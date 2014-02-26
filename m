@@ -1,119 +1,218 @@
-From: "Dmitry S. Dolzhenko" <dmitrys.dolzhenko@yandex.ru>
-Subject: [PATCH] commit.c: use the generic "sha1_pos" function for lookup
- sha1
-Date: Wed, 26 Feb 2014 14:07:47 +0400
-Message-ID: <530DBCF3.9060801@yandex.ru>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] repack: add `repack.honorpackkeep` config var
+Date: Wed, 26 Feb 2014 05:13:53 -0500
+Message-ID: <20140226101353.GA25711@sigill.intra.peff.net>
+References: <52E080C1.4030402@fb.com>
+ <20140123225238.GB2567@sigill.intra.peff.net>
+ <52E1A99D.6010809@fb.com>
+ <52E1AB78.1000504@fb.com>
+ <20140124022822.GC4521@sigill.intra.peff.net>
+ <52E1D39B.4050103@fb.com>
+ <20140128060954.GA26401@sigill.intra.peff.net>
+ <xmqq8uu0mpg8.fsf@gitster.dls.corp.google.com>
+ <20140224082459.GA32594@sigill.intra.peff.net>
+ <xmqq1tys9vie.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------020405000504030006080905"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 26 11:08:51 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Siddharth Agarwal <sid0@fb.com>, Vicent Marti <tanoku@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 26 11:14:07 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WIbQ1-0002Ta-PB
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Feb 2014 11:08:50 +0100
+	id 1WIbV6-0008P3-L4
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Feb 2014 11:14:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751192AbaBZKIp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Feb 2014 05:08:45 -0500
-Received: from forward2h.mail.yandex.net ([84.201.187.147]:59703 "EHLO
-	forward2h.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750799AbaBZKIn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Feb 2014 05:08:43 -0500
-Received: from smtp2h.mail.yandex.net (smtp2h.mail.yandex.net [84.201.187.145])
-	by forward2h.mail.yandex.net (Yandex) with ESMTP id 8885C702269
-	for <git@vger.kernel.org>; Wed, 26 Feb 2014 14:08:25 +0400 (MSK)
-Received: from smtp2h.mail.yandex.net (localhost [127.0.0.1])
-	by smtp2h.mail.yandex.net (Yandex) with ESMTP id 504EB1703CAE
-	for <git@vger.kernel.org>; Wed, 26 Feb 2014 14:08:25 +0400 (MSK)
-Received: from unknown (unknown [31.181.66.29])
-	by smtp2h.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id o8vVf0HrVn-8OMOog3b;
-	Wed, 26 Feb 2014 14:08:24 +0400
-	(using TLSv1 with cipher CAMELLIA256-SHA (256/256 bits))
-	(Client certificate not present)
-X-Yandex-Uniq: 381e04dd-c989-444b-810e-490a82d2470d
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1393409304;
-	bh=Xq4s2D2SrIYj4JufkDlASFseNgFJwy5f7BJEqye555M=;
-	h=Message-ID:Date:From:User-Agent:MIME-Version:To:Subject:
-	 Content-Type;
-	b=UBhUL3iOHwu4Y/uF189QVpcx2y83KQDgEl2LhWw8FkjtBJo/epWJB0SO5DJbbDYjT
-	 /c3BFIRnguiKCokSPaYOYjygUfwIQXIqAsidJ76j/TgTylvs6KCUt6UnnibBAzAhiS
-	 94nqTtGa2TiAqQoo7Ahg3doqhzI3PX3G0NSIyu44=
-Authentication-Results: smtp2h.mail.yandex.net; dkim=pass header.i=@yandex.ru
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20131103 Icedove/17.0.10
+	id S1751333AbaBZKN6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Feb 2014 05:13:58 -0500
+Received: from cloud.peff.net ([50.56.180.127]:57235 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750799AbaBZKNz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Feb 2014 05:13:55 -0500
+Received: (qmail 7643 invoked by uid 102); 26 Feb 2014 10:13:56 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 26 Feb 2014 04:13:56 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 26 Feb 2014 05:13:53 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqq1tys9vie.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242707>
 
-This is a multi-part message in MIME format.
---------------020405000504030006080905
-Content-Type: text/plain; charset=windows-1251
-Content-Transfer-Encoding: 7bit
+On Mon, Feb 24, 2014 at 11:10:49AM -0800, Junio C Hamano wrote:
 
-Refactor binary search in "commit_graft_pos" function: use
-generic "sha1_pos" function.
+> > The best name I could come up with is "--pack-keep-objects", since that
+> > is literally what it is doing. I'm not wild about the name because it is
+> > easy to read "keep" as a verb (and "pack" as a noun). I think it's OK,
+> > but suggestions are welcome.
+> 
+> pack-kept-objects then?
 
-Signed-off-by: Dmitry S. Dolzhenko <dmitrys.dolzhenko@yandex.ru>
+Hmm. That does address my point above, but somehow the word "kept" feels
+awkward to me. I'm ambivalent between the two.
+
+Here's the "kept" version if you want to apply that.
+
+-- >8 --
+From: Vicent Marti <tanoku@gmail.com>
+Subject: [PATCH] repack: add `repack.packKeptObjects` config var
+
+The git-repack command always passes `--honor-pack-keep`
+to pack-objects. This has traditionally been a good thing,
+as we do not want to duplicate those objects in a new pack,
+and we are not going to delete the old pack.
+
+However, when bitmaps are in use, it is important for a full
+repack to include all reachable objects, even if they may be
+duplicated in a .keep pack. Otherwise, we cannot generate
+the bitmaps, as the on-disk format requires the set of
+objects in the pack to be fully closed.
+
+Even if the repository does not generally have .keep files,
+a simultaneous push could cause a race condition in which a
+.keep file exists at the moment of a repack. The repack may
+try to include those objects in one of two situations:
+
+  1. The pushed .keep pack contains objects that were
+     already in the repository (e.g., blobs due to a revert of
+     an old commit).
+
+  2. Receive-pack updates the refs, making the objects
+     reachable, but before it removes the .keep file, the
+     repack runs.
+
+In either case, we may prefer to duplicate some objects in
+the new, full pack, and let the next repack (after the .keep
+file is cleaned up) take care of removing them.
+
+This patch introduces an option to disable the
+`--honor-pack-keep` option.  It is not triggered by default,
+even when pack.writeBitmaps is turned on, because its use
+depends on your overall packing strategy and use of .keep
+files.
+
+Note that this option just disables the pack-objects
+behavior. We still leave packs with a .keep in place, as we
+do not necessarily know that we have duplicated all of their
+objects.
+
+Signed-off-by: Jeff King <peff@peff.net>
 ---
- commit.c | 24 +++++++++---------------
- 1 file changed, 9 insertions(+), 15 deletions(-)
+ Documentation/config.txt     |  5 +++++
+ Documentation/git-repack.txt |  8 ++++++++
+ builtin/repack.c             | 10 +++++++++-
+ t/t7700-repack.sh            | 16 ++++++++++++++++
+ 4 files changed, 38 insertions(+), 1 deletion(-)
 
-diff --git a/commit.c b/commit.c
-index 6bf4fe0..8edaeb7 100644
---- a/commit.c
-+++ b/commit.c
-@@ -10,6 +10,7 @@
- #include "mergesort.h"
- #include "commit-slab.h"
- #include "prio-queue.h"
-+#include "sha1-lookup.h"
-  static struct commit_extra_header *read_commit_extra_header_lines(const char *buf, size_t len, const char **);
- @@ -114,23 +115,16 @@ static unsigned long parse_commit_date(const char *buf, const char *tail)
- static struct commit_graft **commit_graft;
- static int commit_graft_alloc, commit_graft_nr;
- +static const unsigned char *commit_graft_sha1_access(size_t index, void *table)
-+{
-+	struct commit_graft **commit_graft_table = table;
-+	return commit_graft_table[index]->sha1;
-+}
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index becbade..3a3d84f 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2136,6 +2136,11 @@ repack.usedeltabaseoffset::
+ 	"false" and repack. Access from old Git versions over the
+ 	native protocol are unaffected by this option.
+ 
++repack.packKeptObjects::
++	If set to true, makes `git repack` act as if
++	`--pack-kept-objects` was passed. See linkgit:git-repack[1] for
++	details. Defaults to false.
 +
- static int commit_graft_pos(const unsigned char *sha1)
- {
--	int lo, hi;
--	lo = 0;
--	hi = commit_graft_nr;
--	while (lo < hi) {
--		int mi = (lo + hi) / 2;
--		struct commit_graft *graft = commit_graft[mi];
--		int cmp = hashcmp(sha1, graft->sha1);
--		if (!cmp)
--			return mi;
--		if (cmp < 0)
--			hi = mi;
--		else
--			lo = mi + 1;
--	}
--	return -lo - 1;
-+	return sha1_pos(sha1, commit_graft, commit_graft_nr,
-+			   commit_graft_sha1_access);
+ rerere.autoupdate::
+ 	When set to true, `git-rerere` updates the index with the
+ 	resulting contents after it cleanly resolves conflicts using
+diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
+index 002cfd5..4786a78 100644
+--- a/Documentation/git-repack.txt
++++ b/Documentation/git-repack.txt
+@@ -117,6 +117,14 @@ other objects in that pack they already have locally.
+ 	must be able to refer to all reachable objects. This option
+ 	overrides the setting of `pack.writebitmaps`.
+ 
++--pack-kept-objects::
++	Include objects in `.keep` files when repacking.  Note that we
++	still do not delete `.keep` packs after `pack-objects` finishes.
++	This means that we may duplicate objects, but this makes the
++	option safe to use when there are concurrent pushes or fetches.
++	This option is generally only useful if you are writing bitmaps
++	with `-b` or `pack.writebitmaps`, as it ensures that the
++	bitmapped packfile has the necessary objects.
+ 
+ Configuration
+ -------------
+diff --git a/builtin/repack.c b/builtin/repack.c
+index 49f5857..49947b2 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -9,6 +9,7 @@
+ #include "argv-array.h"
+ 
+ static int delta_base_offset = 1;
++static int pack_kept_objects;
+ static char *packdir, *packtmp;
+ 
+ static const char *const git_repack_usage[] = {
+@@ -22,6 +23,10 @@ static int repack_config(const char *var, const char *value, void *cb)
+ 		delta_base_offset = git_config_bool(var, value);
+ 		return 0;
+ 	}
++	if (!strcmp(var, "repack.packkeptobjects")) {
++		pack_kept_objects = git_config_bool(var, value);
++		return 0;
++	}
+ 	return git_default_config(var, value, cb);
  }
-  int register_commit_graft(struct commit_graft *graft, int ignore_dups)
+ 
+@@ -175,6 +180,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 				N_("limits the maximum delta depth")),
+ 		OPT_STRING(0, "max-pack-size", &max_pack_size, N_("bytes"),
+ 				N_("maximum size of each packfile")),
++		OPT_BOOL(0, "pack-kept-objects", &pack_kept_objects,
++				N_("repack objects in packs marked with .keep")),
+ 		OPT_END()
+ 	};
+ 
+@@ -190,7 +197,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 
+ 	argv_array_push(&cmd_args, "pack-objects");
+ 	argv_array_push(&cmd_args, "--keep-true-parents");
+-	argv_array_push(&cmd_args, "--honor-pack-keep");
++	if (!pack_kept_objects)
++		argv_array_push(&cmd_args, "--honor-pack-keep");
+ 	argv_array_push(&cmd_args, "--non-empty");
+ 	argv_array_push(&cmd_args, "--all");
+ 	argv_array_push(&cmd_args, "--reflog");
+diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
+index b45bd1e..f8431a8 100755
+--- a/t/t7700-repack.sh
++++ b/t/t7700-repack.sh
+@@ -35,6 +35,22 @@ test_expect_success 'objects in packs marked .keep are not repacked' '
+ 	test -z "$found_duplicate_object"
+ '
+ 
++test_expect_success '--pack-kept-objects duplicates objects' '
++	# build on $objsha1, $packsha1, and .keep state from previous
++	git repack -Adl --pack-kept-objects &&
++	test_when_finished "found_duplicate_object=" &&
++	for p in .git/objects/pack/*.idx; do
++		idx=$(basename $p)
++		test "pack-$packsha1.idx" = "$idx" && continue
++		if git verify-pack -v $p | egrep "^$objsha1"; then
++			found_duplicate_object=1
++			echo "DUPLICATE OBJECT FOUND"
++			break
++		fi
++	done &&
++	test "$found_duplicate_object" = 1
++'
++
+ test_expect_success 'loose objects in alternate ODB are not repacked' '
+ 	mkdir alt_objects &&
+ 	echo `pwd`/alt_objects > .git/objects/info/alternates &&
 -- 
-1.8.5.3
-
-
---------------020405000504030006080905
-Content-Type: text/plain; charset=UTF-8;
- name="=?windows-1251?Q?=D7=E0=F1=F2=FC_=E2=EB=EE=E6=E5=ED=ED=EE=E3=EE_=F1=EE?=
- =?windows-1251?Q?=EE=E1=F9=E5=ED=E8=FF?="
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment;
- filename*0*=windows-1251''%D7%E0%F1%F2%FC%20%E2%EB%EE%E6%E5%ED%ED%EE%E3%EE;
- filename*1*=%20%F1%EE%EE%E1%F9%E5%ED%E8%FF
-
-
---------------020405000504030006080905--
+1.8.5.2.500.g8060133
