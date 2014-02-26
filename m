@@ -1,88 +1,132 @@
-From: Omar Othman <omar.othman@booking.com>
-Subject: Re: `git stash pop` UX Problem
-Date: Wed, 26 Feb 2014 08:37:57 +0100
-Message-ID: <530D99D5.5060308@booking.com>
-References: <530B0395.5030407@booking.com>	<CANUGeEbPrPp8Sa-KEKSxNDWJShdkDBTkQyXv7tDJ6ReH6MXrHw@mail.gmail.com>	<vpqlhx0a3cb.fsf@anie.imag.fr> <530C893D.7000108@ira.uka.de>	<vpqzjlf5q2z.fsf@anie.imag.fr> <xmqqwqgj57n9.fsf@gitster.dls.corp.google.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: GSoC idea: allow "git rebase --interactive" todo lines to take options
+Date: Wed, 26 Feb 2014 09:04:30 +0100
+Message-ID: <530DA00E.4090402@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Holger Hellmuth <hellmuth@ira.uka.de>,
-	Brandon McCaig <bamccaig@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 26 08:38:06 2014
+Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: git discussion list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Feb 26 09:04:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WIZ49-0002Iq-G2
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Feb 2014 08:38:05 +0100
+	id 1WIZTr-0002OV-Ke
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Feb 2014 09:04:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750824AbaBZHiA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Feb 2014 02:38:00 -0500
-Received: from mail-out5.booking.com ([5.57.20.182]:49821 "EHLO
-	mail-out5.booking.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750745AbaBZHh7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Feb 2014 02:37:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=booking.com; s=bk;
-	h=Content-Transfer-Encoding:Content-Type:In-Reply-To:References:Subject:CC:To:MIME-Version:From:Date:Message-ID; bh=VbVzINK/CrSbnQUe1qsvm1zeC+7r++YVKQXjPfcQSYo=;
-	b=fygRf9acbIYtBObuUovApcyeP1QIyi78MumefKk4iqUQMmUZbkoPmNZ+OoNAGDg8Zj8Io5d0jYH8b5iaw8s+rN3NPh1V5u56DAbYq0f4Yk7DzxgzH+IyMdeb9mYYhTUvBY8NE6YSXd5fvDpfSVSOl4P2+I8UMZ/Xk4RQeWI3biA=;
-Received: from corpds-202.lhr4.corp.booking.com ([10.186.68.14]:44061)
-	by mtx-201.lhr4.prod.booking.com with esmtps (TLSv1:DHE-RSA-AES256-SHA:256)
-	(Exim 4.80.1)
-	(envelope-from <omar.othman@booking.com>)
-	id 1WIZ42-00015m-UI; Wed, 26 Feb 2014 08:37:58 +0100
-Received: from [10.155.74.57] (port=32989)
-	by corpds-202.lhr4.corp.booking.com with esmtpsa (TLSv1:DHE-RSA-AES128-SHA:128)
-	(Exim 4.80.1)
-	(envelope-from <omar.othman@booking.com>)
-	id 1WIZ42-0003j6-P4; Wed, 26 Feb 2014 08:37:58 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
-In-Reply-To: <xmqqwqgj57n9.fsf@gitster.dls.corp.google.com>
+	id S1751864AbaBZIEf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Feb 2014 03:04:35 -0500
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:54638 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751017AbaBZIEe (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 26 Feb 2014 03:04:34 -0500
+X-AuditID: 1207440f-f79326d000003c9f-73-530da0118f0e
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id D6.20.15519.110AD035; Wed, 26 Feb 2014 03:04:33 -0500 (EST)
+Received: from [192.168.69.148] (p57A2498D.dip0.t-ipconnect.de [87.162.73.141])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s1Q84VSY020285
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Wed, 26 Feb 2014 03:04:32 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprCKsWRmVeSWpSXmKPExsUixO6iqCu4gDfYoO+rnEXXlW4mi/7lXWwW
+	E+43MDswe+ycdZfd48PHOI/Pm+QCmKO4bZISS8qCM9Pz9O0SuDPuLioomCpa0bRzE0sD4wmB
+	LkZODgkBE4kFnUuZIWwxiQv31rN1MXJxCAlcZpRYveQjO0hCSOA8k8SNz2kgNq+AtsTyl8uY
+	QGwWAVWJyy3rwZrZBHQlFvU0g8VFBYIlVl9+wAJRLyhxcuYTMFsEqGbXs6tsIDazQJnE9/5r
+	YL3CAv4S/7pXAtVwAB0hLtHTGARRoiPxru8BM4QtL7H97RzmCYz8s5BMnYWkbBaSsgWMzKsY
+	5RJzSnN1cxMzc4pTk3WLkxPz8lKLdE30cjNL9FJTSjcxQsKTfwdj13qZQ4wCHIxKPLwBLLzB
+	QqyJZcWVuYcYJTmYlER5i2YDhfiS8lMqMxKLM+KLSnNSiw8xSnAwK4nwvq4AyvGmJFZWpRbl
+	w6SkOViUxHnVl6j7CQmkJ5akZqemFqQWwWRlODiUJHjZ5wM1ChalpqdWpGXmlCCkmTg4QYZz
+	SYkUp+alpBYllpZkxIOiMb4YGI8gKR6gvRzzQPYWFyTmAkUhWk8xGnPcbvv1iZHj6vZ/nxiF
+	WPLy81KlxHm9QUoFQEozSvPgFsES0ytGcaC/hXkFQe7hASY1uHmvgFYxAa06Ks0DsqokESEl
+	1cC4TXxGzAe3iS5/t38PYgwM9Iw8+EWZT9/R8YFxQdGtgqMnT3kf7Nu2Z5NE0MzYr2Lzb6td
+	nxv4302uaoPopSdCDMwu2usmZfQF2XN++6lukGVz5E/uJMMKA+uFvatu61//o7Fv 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242701>
+
+I just submitted the idea below as a pull request [1] to the GSoC ideas
+page, but I'd like to get some mailing list feedback first that the idea
+is sensible...
+
+And, is there anybody else willing to volunteer as a mentor for this
+project?  (There should be at least two.)
+
+Michael
+
+[1] https://github.com/git/git.github.io/pull/5
 
 
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
->
->> Holger Hellmuth <hellmuth@ira.uka.de> writes:
->>
->>> Am 24.02.2014 17:21, schrieb Matthieu Moy:
->>>> $ git add foo.txt
->>>> $ git status
->>>> On branch master
->>>> Changes to be committed:
->>>>     (use "git reset HEAD <file>..." to unstage)
->>>>
->>>>           modified:   foo.txt
->>> Maybe status should display a stash count if that count is > 0, as
->>> this is part of the state of the repo.
->> Maybe it would help some users, but not me for example. My main use of
->> "git stash" is a safe replacement for "git reset --hard": when I want to
->> discard changes, but keep them safe just in case.
->>
->> So, my stash count is almost always >0, and I don't want to hear about
->> it.
-> "status" is about reminding the user what changes are already in the
-> index (i.e. what you would commit) and what changes are in the
-> working tree, from which you could further update the index with
-> (i.e. what you could commit).
->
-> One _could_ argue that stashed changes are what could be reflected
-> to the working tree and form the source of the latter, but my gut
-> feeling is that it is a rather weak argument.  At that point you are
-> talking about what you could potentially change in the working tree,
-> and the way to do so is not limited to "stash pop" (i.e. you can
-> "git cherry-pick --no-commit $a_commit", or "edit" any file in the
-> working tree for that matter, with the same ease).
->
-> So, I tend to agree with you, while I do understand where "I want to
-> know about what is in stash" is coming from (and that is why we do
-> have "git stash list" command).
-Same comment. Everyone will have his own opinion. As long as the 
-messages are not customizable, we can debate for hours and everybody has 
-a valid point.
+## Line options for `git rebase --interactive`
+
+One of the more powerful features in Git is the command `git rebase
+--interactive`, which allows recent commits to be reordered, squashed
+together, or even revised completely.  The command creates a todo list
+and opens it in an editor.  The original todo list might look like:
+
+    pick deadbee Implement feature XXX
+    pick c0ffeee The oneline of the next commit
+    pick 01a01a0 This change is questionable
+    pick f1a5c00 Fix to feature XXX
+    pick deadbab The oneline of the commit after
+
+The user can edit the list to make changes to the history, for example
+to
+
+    pick deadbee Implement feature XXX
+    squash f1a5c00 Fix to feature XXX
+    exec make
+    edit c0ffeee The oneline of the next commit
+    pick deadbab The oneline of the commit after
+
+This would cause commits `deadbee` and `f1a5c00` to be squashed
+together into one commit followed by running `make` to test-compile
+the results, delete commit `01a01a0` altogether, and stop after
+committing commit `c0ffeee` to allow the user to make changes.
+
+It would be nice to support more flexibility in the todo-list commands
+by allowing the commands to take options.  Maybe
+
+* Convert a commit into a merge commit:
+
+      pick -p c0ffeee -p e1ee712 deadbab The oneline of the commit after
+
+* After squashing two commits, add a "Signed-off-by" line to the
+  commit log message:
+
+    pick deadbee Implement feature XXX
+    squash --signoff f1a5c00 Fix to feature XXX
+
+  or GPG-sign a commit:
+
+    pick --gpg-sign=<keyid> deadbee Implement feature XXX
+
+* Reset the author of the commit to the current user or a specified
+  user:
+
+    pick --reset-author deadbee Implement feature XXX
+    pick --author="A U Thor <author@example.com>" deadbab The oneline of
+the commit after
+
+The goal of this project would be (1) to add the infrastructure for
+handling options on todo-list lines, and (2) implement some concrete
+options.  A big part of the difficulty of this project is that `git
+rebase --interactive` is implemented via a sparsely-commented shell
+script.  Adding comments and cleaning up the script as you go would be
+very welcome.
+
+ - Language: sh
+ - Difficulty: medium
+ - Possible mentors: Michael Haggerty
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
