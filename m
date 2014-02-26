@@ -1,85 +1,85 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 10/25] Add new environment variable $GIT_COMMON_DIR
-Date: Wed, 26 Feb 2014 12:23:27 -0500
-Message-ID: <CAPig+cQdrZE-x1KdCwPWOaer7=Cwze-snNZ3-o+9mS7X1AneaQ@mail.gmail.com>
-References: <1392730814-19656-1-git-send-email-pclouds@gmail.com>
-	<1392730814-19656-11-git-send-email-pclouds@gmail.com>
-	<CAPig+cRPpdfNYP=8o+9ku7Lr6bQ3EBiFQcS_aM4YBVhCbuJ3sQ@mail.gmail.com>
-	<CACsJy8CSZZptDr6rWTNES1peDrkk5k7Ai9mzQvSBDZz7FGJxLA@mail.gmail.com>
-	<6CF0FBAC168D48BA901A31901FAD0C3E@PhilipOakley>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Duy Nguyen <pclouds@gmail.com>, Git List <git@vger.kernel.org>
-To: Philip Oakley <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Wed Feb 26 18:23:35 2014
+From: Andrew Wong <andrew.kw.w@gmail.com>
+Subject: [RFC 2/3] merge: Add hints to tell users about "git merge --abort"
+Date: Wed, 26 Feb 2014 13:06:24 -0500
+Message-ID: <1393437985-31401-3-git-send-email-andrew.kw.w@gmail.com>
+References: <1393437985-31401-1-git-send-email-andrew.kw.w@gmail.com>
+Cc: Andrew Wong <andrew.kw.w@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 26 19:06:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WIiCi-0003mL-UN
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Feb 2014 18:23:33 +0100
+	id 1WIisW-0004U4-LF
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Feb 2014 19:06:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753206AbaBZRX2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Feb 2014 12:23:28 -0500
-Received: from mail-yh0-f43.google.com ([209.85.213.43]:52733 "EHLO
-	mail-yh0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753181AbaBZRX1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Feb 2014 12:23:27 -0500
-Received: by mail-yh0-f43.google.com with SMTP id b6so1311724yha.16
-        for <git@vger.kernel.org>; Wed, 26 Feb 2014 09:23:27 -0800 (PST)
+	id S1752706AbaBZSGj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Feb 2014 13:06:39 -0500
+Received: from mail-ie0-f169.google.com ([209.85.223.169]:59716 "EHLO
+	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751410AbaBZSGi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Feb 2014 13:06:38 -0500
+Received: by mail-ie0-f169.google.com with SMTP id at1so1013383iec.0
+        for <git@vger.kernel.org>; Wed, 26 Feb 2014 10:06:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=YydSJO4ExhckQKP/+d2DvtDNEATHb83wK9Au1ANSt9U=;
-        b=SrcL0tXq/1L/2ZC4IRe3lgyJSE+XvzlEDVMTW4Mqkdnnwsz13I77935Q924wqiuJ25
-         LESWQIBgXRFgVQ9bt6Rh7A73BHV2dAAxgtOG/Bqn11LIS6hRV3P5oEX3A3MZVuR+l6F+
-         i4WXeYdghvqlctjMIGfcJ2otHptcDmQl/IJfI5DjFFH4LhSmZzMsiPwgvavOAQB+ku1k
-         3hsYgTUnRnwJDTwyjkoaqsVS0x6KRBkBst13EevktdjzDkK1JB4LdSMU8TlnkXk/KD84
-         57qkL+iYYEYfE9JZcVhfCaxaDo+XZMJGcn1gBuuPAORBKNATYOi/Q7zY/QbnGiKqc+VV
-         TGNA==
-X-Received: by 10.236.7.231 with SMTP id 67mr9281819yhp.30.1393435407212; Wed,
- 26 Feb 2014 09:23:27 -0800 (PST)
-Received: by 10.170.180.195 with HTTP; Wed, 26 Feb 2014 09:23:27 -0800 (PST)
-In-Reply-To: <6CF0FBAC168D48BA901A31901FAD0C3E@PhilipOakley>
-X-Google-Sender-Auth: 6fctezK6e1hUlNcQlttWzB3HR28
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=6jJ8JrLrL85XFRgGzN3j2nudaDJAyETen3cM+jbXRqk=;
+        b=Uxw33YEbY+EpP8rtxU6sDLXbRza9On7K2FL1Rh/sS6sAvIcRHpeF27PZOHhspVGa67
+         qdyhWuu8tXzV02xEpTM7S9U8TmANinECtwyyBHHDLjnv9qu/OnlfO/lLiCXrT+OlATWO
+         lMbQQQA6R8QlRfVX6jiIu4OZd55M7E4T4swvTKx4bnI3JjJWna1H5yM3n/wSfKHJ3zGk
+         3GswNBvMtIiXQ2DO0Kby/nJYuQyAXLQ6mkylqFHlY7KdChh+t3YfVKSF3ekBeuZOn1zc
+         vXVNsngm4UWiW3WAmte0HZZMut9eM3Vr8AXXGxvNFSTNdFyDtG26A4rrywuXZX7CKu34
+         J+Nw==
+X-Received: by 10.50.11.36 with SMTP id n4mr27460998igb.3.1393437998235;
+        Wed, 26 Feb 2014 10:06:38 -0800 (PST)
+Received: from dresden.sidefx.com (nat.sidefx.com. [38.104.156.10])
+        by mx.google.com with ESMTPSA id kb5sm1968331igb.1.2014.02.26.10.06.36
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 26 Feb 2014 10:06:37 -0800 (PST)
+X-Mailer: git-send-email 1.9.0.7.g53f6706
+In-Reply-To: <1393437985-31401-1-git-send-email-andrew.kw.w@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242740>
 
-On Wed, Feb 26, 2014 at 11:12 AM, Philip Oakley <philipoakley@iee.org> wrote:
-> From: "Duy Nguyen" <pclouds@gmail.com>
->> On Wed, Feb 26, 2014 at 8:24 AM, Eric Sunshine <sunshine@sunshineco.com>
->> wrote:
->>>>
->>>> +'GIT_COMMON_DIR'::
->>>> +       If this variable is set to a path, non-worktree files that are
->>>> +       normally in $GIT_DIR will be taken from this path
->>>> +       instead. Worktree-specific files such as HEAD or index are
->>>> +       taken from $GIT_DIR. This variable has lower precedence than
->>>> +       other path variables such as GIT_INDEX_FILE,
->>>> +       GIT_OBJECT_DIRECTORY...
->>>
->>> For a person not familiar with "git checkout --to" or its underlying
->>> implementation, this description may be lacking. Such a reader may be
->>> left wondering about GIT_COMMON_DIR's overall purpose, and when and
->>> how it should be used. Perhaps it would make sense to talk a bit about
->>> "git checkout --to" here?
->>
->> I don't want to repeat too much. Maybe mention about "git checkout
->> --to" and point them to git-checkout man page?
->
-> I've just looked at both
-> https://www.kernel.org/pub/software/scm/git/docs/git-checkout.html and
-> http://git-htmldocs.googlecode.com/git/git-checkout.html and neither appear
-> to mention the --to option.
->
-> Is it missing from the man page? Or is it me that's missing something?
+Signed-off-by: Andrew Wong <andrew.kw.w@gmail.com>
+---
+ builtin/merge.c | 3 ++-
+ wt-status.c     | 3 +++
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-'git checkout --to' is the new feature being introduced by this
-25-patch series [1] from Duy (to which we are responding).
-
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/242300
+diff --git a/builtin/merge.c b/builtin/merge.c
+index e576a7f..07af427 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -909,7 +909,8 @@ static int suggest_conflicts(int renormalizing)
+ 	fclose(fp);
+ 	rerere(allow_rerere_auto);
+ 	printf(_("Automatic merge failed; "
+-			"fix conflicts and then commit the result.\n"));
++			"fix conflicts and then commit the result.\n"
++			"To abort the merge, use \"git merge --abort\".\n"));
+ 	return 1;
+ }
+ 
+diff --git a/wt-status.c b/wt-status.c
+index 6e1ad7d..54c2203 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -907,6 +907,9 @@ static void show_merge_in_progress(struct wt_status *s,
+ 			status_printf_ln(s, color,
+ 				_("  (use \"git commit\" to conclude merge)"));
+ 	}
++	if (s->hints)
++		status_printf_ln(s, color,
++			_("  (use \"git merge --abort\" to abort the merge)\n"));
+ 	wt_status_print_trailer(s);
+ }
+ 
+-- 
+1.9.0.6.g16e5f9a
