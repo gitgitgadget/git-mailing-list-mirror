@@ -1,116 +1,75 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: Compiling git for Windows
-Date: Wed, 26 Feb 2014 19:37:59 -0000
-Organization: OPDS
-Message-ID: <70BA74432D4449F2895535E6314C37A2@PhilipOakley>
-References: <CAHd499Cr2g0MZs2XBCC-zZqjHeffqO0LXoP1ViaFOjQhTuPKzw@mail.gmail.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 10/25] Add new environment variable $GIT_COMMON_DIR
+Date: Wed, 26 Feb 2014 14:43:59 -0500
+Message-ID: <CAPig+cSpnK0vqG_jQYmW1SC-VTQknG_aFnBRN-HvBmEsN0mzSw@mail.gmail.com>
+References: <1392730814-19656-1-git-send-email-pclouds@gmail.com>
+	<1392730814-19656-11-git-send-email-pclouds@gmail.com>
+	<CAPig+cRPpdfNYP=8o+9ku7Lr6bQ3EBiFQcS_aM4YBVhCbuJ3sQ@mail.gmail.com>
+	<CACsJy8CSZZptDr6rWTNES1peDrkk5k7Ai9mzQvSBDZz7FGJxLA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=ISO-8859-1; reply-type=original
-Cc: "Git MsysGit" <msysgit@googlegroups.com>
-To: "Robert Dailey" <rcdailey.lists@gmail.com>,
-	"Git" <git@vger.kernel.org>
-X-From: msysgit+bncBDSOTWHYX4PBBDUFXGMAKGQE7EMU6BI@googlegroups.com Wed Feb 26 20:37:56 2014
-Return-path: <msysgit+bncBDSOTWHYX4PBBDUFXGMAKGQE7EMU6BI@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wi0-f184.google.com ([209.85.212.184])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 26 20:44:06 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDSOTWHYX4PBBDUFXGMAKGQE7EMU6BI@googlegroups.com>)
-	id 1WIkIh-0002bk-KM
-	for gcvm-msysgit@m.gmane.org; Wed, 26 Feb 2014 20:37:51 +0100
-Received: by mail-wi0-f184.google.com with SMTP id bs8sf190927wib.1
-        for <gcvm-msysgit@m.gmane.org>; Wed, 26 Feb 2014 11:37:51 -0800 (PST)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1WIkOj-0000hV-GA
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Feb 2014 20:44:05 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753069AbaBZToA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Feb 2014 14:44:00 -0500
+Received: from mail-yh0-f41.google.com ([209.85.213.41]:56590 "EHLO
+	mail-yh0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752061AbaBZToA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Feb 2014 14:44:00 -0500
+Received: by mail-yh0-f41.google.com with SMTP id f73so1571906yha.28
+        for <git@vger.kernel.org>; Wed, 26 Feb 2014 11:43:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=message-id:reply-to:from:to:cc:references:subject:date:organization
-         :mime-version:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:list-post:list-help:list-archive
-         :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=h2T7nEb19LGaehwvctWkCRwSIgQZO0cfUw6zDO9qp2o=;
-        b=yywh1wuzCkj6LFMBxYiZ14NiRiJxf9fOq5PcH0/35Fzqmk9NdIgsIl6103SsR3BeM6
-         Zpr8HnGI0Z0JxMzUoQfT2Fj53FUKSlUlGgxhP0utS1ihbXxVyNZQWmHzcPfyvt8IDiw+
-         sgHtVQelqs6Q+bwqe4LLukjNryQPzV6jn6BBbUwBQGI4J3QBr5nwHGogqIEcfwyhWBlt
-         rfputpWjRktj3D+5f300vHJ1Y/lpqOVAjl4FRV/uP3gtk95zddOHhVH5+AcI0/UAMaqa
-         zUlxsM1v+BdUetB2Zy5gCNxfZHVCWGCxsFimzfrCjF1Cy7Z+KDE6rkUB+jTlUpK5IvHM
-         7hUA==
-X-Received: by 10.180.84.229 with SMTP id c5mr48793wiz.4.1393443471275;
-        Wed, 26 Feb 2014 11:37:51 -0800 (PST)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.36.138 with SMTP id q10ls153599wij.31.gmail; Wed, 26 Feb
- 2014 11:37:50 -0800 (PST)
-X-Received: by 10.180.82.35 with SMTP id f3mr17884919wiy.0.1393443470319;
-        Wed, 26 Feb 2014 11:37:50 -0800 (PST)
-Received: from out1.ip03ir2.opaltelecom.net (out1.ip03ir2.opaltelecom.net. [62.24.128.239])
-        by gmr-mx.google.com with ESMTP id jb4si1058639wic.0.2014.02.26.11.37.50
-        for <msysgit@googlegroups.com>;
-        Wed, 26 Feb 2014 11:37:50 -0800 (PST)
-Received-SPF: softfail (google.com: domain of transitioning philipoakley@iee.org does not designate 62.24.128.239 as permitted sender) client-ip=62.24.128.239;
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Ah0YABxCDlNZ8Yi5/2dsb2JhbABagwY7iRi4JgUBAgEBgRkXdGkBAYEfAQEWAQQBAQEBAwECBQEBLh4BASELAgMFAgEDDgcMJRQBBAgHCwYHFwYBEggCAQIDAYU4BwGCBw0DFQnCBQ2HMxMEjD6CFoMqgRQEiRGGHIYzaY5OhUeDLTw
-X-IPAS-Result: Ah0YABxCDlNZ8Yi5/2dsb2JhbABagwY7iRi4JgUBAgEBgRkXdGkBAYEfAQEWAQQBAQEBAwECBQEBLh4BASELAgMFAgEDDgcMJRQBBAgHCwYHFwYBEggCAQIDAYU4BwGCBw0DFQnCBQ2HMxMEjD6CFoMqgRQEiRGGHIYzaY5OhUeDLTw
-X-IronPort-AV: E=Sophos;i="4.97,549,1389744000"; 
-   d="scan'208";a="451029540"
-Received: from host-89-241-136-185.as13285.net (HELO PhilipOakley) ([89.241.136.185])
-  by out1.ip03ir2.opaltelecom.net with SMTP; 26 Feb 2014 19:37:49 +0000
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-Original-Sender: philipoakley@iee.org
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=softfail
- (google.com: domain of transitioning philipoakley@iee.org does not designate
- 62.24.128.239 as permitted sender) smtp.mail=philipoakley@iee.org
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242749>
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=wiesjg5RbquqGvmzE3M67O3CoQ79gnLkddPsAX/ZPzE=;
+        b=kK80MQ5sGqMQb6o6GwStLPpB1XPQNqD68OyZMfBVRN+JmbJnzA8JZC3tmBNzDrrDDQ
+         vxwhI5Jbkih9lR7aW0pnDNm7/1wrEv+pqQ7MDch0ArscNUgVFqOIn6GnUybkRqvJQwfw
+         LwZ9mXpaPxU++BU7o/5a/VD9oPpkREu5CZFpwXzP5GZYE/Ejy06YTrGj2miruhev6NZt
+         cvwAbE3Fh/NXTuMox3W9bfRs1Ttrf0ipaP3wIhy8Q8eWYhwhU28B7d2yfbkXMYHdDQ1S
+         ReX4xYThgvs32+WCnEHb5o/o1xaYt1qjw5gULRJPAfak7bRWwzjIzkDG4YWHvlzTSO7b
+         UKew==
+X-Received: by 10.236.50.194 with SMTP id z42mr3441078yhb.145.1393443839255;
+ Wed, 26 Feb 2014 11:43:59 -0800 (PST)
+Received: by 10.170.180.195 with HTTP; Wed, 26 Feb 2014 11:43:59 -0800 (PST)
+In-Reply-To: <CACsJy8CSZZptDr6rWTNES1peDrkk5k7Ai9mzQvSBDZz7FGJxLA@mail.gmail.com>
+X-Google-Sender-Auth: BiplYwW8Pc-xEkmKb5PaF9U1MJE
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242750>
 
-From: "Robert Dailey" <rcdailey.lists@gmail.com>
-> Oddly I'm not able to find any instructions on how to build Git for
-> Windows. I've done a clone of the repository here:
+On Wed, Feb 26, 2014 at 5:55 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Wed, Feb 26, 2014 at 8:24 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>>> +'GIT_COMMON_DIR'::
+>>> +       If this variable is set to a path, non-worktree files that are
+>>> +       normally in $GIT_DIR will be taken from this path
+>>> +       instead. Worktree-specific files such as HEAD or index are
+>>> +       taken from $GIT_DIR. This variable has lower precedence than
+>>> +       other path variables such as GIT_INDEX_FILE,
+>>> +       GIT_OBJECT_DIRECTORY...
+>>
+>> For a person not familiar with "git checkout --to" or its underlying
+>> implementation, this description may be lacking. Such a reader may be
+>> left wondering about GIT_COMMON_DIR's overall purpose, and when and
+>> how it should be used. Perhaps it would make sense to talk a bit about
+>> "git checkout --to" here?
 >
-> https://github.com/msysgit/git
->
-> I did attempt to try doing it myself. I installed 'make' and mingw-gcc
-> in Cygwin and attempted 'make' from the git directory but it fails
-> immediately (I can post information on the failure if needed, but I'm
-> assuming I'm not taking the correct approach).
->
-> Can someone point me to some instructions on how to build Git for
-> Windows? Thanks.
-> --
+> I don't want to repeat too much. Maybe mention about "git checkout
+> --to" and point them to git-checkout man page?
 
-Try the wiki  https://github.com/msysgit/msysgit/wiki
-
-The dev list is at msysgit@googlegroups.com;
-
---
-
-Philip 
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/groups/opt_out.
+Yes, that might be sufficient. "git checkout --to" documentation
+points the reader at the "MULTIPLE CHECKOUT MODE" section which gives
+a more detailed explanation of GIT_COMMON_DIR, so a user wanting to
+understand GIT_COMMON_DIR better would have a way to find the
+information.
