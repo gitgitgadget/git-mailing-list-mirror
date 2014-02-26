@@ -1,94 +1,64 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Git in GSoC 2014
-Date: Wed, 26 Feb 2014 06:04:33 -0500
-Message-ID: <20140226110433.GF25711@sigill.intra.peff.net>
-References: <20140225154158.GA9038@sigill.intra.peff.net>
- <530CCFB0.5050406@alum.mit.edu>
- <20140226102350.GB25711@sigill.intra.peff.net>
- <530DC4D1.4060301@alum.mit.edu>
+Subject: Re: [PATCH v3] tag: support --sort=<spec>
+Date: Wed, 26 Feb 2014 06:08:04 -0500
+Message-ID: <20140226110803.GG25711@sigill.intra.peff.net>
+References: <1393039762-4843-1-git-send-email-pclouds@gmail.com>
+ <1393330935-22229-1-git-send-email-pclouds@gmail.com>
+ <20140226090511.GA32537@sigill.intra.peff.net>
+ <CACsJy8CW9p-PDJC9zXBwXrxOk9GhBFk1nVtG1Xn76g3FN+KgaA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Feb 26 12:04:56 2014
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 26 12:08:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WIcIE-00071J-Nx
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Feb 2014 12:04:51 +0100
+	id 1WIcLZ-0004W1-Sy
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Feb 2014 12:08:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752613AbaBZLEg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Feb 2014 06:04:36 -0500
-Received: from cloud.peff.net ([50.56.180.127]:57277 "HELO peff.net"
+	id S1752390AbaBZLIN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Feb 2014 06:08:13 -0500
+Received: from cloud.peff.net ([50.56.180.127]:57284 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752596AbaBZLEf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Feb 2014 06:04:35 -0500
-Received: (qmail 10488 invoked by uid 102); 26 Feb 2014 11:04:35 -0000
+	id S1751635AbaBZLIJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Feb 2014 06:08:09 -0500
+Received: (qmail 10637 invoked by uid 102); 26 Feb 2014 11:08:09 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 26 Feb 2014 05:04:35 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 26 Feb 2014 06:04:33 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 26 Feb 2014 05:08:09 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 26 Feb 2014 06:08:04 -0500
 Content-Disposition: inline
-In-Reply-To: <530DC4D1.4060301@alum.mit.edu>
+In-Reply-To: <CACsJy8CW9p-PDJC9zXBwXrxOk9GhBFk1nVtG1Xn76g3FN+KgaA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242717>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242718>
 
-On Wed, Feb 26, 2014 at 11:41:21AM +0100, Michael Haggerty wrote:
+On Wed, Feb 26, 2014 at 06:03:40PM +0700, Duy Nguyen wrote:
 
-> > Yes, though I think it makes sense to put them on a separate page. We
-> > should probably write up some notes for students, too: how to get in
-> > touch with us, what do we expect of them in the pre-proposal period,
-> > what would we expect in terms of communication and day-to-day workflow
-> > during the summer, etc.
+> > Cool. I think doing this makes the most sense, as we do not have to
+> > worry about build-time config (and I do not see any particular reason
+> > why we would want to use the system strverscmp on glibc systems).
 > 
-> Since time is short, I already started on this.  I wrote a first draft
-> of an introduction for the students.  I also started looking for
-> microprojects.  I started going through our source files alphabetically,
-> and have already found six suggestions by "bundle.c", so I don't think
-> there will be a problem finding enough tiny things to do.
+> Another reason I want to stay away from glibc is I want to fix the
+> algorithm to sort YY-preXX and YY-rcXX before YY. There could be
+> reasons that glibc might reject such a change even if it makes sense
+> in our context. Even if we make it to newer glibc and fix compat
+> version, people on older glibc will not receive the fix while people
+> on compat do. Not so good.
 
-Thanks, the intro text looks great.
+Yeah, the handling of -rc has bugged me, too (in my personal alias, I
+just grep out the -rc before feeding the list to "sort -V" :) ).
 
-We probably need some intro text to go on the ideas page (that is what
-Google links to for prospective students) that points them to the
-microproject page.
-
-> See my branch on GitHub [1] or read the appended text below.
-
-I've merged and pushed out your branch (I'll work on getting push access
-for people, as there's no real reason for me to be an integration
-bottleneck with this stuff).
-
-> I've been looking for *really* tiny projects.  Feedback is welcome about
-> whether they are too trivial to be meaningful in distinguishing
-> promising students from no-hopers.  My feeling is that there is so much
-> process involved in submitting a patch that it will take even a
-> well-prepared student quite a while to make a change, no matter how trivial.
-
-I really like the level of the projects below. It should be more about
-the process than the code, and I think you nailed that. I especially
-like the ones that require some digging in history.
-
-The bug list I mentioned before is probably too heavyweight in that
-sense (they're more like 4-6 hour projects for somebody who isn't
-familiar with the code, plus submission headaches on top of that).
-
-> Also, how many suggested microprojects do you think we need (i.e., when
-> can I stop :-) )?
-
-I think it depends on how quickly people do them. We can always add more
-if they run low (though 6 does not provide a huge buffer, so we may want
-a few more).
-
-> 6.  Change `bundle.c:add_to_ref_list()` to use `ALLOC_GROW()`.
-
-This is the only one that seemed like it might be _too_ trivial to me.
-The memcpy/hashcpy one is similarly trivial, but I like the add-on of
-"look for other places". I guess we could do that here, too.
+I'd worry slightly, though, that there are other schemes where that
+behaves poorly. Should we optimize for git's version numbering, or for
+what most other projects want? There could even be room for two types of
+version-compare. But before thinking about that, I'd want to know why
+glibc behaves as it does.
 
 -Peff
