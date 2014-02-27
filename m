@@ -1,88 +1,113 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: Git in GSoC 2014
-Date: Thu, 27 Feb 2014 21:26:01 +0100
-Message-ID: <530F9F59.4030307@alum.mit.edu>
-References: <20140225154158.GA9038@sigill.intra.peff.net> <530CCFB0.5050406@alum.mit.edu> <20140226102350.GB25711@sigill.intra.peff.net> <530DC4D1.4060301@alum.mit.edu> <xmqq8usx4pvh.fsf@gitster.dls.corp.google.com> <530EEAA2.3030306@alum.mit.edu> <xmqqlhwwz7m7.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 18/25] setup.c: support multi-checkout repo setup
+Date: Thu, 27 Feb 2014 12:28:50 -0800
+Message-ID: <xmqqk3cgxptp.fsf@gitster.dls.corp.google.com>
+References: <1392730814-19656-1-git-send-email-pclouds@gmail.com>
+	<1392730814-19656-19-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 27 21:26:16 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 27 21:29:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJ7X2-0004Bw-GH
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 21:26:12 +0100
+	id 1WJ7Zl-0000HY-9t
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 21:29:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751467AbaB0U0I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Feb 2014 15:26:08 -0500
-Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:54435 "EHLO
-	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750904AbaB0U0G (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Feb 2014 15:26:06 -0500
-X-AuditID: 1207440e-f79c76d000003e2c-79-530f9f5d512a
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id B5.0E.15916.D5F9F035; Thu, 27 Feb 2014 15:26:05 -0500 (EST)
-Received: from [192.168.69.148] (p57A24AC7.dip0.t-ipconnect.de [87.162.74.199])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s1RKQ2te020339
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Thu, 27 Feb 2014 15:26:04 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
-In-Reply-To: <xmqqlhwwz7m7.fsf@gitster.dls.corp.google.com>
-X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrOKsWRmVeSWpSXmKPExsUixO6iqBs7nz/YYP48QYuuK91MFg29V5gt
-	frT0MDswezzr3cPocfGSssfnTXIBzFHcNkmJJWXBmel5+nYJ3BkL5nxiKbjEUXF0qXUD4xO2
-	LkZODgkBE4kT/25B2WISF+6tB7K5OIQELjNKvDnaww7hnGeSuHFkOitIFa+AtsTabUfZQWwW
-	AVWJNyv+MYHYbAK6Eot6msFsUYFgidWXH7BA1AtKnJz5BMwWEVCTmNh2CMjm4GAWMJKYd7oe
-	JCwsICtx/95qqMXLmCTmPF7GDJLgFLCW+PzyFjNIvYSAuERPYxBImFlAR+Jd3wNmCFteYvvb
-	OcwTGAVnIdk2C0nZLCRlCxiZVzHKJeaU5urmJmbmFKcm6xYnJ+blpRbpGuvlZpbopaaUbmKE
-	BDTfDsb29TKHGAU4GJV4eCd48gcLsSaWFVfmHmKU5GBSEuXlnAIU4kvKT6nMSCzOiC8qzUkt
-	PsQowcGsJMLrOwcox5uSWFmVWpQPk5LmYFES51Vbou4nJJCeWJKanZpakFoEk5Xh4FCS4C2Y
-	B9QoWJSanlqRlplTgpBm4uAEGc4lJVKcmpeSWpRYWpIRD4rf+GJgBIOkeID2BoC08xYXJOYC
-	RSFaTzHqctxu+/WJUYglLz8vVUqc1xqkSACkKKM0D24FLH29YhQH+liY1wKkigeY+uAmvQJa
-	wgS05Kg0D8iSkkSElFQDY3PcjZjAP4Eel2KmSs5PXGh4RPJFoMLBPsfH7kv/b475bjDlOcd/
-	rmNKfksc3k2d/9i2s+mLj/ER7wdXOmwuLcjZlB4dejy9X9W/ec2RA/prf71hdro8 
+	id S1751393AbaB0U25 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Feb 2014 15:28:57 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51250 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751255AbaB0U24 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Feb 2014 15:28:56 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4818170B15;
+	Thu, 27 Feb 2014 15:28:55 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=P1ZBm0zdb1XE
+	1VqJhteT6zID6HU=; b=vGtNqg+lokmVllp3JK2bdJRaNSw8p9btlG9RWiPhdD0o
+	6SW4VP8KMuRj1JTuwrPAgnxxskXdCNKzpVOBKENWNRz/RSvNaLrZoSlhV/wzscN8
+	LcWAxXZk0E9F7HE8iK8u5AelrlmysFkXvUYa6zVsJCVPDlnwGdBePY2OiOaZCNs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=CF6CHT
+	bUvC1YAwTulKYX6jc29M836RLhOb/eGw8X8Mflgo5CTAMW5VE4C70kUL7nNYhu8I
+	prCnUAmlBR0UzZPCCukevjBcBjlqhvRplzyTnFWy5WdYQIxFpfwM82217tFqy2uA
+	FSGDZlysYjxt13KLyM/ICYtsJ4l1oM7+CsH4Y=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2E9A970B14;
+	Thu, 27 Feb 2014 15:28:55 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6E64470B13;
+	Thu, 27 Feb 2014 15:28:54 -0500 (EST)
+In-Reply-To: <1392730814-19656-19-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Tue, 18
+ Feb 2014 20:40:07 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: C6EB6070-9FED-11E3-B459-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242850>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242851>
 
-On 02/27/2014 08:19 PM, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
-> 
->> Sounds good.  I suggest we make your blob a paragraph before the list of
->> bullet points rather than part of the list.  Please suggest some "TBD*"
->> then I'll add it to the text.  Would we also fill in "X" with the name
->> of the actual student involved in the conversation that is pointed to?
-> 
-> I was not thinking about using a student thread (I do not remember
-> having a good on-list interaction with past GSoC students).
-> 
-> How about using this one from our recent past:
-> 
->     http://thread.gmane.org/gmane.comp.version-control.git/239068
-> 
-> which has the following good points to be used as an example.  It:
-> 
->  - involved multiple cycles and multiple reviewers;
-> 
->  - showed good response to the comments from the original author;
->    and most importantly
-> 
->  - had everything related to the topic in one single neat thread.
-> 
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-Change pushed.  Thanks Junio!
+> The repo setup procedure is updated to detect $GIT_DIR/commondir and
+> set $GIT_COMMON_DIR properly.
+>
+> The core.worktree is ignored when $GIT_DIR/commondir presents. This i=
+s
+> because "commondir" repos are intended for separate/linked checkouts
+> and pointing them back to a fixed core.worktree just does not make
+> sense.
+>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+>  Documentation/config.txt        |  3 +-
+>  Documentation/git-rev-parse.txt |  3 ++
+>  builtin/rev-parse.c             |  4 +++
+>  cache.h                         |  1 +
+>  environment.c                   |  8 ++---
+>  setup.c                         | 33 +++++++++++++-----
+>  t/t1501-worktree.sh             | 76 +++++++++++++++++++++++++++++++=
+++++++++++
+>  t/t1510-repo-setup.sh           |  1 +
+>  trace.c                         |  1 +
+>  9 files changed, 115 insertions(+), 15 deletions(-)
+>
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 5f4d793..cbf4d97 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -381,7 +381,8 @@ false), while all other repositories are assumed =
+to be bare (bare
+> =20
+>  core.worktree::
+>  	Set the path to the root of the working tree.
+> -	This can be overridden by the GIT_WORK_TREE environment
+> +	This can be overridden by the GIT_WORK_TREE
+> +	or GIT_COMMON_DIR environment
+>  	variable and the '--work-tree' command line option.
 
-Michael
+During my first reading, I was guessing that the reason you changed
+this is because COMMON_DIR may redirect the config file from which
+core.worktree may be read.  But that is probably not what you meant.
+You do not want to share core.worktree between the borrowing and the
+borrowed repositories.  If the presense of GIT_COMMON_DIR _disables_
+core.worktree settings without supplying an alternative value, as
+opposed to GIT_WORK_TREE which does override with an alternative
+value, it is very different from "can be overriden".
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+It needs a better phrasing.
+
+By the way, do we need to do something special for core.bare as
+well for a similar reason?
