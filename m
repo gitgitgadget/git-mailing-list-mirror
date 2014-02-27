@@ -1,94 +1,101 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: Branch Name Case Sensitivity
-Date: Thu, 27 Feb 2014 22:00:43 +0100
-Message-ID: <530FA77B.2030707@alum.mit.edu>
-References: <CAJHY66EQD280QgXBCoZU4y_aqSEu3A1hXzeW7X-rtT6vMZ92oA@mail.gmail.com> <xmqqvbw0xrl6.fsf@gitster.dls.corp.google.com> <530FA0C1.3000109@web.de> <CAJHY66H2M2aQvQ8MLN7XB4uYiFohRfhhsXhd56hwDR5qMGi6Tg@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH] difftool: support repositories with .git-files
+Date: Thu, 27 Feb 2014 21:12:13 +0000
+Message-ID: <530FAA2D.8060104@web.de>
+References: <1393211555-50270-1-git-send-email-davvid@gmail.com>	<xmqqr46s9yzx.fsf@gitster.dls.corp.google.com>	<530BB548.3050603@web.de>	<xmqq1tyr6pfw.fsf@gitster.dls.corp.google.com>	<530CFE56.6040807@web.de> <xmqqd2ia6dvo.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Lee Hopkins <leerhop@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 27 22:00:58 2014
+Cc: David Aguilar <davvid@gmail.com>, git@vger.kernel.org,
+	=?ISO-8859-1?Q?G=E1bor_Lipt=E1k?= <gabor.liptak@gmail.com>,
+	John Keeping <john@keeping.me.uk>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 27 22:12:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJ84d-00047W-KV
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 22:00:55 +0100
+	id 1WJ8Fi-0004rs-3r
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 22:12:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752281AbaB0VAv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Feb 2014 16:00:51 -0500
-Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:57152 "EHLO
-	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751072AbaB0VAr (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Feb 2014 16:00:47 -0500
-X-AuditID: 12074411-f79ab6d000002f0e-1e-530fa77e6d03
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id DD.E3.12046.E77AF035; Thu, 27 Feb 2014 16:00:46 -0500 (EST)
-Received: from [192.168.69.148] (p57A24AC7.dip0.t-ipconnect.de [87.162.74.199])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s1RL0hVi022019
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Thu, 27 Feb 2014 16:00:45 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
-In-Reply-To: <CAJHY66H2M2aQvQ8MLN7XB4uYiFohRfhhsXhd56hwDR5qMGi6Tg@mail.gmail.com>
+	id S1751586AbaB0VMR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Feb 2014 16:12:17 -0500
+Received: from mout.web.de ([212.227.15.4]:50099 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751072AbaB0VMR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Feb 2014 16:12:17 -0500
+Received: from [192.168.1.102] ([90.174.2.86]) by smtp.web.de (mrweb102) with
+ ESMTPA (Nemesis) id 0MS290-1WgnvY36tO-00TD56 for <git@vger.kernel.org>; Thu,
+ 27 Feb 2014 22:12:15 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
+In-Reply-To: <xmqqd2ia6dvo.fsf@gitster.dls.corp.google.com>
 X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrPKsWRmVeSWpSXmKPExsUixO6iqFu3nD/YoOWwtUXXlW4mi4beK8wW
-	a57/ZrLo7PjK6MDisXPWXXaPi5eUPT5vkvO4/WwbSwBLFLdNUmJJWXBmep6+XQJ3xqHFk1gL
-	1nJX/Jj5nL2BcSpnFyMnh4SAicTlLaeYIWwxiQv31rOB2EIClxklWg7GQdjnmSTWr3AGsXkF
-	tCW2f1zJBGKzCKhKHNv/nxHEZhPQlVjU0wwWFxUIllh9+QELRL2gxMmZT8BsEQFliWVnW4Hm
-	c3AwC9RKnN0SBRIWFtCUuHrhFVAJF9Cqe4wSJz/eB6vhFAiU2LGbCcSUEBCX6GkMAilnFtCR
-	eNf3gBnClpfY/nYO8wRGwVlIls1CUjYLSdkCRuZVjHKJOaW5urmJmTnFqcm6xcmJeXmpRbqm
-	ermZJXqpKaWbGCEBLriDccZJuUOMAhyMSjy8Ezz5g4VYE8uKK3MPMUpyMCmJ8nJOAQrxJeWn
-	VGYkFmfEF5XmpBYfYpTgYFYS4fWdA5TjTUmsrEotyodJSXOwKInz8i1R9xMSSE8sSc1OTS1I
-	LYLJynBwKEnw1iwDahQsSk1PrUjLzClBSDNxcIIM55ISKU7NS0ktSiwtyYgHxW58MTB6QVI8
-	QHsFQNp5iwsSc4GiEK2nGHU5brf9+sQoxJKXn5cqJc7bvhSoSACkKKM0D24FLJ29YhQH+liY
-	txhkFA8wFcJNegW0hAloyVFpHpAlJYkIKakGxvTYedoqT6zflczvFrMQk5nsH3v51R+jP5+n
-	5sXXHray41jvGFEg9Ua7fNnSNQ0b1RJ/hed+O/DhyjzRGKu7gXNPZ8dPUD1bv79s 
+X-Provags-ID: V03:K0:MwrcM+e8ruOKV6I3gptO9vQXKtpCbV/9EiOK9iU1S5Do8lkBV4J
+ UvbUcP9wBKJsxyjJiFxjzYnZqjM4maD/Skydk0K1QBCjBD1r6kJlJYWgyn0JlAxfnEv2mV0
+ Yz6Vhl7nDWGBQ/i3D7gmMU4QLGFJeygWAPcmu0lRmaUGfCpNOyc79DaiU17D7LUcbaEeetX
+ 33lWSM1VBFocbNG1JMlXg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242859>
 
-On 02/27/2014 09:37 PM, Lee Hopkins wrote:
->> Perhaps git-{branch,tag}.txt and possibly gitrepository-layout.txt
->> in Documentation/ may need a new "*Note*" section to warn against
->> this.
+Am 25.02.2014 22:12, schrieb Junio C Hamano:
+> Jens Lehmann <Jens.Lehmann@web.de> writes:
 > 
-> A little more documentation never hurt anyone :).
+>>>> +test_expect_success PERL 'difftool properly honours gitlink and core.worktree' '
+>>>> +	git submodule add ./. submod/ule &&
+>>>> +	(
+>>>> +		cd submod/ule &&
+>>>> +		git difftool --tool=echo  --dir-diff --cached
+>>>
+>>> In the context of this fix, finishing with 0 exit status may be all
+>>> we care about, but do we also care about things like in what
+>>> directory the tool is invoked in, what arguments and extra
+>>> environment settings (if any) it is given, and stuff like that?
+>>
+>> Sure. But I just intended to test the fix (and the test can easily
+>> be extended by people who know more about difftool than I do).
 > 
->> Or we can possibly trigger this function at the the of
->> "checkout -b" or "fetch" commands ?
->> Only when core.ignorecase == true ?
+> Yes, we need to start somewhere and I'd agree that it was a good
+> starting point.
 > 
-> This would essentially make git always use packed-refs when
-> core.ignorecase == true, correct? Are there any downsides to always
-> using packed-refs?
+>> Right, using echo was not the best choice here. I used it to avoid
+>> the dependency to meld...
+> 
+> Perhaps like this then?  This is an "a monkey sees what
+> difftool_test_setup does and then mimics" patch ;-).
 
-There are at least two reasons I can think of:
+Nicely done :-)
 
-1. Efficiency: any time a reference changes, the whole packed-refs file
-would have to be read and written as opposed to a single, small
-loose-ref file.
-
-2. Lock contention: two processes can modify loose references at the
-same time without contending with each other.  If they always wrote the
-packed-refs file, there would be more lock contention (which in the git
-world means that one of the processes would fail).
-
-Whether these are concern for a single user using a local git repository
-(as opposed to git running on a server) mostly depends on how many
-references you have.  With a hundred references you would probably not
-notice any difference.  With ten thousand you probably would.  Somewhere
-in between lies the pain threshold.
-
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+>  t/t7800-difftool.sh | 13 +++++++++++++
+>  1 file changed, 13 insertions(+)
+> 
+> diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
+> index 2418528..595f808 100755
+> --- a/t/t7800-difftool.sh
+> +++ b/t/t7800-difftool.sh
+> @@ -434,4 +434,17 @@ test_expect_success PERL 'difftool --no-symlinks detects conflict ' '
+>  	)
+>  '
+>  
+> +test_expect_success PERL 'difftool properly honours gitlink and core.worktree' '
+> +	git submodule add ./. submod/ule &&
+> +	(
+> +		cd submod/ule &&
+> +		git config diff.tool checktrees &&
+> +		git config difftool.checktrees.cmd '\''
+> +			test -d "$LOCAL" && test -d "$REMOTE"
+> +		'\'' &&
+> +		echo further >>file &&
+> +		git difftool --tool=checktrees --dir-diff
+> +	)
+> +'
+> +
+>  test_done
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
