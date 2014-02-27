@@ -1,65 +1,108 @@
-From: "Dmitry S. Dolzhenko" <dmitrys.dolzhenko@yandex.ru>
-Subject: Re: [PATCH] branch: change install_branch_config() to use skip_prefix()
-Date: Thu, 27 Feb 2014 17:05:48 +0400
-Message-ID: <530F382C.2030101@yandex.ru>
-References: <530F1DED.50308@yandex.ru> <530F248B.6030506@alum.mit.edu>
+From: Stephen Leake <stephen_leake@stephe-leake.org>
+Subject: Re: `git stash pop` UX Problem
+Date: Thu, 27 Feb 2014 07:18:02 -0600
+Message-ID: <85r46o3d9x.fsf@stephe-leake.org>
+References: <530B0395.5030407@booking.com>
+	<CANUGeEbPrPp8Sa-KEKSxNDWJShdkDBTkQyXv7tDJ6ReH6MXrHw@mail.gmail.com>
+	<vpqlhx0a3cb.fsf@anie.imag.fr> <530C893D.7000108@ira.uka.de>
+	<vpqzjlf5q2z.fsf@anie.imag.fr>
+	<xmqqwqgj57n9.fsf@gitster.dls.corp.google.com>
+	<85r46q537a.fsf@stephe-leake.org>
+	<xmqq4n3m6dic.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Feb 27 14:17:06 2014
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 27 14:18:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJ0pl-0004hP-5G
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 14:17:05 +0100
+	id 1WJ0qr-0000r6-3F
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 14:18:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751613AbaB0NRA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Feb 2014 08:17:00 -0500
-Received: from forward4l.mail.yandex.net ([84.201.143.137]:57232 "EHLO
-	forward4l.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751026AbaB0NQ7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Feb 2014 08:16:59 -0500
-X-Greylist: delayed 626 seconds by postgrey-1.27 at vger.kernel.org; Thu, 27 Feb 2014 08:16:59 EST
-Received: from smtp4o.mail.yandex.net (smtp4o.mail.yandex.net [37.140.190.29])
-	by forward4l.mail.yandex.net (Yandex) with ESMTP id 8AF421440FD9;
-	Thu, 27 Feb 2014 17:06:31 +0400 (MSK)
-Received: from smtp4o.mail.yandex.net (localhost [127.0.0.1])
-	by smtp4o.mail.yandex.net (Yandex) with ESMTP id 2FAF923213DD;
-	Thu, 27 Feb 2014 17:06:31 +0400 (MSK)
-Received: from unknown (unknown [31.181.12.71])
-	by smtp4o.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id mqsDdEQp8s-6U88CED9;
-	Thu, 27 Feb 2014 17:06:30 +0400
-	(using TLSv1 with cipher CAMELLIA256-SHA (256/256 bits))
-	(Client certificate not present)
-X-Yandex-Uniq: e4dcdc3b-20c0-42ac-8099-af4d03947580
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1393506390;
-	bh=FYTOfI9Rr9qducVSNlaNuD4lDSITlr31UN0fo0+ziJ4=;
-	h=Message-ID:Date:From:User-Agent:MIME-Version:To:CC:Subject:
-	 References:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	b=wTio6KRmnZJ+e+3iJ47Ui63hwCOh6c5YMdUiAk5ftjx/wxNXVeoh/OT4RQxQJ/gEz
-	 CQ0N9rk7n1hDt+b46LzuWKT9TdoF4yMUIduf43urxqh/a/hpToUb/4SK35mH8BRKlX
-	 8O7MmuXh5rTF5WRwIia6ZThut9FcWbdfsF/wxTzY=
-Authentication-Results: smtp4o.mail.yandex.net; dkim=pass header.i=@yandex.ru
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20131103 Icedove/17.0.10
-In-Reply-To: <530F248B.6030506@alum.mit.edu>
+	id S1751223AbaB0NSI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Feb 2014 08:18:08 -0500
+Received: from cdptpa-outbound-snat.email.rr.com ([107.14.166.230]:26282 "EHLO
+	cdptpa-oedge-vip.email.rr.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1750742AbaB0NSH (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Feb 2014 08:18:07 -0500
+Received: from [75.87.81.6] ([75.87.81.6:52626] helo=TAKVER)
+	by cdptpa-oedge02 (envelope-from <stephen_leake@stephe-leake.org>)
+	(ecelerity 3.5.0.35861 r(Momo-dev:tip)) with ESMTP
+	id 78/BC-30151-C0B3F035; Thu, 27 Feb 2014 13:18:05 +0000
+In-Reply-To: <xmqq4n3m6dic.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Tue, 25 Feb 2014 14:20:11 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (windows-nt)
+X-RR-Connecting-IP: 107.14.168.130:25
+X-Cloudmark-Score: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242820>
 
-Michael,
+Junio C Hamano <gitster@pobox.com> writes:
 
-Thank you for your remarks.
+> Stephen Leake <stephen_leake@stephe-leake.org> writes:
+>
+>>> One _could_ argue that stashed changes are what could be reflected
+>>> to the working tree and form the source of the latter, but my gut
+>>> feeling is that it is a rather weak argument.  At that point you are
+>>> talking about what you could potentially change in the working tree,
+>>
+>> No, I saved things in the stash on purpose. For example, I had changes
+>> that were not ready to commit, but I wanted to do a merge from upstream.
+>
+> I often save things by running "git diff >P.diff" on purpose.
 
-> If you look at what skip_prefix() and starts_with() do, I think you will
-> find that you are doing too much work here.
+Ok. How is that better than 'git stash save'?
 
-How about this one?
+> Should "git status" read these patches and tell me what paths I
+> could change in the working tree by applying it?  
 
-	const char *shortname = skip_prefix(remote, "refs/heads/");
-	int remote_is_branch = shortname != NULL;
+No, 'git stash save' appears to be the method git provides to do this,
+so it is the only one that git needs to support.
+
+(The content of 'P.diff' already tells you what paths are modified, as
+does 'git stash show')
+
+But I am new to git, so I could just be missing the point.
+
+>Where does it end?
+
+Where we agree it ends :).
+
+>> There are workflows where the stash is not important; provide an option
+>> to 'git status' that means "ignore stash". 
+>
+> How is that different to tell those who want to know what are in the
+> stash to type "git stash list" when they want to learn that
+> information?
+
+You are correct, this is a question of style. The question is:
+
+Which style is best for git, considering the needs of newbies and
+seasoned users?
+
+As a newbie, I find these things confusing:
+
+- the stash status is not displayed by 'git status'
+
+- 'git add' does not report that all pending merge conflicts are now
+resolved.
+
+I'm sure I will discover other confusing things in the future :).
+
+
+I am a seasoned user of CM systems in general; in all cases, I have
+customized an Emacs front-end to do _exactly_ what I want, rather than
+relying on the command line tools directly. So I have a rather extreme
+perspective on this :). I do rely on the command line tools while
+learning a new CM system.
+
+In general, I expect seasoned users to be more accepting of the need to
+provide additional options to customize the tools to their workflow.
+
+-- 
+-- Stephe
