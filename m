@@ -1,142 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 8/8] log --remerge-diff: show what the conflict resolution changed
-Date: Wed, 26 Feb 2014 16:40:30 -0800
-Message-ID: <xmqqbnxt1j7l.fsf@gitster.dls.corp.google.com>
-References: <cover.1393059605.git.tr@thomasrast.ch>
-	<75c29215c6a61fe1dc3f088f0fcd9acfa54f24fa.1393059605.git.tr@thomasrast.ch>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v3 17/25] setup.c: detect $GIT_COMMON_DIR check_repository_format_gently()
+Date: Thu, 27 Feb 2014 09:43:56 +0700
+Message-ID: <CACsJy8CQTV65KnzhQ8PrgrEUAJA+LPD=-5=g9J_gtNoLOPApAg@mail.gmail.com>
+References: <1392730814-19656-1-git-send-email-pclouds@gmail.com>
+ <1392730814-19656-18-git-send-email-pclouds@gmail.com> <xmqqios11k0v.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Thomas Rast <tr@thomasrast.ch>
-X-From: git-owner@vger.kernel.org Thu Feb 27 01:40:44 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 27 03:44:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WIp1l-0001eW-4I
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 01:40:41 +0100
+	id 1WIqxc-0007OC-5u
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 03:44:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753880AbaB0Akg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Feb 2014 19:40:36 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39839 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751989AbaB0Akg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Feb 2014 19:40:36 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 262FA7085C;
-	Wed, 26 Feb 2014 19:40:35 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=XacbI+VRFHaUBaeSUK7GdRVOtNM=; b=Apcgg9
-	GxOX1IEKtpDwwpBPXRqHrd1NHWJ+rwvxijGvf8jXyv0U1Gb0pW1Fj47kkWvpolwI
-	1vzYTTVeCIyhbu2G1vUNRlfQwsEEIcylT/Siw0tmHN9AoqI4gGRvMG3j6sPyf6od
-	rCTKCzFq3m7m+LA5jTL0RqndkQ+BEPPTO1DyQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=al272uhIPeZrPc9F+sAiwkuMfGPvJpQe
-	u747zBsG+NQELAJCijKMsHBTHrJtyVJHd6Iri8WdBOR1O9sAtWA/NuR/9w0R0yTY
-	TuM4DfbUowlvcLhKlttVLjlhPEb7fVunGDCDbGM1nSIhPFH2X+RfhMqytURZyAxw
-	a9UQxwt9UbI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0ABD87085B;
-	Wed, 26 Feb 2014 19:40:35 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3F8BF7085A;
-	Wed, 26 Feb 2014 19:40:34 -0500 (EST)
-In-Reply-To: <75c29215c6a61fe1dc3f088f0fcd9acfa54f24fa.1393059605.git.tr@thomasrast.ch>
-	(Thomas Rast's message of "Sat, 22 Feb 2014 10:17:56 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: C4B1426C-9F47-11E3-A81B-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754632AbaB0Co2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Feb 2014 21:44:28 -0500
+Received: from mail-qc0-f175.google.com ([209.85.216.175]:56519 "EHLO
+	mail-qc0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754186AbaB0Co1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 26 Feb 2014 21:44:27 -0500
+Received: by mail-qc0-f175.google.com with SMTP id m20so1913334qcx.6
+        for <git@vger.kernel.org>; Wed, 26 Feb 2014 18:44:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=7gWj0bMUuBlVhC/TVhfhDdBbs8RC2P0NaJr+ox0qtjU=;
+        b=zBq8VDkjoXnsh+A2NiPSixwGg9fEwpB4/DinGQJKG5HW8HxcFLGs2s0ieKKMwViNBd
+         8l6eHuNcabDCBG33rNqeVWjCWco9FRNCrtMxw8hLIUIxxYt8Xg4eGs4UJ/DnRK32sDWz
+         TuNaIaevtAeRaxeg2TsiMbSIPLH14JEU+JgMsY+Bnrvr/K7Qh+CJEUfSZV95NIUZzde4
+         W5SPS1+JDxtnbXbNOO+FOi9Twjkj+qBkUveS3pdlm0WFBdHVrDOZf/awB/lg3YCexOnd
+         OzOlkyGx30LW4ndU53d5Dv2cm1RQqbeBZ+ADqxKxgAktViKXf3T9p0l2S3zuEBfhWbSm
+         2Fjg==
+X-Received: by 10.140.40.5 with SMTP id w5mr3762891qgw.65.1393469066976; Wed,
+ 26 Feb 2014 18:44:26 -0800 (PST)
+Received: by 10.96.215.102 with HTTP; Wed, 26 Feb 2014 18:43:56 -0800 (PST)
+In-Reply-To: <xmqqios11k0v.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242782>
 
-Thomas Rast <tr@thomasrast.ch> writes:
+On Thu, Feb 27, 2014 at 7:22 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
+:
+>
+>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
+ail.com>
+>> ---
+>
+> It is a good thing to do to read config from the real repository we
+> are borrowing from when we have .git/commondir, but it makes me
+> wonder if we should signal some kind of error if we find .git/config
+> in such a borrowing repository---which will be silently ignored.
+>
+> My gut feeling is that such a check may be necessary, but may not
+> belong to this function.
 
-> diff --git a/log-tree.c b/log-tree.c
-> index 30b3063..9b831e9 100644
-> --- a/log-tree.c
-> +++ b/log-tree.c
-> @@ -11,6 +11,8 @@
->  #include "gpg-interface.h"
->  #include "sequencer.h"
->  #include "line-log.h"
-> +#include "cache-tree.h"
-> +#include "merge-recursive.h"
->  
->  struct decoration name_decoration = { "object names" };
->  
-> @@ -723,6 +725,300 @@ static int do_diff_combined(struct rev_info *opt, struct commit *commit)
->  }
->  
->  /*
-> + * Helpers for make_asymmetric_conflict_entries() below.
-> + */
-> +static char *load_cache_entry_blob(struct cache_entry *entry,
-> +				   unsigned long *size)
-> +{
-
-I briefly wondered if this helper need to know about contents
-conversions (e.g. smudge/clean or crlf), but not doing any of that
-*is* the right thing to do.  IOW, I agree with what this part of the
-patch does.
-
-But it feels, at least to me, that this helper function ...
-
-> +static void strbuf_append_cache_entry_blob(struct strbuf *sb,
-> +					   struct cache_entry *entry)
-> +{
-
-... and this one are overly specific.  Why should they know about
-(and limit themselves to operate on) cache-entry type?  Isn't it too
-much to ask for the caller to say "entry->sha1" instead of "entry"?
-
-I do not have an issue with a "load_blob()" helper that makes sure
-what it reads is a blob, though, of course.
-
-> +static void assemble_conflict_entry(struct strbuf *sb,
-> +				    const char *branch1,
-> +				    const char *branch2,
-> +				    struct cache_entry *entry1,
-> +				    struct cache_entry *entry2)
-> +{
-> +	strbuf_addf(sb, "<<<<<<< %s\n", branch1);
-> +	strbuf_append_cache_entry_blob(sb, entry1);
-> +	strbuf_addstr(sb, "=======\n");
-> +	strbuf_append_cache_entry_blob(sb, entry2);
-> +	strbuf_addf(sb, ">>>>>>> %s\n", branch2);
-> +}
-> +
-> +/*
-> + * For --remerge-diff, we need conflicted (<<<<<<< ... >>>>>>>)
-> + * representations of as many conflicts as possible.  Default conflict
-> + * generation only applies to files that have all three stages.
-> + *
-> + * This function generates conflict hunk representations for files
-> + * that have only one of stage 2 or 3.  The corresponding side in the
-> + * conflict hunk format will be empty.  A stage 1, if any, will be
-> + * dropped in the process.
-> + */
-> +static void make_asymmetric_conflict_entries(const char *branch1,
-> +					     const char *branch2)
-> +{
-
-I should comment on this one in a separate message after I read it
-over once again.
-
-> +}
-> +
-> +/*
-> + * --remerge-diff doesn't currently handle entries that cannot be
-> + * turned into a stage0 conflicted-file format blob.  So this routine
-> + * clears the corresponding entries from the index.  This is
-> + * suboptimal; we should eventually handle them _somehow_.
-> +*/
-> +static void drop_non_stage0()
-
-"static void drop_non_stage0(void)"
+Just checking. Once we do this, what about .git/refs/.. that is also
+ignored in such a repo? I can see the point that config could be
+manually edited so the user may edit the file at the wrong place, so
+it's good the we catch this exception.
+--=20
+Duy
