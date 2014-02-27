@@ -1,100 +1,89 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 1/2] fetch: add a failing test for prunning with
- overlapping refspecs
-Date: Thu, 27 Feb 2014 15:19:27 -0500
-Message-ID: <CAPig+cTjvkNEfv8ThdPBVUXEGvZKAmhv9PvH1-sf4eJALUTHww@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] fetch: handle overlaping refspecs on --prune
+Date: Thu, 27 Feb 2014 12:19:44 -0800
+Message-ID: <xmqqob1sxq8v.fsf@gitster.dls.corp.google.com>
 References: <1393491610-19476-1-git-send-email-cmn@elego.de>
+	<1393491610-19476-2-git-send-email-cmn@elego.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: =?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>
-X-From: git-owner@vger.kernel.org Thu Feb 27 21:19:47 2014
+Cc: git@vger.kernel.org
+To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
+X-From: git-owner@vger.kernel.org Thu Feb 27 21:20:07 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJ7Qn-0000Lx-DI
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 21:19:45 +0100
+	id 1WJ7R8-0001yW-Of
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 21:20:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751516AbaB0UTc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Feb 2014 15:19:32 -0500
-Received: from mail-yh0-f50.google.com ([209.85.213.50]:47545 "EHLO
-	mail-yh0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751504AbaB0UT2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Feb 2014 15:19:28 -0500
-Received: by mail-yh0-f50.google.com with SMTP id t59so1587132yho.23
-        for <git@vger.kernel.org>; Thu, 27 Feb 2014 12:19:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=DNb0sZ1SNLG+WfwqTh2311pr8M3yUn2CmM8TiqUxbaE=;
-        b=TcWZklXKSN45giExkaUqFel/JuNKI/dmYtNwgKtUHXtAc9LaQ7u6pAC2t1K3mQVD/q
-         NB796YPUK4TyY+FHlqpP6pHhQoZVU1Et8d2Bm/UzWTw1aA1yEUYS7GAPAG+W91hh5XNE
-         k8WMosbXAT99G+CpmlaPUKdYMdV3cyy2acjTjU31LgLmqo0iSOcdLTAGo4asMbxGTbi4
-         99UDWv3rCssuwh+/8Tfdut7AxzAHO8MewuLTzYjCv2ggMeyDCUnniQn+dd694n+r92v5
-         voQ0gjftIhq7voVAssuK2AWtwDHKHgY3avrFVLWcWMC3q5ITnvPFBu8Jr7DTw/HqOIFP
-         lZjg==
-X-Received: by 10.236.152.233 with SMTP id d69mr17435602yhk.11.1393532367705;
- Thu, 27 Feb 2014 12:19:27 -0800 (PST)
-Received: by 10.170.180.195 with HTTP; Thu, 27 Feb 2014 12:19:27 -0800 (PST)
-In-Reply-To: <1393491610-19476-1-git-send-email-cmn@elego.de>
-X-Google-Sender-Auth: GClC0rtvFd1pKsaLELqD-Eocljw
+	id S1751550AbaB0UTv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Feb 2014 15:19:51 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57234 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750781AbaB0UTu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Feb 2014 15:19:50 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 26B627070A;
+	Thu, 27 Feb 2014 15:19:50 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=LAJwepjNST40
+	cwYtPo59rbBPFpQ=; b=p5lXHC/CzEGYuQOQArVrUl9dWi/iXG2a3JCpoO9zQNMY
+	VfvT+LAMbzMEdSigwOd4O3S/hojxdmFShvYyRx/PH4/aZHtB1+3BP0IAjTFIiTIX
+	Sth7NOXTl6Qak0xmR2NTguQW8TN5JkSRZvs3avO+t++kvzoH1jFigEAXM7OKPjk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=pdziX8
+	kyCrfn6l/gLhtaXcPAdRI4YiKV7/oqpmss/VmfdkekojeouOCRRxy9izxgtz2VXx
+	gKGf9mxNGE+xRPmMyn4x6qY6tHHCQMxOWduM9vYmgiWdKihW/t7wZwM9ec9dp/A/
+	muvKYNS9dit5n0ncDTg2lu4dyfuc2tnBRV0wg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 041C870707;
+	Thu, 27 Feb 2014 15:19:50 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 74400706FC;
+	Thu, 27 Feb 2014 15:19:48 -0500 (EST)
+In-Reply-To: <1393491610-19476-2-git-send-email-cmn@elego.de> ("Carlos
+ =?utf-8?Q?Mart=C3=ADn?=
+	Nieto"'s message of "Thu, 27 Feb 2014 10:00:10 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 817E23A2-9FEC-11E3-A5C8-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242848>
 
-On Thu, Feb 27, 2014 at 4:00 AM, Carlos Mart=EDn Nieto <cmn@elego.de> w=
-rote:
-> Subject: fetch: add a failing test for prunning with overlapping refs=
-pecs
+Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
 
-s/prunning/pruning/
-
-> Signed-off-by: Carlos Mart=EDn Nieto <cmn@elego.de>
-> ---
-> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-> index 1f0f8e6..4949e3d 100755
-> --- a/t/t5510-fetch.sh
-> +++ b/t/t5510-fetch.sh
-> @@ -113,6 +113,26 @@ test_expect_success 'fetch --prune with a namesp=
-ace keeps other namespaces' '
->         git rev-parse origin/master
->  '
+> From: Carlos Mart=C3=ADn Nieto <cmn@dwim.me>
 >
-> +test_expect_failure 'fetch --prune handles overlapping refspecs' '
-> +       cd "$D" &&
-> +       git update-ref refs/pull/42/head master &&
-> +       git clone . prune-overlapping &&
-> +       cd prune-overlapping &&
-> +       git config --add remote.origin.fetch refs/pull/*/head:refs/re=
-motes/origin/pr/* &&
-> +
-> +       git fetch --prune origin &&
-> +       git rev-parse origin/master &&
-> +       git rev-parse origin/pr/42 &&
-> +
-> +       git config --unset-all remote.origin.fetch
+> We need to consider that a remote-tracking branch may match more than
+> one rhs of a fetch refspec.
 
-Broken &&-chain.
+Hmph, do we *need* to, really?
 
-> +       git config remote.origin.fetch refs/pull/*/head:refs/remotes/=
-origin/pr/* &&
-> +       git config --add remote.origin.fetch refs/heads/*:refs/remote=
-s/origin/* &&
-> +
-> +       git fetch --prune origin &&
-> +       git rev-parse origin/master &&
-> +       git rev-parse origin/pr/42
-> +'
-> +
->  test_expect_success 'fetch --prune --tags does not delete the remote=
--tracking branches' '
->         cd "$D" &&
->         git clone . prune-tags &&
-> --
-> 1.9.0.rc3.244.g3497008
+Do you mean fetching one ref on the remote side and storing that in
+multiple remote-tracking refs on our side?  What benefit does such
+an arrangement give the user?  When we "git fetch $there $that_ref"
+to obtain that single ref, do we update both remote-tracking refs?
+When the user asks "git log $that_ref@{upstream}", which one of two
+or more remote-tracking refs should we consult?  Should we report
+an error if these remote-tracking refs that are supposed to track
+the same remote ref not all match?  Does "git push $there $that_ref"
+to update that remote ref update all of these remote-tracking refs
+on our side?  Should it?
+
+My knee-jerk reaction is that it may not be worth supporting such an
+arrangement as broken (we may even want to diagnose it as an error),
+but assuming we do need to, the approach to solve it, i.e. this...
+
+> In such a case, it is not enough to stop at
+> the first match but look at all of the matches in order to determine
+> whether a head is stale.
+
+=2E.. sounds sensible.
