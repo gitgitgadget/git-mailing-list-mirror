@@ -1,81 +1,76 @@
-From: Sun He <sunheehnus@gmail.com>
-Subject: [PATCH] GSoC2014 microprojects #5 Change bundle.c:add_to_ref_list() to use hashcpy()
-Date: Thu, 27 Feb 2014 22:58:47 +0800
-Message-ID: <1393513127-32399-1-git-send-email-sunheehnus@gmail.com>
-Cc: mhagger@alum.mit.edu, Sun He <sunheehnus@gmail.com>
+From: "Dmitry S. Dolzhenko" <dmitrys.dolzhenko@yandex.ru>
+Subject: [PATCH v2] branch: change install_branch_config() to use skip_prefix()
+Date: Thu, 27 Feb 2014 19:35:29 +0400
+Message-ID: <530F5B41.1050900@yandex.ru>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 27 16:00:23 2014
+X-From: git-owner@vger.kernel.org Thu Feb 27 16:43:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJ2Rg-0003dN-Vu
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 16:00:21 +0100
+	id 1WJ36w-00024y-5Y
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 16:42:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751424AbaB0PAN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Feb 2014 10:00:13 -0500
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:63206 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750913AbaB0PAM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Feb 2014 10:00:12 -0500
-Received: by mail-pa0-f47.google.com with SMTP id lj1so809767pab.34
-        for <git@vger.kernel.org>; Thu, 27 Feb 2014 07:00:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=J0ia0j9z1599Ty7MKu271py5YSjGpFzp/pYACKgJdFI=;
-        b=uUNXoSzq6KkE1Yx4SRdFvunLqjHonG0hVB7PW6yzwQPjhfmwI0sSS6y82D4zisneVL
-         kKqvyVksMwXwz51eiKb41yxMUPJhpwtz02w4LKcpNVHyP+fF4Ch9A2bqwc14+1HnKCim
-         dF0N6FU+/47Tq+QrUjC+W3zNU5cMhBTWVJR9nujzrluPVzG18oJjHxEMgXp8aNtAzCt7
-         4ma8JyT5ILKCZbj7dbE21013l7Hc70wHpy87LUfn72W+oNknb8L87VhU3mVnCNAXSsPl
-         vELdomdFfxshDIymIqeDMxkMvn4lPdjEi6qLq+PzO9PdU2Nwv9dDkGBaPuOm2bNbS16t
-         0T1g==
-X-Received: by 10.67.1.202 with SMTP id bi10mr15861992pad.68.1393513210152;
-        Thu, 27 Feb 2014 07:00:10 -0800 (PST)
-Received: from localhost.localdomain ([61.150.43.99])
-        by mx.google.com with ESMTPSA id dc4sm14293203pbc.34.2014.02.27.07.00.05
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 27 Feb 2014 07:00:09 -0800 (PST)
-X-Mailer: git-send-email 1.7.1
+	id S1752563AbaB0Pmy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Feb 2014 10:42:54 -0500
+Received: from forward10.mail.yandex.net ([77.88.61.49]:52923 "EHLO
+	forward10.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752387AbaB0Pmx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Feb 2014 10:42:53 -0500
+X-Greylist: delayed 441 seconds by postgrey-1.27 at vger.kernel.org; Thu, 27 Feb 2014 10:42:53 EST
+Received: from smtp9.mail.yandex.net (smtp9.mail.yandex.net [77.88.61.35])
+	by forward10.mail.yandex.net (Yandex) with ESMTP id 7C25A1020208
+	for <git@vger.kernel.org>; Thu, 27 Feb 2014 19:35:30 +0400 (MSK)
+Received: from smtp9.mail.yandex.net (localhost [127.0.0.1])
+	by smtp9.mail.yandex.net (Yandex) with ESMTP id 5BED215200F5
+	for <git@vger.kernel.org>; Thu, 27 Feb 2014 19:35:30 +0400 (MSK)
+Received: from 212.192.143.160 (212.192.143.160 [212.192.143.160])
+	by smtp9.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id BLmnu1Fi2X-ZTG8CVBP;
+	Thu, 27 Feb 2014 19:35:30 +0400
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(Client certificate not present)
+X-Yandex-Uniq: 7b31b6f3-9fc5-4ad9-bdca-f74dc0c91030
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1393515330;
+	bh=tatnkI+qukKZuKfCvpnjAG8/9iR4+5uEXU/50itbZvg=;
+	h=Message-ID:Date:From:User-Agent:MIME-Version:To:Subject:
+	 Content-Type:Content-Transfer-Encoding;
+	b=YHVrFJpssy7go9RjpMqtoWoOX/R6JD06BQZDvzsZKl38phRNU1gORYdniW/dkoryT
+	 CwlFIgW/SL85k7LurhDJeUaVMkIdXnUI604dMEtJxE77fEiZSYCsWUopDIN2EP4OWz
+	 kwejWiOrmFi7iTIXZnLLmO0FJZ23ymxYfeg4FwtU=
+Authentication-Results: smtp9.mail.yandex.net; dkim=pass header.i=@yandex.ru
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242829>
 
+Change install_branch_config() to use skip_prefix()
+for getting the short name of the remote branch.
 
-Signed-off-by: Sun He <sunheehnus@gmail.com>
+Signed-off-by: Dmitry S. Dolzhenko <dmitrys.dolzhenko@yandex.ru>
 ---
- bundle.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ branch.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/bundle.c b/bundle.c
-index e99065c..7809fbb 100644
---- a/bundle.c
-+++ b/bundle.c
-@@ -19,7 +19,7 @@ static void add_to_ref_list(const unsigned char *sha1, const char *name,
- 		list->list = xrealloc(list->list,
- 				list->alloc * sizeof(list->list[0]));
- 	}
--	memcpy(list->list[list->nr].sha1, sha1, 20);
-+	hashcpy(list->list[list->nr].sha1, sha1);
- 	list->list[list->nr].name = xstrdup(name);
- 	list->nr++;
- }
+diff --git a/branch.c b/branch.c
+index 723a36b..9382e02 100644
+--- a/branch.c
++++ b/branch.c
+@@ -49,8 +49,8 @@ static int should_setup_rebase(const char *origin)
+ 
+ void install_branch_config(int flag, const char *local, const char *origin, const char *remote)
+ {
+-	const char *shortname = remote + 11;
+-	int remote_is_branch = starts_with(remote, "refs/heads/");
++	const char *shortname = skip_prefix(remote, "refs/heads/");
++	int remote_is_branch = shortname != NULL;
+ 	struct strbuf key = STRBUF_INIT;
+ 	int rebasing = should_setup_rebase(origin);
+ 
 -- 
-1.7.1
-
-> See if you can find other places where hashcpy() should be used instead of memcpy()
-grep.c:grep_source_init()
-reflog-walk.c:read_one_reflog()
-ppc/sha1.c:ppc_SHA1_Final()
-refs.c:resolve_gitlink_packed_ref()
-
-We can find those by the shell command:
-$ find . | xargs grep "memcpy\(.*20.*\)
-
-
-Cheers,
-He Sun
+1.8.3.2
