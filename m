@@ -1,88 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 11/25] git-sh-setup.sh: use rev-parse --git-path to get $GIT_DIR/objects
-Date: Wed, 26 Feb 2014 16:00:06 -0800
-Message-ID: <xmqqvbw11l2x.fsf@gitster.dls.corp.google.com>
-References: <1392730814-19656-1-git-send-email-pclouds@gmail.com>
-	<1392730814-19656-12-git-send-email-pclouds@gmail.com>
+From: Andrew Wong <andrew.kw.w@gmail.com>
+Subject: Re: [RFC 3/3] reset: Change the default behavior to use "--merge"
+ during a merge
+Date: Wed, 26 Feb 2014 19:00:56 -0500
+Message-ID: <CADgNjamXxvhS-JzFY7DxvZAQQA3AQmY2hS5AoJv9xHv2DzP7=Q@mail.gmail.com>
+References: <1393437985-31401-1-git-send-email-andrew.kw.w@gmail.com>
+	<1393437985-31401-4-git-send-email-andrew.kw.w@gmail.com>
+	<vpq8usxenul.fsf@anie.imag.fr>
+	<CADgNjanavxZfuXgvEAOMzPAJr9YqAvF4+ZDq9KW9aeR_PcVo-Q@mail.gmail.com>
+	<vpqeh2pd237.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 27 01:00:18 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Feb 27 01:01:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WIoOf-0007ye-Vm
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 01:00:18 +0100
+	id 1WIoPO-0002kI-5c
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 01:01:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752826AbaB0AAM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Feb 2014 19:00:12 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54343 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751989AbaB0AAK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 26 Feb 2014 19:00:10 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 55C0470C6F;
-	Wed, 26 Feb 2014 19:00:10 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=1eL6GNT4126T
-	TGVkrXgWjwy+HAM=; b=ln2ONxFbaeEzfka8NkldTb3Dbmw88vt3dat1fS23aTft
-	Uu+jy5riDvU1HUgXwbqTDwiAzb9McfPhlV+4Au3i8fqad4ZK6NTqFChxAp+sWmto
-	vgZuYaQHh+0AIwdLpy6PDsoeXpmllvoFcd4eXNTb4CLP6+SotEGzLkGt47WoPyE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Bq9vRx
-	GJbmY/IqtBubkrABX9OnFXRyOHGzMRwgWGwKODTDYbLiKLUVT5JOgJ3SoV55MFNy
-	lZtXzWgKrdpg+sqkcTuAHJH1FsmoFppGIfUFXTV6OqPBFKEKiwmSeSak+jZj9hJX
-	G+cgqIifvWgyO6tAPWkPz4J6peSJaL2TLl9dg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4457A70C6D;
-	Wed, 26 Feb 2014 19:00:10 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 65F0470C6A;
-	Wed, 26 Feb 2014 19:00:09 -0500 (EST)
-In-Reply-To: <1392730814-19656-12-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Tue, 18
- Feb 2014 20:40:00 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 1F5FA9D4-9F42-11E3-9229-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753112AbaB0AA6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Feb 2014 19:00:58 -0500
+Received: from mail-wi0-f180.google.com ([209.85.212.180]:36058 "EHLO
+	mail-wi0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751989AbaB0AA6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Feb 2014 19:00:58 -0500
+Received: by mail-wi0-f180.google.com with SMTP id hm4so2834218wib.1
+        for <git@vger.kernel.org>; Wed, 26 Feb 2014 16:00:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=i7pZniumeb5L8YtXYSx5MzZqV8NLaXfxRmAsbcibPIg=;
+        b=ClRaMyNStQqF4FWXv/uTIylyyCC60Cj08XCmD8pin1PmQbfAU/Zoq5qFVVQGRjLgJ+
+         gEL9ahnbyF/eW2bhahEXzoVp4U+oUzPd4ftbg3U1Mf4/wYvDSWDARv3wjR+PUrtmq7cu
+         eHv9kXwl/iGVURtbJDl6cgjI3d6Gzdgi8R9D1cqhODF1Y8P8nk/8qoI+3bX+ONfTpZ3E
+         nw3l0/wBJzdN+MvwfrVJlPUPCiUWCg4Noclz4nyRFP+UHjtZmXAFVmlC/lPVvI8KEI/T
+         OuaQLE9yuuNiKMP/XAGD7ocJHouvmh10ZtiQ60RM6qYtcpDZF054xjW2HsyCnZ0hDVjt
+         6JSQ==
+X-Received: by 10.194.59.210 with SMTP id b18mr4276999wjr.60.1393459256736;
+ Wed, 26 Feb 2014 16:00:56 -0800 (PST)
+Received: by 10.194.81.65 with HTTP; Wed, 26 Feb 2014 16:00:56 -0800 (PST)
+In-Reply-To: <vpqeh2pd237.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242776>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
-
-> If $GIT_COMMON_DIR is set, $GIT_OBJECT_DIRECTORY should be
-> $GIT_COMMON_DIR/objects, not $GIT_DIR/objects. Just let rev-parse
-> --git-path handle it.
+On Wed, Feb 26, 2014 at 3:57 PM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> If you were to design "git reset"'s interface from scratch, your
+> proposal would make sense. But we're talking about a change, and you
+> can't expect that users never use the current behavior. At the very
+> least, there should be a warning telling the user that the behavior
+> changed, and I'm really afraid that the warning goes along the lines of
+> "I've thought you'd prefer me to discard your unsaved changes, please
+> rewrite them if you actually didn't want me to".
 >
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
->  git-sh-setup.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>>> I'm not really convinced that this is such a good change, and if we go
+>>> this way, there should be a transition to let users stop using
+>>> argumentless "git reset" to reset the index during a merge.
+>>
+>> Yeah, this breaks compatibility, but like I said, during a merge, I don't
+>> see a good reason to do "git reset --mixed",
 >
-> diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-> index fffa3c7..fec9430 100644
-> --- a/git-sh-setup.sh
-> +++ b/git-sh-setup.sh
-> @@ -343,7 +343,7 @@ then
->  		echo >&2 "Unable to determine absolute path of git directory"
->  		exit 1
->  	}
-> -	: ${GIT_OBJECT_DIRECTORY=3D"$GIT_DIR/objects"}
-> +	: ${GIT_OBJECT_DIRECTORY=3D"`git rev-parse --git-path objects`"}
+> The point with backward compatibility is not to know whether users have
+> a good reason to, but whether you can guarantee that no one ever does
+> it.
 
-$(...) is the preferred way over `...` in this codebase.
+Yeah, I do see what you mean. But the problem of using "git reset
+--mixed" during a merge is problematic too. It leaves you with a mix
+of merge changes and local changes. As Junio pointed out, new files
+will also be left in the worktree. So users would have to clean all
+that up manually. Perhaps what Junio suggested is a better approach.
+Slowly phase out this behavior by printing out warnings. Then
+eventually erroring out in this situation, and then finally switch to
+a new behavior, whatever that may be.
 
->  fi
-> =20
->  peel_committish () {
+Andrew
