@@ -1,109 +1,108 @@
-From: Sun He <sunheehnus@gmail.com>
-Subject: [PATCH] GSoC2014 microprojects  Rewrite bulk-checkin.c:finish_bulk_checkin() to use a strbuf for handling packname
-Date: Thu, 27 Feb 2014 22:20:42 +0800
-Message-ID: <1393510842-31769-1-git-send-email-sunheehnus@gmail.com>
-Cc: mhagger@alum.mit.edu, Sun He <sunheehnus@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 27 15:22:26 2014
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: An idea for "git bisect" and a GSoC enquiry
+Date: Thu, 27 Feb 2014 15:47:45 +0100
+Message-ID: <CAP8UFD0Wd3FcgxW+Vb-YKACLqqaeF+AAf=YRScZd84t7qiNkjw@mail.gmail.com>
+References: <CAL0uuq0=Zo0X8mYRD6q-Q+QAcZhfmxOwKiRegDrRm3O_i0Q+EA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git <git@vger.kernel.org>
+To: Jacopo Notarstefano <jacopo.notarstefano@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 27 15:47:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJ1qy-0004qj-K5
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 15:22:24 +0100
+	id 1WJ2Fc-00014z-0W
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 15:47:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753511AbaB0OWR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Feb 2014 09:22:17 -0500
-Received: from mail-pd0-f175.google.com ([209.85.192.175]:48546 "EHLO
-	mail-pd0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753479AbaB0OWP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Feb 2014 09:22:15 -0500
-Received: by mail-pd0-f175.google.com with SMTP id x10so2493279pdj.20
-        for <git@vger.kernel.org>; Thu, 27 Feb 2014 06:22:14 -0800 (PST)
+	id S1753173AbaB0Orr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Feb 2014 09:47:47 -0500
+Received: from mail-ve0-f180.google.com ([209.85.128.180]:65266 "EHLO
+	mail-ve0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753157AbaB0Orq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Feb 2014 09:47:46 -0500
+Received: by mail-ve0-f180.google.com with SMTP id jz11so3821156veb.39
+        for <git@vger.kernel.org>; Thu, 27 Feb 2014 06:47:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=XRuhptAN8a86gI4pCe+UD1uY/pI+akm7fYcuhqrT3pI=;
-        b=Nw8twKJ94snDRIFj11Ew8ebGfkP4yQ7sjJO6YDw46+clrtHz1FaFDylT6bhdsqqAqc
-         jXPhemPxP65d3JnGcam0DC8rhri5S8ICLIGLUWsu1Lyyg+8pyEJfLhLwIzVQQy6u6ZYB
-         orIpRU7OevZ5diJJwRJYyGh4wbkKpKh7Tgi+H0FXbIQrdeH3Czv5dkVOh2SNJCG4Dz7v
-         cHAbv3qsAZcibYOnMc92i8gMh7ZwLyiYpeJ6yLY6zirybrN7Wc+7qsNEIcAwNHxnRlFr
-         eItqhJciXuPiZviDkqzn9StlKrg3yzotpz4IEmbvTYqfZX0043+CMlIoLhzFqkw8jH9z
-         7+6g==
-X-Received: by 10.66.20.10 with SMTP id j10mr13384401pae.11.1393510934723;
-        Thu, 27 Feb 2014 06:22:14 -0800 (PST)
-Received: from localhost.localdomain ([61.150.43.99])
-        by mx.google.com with ESMTPSA id bz4sm14040986pbb.12.2014.02.27.06.22.10
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 27 Feb 2014 06:22:13 -0800 (PST)
-X-Mailer: git-send-email 1.7.1
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=87wLMcVt41aBGiZZ2IbesbBX7U7jdbzt4ymeFxgTgsY=;
+        b=aHPojIpw5n8fO1q3i48ZpdLeXL5XDrJGF0hR5ODmop6mZD+7+AjtF+xRfIzDVp/EtK
+         uWPzoKsz4Ieeqk8vB9qKDXYa8t9p7InuYvK3/4FpB3l0SKywzkA5M3dE+QyC4Pp8H0hW
+         dy1vN2/VL2kY3gtr2uRVdR5hXth+3ytsC67hCDhSbjRa7dsn3wTQd88NXkH5UFrBXUeg
+         Eeb8G7ju93rJ31ctMA7hTkcXWo/O12TKWQt1LQcuckNMCg+hhrWKseuQ9cf3n+qwMzUP
+         PC6y5DDbI3XN25p0AtvXnzht8AUFMdCZXgokIlMGWDubsNLf4cOdfFscFsdOywkRRttl
+         a6jg==
+X-Received: by 10.52.122.14 with SMTP id lo14mr1264079vdb.38.1393512465639;
+ Thu, 27 Feb 2014 06:47:45 -0800 (PST)
+Received: by 10.58.104.129 with HTTP; Thu, 27 Feb 2014 06:47:45 -0800 (PST)
+In-Reply-To: <CAL0uuq0=Zo0X8mYRD6q-Q+QAcZhfmxOwKiRegDrRm3O_i0Q+EA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242827>
 
+Hi,
 
-Signed-off-by: Sun He <sunheehnus@gmail.com>
----
- bulk-checkin.c |   10 +++++++++-
- 1 files changed, 9 insertions(+), 1 deletions(-)
+On Wed, Feb 26, 2014 at 9:28 AM, Jacopo Notarstefano
+<jacopo.notarstefano@gmail.com> wrote:
+> Hey everyone,
+>
+> my name is Jacopo, a student developer from Italy, and I'm interested
+> in applying to this years' Google Summer of Code. I set my eyes on the
+> project called "git-bisect improvements", in particular the subtask
+> about swapping the "good" and "bad" labels when looking for a
+> bug-fixing release.
+>
+> I have a very simple proposal for that: add a new "mark" subcommand.
+> Here is an example of how it should work:
+>
+> 1) A developer wants to find in which commit a past regression was
+> fixed. She start bisecting as usual with "git bisect start".
+> 2) The current HEAD has the bugfix, so she marks it as fixed with "git
+> bisect mark fixed".
+> 3) She knows that HEAD~100 had the regression, so she marks it as
+> unfixed with "git bisect mark unfixed".
+> 4) Now that git knows what the two labels are, it starts bisecting as usual.
+>
+> For compatibility with already written scripts, "git bisect good" and
+> "git bisect bad" will alias to "git bisect mark good" and "git bisect
+> mark bad" respectively.
+>
+> Does this make sense? Did I overlook some details?
 
-diff --git a/bulk-checkin.c b/bulk-checkin.c
-index 118c625..e3c7fb2 100644
---- a/bulk-checkin.c
-+++ b/bulk-checkin.c
-@@ -23,7 +23,8 @@ static struct bulk_checkin_state {
- static void finish_bulk_checkin(struct bulk_checkin_state *state)
- {
- 	unsigned char sha1[20];
--	char packname[PATH_MAX];
-+    char *packname;
-+    struct strbuf sb;
- 	int i;
- 
- 	if (!state->f)
-@@ -43,6 +44,10 @@ static void finish_bulk_checkin(struct bulk_checkin_state *state)
- 		close(fd);
- 	}
- 
-+     /* 64-1 is more than the sum of len(sha1_to_hex(sha1)) and len(".pack") */
-+    strbuf_init(&sb,strlen(get_object_directory())+64);
-+    packname = sb.buf;
-+
- 	sprintf(packname, "%s/pack/pack-", get_object_directory());
- 	finish_tmp_packfile(packname, state->pack_tmp_name,
- 			    state->written, state->nr_written,
-@@ -54,6 +59,9 @@ clear_exit:
- 	free(state->written);
- 	memset(state, 0, sizeof(*state));
- 
-+    /* release sb space */
-+    strbuf_release(&sb);
-+
- 	/* Make objects we just wrote available to ourselves */
- 	reprepare_packed_git();
- }
--- 
-1.7.1
+As Junio said adding a command "mark" doesn't by itself solve the
+difficult problems related to this project.
+(By the way I think it is misleading to state that this GSoC is "easy".)
 
-> Rewrite bulk-checkin.c:finish_bulk_checkin() to use a strbuf for handling packname, and explain why this is useful.
+> There were already several proposals on this topic, among which those
+> listed at https://git.wiki.kernel.org/index.php/SmallProjectsIdeas#git_bisect_fix.2Funfixed.
+> I'm interested in contacting the prospective mentor, Christian Couder,
+> to go over these. What's the proper way to ask for an introduction?
 
-char packname[PATH_MAX] (PATH_MAX=4096) in a local function costs too much space, it may cause stack overflow.
-Using strbuf to deal with packname is more space-friendly.
-I only use the API strbuf_init to alloc enough space for packname. I didn't use other APIs because I want to make the change as little as possible that I don't have to fix other functions which may import new bugs.
-Because the space spared for sb is on heap, we must release it after it is not useful.
+As Michael said, you can just CC me or send me a private email.
 
-> Also check if the first argument of pack-write.c:finish_tmp_packfile() can be made const.
+But I think the most important thing right now is first to gather as
+much information as you can from the previous discussions on this
+topic on this mainling list.
+Perhaps you should also gather information on how git bisect works.
 
-Tht first argument of pack-write.c:finish_tmp_packfile() can be made const because we didn't use *name_buffer to change anything.
+It will help you understand what are the difficult problems.
 
-Cheers,
-He Sun
+One of the problems, for example, is that git bisect can work using a
+"good" commit that is not an ancestor of the "bad" commit.
+In this case it will checkout the merge bases between the good and the
+bad commit. (And by the way this is related to the bug that should
+also be fixed as part of this project.)
 
-PS: 
-Why I cannot sent email to git@vger.kernel.org via my Firefox?
-Can you receive my former emails?
-Thanks.
+Then you are welcome to come back and ask questions, or suggest solutions.
+
+> I tried asking on IRC, but had no success.
+
+Sorry but I don't use IRC.
+
+Thanks,
+Christian.
