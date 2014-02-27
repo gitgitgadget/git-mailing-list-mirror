@@ -1,110 +1,90 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH/RFC] rebase: new convenient option to edit a single commit
-Date: Thu, 27 Feb 2014 14:52:39 +0100
-Message-ID: <vpqvbw08xy0.fsf@anie.imag.fr>
-References: <1393506078-7310-1-git-send-email-pclouds@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 27 14:52:51 2014
+From: Sun He <sunheehnus@gmail.com>
+Subject: [PATCH] Rewrite bulk-checkin.c:finish_bulk_checkin() to use a strbuf for handling packname
+Date: Thu, 27 Feb 2014 22:00:01 +0800
+Message-ID: <1393509601-31312-1-git-send-email-sunheehnus@gmail.com>
+Cc: mhagger@alum.mit.edu, Sun He <sunheehnus@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 27 15:01:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJ1OM-0007Dk-8b
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 14:52:50 +0100
+	id 1WJ1X2-0002Tn-7a
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 15:01:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751048AbaB0Nwp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Feb 2014 08:52:45 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:42255 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750742AbaB0Nwo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Feb 2014 08:52:44 -0500
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s1RDqchB004325
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 27 Feb 2014 14:52:38 +0100
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s1RDqdsJ003062;
-	Thu, 27 Feb 2014 14:52:39 +0100
-In-Reply-To: <1393506078-7310-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Thu, 27
- Feb 2014 20:01:18 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 27 Feb 2014 14:52:39 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s1RDqchB004325
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1394113961.05319@RGgfr/u7NK7J3ntckTOz0A
+	id S1752960AbaB0OBn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Feb 2014 09:01:43 -0500
+Received: from mail-pa0-f51.google.com ([209.85.220.51]:48006 "EHLO
+	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751850AbaB0OBl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Feb 2014 09:01:41 -0500
+Received: by mail-pa0-f51.google.com with SMTP id kq14so2376605pab.10
+        for <git@vger.kernel.org>; Thu, 27 Feb 2014 06:01:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=/F0WvkiwMT2KHY7tY/EbPwnIb3sXkuXyyKN3fGqFZhE=;
+        b=mTThYqwIDzNVxp5ZrPfBacVTZZLmii7t+xScYIK6u9lbGLv9lH5POUShYRIj4L2GfG
+         ngfiRTRwsnII9vx9gk0LGeDEGKl52mW09dw3E7V2CAn2OM5xbw9wEUCYtpKAM17UtR/q
+         /xkz0OahnQ1KzBaDSZXTwNvNoxqaTANLcFEWH0LKQO0FBrzv1LWyoTjgOTshKoHStUBL
+         Q9Jg3iVTPSD0syZzCmfOLwIEp0k+/ezJBQgasMTaFHbtvS2xg6cHS3npzb5OG7r0wiCv
+         ZYfQGE2euB6FODPqHFrtkgOMKVYk+53kqoMhDUufFmdxAzPdLCJCcnyWgc+UB8sAjOH0
+         8ziw==
+X-Received: by 10.68.89.162 with SMTP id bp2mr13176253pbb.151.1393509696890;
+        Thu, 27 Feb 2014 06:01:36 -0800 (PST)
+Received: from localhost.localdomain ([61.150.43.99])
+        by mx.google.com with ESMTPSA id oa3sm13864818pbb.15.2014.02.27.06.01.28
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 27 Feb 2014 06:01:35 -0800 (PST)
+X-Mailer: git-send-email 1.7.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242825>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
 
-> I find myself often do "git rebase -i xxx" and replace one "pick" lin=
-e
-> with "edit" to amend just one commit when I see something I don't lik=
-e
-> in that commit. This happens often while cleaning up a series. This
-> automates the "replace" step so it sends me straight to that commit.
+Signed-off-by: Sun He <sunheehnus@gmail.com>
+---
+ bulk-checkin.c |   10 +++++++++-
+ 1 files changed, 9 insertions(+), 1 deletions(-)
 
-Sounds a good idea to me.
-
->  git-rebase--interactive.sh | 17 ++++++++++++++---
->  git-rebase.sh              | 10 ++++++++++
-
-(obviously, don't forget doc and test if this becomes a non-RFC)
-
->  has_action "$todo" ||
->  	die_abort "Nothing to do"
-> diff --git a/git-rebase.sh b/git-rebase.sh
-> index 1cf8dba..98796cc 100755
-> --- a/git-rebase.sh
-> +++ b/git-rebase.sh
-> @@ -31,6 +31,7 @@ verify             allow pre-rebase hook to run
->  rerere-autoupdate  allow rerere to update index with resolved confli=
-cts
->  root!              rebase all reachable commits up to the root(s)
->  autosquash         move commits that begin with squash!/fixup! under=
- -i
-> +1,edit-one!        generate todo list to edit this commit
->  committer-date-is-author-date! passed to 'git am'
->  ignore-date!       passed to 'git am'
->  whitespace=3D!       passed to 'git apply'
-> @@ -249,6 +250,10 @@ do
->  	-i)
->  		interactive_rebase=3Dexplicit
->  		;;
-> +	-1)
-> +		interactive_rebase=3Dexplicit
-> +		edit_one=3Dt
-> +		;;
->  	-k)
->  		keep_empty=3Dyes
->  		;;
-> @@ -450,6 +455,11 @@ then
->  		;;
->  	*)	upstream_name=3D"$1"
->  		shift
-> +		if test -n "$edit_one"
-> +		then
-> +			edit_one=3D"$upstream_name"
-> +			upstream_name=3D"$upstream_name^"
-> +		fi
->  		;;
-
-I think you forgot the case where the user specified -1 but no extra
-argument (i.e. use the default to upstream branch). Shouldn't the added
-code be after the esac?
-
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+diff --git a/bulk-checkin.c b/bulk-checkin.c
+index 118c625..8c47d71 100644
+--- a/bulk-checkin.c
++++ b/bulk-checkin.c
+@@ -23,7 +23,8 @@ static struct bulk_checkin_state {
+ static void finish_bulk_checkin(struct bulk_checkin_state *state)
+ {
+ 	unsigned char sha1[20];
+-	char packname[PATH_MAX];
++	char *packname;
++    struct strbuf sb;
+ 	int i;
+ 
+ 	if (!state->f)
+@@ -43,6 +44,10 @@ static void finish_bulk_checkin(struct bulk_checkin_state *state)
+ 		close(fd);
+ 	}
+ 
++    /* 64-1 is more than the sum of len(sha1_to_hex(sha1)) and len(".pack") */
++    strbuf_init(&sb,strlen(get_object_directory())+64);
++    packname = sb.buf;
++
+ 	sprintf(packname, "%s/pack/pack-", get_object_directory());
+ 	finish_tmp_packfile(packname, state->pack_tmp_name,
+ 			    state->written, state->nr_written,
+@@ -54,6 +59,9 @@ clear_exit:
+ 	free(state->written);
+ 	memset(state, 0, sizeof(*state));
+ 
++    /* release sb space */
++    strbuf_release(&sb);
++
+ 	/* Make objects we just wrote available to ourselves */
+ 	reprepare_packed_git();
+ }
+-- 
+1.7.1
