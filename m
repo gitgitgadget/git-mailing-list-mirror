@@ -1,80 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Branch Name Case Sensitivity
-Date: Thu, 27 Feb 2014 11:50:45 -0800
-Message-ID: <xmqqvbw0xrl6.fsf@gitster.dls.corp.google.com>
-References: <CAJHY66EQD280QgXBCoZU4y_aqSEu3A1hXzeW7X-rtT6vMZ92oA@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 1/2] fetch: add a failing test for prunning with
+ overlapping refspecs
+Date: Thu, 27 Feb 2014 15:19:27 -0500
+Message-ID: <CAPig+cTjvkNEfv8ThdPBVUXEGvZKAmhv9PvH1-sf4eJALUTHww@mail.gmail.com>
+References: <1393491610-19476-1-git-send-email-cmn@elego.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Lee Hopkins <leerhop@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 27 20:50:56 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>
+To: =?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>
+X-From: git-owner@vger.kernel.org Thu Feb 27 21:19:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJ6yr-0007Xi-Dh
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 20:50:53 +0100
+	id 1WJ7Qn-0000Lx-DI
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 21:19:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751408AbaB0Tut (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Feb 2014 14:50:49 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53352 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751155AbaB0Tut (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Feb 2014 14:50:49 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2629370B1E;
-	Thu, 27 Feb 2014 14:50:48 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=n6iBUHmtiz8k6tYZUiU6oRs8I34=; b=mqjFyP
-	/9rYFdfdM5s0Q7VObCqPCAT4ZgmdwEozv8e5lC8l+E4Z0DIgmRF0FXnJKzIgFTo9
-	azws2IOrqwRWwA7qZ9mLYFa2Ts4jMvFMoNnVpWa1ciPthwxsn2TXbzHp7an5rkpe
-	qgiODgAG7z3JkbQEtvfJxhtt/KIJwetLT+0d8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ViXYCDh/nbMR0Ggb+7SsERTHN7NecD5O
-	xRV+LSBN2MDm4fihgXClnSRYyXJ+DCTcfy3CnzK0dwy4SG92ll4k7ubt8z6LIHal
-	QCw54dULdicsK4RRJjutJ3LS2vDiWYlUih/+2rZKU4PJ+vn6LvZ+crP1McWGb4hD
-	4oOZN5HUajA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E76B070B1D;
-	Thu, 27 Feb 2014 14:50:47 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0D48770B18;
-	Thu, 27 Feb 2014 14:50:46 -0500 (EST)
-In-Reply-To: <CAJHY66EQD280QgXBCoZU4y_aqSEu3A1hXzeW7X-rtT6vMZ92oA@mail.gmail.com>
-	(Lee Hopkins's message of "Wed, 26 Feb 2014 16:06:54 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 73863E78-9FE8-11E3-835B-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751516AbaB0UTc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Feb 2014 15:19:32 -0500
+Received: from mail-yh0-f50.google.com ([209.85.213.50]:47545 "EHLO
+	mail-yh0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751504AbaB0UT2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Feb 2014 15:19:28 -0500
+Received: by mail-yh0-f50.google.com with SMTP id t59so1587132yho.23
+        for <git@vger.kernel.org>; Thu, 27 Feb 2014 12:19:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=DNb0sZ1SNLG+WfwqTh2311pr8M3yUn2CmM8TiqUxbaE=;
+        b=TcWZklXKSN45giExkaUqFel/JuNKI/dmYtNwgKtUHXtAc9LaQ7u6pAC2t1K3mQVD/q
+         NB796YPUK4TyY+FHlqpP6pHhQoZVU1Et8d2Bm/UzWTw1aA1yEUYS7GAPAG+W91hh5XNE
+         k8WMosbXAT99G+CpmlaPUKdYMdV3cyy2acjTjU31LgLmqo0iSOcdLTAGo4asMbxGTbi4
+         99UDWv3rCssuwh+/8Tfdut7AxzAHO8MewuLTzYjCv2ggMeyDCUnniQn+dd694n+r92v5
+         voQ0gjftIhq7voVAssuK2AWtwDHKHgY3avrFVLWcWMC3q5ITnvPFBu8Jr7DTw/HqOIFP
+         lZjg==
+X-Received: by 10.236.152.233 with SMTP id d69mr17435602yhk.11.1393532367705;
+ Thu, 27 Feb 2014 12:19:27 -0800 (PST)
+Received: by 10.170.180.195 with HTTP; Thu, 27 Feb 2014 12:19:27 -0800 (PST)
+In-Reply-To: <1393491610-19476-1-git-send-email-cmn@elego.de>
+X-Google-Sender-Auth: GClC0rtvFd1pKsaLELqD-Eocljw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242847>
 
-Lee Hopkins <leerhop@gmail.com> writes:
+On Thu, Feb 27, 2014 at 4:00 AM, Carlos Mart=EDn Nieto <cmn@elego.de> w=
+rote:
+> Subject: fetch: add a failing test for prunning with overlapping refs=
+pecs
 
-> Last week I ran across a potential bug with branch names on case
-> insensitive file systems, the complete scenario can be found here:
+s/prunning/pruning/
+
+> Signed-off-by: Carlos Mart=EDn Nieto <cmn@elego.de>
+> ---
+> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+> index 1f0f8e6..4949e3d 100755
+> --- a/t/t5510-fetch.sh
+> +++ b/t/t5510-fetch.sh
+> @@ -113,6 +113,26 @@ test_expect_success 'fetch --prune with a namesp=
+ace keeps other namespaces' '
+>         git rev-parse origin/master
+>  '
 >
-> https://groups.google.com/forum/#!topic/msysgit/ugKL-sVMiqI
->
-> The tldr is because refs are stored as plain text files except when
-> packed into packed-refs, Git occasionally cannot tell the difference
-> between branches whose names only differ in case, and this could
-> potentially lead to the loss of history.
->
-> It sounds like this is a known issue, and after some more digging I
-> did find some older threads related to this topic, but nothing recent.
+> +test_expect_failure 'fetch --prune handles overlapping refspecs' '
+> +       cd "$D" &&
+> +       git update-ref refs/pull/42/head master &&
+> +       git clone . prune-overlapping &&
+> +       cd prune-overlapping &&
+> +       git config --add remote.origin.fetch refs/pull/*/head:refs/re=
+motes/origin/pr/* &&
+> +
+> +       git fetch --prune origin &&
+> +       git rev-parse origin/master &&
+> +       git rev-parse origin/pr/42 &&
+> +
+> +       git config --unset-all remote.origin.fetch
 
-Yes, it is not limited to branch names but also applies to tags and
-filenames in your working tree.
+Broken &&-chain.
 
-Perhaps git-{branch,tag}.txt and possibly gitrepository-layout.txt
-in Documentation/ may need a new "*Note*" section to warn against
-this.
-
-Thanks.
+> +       git config remote.origin.fetch refs/pull/*/head:refs/remotes/=
+origin/pr/* &&
+> +       git config --add remote.origin.fetch refs/heads/*:refs/remote=
+s/origin/* &&
+> +
+> +       git fetch --prune origin &&
+> +       git rev-parse origin/master &&
+> +       git rev-parse origin/pr/42
+> +'
+> +
+>  test_expect_success 'fetch --prune --tags does not delete the remote=
+-tracking branches' '
+>         cd "$D" &&
+>         git clone . prune-tags &&
+> --
+> 1.9.0.rc3.244.g3497008
