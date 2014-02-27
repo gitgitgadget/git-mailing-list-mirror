@@ -1,95 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] branch: change install_branch_config() to use skip_prefix()
-Date: Thu, 27 Feb 2014 14:17:29 -0800
-Message-ID: <xmqqy50ww686.fsf@gitster.dls.corp.google.com>
-References: <530F5B41.1050900@yandex.ru>
-	<xmqq4n3kz6jb.fsf@gitster.dls.corp.google.com>
+From: Karsten Blees <karsten.blees@gmail.com>
+Subject: Re: Branch Name Case Sensitivity
+Date: Thu, 27 Feb 2014 23:24:29 +0100
+Message-ID: <530FBB1D.3050505@gmail.com>
+References: <CAJHY66EQD280QgXBCoZU4y_aqSEu3A1hXzeW7X-rtT6vMZ92oA@mail.gmail.com> <xmqqvbw0xrl6.fsf@gitster.dls.corp.google.com> <530FA0C1.3000109@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: "Dmitry S. Dolzhenko" <dmitrys.dolzhenko@yandex.ru>
-X-From: git-owner@vger.kernel.org Thu Feb 27 23:17:41 2014
+To: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Lee Hopkins <leerhop@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 27 23:24:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJ9Gs-0005BN-K7
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 23:17:38 +0100
+	id 1WJ9NX-0002Bc-3K
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 23:24:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751879AbaB0WRe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Feb 2014 17:17:34 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64976 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751296AbaB0WRd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Feb 2014 17:17:33 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 38CD47021F;
-	Thu, 27 Feb 2014 17:17:33 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=q7MetTjjS0iW/EtEN1wbV0wpbYE=; b=wbDZAE
-	kHwntDWAANBISRaMEbfWrRiSQw41DbfQ5BIxh6u897DlFjENbNPGyJ3J6UqBHMzR
-	VdSyWPEzNDbhBbUevWbdHC8W2QgOvEU5zMFqMMfSslA8AHSpJq7jDC85QvMSphtf
-	YBNEyweUlmA2kSXPZaOPnjqYRScz69SRbcH8o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Ib4EjntSkZgjnp6VqaqRowZcPzRnyIWz
-	s2v2cy4sKTpKS7AdD1S16+IvQxQ4ZrtARRF5EGgwGDhT1t3RBoHRa/+/Armlw0jK
-	vzsT1W0t5xFBHCobZy69pLToxNOS7ruayTYDXkAF0fY1rhL9bP2RhWoQu/JERu9b
-	Bg1+X4NMsIo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F010E7021E;
-	Thu, 27 Feb 2014 17:17:32 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2B27A7021D;
-	Thu, 27 Feb 2014 17:17:32 -0500 (EST)
-In-Reply-To: <xmqq4n3kz6jb.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Thu, 27 Feb 2014 11:42:32 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: F3C948D2-9FFC-11E3-9C08-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752456AbaB0WY1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Feb 2014 17:24:27 -0500
+Received: from mail-ea0-f178.google.com ([209.85.215.178]:41873 "EHLO
+	mail-ea0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751979AbaB0WY0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Feb 2014 17:24:26 -0500
+Received: by mail-ea0-f178.google.com with SMTP id a15so2165772eae.23
+        for <git@vger.kernel.org>; Thu, 27 Feb 2014 14:24:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=7AM4dXbOHj8VB4F8GHk8EZ+EeE/5am+APqiU+eFvxT4=;
+        b=QO4dB8/nLDp1mGPsxN4lP5pfVSFaP5pDtAk2Gk5xN7/eAuM4f2IGKYbAa5oj4oDVjX
+         zpC208MzlgN5yiGeFpVAEaZTxkznKHYTRPmxpZDjP9MOtfP6FlwvyNKgRjFuYUw8tx3H
+         TeXphpfzLwZTifQzO/7SV2s9Sz9HMRkamXpgOF/yaCmUmgg4snbnlCbgkCv0nD7HTXZH
+         m+ylVfh5Nj0hpXEv5SOUB9U4iQ6UpB6usfNWG7LWqlmzQfLbDWZO1FjJyWFJ1vopbt3X
+         dODlIatZJlQxqvzRu1lA8gjxUUYumGBp2QoQGt4iP29zODrT6nusRYfWQFA79seoxInY
+         ptwg==
+X-Received: by 10.14.179.129 with SMTP id h1mr16502976eem.26.1393539865746;
+        Thu, 27 Feb 2014 14:24:25 -0800 (PST)
+Received: from [10.1.100.54] (ns.dcon.de. [77.244.111.149])
+        by mx.google.com with ESMTPSA id j41sm2742266eeg.10.2014.02.27.14.24.24
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 27 Feb 2014 14:24:25 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
+In-Reply-To: <530FA0C1.3000109@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242869>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> "Dmitry S. Dolzhenko" <dmitrys.dolzhenko@yandex.ru> writes:
->
->> Change install_branch_config() to use skip_prefix()
->> for getting the short name of the remote branch.
+Am 27.02.2014 21:32, schrieb Torsten B=F6gershausen:
+> On 2014-02-27 20.50, Junio C Hamano wrote:
+>> Lee Hopkins <leerhop@gmail.com> writes:
 >>
->> Signed-off-by: Dmitry S. Dolzhenko <dmitrys.dolzhenko@yandex.ru>
->> ---
->>  branch.c | 4 ++--
->>  1 file changed, 2 insertions(+), 2 deletions(-)
+>>> Last week I ran across a potential bug with branch names on case
+>>> insensitive file systems, the complete scenario can be found here:
+>>>
+>>> https://groups.google.com/forum/#!topic/msysgit/ugKL-sVMiqI
+>>>
+>>> The tldr is because refs are stored as plain text files except when
+>>> packed into packed-refs, Git occasionally cannot tell the differenc=
+e
+>>> between branches whose names only differ in case, and this could
+>>> potentially lead to the loss of history.
+>>>
+>>> It sounds like this is a known issue, and after some more digging I
+>>> did find some older threads related to this topic, but nothing rece=
+nt.
 >>
->> diff --git a/branch.c b/branch.c
->> index 723a36b..9382e02 100644
->> --- a/branch.c
->> +++ b/branch.c
->> @@ -49,8 +49,8 @@ static int should_setup_rebase(const char *origin)
->>  
->>  void install_branch_config(int flag, const char *local, const char *origin, const char *remote)
->>  {
->> -	const char *shortname = remote + 11;
->> -	int remote_is_branch = starts_with(remote, "refs/heads/");
->> +	const char *shortname = skip_prefix(remote, "refs/heads/");
->> +	int remote_is_branch = shortname != NULL;
->
-> That sounds more reasonable, compared to the previous round.
-> I'd probably say this
->
-> 	int remote_is_branch = !shortname;
->
-> instead, if I were doing this patch myself, though.
+>> Yes, it is not limited to branch names but also applies to tags and
+>> filenames in your working tree.
+>>
+>> Perhaps git-{branch,tag}.txt and possibly gitrepository-layout.txt
+>> in Documentation/ may need a new "*Note*" section to warn against
+>> this.
+>>
+>> Thanks.
+> There is a possible workaround:
+> git pack-refs --all --prune
+>=20
 
-Heh, that is !!, not !.
-
->
->>  	struct strbuf key = STRBUF_INIT;
->>  	int rebasing = should_setup_rebase(origin);
+If I understand the issue correctly, the problem is that packed-refs ar=
+e always case-sensitive, even if core.ignorecase=3Dtrue. OTOH, checking=
+ / updating _unpacked_ refs on a case-insensitive file system is natura=
+lly case-insensitive. So wouldn't it be a better workaround to disallow=
+ packed refs (i.e. 'git config gc.packrefs false')?
