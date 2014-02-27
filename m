@@ -1,151 +1,137 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] shallow: use stat_validity to check for up-to-date file
-Date: Thu, 27 Feb 2014 05:56:31 -0500
-Message-ID: <20140227105630.GA29668@sigill.intra.peff.net>
-References: <1393485183-20100-1-git-send-email-pclouds@gmail.com>
- <20140227090426.GA21892@sigill.intra.peff.net>
- <20140227091012.GB21892@sigill.intra.peff.net>
- <20140227092227.GA28551@sigill.intra.peff.net>
- <CACsJy8AHwyy0wwFD3fu+Aak+k=bFM1NAWzVSs1G4389UWqZptg@mail.gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: An idea for "git bisect" and a GSoC enquiry
+Date: Thu, 27 Feb 2014 12:18:41 +0100
+Message-ID: <530F1F11.7060403@alum.mit.edu>
+References: <CAL0uuq0=Zo0X8mYRD6q-Q+QAcZhfmxOwKiRegDrRm3O_i0Q+EA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 27 11:56:46 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jacopo Notarstefano <jacopo.notarstefano@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 27 12:18:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WIyds-0006gu-9X
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 11:56:40 +0100
+	id 1WIyzL-0003nz-6T
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 12:18:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752370AbaB0K4g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Feb 2014 05:56:36 -0500
-Received: from cloud.peff.net ([50.56.180.127]:57950 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751453AbaB0K4f (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Feb 2014 05:56:35 -0500
-Received: (qmail 16980 invoked by uid 102); 27 Feb 2014 10:56:35 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 27 Feb 2014 04:56:35 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 27 Feb 2014 05:56:31 -0500
-Content-Disposition: inline
-In-Reply-To: <CACsJy8AHwyy0wwFD3fu+Aak+k=bFM1NAWzVSs1G4389UWqZptg@mail.gmail.com>
+	id S1751423AbaB0LSr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Feb 2014 06:18:47 -0500
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:63367 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750813AbaB0LSq (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Feb 2014 06:18:46 -0500
+X-AuditID: 12074413-f79076d000002d17-58-530f1f153070
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id A3.77.11543.51F1F035; Thu, 27 Feb 2014 06:18:45 -0500 (EST)
+Received: from [192.168.69.148] (p57A24AC7.dip0.t-ipconnect.de [87.162.74.199])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s1RBIffW028024
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Thu, 27 Feb 2014 06:18:42 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
+In-Reply-To: <CAL0uuq0=Zo0X8mYRD6q-Q+QAcZhfmxOwKiRegDrRm3O_i0Q+EA@mail.gmail.com>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrNKsWRmVeSWpSXmKPExsUixO6iqCsqzx9s8PcEr8XtmS3MFl1Xupks
+	GnqvMFssn7+GxYHFY+esu+weFy8pe3zeJBfAHMVtk5RYUhacmZ6nb5fAnTFjxT+2gjsyFSva
+	37E1MDaLdzFyckgImEj8+zuHEcIWk7hwbz1bFyMXh5DAZUaJT1v3skA455kkHj+8A5Th4OAV
+	0JZo/JMB0sAioCpx9811NhCbTUBXYlFPMxOILSoQLLH68gMWEJtXQFDi5MwnLCCtIgLmEq/X
+	+YKEmQWKJY7N/MQOYgsLWEjcXr+CGcQWEgiQeHrrMlicUyBQYu+RdUwgrRIC4hI9jUEQrToS
+	7/oeMEPY8hLb385hnsAoOAvJsllIymYhKVvAyLyKUS4xpzRXNzcxM6c4NVm3ODkxLy+1SNdc
+	LzezRC81pXQTIySwhXcw7jopd4hRgINRiYf3BDNfsBBrYllxZe4hRkkOJiVR3vNS/MFCfEn5
+	KZUZicUZ8UWlOanFhxglOJiVRHjXMwHleFMSK6tSi/JhUtIcLErivGpL1P2EBNITS1KzU1ML
+	UotgsjIcHEoSvIpyQI2CRanpqRVpmTklCGkmDk6Q4VxSIsWpeSmpRYmlJRnxoOiNLwbGL0iK
+	B2jvY1mQvcUFiblAUYjWU4y6HLfbfn1iFGLJy89LlRLnNQLZIQBSlFGaB7cClsZeMYoDfSzM
+	awpSxQNMgXCTXgEtYQJaclSaB2RJSSJCSqqBcab73ZRadx+d6kVpH80ititc0v0xqap0hZuy
+	sfHk189Zv7/nu9x7ZQLHu9d/mqadDvdlUbHguC5u1u9iN7/w1bGuxgs6fz78zNht 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242803>
 
-On Thu, Feb 27, 2014 at 05:18:58PM +0700, Duy Nguyen wrote:
+On 02/26/2014 09:28 AM, Jacopo Notarstefano wrote:
+> my name is Jacopo, a student developer from Italy, and I'm interested
+> in applying to this years' Google Summer of Code. I set my eyes on the
+> project called "git-bisect improvements", in particular the subtask
+> about swapping the "good" and "bad" labels when looking for a
+> bug-fixing release.
 
-> On Thu, Feb 27, 2014 at 4:22 PM, Jeff King <peff@peff.net> wrote:
-> > On Thu, Feb 27, 2014 at 04:10:12AM -0500, Jeff King wrote:
-> >
-> >> I also notice that check_shallow_file_for_update returns early if
-> >> !is_shallow. Is that safe? Is it possible for another process to have
-> >> made us shallow since the program began? In that case, we would have to
-> >> stat() the file always, then complain if it exists and !is_shallow.
+Hello and welcome!
+
+> I have a very simple proposal for that: add a new "mark" subcommand.
+> Here is an example of how it should work:
 > 
-> I think it's safer to do it your way.
+> 1) A developer wants to find in which commit a past regression was
+> fixed. She start bisecting as usual with "git bisect start".
+> 2) The current HEAD has the bugfix, so she marks it as fixed with "git
+> bisect mark fixed".
+> 3) She knows that HEAD~100 had the regression, so she marks it as
+> unfixed with "git bisect mark unfixed".
+> 4) Now that git knows what the two labels are, it starts bisecting as usual.
+> 
+> For compatibility with already written scripts, "git bisect good" and
+> "git bisect bad" will alias to "git bisect mark good" and "git bisect
+> mark bad" respectively.
+> 
+> Does this make sense? Did I overlook some details?
 
-Yeah, I played around a bit and found that using "git fetch --depth" in
-a non-shallow repo could run into this case.
+I don't understand the benefit of adding a new command "mark" rather
+than continuing to use "good", "bad", plus new commands "unfixed" and
+"fixed".  Does this solve any problems?
 
-> >         if (stat(git_path("shallow"), &st))
-> >                 die("shallow file was removed during fetch");
-> > +       else if (!is_shallow)
-> > +               die("shallow file appeared during fetch");
+What happens if the user mixes, say, "good" and "fixed" in a single
+bisect session?
 
-Note that this is wrong; when the file is missing (the first part of the
-conditional), we need to check "is_shallow" before dying. Otherwise we
-erroneously complain when creating the file for the first time.
+I think it would be more convenient if "git bisect" would autodetect
+whether the history went from "good" to "bad" or vice versa.  The
+algorithm could be:
 
-As I was fixing it, though, I recalled that we had to write a similar
-system for the packed-refs file. Fortunately, it was easy to reuse, and
-I ended up with the patch below.
+1. Wait until the user has marked one commit "bad" and one commit "good".
 
--- >8 --
-Subject: shallow: use stat_validity to check for up-to-date file
+2. If a "good" commit is an ancestor of a "bad" one, then "git bisect"
+should announce "I will now look for the first bad commit".  If
+reversed, then announce "I will now look for the first good commit".  If
+neither commit is an ancestor of the other, then explain the situation
+and ask the user to run "git bisect find-first-bad" or "git bisect
+find-first-good" or to mark another commit "bad" or "good".
 
-When we are about to write the shallow file, we check that
-it has not changed since we last read it. Instead of
-hand-rolling this, we can use stat_validity. This is built
-around the index stat-check, so it is more robust than just
-checking the mtime, as we do now (it uses the same check as
-we do for index files).
+3. If the user marks another commit, go back to step 2, also doing a
+consistency check to make sure that all of the ancestry relationships go
+in a consistent direction.
 
-The new code also handles the case of a shallow file
-appearing unexpectedly. With the current code, two
-simultaneous processes making us shallow (e.g., two "git
-fetch --depth=1" running at the same time in a non-shallow
-repository) can race to overwrite each other.
+4. After the direction is clear, the old bisect algorithm can be used
+(though taking account of the direction).  Obviously a lot of the output
+would have to be adjusted, as would the way that a bisect is visualized.
 
-As a bonus, we also remove a race in determining the stat
-information of what we read (we stat and then open, leaving
-a race window; instead we should open and then fstat the
-descriptor).
+I can't think of any fundamental problems with a scheme like this, and I
+think it would be easier to use than the unfixed/fixed scheme.  But that
+is only my opinion; other opinions are undoubtedly available :-)
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- shallow.c | 24 +++++++-----------------
- 1 file changed, 7 insertions(+), 17 deletions(-)
+> There were already several proposals on this topic, among which those
+> listed at https://git.wiki.kernel.org/index.php/SmallProjectsIdeas#git_bisect_fix.2Funfixed.
+> I'm interested in contacting the prospective mentor, Christian Couder,
+> to go over these. What's the proper way to ask for an introduction? I
+> tried asking on IRC, but had no success.
 
-diff --git a/shallow.c b/shallow.c
-index 75da07a..9668b39 100644
---- a/shallow.c
-+++ b/shallow.c
-@@ -10,7 +10,7 @@
- #include "commit-slab.h"
- 
- static int is_shallow = -1;
--static struct stat shallow_stat;
-+static struct stat_validity shallow_stat;
- static char *alternate_shallow_file;
- 
- void set_alternate_shallow_file(const char *path, int override)
-@@ -52,12 +52,12 @@ int is_repository_shallow(void)
- 	 * shallow file should be used. We could just open it and it
- 	 * will likely fail. But let's do an explicit check instead.
- 	 */
--	if (!*path ||
--	    stat(path, &shallow_stat) ||
--	    (fp = fopen(path, "r")) == NULL) {
-+	if (!*path || (fp = fopen(path, "r")) == NULL) {
-+		stat_validity_clear(&shallow_stat);
- 		is_shallow = 0;
- 		return is_shallow;
- 	}
-+	stat_validity_update(&shallow_stat, fileno(fp));
- 	is_shallow = 1;
- 
- 	while (fgets(buf, sizeof(buf), fp)) {
-@@ -137,21 +137,11 @@ struct commit_list *get_shallow_commits(struct object_array *heads, int depth,
- 
- void check_shallow_file_for_update(void)
- {
--	struct stat st;
--
--	if (!is_shallow)
--		return;
--	else if (is_shallow == -1)
-+	if (is_shallow == -1)
- 		die("BUG: shallow must be initialized by now");
- 
--	if (stat(git_path("shallow"), &st))
--		die("shallow file was removed during fetch");
--	else if (st.st_mtime != shallow_stat.st_mtime
--#ifdef USE_NSEC
--		 || ST_MTIME_NSEC(st) != ST_MTIME_NSEC(shallow_stat)
--#endif
--		   )
--		die("shallow file was changed during fetch");
-+	if (!stat_validity_check(&shallow_stat, git_path("shallow")))
-+		die("shallow file has changed since we read it");
- }
- 
- #define SEEN_ONLY 1
+Just CC Christian on your emails to the mailing list, like I've done
+with this email.  As a rule of thumb all communications should go to the
+mailing list *plus* any people who are likely to be personally
+interested in the topic (e.g., because they have participated in the
+thread).
+
+By the way, although "git bisect fixed/unfixed" would be a very useful
+improvement, and has gone unimplemented for a lamentably long time, my
+personal feeling is that it has too meat in it to constitute a GSoC
+project by itself.
+
+Michael
+
 -- 
-1.8.5.2.500.g8060133
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
