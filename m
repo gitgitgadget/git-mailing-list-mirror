@@ -1,70 +1,68 @@
 From: Sun He <sunheehnus@gmail.com>
-Subject: [PATCH] Rewrite git-compat-util.h:skip_prefix() as a loop
-Date: Thu, 27 Feb 2014 20:13:17 +0800
-Message-ID: <1393503197-29669-1-git-send-email-sunheehnus@gmail.com>
+Subject: [PATCH] Change branch.c:install_branch_config()
+Date: Thu, 27 Feb 2014 20:27:41 +0800
+Message-ID: <1393504061-30008-1-git-send-email-sunheehnus@gmail.com>
 Cc: Sun He <sunheehnus@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 27 13:15:07 2014
+X-From: git-owner@vger.kernel.org Thu Feb 27 13:29:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WIzrk-0000i1-NI
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 13:15:05 +0100
+	id 1WJ05P-0004cL-Lb
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 13:29:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752729AbaB0MOq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Feb 2014 07:14:46 -0500
-Received: from mail-pb0-f43.google.com ([209.85.160.43]:35950 "EHLO
-	mail-pb0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751895AbaB0MOp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Feb 2014 07:14:45 -0500
-Received: by mail-pb0-f43.google.com with SMTP id um1so687489pbc.30
-        for <git@vger.kernel.org>; Thu, 27 Feb 2014 04:14:44 -0800 (PST)
+	id S1752212AbaB0M3H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Feb 2014 07:29:07 -0500
+Received: from mail-pb0-f51.google.com ([209.85.160.51]:49610 "EHLO
+	mail-pb0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751771AbaB0M3F (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Feb 2014 07:29:05 -0500
+Received: by mail-pb0-f51.google.com with SMTP id un15so2462840pbc.38
+        for <git@vger.kernel.org>; Thu, 27 Feb 2014 04:29:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id;
-        bh=vP7ksgkHqVYIBJFUgR5Z57y9FSdaKiupx8InD1pqShM=;
-        b=gHfd+qSM/KEkY2nwRtHiEo3ftCXIJ4a6bp4b+rANn9+jXgK5c0vW5cCcYcmKuvIurV
-         zpkYLdUNWbAyhpyUfvPA2LetgcuHYWsQpUyUkSqEXCYulMq8aSKoCdUjqzrwtXamDh7A
-         Z0uYxl2TqO7k4G7cgt4MfksnEQVVnL/IJBUkjSQt/Hnnn3MzqmzqImxPC+fVQ1t9SwQ+
-         NUL64FUiPBm3T3na0nQiSuIaMDmQRdFhGup1E3X91GrEjqMxkADioUyMdFsdGWF6Bci8
-         DatA6AYghOVmmXO4kxGXYOUwT8vFOKHoqLAvcBX12mWPRic4+LCH+dWIEDDzVrvtg7ku
-         K/yQ==
-X-Received: by 10.68.202.230 with SMTP id kl6mr13041136pbc.55.1393503284780;
-        Thu, 27 Feb 2014 04:14:44 -0800 (PST)
+        bh=/7w5Nyh9f43bAEofc0CLi71xO/jeG89VWbqpVV4+9Sk=;
+        b=qy64/o2mNn6dGjBm4aHW5qo5cE1HS9T6R0I22ugZdL3DCy2b+JsSSQuok5NNpctJEu
+         zPN8y33CJh0OftLgn9P/2d0ZzqA63YVisUSDJ5vzoBiB9/PZoz5e/JqETYtUFxybvG/0
+         agO2cIrDq+37J24UiNIW1Uynir7r16uGI4IwbjZevGJckBvZBOefPJNM2NvN9b9zpr9J
+         kdRCAt2dhTcTydUSWxiRf2V602SFa3yO+RGh+5bohcvrS9o66HQLAgaxuVURUQPNALgF
+         evOwOMBvm1oq4KjsyzrYkV2l+BsfrQiXEWosHLsdcAC1bxK/NkVrWaE64nb6hUA5j8ML
+         QoRQ==
+X-Received: by 10.66.122.36 with SMTP id lp4mr15215063pab.82.1393504144467;
+        Thu, 27 Feb 2014 04:29:04 -0800 (PST)
 Received: from localhost.localdomain ([61.150.43.99])
-        by mx.google.com with ESMTPSA id yz5sm30005161pac.9.2014.02.27.04.14.41
+        by mx.google.com with ESMTPSA id ha2sm13124196pbb.8.2014.02.27.04.29.01
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 27 Feb 2014 04:14:43 -0800 (PST)
+        Thu, 27 Feb 2014 04:29:03 -0800 (PST)
 X-Mailer: git-send-email 1.7.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242814>
 
 
 Signed-off-by: Sun He <sunheehnus@gmail.com>
 ---
- git-compat-util.h |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ branch.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index cbd86c3..4daa6cf 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -357,8 +357,8 @@ extern int suffixcmp(const char *str, const char *suffix);
- 
- static inline const char *skip_prefix(const char *str, const char *prefix)
+diff --git a/branch.c b/branch.c
+index 723a36b..2fe9c05 100644
+--- a/branch.c
++++ b/branch.c
+@@ -50,7 +50,7 @@ static int should_setup_rebase(const char *origin)
+ void install_branch_config(int flag, const char *local, const char *origin, const char *remote)
  {
--	size_t len = strlen(prefix);
--	return strncmp(str, prefix, len) ? NULL : str + len;
-+    while( *prefix != '\0' && *str++ == *prefix++ );
-+    return *prefix == '\0' ? str : NULL;
- }
+ 	const char *shortname = remote + 11;
+-	int remote_is_branch = starts_with(remote, "refs/heads/");
++	int remote_is_branch = skip_prefix(remote,"refs/heads")!=NULL;
+ 	struct strbuf key = STRBUF_INIT;
+ 	int rebasing = should_setup_rebase(origin);
  
- #if defined(NO_MMAP) || defined(USE_WIN32_MMAP)
 -- 
 1.7.1
