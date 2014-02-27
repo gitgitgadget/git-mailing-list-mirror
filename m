@@ -1,96 +1,104 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] repack: add `repack.honorpackkeep` config var
-Date: Thu, 27 Feb 2014 10:04:44 -0800
-Message-ID: <xmqqy50wzb2b.fsf@gitster.dls.corp.google.com>
-References: <52E1A99D.6010809@fb.com> <52E1AB78.1000504@fb.com>
-	<20140124022822.GC4521@sigill.intra.peff.net>
-	<52E1D39B.4050103@fb.com>
-	<20140128060954.GA26401@sigill.intra.peff.net>
-	<xmqq8uu0mpg8.fsf@gitster.dls.corp.google.com>
-	<20140224082459.GA32594@sigill.intra.peff.net>
-	<xmqq1tys9vie.fsf@gitster.dls.corp.google.com>
-	<20140226101353.GA25711@sigill.intra.peff.net>
-	<xmqqr46p39cj.fsf@gitster.dls.corp.google.com>
-	<20140227112734.GC29668@sigill.intra.peff.net>
+From: Brandon McCaig <bamccaig@gmail.com>
+Subject: Re: GSoC idea: allow "git rebase --interactive" todo lines to take options
+Date: Thu, 27 Feb 2014 13:10:30 -0500
+Message-ID: <CANUGeEY2qE2LPq=-bhaKrKrv+uJUaPRqAeW_X1sFyZH-_PRVeA@mail.gmail.com>
+References: <530DA00E.4090402@alum.mit.edu> <20140226105249.GE25711@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Siddharth Agarwal <sid0@fb.com>, Vicent Marti <tanoku@gmail.com>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	git discussion list <git@vger.kernel.org>,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Feb 27 19:05:01 2014
+X-From: git-owner@vger.kernel.org Thu Feb 27 19:11:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJ5KN-00063P-S8
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 19:05:00 +0100
+	id 1WJ5QT-0007Mm-7B
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 19:11:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753241AbaB0SEy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Feb 2014 13:04:54 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42932 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753157AbaB0SEs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Feb 2014 13:04:48 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 85F3A6FF06;
-	Thu, 27 Feb 2014 13:04:47 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=PsTkFK78yOgVKtRw7NJKRAeEhJk=; b=f/IhhN
-	OTl0bQrU+hzG60U5q+TyBbuQYjMGwcrohlvoJ9Bmdt3LDcs8n2Nvp2DwtE/obr5S
-	7AwCgNnkQTdJ+uWO0K1DNkODBk2+3xUU+8Abi5kR/YzL4G3jsZ9T22hSO/MvzuvI
-	6h5QeRALrFETwpDpz1C7O6XGDeU4pwWZXXlgw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=AB0yPaitIwqKncm9xRwgfRcL4UXtXriS
-	CiOSiRB4nueUYwMal+V6Qh+B5/s+3ER5aypTt5d+n+bMqcjE5HZ+KpmPvTLjBzHW
-	HtHyEup41pZDuakCFG8Lj+G+OHACOgjC25o5gvXbNUOMXR/+cquIP4UgnPdfAWfo
-	AilJQ7bXk8M=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6DB546FF05;
-	Thu, 27 Feb 2014 13:04:47 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 75F6E6FEFD;
-	Thu, 27 Feb 2014 13:04:46 -0500 (EST)
-In-Reply-To: <20140227112734.GC29668@sigill.intra.peff.net> (Jeff King's
-	message of "Thu, 27 Feb 2014 06:27:34 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: A45449B4-9FD9-11E3-8AE2-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751720AbaB0SKx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Feb 2014 13:10:53 -0500
+Received: from mail-wi0-f180.google.com ([209.85.212.180]:33896 "EHLO
+	mail-wi0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751157AbaB0SKv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Feb 2014 13:10:51 -0500
+Received: by mail-wi0-f180.google.com with SMTP id hm4so3846132wib.7
+        for <git@vger.kernel.org>; Thu, 27 Feb 2014 10:10:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=hKnfi6tFsfwlIHYnc6Et0QPOgbDhoPQJouUJFLUsXm0=;
+        b=gRACzzR7yIZvUc+PmcO0gaVaRmZb9yFOUq3gnk2Fz98O3m0PKAhWlhXWKBNAz7WXq1
+         kaBm7/L4tjLp0DmIPHGShdHMjEAQGoC2kVK2ZM05pYimHWThUJ0Ivs7knLaKsUzaEhoo
+         7weCSjjgPIjB85UPgcKCfN8hTj58tFrI4/T+FGD3gHGV+AF8uMYm2B796qvdfOKDKw0G
+         Y5ypoVN8qJ7xjZ/EkrmHumS9H3zodXuX31ynnRBa/Y6LHk/wrjW8LzU7wo/K6x6E5OW+
+         LvAyPSx7xkzrJWXCIyChw9lwF9YSVU9GrZ1rlvQYMHBSYrd3puzsGnJNFr6jvUtfk6I/
+         QjHA==
+X-Received: by 10.180.219.44 with SMTP id pl12mr14560198wic.12.1393524650658;
+ Thu, 27 Feb 2014 10:10:50 -0800 (PST)
+Received: by 10.216.176.65 with HTTP; Thu, 27 Feb 2014 10:10:30 -0800 (PST)
+In-Reply-To: <20140226105249.GE25711@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242834>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242835>
 
-Jeff King <peff@peff.net> writes:
+On Wed, Feb 26, 2014 at 5:52 AM, Jeff King <peff@peff.net> wrote:
+> This seems like a reasonable feature to me. All of your examples are
+> possible with an "e"dit and another git command, but the convenience may
+> be worth it (though personally, most of the examples you gave are
+> particularly interesting to me[1]).
 
-> Of all of them, I think --pack-kept-objects is probably the best. And I
-> think we are hitting diminishing returns in thinking too much more on
-> the name. :)
+This strikes me as over-complicating the rebase --interactive
+interface. Particularly all of the ideas expressed later on about
+merge commits and resetting authors, etc. It seems like you're trying
+to define a whole new command set (i.e., API) for Git, but within the
+context of rebase --interactive. I think it would be hard to document
+this, and hard to learn it, and harder still to remember it (even
+though it would obviously try to mirror the existing Git command API).
+I honestly didn't know (or forgot) about the e"x"ec command, but that
+to me says that I can automate whatever I want without needing to make
+any changes to the rebase --interactive interface. The advantage to
+this is that we don't need to reinvent the square wheel that is the
+Git command API. We can just exec git ... with the exact same command
+set and options that we're already familiar with. No doubts about
+syntax or disparities, etc.
 
-True enough.
+I don't think it's my place to resist these changes; particularly
+because I don't think they'd necessarily affect me, except for maybe
+the proposed automatic merge support, but if that SOMEHOW actually
+works reliably and sensibly (i.e., to allow you to rebase over merges
+without losing the merges) I'm not sure I'd complain. That said, I do
+think that this is probably a bad direction and shouldn't be rushed
+into too fast. It seems like it would be a complicated thing to do,
+more complicated to do well, and I'm not sure that it would really
+improve things any. I'm not sure that users would prefer to use this
+over "e"diting and/or e"x"ecing instead. Plus where do you draw the
+line as far as which features to reproduce? How do you prevent scope
+creep?
 
-I wonder if it makes sense to link it with "pack.writebitmaps" more
-tightly, without even exposing it as a seemingly orthogonal knob
-that can be tweaked, though.
+> [1] The one feature I would like in this vein is that editing the title
+>     in the instruction-sheet would modify the commit message of the
+>     relevant commit. For some reason I try to do this every few weeks,
+>     but of course the changes are just thrown away.
 
-I think that is because I do not fully understand the ", because ..."
-part of the below:
+When I do this I am usually half asleep and it's a good reminder to
+pay attention to what I'm doing. I'd probably rather Git *error* when
+I change the subject line and tell me why it doesn't make sense and
+recommend "r"eword instead.
 
->> This patch introduces an option to disable the
->> `--honor-pack-keep` option.  It is not triggered by default,
->> even when pack.writeBitmaps is turned on, because its use
->> depends on your overall packing strategy and use of .keep
->> files.
+Regards,
 
-If you ask --write-bitmap-index (or have pack.writeBitmaps on), you
-do want the bitmap-index to be written, and unless you tell
-pack-objects to ignore the .keep marker, it cannot do so, no?
 
-Does the ", because ..." part above mean "you may have an overall
-packing strategy to use .keep file to not ever repack some subset of
-the objects, so we will not silently explode the kept objects into a
-new pack"?
+-- 
+Brandon McCaig <bamccaig@gmail.com> <bamccaig@castopulence.org>
+Castopulence Software <https://www.castopulence.org/>
+Blog <http://www.bamccaig.com/>
+perl -E '$_=q{V zrna gur orfg jvgu jung V fnl. }.
+q{Vg qbrfa'\''g nyjnlf fbhaq gung jnl.};
+tr/A-Ma-mN-Zn-z/N-Zn-zA-Ma-m/;say'
