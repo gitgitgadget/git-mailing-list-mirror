@@ -1,92 +1,186 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] shallow: verify shallow file after taking lock
-Date: Thu, 27 Feb 2014 17:18:58 +0700
-Message-ID: <CACsJy8AHwyy0wwFD3fu+Aak+k=bFM1NAWzVSs1G4389UWqZptg@mail.gmail.com>
-References: <1393485183-20100-1-git-send-email-pclouds@gmail.com>
- <20140227090426.GA21892@sigill.intra.peff.net> <20140227091012.GB21892@sigill.intra.peff.net>
- <20140227092227.GA28551@sigill.intra.peff.net>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 2/2] fetch: handle overlaping refspecs on --prune
+Date: Thu, 27 Feb 2014 11:21:53 +0100
+Message-ID: <530F11C1.7040407@alum.mit.edu>
+References: <1393491610-19476-1-git-send-email-cmn@elego.de> <1393491610-19476-2-git-send-email-cmn@elego.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Feb 27 11:19:46 2014
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?UTF-8?B?Q2FybG9zIE1hcnTDrW4gTmlldG8=?= <cmn@elego.de>
+X-From: git-owner@vger.kernel.org Thu Feb 27 11:22:06 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WIy48-0005Il-I7
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 11:19:44 +0100
+	id 1WIy6O-00079Y-Oz
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 11:22:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751193AbaB0KTa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Feb 2014 05:19:30 -0500
-Received: from mail-qg0-f48.google.com ([209.85.192.48]:61139 "EHLO
-	mail-qg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751006AbaB0KT3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Feb 2014 05:19:29 -0500
-Received: by mail-qg0-f48.google.com with SMTP id a108so5057520qge.7
-        for <git@vger.kernel.org>; Thu, 27 Feb 2014 02:19:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=WXdtsACClYIcC715qSp2CkoJgncpzuv2WlamJC9fCo4=;
-        b=JBw8au5/lt9ih61CZY7dIhnOiLNLNx6tJQKaNQ/XmAlBBaGYeTtVaW91Avm29aANol
-         UMdUCkajp+xbLBIa+1F2jG8au9Mm7YQ80L81woY2bdPYDVbEpzpwroFtZSVj8Gnz33eG
-         KT+Lism565rPLzkQG4/xlh0neGV6S9xO+/qBHHNt4q0ucbG+0SCCmgvRneobNRJ5T/+Q
-         2dAExH0irctxAEEUFbTvAz4ADvc9VguScDnHlcwunfWDv99SAGI+FaokwpRlQUo/0ZCH
-         vUEH6vSfaM1srh7aV5BIpnVehfEWkXQvQcryLizZ8CmyMY6SPiblr7F9WpVKxl7L0nic
-         f05A==
-X-Received: by 10.140.47.212 with SMTP id m78mr5762868qga.21.1393496368906;
- Thu, 27 Feb 2014 02:19:28 -0800 (PST)
-Received: by 10.96.215.102 with HTTP; Thu, 27 Feb 2014 02:18:58 -0800 (PST)
-In-Reply-To: <20140227092227.GA28551@sigill.intra.peff.net>
+	id S1751279AbaB0KV7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Feb 2014 05:21:59 -0500
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:63147 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751026AbaB0KV6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Feb 2014 05:21:58 -0500
+X-AuditID: 12074413-f79076d000002d17-14-530f11c5a61b
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id A0.16.11543.5C11F035; Thu, 27 Feb 2014 05:21:57 -0500 (EST)
+Received: from [192.168.69.148] (p57A24AC7.dip0.t-ipconnect.de [87.162.74.199])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s1RALrBl025944
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Thu, 27 Feb 2014 05:21:56 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
+In-Reply-To: <1393491610-19476-2-git-send-email-cmn@elego.de>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprNKsWRmVeSWpSXmKPExsUixO6iqHtUkD/Y4Pt8KYvpXatZLLqudDM5
+	MHlcWveSyePzJrkApihum6TEkrLgzPQ8fbsE7ozPnUvYCrYoVNyZ1sTYwLhUsouRk0NCwERi
+	ysp1jBC2mMSFe+vZuhi5OIQELjNKHJ7yhQXCOc8ksWPuVLAqXgFtifaPi4ASHBwsAqoSbx9G
+	goTZBHQlFvU0M4HYogLBEqsvP2CBKBeUODnzCZgtImAt0d+4FKyVWUBcov8fWFhYwFVi36E7
+	YLaQQK7EnWPb2UFsTgFbiYnfnjCDlEsAlfc0BkF0qkusnycEUsEsIC/RvHU28wRGwVlIds1C
+	qJqFpGoBI/MqRrnEnNJc3dzEzJzi1GTd4uTEvLzUIl1zvdzMEr3UlNJNjJDAFd7BuOuk3CFG
+	AQ5GJR7eE8x8wUKsiWXFlbmHGCU5mJREefew8wcL8SXlp1RmJBZnxBeV5qQWH2KU4GBWEuFd
+	zwSU401JrKxKLcqHSUlzsCiJ86otUfcTEkhPLEnNTk0tSC2CycpwcChJ8OoDI1RIsCg1PbUi
+	LTOnBCHNxMEJMpxLSqQ4NS8ltSixtCQjHhS58cXA2AVJ8QDttQRp5y0uSMwFikK0nmLU5bjd
+	9usToxBLXn5eqpQ4r70AUJEASFFGaR7cCliaesUoDvSxMC8nyCgeYIqDm/QKaAkT0JKj0jwg
+	S0oSEVJSDYzLF/c4Puztcz3N6uZwReuLeJnX9ZXX+PxkbXsZj7nbrOvfUmb/Yf4Om7B9cUIq
+	E3QrX6maHWOtmZ5998oG6Qpn3VWfDc3Nbia8TJiuVVy17sQKkysPVT3nn9UO2Jj8 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242800>
 
-On Thu, Feb 27, 2014 at 4:22 PM, Jeff King <peff@peff.net> wrote:
-> On Thu, Feb 27, 2014 at 04:10:12AM -0500, Jeff King wrote:
->
->> I also notice that check_shallow_file_for_update returns early if
->> !is_shallow. Is that safe? Is it possible for another process to have
->> made us shallow since the program began? In that case, we would have to
->> stat() the file always, then complain if it exists and !is_shallow.
-
-I think it's safer to do it your way.
-
->
-> That patch would look like this:
->
-> diff --git a/shallow.c b/shallow.c
-> index 75da07a..e05a241 100644
-> --- a/shallow.c
-> +++ b/shallow.c
-> @@ -139,13 +139,13 @@ void check_shallow_file_for_update(void)
+On 02/27/2014 10:00 AM, Carlos Mart=C3=ADn Nieto wrote:
+> From: Carlos Mart=C3=ADn Nieto <cmn@dwim.me>
+>=20
+> We need to consider that a remote-tracking branch may match more than
+> one rhs of a fetch refspec. In such a case, it is not enough to stop =
+at
+> the first match but look at all of the matches in order to determine
+> whether a head is stale.
+>=20
+> To this goal, introduce a variant of query_refspecs which returns all=
+ of
+> the matching refspecs and loop over those answers to check for
+> staleness.
+>=20
+> Signed-off-by: Carlos Mart=C3=ADn Nieto <cmn@elego.de>
+> ---
+>=20
+> There is an unfortunate duplication of code here, as
+> query_refspecs_multiple is mostly query_refspecs but we only care
+> about the other side of matching refspecs and disregard the 'force'
+> information which query_refspecs does want.
+>=20
+> I thought about putting both together via callbacks and having
+> query_refspecs stop at the first one, but I'm not sure that it would
+> make it easier to read or manage.
+>=20
+>  remote.c         | 52 ++++++++++++++++++++++++++++++++++++++++++++++=
++-----
+>  t/t5510-fetch.sh |  2 +-
+>  2 files changed, 48 insertions(+), 6 deletions(-)
+>=20
+> diff --git a/remote.c b/remote.c
+> index 9f1a8aa..26140c7 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -821,6 +821,33 @@ static int match_name_with_pattern(const char *k=
+ey, const char *name,
+>  	return ret;
+>  }
+> =20
+> +static void query_refspecs_multiple(struct refspec *refs, int ref_co=
+unt, struct refspec *query, struct string_list *results)
+> +{
+> +	int i;
+> +	int find_src =3D !query->src;
+> +
+> +	if (find_src && !query->dst)
+> +		error("query_refspecs_multiple: need either src or dst");
+> +
+> +	for (i =3D 0; i < ref_count; i++) {
+> +		struct refspec *refspec =3D &refs[i];
+> +		const char *key =3D find_src ? refspec->dst : refspec->src;
+> +		const char *value =3D find_src ? refspec->src : refspec->dst;
+> +		const char *needle =3D find_src ? query->dst : query->src;
+> +		char **result =3D find_src ? &query->src : &query->dst;
+> +
+> +		if (!refspec->dst)
+> +			continue;
+> +		if (refspec->pattern) {
+> +			if (match_name_with_pattern(key, needle, value, result)) {
+> +				string_list_append_nodup(results, *result);
+> +			}
+> +		} else if (!strcmp(needle, key)) {
+> +			string_list_append(results, value);
+> +		}
+> +	}
+> +}
+> +
+>  static int query_refspecs(struct refspec *refs, int ref_count, struc=
+t refspec *query)
 >  {
->         struct stat st;
->
-> -       if (!is_shallow)
-> -               return;
-> -       else if (is_shallow == -1)
-> +       if (is_shallow == -1)
->                 die("BUG: shallow must be initialized by now");
->
->         if (stat(git_path("shallow"), &st))
->                 die("shallow file was removed during fetch");
-> +       else if (!is_shallow)
-> +               die("shallow file appeared during fetch");
->         else if (st.st_mtime != shallow_stat.st_mtime
->  #ifdef USE_NSEC
->                  || ST_MTIME_NSEC(st) != ST_MTIME_NSEC(shallow_stat)
->
-> but again, I'm not really clear on whether this is possible.
->
-> -Peff
+>  	int i;
+> @@ -1954,25 +1981,40 @@ static int get_stale_heads_cb(const char *ref=
+name,
+>  	const unsigned char *sha1, int flags, void *cb_data)
+>  {
+>  	struct stale_heads_info *info =3D cb_data;
+> +	struct string_list matches =3D STRING_LIST_INIT_DUP;
+>  	struct refspec query;
+> +	int i, stale =3D 1;
+>  	memset(&query, 0, sizeof(struct refspec));
+>  	query.dst =3D (char *)refname;
+> =20
+> -	if (query_refspecs(info->refs, info->ref_count, &query))
+> +	query_refspecs_multiple(info->refs, info->ref_count, &query, &match=
+es);
+> +	if (matches.nr =3D=3D 0)
+>  		return 0; /* No matches */
+> =20
+>  	/*
+>  	 * If we did find a suitable refspec and it's not a symref and
+>  	 * it's not in the list of refs that currently exist in that
+> -	 * remote we consider it to be stale.
+> +	 * remote we consider it to be stale. In order to deal with
+> +	 * overlapping refspecs, we need to go over all of the
+> +	 * matching refs.
+>  	 */
+> -	if (!((flags & REF_ISSYMREF) ||
+> -	      string_list_has_string(info->ref_names, query.src))) {
+> +	if (flags & REF_ISSYMREF)
+> +		return 0;
+> +
+> +	for (i =3D 0; i < matches.nr; i++) {
+> +		if (string_list_has_string(info->ref_names, matches.items[i].strin=
+g)) {
+> +			stale =3D 0;
+> +			break;
+> +		}
+> +	}
+> +
+> +	string_list_clear(&matches, 0);
+> +
+> +	if (stale) {
+>  		struct ref *ref =3D make_linked_ref(refname, &info->stale_refs_tai=
+l);
+>  		hashcpy(ref->new_sha1, sha1);
+>  	}
+> =20
+> -	free(query.src);
+>  	return 0;
+>  }
 
+I didn't have time to review this fully, but I think you are missing
+calls to string_list_clear(&matches) on a couple of code paths.
 
+Michael
 
--- 
-Duy
+--=20
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
