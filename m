@@ -1,76 +1,65 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v4] tag: support --sort=<spec>
-Date: Thu, 27 Feb 2014 08:11:00 -0500
-Message-ID: <20140227131100.GA22783@sigill.intra.peff.net>
-References: <1393330935-22229-1-git-send-email-pclouds@gmail.com>
- <1393505812-7171-1-git-send-email-pclouds@gmail.com>
+From: "Dmitry S. Dolzhenko" <dmitrys.dolzhenko@yandex.ru>
+Subject: Re: [PATCH] branch: change install_branch_config() to use skip_prefix()
+Date: Thu, 27 Feb 2014 17:05:48 +0400
+Message-ID: <530F382C.2030101@yandex.ru>
+References: <530F1DED.50308@yandex.ru> <530F248B.6030506@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 27 14:11:18 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Thu Feb 27 14:17:06 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJ0k4-0007RN-VN
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 14:11:13 +0100
+	id 1WJ0pl-0004hP-5G
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 14:17:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752891AbaB0NLF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Feb 2014 08:11:05 -0500
-Received: from cloud.peff.net ([50.56.180.127]:58022 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751898AbaB0NLC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Feb 2014 08:11:02 -0500
-Received: (qmail 24243 invoked by uid 102); 27 Feb 2014 13:11:01 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 27 Feb 2014 07:11:01 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 27 Feb 2014 08:11:00 -0500
-Content-Disposition: inline
-In-Reply-To: <1393505812-7171-1-git-send-email-pclouds@gmail.com>
+	id S1751613AbaB0NRA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Feb 2014 08:17:00 -0500
+Received: from forward4l.mail.yandex.net ([84.201.143.137]:57232 "EHLO
+	forward4l.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751026AbaB0NQ7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Feb 2014 08:16:59 -0500
+X-Greylist: delayed 626 seconds by postgrey-1.27 at vger.kernel.org; Thu, 27 Feb 2014 08:16:59 EST
+Received: from smtp4o.mail.yandex.net (smtp4o.mail.yandex.net [37.140.190.29])
+	by forward4l.mail.yandex.net (Yandex) with ESMTP id 8AF421440FD9;
+	Thu, 27 Feb 2014 17:06:31 +0400 (MSK)
+Received: from smtp4o.mail.yandex.net (localhost [127.0.0.1])
+	by smtp4o.mail.yandex.net (Yandex) with ESMTP id 2FAF923213DD;
+	Thu, 27 Feb 2014 17:06:31 +0400 (MSK)
+Received: from unknown (unknown [31.181.12.71])
+	by smtp4o.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id mqsDdEQp8s-6U88CED9;
+	Thu, 27 Feb 2014 17:06:30 +0400
+	(using TLSv1 with cipher CAMELLIA256-SHA (256/256 bits))
+	(Client certificate not present)
+X-Yandex-Uniq: e4dcdc3b-20c0-42ac-8099-af4d03947580
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1393506390;
+	bh=FYTOfI9Rr9qducVSNlaNuD4lDSITlr31UN0fo0+ziJ4=;
+	h=Message-ID:Date:From:User-Agent:MIME-Version:To:CC:Subject:
+	 References:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	b=wTio6KRmnZJ+e+3iJ47Ui63hwCOh6c5YMdUiAk5ftjx/wxNXVeoh/OT4RQxQJ/gEz
+	 CQ0N9rk7n1hDt+b46LzuWKT9TdoF4yMUIduf43urxqh/a/hpToUb/4SK35mH8BRKlX
+	 8O7MmuXh5rTF5WRwIia6ZThut9FcWbdfsF/wxTzY=
+Authentication-Results: smtp4o.mail.yandex.net; dkim=pass header.i=@yandex.ru
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20131103 Icedove/17.0.10
+In-Reply-To: <530F248B.6030506@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242818>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242819>
 
-On Thu, Feb 27, 2014 at 07:56:52PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
-=BB=8Dc Duy wrote:
+Michael,
 
-> --sort=3Dversion:refname (or --sort=3Dv:refname for short) sorts tags=
- as
-> if they are versions. --sort=3D-refname reverses the order (with or
-> without ":version").
->=20
-> versioncmp() is copied from string/strverscmp.c in glibc commit
-> ee9247c38a8def24a59eb5cfb7196a98bef8cfdc, reformatted to Git coding
-> style. The implementation is under LGPL-2.1 and according to [1] I ca=
-n
-> relicense it to GPLv2.
+Thank you for your remarks.
 
-This looks good to me. One minor typo:
+> If you look at what skip_prefix() and starts_with() do, I think you will
+> find that you are doing too much work here.
 
-> diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-> index 404257d..9b05931 100644
-> --- a/Documentation/git-tag.txt
-> +++ b/Documentation/git-tag.txt
-> @@ -95,6 +95,12 @@ OPTIONS
->  	using fnmatch(3)).  Multiple patterns may be given; if any of
->  	them matches, the tag is shown.
-> =20
-> +--sort=3D<type>::
-> +	Sort in a specific order. Supported type is "refname"
-> +	(lexicographic order), "version:refname" or "v:refname" (tags
-> +	name are treated as versions). Prepend "-" to reverse sort
+How about this one?
 
-s/tags name/tag names/
-
-You had mentioned earlier tweaking the version comparison to handle
-things like -rc better. I think that can come on top of this initial
-patch, but we should probably figure out the final sort order before
-including this in a release.
-
--Peff
+	const char *shortname = skip_prefix(remote, "refs/heads/");
+	int remote_is_branch = shortname != NULL;
