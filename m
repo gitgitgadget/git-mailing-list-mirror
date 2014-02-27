@@ -1,86 +1,156 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v3 10/25] Add new environment variable $GIT_COMMON_DIR
-Date: Thu, 27 Feb 2014 10:03:15 +0700
-Message-ID: <CACsJy8ChMq7cW-H4oSCi8QdMjb2Juqi=Y4k_+5395qA51RxN0g@mail.gmail.com>
-References: <1392730814-19656-1-git-send-email-pclouds@gmail.com>
- <1392730814-19656-11-git-send-email-pclouds@gmail.com> <xmqqzjld1l59.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] archive: add archive.restrictRemote option
+Date: Wed, 26 Feb 2014 23:05:05 -0500
+Message-ID: <20140227040504.GA2242@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 27 04:03:52 2014
+Content-Type: text/plain; charset=utf-8
+Cc: "Scott J. Goldman" <scottjg@github.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 27 05:05:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WIrGJ-0005pv-Vo
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 04:03:52 +0100
+	id 1WIsDj-0000VC-Va
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 05:05:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753077AbaB0DDq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Feb 2014 22:03:46 -0500
-Received: from mail-qc0-f179.google.com ([209.85.216.179]:58551 "EHLO
-	mail-qc0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751929AbaB0DDq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 26 Feb 2014 22:03:46 -0500
-Received: by mail-qc0-f179.google.com with SMTP id r5so2583837qcx.38
-        for <git@vger.kernel.org>; Wed, 26 Feb 2014 19:03:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=BtnqYh+d2Sp0yMTPOIg7sETGhFarwPdVm3oBjoRttQM=;
-        b=VjdJPLs6b9tCBVbvgzWvjkAQVP/IhbMU1IYk/k1vmt8pl8FxXqyEh7Ns6IsO1omoh2
-         1puAjnKo3Hsu820+YFex1xLgSSiH/qeue29J7ItzuMUcOS7G0TAgFTuOJCTuZ8X+3fsr
-         MZAtiFHmFyaDjlxrPZZ6qBYgADa/uFEj7UvrlFZyu6KJev+kfvb3zOq8nwxtUvvnzbib
-         e7e9OPor6JEyBaSwYT8aimqFWZfEntomwoENbrO5z+Z+7TQg7OHuKMKrRIah2JP2Dwsg
-         QG8ugcKbrviDwWtE602JrfX88APfHLa8ZTzGKF2z3iwzKcC8UmCrjuVDWi3spaKvvMvo
-         Dklw==
-X-Received: by 10.140.47.212 with SMTP id m78mr3905892qga.21.1393470225524;
- Wed, 26 Feb 2014 19:03:45 -0800 (PST)
-Received: by 10.96.215.102 with HTTP; Wed, 26 Feb 2014 19:03:15 -0800 (PST)
-In-Reply-To: <xmqqzjld1l59.fsf@gitster.dls.corp.google.com>
+	id S1754058AbaB0EFJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Feb 2014 23:05:09 -0500
+Received: from cloud.peff.net ([50.56.180.127]:57767 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751700AbaB0EFI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Feb 2014 23:05:08 -0500
+Received: (qmail 28313 invoked by uid 102); 27 Feb 2014 04:05:07 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 26 Feb 2014 22:05:07 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 26 Feb 2014 23:05:05 -0500
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242783>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242784>
 
-On Thu, Feb 27, 2014 at 6:58 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
-:
->
->> Note that logs/refs/.tmp-renamed-log is used to prepare new reflog
->> entry and it's supposed to be on the same filesystem as the target
->> reflog file. This is not guaranteed true for logs/HEAD when it's
->> mapped to repos/xx/logs/HEAD because the user can put "repos"
->> directory on different filesystem. Don't mess with .git unless you
->> know what you're doing.
->
-> Hmph.  I am puzzled.
->
-> We use TMP_RENAMED_LOG in rename_ref() in this sequence:
->
->  * First move refs/logs/$oldname to TMP_RENAMED_LOG;
->  * Delete refs/$oldname;
->  * Delete refs/$newname if exists;
->  * Move TMP_RENAMED_LOG to refs/logs/$newname;
->  * Create refs/$newname.
->
-> in rename_ref(), and TMP_RENAMED_LOG or the helper function
-> rename_tmp_log() that does the actual rename do not seem to be
-> called by any other codepath.
->
-> How would logs/HEAD get in the picture?  Specifically, I am not sure
-> if we ever allow renaming the HEAD (which typically is a symref but
-> could be detached) via rename_ref() at all.
+From: Scott J. Goldman <scottjg@github.com>
 
-HEAD is an exception, I agree. If you rename HEAD to something else,
-the repo will not be recognized anymore because HEAD is part of the
-repo signature. There are other refs outside refs/ though that can be
-renamed in theory.  In practice all rename_ref() callers only operate
-on refs/ domain so this is a false alarm.
---=20
-Duy
+In commit ee27ca4, we started restricting remote git-archive
+invocations to only accessing reachable commits. This
+matches what upload-pack allows, but does restrict some
+useful cases (e.g., HEAD:foo). We loosened this in 0f544ee,
+which allows `foo:bar` as long as `foo` is a ref tip.
+However, that still doesn't allow many useful things, like:
+
+  1. Commits accessible from a ref, like `foo^:bar`, which
+     is reachable
+
+  2. Arbitrary sha1s, even if they are reachable.
+
+We can do a full object-reachability check for these cases,
+but it can be quite expensive if the client has sent us the
+sha1 of a tree; we have to visit every sub-tree of every
+commit in the worst case.
+
+Let's instead give site admins an escape hatch, in case they
+prefer the more liberal behavior.  For many sites, the full
+object database is public anyway (e.g., if you allow dumb
+walker access), or the site admin may simply decide the
+security/convenience tradeoff is not worth it.
+
+This patch adds a new config option to turn off the
+restrictions added in ee27ca4. It defaults to on, meaning
+there is no change in behavior by default.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ Documentation/git-archive.txt |  7 +++++++
+ archive.c                     | 13 +++++++++++--
+ t/t5000-tar-tree.sh           |  9 +++++++++
+ 3 files changed, 27 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-archive.txt b/Documentation/git-archive.txt
+index b97aaab..486cb08 100644
+--- a/Documentation/git-archive.txt
++++ b/Documentation/git-archive.txt
+@@ -121,6 +121,13 @@ tar.<format>.remote::
+ 	user-defined formats, but true for the "tar.gz" and "tgz"
+ 	formats.
+ 
++archive.restrictRemote::
++	If true, archives can only be requested by refnames. If false,
++	allows remote archive requests from arbitrary revisions. This
++	can be a security hazard, as archives could be requested for
++	unreachable commits that have been pruned from the repository.
++	Defaults to true.
++
+ [[ATTRIBUTES]]
+ ATTRIBUTES
+ ----------
+diff --git a/archive.c b/archive.c
+index 346f3b2..13eb23a 100644
+--- a/archive.c
++++ b/archive.c
+@@ -17,6 +17,7 @@ static char const * const archive_usage[] = {
+ static const struct archiver **archivers;
+ static int nr_archivers;
+ static int alloc_archivers;
++static int git_archive_restrict_remote = 1;
+ 
+ void register_archiver(struct archiver *ar)
+ {
+@@ -257,7 +258,7 @@ static void parse_treeish_arg(const char **argv,
+ 	unsigned char sha1[20];
+ 
+ 	/* Remotes are only allowed to fetch actual refs */
+-	if (remote) {
++	if (remote && git_archive_restrict_remote) {
+ 		char *ref = NULL;
+ 		const char *colon = strchr(name, ':');
+ 		int refnamelen = colon ? colon - name : strlen(name);
+@@ -401,6 +402,14 @@ static int parse_archive_args(int argc, const char **argv,
+ 	return argc;
+ }
+ 
++static int git_default_archive_config(const char *var, const char *value,
++				      void *cb)
++{
++	if (!strcmp(var, "archive.restrictremote"))
++		git_archive_restrict_remote = git_config_bool(var, value);
++	return git_default_config(var, value, cb);
++}
++
+ int write_archive(int argc, const char **argv, const char *prefix,
+ 		  int setup_prefix, const char *name_hint, int remote)
+ {
+@@ -411,7 +420,7 @@ int write_archive(int argc, const char **argv, const char *prefix,
+ 	if (setup_prefix && prefix == NULL)
+ 		prefix = setup_git_directory_gently(&nongit);
+ 
+-	git_config(git_default_config, NULL);
++	git_config(git_default_archive_config, NULL);
+ 	init_tar_archiver();
+ 	init_zip_archiver();
+ 
+diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
+index 05f011d..eba285f 100755
+--- a/t/t5000-tar-tree.sh
++++ b/t/t5000-tar-tree.sh
+@@ -213,6 +213,15 @@ test_expect_success 'clients cannot access unreachable commits' '
+ 	test_must_fail git archive --remote=. $sha1 >remote.tar
+ '
+ 
++test_expect_success 'clients can access unreachable commits' '
++	test_commit unreachable1 &&
++	sha1=`git rev-parse HEAD` &&
++	git reset --hard HEAD^ &&
++	git archive $sha1 >remote.tar &&
++	test_config archive.restrictRemote false &&
++	git archive --remote=. $sha1 >remote.tar
++'
++
+ test_expect_success 'setup tar filters' '
+ 	git config tar.tar.foo.command "tr ab ba" &&
+ 	git config tar.bar.command "tr ab ba" &&
+-- 
+1.8.5.2.500.g8060133
