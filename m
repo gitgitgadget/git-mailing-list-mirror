@@ -1,68 +1,65 @@
-From: Sun He <sunheehnus@gmail.com>
-Subject: [PATCH] Change branch.c:install_branch_config()
-Date: Thu, 27 Feb 2014 20:27:41 +0800
-Message-ID: <1393504061-30008-1-git-send-email-sunheehnus@gmail.com>
-Cc: Sun He <sunheehnus@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 27 13:29:12 2014
+From: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+Subject: Re: An idea for "git bisect" and a GSoC enquiry
+Date: Thu, 27 Feb 2014 13:09:52 +0100 (CET)
+Message-ID: <239563375.177900.1393502992014.JavaMail.zimbra@imag.fr>
+References: <CAL0uuq0=Zo0X8mYRD6q-Q+QAcZhfmxOwKiRegDrRm3O_i0Q+EA@mail.gmail.com> <530F1F11.7060403@alum.mit.edu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Jacopo Notarstefano <jacopo.notarstefano@gmail.com>,
+	git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Thu Feb 27 13:32:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJ05P-0004cL-Lb
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 13:29:12 +0100
+	id 1WJ08Q-0001sE-J2
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 13:32:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752212AbaB0M3H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Feb 2014 07:29:07 -0500
-Received: from mail-pb0-f51.google.com ([209.85.160.51]:49610 "EHLO
-	mail-pb0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751771AbaB0M3F (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Feb 2014 07:29:05 -0500
-Received: by mail-pb0-f51.google.com with SMTP id un15so2462840pbc.38
-        for <git@vger.kernel.org>; Thu, 27 Feb 2014 04:29:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=/7w5Nyh9f43bAEofc0CLi71xO/jeG89VWbqpVV4+9Sk=;
-        b=qy64/o2mNn6dGjBm4aHW5qo5cE1HS9T6R0I22ugZdL3DCy2b+JsSSQuok5NNpctJEu
-         zPN8y33CJh0OftLgn9P/2d0ZzqA63YVisUSDJ5vzoBiB9/PZoz5e/JqETYtUFxybvG/0
-         agO2cIrDq+37J24UiNIW1Uynir7r16uGI4IwbjZevGJckBvZBOefPJNM2NvN9b9zpr9J
-         kdRCAt2dhTcTydUSWxiRf2V602SFa3yO+RGh+5bohcvrS9o66HQLAgaxuVURUQPNALgF
-         evOwOMBvm1oq4KjsyzrYkV2l+BsfrQiXEWosHLsdcAC1bxK/NkVrWaE64nb6hUA5j8ML
-         QoRQ==
-X-Received: by 10.66.122.36 with SMTP id lp4mr15215063pab.82.1393504144467;
-        Thu, 27 Feb 2014 04:29:04 -0800 (PST)
-Received: from localhost.localdomain ([61.150.43.99])
-        by mx.google.com with ESMTPSA id ha2sm13124196pbb.8.2014.02.27.04.29.01
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 27 Feb 2014 04:29:03 -0800 (PST)
-X-Mailer: git-send-email 1.7.1
+	id S1752754AbaB0McN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Feb 2014 07:32:13 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:38211 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752453AbaB0McL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Feb 2014 07:32:11 -0500
+X-Greylist: delayed 1330 seconds by postgrey-1.27 at vger.kernel.org; Thu, 27 Feb 2014 07:32:11 EST
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s1RC9oGk030787
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 27 Feb 2014 13:09:50 +0100
+Received: from z8-mb-verimag.imag.fr (z8-mb-verimag.imag.fr [129.88.4.38])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s1RC9p9X001506;
+	Thu, 27 Feb 2014 13:09:51 +0100
+In-Reply-To: <530F1F11.7060403@alum.mit.edu>
+X-Originating-IP: [129.88.6.115]
+X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - FF27 (Linux)/8.0.6_GA_5922)
+Thread-Topic: An idea for "git bisect" and a GSoC enquiry
+Thread-Index: d08UKGHnPU+sN9Naj6jCDVgW6tCRXg==
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 27 Feb 2014 13:09:50 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s1RC9oGk030787
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@imag.fr
+MailScanner-NULL-Check: 1394107793.20235@kShTAd21QCPiew+ys5GYhA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242815>
 
+----- Original Message -----
+> I don't understand the benefit of adding a new command "mark" rather
+> than continuing to use "good", "bad", plus new commands "unfixed" and
+> "fixed".  Does this solve any problems?
 
-Signed-off-by: Sun He <sunheehnus@gmail.com>
----
- branch.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+I think it could be interesting to allow arbitrary words here. For example, I recently walked through history to find a performance regression, it would have been natural to use slow/fast instead of bad/good (bad/good would actually do the job, but slightly less naturally). One can look for a change which is neither a fix nor a bug (e.g. when did command foo start behaving like that? when did we start using such or such feature in the code).
 
-diff --git a/branch.c b/branch.c
-index 723a36b..2fe9c05 100644
---- a/branch.c
-+++ b/branch.c
-@@ -50,7 +50,7 @@ static int should_setup_rebase(const char *origin)
- void install_branch_config(int flag, const char *local, const char *origin, const char *remote)
- {
- 	const char *shortname = remote + 11;
--	int remote_is_branch = starts_with(remote, "refs/heads/");
-+	int remote_is_branch = skip_prefix(remote,"refs/heads")!=NULL;
- 	struct strbuf key = STRBUF_INIT;
- 	int rebasing = should_setup_rebase(origin);
- 
+I wouldn't fight for it, but I think it makes sense.
+
 -- 
-1.7.1
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
