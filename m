@@ -1,73 +1,225 @@
-From: Ilya Bobyr <ilya.bobir@gmail.com>
-Subject: [PATCH] gitk: replace SHA1 entry field on keyboard paste
-Date: Thu, 27 Feb 2014 01:56:52 -0800
-Message-ID: <530F0BE4.1040609@gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] upload-pack: allow shallow fetching from a read-only repository
+Date: Thu, 27 Feb 2014 17:11:41 +0700
+Message-ID: <CACsJy8Di7vVhZzzHhavTPupbgeiKr70psq_U33C8i4c+auJxUA@mail.gmail.com>
+References: <1393485183-20100-1-git-send-email-pclouds@gmail.com> <20140227090426.GA21892@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 27 10:57:51 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Feb 27 11:12:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WIxiv-0004Gj-JG
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 10:57:49 +0100
+	id 1WIxx6-0007Em-Ax
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 11:12:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750918AbaB0J5L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Feb 2014 04:57:11 -0500
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:59983 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750781AbaB0J5J (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Feb 2014 04:57:09 -0500
-Received: by mail-pa0-f43.google.com with SMTP id rd3so2289596pab.2
-        for <git@vger.kernel.org>; Thu, 27 Feb 2014 01:57:08 -0800 (PST)
+	id S1751974AbaB0KMR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Feb 2014 05:12:17 -0500
+Received: from mail-qc0-f182.google.com ([209.85.216.182]:57989 "EHLO
+	mail-qc0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751885AbaB0KMM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Feb 2014 05:12:12 -0500
+Received: by mail-qc0-f182.google.com with SMTP id e16so1130628qcx.13
+        for <git@vger.kernel.org>; Thu, 27 Feb 2014 02:12:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        bh=Eu0M+ltr/iLAInJKCbfJKtSvYLsKY3CGxo7/RVCpez4=;
-        b=KEu+waGhVF8LLuMSjUHlmtTgQMJNzBELZi0E7G4ZNzTnOFWOJjVPdwS5LLKkFSOi7b
-         v9NgdcBO2wVb653ciQITCZMASuYHYsY6O0vt0snzM5NIGodvFczj6pa+B7nKTiX5CXAo
-         ONTjHTou4he191A6nz2Zhmrc9TVGxaIY6i5UAHA4iqa6+q4zyTOpmUO3kwF9LIqtJI49
-         ROlFLotHvizBTy2f2eRyc/eELEUS/xsFtm7fhnhG90WpWLgSg7sTO7hOFijy7vpg68bh
-         ffynmReetx7lJ6uHCZL+VoSauheRsVutVnObLi24w9uhgHOXcKcrvr6WfLd/LkZNBy9i
-         Xgzg==
-X-Received: by 10.68.178.66 with SMTP id cw2mr12227959pbc.89.1393495028542;
-        Thu, 27 Feb 2014 01:57:08 -0800 (PST)
-Received: from [192.168.1.2] (c-50-136-172-14.hsd1.ca.comcast.net. [50.136.172.14])
-        by mx.google.com with ESMTPSA id bz4sm11769624pbb.12.2014.02.27.01.57.07
-        for <git@vger.kernel.org>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 27 Feb 2014 01:57:07 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:27.0) Gecko/20100101 Thunderbird/27.0
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=bKLz9Hsoh34vQs2/yibxCD+WFGdSKPEcIJv7Eb+IBhE=;
+        b=S/jn7d+Oh8azAT3HiCOHtqnfCmWLTPIDCYHZ9G2q4unFlmnnpx+YnveqZYBVMrZWM6
+         QuTiBVUiQ10V+OX2/uJtYSF7B2mbazPVOM3yS8lZElaUSNwvcrOmdvDbgAGIjJRBQF6E
+         RcA+owR4SojgXNA0UZcU1WStSGffdbDDGdPVjcfgmmME/cPP/1bFpf9IejSxDomk4t6y
+         86sdIvFw2iysFk5OvpKh7lwYbPEdnPHqEZZuamSUjhiCKg45IITgbmevNFyXGTnmkBJP
+         MMhb/uYUybcXTPSOuCjf3G3m/uvNS5ZeXr/V24N40rIgdgfU3WMQrjtwaZFqRYFi1xQG
+         LRSA==
+X-Received: by 10.140.93.130 with SMTP id d2mr5667145qge.41.1393495931766;
+ Thu, 27 Feb 2014 02:12:11 -0800 (PST)
+Received: by 10.96.215.102 with HTTP; Thu, 27 Feb 2014 02:11:41 -0800 (PST)
+In-Reply-To: <20140227090426.GA21892@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242798>
 
-We already replace old SHA with the clipboard content for the mouse
-paste event.  It seems reasonable to do the same when pasting from
-keyboard.
+On Thu, Feb 27, 2014 at 4:04 PM, Jeff King <peff@peff.net> wrote:
+> This is not introduced by your patch, but I notice that we do not seem
+> to do anything with the tempfiles when the program dies prematurely.
+> We've started collecting stale shallow_XXXXXX files in our server repos.
+>
+> For the writable cases, should we be using the lockfile API to take
+> shallow.lock? It looks like we do take a lock on it, but only after the
+> fetch, and then we have to do a manual check for it having moved (by the
+> way, shouldn't we do that check under the lock? I think
+> setup_alternate_shallow has a race condition).
+>
+> I guess the reason to take the lock at the last minute is that the whole
+> fetch is heavyweight. But if the fetches are going to conflict, perhaps
+> it is better to have lock contention at the beginning, rather than
+> failing only at the end. I don't know very much about the shallow
+> system; does each operation rewrite the shallow file, or is it often
+> left untouched (in which case two simultaneous fetches could coexist
+> most of the time).
 
-Signed-off-by: Ilya Bobyr <ilya.bobyr@gmail.com>
----
-  gitk-git/gitk |    1 +
-  1 files changed, 1 insertions(+), 0 deletions(-)
+For writable cases (fetch-pack and receive-pack), yes I think locking
+earlier is better or multiple fetches/pushes will race to update
+shallow file. Chances of racing fetches are practically near zero, I
+think. We need to do something about push.
 
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index 90764e8..2f58bcf 100755
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -2585,6 +2585,7 @@ proc makewindow {} {
-      bind $fstring <Key-Return> {dofind 1 1}
-      bind $sha1entry <Key-Return> {gotocommit; break}
-      bind $sha1entry <<PasteSelection>> clearsha1
-+    bind $sha1entry <<Paste>> clearsha1
-      bind $cflist <1> {sel_flist %W %x %y; break}
-      bind $cflist <B1-Motion> {sel_flist %W %x %y; break}
-      bind $cflist <ButtonRelease-1> {treeclick %W %x %y}
---
-1.7.9
+We only update shallow file in these cases: clone --depth, fetch
+--update-shallow, fetch --depth, and push when receive.shallowupdate
+is set. All of them may end up not updating shallow file though. The
+last case is the most troublesome because receive.shallowupdate is set
+at server side and we don't want any shallow push to block all other
+shallow pushes..
+
+For read-only case in upload-file, locking only reduces the
+availability of clone/fetch.
+
+> At any rate, if we used the lockfile API, it handles tempfile cleanup
+> automatically. Otherwise, I think we need something like the patch
+> below (in the interest of simplicity, I just drop all of the explicit
+> unlinks and let them use the atexit handler to clean up; you could also
+> add a function to explicitly unlink the tempfile and clear the handler).
+
+Looks like a good thing to do anyway.
+
+>
+> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+> index 85bba35..ac1d9b5 100644
+> --- a/builtin/receive-pack.c
+> +++ b/builtin/receive-pack.c
+> @@ -833,8 +833,6 @@ static void execute_commands(struct command *commands,
+>                         error("BUG: run 'git fsck' for safety.\n"
+>                               "If there are errors, try to remove "
+>                               "the reported refs above");
+> -               if (alt_shallow_file && *alt_shallow_file)
+> -                       unlink(alt_shallow_file);
+>         }
+>  }
+>
+> @@ -1087,10 +1085,6 @@ static void update_shallow_info(struct command *commands,
+>                         cmd->skip_update = 1;
+>                 }
+>         }
+> -       if (alt_shallow_file && *alt_shallow_file) {
+> -               unlink(alt_shallow_file);
+> -               alt_shallow_file = NULL;
+> -       }
+>         free(ref_status);
+>  }
+>
+> diff --git a/fetch-pack.c b/fetch-pack.c
+> index 90fdd49..ae8550e 100644
+> --- a/fetch-pack.c
+> +++ b/fetch-pack.c
+> @@ -947,17 +947,6 @@ static void update_shallow(struct fetch_pack_args *args,
+>         if (!si->shallow || !si->shallow->nr)
+>                 return;
+>
+> -       if (alternate_shallow_file) {
+> -               /*
+> -                * The temporary shallow file is only useful for
+> -                * index-pack and unpack-objects because it may
+> -                * contain more roots than we want. Delete it.
+> -                */
+> -               if (*alternate_shallow_file)
+> -                       unlink(alternate_shallow_file);
+> -               free((char *)alternate_shallow_file);
+> -       }
+> -
+>         if (args->cloning) {
+>                 /*
+>                  * remote is shallow, but this is a clone, there are
+> diff --git a/shallow.c b/shallow.c
+> index bbc98b5..0f2bb48 100644
+> --- a/shallow.c
+> +++ b/shallow.c
+> @@ -8,6 +8,7 @@
+>  #include "diff.h"
+>  #include "revision.h"
+>  #include "commit-slab.h"
+> +#include "sigchain.h"
+>
+>  static int is_shallow = -1;
+>  static struct stat shallow_stat;
+> @@ -216,27 +217,49 @@ int write_shallow_commits(struct strbuf *out, int use_pack_protocol,
+>         return write_shallow_commits_1(out, use_pack_protocol, extra, 0);
+>  }
+>
+> +static struct strbuf shallow_tmpfile = STRBUF_INIT;
+> +
+> +static void remove_shallow_tmpfile(void)
+> +{
+> +       if (shallow_tmpfile.len) {
+> +               unlink_or_warn(shallow_tmpfile.buf);
+> +               strbuf_reset(&shallow_tmpfile);
+> +       }
+> +}
+> +
+> +static void remove_shallow_tmpfile_on_signal(int signo)
+> +{
+> +       remove_shallow_tmpfile();
+> +       sigchain_pop(signo);
+> +       raise(signo);
+> +}
+> +
+>  char *setup_temporary_shallow(const struct sha1_array *extra)
+>  {
+>         struct strbuf sb = STRBUF_INIT;
+>         int fd;
+>
+>         if (write_shallow_commits(&sb, 0, extra)) {
+> -               struct strbuf path = STRBUF_INIT;
+> -               strbuf_addstr(&path, git_path("shallow_XXXXXX"));
+> -               fd = xmkstemp(path.buf);
+> +               strbuf_addstr(&shallow_tmpfile, git_path("shallow_XXXXXX"));
+> +               fd = xmkstemp(shallow_tmpfile.buf);
+> +
+> +               /* XXX can there be multiple shallow tempfiles in one program?
+> +                * In that case, we would need to maintain a list */
+> +               atexit(remove_shallow_tmpfile);
+> +               sigchain_push_common(remove_shallow_tmpfile_on_signal);
+> +
+>                 if (write_in_full(fd, sb.buf, sb.len) != sb.len)
+>                         die_errno("failed to write to %s",
+> -                                 path.buf);
+> +                                 shallow_tmpfile.buf);
+>                 close(fd);
+>                 strbuf_release(&sb);
+> -               return strbuf_detach(&path, NULL);
+> +               return shallow_tmpfile.buf;
+>         }
+>         /*
+>          * is_repository_shallow() sees empty string as "no shallow
+>          * file".
+>          */
+> -       return xstrdup("");
+> +       return shallow_tmpfile.buf;
+>  }
+>
+>  void setup_alternate_shallow(struct lock_file *shallow_lock,
+> diff --git a/upload-pack.c b/upload-pack.c
+> index 0c44f6b..55c1f71 100644
+> --- a/upload-pack.c
+> +++ b/upload-pack.c
+> @@ -242,11 +242,6 @@ static void create_pack_file(void)
+>                 error("git upload-pack: git-pack-objects died with error.");
+>                 goto fail;
+>         }
+> -       if (shallow_file) {
+> -               if (*shallow_file)
+> -                       unlink(shallow_file);
+> -               free(shallow_file);
+> -       }
+>
+>         /* flush the data */
+>         if (0 <= buffered) {
+
+
+
+-- 
+Duy
