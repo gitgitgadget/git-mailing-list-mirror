@@ -1,104 +1,154 @@
-From: Brandon McCaig <bamccaig@gmail.com>
-Subject: Re: GSoC idea: allow "git rebase --interactive" todo lines to take options
-Date: Thu, 27 Feb 2014 13:10:30 -0500
-Message-ID: <CANUGeEY2qE2LPq=-bhaKrKrv+uJUaPRqAeW_X1sFyZH-_PRVeA@mail.gmail.com>
-References: <530DA00E.4090402@alum.mit.edu> <20140226105249.GE25711@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] archive: add archive.restrictRemote option
+Date: Thu, 27 Feb 2014 10:37:30 -0800
+Message-ID: <xmqqtxbkz9jp.fsf@gitster.dls.corp.google.com>
+References: <20140227040504.GA2242@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	git discussion list <git@vger.kernel.org>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Scott J. Goldman" <scottjg@github.com>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Feb 27 19:11:18 2014
+X-From: git-owner@vger.kernel.org Thu Feb 27 19:37:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJ5QT-0007Mm-7B
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 19:11:17 +0100
+	id 1WJ5q1-0005C6-Se
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 19:37:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751720AbaB0SKx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Feb 2014 13:10:53 -0500
-Received: from mail-wi0-f180.google.com ([209.85.212.180]:33896 "EHLO
-	mail-wi0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751157AbaB0SKv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Feb 2014 13:10:51 -0500
-Received: by mail-wi0-f180.google.com with SMTP id hm4so3846132wib.7
-        for <git@vger.kernel.org>; Thu, 27 Feb 2014 10:10:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=hKnfi6tFsfwlIHYnc6Et0QPOgbDhoPQJouUJFLUsXm0=;
-        b=gRACzzR7yIZvUc+PmcO0gaVaRmZb9yFOUq3gnk2Fz98O3m0PKAhWlhXWKBNAz7WXq1
-         kaBm7/L4tjLp0DmIPHGShdHMjEAQGoC2kVK2ZM05pYimHWThUJ0Ivs7knLaKsUzaEhoo
-         7weCSjjgPIjB85UPgcKCfN8hTj58tFrI4/T+FGD3gHGV+AF8uMYm2B796qvdfOKDKw0G
-         Y5ypoVN8qJ7xjZ/EkrmHumS9H3zodXuX31ynnRBa/Y6LHk/wrjW8LzU7wo/K6x6E5OW+
-         LvAyPSx7xkzrJWXCIyChw9lwF9YSVU9GrZ1rlvQYMHBSYrd3puzsGnJNFr6jvUtfk6I/
-         QjHA==
-X-Received: by 10.180.219.44 with SMTP id pl12mr14560198wic.12.1393524650658;
- Thu, 27 Feb 2014 10:10:50 -0800 (PST)
-Received: by 10.216.176.65 with HTTP; Thu, 27 Feb 2014 10:10:30 -0800 (PST)
-In-Reply-To: <20140226105249.GE25711@sigill.intra.peff.net>
+	id S1752829AbaB0Shh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Feb 2014 13:37:37 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35234 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752044AbaB0Shg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Feb 2014 13:37:36 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C5E2B6EE13;
+	Thu, 27 Feb 2014 13:37:33 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=u6KBoIp2hWpEZjEx1Y/kcvtHlag=; b=YKr8oQ
+	81DehcvoOJrv4bRBWdQNPmFFd/k5KG7q7RwJvzOhSOnW8Dltq5RaNLTA7cBBYmRe
+	PIYB2jEHqtNJSuPp71Z3A2y+DDkgX40ss4d58G4McpMcQzSA8mIl8lROZR8BaLPL
+	6f40uzaU+P4lXv/JbuVHymMQOMkGroCOBiyiM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=u1MoVMEVOnNN9HlyAgNAvwNwnkjAmhNM
+	x7nKgvi67nmuwhsNffMhGxpNH7MWrfU+I2on97TJR/rB6FfaUkwL8U37zhYsO7lE
+	EIVedpHTmC1ByLJ2Nl1+/GWZyQ9nA5nDeFhgkI8JlfxAGmpd84SUL8sA77AG2kna
+	eyehcOGK+lE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A35426EE12;
+	Thu, 27 Feb 2014 13:37:33 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C65136EE11;
+	Thu, 27 Feb 2014 13:37:32 -0500 (EST)
+In-Reply-To: <20140227040504.GA2242@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 26 Feb 2014 23:05:05 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 3859C0AE-9FDE-11E3-AD21-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242836>
 
-On Wed, Feb 26, 2014 at 5:52 AM, Jeff King <peff@peff.net> wrote:
-> This seems like a reasonable feature to me. All of your examples are
-> possible with an "e"dit and another git command, but the convenience may
-> be worth it (though personally, most of the examples you gave are
-> particularly interesting to me[1]).
+Jeff King <peff@peff.net> writes:
 
-This strikes me as over-complicating the rebase --interactive
-interface. Particularly all of the ideas expressed later on about
-merge commits and resetting authors, etc. It seems like you're trying
-to define a whole new command set (i.e., API) for Git, but within the
-context of rebase --interactive. I think it would be hard to document
-this, and hard to learn it, and harder still to remember it (even
-though it would obviously try to mirror the existing Git command API).
-I honestly didn't know (or forgot) about the e"x"ec command, but that
-to me says that I can automate whatever I want without needing to make
-any changes to the rebase --interactive interface. The advantage to
-this is that we don't need to reinvent the square wheel that is the
-Git command API. We can just exec git ... with the exact same command
-set and options that we're already familiar with. No doubts about
-syntax or disparities, etc.
+> From: Scott J. Goldman <scottjg@github.com>
+>
+> In commit ee27ca4, we started restricting remote git-archive
+> invocations to only accessing reachable commits. This
+> matches what upload-pack allows, but does restrict some
+> useful cases (e.g., HEAD:foo). We loosened this in 0f544ee,
+> which allows `foo:bar` as long as `foo` is a ref tip.
+> However, that still doesn't allow many useful things, like:
+>
+>   1. Commits accessible from a ref, like `foo^:bar`, which
+>      is reachable
+>
+>   2. Arbitrary sha1s, even if they are reachable.
+>
+> We can do a full object-reachability check for these cases,
+> but it can be quite expensive if the client has sent us the
+> sha1 of a tree; we have to visit every sub-tree of every
+> commit in the worst case.
+>
+> Let's instead give site admins an escape hatch, in case they
+> prefer the more liberal behavior.  For many sites, the full
+> object database is public anyway (e.g., if you allow dumb
+> walker access), or the site admin may simply decide the
+> security/convenience tradeoff is not worth it.
+>
+> This patch adds a new config option to turn off the
+> restrictions added in ee27ca4. It defaults to on, meaning
+> there is no change in behavior by default.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
 
-I don't think it's my place to resist these changes; particularly
-because I don't think they'd necessarily affect me, except for maybe
-the proposed automatic merge support, but if that SOMEHOW actually
-works reliably and sensibly (i.e., to allow you to rebase over merges
-without losing the merges) I'm not sure I'd complain. That said, I do
-think that this is probably a bad direction and shouldn't be rushed
-into too fast. It seems like it would be a complicated thing to do,
-more complicated to do well, and I'm not sure that it would really
-improve things any. I'm not sure that users would prefer to use this
-over "e"diting and/or e"x"ecing instead. Plus where do you draw the
-line as far as which features to reproduce? How do you prevent scope
-creep?
+Thanks.
 
-> [1] The one feature I would like in this vein is that editing the title
->     in the instruction-sheet would modify the commit message of the
->     relevant commit. For some reason I try to do this every few weeks,
->     but of course the changes are just thrown away.
+Do GitHub people have general aversion against signing off (or
+sending out, for that matter) their own patches, unless they were
+already active here before they joined GitHub, by the way?
 
-When I do this I am usually half asleep and it's a good reminder to
-pay attention to what I'm doing. I'd probably rather Git *error* when
-I change the subject line and tell me why it doesn't make sense and
-recommend "r"eword instead.
+I like the general idea and this escape hatch would be a good thing
+to have.
 
-Regards,
+A few comments:
 
+ - Seeing the word combination "restrict"+"remote" before reading
+   the explanation made me think "hmph, only allow remote archive
+   from certain hosts but not from others?"  We are restricting the
+   objects and only on the remote usage, not restricting remotes, so
+   somebody else may be able to come up with a less misleading name.
 
--- 
-Brandon McCaig <bamccaig@gmail.com> <bamccaig@castopulence.org>
-Castopulence Software <https://www.castopulence.org/>
-Blog <http://www.bamccaig.com/>
-perl -E '$_=q{V zrna gur orfg jvgu jung V fnl. }.
-q{Vg qbrfa'\''g nyjnlf fbhaq gung jnl.};
-tr/A-Ma-mN-Zn-z/N-Zn-zA-Ma-m/;say'
+ - It might be better to call the escape hatch "allow something"
+   that defaults to "false".  It is merely the issue of perception,
+   but having a knob to be limiting that defaults to true gives a
+   wrong impression that in an ideal world remote archive ought to
+   be loose and we are artificially limiting it by default.
+
+But these are just my "reactions"; neither is an objection to the
+posted patch as-is.
+
+> ---
+>  Documentation/git-archive.txt |  7 +++++++
+>  archive.c                     | 13 +++++++++++--
+>  t/t5000-tar-tree.sh           |  9 +++++++++
+>  3 files changed, 27 insertions(+), 2 deletions(-)
+>
+> diff --git a/Documentation/git-archive.txt b/Documentation/git-archive.txt
+> index b97aaab..486cb08 100644
+> --- a/Documentation/git-archive.txt
+> +++ b/Documentation/git-archive.txt
+> @@ -121,6 +121,13 @@ tar.<format>.remote::
+>  	user-defined formats, but true for the "tar.gz" and "tgz"
+>  	formats.
+>  
+> +archive.restrictRemote::
+> +	If true, archives can only be requested by refnames. If false,
+
+As this does not affect local use of "git archive", "requested by
+refnames" may need to be clarified further.  Perhaps "remote
+archives can be requested only for published refnames" or something.
+
+Just to help starting further discussion to pick brains of others,
+this paragraph could have been like this, I would think.
+
+    archive.serveArbitraryObjectToRemote::
+
+        By default, remote archives can be requested only for
+        published refnames (e.g. "git archive --remote=origin
+        master" is OK, but "git archive --remote=origin ae9677f" is
+        not), to prevent peeking into unreachable commits that have
+        been pruned from the repository.  This configuration
+        variable can be set to bypass this security measure.
+
+The phrase "serve arbitrary object to remote" would reflect the
+purpose of the escape hatch better, I would think, but it is not a
+great short-and-sweet name.
+
+Thanks.
