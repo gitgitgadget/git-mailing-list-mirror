@@ -1,103 +1,130 @@
-From: Faiz Kothari <faiz.off93@gmail.com>
-Subject: [PATCH] GSoC2014 Microproject rewrite finish_bulk_checkin()
-Date: Fri, 28 Feb 2014 00:32:20 +0530
-Message-ID: <1393527740-16765-1-git-send-email-faiz.off93@gmail.com>
-Cc: Faiz Kothari <faiz.off93@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 27 20:03:20 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] commit.c: use the generic "sha1_pos" function for lookup
+Date: Thu, 27 Feb 2014 11:06:58 -0800
+Message-ID: <xmqqppm8z86l.fsf@gitster.dls.corp.google.com>
+References: <530E3732.3060708@yandex.ru>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Dmitry S. Dolzhenko" <dmitrys.dolzhenko@yandex.ru>
+X-From: git-owner@vger.kernel.org Thu Feb 27 20:07:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJ6Ep-0005YO-9U
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 20:03:19 +0100
+	id 1WJ6Id-0005rc-Bj
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 20:07:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753638AbaB0TDK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Feb 2014 14:03:10 -0500
-Received: from mail-pd0-f169.google.com ([209.85.192.169]:37858 "EHLO
-	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753375AbaB0TDG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Feb 2014 14:03:06 -0500
-Received: by mail-pd0-f169.google.com with SMTP id fp1so1748591pdb.0
-        for <git@vger.kernel.org>; Thu, 27 Feb 2014 11:03:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=4Pn4XqScHnFEkkz/uVrWUCzMI4TQIWlT5+KQmlXs3mw=;
-        b=UjxmHlW59zEJx30Kb3wb/ylhPSyXVPNmhLys9jo6dCV/ptFWdp0/gkAtMMdkgfpM39
-         eMAVv7u2frzFs85uLTwO8ghidQivgZrcpShZGGNw6Wyeef1Vu0fNvyauziLaZQ6eE63K
-         cn3/EO/gepdA6b1n2tS48URd0OI7zq1TvlwSQWev3x6arU2pLt9KxkvqWM6GwKzgV7qC
-         eJB3WiR8nwuKnHFrWCqo4mJM50a51ezzn/udszs+bFTXr5rIkOSlDULZr8bgkkdbcZGu
-         lMLTNujQJRGi5QtOtznw2TyQcwWJ/sFXivvpYLWKzO98OSrccu9Tia2gLLhf0jPlCzx1
-         j4RQ==
-X-Received: by 10.68.129.201 with SMTP id ny9mr15093765pbb.70.1393527786009;
-        Thu, 27 Feb 2014 11:03:06 -0800 (PST)
-Received: from dj-pc.bits-goa.ac.in ([115.248.130.148])
-        by mx.google.com with ESMTPSA id sy2sm15982783pbc.28.2014.02.27.11.03.02
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 27 Feb 2014 11:03:04 -0800 (PST)
-X-Mailer: git-send-email 1.7.9.5
+	id S1753267AbaB0THE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Feb 2014 14:07:04 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64277 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752545AbaB0THB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Feb 2014 14:07:01 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1C79A6FA37;
+	Thu, 27 Feb 2014 14:07:01 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=19UYOIdwaRNdg3j0efxYCaz14X4=; b=F7dM8L
+	phHlV26Gyl+xb2SB10UED/TVVv2+Tv3DznSyhiF1y2UIXJe1qTpn+w3G8BWaHRu7
+	YR6HHcmzVuJU8U0FdeeG6fykNQ4aOU5j1EZUl2ePowUMCD3ZaYboVGSAfoKWHeDM
+	fJ76hnZTl9AsPI1zwRJKGnzeXvLMNXoVkKFnk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=JKeIShipSdtUFZe4H7NMxkV8eSbdZfI/
+	Q/aldk+DEeaXMKVk3pkZ5je0plM6ZOfZfJUmy4fxJVIh+umx05xTGGsrMOy5u+sk
+	txl9R+UCviRnnGrVHD7y3xahsYHw1z1E5rqXhrNxZomw6ToC3fnhb0WQfii/5Q+V
+	Am2acNdzE7M=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0101A6FA36;
+	Thu, 27 Feb 2014 14:07:01 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0F9456FA34;
+	Thu, 27 Feb 2014 14:06:59 -0500 (EST)
+In-Reply-To: <530E3732.3060708@yandex.ru> (Dmitry S. Dolzhenko's message of
+	"Wed, 26 Feb 2014 22:49:22 +0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 55B6D6C4-9FE2-11E3-9365-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242837>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242838>
 
-Signed-off-by: Faiz Kothari <faiz.off93@gmail.com>
----
- bulk-checkin.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+"Dmitry S. Dolzhenko" <dmitrys.dolzhenko@yandex.ru> writes:
 
-diff --git a/bulk-checkin.c b/bulk-checkin.c
-index 118c625..feeff9f 100644
---- a/bulk-checkin.c
-+++ b/bulk-checkin.c
-@@ -23,7 +23,7 @@ static struct bulk_checkin_state {
- static void finish_bulk_checkin(struct bulk_checkin_state *state)
- {
- 	unsigned char sha1[20];
--	char packname[PATH_MAX];
-+	struct strbuf packname;
- 	int i;
- 
- 	if (!state->f)
-@@ -42,9 +42,11 @@ static void finish_bulk_checkin(struct bulk_checkin_state *state)
- 					 state->offset);
- 		close(fd);
- 	}
--
--	sprintf(packname, "%s/pack/pack-", get_object_directory());
--	finish_tmp_packfile(packname, state->pack_tmp_name,
-+	
-+	packname.len = packname.alloc = 64 + strlen(get_object_directory());
-+	packname.buf = (char *)malloc(packname.len * sizeof(char));
-+	sprintf(packname.buf, "%s/pack/pack-", get_object_directory());
-+	finish_tmp_packfile(packname.buf, state->pack_tmp_name,
- 			    state->written, state->nr_written,
- 			    &state->pack_idx_opts, sha1);
- 	for (i = 0; i < state->nr_written; i++)
-@@ -53,7 +55,7 @@ static void finish_bulk_checkin(struct bulk_checkin_state *state)
- clear_exit:
- 	free(state->written);
- 	memset(state, 0, sizeof(*state));
--
-+	free(packname.buf);
- 	/* Make objects we just wrote available to ourselves */
- 	reprepare_packed_git();
- }
--- 
-1.7.9.5
+> Refactor binary search in "commit_graft_pos" function: use
+> generic "sha1_pos" function.
+>
+> Signed-off-by: Dmitry S. Dolzhenko <dmitrys.dolzhenko@yandex.ru>
+> ---
 
-> Rewrite bulk-checkin.c:finish_bulk_checkin() to use a strbuf for handling packname, and explain why this is useful.
-> Also check if the first argument of pack-write.c:finish_tmp_packfile() can be made const.
+Looks trivially correct; thanks.
 
-Adding 64 to strlen(get_object_directory()) to accomodate sha1_to_hex(sha1) and itself.
-Using the APIs for strbuf is giving me test failures(12/15) during t1050-large.sh 
-So, I used the malloc() and free() instead.
-Instead of having packname on stack and cause stackoverflow because of MAX_PATH ~ 4KB, have it on heap.
-Can have first parameter to pack-write.c:finish_tmp_packfile() as const because packname is not required to be modified.
+Looking at this patch makes me wonder why we have sha1_pos() and
+sha1_entry_pos() helper functions, though.  It feels as if the
+former could be written in terms of the latter, but there may be
+some performance and correctness downsides if we did so:
 
-I apologise for my two earlier patches not being in proper format. I have finally got it working properly. Will make sure,
-it does not happen again.
+ - rewriting sha1_entry_pos() in terms of sha1_pos() would add the
+   cost of callback to obtain the keys;
+
+ - sha1_entry_pos() picks the middle location conservatively to
+   avoid overshooting penalty, which sha1_pos() does not do;
+
+ - sha1_entry_pos() has been updated recently to tolerate
+   duplicates.
+
+
+
+>  commit.c | 24 +++++++++---------------
+>  1 file changed, 9 insertions(+), 15 deletions(-)
+>
+> diff --git a/commit.c b/commit.c
+> index 6bf4fe0..6ceee6a 100644
+> --- a/commit.c
+> +++ b/commit.c
+> @@ -10,6 +10,7 @@
+>  #include "mergesort.h"
+>  #include "commit-slab.h"
+>  #include "prio-queue.h"
+> +#include "sha1-lookup.h"
+>  
+>  static struct commit_extra_header *read_commit_extra_header_lines(const char *buf, size_t len, const char **);
+>  
+> @@ -114,23 +115,16 @@ static unsigned long parse_commit_date(const char *buf, const char *tail)
+>  static struct commit_graft **commit_graft;
+>  static int commit_graft_alloc, commit_graft_nr;
+>  
+> +static const unsigned char *commit_graft_sha1_access(size_t index, void *table)
+> +{
+> +	struct commit_graft **commit_graft_table = table;
+> +	return commit_graft_table[index]->sha1;
+> +}
+> +
+>  static int commit_graft_pos(const unsigned char *sha1)
+>  {
+> -	int lo, hi;
+> -	lo = 0;
+> -	hi = commit_graft_nr;
+> -	while (lo < hi) {
+> -		int mi = (lo + hi) / 2;
+> -		struct commit_graft *graft = commit_graft[mi];
+> -		int cmp = hashcmp(sha1, graft->sha1);
+> -		if (!cmp)
+> -			return mi;
+> -		if (cmp < 0)
+> -			hi = mi;
+> -		else
+> -			lo = mi + 1;
+> -	}
+> -	return -lo - 1;
+> +	return sha1_pos(sha1, commit_graft, commit_graft_nr,
+> +			commit_graft_sha1_access);
+>  }
+>  
+>  int register_commit_graft(struct commit_graft *graft, int ignore_dups)
