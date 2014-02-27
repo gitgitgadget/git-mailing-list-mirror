@@ -1,73 +1,121 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] repack: add `repack.honorpackkeep` config var
-Date: Thu, 27 Feb 2014 06:27:34 -0500
-Message-ID: <20140227112734.GC29668@sigill.intra.peff.net>
-References: <52E1A99D.6010809@fb.com>
- <52E1AB78.1000504@fb.com>
- <20140124022822.GC4521@sigill.intra.peff.net>
- <52E1D39B.4050103@fb.com>
- <20140128060954.GA26401@sigill.intra.peff.net>
- <xmqq8uu0mpg8.fsf@gitster.dls.corp.google.com>
- <20140224082459.GA32594@sigill.intra.peff.net>
- <xmqq1tys9vie.fsf@gitster.dls.corp.google.com>
- <20140226101353.GA25711@sigill.intra.peff.net>
- <xmqqr46p39cj.fsf@gitster.dls.corp.google.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH] GSoC 2014 Microproject 1 rewrite skip_prefix() as loop
+Date: Thu, 27 Feb 2014 12:32:08 +0100
+Message-ID: <530F2238.4090303@alum.mit.edu>
+References: <1393433195.4629.4.camel@dj-pc>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Siddharth Agarwal <sid0@fb.com>, Vicent Marti <tanoku@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 27 12:27:42 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Faiz Kothari <faiz.off93@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 27 12:39:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WIz7s-0000UZ-Oq
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 12:27:41 +0100
+	id 1WIzJD-0002eJ-EP
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 12:39:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751200AbaB0L1h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Feb 2014 06:27:37 -0500
-Received: from cloud.peff.net ([50.56.180.127]:57968 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750918AbaB0L1g (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Feb 2014 06:27:36 -0500
-Received: (qmail 18532 invoked by uid 102); 27 Feb 2014 11:27:36 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 27 Feb 2014 05:27:36 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 27 Feb 2014 06:27:34 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqqr46p39cj.fsf@gitster.dls.corp.google.com>
+	id S1752499AbaB0LjO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Feb 2014 06:39:14 -0500
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:44051 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752495AbaB0LjN (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Feb 2014 06:39:13 -0500
+X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Thu, 27 Feb 2014 06:39:12 EST
+X-AuditID: 1207440c-f79656d000003eba-25-530f223a8b0f
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id D3.F3.16058.A322F035; Thu, 27 Feb 2014 06:32:10 -0500 (EST)
+Received: from [192.168.69.148] (p57A24AC7.dip0.t-ipconnect.de [87.162.74.199])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s1RBW87e028515
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Thu, 27 Feb 2014 06:32:09 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
+In-Reply-To: <1393433195.4629.4.camel@dj-pc>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprNKsWRmVeSWpSXmKPExsUixO6iqGulxB9s8PqfrMX9ja9YLLqudDM5
+	MHnsnHWX3ePzJrkApihum6TEkrLgzPQ8fbsE7ozWc/+YC2YKVjx78pG1gfEabxcjJ4eEgInE
+	+9eP2CFsMYkL99azdTFycQgJXGaUODNhOSuEc55J4vnHmcwgVbwC2hKff61k6WLk4GARUJWY
+	ezUcJMwmoCuxqKeZCcQWFQiWWH35AQtEuaDEyZlPwGwRAXWJOT/egLUyC4hL9P8DCwsLeEuc
+	nDQbzBYCmr619z/YGE4BHYmvU6YxgpRLAJX3NAZBdKpLrJ8nBFLBLCAvsf3tHOYJjIKzkOya
+	hVA1C0nVAkbmVYxyiTmlubq5iZk5xanJusXJiXl5qUW6hnq5mSV6qSmlmxghgcuzg/HbOplD
+	jAIcjEo8vCeY+YKFWBPLiitzDzFKcjApifJ2yfMHC/El5adUZiQWZ8QXleakFh9ilOBgVhLh
+	Xc8ElONNSaysSi3Kh0lJc7AoifOqLlH3ExJITyxJzU5NLUgtgsnKcHAoSfCWKAI1ChalpqdW
+	pGXmlCCkmTg4QYZzSYkUp+alpBYllpZkxIMiN74YGLsgKR6gvZkg7bzFBYm5QFGI1lOMuhy3
+	2359YhRiycvPS5US55UFKRIAKcoozYNbAUtTrxjFgT4W5q0HqeIBpji4Sa+AljABLTkqzQOy
+	pCQRISXVwOi/NnSi56F/ayRklp45sruSw/BcYtXZ3t6ATRnCel1eLsuZ5s633/H79sYrv6W2
+	7xept7i0ZlfQxburtJN2d8atlXyy9lxk8mr9DJ+8zpA36q8zBZQKw09Jn+S6K+Ua 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242808>
 
-On Wed, Feb 26, 2014 at 12:30:36PM -0800, Junio C Hamano wrote:
-
-> >> pack-kept-objects then?
-> >
-> > Hmm. That does address my point above, but somehow the word "kept" feels
-> > awkward to me. I'm ambivalent between the two.
+On 02/26/2014 05:46 PM, Faiz Kothari wrote:
+> I am Faiz Kothari, I am a GSoC aspirant and want to contribute to git.
+> I am submitting the patch in reponse to Microproject 1,
+> rewrite git-compat-util.h:skip_prefix() as a loop.
 > 
-> That word does make my backside somewhat itchy ;-)
+> Signed-off-by: Faiz Kothari <faiz.off93@gmail.com>
+
+The subject of your email plus the part above the "---" line will be
+taken directly to be used as the commit message.  So it should not
+include information that is inappropriate for a commit message.
+
+You can put such information directly below the "---" line.
+
+Please also see my comments below.
+
+> ---
+>  git-compat-util.h | 7 +++++--
+>  1 file changed, 5 insertions(+), 2 deletions(-)
 > 
-> Would it help to take a step back and think what the option really
-> does?  Perhaps we should call it --pack-all-objects, which is short
-> for --pack-all-objectsregardless-of-where-they-currently-are-stored,
-> or something?  The word "all" gives a wrong connotation in a
-> different way (e.g. "regardless of reachability" is a possible wrong
-> interpretation), so that does not sound too good, either.
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index cbd86c3..bb2582a 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -357,8 +357,11 @@ extern int suffixcmp(const char *str, const char
+> *suffix);
+>  
+>  static inline const char *skip_prefix(const char *str, const char
+> *prefix)
 
-I do not think "all" is what we want to say. It only affects "kept"
-objects, not any of the other exclusions (e.g., "-l").
+The line above seems to have been broken by your email program.  It is
+important for efficiency reasons that patches be readable directly out
+of emails (e.g., by using "git am").  Please practice by sending the
+patch to yourself different ways until "git am" works on it correctly.
 
-> "--repack-kept-objects"?  "--include-kept-objects"?
+>  {
+> -	size_t len = strlen(prefix);
+> -	return strncmp(str, prefix, len) ? NULL : str + len;
+> +	for (; ; str++, prefix++)
+> +		if (!*prefix)
+> +			return str;//code same as strbuf.c:starts_with()
 
-Of all of them, I think --pack-kept-objects is probably the best. And I
-think we are hitting diminishing returns in thinking too much more on
-the name. :)
+We don't use "//" for comments, and please space things out the way
+other code does it.  But actually, IMO this particular comment doesn't
+really belong permanently in the code.  It rather belongs in the commit
+message, or in the discussion (under the "---"), or maybe it should be
+taken as an indication of a deeper problem (see below).
 
--Peff
+> +		else if (*str != *prefix)
+> +			return NULL;
+>  }
+>  
+>  #if defined(NO_MMAP) || defined(USE_WIN32_MMAP)
+> 
+
+The code itself looks correct.
+
+But, considering your comment, would it be appropriate for one of the
+functions to call the other?
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
