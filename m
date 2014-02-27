@@ -1,70 +1,65 @@
-From: Lee Hopkins <leerhop@gmail.com>
-Subject: Re: Branch Name Case Sensitivity
-Date: Thu, 27 Feb 2014 18:38:04 -0500
-Message-ID: <CAJHY66FtC03YbJrbVn+adsePkYnVD2RGH1TGkzz2pKNBoee_iQ@mail.gmail.com>
-References: <CAJHY66EQD280QgXBCoZU4y_aqSEu3A1hXzeW7X-rtT6vMZ92oA@mail.gmail.com>
-	<xmqqvbw0xrl6.fsf@gitster.dls.corp.google.com>
-	<530FA0C1.3000109@web.de>
-	<530FBB1D.3050505@gmail.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: How to mark a complete sub-directory assume-unchanged/skip-worktree?
+Date: Thu, 27 Feb 2014 23:46:55 -0000
+Organization: OPDS
+Message-ID: <DAC4EA00279649D6B3F4DB1B3D662BA6@PhilipOakley>
+References: <3A9AA61FDE124808AA25DE3511CF99F1@PhilipOakley> <CACsJy8DV2uCQbfCP=Mf2qajVAtpTZvKKeCS2H4_o6LA3B96QAA@mail.gmail.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Karsten Blees <karsten.blees@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 28 00:38:12 2014
+Content-Type: text/plain;
+	format=flowed;
+	charset="utf-8";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Git List" <git@vger.kernel.org>
+To: "Duy Nguyen" <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 28 00:47:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJAWp-0005Kp-UW
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 00:38:12 +0100
+	id 1WJAfe-0005EV-KG
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 00:47:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751671AbaB0XiH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Feb 2014 18:38:07 -0500
-Received: from mail-oa0-f49.google.com ([209.85.219.49]:55638 "EHLO
-	mail-oa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751268AbaB0XiF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Feb 2014 18:38:05 -0500
-Received: by mail-oa0-f49.google.com with SMTP id g12so1204852oah.22
-        for <git@vger.kernel.org>; Thu, 27 Feb 2014 15:38:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=DqgHmlrAgGy758gc5ULiupjicVIF6x+pykN70lXwyKk=;
-        b=VMxJ4qqmu/JT4Jnlz07iFznXv5bA207HITHWDrvgn68m5furcGC3OV100/G/A72ndj
-         Dm2iNXOt+C2WZKSezIXNriC85TwhRV2dWaJQSkHUsyKuDxNZYm1zv0NqUAgrOjLVre8u
-         ezcZpLPu7L4tH6J41J0tlGMUAaXvvWLivnAIbDZ4tzRjpDQwtT+mjUyjFe9sNyu+wvZN
-         Vmzo4nJs0L4PA+NstVJ51bZ8+D3zozDtl0hHz/pePFHLQMWgU+nN0kf45f3M0RPOtq8H
-         SjZguQR+5P2WIWtsyw4lLSXvubQ0dIIJdYha+Y5Q4B7zC1fqtni/XGlnC4a+uixSTW3J
-         qNXw==
-X-Received: by 10.60.157.228 with SMTP id wp4mr14463731oeb.39.1393544284457;
- Thu, 27 Feb 2014 15:38:04 -0800 (PST)
-Received: by 10.76.122.241 with HTTP; Thu, 27 Feb 2014 15:38:04 -0800 (PST)
-In-Reply-To: <530FBB1D.3050505@gmail.com>
+	id S1751613AbaB0XrO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Feb 2014 18:47:14 -0500
+Received: from out1.ip06ir2.opaltelecom.net ([62.24.128.242]:28204 "EHLO
+	out1.ip06ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751213AbaB0XrN (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Feb 2014 18:47:13 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AlsXAN68D1NZ8YVX/2dsb2JhbABagwaEFYU+uEUFAQIBAYEcF3RpAQGBHwEBFAEEAQEFCAEBGRUeAQEhCwIDBQIBAw4HAwICBSECAhQBBAgSBgcXBhMIAgECAwGFOAcBggcNAxWqU5lbDYcKF4EpixaCFoJ1NYEUBI8vhxyOUIVHgy08
+X-IPAS-Result: AlsXAN68D1NZ8YVX/2dsb2JhbABagwaEFYU+uEUFAQIBAYEcF3RpAQGBHwEBFAEEAQEFCAEBGRUeAQEhCwIDBQIBAw4HAwICBSECAhQBBAgSBgcXBhMIAgECAwGFOAcBggcNAxWqU5lbDYcKF4EpixaCFoJ1NYEUBI8vhxyOUIVHgy08
+X-IronPort-AV: E=Sophos;i="4.97,558,1389744000"; 
+   d="scan'208";a="602598438"
+Received: from host-89-241-133-87.as13285.net (HELO PhilipOakley) ([89.241.133.87])
+  by out1.ip06ir2.opaltelecom.net with SMTP; 27 Feb 2014 23:47:11 +0000
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242876>
 
-> If I understand the issue correctly, the problem is that packed-refs are always case-sensitive, even if core.ignorecase=true.
-> OTOH, checking / updating _unpacked_ refs on a case-insensitive file system is naturally case-insensitive.
-> So wouldn't it be a better workaround to disallow packed refs (i.e. 'git config gc.packrefs false')?
+From: "Duy Nguyen" <pclouds@gmail.com>
+> On Fri, Feb 28, 2014 at 12:25 AM, Philip Oakley <philipoakley@iee.org> 
+> wrote:
+>> Have there been previous attempts to look at marking sub-dirs as
+>> --skip-worktree, or some other sentinel value for the missing tree?
+>
+> I dealt with this by creating partial index, that only contains
+> entries for interested subtrees. The index also stores the base tree
+> SHA-1, so write-tree can still create (full) new trees correctly from
+> partial index.
+> -- 
+> Duy
 
-You are correct, the issue boils down to mixing the usage of
-packed-refs and loose refs on case insensitive file systems. So either
-always using packed-refs or always using loose refs would take care of
-the problem. Based Michael Haggerty's response, it seems that always
-using loose refs would be a better workaround.
+Is there a particular bit of code I'd be worth studying for the partial 
+index example to see how well it might fit my ideas?
 
-If I understand gc.packrefs = false correctly, it only prevents git gc
-from running git pack-refs, so my question would be is there anything
-else aside from git gc that would trigger git pack-refs? Are there
-significant downsides to always using loose refs? Would checking
-core.ignorecase in builtin\pack-refs.c, and exiting if true, be
-appropriate?
-
-Thanks,
--Lee
+--
+Philip 
