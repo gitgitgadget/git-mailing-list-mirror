@@ -1,59 +1,79 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: How to mark a complete sub-directory assume-unchanged/skip-worktree?
-Date: Fri, 28 Feb 2014 07:58:54 +0700
-Message-ID: <CACsJy8BJRixFno=Mb-3PGi-+JTq6RO19GdkveGdApdW8G9nKNQ@mail.gmail.com>
-References: <3A9AA61FDE124808AA25DE3511CF99F1@PhilipOakley>
- <CACsJy8DV2uCQbfCP=Mf2qajVAtpTZvKKeCS2H4_o6LA3B96QAA@mail.gmail.com> <DAC4EA00279649D6B3F4DB1B3D662BA6@PhilipOakley>
+From: Stephen Leake <stephen_leake@stephe-leake.org>
+Subject: Re: `git stash pop` UX Problem
+Date: Thu, 27 Feb 2014 20:57:10 -0600
+Message-ID: <85fvn40ws9.fsf@stephe-leake.org>
+References: <1lho9x8.1qh70zkp477M%lists@haller-berlin.de>
+	<vpqmwhexidi.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Philip Oakley <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Fri Feb 28 01:59:30 2014
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 28 03:57:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJBnV-0005Vf-Fo
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 01:59:29 +0100
+	id 1WJDdW-0005WY-3O
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 03:57:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751734AbaB1A7Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Feb 2014 19:59:25 -0500
-Received: from mail-yh0-f49.google.com ([209.85.213.49]:35816 "EHLO
-	mail-yh0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751213AbaB1A7Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Feb 2014 19:59:24 -0500
-Received: by mail-yh0-f49.google.com with SMTP id z6so24211yhz.8
-        for <git@vger.kernel.org>; Thu, 27 Feb 2014 16:59:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=ULRbik/mqDs2g6ys/Cj/cjWWaa6/VfHqStyXcAdCAsE=;
-        b=n3Mgi/L0996KMNflSiz47iTdpkV6O/V22VCakY6SywPCIPB5IsNSP3jYeAWA049Epy
-         BiH+BVs9dykCDCRrJgqiYeT98PNSAF/1YOg1o2gitzTfwZlAWjozew/27Y9erNK87GzU
-         PJkG064JF2+PebyOHAq8LV0drQtAc5kyAPjRu46IfW6O9WE0L/mYMSbquU+EOp6Xyg4g
-         GoAJqrgUhFskAUNO4W3obGEW9cwjtlZ7ybPfrVyI+ZTrsnDf1ftu2qgKrR6GbciPnzce
-         LqQpZbQyHHzvnM7IJfZIa/LjkkXdh0Ugo71P04DowMsIywgKS4m3M98C2V02gYdccdkL
-         6qjA==
-X-Received: by 10.236.96.201 with SMTP id r49mr18422249yhf.33.1393549164321;
- Thu, 27 Feb 2014 16:59:24 -0800 (PST)
-Received: by 10.170.115.65 with HTTP; Thu, 27 Feb 2014 16:58:54 -0800 (PST)
-In-Reply-To: <DAC4EA00279649D6B3F4DB1B3D662BA6@PhilipOakley>
+	id S1751613AbaB1C5O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Feb 2014 21:57:14 -0500
+Received: from cdptpa-outbound-snat.email.rr.com ([107.14.166.227]:53856 "EHLO
+	cdptpa-oedge-vip.email.rr.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751232AbaB1C5N (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Feb 2014 21:57:13 -0500
+Received: from [75.87.81.6] ([75.87.81.6:53494] helo=TAKVER)
+	by cdptpa-oedge03 (envelope-from <stephen_leake@stephe-leake.org>)
+	(ecelerity 3.5.0.35861 r(Momo-dev:tip)) with ESMTP
+	id ED/6D-02678-70BFF035; Fri, 28 Feb 2014 02:57:12 +0000
+In-Reply-To: <vpqmwhexidi.fsf@anie.imag.fr> (Matthieu Moy's message of "Wed,
+	26 Feb 2014 11:45:13 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (windows-nt)
+X-RR-Connecting-IP: 107.14.168.142:25
+X-Cloudmark-Score: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242878>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242880>
 
-On Fri, Feb 28, 2014 at 6:46 AM, Philip Oakley <philipoakley@iee.org> wrote:
-> Is there a particular bit of code I'd be worth studying for the partial
-> index example to see how well it might fit my ideas?
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-My last attempt was
-http://git.661346.n2.nabble.com/PATCH-00-17-Narrow-clone-v3-was-subtree-clone-tt5499879.html
-If you're interested in the index part then see 15/17 and maybe 03/17
-and 04/17. I can try to rebase and publish the series somewhere if you
-want to try it out.
+> lists@haller-berlin.de (Stefan Haller) writes:
+>
+>> Your intention was clearly to drop the stash, it just wasn't dropped
+>> because of the conflict. Dropping it automatically once the conflict
+>> is resolved would be nice.
+>
+> Your intention when you ran "git stash pop", yes. Your intention when
+> you ran "git add", I call that guessing.
+
+You might be adding other files for other reasons. But if you add a file
+that does resolve a conflict caused by 'git stash pop', it is not
+guessing.
+
+> The condition for dropping the stash should be more "conflits
+> resolutions are done AND the user is happy with it". Otherwise, if you
+> mess up your conflict resolution, and notice it after running "git add",
+> then you're screwed because Git just happily discarded your important
+> data. The point of keeping the stash is to leave it up to the user to
+> decide between "I'm happy, I can drop" or "I'm not, I should re-apply",
+> and Git cannot tell which is which.
+
+Yes, that makes sense.
+
+> Hinting the user to run "stash pop" would be more acceptable, but
+> talking about "git stash" in "git add"'s code is somehow a dependency
+> order violation (stash is normally implemented on top of Git's basic
+> features, not the other way around). Does not seem serious from at first
+> from the user point of view, but this pushes the codebase one step in
+> the direction of an unmaintainable mess.
+
+Also makes sense.
+
+So "git add" and "git stash *" are lower level tools; to get the effect
+we are asking for, we should use a front-end (which is why I'm writing
+one for Emacs :).
+
 -- 
-Duy
+-- Stephe
