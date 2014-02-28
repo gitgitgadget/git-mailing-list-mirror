@@ -1,79 +1,71 @@
 From: Stephen Leake <stephen_leake@stephe-leake.org>
 Subject: Re: `git stash pop` UX Problem
-Date: Thu, 27 Feb 2014 20:57:10 -0600
-Message-ID: <85fvn40ws9.fsf@stephe-leake.org>
-References: <1lho9x8.1qh70zkp477M%lists@haller-berlin.de>
-	<vpqmwhexidi.fsf@anie.imag.fr>
+Date: Thu, 27 Feb 2014 21:00:38 -0600
+Message-ID: <85bnxs0wmh.fsf@stephe-leake.org>
+References: <530B0395.5030407@booking.com>
+	<CANUGeEbPrPp8Sa-KEKSxNDWJShdkDBTkQyXv7tDJ6ReH6MXrHw@mail.gmail.com>
+	<530C953F.9050805@booking.com> <vpqlhwz5o58.fsf@anie.imag.fr>
+	<530CA4C9.60601@booking.com> <vpqeh2r43kx.fsf@anie.imag.fr>
+	<530D97BA.1080107@booking.com> <vpqzjlez3c4.fsf@anie.imag.fr>
+	<xmqqd2i94qfq.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 28 03:57:20 2014
+X-From: git-owner@vger.kernel.org Fri Feb 28 04:00:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJDdW-0005WY-3O
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 03:57:18 +0100
+	id 1WJDgr-0005PU-NF
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 04:00:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751613AbaB1C5O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Feb 2014 21:57:14 -0500
-Received: from cdptpa-outbound-snat.email.rr.com ([107.14.166.227]:53856 "EHLO
+	id S1751638AbaB1DAl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Feb 2014 22:00:41 -0500
+Received: from cdptpa-outbound-snat.email.rr.com ([107.14.166.231]:54463 "EHLO
 	cdptpa-oedge-vip.email.rr.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751232AbaB1C5N (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Feb 2014 21:57:13 -0500
-Received: from [75.87.81.6] ([75.87.81.6:53494] helo=TAKVER)
-	by cdptpa-oedge03 (envelope-from <stephen_leake@stephe-leake.org>)
+	by vger.kernel.org with ESMTP id S1750941AbaB1DAk (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Feb 2014 22:00:40 -0500
+Received: from [75.87.81.6] ([75.87.81.6:53495] helo=TAKVER)
+	by cdptpa-oedge02 (envelope-from <stephen_leake@stephe-leake.org>)
 	(ecelerity 3.5.0.35861 r(Momo-dev:tip)) with ESMTP
-	id ED/6D-02678-70BFF035; Fri, 28 Feb 2014 02:57:12 +0000
-In-Reply-To: <vpqmwhexidi.fsf@anie.imag.fr> (Matthieu Moy's message of "Wed,
-	26 Feb 2014 11:45:13 +0100")
+	id 16/43-30151-8DBFF035; Fri, 28 Feb 2014 03:00:40 +0000
+In-Reply-To: <xmqqd2i94qfq.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Wed, 26 Feb 2014 11:36:09 -0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (windows-nt)
-X-RR-Connecting-IP: 107.14.168.142:25
+X-RR-Connecting-IP: 107.14.168.130:25
 X-Cloudmark-Score: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242881>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> lists@haller-berlin.de (Stefan Haller) writes:
+> ...  So "resolve the conflicts" is assuming the intention of
+> the user who issued "pop" too much (let alone "manually"---it does
+> not matter how the user resolves conflicts---the only thing we want
+> to say is Git did all it would and no further automated help in
+> resolving is availble, but "manually" is not quite the word).
+
++1
+
+> "The stash was not dropped" is the most important thing in your
+> additional text.  How about rephrasing like this?
 >
->> Your intention was clearly to drop the stash, it just wasn't dropped
->> because of the conflict. Dropping it automatically once the conflict
->> is resolved would be nice.
+>     $ git stash pop
+>     Auto-merging foo.txt
+>     CONFLICT (content): Merge conflict in foo.txt
 >
-> Your intention when you ran "git stash pop", yes. Your intention when
-> you ran "git add", I call that guessing.
+>     The stashed change could not be replayed cleanly, leaving
+>     conflicts in the working tree. The stash was not dropped in case
+>     you need it again.
+>
+>     After you are done with the stash, you may want to "git stash
+>     drop" to discard it.
 
-You might be adding other files for other reasons. But if you add a file
-that does resolve a conflict caused by 'git stash pop', it is not
-guessing.
-
-> The condition for dropping the stash should be more "conflits
-> resolutions are done AND the user is happy with it". Otherwise, if you
-> mess up your conflict resolution, and notice it after running "git add",
-> then you're screwed because Git just happily discarded your important
-> data. The point of keeping the stash is to leave it up to the user to
-> decide between "I'm happy, I can drop" or "I'm not, I should re-apply",
-> and Git cannot tell which is which.
-
-Yes, that makes sense.
-
-> Hinting the user to run "stash pop" would be more acceptable, but
-> talking about "git stash" in "git add"'s code is somehow a dependency
-> order violation (stash is normally implemented on top of Git's basic
-> features, not the other way around). Does not seem serious from at first
-> from the user point of view, but this pushes the codebase one step in
-> the direction of an unmaintainable mess.
-
-Also makes sense.
-
-So "git add" and "git stash *" are lower level tools; to get the effect
-we are asking for, we should use a front-end (which is why I'm writing
-one for Emacs :).
++1
 
 -- 
 -- Stephe
