@@ -1,83 +1,142 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: `git stash pop` UX Problem
-Date: Fri, 28 Feb 2014 09:45:59 -0800
-Message-ID: <xmqqeh2nw2p4.fsf@gitster.dls.corp.google.com>
-References: <1lho9x8.1qh70zkp477M%lists@haller-berlin.de>
-	<vpqmwhexidi.fsf@anie.imag.fr> <85fvn40ws9.fsf@stephe-leake.org>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: [PATCH v2 2/2] Document some functions defined in object.c
+Date: Fri, 28 Feb 2014 12:49:11 -0500 (EST)
+Message-ID: <alpine.LFD.2.11.1402281248470.17677@knanqh.ubzr>
+References: <1393604957-7571-1-git-send-email-mhagger@alum.mit.edu>
+ <1393604957-7571-3-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Stephen Leake <stephen_leake@stephe-leake.org>
-X-From: git-owner@vger.kernel.org Fri Feb 28 18:46:26 2014
+Content-Type: TEXT/PLAIN; CHARSET=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Christian Couder <christian.couder@gmail.com>,
+	=?ISO-8859-2?Q?Jakub_Nar=EAbski?= <jnareb@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Fri Feb 28 18:49:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJRVx-0004U9-S2
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 18:46:26 +0100
+	id 1WJRYt-0006mh-0X
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 18:49:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753552AbaB1RqQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Feb 2014 12:46:16 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60395 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753545AbaB1RqN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Feb 2014 12:46:13 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 33E5E6E1CA;
-	Fri, 28 Feb 2014 12:46:12 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=mFEp2a0Qnpweez+sOo6+ZN/MBDw=; b=QZK37P
-	f7MyWv2hqaKelxjXH6J1FIEXRfovHO+V23vwUbhj5m+OWcEKFPPhB/9yLkVNsAxh
-	ytIzs2j7mzRIfManiaQ2fIgRw3fQotcaX9vfN1gYHHNQ8N7JpDHgvGBsVceuiiFB
-	Owjp0fYOrhVUb8k2QjRmiOuumTAWiBqX9gz5Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Ew96PTOaL5rYZT7Qgz83HQLXgUUkqIet
-	UnVlfEvhy0U+2HQDcfXgmsC7GxC7FwcHu6EUwyKNP0WA7tiT/Mtos67pLiNnKXmY
-	oe6x3IbGZBIyv2VwKwTa3uPUTEnTR3qEyw9slcK/vYwedO0PCzvfZZM/+piwGzrO
-	q64Kc34gK7o=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1BE396E1C9;
-	Fri, 28 Feb 2014 12:46:12 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C61F86E1C2;
-	Fri, 28 Feb 2014 12:46:05 -0500 (EST)
-In-Reply-To: <85fvn40ws9.fsf@stephe-leake.org> (Stephen Leake's message of
-	"Thu, 27 Feb 2014 20:57:10 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 32C52332-A0A0-11E3-84A0-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753761AbaB1RtU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Feb 2014 12:49:20 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:25930 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753493AbaB1RtN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Feb 2014 12:49:13 -0500
+Received: from yoda.home ([66.130.143.177]) by VL-VM-MR001.ip.videotron.ca
+ (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
+ 2011)) with ESMTP id <0N1P009EVW601E90@VL-VM-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 28 Feb 2014 12:49:12 -0500 (EST)
+Received: from xanadu.home (xanadu.home [192.168.2.2])	by yoda.home (Postfix)
+ with ESMTPSA id 33A6C2DA0711; Fri, 28 Feb 2014 12:49:12 -0500 (EST)
+In-reply-to: <1393604957-7571-3-git-send-email-mhagger@alum.mit.edu>
+User-Agent: Alpine 2.11 (LFD 23 2013-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242995>
 
-Stephen Leake <stephen_leake@stephe-leake.org> writes:
+On Fri, 28 Feb 2014, Michael Haggerty wrote:
 
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
->
->> lists@haller-berlin.de (Stefan Haller) writes:
->>
->>> Your intention was clearly to drop the stash, it just wasn't dropped
->>> because of the conflict. Dropping it automatically once the conflict
->>> is resolved would be nice.
->>
->> Your intention when you ran "git stash pop", yes. Your intention when
->> you ran "git add", I call that guessing.
->
-> You might be adding other files for other reasons. But if you add a file
-> that does resolve a conflict caused by 'git stash pop', it is not
-> guessing.
+> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 
-The only thing you know for sure is that the user has consumed _one_
-part of the stashed change, no?  What if the stash had changes for
-more than one path?
+Acked-by: Nicolas Pitre <nico@fluxnic.net>
 
-At the time of "git add $path", can you reliably tell if the
-conflict to the $path the user is resolving came from a previous
-"git stash pop", not from any other mergy operations, e.g. "git
-stash apply" or "git apply -3"?
+> ---
+>  object.c | 29 ++++++++++++++++++++++++++++-
+>  object.h |  7 +++++++
+>  2 files changed, 35 insertions(+), 1 deletion(-)
+> 
+> diff --git a/object.c b/object.c
+> index 584f7ac..57a0890 100644
+> --- a/object.c
+> +++ b/object.c
+> @@ -43,14 +43,32 @@ int type_from_string(const char *str)
+>  	die("invalid object type \"%s\"", str);
+>  }
+>  
+> +/*
+> + * Return a numerical hash value between 0 and n-1 for the object with
+> + * the specified sha1.  n must be a power of 2.  Please note that the
+> + * return value is *not* consistent across computer architectures.
+> + */
+>  static unsigned int hash_obj(const unsigned char *sha1, unsigned int n)
+>  {
+>  	unsigned int hash;
+> +
+> +	/*
+> +	 * Since the sha1 is essentially random, we just take the
+> +	 * required number of bits directly from the first
+> +	 * sizeof(unsigned int) bytes of sha1.  First we have to copy
+> +	 * the bytes into a properly aligned integer.  If we cared
+> +	 * about getting consistent results across architectures, we
+> +	 * would have to call ntohl() here, too.
+> +	 */
+>  	memcpy(&hash, sha1, sizeof(unsigned int));
+> -	/* Assumes power-of-2 hash sizes in grow_object_hash */
+>  	return hash & (n - 1);
+>  }
+>  
+> +/*
+> + * Insert obj into the hash table hash, which has length size (which
+> + * must be a power of 2).  On collisions, simply overflow to the next
+> + * empty bucket.
+> + */
+>  static void insert_obj_hash(struct object *obj, struct object **hash, unsigned int size)
+>  {
+>  	unsigned int j = hash_obj(obj->sha1, size);
+> @@ -63,6 +81,10 @@ static void insert_obj_hash(struct object *obj, struct object **hash, unsigned i
+>  	hash[j] = obj;
+>  }
+>  
+> +/*
+> + * Look up the record for the given sha1 in the hash map stored in
+> + * obj_hash.  Return NULL if it was not found.
+> + */
+>  struct object *lookup_object(const unsigned char *sha1)
+>  {
+>  	unsigned int i, first;
+> @@ -92,6 +114,11 @@ struct object *lookup_object(const unsigned char *sha1)
+>  	return obj;
+>  }
+>  
+> +/*
+> + * Increase the size of the hash map stored in obj_hash to the next
+> + * power of 2 (but at least 32).  Copy the existing values to the new
+> + * hash map.
+> + */
+>  static void grow_object_hash(void)
+>  {
+>  	int i;
+> diff --git a/object.h b/object.h
+> index dc5df8c..732bf4d 100644
+> --- a/object.h
+> +++ b/object.h
+> @@ -42,7 +42,14 @@ struct object {
+>  extern const char *typename(unsigned int type);
+>  extern int type_from_string(const char *str);
+>  
+> +/*
+> + * Return the current number of buckets in the object hashmap.
+> + */
+>  extern unsigned int get_max_object_index(void);
+> +
+> +/*
+> + * Return the object from the specified bucket in the object hashmap.
+> + */
+>  extern struct object *get_indexed_object(unsigned int);
+>  
+>  /*
+> -- 
+> 1.8.5.3
+> 
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
