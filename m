@@ -1,94 +1,137 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] archive: add archive.restrictRemote option
-Date: Fri, 28 Feb 2014 04:07:09 -0500
-Message-ID: <20140228090709.GB11709@sigill.intra.peff.net>
-References: <20140227040504.GA2242@sigill.intra.peff.net>
- <xmqqtxbkz9jp.fsf@gitster.dls.corp.google.com>
+From: Jacopo Notarstefano <jacopo.notarstefano@gmail.com>
+Subject: Re: An idea for "git bisect" and a GSoC enquiry
+Date: Fri, 28 Feb 2014 10:07:55 +0100
+Message-ID: <CAL0uuq33i6jU1A4Vv4xUO7=QZRej0vxVM12SKxvOiLk27hsD2A@mail.gmail.com>
+References: <CAL0uuq0=Zo0X8mYRD6q-Q+QAcZhfmxOwKiRegDrRm3O_i0Q+EA@mail.gmail.com>
+	<530F1F11.7060403@alum.mit.edu>
+	<CAL0uuq3TGb2wjaqNxwXYa++E5rjVoozox5mZbzTaE17OKtsVTg@mail.gmail.com>
+	<a8cf74b4-bae1-4511-a45e-d4ca90e3c3e1@email.android.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, "Scott J. Goldman" <scottjg@github.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 28 10:07:31 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <christian.couder@gmail.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Fri Feb 28 10:08:06 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJJPk-0001Ih-Pl
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 10:07:29 +0100
+	id 1WJJQK-0003uB-St
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 10:08:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752124AbaB1JHS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Feb 2014 04:07:18 -0500
-Received: from cloud.peff.net ([50.56.180.127]:58592 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751732AbaB1JHL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Feb 2014 04:07:11 -0500
-Received: (qmail 20117 invoked by uid 102); 28 Feb 2014 09:07:11 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 28 Feb 2014 03:07:11 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 28 Feb 2014 04:07:09 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqqtxbkz9jp.fsf@gitster.dls.corp.google.com>
+	id S1751550AbaB1JIA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Feb 2014 04:08:00 -0500
+Received: from mail-vc0-f176.google.com ([209.85.220.176]:45471 "EHLO
+	mail-vc0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751679AbaB1JH5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Feb 2014 04:07:57 -0500
+Received: by mail-vc0-f176.google.com with SMTP id la4so428965vcb.7
+        for <git@vger.kernel.org>; Fri, 28 Feb 2014 01:07:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=q0nvqT+HZ8RHHzaIQ2hx4cigPUZrWbXMC3weR71xjCw=;
+        b=FrLn9znb3QMYdYG87wS/YDqs7loqp66+3MmDuboFyifIyKdIHiHR66uKrN11tQ+f3F
+         Neg7Tv1IPXT/Lf5+uLpp2UQApSmh2Tdm4PP4og+M/SSaTeHuw53JpixZ56vZ0hiu4Qao
+         zOUqH8EeS3cdaZ/83U0RA+knkGnAQVkGT/JRR7Yl9uJzh1yXpschF6GGeMtvnWPyLlA6
+         GtwaIzW4OmSpG0m9rvr6r2UGE4fac48+u4X+QYCv+z8pkb2dwpsTjyrM1mC5rcOP2UmR
+         HFoJMmASVZ+fkiIAy4K81ffO+nI+bFy8/jMzdWudFb8vHuWv2+2LFeE0sjrHEl0dYDhE
+         cDZA==
+X-Received: by 10.221.34.211 with SMTP id st19mr1485113vcb.5.1393578475766;
+ Fri, 28 Feb 2014 01:07:55 -0800 (PST)
+Received: by 10.52.73.161 with HTTP; Fri, 28 Feb 2014 01:07:55 -0800 (PST)
+In-Reply-To: <a8cf74b4-bae1-4511-a45e-d4ca90e3c3e1@email.android.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242912>
 
-On Thu, Feb 27, 2014 at 10:37:30AM -0800, Junio C Hamano wrote:
+This email was sent privately by Michael to me as a result of my
+previous error. I'm quoting it in its entirety so that he doesn't have
+to submit it twice.
 
-> > Signed-off-by: Jeff King <peff@peff.net>
-> 
-> Thanks.
-> 
-> Do GitHub people have general aversion against signing off (or
-> sending out, for that matter) their own patches, unless they were
-> already active here before they joined GitHub, by the way?
-
-Mostly it is that I clean up the patches and commit messages before
-sending them out. Michael sends out his own patches because they are
-already perfect by the time I see them. :)
-
-I can certainly get S-O-B from GitHubbers, but my impression of the DCO
-is that it does not matter; as the first link in the signoff chain, I am
-certifying that the patch meets the licensing requirements. Of course, I
-know that because of my relationship to the author and our employer,
-which is something that isn't encoded in the headers. A S-O-B from the
-author would perhaps make it more obvious what happened.
-
-> I like the general idea and this escape hatch would be a good thing
-> to have.
-> 
-> A few comments:
-> 
->  - Seeing the word combination "restrict"+"remote" before reading
->    the explanation made me think "hmph, only allow remote archive
->    from certain hosts but not from others?"  We are restricting the
->    objects and only on the remote usage, not restricting remotes, so
->    somebody else may be able to come up with a less misleading name.
+On Thu, Feb 27, 2014 at 8:32 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> Please forgive my typos and brevity; this was typed on a phone.
 >
->  - It might be better to call the escape hatch "allow something"
->    that defaults to "false".  It is merely the issue of perception,
->    but having a knob to be limiting that defaults to true gives a
->    wrong impression that in an ideal world remote archive ought to
->    be loose and we are artificially limiting it by default.
-
-After reading your first point, I came up with
-"archive.allowRemoteUnreachable", which also satisfies the second. I do
-not have a strong opinion.
-
-> > +archive.restrictRemote::
-> > +	If true, archives can only be requested by refnames. If false,
-> 
-> As this does not affect local use of "git archive", "requested by
-> refnames" may need to be clarified further.  Perhaps "remote
-> archives can be requested only for published refnames" or something.
-
-I was hoping to be vague. If we really want to get into specifics, we
-should probably document the current rules (refnames, and sub-trees of
-refnames). It might be a good thing to document that anyway, though. And
-by doing so, it would become obvious why one would want to set this
-option. I'll see what I can come up with.
-
--Peff
+> Michael
+> On February 27, 2014 5:16:40 PM CET, Jacopo Notarstefano <jacopo.notarstefano@gmail.com> wrote:
+>>On Thu, Feb 27, 2014 at 12:18 PM, Michael Haggerty
+>><mhagger@alum.mit.edu> wrote:
+>>> What happens if the user mixes, say, "good" and "fixed" in a single
+>>> bisect session?
+>>>
+>>
+>>I don't think that's an issue. If the user uses the label "fixed"
+>>instead of "bad" she will have a hard time remembering to use it every
+>>time she needs it, and maybe the output of "git bisect" will look very
+>>confusing, but what can git do? This is a semantic user input error,
+>>not a syntax one.
+>
+> - git could emit an error message and refuse to continue
+> - git could interpret the command one way or the other, with or without a warning
+>
+> By my count that gives at least five possibilities. The feature cannot be implemented without choosing one.
+>
+>>> I think it would be more convenient if "git bisect" would autodetect
+>>> whether the history went from "good" to "bad" or vice versa.  The
+>>> algorithm could be:
+>>>
+>>> 1. Wait until the user has marked one commit "bad" and one commit
+>>"good".
+>>>
+>>> 2. If a "good" commit is an ancestor of a "bad" one, then "git
+>>bisect"
+>>> should announce "I will now look for the first bad commit".  If
+>>> reversed, then announce "I will now look for the first good commit".
+>>If
+>>> neither commit is an ancestor of the other, then explain the
+>>situation
+>>> and ask the user to run "git bisect find-first-bad" or "git bisect
+>>> find-first-good" or to mark another commit "bad" or "good".
+>>>
+>>> 3. If the user marks another commit, go back to step 2, also doing a
+>>> consistency check to make sure that all of the ancestry relationships
+>>go
+>>> in a consistent direction.
+>>>
+>>> 4. After the direction is clear, the old bisect algorithm can be used
+>>> (though taking account of the direction).  Obviously a lot of the
+>>output
+>>> would have to be adjusted, as would the way that a bisect is
+>>visualized.
+>>>
+>>> I can't think of any fundamental problems with a scheme like this,
+>>and I
+>>> think it would be easier to use than the unfixed/fixed scheme.  But
+>>that
+>>> is only my opinion; other opinions are undoubtedly available :-)
+>>>
+>>
+>>I like this idea! It also looks fun to implement. A minor difference
+>>is that I'd rather die with an error on point 2) if there's no
+>>ancestorship relation between the two commits; if the user is asking
+>>for such a thing then she has a fundamental misconception of the state
+>>of her repository.
+>
+> That is not correct. If there is a bug on one branch but not another, it is legitimate to ask when the bug was introduced, and git bisect can indeed handle this case today (think about how this could work, and try it!)
+>
+>>> By the way, although "git bisect fixed/unfixed" would be a very
+>>useful
+>>> improvement, and has gone unimplemented for a lamentably long time,
+>>my
+>>> personal feeling is that it has too meat in it to constitute a GSoC
+>>> project by itself.
+>>>
+>>
+>>Oh! Then in fact, as Christian Couder said, this project shouldn't be
+>>marked as "easy".
+>
+> Sorry for the typo; I meant to say "too LITTLE meat".
+>
+>
+> --
+> Michael Haggerty
+> mhagger@alum.mit.edu
