@@ -1,90 +1,100 @@
-From: Stephen Leake <stephen_leake@stephe-leake.org>
-Subject: git reset <path> returns unwanted failure status
-Date: Fri, 28 Feb 2014 10:40:15 -0600
-Message-ID: <85wqgfxkb4.fsf@stephe-leake.org>
+From: Kirill Smelkov <kirr@mns.spb.ru>
+Subject: Re: [PATCH 17/19] Portable alloca for Git
+Date: Fri, 28 Feb 2014 21:00:12 +0400
+Organization: Marine Bridge & Navigation Systems
+Message-ID: <20140228170012.GA5247@tugrik.mns.mnsspb.ru>
+References: <cover.1393257006.git.kirr@mns.spb.ru>
+ <f08867ee212e27074dbb4cbb06af408b16dba0a1.1393257006.git.kirr@mns.spb.ru>
+ <CABPQNSaVQuXBEnSrs6hdHwEbaBKFr-NjKpuBRNnbkM+HtfJ4Ag@mail.gmail.com>
+ <CABPQNSadTGfiue6G+6x7_o10Ri1E7D5vZFU=Cp8rAha+j9jwSA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 28 17:40:28 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>,
+	Brandon Casey <drafnel@gmail.com>,
+	Marius Storm-Olsen <mstormo@gmail.com>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Gerrit Pape <pape@smarden.org>,
+	Petr Salinger <Petr.Salinger@seznam.cz>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Thomas Schwinge <tschwinge@gnu.org>
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 28 17:58:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJQU5-00041s-Hs
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 17:40:25 +0100
+	id 1WJQlo-0001oi-G8
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 17:58:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752970AbaB1QkU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Feb 2014 11:40:20 -0500
-Received: from cdptpa-outbound-snat.email.rr.com ([107.14.166.231]:20207 "EHLO
-	cdptpa-oedge-vip.email.rr.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752959AbaB1QkT (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 Feb 2014 11:40:19 -0500
-Received: from [75.87.81.6] ([75.87.81.6:54045] helo=TAKVER)
-	by cdptpa-oedge01 (envelope-from <stephen_leake@stephe-leake.org>)
-	(ecelerity 3.5.0.35861 r(Momo-dev:tip)) with ESMTP
-	id 39/64-10928-1FBB0135; Fri, 28 Feb 2014 16:40:18 +0000
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (windows-nt)
-X-RR-Connecting-IP: 107.14.168.118:25
-X-Cloudmark-Score: 0
+	id S1752804AbaB1Q6k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Feb 2014 11:58:40 -0500
+Received: from mail.mnsspb.ru ([84.204.75.2]:33582 "EHLO mail.mnsspb.ru"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752593AbaB1Q6j (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Feb 2014 11:58:39 -0500
+Received: from [192.168.0.127] (helo=tugrik.mns.mnsspb.ru)
+	by mail.mnsspb.ru with esmtps id 1WJQlb-0001ef-4d; Fri, 28 Feb 2014 20:58:31 +0400
+Received: from kirr by tugrik.mns.mnsspb.ru with local (Exim 4.72)
+	(envelope-from <kirr@tugrik.mns.mnsspb.ru>)
+	id 1WJQnE-0001PQ-CX; Fri, 28 Feb 2014 21:00:12 +0400
+Content-Disposition: inline
+In-Reply-To: <CABPQNSadTGfiue6G+6x7_o10Ri1E7D5vZFU=Cp8rAha+j9jwSA@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242987>
 
-The use case:
+On Fri, Feb 28, 2014 at 02:50:04PM +0100, Erik Faye-Lund wrote:
+> On Fri, Feb 28, 2014 at 2:44 PM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
+> > On Mon, Feb 24, 2014 at 5:21 PM, Kirill Smelkov <kirr@mns.spb.ru> wrote:
+> >> diff --git a/Makefile b/Makefile
+> >> index dddaf4f..0334806 100644
+> >> --- a/Makefile
+> >> +++ b/Makefile
+> >> @@ -316,6 +321,7 @@ endif
+> >>  ifeq ($(uname_S),Windows)
+> >>         GIT_VERSION := $(GIT_VERSION).MSVC
+> >>         pathsep = ;
+> >> +       HAVE_ALLOCA_H = YesPlease
+> >>         NO_PREAD = YesPlease
+> >>         NEEDS_CRYPTO_WITH_SSL = YesPlease
+> >>         NO_LIBGEN_H = YesPlease
+> >
+> > In MSVC, alloca is defined in in malloc.h, not alloca.h:
+> >
+> > http://msdn.microsoft.com/en-us/library/wb1s57t5.aspx
+> >
+> > In fact, it has no alloca.h at all. But we don't have malloca.h in
+> > mingw either, so creating a compat/win32/alloca.h that includes
+> > malloc.h is probably sufficient.
+> 
+> "But we don't have alloca.h in mingw either", sorry.
 
-I'm doing a 'git stash pop'; it had conflicts. At this point, 'git status' shows:
+Don't we have that for MSVC already in
 
-# On branch master
-# Changes to be committed:
-#   (use "git reset HEAD <file>..." to unstage)
-#
-#	modified:   Target.java
-#
-# Unmerged paths:
-#   (use "git reset HEAD <file>..." to unstage)
-#   (use "git add/rm <file>..." as appropriate to mark resolution)
-#
-#	both modified:      DriveByInches.java
-#
-# Changes not staged for commit:
-#   (use "git add <file>..." to update what will be committed)
-#   (use "git checkout -- <file>..." to discard changes in working directory)
-#
-#	modified:   CommandBasedAutonomous.java
-#
-# Untracked files:
-#   (use "git add <file>..." to include in what will be committed)
-#
-#	AerialAssist2014/src/org/usfirst/frc1939/AerialAssist2014/Autonomous/
+    compat/vcbuild/include/alloca.h
 
-As part of the conflict resolution, I decide to unstage Target.java:
+and
 
-stephe@takver$ git reset Target.java
-Unstaged changes after reset:
-M	CommandBasedAutonomous.java
-U	DriveByInches.java
-M	Target.java
-stephe@takver$ echo $?
-1
+    ifeq ($(uname_S),Windows)
+        ...
+        BASIC_CFLAGS = ... -Icompat/vcbuild/include ...
 
 
-The issue is the error status and the messages about other files.
+in config.mak.uname ?
 
-If I had not specified a path to 'git reset', the error status would
-make sense; those files were not reset. However, since the file I
-specified was reset, there should be no error.
+And as I've not touched MINGW part in config.mak.uname the patch stays
+valid as it is :) and we can incrementally update what platforms have
+working alloca with follow-up patches.
 
-Similarly, if I specify no path to a git command, I expect warning
-messages about files in the workspace that might need attention.
-However, if I do specify a path, I expect warning messages about files
-in that path only.
+In fact that would be maybe preferred, for maintainers to enable alloca
+with knowledge and testing, as one person can't have them all at hand.
 
-This can be stated more concisely if the default path is considered to be
-"*" (and recursive); don't error if the operation succeeded for all
-files in the path; don't warn about files not in the path.
-
--- 
--- Stephe
+Thanks,
+Kirill
