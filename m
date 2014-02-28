@@ -1,72 +1,83 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 0/2] lifting upload-archive restrictions
-Date: Fri, 28 Feb 2014 09:54:52 -0800
-Message-ID: <xmqq61nzw2ab.fsf@gitster.dls.corp.google.com>
-References: <20140227040504.GA2242@sigill.intra.peff.net>
-	<xmqqtxbkz9jp.fsf@gitster.dls.corp.google.com>
-	<20140228090709.GB11709@sigill.intra.peff.net>
-	<20140228095619.GA11803@sigill.intra.peff.net>
+Subject: Re: [PATCH 2/2] fetch: handle overlaping refspecs on --prune
+Date: Fri, 28 Feb 2014 10:04:32 -0800
+Message-ID: <xmqqy50vun9r.fsf@gitster.dls.corp.google.com>
+References: <1393491610-19476-1-git-send-email-cmn@elego.de>
+	<1393491610-19476-2-git-send-email-cmn@elego.de>
+	<xmqqob1sxq8v.fsf@gitster.dls.corp.google.com>
+	<1393590104.5277.19.camel@centaur.cmartin.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Scott J. Goldman" <scottjg@github.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 28 18:55:05 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
+X-From: git-owner@vger.kernel.org Fri Feb 28 19:04:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJReK-0002c0-P3
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 18:55:05 +0100
+	id 1WJRnc-0001fE-Vc
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 19:04:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753080AbaB1Ry7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Feb 2014 12:54:59 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46352 "EHLO
+	id S1752917AbaB1SEh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Feb 2014 13:04:37 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43718 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752494AbaB1Ry6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Feb 2014 12:54:58 -0500
+	id S1752557AbaB1SEg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Feb 2014 13:04:36 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 376526E56A;
-	Fri, 28 Feb 2014 12:54:58 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F2B8B6E86B;
+	Fri, 28 Feb 2014 13:04:35 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=TYysFn06U6//NL+m91Y575k7Pzk=; b=Lws6yE
-	VYGZ91XzDdL3eZaNGQ6QE+j0DitgeMlRo/7ivMzCAUNjwrwxKoNu9+B+m/OMhFXJ
-	jpwYSt8sEBzzVjZR9too7cJd762G3kjnyIvWjqhR5EExue8Dwlwx1aSjBtMZHFCb
-	hEOnq0kEmtOAmknxV7DvgGGYcinRNvxo2edOo=
+	:content-type:content-transfer-encoding; s=sasl; bh=lSqIQkMPrLlB
+	an5UWRbxEBn9CEI=; b=Mfa97m23Oi9xJXUYWQuYVH9C9j/6ae7g9IQK0zp1D7Lv
+	M2EPVuAQGIOdvhCRh7ltbmrOYBjUGkFqgBTPW9nw0PFAM/4qfaMDDs841Kx7lvqC
+	csRs1VvhxsCvizL1GEkDeuu+0RV/9gsbGhk8IMy4sMcTpuiUltKmHsVR1p5ZPMc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Uhn9biA/xlKlfACyfxrgt7LXVW0Rw/RR
-	ekltgpC/qSUYW7s64+N1eOZMlWHBnhaUmahkOs6bt/RZdm4rZ5EsDzC7v6eLre4m
-	b5iEBbFyHOfZ+PTiYn2eIKfrDWHGWloUSldtIvb4gNIZwx+FA2pkcWa6QfhX16AQ
-	UJYTy/GqOp8=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=ppmaXT
+	FbfYzRw4JS+rdOGrGh+JDzqS/0y9vgCpS+fCZKpfA5LNYb5VWV8g/ipOfC2CrR5N
+	u4f5G9B8cWdWmUBNKciFHJGNRfbzMccpgEIWLm9nsJ4S6ZuGTX5fUr1TdnGAGTSP
+	CvDbbKU0CWt4S44eQboArBwIygcgaLyUjXr48=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1F12B6E569;
-	Fri, 28 Feb 2014 12:54:58 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DA2D26E86A;
+	Fri, 28 Feb 2014 13:04:35 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 075596E566;
-	Fri, 28 Feb 2014 12:54:54 -0500 (EST)
-In-Reply-To: <20140228095619.GA11803@sigill.intra.peff.net> (Jeff King's
-	message of "Fri, 28 Feb 2014 04:56:19 -0500")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2C3886E866;
+	Fri, 28 Feb 2014 13:04:35 -0500 (EST)
+In-Reply-To: <1393590104.5277.19.camel@centaur.cmartin.tk> ("Carlos
+ =?utf-8?Q?Mart=C3=ADn?=
+	Nieto"'s message of "Fri, 28 Feb 2014 13:21:44 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 6E34F892-A0A1-11E3-AD93-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: C801104E-A0A2-11E3-B5C9-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242999>
 
-Jeff King <peff@peff.net> writes:
+Carlos Mart=C3=ADn Nieto <cmn@elego.de> writes:
 
-> Here's a series to handle this; I think the end result is much nicer. I
-> ended up calling the option "uploadarchive.allowUnreachable". By moving
-> it there instead of under "archive", it is more clear that this is about
-> the _serving_ end of the remote connection, and the word "remote"
-> becomes redundant.
+> ... However, we now
+> have 'origin/master' and 'origin/pr/5' both of which match the
+> 'refs/remotes/origin/*' pattern. The current behaviour is to stop at =
+the
+> first match, which would mark it as stale as there is no
+> 'refs/heads/pr/5' branch in the remote.
 
-Yeah, the original was already good but I like this version much
-better.  I'm glad I bikeshedded ;-)
+OK, but with a later pattern, we can find out that it came from pull/5
+that was advertised by the remote.  If we had origin/pr/1 when the
+remote no longer has pull/1, then we can say that is stale.
 
-Thanks.
+Makes sense.  Thanks for an explanation.
+
+I wonder how well --prune would work on a repository in pre 1.5
+layout, where all branches were copied to local refs/heads/
+hierarchy except for 'master' (which is renamed to 'origin').  Does
+it have a similar issue?  Do we end up pruning refs/heads/origin
+away because we do not see it on the remote end, or we somehow
+already deal with it and not have to worry about it?
