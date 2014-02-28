@@ -1,102 +1,97 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] branch.c: delete size check of newly tracked branch names
-Date: Fri, 28 Feb 2014 18:41:05 +0700
-Message-ID: <CACsJy8A7jVM1wdU2BK-NyQ5HJoY_19oKhSXCKqV_7qNN+OA+mw@mail.gmail.com>
-References: <1393585744-2569-1-git-send-email-jacopo.notarstefano@gmail.com>
+From: Thomas Schwinge <thomas@codesourcery.com>
+Subject: Re: [PATCH 17/19] Portable alloca for Git
+Date: Fri, 28 Feb 2014 11:58:59 +0100
+Message-ID: <878usvo64s.fsf@kepler.schwinge.homeip.net>
+References: <cover.1393257006.git.kirr@mns.spb.ru> <f08867ee212e27074dbb4cbb06af408b16dba0a1.1393257006.git.kirr@mns.spb.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Christian Couder <christian.couder@gmail.com>
-To: Jacopo Notarstefano <jacopo.notarstefano@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 28 12:41:43 2014
+Content-Type: multipart/signed; boundary="=-=-="; micalg=pgp-sha1;
+	protocol="application/pgp-signature"
+Cc: <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Kirill Smelkov <kirr@mns.spb.ru>
+X-From: git-owner@vger.kernel.org Fri Feb 28 13:09:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJLp0-0003oo-B5
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 12:41:42 +0100
+	id 1WJMG1-0003Mq-7i
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 13:09:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751887AbaB1Llh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Feb 2014 06:41:37 -0500
-Received: from mail-qc0-f171.google.com ([209.85.216.171]:54266 "EHLO
-	mail-qc0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751851AbaB1Llg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Feb 2014 06:41:36 -0500
-Received: by mail-qc0-f171.google.com with SMTP id x3so549039qcv.16
-        for <git@vger.kernel.org>; Fri, 28 Feb 2014 03:41:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=yRtrjKtlCfLiVYn25/arwKxiDTUSiItdppKb/HPRco4=;
-        b=cIsXrMofTZYA66Q9leGODeiekZji9SOf+W7w1CWPFdkiSfA7jWio7idilrZIZS33Sp
-         c1xqqabU4N386S2ryNjpd8mBHkAc1CtRHIUAkW5yOuH3EjNMZl3HB1oX0LIR76dq0hrv
-         5eKFvptXmR/jNUjviM1Se+gRxPkAzcdLPZO9ijzK8virrgth8fMAdRSzgT2+pc+mcBO6
-         UIWMa1m+0ijGd7bx8TrkR3O2PZxG/I3eqk5oDUhLw2XfbHdqIjKQLiWgI3QXsHQHJAYa
-         oOEEJHKTKH4lao35FQV69vIseRteFxrMoSj/XHWFl98EisbcW8KzH9iiSce44Rqu3IGz
-         QtKA==
-X-Received: by 10.224.26.71 with SMTP id d7mr2722220qac.89.1393587695569; Fri,
- 28 Feb 2014 03:41:35 -0800 (PST)
-Received: by 10.96.215.102 with HTTP; Fri, 28 Feb 2014 03:41:05 -0800 (PST)
-In-Reply-To: <1393585744-2569-1-git-send-email-jacopo.notarstefano@gmail.com>
+	id S1751342AbaB1MJd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Feb 2014 07:09:33 -0500
+Received: from relay1.mentorg.com ([192.94.38.131]:42815 "EHLO
+	relay1.mentorg.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751021AbaB1MJc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Feb 2014 07:09:32 -0500
+X-Greylist: delayed 4216 seconds by postgrey-1.27 at vger.kernel.org; Fri, 28 Feb 2014 07:09:32 EST
+Received: from svr-orw-fem-01.mgc.mentorg.com ([147.34.98.93])
+	by relay1.mentorg.com with esmtp 
+	id 1WJL9r-0003d5-Ed from Thomas_Schwinge@mentor.com ; Fri, 28 Feb 2014 02:59:11 -0800
+Received: from SVR-IES-FEM-01.mgc.mentorg.com ([137.202.0.104]) by svr-orw-fem-01.mgc.mentorg.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.4675);
+	 Fri, 28 Feb 2014 02:59:11 -0800
+Received: from feldtkeller.schwinge.homeip.net (137.202.0.76) by
+ SVR-IES-FEM-01.mgc.mentorg.com (137.202.0.104) with Microsoft SMTP Server id
+ 14.2.247.3; Fri, 28 Feb 2014 10:59:08 +0000
+In-Reply-To: <f08867ee212e27074dbb4cbb06af408b16dba0a1.1393257006.git.kirr@mns.spb.ru>
+User-Agent: Notmuch/0.9-101-g81dad07 (http://notmuchmail.org) Emacs/23.4.1 (i486-pc-linux-gnu)
+X-OriginalArrivalTime: 28 Feb 2014 10:59:11.0342 (UTC) FILETIME=[1C5818E0:01CF3474]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242945>
 
-On Fri, Feb 28, 2014 at 6:09 PM, Jacopo Notarstefano
-<jacopo.notarstefano@gmail.com> wrote:
-> Since commit 6f084a56 the length of a newly tracked branch name was limited
-> to 1019 = 1024 - 7 - 7 - 1 characters, a bound derived by having to store
-> this name in a char[1024] called key with two strings of length at most 7
-> and a '\0' character.
->
-> This was no longer necessary as of commit a9f2c136, which uses a strbuf
-> (documented in Documentation/technical/api-strbuf.txt) to store this value.
->
-> This patch removes this unneeded check and thus allows for branch names
-> longer than 1019 characters.
+--=-=-=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Nice. new_ref is passed in install_branch_config() in latest code. I
-guess you already made sure this function did not make any assumption
-about new_ref's length?
+Hi!
 
->
-> Signed-off-by: Jacopo Notarstefano <jacopo.notarstefano@gmail.com>
-> ---
->
-> Submitted as GSoC microproject #3.
->
->  branch.c | 4 ----
->  1 file changed, 4 deletions(-)
->
-> diff --git a/branch.c b/branch.c
-> index 723a36b..05feaff 100644
-> --- a/branch.c
-> +++ b/branch.c
-> @@ -114,10 +114,6 @@ static int setup_tracking(const char *new_ref, const char *orig_ref,
->         struct tracking tracking;
->         int config_flags = quiet ? 0 : BRANCH_CONFIG_VERBOSE;
->
-> -       if (strlen(new_ref) > 1024 - 7 - 7 - 1)
-> -               return error(_("Tracking not set up: name too long: %s"),
-> -                               new_ref);
-> -
->         memset(&tracking, 0, sizeof(tracking));
->         tracking.spec.dst = (char *)orig_ref;
->         if (for_each_remote(find_tracked_branch, &tracking))
-> --
-> 1.9.0.1.g5abca64
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+On Mon, 24 Feb 2014 20:21:49 +0400, Kirill Smelkov <kirr@mns.spb.ru> wrote:
+> Both autoconf and config.mak.uname configurations were updated. For
+> autoconf, we are not bothering considering cases, when no alloca.h is
+> available, but alloca() works some other way - its simply alloca.h is
+> available and works or not, everything else is deep legacy.
+
+Sounds good for GNU Hurd, or any system using glibc (but have not
+explicitly tested your patch).
+
+> For config.mak.uname, I've tried to make my almost-sure guess for where
+> alloca() is available, but since I only have access to Linux it is the
+> only change I can be sure about myself, with relevant to other changed
+> systems people Cc'ed.
+
+> diff --git a/config.mak.uname b/config.mak.uname
+> index 7d31fad..71602ee 100644
+> --- a/config.mak.uname
+> +++ b/config.mak.uname
+> @@ -239,6 +243,7 @@ ifeq ($(uname_S),AIX)
+>  endif
+>  ifeq ($(uname_S),GNU)
+>  	# GNU/Hurd
+> +	HAVE_ALLOCA_H =3D YesPlease
+>  	NO_STRLCPY =3D YesPlease
+>  	NO_MKSTEMPS =3D YesPlease
+>  	HAVE_PATHS_H =3D YesPlease
+
+Acked-by: Thomas Schwinge <thomas@codesourcery.com> (GNU Hurd changes)
 
 
+Gr=C3=BC=C3=9Fe,
+ Thomas
 
--- 
-Duy
+--=-=-=
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
+
+iQEcBAEBAgAGBQJTEGvzAAoJEK3/DN1sMFFt7RcH/jWSFkynceXUbi8yJ5y3yO8y
+oDeKCICq3pLUs+fd4xyvT7nwv+F7bdvH2u4z+SV+GIlK1EukpeeaaHgCR5er+W1j
+Yjy6aMKd7Y/5zHKBVzihqAuwcCee6bJ8QmTYDRKCfxSgoYhv9ncqhPT0bK+CMhs+
+Zr6tCFgdlUGzVgKDm/vXyLEkupmmuTW54ExZAYbtJhx5tZeS3ejA0uwMUP74qzNm
+/EGebWYCWtCkofIayXlcKg8JXpVKrTLo+tnggY1n2n2jHXpNwasZk5zMklxW0ZLL
+RjQ5dm7nWCk1rmenyBcMhZWip2kP/CM5SAyTJXAiOMC//VmwvQjaCzsFC4WeZKM=
+=kV4K
+-----END PGP SIGNATURE-----
+--=-=-=--
