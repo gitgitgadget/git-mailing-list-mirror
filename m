@@ -1,78 +1,79 @@
-From: Lee Hopkins <leerhop@gmail.com>
-Subject: Re: Branch Name Case Sensitivity
-Date: Fri, 28 Feb 2014 09:10:56 -0500
-Message-ID: <CAJHY66EPKnmSGGSxRi=p8m4dsys=wiLNWoQF6+3Xe4j9J+DivQ@mail.gmail.com>
-References: <CAJHY66EQD280QgXBCoZU4y_aqSEu3A1hXzeW7X-rtT6vMZ92oA@mail.gmail.com>
-	<xmqqvbw0xrl6.fsf@gitster.dls.corp.google.com>
-	<530FA0C1.3000109@web.de>
-	<530FBB1D.3050505@gmail.com>
-	<CAJHY66FtC03YbJrbVn+adsePkYnVD2RGH1TGkzz2pKNBoee_iQ@mail.gmail.com>
-	<53102FB0.6040603@viscovery.net>
-	<5310959D.709@gmail.com>
+From: Stephen Leake <stephen_leake@stephe-leake.org>
+Subject: Re: [RFC 0/3] Make git more user-friendly during a merge conflict
+Date: Fri, 28 Feb 2014 08:13:52 -0600
+Message-ID: <858usvz5nj.fsf@stephe-leake.org>
+References: <1393437985-31401-1-git-send-email-andrew.kw.w@gmail.com>
+	<20140226202601.GK7855@google.com> <857g8f1ugu.fsf@stephe-leake.org>
+	<87fvn335sm.fsf@fencepost.gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	=?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Karsten Blees <karsten.blees@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 28 15:11:05 2014
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 28 15:14:06 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJO9V-0003UE-T7
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 15:11:02 +0100
+	id 1WJOCS-0007OO-5A
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 15:14:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751514AbaB1OK5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Feb 2014 09:10:57 -0500
-Received: from mail-qa0-f49.google.com ([209.85.216.49]:52287 "EHLO
-	mail-qa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751066AbaB1OK5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Feb 2014 09:10:57 -0500
-Received: by mail-qa0-f49.google.com with SMTP id j7so667365qaq.36
-        for <git@vger.kernel.org>; Fri, 28 Feb 2014 06:10:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=x+Qhi0/BchsepSPaxTaxMYU0JY5Z4SsQukBaf/OtORI=;
-        b=JoDmt3KB0FxKLlSBhzIehKzkmOLyFbcb0fF4XJ2XKFxLrajCpqjEOn1lb/gT/V/L1k
-         x84o3yJGT1EzccAF33ogspDAjcqjTrO04NCVcv0hYrDte92h/iGXjyeLlCklpplbF8m2
-         F91RArk2fUv72Yq4CV+ECUre9soJfQVUZKbrIWecSxlt4zTcexBz732VzRNNoVBkQ7PS
-         xONXzB21AG0I+W97s4eq2IZvcnFbSr73vN7pKGkTcgzQF3J6zfm3CNVwFjrcQ4ILyXo9
-         EppTj2rO+/0bOuIejmdYhLNofU5Jcs+0K4WAG7q7uWaSH1gvGWEqLnstNtuHyMeMp2va
-         r/ug==
-X-Received: by 10.140.108.116 with SMTP id i107mr3673393qgf.80.1393596656403;
- Fri, 28 Feb 2014 06:10:56 -0800 (PST)
-Received: by 10.140.106.69 with HTTP; Fri, 28 Feb 2014 06:10:56 -0800 (PST)
-In-Reply-To: <5310959D.709@gmail.com>
+	id S1752318AbaB1ON6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Feb 2014 09:13:58 -0500
+Received: from cdptpa-outbound-snat.email.rr.com ([107.14.166.227]:24401 "EHLO
+	cdptpa-oedge-vip.email.rr.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752305AbaB1ON4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Feb 2014 09:13:56 -0500
+Received: from [75.87.81.6] ([75.87.81.6:53938] helo=TAKVER)
+	by cdptpa-oedge01 (envelope-from <stephen_leake@stephe-leake.org>)
+	(ecelerity 3.5.0.35861 r(Momo-dev:tip)) with ESMTP
+	id 2F/B4-10928-3A990135; Fri, 28 Feb 2014 14:13:55 +0000
+In-Reply-To: <87fvn335sm.fsf@fencepost.gnu.org> (David Kastrup's message of
+	"Fri, 28 Feb 2014 11:11:53 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (windows-nt)
+X-RR-Connecting-IP: 107.14.168.118:25
+X-Cloudmark-Score: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242960>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242961>
 
-> If you are on a case-insensitive filesystem, or work on a cross-platform
-> project, ensure that you avoid ambiguous refs. Problem solved.
+David Kastrup <dak@gnu.org> writes:
 
-I agree this is the best solution, and I personally avoid the use of
-ambiguous refs. However, since there is nothing in git stopping the
-use of ambiguous refs, there is no way to stop every person who works
-on a shared repo from using them.
+> Stephen Leake <stephen_leake@stephe-leake.org> writes:
+>
+>> I like commands that "do the right thing". So no, this would not be
+>> confusing.
+>
+> I _hate_ commands that think they know better than to do what they are
+> told.  In particular when doing destructive things.  And just because
+> _you_ like them does not mean they are not confusing.
 
-> So, everybody on a case-insensitive file system should pay the price even
-> if they do not need the "feature"? No way.
+Ok, I should have said "not confusing for me".
 
-I would say preventing potential loss of commits is a price worth paying.
+People differ.
 
-> IMO the proper solution is to teach packed-refs about core.ignorecase. Until that happens, disabling gc.packrefs seems to be a valid
-> workaround for people who have that problem.
+> In the long run, it is much more confusing if you come to rely on some
+> commands doing "the right thing" while in other cases, the actually
+> written thing is done.
 
-Once again, based on Michael Haggerty's very informative input, maybe
-an even better solution would be to add a core.allowambiguousrefs
-(default to true) option and when it is false do a case insensitive
-comparison during ref creation (branching, tagging).
+There should always be the option of telling git exactly what to do. In
+my emacs front end, the command that "does the right thing" is _called_
+"do-the-right-thing". All of the other commands do exactly as told.
 
-Thanks,
--Lee
+In this case, it is only "git reset" that would do the right thing,
+since you did _not_ tell it specifically what to do.
+
+Relying on a default is always problematic, in my experience; I much
+prefer "no default" to "a default that people voted on 10 years ago, and
+now we are stuck with it".
+
+> "do the right thing" commands also tend to do the wrong thing
+> occasionally with potentially disastrous results when they are used in
+> scripts where the followup actions rely on the actual result.
+
+That is bad, and should not be allowed. On the other hand, I have yet to
+see an actual use case of bad behavior in this discussion.
+
+-- 
+-- Stephe
