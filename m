@@ -1,91 +1,134 @@
-From: Karsten Blees <karsten.blees@gmail.com>
-Subject: Re: Branch Name Case Sensitivity
-Date: Fri, 28 Feb 2014 14:56:45 +0100
-Message-ID: <5310959D.709@gmail.com>
-References: <CAJHY66EQD280QgXBCoZU4y_aqSEu3A1hXzeW7X-rtT6vMZ92oA@mail.gmail.com>	<xmqqvbw0xrl6.fsf@gitster.dls.corp.google.com>	<530FA0C1.3000109@web.de>	<530FBB1D.3050505@gmail.com> <CAJHY66FtC03YbJrbVn+adsePkYnVD2RGH1TGkzz2pKNBoee_iQ@mail.gmail.com> <53102FB0.6040603@viscovery.net>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: GSoC idea: allow "git rebase --interactive" todo lines to take
+ options
+Date: Fri, 28 Feb 2014 15:03:52 +0100
+Message-ID: <53109748.3090507@alum.mit.edu>
+References: <530DA00E.4090402@alum.mit.edu> <20140226105249.GE25711@sigill.intra.peff.net> <CANUGeEY2qE2LPq=-bhaKrKrv+uJUaPRqAeW_X1sFyZH-_PRVeA@mail.gmail.com> <20140228125241.GA23448@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>,
-	Lee Hopkins <leerhop@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 28 14:56:51 2014
+Cc: Brandon McCaig <bamccaig@gmail.com>,
+	git discussion list <git@vger.kernel.org>,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Feb 28 15:04:06 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJNvk-000310-EF
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 14:56:48 +0100
+	id 1WJO2k-0007rH-IA
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 15:04:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751904AbaB1N4o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Feb 2014 08:56:44 -0500
-Received: from mail-ea0-f175.google.com ([209.85.215.175]:36454 "EHLO
-	mail-ea0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751712AbaB1N4n (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Feb 2014 08:56:43 -0500
-Received: by mail-ea0-f175.google.com with SMTP id z10so2657861ead.20
-        for <git@vger.kernel.org>; Fri, 28 Feb 2014 05:56:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=c8FhjGT8MEJ03759NyMoVF4yElHfWBGrujJg38pvD+E=;
-        b=FUpcAfNRsDpyplgdY77TUawwRrWUz3YeHi+QgS0l3XPqUwRGW6TIL7Ir4gy5i0353t
-         zI4tEUN6CzLBDYtrnrxEmO0LpbClN+d1CafA97MxS01YtUJA4xObJ0X4srovFjkyohf1
-         YOQax2PNaXFqfeP1O9GONCl8nTMlJAumxADwzX9dwwYuuJ6e8kpcwwFVS0NSk9zPzcUT
-         0wINUHDLa5xW3Y53S2tkYpR75tqhnI/yVICX2xQAUuZIi1aklcDMQ/VoRhLXn3eDav9t
-         oQqhTjUvr7YONsVPsHAur2+wFa4sBEX682lHHvGXAGXoX3Oc0oJNOFElC01M/3WxOZUk
-         Eoow==
-X-Received: by 10.15.99.201 with SMTP id bl49mr21516497eeb.53.1393595802195;
-        Fri, 28 Feb 2014 05:56:42 -0800 (PST)
-Received: from [10.1.100.54] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id i1sm10717603eeo.16.2014.02.28.05.56.40
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 28 Feb 2014 05:56:41 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
-In-Reply-To: <53102FB0.6040603@viscovery.net>
+	id S1752464AbaB1OD6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Feb 2014 09:03:58 -0500
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:61525 "EHLO
+	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751945AbaB1OD4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Feb 2014 09:03:56 -0500
+X-AuditID: 12074411-f79ab6d000002f0e-17-5310974bcc4d
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id A3.1C.12046.B4790135; Fri, 28 Feb 2014 09:03:55 -0500 (EST)
+Received: from [192.168.69.148] (p57A2462E.dip0.t-ipconnect.de [87.162.70.46])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s1SE3qLL032249
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Fri, 28 Feb 2014 09:03:54 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
+In-Reply-To: <20140228125241.GA23448@sigill.intra.peff.net>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrOKsWRmVeSWpSXmKPExsUixO6iqOs9XSDYYOcZE4vjPw6zWHRd6Way
+	6F/exWYx4X4Ds8WPlh5mB1aPnbPusnt8+Bjn8ax3D6PH501yASxR3DZJiSVlwZnpefp2CdwZ
+	3798YC14JVlx784vxgbG7SJdjJwcEgImErN3dLJC2GISF+6tZ+ti5OIQErjMKPHk/SMmCOcc
+	k8TPS89YQKp4BbQlniy9wgZiswioSrz4vocRxGYT0JVY1NPMBGKLCgRLrL78AKpeUOLkzCdg
+	toiArMT3wxsZQYYyC9xglJi04zbYamGBUImey2dgtjFK3J13C2wDp4C1xKpt+4C6OYDuE5fo
+	aQwCMZkF1CXWzxMCqWAWkJfY/nYO8wRGwVlI1s1CqJqFpGoBI/MqRrnEnNJc3dzEzJzi1GTd
+	4uTEvLzUIl1TvdzMEr3UlNJNjJCAF9zBOOOk3CFGAQ5GJR7eCZ78wUKsiWXFlbmHGCU5mJRE
+	eZVbBYKF+JLyUyozEosz4otKc1KLDzFKcDArifA+aQLK8aYkVlalFuXDpKQ5WJTEefmWqPsJ
+	CaQnlqRmp6YWpBbBZGU4OJQkeOOnATUKFqWmp1akZeaUIKSZODhBhnNJiRSn5qWkFiWWlmTE
+	gyI4vhgYwyApHqC9uVNB9hYXJOYCRSFaTzHqctxu+/WJUYglLz8vVUocYocASFFGaR7cClh6
+	e8UoDvSxMG8RSBUPMDXCTXoFtIQJaAmnJ9iSkkSElFQDoz3PPc/FHZKR2fPWLQ1K++rHcme+
+	2PPSFIYJ3ZM+tijOlv6xc1MRk4fN4qCLhVHbtE/vFVNf8W5d0JXPSqfljilzzj7s 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242959>
 
-Am 28.02.2014 07:41, schrieb Johannes Sixt:
-> Am 2/28/2014 0:38, schrieb Lee Hopkins:
->>> If I understand the issue correctly, the problem is that packed-refs
->>> are always case-sensitive, even if core.ignorecase=true. OTOH,
+On 02/28/2014 01:52 PM, Jeff King wrote:
+> [...]
+> Sorry, I missed an important word in my final sentence. It should have
+> been "the examples you gave are NOT particularly interesting to me".
 > 
-> core.ignorecase is intended to affect filenames of the worktree, not
-> anything else, BTW.
+> On Thu, Feb 27, 2014 at 01:10:30PM -0500, Brandon McCaig wrote:
+>> Particularly all of the ideas expressed later on about
+>> merge commits and resetting authors, etc. It seems like you're trying
+>> to define a whole new command set (i.e., API) for Git, but within the
+>> context of rebase --interactive. I think it would be hard to document
+>> this, and hard to learn it, and harder still to remember it (even
+>> though it would obviously try to mirror the existing Git command API).
 > 
-
-from git-config(1):
-"enables various workarounds to enable git to work better on filesystems that are not case sensitive"
-
-It says nothing about work-tree only, so I'd expect it to apply to all git components that store potentially case-sensitive information in file names.
-
-...it also says "better", not "flawlessly" :-)
-
->>> checking / updating _unpacked_ refs on a case-insensitive file system
->>> is naturally case-insensitive. So wouldn't it be a better workaround
->>> to disallow packed refs (i.e. 'git config gc.packrefs false')?
->>
->> You are correct, the issue boils down to mixing the usage of 
->> packed-refs and loose refs on case insensitive file systems. So either 
->> always using packed-refs or always using loose refs would take care of 
->> the problem. Based Michael Haggerty's response, it seems that always 
->> using loose refs would be a better workaround.
+> I agree some of the examples are getting esoteric. Things like --signoff
+> and --reset-author are a fairly straightforward convenience feature:
+> they save you from writing "exec git commit --amend --signoff".
 > 
-> So, everybody on a case-insensitive file system should pay the price even
-> if they do not need the "feature"? No way.
+> For others that cannot currently be done with a simple option to "git
+> commit", I think a reasonable first step would be to implement them
+> there. For example, you cannot currently "git commit --tree". Maybe that
+> is too insane and low-level an option for "git commit". But if it is,
+> then it is almost certainly too insane and low-level for a rebase
+> instruction.
 > 
-> If you are on a case-insensitive filesystem, or work on a cross-platform
-> project, ensure that you avoid ambiguous refs. Problem solved.
+> For others from Michael's list, I expect they may not make _sense_
+> outside of a rebase. That is, they are operations whose input is not a
+> single commit, but a sequence of commits (e.g., if you had some
+> high-level command that allowed swapping two commits without having to
+> redo the conflicts from the second commit). Those ones might make sense
+> to exist as part of rebase and nowhere else (but then they are not
+> necessarily just options, but rather new instructions).
 > 
+>> That said, I do think that this is probably a bad direction and
+>> shouldn't be rushed into too fast.
+> 
+> I'm not sure whether it is a good idea or not. But I think it is looking
+> decreasingly like a good GSoC project.
 
-So its OK to lose data if you accidentally use an ambiguous ref? I cannot believe you actually meant that.
+I guess I misread the sentiment of the mailing list, because I merged
+this idea into the list about two hours ago.
 
-IMO the proper solution is to teach packed-refs about core.ignorecase. Until that happens, disabling gc.packrefs seems to be a valid workaround for people who have that problem.
+I'm not claiming that all of the sub-ideas are good, but I do think that
+some of them are, and that the general idea of allowing options on
+todo-list commands would make it possible for them to be more expressive
+while *avoiding* making them a lot harder to learn.  I would rather give
+the user a few options that can be used consistently on multiple
+commands than have to invent a new command for each new feature.  And I
+think that the line-oriented nature of the todo list makes
+
+    pick --signoff 1234abc Blah blah
+
+easier to understand (and easier to type) than
+
+    pick 1234abc Blah blah
+    amend --signoff
+
+let alone
+
+    pick 1234abc Blah blah
+    exec git commit --amend --signoff
+
+I also like the idea of a non-broken "git rebase --interactive
+--preserve-merges" via a todo option "-p" or something similar.
+
+But if you think that even the proposal's simpler sub-ideas are
+controversial, then let me know and I will delete the idea from the list
+again.  I don't want a GSoC student to have to fight battles of my own
+creation :-)
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
