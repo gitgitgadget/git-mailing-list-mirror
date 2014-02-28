@@ -1,92 +1,314 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: [PATCH] help.c: rename function "pretty_print_string_list"
-Date: Fri, 28 Feb 2014 20:27:29 +0100
-Message-ID: <1393615649-29248-1-git-send-email-ralf.thielow@gmail.com>
-Cc: Ralf Thielow <ralf.thielow@gmail.com>
+From: Fabio D'Alfonso <fabio.dalfonso@fabiodalfonso.com>
+Subject: t9200 cvsexportcommit test fails on Ubuntu server 12.04.4 LTS
+Date: Fri, 28 Feb 2014 19:45:07 +0100
+Organization: Fabio D'Alfonso
+Message-ID: <5310D933.1@fabiodalfonso.com>
+Reply-To: fabio.dalfonso@fabiodalfonso.com
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 28 20:27:57 2014
+X-From: git-owner@vger.kernel.org Fri Feb 28 20:32:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJT6B-0005UD-My
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 20:27:56 +0100
+	id 1WJTAH-0000FC-Gu
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 20:32:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751785AbaB1T1e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Feb 2014 14:27:34 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:54807 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751556AbaB1T1d (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Feb 2014 14:27:33 -0500
-Received: by mail-ee0-f46.google.com with SMTP id d49so2476010eek.19
-        for <git@vger.kernel.org>; Fri, 28 Feb 2014 11:27:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=f9CqvlPSO6v3qbbJpovhjFNjrKZp6zoVIv+Gb71Db5Y=;
-        b=Kew5YqbtXF2nC7L6Bk+2puaGiBBsVIV5d5QnNTN1DSQs3ULwJEtEjTEQ6oY7d5uOWU
-         dlwwHpNwujo5MwTtZZ/4rBTQQCBjXZja5TCVNksX1O/M1f4VzWGsGmzc63hRzzhGJB62
-         3s874iC0X2TD2lxjkI6KmH2tSJ3HFC+92jkdJEuo5l3a8mfc0qS3hj8i8pGv8rF9/HL5
-         LLApodyswbH5eQLUbgOXC+TxY3wdEA5NHjRNElmO02Hgy5U3KQD9kN+2hjDRAgZpYV14
-         nL2Z+3xJItj4eRiuZ/Mxoq7qOTeIbdy7mTPsN2YxPupGVYyI3KyNK/l7aLeO+TQg+n7c
-         zsHQ==
-X-Received: by 10.15.21.2 with SMTP id c2mr23367370eeu.77.1393615651849;
-        Fri, 28 Feb 2014 11:27:31 -0800 (PST)
-Received: from localhost (dslb-178-008-120-172.pools.arcor-ip.net. [178.8.120.172])
-        by mx.google.com with ESMTPSA id m8sm14069935eef.14.2014.02.28.11.27.30
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 28 Feb 2014 11:27:31 -0800 (PST)
-X-Mailer: git-send-email 1.9.0.164.g473e143
+	id S1751853AbaB1TcE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Feb 2014 14:32:04 -0500
+Received: from gateway11.websitewelcome.com ([67.18.72.139]:37297 "EHLO
+	gateway11.websitewelcome.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751715AbaB1TcD (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Feb 2014 14:32:03 -0500
+X-Greylist: delayed 1501 seconds by postgrey-1.27 at vger.kernel.org; Fri, 28 Feb 2014 14:32:03 EST
+Received: by gateway11.websitewelcome.com (Postfix, from userid 500)
+	id 436582DDB3DC5; Fri, 28 Feb 2014 12:45:12 -0600 (CST)
+Received: from gator4050.hostgator.com (gator4050.hostgator.com [192.185.4.61])
+	by gateway11.websitewelcome.com (Postfix) with ESMTP id D4F8C2DDB329D
+	for <git@vger.kernel.org>; Fri, 28 Feb 2014 12:45:09 -0600 (CST)
+Received: from [95.237.41.141] (port=5662 helo=[192.168.1.16])
+	by gator4050.hostgator.com with esmtpa (Exim 4.80.1)
+	(envelope-from <fabio.dalfonso@fabiodalfonso.com>)
+	id 1WJSQn-0001zn-0x
+	for git@vger.kernel.org; Fri, 28 Feb 2014 12:45:09 -0600
+User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - gator4050.hostgator.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - fabiodalfonso.com
+X-BWhitelist: no
+X-Source-IP: 95.237.41.141
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: ([192.168.1.16]) [95.237.41.141]:5662
+X-Source-Auth: fabio.dalfonso@fabiodalfonso.com
+X-Email-Count: 2
+X-Source-Cap: ZGFsZm9uc287ZGFsZm9uc287Z2F0b3I0MDUwLmhvc3RnYXRvci5jb20=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243007>
 
-The part "string_list" of the name of function
-"pretty_print_string_list" is just an implementation
-detail. The function pretty-prints command names so
-rename it to "pretty_print_cmdnames".
+Hi,
+I get 12 of 15 tests faling.
 
-Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
----
-Just noticed this while digging through Git codebase.
+Any idea? the same build works fine on 11.04 where I have a desktop ver=
+sion.
 
- help.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+Thanks
 
-diff --git a/help.c b/help.c
-index df7d16d..b266b09 100644
---- a/help.c
-+++ b/help.c
-@@ -78,8 +78,7 @@ void exclude_cmds(struct cmdnames *cmds, struct cmdnames *excludes)
- 	cmds->cnt = cj;
- }
- 
--static void pretty_print_string_list(struct cmdnames *cmds,
--				     unsigned int colopts)
-+static void pretty_print_cmdnames(struct cmdnames *cmds, unsigned int colopts)
- {
- 	struct string_list list = STRING_LIST_INIT_NODUP;
- 	struct column_options copts;
-@@ -209,14 +208,14 @@ void list_commands(unsigned int colopts,
- 		const char *exec_path = git_exec_path();
- 		printf_ln(_("available git commands in '%s'"), exec_path);
- 		putchar('\n');
--		pretty_print_string_list(main_cmds, colopts);
-+		pretty_print_cmdnames(main_cmds, colopts);
- 		putchar('\n');
- 	}
- 
- 	if (other_cmds->cnt) {
- 		printf_ln(_("git commands available from elsewhere on your $PATH"));
- 		putchar('\n');
--		pretty_print_string_list(other_cmds, colopts);
-+		pretty_print_cmdnames(other_cmds, colopts);
- 		putchar('\n');
- 	}
- }
--- 
-1.9.0.164.g473e143
+
+not ok 1 - New file
+#    mkdir A B C D E F &&
+#         echo hello1 >A/newfile1.txt &&
+#         echo hello2 >B/newfile2.txt &&
+#         cp "$TEST_DIRECTORY"/test-binary-
+1.png C/newfile3.png &&
+#         cp "$TEST_DIRECTORY"/test-binary-1.png D/newfile4.png &&
+#         git add A/newfile1.txt &&
+#         git add B/newfile2.txt &&
+#         git add C/newfile3.png &&
+#         git add D/newfile4.png &&
+#         git commit -a -m "Test: New file" &&
+#         id=3D$(git rev-list --max-count=3D1 HEAD) &&
+#         (cd "$CVSWORK" &&
+#         git cvsexportcommit -c $id &&
+#         check_entries A "newfile1.txt/1.1/" &&
+#         check_entries B "newfile2.txt/1.1/" &&
+#         check_entries C "newfile3.png/1.1/-kb" &&
+#         check_entries D "newfile4.png/1.1/-kb" &&
+#         test_cmp A/newfile1.txt ../A/newfile1.txt &&
+#         test_cmp B/newfile2.txt ../B/newfile2.txt &&
+#         test_cmp C/newfile3.png ../C/newfile3.png &&
+#         test_cmp D/newfile4.png ../D/newfile4.png
+#         )
+not ok 2 - Remove two files, add two and update two
+#    echo Hello1 >>A/newfile1.txt &&
+#         rm -f B/newfile2.txt &&
+#         rm -f C/newfile3.png &&
+#         echo Hello5  >E/newfile5.txt &&
+#         cp "$TEST_DIRECTORY"/test-binary-2.png D/newfile4.png &&
+#         cp "$TEST_DIRECTORY"/test-binary-1.png F/newfile6.png &&
+#         git add E/newfile5.txt &&
+#         git add F/newfile6.png &&
+#         git commit -a -m "Test: Remove, add and update" &&
+#         id=3D$(git rev-list --max-count=3D1 HEAD) &&
+#         (cd "$CVSWORK" &&
+#         git cvsexportcommit -c $id &&
+#         check_entries A "newfile1.txt/1.2/" &&
+#         check_entries B "" &&
+#         check_entries C "" &&
+#         check_entries D "newfile4.png/1.2/-kb" &&
+#         check_entries E "newfile5.txt/1.1/" &&
+#         check_entries F "newfile6.png/1.1/-kb" &&
+#         test_cmp A/newfile1.txt ../A/newfile1.txt &&
+#         test_cmp D/newfile4.png ../D/newfile4.png &&
+#         test_cmp E/newfile5.txt ../E/newfile5.txt &&
+#         test_cmp F/newfile6.png ../F/newfile6.png
+#         )
+ok 3 - Fail to change binary more than one generation old
+not ok 4 - Remove only binary files
+#    git reset --hard HEAD^^ &&
+#         rm -f D/newfile4.png &&
+#         git commit -a -m "test: remove only a binary file" &&
+#         id=3D$(git rev-list --max-count=3D1 HEAD) &&
+#         (cd "$CVSWORK" &&
+#         git cvsexportcommit -c $id &&
+#         check_entries A "newfile1.txt/1.2/" &&
+#         check_entries B "" &&
+#         check_entries C "" &&
+#         check_entries D "" &&
+#         check_entries E "newfile5.txt/1.1/" &&
+#         check_entries F "newfile6.png/1.1/-kb" &&
+#         test_cmp A/newfile1.txt ../A/newfile1.txt &&
+#         test_cmp E/newfile5.txt ../E/newfile5.txt &&
+#         test_cmp F/newfile6.png ../F/newfile6.png
+#         )
+not ok 5 - Remove only a text file
+#    rm -f A/newfile1.txt &&
+#         git commit -a -m "test: remove only a binary file" &&
+#         id=3D$(git rev-list --max-count=3D1 HEAD) &&
+#         (cd "$CVSWORK" &&
+#         git cvsexportcommit -c $id &&
+#         check_entries A "" &&
+#         check_entries B "" &&
+#         check_entries C "" &&
+#         check_entries D "" &&
+#         check_entries E "newfile5.txt/1.1/" &&
+#         check_entries F "newfile6.png/1.1/-kb" &&
+#         test_cmp E/newfile5.txt ../E/newfile5.txt &&
+#         test_cmp F/newfile6.png ../F/newfile6.png
+#         )
+not ok 6 - New file with spaces in file name
+#    mkdir "G g" &&
+#          echo ok then >"G g/with spaces.txt" &&
+#          git add "G g/with spaces.txt" && \
+#          cp "$TEST_DIRECTORY"/test-binary-1.png "G g/with spaces.png"=
+ && \
+#          git add "G g/with spaces.png" &&
+#          git commit -a -m "With spaces" &&
+#          id=3D$(git rev-list --max-count=3D1 HEAD) &&
+#          (cd "$CVSWORK" &&
+#          git cvsexportcommit -c $id &&
+#          check_entries "G g" "with spaces.png/1.1/-kb|with=20
+spaces.txt/1.1/"
+#          )
+not ok 7 - Update file with spaces in file name
+#    echo Ok then >>"G g/with spaces.txt" &&
+#          cat "$TEST_DIRECTORY"/test-binary-1.png >>"G g/with=20
+spaces.png" && \
+#          git add "G g/with spaces.png" &&
+#          git commit -a -m "Update with spaces" &&
+#          id=3D$(git rev-list --max-count=3D1 HEAD) &&
+#          (cd "$CVSWORK" &&
+#          git cvsexportcommit -c $id
+#          check_entries "G g" "with spaces.png/1.2/-kb|with=20
+spaces.txt/1.2/"
+#          )
+not ok 8 - File with non-ascii file name
+#    mkdir -p=20
+=C5/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/=E5/=E4/=F6=
+ &&
+#          echo Foo=20
+ >=C5/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/=E5/=E4/=F6=
+/g=E5rdets=E5g=E5rdet.txt &&
+#          git add=20
+=C5/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/=E5/=E4/=F6=
+/g=E5rdets=E5g=E5rdet.txt=20
+&&
+#          cp "$TEST_DIRECTORY"/test-binary-1.png=20
+=C5/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/=E5/=E4/=F6=
+/g=E5rdets=E5g=E5rdet.png=20
+&&
+#          git add=20
+=C5/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/=E5/=E4/=F6=
+/g=E5rdets=E5g=E5rdet.png=20
+&&
+#          git commit -a -m "G=E5r det s=E5 g=E5r det" && \
+#          id=3D$(git rev-list --max-count=3D1 HEAD) &&
+#          (cd "$CVSWORK" &&
+#          git cvsexportcommit -v -c $id &&
+#          check_entries \
+#         =20
+"=C5/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/=E5/=E4/=F6=
+" \
+#          "g=E5rdets=E5g=E5rdet.png/1.1/-kb|g=E5rdets=E5g=E5rdet.txt/1=
+=2E1/"
+#          )
+ok 9 - Mismatching patch should fail
+ok 10 - Retain execute bit
+not ok 11 - -w option should work with relative GIT_DIR
+#
+#          mkdir W &&
+#          echo foobar >W/file1.txt &&
+#          echo bazzle >W/file2.txt &&
+#          git add W/file1.txt &&
+#          git add W/file2.txt &&
+#          git commit -m "More updates" &&
+#          id=3D$(git rev-list --max-count=3D1 HEAD) &&
+#          (cd "$GIT_DIR" &&
+#          GIT_DIR=3D. git cvsexportcommit -w "$CVSWORK" -c $id &&
+#          check_entries "$CVSWORK/W" "file1.txt/1.1/|file2.txt/1.1/" &=
+&
+#          test_cmp "$CVSWORK/W/file1.txt" ../W/file1.txt &&
+#          test_cmp "$CVSWORK/W/file2.txt" ../W/file2.txt
+#          )
+#
+not ok 12 - check files before directories
+#
+#
+#        echo Notes > release-notes &&
+#        git add release-notes &&
+#        git commit -m "Add release notes" release-notes &&
+#        id=3D$(git rev-parse HEAD) &&
+#        git cvsexportcommit -w "$CVSWORK" -c $id &&
+#
+#        echo new > DS &&
+#        echo new > E/DS &&
+#        echo modified > release-notes &&
+#        git add DS E/DS release-notes &&
+#        git commit -m "Add two files with the same basename" &&
+#        id=3D$(git rev-parse HEAD) &&
+#        git cvsexportcommit -w "$CVSWORK" -c $id &&
+#        check_entries "$CVSWORK/E" "DS/1.1/|newfile5.txt/1.1/" &&
+#        check_entries "$CVSWORK" "DS/1.1/|release-notes/1.2/" &&
+#        test_cmp "$CVSWORK/DS" DS &&
+#        test_cmp "$CVSWORK/E/DS" E/DS &&
+#        test_cmp "$CVSWORK/release-notes" release-notes
+#
+#
+not ok 13 - re-commit a removed filename which remains in CVS attic
+#
+#
+#        (cd "$CVSWORK" &&
+#         echo >attic_gremlin &&
+#         cvs -Q add attic_gremlin &&
+#         cvs -Q ci -m "added attic_gremlin" &&
+#         rm attic_gremlin &&
+#         cvs -Q rm attic_gremlin &&
+#         cvs -Q ci -m "removed attic_gremlin") &&
+#
+#        echo > attic_gremlin &&
+#        git add attic_gremlin &&
+#        git commit -m "Added attic_gremlin" &&
+#        git cvsexportcommit -w "$CVSWORK" -c HEAD &&
+#        (cd "$CVSWORK"; cvs -Q update -d) &&
+#        test -f "$CVSWORK/attic_gremlin"
+#
+not ok 14 - commit a file with leading spaces in the name
+#
+#
+#        echo space > " space" &&
+#        git add " space" &&
+#        git commit -m "Add a file with a leading space" &&
+#        id=3D$(git rev-parse HEAD) &&
+#        git cvsexportcommit -w "$CVSWORK" -c $id &&
+#        check_entries "$CVSWORK" "=20
+space/1.1/|DS/1.1/|attic_gremlin/1.3/|release-notes/1.2/" &&
+#        test_cmp "$CVSWORK/ space" " space"
+#
+#
+not ok 15 - use the same checkout for Git and CVS
+#
+#
+#        (mkdir shared &&
+#         cd shared &&
+#         sane_unset GIT_DIR &&
+#         cvs co . &&
+#         git init &&
+#         git add " space" &&
+#         git commit -m "fake initial commit" &&
+#         echo Hello >> " space" &&
+#         git commit -m "Another change" " space" &&
+#         git cvsexportcommit -W -p -u -c HEAD &&
+#         grep Hello " space" &&
+#         git diff-files)
+#
+#
+# failed 12 among 15 test(s)
+1..15
+--=20
+
+=46abio D'Alfonso
+'Enabling Business Through IT'
+cell.  +39.348.059.40.22 ***
+web: www.fabiodalfonso.com <http://www.fabiodalfonso.com/>
+email: fabio.dalfonso@fabiodalfonso.com
+<mailto:fabio.dalfonso@fabiodalfonso.com>linkedin:=20
+www.linkedin.com/in/fabiodalfonso <http://it.linkedin.com/in/fabiodalfo=
+nso>
+twitter: www.twitter.com/#!/fabio_dalfonso=20
+<http://www.twitter.com/#%21/fabio_dalfonso>
+
+fax: +39.06.874.599.581
+BlackBerry=AE Wireless Enabled Address.
+
+
+          ** Hidden  numbers are automatically rejected by the phone*
