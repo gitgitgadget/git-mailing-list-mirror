@@ -1,74 +1,76 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] t3200-branch: test setting branch as own upstream
-Date: Fri, 28 Feb 2014 01:27:15 -0500
-Message-ID: <20140228062715.GE32556@sigill.intra.peff.net>
-References: <1393556659-32717-1-git-send-email-modocache@gmail.com>
- <20140228053703.GA32556@sigill.intra.peff.net>
- <CAN7MxmWP9N==0DnoE-0=Xr7NWkNMSGBC+yiz1a3wS5EbHigvKg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Brian Gesiak <modocache@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 28 07:27:22 2014
+From: Brian Gesiak <modocache@gmail.com>
+Subject: [PATCH v2 1/2] t3200-branch: test setting branch as own upstream
+Date: Fri, 28 Feb 2014 15:41:02 +0900
+Message-ID: <1393569662-68351-1-git-send-email-modocache@gmail.com>
+Cc: git@vger.kernel.org, Brian Gesiak <modocache@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Feb 28 07:41:21 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJGun-0002it-UU
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 07:27:22 +0100
+	id 1WJH8I-0000VE-Vy
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 07:41:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751825AbaB1G1S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Feb 2014 01:27:18 -0500
-Received: from cloud.peff.net ([50.56.180.127]:58493 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750795AbaB1G1R (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Feb 2014 01:27:17 -0500
-Received: (qmail 9484 invoked by uid 102); 28 Feb 2014 06:27:17 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 28 Feb 2014 00:27:17 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 28 Feb 2014 01:27:15 -0500
-Content-Disposition: inline
-In-Reply-To: <CAN7MxmWP9N==0DnoE-0=Xr7NWkNMSGBC+yiz1a3wS5EbHigvKg@mail.gmail.com>
+	id S1751750AbaB1GlO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Feb 2014 01:41:14 -0500
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:65332 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750820AbaB1GlO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Feb 2014 01:41:14 -0500
+Received: by mail-pa0-f43.google.com with SMTP id bj1so263513pad.16
+        for <git@vger.kernel.org>; Thu, 27 Feb 2014 22:41:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=OLWVdx4oHM6wM93NfLGUk02UNFGf9zAflZDL2TVz5IQ=;
+        b=FNLUVM+cHHZ+03N6kNq0ehLu85tY3siLsL52kFnGhaNA3tlqWa8hNF/FBPLkL8LrRC
+         aNro0Zb0JkEuNYnG/+h+AeKnrEoWV9N3D96i6JWGoZ3ZkWBldEOb0J2D/fEbPsrhMRl2
+         rTxixq+QWDPe4nqymF+epShFXABsOKHj9SSJFnf62viVLyvCCqEw6eXyxHEhJxahy2en
+         3n3Aw+VJKCufl33tK7oIkN4kKaikvUZJT0XvfvXzAM3mlYfU7OlsCt1cp4nO05SBC9zh
+         lw2EF+CKf6KWeEeOyFgJJdCoInZiQ5sNuZ4bd9psDuddtCVifvIoqpF6rYCt8g6QNl6h
+         4rNA==
+X-Received: by 10.68.242.68 with SMTP id wo4mr1678767pbc.32.1393569673606;
+        Thu, 27 Feb 2014 22:41:13 -0800 (PST)
+Received: from localhost.localdomain (p1157-ipbf5204marunouchi.tokyo.ocn.ne.jp. [118.8.132.157])
+        by mx.google.com with ESMTPSA id eb5sm6089861pad.22.2014.02.27.22.41.12
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Thu, 27 Feb 2014 22:41:13 -0800 (PST)
+X-Mailer: git-send-email 1.8.3.4 (Apple Git-47)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242891>
 
-On Fri, Feb 28, 2014 at 03:17:28PM +0900, Brian Gesiak wrote:
+No test asserts that "git branch -u refs/heads/my-branch my-branch"
+emits a warning. Add a test that does so.
 
-> > For an operation like "git branch foo origin" where setting up the
-> > tracking is a side effect, a warning makes sense. But the sole purpose
-> > of the command above is to set the upstream, and we didn't do it; should
-> > this warning actually be upgraded to an error?
-> 
-> I agree. I originally wrote the test using test_expect_failure--imagine my
-> surprise when the exit status was 0, despite the fact that the upstream wasn't
-> set!
+Signed-off-by: Brian Gesiak <modocache@gmail.com>
+---
+ t/t3200-branch.sh | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-For reference, you don't want test_expect_failure here; it is about "we
-want this to succeed, but git is currently buggy and we know it, so mark
-it as a failing test". You want test_must_fail to indicate a command
-inside a test that must exit non-zero:
-
-  test_expect_success 'pointing upstream to itself fails' '
-          test_must_fail git branch -u ...
-  '
-
-I notice that the warning comes from install_branch_config, which gets
-used both for "branch -u", but also in the "side effect" case I
-mentioned above. Is it possible to trigger this as part of such a case?
-I think maybe "git branch -f --track foo foo" would do it. If so, we
-should perhaps include a test that it does not break if we upgrade the
-"-u" case to an error.
-
-> Patch is on the way, just waiting for the tests to complete. Thanks
-> for pointing that out! Also, sorry if it's in the Makefile somewhere,
-> but is there an easy way to run just a single test file in the t
-> directory?
-
-You can run "./tXXXX-....sh" explicitly.
-
--Peff
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index fcdb867..6164126 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -507,6 +507,14 @@ EOF
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success '--set-upstream-to shows warning if used to set branch as own upstream' '
++	git branch --set-upstream-to refs/heads/my13 my13 2>actual &&
++	cat >expected <<EOF &&
++warning: Not setting branch my13 as its own upstream.
++EOF
++	test_i18ncmp expected actual
++'
++
+ # Keep this test last, as it changes the current branch
+ cat >expect <<EOF
+ $_z40 $HEAD $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150200 +0000	branch: Created from master
+-- 
+1.8.3.4 (Apple Git-47)
