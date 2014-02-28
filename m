@@ -1,110 +1,82 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH 17/19] Portable alloca for Git
-Date: Fri, 28 Feb 2014 18:19:58 +0100
-Message-ID: <CABPQNSYnDjhxjpyZQkNP_qwect_tnPvJ_nEfGSq9qnYFMpehWg@mail.gmail.com>
-References: <cover.1393257006.git.kirr@mns.spb.ru> <f08867ee212e27074dbb4cbb06af408b16dba0a1.1393257006.git.kirr@mns.spb.ru>
- <CABPQNSaVQuXBEnSrs6hdHwEbaBKFr-NjKpuBRNnbkM+HtfJ4Ag@mail.gmail.com>
- <CABPQNSadTGfiue6G+6x7_o10Ri1E7D5vZFU=Cp8rAha+j9jwSA@mail.gmail.com> <20140228170012.GA5247@tugrik.mns.mnsspb.ru>
-Reply-To: kusmabite@gmail.com
+From: Stephen Leake <stephen_leake@stephe-leake.org>
+Subject: Re: [RFC 0/3] Make git more user-friendly during a merge conflict
+Date: Fri, 28 Feb 2014 11:26:23 -0600
+Message-ID: <85zjlb1740.fsf@stephe-leake.org>
+References: <1393437985-31401-1-git-send-email-andrew.kw.w@gmail.com>
+	<20140226202601.GK7855@google.com> <857g8f1ugu.fsf@stephe-leake.org>
+	<87fvn335sm.fsf@fencepost.gnu.org> <858usvz5nj.fsf@stephe-leake.org>
+	<87txbj1fnw.fsf@fencepost.gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>,
-	Brandon Casey <drafnel@gmail.com>,
-	Marius Storm-Olsen <mstormo@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Gerrit Pape <pape@smarden.org>,
-	Petr Salinger <Petr.Salinger@seznam.cz>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Thomas Schwinge <tschwinge@gnu.org>
-To: Kirill Smelkov <kirr@mns.spb.ru>
-X-From: git-owner@vger.kernel.org Fri Feb 28 18:20:44 2014
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 28 18:26:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJR75-0001nk-IK
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 18:20:43 +0100
+	id 1WJRCi-0006BB-5O
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 18:26:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752308AbaB1RUj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Feb 2014 12:20:39 -0500
-Received: from mail-ig0-f169.google.com ([209.85.213.169]:65283 "EHLO
-	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751743AbaB1RUi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Feb 2014 12:20:38 -0500
-Received: by mail-ig0-f169.google.com with SMTP id y6so2433317igj.0
-        for <git@vger.kernel.org>; Fri, 28 Feb 2014 09:20:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=JxyeR1VFMQyh2dguaeVXIO6odnY6EGsnMb0g52OO9A0=;
-        b=zyNwbgXfPhmYbB5/zG/USeMEgZMN+44Wx5OnI49h/ZNtAwg4pguHDn23z1jaR+ulbk
-         nwnwTEH+pyVaA4MTzohyfZnXuzUGq9fXnInwiOy/zzIv2SUnAuD6kZtx8LVYnovkW5dw
-         o0FSgrne2NauNUTl8lq2Kb8tr/l0wS5vbc57an7UrRktZSOQDIDvFKb1sZ7iLtyH4py9
-         I5PkGstQE0K5qH3Z8LebcfH8Kotxu98pV9UiI5hLjh9VeM6ENss4jcwSz4RvFD+ZiPw4
-         C2abdxHk9gDpoIFfkBnxwozguJQvDvFjqdHKR8yynkWKMayaxEDwO0FnLxPwoPO4JQ5r
-         APwQ==
-X-Received: by 10.42.41.82 with SMTP id o18mr11667893ice.50.1393608038275;
- Fri, 28 Feb 2014 09:20:38 -0800 (PST)
-Received: by 10.64.166.135 with HTTP; Fri, 28 Feb 2014 09:19:58 -0800 (PST)
-In-Reply-To: <20140228170012.GA5247@tugrik.mns.mnsspb.ru>
+	id S1752993AbaB1R02 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Feb 2014 12:26:28 -0500
+Received: from cdptpa-outbound-snat.email.rr.com ([107.14.166.229]:40098 "EHLO
+	cdptpa-oedge-vip.email.rr.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752809AbaB1R01 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Feb 2014 12:26:27 -0500
+Received: from [75.87.81.6] ([75.87.81.6:49272] helo=TAKVER)
+	by cdptpa-oedge01 (envelope-from <stephen_leake@stephe-leake.org>)
+	(ecelerity 3.5.0.35861 r(Momo-dev:tip)) with ESMTP
+	id 0B/C9-10928-2C6C0135; Fri, 28 Feb 2014 17:26:26 +0000
+In-Reply-To: <87txbj1fnw.fsf@fencepost.gnu.org> (David Kastrup's message of
+	"Fri, 28 Feb 2014 15:21:39 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (windows-nt)
+X-RR-Connecting-IP: 107.14.168.118:25
+X-Cloudmark-Score: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242991>
 
-On Fri, Feb 28, 2014 at 6:00 PM, Kirill Smelkov <kirr@mns.spb.ru> wrote:
-> On Fri, Feb 28, 2014 at 02:50:04PM +0100, Erik Faye-Lund wrote:
->> On Fri, Feb 28, 2014 at 2:44 PM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
->> > On Mon, Feb 24, 2014 at 5:21 PM, Kirill Smelkov <kirr@mns.spb.ru> wrote:
->> >> diff --git a/Makefile b/Makefile
->> >> index dddaf4f..0334806 100644
->> >> --- a/Makefile
->> >> +++ b/Makefile
->> >> @@ -316,6 +321,7 @@ endif
->> >>  ifeq ($(uname_S),Windows)
->> >>         GIT_VERSION := $(GIT_VERSION).MSVC
->> >>         pathsep = ;
->> >> +       HAVE_ALLOCA_H = YesPlease
->> >>         NO_PREAD = YesPlease
->> >>         NEEDS_CRYPTO_WITH_SSL = YesPlease
->> >>         NO_LIBGEN_H = YesPlease
->> >
->> > In MSVC, alloca is defined in in malloc.h, not alloca.h:
->> >
->> > http://msdn.microsoft.com/en-us/library/wb1s57t5.aspx
->> >
->> > In fact, it has no alloca.h at all. But we don't have malloca.h in
->> > mingw either, so creating a compat/win32/alloca.h that includes
->> > malloc.h is probably sufficient.
+David Kastrup <dak@gnu.org> writes:
+
+> Stephen Leake <stephen_leake@stephe-leake.org> writes:
+>
+>> David Kastrup <dak@gnu.org> writes:
 >>
->> "But we don't have alloca.h in mingw either", sorry.
+>>> "do the right thing" commands also tend to do the wrong thing
+>>> occasionally with potentially disastrous results when they are used
+>>> in scripts where the followup actions rely on the actual result.
+>>
+>> That is bad, and should not be allowed. On the other hand, I have yet
+>> to see an actual use case of bad behavior in this discussion.
 >
-> Don't we have that for MSVC already in
+> Huh.
 >
->     compat/vcbuild/include/alloca.h
->
-> and
->
->     ifeq ($(uname_S),Windows)
->         ...
->         BASIC_CFLAGS = ... -Icompat/vcbuild/include ...
->
->
-> in config.mak.uname ?
+> <http://permalink.gmane.org/gmane.comp.version-control.git/242744>
 
-Ah, of course. Thanks for setting me straight!
+That's about backward incompatibility, which is bad, but not what I was
+talking about above.
 
-> And as I've not touched MINGW part in config.mak.uname the patch stays
-> valid as it is :) and we can incrementally update what platforms have
-> working alloca with follow-up patches.
->
-> In fact that would be maybe preferred, for maintainers to enable alloca
-> with knowledge and testing, as one person can't have them all at hand.
+Specifically, the proposed change is:
 
-Yeah, you're probably right.
+'git reset' will have different default actions depending on context:
+
+- if a merge is not in progress, it will do 'git reset --mixed'
+
+- if a merge is in progress, it will do 'git reset --merge'
+
+Is there a use case where this will do the wrong thing?
+
+Of course, I fully understand that not being able to come up with a
+"wrong thing" use case is not the same as proving it cannot happen,
+especially for a system as complex as git.
+
+So it would be ok to say "we don't do that so we are not exposed to
+unintended consequences".
+
+But "wrong thing" use cases are more convincing :).
+
+-- 
+-- Stephe
