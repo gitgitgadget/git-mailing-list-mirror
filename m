@@ -1,119 +1,97 @@
-From: Conley Owens <cco3@android.com>
-Subject: [BUG] Halt during fetch on MacOS
-Date: Fri, 28 Feb 2014 15:26:28 -0800
-Message-ID: <CAFFUb6X455R4OD5FKnVFHFmvTyRqtV300bc=a8Xs03agM+=uLQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Branch Name Case Sensitivity
+Date: Fri, 28 Feb 2014 15:28:58 -0800
+Message-ID: <xmqq7g8eu891.fsf@gitster.dls.corp.google.com>
+References: <CAJHY66EQD280QgXBCoZU4y_aqSEu3A1hXzeW7X-rtT6vMZ92oA@mail.gmail.com>
+	<xmqqvbw0xrl6.fsf@gitster.dls.corp.google.com>
+	<530FA0C1.3000109@web.de> <530FBB1D.3050505@gmail.com>
+	<CAJHY66FtC03YbJrbVn+adsePkYnVD2RGH1TGkzz2pKNBoee_iQ@mail.gmail.com>
+	<53102FB0.6040603@viscovery.net> <5310959D.709@gmail.com>
+	<xmqqk3cfuksd.fsf@gitster.dls.corp.google.com>
+	<CACsJy8A6etyFkxn3D7hjM9JgzmokPBARXrEncVuw1x+OOHJ_Lg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 01 00:26:39 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Karsten Blees <karsten.blees@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Lee Hopkins <leerhop@gmail.com>,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 01 00:29:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJWp8-0007je-8e
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Mar 2014 00:26:34 +0100
+	id 1WJWrd-0001Do-Px
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Mar 2014 00:29:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752333AbaB1X03 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Feb 2014 18:26:29 -0500
-Received: from mail-ie0-f175.google.com ([209.85.223.175]:58897 "EHLO
-	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751787AbaB1X03 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Feb 2014 18:26:29 -0500
-Received: by mail-ie0-f175.google.com with SMTP id at1so4110091iec.34
-        for <git@vger.kernel.org>; Fri, 28 Feb 2014 15:26:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=android.com; s=20120917;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=BLWgywxFOgc3oLHh5KmQtwSlw8vN4lvhA9qO6PP0WJI=;
-        b=SaPxXgNaBxeg5kAXhek2zism4TbwPdqHtK9bZxyYH6VYpGf1udDbEOBKlx/ExyS+1J
-         KqV7EL5lvF5QqrbGz6Tnj2JB6lw9MA0Vwo4Xi4u8HsJ16ebe5YK2rK4emwQFroOSi9i6
-         aWcbLl3Q3xbgY56N1GGK2WS7PTZwf/OKX6OzDP5MonG2IC4lF+hsaTAQW+aRepH3Qt0c
-         u/wRqfd0+6EGOnkPY06tEWIYaCtnlb2+TGSSDOcH44QKKp0jkkF1SmZ6LLA9DOKTEjBt
-         pY/624Xv5ZVO7Q5Azp3i9TqDinGo4B8aX/7+/qcGMls2Gxz7u/WnrkJdbHzKgrlVbyGk
-         VVdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=BLWgywxFOgc3oLHh5KmQtwSlw8vN4lvhA9qO6PP0WJI=;
-        b=kO1LYrEStsiNeQWc4KGdofXC5qi35xVsOVgNLtLuKxZLdcfpznc++qHYvHhBLy80Ov
-         +EL/w7JUW5OfeqM5Zxm++dHqq6/pUZ6RunineN+iATFCwoLNFvn0rUQ+mqLUDvDJB6l4
-         aFqhovfWEl5xnZ5bArnE6igR4Tvs42fJmLHzv3ymOf2VwYWSH4T2Innj/kfI8CgiQnIB
-         DpvJMUIxyEUfjjxi8uJHqGu3wAF7Qgk+/HBrHxuhy7Srb2JCtZStJp6Fglc8riQQiZte
-         qS6Lw0Jv2WoEsBpu1IawudjGZga3DMQFYP+3LKl8/xNQFSR47QSmg5zX8JBguenTiP0M
-         tJBw==
-X-Gm-Message-State: ALoCoQmQMaTS+ydHOgPWyGWbbKuEIHNnMnrMfcE0jCwaGX5yTBLOTP1IIFPc/7n3EiW6VJMF2Thd
-X-Received: by 10.50.128.101 with SMTP id nn5mr7186267igb.7.1393629988595;
- Fri, 28 Feb 2014 15:26:28 -0800 (PST)
-Received: by 10.64.145.101 with HTTP; Fri, 28 Feb 2014 15:26:28 -0800 (PST)
+	id S1752124AbaB1X3F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Feb 2014 18:29:05 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:32999 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751911AbaB1X3E (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Feb 2014 18:29:04 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B0DB06EC86;
+	Fri, 28 Feb 2014 18:29:02 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Li9ECkbK41X0VeTAKRLMJXYTeuM=; b=e+fib9
+	1uKAWWv+eE12rsT42AHgKC8an34HeZHFMM88gyy37mS8kGz4+d5Va6sRypwVx7W4
+	s+wZXKV9ZwijO5n5rj52HeETsOQ40MCWEhnyZ7K5zL4iMmo3XoBURDdoPOqSqhZS
+	MxGga6c0rOmFaV8/Zu2qwVz4moGKE28K70S2E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=cd39SMxKQACDSuv523DLXU2OH1cjTXTq
+	1tSwBKQWoGwS9e1WJxneh0mTP4OissRsS73D0bOPqtJgJnXodA7mVpda9B5ZDYNB
+	6wOMhKoYYuonxSnKhHf5aDnDowzv0T5QXo1ajnGdW2vhGVRvGTbPGCT9komDl2ah
+	R4TBeGWjOvY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9984A6EC82;
+	Fri, 28 Feb 2014 18:29:02 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9D3D66EC7F;
+	Fri, 28 Feb 2014 18:29:01 -0500 (EST)
+In-Reply-To: <CACsJy8A6etyFkxn3D7hjM9JgzmokPBARXrEncVuw1x+OOHJ_Lg@mail.gmail.com>
+	(Duy Nguyen's message of "Sat, 1 Mar 2014 06:22:09 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 1AF7BAF0-A0D0-11E3-9F8D-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243027>
 
-$ git --version  # This is just the git from MacPorts
-git version 1.8.5.5
-$ sw_vers
-ProductName:    Mac OS X
-ProductVersion: 10.8.5
-BuildVersion:   12F45
+Duy Nguyen <pclouds@gmail.com> writes:
 
-test.sh
-"""""""""""""""""""""""""""""""""""""
-#!/bin/bash
-rungit() {
-    mkdir $1
-    GIT_DIR=$1 git init --bare
-    echo '[remote "aosp"]' > $1/config
-    echo '    url =
-https://android.googlesource.com/platform/external/tinyxml2' >>
-$1/config
-    GIT_DIR=$1 git fetch aosp +refs/heads/master:refs/remotes/aosp/master
-    rm -rf $1
-}
+> On Sat, Mar 1, 2014 at 1:58 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Karsten Blees <karsten.blees@gmail.com> writes:
+>>
+>>>> If you are on a case-insensitive filesystem, or work on a cross-platform
+>>>> project, ensure that you avoid ambiguous refs. Problem solved.
+>>>>
+>>>
+>>> So its OK to lose data if you accidentally use an ambiguous ref? I
+>>> cannot believe you actually meant that.
+>>
+>> I think he meant what he said: "you avoid ambiguous refs".  He did
+>> not say "it is not Git's business to help you doing so".
+>>
+>> I think it is prudent to warn in the end-user facing layer (read: do
+>> not touch refs.c to implement something like that) when the user
+>> creates "refs/heads/Next" when there already is "refs/heads/next",
+>> and I further think it would make sense to do so even on case
+>> sensitive platforms.
+>
+> That does not help when the user creates "next" and pulls "Next" from
+> elsewhere, does it?
 
-for i in $(seq 1 100)
-do
-    rungit testdir$i &
-done
-"""""""""""""""""""""""""""""""""""""""
-$ ./test.sh  # Warning! This script fetches ~40MB of data
-
-When everything cools, you can see that there are some fetches hanging
-(typically).
-$ ps | grep 'git fetch'
-...
-63310 ttys004    0:00.01 git fetch aosp
-+refs/heads/master:refs/remotes/aosp/master
-63314 ttys004    0:00.01 git fetch aosp
-+refs/heads/master:refs/remotes/aosp/master
-63319 ttys004    0:00.01 git fetch aosp
-+refs/heads/master:refs/remotes/aosp/master
-63407 ttys004    0:00.00 git fetch aosp
-+refs/heads/master:refs/remotes/aosp/master
-63414 ttys004    0:00.00 git fetch aosp
-+refs/heads/master:refs/remotes/aosp/master
-63420 ttys004    0:00.00 git fetch aosp
-+refs/heads/master:refs/remotes/aosp/master
-...
-
-You can look at the parent process of each and see that one half
-spawned the other half, or you can look at the environment variables
-for each to see that there are two processes operating in the same
-directory for each directory where there's an issue.
-$ echo "$(for pid in $(ps | grep 'git fetch' | grep -o '^[0-9]*'); do
-ps -p $pid -wwwE | grep 'GIT_DIR=[^ ]*' -o; done)" | sort
-GIT_DIR=testdir14
-GIT_DIR=testdir14
-GIT_DIR=testdir32
-GIT_DIR=testdir32
-GIT_DIR=testdir47
-GIT_DIR=testdir47
-
-I've searched through the mailing list, but this doesn't seem to be a
-known issue.  I've only seen this occur on macs (and with a good deal
-of regularity).  It doesn't occur on my Ubuntu box.
-
-~cco3
+That depends on what the project policy would be.  At that point,
+that user needs to talk with the "elsewhere" person and resolve the
+issue (if there is one) according to the policy of their project,
+and it is not Git's business to _solve_ it for them.  Warning I
+suggested was a way to help avoiding without getting in a way of
+projects whose policy is to allow these.
