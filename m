@@ -1,136 +1,89 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] repack: add `repack.honorpackkeep` config var
-Date: Fri, 28 Feb 2014 10:45:39 -0800
-Message-ID: <xmqqob1ruld8.fsf@gitster.dls.corp.google.com>
-References: <20140124022822.GC4521@sigill.intra.peff.net>
-	<52E1D39B.4050103@fb.com>
-	<20140128060954.GA26401@sigill.intra.peff.net>
-	<xmqq8uu0mpg8.fsf@gitster.dls.corp.google.com>
-	<20140224082459.GA32594@sigill.intra.peff.net>
-	<xmqq1tys9vie.fsf@gitster.dls.corp.google.com>
-	<20140226101353.GA25711@sigill.intra.peff.net>
-	<xmqqr46p39cj.fsf@gitster.dls.corp.google.com>
-	<20140227112734.GC29668@sigill.intra.peff.net>
-	<xmqqy50wzb2b.fsf@gitster.dls.corp.google.com>
-	<20140228085546.GA11709@sigill.intra.peff.net>
+Subject: Re: Branch Name Case Sensitivity
+Date: Fri, 28 Feb 2014 10:58:10 -0800
+Message-ID: <xmqqk3cfuksd.fsf@gitster.dls.corp.google.com>
+References: <CAJHY66EQD280QgXBCoZU4y_aqSEu3A1hXzeW7X-rtT6vMZ92oA@mail.gmail.com>
+	<xmqqvbw0xrl6.fsf@gitster.dls.corp.google.com>
+	<530FA0C1.3000109@web.de> <530FBB1D.3050505@gmail.com>
+	<CAJHY66FtC03YbJrbVn+adsePkYnVD2RGH1TGkzz2pKNBoee_iQ@mail.gmail.com>
+	<53102FB0.6040603@viscovery.net> <5310959D.709@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Siddharth Agarwal <sid0@fb.com>, Vicent Marti <tanoku@gmail.com>,
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Lee Hopkins <leerhop@gmail.com>,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
 	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 28 19:45:52 2014
+To: Karsten Blees <karsten.blees@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 28 19:58:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJSRR-0007ir-Dz
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 19:45:49 +0100
+	id 1WJSda-0000Si-VO
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 19:58:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751931AbaB1Spp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Feb 2014 13:45:45 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49923 "EHLO
+	id S1752095AbaB1S6Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Feb 2014 13:58:16 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44093 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751679AbaB1Spo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Feb 2014 13:45:44 -0500
+	id S1751688AbaB1S6O (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Feb 2014 13:58:14 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CCDC36F5D1;
-	Fri, 28 Feb 2014 13:45:43 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2CC446FC1F;
+	Fri, 28 Feb 2014 13:58:14 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=dXW9klJZFAo98voFsB5byDzy5d4=; b=EIRcdJ
-	Re+PNE4df7TDReZSFZyLDhIHwYVwq0HF+qgHIHIeMnE0C6rHwHVWEwjoWPebtMCx
-	O3mFF/tGi0o7DUPY7Kgn05y3qveu5ZNlVstiBQWFLxumKlepHHEXJNFJ9KB3Cm0m
-	ZRTQNCiCSn9XuFALyXpamPlzux3V/EWt18H3c=
+	:content-type; s=sasl; bh=sq+guCH9tLVPtTtJzxNseq+Lpl4=; b=w6AK7o
+	xmMaSMY/JmYraGTcEdVTbO3hDyCLr9dqsDsmMo2stksgJs1eimXUh70Gb5OLUUfJ
+	abYrHl2Sf9jANvYtlGb9KSHSpeHflOPwUS8rKN6IjgHm5sR+Y921VSHI1GtC3/W1
+	ug+Pg/ttc2QYFXOp3Yico74CJjKt4uvd3IgNo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=k8aY+QvrlEKMM8ELktv4sGisI6OGmZC7
-	kugAqwXKVRTEFJfZXgzcl6fciRhkwwS6gXAWwO9G5tCECW9HEr2UkUiBvUq69mmr
-	us1EcLR1PMifKnpzSaCtKqzDVJWOQcoqmefzCAsN7YutgGi+xOUQc+dWGTLBrAyA
-	5RANUFpvzoA=
+	:content-type; q=dns; s=sasl; b=b0MgjyNW46Ax9R+VpJpLDcEI6O9cBUJz
+	WhW46aIGB89E/00943rbHhjXNC9w9UX5vGoIbp3+tqEl8P0szSYOf779znN4m1i1
+	aRgtUxdmF5PVotvV2T07RdAhIIbs4hgwWNepRbXdoUwqmSDOEgoPxwpCgGfl8M2w
+	ENIxaTmmPnk=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ABA1A6F5D0;
-	Fri, 28 Feb 2014 13:45:43 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0A6EF6FC1E;
+	Fri, 28 Feb 2014 13:58:14 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BF9436F5CE;
-	Fri, 28 Feb 2014 13:45:41 -0500 (EST)
-In-Reply-To: <20140228085546.GA11709@sigill.intra.peff.net> (Jeff King's
-	message of "Fri, 28 Feb 2014 03:55:46 -0500")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 22F4F6FC19;
+	Fri, 28 Feb 2014 13:58:13 -0500 (EST)
+In-Reply-To: <5310959D.709@gmail.com> (Karsten Blees's message of "Fri, 28 Feb
+	2014 14:56:45 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 8636FFB0-A0A8-11E3-8E17-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 460F6C68-A0AA-11E3-9723-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243002>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243003>
 
-Jeff King <peff@peff.net> writes:
+Karsten Blees <karsten.blees@gmail.com> writes:
 
-> On Thu, Feb 27, 2014 at 10:04:44AM -0800, Junio C Hamano wrote:
+>> If you are on a case-insensitive filesystem, or work on a cross-platform
+>> project, ensure that you avoid ambiguous refs. Problem solved.
+>> 
 >
->> I wonder if it makes sense to link it with "pack.writebitmaps" more
->> tightly, without even exposing it as a seemingly orthogonal knob
->> that can be tweaked, though.
->> 
->> I think that is because I do not fully understand the ", because ..."
->> part of the below:
->> 
->> >> This patch introduces an option to disable the
->> >> `--honor-pack-keep` option.  It is not triggered by default,
->> >> even when pack.writeBitmaps is turned on, because its use
->> >> depends on your overall packing strategy and use of .keep
->> >> files.
->> 
->> If you ask --write-bitmap-index (or have pack.writeBitmaps on), you
->> do want the bitmap-index to be written, and unless you tell
->> pack-objects to ignore the .keep marker, it cannot do so, no?
->> 
->> Does the ", because ..." part above mean "you may have an overall
->> packing strategy to use .keep file to not ever repack some subset of
->> the objects, so we will not silently explode the kept objects into a
->> new pack"?
->
-> Exactly. The two features (bitmaps and .keep) are not compatible with
-> each other, so you have to prioritize one. If you are using static .keep
-> files, you might want them to continue being respected at the expense of
-> using bitmaps for that repo. So I think you want a separate option from
-> --write-bitmap-index to allow the appropriate flexibility.
+> So its OK to lose data if you accidentally use an ambiguous ref? I
+> cannot believe you actually meant that.
 
-What is "the appropriate flexibility", though?  If the user wants to
-use bitmap, we would need to drop .keep, no?  Doesn't always having
-two copies in two packs degrade performance unnecessarily (without
-even talking about wasted diskspace)?  An explicit .keep exists in
-the repository because it is expensive and undesirable to duplicate
-what is in there in the first place, so it feels to me that either
+I think he meant what he said: "you avoid ambiguous refs".  He did
+not say "it is not Git's business to help you doing so".
 
- - Disable with warning, or outright refuse, the "-b" option if
-   there is .keep (if we want to give precedence to .keep); or
+I think it is prudent to warn in the end-user facing layer (read: do
+not touch refs.c to implement something like that) when the user
+creates "refs/heads/Next" when there already is "refs/heads/next",
+and I further think it would make sense to do so even on case
+sensitive platforms.
 
- - Remove .keep with warning when "-b" option is given (if we want
-   to give precedence to "-b").
-
-and nothing else would be a reasonable option.  Unfortunately, we
-can do neither automatically because there could be a transient .keep
-file in an active repository.
-
-So I think I agree with this...
-
-> The default is another matter.  I think most people using .bitmaps on a
-> server would probably want to set repack.packKeptObjects.  They would
-> want to repack often to take advantage of the .bitmaps anyway, so they
-> probably don't care about .keep files (any they see are due to races
-> with incoming pushes).
-
-... which makes me think that repack.packKeptObjects is merely a
-distraction---it should be enough to just pass "--pack-kept-objects"
-when "-b" is asked, without giving any extra configurability, no?
-
-> So we could do something like falling back to turning the option on if
-> --write-bitmap-index is on _and_ the user didn't specify
-> --pack-kept-objects.
-
-If you mean "didn't specify --no-pack-kept-objects", then I think
-that is sensible.  I still do not know why we would want the
-configuration variable, though.
+We warn ambiguous refs across refs hierarchies (e.g. if you have
+refs/heads/next and refs/tags/next) with core.warnAmbiguousRefs; I
+do not think it is a stretch to either introduce a new configuration
+core.warnCaseInsensitiveRefs (auto-detected at the same place as we
+auto-detect core.ignorecase) or use the same core.warnAmbiguousRefs
+to trigger a warning upon seeing both "refs/heads/next" and
+"refs/heads/Next".
