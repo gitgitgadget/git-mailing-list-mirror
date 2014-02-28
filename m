@@ -1,143 +1,221 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 2/2] Document some functions defined in object.c
-Date: Fri, 28 Feb 2014 17:29:17 +0100
-Message-ID: <1393604957-7571-3-git-send-email-mhagger@alum.mit.edu>
-References: <1393604957-7571-1-git-send-email-mhagger@alum.mit.edu>
-Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
-	Nicolas Pitre <nico@fluxnic.net>,
-	=?UTF-8?q?Jakub=20Nar=C4=99bski?= <jnareb@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 28 17:30:18 2014
+From: Sun He <sunheehnus@gmail.com>
+Subject: [PATCH] finish_tmp_packfile():use strbuf for pathname construction
+Date: Sat,  1 Mar 2014 00:32:47 +0800
+Message-ID: <1393605167-19774-1-git-send-email-sunheehnus@gmail.com>
+Cc: mhagger@alum.mit.edu, sunshine@sunshineco.com,
+	Sun He <sunheehnus@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 28 17:34:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJQKE-0004ct-U3
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 17:30:15 +0100
+	id 1WJQOA-0007ZR-MC
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 17:34:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752840AbaB1QaB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Feb 2014 11:30:01 -0500
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:52397 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752873AbaB1Q3y (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 Feb 2014 11:29:54 -0500
-X-AuditID: 12074414-f79d96d000002d2b-45-5310b98213f5
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 8C.57.11563.289B0135; Fri, 28 Feb 2014 11:29:54 -0500 (EST)
-Received: from michael.fritz.box (p57A2462E.dip0.t-ipconnect.de [87.162.70.46])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s1SGTLSf006566
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Fri, 28 Feb 2014 11:29:52 -0500
-X-Mailer: git-send-email 1.8.5.3
-In-Reply-To: <1393604957-7571-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrOIsWRmVeSWpSXmKPExsUixO6iqNu0UyDY4NhvfovbM1uYLbqudDNZ
-	NPReYbZYcXUOs8Xbm0sYLW6vmM9sMe/FCzYHdo+/7z8weTw70c7msXPWXXaPi5eUPT5vkgtg
-	jeK2SUosKQvOTM/Tt0vgzjh4ZApbwWLRiq1XXrE3MF4R6GLk5JAQMJG48PQgC4QtJnHh3nq2
-	LkYuDiGBy4wSy788Z4VwjjNJ3OhaxghSxSagK7Gop5kJxBYRUJOY2HaIBaSIWWAik8TmI2/Y
-	QRLCAs4SG9YdACtiEVCVaD+zEqyZFyi+8B2ELSGgINGybBdYPaeAi8SW6/+A6jmAtjlLzN/o
-	O4GRdwEjwypGucSc0lzd3MTMnOLUZN3i5MS8vNQiXQu93MwSvdSU0k2MkEAT2cF45KTcIUYB
-	DkYlHl7JRQLBQqyJZcWVuYcYJTmYlER5r+8ACvEl5adUZiQWZ8QXleakFh9ilOBgVhLhvbQY
-	KMebklhZlVqUD5OS5mBREuf9tljdT0ggPbEkNTs1tSC1CCYrw8GhJMG7F2SoYFFqempFWmZO
-	CUKaiYMTZDiXlEhxal5KalFiaUlGPCg24ouB0QGS4gHaexuknbe4IDEXKArReopRUUqcNwEk
-	IQCSyCjNgxsLSx+vGMWBvhTm3QNSxQNMPXDdr4AGMwEN5vQEG1ySiJCSamA0EFv2PCbvE4/m
-	8Yn3K/82zZSatPDm+gm1PYoTK+bpcnxt2OOqdHDtzYeKCrE/tjZVNDX1/X/Yl+sw2//TJ+kn
-	BoavFFhXh5hEFaYp3FRJ9TnGIX5GlCOl+Nn7U6V72+JT4r4cn6nz8sDN3KrMd7rh 
+	id S1752701AbaB1QeO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Feb 2014 11:34:14 -0500
+Received: from mail-pb0-f52.google.com ([209.85.160.52]:40834 "EHLO
+	mail-pb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752155AbaB1QeN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Feb 2014 11:34:13 -0500
+Received: by mail-pb0-f52.google.com with SMTP id rr13so961069pbb.25
+        for <git@vger.kernel.org>; Fri, 28 Feb 2014 08:34:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=Tp9HvRaq7ZLKpA/5oKERvNqsvezCKMvU/QCSlI4P2uQ=;
+        b=eJCx5/AD5fwy+PM2WEh9MgVQagXAQ1onynHaZbEw5KjSTTewO1JxkvhrsHIE1S3Cjz
+         V05B/qRksjYoSBea1nc2VwsKXkQkFUh5gojkcYurFevuZEgQ3ZEEsWL4a3nfEw3twOtG
+         +7Aa5pw11TboNODIbdjDeTlHFhyZjmeJC+oiNgb2aBpoFlL3HoOwY7BQnSjtCn/o3U1x
+         L5qEEsdUQglGB6878JP4d3bJLSnrwYbTbBpos6ioVGqpFdHeN8aZr2E4wdzAwg87R8Fv
+         o0j8vSpd6PwrjdocMQlIQXTzb0kv2ZGq/FbpGTtPoKE61CMYBw+e26XoMdjmnY2Jl41y
+         /anw==
+X-Received: by 10.66.216.129 with SMTP id oq1mr4398777pac.75.1393605252930;
+        Fri, 28 Feb 2014 08:34:12 -0800 (PST)
+Received: from ENIGMA.61.134.1.4 ([61.150.43.99])
+        by mx.google.com with ESMTPSA id gj9sm7738252pbc.7.2014.02.28.08.34.08
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 28 Feb 2014 08:34:11 -0800 (PST)
+X-Mailer: git-send-email 1.9.0.138.g2de3478.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242985>
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+Signed-off-by: Sun He <sunheehnus@gmail.com>
 ---
- object.c | 29 ++++++++++++++++++++++++++++-
- object.h |  7 +++++++
- 2 files changed, 35 insertions(+), 1 deletion(-)
+I follow the suggestions of Eric Sunshine to fix the patch.
 
-diff --git a/object.c b/object.c
-index 584f7ac..57a0890 100644
---- a/object.c
-+++ b/object.c
-@@ -43,14 +43,32 @@ int type_from_string(const char *str)
- 	die("invalid object type \"%s\"", str);
- }
+Of cause this patch has assumed that you have already fix the bug of
+tmpname in builtin/pack-objects.c:write_pack_file() warning()
+
+I want to say thank you to Eric Sunshine and Michael Haggerty who give me
+lots of help.
+
+
+
+ builtin/pack-objects.c | 15 ++++++---------
+ bulk-checkin.c         |  8 +++++---
+ pack-write.c           | 18 ++++++++++--------
+ pack.h                 |  2 +-
+ 4 files changed, 22 insertions(+), 21 deletions(-)
+
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index c733379..099d6ed 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -803,7 +803,7 @@ static void write_pack_file(void)
  
-+/*
-+ * Return a numerical hash value between 0 and n-1 for the object with
-+ * the specified sha1.  n must be a power of 2.  Please note that the
-+ * return value is *not* consistent across computer architectures.
-+ */
- static unsigned int hash_obj(const unsigned char *sha1, unsigned int n)
- {
- 	unsigned int hash;
-+
-+	/*
-+	 * Since the sha1 is essentially random, we just take the
-+	 * required number of bits directly from the first
-+	 * sizeof(unsigned int) bytes of sha1.  First we have to copy
-+	 * the bytes into a properly aligned integer.  If we cared
-+	 * about getting consistent results across architectures, we
-+	 * would have to call ntohl() here, too.
-+	 */
- 	memcpy(&hash, sha1, sizeof(unsigned int));
--	/* Assumes power-of-2 hash sizes in grow_object_hash */
- 	return hash & (n - 1);
- }
+ 		if (!pack_to_stdout) {
+ 			struct stat st;
+-			char tmpname[PATH_MAX];
++			struct strbuf tmpname = STRBUF_INIT;
  
-+/*
-+ * Insert obj into the hash table hash, which has length size (which
-+ * must be a power of 2).  On collisions, simply overflow to the next
-+ * empty bucket.
-+ */
- static void insert_obj_hash(struct object *obj, struct object **hash, unsigned int size)
- {
- 	unsigned int j = hash_obj(obj->sha1, size);
-@@ -63,6 +81,10 @@ static void insert_obj_hash(struct object *obj, struct object **hash, unsigned i
- 	hash[j] = obj;
- }
+ 			/*
+ 			 * Packs are runtime accessed in their mtime
+@@ -826,23 +826,19 @@ static void write_pack_file(void)
+ 						tmpname, strerror(errno));
+ 			}
  
-+/*
-+ * Look up the record for the given sha1 in the hash map stored in
-+ * obj_hash.  Return NULL if it was not found.
-+ */
- struct object *lookup_object(const unsigned char *sha1)
- {
- 	unsigned int i, first;
-@@ -92,6 +114,11 @@ struct object *lookup_object(const unsigned char *sha1)
- 	return obj;
- }
+-			/* Enough space for "-<sha-1>.pack"? */
+-			if (sizeof(tmpname) <= strlen(base_name) + 50)
+-				die("pack base name '%s' too long", base_name);
+-			snprintf(tmpname, sizeof(tmpname), "%s-", base_name);
++			strbuf_addf(&tmpname, "%s-", base_name);
  
-+/*
-+ * Increase the size of the hash map stored in obj_hash to the next
-+ * power of 2 (but at least 32).  Copy the existing values to the new
-+ * hash map.
-+ */
- static void grow_object_hash(void)
+ 			if (write_bitmap_index) {
+ 				bitmap_writer_set_checksum(sha1);
+ 				bitmap_writer_build_type_index(written_list, nr_written);
+ 			}
+ 
+-			finish_tmp_packfile(tmpname, pack_tmp_name,
++			finish_tmp_packfile(&tmpname, pack_tmp_name,
+ 					    written_list, nr_written,
+ 					    &pack_idx_opts, sha1);
+ 
+ 			if (write_bitmap_index) {
+-				char *end_of_name_prefix = strrchr(tmpname, 0);
+-				sprintf(end_of_name_prefix, "%s.bitmap", sha1_to_hex(sha1));
++				strbuf_addf(&tmpname, "%s.bitmap" ,sha1_to_hex(sha1));
+ 
+ 				stop_progress(&progress_state);
+ 
+@@ -851,10 +847,11 @@ static void write_pack_file(void)
+ 				bitmap_writer_select_commits(indexed_commits, indexed_commits_nr, -1);
+ 				bitmap_writer_build(&to_pack);
+ 				bitmap_writer_finish(written_list, nr_written,
+-						     tmpname, write_bitmap_options);
++						     tmpname.buf, write_bitmap_options);
+ 				write_bitmap_index = 0;
+ 			}
+ 
++			strbuf_release(&tmpname);
+ 			free(pack_tmp_name);
+ 			puts(sha1_to_hex(sha1));
+ 		}
+diff --git a/bulk-checkin.c b/bulk-checkin.c
+index 118c625..98e651c 100644
+--- a/bulk-checkin.c
++++ b/bulk-checkin.c
+@@ -4,6 +4,7 @@
+ #include "bulk-checkin.h"
+ #include "csum-file.h"
+ #include "pack.h"
++#include "strbuf.h"
+ 
+ static int pack_compression_level = Z_DEFAULT_COMPRESSION;
+ 
+@@ -23,7 +24,7 @@ static struct bulk_checkin_state {
+ static void finish_bulk_checkin(struct bulk_checkin_state *state)
  {
+ 	unsigned char sha1[20];
+-	char packname[PATH_MAX];
++	struct strbuf packname = STRBUF_INIT;
  	int i;
-diff --git a/object.h b/object.h
-index dc5df8c..732bf4d 100644
---- a/object.h
-+++ b/object.h
-@@ -42,7 +42,14 @@ struct object {
- extern const char *typename(unsigned int type);
- extern int type_from_string(const char *str);
  
-+/*
-+ * Return the current number of buckets in the object hashmap.
-+ */
- extern unsigned int get_max_object_index(void);
+ 	if (!state->f)
+@@ -43,8 +44,8 @@ static void finish_bulk_checkin(struct bulk_checkin_state *state)
+ 		close(fd);
+ 	}
+ 
+-	sprintf(packname, "%s/pack/pack-", get_object_directory());
+-	finish_tmp_packfile(packname, state->pack_tmp_name,
++	strbuf_addf(&packname, "%s/pack/pack-", get_object_directory());
++	finish_tmp_packfile(&packname, state->pack_tmp_name,
+ 			    state->written, state->nr_written,
+ 			    &state->pack_idx_opts, sha1);
+ 	for (i = 0; i < state->nr_written; i++)
+@@ -54,6 +55,7 @@ clear_exit:
+ 	free(state->written);
+ 	memset(state, 0, sizeof(*state));
+ 
++	strbuf_release(&packname);
+ 	/* Make objects we just wrote available to ourselves */
+ 	reprepare_packed_git();
+ }
+diff --git a/pack-write.c b/pack-write.c
+index 9b8308b..9ccf804 100644
+--- a/pack-write.c
++++ b/pack-write.c
+@@ -336,7 +336,7 @@ struct sha1file *create_tmp_packfile(char **pack_tmp_name)
+ 	return sha1fd(fd, *pack_tmp_name);
+ }
+ 
+-void finish_tmp_packfile(char *name_buffer,
++void finish_tmp_packfile(struct strbuf *name_buffer,
+ 			 const char *pack_tmp_name,
+ 			 struct pack_idx_entry **written_list,
+ 			 uint32_t nr_written,
+@@ -344,7 +344,7 @@ void finish_tmp_packfile(char *name_buffer,
+ 			 unsigned char sha1[])
+ {
+ 	const char *idx_tmp_name;
+-	char *end_of_name_prefix = strrchr(name_buffer, 0);
++	int basename_len = name_buffer->len;
+ 
+ 	if (adjust_shared_perm(pack_tmp_name))
+ 		die_errno("unable to make temporary pack file readable");
+@@ -354,17 +354,19 @@ void finish_tmp_packfile(char *name_buffer,
+ 	if (adjust_shared_perm(idx_tmp_name))
+ 		die_errno("unable to make temporary index file readable");
+ 
+-	sprintf(end_of_name_prefix, "%s.pack", sha1_to_hex(sha1));
+-	free_pack_by_name(name_buffer);
++	strbuf_addf(name_buffer, "%s.pack", sha1_to_hex(sha1));
++	free_pack_by_name(name_buffer->buf);
+ 
+-	if (rename(pack_tmp_name, name_buffer))
++	if (rename(pack_tmp_name, name_buffer->buf))
+ 		die_errno("unable to rename temporary pack file");
+ 
+-	sprintf(end_of_name_prefix, "%s.idx", sha1_to_hex(sha1));
+-	if (rename(idx_tmp_name, name_buffer))
++	strbuf_setlen(name_buffer, basename_len);
 +
-+/*
-+ * Return the object from the specified bucket in the object hashmap.
-+ */
- extern struct object *get_indexed_object(unsigned int);
++	strbuf_addf(name_buffer, "%s.idx", sha1_to_hex(sha1));
++	if (rename(idx_tmp_name, name_buffer->buf))
+ 		die_errno("unable to rename temporary index file");
  
- /*
+-	*end_of_name_prefix = '\0';
++	strbuf_setlen(name_buffer, basename_len);
+ 
+ 	free((void *)idx_tmp_name);
+ }
+diff --git a/pack.h b/pack.h
+index 12d9516..3223f5a 100644
+--- a/pack.h
++++ b/pack.h
+@@ -91,6 +91,6 @@ extern int encode_in_pack_object_header(enum object_type, uintmax_t, unsigned ch
+ extern int read_pack_header(int fd, struct pack_header *);
+ 
+ extern struct sha1file *create_tmp_packfile(char **pack_tmp_name);
+-extern void finish_tmp_packfile(char *name_buffer, const char *pack_tmp_name, struct pack_idx_entry **written_list, uint32_t nr_written, struct pack_idx_option *pack_idx_opts, unsigned char sha1[]);
++extern void finish_tmp_packfile(struct strbuf *name_buffer, const char *pack_tmp_name, struct pack_idx_entry **written_list, uint32_t nr_written, struct pack_idx_option *pack_idx_opts, unsigned char sha1[]);
+ 
+ #endif
 -- 
-1.8.5.3
+1.9.0.138.g2de3478.dirty
