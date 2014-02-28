@@ -1,84 +1,68 @@
-From: Jacopo Notarstefano <jacopo.notarstefano@gmail.com>
-Subject: [PATCH] branch.c: delete size check of newly tracked branch names
-Date: Fri, 28 Feb 2014 12:09:04 +0100
-Message-ID: <1393585744-2569-1-git-send-email-jacopo.notarstefano@gmail.com>
-Cc: Jacopo Notarstefano <jacopo.notarstefano@gmail.com>,
-	mhagger@alum.mit.edu, christian.couder@gmail.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 28 12:09:20 2014
+From: Brian Gesiak <modocache@gmail.com>
+Subject: Re: [PATCH 1/2] t3200-branch: test setting branch as own upstream
+Date: Fri, 28 Feb 2014 20:16:13 +0900
+Message-ID: <CAN7MxmVxYhF1VXWZNAXyfF8iBNQaqqwoyjmDAP_9_bc5NUUU6A@mail.gmail.com>
+References: <1393556659-32717-1-git-send-email-modocache@gmail.com>
+	<20140228053703.GA32556@sigill.intra.peff.net>
+	<531032DD.9000904@viscovery.net>
+	<20140228071401.GA1229@sigill.intra.peff.net>
+	<20140228072606.GA622@sigill.intra.peff.net>
+	<CAN7MxmXOvkrWPDEUH_Bqz5RVZUS7kuWkwi9kWmdwuwySszd=YA@mail.gmail.com>
+	<20140228083718.GA11480@sigill.intra.peff.net>
+	<CAN7MxmUUoz-HGFiTfgpvLpkXhvjBn_dYje7unoHE-Y=k3A0aqg@mail.gmail.com>
+	<20140228105929.GA18960@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Feb 28 12:16:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJLJe-0001xJ-TY
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 12:09:19 +0100
+	id 1WJLQU-0008WS-2X
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 12:16:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751810AbaB1LJO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Feb 2014 06:09:14 -0500
-Received: from mail-ee0-f41.google.com ([74.125.83.41]:38625 "EHLO
-	mail-ee0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751635AbaB1LJN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Feb 2014 06:09:13 -0500
-Received: by mail-ee0-f41.google.com with SMTP id b15so2190438eek.0
-        for <git@vger.kernel.org>; Fri, 28 Feb 2014 03:09:12 -0800 (PST)
+	id S1752021AbaB1LQQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Feb 2014 06:16:16 -0500
+Received: from mail-ie0-f179.google.com ([209.85.223.179]:60998 "EHLO
+	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751522AbaB1LQO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Feb 2014 06:16:14 -0500
+Received: by mail-ie0-f179.google.com with SMTP id to1so3254279ieb.10
+        for <git@vger.kernel.org>; Fri, 28 Feb 2014 03:16:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=9j5c/0Mm1Ny+aGFZ2rHzSEYUUus9ekZFXRJrC08yAzQ=;
-        b=cwQPSPOy8zlJayQ5EUoI8CASPbnhqt2emFN66ja7LXgEvFS7TfiWYBhbbgc+ubm3m9
-         ZSdeGsWA8GseAEAV3A3yP4wfgBHPJdWNtXcwVAMTSezavm0CVqzWsylA5o0i6YNkWrB4
-         2Vmn6zUpe+pjx+rGXKpOV5TX28X2Q+H0qaib6oHFhRO2Vtg/zeXgsSjkasG+b+PAPdzI
-         ssvhU5fiekgd0eRSjM+gmi/NGYJBaeMfBTaONFNpdY8SgjT1fLeH0qkt87ZULlwFJCeO
-         +N39bbYAhnlEMsPa5TkijbE0CuC1MUgztT3tv0yYANXJfjYbXuwH1Zo6o/Q8EHYmBsZn
-         aiug==
-X-Received: by 10.15.73.134 with SMTP id h6mr20754622eey.15.1393585752536;
-        Fri, 28 Feb 2014 03:09:12 -0800 (PST)
-Received: from localhost.localdomain (dynamic-adsl-78-13-118-34.clienti.tiscali.it. [78.13.118.34])
-        by mx.google.com with ESMTPSA id j41sm9120683eey.15.2014.02.28.03.09.09
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 28 Feb 2014 03:09:11 -0800 (PST)
-X-Mailer: git-send-email 1.9.0.1.g5abca64
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=mO2OpY91kqyvS2qEiTHkXxZ441ppC68rE7kqYy7r8JE=;
+        b=S5P+Zr2cP3ojK3tciveq4wDTXJb0x70ZMCi9AzZUnUmgDEGbCa8oiUYGkpa6+V6x9r
+         kBa8b7XSQeReTCyB9VhrvEqKgsaXSKdWNcEvUHr2Pehtr+aUhsek7NCpAhQQBUK93AE0
+         XZDEtP7gvhRqtqemFEG5UgBxOVvBwmjb6kB+ZdjuqqIQRN+R4l+xSQUpW78bDO9jNiS3
+         fJNqd2p0CaLwerHXZy0vkjWe+NR+ZFd7xbBKmH8zpbs8jYNsh2o3GeeVA3ACchlnScKF
+         RTHpFd18YDzOx4gaF7ZiaNHiMP2QdjUSyRm6dpWqvYnukM7EUgeW8g2vX3GfjXQ6ZY9x
+         NGuw==
+X-Received: by 10.50.93.106 with SMTP id ct10mr3252144igb.21.1393586173812;
+ Fri, 28 Feb 2014 03:16:13 -0800 (PST)
+Received: by 10.64.55.161 with HTTP; Fri, 28 Feb 2014 03:16:13 -0800 (PST)
+In-Reply-To: <20140228105929.GA18960@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242942>
 
-Since commit 6f084a56 the length of a newly tracked branch name was limited
-to 1019 = 1024 - 7 - 7 - 1 characters, a bound derived by having to store
-this name in a char[1024] called key with two strings of length at most 7
-and a '\0' character.
+> I just don't want to regress somebody else's workflow due
+> to my lack of imagination.
 
-This was no longer necessary as of commit a9f2c136, which uses a strbuf
-(documented in Documentation/technical/api-strbuf.txt) to store this value.
+This makes a lot of sense to me, although as-is the function emits a
+warning and returns immediately (although with a successful status
+code), so I'm also stumped as to what kind of workflow this would be
+included in.
 
-This patch removes this unneeded check and thus allows for branch names
-longer than 1019 characters.
+In any case, if the jury's out on this one, I suppose the two patches
+I submitted are good to merge? Part of me thinks the bump from warning
+to error belongs in its own patch anyway.
 
-Signed-off-by: Jacopo Notarstefano <jacopo.notarstefano@gmail.com>
----
-
-Submitted as GSoC microproject #3.
-
- branch.c | 4 ----
- 1 file changed, 4 deletions(-)
-
-diff --git a/branch.c b/branch.c
-index 723a36b..05feaff 100644
---- a/branch.c
-+++ b/branch.c
-@@ -114,10 +114,6 @@ static int setup_tracking(const char *new_ref, const char *orig_ref,
- 	struct tracking tracking;
- 	int config_flags = quiet ? 0 : BRANCH_CONFIG_VERBOSE;
- 
--	if (strlen(new_ref) > 1024 - 7 - 7 - 1)
--		return error(_("Tracking not set up: name too long: %s"),
--				new_ref);
--
- 	memset(&tracking, 0, sizeof(tracking));
- 	tracking.spec.dst = (char *)orig_ref;
- 	if (for_each_remote(find_tracked_branch, &tracking))
--- 
-1.9.0.1.g5abca64
+- Brian Gesiak
