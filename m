@@ -1,171 +1,145 @@
-From: Faiz Kothari <faiz.off93@gmail.com>
-Subject: Re: [PATCH] rewrite bulk-checkin.c:finish_bulk_checkin() using strbuf
-Date: Fri, 28 Feb 2014 23:57:20 +0530
-Message-ID: <CAFbjVcnx41CTOV-SCGC9a91b9weNTgYoRP1+uVDukp6Z+0F_yg@mail.gmail.com>
-References: <1393574305-24015-1-git-send-email-faiz.off93@gmail.com>
-	<CAPig+cTXK6=LDPDii6RQyO1fiMCq0Rai5uO0JYOzunM=4c_nUw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: An idea for "git bisect" and a GSoC enquiry
+Date: Fri, 28 Feb 2014 10:31:53 -0800
+Message-ID: <xmqqtxbjum06.fsf@gitster.dls.corp.google.com>
+References: <CAL0uuq0=Zo0X8mYRD6q-Q+QAcZhfmxOwKiRegDrRm3O_i0Q+EA@mail.gmail.com>
+	<530F1F11.7060403@alum.mit.edu>
+	<CAL0uuq0msXWZDDWzpetfBG0cgGQLKrtwhNp-DqbD6Q3aytaCdQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Fri Feb 28 19:27:32 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
+	Christian Couder <christian.couder@gmail.com>
+To: Jacopo Notarstefano <jacopo.notarstefano@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 28 19:32:09 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJS9e-00022L-QM
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 19:27:27 +0100
+	id 1WJSEC-0005YR-5i
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 19:32:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751638AbaB1S1W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Feb 2014 13:27:22 -0500
-Received: from mail-lb0-f179.google.com ([209.85.217.179]:33934 "EHLO
-	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751360AbaB1S1V (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Feb 2014 13:27:21 -0500
-Received: by mail-lb0-f179.google.com with SMTP id p9so2722870lbv.10
-        for <git@vger.kernel.org>; Fri, 28 Feb 2014 10:27:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=rvZK4TviBdpqE21shJgTDwkW/gbYOhea0ZLJpjj0nXg=;
-        b=RwJeTXFH1h+exH5AyhksSB8km5N09/YCznlrDALgchYJI4WiQK6eJtfkXWfTTr2aMn
-         0cPYaiwT7qniVmwpIovZPtoMQ0GdW4R87wzVn1SUDfUav1f7hDeEy/VcQUExSNLGxQiS
-         B/Kn8Dq9uYCRRdIFgw9d8K4L4yZjulb2UR0a4XmTNhim4mzN+dAa2MZgf9iZB3CtQQy2
-         KMLk83mRkdVfnA67vEpdRpchTPCFDJp8L+XIZB1GwcI+wkoJ2CE1u2SFLoUwy1hQ0EFK
-         qqSMaizkYviHJxPMyflg2OPoStN2xdZc9vMhBzVKOLFfKt1HVoOSz73iJvtWlClxxflP
-         OE2w==
-X-Received: by 10.112.160.161 with SMTP id xl1mr2107444lbb.71.1393612040318;
- Fri, 28 Feb 2014 10:27:20 -0800 (PST)
-Received: by 10.114.186.35 with HTTP; Fri, 28 Feb 2014 10:27:20 -0800 (PST)
-In-Reply-To: <CAPig+cTXK6=LDPDii6RQyO1fiMCq0Rai5uO0JYOzunM=4c_nUw@mail.gmail.com>
+	id S1751527AbaB1ScD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Feb 2014 13:32:03 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63120 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751410AbaB1ScB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Feb 2014 13:32:01 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C7F1C6F058;
+	Fri, 28 Feb 2014 13:31:58 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=vdZ4pAWRQ+RHW6fQXq5F9m3q/vI=; b=ic9dga
+	Fi4JOoN7A3S9wAj4vPjEx8dE1t1i9Z3pFYNtwHvvHOlaWr6mh8y1H4yz006kKxkc
+	UtMPp7vDCz0XgFBlXyUeSXPdlD6S69NO6JOUCySsqkfbZ0qAATCH7pydtoQ1smyr
+	qRQ592o/xoxJugpWx2eCrsXFQmLIES2WVx0U0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=jI2YS0m3Pi/uBuA/lgsPjYGcFa5tRviP
+	Gh+I78qdY9MSxNdyXH8DAB9pbbUR1T0/SOh94Qvzlg35M/5JigrTO76ZEzqYA55b
+	uWHnlwUC4moin7VU9H8AVPr3I50Soe4+gqj5m1eVjk0ii0NGqgk0gKtziO/sUJml
+	lixSyQd+sss=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ACCC86F057;
+	Fri, 28 Feb 2014 13:31:58 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3F9256F022;
+	Fri, 28 Feb 2014 13:31:56 -0500 (EST)
+In-Reply-To: <CAL0uuq0msXWZDDWzpetfBG0cgGQLKrtwhNp-DqbD6Q3aytaCdQ@mail.gmail.com>
+	(Jacopo Notarstefano's message of "Fri, 28 Feb 2014 10:03:15 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 9A29B384-A0A6-11E3-B011-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243001>
 
-Hi,
-Thanks for the suggestions and remarks.
-I rewrote bulk-checkin.c:finish_bulk_checkin() using strbuf. But saw
-that Sun He has already implemented the same way I have done.
-Should I submit my implementation as a patch?
+Jacopo Notarstefano <jacopo.notarstefano@gmail.com> writes:
 
-Secondly,
-I tried implementing this WITHOUT changing the prototype of the
-function pack-write.c:finish_tmp_packfile().
-
-For this I detached the buffer from strbuf in finish_bulk_checkin()
-using strbuf_detach() and passed it to finish_tmp_packfile().
-
-Inside finish_tmp_packfile, I attached the same buffer to a local
-struct strbuf using strbuf_attach().
-Now the problem is, two of the arguments to strbuf_attach() are
-'alloc' and 'len' which are private members of the struct strbuf.
-But since I am just passing the detached buffer, the information of
-alloc and len is lost which is required at the time of attaching.
-I cannot think of any better way of using strbuf and NOT modify the
-prototype of finish_tmp_packfile()
-
-As a workaround, I can determine alloc = (strlen(buf) + 1) and len =
-strlen(buf) but AFAIK this is not always true and may break.
-Any suggestions?
-
-Thanks.
-
-On Fri, Feb 28, 2014 at 2:45 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Fri, Feb 28, 2014 at 2:58 AM, Faiz Kothari <faiz.off93@gmail.com> wrote:
->> Signed-off-by: Faiz Kothari <faiz.off93@gmail.com>
+> On Thu, Feb 27, 2014 at 12:18 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+>> I don't understand the benefit of adding a new command "mark" rather
+>> than continuing to use "good", "bad", plus new commands "unfixed" and
+>> "fixed".  Does this solve any problems?
 >>
->> Notes:
->>     I finally got what's happening, and why the errors were caused.
->>     packname is supposed to contain the complete path to the .pack file.
->>     Packs are stored as /path/to/<SHA1>.pack which I overlooked earlier.
->>     After inspecting what is happening in pack-write.c:finish_tmp_packfile()
->>     which indirectly modifies packname by appending the SHA1 and ".pack" to packname
->>     This is happening in these code snippets:
->>         char *end_of_name_prefix = strrchr(name_buffer, 0);
->>
->>     and later
->>         sprintf(end_of_name_prefix, "%s.pack", sha1_to_hex(sha1));
->>
->>     name_buffer is packname.buf
->>     Using const for the first argument of pack-write.c:finish_tmp_packfile()
->>     doesnot raise any compile time warning or error and not any runtime errors,
->>     since the packname.buf is on heap and has extra space to which more char can be written.
->>     If this was not the case,
->>         for e.g. passing a constant string and modifying it.
->>         This will result in a segmentation fault.
->> ---
 >
-> This notes section is important to the ongoing email discussion,
-> however, it should be placed below the "---" line so that it does not
-> become part of the recorded commit message when the patch is applied
-> via "git am".
+> As Matthieu Moy remarked in a previous email, the main reason is
+> extensibility: I prefer having a single command to assign new
+> descriptive labels instead of having to patch git-bisect.sh to create
+> new labels like fixed, unfixed, fast, slow...
 >
->>  bulk-checkin.c |    8 +++++---
->>  pack-write.c   |    2 +-
->>  pack.h         |    2 +-
->>  3 files changed, 7 insertions(+), 5 deletions(-)
->>
->> diff --git a/bulk-checkin.c b/bulk-checkin.c
->> index 118c625..bbdf1ec 100644
->> --- a/bulk-checkin.c
->> +++ b/bulk-checkin.c
->> @@ -23,7 +23,7 @@ static struct bulk_checkin_state {
->>  static void finish_bulk_checkin(struct bulk_checkin_state *state)
->>  {
->>         unsigned char sha1[20];
->> -       char packname[PATH_MAX];
->> +       struct strbuf packname = STRBUF_INIT;
->>         int i;
->>
->>         if (!state->f)
->> @@ -42,9 +42,10 @@ static void finish_bulk_checkin(struct bulk_checkin_state *state)
->>                                          state->offset);
->>                 close(fd);
->>         }
->> +       strbuf_addf(&packname, "%s/pack/pack-", get_object_directory());
->> +       strbuf_grow(&packname, 40 + 5);
+>> What happens if the user mixes, say, "good" and "fixed" in a single
+>> bisect session?
 >
-> There are several problems with this. First, magic numbers 40 and 5
-> convey no meaning to the reader. At the very least, they should be
-> named constants or a comment should explain them. More seriously,
-> though, this code is fragile since it has far too intimate knowledge
-> of the inner workings of finish_tmp_packfile(). If the implementation
-> of finish_tmp_packfile() changes in the future such that it writes
-> more than 45 additional characters to the incoming buffer, this will
-> break.
->
-> Rather than coupling finish_bulk_checkin() and finish_tmp_packfile()
-> so tightly, consider finish_tmp_packfile() a black box which just
-> "does its job" and then propose ways to make things work without
-> finish_bulk_checkin() having to know how that job is done.
->
->> -       sprintf(packname, "%s/pack/pack-", get_object_directory());
->> -       finish_tmp_packfile(packname, state->pack_tmp_name,
->> +       finish_tmp_packfile(packname.buf, state->pack_tmp_name,
->>                             state->written, state->nr_written,
->>                             &state->pack_idx_opts, sha1);
->>         for (i = 0; i < state->nr_written; i++)
->> diff --git a/pack-write.c b/pack-write.c
->> index 605d01b..ac38867 100644
->> --- a/pack-write.c
->> +++ b/pack-write.c
->> @@ -336,7 +336,7 @@ struct sha1file *create_tmp_packfile(char **pack_tmp_name)
->>         return sha1fd(fd, *pack_tmp_name);
->>  }
->>
->> -void finish_tmp_packfile(char *name_buffer,
->> +void finish_tmp_packfile(const char *name_buffer,
->
-> This is misleading and fragile. By specifying 'const',
-> finish_tmp_packfile() promises not to modify the content of the
-> incoming name_buffer, yet it breaks this promise by modifying the
-> buffer through the non-const end_of_name_prefix variable (after
-> dropping the 'const' via strrchr()).
->
->>                          const char *pack_tmp_name,
->>                          struct pack_idx_entry **written_list,
->>                          uint32_t nr_written,
+> I don't think that's an issue. If the user uses the label "fixed"
+> instead of "bad" she will have a hard time remembering to use it every
+> time she needs it,...
+
+I am not sure I understand what you are trying to say.  Are you
+saying that we should stick to good/bad and allow the users use
+nothing else, because allowing "fixed" will be confusing?
+
+> and maybe the output of "git bisect" will look very
+> confusing, but what can git do? This is a semantic user input error,
+> not a syntax one.
+
+For a young tool or a feature, catering to perfect human perfectly
+is a good first goal---if it does not work well even for error-free
+human input, it would be worthless.  However, its second goal after
+achieving that first goal ought to be to help imperfect humans.
+
+I can very well imagine somebody start hunting for an earlier bugfix
+(perhaps trying to find it to backport to an older maintenance
+track), start saying "fixed", "broken", "broken", ..., continue
+after leaving for lunch for a while, and then try to mark the next
+version he tests as "bad" because it has a bug.
+
+It technically may be an user error, in the sense that in such a
+"where is the fix?" session, you want to mark a "still-has-bug" one
+as "broken" and mark a "no-longer-has-bug" one as "fixed" (just like
+"still-broken" as "bad" and "no-longer-broken" as "good" in regular
+bisection).  But at that point, the tool *knows* that the user
+earlier used "fixed" (or "broken") to mark some commits *already*.
+
+Why do you think there is nothing it can do to help the user?  Upon
+seeing "bad", the tool should at least be able to say "Excuse me,
+but you earlier said 'fixed' for one of the commits, so your
+vocabulary now is limited to 'fixed' and 'broken'".  I think it also
+should be able to add "Did you mean to say 'broken'?", or even "I'd
+assume that you meant 'broken' and will continue."
+
+I have always wondered if we can introduce a value neutral synonyms
+to good and bad.  For a bisect session, we care only about two
+states: "still-X" and "no-longer-X" where X may be 'working' for the
+normal bug-hunting bisection and 'broken' for the fix-hunting one.
+
+	$ git bisect still-working v1.6.0
+        $ git bisect no-longer-working v1.8.0
+
+would be a way to find a bug that was introduced during v1.6.0..v1.8.0,
+while
+
+        $ git bisect still-broken v1.6.0
+        $ git bisect no-longer-broken v1.8.0
+
+would be a way to find a fix in the same range.  The lowest-level
+bisection machinery could just _ignore_ anything after still/no-longer
+and do its thing, while the end-user facing layer could enforce,
+once one commit is marked as still-X (or no-longer-X), that nothing
+other than the same X is used, and issue an error message, perhaps
+like this:
+
+	$ git bisect still-broken v1.6.0
+        $ git bisect still-working v1.8.0
+        error: You earlier marked v1.6.0 as "still-broken" and
+        error: are hunting for the first commit that can be marked
+        error: as "no-longer-broken".  Say either "still-broken" or
+        error: "no-longer-broken", not "still-working".
+
+and that can be done without having to understand that "broken" is
+the opposite of "working" (of course if we understood that, we could
+even offer to guess that the user meant "no-longer-broken" by
+"still-working", but we do not want to go there).
