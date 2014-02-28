@@ -1,195 +1,94 @@
-From: Jacopo Notarstefano <jacopo.notarstefano@gmail.com>
-Subject: Re: An idea for "git bisect" and a GSoC enquiry
-Date: Fri, 28 Feb 2014 10:03:15 +0100
-Message-ID: <CAL0uuq0msXWZDDWzpetfBG0cgGQLKrtwhNp-DqbD6Q3aytaCdQ@mail.gmail.com>
-References: <CAL0uuq0=Zo0X8mYRD6q-Q+QAcZhfmxOwKiRegDrRm3O_i0Q+EA@mail.gmail.com>
-	<530F1F11.7060403@alum.mit.edu>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] archive: add archive.restrictRemote option
+Date: Fri, 28 Feb 2014 04:07:09 -0500
+Message-ID: <20140228090709.GB11709@sigill.intra.peff.net>
+References: <20140227040504.GA2242@sigill.intra.peff.net>
+ <xmqqtxbkz9jp.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Feb 28 10:03:27 2014
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, "Scott J. Goldman" <scottjg@github.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 28 10:07:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJJLp-0000H3-F4
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 10:03:25 +0100
+	id 1WJJPk-0001Ih-Pl
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 10:07:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751691AbaB1JDS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Feb 2014 04:03:18 -0500
-Received: from mail-vc0-f169.google.com ([209.85.220.169]:52747 "EHLO
-	mail-vc0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751123AbaB1JDQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Feb 2014 04:03:16 -0500
-Received: by mail-vc0-f169.google.com with SMTP id hq11so439794vcb.0
-        for <git@vger.kernel.org>; Fri, 28 Feb 2014 01:03:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=zuIYFPlIEC12lCx+uLCdRxiMyNBY1UitWXKliy/8ECQ=;
-        b=iDZvNNTDMsfypZfOMZYncrAbVFZZlrCQRuKwa9Xj+e3TUo/lVFyOnCu25laaxgv5/x
-         QzuPPtlZ8qiDMK9LggLKe7WqKenc5O3frvJgLT/WWzEY46IQGPtaGA56OIQwEtrde2wp
-         zK3/Cmjhe3DMYDHoGZ6KzaqshPCThF/lJTKT8cK7pSwCayRezPQldEJ1paUF0cqyuYyL
-         /EJ3dKX3CXLZVPHSb5dNIuPqJwbkhfE56CLmeC67AcUDjIgNSIPGl6uSJqJmYd22Z0kO
-         XPJQ6BPYtFIAXMMwWO2/SPD17gRmXdqbS6Ub+7ccOUlcsQp9rqGt9nQQ3d81vnQ7eh8A
-         82SA==
-X-Received: by 10.221.66.73 with SMTP id xp9mr1437369vcb.27.1393578195644;
- Fri, 28 Feb 2014 01:03:15 -0800 (PST)
-Received: by 10.52.73.161 with HTTP; Fri, 28 Feb 2014 01:03:15 -0800 (PST)
-In-Reply-To: <530F1F11.7060403@alum.mit.edu>
+	id S1752124AbaB1JHS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Feb 2014 04:07:18 -0500
+Received: from cloud.peff.net ([50.56.180.127]:58592 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751732AbaB1JHL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Feb 2014 04:07:11 -0500
+Received: (qmail 20117 invoked by uid 102); 28 Feb 2014 09:07:11 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 28 Feb 2014 03:07:11 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 28 Feb 2014 04:07:09 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqqtxbkz9jp.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242911>
 
-On Thu, Feb 27, 2014 at 12:18 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> I don't understand the benefit of adding a new command "mark" rather
-> than continuing to use "good", "bad", plus new commands "unfixed" and
-> "fixed".  Does this solve any problems?
->
+On Thu, Feb 27, 2014 at 10:37:30AM -0800, Junio C Hamano wrote:
 
-As Matthieu Moy remarked in a previous email, the main reason is
-extensibility: I prefer having a single command to assign new
-descriptive labels instead of having to patch git-bisect.sh to create
-new labels like fixed, unfixed, fast, slow...
+> > Signed-off-by: Jeff King <peff@peff.net>
+> 
+> Thanks.
+> 
+> Do GitHub people have general aversion against signing off (or
+> sending out, for that matter) their own patches, unless they were
+> already active here before they joined GitHub, by the way?
 
-> What happens if the user mixes, say, "good" and "fixed" in a single
-> bisect session?
->
+Mostly it is that I clean up the patches and commit messages before
+sending them out. Michael sends out his own patches because they are
+already perfect by the time I see them. :)
 
-I don't think that's an issue. If the user uses the label "fixed"
-instead of "bad" she will have a hard time remembering to use it every
-time she needs it, and maybe the output of "git bisect" will look very
-confusing, but what can git do? This is a semantic user input error,
-not a syntax one.
+I can certainly get S-O-B from GitHubbers, but my impression of the DCO
+is that it does not matter; as the first link in the signoff chain, I am
+certifying that the patch meets the licensing requirements. Of course, I
+know that because of my relationship to the author and our employer,
+which is something that isn't encoded in the headers. A S-O-B from the
+author would perhaps make it more obvious what happened.
 
-> I think it would be more convenient if "git bisect" would autodetect
-> whether the history went from "good" to "bad" or vice versa.  The
-> algorithm could be:
+> I like the general idea and this escape hatch would be a good thing
+> to have.
+> 
+> A few comments:
+> 
+>  - Seeing the word combination "restrict"+"remote" before reading
+>    the explanation made me think "hmph, only allow remote archive
+>    from certain hosts but not from others?"  We are restricting the
+>    objects and only on the remote usage, not restricting remotes, so
+>    somebody else may be able to come up with a less misleading name.
 >
-> 1. Wait until the user has marked one commit "bad" and one commit "good".
->
-> 2. If a "good" commit is an ancestor of a "bad" one, then "git bisect"
-> should announce "I will now look for the first bad commit".  If
-> reversed, then announce "I will now look for the first good commit".  If
-> neither commit is an ancestor of the other, then explain the situation
-> and ask the user to run "git bisect find-first-bad" or "git bisect
-> find-first-good" or to mark another commit "bad" or "good".
->
-> 3. If the user marks another commit, go back to step 2, also doing a
-> consistency check to make sure that all of the ancestry relationships go
-> in a consistent direction.
->
-> 4. After the direction is clear, the old bisect algorithm can be used
-> (though taking account of the direction).  Obviously a lot of the output
-> would have to be adjusted, as would the way that a bisect is visualized.
->
-> I can't think of any fundamental problems with a scheme like this, and I
-> think it would be easier to use than the unfixed/fixed scheme.  But that
-> is only my opinion; other opinions are undoubtedly available :-)
->
+>  - It might be better to call the escape hatch "allow something"
+>    that defaults to "false".  It is merely the issue of perception,
+>    but having a knob to be limiting that defaults to true gives a
+>    wrong impression that in an ideal world remote archive ought to
+>    be loose and we are artificially limiting it by default.
 
-I like this idea! It also looks fun to implement. A minor difference
-is that I'd rather die with an error on point 2) if there's no
-ancestorship relation between the two commits; if the user is asking
-for such a thing then she has a fundamental misconception of the state
-of her repository.
+After reading your first point, I came up with
+"archive.allowRemoteUnreachable", which also satisfies the second. I do
+not have a strong opinion.
 
-> By the way, although "git bisect fixed/unfixed" would be a very useful
-> improvement, and has gone unimplemented for a lamentably long time, my
-> personal feeling is that it has too meat in it to constitute a GSoC
-> project by itself.
+> > +archive.restrictRemote::
+> > +	If true, archives can only be requested by refnames. If false,
+> 
+> As this does not affect local use of "git archive", "requested by
+> refnames" may need to be clarified further.  Perhaps "remote
+> archives can be requested only for published refnames" or something.
 
-Oh! Then in fact, as Christian Couder said, this project shouldn't be
-marked as "easy".
+I was hoping to be vague. If we really want to get into specifics, we
+should probably document the current rules (refnames, and sub-trees of
+refnames). It might be a good thing to document that anyway, though. And
+by doing so, it would become obvious why one would want to set this
+option. I'll see what I can come up with.
 
-(Sorry for sending this email twice! I thought I had sent it to the
-list as well.)
-
-On Thu, Feb 27, 2014 at 12:18 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> On 02/26/2014 09:28 AM, Jacopo Notarstefano wrote:
->> my name is Jacopo, a student developer from Italy, and I'm interested
->> in applying to this years' Google Summer of Code. I set my eyes on the
->> project called "git-bisect improvements", in particular the subtask
->> about swapping the "good" and "bad" labels when looking for a
->> bug-fixing release.
->
-> Hello and welcome!
->
->> I have a very simple proposal for that: add a new "mark" subcommand.
->> Here is an example of how it should work:
->>
->> 1) A developer wants to find in which commit a past regression was
->> fixed. She start bisecting as usual with "git bisect start".
->> 2) The current HEAD has the bugfix, so she marks it as fixed with "git
->> bisect mark fixed".
->> 3) She knows that HEAD~100 had the regression, so she marks it as
->> unfixed with "git bisect mark unfixed".
->> 4) Now that git knows what the two labels are, it starts bisecting as usual.
->>
->> For compatibility with already written scripts, "git bisect good" and
->> "git bisect bad" will alias to "git bisect mark good" and "git bisect
->> mark bad" respectively.
->>
->> Does this make sense? Did I overlook some details?
->
-> I don't understand the benefit of adding a new command "mark" rather
-> than continuing to use "good", "bad", plus new commands "unfixed" and
-> "fixed".  Does this solve any problems?
->
-> What happens if the user mixes, say, "good" and "fixed" in a single
-> bisect session?
->
-> I think it would be more convenient if "git bisect" would autodetect
-> whether the history went from "good" to "bad" or vice versa.  The
-> algorithm could be:
->
-> 1. Wait until the user has marked one commit "bad" and one commit "good".
->
-> 2. If a "good" commit is an ancestor of a "bad" one, then "git bisect"
-> should announce "I will now look for the first bad commit".  If
-> reversed, then announce "I will now look for the first good commit".  If
-> neither commit is an ancestor of the other, then explain the situation
-> and ask the user to run "git bisect find-first-bad" or "git bisect
-> find-first-good" or to mark another commit "bad" or "good".
->
-> 3. If the user marks another commit, go back to step 2, also doing a
-> consistency check to make sure that all of the ancestry relationships go
-> in a consistent direction.
->
-> 4. After the direction is clear, the old bisect algorithm can be used
-> (though taking account of the direction).  Obviously a lot of the output
-> would have to be adjusted, as would the way that a bisect is visualized.
->
-> I can't think of any fundamental problems with a scheme like this, and I
-> think it would be easier to use than the unfixed/fixed scheme.  But that
-> is only my opinion; other opinions are undoubtedly available :-)
->
->> There were already several proposals on this topic, among which those
->> listed at https://git.wiki.kernel.org/index.php/SmallProjectsIdeas#git_bisect_fix.2Funfixed.
->> I'm interested in contacting the prospective mentor, Christian Couder,
->> to go over these. What's the proper way to ask for an introduction? I
->> tried asking on IRC, but had no success.
->
-> Just CC Christian on your emails to the mailing list, like I've done
-> with this email.  As a rule of thumb all communications should go to the
-> mailing list *plus* any people who are likely to be personally
-> interested in the topic (e.g., because they have participated in the
-> thread).
->
-> By the way, although "git bisect fixed/unfixed" would be a very useful
-> improvement, and has gone unimplemented for a lamentably long time, my
-> personal feeling is that it has too meat in it to constitute a GSoC
-> project by itself.
->
-> Michael
->
-> --
-> Michael Haggerty
-> mhagger@alum.mit.edu
-> http://softwareswirl.blogspot.com/
+-Peff
