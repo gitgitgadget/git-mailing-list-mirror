@@ -1,80 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 09/11] reflog-walk.c: use ALLOC_GROW() instead of inline code
-Date: Fri, 28 Feb 2014 11:06:51 -0800
-Message-ID: <xmqqbnxrukdw.fsf@gitster.dls.corp.google.com>
-References: <530FA3E7.8020200@yandex.ru> <531056E7.3010305@yandex.ru>
-	<53105AF2.3070301@yandex.ru>
-	<CACsJy8DKXYJc2k6Zsqd0ruF_Jex=FH8rWzmhax2Co8z_oa+7zw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Dmitry S. Dolzhenko" <dmitrys.dolzhenko@yandex.ru>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 28 20:07:18 2014
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: [PATCH] help.c: rename function "pretty_print_string_list"
+Date: Fri, 28 Feb 2014 20:27:29 +0100
+Message-ID: <1393615649-29248-1-git-send-email-ralf.thielow@gmail.com>
+Cc: Ralf Thielow <ralf.thielow@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 28 20:27:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJSmE-0006bB-8M
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 20:07:18 +0100
+	id 1WJT6B-0005UD-My
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 20:27:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751700AbaB1THL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Feb 2014 14:07:11 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50268 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751556AbaB1THK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Feb 2014 14:07:10 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D4BAF6FF7C;
-	Fri, 28 Feb 2014 14:07:09 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=aD7sSBrwn9u4zjakC0DepN5i31w=; b=XfLOkY
-	dVUnnLWHh05DA84+4OLFxBnoQzHGItIwtoJ6b/RNrsSP1P6/B3WvDxUA8GNiRx+y
-	3H3xy3ldpQSk43uO201Wa80xX/MXu/AyF7Y+dD0xO0+jv8yUMHbe6gkfloPRfR8U
-	xryjcyOsKpHWvHqrfGKN5QsYty7hQG+YTvXOM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QByUvCOXqRtDquW9wUuw6jsxD7JcWuPi
-	OY2BNo22ufwRt8FIlaCqv6F/tPauWUBOYK+UzZZDL+RytKg6mpPnVJd47P6AWaTE
-	PKNIqbnSV5AzzVY2RqlXXicPPWiCeb/Svm/jX4o4UEqpeBO3NMs5SMhqj+R2tntA
-	cc9UalLSCEA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 919706FF78;
-	Fri, 28 Feb 2014 14:07:09 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5A4636FF73;
-	Fri, 28 Feb 2014 14:07:08 -0500 (EST)
-In-Reply-To: <CACsJy8DKXYJc2k6Zsqd0ruF_Jex=FH8rWzmhax2Co8z_oa+7zw@mail.gmail.com>
-	(Duy Nguyen's message of "Fri, 28 Feb 2014 19:39:12 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 85143294-A0AB-11E3-A51B-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751785AbaB1T1e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Feb 2014 14:27:34 -0500
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:54807 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751556AbaB1T1d (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Feb 2014 14:27:33 -0500
+Received: by mail-ee0-f46.google.com with SMTP id d49so2476010eek.19
+        for <git@vger.kernel.org>; Fri, 28 Feb 2014 11:27:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=f9CqvlPSO6v3qbbJpovhjFNjrKZp6zoVIv+Gb71Db5Y=;
+        b=Kew5YqbtXF2nC7L6Bk+2puaGiBBsVIV5d5QnNTN1DSQs3ULwJEtEjTEQ6oY7d5uOWU
+         dlwwHpNwujo5MwTtZZ/4rBTQQCBjXZja5TCVNksX1O/M1f4VzWGsGmzc63hRzzhGJB62
+         3s874iC0X2TD2lxjkI6KmH2tSJ3HFC+92jkdJEuo5l3a8mfc0qS3hj8i8pGv8rF9/HL5
+         LLApodyswbH5eQLUbgOXC+TxY3wdEA5NHjRNElmO02Hgy5U3KQD9kN+2hjDRAgZpYV14
+         nL2Z+3xJItj4eRiuZ/Mxoq7qOTeIbdy7mTPsN2YxPupGVYyI3KyNK/l7aLeO+TQg+n7c
+         zsHQ==
+X-Received: by 10.15.21.2 with SMTP id c2mr23367370eeu.77.1393615651849;
+        Fri, 28 Feb 2014 11:27:31 -0800 (PST)
+Received: from localhost (dslb-178-008-120-172.pools.arcor-ip.net. [178.8.120.172])
+        by mx.google.com with ESMTPSA id m8sm14069935eef.14.2014.02.28.11.27.30
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 28 Feb 2014 11:27:31 -0800 (PST)
+X-Mailer: git-send-email 1.9.0.164.g473e143
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243006>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+The part "string_list" of the name of function
+"pretty_print_string_list" is just an implementation
+detail. The function pretty-prints command names so
+rename it to "pretty_print_cmdnames".
 
-> On Fri, Feb 28, 2014 at 4:46 PM, Dmitry S. Dolzhenko
-> <dmitrys.dolzhenko@yandex.ru> wrote:
->> Affected functions: read_one_reflog(), add_commit_info()
->
-> We can usually see this from @@ line so it's not really needed to
-> describe. Same comment for a few other patches.
+Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+---
+Just noticed this while digging through Git codebase.
 
-Not everybody always reads "git log" with "-p".  It is good to see
-what are changed mentioned somewhere.
+ help.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-I prefer to see full sentences, though ;-)
-
-	Subject: reflog-walk.c: use ALLOC_GROW()
-
-	read_one_reflog() and add_commit_info() open-codes reallocation;
-        use ALLOC_GROW() instead.
-
-or something.  But that is minor.
+diff --git a/help.c b/help.c
+index df7d16d..b266b09 100644
+--- a/help.c
++++ b/help.c
+@@ -78,8 +78,7 @@ void exclude_cmds(struct cmdnames *cmds, struct cmdnames *excludes)
+ 	cmds->cnt = cj;
+ }
+ 
+-static void pretty_print_string_list(struct cmdnames *cmds,
+-				     unsigned int colopts)
++static void pretty_print_cmdnames(struct cmdnames *cmds, unsigned int colopts)
+ {
+ 	struct string_list list = STRING_LIST_INIT_NODUP;
+ 	struct column_options copts;
+@@ -209,14 +208,14 @@ void list_commands(unsigned int colopts,
+ 		const char *exec_path = git_exec_path();
+ 		printf_ln(_("available git commands in '%s'"), exec_path);
+ 		putchar('\n');
+-		pretty_print_string_list(main_cmds, colopts);
++		pretty_print_cmdnames(main_cmds, colopts);
+ 		putchar('\n');
+ 	}
+ 
+ 	if (other_cmds->cnt) {
+ 		printf_ln(_("git commands available from elsewhere on your $PATH"));
+ 		putchar('\n');
+-		pretty_print_string_list(other_cmds, colopts);
++		pretty_print_cmdnames(other_cmds, colopts);
+ 		putchar('\n');
+ 	}
+ }
+-- 
+1.9.0.164.g473e143
