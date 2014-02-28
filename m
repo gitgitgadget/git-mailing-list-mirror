@@ -1,142 +1,91 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: [PATCH v2 2/2] Document some functions defined in object.c
-Date: Fri, 28 Feb 2014 12:49:11 -0500 (EST)
-Message-ID: <alpine.LFD.2.11.1402281248470.17677@knanqh.ubzr>
-References: <1393604957-7571-1-git-send-email-mhagger@alum.mit.edu>
- <1393604957-7571-3-git-send-email-mhagger@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] archive: add archive.restrictRemote option
+Date: Fri, 28 Feb 2014 09:51:42 -0800
+Message-ID: <xmqqa9dbw2fl.fsf@gitster.dls.corp.google.com>
+References: <20140227040504.GA2242@sigill.intra.peff.net>
+	<xmqqtxbkz9jp.fsf@gitster.dls.corp.google.com>
+	<20140228090709.GB11709@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; CHARSET=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Christian Couder <christian.couder@gmail.com>,
-	=?ISO-8859-2?Q?Jakub_Nar=EAbski?= <jnareb@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Feb 28 18:49:30 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Scott J. Goldman" <scottjg@github.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Feb 28 18:51:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJRYt-0006mh-0X
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 18:49:27 +0100
+	id 1WJRbC-00009T-7O
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 18:51:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753761AbaB1RtU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Feb 2014 12:49:20 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:25930 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753493AbaB1RtN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Feb 2014 12:49:13 -0500
-Received: from yoda.home ([66.130.143.177]) by VL-VM-MR001.ip.videotron.ca
- (Oracle Communications Messaging Exchange Server 7u4-22.01 64bit (built Apr 21
- 2011)) with ESMTP id <0N1P009EVW601E90@VL-VM-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 28 Feb 2014 12:49:12 -0500 (EST)
-Received: from xanadu.home (xanadu.home [192.168.2.2])	by yoda.home (Postfix)
- with ESMTPSA id 33A6C2DA0711; Fri, 28 Feb 2014 12:49:12 -0500 (EST)
-In-reply-to: <1393604957-7571-3-git-send-email-mhagger@alum.mit.edu>
-User-Agent: Alpine 2.11 (LFD 23 2013-08-11)
+	id S1752990AbaB1Rvq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Feb 2014 12:51:46 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53602 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752185AbaB1Rvp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Feb 2014 12:51:45 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A06DB6E38A;
+	Fri, 28 Feb 2014 12:51:44 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=WoQRgCIR2KDnVHOtpUzTAEjIk38=; b=pkXRV1
+	+CB+HJlieZq0mi6UlIyav1gwvhbVO2y+l03mDHWWM+QRXQR9lloU4CbhnAm4pXqB
+	P3Xr02BuyIIe3M1RbPrlUkTafTKRml7j39IeJhgFfFNRlxj/NOgpJ9TlSfrgEK9U
+	SB2+rsEznTfIvaXWfzrcK3l7mXQ5cghyd0D8Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gRezYk2vBE2X4y1w+vUIXAD0h8sGmusz
+	bO+Cbs6TA7FQgnAxNGe5/S95rhXPo25fPqwOqcmtrmBvB0BNkR1VsRNMGt3IerTL
+	xPQHBbbibFAjzg9acOlfCiSJYiVPzhh/m2/c+hZW42MjOT5W7G91OtVeFujCDfGl
+	hk6Pd3FWuzA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8D04B6E389;
+	Fri, 28 Feb 2014 12:51:44 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C92B36E388;
+	Fri, 28 Feb 2014 12:51:43 -0500 (EST)
+In-Reply-To: <20140228090709.GB11709@sigill.intra.peff.net> (Jeff King's
+	message of "Fri, 28 Feb 2014 04:07:09 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: FC3D86AA-A0A0-11E3-B667-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242995>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242996>
 
-On Fri, 28 Feb 2014, Michael Haggerty wrote:
+Jeff King <peff@peff.net> writes:
 
-> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+> On Thu, Feb 27, 2014 at 10:37:30AM -0800, Junio C Hamano wrote:
+>
+>> > Signed-off-by: Jeff King <peff@peff.net>
+>> 
+>> Thanks.
+>> 
+>> Do GitHub people have general aversion against signing off (or
+>> sending out, for that matter) their own patches, unless they were
+>> already active here before they joined GitHub, by the way?
+>
+> Mostly it is that I clean up the patches and commit messages before
+> sending them out. Michael sends out his own patches because they are
+> already perfect by the time I see them. :)
+>
+> I can certainly get S-O-B from GitHubbers, but my impression of the DCO
+> is that it does not matter...
+> ... A S-O-B from the
+> author would perhaps make it more obvious what happened.
 
-Acked-by: Nicolas Pitre <nico@fluxnic.net>
+Oh, I was not saying the practice was not legit.  It was just that I
+expected a bit more from GitHub, a leading company that evangelises
+use of Git ;-)
 
-> ---
->  object.c | 29 ++++++++++++++++++++++++++++-
->  object.h |  7 +++++++
->  2 files changed, 35 insertions(+), 1 deletion(-)
-> 
-> diff --git a/object.c b/object.c
-> index 584f7ac..57a0890 100644
-> --- a/object.c
-> +++ b/object.c
-> @@ -43,14 +43,32 @@ int type_from_string(const char *str)
->  	die("invalid object type \"%s\"", str);
->  }
->  
-> +/*
-> + * Return a numerical hash value between 0 and n-1 for the object with
-> + * the specified sha1.  n must be a power of 2.  Please note that the
-> + * return value is *not* consistent across computer architectures.
-> + */
->  static unsigned int hash_obj(const unsigned char *sha1, unsigned int n)
->  {
->  	unsigned int hash;
-> +
-> +	/*
-> +	 * Since the sha1 is essentially random, we just take the
-> +	 * required number of bits directly from the first
-> +	 * sizeof(unsigned int) bytes of sha1.  First we have to copy
-> +	 * the bytes into a properly aligned integer.  If we cared
-> +	 * about getting consistent results across architectures, we
-> +	 * would have to call ntohl() here, too.
-> +	 */
->  	memcpy(&hash, sha1, sizeof(unsigned int));
-> -	/* Assumes power-of-2 hash sizes in grow_object_hash */
->  	return hash & (n - 1);
->  }
->  
-> +/*
-> + * Insert obj into the hash table hash, which has length size (which
-> + * must be a power of 2).  On collisions, simply overflow to the next
-> + * empty bucket.
-> + */
->  static void insert_obj_hash(struct object *obj, struct object **hash, unsigned int size)
->  {
->  	unsigned int j = hash_obj(obj->sha1, size);
-> @@ -63,6 +81,10 @@ static void insert_obj_hash(struct object *obj, struct object **hash, unsigned i
->  	hash[j] = obj;
->  }
->  
-> +/*
-> + * Look up the record for the given sha1 in the hash map stored in
-> + * obj_hash.  Return NULL if it was not found.
-> + */
->  struct object *lookup_object(const unsigned char *sha1)
->  {
->  	unsigned int i, first;
-> @@ -92,6 +114,11 @@ struct object *lookup_object(const unsigned char *sha1)
->  	return obj;
->  }
->  
-> +/*
-> + * Increase the size of the hash map stored in obj_hash to the next
-> + * power of 2 (but at least 32).  Copy the existing values to the new
-> + * hash map.
-> + */
->  static void grow_object_hash(void)
->  {
->  	int i;
-> diff --git a/object.h b/object.h
-> index dc5df8c..732bf4d 100644
-> --- a/object.h
-> +++ b/object.h
-> @@ -42,7 +42,14 @@ struct object {
->  extern const char *typename(unsigned int type);
->  extern int type_from_string(const char *str);
->  
-> +/*
-> + * Return the current number of buckets in the object hashmap.
-> + */
->  extern unsigned int get_max_object_index(void);
-> +
-> +/*
-> + * Return the object from the specified bucket in the object hashmap.
-> + */
->  extern struct object *get_indexed_object(unsigned int);
->  
->  /*
-> -- 
-> 1.8.5.3
-> 
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+> I was hoping to be vague. If we really want to get into specifics, we
+> should probably document the current rules (refnames, and sub-trees of
+> refnames). It might be a good thing to document that anyway, though. And
+> by doing so, it would become obvious why one would want to set this
+> option. I'll see what I can come up with.
+
+Thanks.
