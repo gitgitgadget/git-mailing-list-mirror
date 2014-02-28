@@ -1,94 +1,59 @@
-From: Faiz Kothari <faiz.off93@gmail.com>
-Subject: [PATCH] Problem in bulk-checkin.c:finish_bulk_checkin() Unable to fix
-Date: Fri, 28 Feb 2014 05:34:09 +0530
-Message-ID: <1393545849-26775-1-git-send-email-faiz.off93@gmail.com>
-Cc: artagnon@gmail.com, Faiz Kothari <faiz.off93@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 28 01:04:33 2014
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: How to mark a complete sub-directory assume-unchanged/skip-worktree?
+Date: Fri, 28 Feb 2014 07:58:54 +0700
+Message-ID: <CACsJy8BJRixFno=Mb-3PGi-+JTq6RO19GdkveGdApdW8G9nKNQ@mail.gmail.com>
+References: <3A9AA61FDE124808AA25DE3511CF99F1@PhilipOakley>
+ <CACsJy8DV2uCQbfCP=Mf2qajVAtpTZvKKeCS2H4_o6LA3B96QAA@mail.gmail.com> <DAC4EA00279649D6B3F4DB1B3D662BA6@PhilipOakley>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Fri Feb 28 01:59:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJAwJ-0002A4-D1
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 01:04:31 +0100
+	id 1WJBnV-0005Vf-Fo
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 01:59:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751642AbaB1AE1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Feb 2014 19:04:27 -0500
-Received: from mail-pa0-f54.google.com ([209.85.220.54]:42788 "EHLO
-	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751224AbaB1AE0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Feb 2014 19:04:26 -0500
-Received: by mail-pa0-f54.google.com with SMTP id fa1so3183121pad.41
-        for <git@vger.kernel.org>; Thu, 27 Feb 2014 16:04:26 -0800 (PST)
+	id S1751734AbaB1A7Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Feb 2014 19:59:25 -0500
+Received: from mail-yh0-f49.google.com ([209.85.213.49]:35816 "EHLO
+	mail-yh0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751213AbaB1A7Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Feb 2014 19:59:24 -0500
+Received: by mail-yh0-f49.google.com with SMTP id z6so24211yhz.8
+        for <git@vger.kernel.org>; Thu, 27 Feb 2014 16:59:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=n0CnT5DgsfPX7Mk6CgELhSu3kFcMIfnsBKWUe+1DkiI=;
-        b=jWrOJTLCLdJPD/7CmCI7CzUEhrxUtqbsZAUKiuF8I7qNxp9TSleluf3BkoIv9eLEtk
-         Ssj12cRRUWvlUPdW+ypp/KqWg8FSwXbnlerjlElvlyyJBMpC7gqSO7B8U78qrngc6FW5
-         YRv017YjoSKKPR/RCPFTcNw/ci4JPs3Pi2CbkV7O5gp3iLvPWqoPXdHocbgt2kKOGLnD
-         yKuqH2sObEsYJWx4P39YTrl38a4qS4+5UDHVCW/xVEVgLmaQLOHzOMpNMlWN8A2LT/sa
-         EgRX7uyLIniUhhUzZUxDwHLTGtHG9mL2rKVXJuMXRI2bdFvxi4POQsyXvHOWodvK4uGY
-         QaqA==
-X-Received: by 10.68.191.200 with SMTP id ha8mr16346413pbc.66.1393545866047;
-        Thu, 27 Feb 2014 16:04:26 -0800 (PST)
-Received: from dj-pc.bits-goa.ac.in ([115.248.130.148])
-        by mx.google.com with ESMTPSA id c7sm17580426pbt.0.2014.02.27.16.04.22
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 27 Feb 2014 16:04:25 -0800 (PST)
-X-Mailer: git-send-email 1.7.9.5
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=ULRbik/mqDs2g6ys/Cj/cjWWaa6/VfHqStyXcAdCAsE=;
+        b=n3Mgi/L0996KMNflSiz47iTdpkV6O/V22VCakY6SywPCIPB5IsNSP3jYeAWA049Epy
+         BiH+BVs9dykCDCRrJgqiYeT98PNSAF/1YOg1o2gitzTfwZlAWjozew/27Y9erNK87GzU
+         PJkG064JF2+PebyOHAq8LV0drQtAc5kyAPjRu46IfW6O9WE0L/mYMSbquU+EOp6Xyg4g
+         GoAJqrgUhFskAUNO4W3obGEW9cwjtlZ7ybPfrVyI+ZTrsnDf1ftu2qgKrR6GbciPnzce
+         LqQpZbQyHHzvnM7IJfZIa/LjkkXdh0Ugo71P04DowMsIywgKS4m3M98C2V02gYdccdkL
+         6qjA==
+X-Received: by 10.236.96.201 with SMTP id r49mr18422249yhf.33.1393549164321;
+ Thu, 27 Feb 2014 16:59:24 -0800 (PST)
+Received: by 10.170.115.65 with HTTP; Thu, 27 Feb 2014 16:58:54 -0800 (PST)
+In-Reply-To: <DAC4EA00279649D6B3F4DB1B3D662BA6@PhilipOakley>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242877>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242878>
 
-Signed-off-by: Faiz Kothari <faiz.off93@gmail.com>
----
-Compiles without errors.
-Fails in test t/t1050-large.sh ,fails 12/15 tests. Dumps memory map and backtrace.
-Somewhere its not able to free(): invalid pointer.
-Please somone pointout where I am doing it wrong.
-Help is really appreciated.
-Thanks.
+On Fri, Feb 28, 2014 at 6:46 AM, Philip Oakley <philipoakley@iee.org> wrote:
+> Is there a particular bit of code I'd be worth studying for the partial
+> index example to see how well it might fit my ideas?
 
- bulk-checkin.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/bulk-checkin.c b/bulk-checkin.c
-index 118c625..c76cd6b 100644
---- a/bulk-checkin.c
-+++ b/bulk-checkin.c
-@@ -23,7 +23,7 @@ static struct bulk_checkin_state {
- static void finish_bulk_checkin(struct bulk_checkin_state *state)
- {
- 	unsigned char sha1[20];
--	char packname[PATH_MAX];
-+	struct strbuf packname = STRBUF_INIT;
- 	int i;
- 
- 	if (!state->f)
-@@ -42,9 +42,8 @@ static void finish_bulk_checkin(struct bulk_checkin_state *state)
- 					 state->offset);
- 		close(fd);
- 	}
--
--	sprintf(packname, "%s/pack/pack-", get_object_directory());
--	finish_tmp_packfile(packname, state->pack_tmp_name,
-+	strbuf_addf(&packname, "%s/pack/pack-", get_object_directory());
-+	finish_tmp_packfile(packname.buf, state->pack_tmp_name,
- 			    state->written, state->nr_written,
- 			    &state->pack_idx_opts, sha1);
- 	for (i = 0; i < state->nr_written; i++)
-@@ -53,6 +52,7 @@ static void finish_bulk_checkin(struct bulk_checkin_state *state)
- clear_exit:
- 	free(state->written);
- 	memset(state, 0, sizeof(*state));
-+	strbuf_release(&packname);
- 
- 	/* Make objects we just wrote available to ourselves */
- 	reprepare_packed_git();
+My last attempt was
+http://git.661346.n2.nabble.com/PATCH-00-17-Narrow-clone-v3-was-subtree-clone-tt5499879.html
+If you're interested in the index part then see 15/17 and maybe 03/17
+and 04/17. I can try to rebase and publish the series somewhere if you
+want to try it out.
 -- 
-1.7.9.5
+Duy
