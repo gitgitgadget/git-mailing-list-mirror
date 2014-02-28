@@ -1,91 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] archive: add archive.restrictRemote option
-Date: Fri, 28 Feb 2014 09:51:42 -0800
-Message-ID: <xmqqa9dbw2fl.fsf@gitster.dls.corp.google.com>
-References: <20140227040504.GA2242@sigill.intra.peff.net>
-	<xmqqtxbkz9jp.fsf@gitster.dls.corp.google.com>
-	<20140228090709.GB11709@sigill.intra.peff.net>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [RFC 0/3] Make git more user-friendly during a merge conflict
+Date: Fri, 28 Feb 2014 18:33:03 +0100
+Message-ID: <87eh2n16sw.fsf@fencepost.gnu.org>
+References: <1393437985-31401-1-git-send-email-andrew.kw.w@gmail.com>
+	<20140226202601.GK7855@google.com> <857g8f1ugu.fsf@stephe-leake.org>
+	<87fvn335sm.fsf@fencepost.gnu.org> <858usvz5nj.fsf@stephe-leake.org>
+	<87txbj1fnw.fsf@fencepost.gnu.org> <85zjlb1740.fsf@stephe-leake.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Scott J. Goldman" <scottjg@github.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 28 18:51:52 2014
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Stephen Leake <stephen_leake@stephe-leake.org>
+X-From: git-owner@vger.kernel.org Fri Feb 28 18:53:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJRbC-00009T-7O
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 18:51:50 +0100
+	id 1WJRcy-0001Zy-TQ
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 18:53:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752990AbaB1Rvq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Feb 2014 12:51:46 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53602 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752185AbaB1Rvp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Feb 2014 12:51:45 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A06DB6E38A;
-	Fri, 28 Feb 2014 12:51:44 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=WoQRgCIR2KDnVHOtpUzTAEjIk38=; b=pkXRV1
-	+CB+HJlieZq0mi6UlIyav1gwvhbVO2y+l03mDHWWM+QRXQR9lloU4CbhnAm4pXqB
-	P3Xr02BuyIIe3M1RbPrlUkTafTKRml7j39IeJhgFfFNRlxj/NOgpJ9TlSfrgEK9U
-	SB2+rsEznTfIvaXWfzrcK3l7mXQ5cghyd0D8Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gRezYk2vBE2X4y1w+vUIXAD0h8sGmusz
-	bO+Cbs6TA7FQgnAxNGe5/S95rhXPo25fPqwOqcmtrmBvB0BNkR1VsRNMGt3IerTL
-	xPQHBbbibFAjzg9acOlfCiSJYiVPzhh/m2/c+hZW42MjOT5W7G91OtVeFujCDfGl
-	hk6Pd3FWuzA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8D04B6E389;
-	Fri, 28 Feb 2014 12:51:44 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C92B36E388;
-	Fri, 28 Feb 2014 12:51:43 -0500 (EST)
-In-Reply-To: <20140228090709.GB11709@sigill.intra.peff.net> (Jeff King's
-	message of "Fri, 28 Feb 2014 04:07:09 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: FC3D86AA-A0A0-11E3-B667-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753015AbaB1Rxg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Feb 2014 12:53:36 -0500
+Received: from fencepost.gnu.org ([208.118.235.10]:55311 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752185AbaB1Rxg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Feb 2014 12:53:36 -0500
+Received: from localhost ([127.0.0.1]:54350 helo=lola)
+	by fencepost.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <dak@gnu.org>)
+	id 1WJRcs-0001g9-Ka; Fri, 28 Feb 2014 12:53:34 -0500
+Received: by lola (Postfix, from userid 1000)
+	id C1260E0BFA; Fri, 28 Feb 2014 18:33:03 +0100 (CET)
+In-Reply-To: <85zjlb1740.fsf@stephe-leake.org> (Stephen Leake's message of
+	"Fri, 28 Feb 2014 11:26:23 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242996>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242997>
 
-Jeff King <peff@peff.net> writes:
+Stephen Leake <stephen_leake@stephe-leake.org> writes:
 
-> On Thu, Feb 27, 2014 at 10:37:30AM -0800, Junio C Hamano wrote:
+> David Kastrup <dak@gnu.org> writes:
 >
->> > Signed-off-by: Jeff King <peff@peff.net>
->> 
->> Thanks.
->> 
->> Do GitHub people have general aversion against signing off (or
->> sending out, for that matter) their own patches, unless they were
->> already active here before they joined GitHub, by the way?
+>> Stephen Leake <stephen_leake@stephe-leake.org> writes:
+>>
+>>> David Kastrup <dak@gnu.org> writes:
+>>>
+>>>> "do the right thing" commands also tend to do the wrong thing
+>>>> occasionally with potentially disastrous results when they are use=
+d
+>>>> in scripts where the followup actions rely on the actual result.
+>>>
+>>> That is bad, and should not be allowed. On the other hand, I have y=
+et
+>>> to see an actual use case of bad behavior in this discussion.
+>>
+>> Huh.
+>>
+>> <http://permalink.gmane.org/gmane.comp.version-control.git/242744>
 >
-> Mostly it is that I clean up the patches and commit messages before
-> sending them out. Michael sends out his own patches because they are
-> already perfect by the time I see them. :)
->
-> I can certainly get S-O-B from GitHubbers, but my impression of the DCO
-> is that it does not matter...
-> ... A S-O-B from the
-> author would perhaps make it more obvious what happened.
+> That's about backward incompatibility, which is bad, but not what I w=
+as
+> talking about above.
 
-Oh, I was not saying the practice was not legit.  It was just that I
-expected a bit more from GitHub, a leading company that evangelises
-use of Git ;-)
+No, it isn't.  I quote:
 
-> I was hoping to be vague. If we really want to get into specifics, we
-> should probably document the current rules (refnames, and sub-trees of
-> refnames). It might be a good thing to document that anyway, though. And
-> by doing so, it would become obvious why one would want to set this
-> option. I'll see what I can come up with.
+    I sometimes run "git reset" during a merge to only reset the index
+    and then examine the changes introduced by the merge. With your
+    changes, someone doing so would abort the merge and discard the
+    merge resolution.  I very rarely do this, but even rarely, I
+    wouldn't like Git to start droping data silently for me ;-).
 
-Thanks.
+You should not make statements like "I have yet to see an actual use
+case of bad behavior in this discussion" when you actually mean "I=A0ha=
+ve
+not yet seen anything I=A0would be interested in doing myself".
+
+--=20
+David Kastrup
