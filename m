@@ -1,91 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] i18n: proposed command missing leading dash
-Date: Fri, 28 Feb 2014 15:31:32 -0800
-Message-ID: <xmqq38j2u84r.fsf@gitster.dls.corp.google.com>
-References: <1393620766-17582-1-git-send-email-sandy.carter@savoirfairelinux.com>
-	<20140228214140.GP7855@google.com>
+From: He Sun <sunheehnus@gmail.com>
+Subject: Re: [PATCH] parse-options.c:parse_options_check() change
+ OPTION_NUMBER to OPTION_CMDMODE
+Date: Sat, 1 Mar 2014 07:40:18 +0800
+Message-ID: <CAJr59C0jKYcee_wfzTrv+pg51DGuBKekeC9iz0TF_wzAuKjs7w@mail.gmail.com>
+References: <1393578442-2822-1-git-send-email-sunheehnus@gmail.com>
+	<531061D1.2060206@alum.mit.edu>
+	<xmqq1tynuiqh.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sandy Carter <sandy.carter@savoirfairelinux.com>,
-	git@vger.kernel.org, jn.avila@free.fr,
-	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 01 00:31:43 2014
+Content-Type: text/plain; charset=ISO-8859-1
+To: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Mar 01 00:40:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJWu5-0002zz-Cj
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Mar 2014 00:31:41 +0100
+	id 1WJX2Z-0000o6-Ks
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Mar 2014 00:40:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752143AbaB1Xbh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Feb 2014 18:31:37 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38248 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751787AbaB1Xbh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Feb 2014 18:31:37 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A84806ED7B;
-	Fri, 28 Feb 2014 18:31:36 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=QHiE7r+p0qx/eYF1cvrpBVVCqDM=; b=TUtzOU
-	tlROEoqNmUTTCvGjBcv9b4zi/iyhu2tdiypxhQLMtPFbWiQoDFi0EpPyBLe745KF
-	QwtbqWsU+Jxbr896WzL48//CQ1r1ykdJiz74khRVVDllAiYxxZYgXWCTrILvc391
-	AoEl64DJ14e3hG1XgoLXFj3mdddBU8vlSM4Ts=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qAmyCDepwfsHQx3SB+4/DFpvt4+AJ+qm
-	zGChwAqgWaWdqWhLmG7ow/XXAnmFLt64tXD9jaS9slSkP/VjIsF/bNukcufnunWs
-	70Y7zHkbc6otsyTkMiqpoJILAdp0ALkXPAT7d5SBwa6M0dy6V7tVI89Z1QTT9zdZ
-	KvF8666x2tU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8F6F66ED7A;
-	Fri, 28 Feb 2014 18:31:36 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C3B476ED76;
-	Fri, 28 Feb 2014 18:31:35 -0500 (EST)
-In-Reply-To: <20140228214140.GP7855@google.com> (Jonathan Nieder's message of
-	"Fri, 28 Feb 2014 13:41:40 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 76D9B620-A0D0-11E3-857B-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752882AbaB1XkW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Feb 2014 18:40:22 -0500
+Received: from mail-we0-f179.google.com ([74.125.82.179]:53530 "EHLO
+	mail-we0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752871AbaB1XkT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Feb 2014 18:40:19 -0500
+Received: by mail-we0-f179.google.com with SMTP id x48so1091957wes.24
+        for <git@vger.kernel.org>; Fri, 28 Feb 2014 15:40:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        bh=ukMz9JjLhuqBHTATWZ6aI0VIpWlm3G+jWw2d21z/5Z4=;
+        b=RmiZcJBUizrHAYEL4W6DvYh+qHuuEw2xIwzxcME2ns5G0hY+eXJoOhNgkmF33pyy0f
+         ClFXfphSQAp6zJDWzEkxrXIYZ+ORS3xU31BhA2HShyk7wZNBOvRykT4FkgDOBRkZaMBZ
+         lqgSbaXLFCTr4Ko/lJRKomodxtCNeFQFC23qrNg6vvOwcMvsCUkXd64Khh9OytrVXpac
+         PgKK6AhGIZc3zzG2GNTKcZomwumRgD/h8h8xbEog8VuCmd91KZKOb2sgGu8xz+v4ctpY
+         yfgAC5+TSa70uoqN6jnsNAZ6lgSxq3nYKqa3tXfGfkWACZNA4KGyOwCja0xdJ7cZpO6a
+         FqcQ==
+X-Received: by 10.194.63.103 with SMTP id f7mr5261840wjs.38.1393630818834;
+ Fri, 28 Feb 2014 15:40:18 -0800 (PST)
+Received: by 10.216.203.69 with HTTP; Fri, 28 Feb 2014 15:40:18 -0800 (PST)
+In-Reply-To: <xmqq1tynuiqh.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243029>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
-
-> To make life saner for translators, this should be either
-> untranslatable or a single multi-line string, I suspect:
+2014-03-01 3:42 GMT+08:00 Junio C Hamano <gitster@pobox.com>:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
 >
-> diff --git i/builtin/branch.c w/builtin/branch.c
-> index b4d7716..972040c 100644
-> --- i/builtin/branch.c
-> +++ w/builtin/branch.c
-> @@ -1022,11 +1022,13 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
->  		 */
->  		if (argc == 1 && track == BRANCH_TRACK_OVERRIDE &&
->  		    !branch_existed && remote_tracking) {
-> -			fprintf(stderr, _("\nIf you wanted to make '%s' track '%s', do this:\n\n"), head, branch->name);
-> -			fprintf(stderr, _("    git branch -d %s\n"), branch->name);
-> -			fprintf(stderr, _("    git branch --set-upstream-to %s\n"), branch->name);
-> +			fprintf(stderr, "\n");
-> +			fprintf(stderr, _("If you wanted to make '%s' track '%s', do this:\n\n"
-> +					  "    git branch -d %s\n"
-> +					  "    git branch --set-upstream-to %s"),
-> +					head, branch->name, branch->name, branch->name);
-> +			fprintf(stderr, "\n");
->  		}
-> -
->  	} else
->  		usage_with_options(builtin_branch_usage, options);
->  
-> What do you think?
+>> On 02/28/2014 10:07 AM, Sun He wrote:
+>>> Signed-off-by: Sun He <sunheehnus@gmail.com>
+>>> ---
+>>>  parse-options.c | 2 +-
+>>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>>
+>>> diff --git a/parse-options.c b/parse-options.c
+>>> index 7b8d3fa..59a52b0 100644
+>>> --- a/parse-options.c
+>>> +++ b/parse-options.c
+>>> @@ -371,7 +371,7 @@ static void parse_options_check(const struct option *opts)
+>>>              case OPTION_NEGBIT:
+>>>              case OPTION_SET_INT:
+>>>              case OPTION_SET_PTR:
+>>> -            case OPTION_NUMBER:
+>>> +            case OPTION_CMDMODE:
+>>>                      if ((opts->flags & PARSE_OPT_OPTARG) ||
+>>>                          !(opts->flags & PARSE_OPT_NOARG))
+>>>                              err |= optbug(opts, "should not accept an argument");
+>>>
+>>> --
+>>> 1.9.0.138.g2de3478.dirty
+>>>
+>>> Hi,
+>>> When I was reading code yesterday, I came across this protential bug.
+>>> parse-options.h says that OPTION_CMDMODE is an option with no arguments and OPTION_NUMBER is special type option.
+>
+> Please, no overlong line in the text part that makes things
+> unnecessarily hard to read.
+>
+> I agree with all the comments in the message I am responding to.
+>
 
-Yes, I think it is sensible to make sure that the command examples
-are not corrupted by the _() process.
+OK, got it. Thanks.
+
+>> BTW, none of my comments should be taken to indicate whether the commit
+>> itself makes sense or not.  I haven't checked that far.
+>
+> While I think it is sensible to make sure CMDMODE is not marked to
+> allow arguments, I do not understand why "special type" would imply
+> "it is allowed to be marked to take an argument".  Why is it a
+> good change to remove "case OPTION_NUMBER:" here?
+
+The comments in parse-options.h (Line 10-16) says that CMDMODE is not
+marked to allow arguments. And I am not sure if removing OPTION_NUMBER
+is a proper way.
