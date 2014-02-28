@@ -1,67 +1,118 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: Branch Name Case Sensitivity
-Date: Fri, 28 Feb 2014 07:41:52 +0100
-Message-ID: <53102FB0.6040603@viscovery.net>
-References: <CAJHY66EQD280QgXBCoZU4y_aqSEu3A1hXzeW7X-rtT6vMZ92oA@mail.gmail.com>	<xmqqvbw0xrl6.fsf@gitster.dls.corp.google.com>	<530FA0C1.3000109@web.de>	<530FBB1D.3050505@gmail.com> <CAJHY66FtC03YbJrbVn+adsePkYnVD2RGH1TGkzz2pKNBoee_iQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Lee Hopkins <leerhop@gmail.com>,
-	Karsten Blees <karsten.blees@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 28 07:42:11 2014
+From: Brian Gesiak <modocache@gmail.com>
+Subject: [PATCH v2 2/2] branch: use skip_prefix
+Date: Fri, 28 Feb 2014 15:43:33 +0900
+Message-ID: <1393569813-68583-1-git-send-email-modocache@gmail.com>
+Cc: git@vger.kernel.org, Brian Gesiak <modocache@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Feb 28 07:44:08 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJH96-0000cw-46
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 07:42:08 +0100
+	id 1WJHAw-0005FH-AO
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 07:44:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751900AbaB1GmE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Feb 2014 01:42:04 -0500
-Received: from so.liwest.at ([212.33.55.19]:59107 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751247AbaB1GmD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Feb 2014 01:42:03 -0500
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.80.1)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1WJH8r-0005g9-SK; Fri, 28 Feb 2014 07:41:53 +0100
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 79B1516613;
-	Fri, 28 Feb 2014 07:41:53 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
-In-Reply-To: <CAJHY66FtC03YbJrbVn+adsePkYnVD2RGH1TGkzz2pKNBoee_iQ@mail.gmail.com>
-X-Spam-Score: -1.0 (-)
+	id S1752040AbaB1Gn6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Feb 2014 01:43:58 -0500
+Received: from mail-pd0-f176.google.com ([209.85.192.176]:41710 "EHLO
+	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751604AbaB1Gnn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Feb 2014 01:43:43 -0500
+Received: by mail-pd0-f176.google.com with SMTP id r10so342998pdi.35
+        for <git@vger.kernel.org>; Thu, 27 Feb 2014 22:43:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=4YL4wRyMexSTuc7zAU29QDxrFvw2A1xrvZSAhaLxfu0=;
+        b=gNzAsw3P6ShJiY3gTcAtCrvUcCkfQwl0b9S63QMsAV6oLCoqUPkLpzigT/9lMt0y4e
+         t8wB8WaMfnfsjP344Fh1A9JREbOm9TFIByxomeChmZxZFpVQOMWkx7NesambEiNKa9YU
+         y8lE3zWkxao7LEg5uNNj0r4K3VgLMXlohSktl/uTC/jN1lRzaFLgLwnGzd1U9QDSviJU
+         8MWS5MURdxelrykaPpk/drbfX1uIsdpk0KTH02ThSRL0ugzeKnKS/oaw3bPRwlxTHV4x
+         pnHVXMhXvK5lfjYZe2R5ebDUBAqYC3CsFrN+29q46g2tdFCoVDvtWz8YJNX9A21xcgzC
+         rjJQ==
+X-Received: by 10.68.198.97 with SMTP id jb1mr1625796pbc.104.1393569822969;
+        Thu, 27 Feb 2014 22:43:42 -0800 (PST)
+Received: from localhost.localdomain (p1157-ipbf5204marunouchi.tokyo.ocn.ne.jp. [118.8.132.157])
+        by mx.google.com with ESMTPSA id op3sm2544322pbc.40.2014.02.27.22.43.41
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Thu, 27 Feb 2014 22:43:42 -0800 (PST)
+X-Mailer: git-send-email 1.8.3.4 (Apple Git-47)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242893>
 
-Am 2/28/2014 0:38, schrieb Lee Hopkins:
->> If I understand the issue correctly, the problem is that packed-refs
->> are always case-sensitive, even if core.ignorecase=true. OTOH,
+The install_branch_config function reimplemented the skip_prefix
+function inline. Use skip_prefix function instead for brevity.
 
-core.ignorecase is intended to affect filenames of the worktree, not
-anything else, BTW.
+Reported-by: Michael Haggerty <mhagger@alum.mit.edu>
+Signed-off-by: Brian Gesiak <modocache@gmail.com>
+---
+ branch.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
->> checking / updating _unpacked_ refs on a case-insensitive file system
->> is naturally case-insensitive. So wouldn't it be a better workaround
->> to disallow packed refs (i.e. 'git config gc.packrefs false')?
-> 
-> You are correct, the issue boils down to mixing the usage of 
-> packed-refs and loose refs on case insensitive file systems. So either 
-> always using packed-refs or always using loose refs would take care of 
-> the problem. Based Michael Haggerty's response, it seems that always 
-> using loose refs would be a better workaround.
-
-So, everybody on a case-insensitive file system should pay the price even
-if they do not need the "feature"? No way.
-
-If you are on a case-insensitive filesystem, or work on a cross-platform
-project, ensure that you avoid ambiguous refs. Problem solved.
-
--- Hannes
+diff --git a/branch.c b/branch.c
+index 723a36b..e163f3c 100644
+--- a/branch.c
++++ b/branch.c
+@@ -1,3 +1,4 @@
++#include "git-compat-util.h"
+ #include "cache.h"
+ #include "branch.h"
+ #include "refs.h"
+@@ -49,12 +50,11 @@ static int should_setup_rebase(const char *origin)
+ 
+ void install_branch_config(int flag, const char *local, const char *origin, const char *remote)
+ {
+-	const char *shortname = remote + 11;
+-	int remote_is_branch = starts_with(remote, "refs/heads/");
++	const char *shortname = skip_prefix(remote, "refs/heads/");
+ 	struct strbuf key = STRBUF_INIT;
+ 	int rebasing = should_setup_rebase(origin);
+ 
+-	if (remote_is_branch
++	if (shortname
+ 	    && !strcmp(local, shortname)
+ 	    && !origin) {
+ 		warning(_("Not setting branch %s as its own upstream."),
+@@ -77,29 +77,29 @@ void install_branch_config(int flag, const char *local, const char *origin, cons
+ 	strbuf_release(&key);
+ 
+ 	if (flag & BRANCH_CONFIG_VERBOSE) {
+-		if (remote_is_branch && origin)
++		if (shortname && origin)
+ 			printf_ln(rebasing ?
+ 				  _("Branch %s set up to track remote branch %s from %s by rebasing.") :
+ 				  _("Branch %s set up to track remote branch %s from %s."),
+ 				  local, shortname, origin);
+-		else if (remote_is_branch && !origin)
++		else if (shortname && !origin)
+ 			printf_ln(rebasing ?
+ 				  _("Branch %s set up to track local branch %s by rebasing.") :
+ 				  _("Branch %s set up to track local branch %s."),
+ 				  local, shortname);
+-		else if (!remote_is_branch && origin)
++		else if (!shortname && origin)
+ 			printf_ln(rebasing ?
+ 				  _("Branch %s set up to track remote ref %s by rebasing.") :
+ 				  _("Branch %s set up to track remote ref %s."),
+ 				  local, remote);
+-		else if (!remote_is_branch && !origin)
++		else if (!shortname && !origin)
+ 			printf_ln(rebasing ?
+ 				  _("Branch %s set up to track local ref %s by rebasing.") :
+ 				  _("Branch %s set up to track local ref %s."),
+ 				  local, remote);
+ 		else
+-			die("BUG: impossible combination of %d and %p",
+-			    remote_is_branch, origin);
++			die("BUG: impossible combination of %p and %p",
++			    shortname, origin);
+ 	}
+ }
+ 
+-- 
+1.8.3.4 (Apple Git-47)
