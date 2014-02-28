@@ -1,70 +1,84 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] t3200-branch: test setting branch as own upstream
-Date: Fri, 28 Feb 2014 05:59:29 -0500
-Message-ID: <20140228105929.GA18960@sigill.intra.peff.net>
-References: <1393556659-32717-1-git-send-email-modocache@gmail.com>
- <20140228053703.GA32556@sigill.intra.peff.net>
- <531032DD.9000904@viscovery.net>
- <20140228071401.GA1229@sigill.intra.peff.net>
- <20140228072606.GA622@sigill.intra.peff.net>
- <CAN7MxmXOvkrWPDEUH_Bqz5RVZUS7kuWkwi9kWmdwuwySszd=YA@mail.gmail.com>
- <20140228083718.GA11480@sigill.intra.peff.net>
- <CAN7MxmUUoz-HGFiTfgpvLpkXhvjBn_dYje7unoHE-Y=k3A0aqg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Brian Gesiak <modocache@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 28 11:59:54 2014
+From: Jacopo Notarstefano <jacopo.notarstefano@gmail.com>
+Subject: [PATCH] branch.c: delete size check of newly tracked branch names
+Date: Fri, 28 Feb 2014 12:09:04 +0100
+Message-ID: <1393585744-2569-1-git-send-email-jacopo.notarstefano@gmail.com>
+Cc: Jacopo Notarstefano <jacopo.notarstefano@gmail.com>,
+	mhagger@alum.mit.edu, christian.couder@gmail.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 28 12:09:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJLAU-0001gr-Qh
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 11:59:51 +0100
+	id 1WJLJe-0001xJ-TY
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 12:09:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751452AbaB1K7d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Feb 2014 05:59:33 -0500
-Received: from cloud.peff.net ([50.56.180.127]:58680 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751296AbaB1K7d (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Feb 2014 05:59:33 -0500
-Received: (qmail 26756 invoked by uid 102); 28 Feb 2014 10:59:33 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 28 Feb 2014 04:59:33 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 28 Feb 2014 05:59:29 -0500
-Content-Disposition: inline
-In-Reply-To: <CAN7MxmUUoz-HGFiTfgpvLpkXhvjBn_dYje7unoHE-Y=k3A0aqg@mail.gmail.com>
+	id S1751810AbaB1LJO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Feb 2014 06:09:14 -0500
+Received: from mail-ee0-f41.google.com ([74.125.83.41]:38625 "EHLO
+	mail-ee0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751635AbaB1LJN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Feb 2014 06:09:13 -0500
+Received: by mail-ee0-f41.google.com with SMTP id b15so2190438eek.0
+        for <git@vger.kernel.org>; Fri, 28 Feb 2014 03:09:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=9j5c/0Mm1Ny+aGFZ2rHzSEYUUus9ekZFXRJrC08yAzQ=;
+        b=cwQPSPOy8zlJayQ5EUoI8CASPbnhqt2emFN66ja7LXgEvFS7TfiWYBhbbgc+ubm3m9
+         ZSdeGsWA8GseAEAV3A3yP4wfgBHPJdWNtXcwVAMTSezavm0CVqzWsylA5o0i6YNkWrB4
+         2Vmn6zUpe+pjx+rGXKpOV5TX28X2Q+H0qaib6oHFhRO2Vtg/zeXgsSjkasG+b+PAPdzI
+         ssvhU5fiekgd0eRSjM+gmi/NGYJBaeMfBTaONFNpdY8SgjT1fLeH0qkt87ZULlwFJCeO
+         +N39bbYAhnlEMsPa5TkijbE0CuC1MUgztT3tv0yYANXJfjYbXuwH1Zo6o/Q8EHYmBsZn
+         aiug==
+X-Received: by 10.15.73.134 with SMTP id h6mr20754622eey.15.1393585752536;
+        Fri, 28 Feb 2014 03:09:12 -0800 (PST)
+Received: from localhost.localdomain (dynamic-adsl-78-13-118-34.clienti.tiscali.it. [78.13.118.34])
+        by mx.google.com with ESMTPSA id j41sm9120683eey.15.2014.02.28.03.09.09
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 28 Feb 2014 03:09:11 -0800 (PST)
+X-Mailer: git-send-email 1.9.0.1.g5abca64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242941>
 
-On Fri, Feb 28, 2014 at 07:44:10PM +0900, Brian Gesiak wrote:
+Since commit 6f084a56 the length of a newly tracked branch name was limited
+to 1019 = 1024 - 7 - 7 - 1 characters, a bound derived by having to store
+this name in a char[1024] called key with two strings of length at most 7
+and a '\0' character.
 
-> > I notice that the warning comes from install_branch_config, which gets
-> > used both for "branch -u", but also in the "side effect" case I
-> > mentioned above. Is it possible to trigger this as part of such a case?
-> > I think maybe "git branch -f --track foo foo" would do it. If so, we
-> > should perhaps include a test that it does not break if we upgrade the
-> > "-u" case to an error.
-> 
-> Do you mean that install_branch_config should continue to emit a
-> warning in the "side effect" case? I'm not sure I agree--how is "git
-> branch -f --track foo foo" less erroneous than "git branch -u foo
-> refs/heads/foo"? Perhaps I'm missing some insight on how "--track" is
-> used.
+This was no longer necessary as of commit a9f2c136, which uses a strbuf
+(documented in Documentation/technical/api-strbuf.txt) to store this value.
 
-I'd be more worried about triggering it via the config. E.g.:
+This patch removes this unneeded check and thus allows for branch names
+longer than 1019 characters.
 
-  git config branch.autosetupmerge always
-  git branch -f foo foo
+Signed-off-by: Jacopo Notarstefano <jacopo.notarstefano@gmail.com>
+---
 
-Should the second command die? I admit I'm having a hard time coming up
-with a feasible reason why anyone would do "branch -f foo foo" in the
-first place. I just don't want to regress somebody else's workflow due
-to my lack of imagination.
+Submitted as GSoC microproject #3.
 
--Peff
+ branch.c | 4 ----
+ 1 file changed, 4 deletions(-)
+
+diff --git a/branch.c b/branch.c
+index 723a36b..05feaff 100644
+--- a/branch.c
++++ b/branch.c
+@@ -114,10 +114,6 @@ static int setup_tracking(const char *new_ref, const char *orig_ref,
+ 	struct tracking tracking;
+ 	int config_flags = quiet ? 0 : BRANCH_CONFIG_VERBOSE;
+ 
+-	if (strlen(new_ref) > 1024 - 7 - 7 - 1)
+-		return error(_("Tracking not set up: name too long: %s"),
+-				new_ref);
+-
+ 	memset(&tracking, 0, sizeof(tracking));
+ 	tracking.spec.dst = (char *)orig_ref;
+ 	if (for_each_remote(find_tracked_branch, &tracking))
+-- 
+1.9.0.1.g5abca64
