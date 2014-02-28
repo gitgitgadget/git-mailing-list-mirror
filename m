@@ -1,124 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] submodule update: document the '--checkout' option
-Date: Fri, 28 Feb 2014 13:39:32 -0800
-Message-ID: <xmqqbnxqudbf.fsf@gitster.dls.corp.google.com>
-References: <20140225110316.GU11566@login.drsnuggles.stderr.nl>
-	<530FB5C4.8080400@web.de>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] i18n: proposed command missing leading dash
+Date: Fri, 28 Feb 2014 13:41:40 -0800
+Message-ID: <20140228214140.GP7855@google.com>
+References: <1393620766-17582-1-git-send-email-sandy.carter@savoirfairelinux.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Matthijs Kooijman <matthijs@stdin.nl>, git@vger.kernel.org,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Fri Feb 28 22:39:54 2014
+Cc: git@vger.kernel.org, jn.avila@free.fr,
+	Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
+To: Sandy Carter <sandy.carter@savoirfairelinux.com>
+X-From: git-owner@vger.kernel.org Fri Feb 28 22:41:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJV9s-00045H-La
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 22:39:53 +0100
+	id 1WJVBk-0005Xe-M1
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 22:41:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752115AbaB1Vjs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Feb 2014 16:39:48 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34875 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751729AbaB1Vjr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Feb 2014 16:39:47 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E8D206E30E;
-	Fri, 28 Feb 2014 16:39:45 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=BOKndEqbOqccvy99pwmgA9Lcib0=; b=gzCemD
-	sy0J8MuzwVcPgLLzGtL2RL586hnh1ERdF6yaVSEZu3il5Q9TJLWSh5s1uT/staYE
-	B9NGDMkzOtmJvuCmhMfNtXA4mPdEOvTPkCSGCFRgjBfJMZF6wrXHoFOA9sirwBxf
-	LcAj6wGVpfdkLcdxMgQVPSnNaaSGeXmSymv/8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=A1awBGaR3EDGWGRFibKQLSpwh3AuC3n4
-	lh1E6nDQqLA6op/c8nynzFxGZ1nM1efWCbZSSOBdSMX4PhNBFpIMDvdaHw5fvrnM
-	KRWNIrNF/8SvHC5HVSEp3HV+xpTfmfyB08QgcVQZnwl23u2zPZ/Sv8/vyemmEn6X
-	1SIvNKIO2fo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 52F0D6E30A;
-	Fri, 28 Feb 2014 16:39:44 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8A9BF6E304;
-	Fri, 28 Feb 2014 16:39:41 -0500 (EST)
-In-Reply-To: <530FB5C4.8080400@web.de> (Jens Lehmann's message of "Thu, 27 Feb
-	2014 22:01:40 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: D4CFACCC-A0C0-11E3-8ADE-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752147AbaB1Vlo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Feb 2014 16:41:44 -0500
+Received: from mail-pb0-f51.google.com ([209.85.160.51]:56837 "EHLO
+	mail-pb0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751712AbaB1Vln (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Feb 2014 16:41:43 -0500
+Received: by mail-pb0-f51.google.com with SMTP id uo5so588097pbc.38
+        for <git@vger.kernel.org>; Fri, 28 Feb 2014 13:41:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=3Jwex9W7BsfpzhmWyE71yaHLBmmmzMzoEQEqQUczFhY=;
+        b=MwiZ27CVse/N+ootvO721ko1trQ5r8OjtsGy58aOTH2o5zWfT3wV2jK1sIzEhQJ8Ia
+         ZAgP0XfGBWU+3+MO7sj/ZLd6yfVu0I7NFkJb5SBzeJyFH3uvE3/3mQ9RHurgXElqAYLs
+         CuiOuvuqZIh9RRgRUM8PqR5NnHGLbGNjde0CaZokzriUZGlwhwqV67fnhXB8G/hAO5KA
+         L434puSmBIVpU+ZTHNbCRTAg6J0DdGMzTUPsx8VnAAP0WgdF5S9d45WEwR4Csc57lVXL
+         DimiB3Bb6HE99LossPLmGhzFlBu4QnHczFhFwQALQRd4IWwH/mchumsirkpYkA3o4rI7
+         7rKQ==
+X-Received: by 10.68.226.70 with SMTP id rq6mr5942472pbc.107.1393623703379;
+        Fri, 28 Feb 2014 13:41:43 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id qs1sm9495670pbb.18.2014.02.28.13.41.42
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 28 Feb 2014 13:41:42 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1393620766-17582-1-git-send-email-sandy.carter@savoirfairelinux.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243020>
 
-Jens Lehmann <Jens.Lehmann@web.de> writes:
+Hi,
 
-> Good point. What about this?
->
->
->  Documentation/git-submodule.txt | 13 +++++++++++--
->  git-submodule.sh                |  2 +-
->  2 files changed, 12 insertions(+), 3 deletions(-)
->
-> diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-> index bfef8a0..9054217 100644
-> --- a/Documentation/git-submodule.txt
-> +++ b/Documentation/git-submodule.txt
-> @@ -15,8 +15,8 @@ SYNOPSIS
->  'git submodule' [--quiet] init [--] [<path>...]
->  'git submodule' [--quiet] deinit [-f|--force] [--] <path>...
->  'git submodule' [--quiet] update [--init] [--remote] [-N|--no-fetch]
-> -	      [-f|--force] [--rebase] [--reference <repository>] [--depth <depth>]
-> -	      [--merge] [--recursive] [--] [<path>...]
-> +	      [-f|--force] [--checkout|--merge|--rebase] [--reference <repository>]
-> +	      [--depth <depth>] [--recursive] [--] [<path>...]
+Sandy Carter wrote:
 
-This has already been done by 23d25e48 (submodule: explicit local
-branch creation in module_clone, 2014-01-26).  That commit also adds
-some text to the description of 'update' subcommand, but not a
-separate entry for '--checkout' mode.
+> Add missing leading dash to proposed commands in french output when
+> using the command:
 
-Does the result of applying this patch except for this particular
-hunk still make sense as a whole?  It appears to me that it does,
-but just to double check...
+Thanks!
 
-Thanks.
+[...]
+> --- a/po/fr.po
+> +++ b/po/fr.po
+> @@ -3266,7 +3266,7 @@ msgstr "    git branch -d %s\n"
+>  #: builtin/branch.c:1027
+>  #, c-format
+>  msgid "    git branch --set-upstream-to %s\n"
+> -msgstr "    git branch -set-upstream-to %s\n"
+> +msgstr "    git branch --set-upstream-to %s\n"
 
->  'git submodule' [--quiet] summary [--cached|--files] [(-n|--summary-limit) <n>]
->  	      [commit] [--] [<path>...]
->  'git submodule' [--quiet] foreach [--recursive] <command>
-> @@ -287,6 +287,15 @@ SHA-1.  If you don't want to fetch, you should use `submodule update
->  	This option is only valid for the update command.
->  	Don't fetch new objects from the remote site.
->
-> +--checkout::
-> +	This option is only valid for the update command.
-> +	Checkout the commit recorded in the superproject on a detached HEAD
-> +	in the submodule. This is the default behavior, the main use of
-> +	this option is to override `submodule.$name.update` when set to
-> +	`merge`, `rebase` or `none`.
-> +	If the key `submodule.$name.update` is either not explicitly set or
-> +	set to `checkout`, this option is implicit.
-> +
->  --merge::
->  	This option is only valid for the update command.
->  	Merge the commit recorded in the superproject into the current branch
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index 4a30087..65cf963 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -9,7 +9,7 @@ USAGE="[--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <re
->     or: $dashless [--quiet] status [--cached] [--recursive] [--] [<path>...]
->     or: $dashless [--quiet] init [--] [<path>...]
->     or: $dashless [--quiet] deinit [-f|--force] [--] <path>...
-> -   or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch] [-f|--force] [--rebase] [--reference <repository>] [--merge] [--recursive] [--] [<path>...]
-> +   or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch] [-f|--force] [--checkout|--merge|--rebase] [--reference <repository>] [--recursive] [--] [<path>...]
->     or: $dashless [--quiet] summary [--cached|--files] [--summary-limit <n>] [commit] [--] [<path>...]
->     or: $dashless [--quiet] foreach [--recursive] <command>
->     or: $dashless [--quiet] sync [--recursive] [--] [<path>...]"
+To make life saner for translators, this should be either
+untranslatable or a single multi-line string, I suspect:
+
+diff --git i/builtin/branch.c w/builtin/branch.c
+index b4d7716..972040c 100644
+--- i/builtin/branch.c
++++ w/builtin/branch.c
+@@ -1022,11 +1022,13 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		 */
+ 		if (argc == 1 && track == BRANCH_TRACK_OVERRIDE &&
+ 		    !branch_existed && remote_tracking) {
+-			fprintf(stderr, _("\nIf you wanted to make '%s' track '%s', do this:\n\n"), head, branch->name);
+-			fprintf(stderr, _("    git branch -d %s\n"), branch->name);
+-			fprintf(stderr, _("    git branch --set-upstream-to %s\n"), branch->name);
++			fprintf(stderr, "\n");
++			fprintf(stderr, _("If you wanted to make '%s' track '%s', do this:\n\n"
++					  "    git branch -d %s\n"
++					  "    git branch --set-upstream-to %s"),
++					head, branch->name, branch->name, branch->name);
++			fprintf(stderr, "\n");
+ 		}
+-
+ 	} else
+ 		usage_with_options(builtin_branch_usage, options);
+ 
+What do you think?
+
+Jonathan
