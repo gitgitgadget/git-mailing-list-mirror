@@ -1,116 +1,96 @@
-From: "Paul Lotz" <plotz@lsst.org>
-Subject: RE: difftool sends malformed path to exernal tool on Windows
-Date: Fri, 28 Feb 2014 08:56:04 -0700
-Message-ID: <000001cf349d$95fed750$c1fc85f0$@lsst.org>
-References: <011301cf2c2d$90442810$b0cc7830$@lsst.org> <20140221103821.GA21414@gmail.com>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: `git stash pop` UX Problem
+Date: Fri, 28 Feb 2014 17:02:34 +0100
+Message-ID: <87mwhb1azp.fsf@fencepost.gnu.org>
+References: <1lho9x8.1qh70zkp477M%lists@haller-berlin.de>
+	<vpqmwhexidi.fsf@anie.imag.fr> <85fvn40ws9.fsf@stephe-leake.org>
+	<CANUGeEZTeqBpf0VP4gCG9iN=v20U4axxoSjX9JbLPp_ppX3QiA@mail.gmail.com>
+	<851tynz2yg.fsf@stephe-leake.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <git@vger.kernel.org>
-To: "'David Aguilar'" <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 28 16:56:13 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Stephen Leake <stephen_leake@stephe-leake.org>
+X-From: git-owner@vger.kernel.org Fri Feb 28 17:02:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJPnI-0003Kl-Hh
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 16:56:12 +0100
+	id 1WJPtY-0008HE-0T
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 17:02:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752332AbaB1P4H convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Feb 2014 10:56:07 -0500
-Received: from mail.lsstcorp.org ([140.252.15.63]:54158 "EHLO mail.lsst.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751447AbaB1P4G convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 Feb 2014 10:56:06 -0500
-Received: from PaulLaptop ([140.252.119.210]) by mail.lsst.org with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 28 Feb 2014 08:56:04 -0700
-In-Reply-To: 
-X-Mailer: Microsoft Outlook 15.0
-Thread-Index: AQKjFvigrE20EroY6kKNjpOQ6fvyewFLrX1WAd6w1M+ZCbo1MA==
-Content-Language: en-us
-X-OriginalArrivalTime: 28 Feb 2014 15:56:04.0697 (UTC) FILETIME=[95EE5C90:01CF349D]
+	id S1752512AbaB1QCg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Feb 2014 11:02:36 -0500
+Received: from fencepost.gnu.org ([208.118.235.10]:52715 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752450AbaB1QCf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Feb 2014 11:02:35 -0500
+Received: from localhost ([127.0.0.1]:51757 helo=lola)
+	by fencepost.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <dak@gnu.org>)
+	id 1WJPtS-0008O3-Of; Fri, 28 Feb 2014 11:02:35 -0500
+Received: by lola (Postfix, from userid 1000)
+	id 4ABC2E0BFA; Fri, 28 Feb 2014 17:02:34 +0100 (CET)
+In-Reply-To: <851tynz2yg.fsf@stephe-leake.org> (Stephen Leake's message of
+	"Fri, 28 Feb 2014 09:12:07 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242980>
 
-OK, so what can we do next?
+Stephen Leake <stephen_leake@stephe-leake.org> writes:
 
-Paul
+> Brandon McCaig <bamccaig@gmail.com> writes:
+>
+>> On Thu, Feb 27, 2014 at 9:57 PM, Stephen Leake
+>> <stephen_leake@stephe-leake.org> wrote:
+>>> You might be adding other files for other reasons. But if you add a file
+>>> that does resolve a conflict caused by 'git stash pop', it is not
+>>> guessing.
+>>
+>> Staging a file doesn't tell git that you resolved a conflict. Git will
+>> happily accept a blob full of conflict markers. Git doesn't know the
+>> difference. Git expects the user to know what is right. The user has
+>> the freedom to manipulate the index as they see fit, which means both
+>> adding and removing from it anytime they wish.
+>
+> But git has a notion of "unresolved conflict".
 
------Original Message-----
-=46rom: Paul Lotz [mailto:plotz@lsst.org]=20
-Sent: Monday, February 24, 2014 9:44 AM
-To: 'David Aguilar'
-Cc: 'git@vger.kernel.org'
-Subject: RE: difftool sends malformed path to exernal tool on Windows
+Not really.  It has a notion of "unmerged path".
 
-David,
+> For example, when I have conflicts from a 'git stash pop', 'git
+> status' shows:
+>
+> stephe@takver$ git status
+> # On branch master
+> # Unmerged paths:
+> #   (use "git reset HEAD <file>..." to unstage)
+> #   (use "git add/rm <file>..." as appropriate to mark resolution)
+> #
+> #	both modified:      CommandBasedAutonomous.java
+> #	both modified:      DriveByInches.java
+> #
+> # ...
+>
+> How does it know those files are "unmerged"? I'm guessing it has
+> recorded the fact that they had conflicts. Where does it record that?
 
-Thanks for the helpful reply.
+The index contains the unmerged versions of the file.  Possibly also the
+version with conflict markers, but it's been too long since I last
+checked.
 
-As you suggested, I modified the .gitconfig file to have:
-[difftool "test"]
-	cmd =3D echo \"$LOCAL\" \"$REMOTE\"
+After "git add", there is only one version in the index.
 
-and ran
-$ git difftool -t test
+If you apply a stash with unmerged paths to a worktree/index, possibly
+containing unmerged paths of its own, possibly getting new unmerged
+paths by failing to apply the stash, you get unmerged paths from several
+different unresolved conflicts.
 
-An example of the the resulting console output is:
-C:/Users/Paul/AppData/Local/Temp/I8L2Bc_WriteTestParameters.vi Commands=
-/StartAutomatedTest/WriteTestParameters.vi
+Git has no idea about the history of unmerged paths.  So having "git
+add" modify the operation of "git reset" whenever "git add" overwrites
+an unmerged path in the index could lead to quite funny results.
 
-Paul
-
------Original Message-----
-=46rom: David Aguilar [mailto:davvid@gmail.com]
-Sent: Friday, February 21, 2014 3:38 AM
-To: Paul Lotz
-Cc: git@vger.kernel.org
-Subject: Re: difftool sends malformed path to exernal tool on Windows
-
-On Mon, Feb 17, 2014 at 03:14:01PM -0700, Paul Lotz wrote:
-> From the Git Bash command line, I enter $ git difftool
->=20
-> and type =E2=80=98y=E2=80=99 when the file I want to difference appea=
-rs.  Git=20
-> correctly calls the external diff tool (LVCompare.exe), but the path=20
-> for the remote file Git passes to that tool is malformed (e.g.,=20
-> C:\/Users/Paul/AppData/Local/Temp/QCpqLa_calcLoadCellExcitation.vi).
-> Obviously the \/ (backslash forwardslash) combination is incorrect.
-
-If this is the case then difftool is not the only one with this problem=
-=2E
-
-We use the GIT_EXTERNAL_DIFF mechanism to run difftool under "git diff"=
-, so it may be that the paths are mangled by "git diff" itself.
-I don't really know enough about msysgit to know for sure, though.
-
-What do you see if you create a dummy tool which just does "echo"?
-
-[difftool "test"]
-	cmd =3D echo \"$LOCAL\" \"$REMOTE\"
-
-Then run:
-
-$ git difftool -t test
-
-> For the record, I have successfully made calls to LVCompare.exe=20
-> manually from a Windows command prompt directly (without Git).
->=20
-> The relevant portion of the .gitconfig file is:
-> [diff]
->      tool =3D "LVCompare"
-> [difftool "LVCompare"]
->      cmd =3D 'C:/Program Files (x86)/National Instruments/Shared/LabV=
-IEW=20
-> Compare/LVCompare.exe' \"$LOCAL\"  \"$REMOTE\"
->=20
->=20
-> For the record, the operating system is Windows 8.1.
-
-Do any msysgit folks know whether GIT_EXTERNAL_DIFF is a known issue?
---
-David
+-- 
+David Kastrup
