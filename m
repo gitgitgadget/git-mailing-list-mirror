@@ -1,69 +1,67 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] t3200-branch: test setting branch as own upstream
-Date: Fri, 28 Feb 2014 03:37:19 -0500
-Message-ID: <20140228083718.GA11480@sigill.intra.peff.net>
-References: <1393556659-32717-1-git-send-email-modocache@gmail.com>
- <20140228053703.GA32556@sigill.intra.peff.net>
- <531032DD.9000904@viscovery.net>
- <20140228071401.GA1229@sigill.intra.peff.net>
- <20140228072606.GA622@sigill.intra.peff.net>
- <CAN7MxmXOvkrWPDEUH_Bqz5RVZUS7kuWkwi9kWmdwuwySszd=YA@mail.gmail.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: How to mark a complete sub-directory assume-unchanged/skip-worktree?
+Date: Fri, 28 Feb 2014 08:38:09 -0000
+Organization: OPDS
+Message-ID: <96570BB66BDF4E96B2A967CF9E5842A8@PhilipOakley>
+References: <3A9AA61FDE124808AA25DE3511CF99F1@PhilipOakley> <CACsJy8DV2uCQbfCP=Mf2qajVAtpTZvKKeCS2H4_o6LA3B96QAA@mail.gmail.com> <DAC4EA00279649D6B3F4DB1B3D662BA6@PhilipOakley> <CACsJy8BJRixFno=Mb-3PGi-+JTq6RO19GdkveGdApdW8G9nKNQ@mail.gmail.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Brian Gesiak <modocache@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 28 09:37:29 2014
+Content-Type: text/plain;
+	format=flowed;
+	charset="UTF-8";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Git List" <git@vger.kernel.org>
+To: "Duy Nguyen" <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 28 09:38:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJIwh-0003wn-7v
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 09:37:27 +0100
+	id 1WJIxT-0007WA-G3
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 09:38:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751399AbaB1IhW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Feb 2014 03:37:22 -0500
-Received: from cloud.peff.net ([50.56.180.127]:58566 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750927AbaB1IhV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Feb 2014 03:37:21 -0500
-Received: (qmail 18596 invoked by uid 102); 28 Feb 2014 08:37:21 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 28 Feb 2014 02:37:21 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 28 Feb 2014 03:37:19 -0500
-Content-Disposition: inline
-In-Reply-To: <CAN7MxmXOvkrWPDEUH_Bqz5RVZUS7kuWkwi9kWmdwuwySszd=YA@mail.gmail.com>
+	id S1751443AbaB1IiL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Feb 2014 03:38:11 -0500
+Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:9021 "EHLO
+	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751164AbaB1IiK (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Feb 2014 03:38:10 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: An8ZAG1KEFNZ8YaD/2dsb2JhbABagwY7g1qFPrhOBAEBAgEBgRIXdGkBAYEfAQEUAQQBAQUIAQEZFR4BARUMCwIDBQIBAw4HAwICBSECAhQBBAgSBgcXBhMIAgECAwGFOAcBggcNAxUJqjGZXQ0KhxmBKYsWghaCdTWBFASPMIccjlCFSIMtPA
+X-IPAS-Result: An8ZAG1KEFNZ8YaD/2dsb2JhbABagwY7g1qFPrhOBAEBAgEBgRIXdGkBAYEfAQEUAQQBAQUIAQEZFR4BARUMCwIDBQIBAw4HAwICBSECAhQBBAgSBgcXBhMIAgECAwGFOAcBggcNAxUJqjGZXQ0KhxmBKYsWghaCdTWBFASPMIccjlCFSIMtPA
+X-IronPort-AV: E=Sophos;i="4.97,560,1389744000"; 
+   d="scan'208";a="456667878"
+Received: from host-89-241-134-131.as13285.net (HELO PhilipOakley) ([89.241.134.131])
+  by out1.ip01ir2.opaltelecom.net with SMTP; 28 Feb 2014 08:38:09 +0000
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242906>
 
-On Fri, Feb 28, 2014 at 04:28:38PM +0900, Brian Gesiak wrote:
+From: "Duy Nguyen" <pclouds@gmail.com>
+> On Fri, Feb 28, 2014 at 6:46 AM, Philip Oakley <philipoakley@iee.org> 
+> wrote:
+>> Is there a particular bit of code I'd be worth studying for the 
+>> partial
+>> index example to see how well it might fit my ideas?
+>
+> My last attempt was
+> http://git.661346.n2.nabble.com/PATCH-00-17-Narrow-clone-v3-was-subtree-clone-tt5499879.html
+> If you're interested in the index part then see 15/17 and maybe 03/17
+> and 04/17. I can try to rebase and publish the series somewhere if you
+> want to try it out.
+> -- 
+> Duy
+> --
+Thanks for that pointer.  I'll look it out and see how well it matched 
+my ideas, and reflect on any differences to pick up learning points 
+early!
 
-> I would be in favor of using test_i18ngrep, but it seems like this
-> test file overwhelmingly uses test_(i18n)cmp, even when inspecting
-> stderr output.
-
-We generally prefer "cmp" checks to "grep" checks, because they are more
-rigorous. However, when testing human-readable output which may change,
-sometimes being too specific can simply make the tests brittle and
-annoying. Using a forgiving regex that matches keywords can be helpful.
-So there's definitely some room for judgement.
-
-I think what you posted as v2 looks OK.
-
-> Making double-sure that all tests pass when run with "sh -x" seems
-> like a larger endeavor.
-> 
-> Of course, I'd be happy to submit several patches if there's support
-> for such a change. But as Peff points out it will be a large diff.
-
-Yeah, I don't think it's worth the effort.
-
-If you feel like continuing on this series, converting the warning()
-into a die() would be a much more productive use of time (but if you
-don't, I do not see any reason not to take the patches you've posted).
-
--Peff
+Philip 
