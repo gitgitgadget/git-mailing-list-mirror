@@ -1,99 +1,66 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Rewrite git-compat-util.h:skip_prefix() as a loop
-Date: Fri, 28 Feb 2014 01:17:25 -0500
-Message-ID: <20140228061725.GD32556@sigill.intra.peff.net>
-References: <1393503197-29669-1-git-send-email-sunheehnus@gmail.com>
- <xmqqd2i8z6um.fsf@gitster.dls.corp.google.com>
- <87k3cg47o6.fsf@fencepost.gnu.org>
+From: Brian Gesiak <modocache@gmail.com>
+Subject: Re: [PATCH 1/2] t3200-branch: test setting branch as own upstream
+Date: Fri, 28 Feb 2014 15:17:28 +0900
+Message-ID: <CAN7MxmWP9N==0DnoE-0=Xr7NWkNMSGBC+yiz1a3wS5EbHigvKg@mail.gmail.com>
+References: <1393556659-32717-1-git-send-email-modocache@gmail.com>
+	<20140228053703.GA32556@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, Sun He <sunheehnus@gmail.com>,
-	git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Fri Feb 28 07:17:32 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Feb 28 07:17:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJGlI-0008Jh-6U
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 07:17:32 +0100
+	id 1WJGlN-0000Wn-RJ
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 07:17:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750835AbaB1GR2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Feb 2014 01:17:28 -0500
-Received: from cloud.peff.net ([50.56.180.127]:58484 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750740AbaB1GR1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Feb 2014 01:17:27 -0500
-Received: (qmail 8844 invoked by uid 102); 28 Feb 2014 06:17:27 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 28 Feb 2014 00:17:27 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 28 Feb 2014 01:17:25 -0500
-Content-Disposition: inline
-In-Reply-To: <87k3cg47o6.fsf@fencepost.gnu.org>
+	id S1751114AbaB1GRc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Feb 2014 01:17:32 -0500
+Received: from mail-ie0-f170.google.com ([209.85.223.170]:42796 "EHLO
+	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750740AbaB1GRb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Feb 2014 01:17:31 -0500
+Received: by mail-ie0-f170.google.com with SMTP id rd18so1177552iec.29
+        for <git@vger.kernel.org>; Thu, 27 Feb 2014 22:17:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=qsLELvsJ4A2ffFixX3MHMRl3TAposkjgKeHf29r29Zk=;
+        b=YYN5Dqdnm5dzPXyK+sfbXqq9/2BeErfGYpZ21+EtFgOYVDhUXC5U5lL8pUX0j/Kegs
+         pj9jZsfJ4PIjBBEjjQAEPW6+w8ymkn1mYer0Rir9GGsu6r14aBECAK/X6scjrJoF3x4j
+         udn7qtt38ubABiV6Y8rox6RScEut1HXbD9XBEeRJAyFpzMaq+vl/C1HFVaJB/E8yFCJW
+         S1jcdNID8Xwj9r+/7IMkECwTJePO5tseSDF9XF5P/m+jXPqCVPS7oY4kD6PvFQED3Ecc
+         VpVcYsiseO4wqTS+D7uagLJxJF4X4wnFJGIETlG80oiONexjkqqJDFbNWioW2g+QvQiQ
+         mP8Q==
+X-Received: by 10.50.111.79 with SMTP id ig15mr2185369igb.14.1393568248640;
+ Thu, 27 Feb 2014 22:17:28 -0800 (PST)
+Received: by 10.64.55.161 with HTTP; Thu, 27 Feb 2014 22:17:28 -0800 (PST)
+In-Reply-To: <20140228053703.GA32556@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242888>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242889>
 
-On Thu, Feb 27, 2014 at 09:33:45PM +0100, David Kastrup wrote:
+> For an operation like "git branch foo origin" where setting up the
+> tracking is a side effect, a warning makes sense. But the sole purpose
+> of the command above is to set the upstream, and we didn't do it; should
+> this warning actually be upgraded to an error?
 
-> >> diff --git a/git-compat-util.h b/git-compat-util.h
-> >> index cbd86c3..4daa6cf 100644
-> >> --- a/git-compat-util.h
-> >> +++ b/git-compat-util.h
-> >> @@ -357,8 +357,8 @@ extern int suffixcmp(const char *str, const char *suffix);
-> >>  
-> >>  static inline const char *skip_prefix(const char *str, const char *prefix)
-> >>  {
-> >> -	size_t len = strlen(prefix);
-> >> -	return strncmp(str, prefix, len) ? NULL : str + len;
-> >> +    while( *prefix != '\0' && *str++ == *prefix++ );
-> >> +    return *prefix == '\0' ? str : NULL;
-> >
-> > Documentation/CodingGuidelines?
-> 
-> Mostly relevant for tabification here, not helping much otherwise.  In
-> particular, does not contain the advice "empty statements should appear
-> on a line of their own" which would help with readability here.
+I agree. I originally wrote the test using test_expect_failure--imagine my
+surprise when the exit status was 0, despite the fact that the upstream wasn't
+set!
 
-Also whitespace in the "while", which I could not find mentioned in
-CodingGuidelines either. Maybe:
+> This should use test_i18ncmp, as the string you are matching is
+> internationalized.
 
--- >8 --
-Subject: [PATCH] CodingGuidelines: mention C whitespace rules
+Patch is on the way, just waiting for the tests to complete. Thanks for pointing
+that out! Also, sorry if it's in the Makefile somewhere, but is there
+an easy way
+to run just a single test file in the t directory?
 
-We are fairly consistent about these, so most are covered by
-"follow existing style", but it doesn't hurt to be explicit.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/CodingGuidelines | 11 +++++++++++
- 1 file changed, 11 insertions(+)
-
-diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-index ef67b53..ed432a8 100644
---- a/Documentation/CodingGuidelines
-+++ b/Documentation/CodingGuidelines
-@@ -126,6 +126,17 @@ For C programs:
-    "char * string".  This makes it easier to understand code
-    like "char *string, c;".
- 
-+ - Use whitespace around operators and keywords, but not inside
-+   parentheses and not around functions. So:
-+
-+        while (condition)
-+		func(bar + 1);
-+
-+   and not:
-+
-+        while( condition )
-+		func (bar+1);
-+
-  - We avoid using braces unnecessarily.  I.e.
- 
- 	if (bla) {
--- 
-1.8.5.2.500.g8060133
+- Brian Gesiak
