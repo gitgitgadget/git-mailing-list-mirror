@@ -1,91 +1,92 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] rewrite bulk-checkin.c:finish_bulk_checkin() using strbuf
-Date: Fri, 28 Feb 2014 16:59:16 -0500
-Message-ID: <CAPig+cTGL+s5nT9rgcHhsM+oPTjoJPaorFKHmYtGJ=ZCk4Rm=A@mail.gmail.com>
-References: <1393574305-24015-1-git-send-email-faiz.off93@gmail.com>
-	<CAPig+cTXK6=LDPDii6RQyO1fiMCq0Rai5uO0JYOzunM=4c_nUw@mail.gmail.com>
-	<CAFbjVcnx41CTOV-SCGC9a91b9weNTgYoRP1+uVDukp6Z+0F_yg@mail.gmail.com>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH 1/2] t3200-branch: test setting branch as own upstream
+Date: Fri, 28 Feb 2014 22:15:05 +0000
+Message-ID: <20140228221505.GA681289@vauxhall.crustytoothpaste.net>
+References: <1393556659-32717-1-git-send-email-modocache@gmail.com>
+ <20140228053703.GA32556@sigill.intra.peff.net>
+ <CAN7MxmWP9N==0DnoE-0=Xr7NWkNMSGBC+yiz1a3wS5EbHigvKg@mail.gmail.com>
+ <20140228062715.GE32556@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>
-To: Faiz Kothari <faiz.off93@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 28 22:59:21 2014
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="G4iJoqBmSsgzjUCe"
+Cc: Brian Gesiak <modocache@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Feb 28 23:15:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJVSj-0002Ak-6T
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 22:59:21 +0100
+	id 1WJViG-00061n-Vy
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Feb 2014 23:15:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752435AbaB1V7R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Feb 2014 16:59:17 -0500
-Received: from mail-yk0-f169.google.com ([209.85.160.169]:37835 "EHLO
-	mail-yk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752036AbaB1V7Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Feb 2014 16:59:16 -0500
-Received: by mail-yk0-f169.google.com with SMTP id 142so3626052ykq.0
-        for <git@vger.kernel.org>; Fri, 28 Feb 2014 13:59:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=WXCktzAsUqcZpjjPMq9i9rZ/4vDBKyLgqRHuO3Sa9NA=;
-        b=rD/pjTrUvAiifHdK9KlgGUtDUpRyX86OYPy0C0Zt/XDuFvii0gv+TPq2zxRwSUUtwN
-         9NTylAqnOwIkciW2q912QAL5rNEoJAPH/l+gqZgMtlJdH9wFBdf8YVCqg3R+c/cMRRWW
-         XuWPvyKctRsKpIrI9KASgRG9aPou9nRMCdnlwJM4dRyIY7cXz38s3UIQoNJmgpTOCxAk
-         Bu4GhnxABdfx9Wl0ND7ivI0FJiQI4Ol26bw78CcNv7/2LPMryXoDrs4/BEERWHgDaHVT
-         ldQGYXqt9vfgQxwgm7x9FZ0VgkYnr5zh9T6qiMxts7piBH6O1WfUCHXbk86cNIYj1SM7
-         I+zA==
-X-Received: by 10.236.199.82 with SMTP id w58mr4591590yhn.57.1393624756202;
- Fri, 28 Feb 2014 13:59:16 -0800 (PST)
-Received: by 10.170.180.195 with HTTP; Fri, 28 Feb 2014 13:59:16 -0800 (PST)
-In-Reply-To: <CAFbjVcnx41CTOV-SCGC9a91b9weNTgYoRP1+uVDukp6Z+0F_yg@mail.gmail.com>
-X-Google-Sender-Auth: ZvkVgvwJeK6GLaF0HxsNcTWo7UI
+	id S1752871AbaB1WPP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Feb 2014 17:15:15 -0500
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:52250 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752435AbaB1WPM (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Feb 2014 17:15:12 -0500
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:4ddd:8d7a:e496:d6fd])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 9B2B328088;
+	Fri, 28 Feb 2014 22:15:10 +0000 (UTC)
+Mail-Followup-To: Jeff King <peff@peff.net>,
+	Brian Gesiak <modocache@gmail.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20140228062715.GE32556@sigill.intra.peff.net>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.12-1-amd64)
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243021>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243022>
 
-On Fri, Feb 28, 2014 at 1:27 PM, Faiz Kothari <faiz.off93@gmail.com> wrote:
-> Thanks for the suggestions and remarks.
 
-[Administrivia: On this list, top-posting is frowned upon; inline
-responses are preferred.]
+--G4iJoqBmSsgzjUCe
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> I rewrote bulk-checkin.c:finish_bulk_checkin() using strbuf. But saw
-> that Sun He has already implemented the same way I have done.
-> Should I submit my implementation as a patch?
+On Fri, Feb 28, 2014 at 01:27:15AM -0500, Jeff King wrote:
+> On Fri, Feb 28, 2014 at 03:17:28PM +0900, Brian Gesiak wrote:
+> > Patch is on the way, just waiting for the tests to complete. Thanks
+> > for pointing that out! Also, sorry if it's in the Makefile somewhere,
+> > but is there an easy way to run just a single test file in the t
+> > directory?
+>=20
+> You can run "./tXXXX-....sh" explicitly.
 
-Yes. The purpose of these micro-projects is to expose you to the Git
-project's development process so that you know what will be expected
-of you as a GSoC student, and to give the GSoC mentors an opportunity
-to evaluate your abilities and observe how you interact with the
-reviewers.
+You can also use Perl's prove command, which provides some nice-to-have
+features, such as exiting abnormally if your tests abort prematurely.
 
-> Secondly,
-> I tried implementing this WITHOUT changing the prototype of the
-> function pack-write.c:finish_tmp_packfile().
->
-> For this I detached the buffer from strbuf in finish_bulk_checkin()
-> using strbuf_detach() and passed it to finish_tmp_packfile().
->
-> Inside finish_tmp_packfile, I attached the same buffer to a local
-> struct strbuf using strbuf_attach().
-> Now the problem is, two of the arguments to strbuf_attach() are
-> 'alloc' and 'len' which are private members of the struct strbuf.
-> But since I am just passing the detached buffer, the information of
-> alloc and len is lost which is required at the time of attaching.
-> I cannot think of any better way of using strbuf and NOT modify the
-> prototype of finish_tmp_packfile()
->
-> As a workaround, I can determine alloc = (strlen(buf) + 1) and len =
-> strlen(buf) but AFAIK this is not always true and may break.
-> Any suggestions?
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
 
-That's getting rather convoluted. You may want to ask yourself if it
-is really necessary for finish_tmp_packfile() to modify the buffer
-passed in by the caller or if finish_pack_file() should instead take
-responsibility for itself by allocating its own buffer (strbuf) in
-which to do path manipulation.
+--G4iJoqBmSsgzjUCe
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCgAGBQJTEQppAAoJEL9TXYEfUvaLVEAP/iJ+uoBAAWxN8ardXPsdFNvt
+PG+jWYv7cXfeC473VKYmdspmlo8Rpy9Xi3/mJDHHp0MokeOAPAn86xO31BMqp61h
+gmX26zHeyWPOPfvcNu+/uNv0nfLYxBHHagkfePYtLdrGXElOfDo3YEpKork954Yg
+NTpRz2momkHNf5wQa2jkzzlEdymRiywbMKsB/VRifA325m0eTy7fdzAKAR7vvk0R
+6tOQitr9EAcagImG5/74YE1bpfNELTvnYMHJbiC3NfneZHC++ETspYP7Ut98rYoW
+leTZzqIZLIaZ94c73fIhJewCb24LN8aGS9cOfOiJ7nqPBXmVdeXPehx/UG6H3BFB
+PMOt8kxhpC/XlYurKfKQjSjxAf8V35zPhAesBNKtIOlEDyjzZDR4HYNl0FMTtfwu
+pqT2DpA9l5JGvxwHRYmoQcdc4/2SaenIYx0BYRdwl8O0ovSs1ok82s3E6zlXozLb
+4hM1YITRIK8hV+BUXdcNkKntDULH8OaVLFp7RSkTTxd199xWhgJRnzGtv/FFJnCC
+lIb4kPjGQG7GqCUZyVHahGIrBwXzb5+XYyvb0NOmJ6erAx7OIbTKLiRPFQdmmcK1
+QQkV+ik2PM4IYsE2rahQsRnBZ0icofhvp7rqxEaieiSXz3jFlJSAdMxUA9+INj9z
+mkdyqqigapFFCyVqAFxu
+=7MRZ
+-----END PGP SIGNATURE-----
+
+--G4iJoqBmSsgzjUCe--
