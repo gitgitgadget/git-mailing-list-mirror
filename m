@@ -1,260 +1,118 @@
-From: He Sun <sunheehnus@gmail.com>
-Subject: Re: [PATCH] rewrite finish_bulk_checkin() using strbuf
-Date: Sat, 1 Mar 2014 15:10:37 +0800
-Message-ID: <CAJr59C2F93qUFk3g201ykmQbbQmPGN60k=9--3rOuYAvdZHapA@mail.gmail.com>
-References: <1393656389-31300-1-git-send-email-faiz.off93@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: RFC GSoC idea: new "git config" features
+Date: Sat, 1 Mar 2014 02:52:47 -0500
+Message-ID: <20140301075247.GF20397@sigill.intra.peff.net>
+References: <53108650.2020708@alum.mit.edu>
+ <xmqqwqgft3bj.fsf@gitster.dls.corp.google.com>
+ <53112794.2070007@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: Faiz Kothari <faiz.off93@gmail.com>, git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Mar 01 08:10:44 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	git discussion list <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Sat Mar 01 08:52:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJe4J-0002Ys-MA
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Mar 2014 08:10:44 +0100
+	id 1WJej8-0005pF-Lm
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Mar 2014 08:52:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750869AbaCAHKj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Mar 2014 02:10:39 -0500
-Received: from mail-wg0-f47.google.com ([74.125.82.47]:50524 "EHLO
-	mail-wg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750769AbaCAHKi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Mar 2014 02:10:38 -0500
-Received: by mail-wg0-f47.google.com with SMTP id n12so1302779wgh.18
-        for <git@vger.kernel.org>; Fri, 28 Feb 2014 23:10:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        bh=feaHmqTzRMDiplxVNBzuQOOyjq/2LB5POH/uiLGkP2U=;
-        b=PgpVEuBl/Y9jK285b23R/q0AwvrALBrmXLGxs4lDlDAH5CwRy2oqxVggKA+n2g2LMo
-         3XGZlsXK5Ysv90aiHSqy5QBzB+Q3B4v3pxw67VZQ4hTmDTvfKfNSr4zjOAa5yp7ow373
-         0PVydUHLhKnq/rtIf1RzCbOGELakkw8K01xIovUaEaaggsN+u9/i/VSGhPkjYrafeWZa
-         IOdNXVF2TIdaZuoqRjuN2xRbq6E1sii9bLOyGIu2SVSVzWtUHrnFO7Wyq55cUTjskYbb
-         SCloegQOllUuW/aB4Yr0Cquobty+HGO39uftKWi7NMyO1+r0JGUmDSOorfYAypn1EyWa
-         XZcg==
-X-Received: by 10.180.7.227 with SMTP id m3mr5882172wia.59.1393657837692; Fri,
- 28 Feb 2014 23:10:37 -0800 (PST)
-Received: by 10.216.203.69 with HTTP; Fri, 28 Feb 2014 23:10:37 -0800 (PST)
-In-Reply-To: <1393656389-31300-1-git-send-email-faiz.off93@gmail.com>
+	id S1752504AbaCAHwu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Mar 2014 02:52:50 -0500
+Received: from cloud.peff.net ([50.56.180.127]:59242 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752423AbaCAHwt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Mar 2014 02:52:49 -0500
+Received: (qmail 25982 invoked by uid 102); 1 Mar 2014 07:52:49 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 01 Mar 2014 01:52:49 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 01 Mar 2014 02:52:47 -0500
+Content-Disposition: inline
+In-Reply-To: <53112794.2070007@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243051>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243052>
 
-2014-03-01 14:46 GMT+08:00 Faiz Kothari <faiz.off93@gmail.com>:
-> From: Faiz Kotahri <faiz.off93@gmail.com>
->
-> Signed-off-by: Faiz Kothari <faiz.off93@gmail.com>
-> ---
-> Sticking with implementation involving changing the prototype for
-> pack-write.c:finish_tmp_packfile()
-> Fixing a small bug in Sun He's implementation which caused a fail in some tests.
->
->  builtin/pack-objects.c |   25 ++++++++++++-------------
->  bulk-checkin.c         |    9 ++++++---
->  pack-write.c           |   19 ++++++++++---------
->  pack.h                 |    3 ++-
->  4 files changed, 30 insertions(+), 26 deletions(-)
->
-> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-> index c733379..4b59bba 100644
-> --- a/builtin/pack-objects.c
-> +++ b/builtin/pack-objects.c
-> @@ -20,6 +20,7 @@
->  #include "streaming.h"
->  #include "thread-utils.h"
->  #include "pack-bitmap.h"
-> +#include "strbuf.h"
->
->  static const char *pack_usage[] = {
->         N_("git pack-objects --stdout [options...] [< ref-list | < object-list]"),
-> @@ -803,8 +804,8 @@ static void write_pack_file(void)
->
->                 if (!pack_to_stdout) {
->                         struct stat st;
-> -                       char tmpname[PATH_MAX];
-> -
-> +                       struct strbuf tmpname = STRBUF_INIT;
-> +                       int ini_length;
->                         /*
->                          * Packs are runtime accessed in their mtime
->                          * order since newer packs are more likely to contain
-> @@ -823,26 +824,24 @@ static void write_pack_file(void)
->                                 utb.modtime = --last_mtime;
->                                 if (utime(pack_tmp_name, &utb) < 0)
->                                         warning("failed utime() on %s: %s",
-> -                                               tmpname, strerror(errno));
-> +                                               pack_tmp_name, strerror(errno));
->                         }
->
-> -                       /* Enough space for "-<sha-1>.pack"? */
-> -                       if (sizeof(tmpname) <= strlen(base_name) + 50)
-> -                               die("pack base name '%s' too long", base_name);
-> -                       snprintf(tmpname, sizeof(tmpname), "%s-", base_name);
-> +                       strbuf_addf(&tmpname, "%s-", base_name);
-> +                       ini_length = tmpname.len;
->
->                         if (write_bitmap_index) {
->                                 bitmap_writer_set_checksum(sha1);
->                                 bitmap_writer_build_type_index(written_list, nr_written);
->                         }
-> -
-> -                       finish_tmp_packfile(tmpname, pack_tmp_name,
-> +
-> +                       finish_tmp_packfile(&tmpname, pack_tmp_name,
->                                             written_list, nr_written,
->                                             &pack_idx_opts, sha1);
->
->                         if (write_bitmap_index) {
-> -                               char *end_of_name_prefix = strrchr(tmpname, 0);
-> -                               sprintf(end_of_name_prefix, "%s.bitmap", sha1_to_hex(sha1));
-> +                               strbuf_remove(&tmpname, ini_length, tmpname.len - ini_length);
+On Sat, Mar 01, 2014 at 01:19:32AM +0100, Michael Haggerty wrote:
 
-Is this the position where you think may import bugs?
-I think it should be the duty of finish_tmp_packfile to ensure that the tmpname
-is the same as it is input as a param.
-And in my original code, I have used strbuf_remove() at the end of
-finish_tmp_packfile.
-There is a more elegant way to finish this task.[According to ]
+> I absolutely understand that changing all of the config parsers is not
+> feasible.  But I had imagined a third route:
+> 
+> (3) parse the config once, storing the raw values to records in
+>     memory.  When an "unset" is seen, delete any previous records that
+>     have accumulated for that key.  After the whole config has been
+>     read, iterate through the records, feeding the surviving values
+>     into the callback in the order they were originally read (minus
+>     deletions).
+> 
+> Do you see any problems with this way of implementing the functionality
+> (aside from slightly increased overhead)?
 
+Yeah, this is something I have considered many times. It does have some
+overhead, but the existing system is not great either. As you noted, we
+often read the config several times for a given program invocation.
 
-> +                               strbuf_addf(&tmpname, "%s.bitmap", sha1_to_hex(sha1));
->
->                                 stop_progress(&progress_state);
->
-> @@ -851,10 +850,10 @@ static void write_pack_file(void)
->                                 bitmap_writer_select_commits(indexed_commits, indexed_commits_nr, -1);
->                                 bitmap_writer_build(&to_pack);
->                                 bitmap_writer_finish(written_list, nr_written,
-> -                                                    tmpname, write_bitmap_options);
-> +                                                    tmpname.buf, write_bitmap_options);
->                                 write_bitmap_index = 0;
->                         }
-> -
-> +                       strbuf_release(&tmpname);
->                         free(pack_tmp_name);
->                         puts(sha1_to_hex(sha1));
->                 }
-> diff --git a/bulk-checkin.c b/bulk-checkin.c
-> index 118c625..248454c 100644
-> --- a/bulk-checkin.c
-> +++ b/bulk-checkin.c
-> @@ -4,6 +4,7 @@
->  #include "bulk-checkin.h"
->  #include "csum-file.h"
->  #include "pack.h"
-> +#include "strbuf.h"
->
->  static int pack_compression_level = Z_DEFAULT_COMPRESSION;
->
-> @@ -23,7 +24,7 @@ static struct bulk_checkin_state {
->  static void finish_bulk_checkin(struct bulk_checkin_state *state)
->  {
->         unsigned char sha1[20];
-> -       char packname[PATH_MAX];
-> +       struct strbuf packname = STRBUF_INIT;
->         int i;
->
->         if (!state->f)
-> @@ -43,16 +44,18 @@ static void finish_bulk_checkin(struct bulk_checkin_state *state)
->                 close(fd);
->         }
->
-> -       sprintf(packname, "%s/pack/pack-", get_object_directory());
-> -       finish_tmp_packfile(packname, state->pack_tmp_name,
-> +       strbuf_addf(&packname, "%s/pack/pack-", get_object_directory());
-> +       finish_tmp_packfile(&packname, state->pack_tmp_name,
->                             state->written, state->nr_written,
->                             &state->pack_idx_opts, sha1);
-> +
->         for (i = 0; i < state->nr_written; i++)
->                 free(state->written[i]);
->
->  clear_exit:
->         free(state->written);
->         memset(state, 0, sizeof(*state));
-> +       strbuf_release(&packname);
->
->         /* Make objects we just wrote available to ourselves */
->         reprepare_packed_git();
-> diff --git a/pack-write.c b/pack-write.c
-> index 9b8308b..60f5734 100644
-> --- a/pack-write.c
-> +++ b/pack-write.c
-> @@ -1,6 +1,7 @@
->  #include "cache.h"
->  #include "pack.h"
->  #include "csum-file.h"
-> +#include "strbuf.h"
->
->  void reset_pack_idx_option(struct pack_idx_option *opts)
->  {
-> @@ -336,7 +337,7 @@ struct sha1file *create_tmp_packfile(char **pack_tmp_name)
->         return sha1fd(fd, *pack_tmp_name);
->  }
->
-> -void finish_tmp_packfile(char *name_buffer,
-> +void finish_tmp_packfile(struct strbuf *name_buffer,
->                          const char *pack_tmp_name,
->                          struct pack_idx_entry **written_list,
->                          uint32_t nr_written,
-> @@ -344,7 +345,7 @@ void finish_tmp_packfile(char *name_buffer,
->                          unsigned char sha1[])
->  {
->         const char *idx_tmp_name;
-> -       char *end_of_name_prefix = strrchr(name_buffer, 0);
-> +       int ini_length = name_buffer->len;
->
->         if (adjust_shared_perm(pack_tmp_name))
->                 die_errno("unable to make temporary pack file readable");
-> @@ -354,17 +355,17 @@ void finish_tmp_packfile(char *name_buffer,
->         if (adjust_shared_perm(idx_tmp_name))
->                 die_errno("unable to make temporary index file readable");
->
-> -       sprintf(end_of_name_prefix, "%s.pack", sha1_to_hex(sha1));
-> -       free_pack_by_name(name_buffer);
-> +       strbuf_addf(name_buffer, "%s.pack", sha1_to_hex(sha1));
-> +       free_pack_by_name(name_buffer->buf);
->
-> -       if (rename(pack_tmp_name, name_buffer))
-> +       if (rename(pack_tmp_name, name_buffer->buf))
->                 die_errno("unable to rename temporary pack file");
->
-> -       sprintf(end_of_name_prefix, "%s.idx", sha1_to_hex(sha1));
-> -       if (rename(idx_tmp_name, name_buffer))
-> +       strbuf_remove(name_buffer, ini_length, name_buffer->len - ini_length);
-> +       strbuf_addf(name_buffer, "%s.idx", sha1_to_hex(sha1));
-> +
-> +       if (rename(idx_tmp_name, name_buffer->buf))
->                 die_errno("unable to rename temporary index file");
->
-> -       *end_of_name_prefix = '\0';
-> -
->         free((void *)idx_tmp_name);
->  }
-> diff --git a/pack.h b/pack.h
-> index 12d9516..0afe8d1 100644
-> --- a/pack.h
-> +++ b/pack.h
-> @@ -3,6 +3,7 @@
->
->  #include "object.h"
->  #include "csum-file.h"
-> +#include "strbuf.h"
->
->  /*
->   * Packed object header
-> @@ -91,6 +92,6 @@ extern int encode_in_pack_object_header(enum object_type, uintmax_t, unsigned ch
->  extern int read_pack_header(int fd, struct pack_header *);
->
->  extern struct sha1file *create_tmp_packfile(char **pack_tmp_name);
-> -extern void finish_tmp_packfile(char *name_buffer, const char *pack_tmp_name, struct pack_idx_entry **written_list, uint32_t nr_written, struct pack_idx_option *pack_idx_opts, unsigned char sha1[]);
-> +extern void finish_tmp_packfile(struct strbuf *name_buffer, const char *pack_tmp_name, struct pack_idx_entry **written_list, uint32_t nr_written, struct pack_idx_option *pack_idx_opts, unsigned char sha1[]);
->
->  #endif
-> --
-> 1.7.9.5
->
+But moreover, we linearly strcmp each config key we find against each
+one we know about. In some cases we return early if a sub-function is
+looking for `starts_with(key, "foo.")`, but in most cases we just look
+for "foo.bar", "foo.baz", and so on.
+
+If we had the keys in-memory, we could reverse this: config code asks
+for keys it cares about, and we can do an optimized lookup (binary
+search, hash, etc).
+
+That also makes many constructs easier to express. Recently we had a
+problem where the parsing order of "remote.pushdefault" and
+"branch.*.pushremote" mattered, because they were read into the same
+variable. The solution is to use two variables and reconcile them after
+all config is read. But if you can just query the config subsystem
+directly, the boilerplate of reading them into strings goes away, and
+you can just do:
+
+  x = config_string_getf("branch.%s.pushremote", current_branch);
+  if (!x)
+          x = config_string_get("remote.pushdefault");
+  if (!x)
+          x = config_string_getf("branch.%s.remote", current_branch);
+  if (!x)
+          x = "origin";
+
+As it is now, the code that does this has a lot more boilerplate, and is
+split across several functions.
+
+Another example is the way we have to manage "deferred" config in
+git-status (see 84b4202). This might be more clear if we could simply
+`config_get_bool("status.branch")` at the right moment.
+
+The talk of efficiency is probably a red-herring here. I do not think
+config-reading is a significant source of slow-down in the current code.
+But I'd be in favor of something that reduced boilerplate and made the
+code easier to read.
+
+> > But the side effects these callbacks may cause are not limited to
+> > setting a simple scaler variable (like 'frotz' in the illustration)
+> > but would include things that are hard to undo once done
+> > (e.g. calling a set-up function with a lot of side effects).
+
+Most callbacks would convert to a query system in a pretty
+straightforward way, but some that have side effects might be tricky.
+Converting them all may be too large for a GSoC project, but I think you
+could do it gradually:
+
+  1. Convert the parser to read into an in-memory representation, but
+     leave git_config() as a wrapper which iterates over it.
+
+  2. Add query functions like config_string_get() above.
+
+  3. Convert callbacks to query functions one by one.
+
+  4. Eventually drop git_config().
+
+A GSoC project could take us partway through (3).
+
+-Peff
