@@ -1,72 +1,98 @@
-From: Stephen Leake <stephen_leake@stephe-leake.org>
-Subject: Re: [RFC 0/3] Make git more user-friendly during a merge conflict
-Date: Sat, 01 Mar 2014 10:50:25 -0600
-Message-ID: <85ob1pyib2.fsf@stephe-leake.org>
-References: <1393437985-31401-1-git-send-email-andrew.kw.w@gmail.com>
-	<20140226202601.GK7855@google.com> <857g8f1ugu.fsf@stephe-leake.org>
-	<87fvn335sm.fsf@fencepost.gnu.org> <858usvz5nj.fsf@stephe-leake.org>
-	<87txbj1fnw.fsf@fencepost.gnu.org> <85zjlb1740.fsf@stephe-leake.org>
-	<87eh2n16sw.fsf@fencepost.gnu.org> <85vbvyxl8i.fsf@stephe-leake.org>
-	<vpqioryrvwg.fsf@anie.imag.fr>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH v4 19/27] wrapper.c: wrapper to open a file, fprintf then
+ close
+Date: Sat, 01 Mar 2014 18:11:24 +0100
+Message-ID: <531214BC.3070704@web.de>
+References: <1392730814-19656-1-git-send-email-pclouds@gmail.com> <1393675983-3232-1-git-send-email-pclouds@gmail.com> <1393675983-3232-20-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 01 17:50:40 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 01 18:11:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJn7V-00070T-P7
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Mar 2014 17:50:38 +0100
+	id 1WJnRl-00074a-Pq
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Mar 2014 18:11:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753025AbaCAQuc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Mar 2014 11:50:32 -0500
-Received: from cdptpa-outbound-snat.email.rr.com ([107.14.166.226]:58317 "EHLO
-	cdptpa-oedge-vip.email.rr.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1750762AbaCAQuc (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 1 Mar 2014 11:50:32 -0500
-Received: from [70.94.38.149] ([70.94.38.149:50173] helo=TAKVER)
-	by cdptpa-oedge03 (envelope-from <stephen_leake@stephe-leake.org>)
-	(ecelerity 3.5.0.35861 r(Momo-dev:tip)) with ESMTP
-	id 6A/8E-02678-4DF02135; Sat, 01 Mar 2014 16:50:29 +0000
-In-Reply-To: <vpqioryrvwg.fsf@anie.imag.fr> (Matthieu Moy's message of "Sat,
-	01 Mar 2014 12:38:39 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (windows-nt)
-X-RR-Connecting-IP: 107.14.168.142:25
-X-Cloudmark-Score: 0
+	id S1753237AbaCARL2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 1 Mar 2014 12:11:28 -0500
+Received: from mout.web.de ([212.227.15.4]:64540 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753228AbaCARL2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Mar 2014 12:11:28 -0500
+Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb002)
+ with ESMTPSA (Nemesis) id 0M0Qxx-1XENZT2CFB-00uWJX for <git@vger.kernel.org>;
+ Sat, 01 Mar 2014 18:11:26 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
+In-Reply-To: <1393675983-3232-20-git-send-email-pclouds@gmail.com>
+X-Provags-ID: V03:K0:O9dRoH38AtE+bwkgWKuwTIU/IVMCXzw9Jqr5VYMhKTG8ZSTGfbI
+ ZXfGm39fC6jdHoHcpM+LbgSOCbtfVPkEGRJf/pvILmMWEj5FmMXH2I9qfECWrbi9UaUe201
+ IeeDNqBPhIQISFXBibNQETTNJhEApZEIIuqGpI1pPYjn1Rf3FvjcTYsEvllkECKmu/4HeUy
+ B/DpcT+iUvI/KUxtmOdUQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243105>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
-
-> $ git status
-> On branch master
-> nothing to commit, working directory clean
-> $
-
-ok, you've lost your conflict resolutions.
-
->> In fact, it now seems that 'git reset --mixed' is always the same as
->> 'git reset --merge'. So I must be missing something!
->
-> "git reset --merge" is an alias for "git merge --abort" (IIRC, it's
-> actually the other way around). Essentially, it reverts, or tries to
-> revert everything (worktree and index) as it was before the merge. That
-> includes throwing away conflict resolution.
-
-Ok.
-
-> Now, I do agree that the documentation of "git reset" is terrible, 
-
-Ok, good.
-
-So is this a sufficient bug report to request that the documentation be
-fixed? (I obviously don't know enough to even think about submitting a
-patch).
-
--- 
--- Stephe
+On 2014-03-01 13.12, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+>  cache.h   |  2 ++
+>  wrapper.c | 31 +++++++++++++++++++++++++++++++
+>  2 files changed, 33 insertions(+)
+>=20
+> diff --git a/cache.h b/cache.h
+> index 98b5dd3..99b86d9 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -1239,6 +1239,8 @@ static inline ssize_t write_str_in_full(int fd,=
+ const char *str)
+>  {
+>  	return write_in_full(fd, str, strlen(str));
+>  }
+> +__attribute__((format (printf,3,4)))
+> +extern int write_file(const char *path, int fatal, const char *fmt, =
+=2E..);
+> =20
+>  /* pager.c */
+>  extern void setup_pager(void);
+> diff --git a/wrapper.c b/wrapper.c
+> index 0cc5636..5ced50d 100644
+> --- a/wrapper.c
+> +++ b/wrapper.c
+> @@ -455,3 +455,34 @@ struct passwd *xgetpwuid_self(void)
+>  		    errno ? strerror(errno) : _("no such user"));
+>  	return pw;
+>  }
+> +
+> +int write_file(const char *path, int fatal, const char *fmt, ...)
+> +{
+> +	struct strbuf sb =3D STRBUF_INIT;
+> +	int fd =3D open(path, O_RDWR | O_CREAT | O_TRUNC, 0666);
+> +	va_list params;
+> +	if (fd < 0) {
+> +		if (fatal)
+> +			die_errno(_("could not open %s for writing"), path);
+> +		return -1;
+> +	}
+> +	va_start(params, fmt);
+> +	strbuf_vaddf(&sb, fmt, params);
+> +	va_end(params);
+> +	if (write_in_full(fd, sb.buf, sb.len) !=3D sb.len) {
+> +		int err =3D errno;
+> +		close(fd);
+> +		errno =3D err;
+> +		strbuf_release(&sb);
+Micro nit:
+Today we now what strbuf_release() is doing, but if we ever change the
+implementation, it is 3% safer to keep err a little bit longer like thi=
+s:
+> +		strbuf_release(&sb);
+> +		errno =3D err;
