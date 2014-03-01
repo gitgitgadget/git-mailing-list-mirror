@@ -1,48 +1,48 @@
 From: He Sun <sunheehnus@gmail.com>
 Subject: Re: [PATCH] rewrite finish_bulk_checkin() using strbuf
-Date: Sat, 1 Mar 2014 15:10:30 +0800
-Message-ID: <CAJr59C35jQoUfFVQSOticjGQmj_jKVrkR1=Uhej0JNhsZ-2LHA@mail.gmail.com>
+Date: Sat, 1 Mar 2014 15:10:37 +0800
+Message-ID: <CAJr59C2F93qUFk3g201ykmQbbQmPGN60k=9--3rOuYAvdZHapA@mail.gmail.com>
 References: <1393656389-31300-1-git-send-email-faiz.off93@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 To: Faiz Kothari <faiz.off93@gmail.com>, git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Mar 01 08:10:37 2014
+X-From: git-owner@vger.kernel.org Sat Mar 01 08:10:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJe4C-0002Vh-8x
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Mar 2014 08:10:36 +0100
+	id 1WJe4J-0002Ys-MA
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Mar 2014 08:10:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750825AbaCAHKc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Mar 2014 02:10:32 -0500
-Received: from mail-we0-f176.google.com ([74.125.82.176]:49464 "EHLO
-	mail-we0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750769AbaCAHKb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Mar 2014 02:10:31 -0500
-Received: by mail-we0-f176.google.com with SMTP id x48so1286057wes.7
-        for <git@vger.kernel.org>; Fri, 28 Feb 2014 23:10:30 -0800 (PST)
+	id S1750869AbaCAHKj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Mar 2014 02:10:39 -0500
+Received: from mail-wg0-f47.google.com ([74.125.82.47]:50524 "EHLO
+	mail-wg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750769AbaCAHKi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Mar 2014 02:10:38 -0500
+Received: by mail-wg0-f47.google.com with SMTP id n12so1302779wgh.18
+        for <git@vger.kernel.org>; Fri, 28 Feb 2014 23:10:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :content-type;
-        bh=/Fr8aFwJv5OhNPrbMzRDxNQhKMUv6iXrNFYXpLcjso8=;
-        b=M1oM9ZTSNHG1DF25i7gQU9eX+7TGrPXZe9+jr0OB745n563mzrnadxGzC7YcBMMqxi
-         8nZjkIgIEW9osm3pe5BcztJY+o7RHZLBU8istAwBP+BROzraqtu7MWw62OQ2lpV4QnnL
-         6Rj9PSEFUYjosZTjUpslcRuovFXvhEfmIdeUeGsLBAOwQWEo/KtgGguuZMQdli5WZdB6
-         MqgJbicqq6fiuRrNYnzaDXgdiuJsWB9yaEjkxy4S57tJra5aVUpmv/LzCHlcdzpy99ry
-         wde3uCXnW/qyHEOf6yeCDQxjYwoHjIqgAu9xVeuEIk5On6vUdifr7FUf+Nk1NuH6s82B
-         4daQ==
-X-Received: by 10.180.97.37 with SMTP id dx5mr5916334wib.53.1393657830689;
- Fri, 28 Feb 2014 23:10:30 -0800 (PST)
-Received: by 10.216.203.69 with HTTP; Fri, 28 Feb 2014 23:10:30 -0800 (PST)
+        bh=feaHmqTzRMDiplxVNBzuQOOyjq/2LB5POH/uiLGkP2U=;
+        b=PgpVEuBl/Y9jK285b23R/q0AwvrALBrmXLGxs4lDlDAH5CwRy2oqxVggKA+n2g2LMo
+         3XGZlsXK5Ysv90aiHSqy5QBzB+Q3B4v3pxw67VZQ4hTmDTvfKfNSr4zjOAa5yp7ow373
+         0PVydUHLhKnq/rtIf1RzCbOGELakkw8K01xIovUaEaaggsN+u9/i/VSGhPkjYrafeWZa
+         IOdNXVF2TIdaZuoqRjuN2xRbq6E1sii9bLOyGIu2SVSVzWtUHrnFO7Wyq55cUTjskYbb
+         SCloegQOllUuW/aB4Yr0Cquobty+HGO39uftKWi7NMyO1+r0JGUmDSOorfYAypn1EyWa
+         XZcg==
+X-Received: by 10.180.7.227 with SMTP id m3mr5882172wia.59.1393657837692; Fri,
+ 28 Feb 2014 23:10:37 -0800 (PST)
+Received: by 10.216.203.69 with HTTP; Fri, 28 Feb 2014 23:10:37 -0800 (PST)
 In-Reply-To: <1393656389-31300-1-git-send-email-faiz.off93@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243051>
 
 2014-03-01 14:46 GMT+08:00 Faiz Kothari <faiz.off93@gmail.com>:
 > From: Faiz Kotahri <faiz.off93@gmail.com>
@@ -118,8 +118,8 @@ I think it should be the duty of finish_tmp_packfile to ensure that the tmpname
 is the same as it is input as a param.
 And in my original code, I have used strbuf_remove() at the end of
 finish_tmp_packfile.
-Eric Sunshine <sunshine@sunshineco.com> came up with a more elegant way to
-finish this task. That's using  strbuf_setlen() instead of strbuf_remove().
+There is a more elegant way to finish this task.[According to ]
+
 
 > +                               strbuf_addf(&tmpname, "%s.bitmap", sha1_to_hex(sha1));
 >
@@ -258,5 +258,3 @@ finish this task. That's using  strbuf_setlen() instead of strbuf_remove().
 > --
 > 1.7.9.5
 >
-Cheers,
-He Sun
