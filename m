@@ -1,84 +1,150 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v3 07/25] reflog: avoid constructing .lock path with git_path
-Date: Sat, 1 Mar 2014 10:42:51 +0700
-Message-ID: <CACsJy8A3mGCJzacaVrVUSxJnqXZ=GUhgOzpheUixpyWtYE6gDw@mail.gmail.com>
-References: <1392730814-19656-1-git-send-email-pclouds@gmail.com>
- <1392730814-19656-8-git-send-email-pclouds@gmail.com> <xmqqr46q4xt6.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] repack: add `repack.honorpackkeep` config var
+Date: Sat, 1 Mar 2014 00:43:50 -0500
+Message-ID: <20140301054350.GA20397@sigill.intra.peff.net>
+References: <20140128060954.GA26401@sigill.intra.peff.net>
+ <xmqq8uu0mpg8.fsf@gitster.dls.corp.google.com>
+ <20140224082459.GA32594@sigill.intra.peff.net>
+ <xmqq1tys9vie.fsf@gitster.dls.corp.google.com>
+ <20140226101353.GA25711@sigill.intra.peff.net>
+ <xmqqr46p39cj.fsf@gitster.dls.corp.google.com>
+ <20140227112734.GC29668@sigill.intra.peff.net>
+ <xmqqy50wzb2b.fsf@gitster.dls.corp.google.com>
+ <20140228085546.GA11709@sigill.intra.peff.net>
+ <xmqqob1ruld8.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Cc: Siddharth Agarwal <sid0@fb.com>, Vicent Marti <tanoku@gmail.com>,
+	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 01 04:43:50 2014
+X-From: git-owner@vger.kernel.org Sat Mar 01 06:44:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJaq5-0002N6-SH
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Mar 2014 04:43:50 +0100
+	id 1WJciM-0002a4-Mj
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Mar 2014 06:43:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752553AbaCADnW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Feb 2014 22:43:22 -0500
-Received: from mail-qc0-f178.google.com ([209.85.216.178]:57160 "EHLO
-	mail-qc0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752134AbaCADnV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 Feb 2014 22:43:21 -0500
-Received: by mail-qc0-f178.google.com with SMTP id i8so1720123qcq.37
-        for <git@vger.kernel.org>; Fri, 28 Feb 2014 19:43:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=L81rsRQoI5gMf/UNh1/JHJ1WxbJQc0inG8QLktiZBHg=;
-        b=X5nLkwebUbC2tFtu4gBdU8lxXzHPOv4zWkmw/qQTi5iG2iIXJ2a6WXj03vZHshzd1W
-         qb+kEPAZ7LbQoO0WafmsV4Zzej6aF+xG7VYTj8lGSHmWp4CvZQNhRoEVx+uFJ6/1tEkt
-         ADESlqTctzPQXPwRUetVjSRyruat7FPrnTiBThJg71ohE6RFUp/UcBEsebVrDgF/CoTg
-         utiPQAzIfWSSwKrM6/Db/EzQUsUgieDRnKcSKVimlJX9Q2IAYa3tr/CyjZK56w1Y8cfG
-         caruaO/rq4pZlfz7Rp2jAJoPT13znGn3KJvwCYFB1SeDPThU4qfNT54N21WJ3WwmDaY6
-         Bg1w==
-X-Received: by 10.140.47.212 with SMTP id m78mr8122245qga.21.1393645401212;
- Fri, 28 Feb 2014 19:43:21 -0800 (PST)
-Received: by 10.96.215.102 with HTTP; Fri, 28 Feb 2014 19:42:51 -0800 (PST)
-In-Reply-To: <xmqqr46q4xt6.fsf@gitster.dls.corp.google.com>
+	id S1750831AbaCAFnx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Mar 2014 00:43:53 -0500
+Received: from cloud.peff.net ([50.56.180.127]:59180 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750787AbaCAFnw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Mar 2014 00:43:52 -0500
+Received: (qmail 20238 invoked by uid 102); 1 Mar 2014 05:43:52 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 28 Feb 2014 23:43:52 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 01 Mar 2014 00:43:50 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqqob1ruld8.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243042>
 
-On Wed, Feb 26, 2014 at 5:44 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
-:
->
->> git_path() soon understands the path given to it. Some paths "abc" m=
-ay
->> become "def" while other "ghi" may become "ijk". We don't want
->> git_path() to interfere with .lock path construction. Concatenate
->> ".lock" after the path has been resolved by git_path() so if "abc"
->> becomes "def", we'll have "def.lock", not "ijk".
->
-> Hmph.  I am not sure if the above is readable (or if I am reading it
-> correctly).
+On Fri, Feb 28, 2014 at 10:45:39AM -0800, Junio C Hamano wrote:
 
-Definitely not now that I have had my break from the series and reread =
-it.
+> > Exactly. The two features (bitmaps and .keep) are not compatible with
+> > each other, so you have to prioritize one. If you are using static .keep
+> > files, you might want them to continue being respected at the expense of
+> > using bitmaps for that repo. So I think you want a separate option from
+> > --write-bitmap-index to allow the appropriate flexibility.
+> 
+> What is "the appropriate flexibility", though?  If the user wants to
+> use bitmap, we would need to drop .keep, no?
 
-> If "abc" becomes "def", it would take deliberate work to make
-> "abc.lock" into "ijk", and it would be natural to expect that
-> "abc.lock" would become "def.lock" without any fancy trick, no?
+Or the flip side: if the user wants to use .keep, we should drop
+bitmaps. My point is that we do not know which way the user wants to
+go, so we should not tie the options together.
 
-A better explanation may be, while many paths are not converted by
-git_path() ("abc" -> "abc"), some of them will be based on the given
-path ("def" -> "ghi"). Giving path def.lock to git_path() may confuse
-it and make it believe def.lock should not be converted because the
-signature is "def.lock" not "def". But we want the lock file to have
-the same base name with the locked file (e.g. "ghi.lock", not
-"def.lock"). So it's best to append ".lock" after git_path() has done
-its conversion.
+> Doesn't always having two copies in two packs degrade performance
+> unnecessarily (without even talking about wasted diskspace)?  An
+> explicit .keep exists in the repository because it is expensive and
+> undesirable to duplicate what is in there in the first place, so it
+> feels to me that either
 
-The alternative is teach git_path about ".lock", but I don't really
-want to put more logic down there.
---=20
-Duy
+The benefits of static .keep files are (I think):
+
+  1. less I/O during repacks, as you do not rewrite a static set of
+     objects
+
+  2. less turnover of packfiles, which can make dumb access more
+     efficient (both for dumb clients, but also for things like
+     non-git-aware backups).
+
+I think the existence of smart-http more or less nullifies (2). For (1),
+it helps at first, but you get diminishing returns as your non-keep
+packfile grows. I think it only helps in pathological cases (e.g., you
+mark 10GB worth of giant blobs in a .keep pack, and then pack the other
+10MB of trees, commits, and normal-sized blobs as usual).
+
+>  - Disable with warning, or outright refuse, the "-b" option if
+>    there is .keep (if we want to give precedence to .keep); or
+> 
+>  - Remove .keep with warning when "-b" option is given (if we want
+>    to give precedence to "-b").
+> 
+> and nothing else would be a reasonable option.  Unfortunately, we
+> can do neither automatically because there could be a transient .keep
+> file in an active repository.
+
+Right, the transient ones complicate the issue. But I think even for
+static .keep versus bitmaps, there is question. See below...
+
+> > The default is another matter.  I think most people using .bitmaps on a
+> > server would probably want to set repack.packKeptObjects.  They would
+> > want to repack often to take advantage of the .bitmaps anyway, so they
+> > probably don't care about .keep files (any they see are due to races
+> > with incoming pushes).
+> 
+> ... which makes me think that repack.packKeptObjects is merely a
+> distraction---it should be enough to just pass "--pack-kept-objects"
+> when "-b" is asked, without giving any extra configurability, no?
+
+But you do not necessarily ask for "-b" explicitly; it might come from
+the config, too. Imagine you have a server with many repos. You want to
+use bitmaps when you can, so you set pack.writeBitmaps in
+/etc/gitconfig. But in a few repos, you want to use .keep files, and
+it's more important for you to use it than bitmaps (e.g., because it is
+one of the pathological cases above). So you set repack.packKeptObjects
+to false in /etc/gitconfig, to prefer .keep to bitmaps where
+appropriate.
+
+If you did not have that config option, your alternative would be to
+turn off pack.writeBitmaps in the repositories with .keep files. But
+then you need to per-repo keep that flag in sync with whether or not the
+repo has .keep files.
+
+To be clear, at GitHub we do not plan on ever having
+repack.packKeptObjects off (for now we have it on explicitly, but if it
+were connected to pack.writeBitmaps, then we would be happy with that
+default). I am mostly trying to give an escape hatch to let people use
+different optimization strategies if they want.
+
+If we are going to have --pack-kept-objects (and I think we should),
+I think we also should have a matching config option. Because it is
+useful when matched with the bitmap code, and that can be turned on both
+from the command-line or from the config. Wherever you are doing that,
+you would want to be able to make the matching .keep decision.
+
+And I don't think it hurts much.  With the fallback-to-on behavior, you
+do not have to even care that it is there unless you are doing something
+clever.
+
+> > So we could do something like falling back to turning the option on if
+> > --write-bitmap-index is on _and_ the user didn't specify
+> > --pack-kept-objects.
+> 
+> If you mean "didn't specify --no-pack-kept-objects", then I think
+> that is sensible.  I still do not know why we would want the
+> configuration variable, though.
+
+Right, I meant "if the pack-kept-objects variable is set, either on or
+off, either via the command line or in the config".
+
+As far as what the config is good for, see above.
+
+-Peff
