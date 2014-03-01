@@ -1,84 +1,203 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH] Place cache.h at the first place to match generl rule
-Date: Sat, 1 Mar 2014 18:05:06 +0000
-Message-ID: <20140301180506.GD681289@vauxhall.crustytoothpaste.net>
-References: <1393686323-20978-1-git-send-email-sunheehnus@gmail.com>
+From: Lee Hopkins <leerhop@gmail.com>
+Subject: Re: Branch Name Case Sensitivity
+Date: Sat, 1 Mar 2014 14:38:47 -0500
+Message-ID: <CAJHY66G9WkL7sk99GhiyxjWCTkX_ip7Qb8P5gF9ovgQ-A+Yjyw@mail.gmail.com>
+References: <CAJHY66EQD280QgXBCoZU4y_aqSEu3A1hXzeW7X-rtT6vMZ92oA@mail.gmail.com>
+	<xmqqvbw0xrl6.fsf@gitster.dls.corp.google.com>
+	<530FA0C1.3000109@web.de>
+	<530FBB1D.3050505@gmail.com>
+	<CAJHY66FtC03YbJrbVn+adsePkYnVD2RGH1TGkzz2pKNBoee_iQ@mail.gmail.com>
+	<53102FB0.6040603@viscovery.net>
+	<5310959D.709@gmail.com>
+	<xmqqk3cfuksd.fsf@gitster.dls.corp.google.com>
+	<CACsJy8A6etyFkxn3D7hjM9JgzmokPBARXrEncVuw1x+OOHJ_Lg@mail.gmail.com>
+	<xmqq7g8eu891.fsf@gitster.dls.corp.google.com>
+	<CAJHY66EP539ZsLJcmHcnRQcOqcLqXK-M45wME9DkKkqmumg8fA@mail.gmail.com>
+	<53118436.5080507@web.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="zbGR4y+acU1DwHSi"
-Cc: git@vger.kernel.org, pclouds@gmail.com
-To: Sun He <sunheehnus@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 01 19:05:51 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
+	Karsten Blees <karsten.blees@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sat Mar 01 20:38:54 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJoIH-0003th-Ml
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Mar 2014 19:05:50 +0100
+	id 1WJpkL-0004IA-1g
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Mar 2014 20:38:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753113AbaCASFn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Mar 2014 13:05:43 -0500
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:52273 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753083AbaCASFM (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 1 Mar 2014 13:05:12 -0500
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:897e:5e1:f26c:6822])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 448FA28088;
-	Sat,  1 Mar 2014 18:05:10 +0000 (UTC)
-Mail-Followup-To: Sun He <sunheehnus@gmail.com>, git@vger.kernel.org,
-	pclouds@gmail.com
-Content-Disposition: inline
-In-Reply-To: <1393686323-20978-1-git-send-email-sunheehnus@gmail.com>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.12-1-amd64)
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Spam-Score: -0.272 () BAYES_00,RDNS_NONE
+	id S1753219AbaCATit (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Mar 2014 14:38:49 -0500
+Received: from mail-qa0-f45.google.com ([209.85.216.45]:64223 "EHLO
+	mail-qa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753131AbaCATis (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Mar 2014 14:38:48 -0500
+Received: by mail-qa0-f45.google.com with SMTP id hw13so2059667qab.32
+        for <git@vger.kernel.org>; Sat, 01 Mar 2014 11:38:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=44epjRwiOFEjWWecodoUZkKHt9ud3oO9uCDCWkaR9qs=;
+        b=wkQVl4FJ2vlofF2KLmOFBxTNhAczUJ++rsBEiZALfYiUm5q6nxZuuPTr3XhQj5NrAa
+         OpCVXwCGNomQWs517inCsRdSKW0ruDsAkCFxmo65auuR67zMNR9eHrdPTbIAQ//eKp++
+         4wtfwDQczkaQENhOrpoA1Ghruhn2th3FDnge1/l9i+GNfc/puVU92DJe/f3uDKF3tuyM
+         AVj83p9cxfLglSKJas0NvXz7ezEGrIzRQmFbxoC1hAwNP9pvQhIPDALg4qzw3vXXYeId
+         JUP4jmVbB/geZv+9MjhCEys13bucNuB4HoxLpBaJPhh0kbxWMnMATtDs6W1tj3r0RZ3m
+         Knwg==
+X-Received: by 10.224.113.204 with SMTP id b12mr12719011qaq.35.1393702727435;
+ Sat, 01 Mar 2014 11:38:47 -0800 (PST)
+Received: by 10.140.106.69 with HTTP; Sat, 1 Mar 2014 11:38:47 -0800 (PST)
+In-Reply-To: <53118436.5080507@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243108>
 
+Incorporating Torsten suggestions and some documentation:
 
---zbGR4y+acU1DwHSi
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+---
+ Documentation/config.txt |   12 ++++++++++++
+ builtin/init-db.c        |    4 +++-
+ config.c                 |    5 +++++
+ environment.c            |    1 +
+ refs.c                   |   26 +++++++++++++++++++++++---
+ 5 files changed, 44 insertions(+), 4 deletions(-)
 
-On Sat, Mar 01, 2014 at 11:05:23PM +0800, Sun He wrote:
-> Signed-off-by: Sun He <sunheehnus@gmail.com>
-> Helped-by: Duy Nguyen <pclouds@gmail.com>
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 040197b..c0a6c5c 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2077,6 +2077,18 @@ receive.shallowupdate::
+  If set to true, .git/shallow can be updated when new refs
+  require new shallow roots. Otherwise those refs are rejected.
 
-Your commit summary has "generl" instead of "general".
++refs.ignorecase::
++ If true, this option prevents the creation of ref names
++ that differ in case only. For example, if a branch Foo exists,
++ `git checkout -b foo` would fail. This is the case
++ across ref hierarchies, so `git tag foo` would also fail.
++ This option is useful on filesystems that are not case
++ sensitive.
+++
++The default is false, except linkgit:git-clone[1] or linkgit:git-init[1]
++will probe and set refs.ignorecase true if appropriate when the repository
++is created. refs.ignorecase will also be true if core.ignorecase is true.
++
+ remote.pushdefault::
+  The remote to push to by default.  Overrides
+  `branch.<name>.remote` for all branches, and is overridden by
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index c7c76bb..7c6931b 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -288,8 +288,10 @@ static int create_default_files(const char *template_path)
+  /* Check if the filesystem is case-insensitive */
+  path[len] = 0;
+  strcpy(path + len, "CoNfIg");
+- if (!access(path, F_OK))
++ if (!access(path, F_OK)) {
+  git_config_set("core.ignorecase", "true");
++ git_config_set("refs.ignorecase", "true");
++ }
+  probe_utf8_pathname_composition(path, len);
+  }
 
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+diff --git a/config.c b/config.c
+index 314d8ee..797391a 100644
+--- a/config.c
++++ b/config.c
+@@ -702,6 +702,11 @@ static int git_default_core_config(const char
+*var, const char *value)
+  return 0;
+  }
 
---zbGR4y+acU1DwHSi
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
++ if (!strcmp(var, "refs.ignorecase")) {
++ refs_ignore_case = git_config_bool(var, value);
++ return 0;
++ }
++
+  if (!strcmp(var, "core.attributesfile"))
+  return git_config_pathname(&git_attributes_file, var, value);
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+diff --git a/environment.c b/environment.c
+index 4a3437d..2eced48 100644
+--- a/environment.c
++++ b/environment.c
+@@ -18,6 +18,7 @@ int check_stat = 1;
+ int has_symlinks = 1;
+ int minimum_abbrev = 4, default_abbrev = 7;
+ int ignore_case;
++int refs_ignore_case = -1;
+ int assume_unchanged;
+ int prefer_symlink_refs;
+ int is_bare_repository_cfg = -1; /* unspecified */
+diff --git a/refs.c b/refs.c
+index 89228e2..1915ec2 100644
+--- a/refs.c
++++ b/refs.c
+@@ -359,16 +359,26 @@ struct string_slice {
+  const char *str;
+ };
 
-iQIcBAEBCgAGBQJTEiFSAAoJEL9TXYEfUvaLSKoP/0D5AkTXgwXyM1NAjsT1VPp3
-DmEGy/SyW5ryVCWbd5f3AqTUgUk1hA2Kdc/8jySBNuWkdcSnn/nNwqAmQSQDa9hT
-4u55nEoCVLVMZfg2ADwG+vohaJEQ+CBypP9mQYyGK5kYhChBSSrpJnshcIoNKDVU
-fYnJZn+vkqnghhFesacCzLwIhyAz/IqVD+7UVPE9+EBMAJhBSinS3INesTl4Qdcc
-rso9+HEiYMyX6GRgCvbA6mS++sEdyDPUz38bfZUy/Siy5M5aeEkA4ZXkZILRlF1q
-ZTfOy1sT/lbv/1QT48LTcqNPiT8lFKyDhReeZMFQ0zqUlYLcHolQWDiuun/p/cuv
-dVxh6KWg0MiLTkyO68B92FgyddO1/IhluA74+Q9dl30nIpRTs9lvIV94PRNwRzo3
-alH3X3aWOhgZenIAnNf8NE6/hN8Vr2oca3Q9+rGGTLmenu5Nt4gRyhpiLDfur4wo
-OxXSwd4zhJ7Z9evFdoUuzbFUnPvHLshX8uPP4KJoa0yO0kGCGa9O/2FxVgAjxMwk
-WIAakNnfOwb4ADSlC+5kW4jG+nKq4LwFmJX1qoniBk3B+e/QT03uJ9uuQDkLfA4R
-zvvnCMWgAPubEVeCf9oVlxcbIQHT1CDZgBh9wMH0HzCwTZCya+DYCfB9DeDCRqLZ
-ez5On3R7criDDauwjuDN
-=h+jc
------END PGP SIGNATURE-----
+-static int ref_entry_cmp_sslice(const void *key_, const void *ent_)
++static int ref_entry_ncmp(const void *key_, const void *ent_, int
+(*cmp_fn)(const char *, const char *, size_t))
+ {
+  const struct string_slice *key = key_;
+  const struct ref_entry *ent = *(const struct ref_entry * const *)ent_;
+- int cmp = strncmp(key->str, ent->name, key->len);
++ int cmp = cmp_fn(key->str, ent->name, key->len);
+  if (cmp)
+  return cmp;
+  return '\0' - (unsigned char)ent->name[key->len];
+ }
 
---zbGR4y+acU1DwHSi--
++static int ref_entry_cmp_sslice(const void *key_, const void *ent_)
++{
++ return ref_entry_ncmp(key_, ent_, strncmp);
++}
++
++static int ref_entry_casecmp_sslice(const void *key_, const void *ent_)
++{
++ return ref_entry_ncmp(key_, ent_, strncasecmp);
++}
++
+ /*
+  * Return the index of the entry with the given refname from the
+  * ref_dir (non-recursively), sorting dir if necessary.  Return -1 if
+@@ -378,6 +388,7 @@ static int search_ref_dir(struct ref_dir *dir,
+const char *refname, size_t len)
+ {
+  struct ref_entry **r;
+  struct string_slice key;
++ int (*cmp_fn)(const void *, const void *);
+
+  if (refname == NULL || !dir->nr)
+  return -1;
+@@ -385,8 +396,17 @@ static int search_ref_dir(struct ref_dir *dir,
+const char *refname, size_t len)
+  sort_ref_dir(dir);
+  key.len = len;
+  key.str = refname;
++
++ if(refs_ignore_case < 0)
++ refs_ignore_case  = ignore_case;
++
++ if(ignore_case)
++ cmp_fn = ref_entry_casecmp_sslice;
++ else
++ cmp_fn = ref_entry_cmp_sslice;
++
+  r = bsearch(&key, dir->entries, dir->nr, sizeof(*dir->entries),
+-    ref_entry_cmp_sslice);
++ cmp_fn);
+
+  if (r == NULL)
+  return -1;
+--
