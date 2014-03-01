@@ -1,9 +1,10 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v4 00/27] Support multiple checkouts
-Date: Sat,  1 Mar 2014 19:12:36 +0700
-Message-ID: <1393675983-3232-1-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v4 01/27] path.c: make get_pathname() return strbuf instead of static buffer
+Date: Sat,  1 Mar 2014 19:12:37 +0700
+Message-ID: <1393675983-3232-2-git-send-email-pclouds@gmail.com>
 References: <1392730814-19656-1-git-send-email-pclouds@gmail.com>
+ <1393675983-3232-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
@@ -11,132 +12,267 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 01 13:20:53 2014
+X-From: git-owner@vger.kernel.org Sat Mar 01 13:21:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJiuS-0001XN-Cp
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Mar 2014 13:20:52 +0100
+	id 1WJiuY-0001bH-Ru
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Mar 2014 13:20:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752326AbaCAMUs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 1 Mar 2014 07:20:48 -0500
-Received: from mail-pb0-f54.google.com ([209.85.160.54]:50313 "EHLO
-	mail-pb0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752299AbaCAMUr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Mar 2014 07:20:47 -0500
-Received: by mail-pb0-f54.google.com with SMTP id ma3so1765936pbc.41
-        for <git@vger.kernel.org>; Sat, 01 Mar 2014 04:20:47 -0800 (PST)
+	id S1752401AbaCAMUy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 1 Mar 2014 07:20:54 -0500
+Received: from mail-pd0-f177.google.com ([209.85.192.177]:45491 "EHLO
+	mail-pd0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752340AbaCAMUx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Mar 2014 07:20:53 -0500
+Received: by mail-pd0-f177.google.com with SMTP id g10so1857751pdj.36
+        for <git@vger.kernel.org>; Sat, 01 Mar 2014 04:20:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=q98KCIWMJt0bJiP0xVY50BESQuOjkWv1GrI5wD5B/gU=;
-        b=L/2cq0pZEG8SYaU5W3tAV0lZ17E4/JCklh4pRvQJ5mRIp5rhk7eIjsHVkfs6oxAknD
-         j7mzJ1/oO1uJx17HBm5UeRmxUUzj5NWIN1k/QaJZt0GILh3RJrEJ9u2U5GaeomD5Mmix
-         FQY7oDJaBTXzVdQpNFXHQInfca68GrCiBWCAqUMeBJ2X8Rwjm/36UvZfv7lLc/TjaIMP
-         /qw+xkuRT3umLqBM99GbQf6/Eohd6+r2i2sNUTPFdu81GWAvkR48yNgsTA25omiwMCv2
-         1iDdLzgVe3TVuKAYIFVjea+daB18HymtDafMXwjrt9YJE8HP1neyD+AMH2hJpw3NHu8E
-         GmIg==
-X-Received: by 10.67.5.39 with SMTP id cj7mr9092551pad.7.1393676447085;
-        Sat, 01 Mar 2014 04:20:47 -0800 (PST)
+        bh=/7xqG1h82ZSBPvVaweTMEbYpWsIpUdoK6cL/0EK93Rs=;
+        b=COyZFcInZR2nbBtYPp3vuHnhKtGAulUba/ZfLCCyK1ofFqsvUXdE1HL2BVQFTGDw+K
+         iNvckycyhY7HvdGOsWvUzy2LeHwVpvDHQHUxFz1Yjfl4t/ICsd22NPDcK6SRBpLb+V6Q
+         xwzW8EzPQzJNh0jQ5J0xUWZ/dE4QN2nExIEuoym/jYYK9EYRfP39iyNnocS0p5tnH5Ls
+         lbVwmwEjbvf1Q+sbPNdiMkCvx1v2n3Zx5EiZTMDal8Rao28p9BDEAWERXWPVQf+h8ZRl
+         syuH4uMpkwBVfUGwtHS2A0TfYZ9b6gGM+ghRkwcXU5uTaaX1GcPG3r6AWBIVKeTXR/7Y
+         OuIA==
+X-Received: by 10.67.8.102 with SMTP id dj6mr9352295pad.10.1393676453072;
+        Sat, 01 Mar 2014 04:20:53 -0800 (PST)
 Received: from lanh ([115.73.238.45])
-        by mx.google.com with ESMTPSA id gj9sm15918735pbc.7.2014.03.01.04.20.43
+        by mx.google.com with ESMTPSA id tu3sm37186489pab.1.2014.03.01.04.20.50
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 01 Mar 2014 04:20:46 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Sat, 01 Mar 2014 19:21:12 +0700
+        Sat, 01 Mar 2014 04:20:52 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Sat, 01 Mar 2014 19:21:18 +0700
 X-Mailer: git-send-email 1.9.0.40.gaa8c3ea
-In-Reply-To: <1392730814-19656-1-git-send-email-pclouds@gmail.com>
+In-Reply-To: <1393675983-3232-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243066>
 
-Phew.. v4 changes are
+We've been avoiding PATH_MAX whenever possible. This patch makes
+get_pathname() return a strbuf and updates the callers to take
+advantage of this. The code is simplified as we no longer need to
+worry about buffer overflow.
 
-- address all comments from Junio and Eric (I hope)
-- fix "git checkout --to" not working from the linked checkouts
-- report unused files (e.g. $GIT_DIR/repos/xx/config) in count-objects =
--v
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ path.c | 120 ++++++++++++++++++++++++++++-----------------------------=
+--------
+ 1 file changed, 51 insertions(+), 69 deletions(-)
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (27):
-  path.c: make get_pathname() return strbuf instead of static buffer
-  Convert git_snpath() to strbuf_git_path()
-  path.c: rename vsnpath() to do_git_path()
-  path.c: group git_path(), git_pathdup() and strbuf_git_path() togethe=
-r
-  Make git_path() aware of file relocation in $GIT_DIR
-  *.sh: respect $GIT_INDEX_FILE
-  reflog: avoid constructing .lock path with git_path
-  fast-import: use git_path() for accessing .git dir instead of get_git=
-_dir()
-  commit: use SEQ_DIR instead of hardcoding "sequencer"
-  Add new environment variable $GIT_COMMON_DIR
-  git-sh-setup.sh: use rev-parse --git-path to get $GIT_DIR/objects
-  *.sh: avoid hardcoding $GIT_DIR/hooks/...
-  git-stash: avoid hardcoding $GIT_DIR/logs/....
-  setup.c: convert is_git_directory() to use strbuf
-  setup.c: detect $GIT_COMMON_DIR in is_git_directory()
-  setup.c: convert check_repository_format_gently to use strbuf
-  setup.c: detect $GIT_COMMON_DIR check_repository_format_gently()
-  setup.c: support multi-checkout repo setup
-  wrapper.c: wrapper to open a file, fprintf then close
-  use new wrapper write_file() for simple file writing
-  checkout: support checking out into a new working directory
-  checkout: clean up half-prepared directories in --to mode
-  checkout: detach if the branch is already checked out elsewhere
-  prune: strategies for linked checkouts
-  gc: style change -- no SP before closing bracket
-  gc: support prune --repos
-  count-objects: report unused files in $GIT_DIR/repos/...
-
- Documentation/config.txt               |   8 +
- Documentation/git-checkout.txt         |  34 ++++
- Documentation/git-prune.txt            |   3 +
- Documentation/git-rev-parse.txt        |   8 +
- Documentation/git.txt                  |   9 ++
- Documentation/gitrepository-layout.txt |  75 +++++++--
- builtin/branch.c                       |   4 +-
- builtin/checkout.c                     | 274 +++++++++++++++++++++++++=
-++++++--
- builtin/commit.c                       |   2 +-
- builtin/count-objects.c                |  37 ++++-
- builtin/gc.c                           |  21 ++-
- builtin/init-db.c                      |   7 +-
- builtin/prune.c                        |  74 +++++++++
- builtin/reflog.c                       |   2 +-
- builtin/rev-parse.c                    |  11 ++
- cache.h                                |  10 +-
- compat/mingw.h                         |   1 +
- daemon.c                               |  11 +-
- environment.c                          |  24 ++-
- fast-import.c                          |   5 +-
- git-am.sh                              |  22 +--
- git-compat-util.h                      |   4 +
- git-pull.sh                            |   2 +-
- git-rebase--interactive.sh             |   6 +-
- git-rebase--merge.sh                   |   6 +-
- git-rebase.sh                          |   4 +-
- git-sh-setup.sh                        |   2 +-
- git-stash.sh                           |   6 +-
- path.c                                 | 206 ++++++++++++++++---------
- refs.c                                 |  66 +++++---
- refs.h                                 |   2 +-
- setup.c                                | 124 +++++++++++----
- submodule.c                            |   9 +-
- t/t0060-path-utils.sh                  |  34 ++++
- t/t1501-worktree.sh                    |  76 +++++++++
- t/t1510-repo-setup.sh                  |   1 +
- t/t2025-checkout-to.sh (new +x)        |  57 +++++++
- templates/hooks--applypatch-msg.sample |   4 +-
- templates/hooks--pre-applypatch.sample |   4 +-
- trace.c                                |   1 +
- transport.c                            |   8 +-
- wrapper.c                              |  31 ++++
- 42 files changed, 1069 insertions(+), 226 deletions(-)
-
+diff --git a/path.c b/path.c
+index 24594c4..5346700 100644
+--- a/path.c
++++ b/path.c
+@@ -16,11 +16,15 @@ static int get_st_mode_bits(const char *path, int *=
+mode)
+=20
+ static char bad_path[] =3D "/bad-path/";
+=20
+-static char *get_pathname(void)
++static struct strbuf *get_pathname(void)
+ {
+-	static char pathname_array[4][PATH_MAX];
++	static struct strbuf pathname_array[4] =3D {
++		STRBUF_INIT, STRBUF_INIT, STRBUF_INIT, STRBUF_INIT
++	};
+ 	static int index;
+-	return pathname_array[3 & ++index];
++	struct strbuf *sb =3D &pathname_array[3 & ++index];
++	strbuf_reset(sb);
++	return sb;
+ }
+=20
+ static char *cleanup_path(char *path)
+@@ -34,6 +38,13 @@ static char *cleanup_path(char *path)
+ 	return path;
+ }
+=20
++static void strbuf_cleanup_path(struct strbuf *sb)
++{
++	char *path =3D cleanup_path(sb->buf);
++	if (path > sb->buf)
++		strbuf_remove(sb, 0, path - sb->buf);
++}
++
+ char *mksnpath(char *buf, size_t n, const char *fmt, ...)
+ {
+ 	va_list args;
+@@ -49,85 +60,70 @@ char *mksnpath(char *buf, size_t n, const char *fmt=
+, ...)
+ 	return cleanup_path(buf);
+ }
+=20
+-static char *vsnpath(char *buf, size_t n, const char *fmt, va_list arg=
+s)
++static void vsnpath(struct strbuf *buf, const char *fmt, va_list args)
+ {
+ 	const char *git_dir =3D get_git_dir();
+-	size_t len;
+-
+-	len =3D strlen(git_dir);
+-	if (n < len + 1)
+-		goto bad;
+-	memcpy(buf, git_dir, len);
+-	if (len && !is_dir_sep(git_dir[len-1]))
+-		buf[len++] =3D '/';
+-	len +=3D vsnprintf(buf + len, n - len, fmt, args);
+-	if (len >=3D n)
+-		goto bad;
+-	return cleanup_path(buf);
+-bad:
+-	strlcpy(buf, bad_path, n);
+-	return buf;
++	strbuf_addstr(buf, git_dir);
++	if (buf->len && !is_dir_sep(buf->buf[buf->len - 1]))
++		strbuf_addch(buf, '/');
++	strbuf_vaddf(buf, fmt, args);
++	strbuf_cleanup_path(buf);
+ }
+=20
+ char *git_snpath(char *buf, size_t n, const char *fmt, ...)
+ {
+-	char *ret;
++	struct strbuf sb =3D STRBUF_INIT;
+ 	va_list args;
+ 	va_start(args, fmt);
+-	ret =3D vsnpath(buf, n, fmt, args);
++	vsnpath(&sb, fmt, args);
+ 	va_end(args);
+-	return ret;
++	if (sb.len >=3D n)
++		strlcpy(buf, bad_path, n);
++	else
++		memcpy(buf, sb.buf, sb.len + 1);
++	strbuf_release(&sb);
++	return buf;
+ }
+=20
+ char *git_pathdup(const char *fmt, ...)
+ {
+-	char path[PATH_MAX], *ret;
++	struct strbuf path =3D STRBUF_INIT;
+ 	va_list args;
+ 	va_start(args, fmt);
+-	ret =3D vsnpath(path, sizeof(path), fmt, args);
++	vsnpath(&path, fmt, args);
+ 	va_end(args);
+-	return xstrdup(ret);
++	return strbuf_detach(&path, NULL);
+ }
+=20
+ char *mkpathdup(const char *fmt, ...)
+ {
+-	char *path;
+ 	struct strbuf sb =3D STRBUF_INIT;
+ 	va_list args;
+-
+ 	va_start(args, fmt);
+ 	strbuf_vaddf(&sb, fmt, args);
+ 	va_end(args);
+-	path =3D xstrdup(cleanup_path(sb.buf));
+-
+-	strbuf_release(&sb);
+-	return path;
++	strbuf_cleanup_path(&sb);
++	return strbuf_detach(&sb, NULL);
+ }
+=20
+ char *mkpath(const char *fmt, ...)
+ {
+ 	va_list args;
+-	unsigned len;
+-	char *pathname =3D get_pathname();
+-
++	struct strbuf *pathname =3D get_pathname();
+ 	va_start(args, fmt);
+-	len =3D vsnprintf(pathname, PATH_MAX, fmt, args);
++	strbuf_vaddf(pathname, fmt, args);
+ 	va_end(args);
+-	if (len >=3D PATH_MAX)
+-		return bad_path;
+-	return cleanup_path(pathname);
++	return cleanup_path(pathname->buf);
+ }
+=20
+ char *git_path(const char *fmt, ...)
+ {
+-	char *pathname =3D get_pathname();
++	struct strbuf *pathname =3D get_pathname();
+ 	va_list args;
+-	char *ret;
+-
+ 	va_start(args, fmt);
+-	ret =3D vsnpath(pathname, PATH_MAX, fmt, args);
++	vsnpath(pathname, fmt, args);
+ 	va_end(args);
+-	return ret;
++	return pathname->buf;
+ }
+=20
+ void home_config_paths(char **global, char **xdg, char *file)
+@@ -158,41 +154,27 @@ void home_config_paths(char **global, char **xdg,=
+ char *file)
+=20
+ char *git_path_submodule(const char *path, const char *fmt, ...)
+ {
+-	char *pathname =3D get_pathname();
+-	struct strbuf buf =3D STRBUF_INIT;
++	struct strbuf *buf =3D get_pathname();
+ 	const char *git_dir;
+ 	va_list args;
+-	unsigned len;
+-
+-	len =3D strlen(path);
+-	if (len > PATH_MAX-100)
+-		return bad_path;
+=20
+-	strbuf_addstr(&buf, path);
+-	if (len && path[len-1] !=3D '/')
+-		strbuf_addch(&buf, '/');
+-	strbuf_addstr(&buf, ".git");
++	strbuf_addstr(buf, path);
++	if (buf->len && buf->buf[buf->len - 1] !=3D '/')
++		strbuf_addch(buf, '/');
++	strbuf_addstr(buf, ".git");
+=20
+-	git_dir =3D read_gitfile(buf.buf);
++	git_dir =3D read_gitfile(buf->buf);
+ 	if (git_dir) {
+-		strbuf_reset(&buf);
+-		strbuf_addstr(&buf, git_dir);
++		strbuf_reset(buf);
++		strbuf_addstr(buf, git_dir);
+ 	}
+-	strbuf_addch(&buf, '/');
+-
+-	if (buf.len >=3D PATH_MAX)
+-		return bad_path;
+-	memcpy(pathname, buf.buf, buf.len + 1);
+-
+-	strbuf_release(&buf);
+-	len =3D strlen(pathname);
++	strbuf_addch(buf, '/');
+=20
+ 	va_start(args, fmt);
+-	len +=3D vsnprintf(pathname + len, PATH_MAX - len, fmt, args);
++	strbuf_vaddf(buf, fmt, args);
+ 	va_end(args);
+-	if (len >=3D PATH_MAX)
+-		return bad_path;
+-	return cleanup_path(pathname);
++	strbuf_cleanup_path(buf);
++	return buf->buf;
+ }
+=20
+ int validate_headref(const char *path)
 --=20
 1.9.0.40.gaa8c3ea
