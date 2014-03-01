@@ -1,90 +1,93 @@
-From: Brian Gesiak <modocache@gmail.com>
-Subject: [GSoC14][RFC] Proposal Draft: Refactor tempfile handling
-Date: Sun, 2 Mar 2014 06:04:39 +0900
-Message-ID: <CAN7MxmVQuk96dmXfxZ5kRZPTXNwpz2RY=y8HyqX4mZzrZUVbNg@mail.gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH] implemented strbuf_write_or_die()
+Date: Sat, 01 Mar 2014 22:34:30 +0100
+Message-ID: <53125266.8040007@kdbg.org>
+References: <1393672871-28281-1-git-send-email-faiz.off93@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 01 22:05:13 2014
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+To: Faiz Kothari <faiz.off93@gmail.com>, git@vger.kernel.org,
+	sunshine@sunshineco.com
+X-From: git-owner@vger.kernel.org Sat Mar 01 22:34:54 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJr5s-00006e-Bs
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Mar 2014 22:05:12 +0100
+	id 1WJrYb-0001rA-LA
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Mar 2014 22:34:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753228AbaCAVEk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Mar 2014 16:04:40 -0500
-Received: from mail-ie0-f180.google.com ([209.85.223.180]:35765 "EHLO
-	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753191AbaCAVEk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Mar 2014 16:04:40 -0500
-Received: by mail-ie0-f180.google.com with SMTP id as1so251758iec.39
-        for <git@vger.kernel.org>; Sat, 01 Mar 2014 13:04:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=QzaXg2PrYVUmjizSKuW6MqOf1alPgpzadotMQZCfdUM=;
-        b=das5H6lqP2/a6q/hMQSHPGn3egmdK8wOT/mofw9oo6L4bya9SME2dFN7zS2u9ipT7C
-         9JZlyAuMkmoAyTwJqaWMUlyfSf1mCxbTUbG0o4QZ9FI9xwzv8Nyu3l+4UvQD7tFsvI6M
-         3nFEAlRg88dXg3jApMbs5NIdYUNePX2kl3qF+Nj1ZwYVvtYElojVFZfKsmv7NgLXfmgr
-         SYMHemoFCIIrzKvwQFETW1O3BkQ/xxHmJ27HPecIKmrH92IulBF4LYzmZ9MjapSvcsou
-         mW19Ie+F2H4a1PZUMTf5KgHaxBfHm2zYTcrtskWXk6kHYNwyPi3iQ2NhNjliyi/rlU+s
-         l5Jw==
-X-Received: by 10.50.93.106 with SMTP id ct10mr12694338igb.21.1393707879581;
- Sat, 01 Mar 2014 13:04:39 -0800 (PST)
-Received: by 10.64.55.161 with HTTP; Sat, 1 Mar 2014 13:04:39 -0800 (PST)
+	id S1753377AbaCAVet (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Mar 2014 16:34:49 -0500
+Received: from bsmtp4.bon.at ([195.3.86.186]:56181 "EHLO lbmfmo03.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753205AbaCAVes (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Mar 2014 16:34:48 -0500
+Received: from bsmtp.bon.at (unknown [192.168.181.105])
+	by lbmfmo03.bon.at (Postfix) with ESMTP id E5234CE0BD
+	for <git@vger.kernel.org>; Sat,  1 Mar 2014 22:34:46 +0100 (CET)
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 9CF10130050;
+	Sat,  1 Mar 2014 22:34:32 +0100 (CET)
+Received: from dx.sixt.local (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id C76AA19F3DF;
+	Sat,  1 Mar 2014 22:34:30 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
+In-Reply-To: <1393672871-28281-1-git-send-email-faiz.off93@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243111>
 
-Hello all,
+Am 01.03.2014 12:21, schrieb Faiz Kothari:
+> Signed-off-by: Faiz Kothari <faiz.off93@gmail.com>
+> ---
+> Implemented write_or_die.c:strbuf_write_or_die() and used in relevant places
+> to substitute write_or_die(). I spotted other places where strbuf can be used
+> in place of buf[MAX_PATH] but that would require a change in prototype of a 
+> lot of functions and functions calling them and so on....
+> I'll look for more places where strbuf can be used safely.
 
-My name is Brian Gesiak. I'm a research student at the University of
-Tokyo, and I'm hoping to participate in this year's Google Summer of
-Code by contributing to Git. I'm a longtime user, first-time
-contributor--some of you may have noticed my "microproject"
-patches.[1][2]
+You haven't given a justifiction of the change (why is this change good?)
 
-I'd like to gather some information on one of the GSoC ideas posted on
-the ideas page. Namely, I'm interested in refactoring the way
-tempfiles are cleaned up.
+> diff --git a/write_or_die.c b/write_or_die.c
+> index b50f99a..5fb309b 100644
+> --- a/write_or_die.c
+> +++ b/write_or_die.c
+> @@ -1,4 +1,5 @@
+>  #include "cache.h"
+> +#include "strbuf.h"
 
-The ideas page points out that while lock files are closed and
-unlinked[3] when the program exits[4], object pack files implement
-their own brand of temp file creation and deletion. This
-implementation doesn't share the same guarantees as lock files--it is
-possible that the program terminates before the temp file is
-unlinked.[5]
+I think you have the layering backwards here: strbuf_write_or_die should
+be part of the (higher-level) strbuf API, and not an extension of the
+low-level write_or_die function.
 
-Lock file references are stored in a linked list. When the program
-exits, this list is traversed and each file is closed and unlinked. It
-seems to me that this mechanism is appropriate for temp files in
-general, not just lock files. Thus, my proposal would be to extract
-this logic into a separate module--tempfile.h, perhaps. Lock and
-object files would share the tempfile implementation.
+>  
+>  static void check_pipe(int err)
+>  {
+> @@ -64,6 +65,14 @@ void write_or_die(int fd, const void *buf, size_t count)
+>  	}
+>  }
+>  
+> +void strbuf_write_or_die(int fd, const struct strbuf *sbuf)
 
-That is, both object and lock temp files would be stored in a linked
-list, and all of these would be deleted at program exit.
+And when you make the function a strbuf API, the prototype should be
 
-I'm very enthused about this project--I think it has it all:
+void strbuf_write_or_die(const struct strbuf *sbuf, int fd)
 
-- Tangible benefits for the end-user
-- Reduced complexity in the codebase
-- Ambitious enough to be interesting
-- Small enough to realistically be completed in a summer
+as in "hey, strbuf object, write your content to this file descriptor!"
 
-Please let me know if this seems like it would make for an interesting
-proposal, or if perhaps there is something I am overlooking. Any
-feedback at all would be appreciated. Thank you!
+> +{
+> +	if(write_in_full(fd, sbuf->buf, sbuf->len) < 0){
+> +		check_pipe(errno);
+> +		die_errno("write error");
+> +	}
+> +}
+> +
+>  int write_or_whine_pipe(int fd, const void *buf, size_t count, const char *msg)
+>  {
+>  	if (write_in_full(fd, buf, count) < 0) {
+> 
 
-- Brian Gesiak
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/242891
-[2] http://thread.gmane.org/gmane.comp.version-control.git/242893
-[3] https://github.com/git/git/blob/v1.9.0/lockfile.c#L18
-[4] https://github.com/git/git/blob/v1.9.0/lockfile.c#L143
-[5] https://github.com/git/git/blob/v1.9.0/pack-write.c#L350
+-- Hannes
