@@ -1,49 +1,49 @@
 From: He Sun <sunheehnus@gmail.com>
 Subject: Re: [PATCH] Replace memcpy with hashcpy when dealing hash copy globally
-Date: Sat, 1 Mar 2014 22:53:36 +0800
-Message-ID: <CAJr59C37x9pdjcpo_4MrRm8Zk+So2JUj3TjBOGH+Bj-La=RTwQ@mail.gmail.com>
+Date: Sat, 1 Mar 2014 22:53:45 +0800
+Message-ID: <CAJr59C2oi9Oi=SJMZigw4SnXnRmVG5wQOpWL2eeVv_u1bfKvmg@mail.gmail.com>
 References: <1393636024-17576-1-git-send-email-sunheehnus@gmail.com>
 	<CACsJy8Apoz43HPAgdrTHSNgSOcUhv9j258+r0xDJeioY3iogig@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 To: Duy Nguyen <pclouds@gmail.com>, git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Mar 01 15:54:03 2014
+X-From: git-owner@vger.kernel.org Sat Mar 01 15:54:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJlIh-0001vj-Di
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Mar 2014 15:54:03 +0100
+	id 1WJlIp-0001zy-Pu
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Mar 2014 15:54:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752870AbaCAOxj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Mar 2014 09:53:39 -0500
-Received: from mail-wi0-f174.google.com ([209.85.212.174]:43084 "EHLO
-	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752630AbaCAOxi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Mar 2014 09:53:38 -0500
-Received: by mail-wi0-f174.google.com with SMTP id f8so1801298wiw.7
-        for <git@vger.kernel.org>; Sat, 01 Mar 2014 06:53:37 -0800 (PST)
+	id S1752979AbaCAOyD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Mar 2014 09:54:03 -0500
+Received: from mail-wg0-f50.google.com ([74.125.82.50]:47058 "EHLO
+	mail-wg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752891AbaCAOxr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Mar 2014 09:53:47 -0500
+Received: by mail-wg0-f50.google.com with SMTP id l18so1524633wgh.33
+        for <git@vger.kernel.org>; Sat, 01 Mar 2014 06:53:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :content-type;
-        bh=kwIhN/Zp17xsLpD9W1ef5fj2Lysgf9pCfpjlQ5/6Bnw=;
-        b=hLwD8XUjLnXAnW5SJ/SfAlSHUqHzXC4N02TW0DNNifuX4+Wb3dbdMgNZ9NtxVTvF9C
-         r6bheSfECEGnaqhXIK+JMRHkMZ4XhsRDPSojtdosJW1QjYgff/WW8YsHz25QKdtZCsdm
-         60p9z6I4R5dzIcFIx5Yz8ln5z2Cn+fOMPN5j0qnC58wFYfqHdOoJX7LXFSIE3R/DYGsm
-         geZ3Os1eXPryAwK9aB5e5fgXoUFIu8QhMCAn/BHMNmL+odkMfAijQiyZonvux/972qRe
-         A4abxXv2L35uCmJurBKGGqj3AT9MEwVakJdlteP2ReMr6Gc9HW1Lx4x0+5eAI5AVtWS2
-         xYkA==
-X-Received: by 10.180.205.130 with SMTP id lg2mr7796603wic.59.1393685616627;
- Sat, 01 Mar 2014 06:53:36 -0800 (PST)
-Received: by 10.216.203.69 with HTTP; Sat, 1 Mar 2014 06:53:36 -0800 (PST)
+        bh=kp+e0cwvzUBpdky4Xz5JfEAKs1xgpOzhhyW0s9U0IBs=;
+        b=qaQHf0G2fk5U0rgxLdNe1w191xMc60h2ZhiXG5HJOsObhS3f7VYiq5wRKWFAo027No
+         Lp0Q2TzMD3XjThg7PVSgstxRYftP7es6DPlH9K8QJ4OyE873EoyQ/onr2InOuyj+DxoD
+         C35naRGGiEKFbuKAbd0crmWH7y6jyJdy7Z5i7MbSF0fPq8sZDvasZ2q7/QHujnr6FkCn
+         su0eUDJn0e10rvk6tC4p2+YO8FhXiv1Ummb+09FYu9/or4ttBlDCKwdxsWJV5gIyDZPZ
+         sAXWTaErirzwjYbdYB8zsB9ZY4TN9gl3ER5vv4kklIJpQtkg3nowACVvcjuWAk1R3YeI
+         2Aeg==
+X-Received: by 10.180.189.139 with SMTP id gi11mr7840688wic.53.1393685625773;
+ Sat, 01 Mar 2014 06:53:45 -0800 (PST)
+Received: by 10.216.203.69 with HTTP; Sat, 1 Mar 2014 06:53:45 -0800 (PST)
 In-Reply-To: <CACsJy8Apoz43HPAgdrTHSNgSOcUhv9j258+r0xDJeioY3iogig@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243099>
 
 2014-03-01 10:58 GMT+08:00 Duy Nguyen <pclouds@gmail.com>:
 > On Sat, Mar 1, 2014 at 8:07 AM, Sun He <sunheehnus@gmail.com> wrote:
@@ -91,7 +91,10 @@ Thanks.
 > leave this memcpy alone (and if you do, state so in the commit message
 > with the reason).
 
-Yap, after I parsed all the sourcecode
+Yap, I should follow the general rule. My fault.
+Thanks.
+
+What's more,
 
 I have find out all the files that cache.h git-compat-util.h and
 builtin.h are not the first #include
