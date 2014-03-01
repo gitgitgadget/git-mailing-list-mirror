@@ -1,93 +1,100 @@
-From: Johannes Sixt <j6t@kdbg.org>
+From: Michael Haggerty <mhagger@alum.mit.edu>
 Subject: Re: [PATCH] implemented strbuf_write_or_die()
-Date: Sat, 01 Mar 2014 22:34:30 +0100
-Message-ID: <53125266.8040007@kdbg.org>
-References: <1393672871-28281-1-git-send-email-faiz.off93@gmail.com>
+Date: Sat, 01 Mar 2014 23:33:53 +0100
+Message-ID: <53126051.7030904@alum.mit.edu>
+References: <CAJr59C0e22OuDWU5Xc0A=cc+zY32nfum6SXTDU3wLCPyFPF70A@mail.gmail.com> <1393680567-2166-1-git-send-email-faiz.off93@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: Faiz Kothari <faiz.off93@gmail.com>, git@vger.kernel.org,
-	sunshine@sunshineco.com
-X-From: git-owner@vger.kernel.org Sat Mar 01 22:34:54 2014
+Cc: git@vger.kernel.org, sunheehnus@gmail.com, sunshine@sunshineco.com
+To: Faiz Kothari <faiz.off93@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 01 23:34:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJrYb-0001rA-LA
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Mar 2014 22:34:53 +0100
+	id 1WJsUI-0004op-Hu
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Mar 2014 23:34:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753377AbaCAVet (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Mar 2014 16:34:49 -0500
-Received: from bsmtp4.bon.at ([195.3.86.186]:56181 "EHLO lbmfmo03.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753205AbaCAVes (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Mar 2014 16:34:48 -0500
-Received: from bsmtp.bon.at (unknown [192.168.181.105])
-	by lbmfmo03.bon.at (Postfix) with ESMTP id E5234CE0BD
-	for <git@vger.kernel.org>; Sat,  1 Mar 2014 22:34:46 +0100 (CET)
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 9CF10130050;
-	Sat,  1 Mar 2014 22:34:32 +0100 (CET)
-Received: from dx.sixt.local (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id C76AA19F3DF;
-	Sat,  1 Mar 2014 22:34:30 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
-In-Reply-To: <1393672871-28281-1-git-send-email-faiz.off93@gmail.com>
+	id S1753296AbaCAWd6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Mar 2014 17:33:58 -0500
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:53794 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753285AbaCAWd5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 1 Mar 2014 17:33:57 -0500
+X-AuditID: 1207440f-f79326d000003c9f-6a-5312605457ed
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id EE.8C.15519.45062135; Sat,  1 Mar 2014 17:33:56 -0500 (EST)
+Received: from [192.168.69.148] (p57A25682.dip0.t-ipconnect.de [87.162.86.130])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s21MXsfq018116
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Sat, 1 Mar 2014 17:33:55 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
+In-Reply-To: <1393680567-2166-1-git-send-email-faiz.off93@gmail.com>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrHKsWRmVeSWpSXmKPExsUixO6iqBuSIBRs0H1C3eL+xlcsFl1Xupks
+	2m5vZ7Q486aR0YHFY+esu+weix94eXzeJBfAHMVtk5RYUhacmZ6nb5fAndH+pp+54ANPxaP3
+	S9kaGGdxdTFyckgImEhs7lvJCGGLSVy4t56ti5GLQ0jgMqPEsXPnoZxzTBLX77xkB6niFdCW
+	OPP0OVgHi4CqxIlPJ5lAbDYBXYlFPc1gtqhAsMTqyw9YIOoFJU7OfAJmiwioS8z58QbMZhZw
+	k/i25S4biC0sYCax/MtKdohlHYwSfdtOMYMkOAVcJCb/XsTaxcgBdJ64RE9jEESvjsS7vgfM
+	ELa8xPa3c5gnMArOQrJuFpKyWUjKFjAyr2KUS8wpzdXNTczMKU5N1i1OTszLSy3SNdHLzSzR
+	S00p3cQICW/+HYxd62UOMQpwMCrx8O6IEgoWYk0sK67MPcQoycGkJMpb5QsU4kvKT6nMSCzO
+	iC8qzUktPsQowcGsJMJ7ngUox5uSWFmVWpQPk5LmYFES51Vfou4nJJCeWJKanZpakFoEk5Xh
+	4FCS4P0ZB9QoWJSanlqRlplTgpBm4uAEGc4lJVKcmpeSWpRYWpIRD4rh+GJgFIOkeID2vgFp
+	5y0uSMwFikK0nmLU5bjd9usToxBLXn5eqpQ472mQIgGQoozSPLgVsGT2ilEc6GNhXrZ4oCoe
+	YCKEm/QKaAkT0JKW/QIgS0oSEVJSDYxNmVun6SRZ6WbMsedaHXhxKo+uz8Yrb4KXxsSU/Xs5
+	Y+GTvIy/lvlXVv3sX7sy59adMr3jlt17v3RceWqo/pLLK+HyhKPLm6/Wzq+ssV0w 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243112>
 
-Am 01.03.2014 12:21, schrieb Faiz Kothari:
+Please leave a little more time for people to give feedback between
+versions of a patch series (unless the first version was so broken that
+it would be pointless for any other reviewer to waste time on it.  And
+please label the versions of a single patch series "[PATCH]" then
+"[PATCH v2]", "[PATCH v3]", etc.
+
+I agree with Johannes's advice that the function is in the wrong place
+and has the wrong parameter order.
+
+On 03/01/2014 02:29 PM, Faiz Kothari wrote:
 > Signed-off-by: Faiz Kothari <faiz.off93@gmail.com>
 > ---
-> Implemented write_or_die.c:strbuf_write_or_die() and used in relevant places
-> to substitute write_or_die(). I spotted other places where strbuf can be used
-> in place of buf[MAX_PATH] but that would require a change in prototype of a 
-> lot of functions and functions calling them and so on....
-> I'll look for more places where strbuf can be used safely.
-
-You haven't given a justifiction of the change (why is this change good?)
-
-> diff --git a/write_or_die.c b/write_or_die.c
-> index b50f99a..5fb309b 100644
-> --- a/write_or_die.c
-> +++ b/write_or_die.c
-> @@ -1,4 +1,5 @@
->  #include "cache.h"
-> +#include "strbuf.h"
-
-I think you have the layering backwards here: strbuf_write_or_die should
-be part of the (higher-level) strbuf API, and not an extension of the
-low-level write_or_die function.
-
->  
->  static void check_pipe(int err)
->  {
-> @@ -64,6 +65,14 @@ void write_or_die(int fd, const void *buf, size_t count)
->  	}
->  }
->  
-> +void strbuf_write_or_die(int fd, const struct strbuf *sbuf)
-
-And when you make the function a strbuf API, the prototype should be
-
-void strbuf_write_or_die(const struct strbuf *sbuf, int fd)
-
-as in "hey, strbuf object, write your content to this file descriptor!"
-
-> +{
-> +	if(write_in_full(fd, sbuf->buf, sbuf->len) < 0){
-> +		check_pipe(errno);
-> +		die_errno("write error");
-> +	}
-> +}
-> +
->  int write_or_whine_pipe(int fd, const void *buf, size_t count, const char *msg)
->  {
->  	if (write_in_full(fd, buf, count) < 0) {
+>>> -               write_or_die(1, rpc.result.buf, rpc.result.len);
+>>> +               strbuf_write_or_die(1, &(rpc.result.buf));
 > 
+>> May be this should be
+>> strbuf_write_or_die(1, &(rpc.result));
+> 
+> Yes, I changed that :-) Thanks again.
 
--- Hannes
+I find it alarming that either the compiler didn't emit warnings for the
+old version or that you ignored the compiler warnings.  Git should
+compile without warnings even with with quite strict compiler settings;
+I use gcc with the following options
+
+    -Wall -Werror \
+        -Wdeclaration-after-statement \
+        -Wno-format-zero-length \
+        -Wno-format-security
+
+Maybe you weren't including the header file that declares
+strbuf_write_or_die() in the file containing this invocation?
+
+Also, the parentheses in "&(rpc.result)" are unnecessary.
+
+And I think that some of the blank lines that you added contained
+invisible whitespace.  Please check your whitespace!  You can run "git
+diff --check" to detect some obvious whitespace problems.
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
