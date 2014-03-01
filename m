@@ -1,94 +1,107 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [RFC 0/3] Make git more user-friendly during a merge conflict
-Date: Sat, 01 Mar 2014 12:38:39 +0100
-Message-ID: <vpqioryrvwg.fsf@anie.imag.fr>
-References: <1393437985-31401-1-git-send-email-andrew.kw.w@gmail.com>
-	<20140226202601.GK7855@google.com> <857g8f1ugu.fsf@stephe-leake.org>
-	<87fvn335sm.fsf@fencepost.gnu.org> <858usvz5nj.fsf@stephe-leake.org>
-	<87txbj1fnw.fsf@fencepost.gnu.org> <85zjlb1740.fsf@stephe-leake.org>
-	<87eh2n16sw.fsf@fencepost.gnu.org> <85vbvyxl8i.fsf@stephe-leake.org>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Stephen Leake <stephen_leake@stephe-leake.org>
-X-From: git-owner@vger.kernel.org Sat Mar 01 12:39:25 2014
+From: Brian Gesiak <modocache@gmail.com>
+Subject: [PATCH v2] branch: die when setting branch as own upstream
+Date: Sat,  1 Mar 2014 21:19:16 +0900
+Message-ID: <1393676356-67203-1-git-send-email-modocache@gmail.com>
+References: <vpqa9db1e0l.fsf@anie.imag.fr>
+Cc: modocache <modocache@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 01 13:19:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJiGK-0007pT-Iy
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Mar 2014 12:39:24 +0100
+	id 1WJitN-00012S-4O
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Mar 2014 13:19:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752585AbaCALiy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Mar 2014 06:38:54 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:48322 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752540AbaCALix (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Mar 2014 06:38:53 -0500
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s21Bccff025052
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 1 Mar 2014 12:38:38 +0100
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s21Bcdpr031219;
-	Sat, 1 Mar 2014 12:38:39 +0100
-In-Reply-To: <85vbvyxl8i.fsf@stephe-leake.org> (Stephen Leake's message of
-	"Sat, 01 Mar 2014 04:32:29 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sat, 01 Mar 2014 12:38:38 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s21Bccff025052
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1394278722.77073@7tlf/Tvdmudygwvt37SAVQ
+	id S1752234AbaCAMTP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Mar 2014 07:19:15 -0500
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:33793 "EHLO
+	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752017AbaCAMTO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Mar 2014 07:19:14 -0500
+Received: by mail-pa0-f52.google.com with SMTP id rd3so377078pab.39
+        for <git@vger.kernel.org>; Sat, 01 Mar 2014 04:19:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=IwdKVowaDW9NfOT/xvRNTqjjpndHAs3MYp3QPQ9BNNU=;
+        b=T6Q4lGws0Vin/8z1sl38kyLf2E4VqdUK8V5XkPl1ZWmx+1/nb8wnL4VmSO3SF2Ux3M
+         m//LVYgVaf2IfOC3IwzgywsEAgYOEEzLnfy9RcYj7vO32Ai712sUXbOsaTjWyOTnwmM3
+         HDuDcAgf/7ccvPZcm8PGI67psrcjNLl3yydd95Ttu6ghAGZEI2bzs2WUHQZpM+dtHSQr
+         VKLGjFUmmEC786SyxW9pchuykuwcZ4/qbXO+7yAdIDnicAf0WdqK2vvesaQKziR4Yogw
+         vwbJhRI9XO4OJaNs9DdNLfWnbQTO9m4Xhfa+OdpJBMi77fdjq5BxmaLctrLVlC3KVayY
+         aAhA==
+X-Received: by 10.66.197.135 with SMTP id iu7mr241870pac.149.1393676353989;
+        Sat, 01 Mar 2014 04:19:13 -0800 (PST)
+Received: from localhost.localdomain (p1157-ipbf5204marunouchi.tokyo.ocn.ne.jp. [118.8.132.157])
+        by mx.google.com with ESMTPSA id op3sm15855602pbc.40.2014.03.01.04.19.12
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Sat, 01 Mar 2014 04:19:13 -0800 (PST)
+X-Mailer: git-send-email 1.8.3.4 (Apple Git-47)
+In-Reply-To: <vpqa9db1e0l.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243064>
 
-Stephen Leake <stephen_leake@stephe-leake.org> writes:
+From: modocache <modocache@gmail.com>
 
-> So as I understand it, this does _not_ lose your conflict resolutions.
+Branch set as own upstream using one of the following commands returns
+immediately with an exit code of 0:
 
-Well, then maybe it's time to try the command before continuing
-commenting on its behavior ;-).
+- `git branch --set-upstream-to foo refs/heads/foo`
+- `git branch --force --track foo foo`
 
-$ git status
-[...]
-        both modified:      foo.txt
-[...]
-$ git diff
-diff --cc foo.txt
-index 595f399,996c0e1..0000000
---- a/foo.txt
-+++ b/foo.txt
-@@@ -1,1 -1,1 +1,1 @@@
-- content1
- -content2
-++resolved
-$ git reset --merge
-$ git status
-On branch master
-nothing to commit, working directory clean
-$
+Since neither of these actions currently set the upstream, an exit code
+of 0 is misleading. Instead, exit with a status code indicating failure
+by using the die function.
 
-> In fact, it now seems that 'git reset --mixed' is always the same as
-> 'git reset --merge'. So I must be missing something!
+Signed-off-by: Brian Gesiak <modocache@gmail.com>
+---
+ branch.c          | 9 ++-------
+ t/t3200-branch.sh | 6 +++---
+ 2 files changed, 5 insertions(+), 10 deletions(-)
 
-"git reset --merge" is an alias for "git merge --abort" (IIRC, it's
-actually the other way around). Essentially, it reverts, or tries to
-revert everything (worktree and index) as it was before the merge. That
-includes throwing away conflict resolution.
-
-Now, I do agree that the documentation of "git reset" is terrible, and I
-actually think that the command does too many different things (putting
-"git reset" and "git reset --hard" so close to each other is not a good
-idead IMHO: the first is a harmless command I use very often, and the
-second is one of the most destructive operation Git has).
-
+diff --git a/branch.c b/branch.c
+index e163f3c..9bac8b5 100644
+--- a/branch.c
++++ b/branch.c
+@@ -54,13 +54,8 @@ void install_branch_config(int flag, const char *local, const char *origin, cons
+ 	struct strbuf key = STRBUF_INIT;
+ 	int rebasing = should_setup_rebase(origin);
+ 
+-	if (shortname
+-	    && !strcmp(local, shortname)
+-	    && !origin) {
+-		warning(_("Not setting branch %s as its own upstream."),
+-			local);
+-		return;
+-	}
++	if (shortname && !strcmp(local, shortname) && !origin)
++		die(_("Not setting branch %s as its own upstream."), local);
+ 
+ 	strbuf_addf(&key, "branch.%s.remote", local);
+ 	git_config_set(key.buf, origin ? origin : ".");
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index 6164126..3ac493f 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -507,10 +507,10 @@ EOF
+ 	test_cmp expected actual
+ '
+ 
+-test_expect_success '--set-upstream-to shows warning if used to set branch as own upstream' '
+-	git branch --set-upstream-to refs/heads/my13 my13 2>actual &&
++test_expect_success '--set-upstream-to fails if used to set branch as own upstream' '
++	test_must_fail git branch --set-upstream-to refs/heads/my13 my13 2>actual &&
+ 	cat >expected <<EOF &&
+-warning: Not setting branch my13 as its own upstream.
++fatal: Not setting branch my13 as its own upstream.
+ EOF
+ 	test_i18ncmp expected actual
+ '
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+1.8.3.4 (Apple Git-47)
