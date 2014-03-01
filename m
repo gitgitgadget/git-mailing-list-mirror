@@ -1,91 +1,90 @@
-From: Tanay Abhra <tanayabh@gmail.com>
-Subject: [PATCH] commit.c:record_author_date() use skip_prefix() instead of starts_with()
-Date: Sat,  1 Mar 2014 11:48:19 -0800
-Message-ID: <1393703299-7977-1-git-send-email-tanayabh@gmail.com>
-To: git@vger.kernel.org, tanayabh@gmail.com
-X-From: git-owner@vger.kernel.org Sat Mar 01 20:49:15 2014
+From: Brian Gesiak <modocache@gmail.com>
+Subject: [GSoC14][RFC] Proposal Draft: Refactor tempfile handling
+Date: Sun, 2 Mar 2014 06:04:39 +0900
+Message-ID: <CAN7MxmVQuk96dmXfxZ5kRZPTXNwpz2RY=y8HyqX4mZzrZUVbNg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 01 22:05:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJpuM-0007u3-N0
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Mar 2014 20:49:15 +0100
+	id 1WJr5s-00006e-Bs
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Mar 2014 22:05:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753194AbaCATtB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Mar 2014 14:49:01 -0500
-Received: from mail-pb0-f47.google.com ([209.85.160.47]:51240 "EHLO
-	mail-pb0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753041AbaCATtA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Mar 2014 14:49:00 -0500
-Received: by mail-pb0-f47.google.com with SMTP id up15so2153269pbc.6
-        for <git@vger.kernel.org>; Sat, 01 Mar 2014 11:49:00 -0800 (PST)
+	id S1753228AbaCAVEk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Mar 2014 16:04:40 -0500
+Received: from mail-ie0-f180.google.com ([209.85.223.180]:35765 "EHLO
+	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753191AbaCAVEk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Mar 2014 16:04:40 -0500
+Received: by mail-ie0-f180.google.com with SMTP id as1so251758iec.39
+        for <git@vger.kernel.org>; Sat, 01 Mar 2014 13:04:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:subject:date:message-id;
-        bh=ofC+RRjh58zG3NptOMHoVXZ5u7fG+0Tax7mSqrKuizs=;
-        b=DPintYmhcqShnDQmyELsFP03TtO1+Wqs4ZUnLxeGUISTYCeMRQ/k0aSKcNXAdsA40S
-         mQYea+BoH4OzjFtZo+HKKoGXWFmgxUr0IT31OyfWDwDLNZ4tnvciQqDbpXbbGhh7A/PH
-         pSlbcDdSGuKUtSpRMKTRETFu4CwLLWmN5fzkcfypOxJDszYdyiZMLfPI0Q4gpPi3DqTK
-         A4biqxVmikwDjNeD7TyGzpq607BeBKvDMh2uanUrjlLyoS3WLra8MsC5GOCiXX1xN/dR
-         gO0lP1ZQPh5gnfc1Gn9OKdf/Ny6uko4w6avDLvawvSDMwVibh1Ru0k2Hh/uHc5yNDwMi
-         oKzw==
-X-Received: by 10.68.131.100 with SMTP id ol4mr10878848pbb.134.1393703339948;
-        Sat, 01 Mar 2014 11:48:59 -0800 (PST)
-Received: from localhost.localdomain ([59.178.139.18])
-        by mx.google.com with ESMTPSA id sy2sm19025502pbc.28.2014.03.01.11.48.57
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 01 Mar 2014 11:48:59 -0800 (PST)
-X-Mailer: git-send-email 1.9.0
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=QzaXg2PrYVUmjizSKuW6MqOf1alPgpzadotMQZCfdUM=;
+        b=das5H6lqP2/a6q/hMQSHPGn3egmdK8wOT/mofw9oo6L4bya9SME2dFN7zS2u9ipT7C
+         9JZlyAuMkmoAyTwJqaWMUlyfSf1mCxbTUbG0o4QZ9FI9xwzv8Nyu3l+4UvQD7tFsvI6M
+         3nFEAlRg88dXg3jApMbs5NIdYUNePX2kl3qF+Nj1ZwYVvtYElojVFZfKsmv7NgLXfmgr
+         SYMHemoFCIIrzKvwQFETW1O3BkQ/xxHmJ27HPecIKmrH92IulBF4LYzmZ9MjapSvcsou
+         mW19Ie+F2H4a1PZUMTf5KgHaxBfHm2zYTcrtskWXk6kHYNwyPi3iQ2NhNjliyi/rlU+s
+         l5Jw==
+X-Received: by 10.50.93.106 with SMTP id ct10mr12694338igb.21.1393707879581;
+ Sat, 01 Mar 2014 13:04:39 -0800 (PST)
+Received: by 10.64.55.161 with HTTP; Sat, 1 Mar 2014 13:04:39 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243110>
 
+Hello all,
 
-Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
----
- commit.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+My name is Brian Gesiak. I'm a research student at the University of
+Tokyo, and I'm hoping to participate in this year's Google Summer of
+Code by contributing to Git. I'm a longtime user, first-time
+contributor--some of you may have noticed my "microproject"
+patches.[1][2]
 
-diff --git a/commit.c b/commit.c
-index 6bf4fe0..c954ecb 100644
---- a/commit.c
-+++ b/commit.c
-@@ -566,7 +566,7 @@ static void record_author_date(struct author_date_slab *author_date,
- 	     buf;
- 	     buf = line_end + 1) {
- 		line_end = strchrnul(buf, '\n');
--		if (!starts_with(buf, "author ")) {
-+		if (!skip_prefix(buf, "author ")) {
- 			if (!line_end[0] || line_end[1] == '\n')
- 				return; /* end of header */
- 			continue;
--- 
-1.7.9.5
+I'd like to gather some information on one of the GSoC ideas posted on
+the ideas page. Namely, I'm interested in refactoring the way
+tempfiles are cleaned up.
 
-Hello,
+The ideas page points out that while lock files are closed and
+unlinked[3] when the program exits[4], object pack files implement
+their own brand of temp file creation and deletion. This
+implementation doesn't share the same guarantees as lock files--it is
+possible that the program terminates before the temp file is
+unlinked.[5]
 
-This is my patch for the GSoC microproject #10:
+Lock file references are stored in a linked list. When the program
+exits, this list is traversed and each file is closed and unlinked. It
+seems to me that this mechanism is appropriate for temp files in
+general, not just lock files. Thus, my proposal would be to extract
+this logic into a separate module--tempfile.h, perhaps. Lock and
+object files would share the tempfile implementation.
 
-Rewrite commit.c:record_author_date() to use skip_prefix(). 
-Are there other places in this file where skip_prefix() would be more 
-readable than starts_with()?
+That is, both object and lock temp files would be stored in a linked
+list, and all of these would be deleted at program exit.
 
-Since skip_prefix() and starts_with() implement the same functionality with different
-return values, they can be interchanged easily.
+I'm very enthused about this project--I think it has it all:
 
-Other usage of starts_with() in the same file can be found with
+- Tangible benefits for the end-user
+- Reduced complexity in the codebase
+- Ambitious enough to be interesting
+- Small enough to realistically be completed in a summer
 
-$ grep -n starts_with commit.c
+Please let me know if this seems like it would make for an interesting
+proposal, or if perhaps there is something I am overlooking. Any
+feedback at all would be appreciated. Thank you!
 
-1116:		else if (starts_with(line, gpg_sig_header) &&
-1196:		if (starts_with(buf, sigcheck_gpg_status[i].check + 1)) {
+- Brian Gesiak
 
-I have a query,should I tackle a bug from the mailing lists or research about the proposal 
-and present a rough draft?
-
-Cheers,
-Tanay Abhra.
+[1] http://thread.gmane.org/gmane.comp.version-control.git/242891
+[2] http://thread.gmane.org/gmane.comp.version-control.git/242893
+[3] https://github.com/git/git/blob/v1.9.0/lockfile.c#L18
+[4] https://github.com/git/git/blob/v1.9.0/lockfile.c#L143
+[5] https://github.com/git/git/blob/v1.9.0/pack-write.c#L350
