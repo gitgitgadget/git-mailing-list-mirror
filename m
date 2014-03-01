@@ -1,60 +1,78 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [PATCH v4 13/27] git-stash: avoid hardcoding $GIT_DIR/logs/....
-Date: Sat, 01 Mar 2014 16:50:44 +0100
-Message-ID: <531201D4.6090900@web.de>
-References: <1392730814-19656-1-git-send-email-pclouds@gmail.com> <1393675983-3232-1-git-send-email-pclouds@gmail.com> <1393675983-3232-14-git-send-email-pclouds@gmail.com>
+From: Gilles Filippini <gilles.filippini@free.fr>
+Subject: [PATCH] contrib/subtree - unset prefix before proceeding
+Date: Sat, 01 Mar 2014 17:33:32 +0100
+Message-ID: <53120BDC.9000406@free.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 01 16:51:04 2014
+Content-Type: multipart/mixed;
+ boundary="------------090503090504090006040405"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 01 17:34:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJmBr-0008QU-Fy
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Mar 2014 16:51:03 +0100
+	id 1WJmrb-0000Ip-6i
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Mar 2014 17:34:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753010AbaCAPuw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 1 Mar 2014 10:50:52 -0500
-Received: from mout.web.de ([212.227.15.3]:51239 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752927AbaCAPur (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Mar 2014 10:50:47 -0500
-Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb002)
- with ESMTPSA (Nemesis) id 0MBCYn-1WTzKi2Fzp-00AIDW for <git@vger.kernel.org>;
- Sat, 01 Mar 2014 16:50:45 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
-In-Reply-To: <1393675983-3232-14-git-send-email-pclouds@gmail.com>
-X-Provags-ID: V03:K0:EX9jiszwgyLARlYvv12cYnJN5M/dSMKiNS3w0EX9K1JVzjtk8to
- QHgsY0uUZs6wu0GukkvZh75e8L816iwYDRyCy7GDlalTR6JNDSgj++WtuCmPot8EJTeUm0h
- nm1mKI39D7wiJlfuyrVALTl2+RNzqq4ymTZZn2Hge++MIOMGniZYMHj99GLsNEGc8icFQ3U
- 62BVUKvYZyrrRsfme/k9w==
+	id S1752844AbaCAQeG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Mar 2014 11:34:06 -0500
+Received: from smtpfb1-g21.free.fr ([212.27.42.9]:58624 "EHLO
+	smtpfb1-g21.free.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752005AbaCAQeF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Mar 2014 11:34:05 -0500
+Received: from smtp5-g21.free.fr (smtp5-g21.free.fr [212.27.42.5])
+	by smtpfb1-g21.free.fr (Postfix) with ESMTP id C8D3F77CDF8
+	for <git@vger.kernel.org>; Sat,  1 Mar 2014 17:33:59 +0100 (CET)
+Received: from [129.200.100.4] (unknown [88.189.102.17])
+	by smtp5-g21.free.fr (Postfix) with ESMTP id BA66DD4809A
+	for <git@vger.kernel.org>; Sat,  1 Mar 2014 17:33:34 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20131103 Icedove/17.0.10
+X-Enigmail-Version: 1.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243103>
 
-On 2014-03-01 13.12, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
->  git-stash.sh | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->=20
-> diff --git a/git-stash.sh b/git-stash.sh
-> index ae7d16e..12d9b37 100755
-> --- a/git-stash.sh
-> +++ b/git-stash.sh
-> @@ -183,7 +183,7 @@ store_stash () {
->  	fi
-> =20
->  	# Make sure the reflog for stash is kept.
-> -	: >>"$GIT_DIR/logs/$ref_stash"
-> +	: >>"`git rev-parse --git-path logs/$ref_stash`"
-            "$(git rev-parse --git-path logs/$ref_stash)"
-Shouldn't we prefer $() over `` ?
+This is a multi-part message in MIME format.
+--------------090503090504090006040405
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+This is to prevent unwanted prefix when such an environment variable
+exists. The case occurs for example during the Debian package build
+where the git-subtree test suite is called with 'prefix=/usr', which
+makes test 21 fail:
+not ok 21 - Check that prefix argument is required for split
+
+Signed-off-by: Gilles Filippini <gilles.filippini@free.fr>
+---
+ contrib/subtree/git-subtree.sh | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+index dc59a91..db925ca 100755
+--- a/contrib/subtree/git-subtree.sh
++++ b/contrib/subtree/git-subtree.sh
+@@ -46,6 +46,7 @@ ignore_joins=
+ annotate=
+ squash=
+ message=
++prefix=
+ 
+ debug()
+ {
+-- 
+1.9.0
+
+
+--------------090503090504090006040405
+Content-Type: text/plain; charset=UTF-8;
+ name="Portion de message joint"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+ filename="Portion de message joint"
+
+
+--------------090503090504090006040405--
