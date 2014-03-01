@@ -1,104 +1,154 @@
-From: Fabio D'Alfonso <fabio.dalfonso@fabiodalfonso.com>
-Subject: Re: t9200 cvsexportcommit test fails on Ubuntu server 12.04.4 LTS
-Date: Sat, 01 Mar 2014 11:09:57 +0100
-Organization: Fabio D'Alfonso
-Message-ID: <5311B1F5.7080501@fabiodalfonso.com>
-References: <5310D933.1@fabiodalfonso.com> <20140301064642.GD20397@sigill.intra.peff.net>
-Reply-To: fabio.dalfonso@fabiodalfonso.com
+From: Stephen Leake <stephen_leake@stephe-leake.org>
+Subject: Re: [RFC 0/3] Make git more user-friendly during a merge conflict
+Date: Sat, 01 Mar 2014 04:32:29 -0600
+Message-ID: <85vbvyxl8i.fsf@stephe-leake.org>
+References: <1393437985-31401-1-git-send-email-andrew.kw.w@gmail.com>
+	<20140226202601.GK7855@google.com> <857g8f1ugu.fsf@stephe-leake.org>
+	<87fvn335sm.fsf@fencepost.gnu.org> <858usvz5nj.fsf@stephe-leake.org>
+	<87txbj1fnw.fsf@fencepost.gnu.org> <85zjlb1740.fsf@stephe-leake.org>
+	<87eh2n16sw.fsf@fencepost.gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Mar 01 11:31:22 2014
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 01 11:32:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJhCU-0001GF-At
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Mar 2014 11:31:22 +0100
+	id 1WJhDh-0001r2-HP
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Mar 2014 11:32:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752749AbaCAKbR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 1 Mar 2014 05:31:17 -0500
-Received: from gateway01.websitewelcome.com ([67.18.80.19]:54163 "EHLO
-	gateway01.websitewelcome.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750869AbaCAKbQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 1 Mar 2014 05:31:16 -0500
-X-Greylist: delayed 1276 seconds by postgrey-1.27 at vger.kernel.org; Sat, 01 Mar 2014 05:31:16 EST
-Received: by gateway01.websitewelcome.com (Postfix, from userid 5007)
-	id 923B071BFA4E1; Sat,  1 Mar 2014 04:09:59 -0600 (CST)
-Received: from gator4050.hostgator.com (gator4050.hostgator.com [192.185.4.61])
-	by gateway01.websitewelcome.com (Postfix) with ESMTP id 858D571BFA4BD
-	for <git@vger.kernel.org>; Sat,  1 Mar 2014 04:09:59 -0600 (CST)
-Received: from [95.237.41.141] (port=12749 helo=[192.168.1.16])
-	by gator4050.hostgator.com with esmtpa (Exim 4.80.1)
-	(envelope-from <fabio.dalfonso@fabiodalfonso.com>)
-	id 1WJgrn-0004GF-3p; Sat, 01 Mar 2014 04:09:59 -0600
-User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
-In-Reply-To: <20140301064642.GD20397@sigill.intra.peff.net>
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - gator4050.hostgator.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - fabiodalfonso.com
-X-BWhitelist: no
-X-Source-IP: 95.237.41.141
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: ([192.168.1.16]) [95.237.41.141]:12749
-X-Source-Auth: fabio.dalfonso@fabiodalfonso.com
-X-Email-Count: 1
-X-Source-Cap: ZGFsZm9uc287ZGFsZm9uc287Z2F0b3I0MDUwLmhvc3RnYXRvci5jb20=
+	id S1752755AbaCAKce convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 1 Mar 2014 05:32:34 -0500
+Received: from cdptpa-outbound-snat.email.rr.com ([107.14.166.228]:51591 "EHLO
+	cdptpa-oedge-vip.email.rr.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1750869AbaCAKcd convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 1 Mar 2014 05:32:33 -0500
+Received: from [70.94.38.149] ([70.94.38.149:50069] helo=TAKVER)
+	by cdptpa-oedge03 (envelope-from <stephen_leake@stephe-leake.org>)
+	(ecelerity 3.5.0.35861 r(Momo-dev:tip)) with ESMTP
+	id 89/6D-02678-F37B1135; Sat, 01 Mar 2014 10:32:32 +0000
+In-Reply-To: <87eh2n16sw.fsf@fencepost.gnu.org> (David Kastrup's message of
+	"Fri, 28 Feb 2014 18:33:03 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (windows-nt)
+X-RR-Connecting-IP: 107.14.168.142:25
+X-Cloudmark-Score: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243057>
 
-Hi,
-thanks for the suggestion.
+David Kastrup <dak@gnu.org> writes:
 
-Tests failed because the cvs is built with denied root commit on 12.04,=
-=20
-I did not notice as the 11.04 works. I use root for system activities o=
-n=20
-servers. Will sometime in the future start to sudoku...
-
-Made a check as git user and was fine.
-
-=46abio D'Alfonso
-'Enabling Business Through IT'
-cell.  +39.348.059.40.22 ***
-web: www.fabiodalfonso.com <http://www.fabiodalfonso.com/>
-email: fabio.dalfonso@fabiodalfonso.com
-<mailto:fabio.dalfonso@fabiodalfonso.com>linkedin:=20
-www.linkedin.com/in/fabiodalfonso <http://it.linkedin.com/in/fabiodalfo=
-nso>
-twitter: www.twitter.com/#!/fabio_dalfonso=20
-<http://www.twitter.com/#%21/fabio_dalfonso>
-
-fax: +39.06.874.599.581
-BlackBerry=C2=AE Wireless Enabled Address.
-
-
-          ** Hidden  numbers are automatically rejected by the phone*
-
-On 3/1/2014 7:46 AM, Jeff King wrote:
-> On Fri, Feb 28, 2014 at 07:45:07PM +0100, Fabio D'Alfonso wrote:
+> Stephen Leake <stephen_leake@stephe-leake.org> writes:
 >
->> I get 12 of 15 tests faling.
+>> David Kastrup <dak@gnu.org> writes:
 >>
->> Any idea? the same build works fine on 11.04 where I have a desktop =
-version.
-> No clue. It works fine for me here (Debian sid). Perhaps try running =
-the
-> script like:
+>>> Stephen Leake <stephen_leake@stephe-leake.org> writes:
+>>>
+>>>> David Kastrup <dak@gnu.org> writes:
+>>>>
+>>>>> "do the right thing" commands also tend to do the wrong thing
+>>>>> occasionally with potentially disastrous results when they are us=
+ed
+>>>>> in scripts where the followup actions rely on the actual result.
+>>>>
+>>>> That is bad, and should not be allowed. On the other hand, I have =
+yet
+>>>> to see an actual use case of bad behavior in this discussion.
+>>>
+>>> Huh.
+>>>
+>>> <http://permalink.gmane.org/gmane.comp.version-control.git/242744>
+>>
+>> That's about backward incompatibility, which is bad, but not what I =
+was
+>> talking about above.
 >
->      ./t9200-git-cvsexportcommit.sh -v -i
+> No, it isn't.  I quote:
 >
-> which should give more information about what exactly is failing?
+>     I sometimes run "git reset" during a merge to only reset the inde=
+x
+>     and then examine the changes introduced by the merge. With your
+>     changes, someone doing so would abort the merge and discard the
+>     merge resolution.  I very rarely do this, but even rarely, I
+>     wouldn't like Git to start droping data silently for me ;-).
 >
-> -Peff
+> You should not make statements like "I have yet to see an actual use
+> case of bad behavior in this discussion" when you actually mean "I=C2=
+=A0have
+> not yet seen anything I=C2=A0would be interested in doing myself".
+
+Clearly I misunderstood your point. Merely repeating the same statement
+that I misunderstood, and adding a misunderstanding of what I said, is
+not helpful.
+
+So let me see if I can expand on your use case:
+
+- you do 'git merge', which results in conflicts
+
+- you edit some workspace files to resolve some of those conflicts=20
+
+    (I added this step later, since it was implied but not explicit)
+
+- you do 'git reset', intending 'git reset --mixed' (because that is th=
+e
+  current default)
+
+    Actually, I can't find a precise definition of 'git reset'. Here is
+    the synopsis from the man page for 'git-reset' (from git 1.7.9):
+
+       git reset [-q] [<commit>] [--] <paths>...
+       git reset (--patch | -p) [<commit>] [--] [<paths>...]
+       git reset (--soft | --mixed | --hard | --merge | --keep) [-q] [<=
+commit>]
+
+    In 'git reset', there is no path, so it must be the second or third
+    form. But those _require_ one of the -- options. So 'git reset' is
+    illegal. Clearly something is wrong here; apparently the third line
+    should be:
+
+       git reset [--soft | --mixed | --hard | --merge | --keep] [-q] [<=
+commit>]
+
+    with '--mixed' as the default, as is stated later. (perhaps the
+    original intent was to not have a default for the third form, but
+    that got changed sometime?).
+
+    This command "resets the index" but not the working tree. I'm not
+    clear what "reset the index" means here; does it mean "remove all
+    entries from the index", or "reset the index to some previous
+    state"? In other man pages, "reset" can have either meaning
+    depending on context.
+
+- then you "examine changes introduced by the merge". I don't know what
+  this means in detail.=20
+
+    Before resetting the index, you could diff a workspace file against
+    either HEAD or index. Now you can only diff against HEAD, so I don'=
+t
+    understand why you wanted to reset the index. That's not relevant t=
+o
+    this use case; I'll just accept that resetting the index is a usefu=
+l
+    thing to do here. But I would like to understand why.
+
+- with the "do the right thing" patch, 'git reset' does 'git reset
+  --merge' instead
+
+    That "Resets the index and updates the files in the working tree
+    that are different between <commit> and HEAD".=20
+
+    "<commit>" in this case defaults to HEAD, so the working tree is
+    not changed.
+
+So as I understand it, this does _not_ lose your conflict resolutions.
+
+In fact, it now seems that 'git reset --mixed' is always the same as
+'git reset --merge'. So I must be missing something!
+
+--=20
+-- Stephe
