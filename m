@@ -1,62 +1,105 @@
-From: "Dmitry S. Dolzhenko" <dmitrys.dolzhenko@yandex.ru>
-Subject: Re: [PATCH v2 00/11] Use ALLOC_GROW() instead of inline code
-Date: Sat, 01 Mar 2014 10:57:36 +0400
-Message-ID: <531184E0.3000808@yandex.ru>
-References: <530FA3E7.8020200@yandex.ru> <531056E7.3010305@yandex.ru> <53109F78.2060203@alum.mit.edu>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 01/11] builtin/pack-objects.c: change
+ check_pbase_path() to use ALLOC_GROW()
+Date: Sat, 1 Mar 2014 02:07:58 -0500
+Message-ID: <20140301070758.GE20397@sigill.intra.peff.net>
+References: <530FA3E7.8020200@yandex.ru>
+ <531056E7.3010305@yandex.ru>
+ <53105995.3010001@yandex.ru>
+ <CACsJy8C2h13JFqh=CKvR=3TByHkxWCNR-XhK-WxA+DOE3GmvAQ@mail.gmail.com>
+ <CACsJy8AmQeVb-i6Sn0BH-_ikEXPHTdtKnQRyzChX1WfD9Lj4Jw@mail.gmail.com>
+ <53109B19.8070103@alum.mit.edu>
+ <xmqqfvn3ukjs.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Sat Mar 01 07:57:46 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Duy Nguyen <pclouds@gmail.com>,
+	"Dmitry S. Dolzhenko" <dmitrys.dolzhenko@yandex.ru>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 01 08:08:08 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJdrl-0004gD-KU
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Mar 2014 07:57:45 +0100
+	id 1WJe1m-0001IE-Ap
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Mar 2014 08:08:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752277AbaCAG5l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Mar 2014 01:57:41 -0500
-Received: from forward9l.mail.yandex.net ([84.201.143.142]:56087 "EHLO
-	forward9l.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751588AbaCAG5l (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Mar 2014 01:57:41 -0500
-Received: from smtp1o.mail.yandex.net (smtp1o.mail.yandex.net [37.140.190.26])
-	by forward9l.mail.yandex.net (Yandex) with ESMTP id 5F6C5E60E99;
-	Sat,  1 Mar 2014 10:57:38 +0400 (MSK)
-Received: from smtp1o.mail.yandex.net (localhost [127.0.0.1])
-	by smtp1o.mail.yandex.net (Yandex) with ESMTP id 01775DE1471;
-	Sat,  1 Mar 2014 10:57:37 +0400 (MSK)
-Received: from 212.192.143.74 (212.192.143.74 [212.192.143.74])
-	by smtp1o.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id KTuWrvY0PK-vbI4OQ2q;
-	Sat,  1 Mar 2014 10:57:37 +0400
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(Client certificate not present)
-X-Yandex-Uniq: 87cb5a80-3b6c-4018-b9cb-9f4741b1daec
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1393657057;
-	bh=pTORkKYdlV1xy13mzNd4p5wcORdZ9ttp8yKokdUTEcc=;
-	h=Message-ID:Date:From:User-Agent:MIME-Version:To:CC:Subject:
-	 References:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	b=NR/r46TOwYqeFsirnUJMfHBkco+XF6wBAZJ+ELdaxEy+lvA0zfVHLUhMYPtIfN2YO
-	 9Hs3hBxOFLQ2EU7TpyXENYarQ1RqvKbPAY7J1CNHA9qc66jl5Wo7HWgzuKC7QCcFW8
-	 Orc70EcGlV5dAL4fnB1yvzLoNEJGGWGg0Nvu0JVE=
-Authentication-Results: smtp1o.mail.yandex.net; dkim=pass header.i=@yandex.ru
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
-In-Reply-To: <53109F78.2060203@alum.mit.edu>
+	id S1750787AbaCAHIB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Mar 2014 02:08:01 -0500
+Received: from cloud.peff.net ([50.56.180.127]:59222 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750769AbaCAHIA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Mar 2014 02:08:00 -0500
+Received: (qmail 24030 invoked by uid 102); 1 Mar 2014 07:08:00 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 01 Mar 2014 01:08:00 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 01 Mar 2014 02:07:58 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqqfvn3ukjs.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243049>
 
-Michael,
+On Fri, Feb 28, 2014 at 11:03:19AM -0800, Junio C Hamano wrote:
 
-On 28.02.2014 18:38, Michael Haggerty wrote:
-> Everything looks fine to me.  Assuming the test suite ran 100%,
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
 > 
-> Acked-by: Michael Haggerty <mhagger@alum.mit.edu>
+> > So my vote is that the patches are OK the way Dmitry wrote them (mind, I
+> > have only read through 05/11 so far).
+> 
+> Seconded ;-)
+> 
+> By the way, I do not like these long subjects.  "change" is a
+> redundant word when one sends a patch---as all patches are about
+> changing something.
+> 
+> 	Subject: builtin/pack-objects.c: use ALLOC_GROW() in check_pbase_path()
+> 
+> would be a lot more appropriate for "git shortlog" consumption.
 
-All tests passed successfully for this patch, at least on my machine.
-Can I do something else to improve this patch?
+I would actually go one step further and drop or shorten the filename in
+the subject. It is very long, it is already easy to see which file was
+changed from the diffstat, and it doesn't give any useful context for
+other parts of the subject.
+
+I really like the "foo:" convention for starting a subject line, because
+it immediately makes clear what area you are working in without having
+to waste space on English conjunctions or prepositions. But it does not
+have to be a filename. It can be a subsystem, a command, a function, an
+area of the project, or anything that gives context to the rest of the
+line.
+
+So I would suggest one of:
+
+  Subject: use ALLOC_GROW() in check_pbase_path()
+
+    Talking about the filename is redundant; there's only one
+    check_pbase_path.
+
+  Subject: check_pbase_path: use ALLOW_GROW
+
+    Even shorter.
+
+  Subject: builtin/pack-objects.c: use ALLOC_GROW
+
+    This one implies to me that the point of the commit is to convert
+    the whole file to use ALLOC_GROW where appropriate, not just that
+    function (even if that function may be the only spot changed).
+
+I'd probably not use:
+
+  Subject: pack-objects: use ALLOC_GROW
+
+as the scope is not about the command, but about the C file.
+
+I realize that I just bikeshedded on subject lines for half a page, and
+part of me wants to go kill myself in shame. But I feel like I see the
+technique misapplied often enough that maybe some guidance is merited.
+Feel free to ignore. :)
+
+-Peff
