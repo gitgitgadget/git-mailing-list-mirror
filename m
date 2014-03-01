@@ -1,78 +1,72 @@
-From: Gilles Filippini <gilles.filippini@free.fr>
-Subject: [PATCH] contrib/subtree - unset prefix before proceeding
-Date: Sat, 01 Mar 2014 17:33:32 +0100
-Message-ID: <53120BDC.9000406@free.fr>
+From: Stephen Leake <stephen_leake@stephe-leake.org>
+Subject: Re: [RFC 0/3] Make git more user-friendly during a merge conflict
+Date: Sat, 01 Mar 2014 10:50:25 -0600
+Message-ID: <85ob1pyib2.fsf@stephe-leake.org>
+References: <1393437985-31401-1-git-send-email-andrew.kw.w@gmail.com>
+	<20140226202601.GK7855@google.com> <857g8f1ugu.fsf@stephe-leake.org>
+	<87fvn335sm.fsf@fencepost.gnu.org> <858usvz5nj.fsf@stephe-leake.org>
+	<87txbj1fnw.fsf@fencepost.gnu.org> <85zjlb1740.fsf@stephe-leake.org>
+	<87eh2n16sw.fsf@fencepost.gnu.org> <85vbvyxl8i.fsf@stephe-leake.org>
+	<vpqioryrvwg.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------090503090504090006040405"
+Content-Type: text/plain
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 01 17:34:13 2014
+X-From: git-owner@vger.kernel.org Sat Mar 01 17:50:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJmrb-0000Ip-6i
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Mar 2014 17:34:11 +0100
+	id 1WJn7V-00070T-P7
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Mar 2014 17:50:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752844AbaCAQeG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Mar 2014 11:34:06 -0500
-Received: from smtpfb1-g21.free.fr ([212.27.42.9]:58624 "EHLO
-	smtpfb1-g21.free.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752005AbaCAQeF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Mar 2014 11:34:05 -0500
-Received: from smtp5-g21.free.fr (smtp5-g21.free.fr [212.27.42.5])
-	by smtpfb1-g21.free.fr (Postfix) with ESMTP id C8D3F77CDF8
-	for <git@vger.kernel.org>; Sat,  1 Mar 2014 17:33:59 +0100 (CET)
-Received: from [129.200.100.4] (unknown [88.189.102.17])
-	by smtp5-g21.free.fr (Postfix) with ESMTP id BA66DD4809A
-	for <git@vger.kernel.org>; Sat,  1 Mar 2014 17:33:34 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20131103 Icedove/17.0.10
-X-Enigmail-Version: 1.6
+	id S1753025AbaCAQuc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Mar 2014 11:50:32 -0500
+Received: from cdptpa-outbound-snat.email.rr.com ([107.14.166.226]:58317 "EHLO
+	cdptpa-oedge-vip.email.rr.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1750762AbaCAQuc (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 1 Mar 2014 11:50:32 -0500
+Received: from [70.94.38.149] ([70.94.38.149:50173] helo=TAKVER)
+	by cdptpa-oedge03 (envelope-from <stephen_leake@stephe-leake.org>)
+	(ecelerity 3.5.0.35861 r(Momo-dev:tip)) with ESMTP
+	id 6A/8E-02678-4DF02135; Sat, 01 Mar 2014 16:50:29 +0000
+In-Reply-To: <vpqioryrvwg.fsf@anie.imag.fr> (Matthieu Moy's message of "Sat,
+	01 Mar 2014 12:38:39 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (windows-nt)
+X-RR-Connecting-IP: 107.14.168.142:25
+X-Cloudmark-Score: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243103>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243104>
 
-This is a multi-part message in MIME format.
---------------090503090504090006040405
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-This is to prevent unwanted prefix when such an environment variable
-exists. The case occurs for example during the Debian package build
-where the git-subtree test suite is called with 'prefix=/usr', which
-makes test 21 fail:
-not ok 21 - Check that prefix argument is required for split
+> $ git status
+> On branch master
+> nothing to commit, working directory clean
+> $
 
-Signed-off-by: Gilles Filippini <gilles.filippini@free.fr>
----
- contrib/subtree/git-subtree.sh | 1 +
- 1 file changed, 1 insertion(+)
+ok, you've lost your conflict resolutions.
 
-diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index dc59a91..db925ca 100755
---- a/contrib/subtree/git-subtree.sh
-+++ b/contrib/subtree/git-subtree.sh
-@@ -46,6 +46,7 @@ ignore_joins=
- annotate=
- squash=
- message=
-+prefix=
- 
- debug()
- {
+>> In fact, it now seems that 'git reset --mixed' is always the same as
+>> 'git reset --merge'. So I must be missing something!
+>
+> "git reset --merge" is an alias for "git merge --abort" (IIRC, it's
+> actually the other way around). Essentially, it reverts, or tries to
+> revert everything (worktree and index) as it was before the merge. That
+> includes throwing away conflict resolution.
+
+Ok.
+
+> Now, I do agree that the documentation of "git reset" is terrible, 
+
+Ok, good.
+
+So is this a sufficient bug report to request that the documentation be
+fixed? (I obviously don't know enough to even think about submitting a
+patch).
+
 -- 
-1.9.0
-
-
---------------090503090504090006040405
-Content-Type: text/plain; charset=UTF-8;
- name="Portion de message joint"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment;
- filename="Portion de message joint"
-
-
---------------090503090504090006040405--
+-- Stephe
