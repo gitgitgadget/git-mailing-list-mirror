@@ -1,136 +1,147 @@
-From: Lee Hopkins <leerhop@gmail.com>
-Subject: Re: Branch Name Case Sensitivity
-Date: Fri, 28 Feb 2014 21:42:12 -0500
-Message-ID: <CAJHY66EP539ZsLJcmHcnRQcOqcLqXK-M45wME9DkKkqmumg8fA@mail.gmail.com>
-References: <CAJHY66EQD280QgXBCoZU4y_aqSEu3A1hXzeW7X-rtT6vMZ92oA@mail.gmail.com>
-	<xmqqvbw0xrl6.fsf@gitster.dls.corp.google.com>
-	<530FA0C1.3000109@web.de>
-	<530FBB1D.3050505@gmail.com>
-	<CAJHY66FtC03YbJrbVn+adsePkYnVD2RGH1TGkzz2pKNBoee_iQ@mail.gmail.com>
-	<53102FB0.6040603@viscovery.net>
-	<5310959D.709@gmail.com>
-	<xmqqk3cfuksd.fsf@gitster.dls.corp.google.com>
-	<CACsJy8A6etyFkxn3D7hjM9JgzmokPBARXrEncVuw1x+OOHJ_Lg@mail.gmail.com>
-	<xmqq7g8eu891.fsf@gitster.dls.corp.google.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] strbuf: style fix -- top opening bracket on a separate line
+Date: Sat,  1 Mar 2014 09:50:55 +0700
+Message-ID: <1393642255-2551-1-git-send-email-pclouds@gmail.com>
+References: <xmqqppmi97s3.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Karsten Blees <karsten.blees@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	=?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 01 03:42:18 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 01 03:50:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJZsX-0004iL-Mc
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Mar 2014 03:42:18 +0100
+	id 1WJa0c-0000Ms-A0
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Mar 2014 03:50:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752494AbaCACmO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Feb 2014 21:42:14 -0500
-Received: from mail-qa0-f49.google.com ([209.85.216.49]:55616 "EHLO
-	mail-qa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752090AbaCACmN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Feb 2014 21:42:13 -0500
-Received: by mail-qa0-f49.google.com with SMTP id j7so1457578qaq.8
-        for <git@vger.kernel.org>; Fri, 28 Feb 2014 18:42:12 -0800 (PST)
+	id S1752781AbaCACue convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Feb 2014 21:50:34 -0500
+Received: from mail-pb0-f45.google.com ([209.85.160.45]:35432 "EHLO
+	mail-pb0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752040AbaCACud (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Feb 2014 21:50:33 -0500
+Received: by mail-pb0-f45.google.com with SMTP id uo5so827187pbc.4
+        for <git@vger.kernel.org>; Fri, 28 Feb 2014 18:50:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=nnx4L57ZHLJNTDE4blzgJDopJjUIuFB1j9DvE7pwnIc=;
-        b=demSEYS7k1i7FI0WE2JqBsGDIeAhGwORpFM0zbW0kBGN9zWGBO+n7JNQEhuT+y9tic
-         tig9j6aCBIkSR/Pvc1S3r5qq9Mpq2e2IdzoZfvt+bVVdXpUmRDTQxPrZRA+IBEsqt/ke
-         /lr1pvmTMQ82AMKLK8wEnB7YCOpqD2sPi3fC2xmAGekwUgdHN20XOCBLuT8lkxpTjIjP
-         BVab5D9i/0C2exHWWr3d/A+54wzUk+kHVvrba4RKp+MGgDP66kQHGCmQVcETSfu9oQ7x
-         ntdC3hY5+V9vPP20ee1D+Dr799os0j8fIOTkJ69aBFrdex14H13cX7zTVf8hlvPzkLAq
-         F25A==
-X-Received: by 10.140.96.180 with SMTP id k49mr7955666qge.4.1393641732698;
- Fri, 28 Feb 2014 18:42:12 -0800 (PST)
-Received: by 10.140.106.69 with HTTP; Fri, 28 Feb 2014 18:42:12 -0800 (PST)
-In-Reply-To: <xmqq7g8eu891.fsf@gitster.dls.corp.google.com>
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=gGFFcVLMBuanUfuu9doFVbpliOvmCds+VL6HhcC8dmo=;
+        b=lfh1tZm9xlZ+6k0rXmjWo/0sou9iQJDf5lC6JVlu1ZP7tv/0HOvE6lLQttu5+kUuRN
+         6bvbKrIQa/Jj6xQFlNQ5NzXg6osjm96v2geo5ArKUTEQQ81MP9d7vxqeVnwOCPPhBtdl
+         JNlDynFsPI6/Dmi6vEBAIyoHgG60q+g7B5geXX9zVEHW7MzKZXzI54ut8J9626Q4ApSV
+         B0aTJfrEmKTUtvn+lgC8IMlNCv1hxTrfnRj6GB2tpSS0N3tI3wIJ2JFXlnaZx2v6DmXx
+         Ux5HyTPp7oczZ16AE2Kf6xKIGCpEZfAzXHmlPkf9dXHJFP3l+zQvO4E0Uzdeo7CV+YOD
+         455g==
+X-Received: by 10.67.5.131 with SMTP id cm3mr7312919pad.92.1393642233157;
+        Fri, 28 Feb 2014 18:50:33 -0800 (PST)
+Received: from lanh ([115.73.192.203])
+        by mx.google.com with ESMTPSA id xs1sm26648182pac.7.2014.02.28.18.50.28
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 28 Feb 2014 18:50:32 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Sat, 01 Mar 2014 09:50:56 +0700
+X-Mailer: git-send-email 1.9.0.40.gaa8c3ea
+In-Reply-To: <xmqqppmi97s3.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243038>
 
-I went ahead and took a stab at a solution. My solution is more
-aggressive than a warning, I actually prevent the creation of
-ambiguous refs. My changes are also in refs.c, which may not be
-appropriate, but it seemed like the natural place.
-
-I have never contributed to Git (in fact this is my first dive into
-the source) and my C is a bit rusty, so bear with me, this is just a
-suggestion:
-
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
 ---
- refs.c |   31 ++++++++++++++++++++++++-------
- 1 files changed, 24 insertions(+), 7 deletions(-)
+ On Thu, Feb 20, 2014 at 3:17 AM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+ >> --- a/strbuf.h
+ >> +++ b/strbuf.h
+ >> @@ -116,6 +116,10 @@ extern void strbuf_add(struct strbuf *, const =
+void *, size_t);
+ >> =C2=A0static inline void strbuf_addstr(struct strbuf *sb, const cha=
+r *s) {
+ >> =C2=A0 =C2=A0 =C2=A0 strbuf_add(sb, s, strlen(s));
+ >> =C2=A0}
+ >> +static inline void strbuf_addstr_at(struct strbuf *sb, size_t len,=
+ const char *s) {
+ >
+ > Please have the opening "{" on its own line.
+ >
+ > Surrounding existing functions are all offenders, but that is not an
+ > excuse to make it worse (cleaning them up will need to be done in a
+ > separate patch).
 
-diff --git a/refs.c b/refs.c
-index 89228e2..12ccdac 100644
---- a/refs.c
-+++ b/refs.c
-@@ -359,14 +359,24 @@ struct string_slice {
-  const char *str;
- };
+ Let's fix the surrounding code then.
 
-+static int ref_entry_ncmp(const void *key_, const void *ent_, int
-(*cmp_fn)(const char *, const char *, size_t))
+ strbuf.h | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
+
+diff --git a/strbuf.h b/strbuf.h
+index 73e80ce..39c14cf 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -17,20 +17,23 @@ extern void strbuf_init(struct strbuf *, size_t);
+ extern void strbuf_release(struct strbuf *);
+ extern char *strbuf_detach(struct strbuf *, size_t *);
+ extern void strbuf_attach(struct strbuf *, void *, size_t, size_t);
+-static inline void strbuf_swap(struct strbuf *a, struct strbuf *b) {
++static inline void strbuf_swap(struct strbuf *a, struct strbuf *b)
 +{
-+    const struct string_slice *key = key_;
-+    const struct ref_entry *ent = *(const struct ref_entry * const *)ent_;
-+    int cmp = cmp_fn(key->str, ent->name, key->len);
-+    if (cmp)
-+        return cmp;
-+    return '\0' - (unsigned char)ent->name[key->len];
-+}
-+
- static int ref_entry_cmp_sslice(const void *key_, const void *ent_)
- {
-- const struct string_slice *key = key_;
-- const struct ref_entry *ent = *(const struct ref_entry * const *)ent_;
-- int cmp = strncmp(key->str, ent->name, key->len);
-- if (cmp)
-- return cmp;
-- return '\0' - (unsigned char)ent->name[key->len];
-+ return ref_entry_ncmp(key_, ent_, strncmp);
-+}
-+
-+static int ref_entry_casecmp_sslice(const void *key_, const void *ent_)
-+{
-+    return ref_entry_ncmp(key_, ent_, strncasecmp);
+ 	struct strbuf tmp =3D *a;
+ 	*a =3D *b;
+ 	*b =3D tmp;
  }
-
- /*
-@@ -378,6 +388,7 @@ static int search_ref_dir(struct ref_dir *dir,
-const char *refname, size_t len)
- {
-  struct ref_entry **r;
-  struct string_slice key;
-+    int (*cmp_fn)(const void *, const void *);
-
-  if (refname == NULL || !dir->nr)
-  return -1;
-@@ -385,8 +396,14 @@ static int search_ref_dir(struct ref_dir *dir,
-const char *refname, size_t len)
-  sort_ref_dir(dir);
-  key.len = len;
-  key.str = refname;
-+
-+    if(ignore_case)
-+        cmp_fn = ref_entry_casecmp_sslice;
-+    else
-+        cmp_fn = ref_entry_cmp_sslice;
-+
-  r = bsearch(&key, dir->entries, dir->nr, sizeof(*dir->entries),
--    ref_entry_cmp_sslice);
-+    cmp_fn);
-
-  if (r == NULL)
-  return -1;
---
+=20
+ /*----- strbuf size related -----*/
+-static inline size_t strbuf_avail(const struct strbuf *sb) {
++static inline size_t strbuf_avail(const struct strbuf *sb)
++{
+ 	return sb->alloc ? sb->alloc - sb->len - 1 : 0;
+ }
+=20
+ extern void strbuf_grow(struct strbuf *, size_t);
+=20
+-static inline void strbuf_setlen(struct strbuf *sb, size_t len) {
++static inline void strbuf_setlen(struct strbuf *sb, size_t len)
++{
+ 	if (len > (sb->alloc ? sb->alloc - 1 : 0))
+ 		die("BUG: strbuf_setlen() beyond buffer");
+ 	sb->len =3D len;
+@@ -97,7 +100,8 @@ static inline struct strbuf **strbuf_split(const str=
+uct strbuf *sb,
+ extern void strbuf_list_free(struct strbuf **);
+=20
+ /*----- add data in your buffer -----*/
+-static inline void strbuf_addch(struct strbuf *sb, int c) {
++static inline void strbuf_addch(struct strbuf *sb, int c)
++{
+ 	strbuf_grow(sb, 1);
+ 	sb->buf[sb->len++] =3D c;
+ 	sb->buf[sb->len] =3D '\0';
+@@ -113,10 +117,12 @@ extern void strbuf_splice(struct strbuf *, size_t=
+ pos, size_t len,
+ extern void strbuf_add_commented_lines(struct strbuf *out, const char =
+*buf, size_t size);
+=20
+ extern void strbuf_add(struct strbuf *, const void *, size_t);
+-static inline void strbuf_addstr(struct strbuf *sb, const char *s) {
++static inline void strbuf_addstr(struct strbuf *sb, const char *s)
++{
+ 	strbuf_add(sb, s, strlen(s));
+ }
+-static inline void strbuf_addbuf(struct strbuf *sb, const struct strbu=
+f *sb2) {
++static inline void strbuf_addbuf(struct strbuf *sb, const struct strbu=
+f *sb2)
++{
+ 	strbuf_grow(sb, sb2->len);
+ 	strbuf_add(sb, sb2->buf, sb2->len);
+ }
+--=20
+1.9.0.40.gaa8c3ea
