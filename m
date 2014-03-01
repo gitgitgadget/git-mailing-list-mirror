@@ -1,143 +1,140 @@
-From: He Sun <sunheehnus@gmail.com>
-Subject: Re: [PATCH] Rewrite bulk-checkin.c:finish_bulk_checkin() to use a
- strbuf for handling packname
-Date: Sat, 1 Mar 2014 08:13:40 +0800
-Message-ID: <CAJr59C3VE=kuSUsFF8Hq+KU6+a1JOEt4edg3YhBnnc_EsPcZZQ@mail.gmail.com>
-References: <1393576104-1758-1-git-send-email-sunheehnus@gmail.com>
-	<CAPig+cSvkmZH2qEqKd=sjaMO8bfnxiKiuTKtfOuMCDwDfCDciw@mail.gmail.com>
-	<CAPig+cSN1WGj9aMKHEo+JO6xN2dT_+0fEjPG3bK=ZsA4dwyWBw@mail.gmail.com>
-	<CAJr59C2YTW-k=ujioUDfebf5koT4viB7NLtPk-do4T5Vo1Aqjw@mail.gmail.com>
-	<CAPig+cTdMZw=tiJyr-0v_ZE_P92Yjc1g2YhhBF_Jv+ML87kz2Q@mail.gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: RFC GSoC idea: new "git config" features
+Date: Sat, 01 Mar 2014 01:19:32 +0100
+Message-ID: <53112794.2070007@alum.mit.edu>
+References: <53108650.2020708@alum.mit.edu> <xmqqwqgft3bj.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=GB2312
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git <git@vger.kernel.org>, Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 01 01:13:56 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git discussion list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 01 01:19:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJXYo-0000Ti-5Z
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Mar 2014 01:13:46 +0100
+	id 1WJXeX-0004wP-Hr
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Mar 2014 01:19:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752323AbaCAANm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Feb 2014 19:13:42 -0500
-Received: from mail-we0-f177.google.com ([74.125.82.177]:51807 "EHLO
-	mail-we0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752036AbaCAANl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 Feb 2014 19:13:41 -0500
-Received: by mail-we0-f177.google.com with SMTP id t61so1123609wes.22
-        for <git@vger.kernel.org>; Fri, 28 Feb 2014 16:13:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        bh=eBn4lwmfOyUyLpUuAseZ4zzmvPaNFkaA4L4lRi7PSLA=;
-        b=VKI1+4XOKiotJ5B6oGjaamCEfmhCOp+UFuQw+eXuxYTGhDhUoHsdxuyWBmj6efbLOn
-         RUzrwwk1ACtlQztEKuIFScS7kmKmksqHx4oWl5yYUtApmClMXVO6nU6LE7VsptlfPZdf
-         ZVb+lj7MxsMtp4Cnlx5LIpS5zB9RLiSxHi1ymGGVP7wF71wAmUDEvZ9dgmr0YbjAqUsx
-         /6/f4MYF362Bc/Mw1fY7EeyNDcFK24VJIKtFHITOJmA3VRHQwr68udjQcH0nWHMZLQHS
-         EZ7ZMoGXF/MovO5KsEZ45043GxXls7LRjgT1j71DXZnM2rb6R8nvZuCYMPc2U80aIDe7
-         o++g==
-X-Received: by 10.194.62.243 with SMTP id b19mr17734wjs.63.1393632820189; Fri,
- 28 Feb 2014 16:13:40 -0800 (PST)
-Received: by 10.216.203.69 with HTTP; Fri, 28 Feb 2014 16:13:40 -0800 (PST)
-In-Reply-To: <CAPig+cTdMZw=tiJyr-0v_ZE_P92Yjc1g2YhhBF_Jv+ML87kz2Q@mail.gmail.com>
+	id S1752275AbaCAATh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Feb 2014 19:19:37 -0500
+Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:48029 "EHLO
+	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752036AbaCAATg (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Feb 2014 19:19:36 -0500
+X-AuditID: 1207440d-f79d86d0000043db-cb-53112797e09f
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id F6.41.17371.79721135; Fri, 28 Feb 2014 19:19:35 -0500 (EST)
+Received: from [192.168.69.148] (p57A2462E.dip0.t-ipconnect.de [87.162.70.46])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s210JXwr030075
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Fri, 28 Feb 2014 19:19:35 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
+In-Reply-To: <xmqqwqgft3bj.fsf@gitster.dls.corp.google.com>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprFKsWRmVeSWpSXmKPExsUixO6iqDtdXTDY4OsEG4uuK91MFg29V5gd
+	mDwuXlL2+LxJLoApitsmKbGkLDgzPU/fLoE748yCpcwFL6UqJnzbxdjA+Fiki5GDQ0LAROLo
+	Y7kuRk4gU0ziwr31bF2MXBxCApcZJZYd2ckK4Zxjkli87hUbSBWvgLbE6/8f2UGaWQRUJa4d
+	CwEJswnoSizqaWYCsUUFgiVWX37AAlEuKHFy5hMwW0RATWJi2yEWkFZmoPqHbxJBwsICphKT
+	Tjayg9hCAlESD5duYgIp4RSwllh/NQ7iSnGJnsYgkApmAR2Jd30PmCFseYntb+cwT2AUnIVk
+	1ywkZbOQlC1gZF7FKJeYU5qrm5uYmVOcmqxbnJyYl5dapGukl5tZopeaUrqJERK2vDsY/6+T
+	OcQowMGoxMN7YL5AsBBrYllxZe4hRkkOJiVR3o0cgsFCfEn5KZUZicUZ8UWlOanFhxglOJiV
+	RHgnXAcq501JrKxKLcqHSUlzsCiJ86otUfcTEkhPLEnNTk0tSC2CycpwcChJ8K5QAxoqWJSa
+	nlqRlplTgpBm4uAEGc4lJVKcmpeSWpRYWpIRD4rc+GJg7IKkeID2vgNp5y0uSMwFikK0nmLU
+	5bjd9usToxBLXn5eqpQ47z9VoCIBkKKM0jy4FbAk9YpRHOhjYd43IKN4gAkObtIroCVMQEta
+	9oM8V1ySiJCSamBUZZp2lV1i3emtt1bMkJh2i/3+Seer6+8+rNpzSVfrWHxV8wK/OnnXCK/k
+	lytNxffzp8maZukxbsrZdSR9kuFZJY/Nf2/nzkm9J2Nz3Hhn+8yzj6vuLnZ7cFdt 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243032>
 
-2014-03-01 4:42 GMT+08:00 Eric Sunshine <sunshine@sunshineco.com>:
-> On Fri, Feb 28, 2014 at 9:17 AM, =CB=EF=BA=D5 <sunheehnus@gmail.com> =
-wrote:
->> 2014-02-28 21:12 GMT+08:00 Eric Sunshine [via git]
->> <ml-node+s661346n7604500h1@n2.nabble.com>:
->>> On Fri, Feb 28, 2014 at 4:46 AM, Eric Sunshine <[hidden email]> wro=
-te:
->>>
->>>> On Fri, Feb 28, 2014 at 3:28 AM, Sun He <[hidden email]> wrote:
->>>>> Signed-off-by: Sun He <[hidden email]>
->>>>> ---
->>>>
->>>> Nicely done.
->>>>
->>>> Due to the necessary changes to finish_tmp_packfile(), the focus o=
-f
->>>> this patch has changed slightly from that suggested by the
->>>> microproject. It's really now about finish_tmp_packfile() rather t=
-han
->>>> finish_bulk_checkin(). As such, it may make sense to adjust the pa=
-tch
->>>> subject to reflect this. For instance:
->>>>
->>>>   Subject: finish_tmp_packfile(): use strbuf for pathname construc=
-tion
->>>
->>> You may also want your commit message to explain why you chose this
->>> approach over other legitimate approaches. For instance, your chang=
-e
->>> places extra burden on callers of finish_tmp_packfile() by leaking =
-a
->>> detail of its implementation: namely that it wants to manipulate
->>> pathnames easily (via strbuf). An equally valid and more encapsulat=
-ed
->>> approach would be for finish_tmp_packfile() to accept a 'const char=
- *'
->>> and construct its own strbuf internally.
->>>
->>> If the extra strbuf creation in the alternate approach is measurabl=
-y
->>> slower, then you could use that fact to justify your implementation
->>> choice in the commit message. On the other hand, if it's not
->>> measurably slower, then perhaps the more encapsulated approach with
->>> cleaner API might be preferable.
->>>
+On 02/28/2014 09:00 PM, Junio C Hamano wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+> 
+>> I just wrote up another double-idea that has been stewing in my head for
+>> a while:
 >>
->> Thank you for your explaination. I get the point.
->> And I think if it is proved that the strbuf way is measurably slower=
-=2E
->> We should add a check for the length of string before we sprintf().
->
-> I'm not sure what you mean by checking the string length before sprin=
-tf().
->
+>> * Allow configuration values to be unset via a config file
+>> * Fix "git config --unset" to clean up detritus from sections that are
+>> left empty.
+> 
+> The former is *way* too large for a GSoC project.  Most
+> configuration variables are meant to be read sequencially and affect
+> in-core variables directly, like
+> 
+>         /* file-scope global */
+> 	static int frotz = -1;  /* unset */
+> 
+>         static int parse_config_frotz(const char *key, const char *value, void *cb)
+> 	{
+>         	if (!strcmp(key, "core.frotz"))
+>                 	frotz = git_config_int(value);
+> 		return 0;
+> 	}
+> 
+> 	... and somewhere ...
+>         	git_config(parse_config_frotz, NULL);
+> 
+> The config parsers are distributed and there is no single registry
+> that knows how in-core variables owned by each subsystem represent
+> an "unset" value.  In the above example, -1 is such a sentinel
+> value, but in some other contexts, the subsystem may choose to use
+> INT_MAX.  The only way to allow "resetting to previous" is to
+> 
+>  (1) come up with a way to pass "this key is being reset to
+>      'unspecified'" to existing git_config() callback functions
+>      (like parse_config_frotz() in the above illustration), which
+>      may or may not involve changing the function signature of the
+>      callbacks;
+> 
+>  (2) go through all the git_config() callback functions and make
+>      them understand the new "reset to 'unspecified'" convention.
 
-That's because one is not certain of the length of get_object_directory=
-()
+I absolutely understand that changing all of the config parsers is not
+feasible.  But I had imagined a third route:
 
-Micheal Mhaggerty<mhagger@alum.mit.edu> explained this to me.
-    Saving stack space is nice, though given that it takes more time to
-    allocate space on the heap, it is nonetheless usually preferred to =
-use
-    the stack for temporary variables of this size.
+(3) parse the config once, storing the raw values to records in
+    memory.  When an "unset" is seen, delete any previous records that
+    have accumulated for that key.  After the whole config has been
+    read, iterate through the records, feeding the surviving values
+    into the callback in the order they were originally read (minus
+    deletions).
 
-    The problem has more to do with the fact that the old version fixes=
- a
-    maximum length on the buffer, which could be a problem if one is no=
-t
-    certain of the length of get_object_directory().
+Do you see any problems with this way of implementing the functionality
+(aside from slightly increased overhead)?
 
-    The other point of strbuf is that you don't have to do the error-pr=
-one
-    bookkeeping yourself.  So it would be preferable to use strbuf_addf=
-().
+And once we have a way to store config records in memory, it might also
+make sense to reuse the parsed values for later config inquiries (after
+checking that the files have not changed since the last read).  After
+this second step the net performance change might even be advantageous.
 
-It is the same as yours about the space and time costs. ^_^
+> which may not sound too bad at the first glance (especially, the
+> first one is almost trivial).
+> 
+> But the side effects these callbacks may cause are not limited to
+> setting a simple scaler variable (like 'frotz' in the illustration)
+> but would include things that are hard to undo once done
+> (e.g. calling a set-up function with a lot of side effects).
+> 
+> The latter, on the other hand, should be a change that is of a
+> fairly limited scope, and would be a good fit for a GSoC project
+> (incidentally, it has been one of the items on my leftover-bits list
+> http://git-blame.blogspot.com/p/leftover-bits.html for quite some
+> time).
 
-> My point was that if there are multiple ways of solving the same
-> problem, it can be helpful for reviewers if your commit message
-> explains why the solution you chose is better than the others.
->
-> Slowness and/or cleanliness of API were just examples you might use i=
-n
-> your commit message for justifying why you chose one approach over
-> another.
+But only the latter part would be a bit meager as a GSoC project, don't
+you think?
 
-OK, OK, Got it. Thank you very much.
+Thanks for the feedback.
 
-Cheers,
-He Sun
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
