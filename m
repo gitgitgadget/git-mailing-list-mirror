@@ -1,147 +1,90 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] strbuf: style fix -- top opening bracket on a separate line
-Date: Sat,  1 Mar 2014 09:50:55 +0700
-Message-ID: <1393642255-2551-1-git-send-email-pclouds@gmail.com>
-References: <xmqqppmi97s3.fsf@gitster.dls.corp.google.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] Replace memcpy with hashcpy when dealing hash copy globally
+Date: Sat, 1 Mar 2014 09:58:50 +0700
+Message-ID: <CACsJy8Apoz43HPAgdrTHSNgSOcUhv9j258+r0xDJeioY3iogig@mail.gmail.com>
+References: <1393636024-17576-1-git-send-email-sunheehnus@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 01 03:50:39 2014
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Sun He <sunheehnus@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 01 03:59:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJa0c-0000Ms-A0
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Mar 2014 03:50:38 +0100
+	id 1WJa97-0004dn-UC
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Mar 2014 03:59:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752781AbaCACue convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Feb 2014 21:50:34 -0500
-Received: from mail-pb0-f45.google.com ([209.85.160.45]:35432 "EHLO
-	mail-pb0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752040AbaCACud (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Feb 2014 21:50:33 -0500
-Received: by mail-pb0-f45.google.com with SMTP id uo5so827187pbc.4
-        for <git@vger.kernel.org>; Fri, 28 Feb 2014 18:50:33 -0800 (PST)
+	id S1752259AbaCAC7V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Feb 2014 21:59:21 -0500
+Received: from mail-qg0-f41.google.com ([209.85.192.41]:33756 "EHLO
+	mail-qg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751905AbaCAC7V (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Feb 2014 21:59:21 -0500
+Received: by mail-qg0-f41.google.com with SMTP id i50so4545360qgf.0
+        for <git@vger.kernel.org>; Fri, 28 Feb 2014 18:59:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=gGFFcVLMBuanUfuu9doFVbpliOvmCds+VL6HhcC8dmo=;
-        b=lfh1tZm9xlZ+6k0rXmjWo/0sou9iQJDf5lC6JVlu1ZP7tv/0HOvE6lLQttu5+kUuRN
-         6bvbKrIQa/Jj6xQFlNQ5NzXg6osjm96v2geo5ArKUTEQQ81MP9d7vxqeVnwOCPPhBtdl
-         JNlDynFsPI6/Dmi6vEBAIyoHgG60q+g7B5geXX9zVEHW7MzKZXzI54ut8J9626Q4ApSV
-         B0aTJfrEmKTUtvn+lgC8IMlNCv1hxTrfnRj6GB2tpSS0N3tI3wIJ2JFXlnaZx2v6DmXx
-         Ux5HyTPp7oczZ16AE2Kf6xKIGCpEZfAzXHmlPkf9dXHJFP3l+zQvO4E0Uzdeo7CV+YOD
-         455g==
-X-Received: by 10.67.5.131 with SMTP id cm3mr7312919pad.92.1393642233157;
-        Fri, 28 Feb 2014 18:50:33 -0800 (PST)
-Received: from lanh ([115.73.192.203])
-        by mx.google.com with ESMTPSA id xs1sm26648182pac.7.2014.02.28.18.50.28
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 28 Feb 2014 18:50:32 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Sat, 01 Mar 2014 09:50:56 +0700
-X-Mailer: git-send-email 1.9.0.40.gaa8c3ea
-In-Reply-To: <xmqqppmi97s3.fsf@gitster.dls.corp.google.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=yyfSQVJitK1O4/vmeKF01nqz/CX0ItUlCl5Pew5ef2Y=;
+        b=Q+CEOc65pD8TumS7NqcC9k3yghABS1/oXGi38dtPPWY1evhNtImDsDkIviXtxUsUvT
+         PxFWTcYrlIRKqQIpwPplWPR8dhNhQeVf0ZBG3C/nHNar3L9rNbmuVyjMc9e+5aYlIqdN
+         PfE+oNuBHln9Gl1a6RsjskOxEety+FQ6WSMGHEqG4Gq2wRpnFnOHsEN59MSvWSBws06X
+         PuG655EvkDjlginLFPOszioPOeikfcfM7LfoShhxtVr/14fmdysoePnyKXVbGVmLt44E
+         7nnteDiYNm3nP0eajBZ8fbFGqVCudZMPjKsOXfZZoqGu5VxW8IpcPv6EwtUpm3WgkeE2
+         NLSA==
+X-Received: by 10.140.39.212 with SMTP id v78mr7881175qgv.77.1393642760313;
+ Fri, 28 Feb 2014 18:59:20 -0800 (PST)
+Received: by 10.96.215.102 with HTTP; Fri, 28 Feb 2014 18:58:50 -0800 (PST)
+In-Reply-To: <1393636024-17576-1-git-send-email-sunheehnus@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243039>
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- On Thu, Feb 20, 2014 at 3:17 AM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
- >> --- a/strbuf.h
- >> +++ b/strbuf.h
- >> @@ -116,6 +116,10 @@ extern void strbuf_add(struct strbuf *, const =
-void *, size_t);
- >> =C2=A0static inline void strbuf_addstr(struct strbuf *sb, const cha=
-r *s) {
- >> =C2=A0 =C2=A0 =C2=A0 strbuf_add(sb, s, strlen(s));
- >> =C2=A0}
- >> +static inline void strbuf_addstr_at(struct strbuf *sb, size_t len,=
- const char *s) {
- >
- > Please have the opening "{" on its own line.
- >
- > Surrounding existing functions are all offenders, but that is not an
- > excuse to make it worse (cleaning them up will need to be done in a
- > separate patch).
+On Sat, Mar 1, 2014 at 8:07 AM, Sun He <sunheehnus@gmail.com> wrote:
+> Signed-off-by: Sun He <sunheehnus@gmail.com>
+> ---
+>  Find the potential places with memcpy by the bash command:
+>    $ find . | xargs grep "memcpy.*\(.*20.*\)"
+>
+>  Helped-by: Michael Haggerty<mhagger@alum.mit.edu>
 
- Let's fix the surrounding code then.
+You may want to put this Helped-by before "---" because it's supposed
+to end up in the final commit. The patch looks straightforward,
+except..
 
- strbuf.h | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+> diff --git a/ppc/sha1.c b/ppc/sha1.c
+> index ec6a192..8a87fea 100644
+> --- a/ppc/sha1.c
+> +++ b/ppc/sha1.c
+> @@ -9,6 +9,7 @@
+>  #include <stdio.h>
+>  #include <string.h>
+>  #include "sha1.h"
+> +#include "cache.h"
+>
+>  extern void ppc_sha1_core(uint32_t *hash, const unsigned char *p,
+>                           unsigned int nblocks);
+> @@ -67,6 +68,6 @@ int ppc_SHA1_Final(unsigned char *hash, ppc_SHA_CTX *c)
+>                 memset(&c->buf.b[cnt], 0, 56 - cnt);
+>         c->buf.l[7] = c->len;
+>         ppc_sha1_core(c->hash, c->buf.b, 1);
+> -       memcpy(hash, c->hash, 20);
+> +       hashcpy(hash, c->hash);
+>         return 0;
+>  }
 
-diff --git a/strbuf.h b/strbuf.h
-index 73e80ce..39c14cf 100644
---- a/strbuf.h
-+++ b/strbuf.h
-@@ -17,20 +17,23 @@ extern void strbuf_init(struct strbuf *, size_t);
- extern void strbuf_release(struct strbuf *);
- extern char *strbuf_detach(struct strbuf *, size_t *);
- extern void strbuf_attach(struct strbuf *, void *, size_t, size_t);
--static inline void strbuf_swap(struct strbuf *a, struct strbuf *b) {
-+static inline void strbuf_swap(struct strbuf *a, struct strbuf *b)
-+{
- 	struct strbuf tmp =3D *a;
- 	*a =3D *b;
- 	*b =3D tmp;
- }
-=20
- /*----- strbuf size related -----*/
--static inline size_t strbuf_avail(const struct strbuf *sb) {
-+static inline size_t strbuf_avail(const struct strbuf *sb)
-+{
- 	return sb->alloc ? sb->alloc - sb->len - 1 : 0;
- }
-=20
- extern void strbuf_grow(struct strbuf *, size_t);
-=20
--static inline void strbuf_setlen(struct strbuf *sb, size_t len) {
-+static inline void strbuf_setlen(struct strbuf *sb, size_t len)
-+{
- 	if (len > (sb->alloc ? sb->alloc - 1 : 0))
- 		die("BUG: strbuf_setlen() beyond buffer");
- 	sb->len =3D len;
-@@ -97,7 +100,8 @@ static inline struct strbuf **strbuf_split(const str=
-uct strbuf *sb,
- extern void strbuf_list_free(struct strbuf **);
-=20
- /*----- add data in your buffer -----*/
--static inline void strbuf_addch(struct strbuf *sb, int c) {
-+static inline void strbuf_addch(struct strbuf *sb, int c)
-+{
- 	strbuf_grow(sb, 1);
- 	sb->buf[sb->len++] =3D c;
- 	sb->buf[sb->len] =3D '\0';
-@@ -113,10 +117,12 @@ extern void strbuf_splice(struct strbuf *, size_t=
- pos, size_t len,
- extern void strbuf_add_commented_lines(struct strbuf *out, const char =
-*buf, size_t size);
-=20
- extern void strbuf_add(struct strbuf *, const void *, size_t);
--static inline void strbuf_addstr(struct strbuf *sb, const char *s) {
-+static inline void strbuf_addstr(struct strbuf *sb, const char *s)
-+{
- 	strbuf_add(sb, s, strlen(s));
- }
--static inline void strbuf_addbuf(struct strbuf *sb, const struct strbu=
-f *sb2) {
-+static inline void strbuf_addbuf(struct strbuf *sb, const struct strbu=
-f *sb2)
-+{
- 	strbuf_grow(sb, sb2->len);
- 	strbuf_add(sb, sb2->buf, sb2->len);
- }
---=20
-1.9.0.40.gaa8c3ea
+cache.h (actually git-compat-util.h that cache.h includes) messes
+around with system headers by defining this and that macro. The
+general rule is if cache.h or git-compat-util.h is included, it's the
+first #include, and system includes will be always in
+git-compat-util.h (grep '^#include' shows this). Maybe it's best to
+leave this memcpy alone (and if you do, state so in the commit message
+with the reason).
+-- 
+Duy
