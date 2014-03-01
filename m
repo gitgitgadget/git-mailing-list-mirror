@@ -1,154 +1,79 @@
-From: Stephen Leake <stephen_leake@stephe-leake.org>
-Subject: Re: [RFC 0/3] Make git more user-friendly during a merge conflict
-Date: Sat, 01 Mar 2014 04:32:29 -0600
-Message-ID: <85vbvyxl8i.fsf@stephe-leake.org>
-References: <1393437985-31401-1-git-send-email-andrew.kw.w@gmail.com>
-	<20140226202601.GK7855@google.com> <857g8f1ugu.fsf@stephe-leake.org>
-	<87fvn335sm.fsf@fencepost.gnu.org> <858usvz5nj.fsf@stephe-leake.org>
-	<87txbj1fnw.fsf@fencepost.gnu.org> <85zjlb1740.fsf@stephe-leake.org>
-	<87eh2n16sw.fsf@fencepost.gnu.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: RFC GSoC idea: new "git config" features
+Date: Sat, 01 Mar 2014 12:01:44 +0100
+Message-ID: <vpq38j2tc6f.fsf@anie.imag.fr>
+References: <53108650.2020708@alum.mit.edu>
+	<xmqqwqgft3bj.fsf@gitster.dls.corp.google.com>
+	<53112794.2070007@alum.mit.edu>
+	<20140301075247.GF20397@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 01 11:32:38 2014
+Content-Type: text/plain
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>,
+	git discussion list <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Mar 01 12:02:21 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJhDh-0001r2-HP
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Mar 2014 11:32:37 +0100
+	id 1WJhgS-0007j5-LU
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Mar 2014 12:02:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752755AbaCAKce convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 1 Mar 2014 05:32:34 -0500
-Received: from cdptpa-outbound-snat.email.rr.com ([107.14.166.228]:51591 "EHLO
-	cdptpa-oedge-vip.email.rr.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1750869AbaCAKcd convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 1 Mar 2014 05:32:33 -0500
-Received: from [70.94.38.149] ([70.94.38.149:50069] helo=TAKVER)
-	by cdptpa-oedge03 (envelope-from <stephen_leake@stephe-leake.org>)
-	(ecelerity 3.5.0.35861 r(Momo-dev:tip)) with ESMTP
-	id 89/6D-02678-F37B1135; Sat, 01 Mar 2014 10:32:32 +0000
-In-Reply-To: <87eh2n16sw.fsf@fencepost.gnu.org> (David Kastrup's message of
-	"Fri, 28 Feb 2014 18:33:03 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (windows-nt)
-X-RR-Connecting-IP: 107.14.168.142:25
-X-Cloudmark-Score: 0
+	id S1752460AbaCALCQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Mar 2014 06:02:16 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:47475 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751711AbaCALCQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Mar 2014 06:02:16 -0500
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s21B1i8H017219
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 1 Mar 2014 12:01:44 +0100
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s21B1iNL030899;
+	Sat, 1 Mar 2014 12:01:44 +0100
+In-Reply-To: <20140301075247.GF20397@sigill.intra.peff.net> (Jeff King's
+	message of "Sat, 1 Mar 2014 02:52:47 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sat, 01 Mar 2014 12:01:46 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s21B1i8H017219
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1394276510.79504@qBKtYnvs0m47hQDKCSkCjQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243058>
 
-David Kastrup <dak@gnu.org> writes:
+Jeff King <peff@peff.net> writes:
 
-> Stephen Leake <stephen_leake@stephe-leake.org> writes:
->
->> David Kastrup <dak@gnu.org> writes:
->>
->>> Stephen Leake <stephen_leake@stephe-leake.org> writes:
->>>
->>>> David Kastrup <dak@gnu.org> writes:
->>>>
->>>>> "do the right thing" commands also tend to do the wrong thing
->>>>> occasionally with potentially disastrous results when they are us=
-ed
->>>>> in scripts where the followup actions rely on the actual result.
->>>>
->>>> That is bad, and should not be allowed. On the other hand, I have =
-yet
->>>> to see an actual use case of bad behavior in this discussion.
->>>
->>> Huh.
->>>
->>> <http://permalink.gmane.org/gmane.comp.version-control.git/242744>
->>
->> That's about backward incompatibility, which is bad, but not what I =
-was
->> talking about above.
->
-> No, it isn't.  I quote:
->
->     I sometimes run "git reset" during a merge to only reset the inde=
-x
->     and then examine the changes introduced by the merge. With your
->     changes, someone doing so would abort the merge and discard the
->     merge resolution.  I very rarely do this, but even rarely, I
->     wouldn't like Git to start droping data silently for me ;-).
->
-> You should not make statements like "I have yet to see an actual use
-> case of bad behavior in this discussion" when you actually mean "I=C2=
-=A0have
-> not yet seen anything I=C2=A0would be interested in doing myself".
+> If we had the keys in-memory, we could reverse this: config code asks
+> for keys it cares about, and we can do an optimized lookup (binary
+> search, hash, etc).
 
-Clearly I misunderstood your point. Merely repeating the same statement
-that I misunderstood, and adding a misunderstanding of what I said, is
-not helpful.
+I'm actually dreaming of a system where a configuration variable could
+be "declared" in Git's source code, with associated type (list/single
+value, boolean/string/path/...), default value and documentation (and
+then Documentation/config.txt could become a generated file). One could
+imagine a lot of possibilities like
 
-So let me see if I can expand on your use case:
+$ git config --describe <some-variable>
+Type: boolean
+Default value: true
+Description: ...
 
-- you do 'git merge', which results in conflicts
+Somehow, do for config variables what has been done for command-line
+option parsing.
 
-- you edit some workspace files to resolve some of those conflicts=20
+Migrating the whole code to such system would take time, but creating
+the system and applying it to a few examples might be feasible as a GSoC
+project.
 
-    (I added this step later, since it was implied but not explicit)
-
-- you do 'git reset', intending 'git reset --mixed' (because that is th=
-e
-  current default)
-
-    Actually, I can't find a precise definition of 'git reset'. Here is
-    the synopsis from the man page for 'git-reset' (from git 1.7.9):
-
-       git reset [-q] [<commit>] [--] <paths>...
-       git reset (--patch | -p) [<commit>] [--] [<paths>...]
-       git reset (--soft | --mixed | --hard | --merge | --keep) [-q] [<=
-commit>]
-
-    In 'git reset', there is no path, so it must be the second or third
-    form. But those _require_ one of the -- options. So 'git reset' is
-    illegal. Clearly something is wrong here; apparently the third line
-    should be:
-
-       git reset [--soft | --mixed | --hard | --merge | --keep] [-q] [<=
-commit>]
-
-    with '--mixed' as the default, as is stated later. (perhaps the
-    original intent was to not have a default for the third form, but
-    that got changed sometime?).
-
-    This command "resets the index" but not the working tree. I'm not
-    clear what "reset the index" means here; does it mean "remove all
-    entries from the index", or "reset the index to some previous
-    state"? In other man pages, "reset" can have either meaning
-    depending on context.
-
-- then you "examine changes introduced by the merge". I don't know what
-  this means in detail.=20
-
-    Before resetting the index, you could diff a workspace file against
-    either HEAD or index. Now you can only diff against HEAD, so I don'=
-t
-    understand why you wanted to reset the index. That's not relevant t=
-o
-    this use case; I'll just accept that resetting the index is a usefu=
-l
-    thing to do here. But I would like to understand why.
-
-- with the "do the right thing" patch, 'git reset' does 'git reset
-  --merge' instead
-
-    That "Resets the index and updates the files in the working tree
-    that are different between <commit> and HEAD".=20
-
-    "<commit>" in this case defaults to HEAD, so the working tree is
-    not changed.
-
-So as I understand it, this does _not_ lose your conflict resolutions.
-
-In fact, it now seems that 'git reset --mixed' is always the same as
-'git reset --merge'. So I must be missing something!
-
---=20
--- Stephe
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
