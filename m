@@ -1,94 +1,75 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 2/3] rebase: accept -<number> as another way of saying HEAD~<number>
-Date: Sun, 02 Mar 2014 16:55:27 +0100
-Message-ID: <vpqlhwsr3ww.fsf@anie.imag.fr>
-References: <1393506078-7310-1-git-send-email-pclouds@gmail.com>
-	<1393728794-29566-1-git-send-email-pclouds@gmail.com>
-	<1393728794-29566-3-git-send-email-pclouds@gmail.com>
-	<CAPig+cSPKSsVG_yqaQfOCswaENKdUGrWt_YcQ3yZCpgG5jQ+JQ@mail.gmail.com>
-	<CAPig+cSFWT6kwZUFFUE3=TcfHRUJnx54+fcZCzJwmOSJKFsYeA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Philip Oakley <philipoakley@iee.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Sun Mar 02 16:56:17 2014
+From: Guanglin Xu <mzguanglin@gmail.com>
+Subject: [PATCH v2] branch.c: change install_branch_config() to use skip_prefix()
+Date: Sun,  2 Mar 2014 23:55:55 +0800
+Message-ID: <1393775755-15359-1-git-send-email-mzguanglin@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 02 16:56:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WK8kQ-000363-LN
-	for gcvg-git-2@plane.gmane.org; Sun, 02 Mar 2014 16:56:15 +0100
+	id 1WK8kZ-0003Aa-F0
+	for gcvg-git-2@plane.gmane.org; Sun, 02 Mar 2014 16:56:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751701AbaCBPzt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 2 Mar 2014 10:55:49 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:54868 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751301AbaCBPzs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Mar 2014 10:55:48 -0500
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s22FtROE000825
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 2 Mar 2014 16:55:27 +0100
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s22FtS5s007831;
-	Sun, 2 Mar 2014 16:55:28 +0100
-In-Reply-To: <CAPig+cSFWT6kwZUFFUE3=TcfHRUJnx54+fcZCzJwmOSJKFsYeA@mail.gmail.com>
-	(Eric Sunshine's message of "Sun, 2 Mar 2014 03:55:01 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sun, 02 Mar 2014 16:55:27 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s22FtROE000825
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1394380528.89868@BHaMvHu22BAa0HovKCEo6A
+	id S1753449AbaCBP4S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Mar 2014 10:56:18 -0500
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:61802 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753070AbaCBP4R (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Mar 2014 10:56:17 -0500
+Received: by mail-pa0-f49.google.com with SMTP id hz1so2763012pad.36
+        for <git@vger.kernel.org>; Sun, 02 Mar 2014 07:56:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:subject:date:message-id:content-type;
+        bh=H/OmdSbUowpyfKZoYicWK0KQoQhQQdeePCtzt207f3c=;
+        b=e5tQ4GKmAcQCi7iFxVj3WtD8ZyzFFHE7uWxqaePy/mk0cvDyOiCH1fkOt5pVjU4sr8
+         Ooer5yXBdR+WBu80LJgRIvgd6Xh7d16/Mao+dll95VSaRHa7qsVGGtbsEMso+X2NftYr
+         fHXpyTL2L1NBEQJ+O4ZJBpwAamiqtA2qA5FcYEaB2P6CfOKmWPZBa/R68jJ+YdzeEmfz
+         rLwf2xwvi5BXbFi+mgHD7FopGJ4hpdogcPkPCHgv0joGCld2gRG52nPbmKJ1wCW9tB2Z
+         bBIEzaRs4GbVaM3pWIvIcYGEc3ywbLY0vhZF4nEsMcJHSG3SCVfqBYq98YrgK2O3KVgd
+         I4Rg==
+X-Received: by 10.68.171.193 with SMTP id aw1mr3243502pbc.117.1393775777388;
+        Sun, 02 Mar 2014 07:56:17 -0800 (PST)
+Received: from localhost.localdomain ([113.107.25.71])
+        by mx.google.com with ESMTPSA id f5sm64233278pat.11.2014.03.02.07.56.14
+        for <git@vger.kernel.org>
+        (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 02 Mar 2014 07:56:16 -0800 (PST)
+X-Mailer: git-send-email 1.9.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243151>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243152>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Change install_branch_config() to use skip_prefix() and make it conform to the usage of previous starts_with(). This is because the proper usage of skip_prefix() overrides the functionality of starts_with(). Thorough replacements may finally remove the starts_with() function and reduce  code redundency.
 
-> On Sun, Mar 2, 2014 at 3:53 AM, Eric Sunshine <sunshine@sunshineco.co=
-m> wrote:
->> On Sat, Mar 1, 2014 at 9:53 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8D=
-c Duy <pclouds@gmail.com> wrote:
->>> This is "rev-list style", where people can do "git rev-list -3" in
->>> addition to "git rev-list HEAD~3". A lot of commands are driven by =
-the
->>> revision machinery and also accept this form. This addition to reba=
-se
->>> is just for convenience.
->>
->> I'm seeing some pretty strange results with this. If I use -1, -2, o=
-r
->> -3 then it rebases the expected commits, however, -4 gives me 9
->> commits, and -5 rebases 35 commits. Am I misunderstanding how this
->> works?
->
-> Nevermind. I wasn't paying attention to the fact that I was attemptin=
-g
-> to rebase merges.
+Signed-off-by: Guanglin Xu <mzguanglin@gmail.com>
+---
+ branch.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Your remark is actually interesting. Most (all?) Git commands taking
--<n> as parameters act on n commits, regardless of merges.
+diff --git a/branch.c b/branch.c
+index 723a36b..ca4e824 100644
+--- a/branch.c
++++ b/branch.c
+@@ -50,7 +50,7 @@ static int should_setup_rebase(const char *origin)
+ void install_branch_config(int flag, const char *local, const char *origin, const char *remote)
+ {
+ 	const char *shortname = remote + 11;
+-	int remote_is_branch = starts_with(remote, "refs/heads/");
++	int remote_is_branch = (NULL != skip_prefix(remote ,"refs/heads/"));
+ 	struct strbuf key = STRBUF_INIT;
+ 	int rebasing = should_setup_rebase(origin);
+ 
+-- 
+1.9.0
 
-So, this commit creates an inconsistency between e.g. "git log -3" (sho=
-w
-last 3 commits) and "git rebase -3" (rebase up to HEAD~3, but there may
-be more commits in case there are merges).
 
-I don't have a better proposal, but at least the inconsistancy should b=
-e
-documented (e.g. "note that this is different from what other commands
-like 'git log' do when used with a -<number> option since ..." in the
-manpage).
+Hi,
+I am Guanglin Xu. I plan to apply for GSoC 2014.
 
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+This patch is in accordance with the idea#2 of GSoC2014 Microproject. Any comments are welcomed.
