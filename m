@@ -1,95 +1,156 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 3/3] rebase: new convenient option to edit a single commit
-Date: Sun, 2 Mar 2014 04:09:38 -0500
-Message-ID: <CAPig+cS8XRf8LzajSJL7LVxVKb_cqLviwSimYyYXRWL46dh9QA@mail.gmail.com>
-References: <1393506078-7310-1-git-send-email-pclouds@gmail.com>
-	<1393728794-29566-1-git-send-email-pclouds@gmail.com>
-	<1393728794-29566-4-git-send-email-pclouds@gmail.com>
-	<CAPig+cQ7pd4mQTTsT2Kq3KL-erUdncBsYmFjt8aFWB5THE6Srw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.org>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 02 10:09:59 2014
+From: Sun He <sunheehnus@gmail.com>
+Subject: [PATCH v2] Replace memcpy with hashcpy when dealing hash copy globally
+Date: Sun,  2 Mar 2014 17:37:24 +0800
+Message-ID: <1393753044-6232-1-git-send-email-sunheehnus@gmail.com>
+Cc: pclouds@gmail.com, mhagger@alum.mit.edu,
+	Sun He <sunheehnus@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 02 10:39:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WK2PG-0002WU-FH
-	for gcvg-git-2@plane.gmane.org; Sun, 02 Mar 2014 10:09:58 +0100
+	id 1WK2rm-0005Po-FS
+	for gcvg-git-2@plane.gmane.org; Sun, 02 Mar 2014 10:39:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752578AbaCBJJu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 2 Mar 2014 04:09:50 -0500
-Received: from mail-yh0-f47.google.com ([209.85.213.47]:65023 "EHLO
-	mail-yh0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752016AbaCBJJj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Mar 2014 04:09:39 -0500
-Received: by mail-yh0-f47.google.com with SMTP id c41so2546473yho.34
-        for <git@vger.kernel.org>; Sun, 02 Mar 2014 01:09:39 -0800 (PST)
+	id S1751734AbaCBJiu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Mar 2014 04:38:50 -0500
+Received: from mail-pb0-f49.google.com ([209.85.160.49]:34409 "EHLO
+	mail-pb0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751554AbaCBJiq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Mar 2014 04:38:46 -0500
+Received: by mail-pb0-f49.google.com with SMTP id jt11so2558380pbb.22
+        for <git@vger.kernel.org>; Sun, 02 Mar 2014 01:38:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=ouK8F+4Qic9SVZjXHuBabofYRa831VR0QKhw94MdpWs=;
-        b=IF3TfplZ09ZzeTp66w+4Vo5LMZEe5hXpMZj+jrmWWXGyM3CDyYWKhGqX0NHzr5EFSY
-         CXmdq6NbhPNJlzKSlh/YyRcR8uzysB/6WOd4TMDMN3Y5ofKuKP9zzKklWildkHskaJj2
-         vzHYlNsl+JeDBQq2THX9VZ24yMJmdskTxksyBa24yELY1elbCbH4pslfuAU90tJjXo3K
-         qf/RLD5RZ2Tg0cVVabgCse5PGtj61uKwl3sl+tqsrLTCwDkrsJUJM/GvJVJO8KFUhRhq
-         oEPehegpGgMBYMJ2nagk2ptRsl9CLufeZGEZ7JMh3emJAvbqL7S+lTwF3dX5Cd7jPL1v
-         I2CQ==
-X-Received: by 10.236.172.33 with SMTP id s21mr582975yhl.71.1393751378893;
- Sun, 02 Mar 2014 01:09:38 -0800 (PST)
-Received: by 10.170.180.195 with HTTP; Sun, 2 Mar 2014 01:09:38 -0800 (PST)
-In-Reply-To: <CAPig+cQ7pd4mQTTsT2Kq3KL-erUdncBsYmFjt8aFWB5THE6Srw@mail.gmail.com>
-X-Google-Sender-Auth: LIN7_OfbrjNWSgrKYAL1qmnMkAI
+        h=from:to:cc:subject:date:message-id;
+        bh=lfg/S6ODMNoKxxF6Zvj4BkNayVJ3YlSUo5DSU/9e8xQ=;
+        b=Ci4M5CVy8CVPCv1O0RPogIz7tCD0v6ydNUGNQffLcrQe3MBBB7ofkWiE0Haqt4a0fn
+         LEFTXC9O7wqeQY34MnRhPuiXD7eFW+0GiRsh6v9+S2K2/BMKrQsz3I+WBdvzlOyIc3wM
+         /HGz86QcBrvFu+JGHAhpsrOsH9kNZOJlGnryaoneRztosHXpbI3wNkBKuM524PFbbzSj
+         aMlBX82Z2t52bmFJZCPgaF3e7YFg2YNLintBaH1kT5TuBFKepzhlwQKL/FmdS6EYL5gC
+         fyvppo7zXCjfJ9aNVkKrYirqgqF7yirlvew/uY+Sqh7J6VkuSX0wlFKdYEiqHHYIwlgr
+         /ygw==
+X-Received: by 10.66.118.71 with SMTP id kk7mr13359638pab.14.1393753125923;
+        Sun, 02 Mar 2014 01:38:45 -0800 (PST)
+Received: from ENIGMA.61.134.1.4 ([61.150.43.99])
+        by mx.google.com with ESMTPSA id om6sm23823622pbc.43.2014.03.02.01.38.42
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 02 Mar 2014 01:38:44 -0800 (PST)
+X-Mailer: git-send-email 1.9.0.138.g2de3478.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243146>
 
-On Sun, Mar 2, 2014 at 4:04 AM, Eric Sunshine <sunshine@sunshineco.com>=
- wrote:
-> On Sat, Mar 1, 2014 at 9:53 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc=
- Duy <pclouds@gmail.com> wrote:
->> "git rebase -e XYZ" is basically the same as
->>
->> EDITOR=3D"sed -i '1s/pick XYZ/edit XYZ/' $@" \
->> git rebase -i XYZ^
->>
->> In English, it prepares the todo list for you to edit only commit XY=
-Z
->> to save your time. The time saving is only significant when you edit=
- a
->> lot of commits separately.
->
-> Should this accept multiple -e arguments? Based upon the above
-> justification, it sounds like it should, and I think that would be th=
-e
-> intuitive expectation (at least for me).
->
-> The current implementation, however, is broken with multiple -e argum=
-ents. With:
->
->     git rebase -i -e older -e newer
->
-> 'newer' is ignored entirely. However, with:
->
->     git rebase -i -e newer -e older
->
-> it errors out when rewriting the todo list:
->
->     "expected to find 'edit older' line but did not"
->
-> An implementation supporting multiple -e arguments would need to
-> ensure that the todo list extends to the "oldest" rev specified by an=
-y
-> -e argument.
+ Replacing memcpy with hashcpy is more directly and elegant.
 
-Of course, I'm misreading and abusing the intention of -e as if it is
-"-e <arg>".
+ Leave ppc/sha1.c alone, as it is an isolated component.
+ Pull cache.h(actually ../cache.h) in just for one memcpy
+ there is not proper.
+
+Helped-by: Michael Haggerty <mhagger@alum.mit.edu>
+Helped-by: Duy Nguyen <pclouds@gmail.com>
+Signed-off-by: Sun He <sunheehnus@gmail.com>
+---
+
+ PATCH v2 leave ppc/sha1.c alone.
+
+ The general rule is if cache.h or git-compat-util.h is included,
+ it is the first #include, and system includes will be always in
+ git-compat-tuil.h.
+					via Duy Nguyen
+
+ The change in PATCH v1 is not proper because I placed cache.h
+ in the end.
+ And adding it to the head is not a good way to achieve the goal,
+ as is said above "---".
+
+ Thanks to Duy Nguyen.
+
+ Find the potential places with memcpy by the bash command:
+  $ find . | xargs grep "memcpy.*\(.*20.*\)"
+
+
+ ppc/sha1.c doesn't include cache.h and it cannot use 
+ So just leave memcpy(in ppc/sha1.c) alone
+
+ bundle.c            | 2 +-
+ grep.c              | 2 +-
+ pack-bitmap-write.c | 2 +-
+ reflog-walk.c       | 4 ++--
+ refs.c              | 2 +-
+ 5 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/bundle.c b/bundle.c
+index e99065c..7809fbb 100644
+--- a/bundle.c
++++ b/bundle.c
+@@ -19,7 +19,7 @@ static void add_to_ref_list(const unsigned char *sha1, const char *name,
+ 		list->list = xrealloc(list->list,
+ 				list->alloc * sizeof(list->list[0]));
+ 	}
+-	memcpy(list->list[list->nr].sha1, sha1, 20);
++	hashcpy(list->list[list->nr].sha1, sha1);
+ 	list->list[list->nr].name = xstrdup(name);
+ 	list->nr++;
+ }
+diff --git a/grep.c b/grep.c
+index c668034..f5101f7 100644
+--- a/grep.c
++++ b/grep.c
+@@ -1650,7 +1650,7 @@ void grep_source_init(struct grep_source *gs, enum grep_source_type type,
+ 		break;
+ 	case GREP_SOURCE_SHA1:
+ 		gs->identifier = xmalloc(20);
+-		memcpy(gs->identifier, identifier, 20);
++		hashcpy(gs->identifier, identifier);
+ 		break;
+ 	case GREP_SOURCE_BUF:
+ 		gs->identifier = NULL;
+diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+index 1218bef..5f1791a 100644
+--- a/pack-bitmap-write.c
++++ b/pack-bitmap-write.c
+@@ -530,7 +530,7 @@ void bitmap_writer_finish(struct pack_idx_entry **index,
+ 	header.version = htons(default_version);
+ 	header.options = htons(flags | options);
+ 	header.entry_count = htonl(writer.selected_nr);
+-	memcpy(header.checksum, writer.pack_checksum, 20);
++	hashcpy(header.checksum, writer.pack_checksum);
+ 
+ 	sha1write(f, &header, sizeof(header));
+ 	dump_bitmap(f, writer.commits);
+diff --git a/reflog-walk.c b/reflog-walk.c
+index b2fbdb2..d490f7d 100644
+--- a/reflog-walk.c
++++ b/reflog-walk.c
+@@ -32,8 +32,8 @@ static int read_one_reflog(unsigned char *osha1, unsigned char *nsha1,
+ 			sizeof(struct reflog_info));
+ 	}
+ 	item = array->items + array->nr;
+-	memcpy(item->osha1, osha1, 20);
+-	memcpy(item->nsha1, nsha1, 20);
++	hashcpy(item->osha1, osha1);
++	hashcpy(item->nsha1, nsha1);
+ 	item->email = xstrdup(email);
+ 	item->timestamp = timestamp;
+ 	item->tz = tz;
+diff --git a/refs.c b/refs.c
+index 89228e2..f90b7ea 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1222,7 +1222,7 @@ static int resolve_gitlink_packed_ref(struct ref_cache *refs,
+ 	if (ref == NULL)
+ 		return -1;
+ 
+-	memcpy(sha1, ref->u.value.sha1, 20);
++	hashcpy(sha1, ref->u.value.sha1);
+ 	return 0;
+ }
+ 
+-- 
+1.9.0.138.g2de3478.dirty
