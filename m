@@ -1,81 +1,150 @@
-From: Jacopo Notarstefano <jacopo.notarstefano@gmail.com>
-Subject: Re: [PATCH] branch.c: change install_branch_config() to use skip_prefix()
-Date: Sun, 2 Mar 2014 15:01:02 +0100
-Message-ID: <CAL0uuq0Vc7uZdixLV6OciAZWFYcif_WMCNABEvC=6gT5s+mthQ@mail.gmail.com>
-References: <1393761147-13590-1-git-send-email-mzguanglin@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Guanglin Xu <mzguanglin@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 02 15:01:36 2014
+From: Max Horn <max@quendi.de>
+Subject: Re: [BUG] Halt during fetch on MacOS
+Date: Sun, 2 Mar 2014 15:36:03 +0100
+Message-ID: <3DC821FE-7330-4163-9E73-D3313B74E001@quendi.de>
+References: <CAFFUb6X455R4OD5FKnVFHFmvTyRqtV300bc=a8Xs03agM+=uLQ@mail.gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 6.6 \(1510\))
+Content-Type: multipart/signed; boundary="Apple-Mail=_7F95C82E-F00F-4F78-A8E5-28B1B494B8C1"; protocol="application/pgp-signature"; micalg=pgp-sha256
+Cc: git@vger.kernel.org
+To: Conley Owens <cco3@android.com>
+X-From: git-owner@vger.kernel.org Sun Mar 02 15:36:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WK6xU-0006E8-FB
-	for gcvg-git-2@plane.gmane.org; Sun, 02 Mar 2014 15:01:36 +0100
+	id 1WK7V4-0002dj-Kv
+	for gcvg-git-2@plane.gmane.org; Sun, 02 Mar 2014 15:36:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752197AbaCBOBF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Mar 2014 09:01:05 -0500
-Received: from mail-vc0-f180.google.com ([209.85.220.180]:62365 "EHLO
-	mail-vc0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751955AbaCBOBD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Mar 2014 09:01:03 -0500
-Received: by mail-vc0-f180.google.com with SMTP id ks9so2614887vcb.11
-        for <git@vger.kernel.org>; Sun, 02 Mar 2014 06:01:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=iD5zNBgxI6/moIgJK5KsKRyQIkLZIgsKhFlwDY2lWvs=;
-        b=WemI6UdrFBXQJudjqbHFCGIoFuVsaLBFcBhInMuvIxeqyVeswsvGrbXpXZiLIi1aVB
-         h3XHfQni846knaEz8+IwLS7G+MDm9XLs0nmpKJ+KMl//kmZ7OfrK26BgfVZjtqaT/mGo
-         NvKmvoAPz6gAqeOpYXNijynU5R7c0++fpZEzg6Ktc7eflkDpqTAkMgVtpYYgXgW3x4oT
-         k8Iysq5bNyVX0M0b37ltpbVazQ61b88bgGk2kUYtVadBpDLKETPrbvpAoq91zehc49cV
-         /eCCv4iSU8gXqaVLnBy21S3EyBetDCKka1Kz2vnOz3UoeHygE3rv1VRv1dDx/MUetYUJ
-         1sWA==
-X-Received: by 10.220.175.198 with SMTP id bb6mr2217746vcb.31.1393768862835;
- Sun, 02 Mar 2014 06:01:02 -0800 (PST)
-Received: by 10.52.73.161 with HTTP; Sun, 2 Mar 2014 06:01:02 -0800 (PST)
-In-Reply-To: <1393761147-13590-1-git-send-email-mzguanglin@gmail.com>
+	id S1752952AbaCBOgN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Mar 2014 09:36:13 -0500
+Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:60286 "EHLO
+	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752043AbaCBOgN (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 2 Mar 2014 09:36:13 -0500
+Received: from ip-178-201-245-81.unitymediagroup.de ([178.201.245.81] helo=zanovar.fritz.box); authenticated
+	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
+	id 1WK7Uu-00067w-H7; Sun, 02 Mar 2014 15:36:08 +0100
+In-Reply-To: <CAFFUb6X455R4OD5FKnVFHFmvTyRqtV300bc=a8Xs03agM+=uLQ@mail.gmail.com>
+X-Mailer: Apple Mail (2.1510)
+X-bounce-key: webpack.hosteurope.de;max@quendi.de;1393770972;9387a854;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243149>
 
-The part about this being a GSoC microproject should go below the
-three dashes, since it's not information that needs to
- be recorded in the codebase.
 
-On Sun, Mar 2, 2014 at 12:52 PM, Guanglin Xu <mzguanglin@gmail.com> wrote:
-> GSoC2014 Microproject: according to the idea#2 for microprojects, change install_branch_config() to use skip_prefix() and make it conform to the usage of previous starts_with().
->
-> Signed-off-by: Guanglin Xu <mzguanglin@gmail.com>
-> ---
->  branch.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/branch.c b/branch.c
-> index 723a36b..ca4e824 100644
-> --- a/branch.c
-> +++ b/branch.c
-> @@ -50,7 +50,7 @@ static int should_setup_rebase(const char *origin)
->  void install_branch_config(int flag, const char *local, const char *origin, const char *remote)
->  {
->         const char *shortname = remote + 11;
-> -       int remote_is_branch = starts_with(remote, "refs/heads/");
-> +       int remote_is_branch = (NULL != skip_prefix(remote ,"refs/heads/"));
->         struct strbuf key = STRBUF_INIT;
->         int rebasing = should_setup_rebase(origin);
->
-> --
-> 1.9.0
->
-> Hi,
-> I am Guanglin Xu. I plan to apply for GSoC 2014.
+--Apple-Mail=_7F95C82E-F00F-4F78-A8E5-28B1B494B8C1
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=iso-8859-1
+
+
+On 01.03.2014, at 00:26, Conley Owens <cco3@android.com> wrote:
+
+> $ git --version  # This is just the git from MacPorts
+> git version 1.8.5.5
+> $ sw_vers
+> ProductName:    Mac OS X
+> ProductVersion: 10.8.5
+> BuildVersion:   12F45
+
+I cannot reproduce this, neither with 1.8.5.5 nor with 1.9.0. I am also =
+running Mac OS X 10.8.5.
+
+Note: I tried this both with you original test.sh, and also with a =
+version were I replaced the ">" by ">>", as per Jeff's suggestion. It =
+(as predicted) didn't make any difference).
+
+If this is a race condition, it might be easier to trigger it on slower =
+hardware. I am running this on a 2012 MBP with 2.3 Ghz i7 and an SSD. =
+What is your test machine?
+
+
+Cheers,
+Max
+
+>=20
+> test.sh
+> """""""""""""""""""""""""""""""""""""
+> #!/bin/bash
+> rungit() {
+>    mkdir $1
+>    GIT_DIR=3D$1 git init --bare
+>    echo '[remote "aosp"]' > $1/config
+>    echo '    url =3D
+> https://android.googlesource.com/platform/external/tinyxml2' >>
+> $1/config
+>    GIT_DIR=3D$1 git fetch aosp =
++refs/heads/master:refs/remotes/aosp/master
+>    rm -rf $1
+> }
+>=20
+> for i in $(seq 1 100)
+> do
+>    rungit testdir$i &
+> done
+> """""""""""""""""""""""""""""""""""""""
+> $ ./test.sh  # Warning! This script fetches ~40MB of data
+>=20
+> When everything cools, you can see that there are some fetches hanging
+> (typically).
+> $ ps | grep 'git fetch'
+> ...
+> 63310 ttys004    0:00.01 git fetch aosp
+> +refs/heads/master:refs/remotes/aosp/master
+> 63314 ttys004    0:00.01 git fetch aosp
+> +refs/heads/master:refs/remotes/aosp/master
+> 63319 ttys004    0:00.01 git fetch aosp
+> +refs/heads/master:refs/remotes/aosp/master
+> 63407 ttys004    0:00.00 git fetch aosp
+> +refs/heads/master:refs/remotes/aosp/master
+> 63414 ttys004    0:00.00 git fetch aosp
+> +refs/heads/master:refs/remotes/aosp/master
+> 63420 ttys004    0:00.00 git fetch aosp
+> +refs/heads/master:refs/remotes/aosp/master
+> ...
+>=20
+> You can look at the parent process of each and see that one half
+> spawned the other half, or you can look at the environment variables
+> for each to see that there are two processes operating in the same
+> directory for each directory where there's an issue.
+> $ echo "$(for pid in $(ps | grep 'git fetch' | grep -o '^[0-9]*'); do
+> ps -p $pid -wwwE | grep 'GIT_DIR=3D[^ ]*' -o; done)" | sort
+> GIT_DIR=3Dtestdir14
+> GIT_DIR=3Dtestdir14
+> GIT_DIR=3Dtestdir32
+> GIT_DIR=3Dtestdir32
+> GIT_DIR=3Dtestdir47
+> GIT_DIR=3Dtestdir47
+>=20
+> I've searched through the mailing list, but this doesn't seem to be a
+> known issue.  I've only seen this occur on macs (and with a good deal
+> of regularity).  It doesn't occur on my Ubuntu box.
+>=20
+> ~cco3
 > --
 > To unsubscribe from this list: send the line "unsubscribe git" in
 > the body of a message to majordomo@vger.kernel.org
 > More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>=20
+
+
+--Apple-Mail=_7F95C82E-F00F-4F78-A8E5-28B1B494B8C1
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP using GPGMail
+
+-----BEGIN PGP SIGNATURE-----
+Comment: GPGTools - http://gpgtools.org
+
+iF4EAREIAAYFAlMTQdgACgkQIpJVslrhe1kA9AEAoI+gRifQn2+lKgf2rGoM9lhW
+YhXiiTvBqxgNzsj37OMBALjPONW/h0YLUAPL6uV3vcjeisILzx8C91XEugdpEGln
+=xsuf
+-----END PGP SIGNATURE-----
+
+--Apple-Mail=_7F95C82E-F00F-4F78-A8E5-28B1B494B8C1--
