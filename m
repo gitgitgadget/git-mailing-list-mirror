@@ -1,82 +1,93 @@
-From: kgeorgiou <kyriakos.a.georgiou@gmail.com>
-Subject: [PATCH][GSoC] git-compat-util.h:rewrite skip_prefix() as loop
-Date: Sun,  2 Mar 2014 00:42:11 +0200
-Message-ID: <1393713731-55358-1-git-send-email-kyriakos.a.georgiou@gmail.com>
-Cc: kgeorgiou <kyriakos.a.georgiou@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 01 23:43:25 2014
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v4 24/27] prune: strategies for linked checkouts
+Date: Sun, 2 Mar 2014 07:01:23 +0700
+Message-ID: <CACsJy8CbE0VH_2bAH3weokuHVMUor9es7bgT7rWFi28fJjZ36w@mail.gmail.com>
+References: <1392730814-19656-1-git-send-email-pclouds@gmail.com>
+ <1393675983-3232-1-git-send-email-pclouds@gmail.com> <1393675983-3232-25-git-send-email-pclouds@gmail.com>
+ <5312151B.6080605@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sun Mar 02 01:02:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJsct-0007mf-M1
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Mar 2014 23:43:24 +0100
+	id 1WJtrQ-0007yW-8B
+	for gcvg-git-2@plane.gmane.org; Sun, 02 Mar 2014 01:02:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753296AbaCAWm4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Mar 2014 17:42:56 -0500
-Received: from mail-ee0-f50.google.com ([74.125.83.50]:63295 "EHLO
-	mail-ee0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753285AbaCAWmz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Mar 2014 17:42:55 -0500
-Received: by mail-ee0-f50.google.com with SMTP id c13so1150600eek.23
-        for <git@vger.kernel.org>; Sat, 01 Mar 2014 14:42:54 -0800 (PST)
+	id S1753335AbaCBABz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 1 Mar 2014 19:01:55 -0500
+Received: from mail-qc0-f172.google.com ([209.85.216.172]:64468 "EHLO
+	mail-qc0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753320AbaCBABz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 1 Mar 2014 19:01:55 -0500
+Received: by mail-qc0-f172.google.com with SMTP id i8so2369845qcq.17
+        for <git@vger.kernel.org>; Sat, 01 Mar 2014 16:01:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=wZBiELUyprCueF5x62qkbaeacky5da9mqaUJ6Ly31fE=;
-        b=gi1g5VWywiYbUNoRH016uP5KzFM4lyukN+6+TI2fnnJDBPG4ruGbGV4bANQJUJJWaR
-         2LniKWPLZyyFieHf1fuUuQ719/lf/2hSmLGZHmfM2EUfIPd60CVq8hgrm9J1QnsmENmm
-         CeFhr0a/Bq/czMXP1zToMSlcn2etc+aSZLgastXnluynDyW1NmLlrI12UkTdq6Trnt5I
-         +ssHbZ7/3CQ97vxzHCSo0hrk/c6kX8+oSnMypjM9wYYhW5TvfIEFuRtxE9BNGbu4MPQj
-         owwcndIQLE4eYl6PZ8713yF3pRIospU0CwOG19yeKjLUStDpwmTmGEoM4eSoxg6J9Igb
-         g8RQ==
-X-Received: by 10.15.83.67 with SMTP id b43mr16920518eez.40.1393713773966;
-        Sat, 01 Mar 2014 14:42:53 -0800 (PST)
-Received: from localhost.localdomain ([212.50.113.31])
-        by mx.google.com with ESMTPSA id a2sm28924044eem.18.2014.03.01.14.42.52
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 01 Mar 2014 14:42:53 -0800 (PST)
-X-Mailer: git-send-email 1.8.3.2
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=5gFSKtSUWhZnSLD+v3afOAqs4Vkst5H+ziyRdhVl3iA=;
+        b=GH6yF4O811XRkLSFUvLWaciNKuWpNBYGZE+YrLNbCmRdnVdznWMG0plUQ7N58u25Yb
+         cwRgNtqnZMB/Y96a3RddEZw4BLprpCuO2Ckre1G3bT7WTE5DmNuKikGP1efaHGxlnwuJ
+         OeuaGGz7g5Zuty6uu9oV+vR/g8kfpLeK0rs+ANnHacG90N1yD/W1AZjPhdeGpouonqv6
+         e+wVM7XAzkZuRhrBcMIPUdGQC5q2A/06EYHHy7QWww06EyAXVAkXXRx9wVwRttL6Z0TP
+         C3KjxiRexEIzM1loNnYliyTyeOP1d5/cxzFVS1NotbJhjFbfzE3hFLaUxarnB1LiskG1
+         dJJw==
+X-Received: by 10.229.112.5 with SMTP id u5mr5331066qcp.3.1393718514287; Sat,
+ 01 Mar 2014 16:01:54 -0800 (PST)
+Received: by 10.96.215.102 with HTTP; Sat, 1 Mar 2014 16:01:23 -0800 (PST)
+In-Reply-To: <5312151B.6080605@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243113>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243114>
 
-Rewritten git-compat-util.h:skip_prefix() as a loop, so that it doesn't have to
-scan through the prefix string twice as a miniproject for GSoC 2014.
+On Sun, Mar 2, 2014 at 12:12 AM, Torsten B=C3=B6gershausen <tboegi@web.=
+de> wrote:
+> On 2014-03-01 13.13, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+> []
+>>
+>> +static dev_t get_device_or_die(const char *path)
+>> +{
+>> +     struct stat buf;
+>> +     if (stat(path, &buf))
+>> +             die_errno("failed to stat '%s'", path);
+>> +     /* Ah Windows! Make different drives different "partitions" */
+>> +     if (is_windows())
+>> +             buf.st_dev =3D toupper(real_path(path)[0]);
+>> +     return buf.st_dev;
+>
+> Is this only related to Windows ?
 
-(I've just noticed that this miniproject has already been tackled by another 
-contributor, if that's a problem I can pick something else.)
+Yes. At least the treatment is Windows specific. If st_dev =3D=3D 0 in
+other cases, then we have to deal with them case-by-case.
 
-Looking forward to any kind of feedback.
+> Do we have other file systems, which return st_dev =3D=3D 0 ?
+> Should we check that path[0] !=3D '/', or better !is_dir_sep(path[0])=
+ ?
+> Do we need has_dos_drive_prefix() ?
 
-- Kyriakos Georgiou
+real_path() returns an absolute path, so we're guaranteed its first
+character is the drive letter, right? (I tried to confirm this by
+reading read_path_internal, but it's a bit complex, and I don't have
+Windows machine to quickly test it out)
 
-Signed-off-by: kgeorgiou <kyriakos.a.georgiou@gmail.com>
----
- git-compat-util.h | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+>
+> As a first suggestion, would this be better:
+>
+>> +     if (!buf.st_dev)
+>> +             buf.st_dev =3D toupper(real_path(path)[0]);
+>
+> (End of loose thinking)
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 614a5e9..713f37a 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -357,8 +357,11 @@ extern int suffixcmp(const char *str, const char *suffix);
- 
- static inline const char *skip_prefix(const char *str, const char *prefix)
- {
--	size_t len = strlen(prefix);
--	return strncmp(str, prefix, len) ? NULL : str + len;
-+	while(*prefix && *str == *prefix) {
-+		str++;
-+		prefix++;
-+	}
-+	return *prefix ? NULL : str;
- }
- 
- #if defined(NO_MMAP) || defined(USE_WIN32_MMAP)
--- 
-1.8.3.2
+
+
+--=20
+Duy
