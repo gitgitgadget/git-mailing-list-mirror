@@ -1,75 +1,92 @@
 From: Guanglin Xu <mzguanglin@gmail.com>
-Subject: [PATCH v2] branch.c: change install_branch_config() to use skip_prefix()
-Date: Sun,  2 Mar 2014 23:55:55 +0800
-Message-ID: <1393775755-15359-1-git-send-email-mzguanglin@gmail.com>
-Content-Type: text/plain; charset="utf-8"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 02 16:56:27 2014
+Subject: Re: [PATCH] branch.c: change install_branch_config() to use skip_prefix()
+Date: Mon, 3 Mar 2014 00:01:41 +0800
+Message-ID: <CAATe9uiCz_fe65=O_qVUX5OWbbFj4nqBZDsB_0dMt175HLCFDg@mail.gmail.com>
+References: <1393761147-13590-1-git-send-email-mzguanglin@gmail.com>
+	<CAL0uuq0Vc7uZdixLV6OciAZWFYcif_WMCNABEvC=6gT5s+mthQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Sun Mar 02 17:01:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WK8kZ-0003Aa-F0
-	for gcvg-git-2@plane.gmane.org; Sun, 02 Mar 2014 16:56:23 +0100
+	id 1WK8pn-0005SG-96
+	for gcvg-git-2@plane.gmane.org; Sun, 02 Mar 2014 17:01:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753449AbaCBP4S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Mar 2014 10:56:18 -0500
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:61802 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753070AbaCBP4R (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Mar 2014 10:56:17 -0500
-Received: by mail-pa0-f49.google.com with SMTP id hz1so2763012pad.36
-        for <git@vger.kernel.org>; Sun, 02 Mar 2014 07:56:17 -0800 (PST)
+	id S1753402AbaCBQBm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Mar 2014 11:01:42 -0500
+Received: from mail-ig0-f182.google.com ([209.85.213.182]:62503 "EHLO
+	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751463AbaCBQBm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Mar 2014 11:01:42 -0500
+Received: by mail-ig0-f182.google.com with SMTP id uy17so5663034igb.3
+        for <git@vger.kernel.org>; Sun, 02 Mar 2014 08:01:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:subject:date:message-id:content-type;
-        bh=H/OmdSbUowpyfKZoYicWK0KQoQhQQdeePCtzt207f3c=;
-        b=e5tQ4GKmAcQCi7iFxVj3WtD8ZyzFFHE7uWxqaePy/mk0cvDyOiCH1fkOt5pVjU4sr8
-         Ooer5yXBdR+WBu80LJgRIvgd6Xh7d16/Mao+dll95VSaRHa7qsVGGtbsEMso+X2NftYr
-         fHXpyTL2L1NBEQJ+O4ZJBpwAamiqtA2qA5FcYEaB2P6CfOKmWPZBa/R68jJ+YdzeEmfz
-         rLwf2xwvi5BXbFi+mgHD7FopGJ4hpdogcPkPCHgv0joGCld2gRG52nPbmKJ1wCW9tB2Z
-         bBIEzaRs4GbVaM3pWIvIcYGEc3ywbLY0vhZF4nEsMcJHSG3SCVfqBYq98YrgK2O3KVgd
-         I4Rg==
-X-Received: by 10.68.171.193 with SMTP id aw1mr3243502pbc.117.1393775777388;
-        Sun, 02 Mar 2014 07:56:17 -0800 (PST)
-Received: from localhost.localdomain ([113.107.25.71])
-        by mx.google.com with ESMTPSA id f5sm64233278pat.11.2014.03.02.07.56.14
-        for <git@vger.kernel.org>
-        (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 02 Mar 2014 07:56:16 -0800 (PST)
-X-Mailer: git-send-email 1.9.0
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:cc
+         :content-type;
+        bh=RJvNOJEaAWAtKZZ2ikI2XIy7Rdg08gF1bA0XHL9jeOs=;
+        b=jDEOg+spOEn5Z99iHsdu1S7Va3BcGrZzdAvBE85tTKUpmQ84SPOpx+Eo8gvwiZhbgm
+         YAEp/oSucseM0exR1dvveAc3BS+Ipt95VLEw/qqNrCVtncHeUs9Zuip3J+Y4vwAwDOt0
+         QwlhiYNkpsTawr2cMPFN31W1VHF8Ogv7l2dZWAnqkx3n4K4QSd4HmtLACe8cIZ5xDAZv
+         XJkvvdPjBT5RHpPnoeYp2lwur8B/46NmA74fn/l8k10jrh42RvMRfmVmI6nfKMfQWWKY
+         15vRFXs/5zqOvhqn9l5RBzM0hHaiYyelWGiF1CjgJh/HTONgTYxX0j3R6OwDm+fJMDFA
+         RJDA==
+X-Received: by 10.43.163.2 with SMTP id mm2mr21942761icc.20.1393776101612;
+ Sun, 02 Mar 2014 08:01:41 -0800 (PST)
+Received: by 10.64.14.135 with HTTP; Sun, 2 Mar 2014 08:01:41 -0800 (PST)
+In-Reply-To: <CAL0uuq0Vc7uZdixLV6OciAZWFYcif_WMCNABEvC=6gT5s+mthQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243153>
 
-Change install_branch_config() to use skip_prefix() and make it conform to the usage of previous starts_with(). This is because the proper usage of skip_prefix() overrides the functionality of starts_with(). Thorough replacements may finally remove the starts_with() function and reduce  code redundency.
+Hi Jacopo,
 
-Signed-off-by: Guanglin Xu <mzguanglin@gmail.com>
----
- branch.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Thanks for your comments. I just update this PATCH as v2. I appreciate
+more comments from you and others in the new thread.
 
-diff --git a/branch.c b/branch.c
-index 723a36b..ca4e824 100644
---- a/branch.c
-+++ b/branch.c
-@@ -50,7 +50,7 @@ static int should_setup_rebase(const char *origin)
- void install_branch_config(int flag, const char *local, const char *origin, const char *remote)
- {
- 	const char *shortname = remote + 11;
--	int remote_is_branch = starts_with(remote, "refs/heads/");
-+	int remote_is_branch = (NULL != skip_prefix(remote ,"refs/heads/"));
- 	struct strbuf key = STRBUF_INIT;
- 	int rebasing = should_setup_rebase(origin);
- 
--- 
-1.9.0
+Regards,
 
+Guanglin
 
-Hi,
-I am Guanglin Xu. I plan to apply for GSoC 2014.
-
-This patch is in accordance with the idea#2 of GSoC2014 Microproject. Any comments are welcomed.
+2014-03-02 22:01 GMT+08:00 Jacopo Notarstefano <jacopo.notarstefano@gmail.com>:
+> The part about this being a GSoC microproject should go below the
+> three dashes, since it's not information that needs to
+>  be recorded in the codebase.
+>
+> On Sun, Mar 2, 2014 at 12:52 PM, Guanglin Xu <mzguanglin@gmail.com> wrote:
+>> GSoC2014 Microproject: according to the idea#2 for microprojects, change install_branch_config() to use skip_prefix() and make it conform to the usage of previous starts_with().
+>>
+>> Signed-off-by: Guanglin Xu <mzguanglin@gmail.com>
+>> ---
+>>  branch.c | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/branch.c b/branch.c
+>> index 723a36b..ca4e824 100644
+>> --- a/branch.c
+>> +++ b/branch.c
+>> @@ -50,7 +50,7 @@ static int should_setup_rebase(const char *origin)
+>>  void install_branch_config(int flag, const char *local, const char *origin, const char *remote)
+>>  {
+>>         const char *shortname = remote + 11;
+>> -       int remote_is_branch = starts_with(remote, "refs/heads/");
+>> +       int remote_is_branch = (NULL != skip_prefix(remote ,"refs/heads/"));
+>>         struct strbuf key = STRBUF_INIT;
+>>         int rebasing = should_setup_rebase(origin);
+>>
+>> --
+>> 1.9.0
+>>
+>> Hi,
+>> I am Guanglin Xu. I plan to apply for GSoC 2014.
+>> --
+>> To unsubscribe from this list: send the line "unsubscribe git" in
+>> the body of a message to majordomo@vger.kernel.org
+>> More majordomo info at  http://vger.kernel.org/majordomo-info.html
