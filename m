@@ -1,279 +1,129 @@
-From: Faiz Kothari <faiz.off93@gmail.com>
-Subject: [PATCH v2] implemented strbuf_write_or_die()
-Date: Sun,  2 Mar 2014 05:48:47 +0530
-Message-ID: <1393719527-24221-1-git-send-email-faiz.off93@gmail.com>
-References: <53126051.7030904@alum.mit.edu>
-Cc: Faiz Kothari <faiz.off93@gmail.com>
-To: git@vger.kernel.org, mhagger@alum.mit.edu, j6t@kdbg.org,
-	sunshine@sunshineco.com
-X-From: git-owner@vger.kernel.org Sun Mar 02 01:19:27 2014
+From: "Kyle J. McKay" <mackyle@gmail.com>
+Subject: Re: [BUG] Halt during fetch on MacOS
+Date: Sat, 1 Mar 2014 18:02:54 -0800
+Message-ID: <F9B4418D-9414-4857-9199-EDBA20B952C6@gmail.com>
+References: <CAFFUb6X455R4OD5FKnVFHFmvTyRqtV300bc=a8Xs03agM+=uLQ@mail.gmail.com> <20140301061532.GC20397@sigill.intra.peff.net>
+Mime-Version: 1.0 (Apple Message framework v936)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Git mailing list <git@vger.kernel.org>
+To: Conley Owens <cco3@android.com>
+X-From: git-owner@vger.kernel.org Sun Mar 02 03:03:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WJu7n-0004pm-LP
-	for gcvg-git-2@plane.gmane.org; Sun, 02 Mar 2014 01:19:24 +0100
+	id 1WJvkb-0002Zc-4U
+	for gcvg-git-2@plane.gmane.org; Sun, 02 Mar 2014 03:03:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753448AbaCBATT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Mar 2014 19:19:19 -0500
-Received: from mail-pd0-f182.google.com ([209.85.192.182]:44292 "EHLO
-	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753320AbaCBATT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Mar 2014 19:19:19 -0500
-Received: by mail-pd0-f182.google.com with SMTP id g10so2282652pdj.27
-        for <git@vger.kernel.org>; Sat, 01 Mar 2014 16:19:18 -0800 (PST)
+	id S1753380AbaCBCC6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Mar 2014 21:02:58 -0500
+Received: from mail-pb0-f42.google.com ([209.85.160.42]:39116 "EHLO
+	mail-pb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753373AbaCBCC5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Mar 2014 21:02:57 -0500
+Received: by mail-pb0-f42.google.com with SMTP id rr13so2360078pbb.15
+        for <git@vger.kernel.org>; Sat, 01 Mar 2014 18:02:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=+b39+fymPpxGYSH+iYqBahaxjdyDHoAeS3PNgwk0zqo=;
-        b=XHK+TgotVAB1x22ex7nh3yVaI1qiFC1zNRz+vKp9qwqwNHUjuixV5COqYf+9meN281
-         MEJKtZn0tDRwnh/M0Q1C+vqq/rmNwANAW9d1ODzNMD3s22M0S+OrNcm1fnTws0M/HNaY
-         xtllQICH28R/Vt5hRWHHnpirehqgYc/hZxF+CjIpFHDAsihRniwM1EOdKKowxf7oFKle
-         4PDnYWFFvY1CKOMw71XeWhm8N8IdLa/RtMIoxVS2Tpl3FO2+3jFsUowCTbsWui6EYpSP
-         DEr1pvUkdDkaKBw8Q8w8/lUVNhX318bfo8zie1E88nbbUIClGF+wDyrvk5n61UMBy9ri
-         SAag==
-X-Received: by 10.66.166.175 with SMTP id zh15mr11711701pab.36.1393719558449;
-        Sat, 01 Mar 2014 16:19:18 -0800 (PST)
-Received: from dj-pc.bits-goa.ac.in ([115.248.130.148])
-        by mx.google.com with ESMTPSA id pp5sm20251771pbb.33.2014.03.01.16.19.14
+        h=from:to:in-reply-to:subject:references:message-id:content-type
+         :content-transfer-encoding:mime-version:date:cc;
+        bh=4EojqQZtJ7yH4NulaSMI2/ECLOqeuFwBVLqwLoZpkMQ=;
+        b=D/8EEVyKAFPne+cRQZjwpNmZd0zKQaqim+3srhGfhPDqxwkPhjzO7lP0D5G+N5kitB
+         EtYTX5/POc3A5V77rGY/QO1w18QdEXt/h8QoYkkBf8wO7qGc/5DbMNWpN0lL9pb3C9ER
+         yKaso4LNGWxqZfk3JslPpFBcCagJFzSVkGmu+unY2AfecjizIl1JogE+Tq1VSKr4tdgR
+         d1UY/qyMk/1T9SnudjmLX96CkebFqG3/KOA7ue7DbZA0ivXV03lzT65OTlp4r24kBMjJ
+         UjNqnDw+5MH6PFLyIqC1PaQewF9lPhXcwqe/8KHv1TVSW4QoVuaJWYxxqHgYqsVoVDZy
+         br8w==
+X-Received: by 10.67.2.106 with SMTP id bn10mr11888053pad.38.1393725777407;
+        Sat, 01 Mar 2014 18:02:57 -0800 (PST)
+Received: from [172.16.16.105] (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
+        by mx.google.com with ESMTPSA id ns7sm20749683pbc.32.2014.03.01.18.02.55
         for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 01 Mar 2014 16:19:17 -0800 (PST)
-X-Mailer: git-send-email 1.7.9.5
-In-Reply-To: <53126051.7030904@alum.mit.edu>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Sat, 01 Mar 2014 18:02:56 -0800 (PST)
+In-Reply-To: <20140301061532.GC20397@sigill.intra.peff.net>
+X-Mauler: Craptastic (2.936)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243116>
 
-Signed-off-by: Faiz Kothari <faiz.off93@gmail.com>
----
-Thanks for the feedback.
-Implemented write_or_dir.c:strbuf_write_or_die() again.
-Checks if NULL is passed to prevent segmentation fault, I was not sure 
-what error message to print so for now its "write error".
-Changed the prototype as suggested.
-Implementing this clearly distinguishes between writing a normal buffer
-and writing a strbuf. Also, it provides an interface to write strbuf
-directly without knowing the private members of strbuf, making strbuf 
-completely opaque. Also, makes the code more readable.
-I hope its proper now.
+On Feb 28, 2014, at 22:15, Jeff King wrote:
+> On Fri, Feb 28, 2014 at 03:26:28PM -0800, Conley Owens wrote:
+>
+>> test.sh
+>> """""""""""""""""""""""""""""""""""""
+>> #!/bin/bash
+>> rungit() {
+>>    mkdir $1
+>>    GIT_DIR=$1 git init --bare
+>>    echo '[remote "aosp"]' > $1/config
+>>    echo '    url =
+>> https://android.googlesource.com/platform/external/tinyxml2' >>
+>> $1/config
+>>    GIT_DIR=$1 git fetch aosp +refs/heads/master:refs/remotes/aosp/ 
+>> master
+>
+> I don't think this is affecting your test, but you probably want  
+> ">>" to
+> append to the config for the first line, too. Otherwise you are
+> overwriting some of git's default settings.
 
-Thanks.
+I replaced it with a call to git config in my version.
 
- builtin/cat-file.c     |    2 +-
- builtin/notes.c        |    6 +++---
- builtin/receive-pack.c |    2 +-
- builtin/send-pack.c    |    2 +-
- builtin/stripspace.c   |    2 +-
- builtin/tag.c          |    2 +-
- bundle.c               |    2 +-
- cache.h                |    1 +
- fetch-pack.c           |    2 +-
- http-backend.c         |    2 +-
- remote-curl.c          |    6 +++---
- write_or_die.c         |   10 ++++++++++
- 12 files changed, 25 insertions(+), 14 deletions(-)
+>> When everything cools, you can see that there are some fetches  
+>> hanging
+>> (typically).
+>> $ ps | grep 'git fetch'
+>> ...
+>> 63310 ttys004    0:00.01 git fetch aosp
+>> +refs/heads/master:refs/remotes/aosp/master
+>> [...]
+>
+> I can't reproduce here on Linux. Can you find out what the processes  
+> are
+> doing with something like strace?
 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index d5a93e0..d07a0be 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -255,7 +255,7 @@ static int batch_one_object(const char *obj_name, struct batch_options *opt,
- 
- 	strbuf_expand(&buf, opt->format, expand_format, data);
- 	strbuf_addch(&buf, '\n');
--	write_or_die(1, buf.buf, buf.len);
-+	strbuf_write_or_die(&buf, 1);
- 	strbuf_release(&buf);
- 
- 	if (opt->print_contents) {
-diff --git a/builtin/notes.c b/builtin/notes.c
-index 2b24d05..a208d56 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -140,7 +140,7 @@ static void write_commented_object(int fd, const unsigned char *object)
- 	if (strbuf_read(&buf, show.out, 0) < 0)
- 		die_errno(_("could not read 'show' output"));
- 	strbuf_add_commented_lines(&cbuf, buf.buf, buf.len);
--	write_or_die(fd, cbuf.buf, cbuf.len);
-+	strbuf_write_or_die(&cbuf, fd);
- 
- 	strbuf_release(&cbuf);
- 	strbuf_release(&buf);
-@@ -167,14 +167,14 @@ static void create_note(const unsigned char *object, struct msg_arg *msg,
- 			die_errno(_("could not create file '%s'"), path);
- 
- 		if (msg->given)
--			write_or_die(fd, msg->buf.buf, msg->buf.len);
-+			strbuf_write_or_die(&(msg->buf), fd);
- 		else if (prev && !append_only)
- 			write_note_data(fd, prev);
- 
- 		strbuf_addch(&buf, '\n');
- 		strbuf_add_commented_lines(&buf, note_template, strlen(note_template));
- 		strbuf_addch(&buf, '\n');
--		write_or_die(fd, buf.buf, buf.len);
-+		strbuf_write_or_die(&buf, fd);
- 
- 		write_commented_object(fd, object);
- 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 85bba35..d590993 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -1114,7 +1114,7 @@ static void report(struct command *commands, const char *unpack_status)
- 	if (use_sideband)
- 		send_sideband(1, 1, buf.buf, buf.len, use_sideband);
- 	else
--		write_or_die(1, buf.buf, buf.len);
-+		strbuf_write_or_die(&buf, 1);
- 	strbuf_release(&buf);
- }
- 
-diff --git a/builtin/send-pack.c b/builtin/send-pack.c
-index f420b74..f26ba21 100644
---- a/builtin/send-pack.c
-+++ b/builtin/send-pack.c
-@@ -86,7 +86,7 @@ static void print_helper_status(struct ref *ref)
- 		}
- 		strbuf_addch(&buf, '\n');
- 
--		write_or_die(1, buf.buf, buf.len);
-+		strbuf_write_or_die(&buf, 1);
- 	}
- 	strbuf_release(&buf);
- }
-diff --git a/builtin/stripspace.c b/builtin/stripspace.c
-index 1259ed7..33b7f85 100644
---- a/builtin/stripspace.c
-+++ b/builtin/stripspace.c
-@@ -115,7 +115,7 @@ int cmd_stripspace(int argc, const char **argv, const char *prefix)
- 	else
- 		comment_lines(&buf);
- 
--	write_or_die(1, buf.buf, buf.len);
-+	strbuf_write_or_die(&buf, 1);
- 	strbuf_release(&buf);
- 	return 0;
- }
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 74d3780..53ab280 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -349,7 +349,7 @@ static void create_tag(const unsigned char *object, const char *tag,
- 				strbuf_commented_addf(&buf, _(tag_template), comment_line_char);
- 			else
- 				strbuf_commented_addf(&buf, _(tag_template_nocleanup), comment_line_char);
--			write_or_die(fd, buf.buf, buf.len);
-+			strbuf_write_or_die(&buf, fd);
- 			strbuf_release(&buf);
- 		}
- 		close(fd);
-diff --git a/bundle.c b/bundle.c
-index e99065c..c8bddd8 100644
---- a/bundle.c
-+++ b/bundle.c
-@@ -279,7 +279,7 @@ int create_bundle(struct bundle_header *header, const char *path,
- 	while (strbuf_getwholeline(&buf, rls_fout, '\n') != EOF) {
- 		unsigned char sha1[20];
- 		if (buf.len > 0 && buf.buf[0] == '-') {
--			write_or_die(bundle_fd, buf.buf, buf.len);
-+			strbuf_write_or_die(&buf, bundle_fd);
- 			if (!get_sha1_hex(buf.buf + 1, sha1)) {
- 				struct object *object = parse_object_or_die(sha1, buf.buf);
- 				object->flags |= UNINTERESTING;
-diff --git a/cache.h b/cache.h
-index db223e8..8898bf4 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1227,6 +1227,7 @@ extern int copy_fd(int ifd, int ofd);
- extern int copy_file(const char *dst, const char *src, int mode);
- extern int copy_file_with_time(const char *dst, const char *src, int mode);
- extern void write_or_die(int fd, const void *buf, size_t count);
-+extern void strbuf_write_or_die(const struct strbuf *sbuf, int fd);
- extern int write_or_whine(int fd, const void *buf, size_t count, const char *msg);
- extern int write_or_whine_pipe(int fd, const void *buf, size_t count, const char *msg);
- extern void fsync_or_die(int fd, const char *);
-diff --git a/fetch-pack.c b/fetch-pack.c
-index f061f1f..af28bd2 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -216,7 +216,7 @@ static void send_request(struct fetch_pack_args *args,
- 		send_sideband(fd, -1, buf->buf, buf->len, LARGE_PACKET_MAX);
- 		packet_flush(fd);
- 	} else
--		write_or_die(fd, buf->buf, buf->len);
-+		strbuf_write_or_die(buf, fd);
- }
- 
- static void insert_one_alternate_ref(const struct ref *ref, void *unused)
-diff --git a/http-backend.c b/http-backend.c
-index d2c0a62..bed9341 100644
---- a/http-backend.c
-+++ b/http-backend.c
-@@ -157,7 +157,7 @@ static void send_strbuf(const char *type, struct strbuf *buf)
- 	hdr_int(content_length, buf->len);
- 	hdr_str(content_type, type);
- 	end_headers();
--	write_or_die(1, buf->buf, buf->len);
-+	strbuf_write_or_die(buf, 1);
- }
- 
- static void send_local_file(const char *the_type, const char *name)
-diff --git a/remote-curl.c b/remote-curl.c
-index 10cb011..677df24 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -634,7 +634,7 @@ static int rpc_service(struct rpc_state *rpc, struct discovery *heads)
- 	if (start_command(&client))
- 		exit(1);
- 	if (preamble)
--		write_or_die(client.in, preamble->buf, preamble->len);
-+		strbuf_write_or_die(preamble, client.in);
- 	if (heads)
- 		write_or_die(client.in, heads->buf, heads->len);
- 
-@@ -767,7 +767,7 @@ static int fetch_git(struct discovery *heads,
- 
- 	err = rpc_service(&rpc, heads);
- 	if (rpc.result.len)
--		write_or_die(1, rpc.result.buf, rpc.result.len);
-+		strbuf_write_or_die(&rpc.result, 1);
- 	strbuf_release(&rpc.result);
- 	strbuf_release(&preamble);
- 	free(depth_arg);
-@@ -889,7 +889,7 @@ static int push_git(struct discovery *heads, int nr_spec, char **specs)
- 
- 	err = rpc_service(&rpc, heads);
- 	if (rpc.result.len)
--		write_or_die(1, rpc.result.buf, rpc.result.len);
-+		strbuf_write_or_die(&rpc.result, 1);
- 	strbuf_release(&rpc.result);
- 	argv_array_clear(&args);
- 	return err;
-diff --git a/write_or_die.c b/write_or_die.c
-index b50f99a..373450e 100644
---- a/write_or_die.c
-+++ b/write_or_die.c
-@@ -64,6 +64,16 @@ void write_or_die(int fd, const void *buf, size_t count)
- 	}
- }
- 
-+void strbuf_write_or_die(const struct strbuf *sbuf, int fd)
-+{
-+	if(!sbuf)
-+		fprintf(stderr, "write error\n");
-+	else if (write_in_full(fd, sbuf->buf, sbuf->len) < 0) {
-+		check_pipe(errno);
-+		die_errno("write error");
-+	}
-+}
-+
- int write_or_whine_pipe(int fd, const void *buf, size_t count, const char *msg)
- {
- 	if (write_in_full(fd, buf, count) < 0) {
--- 
-1.7.9.5
+I can't reproduce, mostly, on Mac OS X 10.5.8 or 10.6.8.
+
+What I mean by mostly is that the very first time I ran the test  
+script I got approximately 36 of these errors:
+
+fatal: unable to access 'https://android.googlesource.com/platform/external/tinyxml2/' 
+: Unknown SSL protocol error in connection to android.googlesource.com: 
+443
+
+The rest of the fetches completed.  That was with Git 1.8.5.1.
+
+However, I was never able to reproduce those errors again.  All the  
+subsequent runs completed all fetches successfully using that same Git  
+version so I also tried Git 1.8.5.2, 1.8.5.5 and Git 1.7.6.1 on the  
+original and another machine.
+
+I am, however NAT'd, so it's possible the NAT was somehow responsible  
+for the initial 36 failures.
+
+Perhaps you are seeing a similar issue.
+
+You might try setting these sysctl variables:
+
+# Timeout new TCP connections after 30 seconds instead of 75
+net.inet.tcp.keepinit=30000
+# Always keep alive TCP connections
+net.inet.tcp.always_keepalive=1
+# Start keep alive checks after 30 seconds instead of 2 hours
+net.inet.tcp.keepidle=30000
+# Wait 5 seconds between probes instead of 75
+# Note that 8 probes in a row must fail to drop the connection
+net.inet.tcp.keepintvl=5000
+
+then running your test again and see if the hanging git fetch  
+processes die with some kind of failed connection error within about  
+70 seconds or so.  With the default sysctl settings, even with Git  
+enabling keep alives, it would likely take a bit over two hours for a  
+dead connection to be noticed.
+
+--Kyle
