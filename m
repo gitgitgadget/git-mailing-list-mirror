@@ -1,137 +1,168 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH] Replace memcpy with hashcpy when lengths defined
-Date: Sun, 2 Mar 2014 19:44:13 -0000
-Organization: OPDS
-Message-ID: <BD20EE393DBA43E39E6390ECB511EDD2@PhilipOakley>
-References: <1393787977-13164-1-git-send-email-albcoron@gmail.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v4 01/27] path.c: make get_pathname() return strbuf
+ instead of static buffer
+Date: Sun, 2 Mar 2014 14:51:35 -0500
+Message-ID: <CAPig+cQubZByK3rNPOJy8rfLZpALpW0dOMz55gnFWRPppTAApg@mail.gmail.com>
+References: <1392730814-19656-1-git-send-email-pclouds@gmail.com>
+	<1393675983-3232-1-git-send-email-pclouds@gmail.com>
+	<1393675983-3232-2-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-To: "Alberto" <albcoron@gmail.com>, <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Mar 02 20:44:41 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 02 20:51:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKCJU-0008Sh-GN
-	for gcvg-git-2@plane.gmane.org; Sun, 02 Mar 2014 20:44:40 +0100
+	id 1WKCQH-0003HZ-OK
+	for gcvg-git-2@plane.gmane.org; Sun, 02 Mar 2014 20:51:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751859AbaCBToP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Mar 2014 14:44:15 -0500
-Received: from out1.ip05ir2.opaltelecom.net ([62.24.128.241]:35644 "EHLO
-	out1.ip05ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751701AbaCBToO (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Mar 2014 14:44:14 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: As4YAFuJE1NZ8YSB/2dsb2JhbABagwY7iRi4WgEBAgGBFRd0giAFAQEEAQgBAR0RFggBASYGAgMFAgEDFQwlFAEECBACBgcXBgEHCwgCAQIDAQwEh0QDCQwJxCsNhzSMQ4VBgRQEiROGHocegx+LMYVIgy08
-X-IPAS-Result: As4YAFuJE1NZ8YSB/2dsb2JhbABagwY7iRi4WgEBAgGBFRd0giAFAQEEAQgBAR0RFggBASYGAgMFAgEDFQwlFAEECBACBgcXBgEHCwgCAQIDAQwEh0QDCQwJxCsNhzSMQ4VBgRQEiROGHocegx+LMYVIgy08
-X-IronPort-AV: E=Sophos;i="4.97,573,1389744000"; 
-   d="scan'208";a="446680429"
-Received: from host-89-241-132-129.as13285.net (HELO PhilipOakley) ([89.241.132.129])
-  by out1.ip05ir2.opaltelecom.net with SMTP; 02 Mar 2014 19:44:10 +0000
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1751874AbaCBTvg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 2 Mar 2014 14:51:36 -0500
+Received: from mail-yh0-f47.google.com ([209.85.213.47]:46953 "EHLO
+	mail-yh0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751701AbaCBTvf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 2 Mar 2014 14:51:35 -0500
+Received: by mail-yh0-f47.google.com with SMTP id c41so2807681yho.20
+        for <git@vger.kernel.org>; Sun, 02 Mar 2014 11:51:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=PMl4Woe8zP79FPW0WHwzWaWjAWRnWFUQD9boWtzoL6M=;
+        b=QapNPDLs2prLLIqrlLGTclbDdRallTirMrnItrJkR/wJAKndTh96cWfuWOiQqARelX
+         gVYvWE66/cXVH2KO4TODj3NRMAM01cfkkgFAI25D4F6dKUVqjhOY+UUosYsCNiSAOmM4
+         xkTh5i/jykGR4Xpv/xvN0lqB/XoZNZgFWoM67od1ls8LMRd9I1ia6NkPneewfFqNDKEs
+         FNQ6MkNj78OjjEzS36CnTijl8WDHZwdUYT6Jrs2pGtWyt85bCje8DGHlJpwoVbR4l5/Z
+         2VqCSZIF/kNDWvE9xNzgiMKpFiLwRkFELF3UHKQJ+cmmJ+4Ie/PTmUyoetRwBzNJf+Vq
+         HF6g==
+X-Received: by 10.236.36.16 with SMTP id v16mr35476yha.153.1393789895256; Sun,
+ 02 Mar 2014 11:51:35 -0800 (PST)
+Received: by 10.170.180.195 with HTTP; Sun, 2 Mar 2014 11:51:35 -0800 (PST)
+In-Reply-To: <1393675983-3232-2-git-send-email-pclouds@gmail.com>
+X-Google-Sender-Auth: EyhTDUurt5fA_uz-e1EE-0YNTRU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243157>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243158>
 
-From: "Alberto" <albcoron@gmail.com>
-> From: Alberto Corona <albcoron@gmail.com>
+On Sat, Mar 1, 2014 at 7:12 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc D=
+uy <pclouds@gmail.com> wrote:
+> We've been avoiding PATH_MAX whenever possible. This patch makes
+> get_pathname() return a strbuf and updates the callers to take
+> advantage of this. The code is simplified as we no longer need to
+> worry about buffer overflow.
 >
-> Replaced memcpy with hashcpy where lengts in memcpy
-
-s/lengts/lengths/
-
-> are already defined.
->
-> Signed-off-by: Alberto Corona <albcoron@gmail.com>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
 > ---
-> bundle.c    | 2 +-
-> grep.c      | 2 +-
-> refs.c      | 2 +-
-> sha1_name.c | 4 ++--
-> 4 files changed, 5 insertions(+), 5 deletions(-)
->
-> diff --git a/bundle.c b/bundle.c
-> index e99065c..7809fbb 100644
-> --- a/bundle.c
-> +++ b/bundle.c
-> @@ -19,7 +19,7 @@ static void add_to_ref_list(const unsigned char 
-> *sha1, const char *name,
->  list->list = xrealloc(list->list,
->  list->alloc * sizeof(list->list[0]));
+> diff --git a/path.c b/path.c
+> index 24594c4..5346700 100644
+> --- a/path.c
+> +++ b/path.c
+> @@ -49,85 +60,70 @@ char *mksnpath(char *buf, size_t n, const char *f=
+mt, ...)
+>         return cleanup_path(buf);
 >  }
-> - memcpy(list->list[list->nr].sha1, sha1, 20);
-> + hashcpy(list->list[list->nr].sha1, sha1);
->  list->list[list->nr].name = xstrdup(name);
->  list->nr++;
-> }
-> diff --git a/grep.c b/grep.c
-> index c668034..f5101f7 100644
-> --- a/grep.c
-> +++ b/grep.c
-> @@ -1650,7 +1650,7 @@ void grep_source_init(struct grep_source *gs, 
-> enum grep_source_type type,
->  break;
->  case GREP_SOURCE_SHA1:
->  gs->identifier = xmalloc(20);
-> - memcpy(gs->identifier, identifier, 20);
-> + hashcpy(gs->identifier, identifier);
->  break;
->  case GREP_SOURCE_BUF:
->  gs->identifier = NULL;
-> diff --git a/refs.c b/refs.c
-> index 89228e2..f90b7ea 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -1222,7 +1222,7 @@ static int resolve_gitlink_packed_ref(struct 
-> ref_cache *refs,
->  if (ref == NULL)
->  return -1;
 >
-> - memcpy(sha1, ref->u.value.sha1, 20);
-> + hashcpy(sha1, ref->u.value.sha1);
->  return 0;
-> }
->
-> diff --git a/sha1_name.c b/sha1_name.c
-> index 6fca869..3f5010f 100644
-> --- a/sha1_name.c
-> +++ b/sha1_name.c
-> @@ -111,7 +111,7 @@ static void find_short_object_filename(int len, 
-> const char *hex_pfx, struct disa
->  continue;
->  if (memcmp(de->d_name, hex_pfx + 2, len - 2))
->  continue;
-> - memcpy(hex + 2, de->d_name, 38);
-> + hashcpy(hex + 2, de->d_name);
->  if (!get_sha1_hex(hex, sha1))
->  update_candidates(ds, sha1);
+> -static char *vsnpath(char *buf, size_t n, const char *fmt, va_list a=
+rgs)
+> +static void vsnpath(struct strbuf *buf, const char *fmt, va_list arg=
+s)
+>  {
+>         const char *git_dir =3D get_git_dir();
+> -       size_t len;
+> -
+> -       len =3D strlen(git_dir);
+> -       if (n < len + 1)
+> -               goto bad;
+> -       memcpy(buf, git_dir, len);
+> -       if (len && !is_dir_sep(git_dir[len-1]))
+> -               buf[len++] =3D '/';
+> -       len +=3D vsnprintf(buf + len, n - len, fmt, args);
+> -       if (len >=3D n)
+> -               goto bad;
+> -       return cleanup_path(buf);
+> -bad:
+> -       strlcpy(buf, bad_path, n);
+> -       return buf;
+> +       strbuf_addstr(buf, git_dir);
+> +       if (buf->len && !is_dir_sep(buf->buf[buf->len - 1]))
+> +               strbuf_addch(buf, '/');
+> +       strbuf_vaddf(buf, fmt, args);
+> +       strbuf_cleanup_path(buf);
 >  }
-> @@ -373,7 +373,7 @@ const char *find_unique_abbrev(const unsigned char 
-> *sha1, int len)
->  static char hex[41];
+
+There's a slight semantic change here. The old code overwrote 'buf',
+but the new code appends to 'buf'. For someone familiar with
+sprintf(), or typical va_list or variadic functions there may be an
+intuitive expectation that 'buf' will be overwritten. Should this code
+be doing strbuf_reset() as its first action (or should that be the
+responsibility of the caller who is reusing 'buff')?
+
+>  char *mkpath(const char *fmt, ...)
+>  {
+>         va_list args;
+> -       unsigned len;
+> -       char *pathname =3D get_pathname();
+> -
+> +       struct strbuf *pathname =3D get_pathname();
+>         va_start(args, fmt);
+> -       len =3D vsnprintf(pathname, PATH_MAX, fmt, args);
+> +       strbuf_vaddf(pathname, fmt, args);
+>         va_end(args);
+> -       if (len >=3D PATH_MAX)
+> -               return bad_path;
+> -       return cleanup_path(pathname);
+> +       return cleanup_path(pathname->buf);
+>  }
+
+Prior to this change, it was possible (though probably not
+recommended) for a caller to append gunk to the returned path up to
+PATH_MAX without worrying about stomping memory. With the change, this
+is no longer true. Should the function be changed to return 'const
+char *' to enforce this restriction?
+
+>  char *git_path(const char *fmt, ...)
+>  {
+> -       char *pathname =3D get_pathname();
+> +       struct strbuf *pathname =3D get_pathname();
+>         va_list args;
+> -       char *ret;
+> -
+>         va_start(args, fmt);
+> -       ret =3D vsnpath(pathname, PATH_MAX, fmt, args);
+> +       vsnpath(pathname, fmt, args);
+>         va_end(args);
+> -       return ret;
+> +       return pathname->buf;
+>  }
+
+Ditto.
+
 >
->  exists = has_sha1_file(sha1);
-> - memcpy(hex, sha1_to_hex(sha1), 40);
-> + hashcpy(hex, sha1_to_hex(sha1));
->  if (len == 40 || !len)
->  return hex;
->  while (len < 40) {
-> -- 
-> 1.9.0.138.g2de3478.dirty
+>  void home_config_paths(char **global, char **xdg, char *file)
+> @@ -158,41 +154,27 @@ void home_config_paths(char **global, char **xd=
+g, char *file)
 >
+>  char *git_path_submodule(const char *path, const char *fmt, ...)
+>  {
+> -       char *pathname =3D get_pathname();
+> -       struct strbuf buf =3D STRBUF_INIT;
+> +       struct strbuf *buf =3D get_pathname();
+> ...
+> +       strbuf_cleanup_path(buf);
+> +       return buf->buf;
+>  }
+
+And here?
+
+>
+>  int validate_headref(const char *path)
 > --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+> 1.9.0.40.gaa8c3ea
