@@ -1,78 +1,158 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 2/3] rebase: accept -<number> as another way of saying HEAD~<number>
-Date: Mon, 03 Mar 2014 10:37:11 +0100
-Message-ID: <vpq7g8bfws8.fsf@anie.imag.fr>
-References: <1393506078-7310-1-git-send-email-pclouds@gmail.com>
-	<1393728794-29566-1-git-send-email-pclouds@gmail.com>
-	<1393728794-29566-3-git-send-email-pclouds@gmail.com>
-	<CAPig+cSPKSsVG_yqaQfOCswaENKdUGrWt_YcQ3yZCpgG5jQ+JQ@mail.gmail.com>
-	<CAPig+cSFWT6kwZUFFUE3=TcfHRUJnx54+fcZCzJwmOSJKFsYeA@mail.gmail.com>
-	<vpqlhwsr3ww.fsf@anie.imag.fr> <53144881.6090702@alum.mit.edu>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	=?utf-8?B?Tmd1eeG7hW4gVGg=?= =?utf-8?B?w6FpIE5n4buNYw==?= Duy 
-	<pclouds@gmail.com>, Git List <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Mar 03 10:37:41 2014
+From: Sun He <sunheehnus@gmail.com>
+Subject: [PATCH v3] Replace memcpy with hashcpy when dealing hash copy globally
+Date: Mon,  3 Mar 2014 17:39:59 +0800
+Message-ID: <1393839599-6955-1-git-send-email-sunheehnus@gmail.com>
+Cc: sunshine@sunshineco.com, mhagger@alum.mit.edu, pclouds@gmail.com,
+	Sun He <sunheehnus@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 03 10:41:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKPJc-0006sS-8Q
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 10:37:40 +0100
+	id 1WKPNM-0000pC-5X
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 10:41:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753886AbaCCJhf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2014 04:37:35 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:44380 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753678AbaCCJhe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2014 04:37:34 -0500
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s239bBTT000463
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 3 Mar 2014 10:37:11 +0100
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s239bBYh016566;
-	Mon, 3 Mar 2014 10:37:11 +0100
-In-Reply-To: <53144881.6090702@alum.mit.edu> (Michael Haggerty's message of
-	"Mon, 03 Mar 2014 10:16:49 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 03 Mar 2014 10:37:12 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s239bBTT000463
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1394444233.99511@rn1gZUYicXYs8g9VDE42Og
+	id S1754141AbaCCJl2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2014 04:41:28 -0500
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:33230 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752263AbaCCJl1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2014 04:41:27 -0500
+Received: by mail-pa0-f54.google.com with SMTP id lf10so875110pab.13
+        for <git@vger.kernel.org>; Mon, 03 Mar 2014 01:41:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=AYzLQzudPSASWacx89Sy8KDfrhCv2NbjxbT9n/qj5PM=;
+        b=tE5rQhSREYG8tQXJL2E5qhjJacLrm3YPV6GJI/8TnVZAcaOE4rNBL6wZq7jkGKuM39
+         yXFhElXBTffg0+xUQBFmBzMI+aww/Nl8QFLcdHJD2hH9V7XkcTWlMwTeMNWgpYdT04Ny
+         HYaBpwXqH6HH9UXy7Niapg8K8yWp8dxFBZpeHkFRzcRDLoIide8HrShjAnNeKMQRAiE9
+         DTDYYaYQdKTvokYB3KcggfjdNGKDJSWRsjmV3kiZ3LBgzw61aWJmON7XWkGyUPfeJxmX
+         8l+J/6lOic31Tb45h1ZFaE8xT65ZvqjBnyTPMJSXZpaSQDsFiJDQn8lS66xT+fMKn9z3
+         V32A==
+X-Received: by 10.66.248.227 with SMTP id yp3mr5609384pac.116.1393839686504;
+        Mon, 03 Mar 2014 01:41:26 -0800 (PST)
+Received: from ENIGMA.61.134.1.4 ([61.150.43.99])
+        by mx.google.com with ESMTPSA id vg1sm34129285pbc.44.2014.03.03.01.41.18
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 03 Mar 2014 01:41:25 -0800 (PST)
+X-Mailer: git-send-email 1.9.0.138.g2de3478.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243206>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243207>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+Replacing memcpy with hashcpy is more directly and elegant.
 
-> Or perhaps "-NUM" should fail with an error message if any of the last
-> NUM commits are merges.  In that restricted scenario (which probably
-> accounts for 99% of rebases), "-NUM" is equivalent to "HEAD~NUM".
+Leave ppc/sha1.c alone, as it is an isolated component.
+Pull cache.h(actually ../cache.h) in just for one memcpy
+there is not proper.
 
-Makes sense to me. So, -NUM would actually mean "rebase the last NUM
-commits" (as well as being an alias for HEAD~NUM), but would fail when
-it does not make sense (with an error message explaining the situation
-and pointing the user to HEAD~N if this is what he wanted).
+Helped-by: Michael Haggerty <mhagger@alum.mit.edu>
+Helped-by: Duy Nguyen <pclouds@gmail.com>
+Signed-off-by: Sun He <sunheehnus@gmail.com>
+---
 
-This would actually be a feature for me: I often want to rebase "recent
-enough" history, and when my @{upstream} isn't well positionned, I
-randomly type HEAD~N without remembering what N should be. When N is too
-small, the rebase doesn't reach the interesting commit, and when N is
-too big, it reaches a merge commit and I get a bunch of commits I'm not
-allowed to edit in my todo-list. Then I have to abort the commit
-manually. With -N failing on merge commits, the rebase would abort
-itself automatically.
+PATCH v3 delete the one-space indentation on each line of commit message
+as is suggested by Eric Sunshine.
+ Thanks to Eric Sunshine.
 
+PATCH v2 leave ppc/sha1.c alone.
+
+The general rule is if cache.h or git-compat-util.h is included,
+it is the first #include, and system includes will be always in
+git-compat-tuil.h.
+       				via Duy Nguyen
+
+The change in PATCH v1 is not proper because I placed cache.h
+in the end.
+And adding it to the head is not a good way to achieve the goal,
+as is said above "---".
+ Thanks to Duy Nguyen.
+
+Find the potential places with memcpy by the bash command:
+ $ find . | xargs grep "memcpy.*\(.*20.*\)"
+
+ppc/sha1.c doesn't include cache.h and it cannot use hashcpy().
+So just leave memcpy(in ppc/sha1.c) alone.
+
+ bundle.c            | 2 +-
+ grep.c              | 2 +-
+ pack-bitmap-write.c | 2 +-
+ reflog-walk.c       | 4 ++--
+ refs.c              | 2 +-
+ 5 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/bundle.c b/bundle.c
+index e99065c..7809fbb 100644
+--- a/bundle.c
++++ b/bundle.c
+@@ -19,7 +19,7 @@ static void add_to_ref_list(const unsigned char *sha1, const char *name,
+ 		list->list = xrealloc(list->list,
+ 				list->alloc * sizeof(list->list[0]));
+ 	}
+-	memcpy(list->list[list->nr].sha1, sha1, 20);
++	hashcpy(list->list[list->nr].sha1, sha1);
+ 	list->list[list->nr].name = xstrdup(name);
+ 	list->nr++;
+ }
+diff --git a/grep.c b/grep.c
+index c668034..f5101f7 100644
+--- a/grep.c
++++ b/grep.c
+@@ -1650,7 +1650,7 @@ void grep_source_init(struct grep_source *gs, enum grep_source_type type,
+ 		break;
+ 	case GREP_SOURCE_SHA1:
+ 		gs->identifier = xmalloc(20);
+-		memcpy(gs->identifier, identifier, 20);
++		hashcpy(gs->identifier, identifier);
+ 		break;
+ 	case GREP_SOURCE_BUF:
+ 		gs->identifier = NULL;
+diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+index 1218bef..5f1791a 100644
+--- a/pack-bitmap-write.c
++++ b/pack-bitmap-write.c
+@@ -530,7 +530,7 @@ void bitmap_writer_finish(struct pack_idx_entry **index,
+ 	header.version = htons(default_version);
+ 	header.options = htons(flags | options);
+ 	header.entry_count = htonl(writer.selected_nr);
+-	memcpy(header.checksum, writer.pack_checksum, 20);
++	hashcpy(header.checksum, writer.pack_checksum);
+ 
+ 	sha1write(f, &header, sizeof(header));
+ 	dump_bitmap(f, writer.commits);
+diff --git a/reflog-walk.c b/reflog-walk.c
+index b2fbdb2..d490f7d 100644
+--- a/reflog-walk.c
++++ b/reflog-walk.c
+@@ -32,8 +32,8 @@ static int read_one_reflog(unsigned char *osha1, unsigned char *nsha1,
+ 			sizeof(struct reflog_info));
+ 	}
+ 	item = array->items + array->nr;
+-	memcpy(item->osha1, osha1, 20);
+-	memcpy(item->nsha1, nsha1, 20);
++	hashcpy(item->osha1, osha1);
++	hashcpy(item->nsha1, nsha1);
+ 	item->email = xstrdup(email);
+ 	item->timestamp = timestamp;
+ 	item->tz = tz;
+diff --git a/refs.c b/refs.c
+index 89228e2..f90b7ea 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1222,7 +1222,7 @@ static int resolve_gitlink_packed_ref(struct ref_cache *refs,
+ 	if (ref == NULL)
+ 		return -1;
+ 
+-	memcpy(sha1, ref->u.value.sha1, 20);
++	hashcpy(sha1, ref->u.value.sha1);
+ 	return 0;
+ }
+ 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+1.9.0.138.g2de3478.dirty
