@@ -1,97 +1,99 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-config: document interactive.singlekey requires Term::Readkey
-Date: Mon, 03 Mar 2014 10:58:58 -0800
-Message-ID: <xmqq1tyjqfbh.fsf@gitster.dls.corp.google.com>
-References: <6157736903dbcb3359eda07eff6f0faf832ef256.1393790234.git.simon@ruderich.org>
+Subject: Re: [PATCH v3] skip_prefix: rewrite so that prefix is scanned once
+Date: Mon, 03 Mar 2014 11:05:16 -0800
+Message-ID: <xmqqvbvvp0gj.fsf@gitster.dls.corp.google.com>
+References: <1393816384-3300-1-git-send-email-siddharth98391@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Simon Ruderich <simon@ruderich.org>
-X-From: git-owner@vger.kernel.org Mon Mar 03 20:00:10 2014
+Cc: git@vger.kernel.org, sunshine@sunshineco.com
+To: Siddharth Goel <siddharth98391@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 03 20:05:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKY5w-0005rJ-Vo
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 20:00:09 +0100
+	id 1WKYB9-0001DG-Uq
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 20:05:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755323AbaCCS7H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2014 13:59:07 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33515 "EHLO
+	id S1755378AbaCCTFZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2014 14:05:25 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37812 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755196AbaCCS7F (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2014 13:59:05 -0500
+	id S1754847AbaCCTFX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2014 14:05:23 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3DA666FE3F;
-	Mon,  3 Mar 2014 13:59:02 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D386A70179;
+	Mon,  3 Mar 2014 14:05:22 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=FpMH6X8frzBFo6LOAfZ4PQK6MNI=; b=g4unb0
-	akCBXkHf0ON7ehxMRSALZHN7lxVgYH6nIVEm3s+U5hokxbwF3pKXkrwgmeIhbbts
-	yKSOVB/a7koS5tglVS8bxZovIegx8k8Uadk1CUXsTKpZ6UPcDWf81D6hZ2/0oJvQ
-	opeCobWjqPgASgzXXEM9gYztJX8BTDWIJBEqg=
+	:content-type; s=sasl; bh=X4zHQ583viJ/llbDADUV+vlpn20=; b=u2yN71
+	9XsEb7FZiv3jyA0/6YbE+4CTl5B0BbSFEK5LoXwBM/G9mVe36z1yhKaIgWDkMEeb
+	G5RahWuksvDw1OR503W3GXxDG07gU69SnAj3azgMkIvjwXE8Hr4losueWrhN1lSx
+	dMpmbvdRjQJqCfkhYx34hdVnqLt9lfXtnYfrM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=pAA5Cgx3NO18Xq/0Hdy4SJV+b6/42yNY
-	99vY74QosMBl8Rv36DpkGzhFka4S4HQ1esf6/iuvGdCWSj6OXufs51zpau/eo7TP
-	SQ/YBNBSXrn+RpK5NTrXyqrxxfXhrMHB9/2QMpWlGw2qv9nVKGFwMsDBgfR7XAM/
-	C9joo62HuXg=
+	:content-type; q=dns; s=sasl; b=VB6csB4zFwj+x5yUjlVDE7cQuQmcie0m
+	6booO+6yg5ewW5esw72IvFdaBWLSoWO9Bb4wy62XE9LJOntHo1LqysgM7ev/4jiE
+	vH0/ZFHPd1GHHULAsBWxC3oRORVnrdHVsFHprx9UOlBCfQtYPck35x9x/aXboTB2
+	EIewQxszvlQ=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1E02B6FE3B;
-	Mon,  3 Mar 2014 13:59:02 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CE78C70175;
+	Mon,  3 Mar 2014 14:05:20 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 380DF6FE37;
-	Mon,  3 Mar 2014 13:59:01 -0500 (EST)
-In-Reply-To: <6157736903dbcb3359eda07eff6f0faf832ef256.1393790234.git.simon@ruderich.org>
-	(Simon Ruderich's message of "Sun, 2 Mar 2014 20:58:40 +0100")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A868B70171;
+	Mon,  3 Mar 2014 14:05:18 -0500 (EST)
+In-Reply-To: <1393816384-3300-1-git-send-email-siddharth98391@gmail.com>
+	(Siddharth Goel's message of "Mon, 3 Mar 2014 11:13:04 +0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: E1F61EB2-A305-11E3-949C-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: C2F155BC-A306-11E3-BB63-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243255>
 
-Simon Ruderich <simon@ruderich.org> writes:
+Siddharth Goel <siddharth98391@gmail.com> writes:
 
-> Most distributions don't require Term::Readkey as dependency,
-> leaving the user to wonder why the setting doesn't work.
+> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+> Signed-off-by: Siddharth Goel <siddharth98391@gmail.com>
+> ---
+> Added a space after colon in the subject as compared to previous 
+> patch [PATCH v2].
 >
-> Signed-off-by: Simon Ruderich <simon@ruderich.org>
+> [PATCH v2]: http://thread.gmane.org/gmane.comp.version-control.git/243150
 
-Thanks, but is it true that interactive.singlekey "requries"
-Term::ReadKey?
+Whenever you see "Change", "Rewrite", etc. in the subject of a patch
+that touches existing code, think twice.  The subject line is a
+scarce real estate to be wasted on a noiseword that carries no real
+information, and we already know a patch that touches existing code
+changes or rewrites things.
 
-The relevant part of git-add--interactive reads like so:
+    Subject: [PATCH v3] skip_prefix: scan prefix only once
 
-if ($repo->config_bool("interactive.singlekey")) {
-	eval {
-		require Term::ReadKey;
-		Term::ReadKey->import;
-		$use_readkey = 1;
-	};
-	eval {
-		require Term::Cap;
-		my $termcap = Term::Cap->Tgetent;
-		foreach (values %$termcap) {
-			$term_escapes{$_} = 1 if /^\e/;
-		}
-		$use_termcap = 1;
-	};
-}
+perhaps?
 
-The implementation of prompt_single_character sub wants to use
-ReadKey, but can still let the user interact with the program by
-falling back to a cooked input when it is not available, so perhaps
-a better fix might be something like this:
+>  git-compat-util.h | 7 +++++--
+>  1 file changed, 5 insertions(+), 2 deletions(-)
+>
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index 614a5e9..550dce3 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -357,8 +357,11 @@ extern int suffixcmp(const char *str, const char *suffix);
+>  
+>  static inline const char *skip_prefix(const char *str, const char *prefix)
+>  {
+> -	size_t len = strlen(prefix);
+> -	return strncmp(str, prefix, len) ? NULL : str + len;
+> +	while (*prefix != '\0' && *str == *prefix) {
+> +		str++;
+> +		prefix++;
+> +	}
+> +	return (*prefix == '\0' ? str : NULL);
 
-        if (!$use_readkey) {
-        	print STDERR "missing Term::ReadKey, disabling interactive.singlekey\n";
-        }
-
-inside the above if() that prepares $use_readkey?
-
-You also misspelled the package name it seems ;-)
+Unlike another patch I saw the other day on the same topic, this
+checks *prefix twice for the last round, even though I think this
+one is probably slightly easier to read.  I dunno.
