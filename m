@@ -1,66 +1,71 @@
-From: Ilya Bobyr <ilya.bobir@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH 1/2] test-lib: tests skipped by GIT_SKIP_TESTS say so
-Date: Mon, 03 Mar 2014 15:12:33 -0800
-Message-ID: <53150C61.90500@gmail.com>
-References: <1393842298-5944-1-git-send-email-ilya.bobyr@gmail.com> <CAPig+cQgYOz7rDax=HFNG9mr-H1FaoL-ss2mgdpMazPS4pWbNQ@mail.gmail.com>
+Date: Mon, 03 Mar 2014 15:13:39 -0800
+Message-ID: <xmqqsiqynae4.fsf@gitster.dls.corp.google.com>
+References: <1393842298-5944-1-git-send-email-ilya.bobyr@gmail.com>
+	<CAPig+cQgYOz7rDax=HFNG9mr-H1FaoL-ss2mgdpMazPS4pWbNQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Ilya Bobyr <ilya.bobyr@gmail.com>, Git List <git@vger.kernel.org>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Thomas Rast <tr@thomasrast.ch>
-To: Eric Sunshine <sunshine@sunshineco.com>,
-	Ilya Bobyr <ilya.bobyr@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 04 00:12:45 2014
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Tue Mar 04 00:13:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKc2P-0004gA-23
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 00:12:45 +0100
+	id 1WKc3R-0005Rk-Aa
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 00:13:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755364AbaCCXMl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2014 18:12:41 -0500
-Received: from mail-pb0-f51.google.com ([209.85.160.51]:61781 "EHLO
-	mail-pb0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755282AbaCCXMk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2014 18:12:40 -0500
-Received: by mail-pb0-f51.google.com with SMTP id uo5so3651982pbc.24
-        for <git@vger.kernel.org>; Mon, 03 Mar 2014 15:12:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=/4I/6JjjMcx+XGONDTzMFfeOEeEwdQObtIl45aKZqGk=;
-        b=AMvYuxIxKuVCuAIf0zAa/7Y5h4gx1s4okhQzD50OqpCC/nJaqXC4HMc5550gw2S/kv
-         WCRzrUEoNJeWb71mO8PT/FFq+DM1XytY9Yw9V6CjiHo62EfEi/jowwvL1E1w/8MkqEhP
-         sGrHwAc1lfaH8EUq75jrA83AKjdDcCnnobbSxRI6wvMmr6mk7/7FdRywQ3lJC3LoJyWn
-         6nV9N/CWnXusEttyPfy63lr4kVaNtwlU8oT5WgfSgIjHUlMiNxnSbw2Hsup2YT1d+F5a
-         n50WIx12wvdvtNCCvYT7KTY5qR/RxmRfiF8aP0j6/ZliBFy1RDnPQHPzO7F74n9u0DC1
-         0JbA==
-X-Received: by 10.66.155.133 with SMTP id vw5mr2324848pab.124.1393888360055;
-        Mon, 03 Mar 2014 15:12:40 -0800 (PST)
-Received: from [192.168.1.2] (c-50-136-172-14.hsd1.ca.comcast.net. [50.136.172.14])
-        by mx.google.com with ESMTPSA id f5sm92062836pat.11.2014.03.03.15.12.38
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 03 Mar 2014 15:12:39 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:27.0) Gecko/20100101 Thunderbird/27.0
+	id S1755430AbaCCXNp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2014 18:13:45 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47720 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755282AbaCCXNo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2014 18:13:44 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4A80E6BA9B;
+	Mon,  3 Mar 2014 18:13:44 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=3EHC73/ivjON5FA/TlvDnvCDSpk=; b=gKi42u
+	IKuMGRyRqeXf9RogYDiQpXROaDtUOsCv5ZCFBfrGZyabD4BGsiVBwHQgK6PBe3eJ
+	mj+Tpjmpd8syH5F+MhMDTDD/TNLi1GtQ1zlZ3ciw7tn2XlPoskt1BULbtMwbszs8
+	Tv8eFrKv07riNB5K537yv+S4yTdliD6qqw9/0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ZbVhBxVfgU+wXy9AWLcV9aNaUtdTFK+q
+	c63yu05XHF2n5zKVASyP7VzPs3tT4sW4SimRlKl0CMes8IBBSFnWtvHOUZPRjGzO
+	uRJc8FjRs6E/truHX9w1x3gO2nc2FcV2RCY++QvIg+zVqY1e+dn1jxgAfSn0KmiW
+	qN8P2gICEok=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 370E76BA9A;
+	Mon,  3 Mar 2014 18:13:44 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E33E96BA95;
+	Mon,  3 Mar 2014 18:13:40 -0500 (EST)
 In-Reply-To: <CAPig+cQgYOz7rDax=HFNG9mr-H1FaoL-ss2mgdpMazPS4pWbNQ@mail.gmail.com>
+	(Eric Sunshine's message of "Mon, 3 Mar 2014 17:59:15 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 755F3D78-A329-11E3-AD35-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243304>
 
-On 3/3/2014 2:59 PM, Eric Sunshine wrote:
+Eric Sunshine <sunshine@sunshineco.com> writes:
+
 > On Mon, Mar 3, 2014 at 5:24 AM, Ilya Bobyr <ilya.bobyr@gmail.com> wrote:
 >> We used to show "(missing )" next to tests skipped because they are
 >> specified in GIT_SKIP_TESTS.  Use "(matched by GIT_SKIP_TESTS)" instead.
+>
 > Bikeshedding: That's pretty verbose. Perhaps just say "(excluded)"?
 
-The next patch adds another reason for the test to be skipped, so it 
-seems reasonable to say why exactly.
-The patch actually makes it say "matched GIT_SKIP_TESTS".
-It looks OK on the console.
+Sounds good, or at least better than matched GIT_SKIP_TESTS, to me ;-).
+
+Thanks.
