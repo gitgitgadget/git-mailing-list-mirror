@@ -1,146 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH V2] commit.c: Use skip_prefix() instead of starts_with()
-Date: Mon, 03 Mar 2014 11:43:35 -0800
-Message-ID: <xmqqiorvoyoo.fsf@gitster.dls.corp.google.com>
-References: <1393862398-2989-1-git-send-email-tanayabh@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] implemented strbuf_write_or_die()
+Date: Mon, 3 Mar 2014 14:46:12 -0500
+Message-ID: <CAPig+cTmejtWXRzr6qk-kd+P8j4b6xMJSUVnNnqObqNXc-S9UA@mail.gmail.com>
+References: <1393672871-28281-1-git-send-email-faiz.off93@gmail.com>
+	<CAJr59C0e22OuDWU5Xc0A=cc+zY32nfum6SXTDU3wLCPyFPF70A@mail.gmail.com>
+	<CAPig+cRgc4UtmJMieS9Mdrz7vjUNiu7QFu1PSBppKo22Ln5G-A@mail.gmail.com>
+	<xmqqvbvvqglc.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Tanay Abhra <tanayabh@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 03 20:43:56 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: He Sun <sunheehnus@gmail.com>, Faiz Kothari <faiz.off93@gmail.com>,
+	git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 03 20:46:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKYmF-0002N8-9f
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 20:43:51 +0100
+	id 1WKYoh-0004FD-Co
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 20:46:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754543AbaCCTnn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2014 14:43:43 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61638 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753269AbaCCTnl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2014 14:43:41 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C57CF6F263;
-	Mon,  3 Mar 2014 14:43:40 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=n1tXjpaMhSVfv6DUJ5xvYCPk0MA=; b=BkS0Oc
-	ZyDQCndR8Iy+Nx0ruajfL0JG8clJSmZTpBPJuvL+PHvzlUEzkAPLJ1WXpt25alnI
-	iZYCAMz1/GNBZNIBxvbeK/H5SKhfZLHGpay/Nn2AEzii4r/hlvFaXLkE2Ugse6vG
-	lUufJ5RL4VcpF6ML5APH1vBSTyP9bgDDnWYxo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=dPUoXMGh89FEbr0blacOAvvGnd6EMO1t
-	1/PMGw67jfR8EAqm1d1WMlScHmpyx5bi5OHurVPWBlJ0uFz/WjJXhzx75bCKH4kJ
-	itEZ/o319AAjpwqynS9qt3FKAwRw5x3jLfI26aQtHEwwfVr0qVAgfuvI6RhbcEuU
-	dtQGzVsLGc0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B3F816F25E;
-	Mon,  3 Mar 2014 14:43:40 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BD7C16F25A;
-	Mon,  3 Mar 2014 14:43:37 -0500 (EST)
-In-Reply-To: <1393862398-2989-1-git-send-email-tanayabh@gmail.com> (Tanay
-	Abhra's message of "Mon, 3 Mar 2014 07:59:58 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 1D4E2472-A30C-11E3-A74B-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754790AbaCCTqO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2014 14:46:14 -0500
+Received: from mail-yh0-f51.google.com ([209.85.213.51]:44991 "EHLO
+	mail-yh0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754183AbaCCTqM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2014 14:46:12 -0500
+Received: by mail-yh0-f51.google.com with SMTP id f10so3534054yha.38
+        for <git@vger.kernel.org>; Mon, 03 Mar 2014 11:46:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=IZzKoSlntgWXepvebogSlLdDzoVB3KoZgBo3HI3RlgY=;
+        b=xt1Yywci5QxnkHm9xKhMsQJNZbO6KRVwmN5dSgsamMfhpxVxapXhKVnJ82oiarRuCm
+         ZweJG/vdzmEG7eE/O8j2wiq16551/UGHpRYEKstjuMmiHXIZd7mXtku0J4UmGzsn1dbM
+         i0mpD9H2DT4k/VeNgJ3bQoSkyo8ExkiBjllK7zunea7129xt5w9fwlNM+f4fwun1fPUF
+         1uFmE8jJnjQJ+RlfA37hUy2cqzM+wZYxAoWKnb/+XbMRcQ+A++bqMD4wzVVBBJDx2uKq
+         LsvsBXNI7yrxiineH1W3sKiGQN7pVPEXmVaoE+d0HcP1pRTxMnVq9KEbhmC2NGLnmb7u
+         cxDw==
+X-Received: by 10.236.231.234 with SMTP id l100mr1316095yhq.135.1393875972100;
+ Mon, 03 Mar 2014 11:46:12 -0800 (PST)
+Received: by 10.170.180.195 with HTTP; Mon, 3 Mar 2014 11:46:12 -0800 (PST)
+In-Reply-To: <xmqqvbvvqglc.fsf@gitster.dls.corp.google.com>
+X-Google-Sender-Auth: Joz9jS7SfSUMDl4Ia8ufVaon7x4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243260>
 
-Tanay Abhra <tanayabh@gmail.com> writes:
+On Mon, Mar 3, 2014 at 1:31 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+>
+>> On Sat, Mar 1, 2014 at 7:51 AM, He Sun <sunheehnus@gmail.com> wrote:
+>>> 2014-03-01 19:21 GMT+08:00 Faiz Kothari <faiz.off93@gmail.com>:
+>>>> diff --git a/remote-curl.c b/remote-curl.c
+>>>> index 10cb011..dee8716 100644
+>>>> --- a/remote-curl.c
+>>>> +++ b/remote-curl.c
+>>>> @@ -634,7 +634,7 @@ static int rpc_service(struct rpc_state *rpc, struct discovery *heads)
+>>>>         if (start_command(&client))
+>>>>                 exit(1);
+>>>>         if (preamble)
+>>>> -               write_or_die(client.in, preamble->buf, preamble->len);
+>>>> +               strbuf_write_or_die(client.in, preamble);
+>>>>         if (heads)
+>>>>                 write_or_die(client.in, heads->buf, heads->len);
+>>>
+>>> This should be changed. May be you can use Ctrl-F to search write_or_die().
+>>> Or if you are using vim, use "/ and n" to find all.
+>>
+>> It's not obvious from the patch fragment, but 'heads' is not a strbuf,
+>> so Faiz correctly left this invocation alone.
+>
+> That is a very good sign why this change is merely a code-churn and
+> not an improvement, isn't it?  We know (and any strbuf user should
+> know) that ->buf and ->len are the ways to learn the pointer and the
+> length the strbuf holds.  Why anybody thinks it is benefitial to
+> introduce another function that is _only_ for writing out strbuf and
+> cannot be used to write out a plain buffer is simply beyond me.
 
-> In record_author_date() & parse_gpg_output() ,using skip_prefix() instead of
-> starts_with() is more elegant and abstracts away the details.
+As a potential GSoC student and newcomer to the project, Faiz would
+not have known that this would be considered unwanted churn when he
+chose the task from the GSoC microproject page [1]. Perhaps it would
+be a good idea to retire this item from the list?
 
-Avoid subjective judgement like "more elegant" when justifying your
-change; you are not your own judge.
+On the other hand, it did expose Faiz to the iterative code review
+process on this project and gave him a taste of what would be expected
+of him as a GSoC student, so the microproject achieved that important
+goal, and thus wasn't an utter failure.
 
-The caller of starts_with() actually can use the string that follows
-the expected prefix and that is the reason why using skip_prefix()
-in these places is a good idea.  There is no need to be subjective
-to justify that change.
-
-I do not think there is any more abstracting away of the details in
-this change.  The updated uses a different and more suitable
-abstraction than the original.
-
-> diff --git a/commit.c b/commit.c
-> index 6bf4fe0..668c703 100644
-> --- a/commit.c
-> +++ b/commit.c
-> @@ -548,7 +548,7 @@ define_commit_slab(author_date_slab, unsigned long);
->  static void record_author_date(struct author_date_slab *author_date,
->  			       struct commit *commit)
->  {
-> -	const char *buf, *line_end;
-> +	const char *buf, *line_end, *skip;
->  	char *buffer = NULL;
->  	struct ident_split ident;
->  	char *date_end;
-> @@ -566,14 +566,15 @@ static void record_author_date(struct author_date_slab *author_date,
->  	     buf;
->  	     buf = line_end + 1) {
->  		line_end = strchrnul(buf, '\n');
-> -		if (!starts_with(buf, "author ")) {
-> +		if (!(skip = skip_prefix(buf, "author "))) {
-
-We tend to avoid assignments in conditionals.
-
->  			if (!line_end[0] || line_end[1] == '\n')
->  				return; /* end of header */
->  			continue;
->  		}
-> +		buf = skip;
->  		if (split_ident_line(&ident,
-> -				     buf + strlen("author "),
-> -				     line_end - (buf + strlen("author "))) ||
-> +				     buf,
-> +				     line_end - buf) ||
->  		    !ident.date_begin || !ident.date_end)
->  			goto fail_exit; /* malformed "author" line */
->  		break;
-
-If you give a sensible name to what 'buf + strlen("author ")' is,
-then the result becomes a lot more readable compared to the
-original, and I think that is what this change is about.
-
-And "skip" is not a good name for that.  'but + strlen("author ")'
-is what split_ident_line() expects its input to be split; let's
-tentatively call it "ident_line" and see what the call looks like:
-
-	split_ident_line(&ident, ident_line, line_end - ident_line))
-
-And that is what we want to see here.  It is a bit more clear than
-the original that we are splitting the ident information on the line,
-ident_line (you could call it ident_begin) points at the beginning
-and line_end points at the end of that ident information.
-
-Use of skip_prefix(), which I am sure you took the name of the new
-variable "skip" from, is merely an implementation detail of finding
-where the ident begins.  A good rule of thumb to remember is to name
-things after what they are, not how you obtain them, how they are
-used or what they are used for/as.
-
-> @@ -1193,9 +1194,9 @@ static void parse_gpg_output(struct signature_check *sigc)
->  	for (i = 0; i < ARRAY_SIZE(sigcheck_gpg_status); i++) {
->  		const char *found, *next;
->  
-> -		if (starts_with(buf, sigcheck_gpg_status[i].check + 1)) {
-> +		if (found = skip_prefix(buf, sigcheck_gpg_status[i].check + 1)) {
->  			/* At the very beginning of the buffer */
-> -			found = buf + strlen(sigcheck_gpg_status[i].check + 1);
-> +			;
->  		} else {
->  			found = strstr(buf, sigcheck_gpg_status[i].check);
->  			if (!found)
-
-This hunk looks good.  It can be a separate patch but they are both
-minor changes so it is OK to have it in a single patch.
+[1]: https://github.com/git/git.github.io/blob/master/SoC-2014-Microprojects.md
