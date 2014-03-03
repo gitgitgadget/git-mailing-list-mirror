@@ -1,96 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: My advice for GSoC applicants
-Date: Mon, 03 Mar 2014 14:29:10 -0800
-Message-ID: <xmqqa9d6or0p.fsf@gitster.dls.corp.google.com>
-References: <53145D48.3040603@alum.mit.edu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git discussion list <git@vger.kernel.org>,
-	Dmitry Dolzhenko <dmitrys.dolzhenko@yandex.ru>,
-	Sun He <sunheehnus@gmail.com>,
-	Brian Gesiak <modocache@gmail.com>,
-	Tanay Abhra <tanayabh@gmail.com>,
-	Kyriakos Georgiou <kyriakos.a.georgiou@gmail.com>,
-	Siddharth Goel <siddharth98391@gmail.com>,
-	Guanglin Xu <mzguanglin@gmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Alberto Corona <albcoron@gmail.com>,
-	Jacopo Notarstefano <jacopo.notarstefano@gmail.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Mar 03 23:29:19 2014
+From: "Dmitry S. Dolzhenko" <dmitrys.dolzhenko@yandex.ru>
+Subject: [PATCH v4 00/14] Use ALLOC_GROW() instead of inline code
+Date: Tue,  4 Mar 2014 02:31:48 +0400
+Message-ID: <1393885922-21616-1-git-send-email-dmitrys.dolzhenko@yandex.ru>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 03 23:32:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKbMM-0008In-Mm
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 23:29:19 +0100
+	id 1WKbPE-0001zm-SN
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 23:32:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755107AbaCCW3O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2014 17:29:14 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60406 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754906AbaCCW3N (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2014 17:29:13 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C1D7D718A0;
-	Mon,  3 Mar 2014 17:29:12 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=hJwNq0/S3ZkoABPlcNw1fjE/kjc=; b=dTkm1o
-	CVToJMcspfU2NKPu5r7HboqmcKyfSiPaLuCGXNUKw+N0/CGSz7Fm0EJIOzzMe2fR
-	TisyrMo8GOrttuspWK9wZj3FhMU6gTsp0hmd6yzLBf9muvgClm7a5l8dUl66pr4n
-	NJNipsg2s3Ogqkqro+2g4g7hT0ee9WCB01UGk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Xq5sBlvVzjmyEwKPkLjd3IX23gTSmeMm
-	qWkKKnw+xfyhHAzNfF9Myiy68lLZUodUPtLw68DiuvkVBJCXlixCimcEPeoe/iyq
-	lAnv6isRulmWlXT//WxnIbh5OK3MGb12MMGqY4S4HMSn9nKSCsuAJV1m4Sdo3aAw
-	SvpmJz/cWVk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A95BF7189F;
-	Mon,  3 Mar 2014 17:29:12 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D6EF97189C;
-	Mon,  3 Mar 2014 17:29:11 -0500 (EST)
-In-Reply-To: <53145D48.3040603@alum.mit.edu> (Michael Haggerty's message of
-	"Mon, 03 Mar 2014 11:45:28 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 3E8B3BE0-A323-11E3-B621-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755450AbaCCWcL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2014 17:32:11 -0500
+Received: from forward5o.mail.yandex.net ([37.140.190.34]:39155 "EHLO
+	forward5o.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755208AbaCCWcJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2014 17:32:09 -0500
+Received: from smtp3o.mail.yandex.net (smtp3o.mail.yandex.net [37.140.190.28])
+	by forward5o.mail.yandex.net (Yandex) with ESMTP id 689CE170127E
+	for <git@vger.kernel.org>; Tue,  4 Mar 2014 02:32:07 +0400 (MSK)
+Received: from smtp3o.mail.yandex.net (localhost [127.0.0.1])
+	by smtp3o.mail.yandex.net (Yandex) with ESMTP id 4511B1E1357
+	for <git@vger.kernel.org>; Tue,  4 Mar 2014 02:32:07 +0400 (MSK)
+Received: from 212.192.143.249 (212.192.143.249 [212.192.143.249])
+	by smtp3o.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id 97cx6V3GKz-W6vm0X7L;
+	Tue,  4 Mar 2014 02:32:06 +0400
+	(using TLSv1 with cipher AES256-SHA (256/256 bits))
+	(Client certificate not present)
+X-Yandex-Uniq: b878a328-5cf5-449a-ad2a-146b9664159e
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1393885926;
+	bh=I1qrA9uesxqd+UjXUMi+ran/0AV3w2/Knn3APHKvBs8=;
+	h=From:To:Subject:Date:Message-Id:X-Mailer;
+	b=cA0z6NScBqBBGZNt3Q8rhCzft91Uzd87s8hMlCwDB9sFt9TxJuRcCS2JucVzr8lsr
+	 q+1SHiHHruDPxh+ZtMEPddfsGHQWkbDgxH1Wt7x9EyAX0gtms0PvZd96KSB2dOJyop
+	 AwEgLMt+4Nnll/etNOI+3xdih0LQdLiTQQaVbhKg=
+Authentication-Results: smtp3o.mail.yandex.net; dkim=pass header.i=@yandex.ru
+X-Mailer: git-send-email 1.8.3.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243277>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243278>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+This version differs from previous [1] the following changes:
+  - added three new commits with similar changes in "builtin/mktree.c",
+    "cache-tree.c" and "sha1_file.c".
+  - updated commit messages: "use ALLOC_GROW() in function_name()" instead of
+    "change function_name() to use ALLOC_GROW()"
+  - updated [PATCH v2 01/11] [2] to keep code lines within 80 columns in 
+    "builtin/pack-objects.c"
 
-> Based on my experience so far as a first-time Google Summer of Code
-> mentor, I just wrote a blog article containing some hopefully useful
-> advice for students applying to the program.  Please note that this is
-> my personal opinion only and doesn't necessarily reflect the views of
-> the Git/libgit2 projects as a whole.
->
->     My secret tip for GSoC success
->
-> http://softwareswirl.blogspot.com/2014/03/my-secret-tip-for-gsoc-success.html
+Duy Nguyen, Michael Haggerty, Junio C Hamano, Eric Sunshine, and He Sun, 
+thanks you very much for your remarks and advices
 
-Thanks for writing this.
+[1] http://thread.gmane.org/gmane.comp.version-control.git/242919
+[2] http://thread.gmane.org/gmane.comp.version-control.git/242920
 
-Also thanks for the MicroProject approach to introduce potential
-students and the community.
+Dmitry S. Dolzhenko (14):
+  builtin/pack-objects.c: use ALLOC_GROW() in check_pbase_path()
+  bundle.c: use ALLOC_GROW() in add_to_ref_list()
+  cache-tree.c: use ALLOC_GROW() in find_subtree()
+  commit.c: use ALLOC_GROW() in register_commit_graft()
+  diff.c: use ALLOC_GROW()
+  diffcore-rename.c: use ALLOC_GROW()
+  patch-ids.c: use ALLOC_GROW() in add_commit()
+  replace_object.c: use ALLOC_GROW() in register_replace_object()
+  reflog-walk.c: use ALLOC_GROW()
+  dir.c: use ALLOC_GROW() in create_simplify()
+  attr.c: use ALLOC_GROW() in handle_attr_line()
+  builtin/mktree.c: use ALLOC_GROW() in append_to_tree()
+  read-cache.c: use ALLOC_GROW() in add_index_entry()
+  sha1_file.c: use ALLOC_GROW() in pretend_sha1_file()
 
-Multiple students seem to be hitting the same microprojects (aka "we
-are running out of micros"), which might be a bit unfortunate.  I
-think the original plan might have been that for a student candidate
-to pass, his-or-her patch must hit my tree and queued somewhere, but
-with these duplicates I do not think it is fair to disqualify those
-who interacted with reviewers well but solved an already solved
-micro.
+ attr.c                 |  7 +------
+ builtin/mktree.c       |  5 +----
+ builtin/pack-objects.c |  9 +++------
+ bundle.c               |  6 +-----
+ cache-tree.c           |  6 +-----
+ commit.c               |  8 ++------
+ diff.c                 | 12 ++----------
+ diffcore-rename.c      | 12 ++----------
+ dir.c                  |  5 +----
+ patch-ids.c            |  5 +----
+ read-cache.c           |  6 +-----
+ reflog-walk.c          | 12 ++----------
+ replace_object.c       |  8 ++------
+ sha1_file.c            |  7 +------
+ 14 files changed, 21 insertions(+), 87 deletions(-)
 
-Even with the duplicates I think we are learning how well each
-student respond to reviews (better ones even seem to pick up lessons
-from reviews on others' threads that tackle micros different from
-their own) and what his-or-her general cognitive ability is.
+-- 
+1.8.3.2
