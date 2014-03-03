@@ -1,89 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] write_pack_file: use correct variable in diagnostic
-Date: Mon, 03 Mar 2014 10:43:09 -0800
-Message-ID: <xmqqfvmzqg1u.fsf@gitster.dls.corp.google.com>
-References: <1393745411-30980-1-git-send-email-sunheehnus@gmail.com>
+From: Faiz Kothari <faiz.off93@gmail.com>
+Subject: Fwd: [PATCH] implemented strbuf_write_or_die()
+Date: Tue, 4 Mar 2014 00:18:29 +0530
+Message-ID: <CAFbjVck=yfRfhFtmLedD9A+ddeo7VcJ-km=6NBgmYXtmSfBRmQ@mail.gmail.com>
+References: <1393672871-28281-1-git-send-email-faiz.off93@gmail.com>
+	<CAJr59C0e22OuDWU5Xc0A=cc+zY32nfum6SXTDU3wLCPyFPF70A@mail.gmail.com>
+	<CAPig+cRgc4UtmJMieS9Mdrz7vjUNiu7QFu1PSBppKo22Ln5G-A@mail.gmail.com>
+	<xmqqvbvvqglc.fsf@gitster.dls.corp.google.com>
+	<CAFbjVckhU7NHzLjqPo5WkoBwVLrOLg=CS6mHSKkQstUxB31_eA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, sunshine@sunshineco.com
-To: Sun He <sunheehnus@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 03 19:43:19 2014
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 03 19:48:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKXpe-00036S-T5
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 19:43:19 +0100
+	id 1WKXul-0006rQ-FM
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 19:48:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753984AbaCCSnO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2014 13:43:14 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39672 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753590AbaCCSnN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2014 13:43:13 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2B2E06F6B5;
-	Mon,  3 Mar 2014 13:43:13 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=mvqZ8hnnTM+BDOJnqzwKnVSAkSo=; b=vU5foL
-	1naN7r/dR27Z0YaGawQGVgrGWe/KF8VvR9s0vcRUhjZo1oSgYcvKeiwG9aORa9ru
-	UqGNwTX9ha/ddKjT/f9rPgEamppD5ppdHh421sGC9Vx0aEYXXddog+S8xBYNx0R/
-	uy8tmO7k/4chFLo2NMXk8yacH84dUsIT2L3wo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=x7f1vzilxgDlZoUO1XkQ4rRplpiqsshL
-	/yFmc8MhYf8aoT6GVx+9rxhDvURIdkFRyXE+PMJOJBYxAq9XZqNCoo1L88p046TG
-	+QQHxaxCMTE0562VtvHNABomA9J03pBEuc1ke6gQGoxYhjZSI7+vX1YVip0sijo2
-	5v7+/q2fCjw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0D57B6F6B4;
-	Mon,  3 Mar 2014 13:43:13 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3379E6F6B0;
-	Mon,  3 Mar 2014 13:43:11 -0500 (EST)
-In-Reply-To: <1393745411-30980-1-git-send-email-sunheehnus@gmail.com> (Sun
-	He's message of "Sun, 2 Mar 2014 15:30:11 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: ABB48AFC-A303-11E3-81C1-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754158AbaCCSsb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2014 13:48:31 -0500
+Received: from mail-la0-f52.google.com ([209.85.215.52]:59808 "EHLO
+	mail-la0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753842AbaCCSsa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2014 13:48:30 -0500
+Received: by mail-la0-f52.google.com with SMTP id ec20so4095166lab.39
+        for <git@vger.kernel.org>; Mon, 03 Mar 2014 10:48:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        bh=fNPGunZ58OUgyaEaRqt+Fmne/uWE2hK2P5NIaBnzCwM=;
+        b=IBKeS8cV/uhqsmQ8Al8yjaH9cdfgxo9z9NFkQZt3VOSMWiyUMCKQE/hPRusvFAni7I
+         ynW4bLxg7f+B6VZHZq1jJx/j4FRX45ZeFIqGlE4KmtR1zvQOgIxdEDyLsJFhLjTiFn8T
+         v7sCpaCcFf+XWtwaLfAYP9mh4UEP5I3HlFMLwe7+l7lEs+HzFDQ5UzS5PvF0FCVvhdc/
+         9Ku16KBPcZBCMhj9a5GgwYbBWFj/ai6gJPBLI+HiUL7UfNg13Y2NEHi6+bp5/kY7zKbW
+         RN6NguUdno+Qn/gbe8WNYM5Jl6SpO4gaZNs2h4TiqjQitQXMp51Bao+R3Igdm3oHfSwC
+         KjsA==
+X-Received: by 10.112.13.133 with SMTP id h5mr2292575lbc.67.1393872509384;
+ Mon, 03 Mar 2014 10:48:29 -0800 (PST)
+Received: by 10.114.186.35 with HTTP; Mon, 3 Mar 2014 10:48:29 -0800 (PST)
+In-Reply-To: <CAFbjVckhU7NHzLjqPo5WkoBwVLrOLg=CS6mHSKkQstUxB31_eA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243251>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243252>
 
-Sun He <sunheehnus@gmail.com> writes:
+On Tue, Mar 4, 2014 at 12:01 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+>
+>> On Sat, Mar 1, 2014 at 7:51 AM, He Sun <sunheehnus@gmail.com> wrote:
+>>> 2014-03-01 19:21 GMT+08:00 Faiz Kothari <faiz.off93@gmail.com>:
+>>>> diff --git a/remote-curl.c b/remote-curl.c
+>>>> index 10cb011..dee8716 100644
+>>>> --- a/remote-curl.c
+>>>> +++ b/remote-curl.c
+>>>> @@ -634,7 +634,7 @@ static int rpc_service(struct rpc_state *rpc, struct discovery *heads)
+>>>>         if (start_command(&client))
+>>>>                 exit(1);
+>>>>         if (preamble)
+>>>> -               write_or_die(client.in, preamble->buf, preamble->len);
+>>>> +               strbuf_write_or_die(client.in, preamble);
+>>>>         if (heads)
+>>>>                 write_or_die(client.in, heads->buf, heads->len);
+>>>
+>>> This should be changed. May be you can use Ctrl-F to search write_or_die().
+>>> Or if you are using vim, use "/ and n" to find all.
+>>
+>> It's not obvious from the patch fragment, but 'heads' is not a strbuf,
+>> so Faiz correctly left this invocation alone.
+>
+> That is a very good sign why this change is merely a code-churn and
+> not an improvement, isn't it?  We know (and any strbuf user should
+> know) that ->buf and ->len are the ways to learn the pointer and the
+> length the strbuf holds.  Why anybody thinks it is benefitial to
+> introduce another function that is _only_ for writing out strbuf and
+> cannot be used to write out a plain buffer is simply beyond me.
+>
+Hi,
+Thanks for the feedback. Yes, I do realize, its kind of a code churn.
+I didn't realize it until I looked at the sign you pointed out.
+But it was a good exercise to go through the code as this is one of
+the GSoC microprojects.
+Sorry, it didn't turn out to be a beneficial one. My bad.
 
-> 'pack_tmp_name' is the subject of the utime() check, so report it in the
-> warning, not the uninitialized 'tmpname'
->
-> Signed-off-by: Sun He <sunheehnus@gmail.com>
-> ---
->
->  Changing the subject and adding valid information as tutored by 
->  Eric Sunshine.
->  Thanks to him.
->
->  builtin/pack-objects.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-> index c733379..4922ce5 100644
-> --- a/builtin/pack-objects.c
-> +++ b/builtin/pack-objects.c
-> @@ -823,7 +823,7 @@ static void write_pack_file(void)
->  				utb.modtime = --last_mtime;
->  				if (utime(pack_tmp_name, &utb) < 0)
->  					warning("failed utime() on %s: %s",
-> -						tmpname, strerror(errno));
-> +						pack_tmp_name, strerror(errno));
->  			}
->  
->  			/* Enough space for "-<sha-1>.pack"? */
+Thanks a lot again for the suggestions and feedback.
 
-Very nicely done.  Thanks.
-
-And big Thanks to Eric guiding this patch through.
+-Faiz
