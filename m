@@ -1,124 +1,71 @@
-From: Tanay Abhra <tanayabh@gmail.com>
-Subject: [PATCH V2] commit.c: Use skip_prefix() instead of starts_with()
-Date: Mon,  3 Mar 2014 07:59:58 -0800
-Message-ID: <1393862398-2989-1-git-send-email-tanayabh@gmail.com>
-Cc: Tanay Abhra <tanayabh@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 03 17:01:36 2014
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH] cache_tree_find(): remove redundant check in while condition
+Date: Mon,  3 Mar 2014 17:08:05 +0100
+Message-ID: <1393862885-23271-1-git-send-email-mhagger@alum.mit.edu>
+Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 03 17:08:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKVJ9-0001FW-0V
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 17:01:35 +0100
+	id 1WKVQ2-0006KS-RZ
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 17:08:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754354AbaCCQB2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2014 11:01:28 -0500
-Received: from mail-pd0-f170.google.com ([209.85.192.170]:44907 "EHLO
-	mail-pd0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753855AbaCCQB1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2014 11:01:27 -0500
-Received: by mail-pd0-f170.google.com with SMTP id v10so1827013pde.1
-        for <git@vger.kernel.org>; Mon, 03 Mar 2014 08:01:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=IX0a4MUoU2TRhVMe1gRfkaGOmfx5Z0KYnKDr0xLZhXQ=;
-        b=sy39t4d9/7w3CpwQXbVqCb67cB3iuWeBPuZCo0nAeS0bdEBaD4AczgfLO7l036YoNj
-         P/NEEBgFF0KvcVgsbEyWcZGU+uJGC3KzEJsoFya8V2ryeOfPrQRh2SeXzh/NHlQlN9g+
-         x7iQW1Ybb1zlxQKHCbbXSCGATLBViy4hwnRJFpJDg9v7M+kulirvUp5JNbDjKCCnV56R
-         zRgD50Q3A51Twjxfy/m52klB3Za2yieZ6BoQvUT29LGXybAaTjwqQn3oodujHSTeClCy
-         i0cDMXPNeZc7KQAOeEG3GGDTgYq5nCv2wQ9hARM4M0tP3ZbVldAm8yvmnIzdE4fi/W0L
-         EY4g==
-X-Received: by 10.68.191.200 with SMTP id ha8mr20423768pbc.66.1393862486135;
-        Mon, 03 Mar 2014 08:01:26 -0800 (PST)
-Received: from localhost.localdomain ([59.178.141.216])
-        by mx.google.com with ESMTPSA id yx3sm10987494pbb.6.2014.03.03.08.01.23
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 03 Mar 2014 08:01:25 -0800 (PST)
+	id S1754158AbaCCQIi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2014 11:08:38 -0500
+Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:62806 "EHLO
+	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753980AbaCCQIh (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Mar 2014 11:08:37 -0500
+X-AuditID: 1207440d-f79d86d0000043db-f9-5314a9047a55
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id D8.C7.17371.409A4135; Mon,  3 Mar 2014 11:08:36 -0500 (EST)
+Received: from michael.fritz.box (p57A2466F.dip0.t-ipconnect.de [87.162.70.111])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s23G88wB019126
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Mon, 3 Mar 2014 11:08:35 -0500
 X-Mailer: git-send-email 1.9.0
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrAIsWRmVeSWpSXmKPExsUixO6iqMuyUiTY4NF3ZYuuK91MFg29V5gt
+	bq+Yz+zA7PH3/Qcmj4uXlD0+b5ILYI7itklKLCkLzkzP07dL4M44fugvU8EdloqFF0+yNjBe
+	Z+5i5OSQEDCR+H10CxOELSZx4d56NhBbSOAyo0TPfPMuRi4g+ziTRM+1E4wgCTYBXYlFPc1g
+	DSICahIT2w6xgNjMAg4Smz83gtUIC/hKrFj8C8xmEVCVOPr1JtgyXgEXidNP/rNCLJOTmPJ7
+	AfsERu4FjAyrGOUSc0pzdXMTM3OKU5N1i5MT8/JSi3SN9HIzS/RSU0o3MUJ8z7uD8f86mUOM
+	AhyMSjy8M6aJBAuxJpYVV+YeYpTkYFIS5f24HCjEl5SfUpmRWJwRX1Sak1p8iFGCg1lJhDei
+	BijHm5JYWZValA+TkuZgURLnVVui7ickkJ5YkpqdmlqQWgSTleHgUJLgrVwB1ChYlJqeWpGW
+	mVOCkGbi4AQZziUlUpyal5JalFhakhEPCvT4YmCog6R4gPa2grTzFhck5gJFIVpPMSpKifNu
+	ADlWACSRUZoHNxYW0a8YxYG+FOadBtLOA0wGcN2vgAYzAQ028wMbXJKIkJJqYGSIDTOb9olX
+	br9k8/E6dv+pm1K89rQK/0hOveoSO7GscdUHjh19z+T/8lx6ISy/MbjunlDE8Zl7rjzru2J7
+	7oC4T7/xhQXPMv5mszxWLA3l8ZwhUr9afGtAyPO1UldXd+6QL3Hb+/k8Jz+H2Squ3xON5Tf7
+	/yqddd2To3O37bx/y1RWrXoqeE2JpTgj0VCLuag4EQAGwKsqwwIAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243232>
 
-In record_author_date() & parse_gpg_output() ,using skip_prefix() instead of
-starts_with() is more elegant and abstracts away the details.
-
-Helped-by: Michael Haggerty <mhagger@alum.mit.edu>
-Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
-Patch V2 Corrected email formatting ,reapplied the implementation according to suggestions.
-	Thanks to Michael Haggerty.
+A trivial little cleanup.
 
-This is in respect to GSoC microproject #10.
+ cache-tree.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-In record_author_date(), extra and useless calls to strlen due to using starts_with()
-were removed by using skip_prefix(). Extra variable "skip" was used as "buf" is used in 
-for loop update check.
-
-Other usages of starts_with() in the same file can be found with,
-
-$ grep -n starts_with commit.c
-
-1116:		else if (starts_with(line, gpg_sig_header) &&
-1196:		if (starts_with(buf, sigcheck_gpg_status[i].check + 1)) {
-
-The starts_with() in line 1116 was left as it is, as strlen values were pre generated as 
-global variables.
-The starts_with() in line 1196 was replaced as it abstracts way the skip_prefix part by
-directly using the function.
-Also skip_prefix() is inline when compared to starts_with().
-
- commit.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
-
-diff --git a/commit.c b/commit.c
-index 6bf4fe0..668c703 100644
---- a/commit.c
-+++ b/commit.c
-@@ -548,7 +548,7 @@ define_commit_slab(author_date_slab, unsigned long);
- static void record_author_date(struct author_date_slab *author_date,
- 			       struct commit *commit)
- {
--	const char *buf, *line_end;
-+	const char *buf, *line_end, *skip;
- 	char *buffer = NULL;
- 	struct ident_split ident;
- 	char *date_end;
-@@ -566,14 +566,15 @@ static void record_author_date(struct author_date_slab *author_date,
- 	     buf;
- 	     buf = line_end + 1) {
- 		line_end = strchrnul(buf, '\n');
--		if (!starts_with(buf, "author ")) {
-+		if (!(skip = skip_prefix(buf, "author "))) {
- 			if (!line_end[0] || line_end[1] == '\n')
- 				return; /* end of header */
- 			continue;
- 		}
-+		buf = skip;
- 		if (split_ident_line(&ident,
--				     buf + strlen("author "),
--				     line_end - (buf + strlen("author "))) ||
-+				     buf,
-+				     line_end - buf) ||
- 		    !ident.date_begin || !ident.date_end)
- 			goto fail_exit; /* malformed "author" line */
- 		break;
-@@ -1193,9 +1194,9 @@ static void parse_gpg_output(struct signature_check *sigc)
- 	for (i = 0; i < ARRAY_SIZE(sigcheck_gpg_status); i++) {
- 		const char *found, *next;
- 
--		if (starts_with(buf, sigcheck_gpg_status[i].check + 1)) {
-+		if (found = skip_prefix(buf, sigcheck_gpg_status[i].check + 1)) {
- 			/* At the very beginning of the buffer */
--			found = buf + strlen(sigcheck_gpg_status[i].check + 1);
-+			;
- 		} else {
- 			found = strstr(buf, sigcheck_gpg_status[i].check);
- 			if (!found)
+diff --git a/cache-tree.c b/cache-tree.c
+index 0bbec43..7f63c23 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -565,7 +565,7 @@ static struct cache_tree *cache_tree_find(struct cache_tree *it, const char *pat
+ 			return NULL;
+ 		it = sub->cache_tree;
+ 		if (slash)
+-			while (*slash && *slash == '/')
++			while (*slash == '/')
+ 				slash++;
+ 		if (!slash || !*slash)
+ 			return it; /* prefix ended with slashes */
 -- 
 1.9.0
