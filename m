@@ -1,84 +1,96 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: Help needed: Tests failed While replacing char array with strbuf
- in bulk-checkin.c
-Date: Mon, 3 Mar 2014 17:14:26 -0500
-Message-ID: <CAPig+cTE7wtVpmjN=p56JB6avL8n_JhDC6g5cAgGcmJQ8OVt5g@mail.gmail.com>
-References: <d7af2c2bcb07168ecddedf76ca776cd0@students.iiit.ac.in>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: My advice for GSoC applicants
+Date: Mon, 03 Mar 2014 14:29:10 -0800
+Message-ID: <xmqqa9d6or0p.fsf@gitster.dls.corp.google.com>
+References: <53145D48.3040603@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>
-To: "saikrishna.sripada" <saikrishna.sripada@students.iiit.ac.in>
-X-From: git-owner@vger.kernel.org Mon Mar 03 23:14:34 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git discussion list <git@vger.kernel.org>,
+	Dmitry Dolzhenko <dmitrys.dolzhenko@yandex.ru>,
+	Sun He <sunheehnus@gmail.com>,
+	Brian Gesiak <modocache@gmail.com>,
+	Tanay Abhra <tanayabh@gmail.com>,
+	Kyriakos Georgiou <kyriakos.a.georgiou@gmail.com>,
+	Siddharth Goel <siddharth98391@gmail.com>,
+	Guanglin Xu <mzguanglin@gmail.com>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Alberto Corona <albcoron@gmail.com>,
+	Jacopo Notarstefano <jacopo.notarstefano@gmail.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Mon Mar 03 23:29:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKb85-0006F4-Lw
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 23:14:34 +0100
+	id 1WKbMM-0008In-Mm
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 23:29:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755074AbaCCWO2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2014 17:14:28 -0500
-Received: from mail-yk0-f172.google.com ([209.85.160.172]:38589 "EHLO
-	mail-yk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754982AbaCCWO1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2014 17:14:27 -0500
-Received: by mail-yk0-f172.google.com with SMTP id 200so12138235ykr.3
-        for <git@vger.kernel.org>; Mon, 03 Mar 2014 14:14:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=M7nzd3dq9n9sVHu/pYT3wX2uLhVFpE1kVoEU4PnfrHo=;
-        b=C6nVM0LNQNOylmjgHjx9HXaYCM2lm2ct5ESbvo9VUfsYCtaLMdkoSJX2NShd/LXpge
-         o2Z79Rwib9fBWZlj9H86uTUrcMfMjBLkL3NAjb5++VrFaKYA/5cyrTGRPfFC5HDFuyde
-         5U8zdpmRAgYmFpD687z3W+QYT9enBCvgoANhpcqUvEbqQgwGK676wGeCB11vormdBoUb
-         RnD1LVJQYzXvrykUur7fpfs5Ntynr9szTWkVnoxz13oVVKxerefyK7wwaf92Q/VkLi2X
-         N0pXRtkhFOC+NsN5cjmdf7NHpVSKxVz71Ye6046RawoQeQ9W8Fvqodyj5Zw5/Ond1uEb
-         hNtA==
-X-Received: by 10.236.120.147 with SMTP id p19mr24821286yhh.6.1393884866904;
- Mon, 03 Mar 2014 14:14:26 -0800 (PST)
-Received: by 10.170.180.195 with HTTP; Mon, 3 Mar 2014 14:14:26 -0800 (PST)
-In-Reply-To: <d7af2c2bcb07168ecddedf76ca776cd0@students.iiit.ac.in>
-X-Google-Sender-Auth: bHfqgAVQ5cgwk8NlSn7XHMzRo5U
+	id S1755107AbaCCW3O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2014 17:29:14 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60406 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754906AbaCCW3N (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2014 17:29:13 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C1D7D718A0;
+	Mon,  3 Mar 2014 17:29:12 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=hJwNq0/S3ZkoABPlcNw1fjE/kjc=; b=dTkm1o
+	CVToJMcspfU2NKPu5r7HboqmcKyfSiPaLuCGXNUKw+N0/CGSz7Fm0EJIOzzMe2fR
+	TisyrMo8GOrttuspWK9wZj3FhMU6gTsp0hmd6yzLBf9muvgClm7a5l8dUl66pr4n
+	NJNipsg2s3Ogqkqro+2g4g7hT0ee9WCB01UGk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Xq5sBlvVzjmyEwKPkLjd3IX23gTSmeMm
+	qWkKKnw+xfyhHAzNfF9Myiy68lLZUodUPtLw68DiuvkVBJCXlixCimcEPeoe/iyq
+	lAnv6isRulmWlXT//WxnIbh5OK3MGb12MMGqY4S4HMSn9nKSCsuAJV1m4Sdo3aAw
+	SvpmJz/cWVk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A95BF7189F;
+	Mon,  3 Mar 2014 17:29:12 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D6EF97189C;
+	Mon,  3 Mar 2014 17:29:11 -0500 (EST)
+In-Reply-To: <53145D48.3040603@alum.mit.edu> (Michael Haggerty's message of
+	"Mon, 03 Mar 2014 11:45:28 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 3E8B3BE0-A323-11E3-B621-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243276>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243277>
 
-On Mon, Mar 3, 2014 at 4:11 PM, saikrishna.sripada
-<saikrishna.sripada@students.iiit.ac.in> wrote:
-> I am trying do complete the microproject 4, inorder to apply to GSOC.
-> I have made the below changes:
->
-> https://gist.github.com/anhsirksai/9334565
->
-> Post my changes compilation is succes in the source directory.
-> But when I ran the tests[make in t/ directory] my tests are failing saying
->
-> "
->  free(): invalid pointer: 0x3630376532353636 ***
-> ======= Backtrace: =========
-> /lib/x86_64-linux-gnu/libc.so.6(+0x7eb96)[0x2b5f3b540b96]
-> /home/saikrishna/Desktop/libcloud-0.14.1/sai/git/git[0x4fb829]
-> /home/saikrishna/Desktop/libcloud-0.14.1/sai/git/git[0x47d425]
-> /home/saikrishna/Desktop/libcloud-0.14.1/sai/git/git[0x4064ad]
-> /home/saikrishna/Desktop/libcloud-0.14.1/sai/git/git[0x405a04]
-> /home/saikrishna/Desktop/libcloud-0.14.1/sai/git/git[0x404cbd]
-> /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xed)[0x2b5f3b4e376d]
-> /home/saikrishna/Desktop/libcloud-0.14.1/sai/git/git[0x405109]
-> "
->
-> Can some one please help me with the memory allacation and strbuf_release()
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-Read the microproject text carefully and _fully_. It provides the clue
-you need to understand the problem.
+> Based on my experience so far as a first-time Google Summer of Code
+> mentor, I just wrote a blog article containing some hopefully useful
+> advice for students applying to the program.  Please note that this is
+> my personal opinion only and doesn't necessarily reflect the views of
+> the Git/libgit2 projects as a whole.
+>
+>     My secret tip for GSoC success
+>
+> http://softwareswirl.blogspot.com/2014/03/my-secret-tip-for-gsoc-success.html
 
-    Rewrite bulk-checkin.c:finish_bulk_checkin() to use a strbuf for
-    handling packname, and explain why this is useful. Also check if
-    the first argument of pack-write.c:finish_tmp_packfile() can be
-    made const.
+Thanks for writing this.
 
-If, after making a closer examination of the mentioned functions, the
-problem still eludes you, ask here again.
+Also thanks for the MicroProject approach to introduce potential
+students and the community.
+
+Multiple students seem to be hitting the same microprojects (aka "we
+are running out of micros"), which might be a bit unfortunate.  I
+think the original plan might have been that for a student candidate
+to pass, his-or-her patch must hit my tree and queued somewhere, but
+with these duplicates I do not think it is fair to disqualify those
+who interacted with reviewers well but solved an already solved
+micro.
+
+Even with the duplicates I think we are learning how well each
+student respond to reviews (better ones even seem to pick up lessons
+from reviews on others' threads that tackle micros different from
+their own) and what his-or-her general cognitive ability is.
