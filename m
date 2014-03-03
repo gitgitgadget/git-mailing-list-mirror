@@ -1,105 +1,114 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 1/2] test-lib: tests skipped by GIT_SKIP_TESTS say so
-Date: Mon, 3 Mar 2014 17:59:15 -0500
-Message-ID: <CAPig+cQgYOz7rDax=HFNG9mr-H1FaoL-ss2mgdpMazPS4pWbNQ@mail.gmail.com>
-References: <1393842298-5944-1-git-send-email-ilya.bobyr@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Thomas Rast <tr@thomasrast.ch>
-To: Ilya Bobyr <ilya.bobyr@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 03 23:59:22 2014
+From: Max Horn <max@quendi.de>
+Subject: Re: [PATCH V2] commit.c: Use skip_prefix() instead of starts_with()
+Date: Mon, 3 Mar 2014 23:59:20 +0100
+Message-ID: <176A3D83-AFFB-4EF4-A1CB-3A953F692166@quendi.de>
+References: <1393862398-2989-1-git-send-email-tanayabh@gmail.com> <xmqqiorvoyoo.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0 (Mac OS X Mail 6.6 \(1510\))
+Content-Type: multipart/signed; boundary="Apple-Mail=_85E49313-5AC6-44C2-9A53-5708160A414E"; protocol="application/pgp-signature"; micalg=pgp-sha256
+Cc: Tanay Abhra <tanayabh@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 03 23:59:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKbpQ-0003fg-G6
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 23:59:20 +0100
+	id 1WKbpb-0003nB-7B
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 23:59:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755235AbaCCW7Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2014 17:59:16 -0500
-Received: from mail-yh0-f42.google.com ([209.85.213.42]:57896 "EHLO
-	mail-yh0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755005AbaCCW7Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2014 17:59:16 -0500
-Received: by mail-yh0-f42.google.com with SMTP id a41so4232184yho.15
-        for <git@vger.kernel.org>; Mon, 03 Mar 2014 14:59:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=hXBRII9a2pNGtR01g25hJmslwWmLTZIIpwCxADBpDN4=;
-        b=R+2W8imTuHPbmoyMLM5KeeKJURehf2edpZbgj5/3W28w7oPFaSoXsN0ozSPy50a9nr
-         k3TgXARr+zUuKnDAZR2HqkDcwdPtRe1b3Wnhwxp1ezWtx2cQMnGPfYUGTqvnp4tEprmF
-         g1wPCxe3T6Q4oMQW9zzjSxEuVXjnRPmPrgf45BVbSn2uyYFi/4JL9hUg6UODdPHAPBs2
-         eiyCa0+OYbraKZnkATr9+8z4Mtx1T3tHrgGtwcR+B8BoaRB93A3Y8KEMXioKGf62Ez5l
-         IpnTtMV0pl6ExkG959L0bi6q+gH24R4Y0utFP3lVu7C0YO7lnPqj3OthqsK/dvf4PDzR
-         wPQg==
-X-Received: by 10.236.46.18 with SMTP id q18mr25111426yhb.21.1393887555559;
- Mon, 03 Mar 2014 14:59:15 -0800 (PST)
-Received: by 10.170.180.195 with HTTP; Mon, 3 Mar 2014 14:59:15 -0800 (PST)
-In-Reply-To: <1393842298-5944-1-git-send-email-ilya.bobyr@gmail.com>
-X-Google-Sender-Auth: yLU7a3VEpJg9qDCuViIPf8JDuYU
+	id S1755287AbaCCW71 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2014 17:59:27 -0500
+Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:52121 "EHLO
+	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755005AbaCCW70 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Mar 2014 17:59:26 -0500
+Received: from hsi-kbw-46-223-222-244.hsi.kabel-badenwuerttemberg.de ([46.223.222.244] helo=[192.168.50.103]); authenticated
+	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
+	id 1WKbpU-000894-DV; Mon, 03 Mar 2014 23:59:24 +0100
+In-Reply-To: <xmqqiorvoyoo.fsf@gitster.dls.corp.google.com>
+X-Mailer: Apple Mail (2.1510)
+X-bounce-key: webpack.hosteurope.de;max@quendi.de;1393887566;0d456562;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243299>
 
-On Mon, Mar 3, 2014 at 5:24 AM, Ilya Bobyr <ilya.bobyr@gmail.com> wrote:
-> We used to show "(missing )" next to tests skipped because they are
-> specified in GIT_SKIP_TESTS.  Use "(matched by GIT_SKIP_TESTS)" instead.
 
-Bikeshedding: That's pretty verbose. Perhaps just say "(excluded)"?
+--Apple-Mail=_85E49313-5AC6-44C2-9A53-5708160A414E
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=us-ascii
 
-> ---
->  t/test-lib.sh |   13 ++++++++-----
->  1 files changed, 8 insertions(+), 5 deletions(-)
->
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index 1531c24..89a405b 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -446,25 +446,28 @@ test_finish_ () {
->
->  test_skip () {
->         to_skip=
-> +       skipped_reason=
->         if match_pattern_list $this_test.$test_count $GIT_SKIP_TESTS
->         then
->                 to_skip=t
-> +               skipped_reason="matched GIT_SKIP_TESTS"
->         fi
->         if test -z "$to_skip" && test -n "$test_prereq" &&
->            ! test_have_prereq "$test_prereq"
->         then
->                 to_skip=t
-> -       fi
-> -       case "$to_skip" in
-> -       t)
-> +
->                 of_prereq=
->                 if test "$missing_prereq" != "$test_prereq"
->                 then
->                         of_prereq=" of $test_prereq"
->                 fi
-> -
-> +               skipped_reason="missing $missing_prereq${of_prereq}"
-> +       fi
-> +       case "$to_skip" in
-> +       t)
->                 say_color skip >&3 "skipping test: $@"
-> -               say_color skip "ok $test_count # skip $1 (missing $missing_prereq${of_prereq})"
-> +               say_color skip "ok $test_count # skip $1 ($skipped_reason)"
->                 : true
->                 ;;
->         *)
-> --
-> 1.7.9
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+On 03.03.2014, at 20:43, Junio C Hamano <gitster@pobox.com> wrote:
+
+> Tanay Abhra <tanayabh@gmail.com> writes:
+>=20
+>> @@ -1193,9 +1194,9 @@ static void parse_gpg_output(struct =
+signature_check *sigc)
+>> 	for (i =3D 0; i < ARRAY_SIZE(sigcheck_gpg_status); i++) {
+>> 		const char *found, *next;
+>>=20
+>> -		if (starts_with(buf, sigcheck_gpg_status[i].check + 1)) =
+{
+>> +		if (found =3D skip_prefix(buf, =
+sigcheck_gpg_status[i].check + 1)) {
+>> 			/* At the very beginning of the buffer */
+>> -			found =3D buf + =
+strlen(sigcheck_gpg_status[i].check + 1);
+>> +			;
+>> 		} else {
+>> 			found =3D strstr(buf, =
+sigcheck_gpg_status[i].check);
+>> 			if (!found)
+>=20
+> This hunk looks good.  It can be a separate patch but they are both
+> minor changes so it is OK to have it in a single patch.
+
+Hm, but that hunk also introduces an assignment in a conditional, and =
+introduces an empty block. Maybe like this?
+
+
+diff --git a/commit.c b/commit.c
+index 6bf4fe0..0ee0725 100644
+--- a/commit.c
++++ b/commit.c
+@@ -1193,10 +1193,8 @@ static void parse_gpg_output(struct =
+signature_check *sigc)
+        for (i =3D 0; i < ARRAY_SIZE(sigcheck_gpg_status); i++) {
+                const char *found, *next;
+
+-               if (starts_with(buf, sigcheck_gpg_status[i].check + 1)) =
+{
+-                       /* At the very beginning of the buffer */
+-                       found =3D buf + =
+strlen(sigcheck_gpg_status[i].check + 1);
+-               } else {
++               found =3D skip_prefix(buf, sigcheck_gpg_status[i].check =
++ 1);
++               if (!found) {
+                        found =3D strstr(buf, =
+sigcheck_gpg_status[i].check);
+                        if (!found)
+                                continue;
+
+
+
+--Apple-Mail=_85E49313-5AC6-44C2-9A53-5708160A414E
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP using GPGMail
+
+-----BEGIN PGP SIGNATURE-----
+Comment: GPGTools - http://gpgtools.org
+
+iF4EAREIAAYFAlMVCUwACgkQIpJVslrhe1l27AD9EuLemwKnmaTF/1sNWdzqtgZI
+0CZZveEZnEe3E7MSl3IA/2ooC7HMm8aBajvt9pOgstRnU7CGz5XyRBGqfNSKwUbD
+=yaWL
+-----END PGP SIGNATURE-----
+
+--Apple-Mail=_85E49313-5AC6-44C2-9A53-5708160A414E--
