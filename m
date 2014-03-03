@@ -1,91 +1,77 @@
-From: Faiz Kothari <faiz.off93@gmail.com>
-Subject: Fwd: [PATCH] implemented strbuf_write_or_die()
-Date: Tue, 4 Mar 2014 00:18:29 +0530
-Message-ID: <CAFbjVck=yfRfhFtmLedD9A+ddeo7VcJ-km=6NBgmYXtmSfBRmQ@mail.gmail.com>
-References: <1393672871-28281-1-git-send-email-faiz.off93@gmail.com>
-	<CAJr59C0e22OuDWU5Xc0A=cc+zY32nfum6SXTDU3wLCPyFPF70A@mail.gmail.com>
-	<CAPig+cRgc4UtmJMieS9Mdrz7vjUNiu7QFu1PSBppKo22Ln5G-A@mail.gmail.com>
-	<xmqqvbvvqglc.fsf@gitster.dls.corp.google.com>
-	<CAFbjVckhU7NHzLjqPo5WkoBwVLrOLg=CS6mHSKkQstUxB31_eA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] branch.c: change install_branch_config() to use skip_prefix()
+Date: Mon, 03 Mar 2014 10:49:27 -0800
+Message-ID: <xmqq61nvqfrc.fsf@gitster.dls.corp.google.com>
+References: <1393775755-15359-1-git-send-email-mzguanglin@gmail.com>
+	<CAPig+cRy2Jt_3DAS=ARzN-8HT3rdMCSGP5QfU8sJZGwqsJTG3g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 03 19:48:36 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Guanglin Xu <mzguanglin@gmail.com>, Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Mon Mar 03 19:49:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKXul-0006rQ-FM
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 19:48:35 +0100
+	id 1WKXvj-0007Xp-N3
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 19:49:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754158AbaCCSsb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2014 13:48:31 -0500
-Received: from mail-la0-f52.google.com ([209.85.215.52]:59808 "EHLO
-	mail-la0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753842AbaCCSsa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2014 13:48:30 -0500
-Received: by mail-la0-f52.google.com with SMTP id ec20so4095166lab.39
-        for <git@vger.kernel.org>; Mon, 03 Mar 2014 10:48:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        bh=fNPGunZ58OUgyaEaRqt+Fmne/uWE2hK2P5NIaBnzCwM=;
-        b=IBKeS8cV/uhqsmQ8Al8yjaH9cdfgxo9z9NFkQZt3VOSMWiyUMCKQE/hPRusvFAni7I
-         ynW4bLxg7f+B6VZHZq1jJx/j4FRX45ZeFIqGlE4KmtR1zvQOgIxdEDyLsJFhLjTiFn8T
-         v7sCpaCcFf+XWtwaLfAYP9mh4UEP5I3HlFMLwe7+l7lEs+HzFDQ5UzS5PvF0FCVvhdc/
-         9Ku16KBPcZBCMhj9a5GgwYbBWFj/ai6gJPBLI+HiUL7UfNg13Y2NEHi6+bp5/kY7zKbW
-         RN6NguUdno+Qn/gbe8WNYM5Jl6SpO4gaZNs2h4TiqjQitQXMp51Bao+R3Igdm3oHfSwC
-         KjsA==
-X-Received: by 10.112.13.133 with SMTP id h5mr2292575lbc.67.1393872509384;
- Mon, 03 Mar 2014 10:48:29 -0800 (PST)
-Received: by 10.114.186.35 with HTTP; Mon, 3 Mar 2014 10:48:29 -0800 (PST)
-In-Reply-To: <CAFbjVckhU7NHzLjqPo5WkoBwVLrOLg=CS6mHSKkQstUxB31_eA@mail.gmail.com>
+	id S1754170AbaCCStb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2014 13:49:31 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38174 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754005AbaCCStb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2014 13:49:31 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9CBCE6F956;
+	Mon,  3 Mar 2014 13:49:30 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=BV7PfasWKYdma//pb0HIujfNA38=; b=iV8Mf+
+	6BydD7ezt/porZJxzAuN13xiTkk69MnkZwzC8f0uEgI0VruL54gIQ2+3kRwXwfrW
+	ToLF7+/cBspPEacY9xk1B/sVDBq7D0mYSmPar03ZkUMtsQgncwLOFZqYYTk7e/RX
+	VJ7wbSJl4g7onSXHuxi7AzZID726RJdTIBRRE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=tVHiiy95XcDG+txIhiDPjGQ8So2C5SZk
+	qKOECJh9mN3HFyrmWB9PUxgZmjcauO3PJ/SRnTqVVIydyYrn/ACYCdZwsoLRf2M4
+	SrR7YL0HsoIKcDoHP84YH5wstcmmBYPm0JoAUkiZozKeylwNgA2WH7CX5sgPc0ee
+	AEos8sDLH7k=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 80ABB6F951;
+	Mon,  3 Mar 2014 13:49:30 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A2E236F94C;
+	Mon,  3 Mar 2014 13:49:29 -0500 (EST)
+In-Reply-To: <CAPig+cRy2Jt_3DAS=ARzN-8HT3rdMCSGP5QfU8sJZGwqsJTG3g@mail.gmail.com>
+	(Eric Sunshine's message of "Sun, 2 Mar 2014 17:56:09 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 8D480AA2-A304-11E3-8E08-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243253>
 
-On Tue, Mar 4, 2014 at 12:01 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
->
->> On Sat, Mar 1, 2014 at 7:51 AM, He Sun <sunheehnus@gmail.com> wrote:
->>> 2014-03-01 19:21 GMT+08:00 Faiz Kothari <faiz.off93@gmail.com>:
->>>> diff --git a/remote-curl.c b/remote-curl.c
->>>> index 10cb011..dee8716 100644
->>>> --- a/remote-curl.c
->>>> +++ b/remote-curl.c
->>>> @@ -634,7 +634,7 @@ static int rpc_service(struct rpc_state *rpc, struct discovery *heads)
->>>>         if (start_command(&client))
->>>>                 exit(1);
->>>>         if (preamble)
->>>> -               write_or_die(client.in, preamble->buf, preamble->len);
->>>> +               strbuf_write_or_die(client.in, preamble);
->>>>         if (heads)
->>>>                 write_or_die(client.in, heads->buf, heads->len);
->>>
->>> This should be changed. May be you can use Ctrl-F to search write_or_die().
->>> Or if you are using vim, use "/ and n" to find all.
->>
->> It's not obvious from the patch fragment, but 'heads' is not a strbuf,
->> so Faiz correctly left this invocation alone.
->
-> That is a very good sign why this change is merely a code-churn and
-> not an improvement, isn't it?  We know (and any strbuf user should
-> know) that ->buf and ->len are the ways to learn the pointer and the
-> length the strbuf holds.  Why anybody thinks it is benefitial to
-> introduce another function that is _only_ for writing out strbuf and
-> cannot be used to write out a plain buffer is simply beyond me.
->
-Hi,
-Thanks for the feedback. Yes, I do realize, its kind of a code churn.
-I didn't realize it until I looked at the sign you pointed out.
-But it was a good exercise to go through the code as this is one of
-the GSoC microprojects.
-Sorry, it didn't turn out to be a beneficial one. My bad.
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-Thanks a lot again for the suggestions and feedback.
+>> diff --git a/branch.c b/branch.c
+>> index 723a36b..ca4e824 100644
+>> --- a/branch.c
+>> +++ b/branch.c
+>> @@ -50,7 +50,7 @@ static int should_setup_rebase(const char *origin)
+>>  void install_branch_config(int flag, const char *local, const char *origin, const char *remote)
+>>  {
+>>         const char *shortname = remote + 11;
+>> -       int remote_is_branch = starts_with(remote, "refs/heads/");
+>> +       int remote_is_branch = (NULL != skip_prefix(remote ,"refs/heads/"));
+>
+> This actually makes the code more difficult to read and understand.
+> There's a more fundamental reason to use skip_prefix() here. See if
+> you can figure it out. (Hint: shortname)
 
--Faiz
+I've already queued 0630aa49 (branch: use skip_prefix() in
+install_branch_config(), 2014-02-28) on this topic, by the way.
