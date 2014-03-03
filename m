@@ -1,114 +1,104 @@
 From: Ilya Bobyr <ilya.bobir@gmail.com>
-Subject: Re: [PATCH 2/2] test-lib: GIT_TEST_ONLY to run only specific tests
-Date: Mon, 03 Mar 2014 15:48:41 -0800
-Message-ID: <531514D9.4000101@gmail.com>
-References: <1393842298-5944-1-git-send-email-ilya.bobyr@gmail.com>	<1393842298-5944-2-git-send-email-ilya.bobyr@gmail.com>	<CAPig+cT46ekT87TuoTtwvt0G+DraB9cdgW1wd6NsodjJ5FmJrA@mail.gmail.com> <xmqqob1mn9t6.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH 1/2] test-lib: tests skipped by GIT_SKIP_TESTS say so
+Date: Mon, 03 Mar 2014 15:50:19 -0800
+Message-ID: <5315153B.5030809@gmail.com>
+References: <CAPig+cRnfDta9FofgH2jSdivzKvJiHwnzPZ5PoO4UTpWQLSH4w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
 Cc: Ilya Bobyr <ilya.bobyr@gmail.com>, Git List <git@vger.kernel.org>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Thomas Rast <tr@thomasrast.ch>
-To: Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue Mar 04 00:48:55 2014
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Tue Mar 04 00:50:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKcbM-0004VP-VP
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 00:48:53 +0100
+	id 1WKccx-0005h3-Cs
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 00:50:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755292AbaCCXst (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2014 18:48:49 -0500
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:49836 "EHLO
-	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755182AbaCCXss (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2014 18:48:48 -0500
-Received: by mail-pa0-f41.google.com with SMTP id fa1so528869pad.0
-        for <git@vger.kernel.org>; Mon, 03 Mar 2014 15:48:48 -0800 (PST)
+	id S1755466AbaCCXu1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2014 18:50:27 -0500
+Received: from mail-pd0-f176.google.com ([209.85.192.176]:60301 "EHLO
+	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755248AbaCCXu0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2014 18:50:26 -0500
+Received: by mail-pd0-f176.google.com with SMTP id r10so4344774pdi.35
+        for <git@vger.kernel.org>; Mon, 03 Mar 2014 15:50:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=message-id:date:from:user-agent:mime-version:to:cc:subject
          :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=5FN0n8QWuhg44VFTXUSDFBq+D5aSIAb4vBNOZlkNaLc=;
-        b=hq5R01gtWONCcd9pTLqVXDX5dZP2Yq88LnqVS3owYInQZTAT64KUQpVf5aCbYnWh8L
-         h+K9oS38qYGlhF2ctFEkCi/CtHsnQb8L5RLioiRkI+h1WABETOnMFll/Oti9Z0NAeM9k
-         VEN49aoxlHs8o8lANqjBdyAFfhJBndpCwBFVPPysFVeKGP0nv3P+MLfYZNrJ9YxTTyv7
-         PhbzOmPy/ApJIDFmmYmt02P7e8TkcIH8s7RlF9U0cYO3Hmqhsyq2IIB+HEvkQltMmesg
-         Tyq+Qe9nPDwngjDralh9y082WrXoemn86b3MVBdkf9vk2M3Na3uUDA+mdEgGQpo7IiHC
-         yLDQ==
-X-Received: by 10.66.142.170 with SMTP id rx10mr2324389pab.117.1393890528124;
-        Mon, 03 Mar 2014 15:48:48 -0800 (PST)
+        bh=+OhJHc3Q17dM3fh3izzVwj0a3iHfGE5Jzu+NVbo6cZs=;
+        b=NmqdkhUxoVO50pZI2Z3QHMoDzNRDfnyUs3v1L3hTMpMkuYPl38lTV0t2ZBcj2+/w0p
+         IG8t2V6DqyaNN3khKYm79rkuRf8UZ4AYytbdGsYdXt8LLsUE/ZeG/aQ0AR8F4D7vNSra
+         E0OSdT3LLOUVjQgM/HQNDN1CqwK1bKgYeWHRKXGZ4KlJguwiXLwna3IpNtb/aoNSA32q
+         OPb2hyO2Wr/lfDUKl94FBcNfiOb5Ywwk3/8dAtXIfKIqhKBmI1XUY6q5T++ZUjG7cl7n
+         Au7/3ONSebp0sewrqng/3jMJ2L0plvBTrPDu5kXkbrgZg2yPO23HYCkiQ9XbLsN1FkAr
+         8bZw==
+X-Received: by 10.68.133.138 with SMTP id pc10mr22297030pbb.98.1393890626326;
+        Mon, 03 Mar 2014 15:50:26 -0800 (PST)
 Received: from [192.168.1.2] (c-50-136-172-14.hsd1.ca.comcast.net. [50.136.172.14])
-        by mx.google.com with ESMTPSA id eb5sm92497016pad.22.2014.03.03.15.48.47
+        by mx.google.com with ESMTPSA id vb7sm24525893pbc.13.2014.03.03.15.50.25
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 03 Mar 2014 15:48:47 -0800 (PST)
+        Mon, 03 Mar 2014 15:50:25 -0800 (PST)
 User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:27.0) Gecko/20100101 Thunderbird/27.0
-In-Reply-To: <xmqqob1mn9t6.fsf@gitster.dls.corp.google.com>
+In-Reply-To: <CAPig+cRnfDta9FofgH2jSdivzKvJiHwnzPZ5PoO4UTpWQLSH4w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243315>
 
-On 3/3/2014 3:26 PM, Junio C Hamano wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
+On 3/3/2014 3:18 PM, Eric Sunshine wrote:
+> On Mon, Mar 3, 2014 at 6:12 PM, Ilya Bobyr <ilya.bobir@gmail.com> wrote:
+>> On 3/3/2014 2:59 PM, Eric Sunshine wrote:
+>>> On Mon, Mar 3, 2014 at 5:24 AM, Ilya Bobyr <ilya.bobyr@gmail.com> wrote:
+>>>> We used to show "(missing )" next to tests skipped because they are
+>>>> specified in GIT_SKIP_TESTS.  Use "(matched by GIT_SKIP_TESTS)" instead.
+>>> Bikeshedding: That's pretty verbose. Perhaps just say "(excluded)"?
+>>
+>> The next patch adds another reason for the test to be skipped, so it seems
+>> reasonable to say why exactly.
+>> The patch actually makes it say "matched GIT_SKIP_TESTS".
+>> It looks OK on the console.
+> Still just bikeshedding:
 >
->> On Mon, Mar 3, 2014 at 5:24 AM, Ilya Bobyr <ilya.bobyr@gmail.com> wrote:
->>> This is a counterpart to GIT_SKIP_TESTS.  Mostly useful when debugging.
->> To be grammatically similar to GIT_SKIP_TESTS, perhaps name it GIT_RUN_TESTS?
-> I actually do not like the interface to use two variables very much.
-> Can't we just allow negative entries on "to be skipped" list?
+> That new message in patch #2 says "not in GIT_TEST_ONLY", but isn't
+> "(excluded)" also applicable to that case? Is it important to be able
+> to distinguish between the two "excluded" reasons?
 >
-> That is
->
-> 	GIT_SKIP_TESTS='t9??? !t91??'
->
-> would skip nine-thousand series, but would run 91xx series, and all
-> the others are not excluded.
->
-> Simple rules to consider:
->
->   - If the list consists of _only_ negated patterns, pretend that
->     there is "unless otherwise specified with negatives, skip all
->     tests", i.e. treat GIT_SKIP_TESTS='!t91??' just the same way you
->     would treat GIT_SKIP_TESTS='* !t91??'.
->
->   - The orders should not matter for simplicity of the semantics;
->     before running each test, check if it matches any negative (and
->     run it if it matches, without looking at any positives), and
->     otherwise check if it matches any positive (and skip it if it
->     does not).
->
-> Hmm?
+> (No more bikeshedding for me.)
 
-I can do that.  But I am not sure that matches the use cases I had in 
-mind the best.
+Makes sense.  I guess it is unlikely you would want to use both include 
+and exclude filters in one run.
+On the other hand it seems nice to see the reason why it was skipped.
 
-First use case is that while developing I want to run tests frequently 
-and I have a specific test that I am working on at the moment.
-That test is broken and I am trying to fix it (TDD).
-I want to run just the initialization test(s) and then that specific test.
-Running everything is quite slow.
+Here are both options for comparison.  "Longer":
 
-GIT_RUN_ONLY addresses the TDD case.
+     $ GIT_SKIP_TESTS='t0000.[236789] t0001.??' ./t0001-init.sh
+     ok 1 - plain
+     ok 2 # skip plain nested in bare (matched GIT_SKIP_TESTS)
+     ok 3 # skip plain through aliased command, outside any git repo 
+(matched GIT_SKIP_TESTS)
+     not ok 4 - plain nested through aliased command # TODO known breakage
+     not ok 5 - plain nested in bare through aliased command # TODO 
+known breakage
+     ok 6 # skip plain with GIT_WORK_TREE (matched GIT_SKIP_TESTS)
 
-Second case is when I broke one or more tests and want to figure out 
-what is wrong.
-In this case running tests after the broken one will clutter the output 
-directory and will make debugging somewhat harder, especially if I am 
-not familiar with all the tests.
+and changed to "excluded":
 
-For the second case I was actually thinking that something like 
-"<t9100.32" would be useful, where 32 is the broken test.
+     $ GIT_SKIP_TESTS='t0000.[236789] t0001.??' ./t0001-init.sh
+     ok 1 - plain
+     ok 2 # skip plain nested in bare (excluded)
+     ok 3 # skip plain through aliased command, outside any git repo 
+(excluded)
+     not ok 4 - plain nested through aliased command # TODO known breakage
+     not ok 5 - plain nested in bare through aliased command # TODO 
+known breakage
+     ok 6 # skip plain with GIT_WORK_TREE (excluded)
 
-Maybe we can come up with an interface that covers all 3 cases?
-
-While exclusion can be used it adds an extra step to both cases, as you 
-need to mentally negate what you want first.
-
-It might be that we are looking at different use cases, as you are 
-talking about whole test suits.
+P.S. It seems that now the whole interface may change :)
