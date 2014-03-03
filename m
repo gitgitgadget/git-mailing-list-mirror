@@ -1,202 +1,108 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] submodule : Add --no-separate-git-dir option to add and
- update command.
-Date: Mon, 03 Mar 2014 17:45:09 +0000
-Message-ID: <5314BFA5.2030807@web.de>
-References: <1393858066.7891.20.camel@Naugrim>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Branch Name Case Sensitivity
+Date: Mon, 03 Mar 2014 09:51:52 -0800
+Message-ID: <xmqqsiqzrwzr.fsf@gitster.dls.corp.google.com>
+References: <CAJHY66EQD280QgXBCoZU4y_aqSEu3A1hXzeW7X-rtT6vMZ92oA@mail.gmail.com>
+	<xmqqvbw0xrl6.fsf@gitster.dls.corp.google.com>
+	<530FA0C1.3000109@web.de> <530FBB1D.3050505@gmail.com>
+	<CAJHY66FtC03YbJrbVn+adsePkYnVD2RGH1TGkzz2pKNBoee_iQ@mail.gmail.com>
+	<53102FB0.6040603@viscovery.net> <5310959D.709@gmail.com>
+	<xmqqk3cfuksd.fsf@gitster.dls.corp.google.com>
+	<CACsJy8A6etyFkxn3D7hjM9JgzmokPBARXrEncVuw1x+OOHJ_Lg@mail.gmail.com>
+	<xmqq7g8eu891.fsf@gitster.dls.corp.google.com>
+	<CAJHY66EP539ZsLJcmHcnRQcOqcLqXK-M45wME9DkKkqmumg8fA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Henri GEIST <geist.henri@laposte.net>
-X-From: git-owner@vger.kernel.org Mon Mar 03 18:45:25 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Karsten Blees <karsten.blees@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Lee Hopkins <leerhop@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 03 18:52:07 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKWvc-0004Je-KN
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 18:45:25 +0100
+	id 1WKX26-0008NG-IT
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 18:52:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753634AbaCCRpU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2014 12:45:20 -0500
-Received: from mout.web.de ([212.227.15.14]:56378 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753402AbaCCRpT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2014 12:45:19 -0500
-Received: from [192.168.1.102] ([90.174.2.29]) by smtp.web.de (mrweb004) with
- ESMTPA (Nemesis) id 0LiFT1-1Wyl9r3BRL-00nR2l for <git@vger.kernel.org>; Mon,
- 03 Mar 2014 18:45:18 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
-In-Reply-To: <1393858066.7891.20.camel@Naugrim>
-X-Enigmail-Version: 1.6
-X-Provags-ID: V03:K0:lHO8b4FQ8BrospKPywKFCwj8TmBnfNneg+hm5bsa89OoSSA+ovT
- EnsMBp0GUZThwZKxaSQDbd9AZxsivwfXhUfCr6RbHj2TYAmQIsPnT8RQGGZX2qntXq2hL3y
- 053nZytmFRr1v60S6zFE6Qvt7UdauC3Xu+exm1YVmhs//mAQ18+b8XnyBcpTGtW6bfeVcKf
- 2c27uYMZsUaOr2QWP5wKw==
+	id S1753078AbaCCRv7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2014 12:51:59 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34096 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752855AbaCCRv6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2014 12:51:58 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AE58970138;
+	Mon,  3 Mar 2014 12:51:57 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=DPQVhlH1dxDa+tMZ4mZ1axeAL4A=; b=B67sbM
+	rll1AIZq+hn2J3/uWJG2/0ZsvZYHc2uUxQNJHOqkf3vVRFXLe6xRaUpHx189WGB+
+	00DZhjAp3nVzFg+cd+bQoCCP4CFm+kZlYVpnU2Lvwc5BJYLOa9PWfoShn1pZ2Gve
+	ZjkkCKlOgbm4QwGAukmb3Zsn92l/AUsAvUUbY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Gj9FGMR/LJZieNXvkZFDyPj4IkpXNO31
+	F61UqqKuJp2KqWqPiUKGCTwWvXAinZcP6tunktwXqVo9OfUF749oSQSxt17BG1ao
+	RB9N8u624kRNu2eYMcf0iGKbfAKPDwVIiM5jmNLplguO+QU/4ZaEGNlcVuRQ6jjA
+	tQdFBGpzG1A=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 99AD570137;
+	Mon,  3 Mar 2014 12:51:57 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CDBE870133;
+	Mon,  3 Mar 2014 12:51:56 -0500 (EST)
+In-Reply-To: <CAJHY66EP539ZsLJcmHcnRQcOqcLqXK-M45wME9DkKkqmumg8fA@mail.gmail.com>
+	(Lee Hopkins's message of "Fri, 28 Feb 2014 21:42:12 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 834A3460-A2FC-11E3-83F1-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243238>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243239>
 
-Am 03.03.2014 14:47, schrieb Henri GEIST:
-> This new option prevent git submodule <add|update> to clone the missing
-> submodules with the --separate-git-dir option.
-> Then the submodule will be regular repository and their gitdir will not
-> be placed in the superproject gitdir/modules directory.
+Lee Hopkins <leerhop@gmail.com> writes:
 
-And what is your motivation for this? After all submodules containing
-a .git directory are second class citizens (because they can never be
-safely removed by regular git commands).
-
-> Signed-off-by: Henri GEIST <geist.henri@laposte.net>
+> I went ahead and took a stab at a solution. My solution is more
+> aggressive than a warning, I actually prevent the creation of
+> ambiguous refs. My changes are also in refs.c, which may not be
+> appropriate, but it seemed like the natural place.
+>
+> I have never contributed to Git (in fact this is my first dive into
+> the source) and my C is a bit rusty, so bear with me, this is just a
+> suggestion:
+>
 > ---
->  Documentation/git-submodule.txt |   18 ++++++++++++++++--
->  git-submodule.sh                |   22 ++++++++++++++++++++--
->  t/t7400-submodule-basic.sh      |   12 ++++++++++++
->  3 files changed, 48 insertions(+), 4 deletions(-)
-> 
-> diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-> index 21cb59a..303a475 100644
-> --- a/Documentation/git-submodule.txt
-> +++ b/Documentation/git-submodule.txt
-> @@ -10,13 +10,14 @@ SYNOPSIS
->  --------
->  [verse]
->  'git submodule' [--quiet] add [-b <branch>] [-f|--force] [--name <name>]
-> -	      [--reference <repository>] [--depth <depth>] [--] <repository> [<path>]
-> +	      [--reference <repository>] [--depth <depth>] [--no-separate-git-dir]
-> +	      [--] <repository> [<path>]
->  'git submodule' [--quiet] status [--cached] [--recursive] [--] [<path>...]
->  'git submodule' [--quiet] init [--] [<path>...]
->  'git submodule' [--quiet] deinit [-f|--force] [--] <path>...
->  'git submodule' [--quiet] update [--init] [--remote] [-N|--no-fetch]
->  	      [-f|--force] [--rebase|--merge|--checkout] [--reference <repository>]
-> -	      [--depth <depth>] [--recursive] [--] [<path>...]
-> +	      [--depth <depth>] [--recursive] [--no-separate-git-dir] [--] [<path>...]
->  'git submodule' [--quiet] summary [--cached|--files] [(-n|--summary-limit) <n>]
->  	      [commit] [--] [<path>...]
->  'git submodule' [--quiet] foreach [--recursive] <command>
-> @@ -107,6 +108,10 @@ is the superproject and submodule repositories will be kept
->  together in the same relative location, and only the
->  superproject's URL needs to be provided: git-submodule will correctly
->  locate the submodule using the relative URL in .gitmodules.
-> ++
-> +If `--no-separate-git-dir` is specified, missing submodules will be cloned
-> +has normal git repository without the option `--separate-git-dir` pointing
-> +to the modules directory of the superproject gitdir.
->  
->  status::
->  	Show the status of the submodules. This will print the SHA-1 of the
-> @@ -185,6 +190,10 @@ If the submodule is not yet initialized, and you just want to use the
->  setting as stored in .gitmodules, you can automatically initialize the
->  submodule with the `--init` option.
->  +
-> +If `--no-separate-git-dir` is specified, missing submodules will be cloned
-> +has normal git repository without the option `--separate-git-dir` pointing
-> +to the modules directory of the superproject gitdir.
-> ++
->  If `--recursive` is specified, this command will recurse into the
->  registered submodules, and update any nested submodules within.
->  +
-> @@ -363,6 +372,11 @@ for linkgit:git-clone[1]'s `--reference` and `--shared` options carefully.
->  	clone with a history truncated to the specified number of revisions.
->  	See linkgit:git-clone[1]
->  
-> +--no-separate-git-dir::
-> +	This option is valid for add and update commands. Specify that missing
-> +	submodules should be clonned as self contain repository without a
-> +	separate gitdir placed in the modules directory of the superproject
-> +	gitdir.
->  
->  <path>...::
->  	Paths to submodule(s). When specified this will restrict the command
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index a33f68d..36eaf31 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -5,11 +5,11 @@
->  # Copyright (c) 2007 Lars Hjemli
->  
->  dashless=$(basename "$0" | sed -e 's/-/ /')
-> -USAGE="[--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <repository>] [--] <repository> [<path>]
-> +USAGE="[--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <repository>] [--no-separate-git-dir] [--] <repository> [<path>]
->     or: $dashless [--quiet] status [--cached] [--recursive] [--] [<path>...]
->     or: $dashless [--quiet] init [--] [<path>...]
->     or: $dashless [--quiet] deinit [-f|--force] [--] <path>...
-> -   or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch] [-f|--force] [--rebase] [--reference <repository>] [--merge] [--recursive] [--] [<path>...]
-> +   or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch] [-f|--force] [--rebase] [--reference <repository>] [--merge] [--recursive] [--no-separate-git-dir] [--] [<path>...]
->     or: $dashless [--quiet] summary [--cached|--files] [--summary-limit <n>] [commit] [--] [<path>...]
->     or: $dashless [--quiet] foreach [--recursive] <command>
->     or: $dashless [--quiet] sync [--recursive] [--] [<path>...]"
-> @@ -36,6 +36,7 @@ update=
->  prefix=
->  custom_name=
->  depth=
-> +noseparategitdir=
->  
->  # The function takes at most 2 arguments. The first argument is the
->  # URL that navigates to the submodule origin repo. When relative, this URL
-> @@ -270,6 +271,17 @@ module_clone()
->  		quiet=-q
->  	fi
->  
-> +
-> +	if test -n "$noseparategitdir"
-> +	then
-> +		(
-> +			clear_local_git_env
-> +			git clone $quiet ${depth:+"$depth"} -n ${reference:+"$reference"} "$url" "$sm_path"
-> +		) ||
-> +		die "$(eval_gettext "Clone of '\$url' into submodule path '\$sm_path' failed")"
-> +		return
-> +	fi
-> +
->  	gitdir=
->  	gitdir_base=
->  	base_name=$(dirname "$name")
-> @@ -359,6 +371,9 @@ cmd_add()
->  		-q|--quiet)
->  			GIT_QUIET=1
->  			;;
-> +		--no-separate-git-dir)
-> +			noseparategitdir=1
-> +			;;
->  		--reference)
->  			case "$2" in '') usage ;; esac
->  			reference_path=$2
-> @@ -758,6 +773,9 @@ cmd_update()
->  		-f|--force)
->  			force=$1
->  			;;
-> +		--no-separate-git-dir)
-> +			noseparategitdir=1
-> +			;;
->  		-r|--rebase)
->  			update="rebase"
->  			;;
-> diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-> index c28e8d8..aa2df3d 100755
-> --- a/t/t7400-submodule-basic.sh
-> +++ b/t/t7400-submodule-basic.sh
-> @@ -81,6 +81,18 @@ inspect() {
->  	)
->  }
->  
-> +test_expect_success 'submodule add --no-separate-git-dir' '
-> +	(
-> +		cd addtest &&
-> +		rm -rf submod &&
-> +		git submodule add --no-separate-git-dir -q "$submodurl" submod >actual &&
-> +		test_must_be_empty actual &&
-> +		test -d submod/.git &&
-> +		rm -rf submod &&
-> +		git reset --hard
-> +	)
-> +'
-> +
->  test_expect_success 'submodule add' '
->  	echo "refs/heads/master" >expect &&
->  	>empty &&
-> 
+>  refs.c |   31 ++++++++++++++++++++++++-------
+>  1 files changed, 24 insertions(+), 7 deletions(-)
+
+Starting something like this from forbidding is likely to turn out
+to be a very bad idea that can break existing repositories.
+
+A new configuration
+
+	refs.caseInsensitive = {warn|error|allow}
+
+that defaults to "warn" and the user can choose to set to "error" to
+forbid, would be more palatable, I would say.
+
+If the variable is not in 'core.' namespace, you should implement
+this check at the Porcelain level, allowing lower-level tools like
+update-ref as an escape hatch that let users bypass the restriction
+to be used to correct breakages; it would mean an unconditional "if
+!stricmp(), it is an error" in refs.c will not work well.
+
+I think it might be OK to have
+
+	core.allowCaseInsentitiveRefs = {yes|no|warn}
+
+which defaults to 'warn' (and 'yes' corresponds to 'allow', 'no'
+corresponds to 'error', in the previous suggestion), instead. If we
+wanted to prevent even lower-level tools like update-ref from
+bypassing the check, that is.
