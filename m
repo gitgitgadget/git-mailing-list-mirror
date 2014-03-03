@@ -1,76 +1,65 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH] cache_tree_find(): remove redundant check in while condition
-Date: Mon, 03 Mar 2014 18:07:48 +0100
-Message-ID: <5314B6E4.7030607@alum.mit.edu>
-References: <1393862885-23271-1-git-send-email-mhagger@alum.mit.edu> <87a9d7kztm.fsf@fencepost.gnu.org>
+From: Rick Umali <rickumali@gmail.com>
+Subject: Re: My advice for GSoC applicants
+Date: Mon, 3 Mar 2014 12:12:38 -0500
+Message-ID: <CALKcQ2aU1u9deWt2RqTJk17yfk=SoRhEPSA=BX04ZagGhQNi_A@mail.gmail.com>
+References: <53145D48.3040603@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Mar 03 18:07:58 2014
+Cc: git discussion list <git@vger.kernel.org>,
+	Dmitry Dolzhenko <dmitrys.dolzhenko@yandex.ru>,
+	Sun He <sunheehnus@gmail.com>,
+	Brian Gesiak <modocache@gmail.com>,
+	Tanay Abhra <tanayabh@gmail.com>,
+	Kyriakos Georgiou <kyriakos.a.georgiou@gmail.com>,
+	Siddharth Goel <siddharth98391@gmail.com>,
+	Guanglin Xu <mzguanglin@gmail.com>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Alberto Corona <albcoron@gmail.com>,
+	Jacopo Notarstefano <jacopo.notarstefano@gmail.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Mon Mar 03 18:12:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKWLN-0003vL-3A
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 18:07:57 +0100
+	id 1WKWQ0-00076B-MA
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 18:12:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753774AbaCCRHw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2014 12:07:52 -0500
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:63095 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753183AbaCCRHw (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Mar 2014 12:07:52 -0500
-X-AuditID: 1207440d-f79d86d0000043db-11-5314b6e797ab
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 89.8A.17371.7E6B4135; Mon,  3 Mar 2014 12:07:51 -0500 (EST)
-Received: from [192.168.69.148] (p57A2466F.dip0.t-ipconnect.de [87.162.70.111])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s23H7mv5022161
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Mon, 3 Mar 2014 12:07:50 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
-In-Reply-To: <87a9d7kztm.fsf@fencepost.gnu.org>
-X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrKKsWRmVeSWpSXmKPExsUixO6iqPt8m0iwwfQZEhazb2xjs+i60s1k
-	0dB7hdmB2aNtmpnHxUvKHp83yQUwR3HbJCWWlAVnpufp2yVwZyxftJelYA1zxY5/n5gbGPcz
-	dTFyckgImEhs3nWVEcIWk7hwbz0biC0kcJlRYsE7AQj7HJPEv3syIDavgLbEy8XnwWpYBFQl
-	Tq9bDGazCehKLOppBpspKhAssfryAxaIekGJkzOfgNkiAvISy2e9ZQexmQWsJVa8PgxWLywQ
-	KHFt0SZGiF3pElcXzQSr4RTQl+ha9AKohgPoNnGJnsYgiFYdiXd9D5ghbHmJ7W/nME9gFJyF
-	ZNssJGWzkJQtYGRexSiXmFOaq5ubmJlTnJqsW5ycmJeXWqRrpJebWaKXmlK6iRESzLw7GP+v
-	kznEKMDBqMTDO2OaSLAQa2JZcWXuIUZJDiYlUV52YCwI8SXlp1RmJBZnxBeV5qQWH2KU4GBW
-	EuGNqAHK8aYkVlalFuXDpKQ5WJTEedWWqPsBfZlYkpqdmlqQWgSTleHgUJLgfb4VqFGwKDU9
-	tSItM6cEIc3EwQkynEtKpDg1LyW1KLG0JCMeFL3xxcD4BUnxAO1VBLmJt7ggMRcoCtF6ilGX
-	43bbr0+MQix5+XmpUuK8d0B2CIAUZZTmwa2Apa5XjOJAHwvz/gap4gGmPbhJr4CWMAEtMfMD
-	W1KSiJCSamBseLHgZnLznjPrbMNDJzy/HXfGKX+yifvNhTWuF3R8117vsDxzMmtP1bmUr8ox
-	HdqqJm/9tmUVnSpc3rdk+uGn/X03qp0TI16umh4twn+aNfe5tOtpp4KbT2y+yrAI 
+	id S1753999AbaCCRMk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2014 12:12:40 -0500
+Received: from mail-ve0-f174.google.com ([209.85.128.174]:41661 "EHLO
+	mail-ve0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752498AbaCCRMj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2014 12:12:39 -0500
+Received: by mail-ve0-f174.google.com with SMTP id oz11so2977130veb.5
+        for <git@vger.kernel.org>; Mon, 03 Mar 2014 09:12:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=QRbH45KHwQLJGHFKCAdB41LwL8OqEVo5+O6+yRcTnI4=;
+        b=fBZOOx48MEIxa01jbYa7Cl1JVXWEv9AAtpZOVPT2wX9F26jpGWUEyion7WXM6U6ln9
+         ttSQAV3zzZ5Yf59IElnW/wGYuPh802RvtYWPfPavdjbvV0yPIqc3D+QRwTFimywaFM54
+         CliMLgJpOsg6u8QvdQantJ/cXwkbU3Cb+I3+I2kXw1PMsdttqWab2OxSWZRk67eZtxU2
+         8im713Ra5MKSz86YOo/upp9QAV3xYVgf5+SuFPep9OBne3iwXpeBRMW0zhg9MiCa3Ihf
+         5Lj80Qj3+ioewW4rgUPHerSLbHAqCUylz/YYMzePYNWDdN51W5Rlmkhs3K27edkINC2t
+         vZuA==
+X-Received: by 10.58.132.203 with SMTP id ow11mr18136543veb.1.1393866758842;
+ Mon, 03 Mar 2014 09:12:38 -0800 (PST)
+Received: by 10.221.59.69 with HTTP; Mon, 3 Mar 2014 09:12:38 -0800 (PST)
+In-Reply-To: <53145D48.3040603@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243235>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243236>
 
-On 03/03/2014 05:32 PM, David Kastrup wrote:
-> [...]
-> So perhaps all of that should just be
-> 
-> 		while (*slash == '/')
-> 			slash++;
-> 		if (!*slash)
-> 			return it;
-> 
+On Mon, Mar 3, 2014 at 5:45 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+>     My secret tip for GSoC success
+>
+> http://softwareswirl.blogspot.com/2014/03/my-secret-tip-for-gsoc-success.html
 
-I just fixed a little thing that caught my eye.  You OWNED it.  You are
-absolutely right.
-
-Will you prepare a patch or would you like me to do it?
-
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+I enjoyed reading that BLOG post. I daresay some of the points you
+raise are pertinent for any new contributor to any open-source code
+base.
