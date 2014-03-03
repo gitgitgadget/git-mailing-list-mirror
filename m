@@ -1,94 +1,118 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 00/14] Use ALLOC_GROW() instead of inline code
-Date: Mon, 03 Mar 2014 15:02:57 -0800
-Message-ID: <xmqqwqganavy.fsf@gitster.dls.corp.google.com>
-References: <1393885922-21616-1-git-send-email-dmitrys.dolzhenko@yandex.ru>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 2/2] test-lib: GIT_TEST_ONLY to run only specific tests
+Date: Mon, 3 Mar 2014 18:03:55 -0500
+Message-ID: <CAPig+cT46ekT87TuoTtwvt0G+DraB9cdgW1wd6NsodjJ5FmJrA@mail.gmail.com>
+References: <1393842298-5944-1-git-send-email-ilya.bobyr@gmail.com>
+	<1393842298-5944-2-git-send-email-ilya.bobyr@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Dmitry S. Dolzhenko" <dmitrys.dolzhenko@yandex.ru>
-X-From: git-owner@vger.kernel.org Tue Mar 04 00:03:11 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Thomas Rast <tr@thomasrast.ch>
+To: Ilya Bobyr <ilya.bobyr@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 04 00:04:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKbt8-0006GX-Cr
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 00:03:10 +0100
+	id 1WKbtx-0006rM-Sd
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 00:04:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755330AbaCCXDE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2014 18:03:04 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60294 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755005AbaCCXDC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2014 18:03:02 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C20FF6B731;
-	Mon,  3 Mar 2014 18:03:01 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SoBTEtG8AkOaDbWNkgDtqlkm1Cg=; b=qQCPHf
-	SHJ/mdMLj33tE5nPNH1DIQviqVRfFIfmSCYnAQsAsA9mL4RUUzAm+9VPXLz03yYJ
-	fMNbGEXcPVisSnygLpbkhYUXa6wnb30vtZ6fYGHeq4D2wk3y/cGuOGx3pPTZ2ha5
-	bUbwVMa+PVy/rVG51lS9VR/InASzHWDVM4An0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=aBPWDxrLxIkm6dg/m6hA/a+LPnjzKcAh
-	YCjjuPetIFGBaLjpH2r1uQ4VU++ow4qy+4Cx6g+T1hI/orpA67cxBc9w8USqiIwV
-	7PvSMiz5AMx5tqjtec+RUMAhdDDs+5++jvLHs/3k2rZ4xq5SMBHRMnvKenIHH/Li
-	2MMFNEdO/qc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9CDE36B730;
-	Mon,  3 Mar 2014 18:03:01 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BB20D6B72B;
-	Mon,  3 Mar 2014 18:03:00 -0500 (EST)
-In-Reply-To: <1393885922-21616-1-git-send-email-dmitrys.dolzhenko@yandex.ru>
-	(Dmitry S. Dolzhenko's message of "Tue, 4 Mar 2014 02:31:48 +0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: F7CDDDAC-A327-11E3-9D79-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755475AbaCCXD5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2014 18:03:57 -0500
+Received: from mail-yk0-f170.google.com ([209.85.160.170]:48023 "EHLO
+	mail-yk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755005AbaCCXD4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2014 18:03:56 -0500
+Received: by mail-yk0-f170.google.com with SMTP id 9so12304517ykp.1
+        for <git@vger.kernel.org>; Mon, 03 Mar 2014 15:03:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=pjHMJMzkyw0wZ4fPWUceiNwW5wpyRN/BZdR5vBwEiMw=;
+        b=wZ74qH1n7ZeoMkxhyq+IZCzJN4WAjpInlq9Yti9a/w37Tw1BCmvs9MoXBeiJxh4gXY
+         DnzEHqc1OjE6b2EnOuzZIrOG1hmEhvl5OxreKg6sAB8dXe6/c420qk8GFOwNUcFB1DHg
+         Ra1V0TJoOihKT5Ujk29fBjsmobYTAjhZBCGas/VQ/gRCVuJkIiCCmS9/1gJ8G3RAvJAA
+         K4/aVymNTfGiPp+L/5YpUs+708AcYgnqldvk97xyrM7rQj5W4aZ+A8pBQOgNd4iUi1Tw
+         hY4dXx2K3Uxbpltso0Y6E0FHSwCQ2+cG6nuhzWfq6+lrxmlJXf2U/JmuUsnAmxIMCo39
+         21tw==
+X-Received: by 10.236.129.198 with SMTP id h46mr24902815yhi.17.1393887835537;
+ Mon, 03 Mar 2014 15:03:55 -0800 (PST)
+Received: by 10.170.180.195 with HTTP; Mon, 3 Mar 2014 15:03:55 -0800 (PST)
+In-Reply-To: <1393842298-5944-2-git-send-email-ilya.bobyr@gmail.com>
+X-Google-Sender-Auth: EgMiUCB2yUHWb6IY-aR3-M5vUuU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243301>
 
-> Dmitry S. Dolzhenko (14):
->   builtin/pack-objects.c: use ALLOC_GROW() in check_pbase_path()
->   bundle.c: use ALLOC_GROW() in add_to_ref_list()
->   cache-tree.c: use ALLOC_GROW() in find_subtree()
->   commit.c: use ALLOC_GROW() in register_commit_graft()
->   diff.c: use ALLOC_GROW()
->   diffcore-rename.c: use ALLOC_GROW()
->   patch-ids.c: use ALLOC_GROW() in add_commit()
->   replace_object.c: use ALLOC_GROW() in register_replace_object()
->   reflog-walk.c: use ALLOC_GROW()
->   dir.c: use ALLOC_GROW() in create_simplify()
->   attr.c: use ALLOC_GROW() in handle_attr_line()
->   builtin/mktree.c: use ALLOC_GROW() in append_to_tree()
->   read-cache.c: use ALLOC_GROW() in add_index_entry()
->   sha1_file.c: use ALLOC_GROW() in pretend_sha1_file()
+On Mon, Mar 3, 2014 at 5:24 AM, Ilya Bobyr <ilya.bobyr@gmail.com> wrote:
+> This is a counterpart to GIT_SKIP_TESTS.  Mostly useful when debugging.
 
-All looked cleanly done.
+To be grammatically similar to GIT_SKIP_TESTS, perhaps name it GIT_RUN_TESTS?
 
-The resulting code of 1, 3, 4, 6 and 8 share this pattern:
+> ---
+>  t/README      |   15 +++++++++++++++
+>  t/test-lib.sh |    8 ++++++++
+>  2 files changed, 23 insertions(+), 0 deletions(-)
+>
+> diff --git a/t/README b/t/README
+> index caeeb9d..f939987 100644
+> --- a/t/README
+> +++ b/t/README
+> @@ -187,6 +187,21 @@ and either can match the "t[0-9]{4}" part to skip the whole
+>  test, or t[0-9]{4} followed by ".$number" to say which
+>  particular test to skip.
+>
+> +Sometimes the opposite is desired - ability to execute only one or
+> +several tests.  Mostly while debugging tests.  For that you can say
+> +
+> +    $ GIT_TEST_ONLY=t9200.8 sh ./t9200-git-cvsexport-commit.sh
+> +
+> +or, similrary to GIT_SKIP_TESTS
+> +
+> +    $ GIT_TEST_ONLY='t[0-4]??? t91?? t9200.8' make
+> +
+> +In additiona to matching against "<test suite number>.<test number>"
 
-	ALLOC_GROW(table, number + 1, alloc);
-        number++;
+s/additiona/addition/
 
-which may be easier to understand if done the other way around:
+Plus the other typos already mentioned by Philip...
 
-        number++;
-	ALLOC_GROW(table, number, alloc);
-
-That is, "we know we want one more, so make sure they fit in the
-table".
-
-But that is just a minor issue; I suspect many existing callsites to
-ALLOC_GROW() already follow the former pattern, and if we decide to
-to switch the former to the latter, we shouldn't be doing so within
-this series (we should do that as a separate series on top of this).
-
-Thanks; will queue.
+> +GIT_TEST_ONLY is matched against just the test numbes.  This comes
+> +handy when you are running only one test:
+> +
+> +    $ GIT_TEST_ONLY='[0-8]' sh ./t9200-git-cvsexport-commit.sh
+> +
+>  Note that some tests in the existing test suite rely on previous
+>  test item, so you cannot arbitrarily disable one and expect the
+>  remainder of test to check what the test originally was intended
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 89a405b..12bf436 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -464,6 +464,14 @@ test_skip () {
+>                 fi
+>                 skipped_reason="missing $missing_prereq${of_prereq}"
+>         fi
+> +       if test -z "$to_skip" && test -n "$GIT_TEST_ONLY" &&
+> +               ! match_pattern_list $this_test.$test_count $GIT_TEST_ONLY &&
+> +               ! match_pattern_list $test_count $GIT_TEST_ONLY
+> +       then
+> +               to_skip=t
+> +               skipped_reason="not in GIT_TEST_ONLY"
+> +       fi
+> +
+>         case "$to_skip" in
+>         t)
+>                 say_color skip >&3 "skipping test: $@"
+> --
+> 1.7.9
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
