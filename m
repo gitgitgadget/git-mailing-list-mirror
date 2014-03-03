@@ -1,62 +1,133 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: msysgit color scheme
-Date: Mon, 3 Mar 2014 00:27:19 +0100
-Message-ID: <CABPQNSYPTifbRZ8jJxOe3BqnDD-x6JGTg2tSWuU8boOEVEv0eg@mail.gmail.com>
-References: <CAHd499Arq_KhSKH=quez4irU_i4AjZN-anbvGn3XM--Cg4Nypg@mail.gmail.com>
-Reply-To: kusmabite@gmail.com
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v4 02/27] Convert git_snpath() to strbuf_git_path()
+Date: Sun, 2 Mar 2014 19:02:16 -0500
+Message-ID: <CAPig+cTjqrveuOS+3+bonwJa_Kjg=STJU1JJ2Kj7Gs5U9eEB9Q@mail.gmail.com>
+References: <1392730814-19656-1-git-send-email-pclouds@gmail.com>
+	<1393675983-3232-1-git-send-email-pclouds@gmail.com>
+	<1393675983-3232-3-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git <git@vger.kernel.org>
-To: Robert Dailey <rcdailey.lists@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 03 00:28:08 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 03 01:02:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKFnj-0001dP-G7
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 00:28:07 +0100
+	id 1WKGKy-0001oE-0J
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 01:02:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753678AbaCBX2C (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Mar 2014 18:28:02 -0500
-Received: from mail-ig0-f174.google.com ([209.85.213.174]:37642 "EHLO
-	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753246AbaCBX2B (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Mar 2014 18:28:01 -0500
-Received: by mail-ig0-f174.google.com with SMTP id h18so6318383igc.1
-        for <git@vger.kernel.org>; Sun, 02 Mar 2014 15:28:00 -0800 (PST)
+	id S1754000AbaCCACV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 2 Mar 2014 19:02:21 -0500
+Received: from mail-yk0-f178.google.com ([209.85.160.178]:54745 "EHLO
+	mail-yk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753829AbaCCACR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 2 Mar 2014 19:02:17 -0500
+Received: by mail-yk0-f178.google.com with SMTP id 79so8733671ykr.9
+        for <git@vger.kernel.org>; Sun, 02 Mar 2014 16:02:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=gcXq2KIWHCX+FiFauejz/6Xy98kGaNPPclLS2DtSHu4=;
-        b=ZUODR2MrCctFZSCWY0gHUX5uR4n7OdBgImf/3j4Oe9vjHnEjaGJRBK0HENWNCC6CV5
-         9UUTW0UcUR1glhuZHAO5yRUbbUaxv5jb2Q/mEBPCeTh/TG0nEVI604B52n7CaFuuaNyl
-         JBgc7ZNvm6K0b3A26b66nNtRzqp0/4PG8OGJzvGPwhN7h1p5zgqI4QTc8Cxs3XFBJX/g
-         JWR1DHUKl20UPXTcoIzKrM8w8Go5R02NVrGux/bucfRrZ2WtQF84fGXlOMjLhTylY/bV
-         Pe72bT9ATg8yevjuinCHT4Vmsb+sYeUAoTfYAgMceS/QNnGBGtWabcDB9qpzdQ7G1HME
-         golQ==
-X-Received: by 10.50.254.131 with SMTP id ai3mr18460918igd.43.1393802879704;
- Sun, 02 Mar 2014 15:27:59 -0800 (PST)
-Received: by 10.64.166.135 with HTTP; Sun, 2 Mar 2014 15:27:19 -0800 (PST)
-In-Reply-To: <CAHd499Arq_KhSKH=quez4irU_i4AjZN-anbvGn3XM--Cg4Nypg@mail.gmail.com>
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=tGXlEbFAtbdPLSgalsBYhB2Wmm9noZKvND7oWgI4poY=;
+        b=BHxfOArarH9GEbk+wr27YHZ+9Igi+8RjDb6lVwOJagBuarzTmGp9LpK7+hI3fyWxxB
+         iSqpg3pTW17zqrymxigkTywBMSPxNW0xuxf0It9cu33fU2nzCpJONFST9tHp3k15MM0I
+         9whIIl7Uqr34bYzGrGSPsvrHUOevdl+tQsmCXZbq/RkIOTU4etu0ouMyK/qU0AkpL0/7
+         8YUuLllnY6g0DvMhb9+C4lsmeBtzQTGHG6Lkftf3/n0kex9mRu5Ume4W3lszeJrwEsau
+         ahmLnVwQm83ZccejKUukyORAoDAj34E0UbJMGSSP6+NIaUr5P9D1MnfIol47GNlSBBe9
+         xKxg==
+X-Received: by 10.236.122.99 with SMTP id s63mr18715837yhh.19.1393804936981;
+ Sun, 02 Mar 2014 16:02:16 -0800 (PST)
+Received: by 10.170.180.195 with HTTP; Sun, 2 Mar 2014 16:02:16 -0800 (PST)
+In-Reply-To: <1393675983-3232-3-git-send-email-pclouds@gmail.com>
+X-Google-Sender-Auth: 65HdBQ6KB4Gv41CSq5zwxvvxo2s
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243166>
 
-On Fri, Feb 28, 2014 at 11:38 PM, Robert Dailey
-<rcdailey.lists@gmail.com> wrote:
-> Is there a way to change color scheme in msysgit without going through
-> the Properties >> Colors settings?
+On Sat, Mar 1, 2014 at 7:12 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc D=
+uy <pclouds@gmail.com> wrote:
+> In the previous patch, git_snpath() is modified to allocate a new
+> strbuf buffer because vsnpath() needs that. But that makes it awkward
+> because git_snpath() receives a pre-allocated buffer from outside and
+> has to copy data back. Rename it to strbuf_git_path() and make it
+> receive strbuf directly.
 >
-> Reason I ask is because I share the same HOME directory and .bashrc
-> file between msysgit and cygwin, and it'd be nice to use the same
-> color scheme defined in the bashrc between both.
+> The conversion from git_snpath() to git_path() in
+> update_refs_for_switch() is safe because that function does not keep
+> any pointer to the round-robin buffer pool allocated by
+> get_pathname().
+>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+> diff --git a/refs.c b/refs.c
+> index 89228e2..434bd5e 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -2717,17 +2729,19 @@ static int copy_msg(char *buf, const char *ms=
+g)
+>         return cp - buf;
+>  }
+>
+> -int log_ref_setup(const char *refname, char *logfile, int bufsize)
+> +int log_ref_setup(const char *refname, struct strbuf *sb_logfile)
+>  {
+>         int logfd, oflags =3D O_APPEND | O_WRONLY;
+> +       const char *logfile;
+>
+> -       git_snpath(logfile, bufsize, "logs/%s", refname);
+> +       strbuf_git_path(sb_logfile, "logs/%s", refname);
+> +       logfile =3D sb_logfile->buf;
+>         if (log_all_ref_updates &&
+>             (starts_with(refname, "refs/heads/") ||
+>              starts_with(refname, "refs/remotes/") ||
+>              starts_with(refname, "refs/notes/") ||
+>              !strcmp(refname, "HEAD"))) {
+> -               if (safe_create_leading_directories(logfile) < 0)
+> +               if (safe_create_leading_directories(sb_logfile->buf) =
+< 0)
 
-Not really. The reason is that in cygwin, it's the terminal emulatorl
-that does the coloring, but this doesn't work for non-cygwin programs.
-So we're detecting if stdout points to a console, and setting
-win32-console attributes directly. If you're interested in the
-details, see compat/winansi.c.
+At this point, 'logfile' is still 'sb_logfile->buf', so do you really
+need this change?
+
+>                         return error("unable to create directory for =
+%s",
+>                                      logfile);
+>                 oflags |=3D O_CREAT;
+> @@ -2762,20 +2776,22 @@ static int log_ref_write(const char *refname,=
+ const unsigned char *old_sha1,
+>         int logfd, result, written, oflags =3D O_APPEND | O_WRONLY;
+>         unsigned maxlen, len;
+>         int msglen;
+> -       char log_file[PATH_MAX];
+> +       struct strbuf sb_log_file =3D STRBUF_INIT;
+> +       const char *log_file;
+>         char *logrec;
+>         const char *committer;
+>
+>         if (log_all_ref_updates < 0)
+>                 log_all_ref_updates =3D !is_bare_repository();
+>
+> -       result =3D log_ref_setup(refname, log_file, sizeof(log_file))=
+;
+> +       result =3D log_ref_setup(refname, &sb_log_file);
+>         if (result)
+> -               return result;
+> +               goto done;
+> +       log_file =3D sb_log_file.buf;
+>
+>         logfd =3D open(log_file, oflags);
+>         if (logfd < 0)
+> -               return 0;
+> +               goto done;
+>         msglen =3D msg ? strlen(msg) : 0;
+>         committer =3D git_committer_info(0);
+>         maxlen =3D strlen(committer) + msglen + 100;
+> --
+> 1.9.0.40.gaa8c3ea
