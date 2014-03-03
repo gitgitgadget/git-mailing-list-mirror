@@ -1,67 +1,106 @@
-From: "saikrishna.sripada" <saikrishna.sripada@students.iiit.ac.in>
-Subject: Help needed: Tests failed While replacing char array with strbuf in
- bulk-checkin.c
-Date: Tue, 04 Mar 2014 02:41:14 +0530
-Message-ID: <d7af2c2bcb07168ecddedf76ca776cd0@students.iiit.ac.in>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] implemented strbuf_write_or_die()
+Date: Mon, 3 Mar 2014 16:29:32 -0500
+Message-ID: <CAPig+cTm-JXXC7raFmHWrG5fc54a7u4V9E5Zj71DTwWxZbb9OA@mail.gmail.com>
+References: <1393672871-28281-1-git-send-email-faiz.off93@gmail.com>
+	<CAJr59C0e22OuDWU5Xc0A=cc+zY32nfum6SXTDU3wLCPyFPF70A@mail.gmail.com>
+	<CAPig+cRgc4UtmJMieS9Mdrz7vjUNiu7QFu1PSBppKo22Ln5G-A@mail.gmail.com>
+	<xmqqvbvvqglc.fsf@gitster.dls.corp.google.com>
+	<CAPig+cTmejtWXRzr6qk-kd+P8j4b6xMJSUVnNnqObqNXc-S9UA@mail.gmail.com>
+	<xmqqsiqznhpb.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 7bit
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Mar 03 22:18:43 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: He Sun <sunheehnus@gmail.com>, Faiz Kothari <faiz.off93@gmail.com>,
+	git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 03 22:29:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKaG2-0008L4-Im
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 22:18:42 +0100
+	id 1WKaQb-0007dI-Oy
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 22:29:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754676AbaCCVSj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2014 16:18:39 -0500
-Received: from students.iiit.ac.in ([196.12.53.7]:47920 "EHLO
-	students.iiit.ac.in" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753590AbaCCVSh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2014 16:18:37 -0500
-X-Greylist: delayed 440 seconds by postgrey-1.27 at vger.kernel.org; Mon, 03 Mar 2014 16:18:37 EST
-Received: from students.iiit.ac.in (students.iiit.ac.in [127.0.0.1])
-	(Authenticated sender: saikrishna.sripada)
-	by students.iiit.ac.in (Postfix) with ESMTPA id 565222E15CC
-	for <git@vger.kernel.org>; Tue,  4 Mar 2014 02:41:14 +0530 (IST)
-X-Sender: saikrishna.sripada@students.iiit.ac.in (9AbpNPKdPIeK1BwmxthxIJ5kjCuSezCD7iruBckelAdXex+5o721dRCafbtXEmvYVdi2eYroY61MMR4QaRaJs7KzYA9qYe7hZRWinuM9VaomhC/jP64S56ufHWdj+ydol5noG87IcNgbK7ctjhevzoxeBWF7Y7ypf/hSKcJUVZNIEf57nkfBC3g2BqsA5ANw7nvkPAb66aQyjva6O8TOgWjsJEiMGjEbWT3K51S4+FP8fcCNkBefgjDPzrTQRr7j909JWuVLJW3x8Wbtf5ndUDch52bd5N6ZTsx+zZc0LDSsbOa7bxBaM544pjLWIMYv2PN+Q3FXX9DNVn5dXH1iJFNo4upwBtKoEtWnHDf09iTp/tWbDELZwbzdcFW1rzL/2NNfl/D7n4NtD+Zuqh53OHngMn/I5o+rTcLXJlM0MPFlNDhKLzMadKCw3+LEm6VnWfCbBKBbHsyctwxjXD6+BF2X5ORMJMRVPp7Ad8zWQ/IPfH09bajDCQ1CCD41+v5T7T5NimraVMMnWB3eVLKtLQhHubV6UyP+EMbBr1scWd0OL7kddNZcBTvVKO3926M3qZ0Rv+OhwavcJK+Fzb+aK1piv2RFdOk10PBBapePKopgVeH773hz3jKk9MeyJwBXgcLWZf3Aq8/LOjFZ5aaHwYtiG1hwXB3X0QCMC+QCMoL/Go/lNN8OQeRgrX1qYX+HYrXhYLnf3O+fiFbxQEaz4VEjk2PPyQe2p6YZvshFYI5eKv
- aohvHEDvVYP7NX/AFK2aE484dO+CUylOOQLhtulEtQdcbTNVwEWx8YfXZHo7ngVymfmyjWGCnj+7xQazKuVcLSrDts1weojsGP 
-User-Agent: RoundCube WebMail
+	id S1755054AbaCCV3d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2014 16:29:33 -0500
+Received: from mail-yk0-f175.google.com ([209.85.160.175]:41259 "EHLO
+	mail-yk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753996AbaCCV3d (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2014 16:29:33 -0500
+Received: by mail-yk0-f175.google.com with SMTP id 131so10559871ykp.6
+        for <git@vger.kernel.org>; Mon, 03 Mar 2014 13:29:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=uL7SEMF1Menn+63XGQ+1dds1dzb63fcEQPAInxDc1yg=;
+        b=F0bkwSxlmZIArZ85QQpnCgoA9vxmE5XYjVH6zuWUMu2u4e/5XP/YdN+QITbtkIQ6NY
+         aot6e8J373XlpD8Rj9dkdLcJnS1Rf5wdmRZElRgg+vzzfKytr5js1PqS5FwOx7SqR0Z2
+         3k4u4Y7Dmb+EcBzTsVzMaXalE33MlaPNM/1wegtvR85RjBoio3asX6YBasy98zuoBrak
+         1AVhnf7zG1d/KYpaj23ez9HMXif4c8xV4WYK+wCjuVxleL2SFIh5Tawdrv8shkllF4vV
+         DL5LHbvmeyi3UWxxaZx/uv2TtpDHJz6GsDa9Be6RFwq1pH0tzLlmkhgIEb3bERpVn2gQ
+         sECA==
+X-Received: by 10.236.126.81 with SMTP id a57mr4104026yhi.95.1393882172444;
+ Mon, 03 Mar 2014 13:29:32 -0800 (PST)
+Received: by 10.170.180.195 with HTTP; Mon, 3 Mar 2014 13:29:32 -0800 (PST)
+In-Reply-To: <xmqqsiqznhpb.fsf@gitster.dls.corp.google.com>
+X-Google-Sender-Auth: lzQhDNnXQnnax358ctGBuI1HIFI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243273>
 
-Hi ,
-I am trying do complete the microproject 4, inorder to apply to GSOC.
-I have made the below changes:
+On Mon, Mar 3, 2014 at 3:35 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+>> On Mon, Mar 3, 2014 at 1:31 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> Eric Sunshine <sunshine@sunshineco.com> writes:
+>>>> It's not obvious from the patch fragment, but 'heads' is not a strbuf,
+>>>> so Faiz correctly left this invocation alone.
+>>>
+>>> That is a very good sign why this change is merely a code-churn and
+>>> not an improvement, isn't it?  We know (and any strbuf user should
+>>> know) that ->buf and ->len are the ways to learn the pointer and the
+>>> length the strbuf holds.  Why anybody thinks it is benefitial to
+>>> introduce another function that is _only_ for writing out strbuf and
+>>> cannot be used to write out a plain buffer is simply beyond me.
+>>
+>> As a potential GSoC student and newcomer to the project, Faiz would
+>> not have known that this would be considered unwanted churn when he
+>> chose the task from the GSoC microproject page [1]. Perhaps it would
+>> be a good idea to retire this item from the list?
+>
+> I don't think I saw this on the microproject suggestion page when I
+> last looked at it, and assumed that this was on the student's own
+> initiative.
 
-https://gist.github.com/anhsirksai/9334565
+I also had not seen it earlier on the microprojects page and had the
+same reaction until I re-checked the page and found that it had been
+added [1].
 
-Post my changes compilation is succes in the source directory.
-But when I ran the tests[make in t/ directory] my tests are failing 
-saying
+The microprojects page already instructs students to indicate that a
+submission is for GSoC [2] (and many have followed the advice), but
+perhaps we can avoid this sort of misunderstanding in the future by
+making it more explicit: for instance, tell them to add [GSoC] to the
+Subject:.
 
-"
-  free(): invalid pointer: 0x3630376532353636 ***
-======= Backtrace: =========
-/lib/x86_64-linux-gnu/libc.so.6(+0x7eb96)[0x2b5f3b540b96]
-/home/saikrishna/Desktop/libcloud-0.14.1/sai/git/git[0x4fb829]
-/home/saikrishna/Desktop/libcloud-0.14.1/sai/git/git[0x47d425]
-/home/saikrishna/Desktop/libcloud-0.14.1/sai/git/git[0x4064ad]
-/home/saikrishna/Desktop/libcloud-0.14.1/sai/git/git[0x405a04]
-/home/saikrishna/Desktop/libcloud-0.14.1/sai/git/git[0x404cbd]
-/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xed)[0x2b5f3b4e376d]
-/home/saikrishna/Desktop/libcloud-0.14.1/sai/git/git[0x405109]
-"
+[1]: https://github.com/git/git.github.io/commit/f314120a2b5e831459673c612a3630ad953d9954
+[2]: https://github.com/git/git.github.io/blame/master/SoC-2014-Microprojects.md#L83
 
-Can some one please help me with the memory allacation and 
-strbuf_release()
+>> On the other hand, it did expose Faiz to the iterative code review
+>> process on this project and gave him a taste of what would be expected
+>> of him as a GSoC student, so the microproject achieved that important
+>> goal, and thus wasn't an utter failure.
+>>
+>> [1]: https://github.com/git/git.github.io/blob/master/SoC-2014-Microprojects.md
+>
+> Surely.
+>
+> I would have to say that this is not a good sample exercise to
+> suggest to new students and I'd encourage dropping it from the list.
+> You could argue that it is an effective way to cull people with bad
+> design taste to mix suggestions to make the codebase worse and see
+> who picks them, but I do not think it is very fair ;-)
 
-Thanks,
---sai krishna
+Agreed. The item should be dropped from the list.
