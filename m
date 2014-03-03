@@ -1,276 +1,118 @@
-From: Henri GEIST <geist.henri@laposte.net>
-Subject: Re: [PATCH] submodule : Add --no-separate-git-dir option to add and
- update command.
-Date: Mon, 03 Mar 2014 21:34:26 +0100
-Message-ID: <1393878866.7891.22.camel@Naugrim>
-References: <1393858066.7891.20.camel@Naugrim> <5314BFA5.2030807@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] implemented strbuf_write_or_die()
+Date: Mon, 03 Mar 2014 12:35:44 -0800
+Message-ID: <xmqqsiqznhpb.fsf@gitster.dls.corp.google.com>
+References: <1393672871-28281-1-git-send-email-faiz.off93@gmail.com>
+	<CAJr59C0e22OuDWU5Xc0A=cc+zY32nfum6SXTDU3wLCPyFPF70A@mail.gmail.com>
+	<CAPig+cRgc4UtmJMieS9Mdrz7vjUNiu7QFu1PSBppKo22Ln5G-A@mail.gmail.com>
+	<xmqqvbvvqglc.fsf@gitster.dls.corp.google.com>
+	<CAPig+cTmejtWXRzr6qk-kd+P8j4b6xMJSUVnNnqObqNXc-S9UA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-mqvi2tD9Qj3u/IJ3Jsvm"
-Cc: git@vger.kernel.org
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Mon Mar 03 21:34:39 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: He Sun <sunheehnus@gmail.com>, Faiz Kothari <faiz.off93@gmail.com>,
+	git <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Mon Mar 03 21:35:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKZZN-0002iY-RG
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 21:34:38 +0100
+	id 1WKZab-0003aw-GO
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 21:35:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754434AbaCCUed (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2014 15:34:33 -0500
-Received: from smtpout5.laposte.net ([193.253.67.230]:21875 "EHLO
-	smtpout.laposte.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754160AbaCCUec (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2014 15:34:32 -0500
-Received: from [192.168.0.8] ([82.242.149.125])
-	by mwinf8509-out with ME
-	id Z8aS1n0092iaXuy038aSv0; Mon, 03 Mar 2014 21:34:27 +0100
-In-Reply-To: <5314BFA5.2030807@web.de>
-X-Mailer: Evolution 3.4.4-3 
+	id S1754310AbaCCUft (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2014 15:35:49 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52868 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753590AbaCCUfs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2014 15:35:48 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CE75E70AA5;
+	Mon,  3 Mar 2014 15:35:47 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=acoEt7rXKaGDpXqRUdiT22RB420=; b=TAjvRw
+	FHDEuq2UZhTlAHFT7yIhO6ZgQUtt/wZk52lIYyIXyxiNHM8trzpRwAw4Z0C/QAoI
+	8s7FXtKKp4OXbMncxezBO0RmmzPaVM9+4l2M9xIMJjcsaZgCWnM84oOBOW13SCkF
+	41p68pJVXRDl2NliB+odqxu/HwxlfO5J5uOos=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=msgJX/+7K66U5eqBkaKwyBu83M49mM/b
+	Cd/Qn28yrIUP4DIJ/8IhY4Gfc06r6J+/F2YmI3K2BUIa25n8KpZWuWAy7wazcJtS
+	WscZ8bogFbn/8FFJtz4NPdhRY97rAgHmcrLpDghx1HWlmMG3eYj0bf+YpqZIGO6X
+	ogeLl+yXtM0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9ECA970AA3;
+	Mon,  3 Mar 2014 15:35:47 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AF08570AA0;
+	Mon,  3 Mar 2014 15:35:46 -0500 (EST)
+In-Reply-To: <CAPig+cTmejtWXRzr6qk-kd+P8j4b6xMJSUVnNnqObqNXc-S9UA@mail.gmail.com>
+	(Eric Sunshine's message of "Mon, 3 Mar 2014 14:46:12 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 664CF20A-A313-11E3-B09C-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243268>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243269>
 
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
---=-mqvi2tD9Qj3u/IJ3Jsvm
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Le lundi 03 mars 2014 =C3=A0 17:45 +0000, Jens Lehmann a =C3=A9crit :
-> Am 03.03.2014 14:47, schrieb Henri GEIST:
-> > This new option prevent git submodule <add|update> to clone the missing
-> > submodules with the --separate-git-dir option.
-> > Then the submodule will be regular repository and their gitdir will not
-> > be placed in the superproject gitdir/modules directory.
->=20
-> And what is your motivation for this? After all submodules containing
-> a .git directory are second class citizens (because they can never be
-> safely removed by regular git commands).
+> On Mon, Mar 3, 2014 at 1:31 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Eric Sunshine <sunshine@sunshineco.com> writes:
+>>
+>>> On Sat, Mar 1, 2014 at 7:51 AM, He Sun <sunheehnus@gmail.com> wrote:
+>>>> 2014-03-01 19:21 GMT+08:00 Faiz Kothari <faiz.off93@gmail.com>:
+>>>>> diff --git a/remote-curl.c b/remote-curl.c
+>>>>> index 10cb011..dee8716 100644
+>>>>> --- a/remote-curl.c
+>>>>> +++ b/remote-curl.c
+>>>>> @@ -634,7 +634,7 @@ static int rpc_service(struct rpc_state *rpc, struct discovery *heads)
+>>>>>         if (start_command(&client))
+>>>>>                 exit(1);
+>>>>>         if (preamble)
+>>>>> -               write_or_die(client.in, preamble->buf, preamble->len);
+>>>>> +               strbuf_write_or_die(client.in, preamble);
+>>>>>         if (heads)
+>>>>>                 write_or_die(client.in, heads->buf, heads->len);
+>>>>
+>>>> This should be changed. May be you can use Ctrl-F to search write_or_die().
+>>>> Or if you are using vim, use "/ and n" to find all.
+>>>
+>>> It's not obvious from the patch fragment, but 'heads' is not a strbuf,
+>>> so Faiz correctly left this invocation alone.
+>>
+>> That is a very good sign why this change is merely a code-churn and
+>> not an improvement, isn't it?  We know (and any strbuf user should
+>> know) that ->buf and ->len are the ways to learn the pointer and the
+>> length the strbuf holds.  Why anybody thinks it is benefitial to
+>> introduce another function that is _only_ for writing out strbuf and
+>> cannot be used to write out a plain buffer is simply beyond me.
 >
+> As a potential GSoC student and newcomer to the project, Faiz would
+> not have known that this would be considered unwanted churn when he
+> chose the task from the GSoC microproject page [1]. Perhaps it would
+> be a good idea to retire this item from the list?
 
-I recognize most people will prefer to have the .git directory separate.
-And I do not intend to make this option the default.
+I don't think I saw this on the microproject suggestion page when I
+last looked at it, and assumed that this was on the student's own
+initiative.
 
-My reasons are:
+> On the other hand, it did expose Faiz to the iterative code review
+> process on this project and gave him a taste of what would be expected
+> of him as a GSoC student, so the microproject achieved that important
+> goal, and thus wasn't an utter failure.
+>
+> [1]: https://github.com/git/git.github.io/blob/master/SoC-2014-Microprojects.md
 
-  - As it is not clearly stated in the doc that the gitdir is separate.
-    The first time I have copied one module to an USB key I had a big
-    surprise.
+Surely.
 
-  - This will not change anything for people not using it.
-
-  - I use an other patch which I plane to send later which enable multiple
-    level of superproject to add a gitlink to the same submodule.
-    And in this case the superproject containing the separate gitdir will b=
-e
-    arbitrary and depend on the processing order of the
-    'git submodule update --recursive' command.
-
-  - I have written this for myself and have using it since 2012 and send it=
- in
-    the hope it could be useful for someone else even if it is only a few
-    people. But if its not the case no problem I will keep using it for mys=
-elf.
-
-
-> > Signed-off-by: Henri GEIST <geist.henri@laposte.net>
-> > ---
-> >  Documentation/git-submodule.txt |   18 ++++++++++++++++--
-> >  git-submodule.sh                |   22 ++++++++++++++++++++--
-> >  t/t7400-submodule-basic.sh      |   12 ++++++++++++
-> >  3 files changed, 48 insertions(+), 4 deletions(-)
-> >=20
-> > diff --git a/Documentation/git-submodule.txt b/Documentation/git-submod=
-ule.txt
-> > index 21cb59a..303a475 100644
-> > --- a/Documentation/git-submodule.txt
-> > +++ b/Documentation/git-submodule.txt
-> > @@ -10,13 +10,14 @@ SYNOPSIS
-> >  --------
-> >  [verse]
-> >  'git submodule' [--quiet] add [-b <branch>] [-f|--force] [--name <name=
->]
-> > -	      [--reference <repository>] [--depth <depth>] [--] <repository> =
-[<path>]
-> > +	      [--reference <repository>] [--depth <depth>] [--no-separate-git=
--dir]
-> > +	      [--] <repository> [<path>]
-> >  'git submodule' [--quiet] status [--cached] [--recursive] [--] [<path>=
-...]
-> >  'git submodule' [--quiet] init [--] [<path>...]
-> >  'git submodule' [--quiet] deinit [-f|--force] [--] <path>...
-> >  'git submodule' [--quiet] update [--init] [--remote] [-N|--no-fetch]
-> >  	      [-f|--force] [--rebase|--merge|--checkout] [--reference <reposi=
-tory>]
-> > -	      [--depth <depth>] [--recursive] [--] [<path>...]
-> > +	      [--depth <depth>] [--recursive] [--no-separate-git-dir] [--] [<=
-path>...]
-> >  'git submodule' [--quiet] summary [--cached|--files] [(-n|--summary-li=
-mit) <n>]
-> >  	      [commit] [--] [<path>...]
-> >  'git submodule' [--quiet] foreach [--recursive] <command>
-> > @@ -107,6 +108,10 @@ is the superproject and submodule repositories wil=
-l be kept
-> >  together in the same relative location, and only the
-> >  superproject's URL needs to be provided: git-submodule will correctly
-> >  locate the submodule using the relative URL in .gitmodules.
-> > ++
-> > +If `--no-separate-git-dir` is specified, missing submodules will be cl=
-oned
-> > +has normal git repository without the option `--separate-git-dir` poin=
-ting
-> > +to the modules directory of the superproject gitdir.
-> > =20
-> >  status::
-> >  	Show the status of the submodules. This will print the SHA-1 of the
-> > @@ -185,6 +190,10 @@ If the submodule is not yet initialized, and you j=
-ust want to use the
-> >  setting as stored in .gitmodules, you can automatically initialize the
-> >  submodule with the `--init` option.
-> >  +
-> > +If `--no-separate-git-dir` is specified, missing submodules will be cl=
-oned
-> > +has normal git repository without the option `--separate-git-dir` poin=
-ting
-> > +to the modules directory of the superproject gitdir.
-> > ++
-> >  If `--recursive` is specified, this command will recurse into the
-> >  registered submodules, and update any nested submodules within.
-> >  +
-> > @@ -363,6 +372,11 @@ for linkgit:git-clone[1]'s `--reference` and `--sh=
-ared` options carefully.
-> >  	clone with a history truncated to the specified number of revisions.
-> >  	See linkgit:git-clone[1]
-> > =20
-> > +--no-separate-git-dir::
-> > +	This option is valid for add and update commands. Specify that missin=
-g
-> > +	submodules should be clonned as self contain repository without a
-> > +	separate gitdir placed in the modules directory of the superproject
-> > +	gitdir.
-> > =20
-> >  <path>...::
-> >  	Paths to submodule(s). When specified this will restrict the command
-> > diff --git a/git-submodule.sh b/git-submodule.sh
-> > index a33f68d..36eaf31 100755
-> > --- a/git-submodule.sh
-> > +++ b/git-submodule.sh
-> > @@ -5,11 +5,11 @@
-> >  # Copyright (c) 2007 Lars Hjemli
-> > =20
-> >  dashless=3D$(basename "$0" | sed -e 's/-/ /')
-> > -USAGE=3D"[--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--r=
-eference <repository>] [--] <repository> [<path>]
-> > +USAGE=3D"[--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--r=
-eference <repository>] [--no-separate-git-dir] [--] <repository> [<path>]
-> >     or: $dashless [--quiet] status [--cached] [--recursive] [--] [<path=
->...]
-> >     or: $dashless [--quiet] init [--] [<path>...]
-> >     or: $dashless [--quiet] deinit [-f|--force] [--] <path>...
-> > -   or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch] =
-[-f|--force] [--rebase] [--reference <repository>] [--merge] [--recursive] =
-[--] [<path>...]
-> > +   or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch] =
-[-f|--force] [--rebase] [--reference <repository>] [--merge] [--recursive] =
-[--no-separate-git-dir] [--] [<path>...]
-> >     or: $dashless [--quiet] summary [--cached|--files] [--summary-limit=
- <n>] [commit] [--] [<path>...]
-> >     or: $dashless [--quiet] foreach [--recursive] <command>
-> >     or: $dashless [--quiet] sync [--recursive] [--] [<path>...]"
-> > @@ -36,6 +36,7 @@ update=3D
-> >  prefix=3D
-> >  custom_name=3D
-> >  depth=3D
-> > +noseparategitdir=3D
-> > =20
-> >  # The function takes at most 2 arguments. The first argument is the
-> >  # URL that navigates to the submodule origin repo. When relative, this=
- URL
-> > @@ -270,6 +271,17 @@ module_clone()
-> >  		quiet=3D-q
-> >  	fi
-> > =20
-> > +
-> > +	if test -n "$noseparategitdir"
-> > +	then
-> > +		(
-> > +			clear_local_git_env
-> > +			git clone $quiet ${depth:+"$depth"} -n ${reference:+"$reference"} "=
-$url" "$sm_path"
-> > +		) ||
-> > +		die "$(eval_gettext "Clone of '\$url' into submodule path '\$sm_path=
-' failed")"
-> > +		return
-> > +	fi
-> > +
-> >  	gitdir=3D
-> >  	gitdir_base=3D
-> >  	base_name=3D$(dirname "$name")
-> > @@ -359,6 +371,9 @@ cmd_add()
-> >  		-q|--quiet)
-> >  			GIT_QUIET=3D1
-> >  			;;
-> > +		--no-separate-git-dir)
-> > +			noseparategitdir=3D1
-> > +			;;
-> >  		--reference)
-> >  			case "$2" in '') usage ;; esac
-> >  			reference_path=3D$2
-> > @@ -758,6 +773,9 @@ cmd_update()
-> >  		-f|--force)
-> >  			force=3D$1
-> >  			;;
-> > +		--no-separate-git-dir)
-> > +			noseparategitdir=3D1
-> > +			;;
-> >  		-r|--rebase)
-> >  			update=3D"rebase"
-> >  			;;
-> > diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-> > index c28e8d8..aa2df3d 100755
-> > --- a/t/t7400-submodule-basic.sh
-> > +++ b/t/t7400-submodule-basic.sh
-> > @@ -81,6 +81,18 @@ inspect() {
-> >  	)
-> >  }
-> > =20
-> > +test_expect_success 'submodule add --no-separate-git-dir' '
-> > +	(
-> > +		cd addtest &&
-> > +		rm -rf submod &&
-> > +		git submodule add --no-separate-git-dir -q "$submodurl" submod >actu=
-al &&
-> > +		test_must_be_empty actual &&
-> > +		test -d submod/.git &&
-> > +		rm -rf submod &&
-> > +		git reset --hard
-> > +	)
-> > +'
-> > +
-> >  test_expect_success 'submodule add' '
-> >  	echo "refs/heads/master" >expect &&
-> >  	>empty &&
-> >=20
->=20
-
-
-
-
---=-mqvi2tD9Qj3u/IJ3Jsvm
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iF4EABEKAAYFAlMU51IACgkQkKuHPdwEGdSghgD/QU4QxMzGew8qXLbPGaHe0+z1
-SpdKQVYNO2eaf4uLEUwA/1ZVEpRYGfK9n67zmIMFGdQBNbc+zNhgLNepcchTFeMs
-=lzGQ
------END PGP SIGNATURE-----
-
---=-mqvi2tD9Qj3u/IJ3Jsvm--
+I would have to say that this is not a good sample exercise to
+suggest to new students and I'd encourage dropping it from the list.
+You could argue that it is an effective way to cull people with bad
+design taste to mix suggestions to make the codebase worse and see
+who picks them, but I do not think it is very fair ;-)
