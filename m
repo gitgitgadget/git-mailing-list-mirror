@@ -1,101 +1,122 @@
-From: Guanglin Xu <mzguanglin@gmail.com>
-Subject: Re: [PATCH v4] branch.c: change install_branch_config() to use skip_prefix()
-Date: Mon, 3 Mar 2014 16:57:18 +0800
-Message-ID: <CAATe9ugnq6bm8W05RP=uq+nPEZqsyRYFosRvyJwOSot+ynPOKw@mail.gmail.com>
-References: <1393828581-65523-1-git-send-email-mzguanglin@gmail.com>
-	<CAPig+cQ7Zg-jPewuaYJ7K8aZBfJQPPt64Pzn9g1GdbikTQORzQ@mail.gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH] commit.c:record_author_date() use skip_prefix() instead
+ of starts_with()
+Date: Mon, 03 Mar 2014 09:58:56 +0100
+Message-ID: <53144450.3080006@alum.mit.edu>
+References: <1393703299-7977-1-git-send-email-tanayabh@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Mar 03 09:57:24 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Tanay Abhra <tanayabh@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 03 09:59:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKOgd-0000NH-LC
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 09:57:24 +0100
+	id 1WKOiq-0001mp-II
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 09:59:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754102AbaCCI5T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2014 03:57:19 -0500
-Received: from mail-ie0-f173.google.com ([209.85.223.173]:37805 "EHLO
-	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754061AbaCCI5S (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2014 03:57:18 -0500
-Received: by mail-ie0-f173.google.com with SMTP id rl12so2529913iec.32
-        for <git@vger.kernel.org>; Mon, 03 Mar 2014 00:57:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=nFwuwqABhO5BSOSjUFnpNlx4ThT/7APqMwqAu4aHz5A=;
-        b=imiDvjkzJCynWJhrt8omJxbKqAI22B1BYJZLEh1yyTMj9IjzECCWreF2nGwoE0/3VX
-         h41vG/FE8xDnUBwpRqpKcxBaeBifj5SfT8+yjtOAJhQf1Hyry3mySRQ6dfiURnmJzFFE
-         fEHLjyORQ30F4awpQnNUU8vpGnuB7OM7Fj9Qspj5GaSfs6WdiKUGJi/W6C+5NOR/040l
-         k7q9d7TIJ+rA+diXG/goxN9DZigNFJSi6IaN73MnVZyPp/MedGWNbXD3097FFXNnRlIK
-         iBb3c0YebVzRHne/+P78SuodUPMetHxf5R6pD0fMYof4fWnZvHgHd7XNQ/0ba5lQ+wvm
-         jSeQ==
-X-Received: by 10.42.129.9 with SMTP id o9mr24689833ics.38.1393837038301; Mon,
- 03 Mar 2014 00:57:18 -0800 (PST)
-Received: by 10.64.14.135 with HTTP; Mon, 3 Mar 2014 00:57:18 -0800 (PST)
-In-Reply-To: <CAPig+cQ7Zg-jPewuaYJ7K8aZBfJQPPt64Pzn9g1GdbikTQORzQ@mail.gmail.com>
+	id S1754061AbaCCI7B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2014 03:59:01 -0500
+Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:60547 "EHLO
+	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753760AbaCCI67 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Mar 2014 03:58:59 -0500
+X-AuditID: 1207440d-f79d86d0000043db-f9-5314445218da
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 43.99.17371.25444135; Mon,  3 Mar 2014 03:58:58 -0500 (EST)
+Received: from [192.168.69.148] (p57A2466F.dip0.t-ipconnect.de [87.162.70.111])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s238wvxG000489
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Mon, 3 Mar 2014 03:58:58 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
+In-Reply-To: <1393703299-7977-1-git-send-email-tanayabh@gmail.com>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprLKsWRmVeSWpSXmKPExsUixO6iqBvkIhJscOO4tUXXlW4mi18X3jM7
+	MHnsnHWX3ePzJrkApihum6TEkrLgzPQ8fbsE7owds0oKZgpWPF74mrWB8RBvFyMnh4SAicTy
+	rR+YIGwxiQv31rN1MXJxCAlcZpTYumM+M4Rzjkni4vkuVpAqXgFtibOH74F1sAioSmy68hbM
+	ZhPQlVjU0wxmiwoES6y+/IAFol5Q4uTMJ2C2iICKxM9dt4GGcnAwC4hL9P8DCwsLxEt8ODsf
+	rFVIwFGiY851NhCbU8BJYvG8XjaQcgmg8p7GIJAws4COxLu+B8wQtrzE9rdzmCcwCs5CsmwW
+	krJZSMoWMDKvYpRLzCnN1c1NzMwpTk3WLU5OzMtLLdI10svNLNFLTSndxAgJXt4djP/XyRxi
+	FOBgVOLhNVgqHCzEmlhWXJl7iFGSg0lJlPeLo0iwEF9SfkplRmJxRnxRaU5q8SFGCQ5mJRHe
+	/GVA5bwpiZVVqUX5MClpDhYlcV61Jep+QgLpiSWp2ampBalFMFkZDg4lCV5LZ6ChgkWp6akV
+	aZk5JQhpJg5OkOFcUiLFqXkpqUWJpSUZ8aDojS8Gxi9Iigdor7QTUDtvcUFiLlAUovUUoy7H
+	7bZfnxiFWPLy81KlxHm7QYoEQIoySvPgVsBS1StGcaCPhXlFQS7hAaY5uEmvgJYwAS3pNgRb
+	UpKIkJJqYJy/z6R9XV295LSt9/m+L5FfbZ07K7G0OGLbt7KdST0sh2ue3E+UnbPBJqj8lbzw
+	d5bCHetmTDEK3mZgY+bpIZsipGFoby/vVu9nVFGafOKXytbpB5l/mAmcmaD53sOp 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243201>
 
-Hi Eric,
+The format of this email is wrong.  The non-commit-message notes should
+come between the "---" line (<- note, there are three minus signs here)
+and the patch itself.
 
-Yes, you're right. "!!" is comfortably concise and also idiomatic in
-Git sources.
+On 03/01/2014 08:48 PM, Tanay Abhra wrote:
+> Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
+> ---
+>  commit.c |    2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/commit.c b/commit.c
+> index 6bf4fe0..c954ecb 100644
+> --- a/commit.c
+> +++ b/commit.c
+> @@ -566,7 +566,7 @@ static void record_author_date(struct author_date_slab *author_date,
+>  	     buf;
+>  	     buf = line_end + 1) {
+>  		line_end = strchrnul(buf, '\n');
+> -		if (!starts_with(buf, "author ")) {
+> +		if (!skip_prefix(buf, "author ")) {
 
-Thanks,
+If this is the only change, there is not much point, is there?  How does
+this help?  Perhaps there is some way to take advantage of the
+difference between starts_with() and skip_prefix() to simplify the rest
+of the function?
 
-Guanglin
+>  			if (!line_end[0] || line_end[1] == '\n')
+>  				return; /* end of header */
+>  			continue;
+> -- 
+> 1.7.9.5
+> 
+> Hello,
+> 
+> This is my patch for the GSoC microproject #10:
+> 
+> Rewrite commit.c:record_author_date() to use skip_prefix(). 
+> Are there other places in this file where skip_prefix() would be more 
+> readable than starts_with()?
+> 
+> Since skip_prefix() and starts_with() implement the same functionality with different
+> return values, they can be interchanged easily.
+> 
+> Other usage of starts_with() in the same file can be found with
+> 
+> $ grep -n starts_with commit.c
+> 
+> 1116:		else if (starts_with(line, gpg_sig_header) &&
+> 1196:		if (starts_with(buf, sigcheck_gpg_status[i].check + 1)) {
 
-2014-03-03 16:12 GMT+08:00 Eric Sunshine <sunshine@sunshineco.com>:
-> On Mon, Mar 3, 2014 at 1:36 AM, Guanglin Xu <mzguanglin@gmail.com> wrote:
->> to avoid a magic code of 11.
->>
->> Helped-by: Sun He <sunheeh...@gmail.com>
->> Helped-by: Eric Sunshine <sunsh...@sunshineco.com>
->> Helped-by: Jacopo Notarstefano <jaco...@gmail.com>
->>
->> Signed-off-by: Guanglin Xu <mzguanglin@gmail.com>
->> ---
->>
->> This is an implementation of the idea#2 of GSoC 2014 microproject.
->>
->>  branch.c | 8 ++++++--
->>  1 file changed, 6 insertions(+), 2 deletions(-)
->>
->> diff --git a/branch.c b/branch.c
->> index 723a36b..4eec0ac 100644
->> --- a/branch.c
->> +++ b/branch.c
->> @@ -49,8 +49,12 @@ static int should_setup_rebase(const char *origin)
->>
->>  void install_branch_config(int flag, const char *local, const char *origin, const char *remote)
->>  {
->> -       const char *shortname = remote + 11;
->> -       int remote_is_branch = starts_with(remote, "refs/heads/");
->> +       const char *shortname = skip_prefix(remote ,"refs/heads/");
->> +       int remote_is_branch;
->> +       if (NULL == shortname)
->> +               remote_is_branch = 0;
->> +       else
->> +               remote_is_branch = 1;
->
-> A bit verbose. Perhaps just:
->
->     int remote_is_branch = !!shortname;
->
-> which you will find to be idiomatic in this project.
->
->>         struct strbuf key = STRBUF_INIT;
->>         int rebasing = should_setup_rebase(origin);
->>
->> --
->> 1.9.0
+The rhetorical question that was part of this microproject was meant to
+inspire you to actually *FIX* the other spots, at least if the change
+makes sense.
+
+> I have a query,should I tackle a bug from the mailing lists or research about the proposal 
+> and present a rough draft?
+
+My suggestion is that you follow up on this microproject until it is
+perfect before worrying too much about the next step.
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
