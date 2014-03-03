@@ -1,78 +1,69 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v3] skip_prefix: rewrite so that prefix is scanned once
-Date: Tue, 4 Mar 2014 06:37:25 +0700
-Message-ID: <CACsJy8ASBeravdk67pbOJbrFUbwg21JwYcLtSbDDMJOu9-F=yA@mail.gmail.com>
-References: <1393816384-3300-1-git-send-email-siddharth98391@gmail.com>
- <xmqqvbvvp0gj.fsf@gitster.dls.corp.google.com> <xmqq61nuoqd5.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] test-lib: tests skipped by GIT_SKIP_TESTS say so
+Date: Mon, 03 Mar 2014 15:39:16 -0800
+Message-ID: <xmqqfvmyn97f.fsf@gitster.dls.corp.google.com>
+References: <CAPig+cRnfDta9FofgH2jSdivzKvJiHwnzPZ5PoO4UTpWQLSH4w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Siddharth Goel <siddharth98391@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 04 00:38:01 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Ilya Bobyr <ilya.bobir@gmail.com>,
+	Ilya Bobyr <ilya.bobyr@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Thomas Rast <tr@thomasrast.ch>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Tue Mar 04 00:39:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKcQq-00057R-Jv
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 00:38:00 +0100
+	id 1WKcSQ-0006Cu-5O
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 00:39:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755426AbaCCXh4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2014 18:37:56 -0500
-Received: from mail-qc0-f170.google.com ([209.85.216.170]:53458 "EHLO
-	mail-qc0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755254AbaCCXh4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2014 18:37:56 -0500
-Received: by mail-qc0-f170.google.com with SMTP id e9so216991qcy.1
-        for <git@vger.kernel.org>; Mon, 03 Mar 2014 15:37:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=+sPNhrOyCzUZ3HAV9KGG+2tC6fE71fM54w0hdVnmkXo=;
-        b=tYnQKm/1vcl/F6rB5ecjIIePZDGpU7oJqOhTmT8t+UtuhZHC7fuCOtPFaKGBpCYV7H
-         oQwymLy34aE0zb50YycO902FwQXjUIFP+CHQQom5Nzn8aTp08Mhe6UYlxoI1EGpalbmP
-         +RrrhCAayxukNXMyleObU7h27zMA1gOYBQL7Vi5MGto3dbyyU0CwUuaSekX42FAdIt0G
-         GFUybZ4huT0EwsVmilBLJ+eIEBpHmxvDvoPizNMEBiAN3C12xcH2I+sQl/v3qR3R10i0
-         RQPWsr7Q0Bk/EzQjI7FdIUvlX6yg1WtZwfu+VAtCT1xjZytwZDdSBv26/3nSdu2052FV
-         j0lQ==
-X-Received: by 10.224.36.129 with SMTP id t1mr6341793qad.88.1393889875582;
- Mon, 03 Mar 2014 15:37:55 -0800 (PST)
-Received: by 10.96.215.102 with HTTP; Mon, 3 Mar 2014 15:37:25 -0800 (PST)
-In-Reply-To: <xmqq61nuoqd5.fsf@gitster.dls.corp.google.com>
+	id S1755836AbaCCXjX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2014 18:39:23 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55322 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755833AbaCCXjT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2014 18:39:19 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E843C5528A;
+	Mon,  3 Mar 2014 18:39:18 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=h/VuH5LvPTmkZg2pT9bqUe4X4qI=; b=WTKhZw
+	1t54NhS2S2YFI/Z8wwW2FX76zJIqtOvk7ypECEuDQzbO4liY9YW6TT9DZvvKJv8W
+	IW+gsW+nlXh0SXRwZcZs4vA+oBbXJtIdS5izW2adKHcTFF2VVtsVEZCyE5z7imer
+	/ErkLWGgspadmO87AJCKcxozySmiLmUF03MJc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CuxzdVe0BatmaMwC4gKMzGOoKx37YnTp
+	+cKVEDyfgNH4PTF+nmK8k86LuyaW5dvhxa4qCSOgS1cDOnkGS0oxo/35eBlDb71p
+	rX1qy1Vu7KfPXf6V6/fUMGu2A2c/X07QYVkSTn4W+RfVS6At5hoaRU+ZDZyb/y4l
+	aLnK+LpaW/M=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D4DBF55287;
+	Mon,  3 Mar 2014 18:39:18 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 33C2B5527F;
+	Mon,  3 Mar 2014 18:39:18 -0500 (EST)
+In-Reply-To: <CAPig+cRnfDta9FofgH2jSdivzKvJiHwnzPZ5PoO4UTpWQLSH4w@mail.gmail.com>
+	(Eric Sunshine's message of "Mon, 3 Mar 2014 18:18:46 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 09A9D4FE-A32D-11E3-AF3B-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243311>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243312>
 
-On Tue, Mar 4, 2014 at 5:43 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index cbd86c3..68ffaef 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -357,8 +357,14 @@ extern int suffixcmp(const char *str, const char *suffix);
->
->  static inline const char *skip_prefix(const char *str, const char *prefix)
->  {
-> -       size_t len = strlen(prefix);
-> -       return strncmp(str, prefix, len) ? NULL : str + len;
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-Just a note. gcc does optimize strlen("abcdef") to 6, and with that
-information at compile time built-in strncmp might do better.
+> That new message in patch #2 says "not in GIT_TEST_ONLY", but isn't
+> "(excluded)" also applicable to that case? Is it important to be able
+> to distinguish between the two "excluded" reasons?
 
-> +       while (1) {
-> +               if (!*prefix)
-> +                       return str;
-> +               if (*str != *prefix)
-> +                       return NULL;
-> +               prefix++;
-> +               str++;
-> +       }
->  }
->
->  #if defined(NO_MMAP) || defined(USE_WIN32_MMAP)
--- 
-Duy
+An obvious solution is not to *have* two reasons in the first place
+;-)
