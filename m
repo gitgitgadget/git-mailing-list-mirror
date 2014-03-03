@@ -1,81 +1,96 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 2/3] rebase: accept -<number> as another way of saying HEAD~<number>
-Date: Mon, 03 Mar 2014 11:12:09 +0100
-Message-ID: <vpqvbvvegli.fsf@anie.imag.fr>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/3] rebase: accept -<number> as another way of saying
+ HEAD~<number>
+Date: Mon, 3 Mar 2014 05:13:03 -0500
+Message-ID: <20140303101303.GA23977@sigill.intra.peff.net>
 References: <1393506078-7310-1-git-send-email-pclouds@gmail.com>
-	<1393728794-29566-1-git-send-email-pclouds@gmail.com>
-	<1393728794-29566-3-git-send-email-pclouds@gmail.com>
-	<CAPig+cSPKSsVG_yqaQfOCswaENKdUGrWt_YcQ3yZCpgG5jQ+JQ@mail.gmail.com>
-	<CAPig+cSFWT6kwZUFFUE3=TcfHRUJnx54+fcZCzJwmOSJKFsYeA@mail.gmail.com>
-	<vpqlhwsr3ww.fsf@anie.imag.fr> <53144881.6090702@alum.mit.edu>
-	<vpq7g8bfws8.fsf@anie.imag.fr>
-	<CACsJy8CPhTQxpnY70PxD9zFSipaJCTQPBsmReD8E9tmEgsvTRg@mail.gmail.com>
+ <1393728794-29566-1-git-send-email-pclouds@gmail.com>
+ <1393728794-29566-3-git-send-email-pclouds@gmail.com>
+ <CAPig+cSPKSsVG_yqaQfOCswaENKdUGrWt_YcQ3yZCpgG5jQ+JQ@mail.gmail.com>
+ <CAPig+cSFWT6kwZUFFUE3=TcfHRUJnx54+fcZCzJwmOSJKFsYeA@mail.gmail.com>
+ <vpqlhwsr3ww.fsf@anie.imag.fr>
+ <53144881.6090702@alum.mit.edu>
+ <vpq7g8bfws8.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
 Cc: Michael Haggerty <mhagger@alum.mit.edu>,
 	Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Git List <git@vger.kernel.org>,
 	Philip Oakley <philipoakley@iee.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 03 11:12:34 2014
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Mar 03 11:13:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKPrN-0003VP-Vv
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 11:12:34 +0100
+	id 1WKPs2-0003up-Bn
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 11:13:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753992AbaCCKM3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2014 05:12:29 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:48084 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753750AbaCCKM0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2014 05:12:26 -0500
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s23AC9k1009202
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 3 Mar 2014 11:12:09 +0100
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s23ACA5C017533;
-	Mon, 3 Mar 2014 11:12:10 +0100
-In-Reply-To: <CACsJy8CPhTQxpnY70PxD9zFSipaJCTQPBsmReD8E9tmEgsvTRg@mail.gmail.com>
-	(Duy Nguyen's message of "Mon, 3 Mar 2014 17:04:27 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 03 Mar 2014 11:12:09 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s23AC9k1009202
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1394446331.22884@HfkTgOv9UyltvAn5NIZ80A
+	id S1754633AbaCCKNJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2014 05:13:09 -0500
+Received: from cloud.peff.net ([50.56.180.127]:60261 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754301AbaCCKNG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2014 05:13:06 -0500
+Received: (qmail 6156 invoked by uid 102); 3 Mar 2014 10:13:06 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 03 Mar 2014 04:13:06 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 03 Mar 2014 05:13:03 -0500
+Content-Disposition: inline
+In-Reply-To: <vpq7g8bfws8.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243212>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+On Mon, Mar 03, 2014 at 10:37:11AM +0100, Matthieu Moy wrote:
 
-> On Mon, Mar 3, 2014 at 4:37 PM, Matthieu Moy
->
->> This would actually be a feature for me: I often want to rebase "recent
->> enough" history, and when my @{upstream} isn't well positionned, I
->> randomly type HEAD~N without remembering what N should be. When N is too
->> small, the rebase doesn't reach the interesting commit, and when N is
->> too big, it reaches a merge commit and I get a bunch of commits I'm not
->> allowed to edit in my todo-list. Then I have to abort the commit
->> manually. With -N failing on merge commits, the rebase would abort
->> itself automatically.
->
-> would "git rebase -i --fork-point" be what you need instead?
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+> 
+> > Or perhaps "-NUM" should fail with an error message if any of the last
+> > NUM commits are merges.  In that restricted scenario (which probably
+> > accounts for 99% of rebases), "-NUM" is equivalent to "HEAD~NUM".
+> 
+> Makes sense to me. So, -NUM would actually mean "rebase the last NUM
+> commits" (as well as being an alias for HEAD~NUM), but would fail when
+> it does not make sense (with an error message explaining the situation
+> and pointing the user to HEAD~N if this is what he wanted).
 
-I don't think so. My use case is when I did a manual merge, so
-@{upstream} is helpless or even not positionned. There is for sure an
-accurate command (remember the branch I just merged and put it on the
-command-line), but my fingers prefer typing quick and dirty commands and
-hope I won't get too many trial and error cycles ;-).
+Yeah, I agree with this. I think "-NUM" is only useful for linear
+string-of-pearls history. With merges, it either means:
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+  - linearize history (a la git-log), go back NUM commits, and treat the
+    result as the upstream. This is useless, because it's difficult to
+    predict where you're going to end up. Using explicit "~" and "^"
+    relative-commit operators to specify the upstream is more flexible
+    if you really want to do this (but I don't know why you would).
+
+  - do not use an UNINTERESTING upstream as the cutoff, but instead
+    try to rebase exactly NUM commits. In the face of non-linear
+    history, I'm not even sure what this would mean, or how we would
+    implement it.
+
+Neither of those is useful, so I don't think erroring out on them is a
+bad thing. And by erroring out (rather than documenting some weird and
+useless behavior), we don't have to worry about backwards compatibility
+if we later _do_ come up with a useful behavior (the best I can think of
+is that "--first-parent -3" might have a use, but I think that should
+already be covered, as the results of --first-parent are by-definition
+linear).
+
+> This would actually be a feature for me: I often want to rebase "recent
+> enough" history, and when my @{upstream} isn't well positionned, I
+> randomly type HEAD~N without remembering what N should be. When N is too
+> small, the rebase doesn't reach the interesting commit, and when N is
+> too big, it reaches a merge commit and I get a bunch of commits I'm not
+> allowed to edit in my todo-list. Then I have to abort the commit
+> manually. With -N failing on merge commits, the rebase would abort
+> itself automatically.
+
+I do the same thing.
+
+-Peff
