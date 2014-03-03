@@ -1,98 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] rebase: accept -<number> as another way of saying HEAD~<number>
-Date: Mon, 03 Mar 2014 13:48:44 -0800
-Message-ID: <xmqqha7fnebn.fsf@gitster.dls.corp.google.com>
-References: <1393506078-7310-1-git-send-email-pclouds@gmail.com>
-	<1393728794-29566-1-git-send-email-pclouds@gmail.com>
-	<1393728794-29566-3-git-send-email-pclouds@gmail.com>
-	<CAPig+cSPKSsVG_yqaQfOCswaENKdUGrWt_YcQ3yZCpgG5jQ+JQ@mail.gmail.com>
-	<CAPig+cSFWT6kwZUFFUE3=TcfHRUJnx54+fcZCzJwmOSJKFsYeA@mail.gmail.com>
-	<vpqlhwsr3ww.fsf@anie.imag.fr> <53144881.6090702@alum.mit.edu>
-	<vpq7g8bfws8.fsf@anie.imag.fr>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: Help needed: Tests failed While replacing char array with strbuf
+ in bulk-checkin.c
+Date: Mon, 3 Mar 2014 17:14:26 -0500
+Message-ID: <CAPig+cTE7wtVpmjN=p56JB6avL8n_JhDC6g5cAgGcmJQ8OVt5g@mail.gmail.com>
+References: <d7af2c2bcb07168ecddedf76ca776cd0@students.iiit.ac.in>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Philip Oakley <philipoakley@iee.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Mar 03 22:48:53 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>
+To: "saikrishna.sripada" <saikrishna.sripada@students.iiit.ac.in>
+X-From: git-owner@vger.kernel.org Mon Mar 03 23:14:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKajD-0004vO-Vy
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 22:48:52 +0100
+	id 1WKb85-0006F4-Lw
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 23:14:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754891AbaCCVss (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2014 16:48:48 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56057 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754564AbaCCVsr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2014 16:48:47 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1D64771903;
-	Mon,  3 Mar 2014 16:48:47 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=wsGbFtr2PWBV9LspkbWkEmDopBw=; b=jlY0ot
-	iHSwGtP0xSwMRaDdRYCIAyQ9Cdp73R5fF1NvWPozoPr1lH6S+voLNZcXDE1ngRSX
-	Nwq3BgGZ6PXyiR8pAl9C9XOlKl6KgpIlqZJWaVauGI9rNWWxlF/UBnsuE2ABQC9E
-	ZnhvypbXnWAUn0FrJa224kKGD//ebR0PsiZAU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KLdQ00joEvNe30ka2nL15QgkvBGNCfip
-	I4GLq6jrMT1BpzhRxFKWZgqFBmg3CG3Vk0KFzEcalVQFY4m+TmfvFAUeg5is8Ujk
-	szkEwjmFr3UUmN7twea5NHpypUlZJAFagSp4ZszZlOPRt2VpAq4fpoYzoMC9YRzO
-	6l7IdJCDz2g=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 082D071902;
-	Mon,  3 Mar 2014 16:48:47 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4775471900;
-	Mon,  3 Mar 2014 16:48:46 -0500 (EST)
-In-Reply-To: <vpq7g8bfws8.fsf@anie.imag.fr> (Matthieu Moy's message of "Mon,
-	03 Mar 2014 10:37:11 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 98BB3DB4-A31D-11E3-9DFC-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755074AbaCCWO2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2014 17:14:28 -0500
+Received: from mail-yk0-f172.google.com ([209.85.160.172]:38589 "EHLO
+	mail-yk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754982AbaCCWO1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2014 17:14:27 -0500
+Received: by mail-yk0-f172.google.com with SMTP id 200so12138235ykr.3
+        for <git@vger.kernel.org>; Mon, 03 Mar 2014 14:14:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=M7nzd3dq9n9sVHu/pYT3wX2uLhVFpE1kVoEU4PnfrHo=;
+        b=C6nVM0LNQNOylmjgHjx9HXaYCM2lm2ct5ESbvo9VUfsYCtaLMdkoSJX2NShd/LXpge
+         o2Z79Rwib9fBWZlj9H86uTUrcMfMjBLkL3NAjb5++VrFaKYA/5cyrTGRPfFC5HDFuyde
+         5U8zdpmRAgYmFpD687z3W+QYT9enBCvgoANhpcqUvEbqQgwGK676wGeCB11vormdBoUb
+         RnD1LVJQYzXvrykUur7fpfs5Ntynr9szTWkVnoxz13oVVKxerefyK7wwaf92Q/VkLi2X
+         N0pXRtkhFOC+NsN5cjmdf7NHpVSKxVz71Ye6046RawoQeQ9W8Fvqodyj5Zw5/Ond1uEb
+         hNtA==
+X-Received: by 10.236.120.147 with SMTP id p19mr24821286yhh.6.1393884866904;
+ Mon, 03 Mar 2014 14:14:26 -0800 (PST)
+Received: by 10.170.180.195 with HTTP; Mon, 3 Mar 2014 14:14:26 -0800 (PST)
+In-Reply-To: <d7af2c2bcb07168ecddedf76ca776cd0@students.iiit.ac.in>
+X-Google-Sender-Auth: bHfqgAVQ5cgwk8NlSn7XHMzRo5U
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243276>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
-
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
+On Mon, Mar 3, 2014 at 4:11 PM, saikrishna.sripada
+<saikrishna.sripada@students.iiit.ac.in> wrote:
+> I am trying do complete the microproject 4, inorder to apply to GSOC.
+> I have made the below changes:
 >
->> Or perhaps "-NUM" should fail with an error message if any of the last
->> NUM commits are merges.  In that restricted scenario (which probably
->> accounts for 99% of rebases), "-NUM" is equivalent to "HEAD~NUM".
+> https://gist.github.com/anhsirksai/9334565
 >
-> Makes sense to me. So, -NUM would actually mean "rebase the last NUM
-> commits" (as well as being an alias for HEAD~NUM), but would fail when
-> it does not make sense (with an error message explaining the situation
-> and pointing the user to HEAD~N if this is what he wanted).
+> Post my changes compilation is succes in the source directory.
+> But when I ran the tests[make in t/ directory] my tests are failing saying
 >
-> This would actually be a feature for me: I often want to rebase "recent
-> enough" history, and when my @{upstream} isn't well positionned,...
+> "
+>  free(): invalid pointer: 0x3630376532353636 ***
+> ======= Backtrace: =========
+> /lib/x86_64-linux-gnu/libc.so.6(+0x7eb96)[0x2b5f3b540b96]
+> /home/saikrishna/Desktop/libcloud-0.14.1/sai/git/git[0x4fb829]
+> /home/saikrishna/Desktop/libcloud-0.14.1/sai/git/git[0x47d425]
+> /home/saikrishna/Desktop/libcloud-0.14.1/sai/git/git[0x4064ad]
+> /home/saikrishna/Desktop/libcloud-0.14.1/sai/git/git[0x405a04]
+> /home/saikrishna/Desktop/libcloud-0.14.1/sai/git/git[0x404cbd]
+> /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xed)[0x2b5f3b4e376d]
+> /home/saikrishna/Desktop/libcloud-0.14.1/sai/git/git[0x405109]
+> "
+>
+> Can some one please help me with the memory allacation and strbuf_release()
 
-Could you elaborate on this a bit?  What does "isn't well
-positioned" mean?  Do you mean "the upstream has advanced but there
-is no reason for my topic to build on that---I'd rather want to make
-sure I can view 'diff @{1} HEAD' and understand what my changes
-before the rebase was"?  That is, what you really want is
+Read the microproject text carefully and _fully_. It provides the clue
+you need to understand the problem.
 
-	git rebase -i --onto $(git merge-base @{upstream} HEAD) @{upstream}
+    Rewrite bulk-checkin.c:finish_bulk_checkin() to use a strbuf for
+    handling packname, and explain why this is useful. Also check if
+    the first argument of pack-write.c:finish_tmp_packfile() can be
+    made const.
 
-but that is too long to type?
-
-If it is very common (and I suspect it is), we may want to support
-such a short-hand---the above does not make any sense without '-i',
-but I would say with '-i' you do not want to reBASE on an updated
-base most of the time.  "git rebase -i @{upstream}...HEAD" or
-something?
+If, after making a closer examination of the mentioned functions, the
+problem still eludes you, ask here again.
