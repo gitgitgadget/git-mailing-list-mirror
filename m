@@ -1,89 +1,91 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 2/3] rebase: accept -<number> as another way of saying HEAD~<number>
-Date: Mon, 03 Mar 2014 23:39:11 +0100
-Message-ID: <vpqlhwqc3g0.fsf@anie.imag.fr>
-References: <1393506078-7310-1-git-send-email-pclouds@gmail.com>
-	<1393728794-29566-1-git-send-email-pclouds@gmail.com>
-	<1393728794-29566-3-git-send-email-pclouds@gmail.com>
-	<CAPig+cSPKSsVG_yqaQfOCswaENKdUGrWt_YcQ3yZCpgG5jQ+JQ@mail.gmail.com>
-	<CAPig+cSFWT6kwZUFFUE3=TcfHRUJnx54+fcZCzJwmOSJKFsYeA@mail.gmail.com>
-	<vpqlhwsr3ww.fsf@anie.imag.fr> <53144881.6090702@alum.mit.edu>
-	<vpq7g8bfws8.fsf@anie.imag.fr>
-	<xmqqha7fnebn.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [GSoC14][RFC] Proposal Draft: Refactor tempfile handling
+Date: Mon, 3 Mar 2014 17:42:38 -0500
+Message-ID: <20140303224238.GA2699@sigill.intra.peff.net>
+References: <CAN7MxmVQuk96dmXfxZ5kRZPTXNwpz2RY=y8HyqX4mZzrZUVbNg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Philip Oakley <philipoakley@iee.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 03 23:39:36 2014
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Brian Gesiak <modocache@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 03 23:42:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKbWJ-0006zQ-3M
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 23:39:35 +0100
+	id 1WKbZN-0000bJ-Qj
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 23:42:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755073AbaCCWja (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2014 17:39:30 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:35543 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754913AbaCCWj3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2014 17:39:29 -0500
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s23Md9XD026723
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 3 Mar 2014 23:39:09 +0100
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s23MdBKK025190;
-	Mon, 3 Mar 2014 23:39:11 +0100
-In-Reply-To: <xmqqha7fnebn.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 03 Mar 2014 13:48:44 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 03 Mar 2014 23:39:09 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s23Md9XD026723
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1394491150.54432@KdngD6XINxkBcB/qQ60ndQ
+	id S1755270AbaCCWml (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2014 17:42:41 -0500
+Received: from cloud.peff.net ([50.56.180.127]:60658 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755009AbaCCWmk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2014 17:42:40 -0500
+Received: (qmail 14845 invoked by uid 102); 3 Mar 2014 22:42:40 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 03 Mar 2014 16:42:40 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 03 Mar 2014 17:42:38 -0500
+Content-Disposition: inline
+In-Reply-To: <CAN7MxmVQuk96dmXfxZ5kRZPTXNwpz2RY=y8HyqX4mZzrZUVbNg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243293>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243294>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Sun, Mar 02, 2014 at 06:04:39AM +0900, Brian Gesiak wrote:
 
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
->
->> Michael Haggerty <mhagger@alum.mit.edu> writes:
->>
->>> Or perhaps "-NUM" should fail with an error message if any of the last
->>> NUM commits are merges.  In that restricted scenario (which probably
->>> accounts for 99% of rebases), "-NUM" is equivalent to "HEAD~NUM".
->>
->> Makes sense to me. So, -NUM would actually mean "rebase the last NUM
->> commits" (as well as being an alias for HEAD~NUM), but would fail when
->> it does not make sense (with an error message explaining the situation
->> and pointing the user to HEAD~N if this is what he wanted).
->>
->> This would actually be a feature for me: I often want to rebase "recent
->> enough" history, and when my @{upstream} isn't well positionned,...
->
-> Could you elaborate on this a bit?  What does "isn't well
-> positioned" mean?
+> My name is Brian Gesiak. I'm a research student at the University of
+> Tokyo, and I'm hoping to participate in this year's Google Summer of
+> Code by contributing to Git. I'm a longtime user, first-time
+> contributor--some of you may have noticed my "microproject"
+> patches.[1][2]
 
-The most common case is when @{upstream} is not positionned at all,
-because I'm on a temporary branch on which I did not configure it. The
-other case is when I did a manual merge of a branch other than upstream.
+Yes, we did notice them. Thanks, and welcome. :)
 
-As I said in another message, there would probably be cleaner solutions,
-but the trial and error one does not work that bad.
+> The ideas page points out that while lock files are closed and
+> unlinked[3] when the program exits[4], object pack files implement
+> their own brand of temp file creation and deletion. This
+> implementation doesn't share the same guarantees as lock files--it is
+> possible that the program terminates before the temp file is
+> unlinked.[5]
+> 
+> Lock file references are stored in a linked list. When the program
+> exits, this list is traversed and each file is closed and unlinked. It
+> seems to me that this mechanism is appropriate for temp files in
+> general, not just lock files. Thus, my proposal would be to extract
+> this logic into a separate module--tempfile.h, perhaps. Lock and
+> object files would share the tempfile implementation.
+> 
+> That is, both object and lock temp files would be stored in a linked
+> list, and all of these would be deleted at program exit.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Yes, I think this is definitely the right way to go. We should be able
+to unify the tempfile handling for all of git. Once the logic is
+extracted into a nice API, there are several other places that can use
+it, too:
+
+  - the external diff code creates tempfiles and uses its own cleanup
+    routines
+
+  - the shallow_XXXXXX tempfiles (these are not cleaned right now,
+    though I sent a patch recently for them to do their own cleanup)
+
+Those are just off the top of my head. There may be other spots, too.
+
+It is worth thinking in your proposal about some of the things that the
+API will want to handle. What are the mismatches in how lockfiles and
+object files are handled? E.g., how do we finalize them into place?
+How should the API be designed to minimize race conditions (e.g., if we
+get a signal delivered while we are committing or cleaning up a file)?
+
+> Please let me know if this seems like it would make for an interesting
+> proposal, or if perhaps there is something I am overlooking. Any
+> feedback at all would be appreciated. Thank you!
+
+You definitely have a grasp of what the project is aiming for, and which
+areas need to be touched.
+
+-Peff
