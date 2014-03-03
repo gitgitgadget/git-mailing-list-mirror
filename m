@@ -1,121 +1,110 @@
-From: karthik nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH] commit.c: Replace starts_with() with skip_prefix()
-Date: Mon, 3 Mar 2014 20:53:47 +0530
-Message-ID: <CAOLa=ZRxj-iBiQRXEYvq6MrQyQcyzk32kPij8zzxh4ECbBrnMw@mail.gmail.com>
-References: <1393832875-29096-1-git-send-email-karthik.188@gmail.com> <CAPig+cQLoZy=MV_AqPQseMxsrU6T_PqmCifWn1SrOGwF2FcYzg@mail.gmail.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH 2/2] test-lib: GIT_TEST_ONLY to run only specific tests
+Date: Mon, 3 Mar 2014 15:56:02 -0000
+Organization: OPDS
+Message-ID: <A85165F7C59F4572AB131A02D0E09698@PhilipOakley>
+References: <1393842298-5944-1-git-send-email-ilya.bobyr@gmail.com> <1393842298-5944-2-git-send-email-ilya.bobyr@gmail.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Mar 03 16:24:22 2014
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Jonathan Nieder" <jrnieder@gmail.com>,
+	"Thomas Rast" <tr@thomasrast.ch>
+To: "Ilya Bobyr" <ilya.bobyr@gmail.com>, <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Mar 03 16:56:07 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKUj7-0000uO-T5
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 16:24:22 +0100
+	id 1WKVDl-0005qU-BP
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 16:56:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754177AbaCCPYJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2014 10:24:09 -0500
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:58436 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753980AbaCCPYI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2014 10:24:08 -0500
-Received: by mail-pa0-f46.google.com with SMTP id kp14so3788631pab.5
-        for <git@vger.kernel.org>; Mon, 03 Mar 2014 07:24:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=NeSQZptQBkwQVQd/qYvputmZJ87qKEpWsk+gEWrykGk=;
-        b=N/iGdC70Im9C7QHiqYRSD4ngvFT9ptPoBwZkFeJDqKzzkPBDN8dHa4CN5B5+ub1Ppj
-         AfSowGpYaC1N8jigM3SP400R47pSBNGGQ4r1fcQcfqo1IsCFdVXavnad5jvjPxtXdgox
-         ursDPn6KUcMEEveTBuH+8+tId1lRhQJGErwY8I3/z8gpor/EIHPwu4c7uWYbnwyibdCU
-         vQfqObAYpR5eGSOhiaN7atk29ONNJFETEgfquPBqPplOfHKJdRNYSNkOZfvzy/oRWAOv
-         cBg1Xpxiht5TJDiYyRMb40nKuQopvRnSpgJTrwmqhK8RRN6xBYSXnFEIBOOblkgMee0Z
-         vbzg==
-X-Received: by 10.66.197.135 with SMTP id iu7mr259594pac.149.1393860247753;
- Mon, 03 Mar 2014 07:24:07 -0800 (PST)
-Received: by 10.68.138.138 with HTTP; Mon, 3 Mar 2014 07:23:47 -0800 (PST)
-In-Reply-To: <CAPig+cQLoZy=MV_AqPQseMxsrU6T_PqmCifWn1SrOGwF2FcYzg@mail.gmail.com>
+	id S1754529AbaCCPz5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2014 10:55:57 -0500
+Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:43791 "EHLO
+	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753716AbaCCPz4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Mar 2014 10:55:56 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AogXAM2lFFNZ8Ylt/2dsb2JhbABagwY7iRi4BQUBAgEBgSEXdGkBAYEfAQEUAQQBAQUIAQEuHgEBIQsCAwUCAQMVDCUUAQQIEgYHFwYBEggCAQIDAYU4BwGCBw0DFQnFQQ2GXBeMQ4IWgyuBFASJE4Yehx6MQYIPhUiDLTw
+X-IPAS-Result: AogXAM2lFFNZ8Ylt/2dsb2JhbABagwY7iRi4BQUBAgEBgSEXdGkBAYEfAQEUAQQBAQUIAQEuHgEBIQsCAwUCAQMVDCUUAQQIEgYHFwYBEggCAQIDAYU4BwGCBw0DFQnFQQ2GXBeMQ4IWgyuBFASJE4Yehx6MQYIPhUiDLTw
+X-IronPort-AV: E=Sophos;i="4.97,578,1389744000"; 
+   d="scan'208";a="437552381"
+Received: from host-89-241-137-109.as13285.net (HELO PhilipOakley) ([89.241.137.109])
+  by out1.ip04ir2.opaltelecom.net with SMTP; 03 Mar 2014 15:55:43 +0000
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243230>
 
-Hello Eric,
-Thanks for Pointing out everything, i had a thorough look and fixed a
-couple of things.
-Here is an Updated Patch.
-- Removed unnecessary code and variables.
-- Replaced all instances of starts_with() with skip_prefix()
+Minor nits.
 
-Replace starts_with() with skip_prefix() for better reading purposes.
-Also to replace "buf + strlen(author )" by skip_prefix(), which is
-saved in a new "const char" variable "buf_skipprefix".
+From: "Ilya Bobyr" <ilya.bobyr@gmail.com>
+> This is a counterpart to GIT_SKIP_TESTS.  Mostly useful when 
+> debugging.
+> ---
+> t/README      |   15 +++++++++++++++
+> t/test-lib.sh |    8 ++++++++
+> 2 files changed, 23 insertions(+), 0 deletions(-)
+>
+> diff --git a/t/README b/t/README
+> index caeeb9d..f939987 100644
+> --- a/t/README
+> +++ b/t/README
+> @@ -187,6 +187,21 @@ and either can match the "t[0-9]{4}" part to skip 
+> the whole
+> test, or t[0-9]{4} followed by ".$number" to say which
+> particular test to skip.
+>
+> +Sometimes the opposite is desired - ability to execute only one or
+> +several tests.  Mostly while debugging tests.  For that you can say
+> +
+> +    $ GIT_TEST_ONLY=t9200.8 sh ./t9200-git-cvsexport-commit.sh
+> +
+> +or, similrary to GIT_SKIP_TESTS
+> +
+> +    $ GIT_TEST_ONLY='t[0-4]??? t91?? t9200.8' make
+> +
+> +In additiona to matching against "<test suite number>.<test number>"
+> +GIT_TEST_ONLY is matched against just the test .  This comes
+s/numbes/numbers/
 
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
- commit.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+> +handy when you are running only one test:
+s/handy/in handy/
 
-diff --git a/commit.c b/commit.c
-index 6bf4fe0..e5dc2e2 100644
---- a/commit.c
-+++ b/commit.c
-@@ -552,6 +552,7 @@ static void record_author_date(struct
-author_date_slab *author_date,
-  char *buffer = NULL;
-  struct ident_split ident;
-  char *date_end;
-+ const char *buf_skipprefix;
-  unsigned long date;
-
-  if (!commit->buffer) {
-@@ -562,18 +563,20 @@ static void record_author_date(struct
-author_date_slab *author_date,
-  return;
-  }
-
-+ buf_skipprefix = skip_prefix(buf, "author ");
-+
-  for (buf = commit->buffer ? commit->buffer : buffer;
-      buf;
-      buf = line_end + 1) {
-  line_end = strchrnul(buf, '\n');
-- if (!starts_with(buf, "author ")) {
-+ if (!buf_skipprefix) {
-  if (!line_end[0] || line_end[1] == '\n')
-  return; /* end of header */
-  continue;
-  }
-  if (split_ident_line(&ident,
--     buf + strlen("author "),
--     line_end - (buf + strlen("author "))) ||
-+ buf_skipprefix,
-+ line_end - buf_skipprefix) ||
-     !ident.date_begin || !ident.date_end)
-  goto fail_exit; /* malformed "author" line */
-  break;
-@@ -1113,7 +1116,7 @@ int parse_signed_commit(const unsigned char *sha1,
-  next = next ? next + 1 : tail;
-  if (in_signature && line[0] == ' ')
-  sig = line + 1;
-- else if (starts_with(line, gpg_sig_header) &&
-+ else if (skip_prefix(line, gpg_sig_header) &&
-  line[gpg_sig_header_len] == ' ')
-  sig = line + gpg_sig_header_len + 1;
-  if (sig) {
-@@ -1193,7 +1196,7 @@ static void parse_gpg_output(struct signature_check *sigc)
-  for (i = 0; i < ARRAY_SIZE(sigcheck_gpg_status); i++) {
-  const char *found, *next;
-
-- if (starts_with(buf, sigcheck_gpg_status[i].check + 1)) {
-+ if (skip_prefix(buf, sigcheck_gpg_status[i].check + 1)) {
-  /* At the very beginning of the buffer */
-  found = buf + strlen(sigcheck_gpg_status[i].check + 1);
-  } else {
--- 
-1.9.0.138.g2de3478
+> +
+> +    $ GIT_TEST_ONLY='[0-8]' sh ./t9200-git-cvsexport-commit.sh
+> +
+> Note that some tests in the existing test suite rely on previous
+> test item, so you cannot arbitrarily disable one and expect the
+> remainder of test to check what the test originally was intended
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 89a405b..12bf436 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -464,6 +464,14 @@ test_skip () {
+>  fi
+>  skipped_reason="missing $missing_prereq${of_prereq}"
+>  fi
+> + if test -z "$to_skip" && test -n "$GIT_TEST_ONLY" &&
+> + ! match_pattern_list $this_test.$test_count $GIT_TEST_ONLY &&
+> + ! match_pattern_list $test_count $GIT_TEST_ONLY
+> + then
+> + to_skip=t
+> + skipped_reason="not in GIT_TEST_ONLY"
+> + fi
+> +
+>  case "$to_skip" in
+>  t)
+>  say_color skip >&3 "skipping test: $@"
+> -- 
+Philip 
