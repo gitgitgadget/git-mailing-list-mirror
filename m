@@ -1,139 +1,103 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v4 01/27] path.c: make get_pathname() return strbuf
- instead of static buffer
-Date: Mon, 3 Mar 2014 07:14:56 +0700
-Message-ID: <CACsJy8DEkMJ+RD8ekLWRCy_d4Zm1x18ELg7fyndEt+zcynZ5XA@mail.gmail.com>
+Subject: Re: [PATCH v4 02/27] Convert git_snpath() to strbuf_git_path()
+Date: Mon, 3 Mar 2014 07:15:47 +0700
+Message-ID: <CACsJy8DeGCdnWHOxTeGUV4CsHyV-u_DgR-03iyOrEKznsQsqGA@mail.gmail.com>
 References: <1392730814-19656-1-git-send-email-pclouds@gmail.com>
- <1393675983-3232-1-git-send-email-pclouds@gmail.com> <1393675983-3232-2-git-send-email-pclouds@gmail.com>
- <CAPig+cQubZByK3rNPOJy8rfLZpALpW0dOMz55gnFWRPppTAApg@mail.gmail.com>
+ <1393675983-3232-1-git-send-email-pclouds@gmail.com> <1393675983-3232-3-git-send-email-pclouds@gmail.com>
+ <CAPig+cTjqrveuOS+3+bonwJa_Kjg=STJU1JJ2Kj7Gs5U9eEB9Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Mar 03 01:15:33 2014
+X-From: git-owner@vger.kernel.org Mon Mar 03 01:16:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKGXc-0008Nl-Mv
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 01:15:33 +0100
+	id 1WKGYQ-0000Hl-GE
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 01:16:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752927AbaCCAP2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 2 Mar 2014 19:15:28 -0500
-Received: from mail-qc0-f173.google.com ([209.85.216.173]:34125 "EHLO
-	mail-qc0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751505AbaCCAP1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Mar 2014 19:15:27 -0500
-Received: by mail-qc0-f173.google.com with SMTP id r5so1834417qcx.4
-        for <git@vger.kernel.org>; Sun, 02 Mar 2014 16:15:26 -0800 (PST)
+	id S1753644AbaCCAQS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 2 Mar 2014 19:16:18 -0500
+Received: from mail-qa0-f46.google.com ([209.85.216.46]:55629 "EHLO
+	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753071AbaCCAQS convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 2 Mar 2014 19:16:18 -0500
+Received: by mail-qa0-f46.google.com with SMTP id i13so2781243qae.5
+        for <git@vger.kernel.org>; Sun, 02 Mar 2014 16:16:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        bh=VAaD5WPesHqFZQyUMsHfgfxXxjQ+em349OoipM3SW7Y=;
-        b=IebWgunMLKLSKo7HkbvKIeUy9GfM5aexB2atwNXKDrJxTtdkAZc8/wimklniC71WcB
-         4RNtIWIXlaVQfOvoY4ICsAfX3X/1bA5cwz2ZiUBNzAKo6HLA1jAPMX93o20iRq0+xlvO
-         u0L0xzo87dn31O431JEErunDh9Hyt/yWVliBUNHulEkj0vOj1IR1fu3T6HBXhm0mRf5Q
-         MoD+LtwasGMcBhFpNRD8IOSzFv631fUSDGRd1pu96JCRz59by4rQ4ThZyMEcJoSIl2we
-         y+0ZR0sr/7L6hAXsCZdyCiz/3WXwqYnzOusVg/TOZMEntDr7cZDn6OP4+4uADlIGDJxL
-         kDkg==
-X-Received: by 10.140.51.109 with SMTP id t100mr18864938qga.50.1393805726653;
- Sun, 02 Mar 2014 16:15:26 -0800 (PST)
-Received: by 10.96.215.102 with HTTP; Sun, 2 Mar 2014 16:14:56 -0800 (PST)
-In-Reply-To: <CAPig+cQubZByK3rNPOJy8rfLZpALpW0dOMz55gnFWRPppTAApg@mail.gmail.com>
+        bh=3OjG/39SJZKG/xirphGd4f6q9y+UV6TJtThDp0o+sFQ=;
+        b=Nfshkz9pb1GQs1nIFT6fqYfcR8p2/r5EPZTwmIN3mDNSwn3XL7KhJN9+4SqtunWO1r
+         W8JhiTe6sjCgoSuUYfgRoEjQ4aPIMk7S4NLoGDSVFg5PTckp6muLP5eyqL4TrDmKmpEI
+         I75ulfFBcGpJ6laeJOS60sOE0n2iYxyaOFAKsFrmat1FHjNdgqsJ3/ZuHAME6yXTBDw2
+         7MLVGYJJOj07fo5V5jhNv9Ukq5zUjjxy4AQ13NGwtY2U/FZVgXE6Pf9M6kBBO3f87bWl
+         S1B7mTnfRfSf/UNTXXalIw1JhZcwzhJ6LaA6c+rlCt9NhPS7ER15utspLxRjEsbOACnZ
+         CURw==
+X-Received: by 10.229.118.4 with SMTP id t4mr19786607qcq.9.1393805777401; Sun,
+ 02 Mar 2014 16:16:17 -0800 (PST)
+Received: by 10.96.215.102 with HTTP; Sun, 2 Mar 2014 16:15:47 -0800 (PST)
+In-Reply-To: <CAPig+cTjqrveuOS+3+bonwJa_Kjg=STJU1JJ2Kj7Gs5U9eEB9Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243168>
 
-On Mon, Mar 3, 2014 at 2:51 AM, Eric Sunshine <sunshine@sunshineco.com>=
+On Mon, Mar 3, 2014 at 7:02 AM, Eric Sunshine <sunshine@sunshineco.com>=
  wrote:
 > On Sat, Mar 1, 2014 at 7:12 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc=
  Duy <pclouds@gmail.com> wrote:
->> We've been avoiding PATH_MAX whenever possible. This patch makes
->> get_pathname() return a strbuf and updates the callers to take
->> advantage of this. The code is simplified as we no longer need to
->> worry about buffer overflow.
+>> In the previous patch, git_snpath() is modified to allocate a new
+>> strbuf buffer because vsnpath() needs that. But that makes it awkwar=
+d
+>> because git_snpath() receives a pre-allocated buffer from outside an=
+d
+>> has to copy data back. Rename it to strbuf_git_path() and make it
+>> receive strbuf directly.
+>>
+>> The conversion from git_snpath() to git_path() in
+>> update_refs_for_switch() is safe because that function does not keep
+>> any pointer to the round-robin buffer pool allocated by
+>> get_pathname().
 >>
 >> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
 ail.com>
 >> ---
->> diff --git a/path.c b/path.c
->> index 24594c4..5346700 100644
->> --- a/path.c
->> +++ b/path.c
->> @@ -49,85 +60,70 @@ char *mksnpath(char *buf, size_t n, const char *=
-fmt, ...)
->>         return cleanup_path(buf);
+>> diff --git a/refs.c b/refs.c
+>> index 89228e2..434bd5e 100644
+>> --- a/refs.c
+>> +++ b/refs.c
+>> @@ -2717,17 +2729,19 @@ static int copy_msg(char *buf, const char *m=
+sg)
+>>         return cp - buf;
 >>  }
 >>
->> -static char *vsnpath(char *buf, size_t n, const char *fmt, va_list =
-args)
->> +static void vsnpath(struct strbuf *buf, const char *fmt, va_list ar=
-gs)
+>> -int log_ref_setup(const char *refname, char *logfile, int bufsize)
+>> +int log_ref_setup(const char *refname, struct strbuf *sb_logfile)
 >>  {
->>         const char *git_dir =3D get_git_dir();
->> -       size_t len;
->> -
->> -       len =3D strlen(git_dir);
->> -       if (n < len + 1)
->> -               goto bad;
->> -       memcpy(buf, git_dir, len);
->> -       if (len && !is_dir_sep(git_dir[len-1]))
->> -               buf[len++] =3D '/';
->> -       len +=3D vsnprintf(buf + len, n - len, fmt, args);
->> -       if (len >=3D n)
->> -               goto bad;
->> -       return cleanup_path(buf);
->> -bad:
->> -       strlcpy(buf, bad_path, n);
->> -       return buf;
->> +       strbuf_addstr(buf, git_dir);
->> +       if (buf->len && !is_dir_sep(buf->buf[buf->len - 1]))
->> +               strbuf_addch(buf, '/');
->> +       strbuf_vaddf(buf, fmt, args);
->> +       strbuf_cleanup_path(buf);
->>  }
+>>         int logfd, oflags =3D O_APPEND | O_WRONLY;
+>> +       const char *logfile;
+>>
+>> -       git_snpath(logfile, bufsize, "logs/%s", refname);
+>> +       strbuf_git_path(sb_logfile, "logs/%s", refname);
+>> +       logfile =3D sb_logfile->buf;
+>>         if (log_all_ref_updates &&
+>>             (starts_with(refname, "refs/heads/") ||
+>>              starts_with(refname, "refs/remotes/") ||
+>>              starts_with(refname, "refs/notes/") ||
+>>              !strcmp(refname, "HEAD"))) {
+>> -               if (safe_create_leading_directories(logfile) < 0)
+>> +               if (safe_create_leading_directories(sb_logfile->buf)=
+ < 0)
 >
-> There's a slight semantic change here. The old code overwrote 'buf',
-> but the new code appends to 'buf'. For someone familiar with
-> sprintf(), or typical va_list or variadic functions there may be an
-> intuitive expectation that 'buf' will be overwritten. Should this cod=
-e
-> be doing strbuf_reset() as its first action (or should that be the
-> responsibility of the caller who is reusing 'buff')?
+> At this point, 'logfile' is still 'sb_logfile->buf', so do you really
+> need this change?
 
-those callers that use get_pathname() already have strbuf reset, so
-I'd say let the remaining callers reset the buffer.
-
->
->>  char *mkpath(const char *fmt, ...)
->>  {
->>         va_list args;
->> -       unsigned len;
->> -       char *pathname =3D get_pathname();
->> -
->> +       struct strbuf *pathname =3D get_pathname();
->>         va_start(args, fmt);
->> -       len =3D vsnprintf(pathname, PATH_MAX, fmt, args);
->> +       strbuf_vaddf(pathname, fmt, args);
->>         va_end(args);
->> -       if (len >=3D PATH_MAX)
->> -               return bad_path;
->> -       return cleanup_path(pathname);
->> +       return cleanup_path(pathname->buf);
->>  }
->
-> Prior to this change, it was possible (though probably not
-> recommended) for a caller to append gunk to the returned path up to
-> PATH_MAX without worrying about stomping memory. With the change, thi=
-s
-> is no longer true. Should the function be changed to return 'const
-> char *' to enforce this restriction?
-
-Sure. Will do (same for below)
+Junio made the same comment last time and I missed it. Will update.
 --=20
 Duy
