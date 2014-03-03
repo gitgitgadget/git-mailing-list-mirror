@@ -1,114 +1,94 @@
-From: Max Horn <max@quendi.de>
-Subject: Re: [PATCH V2] commit.c: Use skip_prefix() instead of starts_with()
-Date: Mon, 3 Mar 2014 23:59:20 +0100
-Message-ID: <176A3D83-AFFB-4EF4-A1CB-3A953F692166@quendi.de>
-References: <1393862398-2989-1-git-send-email-tanayabh@gmail.com> <xmqqiorvoyoo.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0 (Mac OS X Mail 6.6 \(1510\))
-Content-Type: multipart/signed; boundary="Apple-Mail=_85E49313-5AC6-44C2-9A53-5708160A414E"; protocol="application/pgp-signature"; micalg=pgp-sha256
-Cc: Tanay Abhra <tanayabh@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 03 23:59:31 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 00/14] Use ALLOC_GROW() instead of inline code
+Date: Mon, 03 Mar 2014 15:02:57 -0800
+Message-ID: <xmqqwqganavy.fsf@gitster.dls.corp.google.com>
+References: <1393885922-21616-1-git-send-email-dmitrys.dolzhenko@yandex.ru>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Dmitry S. Dolzhenko" <dmitrys.dolzhenko@yandex.ru>
+X-From: git-owner@vger.kernel.org Tue Mar 04 00:03:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKbpb-0003nB-7B
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 23:59:31 +0100
+	id 1WKbt8-0006GX-Cr
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 00:03:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755287AbaCCW71 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2014 17:59:27 -0500
-Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:52121 "EHLO
-	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755005AbaCCW70 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Mar 2014 17:59:26 -0500
-Received: from hsi-kbw-46-223-222-244.hsi.kabel-badenwuerttemberg.de ([46.223.222.244] helo=[192.168.50.103]); authenticated
-	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
-	id 1WKbpU-000894-DV; Mon, 03 Mar 2014 23:59:24 +0100
-In-Reply-To: <xmqqiorvoyoo.fsf@gitster.dls.corp.google.com>
-X-Mailer: Apple Mail (2.1510)
-X-bounce-key: webpack.hosteurope.de;max@quendi.de;1393887566;0d456562;
+	id S1755330AbaCCXDE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2014 18:03:04 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60294 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755005AbaCCXDC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2014 18:03:02 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C20FF6B731;
+	Mon,  3 Mar 2014 18:03:01 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=SoBTEtG8AkOaDbWNkgDtqlkm1Cg=; b=qQCPHf
+	SHJ/mdMLj33tE5nPNH1DIQviqVRfFIfmSCYnAQsAsA9mL4RUUzAm+9VPXLz03yYJ
+	fMNbGEXcPVisSnygLpbkhYUXa6wnb30vtZ6fYGHeq4D2wk3y/cGuOGx3pPTZ2ha5
+	bUbwVMa+PVy/rVG51lS9VR/InASzHWDVM4An0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=aBPWDxrLxIkm6dg/m6hA/a+LPnjzKcAh
+	YCjjuPetIFGBaLjpH2r1uQ4VU++ow4qy+4Cx6g+T1hI/orpA67cxBc9w8USqiIwV
+	7PvSMiz5AMx5tqjtec+RUMAhdDDs+5++jvLHs/3k2rZ4xq5SMBHRMnvKenIHH/Li
+	2MMFNEdO/qc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9CDE36B730;
+	Mon,  3 Mar 2014 18:03:01 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BB20D6B72B;
+	Mon,  3 Mar 2014 18:03:00 -0500 (EST)
+In-Reply-To: <1393885922-21616-1-git-send-email-dmitrys.dolzhenko@yandex.ru>
+	(Dmitry S. Dolzhenko's message of "Tue, 4 Mar 2014 02:31:48 +0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: F7CDDDAC-A327-11E3-9D79-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243300>
 
+> Dmitry S. Dolzhenko (14):
+>   builtin/pack-objects.c: use ALLOC_GROW() in check_pbase_path()
+>   bundle.c: use ALLOC_GROW() in add_to_ref_list()
+>   cache-tree.c: use ALLOC_GROW() in find_subtree()
+>   commit.c: use ALLOC_GROW() in register_commit_graft()
+>   diff.c: use ALLOC_GROW()
+>   diffcore-rename.c: use ALLOC_GROW()
+>   patch-ids.c: use ALLOC_GROW() in add_commit()
+>   replace_object.c: use ALLOC_GROW() in register_replace_object()
+>   reflog-walk.c: use ALLOC_GROW()
+>   dir.c: use ALLOC_GROW() in create_simplify()
+>   attr.c: use ALLOC_GROW() in handle_attr_line()
+>   builtin/mktree.c: use ALLOC_GROW() in append_to_tree()
+>   read-cache.c: use ALLOC_GROW() in add_index_entry()
+>   sha1_file.c: use ALLOC_GROW() in pretend_sha1_file()
 
---Apple-Mail=_85E49313-5AC6-44C2-9A53-5708160A414E
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=us-ascii
+All looked cleanly done.
 
+The resulting code of 1, 3, 4, 6 and 8 share this pattern:
 
-On 03.03.2014, at 20:43, Junio C Hamano <gitster@pobox.com> wrote:
+	ALLOC_GROW(table, number + 1, alloc);
+        number++;
 
-> Tanay Abhra <tanayabh@gmail.com> writes:
->=20
->> @@ -1193,9 +1194,9 @@ static void parse_gpg_output(struct =
-signature_check *sigc)
->> 	for (i =3D 0; i < ARRAY_SIZE(sigcheck_gpg_status); i++) {
->> 		const char *found, *next;
->>=20
->> -		if (starts_with(buf, sigcheck_gpg_status[i].check + 1)) =
-{
->> +		if (found =3D skip_prefix(buf, =
-sigcheck_gpg_status[i].check + 1)) {
->> 			/* At the very beginning of the buffer */
->> -			found =3D buf + =
-strlen(sigcheck_gpg_status[i].check + 1);
->> +			;
->> 		} else {
->> 			found =3D strstr(buf, =
-sigcheck_gpg_status[i].check);
->> 			if (!found)
->=20
-> This hunk looks good.  It can be a separate patch but they are both
-> minor changes so it is OK to have it in a single patch.
+which may be easier to understand if done the other way around:
 
-Hm, but that hunk also introduces an assignment in a conditional, and =
-introduces an empty block. Maybe like this?
+        number++;
+	ALLOC_GROW(table, number, alloc);
 
+That is, "we know we want one more, so make sure they fit in the
+table".
 
-diff --git a/commit.c b/commit.c
-index 6bf4fe0..0ee0725 100644
---- a/commit.c
-+++ b/commit.c
-@@ -1193,10 +1193,8 @@ static void parse_gpg_output(struct =
-signature_check *sigc)
-        for (i =3D 0; i < ARRAY_SIZE(sigcheck_gpg_status); i++) {
-                const char *found, *next;
+But that is just a minor issue; I suspect many existing callsites to
+ALLOC_GROW() already follow the former pattern, and if we decide to
+to switch the former to the latter, we shouldn't be doing so within
+this series (we should do that as a separate series on top of this).
 
--               if (starts_with(buf, sigcheck_gpg_status[i].check + 1)) =
-{
--                       /* At the very beginning of the buffer */
--                       found =3D buf + =
-strlen(sigcheck_gpg_status[i].check + 1);
--               } else {
-+               found =3D skip_prefix(buf, sigcheck_gpg_status[i].check =
-+ 1);
-+               if (!found) {
-                        found =3D strstr(buf, =
-sigcheck_gpg_status[i].check);
-                        if (!found)
-                                continue;
-
-
-
---Apple-Mail=_85E49313-5AC6-44C2-9A53-5708160A414E
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename=signature.asc
-Content-Type: application/pgp-signature;
-	name=signature.asc
-Content-Description: Message signed with OpenPGP using GPGMail
-
------BEGIN PGP SIGNATURE-----
-Comment: GPGTools - http://gpgtools.org
-
-iF4EAREIAAYFAlMVCUwACgkQIpJVslrhe1l27AD9EuLemwKnmaTF/1sNWdzqtgZI
-0CZZveEZnEe3E7MSl3IA/2ooC7HMm8aBajvt9pOgstRnU7CGz5XyRBGqfNSKwUbD
-=yaWL
------END PGP SIGNATURE-----
-
---Apple-Mail=_85E49313-5AC6-44C2-9A53-5708160A414E--
+Thanks; will queue.
