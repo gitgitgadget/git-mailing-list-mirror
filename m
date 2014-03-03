@@ -1,94 +1,158 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] implemented strbuf_write_or_die()
-Date: Mon, 3 Mar 2014 14:46:12 -0500
-Message-ID: <CAPig+cTmejtWXRzr6qk-kd+P8j4b6xMJSUVnNnqObqNXc-S9UA@mail.gmail.com>
-References: <1393672871-28281-1-git-send-email-faiz.off93@gmail.com>
-	<CAJr59C0e22OuDWU5Xc0A=cc+zY32nfum6SXTDU3wLCPyFPF70A@mail.gmail.com>
-	<CAPig+cRgc4UtmJMieS9Mdrz7vjUNiu7QFu1PSBppKo22Ln5G-A@mail.gmail.com>
-	<xmqqvbvvqglc.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] repack: add `repack.honorpackkeep` config var
+Date: Mon, 03 Mar 2014 11:51:06 -0800
+Message-ID: <xmqqeh2joyc5.fsf@gitster.dls.corp.google.com>
+References: <20140224082459.GA32594@sigill.intra.peff.net>
+	<xmqq1tys9vie.fsf@gitster.dls.corp.google.com>
+	<20140226101353.GA25711@sigill.intra.peff.net>
+	<xmqqr46p39cj.fsf@gitster.dls.corp.google.com>
+	<20140227112734.GC29668@sigill.intra.peff.net>
+	<xmqqy50wzb2b.fsf@gitster.dls.corp.google.com>
+	<20140228085546.GA11709@sigill.intra.peff.net>
+	<xmqqob1ruld8.fsf@gitster.dls.corp.google.com>
+	<20140301054350.GA20397@sigill.intra.peff.net>
+	<xmqqeh2jrvz8.fsf@gitster.dls.corp.google.com>
+	<20140303181558.GA16523@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: He Sun <sunheehnus@gmail.com>, Faiz Kothari <faiz.off93@gmail.com>,
-	git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 03 20:46:25 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Siddharth Agarwal <sid0@fb.com>, Vicent Marti <tanoku@gmail.com>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Mar 03 20:51:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKYoh-0004FD-Co
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 20:46:23 +0100
+	id 1WKYtg-0007cw-Uj
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 20:51:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754790AbaCCTqO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2014 14:46:14 -0500
-Received: from mail-yh0-f51.google.com ([209.85.213.51]:44991 "EHLO
-	mail-yh0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754183AbaCCTqM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2014 14:46:12 -0500
-Received: by mail-yh0-f51.google.com with SMTP id f10so3534054yha.38
-        for <git@vger.kernel.org>; Mon, 03 Mar 2014 11:46:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=IZzKoSlntgWXepvebogSlLdDzoVB3KoZgBo3HI3RlgY=;
-        b=xt1Yywci5QxnkHm9xKhMsQJNZbO6KRVwmN5dSgsamMfhpxVxapXhKVnJ82oiarRuCm
-         ZweJG/vdzmEG7eE/O8j2wiq16551/UGHpRYEKstjuMmiHXIZd7mXtku0J4UmGzsn1dbM
-         i0mpD9H2DT4k/VeNgJ3bQoSkyo8ExkiBjllK7zunea7129xt5w9fwlNM+f4fwun1fPUF
-         1uFmE8jJnjQJ+RlfA37hUy2cqzM+wZYxAoWKnb/+XbMRcQ+A++bqMD4wzVVBBJDx2uKq
-         LsvsBXNI7yrxiineH1W3sKiGQN7pVPEXmVaoE+d0HcP1pRTxMnVq9KEbhmC2NGLnmb7u
-         cxDw==
-X-Received: by 10.236.231.234 with SMTP id l100mr1316095yhq.135.1393875972100;
- Mon, 03 Mar 2014 11:46:12 -0800 (PST)
-Received: by 10.170.180.195 with HTTP; Mon, 3 Mar 2014 11:46:12 -0800 (PST)
-In-Reply-To: <xmqqvbvvqglc.fsf@gitster.dls.corp.google.com>
-X-Google-Sender-Auth: Joz9jS7SfSUMDl4Ia8ufVaon7x4
+	id S1754387AbaCCTvX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2014 14:51:23 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44239 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753741AbaCCTvW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2014 14:51:22 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 513D76F5AF;
+	Mon,  3 Mar 2014 14:51:22 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=V6YFOwQOl1s0yoGuBLKkvT0EV+A=; b=Xw7fDt
+	3/wZfYB3gHJMdDIcy4TOPMNu6DjXqfvD0yIxsEqtAW0sfysu9e38sLsJXC5sNRDE
+	bhvktLbk3M+H0GIfnXm3wUyuiryAPHNt0cDdjElsFRzHnyzEOj1ApL86XQX6n2qL
+	fNM4V4yyQM13Rz+upaXqHaLPslOtp8aj/YpRY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=TQ3NcIvKSFWkWo/ZKNckrbu96VZKjmR6
+	iIH56JQ5w6jD+5Q86XgIvho7rhvPYH08YOhHO+4iKQHAK1n7pkEUSXKAVXLedPg1
+	mTpPd0/o4wi++14GD4z32TTiApgoEvqggN7AKZaJwQ8JWHn7IAr+8Ca3aUQU9T2o
+	ljKBJyUjSMw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0110C6F5AD;
+	Mon,  3 Mar 2014 14:51:22 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CDDC16F5A7;
+	Mon,  3 Mar 2014 14:51:20 -0500 (EST)
+In-Reply-To: <20140303181558.GA16523@sigill.intra.peff.net> (Jeff King's
+	message of "Mon, 3 Mar 2014 13:15:58 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 3150A93A-A30D-11E3-BD1E-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243261>
 
-On Mon, Mar 3, 2014 at 1:31 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
+Jeff King <peff@peff.net> writes:
+
+> On Mon, Mar 03, 2014 at 10:13:47AM -0800, Junio C Hamano wrote:
 >
->> On Sat, Mar 1, 2014 at 7:51 AM, He Sun <sunheehnus@gmail.com> wrote:
->>> 2014-03-01 19:21 GMT+08:00 Faiz Kothari <faiz.off93@gmail.com>:
->>>> diff --git a/remote-curl.c b/remote-curl.c
->>>> index 10cb011..dee8716 100644
->>>> --- a/remote-curl.c
->>>> +++ b/remote-curl.c
->>>> @@ -634,7 +634,7 @@ static int rpc_service(struct rpc_state *rpc, struct discovery *heads)
->>>>         if (start_command(&client))
->>>>                 exit(1);
->>>>         if (preamble)
->>>> -               write_or_die(client.in, preamble->buf, preamble->len);
->>>> +               strbuf_write_or_die(client.in, preamble);
->>>>         if (heads)
->>>>                 write_or_die(client.in, heads->buf, heads->len);
->>>
->>> This should be changed. May be you can use Ctrl-F to search write_or_die().
->>> Or if you are using vim, use "/ and n" to find all.
->>
->> It's not obvious from the patch fragment, but 'heads' is not a strbuf,
->> so Faiz correctly left this invocation alone.
+>> > Or the flip side: if the user wants to use .keep, we should drop
+>> > bitmaps. My point is that we do not know which way the user wants to
+>> > go, so we should not tie the options together.
+>> 
+>> Hmph.  I think the short of your later explanation is "global config
+>> may tell us to use bitmap, in which case we would need a way to
+>> defeat that and have existing .keep honored, and it makes it easier
+>> to do so if these two are kept separate, because you do not want to
+>> run around and selectively disable bitmaps in these repositories.
+>> We can instead do so with repack.packKeptObjects in the global
+>> configuration." and I tend to agree with the reasoning.
 >
-> That is a very good sign why this change is merely a code-churn and
-> not an improvement, isn't it?  We know (and any strbuf user should
-> know) that ->buf and ->len are the ways to learn the pointer and the
-> length the strbuf holds.  Why anybody thinks it is benefitial to
-> introduce another function that is _only_ for writing out strbuf and
-> cannot be used to write out a plain buffer is simply beyond me.
+> Yes. Do you need a re-roll from me? I think the last version I sent +
+> the squash to tie the default to bitmap-writing makes the most sense.
 
-As a potential GSoC student and newcomer to the project, Faiz would
-not have known that this would be considered unwanted churn when he
-chose the task from the GSoC microproject page [1]. Perhaps it would
-be a good idea to retire this item from the list?
+I have 9e20b390 (repack: add `repack.packKeptObjects` config var,
+2014-02-26); I do not recall I've squashed anything into it, though.
 
-On the other hand, it did expose Faiz to the iterative code review
-process on this project and gave him a taste of what would be expected
-of him as a GSoC student, so the microproject achieved that important
-goal, and thus wasn't an utter failure.
+Do you mean this one?
 
-[1]: https://github.com/git/git.github.io/blob/master/SoC-2014-Microprojects.md
+Here's the interdiff for doing the fallback:
+
+---
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 3a3d84f..a8ddc7f 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2139,7 +2139,9 @@ repack.usedeltabaseoffset::
+ repack.packKeptObjects::
+ 	If set to true, makes `git repack` act as if
+ 	`--pack-kept-objects` was passed. See linkgit:git-repack[1] for
+-	details. Defaults to false.
++	details. Defaults to `false` normally, but `true` if a bitmap
++	index is being written (either via `--write-bitmap-index` or
++	`pack.writeBitmaps`).
+ 
+ rerere.autoupdate::
+ 	When set to true, `git-rerere` updates the index with the
+diff --git a/builtin/repack.c b/builtin/repack.c
+index 49947b2..6b0b62d 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -9,7 +9,7 @@
+ #include "argv-array.h"
+ 
+ static int delta_base_offset = 1;
+-static int pack_kept_objects;
++static int pack_kept_objects = -1;
+ static char *packdir, *packtmp;
+ 
+ static const char *const git_repack_usage[] = {
+@@ -190,6 +190,9 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 	argc = parse_options(argc, argv, prefix, builtin_repack_options,
+ 				git_repack_usage, 0);
+ 
++	if (pack_kept_objects < 0)
++		pack_kept_objects = write_bitmap;
++
+ 	packdir = mkpathdup("%s/pack", get_object_directory());
+ 	packtmp = mkpathdup("%s/.tmp-%d-pack", packdir, (int)getpid());
+ 
+diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
+index f8431a8..b1eed5c 100755
+--- a/t/t7700-repack.sh
++++ b/t/t7700-repack.sh
+@@ -21,7 +21,7 @@ test_expect_success 'objects in packs marked .keep are not repacked' '
+ 	objsha1=$(git verify-pack -v pack-$packsha1.idx | head -n 1 |
+ 		sed -e "s/^\([0-9a-f]\{40\}\).*/\1/") &&
+ 	mv pack-* .git/objects/pack/ &&
+-	git repack -A -d -l &&
++	git repack --no-pack-kept-objects -A -d -l &&
+ 	git prune-packed &&
+ 	for p in .git/objects/pack/*.idx; do
+ 		idx=$(basename $p)
+@@ -35,9 +35,9 @@ test_expect_success 'objects in packs marked .keep are not repacked' '
+ 	test -z "$found_duplicate_object"
+ '
+ 
+-test_expect_success '--pack-kept-objects duplicates objects' '
++test_expect_success 'writing bitmaps duplicates .keep objects' '
+ 	# build on $objsha1, $packsha1, and .keep state from previous
+-	git repack -Adl --pack-kept-objects &&
++	git repack -Adl &&
+ 	test_when_finished "found_duplicate_object=" &&
+ 	for p in .git/objects/pack/*.idx; do
+ 		idx=$(basename $p)
