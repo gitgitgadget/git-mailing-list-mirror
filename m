@@ -1,158 +1,85 @@
-From: Sun He <sunheehnus@gmail.com>
-Subject: [PATCH v3] Replace memcpy with hashcpy when dealing hash copy globally
-Date: Mon,  3 Mar 2014 17:39:59 +0800
-Message-ID: <1393839599-6955-1-git-send-email-sunheehnus@gmail.com>
-Cc: sunshine@sunshineco.com, mhagger@alum.mit.edu, pclouds@gmail.com,
-	Sun He <sunheehnus@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 03 10:41:34 2014
+From: Karsten Blees <karsten.blees@gmail.com>
+Subject: Re: Branch Name Case Sensitivity
+Date: Mon, 03 Mar 2014 11:03:33 +0100
+Message-ID: <53145375.4040802@gmail.com>
+References: <CAJHY66EQD280QgXBCoZU4y_aqSEu3A1hXzeW7X-rtT6vMZ92oA@mail.gmail.com>	<xmqqvbw0xrl6.fsf@gitster.dls.corp.google.com>	<530FA0C1.3000109@web.de>	<530FBB1D.3050505@gmail.com>	<CAJHY66FtC03YbJrbVn+adsePkYnVD2RGH1TGkzz2pKNBoee_iQ@mail.gmail.com>	<53102FB0.6040603@viscovery.net>	<5310959D.709@gmail.com>	<xmqqk3cfuksd.fsf@gitster.dls.corp.google.com>	<CACsJy8A6etyFkxn3D7hjM9JgzmokPBARXrEncVuw1x+OOHJ_Lg@mail.gmail.com>	<xmqq7g8eu891.fsf@gitster.dls.corp.google.com> <CAJHY66EP539ZsLJcmHcnRQcOqcLqXK-M45wME9DkKkqmumg8fA@mail.gmail.com> <53118436.5080507@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	Lee Hopkins <leerhop@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 03 11:03:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKPNM-0000pC-5X
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 10:41:32 +0100
+	id 1WKPin-0006FQ-Fx
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Mar 2014 11:03:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754141AbaCCJl2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2014 04:41:28 -0500
-Received: from mail-pa0-f54.google.com ([209.85.220.54]:33230 "EHLO
-	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752263AbaCCJl1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2014 04:41:27 -0500
-Received: by mail-pa0-f54.google.com with SMTP id lf10so875110pab.13
-        for <git@vger.kernel.org>; Mon, 03 Mar 2014 01:41:26 -0800 (PST)
+	id S1753693AbaCCKDh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Mar 2014 05:03:37 -0500
+Received: from mail-ee0-f49.google.com ([74.125.83.49]:53585 "EHLO
+	mail-ee0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752988AbaCCKDg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2014 05:03:36 -0500
+Received: by mail-ee0-f49.google.com with SMTP id b57so3869400eek.8
+        for <git@vger.kernel.org>; Mon, 03 Mar 2014 02:03:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=AYzLQzudPSASWacx89Sy8KDfrhCv2NbjxbT9n/qj5PM=;
-        b=tE5rQhSREYG8tQXJL2E5qhjJacLrm3YPV6GJI/8TnVZAcaOE4rNBL6wZq7jkGKuM39
-         yXFhElXBTffg0+xUQBFmBzMI+aww/Nl8QFLcdHJD2hH9V7XkcTWlMwTeMNWgpYdT04Ny
-         HYaBpwXqH6HH9UXy7Niapg8K8yWp8dxFBZpeHkFRzcRDLoIide8HrShjAnNeKMQRAiE9
-         DTDYYaYQdKTvokYB3KcggfjdNGKDJSWRsjmV3kiZ3LBgzw61aWJmON7XWkGyUPfeJxmX
-         8l+J/6lOic31Tb45h1ZFaE8xT65ZvqjBnyTPMJSXZpaSQDsFiJDQn8lS66xT+fMKn9z3
-         V32A==
-X-Received: by 10.66.248.227 with SMTP id yp3mr5609384pac.116.1393839686504;
-        Mon, 03 Mar 2014 01:41:26 -0800 (PST)
-Received: from ENIGMA.61.134.1.4 ([61.150.43.99])
-        by mx.google.com with ESMTPSA id vg1sm34129285pbc.44.2014.03.03.01.41.18
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=iuonXa2cu6tphHnA4F9lKq4nGinrQiiRrwBO8kkdUI4=;
+        b=Q0xHfjH4dvnoZHIBvlBIBTxUHFOOjf00KK4o6BRy6pJ58ZXiARmj+yE/22AccmwFDR
+         gC1ss56wz34S/4T7NpXVzQB7BlyYqpp7up1BZOYW+ZynqcA0HConDqNWG96GfuYFEbJq
+         SzHDeY8m8GP7YhsRgeFbxxlnojPh9rBE2TiMrpSsI0vqMoBofwggMbW86Ad7wn2ZZEcL
+         7cDzZ7q0IGZgcKuOU7hQ58b52+nIDVfyYB7A1ROxCnPc6oCcVxXNHCSh89kseJvox/yC
+         hfZaWZ9C6/Qbx+ys8VCtvJbVHjj9fwURuRAoobJigLfYmqgYM+dAJc3Ve1ZItPkwiHHw
+         eQ2A==
+X-Received: by 10.14.218.70 with SMTP id j46mr25284313eep.11.1393841015275;
+        Mon, 03 Mar 2014 02:03:35 -0800 (PST)
+Received: from [10.1.100.54] (ns.dcon.de. [77.244.111.149])
+        by mx.google.com with ESMTPSA id k41sm48021947een.19.2014.03.03.02.03.33
         for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 03 Mar 2014 01:41:25 -0800 (PST)
-X-Mailer: git-send-email 1.9.0.138.g2de3478.dirty
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 03 Mar 2014 02:03:34 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
+In-Reply-To: <53118436.5080507@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243207>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243208>
 
-Replacing memcpy with hashcpy is more directly and elegant.
+Am 01.03.2014 07:54, schrieb Torsten B=F6gershausen:
+> On 2014-03-01 03.42, Lee Hopkins wrote:
+>> +
+>> +    if(ignore_case)
+> Only looking at ignore_case here closes the door for people
+> who have a branch "foo" and "Foo" at the same time.
+> (Which means that they are carefully running git pack-refs)
+> How about something like this:
+>  +    if (refs_ignore_case < 0)
+>  +      refs_ignore_case =3D ignore_case;
+>  +    if (refs_ignore_case)
 
-Leave ppc/sha1.c alone, as it is an isolated component.
-Pull cache.h(actually ../cache.h) in just for one memcpy
-there is not proper.
+I don't think this distinction is necessary, either you have a case-ins=
+ensitive file system or you don't. The case that the .git directory is =
+case-sensitive and the worktree directory isn't (or the other way aroun=
+d) is probably so exotic that we can ignore it.
 
-Helped-by: Michael Haggerty <mhagger@alum.mit.edu>
-Helped-by: Duy Nguyen <pclouds@gmail.com>
-Signed-off-by: Sun He <sunheehnus@gmail.com>
----
+> (And then we need the diff further down on top of this.)
+> (And of course Documentation/config.txt)
+> The main motivation is that you can set refs.ignorecase =3D=3D true o=
+n
+> e.g. Linux, to prevent to have branches "Foo" and "foo" at the same t=
+ime,
+> which gives problems when pulling into e.g. Windows/Mac OS
 
-PATCH v3 delete the one-space indentation on each line of commit message
-as is suggested by Eric Sunshine.
- Thanks to Eric Sunshine.
-
-PATCH v2 leave ppc/sha1.c alone.
-
-The general rule is if cache.h or git-compat-util.h is included,
-it is the first #include, and system includes will be always in
-git-compat-tuil.h.
-       				via Duy Nguyen
-
-The change in PATCH v1 is not proper because I placed cache.h
-in the end.
-And adding it to the head is not a good way to achieve the goal,
-as is said above "---".
- Thanks to Duy Nguyen.
-
-Find the potential places with memcpy by the bash command:
- $ find . | xargs grep "memcpy.*\(.*20.*\)"
-
-ppc/sha1.c doesn't include cache.h and it cannot use hashcpy().
-So just leave memcpy(in ppc/sha1.c) alone.
-
- bundle.c            | 2 +-
- grep.c              | 2 +-
- pack-bitmap-write.c | 2 +-
- reflog-walk.c       | 4 ++--
- refs.c              | 2 +-
- 5 files changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/bundle.c b/bundle.c
-index e99065c..7809fbb 100644
---- a/bundle.c
-+++ b/bundle.c
-@@ -19,7 +19,7 @@ static void add_to_ref_list(const unsigned char *sha1, const char *name,
- 		list->list = xrealloc(list->list,
- 				list->alloc * sizeof(list->list[0]));
- 	}
--	memcpy(list->list[list->nr].sha1, sha1, 20);
-+	hashcpy(list->list[list->nr].sha1, sha1);
- 	list->list[list->nr].name = xstrdup(name);
- 	list->nr++;
- }
-diff --git a/grep.c b/grep.c
-index c668034..f5101f7 100644
---- a/grep.c
-+++ b/grep.c
-@@ -1650,7 +1650,7 @@ void grep_source_init(struct grep_source *gs, enum grep_source_type type,
- 		break;
- 	case GREP_SOURCE_SHA1:
- 		gs->identifier = xmalloc(20);
--		memcpy(gs->identifier, identifier, 20);
-+		hashcpy(gs->identifier, identifier);
- 		break;
- 	case GREP_SOURCE_BUF:
- 		gs->identifier = NULL;
-diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
-index 1218bef..5f1791a 100644
---- a/pack-bitmap-write.c
-+++ b/pack-bitmap-write.c
-@@ -530,7 +530,7 @@ void bitmap_writer_finish(struct pack_idx_entry **index,
- 	header.version = htons(default_version);
- 	header.options = htons(flags | options);
- 	header.entry_count = htonl(writer.selected_nr);
--	memcpy(header.checksum, writer.pack_checksum, 20);
-+	hashcpy(header.checksum, writer.pack_checksum);
- 
- 	sha1write(f, &header, sizeof(header));
- 	dump_bitmap(f, writer.commits);
-diff --git a/reflog-walk.c b/reflog-walk.c
-index b2fbdb2..d490f7d 100644
---- a/reflog-walk.c
-+++ b/reflog-walk.c
-@@ -32,8 +32,8 @@ static int read_one_reflog(unsigned char *osha1, unsigned char *nsha1,
- 			sizeof(struct reflog_info));
- 	}
- 	item = array->items + array->nr;
--	memcpy(item->osha1, osha1, 20);
--	memcpy(item->nsha1, nsha1, 20);
-+	hashcpy(item->osha1, osha1);
-+	hashcpy(item->nsha1, nsha1);
- 	item->email = xstrdup(email);
- 	item->timestamp = timestamp;
- 	item->tz = tz;
-diff --git a/refs.c b/refs.c
-index 89228e2..f90b7ea 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1222,7 +1222,7 @@ static int resolve_gitlink_packed_ref(struct ref_cache *refs,
- 	if (ref == NULL)
- 		return -1;
- 
--	memcpy(sha1, ref->u.value.sha1, 20);
-+	hashcpy(sha1, ref->u.value.sha1);
- 	return 0;
- }
- 
--- 
-1.9.0.138.g2de3478.dirty
+If you want to prevent problems with Windows/Mac OS, you should set cor=
+e.ignorecase =3D true. I don't see why we need yet another config setti=
+ng for refs (and logs?).
