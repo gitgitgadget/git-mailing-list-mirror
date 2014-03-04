@@ -1,128 +1,199 @@
-From: Max Horn <max@quendi.de>
-Subject: Re: [PATCH v3] commit.c: use skip_prefix() instead of starts_with()
-Date: Tue, 4 Mar 2014 20:16:47 +0100
-Message-ID: <8CB399B0-6781-4702-9EC5-0D0A0CCC3450@quendi.de>
-References: <1393922540-13156-1-git-send-email-tanayabh@gmail.com>
-Mime-Version: 1.0 (Mac OS X Mail 6.6 \(1510\))
-Content-Type: multipart/signed; boundary="Apple-Mail=_EBF286A4-0DA2-4261-BB98-F6BD79A2BA8B"; protocol="application/pgp-signature"; micalg=pgp-sha256
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu, gitster@pobox.com
-To: Tanay Abhra <tanayabh@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 04 20:17:12 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] rev-parse --parseopt: option argument name hints
+Date: Tue, 04 Mar 2014 11:22:43 -0800
+Message-ID: <xmqqwqg9kbuk.fsf@gitster.dls.corp.google.com>
+References: <1393842740-4628-1-git-send-email-ilya.bobyr@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Ilya Bobyr <ilya.bobyr@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 04 20:22:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKuq0-0007Gn-2S
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 20:17:12 +0100
+	id 1WKuvY-0003i5-93
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 20:22:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756119AbaCDTRC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2014 14:17:02 -0500
-Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:59650 "EHLO
-	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755730AbaCDTQ7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Mar 2014 14:16:59 -0500
-Received: from hsi-kbw-46-223-222-244.hsi.kabel-badenwuerttemberg.de ([46.223.222.244] helo=[192.168.50.136]); authenticated
-	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
-	id 1WKupf-0002Ci-IE; Tue, 04 Mar 2014 20:16:51 +0100
-In-Reply-To: <1393922540-13156-1-git-send-email-tanayabh@gmail.com>
-X-Mailer: Apple Mail (2.1510)
-X-bounce-key: webpack.hosteurope.de;max@quendi.de;1393960619;fa51eebf;
+	id S1755272AbaCDTWw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Mar 2014 14:22:52 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34509 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752144AbaCDTWu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Mar 2014 14:22:50 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 12E5B71AE5;
+	Tue,  4 Mar 2014 14:22:50 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=3jM2+GTYdTmNZIWXTBNwETpabRo=; b=UPcfAv
+	prqVEKGSqXJrAFplBuIzMB+nypEe/Nzk/T+h29JGcdMqW6Cr6HuJtXBvC39sBQGu
+	GaMk3c/A8qI8k1IHsx2cWG30RAc5EvUXWzVfK2HCeXEMZquvBBSCeYbcxAI5/u+J
+	LzjabvlllvnyP0rqWp8PHXCNMl2zM+XT4KKeA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ENV5EKfooLhZKQQa+LzqSWt79J9aXDOF
+	hNTPtx+B//bOZX2Br2LBbdzMgLNrcs7Dl/AoXgQDGdXzl199RYegB85BR/s2on8L
+	m7oPyxBTl3XzEEHm+ZMR3ccdm4cQwM+f7+OEM+Nv+G1MgxF0dBx4SwvHUKsXagRW
+	cTt/p+tpRMY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F222071AE4;
+	Tue,  4 Mar 2014 14:22:49 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3532C71ADF;
+	Tue,  4 Mar 2014 14:22:47 -0500 (EST)
+In-Reply-To: <1393842740-4628-1-git-send-email-ilya.bobyr@gmail.com> (Ilya
+	Bobyr's message of "Mon, 3 Mar 2014 02:32:20 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 5EECA202-A3D2-11E3-88C3-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243371>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243372>
 
+Ilya Bobyr <ilya.bobyr@gmail.com> writes:
 
---Apple-Mail=_EBF286A4-0DA2-4261-BB98-F6BD79A2BA8B
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=us-ascii
+> Built-in commands can specify names for option arguments, that are shown
+> when usage text is generated for the command.  sh based commands should
+> be able to do the same.
+>
+> Option argument name hint is any text that comes after [*=?!] after the
+> argument name up to the first whitespace.  Underscores are replaced with
+> whitespace.  It is unlikely that an underscore would be useful in the
+> hint text.
+>
+> Signed-off-by: Ilya Bobyr <ilya.bobyr@gmail.com>
+> ---
+>  Documentation/git-rev-parse.txt |   11 +++++++++--
+>  builtin/rev-parse.c             |   17 ++++++++++++++++-
+>  t/t1502-rev-parse-parseopt.sh   |   20 ++++++++++++++++++++
+>  3 files changed, 45 insertions(+), 3 deletions(-)
+>
+> diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
+> index 0d2cdcd..4cb6e02 100644
+> --- a/Documentation/git-rev-parse.txt
+> +++ b/Documentation/git-rev-parse.txt
+> @@ -284,13 +284,13 @@ Input Format
+>  
+>  'git rev-parse --parseopt' input format is fully text based. It has two parts,
+>  separated by a line that contains only `--`. The lines before the separator
+> -(should be more than one) are used for the usage.
+> +(could be more than one) are used for the usage.
 
+Good spotting.  I think the original author meant to say there
+should be at least one line to serve as the usage string, so
+updating it to "should be one or more" may be more accurate, but
+"could be more than one" would also work.
 
-On 04.03.2014, at 09:42, Tanay Abhra <tanayabh@gmail.com> wrote:
+>  The lines after the separator describe the options.
+>  
+>  Each line of options has this format:
+>  
+>  ------------
+> -<opt_spec><flags>* SP+ help LF
+> +<opt_spec><flags>*<argh>? SP+ help LF
+>  ------------
+>  
+>  `<opt_spec>`::
+> @@ -313,6 +313,12 @@ Each line of options has this format:
+>  
+>  	* Use `!` to not make the corresponding negated long option available.
+>  
+> +`<argh>`::
+> +	`<argh>`, if specified, is used as a name of the argument, if the
+> +	option takes an argument. `<argh>` is terminated by the first
+> +	whitespace. Angle braces are added automatically.  Underscore symbols
+> +	are replaced with spaces.
 
-[...]
+I had a hard time understanding this "Angle brackets are added
+automatically" one (obviously nobody wants extra angle brackets
+added around option arguments given by the user), until I looked at
+the addition of the test to realize that this description is only
+about how it appears in the help output.  The description needs to
+be clarified to avoid confusion.
 
-> commit.c | 17 +++++++++--------
-> 1 file changed, 9 insertions(+), 8 deletions(-)
->=20
-> diff --git a/commit.c b/commit.c
-> index 6bf4fe0..6c92acb 100644
-> --- a/commit.c
-> +++ b/commit.c
+> @@ -333,6 +339,7 @@ h,help    show the help
+>  
+>  foo       some nifty option --foo
+>  bar=      some cool option --bar with an argument
+> +baz=arg   another cool option --baz with an argument named <arg>
 
-[...]
+It probably is better not to have " named <arg>" at the end here, as
+that gives an apparent-but-false contradiction with the "Angle
+brackets are added *automatically*" and confuse readers.  At least,
+it confused _this_ reader.
 
-> @@ -566,14 +566,16 @@ static void record_author_date(struct =
-author_date_slab *author_date,
-> 	     buf;
-> 	     buf =3D line_end + 1) {
-> 		line_end =3D strchrnul(buf, '\n');
-> -		if (!starts_with(buf, "author ")) {
-> +		ident_line =3D skip_prefix(buf, "author ");
-> +		if (!ident_line) {
-> 			if (!line_end[0] || line_end[1] =3D=3D '\n')
-> 				return; /* end of header */
-> 			continue;
-> 		}
-> +		buf =3D ident_line;
-> 		if (split_ident_line(&ident,
-> -				     buf + strlen("author "),
-> -				     line_end - (buf + strlen("author =
-"))) ||
-> +				     buf,
-> +				     line_end - buf) ||
-> 		    !ident.date_begin || !ident.date_end)
-> 			goto fail_exit; /* malformed "author" line */
-> 		break;
+After the "eval" in the existing example to parse the "$@" argument
+list in this part of the documentation, it may be a good idea to say
+something like:
 
-Why not get rid of that assignment to "buf", and use ident_line instead =
-of buf below? That seems like it would be more readable, wouldn't it?
+	The above command, when "$@" is "--help", produces the
+	following help output:
 
+	... sample output here ...
 
-> @@ -1193,10 +1195,9 @@ static void parse_gpg_output(struct =
-signature_check *sigc)
-> 	for (i =3D 0; i < ARRAY_SIZE(sigcheck_gpg_status); i++) {
-> 		const char *found, *next;
->=20
-> -		if (starts_with(buf, sigcheck_gpg_status[i].check + 1)) =
-{
-> -			/* At the very beginning of the buffer */
-> -			found =3D buf + =
-strlen(sigcheck_gpg_status[i].check + 1);
-> -		} else {
-> +		found =3D skip_prefix(buf, sigcheck_gpg_status[i].check =
-+ 1);
-> +		/* At the very beginning of the buffer */
+to show the actual output.  That way, we can illustrate how input
+"baz?arg description of baz" is turned into "--baz[=<arg>]" output
+clearly (yes, I am suggesting to use '?' in the new example, not '='
+whose usage is already shown in the existing example).
 
-Do we really need that comment, and in that spot? The code seemed clear =
-enough to me without it. But if you think keeping is better, perhaps =
-move it to *before* the skip_prefix, and add a trailing "?"
+> diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+> index aaeb611..83a769e 100644
+> --- a/builtin/rev-parse.c
+> +++ b/builtin/rev-parse.c
+> @@ -395,9 +395,10 @@ static int cmd_parseopt(int argc, const char **argv, const char *prefix)
+>  		usage[unb++] = strbuf_detach(&sb, NULL);
+>  	}
+>  
+> -	/* parse: (<short>|<short>,<long>|<long>)[=?]? SP+ <help> */
+> +	/* parse: (<short>|<short>,<long>|<long>)[*=?!]*<arghint>? SP+ <help> */
+>  	while (strbuf_getline(&sb, stdin, '\n') != EOF) {
+>  		const char *s;
+> +		const char *argh;
 
-> +		if(!found) {
-> 			found =3D strstr(buf, =
-sigcheck_gpg_status[i].check);
-> 			if (!found)
-> 				continue;
+Let's spell that variable name out, e.g. arg_hint or something.
 
+> diff --git a/t/t1502-rev-parse-parseopt.sh b/t/t1502-rev-parse-parseopt.sh
+> index 83b1300..bf0db05 100755
+> --- a/t/t1502-rev-parse-parseopt.sh
+> +++ b/t/t1502-rev-parse-parseopt.sh
+> @@ -18,6 +18,17 @@ An option group Header
+>      -C[...]               option C with an optional argument
+>      -d, --data[=...]      short and long option with an optional argument
+>  
+> +Argument hints
+> +    -b <arg>              short option required argument
+> +    --bar2 <arg>          long option required argument
+> +    -e, --fuz <with spaces>
+> +                          short and long option required argument
+> +    -s[<some>]            short option optional argument
+> +    --long[=<data>]       long option optional argument
+> +    -g, --fluf[=<path>]   short and long option optional argument
+> +    --longest <a very long argument hint>
+> +                          a very long argument hint
+> +
+>  Extras
+>      --extra1              line above used to cause a segfault but no longer does
+>  
+> @@ -39,6 +50,15 @@ b,baz     a short and long option
+>  C?        option C with an optional argument
+>  d,data?   short and long option with an optional argument
+>  
+> + Argument hints
+> +b=arg     short option required argument
+> +bar2=arg  long option required argument
+> +e,fuz=with_spaces  short and long option required argument
+> +s?some    short option optional argument
+> +long?data long option optional argument
+> +g,fluf?path     short and long option optional argument
+> +longest=a_very_long_argument_hint  a very long argument hint
+> +
 
+Nice.
 
---Apple-Mail=_EBF286A4-0DA2-4261-BB98-F6BD79A2BA8B
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename=signature.asc
-Content-Type: application/pgp-signature;
-	name=signature.asc
-Content-Description: Message signed with OpenPGP using GPGMail
-
------BEGIN PGP SIGNATURE-----
-Comment: GPGTools - http://gpgtools.org
-
-iF4EAREIAAYFAlMWJqMACgkQIpJVslrhe1mEkQD/a/jmVIZrw9mNlfpDDqANUZ68
-RH3Y2hqZZ9Bzcui1zF8A/3mDec+2M1JcEWXfRWdwKb27/Oe5cvXD/J6sk6/GfkqM
-=HB+i
------END PGP SIGNATURE-----
-
---Apple-Mail=_EBF286A4-0DA2-4261-BB98-F6BD79A2BA8B--
+Thanks.
