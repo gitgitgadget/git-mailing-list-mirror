@@ -1,91 +1,139 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] gitk: replace SHA1 entry field on keyboard paste
-Date: Tue, 04 Mar 2014 10:15:07 -0800
-Message-ID: <xmqqmwh5ltjo.fsf@gitster.dls.corp.google.com>
-References: <1393570297-6012-1-git-send-email-ilya.bobyr@gmail.com>
+Subject: Re: [PATCH 1/3] rev-parse: support OPT_NUMBER_CALLBACK in --parseopt
+Date: Tue, 04 Mar 2014 10:28:22 -0800
+Message-ID: <xmqqiortlsxl.fsf@gitster.dls.corp.google.com>
+References: <1393506078-7310-1-git-send-email-pclouds@gmail.com>
+	<1393728794-29566-1-git-send-email-pclouds@gmail.com>
+	<1393728794-29566-2-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Ilya Bobyr <ilya.bobyr@gmail.com>
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Tue Mar 04 19:15:27 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Jeff King <peff@peff.net>, philipoakley@iee.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 04 19:28:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKtsE-0007U4-ER
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 19:15:26 +0100
+	id 1WKu4u-000194-7M
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 19:28:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754271AbaCDSPO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2014 13:15:14 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64709 "EHLO
+	id S1752418AbaCDS21 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Mar 2014 13:28:27 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65183 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751988AbaCDSPM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Mar 2014 13:15:12 -0500
+	id S1751494AbaCDS20 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Mar 2014 13:28:26 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4F5F66F396;
-	Tue,  4 Mar 2014 13:15:12 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4E70D6F773;
+	Tue,  4 Mar 2014 13:28:26 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5lpxq06++VHX/Dw/dkxl7qR+VK8=; b=hKP0Zp
-	9KM0QIA9M47fzTbFhAL6DpGV9F3ZlKYvUp4RAM1zHKAzgLv8cAp0nGq4W0/1Y+ID
-	tdV6Mw7xNSM+aRK0aFPF1GJwDZMcXDWCQpeQqlWwfQ2Q5ksahwYXPqMFaeSlCT1B
-	uxJw9Q9USuH57jIV9ua4KrL52MgUkkhOrpSDg=
+	:content-type:content-transfer-encoding; s=sasl; bh=T2h4EwTc4RDP
+	xqdyZ63gSwhAGEQ=; b=hRZS02ZsmZQgwuwisRmBL9N0/lyZFIneJcmlgZn8TyAp
+	JWZ6i4DzNz7l/tMGITw1n5A7BBtOfXPFDtKsCOUshoqGn499LNNz0teM8LqY70m/
+	IZra+FPfHjieOh+CF43u6rHqzK3L5yUNK9Hgq6UBbaNP/PzBkpsOy9MIdl1JiJE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=IjuErkQIyoIhWyjpUgD+TcFx7D5MJkfj
-	sr1AkjjSbCmw1pWZJmpNixsfuT0TKvBPsRbuOP2WYeTTYJwij1p022V/R5Yvvk9j
-	MOzuttBVJ89rY5WkJ9HeqqqtxXcICh6GKCr5uzMQ3ISK8fI4WsgXGjTh87hYmbFB
-	gemfIAK5NnA=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Er2QnB
+	vEiN1HACR6N2TtYSnWrWdE5Uv8mwSpRI0logBPNnbUQOsN96RtLNBTp1QP7IF5/5
+	TmaOqdqZFCwxycD1vlLb2Xprw7do+z5+dTOdXGQUJ98fcTS3JHAKYkcPe1Kyk0P6
+	To8bufsURWJ5h9VsiMP0yB4ZUaLNQeNootLQE=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 350326F394;
-	Tue,  4 Mar 2014 13:15:12 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3604D6F772;
+	Tue,  4 Mar 2014 13:28:26 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7F1936F393;
-	Tue,  4 Mar 2014 13:15:11 -0500 (EST)
-In-Reply-To: <1393570297-6012-1-git-send-email-ilya.bobyr@gmail.com> (Ilya
-	Bobyr's message of "Thu, 27 Feb 2014 22:51:37 -0800")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 370806F76D;
+	Tue,  4 Mar 2014 13:28:25 -0500 (EST)
+In-Reply-To: <1393728794-29566-2-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Sun, 2 Mar
+ 2014 09:53:12 +0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: ECF1BFEC-A3C8-11E3-97B2-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: C607A82C-A3CA-11E3-A931-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243365>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243366>
 
-From: Ilya Bobyr <ilya.bobyr@gmail.com>
-Date: Thu, 27 Feb 2014 22:51:37 -0800
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-We already replace old SHA with the clipboard content for the mouse
-paste event.  It seems reasonable to do the same when pasting from
-keyboard.
+> If the option spec is
+>
+> -NUM Help string
+>
+> then rev-parse will accept and parse -([0-9]+) and return "-NUM $1"
 
-Signed-off-by: Ilya Bobyr <ilya.bobyr@gmail.com>
----
+Even though the hardcoded "NUM" token initially gave me a knee-jerk
+"Yuck" reaction, that literal option name is very unlikely to be
+desired by scripts/commands for their real option names, and being
+in all uppercase it is very clear that it is magic convention
+between the parsing mechanism and the script it uses.
 
- * Paul?  I do not use <<Paste>> on my keyboard, so I am not in the
-   position to say that this patch is correct (or not).  I am just
-   forwarding it in case you think gitk users will find it useful.
+It however felt funny to me without a matching (possibly hidden)
+mechanism to allow parse-options machinery to consume such an output
+as its input.  In a script that uses this mechanism to parse out the
+numeric option "-NUM 3" out of "git script -3" and uses that "three"
+to drive an underlying command (e.g. "git grep -3"), wouldn't it be
+more natural if that underlying command can be told to accept the
+same notation (i.e. "git grep -NUM 3")?  For that to be consistent
+with the rest of the system, "-NUM" would not be a good token; being
+it multi-character, it must be "--NUM" or something with double-dash
+prefix.
 
-   The original patch was done against my tree, so I hand tweaked it
-   to apply to your tree.
-   
-   Thanks.
+I kind of like the basic idea, the capability it tries to give
+scripted Porcelain implementations.  But my impression is that
+"rebase -i -4", which this mechanism was invented for, is not
+progressing, so perhaps we should wait until the real user of this
+feature appears.
 
- gitk |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+Thanks.
 
-diff --git a/gitk b/gitk
-index 90764e8..2f58bcf 100755
---- a/gitk
-+++ b/gitk
-@@ -2585,6 +2585,7 @@ proc makewindow {} {
-     bind $fstring <Key-Return> {dofind 1 1}
-     bind $sha1entry <Key-Return> {gotocommit; break}
-     bind $sha1entry <<PasteSelection>> clearsha1
-+    bind $sha1entry <<Paste>> clearsha1
-     bind $cflist <1> {sel_flist %W %x %y; break}
-     bind $cflist <B1-Motion> {sel_flist %W %x %y; break}
-     bind $cflist <ButtonRelease-1> {treeclick %W %x %y}
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+>  builtin/rev-parse.c | 9 +++++++--
+>  1 file changed, 7 insertions(+), 2 deletions(-)
+>
+> diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+> index 45901df..b37676f 100644
+> --- a/builtin/rev-parse.c
+> +++ b/builtin/rev-parse.c
+> @@ -331,6 +331,8 @@ static int parseopt_dump(const struct option *o, =
+const char *arg, int unset)
+>  	struct strbuf *parsed =3D o->value;
+>  	if (unset)
+>  		strbuf_addf(parsed, " --no-%s", o->long_name);
+> +	else if (o->type =3D=3D OPTION_NUMBER)
+> +		strbuf_addf(parsed, " -NUM");
+>  	else if (o->short_name && (o->long_name =3D=3D NULL || !stuck_long)=
+)
+>  		strbuf_addf(parsed, " -%c", o->short_name);
+>  	else
+> @@ -338,7 +340,7 @@ static int parseopt_dump(const struct option *o, =
+const char *arg, int unset)
+>  	if (arg) {
+>  		if (!stuck_long)
+>  			strbuf_addch(parsed, ' ');
+> -		else if (o->long_name)
+> +		else if (o->long_name || o->type =3D=3D OPTION_NUMBER)
+>  			strbuf_addch(parsed, '=3D');
+>  		sq_quote_buf(parsed, arg);
+>  	}
+> @@ -439,7 +441,10 @@ static int cmd_parseopt(int argc, const char **a=
+rgv, const char *prefix)
+> =20
+>  		if (s - sb.buf =3D=3D 1) /* short option only */
+>  			o->short_name =3D *sb.buf;
+> -		else if (sb.buf[1] !=3D ',') /* long option only */
+> +		else if (s - sb.buf =3D=3D 4 && !strncmp(sb.buf, "-NUM", 4)) {
+> +			o->type =3D OPTION_NUMBER;
+> +			o->flags =3D PARSE_OPT_NOARG | PARSE_OPT_NONEG;
+> +		} else if (sb.buf[1] !=3D ',') /* long option only */
+>  			o->long_name =3D xmemdupz(sb.buf, s - sb.buf);
+>  		else {
+>  			o->short_name =3D *sb.buf;
