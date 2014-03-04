@@ -1,109 +1,133 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2] cache_tree_find(): remove redundant checks
-Date: Tue,  4 Mar 2014 09:31:08 +0100
-Message-ID: <1393921868-4382-1-git-send-email-mhagger@alum.mit.edu>
-Cc: David Kastrup <dak@gnu.org>, git@vger.kernel.org,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 04 09:38:45 2014
+From: Tanay Abhra <tanayabh@gmail.com>
+Subject: [PATCH v3] commit.c: use skip_prefix() instead of starts_with()
+Date: Tue,  4 Mar 2014 00:42:20 -0800
+Message-ID: <1393922540-13156-1-git-send-email-tanayabh@gmail.com>
+Cc: mhagger@alum.mit.edu, gitster@pobox.com, max@quendi.de,
+	Tanay Abhra <tanayabh@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 04 09:43:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKks8-0002Fw-E1
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 09:38:44 +0100
+	id 1WKkwv-0005l3-VM
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 09:43:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756501AbaCDIik (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2014 03:38:40 -0500
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:43724 "EHLO
-	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756491AbaCDIij (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Mar 2014 03:38:39 -0500
-X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Tue, 04 Mar 2014 03:38:38 EST
-X-AuditID: 12074412-f79d46d000002e58-97-53158f683453
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id D8.6F.11864.86F85135; Tue,  4 Mar 2014 03:31:36 -0500 (EST)
-Received: from michael.fritz.box (p57A2482C.dip0.t-ipconnect.de [87.162.72.44])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s248VEi8032080
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Tue, 4 Mar 2014 03:31:35 -0500
+	id S1756499AbaCDInh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Mar 2014 03:43:37 -0500
+Received: from mail-pb0-f53.google.com ([209.85.160.53]:56370 "EHLO
+	mail-pb0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756462AbaCDIng (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Mar 2014 03:43:36 -0500
+Received: by mail-pb0-f53.google.com with SMTP id rp16so4903220pbb.26
+        for <git@vger.kernel.org>; Tue, 04 Mar 2014 00:43:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=dK6cbgXJiO9/OoTEePS7sVp7W3OX5LA7Rj0dACotDNU=;
+        b=SSiUT0r04aBPU4cA66Ao7IPGVZ0M/KXe/SjlO9pzQihL17bbUY92e9McWMDXMEgBvM
+         +rcENBkeM/FHAj6PZGJNCJ/AlsDk0PJ0bAyYQXAlUIZ17pDsM0/pbT9U/vjuVXIL/t+4
+         2KMrGQwBDzQYleHr7E4ot3Zw8qWSSZP8Ut2QBQvUzw25KR05FnZ6a49ia3BmxdFwBbq5
+         3liRrjt4zvF4nLSimaW4BPrNOgdac/e4UBWuFXIy1iBcto8i6qlyjZ+Rr3ph4spA5+EV
+         kSmF3vIY7NKl1FD/auVrMyJ9nDFcfUXg8FDQQBHBIMScXN6Aw55duPymedPAyy72wC7C
+         1fQA==
+X-Received: by 10.68.236.100 with SMTP id ut4mr24479870pbc.29.1393922615924;
+        Tue, 04 Mar 2014 00:43:35 -0800 (PST)
+Received: from localhost.localdomain ([59.178.59.170])
+        by mx.google.com with ESMTPSA id af1sm101012768pad.12.2014.03.04.00.43.31
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 04 Mar 2014 00:43:34 -0800 (PST)
 X-Mailer: git-send-email 1.9.0
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrJIsWRmVeSWpSXmKPExsUixO6iqJvRLxpsMPmwgcXsG9vYLLqudDNZ
-	NPReYba4vWI+swOLx9/3H5g82qaZeVy8pOzxeZNcAEsUt01SYklZcGZ6nr5dAnfGsXWvGQue
-	8FT8aFrM3sB4g7OLkZNDQsBEonnhNzYIW0ziwr31QDYXh5DAZUaJH4tWMUE4x5gkmnuPMYFU
-	sQnoSizqaQazRQTUJCa2HWIBsZkF0iQebLkCZHNwCAvYScxuNwcJswioSsxavZAZxOYVcJaY
-	820b1DI5iSm/F7BPYORewMiwilEuMac0Vzc3MTOnODVZtzg5MS8vtUjXTC83s0QvNaV0EyMk
-	GIR2MK4/KXeIUYCDUYmH12GKSLAQa2JZcWXuIUZJDiYlUV6TXtFgIb6k/JTKjMTijPii0pzU
-	4kOMEhzMSiK8cvpAOd6UxMqq1KJ8mJQ0B4uSOO/Pxep+QgLpiSWp2ampBalFMFkZDg4lCV7j
-	PqBGwaLU9NSKtMycEoQ0EwcnyHAuKZHi1LyU1KLE0pKMeFCgxxcDQx0kxQO09whIO29xQWIu
-	UBSi9RSjopQ4bxdIQgAkkVGaBzcWFuOvGMWBvhTm7QWp4gGmB7juV0CDmYAGm/mJgAwuSURI
-	STUw2l14rrVh9r0Tv+6UeOX41+bGW386NG/nnKVC7ELn4zSO3nznb6176r10TPGN3b+CWGuO
-	RFX7yXcs+bWy5YH3jVa9fd/55/Zn3ZwSfYm5cPOuMu+8Rr9181iNP8i+6jgguH31+9r3L85M
-	rGM1+zCT9Yslx02OZ2zsvSrtqd/P/Rbqvn39bY11qRJLcUaioRZzUXEiAKbhM3fM 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243328>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243329>
 
-The beginning of the loop ensures that slash can never be NULL.  So
-don't keep checking whether it is NULL later in the loop.
+In record_author_date() & parse_gpg_output() ,using skip_prefix() instead of
+starts_with() is a more suitable abstraction.
 
-Furthermore, there is no need for an early
-
-    return it;
-
-from the loop if slash points at the end of the string, because that
-is exactly what will happen when the while condition fails at the
-start of the next iteration.
-
-Helped-by: David Kastrup <dak@gnu.org>
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+Helped-by: Max Horn <max@quendi.de> 
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Helped-by: Michael Haggerty <mhagger@alum.mit.edu>
+Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
 ---
-I incorporated David's suggestion, and then realized that yet another
-check was superfluous, so I removed that one too.
+Patch V3 Variable naming improved, removed assignments inside conditionals.
+	Thanks to Junio C Hamano and Max Horn.
+	
+Patch V2 Corrected email formatting ,reapplied the implementation according to suggestions.
+	Thanks to Michael Haggerty.
 
- cache-tree.c | 15 ++++++---------
- 1 file changed, 6 insertions(+), 9 deletions(-)
+This is in respect to GSoC microproject #10.
 
-diff --git a/cache-tree.c b/cache-tree.c
-index 0bbec43..19252c3 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -551,25 +551,22 @@ static struct cache_tree *cache_tree_find(struct cache_tree *it, const char *pat
- 	if (!it)
- 		return NULL;
- 	while (*path) {
--		const char *slash;
- 		struct cache_tree_sub *sub;
-+		const char *slash = strchr(path, '/');
+In record_author_date(), extra and useless calls to strlen due to using starts_with()
+were removed by using skip_prefix(). Extra variable "skip" was used as "buf" is used in 
+for loop update check.
+
+Other usages of starts_with() in the same file can be found with,
+
+$ grep -n starts_with commit.c
+
+1116:		else if (starts_with(line, gpg_sig_header) &&
+1196:		if (starts_with(buf, sigcheck_gpg_status[i].check + 1)) {
+
+The starts_with() in line 1116 was left as it is, as strlen values were pre generated as 
+global variables.
+The starts_with() in line 1196 was replaced as it abstracts way the skip_prefix part by
+directly using the function.
+Also skip_prefix() is inline when compared to starts_with().
+
+ commit.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
+
+diff --git a/commit.c b/commit.c
+index 6bf4fe0..6c92acb 100644
+--- a/commit.c
++++ b/commit.c
+@@ -548,7 +548,7 @@ define_commit_slab(author_date_slab, unsigned long);
+ static void record_author_date(struct author_date_slab *author_date,
+ 			       struct commit *commit)
+ {
+-	const char *buf, *line_end;
++	const char *buf, *line_end, *ident_line;
+ 	char *buffer = NULL;
+ 	struct ident_split ident;
+ 	char *date_end;
+@@ -566,14 +566,16 @@ static void record_author_date(struct author_date_slab *author_date,
+ 	     buf;
+ 	     buf = line_end + 1) {
+ 		line_end = strchrnul(buf, '\n');
+-		if (!starts_with(buf, "author ")) {
++		ident_line = skip_prefix(buf, "author ");
++		if (!ident_line) {
+ 			if (!line_end[0] || line_end[1] == '\n')
+ 				return; /* end of header */
+ 			continue;
+ 		}
++		buf = ident_line;
+ 		if (split_ident_line(&ident,
+-				     buf + strlen("author "),
+-				     line_end - (buf + strlen("author "))) ||
++				     buf,
++				     line_end - buf) ||
+ 		    !ident.date_begin || !ident.date_end)
+ 			goto fail_exit; /* malformed "author" line */
+ 		break;
+@@ -1193,10 +1195,9 @@ static void parse_gpg_output(struct signature_check *sigc)
+ 	for (i = 0; i < ARRAY_SIZE(sigcheck_gpg_status); i++) {
+ 		const char *found, *next;
  
--		slash = strchr(path, '/');
- 		if (!slash)
- 			slash = path + strlen(path);
--		/* between path and slash is the name of the
--		 * subtree to look for.
-+		/*
-+		 * Between path and slash is the name of the subtree
-+		 * to look for.
- 		 */
- 		sub = find_subtree(it, path, slash - path, 0);
- 		if (!sub)
- 			return NULL;
- 		it = sub->cache_tree;
--		if (slash)
--			while (*slash && *slash == '/')
--				slash++;
--		if (!slash || !*slash)
--			return it; /* prefix ended with slashes */
- 		path = slash;
-+		while (*path == '/')
-+			path++;
- 	}
- 	return it;
- }
+-		if (starts_with(buf, sigcheck_gpg_status[i].check + 1)) {
+-			/* At the very beginning of the buffer */
+-			found = buf + strlen(sigcheck_gpg_status[i].check + 1);
+-		} else {
++		found = skip_prefix(buf, sigcheck_gpg_status[i].check + 1);
++		/* At the very beginning of the buffer */
++		if(!found) {
+ 			found = strstr(buf, sigcheck_gpg_status[i].check);
+ 			if (!found)
+ 				continue;
 -- 
 1.9.0
