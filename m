@@ -1,165 +1,79 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] commit.c: Replace starts_with() with skip_prefix()
-Date: Mon, 3 Mar 2014 18:54:13 -0500
-Message-ID: <CAPig+cQuzWv1+yg6F4zBqYfGdH6iz5xteCFHW6_o8Wyx68JT7w@mail.gmail.com>
-References: <1393832875-29096-1-git-send-email-karthik.188@gmail.com>
-	<CAPig+cQLoZy=MV_AqPQseMxsrU6T_PqmCifWn1SrOGwF2FcYzg@mail.gmail.com>
-	<CAOLa=ZRxj-iBiQRXEYvq6MrQyQcyzk32kPij8zzxh4ECbBrnMw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] test-lib: GIT_TEST_ONLY to run only specific tests
+Date: Mon, 03 Mar 2014 16:08:32 -0800
+Message-ID: <xmqq4n3en7un.fsf@gitster.dls.corp.google.com>
+References: <1393842298-5944-1-git-send-email-ilya.bobyr@gmail.com>
+	<1393842298-5944-2-git-send-email-ilya.bobyr@gmail.com>
+	<CAPig+cT46ekT87TuoTtwvt0G+DraB9cdgW1wd6NsodjJ5FmJrA@mail.gmail.com>
+	<xmqqob1mn9t6.fsf@gitster.dls.corp.google.com>
+	<531514D9.4000101@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>
-To: karthik nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 04 00:54:21 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Ilya Bobyr <ilya.bobyr@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Thomas Rast <tr@thomasrast.ch>
+To: Ilya Bobyr <ilya.bobir@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 04 01:08:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKcgd-0008NN-NS
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 00:54:20 +0100
+	id 1WKcuX-0001jr-Oq
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 01:08:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755435AbaCCXyP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2014 18:54:15 -0500
-Received: from mail-yh0-f46.google.com ([209.85.213.46]:64691 "EHLO
-	mail-yh0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755301AbaCCXyO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2014 18:54:14 -0500
-Received: by mail-yh0-f46.google.com with SMTP id v1so4303722yhn.19
-        for <git@vger.kernel.org>; Mon, 03 Mar 2014 15:54:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=Ye9S7llAYMoWWl9mQvsvjEjyyYFamiIGbnSO0NlkIy0=;
-        b=TbgSVm9IlYF3ColVDNcdLg0Ap5z/3jixaV5vlS3bN0B+z6oldGjPsPWhNjcGrA9v7r
-         VvEdYpKdgrP3XdiXMLmG2AEquV9T0pDup/9F18ZJ1zwOcEJwfrnNJb5bV+IV5k3yoghh
-         1FqcQRL7XLPfcEPr4STX9lqvwPKSqf0bmOMDmJQ4IhmxdB+qzDzPgsFT/tyPbT+j2QX8
-         7sNHigZ5JEgDHG1Yc/n6ws698ltMNJYeDEF6XGCfSM0CVah7NvfWZrnTuhoVQuypz5t3
-         5s3slXzgJmcB6svYbzwK0DVCTvypoZtDO8qkeLx2sgFxCkw5IKqguXhHroT0g8eTAyx/
-         WcoQ==
-X-Received: by 10.236.120.102 with SMTP id o66mr4230272yhh.99.1393890853562;
- Mon, 03 Mar 2014 15:54:13 -0800 (PST)
-Received: by 10.170.180.195 with HTTP; Mon, 3 Mar 2014 15:54:13 -0800 (PST)
-In-Reply-To: <CAOLa=ZRxj-iBiQRXEYvq6MrQyQcyzk32kPij8zzxh4ECbBrnMw@mail.gmail.com>
-X-Google-Sender-Auth: 1a90yaXC2iooYLGcTlUbbRUmr3k
+	id S1755395AbaCDAIh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2014 19:08:37 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38357 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755301AbaCDAIg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2014 19:08:36 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DAECC55C58;
+	Mon,  3 Mar 2014 19:08:35 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=NLMRdlHTgwgBZ81F/ji77yCUedQ=; b=qdLhjN
+	mBpHL9gnve/NygTvgXwkN8dy6hjx7HvYlFNf5t8kYF7GUvynbLe7X3LD5jMNAE4r
+	W/Cjf3eFzF4KYuM6j7FbSA9FY/eW+1B9CZylfG9xP0AWGahqppWX1DWiAM/JHQ9v
+	OPRn5kBwm+kl19CT224kUsQovD7ZZ36TFuhzc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qCKE8MpOhGGIK3qXog30S+3ZN/81zOtA
+	gyWUHXO7RPZ+XbROjHtFS83uxjtufDupq/wDDOxNTD9hMKgbRJwGLByYiz+ZeC8B
+	gN7G1Y+646okdgYKK8/dbwQ6wCBoYK3VsNt51k9iZbRyjNvL/bbA/utfevehL6gQ
+	D2zjnZpMMgY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9F65655C57;
+	Mon,  3 Mar 2014 19:08:35 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9E9AB55C53;
+	Mon,  3 Mar 2014 19:08:34 -0500 (EST)
+In-Reply-To: <531514D9.4000101@gmail.com> (Ilya Bobyr's message of "Mon, 03
+	Mar 2014 15:48:41 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 20A0BE58-A331-11E3-8451-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243317>
 
-On Mon, Mar 3, 2014 at 10:23 AM, karthik nayak <karthik.188@gmail.com> wrote:
-> Hello Eric,
-> Thanks for Pointing out everything, i had a thorough look and fixed a
-> couple of things.
-> Here is an Updated Patch.
-> - Removed unnecessary code and variables.
-> - Replaced all instances of starts_with() with skip_prefix()
+Ilya Bobyr <ilya.bobir@gmail.com> writes:
 
-This commentary is important for the on-going email discussion but
-does not belong in the commit message for the permanent project
-history, so place it below the "---" line just under your sign-off.
+> It might be that we are looking at different use cases, as you are
+> talking about whole test suits.
 
-Explaining what changed since the last attempt, as you do here, is a
-good thing. To further ease the review process, supply a link to the
-previous attempt, like this [1].
+I do not think so.
 
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/243194
+I do not see anything prevents you from saying
 
-> Replace starts_with() with skip_prefix() for better reading purposes.
-> Also to replace "buf + strlen(author )" by skip_prefix(), which is
-> saved in a new "const char" variable "buf_skipprefix".
+	GIT_SKIP_TESTS='t0000 !t0000.1 !t0000.4'
 
-The second sentence is really the meat of this change, and not at all
-incidental as "Also" implies. You should use it (or a refinement of
-it) as your commit message. The first sentence doesn't particularly
-add much and can easily be dropped.
-
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
->  commit.c | 13 ++++++++-----
->  1 file changed, 8 insertions(+), 5 deletions(-)
->
-> diff --git a/commit.c b/commit.c
-> index 6bf4fe0..e5dc2e2 100644
-> --- a/commit.c
-> +++ b/commit.c
-> @@ -552,6 +552,7 @@ static void record_author_date(struct
-> author_date_slab *author_date,
->   char *buffer = NULL;
->   struct ident_split ident;
->   char *date_end;
-> + const char *buf_skipprefix;
-
-Read this response by Junio [2] to another GSoC candidate which
-explains why this is a poor variable name and how to craft a better
-one.
-
-[2]: http://thread.gmane.org/gmane.comp.version-control.git/243231/focus=243259
-
->   unsigned long date;
->
->   if (!commit->buffer) {
-> @@ -562,18 +563,20 @@ static void record_author_date(struct
-> author_date_slab *author_date,
->   return;
->   }
->
-> + buf_skipprefix = skip_prefix(buf, "author ");
-
-Unfortunately, your patch is badly whitespace-damaged as if it was
-pasted into the mailer and mangled. (Your first submission did not
-have this problem.) If you can, use "git send-email" to avoid such
-corruption.
-
-> +
->   for (buf = commit->buffer ? commit->buffer : buffer;
->       buf;
->       buf = line_end + 1) {
->   line_end = strchrnul(buf, '\n');
-> - if (!starts_with(buf, "author ")) {
-> + if (!buf_skipprefix) {
->   if (!line_end[0] || line_end[1] == '\n')
->   return; /* end of header */
->   continue;
->   }
->   if (split_ident_line(&ident,
-> -     buf + strlen("author "),
-> -     line_end - (buf + strlen("author "))) ||
-> + buf_skipprefix,
-> + line_end - buf_skipprefix) ||
-
-Looks reasonable (sans whitespace damage).
-
->      !ident.date_begin || !ident.date_end)
->   goto fail_exit; /* malformed "author" line */
->   break;
-> @@ -1113,7 +1116,7 @@ int parse_signed_commit(const unsigned char *sha1,
->   next = next ? next + 1 : tail;
->   if (in_signature && line[0] == ' ')
->   sig = line + 1;
-> - else if (starts_with(line, gpg_sig_header) &&
-> + else if (skip_prefix(line, gpg_sig_header) &&
->   line[gpg_sig_header_len] == ' ')
->   sig = line + gpg_sig_header_len + 1;
->   if (sig) {
-> @@ -1193,7 +1196,7 @@ static void parse_gpg_output(struct signature_check *sigc)
->   for (i = 0; i < ARRAY_SIZE(sigcheck_gpg_status); i++) {
->   const char *found, *next;
->
-> - if (starts_with(buf, sigcheck_gpg_status[i].check + 1)) {
-> + if (skip_prefix(buf, sigcheck_gpg_status[i].check + 1)) {
->   /* At the very beginning of the buffer */
->   found = buf + strlen(sigcheck_gpg_status[i].check + 1);
->   } else {
-
-For these two sets of changes, unless you are actually taking
-advantage of the return value of skip_prefix(), the mere mechanical
-replacement of starts_with() with skip_prefix() actually hurts
-readability. Examine each of these cases more carefully to determine
-whether skip_prefix() is in fact useful. If so, take advantage of it.
-If not, explain in the patch commentary why skip_prefix() doesn't
-help.
-
-> --
-> 1.9.0.138.g2de3478
+to specify test-pieces in individual tests so that you can run the
+setup step (step .1) and the specific test (step .4) without running
+two tests in between.
