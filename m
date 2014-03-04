@@ -1,82 +1,67 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 3/3] rebase: new convenient option to edit a single commit
-Date: Tue, 4 Mar 2014 09:08:31 +0700
-Message-ID: <CACsJy8Ct41PRb=_Ez7FLXbdiZkTU-tFYqtAxow9mCw7wYAfOhg@mail.gmail.com>
-References: <1393506078-7310-1-git-send-email-pclouds@gmail.com>
- <1393728794-29566-1-git-send-email-pclouds@gmail.com> <1393728794-29566-4-git-send-email-pclouds@gmail.com>
- <CAPig+cTn-YcWHsGRKUZWqACJ5ZspWoB+f4i7hNj09_4Ci6odiw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-bisect.sh: fix a few style issues
+Date: Mon, 03 Mar 2014 18:30:58 -0800
+Message-ID: <xmqqzjl6lmot.fsf@gitster.dls.corp.google.com>
+References: <1393892503-12765-1-git-send-email-jacopo.notarstefano@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue Mar 04 03:09:10 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jacopo Notarstefano <jacopo.notarstefano@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 04 03:31:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKen8-0000yw-49
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 03:09:10 +0100
+	id 1WKf8R-0007X8-V6
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 03:31:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756002AbaCDCJE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Mar 2014 21:09:04 -0500
-Received: from mail-qc0-f172.google.com ([209.85.216.172]:52811 "EHLO
-	mail-qc0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755981AbaCDCJC convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Mar 2014 21:09:02 -0500
-Received: by mail-qc0-f172.google.com with SMTP id i8so4723177qcq.17
-        for <git@vger.kernel.org>; Mon, 03 Mar 2014 18:09:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=CIfqZyZtJ0cJbrG0ByfKVgdP3hXqgmiD7sYn8ycoP7E=;
-        b=mHMQyn91bXeMvFCOvAuSFUAP0Ix4hr0eC8oJX3UYRzNrT1AXXZ+XlpTpL6mNJI2HpV
-         iFuc6VbXAi/5yGZbJhiRYjb11/s2tSzXdq3kZfM7tZmxj36lO2u7f2ghU1YK2KNiFQ0Y
-         LohIY6Ku489Tljk8eccuqMhDvV/6J3G6Cj6ev4s1dmeFgXhVIxSnbTAO+JbM3woOmKmk
-         ppODPV9h+sRe+naWvCErXAeSRe5QDPKYLHTgGfmZmvGblgZIuFY8zb1/vhUhWsKsYhsf
-         GfyJ8df60ncBzaqcFOKfdEf7bwKYri0GL6g/YpnO3cCfTIrbr/cZnMuDDHmxSrt+R2hA
-         liRg==
-X-Received: by 10.140.84.40 with SMTP id k37mr6491187qgd.98.1393898941458;
- Mon, 03 Mar 2014 18:09:01 -0800 (PST)
-Received: by 10.96.215.102 with HTTP; Mon, 3 Mar 2014 18:08:31 -0800 (PST)
-In-Reply-To: <CAPig+cTn-YcWHsGRKUZWqACJ5ZspWoB+f4i7hNj09_4Ci6odiw@mail.gmail.com>
+	id S1756097AbaCDCbH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2014 21:31:07 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51216 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755576AbaCDCbG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2014 21:31:06 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DE13671F7A;
+	Mon,  3 Mar 2014 21:31:04 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=w7QxIt6fnk19c+7N7tVnQMaHpMY=; b=JYLJk1
+	kGLL2qdT6+svHJA26ZaoR/NsCUmvVG8wUQ5IRIyvPVLh6dvp8GOy96V8YUfyBzSD
+	74PGFudsI6BA/mt4yAK9K3hJyhcv8obvegwDhY3LZ15B23QqE/9DK0u3eEymh8Gh
+	emGqz7MfFw0YnJdVnU+iR61lA26/dm1LGqG1g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=NlUy+sOKI0h+7civ7qCONpBItHaa4ZFo
+	l+lfSbHZqB8A0W8IlubKholE7IfeXdL1TAqaJ7unlT/9NYSN8aN7b5qCSiwfTdDs
+	9N+0I0XqPdCV0grMRNK1GtIvPWEOi8wM8Jt5gRozYnCDcjj2yMQ4WFYYGCtL7wVj
+	GUHHA7l12Yw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D330071F79;
+	Mon,  3 Mar 2014 21:31:03 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 259AA71F77;
+	Mon,  3 Mar 2014 21:31:03 -0500 (EST)
+In-Reply-To: <1393892503-12765-1-git-send-email-jacopo.notarstefano@gmail.com>
+	(Jacopo Notarstefano's message of "Tue, 4 Mar 2014 01:21:43 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 07E31686-A345-11E3-9DBF-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243323>
 
-On Tue, Mar 4, 2014 at 3:28 AM, Eric Sunshine <sunshine@sunshineco.com>=
- wrote:
-> On Sat, Mar 1, 2014 at 9:53 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc=
- Duy <pclouds@gmail.com> wrote:
->> "git rebase -e XYZ" is basically the same as
->>
->> EDITOR=3D"sed -i '1s/pick XYZ/edit XYZ/' $@" \
->> git rebase -i XYZ^
->>
->> In English, it prepares the todo list for you to edit only commit XY=
-Z
->> to save your time. The time saving is only significant when you edit=
- a
->> lot of commits separately.
->
-> Is it correct to single out only "edit" for special treatment? If
-> allowing "edit" on the command-line, then shouldn't command-line
-> "reword" also be supported? I, for one, often need to reword a commit
-> message (or two or three); far more frequently than I need to edit a
-> commit.
->
-> (This is a genuine question about perceived favoritism of "edit", as
-> opposed to a request to further bloat the interface.)
+Jacopo Notarstefano <jacopo.notarstefano@gmail.com> writes:
 
-Heh I had the same thought yesterday. The same thing could be asked
-for "git commit --fixup" to send us back to the fixed up commit so we
-can do something about it. If we go along that line, then "git commit"
-may be a better interface to reword older commits..
---=20
-Duy
+> Redirection operators should have a space before them, but not after them.
+>
+> Signed-off-by: Jacopo Notarstefano <jacopo.notarstefano@gmail.com>
+> ---
+
+Looks obviously harmless ;-)
+
+Thanks.
