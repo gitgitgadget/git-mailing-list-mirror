@@ -1,175 +1,159 @@
-From: Ilya Bobyr <ilya.bobir@gmail.com>
-Subject: Re: [PATCH 2/2] test-lib: GIT_TEST_ONLY to run only specific tests
-Date: Tue, 04 Mar 2014 01:18:13 -0800
-Message-ID: <53159A55.70105@gmail.com>
-References: <1393842298-5944-1-git-send-email-ilya.bobyr@gmail.com>	<1393842298-5944-2-git-send-email-ilya.bobyr@gmail.com>	<CAPig+cT46ekT87TuoTtwvt0G+DraB9cdgW1wd6NsodjJ5FmJrA@mail.gmail.com>	<xmqqob1mn9t6.fsf@gitster.dls.corp.google.com>	<531514D9.4000101@gmail.com>	<xmqq4n3en7un.fsf@gitster.dls.corp.google.com>	<53157B72.3000205@gmail.com> <xmqqvbvul62n.fsf@gitster.dls.corp.google.com>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH v3] skip_prefix: rewrite so that prefix is scanned once
+Date: Tue, 04 Mar 2014 10:18:26 +0100
+Message-ID: <87txbeiaot.fsf@fencepost.gnu.org>
+References: <1393816384-3300-1-git-send-email-siddharth98391@gmail.com>
+	<xmqqvbvvp0gj.fsf@gitster.dls.corp.google.com>
+	<xmqq61nuoqd5.fsf@gitster.dls.corp.google.com>
+	<CACsJy8ASBeravdk67pbOJbrFUbwg21JwYcLtSbDDMJOu9-F=yA@mail.gmail.com>
+	<877g8akenw.fsf@fencepost.gnu.org>
+	<20140304015819.GA10643@duynguyen-vnpc.dek-tpc.internal>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Ilya Bobyr <ilya.bobyr@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Thomas Rast <tr@thomasrast.ch>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 04 10:18:34 2014
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Siddharth Goel <siddharth98391@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 04 10:18:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKlUf-00066P-8j
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 10:18:33 +0100
+	id 1WKlUl-0006Ao-Os
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 10:18:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756633AbaCDJS0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2014 04:18:26 -0500
-Received: from mail-pa0-f44.google.com ([209.85.220.44]:33835 "EHLO
-	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756539AbaCDJSV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Mar 2014 04:18:21 -0500
-Received: by mail-pa0-f44.google.com with SMTP id bj1so5058892pad.3
-        for <git@vger.kernel.org>; Tue, 04 Mar 2014 01:18:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=AXbXbeAlQwpejmneUM/qAgB44k0daYi86bjqAbq3mjw=;
-        b=qOntelw2PnvLb/uHdK2BYo906Pt1Ezsk8gU5qj1AjpPwkt56VRJ+6LCNWfj4o/gApB
-         JPrEem2cx9bIL66+PouGnvmTJX63USMpkrQguNqehWifc5a5+pkQbPwUiWyiBgm1tTv3
-         stFALPWf8ftJKwZOG25KrOMWeC5jGBfONIXuCrhHR8ox6WNR+sJRWK1nkIdfuWX0+c2b
-         Q5qfceNxM4R/49tVNM3gNMzEBXU70idwGJ9iyJ05FEoVuAlYY0XELoZZD71RdNzCMY4n
-         IK5JEiAr3C7U6t8SOiHVgA7vdPVnm3TcHTyjE3pLpnkIbW7yv4aVTi1yoqN3UNmKPzaN
-         tECg==
-X-Received: by 10.66.163.138 with SMTP id yi10mr4694828pab.95.1393924700808;
-        Tue, 04 Mar 2014 01:18:20 -0800 (PST)
-Received: from [192.168.1.2] (c-50-136-172-14.hsd1.ca.comcast.net. [50.136.172.14])
-        by mx.google.com with ESMTPSA id om6sm45485298pbc.43.2014.03.04.01.18.19
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 04 Mar 2014 01:18:20 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:27.0) Gecko/20100101 Thunderbird/27.0
-In-Reply-To: <xmqqvbvul62n.fsf@gitster.dls.corp.google.com>
+	id S1756654AbaCDJSd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Mar 2014 04:18:33 -0500
+Received: from fencepost.gnu.org ([208.118.235.10]:43516 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756539AbaCDJS2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Mar 2014 04:18:28 -0500
+Received: from localhost ([127.0.0.1]:42556 helo=lola)
+	by fencepost.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <dak@gnu.org>)
+	id 1WKlUY-0001PS-Nc; Tue, 04 Mar 2014 04:18:27 -0500
+Received: by lola (Postfix, from userid 1000)
+	id 59894DF3DC; Tue,  4 Mar 2014 10:18:26 +0100 (CET)
+In-Reply-To: <20140304015819.GA10643@duynguyen-vnpc.dek-tpc.internal> (Duy
+	Nguyen's message of "Tue, 4 Mar 2014 08:58:19 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243332>
 
-On 3/4/2014 12:29 AM, Junio C Hamano wrote:
-> Ilya Bobyr <ilya.bobir@gmail.com> writes:
+Duy Nguyen <pclouds@gmail.com> writes:
+
+> On Tue, Mar 04, 2014 at 01:09:39AM +0100, David Kastrup wrote:
+>> Duy Nguyen <pclouds@gmail.com> writes:
+>>=20
+>> > On Tue, Mar 4, 2014 at 5:43 AM, Junio C Hamano <gitster@pobox.com>=
+ wrote:
+>> >> diff --git a/git-compat-util.h b/git-compat-util.h
+>> >> index cbd86c3..68ffaef 100644
+>> >> --- a/git-compat-util.h
+>> >> +++ b/git-compat-util.h
+>> >> @@ -357,8 +357,14 @@ extern int suffixcmp(const char *str, const =
+char *suffix);
+>> >>
+>> >>  static inline const char *skip_prefix(const char *str, const cha=
+r *prefix)
+>> >>  {
+>> >> -       size_t len =3D strlen(prefix);
+>> >> -       return strncmp(str, prefix, len) ? NULL : str + len;
+>> >
+>> > Just a note. gcc does optimize strlen("abcdef") to 6, and with tha=
+t
+>> > information at compile time built-in strncmp might do better.
+>>=20
+>> Indeed, most (but not all) of the calls have a constant string as
+>> prefix.  However, strncmp in each iteration checks for both *str as =
+well
+>> as *prefix to be different from '\0' independently (and it appears
+>> unlikely to me that the optimizer will figure out that it's unnecess=
+ary
+>> for either) _and_ compares them for equality so it's not likely to b=
+e
+>> faster than the open-coded loop.
+>>=20
+>> One could, however, use memcmp instead of strncmp.  I'm just not sur=
+e
+>> whether memcmp is guaranteed not to peek beyond the first mismatchin=
+g
+>> byte even if the count would allow for more.  It could lead to undef=
+ined
+>> behavior if the first mismatching byte would be the ending NUL byte =
+of
+>> str.
 >
->> While it could be done, it looks less obvious than this:
->>
->>      GIT_TEST_ONLY='1 4' ./t0001-init.sh
-> If you are thinking about affecting only one test,
+> It turns out gcc does not generate a call to strncmp either. It
+> inlines repz cmpsb instead.
 
-Yes, that is the use case: when I am developing a specific feature I 
-want to run just one test for that feature over and over, while I am 
-working on that specific thing.
-Not the whole test suite (like "t0001"), but just the new case that I've 
-added to the end, for example.  Plus one or more tests that setup enough 
-environment for it.
+Oh wow.  So it _does_ know that it's not necessary to check for a NUL
+byte when the length of one argument is already known.  I am seriously
+impressed.
 
-> then you
-> shouldn't be mucking with environment variables in the first place,
-> primarily because running:
+> I recall we had a discussion long ago about the inefficiency of repz
+> and and open-coded loop is preferred,
+
+I think that this mostly applies for Pentium I, possibly also the
+dead-ended Pentium=A0Pro architecture (that sort-of translated the x86
+opcodes into RISC instructions).  I think that later processor variants
+(and AMD anyway) got those instructions back to usable shape.
+
+One thing where there was a _lot_ of performance difference between
+open-coding and builtin was using memcpy (repz movb) for copying
+well-aligned data bytewise rather than copying, say, integer arrays
+element-wise.
+
+But since that was egg-on-face material, the hardware got better at it.
+
+And anyway, GCC should know what to pick here.  So with GCC being as
+smart as that (using the equivalent of memcmp on its own initiative
+instead of the full strncmp), I don't think we have a reasonable chance
+to beat its performance with an open-coded variant.
+
+> produces this assembly with gcc -O2 (on x86, apparently)
 >
->      $ GIT_TEST_ONLY='1 4' make test
->
-> to run test .1 and .4 of all the test scripts would not make any
-> sense.
+> -- 8< --
+> 00000000 <main>:
+>    0:   55                      push   %ebp
+>    1:   b9 03 00 00 00          mov    $0x3,%ecx
+>    6:   89 e5                   mov    %esp,%ebp
+>    8:   57                      push   %edi
+>    9:   bf 00 00 00 00          mov    $0x0,%edi
+>    e:   56                      push   %esi
+>    f:   53                      push   %ebx
+>   10:   83 e4 f0                and    $0xfffffff0,%esp
+>   13:   83 ec 10                sub    $0x10,%esp
+>   16:   8b 45 0c                mov    0xc(%ebp),%eax
+>   19:   8b 40 04                mov    0x4(%eax),%eax
+>   1c:   89 c6                   mov    %eax,%esi
+>   1e:   f3 a6                   repz cmpsb %es:(%edi),%ds:(%esi)
+>   20:   0f 97 c3                seta   %bl
+>   23:   0f 92 c1                setb   %cl
+>   26:   83 c0 03                add    $0x3,%eax
+>   29:   31 d2                   xor    %edx,%edx
+>   2b:   38 cb                   cmp    %cl,%bl
+>   2d:   0f 44 d0                cmove  %eax,%edx
 
-No it does not.  It only makes sense for one test suite.
+More like i686 than x86 here.
 
-> I think your "simplicity" argument is a total red-herring.
-> Of course if you do not have to say the test script name, your
-> specification would be shorter, but that is only because your
-> specification is not specific enough to be useful.
+>   30:   89 14 24                mov    %edx,(%esp)
+>   33:   e8 fc ff ff ff          call   34 <main+0x34>
+>   38:   8d 65 f4                lea    -0xc(%ebp),%esp
+>   3b:   31 c0                   xor    %eax,%eax
+>   3d:   5b                      pop    %ebx
+>   3e:   5e                      pop    %esi
+>   3f:   5f                      pop    %edi
+>   40:   5d                      pop    %ebp
+>   41:   c3                      ret
 
-In my case it is very useful :)
-This is why I am saying that we might be talking about different cases: 
-you are talking about the test suite level, while the issue I am trying 
-to address an issue at an individual test level.
+Well, we won't beat this here.
 
-> Giving that as a command line argument to the specific script, e.g.
->
->      $ sh ./t0001-init.sh --only='1 4'
->
-> might make some sense, but the above GIT_TEST_ONLY does not make any
-> sense from the UI point of view.
-
-No problem, I guess I can make it look like that - with '--only'.
-Maybe '--tests'?  Then the same negation syntax could be used as 
-previously discussed.
-As well as range syntax.
-
-> There are many reasons that makes me unenthused about this line of
-> change in the first place:
->
->   * Both at the philosophical level and at the practical level, I've
->     found that it always makes sense to run most of the tests, i.e.
->     skipping ought to be an exception not the norm. Over the course
->     of this project, I often saw an alleged fix to one part of the
->     system introduces breakages that are caught by tests that checks
->     parts of the system that does not have any superficial link to it
->     (e.g. update the refs code and find a rebase test break).
-
-My main argument is the time.  When testing Git as a whole or a feature 
-as a whole there is no reason to skip some tests.
-When working on a specific piece I may run the same test 100 times easily.
-Here is what I see on my Cygwin:
-
-     $ time ./t0001-init.sh
-     [...]
-     1..36
-
-     real    0m6.693s
-     user    0m1.505s
-     sys     0m3.937s
-
-
-     $ time GIT_SKIP_TESTS='t0001.[36789] t0001.??' ./t0001-init.sh
-     [...]
-     1..36
-
-     real    0m3.313s
-     user    0m0.769s
-     sys     0m1.844s
-
-So skipping 34 tests that I am not interested in save a bit more that 
-50% of the time.
-While it would be really nice if it would be faster, this speedup is a 
-pretty simple one.
-
->   * Even though GIT_SKIP_TESTS mechanism still allows you to skip
->     individual test pieces, it has never been a serious "feature" in
->     the first place. Many of the tests unfortunately do rely on state
->     previous sequences of tests left behind, so it is not realistic
->     to expect that you can skip test pieces randomly and exercise
->     later test pieces reliably.
->
->   * The numbering of individual test pieces can easily change by new
->     tests inserted in the middle; again, many tests do take advantge
->     of the states earlier tests leave behind, so "do not add new
->     tests in the middle" is not a realistic rule to enforce, unless
->     you are willing to clean up existing test scripts so that each
->     test piece is independent from all the previous ones.
-
-Both are true, but do not apply to the TDD case.
-Neither they apply to a case when a test is broken and I want to execute 
-everything up to that test.
-
-> The latter two makes the ability to skip individual test pieces a
-> "theoretically it could be made useful but practically not so much"
-> misfeature.  I am very hesitant to see the test framework code
-> churned only to enhance its "usefulness" when there isn't any in the
-> first place, without first making changes that fundamentally
-> improves its usefulness (e.g. to solve "test numbering is not
-> stable" problem, you could identify the tests with test names
-> instead of numbers to make it more stable, but that is not what your
-> patch is even attempting to do).
-
-If you see a way to address my problems, I might be able to code it the 
-way you want it to be.
-
-> [...]
+--=20
+David Kastrup
