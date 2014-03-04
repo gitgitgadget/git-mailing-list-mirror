@@ -1,81 +1,140 @@
-From: Jacopo Notarstefano <jacopo.notarstefano@gmail.com>
-Subject: [PATCH v2] branch.c: delete size check of newly tracked branch names
-Date: Tue,  4 Mar 2014 22:29:17 +0100
-Message-ID: <1393968557-22696-1-git-send-email-jacopo.notarstefano@gmail.com>
-Cc: Jacopo Notarstefano <jacopo.notarstefano@gmail.com>,
-	mhagger@alum.mit.edu, christian.couder@gmail.com, pclouds@gmail.com
+From: Tanay Abhra <tanayabh@gmail.com>
+Subject: [PATCH v5] commit.c: use skip_prefix() instead of starts_with()
+Date: Tue,  4 Mar 2014 14:07:11 -0800
+Message-ID: <1393970831-3558-1-git-send-email-tanayabh@gmail.com>
+Cc: mhagger@alum.mit.edu, gitster@pobox.com, max@quendi.de,
+	Tanay Abhra <tanayabh@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 04 22:29:48 2014
+X-From: git-owner@vger.kernel.org Tue Mar 04 23:08:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKwuJ-0004fv-GH
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 22:29:47 +0100
+	id 1WKxVV-00013S-B4
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 23:08:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758197AbaCDV3n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2014 16:29:43 -0500
-Received: from mail-ea0-f181.google.com ([209.85.215.181]:52052 "EHLO
-	mail-ea0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758196AbaCDV3l (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Mar 2014 16:29:41 -0500
-Received: by mail-ea0-f181.google.com with SMTP id k10so618317eaj.40
-        for <git@vger.kernel.org>; Tue, 04 Mar 2014 13:29:40 -0800 (PST)
+	id S1757460AbaCDWII (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Mar 2014 17:08:08 -0500
+Received: from mail-pd0-f172.google.com ([209.85.192.172]:49826 "EHLO
+	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755763AbaCDWIF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Mar 2014 17:08:05 -0500
+Received: by mail-pd0-f172.google.com with SMTP id p10so137434pdj.31
+        for <git@vger.kernel.org>; Tue, 04 Mar 2014 14:08:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id;
-        bh=1s5066SPgn/JTzdzunESrvSaeQj61mInRSCfX5VM7gw=;
-        b=QoUFafpLTuh0jU+gnmWuzj+LN/NcXskU4x9jN6e5g7Gh6vYK9kXAhgCcmLpkAGF8BI
-         cP/RiClmSxnHQLumqfc7enrUStTdJboMl9W7V8CqAK4sn85Z64QSc0MgcQ7BRy6XM3vt
-         3GsDJoCS3efJmjTUJu1GrIaqxSlqRvj882D7WnpyqQw1APJJari8f1s3zQK4qy4EpQj8
-         oS1x+eMyLuNhRAnS28TydsWFhYU1XXAIRTeBDzWQAYqNinDSsxRVpfgbER7T2naIsWsm
-         byiwfn4HGCSQ+2hBeYbOxMW7c5r9alASCigydecHoi4yqFLw5/VObxP+qo7hpmkjQlSy
-         04YQ==
-X-Received: by 10.15.52.66 with SMTP id o42mr1581319eew.89.1393968580382;
-        Tue, 04 Mar 2014 13:29:40 -0800 (PST)
-Received: from localhost.localdomain (dynamic-adsl-78-13-120-49.clienti.tiscali.it. [78.13.120.49])
-        by mx.google.com with ESMTPSA id o5sm691944eeg.8.2014.03.04.13.29.36
+        bh=xFlbKDVIMFto1q9ScLOiqCLFz4upMyCrHb1MdZl7eTw=;
+        b=ke0Oel4Ra4nw8nYYTM9uXwUM4hPIhlX5yCzroogNXSTSfGWdEsI5eA6iidKuI4Fwni
+         3csfw+Wp3H38TLgX8RoF/PHw+TWeFdhJeNpEjv3DWJHKslP7Ar8fjUo1/nZj1VNbEHTO
+         8d6JI0Q+X9/expVmxRpMzv6WYUji6NcmcOs0lMgnrBOITv0ZJHeqHqaQOtRrqNH4dbOb
+         9id6ryy9oPsrmlxIeCk4HF3o/XxKCM6HI1Th4w+LHU+QnVfodB6XmCRwL2SGwMV4WlKD
+         pwewmI3J5oe8/uFmkzRLOmWPoT+hXsVLwI6xhF/eqnCyK+OGwjvc3aPrfBTFsYDp/MYs
+         2R9w==
+X-Received: by 10.68.240.36 with SMTP id vx4mr2346456pbc.140.1393970885137;
+        Tue, 04 Mar 2014 14:08:05 -0800 (PST)
+Received: from localhost.localdomain ([59.178.55.189])
+        by mx.google.com with ESMTPSA id z3sm1423564pas.15.2014.03.04.14.08.02
         for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Tue, 04 Mar 2014 13:29:37 -0800 (PST)
-X-Mailer: git-send-email 1.9.0.138.g2de3478
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 04 Mar 2014 14:08:04 -0800 (PST)
+X-Mailer: git-send-email 1.9.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243395>
 
-Since commit 6f084a56 the length of a newly tracked branch name is limited
-to 1009 = 1024 - 7 - 7 - 1 characters, a bound derived by having to store
-this name in a char[1024] with two strings of length at most 7 and a '\0'
-character.
+In record_author_date() & parse_gpg_output(), the callers of
+starts_with() not just want to know if the string starts with the
+prefix, but also can benefit from knowing the string that follows
+the prefix.
 
-This is no longer necessary as of commit a9f2c136, which uses a strbuf
-(documented in Documentation/technical/api-strbuf.txt) to store this value.
+By using skip_prefix(), we can do both at the same time.
 
-Remove this unneeded check and thus allow for branch names longer than 1009
-characters.
-
-Signed-off-by: Jacopo Notarstefano <jacopo.notarstefano@gmail.com>
+Helped-by: Max Horn <max@quendi.de>
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Helped-by: Michael Haggerty <mhagger@alum.mit.edu>
+Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
 ---
- branch.c | 4 ----
- 1 file changed, 4 deletions(-)
+Patch V5 Minor revision of indentation
+Patch V4  Identation improved, removed useless comment. [1]
+		Thanks to Junio C Hamano and Max Horn.
+[1] http://article.gmane.org/gmane.comp.version-control.git/243388
 
-diff --git a/branch.c b/branch.c
-index 723a36b..05feaff 100644
---- a/branch.c
-+++ b/branch.c
-@@ -114,10 +114,6 @@ static int setup_tracking(const char *new_ref, const char *orig_ref,
- 	struct tracking tracking;
- 	int config_flags = quiet ? 0 : BRANCH_CONFIG_VERBOSE;
+Patch V3 Variable naming improved, removed assignments inside conditionals.
+        Thanks to Junio C Hamano and Max Horn.
+
+Patch V2 Corrected email formatting ,reapplied the implementation according to suggestions.
+        Thanks to Michael Haggerty.
+
+This is in respect to GSoC microproject #10.
+
+In record_author_date(), extra and useless calls to strlen due to using starts_with()
+were removed by using skip_prefix(). Extra variable "ident_line" was used as "buf" is used in
+for loop update check.
+
+Other usages of starts_with() in the same file can be found with,
+
+$ grep -n starts_with commit.c
+
+1116:           else if (starts_with(line, gpg_sig_header) &&
+1196:           if (starts_with(buf, sigcheck_gpg_status[i].check + 1)) {
+
+The starts_with() in line 1116 was left as it is, as strlen values were pre computed as
+global variables, and replacing may hamper the clarity.
+The starts_with() in line 1196 was replaced as it abstracts way the skip_prefix part by
+directly using the function.
+Also skip_prefix() is inline when compared to starts_with().
+
+---
+ commit.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
+
+diff --git a/commit.c b/commit.c
+index 6bf4fe0..d37675c 100644
+--- a/commit.c
++++ b/commit.c
+@@ -548,7 +548,7 @@ define_commit_slab(author_date_slab, unsigned long);
+ static void record_author_date(struct author_date_slab *author_date,
+ 			       struct commit *commit)
+ {
+-	const char *buf, *line_end;
++	const char *buf, *line_end, *ident_line;
+ 	char *buffer = NULL;
+ 	struct ident_split ident;
+ 	char *date_end;
+@@ -566,14 +566,14 @@ static void record_author_date(struct author_date_slab *author_date,
+ 	     buf;
+ 	     buf = line_end + 1) {
+ 		line_end = strchrnul(buf, '\n');
+-		if (!starts_with(buf, "author ")) {
++		ident_line = skip_prefix(buf, "author ");
++		if (!ident_line) {
+ 			if (!line_end[0] || line_end[1] == '\n')
+ 				return; /* end of header */
+ 			continue;
+ 		}
+ 		if (split_ident_line(&ident,
+-				     buf + strlen("author "),
+-				     line_end - (buf + strlen("author "))) ||
++				     ident_line, line_end - ident_line) ||
+ 		    !ident.date_begin || !ident.date_end)
+ 			goto fail_exit; /* malformed "author" line */
+ 		break;
+@@ -1193,10 +1193,8 @@ static void parse_gpg_output(struct signature_check *sigc)
+ 	for (i = 0; i < ARRAY_SIZE(sigcheck_gpg_status); i++) {
+ 		const char *found, *next;
  
--	if (strlen(new_ref) > 1024 - 7 - 7 - 1)
--		return error(_("Tracking not set up: name too long: %s"),
--				new_ref);
--
- 	memset(&tracking, 0, sizeof(tracking));
- 	tracking.spec.dst = (char *)orig_ref;
- 	if (for_each_remote(find_tracked_branch, &tracking))
+-		if (starts_with(buf, sigcheck_gpg_status[i].check + 1)) {
+-			/* At the very beginning of the buffer */
+-			found = buf + strlen(sigcheck_gpg_status[i].check + 1);
+-		} else {
++		found = skip_prefix(buf, sigcheck_gpg_status[i].check + 1);
++		if(!found) {
+ 			found = strstr(buf, sigcheck_gpg_status[i].check);
+ 			if (!found)
+ 				continue;
 -- 
-1.9.0.138.g2de3478
+1.9.0
