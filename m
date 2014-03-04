@@ -1,64 +1,75 @@
-From: karthik nayak <karthik.188@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: git compile with debug symbols
-Date: Tue, 4 Mar 2014 21:30:38 +0530
-Message-ID: <CAOLa=ZRAtOkLAQS89G59=KHvCvuBQ_ptU1ACSqh==ww29-7NKg@mail.gmail.com>
+Date: Tue, 04 Mar 2014 17:03:59 +0100
+Message-ID: <vpqtxbene6o.fsf@anie.imag.fr>
 References: <1393947964.16150.YahooMailNeo@web162902.mail.bf1.yahoo.com>
+	<87a9d6hsf3.fsf@fencepost.gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Mahesh Pujari <pujarimahesh_kumar@yahoo.com>
-X-From: git-owner@vger.kernel.org Tue Mar 04 17:01:15 2014
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Mahesh Pujari <pujarimahesh_kumar@yahoo.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Tue Mar 04 17:04:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKrmJ-00014u-BR
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 17:01:11 +0100
+	id 1WKrpF-0003T6-V4
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 17:04:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753904AbaCDQBG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2014 11:01:06 -0500
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:51119 "EHLO
-	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752007AbaCDQBE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Mar 2014 11:01:04 -0500
-Received: by mail-pa0-f41.google.com with SMTP id fa1so1517530pad.0
-        for <git@vger.kernel.org>; Tue, 04 Mar 2014 08:01:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=C4xuMPGLbVARrJ16h5GEqra1cS9ig2+IJCPE7OYzHME=;
-        b=mnBXcgzXGmqYrwkcOu1ZVDpj9JoIE6mbPcaYgxoDJPsTlv1mkJRLD+nUR51SJYJj/e
-         3gxcRXcunxfkKTSR5ujKWG/k4Am85bmIbZEpSOfGb/nPIQCtta4nUTvJ0y3ZS704+2X4
-         8Che2xLsaA8IdtvOxtI+6gEauyl+s65A4uQAVXWwiGpx7eCxzphBxK1aks2F8CJDqhxl
-         tTRaBvlsZa56vylZipmSYW8IlKCtEDK3XWqyJTCoHlbcwgXbPAzEaXdNvfsvvJVdH+lB
-         i0qla2MN6UYyWEbC7a9N5O+coFz2t6J7CpiOe1otjhLh13vq3yjc0/slryTzrgcUZ3ga
-         9Iiw==
-X-Received: by 10.68.143.196 with SMTP id sg4mr127941pbb.155.1393948858495;
- Tue, 04 Mar 2014 08:00:58 -0800 (PST)
-Received: by 10.68.138.138 with HTTP; Tue, 4 Mar 2014 08:00:38 -0800 (PST)
-In-Reply-To: <1393947964.16150.YahooMailNeo@web162902.mail.bf1.yahoo.com>
+	id S1753236AbaCDQEJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Mar 2014 11:04:09 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:58712 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751894AbaCDQEI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Mar 2014 11:04:08 -0500
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s24G3wA3025507
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 4 Mar 2014 17:03:58 +0100
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s24G3xlL004011;
+	Tue, 4 Mar 2014 17:03:59 +0100
+In-Reply-To: <87a9d6hsf3.fsf@fencepost.gnu.org> (David Kastrup's message of
+	"Tue, 04 Mar 2014 16:53:04 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 04 Mar 2014 17:03:58 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s24G3wA3025507
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1394553842.21319@WLa9AYHodWONwjZt32p4pw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243353>
 
-A quick look at the Makefile shows that -g is enabled by default. so
-debugging is enabled by default
+David Kastrup <dak@gnu.org> writes:
 
-On Tue, Mar 4, 2014 at 9:16 PM, Mahesh Pujari
-<pujarimahesh_kumar@yahoo.com> wrote:
+> Mahesh Pujari <pujarimahesh_kumar@yahoo.com> writes:
 >
+>> Hello,
+>> =A0I am trying to compile git with debug symbols and failed to do so
+>> (basically I am a noob), can some one direct me to links or mailing
+>> list (have searched but couldn't find) or doc's so that I can debug
+>> git using gdb.
 >
-> Hello,
->  I am trying to compile git with debug symbols and failed to do so (basically I am a noob), can some one direct me to links or mailing list (have searched but couldn't find) or doc's so that I can debug git using gdb.
->
-> thanks,
-> mpujari
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> git is compiled with debug symbols by default.
+
+=2E.. but:
+
+1) some Git commands are shell-scripts, on which you can't use gdb.
+
+2) some Git commands fork other commands, and then you have to deal wit=
+h
+   multiple processes (i.e. putting a breakpoint in a piece of code
+   executed by the subprocess won't work if gdb is running on the other
+   one).
+
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
