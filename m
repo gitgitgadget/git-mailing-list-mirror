@@ -1,52 +1,67 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH v2] cache_tree_find(): remove redundant checks
-Date: Tue, 04 Mar 2014 11:34:39 +0100
-Message-ID: <87ha7ei75s.fsf@fencepost.gnu.org>
-References: <1393921868-4382-1-git-send-email-mhagger@alum.mit.edu>
-	<87ppm2i9ot.fsf@fencepost.gnu.org> <5315A974.5000104@alum.mit.edu>
+From: Thomas Ferris Nicolaisen <tfnico@gmail.com>
+Subject: Re: Rewriting git history during git-svn conversion
+Date: Tue, 4 Mar 2014 11:56:42 +0100
+Message-ID: <CAEcj5uVOWzcCjrUO9NBuRvbPUaqigJyaOmG_8wCumznB+yTH4Q@mail.gmail.com>
+References: <CAHd499DqoUEKeu4uM5w7Y6Tm-tE-oJMUdz4RxP9s6CpN=LS9Bg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Mar 04 11:34:47 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git <git@vger.kernel.org>
+To: Robert Dailey <rcdailey.lists@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 04 11:56:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKmgP-0002FX-VJ
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 11:34:46 +0100
+	id 1WKn1j-00015I-NM
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 11:56:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756858AbaCDKel (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2014 05:34:41 -0500
-Received: from fencepost.gnu.org ([208.118.235.10]:44653 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756452AbaCDKek (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Mar 2014 05:34:40 -0500
-Received: from localhost ([127.0.0.1]:43694 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1WKmgK-0000Yc-3y; Tue, 04 Mar 2014 05:34:40 -0500
-Received: by lola (Postfix, from userid 1000)
-	id A8212E04EF; Tue,  4 Mar 2014 11:34:39 +0100 (CET)
-In-Reply-To: <5315A974.5000104@alum.mit.edu> (Michael Haggerty's message of
-	"Tue, 04 Mar 2014 11:22:44 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
+	id S1756681AbaCDK4n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Mar 2014 05:56:43 -0500
+Received: from mail-qg0-f41.google.com ([209.85.192.41]:38747 "EHLO
+	mail-qg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756631AbaCDK4m (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Mar 2014 05:56:42 -0500
+Received: by mail-qg0-f41.google.com with SMTP id i50so14999909qgf.0
+        for <git@vger.kernel.org>; Tue, 04 Mar 2014 02:56:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=l3Jlsa/GG3lRPSq05U050PQqbaU/D1OA2hkr7cZTY10=;
+        b=eMZoa83EuXJHnCn2tOOtBxSV/3ToRXByCk8Jc/r0vUw2MdyAtkwZI4Jzaa4Ak3wBIc
+         ZR7RRKwVakF+4j3We/1z/yAETvFnDRT0L2whdebjogtM7O/G91ZuwNvGmpS8TsZaraYV
+         pPZyuMDYYnW8vT9O3LGlmdnMlbKVIkoraKdKI6IHM/0LJZBk1nHPQu9HCPgr8DN3KFXG
+         igNJvfO3zNp404Yzl0QNGhsDlsI+6/A8qOUE1Axxkhhow+Qfiq+dy6hywICL0W+J7Ex2
+         9PMKV1RacewNKCLxYzWYEanrczoGz4LuPqrcLUwd9kpsPyMpqNBkN88U5B6Y5oI3VWol
+         91Mw==
+X-Received: by 10.140.81.74 with SMTP id e68mr8559943qgd.99.1393930602230;
+ Tue, 04 Mar 2014 02:56:42 -0800 (PST)
+Received: by 10.140.81.75 with HTTP; Tue, 4 Mar 2014 02:56:42 -0800 (PST)
+In-Reply-To: <CAHd499DqoUEKeu4uM5w7Y6Tm-tE-oJMUdz4RxP9s6CpN=LS9Bg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243338>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+On Mon, Mar 3, 2014 at 7:38 PM, Robert Dailey <rcdailey.lists@gmail.com> wrote:
+>
+> Is it safe to do this while still using git svn fetch? Will it
+> properly continue to convert SVN commits on top of my rewritten
+> history? If not, what changes can I make after I run the commands
+> linked by the URL above so that git svn continues to work normally?
+>
 
-> BTW, I purposely didn't use a "for" loop at the end (even though I
-> usually like them) because I wanted to keep it prominent that path is
-> being updated to the value of slash.  Putting that assignment in a for
-> loop makes it easy to overlook because it puts "path" in the spot that
-> usually holds an inconsequential iteration variable.
+I think it's OK. git-svn doesn't continuously verify the integrity of
+history already converted, I believe.
 
-Reasonable.
+Just try it out, it worked fine in a little demo setup I made
+(although I used rebase -i instead of filter-branch):
 
--- 
-David Kastrup
+git svn clone .. #maybe clone a little test repository to speed up the testing
+git filter-branch ... #remove unwanted files
+git svn fetch #this should work
+
+On a related note, maybe you'll enjoy my git-svn demos & ideas here:
+http://www.tfnico.com/presentations/git-and-subversion
