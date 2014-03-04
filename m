@@ -1,98 +1,102 @@
-From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: Branch Name Case Sensitivity
-Date: Tue, 04 Mar 2014 21:37:38 +0100
-Message-ID: <53163992.20701@web.de>
-References: <CAJHY66EQD280QgXBCoZU4y_aqSEu3A1hXzeW7X-rtT6vMZ92oA@mail.gmail.com>	<xmqqvbw0xrl6.fsf@gitster.dls.corp.google.com>	<530FA0C1.3000109@web.de> <530FBB1D.3050505@gmail.com>	<CAJHY66FtC03YbJrbVn+adsePkYnVD2RGH1TGkzz2pKNBoee_iQ@mail.gmail.com>	<53102FB0.6040603@viscovery.net> <5310959D.709@gmail.com>	<xmqqk3cfuksd.fsf@gitster.dls.corp.google.com>	<CACsJy8A6etyFkxn3D7hjM9JgzmokPBARXrEncVuw1x+OOHJ_Lg@mail.gmail.com>	<xmqq7g8eu891.fsf@gitster.dls.corp.google.com>	<CAJHY66EP539ZsLJcmHcnRQcOqcLqXK-M45wME9DkKkqmumg8fA@mail.gmail.com> <xmqqsiqzrwzr.fsf@gitster.dls.corp.google.com> <5315D3B9.6050602@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] commit.c: use skip_prefix() instead of starts_with()
+Date: Tue, 04 Mar 2014 12:38:32 -0800
+Message-ID: <xmqqha7dk8c7.fsf@gitster.dls.corp.google.com>
+References: <1393922540-13156-1-git-send-email-tanayabh@gmail.com>
+	<8CB399B0-6781-4702-9EC5-0D0A0CCC3450@quendi.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	=?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Karsten Blees <karsten.blees@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Lee Hopkins <leerhop@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 04 21:38:14 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Tanay Abhra <tanayabh@gmail.com>, git@vger.kernel.org,
+	mhagger@alum.mit.edu
+To: Max Horn <max@quendi.de>
+X-From: git-owner@vger.kernel.org Tue Mar 04 21:38:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKw6P-00066I-VQ
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 21:38:14 +0100
+	id 1WKw6w-0006Ug-LR
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 21:38:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757718AbaCDUiG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2014 15:38:06 -0500
-Received: from mout.web.de ([212.227.15.4]:56723 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756496AbaCDUiD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Mar 2014 15:38:03 -0500
-Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb002)
- with ESMTPSA (Nemesis) id 0LhvYQ-1Wy4TG22Ne-00nCwc; Tue, 04 Mar 2014 21:37:41
- +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
-In-Reply-To: <5315D3B9.6050602@gmail.com>
-X-Provags-ID: V03:K0:XXNYaRrJxbUKuzZH7ObChA7jNSIR/10XM1W5E8cOdllA0Sm34Al
- 5Yz+co2dgp2Rcrkokhjpuo0Y+mUWn9laPO7/MJ52oD3hwnrNGm5+0Poywx0fGolF4Lk2woT
- CST2VU5wN00d/KeQsmIUAGBqRo0Domq8MwwhRx3FRjyg4OhEJbn/DgRz2UAKvZWBPTqDZ2P
- 2dFqXi/1S/UxruicR57Eg==
+	id S932339AbaCDUik (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Mar 2014 15:38:40 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53482 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756456AbaCDUig (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Mar 2014 15:38:36 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F28DA715A9;
+	Tue,  4 Mar 2014 15:38:35 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=O0NU1Kc3lMRPN3hDiNrsqfPENY0=; b=kxyG/b
+	dBFyWArJ5BTdCseZECRggebNLutAtHfAHlzPqnfy+yAhz+XOWLAnqJyBmPBWpAUe
+	RpT/UqKAjsUJYI/Dd2+18WamTap3hYnREHhtxottJO25XFW+j21qAc5Wq1PesSaW
+	OOP+Ytt1eo/OjoplWOwr8rFeirSSH/JZPQ2Rc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PTZ4wzY/8mkQEMIfr7Ww6dexpAQE3ZSQ
+	mxZJ9NTuhoJexpexwVocH+gq4p4rDr4TpjAaFqtxX0iPWaccdQZjGLygMqCZGSUA
+	fkBNxvLChif1HTJjRTxQoFJc95o/NLtrJNOglkgpttSEl7A9ZDRXyj7Y4xf9koS4
+	qB73UrqPhxQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CB834715A7;
+	Tue,  4 Mar 2014 15:38:35 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C41D47159A;
+	Tue,  4 Mar 2014 15:38:34 -0500 (EST)
+In-Reply-To: <8CB399B0-6781-4702-9EC5-0D0A0CCC3450@quendi.de> (Max Horn's
+	message of "Tue, 4 Mar 2014 20:16:47 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: F4E683FE-A3DC-11E3-B66F-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243387>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243388>
 
-On 2014-03-04 14.23, Karsten Blees wrote:
-> Am 03.03.2014 18:51, schrieb Junio C Hamano:
->> Lee Hopkins <leerhop@gmail.com> writes:
->>
->>> I went ahead and took a stab at a solution. My solution is more
->>> aggressive than a warning, I actually prevent the creation of
->>> ambiguous refs. My changes are also in refs.c, which may not be
->>> appropriate, but it seemed like the natural place.
->>>
->>> I have never contributed to Git (in fact this is my first dive into
->>> the source) and my C is a bit rusty, so bear with me, this is just a
->>> suggestion:
->>>
->>> ---
->>>  refs.c |   31 ++++++++++++++++++++++++-------
->>>  1 files changed, 24 insertions(+), 7 deletions(-)
->>
->> Starting something like this from forbidding is likely to turn out
->> to be a very bad idea that can break existing repositories.
->>
-> 
-> Its sure worth considering what should be done with pre-existing duplicates. However, repositories with such refs are already broken on case-insensitive filesystems, and allowing something that's known to be broken is even more dangerous, IMO.
-> 
-> An alternative approach could be to encode upper-case letters in loose refs if core.ignorecase == true (e.g. "Foo" -> "%46oo"). Although this may pose a problem for commands that bypass the refs API / plumbing for whatever reason.
-> 
->> A new configuration
->>
->> 	refs.caseInsensitive = {warn|error|allow}
->>
-> 
-> s/caseInsensitive/caseSensitive/
-> Its case-sensitive refs that cause trouble, case-insensitive refs would be fine on all platforms.
-> 
-> I still don't see why we need an extra setting for this. The problems are inherently caused by case-insensitive filesystems, and we already have 'core.ignorecase' for that (its even automatically configured). Having an extra setting for refs is somewhat like making 'core.ignorecase' configurable per sub-directory.
-I start to agree here.
-The case-insensitive file system does not allow branches foo and Foo at the same time,
-and the packed refs should simply follow this convention/restriction/behaviour.
+Max Horn <max@quendi.de> writes:
 
-(and everything else could and should go into another patch:
- If we ever want Linux to ignore the case in refs,
- to ease the cross-platform development with Windows.
- Or if we allow Windows/Mac OS to handle case insensitive refs (by always packing them)
- to ease the co-working with e.g. Linux.
-)
+>> +		buf = ident_line;
+>> 		if (split_ident_line(&ident,
+>> -				     buf + strlen("author "),
+>> -				     line_end - (buf + strlen("author "))) ||
+>> +				     buf,
+>> +				     line_end - buf) ||
+>> 		    !ident.date_begin || !ident.date_end)
+>> 			goto fail_exit; /* malformed "author" line */
+>> 		break;
+>
+> Why not get rid of that assignment to "buf", and use ident_line
+> instead of buf below? That seems like it would be more readable,
+> wouldn't it?
 
-Lee, could you improve your change in refs.c into a real patch, with a commit message?
-(And please have a look at the indentation with TABs)
+Yes, and also now the argument list is much shorter, you could
+probably do it on two lines instead of three:
 
-A test case could be good, if time allows I can make a suggestion.
+                if (split_ident_line(&ident,
+                                     ident_line, line_end - ident_line) ||
+                    ...
 
-Thanks for all comments
-/Torsten
- 
+
+>> @@ -1193,10 +1195,9 @@ static void parse_gpg_output(struct signature_check *sigc)
+>> 	for (i = 0; i < ARRAY_SIZE(sigcheck_gpg_status); i++) {
+>> 		const char *found, *next;
+>> 
+>> -		if (starts_with(buf, sigcheck_gpg_status[i].check + 1)) {
+>> -			/* At the very beginning of the buffer */
+>> -			found = buf + strlen(sigcheck_gpg_status[i].check + 1);
+>> -		} else {
+>> +		found = skip_prefix(buf, sigcheck_gpg_status[i].check + 1);
+>> +		/* At the very beginning of the buffer */
+>
+> Do we really need that comment, and in that spot? The code seemed
+> clear enough to me without it. But if you think keeping is better,
+> perhaps move it to *before* the skip_prefix, and add a trailing
+> "?"
+
+Both good suggestions (I tend to prefer the removal).
+
+Thanks.
