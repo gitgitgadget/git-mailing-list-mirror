@@ -1,147 +1,113 @@
-From: Henri GEIST <geist.henri@laposte.net>
-Subject: [PATCH/RFC] git-gui: Add a 'recursive' checkbox in the clone menu.
-Date: Wed, 05 Mar 2014 00:01:16 +0100
-Message-ID: <1393974076.7891.27.camel@Naugrim>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] cache_tree_find(): remove redundant checks
+Date: Tue, 04 Mar 2014 15:18:34 -0800
+Message-ID: <xmqqr46himd1.fsf@gitster.dls.corp.google.com>
+References: <1393921868-4382-1-git-send-email-mhagger@alum.mit.edu>
+	<xmqq8uspk72g.fsf@gitster.dls.corp.google.com>
+	<531652B9.4000001@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-1Vm65Z34j2dZj+ijsb8R"
-Cc: Pat Thoyts <patthoyts@users.sourceforge.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 05 00:01:32 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: David Kastrup <dak@gnu.org>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Wed Mar 05 00:18:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKyL5-00088P-Gp
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Mar 2014 00:01:31 +0100
+	id 1WKybk-0004Zt-EN
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Mar 2014 00:18:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754777AbaCDXBX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2014 18:01:23 -0500
-Received: from smtpout5.laposte.net ([193.253.67.230]:40819 "EHLO
-	smtpout.laposte.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754614AbaCDXBW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Mar 2014 18:01:22 -0500
-Received: from [192.168.0.8] ([82.242.149.125])
-	by mwinf8510-out with ME
-	id Zb1G1n0042iaXuy03b1GPQ; Wed, 05 Mar 2014 00:01:17 +0100
-X-Mailer: Evolution 3.4.4-3 
+	id S1754931AbaCDXSk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Mar 2014 18:18:40 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47181 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753797AbaCDXSj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Mar 2014 18:18:39 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 71B7071A09;
+	Tue,  4 Mar 2014 18:18:38 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=M1sW2VTnb3okMiikULlVTaWmnvw=; b=m3qVyP
+	qGI5hWbGCw71nN55TALH6X6FHmaMBfQd3XSr54kGc3S/Ei9B62jv4V5eDLrlxhHo
+	9pZaWG8gR2E4+oICy4CoCpLgx9QRcxa8C2SSSrT6cn/8rf7L8wIFt8ff6a8aKRnQ
+	TFpPtR5tO/NM0+FgR0HjcJ7T1dzP66750DZxQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KslRFUp8GcnbpaJtELk6cTQI/AG7Eqf3
+	NiKX2KAcQ+XzbYYJs4Gjq6kn6on8K6h2f1hC+7cQopfwLTkv55watt9uC/Fa83JX
+	wKLgxgFQfaG7q1i8KJngWP6j71GoK6ggSDNucBiJwAMXyu4+pMb53xT0kQ/yamxR
+	msJX79w0IjI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5FEF571A08;
+	Tue,  4 Mar 2014 18:18:38 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A339471A07;
+	Tue,  4 Mar 2014 18:18:37 -0500 (EST)
+In-Reply-To: <531652B9.4000001@alum.mit.edu> (Michael Haggerty's message of
+	"Tue, 04 Mar 2014 23:24:57 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 50A77700-A3F3-11E3-9B22-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243404>
 
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
---=-1Vm65Z34j2dZj+ijsb8R
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+>> Isn't the above a strchrnul()?
+>
+> Oh, cool, I never realized that this GNU extension was blessed for use
+> in Git.  Will change.
 
-Permit to do a 'git clone --recursive' through git-gui.
+We do have our own fallbacks for non-glibc platforms, so it should
+be safe.
 
-Signed-off-by: Henri GEIST <geist.henri@laposte.net>
----
-I have set the default checkbox state to 'true' by default has all my gui u=
-sers
-use it all the time this way.
-But as it change the default behavior you may prefer to set it to 'false' b=
-y
-default.
+>> Combining a freestanding decl with intializer assignment to lose one
+>> line is sort of cheating on the line count, but replacing the three
+>> lines with a single strchrnul() would be a real code reduction ;-)
+>
+> I suppose you are just teasing me, but for the record I consider line
+> count only a secondary metric.  The reason for combining initialization
+> with declaration is to reduce by one the number of times that the reader
+> has to think about that variable when analyzing the code.
+> ...
+> I really wish we could mix declarations with statements because I think
+> it is a big help to readability.
 
- git-gui/lib/choose_repository.tcl |   34 ++++++++++++++++++++++++++++++++-=
--
- 1 file changed, 32 insertions(+), 2 deletions(-)
+Unfortunately, I think we are in violent disagreement.
 
-diff --git a/git-gui/lib/choose_repository.tcl b/git-gui/lib/choose_reposit=
-ory.tcl
-index 3c10bc6..47d436b 100644
---- a/git-gui/lib/choose_repository.tcl
-+++ b/git-gui/lib/choose_repository.tcl
-@@ -18,6 +18,7 @@ field local_path       {} ; # Where this repository is lo=
-cally
- field origin_url       {} ; # Where we are cloning from
- field origin_name  origin ; # What we shall call 'origin'
- field clone_type hardlink ; # Type of clone to construct
-+field recursive      true ; # Recursive cloning flag
- field readtree_err        ; # Error output from read-tree (if any)
- field sorted_recent       ; # recent repositories (sorted)
-=20
-@@ -525,6 +526,11 @@ method _do_clone {} {
- 	foreach r $w_types {
- 		pack $r -anchor w
- 	}
-+	${NS}::checkbutton $args.type_f.recursive \
-+		-text [mc "Recursive (For submodules)"] \
-+		-variable @recursive \
-+		-onvalue true -offvalue false
-+	pack $args.type_f.recursive
- 	grid $args.type_l $args.type_f -sticky new
-=20
- 	grid columnconfigure $args 1 -weight 1
-@@ -952,6 +958,30 @@ method _do_clone_checkout {HEAD} {
- 	fileevent $fd readable [cb _readtree_wait $fd]
- }
-=20
-+method _do_validate_submodule_cloning {ok} {
-+	if {$ok} {
-+		$o_cons done $ok
-+		set done 1
-+	} else {
-+		_clone_failed $this [mc "Cannot clone submodules."]
-+	}
-+}
-+
-+method _do_clone_submodules {} {
-+	if {$recursive eq {true}} {
-+		destroy $w_body
-+		set o_cons [console::embed \
-+			$w_body \
-+			[mc "Cloning submodules"]]
-+		pack $w_body -fill both -expand 1 -padx 10
-+		$o_cons exec \
-+			[list git submodule update --init --recursive] \
-+			[cb _do_validate_submodule_cloning]
-+	} else {
-+		set done 1
-+	}
-+}
-+
- method _readtree_wait {fd} {
- 	set buf [read $fd]
- 	$o_cons update_meter $buf
-@@ -982,7 +1012,7 @@ method _readtree_wait {fd} {
- 		fconfigure $fd_ph -blocking 0 -translation binary -eofchar {}
- 		fileevent $fd_ph readable [cb _postcheckout_wait $fd_ph]
- 	} else {
--		set done 1
-+		_do_clone_submodules $this
- 	}
- }
-=20
-@@ -996,7 +1026,7 @@ method _postcheckout_wait {fd_ph} {
- 			hook_failed_popup post-checkout $pch_error 0
- 		}
- 		unset pch_error
--		set done 1
-+		_do_clone_submodules $this
- 		return
- 	}
- 	fconfigure $fd_ph -blocking 0
---=20
-1.7.9.3.369.gd715.dirty
+A variable declaration block with initializations on only some but
+not all variables is extremely annoying.  If none of the variable
+declaration has initialization (or initialization to trivial values
+that do not depend on the logic flow), and the first statement is
+separated from the decl block, then I do not have to read the decl
+part when reading the code/logic *at all* (the compiler will find
+missing variables, variables declared as a wrong type, etc.).
 
+In other words, a trivial initialization at the beginning of the
+block, if the logic flow only sometimes makes assignment to the
+variable, is perfectly fine, e.g.
 
---=-1Vm65Z34j2dZj+ijsb8R
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
+	const char *string = NULL;
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+	if (...) {
+        	string = ...
+	}                
 
-iF4EABEKAAYFAlMWWzwACgkQkKuHPdwEGdQMBAD8Cktpj3IHXXGBK57SIWy40BMT
-BREskkW1JGsZ1wu+o84A/iVk9eO8h8lCve+V6j5uAcTKwHDOFYMiNiMzGfN7pw5J
-=1GX3
------END PGP SIGNATURE-----
+But I would wish people stop doing this:
 
---=-1Vm65Z34j2dZj+ijsb8R--
+	const char *string = strchrnul(name, ':');
+
+	... the real logic of the block that uses string follows ...
+
+and instead say
+
+	const char *string;
+
+	string = strchrnul(name, ':');
+	... the real logic of the block that uses string follows ...
