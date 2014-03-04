@@ -1,133 +1,141 @@
-From: Tanay Abhra <tanayabh@gmail.com>
-Subject: [PATCH v3] commit.c: use skip_prefix() instead of starts_with()
-Date: Tue,  4 Mar 2014 00:42:20 -0800
-Message-ID: <1393922540-13156-1-git-send-email-tanayabh@gmail.com>
-Cc: mhagger@alum.mit.edu, gitster@pobox.com, max@quendi.de,
-	Tanay Abhra <tanayabh@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 04 09:43:43 2014
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 3/3] rebase: new convenient option to edit a single commit
+Date: Tue, 04 Mar 2014 09:59:45 +0100
+Message-ID: <53159601.8020702@alum.mit.edu>
+References: <1393506078-7310-1-git-send-email-pclouds@gmail.com> <1393728794-29566-1-git-send-email-pclouds@gmail.com> <1393728794-29566-4-git-send-email-pclouds@gmail.com> <CAPig+cTn-YcWHsGRKUZWqACJ5ZspWoB+f4i7hNj09_4Ci6odiw@mail.gmail.com> <CACsJy8Ct41PRb=_Ez7FLXbdiZkTU-tFYqtAxow9mCw7wYAfOhg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 04 10:00:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKkwv-0005l3-VM
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 09:43:42 +0100
+	id 1WKlCg-0000rn-Bg
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 09:59:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756499AbaCDInh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2014 03:43:37 -0500
-Received: from mail-pb0-f53.google.com ([209.85.160.53]:56370 "EHLO
-	mail-pb0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756462AbaCDIng (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Mar 2014 03:43:36 -0500
-Received: by mail-pb0-f53.google.com with SMTP id rp16so4903220pbb.26
-        for <git@vger.kernel.org>; Tue, 04 Mar 2014 00:43:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=dK6cbgXJiO9/OoTEePS7sVp7W3OX5LA7Rj0dACotDNU=;
-        b=SSiUT0r04aBPU4cA66Ao7IPGVZ0M/KXe/SjlO9pzQihL17bbUY92e9McWMDXMEgBvM
-         +rcENBkeM/FHAj6PZGJNCJ/AlsDk0PJ0bAyYQXAlUIZ17pDsM0/pbT9U/vjuVXIL/t+4
-         2KMrGQwBDzQYleHr7E4ot3Zw8qWSSZP8Ut2QBQvUzw25KR05FnZ6a49ia3BmxdFwBbq5
-         3liRrjt4zvF4nLSimaW4BPrNOgdac/e4UBWuFXIy1iBcto8i6qlyjZ+Rr3ph4spA5+EV
-         kSmF3vIY7NKl1FD/auVrMyJ9nDFcfUXg8FDQQBHBIMScXN6Aw55duPymedPAyy72wC7C
-         1fQA==
-X-Received: by 10.68.236.100 with SMTP id ut4mr24479870pbc.29.1393922615924;
-        Tue, 04 Mar 2014 00:43:35 -0800 (PST)
-Received: from localhost.localdomain ([59.178.59.170])
-        by mx.google.com with ESMTPSA id af1sm101012768pad.12.2014.03.04.00.43.31
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 04 Mar 2014 00:43:34 -0800 (PST)
-X-Mailer: git-send-email 1.9.0
+	id S1756460AbaCDI7y convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Mar 2014 03:59:54 -0500
+Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:43717 "EHLO
+	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756216AbaCDI7x (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Mar 2014 03:59:53 -0500
+X-AuditID: 1207440d-f79d86d0000043db-a0-53159608013f
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 97.C2.17371.80695135; Tue,  4 Mar 2014 03:59:52 -0500 (EST)
+Received: from [192.168.69.148] (p57A2482C.dip0.t-ipconnect.de [87.162.72.44])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s248xmaY000695
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Tue, 4 Mar 2014 03:59:49 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
+In-Reply-To: <CACsJy8Ct41PRb=_Ez7FLXbdiZkTU-tFYqtAxow9mCw7wYAfOhg@mail.gmail.com>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA02SbUhTYRTHfe69264vtx7vpntaZjQooZqVCQ2J6kPW8IOkQ4gg1tXdtuF2
+	Z/duptKLZi/LFzDzdZGIVoKlxkIxrIQJDS0js0CIiR/KcOmHWpCMou51+PLtz/n/z/lxOIfE
+	ab9MQ9o4F8tzjF0rjyNoxfEdOrIlybh/ykvpaz7WYvoP4QGZvrZpCeiXr9fh+tvN2/RvF6vA
+	MbnhuTeoMNz5FZAZeh72A8N8/Qtg6J7LMYR9qafkZ+IPFzKuUqPNwu07ci7eujQ2Jit5isoi
+	wXFFJfAoa0AsiWAmmp9ZIKI6Gb2fHZDXgDiShtMA/V5elEsGDScxFPAVSJqCe1DkW5+iBpAk
+	AXeivgaFVJZDHeqqq8YknQSN6PH0HBGNJ6Lx9i8rWgW1aNEzhEvzcfgGoE7PCCHNUcJc1Hct
+	PcodwtDsQttKQyzMQ73hMCZlEFSjuqp8SeIwDQ100FICh9tR9eA9vAEkejfQvOsp74ZUJ8B7
+	QSpjdzt0DsZmF9ginVDEcBzL6zLSHTZXOmt2+0D0BtQw+Nef4geQBNoEqq1FZaRlTKlQ7vCD
+	LSSmTaICTUlGelOh01xuZQSriXfbWcEPEIlrVVToruhRZqa8guWdq9ZWktCqqV0P0nJpaGFc
+	bDHLlrD8qptCklpEORvExkSetbBl521217qNkbHS8DiNSmA5M8szbpfVJF3XJIjnlawEkRvT
+	LHGFEsYhVqOtE0BHfr4Z+QlognNyrEZNqSQGlEJWN7eGWH29EFCLGyupv9J6CeJjrk0KiRBM
+	hMSvLCe4mHVLUwk6jMFLdRbfUKxx88LwSGmM52Dm5cLx0SuNlvqZQ6YLQsbRwWfJ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243329>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243330>
 
-In record_author_date() & parse_gpg_output() ,using skip_prefix() instead of
-starts_with() is a more suitable abstraction.
+On 03/04/2014 03:08 AM, Duy Nguyen wrote:
+> On Tue, Mar 4, 2014 at 3:28 AM, Eric Sunshine <sunshine@sunshineco.co=
+m> wrote:
+>> On Sat, Mar 1, 2014 at 9:53 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8D=
+c Duy <pclouds@gmail.com> wrote:
+>>> "git rebase -e XYZ" is basically the same as
+>>>
+>>> EDITOR=3D"sed -i '1s/pick XYZ/edit XYZ/' $@" \
+>>> git rebase -i XYZ^
+>>>
+>>> In English, it prepares the todo list for you to edit only commit X=
+YZ
+>>> to save your time. The time saving is only significant when you edi=
+t a
+>>> lot of commits separately.
+>>
+>> Is it correct to single out only "edit" for special treatment? If
+>> allowing "edit" on the command-line, then shouldn't command-line
+>> "reword" also be supported? I, for one, often need to reword a commi=
+t
+>> message (or two or three); far more frequently than I need to edit a
+>> commit.
+>>
+>> (This is a genuine question about perceived favoritism of "edit", as
+>> opposed to a request to further bloat the interface.)
+>=20
+> Heh I had the same thought yesterday. The same thing could be asked
+> for "git commit --fixup" to send us back to the fixed up commit so we
+> can do something about it. If we go along that line, then "git commit=
+"
+> may be a better interface to reword older commits..
 
-Helped-by: Max Horn <max@quendi.de> 
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Helped-by: Michael Haggerty <mhagger@alum.mit.edu>
-Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
----
-Patch V3 Variable naming improved, removed assignments inside conditionals.
-	Thanks to Junio C Hamano and Max Horn.
-	
-Patch V2 Corrected email formatting ,reapplied the implementation according to suggestions.
-	Thanks to Michael Haggerty.
+I disagree.  "git commit --fixup" doesn't rewrite history.  It just add=
+s
+a new commit with a special commit message that will make it easier to
+rewrite history later.  I think it would be prudent to keep the
+history-rewriting functionality segregated in "git rebase", which users
+already know they have to use with care [1].
 
-This is in respect to GSoC microproject #10.
+But the next question is whether "git rebase" should have shortcuts for
+*most* of its line commands.  All of the following seem to make sense:
 
-In record_author_date(), extra and useless calls to strlen due to using starts_with()
-were removed by using skip_prefix(). Extra variable "skip" was used as "buf" is used in 
-for loop update check.
+    git rebase --edit COMMIT
 
-Other usages of starts_with() in the same file can be found with,
+        A long-form for the -e option we have been talking about.
+        It is unfortunately that this spelling sounds like the
+        "--edit" option on "git commit --edit" and "git merge --edit",
+        so people might use it when they really mean
+        "git rebase --reword COMMIT".
 
-$ grep -n starts_with commit.c
+    git rebase --reword COMMIT
+    git rebase --fixup COMMIT
+    git rebase --squash COMMIT
 
-1116:		else if (starts_with(line, gpg_sig_header) &&
-1196:		if (starts_with(buf, sigcheck_gpg_status[i].check + 1)) {
+    git rebase --kill COMMIT
 
-The starts_with() in line 1116 was left as it is, as strlen values were pre generated as 
-global variables.
-The starts_with() in line 1196 was replaced as it abstracts way the skip_prefix part by
-directly using the function.
-Also skip_prefix() is inline when compared to starts_with().
+        Remove the commit from history, like running "git rebase
+        --interactive" then deleting that line.
 
- commit.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+I'm quite confident that I would use all of these commands.
 
-diff --git a/commit.c b/commit.c
-index 6bf4fe0..6c92acb 100644
---- a/commit.c
-+++ b/commit.c
-@@ -548,7 +548,7 @@ define_commit_slab(author_date_slab, unsigned long);
- static void record_author_date(struct author_date_slab *author_date,
- 			       struct commit *commit)
- {
--	const char *buf, *line_end;
-+	const char *buf, *line_end, *ident_line;
- 	char *buffer = NULL;
- 	struct ident_split ident;
- 	char *date_end;
-@@ -566,14 +566,16 @@ static void record_author_date(struct author_date_slab *author_date,
- 	     buf;
- 	     buf = line_end + 1) {
- 		line_end = strchrnul(buf, '\n');
--		if (!starts_with(buf, "author ")) {
-+		ident_line = skip_prefix(buf, "author ");
-+		if (!ident_line) {
- 			if (!line_end[0] || line_end[1] == '\n')
- 				return; /* end of header */
- 			continue;
- 		}
-+		buf = ident_line;
- 		if (split_ident_line(&ident,
--				     buf + strlen("author "),
--				     line_end - (buf + strlen("author "))) ||
-+				     buf,
-+				     line_end - buf) ||
- 		    !ident.date_begin || !ident.date_end)
- 			goto fail_exit; /* malformed "author" line */
- 		break;
-@@ -1193,10 +1195,9 @@ static void parse_gpg_output(struct signature_check *sigc)
- 	for (i = 0; i < ARRAY_SIZE(sigcheck_gpg_status); i++) {
- 		const char *found, *next;
- 
--		if (starts_with(buf, sigcheck_gpg_status[i].check + 1)) {
--			/* At the very beginning of the buffer */
--			found = buf + strlen(sigcheck_gpg_status[i].check + 1);
--		} else {
-+		found = skip_prefix(buf, sigcheck_gpg_status[i].check + 1);
-+		/* At the very beginning of the buffer */
-+		if(!found) {
- 			found = strstr(buf, sigcheck_gpg_status[i].check);
- 			if (!found)
- 				continue;
--- 
-1.9.0
+Moreover, it would logically be reasonable to allow multiple of these
+options, at least as long as they have distinct COMMIT arguments.
+Though, as Duy points out, it might in practice be easier to edit the
+todo list in an editor rather than trying to do multiple "edits" at a
+time via the command line.
+
+Some thought would have to go into the question of if/how these command=
+s
+should interact with "git rebase --autosquash" (which, don't forget, ca=
+n
+also be requested via rebase.autosquash).
+
+Michael
+
+[1] OK, granted, there is "git commit --amend", which rewrites history
+too.  But it rewrites only the last commit, which is less likely to be
+problematic.
+
+--=20
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
