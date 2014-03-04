@@ -1,81 +1,120 @@
-From: Faiz Kothari <faiz.off93@gmail.com>
-Subject: Re: [PATCH] implemented strbuf_write_or_die()
-Date: Tue, 4 Mar 2014 22:31:19 +0530
-Message-ID: <CAFbjVcnnUeYwB=3R8JWuCnSRTRkKtkPMpqmgSXtoa4ut-OO__Q@mail.gmail.com>
-References: <1393672871-28281-1-git-send-email-faiz.off93@gmail.com>
-	<CAJr59C0e22OuDWU5Xc0A=cc+zY32nfum6SXTDU3wLCPyFPF70A@mail.gmail.com>
-	<CAPig+cRgc4UtmJMieS9Mdrz7vjUNiu7QFu1PSBppKo22Ln5G-A@mail.gmail.com>
-	<xmqqvbvvqglc.fsf@gitster.dls.corp.google.com>
-	<53159A81.4050905@alum.mit.edu>
+From: Tanay Abhra <tanayabh@gmail.com>
+Subject: Re: [PATCH] [PATCH] commit.c: Replace =?utf-8?b?c3RhcnRzX3dpdGgoKQ==?= with =?utf-8?b?c2tpcF9wcmVmaXgoKQ==?=
+Date: Tue, 4 Mar 2014 17:31:12 +0000 (UTC)
+Message-ID: <loom.20140304T182823-503@post.gmane.org>
+References: <1393948445-24689-1-git-send-email-karthik.188@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	He Sun <sunheehnus@gmail.com>, git <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Mar 04 18:01:27 2014
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 04 18:35:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKsic-0006gA-M9
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 18:01:27 +0100
+	id 1WKtFm-0000ao-28
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 18:35:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753269AbaCDRBW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2014 12:01:22 -0500
-Received: from mail-lb0-f172.google.com ([209.85.217.172]:36313 "EHLO
-	mail-lb0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751820AbaCDRBV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Mar 2014 12:01:21 -0500
-Received: by mail-lb0-f172.google.com with SMTP id c11so5835927lbj.31
-        for <git@vger.kernel.org>; Tue, 04 Mar 2014 09:01:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=e1oI+T3gThU1B/tjhMYKL6J4nySTbngKhTrN6vKKJCY=;
-        b=eNS9Qgigw2XltrtF3iGZvBDTl4c+JkdJFCg13wmHwT4xhhmdQK5gHa3+7RSu8nowWo
-         aEG6O9gNvg4scUhcgp0MUvlxPZQ5U0FHUXSywwnLpyeQJAbJq8WsMAf7EnN/YruLp4ev
-         YEf0mJ8+cJmvrvQMehSHbA5l4ZejmHGoORXhOBLzMnf37Hw0r0YjUsNNKx+vMSB+RSyi
-         C166S+3Ck67u+3Nat3+HuO95zIrBMXCSI/pUoeolPEzbc9aOoOleHHMBfzYc4xH5p6mN
-         mEFs1gMYeq9QJM7dSpdYdArs81S430F7WNh2EreB5bemVjz9VKgICAWjuEZcV47j27Eq
-         fCMQ==
-X-Received: by 10.112.13.133 with SMTP id h5mr191646lbc.67.1393952479684; Tue,
- 04 Mar 2014 09:01:19 -0800 (PST)
-Received: by 10.114.186.35 with HTTP; Tue, 4 Mar 2014 09:01:19 -0800 (PST)
-In-Reply-To: <53159A81.4050905@alum.mit.edu>
+	id S1754034AbaCDRfH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Mar 2014 12:35:07 -0500
+Received: from plane.gmane.org ([80.91.229.3]:49111 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753025AbaCDRfG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Mar 2014 12:35:06 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1WKtF9-0008RT-2I
+	for git@vger.kernel.org; Tue, 04 Mar 2014 18:35:05 +0100
+Received: from triband-del-59.178.55.90.bol.net.in ([triband-del-59.178.55.90.bol.net.in])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 04 Mar 2014 18:35:03 +0100
+Received: from tanayabh by triband-del-59.178.55.90.bol.net.in with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 04 Mar 2014 18:35:03 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 59.178.55.90 (Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Firefox/24.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243359>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243360>
 
-> I'm the guilty one.  I like the change (obviously, since I suggested
-> it).  Writing strbufs comes up frequently and will hopefully increase in
-> usage and I think it is a positive thing to encourage the use of strbufs
-> by making them increasingly first-class citizens.
->
-> But I can see your points too, and I humbly defer to the wisdom of the
-> list.  I will remove this suggestion from the list of microprojects.
->
-> Faiz, this is the way things go on the Git mailing list.  It would be
-> boring if everybody agreed all the time :-)
->
-> Michael
+
+Karthik Nayak <karthik.188 <at> gmail.com> writes:
+
+> 
+> In record_author_date() :
+> Replace "buf + strlen(author )" by skip_prefix(), which is
+> saved in a new "const char" variable "indent_line".
+> 
+> In parse_signed_commit() :
+> Replace "line + gpg_sig_header_len" by skip_prefix(), which
+> is saved in a new "const char" variable "indent_line".
+> 
+> In parse_gpg_output() :
+> Replace "buf + strlen(sigcheck_gpg_status[i].check + 1)" by
+> skip_prefix(), which is saved in already available
+> variable "found".
+> 
+> Signed-off-by: Karthik Nayak <karthik.188 <at> gmail.com>
+> ---
+>  commit.c | 23 ++++++++++++-----------
+>  1 file changed, 12 insertions(+), 11 deletions(-)
+> 
+> diff --git a/commit.c b/commit.c
+> index 6bf4fe0..71a03e3 100644
+> --- a/commit.c
+> +++ b/commit.c
+
+>  <at>  <at>  -1098,6 +1100,7  <at>  <at>  int parse_signed_commit(const
+unsigned char *sha1,
+>  	char *buffer = read_sha1_file(sha1, &type, &size);
+>  	int in_signature, saw_signature = -1;
+>  	char *line, *tail;
+> +	const char *indent_line;
+> 
+>  	if (!buffer || type != OBJ_COMMIT)
+>  		goto cleanup;
+>  <at>  <at>  -1111,11 +1114,11  <at>  <at>  int parse_signed_commit(const
+unsigned char *sha1,
+>  		char *next = memchr(line, '\n', tail - line);
+> 
+>  		next = next ? next + 1 : tail;
+> +		indent_line = skip_prefix(line, gpg_sig_header);
+>  		if (in_signature && line[0] == ' ')
+>  			sig = line + 1;
+> -		else if (starts_with(line, gpg_sig_header) &&
+> -			 line[gpg_sig_header_len] == ' ')
+> -			sig = line + gpg_sig_header_len + 1;
+> +		else if (indent_line && indent_line[1] == ' ')
+> +			sig = indent_line + 2;
+>  		if (sig) {
+>  			strbuf_add(signature, sig, next - sig);
+>  			saw_signature = 1;
+
 
 Hi,
-Thank you all. Even I like the strbuf_write_or_die() but again its a
-code churn as pointed out. But if we want to use strbuf instead of
-static buffers we might need this function very often (Its just my
-opinion).
-Anyways, implementing it was an exercise and I enjoyed it. I agree
-with Michael Haggerty that it would be boring if everybody agreed all
-the time :D
-I enjoyed it and learnt from the exercise, so I don't think it was a
-waste or a bad exercise. At least it exposed me to practices of good
-software design and importance of layers in software.
 
-Thanks a lot.
+I was attempting the same microproject so I thought I would share some
+points that were told to me earlier .The mail subject should have a
+increasing order of submission numbers for each revision(for example here it
+should be [PATCH v2]).
 
--Faiz
+Also write the superfluous stuff which you have written in the bottom  
+after ---(the three dashes after the signed off statement) .
+
+In the parse_signed_commit() function, gpg_sig_header_len and gpg_sig_header
+variables are precomputed outside of the function, and also Junio said to
+prefer starts_with(), whenever skip_prefix() advantages are not so important
+in the context.So the replace may not be so advantageous ,I may be wrong in
+this case.
+
+ 
+
+Cheers,
+Tanay Abhra.
