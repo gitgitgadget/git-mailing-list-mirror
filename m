@@ -1,200 +1,87 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH v2] upload-pack: allow shallow fetching from a read-only repository
-Date: Tue,  4 Mar 2014 19:30:05 +0700
-Message-ID: <1393936205-15953-1-git-send-email-pclouds@gmail.com>
-References: <1393485183-20100-1-git-send-email-pclouds@gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 3/3] rebase: new convenient option to edit a single commit
+Date: Tue, 04 Mar 2014 14:11:05 +0100
+Message-ID: <5315D0E9.4070408@alum.mit.edu>
+References: <1393506078-7310-1-git-send-email-pclouds@gmail.com> <1393728794-29566-1-git-send-email-pclouds@gmail.com> <1393728794-29566-4-git-send-email-pclouds@gmail.com> <CAPig+cTn-YcWHsGRKUZWqACJ5ZspWoB+f4i7hNj09_4Ci6odiw@mail.gmail.com> <CACsJy8Ct41PRb=_Ez7FLXbdiZkTU-tFYqtAxow9mCw7wYAfOhg@mail.gmail.com> <53159601.8020702@alum.mit.edu> <CACsJy8CSaAnVrFnhxRd=jPmXCat5AObNRLKzCesbdx3JS83PnA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 04 13:29:56 2014
+Content-Transfer-Encoding: 7bit
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 04 14:11:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKoTq-0001ch-L9
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 13:29:55 +0100
+	id 1WKp7r-0007nh-TE
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 14:11:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757189AbaCDM3k convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Mar 2014 07:29:40 -0500
-Received: from mail-pd0-f173.google.com ([209.85.192.173]:49597 "EHLO
-	mail-pd0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757184AbaCDM3j (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Mar 2014 07:29:39 -0500
-Received: by mail-pd0-f173.google.com with SMTP id z10so5073396pdj.32
-        for <git@vger.kernel.org>; Tue, 04 Mar 2014 04:29:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=xZ6tk063ujBloj/zCCEkuePUCHr1az7RlLOLYbV9zEo=;
-        b=WUOTMHCBL+asnEY2jO8pxtttekqE+pgvzNp4FvUTZYFj6i9/Hod8GTbsBsBrqd58aW
-         gaBX2oEJEuLEpDKGmCQzzXzK8m2nUhh91dda9Ut9V4c/oiQX3vDciZz58EIUAhMx2xRg
-         eXJOxFhJuXfh/GMkunhnSaGc4G/xt8R0fjV3Vd7TSTtsmMlXw1K1Oo3WlAzIqrs64k+a
-         /KhJXzrZN7OmgUQuU1iEHuhnQdCrK35b0JWugNX5TVj4rjbCY1lVrbcEblRVun39VxC5
-         AqrJlRptm4Yna1FoKGq6JSE9Cr7Wu1ZsaXz80ohWCXNShN2OE8ONf3JW8pA9uH9hePh7
-         gg+Q==
-X-Received: by 10.67.13.226 with SMTP id fb2mr5693447pad.146.1393936178764;
-        Tue, 04 Mar 2014 04:29:38 -0800 (PST)
-Received: from lanh ([115.73.245.149])
-        by mx.google.com with ESMTPSA id pp5sm47357144pbb.33.2014.03.04.04.29.34
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 04 Mar 2014 04:29:37 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Tue, 04 Mar 2014 19:30:06 +0700
-X-Mailer: git-send-email 1.9.0.40.gaa8c3ea
-In-Reply-To: <1393485183-20100-1-git-send-email-pclouds@gmail.com>
+	id S1757121AbaCDNLL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Mar 2014 08:11:11 -0500
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:47224 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757065AbaCDNLK (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Mar 2014 08:11:10 -0500
+X-AuditID: 12074413-f79076d000002d17-90-5315d0ede45b
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 3E.6C.11543.DE0D5135; Tue,  4 Mar 2014 08:11:09 -0500 (EST)
+Received: from [192.168.69.148] (p57A2482C.dip0.t-ipconnect.de [87.162.72.44])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s24DB54j010929
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Tue, 4 Mar 2014 08:11:06 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
+In-Reply-To: <CACsJy8CSaAnVrFnhxRd=jPmXCat5AObNRLKzCesbdx3JS83PnA@mail.gmail.com>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrCKsWRmVeSWpSXmKPExsUixO6iqPv2gmiwwelzvBZdV7qZLC59Xs9q
+	0T3lLaPFj5YeZovOqbIWZ940MjqweeycdZfdY+KX46wey5euY/R41ruH0WPxAy+Pz5vkAtii
+	uG2SEkvKgjPT8/TtErgzNi7by1qwmbPi4q67rA2MO9m7GDk5JARMJHpeX2CFsMUkLtxbz9bF
+	yMUhJHCZUWLDgt2MEM5ZJon3vX/AOngFtCWWv5zDCGKzCKhK3Np6CcxmE9CVWNTTzARiiwoE
+	S6y+/IAFol5Q4uTMJ2C2iICSxJuObcwgQ5kFTjNKLOjYDZTg4BAW8JNY26QHsWw2s8Syrn6w
+	Bk6BQImp036wgdRICIhL9DQGgZjMAuoS6+cJgVQwC8hLbH87h3kCo+AsJNtmIVTNQlK1gJF5
+	FaNcYk5prm5uYmZOcWqybnFyYl5eapGuuV5uZoleakrpJkZILAjvYNx1Uu4QowAHoxIPr+MU
+	kWAh1sSy4srcQ4ySHExKorxZ50WDhfiS8lMqMxKLM+KLSnNSiw8xSnAwK4nwKi4EyvGmJFZW
+	pRblw6SkOViUxHnVlqj7CQmkJ5akZqemFqQWwWRlODiUJHh/gQwVLEpNT61Iy8wpQUgzcXCC
+	DOeSEilOzUtJLUosLcmIB8VvfDEwgkFSPEB7/S+A7C0uSMwFikK0nmLU5bjd9usToxBLXn5e
+	qpQ4rwXIDgGQoozSPLgVsMT3ilEc6GNhXmGQUTzApAk36RXQEiagJdyTwZaUJCKkpBoY7VR4
+	t8dKbra5fuLP+3sua75FVU3deXLlbxOTo4v95VmWHLnHVXf0Wsp554KHj5a2zS1b 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243340>
 
-Before cdab485 (upload-pack: delegate rev walking in shallow fetch to
-pack-objects - 2013-08-16) upload-pack does not write to the source
-repository. cdab485 starts to write $GIT_DIR/shallow_XXXXXX if it's a
-shallow fetch, so the source repo must be writable.
+On 03/04/2014 11:24 AM, Duy Nguyen wrote:
+> On Tue, Mar 4, 2014 at 3:59 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+>>     git rebase --fixup COMMIT
+>>     git rebase --squash COMMIT
+> 
+> This is not interactive (except when merge conflicts occur), is it?
 
-git:// servers do not need write access to repos and usually don't,
-which mean cdab485 breaks shallow clone over git://
+--fixup would not be interactive (is that a problem?), but --squash does
+open an editor to allow you to merge the commit messages.
 
-=46all back to $TMPDIR if $GIT_DIR/shallow_XXXXXX cannot be created in
-this case. Note that in other cases that write $GIT_DIR/shallow_XXXXXX
-and eventually rename it to $GIT_DIR/shallow, there is no fallback to
-$TMPDIR.
+> A bit off topic. I sometimes want to fix up a commit and make it stop
+> there for me to test it again but there is no such command, is there?
+> Maybe we could add support for "fixup/edit" (or "fe" for short) and
+> "squash/edit" ("se"). Not really familiar with the code base to do
+> that myself quickly though.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- Rebased on top of jk/shallow-update-fix
+Maybe we should allow "edit" to appear on a line by itself, without a
+SHA-1, in which case it would stop after all previous lines had been
+processed.  Then you could change one line to "fixup" or "squash", and
+then add a blank "edit" line after it.  Though there is no really
+obvious way to do this using the hypothetical new command line options
+that we have been discussing.
 
- builtin/receive-pack.c   |  2 +-
- commit.h                 |  2 +-
- fetch-pack.c             |  2 +-
- shallow.c                | 13 +++++++++++--
- t/t5537-fetch-shallow.sh | 13 +++++++++++++
- upload-pack.c            |  2 +-
- 6 files changed, 28 insertions(+), 6 deletions(-)
+Michael
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index c323081..d723099 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -932,7 +932,7 @@ static const char *unpack(int err_fd, struct shallo=
-w_info *si)
- 			ntohl(hdr.hdr_version), ntohl(hdr.hdr_entries));
-=20
- 	if (si->nr_ours || si->nr_theirs) {
--		alt_shallow_file =3D setup_temporary_shallow(si->shallow);
-+		alt_shallow_file =3D setup_temporary_shallow(si->shallow, 0);
- 		argv_array_pushl(&av, "--shallow-file", alt_shallow_file, NULL);
- 	}
-=20
-diff --git a/commit.h b/commit.h
-index 55631f1..d38e996 100644
---- a/commit.h
-+++ b/commit.h
-@@ -209,7 +209,7 @@ extern int write_shallow_commits(struct strbuf *out=
-, int use_pack_protocol,
- extern void setup_alternate_shallow(struct lock_file *shallow_lock,
- 				    const char **alternate_shallow_file,
- 				    const struct sha1_array *extra);
--extern const char *setup_temporary_shallow(const struct sha1_array *ex=
-tra);
-+extern const char *setup_temporary_shallow(const struct sha1_array *ex=
-tra, int read_only);
- extern void advertise_shallow_grafts(int);
-=20
- struct shallow_info {
-diff --git a/fetch-pack.c b/fetch-pack.c
-index ae8550e..b71d186 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -853,7 +853,7 @@ static struct ref *do_fetch_pack(struct fetch_pack_=
-args *args,
- 		setup_alternate_shallow(&shallow_lock, &alternate_shallow_file,
- 					NULL);
- 	else if (si->nr_ours || si->nr_theirs)
--		alternate_shallow_file =3D setup_temporary_shallow(si->shallow);
-+		alternate_shallow_file =3D setup_temporary_shallow(si->shallow, 0);
- 	else
- 		alternate_shallow_file =3D NULL;
- 	if (get_pack(args, fd, pack_lockfile))
-diff --git a/shallow.c b/shallow.c
-index c7602ce..ad28af6 100644
---- a/shallow.c
-+++ b/shallow.c
-@@ -224,7 +224,8 @@ static void remove_temporary_shallow_on_signal(int =
-signo)
- 	raise(signo);
- }
-=20
--const char *setup_temporary_shallow(const struct sha1_array *extra)
-+const char *setup_temporary_shallow(const struct sha1_array *extra,
-+				    int read_only)
- {
- 	static int installed_handler;
- 	struct strbuf sb =3D STRBUF_INIT;
-@@ -235,7 +236,15 @@ const char *setup_temporary_shallow(const struct s=
-ha1_array *extra)
-=20
- 	if (write_shallow_commits(&sb, 0, extra)) {
- 		strbuf_addstr(&temporary_shallow, git_path("shallow_XXXXXX"));
--		fd =3D xmkstemp(temporary_shallow.buf);
-+		fd =3D mkstemp(temporary_shallow.buf);
-+		if (read_only && fd < 0) {
-+			strbuf_grow(&temporary_shallow, PATH_MAX);
-+			fd =3D git_mkstemp(temporary_shallow.buf, PATH_MAX,
-+					 "shallow_XXXXXX");
-+		}
-+		if (fd < 0)
-+			die_errno("Unable to create temporary file '%s'",
-+				  temporary_shallow.buf);
-=20
- 		if (!installed_handler) {
- 			atexit(remove_temporary_shallow);
-diff --git a/t/t5537-fetch-shallow.sh b/t/t5537-fetch-shallow.sh
-index b0fa738..171db88 100755
---- a/t/t5537-fetch-shallow.sh
-+++ b/t/t5537-fetch-shallow.sh
-@@ -173,6 +173,19 @@ EOF
- 	)
- '
-=20
-+test_expect_success POSIXPERM 'shallow fetch from a read-only repo' '
-+	cp -R .git read-only.git &&
-+	find read-only.git -print | xargs chmod -w &&
-+	test_when_finished "find read-only.git -type d -print | xargs chmod +=
-w" &&
-+	git clone --no-local --depth=3D2 read-only.git from-read-only &&
-+	git --git-dir=3Dfrom-read-only/.git log --format=3D%s >actual &&
-+	cat >expect <<EOF &&
-+add-1-back
-+4
-+EOF
-+	test_cmp expect actual
-+'
-+
- if test -n "$NO_CURL" -o -z "$GIT_TEST_HTTPD"; then
- 	say 'skipping remaining tests, git built without http support'
- 	test_done
-diff --git a/upload-pack.c b/upload-pack.c
-index a3c52f6..b538f32 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -84,7 +84,7 @@ static void create_pack_file(void)
- 	const char *shallow_file =3D NULL;
-=20
- 	if (shallow_nr) {
--		shallow_file =3D setup_temporary_shallow(NULL);
-+		shallow_file =3D setup_temporary_shallow(NULL, 1);
- 		argv[arg++] =3D "--shallow-file";
- 		argv[arg++] =3D shallow_file;
- 	}
---=20
-1.9.0.40.gaa8c3ea
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
