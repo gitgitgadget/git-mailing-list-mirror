@@ -1,87 +1,110 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 3/3] rebase: new convenient option to edit a single commit
-Date: Tue, 04 Mar 2014 14:11:05 +0100
-Message-ID: <5315D0E9.4070408@alum.mit.edu>
-References: <1393506078-7310-1-git-send-email-pclouds@gmail.com> <1393728794-29566-1-git-send-email-pclouds@gmail.com> <1393728794-29566-4-git-send-email-pclouds@gmail.com> <CAPig+cTn-YcWHsGRKUZWqACJ5ZspWoB+f4i7hNj09_4Ci6odiw@mail.gmail.com> <CACsJy8Ct41PRb=_Ez7FLXbdiZkTU-tFYqtAxow9mCw7wYAfOhg@mail.gmail.com> <53159601.8020702@alum.mit.edu> <CACsJy8CSaAnVrFnhxRd=jPmXCat5AObNRLKzCesbdx3JS83PnA@mail.gmail.com>
+From: Karsten Blees <karsten.blees@gmail.com>
+Subject: Re: Branch Name Case Sensitivity
+Date: Tue, 04 Mar 2014 14:23:05 +0100
+Message-ID: <5315D3B9.6050602@gmail.com>
+References: <CAJHY66EQD280QgXBCoZU4y_aqSEu3A1hXzeW7X-rtT6vMZ92oA@mail.gmail.com>	<xmqqvbw0xrl6.fsf@gitster.dls.corp.google.com>	<530FA0C1.3000109@web.de> <530FBB1D.3050505@gmail.com>	<CAJHY66FtC03YbJrbVn+adsePkYnVD2RGH1TGkzz2pKNBoee_iQ@mail.gmail.com>	<53102FB0.6040603@viscovery.net> <5310959D.709@gmail.com>	<xmqqk3cfuksd.fsf@gitster.dls.corp.google.com>	<CACsJy8A6etyFkxn3D7hjM9JgzmokPBARXrEncVuw1x+OOHJ_Lg@mail.gmail.com>	<xmqq7g8eu891.fsf@gitster.dls.corp.google.com>	<CAJHY66EP539ZsLJcmHcnRQcOqcLqXK-M45wME9DkKkqmumg8fA@mail.gmail.com> <xmqqsiqzrwzr.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 04 14:11:18 2014
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	=?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>, Lee Hopkins <leerhop@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 04 14:23:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKp7r-0007nh-TE
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 14:11:16 +0100
+	id 1WKpJR-0000KB-Vu
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 14:23:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757121AbaCDNLL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2014 08:11:11 -0500
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:47224 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757065AbaCDNLK (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Mar 2014 08:11:10 -0500
-X-AuditID: 12074413-f79076d000002d17-90-5315d0ede45b
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 3E.6C.11543.DE0D5135; Tue,  4 Mar 2014 08:11:09 -0500 (EST)
-Received: from [192.168.69.148] (p57A2482C.dip0.t-ipconnect.de [87.162.72.44])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s24DB54j010929
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Tue, 4 Mar 2014 08:11:06 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
-In-Reply-To: <CACsJy8CSaAnVrFnhxRd=jPmXCat5AObNRLKzCesbdx3JS83PnA@mail.gmail.com>
-X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrCKsWRmVeSWpSXmKPExsUixO6iqPv2gmiwwelzvBZdV7qZLC59Xs9q
-	0T3lLaPFj5YeZovOqbIWZ940MjqweeycdZfdY+KX46wey5euY/R41ruH0WPxAy+Pz5vkAtii
-	uG2SEkvKgjPT8/TtErgzNi7by1qwmbPi4q67rA2MO9m7GDk5JARMJHpeX2CFsMUkLtxbz9bF
-	yMUhJHCZUWLDgt2MEM5ZJon3vX/AOngFtCWWv5zDCGKzCKhK3Np6CcxmE9CVWNTTzARiiwoE
-	S6y+/IAFol5Q4uTMJ2C2iICSxJuObcwgQ5kFTjNKLOjYDZTg4BAW8JNY26QHsWw2s8Syrn6w
-	Bk6BQImp036wgdRICIhL9DQGgZjMAuoS6+cJgVQwC8hLbH87h3kCo+AsJNtmIVTNQlK1gJF5
-	FaNcYk5prm5uYmZOcWqybnFyYl5eapGuuV5uZoleakrpJkZILAjvYNx1Uu4QowAHoxIPr+MU
-	kWAh1sSy4srcQ4ySHExKorxZ50WDhfiS8lMqMxKLM+KLSnNSiw8xSnAwK4nwKi4EyvGmJFZW
-	pRblw6SkOViUxHnVlqj7CQmkJ5akZqemFqQWwWRlODiUJHh/gQwVLEpNT61Iy8wpQUgzcXCC
-	DOeSEilOzUtJLUosLcmIB8VvfDEwgkFSPEB7/S+A7C0uSMwFikK0nmLU5bjd9usToxBLXn5e
-	qpQ4rwXIDgGQoozSPLgVsMT3ilEc6GNhXmGQUTzApAk36RXQEiagJdyTwZaUJCKkpBoY7VR4
-	t8dKbra5fuLP+3sua75FVU3deXLlbxOTo4v95VmWHLnHVXf0Wsp554KHj5a2zS1b 
+	id S1757241AbaCDNXJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Mar 2014 08:23:09 -0500
+Received: from mail-bk0-f52.google.com ([209.85.214.52]:43263 "EHLO
+	mail-bk0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757200AbaCDNXH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Mar 2014 08:23:07 -0500
+Received: by mail-bk0-f52.google.com with SMTP id my13so204154bkb.25
+        for <git@vger.kernel.org>; Tue, 04 Mar 2014 05:23:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=cI6Tp7/ZSPnYrP/RghVW+ax9FSN+N6198EwruPYC8PM=;
+        b=Is1LIqMfv/2dGW5kqWCygHihsmk4cOVbOpf3jR5JJrlTUVUUoQZJZHn1SyJ/CppQ11
+         /9pzI3SEW2dxIR3l2mYZGyv/9DEBsjaGeoztW4t+fR+R8o/RlV7yBy8Lu18wyeh123WW
+         gRuRE1Wdf7npFAtZ3ogTOEzHN5UbjGdhOAWbfZ0Bca67BX30Bb3bp3NCqx1Pkj8uiTg4
+         GSX0lXVv9kKB3SNPLZnDEtpxIUXGMH5gIarpNS+E0HnEvvmhpI1k95ax+JerFmsmK/5n
+         Mo4j113rJim0zxPFDJvzkkcOSEtmeUjpGJqXIFIRFGEk/RWp8duPy0aKgGlblcdc/3hp
+         3xjQ==
+X-Received: by 10.205.36.200 with SMTP id tb8mr642171bkb.105.1393939386421;
+        Tue, 04 Mar 2014 05:23:06 -0800 (PST)
+Received: from [10.1.100.54] (ns.dcon.de. [77.244.111.149])
+        by mx.google.com with ESMTPSA id e8sm288198bko.0.2014.03.04.05.23.05
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 04 Mar 2014 05:23:05 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
+In-Reply-To: <xmqqsiqzrwzr.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243341>
 
-On 03/04/2014 11:24 AM, Duy Nguyen wrote:
-> On Tue, Mar 4, 2014 at 3:59 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->>     git rebase --fixup COMMIT
->>     git rebase --squash COMMIT
+Am 03.03.2014 18:51, schrieb Junio C Hamano:
+> Lee Hopkins <leerhop@gmail.com> writes:
 > 
-> This is not interactive (except when merge conflicts occur), is it?
+>> I went ahead and took a stab at a solution. My solution is more
+>> aggressive than a warning, I actually prevent the creation of
+>> ambiguous refs. My changes are also in refs.c, which may not be
+>> appropriate, but it seemed like the natural place.
+>>
+>> I have never contributed to Git (in fact this is my first dive into
+>> the source) and my C is a bit rusty, so bear with me, this is just a
+>> suggestion:
+>>
+>> ---
+>>  refs.c |   31 ++++++++++++++++++++++++-------
+>>  1 files changed, 24 insertions(+), 7 deletions(-)
+> 
+> Starting something like this from forbidding is likely to turn out
+> to be a very bad idea that can break existing repositories.
+> 
 
---fixup would not be interactive (is that a problem?), but --squash does
-open an editor to allow you to merge the commit messages.
+Its sure worth considering what should be done with pre-existing duplicates. However, repositories with such refs are already broken on case-insensitive filesystems, and allowing something that's known to be broken is even more dangerous, IMO.
 
-> A bit off topic. I sometimes want to fix up a commit and make it stop
-> there for me to test it again but there is no such command, is there?
-> Maybe we could add support for "fixup/edit" (or "fe" for short) and
-> "squash/edit" ("se"). Not really familiar with the code base to do
-> that myself quickly though.
+An alternative approach could be to encode upper-case letters in loose refs if core.ignorecase == true (e.g. "Foo" -> "%46oo"). Although this may pose a problem for commands that bypass the refs API / plumbing for whatever reason.
 
-Maybe we should allow "edit" to appear on a line by itself, without a
-SHA-1, in which case it would stop after all previous lines had been
-processed.  Then you could change one line to "fixup" or "squash", and
-then add a blank "edit" line after it.  Though there is no really
-obvious way to do this using the hypothetical new command line options
-that we have been discussing.
+> A new configuration
+> 
+> 	refs.caseInsensitive = {warn|error|allow}
+> 
 
-Michael
+s/caseInsensitive/caseSensitive/
+Its case-sensitive refs that cause trouble, case-insensitive refs would be fine on all platforms.
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+I still don't see why we need an extra setting for this. The problems are inherently caused by case-insensitive filesystems, and we already have 'core.ignorecase' for that (its even automatically configured). Having an extra setting for refs is somewhat like making 'core.ignorecase' configurable per sub-directory.
+
+> that defaults to "warn" and the user can choose to set to "error" to
+> forbid, would be more palatable, I would say.
+> 
+> If the variable is not in 'core.' namespace, you should implement
+> this check at the Porcelain level, allowing lower-level tools like
+> update-ref as an escape hatch that let users bypass the restriction
+> to be used to correct breakages; it would mean an unconditional "if
+> !stricmp(), it is an error" in refs.c will not work well.
+> 
+> I think it might be OK to have
+> 
+> 	core.allowCaseInsentitiveRefs = {yes|no|warn}
+> 
+> which defaults to 'warn' (and 'yes' corresponds to 'allow', 'no'
+> corresponds to 'error', in the previous suggestion), instead. If we
+> wanted to prevent even lower-level tools like update-ref from
+> bypassing the check, that is.
+> 
+
+Its the plumbing that's broken, so implementing checks at the porcelain level won't help much. In particular, git-update-ref currently drops branches (or resets them to an earlier state) and messes up reflogs.
