@@ -1,67 +1,124 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-bisect.sh: fix a few style issues
-Date: Mon, 03 Mar 2014 18:30:58 -0800
-Message-ID: <xmqqzjl6lmot.fsf@gitster.dls.corp.google.com>
-References: <1393892503-12765-1-git-send-email-jacopo.notarstefano@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v4 19/27] wrapper.c: wrapper to open a file, fprintf then close
+Date: Mon, 3 Mar 2014 21:47:05 -0500
+Message-ID: <CAPig+cQT33-h2nmRDD8FC7KrCH-1UPqK39Vb3qHKSKz8nhtndQ@mail.gmail.com>
+References: <1392730814-19656-1-git-send-email-pclouds@gmail.com>
+	<1393675983-3232-1-git-send-email-pclouds@gmail.com>
+	<1393675983-3232-20-git-send-email-pclouds@gmail.com>
+	<531214BC.3070704@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jacopo Notarstefano <jacopo.notarstefano@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 04 03:31:13 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Tue Mar 04 03:47:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKf8R-0007X8-V6
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 03:31:12 +0100
+	id 1WKfNv-0001bh-O8
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 03:47:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756097AbaCDCbH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2014 21:31:07 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51216 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755576AbaCDCbG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2014 21:31:06 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DE13671F7A;
-	Mon,  3 Mar 2014 21:31:04 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=w7QxIt6fnk19c+7N7tVnQMaHpMY=; b=JYLJk1
-	kGLL2qdT6+svHJA26ZaoR/NsCUmvVG8wUQ5IRIyvPVLh6dvp8GOy96V8YUfyBzSD
-	74PGFudsI6BA/mt4yAK9K3hJyhcv8obvegwDhY3LZ15B23QqE/9DK0u3eEymh8Gh
-	emGqz7MfFw0YnJdVnU+iR61lA26/dm1LGqG1g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NlUy+sOKI0h+7civ7qCONpBItHaa4ZFo
-	l+lfSbHZqB8A0W8IlubKholE7IfeXdL1TAqaJ7unlT/9NYSN8aN7b5qCSiwfTdDs
-	9N+0I0XqPdCV0grMRNK1GtIvPWEOi8wM8Jt5gRozYnCDcjj2yMQ4WFYYGCtL7wVj
-	GUHHA7l12Yw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D330071F79;
-	Mon,  3 Mar 2014 21:31:03 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 259AA71F77;
-	Mon,  3 Mar 2014 21:31:03 -0500 (EST)
-In-Reply-To: <1393892503-12765-1-git-send-email-jacopo.notarstefano@gmail.com>
-	(Jacopo Notarstefano's message of "Tue, 4 Mar 2014 01:21:43 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 07E31686-A345-11E3-9DBF-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756081AbaCDCrH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Mar 2014 21:47:07 -0500
+Received: from mail-yk0-f177.google.com ([209.85.160.177]:36372 "EHLO
+	mail-yk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755980AbaCDCrG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Mar 2014 21:47:06 -0500
+Received: by mail-yk0-f177.google.com with SMTP id q200so12850605ykb.8
+        for <git@vger.kernel.org>; Mon, 03 Mar 2014 18:47:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=kzg3hBSyhc3yeTzROJFaJA6/qjXn6Yfa2zyuj23O72Q=;
+        b=EcJZbXSsXyog6D0tsqm7cUnYE7TniNMilGWPk+CDOP+z540r4CSUUbwNTUrbMgtn3E
+         CwnHQH9R1szTm32Ta6RNuRGIZpfP4x0omNGr7NAlLu1SZh+3QcAMogztjLtjZnsSrMH/
+         Mxmicj8A5EMF5NiL8siIZegyLM9cqVYHejEloNjtASO/nB3sr8HJvAsI0RfMtt3QI+P5
+         1kLQfM6pjHdas/mRAd5z0g+sJ3W/82f0Zh+0AD0ReuBqZLs8WWkAZoI5XWhdihd7jtgz
+         U2Hu0l7TgGj7s7x0mTgr1SOxWEP/4MAsznPfPRAztgwTYin1LAmpJKRK2+s5X4GRskll
+         Cpnw==
+X-Received: by 10.236.147.129 with SMTP id t1mr5695985yhj.91.1393901225297;
+ Mon, 03 Mar 2014 18:47:05 -0800 (PST)
+Received: by 10.170.180.195 with HTTP; Mon, 3 Mar 2014 18:47:05 -0800 (PST)
+In-Reply-To: <531214BC.3070704@web.de>
+X-Google-Sender-Auth: CtZFDqfQUH5Yw0PxEb_f5gV2iFs
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243323>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243324>
 
-Jacopo Notarstefano <jacopo.notarstefano@gmail.com> writes:
+On Sat, Mar 1, 2014 at 12:11 PM, Torsten B=C3=B6gershausen <tboegi@web.=
+de> wrote:
+> On 2014-03-01 13.12, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
+ail.com>
+>> ---
+>>  cache.h   |  2 ++
+>>  wrapper.c | 31 +++++++++++++++++++++++++++++++
+>>  2 files changed, 33 insertions(+)
+>>
+>> diff --git a/cache.h b/cache.h
+>> index 98b5dd3..99b86d9 100644
+>> --- a/cache.h
+>> +++ b/cache.h
+>> @@ -1239,6 +1239,8 @@ static inline ssize_t write_str_in_full(int fd=
+, const char *str)
+>>  {
+>>       return write_in_full(fd, str, strlen(str));
+>>  }
+>> +__attribute__((format (printf,3,4)))
+>> +extern int write_file(const char *path, int fatal, const char *fmt,=
+ ...);
+>>
+>>  /* pager.c */
+>>  extern void setup_pager(void);
+>> diff --git a/wrapper.c b/wrapper.c
+>> index 0cc5636..5ced50d 100644
+>> --- a/wrapper.c
+>> +++ b/wrapper.c
+>> @@ -455,3 +455,34 @@ struct passwd *xgetpwuid_self(void)
+>>                   errno ? strerror(errno) : _("no such user"));
+>>       return pw;
+>>  }
+>> +
+>> +int write_file(const char *path, int fatal, const char *fmt, ...)
+>> +{
+>> +     struct strbuf sb =3D STRBUF_INIT;
+>> +     int fd =3D open(path, O_RDWR | O_CREAT | O_TRUNC, 0666);
+>> +     va_list params;
+>> +     if (fd < 0) {
 
-> Redirection operators should have a space before them, but not after them.
->
-> Signed-off-by: Jacopo Notarstefano <jacopo.notarstefano@gmail.com>
-> ---
+Micro nit atop Torsten's micro nit:
 
-Looks obviously harmless ;-)
+It is 3% easier to understand the code if the check for open() failure
+immediately follows the open() attempt:
 
-Thanks.
+    va_list params;
+    int fd =3D open(...);
+    if (fd < 0) {
+
+>> +             if (fatal)
+>> +                     die_errno(_("could not open %s for writing"), =
+path);
+>> +             return -1;
+>> +     }
+>> +     va_start(params, fmt);
+>> +     strbuf_vaddf(&sb, fmt, params);
+>> +     va_end(params);
+>> +     if (write_in_full(fd, sb.buf, sb.len) !=3D sb.len) {
+>> +             int err =3D errno;
+>> +             close(fd);
+>> +             errno =3D err;
+>> +             strbuf_release(&sb);
+> Micro nit:
+> Today we now what strbuf_release() is doing, but if we ever change th=
+e
+> implementation, it is 3% safer to keep err a little bit longer like t=
+his:
+>> +             strbuf_release(&sb);
+>> +             errno =3D err;
