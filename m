@@ -1,8 +1,7 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v6 11/11] Documentation: add documentation for 'git
- interpret-trailers'
-Date: Tue, 04 Mar 2014 20:48:09 +0100
-Message-ID: <20140304194810.14249.78516.chriscool@tuxfamily.org>
+Subject: [PATCH v6 02/11] trailer: process trailers from stdin and arguments
+Date: Tue, 04 Mar 2014 20:48:00 +0100
+Message-ID: <20140304194810.14249.7378.chriscool@tuxfamily.org>
 References: <20140304193250.14249.56949.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Josh Triplett <josh@joshtriplett.org>,
@@ -12,167 +11,251 @@ Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>,
 	Eric Sunshine <sunshine@sunshineco.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 04 20:50:03 2014
+X-From: git-owner@vger.kernel.org Tue Mar 04 20:50:09 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKvLi-0000BT-8m
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 20:49:58 +0100
+	id 1WKvLs-0000LH-3Z
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 20:50:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754872AbaCDTtr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2014 14:49:47 -0500
-Received: from mail-3y.bbox.fr ([194.158.98.45]:64008 "EHLO mail-3y.bbox.fr"
+	id S1755290AbaCDTuA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Mar 2014 14:50:00 -0500
+Received: from mail-1y.bbox.fr ([194.158.98.14]:53539 "EHLO mail-1y.bbox.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755215AbaCDTte (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Mar 2014 14:49:34 -0500
+	id S1753904AbaCDTt3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Mar 2014 14:49:29 -0500
 Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-3y.bbox.fr (Postfix) with ESMTP id 6AA8F47;
-	Tue,  4 Mar 2014 20:49:33 +0100 (CET)
-X-git-sha1: fd5f64e5ede1de03d0c6072c1c017a99ea1b25e0 
+	by mail-1y.bbox.fr (Postfix) with ESMTP id F169C50;
+	Tue,  4 Mar 2014 20:49:27 +0100 (CET)
+X-git-sha1: c971a7c499523167aeecc9137950eefdde3afaee 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20140304193250.14249.56949.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243385>
+
+Implement the logic to process trailers from stdin and arguments.
+
+At the beginning trailers from stdin are in their own in_tok
+doubly linked list, and trailers from arguments are in their own
+arg_tok doubly linked list.
+
+The lists are traversed and when an arg_tok should be "applied",
+it is removed from its list and inserted into the in_tok list.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- Documentation/git-interpret-trailers.txt | 123 +++++++++++++++++++++++++++++++
- 1 file changed, 123 insertions(+)
- create mode 100644 Documentation/git-interpret-trailers.txt
+ trailer.c | 197 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 197 insertions(+)
 
-diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
-new file mode 100644
-index 0000000..75ae386
---- /dev/null
-+++ b/Documentation/git-interpret-trailers.txt
-@@ -0,0 +1,123 @@
-+git-interpret-trailers(1)
-+=========================
+diff --git a/trailer.c b/trailer.c
+index db93a63..a0124f2 100644
+--- a/trailer.c
++++ b/trailer.c
+@@ -47,3 +47,200 @@ static size_t alnum_len(const char *buf, size_t len)
+ 		len--;
+ 	return len;
+ }
 +
-+NAME
-+----
-+git-interpret-trailers - help add stuctured information into commit messages
++static void free_trailer_item(struct trailer_item *item)
++{
++	free(item->conf.name);
++	free(item->conf.key);
++	free(item->conf.command);
++	free((char *)item->token);
++	free((char *)item->value);
++	free(item);
++}
 +
-+SYNOPSIS
-+--------
-+[verse]
-+'git interpret-trailers' [--trim-empty] [(<token>[(=|:)<value>])...]
++static void add_arg_to_input_list(struct trailer_item *in_tok,
++				  struct trailer_item *arg_tok)
++{
++	if (arg_tok->conf.where == WHERE_AFTER) {
++		arg_tok->next = in_tok->next;
++		in_tok->next = arg_tok;
++		arg_tok->previous = in_tok;
++		if (arg_tok->next)
++			arg_tok->next->previous = arg_tok;
++	} else {
++		arg_tok->previous = in_tok->previous;
++		in_tok->previous = arg_tok;
++		arg_tok->next = in_tok;
++		if (arg_tok->previous)
++			arg_tok->previous->next = arg_tok;
++	}
++}
 +
-+DESCRIPTION
-+-----------
-+Help add RFC 822-like headers, called 'trailers', at the end of the
-+otherwise free-form part of a commit message.
++static int check_if_different(struct trailer_item *in_tok,
++			      struct trailer_item *arg_tok,
++			      int alnum_len, int check_all)
++{
++	enum action_where where = arg_tok->conf.where;
++	do {
++		if (!in_tok)
++			return 1;
++		if (same_trailer(in_tok, arg_tok, alnum_len))
++			return 0;
++		/*
++		 * if we want to add a trailer after another one,
++		 * we have to check those before this one
++		 */
++		in_tok = (where == WHERE_AFTER) ? in_tok->previous : in_tok->next;
++	} while (check_all);
++	return 1;
++}
 +
-+This command is a filter. It reads the standard input for a commit
-+message and applies the `token` arguments, if any, to this
-+message. The resulting message is emited on the standard output.
++static void apply_arg_if_exists(struct trailer_item *in_tok,
++				struct trailer_item *arg_tok,
++				int alnum_len)
++{
++	switch (arg_tok->conf.if_exists) {
++	case EXISTS_DO_NOTHING:
++		free_trailer_item(arg_tok);
++		break;
++	case EXISTS_OVERWRITE:
++		free((char *)in_tok->value);
++		in_tok->value = xstrdup(arg_tok->value);
++		free_trailer_item(arg_tok);
++		break;
++	case EXISTS_ADD:
++		add_arg_to_input_list(in_tok, arg_tok);
++		break;
++	case EXISTS_ADD_IF_DIFFERENT:
++		if (check_if_different(in_tok, arg_tok, alnum_len, 1))
++			add_arg_to_input_list(in_tok, arg_tok);
++		else
++			free_trailer_item(arg_tok);
++		break;
++	case EXISTS_ADD_IF_DIFFERENT_NEIGHBOR:
++		if (check_if_different(in_tok, arg_tok, alnum_len, 0))
++			add_arg_to_input_list(in_tok, arg_tok);
++		else
++			free_trailer_item(arg_tok);
++		break;
++	}
++}
 +
-+Some configuration variables control the way the `token` arguments are
-+applied to the message and the way any existing trailer in the message
-+is changed. They also make it possible to automatically add some
-+trailers.
++static void remove_from_list(struct trailer_item *item,
++			     struct trailer_item **first)
++{
++	if (item->next)
++		item->next->previous = item->previous;
++	if (item->previous)
++		item->previous->next = item->next;
++	else
++		*first = item->next;
++}
 +
-+By default, a 'token=value' or 'token:value' argument will be added
-+only if no trailer with the same (token, value) pair is already in the
-+message. The 'token' and 'value' parts will be trimmed to remove
-+starting and trailing whitespace, and the resulting trimmed 'token'
-+and 'value' will appear in the message like this:
++static struct trailer_item *remove_first(struct trailer_item **first)
++{
++	struct trailer_item *item = *first;
++	*first = item->next;
++	if (item->next) {
++		item->next->previous = NULL;
++		item->next = NULL;
++	}
++	return item;
++}
 +
-+------------------------------------------------
-+token: value
-+------------------------------------------------
++static void process_input_token(struct trailer_item *in_tok,
++				struct trailer_item **arg_tok_first,
++				enum action_where where)
++{
++	struct trailer_item *arg_tok;
++	struct trailer_item *next_arg;
 +
-+By default, if there are already trailers with the same 'token', the
-+new trailer will appear just after the last trailer with the same
-+'token'. Otherwise it will appear at the end of the message.
++	int tok_alnum_len = alnum_len(in_tok->token, strlen(in_tok->token));
++	for (arg_tok = *arg_tok_first; arg_tok; arg_tok = next_arg) {
++		next_arg = arg_tok->next;
++		if (same_token(in_tok, arg_tok, tok_alnum_len) &&
++		    arg_tok->conf.where == where) {
++			remove_from_list(arg_tok, arg_tok_first);
++			apply_arg_if_exists(in_tok, arg_tok, tok_alnum_len);
++			/*
++			 * If arg has been added to input,
++			 * then we need to process it too now.
++			 */
++			if ((where == WHERE_AFTER ? in_tok->next : in_tok->previous) == arg_tok)
++				in_tok = arg_tok;
++		}
++	}
++}
 +
-+Note that 'trailers' do not follow and are not intended to follow many
-+rules that are in RFC 822. For example they do not follow the line
-+breaking rules, the encoding rules and probably many other rules.
++static void update_last(struct trailer_item **last)
++{
++	if (*last)
++		while((*last)->next != NULL)
++			*last = (*last)->next;
++}
 +
-+OPTIONS
-+-------
-+--trim-empty::
-+	If the 'value' part of any trailer contains only whitespace,
-+	the whole trailer will be removed from the resulting message.
++static void update_first(struct trailer_item **first)
++{
++	if (*first)
++		while((*first)->previous != NULL)
++			*first = (*first)->previous;
++}
 +
-+CONFIGURATION VARIABLES
-+-----------------------
++static void apply_arg_if_missing(struct trailer_item **in_tok_first,
++				 struct trailer_item **in_tok_last,
++				 struct trailer_item *arg_tok)
++{
++	struct trailer_item **in_tok;
++	enum action_where where;
 +
-+trailer.<token>.key::
-+	This 'key' will be used instead of 'token' in the
-+	trailer. After some alphanumeric characters, it can contain
-+	some non alphanumeric characters like ':', '=' or '#' that will
-+	be used instead of ':' to separate the token from the value in
-+	the trailer, though the default ':' is more standard.
++	switch (arg_tok->conf.if_missing) {
++	case MISSING_DO_NOTHING:
++		free_trailer_item(arg_tok);
++		break;
++	case MISSING_ADD:
++		where = arg_tok->conf.where;
++		in_tok = (where == WHERE_AFTER) ? in_tok_last : in_tok_first;
++		if (*in_tok) {
++			add_arg_to_input_list(*in_tok, arg_tok);
++			*in_tok = arg_tok;
++		} else {
++			*in_tok_first = arg_tok;
++			*in_tok_last = arg_tok;
++		}
++		break;
++	}
++}
 +
-+trailer.<token>.where::
-+	This can be either `after`, which is the default, or
-+	`before`. If it is `before`, then a trailer with the specified
-+	token, will appear before, instead of after, other trailers
-+	with the same token, or otherwise at the beginning, instead of
-+	at the end, of all the trailers.
++static void process_trailers_lists(struct trailer_item **in_tok_first,
++				   struct trailer_item **in_tok_last,
++				   struct trailer_item **arg_tok_first)
++{
++	struct trailer_item *in_tok;
++	struct trailer_item *arg_tok;
 +
-+trailer.<token>.ifexist::
-+	This option makes it possible to choose what action will be
-+	performed when there is already at least one trailer with the
-+	same token in the message.
-++
-+The valid values for this option are: `addIfDifferent` (this is the
-+default), `addIfDifferentNeighbor`, `add`, `overwrite` or `doNothing`.
-++
-+With `addIfDifferent`, a new trailer will be added only if no trailer
-+with the same (token, value) pair is already in the message.
-++
-+With `addIfDifferentNeighbor`, a new trailer will be added only if no
-+trailer with the same (token, value) pair is above or below the line
-+where the new trailer will be added.
-++
-+With `add`, a new trailer will be added, even if some trailers with
-+the same (token, value) pair are already in the message.
-++
-+With `overwrite`, the new trailer will overwrite an existing trailer
-+with the same token.
-++
-+With `doNothing`, nothing will be done, that is no new trailer will be
-+added if there is already one with the same token in the message.
++	if (!*arg_tok_first)
++		return;
 +
-+trailer.<token>.ifmissing::
-+	This option makes it possible to choose what action will be
-+	performed when there is not yet any trailer with the same
-+	token in the message.
-++
-+The valid values for this option are: `add` (this is the default) and
-+`doNothing`.
-++
-+With `add`, a new trailer will be added.
-++
-+With `doNothing`, nothing will be done.
++	/* Process input from end to start */
++	for (in_tok = *in_tok_last; in_tok; in_tok = in_tok->previous) {
++		process_input_token(in_tok, arg_tok_first, WHERE_AFTER);
++	}
 +
-+trailer.<token>.command::
-+	This option can be used to specify a shell command that will
-+	be used to automatically add or modify a trailer with the
-+	specified 'token'.
-++
-+When this option is specified, it is like if a special 'token=value'
-+argument is added at the end of the command line, where 'value' will
-+be given by the standard output of the specified command.
-++
-+If the command contains the `$ARG` string, this string will be
-+replaced with the 'value' part of an existing trailer with the same
-+token, if any, before the command is launched.
++	update_last(in_tok_last);
 +
-+SEE ALSO
-+--------
-+linkgit:git-commit[1]
++	if (!*arg_tok_first)
++		return;
 +
-+GIT
-+---
-+Part of the linkgit:git[1] suite
++	/* Process input from start to end */
++	for (in_tok = *in_tok_first; in_tok; in_tok = in_tok->next) {
++		process_input_token(in_tok, arg_tok_first, WHERE_BEFORE);
++	}
++
++	update_first(in_tok_first);
++
++	/* Process args left */
++	while (*arg_tok_first) {
++		arg_tok = remove_first(arg_tok_first);
++		apply_arg_if_missing(in_tok_first, in_tok_last, arg_tok);
++	}
++}
 -- 
 1.8.5.2.204.gcfe299d.dirty
