@@ -1,159 +1,105 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH v3] skip_prefix: rewrite so that prefix is scanned once
-Date: Tue, 04 Mar 2014 10:18:26 +0100
-Message-ID: <87txbeiaot.fsf@fencepost.gnu.org>
-References: <1393816384-3300-1-git-send-email-siddharth98391@gmail.com>
-	<xmqqvbvvp0gj.fsf@gitster.dls.corp.google.com>
-	<xmqq61nuoqd5.fsf@gitster.dls.corp.google.com>
-	<CACsJy8ASBeravdk67pbOJbrFUbwg21JwYcLtSbDDMJOu9-F=yA@mail.gmail.com>
-	<877g8akenw.fsf@fencepost.gnu.org>
-	<20140304015819.GA10643@duynguyen-vnpc.dek-tpc.internal>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH] implemented strbuf_write_or_die()
+Date: Tue, 04 Mar 2014 10:18:57 +0100
+Message-ID: <53159A81.4050905@alum.mit.edu>
+References: <1393672871-28281-1-git-send-email-faiz.off93@gmail.com> <CAJr59C0e22OuDWU5Xc0A=cc+zY32nfum6SXTDU3wLCPyFPF70A@mail.gmail.com> <CAPig+cRgc4UtmJMieS9Mdrz7vjUNiu7QFu1PSBppKo22Ln5G-A@mail.gmail.com> <xmqqvbvvqglc.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Siddharth Goel <siddharth98391@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 04 10:18:40 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	He Sun <sunheehnus@gmail.com>,
+	Faiz Kothari <faiz.off93@gmail.com>, git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 04 10:19:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKlUl-0006Ao-Os
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 10:18:40 +0100
+	id 1WKlVG-0006WE-3k
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 10:19:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756654AbaCDJSd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Mar 2014 04:18:33 -0500
-Received: from fencepost.gnu.org ([208.118.235.10]:43516 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756539AbaCDJS2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Mar 2014 04:18:28 -0500
-Received: from localhost ([127.0.0.1]:42556 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1WKlUY-0001PS-Nc; Tue, 04 Mar 2014 04:18:27 -0500
-Received: by lola (Postfix, from userid 1000)
-	id 59894DF3DC; Tue,  4 Mar 2014 10:18:26 +0100 (CET)
-In-Reply-To: <20140304015819.GA10643@duynguyen-vnpc.dek-tpc.internal> (Duy
-	Nguyen's message of "Tue, 4 Mar 2014 08:58:19 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
+	id S1756669AbaCDJTF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Mar 2014 04:19:05 -0500
+Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:50172 "EHLO
+	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752195AbaCDJTD (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Mar 2014 04:19:03 -0500
+X-AuditID: 12074414-f79d96d000002d2b-f3-53159a85fb52
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id CC.5E.11563.58A95135; Tue,  4 Mar 2014 04:19:01 -0500 (EST)
+Received: from [192.168.69.148] (p57A2482C.dip0.t-ipconnect.de [87.162.72.44])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s249Ivv1001563
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Tue, 4 Mar 2014 04:18:59 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
+In-Reply-To: <xmqqvbvvqglc.fsf@gitster.dls.corp.google.com>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrBKsWRmVeSWpSXmKPExsUixO6iqNs6SzTYYOcaSYv7G1+xWHRd6Way
+	aOi9wmzRdns7o8WZN42MDqweO2fdZfe4eEnZY/EDL4/Pm+QCWKK4bZISS8qCM9Pz9O0SuDMu
+	z7zNWHBboGLqzwXsDYydvF2MnBwSAiYSzX07WSBsMYkL99azdTFycQgJXGaUOPdoIyuEc5ZJ
+	4t3LH6wgVbwC2hJfTt9nA7FZBFQljm48DdbNJqArsainmQnEFhUIllh9+QELRL2gxMmZT8Bs
+	EQE1iYlth1hAhjILTGaU2DOhBywhLGAmsfzLSnaIbX8ZJT60/QXbwClgLTFr1UXmLkYOoPvE
+	JXoag0DCzAI6Eu/6HjBD2PIS29/OYZ7AKDgLyb5ZSMpmISlbwMi8ilEuMac0Vzc3MTOnODVZ
+	tzg5MS8vtUjXQi83s0QvNaV0EyMk5EV2MB45KXeIUYCDUYmHd6GxaLAQa2JZcWXuIUZJDiYl
+	Ud7LU4FCfEn5KZUZicUZ8UWlOanFhxglOJiVRHhfTQbK8aYkVlalFuXDpKQ5WJTEeb8tVvcT
+	EkhPLEnNTk0tSC2CycpwcChJ8DbOBGoULEpNT61Iy8wpQUgzcXCCDOeSEilOzUtJLUosLcmI
+	B0VxfDEwjkFSPEB7F4K08xYXJOYCRSFaTzHqctxu+/WJUYglLz8vVUqc1wakSACkKKM0D24F
+	LMG9YhQH+liYVxWkigeYHOEmvQJawgS0hBvsueKSRISUVAOjc2WEjfzzB3VfFzM9PlB/Isnb
+	613BH+fLt8/9nH3k149FST/frFiv5ntSK2JbT3ZelHb0TTupX2l5Pwqrk0NrlR+y 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243333>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+On 03/03/2014 07:31 PM, Junio C Hamano wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> 
+>> On Sat, Mar 1, 2014 at 7:51 AM, He Sun <sunheehnus@gmail.com> wrote:
+>>> 2014-03-01 19:21 GMT+08:00 Faiz Kothari <faiz.off93@gmail.com>:
+>>>> diff --git a/remote-curl.c b/remote-curl.c
+>>>> index 10cb011..dee8716 100644
+>>>> --- a/remote-curl.c
+>>>> +++ b/remote-curl.c
+>>>> @@ -634,7 +634,7 @@ static int rpc_service(struct rpc_state *rpc, struct discovery *heads)
+>>>>         if (start_command(&client))
+>>>>                 exit(1);
+>>>>         if (preamble)
+>>>> -               write_or_die(client.in, preamble->buf, preamble->len);
+>>>> +               strbuf_write_or_die(client.in, preamble);
+>>>>         if (heads)
+>>>>                 write_or_die(client.in, heads->buf, heads->len);
+>>>
+>>> This should be changed. May be you can use Ctrl-F to search write_or_die().
+>>> Or if you are using vim, use "/ and n" to find all.
+>>
+>> It's not obvious from the patch fragment, but 'heads' is not a strbuf,
+>> so Faiz correctly left this invocation alone.
+> 
+> That is a very good sign why this change is merely a code-churn and
+> not an improvement, isn't it?  We know (and any strbuf user should
+> know) that ->buf and ->len are the ways to learn the pointer and the
+> length the strbuf holds.  Why anybody thinks it is benefitial to
+> introduce another function that is _only_ for writing out strbuf and
+> cannot be used to write out a plain buffer is simply beyond me.
 
-> On Tue, Mar 04, 2014 at 01:09:39AM +0100, David Kastrup wrote:
->> Duy Nguyen <pclouds@gmail.com> writes:
->>=20
->> > On Tue, Mar 4, 2014 at 5:43 AM, Junio C Hamano <gitster@pobox.com>=
- wrote:
->> >> diff --git a/git-compat-util.h b/git-compat-util.h
->> >> index cbd86c3..68ffaef 100644
->> >> --- a/git-compat-util.h
->> >> +++ b/git-compat-util.h
->> >> @@ -357,8 +357,14 @@ extern int suffixcmp(const char *str, const =
-char *suffix);
->> >>
->> >>  static inline const char *skip_prefix(const char *str, const cha=
-r *prefix)
->> >>  {
->> >> -       size_t len =3D strlen(prefix);
->> >> -       return strncmp(str, prefix, len) ? NULL : str + len;
->> >
->> > Just a note. gcc does optimize strlen("abcdef") to 6, and with tha=
-t
->> > information at compile time built-in strncmp might do better.
->>=20
->> Indeed, most (but not all) of the calls have a constant string as
->> prefix.  However, strncmp in each iteration checks for both *str as =
-well
->> as *prefix to be different from '\0' independently (and it appears
->> unlikely to me that the optimizer will figure out that it's unnecess=
-ary
->> for either) _and_ compares them for equality so it's not likely to b=
-e
->> faster than the open-coded loop.
->>=20
->> One could, however, use memcmp instead of strncmp.  I'm just not sur=
-e
->> whether memcmp is guaranteed not to peek beyond the first mismatchin=
-g
->> byte even if the count would allow for more.  It could lead to undef=
-ined
->> behavior if the first mismatching byte would be the ending NUL byte =
-of
->> str.
->
-> It turns out gcc does not generate a call to strncmp either. It
-> inlines repz cmpsb instead.
+I'm the guilty one.  I like the change (obviously, since I suggested
+it).  Writing strbufs comes up frequently and will hopefully increase in
+usage and I think it is a positive thing to encourage the use of strbufs
+by making them increasingly first-class citizens.
 
-Oh wow.  So it _does_ know that it's not necessary to check for a NUL
-byte when the length of one argument is already known.  I am seriously
-impressed.
+But I can see your points too, and I humbly defer to the wisdom of the
+list.  I will remove this suggestion from the list of microprojects.
 
-> I recall we had a discussion long ago about the inefficiency of repz
-> and and open-coded loop is preferred,
+Faiz, this is the way things go on the Git mailing list.  It would be
+boring if everybody agreed all the time :-)
 
-I think that this mostly applies for Pentium I, possibly also the
-dead-ended Pentium=A0Pro architecture (that sort-of translated the x86
-opcodes into RISC instructions).  I think that later processor variants
-(and AMD anyway) got those instructions back to usable shape.
+Michael
 
-One thing where there was a _lot_ of performance difference between
-open-coding and builtin was using memcpy (repz movb) for copying
-well-aligned data bytewise rather than copying, say, integer arrays
-element-wise.
-
-But since that was egg-on-face material, the hardware got better at it.
-
-And anyway, GCC should know what to pick here.  So with GCC being as
-smart as that (using the equivalent of memcmp on its own initiative
-instead of the full strncmp), I don't think we have a reasonable chance
-to beat its performance with an open-coded variant.
-
-> produces this assembly with gcc -O2 (on x86, apparently)
->
-> -- 8< --
-> 00000000 <main>:
->    0:   55                      push   %ebp
->    1:   b9 03 00 00 00          mov    $0x3,%ecx
->    6:   89 e5                   mov    %esp,%ebp
->    8:   57                      push   %edi
->    9:   bf 00 00 00 00          mov    $0x0,%edi
->    e:   56                      push   %esi
->    f:   53                      push   %ebx
->   10:   83 e4 f0                and    $0xfffffff0,%esp
->   13:   83 ec 10                sub    $0x10,%esp
->   16:   8b 45 0c                mov    0xc(%ebp),%eax
->   19:   8b 40 04                mov    0x4(%eax),%eax
->   1c:   89 c6                   mov    %eax,%esi
->   1e:   f3 a6                   repz cmpsb %es:(%edi),%ds:(%esi)
->   20:   0f 97 c3                seta   %bl
->   23:   0f 92 c1                setb   %cl
->   26:   83 c0 03                add    $0x3,%eax
->   29:   31 d2                   xor    %edx,%edx
->   2b:   38 cb                   cmp    %cl,%bl
->   2d:   0f 44 d0                cmove  %eax,%edx
-
-More like i686 than x86 here.
-
->   30:   89 14 24                mov    %edx,(%esp)
->   33:   e8 fc ff ff ff          call   34 <main+0x34>
->   38:   8d 65 f4                lea    -0xc(%ebp),%esp
->   3b:   31 c0                   xor    %eax,%eax
->   3d:   5b                      pop    %ebx
->   3e:   5e                      pop    %esi
->   3f:   5f                      pop    %edi
->   40:   5d                      pop    %ebp
->   41:   c3                      ret
-
-Well, we won't beat this here.
-
---=20
-David Kastrup
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
