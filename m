@@ -1,115 +1,128 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] test-lib: GIT_TEST_ONLY to run only specific tests
-Date: Tue, 04 Mar 2014 11:01:51 -0800
-Message-ID: <xmqq1tyhlrds.fsf@gitster.dls.corp.google.com>
-References: <1393842298-5944-1-git-send-email-ilya.bobyr@gmail.com>
-	<1393842298-5944-2-git-send-email-ilya.bobyr@gmail.com>
-	<CAPig+cT46ekT87TuoTtwvt0G+DraB9cdgW1wd6NsodjJ5FmJrA@mail.gmail.com>
-	<xmqqob1mn9t6.fsf@gitster.dls.corp.google.com>
-	<531514D9.4000101@gmail.com>
-	<xmqq4n3en7un.fsf@gitster.dls.corp.google.com>
-	<53157B72.3000205@gmail.com>
-	<xmqqvbvul62n.fsf@gitster.dls.corp.google.com>
-	<53159A55.70105@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Ilya Bobyr <ilya.bobyr@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Thomas Rast <tr@thomasrast.ch>
-To: Ilya Bobyr <ilya.bobir@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 04 20:02:17 2014
+From: Max Horn <max@quendi.de>
+Subject: Re: [PATCH v3] commit.c: use skip_prefix() instead of starts_with()
+Date: Tue, 4 Mar 2014 20:16:47 +0100
+Message-ID: <8CB399B0-6781-4702-9EC5-0D0A0CCC3450@quendi.de>
+References: <1393922540-13156-1-git-send-email-tanayabh@gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 6.6 \(1510\))
+Content-Type: multipart/signed; boundary="Apple-Mail=_EBF286A4-0DA2-4261-BB98-F6BD79A2BA8B"; protocol="application/pgp-signature"; micalg=pgp-sha256
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu, gitster@pobox.com
+To: Tanay Abhra <tanayabh@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 04 20:17:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKubX-0003J4-R8
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 20:02:16 +0100
+	id 1WKuq0-0007Gn-2S
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 20:17:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755397AbaCDTCF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2014 14:02:05 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39283 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752144AbaCDTCA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Mar 2014 14:02:00 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 810AB71348;
-	Tue,  4 Mar 2014 14:01:59 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6URvfkFi2g0Vn5+K13XOsim5Zh0=; b=C71kQ0
-	UMo7uShV2x493yiKQ55r/yTF1TDZkZOnAIUQbTbp9u9uIElw/6CNtp84aSKILanH
-	ZHX2bbjROKh7N1VuX6CHkTJv6yVdqseJiRmGpVqrphwr/B70thXkxb1z/ETdQbE3
-	zBMcaQvCV4b5CR5rbxCtF9jpr7GBtMqOo/q20=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jyj2FxKLOnTUzyqD69+e7d7UMzL9lV5J
-	15/EETIhByXuftHNdmMlYuRwfihRZIUGRfC72nmaStDl7p05NL1+IrU2RW0kd3NA
-	Jc3+h+3I6Y4VO/R81wRnHY5ZhGL7R6DxIkMltKo5DhkVbIvqmjdXkwEgOTcDeZBy
-	tayeSB856Co=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A7B2271342;
-	Tue,  4 Mar 2014 14:01:57 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A19B471337;
-	Tue,  4 Mar 2014 14:01:54 -0500 (EST)
-In-Reply-To: <53159A55.70105@gmail.com> (Ilya Bobyr's message of "Tue, 04 Mar
-	2014 01:18:13 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 73BF4C00-A3CF-11E3-BDA2-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756119AbaCDTRC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Mar 2014 14:17:02 -0500
+Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:59650 "EHLO
+	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755730AbaCDTQ7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Mar 2014 14:16:59 -0500
+Received: from hsi-kbw-46-223-222-244.hsi.kabel-badenwuerttemberg.de ([46.223.222.244] helo=[192.168.50.136]); authenticated
+	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
+	id 1WKupf-0002Ci-IE; Tue, 04 Mar 2014 20:16:51 +0100
+In-Reply-To: <1393922540-13156-1-git-send-email-tanayabh@gmail.com>
+X-Mailer: Apple Mail (2.1510)
+X-bounce-key: webpack.hosteurope.de;max@quendi.de;1393960619;fa51eebf;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243371>
 
-Ilya Bobyr <ilya.bobir@gmail.com> writes:
 
-> On 3/4/2014 12:29 AM, Junio C Hamano wrote:
-> ...
->> then you
->> shouldn't be mucking with environment variables in the first place,
->> primarily because running:
->>
->>      $ GIT_TEST_ONLY='1 4' make test
->>
->> to run test .1 and .4 of all the test scripts would not make any
->> sense.
->
-> No it does not.  It only makes sense for one test suite.
->
->> I think your "simplicity" argument is a total red-herring.
->> Of course if you do not have to say the test script name, your
->> specification would be shorter, but that is only because your
->> specification is not specific enough to be useful.
->
-> In my case it is very useful :)
+--Apple-Mail=_EBF286A4-0DA2-4261-BB98-F6BD79A2BA8B
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=us-ascii
 
-It invites a nonsense usage (i.e. running "make test" under that
-environment variable setting); that is not a good trade-off.
 
->>   * Even though GIT_SKIP_TESTS mechanism still allows you to skip
->>     individual test pieces, it has never been a serious "feature" in
->>     the first place. Many of the tests unfortunately do rely on state
->>     previous sequences of tests left behind, so it is not realistic
->>     to expect that you can skip test pieces randomly and exercise
->>     later test pieces reliably.
->>
->>   * The numbering of individual test pieces can easily change by new
->>     tests inserted in the middle; again, many tests do take advantge
->>     of the states earlier tests leave behind, so "do not add new
->>     tests in the middle" is not a realistic rule to enforce, unless
->>     you are willing to clean up existing test scripts so that each
->>     test piece is independent from all the previous ones.
->
-> Both are true, but do not apply to the TDD case.
+On 04.03.2014, at 09:42, Tanay Abhra <tanayabh@gmail.com> wrote:
 
-The existing tests are designed to be black-box tests, not function
-level unit tests, and touching lower level code carelessly affects
-other parts of the system you did not know the interactions about.
+[...]
 
-What does "TDD case" change anything in that equation?
+> commit.c | 17 +++++++++--------
+> 1 file changed, 9 insertions(+), 8 deletions(-)
+>=20
+> diff --git a/commit.c b/commit.c
+> index 6bf4fe0..6c92acb 100644
+> --- a/commit.c
+> +++ b/commit.c
+
+[...]
+
+> @@ -566,14 +566,16 @@ static void record_author_date(struct =
+author_date_slab *author_date,
+> 	     buf;
+> 	     buf =3D line_end + 1) {
+> 		line_end =3D strchrnul(buf, '\n');
+> -		if (!starts_with(buf, "author ")) {
+> +		ident_line =3D skip_prefix(buf, "author ");
+> +		if (!ident_line) {
+> 			if (!line_end[0] || line_end[1] =3D=3D '\n')
+> 				return; /* end of header */
+> 			continue;
+> 		}
+> +		buf =3D ident_line;
+> 		if (split_ident_line(&ident,
+> -				     buf + strlen("author "),
+> -				     line_end - (buf + strlen("author =
+"))) ||
+> +				     buf,
+> +				     line_end - buf) ||
+> 		    !ident.date_begin || !ident.date_end)
+> 			goto fail_exit; /* malformed "author" line */
+> 		break;
+
+Why not get rid of that assignment to "buf", and use ident_line instead =
+of buf below? That seems like it would be more readable, wouldn't it?
+
+
+> @@ -1193,10 +1195,9 @@ static void parse_gpg_output(struct =
+signature_check *sigc)
+> 	for (i =3D 0; i < ARRAY_SIZE(sigcheck_gpg_status); i++) {
+> 		const char *found, *next;
+>=20
+> -		if (starts_with(buf, sigcheck_gpg_status[i].check + 1)) =
+{
+> -			/* At the very beginning of the buffer */
+> -			found =3D buf + =
+strlen(sigcheck_gpg_status[i].check + 1);
+> -		} else {
+> +		found =3D skip_prefix(buf, sigcheck_gpg_status[i].check =
++ 1);
+> +		/* At the very beginning of the buffer */
+
+Do we really need that comment, and in that spot? The code seemed clear =
+enough to me without it. But if you think keeping is better, perhaps =
+move it to *before* the skip_prefix, and add a trailing "?"
+
+> +		if(!found) {
+> 			found =3D strstr(buf, =
+sigcheck_gpg_status[i].check);
+> 			if (!found)
+> 				continue;
+
+
+
+--Apple-Mail=_EBF286A4-0DA2-4261-BB98-F6BD79A2BA8B
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP using GPGMail
+
+-----BEGIN PGP SIGNATURE-----
+Comment: GPGTools - http://gpgtools.org
+
+iF4EAREIAAYFAlMWJqMACgkQIpJVslrhe1mEkQD/a/jmVIZrw9mNlfpDDqANUZ68
+RH3Y2hqZZ9Bzcui1zF8A/3mDec+2M1JcEWXfRWdwKb27/Oe5cvXD/J6sk6/GfkqM
+=HB+i
+-----END PGP SIGNATURE-----
+
+--Apple-Mail=_EBF286A4-0DA2-4261-BB98-F6BD79A2BA8B--
