@@ -1,79 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] test-lib: GIT_TEST_ONLY to run only specific tests
-Date: Mon, 03 Mar 2014 16:08:32 -0800
-Message-ID: <xmqq4n3en7un.fsf@gitster.dls.corp.google.com>
-References: <1393842298-5944-1-git-send-email-ilya.bobyr@gmail.com>
-	<1393842298-5944-2-git-send-email-ilya.bobyr@gmail.com>
-	<CAPig+cT46ekT87TuoTtwvt0G+DraB9cdgW1wd6NsodjJ5FmJrA@mail.gmail.com>
-	<xmqqob1mn9t6.fsf@gitster.dls.corp.google.com>
-	<531514D9.4000101@gmail.com>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH v3] skip_prefix: rewrite so that prefix is scanned once
+Date: Tue, 04 Mar 2014 01:09:39 +0100
+Message-ID: <877g8akenw.fsf@fencepost.gnu.org>
+References: <1393816384-3300-1-git-send-email-siddharth98391@gmail.com>
+	<xmqqvbvvp0gj.fsf@gitster.dls.corp.google.com>
+	<xmqq61nuoqd5.fsf@gitster.dls.corp.google.com>
+	<CACsJy8ASBeravdk67pbOJbrFUbwg21JwYcLtSbDDMJOu9-F=yA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Ilya Bobyr <ilya.bobyr@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Thomas Rast <tr@thomasrast.ch>
-To: Ilya Bobyr <ilya.bobir@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 04 01:08:43 2014
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Siddharth Goel <siddharth98391@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 04 01:09:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKcuX-0001jr-Oq
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 01:08:42 +0100
+	id 1WKcva-0002Uo-55
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 01:09:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755395AbaCDAIh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2014 19:08:37 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38357 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755301AbaCDAIg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2014 19:08:36 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DAECC55C58;
-	Mon,  3 Mar 2014 19:08:35 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=NLMRdlHTgwgBZ81F/ji77yCUedQ=; b=qdLhjN
-	mBpHL9gnve/NygTvgXwkN8dy6hjx7HvYlFNf5t8kYF7GUvynbLe7X3LD5jMNAE4r
-	W/Cjf3eFzF4KYuM6j7FbSA9FY/eW+1B9CZylfG9xP0AWGahqppWX1DWiAM/JHQ9v
-	OPRn5kBwm+kl19CT224kUsQovD7ZZ36TFuhzc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qCKE8MpOhGGIK3qXog30S+3ZN/81zOtA
-	gyWUHXO7RPZ+XbROjHtFS83uxjtufDupq/wDDOxNTD9hMKgbRJwGLByYiz+ZeC8B
-	gN7G1Y+646okdgYKK8/dbwQ6wCBoYK3VsNt51k9iZbRyjNvL/bbA/utfevehL6gQ
-	D2zjnZpMMgY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9F65655C57;
-	Mon,  3 Mar 2014 19:08:35 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9E9AB55C53;
-	Mon,  3 Mar 2014 19:08:34 -0500 (EST)
-In-Reply-To: <531514D9.4000101@gmail.com> (Ilya Bobyr's message of "Mon, 03
-	Mar 2014 15:48:41 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 20A0BE58-A331-11E3-8451-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755762AbaCDAJl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2014 19:09:41 -0500
+Received: from fencepost.gnu.org ([208.118.235.10]:35070 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755711AbaCDAJl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2014 19:09:41 -0500
+Received: from localhost ([127.0.0.1]:34110 helo=lola)
+	by fencepost.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <dak@gnu.org>)
+	id 1WKcvU-0001Uv-3H; Mon, 03 Mar 2014 19:09:40 -0500
+Received: by lola (Postfix, from userid 1000)
+	id C039DE065F; Tue,  4 Mar 2014 01:09:39 +0100 (CET)
+In-Reply-To: <CACsJy8ASBeravdk67pbOJbrFUbwg21JwYcLtSbDDMJOu9-F=yA@mail.gmail.com>
+	(Duy Nguyen's message of "Tue, 4 Mar 2014 06:37:25 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243318>
 
-Ilya Bobyr <ilya.bobir@gmail.com> writes:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-> It might be that we are looking at different use cases, as you are
-> talking about whole test suits.
+> On Tue, Mar 4, 2014 at 5:43 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> diff --git a/git-compat-util.h b/git-compat-util.h
+>> index cbd86c3..68ffaef 100644
+>> --- a/git-compat-util.h
+>> +++ b/git-compat-util.h
+>> @@ -357,8 +357,14 @@ extern int suffixcmp(const char *str, const char *suffix);
+>>
+>>  static inline const char *skip_prefix(const char *str, const char *prefix)
+>>  {
+>> -       size_t len = strlen(prefix);
+>> -       return strncmp(str, prefix, len) ? NULL : str + len;
+>
+> Just a note. gcc does optimize strlen("abcdef") to 6, and with that
+> information at compile time built-in strncmp might do better.
 
-I do not think so.
+Indeed, most (but not all) of the calls have a constant string as
+prefix.  However, strncmp in each iteration checks for both *str as well
+as *prefix to be different from '\0' independently (and it appears
+unlikely to me that the optimizer will figure out that it's unnecessary
+for either) _and_ compares them for equality so it's not likely to be
+faster than the open-coded loop.
 
-I do not see anything prevents you from saying
+One could, however, use memcmp instead of strncmp.  I'm just not sure
+whether memcmp is guaranteed not to peek beyond the first mismatching
+byte even if the count would allow for more.  It could lead to undefined
+behavior if the first mismatching byte would be the ending NUL byte of
+str.
 
-	GIT_SKIP_TESTS='t0000 !t0000.1 !t0000.4'
-
-to specify test-pieces in individual tests so that you can run the
-setup step (step .1) and the specific test (step .4) without running
-two tests in between.
+-- 
+David Kastrup
