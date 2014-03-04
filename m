@@ -1,70 +1,93 @@
-From: Jacopo Notarstefano <jacopo.notarstefano@gmail.com>
-Subject: Re: [BUG] Halt during fetch on MacOS
-Date: Tue, 4 Mar 2014 23:21:40 +0100
-Message-ID: <CAL0uuq0MPSnB+HNxfD2Mj6mLbhTcvhKQ_e20EV0QgS8Os8CsJw@mail.gmail.com>
-References: <CAFFUb6X455R4OD5FKnVFHFmvTyRqtV300bc=a8Xs03agM+=uLQ@mail.gmail.com>
-	<20140301061532.GC20397@sigill.intra.peff.net>
-	<F9B4418D-9414-4857-9199-EDBA20B952C6@gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v2] cache_tree_find(): remove redundant checks
+Date: Tue, 04 Mar 2014 23:24:57 +0100
+Message-ID: <531652B9.4000001@alum.mit.edu>
+References: <1393921868-4382-1-git-send-email-mhagger@alum.mit.edu> <xmqq8uspk72g.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Conley Owens <cco3@android.com>, Jeff King <peff@peff.net>,
-	Git mailing list <git@vger.kernel.org>
-To: "Kyle J. McKay" <mackyle@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 04 23:21:51 2014
+Content-Transfer-Encoding: 7bit
+Cc: David Kastrup <dak@gnu.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 04 23:25:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKxie-0002T8-AX
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 23:21:48 +0100
+	id 1WKxlu-00053i-0L
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 23:25:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755717AbaCDWVn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2014 17:21:43 -0500
-Received: from mail-vc0-f173.google.com ([209.85.220.173]:64354 "EHLO
-	mail-vc0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754190AbaCDWVm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Mar 2014 17:21:42 -0500
-Received: by mail-vc0-f173.google.com with SMTP id ld13so177347vcb.18
-        for <git@vger.kernel.org>; Tue, 04 Mar 2014 14:21:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=Ml7Kw1i0uf8+bmKwOCW7F9qwICG2el3PWAqkNiu2ddg=;
-        b=gmt354/Cudw7I22Uh1Nkh81JgSaOOUonAbOZqQg0bx1zfmmQ0VWWruHIJOs8tJwCh6
-         Dp1xAhR5I/rvixzLh5tYcmkpChssm9+L2iVE+Sas8iI4ROtEUUrbYtKY71poyvEyqaJo
-         TeJqi0W4rpDXIBO/A8N7w/6uiHxQreo/J4R4YIhSXNx5DEsGl+3DGnapuPZiMGp8AC60
-         Ob3KTVwEnleOgj6Q2JeAXIZpoRF0YQE6aSIIAFummtIRFv02zdUf3Tkw42aHN5R8yUBF
-         I1jkKL/QtPUQZT9evjglfPBf2Q5gpLKV3jI8S9Krx1wSK4uTbh4FJNszbniFlzfiKb5o
-         mM0w==
-X-Received: by 10.58.4.138 with SMTP id k10mr1675395vek.8.1393971701037; Tue,
- 04 Mar 2014 14:21:41 -0800 (PST)
-Received: by 10.52.73.161 with HTTP; Tue, 4 Mar 2014 14:21:40 -0800 (PST)
-In-Reply-To: <F9B4418D-9414-4857-9199-EDBA20B952C6@gmail.com>
+	id S1755688AbaCDWZE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Mar 2014 17:25:04 -0500
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:61692 "EHLO
+	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752123AbaCDWZB (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Mar 2014 17:25:01 -0500
+X-AuditID: 1207440e-f79c76d000003e2c-4b-531652bc1a8a
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 1D.CC.15916.CB256135; Tue,  4 Mar 2014 17:25:00 -0500 (EST)
+Received: from [192.168.69.148] (p57A2482C.dip0.t-ipconnect.de [87.162.72.44])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s24MOwsp004979
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Tue, 4 Mar 2014 17:24:59 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
+In-Reply-To: <xmqq8uspk72g.fsf@gitster.dls.corp.google.com>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrOKsWRmVeSWpSXmKPExsUixO6iqLsnSCzY4PsXM4vZN7axWXRd6Way
+	aOi9wuzA7NE2zczj4iVlj8+b5AKYo7htkhJLyoIz0/P07RK4M+70b2ct6OequLrmDlsD4y/2
+	LkZODgkBE4meF/dZIGwxiQv31rN1MXJxCAlcZpS4eGQ3lHOWSWLByz5WkCpeAW2J3w2LGEFs
+	FgFViUnnuphBbDYBXYlFPc1MILaoQLDE6ssPWCDqBSVOznwCZosIqElMbDsEZjMDbf6x4BTY
+	FcICThITvm8FmykkUCRx+NUvNhCbU8Ba4sadfqB6DqDrxCV6GoMgWnUk3vU9YIaw5SW2v53D
+	PIFRcBaSbbOQlM1CUraAkXkVo1xiTmmubm5iZk5xarJucXJiXl5qka6xXm5miV5qSukmRkhA
+	8+1gbF8vc4hRgINRiYf3BYdYsBBrYllxZe4hRkkOJiVRXm5gPAjxJeWnVGYkFmfEF5XmpBYf
+	YpTgYFYS4Y3RBsrxpiRWVqUW5cOkpDlYlMR51Zao+wkJpCeWpGanphakFsFkZTg4lCR4FwYC
+	NQoWpaanVqRl5pQgpJk4OEGGc0mJFKfmpaQWJZaWZMSDIji+GBjDICkeoL0HQdp5iwsSc4Gi
+	EK2nGHU5brf9+sQoxJKXn5cqJc5bD1IkAFKUUZoHtwKWvl4xigN9LMzbClLFA0x9cJNeAS1h
+	AlrSA/ZccUkiQkqqgVGwefOqs5s3L+D7dC0rbd4XRwnmPS/Td23indSq1rM0OyNF3TGIw3yF
+	qMidBWt3C6XkL7yz0nSKhNWeLJ99pkvXWhpx3RZ3YPt5roFt1uwFC8xW3ylxm5f9 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243397>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243398>
 
-On Sun, Mar 2, 2014 at 3:02 AM, Kyle J. McKay <mackyle@gmail.com> wrote:
-> I can't reproduce, mostly, on Mac OS X 10.5.8 or 10.6.8.
->
-> What I mean by mostly is that the very first time I ran the test script I
-> got approximately 36 of these errors:
->
-> fatal: unable to access
-> 'https://android.googlesource.com/platform/external/tinyxml2/': Unknown SSL
-> protocol error in connection to android.googlesource.com:443
->
-> The rest of the fetches completed.  That was with Git 1.8.5.1.
->
-> However, I was never able to reproduce those errors again.  All the
-> subsequent runs completed all fetches successfully using that same Git
-> version so I also tried Git 1.8.5.2, 1.8.5.5 and Git 1.7.6.1 on the original
-> and another machine.
+On 03/04/2014 10:05 PM, Junio C Hamano wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+> 
+>>  	while (*path) {
+>> -		const char *slash;
+>>  		struct cache_tree_sub *sub;
+>> +		const char *slash = strchr(path, '/');
+>>  
+>> -		slash = strchr(path, '/');
+>>  		if (!slash)
+>>  			slash = path + strlen(path);
+> 
+> Isn't the above a strchrnul()?
 
-With Git 1.9.0.138.g2de3478 (latest build from source) on Mac OS X
-10.9.2 I report similar results. A first run yielded several  "fatal:
-unable to access" errors, while a second run yielded just one.
+Oh, cool, I never realized that this GNU extension was blessed for use
+in Git.  Will change.
+
+> Combining a freestanding decl with intializer assignment to lose one
+> line is sort of cheating on the line count, but replacing the three
+> lines with a single strchrnul() would be a real code reduction ;-)
+
+I suppose you are just teasing me, but for the record I consider line
+count only a secondary metric.  The reason for combining initialization
+with declaration is to reduce by one the number of times that the reader
+has to think about that variable when analyzing the code.
+
+And as I am writing this I realize that after converting to the use of
+strchrnul(), sub can also be initialized at its declaration.
+
+I really wish we could mix declarations with statements because I think
+it is a big help to readability.
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
