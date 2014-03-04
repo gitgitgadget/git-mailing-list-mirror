@@ -1,77 +1,94 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH v3] skip_prefix: rewrite so that prefix is scanned once
-Date: Tue, 04 Mar 2014 01:09:39 +0100
-Message-ID: <877g8akenw.fsf@fencepost.gnu.org>
-References: <1393816384-3300-1-git-send-email-siddharth98391@gmail.com>
-	<xmqqvbvvp0gj.fsf@gitster.dls.corp.google.com>
-	<xmqq61nuoqd5.fsf@gitster.dls.corp.google.com>
-	<CACsJy8ASBeravdk67pbOJbrFUbwg21JwYcLtSbDDMJOu9-F=yA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Siddharth Goel <siddharth98391@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 04 01:09:49 2014
+From: Jacopo Notarstefano <jacopo.notarstefano@gmail.com>
+Subject: [PATCH] git-bisect.sh: fix a few style issues
+Date: Tue,  4 Mar 2014 01:21:43 +0100
+Message-ID: <1393892503-12765-1-git-send-email-jacopo.notarstefano@gmail.com>
+Cc: Jacopo Notarstefano <jacopo.notarstefano@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 04 01:16:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKcva-0002Uo-55
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 01:09:46 +0100
+	id 1WKd1u-00076z-2e
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 01:16:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755762AbaCDAJl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Mar 2014 19:09:41 -0500
-Received: from fencepost.gnu.org ([208.118.235.10]:35070 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755711AbaCDAJl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Mar 2014 19:09:41 -0500
-Received: from localhost ([127.0.0.1]:34110 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1WKcvU-0001Uv-3H; Mon, 03 Mar 2014 19:09:40 -0500
-Received: by lola (Postfix, from userid 1000)
-	id C039DE065F; Tue,  4 Mar 2014 01:09:39 +0100 (CET)
-In-Reply-To: <CACsJy8ASBeravdk67pbOJbrFUbwg21JwYcLtSbDDMJOu9-F=yA@mail.gmail.com>
-	(Duy Nguyen's message of "Tue, 4 Mar 2014 06:37:25 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
+	id S1755326AbaCDAQO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Mar 2014 19:16:14 -0500
+Received: from mail-ea0-f178.google.com ([209.85.215.178]:49401 "EHLO
+	mail-ea0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755248AbaCDAQN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Mar 2014 19:16:13 -0500
+Received: by mail-ea0-f178.google.com with SMTP id a15so9539eae.9
+        for <git@vger.kernel.org>; Mon, 03 Mar 2014 16:16:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=QDUD23eQxTx16bXSAgS1YQtysLnnReHhGRiA50H2+wE=;
+        b=KnfYxSOC3ZIp77OxW1ua0VVVnxu3Znoha+LvA8c4tq0KyYaYocRz/W99BN7zsc4yna
+         mQp5MSk+9w4c1CJJ1tyYfitegKNZnF8LwUozVq4egzAJAj5JDV29G+Zj2xOEwIhXong4
+         eedu0rw+Q1HjG9AOyj/EpNBnJG2zA6Fy7lgv3YqN4OHR1agPB3rMccyedmQEDNXTEbya
+         afj0GBzLMjH7N6V/byjpjWysTRElkpQLmA1CDbU4hiyx/6VcBMLFi/2zchviI9dHRn5r
+         jRx75aiqgYTbtL7dFxtRhyEXf6AVmcwSIqdzXmTkT/FjuRCcOwQHz85AkJuQ7wgk7H1C
+         /XSA==
+X-Received: by 10.14.246.196 with SMTP id q44mr32624247eer.45.1393892172517;
+        Mon, 03 Mar 2014 16:16:12 -0800 (PST)
+Received: from localhost.localdomain (dynamic-adsl-78-12-95-178.clienti.tiscali.it. [78.12.95.178])
+        by mx.google.com with ESMTPSA id x3sm56297110eep.17.2014.03.03.16.16.11
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 03 Mar 2014 16:16:11 -0800 (PST)
+X-Mailer: git-send-email 1.9.0.1.g641f09f
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243319>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Redirection operators should have a space before them, but not after them.
 
-> On Tue, Mar 4, 2014 at 5:43 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> diff --git a/git-compat-util.h b/git-compat-util.h
->> index cbd86c3..68ffaef 100644
->> --- a/git-compat-util.h
->> +++ b/git-compat-util.h
->> @@ -357,8 +357,14 @@ extern int suffixcmp(const char *str, const char *suffix);
->>
->>  static inline const char *skip_prefix(const char *str, const char *prefix)
->>  {
->> -       size_t len = strlen(prefix);
->> -       return strncmp(str, prefix, len) ? NULL : str + len;
->
-> Just a note. gcc does optimize strlen("abcdef") to 6, and with that
-> information at compile time built-in strncmp might do better.
+Signed-off-by: Jacopo Notarstefano <jacopo.notarstefano@gmail.com>
+---
+ git-bisect.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-Indeed, most (but not all) of the calls have a constant string as
-prefix.  However, strncmp in each iteration checks for both *str as well
-as *prefix to be different from '\0' independently (and it appears
-unlikely to me that the optimizer will figure out that it's unnecessary
-for either) _and_ compares them for equality so it's not likely to be
-faster than the open-coded loop.
-
-One could, however, use memcmp instead of strncmp.  I'm just not sure
-whether memcmp is guaranteed not to peek beyond the first mismatching
-byte even if the count would allow for more.  It could lead to undefined
-behavior if the first mismatching byte would be the ending NUL byte of
-str.
-
+diff --git a/git-bisect.sh b/git-bisect.sh
+index 73b4c14..af4d04c 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -365,7 +365,7 @@ bisect_reset() {
+ 	}
+ 	case "$#" in
+ 	0) branch=$(cat "$GIT_DIR/BISECT_START") ;;
+-	1) git rev-parse --quiet --verify "$1^{commit}" > /dev/null || {
++	1) git rev-parse --quiet --verify "$1^{commit}" >/dev/null || {
+ 			invalid="$1"
+ 			die "$(eval_gettext "'\$invalid' is not a valid commit")"
+ 		}
+@@ -458,13 +458,13 @@ exit code \$res from '\$command' is < 0 or >= 128" >&2
+ 		fi
+ 
+ 		# We have to use a subshell because "bisect_state" can exit.
+-		( bisect_state $state > "$GIT_DIR/BISECT_RUN" )
++		( bisect_state $state >"$GIT_DIR/BISECT_RUN" )
+ 		res=$?
+ 
+ 		cat "$GIT_DIR/BISECT_RUN"
+ 
+ 		if sane_grep "first bad commit could be any of" "$GIT_DIR/BISECT_RUN" \
+-			> /dev/null
++			>/dev/null
+ 		then
+ 			gettextln "bisect run cannot continue any more" >&2
+ 			exit $res
+@@ -477,7 +477,7 @@ exit code \$res from '\$command' is < 0 or >= 128" >&2
+ 			exit $res
+ 		fi
+ 
+-		if sane_grep "is the first bad commit" "$GIT_DIR/BISECT_RUN" > /dev/null
++		if sane_grep "is the first bad commit" "$GIT_DIR/BISECT_RUN" >/dev/null
+ 		then
+ 			gettextln "bisect run success"
+ 			exit 0;
 -- 
-David Kastrup
+1.9.0.1.g641f09f
