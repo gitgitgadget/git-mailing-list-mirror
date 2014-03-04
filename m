@@ -1,180 +1,88 @@
-From: Matthijs Kooijman <matthijs@stdin.nl>
-Subject: Re: [PATCH] git submodule foreach: Skip eval for more than one
- argument
-Date: Tue, 4 Mar 2014 14:51:06 +0100
-Message-ID: <20140304135106.GD11566@login.drsnuggles.stderr.nl>
-References: <alpine.DEB.2.00.1309261605330.20647@dr-wily.mit.edu>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="ZjUm/5Ww7TTYVW0y"
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johan Herland <johan@herland.net>, git@vger.kernel.org
-To: Anders Kaseorg <andersk@MIT.EDU>
-X-From: git-owner@vger.kernel.org Tue Mar 04 14:51:21 2014
+From: Krzesimir Nowak <krzesimir@endocode.com>
+Subject: [RFC] make --set-upstream work for local branches not in refs/heads
+Date: Tue,  4 Mar 2014 15:07:25 +0100
+Message-ID: <1393942046-11488-1-git-send-email-krzesimir@endocode.com>
+Cc: Krzesimir Nowak <krzesimir@endocode.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 04 15:08:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WKpkb-0006HK-8A
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 14:51:17 +0100
+	id 1WKq0o-0002yN-9V
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Mar 2014 15:08:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757238AbaCDNvM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2014 08:51:12 -0500
-Received: from drsnuggles.stderr.nl ([94.142.244.14]:57990 "EHLO
-	drsnuggles.stderr.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757185AbaCDNvL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Mar 2014 08:51:11 -0500
-Received: from login.drsnuggles.stderr.nl ([10.42.0.9] ident=mail)
-	by mail.drsnuggles.stderr.nl with smtp (Exim 4.69)
-	(envelope-from <matthijs@stdin.nl>)
-	id 1WKpkQ-00069P-F6; Tue, 04 Mar 2014 14:51:07 +0100
-Received: (nullmailer pid 23645 invoked by uid 1000);
-	Tue, 04 Mar 2014 13:51:06 -0000
-Mail-Followup-To: Matthijs Kooijman <matthijs@stdin.nl>,
-	Anders Kaseorg <andersk@MIT.EDU>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johan Herland <johan@herland.net>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.00.1309261605330.20647@dr-wily.mit.edu>
-X-PGP-Fingerprint: 7F6A 9F44 2820 18E2 18DE  24AA CF49 D0E6 8A2F AFBC
-X-PGP-Key: http://www.stderr.nl/static/files/gpg_pubkey.asc
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Spam-Score: -2.6 (--)
-X-Spam-Report: Spamchecked on "mail.drsnuggles.stderr.nl"
-	pts  rule name              description
-	---- ---------------------- -------------------------------------------
-	-2.6 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
-	[score: 0.0000]
-	0.0 AWL                    AWL: From: address is in the auto white-list
+	id S1757250AbaCDOH6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Mar 2014 09:07:58 -0500
+Received: from mail-bk0-f42.google.com ([209.85.214.42]:55681 "EHLO
+	mail-bk0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751740AbaCDOH5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Mar 2014 09:07:57 -0500
+Received: by mail-bk0-f42.google.com with SMTP id mx12so225325bkb.29
+        for <git@vger.kernel.org>; Tue, 04 Mar 2014 06:07:56 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=tS3IjssVBpLaLwIO3lb2NczOU6aUjDZoCL0KxzgdhVA=;
+        b=LdWro4sf7wPJiFs4zvfWccFI2G76cI8CipDy5/6PDuGdN3y/RNjV2fJRuWQ5ZCPIHA
+         GDQ5RXhIomwUu0S05tg2zYHnZ7+BUfSz5rj0G7SOShTPnmyHg1wAYtwzvY05zTYqpag/
+         xIrHfgKiuouT5BI0cWHNa4HObm4+w1g4MjJGwNoA/rbWc0d49a4cNNr1XBs7yVMsy+Th
+         7xnzILKDJ3s47s4B3n51ZnOgSB79NgX2xvo1/uUx/j/ktemNkEBX9+bYHiBd1bD3sEGI
+         S6N26dKIci4KFXrbrE7fRWcX2MNTLTHKVxAU46betY3OjSIYxtPoG+VtOgnLlE2BBM5x
+         O2fQ==
+X-Gm-Message-State: ALoCoQnSVJtkVILfx+7ef6YftwZp0YtUEAyI7iq1g414/88Ok/e4ctusTrLwYhVnUXWu/wOhW5qJ
+X-Received: by 10.205.41.202 with SMTP id tv10mr1088029bkb.41.1393942075754;
+        Tue, 04 Mar 2014 06:07:55 -0800 (PST)
+Received: from localhost.localdomain (p57923D4E.dip0.t-ipconnect.de. [87.146.61.78])
+        by mx.google.com with ESMTPSA id r1sm1342213bkk.2.2014.03.04.06.07.54
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 04 Mar 2014 06:07:54 -0800 (PST)
+X-Mailer: git-send-email 1.8.3.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243343>
 
+It might be possible (in "Gerrited" setups) to have local branches
+outside refs/heads/, like for example in following fetch config:
 
---ZjUm/5Ww7TTYVW0y
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+[remote "origin"]
+	url = ssh://user@example.com/my-project
+	fetch = +refs/heads/*:refs/remotes/origin/*
+	fetch = +refs/wip/*:refs/remotes/origin-wip/*
 
-Hey folks,
+Let's say that 'test' branch already exist in origin/refs/wip/. If I
+call:
 
-On Thu, Sep 26, 2013 at 04:10:15PM -0400, Anders Kaseorg wrote:
-> =E2=80=98eval "$@"=E2=80=99 created an extra layer of shell interpretatio=
-n, which was
-> probably not expected by a user who passed multiple arguments to git
-> submodule foreach:
+git checkout test
 
-It seems this patch has broken the use of $name, $path, etc. inside the
-command ran by foreach (when it contains more than one argument):
+then it will create a new branch and add an entry to .git/config:
 
+[branch "test"]
+	remote = origin
+	merge = refs/wip/test
 
-matthijs@grubby:~/test$ git --version
-git version 1.9.0
-matthijs@grubby:~/test$ git submodule foreach echo '$name'
-Entering 'test'
-$name
+But if I create a branch 'test2' and call:
 
-But it works on the single-argument version:
+git push --set-upstream origin test2:refs/wip/test2
 
-matthijs@grubby:~/test$ git submodule foreach 'echo $name'
-Entering 'test'
-test
+then branch is pushed, but no entry in .git config is created. I have
+to do it manually. I attached a hack-patch to have it working just to
+check with you if anything like that would be accepted. Obviously the
+get_local_refs() would need to compute the actual list of local
+hierarchies (if it is possible at all). And it probably should get a
+better name. And probably something else.
 
-And it used to work in older versions:
+What do you think?
 
-matthijs@login:~/test$ git --version
-git version 1.7.5.4
-matthijs@login:~/test$ git submodule foreach 'echo $name'
-Entering 'test'
-test
-matthijs@login:~/test$ git submodule foreach echo '$name'
-Entering 'test'
-test
+Krzesimir Nowak (1):
+  RFC: make --set-upstream work for branches not in refs/heads/
 
+ transport.c | 41 ++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 34 insertions(+), 7 deletions(-)
 
-I'm not sure how to fix this exactly. Adding "export" for the variables in
-git-submodule.sh seems obvious but doesn't seem to be a complete solution. =
-This
-makes the variables available in the environment of any commands called (so=
- git
-submodule sh -c 'echo $name') works, but the git submodule foreach echo '$n=
-ame'
-above still doesn't work, since the "$@" used does not do any substitution,=
- it
-just executes $@ as a commandline unmodified. Ideally, you would do variable
-substitution, but not word splitting, but I'm not sure how to do that. Also,
-you'd still need one more layer of backslash escapes, which is probably what
-this commit wanted to prevent...
-
-Note that saying "you should use the single argument version if you need
-those variables" doesn't seem possible in all cases. In particular, I'm
-creating an alias that calls git submodule foreach, where the alias
-contains part of the command and the rest of command comes from
-arguments to the alias, meaning we always have at least two arguments...
-
-Finally, the new behaviour (e.g., eval with one argument, directly
-execute with multiple) is not documented in the manpage, but it seems
-relevant enough to need documentation?
-
-Gr.
-
-Matthijs
-
->=20
-> $ git grep "'"
-> [searches for single quotes]
-> $ git submodule foreach git grep "'"
-> Entering '[submodule]'
-> /usr/lib/git-core/git-submodule: 1: eval: Syntax error: Unterminated quot=
-ed string
-> Stopping at '[submodule]'; script returned non-zero status.
->=20
-> To fix this, if the user passed more than one argument, just execute
-> "$@" directly instead of passing it to eval.
->=20
-> Signed-off-by: Anders Kaseorg <andersk@mit.edu>
-> ---
->  git-submodule.sh | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
->=20
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index c17bef1..3381864 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -545,7 +545,12 @@ cmd_foreach()
->  				sm_path=3D$(relative_path "$sm_path") &&
->  				# we make $path available to scripts ...
->  				path=3D$sm_path &&
-> -				eval "$@" &&
-> +				if [ $# -eq 1 ]
-> +				then
-> +					eval "$1"
-> +				else
-> +					"$@"
-> +				fi &&
->  				if test -n "$recursive"
->  				then
->  					cmd_foreach "--recursive" "$@"
-> --=20
-> 1.8.4
->=20
->=20
->=20
-
---ZjUm/5Ww7TTYVW0y
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAlMV2koACgkQz0nQ5oovr7yBUwCcCyqLMnw7UWnwzs2kSa4IN3VC
-eX0AoNNztkcbjrMWayZgXnSinFbShtHK
-=ZOSh
------END PGP SIGNATURE-----
-
---ZjUm/5Ww7TTYVW0y--
+-- 
+1.8.3.1
