@@ -1,91 +1,85 @@
-From: Jeremy Nickurak <jeremy@nickurak.ca>
-Subject: Re: Bad git log behavior with multiple glob path arguments
-Date: Wed, 5 Mar 2014 09:21:53 -0700
-Message-ID: <CA+eQo_2Gcipe7VA7WMY+etULjmSC=TqGmpZmGSGeWv03c93FDA@mail.gmail.com>
-References: <CA+eQo_21j=GzsvWAjxzr+aFYcPcnnyozySOo0m9bO-xJq_6a9A@mail.gmail.com>
-	<CACsJy8A28x5m1SLV-R=QrFniPXUbV+x9N27GA-j+Ut_oe_6oGQ@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: New directory lost by git am
+Date: Wed, 5 Mar 2014 11:34:15 -0500
+Message-ID: <20140305163415.GA28908@sigill.intra.peff.net>
+References: <531690A3.3040509@ubuntu.com>
+ <53169549.10309@gmail.com>
+ <53169868.3010401@ubuntu.com>
+ <5316DBEC.3020208@gmail.com>
+ <53173423.6050708@ubuntu.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 05 17:22:06 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Chris Packham <judge.packham@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Phillip Susi <psusi@ubuntu.com>
+X-From: git-owner@vger.kernel.org Wed Mar 05 17:34:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WLEZz-0002Wq-Ev
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Mar 2014 17:21:59 +0100
+	id 1WLEly-00064J-Gy
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Mar 2014 17:34:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753056AbaCEQVz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2014 11:21:55 -0500
-Received: from mail-wg0-f46.google.com ([74.125.82.46]:33725 "EHLO
-	mail-wg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751983AbaCEQVy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Mar 2014 11:21:54 -0500
-Received: by mail-wg0-f46.google.com with SMTP id z12so1526493wgg.29
-        for <git@vger.kernel.org>; Wed, 05 Mar 2014 08:21:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nickurak.ca; s=google-dkim;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=LLaXyT3qBsy7bzV6MuGhwbZK97vCL1OQZGwz3izLvkM=;
-        b=Lwqh1gkUL4blg/hffoslYn5T/ozDjrgsSgKAJJJWvE0h8iwTyr0/wWqrOXNxMP9ZSe
-         w4BM/sKLj0HHAvHGmKWbBzMPOmiaZt0yRzUOTnK59/9LFxdwuV/exnCPh+7nvw1nOvbU
-         E9lauLggYMXXH/rf6485wj8duEbOT0qS3q3v4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=LLaXyT3qBsy7bzV6MuGhwbZK97vCL1OQZGwz3izLvkM=;
-        b=VxzbLzTaGha3wqDRwgphrjLzOPZOaplgld4I2jey9BQZqRhV5yvP0YtwGJT6nYMpON
-         xz4wiW5G5C7fnupd3mSJMO5QIka04zbjdt/31ai4UF8RVMgir3sBXlSEUv+w+iQaUpEh
-         K0/FRh+nch/WbhuYy0hWnRidDS8SrBJXQI185MLTNb4p0Q80005ocXX8usTQ1X2B1ueo
-         Vui59PrPcOPSuVbOckXyqx15RA1k+eyyIw8Tp9LbQdGLRYoqPYCjl4VPCTUOxpaXFMfa
-         z7rGcTwfk/hhhskJZj52GTSJlBqwCNJmCiK5XYwGJ4T95AlIkvyyOU9hqGKeJFhf252E
-         z2Nw==
-X-Gm-Message-State: ALoCoQmZI1mZ3ixpYn/lGGLdZdhRd1OUPbDW5cO9EofOSVW3EdHTataXYmFVvxkGkWa931XeoARG
-X-Received: by 10.194.241.132 with SMTP id wi4mr2549192wjc.14.1394036513138;
- Wed, 05 Mar 2014 08:21:53 -0800 (PST)
-Received: by 10.216.122.200 with HTTP; Wed, 5 Mar 2014 08:21:53 -0800 (PST)
-X-Originating-IP: [96.52.225.98]
-In-Reply-To: <CACsJy8A28x5m1SLV-R=QrFniPXUbV+x9N27GA-j+Ut_oe_6oGQ@mail.gmail.com>
+	id S1753899AbaCEQeS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Mar 2014 11:34:18 -0500
+Received: from cloud.peff.net ([50.56.180.127]:33471 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752232AbaCEQeR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2014 11:34:17 -0500
+Received: (qmail 10060 invoked by uid 102); 5 Mar 2014 16:34:17 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 05 Mar 2014 10:34:17 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 05 Mar 2014 11:34:15 -0500
+Content-Disposition: inline
+In-Reply-To: <53173423.6050708@ubuntu.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243443>
 
-On Wed, Mar 5, 2014 at 3:01 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Wed, Mar 5, 2014 at 12:56 PM, Jeremy Nickurak <jeremy@nickurak.ca> wrote:
->> git log seems to understand globs in the last path argument, and the
->> last path argument only. I didn't see anything in the git log man page
->> expressly saying this was to be expected, but it does seem like it
->> ought to work for all the arguments or none of them.
->
-> What version did you use? We have a fix in the same area,
-> e4ddb05 (tree_entry_interesting: match against all pathspecs -
-> 2014-01-25), and it's in v1.8.5.5 and v1.9.0
+On Wed, Mar 05, 2014 at 09:26:43AM -0500, Phillip Susi wrote:
 
-So close! :) 1.8.5.3
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> On 3/5/2014 3:10 AM, Chris Packham wrote:
+> > My example is creating a commit on the "temp" branch then applying
+> > it to the "master" branch using git am.
+> > 
+> >> Do a reset HEAD~1 --hard, and git clean -x -f -d before git am.
+> >> I didn't notice the missing file myself for some time because it
+> >> is left in the working tree, just not added to the index and
+> >> included in the commit.
+> >> 
+> 
+> Right... so the file is left in the directory, even though it is not
+> checked in.  A git status should show it is an unknown file, and a
+> clean should remove it.
 
->> Note that glob matching doesn't seem to occur unless '--' is included.
->
-> do you mean "git log" does not run at all and complains about
-> disambiguation, or it runs but nothing is filtered?
+I don't think those steps are necessary for Chris's example. When he
+switches back to the master branch, git removes the subdirectory (the
+file is tracked in "temp" but not "master", so we remove it when
+switching branches, and then the directory is empty, so we clean it up,
+too). You can verify with an extra "ls" after the checkout but before
+the "am".
 
-It complains about disambiguation:
+> > * "git apply" parsed patches that add new files, generated by
+> > programs other than Git, incorrectly.  This is an old breakage in
+> > v1.7.11.
+> > 
+> > Does that sound like your problem? If you can I'd suggest
+> > updating, ideally to the recent 1.9.0 release but if you're feeling
+> > conservative try 1.8.3.4.
+> 
+> Vaguely, except for the "other than git" part.  This patch was
+> generated by git-format-patch ( I didn't think apply handled patches
+> that weren't ).
 
-$ mkdir -p ~/tmp; cd ~/tmp; git init; echo hello > hello.txt; git add
-hello.txt; git commit -m hello; echo "Without --:"; git log --oneline
-'*.txt'; echo "With --:"; git log --oneline -- '*.txt';
-Reinitialized existing Git repository in /home/nickuj/tmp/.git/
-On branch master
-nothing to commit, working directory clean
-Without --:
-fatal: ambiguous argument '*.txt': unknown revision or path not in the
-working tree.
-Use '--' to separate paths from revisions, like this:
-'git <command> [<revision>...] -- [<file>...]'
-With --:
-78ff378 hello
+I can't get Chris's script to fail on any version of git. Can you show
+us an example of a patch that does not behave (or better yet, a
+reproduction recipe to generate the patch with "format-patch")?
+
+-Peff
