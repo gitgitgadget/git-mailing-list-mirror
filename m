@@ -1,111 +1,63 @@
-From: Kirill Smelkov <kirr@mns.spb.ru>
-Subject: Re: [PATCH 17/19] Portable alloca for Git
-Date: Wed, 5 Mar 2014 13:31:51 +0400
-Organization: Marine Bridge & Navigation Systems
-Message-ID: <20140305093151.GA3994@tugrik.mns.mnsspb.ru>
-References: <cover.1393257006.git.kirr@mns.spb.ru>
- <f08867ee212e27074dbb4cbb06af408b16dba0a1.1393257006.git.kirr@mns.spb.ru>
- <CABPQNSaVQuXBEnSrs6hdHwEbaBKFr-NjKpuBRNnbkM+HtfJ4Ag@mail.gmail.com>
- <CABPQNSadTGfiue6G+6x7_o10Ri1E7D5vZFU=Cp8rAha+j9jwSA@mail.gmail.com>
- <20140228170012.GA5247@tugrik.mns.mnsspb.ru>
- <CABPQNSYnDjhxjpyZQkNP_qwect_tnPvJ_nEfGSq9qnYFMpehWg@mail.gmail.com>
+From: Dmitry <wipedout@yandex.ru>
+Subject: git push first asks for credentials, then checks the branch exists
+Date: Wed, 05 Mar 2014 13:36:12 +0400
+Message-ID: <259061394012172@web5j.yandex.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>,
-	Brandon Casey <drafnel@gmail.com>,
-	Marius Storm-Olsen <mstormo@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Gerrit Pape <pape@smarden.org>,
-	Petr Salinger <Petr.Salinger@seznam.cz>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Thomas Schwinge <tschwinge@gnu.org>
-To: Erik Faye-Lund <kusmabite@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 05 10:30:32 2014
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 05 10:45:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WL89m-0004uD-Rg
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Mar 2014 10:30:31 +0100
+	id 1WL8OY-0000Ox-Em
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Mar 2014 10:45:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752064AbaCEJaY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2014 04:30:24 -0500
-Received: from mail.mnsspb.ru ([84.204.75.2]:51011 "EHLO mail.mnsspb.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751622AbaCEJaV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Mar 2014 04:30:21 -0500
-Received: from [192.168.0.127] (helo=tugrik.mns.mnsspb.ru)
-	by mail.mnsspb.ru with esmtps id 1WL89U-0000yc-VA; Wed, 05 Mar 2014 13:30:13 +0400
-Received: from kirr by tugrik.mns.mnsspb.ru with local (Exim 4.72)
-	(envelope-from <kirr@tugrik.mns.mnsspb.ru>)
-	id 1WL8B5-00012p-Kx; Wed, 05 Mar 2014 13:31:51 +0400
-Content-Disposition: inline
-In-Reply-To: <CABPQNSYnDjhxjpyZQkNP_qwect_tnPvJ_nEfGSq9qnYFMpehWg@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753899AbaCEJpl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Mar 2014 04:45:41 -0500
+Received: from forward13.mail.yandex.net ([95.108.130.120]:59659 "EHLO
+	forward13.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751622AbaCEJpj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2014 04:45:39 -0500
+X-Greylist: delayed 564 seconds by postgrey-1.27 at vger.kernel.org; Wed, 05 Mar 2014 04:45:39 EST
+Received: from web5j.yandex.ru (web5j.yandex.ru [5.45.198.46])
+	by forward13.mail.yandex.net (Yandex) with ESMTP id 4BB4B141624
+	for <git@vger.kernel.org>; Wed,  5 Mar 2014 13:36:13 +0400 (MSK)
+Received: from 127.0.0.1 (localhost [127.0.0.1])
+	by web5j.yandex.ru (Yandex) with ESMTP id F1FBC2681391;
+	Wed,  5 Mar 2014 13:36:12 +0400 (MSK)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
+	t=1394012173; bh=Qs+E7/2m/RbaV5Lz86TJLkzJ0c1FmihCRYCnUunbY6I=;
+	h=From:To:Subject:Date;
+	b=r5OaThX9UOjAfpQ/O82FTk2B/7uvGCDgJCvaNPHYe7WPGuIFm6L6+B0TTnRP0UxXe
+	 wARvTK+u/fzjOCXdz+sFG+MiGs97k+a9GJFCWOVgH0LH7pvc2ejXyRCvRBZG/Zi8zq
+	 9uRHnCr3OSa/hPnktI+TjSrmyRyWMbrmizetJWVk=
+Received: from [195.210.147.143] ([195.210.147.143]) by web5j.yandex.ru with HTTP;
+	Wed, 05 Mar 2014 13:36:12 +0400
+X-Mailer: Yamail [ http://yandex.ru ] 5.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243430>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243431>
 
-On Fri, Feb 28, 2014 at 06:19:58PM +0100, Erik Faye-Lund wrote:
-> On Fri, Feb 28, 2014 at 6:00 PM, Kirill Smelkov <kirr@mns.spb.ru> wrote:
-> > On Fri, Feb 28, 2014 at 02:50:04PM +0100, Erik Faye-Lund wrote:
-> >> On Fri, Feb 28, 2014 at 2:44 PM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
-> >> > On Mon, Feb 24, 2014 at 5:21 PM, Kirill Smelkov <kirr@mns.spb.ru> wrote:
-> >> >> diff --git a/Makefile b/Makefile
-> >> >> index dddaf4f..0334806 100644
-> >> >> --- a/Makefile
-> >> >> +++ b/Makefile
-> >> >> @@ -316,6 +321,7 @@ endif
-> >> >>  ifeq ($(uname_S),Windows)
-> >> >>         GIT_VERSION := $(GIT_VERSION).MSVC
-> >> >>         pathsep = ;
-> >> >> +       HAVE_ALLOCA_H = YesPlease
-> >> >>         NO_PREAD = YesPlease
-> >> >>         NEEDS_CRYPTO_WITH_SSL = YesPlease
-> >> >>         NO_LIBGEN_H = YesPlease
-> >> >
-> >> > In MSVC, alloca is defined in in malloc.h, not alloca.h:
-> >> >
-> >> > http://msdn.microsoft.com/en-us/library/wb1s57t5.aspx
-> >> >
-> >> > In fact, it has no alloca.h at all. But we don't have malloca.h in
-> >> > mingw either, so creating a compat/win32/alloca.h that includes
-> >> > malloc.h is probably sufficient.
-> >>
-> >> "But we don't have alloca.h in mingw either", sorry.
-> >
-> > Don't we have that for MSVC already in
-> >
-> >     compat/vcbuild/include/alloca.h
-> >
-> > and
-> >
-> >     ifeq ($(uname_S),Windows)
-> >         ...
-> >         BASIC_CFLAGS = ... -Icompat/vcbuild/include ...
-> >
-> >
-> > in config.mak.uname ?
-> 
-> Ah, of course. Thanks for setting me straight!
-> 
-> > And as I've not touched MINGW part in config.mak.uname the patch stays
-> > valid as it is :) and we can incrementally update what platforms have
-> > working alloca with follow-up patches.
-> >
-> > In fact that would be maybe preferred, for maintainers to enable alloca
-> > with knowledge and testing, as one person can't have them all at hand.
-> 
-> Yeah, you're probably right.
+Hi,
 
-Erik, the patch has been merged into pu today. Would you please
-follow-up with tested MINGW change?
+Here's my usecase. I have created a BranchWithVeryLongName and I want to have it pushed to origin. So I use this command with version 1.8.1.2:
 
-Thanks beforehand,
-Kirill
+git push origin BranchMistypedLongName
+
+(note that I mistyped the branch name). The following happens:
+1. git asks me for username and password
+2. it authenticates on the origin server
+3. it bails out with "error: sfc refspec BranchMistypedLongName does not match any"
+
+
+Can't git perhaps check that the branch exists before it asks me for credentials and just say there's no such branch?
+
+Could you please fix this?
+
+Thank you.
+Dmitry.
