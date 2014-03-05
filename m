@@ -1,78 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/3] push: detect local refspec errors early
-Date: Wed, 5 Mar 2014 15:56:44 -0500
-Message-ID: <20140305205644.GA13149@sigill.intra.peff.net>
-References: <259061394012172@web5j.yandex.ru>
- <20140305190248.GB31252@sigill.intra.peff.net>
- <xmqqsiqwfjyd.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC 2/3] merge: Add hints to tell users about "git merge --abort"
+Date: Wed, 05 Mar 2014 13:20:45 -0800
+Message-ID: <xmqqob1kfiky.fsf@gitster.dls.corp.google.com>
+References: <1393437985-31401-1-git-send-email-andrew.kw.w@gmail.com>
+	<1393437985-31401-3-git-send-email-andrew.kw.w@gmail.com>
+	<20140226203836.GM7855@google.com>
+	<CADgNjak3aqPDV0iZYc8b6QJ9y+6bUd28n0UJOm6WjufQhjfuwA@mail.gmail.com>
+	<xmqqa9d4ijmu.fsf@gitster.dls.corp.google.com>
+	<CADgNjamZE5140U2vupgZMKyBq+e22+qOAAWKe=iRk7sxzhonvA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Dmitry <wipedout@yandex.ru>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 05 21:56:52 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Andrew Wong <andrew.kw.w@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 05 22:20:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WLIrz-00077l-GX
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Mar 2014 21:56:51 +0100
+	id 1WLJFJ-0006If-JI
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Mar 2014 22:20:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755758AbaCEU4r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2014 15:56:47 -0500
-Received: from cloud.peff.net ([50.56.180.127]:33655 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753448AbaCEU4r (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Mar 2014 15:56:47 -0500
-Received: (qmail 25351 invoked by uid 102); 5 Mar 2014 20:56:46 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 05 Mar 2014 14:56:46 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 05 Mar 2014 15:56:44 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqqsiqwfjyd.fsf@gitster.dls.corp.google.com>
+	id S1757211AbaCEVUx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Mar 2014 16:20:53 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52628 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754298AbaCEVUw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2014 16:20:52 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 86C696F772;
+	Wed,  5 Mar 2014 16:20:49 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=K0ZIBOXxAXXWTALCC3vx9HvPwK4=; b=I9IWl+
+	eDuaUgL+1OYb91p3lfp7PfHCrQfamE0dhPUUU8JmQP0QEGpeqeMa1/YRCQXNz+kW
+	LALtgOln4UhtRHYi41RT42ulRZAu05+4F5r19gCbvDWY/OyDPK+B7K3+ZFv16jS/
+	dTh6HXWUZwaDYjTv+KZ2bxELJHuvW77Zgf+rk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=RGjcjfl+/PBEvpuAR7Om84XBtBgJDjJ3
+	wNamCsxEVWB/ZZVL1UBVaNBOrIsEQZRWEG2K6stHPAMQKYKWwjLEf0BmbN5hVj9A
+	OnPEDAEGDwGPAHDz2/8twleujtvr8WnXzds5S/rL05P0e95pEIIgijj9pmSKDG0F
+	LWIZe9/rksk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 722CA6F770;
+	Wed,  5 Mar 2014 16:20:49 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 89E536F76C;
+	Wed,  5 Mar 2014 16:20:48 -0500 (EST)
+In-Reply-To: <CADgNjamZE5140U2vupgZMKyBq+e22+qOAAWKe=iRk7sxzhonvA@mail.gmail.com>
+	(Andrew Wong's message of "Wed, 5 Mar 2014 15:51:41 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 058DC42C-A4AC-11E3-9571-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243480>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243481>
 
-On Wed, Mar 05, 2014 at 12:51:06PM -0800, Junio C Hamano wrote:
+Andrew Wong <andrew.kw.w@gmail.com> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > We can't fully process the refspecs until we have talked to the other
-> > side, because they may involve matching refs from the remote; I don't
-> > think git even really looks at them until after we've connected.
-> >
-> > But I think there are some obvious cases, like a bogus left-hand side
-> > (i.e., what you have here) that cannot ever succeed, no matter what the
-> > other side has. We could sanity check the refspecs before doing anything
-> > else.
-> 
-> The user's wallclock time is more important than machine cycles,
-> checking things we could check before having the user do things is a
-> good principle to follow.
-> 
-> I wish that the solution did not have to involve doing the same
-> computation twice, but I do not think there is a clean way around
-> that in this codepath.
+> ... merge hints in the future as well.
 
-Yeah, there are two inefficiencies here:
+I actually wish we did not have to add any hints in the first place.
 
-  1. We parse the refspecs twice. In theory we could parse them once,
-     feed the result to check_push_refspecs, then again to
-     match_push_refspecs. That wouldn't be too hard a refactor.
+> Having one advice config/variable
+> for every single situation seems a bit overkill, and we would end up
+> with too many variables.
 
-  2. We match the "src" side to local refs twice. Getting rid of this
-     would involve splitting match_push_refs into two (analyzing the
-     "src" half and the "dst" half), somehow storing the intermediate
-     the two calls, and only contacting the remote after the first step
-     is done. This is probably trickier.
-
-I'd be happy if somebody wanted to do those cleanups on top, but I don't
-personally have an interest in spending time on them. The amount of
-duplicated computation we're talking about here is not very much (and
-the number of refspecs tends to be small, anyway).
-
--Peff
+That goes without saying.
