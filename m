@@ -1,86 +1,111 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH] t7800: add a difftool test for .git-files
-Date: Wed,  5 Mar 2014 01:23:35 -0800
-Message-ID: <1394011415-99543-1-git-send-email-davvid@gmail.com>
-References: <530FAA2D.8060104@web.de>
-Cc: git@vger.kernel.org,
-	=?UTF-8?q?G=C3=A1bor=20Lipt=C3=A1k?= <gabor.liptak@gmail.com>,
-	Jens Lehmann <jens.lehmann@web.de>,
-	John Keeping <john@keeping.me.uk>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 05 10:24:02 2014
+From: Kirill Smelkov <kirr@mns.spb.ru>
+Subject: Re: [PATCH 17/19] Portable alloca for Git
+Date: Wed, 5 Mar 2014 13:31:51 +0400
+Organization: Marine Bridge & Navigation Systems
+Message-ID: <20140305093151.GA3994@tugrik.mns.mnsspb.ru>
+References: <cover.1393257006.git.kirr@mns.spb.ru>
+ <f08867ee212e27074dbb4cbb06af408b16dba0a1.1393257006.git.kirr@mns.spb.ru>
+ <CABPQNSaVQuXBEnSrs6hdHwEbaBKFr-NjKpuBRNnbkM+HtfJ4Ag@mail.gmail.com>
+ <CABPQNSadTGfiue6G+6x7_o10Ri1E7D5vZFU=Cp8rAha+j9jwSA@mail.gmail.com>
+ <20140228170012.GA5247@tugrik.mns.mnsspb.ru>
+ <CABPQNSYnDjhxjpyZQkNP_qwect_tnPvJ_nEfGSq9qnYFMpehWg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>,
+	Brandon Casey <drafnel@gmail.com>,
+	Marius Storm-Olsen <mstormo@gmail.com>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Gerrit Pape <pape@smarden.org>,
+	Petr Salinger <Petr.Salinger@seznam.cz>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Thomas Schwinge <tschwinge@gnu.org>
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 05 10:30:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WL83V-00087S-Nc
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Mar 2014 10:24:02 +0100
+	id 1WL89m-0004uD-Rg
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Mar 2014 10:30:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753415AbaCEJXz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2014 04:23:55 -0500
-Received: from mail-pd0-f178.google.com ([209.85.192.178]:50831 "EHLO
-	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751574AbaCEJXx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Mar 2014 04:23:53 -0500
-Received: by mail-pd0-f178.google.com with SMTP id x10so812395pdj.37
-        for <git@vger.kernel.org>; Wed, 05 Mar 2014 01:23:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=AydmXxOZqE1crAxGR2yRWI74qzhzamkHpb2AuSfdJFk=;
-        b=v07ZO8LHC2ig0L99dJAI4jI+3HyaJjnz0DO2/ZviFwqyhqgsgI6szbSWrLS7HrLz81
-         C6gvqcPfMnR5cvSB44EBK336XGCOEoCxhMSM82Jk/GEC0qcOZdqNbhSWB8mmkyU9VVRJ
-         Cbbg4bSINfQWu9gTrrlufHkILPIWMY9OOoCDb26R8Dhiq/qAv6LCDn5KAAf2q4hspOv+
-         pV+v4cwe3om365CaSkpykCH6O4heYUz8BjLp4FnT+zdiuo0x5/h6T464AumJHJ34NAev
-         9btz34vUPC3d1f/zPlWKegs2rAJdNJOypnGqa7KPLK6CFotVdHoJsw0ZF7eKYd57hRdC
-         b1Bw==
-X-Received: by 10.68.242.68 with SMTP id wo4mr5788307pbc.32.1394011432508;
-        Wed, 05 Mar 2014 01:23:52 -0800 (PST)
-Received: from lustrous.fas.fa.disney.com (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by mx.google.com with ESMTPSA id gg3sm5926547pbc.34.2014.03.05.01.23.50
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 05 Mar 2014 01:23:51 -0800 (PST)
-X-Mailer: git-send-email 1.8.5.5.2.g42fdfc9
-In-Reply-To: <530FAA2D.8060104@web.de>
+	id S1752064AbaCEJaY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Mar 2014 04:30:24 -0500
+Received: from mail.mnsspb.ru ([84.204.75.2]:51011 "EHLO mail.mnsspb.ru"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751622AbaCEJaV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2014 04:30:21 -0500
+Received: from [192.168.0.127] (helo=tugrik.mns.mnsspb.ru)
+	by mail.mnsspb.ru with esmtps id 1WL89U-0000yc-VA; Wed, 05 Mar 2014 13:30:13 +0400
+Received: from kirr by tugrik.mns.mnsspb.ru with local (Exim 4.72)
+	(envelope-from <kirr@tugrik.mns.mnsspb.ru>)
+	id 1WL8B5-00012p-Kx; Wed, 05 Mar 2014 13:31:51 +0400
+Content-Disposition: inline
+In-Reply-To: <CABPQNSYnDjhxjpyZQkNP_qwect_tnPvJ_nEfGSq9qnYFMpehWg@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243429>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243430>
 
-From: Junio C Hamano <gitster@pobox.com>
+On Fri, Feb 28, 2014 at 06:19:58PM +0100, Erik Faye-Lund wrote:
+> On Fri, Feb 28, 2014 at 6:00 PM, Kirill Smelkov <kirr@mns.spb.ru> wrote:
+> > On Fri, Feb 28, 2014 at 02:50:04PM +0100, Erik Faye-Lund wrote:
+> >> On Fri, Feb 28, 2014 at 2:44 PM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
+> >> > On Mon, Feb 24, 2014 at 5:21 PM, Kirill Smelkov <kirr@mns.spb.ru> wrote:
+> >> >> diff --git a/Makefile b/Makefile
+> >> >> index dddaf4f..0334806 100644
+> >> >> --- a/Makefile
+> >> >> +++ b/Makefile
+> >> >> @@ -316,6 +321,7 @@ endif
+> >> >>  ifeq ($(uname_S),Windows)
+> >> >>         GIT_VERSION := $(GIT_VERSION).MSVC
+> >> >>         pathsep = ;
+> >> >> +       HAVE_ALLOCA_H = YesPlease
+> >> >>         NO_PREAD = YesPlease
+> >> >>         NEEDS_CRYPTO_WITH_SSL = YesPlease
+> >> >>         NO_LIBGEN_H = YesPlease
+> >> >
+> >> > In MSVC, alloca is defined in in malloc.h, not alloca.h:
+> >> >
+> >> > http://msdn.microsoft.com/en-us/library/wb1s57t5.aspx
+> >> >
+> >> > In fact, it has no alloca.h at all. But we don't have malloca.h in
+> >> > mingw either, so creating a compat/win32/alloca.h that includes
+> >> > malloc.h is probably sufficient.
+> >>
+> >> "But we don't have alloca.h in mingw either", sorry.
+> >
+> > Don't we have that for MSVC already in
+> >
+> >     compat/vcbuild/include/alloca.h
+> >
+> > and
+> >
+> >     ifeq ($(uname_S),Windows)
+> >         ...
+> >         BASIC_CFLAGS = ... -Icompat/vcbuild/include ...
+> >
+> >
+> > in config.mak.uname ?
+> 
+> Ah, of course. Thanks for setting me straight!
+> 
+> > And as I've not touched MINGW part in config.mak.uname the patch stays
+> > valid as it is :) and we can incrementally update what platforms have
+> > working alloca with follow-up patches.
+> >
+> > In fact that would be maybe preferred, for maintainers to enable alloca
+> > with knowledge and testing, as one person can't have them all at hand.
+> 
+> Yeah, you're probably right.
 
-Signed-off-by: David Aguilar <davvid@gmail.com>
----
-This is a replacement patch for the current tip of da/difftool.
+Erik, the patch has been merged into pu today. Would you please
+follow-up with tested MINGW change?
 
- t/t7800-difftool.sh | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
-
-diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-index 2418528..986b78e 100755
---- a/t/t7800-difftool.sh
-+++ b/t/t7800-difftool.sh
-@@ -434,4 +434,18 @@ test_expect_success PERL 'difftool --no-symlinks detects conflict ' '
- 	)
- '
- 
-+test_expect_success PERL 'difftool properly honors gitlink and core.worktree' '
-+	git submodule add ./. submod/ule &&
-+	(
-+		cd submod/ule &&
-+		test_config diff.tool checktrees &&
-+		test_config difftool.checktrees.cmd '\''
-+			test -d "$LOCAL" && test -d "$REMOTE" && echo good
-+		'\'' &&
-+		echo good>expect &&
-+		git difftool --tool=checktrees --dir-diff HEAD~ >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
- test_done
--- 
-1.8.5.5.2.g42fdfc9
+Thanks beforehand,
+Kirill
