@@ -1,105 +1,81 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: New directory lost by git am
-Date: Wed, 5 Mar 2014 12:13:34 -0500
-Message-ID: <20140305171334.GA31252@sigill.intra.peff.net>
-References: <531690A3.3040509@ubuntu.com>
- <53169549.10309@gmail.com>
- <53169868.3010401@ubuntu.com>
- <5316DBEC.3020208@gmail.com>
- <53173423.6050708@ubuntu.com>
- <20140305163415.GA28908@sigill.intra.peff.net>
- <53175510.7020000@ubuntu.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Chris Packham <judge.packham@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Phillip Susi <psusi@ubuntu.com>
-X-From: git-owner@vger.kernel.org Wed Mar 05 18:13:44 2014
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH v3 1/6] cache_tree_find(): remove redundant checks
+Date: Wed,  5 Mar 2014 18:26:25 +0100
+Message-ID: <1394040390-7954-2-git-send-email-mhagger@alum.mit.edu>
+References: <1394040390-7954-1-git-send-email-mhagger@alum.mit.edu>
+Cc: David Kastrup <dak@gnu.org>, git@vger.kernel.org,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 05 18:26:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WLFO1-0002iR-65
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Mar 2014 18:13:41 +0100
+	id 1WLFah-0007LK-H7
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Mar 2014 18:26:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752791AbaCERNh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2014 12:13:37 -0500
-Received: from cloud.peff.net ([50.56.180.127]:33496 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751630AbaCERNg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Mar 2014 12:13:36 -0500
-Received: (qmail 12029 invoked by uid 102); 5 Mar 2014 17:13:36 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 05 Mar 2014 11:13:36 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 05 Mar 2014 12:13:34 -0500
-Content-Disposition: inline
-In-Reply-To: <53175510.7020000@ubuntu.com>
+	id S1753028AbaCER0m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Mar 2014 12:26:42 -0500
+Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:52274 "EHLO
+	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751879AbaCER0l (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 5 Mar 2014 12:26:41 -0500
+X-AuditID: 1207440d-f79d86d0000043db-83-53175e50746c
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 7A.FE.17371.05E57135; Wed,  5 Mar 2014 12:26:40 -0500 (EST)
+Received: from michael.fritz.box (p57A24002.dip0.t-ipconnect.de [87.162.64.2])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s25HQY7A022625
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Wed, 5 Mar 2014 12:26:39 -0500
+X-Mailer: git-send-email 1.9.0
+In-Reply-To: <1394040390-7954-1-git-send-email-mhagger@alum.mit.edu>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrAIsWRmVeSWpSXmKPExsUixO6iqBsQJx5ssPeOqMXsG9vYLLqudDNZ
+	NPReYba4vWI+swOLx9/3H5g82qaZeVy8pOzxeZNcAEsUt01SYklZcGZ6nr5dAnfG5ZYDLAXb
+	2Sq271vL3MDYwNrFyMkhIWAi0XjtN5QtJnHh3nq2LkYuDiGBy4wSi3uesIMkhASOMkn0vswC
+	sdkEdCUW9TQzgdgiAmoSE9sOsYDYzAJpEg+2XAGzhQWcJL7t3QzWyyKgKrF4QxPYAl4BZ4lL
+	ex+wQSyTk5jyewFYDaeAi0Tj0g6gmRxAu5wlFu1nnsDIu4CRYRWjXGJOaa5ubmJmTnFqsm5x
+	cmJeXmqRrpFebmaJXmpK6SZGSOjw7mD8v07mEKMAB6MSDy9HoHiwEGtiWXFl7iFGSQ4mJVHe
+	q9FAIb6k/JTKjMTijPii0pzU4kOMEhzMSiK8AZFAOd6UxMqq1KJ8mJQ0B4uSOK/aEnU/IYH0
+	xJLU7NTUgtQimKwMB4eSBO+0WKBGwaLU9NSKtMycEoQ0EwcnyHAuKZHi1LyU1KLE0pKMeFBc
+	xBcDIwMkxQO0txOknbe4IDEXKArReopRUUqcVxEkIQCSyCjNgxsLSwivGMWBvhTmnQlSxQNM
+	JnDdr4AGMwENjuYDG1ySiJCSamCcn5+cU3z6t41V5sa7R83nbNs/48kLiWX2W1eH/dEMmOgm
+	da/4GMcF8TutKTfbeD5PF/jbWLn8CWPGpsUd3ufrVqarGEjav8iYp8+i2fH18u79R5g3z3e4
+	bu7wgSF3yZ9Cli0rRDiWvz+wcQ7D75wjjakSgbfYNRWOquazZSxgX3XyY+zBygmM 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243446>
 
-On Wed, Mar 05, 2014 at 11:47:12AM -0500, Phillip Susi wrote:
+slash is initialized to a value that cannot be NULL.  So remove the
+guards against slash == NULL later in the loop.
 
-> > I can't get Chris's script to fail on any version of git. Can you
-> > show us an example of a patch that does not behave (or better yet,
-> > a reproduction recipe to generate the patch with "format-patch")?
-> 
-> AHA!  It requires a conflict.  There were simple conflicts in the NEWS
-> file so I applied the patch with git am --reject and fixed up the
-> NEWS, and ran git am --resolved.  The git am --reject fails to add the
-> new directory to the index.
+Suggested-by: David Kastrup <dak@gnu.org>
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
+ cache-tree.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-Thanks, I can reproduce here. I do not think it has anything to do with
-being in a subdirectory; any new file does not get added to the index.
-In fact, I do not think we update the index at all with "--reject". For
-example, try this:
-
-    git init repo &&
-    cd repo &&
-
-    echo base >conflict &&
-    echo base >modified &&
-    git add . &&
-    git commit -m base &&
-
-    echo master >conflict &&
-    git add . &&
-    git commit -m master &&
-
-    git checkout -b other HEAD^ &&
-    echo other >conflict &&
-    echo other >modified &&
-    echo other >new &&
-    git add . &&
-    git commit -m other &&
-
-    git checkout master &&
-    git format-patch other -1 --stdout >patch &&
-    git am --reject patch
-
-Running "git status -s" shows:
-
-   M modified
-   ?? conflict.rej
-   ?? new
-   ?? patch
-
-We apply the changes to "modified" and "new" to the working tree, but we
-do not stage anything in the index. I suspect this is because our
-invocation of "apply --index" (which is what is doing the real work with
-"--reject" here) bails before touching the index. In theory it should be
-able to update the index for files that applied cleanly and leave the
-other ones alone.
-
-But I have not thought hard about it, so maybe there is a good reason
-not to (it is a little weird just because the resulting index is a
-partial application of the patch).  The "am -3" path does what you want
-here, but it is much simpler: it knows it can represent the 3-way
-conflict in the index. So the index represents the complete state of the
-patch application at the end, including conflicts.
-
--Peff
+diff --git a/cache-tree.c b/cache-tree.c
+index 0bbec43..4d439bd 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -564,10 +564,9 @@ static struct cache_tree *cache_tree_find(struct cache_tree *it, const char *pat
+ 		if (!sub)
+ 			return NULL;
+ 		it = sub->cache_tree;
+-		if (slash)
+-			while (*slash && *slash == '/')
+-				slash++;
+-		if (!slash || !*slash)
++		while (*slash && *slash == '/')
++			slash++;
++		if (!*slash)
+ 			return it; /* prefix ended with slashes */
+ 		path = slash;
+ 	}
+-- 
+1.9.0
