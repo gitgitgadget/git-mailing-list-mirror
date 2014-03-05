@@ -1,80 +1,115 @@
-From: Phillip Susi <psusi@ubuntu.com>
-Subject: Re: New directory lost by git am
-Date: Wed, 05 Mar 2014 13:29:27 -0500
-Message-ID: <53176D07.3020206@ubuntu.com>
-References: <531690A3.3040509@ubuntu.com> <53169549.10309@gmail.com> <53169868.3010401@ubuntu.com> <5316DBEC.3020208@gmail.com> <53173423.6050708@ubuntu.com> <20140305163415.GA28908@sigill.intra.peff.net> <53175510.7020000@ubuntu.com> <20140305171334.GA31252@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC 2/3] merge: Add hints to tell users about "git merge --abort"
+Date: Wed, 05 Mar 2014 10:29:45 -0800
+Message-ID: <xmqqa9d4ijmu.fsf@gitster.dls.corp.google.com>
+References: <1393437985-31401-1-git-send-email-andrew.kw.w@gmail.com>
+	<1393437985-31401-3-git-send-email-andrew.kw.w@gmail.com>
+	<20140226203836.GM7855@google.com>
+	<CADgNjak3aqPDV0iZYc8b6QJ9y+6bUd28n0UJOm6WjufQhjfuwA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Chris Packham <judge.packham@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 05 19:29:44 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Andrew Wong <andrew.kw.w@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 05 19:30:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WLGZU-0002ep-LS
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Mar 2014 19:29:37 +0100
+	id 1WLGZs-00032o-36
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Mar 2014 19:30:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756064AbaCES3c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2014 13:29:32 -0500
-Received: from cdptpa-omtalb.mail.rr.com ([75.180.132.120]:59705 "EHLO
-	cdptpa-omtalb.mail.rr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753061AbaCES3b (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Mar 2014 13:29:31 -0500
-X-Authority-Analysis: v=2.0 cv=S8pbMfQP c=1 sm=0 a=/DbS/tiKggfTkRRHPZEB4g==:17 a=JipEcVzqA9wA:10 a=JbtRu-yXPzkA:10 a=S1A5HrydsesA:10 a=Qsx_du5GiBkA:10 a=IkcTkHD0fZMA:10 a=fxJcL_dCAAAA:8 a=KGjhK52YXX0A:10 a=QfKxxUxMAAAA:8 a=M_dgDDc6FE9TJqProYsA:9 a=QEXdDO2ut3YA:10 a=/DbS/tiKggfTkRRHPZEB4g==:117
-X-Cloudmark-Score: 0
-X-Authenticated-User: 
-X-Originating-IP: 67.78.168.186
-Received: from [67.78.168.186] ([67.78.168.186:61003] helo=[10.1.1.236])
-	by cdptpa-oedge01.mail.rr.com (envelope-from <psusi@ubuntu.com>)
-	(ecelerity 2.2.3.46 r()) with ESMTP
-	id 39/AD-17312-60D67135; Wed, 05 Mar 2014 18:29:26 +0000
-User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
-In-Reply-To: <20140305171334.GA31252@sigill.intra.peff.net>
-X-Enigmail-Version: 1.6
+	id S1754582AbaCES3z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Mar 2014 13:29:55 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48610 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750817AbaCES3y (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2014 13:29:54 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A78CE6F174;
+	Wed,  5 Mar 2014 13:29:48 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=jEHouN4UuakaFka15ctOyzhj4sw=; b=DcN32V
+	MOphqlWmprd+GIH4aKjri59Rh2LPyeYfxM+1u/wG4qAbbHGHyUGeREpodcNlKRLC
+	DnsY14JXBZpcIaC3gsbgHCjYDy1IXO2FHPTTw6lLwmqAg/x2Ef2aMKbBPEJtl8X8
+	0blTgQ9d18yjUSRv6gdOFl8va32LsrlaFnoWo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=LAqM3Vhr0c5vd/5Mp6GogJeKMsT/xk0S
+	ODYXaU3pHBjSkJ08lDAyBVOIwrhX+NHMnqDfdZLKgNHGChtu1N812RO61Fu4q9+v
+	e1rkkoGk07C0COY3D9yJfCXXciflN2hx+Tvk8hyO7i/7GUzGOUVrxHYqDp7Jd5RZ
+	5dP900UD5rc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 905B36F172;
+	Wed,  5 Mar 2014 13:29:48 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CF09D6F171;
+	Wed,  5 Mar 2014 13:29:47 -0500 (EST)
+In-Reply-To: <CADgNjak3aqPDV0iZYc8b6QJ9y+6bUd28n0UJOm6WjufQhjfuwA@mail.gmail.com>
+	(Andrew Wong's message of "Wed, 5 Mar 2014 10:30:40 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 21B06FE6-A494-11E3-A551-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243458>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Andrew Wong <andrew.kw.w@gmail.com> writes:
 
-On 3/5/2014 12:13 PM, Jeff King wrote:
-> We apply the changes to "modified" and "new" to the working tree,
-> but we do not stage anything in the index. I suspect this is
-> because our invocation of "apply --index" (which is what is doing
-> the real work with "--reject" here) bails before touching the
-> index. In theory it should be able to update the index for files
-> that applied cleanly and leave the other ones alone.
+> On Wed, Feb 26, 2014 at 3:38 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+>> Andrew Wong wrote:
+>>
+>>> --- a/builtin/merge.c
+>>> +++ b/builtin/merge.c
+>>> @@ -909,7 +909,8 @@ static int suggest_conflicts(int renormalizing)
+>>>       fclose(fp);
+>>>       rerere(allow_rerere_auto);
+>>>       printf(_("Automatic merge failed; "
+>>> -                     "fix conflicts and then commit the result.\n"));
+>>> +                     "fix conflicts and then commit the result.\n"
+>>> +                     "To abort the merge, use \"git merge --abort\".\n"));
+>>
+>> Seems reasonable, but I worry about the command growing too noisy.
+>>
+>> Could this be guarded by an advice.<something> setting?  (See advice.*
+>> in git-config(1) for what I mean.)
+>
+> I was planning to use advice.resolveConflict, but as I went through
+> merge.c, I noticed there could be a few other situations where we
+> could print out the same message:
+> 1. when prepare_to_commit() fails, due to hook error, editor error, or
+> empty commit message
+> 2. "git commit --no-commit"
+>
+> This means contexts are no longer only about "resolving conflict", so
+> I was thinking of renaming advice.resolveConflict to something like
+> advice.mergeHints.
+>
+> Any thoughts?
 
-Yikes, that's really bad.
+I have no strong opinion on the naming, other than that I doubt this
+particular new "how to abort" message is worth the headache associated
+with the "rename" which involves transition planning of deprecating
+the old, supporting both for a while and then removing the old.
 
-> But I have not thought hard about it, so maybe there is a good
-> reason not to (it is a little weird just because the resulting
-> index is a partial application of the patch).  The "am -3" path
-> does what you want here, but it is much simpler: it knows it can
-> represent the 3-way conflict in the index. So the index represents
-> the complete state of the patch application at the end, including
-> conflicts.
+The existing message above in "suggest-conflicts" is about hinting
+the user to first resolve the conflict before attempting to
+continue, and that is perfectly in line with the existing use of
+advice.resolveConfict in die_conflict() in git-pull that tells the
+user there is an unresolved conflict.
 
-yes, but -3 fails if it can't find the parent blobs.
+On the other hand, the additional "how to abort" message does not
+have to be limited to "you have conflicted paths in the index" case.
 
-
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.17 (MingW32)
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
-
-iQEcBAEBAgAGBQJTF20HAAoJEI5FoCIzSKrwFfQIAJfPmplu7zskercvjnuZGCle
-ccTzK0rYtrwQn/78Vrbc6kqcrQvbvtrqUMN4/ILJ5xeaO80Gzzz8pchBPNN8khhY
-VBQiWUOrKzBH1vszveneva+gFUrLIWk2KI6T8lGTnYulvRVe38WRAwr/8qEClPX6
-hUnYChM17WE+KTV39ezA6ww9ZAyOX7EHq87PJp5nVgBB4HkmkDmccfxYTFNB4FGg
-PPqun8g0Fyytd+Qrsk2M5L6NsPUXi32wIt8EWcyPwU6QrQgKbuWK7QlVkcPPzecM
-eHifKm8V1V0VKudm3S8jbaUDG2KnLIdMveXu/e9Hn7+YgDQh9zM1m7f+NVJDvjk=
-=NAe9
------END PGP SIGNATURE-----
+If the user said "git merge" while another "git merge" is still
+outstanding, we would want to say "You have not concluded your
+previous merge" and die, and you presumably want to add the same
+"how to abort" message there.  Such a codepath is unlikely to be
+covered by existing advice.resolveConflict, and it sounds more
+natural, at least to me, to use a separate variable to squelch only
+the new "how to abort" part.
