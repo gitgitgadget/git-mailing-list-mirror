@@ -1,59 +1,85 @@
-From: Vincenzo di Cicco <enzodicicco@gmail.com>
-Subject: fnmatch vs regex
-Date: Wed, 5 Mar 2014 20:55:05 +0100
-Message-ID: <CAKOJyXc2dezciw=x=-Gw3qjt3Sd=V=2Dy_ARZ25kmjYHULT5_w@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 24/27] prune: strategies for linked checkouts
+Date: Wed, 05 Mar 2014 12:07:44 -0800
+Message-ID: <xmqqd2i0h0j3.fsf@gitster.dls.corp.google.com>
+References: <1392730814-19656-1-git-send-email-pclouds@gmail.com>
+	<1393675983-3232-1-git-send-email-pclouds@gmail.com>
+	<1393675983-3232-25-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 05 20:55:15 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 05 21:07:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WLHuM-0004aa-Pk
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Mar 2014 20:55:15 +0100
+	id 1WLI6b-0000lT-8h
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Mar 2014 21:07:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752946AbaCETzH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2014 14:55:07 -0500
-Received: from mail-vc0-f173.google.com ([209.85.220.173]:41276 "EHLO
-	mail-vc0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751630AbaCETzG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Mar 2014 14:55:06 -0500
-Received: by mail-vc0-f173.google.com with SMTP id ld13so1524660vcb.4
-        for <git@vger.kernel.org>; Wed, 05 Mar 2014 11:55:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=h94HeqQi9+vAQMLWRtQov4doIJ7/crFZ2X9lkKj6EL4=;
-        b=HZVQUz+E93jcSUYVFcfdnWic27R+VPTQFQAOzUrRsJTk4QU/grmQ/au3XFxT6Ii3FM
-         mYv3SlcDPuqkeULYIXUUotUy5Q3J6GA5QzKRxYmSk5gQZl9N9MNrB3rNDEACeybf1Qty
-         U9A5F0L1YuOinb9/uXfeTK/b4ntw0fhAUkDrAXdTfGwONvXb4V0WR7mU6iHZPV7f7LTd
-         vK29hlw0vq4AOFxroA6n5YqopsB6mNN39TBVGfJHBgS19wsW9AU8jLuW8JSvVjCIii/3
-         pNPQDSkU0Hb1zTU1zDaQ8yrrdBLOCasIUFjlqs+wws+OeKiaJkufDMR+AqzBSSwxtv+O
-         Ak4A==
-X-Received: by 10.220.250.203 with SMTP id mp11mr1470558vcb.2.1394049305708;
- Wed, 05 Mar 2014 11:55:05 -0800 (PST)
-Received: by 10.220.67.16 with HTTP; Wed, 5 Mar 2014 11:55:05 -0800 (PST)
+	id S1756496AbaCEUHt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Mar 2014 15:07:49 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43691 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755717AbaCEUHs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 5 Mar 2014 15:07:48 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2C43B6F93C;
+	Wed,  5 Mar 2014 15:07:48 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=DeLBLYx3eKgA
+	ailKnL2gPYPi8NY=; b=tA7903BDxVCmSDZa0UPONJYqC1VVdA+Z6Max3EwcHwBy
+	y/sbDN/pTTwO20geuAb0xfTkxGMswhlugZho0czgebRdQNdO/ndpczDomr2lXsxd
+	99dahQkSuCEDPdI5mGKq4Zcne++UXyzkfBVK5llHZtJQAKK/QXdzExcpu7R/ZaI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=QqWiAb
+	YDeMsgfR9nZPTf1iL/jBmir0GpIDAzyVb48E1ymsMB3fpD6/fl9yjZZ0Wpp5iRWx
+	n4CS89FDUHjhD/x5oEPaSl27yLWcSXmswhWBRywu8FjCGzr+SxcsPNfYQLeH6GOB
+	bC/c8+TEdXSAr9KIvHDi2SYroA3BArlcl9EUg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0E6E16F93B;
+	Wed,  5 Mar 2014 15:07:48 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4F0A76F93A;
+	Wed,  5 Mar 2014 15:07:47 -0500 (EST)
+In-Reply-To: <1393675983-3232-25-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Sat, 1 Mar
+ 2014 19:13:00 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: D2210B26-A4A1-11E3-AA60-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243475>
 
-Hi there, I'm NaN.
-Recently I enrolled to this mailing list thanks to the GSoC.
-I've looked the Ideas Page but -unfortunately- some projects are very
-difficult for me.
-I've looked the source code and I've seen that to perform a search
-with a pattern to the branches list (and other commands) git uses
-fnmatch() and so supports the glob pattern.
-I haven't never massively used the branches or the tags to have the
-necessity to filter in a particolar way the results, and the asterisk
-has always worked very well.
-But: why the decision to support the Blob Pattern instead of the
-Regular Expressions?
-With your experiences can a patch like this improve this side?
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-Thanks for the awesome work,
-NaN
+> +	if (get_device_or_die(path) !=3D get_device_or_die(get_git_dir())) =
+{
+> +		strbuf_reset(&sb);
+> +		strbuf_addf(&sb, "%s/locked", sb_repo.buf);
+> +		write_file(sb.buf, 1, "located on a different file system\n");
+> +		keep_locked =3D 1;
+> +	} else {
+> +		strbuf_reset(&sb);
+> +		strbuf_addf(&sb, "%s/link", sb_repo.buf);
+> +		(void)link(sb_git.buf, sb.buf);
+> +	}
+
+Just in case you did not realize, casting the return away with
+(void) will not squelch this out of the compiler:
+
+    builtin/checkout.c: In function 'prepare_linked_checkout':
+    builtin/checkout.c:947:3: error: ignoring return value of 'link', d=
+eclared with attribute warn_unused_result [-Werror=3Dunused-result]
+
+It still feels fishy to see "we attempt to link but we do not care
+if it works or not" to me, with or without the "unused result"
+issue.
