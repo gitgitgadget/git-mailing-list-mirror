@@ -1,54 +1,100 @@
-From: Mickey Killianey <mickey@killianey.com>
-Subject: Negation in refspecs
-Date: Wed, 5 Mar 2014 10:06:26 -0800
-Message-ID: <CACAUoX6Y5eC_9PxihkecfgWeCetj4K30sVm7wHosTqqh=_0unA@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH] submodule : Add --no-separate-git-dir option to add and
+ update command.
+Date: Wed, 05 Mar 2014 19:13:37 +0100
+Message-ID: <53176951.7000201@web.de>
+References: <1393858066.7891.20.camel@Naugrim> <5314BFA5.2030807@web.de> <1393878866.7891.22.camel@Naugrim>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 05 19:06:57 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Henri GEIST <geist.henri@laposte.net>
+X-From: git-owner@vger.kernel.org Wed Mar 05 19:13:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WLGDY-0005PE-Tw
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Mar 2014 19:06:57 +0100
+	id 1WLGKB-0003i0-8L
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Mar 2014 19:13:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756215AbaCESGt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2014 13:06:49 -0500
-Received: from mail-we0-f181.google.com ([74.125.82.181]:58022 "EHLO
-	mail-we0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756004AbaCESGs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Mar 2014 13:06:48 -0500
-Received: by mail-we0-f181.google.com with SMTP id q58so1685948wes.12
-        for <git@vger.kernel.org>; Wed, 05 Mar 2014 10:06:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:from:date:message-id:subject:to:content-type;
-        bh=LrvY/VNKniFXGYo45/cIU65RKG8zbe8RaP47psBSick=;
-        b=Gs+QgwgDUDam4yTBfkAK9ry4mBGJF4ukcyvtnUqSDOeGy65f8SYwj+554IrD/lzKL2
-         yCZ+Wt3y0HlIMTD6/wdR+tRXhEPt2IGMwNZLwsL3kQ3CysMizkCaDGii0+4syWa+ciZj
-         UgtyQur8gXz1UTRp/Dn2Kkrk5Vp49p6dVrUMAOe1NQ5DOJOcc/wuCjVaY0v7/qa6hR7Q
-         y+4jGb14vzi7uoVMdN7FNyCaZVFfHXOX/bJHAtA701Z6T46vICNbNv8GkE0qWwfsfFNi
-         zLJyflvQB0S3kX/iHcu1LS6KRY4nsXkz9Q8EcD25uGMD5ZCWQzN1IpvuuXRtUqeCcQY2
-         xRoA==
-X-Received: by 10.194.87.195 with SMTP id ba3mr2990117wjb.53.1394042807041;
- Wed, 05 Mar 2014 10:06:47 -0800 (PST)
-Received: by 10.194.158.225 with HTTP; Wed, 5 Mar 2014 10:06:26 -0800 (PST)
-X-Google-Sender-Auth: v3zvVCXhmQGSlzM5DQmMADehgZw
+	id S1754811AbaCESNo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Mar 2014 13:13:44 -0500
+Received: from mout.web.de ([212.227.17.12]:51757 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754528AbaCESNl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2014 13:13:41 -0500
+Received: from [192.168.178.41] ([84.132.147.244]) by smtp.web.de (mrweb004)
+ with ESMTPA (Nemesis) id 0MdI5T-1Wby5p2qV1-00IUVn; Wed, 05 Mar 2014 19:13:38
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
+In-Reply-To: <1393878866.7891.22.camel@Naugrim>
+X-Enigmail-Version: 1.6
+X-Provags-ID: V03:K0:25flPgc+IK63zo0lKC+Mv+fqiKhnHer09nkcORmcZR9VZeD7r0A
+ WdSmq1GmvaPIyEypHq4QFOfAygvSUIwKLj93imOcFSuTDaJp7c7+JaxbIxg3T7Af98vtWao
+ Fqm00AyuTAK/kgKJFNn1OhSfsCS414wx67KYc2s4KfM0A0apO9Us5DIp8djDiF9tK1uqcID
+ vydJZqmOYDB3ij2oXvw9Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243456>
 
-Is there any syntax to support partial negations of refspecs, such as:
+Am 03.03.2014 21:34, schrieb Henri GEIST:
+> Le lundi 03 mars 2014 =C3=A0 17:45 +0000, Jens Lehmann a =C3=A9crit :
+>> Am 03.03.2014 14:47, schrieb Henri GEIST:
+>>> This new option prevent git submodule <add|update> to clone the mis=
+sing
+>>> submodules with the --separate-git-dir option.
+>>> Then the submodule will be regular repository and their gitdir will=
+ not
+>>> be placed in the superproject gitdir/modules directory.
+>>
+>> And what is your motivation for this? After all submodules containin=
+g
+>> a .git directory are second class citizens (because they can never b=
+e
+>> safely removed by regular git commands).
+>>
+>=20
+> I recognize most people will prefer to have the .git directory separa=
+te.
+> And I do not intend to make this option the default.
+>=20
+> My reasons are:
+>=20
+>   - As it is not clearly stated in the doc that the gitdir is separat=
+e.
+>     The first time I have copied one module to an USB key I had a big
+>     surprise.
 
-+refs/heads/*:refs/remotes/origin/*
-!refs/heads/dont-pull:
-!:refs/remotes/origin/dont-push
+Oops! Could you please help us by hinting how the documentation
+could be improved here?
 
-If not now, is negation something that might be possible/reasonable in
-a future version of Git, or is it difficult/unlikely to change?
+>   - This will not change anything for people not using it.
 
-Mick
+I do not agree, as they'll be seeing a new option and might use
+it to "go backward" as Junio explained in his answer.
+
+>   - I use an other patch which I plane to send later which enable mul=
+tiple
+>     level of superproject to add a gitlink to the same submodule.
+>     And in this case the superproject containing the separate gitdir =
+will be
+>     arbitrary and depend on the processing order of the
+>     'git submodule update --recursive' command.
+
+I don't understand that. How is that different from using different
+names (and thus different separate gitdirs) for that duplicated
+submodule? After all, the .git directory is just moved somewhere
+else in the superproject's work tree, and as the name defaults to
+the path of the submodule ...
+
+>   - I have written this for myself and have using it since 2012 and s=
+end it in
+>     the hope it could be useful for someone else even if it is only a=
+ few
+>     people. But if its not the case no problem I will keep using it f=
+or myself.
+
+Thanks.
