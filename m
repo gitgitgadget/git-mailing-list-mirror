@@ -1,81 +1,197 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] [PATCH] commit.c: Replace starts_with() with skip_prefix()
-Date: Wed, 5 Mar 2014 02:48:04 -0500
-Message-ID: <CAPig+cSQtQ_uvjdA2s3+K8YQLDuMXqqc-jG2AuSM7K52q3_pPQ@mail.gmail.com>
-References: <1393948445-24689-1-git-send-email-karthik.188@gmail.com>
-	<CAPig+cR=9oonOdyOm3y2NpdLxh-sq5qQtSxmmN2dH7+UzRy-gA@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [RFC/PATCH] diff: simplify cpp funcname regex
+Date: Wed, 05 Mar 2014 08:58:26 +0100
+Message-ID: <5316D922.9010501@viscovery.net>
+References: <20140305003639.GA9474@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 05 08:48:15 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Thomas Rast <tr@thomasrast.ch>
+To: Jeff King <peff@peff.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 05 08:58:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WL6Yl-00085E-RG
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Mar 2014 08:48:12 +0100
+	id 1WL6ir-0007mx-Ix
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Mar 2014 08:58:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751880AbaCEHsG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2014 02:48:06 -0500
-Received: from mail-yk0-f174.google.com ([209.85.160.174]:54464 "EHLO
-	mail-yk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751564AbaCEHsF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Mar 2014 02:48:05 -0500
-Received: by mail-yk0-f174.google.com with SMTP id 20so1808371yks.5
-        for <git@vger.kernel.org>; Tue, 04 Mar 2014 23:48:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=r2I+hjEZJchiLRHqvhpYOxU+vqXnjCOVDw8lzi3KZho=;
-        b=dTriy1WnOI0UHoxeS4xOl/IJyJOIJPwNI8bIJcnfeztZMK2stZRn0YJpyn69ypuG3N
-         K31f/Mhnka9PjAlCDBf7gctCsQWUzhwPKAXcQh0+KXroRhivIvqPSej6X1jCIRUQEcfS
-         yTG1s6QjJmvcWfGe6hQmkAwnV19ZpkIivVnVd5Tmg6LtdUultm+1OQW6LxVpq74yDX4e
-         0mPqLd6aa16pnv0BhoO1gjfM6P2giydTXi9Sikdb85aWRNPHvkmKU6qk9UAq+KlwXL8v
-         b31qIElr9evBnG5H+blhDKgy/dsxhoIhK472bzhYjBzKHfulhF8dzHIS+uIehBWa4t4n
-         qpTA==
-X-Received: by 10.236.66.143 with SMTP id h15mr5026697yhd.36.1394005684161;
- Tue, 04 Mar 2014 23:48:04 -0800 (PST)
-Received: by 10.170.180.195 with HTTP; Tue, 4 Mar 2014 23:48:04 -0800 (PST)
-In-Reply-To: <CAPig+cR=9oonOdyOm3y2NpdLxh-sq5qQtSxmmN2dH7+UzRy-gA@mail.gmail.com>
-X-Google-Sender-Auth: mb979b6MRy_GKfdc04fijHdskCI
+	id S1752623AbaCEH6d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Mar 2014 02:58:33 -0500
+Received: from so.liwest.at ([212.33.55.23]:40247 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751544AbaCEH6c (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2014 02:58:32 -0500
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.80.1)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1WL6ig-0000ZZ-Dj; Wed, 05 Mar 2014 08:58:26 +0100
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 03F7D16613;
+	Wed,  5 Mar 2014 08:58:25 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
+In-Reply-To: <20140305003639.GA9474@sigill.intra.peff.net>
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243424>
 
-On Tue, Mar 4, 2014 at 5:27 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Tue, Mar 4, 2014 at 10:54 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
->> diff --git a/commit.c b/commit.c
->> index 6bf4fe0..71a03e3 100644
->> --- a/commit.c
->> +++ b/commit.c
->> @@ -1111,11 +1114,11 @@ int parse_signed_commit(const unsigned char *sha1,
->>                 char *next = memchr(line, '\n', tail - line);
->>
->>                 next = next ? next + 1 : tail;
->> +               indent_line = skip_prefix(line, gpg_sig_header);
->
-> Even stranger variable name for a GPG signature (which has nothing at
-> all to do with indentation).
->
->>                 if (in_signature && line[0] == ' ')
->>                         sig = line + 1;
->> -               else if (starts_with(line, gpg_sig_header) &&
->> -                        line[gpg_sig_header_len] == ' ')
->> -                       sig = line + gpg_sig_header_len + 1;
->> +               else if (indent_line && indent_line[1] == ' ')
+Am 3/5/2014 1:36, schrieb Jeff King:
+> The current funcname matcher for C files requires one or
+> more words before the function name, like:
+> 
+>   static int foo(int arg)
+>   {
+> 
+> However, some coding styles look like this:
+> 
+>   static int
+>   foo(int arg)
+>   {
+> 
+> and we do not match, even though the default regex would.
+> 
+> This patch simplifies the regex significantly. Rather than
+> trying to handle all the variants of keywords and return
+> types, we simply look for an identifier at the start of the
+> line that contains a "(", meaning it is either a function
+> definition or a function call, and then not containing ";"
+> which would indicate it is a call or declaration.
 
-Also, shouldn't this be checking *indent_line (or indent_line[0])
-rather than indent_line[1]?
+Here is a patch that I'm carrying around since... a while.
+What do you think?
 
->> +                       sig = indent_line + 2;
->
-> Why is this adding 2 rather than 1?
->
->>                 if (sig) {
->>                         strbuf_add(signature, sig, next - sig);
->>                         saw_signature = 1;
+The pattern I chose also catches variable definition, not just
+functions. That is what I need, but it hurts grep --function-context
+That's the reason I didn't forward the patch, yet.
+
+--- 8< ---
+From: Johannes Sixt <j6t@kdbg.org>
+Date: Tue, 25 Sep 2012 14:08:02 +0200
+Subject: [PATCH] userdiff: have 'cpp' hunk header pattern catch more C++ anchor points
+
+The hunk header pattern 'cpp' is intended for C and C++ source code, but
+it is actually not very useful for the latter, and even hurts some
+use-cases for the former.
+
+The parts of the pattern have the following flaws:
+
+- The first part matches an identifier followed immediately by a colon and
+  arbitrary text and is intended to reject goto labels and C++ access
+  specifiers (public, private, protected). But this pattern also rejects
+  C++ constructs, which look like this:
+
+    MyClass::MyClass()
+    MyClass::~MyClass()
+    MyClass::Item MyClass::Find(...
+
+- The second part matches an identifier followed by a list of qualified
+  names (i.e. identifiers separated by the C++ scope operator '::')
+  separated by space or '*' followed by an opening parenthesis (with space
+  between the tokens). It matches function declarations like
+
+    struct item* get_head(...
+    int Outer::Inner::Func(...
+
+  Since the pattern requires at least two identifiers, GNU-style function
+  definitions are ignored:
+
+    void
+    func(...
+
+  Moreover, since the pattern does not allow punctuation other than '*',
+  the following C++ constructs are not recognized:
+
+  . template definitions:
+      template<class T> int func(T arg)
+
+  . functions returning references:
+      const string& get_message()
+
+  . functions returning templated types:
+      vector<int> foo()
+
+  . operator definitions:
+      Value operator+(Value l, Value r)
+
+- The third part of the pattern finally matches compound definitions. But
+  it forgets about unions and namespaces, and also skips single-line
+  definitions
+
+    struct random_iterator_tag {};
+
+  because no semicolon can occur on the line.
+
+Change the first pattern to require a colon at the end of the line (except
+for trailing space and comments), so that it does not reject constructor
+or destructor definitions.
+
+Notice that all interesting anchor points begin with an identifier or
+keyword. But since there is a large variety of syntactical constructs after
+the first "word", the simplest is to require only this word and accept
+everything else. Therefore, this boils down to a line that begins with a
+letter or underscore (optionally preceded by the C++ scope operator '::'
+to accept functions returning a type anchored at the global namespace).
+Replace the second and third part by a single pattern that picks such a
+line.
+
+This has the following desirable consequence:
+
+- All constructs mentioned above are recognized.
+
+and the following likely desirable consequences:
+
+- Definitions of global variables and typedefs are recognized:
+
+    int num_entries = 0;
+    extern const char* help_text;
+    typedef basic_string<wchar_t> wstring;
+
+- Commonly used marco-ized boilerplate code is recognized:
+
+    BEGIN_MESSAGE_MAP(CCanvas,CWnd)
+    Q_DECLARE_METATYPE(MyStruct)
+    PATTERNS("tex",...)
+
+  (The last one is from this very patch.)
+
+but also the following possibly undesirable consequence:
+
+- When a label is not on a line by itself (except for a comment) it is no
+  longer rejected, but can appear as a hunk header if it occurs at the
+  beginning of a line:
+
+    next:;
+
+IMO, the benefits of the change outweigh the (possible) regressions by a
+large margin.
+
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ userdiff.c                                 | 8 +++-----
+ 13 files changed, 3 insertions(+), 17 deletions(-)
+
+diff --git a/userdiff.c b/userdiff.c
+index ed958ef..49b2094 100644
+--- a/userdiff.c
++++ b/userdiff.c
+@@ -125,11 +125,9 @@ PATTERNS("tex", "^(\\\\((sub)*section|chapter|part)\\*{0,1}\\{.*)$",
+ 	 "\\\\[a-zA-Z@]+|\\\\.|[a-zA-Z0-9\x80-\xff]+"),
+ PATTERNS("cpp",
+ 	 /* Jump targets or access declarations */
+-	 "!^[ \t]*[A-Za-z_][A-Za-z_0-9]*:.*$\n"
+-	 /* C/++ functions/methods at top level */
+-	 "^([A-Za-z_][A-Za-z_0-9]*([ \t*]+[A-Za-z_][A-Za-z_0-9]*([ \t]*::[ \t]*[^[:space:]]+)?){1,}[ \t]*\\([^;]*)$\n"
+-	 /* compound type at top level */
+-	 "^((struct|class|enum)[^;]*)$",
++	 "!^[ \t]*[A-Za-z_][A-Za-z_0-9]*:[[:space:]]*($|/[/*])\n"
++	 /* functions/methods, variables, and compounds at top level */
++	 "^((::[[:space:]]*)?[A-Za-z_].*)$",
+ 	 /* -- */
+ 	 "[a-zA-Z_][a-zA-Z0-9_]*"
+ 	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lL]?"
+-- 
+1.9.0.1398.g59a4f1b
