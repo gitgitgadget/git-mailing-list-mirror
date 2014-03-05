@@ -1,187 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 3/3] push: detect local refspec errors early
-Date: Wed, 5 Mar 2014 14:04:54 -0500
-Message-ID: <20140305190454.GC11039@sigill.intra.peff.net>
-References: <20140305190248.GB31252@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: New directory lost by git am
+Date: Wed, 05 Mar 2014 11:10:46 -0800
+Message-ID: <xmqqtxbch361.fsf@gitster.dls.corp.google.com>
+References: <531690A3.3040509@ubuntu.com> <53169549.10309@gmail.com>
+	<53169868.3010401@ubuntu.com> <5316DBEC.3020208@gmail.com>
+	<53173423.6050708@ubuntu.com>
+	<20140305163415.GA28908@sigill.intra.peff.net>
+	<53175510.7020000@ubuntu.com>
+	<20140305171334.GA31252@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Dmitry <wipedout@yandex.ru>
-X-From: git-owner@vger.kernel.org Wed Mar 05 20:05:05 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Phillip Susi <psusi@ubuntu.com>,
+	Chris Packham <judge.packham@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 05 20:11:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WLH7l-0004ps-Pd
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Mar 2014 20:05:02 +0100
+	id 1WLHDw-0002o2-BX
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Mar 2014 20:11:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753028AbaCETE5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2014 14:04:57 -0500
-Received: from cloud.peff.net ([50.56.180.127]:33577 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750817AbaCETE5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Mar 2014 14:04:57 -0500
-Received: (qmail 17991 invoked by uid 102); 5 Mar 2014 19:04:57 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 05 Mar 2014 13:04:57 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 05 Mar 2014 14:04:54 -0500
-Content-Disposition: inline
-In-Reply-To: <20140305190248.GB31252@sigill.intra.peff.net>
+	id S1752846AbaCETKw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Mar 2014 14:10:52 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63022 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751983AbaCETKv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2014 14:10:51 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 490C07022D;
+	Wed,  5 Mar 2014 14:10:50 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=z2Fya5eEUBUOx89crgi5sVplnow=; b=s2Crut
+	LdgzI6b4lMDhEgO71WQoyn7BiNmoYbsbx/5DSVtvgxbFY1BFG+06XE6/mk4rgf6U
+	Enn/jYM4S+nz4ZGYLz0D4hS/q6B7A6HCXnf52c7n55s8qdcJ6I3jlVYgJSUBjCWB
+	v9na/zxhUSrQc7AJkJEvHZQQdEtDxuS/ZZg1I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=sieUuf2D7RkHo4xiYGl8jE9wX00Nmm7y
+	MLKK/dNQZjRu/AWHU520UwzLNijYrJq282X70go6V5jMFnOT3mqrLW26OqWP6xb9
+	2PNqAQ5GL7dv1MXF4oM56TThMDe954oUqjmni3sPN1X+aT/HckqP8p6aN5VavbSe
+	bUkK3oxDuZI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3662470229;
+	Wed,  5 Mar 2014 14:10:50 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6E3FF70225;
+	Wed,  5 Mar 2014 14:10:49 -0500 (EST)
+In-Reply-To: <20140305171334.GA31252@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 5 Mar 2014 12:13:34 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: DCEB3CD2-A499-11E3-8652-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243467>
 
-When pushing, we do not even look at our push refspecs until
-after we have made contact with the remote receive-pack and
-gotten its list of refs. This means that we may go to some
-work, including asking the user to log in, before realizing
-we have simple errors like "git push origin matser".
+Jeff King <peff@peff.net> writes:
 
-We cannot catch all refspec problems, since fully evaluating
-the refspecs requires knowing what the remote side has. But
-we can do a quick sanity check of the local side and catch a
-few simple error cases.
+> But I have not thought hard about it, so maybe there is a good reason
+> not to (it is a little weird just because the resulting index is a
+> partial application of the patch).
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- remote.c               | 25 +++++++++++++++++++++++++
- remote.h               |  1 +
- t/t5529-push-errors.sh | 48 ++++++++++++++++++++++++++++++++++++++++++++++++
- transport.c            |  8 ++++++--
- 4 files changed, 80 insertions(+), 2 deletions(-)
- create mode 100755 t/t5529-push-errors.sh
+Originally ".rej" was a deliberate attempt to be "not very Git but
+more like 'patch'", so I wouldn't be surprised if the combination
+between "--reject" and "--index" did not work, in the sense that we
+did not add such a partial change to the index.
 
-diff --git a/remote.c b/remote.c
-index b6586c0..8471fb1 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1374,6 +1374,31 @@ static void prepare_ref_index(struct string_list *ref_index, struct ref *ref)
- }
- 
- /*
-+ * Given only the set of local refs, sanity-check the set of push
-+ * refspecs. We can't catch all errors that match_push_refs would,
-+ * but we can catch some errors early before even talking to the
-+ * remote side.
-+ */
-+int check_push_refs(struct ref *src, int nr_refspec, const char **refspec_names)
-+{
-+	struct refspec *refspec = parse_push_refspec(nr_refspec, refspec_names);
-+	int ret = 0;
-+	int i;
-+
-+	for (i = 0; i < nr_refspec; i++) {
-+		struct refspec *rs = refspec + i;
-+
-+		if (rs->pattern || rs->matching)
-+			continue;
-+
-+		ret |= match_explicit_lhs(src, rs, NULL, NULL);
-+	}
-+
-+	free_refspec(nr_refspec, refspec);
-+	return ret;
-+}
-+
-+/*
-  * Given the set of refs the local repository has, the set of refs the
-  * remote repository has, and the refspec used for push, determine
-  * what remote refs we will update and with what value by setting
-diff --git a/remote.h b/remote.h
-index fb7647f..917d383 100644
---- a/remote.h
-+++ b/remote.h
-@@ -166,6 +166,7 @@ extern int query_refspecs(struct refspec *specs, int nr, struct refspec *query);
- char *apply_refspecs(struct refspec *refspecs, int nr_refspec,
- 		     const char *name);
- 
-+int check_push_refs(struct ref *src, int nr_refspec, const char **refspec);
- int match_push_refs(struct ref *src, struct ref **dst,
- 		    int nr_refspec, const char **refspec, int all);
- void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
-diff --git a/t/t5529-push-errors.sh b/t/t5529-push-errors.sh
-new file mode 100755
-index 0000000..9871307
---- /dev/null
-+++ b/t/t5529-push-errors.sh
-@@ -0,0 +1,48 @@
-+#!/bin/sh
-+
-+test_description='detect some push errors early (before contacting remote)'
-+. ./test-lib.sh
-+
-+test_expect_success 'setup commits' '
-+	test_commit one
-+'
-+
-+test_expect_success 'setup remote' '
-+	git init --bare remote.git &&
-+	git remote add origin remote.git
-+'
-+
-+test_expect_success 'setup fake receive-pack' '
-+	FAKE_RP_ROOT=$(pwd) &&
-+	export FAKE_RP_ROOT &&
-+	write_script fake-rp <<-\EOF &&
-+	echo yes >"$FAKE_RP_ROOT"/rp-ran
-+	exit 1
-+	EOF
-+	git config remote.origin.receivepack "\"\$FAKE_RP_ROOT/fake-rp\""
-+'
-+
-+test_expect_success 'detect missing branches early' '
-+	echo no >rp-ran &&
-+	echo no >expect &&
-+	test_must_fail git push origin missing &&
-+	test_cmp expect rp-ran
-+'
-+
-+test_expect_success 'detect missing sha1 expressions early' '
-+	echo no >rp-ran &&
-+	echo no >expect &&
-+	test_must_fail git push origin master~2:master &&
-+	test_cmp expect rp-ran
-+'
-+
-+test_expect_success 'detect ambiguous refs early' '
-+	git branch foo &&
-+	git tag foo &&
-+	echo no >rp-ran &&
-+	echo no >expect &&
-+	test_must_fail git push origin foo &&
-+	test_cmp expect rp-ran
-+'
-+
-+test_done
-diff --git a/transport.c b/transport.c
-index ca7bb44..325f03e 100644
---- a/transport.c
-+++ b/transport.c
-@@ -1132,8 +1132,7 @@ int transport_push(struct transport *transport,
- 
- 		return transport->push(transport, refspec_nr, refspec, flags);
- 	} else if (transport->push_refs) {
--		struct ref *remote_refs =
--			transport->get_refs_list(transport, 1);
-+		struct ref *remote_refs;
- 		struct ref *local_refs = get_local_heads();
- 		int match_flags = MATCH_REFS_NONE;
- 		int verbose = (transport->verbose > 0);
-@@ -1142,6 +1141,11 @@ int transport_push(struct transport *transport,
- 		int pretend = flags & TRANSPORT_PUSH_DRY_RUN;
- 		int push_ret, ret, err;
- 
-+		if (check_push_refs(local_refs, refspec_nr, refspec) < 0)
-+			return -1;
-+
-+		remote_refs = transport->get_refs_list(transport, 1);
-+
- 		if (flags & TRANSPORT_PUSH_ALL)
- 			match_flags |= MATCH_REFS_ALL;
- 		if (flags & TRANSPORT_PUSH_MIRROR)
--- 
-1.8.5.2.500.g8060133
+I do not offhand think of a reason to forbid the combination,
+though, as long as we make sure that "git apply --index --reject"
+still exits with failure to prevent a partial application to be
+auto-committed.
