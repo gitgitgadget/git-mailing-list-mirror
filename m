@@ -1,96 +1,127 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: New directory lost by git am
-Date: Wed, 05 Mar 2014 21:10:20 +1300
-Message-ID: <5316DBEC.3020208@gmail.com>
-References: <531690A3.3040509@ubuntu.com> <53169549.10309@gmail.com> <53169868.3010401@ubuntu.com>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: difftool sends malformed path to exernal tool on Windows
+Date: Wed, 5 Mar 2014 00:25:18 -0800
+Message-ID: <20140305082517.GA86532@gmail.com>
+References: <011301cf2c2d$90442810$b0cc7830$@lsst.org>
+ <20140221103821.GA21414@gmail.com>
+ <000801cf317f$ac1be2b0$0453a810$@lsst.org>
+ <CAJDDKr751=c2AOBfjbg2_im6UCBvwWSVjJ7QX8=76vXMsLSw4g@mail.gmail.com>
+ <00bc01cf3737$b1474280$13d5c780$@lsst.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: Phillip Susi <psusi@ubuntu.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Mar 05 09:10:47 2014
+Content-Type: text/plain; charset=utf-8
+Cc: 'Git Mailing List' <git@vger.kernel.org>
+To: Paul Lotz <plotz@lsst.org>
+X-From: git-owner@vger.kernel.org Wed Mar 05 09:25:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WL6uc-0000Pm-9p
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Mar 2014 09:10:46 +0100
+	id 1WL791-0003YS-Ni
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Mar 2014 09:25:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751880AbaCEIKb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2014 03:10:31 -0500
-Received: from mail-pd0-f169.google.com ([209.85.192.169]:50562 "EHLO
-	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750747AbaCEIKZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Mar 2014 03:10:25 -0500
-Received: by mail-pd0-f169.google.com with SMTP id fp1so740250pdb.14
-        for <git@vger.kernel.org>; Wed, 05 Mar 2014 00:10:25 -0800 (PST)
+	id S1751721AbaCEIZf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Mar 2014 03:25:35 -0500
+Received: from mail-pd0-f181.google.com ([209.85.192.181]:49615 "EHLO
+	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751511AbaCEIZe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2014 03:25:34 -0500
+Received: by mail-pd0-f181.google.com with SMTP id p10so752238pdj.12
+        for <git@vger.kernel.org>; Wed, 05 Mar 2014 00:25:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=IIp5sxXtOIUd37xEFGmh0JLnQwc17qxM17GgpCLEA5Q=;
-        b=iqW6/hrJnfwL9LXuoaqeHVAIjglH7dsmumEBCy0D1gCC3s7h64p77GrdMVPD1qpkrA
-         fBEVYlC9httPfRu0JidzA7EjeNY+GhmUdPPO6Kfstmy435jcad6lhqiS6fbteUgKYhNL
-         EXAqyHSs1Argt7rz8gisTBnfHg/X1GFQHYuOirsXULwwG+i1Xxm6Mc2OC30pX01JjMvc
-         JiHrjrWsyxDUIwka+/zopsQDHXxAOIC8CQ2dV02qVjSYMO+/FyDvqmStTrC/Gob89tzR
-         oVrH1nGVHBl0JL2j5GU2QpUV3b/nRu4hSlQuqM2riVpAHBVklyWDot+N1MBVE9L1v3Ak
-         GEvw==
-X-Received: by 10.67.5.131 with SMTP id cm3mr5249855pad.92.1394007025194;
-        Wed, 05 Mar 2014 00:10:25 -0800 (PST)
-Received: from linux.site (115-188-15-163.jetstream.xtra.co.nz. [115.188.15.163])
-        by mx.google.com with ESMTPSA id gj9sm5202510pbc.7.2014.03.05.00.10.23
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=AIXM+wUG1eTYOtThDmsSjqcPm+eGY+tkksqj58qeUDk=;
+        b=kV3AD+5d8VRwS50RdaU2NB0b/NJhPkwpL/8BWmx+7PzktqxSbvi+pjP6jfvfeht/qS
+         Dq/rQ9DCw/P6lyInfzBKMSCN/69viND+XXdtXWBjbGJH3oidsLQcve7U5KxpzuR+zmxD
+         Z+M1dQZjZVb3lWS5wSgGaRuYVi3tVtEyG0NdxlkSRRvPJuct21uLfbbdXceuts1osfHe
+         SFAyoddoo/Mf8XoI8mdCaQUhuq0Z7mr1M68Mj3XOOpkMHH1dtoJ7jbY3Mi3n82kPMvU9
+         Cg43rU/RK1D5uA9XHBdRzznwAMoeziebY51uuONZa7eZH1aGCKbfhDSseg8rmhabYFim
+         OKsw==
+X-Received: by 10.68.198.36 with SMTP id iz4mr5132441pbc.109.1394007934373;
+        Wed, 05 Mar 2014 00:25:34 -0800 (PST)
+Received: from gmail.com (208-106-56-2.static.sonic.net. [208.106.56.2])
+        by mx.google.com with ESMTPSA id tu3sm10570315pab.1.2014.03.05.00.25.32
         for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 05 Mar 2014 00:10:24 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
-In-Reply-To: <53169868.3010401@ubuntu.com>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Wed, 05 Mar 2014 00:25:33 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <00bc01cf3737$b1474280$13d5c780$@lsst.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243425>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243426>
 
-On 05/03/14 16:22, Phillip Susi wrote:
-> On 03/04/2014 10:08 PM, Chris Packham wrote:
->> Could you provide a few more details such as your git version (git 
->> --version) and an example of the failure. I've tried to reproduce
->> the problem based on the description provided but everything seems
->> to work as expected for me.
+On Mon, Mar 03, 2014 at 04:24:15PM -0700, Paul Lotz wrote:
+> David,
 > 
-> Version 1.8.3.2.
+> OK, I did as you suggested, and the results were revealing.
 > 
->> git --version git version 1.9.0 mkdir test && cd test && git init 
->> echo "hello world" >a.txt git add a.txt git commit -m"Initial
->> commit" git checkout -b temp mkdir b echo "lorem ipsum" >b/b.txt 
->> git add b/b.txt git commit -m"Add b/b.txt" ls -R .: a.txt  b
->>
->> ./b: b.txt git checkout master git format-patch temp -1 --stdout |
->> git am ls -R .: a.txt  b
->>
->> ./b: b.txt
->>
+> First, I replaced "echo" with "cat".  Result: The contents of both files appeared in the Git Bash Window.
 > 
-> You are reapplying the patch while it is already applied.
-
-My example is creating a commit on the "temp" branch then applying it to
-the "master" branch using git am.
-
-> Do a reset
-> HEAD~1 --hard, and git clean -x -f -d before git am.  I didn't notice
-> the missing file myself for some time because it is left in the
-> working tree, just not added to the index and included in the commit.
+> Then I tried calling LVCompare from the Git Bash and Windows Command Prompt windows with variations on the paths.
 > 
+> Here are the most relevant results:
+> First from the Windows Command Prompt:
+> 1) This command works:
+> C:\LSST_TS\SystemSW\M2AADT>"C:\Program Files (x86)\National Instruments\Shared\L
+> abVIEW Compare\LVCompare.exe" C:\Users\Paul\AppData\Local\Temp\Typedefs_TestStat
+> us_Before.ctl C:\LSST_TS\SystemSW\M2AADT\Typedefs\TestStatus.ctl
+> [General note:
+> I saved a copy of the temp file and replaced the hex string with the string 'Before' to make the file stick around.  The paths are otherwise the same.]
 
-Regardless of reproducing the issue a quick glance at the Release notes
-for 1.8.3.3 the following sticks out:
+This is aligns with: http://zone.ni.com/reference/en-XX/help/371361H-01/lvhowto/configlvcomp_thirdparty/
 
-Fixes since v1.8.3.2
---------------------
+	"lvcompare.exe <absolute path to VI 1> ..."
 
- * "git apply" parsed patches that add new files, generated by programs
-   other than Git, incorrectly.  This is an old breakage in v1.7.11.
+The key thing is the mention of absolute paths.
 
-Does that sound like your problem? If you can I'd suggest updating,
-ideally to the recent 1.9.0 release but if you're feeling conservative
-try 1.8.3.4.
+What is happening is that lvcompare.exe (or likely it's a
+Windows thing) changes its current directory to its installation
+directory under Progra~1.
+
+That means the relative paths passed in by difftool won't be found.
+
+The way to fix it is to redirect your difftool config to a script
+that makes all paths absolute.  This script can then call the real
+lvcompare.exe.
+
+You just need to tweak the lvcompare part in your .gitconfig
+to look like this:
+
+[difftool "lvcompare"]
+	cmd = ~/bin/lvcompare.sh \"$LOCAL\" \"$REMOTE\"
+
+
+... and install an executable lvcompare.sh shell script in in
+your $HOME/bin.  Something like this:
+
+#!/bin/sh
+
+abspath () {
+	(
+		cd "$(dirname "$1")" &&
+		printf "%s/%s" "$(pwd)" "$(basename "$1")"
+	)
+}
+
+lvcompare="C:\\Program Files (x86)\National Instruments\\Shared\\LabVIEW Compare\\LVCompare.exe"
+local=$(abspath "$1")
+remote=$(abspath "$2")
+exec "$lvcompare" "$local" "$remote"
+
+> 2) C:\LSST_TS\SystemSW\M2AADT>"C:\Program Files (x86)\National Instruments\Shared\L
+> abVIEW Compare\LVCompare.exe" C:\Users\Paul\AppData\Local\Temp\Typedefs_TestStat
+> us_Before.ctl Typedefs\TestStatus.ctl
+> 
+> Result: Error message with reference to C:\Program Files (x86)\National Instruments\Shared\L
+> abVIEW Compare\supportVIs\_prolvcmp.llb\Typedefs\TestStatus.ctl
+> 
+> Observation: The second path has to be the full path, not the relative path we get back using "echo".
+
+Yes, that's what it looks like.
+-- 
+David
