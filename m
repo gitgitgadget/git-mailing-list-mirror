@@ -1,95 +1,75 @@
-From: Jeff King <peff@peff.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
 Subject: Re: [PATCH] disable grafts during fetch/push/bundle
-Date: Tue, 4 Mar 2014 19:56:49 -0500
-Message-ID: <20140305005649.GB11509@sigill.intra.peff.net>
+Date: Tue, 4 Mar 2014 20:00:44 -0500
+Message-ID: <CAPig+cRqyG_JXSO-DsdP0mAjfmgS+FUCxLz+0+rHeUXrjmcjJg@mail.gmail.com>
 References: <20140304174806.GA11561@sigill.intra.peff.net>
- <xmqqd2i1k7p9.fsf@gitster.dls.corp.google.com>
+	<CAPig+cTzOxn5t0JOwxQyVrU___QPAQvwHR-zqFccaEQw+mYUCA@mail.gmail.com>
+	<20140305003721.GA11509@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 05 01:56:57 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 05 02:00:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WL08m-0003AS-HH
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Mar 2014 01:56:56 +0100
+	id 1WL0CZ-00063s-9c
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Mar 2014 02:00:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755642AbaCEA4w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Mar 2014 19:56:52 -0500
-Received: from cloud.peff.net ([50.56.180.127]:33064 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754764AbaCEA4v (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Mar 2014 19:56:51 -0500
-Received: (qmail 26406 invoked by uid 102); 5 Mar 2014 00:56:51 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 04 Mar 2014 18:56:51 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 04 Mar 2014 19:56:49 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqqd2i1k7p9.fsf@gitster.dls.corp.google.com>
+	id S1755975AbaCEBAq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Mar 2014 20:00:46 -0500
+Received: from mail-yk0-f174.google.com ([209.85.160.174]:61152 "EHLO
+	mail-yk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755893AbaCEBAp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Mar 2014 20:00:45 -0500
+Received: by mail-yk0-f174.google.com with SMTP id 20so918947yks.5
+        for <git@vger.kernel.org>; Tue, 04 Mar 2014 17:00:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=BHD/PfqYO4gBexfQHRq0zEF2+J5krKUubu8PvpfUGww=;
+        b=LmA0KC+JD9yzqLd5vwxnGs6h74Zm6dezUUo9q/s9nmUvZbH4TEV/qpw/VQAa6Bkxuy
+         iOw8E3Pi86WnGe+OaiFG5oh8hWPeMAlROJgSODoJ3Th/0eMCOvoePXhUYV5sfJmkoHy3
+         txYCjSaDCRO45OJ1FJqDN/qd5GVIDOi5addjWmQI2omUB1gGrFpU8p3lP2iSXmDmmfzv
+         XU5OP0Rm0ZId2qaqET700OYwoBDJcL3KQIz3g+twQVTwnBjHZcjJq7KINmgaNAxvWLFA
+         C83x/kRoWFpfeHtfTsG4pkSzcFiNRK8Qj0hMsx4uq29igbbtOnAh89sEwkGx9T4ruKsl
+         qQYw==
+X-Received: by 10.236.50.194 with SMTP id z42mr8716yhb.145.1393981244389; Tue,
+ 04 Mar 2014 17:00:44 -0800 (PST)
+Received: by 10.170.180.195 with HTTP; Tue, 4 Mar 2014 17:00:44 -0800 (PST)
+In-Reply-To: <20140305003721.GA11509@sigill.intra.peff.net>
+X-Google-Sender-Auth: 0LvynEmI_wi9abs3Kr92Wrgpj1w
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243411>
 
-On Tue, Mar 04, 2014 at 12:52:18PM -0800, Junio C Hamano wrote:
+On Tue, Mar 4, 2014 at 7:37 PM, Jeff King <peff@peff.net> wrote:
+> On Tue, Mar 04, 2014 at 06:36:07PM -0500, Eric Sunshine wrote:
+>
+>> On Tue, Mar 4, 2014 at 12:48 PM, Jeff King <peff@peff.net> wrote:
+>> > diff --git a/commit.c b/commit.c
+>> > index 6bf4fe0..886dbfe 100644
+>> > --- a/commit.c
+>> > +++ b/commit.c
+>> > @@ -114,6 +114,11 @@ static unsigned long parse_commit_date(const char *buf, const char *tail)
+>> >  static struct commit_graft **commit_graft;
+>> >  static int commit_graft_alloc, commit_graft_nr;
+>> >
+>> > +int commit_grafts_loaded(void)
+>> > +{
+>> > +       return !!commit_graft_nr;
+>> > +}
+>>
+>> Did you mean !!commit_graft ?
+>
+> Shouldn't they produce the same results?
 
-> > We already make an attempt to do the right thing in several
-> > places by turning off read_replace_refs. However, we missed
-> > at least one case (during bundle creation), and we do
-> > nothing anywhere to handle grafts.
-> 
-> "Doing nothing for grafts" has been pretty much a deliberate
-> omission.  Because we have no way to transfer how histories are
-> grafted together, people cloning from a repository that grafts away
-> a commit that records a mistakenly committed sekrit will end up with
-> a disjoint history, instead of exposing the sekrit to them, and are
-> expected to join the history by recreating grafts (perhaps a README
-> of such a project instructs them to do so).  That was deemed far
-> better than exposing the hidden history, I think.
-
-I see your point, but I would be tempted to say that the person trying
-to hide a secret with grafting is simply wrong to do so. You need to
-cement that history with a rewrite if you want to share with people.
-
-I do not recall any past discussion on this topic, and searching the
-archive only shows people echoing what I said above. Is this something
-we've promised to work in the past?
-
-I'm certainly sympathetic to systems failing to a secure default rather
-than doing something that the user does not expect. But at the same
-time, if using grafts for security isn't something people reasonably
-expect, then failing only hurts the non-security cases.
-
-> And "replace tries to do the right thing" was an attempt to rectify
-> that misfeature of grafts in that we now do have a way to transfer
-> how the history is grafted together, so that project README does not
-> have to instruct the fetcher of doing anything special.
-
-Perhaps the right response is "grafts are broken, use git-replace
-instead". But then should we think about deprecating grafts? Again, this
-patch was spurred by a real user with a graft trying to push and getting
-a confusing error message.
-
-> It _might_ be a misfeature, however, for the object connectivity
-> layer to expose a part of the history replaced away to the party
-> that fetches from such a repository.  Ideally, the "right thing"
-> ought to be to include history that would be omitted if we did not
-> have the replacement (i.e. adding parents the underlying commit does
-> not record), while not following the history that replacement wants
-> to hide (i.e. excluding the commits replacement commits overlay).
-
-I don't really think it's worth the complexity. It's fairly common
-knowledge (or at least I think so) that replace refs are a _view_ onto
-the history. When you share the history graph, you share the true
-objects. You can _also_ share your views in replace/refs, but it is up
-to the client to fetch them. If you want to hide things, then you need
-to rewrite the true objects, end of story.
-
-I dunno. Maybe there are people who have different expectations.
-
--Peff
+Yes they should, but the use of !! seemed to imply that you wanted to
+apply it to the pointer value. (If you indeed intended to use
+commit_graft_nr, then 'return commit_graft_nr', without !!, would have
+been sufficient and idiomatic C.)
