@@ -1,80 +1,82 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v3 6/6] cache_tree_find(): use path variable when passing over slashes
-Date: Wed,  5 Mar 2014 18:26:30 +0100
-Message-ID: <1394040390-7954-7-git-send-email-mhagger@alum.mit.edu>
-References: <1394040390-7954-1-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v3 0/6] cache_tree_find() workover
+Date: Wed,  5 Mar 2014 18:26:24 +0100
+Message-ID: <1394040390-7954-1-git-send-email-mhagger@alum.mit.edu>
 Cc: David Kastrup <dak@gnu.org>, git@vger.kernel.org,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 05 18:27:03 2014
+X-From: git-owner@vger.kernel.org Wed Mar 05 18:33:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WLFaq-0007UZ-KZ
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Mar 2014 18:26:57 +0100
+	id 1WLFhR-0005g1-OM
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Mar 2014 18:33:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754079AbaCER0u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2014 12:26:50 -0500
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:54521 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754511AbaCER0s (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 5 Mar 2014 12:26:48 -0500
-X-AuditID: 12074413-f79076d000002d17-49-53175e587482
+	id S1754222AbaCERdm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Mar 2014 12:33:42 -0500
+Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:52513 "EHLO
+	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752204AbaCERdl (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 5 Mar 2014 12:33:41 -0500
+X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Wed, 05 Mar 2014 12:33:41 EST
+X-AuditID: 12074412-f79d46d000002e58-36-53175e4eb22d
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id A0.30.11543.85E57135; Wed,  5 Mar 2014 12:26:48 -0500 (EST)
+	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 6D.2B.11864.E4E57135; Wed,  5 Mar 2014 12:26:38 -0500 (EST)
 Received: from michael.fritz.box (p57A24002.dip0.t-ipconnect.de [87.162.64.2])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s25HQY7F022625
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s25HQY79022625
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Wed, 5 Mar 2014 12:26:46 -0500
+	Wed, 5 Mar 2014 12:26:36 -0500
 X-Mailer: git-send-email 1.9.0
-In-Reply-To: <1394040390-7954-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrIIsWRmVeSWpSXmKPExsUixO6iqBsRJx5ssGgel8XsG9vYLLqudDNZ
-	NPReYba4vWI+swOLx9/3H5g82qaZeVy8pOzxeZNcAEsUt01SYklZcGZ6nr5dAndGZ/8+poJX
-	rBWr9t1mbGA8xNLFyMkhIWAi0XRqOzOELSZx4d56ti5GLg4hgcuMEpN/b2aEcI4ySbT+38MO
-	UsUmoCuxqKeZCcQWEVCTmNgGMYlZIE3iwZYrYLawQJjEje5XbCA2i4CqxNTDT1lBbF4BZ4mV
-	cz6xQ2yTk5jyewGYzSngItG4tANoJgfQMmeJRfuZJzDyLmBkWMUol5hTmqubm5iZU5yarFuc
-	nJiXl1qka66Xm1mil5pSuokREjzCOxh3nZQ7xCjAwajEw8sZKB4sxJpYVlyZe4hRkoNJSZT3
-	ajRQiC8pP6UyI7E4I76oNCe1+BCjBAezkghvQCRQjjclsbIqtSgfJiXNwaIkzqu2RN1PSCA9
-	sSQ1OzW1ILUIJivDwaEkwbsqBqhRsCg1PbUiLTOnBCHNxMEJMpxLSqQ4NS8ltSixtCQjHhQZ
-	8cXA2ABJ8QDtFYkF2VtckJgLFIVoPcWoKCXOqwiSEABJZJTmwY2FpYRXjOJAXwrzvgDZzgNM
-	J3Ddr4AGMwENjuYDG1ySiJCSamCcd4fz7z2WzqnMqxzaFQpvCyzY3Nu5o7Gq262dIdF+A+vv
-	j3usr8bvnBhgsqx1Odc9jsznNVr3tx98p8TpzXEs7NdWvkSmxy9s33Ra1R1nuXtjQ/Pd8sXb
-	z1XeYlZLYS/msui1+MQcomPaMEVknxO3x+Sy9isi9zecneEqqth2i9M4/ifPdUMl 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrJIsWRmVeSWpSXmKPExsUixO6iqOsXJx5ssOGdkcXsG9vYLLqudDNZ
+	NPReYba4vWI+swOLx9/3H5g82qaZeVy8pOzxeZNcAEsUt01SYklZcGZ6nr5dAnfGo2nfWAoO
+	cFTsWdPG2sD4kq2LkZNDQsBEYuvSVlYIW0ziwr31QHEuDiGBy4wS+yYeZIZwjjJJfDk0nxmk
+	ik1AV2JRTzMTiC0ioCYxse0QC4jNLJAm8WDLFTBbWMBIYnLDIXYQm0VAVWLCxslA9RwcvALO
+	EnMnMUMsk5OY8nsB+wRG7gWMDKsY5RJzSnN1cxMzc4pTk3WLkxPz8lKLdM30cjNL9FJTSjcx
+	QoJBaAfj+pNyhxgFOBiVeHg3+IkHC7EmlhVX5h5ilORgUhLlvRoNFOJLyk+pzEgszogvKs1J
+	LT7EKMHBrCTCGxAJlONNSaysSi3Kh0lJc7AoifP+XKzuJySQnliSmp2aWpBaBJOV4eBQkuBV
+	iAVqFCxKTU+tSMvMKUFIM3FwggznkhIpTs1LSS1KLC3JiAcFenwxMNRBUjxAe0VA2nmLCxJz
+	gaIQracYFaXEeRVBEgIgiYzSPLixsBh/xSgO9KUwRBUPMD3Adb8CGswENDiaD2xwSSJCSqoB
+	6CPtLX/c2KOi12+J/271JsYhKm5mWJDMtws7SwP2py3rs9/8wLo58b8n+6lbZklmMa/FNj39
+	ZWz49zdT3g4+lykW///zJxVenHhgSr+kt8enqSdalJ4t7vZkXfZJTeJQ549s01fTH76UKdDx
+	5tyXpJdxwE3qk9TLy7lXdk++vEf8ybcrvNEiSizFGYmGWsxFxYkAdizXfswCAAA= 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243451>
 
-The search for the end of the slashes is part of the update of the
-path variable for the next iteration as opposed to an update of the
-slash variable.  So iterate using path rather than slash.
+Who would have expected so much slop in one little function?  Here are
+the changes coming out of a long email thread.
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- cache-tree.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+I feel a little bit silly submitting six separate patches, but they
+really are independent.  And two of the changes were suggested by
+other people, so splitting those out, at least, helps give credit
+where it is due.  But feel free to squash the patches together if you
+think it is best.
 
-diff --git a/cache-tree.c b/cache-tree.c
-index 17db9f9..7f8d74d 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -563,9 +563,10 @@ static struct cache_tree *cache_tree_find(struct cache_tree *it, const char *pat
- 		if (!sub)
- 			return NULL;
- 		it = sub->cache_tree;
--		while (*slash == '/')
--			slash++;
-+
- 		path = slash;
-+		while (*path == '/')
-+			path++;
- 	}
- 	return it;
- }
+Changes since v2 (aside from the atomization):
+
+* Use strchrnul() to initialize slash (as suggested by Junio)
+
+* Don't initialize variable at declaration (as per Junio's
+  preference).
+
+Thanks to Junio and David for this workout.
+
+Michael Haggerty (6):
+  cache_tree_find(): remove redundant checks
+  cache_tree_find(): initialize slash using strchrnul()
+  cache_tree_find(): fix comment formatting
+  cache_tree_find(): remove redundant check
+  cache_tree_find(): remove early return
+  cache_tree_find(): use path variable when passing over slashes
+
+ cache-tree.c | 17 +++++++----------
+ 1 file changed, 7 insertions(+), 10 deletions(-)
+
 -- 
 1.9.0
