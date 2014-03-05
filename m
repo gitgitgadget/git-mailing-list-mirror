@@ -1,100 +1,80 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] submodule : Add --no-separate-git-dir option to add and
- update command.
-Date: Wed, 05 Mar 2014 19:13:37 +0100
-Message-ID: <53176951.7000201@web.de>
-References: <1393858066.7891.20.camel@Naugrim> <5314BFA5.2030807@web.de> <1393878866.7891.22.camel@Naugrim>
+From: Phillip Susi <psusi@ubuntu.com>
+Subject: Re: New directory lost by git am
+Date: Wed, 05 Mar 2014 13:29:27 -0500
+Message-ID: <53176D07.3020206@ubuntu.com>
+References: <531690A3.3040509@ubuntu.com> <53169549.10309@gmail.com> <53169868.3010401@ubuntu.com> <5316DBEC.3020208@gmail.com> <53173423.6050708@ubuntu.com> <20140305163415.GA28908@sigill.intra.peff.net> <53175510.7020000@ubuntu.com> <20140305171334.GA31252@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Henri GEIST <geist.henri@laposte.net>
-X-From: git-owner@vger.kernel.org Wed Mar 05 19:13:56 2014
+Content-Transfer-Encoding: 7bit
+Cc: Chris Packham <judge.packham@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 05 19:29:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WLGKB-0003i0-8L
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Mar 2014 19:13:47 +0100
+	id 1WLGZU-0002ep-LS
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Mar 2014 19:29:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754811AbaCESNo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Mar 2014 13:13:44 -0500
-Received: from mout.web.de ([212.227.17.12]:51757 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754528AbaCESNl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Mar 2014 13:13:41 -0500
-Received: from [192.168.178.41] ([84.132.147.244]) by smtp.web.de (mrweb004)
- with ESMTPA (Nemesis) id 0MdI5T-1Wby5p2qV1-00IUVn; Wed, 05 Mar 2014 19:13:38
- +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
-In-Reply-To: <1393878866.7891.22.camel@Naugrim>
+	id S1756064AbaCES3c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Mar 2014 13:29:32 -0500
+Received: from cdptpa-omtalb.mail.rr.com ([75.180.132.120]:59705 "EHLO
+	cdptpa-omtalb.mail.rr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753061AbaCES3b (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2014 13:29:31 -0500
+X-Authority-Analysis: v=2.0 cv=S8pbMfQP c=1 sm=0 a=/DbS/tiKggfTkRRHPZEB4g==:17 a=JipEcVzqA9wA:10 a=JbtRu-yXPzkA:10 a=S1A5HrydsesA:10 a=Qsx_du5GiBkA:10 a=IkcTkHD0fZMA:10 a=fxJcL_dCAAAA:8 a=KGjhK52YXX0A:10 a=QfKxxUxMAAAA:8 a=M_dgDDc6FE9TJqProYsA:9 a=QEXdDO2ut3YA:10 a=/DbS/tiKggfTkRRHPZEB4g==:117
+X-Cloudmark-Score: 0
+X-Authenticated-User: 
+X-Originating-IP: 67.78.168.186
+Received: from [67.78.168.186] ([67.78.168.186:61003] helo=[10.1.1.236])
+	by cdptpa-oedge01.mail.rr.com (envelope-from <psusi@ubuntu.com>)
+	(ecelerity 2.2.3.46 r()) with ESMTP
+	id 39/AD-17312-60D67135; Wed, 05 Mar 2014 18:29:26 +0000
+User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
+In-Reply-To: <20140305171334.GA31252@sigill.intra.peff.net>
 X-Enigmail-Version: 1.6
-X-Provags-ID: V03:K0:25flPgc+IK63zo0lKC+Mv+fqiKhnHer09nkcORmcZR9VZeD7r0A
- WdSmq1GmvaPIyEypHq4QFOfAygvSUIwKLj93imOcFSuTDaJp7c7+JaxbIxg3T7Af98vtWao
- Fqm00AyuTAK/kgKJFNn1OhSfsCS414wx67KYc2s4KfM0A0apO9Us5DIp8djDiF9tK1uqcID
- vydJZqmOYDB3ij2oXvw9Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243457>
 
-Am 03.03.2014 21:34, schrieb Henri GEIST:
-> Le lundi 03 mars 2014 =C3=A0 17:45 +0000, Jens Lehmann a =C3=A9crit :
->> Am 03.03.2014 14:47, schrieb Henri GEIST:
->>> This new option prevent git submodule <add|update> to clone the mis=
-sing
->>> submodules with the --separate-git-dir option.
->>> Then the submodule will be regular repository and their gitdir will=
- not
->>> be placed in the superproject gitdir/modules directory.
->>
->> And what is your motivation for this? After all submodules containin=
-g
->> a .git directory are second class citizens (because they can never b=
-e
->> safely removed by regular git commands).
->>
->=20
-> I recognize most people will prefer to have the .git directory separa=
-te.
-> And I do not intend to make this option the default.
->=20
-> My reasons are:
->=20
->   - As it is not clearly stated in the doc that the gitdir is separat=
-e.
->     The first time I have copied one module to an USB key I had a big
->     surprise.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Oops! Could you please help us by hinting how the documentation
-could be improved here?
+On 3/5/2014 12:13 PM, Jeff King wrote:
+> We apply the changes to "modified" and "new" to the working tree,
+> but we do not stage anything in the index. I suspect this is
+> because our invocation of "apply --index" (which is what is doing
+> the real work with "--reject" here) bails before touching the
+> index. In theory it should be able to update the index for files
+> that applied cleanly and leave the other ones alone.
 
->   - This will not change anything for people not using it.
+Yikes, that's really bad.
 
-I do not agree, as they'll be seeing a new option and might use
-it to "go backward" as Junio explained in his answer.
+> But I have not thought hard about it, so maybe there is a good
+> reason not to (it is a little weird just because the resulting
+> index is a partial application of the patch).  The "am -3" path
+> does what you want here, but it is much simpler: it knows it can
+> represent the 3-way conflict in the index. So the index represents
+> the complete state of the patch application at the end, including
+> conflicts.
 
->   - I use an other patch which I plane to send later which enable mul=
-tiple
->     level of superproject to add a gitlink to the same submodule.
->     And in this case the superproject containing the separate gitdir =
-will be
->     arbitrary and depend on the processing order of the
->     'git submodule update --recursive' command.
+yes, but -3 fails if it can't find the parent blobs.
 
-I don't understand that. How is that different from using different
-names (and thus different separate gitdirs) for that duplicated
-submodule? After all, the .git directory is just moved somewhere
-else in the superproject's work tree, and as the name defaults to
-the path of the submodule ...
 
->   - I have written this for myself and have using it since 2012 and s=
-end it in
->     the hope it could be useful for someone else even if it is only a=
- few
->     people. But if its not the case no problem I will keep using it f=
-or myself.
 
-Thanks.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.17 (MingW32)
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+
+iQEcBAEBAgAGBQJTF20HAAoJEI5FoCIzSKrwFfQIAJfPmplu7zskercvjnuZGCle
+ccTzK0rYtrwQn/78Vrbc6kqcrQvbvtrqUMN4/ILJ5xeaO80Gzzz8pchBPNN8khhY
+VBQiWUOrKzBH1vszveneva+gFUrLIWk2KI6T8lGTnYulvRVe38WRAwr/8qEClPX6
+hUnYChM17WE+KTV39ezA6ww9ZAyOX7EHq87PJp5nVgBB4HkmkDmccfxYTFNB4FGg
+PPqun8g0Fyytd+Qrsk2M5L6NsPUXi32wIt8EWcyPwU6QrQgKbuWK7QlVkcPPzecM
+eHifKm8V1V0VKudm3S8jbaUDG2KnLIdMveXu/e9Hn7+YgDQh9zM1m7f+NVJDvjk=
+=NAe9
+-----END PGP SIGNATURE-----
