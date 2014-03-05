@@ -1,197 +1,96 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [RFC/PATCH] diff: simplify cpp funcname regex
-Date: Wed, 05 Mar 2014 08:58:26 +0100
-Message-ID: <5316D922.9010501@viscovery.net>
-References: <20140305003639.GA9474@sigill.intra.peff.net>
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Re: New directory lost by git am
+Date: Wed, 05 Mar 2014 21:10:20 +1300
+Message-ID: <5316DBEC.3020208@gmail.com>
+References: <531690A3.3040509@ubuntu.com> <53169549.10309@gmail.com> <53169868.3010401@ubuntu.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Thomas Rast <tr@thomasrast.ch>
-To: Jeff King <peff@peff.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 05 08:58:39 2014
+To: Phillip Susi <psusi@ubuntu.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Mar 05 09:10:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WL6ir-0007mx-Ix
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Mar 2014 08:58:37 +0100
+	id 1WL6uc-0000Pm-9p
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Mar 2014 09:10:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752623AbaCEH6d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2014 02:58:33 -0500
-Received: from so.liwest.at ([212.33.55.23]:40247 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751544AbaCEH6c (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Mar 2014 02:58:32 -0500
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.80.1)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1WL6ig-0000ZZ-Dj; Wed, 05 Mar 2014 08:58:26 +0100
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 03F7D16613;
-	Wed,  5 Mar 2014 08:58:25 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
-In-Reply-To: <20140305003639.GA9474@sigill.intra.peff.net>
-X-Spam-Score: -1.0 (-)
+	id S1751880AbaCEIKb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Mar 2014 03:10:31 -0500
+Received: from mail-pd0-f169.google.com ([209.85.192.169]:50562 "EHLO
+	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750747AbaCEIKZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2014 03:10:25 -0500
+Received: by mail-pd0-f169.google.com with SMTP id fp1so740250pdb.14
+        for <git@vger.kernel.org>; Wed, 05 Mar 2014 00:10:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=IIp5sxXtOIUd37xEFGmh0JLnQwc17qxM17GgpCLEA5Q=;
+        b=iqW6/hrJnfwL9LXuoaqeHVAIjglH7dsmumEBCy0D1gCC3s7h64p77GrdMVPD1qpkrA
+         fBEVYlC9httPfRu0JidzA7EjeNY+GhmUdPPO6Kfstmy435jcad6lhqiS6fbteUgKYhNL
+         EXAqyHSs1Argt7rz8gisTBnfHg/X1GFQHYuOirsXULwwG+i1Xxm6Mc2OC30pX01JjMvc
+         JiHrjrWsyxDUIwka+/zopsQDHXxAOIC8CQ2dV02qVjSYMO+/FyDvqmStTrC/Gob89tzR
+         oVrH1nGVHBl0JL2j5GU2QpUV3b/nRu4hSlQuqM2riVpAHBVklyWDot+N1MBVE9L1v3Ak
+         GEvw==
+X-Received: by 10.67.5.131 with SMTP id cm3mr5249855pad.92.1394007025194;
+        Wed, 05 Mar 2014 00:10:25 -0800 (PST)
+Received: from linux.site (115-188-15-163.jetstream.xtra.co.nz. [115.188.15.163])
+        by mx.google.com with ESMTPSA id gj9sm5202510pbc.7.2014.03.05.00.10.23
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 05 Mar 2014 00:10:24 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
+In-Reply-To: <53169868.3010401@ubuntu.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243425>
 
-Am 3/5/2014 1:36, schrieb Jeff King:
-> The current funcname matcher for C files requires one or
-> more words before the function name, like:
+On 05/03/14 16:22, Phillip Susi wrote:
+> On 03/04/2014 10:08 PM, Chris Packham wrote:
+>> Could you provide a few more details such as your git version (git 
+>> --version) and an example of the failure. I've tried to reproduce
+>> the problem based on the description provided but everything seems
+>> to work as expected for me.
 > 
->   static int foo(int arg)
->   {
+> Version 1.8.3.2.
 > 
-> However, some coding styles look like this:
+>> git --version git version 1.9.0 mkdir test && cd test && git init 
+>> echo "hello world" >a.txt git add a.txt git commit -m"Initial
+>> commit" git checkout -b temp mkdir b echo "lorem ipsum" >b/b.txt 
+>> git add b/b.txt git commit -m"Add b/b.txt" ls -R .: a.txt  b
+>>
+>> ./b: b.txt git checkout master git format-patch temp -1 --stdout |
+>> git am ls -R .: a.txt  b
+>>
+>> ./b: b.txt
+>>
 > 
->   static int
->   foo(int arg)
->   {
+> You are reapplying the patch while it is already applied.
+
+My example is creating a commit on the "temp" branch then applying it to
+the "master" branch using git am.
+
+> Do a reset
+> HEAD~1 --hard, and git clean -x -f -d before git am.  I didn't notice
+> the missing file myself for some time because it is left in the
+> working tree, just not added to the index and included in the commit.
 > 
-> and we do not match, even though the default regex would.
-> 
-> This patch simplifies the regex significantly. Rather than
-> trying to handle all the variants of keywords and return
-> types, we simply look for an identifier at the start of the
-> line that contains a "(", meaning it is either a function
-> definition or a function call, and then not containing ";"
-> which would indicate it is a call or declaration.
 
-Here is a patch that I'm carrying around since... a while.
-What do you think?
+Regardless of reproducing the issue a quick glance at the Release notes
+for 1.8.3.3 the following sticks out:
 
-The pattern I chose also catches variable definition, not just
-functions. That is what I need, but it hurts grep --function-context
-That's the reason I didn't forward the patch, yet.
+Fixes since v1.8.3.2
+--------------------
 
---- 8< ---
-From: Johannes Sixt <j6t@kdbg.org>
-Date: Tue, 25 Sep 2012 14:08:02 +0200
-Subject: [PATCH] userdiff: have 'cpp' hunk header pattern catch more C++ anchor points
+ * "git apply" parsed patches that add new files, generated by programs
+   other than Git, incorrectly.  This is an old breakage in v1.7.11.
 
-The hunk header pattern 'cpp' is intended for C and C++ source code, but
-it is actually not very useful for the latter, and even hurts some
-use-cases for the former.
-
-The parts of the pattern have the following flaws:
-
-- The first part matches an identifier followed immediately by a colon and
-  arbitrary text and is intended to reject goto labels and C++ access
-  specifiers (public, private, protected). But this pattern also rejects
-  C++ constructs, which look like this:
-
-    MyClass::MyClass()
-    MyClass::~MyClass()
-    MyClass::Item MyClass::Find(...
-
-- The second part matches an identifier followed by a list of qualified
-  names (i.e. identifiers separated by the C++ scope operator '::')
-  separated by space or '*' followed by an opening parenthesis (with space
-  between the tokens). It matches function declarations like
-
-    struct item* get_head(...
-    int Outer::Inner::Func(...
-
-  Since the pattern requires at least two identifiers, GNU-style function
-  definitions are ignored:
-
-    void
-    func(...
-
-  Moreover, since the pattern does not allow punctuation other than '*',
-  the following C++ constructs are not recognized:
-
-  . template definitions:
-      template<class T> int func(T arg)
-
-  . functions returning references:
-      const string& get_message()
-
-  . functions returning templated types:
-      vector<int> foo()
-
-  . operator definitions:
-      Value operator+(Value l, Value r)
-
-- The third part of the pattern finally matches compound definitions. But
-  it forgets about unions and namespaces, and also skips single-line
-  definitions
-
-    struct random_iterator_tag {};
-
-  because no semicolon can occur on the line.
-
-Change the first pattern to require a colon at the end of the line (except
-for trailing space and comments), so that it does not reject constructor
-or destructor definitions.
-
-Notice that all interesting anchor points begin with an identifier or
-keyword. But since there is a large variety of syntactical constructs after
-the first "word", the simplest is to require only this word and accept
-everything else. Therefore, this boils down to a line that begins with a
-letter or underscore (optionally preceded by the C++ scope operator '::'
-to accept functions returning a type anchored at the global namespace).
-Replace the second and third part by a single pattern that picks such a
-line.
-
-This has the following desirable consequence:
-
-- All constructs mentioned above are recognized.
-
-and the following likely desirable consequences:
-
-- Definitions of global variables and typedefs are recognized:
-
-    int num_entries = 0;
-    extern const char* help_text;
-    typedef basic_string<wchar_t> wstring;
-
-- Commonly used marco-ized boilerplate code is recognized:
-
-    BEGIN_MESSAGE_MAP(CCanvas,CWnd)
-    Q_DECLARE_METATYPE(MyStruct)
-    PATTERNS("tex",...)
-
-  (The last one is from this very patch.)
-
-but also the following possibly undesirable consequence:
-
-- When a label is not on a line by itself (except for a comment) it is no
-  longer rejected, but can appear as a hunk header if it occurs at the
-  beginning of a line:
-
-    next:;
-
-IMO, the benefits of the change outweigh the (possible) regressions by a
-large margin.
-
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- userdiff.c                                 | 8 +++-----
- 13 files changed, 3 insertions(+), 17 deletions(-)
-
-diff --git a/userdiff.c b/userdiff.c
-index ed958ef..49b2094 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -125,11 +125,9 @@ PATTERNS("tex", "^(\\\\((sub)*section|chapter|part)\\*{0,1}\\{.*)$",
- 	 "\\\\[a-zA-Z@]+|\\\\.|[a-zA-Z0-9\x80-\xff]+"),
- PATTERNS("cpp",
- 	 /* Jump targets or access declarations */
--	 "!^[ \t]*[A-Za-z_][A-Za-z_0-9]*:.*$\n"
--	 /* C/++ functions/methods at top level */
--	 "^([A-Za-z_][A-Za-z_0-9]*([ \t*]+[A-Za-z_][A-Za-z_0-9]*([ \t]*::[ \t]*[^[:space:]]+)?){1,}[ \t]*\\([^;]*)$\n"
--	 /* compound type at top level */
--	 "^((struct|class|enum)[^;]*)$",
-+	 "!^[ \t]*[A-Za-z_][A-Za-z_0-9]*:[[:space:]]*($|/[/*])\n"
-+	 /* functions/methods, variables, and compounds at top level */
-+	 "^((::[[:space:]]*)?[A-Za-z_].*)$",
- 	 /* -- */
- 	 "[a-zA-Z_][a-zA-Z0-9_]*"
- 	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lL]?"
--- 
-1.9.0.1398.g59a4f1b
+Does that sound like your problem? If you can I'd suggest updating,
+ideally to the recent 1.9.0 release but if you're feeling conservative
+try 1.8.3.4.
