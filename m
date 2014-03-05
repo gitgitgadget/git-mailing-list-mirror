@@ -1,79 +1,91 @@
-From: Andrew Wong <andrew.kw.w@gmail.com>
-Subject: Re: [RFC 2/3] merge: Add hints to tell users about "git merge --abort"
-Date: Wed, 5 Mar 2014 10:30:40 -0500
-Message-ID: <CADgNjak3aqPDV0iZYc8b6QJ9y+6bUd28n0UJOm6WjufQhjfuwA@mail.gmail.com>
-References: <1393437985-31401-1-git-send-email-andrew.kw.w@gmail.com>
-	<1393437985-31401-3-git-send-email-andrew.kw.w@gmail.com>
-	<20140226203836.GM7855@google.com>
+From: Jeremy Nickurak <jeremy@nickurak.ca>
+Subject: Re: Bad git log behavior with multiple glob path arguments
+Date: Wed, 5 Mar 2014 09:21:53 -0700
+Message-ID: <CA+eQo_2Gcipe7VA7WMY+etULjmSC=TqGmpZmGSGeWv03c93FDA@mail.gmail.com>
+References: <CA+eQo_21j=GzsvWAjxzr+aFYcPcnnyozySOo0m9bO-xJq_6a9A@mail.gmail.com>
+	<CACsJy8A28x5m1SLV-R=QrFniPXUbV+x9N27GA-j+Ut_oe_6oGQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 05 16:30:55 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 05 17:22:06 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WLDmY-0008Lo-GS
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Mar 2014 16:30:54 +0100
+	id 1WLEZz-0002Wq-Ev
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Mar 2014 17:21:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759363AbaCEPap (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2014 10:30:45 -0500
-Received: from mail-wg0-f42.google.com ([74.125.82.42]:51440 "EHLO
-	mail-wg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755657AbaCEPal (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Mar 2014 10:30:41 -0500
-Received: by mail-wg0-f42.google.com with SMTP id y10so1434861wgg.13
-        for <git@vger.kernel.org>; Wed, 05 Mar 2014 07:30:40 -0800 (PST)
+	id S1753056AbaCEQVz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Mar 2014 11:21:55 -0500
+Received: from mail-wg0-f46.google.com ([74.125.82.46]:33725 "EHLO
+	mail-wg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751983AbaCEQVy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2014 11:21:54 -0500
+Received: by mail-wg0-f46.google.com with SMTP id z12so1526493wgg.29
+        for <git@vger.kernel.org>; Wed, 05 Mar 2014 08:21:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
+        d=nickurak.ca; s=google-dkim;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=uJKFX2UaTjc8H1lFpiEWOfk92WaPHDbfyEZoK4+4sew=;
-        b=LGtU7oLZCPCJRLfIFEAYEBIUxT+0ExGNT1uZtP7Jx38EgKk5/X1DY/G3U1xxt2wXn7
-         nPgb9hYprHU0QVv0WVRcR8Z13yB3eUHLaX8bQJJ7LS1kPNlvir3nFSNi5eRQQFMxI7qs
-         GLE5jtV1by9vB7MD/xTcmDkW8Rm0//9u5tXVeS9M3ciKiEYNtm1D2fxDehFNEc7swuiP
-         vJnp0ZqqVeFIQM9xCCk+HyCuDdEih5ogaDcdfKRrxoHFpNXekFvEqsAlpGsKkwEuOT2K
-         Xd5PhuH3p8Oojc6wR7nifRvh6dWhLqoD2wAWmR6PLxO06i0+dRqF4RTxQvYZgW1HdMYA
-         hzFQ==
-X-Received: by 10.194.71.203 with SMTP id x11mr356777wju.93.1394033440087;
- Wed, 05 Mar 2014 07:30:40 -0800 (PST)
-Received: by 10.194.81.65 with HTTP; Wed, 5 Mar 2014 07:30:40 -0800 (PST)
-In-Reply-To: <20140226203836.GM7855@google.com>
+        bh=LLaXyT3qBsy7bzV6MuGhwbZK97vCL1OQZGwz3izLvkM=;
+        b=Lwqh1gkUL4blg/hffoslYn5T/ozDjrgsSgKAJJJWvE0h8iwTyr0/wWqrOXNxMP9ZSe
+         w4BM/sKLj0HHAvHGmKWbBzMPOmiaZt0yRzUOTnK59/9LFxdwuV/exnCPh+7nvw1nOvbU
+         E9lauLggYMXXH/rf6485wj8duEbOT0qS3q3v4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=LLaXyT3qBsy7bzV6MuGhwbZK97vCL1OQZGwz3izLvkM=;
+        b=VxzbLzTaGha3wqDRwgphrjLzOPZOaplgld4I2jey9BQZqRhV5yvP0YtwGJT6nYMpON
+         xz4wiW5G5C7fnupd3mSJMO5QIka04zbjdt/31ai4UF8RVMgir3sBXlSEUv+w+iQaUpEh
+         K0/FRh+nch/WbhuYy0hWnRidDS8SrBJXQI185MLTNb4p0Q80005ocXX8usTQ1X2B1ueo
+         Vui59PrPcOPSuVbOckXyqx15RA1k+eyyIw8Tp9LbQdGLRYoqPYCjl4VPCTUOxpaXFMfa
+         z7rGcTwfk/hhhskJZj52GTSJlBqwCNJmCiK5XYwGJ4T95AlIkvyyOU9hqGKeJFhf252E
+         z2Nw==
+X-Gm-Message-State: ALoCoQmZI1mZ3ixpYn/lGGLdZdhRd1OUPbDW5cO9EofOSVW3EdHTataXYmFVvxkGkWa931XeoARG
+X-Received: by 10.194.241.132 with SMTP id wi4mr2549192wjc.14.1394036513138;
+ Wed, 05 Mar 2014 08:21:53 -0800 (PST)
+Received: by 10.216.122.200 with HTTP; Wed, 5 Mar 2014 08:21:53 -0800 (PST)
+X-Originating-IP: [96.52.225.98]
+In-Reply-To: <CACsJy8A28x5m1SLV-R=QrFniPXUbV+x9N27GA-j+Ut_oe_6oGQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243441>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243442>
 
-On Wed, Feb 26, 2014 at 3:38 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Andrew Wong wrote:
+On Wed, Mar 5, 2014 at 3:01 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Wed, Mar 5, 2014 at 12:56 PM, Jeremy Nickurak <jeremy@nickurak.ca> wrote:
+>> git log seems to understand globs in the last path argument, and the
+>> last path argument only. I didn't see anything in the git log man page
+>> expressly saying this was to be expected, but it does seem like it
+>> ought to work for all the arguments or none of them.
 >
->> --- a/builtin/merge.c
->> +++ b/builtin/merge.c
->> @@ -909,7 +909,8 @@ static int suggest_conflicts(int renormalizing)
->>       fclose(fp);
->>       rerere(allow_rerere_auto);
->>       printf(_("Automatic merge failed; "
->> -                     "fix conflicts and then commit the result.\n"));
->> +                     "fix conflicts and then commit the result.\n"
->> +                     "To abort the merge, use \"git merge --abort\".\n"));
+> What version did you use? We have a fix in the same area,
+> e4ddb05 (tree_entry_interesting: match against all pathspecs -
+> 2014-01-25), and it's in v1.8.5.5 and v1.9.0
+
+So close! :) 1.8.5.3
+
+>> Note that glob matching doesn't seem to occur unless '--' is included.
 >
-> Seems reasonable, but I worry about the command growing too noisy.
->
-> Could this be guarded by an advice.<something> setting?  (See advice.*
-> in git-config(1) for what I mean.)
+> do you mean "git log" does not run at all and complains about
+> disambiguation, or it runs but nothing is filtered?
 
-I was planning to use advice.resolveConflict, but as I went through
-merge.c, I noticed there could be a few other situations where we
-could print out the same message:
-1. when prepare_to_commit() fails, due to hook error, editor error, or
-empty commit message
-2. "git commit --no-commit"
+It complains about disambiguation:
 
-This means contexts are no longer only about "resolving conflict", so
-I was thinking of renaming advice.resolveConflict to something like
-advice.mergeHints.
-
-Any thoughts?
+$ mkdir -p ~/tmp; cd ~/tmp; git init; echo hello > hello.txt; git add
+hello.txt; git commit -m hello; echo "Without --:"; git log --oneline
+'*.txt'; echo "With --:"; git log --oneline -- '*.txt';
+Reinitialized existing Git repository in /home/nickuj/tmp/.git/
+On branch master
+nothing to commit, working directory clean
+Without --:
+fatal: ambiguous argument '*.txt': unknown revision or path not in the
+working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+With --:
+78ff378 hello
