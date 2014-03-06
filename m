@@ -1,78 +1,95 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v3] upload-pack: send shallow info over stdin to pack-objects
-Date: Fri, 7 Mar 2014 06:13:05 +0700
-Message-ID: <CACsJy8B8=N6R6nVa12jjhxdqxMA2eGXOV6jR-XqRRbb-6Xppdg@mail.gmail.com>
-References: <1393936205-15953-1-git-send-email-pclouds@gmail.com>
- <1394095783-24402-1-git-send-email-pclouds@gmail.com> <xmqqfvmvyxzv.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] *.sh: drop useless use of "env"
+Date: Thu, 06 Mar 2014 15:20:17 -0800
+Message-ID: <xmqq1tyex6by.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 07 00:13:42 2014
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 07 00:20:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WLhTw-0006d7-E4
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Mar 2014 00:13:40 +0100
+	id 1WLhaY-00056S-Ih
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Mar 2014 00:20:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752096AbaCFXNg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Mar 2014 18:13:36 -0500
-Received: from mail-qc0-f169.google.com ([209.85.216.169]:54605 "EHLO
-	mail-qc0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751735AbaCFXNf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Mar 2014 18:13:35 -0500
-Received: by mail-qc0-f169.google.com with SMTP id i17so3876457qcy.14
-        for <git@vger.kernel.org>; Thu, 06 Mar 2014 15:13:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=r0m+4NRzIVikN8H1T6v0sOe7bCfwHtgZi8eVYSCm+iM=;
-        b=X3mlu3F0tOpMJyobSr4Zr5Yz9n1CJs27Dmy2kKsBFttFfoweM9vNJAVwByPn/MBIdN
-         5lZbPYHvp4dnXLYfZfD58fQxFLK0Fua0wTbb86KaKZAb4jzGhfYyi1VzV3rfGcIkvSzH
-         EcGiw06UbpBZstemNhGENyvIl7bOx9z5o65X8ln1qweBEdJG6lKd6zimRsZurqdW+KHV
-         DhCkbOpsPJONJMDW7NWfvulTDL4UmGi5yjeU3+nhhGmu7Lvd7cM33u3dp3fcgarqNMaH
-         NkQaNLtSmqlnR3W2uzTRmDoa4IkjyVPUqA18YXdLdA7rLR6RJNROV2MHWmD2107j0bBE
-         ymOw==
-X-Received: by 10.224.112.6 with SMTP id u6mr17579892qap.78.1394147615223;
- Thu, 06 Mar 2014 15:13:35 -0800 (PST)
-Received: by 10.96.215.102 with HTTP; Thu, 6 Mar 2014 15:13:05 -0800 (PST)
-In-Reply-To: <xmqqfvmvyxzv.fsf@gitster.dls.corp.google.com>
+	id S1752508AbaCFXUX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Mar 2014 18:20:23 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65227 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751602AbaCFXUU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Mar 2014 18:20:20 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 236037212A;
+	Thu,  6 Mar 2014 18:20:20 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=l
+	hXPObe3PeeKHqypf+R/oZ9EEDc=; b=OORfYLOuqKAmntf7/Uu4JbTeEGYOT7bOv
+	vpCMSOfMk95hf676N8gv9r6u4YxRLNDy8gyhkVh4E8R68o9LQndxvdYGEkO/Q0tK
+	3ELBNV0Tv5ZgLq+CZOA3LJ0PSrKgNoYYjD/dhnQJAkxRq9Cj3gRHTGSJfu1rpCDD
+	pR674ZzmpU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=xQQ
+	g6beSrT6NVHMFY3gU08mWXLmZBoNMGU0klsQNEcu95zHFSLRmYrKpvBNzx690UCK
+	S+KAXHSh6qi0Xy/MMpCIh8GpVUsbikAZn+Rl3q/3gKEv6eTgNQBXgBBfjtDFkGG4
+	dcZ9Gh0Ge2xMpv/8MZWZl5VHUwQ/nVXEop9IYF9g=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 07AC572129;
+	Thu,  6 Mar 2014 18:20:20 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2171572127;
+	Thu,  6 Mar 2014 18:20:19 -0500 (EST)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: E1F5B30A-A585-11E3-9BA7-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243571>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243572>
 
-On Fri, Mar 7, 2014 at 1:37 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> I like what I see in this patch, but I wonder if we can essentially
-> revert that "temporary shallow file" patch and replace it with the
-> same (or a similar) mechanism uniformly?
+In a bourne shell script, "VAR=VAL command" is sufficient to run
+'command' with environment variable VAR set to value VAL without
+affecting the environment of the shell itself; there is no reason to
+say "env VAR=VAL command".
 
-Using --shallow-file is uniform.The only downside is temporary file.
-Without it you'll need to think of a way (probably different way for
-each command) to feed shallow info to.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-> On the receive-pack side, the comment at the bottom of
-> preprare_shallow_update() makes it clear that, if we wanted to use
-> hooks, we cannot avoid having the proposed new shallow-file in a
-> temporary file, which is unfortunate.  Do we have a similar issue on
-> hooks on the upload-pack side?
+ * Just something I noticed while reading existing tests...
 
-No. I don't think we have hooks on upload-pack.
+ t/t1020-subdirectory.sh | 2 +-
+ t/t9001-send-email.sh   | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
->>  builtin/pack-objects.c   |  7 +++++++
->>  shallow.c                |  2 ++
->>  t/t5537-fetch-shallow.sh | 13 +++++++++++++
->>  upload-pack.c            | 21 ++++++++++++---------
->>  4 files changed, 34 insertions(+), 9 deletions(-)
->
-> Nothing for Documentation/ anywhere?
+diff --git a/t/t1020-subdirectory.sh b/t/t1020-subdirectory.sh
+index 1e2945e..6902320 100755
+--- a/t/t1020-subdirectory.sh
++++ b/t/t1020-subdirectory.sh
+@@ -148,7 +148,7 @@ test_expect_success 'GIT_PREFIX for built-ins' '
+ 	(
+ 		cd dir &&
+ 		printf "change" >two &&
+-		env GIT_EXTERNAL_DIFF=./diff git diff >../actual
++		GIT_EXTERNAL_DIFF=./diff git diff >../actual
+ 		git checkout -- two
+ 	) &&
+ 	test_cmp expect actual
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index 3119c8c..1ecdacb 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -409,7 +409,7 @@ test_expect_success $PREREQ 'Valid In-Reply-To when prompting' '
+ 	(echo "From Example <from@example.com>"
+ 	 echo "To Example <to@example.com>"
+ 	 echo ""
+-	) | env GIT_SEND_EMAIL_NOTTY=1 git send-email \
++	) | GIT_SEND_EMAIL_NOTTY=1 git send-email \
+ 		--smtp-server="$(pwd)/fake.sendmail" \
+ 		$patches 2>errors &&
+ 	! grep "^In-Reply-To: < *>" msgtxt1
 
-Heh git-pack-objects.txt never described stdin format. At least I
-searched for --not in it and found none. So I gladly accepted the
-situation and skipped doc update :D
--- 
-Duy
+
+	
