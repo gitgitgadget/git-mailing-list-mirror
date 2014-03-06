@@ -1,149 +1,111 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] submodule : Add --no-separate-git-dir option to add and
- update command.
-Date: Thu, 06 Mar 2014 21:51:41 +0100
-Message-ID: <5318DFDD.4060006@web.de>
-References: <1393858066.7891.20.camel@Naugrim> <5314BFA5.2030807@web.de>	 <1393878866.7891.22.camel@Naugrim> <53176951.7000201@web.de>	 <1394069128.7891.29.camel@Naugrim> <5318D101.9050305@web.de> <1394136925.7891.31.camel@Naugrim>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] use strchrnul() in place of strchr() and strlen()
+Date: Thu, 06 Mar 2014 12:54:29 -0800
+Message-ID: <xmqqzjl3vyii.fsf@gitster.dls.corp.google.com>
+References: <BLU0-SMTP1988500CEC43BD4C57254AB91890@phx.gbl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: Henri GEIST <geist.henri@laposte.net>
-X-From: git-owner@vger.kernel.org Thu Mar 06 21:51:55 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Rohit Mani <rohit.mani@outlook.com>
+X-From: git-owner@vger.kernel.org Thu Mar 06 21:54:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WLfGi-00075f-G4
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Mar 2014 21:51:52 +0100
+	id 1WLfJP-0001LW-Bu
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Mar 2014 21:54:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753590AbaCFUvr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Mar 2014 15:51:47 -0500
-Received: from mout.web.de ([212.227.15.4]:59095 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753323AbaCFUvp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Mar 2014 15:51:45 -0500
-Received: from [192.168.178.41] ([84.132.148.165]) by smtp.web.de (mrweb002)
- with ESMTPA (Nemesis) id 0LfAfQ-1WwvtV3oKm-00ojzW; Thu, 06 Mar 2014 21:51:42
- +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
-In-Reply-To: <1394136925.7891.31.camel@Naugrim>
-X-Enigmail-Version: 1.6
-X-Provags-ID: V03:K0:fJb97UFIFlE0jbdYka9zi50uB2ngR71X0XfMHqdLArWkJHdAFBU
- Y0QDj3cIAmXDjxnhbNWGyReT2Pc3VHnl/z4K3ti9yaTsf6kyPpDxexD6w0teEUth0bOkN0+
- If3ATosCP99wuRdzLTnwa0xRH87EpZTK48G3WfcVRhhBfT5ejxc8XAnGLsR/UIypdHGK/8t
- P2d5iOqGw2qSyjFHqO/ig==
+	id S1752099AbaCFUyf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Mar 2014 15:54:35 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56425 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750924AbaCFUye (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Mar 2014 15:54:34 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 39FC271F15;
+	Thu,  6 Mar 2014 15:54:34 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Mv9FOiSZ9z6nxvGAOo605luE9zw=; b=X6h8Ll
+	mWc/zkDw0N+kTiWP74j/MqLx687iBGAtTfK9qwtEJh4gZkUMvq2t1aXmo68PZrYl
+	G2zXVOlwYeqc/I+QSkNJ31ao2pIuZ0Fud6WY8US7rh+rLNClKuE/eQsRMO2PRUMV
+	vdtrrEtOE6VRBN4HFYDcqQnzaYYEUjY2PnNRk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=uO+20Oh1789VRTm12QtVTRG+76uyM1Ym
+	3Ech9X1nrZUcv/L675+bH07E4i4YJI7910rraHuqZLrl9gsQS1kudPy2etETVLuA
+	dTngB6b8IBAx0q8Sd+VtpzC0cXf7yNJ02jQdO0GG7Oa35NK4qhlkVFCaGSnyU9od
+	iT04aWOGRFw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 287DB71F13;
+	Thu,  6 Mar 2014 15:54:34 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3CAE171F12;
+	Thu,  6 Mar 2014 15:54:33 -0500 (EST)
+In-Reply-To: <BLU0-SMTP1988500CEC43BD4C57254AB91890@phx.gbl> (Rohit Mani's
+	message of "Wed, 5 Mar 2014 11:29:02 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 85010244-A571-11E3-B05E-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243550>
 
-Am 06.03.2014 21:15, schrieb Henri GEIST:
-> Le jeudi 06 mars 2014 =C3=A0 20:48 +0100, Jens Lehmann a =C3=A9crit :
->> Am 06.03.2014 02:25, schrieb Henri GEIST:
->>> Le mercredi 05 mars 2014 =C3=A0 19:13 +0100, Jens Lehmann a =C3=A9c=
-rit :
->>>> Am 03.03.2014 21:34, schrieb Henri GEIST:
->>>>>   - I use an other patch which I plane to send later which enable=
- multiple
->>>>>     level of superproject to add a gitlink to the same submodule.
->>>>>     And in this case the superproject containing the separate git=
-dir will be
->>>>>     arbitrary and depend on the processing order of the
->>>>>     'git submodule update --recursive' command.
->>>>
->>>> I don't understand that. How is that different from using differen=
-t
->>>> names (and thus different separate gitdirs) for that duplicated
->>>> submodule? After all, the .git directory is just moved somewhere
->>>> else in the superproject's work tree, and as the name defaults to
->>>> the path of the submodule ...
->>>
->>> I think I should give an example.
->>> If I have a hierarchy like this :
->>>
->>> superproject/submodule/subsubmodule
->>>
->>> What I often do is:
->>>
->>> superproject --> submodule --> subsubmodule
->>>              |                 ^
->>>              '-----------------'
->>>
->>> Where '-->' is a gitlink.
->>>
->>>
->>> That mean .gitmodules and index of the superproject contain both su=
-bmodule and
->>> submodule/subsubmodule.
->>
->> Wow, that shouldn't even work (as everything inside "submodule"
->> shouldn't be part of the superproject but must be contained in
->> the submodule itself). Do the "git submodule" script and other
->> git commands like "git status" work for you in such setups?
->=20
-> As I stated above it is the purpose of the other patch that I have no=
-t already send
-> to implement this behavior. And that is why it work.
+Rohit Mani <rohit.mani@outlook.com> writes:
 
-Ok.
+> Avoid scanning strings twice, once with strchr() and then with
+> strlen(), by using strchrnul(). Update the conditional expressions
+> involving the return value of strchrnul() with a check for '\0'.
+>
+> Signed-off-by: Rohit Mani <rohit.mani@outlook.com>
+> ---
 
-> Everything including 'git submodule' and 'git status' work perfectly.
-> The intent of this patch is only to permit this for gitlinks. Not for=
- regular files.
+Nicely done.  I am not sure if you need to say the "update the
+conditional...", which is a logical consequence of such a conversion
+and goes without saying, though.
 
-But I still believe that this shouldn't be permitted at all,
-no matter if files or submodules are concerned. The pitfalls
-files face in such a scenario are pretty much the same for
-submodules too.
+>  cache-tree.c     |   16 +++++++---------
 
->>> and also mean (and that is the point) subsubmodule is a direct 'chi=
-ld' of both
->>> superproject and submodule.
->>
->> Which I think should not be possible. If that works with current
->> Git I suspect we have a bug to fix ... or does your other patch
->> make this work?
->=20
-> You have no bug on this point without my modification this is not pos=
-sible.
+This part may overlap with other topics in flight, but I expect the
+conflict resolution would be trivial.
 
-Glad to hear that.
+> diff --git a/cache-tree.c b/cache-tree.c
+> index 0bbec43..21a13cf 100644
+> --- a/cache-tree.c
+> +++ b/cache-tree.c
+> @@ -121,11 +121,11 @@ void cache_tree_invalidate_path(struct cache_tree *it, const char *path)
+>  
+>  	if (!it)
+>  		return;
+> -	slash = strchr(path, '/');
+> +	slash = strchrnul(path, '/');
+>  	it->entry_count = -1;
+> -	if (!slash) {
+> +	if (*slash == '\0') {
 
->>> In this case where should the separate gitdir of subsubmodule be pl=
-aced ?
->>>   - In superproject/modules/submodule/subsubmodule ?
->>>   - In superproject/submodule/modules/subsubmodule ?
->>>   - Depending on the 'git submodule update' command order ?
->>>   - Or both ?
->>
->> It should be placed in .git/modules/submodule/modules/subsubmodule
->> of the superproject (assuming the subsubmodule is part of the first
->> level submodule). But in your example that would live in
->> .git/modules/submodule/subsubmodule (but as mentioned above, I do
->> not consider this a valid setup because then two repositories would
->> be responsible for the data inside subsubmodule, which will lead to
->> lots of trouble).
->=20
-> That is why a had proposed an option '--no-separate-git-dir'
-> for 'git submodule <add|update>' then no repository is responsible fo=
-r the data
-> in subsubmodule except subsubmodule itself.
+Let's just say
 
-As I mentioned in my other email, it doesn't matter at all for
-the setup you're describing if the git directory lives under
-=2Egit/modules of the superproject or in a .git directory in the
-submodule. The problem you're creating with your future patch
-is related to the work tree, not the GIT_DIR: "subsubmodule"
-could also be added to and tracked by "submodule" (as that is
-completely unaware of "subsubmodule" already being tracked by
-the superproject). Then you would end up in real trouble, as
-"superproject" and "submodule" could have differing SHA-1s
-recorded for subsubmodule. Don't go there, for just the same
-reasons we do not allow that for files.
+	if (!*slash)
 
-What is the use case you are trying to solve and why can that
-not be handled by adding "subsubmodule" inside "submodule"?
+instead; it is more idiomatic (I won't repeat this for other hunks).
+
+>  		int pos;
+> -		namelen = strlen(path);
+> +		namelen = slash - path;
+
+After this "if (!*slash)", we compute "namelen = slash-path".
+Perhaps we can lose this assignment and the other one by hoisting it
+up before "if (!*slash)"?
+
+> @@ -564,10 +562,10 @@ static struct cache_tree *cache_tree_find(struct cache_tree *it, const char *pat
+> +		if (*slash == '\0' || !*slash)
+
+Huh?  "The byte pointed at by 'slash' is NUL, or it is NUL"???
+
+Other than that, looks good to me.
+
+Thanks.
