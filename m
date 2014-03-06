@@ -1,154 +1,87 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] submodule : Add --no-separate-git-dir option to add and
- update command.
-Date: Thu, 06 Mar 2014 20:48:17 +0100
-Message-ID: <5318D101.9050305@web.de>
-References: <1393858066.7891.20.camel@Naugrim> <5314BFA5.2030807@web.de>	 <1393878866.7891.22.camel@Naugrim> <53176951.7000201@web.de> <1394069128.7891.29.camel@Naugrim>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: RFC GSoc Idea: blame: do not overly favor earlier parents
+Date: Thu, 06 Mar 2014 12:02:14 -0800
+Message-ID: <xmqq8usnxfi1.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: Henri GEIST <geist.henri@laposte.net>
-X-From: git-owner@vger.kernel.org Thu Mar 06 20:48:32 2014
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 06 21:02:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WLeHN-0001GH-W0
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Mar 2014 20:48:30 +0100
+	id 1WLeUp-00073s-48
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Mar 2014 21:02:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752078AbaCFTsZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Mar 2014 14:48:25 -0500
-Received: from mout.web.de ([212.227.15.3]:56335 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751444AbaCFTsZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Mar 2014 14:48:25 -0500
-Received: from [192.168.178.41] ([84.132.148.165]) by smtp.web.de (mrweb001)
- with ESMTPA (Nemesis) id 0M3jsn-1XCVud2vnF-00rJcf; Thu, 06 Mar 2014 20:48:18
- +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
-In-Reply-To: <1394069128.7891.29.camel@Naugrim>
-X-Enigmail-Version: 1.6
-X-Provags-ID: V03:K0:O10FA7VnFcmdD0wKKv1HnSRm38UkaRqdGIwyhsEeU/j7SWOx2rP
- PgqHLvH3XO8cKEvQsNI+R6buj2gKm64dT6rQK8AiDfQncWryDbNTitQA9foC6DdWhfPhhpY
- MvYmpFSFwtJNGmjNmbMHup01gC+aOCNUsZbGVTAGqVv/hHGsnqwT5IzINRwDZ00wFvyjqez
- Gu1jyUyQYBLg0fnUOnwZg==
+	id S1751578AbaCFUCS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Mar 2014 15:02:18 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46028 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750829AbaCFUCR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Mar 2014 15:02:17 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BD18770B39;
+	Thu,  6 Mar 2014 15:02:16 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=S
+	0W+m5OLXObVEw8hW3bGuq4K+pY=; b=BVi/PmAI2DVDw+p5wP3rn0ayxpGk2VB7l
+	Wku3OEj+0/FaQ2YOQD2xuFLkFFZ1jxdvhQEbtGaLis5hGOQhKItIM/zTygt9Zmg+
+	a1buWHg/I1VM/a0YbhAbH7/dCivKuS8ZJJrZ71Mb2cjNBRiBEQPwpONSXmtYiIS2
+	sSIwIR4lxA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=vCZ
+	j3fpAa5bh3G98JPjmKpD6/3zy979taIKheIUOozeaxAVuyPuu79HIzTjj96mYECd
+	68xVY9ATZt0XvDHrUpec8DB070CZwSvZdYaisoZjj2kAaxHcs+6sIXQtNtaMlymu
+	e/Hg4S3qr3v1RUfrplsXvu94ZUF9GX2/d3kdP+kU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AA86870B37;
+	Thu,  6 Mar 2014 15:02:16 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9467170B32;
+	Thu,  6 Mar 2014 15:02:15 -0500 (EST)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 36D2EE72-A56A-11E3-9C0D-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243544>
 
-Am 06.03.2014 02:25, schrieb Henri GEIST:
-> Le mercredi 05 mars 2014 =C3=A0 19:13 +0100, Jens Lehmann a =C3=A9cri=
-t :
->> Am 03.03.2014 21:34, schrieb Henri GEIST:
->>> Le lundi 03 mars 2014 =C3=A0 17:45 +0000, Jens Lehmann a =C3=A9crit=
- :
->>>> Am 03.03.2014 14:47, schrieb Henri GEIST:
->>>>> This new option prevent git submodule <add|update> to clone the m=
-issing
->>>>> submodules with the --separate-git-dir option.
->>>>> Then the submodule will be regular repository and their gitdir wi=
-ll not
->>>>> be placed in the superproject gitdir/modules directory.
->>>>
->>>> And what is your motivation for this? After all submodules contain=
-ing
->>>> a .git directory are second class citizens (because they can never=
- be
->>>> safely removed by regular git commands).
->>>>
->>>
->>> I recognize most people will prefer to have the .git directory sepa=
-rate.
->>> And I do not intend to make this option the default.
->>>
->>> My reasons are:
->>>
->>>   - As it is not clearly stated in the doc that the gitdir is separ=
-ate.
->>>     The first time I have copied one module to an USB key I had a b=
-ig
->>>     surprise.
->>
->> Oops! Could you please help us by hinting how the documentation
->> could be improved here?
->>
->=20
-> Of course.
-> There is nothing in Documentation/git-submodule.txt to inform that su=
-bmodules
-> clones are different from regular clones.
-> I will write and propose a patch for the documentation.
-> But maybe in a new thread.
+When looking at a merge, "git blame" inspects the blob object names
+of all parents and if one of them exactly match the merge result,
+pass the entire blame down to that parent.  This is very much in
+line with the history simplification done with "git log" when
+traversing a history with merges.
 
-Thanks!
+On the other hand, when the blob object in the merge result and none
+of the parents match exactly, we let each parent to take as much blame
+as they can, starting from the earlier parent, and later parents get
+a chance to take blame on the "leftover bits".
 
->>>   - This will not change anything for people not using it.
->>
->> I do not agree, as they'll be seeing a new option and might use
->> it to "go backward" as Junio explained in his answer.
->>
->>>   - I use an other patch which I plane to send later which enable m=
-ultiple
->>>     level of superproject to add a gitlink to the same submodule.
->>>     And in this case the superproject containing the separate gitdi=
-r will be
->>>     arbitrary and depend on the processing order of the
->>>     'git submodule update --recursive' command.
->>
->> I don't understand that. How is that different from using different
->> names (and thus different separate gitdirs) for that duplicated
->> submodule? After all, the .git directory is just moved somewhere
->> else in the superproject's work tree, and as the name defaults to
->> the path of the submodule ...
->>
->=20
-> I think I should give an example.
-> If I have a hierarchy like this :
->=20
-> superproject/submodule/subsubmodule
->=20
-> What I often do is:
->=20
-> superproject --> submodule --> subsubmodule
->              |                 ^
->              '-----------------'
->=20
-> Where '-->' is a gitlink.
->=20
->=20
-> That mean .gitmodules and index of the superproject contain both subm=
-odule and
-> submodule/subsubmodule.
+Combination of the above can lead to an unexpected results.
 
-Wow, that shouldn't even work (as everything inside "submodule"
-shouldn't be part of the superproject but must be contained in
-the submodule itself). Do the "git submodule" script and other
-git commands like "git status" work for you in such setups?
+Let's say that M is a two-parent merge, M^1 == A and M^2 == B, and
+that M:path == B:path != A:path (i.e. the merge result matches its
+second parent exactly).  The entire contents of the path is blamed
+to the history leading to B; the history leading to A but not
+involved in B will not get any blame.
 
-> And also mean (and that is the point) subsubmodule is a direct 'child=
-' of both
-> superproject and submodule.
+Now, imagine if you amend M to create N, to add a single line at the
+end of path.  M:path != N:path but there is very small difference
+between the two.  That means B:path != N:path but the difference
+between this merged result and the second parent is very small.
 
-Which I think should not be possible. If that works with current
-Git I suspect we have a bug to fix ... or does your other patch
-make this work?
+Because we give the chance to get blamed for the whole thing to the
+first parent, however, A will grab blame for all the lines that are
+common between A:path and B:path.  For the lines that are the same
+between M:path and N:path, ideally, we should get identical results,
+but it results in a very inconsistent behaviour.
 
-> In this case where should the separate gitdir of subsubmodule be plac=
-ed ?
->   - In superproject/modules/submodule/subsubmodule ?
->   - In superproject/submodule/modules/subsubmodule ?
->   - Depending on the 'git submodule update' command order ?
->   - Or both ?
-
-It should be placed in .git/modules/submodule/modules/subsubmodule
-of the superproject (assuming the subsubmodule is part of the first
-level submodule). But in your example that would live in
-=2Egit/modules/submodule/subsubmodule (but as mentioned above, I do
-not consider this a valid setup because then two repositories would
-be responsible for the data inside subsubmodule, which will lead to
-lots of trouble).
+Update blame.c::pass_blame() and give an option to arrange the list
+of "scapegoats" in the order that are similar to the end result, in
+order to address this issue.  That way, when blaming N:path, we will
+inspect B:path first and let it grab as much blame, as it would happen
+when we started the blame for M:path.
