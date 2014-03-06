@@ -1,7 +1,8 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v7 03/11] trailer: read and process config information
-Date: Thu, 06 Mar 2014 23:14:00 +0100
-Message-ID: <20140306221409.29648.10706.chriscool@tuxfamily.org>
+Subject: [PATCH v7 09/11] trailer: execute command from
+ 'trailer.<name>.command'
+Date: Thu, 06 Mar 2014 23:14:06 +0100
+Message-ID: <20140306221409.29648.45677.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Josh Triplett <josh@joshtriplett.org>,
 	Thomas Rast <tr@thomasrast.ch>,
@@ -11,194 +12,164 @@ Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 07 07:20:42 2014
+X-From: git-owner@vger.kernel.org Fri Mar 07 07:20:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WLo97-00089r-4a
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Mar 2014 07:20:37 +0100
+	id 1WLo99-00089r-OK
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Mar 2014 07:20:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752048AbaCGGUY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Mar 2014 01:20:24 -0500
-Received: from mail-3y.bbox.fr ([194.158.98.45]:38294 "EHLO mail-3y.bbox.fr"
+	id S1752166AbaCGGUi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Mar 2014 01:20:38 -0500
+Received: from mail-1y.bbox.fr ([194.158.98.14]:57830 "EHLO mail-1y.bbox.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751197AbaCGGUX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Mar 2014 01:20:23 -0500
+	id S1751822AbaCGGU0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Mar 2014 01:20:26 -0500
 Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-3y.bbox.fr (Postfix) with ESMTP id 01CAA3F;
-	Fri,  7 Mar 2014 07:20:21 +0100 (CET)
-X-git-sha1: 97dc016e1b87e444a6a33bd655730e6cdedbbd17 
+	by mail-1y.bbox.fr (Postfix) with ESMTP id 862A54C;
+	Fri,  7 Mar 2014 07:20:25 +0100 (CET)
+X-git-sha1: 715f4fcdd5d18c91c767707134d63f390bfe2989 
 X-Mailer: git-mail-commits v0.5.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243594>
 
-This patch implements reading the configuration
-to get trailer information, and then processing
-it and storing it in a doubly linked list.
-
-The config information is stored in the list
-whose first item is pointed to by:
-
-static struct trailer_item *first_conf_item;
+Let the user specify a command that will give on its standard output
+the value to use for the specified trailer.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- trailer.c | 134 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 134 insertions(+)
+ trailer.c | 63 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 63 insertions(+)
 
 diff --git a/trailer.c b/trailer.c
-index 52108c2..7a6d35d 100644
+index cc87918..97a0fe7 100644
 --- a/trailer.c
 +++ b/trailer.c
-@@ -25,6 +25,8 @@ struct trailer_item {
- 	struct conf_info conf;
+@@ -1,4 +1,5 @@
+ #include "cache.h"
++#include "run-command.h"
+ #include "trailer.h"
+ /*
+  * Copyright (c) 2013, 2014 Christian Couder <chriscool@tuxfamily.org>
+@@ -13,11 +14,14 @@ struct conf_info {
+ 	char *name;
+ 	char *key;
+ 	char *command;
++	unsigned command_uses_arg : 1;
+ 	enum action_where where;
+ 	enum action_if_exists if_exists;
+ 	enum action_if_missing if_missing;
  };
  
-+static struct trailer_item *first_conf_item;
++#define TRAILER_ARG_STRING "$ARG"
 +
- static int same_token(struct trailer_item *a, struct trailer_item *b, int alnum_len)
+ struct trailer_item {
+ 	struct trailer_item *previous;
+ 	struct trailer_item *next;
+@@ -59,6 +63,13 @@ static inline int contains_only_spaces(const char *str)
+ 	return !*s;
+ }
+ 
++static inline void strbuf_replace(struct strbuf *sb, const char *a, const char *b)
++{
++	const char *ptr = strstr(sb->buf, a);
++	if (ptr)
++		strbuf_splice(sb, ptr - sb->buf, strlen(a), b, strlen(b));
++}
++
+ static void free_trailer_item(struct trailer_item *item)
  {
- 	return !strncasecmp(a->token, b->token, alnum_len);
-@@ -245,3 +247,135 @@ static void process_trailers_lists(struct trailer_item **in_tok_first,
- 		apply_arg_if_missing(in_tok_first, in_tok_last, arg_tok);
+ 	free(item->conf.name);
+@@ -389,6 +400,7 @@ static int git_trailer_config(const char *conf_key, const char *value, void *cb)
+ 			if (conf->command)
+ 				warning(_("more than one %s"), orig_conf_key);
+ 			conf->command = xstrdup(value);
++			conf->command_uses_arg = !!strstr(conf->command, TRAILER_ARG_STRING);
+ 			break;
+ 		case TRAILER_WHERE:
+ 			if (set_where(conf, value))
+@@ -423,6 +435,44 @@ static void parse_trailer(struct strbuf *tok, struct strbuf *val, const char *tr
  	}
  }
-+
-+static int set_where(struct conf_info *item, const char *value)
+ 
++static int read_from_command(struct child_process *cp, struct strbuf *buf)
 +{
-+	if (!strcasecmp("after", value))
-+		item->where = WHERE_AFTER;
-+	else if (!strcasecmp("before", value))
-+		item->where = WHERE_BEFORE;
-+	else
-+		return 1;
++	if (run_command(cp))
++		return error("running trailer command '%s' failed", cp->argv[0]);
++	if (strbuf_read(buf, cp->out, 1024) < 1)
++		return error("reading from trailer command '%s' failed", cp->argv[0]);
++	strbuf_trim(buf);
 +	return 0;
 +}
 +
-+static int set_if_exists(struct conf_info *item, const char *value)
++static const char *apply_command(const char *command, const char *arg)
 +{
-+	if (!strcasecmp("addIfDifferent", value))
-+		item->if_exists = EXISTS_ADD_IF_DIFFERENT;
-+	else if (!strcasecmp("addIfDifferentNeighbor", value))
-+		item->if_exists = EXISTS_ADD_IF_DIFFERENT_NEIGHBOR;
-+	else if (!strcasecmp("add", value))
-+		item->if_exists = EXISTS_ADD;
-+	else if (!strcasecmp("overwrite", value))
-+		item->if_exists = EXISTS_OVERWRITE;
-+	else if (!strcasecmp("doNothing", value))
-+		item->if_exists = EXISTS_DO_NOTHING;
++	struct strbuf cmd = STRBUF_INIT;
++	struct strbuf buf = STRBUF_INIT;
++	struct child_process cp;
++	const char *argv[] = {NULL, NULL};
++	const char *result = "";
++
++	strbuf_addstr(&cmd, command);
++	if (arg)
++		strbuf_replace(&cmd, TRAILER_ARG_STRING, arg);
++
++	argv[0] = cmd.buf;
++	memset(&cp, 0, sizeof(cp));
++	cp.argv = argv;
++	cp.env = local_repo_env;
++	cp.no_stdin = 1;
++	cp.out = -1;
++	cp.use_shell = 1;
++
++	if (read_from_command(&cp, &buf))
++		strbuf_release(&buf);
 +	else
-+		return 1;
-+	return 0;
++		result = strbuf_detach(&buf, NULL);
++
++	strbuf_release(&cmd);
++	return result;
 +}
-+
-+static int set_if_missing(struct conf_info *item, const char *value)
-+{
-+	if (!strcasecmp("doNothing", value))
-+		item->if_missing = MISSING_DO_NOTHING;
-+	else if (!strcasecmp("add", value))
-+		item->if_missing = MISSING_ADD;
-+	else
-+		return 1;
-+	return 0;
-+}
-+
-+enum trailer_info_type { TRAILER_KEY, TRAILER_COMMAND, TRAILER_WHERE,
-+			 TRAILER_IF_EXISTS, TRAILER_IF_MISSING };
-+
-+static int set_name_and_type(const char *conf_key, const char *suffix,
-+			     enum trailer_info_type type,
-+			     char **pname, enum trailer_info_type *ptype)
-+{
-+	int ret = ends_with(conf_key, suffix);
-+	if (ret) {
-+		*pname = xstrndup(conf_key, strlen(conf_key) - strlen(suffix));
-+		*ptype = type;
-+	}
-+	return ret;
-+}
-+
-+static struct trailer_item *get_conf_item(const char *name)
-+{
+ 
+ static void duplicate_conf(struct conf_info *dst, struct conf_info *src)
+ {
+@@ -445,6 +495,10 @@ static struct trailer_item *new_trailer_item(struct trailer_item *conf_item,
+ 		duplicate_conf(&new->conf, &conf_item->conf);
+ 		new->token = xstrdup(conf_item->conf.key);
+ 		free(tok);
++		if (conf_item->conf.command_uses_arg || !val) {
++			new->value = apply_command(conf_item->conf.command, val);
++			free(val);
++		}
+ 	} else
+ 		new->token = tok;
+ 
+@@ -497,12 +551,21 @@ static struct trailer_item *process_command_line_args(int argc, const char **arg
+ 	int i;
+ 	struct trailer_item *arg_tok_first = NULL;
+ 	struct trailer_item *arg_tok_last = NULL;
 +	struct trailer_item *item;
-+	struct trailer_item *previous;
-+
-+	/* Look up item with same name */
-+	for (previous = NULL, item = first_conf_item;
-+	     item;
-+	     previous = item, item = item->next) {
-+		if (!strcasecmp(item->conf.name, name))
-+			return item;
-+	}
-+
-+	/* Item does not already exists, create it */
-+	item = xcalloc(sizeof(struct trailer_item), 1);
-+	item->conf.name = xstrdup(name);
-+
-+	if (!previous)
-+		first_conf_item = item;
-+	else {
-+		previous->next = item;
-+		item->previous = previous;
-+	}
-+
-+	return item;
-+}
-+
-+static int git_trailer_config(const char *conf_key, const char *value, void *cb)
-+{
-+	if (starts_with(conf_key, "trailer.")) {
-+		const char *orig_conf_key = conf_key;
-+		struct trailer_item *item;
-+		struct conf_info *conf;
-+		char *name;
-+		enum trailer_info_type type;
-+
-+		conf_key += 8;
-+		if (!set_name_and_type(conf_key, ".key", TRAILER_KEY, &name, &type) &&
-+		    !set_name_and_type(conf_key, ".command", TRAILER_COMMAND, &name, &type) &&
-+		    !set_name_and_type(conf_key, ".where", TRAILER_WHERE, &name, &type) &&
-+		    !set_name_and_type(conf_key, ".ifexists", TRAILER_IF_EXISTS, &name, &type) &&
-+		    !set_name_and_type(conf_key, ".ifmissing", TRAILER_IF_MISSING, &name, &type))
-+			return 0;
-+
-+		item = get_conf_item(name);
-+		conf = &item->conf;
-+		free(name);
-+
-+		switch (type) {
-+		case TRAILER_KEY:
-+			if (conf->key)
-+				warning(_("more than one %s"), orig_conf_key);
-+			conf->key = xstrdup(value);
-+			break;
-+		case TRAILER_COMMAND:
-+			if (conf->command)
-+				warning(_("more than one %s"), orig_conf_key);
-+			conf->command = xstrdup(value);
-+			break;
-+		case TRAILER_WHERE:
-+			if (set_where(conf, value))
-+				warning(_("unknown value '%s' for key '%s'"), value, orig_conf_key);
-+			break;
-+		case TRAILER_IF_EXISTS:
-+			if (set_if_exists(conf, value))
-+				warning(_("unknown value '%s' for key '%s'"), value, orig_conf_key);
-+			break;
-+		case TRAILER_IF_MISSING:
-+			if (set_if_missing(conf, value))
-+				warning(_("unknown value '%s' for key '%s'"), value, orig_conf_key);
-+			break;
-+		default:
-+			die("internal bug in trailer.c");
+ 
+ 	for (i = 0; i < argc; i++) {
+ 		struct trailer_item *new = create_trailer_item(argv[i]);
+ 		add_trailer_item(&arg_tok_first, &arg_tok_last, new);
+ 	}
+ 
++	/* Add conf commands that don't use $ARG */
++	for (item = first_conf_item; item; item = item->next) {
++		if (item->conf.command && !item->conf.command_uses_arg) {
++			struct trailer_item *new = new_trailer_item(item, NULL, NULL);
++			add_trailer_item(&arg_tok_first, &arg_tok_last, new);
 +		}
 +	}
-+	return 0;
-+}
++
+ 	return arg_tok_first;
+ }
+ 
 -- 
 1.8.5.2.204.gcfe299d.dirty
