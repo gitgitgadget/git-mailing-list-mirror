@@ -1,179 +1,169 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2] commit.c: Replace starts_with() with skip_prefix()
-Date: Thu, 6 Mar 2014 04:38:48 -0500
-Message-ID: <CAPig+cSp6ckBifayD5a0Z=+xWVfRiVcEyf6rEi_4M-fqWJ9TBw@mail.gmail.com>
-References: <1394028372-29990-1-git-send-email-karthik.188@gmail.com>
+Subject: Re: [PATCH v4 22/27] checkout: clean up half-prepared directories in
+ --to mode
+Date: Thu, 6 Mar 2014 05:06:57 -0500
+Message-ID: <CAPig+cROi2TR+T8f+T_fRmAgBrBtBpC3qo5pCYAMSfRp0JoWWw@mail.gmail.com>
+References: <1392730814-19656-1-git-send-email-pclouds@gmail.com>
+	<1393675983-3232-1-git-send-email-pclouds@gmail.com>
+	<1393675983-3232-23-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>, Tanay Abhra <tanayabh@gmail.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 06 10:38:56 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 06 11:07:09 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WLUlT-0005hD-UM
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Mar 2014 10:38:56 +0100
+	id 1WLVCm-0007KT-CV
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Mar 2014 11:07:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750972AbaCFJiv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Mar 2014 04:38:51 -0500
-Received: from mail-yk0-f172.google.com ([209.85.160.172]:57470 "EHLO
-	mail-yk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750805AbaCFJit (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Mar 2014 04:38:49 -0500
-Received: by mail-yk0-f172.google.com with SMTP id 200so6049624ykr.3
-        for <git@vger.kernel.org>; Thu, 06 Mar 2014 01:38:48 -0800 (PST)
+	id S1752469AbaCFKHA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Mar 2014 05:07:00 -0500
+Received: from mail-yk0-f173.google.com ([209.85.160.173]:35516 "EHLO
+	mail-yk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751190AbaCFKG6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Mar 2014 05:06:58 -0500
+Received: by mail-yk0-f173.google.com with SMTP id 10so6101969ykt.4
+        for <git@vger.kernel.org>; Thu, 06 Mar 2014 02:06:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=/gvaqpD8E5jpY0H0RnCBvbVaCgH76CMiEXq6xXMKrv0=;
-        b=OY2ghpEbv5TEombJi1dvg/fv1KYWgLuc+gvqRbkw+RjSVVQv0PyQr5bfixjscecYn1
-         G7ykZ1sJW+4TH0gQBlQKAHKcV2+O0XwVDoD2mNyeZMr7Tps3iN3iC7bE4RlzCbj9eFdg
-         h9vJ2npTcx1vedcocW1RsAb1V5Q+q+flyNdBJ8Gwma23mKHuQiuUvfzjXH3ZUdJ76+ss
-         aOd6Rz84qTDIOQBsNvdEwjo9pjaR+HZv13FwOH+HP0uFUy61oOJm10dOHdrEtkhL5R/h
-         ODq9MCZpxaWORCEUEiSIQzFI4cgwH+pCILHTJOMife14h85Y/ai+G3OAF163k+uYyRhH
-         rYDQ==
-X-Received: by 10.236.3.10 with SMTP id 10mr12446961yhg.79.1394098728684; Thu,
- 06 Mar 2014 01:38:48 -0800 (PST)
-Received: by 10.170.180.195 with HTTP; Thu, 6 Mar 2014 01:38:48 -0800 (PST)
-In-Reply-To: <1394028372-29990-1-git-send-email-karthik.188@gmail.com>
-X-Google-Sender-Auth: TiHSg4N9olCImPIj2bYCocoWhiw
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=6YiiJTLlwwVPaDHLAdWeEPbsGQic+ie0/87Mf0KWpro=;
+        b=fGJUmnK0noSlkr8QeL3CjVEq+b5S0SGSiIMqwEjnFU5uTPUVcCPmUqxWlYGDSAKoXT
+         HhINzIC3LatVq6Amem4YDxPnsEeeJipPzbSuSs81dSeM2EcAXW2GMI3M3YpolxKcF1Tb
+         D/LBG2zGiexYewbDdKhYXLlLuD0Mwfo2ESJE5vvRYLGvq0gbagcKMK3K6WfV6vI4Herb
+         RlsjoKXKjO/JjT/V0/u/QaEFS6Y2lRDI6GZN0tzYud1hasFrvpUwxckTt+9dWLw01v+A
+         G8rdO44UU7pT1w2tBP8fYssDPZKOBkPDgPE8yet5Bwh1cuqy3rfP1yrMmnD2Rw8F8JEa
+         lNqg==
+X-Received: by 10.236.46.18 with SMTP id q18mr13407487yhb.21.1394100417666;
+ Thu, 06 Mar 2014 02:06:57 -0800 (PST)
+Received: by 10.170.180.195 with HTTP; Thu, 6 Mar 2014 02:06:57 -0800 (PST)
+In-Reply-To: <1393675983-3232-23-git-send-email-pclouds@gmail.com>
+X-Google-Sender-Auth: aA9pQgmCyOOEzgFU5Kemttc45io
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243509>
 
-On Wed, Mar 5, 2014 at 9:06 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
-> Replaces all instances of starts_with() by skip_prefix(),
-
-Use imperative mode: "Replace all..."
-
-> which can not only be used to check presence of a prefix,
-> but also used further on as it returns the string after the prefix,
-> if the prefix is present.
-
-This is a lot better than previous versions. It could be improved a
-bit by more directly stating that skip_prefix() singly does what the
-current code is doing in two steps. (See Tanay's submission [1] for an
-example of a well-crafted commit message). However, we're probably at
-the point of diminishing returns, so no need to reroll just for this.
-
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/243395
-
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+On Sat, Mar 1, 2014 at 7:12 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc D=
+uy <pclouds@gmail.com> wrote:
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
 > ---
+>  builtin/checkout.c | 49 ++++++++++++++++++++++++++++++++++++++++++++=
++++--
+>  1 file changed, 47 insertions(+), 2 deletions(-)
 >
-> Hey Eric,
-> Here are the changes i have made in this Patch v2:
-> 1. Edited the variables names to fit their usage
-> 2. set my emacs to indent 8 tabs, so proper indentation
-> 3. fixed my error where i increased the value by 1 in parse_signed_commit().
-> Thanks again for your patience.
-
-Thanks for the reroll and for explaining the changes. More below.
-
-> ---
->  commit.c | 23 ++++++++++++-----------
->  1 file changed, 12 insertions(+), 11 deletions(-)
+> diff --git a/builtin/checkout.c b/builtin/checkout.c
+> index fa7b54a..28f9ac1 100644
+> --- a/builtin/checkout.c
+> +++ b/builtin/checkout.c
+> @@ -20,6 +20,7 @@
+>  #include "resolve-undo.h"
+>  #include "submodule.h"
+>  #include "argv-array.h"
+> +#include "sigchain.h"
 >
-> diff --git a/commit.c b/commit.c
-> index 6bf4fe0..f006490 100644
-> --- a/commit.c
-> +++ b/commit.c
-> @@ -553,6 +553,7 @@ static void record_author_date(struct author_date_slab *author_date,
->         struct ident_split ident;
->         char *date_end;
->         unsigned long date;
-> +       const char *buf_split;
-
-In a previous review, I suggested reading Junio's response [1] to a
-similar submission. Of particular interest, Junio says:
-
-    A good rule of thumb to remember is to name things after what
-    they are, not how you obtain them, how they are used or what
-    they are used for/as.
-
-The name 'buf_split' is clearly a "how you obtain them", which does
-not convey much. Better would be to name the variable to reflect what
-it references once assigned.
-
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/243231/focus=243259
-
->         if (!commit->buffer) {
->                 unsigned long size;
-> @@ -562,18 +563,19 @@ static void record_author_date(struct author_date_slab *author_date,
->                         return;
->         }
+>  static const char * const checkout_usage[] =3D {
+>         N_("git checkout [options] <branch>"),
+> @@ -814,6 +815,35 @@ static int switch_branches(const struct checkout=
+_opts *opts,
+>         return ret || writeout_error;
+>  }
 >
-> +       buf_split = skip_prefix(buf, "author ");
+> +static const char *junk_work_tree;
+> +static const char *junk_git_dir;
+> +static int is_junk;
+> +static pid_t junk_pid;
 > +
->         for (buf = commit->buffer ? commit->buffer : buffer;
->              buf;
->              buf = line_end + 1) {
->                 line_end = strchrnul(buf, '\n');
-> -               if (!starts_with(buf, "author ")) {
-> +               if (!buf_split) {
->                         if (!line_end[0] || line_end[1] == '\n')
->                                 return; /* end of header */
->                         continue;
->                 }
-> -               if (split_ident_line(&ident,
-> -                                    buf + strlen("author "),
-> -                                    line_end - (buf + strlen("author "))) ||
-> +               if (split_ident_line(&ident, buf_split,
-> +                                    line_end - buf_split) ||
->                     !ident.date_begin || !ident.date_end)
->                         goto fail_exit; /* malformed "author" line */
->                 break;
-> @@ -1098,6 +1100,7 @@ int parse_signed_commit(const unsigned char *sha1,
->         char *buffer = read_sha1_file(sha1, &type, &size);
->         int in_signature, saw_signature = -1;
->         char *line, *tail;
-> +       const char *line_split;
+> +static void remove_junk(void)
+> +{
+> +       struct strbuf sb =3D STRBUF_INIT;
+> +       if (!is_junk || getpid() !=3D junk_pid)
+> +               return;
+> +       if (junk_git_dir) {
+> +               strbuf_addstr(&sb, junk_git_dir);
+> +               remove_dir_recursively(&sb, 0);
+> +               strbuf_reset(&sb);
+> +       }
+> +       if (junk_work_tree) {
+> +               strbuf_addstr(&sb, junk_work_tree);
+> +               remove_dir_recursively(&sb, 0);
+> +               strbuf_reset(&sb);
+> +       }
 
-Ditto.
+strbuf_release(&sb);
 
->         if (!buffer || type != OBJ_COMMIT)
->                 goto cleanup;
-> @@ -1111,11 +1114,11 @@ int parse_signed_commit(const unsigned char *sha1,
->                 char *next = memchr(line, '\n', tail - line);
+> +}
+> +
+> +static void remove_junk_on_signal(int signo)
+> +{
+> +       remove_junk();
+> +       sigchain_pop(signo);
+> +       raise(signo);
+> +}
+> +
+>  static int prepare_linked_checkout(const struct checkout_opts *opts,
+>                                    struct branch_info *new)
+>  {
+> @@ -822,7 +852,7 @@ static int prepare_linked_checkout(const struct c=
+heckout_opts *opts,
+>         const char *path =3D opts->new_worktree, *name;
+>         struct stat st;
+>         struct child_process cp;
+> -       int counter =3D 0, len;
+> +       int counter =3D 0, len, ret;
 >
->                 next = next ? next + 1 : tail;
-> +               line_split = skip_prefix(line, gpg_sig_header);
->                 if (in_signature && line[0] == ' ')
->                         sig = line + 1;
-> -               else if (starts_with(line, gpg_sig_header) &&
-> -                        line[gpg_sig_header_len] == ' ')
-> -                       sig = line + gpg_sig_header_len + 1;
-> +               else if (line_split && line_split[0] == ' ')
-> +                       sig = line_split + 1;
-
-A shortcoming of this change is that skip_prefix() is now being called
-unconditionally, even when its result won't be used (as in the first
-'if' statement). The original code did the work of checking the prefix
-only if the first 'if' statement evaluated to false.
-
->                 if (sig) {
->                         strbuf_add(signature, sig, next - sig);
->                         saw_signature = 1;
-> @@ -1193,10 +1196,8 @@ static void parse_gpg_output(struct signature_check *sigc)
->         for (i = 0; i < ARRAY_SIZE(sigcheck_gpg_status); i++) {
->                 const char *found, *next;
+>         if (!new->commit)
+>                 die(_("no branch specified"));
+> @@ -848,13 +878,21 @@ static int prepare_linked_checkout(const struct=
+ checkout_opts *opts,
+>                 strbuf_addf(&sb_repo, "%d", counter);
+>         }
+>         name =3D strrchr(sb_repo.buf, '/') + 1;
+> +
+> +       junk_pid =3D getpid();
+> +       atexit(remove_junk);
+> +       sigchain_push_common(remove_junk_on_signal);
+> +
+>         if (mkdir(sb_repo.buf, 0777))
+>                 die_errno(_("could not create directory of '%s'"), sb=
+_repo.buf);
+> +       junk_git_dir =3D sb_repo.buf;
+> +       is_junk =3D 1;
 >
-> -               if (starts_with(buf, sigcheck_gpg_status[i].check + 1)) {
-> -                       /* At the very beginning of the buffer */
-> -                       found = buf + strlen(sigcheck_gpg_status[i].check + 1);
-> -               } else {
-> +               found = skip_prefix(buf, sigcheck_gpg_status[i].check + 1);
-> +               if(!found) {
-
-Space after 'if'.
-
->                         found = strstr(buf, sigcheck_gpg_status[i].check);
->                         if (!found)
->                                 continue;
+>         strbuf_addf(&sb_git, "%s/.git", path);
+>         if (safe_create_leading_directories_const(sb_git.buf))
+>                 die_errno(_("could not create leading directories of =
+'%s'"),
+>                           sb_git.buf);
+> +       junk_work_tree =3D path;
+>
+>         write_file(sb_git.buf, 1, "gitdir: %s/repos/%s\n",
+>                    real_path(get_git_common_dir()), name);
+> @@ -879,7 +917,14 @@ static int prepare_linked_checkout(const struct =
+checkout_opts *opts,
+>         memset(&cp, 0, sizeof(cp));
+>         cp.git_cmd =3D 1;
+>         cp.argv =3D opts->saved_argv;
+> -       return run_command(&cp);
+> +       ret =3D run_command(&cp);
+> +       if (!ret)
+> +               is_junk =3D 0;
+> +       strbuf_release(&sb);
+> +       strbuf_release(&sb_repo);
+> +       strbuf_release(&sb_git);
+> +       return ret;
+> +
+>  }
+>
+>  static int git_checkout_config(const char *var, const char *value, v=
+oid *cb)
 > --
-> 1.9.0.138.g2de3478
+> 1.9.0.40.gaa8c3ea
