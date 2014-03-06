@@ -1,81 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] t3200-branch: test setting branch as own upstream
-Date: Thu, 6 Mar 2014 16:00:26 -0500
-Message-ID: <20140306210025.GD29659@sigill.intra.peff.net>
-References: <xmqqmwh5ikl0.fsf@gitster.dls.corp.google.com>
- <1394004715-18776-1-git-send-email-modocache@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/6] fix hunk editing with 'commit -p -m'
+Date: Thu, 06 Mar 2014 13:15:02 -0800
+Message-ID: <xmqqvbvrvxk8.fsf@gitster.dls.corp.google.com>
+References: <1394117424-29780-1-git-send-email-benoit.pierre@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Brian Gesiak <modocache@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 06 22:00:34 2014
+To: Benoit Pierre <benoit.pierre@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 06 22:15:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WLfP6-0006xz-K9
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Mar 2014 22:00:32 +0100
+	id 1WLfdL-0004mh-Fk
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Mar 2014 22:15:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752991AbaCFVA2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Mar 2014 16:00:28 -0500
-Received: from cloud.peff.net ([50.56.180.127]:34333 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751548AbaCFVA1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Mar 2014 16:00:27 -0500
-Received: (qmail 31097 invoked by uid 102); 6 Mar 2014 21:00:27 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 06 Mar 2014 15:00:27 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 06 Mar 2014 16:00:26 -0500
-Content-Disposition: inline
-In-Reply-To: <1394004715-18776-1-git-send-email-modocache@gmail.com>
+	id S1751951AbaCFVPI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Mar 2014 16:15:08 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52238 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751276AbaCFVPH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Mar 2014 16:15:07 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7CEEF7074B;
+	Thu,  6 Mar 2014 16:15:06 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=sRsnIK3LoXRKkZcADot/HwUDajg=; b=WSu4Tz
+	x5RYHYR0jLOPK4Ncp5Hp2uKXV9KDmbccnUUKPlli0wMK49z9acQqJdiqamJAGMoq
+	tgVcnmmkzOwMEEasBlUezdazalJ4PPwfsLOH6jc+J8LOC7G4Ple7McHaY9QI7Q6J
+	AEHoZJEmkV+n+wFRwKwrTaZ1RJZ0VDS4hd1FI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=SiXV+kgBUP9lMT9+ILM7/+uHacLvCdk6
+	WA5k6LRBdBsvlke55Tzdprh6xCfno1CS8wzW/Kx0/oeE3DAqcS8Yml1VzzH39TWG
+	MqO7fe0gHGz+QluiHX3ZvUFoXMKEsurYeV4pproQB8j7Fwu8WMf2KbuXXlIMMYYw
+	fA+IPjt52ok=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 68BC97074A;
+	Thu,  6 Mar 2014 16:15:06 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 73BC270746;
+	Thu,  6 Mar 2014 16:15:05 -0500 (EST)
+In-Reply-To: <1394117424-29780-1-git-send-email-benoit.pierre@gmail.com>
+	(Benoit Pierre's message of "Thu, 6 Mar 2014 15:50:18 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 6377FA4E-A574-11E3-AC95-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243552>
 
-On Wed, Mar 05, 2014 at 04:31:55PM +0900, Brian Gesiak wrote:
+Benoit Pierre <benoit.pierre@gmail.com> writes:
 
-> No test asserts that "git branch -u refs/heads/my-branch my-branch"
-> emits a warning. Add a test that does so.
-> 
-> Signed-off-by: Brian Gesiak <modocache@gmail.com>
+> This patch fixes the fact that hunk editing with 'commit -p -m' does not work:
+> GIT_EDITOR is set to ':' to indicate to hooks that no editor will be launched,
+> which result in the 'hunk edit' option not launching the editor (and selecting
+> the whole hunk).
+>
+> The fix consists in deferring the GIT_EDITOR override to the hook subprocess,
+> like it's already done for GIT_INDEX_FILE:
+> - modify 'run_hook' so the first parameter is the environment to set
+> - add a 'run_hook_v' variant that take a va_list
+> - add a new 'run_commit_hook' helper (to set both GIT_EDITOR and GIT_INDEX_FILE)
 
-Thanks, this looks good. Two minor points that may or may not be worth
-addressing:
-
-> +test_expect_success '--set-upstream-to shows warning if used to set branch as own upstream' '
-> +	git branch --set-upstream-to refs/heads/my13 my13 2>actual &&
-> +	cat >expected <<EOF &&
-> +warning: Not setting branch my13 as its own upstream.
-> +EOF
-
-If you spell the EOF marker as:
-
-    cat >expect <<-\EOF
-
-then:
-
-  1. The shell does not interpolate the contents (it does not matter
-     here, but it is a good habit to be in, so we typically do it unless
-     there is a need to interpolate).
-
-  2. Using <<- will strip leading tabs, so the content can be indented
-     properly along with the rest of the test.
-
-> +	test_i18ncmp expected actual &&
-> +	test_must_fail git config branch.my13.remote &&
-> +	test_must_fail git config branch.my13.merge
-
-I think we could tighten these to:
-
-  test_expect_code 1 git config branch.my13.remote
-
-to eliminate a false-positive success on other config errors. It's
-highly improbable for it to ever matter, though (and it looks like we
-are not so careful in most other places that call "git config" looking
-for a missing entry, either).
-
--Peff
+I sense that this is in line with one of the "leftover bits" items I
+keep in http://git-blame.blogspot.com/p/leftover-bits.html,
+especially http://thread.gmane.org/gmane.comp.version-control.git/192669/focus=192806
+;-)
