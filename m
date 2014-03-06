@@ -1,145 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t3200-branch: test setting branch as own upstream
-Date: Thu, 06 Mar 2014 13:53:49 -0800
-Message-ID: <xmqqa9d3vvrm.fsf@gitster.dls.corp.google.com>
-References: <xmqqmwh5ikl0.fsf@gitster.dls.corp.google.com>
-	<1394004715-18776-1-git-send-email-modocache@gmail.com>
-	<20140306210025.GD29659@sigill.intra.peff.net>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: Re: [PATCH/RFC] git-gui: Add a 'recursive' checkbox in the clone
+ menu.
+Date: Thu, 6 Mar 2014 23:00:34 +0100
+Message-ID: <20140306220034.GA30645@sandbox-ub>
+References: <1393974076.7891.27.camel@Naugrim>
+ <5317662C.6010404@web.de>
+ <1394064956.7891.28.camel@Naugrim>
+ <5318CE14.1090000@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Brian Gesiak <modocache@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Mar 06 22:54:04 2014
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Henri GEIST <geist.henri@laposte.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
+	Pat Thoyts <patthoyts@users.sourceforge.net>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Thu Mar 06 23:07:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WLgEt-00027e-JB
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Mar 2014 22:54:03 +0100
+	id 1WLgSJ-0007rK-5L
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Mar 2014 23:07:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753386AbaCFVx6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Mar 2014 16:53:58 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34697 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752639AbaCFVxy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Mar 2014 16:53:54 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2863D725FA;
-	Thu,  6 Mar 2014 16:53:54 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=R3CaHe80tdPUuO8cwj4dMXOplzU=; b=wc6Fxs
-	nhU9UzxgcBPP2qqTqclIshrz7pcP8rcdzb55LRTQJWtCd1X3ribQzVK0qQbO51kY
-	Tvh9sR1iJwDeI56KAQbfeiixF61Fn/tAhNBiCnzlHy17dtQdSe4N4JiiuLNVb3g5
-	bKQgba+Sa/tXPpisqiNRbqW+wkmzwYcCHNp0Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=tT+QAjDYb+Rmzy9//pRszsiOsE/MN1z8
-	VJgN9diqviZB5eZzFQOKAEiCZdfHl7xklyjHqj089MMXTeUIzvTvpU0Dqdqdg6cg
-	UkAfcCLBQPk3BFRvjbenaO4rTz3l0rQSoo8ybjBa3SzjhwAjclI9LdztJn+mZ4LW
-	WUF7GFXfjGM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1942F725F9;
-	Thu,  6 Mar 2014 16:53:54 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 25741725F8;
-	Thu,  6 Mar 2014 16:53:53 -0500 (EST)
-In-Reply-To: <20140306210025.GD29659@sigill.intra.peff.net> (Jeff King's
-	message of "Thu, 6 Mar 2014 16:00:26 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: CEDF689E-A579-11E3-B4E2-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751899AbaCFWHo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Mar 2014 17:07:44 -0500
+Received: from smtprelay02.ispgateway.de ([80.67.31.29]:45201 "EHLO
+	smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751878AbaCFWHl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Mar 2014 17:07:41 -0500
+X-Greylist: delayed 420 seconds by postgrey-1.27 at vger.kernel.org; Thu, 06 Mar 2014 17:07:41 EST
+Received: from [77.20.146.74] (helo=sandbox-ub)
+	by smtprelay02.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1WLgLG-00076I-Pt; Thu, 06 Mar 2014 23:00:38 +0100
+Content-Disposition: inline
+In-Reply-To: <5318CE14.1090000@web.de>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243563>
 
-Jeff King <peff@peff.net> writes:
+On Thu, Mar 06, 2014 at 08:35:48PM +0100, Jens Lehmann wrote:
+> Am 06.03.2014 01:15, schrieb Henri GEIST:
+> > Le mercredi 05 mars 2014 =E0 19:00 +0100, Jens Lehmann a =E9crit :
+> >> Am 05.03.2014 00:01, schrieb Henri GEIST:
+> >> - Wouldn't it be easier to pass the '--recurse-submodules"
+> >>   option to the "git clone" call for the superproject instead
+> >>   of adding the _do_clone_submodules() function doing a
+> >>   subsequent "git submodule update --init --recursive"? That
+> >>   is also be more future proof with respect to the autoclone
+> >>   config option we have in mind (which would add that behavior
+> >>   for "git clone" itself, making the call you added redundant).
+> >=20
+> > That is what I planned to do at beginning.
+> > But git-gui never call git clone anywhere.
+> > It make the clone step by step with a long and complicated list of
+> > commands just like a Tcl rewrite of git-clone.
+> > Have a look on the function _do_clone2 in choose_repository.tcl.
+>=20
+> You're right, it does fetch followed by read-tree ... so my
+> proposal doesn't make much sense here, sorry for bothering you
+> without checking the source first.
+>=20
+> > As I suspect there should be a good reason for this that I did not
+> > understand I have choose to not refactoring it.
+>=20
+> That makes sense. Shawn, could you shed some light on why clone
+> is coded again using plumbing in git gui instead of just calling
+> the clone command?
 
-> On Wed, Mar 05, 2014 at 04:31:55PM +0900, Brian Gesiak wrote:
->
->> No test asserts that "git branch -u refs/heads/my-branch my-branch"
->> emits a warning. Add a test that does so.
->> 
->> Signed-off-by: Brian Gesiak <modocache@gmail.com>
->
-> Thanks, this looks good. Two minor points that may or may not be worth
-> addressing:
->
->> +test_expect_success '--set-upstream-to shows warning if used to set branch as own upstream' '
->> +	git branch --set-upstream-to refs/heads/my13 my13 2>actual &&
->> +	cat >expected <<EOF &&
->> +warning: Not setting branch my13 as its own upstream.
->> +EOF
->
-> If you spell the EOF marker as:
->
->     cat >expect <<-\EOF
->
-> then:
->
->   1. The shell does not interpolate the contents (it does not matter
->      here, but it is a good habit to be in, so we typically do it unless
->      there is a need to interpolate).
->
->   2. Using <<- will strip leading tabs, so the content can be indented
->      properly along with the rest of the test.
->
->> +	test_i18ncmp expected actual &&
->> +	test_must_fail git config branch.my13.remote &&
->> +	test_must_fail git config branch.my13.merge
->
-> I think we could tighten these to:
->
->   test_expect_code 1 git config branch.my13.remote
->
-> to eliminate a false-positive success on other config errors. It's
-> highly improbable for it to ever matter, though (and it looks like we
-> are not so careful in most other places that call "git config" looking
-> for a missing entry, either).
+I think because git gui is using plumbing everywhere, it is supposed to
+be just another porcelain. And I guess that was an intended decision
+because porcelain might change its output and break git gui. At least
+thats what I inferred.
 
-Sounds good.  Here is what I'll re-queue.
-
--- >8 --
-From: Brian Gesiak <modocache@gmail.com>
-Date: Wed, 5 Mar 2014 16:31:55 +0900
-Subject: [PATCH] t3200-branch: test setting branch as own upstream
-
-No test asserts that "git branch -u refs/heads/my-branch my-branch"
-avoids leaving nonsense configuration and emits a warning.
-
-Add a test that does so.
-
-Signed-off-by: Brian Gesiak <modocache@gmail.com>
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/t3200-branch.sh | 10 ++++++++++
- 1 file changed, 10 insertions(+)
-
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index fcdb867..83037b1 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -507,6 +507,16 @@ EOF
- 	test_cmp expected actual
- '
- 
-+test_expect_success '--set-upstream-to notices an error to set branch as own upstream' '
-+	git branch --set-upstream-to refs/heads/my13 my13 2>actual &&
-+	cat >expected <<-\EOF &&
-+	warning: Not setting branch my13 as its own upstream.
-+	EOF
-+	test_expect_code 1 git config branch.my13.remote &&
-+	test_expect_code 1 git config branch.my13.merge &&
-+	test_i18ncmp expected actual
-+'
-+
- # Keep this test last, as it changes the current branch
- cat >expect <<EOF
- $_z40 $HEAD $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150200 +0000	branch: Created from master
--- 
-1.9.0-192-g8dd89d4
+Cheers Heiko
