@@ -1,203 +1,101 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH v3] upload-pack: send shallow info over stdin to pack-objects
-Date: Thu,  6 Mar 2014 15:49:43 +0700
-Message-ID: <1394095783-24402-1-git-send-email-pclouds@gmail.com>
-References: <1393936205-15953-1-git-send-email-pclouds@gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH] disable grafts during fetch/push/bundle
+Date: Thu, 06 Mar 2014 09:42:46 +0100
+Message-ID: <53183506.5080002@alum.mit.edu>
+References: <20140304174806.GA11561@sigill.intra.peff.net> <xmqqd2i1k7p9.fsf@gitster.dls.corp.google.com> <20140305005649.GB11509@sigill.intra.peff.net> <xmqqy50oh45n.fsf@gitster.dls.corp.google.com> <20140305185212.GA23907@sigill.intra.peff.net> <xmqqppm0h2ti.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Duy Nguyen <pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 06 09:50:16 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 06 09:50:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WLU0M-0001Jh-8A
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Mar 2014 09:50:14 +0100
+	id 1WLU0Z-0001X4-1t
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Mar 2014 09:50:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751040AbaCFIuH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Mar 2014 03:50:07 -0500
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:51740 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751087AbaCFItx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Mar 2014 03:49:53 -0500
-Received: by mail-pa0-f52.google.com with SMTP id rd3so2378206pab.11
-        for <git@vger.kernel.org>; Thu, 06 Mar 2014 00:49:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=yLOdFPejboXTTSoCA1aO7eB0nAb4IngMAzi/NBXhVrw=;
-        b=Iu3utGlW+F+rJC3eq8EpI1+AtL0PIMgmVaW28NMkVQZ2QhIpBQwm0Bg9fQ51dJEO0r
-         TraHaz9nuRpPITQRM1PuMjsdMI8MgM8aQWR96jEhRdT7+mh/OJ2OCKsBF1lxAPgnQCUW
-         StQX7WgFWrmzVaJZ0vfinooVVzV4wh3eOUoFTkSmTisunJpSpbcTk14SwgP+nXf1ai0Y
-         UUsRIr1YJorjIrOs6GIlOd17MHk5j4y93BtJKOn35p8zaBtPfoGaIFDt1tElDaPNCNke
-         WfyDDi2x/DCfpIdSU5JyGvf/BQp4Sn7XLNSiue1wIIblWQduDauAi93VEkoS37PpaTrG
-         +KFA==
-X-Received: by 10.66.246.229 with SMTP id xz5mr12798309pac.119.1394095792795;
-        Thu, 06 Mar 2014 00:49:52 -0800 (PST)
-Received: from pclouds@gmail.com ([14.161.32.83])
-        by mx.google.com with ESMTPSA id bc4sm17244306pbb.2.2014.03.06.00.49.48
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Thu, 06 Mar 2014 00:49:51 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 06 Mar 2014 15:49:44 +0700
-X-Mailer: git-send-email 1.9.0.66.g14f785a
-In-Reply-To: <1393936205-15953-1-git-send-email-pclouds@gmail.com>
+	id S1751805AbaCFItw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Mar 2014 03:49:52 -0500
+Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:56123 "EHLO
+	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751087AbaCFItv (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Mar 2014 03:49:51 -0500
+X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Thu, 06 Mar 2014 03:49:50 EST
+X-AuditID: 12074412-f79d46d000002e58-22-531835088488
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id BA.1E.11864.80538135; Thu,  6 Mar 2014 03:42:48 -0500 (EST)
+Received: from [192.168.69.148] (p57A24A5D.dip0.t-ipconnect.de [87.162.74.93])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s268gkXT031786
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Thu, 6 Mar 2014 03:42:47 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
+In-Reply-To: <xmqqppm0h2ti.fsf@gitster.dls.corp.google.com>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrOKsWRmVeSWpSXmKPExsUixO6iqMthKhFscLVf3aLrSjeTRUPvFWaL
+	Hy09zA7MHs969zB6XLyk7PF5k1wAcxS3TVJiSVlwZnqevl0Cd0bX6QnMBVf4Kg7sf8fWwPiQ
+	u4uRk0NCwETi9uc5jBC2mMSFe+vZuhi5OIQELjNKfJy2HCwhJHCWSWLJSnsQm1dAW2Ljnncs
+	IDaLgKrE1eazTCA2m4CuxKKeZjBbVCBYYvXlBywQ9YISJ2c+AbNFBNQkJrYdArI5OJgFjCTm
+	na4HCQsL2EjcPPqLCWLvUiaJu79+sIIkOAWsJZ7vnsYGUi8hIC7R0xgEEmYW0JF41/eAGcKW
+	l9j+dg7zBEbBWUi2zUJSNgtJ2QJG5lWMcok5pbm6uYmZOcWpybrFyYl5ealFumZ6uZkleqkp
+	pZsYIQEttINx/Um5Q4wCHIxKPLwb/MSDhVgTy4orcw8xSnIwKYnyKhpLBAvxJeWnVGYkFmfE
+	F5XmpBYfYpTgYFYS4d1iCJTjTUmsrEotyodJSXOwKInz/lys7ickkJ5YkpqdmlqQWgSTleHg
+	UJLgrTICahQsSk1PrUjLzClBSDNxcIIM55ISKU7NS0ktSiwtyYgHxW98MTCCQVI8QHt1TED2
+	Fhck5gJFIVpPMepy3G779YlRiCUvPy9VSpz3FsjhAiBFGaV5cCtg6esVozjQx8K85iCjeICp
+	D27SK6AlTEBLovnEQZaUJCKkpBoYw5rrPPjnFHSu3XGPZdfWd+E+Zq/cVdzlb59IrC7kLZap
+	MBI9NSWC85bm/iaBbzYqd/14/xc++j43yfvLJ6bqdbnNU1ZPqZnAUxX5dHWEwOyN 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243504>
 
-=46rom: Duy Nguyen <pclouds@gmail.com>
+On 03/05/2014 08:18 PM, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+>> On Wed, Mar 05, 2014 at 10:49:24AM -0800, Junio C Hamano wrote:
+>>
+>>> ... the plan, at least in my mind, has always been exactly that: grafts
+>>> were a nice little attempt but is broken---if you really wanted to
+>>> muck with the history without rewriting (which is still discouraged,
+>>> by the way), do not use "graft", but use "replace".
+>>
+>> I certainly had in the back of my mind that grafts were a lesser form of
+>> "replace", and that eventually we could get rid of the former. Perhaps
+>> my question should have been: "why haven't we deprecated grafts yet?".
+> 
+> Given that we discourage "grafts" strongly and "replace" less so
+> (but still discourage it), telling the users that biting the bullet
+> and rewriting the history is _the_ permanent solution, I think it is
+> understandable why nobody has bothered to.
 
-Before cdab485 (upload-pack: delegate rev walking in shallow fetch to
-pack-objects - 2013-08-16) upload-pack does not write to the source
-repository. cdab485 starts to write $GIT_DIR/shallow_XXXXXX if it's a
-shallow fetch, so the source repo must be writable.
+Replace objects are better than grafts in *almost* every dimension.  The
+exception is that it is dead simple to create grafts, whereas I always
+have to break open the man pages to remember how to create a replace
+object that does the same thing.
 
-git:// servers do not need write access to repos and usually don't
-have it, which means cdab485 breaks shallow clone over git://
+So I think a helpful step towards deprecating grafts would be to offer a
+couple of convenience features to help people kick the "grafts" habit:
 
-Instead of using a temporary file as the media for shallow points, we
-can send them over stdin to pack-objects as well. Prepend shallow
-SHA-1 with --shallow so pack-objects knows what is
-what.
+* A tool that converts grafts (i.e., the grafts read from
+$GIT_DIR/info/grafts) into the equivalent replacements.
 
-read_object_list_from_stdin() does not accept --shallow lines because
-upload-pack never uses that code. When upload-pack does, then it can
-learn about --shallow lines.
+* A tool that creates a new replacement object that is the equivalent of
+a graft.  I.e., it should do, using replace references, the equivalent
+of the following command:
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- OK new approach, stop creating shallow_XXXXXX in upload-pack.
+      echo SHA1 [PARENT1...] >>$GIT_DIR/info/grafts
 
- builtin/pack-objects.c   |  7 +++++++
- shallow.c                |  2 ++
- t/t5537-fetch-shallow.sh | 13 +++++++++++++
- upload-pack.c            | 21 ++++++++++++---------
- 4 files changed, 34 insertions(+), 9 deletions(-)
+These features could be added to "git replace" or could be built into a
+new "git grafts" command.
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index c733379..79e848e 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -2467,6 +2467,13 @@ static void get_object_list(int ac, const char *=
-*av)
- 				write_bitmap_index =3D 0;
- 				continue;
- 			}
-+			if (starts_with(line, "--shallow ")) {
-+				unsigned char sha1[20];
-+				if (get_sha1_hex(line + 10, sha1))
-+					die("not an SHA-1 '%s'", line + 10);
-+				register_shallow(sha1);
-+				continue;
-+			}
- 			die("not a rev '%s'", line);
- 		}
- 		if (handle_revision_arg(line, &revs, flags, REVARG_CANNOT_BE_FILENAM=
-E))
-diff --git a/shallow.c b/shallow.c
-index bbc98b5..41ff4a0 100644
---- a/shallow.c
-+++ b/shallow.c
-@@ -33,6 +33,8 @@ int register_shallow(const unsigned char *sha1)
- 	graft->nr_parent =3D -1;
- 	if (commit && commit->object.parsed)
- 		commit->parents =3D NULL;
-+	if (is_shallow =3D=3D -1)
-+		is_shallow =3D 1;
- 	return register_commit_graft(graft, 0);
- }
-=20
-diff --git a/t/t5537-fetch-shallow.sh b/t/t5537-fetch-shallow.sh
-index 3ae9092..a980574 100755
---- a/t/t5537-fetch-shallow.sh
-+++ b/t/t5537-fetch-shallow.sh
-@@ -173,4 +173,17 @@ EOF
- 	)
- '
-=20
-+test_expect_success POSIXPERM,SANITY 'shallow fetch from a read-only r=
-epo' '
-+	cp -R .git read-only.git &&
-+	find read-only.git -print | xargs chmod -w &&
-+	test_when_finished "find read-only.git -type d -print | xargs chmod +=
-w" &&
-+	git clone --no-local --depth=3D2 read-only.git from-read-only &&
-+	git --git-dir=3Dfrom-read-only/.git log --format=3D%s >actual &&
-+	cat >expect <<EOF &&
-+add-1-back
-+4
-+EOF
-+	test_cmp expect actual
-+'
-+
- test_done
-diff --git a/upload-pack.c b/upload-pack.c
-index 0c44f6b..a5c50e4 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -70,6 +70,14 @@ static ssize_t send_client_data(int fd, const char *=
-data, ssize_t sz)
- 	return sz;
- }
-=20
-+static int write_one_shallow(const struct commit_graft *graft, void *c=
-b_data)
-+{
-+	FILE *fp =3D cb_data;
-+	if (graft->nr_parent =3D=3D -1)
-+		fprintf(fp, "--shallow %s\n", sha1_to_hex(graft->sha1));
-+	return 0;
-+}
-+
- static void create_pack_file(void)
- {
- 	struct child_process pack_objects;
-@@ -81,12 +89,10 @@ static void create_pack_file(void)
- 	const char *argv[12];
- 	int i, arg =3D 0;
- 	FILE *pipe_fd;
--	char *shallow_file =3D NULL;
-=20
- 	if (shallow_nr) {
--		shallow_file =3D setup_temporary_shallow(NULL);
- 		argv[arg++] =3D "--shallow-file";
--		argv[arg++] =3D shallow_file;
-+		argv[arg++] =3D "";
- 	}
- 	argv[arg++] =3D "pack-objects";
- 	argv[arg++] =3D "--revs";
-@@ -114,6 +120,9 @@ static void create_pack_file(void)
-=20
- 	pipe_fd =3D xfdopen(pack_objects.in, "w");
-=20
-+	if (shallow_nr)
-+		for_each_commit_graft(write_one_shallow, pipe_fd);
-+
- 	for (i =3D 0; i < want_obj.nr; i++)
- 		fprintf(pipe_fd, "%s\n",
- 			sha1_to_hex(want_obj.objects[i].item->sha1));
-@@ -242,12 +251,6 @@ static void create_pack_file(void)
- 		error("git upload-pack: git-pack-objects died with error.");
- 		goto fail;
- 	}
--	if (shallow_file) {
--		if (*shallow_file)
--			unlink(shallow_file);
--		free(shallow_file);
--	}
--
- 	/* flush the data */
- 	if (0 <=3D buffered) {
- 		data[0] =3D buffered;
---=20
-1.9.0.66.g14f785a
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
