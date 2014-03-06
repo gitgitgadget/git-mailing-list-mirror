@@ -1,89 +1,115 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 6/6] merge hook tests: use 'test_must_fail' instead of '!'
-Date: Thu, 06 Mar 2014 13:29:54 -0800
-Message-ID: <xmqqiorrvwvh.fsf@gitster.dls.corp.google.com>
-References: <1394117424-29780-1-git-send-email-benoit.pierre@gmail.com>
-	<1394117424-29780-7-git-send-email-benoit.pierre@gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: RFC GSoC idea: git configuration caching (needs co-mentor!)
+Date: Thu, 06 Mar 2014 22:33:14 +0100
+Message-ID: <5318E99A.20708@alum.mit.edu>
+References: <53180E40.5050308@alum.mit.edu> <xmqqtxbbxh99.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Benoit Pierre <benoit.pierre@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 06 22:30:11 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git discussion list <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 06 22:33:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WLfrg-0003Ca-1d
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Mar 2014 22:30:04 +0100
+	id 1WLfut-0006bq-2A
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Mar 2014 22:33:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753554AbaCFV37 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Mar 2014 16:29:59 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51782 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753094AbaCFV36 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Mar 2014 16:29:58 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F38CB70DB2;
-	Thu,  6 Mar 2014 16:29:57 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=R8x4sU3Hcmypc0ihvy0a3c/nZ+g=; b=JIou1n
-	iA1Wdm1YFbz5DYOnMCgca4pXYEygWOBSnJsjBTHykdXo1LDLEBdQx7aWJVYraTeC
-	C3g4L9lrqPMyFgm9NTSgNQqVvir2YfX338n5Zs1n6eeEA8ue06wSQwL+vSFPL1kh
-	Ahhe881OhQrvvEwF1Slf68ltTXVXOgzyu2fmw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LW6EEp6NsCQZmVVzTeM791YIC6HpEh5X
-	mqj09qwzTnKQLs0oFNsrPIdUhjewlyZqaW7TS5PKiPvsbdZ+qD+LkuZ5CQAdhzYW
-	yM2euW2ZuLuil2q5xTPd2q3Ye5+Lfcj9Jz5btNCxK304mKMWP/ZeT1eU+gbnEgt2
-	GyLezPOArBI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DF13870DB1;
-	Thu,  6 Mar 2014 16:29:57 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0153C70DAE;
-	Thu,  6 Mar 2014 16:29:56 -0500 (EST)
-In-Reply-To: <1394117424-29780-7-git-send-email-benoit.pierre@gmail.com>
-	(Benoit Pierre's message of "Thu, 6 Mar 2014 15:50:24 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 76DC7F86-A576-11E3-BFD2-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752545AbaCFVdT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Mar 2014 16:33:19 -0500
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:50414 "EHLO
+	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751645AbaCFVdS (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Mar 2014 16:33:18 -0500
+X-AuditID: 1207440e-f79c76d000003e2c-21-5318e99d3479
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 26.0E.15916.D99E8135; Thu,  6 Mar 2014 16:33:17 -0500 (EST)
+Received: from [192.168.69.148] (p57A24A5D.dip0.t-ipconnect.de [87.162.74.93])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s26LXEXW001413
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Thu, 6 Mar 2014 16:33:16 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
+In-Reply-To: <xmqqtxbbxh99.fsf@gitster.dls.corp.google.com>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrAKsWRmVeSWpSXmKPExsUixO6iqDv3pUSwwbLXJhZdV7qZLBp6rzBb
+	XPq8ntXiR0sPswOLx8Qvx1k9nvXuYfS4eEnZ4/MmuQCWKG6bpMSSsuDM9Dx9uwTujP8dagXb
+	hSueH5rA3sB4nb+LkZNDQsBEYtKdrcwQtpjEhXvr2boYuTiEBC4zSjTun88I4ZxlknizpI8J
+	pIpXQFOid/YydhCbRUBV4vzXA6wgNpuArsSinmawGlGBYInVlx+wQNQLSpyc+QTMFhFQk5jY
+	dgjI5uBgFqiT+NwkCBIWFvCQmN+3CqxESCBK4szzuWAjOQWsJb4tuMAGUi4hIC7R0xgEEmYW
+	0JF41/eAGcKWl9j+dg7zBEbBWUiWzUJSNgtJ2QJG5lWMcok5pbm6uYmZOcWpybrFyYl5ealF
+	usZ6uZkleqkppZsYISHOt4Oxfb3MIUYBDkYlHt6ORRLBQqyJZcWVuYcYJTmYlER57zwCCvEl
+	5adUZiQWZ8QXleakFh9ilOBgVhLhNT4IlONNSaysSi3Kh0lJc7AoifOqLVH3ExJITyxJzU5N
+	LUgtgsnKcHAoSfBOfQHUKFiUmp5akZaZU4KQZuLgBBnOJSVSnJqXklqUWFqSEQ+K3vhiYPyC
+	pHiA9l54DrK3uCAxFygK0XqKUZfjdtuvT4xCLHn5ealS4rwfQYoEQIoySvPgVsAS2itGcaCP
+	hXkng1zCA0yGcJNeAS1hAloSzScOsqQkESEl1cDI2vtoypFzJ0U0c/tmXo/6vFWdgf+5hr7s
+	odLDkg1nXvV/a6r4KcP7J/5PmJDQmS+XJt/lyggJ/dN39UfLev8TjxqPnvjiPefb 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243559>
 
-Benoit Pierre <benoit.pierre@gmail.com> writes:
+On 03/06/2014 08:24 PM, Junio C Hamano wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+> 
+>> I just wrote up the idea that fell out of the discussion [1] about the
+>> other configuration features that I proposed.  As far as I am concerned,
+>> it can be merged as soon as somebody volunteers as a co-mentor.  The
+>> idea is embodied in a pull request against the git.github.io repository
+>> [2]; the text is also appended below for your convenience.
+>>
+>> Michael
+>>
+>> [1] http://article.gmane.org/gmane.comp.version-control.git/242952
+>> [2] https://github.com/git/git.github.io/pull/7
+>>
+>> ### git configuration API improvements
+>>
+>> There are many places in Git that need to read a configuration value.
+>> Currently, each such site calls `git_config()`, which reads and parses
+>> the configuration files every time that it is called.  This is
+>> wasteful, because it results in the configuration files being
+>> processed multiple times during a single `git` invocation.  It also
+>> prevents the implementation of potential new features, like adding
+>> syntax to allow a configuration file to unset a previously-set value.
+>>
+>> This goal of this project is to make configuration work as follows:
+>>
+>> * Read the configuration from files once and cache the results in an
+>>   appropriate data structure in memory.
+>>
+>> * Change `git_config()` to iterate through the pre-read values in
+>>   memory rather than re-reading the configuration files.
+>>
+>> * Add new API calls that allow the cache to be inquired easily and
+>>   efficiently.  Rewrite other functions like `git_config_int()` to be
+>>   cache-aware.
+> 
+> Are you sure about the second sentence of this item is what you
+> want?
+> 
+> git_config_<type>(name, value) are all about parsing "value" (string
+> or NULL) as <type>, return the parsed value or complain against a
+> bad value for "name".  They do not care where these "name" and
+> "value" come from right now, and there is no reason for them to
+> start caring about caching.  They will still be the underlying
+> helper functions the git_config() callbacks will depend on even
+> after the second item in your list happens.
 
-> Signed-off-by: Benoit Pierre <benoit.pierre@gmail.com>
-> ---
->  t/t7505-prepare-commit-msg-hook.sh | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/t/t7505-prepare-commit-msg-hook.sh b/t/t7505-prepare-commit-msg-hook.sh
-> index 604c06e..1be6cec 100755
-> --- a/t/t7505-prepare-commit-msg-hook.sh
-> +++ b/t/t7505-prepare-commit-msg-hook.sh
-> @@ -167,7 +167,7 @@ test_expect_success 'with failing hook' '
->  	head=`git rev-parse HEAD` &&
->  	echo "more" >> file &&
->  	git add file &&
-> -	! GIT_EDITOR="\"\$FAKE_EDITOR\"" git commit -c $head
-> +	test_must_fail env GIT_EDITOR="\"\$FAKE_EDITOR\"" git commit -c $head
+You're right of course.  For some reason I had it in my brain that these
+functions retrieved *and* parsed values, as opposed to just parsing them.
 
-Thanks. It is good that you avoided the common pitfall of attempting
+I just fixed the text and pushed it live.
 
-	GIT_EDITOR=... test_must_fail git commit -c $head    ;# WRONG
+Michael
 
-but do we assume everybody has "env"?
-
-To be portable, we can do this instead.
-
-	(
-		GIT_EDITOR=... &&
-        	export GIT_EDITOR &&
-                test_must_fail git commit -c $head
-	)
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
