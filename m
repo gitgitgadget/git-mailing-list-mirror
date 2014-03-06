@@ -1,80 +1,94 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: gc/repack has no option to lose grafted parents
-Date: Thu, 6 Mar 2014 18:36:49 -0500
-Message-ID: <CACPiFCLgoGP59sW73YFCt8Wq4hpxZUb0PBF-DzHz0JdxrYo4rw@mail.gmail.com>
-References: <CACPiFCLqa=ZQM6Azh2G5hwBCMx96Cxa5BMN=-2aCy5x=YhBpGg@mail.gmail.com>
- <xmqqwqg6vrht.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] disable grafts during fetch/push/bundle
+Date: Thu, 06 Mar 2014 15:39:43 -0800
+Message-ID: <xmqqob1ivqv4.fsf@gitster.dls.corp.google.com>
+References: <20140304174806.GA11561@sigill.intra.peff.net>
+	<xmqqd2i1k7p9.fsf@gitster.dls.corp.google.com>
+	<20140305005649.GB11509@sigill.intra.peff.net>
+	<xmqqy50oh45n.fsf@gitster.dls.corp.google.com>
+	<20140305185212.GA23907@sigill.intra.peff.net>
+	<xmqqppm0h2ti.fsf@gitster.dls.corp.google.com>
+	<53183506.5080002@alum.mit.edu>
+	<20140306155626.GB18519@sigill.intra.peff.net>
+	<5318A537.4010400@alum.mit.edu>
+	<20140306174803.GA30486@sigill.intra.peff.net>
+	<08A515BA063C44E5A9EFC754793B2AD8@PhilipOakley>
+	<531904E1.6010606@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 07 00:37:18 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Philip Oakley <philipoakley@iee.org>, Jeff King <peff@peff.net>,
+	Christian Couder <christian.couder@gmail.com>,
+	git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Fri Mar 07 00:39:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WLhqo-0004dc-86
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Mar 2014 00:37:18 +0100
+	id 1WLhtH-00078n-IG
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Mar 2014 00:39:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752074AbaCFXhL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Mar 2014 18:37:11 -0500
-Received: from mail-ve0-f177.google.com ([209.85.128.177]:46506 "EHLO
-	mail-ve0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751710AbaCFXhK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Mar 2014 18:37:10 -0500
-Received: by mail-ve0-f177.google.com with SMTP id sa20so3351070veb.8
-        for <git@vger.kernel.org>; Thu, 06 Mar 2014 15:37:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=NZFEs8QqRwqETwmjbNrGPiXVNFMZiIvS5zHUs+Y9IZI=;
-        b=CTpMP1k/eEgXxaHkhq1UVI18qq872K/YpnnpLvHBfMYH7LXFZTzrCmFlhbvosvn1v5
-         Xw+5rrEtu2sUY+0wRzmUPn1hePT/P56ixpkqjufST7EaEVCdWEFIlB+tbwlafnWlRL6Q
-         6918cIWQC6AI6bbA9wO3fhWRIAJwyTNfJQsX6pTn1ZdueS+xDdoiSt3ry9+2fuBos5h3
-         YOGBu/+ydS8dw67S92IlOMCYMZnP/I0pJX/0R+/KiWaSpmkVEpT+kNzRlRk1tI8rlQzC
-         wqMCVT2eszwIuOFR6rRc1ULwx4ezPv0TRzwhtUoGJH5g0MhJZXvptiQiM2lIGdLCvBRg
-         ITng==
-X-Received: by 10.220.10.2 with SMTP id n2mr3418640vcn.26.1394149029809; Thu,
- 06 Mar 2014 15:37:09 -0800 (PST)
-Received: by 10.220.183.138 with HTTP; Thu, 6 Mar 2014 15:36:49 -0800 (PST)
-In-Reply-To: <xmqqwqg6vrht.fsf@gitster.dls.corp.google.com>
+	id S1752525AbaCFXjs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Mar 2014 18:39:48 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60156 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751744AbaCFXjr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Mar 2014 18:39:47 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E55D272776;
+	Thu,  6 Mar 2014 18:39:46 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=F87Pzp3Hnvrc0q26z9I3u8ZOJ1c=; b=rED9CM
+	djBWVxCPZgqCvhZB38fqZhpLbny9AMqWrmAMI8qVoMyat+Yv35h5Ah5S1/q1cphV
+	F9Wg853dI0HlWnWQao25jy153KvR/zSIjt0z4yAPO57Wo0WBx/3zxUFFIoYHpFnp
+	cmJq4q1Q7m0frbN3RX5lWx5AB30X8cs3VQg9A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ow/grgopp5fP2kVbvNP3hyuYTartB4eL
+	2FgmqJFJu3PsS/UdNF/6s1uLwjv1w4/Cg97M0wQH8BpYQEQnBg1Xcl8J2NSdRbHY
+	GirACHLc1qPKvDjE6qtLVTrfetBCySbF2cvleTwjT6IshA45aR3Ccu+7Hn7i+P5j
+	WnVAjzrhn1w=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D063A72774;
+	Thu,  6 Mar 2014 18:39:46 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F1F5372770;
+	Thu,  6 Mar 2014 18:39:45 -0500 (EST)
+In-Reply-To: <531904E1.6010606@alum.mit.edu> (Michael Haggerty's message of
+	"Fri, 07 Mar 2014 00:29:37 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 99761072-A588-11E3-88F3-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243575>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243576>
 
-On Thu, Mar 6, 2014 at 6:26 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Given that we in general frown upon long-term use of grafts (or
-> "replace" for that matter), I am not sure if we want to go in that
-> direction.
->
-> Just a knee-jerk reaction, though.
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-Fair enough.
+> I didn't mean to insult all Windows users in general.  I was only
+> referring to the fact that since the default Windows command line is not
+> a POSIX shell, even an experienced Windows user might have trouble
+> figuring out how to execute a shell loop.  Putting this functionality in
+> a git command or script, by contrast, would make it work universally, no
+> fuss, no muss.
 
-If I state my actual goals -- discarding old, uninteresting history,
-in a "rolling" fashion? (periodically using a script that says "forget
-anything older than one month") -- is there a better way?
+;-)
 
-The repository is not standalone, it receives pushes from hundreds of
-clients, and gets pulled from a couple of clients. All clients are "in
-sync", in that will be pulling every hour (vs a "time window" of one
-month).
+Be it graft or replace, I do not think we want to invite people to
+use these mechansims too lightly to locally rewrite their history
+willy-nilly without fixing their mistakes at the object layer with
+"commit --amend", "rebase", "bfg", etc. in the longer term.  So in
+that sense, adding a command to make it easy is not something I am
+enthusiastic about.
 
-At this stage, and with careful management (ie: custom gc scripts) git
-makes for an excellent async log/report transfer tool. We specially
-appreciate that it has "deep buffer".
+On the other hand, if the user does need to use graft or replace
+(perhaps to prepare for casting the fixed history in stone with
+filter-branch), it would be good to help them avoid making mistakes
+while doing so and tool support may be a way to do so.
 
-cheers,
-
-
-
-m
--- 
- martin.langhoff@gmail.com
- -  ask interesting questions
- - don't get distracted with shiny stuff  - working code first
- ~ http://docs.moodle.org/en/User:Martin_Langhoff
+So, ... I am of two minds.
