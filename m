@@ -1,79 +1,78 @@
-From: Robert Dailey <rcdailey.lists@gmail.com>
-Subject: Unable to shrink repository size
-Date: Wed, 5 Mar 2014 20:55:30 -0600
-Message-ID: <CAHd499AW6nev81iVVhuoYfT0us28SSBDwbHCBa3teYB=cJR99g@mail.gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Subject: Re: Unable to shrink repository size
+Date: Wed, 5 Mar 2014 21:21:23 -0800
+Message-ID: <CABPp-BGPPj63zLjjp5R6+vpJr3nLX_aSCz34qCf2E8tm8J7EDQ@mail.gmail.com>
+References: <CAHd499AW6nev81iVVhuoYfT0us28SSBDwbHCBa3teYB=cJR99g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Mar 06 03:55:39 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git <git@vger.kernel.org>
+To: Robert Dailey <rcdailey.lists@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 06 06:21:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WLOTC-00057o-7j
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Mar 2014 03:55:38 +0100
+	id 1WLQkK-0006B2-VU
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Mar 2014 06:21:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758050AbaCFCzc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2014 21:55:32 -0500
-Received: from mail-vc0-f181.google.com ([209.85.220.181]:39440 "EHLO
-	mail-vc0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757908AbaCFCzb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Mar 2014 21:55:31 -0500
-Received: by mail-vc0-f181.google.com with SMTP id lg15so1939918vcb.40
-        for <git@vger.kernel.org>; Wed, 05 Mar 2014 18:55:30 -0800 (PST)
+	id S1751013AbaCFFVY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Mar 2014 00:21:24 -0500
+Received: from mail-ie0-f169.google.com ([209.85.223.169]:60717 "EHLO
+	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750794AbaCFFVY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Mar 2014 00:21:24 -0500
+Received: by mail-ie0-f169.google.com with SMTP id to1so2250299ieb.28
+        for <git@vger.kernel.org>; Wed, 05 Mar 2014 21:21:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:date:message-id:subject:from:to:content-type;
-        bh=2cubtMkIgwmhZx5e8L8Fo/xtpPIRrwI5nPi6kBm6jak=;
-        b=PGxK/DgE8oPprlkK6oZdxzciBmfvM4n5/lPE1FHdtGnTD8nfgtL0yA9zK0VOkgB79b
-         qW8EkZ7KDMTw1PBJdkcf0JeV5L6MPNXKQMef9ggGjYffriQL2ZO+ExAkKdJCYh9LCIfd
-         +KLOjgh7+t7wbjU4gMUhPWButbG+t6PTLjsOLAHcLZTEq+t9TWZ9d0NALH5+Fbkm2aIe
-         /NAKkaIOrA/89AtNgwGCkfShozi8ZcpTzndTtH+BHTih6GlJXfUTYrXkyWPvT4N+NnwH
-         f2T+40au+MHBNovvvjQCX2LTxkr1ZjsOR7Egn9p51QJLKiKFD/CMGlewVJr1nhu+bgvz
-         hrxA==
-X-Received: by 10.52.27.9 with SMTP id p9mr6144633vdg.28.1394074530040; Wed,
- 05 Mar 2014 18:55:30 -0800 (PST)
-X-Google-Sender-Delegation: rcdailey@gmail.com
-Received: by 10.221.2.79 with HTTP; Wed, 5 Mar 2014 18:55:30 -0800 (PST)
-X-Google-Sender-Auth: rjSvwwKizFDheIA2opK2y_Y9y58
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=8t1L3gU2CweZXzelf+j6cC3vgcVvSOI8paOa68MBCJk=;
+        b=dk2QViVJTF+n8DyXllzA91ibD9Q29/71ps3JvzxOJOQ9Gz6HSaly4KArUvpI5uQi51
+         BhQJ1k3oyCRIv0AjE6hHnfXscZV02jpMC7y2RhSZB77VRDpLm3rSDmsh5PvXKxhz2oGY
+         dW7VXTSzJKkb5SmW2QECRN9V74YruEVtdLmhIW9RHoYHNZASmsumdpdxMrCEYtdPjj+J
+         pQR2iULzZq+ZuviKfZWfC1GusE16yesYgLQn+lazyn+itsDu/IVr9pCzt064kOVGKwM6
+         is7dvNE/O808wHdHYgFgSblQTAlrpdXKD4erFOl7fhbJwQLIrvuVzg8rFbjsrHUKeU8U
+         RQ5w==
+X-Received: by 10.43.131.2 with SMTP id ho2mr52851icc.75.1394083283769; Wed,
+ 05 Mar 2014 21:21:23 -0800 (PST)
+Received: by 10.64.127.69 with HTTP; Wed, 5 Mar 2014 21:21:23 -0800 (PST)
+In-Reply-To: <CAHd499AW6nev81iVVhuoYfT0us28SSBDwbHCBa3teYB=cJR99g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243499>
 
-I have a git-svn clone that I've been working on which is a full and
-complete conversion of our SVN repository at work.
+On Wed, Mar 5, 2014 at 6:55 PM, Robert Dailey <rcdailey.lists@gmail.com> wrote:
+> What I'd like to do is somehow hunt down the largest commit (*not*
+> blob) in the entire history of the repository to hopefully find out
+> where huge directories have been checked in.
+>
+> I can't do a search for largest file (which most google results seem
+> to show to do) since the culprit is really thousands of unnecessary
+> files checked into a single subdirectory somewhere in history.
+>
+> Can anyone offer me some advice to help me reduce the size of my repo
+> further? Thanks.
 
-It started out as 1.4GB (git count-objects -v, looking at
-'size-pack'). I have run the following script to clean up a directory
-in the repo history that I suspect are huge (we had a third party
-library checked in that, uncompressed, was about 1.2GB in size):
+If you are trying to see which commits changed the most files (and/or
+lines), you may find
+   git log --oneline --shortstat
+helpful.  A quick search through that output may help you decide where
+to dig further.
 
--------------------------------
-files=$@
-echo "Removing: $files..."
-git filter-branch --index-filter "git rm -rf --cached --ignore-unmatch
-$files" -- --all
 
-# remove the temporary history git-filter-branch otherwise leaves
-behind for a long time
-rm -rf .git/refs/original/ && git reflog expire --expire=now --all &&
-git gc --aggressive --prune=now
--------------------------------
+Also, I'm sure someone else here probably has a better idea, but
+here's a quick hack I came up with to look at "commit sizes":
 
-Even though I seem to have removed it, the repository size (looking at
-'size-pack' again) only went down about 200MB, so it's at 1.2GB now.
-There is about 3-5 years of commit history in this repository.
+mkdir tmp && for i in $(git rev-list --all); do git branch -f dummy $i
+&& git bundle create tmp/$i.bundle dummy --not dummy^@; done
 
-What I'd like to do is somehow hunt down the largest commit (*not*
-blob) in the entire history of the repository to hopefully find out
-where huge directories have been checked in.
+Follow that up with a quick "ls -alrSh tmp/" and you can see the
+"size" of each commit.
 
-I can't do a search for largest file (which most google results seem
-to show to do) since the culprit is really thousands of unnecessary
-files checked into a single subdirectory somewhere in history.
 
-Can anyone offer me some advice to help me reduce the size of my repo
-further? Thanks.
+Hope that helps,
+Elijah
