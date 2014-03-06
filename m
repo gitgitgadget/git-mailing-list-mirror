@@ -1,135 +1,85 @@
-From: Julian Brost <julian@0x4a42.net>
-Subject: Trust issues with hooks and config files
-Date: Thu, 06 Mar 2014 22:47:43 +0100
-Message-ID: <5318ECFF.40908@0x4a42.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/6] commit: fix patch hunk editing with "commit -p -m"
+Date: Thu, 06 Mar 2014 13:47:54 -0800
+Message-ID: <xmqqeh2fvw1h.fsf@gitster.dls.corp.google.com>
+References: <1394117424-29780-1-git-send-email-benoit.pierre@gmail.com>
+	<1394117424-29780-3-git-send-email-benoit.pierre@gmail.com>
+	<xmqqr46fvx39.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 06 22:47:53 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Benoit Pierre <benoit.pierre@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 06 22:48:08 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WLg8v-0004Jy-67
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Mar 2014 22:47:53 +0100
+	id 1WLg95-0004V2-8e
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Mar 2014 22:48:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752868AbaCFVrs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Mar 2014 16:47:48 -0500
-Received: from mail-ee0-f52.google.com ([74.125.83.52]:33098 "EHLO
-	mail-ee0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751528AbaCFVrr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Mar 2014 16:47:47 -0500
-Received: by mail-ee0-f52.google.com with SMTP id e49so1375675eek.11
-        for <git@vger.kernel.org>; Thu, 06 Mar 2014 13:47:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=0x4a42.net; s=google;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        bh=p4Tp+Cjx2p5stBiOV1Uea4wPg+Q4nrb0qLIE3mb1cwo=;
-        b=F6fVAlNaS6EC97WDjhW65vy35T+cFWsfgGsvyrssInlfmiimr2DoaQJx/RqrQirHa8
-         7UzJfbVihjPGSWH5uvGZ1Hipv9EtwB9fNRpNHumQWRjtkaY2b0IIP2GoiWjPm1NZcmWt
-         FTUkP165WBMPU8kNPA2PqytuvNub3V9l2+dzk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :subject:content-type:content-transfer-encoding;
-        bh=p4Tp+Cjx2p5stBiOV1Uea4wPg+Q4nrb0qLIE3mb1cwo=;
-        b=ZQiXxytUjKQZXbGIMylQq2IlHoUR8z6gtd6LAdwHjirm5UxdQryIDh+0lhI0XvM7PQ
-         iWYnloVS32nWrE+aF04W2AgV8+scdoV+qLTgozM88XlI3u5xL7QuaHV2J7I5tmp0n/9f
-         WXT7gbDGSWWfpe19uJbyNNcA9RKaAtx1WO3lmRECS2MAdPJNB/shaAPj54aZJJ1x5LaQ
-         RTWucQTMr2SbZSqNYyNd+lJefRWDzyMkevBmmbSIUn1qKk6djBfdS88UfGwSbozDQggi
-         UNUguxt6pIs69xkzEP1c4MyyA8EstWhgAaZ3P+nPrZVZlhfRGaEnEWh6o2c53J12X3e2
-         M7Fg==
-X-Gm-Message-State: ALoCoQnZd19PSehiu5x0ZmCwkkZgrJ8tFcQMr7vN1uOozOq/E57melsTdiAoKJUI/kpRjK2TocwE
-X-Received: by 10.15.24.65 with SMTP id i41mr15106208eeu.21.1394142466091;
-        Thu, 06 Mar 2014 13:47:46 -0800 (PST)
-Received: from ?IPv6:2001:4dd0:f944:0:2677:3ff:fea3:17c4? ([2001:4dd0:f944:0:2677:3ff:fea3:17c4])
-        by mx.google.com with ESMTPSA id i1sm26758933eeo.16.2014.03.06.13.47.44
-        for <git@vger.kernel.org>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 06 Mar 2014 13:47:45 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
-X-Enigmail-Version: 1.6
+	id S1753045AbaCFVr7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Mar 2014 16:47:59 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38544 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751438AbaCFVr6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Mar 2014 16:47:58 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CCC63723E9;
+	Thu,  6 Mar 2014 16:47:57 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=zKS7Qr+X9NH18JTAZnpouyBBLA4=; b=fz1bBl
+	VexRVvXX8VQpA5tjvSmZMmHfdofvFQBvEfS8A1XuW0mu6I4gyOT2P+n/6twTs6IW
+	SgUIo/VaK4VTOi0jEIuV7Y4gNaB+2k2xkTx8UUrw1FHAsDdpyWtluUfDub6s+tLN
+	8LsmrztpIOxCqpPUIM9FPYY57o1qsEKKmONPk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=MalrUwPMx0yZz/uNV/+7kWjctkgZqDQ1
+	mhgP4D2yTkMH8POZ3otepg32MCX/WTUu5l01Oq9XQj9iaw3D5GHyF7LmRcXWQ2F9
+	Oj33w4yb0eNa8HU+t9eGjDf4csK8tNNZZAps/Bf2pp+i4oGBMkfOW4IxbuvS/O0H
+	NCZpqBq5qFQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A8D46723E6;
+	Thu,  6 Mar 2014 16:47:57 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7E8AC723E1;
+	Thu,  6 Mar 2014 16:47:56 -0500 (EST)
+In-Reply-To: <xmqqr46fvx39.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Thu, 06 Mar 2014 13:25:14 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: FA4D12F2-A578-11E3-8167-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243561>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Junio C Hamano <gitster@pobox.com> writes:
 
-Hi,
+> Name it run_hook_le() (name modelled after execle()), and call it in
+> your change where you add new calls to this function, and add a thin
+> wrapper run_hook() that preserves the traditional "We can pass only
+> the index-file" for new callers we do not even know about on the
+> topics in flight.
+>
+> Later we can eradicate callers of run_hook() that treats the index-file
+> specially, which was a grave mistake in a public API.
 
-I've noticed some behavior of git that might lead to some security
-issues if the user is not aware of this.
+I am also OK if the patch _removed_ run_hook() and renamed the one
+with the current semantics to run_hook_with_custom_index() or
+something.
 
-Assume we have an evil user on a system, let's call him eve. He
-prepares a repository where he allows other user to push changes to.
-If he now adds a post-receive hook, git will happly execute it as
-whatever user pushes to this repository:
+It would allow us to catch any in-flight topic we do not know about
+that adds a call to run_hook() expecting that it would take a custom
+index file.  We will see a link failure, and then we can evil-merge
+to update such a callsite to call run_hook_with_custom_index().
 
-  root@argon /tmp/git-eve # ls -l /tmp/git-eve/hooks/post-receive
-  -rwxr-xr-x 1 eve users [...] /tmp/git-eve/hooks/post-receive
-  root@argon /tmp/git-root # cat /tmp/git-eve/hooks/post-receive
-  #!/bin/sh
-  id
-  root@argon /tmp/git-root # git push /tmp/git-eve master
-  Counting objects: 3, done.
-  Writing objects: 100% (3/3), 185 bytes | 0 bytes/s, done.
-  Total 3 (delta 0), reused 0 (delta 0)
-  remote: uid=0(root) gid=0(root) groups=0(root),[...]
-  To /tmp/git-eve
-   * [new branch]      master -> master
+An updated run_hook() with different function signature (which is
+in this patch) will also let us notice, but the evil-merge to fix
+the resulting mess will have to be larger than necessary, which is
+not what we want.
 
-Something similiar might happen if eve adds some alias to the config
-file in the repository and grants any other user read access to the
-repository. These aliases will be executed when some other user is
-running any git command in this repository. Even though git does not
-allow defining aliases for existing commands, you might mistype
-something, so adding an alias for "lg" instead of "log" might succeed:
-
-  root@argon /tmp/git-eve # ls -l /tmp/git-eve/config
-  -rw-r--r-- 1 eve users [...] /tmp/git-eve/config
-  root@argon /tmp/git-eve # cat config
-  [core]
-  	repositoryformatversion = 0
-  	filemode = true
-  	bare = true
-  [alias]
-  	lg = !id
-  root@argon /tmp/git-eve # git lg
-  uid=0(root) gid=0(root) groups=0(root),[...]
-
-This gets even worse if you know something about the aliases your
-victim uses, so for example you can override an alias 'l = log'
-defined in the user's config with something malicious in the
-repository config file.
-
-I'd suggest taking a similar approach as Mercurial [1], i.e. ignoring
-configuration files and hooks owned by another user unless the owner
-is explicitly trusted.
-
-Regards,
-Julian
-
-[1] http://mercurial.selenic.com/wiki/Trust
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
-
-iQIcBAEBCAAGBQJTGOz5AAoJECLcYT6QIdBtJLEP/1VPMyRws5IYOVXJDcLukxkh
-87RuL6ZCXE9v66VgEmTYYtJx1Umy18YXCx+ufAuJL2xzo/QH/QhWl/npa+U3ac7D
-2A/3rXt1PvdzoQeT3514t5ntO9WyquHE2N8Ix+xdxwFo/T+Ve+nDV8/hra9he1Nb
-zdldBccyHBDQdEudBLs6tDoJU9fvQ4TAGCGw7CXHCDV4hhyXHt8Nyf9nNOWxXgYh
-5QcDs0sj1MCFm5AdN1SOU7FobiwS//Q8QdKdr9O6L18IoUPnSw2a1S2hGJmwQ/IL
-Y1nQMdFuSx+4n6KKgUBtlo4WTi38u98FG4N0MXqZOSX7SKDVEOYfF+1W31Trhtuw
-KMtojlwBYXsq0CWrW1OQ4Oed91lDGBtLLzF8MSCN1NoG4+Eb/V+RueLzulC5lWU/
-IpDr3d14vFBEydHzYY+35P57Rf2Fl5HkXLQzQ0UmROeAmhUVCnduRj4dn35nb47Z
-G/73UdgX1FMB4lOD8kD9KX0Sov3XLz4n5u706h+lElapd24wBXlaysWVpsmImuW0
-xPLSpX0Dfrtj0sOCvqM0oX40z3bCJ1ibqZOmPGwF0P66DJOOq9sqDYfHlgnvt/qU
-pCqsy0+FyCUuGP17UliEWcFAfdzXrUhxkRneQXC8ieX8YSoP4OtjzIPHrsc54s/2
-7VR0wCTxaHvd05T8WruK
-=kc4p
------END PGP SIGNATURE-----
+Thanks.
