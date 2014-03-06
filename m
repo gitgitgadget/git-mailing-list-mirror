@@ -1,73 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: gc/repack has no option to lose grafted parents
-Date: Thu, 06 Mar 2014 15:26:06 -0800
-Message-ID: <xmqqwqg6vrht.fsf@gitster.dls.corp.google.com>
-References: <CACPiFCLqa=ZQM6Azh2G5hwBCMx96Cxa5BMN=-2aCy5x=YhBpGg@mail.gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH] disable grafts during fetch/push/bundle
+Date: Fri, 07 Mar 2014 00:29:37 +0100
+Message-ID: <531904E1.6010606@alum.mit.edu>
+References: <20140304174806.GA11561@sigill.intra.peff.net> <xmqqd2i1k7p9.fsf@gitster.dls.corp.google.com> <20140305005649.GB11509@sigill.intra.peff.net> <xmqqy50oh45n.fsf@gitster.dls.corp.google.com> <20140305185212.GA23907@sigill.intra.peff.net> <xmqqppm0h2ti.fsf@gitster.dls.corp.google.com> <53183506.5080002@alum.mit.edu> <20140306155626.GB18519@sigill.intra.peff.net> <5318A537.4010400@alum.mit.edu> <20140306174803.GA30486@sigill.intra.peff.net> <08A515BA063C44E5A9EFC754793B2AD8@PhilipOakley>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 07 00:26:17 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>,
+	Christian Couder <christian.couder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Fri Mar 07 00:29:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WLhg8-00028c-UC
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Mar 2014 00:26:17 +0100
+	id 1WLhjX-0005c0-6h
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Mar 2014 00:29:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751953AbaCFX0L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Mar 2014 18:26:11 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42413 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751767AbaCFX0J (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Mar 2014 18:26:09 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6C4F97230F;
-	Thu,  6 Mar 2014 18:26:09 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4Utnl7aHBEg29Uoxth51ilG0wPI=; b=WvIMVC
-	YTykffhfecmKOho2R2rinnVd88JkoTEuUxV7jmKxr5Dsgpg71oxw6XmCQVabCbxx
-	oTGufBMWKuvX8qDJzcII+9O+2k82JlfrPt17jLMirFr2Y2CP+l37uBeOmZ0dgjGT
-	M2HXhIugvlftTIJL9NVS9ZFcOmluPCtiRpMQQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vkIy7t7v88iHfeUB17PNComC84CNDILp
-	aLue0CDNKV+OE/OKdtqmhTDUkOmwjvEcO4XhuoyGcZAPIStTRlbxi/DrDLmVPFBF
-	cN9dvBxdvRusD8JjFrNZdtTKRODKlGDp33lz4+VyK/GTV23SZlpFgnXxBgFGtnq1
-	WHmqfqNMA9k=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 53FCD7230D;
-	Thu,  6 Mar 2014 18:26:09 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5841C7230B;
-	Thu,  6 Mar 2014 18:26:08 -0500 (EST)
-In-Reply-To: <CACPiFCLqa=ZQM6Azh2G5hwBCMx96Cxa5BMN=-2aCy5x=YhBpGg@mail.gmail.com>
-	(Martin Langhoff's message of "Thu, 6 Mar 2014 18:07:06 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: B21D6F6E-A586-11E3-823D-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751785AbaCFX3n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Mar 2014 18:29:43 -0500
+Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:42923 "EHLO
+	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751190AbaCFX3m (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Mar 2014 18:29:42 -0500
+X-AuditID: 12074414-f79d96d000002d2b-a1-531904e56e07
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 52.5C.11563.5E409135; Thu,  6 Mar 2014 18:29:41 -0500 (EST)
+Received: from [192.168.69.148] (p57A24A5D.dip0.t-ipconnect.de [87.162.74.93])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s26NTcYU007080
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Thu, 6 Mar 2014 18:29:39 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
+In-Reply-To: <08A515BA063C44E5A9EFC754793B2AD8@PhilipOakley>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrNKsWRmVeSWpSXmKPExsUixO6iqPuURTLY4OAOfYvbM1uYLbqudDNZ
+	NPReYbb40dLDbNE5VdaB1WPnrLvsHsuXrmP0eNa7h9Hj4iVlj8+b5AJYo7htkhJLyoIz0/P0
+	7RK4Mw6da2Ip+MhZ8WnOeuYGxlfsXYycHBICJhLztm1nhrDFJC7cW8/WxcjFISRwmVHi8psL
+	jBDOWSaJ3UdOglXxCmhLNE8+AdbNIqAqMfn0T0YQm01AV2JRTzMTiC0qECyx+vIDFoh6QYmT
+	M5+A2SICGhI3dt0EG8os0Mco8WX3C7BmYQEbiZtHfzFBbPvMLPFp4kk2kAQnUGJ+81KgzRxA
+	94lL9DQGgZjMAuoS6+cJgVQwC8hLbH87h3kCo+AsJOtmIVTNQlK1gJF5FaNcYk5prm5uYmZO
+	cWqybnFyYl5eapGuhV5uZoleakrpJkZI4IvsYDxyUu4QowAHoxIPr8ECiWAh1sSy4srcQ4yS
+	HExKoryT/wGF+JLyUyozEosz4otKc1KLDzFKcDArifD6fwfK8aYkVlalFuXDpKQ5WJTEeb8t
+	VvcTEkhPLEnNTk0tSC2CycpwcChJ8D5glgwWEixKTU+tSMvMKUFIM3FwggznkhIpTs1LSS1K
+	LC3JiAdFcHwxMIZBUjxAe8+DtPMWFyTmAkUhWk8x6nLcbvv1iVGIJS8/L1VKnDcUpEgApCij
+	NA9uBSzNvWIUB/pYmJcPmPSEeIApEm7SK6AlTEBLovnEQZaUJCKkpBoYHfjuztdRemreaa0R
+	vfKJlFfb0f0cU46s416ZfGjhFc8+C1+TfwvY/WKylwQ7/177hnv6b3GJohXvTHZU 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243574>
 
-Martin Langhoff <martin.langhoff@gmail.com> writes:
+On 03/07/2014 12:01 AM, Philip Oakley wrote:
+> From: "Jeff King" <peff@peff.net>
+>> On Thu, Mar 06, 2014 at 05:41:27PM +0100, Michael Haggerty wrote:
+>>
+>>> > We can wrap that in "git replace --convert-grafts", but I do not >
+>>> think
+>>> > grafts are so common that there would be a big demand for it.
+>>>
+>>> It's probably easier to wrap it than to explain to Windows users what
+>>> they have to do.
+>>
+>> How would Windows users get a graft file in the first-place? There's no
+>> GUI for it! ;)
+> 
+> Now, now... It's dead easy using the git-gui and Notepad++, you can see
+> and confirm the sha1's, copy and paste, and the graft file is a very
+> easy format, so even wimps (windows, icons, menus, pointers aka mouse)
+> folks can do it. (It worked for me when I needed it ;-)
 
-> Back in http://git.661346.n2.nabble.com/PATCH-0-2-Make-git-gc-more-robust-with-regard-to-grafts-td3310281.html
-> we got gc/repack to be safer for users who might be shooting
-> themselves in the foot.
->
-> Would a patch be welcome to add --discard-grafted-objects ? or
-> --keep-real-parents=idontthinkso ?
->
-> cheers,
+I didn't mean to insult all Windows users in general.  I was only
+referring to the fact that since the default Windows command line is not
+a POSIX shell, even an experienced Windows user might have trouble
+figuring out how to execute a shell loop.  Putting this functionality in
+a git command or script, by contrast, would make it work universally, no
+fuss, no muss.
 
-Given that we in general frown upon long-term use of grafts (or
-"replace" for that matter), I am not sure if we want to go in that
-direction.
+Michael
 
-Just a knee-jerk reaction, though.
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
