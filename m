@@ -1,167 +1,179 @@
-From: Krzesimir Nowak <krzesimir@endocode.com>
-Subject: Re: [RFC] make --set-upstream work for local branches not in
- refs/heads
-Date: Thu, 06 Mar 2014 10:27:28 +0100
-Message-ID: <1394098048.2050.19.camel@localhost.localdomain>
-References: <1393942046-11488-1-git-send-email-krzesimir@endocode.com>
-	 <xmqqlhwpkats.fsf@gitster.dls.corp.google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2] commit.c: Replace starts_with() with skip_prefix()
+Date: Thu, 6 Mar 2014 04:38:48 -0500
+Message-ID: <CAPig+cSp6ckBifayD5a0Z=+xWVfRiVcEyf6rEi_4M-fqWJ9TBw@mail.gmail.com>
+References: <1394028372-29990-1-git-send-email-karthik.188@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 06 10:27:41 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>, Tanay Abhra <tanayabh@gmail.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 06 10:38:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WLUaa-0003Sg-6L
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Mar 2014 10:27:40 +0100
+	id 1WLUlT-0005hD-UM
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Mar 2014 10:38:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752558AbaCFJ1e convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Mar 2014 04:27:34 -0500
-Received: from mail-bk0-f50.google.com ([209.85.214.50]:48413 "EHLO
-	mail-bk0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752412AbaCFJ1c (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Mar 2014 04:27:32 -0500
-Received: by mail-bk0-f50.google.com with SMTP id w10so594753bkz.37
-        for <git@vger.kernel.org>; Thu, 06 Mar 2014 01:27:31 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:content-type:mime-version:content-transfer-encoding;
-        bh=QIL72BQDz9qDRoQHZlXvMQh1NHRefV8cPWZ3VLsFXLk=;
-        b=lC5nenMeD+IVLNPMqKit6jQqumHakGztRBm6z28kDf+Sc8CqewEKC0Q1lznaX58tth
-         h61dHQ5bd2C+HsGWHQiSLUKHVx51submb6gRpD5JaDErontOsCepWhwzoh3jpH5TP6F7
-         LArI+HRg2rFmx9naXJP+uHnQ2bulcPnVVK19lE2PE2HRh00yM08a/y2CtU4jdEHTRuLl
-         K1IemP86+bNMl1wXnm3PhbjifrC1R0KKSE32ejqAHZBwYxNwTPULTIITzWmvvhN1IxXO
-         o0XXAzaWLJQqhWo3b9ChndFuQUiKRJ/hIycPhZM4HIRFCZqP+RGA2/3JJYPdu7ZRcfRB
-         d+Og==
-X-Gm-Message-State: ALoCoQkMV47g4QZH1mf+e4Qm7U137xs1NnJIrYQRLkBzu5rUtypEtBgl1Wti5I4U3Dmq4vf8uodt
-X-Received: by 10.204.61.200 with SMTP id u8mr115077bkh.64.1394098050870;
-        Thu, 06 Mar 2014 01:27:30 -0800 (PST)
-Received: from [192.168.178.31] (p579233CA.dip0.t-ipconnect.de. [87.146.51.202])
-        by mx.google.com with ESMTPSA id oa10sm7975015bkb.14.2014.03.06.01.27.29
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Thu, 06 Mar 2014 01:27:30 -0800 (PST)
-In-Reply-To: <xmqqlhwpkats.fsf@gitster.dls.corp.google.com>
-X-Mailer: Evolution 3.8.5 (3.8.5-2.fc19) 
+	id S1750972AbaCFJiv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Mar 2014 04:38:51 -0500
+Received: from mail-yk0-f172.google.com ([209.85.160.172]:57470 "EHLO
+	mail-yk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750805AbaCFJit (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Mar 2014 04:38:49 -0500
+Received: by mail-yk0-f172.google.com with SMTP id 200so6049624ykr.3
+        for <git@vger.kernel.org>; Thu, 06 Mar 2014 01:38:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=/gvaqpD8E5jpY0H0RnCBvbVaCgH76CMiEXq6xXMKrv0=;
+        b=OY2ghpEbv5TEombJi1dvg/fv1KYWgLuc+gvqRbkw+RjSVVQv0PyQr5bfixjscecYn1
+         G7ykZ1sJW+4TH0gQBlQKAHKcV2+O0XwVDoD2mNyeZMr7Tps3iN3iC7bE4RlzCbj9eFdg
+         h9vJ2npTcx1vedcocW1RsAb1V5Q+q+flyNdBJ8Gwma23mKHuQiuUvfzjXH3ZUdJ76+ss
+         aOd6Rz84qTDIOQBsNvdEwjo9pjaR+HZv13FwOH+HP0uFUy61oOJm10dOHdrEtkhL5R/h
+         ODq9MCZpxaWORCEUEiSIQzFI4cgwH+pCILHTJOMife14h85Y/ai+G3OAF163k+uYyRhH
+         rYDQ==
+X-Received: by 10.236.3.10 with SMTP id 10mr12446961yhg.79.1394098728684; Thu,
+ 06 Mar 2014 01:38:48 -0800 (PST)
+Received: by 10.170.180.195 with HTTP; Thu, 6 Mar 2014 01:38:48 -0800 (PST)
+In-Reply-To: <1394028372-29990-1-git-send-email-karthik.188@gmail.com>
+X-Google-Sender-Auth: TiHSg4N9olCImPIj2bYCocoWhiw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243508>
 
-On Tue, 2014-03-04 at 11:44 -0800, Junio C Hamano wrote:
-> Krzesimir Nowak <krzesimir@endocode.com> writes:
->=20
-> > It might be possible (in "Gerrited" setups) to have local branches
-> > outside refs/heads/, like for example in following fetch config:
-> >
-> > [remote "origin"]
-> > 	url =3D ssh://user@example.com/my-project
-> > 	fetch =3D +refs/heads/*:refs/remotes/origin/*
-> > 	fetch =3D +refs/wip/*:refs/remotes/origin-wip/*
-> >
-> > Let's say that 'test' branch already exist in origin/refs/wip/. If =
-I
-> > call:
-> >
-> > git checkout test
-> >
-> > then it will create a new branch and add an entry to .git/config:
-> >
-> > [branch "test"]
-> > 	remote =3D origin
-> > 	merge =3D refs/wip/test
-> >
-> > But if I create a branch 'test2' and call:
-> >
-> > git push --set-upstream origin test2:refs/wip/test2
-> >
-> > then branch is pushed, but no entry in .git config is created.
->=20
-> By definition anything otuside refs/heads/ is not a branch, so do
-> not call things in refs/wip "branches".  Retitle it to "work for
-> local refs outside refs/heads" or something.
+On Wed, Mar 5, 2014 at 9:06 AM, Karthik Nayak <karthik.188@gmail.com> wrote:
+> Replaces all instances of starts_with() by skip_prefix(),
 
-I always have problems with proper use of git's terminology. Sorry.
+Use imperative mode: "Replace all..."
 
->=20
-> Having said that, I do not see a major problem if we allowed
->=20
-> 	[branch "test2"]
-> 		remote =3D origin
->                 merge =3D refs/wip/test2
->=20
-> to be created when "push --setupstream" is requested, making
-> test2@{upstream} to point at refs/remotes/origin-wip/test2.
->=20
-> I do not know what the correct implementation of such a feature
-> should be, though.
+> which can not only be used to check presence of a prefix,
+> but also used further on as it returns the string after the prefix,
+> if the prefix is present.
 
-Hm, have some idea about it, though I will leave its sanity to judge to
-you.
+This is a lot better than previous versions. It could be improved a
+bit by more directly stating that skip_prefix() singly does what the
+current code is doing in two steps. (See Tanay's submission [1] for an
+example of a well-crafted commit message). However, we're probably at
+the point of diminishing returns, so no need to reroll just for this.
 
-Given the following config snippet:
-[remote "origin"]
-	url =3D ssh://user@example.com/my-project
-	fetch =3D +refs/heads/*:refs/remotes/origin/*
-	fetch =3D +refs/wip/*:refs/remotes/origin-wip/*
+[1]: http://thread.gmane.org/gmane.comp.version-control.git/243395
 
-We could have get_local_ref_hierarchies function defined somewhat as
-follows (memory management details are left out):
+> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+> ---
+>
+> Hey Eric,
+> Here are the changes i have made in this Patch v2:
+> 1. Edited the variables names to fit their usage
+> 2. set my emacs to indent 8 tabs, so proper indentation
+> 3. fixed my error where i increased the value by 1 in parse_signed_commit().
+> Thanks again for your patience.
 
-char **get_local_ref_hierarchies(char *remote)
-{
-	char **refspecs =3D get_fetch_refspecs_for_remote (remote);
-	char **iter;
-	char **local =3D NULL;
+Thanks for the reroll and for explaining the changes. More below.
 
-	for (iter =3D refspecs; iter && *iter; ++iter) {
-		char *src =3D get_src_refspec_part (*iter);
-		push (&local, src);
-	}
+> ---
+>  commit.c | 23 ++++++++++++-----------
+>  1 file changed, 12 insertions(+), 11 deletions(-)
+>
+> diff --git a/commit.c b/commit.c
+> index 6bf4fe0..f006490 100644
+> --- a/commit.c
+> +++ b/commit.c
+> @@ -553,6 +553,7 @@ static void record_author_date(struct author_date_slab *author_date,
+>         struct ident_split ident;
+>         char *date_end;
+>         unsigned long date;
+> +       const char *buf_split;
 
-	/* maybe filter dups and make refs/heads/ first */
-	return local;
-}
+In a previous review, I suggested reading Junio's response [1] to a
+similar submission. Of particular interest, Junio says:
 
-I'm sure that there are some corner-cases this code does not handle.
+    A good rule of thumb to remember is to name things after what
+    they are, not how you obtain them, how they are used or what
+    they are used for/as.
 
-Also, maybe it would be good to add some information when --set-upstrea=
-m
-does nothing. Something like after doing "git push --set-upstream origi=
-n
-test:refs/wip/test":
+The name 'buf_split' is clearly a "how you obtain them", which does
+not convey much. Better would be to name the variable to reflect what
+it references once assigned.
 
-"""
-Could not set temp to track refs/wip/test. Either call:
-git config branch.test.remote origin
-git config branch.test.merge refs/wip/test
+[1]: http://thread.gmane.org/gmane.comp.version-control.git/243231/focus=243259
 
-or (this part would appear if this solution in patch is accepted)
+>         if (!commit->buffer) {
+>                 unsigned long size;
+> @@ -562,18 +563,19 @@ static void record_author_date(struct author_date_slab *author_date,
+>                         return;
+>         }
+>
+> +       buf_split = skip_prefix(buf, "author ");
+> +
+>         for (buf = commit->buffer ? commit->buffer : buffer;
+>              buf;
+>              buf = line_end + 1) {
+>                 line_end = strchrnul(buf, '\n');
+> -               if (!starts_with(buf, "author ")) {
+> +               if (!buf_split) {
+>                         if (!line_end[0] || line_end[1] == '\n')
+>                                 return; /* end of header */
+>                         continue;
+>                 }
+> -               if (split_ident_line(&ident,
+> -                                    buf + strlen("author "),
+> -                                    line_end - (buf + strlen("author "))) ||
+> +               if (split_ident_line(&ident, buf_split,
+> +                                    line_end - buf_split) ||
+>                     !ident.date_begin || !ident.date_end)
+>                         goto fail_exit; /* malformed "author" line */
+>                 break;
+> @@ -1098,6 +1100,7 @@ int parse_signed_commit(const unsigned char *sha1,
+>         char *buffer = read_sha1_file(sha1, &type, &size);
+>         int in_signature, saw_signature = -1;
+>         char *line, *tail;
+> +       const char *line_split;
 
-git config --add remote.origin.fetch \
-"+refs/wip/*:refs/remotes/origin-wip/*
-"""
+Ditto.
 
-Cheers,
---=20
-Krzesimir Nowak
-Software Developer
-Endocode AG
+>         if (!buffer || type != OBJ_COMMIT)
+>                 goto cleanup;
+> @@ -1111,11 +1114,11 @@ int parse_signed_commit(const unsigned char *sha1,
+>                 char *next = memchr(line, '\n', tail - line);
+>
+>                 next = next ? next + 1 : tail;
+> +               line_split = skip_prefix(line, gpg_sig_header);
+>                 if (in_signature && line[0] == ' ')
+>                         sig = line + 1;
+> -               else if (starts_with(line, gpg_sig_header) &&
+> -                        line[gpg_sig_header_len] == ' ')
+> -                       sig = line + gpg_sig_header_len + 1;
+> +               else if (line_split && line_split[0] == ' ')
+> +                       sig = line_split + 1;
 
-krzesimir@endocode.com
+A shortcoming of this change is that skip_prefix() is now being called
+unconditionally, even when its result won't be used (as in the first
+'if' statement). The original code did the work of checking the prefix
+only if the first 'if' statement evaluated to false.
 
-------
-Endocode AG, Johannisstra=C3=9Fe 20, 10117 Berlin
-info@endocode.com | www.endocode.com
+>                 if (sig) {
+>                         strbuf_add(signature, sig, next - sig);
+>                         saw_signature = 1;
+> @@ -1193,10 +1196,8 @@ static void parse_gpg_output(struct signature_check *sigc)
+>         for (i = 0; i < ARRAY_SIZE(sigcheck_gpg_status); i++) {
+>                 const char *found, *next;
+>
+> -               if (starts_with(buf, sigcheck_gpg_status[i].check + 1)) {
+> -                       /* At the very beginning of the buffer */
+> -                       found = buf + strlen(sigcheck_gpg_status[i].check + 1);
+> -               } else {
+> +               found = skip_prefix(buf, sigcheck_gpg_status[i].check + 1);
+> +               if(!found) {
 
-Vorstandsvorsitzender: Mirko Boehm
-Vorst=C3=A4nde: Dr. Karl Beecher, Chris K=C3=BChl, Sebastian Sucker
-Aufsichtsratsvorsitzende: Jennifer Beecher
+Space after 'if'.
 
-Registergericht: Amtsgericht Charlottenburg - HRB 150748 B
+>                         found = strstr(buf, sigcheck_gpg_status[i].check);
+>                         if (!found)
+>                                 continue;
+> --
+> 1.9.0.138.g2de3478
