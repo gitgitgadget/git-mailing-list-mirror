@@ -1,90 +1,149 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: RFC GSoc Idea: blame: do not overly favor earlier parents
-Date: Thu, 06 Mar 2014 12:24:51 -0800
-Message-ID: <xmqq4n3bxegc.fsf@gitster.dls.corp.google.com>
-References: <xmqq8usnxfi1.fsf@gitster.dls.corp.google.com>
-	<87siqvcc30.fsf@fencepost.gnu.org>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH] submodule : Add --no-separate-git-dir option to add and
+ update command.
+Date: Thu, 06 Mar 2014 21:51:41 +0100
+Message-ID: <5318DFDD.4060006@web.de>
+References: <1393858066.7891.20.camel@Naugrim> <5314BFA5.2030807@web.de>	 <1393878866.7891.22.camel@Naugrim> <53176951.7000201@web.de>	 <1394069128.7891.29.camel@Naugrim> <5318D101.9050305@web.de> <1394136925.7891.31.camel@Naugrim>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Thu Mar 06 21:25:02 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: Henri GEIST <geist.henri@laposte.net>
+X-From: git-owner@vger.kernel.org Thu Mar 06 21:51:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WLeqk-00056u-E6
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Mar 2014 21:25:02 +0100
+	id 1WLfGi-00075f-G4
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Mar 2014 21:51:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752168AbaCFUY6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Mar 2014 15:24:58 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38500 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750988AbaCFUY5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Mar 2014 15:24:57 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CA85C7139D;
-	Thu,  6 Mar 2014 15:24:56 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=VTvGMagEj6jSL3ekpbPwZuOkzj4=; b=ICfpW/
-	yA+SV4/4WXuoIY6BSlrGBZruIwxgADUtHHTrmS17Pc7gMah+rr74kagIOfm7jhi0
-	ZjDKSnNu1nBTknIwH78m2JLqE6ihaQNW4M/7gPo+2uz4kaapTPvlcT23805nd/PC
-	1PMk0WmGMyFJukv3w+eKCFh6hZkyIQwbUkeqE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=iJr003qj/EKYFNzugzQONgintRjDIz8u
-	5i1aauiHSahwRiU+8cdwknFi/G8UitxmQIKDL2sln/tT0Y75ClN0kS3YQQRO8l9t
-	Of8W1X/3VdBUbKjjh+t9j0lCLeg0elfSU+Dh4aL6wS0ZYMhNWtv3gEZEysclRv2d
-	g0yCM/6Xph0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B11397139C;
-	Thu,  6 Mar 2014 15:24:56 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D72E47139B;
-	Thu,  6 Mar 2014 15:24:55 -0500 (EST)
-In-Reply-To: <87siqvcc30.fsf@fencepost.gnu.org> (David Kastrup's message of
-	"Thu, 06 Mar 2014 21:21:39 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 619C4B78-A56D-11E3-B566-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753590AbaCFUvr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Mar 2014 15:51:47 -0500
+Received: from mout.web.de ([212.227.15.4]:59095 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753323AbaCFUvp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Mar 2014 15:51:45 -0500
+Received: from [192.168.178.41] ([84.132.148.165]) by smtp.web.de (mrweb002)
+ with ESMTPA (Nemesis) id 0LfAfQ-1WwvtV3oKm-00ojzW; Thu, 06 Mar 2014 21:51:42
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
+In-Reply-To: <1394136925.7891.31.camel@Naugrim>
+X-Enigmail-Version: 1.6
+X-Provags-ID: V03:K0:fJb97UFIFlE0jbdYka9zi50uB2ngR71X0XfMHqdLArWkJHdAFBU
+ Y0QDj3cIAmXDjxnhbNWGyReT2Pc3VHnl/z4K3ti9yaTsf6kyPpDxexD6w0teEUth0bOkN0+
+ If3ATosCP99wuRdzLTnwa0xRH87EpZTK48G3WfcVRhhBfT5ejxc8XAnGLsR/UIypdHGK/8t
+ P2d5iOqGw2qSyjFHqO/ig==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243549>
 
-David Kastrup <dak@gnu.org> writes:
+Am 06.03.2014 21:15, schrieb Henri GEIST:
+> Le jeudi 06 mars 2014 =C3=A0 20:48 +0100, Jens Lehmann a =C3=A9crit :
+>> Am 06.03.2014 02:25, schrieb Henri GEIST:
+>>> Le mercredi 05 mars 2014 =C3=A0 19:13 +0100, Jens Lehmann a =C3=A9c=
+rit :
+>>>> Am 03.03.2014 21:34, schrieb Henri GEIST:
+>>>>>   - I use an other patch which I plane to send later which enable=
+ multiple
+>>>>>     level of superproject to add a gitlink to the same submodule.
+>>>>>     And in this case the superproject containing the separate git=
+dir will be
+>>>>>     arbitrary and depend on the processing order of the
+>>>>>     'git submodule update --recursive' command.
+>>>>
+>>>> I don't understand that. How is that different from using differen=
+t
+>>>> names (and thus different separate gitdirs) for that duplicated
+>>>> submodule? After all, the .git directory is just moved somewhere
+>>>> else in the superproject's work tree, and as the name defaults to
+>>>> the path of the submodule ...
+>>>
+>>> I think I should give an example.
+>>> If I have a hierarchy like this :
+>>>
+>>> superproject/submodule/subsubmodule
+>>>
+>>> What I often do is:
+>>>
+>>> superproject --> submodule --> subsubmodule
+>>>              |                 ^
+>>>              '-----------------'
+>>>
+>>> Where '-->' is a gitlink.
+>>>
+>>>
+>>> That mean .gitmodules and index of the superproject contain both su=
+bmodule and
+>>> submodule/subsubmodule.
+>>
+>> Wow, that shouldn't even work (as everything inside "submodule"
+>> shouldn't be part of the superproject but must be contained in
+>> the submodule itself). Do the "git submodule" script and other
+>> git commands like "git status" work for you in such setups?
+>=20
+> As I stated above it is the purpose of the other patch that I have no=
+t already send
+> to implement this behavior. And that is why it work.
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> When looking at a merge, "git blame" inspects the blob object names
->> of all parents and if one of them exactly match the merge result,
->> pass the entire blame down to that parent.  This is very much in
->> line with the history simplification done with "git log" when
->> traversing a history with merges.
->
-> [...]
->
->> Now, imagine if you amend M to create N, to add a single line at the
->> end of path.  M:path != N:path but there is very small difference
->> between the two.  That means B:path != N:path but the difference
->> between this merged result and the second parent is very small.
->
-> That sounds very much like
->
-> commit d5df1593f27bfceab807242a538cb3fa01256efd
-> Merge: 7144168 0b4e246
-> Author: Junio C Hamano <gitster@pobox.com>
-> Date:   Fri Feb 28 13:51:19 2014 -0800
->
->     Merge branch 'bl/blame-full-history' into pu
+Ok.
 
-That one was an attempt to solve the right issue in a wrong way,
-made things worse by breaking the consistency with the history
-simplification of "git log".
+> Everything including 'git submodule' and 'git status' work perfectly.
+> The intent of this patch is only to permit this for gitlinks. Not for=
+ regular files.
 
-The "Idea" is to solve it in the way that is still consistent with
-the usual history simplification.
+But I still believe that this shouldn't be permitted at all,
+no matter if files or submodules are concerned. The pitfalls
+files face in such a scenario are pretty much the same for
+submodules too.
+
+>>> and also mean (and that is the point) subsubmodule is a direct 'chi=
+ld' of both
+>>> superproject and submodule.
+>>
+>> Which I think should not be possible. If that works with current
+>> Git I suspect we have a bug to fix ... or does your other patch
+>> make this work?
+>=20
+> You have no bug on this point without my modification this is not pos=
+sible.
+
+Glad to hear that.
+
+>>> In this case where should the separate gitdir of subsubmodule be pl=
+aced ?
+>>>   - In superproject/modules/submodule/subsubmodule ?
+>>>   - In superproject/submodule/modules/subsubmodule ?
+>>>   - Depending on the 'git submodule update' command order ?
+>>>   - Or both ?
+>>
+>> It should be placed in .git/modules/submodule/modules/subsubmodule
+>> of the superproject (assuming the subsubmodule is part of the first
+>> level submodule). But in your example that would live in
+>> .git/modules/submodule/subsubmodule (but as mentioned above, I do
+>> not consider this a valid setup because then two repositories would
+>> be responsible for the data inside subsubmodule, which will lead to
+>> lots of trouble).
+>=20
+> That is why a had proposed an option '--no-separate-git-dir'
+> for 'git submodule <add|update>' then no repository is responsible fo=
+r the data
+> in subsubmodule except subsubmodule itself.
+
+As I mentioned in my other email, it doesn't matter at all for
+the setup you're describing if the git directory lives under
+=2Egit/modules of the superproject or in a .git directory in the
+submodule. The problem you're creating with your future patch
+is related to the work tree, not the GIT_DIR: "subsubmodule"
+could also be added to and tracked by "submodule" (as that is
+completely unaware of "subsubmodule" already being tracked by
+the superproject). Then you would end up in real trouble, as
+"superproject" and "submodule" could have differing SHA-1s
+recorded for subsubmodule. Don't go there, for just the same
+reasons we do not allow that for files.
+
+What is the use case you are trying to solve and why can that
+not be handled by adding "subsubmodule" inside "submodule"?
