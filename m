@@ -1,218 +1,90 @@
-From: Jeff King <peff@peff.net>
-Subject: [RFC/PATCH 4/4] replace: add --edit option
-Date: Thu, 6 Mar 2014 12:51:17 -0500
-Message-ID: <20140306175117.GD30691@sigill.intra.peff.net>
-References: <20140306174803.GA30486@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUG] Halt during fetch on MacOS
+Date: Thu, 06 Mar 2014 10:24:49 -0800
+Message-ID: <xmqqk3c7yyku.fsf@gitster.dls.corp.google.com>
+References: <CAFFUb6X455R4OD5FKnVFHFmvTyRqtV300bc=a8Xs03agM+=uLQ@mail.gmail.com>
+	<CAFFUb6ViYitJC1sjL_nyWY1RHuJKURfcZ+_5Zk2kr+suh+txZg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Christian Couder <christian.couder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Mar 06 18:51:27 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Conley Owens <cco3@android.com>
+X-From: git-owner@vger.kernel.org Thu Mar 06 19:25:07 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WLcS3-0002uj-P6
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Mar 2014 18:51:24 +0100
+	id 1WLcyb-0002MC-5g
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Mar 2014 19:25:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751726AbaCFRvU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Mar 2014 12:51:20 -0500
-Received: from cloud.peff.net ([50.56.180.127]:34195 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750972AbaCFRvT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Mar 2014 12:51:19 -0500
-Received: (qmail 20948 invoked by uid 102); 6 Mar 2014 17:51:19 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 06 Mar 2014 11:51:19 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 06 Mar 2014 12:51:17 -0500
-Content-Disposition: inline
-In-Reply-To: <20140306174803.GA30486@sigill.intra.peff.net>
+	id S1752472AbaCFSY4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Mar 2014 13:24:56 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36236 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751817AbaCFSYz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Mar 2014 13:24:55 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C546170295;
+	Thu,  6 Mar 2014 13:24:54 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=cdXAOEw1v6hHT3XIQU/yo2XaGzQ=; b=GmVRjk
+	UbnpyESPD9P5L0LO8dnRxpv18F8ylZGjoql05ailsk/Niy+KcByXs1gZYhHr7TYD
+	s+U75DFRa73QX4YG9CC6iVjt9/AsO3slDR2q/G89FN8+0IvGb3tNijkkk0IK+eFB
+	k5KTJZf30J5PfSCtQhGs600eYu4W7r1zF//Zs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=VQVHPSghv6nv8IMSy3VHvYifdwdRfqxL
+	ZoirrdU3EqCX9CQuwPUnSkTURF2+GJjSn/sjSdFNYL//wORnzn9PERZMBmlharAK
+	Vv7rP78dh58YFUQSFZHzrWYaSeCI9YS52UWPuy8usIgX8bcoyNmW0NrmWoZcWylj
+	IGR8qAtu9e8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 85D6F70294;
+	Thu,  6 Mar 2014 13:24:54 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 80A5670291;
+	Thu,  6 Mar 2014 13:24:53 -0500 (EST)
+In-Reply-To: <CAFFUb6ViYitJC1sjL_nyWY1RHuJKURfcZ+_5Zk2kr+suh+txZg@mail.gmail.com>
+	(Conley Owens's message of "Wed, 5 Mar 2014 13:56:13 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 9CAC2BE0-A55C-11E3-9A19-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243528>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243529>
 
-This allows you to run:
+Conley Owens <cco3@android.com> writes:
 
-    git replace --edit SHA1
+> On Fri, Feb 28, 2014 at 3:26 PM, Conley Owens <cco3@android.com> wrote:
+>> $ git --version  # This is just the git from MacPorts
+>> git version 1.8.5.5
+>> $ sw_vers
+>> ProductName:    Mac OS X
+>> ProductVersion: 10.8.5
+>> BuildVersion:   12F45
+>
+> OK, I've tried using my own build from master, and I still get the same results.
+>
+> I've done a little more investigation and discovered it always hangs at:
+> `atexit(notify_parent);` in `run-command.c:start_command`
+> when running:
+> trace: run_command: 'git-remote-https' 'aosp'
+> 'https://android.googlesource.com/platform/external/tinyxml2'
+>
+> Could this have to do with the atexit implementation?  (eg. limit on
+> the number of functions that can be registered, etc)
 
-to get dumped in an editor with the contents of the object
-for SHA1. The result is then read back in and used as a
-"replace" object for SHA1. The writing/reading is
-type-aware, so you get to edit "ls-tree" output rather than
-the binary tree format.
+Thanks.
 
-Missing documentation and tests.
+An interesting theory indeed.  I read that an implementation is
+supposed to take at least ATEXIT_MAX (32) calls to atexit(3); while
+I do think we register functions with atexit(3) from multiple places
+in our code, I doubt we would be making that many.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-Besides missing docs and tests, we might find that we want to factor the
-code a little differently when we start adding other helpers (like
-"--graft"). I will probably push this forward at some point, but I'm not
-planning on working on it for the rest of the day, so if you want to
-pick it up as a base in the meantime and try "--graft", "--env-filter",
-or anything else clever on top, please go ahead.
-
- builtin/replace.c | 110 +++++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 109 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/replace.c b/builtin/replace.c
-index a090302..3ed5f75 100644
---- a/builtin/replace.c
-+++ b/builtin/replace.c
-@@ -12,6 +12,7 @@
- #include "builtin.h"
- #include "refs.h"
- #include "parse-options.h"
-+#include "run-command.h"
- 
- static const char * const git_replace_usage[] = {
- 	N_("git replace [-f] <object> <replacement>"),
-@@ -176,6 +177,105 @@ static int replace_object(const char *object_ref, const char *replace_ref, int f
- 	return replace_object_sha1(object_ref, object, replace_ref, repl, force);
- }
- 
-+/*
-+ * Write the contents of the object named by "sha1" to the file "filename",
-+ * pretty-printed for human editing based on its type.
-+ */
-+static void export_object(const unsigned char *sha1, const char *filename)
-+{
-+	const char *argv[] = { "cat-file", "-p", NULL, NULL };
-+	struct child_process cmd = { argv };
-+	int fd;
-+
-+	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0666);
-+	if (fd < 0)
-+		die_errno("unable to open %s for writing", filename);
-+
-+	argv[2] = sha1_to_hex(sha1);
-+	cmd.git_cmd = 1;
-+	cmd.out = fd;
-+
-+	if (run_command(&cmd))
-+		die("cat-file reported failure");
-+
-+	close(fd);
-+}
-+
-+/*
-+ * Read a previously-exported (and possibly edited) object back from "filename",
-+ * interpreting it as "type", and writing the result to the object database.
-+ * The sha1 of the written object is returned via sha1.
-+ */
-+static void import_object(unsigned char *sha1, enum object_type type,
-+			  const char *filename)
-+{
-+	int fd;
-+
-+	fd = open(filename, O_RDONLY);
-+	if (fd < 0)
-+		die_errno("unable to open %s for reading", filename);
-+
-+	if (type == OBJ_TREE) {
-+		const char *argv[] = { "mktree", NULL };
-+		struct child_process cmd = { argv };
-+		struct strbuf result = STRBUF_INIT;
-+
-+		cmd.argv = argv;
-+		cmd.git_cmd = 1;
-+		cmd.in = fd;
-+		cmd.out = -1;
-+
-+		if (start_command(&cmd))
-+			die("unable to spawn mktree");
-+
-+		if (strbuf_read(&result, cmd.out, 41) < 0)
-+			die_errno("unable to read from mktree");
-+		close(cmd.out);
-+
-+		if (finish_command(&cmd))
-+			die("mktree reported failure");
-+		if (get_sha1_hex(result.buf, sha1) < 0)
-+			die("mktree did not return an object name");
-+	} else {
-+		struct stat st;
-+		int flags = HASH_FORMAT_CHECK | HASH_WRITE_OBJECT;
-+
-+		if (fstat(fd, &st) < 0)
-+			die_errno("unable to fstat %s", filename);
-+		if (index_fd(sha1, fd, &st, type, NULL, flags) < 0)
-+			die("unable to write object to database");
-+		/* index_fd close()s fd for us */
-+	}
-+
-+	/*
-+	 * No need to close(fd) here; both run-command and index-fd
-+	 * will have done it for us.
-+	 */
-+}
-+
-+static int edit_and_replace(const char *object_ref, int force)
-+{
-+	char *tmpfile = git_pathdup("REPLACE_EDITOBJ");
-+	enum object_type type;
-+	unsigned char old[20], new[20];
-+
-+	if (get_sha1(object_ref, old) < 0)
-+		die("Not a valid object name: '%s'", object_ref);
-+
-+	type = sha1_object_info(old, NULL);
-+	if (type < 0)
-+		die("unable to get object type for %s", sha1_to_hex(old));
-+
-+	export_object(old, tmpfile);
-+	if (launch_editor(tmpfile, NULL, NULL) < 0)
-+		die("editing object file failed");
-+	import_object(new, type, tmpfile);
-+
-+	free(tmpfile);
-+
-+	return replace_object_sha1(object_ref, old, "replacement", new, force);
-+}
-+
- int cmd_replace(int argc, const char **argv, const char *prefix)
- {
- 	int force = 0;
-@@ -184,11 +284,13 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
- 		MODE_UNSPECIFIED = 0,
- 		MODE_LIST,
- 		MODE_DELETE,
-+		MODE_EDIT,
- 		MODE_REPLACE
- 	} cmdmode = MODE_UNSPECIFIED;
- 	struct option options[] = {
- 		OPT_CMDMODE('l', "list", &cmdmode, N_("list replace refs"), MODE_LIST),
- 		OPT_CMDMODE('d', "delete", &cmdmode, N_("delete replace refs"), MODE_DELETE),
-+		OPT_CMDMODE('e', "edit", &cmdmode, N_("edit existing object"), MODE_EDIT),
- 		OPT_BOOL('f', "force", &force, N_("replace the ref if it exists")),
- 		OPT_STRING(0, "format", &format, N_("format"), N_("use this format")),
- 		OPT_END()
-@@ -205,7 +307,7 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
- 		usage_msg_opt("--format cannot be used when not listing",
- 			      git_replace_usage, options);
- 
--	if (force && cmdmode != MODE_REPLACE)
-+	if (force && cmdmode != MODE_REPLACE && cmdmode != MODE_EDIT)
- 		usage_msg_opt("-f only makes sense when writing a replacement",
- 			      git_replace_usage, options);
- 
-@@ -222,6 +324,12 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
- 				      git_replace_usage, options);
- 		return replace_object(argv[0], argv[1], force);
- 
-+	case MODE_EDIT:
-+		if (argc != 1)
-+			usage_msg_opt("-e needs exactly one argument",
-+				      git_replace_usage, options);
-+		return edit_and_replace(argv[0], force);
-+
- 	case MODE_LIST:
- 		if (argc > 1)
- 			usage_msg_opt("only one pattern can be given with -l",
--- 
-1.8.5.2.500.g8060133
+> $ cc -v
+> Apple clang version 4.1 (tags/Apple/clang-421.11.66) (based on LLVM 3.1svn)
+> Target: x86_64-apple-darwin12.5.0
+> Thread model: posix
