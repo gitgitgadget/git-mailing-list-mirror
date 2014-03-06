@@ -1,209 +1,144 @@
-From: Henri GEIST <geist.henri@laposte.net>
-Subject: Re: [PATCH/RFC] git-gui: Add a 'recursive' checkbox in the clone
- menu.
-Date: Thu, 06 Mar 2014 01:15:56 +0100
-Message-ID: <1394064956.7891.28.camel@Naugrim>
-References: <1393974076.7891.27.camel@Naugrim> <5317662C.6010404@web.de>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: [PATCH v6 00/11] Add interpret-trailers builtin
+Date: Thu, 06 Mar 2014 01:18:18 +0000
+Message-ID: <5317CCDA.40402@ramsay1.demon.co.uk>
+References: <20140304193250.14249.56949.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-9dQWxZHmT/Izg4Z1qmiE"
-Cc: git@vger.kernel.org, Pat Thoyts <patthoyts@users.sourceforge.net>,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Thu Mar 06 01:16:11 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Thomas Rast <tr@thomasrast.ch>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Christian Couder <chriscool@tuxfamily.org>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 06 02:24:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WLLys-0005nG-Ov
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Mar 2014 01:16:11 +0100
+	id 1WLN36-0008KI-Pf
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Mar 2014 02:24:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756848AbaCFAQF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Mar 2014 19:16:05 -0500
-Received: from smtpout5.laposte.net ([193.253.67.230]:27845 "EHLO
-	smtpout.laposte.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754865AbaCFAQE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Mar 2014 19:16:04 -0500
-Received: from [192.168.1.104] ([109.164.199.213])
-	by mwinf8509-out with ME
-	id a0Fx1n0034ckmKR030FxZC; Thu, 06 Mar 2014 01:15:58 +0100
-In-Reply-To: <5317662C.6010404@web.de>
-X-Mailer: Evolution 3.4.4-3 
+	id S1756996AbaCFBYc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Mar 2014 20:24:32 -0500
+Received: from mdfmta005.mxout.tbr.inty.net ([91.221.168.46]:45355 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756643AbaCFBYb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Mar 2014 20:24:31 -0500
+X-Greylist: delayed 364 seconds by postgrey-1.27 at vger.kernel.org; Wed, 05 Mar 2014 20:24:31 EST
+Received: from smtp.demon.co.uk (unknown [127.0.0.1])
+	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mdfmta005.tbr.inty.net (Postfix) with ESMTP id D054DA644BE
+	for <git@vger.kernel.org>; Thu,  6 Mar 2014 00:18:16 +0000 (GMT)
+Received: from mdfmta009.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta009.tbr.inty.net (Postfix) with ESMTP id D4729384083;
+	Thu,  6 Mar 2014 01:16:39 +0000 (GMT)
+Received: from mdfmta009.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta009.tbr.inty.net (Postfix) with ESMTP id 96508384080;
+	Thu,  6 Mar 2014 01:16:39 +0000 (GMT)
+Received: from [192.168.254.8] (unknown [80.176.147.220])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mdfmta009.tbr.inty.net (Postfix) with ESMTP;
+	Thu,  6 Mar 2014 01:16:37 +0000 (GMT)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
+In-Reply-To: <20140304193250.14249.56949.chriscool@tuxfamily.org>
+X-MDF-HostID: 4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243496>
 
+On 04/03/14 19:47, Christian Couder wrote:
+> This patch series implements a new command:
+> 
+>         git interpret-trailers
+> 
 
---=-9dQWxZHmT/Izg4Z1qmiE
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+[snip]
 
-Le mercredi 05 mars 2014 =C3=A0 19:00 +0100, Jens Lehmann a =C3=A9crit :
-> Am 05.03.2014 00:01, schrieb Henri GEIST:
-> > Permit to do a 'git clone --recursive' through git-gui.
->=20
-> I really like where this is heading!
->=20
-> Some minor issues:
->=20
-> - I think we should be more verbose in the commit message,
->   including that and why the default should be "on". Maybe
->   like this?
->=20
->   "Permit to do a 'git clone --recursive' through git-gui.
->   Add a 'recursive' checkbox in the clone menu which allows
->   users to clone a repository and all its submodules in one
->   go (unless the 'update' flag is set to "none" in the
->   .gitmodules file for a submodule, in that case that
->   specific submodule is not cloned automatically).
->=20
->   Enable this new option per default, as most users want to
->   clone all submodules too when cloning the superproject
->   (This is currently not possible without leaving git gui
->   or adding a custom tool entry for that)."
->=20
+Minor problem: this series causes sparse to complain, thus:
 
-Ok for me.
+    trailer.c:642:6: warning: symbol 'process_trailers' was not \
+        declared. Should it be static?
 
->=20
-> - I'd rather change the button text from "Recursive (For
->   submodules)" to something like "Recursively clone
->   submodules too" or such.
->=20
+The following patch, on top of the 'pu' branch, fixes it:
 
-Perfect
+--- >8 ---
+Subject: [PATCH] trailer.c: suppress sparse warning
 
->=20
-> - Wouldn't it be easier to pass the '--recurse-submodules"
->   option to the "git clone" call for the superproject instead
->   of adding the _do_clone_submodules() function doing a
->   subsequent "git submodule update --init --recursive"? That
->   is also be more future proof with respect to the autoclone
->   config option we have in mind (which would add that behavior
->   for "git clone" itself, making the call you added redundant).
->=20
+Check that the public interface, as declared in the trailer.h header
+file, is consistent with the actual implementation. Add an #include
+of the header file into the implementation file.
 
-That is what I planned to do at beginning.
-But git-gui never call git clone anywhere.
-It make the clone step by step with a long and complicated list of
-commands just like a Tcl rewrite of git-clone.
-Have a look on the function _do_clone2 in choose_repository.tcl.
+Noticed by sparse ("'process_trailers'  was not declared. Should it
+be static?").
 
-As I suspect there should be a good reason for this that I did not
-understand I have choose to not refactoring it.
-And in fact looking in the code 'git clone --recursive' do nothing
-else than calling 'git submodule update --init --recursive' like I
-have done to complete this rewrite of 'git-clone'.
+Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+---
+ trailer.c | 1 +
+ 1 file changed, 1 insertion(+)
 
+diff --git a/trailer.c b/trailer.c
+index b5de616..95d5874 100644
+--- a/trailer.c
++++ b/trailer.c
+@@ -1,6 +1,7 @@
+ #include "cache.h"
+ #include "run-command.h"
+ #include "argv-array.h"
++#include "trailer.h"
+ /*
+  * Copyright (c) 2013 Christian Couder <chriscool@tuxfamily.org>
+  */
+-- 
+1.9.0
+--- 8< ---
 
->=20
-> > Signed-off-by: Henri GEIST <geist.henri@laposte.net>
-> > ---
-> > I have set the default checkbox state to 'true' by default has all my g=
-ui users
-> > use it all the time this way.
-> > But as it change the default behavior you may prefer to set it to 'fals=
-e' by
-> > default.
-> >=20
-> >  git-gui/lib/choose_repository.tcl |   34 +++++++++++++++++++++++++++++=
-+++--
-> >  1 file changed, 32 insertions(+), 2 deletions(-)
-> >=20
-> > diff --git a/git-gui/lib/choose_repository.tcl b/git-gui/lib/choose_rep=
-ository.tcl
-> > index 3c10bc6..47d436b 100644
-> > --- a/git-gui/lib/choose_repository.tcl
-> > +++ b/git-gui/lib/choose_repository.tcl
-> > @@ -18,6 +18,7 @@ field local_path       {} ; # Where this repository i=
-s locally
-> >  field origin_url       {} ; # Where we are cloning from
-> >  field origin_name  origin ; # What we shall call 'origin'
-> >  field clone_type hardlink ; # Type of clone to construct
-> > +field recursive      true ; # Recursive cloning flag
-> >  field readtree_err        ; # Error output from read-tree (if any)
-> >  field sorted_recent       ; # recent repositories (sorted)
-> > =20
-> > @@ -525,6 +526,11 @@ method _do_clone {} {
-> >  	foreach r $w_types {
-> >  		pack $r -anchor w
-> >  	}
-> > +	${NS}::checkbutton $args.type_f.recursive \
-> > +		-text [mc "Recursive (For submodules)"] \
-> > +		-variable @recursive \
-> > +		-onvalue true -offvalue false
-> > +	pack $args.type_f.recursive
-> >  	grid $args.type_l $args.type_f -sticky new
-> > =20
-> >  	grid columnconfigure $args 1 -weight 1
-> > @@ -952,6 +958,30 @@ method _do_clone_checkout {HEAD} {
-> >  	fileevent $fd readable [cb _readtree_wait $fd]
-> >  }
-> > =20
-> > +method _do_validate_submodule_cloning {ok} {
-> > +	if {$ok} {
-> > +		$o_cons done $ok
-> > +		set done 1
-> > +	} else {
-> > +		_clone_failed $this [mc "Cannot clone submodules."]
-> > +	}
-> > +}
-> > +
-> > +method _do_clone_submodules {} {
-> > +	if {$recursive eq {true}} {
-> > +		destroy $w_body
-> > +		set o_cons [console::embed \
-> > +			$w_body \
-> > +			[mc "Cloning submodules"]]
-> > +		pack $w_body -fill both -expand 1 -padx 10
-> > +		$o_cons exec \
-> > +			[list git submodule update --init --recursive] \
-> > +			[cb _do_validate_submodule_cloning]
-> > +	} else {
-> > +		set done 1
-> > +	}
-> > +}
-> > +
-> >  method _readtree_wait {fd} {
-> >  	set buf [read $fd]
-> >  	$o_cons update_meter $buf
-> > @@ -982,7 +1012,7 @@ method _readtree_wait {fd} {
-> >  		fconfigure $fd_ph -blocking 0 -translation binary -eofchar {}
-> >  		fileevent $fd_ph readable [cb _postcheckout_wait $fd_ph]
-> >  	} else {
-> > -		set done 1
-> > +		_do_clone_submodules $this
-> >  	}
-> >  }
-> > =20
-> > @@ -996,7 +1026,7 @@ method _postcheckout_wait {fd_ph} {
-> >  			hook_failed_popup post-checkout $pch_error 0
-> >  		}
-> >  		unset pch_error
-> > -		set done 1
-> > +		_do_clone_submodules $this
-> >  		return
-> >  	}
-> >  	fconfigure $fd_ph -blocking 0
-> >=20
->=20
+However, for this to work, in addition to squashing the above patch into
+your patch #6, you would need to move the creation of the trailer.h header
+file from patch 07/11 ("trailer: add interpret-trailers command") to patch
+06/11 ("trailer: put all the processing together and print"), where it should
+have been anyway! :-D 
 
+HTH
 
+ATB,
+Ramsay Jones
 
---=-9dQWxZHmT/Izg4Z1qmiE
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iF4EABEKAAYFAlMXvjwACgkQkKuHPdwEGdQXkQD/Q7jrYsdS8LoMLUshrvliFWSa
-IdggNGVQhVMLvEJN9/EBAJMRC8I/BRpvbfCzFqNt5sbo5dYfRnPgeGcMnvprKSnh
-=0a+y
------END PGP SIGNATURE-----
-
---=-9dQWxZHmT/Izg4Z1qmiE--
+> Christian Couder (11):
+>   Add data structures and basic functions for commit trailers
+>   trailer: process trailers from stdin and arguments
+>   trailer: read and process config information
+>   trailer: process command line trailer arguments
+>   trailer: parse trailers from stdin
+>   trailer: put all the processing together and print
+>   trailer: add interpret-trailers command
+>   trailer: add tests for "git interpret-trailers"
+>   trailer: execute command from 'trailer.<name>.command'
+>   trailer: add tests for commands in config file
+>   Documentation: add documentation for 'git interpret-trailers'
+> 
+>  .gitignore                               |   1 +
+>  Documentation/git-interpret-trailers.txt | 123 ++++++
+>  Makefile                                 |   2 +
+>  builtin.h                                |   1 +
+>  builtin/interpret-trailers.c             |  33 ++
+>  git.c                                    |   1 +
+>  t/t7513-interpret-trailers.sh            | 261 ++++++++++++
+>  trailer.c                                | 661 +++++++++++++++++++++++++++++++
+>  trailer.h                                |   6 +
+>  9 files changed, 1089 insertions(+)
+>  create mode 100644 Documentation/git-interpret-trailers.txt
+>  create mode 100644 builtin/interpret-trailers.c
+>  create mode 100755 t/t7513-interpret-trailers.sh
+>  create mode 100644 trailer.c
+>  create mode 100644 trailer.h
+> 
