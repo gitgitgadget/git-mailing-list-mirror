@@ -1,60 +1,74 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: gc/repack has no option to lose grafted parents
-Date: Thu, 6 Mar 2014 18:07:06 -0500
-Message-ID: <CACPiFCLqa=ZQM6Azh2G5hwBCMx96Cxa5BMN=-2aCy5x=YhBpGg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/6] test patch hunk editing with "commit -p -m"
+Date: Thu, 06 Mar 2014 15:11:32 -0800
+Message-ID: <xmqq61nqx6qj.fsf@gitster.dls.corp.google.com>
+References: <1394117424-29780-1-git-send-email-benoit.pierre@gmail.com>
+	<1394117424-29780-2-git-send-email-benoit.pierre@gmail.com>
+	<CAPig+cTTCsMDJ_B73+cbedrxoEqbM_txV6JYWmCq-LyX12TpNw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Mar 07 00:07:32 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Benoit Pierre <benoit.pierre@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Fri Mar 07 00:11:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WLhNz-0000Qy-WD
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Mar 2014 00:07:32 +0100
+	id 1WLhS0-0004bR-NO
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Mar 2014 00:11:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751218AbaCFXH2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Mar 2014 18:07:28 -0500
-Received: from mail-vc0-f177.google.com ([209.85.220.177]:61794 "EHLO
-	mail-vc0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750829AbaCFXH1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Mar 2014 18:07:27 -0500
-Received: by mail-vc0-f177.google.com with SMTP id if17so627556vcb.36
-        for <git@vger.kernel.org>; Thu, 06 Mar 2014 15:07:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=9B/dlKH06PyeXXVIBzC7bIAZCts70hn939DujoTfEWE=;
-        b=UedW9H45UxgJxbTmhA4wwbvpJYtptpDlVQw61wfZBYC1Tl912Ha/5Q1B5XHIVjD1Un
-         Puo0Kr8hWEoGHf76Rtt80M4Iv4kUIZMa0J1lokzvKw3R6As2ZNJkYlFHNiScB2XEm1T3
-         k98wldB+Kqc/7uBt0WzpcX8C3v+oBHlHl64Pdb0dJE3nIlWRjkFAFdg8CEbsx3XrH+aj
-         RmgI6T/44EgGsK+QGO779XaqlSPyDwzZYZM2MpfmDD9qPDxvo8VmYLDOlHq6jiPFmdw3
-         l0KkidKBg7xeeBaxMVs7+U+0ZZ1f/4dZ5Q18IwCbesdayTTJVlgC5sFnFifJtdOJ2ug7
-         2ATg==
-X-Received: by 10.52.30.230 with SMTP id v6mr9729655vdh.6.1394147246525; Thu,
- 06 Mar 2014 15:07:26 -0800 (PST)
-Received: by 10.220.183.138 with HTTP; Thu, 6 Mar 2014 15:07:06 -0800 (PST)
+	id S1751049AbaCFXLh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Mar 2014 18:11:37 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51874 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750829AbaCFXLg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Mar 2014 18:11:36 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9346E72E41;
+	Thu,  6 Mar 2014 18:11:35 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=q87+4wAb71Xml7nYwfbkcxBGN+w=; b=nAwPyN
+	sp2DNrhHY2NSc2R3xLVOWJZWNRyBuy+2Wlz9A/iCCQssY9Dc+pnq7SbLVvvgP8IW
+	Z9IB51xr0/egBSo7/eMyxXhAPaXsY8x8CRzTlVExDzOVjuMhE0p9H50Wjr5Og2S+
+	0aMQMtfbVdXE7bwgC+r5UoPa+0t0pAXlMpKMI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=QySy+LUBK/j1weOv3hrfvWJvYAY7O8bc
+	+g9h/qCPOwo7LC6qXTnnRk/Exne7x1QNIVdP7okJdClhRVlVyeA8wtTN8S7zTrYr
+	K0FhS0uUuqv7YJSrDjvUndBLa07+w3pwcZk1PxsQYC6lcRpoCswVUZYo7pJ44QBx
+	k6jDlVE6bYw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7E2BA72E40;
+	Thu,  6 Mar 2014 18:11:35 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 94ED072E3D;
+	Thu,  6 Mar 2014 18:11:34 -0500 (EST)
+In-Reply-To: <CAPig+cTTCsMDJ_B73+cbedrxoEqbM_txV6JYWmCq-LyX12TpNw@mail.gmail.com>
+	(Eric Sunshine's message of "Thu, 6 Mar 2014 17:07:13 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: A95165AE-A584-11E3-B8B2-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243569>
 
-Back in http://git.661346.n2.nabble.com/PATCH-0-2-Make-git-gc-more-robust-with-regard-to-grafts-td3310281.html
-we got gc/repack to be safer for users who might be shooting
-themselves in the foot.
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-Would a patch be welcome to add --discard-grafted-objects ? or
---keep-real-parents=idontthinkso ?
+>> +test_expect_failure 'edit hunk "commit -p -m message"' '
+>> +       echo e | env GIT_EDITOR="sed s/+line3\$/+line2/ -i" git commit -p -m commit2 file &&
+>> +       git diff HEAD^ HEAD >diff &&
+>> +       test_cmp expected diff
+>> +'
+>
+> If you ever add more tests, is it likely that they will be using the
+> same 'expected' file used by this test? If not, perhaps it makes sense
+> to move creation of 'expected' into the test itself.
 
-cheers,
-
-
-
-m
--- 
- martin.langhoff@gmail.com
- -  ask interesting questions
- - don't get distracted with shiny stuff  - working code first
- ~ http://docs.moodle.org/en/User:Martin_Langhoff
+All good points.  Also, I think we try to use "expect" (not
+"expected") vs "actual" (not "diff") in most of the tests.
