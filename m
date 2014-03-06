@@ -1,111 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] use strchrnul() in place of strchr() and strlen()
-Date: Thu, 06 Mar 2014 12:54:29 -0800
-Message-ID: <xmqqzjl3vyii.fsf@gitster.dls.corp.google.com>
-References: <BLU0-SMTP1988500CEC43BD4C57254AB91890@phx.gbl>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] t3200-branch: test setting branch as own upstream
+Date: Thu, 6 Mar 2014 16:00:26 -0500
+Message-ID: <20140306210025.GD29659@sigill.intra.peff.net>
+References: <xmqqmwh5ikl0.fsf@gitster.dls.corp.google.com>
+ <1394004715-18776-1-git-send-email-modocache@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Rohit Mani <rohit.mani@outlook.com>
-X-From: git-owner@vger.kernel.org Thu Mar 06 21:54:40 2014
+To: Brian Gesiak <modocache@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 06 22:00:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WLfJP-0001LW-Bu
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Mar 2014 21:54:39 +0100
+	id 1WLfP6-0006xz-K9
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Mar 2014 22:00:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752099AbaCFUyf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Mar 2014 15:54:35 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56425 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750924AbaCFUye (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Mar 2014 15:54:34 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 39FC271F15;
-	Thu,  6 Mar 2014 15:54:34 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Mv9FOiSZ9z6nxvGAOo605luE9zw=; b=X6h8Ll
-	mWc/zkDw0N+kTiWP74j/MqLx687iBGAtTfK9qwtEJh4gZkUMvq2t1aXmo68PZrYl
-	G2zXVOlwYeqc/I+QSkNJ31ao2pIuZ0Fud6WY8US7rh+rLNClKuE/eQsRMO2PRUMV
-	vdtrrEtOE6VRBN4HFYDcqQnzaYYEUjY2PnNRk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uO+20Oh1789VRTm12QtVTRG+76uyM1Ym
-	3Ech9X1nrZUcv/L675+bH07E4i4YJI7910rraHuqZLrl9gsQS1kudPy2etETVLuA
-	dTngB6b8IBAx0q8Sd+VtpzC0cXf7yNJ02jQdO0GG7Oa35NK4qhlkVFCaGSnyU9od
-	iT04aWOGRFw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 287DB71F13;
-	Thu,  6 Mar 2014 15:54:34 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3CAE171F12;
-	Thu,  6 Mar 2014 15:54:33 -0500 (EST)
-In-Reply-To: <BLU0-SMTP1988500CEC43BD4C57254AB91890@phx.gbl> (Rohit Mani's
-	message of "Wed, 5 Mar 2014 11:29:02 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 85010244-A571-11E3-B05E-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752991AbaCFVA2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Mar 2014 16:00:28 -0500
+Received: from cloud.peff.net ([50.56.180.127]:34333 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751548AbaCFVA1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Mar 2014 16:00:27 -0500
+Received: (qmail 31097 invoked by uid 102); 6 Mar 2014 21:00:27 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 06 Mar 2014 15:00:27 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 06 Mar 2014 16:00:26 -0500
+Content-Disposition: inline
+In-Reply-To: <1394004715-18776-1-git-send-email-modocache@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243551>
 
-Rohit Mani <rohit.mani@outlook.com> writes:
+On Wed, Mar 05, 2014 at 04:31:55PM +0900, Brian Gesiak wrote:
 
-> Avoid scanning strings twice, once with strchr() and then with
-> strlen(), by using strchrnul(). Update the conditional expressions
-> involving the return value of strchrnul() with a check for '\0'.
->
-> Signed-off-by: Rohit Mani <rohit.mani@outlook.com>
-> ---
+> No test asserts that "git branch -u refs/heads/my-branch my-branch"
+> emits a warning. Add a test that does so.
+> 
+> Signed-off-by: Brian Gesiak <modocache@gmail.com>
 
-Nicely done.  I am not sure if you need to say the "update the
-conditional...", which is a logical consequence of such a conversion
-and goes without saying, though.
+Thanks, this looks good. Two minor points that may or may not be worth
+addressing:
 
->  cache-tree.c     |   16 +++++++---------
+> +test_expect_success '--set-upstream-to shows warning if used to set branch as own upstream' '
+> +	git branch --set-upstream-to refs/heads/my13 my13 2>actual &&
+> +	cat >expected <<EOF &&
+> +warning: Not setting branch my13 as its own upstream.
+> +EOF
 
-This part may overlap with other topics in flight, but I expect the
-conflict resolution would be trivial.
+If you spell the EOF marker as:
 
-> diff --git a/cache-tree.c b/cache-tree.c
-> index 0bbec43..21a13cf 100644
-> --- a/cache-tree.c
-> +++ b/cache-tree.c
-> @@ -121,11 +121,11 @@ void cache_tree_invalidate_path(struct cache_tree *it, const char *path)
->  
->  	if (!it)
->  		return;
-> -	slash = strchr(path, '/');
-> +	slash = strchrnul(path, '/');
->  	it->entry_count = -1;
-> -	if (!slash) {
-> +	if (*slash == '\0') {
+    cat >expect <<-\EOF
 
-Let's just say
+then:
 
-	if (!*slash)
+  1. The shell does not interpolate the contents (it does not matter
+     here, but it is a good habit to be in, so we typically do it unless
+     there is a need to interpolate).
 
-instead; it is more idiomatic (I won't repeat this for other hunks).
+  2. Using <<- will strip leading tabs, so the content can be indented
+     properly along with the rest of the test.
 
->  		int pos;
-> -		namelen = strlen(path);
-> +		namelen = slash - path;
+> +	test_i18ncmp expected actual &&
+> +	test_must_fail git config branch.my13.remote &&
+> +	test_must_fail git config branch.my13.merge
 
-After this "if (!*slash)", we compute "namelen = slash-path".
-Perhaps we can lose this assignment and the other one by hoisting it
-up before "if (!*slash)"?
+I think we could tighten these to:
 
-> @@ -564,10 +562,10 @@ static struct cache_tree *cache_tree_find(struct cache_tree *it, const char *pat
-> +		if (*slash == '\0' || !*slash)
+  test_expect_code 1 git config branch.my13.remote
 
-Huh?  "The byte pointed at by 'slash' is NUL, or it is NUL"???
+to eliminate a false-positive success on other config errors. It's
+highly improbable for it to ever matter, though (and it looks like we
+are not so careful in most other places that call "git config" looking
+for a missing entry, either).
 
-Other than that, looks good to me.
-
-Thanks.
+-Peff
