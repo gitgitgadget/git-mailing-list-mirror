@@ -1,68 +1,69 @@
-From: Benoit Pierre <benoit.pierre@gmail.com>
-Subject: [PATCH 5/6] merge hook tests: fix missing '&&' in test
-Date: Thu,  6 Mar 2014 15:50:23 +0100
-Message-ID: <1394117424-29780-6-git-send-email-benoit.pierre@gmail.com>
-References: <1394117424-29780-1-git-send-email-benoit.pierre@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 06 15:51:07 2014
+From: Jeff King <peff@peff.net>
+Subject: Re: Unable to shrink repository size
+Date: Thu, 6 Mar 2014 10:25:50 -0500
+Message-ID: <20140306152550.GA18519@sigill.intra.peff.net>
+References: <CAHd499AW6nev81iVVhuoYfT0us28SSBDwbHCBa3teYB=cJR99g@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Git <git@vger.kernel.org>
+To: Robert Dailey <rcdailey.lists@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 06 16:25:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WLZdV-0005NE-La
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Mar 2014 15:51:02 +0100
+	id 1WLaBK-0007Ct-4k
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Mar 2014 16:25:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752808AbaCFOuz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Mar 2014 09:50:55 -0500
-Received: from mail-wg0-f47.google.com ([74.125.82.47]:58789 "EHLO
-	mail-wg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752666AbaCFOux (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Mar 2014 09:50:53 -0500
-Received: by mail-wg0-f47.google.com with SMTP id x12so3217582wgg.18
-        for <git@vger.kernel.org>; Thu, 06 Mar 2014 06:50:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:subject:date:message-id:in-reply-to:references;
-        bh=LYzpEMM5Cq3COAKTrHz2ILtKfrqE3OA39JdnDu7vTHY=;
-        b=GtMgoOyq3l9dRsdGIgDLNAMtZVJIM80MXfZt/M/nkouHUcvylB49GtzgwYxsfMbymO
-         V3rm2Z0dAnUx8+6gCvr9UeF8HaRatGQuSOSmjW1vQa/wJRfiFLDQw00U8oDAFwghIlFB
-         YtFMZBQtvLKm1brc++0yBpbh77RykQzfM6rITyYCmj5Z1oSx6E7cfb4zkhMXEU6fR20q
-         SnD6VRQFP/xLu7h+B7ZwJpXHm0ICm4tRzHj63MgLEudeHkqmVEqo83NqRHK/J/8jUd8i
-         P+A6flZwg6Q05e2PaTzI9qOmEmORpz3hPSTp7tWe/L3DFYvqbys+xNehvE0UcbMH0RYl
-         XxJw==
-X-Received: by 10.194.78.16 with SMTP id x16mr10744004wjw.86.1394117443037;
-        Thu, 06 Mar 2014 06:50:43 -0800 (PST)
-Received: from localhost (109.12.70.86.rev.sfr.net. [86.70.12.109])
-        by mx.google.com with ESMTPSA id h9sm18043451wjz.16.2014.03.06.06.50.41
-        for <git@vger.kernel.org>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 06 Mar 2014 06:50:42 -0800 (PST)
-X-Mailer: git-send-email 1.9.0
-In-Reply-To: <1394117424-29780-1-git-send-email-benoit.pierre@gmail.com>
+	id S1752999AbaCFPZy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Mar 2014 10:25:54 -0500
+Received: from cloud.peff.net ([50.56.180.127]:34112 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752983AbaCFPZw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Mar 2014 10:25:52 -0500
+Received: (qmail 13480 invoked by uid 102); 6 Mar 2014 15:25:52 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 06 Mar 2014 09:25:52 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 06 Mar 2014 10:25:50 -0500
+Content-Disposition: inline
+In-Reply-To: <CAHd499AW6nev81iVVhuoYfT0us28SSBDwbHCBa3teYB=cJR99g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243518>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243519>
 
-Signed-off-by: Benoit Pierre <benoit.pierre@gmail.com>
----
- t/t7505-prepare-commit-msg-hook.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On Wed, Mar 05, 2014 at 08:55:30PM -0600, Robert Dailey wrote:
 
-diff --git a/t/t7505-prepare-commit-msg-hook.sh b/t/t7505-prepare-commit-msg-hook.sh
-index ae7b2db..604c06e 100755
---- a/t/t7505-prepare-commit-msg-hook.sh
-+++ b/t/t7505-prepare-commit-msg-hook.sh
-@@ -189,7 +189,7 @@ test_expect_success 'with failing hook (merge)' '
- 	git add file &&
- 	rm -f "$HOOK" &&
- 	git commit -m other &&
--	write_script "$HOOK" <<-EOF
-+	write_script "$HOOK" <<-EOF &&
- 	exit 1
- 	EOF
- 	git checkout - &&
--- 
-1.9.0
+> What I'd like to do is somehow hunt down the largest commit (*not*
+> blob) in the entire history of the repository to hopefully find out
+> where huge directories have been checked in.
+> 
+> I can't do a search for largest file (which most google results seem
+> to show to do) since the culprit is really thousands of unnecessary
+> files checked into a single subdirectory somewhere in history.
+
+Other people have offered scripts to look at commit sizes. But it might
+also be useful to see sizes by subdirectory. Sort of a "du" across all
+of history. Script is below.
+
+Note that this script also uses cat-file's "%(objectsize:disk)". So it
+is finding the actual on-disk storage, taking into account delta
+storage. You will need git v1.8.5 or later to use this feature.
+
+  git rev-list --objects --all |
+  git cat-file --batch-check="%(objectsize:disk) %(rest)" |
+  perl -lne '
+    my ($size, $path) = split / /, $_, 2;
+    next unless defined $path; # commit obj
+    do {
+      $sizes{$path} += $size;
+    } while ($path =~ s{/[^/]+$}{});
+
+    END { print "$sizes{$_} $_" for (keys %sizes) }
+  ' |
+  sort -rn
+
+-Peff
