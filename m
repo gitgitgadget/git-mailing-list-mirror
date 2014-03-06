@@ -1,86 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4] Replace memcpy with hashcpy when dealing hash copy globally
-Date: Thu, 06 Mar 2014 11:32:47 -0800
-Message-ID: <xmqqpplzxgv4.fsf@gitster.dls.corp.google.com>
-References: <1394097084-3129-1-git-send-email-sunheehnus@gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH/RFC] git-gui: Add a 'recursive' checkbox in the clone
+ menu.
+Date: Thu, 06 Mar 2014 20:35:48 +0100
+Message-ID: <5318CE14.1090000@web.de>
+References: <1393974076.7891.27.camel@Naugrim> <5317662C.6010404@web.de> <1394064956.7891.28.camel@Naugrim>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu, pclouds@gmail.com
-To: Sun He <sunheehnus@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 06 20:33:04 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Pat Thoyts <patthoyts@users.sourceforge.net>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: Henri GEIST <geist.henri@laposte.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Mar 06 20:35:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WLe2K-0002EF-TT
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Mar 2014 20:32:57 +0100
+	id 1WLe5G-0005Fj-AU
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Mar 2014 20:35:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751945AbaCFTcx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Mar 2014 14:32:53 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47186 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750829AbaCFTcw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Mar 2014 14:32:52 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7CDF071E93;
-	Thu,  6 Mar 2014 14:32:51 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=tLPd98ciHt4tb3Nv0Rutk5b4W5s=; b=tsQaGP
-	BsNZJ4Slxi4bQ5JtU4n6P5cvZLlJYA+84BjrCo4fQdtyXH4zweMeaIvKnnjxeJN8
-	b9B/UFlTELyADA0p2IP1T7/xwJbAHZTXxfrkOzCVIb+fSW/kD8U92PkdOdl+x/V2
-	JTFTXR2erNj3COsL55XM0Z1VvG1V1YndF3MeA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vCnTL80X1JM8bvbr1DRjZRs+1EF3mxAU
-	AnocgAeOK3fAPHx23TGjHRbO6efuUJgHpOI/1GVs6HeLEClpxCeBNzHtcQITLwIu
-	6IA59wwrvHUFgoW/WNk4d9gz3BfAEWsUR4xcxXJ//HmNBtl/R/CpVx67ZeqCsRRp
-	R03LGxn1vX4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 69D2671E92;
-	Thu,  6 Mar 2014 14:32:51 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 577A971E91;
-	Thu,  6 Mar 2014 14:32:50 -0500 (EST)
-In-Reply-To: <1394097084-3129-1-git-send-email-sunheehnus@gmail.com> (Sun He's
-	message of "Thu, 6 Mar 2014 17:11:24 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 1AA78478-A566-11E3-A647-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752418AbaCFTfy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Mar 2014 14:35:54 -0500
+Received: from mout.web.de ([212.227.15.3]:65427 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751655AbaCFTfx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Mar 2014 14:35:53 -0500
+Received: from [192.168.178.41] ([84.132.148.165]) by smtp.web.de (mrweb002)
+ with ESMTPA (Nemesis) id 0M5wkL-1X5vCw3DJZ-00xpoH; Thu, 06 Mar 2014 20:35:51
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
+In-Reply-To: <1394064956.7891.28.camel@Naugrim>
+X-Enigmail-Version: 1.6
+X-Provags-ID: V03:K0:p8hmRRUjZAjmfstB+NWjqQ7Tyepi0t5K9BS9qGqXimmnY7IpzyQ
+ rEMQottainVhBuh84sJOoV8ppnfqQ/cJib2Xuf1zrWuo1xhWuLpfIINT5YgjvO1U0ybVHmB
+ sAi+5gxP38fznCplfZgtgXenoLPhgYZBFs36mVnldQaciyk5WPYH/Z11TshrveXyUBHbbo/
+ 5ihOWnp7R+s0fLT5KQsUw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243539>
 
-Sun He <sunheehnus@gmail.com> writes:
+Am 06.03.2014 01:15, schrieb Henri GEIST:
+> Le mercredi 05 mars 2014 =C3=A0 19:00 +0100, Jens Lehmann a =C3=A9cri=
+t :
+>> Am 05.03.2014 00:01, schrieb Henri GEIST:
+>> - Wouldn't it be easier to pass the '--recurse-submodules"
+>>   option to the "git clone" call for the superproject instead
+>>   of adding the _do_clone_submodules() function doing a
+>>   subsequent "git submodule update --init --recursive"? That
+>>   is also be more future proof with respect to the autoclone
+>>   config option we have in mind (which would add that behavior
+>>   for "git clone" itself, making the call you added redundant).
+>=20
+> That is what I planned to do at beginning.
+> But git-gui never call git clone anywhere.
+> It make the clone step by step with a long and complicated list of
+> commands just like a Tcl rewrite of git-clone.
+> Have a look on the function _do_clone2 in choose_repository.tcl.
 
-> hashcpy() can keep the abstraction of "object name" behind it.
+You're right, it does fetch followed by read-tree ... so my
+proposal doesn't make much sense here, sorry for bothering you
+without checking the source first.
 
-Do we really want to change the phrasing you took the above from to
-say "*can* keep"?
+> As I suspect there should be a good reason for this that I did not
+> understand I have choose to not refactoring it.
 
-Providing the "object name" abstraction is the whole point of the
-function, so of course it can keep it, but that goes without
-saying---it was the sole reason why it was invented in the first
-place.
+That makes sense. Shawn, could you shed some light on why clone
+is coded again using plumbing in git gui instead of just calling
+the clone command?
 
-> Use it instead of memcpy() with hard-coded 20-byte length when
-> moving object names between pieces of memory.
-> We can benefit from it, when we switch to another hash algorithm,
-> eg. MD5, by just fixing the hashcpy().
+> And in fact looking in the code 'git clone --recursive' do nothing
+> else than calling 'git submodule update --init --recursive' like I
+> have done to complete this rewrite of 'git-clone'.
 
-"fix" can be used in two scenarios, I think.  Something is broken
-and you fix it, or something keeps changing and you force it not to
-change.  I do not think either applies to hashcpy().  Perhaps
-"updating", if we really wanted to say it, but because this change
-is not about preparing us to any planned switch of hash function,
-I'd suggest dropping those two lines starting from "We can benefit
-from...".
-
-> Leave ppc/sha1.c as it is, because the function is about the
-> SHA-1 hash algorithm whose output is and will always be 20-byte.
-
-Correct.
+Yep. Note to self: Port everything we add to clone to git gui too.
