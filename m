@@ -1,81 +1,112 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] commit.c: Replace starts_with() with skip_prefix()
-Date: Thu, 06 Mar 2014 11:42:22 -0800
-Message-ID: <xmqqfvmvxgf5.fsf@gitster.dls.corp.google.com>
-References: <1394125521-9341-1-git-send-email-karthik.188@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: RFC GSoC idea: git configuration caching (needs co-mentor!)
+Date: Thu, 6 Mar 2014 14:46:54 -0500
+Message-ID: <20140306194654.GA28203@sigill.intra.peff.net>
+References: <53180E40.5050308@alum.mit.edu>
+ <xmqqtxbbxh99.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, sunshine@sunshineco.com
-To: Karthik Nayak <karthik.188@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 06 20:42:48 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	git discussion list <git@vger.kernel.org>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 06 20:47:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WLeBp-0003jr-Tl
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Mar 2014 20:42:46 +0100
+	id 1WLeFw-00086Z-TQ
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Mar 2014 20:47:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751986AbaCFTmk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Mar 2014 14:42:40 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36445 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752090AbaCFTm0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Mar 2014 14:42:26 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DF57870285;
-	Thu,  6 Mar 2014 14:42:25 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=V2awdgY7rO3ABBWxRvgZxeMoTUY=; b=MB+L5n
-	RSd20XBsJ3fG4hHP+/5at1S79jI+XEXCpEhvLmIee0ihQG8jmzqhvznoLAxnrdTM
-	55rBdWC229pkgi5MKROwwegyQbBXJbQk/HwZTVkbt1xvHQAejy7UK4r/pxNvnmzW
-	rjlpQMvME6ekFm15qwsP4EM5fO5AF/isswuqY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CRpiiAvECI++oEvCjO51W1Hdk0NoCr6C
-	KU9gm3z7Ma2lKUQak3fyF4Ok2AXp9DWWJXbbCjnsDBO7JGYFKLO4Xca6uWkO0Eu4
-	iWVxy3tsGDRvKS/s2/MwjqdY+hysnzSzp8ZBcZaSgoDGYdxwjEi5dj6JgA1eueKT
-	2gOEfJsrY0o=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CCF5170284;
-	Thu,  6 Mar 2014 14:42:25 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DC0DD70281;
-	Thu,  6 Mar 2014 14:42:24 -0500 (EST)
-In-Reply-To: <1394125521-9341-1-git-send-email-karthik.188@gmail.com> (Karthik
-	Nayak's message of "Thu, 6 Mar 2014 22:35:21 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 711B926C-A567-11E3-A8BC-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751602AbaCFTq5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Mar 2014 14:46:57 -0500
+Received: from cloud.peff.net ([50.56.180.127]:34284 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750924AbaCFTq4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Mar 2014 14:46:56 -0500
+Received: (qmail 26961 invoked by uid 102); 6 Mar 2014 19:46:56 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 06 Mar 2014 13:46:56 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 06 Mar 2014 14:46:54 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqqtxbbxh99.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243542>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+On Thu, Mar 06, 2014 at 11:24:18AM -0800, Junio C Hamano wrote:
 
-> @@ -1098,6 +1099,7 @@ int parse_signed_commit(const unsigned char *sha1,
->  	char *buffer = read_sha1_file(sha1, &type, &size);
->  	int in_signature, saw_signature = -1;
->  	char *line, *tail;
-> +	const char *gpg_sig;
->  
->  	if (!buffer || type != OBJ_COMMIT)
->  		goto cleanup;
-> @@ -1113,9 +1115,9 @@ int parse_signed_commit(const unsigned char *sha1,
->  		next = next ? next + 1 : tail;
->  		if (in_signature && line[0] == ' ')
->  			sig = line + 1;
-> -		else if (starts_with(line, gpg_sig_header) &&
-> -			 line[gpg_sig_header_len] == ' ')
-> -			sig = line + gpg_sig_header_len + 1;
-> +		else if ((gpg_sig = skip_prefix(line, gpg_sig_header))
-> +			  && gpg_sig[0] == ' ')
-> +			sig = gpg_sig + 1;
+> > * Add new API calls that allow the cache to be inquired easily and
+> >   efficiently.  Rewrite other functions like `git_config_int()` to be
+> >   cache-aware.
+> 
+> Are you sure about the second sentence of this item is what you
+> want?
+> 
+> git_config_<type>(name, value) are all about parsing "value" (string
+> or NULL) as <type>, return the parsed value or complain against a
+> bad value for "name".  They do not care where these "name" and
+> "value" come from right now, and there is no reason for them to
+> start caring about caching.  They will still be the underlying
+> helper functions the git_config() callbacks will depend on even
+> after the second item in your list happens.
 
-I am not sure if this hunk is a great improvement, as we know the
-length of what we are skipping in the gpg_sig_header_len constant
-that is used throughout this file.
+Yeah, I agree we want a _new_ set of helpers for retrieving values in a
+non-callback way. We could call those helpers "git_config_int" (and
+rename the existing pure functions), but I'd rather not, as it simply
+invites confusion with the existing ones.
+
+> A set of new API calls would look more like this, I would think:
+> 
+> 	extern int git_get_config_string_multi(const char *, int *, const char ***);
+
+Not important at this stage, but I was hoping we could keep the names of
+the new helpers shorter. :)
+
+> 	const char *git_get_config_string(const char *name)
+>         {
+> 		const char **values, *result;
+>                 int num_values;
+> 
+> 	        if (git_get_config_string_multi("sample.str", &num_values, &values))
+>         		return NULL;
+>                 result = num_values ? values[num_values - 1] : NULL;
+>                 free(values);
+> 		return result;
+> 	}
+> 
+> that implements the "last one wins" semantics.  The real thing would
+> need to avoid allocation and free overhead.
+
+One of the things that needs to be figured out by the student is the
+format of the internal cache. I had actually envisioned a mapping of
+keys to values, where values are represented as a full list of strings.
+Then your "string_multi" can just return a pointer to that list, and a
+last-one-wins lookup can grab the final value, with no allocation or
+ownership complexity. We'd lose the relative order of different config
+keys, but those should never be important (only the order of single
+keys, but that is reflected in the order of the value list).
+
+Another approach would be to actually represent the syntax tree of the
+config file in memory. That would make lookups of individual keys more
+expensive, but would enable other manipulation. E.g., if your syntax
+tree included nodes for comments and other non-semantic constructs, then
+we can use it for a complete rewrite. And "git config" becomes:
+
+  1. Read the tree.
+
+  2. Perform operations on the tree (add nodes, delete nodes, etc).
+
+  3. Write out the tree.
+
+and things like "remove the section header when the last item in the
+section is removed" become trivial during step 2.
+
+But comparing those approaches is something for the student to figure
+out, I think.
+
+-Peff
