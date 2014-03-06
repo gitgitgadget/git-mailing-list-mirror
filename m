@@ -1,134 +1,70 @@
-From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v3] commit.c: Replace starts_with() with skip_prefix()
-Date: Thu,  6 Mar 2014 22:35:21 +0530
-Message-ID: <1394125521-9341-1-git-send-email-karthik.188@gmail.com>
-Cc: sunshine@sunshineco.com, Karthik Nayak <karthik.188@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 06 18:08:03 2014
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Testing for commit reachability through plumbing commands
+Date: Thu, 6 Mar 2014 12:17:34 -0500
+Message-ID: <CACPiFCJLyE6XC9dY_eawe2y9gS4YsPdTbqkKAd0dcPXd5-eMCg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Mar 06 18:18:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WLbm4-0001JN-Ed
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Mar 2014 18:08:00 +0100
+	id 1WLbvl-0003GL-1d
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Mar 2014 18:18:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751912AbaCFRH4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Mar 2014 12:07:56 -0500
-Received: from mail-pb0-f51.google.com ([209.85.160.51]:57488 "EHLO
-	mail-pb0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751190AbaCFRHz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Mar 2014 12:07:55 -0500
-Received: by mail-pb0-f51.google.com with SMTP id uo5so2873691pbc.38
-        for <git@vger.kernel.org>; Thu, 06 Mar 2014 09:07:55 -0800 (PST)
+	id S1752392AbaCFRR5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Mar 2014 12:17:57 -0500
+Received: from mail-vc0-f180.google.com ([209.85.220.180]:65397 "EHLO
+	mail-vc0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752081AbaCFRR4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Mar 2014 12:17:56 -0500
+Received: by mail-vc0-f180.google.com with SMTP id ks9so2938014vcb.11
+        for <git@vger.kernel.org>; Thu, 06 Mar 2014 09:17:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=oiZHILiIK6Inv7pt1sPtYXVdJ9S0OPjF2yoSSc1Knz4=;
-        b=008vsUlFJUPaIVHcb8v+lRYbvmSyc/K/0Zdz50RRhPOjQWbUlAt7WlgXVUSzwH7xSN
-         e8Djtm9r64p/+qIPzLz6Ox0NPIbmNZYN8iO6jyDyb5NWaqgE0p7mPoBrmFsCgZNZlp6H
-         kokoitNdTNKhiw4YX5UqfUoyI5+ZiBzaoC6ZC8hZ/RNFqIUCJaRCs97lphj2z1BCFA39
-         r89My95CTHPRLh1422Q966QEePAgXA2/NVNcJoO0viCuGP2tuxkmpjwJZbU7Lqax2VSk
-         xJP3jO62Ly+6Fzm5UhRjm1jKGZP9i9MXk/OIUJppvv4SbmG/ViBKFw6rjKFb80Abh7wF
-         3VEA==
-X-Received: by 10.68.162.1 with SMTP id xw1mr15736246pbb.128.1394125675067;
-        Thu, 06 Mar 2014 09:07:55 -0800 (PST)
-Received: from localhost.localdomain ([106.51.65.86])
-        by mx.google.com with ESMTPSA id bc4sm21697490pbb.2.2014.03.06.09.07.52
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 06 Mar 2014 09:07:54 -0800 (PST)
-X-Mailer: git-send-email 1.9.0.138.g2de3478
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=Je/pu308Jsn2kRdeCP875fBNAJ0kYzDcezUk/7kuy80=;
+        b=TMZE4+PcoP6RX/kk8LIEezcDpMABx14gL3gaPhhK6o2qRNpHxFgy7+roJyd6tWdX2Y
+         BkDHQPPvw9hqfAjyx7BkLhrBcIJ0XfoDhMTgJVtEw/nS8SHvjnwVqqcobxV8Ffx3r8d+
+         92FuRIei67AWHm9C9Mdlx4H/btAktLNHni3VCrkTpTgG9KvQyeecwXHR6wTr5kjHWs6H
+         CAZkhA1ZDq0Acr1id7GgOfTJhDsz5BPk+vi1MNxupP58tcQeix/TMhGD8rAQeT8ucl4A
+         AIltTIvdgRR2B8MR5DTDvUQsvBnaRjZXTubpWXfQalhVw+HSHLN1eGLeXqdCpX0zoc3d
+         Lc1Q==
+X-Received: by 10.58.40.47 with SMTP id u15mr22423vek.71.1394126275366; Thu,
+ 06 Mar 2014 09:17:55 -0800 (PST)
+Received: by 10.220.183.138 with HTTP; Thu, 6 Mar 2014 09:17:34 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243522>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243523>
 
-Replace all instances of starts_with() by skip_prefix(),
-which can not only be used to check presence of a prefix,
-but also used further on as it returns the string after the prefix,
-if the prefix is present. And also manages to do, what the current
-code does in two steps.
+I have a shell script that trims old history on a cronjob. This is for
+a repo that is used to track reports that have limited "life" (like
+logs). Old history is trimmed with grafts pointing to an empty "root"
+commit.
 
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
-Hello Eric,
-In this patch, I have:
-1. Fixed the improper placement of buf_date , initialised to a NULL string.
-2. Fixed whitespace.
-3. Better naming as per your suggestion.
-4. Fixed the initilisation before the if statement.
-Thanks for your suggestion.
----
- commit.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+Right now, info/graft grows unbound. I am looking for a way to trim
+unreachable grafts, I would like to be able to say something like:
 
-diff --git a/commit.c b/commit.c
-index 6bf4fe0..4144e00 100644
---- a/commit.c
-+++ b/commit.c
-@@ -553,6 +553,7 @@ static void record_author_date(struct author_date_slab *author_date,
- 	struct ident_split ident;
- 	char *date_end;
- 	unsigned long date;
-+	const char *buf_date;
- 
- 	if (!commit->buffer) {
- 		unsigned long size;
-@@ -565,15 +566,15 @@ static void record_author_date(struct author_date_slab *author_date,
- 	for (buf = commit->buffer ? commit->buffer : buffer;
- 	     buf;
- 	     buf = line_end + 1) {
-+		buf_date = skip_prefix(buf, "author ");
- 		line_end = strchrnul(buf, '\n');
--		if (!starts_with(buf, "author ")) {
-+		if (!buf_date) {
- 			if (!line_end[0] || line_end[1] == '\n')
- 				return; /* end of header */
- 			continue;
- 		}
--		if (split_ident_line(&ident,
--				     buf + strlen("author "),
--				     line_end - (buf + strlen("author "))) ||
-+		if (split_ident_line(&ident, buf_date,
-+				     line_end - buf_date) ||
- 		    !ident.date_begin || !ident.date_end)
- 			goto fail_exit; /* malformed "author" line */
- 		break;
-@@ -1098,6 +1099,7 @@ int parse_signed_commit(const unsigned char *sha1,
- 	char *buffer = read_sha1_file(sha1, &type, &size);
- 	int in_signature, saw_signature = -1;
- 	char *line, *tail;
-+	const char *gpg_sig;
- 
- 	if (!buffer || type != OBJ_COMMIT)
- 		goto cleanup;
-@@ -1113,9 +1115,9 @@ int parse_signed_commit(const unsigned char *sha1,
- 		next = next ? next + 1 : tail;
- 		if (in_signature && line[0] == ' ')
- 			sig = line + 1;
--		else if (starts_with(line, gpg_sig_header) &&
--			 line[gpg_sig_header_len] == ' ')
--			sig = line + gpg_sig_header_len + 1;
-+		else if ((gpg_sig = skip_prefix(line, gpg_sig_header))
-+			  && gpg_sig[0] == ' ')
-+			sig = gpg_sig + 1;
- 		if (sig) {
- 			strbuf_add(signature, sig, next - sig);
- 			saw_signature = 1;
-@@ -1193,10 +1195,8 @@ static void parse_gpg_output(struct signature_check *sigc)
- 	for (i = 0; i < ARRAY_SIZE(sigcheck_gpg_status); i++) {
- 		const char *found, *next;
- 
--		if (starts_with(buf, sigcheck_gpg_status[i].check + 1)) {
--			/* At the very beginning of the buffer */
--			found = buf + strlen(sigcheck_gpg_status[i].check + 1);
--		} else {
-+		found = skip_prefix(buf, sigcheck_gpg_status[i].check + 1);
-+		if (!found) {
- 			found = strstr(buf, sigcheck_gpg_status[i].check);
- 			if (!found)
- 				continue;
+ git is-reachable treeish
+
+Grepping through docs and existing code hasn't helped, but perhaps I'm
+missing something obvious...
+
+This repository has a couple hundred branches (one per server
+tracked). For a single branch, I can picture a relatively easy
+approach with git merge-base.
+
+thanks!
+
+
+
+m
 -- 
-1.9.0.138.g2de3478
+ martin.langhoff@gmail.com
+ -  ask interesting questions
+ - don't get distracted with shiny stuff  - working code first
+ ~ http://docs.moodle.org/en/User:Martin_Langhoff
