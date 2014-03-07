@@ -1,84 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [micro] Use 'env' on test_must_fail as appropriate
-Date: Thu, 06 Mar 2014 17:14:31 -0800
-Message-ID: <xmqqfvmuvmh4.fsf@gitster.dls.corp.google.com>
-References: <xmqq1tyex6by.fsf@gitster.dls.corp.google.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v3] upload-pack: send shallow info over stdin to pack-objects
+Date: Fri, 7 Mar 2014 08:24:38 +0700
+Message-ID: <CACsJy8AYWBKwUCB=pC0istGvNCNor0i-Ntp1nY5NbJGW+c2fVw@mail.gmail.com>
+References: <1393936205-15953-1-git-send-email-pclouds@gmail.com> <1394095783-24402-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Mar 07 02:14:40 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Duy Nguyen <pclouds@gmail.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Mar 07 02:25:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WLjN1-0002eU-KQ
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Mar 2014 02:14:40 +0100
+	id 1WLjXV-0005H8-Rv
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Mar 2014 02:25:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751458AbaCGBOf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Mar 2014 20:14:35 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65490 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750924AbaCGBOe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Mar 2014 20:14:34 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2FFDA721AA;
-	Thu,  6 Mar 2014 20:14:34 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=2qrUr2Tw52MZQ/mMYbFTnJLKBIo=; b=DHFt8T
-	P/Sonoo2AdeIahRe3vWi5CucQ3YR46q1J7vJE9hdy1XdRItFoLz5GAae7UrmVecw
-	v4mslAkdaL/lC6hgtxVKbbsiR7bqFgaAOHKFpGuvCZOy5K5U4RWkXiercfngnZXS
-	ns/fO50S+Ba88r8QSIjcB1QeUkVx5TllsFo30=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GVu+FoT0PkigwEHs8J1WhafnvMVWNSkc
-	WuSiiO/yjyekK6aS3yBvkomYGMf51jtW7lto8PZ5MimDPkf950DP95gMl4UPlr5h
-	wBr8pff3P0ozEJDlHj8Ay3oHC6xqTyCRpuCiP3ZiMkpUTLb8gxCH+MIFgbdqu6i5
-	oRXHmll9FrE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1C9F0721A9;
-	Thu,  6 Mar 2014 20:14:34 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3B026721A7;
-	Thu,  6 Mar 2014 20:14:33 -0500 (EST)
-In-Reply-To: <xmqq1tyex6by.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Thu, 06 Mar 2014 15:20:17 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: D7535FD2-A595-11E3-AC77-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751573AbaCGBZK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Mar 2014 20:25:10 -0500
+Received: from mail-qc0-f170.google.com ([209.85.216.170]:44691 "EHLO
+	mail-qc0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750924AbaCGBZI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Mar 2014 20:25:08 -0500
+Received: by mail-qc0-f170.google.com with SMTP id e9so3983102qcy.15
+        for <git@vger.kernel.org>; Thu, 06 Mar 2014 17:25:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=zpVNHVYN9oK39wLOzWKr3554DTbfRrdBXNYpgEofnu4=;
+        b=dbYXbTfLz6RN/9icBgDMsn7mLnTK8bUg2n23MjEI0scWorAcLUdKBJ7tI6l2K3KLWK
+         Su3wBY0CGGLEXPRCj9mHcP6GthsXOUiEywJ0GSz+XETzNooFYN2Ix3Yuj9fZ5q1KCdFk
+         KZCiG+AGX7OwENN/OmIRmvnl6REYM02DfPkaVSmM+zX23L2RwQfnr/0UnK4w3OiJIzwA
+         lmyDYDIuIentaQdFUmE4eUJ+azqY3RzHeYoxsY+q+JbQqpqbKeL0bvMS6a386POL0JdC
+         CvYT+H1SeHR2mJtpoyyP2ENjR0Rzt/me2k+HWYDmGc3pQfKeUA4JMslMy2bwbAvJDB7r
+         MVJg==
+X-Received: by 10.140.101.74 with SMTP id t68mr2352628qge.106.1394155508229;
+ Thu, 06 Mar 2014 17:25:08 -0800 (PST)
+Received: by 10.96.215.102 with HTTP; Thu, 6 Mar 2014 17:24:38 -0800 (PST)
+In-Reply-To: <1394095783-24402-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243580>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243581>
 
-Because "VAR=VAL command" is sufficient to run 'command' with
-environment variable VAR set to value VAL without affecting the
-environment of the shell itself, but we cannot do the same with a
-shell function (most notably, "test_must_fail"), we have subshell
-invocations with multiple lines like this:
+On Thu, Mar 6, 2014 at 3:49 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc D=
+uy <pclouds@gmail.com> wrote:
+> diff --git a/t/t5537-fetch-shallow.sh b/t/t5537-fetch-shallow.sh
+> index 3ae9092..a980574 100755
+> --- a/t/t5537-fetch-shallow.sh
+> +++ b/t/t5537-fetch-shallow.sh
+> @@ -173,4 +173,17 @@ EOF
+>         )
+>  '
+>
+> +test_expect_success POSIXPERM,SANITY 'shallow fetch from a read-only=
+ repo' '
+> +       cp -R .git read-only.git &&
+> +       find read-only.git -print | xargs chmod -w &&
+> +       test_when_finished "find read-only.git -type d -print | xargs=
+ chmod +w" &&
+> +       git clone --no-local --depth=3D2 read-only.git from-read-only=
+ &&
+> +       git --git-dir=3Dfrom-read-only/.git log --format=3D%s >actual=
+ &&
+> +       cat >expect <<EOF &&
+> +add-1-back
+> +4
+> +EOF
+> +       test_cmp expect actual
+> +'
+> +
+>  test_done
 
-	... &&
-	(
-        	VAR=VAL &&
-                export VAR &&
-                test_must_fail git command
-	) &&
-        ...
-
-which could be expressed as
-
-	... &&
-        test_must_fail env VAR=VAL git comand &&
-	...
-
-Find and shorten such constructs in existing test scripts.
-
-Note that I am not 100% convinced myself that it is a good idea to
-do this, so please do not add this to the list without seeing it
-discussed.
-
-Thanks.
+It's a separate issue, but maybe we should add a similar test case for
+non-shallow clone from a read-only repo too. Are there any other
+operations that should work well on read-only repos?
+--=20
+Duy
