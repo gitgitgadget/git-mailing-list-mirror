@@ -1,97 +1,97 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH] disable grafts during fetch/push/bundle
-Date: Thu, 6 Mar 2014 23:48:32 -0000
-Organization: OPDS
-Message-ID: <06EAF31C54FB49E5951781E637A79F04@PhilipOakley>
-References: <20140304174806.GA11561@sigill.intra.peff.net> <xmqqd2i1k7p9.fsf@gitster.dls.corp.google.com> <20140305005649.GB11509@sigill.intra.peff.net> <xmqqy50oh45n.fsf@gitster.dls.corp.google.com> <20140305185212.GA23907@sigill.intra.peff.net> <xmqqppm0h2ti.fsf@gitster.dls.corp.google.com> <53183506.5080002@alum.mit.edu> <20140306155626.GB18519@sigill.intra.peff.net> <5318A537.4010400@alum.mit.edu> <20140306174803.GA30486@sigill.intra.peff.net> <08A515BA063C44E5A9EFC754793B2AD8@PhilipOakley> <531904E1.6010606@alum.mit.edu>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 6/6] merge hook tests: use 'test_must_fail' instead of '!'
+Date: Thu, 06 Mar 2014 16:35:47 -0800
+Message-ID: <xmqqk3c6vo9o.fsf@gitster.dls.corp.google.com>
+References: <1394117424-29780-1-git-send-email-benoit.pierre@gmail.com>
+	<1394117424-29780-7-git-send-email-benoit.pierre@gmail.com>
+	<xmqqiorrvwvh.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="UTF-8";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Jeff King" <peff@peff.net>,
-	"Christian Couder" <christian.couder@gmail.com>,
-	"Junio C Hamano" <gitster@pobox.com>, <git@vger.kernel.org>
-To: "Michael Haggerty" <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Mar 07 00:48:37 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Benoit Pierre <benoit.pierre@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 07 01:35:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WLi1k-0007YR-6G
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Mar 2014 00:48:36 +0100
+	id 1WLilZ-0005DL-I1
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Mar 2014 01:35:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751147AbaCFXsc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Mar 2014 18:48:32 -0500
-Received: from out1.ip02ir2.opaltelecom.net ([62.24.128.238]:16417 "EHLO
-	out1.ip02ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750919AbaCFXsb (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 6 Mar 2014 18:48:31 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: ApEXAPIIGVNOl3C4/2dsb2JhbABaDoJ4O4NdhT60a4NyAQIBAYEaF3SCIAUBAQEBAgEIAQEZFR4BASEFBgIDBQIBAw4HAwICBSECAhQBBBoGBwkBDQYTCAIBAgMBh2AMCa5XhVmbDReBKY0ygnY1gRQEhSKKEYo9gmeOEoJuPzw
-X-IPAS-Result: ApEXAPIIGVNOl3C4/2dsb2JhbABaDoJ4O4NdhT60a4NyAQIBAYEaF3SCIAUBAQEBAgEIAQEZFR4BASEFBgIDBQIBAw4HAwICBSECAhQBBBoGBwkBDQYTCAIBAgMBh2AMCa5XhVmbDReBKY0ygnY1gRQEhSKKEYo9gmeOEoJuPzw
-X-IronPort-AV: E=Sophos;i="4.97,604,1389744000"; 
-   d="scan'208";a="456656657"
-Received: from host-78-151-112-184.as13285.net (HELO PhilipOakley) ([78.151.112.184])
-  by out1.ip02ir2.opaltelecom.net with SMTP; 06 Mar 2014 23:48:29 +0000
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1752594AbaCGAfx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Mar 2014 19:35:53 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53271 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752142AbaCGAfw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Mar 2014 19:35:52 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 01D86727A0;
+	Thu,  6 Mar 2014 19:35:51 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=KqZRHa54NFbT1rY4svSBdKLzaz8=; b=b+Quvy
+	LFlafyLkUJaYYgeLWZP4kJ2REFfGDWABMH8zJXPk+aWrbVqV4aZ7byQpMUK2oPPX
+	wHYhq3NeVh2kmE1se6A0zWZS5fZhhQEIU17DXp9oH+/X1wPxrMjAMGiumkn7HK4/
+	nX8KCMUef2O+0BHj9tKW55JOv5Z/H90cTRDzQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=erVDIWsKCYT+QZb79ldV1fIaRAnPbSIW
+	H08sTfDkzlRNUacvk/VEuRFVP06iexsBJW1LwGyGPnBohaVgWRsZGa376jRTTCUS
+	1JAuipxSMFzg7ipatSXFz0KTqUZwy0SXRnTK/k6GOWG2btKHCwGGARs0BvOFR6mO
+	aQAwUT/zZd4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7EAD67279D;
+	Thu,  6 Mar 2014 19:35:50 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 847767279B;
+	Thu,  6 Mar 2014 19:35:49 -0500 (EST)
+In-Reply-To: <xmqqiorrvwvh.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Thu, 06 Mar 2014 13:29:54 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 6E4B4BA8-A590-11E3-841C-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243578>
 
-From: "Michael Haggerty" <mhagger@alum.mit.edu>
-> On 03/07/2014 12:01 AM, Philip Oakley wrote:
->> From: "Jeff King" <peff@peff.net>
->>> On Thu, Mar 06, 2014 at 05:41:27PM +0100, Michael Haggerty wrote:
->>>
->>>> > We can wrap that in "git replace --convert-grafts", but I do not 
->>>> >  >
->>>> think
->>>> > grafts are so common that there would be a big demand for it.
->>>>
->>>> It's probably easier to wrap it than to explain to Windows users 
->>>> what
->>>> they have to do.
->>>
->>> How would Windows users get a graft file in the first-place? There's 
->>> no
->>> GUI for it! ;)
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Benoit Pierre <benoit.pierre@gmail.com> writes:
+>
+>> Signed-off-by: Benoit Pierre <benoit.pierre@gmail.com>
+>> ---
+>>  t/t7505-prepare-commit-msg-hook.sh | 4 ++--
+>>  1 file changed, 2 insertions(+), 2 deletions(-)
 >>
->> Now, now... It's dead easy using the git-gui and Notepad++, you can 
->> see
->> and confirm the sha1's, copy and paste, and the graft file is a very
->> easy format, so even wimps (windows, icons, menus, pointers aka 
->> mouse)
->> folks can do it. (It worked for me when I needed it ;-)
+>> diff --git a/t/t7505-prepare-commit-msg-hook.sh b/t/t7505-prepare-commit-msg-hook.sh
+>> index 604c06e..1be6cec 100755
+>> --- a/t/t7505-prepare-commit-msg-hook.sh
+>> +++ b/t/t7505-prepare-commit-msg-hook.sh
+>> @@ -167,7 +167,7 @@ test_expect_success 'with failing hook' '
+>>  	head=`git rev-parse HEAD` &&
+>>  	echo "more" >> file &&
+>>  	git add file &&
+>> -	! GIT_EDITOR="\"\$FAKE_EDITOR\"" git commit -c $head
+>> +	test_must_fail env GIT_EDITOR="\"\$FAKE_EDITOR\"" git commit -c $head
 >
-> I didn't mean to insult all Windows users in general.  I was only
-> referring to the fact that since the default Windows command line is 
-> not
-> a POSIX shell, even an experienced Windows user might have trouble
-> figuring out how to execute a shell loop.
+> Thanks. It is good that you avoided the common pitfall of attempting
+>
+> 	GIT_EDITOR=... test_must_fail git commit -c $head    ;# WRONG
+>
+> but do we assume everybody has "env"?
 
-I'd missed that aspect about the shell loop. I was mainly pointing out 
-current awkwardness of creating the replace object, relative to grafts - 
-There was an initial attempt by Christian, but it became quite hard to 
-make it robust to sha1's embedded in commit messages.
+It turns out that the answer to this question seems to be "yes, we
+already do."; so the patch is probably OK as-is.
 
->      Putting this functionality in
-> a git command or script, by contrast, would make it work universally, 
-> no
-> fuss, no muss.
+Thanks.
+
+> To be portable, we can do this instead.
 >
-> Michael
->
-> -- 
-> Michael Haggerty
-> mhagger@alum.mit.edu
-> http://softwareswirl.blogspot.com/
-> 
+> 	(
+> 		GIT_EDITOR=... &&
+>         	export GIT_EDITOR &&
+>                 test_must_fail git commit -c $head
+> 	)
