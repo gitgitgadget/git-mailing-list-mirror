@@ -1,92 +1,194 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH] disable grafts during fetch/push/bundle
-Date: Fri, 7 Mar 2014 08:08:37 +0100
-Message-ID: <CAP8UFD0UnUGZb9hWyLS1vPJ6fh3QR-g_p5HNQk79Gqhs9YWi0A@mail.gmail.com>
-References: <20140304174806.GA11561@sigill.intra.peff.net>
-	<xmqqd2i1k7p9.fsf@gitster.dls.corp.google.com>
-	<20140305005649.GB11509@sigill.intra.peff.net>
-	<xmqqy50oh45n.fsf@gitster.dls.corp.google.com>
-	<20140305185212.GA23907@sigill.intra.peff.net>
-	<xmqqppm0h2ti.fsf@gitster.dls.corp.google.com>
-	<53183506.5080002@alum.mit.edu>
-	<20140306155626.GB18519@sigill.intra.peff.net>
-	<5318A537.4010400@alum.mit.edu>
-	<20140306174803.GA30486@sigill.intra.peff.net>
-	<08A515BA063C44E5A9EFC754793B2AD8@PhilipOakley>
-	<531904E1.6010606@alum.mit.edu>
-	<xmqqob1ivqv4.fsf@gitster.dls.corp.google.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [RFC/PATCH] diff: simplify cpp funcname regex
+Date: Fri, 07 Mar 2014 08:23:05 +0100
+Message-ID: <531973D9.9070803@viscovery.net>
+References: <20140305003639.GA9474@sigill.intra.peff.net> <5316D922.9010501@viscovery.net> <20140306212835.GA11743@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Philip Oakley <philipoakley@iee.org>,
-	Jeff King <peff@peff.net>, git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 07 08:09:10 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Thomas Rast <tr@thomasrast.ch>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Mar 07 08:23:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WLou5-0004AE-N6
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Mar 2014 08:09:10 +0100
+	id 1WLp7l-0000pa-7K
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Mar 2014 08:23:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751015AbaCGHIj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Mar 2014 02:08:39 -0500
-Received: from mail-vc0-f176.google.com ([209.85.220.176]:35957 "EHLO
-	mail-vc0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750833AbaCGHIi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Mar 2014 02:08:38 -0500
-Received: by mail-vc0-f176.google.com with SMTP id lc6so3240100vcb.21
-        for <git@vger.kernel.org>; Thu, 06 Mar 2014 23:08:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=BLoiK8aWt0oA6z9hsgJZfaICrlTun2Z4Q7KQk8H8NqA=;
-        b=r4TkgJ5M3stCBrbI6ey66e84fqEmbls1GdwIVxHBpO/6Sxw5/+W2j/DuMJhfvXPHQj
-         k+ayklWMIQ/zlNs3CKz4oxbUSLgH3kh/BNK1gC5qvoTjoNKoQRiDk/oQVt/rs4jX6bww
-         YU6pmtMLq70rl3iSQKJbzzavCuUrndp4R509+jEkChq7cZBBeXlTurMpmztBRi0mpWQ8
-         bPSbUyCesveNQ1ahCKeHeIwqeaUZWH+ZsNx4hvy+G2sV/fouyFOQWvXrVtdQdJZEYitC
-         YpRjh6awPKY3NxvfyTL4hxdNTj3g6P2O6mTw+x9f67+cwSnEolCsV6vD9u8i/2dwN2o+
-         noMg==
-X-Received: by 10.58.37.232 with SMTP id b8mr37701vek.27.1394176117894; Thu,
- 06 Mar 2014 23:08:37 -0800 (PST)
-Received: by 10.58.104.129 with HTTP; Thu, 6 Mar 2014 23:08:37 -0800 (PST)
-In-Reply-To: <xmqqob1ivqv4.fsf@gitster.dls.corp.google.com>
+	id S1750958AbaCGHXM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Mar 2014 02:23:12 -0500
+Received: from so.liwest.at ([212.33.55.23]:45734 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750834AbaCGHXL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Mar 2014 02:23:11 -0500
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.80.1)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1WLp7Z-0006wH-Vt; Fri, 07 Mar 2014 08:23:06 +0100
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 99BB316613;
+	Fri,  7 Mar 2014 08:23:05 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
+In-Reply-To: <20140306212835.GA11743@sigill.intra.peff.net>
+X-Enigmail-Version: 1.6
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243602>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243603>
 
-On Fri, Mar 7, 2014 at 12:39 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
->
->> I didn't mean to insult all Windows users in general.  I was only
->> referring to the fact that since the default Windows command line is not
->> a POSIX shell, even an experienced Windows user might have trouble
->> figuring out how to execute a shell loop.  Putting this functionality in
->> a git command or script, by contrast, would make it work universally, no
->> fuss, no muss.
->
-> ;-)
->
-> Be it graft or replace, I do not think we want to invite people to
-> use these mechansims too lightly to locally rewrite their history
-> willy-nilly without fixing their mistakes at the object layer with
-> "commit --amend", "rebase", "bfg", etc. in the longer term.  So in
-> that sense, adding a command to make it easy is not something I am
-> enthusiastic about.
->
-> On the other hand, if the user does need to use graft or replace
-> (perhaps to prepare for casting the fixed history in stone with
-> filter-branch), it would be good to help them avoid making mistakes
-> while doing so and tool support may be a way to do so.
->
-> So, ... I am of two minds.
->
+Am 3/6/2014 22:28, schrieb Jeff King:
+> On Wed, Mar 05, 2014 at 08:58:26AM +0100, Johannes Sixt wrote:
+>> The pattern I chose also catches variable definition, not just
+>> functions. That is what I need, but it hurts grep --function-context
+>> That's the reason I didn't forward the patch, yet.
+> 
+> If by variable definition you mean:
+> 
+>    struct foo bar = {
+>   -       old
+>   +       new
+>    };
+> 
+> I'd think that would be covered by the existing "struct|class|enum".
+> Though I think we'd want to also allow keywords in front of it, like
+> "static". I suspect the original was more meant to find:
+> 
+>    struct foo {
+>   -old
+>   +new
+>    };
 
-Maybe if we add a new command (or maybe a script) with a name long and
-cryptic-looking enough like "git create-replacement-object" it will
-scare casual users from touching it, while power users will be happy
-to benefit from it.
+No, I meant lines like
+
+    static double var;
+   -static int old;
+   +static int new;
+
+The motivation is to show hints where in a file the change is located:
+Anything that could be of significance for the author should be picked up.
+
+But that does not necessarily help grep --function-context. For example,
+when there is a longish block of global variable definitions and there is
+a match in the middle, then --function-context would provide no context
+because the line itself would be regarded as the beginning of a
+"function", i.e., the context, and the next line (which also matches the
+pattern) would be the beginning of the *next* function, and would not be
+in the context anymore.
+
+> 
+>> The parts of the pattern have the following flaws:
+>>
+>> - The first part matches an identifier followed immediately by a colon and
+>>   arbitrary text and is intended to reject goto labels and C++ access
+>>   specifiers (public, private, protected). But this pattern also rejects
+>>   C++ constructs, which look like this:
+>>
+>>     MyClass::MyClass()
+>>     MyClass::~MyClass()
+>>     MyClass::Item MyClass::Find(...
+> 
+> Makes sense. I noticed your fix is to look for end-of-line or comments
+> afterwards.  Would it be simpler to just check for a non-colon, like:
+> 
+>   !^[ \t]*[A-Za-z_][A-Za-z_0-9]*:($|[^:])
+
+I want to match [[:space:]] after the label's colon, because I have lot's
+of C++ files with CRLF, and I need to match the CR. Your more liberal
+pattern would fit as well, although it would pick up a bit field as in
+
+   struct foo {
+      unsigned
+        flag: 1;
+   -old
+   +new
+
+I would not mind ignoring this case ("garbage in, garbage out" ;-).
+
+>> - The second part matches an identifier followed by a list of qualified
+>>   names (i.e. identifiers separated by the C++ scope operator '::')
+>> [...]
+> 
+> A tried to keep the "looks like a function definition" bit in mine, and
+> yours loosens this quite a bit more. I think that may be OK. That is, I
+> do not think there is any reason for somebody to do:
+> 
+>     void foo() {
+>     call_to_bar();
+>    -old
+>    +new
+>     }
+> 
+> That is, nobody would put a function _call_ without indentation. If
+> something has alphanumerics at the left-most column, then it is probably
+> interesting no matter what.
+> 
+>> - The third part of the pattern finally matches compound definitions. But
+>>   it forgets about unions and namespaces, and also skips single-line
+>>   definitions
+>>
+>>     struct random_iterator_tag {};
+>>
+>>   because no semicolon can occur on the line.
+> 
+> I don't see how that is an interesting line. The point is to find a
+> block that is surrounding the changes, but that is not surrounding
+> the lines below.
+
+I more often than not want to have an answer to the question "where?", not
+"wherein?" Then anything that helps locate a hunk is useful.
+
+(The particular example, an empty struct, looks strange for C programmers,
+of course, but it's a common idiom in C++ when it comes to template
+meta-programming.)
+
+>> Notice that all interesting anchor points begin with an identifier or
+>> keyword. But since there is a large variety of syntactical constructs after
+>> the first "word", the simplest is to require only this word and accept
+>> everything else. Therefore, this boils down to a line that begins with a
+>> letter or underscore (optionally preceded by the C++ scope operator '::'
+>> to accept functions returning a type anchored at the global namespace).
+>> Replace the second and third part by a single pattern that picks such a
+>> line.
+> 
+> Yeah, this bit makes sense to me.
+> 
+> Both yours and mine will find the first line here in things like:
+> 
+>    void foo(void);
+>   -void bar(void);
+>   +void bar(int arg);
+> 
+> but I think that is OK. There _isn't_ any interesting surrounding
+> context here. The current code will sometimes come up with an empty
+> funcline (which is good), but it may just as easily come up with a
+> totally bogus funcline in a case like:
+> 
+>    void unrelated(void)
+>    {
+>    }
+> 
+>    void foo(void);
+>   -void bar(void);
+>   +void bar(int arg);
+> 
+> So trying to be very restrictive and say "that doesn't look like a
+> function" does not really buy us anything (and it creates tons of false
+> negatives, as you documented, because C++ syntax has all kinds of crazy
+> stuff).
+> 
+> _If_ the backwards search learned to terminate (e.g., seeing the "^}"
+> line and saying "well, we can't be inside a function"), then such
+> negative lines might be useful for coming up with an empty funcname
+> rather than the bogus "void foo(void);". But we do not do that
+> currently, and I do not think it is that useful (the funcname above is
+> arguably just as or more useful than an empty one).
+
+As I said, my motivation is not so much to find a "container", but rather
+a clue to help locate a change while reading the patch text. I can speak
+for myself, but I have no idea what is more important for the majority.
+
+-- Hannes
