@@ -1,83 +1,83 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] Use long for timezone in pretty.c:show_ident_date()
-Date: Fri, 7 Mar 2014 14:29:42 -0500
-Message-ID: <CAPig+cSAGEmtKziqE49MxuQOsBdbbbVtLcsYVd+Uoptg2Ucr8A@mail.gmail.com>
-References: <1394218076-70398-1-git-send-email-brian@gernhardtsoftware.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git merge --date --author
+Date: Fri, 07 Mar 2014 11:43:16 -0800
+Message-ID: <xmqqvbvpu757.fsf@gitster.dls.corp.google.com>
+References: <1394188215.3257.17.camel@localhost.localdomain>
+	<87y50mxj0b.fsf@igel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Brian Gernhardt <brian@gernhardtsoftware.com>
-X-From: git-owner@vger.kernel.org Fri Mar 07 20:29:55 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Yann Droneaud <ydroneaud@opteya.com>, git@vger.kernel.org
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Fri Mar 07 20:43:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WM0Sw-0006T7-Ik
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Mar 2014 20:29:54 +0100
+	id 1WM0g0-0002yD-6p
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Mar 2014 20:43:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752046AbaCGT3o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Mar 2014 14:29:44 -0500
-Received: from mail-yk0-f178.google.com ([209.85.160.178]:57365 "EHLO
-	mail-yk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751945AbaCGT3n (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Mar 2014 14:29:43 -0500
-Received: by mail-yk0-f178.google.com with SMTP id 79so11832285ykr.9
-        for <git@vger.kernel.org>; Fri, 07 Mar 2014 11:29:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=Vqa8pbcFl4om6fpsz907hKktxJgU7Insmkek/VeMzBg=;
-        b=Y6G09Wn9T8etfz5J4X8N1stGSGFleiRWL9+8hKjnarqYSD0OyUOBjVg9TMjUKglmu7
-         84e0x64Ppxtr6h9DaP9p2kBgYp48u85z0kDbPa6xH+k84uKjP407y4GcT/6ca0kKJ6hA
-         zqWZffoLAJywp5T9U4EHiJvgHFs1janSzd7K0pHaGVO6IQKQwVO2IXR/lbQnVaXPhP/C
-         syXgzC7ompQPeQlqzIoPYVr1vmonnLZxUx3lpzF3c+4wjrYIneywcFreTv+UFdqjTdlT
-         l/e3iuvGHHVttgPcNAA8R5qerdwX1bBKPPysWoNrpBht1bDB2UZwWMMfWksgJFZ6acTm
-         tRQA==
-X-Received: by 10.236.222.231 with SMTP id t97mr3273323yhp.125.1394220582125;
- Fri, 07 Mar 2014 11:29:42 -0800 (PST)
-Received: by 10.170.180.134 with HTTP; Fri, 7 Mar 2014 11:29:42 -0800 (PST)
-In-Reply-To: <1394218076-70398-1-git-send-email-brian@gernhardtsoftware.com>
-X-Google-Sender-Auth: aN9_M-YFBm8DfYQNMRmoMJLHZKM
+	id S1752080AbaCGTnU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Mar 2014 14:43:20 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45463 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751197AbaCGTnT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Mar 2014 14:43:19 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1E28872CA3;
+	Fri,  7 Mar 2014 14:43:19 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=z/0G8W/dMcrtLY5TwMlskVDvmbo=; b=WmMaLE
+	NcW02C58Nn9553NrKe9a54Rdaa/lz7Yeajj9hylCJSVvvZiBF+BQ6is/sdQp1Z+f
+	ir3DdWa676M6ujokEJM0UOfD9ZL0vZwZagzRM//HxpaDpVLKFEUm8AdpzUPEJa4V
+	7bHwJmpPJYZzTv80ATg+DoXpl99rDsI7rriH8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=fySnVbnXn9PmklC/B2/+OBP1FzPEjVGP
+	50psAXg75TPBNghmwdJQE5PT+xbSMExl4uoYszRsiP7eiLxz8Bx6va5UNxNqoE7c
+	KvQcT8UFE8VR6VLaTvQSI8QoKSi9Wd5eD/0zY+UHkfzSKP7SBmgQmtDLk37Ze53Q
+	1z3oQm7WY4o=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 06B3F72CA2;
+	Fri,  7 Mar 2014 14:43:19 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3030472C9F;
+	Fri,  7 Mar 2014 14:43:18 -0500 (EST)
+In-Reply-To: <87y50mxj0b.fsf@igel.home> (Andreas Schwab's message of "Fri, 07
+	Mar 2014 13:58:44 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: BB49FF94-A630-11E3-9E00-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243625>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243626>
 
-On Fri, Mar 7, 2014 at 1:47 PM, Brian Gernhardt
-<brian@gernhardtsoftware.com> wrote:
-> The value is parsed with strtol and compared against LONG_MIN and
-> LONG_MAX, which doesn't make much sense for an int.
->
-> Signed-off-by: Brian Gernhardt <brian@gernhardtsoftware.com>
+Andreas Schwab <schwab@linux-m68k.org> writes:
 
-Thanks. Find a more complete fix here [1].
+> Yann Droneaud <ydroneaud@opteya.com> writes:
+>
+>> But I'd like to know if there's a specific reason for git merge to not
+>> support --date and --author ?
+>
+> It's rather unusual that a merge is performed on behalf of a different
+> author.
 
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/243582/focus=243617
+Yes.  Michael's "Nobody bothered to implement it" is also correct
+but the reason why nobody bothered to most likely is due to "why
+would you want to lie?".
 
-> ---
->  pretty.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/pretty.c b/pretty.c
-> index 3b811ed..29ebc4f 100644
-> --- a/pretty.c
-> +++ b/pretty.c
-> @@ -397,7 +397,7 @@ static const char *show_ident_date(const struct ident_split *ident,
->                                    enum date_mode mode)
->  {
->         unsigned long date = 0;
-> -       int tz = 0;
-> +       long tz = 0;
->
->         if (ident->date_begin && ident->date_end)
->                 date = strtoul(ident->date_begin, NULL, 10);
-> --
-> 1.9.0.281.gfc51f0a.dirty
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+If the use case is to rebuild history, you would need to be able to
+also lie about the committer, so
+
+>> git merge \
+>>     --date "2013-12-31 23:59:59 +0000" \
+>>     --author "Happy New Year <happy.new-year@gregorian.calendar>" \
+>>     current-year
+
+in such a history-rebuild script would not be sufficient.  The
+script can set necessary environment variables to lie about both
+author and commiter, though, of course.
