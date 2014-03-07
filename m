@@ -1,143 +1,104 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] show_ident_date: fix always-false conditional
-Date: Fri, 7 Mar 2014 13:12:58 -0500
-Message-ID: <CAPig+cSgW_B9YEYA3GCD=0NRYS=+QG_v-dU8zp5Jt6XqAysCKA@mail.gmail.com>
-References: <1394156124-3953-1-git-send-email-sunshine@sunshineco.com>
-	<20140307171501.GA23587@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] upload-pack: send shallow info over stdin to pack-objects
+Date: Fri, 07 Mar 2014 10:27:21 -0800
+Message-ID: <xmqq8uslvp86.fsf@gitster.dls.corp.google.com>
+References: <1393936205-15953-1-git-send-email-pclouds@gmail.com>
+	<1394095783-24402-1-git-send-email-pclouds@gmail.com>
+	<xmqqfvmvyxzv.fsf@gitster.dls.corp.google.com>
+	<CACsJy8B8=N6R6nVa12jjhxdqxMA2eGXOV6jR-XqRRbb-6Xppdg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Mar 07 19:13:06 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 07 19:27:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WLzGa-0007a5-ED
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Mar 2014 19:13:04 +0100
+	id 1WLzUY-0004Sn-7F
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Mar 2014 19:27:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751978AbaCGSM7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Mar 2014 13:12:59 -0500
-Received: from mail-yk0-f176.google.com ([209.85.160.176]:56561 "EHLO
-	mail-yk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751545AbaCGSM7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Mar 2014 13:12:59 -0500
-Received: by mail-yk0-f176.google.com with SMTP id 19so11607782ykq.7
-        for <git@vger.kernel.org>; Fri, 07 Mar 2014 10:12:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=MRhj5xbn6TuSVB3SY1t2yvBHmP5Xm14gZ5bSiBF6cfA=;
-        b=YjhTYxbx5X8UdpPsBEqFDFtCPnp5tIFXT0DEtshqvPZ4813QgI98R2D+hSkrg9PGQ9
-         mdTBQmlNElQX8QW1T+131rSvrnGoljuug0Hf0D7kaWZD6eUfIpXBgJzqnMsO7Q16c1n+
-         VUKd7YbZjkzBkqNQPg+B34uSSiePJC+FJ1qeKUBERR0WFS578QBrbdb50k4x5R7gHu6p
-         BR71rWIOI6u+C/iGm07YQxzwYDXd7I9y0sWalHru/6QKDZLyQzTmjvc3H/kvJwBmMEY+
-         kwQQMdobL9B5ub4pUrIWcDsQfR+kjags4/rcIIq416a/9ScHvH6WEb4GzYyN6rEFYDT3
-         XEOA==
-X-Received: by 10.236.143.148 with SMTP id l20mr24648842yhj.102.1394215978394;
- Fri, 07 Mar 2014 10:12:58 -0800 (PST)
-Received: by 10.170.180.134 with HTTP; Fri, 7 Mar 2014 10:12:58 -0800 (PST)
-In-Reply-To: <20140307171501.GA23587@sigill.intra.peff.net>
-X-Google-Sender-Auth: KEBE9e96Z8OXIMNgOi1L56B9IQM
+	id S1752080AbaCGS10 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Mar 2014 13:27:26 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42574 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751302AbaCGS1Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Mar 2014 13:27:25 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 17D6070EE1;
+	Fri,  7 Mar 2014 13:27:25 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=w2I6poCNKG2PW73lvBjzbGlqDNc=; b=VWUbCp
+	d+4IBNFxxnAIaB21tOYpp46hv8FthwyumsvFrySI2WkZww7V8h5OkyNFKu1nBD3S
+	2/xlywxzMFBlWw1kjt0JuJPH+RM05L+kDlsIdfGGVwz9iVghVIa1uu+1FC7I7bLz
+	Mg+wJAI5trUOywstUo2tqzAJfzw9xoeK2thr8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=RS8bnTlvyypKOQCmv7Y7GB8rCSoJGkeF
+	UR3MmcJA3ocwgN5igHY+eppVhS989Ub/QOlYNCmxSOMv6Nvk9D8e03O4qQgi2qlL
+	rEnOD7MIRbd+AMDsFHkxv7rgPUVbsGkULpu1DcrlSG7pTtTkk1S78rplVwFvWv/M
+	pbEU4fA6vMA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0310B70EDE;
+	Fri,  7 Mar 2014 13:27:25 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 40E3370EDA;
+	Fri,  7 Mar 2014 13:27:24 -0500 (EST)
+In-Reply-To: <CACsJy8B8=N6R6nVa12jjhxdqxMA2eGXOV6jR-XqRRbb-6Xppdg@mail.gmail.com>
+	(Duy Nguyen's message of "Fri, 7 Mar 2014 06:13:05 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 20EF77B2-A626-11E3-8709-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243620>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243621>
 
-On Fri, Mar 7, 2014 at 12:15 PM, Jeff King <peff@peff.net> wrote:
-> On Thu, Mar 06, 2014 at 08:35:24PM -0500, Eric Sunshine wrote:
->
->> 1dca155fe3fa (log: handle integer overflow in timestamps, 2014-02-24)
->> assigns the result of strtol() to an 'int' and then checks it against
->> LONG_MIN and LONG_MAX, indicating underflow or overflow, even though
->> 'int' may not be large enough to represent those values.
->>
->> On Mac, the compiler complains:
->>
->>     warning: comparison of constant 9223372036854775807 with
->>       expression of type 'int' is always false
->>       [-Wtautological-constant-out-of-range-compare]
->>       if (<<tz == LONG_MAX>> || tz == LONG_MIN)
->>
->> Similarly for the LONG_MIN case. Fix this.
->
-> Yeah, this is definitely a potential bug. When I added the overflow
-> check, I blindly assumed that the existing code was at least using a
-> sufficiently large type to store the result of strtol, but it's not.
->
-> I don't think your fix catches all overflow, though:
->
->> +     else if (ident->tz_begin && ident->tz_end) {
->> +             errno = 0;
->> +             tz = strtol(ident->tz_begin, NULL, 10);
->> +             if (errno)
->
-> Errno will trigger if we overflowed a "long", but then we assign the
-> result into an int, possibly truncating the result.
->
->> Alternately, the result of strtol() could be assigned temporarily to a
->> 'long', compared against LONG_MIN and LONG_MAX, and then assigned to the
->> 'int' "tz" variable.
->
-> That catches overflow from strtol, but we'd then truncate when we pass
-> it as an int to show_date.
->
-> I think we want this instead:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-Makes sense.
+> On Fri, Mar 7, 2014 at 1:37 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> I like what I see in this patch, but I wonder if we can essentially
+>> revert that "temporary shallow file" patch and replace it with the
+>> same (or a similar) mechanism uniformly?
+>
+> Using --shallow-file is uniform.  The only downside is temporary file.
+> Without it you'll need to think of a way (probably different way for
+> each command) to feed shallow info to.
 
-Acked-by: Eric Sunshine <sunshine@sunshineco.com>
+Yes, that is what I meant to say by the "we need a way to tell hooks
+in some cases" below; we are in agreement.
 
-> -- >8 --
-> Subject: show_ident_date: fix tz range check
+>> On the receive-pack side, the comment at the bottom of
+>> preprare_shallow_update() makes it clear that, if we wanted to use
+>> hooks, we cannot avoid having the proposed new shallow-file in a
+>> temporary file, which is unfortunate.  Do we have a similar issue on
+>> hooks on the upload-pack side?
 >
-> Commit 1dca155fe3fa (log: handle integer overflow in
-> timestamps, 2014-02-24) tried to catch integer overflow
-> coming from strtol() on the timezone field by comparing against
-> LONG_MIN/LONG_MAX. However, the intermediate "tz" variable
-> is an "int", which means it can never be LONG_MAX on LP64
-> systems; we would truncate the output from strtol before the
-> comparison.
+> No. I don't think we have hooks on upload-pack.
+
+The question was not only about "do we happen to work OK with the
+current code?" but about "are we closing the door for the future?"
+
+If we ever need to add hooks to upload-pack, with the updated
+approach, its operation will not be affected by the temporary
+shallow file tailored for this specific customer.  Which I think is
+a good thing in general.
+
+But at the same time, it means that its operation cannot be
+customized for the specific customer, taking into account what they
+lack (which can be gleaned by looking at the temporary shallow
+information).  I do think that it is not a big downside, but that is
+merely my knee-jerk reaction.
+
+>> Nothing for Documentation/ anywhere?
 >
-> Clang's -Wtautological-constant-out-of-range-compare notices
-> this and rightly complains.
->
-> Let's instead store the result of strtol in a long, and then
-> compare it against INT_MIN/INT_MAX. This will catch overflow
-> from strtol, and also overflow when we pass the result as an
-> int to show_date.
->
-> Reported-by: Eric Sunshine <sunshine@sunshineco.com>
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  pretty.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/pretty.c b/pretty.c
-> index 3b811ed..6e266dd 100644
-> --- a/pretty.c
-> +++ b/pretty.c
-> @@ -397,7 +397,7 @@ static const char *show_ident_date(const struct ident_split *ident,
->                                    enum date_mode mode)
->  {
->         unsigned long date = 0;
-> -       int tz = 0;
-> +       long tz = 0;
->
->         if (ident->date_begin && ident->date_end)
->                 date = strtoul(ident->date_begin, NULL, 10);
-> @@ -406,7 +406,7 @@ static const char *show_ident_date(const struct ident_split *ident,
->         else {
->                 if (ident->tz_begin && ident->tz_end)
->                         tz = strtol(ident->tz_begin, NULL, 10);
-> -               if (tz == LONG_MAX || tz == LONG_MIN)
-> +               if (tz >= INT_MAX || tz <= INT_MIN)
->                         tz = 0;
->         }
->         return show_date(date, tz, mode);
-> --
-> 1.8.5.2.500.g8060133
->
+> Heh git-pack-objects.txt never described stdin format. At least I
+> searched for --not in it and found none. So I gladly accepted the
+> situation and skipped doc update :D
+
+To pile new technical debt on top of existing ones is to make things
+worse, which we would rather not to see.
