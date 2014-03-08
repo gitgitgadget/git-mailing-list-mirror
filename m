@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v5 03/28] Convert git_snpath() to strbuf_git_path()
-Date: Sat,  8 Mar 2014 09:47:55 +0700
-Message-ID: <1394246900-31535-4-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v5 02/28] path.c: make get_pathname() call sites return const char *
+Date: Sat,  8 Mar 2014 09:47:54 +0700
+Message-ID: <1394246900-31535-3-git-send-email-pclouds@gmail.com>
 References: <1393675983-3232-1-git-send-email-pclouds@gmail.com>
  <1394246900-31535-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -18,400 +18,418 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WM7Jf-0004zH-5b
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Mar 2014 03:48:47 +0100
+	id 1WM7Jh-0004zH-42
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Mar 2014 03:48:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752553AbaCHCsd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Mar 2014 21:48:33 -0500
-Received: from mail-pb0-f53.google.com ([209.85.160.53]:62954 "EHLO
-	mail-pb0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752615AbaCHCsM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Mar 2014 21:48:12 -0500
-Received: by mail-pb0-f53.google.com with SMTP id rp16so4920131pbb.26
-        for <git@vger.kernel.org>; Fri, 07 Mar 2014 18:48:12 -0800 (PST)
+	id S1752771AbaCHCsa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Mar 2014 21:48:30 -0500
+Received: from mail-pd0-f171.google.com ([209.85.192.171]:33725 "EHLO
+	mail-pd0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752366AbaCHCsG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Mar 2014 21:48:06 -0500
+Received: by mail-pd0-f171.google.com with SMTP id r10so4772193pdi.16
+        for <git@vger.kernel.org>; Fri, 07 Mar 2014 18:48:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=jJzH0OnYxyZ75mCRE4nmkG/9R2MbO1JUpQN3zBTR88A=;
-        b=pn/8YLJVfWl/NOuKSGxVqFJ5wPgTjdH0PfyRlKu77tkOzyjeOZF2DmjkpoJ/DUgxwF
-         YaAXB/ytm0iugECRvo/drym0R+QmuMsRI+0k6EhKAKnQz38qbaVHFms31G1rDx+nwuVT
-         SKWni+8G0IN92/+vcPCuo377ZN585pKv8wOCxsdFBss2+jjNRjnbQyCDol+zDHANyVhe
-         yPdT3d0nG4UvYUqMZl5cxfT0XBVld/QEbfudg+IOiEUThAJLpPYbf0DC7c3F9yXV9gLA
-         +qe8K9HK989Bv+fICyGGOzZCtG3kRymwqTxb3rxNBcaHnhc1SXptE0Za8QRwBmlkLL85
-         MaGA==
-X-Received: by 10.68.185.1 with SMTP id ey1mr26300432pbc.33.1394246892149;
-        Fri, 07 Mar 2014 18:48:12 -0800 (PST)
+        bh=yzOnCTaz+glO6SyEr/rDEVfDfNpkj4by7TqF4/A8YDo=;
+        b=Rm+nuOZcyOdUTfOCtI+XAo0GPZbDcKBXvSofF4J+0TUuJGMS7VoLiBD8AoF6LAKPjq
+         O+CKbMKuIVCBCC4cw+FNBHZPrwNcVdtI2PNnlqqu4HhXfcL/n9owb/l/oXs20IrZ6zmG
+         BzuqlI6ohe8hsUe2yeHnTzLjagWO/V6ZTavvZsnWK9fwH0OjeuRuAXx5v7k6C4VhOZCG
+         nMmsy96MG/SOGGuE+F2AZLZ/fAIVEW2ZbL+wJkEcDLl35sj2BLO65n5dql7sujStCVTr
+         S1+2Y6bblCAOKUql0bWBqZ9RZk2AT0RqF7QQ/cbP+1N/mxYxscI8W12+2YdSq+iXYvge
+         gQUg==
+X-Received: by 10.66.156.137 with SMTP id we9mr26410338pab.30.1394246886015;
+        Fri, 07 Mar 2014 18:48:06 -0800 (PST)
 Received: from lanh ([115.73.205.153])
-        by mx.google.com with ESMTPSA id kc9sm42095512pbc.25.2014.03.07.18.48.08
+        by mx.google.com with ESMTPSA id pp5sm42344070pbb.33.2014.03.07.18.48.02
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 07 Mar 2014 18:48:11 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Sat, 08 Mar 2014 09:48:45 +0700
+        Fri, 07 Mar 2014 18:48:05 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Sat, 08 Mar 2014 09:48:38 +0700
 X-Mailer: git-send-email 1.9.0.40.gaa8c3ea
 In-Reply-To: <1394246900-31535-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243646>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243647>
 
-In the previous patch, git_snpath() is modified to allocate a new
-strbuf buffer because vsnpath() needs that. But that makes it awkward
-because git_snpath() receives a pre-allocated buffer from outside and
-has to copy data back. Rename it to strbuf_git_path() and make it
-receive strbuf directly.
+Before the previous commit, get_pathname returns an array of PATH_MAX
+length. Even if git_path() and similar functions does not use the
+whole array, git_path() caller can, in theory.
 
-The conversion from git_snpath() to git_path() in
-update_refs_for_switch() is safe because that function does not keep
-any pointer to the round-robin buffer pool allocated by
-get_pathname().
+After the commit, get_pathname() may return a buffer that has just
+enough room for the returned string and git_path() caller should never
+write beyond that.
+
+Make git_path(), mkpath() and git_path_submodule() return a const
+buffer to make sure callers do not write in it at all.
+
+This could have been part of the previous commit, but the "const"
+conversion is too much distraction from the core changes in path.c.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/checkout.c | 25 +++++++++--------
- cache.h            |  4 +--
- path.c             | 11 ++------
- refs.c             | 78 +++++++++++++++++++++++++++++++++-------------=
---------
- refs.h             |  2 +-
- 5 files changed, 65 insertions(+), 55 deletions(-)
+ builtin/checkout.c     | 2 +-
+ builtin/clone.c        | 9 +++++----
+ builtin/fetch.c        | 5 +++--
+ builtin/fsck.c         | 4 ++--
+ builtin/receive-pack.c | 2 +-
+ builtin/remote.c       | 2 +-
+ builtin/repack.c       | 8 +++++---
+ cache.h                | 6 +++---
+ fast-import.c          | 2 +-
+ notes-merge.c          | 6 +++---
+ path.c                 | 6 +++---
+ refs.c                 | 8 ++++----
+ run-command.c          | 4 ++--
+ run-command.h          | 2 +-
+ sha1_file.c            | 2 +-
+ 15 files changed, 36 insertions(+), 32 deletions(-)
 
 diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 64c2aca..efb5e2f 100644
+index 5df3837..64c2aca 100644
 --- a/builtin/checkout.c
 +++ b/builtin/checkout.c
-@@ -585,18 +585,21 @@ static void update_refs_for_switch(const struct c=
-heckout_opts *opts,
- 		if (opts->new_orphan_branch) {
+@@ -586,7 +586,7 @@ static void update_refs_for_switch(const struct che=
+ckout_opts *opts,
  			if (opts->new_branch_log && !log_all_ref_updates) {
  				int temp;
--				char log_file[PATH_MAX];
--				const char *ref_name =3D mkpath("refs/heads/%s", opts->new_orphan_=
+ 				char log_file[PATH_MAX];
+-				char *ref_name =3D mkpath("refs/heads/%s", opts->new_orphan_branch=
+);
++				const char *ref_name =3D mkpath("refs/heads/%s", opts->new_orphan_=
 branch);
-+				struct strbuf log_file =3D STRBUF_INIT;
-+				int ret;
-+				const char *ref_name;
 =20
-+				ref_name =3D mkpath("refs/heads/%s", opts->new_orphan_branch);
  				temp =3D log_all_ref_updates;
  				log_all_ref_updates =3D 1;
--				if (log_ref_setup(ref_name, log_file, sizeof(log_file))) {
-+				ret =3D log_ref_setup(ref_name, &log_file);
-+				log_all_ref_updates =3D temp;
-+				strbuf_release(&log_file);
-+				if (ret) {
- 					fprintf(stderr, _("Can not do reflog for '%s'\n"),
- 					    opts->new_orphan_branch);
--					log_all_ref_updates =3D temp;
- 					return;
- 				}
--				log_all_ref_updates =3D temp;
- 			}
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 43e772c..9339371 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -289,16 +289,17 @@ static void copy_alternates(struct strbuf *src, s=
+truct strbuf *dst,
+ 	struct strbuf line =3D STRBUF_INIT;
+=20
+ 	while (strbuf_getline(&line, in, '\n') !=3D EOF) {
+-		char *abs_path, abs_buf[PATH_MAX];
++		char *abs_path;
+ 		if (!line.len || line.buf[0] =3D=3D '#')
+ 			continue;
+ 		if (is_absolute_path(line.buf)) {
+ 			add_to_alternates_file(line.buf);
+ 			continue;
  		}
- 		else
-@@ -651,14 +654,10 @@ static void update_refs_for_switch(const struct c=
-heckout_opts *opts,
- 					new->name);
- 			}
- 		}
--		if (old->path && old->name) {
--			char log_file[PATH_MAX], ref_file[PATH_MAX];
--
--			git_snpath(log_file, sizeof(log_file), "logs/%s", old->path);
--			git_snpath(ref_file, sizeof(ref_file), "%s", old->path);
--			if (!file_exists(ref_file) && file_exists(log_file))
--				remove_path(log_file);
--		}
-+		if (old->path && old->name &&
-+		    !file_exists(git_path("%s", old->path)) &&
-+		     file_exists(git_path("logs/%s", old->path)))
-+			remove_path(git_path("logs/%s", old->path));
+-		abs_path =3D mkpath("%s/objects/%s", src_repo, line.buf);
+-		normalize_path_copy(abs_buf, abs_path);
+-		add_to_alternates_file(abs_buf);
++		abs_path =3D mkpathdup("%s/objects/%s", src_repo, line.buf);
++		normalize_path_copy(abs_path, abs_path);
++		add_to_alternates_file(abs_path);
++		free(abs_path);
  	}
- 	remove_branch_state();
- 	strbuf_release(&msg);
+ 	strbuf_release(&line);
+ 	fclose(in);
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 025bc3e..04b51ca 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -544,7 +544,8 @@ static int store_updated_refs(const char *raw_url, =
+const char *remote_name,
+ 	struct strbuf note =3D STRBUF_INIT;
+ 	const char *what, *kind;
+ 	struct ref *rm;
+-	char *url, *filename =3D dry_run ? "/dev/null" : git_path("FETCH_HEAD=
+");
++	char *url;
++	const char *filename =3D dry_run ? "/dev/null" : git_path("FETCH_HEAD=
+");
+ 	int want_status;
+=20
+ 	fp =3D fopen(filename, "a");
+@@ -778,7 +779,7 @@ static void check_not_current_branch(struct ref *re=
+f_map)
+=20
+ static int truncate_fetch_head(void)
+ {
+-	char *filename =3D git_path("FETCH_HEAD");
++	const char *filename =3D git_path("FETCH_HEAD");
+ 	FILE *fp =3D fopen(filename, "w");
+=20
+ 	if (!fp)
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index 1affdd5..643c980 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -225,12 +225,12 @@ static void check_unreachable_object(struct objec=
+t *obj)
+ 			printf("dangling %s %s\n", typename(obj->type),
+ 			       sha1_to_hex(obj->sha1));
+ 		if (write_lost_and_found) {
+-			char *filename =3D git_path("lost-found/%s/%s",
++			const char *filename =3D git_path("lost-found/%s/%s",
+ 				obj->type =3D=3D OBJ_COMMIT ? "commit" : "other",
+ 				sha1_to_hex(obj->sha1));
+ 			FILE *f;
+=20
+-			if (safe_create_leading_directories(filename)) {
++			if (safe_create_leading_directories_const(filename)) {
+ 				error("Could not create lost-found");
+ 				return;
+ 			}
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 85bba35..4d27acb 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -599,7 +599,7 @@ static void run_update_post_hook(struct command *co=
+mmands)
+ 	int argc;
+ 	const char **argv;
+ 	struct child_process proc;
+-	char *hook;
++	const char *hook;
+=20
+ 	hook =3D find_hook("post-update");
+ 	for (argc =3D 0, cmd =3D commands; cmd; cmd =3D cmd->next) {
+diff --git a/builtin/remote.c b/builtin/remote.c
+index b3ab4cf..ca3cb3b 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -582,7 +582,7 @@ static int migrate_file(struct remote *remote)
+ {
+ 	struct strbuf buf =3D STRBUF_INIT;
+ 	int i;
+-	char *path =3D NULL;
++	const char *path =3D NULL;
+=20
+ 	strbuf_addf(&buf, "remote.%s.url", remote->name);
+ 	for (i =3D 0; i < remote->url_nr; i++)
+diff --git a/builtin/repack.c b/builtin/repack.c
+index bb2314c..4d35349 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -257,7 +257,8 @@ int cmd_repack(int argc, const char **argv, const c=
+har *prefix)
+ 	failed =3D 0;
+ 	for_each_string_list_item(item, &names) {
+ 		for (ext =3D 0; ext < 2; ext++) {
+-			char *fname, *fname_old;
++			const char *fname_old;
++			char *fname;
+ 			fname =3D mkpathdup("%s/pack-%s%s", packdir,
+ 						item->string, exts[ext]);
+ 			if (!file_exists(fname)) {
+@@ -285,7 +286,8 @@ int cmd_repack(int argc, const char **argv, const c=
+har *prefix)
+ 	if (failed) {
+ 		struct string_list rollback_failure =3D STRING_LIST_INIT_DUP;
+ 		for_each_string_list_item(item, &rollback) {
+-			char *fname, *fname_old;
++			const char *fname_old;
++			char *fname;
+ 			fname =3D mkpathdup("%s/%s", packdir, item->string);
+ 			fname_old =3D mkpath("%s/old-%s", packdir, item->string);
+ 			if (rename(fname_old, fname))
+@@ -334,7 +336,7 @@ int cmd_repack(int argc, const char **argv, const c=
+har *prefix)
+ 	/* Remove the "old-" files */
+ 	for_each_string_list_item(item, &names) {
+ 		for (ext =3D 0; ext < 2; ext++) {
+-			char *fname;
++			const char *fname;
+ 			fname =3D mkpath("%s/old-%s%s",
+ 					packdir,
+ 					item->string,
 diff --git a/cache.h b/cache.h
-index a344a5f..0fae730 100644
+index dc040fb..a344a5f 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -646,8 +646,8 @@ extern int check_repository_format(void);
-=20
- extern char *mksnpath(char *buf, size_t n, const char *fmt, ...)
- 	__attribute__((format (printf, 3, 4)));
--extern char *git_snpath(char *buf, size_t n, const char *fmt, ...)
--	__attribute__((format (printf, 3, 4)));
-+extern void strbuf_git_path(struct strbuf *sb, const char *fmt, ...)
-+	__attribute__((format (printf, 2, 3)));
- extern char *git_pathdup(const char *fmt, ...)
+@@ -654,9 +654,9 @@ extern char *mkpathdup(const char *fmt, ...)
  	__attribute__((format (printf, 1, 2)));
- extern char *mkpathdup(const char *fmt, ...)
+=20
+ /* Return a statically allocated filename matching the sha1 signature =
+*/
+-extern char *mkpath(const char *fmt, ...) __attribute__((format (print=
+f, 1, 2)));
+-extern char *git_path(const char *fmt, ...) __attribute__((format (pri=
+ntf, 1, 2)));
+-extern char *git_path_submodule(const char *path, const char *fmt, ...=
+)
++extern const char *mkpath(const char *fmt, ...) __attribute__((format =
+(printf, 1, 2)));
++extern const char *git_path(const char *fmt, ...) __attribute__((forma=
+t (printf, 1, 2)));
++extern const char *git_path_submodule(const char *path, const char *fm=
+t, ...)
+ 	__attribute__((format (printf, 2, 3)));
+=20
+ extern char *sha1_file_name(const unsigned char *sha1);
+diff --git a/fast-import.c b/fast-import.c
+index 4fd18a3..a9f328d 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -403,7 +403,7 @@ static void dump_marks_helper(FILE *, uintmax_t, st=
+ruct mark_set *);
+=20
+ static void write_crash_report(const char *err)
+ {
+-	char *loc =3D git_path("fast_import_crash_%"PRIuMAX, (uintmax_t) getp=
+id());
++	const char *loc =3D git_path("fast_import_crash_%"PRIuMAX, (uintmax_t=
+) getpid());
+ 	FILE *rpt =3D fopen(loc, "w");
+ 	struct branch *b;
+ 	unsigned long lu;
+diff --git a/notes-merge.c b/notes-merge.c
+index 94a1a8a..d59bcc2 100644
+--- a/notes-merge.c
++++ b/notes-merge.c
+@@ -280,7 +280,7 @@ static void check_notes_merge_worktree(struct notes=
+_merge_options *o)
+ 				    "(%s exists).", git_path("NOTES_MERGE_*"));
+ 		}
+=20
+-		if (safe_create_leading_directories(git_path(
++		if (safe_create_leading_directories_const(git_path(
+ 				NOTES_MERGE_WORKTREE "/.test")))
+ 			die_errno("unable to create directory %s",
+ 				  git_path(NOTES_MERGE_WORKTREE));
+@@ -295,8 +295,8 @@ static void write_buf_to_worktree(const unsigned ch=
+ar *obj,
+ 				  const char *buf, unsigned long size)
+ {
+ 	int fd;
+-	char *path =3D git_path(NOTES_MERGE_WORKTREE "/%s", sha1_to_hex(obj))=
+;
+-	if (safe_create_leading_directories(path))
++	const char *path =3D git_path(NOTES_MERGE_WORKTREE "/%s", sha1_to_hex=
+(obj));
++	if (safe_create_leading_directories_const(path))
+ 		die_errno("unable to create directory for '%s'", path);
+ 	if (file_exists(path))
+ 		die("found existing file at '%s'", path);
 diff --git a/path.c b/path.c
-index 36d461e..417df76 100644
+index 5346700..36d461e 100644
 --- a/path.c
 +++ b/path.c
-@@ -70,19 +70,12 @@ static void vsnpath(struct strbuf *buf, const char =
-*fmt, va_list args)
- 	strbuf_cleanup_path(buf);
+@@ -106,7 +106,7 @@ char *mkpathdup(const char *fmt, ...)
+ 	return strbuf_detach(&sb, NULL);
  }
 =20
--char *git_snpath(char *buf, size_t n, const char *fmt, ...)
-+void strbuf_git_path(struct strbuf *sb, const char *fmt, ...)
+-char *mkpath(const char *fmt, ...)
++const char *mkpath(const char *fmt, ...)
  {
--	struct strbuf sb =3D STRBUF_INIT;
  	va_list args;
- 	va_start(args, fmt);
--	vsnpath(&sb, fmt, args);
-+	vsnpath(sb, fmt, args);
- 	va_end(args);
--	if (sb.len >=3D n)
--		strlcpy(buf, bad_path, n);
--	else
--		memcpy(buf, sb.buf, sb.len + 1);
--	strbuf_release(&sb);
--	return buf;
+ 	struct strbuf *pathname =3D get_pathname();
+@@ -116,7 +116,7 @@ char *mkpath(const char *fmt, ...)
+ 	return cleanup_path(pathname->buf);
  }
 =20
- char *git_pathdup(const char *fmt, ...)
+-char *git_path(const char *fmt, ...)
++const char *git_path(const char *fmt, ...)
+ {
+ 	struct strbuf *pathname =3D get_pathname();
+ 	va_list args;
+@@ -152,7 +152,7 @@ void home_config_paths(char **global, char **xdg, c=
+har *file)
+ 	free(to_free);
+ }
+=20
+-char *git_path_submodule(const char *path, const char *fmt, ...)
++const char *git_path_submodule(const char *path, const char *fmt, ...)
+ {
+ 	struct strbuf *buf =3D get_pathname();
+ 	const char *git_dir;
 diff --git a/refs.c b/refs.c
-index f846f2f..c5613b0 100644
+index 89228e2..f846f2f 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -1325,10 +1325,12 @@ static const char *handle_missing_loose_ref(con=
-st char *refname,
-=20
- const char *resolve_ref_unsafe(const char *refname, unsigned char *sha=
-1, int reading, int *flag)
+@@ -1232,7 +1232,7 @@ static int resolve_gitlink_ref_recursive(struct r=
+ef_cache *refs,
  {
-+	struct strbuf sb_path =3D STRBUF_INIT;
- 	int depth =3D MAXDEPTH;
- 	ssize_t len;
- 	char buffer[256];
- 	static char refname_buffer[256];
-+	const char *ret;
+ 	int fd, len;
+ 	char buffer[128], *p;
+-	char *path;
++	const char *path;
 =20
- 	if (flag)
- 		*flag =3D 0;
-@@ -1337,15 +1339,17 @@ const char *resolve_ref_unsafe(const char *refn=
-ame, unsigned char *sha1, int rea
- 		return NULL;
-=20
- 	for (;;) {
--		char path[PATH_MAX];
-+		const char *path;
- 		struct stat st;
- 		char *buf;
- 		int fd;
-=20
- 		if (--depth < 0)
--			return NULL;
-+			goto fail;
-=20
--		git_snpath(path, sizeof(path), "%s", refname);
-+		strbuf_reset(&sb_path);
-+		strbuf_git_path(&sb_path, "%s", refname);
-+		path =3D sb_path.buf;
-=20
- 		/*
- 		 * We might have to loop back here to avoid a race
-@@ -1359,10 +1363,11 @@ const char *resolve_ref_unsafe(const char *refn=
-ame, unsigned char *sha1, int rea
- 	stat_ref:
- 		if (lstat(path, &st) < 0) {
- 			if (errno =3D=3D ENOENT)
--				return handle_missing_loose_ref(refname, sha1,
--								reading, flag);
-+				ret =3D handle_missing_loose_ref(refname, sha1,
-+							       reading, flag);
- 			else
--				return NULL;
-+				ret =3D NULL;
-+			goto done;
- 		}
-=20
- 		/* Follow "normalized" - ie "refs/.." symlinks by hand */
-@@ -1373,7 +1378,7 @@ const char *resolve_ref_unsafe(const char *refnam=
-e, unsigned char *sha1, int rea
- 					/* inconsistent with lstat; retry */
- 					goto stat_ref;
- 				else
--					return NULL;
-+					goto fail;
- 			}
- 			buffer[len] =3D 0;
- 			if (starts_with(buffer, "refs/") &&
-@@ -1389,7 +1394,7 @@ const char *resolve_ref_unsafe(const char *refnam=
-e, unsigned char *sha1, int rea
- 		/* Is it a directory? */
- 		if (S_ISDIR(st.st_mode)) {
- 			errno =3D EISDIR;
--			return NULL;
-+			goto fail;
- 		}
-=20
- 		/*
-@@ -1402,12 +1407,13 @@ const char *resolve_ref_unsafe(const char *refn=
-ame, unsigned char *sha1, int rea
- 				/* inconsistent with lstat; retry */
- 				goto stat_ref;
- 			else
--				return NULL;
-+				goto fail;
- 		}
-+
- 		len =3D read_in_full(fd, buffer, sizeof(buffer)-1);
- 		close(fd);
- 		if (len < 0)
--			return NULL;
-+			goto fail;
- 		while (len && isspace(buffer[len-1]))
- 			len--;
- 		buffer[len] =3D '\0';
-@@ -1424,9 +1430,10 @@ const char *resolve_ref_unsafe(const char *refna=
-me, unsigned char *sha1, int rea
- 			    (buffer[40] !=3D '\0' && !isspace(buffer[40]))) {
- 				if (flag)
- 					*flag |=3D REF_ISBROKEN;
--				return NULL;
-+				goto fail;
- 			}
--			return refname;
-+			ret =3D refname;
-+			goto done;
- 		}
- 		if (flag)
- 			*flag |=3D REF_ISSYMREF;
-@@ -1436,10 +1443,15 @@ const char *resolve_ref_unsafe(const char *refn=
-ame, unsigned char *sha1, int rea
- 		if (check_refname_format(buf, REFNAME_ALLOW_ONELEVEL)) {
- 			if (flag)
- 				*flag |=3D REF_ISBROKEN;
--			return NULL;
-+			goto fail;
- 		}
- 		refname =3D strcpy(refname_buffer, buf);
- 	}
-+fail:
-+	ret =3D NULL;
-+done:
-+	strbuf_release(&sb_path);
-+	return ret;
- }
-=20
- char *resolve_refdup(const char *ref, unsigned char *sha1, int reading=
-, int *flag)
-@@ -2717,41 +2729,41 @@ static int copy_msg(char *buf, const char *msg)
- 	return cp - buf;
- }
-=20
--int log_ref_setup(const char *refname, char *logfile, int bufsize)
-+int log_ref_setup(const char *refname, struct strbuf *logfile)
+ 	if (recursion > MAXDEPTH || strlen(refname) > MAXREFLEN)
+ 		return -1;
+@@ -2032,7 +2032,7 @@ static struct ref_lock *lock_ref_sha1_basic(const=
+ char *refname,
+ 					    const unsigned char *old_sha1,
+ 					    int flags, int *type_p)
  {
- 	int logfd, oflags =3D O_APPEND | O_WRONLY;
+-	char *ref_file;
++	const char *ref_file;
+ 	const char *orig_refname =3D refname;
+ 	struct ref_lock *lock;
+ 	int last_errno =3D 0;
+@@ -2095,7 +2095,7 @@ static struct ref_lock *lock_ref_sha1_basic(const=
+ char *refname,
+ 		lock->force_write =3D 1;
 =20
--	git_snpath(logfile, bufsize, "logs/%s", refname);
-+	strbuf_git_path(logfile, "logs/%s", refname);
- 	if (log_all_ref_updates &&
- 	    (starts_with(refname, "refs/heads/") ||
- 	     starts_with(refname, "refs/remotes/") ||
- 	     starts_with(refname, "refs/notes/") ||
- 	     !strcmp(refname, "HEAD"))) {
--		if (safe_create_leading_directories(logfile) < 0)
-+		if (safe_create_leading_directories(logfile->buf) < 0)
- 			return error("unable to create directory for %s",
--				     logfile);
-+				     logfile->buf);
- 		oflags |=3D O_CREAT;
- 	}
+  retry:
+-	switch (safe_create_leading_directories(ref_file)) {
++	switch (safe_create_leading_directories_const(ref_file)) {
+ 	case SCLD_OK:
+ 		break; /* success */
+ 	case SCLD_VANISHED:
+@@ -2533,7 +2533,7 @@ static int rename_tmp_log(const char *newrefname)
+ 	int attempts_remaining =3D 4;
 =20
--	logfd =3D open(logfile, oflags, 0666);
-+	logfd =3D open(logfile->buf, oflags, 0666);
- 	if (logfd < 0) {
- 		if (!(oflags & O_CREAT) && errno =3D=3D ENOENT)
- 			return 0;
-=20
- 		if ((oflags & O_CREAT) && errno =3D=3D EISDIR) {
--			if (remove_empty_directories(logfile)) {
-+			if (remove_empty_directories(logfile->buf)) {
- 				return error("There are still logs under '%s'",
--					     logfile);
-+					     logfile->buf);
- 			}
--			logfd =3D open(logfile, oflags, 0666);
-+			logfd =3D open(logfile->buf, oflags, 0666);
- 		}
-=20
- 		if (logfd < 0)
- 			return error("Unable to append to %s: %s",
--				     logfile, strerror(errno));
-+				     logfile->buf, strerror(errno));
- 	}
-=20
--	adjust_shared_perm(logfile);
-+	adjust_shared_perm(logfile->buf);
- 	close(logfd);
- 	return 0;
- }
-@@ -2762,20 +2774,22 @@ static int log_ref_write(const char *refname, c=
-onst unsigned char *old_sha1,
- 	int logfd, result, written, oflags =3D O_APPEND | O_WRONLY;
- 	unsigned maxlen, len;
- 	int msglen;
--	char log_file[PATH_MAX];
-+	struct strbuf sb_log_file =3D STRBUF_INIT;
-+	const char *log_file;
- 	char *logrec;
- 	const char *committer;
-=20
- 	if (log_all_ref_updates < 0)
- 		log_all_ref_updates =3D !is_bare_repository();
-=20
--	result =3D log_ref_setup(refname, log_file, sizeof(log_file));
-+	result =3D log_ref_setup(refname, &sb_log_file);
- 	if (result)
--		return result;
-+		goto done;
-+	log_file =3D sb_log_file.buf;
-=20
- 	logfd =3D open(log_file, oflags);
- 	if (logfd < 0)
--		return 0;
-+		goto done;
- 	msglen =3D msg ? strlen(msg) : 0;
- 	committer =3D git_committer_info(0);
- 	maxlen =3D strlen(committer) + msglen + 100;
-@@ -2788,9 +2802,13 @@ static int log_ref_write(const char *refname, co=
-nst unsigned char *old_sha1,
- 		len +=3D copy_msg(logrec + len - 1, msg) - 1;
- 	written =3D len <=3D maxlen ? write_in_full(logfd, logrec, len) : -1;
- 	free(logrec);
--	if (close(logfd) !=3D 0 || written !=3D len)
--		return error("Unable to append to %s", log_file);
--	return 0;
-+	if (close(logfd) !=3D 0 || written !=3D len) {
-+		error("Unable to append to %s", log_file);
-+		result =3D -1;
-+	}
-+done:
-+	strbuf_release(&sb_log_file);
-+	return result;
+  retry:
+-	switch (safe_create_leading_directories(git_path("logs/%s", newrefnam=
+e))) {
++	switch (safe_create_leading_directories_const(git_path("logs/%s", new=
+refname))) {
+ 	case SCLD_OK:
+ 		break; /* success */
+ 	case SCLD_VANISHED:
+diff --git a/run-command.c b/run-command.c
+index 3914d9c..a94a612 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -751,9 +751,9 @@ int finish_async(struct async *async)
+ #endif
  }
 =20
- static int is_branch(const char *refname)
-diff --git a/refs.h b/refs.h
-index 87a1a79..783033a 100644
---- a/refs.h
-+++ b/refs.h
-@@ -166,7 +166,7 @@ extern void unlock_ref(struct ref_lock *lock);
- extern int write_ref_sha1(struct ref_lock *lock, const unsigned char *=
-sha1, const char *msg);
+-char *find_hook(const char *name)
++const char *find_hook(const char *name)
+ {
+-	char *path =3D git_path("hooks/%s", name);
++	const char *path =3D git_path("hooks/%s", name);
+ 	if (access(path, X_OK) < 0)
+ 		path =3D NULL;
 =20
- /** Setup reflog before using. **/
--int log_ref_setup(const char *ref_name, char *logfile, int bufsize);
-+int log_ref_setup(const char *ref_name, struct strbuf *logfile);
+diff --git a/run-command.h b/run-command.h
+index 6b985af..da01954 100644
+--- a/run-command.h
++++ b/run-command.h
+@@ -45,7 +45,7 @@ int start_command(struct child_process *);
+ int finish_command(struct child_process *);
+ int run_command(struct child_process *);
 =20
- /** Reads log for the value of ref during at_time. **/
- extern int read_ref_at(const char *refname, unsigned long at_time, int=
- cnt,
+-extern char *find_hook(const char *name);
++extern const char *find_hook(const char *name);
+ LAST_ARG_MUST_BE_NULL
+ extern int run_hook(const char *index_file, const char *name, ...);
+=20
+diff --git a/sha1_file.c b/sha1_file.c
+index 6e8c05d..8af0e18 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -402,7 +402,7 @@ void add_to_alternates_file(const char *reference)
+ {
+ 	struct lock_file *lock =3D xcalloc(1, sizeof(struct lock_file));
+ 	int fd =3D hold_lock_file_for_append(lock, git_path("objects/info/alt=
+ernates"), LOCK_DIE_ON_ERROR);
+-	char *alt =3D mkpath("%s\n", reference);
++	const char *alt =3D mkpath("%s\n", reference);
+ 	write_or_die(fd, alt, strlen(alt));
+ 	if (commit_lock_file(lock))
+ 		die("could not close alternates file");
 --=20
 1.9.0.40.gaa8c3ea
