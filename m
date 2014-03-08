@@ -1,71 +1,52 @@
-From: =?utf-8?b?w5h5c3RlaW4=?= Walle <oystwa@gmail.com>
-Subject: Re: [PATCH v7 00/11] Add interpret-trailers builtin
-Date: Sat, 8 Mar 2014 11:54:14 +0000 (UTC)
-Message-ID: <loom.20140308T124447-78@post.gmane.org>
-References: <20140306220029.29150.64594.chriscool@tuxfamily.org> <xmqq8uslu1bi.fsf@gitster.dls.corp.google.com>
+From: Guillaume Gelin <contact@ramnes.eu>
+Subject: git 1.9.0 segfault
+Date: Sat, 8 Mar 2014 16:23:43 +0000
+Message-ID: <CAPn4x+oTTzYMSFzqUmJ8tOO0DdqR+HJJdoeXFZxhABu6B=QmBQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=ISO-8859-1
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 08 12:54:47 2014
+X-From: git-owner@vger.kernel.org Sat Mar 08 17:24:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WMFq0-0005NL-Rj
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Mar 2014 12:54:45 +0100
+	id 1WMK2l-0007iZ-PY
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Mar 2014 17:24:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751278AbaCHLyl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Mar 2014 06:54:41 -0500
-Received: from plane.gmane.org ([80.91.229.3]:46316 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750981AbaCHLyj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Mar 2014 06:54:39 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1WMFpu-0005IV-OX
-	for git@vger.kernel.org; Sat, 08 Mar 2014 12:54:38 +0100
-Received: from 80.156.189.109.customer.cdi.no ([109.189.156.80])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 08 Mar 2014 12:54:38 +0100
-Received: from oystwa by 80.156.189.109.customer.cdi.no with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 08 Mar 2014 12:54:38 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 109.189.156.80 (Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0)
+	id S1751818AbaCHQYH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Mar 2014 11:24:07 -0500
+Received: from mail-wg0-f50.google.com ([74.125.82.50]:58453 "EHLO
+	mail-wg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751577AbaCHQYG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Mar 2014 11:24:06 -0500
+Received: by mail-wg0-f50.google.com with SMTP id x13so6712723wgg.9
+        for <git@vger.kernel.org>; Sat, 08 Mar 2014 08:24:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:from:date:message-id:subject:to:content-type;
+        bh=AlJjByA09TMCnvN5SG5JHH6Dx1vyVBJNnY9BQXKjyUg=;
+        b=Nj4uFUg5rwM7Al4/BN5tz0XaclwS1kOWSi/N5u03IAaOLsEqNxT0Arjn8yQFmzDtVv
+         U9qnWHkePbKZRWXOyTwJhgXVd1/uFw4Ff/Hfiha7iQguQsCp2vRhiKIGdZLc2GGPOvkR
+         u/pYYYg3JF/8xzdvfgjuyA5B0R2u1FDvGC3+aGDYjdwZNyc2qYXIQ/RnVm+xbrRaPGxK
+         lSvKV8g/FSXclZP5/dVwZQu2Y3KzqAdp62k1PSroDPxtN2nUnEW6NcKpRk6frc65sjE9
+         9tq9CEoe9+sBes+54aGF+3BZE9NBFK/SHX1PY4UvrwZ42/ZUq/e4XeTS6jda9eONwkdA
+         CFcQ==
+X-Received: by 10.180.94.196 with SMTP id de4mr2099203wib.16.1394295844061;
+ Sat, 08 Mar 2014 08:24:04 -0800 (PST)
+Received: by 10.216.191.200 with HTTP; Sat, 8 Mar 2014 08:23:43 -0800 (PST)
+X-Google-Sender-Auth: fQyaHT0_nuAOcCFHR5oEWVVrAFU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243675>
 
-Junio C Hamano <gitster <at> pobox.com> writes:
+Hi,
 
-> 
-> 	...
-> 
-> is easier to read and maintain if written like so (with using HT
-> properly---our MUAs may damage it and turn the indentation into
-> spaces):
-> 
-> 	... &&
-> 	sed -e "s/ Z$/ /" >>expect <<-\EOF &&
->         Fixes: Z
->         Acked-by= Z
->         Reviewed-by: Z
->         Signed-off-by: Z
-> 	EOF
-> 	...
-> 
+http://pastebin.com/Np7L54ar
 
-How about:
+Cheers,
 
-   printf '%s: \n' Fixes Acked-by Reviewed-by Signed-off-by >> expect
-
-This solution scores high marks in both readability and maintainability
-in my mind.
+-- 
+Guillaume Gelin
