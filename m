@@ -1,350 +1,68 @@
-From: Rohit Mani <rohit.mani@outlook.com>
-Subject: [GSoC][PATCH v2] use strchrnul() in place of strchr() and strlen()
-Date: Fri, 7 Mar 2014 22:48:31 -0800
-Message-ID: <BLU0-SMTP956BEABA437FB370F76953918A0@phx.gbl>
-References: <y>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v5 01/28] path.c: make get_pathname() return strbuf
+ instead of static buffer
+Date: Sat, 8 Mar 2014 15:57:49 +0700
+Message-ID: <CACsJy8BMK-CkzQjx5cRA6EK4rHdvng9QtNuh5jexd2UKpM_CyA@mail.gmail.com>
+References: <1393675983-3232-1-git-send-email-pclouds@gmail.com>
+ <1394246900-31535-1-git-send-email-pclouds@gmail.com> <1394246900-31535-2-git-send-email-pclouds@gmail.com>
+ <531AB47B.7070506@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Rohit Mani <rohit.mani@outlook.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 08 07:49:58 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sat Mar 08 09:58:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WMB53-0002Og-FL
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Mar 2014 07:49:57 +0100
+	id 1WMD5n-0001NJ-Uw
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Mar 2014 09:58:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750961AbaCHGtY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Mar 2014 01:49:24 -0500
-Received: from [65.55.116.79] ([65.55.116.79]:8354 "EHLO
-	blu0-omc3-s4.blu0.hotmail.com" rhost-flags-FAIL-FAIL-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1750911AbaCHGtX (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 8 Mar 2014 01:49:23 -0500
-Received: from BLU0-SMTP95 ([65.55.116.74]) by blu0-omc3-s4.blu0.hotmail.com with Microsoft SMTPSVC(6.0.3790.4675);
-	 Fri, 7 Mar 2014 22:49:02 -0800
-X-TMN: [3Xmzj2dRothgxxZtAx0cZ9SIA5ETvPR5CIhgvDJIPEs=]
-X-Originating-Email: [rohit.mani@outlook.com]
-Received: from rohit-ubuntu.socal.rr.com ([142.136.123.189]) by BLU0-SMTP95.phx.gbl over TLS secured channel with Microsoft SMTPSVC(6.0.3790.4675);
-	 Fri, 7 Mar 2014 22:49:01 -0800
-X-Mailer: git-send-email 1.7.9.5
-In-Reply-To: <y>
-X-OriginalArrivalTime: 08 Mar 2014 06:49:01.0408 (UTC) FILETIME=[7D07EE00:01CF3A9A]
+	id S1751013AbaCHI6U convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 Mar 2014 03:58:20 -0500
+Received: from mail-qa0-f46.google.com ([209.85.216.46]:36875 "EHLO
+	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750901AbaCHI6T convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 8 Mar 2014 03:58:19 -0500
+Received: by mail-qa0-f46.google.com with SMTP id i13so5124783qae.33
+        for <git@vger.kernel.org>; Sat, 08 Mar 2014 00:58:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=MuLag/PDc6sbxjHaYI1LuKYOyZGiYVsBvwo5fwBmQPE=;
+        b=fb0/jAVgxaRHpcdCk/UWMKZkNdpLz+xY6t13msSolUft0d7frRGdJTsO8tKnG5W5nZ
+         9ajOYrj4jTf/rrqEQu6RjacR/y+x/KW+eqixpohulDQreJAPV0kF3FEoajVErcVCPHKB
+         G1cfqCWAR0fN9H+aFG10lnznUPBnmDpUzPaa3Z+gE5luKuACrbGF40isLFZjZbOQaulY
+         nmSSrSCL+Gmm1UhIN4Bvcb8lLWg5CwE14FlfqLnJ9W8Nh15Cdze8EkbHyjJdkxQpcwnO
+         gHnTueRVL/4SuwSX6qjlAfqxSTdl1/F7POs7hVcJGwBwrwzWv7/O9sbHjffZRvanq7VM
+         X8Zg==
+X-Received: by 10.224.151.147 with SMTP id c19mr856974qaw.86.1394269099133;
+ Sat, 08 Mar 2014 00:58:19 -0800 (PST)
+Received: by 10.96.215.102 with HTTP; Sat, 8 Mar 2014 00:57:49 -0800 (PST)
+In-Reply-To: <531AB47B.7070506@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243672>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243673>
 
-Avoid scanning strings twice, once with strchr() and then with
-strlen(), by using strchrnul().
+On Sat, Mar 8, 2014 at 1:11 PM, Torsten B=C3=B6gershausen <tboegi@web.d=
+e> wrote:
+> On 2014-03-08 03.47, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+>> We've been avoiding PATH_MAX whenever possible. This patch makes
+>> get_pathname() return a strbuf and updates the callers to take
+>> advantage of this. The code is simplified as we no longer need to
+>> worry about buffer overflow.
+>>
+>> vsnpath() behavior is changed slightly: previously it always clears
+> Minor question:
+> Is the function name vsnpath() appropriate any more ?
+> How about renaming the function into strbuf_vaddpath() ?
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Rohit Mani <rohit.mani@outlook.com>
----
-PATCH v2 Updated commit description
-	Updated code according to suggestions [1]
-[1]	http://article.gmane.org/gmane.comp.version-control.git/243550
-	
- archive.c        |    4 ++--
- cache-tree.c     |   15 ++++++---------
- diff.c           |    9 +++------
- fast-import.c    |   35 +++++++++++++----------------------
- match-trees.c    |   11 ++++-------
- parse-options.c  |    5 +----
- pretty.c         |    5 ++---
- remote-testsvn.c |    4 ++--
- ws.c             |    7 ++-----
- 9 files changed, 35 insertions(+), 60 deletions(-)
-
-diff --git a/archive.c b/archive.c
-index 346f3b2..d196215 100644
---- a/archive.c
-+++ b/archive.c
-@@ -259,8 +259,8 @@ static void parse_treeish_arg(const char **argv,
- 	/* Remotes are only allowed to fetch actual refs */
- 	if (remote) {
- 		char *ref = NULL;
--		const char *colon = strchr(name, ':');
--		int refnamelen = colon ? colon - name : strlen(name);
-+		const char *colon = strchrnul(name, ':');
-+		int refnamelen = colon - name;
- 
- 		if (!dwim_ref(name, refnamelen, sha1, &ref))
- 			die("no such ref: %.*s", refnamelen, name);
-diff --git a/cache-tree.c b/cache-tree.c
-index 0bbec43..2130f32 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -121,11 +121,11 @@ void cache_tree_invalidate_path(struct cache_tree *it, const char *path)
- 
- 	if (!it)
- 		return;
--	slash = strchr(path, '/');
-+	slash = strchrnul(path, '/');
-+	namelen = slash - path;
- 	it->entry_count = -1;
--	if (!slash) {
-+	if (!*slash) {
- 		int pos;
--		namelen = strlen(path);
- 		pos = subtree_pos(it, path, namelen);
- 		if (0 <= pos) {
- 			cache_tree_free(&it->down[pos]->cache_tree);
-@@ -143,7 +143,6 @@ void cache_tree_invalidate_path(struct cache_tree *it, const char *path)
- 		}
- 		return;
- 	}
--	namelen = slash - path;
- 	down = find_subtree(it, path, namelen, 0);
- 	if (down)
- 		cache_tree_invalidate_path(down->cache_tree, slash + 1);
-@@ -554,9 +553,7 @@ static struct cache_tree *cache_tree_find(struct cache_tree *it, const char *pat
- 		const char *slash;
- 		struct cache_tree_sub *sub;
- 
--		slash = strchr(path, '/');
--		if (!slash)
--			slash = path + strlen(path);
-+		slash = strchrnul(path, '/');
- 		/* between path and slash is the name of the
- 		 * subtree to look for.
- 		 */
-@@ -564,10 +561,10 @@ static struct cache_tree *cache_tree_find(struct cache_tree *it, const char *pat
- 		if (!sub)
- 			return NULL;
- 		it = sub->cache_tree;
--		if (slash)
-+		if (*slash)
- 			while (*slash && *slash == '/')
- 				slash++;
--		if (!slash || !*slash)
-+		if (!*slash)
- 			return it; /* prefix ended with slashes */
- 		path = slash;
- 	}
-diff --git a/diff.c b/diff.c
-index e800666..cb6b98b 100644
---- a/diff.c
-+++ b/diff.c
-@@ -3365,14 +3365,11 @@ static int opt_arg(const char *arg, int arg_short, const char *arg_long, int *va
- 	if (c != '-')
- 		return 0;
- 	arg++;
--	eq = strchr(arg, '=');
--	if (eq)
--		len = eq - arg;
--	else
--		len = strlen(arg);
-+	eq = strchrnul(arg, '=');
-+	len = eq - arg;
- 	if (!len || strncmp(arg, arg_long, len))
- 		return 0;
--	if (eq) {
-+	if (*eq) {
- 		int n;
- 		char *end;
- 		if (!isdigit(*++eq))
-diff --git a/fast-import.c b/fast-import.c
-index 4fd18a3..dbbf6b0 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -1485,14 +1485,11 @@ static int tree_content_set(
- 	unsigned int i, n;
- 	struct tree_entry *e;
- 
--	slash1 = strchr(p, '/');
--	if (slash1)
--		n = slash1 - p;
--	else
--		n = strlen(p);
-+	slash1 = strchrnul(p, '/');
-+	n = slash1 - p;
- 	if (!n)
- 		die("Empty path component found in input");
--	if (!slash1 && !S_ISDIR(mode) && subtree)
-+	if (!*slash1 && !S_ISDIR(mode) && subtree)
- 		die("Non-directories cannot have subtrees");
- 
- 	if (!root->tree)
-@@ -1501,7 +1498,7 @@ static int tree_content_set(
- 	for (i = 0; i < t->entry_count; i++) {
- 		e = t->entries[i];
- 		if (e->name->str_len == n && !strncmp_icase(p, e->name->str_dat, n)) {
--			if (!slash1) {
-+			if (!*slash1) {
- 				if (!S_ISDIR(mode)
- 						&& e->versions[1].mode == mode
- 						&& !hashcmp(e->versions[1].sha1, sha1))
-@@ -1552,7 +1549,7 @@ static int tree_content_set(
- 	e->versions[0].mode = 0;
- 	hashclr(e->versions[0].sha1);
- 	t->entries[t->entry_count++] = e;
--	if (slash1) {
-+	if (*slash1) {
- 		e->tree = new_tree_content(8);
- 		e->versions[1].mode = S_IFDIR;
- 		tree_content_set(e, slash1 + 1, sha1, mode, subtree);
-@@ -1576,12 +1573,9 @@ static int tree_content_remove(
- 	unsigned int i, n;
- 	struct tree_entry *e;
- 
--	slash1 = strchr(p, '/');
--	if (slash1)
--		n = slash1 - p;
--	else
--		n = strlen(p);
--
-+	slash1 = strchrnul(p, '/');
-+	n = slash1 - p;
-+	
- 	if (!root->tree)
- 		load_tree(root);
- 
-@@ -1594,7 +1588,7 @@ static int tree_content_remove(
- 	for (i = 0; i < t->entry_count; i++) {
- 		e = t->entries[i];
- 		if (e->name->str_len == n && !strncmp_icase(p, e->name->str_dat, n)) {
--			if (slash1 && !S_ISDIR(e->versions[1].mode))
-+			if (*slash1 && !S_ISDIR(e->versions[1].mode))
- 				/*
- 				 * If p names a file in some subdirectory, and a
- 				 * file or symlink matching the name of the
-@@ -1602,7 +1596,7 @@ static int tree_content_remove(
- 				 * exist and need not be deleted.
- 				 */
- 				return 1;
--			if (!slash1 || !S_ISDIR(e->versions[1].mode))
-+			if (!*slash1 || !S_ISDIR(e->versions[1].mode))
- 				goto del_entry;
- 			if (!e->tree)
- 				load_tree(e);
-@@ -1644,11 +1638,8 @@ static int tree_content_get(
- 	unsigned int i, n;
- 	struct tree_entry *e;
- 
--	slash1 = strchr(p, '/');
--	if (slash1)
--		n = slash1 - p;
--	else
--		n = strlen(p);
-+	slash1 = strchrnul(p, '/');
-+	n = slash1 - p;
- 	if (!n && !allow_root)
- 		die("Empty path component found in input");
- 
-@@ -1664,7 +1655,7 @@ static int tree_content_get(
- 	for (i = 0; i < t->entry_count; i++) {
- 		e = t->entries[i];
- 		if (e->name->str_len == n && !strncmp_icase(p, e->name->str_dat, n)) {
--			if (!slash1)
-+			if (!*slash1)
- 				goto found_entry;
- 			if (!S_ISDIR(e->versions[1].mode))
- 				return 0;
-diff --git a/match-trees.c b/match-trees.c
-index 7873cde..e80b4af 100644
---- a/match-trees.c
-+++ b/match-trees.c
-@@ -182,13 +182,10 @@ static int splice_tree(const unsigned char *hash1,
- 	enum object_type type;
- 	int status;
- 
--	subpath = strchr(prefix, '/');
--	if (!subpath)
--		toplen = strlen(prefix);
--	else {
--		toplen = subpath - prefix;
-+	subpath = strchrnul(prefix, '/');
-+	toplen = subpath - prefix;
-+	if (*subpath)
- 		subpath++;
--	}
- 
- 	buf = read_sha1_file(hash1, &type, &sz);
- 	if (!buf)
-@@ -215,7 +212,7 @@ static int splice_tree(const unsigned char *hash1,
- 	if (!rewrite_here)
- 		die("entry %.*s not found in tree %s",
- 		    toplen, prefix, sha1_to_hex(hash1));
--	if (subpath) {
-+	if (*subpath) {
- 		status = splice_tree(rewrite_here, subpath, hash2, subtree);
- 		if (status)
- 			return status;
-diff --git a/parse-options.c b/parse-options.c
-index 7b8d3fa..a5fa0b8 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -223,13 +223,10 @@ static int parse_long_opt(struct parse_opt_ctx_t *p, const char *arg,
-                           const struct option *options)
- {
- 	const struct option *all_opts = options;
--	const char *arg_end = strchr(arg, '=');
-+	const char *arg_end = strchrnul(arg, '=');
- 	const struct option *abbrev_option = NULL, *ambiguous_option = NULL;
- 	int abbrev_flags = 0, ambiguous_flags = 0;
- 
--	if (!arg_end)
--		arg_end = arg + strlen(arg);
--
- 	for (; options->type != OPTION_END; options++) {
- 		const char *rest, *long_name = options->long_name;
- 		int flags = 0, opt_flags = 0;
-diff --git a/pretty.c b/pretty.c
-index 87db08b..99ba8ae 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -549,14 +549,13 @@ static char *get_header(const struct commit *commit, const char *msg,
- 	const char *line = msg;
- 
- 	while (line) {
--		const char *eol = strchr(line, '\n'), *next;
-+		const char *eol = strchrnul(line, '\n'), *next;
- 
- 		if (line == eol)
- 			return NULL;
--		if (!eol) {
-+		if (!*eol) {
- 			warning("malformed commit (header is missing newline): %s",
- 				sha1_to_hex(commit->object.sha1));
--			eol = line + strlen(line);
- 			next = NULL;
- 		} else
- 			next = eol + 1;
-diff --git a/remote-testsvn.c b/remote-testsvn.c
-index 078f1ff..6be55cb 100644
---- a/remote-testsvn.c
-+++ b/remote-testsvn.c
-@@ -78,8 +78,8 @@ static int parse_rev_note(const char *msg, struct rev_note *res)
- 	size_t len;
- 
- 	while (*msg) {
--		end = strchr(msg, '\n');
--		len = end ? end - msg : strlen(msg);
-+		end = strchrnul(msg, '\n');
-+		len = end - msg;
- 
- 		key = "Revision-number: ";
- 		if (starts_with(msg, key)) {
-diff --git a/ws.c b/ws.c
-index b498d75..ea4b2b1 100644
---- a/ws.c
-+++ b/ws.c
-@@ -33,11 +33,8 @@ unsigned parse_whitespace_rule(const char *string)
- 		int negated = 0;
- 
- 		string = string + strspn(string, ", \t\n\r");
--		ep = strchr(string, ',');
--		if (!ep)
--			len = strlen(string);
--		else
--			len = ep - string;
-+		ep = strchrnul(string, ',');
-+		len = ep - string;
- 
- 		if (*string == '-') {
- 			negated = 1;
--- 
-1.7.9.5
+It is renamed in 04/28 to do_git_path().
+--=20
+Duy
