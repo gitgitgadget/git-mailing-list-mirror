@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v5 23/28] checkout: clean up half-prepared directories in --to mode
-Date: Sat,  8 Mar 2014 09:48:15 +0700
-Message-ID: <1394246900-31535-24-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v5 24/28] checkout: detach if the branch is already checked out elsewhere
+Date: Sat,  8 Mar 2014 09:48:16 +0700
+Message-ID: <1394246900-31535-25-git-send-email-pclouds@gmail.com>
 References: <1393675983-3232-1-git-send-email-pclouds@gmail.com>
  <1394246900-31535-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -12,156 +12,220 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 08 03:50:24 2014
+X-From: git-owner@vger.kernel.org Sat Mar 08 03:50:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WM7LD-00067n-1J
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Mar 2014 03:50:23 +0100
+	id 1WM7LI-0006BN-Ag
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Mar 2014 03:50:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753589AbaCHCuP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Mar 2014 21:50:15 -0500
-Received: from mail-pb0-f47.google.com ([209.85.160.47]:57270 "EHLO
-	mail-pb0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753528AbaCHCuN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Mar 2014 21:50:13 -0500
-Received: by mail-pb0-f47.google.com with SMTP id up15so4937919pbc.6
-        for <git@vger.kernel.org>; Fri, 07 Mar 2014 18:50:13 -0800 (PST)
+	id S1753633AbaCHCuV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Mar 2014 21:50:21 -0500
+Received: from mail-pd0-f181.google.com ([209.85.192.181]:41176 "EHLO
+	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753592AbaCHCuT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Mar 2014 21:50:19 -0500
+Received: by mail-pd0-f181.google.com with SMTP id p10so4786251pdj.40
+        for <git@vger.kernel.org>; Fri, 07 Mar 2014 18:50:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=BFZXdf6aHNDnSmRx0NCxHxdHx9FwiKeURSeIgL9UX3c=;
-        b=Idd0ni+MjZGuCDTpaCEwDdWIvXFD7krBW6KXTvRjH920I1kq02grouonj5Y+kAxyk7
-         u/iwXv549/G4vIyGnXeWfsOTgNLMlpGchpf4Fk6SKOE+g4a3HFExjc7lxUo4L76kyq9L
-         tWN/jncFkERPwU2mvaQ4nLwz77F3n4p+2DWSQ2GQ5AdO8sf2Q+8Hj2JxM12oFEJYKd7j
-         LJbBgldAcQiZNEczhggQqfgLBZFH8FLRXlnc2gdt/4ZKuV9/uw2PTI/zayGMQTSHKmG9
-         nBK6MP6NZuMVWsekepITiXE2jsw4GyQuR0VtyVI3iEY2YQXh5tYtLx4VRHJNah6hVHFU
-         CviA==
-X-Received: by 10.66.142.233 with SMTP id rz9mr26101294pab.71.1394247013407;
-        Fri, 07 Mar 2014 18:50:13 -0800 (PST)
+        bh=5AuGvNMmhTMLjU3KGVEUDDhCqiFbbBvbmcFUom/1tqw=;
+        b=FKbFo1esT0cCh16lMT8EkD2zDM8AWMmHLT1guMRXnnybxS3nl0AvNoBPITrfAUF1aD
+         bB1YncqfuPr0K1oBZ3EDLn2kzmfRzPmWL3cOdI6obd0lCSakzs2+eJwc5FxIN4m+g0CJ
+         MJyn6hNn7Fu21Xkq/qfC+edcigU+IYLP+93Kh1sRAQpmkWCMAieaQ5Medbh4gky0SVt/
+         DMyYjG3PjNofhHjpy1cHHYX/u1+ocbyqwleMGqtU83YZ7HLJZd/VJ4y1RMGKi4Q4AyT9
+         ch6QGsbQf0YWRx5HYvt11rMvO41rnmk+v9xn/c6XVD5WE8ymOJdl6DSD2nLnnieBMTuw
+         yVhg==
+X-Received: by 10.68.239.70 with SMTP id vq6mr25712601pbc.152.1394247019172;
+        Fri, 07 Mar 2014 18:50:19 -0800 (PST)
 Received: from lanh ([115.73.205.153])
-        by mx.google.com with ESMTPSA id tu3sm18682191pab.1.2014.03.07.18.50.10
+        by mx.google.com with ESMTPSA id db3sm41733832pbb.10.2014.03.07.18.50.16
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 07 Mar 2014 18:50:12 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Sat, 08 Mar 2014 09:50:46 +0700
+        Fri, 07 Mar 2014 18:50:18 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Sat, 08 Mar 2014 09:50:52 +0700
 X-Mailer: git-send-email 1.9.0.40.gaa8c3ea
 In-Reply-To: <1394246900-31535-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243665>
+
+The normal rule is anything outside refs/heads/ is detached. This
+increases strictness of the rule a bit more: if the branch is checked
+out (either in $GIT_COMMON_DIR/HEAD or any $GIT_DIR/repos/.../HEAD)
+then it's detached as well.
+
+A hint is given so the user knows where to go and do something there
+if they still want to checkout undetached here.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/checkout.c | 49 ++++++++++++++++++++++++++++++++++++++++++++++=
-+--
- 1 file changed, 47 insertions(+), 2 deletions(-)
+ builtin/checkout.c     | 80 ++++++++++++++++++++++++++++++++++++++++++=
+++++++++
+ t/t2025-checkout-to.sh | 15 ++++++++--
+ 2 files changed, 92 insertions(+), 3 deletions(-)
 
 diff --git a/builtin/checkout.c b/builtin/checkout.c
-index aa4ffd1..97fdfcc 100644
+index 97fdfcc..598b43d 100644
 --- a/builtin/checkout.c
 +++ b/builtin/checkout.c
-@@ -20,6 +20,7 @@
- #include "resolve-undo.h"
- #include "submodule.h"
- #include "argv-array.h"
-+#include "sigchain.h"
+@@ -433,6 +433,11 @@ struct branch_info {
+ 	const char *name; /* The short name used */
+ 	const char *path; /* The full name of a real branch */
+ 	struct commit *commit; /* The named commit */
++	/*
++	 * if not null the branch is detached because it's already
++	 * checked out in this checkout
++	 */
++	char *checkout;
+ };
 =20
- static const char * const checkout_usage[] =3D {
- 	N_("git checkout [options] <branch>"),
-@@ -815,6 +816,35 @@ static int switch_branches(const struct checkout_o=
-pts *opts,
- 	return ret || writeout_error;
+ static void setup_branch_path(struct branch_info *branch)
+@@ -641,6 +646,11 @@ static void update_refs_for_switch(const struct ch=
+eckout_opts *opts,
+ 			if (old->path && advice_detached_head)
+ 				detach_advice(new->name);
+ 			describe_detached_head(_("HEAD is now at"), new->commit);
++			if (new->checkout && !*new->checkout)
++				fprintf(stderr, _("hint: the main checkout is holding this branch\=
+n"));
++			else if (new->checkout)
++				fprintf(stderr, _("hint: the linked checkout %s is holding this br=
+anch\n"),
++					new->checkout);
+ 		}
+ 	} else if (new->path) {	/* Switch branches. */
+ 		create_symref("HEAD", new->path, msg.buf);
+@@ -983,6 +993,73 @@ static const char *unique_tracking_name(const char=
+ *name, unsigned char *sha1)
+ 	return NULL;
  }
 =20
-+static const char *junk_work_tree;
-+static const char *junk_git_dir;
-+static int is_junk;
-+static pid_t junk_pid;
-+
-+static void remove_junk(void)
++static int check_linked_checkout(struct branch_info *new,
++				  const char *name, const char *path)
 +{
 +	struct strbuf sb =3D STRBUF_INIT;
-+	if (!is_junk || getpid() !=3D junk_pid)
-+		return;
-+	if (junk_git_dir) {
-+		strbuf_addstr(&sb, junk_git_dir);
-+		remove_dir_recursively(&sb, 0);
-+		strbuf_reset(&sb);
++	char *start, *end;
++	if (strbuf_read_file(&sb, path, 0) < 0)
++		return 0;
++	if (!starts_with(sb.buf, "ref:")) {
++		strbuf_release(&sb);
++		return 0;
 +	}
-+	if (junk_work_tree) {
-+		strbuf_addstr(&sb, junk_work_tree);
-+		remove_dir_recursively(&sb, 0);
++
++	start =3D sb.buf + 4;
++	while (isspace(*start))
++		start++;
++	end =3D start;
++	while (*end && !isspace(*end))
++		end++;
++	if (!strncmp(start, new->path, end - start) &&
++	    new->path[end - start] =3D=3D '\0') {
++		strbuf_release(&sb);
++		new->path =3D NULL; /* detach */
++		new->checkout =3D xstrdup(name); /* reason */
++		return 1;
 +	}
 +	strbuf_release(&sb);
++	return 0;
 +}
 +
-+static void remove_junk_on_signal(int signo)
++static void check_linked_checkouts(struct branch_info *new)
 +{
-+	remove_junk();
-+	sigchain_pop(signo);
-+	raise(signo);
++	struct strbuf path =3D STRBUF_INIT;
++	DIR *dir;
++	struct dirent *d;
++
++	strbuf_addf(&path, "%s/repos", get_git_common_dir());
++	if ((dir =3D opendir(path.buf)) =3D=3D NULL) {
++		strbuf_release(&path);
++		return;
++	}
++
++	strbuf_reset(&path);
++	strbuf_addf(&path, "%s/HEAD", get_git_common_dir());
++	/*
++	 * $GIT_COMMON_DIR/HEAD is practically outside
++	 * $GIT_DIR so resolve_ref_unsafe() won't work (it
++	 * uses git_path). Parse the ref ourselves.
++	 */
++	if (check_linked_checkout(new, "", path.buf)) {
++		strbuf_release(&path);
++		closedir(dir);
++		return;
++	}
++
++	while ((d =3D readdir(dir)) !=3D NULL) {
++		if (!strcmp(d->d_name, ".") || !strcmp(d->d_name, ".."))
++			continue;
++		strbuf_reset(&path);
++		strbuf_addf(&path, "%s/repos/%s/HEAD",
++			    get_git_common_dir(), d->d_name);
++		if (check_linked_checkout(new, d->d_name, path.buf))
++			break;
++	}
++	strbuf_release(&path);
++	closedir(dir);
 +}
 +
- static int prepare_linked_checkout(const struct checkout_opts *opts,
- 				   struct branch_info *new)
- {
-@@ -823,7 +853,7 @@ static int prepare_linked_checkout(const struct che=
-ckout_opts *opts,
- 	const char *path =3D opts->new_worktree, *name;
- 	struct stat st;
- 	struct child_process cp;
--	int counter =3D 0, len;
-+	int counter =3D 0, len, ret;
+ static int parse_branchname_arg(int argc, const char **argv,
+ 				int dwim_new_local_branch_ok,
+ 				struct branch_info *new,
+@@ -1110,6 +1187,9 @@ static int parse_branchname_arg(int argc, const c=
+har **argv,
+ 	else
+ 		new->path =3D NULL; /* not an existing branch */
 =20
- 	if (!new->commit)
- 		die(_("no branch specified"));
-@@ -849,13 +879,21 @@ static int prepare_linked_checkout(const struct c=
-heckout_opts *opts,
- 		strbuf_addf(&sb_repo, "%d", counter);
- 	}
- 	name =3D strrchr(sb_repo.buf, '/') + 1;
++	if (new->path)
++		check_linked_checkouts(new);
 +
-+	junk_pid =3D getpid();
-+	atexit(remove_junk);
-+	sigchain_push_common(remove_junk_on_signal);
+ 	new->commit =3D lookup_commit_reference_gently(rev, 1);
+ 	if (!new->commit) {
+ 		/* not a commit */
+diff --git a/t/t2025-checkout-to.sh b/t/t2025-checkout-to.sh
+index 5ec49e2..2d35a9b 100755
+--- a/t/t2025-checkout-to.sh
++++ b/t/t2025-checkout-to.sh
+@@ -13,13 +13,14 @@ test_expect_success 'checkout --to not updating pat=
+hs' '
+ '
+=20
+ test_expect_success 'checkout --to a new worktree' '
++	git rev-parse HEAD >expect &&
+ 	git checkout --to here master &&
+ 	(
+ 		cd here &&
+ 		test_cmp ../init.t init.t &&
+-		git symbolic-ref HEAD >actual &&
+-		echo refs/heads/master >expect &&
+-		test_cmp expect actual &&
++		test_must_fail git symbolic-ref HEAD &&
++		git rev-parse HEAD >actual &&
++		test_cmp ../expect actual &&
+ 		git fsck
+ 	)
+ '
+@@ -45,4 +46,12 @@ test_expect_success 'checkout --to a new worktree cr=
+eating new branch' '
+ 	)
+ '
+=20
++test_expect_success 'detach if the same branch is already checked out'=
+ '
++	(
++		cd here &&
++		git checkout newmaster &&
++		test_must_fail git symbolic-ref HEAD
++	)
++'
 +
- 	if (mkdir(sb_repo.buf, 0777))
- 		die_errno(_("could not create directory of '%s'"), sb_repo.buf);
-+	junk_git_dir =3D sb_repo.buf;
-+	is_junk =3D 1;
-=20
- 	strbuf_addf(&sb_git, "%s/.git", path);
- 	if (safe_create_leading_directories_const(sb_git.buf))
- 		die_errno(_("could not create leading directories of '%s'"),
- 			  sb_git.buf);
-+	junk_work_tree =3D path;
-=20
- 	write_file(sb_git.buf, 1, "gitdir: %s/repos/%s\n",
- 		   real_path(get_git_common_dir()), name);
-@@ -880,7 +918,14 @@ static int prepare_linked_checkout(const struct ch=
-eckout_opts *opts,
- 	memset(&cp, 0, sizeof(cp));
- 	cp.git_cmd =3D 1;
- 	cp.argv =3D opts->saved_argv;
--	return run_command(&cp);
-+	ret =3D run_command(&cp);
-+	if (!ret)
-+		is_junk =3D 0;
-+	strbuf_release(&sb);
-+	strbuf_release(&sb_repo);
-+	strbuf_release(&sb_git);
-+	return ret;
-+
- }
-=20
- static int git_checkout_config(const char *var, const char *value, voi=
-d *cb)
+ test_done
 --=20
 1.9.0.40.gaa8c3ea
