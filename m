@@ -1,87 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC] Documentation: Say that submodule clones use a separate gitdirs.
-Date: Fri, 07 Mar 2014 15:37:20 -0800
-Message-ID: <xmqqvbvpshqn.fsf@gitster.dls.corp.google.com>
-References: <1394178834.7891.38.camel@Naugrim>
-	<BEB30FB8-204C-4272-8F94-6210D96FB2CB@kellerfarm.com>
-	<1394231714.7891.39.camel@Naugrim>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v3] upload-pack: send shallow info over stdin to pack-objects
+Date: Sat, 8 Mar 2014 07:08:05 +0700
+Message-ID: <CACsJy8AcYBXi6LjyJDeEnogPTXfqYXqijXaLY=bUgNnd4cT_Fg@mail.gmail.com>
+References: <1393936205-15953-1-git-send-email-pclouds@gmail.com>
+ <1394095783-24402-1-git-send-email-pclouds@gmail.com> <xmqqfvmvyxzv.fsf@gitster.dls.corp.google.com>
+ <CACsJy8B8=N6R6nVa12jjhxdqxMA2eGXOV6jR-XqRRbb-6Xppdg@mail.gmail.com> <xmqq8uslvp86.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andrew Keller <andrew@kellerfarm.com>,
-	Git List <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Henri GEIST <geist.henri@laposte.net>
-X-From: git-owner@vger.kernel.org Sat Mar 08 00:37:59 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 08 01:09:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WM4Kw-0003oh-AB
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Mar 2014 00:37:54 +0100
+	id 1WM4p3-0005Tw-R2
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Mar 2014 01:09:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751684AbaCGXhZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Mar 2014 18:37:25 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55516 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751065AbaCGXhY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Mar 2014 18:37:24 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0F0F472346;
-	Fri,  7 Mar 2014 18:37:24 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bNJbpKgxXN4cYsQ0ybc5tK7Q/Ao=; b=e+1KUA
-	Wv1Yvvg0cSXcOVUlUf3fAVUfLqq7zw8aBsq7IqEI1Yktsl7uogaBVYAzwmAm4Nxn
-	5lxXMKFiytKA2hq7A/lvBM7OdJKm+WcK58AONqfiL/7JuwFrJR/D/mOqSM+lRYRM
-	I3Zh+idNilWR0lh22TLQ4TGY9QRdjbpgxklFk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Ljqqtm+iGY+Ogk5Jk0Kyhs/2M0A+ziXv
-	hsgaDrn0nnJjyvoBevGlG/qVsuI8dBSVc4YKWGbijuXsOJPXBpOREyKz01HiBlhW
-	rOseizMbuVLTgSzK5+Y92NtwXPEWzX7MGi05eQwxKcctKDJUnjgBe9b7Pr52kxww
-	Gf0qgmJDNvE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F269D72345;
-	Fri,  7 Mar 2014 18:37:23 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4948372344;
-	Fri,  7 Mar 2014 18:37:23 -0500 (EST)
-In-Reply-To: <1394231714.7891.39.camel@Naugrim> (Henri GEIST's message of
-	"Fri, 07 Mar 2014 23:35:14 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 6ED25EEC-A651-11E3-8AD8-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752858AbaCHAIg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Mar 2014 19:08:36 -0500
+Received: from mail-qa0-f43.google.com ([209.85.216.43]:54927 "EHLO
+	mail-qa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751581AbaCHAIg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Mar 2014 19:08:36 -0500
+Received: by mail-qa0-f43.google.com with SMTP id j15so4782044qaq.16
+        for <git@vger.kernel.org>; Fri, 07 Mar 2014 16:08:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=SRrNVT3nY4WfOyR2T4Oz1XS5vAgPf3NWtYJhoKPb4CE=;
+        b=DiAAMDp28IsTu+vhtR/QJwmh1NK4oU10Ez+X4zVHWxvj48Xy41HvYHNpFSCvVsLddM
+         ox/OcDZzZItUvDDKoU/wBjZqp8uU06pnJ/1AQvIW5Mk3xQvILQDMFO0UjrzbC0lOo84r
+         oC5FjxkT5WIoMsbC8KMAMYld3o44K5hjFbE0b67mNNzeLYaJ2u/mGQvasSVRxTGn94QU
+         vKiYVUJm8ssdHUZT9UbLhvOApC6RcUZsN1RAB18gZx3YkFMPHIrLFtecY7ca2PlEWZ1F
+         hGrWCWK2SchH1PqcVLWCVteRTUzOFV/NmoXUJLCEls/XtEy5VNbO5e3u93Dq0joC5jNC
+         NTCw==
+X-Received: by 10.224.26.71 with SMTP id d7mr25543876qac.89.1394237315179;
+ Fri, 07 Mar 2014 16:08:35 -0800 (PST)
+Received: by 10.96.215.102 with HTTP; Fri, 7 Mar 2014 16:08:05 -0800 (PST)
+In-Reply-To: <xmqq8uslvp86.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243638>
 
-Henri GEIST <geist.henri@laposte.net> writes:
+On Sat, Mar 8, 2014 at 1:27 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> On the receive-pack side, the comment at the bottom of
+>>> preprare_shallow_update() makes it clear that, if we wanted to use
+>>> hooks, we cannot avoid having the proposed new shallow-file in a
+>>> temporary file, which is unfortunate.  Do we have a similar issue on
+>>> hooks on the upload-pack side?
+>>
+>> No. I don't think we have hooks on upload-pack.
+>
+> The question was not only about "do we happen to work OK with the
+> current code?" but about "are we closing the door for the future?"
+>
+> If we ever need to add hooks to upload-pack, with the updated
+> approach, its operation will not be affected by the temporary
+> shallow file tailored for this specific customer.  Which I think is
+> a good thing in general.
+>
+> But at the same time, it means that its operation cannot be
+> customized for the specific customer, taking into account what they
+> lack (which can be gleaned by looking at the temporary shallow
+> information).  I do think that it is not a big downside, but that is
+> merely my knee-jerk reaction.
 
-> This information is technical in nature but has some importance for general users.
-> As this kind of clone have a separate gitdir, you will have a surprise if you
-> copy past the worktree as the gitdir will not come together.
+When upload-pack learns about hooks, I think we'll need to go back
+with --shallow-file, perhaps we a secure temporary place to write in.
+I don't see another way out. Not really sure why upload-pack needs
+customization though. The only case I can think of is to prevent most
+users from fetching certain objects, but that does not sound
+realistic..
 
-I am not sure if I understand exactly what you are trying to say.
-Are you saying that you had a submodule at "sub/dir" in your working
-tree, and then "mkdir ../another && cp -R sub/dir ../another" did
-not result in a usable Git working tree in ../another directory?
+>>> Nothing for Documentation/ anywhere?
+>>
+>> Heh git-pack-objects.txt never described stdin format. At least I
+>> searched for --not in it and found none. So I gladly accepted the
+>> situation and skipped doc update :D
+>
+> To pile new technical debt on top of existing ones is to make things
+> worse, which we would rather not to see.
 
-It is almost like complaining that "mkdir ../newone && cp -R * ../newone/"
-did not result in a usable git repository in ../newone directory and
-honestly speaking, that sounds borderline insane, I'd have to say.
-
-Yes, if a user knows what she is doing, she should be able to make
-something like that work, without running "git clone" (which is
-probably the way most users would do it).  And yes, it would be good
-to let the user learn from the documentation enough so that she
-"knows what she is doing".  But no, I do not think end-user facing
-documentation for "git-submodule" subcommand is the way to do that.
-
-That is why I suggested repository-layout as potentially a better
-alternative location.
-
-But perhaps I am mis-reading your rationale.
+Of course.. So what should we do with this? Go with this "no temp
+file" approach and deal with hooks when they come, or prepare now and
+introduce a secure temp. area?
+-- 
+Duy
