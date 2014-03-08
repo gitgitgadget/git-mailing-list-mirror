@@ -1,128 +1,154 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: git 1.9.0 segfault
-Date: Sat, 8 Mar 2014 16:46:51 +0000
-Message-ID: <20140308164651.GA32213@vauxhall.crustytoothpaste.net>
-References: <CAPn4x+oTTzYMSFzqUmJ8tOO0DdqR+HJJdoeXFZxhABu6B=QmBQ@mail.gmail.com>
+From: Brian Gesiak <modocache@gmail.com>
+Subject: Re: [GSoC14][RFC] Proposal Draft: Refactor tempfile handling
+Date: Sun, 9 Mar 2014 02:04:16 +0900
+Message-ID: <CAN7MxmW-aWgTQpTMuEx=kzyHVUf5E7unZR-LmLQrY-AmmrZxjA@mail.gmail.com>
+References: <CAN7MxmVQuk96dmXfxZ5kRZPTXNwpz2RY=y8HyqX4mZzrZUVbNg@mail.gmail.com>
+	<20140303224238.GA2699@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="NzB8fVQJ5HfG6fxh"
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: git@vger.kernel.org
-To: Guillaume Gelin <contact@ramnes.eu>
-X-From: git-owner@vger.kernel.org Sat Mar 08 17:47:26 2014
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Mar 08 18:04:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WMKPF-000377-Qt
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Mar 2014 17:47:26 +0100
+	id 1WMKfd-00018G-UX
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Mar 2014 18:04:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752107AbaCHQrS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Mar 2014 11:47:18 -0500
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:52412 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751626AbaCHQq4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 8 Mar 2014 11:46:56 -0500
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:fdce:ca83:d79c:2d90])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 78DF428088;
-	Sat,  8 Mar 2014 16:46:55 +0000 (UTC)
-Mail-Followup-To: Guillaume Gelin <contact@ramnes.eu>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <CAPn4x+oTTzYMSFzqUmJ8tOO0DdqR+HJJdoeXFZxhABu6B=QmBQ@mail.gmail.com>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.12-1-amd64)
-User-Agent: Mutt/1.5.22 (2013-10-16)
-X-Spam-Score: -0.272 () BAYES_00,RDNS_NONE
+	id S1751676AbaCHRER (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Mar 2014 12:04:17 -0500
+Received: from mail-ig0-f179.google.com ([209.85.213.179]:43291 "EHLO
+	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751610AbaCHREQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Mar 2014 12:04:16 -0500
+Received: by mail-ig0-f179.google.com with SMTP id t19so4696276igi.0
+        for <git@vger.kernel.org>; Sat, 08 Mar 2014 09:04:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=0TnYUHM8WjgaQUSy0Lj4jEfeLjrqJfgg7Ml63IycPVM=;
+        b=H9p2IX/1MWEIWiQpLfE3Iosc+sEuLkQAXMqO8DSn1/gfprNbVQNyenqSMjcJC0WbG/
+         dabN2+dUEuX4wBn5BWUktm1mMpMIy74vgSnlEjUxtz6MBcyaQQiXVPPWZ6zMWdvrC6FA
+         FHMSCr2pKu3YChuv9+yBVc/yafGinMP97Z274m76pSRqIW6paM5FQhwIZTbg8uhYeYDX
+         O8BXve+JxSHk4SnITYBWDeySkjpoolI5LYQ0m/FfvoREsbi3qHRBSxvyhYgmYfVUL9v3
+         d7E/mSEayh+48c65KSdBTbVX5lT+kqaCl92u6vLuC9stnd4360Fwwucj/7M+r5bnSNn/
+         gCRQ==
+X-Received: by 10.42.15.142 with SMTP id l14mr970475ica.64.1394298256223; Sat,
+ 08 Mar 2014 09:04:16 -0800 (PST)
+Received: by 10.64.55.161 with HTTP; Sat, 8 Mar 2014 09:04:16 -0800 (PST)
+In-Reply-To: <20140303224238.GA2699@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243677>
+
+Excellent, thank you very much for the feedback, Jeff! It was very
+helpful and encouraging. I've done some more research based on your
+comments.
+
+> Once the logic is extracted into a nice API, there are
+> several other places that can use it, too: ...
+
+I've found the following four areas so far:
+
+1. lockfile.lock_file
+2. git-compat-util.odb_mkstemp
+3. git-compat-util.odb_pack_keep
+4. diff.prepare_temp_file
+
+Tons of files use (1) and (2). (3) is less common, and (4) is only
+used for external diffs.
+
+> the shallow_XXXXXX tempfiles
+
+I'm not sure I was able to find this one. Are you referring to the
+lock files used when fetching, such as in fetch-pack.c?
+
+> What are the mismatches in how lockfiles and object files are
+> handled? E.g., how do we finalize them into place? How should
+> the API be designed to minimize race conditions (e.g., if we
+> get a signal delivered while we are committing or cleaning up a file)?
+
+I'd say the biggest difference between lockfiles and object files is
+that tempfile methods like odb_mkstemp need to know the location of
+the object directory. Aside from that, lockfiles and the external diff
+files appear to be cleaned up at exit, while temporary object files
+tend to have a more finely controlled lifecycle. I'm still
+investigating this aspect of the proposal, though.
+
+One question, though: the idea on the ideas page specifies that
+temporary pack and object files may "optionally" be cleaned up in case
+of error during program execution. How will users specify their
+preference? I think the API for creating temporary files should allow
+cleanup options to be specified on a per-file basis. That way each
+part of the program that creates tempfiles can specify a different
+config value to determine the cleanup policy.
+
+Thanks for all your help so far!
+
+- Brian Gesiak
+
+PS: I'm maintaining a working draft of my proposal here, in case
+anyone wants to offer any feedback prior to its submission:
+https://gist.github.com/modocache/9434914
 
 
---NzB8fVQJ5HfG6fxh
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Sat, Mar 08, 2014 at 04:23:43PM +0000, Guillaume Gelin wrote:
-> Hi,
+On Tue, Mar 4, 2014 at 7:42 AM, Jeff King <peff@peff.net> wrote:
+> On Sun, Mar 02, 2014 at 06:04:39AM +0900, Brian Gesiak wrote:
 >
-> http://pastebin.com/Np7L54ar
-
-I can confirm this.  I get the following backtrace:
-
-  Core was generated by `/home/bmc/checkouts/git/git mv packages/ lisp'.
-  Program terminated with signal 11, Segmentation fault.
-  #0  0x00007fe31a4371b2 in _IO_vfprintf_internal (s=3Ds@entry=3D0x7fffa330=
-d2e0, format=3D<optimized out>, format@entry=3D0x7fffa330e5b0 "renaming '%s=
-' failed: Bad address", ap=3Dap@entry=3D0x7fffa330e498)
-      at vfprintf.c:1649
-  1649	vfprintf.c: No such file or directory.
-  (gdb) bt
-  #0  0x00007fe31a4371b2 in _IO_vfprintf_internal (s=3Ds@entry=3D0x7fffa330=
-d2e0, format=3D<optimized out>, format@entry=3D0x7fffa330e5b0 "renaming '%s=
-' failed: Bad address", ap=3Dap@entry=3D0x7fffa330e498)
-      at vfprintf.c:1649
-  #1  0x00007fe31a4e2315 in ___vsnprintf_chk (s=3Ds@entry=3D0x7fffa330d450 =
-"renaming '0\243\377\177", maxlen=3D<optimized out>, maxlen@entry=3D4096, f=
-lags=3Dflags@entry=3D1, slen=3Dslen@entry=3D4096,
-      format=3D0x7fffa330e5b0 "renaming '%s' failed: Bad address", format@e=
-ntry=3D0x544fe5 "fatal: ", args=3D0x7fffa330e498) at vsnprintf_chk.c:63
-  #2  0x00000000005041cb in vsnprintf (__ap=3D<optimized out>, __fmt=3D0x54=
-4fe5 "fatal: ", __n=3D4096, __s=3D0x7fffa330d450 "renaming '0\243\377\177")=
- at /usr/include/x86_64-linux-gnu/bits/stdio2.h:77
-  #3  vreportf (prefix=3Dprefix@entry=3D0x544fe5 "fatal: ", err=3D<optimize=
-d out>, params=3D<optimized out>) at usage.c:12
-  #4  0x0000000000504224 in die_builtin (err=3D<optimized out>, params=3D<o=
-ptimized out>) at usage.c:36
-  #5  0x0000000000504650 in die_errno (fmt=3D0x52be9a "renaming '%s' failed=
-") at usage.c:137
-  #6  0x000000000044cb4d in cmd_mv (argc=3D<optimized out>, argv=3D<optimiz=
-ed out>, prefix=3D<optimized out>) at builtin/mv.c:246
-  #7  0x000000000040602d in run_builtin (argv=3D0x7fffa330ef90, argc=3D3, p=
-=3D0x779d40 <commands+1536>) at git.c:314
-  #8  handle_builtin (argc=3D3, argv=3D0x7fffa330ef90) at git.c:487
-  #9  0x00000000004052e1 in run_argv (argv=3D0x7fffa330ee48, argcp=3D0x7fff=
-a330ee2c) at git.c:533
-  #10 main (argc=3D3, av=3D<optimized out>) at git.c:616
-
-We're failing to rename because we got an EFAULT, and then we try to
-print the failing filename, and we get a segfault right here:
-
-			if (rename(src, dst) < 0 && !ignore_errors)
-				die_errno (_("renaming '%s' failed"), src);
-
-I don't know yet if dst is also bad, but clearly src is.  I'm looking
-into it.
-
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
-
---NzB8fVQJ5HfG6fxh
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCgAGBQJTG0l7AAoJEL9TXYEfUvaL9KMQALqUDMkul3LVHnQ82Mlr0pwX
-cGmFcQs4Ag+ePpl7FvxohtfT5XOERI+wRbFN4X8pHEnBnJe+4nu5xfJH7X7WZcFl
-aQVOWhRFXyjW3BwdAnWMkb+slfgqXKjmzV+NuqoIL7YNMXQzGYirzbG2dRwv+48I
-dfd5l7LZF+4gs8mHDBOQauqrWkv91TPJecDloowS0kTYZjCLrxZJvvV+HrIdELtC
-PvyrdjqGpFTj+szSSYLn8HR4JCA8D5p4x9y0Hfsx+dHSXPAOX6x287+AUWrjcIqV
-sVHt1apxQhm0+bzf3U1QXiQkeiAOuD6Hc6U9+Kra1t0AvvMm2DCdX/L8lJ2oedLU
-9PzoqE7Ddj18Juy8FI252sNFfpX5WNDiqm/4L4u3FXndl7XJm0cyG4g/+zDE64fx
-iJ1FVKFt4iL+ezDnSPVJH9OCTeD+tBPgsIJ9/wdD2deqhOSkxSAod6GQ7n/59TbG
-JDkSdoxyWHT84dq/7C1d1+kPMRsS8JBs8+MPky0wRhoBS32OsSXQfGUQe9WklWxJ
-nphCwMJ3AyB6sc3c2Rsb1B2CuRdjGpA7eEo6kE7cUSWVz15hbGUgzjv4ZwfVbMBt
-LH+u341/Kqi7Mr2vXe4FNsC76lA9EsOxsg7KfDEYaq7jjNV2NB2Gmm+RIbilr3i8
-BQGIQRbWMwecP/aaWAaW
-=Pde1
------END PGP SIGNATURE-----
-
---NzB8fVQJ5HfG6fxh--
+>> My name is Brian Gesiak. I'm a research student at the University of
+>> Tokyo, and I'm hoping to participate in this year's Google Summer of
+>> Code by contributing to Git. I'm a longtime user, first-time
+>> contributor--some of you may have noticed my "microproject"
+>> patches.[1][2]
+>
+> Yes, we did notice them. Thanks, and welcome. :)
+>
+>> The ideas page points out that while lock files are closed and
+>> unlinked[3] when the program exits[4], object pack files implement
+>> their own brand of temp file creation and deletion. This
+>> implementation doesn't share the same guarantees as lock files--it is
+>> possible that the program terminates before the temp file is
+>> unlinked.[5]
+>>
+>> Lock file references are stored in a linked list. When the program
+>> exits, this list is traversed and each file is closed and unlinked. It
+>> seems to me that this mechanism is appropriate for temp files in
+>> general, not just lock files. Thus, my proposal would be to extract
+>> this logic into a separate module--tempfile.h, perhaps. Lock and
+>> object files would share the tempfile implementation.
+>>
+>> That is, both object and lock temp files would be stored in a linked
+>> list, and all of these would be deleted at program exit.
+>
+> Yes, I think this is definitely the right way to go. We should be able
+> to unify the tempfile handling for all of git. Once the logic is
+> extracted into a nice API, there are several other places that can use
+> it, too:
+>
+>   - the external diff code creates tempfiles and uses its own cleanup
+>     routines
+>
+>   - the shallow_XXXXXX tempfiles (these are not cleaned right now,
+>     though I sent a patch recently for them to do their own cleanup)
+>
+> Those are just off the top of my head. There may be other spots, too.
+>
+> It is worth thinking in your proposal about some of the things that the
+> API will want to handle. What are the mismatches in how lockfiles and
+> object files are handled? E.g., how do we finalize them into place?
+> How should the API be designed to minimize race conditions (e.g., if we
+> get a signal delivered while we are committing or cleaning up a file)?
+>
+>> Please let me know if this seems like it would make for an interesting
+>> proposal, or if perhaps there is something I am overlooking. Any
+>> feedback at all would be appreciated. Thank you!
+>
+> You definitely have a grasp of what the project is aiming for, and which
+> areas need to be touched.
+>
+> -Peff
