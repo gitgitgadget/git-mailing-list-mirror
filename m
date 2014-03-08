@@ -1,93 +1,120 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v3] upload-pack: send shallow info over stdin to pack-objects
-Date: Sat, 8 Mar 2014 07:08:05 +0700
-Message-ID: <CACsJy8AcYBXi6LjyJDeEnogPTXfqYXqijXaLY=bUgNnd4cT_Fg@mail.gmail.com>
-References: <1393936205-15953-1-git-send-email-pclouds@gmail.com>
- <1394095783-24402-1-git-send-email-pclouds@gmail.com> <xmqqfvmvyxzv.fsf@gitster.dls.corp.google.com>
- <CACsJy8B8=N6R6nVa12jjhxdqxMA2eGXOV6jR-XqRRbb-6Xppdg@mail.gmail.com> <xmqq8uslvp86.fsf@gitster.dls.corp.google.com>
+From: Henri GEIST <geist.henri@laposte.net>
+Subject: Re: [PATCH/RFC] Documentation: Say that submodule clones use a
+ separate gitdirs.
+Date: Sat, 08 Mar 2014 01:50:52 +0100
+Message-ID: <1394239852.7891.40.camel@Naugrim>
+References: <1394178834.7891.38.camel@Naugrim>
+	 <BEB30FB8-204C-4272-8F94-6210D96FB2CB@kellerfarm.com>
+	 <1394231714.7891.39.camel@Naugrim>
+	 <xmqqvbvpshqn.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-EbDOVxO+KHxjujM3BsRH"
+Cc: Andrew Keller <andrew@kellerfarm.com>,
+	Git List <git@vger.kernel.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Mar 08 01:09:03 2014
+X-From: git-owner@vger.kernel.org Sat Mar 08 01:51:08 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WM4p3-0005Tw-R2
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Mar 2014 01:09:02 +0100
+	id 1WM5Tj-00084Q-Hf
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Mar 2014 01:51:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752858AbaCHAIg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Mar 2014 19:08:36 -0500
-Received: from mail-qa0-f43.google.com ([209.85.216.43]:54927 "EHLO
-	mail-qa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751581AbaCHAIg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Mar 2014 19:08:36 -0500
-Received: by mail-qa0-f43.google.com with SMTP id j15so4782044qaq.16
-        for <git@vger.kernel.org>; Fri, 07 Mar 2014 16:08:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=SRrNVT3nY4WfOyR2T4Oz1XS5vAgPf3NWtYJhoKPb4CE=;
-        b=DiAAMDp28IsTu+vhtR/QJwmh1NK4oU10Ez+X4zVHWxvj48Xy41HvYHNpFSCvVsLddM
-         ox/OcDZzZItUvDDKoU/wBjZqp8uU06pnJ/1AQvIW5Mk3xQvILQDMFO0UjrzbC0lOo84r
-         oC5FjxkT5WIoMsbC8KMAMYld3o44K5hjFbE0b67mNNzeLYaJ2u/mGQvasSVRxTGn94QU
-         vKiYVUJm8ssdHUZT9UbLhvOApC6RcUZsN1RAB18gZx3YkFMPHIrLFtecY7ca2PlEWZ1F
-         hGrWCWK2SchH1PqcVLWCVteRTUzOFV/NmoXUJLCEls/XtEy5VNbO5e3u93Dq0joC5jNC
-         NTCw==
-X-Received: by 10.224.26.71 with SMTP id d7mr25543876qac.89.1394237315179;
- Fri, 07 Mar 2014 16:08:35 -0800 (PST)
-Received: by 10.96.215.102 with HTTP; Fri, 7 Mar 2014 16:08:05 -0800 (PST)
-In-Reply-To: <xmqq8uslvp86.fsf@gitster.dls.corp.google.com>
+	id S1752238AbaCHAu7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Mar 2014 19:50:59 -0500
+Received: from smtpout4.laposte.net ([193.253.67.229]:38061 "EHLO
+	smtpout.laposte.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751197AbaCHAu6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Mar 2014 19:50:58 -0500
+Received: from [192.168.0.8] ([82.242.149.125])
+	by mwinf8507-out with ME
+	id aoqs1n0082iaXuy03oqsT2; Sat, 08 Mar 2014 01:50:53 +0100
+In-Reply-To: <xmqqvbvpshqn.fsf@gitster.dls.corp.google.com>
+X-Mailer: Evolution 3.4.4-3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243639>
 
-On Sat, Mar 8, 2014 at 1:27 AM, Junio C Hamano <gitster@pobox.com> wrote:
->>> On the receive-pack side, the comment at the bottom of
->>> preprare_shallow_update() makes it clear that, if we wanted to use
->>> hooks, we cannot avoid having the proposed new shallow-file in a
->>> temporary file, which is unfortunate.  Do we have a similar issue on
->>> hooks on the upload-pack side?
->>
->> No. I don't think we have hooks on upload-pack.
->
-> The question was not only about "do we happen to work OK with the
-> current code?" but about "are we closing the door for the future?"
->
-> If we ever need to add hooks to upload-pack, with the updated
-> approach, its operation will not be affected by the temporary
-> shallow file tailored for this specific customer.  Which I think is
-> a good thing in general.
->
-> But at the same time, it means that its operation cannot be
-> customized for the specific customer, taking into account what they
-> lack (which can be gleaned by looking at the temporary shallow
-> information).  I do think that it is not a big downside, but that is
-> merely my knee-jerk reaction.
 
-When upload-pack learns about hooks, I think we'll need to go back
-with --shallow-file, perhaps we a secure temporary place to write in.
-I don't see another way out. Not really sure why upload-pack needs
-customization though. The only case I can think of is to prevent most
-users from fetching certain objects, but that does not sound
-realistic..
+--=-EbDOVxO+KHxjujM3BsRH
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
->>> Nothing for Documentation/ anywhere?
->>
->> Heh git-pack-objects.txt never described stdin format. At least I
->> searched for --not in it and found none. So I gladly accepted the
->> situation and skipped doc update :D
->
-> To pile new technical debt on top of existing ones is to make things
-> worse, which we would rather not to see.
+Le vendredi 07 mars 2014 =C3=A0 15:37 -0800, Junio C Hamano a =C3=A9crit :
+> Henri GEIST <geist.henri@laposte.net> writes:
+>=20
+> > This information is technical in nature but has some importance for gen=
+eral users.
+> > As this kind of clone have a separate gitdir, you will have a surprise =
+if you
+> > copy past the worktree as the gitdir will not come together.
+>=20
+> I am not sure if I understand exactly what you are trying to say.
+> Are you saying that you had a submodule at "sub/dir" in your working
+> tree, and then "mkdir ../another && cp -R sub/dir ../another" did
+> not result in a usable Git working tree in ../another directory?
+>=20
+> It is almost like complaining that "mkdir ../newone && cp -R * ../newone/=
+"
+> did not result in a usable git repository in ../newone directory and
+> honestly speaking, that sounds borderline insane, I'd have to say.
+>=20
+> Yes, if a user knows what she is doing, she should be able to make
+> something like that work, without running "git clone" (which is
+> probably the way most users would do it).  And yes, it would be good
+> to let the user learn from the documentation enough so that she
+> "knows what she is doing".  But no, I do not think end-user facing
+> documentation for "git-submodule" subcommand is the way to do that.
+>=20
+> That is why I suggested repository-layout as potentially a better
+> alternative location.
+>=20
+> But perhaps I am mis-reading your rationale.
+>=20
+>=20
 
-Of course.. So what should we do with this? Go with this "no temp
-file" approach and deal with hooks when they come, or prepare now and
-introduce a secure temp. area?
--- 
-Duy
+Let me rephrase my example :
+
+To give one of my project to someone else I have copied it on a USB key.
+By a simple drag and drop with the mouse.
+And I am quite sure I am not alone doing this way.
+
+I have done those kind of things lot of time without any problem.
+But that day 'the_project' happened to be a submodule cloned by
+'git submodule update' then on the USB key the $GIT_DIR of 'the_project'
+was missing.
+
+If 'man git-submodule' have made me aware of the particularities of submodu=
+les
+clone I had write in a terminal:
+
+git clone the_project /media/usb/the_project
+
+Or at least I had understand what happened quicker.
+
+I have nothing against also adding something in repository-layout but I am
+pretty sure normal users never read repository-layout as it is not a comman=
+d
+they use. And it is not mentioned in most tutorials.
+
+
+
+--=-EbDOVxO+KHxjujM3BsRH
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iF4EABEKAAYFAlMaaWwACgkQkKuHPdwEGdTpogEAiy5X78AmeqUkWKfnEXNXiDeJ
+secv5weG07WnmyciLk4BAIWSWmlQoAx/DtFc4mx/v4/z3Eh/K2IgHXjqi03xjFQs
+=+J/6
+-----END PGP SIGNATURE-----
+
+--=-EbDOVxO+KHxjujM3BsRH--
