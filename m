@@ -1,132 +1,97 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] rebase: new option to post edit a squashed or fixed up commit
-Date: Sun,  9 Mar 2014 10:12:17 +0700
-Message-ID: <1394334737-17406-1-git-send-email-pclouds@gmail.com>
+From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: howto to run git without a master branch
+Date: Sun, 09 Mar 2014 08:46:49 +0100
+Message-ID: <531C1C69.6080809@web.de>
+References: <531B8D91.6020800@ist.utl.pt>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 09 04:12:19 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: Carlos Pereira <jose.carlos.pereira@ist.utl.pt>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 09 08:47:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WMU9y-0000Gq-OZ
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Mar 2014 04:12:19 +0100
+	id 1WMYRq-0003jh-T7
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Mar 2014 08:47:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751999AbaCIDLs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 Mar 2014 22:11:48 -0500
-Received: from mail-pd0-f181.google.com ([209.85.192.181]:53197 "EHLO
-	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751938AbaCIDLr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Mar 2014 22:11:47 -0500
-Received: by mail-pd0-f181.google.com with SMTP id p10so5631684pdj.12
-        for <git@vger.kernel.org>; Sat, 08 Mar 2014 19:11:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version:content-type
-         :content-transfer-encoding;
-        bh=7cBs75weFgNo5a+PEf32VIjK7+r2V8fyWslVKZJNHmc=;
-        b=BIiqJ7tX8y64MCC13dUTw5FlIlZUzakQ5WWK5YLjURGE7hVHIxrwbRB6TjbhufV4ud
-         Jbbpm7sFKJtXewH29hN0pf+XzFph+SlCD6Ym/DOqWOk6HqA8H6CEZhTxRgTCIUL9ZXR4
-         W6e/beZIlrxrPdwBX2yugP9QTo1AnDRiUGZUfu+6AOMp4cbcPqk/o9FiVsqmv0c930wF
-         flt3exyRamZ/3ExvLCXJryJRXJOVkJ9WhO90p35+qfil+iaqEPmTMqe2RiKBWhXyTyjd
-         ntzG7splRAYnGcIHlYDXO26XspOWbnM4I+9yFL1ha0Kpxc2BLtjGyhVdpxfyQfRMX8Dr
-         AztQ==
-X-Received: by 10.66.191.131 with SMTP id gy3mr24882pac.152.1394334706647;
-        Sat, 08 Mar 2014 19:11:46 -0800 (PST)
-Received: from lanh ([115.73.205.153])
-        by mx.google.com with ESMTPSA id os1sm45398849pac.20.2014.03.08.19.11.43
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 08 Mar 2014 19:11:45 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Sun, 09 Mar 2014 10:12:20 +0700
-X-Mailer: git-send-email 1.9.0.40.gaa8c3ea
+	id S1752248AbaCIHqz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Mar 2014 03:46:55 -0400
+Received: from mout.web.de ([212.227.15.4]:65429 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751897AbaCIHqz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Mar 2014 03:46:55 -0400
+Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb103)
+ with ESMTPSA (Nemesis) id 0LgpNC-1WzksP0BdO-00oF8a; Sun, 09 Mar 2014 08:46:51
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
+In-Reply-To: <531B8D91.6020800@ist.utl.pt>
+X-Provags-ID: V03:K0:6PJWFVMfEsr7Moo6Jnc3e0CUWTYe/Nw75OQEcnzqje4K/kf+sI2
+ ZpPegU5WccyO+Z/f7bBn7vqGip/8XppPhkVDk8M4sPq4vf2HEh1xJ1vY23NnkGj/nxD/IEk
+ Nq/yQvLPF7qpOul7NtyX8jd/B3HfkWbyo1YjQsQacWGZVrONGQXd3ZMN0ywhay5ZpyEf07N
+ iVvxdrjYEQYfkk0C8bAdw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243689>
 
-After squashing or fixing up, you may want to have a final look at the
-commit, edit some more if needed or even do some testing. --postedit
-enables that. This is (to me) a paranoid mode so either I enable it
-for all squashes and fixups, or none. Hence a new option, not new todo
-commands that give finer selection.
+On 2014-03-08 22.37, Carlos Pereira wrote:
+> Hi,
+> git newbie here.
+> 
+> I would like to work with two main branches: master-g and master-x, instead of the usual master, and apparently git does not like this.
+> 
+> After creating a local repository with these two branches, and a server repository with git init --bare, and pushing the two branches:
+> 
+> git remote add origin foo@bar:~/path/test.git
+> git push origin master-g
+> git push origin master-x
+> 
+> everything seems fine, but cloning:
+> git clone foo@bar:~/path/test.git
+> terminates with a warning: remote HEAD refers to nonexistent ref, unable to checkout.
+This is because Git is trying to be nice:
+When you clone, it tries to checkout a branch for you.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- Documentation/git-rebase.txt | 5 +++++
- git-rebase--interactive.sh   | 5 +++++
- git-rebase.sh                | 7 +++++++
- 3 files changed, 17 insertions(+)
+What happens when you only have 1 branch, lets say master-x?
+If I clone the bare repo here, with only 1 branch, this branch
+is automatically checked out (tested on 1.8.5.2)
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.tx=
-t
-index 2a93c64..dacb163 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -432,6 +432,11 @@ recreates the topic branch with fresh commits so i=
-t can be remerged
- successfully without needing to "revert the reversion" (see the
- link:howto/revert-a-faulty-merge.html[revert-a-faulty-merge How-To] fo=
-r details).
-=20
-+--[no-]postedit::
-+	With --interactive, stop after performing the command "squash"
-+	or "fixup". This gives the user a chance to look at the final
-+	commit and update or test it if needed.
-+
- include::merge-strategies.txt[]
-=20
- NOTES
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index a1adae8..42061fc 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -571,6 +571,11 @@ do_next () {
- 			;;
- 		esac
- 		record_in_rewritten $sha1
-+		if test -n "$postedit"
-+		then
-+			warn "Stopped at $sha1... $rest"
-+			exit_with_patch $sha1 0
-+		fi
- 		;;
- 	x|"exec")
- 		read -r command rest < "$todo"
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 5f6732b..2d4beb7 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -32,6 +32,7 @@ verify             allow pre-rebase hook to run
- rerere-autoupdate  allow rerere to update index with resolved conflict=
-s
- root!              rebase all reachable commits up to the root(s)
- autosquash         move commits that begin with squash!/fixup! under -=
-i
-+postedit           stop after squash or fixup commands
- committer-date-is-author-date! passed to 'git am'
- ignore-date!       passed to 'git am'
- whitespace=3D!       passed to 'git apply'
-@@ -264,6 +265,12 @@ do
- 	--no-autosquash)
- 		autosquash=3D
- 		;;
-+	--postedit)
-+		postedit=3Dt
-+		;;
-+	--no-postedit)
-+		postedit=3D
-+		;;
- 	--fork-point)
- 		fork_point=3Dt
- 		;;
---=20
-1.9.0.40.gaa8c3ea
+What happens when you have 2 branches on the server?
+Git really can not make a decision which one is the right one to check out for
+you, so if you have 2 branched like "master" and "develop", it checks out the
+"master" branch for you.
+
+But if you have "master-x" and "master-g" then Git has no clue, which one could
+be you favorite one (and neither have I)
+
+What does "git branch" say?
+(I think nothing)
+What does "git branch -r" say?
+(I think "origin/master-g" and "origin/master-x")
+  
+> 
+> On the original local repository, I have:
+>>cat HEAD
+> ref: refs/heads/master-x
+> 
+> But on the server repository or the clone repository, HEAD points to master branch, that does not exist:
+>>cat HEAD
+> ref: refs/heads/master
+> 
+> Replacing in the HEAD file, master by master-g (on the server before cloning, or on the clone after cloning) seems to solve the problem.
+> 
+> Shall I worry about this? does my fix (editing directly HEAD on the server) fixes really the problem? 
+
+No
+
+>what would be the correct procedure to avoid this?
+(Don't worry if there is a warning, when Git tries to be nice)
+(Or feel free to send a patch to this list which improves the user experience)
+
+> 
+> Thank you!
+> Carlos Pereira,
