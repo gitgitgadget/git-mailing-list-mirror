@@ -1,302 +1,254 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 16/26] update-ref --stdin: Harmonize error messages
-Date: Mon, 10 Mar 2014 13:46:33 +0100
-Message-ID: <1394455603-2968-17-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH 17/26] refs: Add a concept of a reference transaction
+Date: Mon, 10 Mar 2014 13:46:34 +0100
+Message-ID: <1394455603-2968-18-git-send-email-mhagger@alum.mit.edu>
 References: <1394455603-2968-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Brad King <brad.king@kitware.com>, Jeff King <peff@peff.net>,
 	Vicent Marti <tanoku@gmail.com>,
 	Johan Herland <johan@herland.net>, git@vger.kernel.org,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 10 13:48:14 2014
+X-From: git-owner@vger.kernel.org Mon Mar 10 13:48:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WMzcr-0008ML-H2
+	id 1WMzcs-0008ML-8x
 	for gcvg-git-2@plane.gmane.org; Mon, 10 Mar 2014 13:48:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753583AbaCJMrX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Mar 2014 08:47:23 -0400
-Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:57338 "EHLO
-	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753348AbaCJMrV (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Mar 2014 08:47:21 -0400
-X-AuditID: 1207440f-f79326d000003c9f-34-531db458edf9
+	id S1753053AbaCJMsJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Mar 2014 08:48:09 -0400
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:49920 "EHLO
+	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753582AbaCJMrX (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Mar 2014 08:47:23 -0400
+X-AuditID: 12074411-f79ab6d000002f0e-1c-531db45adec8
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id A0.FA.15519.854BD135; Mon, 10 Mar 2014 08:47:20 -0400 (EDT)
+	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 96.DD.12046.A54BD135; Mon, 10 Mar 2014 08:47:22 -0400 (EDT)
 Received: from michael.fritz.box (p57A2497B.dip0.t-ipconnect.de [87.162.73.123])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s2ACkjwe025479
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s2ACkjwf025479
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Mon, 10 Mar 2014 08:47:19 -0400
+	Mon, 10 Mar 2014 08:47:21 -0400
 X-Mailer: git-send-email 1.9.0
 In-Reply-To: <1394455603-2968-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrLIsWRmVeSWpSXmKPExsUixO6iqBuxRTbYYNZdY4ud6yQsuq50M1k0
-	9F5htph3dxeTxe0V85ktfrT0MFt87FzA7MDu8ff9ByaPnbPusntcevmdzePjs+XsHs969zB6
-	XLyk7PF5k1wAexS3TVJiSVlwZnqevl0Cd0bThfdsBY98Kg79fs/awHjTtouRk0NCwETiU0cD
-	M4QtJnHh3nq2LkYuDiGBy4wSu05NYoVwTjBJ3N9xgRWkik1AV2JRTzMTiC0ioCYxse0QC0gR
-	s8AVRonPX3+xgySEBZwlWq7uBitiEVCVuNV7igXE5hVwkVi9bjkbxDo5iSm/F4DVcwLFp195
-	AGYLAfW+3NPMOoGRdwEjwypGucSc0lzd3MTMnOLUZN3i5MS8vNQiXRO93MwSvdSU0k2MkODj
-	38HYtV7mEKMAB6MSD++BtzLBQqyJZcWVuYcYJTmYlER5J66VDRbiS8pPqcxILM6ILyrNSS0+
-	xCjBwawkwpu5GCjHm5JYWZValA+TkuZgURLnVV+i7ickkJ5YkpqdmlqQWgSTleHgUJLgPbwZ
-	qFGwKDU9tSItM6cEIc3EwQkynEtKpDg1LyW1KLG0JCMeFB3xxcD4AEnxAO3dBtLOW1yQmAsU
-	hWg9xajL8Xrt30+MQix5+XmpUuK8c0CKBECKMkrz4FbAUs0rRnGgj4V5W0GqeIBpCm7SK6Al
-	TEBLmo9LgSwpSURISTUwGoXfLn0ZwnukfOftlwuvvp6mfOm4su2SC6tOMi3N/eLEG6Y/jSdX
-	fu7tpR/dljQuf6HyZcv+vbuPLq1J3yd/Lp37avet3vsfnZq5vh5/qHGQxcIvQ7L3 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrAIsWRmVeSWpSXmKPExsUixO6iqBu1RTbYoOOoqcXOdRIWXVe6mSwa
+	eq8wW8y7u4vJ4vaK+cwWP1p6mC0+di5gdmD3+Pv+A5PHzll32T0uvfzO5vHx2XJ2j2e9exg9
+	Ll5S9vi8SS6APYrbJimxpCw4Mz1P3y6BO6P9VzdzwXyjihmvz7A2MG7S6GLk5JAQMJF4vf4a
+	C4QtJnHh3nq2LkYuDiGBy4wSvSt3sUM4J5gktjesYASpYhPQlVjU08wEYosIqElMbDvEAlLE
+	LHCFUeLz11/sIAlhAVeJMxd/MoPYLAKqEvO3HwYay8HBK+Ai8alTAWKbnMSU3wvAyjmBwtOv
+	PACzhQScJV7uaWadwMi7gJFhFaNcYk5prm5uYmZOcWqybnFyYl5eapGuqV5uZoleakrpJkZI
+	6AnuYJxxUu4QowAHoxIP78G3MsFCrIllxZW5hxglOZiURHknrpUNFuJLyk+pzEgszogvKs1J
+	LT7EKMHBrCTCm7kYKMebklhZlVqUD5OS5mBREuflW6LuJySQnliSmp2aWpBaBJOV4eBQkuCt
+	3wzUKFiUmp5akZaZU4KQZuLgBBnOJSVSnJqXklqUWFqSEQ+KjfhiYHSApHiA9m4DaectLkjM
+	BYpCtJ5iVJQS550DkhAASWSU5sGNhSWUV4ziQF8K87aCVPEAkxFc9yugwUxAg5uPS4EMLklE
+	SEk1MAY/XNV78+35pppvrOodWhVnHxkataxyWZfbe2t78Wml0DVbXNgnX+u41feuScBOZdvk
+	qBuBHdHNaWus9eJT/A5ozmFbdo375epGm/cT7a6lXAxZ5jc/b+XfTTbt1dwRfjnS 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243747>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243748>
 
-Make (most of) the error messages for invalid input have the same
-format [1]:
+Build out the API for dealing with a bunch of reference checks and
+changes within a transaction.  Define an opaque ref_transaction type
+that is managed entirely within refs.c.  Introduce functions for
+starting a transaction, adding updates to a transaction, and
+committing a transaction.
 
-    $COMMAND [SP $REFNAME]: $MESSAGE
-
-Update the tests accordingly.
-
-[1] A few error messages still have their old form, because $COMMAND
-and $REFNAME aren't passed all the way down the call stack.
+This API will soon replace update_refs().
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
-Making more error messages conform to the new pattern is an exercise
-left to the reader (or maybe the writer if I find time to get back to
-it).
+ refs.c | 85 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ refs.h | 63 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 148 insertions(+)
 
- builtin/update-ref.c  | 24 ++++++++++++------------
- t/t1400-update-ref.sh | 32 ++++++++++++++++----------------
- 2 files changed, 28 insertions(+), 28 deletions(-)
-
-diff --git a/builtin/update-ref.c b/builtin/update-ref.c
-index 0a81a11..ac41635 100644
---- a/builtin/update-ref.c
-+++ b/builtin/update-ref.c
-@@ -180,17 +180,17 @@ static const char *parse_cmd_update(struct strbuf *input, const char *next)
- 
- 	update->ref_name = parse_refname(input, &next);
- 	if (!update->ref_name)
--		die("update line missing <ref>");
-+		die("update: missing <ref>");
- 
- 	if (parse_next_sha1(input, &next, update->new_sha1,
- 			    "update", update->ref_name, 0))
--		die("update %s missing <newvalue>", update->ref_name);
-+		die("update %s: missing <newvalue>", update->ref_name);
- 
- 	update->have_old = !parse_next_sha1(input, &next, update->old_sha1,
- 					    "update", update->ref_name, 1);
- 
- 	if (*next != line_termination)
--		die("update %s has extra input: %s", update->ref_name, next);
-+		die("update %s: extra input: %s", update->ref_name, next);
- 
- 	return next;
+diff --git a/refs.c b/refs.c
+index 0963077..54260ce 100644
+--- a/refs.c
++++ b/refs.c
+@@ -3267,6 +3267,85 @@ static int update_ref_write(const char *action, const char *refname,
+ 	return 0;
  }
-@@ -203,17 +203,17 @@ static const char *parse_cmd_create(struct strbuf *input, const char *next)
  
- 	update->ref_name = parse_refname(input, &next);
- 	if (!update->ref_name)
--		die("create line missing <ref>");
-+		die("create: missing <ref>");
- 
- 	if (parse_next_sha1(input, &next, update->new_sha1,
- 			    "create", update->ref_name, 0))
--		die("create %s missing <newvalue>", update->ref_name);
-+		die("create %s: missing <newvalue>", update->ref_name);
- 
- 	if (is_null_sha1(update->new_sha1))
--		die("create %s given zero <newvalue>", update->ref_name);
-+		die("create %s: zero <newvalue>", update->ref_name);
- 
- 	if (*next != line_termination)
--		die("create %s has extra input: %s", update->ref_name, next);
-+		die("create %s: extra input: %s", update->ref_name, next);
- 
- 	return next;
++/*
++ * Data structure for holding a reference transaction, which can
++ * consist of checks and updates to multiple references, carried out
++ * as atomically as possible.  This structure is opaque to callers.
++ */
++struct ref_transaction {
++	struct ref_update **updates;
++	size_t alloc;
++	size_t nr;
++};
++
++struct ref_transaction *create_ref_transaction(void)
++{
++	return xcalloc(1, sizeof(struct ref_transaction));
++}
++
++void free_ref_transaction(struct ref_transaction *transaction)
++{
++	int i;
++
++	for (i = 0; i < transaction->nr; i++) {
++		struct ref_update *update = transaction->updates[i];
++
++		free((char *)update->ref_name);
++		free(update);
++	}
++
++	free(transaction->updates);
++	free(transaction);
++}
++
++static struct ref_update *add_update(struct ref_transaction *transaction,
++				     const char *refname)
++{
++	struct ref_update *update = xcalloc(1, sizeof(*update));
++
++	update->ref_name = xstrdup(refname);
++	ALLOC_GROW(transaction->updates, transaction->nr + 1, transaction->alloc);
++	transaction->updates[transaction->nr++] = update;
++	return update;
++}
++
++void queue_update_ref(struct ref_transaction *transaction, const char *refname,
++		      unsigned char *new_sha1, unsigned char *old_sha1,
++		      int flags, int have_old)
++{
++	struct ref_update *update = add_update(transaction, refname);
++
++	hashcpy(update->new_sha1, new_sha1);
++	update->flags = flags;
++	update->have_old = have_old;
++	if (have_old)
++		hashcpy(update->old_sha1, old_sha1);
++}
++
++void queue_create_ref(struct ref_transaction *transaction, const char *refname,
++		      unsigned char *new_sha1,
++		      int flags)
++{
++	struct ref_update *update = add_update(transaction, refname);
++
++	hashcpy(update->new_sha1, new_sha1);
++	hashclr(update->old_sha1);
++	update->flags = flags;
++	update->have_old = 1;
++}
++
++void queue_delete_ref(struct ref_transaction *transaction, const char *refname,
++		      unsigned char *old_sha1,
++		      int flags, int have_old)
++{
++	struct ref_update *update = add_update(transaction, refname);
++
++	update->flags = flags;
++	update->have_old = have_old;
++	if (have_old)
++		hashcpy(update->old_sha1, old_sha1);
++}
++
+ int update_ref(const char *action, const char *refname,
+ 	       const unsigned char *sha1, const unsigned char *oldval,
+ 	       int flags, enum action_on_err onerr)
+@@ -3378,6 +3457,12 @@ cleanup:
+ 	return ret;
  }
-@@ -226,19 +226,19 @@ static const char *parse_cmd_delete(struct strbuf *input, const char *next)
  
- 	update->ref_name = parse_refname(input, &next);
- 	if (!update->ref_name)
--		die("delete line missing <ref>");
-+		die("delete: missing <ref>");
++int commit_ref_transaction(struct ref_transaction *transaction,
++			   const char *msg, enum action_on_err onerr)
++{
++	return update_refs(msg, transaction->updates, transaction->nr, onerr);
++}
++
+ char *shorten_unambiguous_ref(const char *refname, int strict)
+ {
+ 	int i;
+diff --git a/refs.h b/refs.h
+index 08e60ac..2848fb7 100644
+--- a/refs.h
++++ b/refs.h
+@@ -24,6 +24,8 @@ struct ref_update {
+ 	int have_old; /* 1 if old_sha1 is valid, 0 otherwise */
+ };
  
- 	if (parse_next_sha1(input, &next, update->old_sha1,
- 			    "delete", update->ref_name, 1)) {
- 		update->have_old = 0;
- 	} else {
- 		if (is_null_sha1(update->old_sha1))
--			die("delete %s given zero <oldvalue>", update->ref_name);
-+			die("delete %s: zero <oldvalue>", update->ref_name);
- 		update->have_old = 1;
- 	}
++struct ref_transaction;
++
+ /*
+  * Bit values set in the flags argument passed to each_ref_fn():
+  */
+@@ -220,6 +222,67 @@ enum action_on_err {
+ 	UPDATE_REFS_QUIET_ON_ERR
+ };
  
- 	if (*next != line_termination)
--		die("delete %s has extra input: %s", update->ref_name, next);
-+		die("delete %s: extra input: %s", update->ref_name, next);
- 
- 	return next;
- }
-@@ -251,7 +251,7 @@ static const char *parse_cmd_verify(struct strbuf *input, const char *next)
- 
- 	update->ref_name = parse_refname(input, &next);
- 	if (!update->ref_name)
--		die("verify line missing <ref>");
-+		die("verify: missing <ref>");
- 
- 	if (parse_next_sha1(input, &next, update->old_sha1,
- 			    "verify", update->ref_name, 1)) {
-@@ -262,7 +262,7 @@ static const char *parse_cmd_verify(struct strbuf *input, const char *next)
- 	}
- 
- 	if (*next != line_termination)
--		die("verify %s has extra input: %s", update->ref_name, next);
-+		die("verify %s: extra input: %s", update->ref_name, next);
- 
- 	return next;
- }
-diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
-index e9a0103..3cc5c66 100755
---- a/t/t1400-update-ref.sh
-+++ b/t/t1400-update-ref.sh
-@@ -371,7 +371,7 @@ test_expect_success 'stdin fails on junk after quoted argument' '
- test_expect_success 'stdin fails create with no ref' '
- 	echo "create " >stdin &&
- 	test_must_fail git update-ref --stdin <stdin 2>err &&
--	grep "fatal: create line missing <ref>" err
-+	grep "fatal: create: missing <ref>" err
- '
- 
- test_expect_success 'stdin fails create with bad ref name' '
-@@ -383,19 +383,19 @@ test_expect_success 'stdin fails create with bad ref name' '
- test_expect_success 'stdin fails create with no new value' '
- 	echo "create $a" >stdin &&
- 	test_must_fail git update-ref --stdin <stdin 2>err &&
--	grep "fatal: create $a missing <newvalue>" err
-+	grep "fatal: create $a: missing <newvalue>" err
- '
- 
- test_expect_success 'stdin fails create with too many arguments' '
- 	echo "create $a $m $m" >stdin &&
- 	test_must_fail git update-ref --stdin <stdin 2>err &&
--	grep "fatal: create $a has extra input:  $m" err
-+	grep "fatal: create $a: extra input:  $m" err
- '
- 
- test_expect_success 'stdin fails update with no ref' '
- 	echo "update " >stdin &&
- 	test_must_fail git update-ref --stdin <stdin 2>err &&
--	grep "fatal: update line missing <ref>" err
-+	grep "fatal: update: missing <ref>" err
- '
- 
- test_expect_success 'stdin fails update with bad ref name' '
-@@ -407,19 +407,19 @@ test_expect_success 'stdin fails update with bad ref name' '
- test_expect_success 'stdin fails update with no new value' '
- 	echo "update $a" >stdin &&
- 	test_must_fail git update-ref --stdin <stdin 2>err &&
--	grep "fatal: update $a missing <newvalue>" err
-+	grep "fatal: update $a: missing <newvalue>" err
- '
- 
- test_expect_success 'stdin fails update with too many arguments' '
- 	echo "update $a $m $m $m" >stdin &&
- 	test_must_fail git update-ref --stdin <stdin 2>err &&
--	grep "fatal: update $a has extra input:  $m" err
-+	grep "fatal: update $a: extra input:  $m" err
- '
- 
- test_expect_success 'stdin fails delete with no ref' '
- 	echo "delete " >stdin &&
- 	test_must_fail git update-ref --stdin <stdin 2>err &&
--	grep "fatal: delete line missing <ref>" err
-+	grep "fatal: delete: missing <ref>" err
- '
- 
- test_expect_success 'stdin fails delete with bad ref name' '
-@@ -431,13 +431,13 @@ test_expect_success 'stdin fails delete with bad ref name' '
- test_expect_success 'stdin fails delete with too many arguments' '
- 	echo "delete $a $m $m" >stdin &&
- 	test_must_fail git update-ref --stdin <stdin 2>err &&
--	grep "fatal: delete $a has extra input:  $m" err
-+	grep "fatal: delete $a: extra input:  $m" err
- '
- 
- test_expect_success 'stdin fails verify with too many arguments' '
- 	echo "verify $a $m $m" >stdin &&
- 	test_must_fail git update-ref --stdin <stdin 2>err &&
--	grep "fatal: verify $a has extra input:  $m" err
-+	grep "fatal: verify $a: extra input:  $m" err
- '
- 
- test_expect_success 'stdin fails option with unknown name' '
-@@ -532,7 +532,7 @@ test_expect_success 'stdin create ref fails with bad new value' '
- test_expect_success 'stdin create ref fails with zero new value' '
- 	echo "create $c " >stdin &&
- 	test_must_fail git update-ref --stdin <stdin 2>err &&
--	grep "fatal: create $c given zero <newvalue>" err &&
-+	grep "fatal: create $c: zero <newvalue>" err &&
- 	test_must_fail git rev-parse --verify -q $c
- '
- 
-@@ -556,7 +556,7 @@ test_expect_success 'stdin delete ref fails with wrong old value' '
- test_expect_success 'stdin delete ref fails with zero old value' '
- 	echo "delete $a " >stdin &&
- 	test_must_fail git update-ref --stdin <stdin 2>err &&
--	grep "fatal: delete $a given zero <oldvalue>" err &&
-+	grep "fatal: delete $a: zero <oldvalue>" err &&
- 	git rev-parse $m >expect &&
- 	git rev-parse $a >actual &&
- 	test_cmp expect actual
-@@ -697,7 +697,7 @@ test_expect_success 'stdin -z fails on unknown command' '
- test_expect_success 'stdin -z fails create with no ref' '
- 	printf $F "create " >stdin &&
- 	test_must_fail git update-ref -z --stdin <stdin 2>err &&
--	grep "fatal: create line missing <ref>" err
-+	grep "fatal: create: missing <ref>" err
- '
- 
- test_expect_success 'stdin -z fails create with bad ref name' '
-@@ -721,7 +721,7 @@ test_expect_success 'stdin -z fails create with too many arguments' '
- test_expect_success 'stdin -z fails update with no ref' '
- 	printf $F "update " >stdin &&
- 	test_must_fail git update-ref -z --stdin <stdin 2>err &&
--	grep "fatal: update line missing <ref>" err
-+	grep "fatal: update: missing <ref>" err
- '
- 
- test_expect_success 'stdin -z fails update with bad ref name' '
-@@ -751,7 +751,7 @@ test_expect_success 'stdin -z fails update with too many arguments' '
- test_expect_success 'stdin -z fails delete with no ref' '
- 	printf $F "delete " >stdin &&
- 	test_must_fail git update-ref -z --stdin <stdin 2>err &&
--	grep "fatal: delete line missing <ref>" err
-+	grep "fatal: delete: missing <ref>" err
- '
- 
- test_expect_success 'stdin -z fails delete with bad ref name' '
-@@ -854,7 +854,7 @@ test_expect_success 'stdin -z create ref fails with bad new value' '
- test_expect_success 'stdin -z create ref fails with empty new value' '
- 	printf $F "create $c" "" >stdin &&
- 	test_must_fail git update-ref -z --stdin <stdin 2>err &&
--	grep "fatal: create $c missing <newvalue>" err &&
-+	grep "fatal: create $c: missing <newvalue>" err &&
- 	test_must_fail git rev-parse --verify -q $c
- '
- 
-@@ -878,7 +878,7 @@ test_expect_success 'stdin -z delete ref fails with wrong old value' '
- test_expect_success 'stdin -z delete ref fails with zero old value' '
- 	printf $F "delete $a" "$Z" >stdin &&
- 	test_must_fail git update-ref -z --stdin <stdin 2>err &&
--	grep "fatal: delete $a given zero <oldvalue>" err &&
-+	grep "fatal: delete $a: zero <oldvalue>" err &&
- 	git rev-parse $m >expect &&
- 	git rev-parse $a >actual &&
- 	test_cmp expect actual
++/*
++ * Allocate and initialize a ref_transaction object.  The object must
++ * be freed by calling free_ref_transaction().
++ */
++struct ref_transaction *create_ref_transaction(void);
++
++/*
++ * Free a ref_transaction and all associated data.  This function does
++ * not commit the transaction; that must be done first (if desired) by
++ * calling commit_ref_transaction().
++ */
++void free_ref_transaction(struct ref_transaction *transaction);
++
++
++/*
++ * The following functions add a reference check or update to a
++ * ref_transaction.  In all of them, refname is the name of the
++ * reference to be affected.  The functions make internal copies of
++ * refname, so the caller retains ownership of the parameter.  flags
++ * can be REF_NODEREF; it is passed to update_ref_lock().
++ */
++
++
++/*
++ * Add a reference update to transaction.  new_sha1 is the value that
++ * the reference should have after the update, or zeros if it should
++ * be deleted.  If have_old is true, then old_sha1 holds the value
++ * that the reference should have had before the update, or zeros if
++ * it must not have existed beforehand.
++ */
++void queue_update_ref(struct ref_transaction *transaction, const char *refname,
++		      unsigned char *new_sha1, unsigned char *old_sha1,
++		      int flags, int have_old);
++
++/*
++ * Add a reference creation to transaction.  new_sha1 is the value
++ * that the reference should have after the update, or zeros if it
++ * should be deleted.  It is verified that the reference does not
++ * exist already.
++ */
++void queue_create_ref(struct ref_transaction *transaction, const char *refname,
++		      unsigned char *new_sha1,
++		      int flags);
++
++/*
++ * Add a reference deletion to transaction.  If have_old is true, then
++ * old_sha1 holds the value that the reference should have had before
++ * the update.
++ */
++void queue_delete_ref(struct ref_transaction *transaction, const char *refname,
++		      unsigned char *old_sha1,
++		      int flags, int have_old);
++
++/*
++ * Commit all of the changes that have been queued in transaction, as
++ * atomically as possible.  Return a nonzero value if there is a
++ * problem.  The transaction is unmodified by this function.
++ */
++int commit_ref_transaction(struct ref_transaction *transaction,
++			   const char *msg, enum action_on_err onerr);
++
+ /** Lock a ref and then write its file */
+ int update_ref(const char *action, const char *refname,
+ 		const unsigned char *sha1, const unsigned char *oldval,
 -- 
 1.9.0
