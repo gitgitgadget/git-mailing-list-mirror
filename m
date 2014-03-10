@@ -1,113 +1,70 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 3/7] test patch hunk editing with "commit -p -m"
-Date: Mon, 10 Mar 2014 16:20:59 -0400
-Message-ID: <CAPig+cQoUW5dqSzs-wAVOD1xrbSzuzGoHCDKdmgT_BprngMbvQ@mail.gmail.com>
-References: <1394477377-10994-1-git-send-email-benoit.pierre@gmail.com>
-	<1394477377-10994-4-git-send-email-benoit.pierre@gmail.com>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: question about: Facebook makes Mercurial faster than Git
+Date: Mon, 10 Mar 2014 16:22:08 -0400
+Message-ID: <CACPiFC+yjwakzC-0Z=Asuy6SJAxg=pHv4mis_AP_qKVHkpk1Ag@mail.gmail.com>
+References: <531D8ED9.7040305@gmx.net> <alpine.DEB.2.02.1403100310080.25193@nftneq.ynat.uz>
+ <20140310175102.GA17336@domone.podge> <alpine.DEB.2.02.1403101053120.20306@nftneq.ynat.uz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>
-To: Benoit Pierre <benoit.pierre@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 10 21:21:07 2014
+Cc: =?ISO-8859-2?B?T25k+GVqIELtbGth?= <neleai@seznam.cz>,
+	Dennis Luehring <dl.soluz@gmx.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: David Lang <david@lang.hm>
+X-From: git-owner@vger.kernel.org Mon Mar 10 21:22:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WN6h7-0006cW-FV
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Mar 2014 21:21:05 +0100
+	id 1WN6iX-0008A6-Qh
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Mar 2014 21:22:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753308AbaCJUVB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Mar 2014 16:21:01 -0400
-Received: from mail-yk0-f174.google.com ([209.85.160.174]:53784 "EHLO
-	mail-yk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752561AbaCJUVA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Mar 2014 16:21:00 -0400
-Received: by mail-yk0-f174.google.com with SMTP id 20so20485879yks.5
-        for <git@vger.kernel.org>; Mon, 10 Mar 2014 13:20:59 -0700 (PDT)
+	id S1753767AbaCJUW3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Mar 2014 16:22:29 -0400
+Received: from mail-ve0-f171.google.com ([209.85.128.171]:48194 "EHLO
+	mail-ve0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752315AbaCJUW3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Mar 2014 16:22:29 -0400
+Received: by mail-ve0-f171.google.com with SMTP id cz12so7794625veb.30
+        for <git@vger.kernel.org>; Mon, 10 Mar 2014 13:22:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=R1MX3wjpj9BoTv+A5hkrFgYhvJREYA4Byyy8/7YDLHA=;
-        b=h1Md0a9vog4EtLySsxQH8LKLHSMnk3XtBwCekV2x9GHjbsM6EY8s6QZ5985UWob7+5
-         +dBpOMzqf74YrQHqX6TrLq9gla4WbtzxMFgBMp971i5YLJaEoU3G2g3B53/2M8wqzPaz
-         d323WuyhaSNDhrYELOjjhrxd+LxB4+imN9sgs5U7wNTVjYOO5qsl6ZIdT6Qd75iUrQZV
-         rlxgDPyoln6s2rnyizIBxSiUNWWDIABc34Ppm2cyaCk++Pb1E7OhMcKSvebBuqIYcy2g
-         tUX2rkA0j+SN7pPprEkK+e1KDy33K0Ld8mfSIad1m2dITuSSiwQ8ILeSB2VCl0XZhLqa
-         ug8A==
-X-Received: by 10.236.86.180 with SMTP id w40mr4735017yhe.116.1394482859474;
- Mon, 10 Mar 2014 13:20:59 -0700 (PDT)
-Received: by 10.170.180.134 with HTTP; Mon, 10 Mar 2014 13:20:59 -0700 (PDT)
-In-Reply-To: <1394477377-10994-4-git-send-email-benoit.pierre@gmail.com>
-X-Google-Sender-Auth: Lge3HHEO3msdy53r-hfuEXU1By0
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=N6Aa12zVbEUwMOXYySr47qETt6oQjj40tL5UFXMaJLM=;
+        b=GJdaZV7FwZTUzzvljgewzVG3Lupy/EpYpa4ghR9lZV1jL2BT+aocA/8KvUEgaxlAkc
+         9eraoCmEpPmdr/R0pxAQfkggfgnICBfU36HM6axIDn2mz0jMYPoWgNTovfP9soeRkY4S
+         XGW1i3yeZcKntQ5mCPpW3RhCS9/usNkDsjKNlk1+EA+AI2gRbl4fj/9xSctPDrp1kh9S
+         Fjti3nCMJND3YnBzztAGIg/3+rQpYrr7uS1PkDkIPYpZjQFIjIK8OONuYDBBQZvfUU+M
+         NpLuIMhS8Oa5IT2u1H64yt3MG3+FtJ8Q/FBtqDzcckrFsps85jdg1z9KoHZOAz8lhO6+
+         9k/Q==
+X-Received: by 10.221.30.14 with SMTP id sa14mr94775vcb.44.1394482948205; Mon,
+ 10 Mar 2014 13:22:28 -0700 (PDT)
+Received: by 10.220.183.138 with HTTP; Mon, 10 Mar 2014 13:22:08 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.02.1403101053120.20306@nftneq.ynat.uz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243809>
 
-On Mon, Mar 10, 2014 at 2:49 PM, Benoit Pierre <benoit.pierre@gmail.com> wrote:
-> Add (failing) test: with commit changing the environment to let hooks
-> now that no editor will be used (by setting GIT_EDITOR to ":"), the
-> "edit hunk" functionality does not work (no editor is launched and the
-> whole hunk is committed).
->
-> Signed-off-by: Benoit Pierre <benoit.pierre@gmail.com>
-> ---
->  t/t7513-commit_-p_-m_hunk_edit.sh | 34 ++++++++++++++++++++++++++++++++++
->  1 file changed, 34 insertions(+)
->  create mode 100755 t/t7513-commit_-p_-m_hunk_edit.sh
+On Mon, Mar 10, 2014 at 1:56 PM, David Lang <david@lang.hm> wrote:
+> there's also the issue of managed vs generated files, if you update the
+> mtime all the way up the tree because a source file was compiled and a
+> binary created, that will quickly defeat the value of the recursive mime.
 
-Is it possible to give this file a name less unusual and more
-consistent with other test scripts? Perhaps choose a more generic name
-which may allow other similar tests to be added to the file in the
-future (if needed)?
+I think this points us again to an inotify-based strategy, where git
+can put an event listener daemon which registers just the watchers it
+needs, and filters the events on its own conditions.
 
-> diff --git a/t/t7513-commit_-p_-m_hunk_edit.sh b/t/t7513-commit_-p_-m_hunk_edit.sh
-> new file mode 100755
-> index 0000000..994939a
-> --- /dev/null
-> +++ b/t/t7513-commit_-p_-m_hunk_edit.sh
-> @@ -0,0 +1,34 @@
-> +#!/bin/sh
-> +
-> +test_description='hunk edit with "commit -p -m"'
-> +. ./test-lib.sh
-> +
-> +if ! test_have_prereq PERL
-> +then
-> +       skip_all="skipping '$test_description' tests, perl not available"
-> +       test_done
-> +fi
-> +
-> +test_expect_success 'setup (initial)' '
-> +       echo line1 >file &&
-> +       git add file &&
-> +       git commit -m commit1 &&
-> +       echo line3 >>file &&
-> +       cat >expect <<-\EOF
-> +       diff --git a/file b/file
-> +       index a29bdeb..c0d0fb4 100644
-> +       --- a/file
-> +       +++ b/file
-> +       @@ -1 +1,2 @@
-> +        line1
-> +       +line2
-> +       EOF
+The kernel and fs have no good way of knowing about this stuff.
 
-In the previous review, the suggestion was that creation of 'expect'
-should be moved to the test below where it is actually used rather
-than into the 'setup' phase above.
+cheers,
 
-> +'
-> +
-> +test_expect_failure 'edit hunk "commit -p -m message"' '
-> +       echo e | env GIT_EDITOR="sed s/+line3\$/+line2/ -i" git commit -p -m commit2 file &&
-> +       git diff HEAD^ HEAD >actual &&
-> +       test_cmp expect actual
-> +'
-> +
-> +test_done
-> --
-> 1.9.0
+
+m
+-- 
+ martin.langhoff@gmail.com
+ -  ask interesting questions
+ - don't get distracted with shiny stuff  - working code first
+ ~ http://docs.moodle.org/en/User:Martin_Langhoff
