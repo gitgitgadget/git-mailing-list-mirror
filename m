@@ -1,70 +1,136 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: question about: Facebook makes Mercurial faster than Git
-Date: Mon, 10 Mar 2014 16:22:08 -0400
-Message-ID: <CACPiFC+yjwakzC-0Z=Asuy6SJAxg=pHv4mis_AP_qKVHkpk1Ag@mail.gmail.com>
-References: <531D8ED9.7040305@gmx.net> <alpine.DEB.2.02.1403100310080.25193@nftneq.ynat.uz>
- <20140310175102.GA17336@domone.podge> <alpine.DEB.2.02.1403101053120.20306@nftneq.ynat.uz>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 6/7] merge hook tests: fix and update tests
+Date: Mon, 10 Mar 2014 16:27:40 -0400
+Message-ID: <CAPig+cRsFTNAAzAD99v+A1KCVRNTUOaSyuf_gqPZa8-MLMyoBQ@mail.gmail.com>
+References: <1394477377-10994-1-git-send-email-benoit.pierre@gmail.com>
+	<1394477377-10994-7-git-send-email-benoit.pierre@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: =?ISO-8859-2?B?T25k+GVqIELtbGth?= <neleai@seznam.cz>,
-	Dennis Luehring <dl.soluz@gmx.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: David Lang <david@lang.hm>
-X-From: git-owner@vger.kernel.org Mon Mar 10 21:22:36 2014
+Cc: Git List <git@vger.kernel.org>
+To: Benoit Pierre <benoit.pierre@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 10 21:27:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WN6iX-0008A6-Qh
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Mar 2014 21:22:34 +0100
+	id 1WN6na-00058M-4n
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Mar 2014 21:27:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753767AbaCJUW3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Mar 2014 16:22:29 -0400
-Received: from mail-ve0-f171.google.com ([209.85.128.171]:48194 "EHLO
-	mail-ve0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752315AbaCJUW3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Mar 2014 16:22:29 -0400
-Received: by mail-ve0-f171.google.com with SMTP id cz12so7794625veb.30
-        for <git@vger.kernel.org>; Mon, 10 Mar 2014 13:22:28 -0700 (PDT)
+	id S1753384AbaCJU1m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Mar 2014 16:27:42 -0400
+Received: from mail-yh0-f42.google.com ([209.85.213.42]:59470 "EHLO
+	mail-yh0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753255AbaCJU1l (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Mar 2014 16:27:41 -0400
+Received: by mail-yh0-f42.google.com with SMTP id t59so1069988yho.29
+        for <git@vger.kernel.org>; Mon, 10 Mar 2014 13:27:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=N6Aa12zVbEUwMOXYySr47qETt6oQjj40tL5UFXMaJLM=;
-        b=GJdaZV7FwZTUzzvljgewzVG3Lupy/EpYpa4ghR9lZV1jL2BT+aocA/8KvUEgaxlAkc
-         9eraoCmEpPmdr/R0pxAQfkggfgnICBfU36HM6axIDn2mz0jMYPoWgNTovfP9soeRkY4S
-         XGW1i3yeZcKntQ5mCPpW3RhCS9/usNkDsjKNlk1+EA+AI2gRbl4fj/9xSctPDrp1kh9S
-         Fjti3nCMJND3YnBzztAGIg/3+rQpYrr7uS1PkDkIPYpZjQFIjIK8OONuYDBBQZvfUU+M
-         NpLuIMhS8Oa5IT2u1H64yt3MG3+FtJ8Q/FBtqDzcckrFsps85jdg1z9KoHZOAz8lhO6+
-         9k/Q==
-X-Received: by 10.221.30.14 with SMTP id sa14mr94775vcb.44.1394482948205; Mon,
- 10 Mar 2014 13:22:28 -0700 (PDT)
-Received: by 10.220.183.138 with HTTP; Mon, 10 Mar 2014 13:22:08 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.02.1403101053120.20306@nftneq.ynat.uz>
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=Gawaadu9WnSynhJRiNOicfs2tm12Vahczd9nB48xo2g=;
+        b=IS+x7sBgDE2GY+saOLsjFOPf122dCZYjJwc3KD78NcrveBu8qLOsuH4Jd3fXTphAdQ
+         WwJmNwoi+jaTEJRe9Fhmed2MnzYj3AVcGfLPVxK/o53eN08YwL6CqWNh5JFYRDhONvZ5
+         dVWxQCrL8H23vhK8sGBgoPPENCSS85dZnhVXopZMvTHdgeaNue7gRgmQaTo4nupVkype
+         kG4IAFslxHwTT7vIVQI5x2R5ZU2hn+eOVofRUGjADFnvYtAAZMljUhcKn8bjpODBNPwY
+         0auRQwDG9MZjhKiWUYG9v5mqejnkilb9KQ8I1HUA5MLrVKxGR7UcyOnOyfXP/HwlZRK7
+         Sx1A==
+X-Received: by 10.236.53.135 with SMTP id g7mr6501628yhc.106.1394483260923;
+ Mon, 10 Mar 2014 13:27:40 -0700 (PDT)
+Received: by 10.170.180.134 with HTTP; Mon, 10 Mar 2014 13:27:40 -0700 (PDT)
+In-Reply-To: <1394477377-10994-7-git-send-email-benoit.pierre@gmail.com>
+X-Google-Sender-Auth: od0IpnFY4lGbOcoykRf2wSeyWbo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243809>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243810>
 
-On Mon, Mar 10, 2014 at 1:56 PM, David Lang <david@lang.hm> wrote:
-> there's also the issue of managed vs generated files, if you update the
-> mtime all the way up the tree because a source file was compiled and a
-> binary created, that will quickly defeat the value of the recursive mime.
+On Mon, Mar 10, 2014 at 2:49 PM, Benoit Pierre <benoit.pierre@gmail.com> wrote:
+> - update 'no editor' hook test and add 'editor' hook test
+> - make sure the tree is reset to a clean state after running a test
+>   (using test_when_finished) so later tests are not impacted
 
-I think this points us again to an inotify-based strategy, where git
-can put an event listener daemon which registers just the watchers it
-needs, and filters the events on its own conditions.
+As conceptually distinct changes, it might make sense to split these
+into two patches, one a purely cleanup patch adding
+test_when_finished, and the second introducing your new test. Doing so
+would ease the review process and make the intended changes more
+obvious.
 
-The kernel and fs have no good way of knowing about this stuff.
-
-cheers,
-
-
-m
--- 
- martin.langhoff@gmail.com
- -  ask interesting questions
- - don't get distracted with shiny stuff  - working code first
- ~ http://docs.moodle.org/en/User:Martin_Langhoff
+> Signed-off-by: Benoit Pierre <benoit.pierre@gmail.com>
+> ---
+>  t/t7505-prepare-commit-msg-hook.sh | 27 +++++++++++++++++++++------
+>  1 file changed, 21 insertions(+), 6 deletions(-)
+>
+> diff --git a/t/t7505-prepare-commit-msg-hook.sh b/t/t7505-prepare-commit-msg-hook.sh
+> index 5531abb..03dce09 100755
+> --- a/t/t7505-prepare-commit-msg-hook.sh
+> +++ b/t/t7505-prepare-commit-msg-hook.sh
+> @@ -134,14 +134,26 @@ test_expect_success 'with hook (-c)' '
+>
+>  test_expect_success 'with hook (merge)' '
+>
+> -       head=`git rev-parse HEAD` &&
+> -       git checkout -b other HEAD@{1} &&
+> -       echo "more" >> file &&
+> +       test_when_finished "git checkout -f master" &&
+> +       git checkout -B other HEAD@{1} &&
+> +       echo "more" >>file &&
+> +       git add file &&
+> +       git commit -m other &&
+> +       git checkout - &&
+> +       git merge --no-ff other &&
+> +       test "`git log -1 --pretty=format:%s`" = "merge (no editor)"
+> +'
+> +
+> +test_expect_success 'with hook and editor (merge)' '
+> +
+> +       test_when_finished "git checkout -f master" &&
+> +       git checkout -B other HEAD@{1} &&
+> +       echo "more" >>file &&
+>         git add file &&
+>         git commit -m other &&
+>         git checkout - &&
+> -       git merge other &&
+> -       test "`git log -1 --pretty=format:%s`" = merge
+> +       env GIT_EDITOR="\"\$FAKE_EDITOR\"" git merge --no-ff -e other &&
+> +       test "`git log -1 --pretty=format:%s`" = "merge"
+>  '
+>
+>  cat > "$HOOK" <<'EOF'
+> @@ -151,6 +163,7 @@ EOF
+>
+>  test_expect_success 'with failing hook' '
+>
+> +       test_when_finished "git checkout -f master" &&
+>         head=`git rev-parse HEAD` &&
+>         echo "more" >> file &&
+>         git add file &&
+> @@ -160,6 +173,7 @@ test_expect_success 'with failing hook' '
+>
+>  test_expect_success 'with failing hook (--no-verify)' '
+>
+> +       test_when_finished "git checkout -f master" &&
+>         head=`git rev-parse HEAD` &&
+>         echo "more" >> file &&
+>         git add file &&
+> @@ -169,6 +183,7 @@ test_expect_success 'with failing hook (--no-verify)' '
+>
+>  test_expect_success 'with failing hook (merge)' '
+>
+> +       test_when_finished "git checkout -f master" &&
+>         git checkout -B other HEAD@{1} &&
+>         echo "more" >> file &&
+>         git add file &&
+> @@ -178,7 +193,7 @@ test_expect_success 'with failing hook (merge)' '
+>         exit 1
+>         EOF
+>         git checkout - &&
+> -       test_must_fail git merge other
+> +       test_must_fail git merge --no-ff other
+>
+>  '
+>
+> --
+> 1.9.0
