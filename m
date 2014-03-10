@@ -1,112 +1,83 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 05/26] t1400: Add some more tests involving quoted arguments
-Date: Mon, 10 Mar 2014 13:46:22 +0100
-Message-ID: <1394455603-2968-6-git-send-email-mhagger@alum.mit.edu>
-References: <1394455603-2968-1-git-send-email-mhagger@alum.mit.edu>
-Cc: Brad King <brad.king@kitware.com>, Jeff King <peff@peff.net>,
-	Vicent Marti <tanoku@gmail.com>,
-	Johan Herland <johan@herland.net>, git@vger.kernel.org,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 10 13:48:49 2014
+From: Sandy Carter <sandy.carter@savoirfairelinux.com>
+Subject: Re: [PATCH v2 2/2] i18n: assure command not corrupted by _() process
+Date: Mon, 10 Mar 2014 08:51:21 -0400
+Message-ID: <531DB549.5060304@savoirfairelinux.com>
+References: <1393620766-17582-1-git-send-email-sandy.carter@savoirfairelinux.com> <1393858554-4392-1-git-send-email-sandy.carter@savoirfairelinux.com> <1393858554-4392-2-git-send-email-sandy.carter@savoirfairelinux.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: jn.avila@free.fr
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 10 13:49:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WMzdQ-0000Xv-4g
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Mar 2014 13:48:48 +0100
+	id 1WMzeG-0001Hb-Cy
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Mar 2014 13:49:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753353AbaCJMsj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Mar 2014 08:48:39 -0400
-Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:47818 "EHLO
-	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753488AbaCJMq7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Mar 2014 08:46:59 -0400
-X-AuditID: 1207440e-f79c76d000003e2c-85-531db442fff7
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id E6.C2.15916.244BD135; Mon, 10 Mar 2014 08:46:58 -0400 (EDT)
-Received: from michael.fritz.box (p57A2497B.dip0.t-ipconnect.de [87.162.73.123])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s2ACkjwT025479
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Mon, 10 Mar 2014 08:46:57 -0400
-X-Mailer: git-send-email 1.9.0
-In-Reply-To: <1394455603-2968-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrIIsWRmVeSWpSXmKPExsUixO6iqOu0RTbY4NdjS4ud6yQsuq50M1k0
-	9F5htph3dxeTxe0V85ktfrT0MFt87FzA7MDu8ff9ByaPnbPusntcevmdzePjs+XsHs969zB6
-	XLyk7PF5k1wAexS3TVJiSVlwZnqevl0Cd8b0k8+ZC9bwV6w6soutgfEATxcjJ4eEgInEkb3P
-	2CBsMYkL99YD2VwcQgKXGSWWnfrDCOGcYJKYv+w+C0gVm4CuxKKeZiYQW0RATWJi2yEWkCJm
-	gSuMEp+//mIHSQgL+EhcWLmBEcRmEVCV+Nd/EqyBV8BZomfrDGaIdXISU34vAKvnFHCRmH7l
-	AZgtBFTzck8z6wRG3gWMDKsY5RJzSnN1cxMzc4pTk3WLkxPz8lKLdI31cjNL9FJTSjcxQoKP
-	bwdj+3qZQ4wCHIxKPLwH3soEC7EmlhVX5h5ilORgUhLlnbhWNliILyk/pTIjsTgjvqg0J7X4
-	EKMEB7OSCG/mYqAcb0piZVVqUT5MSpqDRUmcV22Jup+QQHpiSWp2ampBahFMVoaDQ0mC9/Bm
-	oEbBotT01Iq0zJwShDQTByfIcC4pkeLUvJTUosTSkox4UHTEFwPjAyTFA7R3G0g7b3FBYi5Q
-	FKL1FKOilDjvHJCEAEgiozQPbiwspbxiFAf6Upi3FaSKB5iO4LpfAQ1mAhrcfFwKZHBJIkJK
-	qoGxNt/DWcI37P5kr1caz5luOYT3xR1fK+WepZnDGjatxk1SKW5O0bI52nUF8e1bPZk3PA+f
-	LhBrqObXszrxhY7b3DNpyUz36lbevHvwxWfftf0TnzqtmJnRFKXwju2Jhdg/zz/V 
+	id S1753415AbaCJMtg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Mar 2014 08:49:36 -0400
+Received: from mail.savoirfairelinux.com ([209.172.62.77]:54635 "EHLO
+	mail.savoirfairelinux.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752608AbaCJMtf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Mar 2014 08:49:35 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mail.savoirfairelinux.com (Postfix) with ESMTP id DF38410D6288;
+	Mon, 10 Mar 2014 08:49:34 -0400 (EDT)
+X-Virus-Scanned: amavisd-new at mail.savoirfairelinux.com
+Received: from mail.savoirfairelinux.com ([127.0.0.1])
+	by localhost (mail.savoirfairelinux.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id xUHBMO2E4caq; Mon, 10 Mar 2014 08:49:34 -0400 (EDT)
+Received: from [192.168.49.85] (mtl.savoirfairelinux.net [208.88.110.46])
+	by mail.savoirfairelinux.com (Postfix) with ESMTPSA id AA94610D6287;
+	Mon, 10 Mar 2014 08:49:34 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
+In-Reply-To: <1393858554-4392-2-git-send-email-sandy.carter@savoirfairelinux.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243755>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243756>
 
-Previously there were no good tests of C-quoted arguments.
+Is there any update on this patch?
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- t/t1400-update-ref.sh | 26 +++++++++++++++++++++++++-
- 1 file changed, 25 insertions(+), 1 deletion(-)
-
-diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
-index 5836842..627aaaf 100755
---- a/t/t1400-update-ref.sh
-+++ b/t/t1400-update-ref.sh
-@@ -350,12 +350,18 @@ test_expect_success 'stdin fails on unknown command' '
- 	grep "fatal: unknown command: unknown $a" err
- '
- 
--test_expect_success 'stdin fails on badly quoted input' '
-+test_expect_success 'stdin fails on unbalanced quotes' '
- 	echo "create $a \"master" >stdin &&
- 	test_must_fail git update-ref --stdin <stdin 2>err &&
- 	grep "fatal: badly quoted argument: \\\"master" err
- '
- 
-+test_expect_success 'stdin fails on invalid escape' '
-+	echo "create $a \"ma\zter\"" >stdin &&
-+	test_must_fail git update-ref --stdin <stdin 2>err &&
-+	grep "fatal: badly quoted argument: \\\"ma\\\\zter\\\"" err
-+'
-+
- test_expect_success 'stdin fails on junk after quoted argument' '
- 	echo "create \"$a\"master" >stdin &&
- 	test_must_fail git update-ref --stdin <stdin 2>err &&
-@@ -458,6 +464,24 @@ test_expect_success 'stdin create ref works' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'stdin succeeds with quoted argument' '
-+	git update-ref -d $a &&
-+	echo "create $a \"$m\"" >stdin &&
-+	git update-ref --stdin <stdin &&
-+	git rev-parse $m >expect &&
-+	git rev-parse $a >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'stdin succeeds with escaped character' '
-+	git update-ref -d $a &&
-+	echo "create $a \"ma\\163ter\"" >stdin &&
-+	git update-ref --stdin <stdin &&
-+	git rev-parse $m >expect &&
-+	git rev-parse $a >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'stdin update ref creates with zero old value' '
- 	echo "update $b $m $Z" >stdin &&
- 	git update-ref --stdin <stdin &&
--- 
-1.9.0
+Le 2014-03-03 09:55, Sandy Carter a =E9crit :
+> Separate message from command examples to avoid translation issues
+> such as a dash being omitted in a translation.
+>
+> Signed-off-by: Sandy Carter <sandy.carter@savoirfairelinux.com>
+> ---
+>   builtin/branch.c | 10 ++++++----
+>   1 file changed, 6 insertions(+), 4 deletions(-)
+>
+> diff --git a/builtin/branch.c b/builtin/branch.c
+> index b4d7716..b304da8 100644
+> --- a/builtin/branch.c
+> +++ b/builtin/branch.c
+> @@ -1022,11 +1022,13 @@ int cmd_branch(int argc, const char **argv, c=
+onst char *prefix)
+>   		 */
+>   		if (argc =3D=3D 1 && track =3D=3D BRANCH_TRACK_OVERRIDE &&
+>   		    !branch_existed && remote_tracking) {
+> -			fprintf(stderr, _("\nIf you wanted to make '%s' track '%s', do th=
+is:\n\n"), head, branch->name);
+> -			fprintf(stderr, _("    git branch -d %s\n"), branch->name);
+> -			fprintf(stderr, _("    git branch --set-upstream-to %s\n"), branc=
+h->name);
+> +			fprintf(stderr, "\n");
+> +			fprintf(stderr, _("If you wanted to make '%s' track '%s', do this=
+:"), head, branch->name);
+> +			fprintf(stderr, "\n\n");
+> +			fprintf(stderr, "    git branch -d %s\n", branch->name);
+> +			fprintf(stderr, "    git branch --set-upstream-to %s\n", branch->=
+name);
+> +			fprintf(stderr, "\n");
+>   		}
+> -
+>   	} else
+>   		usage_with_options(builtin_branch_usage, options);
+>
+>
