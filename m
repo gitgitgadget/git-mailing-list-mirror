@@ -1,136 +1,109 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 6/7] merge hook tests: fix and update tests
-Date: Mon, 10 Mar 2014 16:27:40 -0400
-Message-ID: <CAPig+cRsFTNAAzAD99v+A1KCVRNTUOaSyuf_gqPZa8-MLMyoBQ@mail.gmail.com>
-References: <1394477377-10994-1-git-send-email-benoit.pierre@gmail.com>
-	<1394477377-10994-7-git-send-email-benoit.pierre@gmail.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH 3/7] test patch hunk editing with "commit -p -m"
+Date: Mon, 10 Mar 2014 20:30:39 -0000
+Organization: OPDS
+Message-ID: <E509041DA7394C9893F4F3EBE99B6E43@PhilipOakley>
+References: <1394477377-10994-1-git-send-email-benoit.pierre@gmail.com> <1394477377-10994-4-git-send-email-benoit.pierre@gmail.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>
-To: Benoit Pierre <benoit.pierre@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 10 21:27:47 2014
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+To: "Benoit Pierre" <benoit.pierre@gmail.com>, <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Mar 10 21:30:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WN6na-00058M-4n
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Mar 2014 21:27:46 +0100
+	id 1WN6qW-0008FY-4P
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Mar 2014 21:30:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753384AbaCJU1m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Mar 2014 16:27:42 -0400
-Received: from mail-yh0-f42.google.com ([209.85.213.42]:59470 "EHLO
-	mail-yh0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753255AbaCJU1l (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Mar 2014 16:27:41 -0400
-Received: by mail-yh0-f42.google.com with SMTP id t59so1069988yho.29
-        for <git@vger.kernel.org>; Mon, 10 Mar 2014 13:27:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=Gawaadu9WnSynhJRiNOicfs2tm12Vahczd9nB48xo2g=;
-        b=IS+x7sBgDE2GY+saOLsjFOPf122dCZYjJwc3KD78NcrveBu8qLOsuH4Jd3fXTphAdQ
-         WwJmNwoi+jaTEJRe9Fhmed2MnzYj3AVcGfLPVxK/o53eN08YwL6CqWNh5JFYRDhONvZ5
-         dVWxQCrL8H23vhK8sGBgoPPENCSS85dZnhVXopZMvTHdgeaNue7gRgmQaTo4nupVkype
-         kG4IAFslxHwTT7vIVQI5x2R5ZU2hn+eOVofRUGjADFnvYtAAZMljUhcKn8bjpODBNPwY
-         0auRQwDG9MZjhKiWUYG9v5mqejnkilb9KQ8I1HUA5MLrVKxGR7UcyOnOyfXP/HwlZRK7
-         Sx1A==
-X-Received: by 10.236.53.135 with SMTP id g7mr6501628yhc.106.1394483260923;
- Mon, 10 Mar 2014 13:27:40 -0700 (PDT)
-Received: by 10.170.180.134 with HTTP; Mon, 10 Mar 2014 13:27:40 -0700 (PDT)
-In-Reply-To: <1394477377-10994-7-git-send-email-benoit.pierre@gmail.com>
-X-Google-Sender-Auth: od0IpnFY4lGbOcoykRf2wSeyWbo
+	id S1753008AbaCJUan (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Mar 2014 16:30:43 -0400
+Received: from out1.ip07ir2.opaltelecom.net ([62.24.128.243]:15852 "EHLO
+	out1.ip07ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752758AbaCJUam (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Mar 2014 16:30:42 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Au4XACEgHlNZ8Y3F/2dsb2JhbABagwY7iRu4fAECAYEhF3RpAQGBHwEBFAEEAQEBAQMIAQEuHgEBLAIDBQIBAxUMJRQBBAgSBgcXBgESCAIBAgMBhTgHAYIHDQMVCbQ5lEsNhlmMRIVCgRQEiRmGIIcfjlKFSIMtPQ
+X-IPAS-Result: Au4XACEgHlNZ8Y3F/2dsb2JhbABagwY7iRu4fAECAYEhF3RpAQGBHwEBFAEEAQEBAQMIAQEuHgEBLAIDBQIBAxUMJRQBBAgSBgcXBgESCAIBAgMBhTgHAYIHDQMVCbQ5lEsNhlmMRIVCgRQEiRmGIIcfjlKFSIMtPQ
+X-IronPort-AV: E=Sophos;i="4.97,625,1389744000"; 
+   d="scan'208";a="100581361"
+Received: from host-89-241-141-197.as13285.net (HELO PhilipOakley) ([89.241.141.197])
+  by out1.ip07ir2.opaltelecom.net with SMTP; 10 Mar 2014 20:30:41 +0000
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243811>
 
-On Mon, Mar 10, 2014 at 2:49 PM, Benoit Pierre <benoit.pierre@gmail.com> wrote:
-> - update 'no editor' hook test and add 'editor' hook test
-> - make sure the tree is reset to a clean state after running a test
->   (using test_when_finished) so later tests are not impacted
+mincro nit.
+From: "Benoit Pierre" <benoit.pierre@gmail.com>
+> Add (failing) test: with commit changing the environment to let hooks
+> now that no editor will be used (by setting GIT_EDITOR to ":"), the
+s/now/know/
 
-As conceptually distinct changes, it might make sense to split these
-into two patches, one a purely cleanup patch adding
-test_when_finished, and the second introducing your new test. Doing so
-would ease the review process and make the intended changes more
-obvious.
-
+> "edit hunk" functionality does not work (no editor is launched and the
+> whole hunk is committed).
+>
 > Signed-off-by: Benoit Pierre <benoit.pierre@gmail.com>
 > ---
->  t/t7505-prepare-commit-msg-hook.sh | 27 +++++++++++++++++++++------
->  1 file changed, 21 insertions(+), 6 deletions(-)
+> t/t7513-commit_-p_-m_hunk_edit.sh | 34 
+> ++++++++++++++++++++++++++++++++++
+> 1 file changed, 34 insertions(+)
+> create mode 100755 t/t7513-commit_-p_-m_hunk_edit.sh
 >
-> diff --git a/t/t7505-prepare-commit-msg-hook.sh b/t/t7505-prepare-commit-msg-hook.sh
-> index 5531abb..03dce09 100755
-> --- a/t/t7505-prepare-commit-msg-hook.sh
-> +++ b/t/t7505-prepare-commit-msg-hook.sh
-> @@ -134,14 +134,26 @@ test_expect_success 'with hook (-c)' '
->
->  test_expect_success 'with hook (merge)' '
->
-> -       head=`git rev-parse HEAD` &&
-> -       git checkout -b other HEAD@{1} &&
-> -       echo "more" >> file &&
-> +       test_when_finished "git checkout -f master" &&
-> +       git checkout -B other HEAD@{1} &&
-> +       echo "more" >>file &&
-> +       git add file &&
-> +       git commit -m other &&
-> +       git checkout - &&
-> +       git merge --no-ff other &&
-> +       test "`git log -1 --pretty=format:%s`" = "merge (no editor)"
+> diff --git a/t/t7513-commit_-p_-m_hunk_edit.sh 
+> b/t/t7513-commit_-p_-m_hunk_edit.sh
+> new file mode 100755
+> index 0000000..994939a
+> --- /dev/null
+> +++ b/t/t7513-commit_-p_-m_hunk_edit.sh
+> @@ -0,0 +1,34 @@
+> +#!/bin/sh
+> +
+> +test_description='hunk edit with "commit -p -m"'
+> +. ./test-lib.sh
+> +
+> +if ! test_have_prereq PERL
+> +then
+> + skip_all="skipping '$test_description' tests, perl not available"
+> + test_done
+> +fi
+> +
+> +test_expect_success 'setup (initial)' '
+> + echo line1 >file &&
+> + git add file &&
+> + git commit -m commit1 &&
+> + echo line3 >>file &&
+> + cat >expect <<-\EOF
+> + diff --git a/file b/file
+> + index a29bdeb..c0d0fb4 100644
+> + --- a/file
+> + +++ b/file
+> + @@ -1 +1,2 @@
+> + line1
+> + +line2
+> + EOF
 > +'
 > +
-> +test_expect_success 'with hook and editor (merge)' '
+> +test_expect_failure 'edit hunk "commit -p -m message"' '
+> + echo e | env GIT_EDITOR="sed s/+line3\$/+line2/ -i" git commit -p -m 
+> commit2 file &&
+> + git diff HEAD^ HEAD >actual &&
+> + test_cmp expect actual
+> +'
 > +
-> +       test_when_finished "git checkout -f master" &&
-> +       git checkout -B other HEAD@{1} &&
-> +       echo "more" >>file &&
->         git add file &&
->         git commit -m other &&
->         git checkout - &&
-> -       git merge other &&
-> -       test "`git log -1 --pretty=format:%s`" = merge
-> +       env GIT_EDITOR="\"\$FAKE_EDITOR\"" git merge --no-ff -e other &&
-> +       test "`git log -1 --pretty=format:%s`" = "merge"
->  '
->
->  cat > "$HOOK" <<'EOF'
-> @@ -151,6 +163,7 @@ EOF
->
->  test_expect_success 'with failing hook' '
->
-> +       test_when_finished "git checkout -f master" &&
->         head=`git rev-parse HEAD` &&
->         echo "more" >> file &&
->         git add file &&
-> @@ -160,6 +173,7 @@ test_expect_success 'with failing hook' '
->
->  test_expect_success 'with failing hook (--no-verify)' '
->
-> +       test_when_finished "git checkout -f master" &&
->         head=`git rev-parse HEAD` &&
->         echo "more" >> file &&
->         git add file &&
-> @@ -169,6 +183,7 @@ test_expect_success 'with failing hook (--no-verify)' '
->
->  test_expect_success 'with failing hook (merge)' '
->
-> +       test_when_finished "git checkout -f master" &&
->         git checkout -B other HEAD@{1} &&
->         echo "more" >> file &&
->         git add file &&
-> @@ -178,7 +193,7 @@ test_expect_success 'with failing hook (merge)' '
->         exit 1
->         EOF
->         git checkout - &&
-> -       test_must_fail git merge other
-> +       test_must_fail git merge --no-ff other
->
->  '
+> +test_done
+> -- 
+> 1.9.0
 >
 > --
-> 1.9.0
+> 
