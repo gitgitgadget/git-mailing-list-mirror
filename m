@@ -1,119 +1,134 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH][GSOC2014] changed logical chain in branch.c to lookup tables
-Date: Mon, 10 Mar 2014 17:25:52 -0400
-Message-ID: <CAPig+cS3H_8gZOuyro_Vt0ay3xphvsB92zFgwFfCdgKsXjU0Gg@mail.gmail.com>
-References: <1394478262-17911-1-git-send-email-tamertas@outlook.com>
-	<BLU0-SMTP15131ED34F192C9871ACC0CD5740@phx.gbl>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 03/26] t1400: Pass a legitimate <newvalue> to update command
+Date: Mon, 10 Mar 2014 22:38:31 +0100
+Message-ID: <531E30D7.40208@alum.mit.edu>
+References: <1394455603-2968-1-git-send-email-mhagger@alum.mit.edu> <1394455603-2968-4-git-send-email-mhagger@alum.mit.edu> <531DF079.9050909@kitware.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>
-To: TamerTas <tamertas@outlook.com>
-X-From: git-owner@vger.kernel.org Mon Mar 10 22:26:02 2014
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Vicent Marti <tanoku@gmail.com>,
+	Johan Herland <johan@herland.net>, git@vger.kernel.org
+To: Brad King <brad.king@kitware.com>
+X-From: git-owner@vger.kernel.org Mon Mar 10 22:38:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WN7hu-00049u-IS
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Mar 2014 22:25:58 +0100
+	id 1WN7uE-0000bP-LV
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Mar 2014 22:38:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754422AbaCJVZy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Mar 2014 17:25:54 -0400
-Received: from mail-yh0-f45.google.com ([209.85.213.45]:36096 "EHLO
-	mail-yh0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754234AbaCJVZx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Mar 2014 17:25:53 -0400
-Received: by mail-yh0-f45.google.com with SMTP id i57so7664274yha.4
-        for <git@vger.kernel.org>; Mon, 10 Mar 2014 14:25:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=25rtERbPU2XgjFN4dA/Fuu/GBBHj1exJzmpzeJr4/g4=;
-        b=tbTaIm077MnPuqtPNwzCebWS7o7VrKnRiEjd0g2Alj4TCfCJ3dJgU0rriCfw8WGn1M
-         OBHLjRS38UHpxsjr9Rwhui1jAwTSikOXGbTUCVV6KbycfMzuYDr7Q5CWpnFLYvscud4u
-         O5qyh0o935aWOh3WG2yBwUz71X1RAMX1rxuAtdMM2iJBKl4yaWh+MpgNDFw2rDb2Jd64
-         ATWq/BsabBKIjGbemRK4kbTugTU0sP1sZt9FpEeFWio7dM88DjmqQddth+YzSQZNA26w
-         DYkmeseahi4qvkBQbxnEGKhDPRavtHbMF/z1dZgXsRTkVzxPhzGZUs/vdqone7rDikPX
-         0G6Q==
-X-Received: by 10.236.7.47 with SMTP id 35mr24396703yho.23.1394486752781; Mon,
- 10 Mar 2014 14:25:52 -0700 (PDT)
-Received: by 10.170.180.134 with HTTP; Mon, 10 Mar 2014 14:25:52 -0700 (PDT)
-In-Reply-To: <BLU0-SMTP15131ED34F192C9871ACC0CD5740@phx.gbl>
-X-Google-Sender-Auth: 8E1ooXRc8QmciUDXHDIVgkNhHOo
+	id S1754186AbaCJVii (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Mar 2014 17:38:38 -0400
+Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:60563 "EHLO
+	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752703AbaCJVig (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Mar 2014 17:38:36 -0400
+X-AuditID: 1207440d-f79d86d0000043db-23-531e30dbb695
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id BB.AE.17371.BD03E135; Mon, 10 Mar 2014 17:38:35 -0400 (EDT)
+Received: from [192.168.69.148] (p57A2497B.dip0.t-ipconnect.de [87.162.73.123])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s2ALcVZm020415
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Mon, 10 Mar 2014 17:38:32 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
+In-Reply-To: <531DF079.9050909@kitware.com>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrGKsWRmVeSWpSXmKPExsUixO6iqHvbQC7Y4OJBXYud6yQsuq50M1k0
+	9F5htph3dxeTxY+WHmaLj50LmB3YPHbOusvucenldzaPj8+Ws3s8693D6HHxkrLH501yAWxR
+	3DZJiSVlwZnpefp2CdwZv7/0MhcsF604e+gAawPjVoEuRk4OCQETiTkb2lkgbDGJC/fWs3Ux
+	cnEICVxmlJi69T8ThHOeSeJUy3x2kCpeAU2JI7dnMYLYLAKqEueWHGQGsdkEdCUW9TQzgdii
+	AsESqy8/YIGoF5Q4OfMJmC0CVL9qXQMbiM0ssIZR4ubGGhBbWCBAYs+PZqjNsxglbi/pABvE
+	KaAtMX/BeiCbA+g8cYmexiCIXh2Jd30PmCFseYntb+cwT2AUnIVk3SwkZbOQlC1gZF7FKJeY
+	U5qrm5uYmVOcmqxbnJyYl5dapGukl5tZopeaUrqJERIPvDsY/6+TOcQowMGoxMN74K1MsBBr
+	YllxZe4hRkkOJiVR3jwduWAhvqT8lMqMxOKM+KLSnNTiQ4wSHMxKIrzrxIFyvCmJlVWpRfkw
+	KWkOFiVxXrUl6n5CAumJJanZqakFqUUwWRkODiUJ3hX6QI2CRanpqRVpmTklCGkmDk6Q4VxS
+	IsWpeSmpRYmlJRnxoBiOLwZGMUiKB2hvIUg7b3FBYi5QFKL1FKMux+22X58YhVjy8vNSpcR5
+	S0CKBECKMkrz4FbAkt8rRnGgj4V5j4BU8QATJ9ykV0BLmICWNB+XAllSkoiQkmpg7OfNf/tA
+	+IVixpnZMVPkI+ofRHa85rvK4eC0wt7F9OLZdZrWK68yuHh3+c/XusV/vmPueZ/1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243820>
 
-On Mon, Mar 10, 2014 at 3:04 PM, TamerTas <tamertas@outlook.com> wrote:
-> Signed-off-by: TamerTas <tamertas@outlook.com>
+Brad,
 
-Thanks for the submission. It appears to be well executed. Read below
-for a concern about the approach taken.
+Thanks for your feedback.
 
-> ---
->  branch.c |   31 ++++++++-----------------------
->  1 file changed, 8 insertions(+), 23 deletions(-)
->
-> diff --git a/branch.c b/branch.c
-> index 723a36b..397edd3 100644
-> --- a/branch.c
-> +++ b/branch.c
-> @@ -50,6 +50,9 @@ static int should_setup_rebase(const char *origin)
->  void install_branch_config(int flag, const char *local, const char *origin, const char *remote)
->  {
->         const char *shortname = remote + 11;
-> +       const char *location[] = {"local", "remote"};
-> +       const char *type[] = {"branch", "ref"};
-> +
->         int remote_is_branch = starts_with(remote, "refs/heads/");
->         struct strbuf key = STRBUF_INIT;
->         int rebasing = should_setup_rebase(origin);
-> @@ -77,29 +80,11 @@ void install_branch_config(int flag, const char *local, const char *origin, cons
->         strbuf_release(&key);
->
->         if (flag & BRANCH_CONFIG_VERBOSE) {
-> -               if (remote_is_branch && origin)
-> -                       printf_ln(rebasing ?
-> -                                 _("Branch %s set up to track remote branch %s from %s by rebasing.") :
-> -                                 _("Branch %s set up to track remote branch %s from %s."),
-> -                                 local, shortname, origin);
-> -               else if (remote_is_branch && !origin)
-> -                       printf_ln(rebasing ?
-> -                                 _("Branch %s set up to track local branch %s by rebasing.") :
-> -                                 _("Branch %s set up to track local branch %s."),
-> -                                 local, shortname);
-> -               else if (!remote_is_branch && origin)
-> -                       printf_ln(rebasing ?
-> -                                 _("Branch %s set up to track remote ref %s by rebasing.") :
-> -                                 _("Branch %s set up to track remote ref %s."),
-> -                                 local, remote);
-> -               else if (!remote_is_branch && !origin)
-> -                       printf_ln(rebasing ?
-> -                                 _("Branch %s set up to track local ref %s by rebasing.") :
-> -                                 _("Branch %s set up to track local ref %s."),
-> -                                 local, remote);
-> -               else
-> -                       die("BUG: impossible combination of %d and %p",
-> -                           remote_is_branch, origin);
-> +
-> +        printf_ln(rebasing ?
-> +              _("Branch %s set up to track %s %s %s by rebasing.") :
-> +              _("Branch %s set up to track %s %s %s."),
-> +              local, location[!origin], type[remote_is_branch], remote);
+On 03/10/2014 06:03 PM, Brad King wrote:
+> On 03/10/2014 08:46 AM, Michael Haggerty wrote:
+>> This test is trying to test a few ways to delete references using "git
+>> update-ref -z --stdin".  The third line passed in is
+>>
+>>     update SP /refs/heads/c NUL NUL <sha1> NUL
+>>
+>> , which is not a correct way to delete a reference according to the
+>> documentation (the new value should be zeros, not empty).  Pass zeros
+>> instead as the new value to test the code correctly.
+> 
+> In my original work on this feature, an empty <newvalue> is allowed.
+> Since newvalue is not optional an empty value can be treated as zero.
+> The relevant documentation is:
+> 
+>  update::
+>          Set <ref> to <newvalue> after verifying <oldvalue>, if given.
+>          Specify a zero <newvalue> to ensure the ref does not exist
+> 
+>  ...
+> 
+>  Use 40 "0" or the empty string to specify a zero value, except that
+>  with `-z` an empty <oldvalue> is considered missing.
+> 
+> The two together say that <newvalue> can be the empty string instead
+> of a literal zero.
 
-The GSoC microproject talks about the _() function used for
-internationalization and the limitations it places on string
-composition. This change assumes, probably incorrectly, that strings
-"local", "remote", "branch" and "ref" do not need to be localized.
-Even allowing internationalization of them (via N_() in the location[]
-and type[] tables) might not be sufficient since grammatical rules
-differ from language to language.
+OK, with your explanation and after reading the docs a couple more
+times, I can see your reading.  Your rules as I now understand them:
 
->         }
->  }
->
-> --
-> 1.7.9.5
+* Without -z
+  * 0{40} or the empty string represents zeros
+  * No preceding SP delimiter indicates that the value is missing
+    (as are any following values)
+
+* With -z
+  * For <newvalue>
+    * 0{40} or the empty string represents zeros (the value is
+      not allowed to be missing)
+  * For <oldvalue>
+    * 0{40} represents zeros
+    * The empty string indicates that the value is missing
+
+I implemented the slightly simpler rules
+
+* Without -z
+  * 0{40} or the empty string represents zeros
+  * No preceding delimiter indicates that the value is missing (as
+    are any following values)
+
+* With -z
+  * 0{40} represents zeros
+  * The empty string indicates that the value is missing
+
+It seems to me that "-z" input will nearly always be machine-generated,
+so there is not much reason to accept the empty string as shorthand for
+zeros.  So I think that my version of the rules, being simpler to
+explain, is a slight improvement.  But your version is already out in
+the wild, so backwards-compatibility is also a consideration, even
+though it is rather a fine point in a rather unlikely usage (why use
+update rather than delete to delete a reference?).
+
+I don't know.  I'm willing to rewrite the code to go back to your rules,
+or rewrite the documentation to describe my rules.
+
+Neutral bystanders *cough*Junio*cough*, what do you prefer?
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
