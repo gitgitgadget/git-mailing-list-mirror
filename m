@@ -1,82 +1,57 @@
-From: Nemina Amarasinghe <neminaa@gmail.com>
-Subject: Re: [PATCH] simplified the chain if() statements of  =?utf-8?b?aW5zdGFsbF9icmFuY2hfY29uZmlnKCk=?= function in branch.c
-Date: Mon, 10 Mar 2014 07:58:45 +0000 (UTC)
-Message-ID: <loom.20140310T085652-521@post.gmane.org>
-References: <loom.20140310T083649-236@post.gmane.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: What's cooking in git.git (Mar 2014, #01; Tue, 4)
+Date: Mon, 10 Mar 2014 09:22:38 +0100
+Message-ID: <531D764E.2000809@viscovery.net>
+References: <xmqqiortijxp.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 10 08:59:19 2014
+Cc: git@vger.kernel.org,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 10 09:23:21 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WMv7G-0002eT-0H
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Mar 2014 08:59:18 +0100
+	id 1WMvUS-0004MD-IG
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Mar 2014 09:23:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752193AbaCJH7O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Mar 2014 03:59:14 -0400
-Received: from plane.gmane.org ([80.91.229.3]:56960 "EHLO plane.gmane.org"
+	id S1752423AbaCJIWo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Mar 2014 04:22:44 -0400
+Received: from so.liwest.at ([212.33.55.23]:43149 "EHLO so.liwest.at"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751041AbaCJH7N (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Mar 2014 03:59:13 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1WMv79-0002WC-Ch
-	for git@vger.kernel.org; Mon, 10 Mar 2014 08:59:11 +0100
-Received: from 61.245.163.2 ([61.245.163.2])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 10 Mar 2014 08:59:11 +0100
-Received: from neminaa by 61.245.163.2 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 10 Mar 2014 08:59:11 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 61.245.163.2 (Mozilla/5.0 (Windows NT 6.3; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0)
+	id S1752146AbaCJIWn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Mar 2014 04:22:43 -0400
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.80.1)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1WMvTq-0001kN-SR; Mon, 10 Mar 2014 09:22:38 +0100
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 70EE816613;
+	Mon, 10 Mar 2014 09:22:38 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
+In-Reply-To: <xmqqiortijxp.fsf@gitster.dls.corp.google.com>
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243710>
 
-Nemina Amarasinghe <neminaa <at> gmail.com> writes:
+Am 3/5/2014 1:10, schrieb Junio C Hamano:
+> * nd/gitignore-trailing-whitespace (2014-02-10) 2 commits
+>  - dir: ignore trailing spaces in exclude patterns
+>  - dir: warn about trailing spaces in exclude patterns
+> 
+>  Warn and then ignore trailing whitespaces in .gitignore files,
+>  unless they are quoted for fnmatch(3), e.g. "path\ ".
+> 
+>  Will merge to 'next'.
 
-Sorry for the first patch. Something went wrong. This is the correct one
+The new test does not pass on Windows. I'll attempt to prepare patches
+that amount to work around using FUNNYNAMES, but I'm running out of time now.
 
-
->From aebfa60feb643280c89b54e5ab87f9d960cde452 Mon Sep 17 00:00:00 2001
-From: Nemina Amarasinghe <neminaa@gmail.com>
-Date: Mon, 10 Mar 2014 13:02:55 +0530
-Subject: [PATCH] simplified the chain if() statements of
- install_brach_config() function in branch.c
-
----
- branch.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
-
-diff --git a/branch.c b/branch.c
-index d3b9d49..0304a7a 100644
---- a/branch.c
-+++ b/branch.c
-@@ -87,12 +87,7 @@ void install_branch_config(int flag, const char *local,
-const char *origin, cons
- 				  _("Branch %s set up to track local branch %s by rebasing.") :
- 				  _("Branch %s set up to track local branch %s."),
- 				  local, shortname);
--		else if (!remote_is_branch && origin)
--			printf_ln(rebasing ?
--				  _("Branch %s set up to track remote ref %s by rebasing.") :
--				  _("Branch %s set up to track remote ref %s."),
--				  local, remote);
--		else if (!remote_is_branch && !origin)
-+		else if (!remote_is_branch && (origin || !origin))
- 			printf_ln(rebasing ?
- 				  _("Branch %s set up to track remote ref %s by rebasing.") :
- 				  _("Branch %s set up to track remote ref %s."),
--- 
-1.9.0.152.g6ab4ae2
+-- Hannes
