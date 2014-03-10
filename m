@@ -1,83 +1,103 @@
-From: Sandy Carter <sandy.carter@savoirfairelinux.com>
-Subject: Re: [PATCH v2 2/2] i18n: assure command not corrupted by _() process
-Date: Mon, 10 Mar 2014 08:51:21 -0400
-Message-ID: <531DB549.5060304@savoirfairelinux.com>
-References: <1393620766-17582-1-git-send-email-sandy.carter@savoirfairelinux.com> <1393858554-4392-1-git-send-email-sandy.carter@savoirfairelinux.com> <1393858554-4392-2-git-send-email-sandy.carter@savoirfairelinux.com>
+From: Yann Droneaud <ydroneaud@opteya.com>
+Subject: Re: git merge --date --author
+Date: Mon, 10 Mar 2014 13:52:52 +0100
+Organization: OPTEYA
+Message-ID: <1394455972.3257.51.camel@localhost.localdomain>
+References: <1394188215.3257.17.camel@localhost.localdomain>
+	 <87y50mxj0b.fsf@igel.home> <xmqqvbvpu757.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: jn.avila@free.fr
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 10 13:49:40 2014
+Cc: Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org,
+	Yann Droneaud <ydroneaud@opteya.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 10 13:53:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WMzeG-0001Hb-Cy
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Mar 2014 13:49:40 +0100
+	id 1WMzhv-00047A-Gk
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Mar 2014 13:53:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753415AbaCJMtg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Mar 2014 08:49:36 -0400
-Received: from mail.savoirfairelinux.com ([209.172.62.77]:54635 "EHLO
-	mail.savoirfairelinux.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752608AbaCJMtf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Mar 2014 08:49:35 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mail.savoirfairelinux.com (Postfix) with ESMTP id DF38410D6288;
-	Mon, 10 Mar 2014 08:49:34 -0400 (EDT)
-X-Virus-Scanned: amavisd-new at mail.savoirfairelinux.com
-Received: from mail.savoirfairelinux.com ([127.0.0.1])
-	by localhost (mail.savoirfairelinux.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id xUHBMO2E4caq; Mon, 10 Mar 2014 08:49:34 -0400 (EDT)
-Received: from [192.168.49.85] (mtl.savoirfairelinux.net [208.88.110.46])
-	by mail.savoirfairelinux.com (Postfix) with ESMTPSA id AA94610D6287;
-	Mon, 10 Mar 2014 08:49:34 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
-In-Reply-To: <1393858554-4392-2-git-send-email-sandy.carter@savoirfairelinux.com>
+	id S1753755AbaCJMxQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Mar 2014 08:53:16 -0400
+Received: from smtp1-g21.free.fr ([212.27.42.1]:34372 "EHLO smtp1-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753746AbaCJMxM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Mar 2014 08:53:12 -0400
+Received: from [192.168.20.20] (unknown [37.162.217.221])
+	by smtp1-g21.free.fr (Postfix) with ESMTP id 53AE3940141;
+	Mon, 10 Mar 2014 13:52:54 +0100 (CET)
+In-Reply-To: <xmqqvbvpu757.fsf@gitster.dls.corp.google.com>
+X-Mailer: Evolution 3.10.4 (3.10.4-1.fc20) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243757>
 
-Is there any update on this patch?
+Hi,
 
-Le 2014-03-03 09:55, Sandy Carter a =E9crit :
-> Separate message from command examples to avoid translation issues
-> such as a dash being omitted in a translation.
->
-> Signed-off-by: Sandy Carter <sandy.carter@savoirfairelinux.com>
-> ---
->   builtin/branch.c | 10 ++++++----
->   1 file changed, 6 insertions(+), 4 deletions(-)
->
-> diff --git a/builtin/branch.c b/builtin/branch.c
-> index b4d7716..b304da8 100644
-> --- a/builtin/branch.c
-> +++ b/builtin/branch.c
-> @@ -1022,11 +1022,13 @@ int cmd_branch(int argc, const char **argv, c=
-onst char *prefix)
->   		 */
->   		if (argc =3D=3D 1 && track =3D=3D BRANCH_TRACK_OVERRIDE &&
->   		    !branch_existed && remote_tracking) {
-> -			fprintf(stderr, _("\nIf you wanted to make '%s' track '%s', do th=
-is:\n\n"), head, branch->name);
-> -			fprintf(stderr, _("    git branch -d %s\n"), branch->name);
-> -			fprintf(stderr, _("    git branch --set-upstream-to %s\n"), branc=
-h->name);
-> +			fprintf(stderr, "\n");
-> +			fprintf(stderr, _("If you wanted to make '%s' track '%s', do this=
-:"), head, branch->name);
-> +			fprintf(stderr, "\n\n");
-> +			fprintf(stderr, "    git branch -d %s\n", branch->name);
-> +			fprintf(stderr, "    git branch --set-upstream-to %s\n", branch->=
-name);
-> +			fprintf(stderr, "\n");
->   		}
-> -
->   	} else
->   		usage_with_options(builtin_branch_usage, options);
->
->
+Le vendredi 07 mars 2014 =C3=A0 11:43 -0800, Junio C Hamano a =C3=A9cri=
+t :
+> Andreas Schwab <schwab@linux-m68k.org> writes:
+>=20
+> > Yann Droneaud <ydroneaud@opteya.com> writes:
+> >
+> >> But I'd like to know if there's a specific reason for git merge to=
+ not
+> >> support --date and --author ?
+> >
+> > It's rather unusual that a merge is performed on behalf of a differ=
+ent
+> > author.
+>=20
+> Yes.  Michael's "Nobody bothered to implement it" is also correct
+> but the reason why nobody bothered to most likely is due to "why
+> would you want to lie?".
+>=20
+
+When was Git changed in some kind of TSA agent one has to bribe to get
+allowed to cross^Wcommit ? Why git lawyer is not implemented ? I want a
+fair trial !
+
+And before adding to Git a perfect lie detector (how will it able to
+make the difference between truth and lie ? then, will it be able to
+make the difference between good and bad ?, oh god, no !), I would
+prefer to have it detect bugs before one could commit instead.
+
+You seems to think I'm lying, but I'm not a liar: I just need to make
+some arrangements with the history under another identity, as I could b=
+e
+legally bound to. So it may sound like a lie for you, but ultimately,
+it's the plain truth.
+
+So as the tool is not in position to distinguish lie from truth, I'd
+prefer to not see this concept brought here.
+
+> If the use case is to rebuild history, you would need to be able to
+> also lie about the committer, so
+>=20
+> >> git merge \
+> >>     --date "2013-12-31 23:59:59 +0000" \
+> >>     --author "Happy New Year <happy.new-year@gregorian.calendar>" =
+\
+> >>     current-year
+>=20
+> in such a history-rebuild script would not be sufficient.  The
+> script can set necessary environment variables to lie about both
+> author and commiter, though, of course.
+>=20
+
+Thanks for reminding this: I have to use GIT_COMMITER_DATE,
+GIT_COMMITER_NAME and GIT_COMMITER_EMAIL.
+
+As I'm not calling for adding --date and --author, I will continue to
+use the environment variables: they're good enough for the job.
+
+Regards.
+
+--=20
+Yann Droneaud
+OPTEYA
