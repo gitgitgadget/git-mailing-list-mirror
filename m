@@ -1,117 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC] Documentation: Say that submodule clones use a separate gitdirs.
-Date: Mon, 10 Mar 2014 12:36:47 -0700
-Message-ID: <xmqqsiqprgkw.fsf@gitster.dls.corp.google.com>
-References: <1394178834.7891.38.camel@Naugrim>
-	<BEB30FB8-204C-4272-8F94-6210D96FB2CB@kellerfarm.com>
-	<1394231714.7891.39.camel@Naugrim>
-	<xmqqvbvpshqn.fsf@gitster.dls.corp.google.com>
-	<1394239852.7891.40.camel@Naugrim>
-	<B2A4F350-1F20-4ABA-80A6-CF244DD7FAFD@kellerfarm.com>
-	<xmqq61nmrrxe.fsf@gitster.dls.corp.google.com>
-	<1394475733.7891.53.camel@Naugrim>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC/WIP] Pluggable reference backends
+Date: Mon, 10 Mar 2014 15:42:47 -0400
+Message-ID: <20140310194247.GA24568@sigill.intra.peff.net>
+References: <531D9B50.5030404@alum.mit.edu>
+ <CAJo=hJtiPgByhk9M4ZKD98DARzgeU6z2mmw7fcLTEbBza-_h6A@mail.gmail.com>
+ <20140310155230.GA29801@sigill.intra.peff.net>
+ <87k3c2820l.fsf@fencepost.gnu.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Andrew Keller <andrew@kellerfarm.com>,
-	Git List <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Henri GEIST <geist.henri@laposte.net>
-X-From: git-owner@vger.kernel.org Mon Mar 10 20:37:06 2014
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	git discussion list <git@vger.kernel.org>,
+	Vicent Marti <tanoku@gmail.com>,
+	Brad King <brad.king@kitware.com>,
+	Johan Herland <johan@herland.net>
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Mon Mar 10 20:42:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WN60Q-0004AC-5S
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Mar 2014 20:36:58 +0100
+	id 1WN66A-0000lB-DC
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Mar 2014 20:42:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752903AbaCJTgy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Mar 2014 15:36:54 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36356 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752304AbaCJTgx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Mar 2014 15:36:53 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3EB2E73296;
-	Mon, 10 Mar 2014 15:36:52 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=cHni25l/ObSp
-	DWL9zUEF47DExnU=; b=VsbcGwwY2qfgObOCmxFujfzHe0NWUu+rf+ytC9UCQyoM
-	XMGiezMQyldyvO+vZLB9x2LJUmfJz6Vx1IpY2WImGtQx85MGlb6lke5JwSKAz9dD
-	c1O+y0aXOrIEW7ggKFvXEKY1Wk4AIA9iMYT/pseeK6adnk/5UtjtB29MaoiOeMM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=PgVXve
-	vI+bpPdN7blHvjC8uvw7ac7nv6R3G+eTZIDOZgTp8jOE1JDtUTfXLNUbAUTdk/So
-	AHIzTlKsTNXdHn+Uneyqm7UlK5hqfXQMfN5szZU3O9jm1wix360h2ig/TnIEmyZf
-	nqddt4w2Z1Ni/l6kkPoYq3vmCRMjF7nISPtTQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2A96B73294;
-	Mon, 10 Mar 2014 15:36:52 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 495B673292;
-	Mon, 10 Mar 2014 15:36:51 -0400 (EDT)
-In-Reply-To: <1394475733.7891.53.camel@Naugrim> (Henri GEIST's message of
-	"Mon, 10 Mar 2014 19:22:13 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 53EB7050-A88B-11E3-BFEC-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752921AbaCJTmu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Mar 2014 15:42:50 -0400
+Received: from cloud.peff.net ([50.56.180.127]:36707 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752412AbaCJTmt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Mar 2014 15:42:49 -0400
+Received: (qmail 17000 invoked by uid 102); 10 Mar 2014 19:42:49 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 10 Mar 2014 14:42:49 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Mar 2014 15:42:47 -0400
+Content-Disposition: inline
+In-Reply-To: <87k3c2820l.fsf@fencepost.gnu.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243798>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243799>
 
-Henri GEIST <geist.henri@laposte.net> writes:
+On Mon, Mar 10, 2014 at 05:14:02PM +0100, David Kastrup wrote:
 
-> Le lundi 10 mars 2014 =C3=A0 08:31 -0700, Junio C Hamano a =C3=A9crit=
- :
-> ...
->> This is not limited to submodules.  There are multiple lower-level
->> mechanisms for a $path/.git to borrow the repository data from
->> elsewhere outside of $path and a cloned submodule uses only one of
->> them.  For any such $path, "cp -R $path $otherplace" will result in
->> an "$otherplace" that does not work as a Git repository in exactly
->> the same way, whether it happens to be a submodule checkout or not.
->>=20
->> That is why I suggested to enhance description on a more general
->> part of the documentation that covers what a Git repository is.
-> ...
-> If there is some other situation where this can occur as a side effec=
-t
-> of a git command it can be good to have the user aware of the list or
-> at least inform them in general case a git repository cannot be copie=
-d
-> in a place every body will see.
-> Or place a note in the manpage of every git command which can have th=
-is
-> side effect.
+> [storing refs in sqlite]
+>
+> Of course, the basic premise for this feature is "let's assume that our
+> file and/or operating system suck at providing file system functionality
+> at file name granularity".  There have been two historically approaches
+> to that problem that are not independent: a) use Linux b) kick Linus.
 
-I think we should do two things:
+You didn't define "suck" here, but there are a number of issues with the
+current ref storage system. Here is a sampling:
 
- - In the repository format document, state that there are two
-   lower-level mechanisms and a half that lets a repository borrow
-   from somewhere else, and "cp -R" of the former will not result in
-   a complete, usable repository, and who employs these mechanisms.
+  1. The filesystem does not present an atomic view of the data (e.g.,
+     you read "a", then while you are reading "b", somebody else updates
+     "a"; your view is one that never existed at any point in time).
 
-   * Redirecting the entire .git via the textual gitfile mechanism,
-     which is used by "clone --separate-git-dir" and "submodule";
+  2. Using the filesystem creates D/F conflicts between branches "foo"
+     and "foo/bar". Because this name is a primary key even for the
+     reflogs, we cannot easily persist reflogs after the ref is removed.
 
-   * Borrowing .git/objects read-only from elsewhere, overlaying our
-     own, via .git/objects/info/alternates, which is used by "clone
-     --reference";
+  3. We use packed-refs in conjunction with loose ones to achieve
+     reasonable performance when there are a large number of refs. The
+     scheme for determining the current value of a ref is complicated
+     and error-prone (we had several race conditions that caused real
+     data loss).
 
-   * Redirecting some paths in .git to another, via "git workdir";
-     soon to be replaced with .git/commondir mechansim.
+Those things can be solved through better support from the filesystem.
+But they were also solved decades ago by relational databases.
 
- - In each of the documentation page on an end-user facing command
-   that will be mentioned above, add "See also" reference to the
-   above description in the repository format document.
+I generally avoid databases where possible. They lock your data up in a
+binary format that you can't easily touch with standard unix tools. And
+they introduce complexity and opportunity for bugs.
 
-   We could elaborate the "See also" as something like "If you use
-   this feature, do not think you can "cp -R" the repository to
-   elsewhere and expect the copy to function; see also ...", if we
-   wanted to.
+But they are also a proven technology for solving exactly the sorts of
+problems that some people are having with git. I do not see a reason not
+to consider them as an option for a pluggable refs system. But I also do
+not see a reason to inflict their costs on people who do not have those
+problems. And that is why Michael's email is about _pluggable_ ref
+backends, and not "let's convert git to sqlite".
+
+I do not even know if sqlite is going to end up as an interesting
+option. But it will be nice to be able to experiment with it easily due
+to git's ref code becoming more modular.
+
+-Peff
