@@ -1,72 +1,46 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: howto to run git without a master branch
-Date: Mon, 10 Mar 2014 10:30:08 +0100
-Message-ID: <874n36h04f.fsf@igel.home>
-References: <531B8D91.6020800@ist.utl.pt> <531C1C69.6080809@web.de>
-	<531CC6FE.2040803@ist.utl.pt> <531CE837.1080504@gmail.com>
+From: Dennis Luehring <dl.soluz@gmx.net>
+Subject: question about: Facebook makes Mercurial faster than Git
+Date: Mon, 10 Mar 2014 11:07:21 +0100
+Message-ID: <531D8ED9.7040305@gmx.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Carlos Pereira <jose.carlos.pereira@ist.utl.pt>,
-	Torsten =?utf-8?Q?B?= =?utf-8?Q?=C3=B6gershausen?= 
-	<tboegi@web.de>, git@vger.kernel.org
-To: Ilya Bobyr <ilya.bobyr@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 10 10:30:39 2014
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 10 11:07:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WMwXd-0006sZ-Vc
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Mar 2014 10:30:38 +0100
+	id 1WMx7I-0002SM-2m
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Mar 2014 11:07:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753149AbaCJJa3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Mar 2014 05:30:29 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:44662 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752475AbaCJJaZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Mar 2014 05:30:25 -0400
-Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3fjDgM2zlsz3hj7T;
-	Mon, 10 Mar 2014 10:30:23 +0100 (CET)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3fjDgM2hhrzbbg5;
-	Mon, 10 Mar 2014 10:30:23 +0100 (CET)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.180])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id hdHKnUzkm5kH; Mon, 10 Mar 2014 10:30:08 +0100 (CET)
-X-Auth-Info: Y3zEaTue7n9MVufAYGnpF5fLlIU9ySPLj4WAfaz1YeU=
-Received: from igel.home (ppp-46-244-225-33.dynamic.mnet-online.de [46.244.225.33])
-	by mail.mnet-online.de (Postfix) with ESMTPA;
-	Mon, 10 Mar 2014 10:30:08 +0100 (CET)
-Received: by igel.home (Postfix, from userid 1000)
-	id 4F8882C01EF; Mon, 10 Mar 2014 10:30:08 +0100 (CET)
-X-Yow: ...Get me a GIN and TONIC!!...make it HAIR TONIC!!
-In-Reply-To: <531CE837.1080504@gmail.com> (Ilya Bobyr's message of "Sun, 09
-	Mar 2014 15:16:23 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752121AbaCJKHY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Mar 2014 06:07:24 -0400
+Received: from mout.gmx.net ([212.227.17.20]:58877 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751812AbaCJKHX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Mar 2014 06:07:23 -0400
+Received: from [192.168.178.20] ([94.218.43.92]) by mail.gmx.com (mrgmx101)
+ with ESMTPSA (Nemesis) id 0LuKHz-1XLgQ33NyR-011gOr for <git@vger.kernel.org>;
+ Mon, 10 Mar 2014 11:07:21 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
+X-Provags-ID: V03:K0:eK8oZ8qZMJB5Z8qhTzxU0Ig2geN0x6WhUHA9r32AhPWF7LAnD+A
+ /jCm24dSSu4dafU8FgBHDmZhI/newooJydDoRrK/IZqnILm5Y2vSG8C+kGcUQfN4APg6gGN
+ Msx5FL6RlFXczagS1FOUZ4Ugc09lU7QFIMqkteiFEkqrwGDVW6EZM187N4l3mksYRHMP8vp
+ CsgKBq4+f126B8yDG9vCw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243722>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243723>
 
-Ilya Bobyr <ilya.bobyr@gmail.com> writes:
+according to these blog posts
 
-> There is a "git remote set-head" to manipulate HEAD in a remote repository.
+http://www.infoq.com/news/2014/01/facebook-scaling-hg
+https://code.facebook.com/posts/218678814984400/scaling-mercurial-at-facebook/
 
-This is misleading.  The command does nothing on the remote side, it
-only changes the refs/remote namespace in your repository.  The purpose
-is to change what branch the ref remote/<name> resolves to, ie. without
-explicit branch name.
+mercurial "can" be faster then git
 
-(The only command that manipulates the remote repository is git push,
-and the plumbing beneath that.  To change HEAD in a remote repository
-you need filesystem access to it.)
-
-Andreas.
-
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+but i don't found any reply from the git community if it is a real problem
+or if there a ongoing (maybe git 2.0) changes to compete better in this case
