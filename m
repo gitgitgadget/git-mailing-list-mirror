@@ -1,78 +1,90 @@
-From: David Lang <david@lang.hm>
-Subject: Re: [RFC/WIP] Pluggable reference backends
-Date: Mon, 10 Mar 2014 09:28:10 -0700 (PDT)
-Message-ID: <alpine.DEB.2.02.1403100923110.16215@nftneq.ynat.uz>
-References: <531D9B50.5030404@alum.mit.edu> <CAJo=hJtiPgByhk9M4ZKD98DARzgeU6z2mmw7fcLTEbBza-_h6A@mail.gmail.com> <20140310155230.GA29801@sigill.intra.peff.net> <87k3c2820l.fsf@fencepost.gnu.org>
+From: Brad King <brad.king@kitware.com>
+Subject: Re: [PATCH 03/26] t1400: Pass a legitimate <newvalue> to update command
+Date: Mon, 10 Mar 2014 13:03:53 -0400
+Message-ID: <531DF079.9050909@kitware.com>
+References: <1394455603-2968-1-git-send-email-mhagger@alum.mit.edu> <1394455603-2968-4-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>, Shawn Pearce <spearce@spearce.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	git discussion list <git@vger.kernel.org>,
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Vicent Marti <tanoku@gmail.com>,
-	Brad King <brad.king@kitware.com>,
-	Johan Herland <johan@herland.net>
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Mar 10 17:28:52 2014
+	Johan Herland <johan@herland.net>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Mon Mar 10 18:09:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WN34N-0007fO-TG
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Mar 2014 17:28:52 +0100
+	id 1WN3i8-000145-Hs
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Mar 2014 18:09:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753686AbaCJQ2r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Mar 2014 12:28:47 -0400
-Received: from mail.lang.hm ([64.81.33.126]:35991 "EHLO bifrost.lang.hm"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753378AbaCJQ2q (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Mar 2014 12:28:46 -0400
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id s2AGSADq001545;
-	Mon, 10 Mar 2014 08:28:11 -0800
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <87k3c2820l.fsf@fencepost.gnu.org>
-User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
+	id S1754099AbaCJRJv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Mar 2014 13:09:51 -0400
+Received: from na3sys009aog106.obsmtp.com ([74.125.149.77]:58292 "HELO
+	na3sys009aog106.obsmtp.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1753520AbaCJRJu (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Mar 2014 13:09:50 -0400
+X-Greylist: delayed 349 seconds by postgrey-1.27 at vger.kernel.org; Mon, 10 Mar 2014 13:09:49 EDT
+Received: from mail-ie0-f170.google.com ([209.85.223.170]) (using TLSv1) by na3sys009aob106.postini.com ([74.125.148.12]) with SMTP
+	ID DSNKUx3x3S/xUlC/YkTFgr/TgwiE32xCeM06@postini.com; Mon, 10 Mar 2014 10:09:50 PDT
+Received: by mail-ie0-f170.google.com with SMTP id rd18so7619261iec.29
+        for <git@vger.kernel.org>; Mon, 10 Mar 2014 10:09:48 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
+         :cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=g2B0lTXuP2Z1KbiKjBA2MFzg+JWG1K/pCu9w8XlPzdk=;
+        b=CLxJ+S17CWA94I3sG6feT/wHMgcEnFuzwG2l5Qmf0WOwHMSYVHKRzhfhvEc4Vhwyb9
+         t6k7vydXUooGTiElaOpaaWoTSXhAJITkS7rtmVOQuPabLXkS1SigcLIRvlrWHpRJYqB0
+         eCZJ6/C6w8YN4lKenLtfMo3qZxSqHwhS59UffxhTa23e6tGR0yG4rMH75WyfP0AKn7fJ
+         qg3LR1dUZCS/chU1tnCQ4KQaG0pkTdALQIyNOCDYOLwM2paG2G1wtsUD52OU1cEIS6Rc
+         rFrtAIlW8vLDrNsYpjPxBXhnNIP2Yp47+k9JP8MBIrfrgUCbOBPdCfi7MeTM/VzrvOPL
+         8pvw==
+X-Received: by 10.50.137.71 with SMTP id qg7mr18687053igb.38.1394470991639;
+        Mon, 10 Mar 2014 10:03:11 -0700 (PDT)
+X-Gm-Message-State: ALoCoQnKJr5upLl1Thn8DH+uzQne6Jv/U6R2rQhRdwGVorm8VQGK6OxkJc/XGEle/TtK/jy0mo5ZcpUT7FdflJoou6mGMF19i09bM6+bjLUsM9DQxaAYbOh/lEJiabICzKbTBk9VnneiEJ06AU2plmzrJFz+N2OiBA==
+X-Received: by 10.50.137.71 with SMTP id qg7mr18687041igb.38.1394470991563;
+        Mon, 10 Mar 2014 10:03:11 -0700 (PDT)
+Received: from [192.168.1.225] (tripoint.kitware.com. [66.194.253.20])
+        by mx.google.com with ESMTPSA id ro10sm37874100igb.6.2014.03.10.10.03.10
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 10 Mar 2014 10:03:10 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
+In-Reply-To: <1394455603-2968-4-git-send-email-mhagger@alum.mit.edu>
+X-Enigmail-Version: 1.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243773>
 
-On Mon, 10 Mar 2014, David Kastrup wrote:
+On 03/10/2014 08:46 AM, Michael Haggerty wrote:
+> This test is trying to test a few ways to delete references using "git
+> update-ref -z --stdin".  The third line passed in is
+> 
+>     update SP /refs/heads/c NUL NUL <sha1> NUL
+> 
+> , which is not a correct way to delete a reference according to the
+> documentation (the new value should be zeros, not empty).  Pass zeros
+> instead as the new value to test the code correctly.
 
-> Jeff King <peff@peff.net> writes:
->
->> On Mon, Mar 10, 2014 at 07:30:45AM -0700, Shawn Pearce wrote:
->>
->>>> * Store references in a SQLite database, to get correct transaction
->>>>   handling.
->>>
->>> No to SQLLite in git-core. Using it from JGit requires building
->>> SQLLite and a JNI wrapper, which makes JGit significantly less
->>> portable. I know SQLLite is pretty amazing, but implementing
->>> compatibility with it from JGit will be a big nightmare for us.
->>
->> That seems like a poor reason not to implement a pluggable feature for
->> git-core. If we implement it, then a site using only git-core can take
->> advantage of it. Sites with JGit cannot, and would use a different
->> pluggable storage mechanism that's supported by both. But if we don't
->> implement, it hurts people using only git-core, and it does not help
->> sites using JGit at all.
->
-> Of course, the basic premise for this feature is "let's assume that our
-> file and/or operating system suck at providing file system functionality
-> at file name granularity".  There have been two historically approaches
-> to that problem that are not independent: a) use Linux b) kick Linus.
+In my original work on this feature, an empty <newvalue> is allowed.
+Since newvalue is not optional an empty value can be treated as zero.
+The relevant documentation is:
 
-As a note, if this is done properly, it could allow for plugins that connect to 
-the underlying storage system (similar to the Facebook Mecurial change)
+ update::
+         Set <ref> to <newvalue> after verifying <oldvalue>, if given.
+         Specify a zero <newvalue> to ensure the ref does not exist
 
-Even for those who don't have the $$$$$ storage arrays, there may be other 
-storage specific hacks that can be done to detect that files haven't changed.
+ ...
 
-For example, with btrfs and you compile into a different directory thatn your 
-source, you may be able to detect that things didn't change by the fact that the 
-filesystem didn't have to do a rewrite of the parent node.
+ Use 40 "0" or the empty string to specify a zero value, except that
+ with `-z` an empty <oldvalue> is considered missing.
 
-David Lang
+The two together say that <newvalue> can be the empty string instead
+of a literal zero.
+
+-Brad
