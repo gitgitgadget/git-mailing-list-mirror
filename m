@@ -1,67 +1,55 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH/RFC] rebase: new convenient option to edit/reword/delete a single commit
-Date: Mon, 10 Mar 2014 09:41:04 +0100
-Message-ID: <vpqd2huh2e7.fsf@anie.imag.fr>
-References: <53159601.8020702@alum.mit.edu>
-	<1394333354-16257-1-git-send-email-pclouds@gmail.com>
-	<531D7820.1090403@alum.mit.edu>
+From: Nemina Amarasinghe <neminaa@gmail.com>
+Subject: Re: [PATCH] simplified the chain if() statements of  =?utf-8?b?aW5zdGFsbF9icmFuY2hfY29uZmlnKCk=?= function in branch.c
+Date: Mon, 10 Mar 2014 08:51:05 +0000 (UTC)
+Message-ID: <loom.20140310T094407-5@post.gmane.org>
+References: <loom.20140310T083649-236@post.gmane.org> <loom.20140310T085652-521@post.gmane.org> <vpqd2huihsc.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-	Jeff King <peff@peff.net>, philipoakley@iee.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Mar 10 09:41:26 2014
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 10 09:51:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WMvm2-0001W6-CR
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Mar 2014 09:41:26 +0100
+	id 1WMvvs-00016f-CA
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Mar 2014 09:51:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751816AbaCJIlW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Mar 2014 04:41:22 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:48492 "EHLO shiva.imag.fr"
+	id S1752020AbaCJIvc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Mar 2014 04:51:32 -0400
+Received: from plane.gmane.org ([80.91.229.3]:42193 "EHLO plane.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751082AbaCJIlV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Mar 2014 04:41:21 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s2A8f4uX012514
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 10 Mar 2014 09:41:04 +0100
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s2A8f50i016721;
-	Mon, 10 Mar 2014 09:41:05 +0100
-In-Reply-To: <531D7820.1090403@alum.mit.edu> (Michael Haggerty's message of
-	"Mon, 10 Mar 2014 09:30:24 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 10 Mar 2014 09:41:04 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s2A8f4uX012514
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1395045668.04905@4jif8mIP+3ftzdn1T/gv/Q
+	id S1751795AbaCJIvb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Mar 2014 04:51:31 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1WMvvm-00011k-8W
+	for git@vger.kernel.org; Mon, 10 Mar 2014 09:51:30 +0100
+Received: from 61.245.163.2 ([61.245.163.2])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 10 Mar 2014 09:51:30 +0100
+Received: from neminaa by 61.245.163.2 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 10 Mar 2014 09:51:30 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 61.245.163.2 (Mozilla/5.0 (Windows NT 6.3; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243715>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243716>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
-
->> @@ -290,6 +294,7 @@ do
->>  		;;
->>  	--autostash)
->>  		autostash=true
->> +		explicit_autosquash=t
->
-> Should that be "explicit_autostash"?
-
-My guess is: no, but it should be below the --autoquash case, not this
-one.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+> 
+> Nemina Amarasinghe <neminaa <at> gmail.com> writes:
+> 
+> Is it me, or is (origin || !origin) a tautology?
+> 
+Thanks for the advices Matthieu. I will go through the documentations again. 
+Is there anything wrong with my logic? 
+What I wanted to express is
+((!remote_is_branch && origin) || (!remote_is_branch || !origin))
