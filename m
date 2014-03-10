@@ -1,104 +1,94 @@
-From: Brad King <brad.king@kitware.com>
-Subject: Re: [PATCH 00/26] Clean up update-refs --stdin and implement ref_transaction
-Date: Mon, 10 Mar 2014 13:44:28 -0400
-Message-ID: <531DF9FC.4070707@kitware.com>
-References: <1394455603-2968-1-git-send-email-mhagger@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/WIP] Pluggable reference backends
+Date: Mon, 10 Mar 2014 10:46:01 -0700
+Message-ID: <xmqqwqg2q752.fsf@gitster.dls.corp.google.com>
+References: <531D9B50.5030404@alum.mit.edu>
+	<CAJo=hJtiPgByhk9M4ZKD98DARzgeU6z2mmw7fcLTEbBza-_h6A@mail.gmail.com>
+	<20140310155230.GA29801@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	git discussion list <git@vger.kernel.org>,
 	Vicent Marti <tanoku@gmail.com>,
-	Johan Herland <johan@herland.net>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Mar 10 18:43:55 2014
+	Brad King <brad.king@kitware.com>,
+	Johan Herland <johan@herland.net>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Mar 10 18:46:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WN4F0-0002Uk-GH
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Mar 2014 18:43:54 +0100
+	id 1WN4HF-0004xU-5k
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Mar 2014 18:46:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752982AbaCJRnu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Mar 2014 13:43:50 -0400
-Received: from na3sys009aog103.obsmtp.com ([74.125.149.71]:54864 "HELO
-	na3sys009aog103.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1752246AbaCJRnt (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Mar 2014 13:43:49 -0400
-Received: from mail-ig0-f175.google.com ([209.85.213.175]) (using TLSv1) by na3sys009aob103.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKUx3508khAt5UTqQg6XYVyjSX/BnA5oON@postini.com; Mon, 10 Mar 2014 10:43:49 PDT
-Received: by mail-ig0-f175.google.com with SMTP id ur14so8844044igb.2
-        for <git@vger.kernel.org>; Mon, 10 Mar 2014 10:43:46 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=9vWKROUhJNIs0EbpNaf2ccMCJVbk7T37aljO/aDmgNs=;
-        b=ekLoJAocFFexRAGUHckVru87bMQJZgtO4CVOTsCIyqFlk1GS8aceu32DCuxXcia6RB
-         TRGmuJ3RLD+uO3da8acna2F3s9EWB+8eIMVEJRddyNzfA2bStFN5Hfo8hflrXzLo5ztR
-         /Iw0N5ozsko3za4zBWp8krUFdyMr4XmICtyKk95Syb8ch8SntnK94EnHc2TJYkap/DiA
-         W4X+RJ1SllI1PvMKNti+l0Bk5l0+EW/yNGuOKNMB85d8DoZ5r7iP8Vo8SsQJokOTtzGZ
-         tIinUoelKPajX5j1rDYVVBhXTt2aRNxSTujxzrt7IARfymvCyrvX2d9nG06TWecHE5fB
-         CYOQ==
-X-Gm-Message-State: ALoCoQl2/i1DRVw3wbnC4rt5BtKgsoOHuTAMpX74neuh4h77V0zl9yP6o8Cw7BS//ak7CVPUw5Ya2q6aQ6yRPYpC0fYBDhVH0BnmDkWVjUETrl5XJlsUk2+N5yi34IPTFJvIIXbsy8zUZ6WrVA/D4g9JvSCQH7DvPA==
-X-Received: by 10.50.171.169 with SMTP id av9mr19137267igc.14.1394473426844;
-        Mon, 10 Mar 2014 10:43:46 -0700 (PDT)
-X-Received: by 10.50.171.169 with SMTP id av9mr19137257igc.14.1394473426737;
-        Mon, 10 Mar 2014 10:43:46 -0700 (PDT)
-Received: from [192.168.1.225] (tripoint.kitware.com. [66.194.253.20])
-        by mx.google.com with ESMTPSA id v5sm39779861igb.0.2014.03.10.10.43.45
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 10 Mar 2014 10:43:46 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
-In-Reply-To: <1394455603-2968-1-git-send-email-mhagger@alum.mit.edu>
-X-Enigmail-Version: 1.6
+	id S1752935AbaCJRqI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Mar 2014 13:46:08 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44990 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752421AbaCJRqH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Mar 2014 13:46:07 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C1AC673663;
+	Mon, 10 Mar 2014 13:46:04 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=aN9sn3d7l5vR6TISVvCgvbZICW0=; b=XOhX4i
+	BqL3oezIENeOtOvC9fgb17ryEeV4DTt5Uzo/cy1wS9rieqCGV4HXoiAVXc72jWIZ
+	ryKdEGagK2ot/WgzljwRqb5vulhrYFcS7tmh3h/HIhR6xFV41MVmduAtW9+dH0Ad
+	4UMqJ2tAhdvkMOZoYlDSkOga8dojmLKZ5M7qo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=E6aF6bv+xhJfcryRUWz3NB0aGGDwBlte
+	bnfe+wBw3007GM6VHzrIox4dlVSu0YyI28A3plBQ5I7GnJ+72NL6wX4knFOons8/
+	sDNNhXThSCLolYE4KXXuV6ofiowj1O79MqvEhdOWtZHWuDva8JLxBCQig1ZQebCl
+	BfMH2Y39U+E=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A89D773662;
+	Mon, 10 Mar 2014 13:46:04 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BD67E73660;
+	Mon, 10 Mar 2014 13:46:03 -0400 (EDT)
+In-Reply-To: <20140310155230.GA29801@sigill.intra.peff.net> (Jeff King's
+	message of "Mon, 10 Mar 2014 11:52:30 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: D9BB805E-A87B-11E3-BF3A-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243780>
 
-Hi Michael,
+Jeff King <peff@peff.net> writes:
 
-This is excellent work.
+> On Mon, Mar 10, 2014 at 07:30:45AM -0700, Shawn Pearce wrote:
+>
+>> > * Store references in a SQLite database, to get correct transaction
+>> >   handling.
+>> 
+>> No to SQLLite in git-core. Using it from JGit requires building
+>> SQLLite and a JNI wrapper, which makes JGit significantly less
+>> portable. I know SQLLite is pretty amazing, but implementing
+>> compatibility with it from JGit will be a big nightmare for us.
+>
+> That seems like a poor reason not to implement a pluggable feature for
+> git-core. If we implement it, then a site using only git-core can take
+> advantage of it. Sites with JGit cannot, and would use a different
+> pluggable storage mechanism that's supported by both. But if we don't
+> implement, it hurts people using only git-core, and it does not help
+> sites using JGit at all.
 
-I haven't reviewed every line of logic in detail but the changes
-look correct at a high level.  The only exception is that the empty
-<newvalue> is supposed to be accepted and treated as zero even in
-"--stdin -z" mode.  See my response to that individual change.
+We would need to eventually have at least one backend that we know
+will play well with different Git implementations that matter
+(namely, git-core, Jgit and libgit2) before the feature can be
+widely adopted.
 
-On 03/10/2014 08:46 AM, Michael Haggerty wrote:
-> The new API for dealing with reference transactions is
-> 
->     ref_transaction *transaction = create_ref_transaction();
->     queue_create_ref(transaction, refname, new_sha1, ...);
->     queue_update_ref(transaction, refname, new_sha1, old_sha1, ...);
->     queue_delete_ref(transaction, refname, old_sha1, ...);
->     ...
->     if (commit_ref_transaction(transaction, msg, ...))
->         die(...);
-
-The layout of this API looks good.
-
-The name "queue" is not fully representative of the current behavior.
-It implies that the order is meaningful but we currently allow at most
-one update to a ref and sort them by refname.  Does your follow-up work
-define behavior for multiple updates to one ref?  Can it collapse them
-into a single update after checking internal consistency of the sequence?
-
-> So most of the commits in this series are actually cleanups in
-> builtin/update-ref.c.  I also spend some time making the error
-> messages emitted by that command more uniform.
-
-All good cleanups, thanks.
-
-> Finally, now that refs.c owns the data structures for dealing with
-> transactions, it is possible to make a few simplifications.
-
-Yes, it is much nicer to keep the data structures private, especially
-as it avoids the copy of the transaction made before sorting.
-
-Thanks,
--Brad
+The first backend that is used while the plugging-interface is in
+development can be anything and does not have to be one that
+eventual ubiquitous one, however; as long as it is something that we
+do not mind carrying it forever, along with that final reference
+backend.  I take the objection from Shawn only as against making the
+sqlite that final one.
