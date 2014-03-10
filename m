@@ -1,66 +1,97 @@
-From: Benoit Pierre <benoit.pierre@gmail.com>
-Subject: [PATCH 7/7] run-command: mark run_hook_with_custom_index as deprecated
-Date: Mon, 10 Mar 2014 19:49:37 +0100
-Message-ID: <1394477377-10994-8-git-send-email-benoit.pierre@gmail.com>
-References: <1394477377-10994-1-git-send-email-benoit.pierre@gmail.com>
+From: TamerTas <tamertas@outlook.com>
+Subject: [PATCH][GSOC2014] changed logical chain in branch.c to lookup tables
+Date: Mon, 10 Mar 2014 21:04:22 +0200
+Message-ID: <BLU0-SMTP15131ED34F192C9871ACC0CD5740@phx.gbl>
+References: <y>
+ <1394478262-17911-1-git-send-email-tamertas@outlook.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: TamerTas <tamertas@outlook.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 10 19:50:21 2014
+X-From: git-owner@vger.kernel.org Mon Mar 10 20:04:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WN5HF-0005To-6q
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Mar 2014 19:50:17 +0100
+	id 1WN5VD-00044x-OK
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Mar 2014 20:04:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754166AbaCJSuF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Mar 2014 14:50:05 -0400
-Received: from mail-we0-f169.google.com ([74.125.82.169]:63115 "EHLO
-	mail-we0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754127AbaCJSuB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Mar 2014 14:50:01 -0400
-Received: by mail-we0-f169.google.com with SMTP id w62so9222401wes.28
-        for <git@vger.kernel.org>; Mon, 10 Mar 2014 11:50:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:subject:date:message-id:in-reply-to:references;
-        bh=XdHNhcyo4zmcXDpU3eF7zhNpcxyVs57yv3Q8IV9MLi8=;
-        b=Hhi8AehQEYepmNC8dlIDB6dV+3/itH7KPBDCLOsfKCatTNfrb4qRdFLmVu/We3FBeP
-         ubc5zwY1mauW//vqqcQ5dKByJgpL479pBsx40PDl06RqeY5WI1JrfZa6Bf05/dgDH4iE
-         dsMnBQTOX0XAG4EMhCKGubpkHewPIOLRTAdvYPTiFD3Y0Z69ckfg1Jee0OLmHGeJRRpo
-         YMht4VRh2xCxaH1xNJKjaTei36UWLshbE+WKkQIVeyy3wr6PyUd1C0ORnM6AN4vDg+X4
-         HMtncb82RE9EkkvsScJm2J2MUlgM7iG98G4QrDKd+nyil3b25hKj5gK8v446ezt2hTv4
-         gd3A==
-X-Received: by 10.194.204.199 with SMTP id la7mr29344315wjc.4.1394477400643;
-        Mon, 10 Mar 2014 11:50:00 -0700 (PDT)
-Received: from localhost (109.12.70.86.rev.sfr.net. [86.70.12.109])
-        by mx.google.com with ESMTPSA id 12sm54370395wjm.10.2014.03.10.11.49.59
-        for <git@vger.kernel.org>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 10 Mar 2014 11:50:00 -0700 (PDT)
-X-Mailer: git-send-email 1.9.0.7.gca5104e.dirty
-In-Reply-To: <1394477377-10994-1-git-send-email-benoit.pierre@gmail.com>
+	id S1752678AbaCJTEj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Mar 2014 15:04:39 -0400
+Received: from blu0-omc3-s27.blu0.hotmail.com ([65.55.116.102]:15426 "EHLO
+	blu0-omc3-s27.blu0.hotmail.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752556AbaCJTEi (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Mar 2014 15:04:38 -0400
+Received: from BLU0-SMTP151 ([65.55.116.73]) by blu0-omc3-s27.blu0.hotmail.com with Microsoft SMTPSVC(6.0.3790.4675);
+	 Mon, 10 Mar 2014 12:04:38 -0700
+X-TMN: [crcPX33VcTJtQsB97qiJXuBcBZ79/lCo]
+X-Originating-Email: [tamertas@outlook.com]
+Received: from localhost.localdomain ([24.133.189.163]) by BLU0-SMTP151.phx.gbl over TLS secured channel with Microsoft SMTPSVC(6.0.3790.4675);
+	 Mon, 10 Mar 2014 12:04:36 -0700
+X-Mailer: git-send-email 1.7.9.5
+In-Reply-To: <1394478262-17911-1-git-send-email-tamertas@outlook.com>
+X-OriginalArrivalTime: 10 Mar 2014 19:04:36.0980 (UTC) FILETIME=[94B54340:01CF3C93]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243793>
 
+
+Signed-off-by: TamerTas <tamertas@outlook.com>
 ---
- run-command.h | 1 +
- 1 file changed, 1 insertion(+)
+ branch.c |   31 ++++++++-----------------------
+ 1 file changed, 8 insertions(+), 23 deletions(-)
 
-diff --git a/run-command.h b/run-command.h
-index 88460f9..3653bfa 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -51,6 +51,7 @@ extern int run_hook_le(const char *const *env, const char *name, ...);
- extern int run_hook_ve(const char *const *env, const char *name, va_list args);
+diff --git a/branch.c b/branch.c
+index 723a36b..397edd3 100644
+--- a/branch.c
++++ b/branch.c
+@@ -50,6 +50,9 @@ static int should_setup_rebase(const char *origin)
+ void install_branch_config(int flag, const char *local, const char *origin, const char *remote)
+ {
+ 	const char *shortname = remote + 11;
++	const char *location[] = {"local", "remote"};
++	const char *type[] = {"branch", "ref"};
++
+ 	int remote_is_branch = starts_with(remote, "refs/heads/");
+ 	struct strbuf key = STRBUF_INIT;
+ 	int rebasing = should_setup_rebase(origin);
+@@ -77,29 +80,11 @@ void install_branch_config(int flag, const char *local, const char *origin, cons
+ 	strbuf_release(&key);
  
- LAST_ARG_MUST_BE_NULL
-+__attribute__((deprecated))
- extern int run_hook_with_custom_index(const char *index_file, const char *name, ...);
+ 	if (flag & BRANCH_CONFIG_VERBOSE) {
+-		if (remote_is_branch && origin)
+-			printf_ln(rebasing ?
+-				  _("Branch %s set up to track remote branch %s from %s by rebasing.") :
+-				  _("Branch %s set up to track remote branch %s from %s."),
+-				  local, shortname, origin);
+-		else if (remote_is_branch && !origin)
+-			printf_ln(rebasing ?
+-				  _("Branch %s set up to track local branch %s by rebasing.") :
+-				  _("Branch %s set up to track local branch %s."),
+-				  local, shortname);
+-		else if (!remote_is_branch && origin)
+-			printf_ln(rebasing ?
+-				  _("Branch %s set up to track remote ref %s by rebasing.") :
+-				  _("Branch %s set up to track remote ref %s."),
+-				  local, remote);
+-		else if (!remote_is_branch && !origin)
+-			printf_ln(rebasing ?
+-				  _("Branch %s set up to track local ref %s by rebasing.") :
+-				  _("Branch %s set up to track local ref %s."),
+-				  local, remote);
+-		else
+-			die("BUG: impossible combination of %d and %p",
+-			    remote_is_branch, origin);
++        
++        printf_ln(rebasing ?
++              _("Branch %s set up to track %s %s %s by rebasing.") :
++              _("Branch %s set up to track %s %s %s."),
++              local, location[!origin], type[remote_is_branch], remote);
+ 	}
+ }
  
- #define RUN_COMMAND_NO_STDIN 1
 -- 
-1.9.0
+1.7.9.5
