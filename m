@@ -1,74 +1,72 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH] simplified the chain if() statements of  install_branch_config() function in branch.c
-Date: Mon, 10 Mar 2014 10:27:22 +0100
-Message-ID: <874n369zet.fsf@fencepost.gnu.org>
-References: <loom.20140310T083649-236@post.gmane.org>
-	<loom.20140310T085652-521@post.gmane.org>
-	<vpqd2huihsc.fsf@anie.imag.fr> <loom.20140310T094407-5@post.gmane.org>
-	<878usia09y.fsf@fencepost.gnu.org>
-	<loom.20140310T101112-236@post.gmane.org>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: howto to run git without a master branch
+Date: Mon, 10 Mar 2014 10:30:08 +0100
+Message-ID: <874n36h04f.fsf@igel.home>
+References: <531B8D91.6020800@ist.utl.pt> <531C1C69.6080809@web.de>
+	<531CC6FE.2040803@ist.utl.pt> <531CE837.1080504@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Nemina Amarasinghe <neminaa@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 10 10:27:33 2014
+Cc: Carlos Pereira <jose.carlos.pereira@ist.utl.pt>,
+	Torsten =?utf-8?Q?B?= =?utf-8?Q?=C3=B6gershausen?= 
+	<tboegi@web.de>, git@vger.kernel.org
+To: Ilya Bobyr <ilya.bobyr@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 10 10:30:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WMwUa-0004Tj-Ca
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Mar 2014 10:27:28 +0100
+	id 1WMwXd-0006sZ-Vc
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Mar 2014 10:30:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752110AbaCJJ1Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Mar 2014 05:27:24 -0400
-Received: from fencepost.gnu.org ([208.118.235.10]:56003 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751812AbaCJJ1Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Mar 2014 05:27:24 -0400
-Received: from localhost ([127.0.0.1]:55045 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1WMwUU-0006g7-NC; Mon, 10 Mar 2014 05:27:23 -0400
-Received: by lola (Postfix, from userid 1000)
-	id 52A6FE05E7; Mon, 10 Mar 2014 10:27:22 +0100 (CET)
-In-Reply-To: <loom.20140310T101112-236@post.gmane.org> (Nemina Amarasinghe's
-	message of "Mon, 10 Mar 2014 09:15:10 +0000 (UTC)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
+	id S1753149AbaCJJa3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Mar 2014 05:30:29 -0400
+Received: from mail-out.m-online.net ([212.18.0.10]:44662 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752475AbaCJJaZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Mar 2014 05:30:25 -0400
+Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3fjDgM2zlsz3hj7T;
+	Mon, 10 Mar 2014 10:30:23 +0100 (CET)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+	by mail.m-online.net (Postfix) with ESMTP id 3fjDgM2hhrzbbg5;
+	Mon, 10 Mar 2014 10:30:23 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.180])
+	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
+	with ESMTP id hdHKnUzkm5kH; Mon, 10 Mar 2014 10:30:08 +0100 (CET)
+X-Auth-Info: Y3zEaTue7n9MVufAYGnpF5fLlIU9ySPLj4WAfaz1YeU=
+Received: from igel.home (ppp-46-244-225-33.dynamic.mnet-online.de [46.244.225.33])
+	by mail.mnet-online.de (Postfix) with ESMTPA;
+	Mon, 10 Mar 2014 10:30:08 +0100 (CET)
+Received: by igel.home (Postfix, from userid 1000)
+	id 4F8882C01EF; Mon, 10 Mar 2014 10:30:08 +0100 (CET)
+X-Yow: ...Get me a GIN and TONIC!!...make it HAIR TONIC!!
+In-Reply-To: <531CE837.1080504@gmail.com> (Ilya Bobyr's message of "Sun, 09
+	Mar 2014 15:16:23 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243722>
 
-Nemina Amarasinghe <neminaa@gmail.com> writes:
+Ilya Bobyr <ilya.bobyr@gmail.com> writes:
 
->> > ((!remote_is_branch && origin) || (!remote_is_branch || !origin))
->> 
->> Is it?
->> 
->> The above is the same as (!remote_is_branch || !origin).  What you wrote
->> before is the same as (!remote_is_branch).
->> 
->> Maybe you should try copy&paste from the expressions you are trying to
->> combine to make sure that what you start with makes sense.
->> 
-> OMG.. Really sorry for that... that was a silly mistake. 
-> This is the one..
->
-> ((!remote_is_branch && origin) || (!remote_is_branch && !origin))
+> There is a "git remote set-head" to manipulate HEAD in a remote repository.
 
-That is, indeed, perfectly equivalent to (!remote_is_branch).  If you
-write
+This is misleading.  The command does nothing on the remote side, it
+only changes the refs/remote namespace in your repository.  The purpose
+is to change what branch the ref remote/<name> resolves to, ie. without
+explicit branch name.
 
-(!remote_is_branch && (origin || !origin))
+(The only command that manipulates the remote repository is git push,
+and the plumbing beneath that.  To change HEAD in a remote repository
+you need filesystem access to it.)
 
-then you will have people (and possibly also the compiler) loudly
-wondering about what you are trying to say here.  The suspicion would be
-that either this is a result of a typo or is supposed to be an
-annoyingly obtuse replacement for a
-/* TODO: treat origin and !origin differently */
-kind of comment.
+Andreas.
 
 -- 
-David Kastrup
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
