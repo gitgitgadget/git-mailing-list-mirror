@@ -1,172 +1,181 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH][GSoC] branch.c:install_branch_config Simplified long
- chain of if statements
-Date: Mon, 10 Mar 2014 19:17:19 -0400
-Message-ID: <CAPig+cRZyvrPL69eunsV89-AycF=TWeN8x5cUvBhcF0MLVvOog@mail.gmail.com>
-References: <1394489041-2377-1-git-send-email-enzodicicco@gmail.com>
+From: Peter C Rigby <peter.rigby@concordia.ca>
+Subject: Re: Fwd: git-reviewed: linking commits to review discussion in git
+Date: Mon, 10 Mar 2014 19:43:33 -0400
+Message-ID: <CAN6Z0OqLqmyjFKfzhBrPxzeGMZ+aE4UcuM9Upqzn9Cr3CyXNSw@mail.gmail.com>
+References: <CANx4bCB5tTzKusbfcqQ=eoeOGJ-WxWvF3QNpfa5rTq7oOSG-5w@mail.gmail.com>
+	<CANx4bCAWVoCQdYQQ5cGXF-Z6Evck=Oeb2Shghkcuf7PMvSZBOA@mail.gmail.com>
+	<20140218052827.GA25291@sigill.intra.peff.net>
+	<8635c4b807ab40db93da43875645dfc8@UMS-SGWHTS1.concordia.ca>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>
-To: Vincenzo di Cicco <enzodicicco@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 11 00:17:25 2014
+Cc: Jeff King <peff@peff.net>,
+	Murtuza Mukadam <murtuza.i.mukadam@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Thomas Rast <tr@thomasrast.ch>
+X-From: git-owner@vger.kernel.org Tue Mar 11 00:43:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WN9Rk-0006oF-VP
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Mar 2014 00:17:25 +0100
+	id 1WN9rB-0008Fc-UW
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Mar 2014 00:43:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753764AbaCJXRV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Mar 2014 19:17:21 -0400
-Received: from mail-yh0-f49.google.com ([209.85.213.49]:52050 "EHLO
-	mail-yh0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752439AbaCJXRU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Mar 2014 19:17:20 -0400
-Received: by mail-yh0-f49.google.com with SMTP id z6so7825055yhz.36
-        for <git@vger.kernel.org>; Mon, 10 Mar 2014 16:17:19 -0700 (PDT)
+	id S1752602AbaCJXng (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Mar 2014 19:43:36 -0400
+Received: from mail-la0-f49.google.com ([209.85.215.49]:62467 "EHLO
+	mail-la0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752261AbaCJXnf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Mar 2014 19:43:35 -0400
+Received: by mail-la0-f49.google.com with SMTP id mc6so5114542lab.36
+        for <git@vger.kernel.org>; Mon, 10 Mar 2014 16:43:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc:content-type;
-        bh=QVqFYLNePrKVxrZLMBNR0OG2olDaR1OiuvSrcUCC8Ak=;
-        b=yZ8gK9jcb+1jD2DpDBDt8ivhoWUfqDsWs+dIMwLBVbN5WZ1HIf1BI7QFp2I3OKaokl
-         F9RQrkfX3zXxbud1ov9in7agEiGUDEBRfovU+YazMXPWbF+uFpsBCIZoC1G8C5vUOUie
-         mx/IYEga/FD36XnvD8mfHEexIViBkOMN/deFf4Pvw1D1+2vLIuUHy7dNu3sbecRasQMD
-         1iojMq0u4FmPGsyMdPJcmTKGeQZ8k0L8BxLKrKoyIn6wBrtoLj+stz8GVGRx2yCrcU/B
-         4+y7oWOfTf6BjnLonJw62/9HYS8FKtEklBKEbmVmxeQsMv2c0vmJId4vOw8RK4W37XD3
-         +v4Q==
-X-Received: by 10.236.41.165 with SMTP id h25mr5618535yhb.126.1394493439493;
- Mon, 10 Mar 2014 16:17:19 -0700 (PDT)
-Received: by 10.170.180.134 with HTTP; Mon, 10 Mar 2014 16:17:19 -0700 (PDT)
-In-Reply-To: <1394489041-2377-1-git-send-email-enzodicicco@gmail.com>
-X-Google-Sender-Auth: k4MjkNr0-SHQ2HEs_MTPsVxQx5I
+        bh=wRM6yIQ4kBTGxwColSefM0rMtse9xH2gc07VGHeoY9Y=;
+        b=mncGJ8u7AkcjmYUHsCHrGsVcyFI5yUcdFosl10fLrvpQV2MfRGXtuemwkljs94owEg
+         NNwJx8Hsh98zdzApB0dmOoXbSwe2s07mMUeVbwvpBY+ughpv+xh8xsZIGBcpKFbYFg01
+         l3leUS2pQ5mlYqeUWlCHukz/qNlvPmo4al9DRLrBuvFConVrXQE8pmf0+C/495X18xRz
+         y22l4JTNNi/Hnb+xsqLSC1cOrPIe42HupYUk5aIrwYXedxTuhyF69U/EMHoz8PiWaOHA
+         iELJkIV8eaGLugX7KlZ1Ni21ua1qSKpqLDq4sLkvEH9RPSvsnYmFXdDgIVy8H58f3tD0
+         mA5w==
+X-Received: by 10.112.97.178 with SMTP id eb18mr14889182lbb.13.1394495013746;
+ Mon, 10 Mar 2014 16:43:33 -0700 (PDT)
+Received: by 10.115.4.6 with HTTP; Mon, 10 Mar 2014 16:43:33 -0700 (PDT)
+In-Reply-To: <8635c4b807ab40db93da43875645dfc8@UMS-SGWHTS1.concordia.ca>
+X-Google-Sender-Auth: -mjHjSv2wuyMrObe64GSJ7E2Wtg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243825>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243826>
 
-Thanks for the submission. Comments below to give you a feel for the
-Git review process...
-
-On Mon, Mar 10, 2014 at 6:04 PM, Vincenzo di Cicco
-<enzodicicco@gmail.com> wrote:
-> From: NaN <enzodicicco@gmail.com>
-
-Drop this line unless it is intentionally different from your email
-From: header, which "git am" will pick up automatically when applying
-your patch. On this project, real names are preferred (as you
-correctly used in your sign-off).
-
-> Hi there, I've made this patch in according to the rules to participate at GSoC.
-> I've seen other patches about this issue very well constructed, so this is only another way to solve this microproject and to test how I can send a patch and discuss about it.
+On Tue, Feb 18, 2014 at 12:28 AM, Jeff King <peff@peff.net> wrote:
+[snip]
 >
-> Thanks,
-> NaN
+>   3. How do we present the emails to the user (including showing
+>      threads, letting them dig deeper, etc)?
 
-These "commentary" lines, which are not intended as part of the
-official commit message, belong below the "---" line following your
-sign-off. Wrap them to 65-70 characters.
+We created a website, you enter a commit and it shows you the reviews:
+http://cesel.encs.concordia.ca/process_request.php?repo=git
 
-> Signed-off-by: Vincenzo di Cicco <enzodicicco@gmail.com>
-> ---
->  Table-driven approach to avoid the long chain of if statements.
+The site will either display the message id for the review or redirect
+you the mailing list archive.
 
-This non-commentary information is suitable for the commit message,
-thus it belongs above your sign-off.
 
->  branch.c | 37 ++++++++++++++-----------------------
->  1 file changed, 14 insertions(+), 23 deletions(-)
+On Sat, Feb 22, 2014 at 11:47 AM, Thomas Rast <tr@thomasrast.ch> wrote:
+> Jeff King <peff@peff.net> writes:
 >
-> diff --git a/branch.c b/branch.c
-> index 723a36b..cb8a544 100644
-> --- a/branch.c
-> +++ b/branch.c
-> @@ -53,6 +53,10 @@ void install_branch_config(int flag, const char *local, const char *origin, cons
->         int remote_is_branch = starts_with(remote, "refs/heads/");
->         struct strbuf key = STRBUF_INIT;
->         int rebasing = should_setup_rebase(origin);
-> +       struct strbuf msg = STRBUF_INIT;
-> +       char *locations[2][2] = {{"locate ref \%s", "local branch \%s"},
-> +                                {"remote ref \%s", "remote branch \%s from \%s"}};
-> +       char *location;
+>> On Mon, Feb 17, 2014 at 03:12:48PM -0500, Murtuza Mukadam wrote:
 
-Use 'const char *'. You can probably drop the hard-coded array dimensions.
+Very sorry for the delayed response. We wanted compare our linking
+technique with yours, see below.
 
-These strings ought to be internationalized, as in the original code,
-thus they should be wrapped with N_().
-
->         if (remote_is_branch
->             && !strcmp(local, shortname)
-> @@ -77,30 +81,17 @@ void install_branch_config(int flag, const char *local, const char *origin, cons
->         strbuf_release(&key);
+>>
+>>> We have linked peer review discussions on
+>>> git@vger.kernel.org to their respective commits within the main
+>>> git.git repository. You can view the linked reviews from 2012
+>>> until present in the GitHub repo at:
+>>> https://github.com/mmukadam/git/tree/review
+>>
+>> Neat. We've experimented in the past with mapping commits back to
+>> mailing list discussions.  Thomas (cc'd) has a script that creates
+>> git-notes trees mapping commits to the relevant message-id, which can
+>> then be found in the list archive.
+>>
+>> To me, the interesting bits of such a project are:
+>>
+>>   1. How do we decide which messages led to which commits? There is
+>>      definitely some room for heuristics here, as patches are sometimes
+>>      tweaked in transit, or come in multiple stages (e.g., the original
+>>      patch, then somebody suggests a fixup on top). You might want to
+>>      compare your work with the script from Thomas here:
+>>
+>>        http://repo.or.cz/w/trackgit.git
 >
->         if (flag & BRANCH_CONFIG_VERBOSE) {
-> -               if (remote_is_branch && origin)
-> -                       printf_ln(rebasing ?
-> -                                 _("Branch %s set up to track remote branch %s from %s by rebasing.") :
-> -                                 _("Branch %s set up to track remote branch %s from %s."),
-> -                                 local, shortname, origin);
-> -               else if (remote_is_branch && !origin)
-> -                       printf_ln(rebasing ?
-> -                                 _("Branch %s set up to track local branch %s by rebasing.") :
-> -                                 _("Branch %s set up to track local branch %s."),
-> -                                 local, shortname);
-> -               else if (!remote_is_branch && origin)
-> -                       printf_ln(rebasing ?
-> -                                 _("Branch %s set up to track remote ref %s by rebasing.") :
-> -                                 _("Branch %s set up to track remote ref %s."),
-> -                                 local, remote);
-> -               else if (!remote_is_branch && !origin)
-> -                       printf_ln(rebasing ?
-> -                                 _("Branch %s set up to track local ref %s by rebasing.") :
-> -                                 _("Branch %s set up to track local ref %s."),
-> -                                 local, remote);
-> -               else
-> -                       die("BUG: impossible combination of %d and %p",
-> -                           remote_is_branch, origin);
-> +               location = locations[origin != NULL][remote_is_branch];
+> Eh, or don't.  My script nowadays uses Junio's suggestion of matching on
+> (author, authordate) with a little bit of tweaking in case there is no
+> match.  The name/date match works for most cases even in slightly
+> tweaked forms.
 
-On this project, it is more idiomatic to say !!origin than 'origin != NULL'.
+In our technique, we take each email patch, eliminate white space and
+hash each line. We then compare the lines with those in commits to the
+same files. The commit that changes the same files and has the largest
+number of matching lines is considered to be the reviewed commit.
 
-If we take the time to trace through the code, we can see that
-remote_is_branch is indeed either 0 or 1, thus this expression is safe
-today, however, if the implementation of starts_with() ever changes so
-that it returns a value other than 1 for true, then this code will
-break. To avoid such breakage, and to avoid placing burden of tracing
-code, you might instead write the expression as:
+We compared Junio's (author, authordate) and our technique on a
+manually created benchmark of 30 messages from the linux, postgres,
+and git mailing lists. We found that Junio's simple technique
+performed equally well to our more complicated technique (see results
+at end of email).
 
-    location = locations[!!origin][!!remote_is_branch];
+On Tue, Feb 18, 2014 at 12:28 AM, Jeff King <peff@peff.net> wrote:
+>   2. How do we store the mapping? I think git-notes are a natural fit
+>      here, but you don't seem to use them. Is there a reason?
 
-> +               strbuf_addstr(&msg, "Branch \%s set up to track ");
-> +               strbuf_addstr(&msg, location);
-> +               if(rebasing)
-> +                       strbuf_addstr(&msg, " by rebasing");
-> +               strbuf_addch(&msg, '.');
+We wanted a way to store each review as its own blob, so we put the
+reviews on a detached 'review' branch and then wrote some simple
+scripts to access and display these reviews on the command line (\eg
+git reviewed --show <commit_hash>).
 
-This approach of composing strings is problematic for translation,
-which is why the GSoC microproject states:
+However, given the previous discussion on this list
+(http://git.661346.n2.nabble.com/RFC-RFH-Fun-things-with-git-notes-or-patch-tracking-backwards-td2297330.html),
+we agree that just putting the msg_id as a note is probably more
+useful. One additional problem we ran into when storing all the
+reviews, is for something like Linux, the reviews took up a massive
+amount of storage.
 
-    Don't forget that the strangely-named function _() is used for
-    internationalization and limits the possibility of gluing
-    strings together.
+> It would be interesting to apply some kind of clustering algorithm that
+> automatically determines the messages related to a commit, including
+> both the patch but also any discussion leading up to it. I realize that
+> may be getting far afield of your original goals, but hey, you said you
+> wanted feedback. I can reach for the stars. :)
 
-For further details about why this approach is undesirable, see this
-other email thread [1].
+It would be interesting to be able to tie in other discussion, perhaps
+related bugs. A future project.
 
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/243793
+Thanks,
+Peter
 
-> +               printf_ln(_(msg.buf), local, remote_is_branch ? remote: shortname, origin);
+Evaluation of linking commits with email reviews on 30 messages from
+Linux, postgres, and git mailing lists
 
-gettext function _() expects constant strings which it can present to
-(human) translators, so passing it a buffer containing a string
-composed at run-time will not work.
+Linux - Files and lines changed:
 
->         }
-> +       strbuf_release(&msg);
->  }
->
->  /*
-> --
-> 1.9.0
+Perfect: 87%
+No Match: 13%
+Incorrect: 0%
+
+Linux - Thomas/Junio  (author, authordate)
+
+Perfect: 87%
+No Match: 13%
+Incorrect: 0%
+
+Git - Files and lines changed:
+
+Perfect: 74 %
+No Match  23  %
+Incorrect: 3 %
+
+Git - Thomas/Junio  (author, authordate)
+
+Perfect: 77%
+No Match: 23%
+Incorrect: 0%
+
+Postgres - Files and lines changed:
+
+Perfect: 57 %
+No Match  36  %
+Incorrect: 7 %
+
+Postgres - Thomas/Junio  (author, authordate)
+
+Perfect: 50%
+No Match: 37%
+Incorrect: 13%
+
+-- 
+http://users.encs.concordia.ca/~pcr/
