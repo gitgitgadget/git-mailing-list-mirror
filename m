@@ -1,123 +1,108 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: question about: Facebook makes Mercurial faster than Git
-Date: Mon, 10 Mar 2014 15:48:20 +0100
-Message-ID: <531DD0B4.3020603@alum.mit.edu>
-References: <531D8ED9.7040305@gmx.net> <CANgJU+W+f3KUxehDGxd+f77RO24VadsnOV=szE2MkBXjs8wDCQ@mail.gmail.com> <531DA519.8090509@gmx.net> <CALKQrgcfTKy0d_BGAZ-bSx5i-=MVEF-WuRfW6T3Q-YxvVSqY_A@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Trust issues with hooks and config files
+Date: Mon, 10 Mar 2014 08:18:26 -0700
+Message-ID: <xmqqiormrsjh.fsf@gitster.dls.corp.google.com>
+References: <5318ECFF.40908@0x4a42.net>
+	<20140307210403.GA6790@sigill.intra.peff.net>
+	<531CA468.3060604@0x4a42.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Dennis Luehring <dl.soluz@gmx.net>, Git <git@vger.kernel.org>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Mon Mar 10 15:48:30 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Julian Brost <julian@0x4a42.net>
+X-From: git-owner@vger.kernel.org Mon Mar 10 16:18:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WN1VF-0006BT-A0
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Mar 2014 15:48:29 +0100
+	id 1WN1yS-0003mJ-Sn
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Mar 2014 16:18:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753693AbaCJOsZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Mar 2014 10:48:25 -0400
-Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:48480 "EHLO
-	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753456AbaCJOsY (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Mar 2014 10:48:24 -0400
-X-AuditID: 1207440e-f79c76d000003e2c-59-531dd0b739e8
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id A8.37.15916.7B0DD135; Mon, 10 Mar 2014 10:48:23 -0400 (EDT)
-Received: from [192.168.69.148] (p57A2497B.dip0.t-ipconnect.de [87.162.73.123])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s2AEmKEh031376
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Mon, 10 Mar 2014 10:48:22 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
-In-Reply-To: <CALKQrgcfTKy0d_BGAZ-bSx5i-=MVEF-WuRfW6T3Q-YxvVSqY_A@mail.gmail.com>
-X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrKKsWRmVeSWpSXmKPExsUixO6iqLv9gmywwfsNAhbzr69ls+i60s1k
-	Me/uLiYHZo/Fm/azeVx6+Z3N4/MmuQDmKG6bpMSSsuDM9Dx9uwTujPMPZ7AUXBWtePvPv4Gx
-	R7CLkZNDQsBEYvbaeywQtpjEhXvr2boYuTiEBC4zSixpWMQO4ZxnkthxZxljFyMHB6+AtkTH
-	lEyQBhYBVYmzU54zgdhsAroSi3qawWxRgWCJ1ZcfgA3lFRCUODnzCZgtAlS/4/EvNpAxzAKO
-	Et86DEDCwgKuEr/+NrNArDrNKPHlynxmkASnQKDEiRmzWEDqJQTEJXoagyBa1SXWzxMCqWAW
-	kJfY/nYO8wRGwVlIls1CqJqFpGoBI/MqRrnEnNJc3dzEzJzi1GTd4uTEvLzUIl1jvdzMEr3U
-	lNJNjJBg5tvB2L5e5hCjAAejEg/vgbcywUKsiWXFlbmHGCU5mJREeSvOyQYL8SXlp1RmJBZn
-	xBeV5qQWH2KU4GBWEuF9AZLjTUmsrEotyodJSXOwKInzqi1R9xMSSE8sSc1OTS1ILYLJynBw
-	KEnwfj0P1ChYlJqeWpGWmVOCkGbi4AQZziUlUpyal5JalFhakhEPitz4YmDsgqR4gPY+Bmnn
-	LS5IzAWKQrSeYtTluN326xOjEEtefl6qlDjvKpAiAZCijNI8uBWw1PWKURzoY2HeFyBVPMC0
-	BzfpFdASJqAlzcelQJaUJCKkpBoYDVucX+w4H5bKpV6hl7OIv9gzZtqZLJtbOxafm/1PdfHa
-	NfdUNzIx/lmYUd3HHB9aOO1Ap45mju9kx5i7+6Z0L5T5HvZtJ+uW4+wHsiSim9/l 
+	id S1753374AbaCJPSg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Mar 2014 11:18:36 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60795 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753905AbaCJPSf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Mar 2014 11:18:35 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DC8CF730B4;
+	Mon, 10 Mar 2014 11:18:29 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=tPFSxVmFRMth2wuhAGXv4dQxCPI=; b=tV2cIP
+	qTINr+DOL+Te8WMfrCbL+NjrGuUBRh++OoRwRDtV6N/1SWZ9WCQuydPOWGYxFcyy
+	F1ZBhqO+981tIW1niZTWVkk57c6RaKWp8L7iUjRx8Hsp7gUZZbzxkC0gHwsEiEDQ
+	0hVLcmANmYVvAbSLAfgWfnZFFBcMcwnYFf5sI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=r3Jmb/NZhFAuUvhUH8LGB+x82XWMvrz+
+	dZvw9TNM6HiMcDI02O1mGDcp8gMyvO44WaNGXEwqCJErxmqb9ALJMFxE3TNhZEFT
+	O9IIhs1oavOYKJQ48fJLFLw4dhT30TOFctpKl6P6vkT5b2fCJeRszDV4ys9Ly/gg
+	lSbU5685kN8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CACEE730B3;
+	Mon, 10 Mar 2014 11:18:29 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D14BC730AE;
+	Mon, 10 Mar 2014 11:18:28 -0400 (EDT)
+In-Reply-To: <531CA468.3060604@0x4a42.net> (Julian Brost's message of "Sun, 09
+	Mar 2014 18:27:04 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 3BBE1C54-A867-11E3-BA67-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243764>
 
-On 03/10/2014 01:10 PM, Johan Herland wrote:
-> It should be possible to teach Git to do similar things, and IINM
-> there are (and have previously been) several attempts to do similar
-> things in Git, e.g.:
-> 
->  - http://thread.gmane.org/gmane.comp.version-control.git/240339
-> 
->  - http://thread.gmane.org/gmane.comp.version-control.git/217817
-> 
-> I haven't looked closely at these attempts (it is not my scratch to
-> itch), and I don't know if/how they would work on top of Watchman, but
-> in principle I don't see why Git shouldn't be able to leverage
-> Watchman the same way Mercurial does.
+Julian Brost <julian@0x4a42.net> writes:
 
-This touches on the most important thing that we should take to heart
-from this episode:
+> On 07.03.2014 22:04, Jeff King wrote:
+>> 
+>> If you want to work on it, I think it's an interesting area. But
+>> any development would need to think about the transition plan for
+>> existing sites that will be broken.
+>
+> I can understand the problem with backward compatibility but in my
+> opinion the default behavior should definitely be to ignore untrusted
+> config files and hooks as it would otherwise only protect users that
+> are already aware of the issue anyways and manually enable this option.
+>
+> Are there any plans for some major release in the future that would
+> allow introducing backward incompatible changes?
 
-Of course Facebook could have modified either Git or Mercurial to do
-what they want.  Why did they pick Mercurial?  The article seems to
-claim that they were initially biased towards Git, but they chose
-Mercurial because its code base is easier to modify.  This is a claim
-that I can easily believe.
+Git 2.0 has been in the planning for quite some months, and I am
+inclined to merge these topics prepared for that release to 'master'
+during this cycle.  Anything new like this one is way too late for
+it, but that does not mean we can never do 3.0 in the future.
 
-The two projects are almost exactly the same age.  The number of commits
-in the two projects is similar.  Mercurial has had fewer contributors
-active at any given time over its project lifetime.
+Perhaps going this way might be possible:
 
-But let's see how much code is in the main part of Mercurial vs. Git:
+ * Introduce a configuration that is read only from $HOME/.gitconfig
+   (or its xdg equivalent) to enable or disable the "unsafe" behaviour.
 
-    $ find mercurial hgext \( -name '*.c' -o -name '*.py' \) -print |
-          xargs cat | wc -l
-    46164
+   By default (i.e. when the above configuration is not set), allow
+   "unsafe" read; when instructed by the above configuration to
+   forbid "unsafe" read, ignore configuration files that are not
+   owned by the owner of the process.  People can toggle the
+   "unsafe" read to experiment with the above (~gitdaemon/.gitconfig
+   can perhaps be used to restrict the daemon access)
 
-    $ cat *.c *.h *.sh *.perl builtin/*.c | wc -l
-    188530
+   Keep it that way for a few releases.
 
-These are just crude estimates and I hope I got the right directories
-for Mercurial.  But, by these numbers, Git has 4 times as much code as
-Mercurial.  That alone will go a long way to making Git harder to
-modify.  I don't think that Git has anywhere near 4 times the features
-of Mercurial.  Probably most of the difference can be explained by the
-choice of implementation languages; 94% of the code in these hg
-directories is Python, whereas 88% of Git's core code is C.
+ * After a few releases, start warning people who do not have the
+   "unsafe" option in their $HOME/.gitconfig about a future default
+   change, to force them to explicitly set it.
 
-How can we make Git easier to hack (short of switching languages)?  Here
-are my suggestions:
+   Keep it that way for a few releases.
 
-* Better function docstrings -- don't make developers have to read the
-whole call stack to find out what a function does, or who owns the
-memory that is passed around.
+ * Flip the default, perhaps still keeping the warning on the
+   flipped default to help people who have not been following along.
 
-* More modularity -- more coherent and abstract APIs between different
-parts of the system, and less pawing around in your neighbor's data
-structures.
+   Keep it that way for a few releases.
 
-* Higher-level abstractions -- make more use of APIs like strbuf and
-string_list as opposed to handling every malloc() and realloc() by hand.
+ * Then finally remove the warning.
 
-I personally wish that we as a project would be more willing to spend a
-few extra CPU microseconds to make our code easier to read and modify
-and more robust.
-
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+A release cycle usually last 10-12 weeks on average.
