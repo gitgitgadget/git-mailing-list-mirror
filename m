@@ -1,103 +1,107 @@
-From: Yann Droneaud <ydroneaud@opteya.com>
-Subject: Re: git merge --date --author
-Date: Mon, 10 Mar 2014 13:52:52 +0100
-Organization: OPTEYA
-Message-ID: <1394455972.3257.51.camel@localhost.localdomain>
-References: <1394188215.3257.17.camel@localhost.localdomain>
-	 <87y50mxj0b.fsf@igel.home> <xmqqvbvpu757.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org,
-	Yann Droneaud <ydroneaud@opteya.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH 21/26] struct ref_update: Store refname as a FLEX_ARRAY.
+Date: Mon, 10 Mar 2014 13:46:38 +0100
+Message-ID: <1394455603-2968-22-git-send-email-mhagger@alum.mit.edu>
+References: <1394455603-2968-1-git-send-email-mhagger@alum.mit.edu>
+Cc: Brad King <brad.king@kitware.com>, Jeff King <peff@peff.net>,
+	Vicent Marti <tanoku@gmail.com>,
+	Johan Herland <johan@herland.net>, git@vger.kernel.org,
+	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 10 13:53:30 2014
+X-From: git-owner@vger.kernel.org Mon Mar 10 13:54:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WMzhv-00047A-Gk
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Mar 2014 13:53:27 +0100
+	id 1WMzj5-0005KL-UI
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Mar 2014 13:54:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753755AbaCJMxQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Mar 2014 08:53:16 -0400
-Received: from smtp1-g21.free.fr ([212.27.42.1]:34372 "EHLO smtp1-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753746AbaCJMxM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Mar 2014 08:53:12 -0400
-Received: from [192.168.20.20] (unknown [37.162.217.221])
-	by smtp1-g21.free.fr (Postfix) with ESMTP id 53AE3940141;
-	Mon, 10 Mar 2014 13:52:54 +0100 (CET)
-In-Reply-To: <xmqqvbvpu757.fsf@gitster.dls.corp.google.com>
-X-Mailer: Evolution 3.10.4 (3.10.4-1.fc20) 
+	id S1753835AbaCJMyf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Mar 2014 08:54:35 -0400
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:54344 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753831AbaCJMyd (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Mar 2014 08:54:33 -0400
+X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Mon, 10 Mar 2014 08:54:33 EDT
+X-AuditID: 1207440c-f79656d000003eba-22-531db462f096
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 60.6E.16058.264BD135; Mon, 10 Mar 2014 08:47:30 -0400 (EDT)
+Received: from michael.fritz.box (p57A2497B.dip0.t-ipconnect.de [87.162.73.123])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s2ACkjwj025479
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Mon, 10 Mar 2014 08:47:29 -0400
+X-Mailer: git-send-email 1.9.0
+In-Reply-To: <1394455603-2968-1-git-send-email-mhagger@alum.mit.edu>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrIIsWRmVeSWpSXmKPExsUixO6iqJu0RTbY4Fq7nsXOdRIWXVe6mSwa
+	eq8wW8y7u4vJ4vaK+cwWP1p6mC0+di5gdmD3+Pv+A5PHzll32T0uvfzO5vHx2XJ2j2e9exg9
+	Ll5S9vi8SS6APYrbJimxpCw4Mz1P3y6BO+PS4W62gt88Fds3rGNqYDzO1cXIySEhYCLxpfcs
+	I4QtJnHh3nq2LkYuDiGBy4wS0zrnQTknmCRm9pxjB6liE9CVWNTTzARiiwioSUxsO8QCUsQs
+	cIVR4vPXX2BFwgIeEm8P3QIbyyKgKtG+7wiYzSvgInFg0WwmiHVyElN+LwCr5wSKT7/yAMwW
+	EnCWeLmnmXUCI+8CRoZVjHKJOaW5urmJmTnFqcm6xcmJeXmpRbqGermZJXqpKaWbGCHBx7OD
+	8ds6mUOMAhyMSjy8B97KBAuxJpYVV+YeYpTkYFIS5Z24VjZYiC8pP6UyI7E4I76oNCe1+BCj
+	BAezkghv5mKgHG9KYmVValE+TEqag0VJnFd1ibqfkEB6YklqdmpqQWoRTFaGg0NJgrd+M1Cj
+	YFFqempFWmZOCUKaiYMTZDiXlEhxal5KalFiaUlGPCg64ouB8QGS4gHa6wDSzltckJgLFIVo
+	PcWoKCXOOwckIQCSyCjNgxsLSymvGMWBvhTmbQWp4gGmI7juV0CDmYAGNx+XAhlckoiQkmpg
+	VKrmvaaUdmCbxrmFRTZL5Yvd5u7R6DOI9FoaYtztdux/88nNbRtqVu+4HF2wWlTefHm9g3mt
+	tEtry5vqYJvClq3zS1deUryek/u4rtBW2o6jZ703U4XJD+9ZD1zKzXU3b1wQbLoo 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243758>
 
-Hi,
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
+ refs.c | 15 ++++++---------
+ 1 file changed, 6 insertions(+), 9 deletions(-)
 
-Le vendredi 07 mars 2014 =C3=A0 11:43 -0800, Junio C Hamano a =C3=A9cri=
-t :
-> Andreas Schwab <schwab@linux-m68k.org> writes:
->=20
-> > Yann Droneaud <ydroneaud@opteya.com> writes:
-> >
-> >> But I'd like to know if there's a specific reason for git merge to=
- not
-> >> support --date and --author ?
-> >
-> > It's rather unusual that a merge is performed on behalf of a differ=
-ent
-> > author.
->=20
-> Yes.  Michael's "Nobody bothered to implement it" is also correct
-> but the reason why nobody bothered to most likely is due to "why
-> would you want to lie?".
->=20
-
-When was Git changed in some kind of TSA agent one has to bribe to get
-allowed to cross^Wcommit ? Why git lawyer is not implemented ? I want a
-fair trial !
-
-And before adding to Git a perfect lie detector (how will it able to
-make the difference between truth and lie ? then, will it be able to
-make the difference between good and bad ?, oh god, no !), I would
-prefer to have it detect bugs before one could commit instead.
-
-You seems to think I'm lying, but I'm not a liar: I just need to make
-some arrangements with the history under another identity, as I could b=
-e
-legally bound to. So it may sound like a lie for you, but ultimately,
-it's the plain truth.
-
-So as the tool is not in position to distinguish lie from truth, I'd
-prefer to not see this concept brought here.
-
-> If the use case is to rebuild history, you would need to be able to
-> also lie about the committer, so
->=20
-> >> git merge \
-> >>     --date "2013-12-31 23:59:59 +0000" \
-> >>     --author "Happy New Year <happy.new-year@gregorian.calendar>" =
-\
-> >>     current-year
->=20
-> in such a history-rebuild script would not be sufficient.  The
-> script can set necessary environment variables to lie about both
-> author and commiter, though, of course.
->=20
-
-Thanks for reminding this: I have to use GIT_COMMITER_DATE,
-GIT_COMMITER_NAME and GIT_COMMITER_EMAIL.
-
-As I'm not calling for adding --date and --author, I will continue to
-use the environment variables: they're good enough for the job.
-
-Regards.
-
---=20
-Yann Droneaud
-OPTEYA
+diff --git a/refs.c b/refs.c
+index 5d08cdf..335d0e2 100644
+--- a/refs.c
++++ b/refs.c
+@@ -3274,11 +3274,11 @@ static int update_ref_write(const char *action, const char *refname,
+  * value or to zero to ensure the ref does not exist before update.
+  */
+ struct ref_update {
+-	const char *refname;
+ 	unsigned char new_sha1[20];
+ 	unsigned char old_sha1[20];
+ 	int flags; /* REF_NODEREF? */
+ 	int have_old; /* 1 if old_sha1 is valid, 0 otherwise */
++	const char refname[FLEX_ARRAY];
+ };
+ 
+ /*
+@@ -3301,12 +3301,8 @@ void free_ref_transaction(struct ref_transaction *transaction)
+ {
+ 	int i;
+ 
+-	for (i = 0; i < transaction->nr; i++) {
+-		struct ref_update *update = transaction->updates[i];
+-
+-		free((char *)update->refname);
+-		free(update);
+-	}
++	for (i = 0; i < transaction->nr; i++)
++		free(transaction->updates[i]);
+ 
+ 	free(transaction->updates);
+ 	free(transaction);
+@@ -3315,9 +3311,10 @@ void free_ref_transaction(struct ref_transaction *transaction)
+ static struct ref_update *add_update(struct ref_transaction *transaction,
+ 				     const char *refname)
+ {
+-	struct ref_update *update = xcalloc(1, sizeof(*update));
++	size_t len = strlen(refname);
++	struct ref_update *update = xcalloc(1, sizeof(*update) + len + 1);
+ 
+-	update->refname = xstrdup(refname);
++	strcpy((char *)update->refname, refname);
+ 	ALLOC_GROW(transaction->updates, transaction->nr + 1, transaction->alloc);
+ 	transaction->updates[transaction->nr++] = update;
+ 	return update;
+-- 
+1.9.0
