@@ -1,180 +1,153 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 19/26] refs: Remove API function update_refs()
-Date: Mon, 10 Mar 2014 13:46:36 +0100
-Message-ID: <1394455603-2968-20-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH 20/26] struct ref_update: Rename field "ref_name" to "refname"
+Date: Mon, 10 Mar 2014 13:46:37 +0100
+Message-ID: <1394455603-2968-21-git-send-email-mhagger@alum.mit.edu>
 References: <1394455603-2968-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Brad King <brad.king@kitware.com>, Jeff King <peff@peff.net>,
 	Vicent Marti <tanoku@gmail.com>,
 	Johan Herland <johan@herland.net>, git@vger.kernel.org,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 10 13:47:41 2014
+X-From: git-owner@vger.kernel.org Mon Mar 10 13:47:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WMzcJ-0007oJ-9P
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Mar 2014 13:47:39 +0100
+	id 1WMzcO-0007t1-Eb
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Mar 2014 13:47:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753596AbaCJMra (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Mar 2014 08:47:30 -0400
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:57770 "EHLO
-	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753590AbaCJMr1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Mar 2014 08:47:27 -0400
-X-AuditID: 12074412-f79d46d000002e58-e1-531db45ed0be
+	id S1753600AbaCJMrh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Mar 2014 08:47:37 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:59269 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753112AbaCJMr3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Mar 2014 08:47:29 -0400
+X-AuditID: 12074413-f79076d000002d17-68-531db460da54
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id C4.41.11864.E54BD135; Mon, 10 Mar 2014 08:47:26 -0400 (EDT)
+	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 0A.96.11543.064BD135; Mon, 10 Mar 2014 08:47:28 -0400 (EDT)
 Received: from michael.fritz.box (p57A2497B.dip0.t-ipconnect.de [87.162.73.123])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s2ACkjwh025479
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s2ACkjwi025479
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Mon, 10 Mar 2014 08:47:25 -0400
+	Mon, 10 Mar 2014 08:47:27 -0400
 X-Mailer: git-send-email 1.9.0
 In-Reply-To: <1394455603-2968-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrAIsWRmVeSWpSXmKPExsUixO6iqBu3RTbY4NQqU4ud6yQsuq50M1k0
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrIIsWRmVeSWpSXmKPExsUixO6iqJuwRTbYYOEBU4ud6yQsuq50M1k0
 	9F5htph3dxeTxe0V85ktfrT0MFt87FzA7MDu8ff9ByaPnbPusntcevmdzePjs+XsHs969zB6
-	XLyk7PF5k1wAexS3TVJiSVlwZnqevl0Cd0bzjp/sBfsUKjr6vrE1MN6T7GLk5JAQMJGY0rmZ
-	EcIWk7hwbz1bFyMXh5DAZUaJyd2nGCGcE0wS985NAKtiE9CVWNTTzARiiwioSUxsO8QCUsQs
-	cIVR4vPXX+wgCWEBO4kXmzYC2RwcLAKqEu/3uoKEeQVcJLobtrFAbJOTmPJ7AVg5J1B8+pUH
-	YLaQgLPEyz3NrBMYeRcwMqxilEvMKc3VzU3MzClOTdYtTk7My0st0jXTy80s0UtNKd3ECAk9
-	oR2M60/KHWIU4GBU4uE98FYmWIg1say4MvcQoyQHk5Io78S1ssFCfEn5KZUZicUZ8UWlOanF
-	hxglOJiVRHgzFwPleFMSK6tSi/JhUtIcLErivD8Xq/sJCaQnlqRmp6YWpBbBZGU4OJQkeH03
-	AzUKFqWmp1akZeaUIKSZODhBhnNJiRSn5qWkFiWWlmTEg2IjvhgYHSApHqC920DaeYsLEnOB
-	ohCtpxgVpcR554AkBEASGaV5cGNhCeUVozjQl8K8rSBVPMBkBNf9CmgwE9Dg5uNSIINLEhFS
-	Ug2MRzJ790g77LmqtcV0Ks/fK2urJjWcVvDd9PX2EecTKk3dz5seSoqe5nr/ZV5zhqZS9Y6z
-	W7cJVAVNq+84dPrE1NnlSU/69E3e7+VY71OVmHv9XNspq9O3z00L7pkc0Rf+MFnm 
+	XLyk7PF5k1wAexS3TVJiSVlwZnqevl0Cd8akn++YC1pkK058ncfcwLhIvIuRk0NCwETi4NVl
+	LBC2mMSFe+vZuhi5OIQELjNKPFs/gRnCOcEk8fR9D1gVm4CuxKKeZiYQW0RATWJi2yEWkCJm
+	gSuMEp+//mIHSQgL+Ems6HzFCmKzCKhKvH3QDNbMK+AicXbncTaIdXISU34vAKvnBIpPv/IA
+	zBYScJZ4uaeZdQIj7wJGhlWMcok5pbm6uYmZOcWpybrFyYl5ealFuuZ6uZkleqkppZsYIcEn
+	vINx10m5Q4wCHIxKPLwH3soEC7EmlhVX5h5ilORgUhLlnbhWNliILyk/pTIjsTgjvqg0J7X4
+	EKMEB7OSCG/mYqAcb0piZVVqUT5MSpqDRUmcV22Jup+QQHpiSWp2ampBahFMVoaDQ0mC9/Bm
+	oEbBotT01Iq0zJwShDQTByfIcC4pkeLUvJTUosTSkox4UHTEFwPjAyTFA7R3G0g7b3FBYi5Q
+	FKL1FKOilDjvHJCEAEgiozQPbiwspbxiFAf6Upi3FaSKB5iO4LpfAQ1mAhrcfFwKZHBJIkJK
+	qoGxTvrQjjcbHrbvFhKKUOjf9NxqjnM9g/J0FU2t1da77K5/OpV/Pnx17s7d5s45v9tcWtfO
+	CpJOvvCmUGa9bvLcqi455yPLTpkKlotc3Vd8p+zba+vdaxgSL2+8v81R5uUpxe8r 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243742>
 
-This should be done via reference transactions now.  This also means
-that struct ref_update can become private.
+This is consistent with the usual nomenclature.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs.c | 31 ++++++++++++++++++++-----------
- refs.h | 20 --------------------
- 2 files changed, 20 insertions(+), 31 deletions(-)
+ refs.c | 18 +++++++++---------
+ refs.h |  2 +-
+ 2 files changed, 10 insertions(+), 10 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index 54260ce..91af0a0 100644
+index 91af0a0..5d08cdf 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -3267,6 +3267,20 @@ static int update_ref_write(const char *action, const char *refname,
- 	return 0;
- }
+@@ -3274,7 +3274,7 @@ static int update_ref_write(const char *action, const char *refname,
+  * value or to zero to ensure the ref does not exist before update.
+  */
+ struct ref_update {
+-	const char *ref_name;
++	const char *refname;
+ 	unsigned char new_sha1[20];
+ 	unsigned char old_sha1[20];
+ 	int flags; /* REF_NODEREF? */
+@@ -3304,7 +3304,7 @@ void free_ref_transaction(struct ref_transaction *transaction)
+ 	for (i = 0; i < transaction->nr; i++) {
+ 		struct ref_update *update = transaction->updates[i];
  
-+/**
-+ * Information needed for a single ref update.  Set new_sha1 to the
-+ * new value or to zero to delete the ref.  To check the old value
-+ * while locking the ref, set have_old to 1 and set old_sha1 to the
-+ * value or to zero to ensure the ref does not exist before update.
-+ */
-+struct ref_update {
-+	const char *ref_name;
-+	unsigned char new_sha1[20];
-+	unsigned char old_sha1[20];
-+	int flags; /* REF_NODEREF? */
-+	int have_old; /* 1 if old_sha1 is valid, 0 otherwise */
-+};
-+
- /*
-  * Data structure for holding a reference transaction, which can
-  * consist of checks and updates to multiple references, carried out
-@@ -3385,16 +3399,17 @@ static int ref_update_reject_duplicates(struct ref_update **updates, int n,
- 	return 0;
- }
+-		free((char *)update->ref_name);
++		free((char *)update->refname);
+ 		free(update);
+ 	}
  
--int update_refs(const char *action, struct ref_update * const *updates_orig,
--		int n, enum action_on_err onerr)
-+int commit_ref_transaction(struct ref_transaction *transaction,
-+			   const char *msg, enum action_on_err onerr)
+@@ -3317,7 +3317,7 @@ static struct ref_update *add_update(struct ref_transaction *transaction,
  {
- 	int ret = 0, delnum = 0, i;
- 	struct ref_update **updates;
- 	int *types;
- 	struct ref_lock **locks;
- 	const char **delnames;
-+	int n = transaction->nr;
+ 	struct ref_update *update = xcalloc(1, sizeof(*update));
  
--	if (!updates_orig || !n)
-+	if (!n)
- 		return 0;
- 
- 	/* Allocate work space */
-@@ -3404,7 +3419,7 @@ int update_refs(const char *action, struct ref_update * const *updates_orig,
- 	delnames = xmalloc(sizeof(*delnames) * n);
- 
- 	/* Copy, sort, and reject duplicate refs */
--	memcpy(updates, updates_orig, sizeof(*updates) * n);
-+	memcpy(updates, transaction->updates, sizeof(*updates) * n);
- 	qsort(updates, n, sizeof(*updates), ref_update_compare);
- 	ret = ref_update_reject_duplicates(updates, n, onerr);
- 	if (ret)
-@@ -3426,7 +3441,7 @@ int update_refs(const char *action, struct ref_update * const *updates_orig,
- 	/* Perform updates first so live commits remain referenced */
- 	for (i = 0; i < n; i++)
- 		if (!is_null_sha1(updates[i]->new_sha1)) {
--			ret = update_ref_write(action,
-+			ret = update_ref_write(msg,
- 					       updates[i]->ref_name,
- 					       updates[i]->new_sha1,
- 					       locks[i], onerr);
-@@ -3457,12 +3472,6 @@ cleanup:
- 	return ret;
+-	update->ref_name = xstrdup(refname);
++	update->refname = xstrdup(refname);
+ 	ALLOC_GROW(transaction->updates, transaction->nr + 1, transaction->alloc);
+ 	transaction->updates[transaction->nr++] = update;
+ 	return update;
+@@ -3375,7 +3375,7 @@ static int ref_update_compare(const void *r1, const void *r2)
+ {
+ 	const struct ref_update * const *u1 = r1;
+ 	const struct ref_update * const *u2 = r2;
+-	return strcmp((*u1)->ref_name, (*u2)->ref_name);
++	return strcmp((*u1)->refname, (*u2)->refname);
  }
  
--int commit_ref_transaction(struct ref_transaction *transaction,
--			   const char *msg, enum action_on_err onerr)
--{
--	return update_refs(msg, transaction->updates, transaction->nr, onerr);
--}
--
- char *shorten_unambiguous_ref(const char *refname, int strict)
+ static int ref_update_reject_duplicates(struct ref_update **updates, int n,
+@@ -3383,14 +3383,14 @@ static int ref_update_reject_duplicates(struct ref_update **updates, int n,
  {
  	int i;
+ 	for (i = 1; i < n; i++)
+-		if (!strcmp(updates[i - 1]->ref_name, updates[i]->ref_name)) {
++		if (!strcmp(updates[i - 1]->refname, updates[i]->refname)) {
+ 			const char *str =
+ 				"Multiple updates for ref '%s' not allowed.";
+ 			switch (onerr) {
+ 			case UPDATE_REFS_MSG_ON_ERR:
+-				error(str, updates[i]->ref_name); break;
++				error(str, updates[i]->refname); break;
+ 			case UPDATE_REFS_DIE_ON_ERR:
+-				die(str, updates[i]->ref_name); break;
++				die(str, updates[i]->refname); break;
+ 			case UPDATE_REFS_QUIET_ON_ERR:
+ 				break;
+ 			}
+@@ -3427,7 +3427,7 @@ int commit_ref_transaction(struct ref_transaction *transaction,
+ 
+ 	/* Acquire all locks while verifying old values */
+ 	for (i = 0; i < n; i++) {
+-		locks[i] = update_ref_lock(updates[i]->ref_name,
++		locks[i] = update_ref_lock(updates[i]->refname,
+ 					   (updates[i]->have_old ?
+ 					    updates[i]->old_sha1 : NULL),
+ 					   updates[i]->flags,
+@@ -3442,7 +3442,7 @@ int commit_ref_transaction(struct ref_transaction *transaction,
+ 	for (i = 0; i < n; i++)
+ 		if (!is_null_sha1(updates[i]->new_sha1)) {
+ 			ret = update_ref_write(msg,
+-					       updates[i]->ref_name,
++					       updates[i]->refname,
+ 					       updates[i]->new_sha1,
+ 					       locks[i], onerr);
+ 			locks[i] = NULL; /* freed by update_ref_write */
 diff --git a/refs.h b/refs.h
-index 2848fb7..b1f8b74 100644
+index b1f8b74..cc24213 100644
 --- a/refs.h
 +++ b/refs.h
-@@ -10,20 +10,6 @@ struct ref_lock {
- 	int force_write;
- };
+@@ -154,7 +154,7 @@ extern void unlock_ref(struct ref_lock *lock);
+ extern int write_ref_sha1(struct ref_lock *lock, const unsigned char *sha1, const char *msg);
  
--/**
-- * Information needed for a single ref update.  Set new_sha1 to the
-- * new value or to zero to delete the ref.  To check the old value
-- * while locking the ref, set have_old to 1 and set old_sha1 to the
-- * value or to zero to ensure the ref does not exist before update.
-- */
--struct ref_update {
--	const char *ref_name;
--	unsigned char new_sha1[20];
--	unsigned char old_sha1[20];
--	int flags; /* REF_NODEREF? */
--	int have_old; /* 1 if old_sha1 is valid, 0 otherwise */
--};
--
- struct ref_transaction;
+ /** Setup reflog before using. **/
+-int log_ref_setup(const char *ref_name, char *logfile, int bufsize);
++int log_ref_setup(const char *refname, char *logfile, int bufsize);
  
- /*
-@@ -288,12 +274,6 @@ int update_ref(const char *action, const char *refname,
- 		const unsigned char *sha1, const unsigned char *oldval,
- 		int flags, enum action_on_err onerr);
- 
--/**
-- * Lock all refs and then perform all modifications.
-- */
--int update_refs(const char *action, struct ref_update * const *updates,
--		int n, enum action_on_err onerr);
--
- extern int parse_hide_refs_config(const char *var, const char *value, const char *);
- extern int ref_is_hidden(const char *);
- 
+ /** Reads log for the value of ref during at_time. **/
+ extern int read_ref_at(const char *refname, unsigned long at_time, int cnt,
 -- 
 1.9.0
