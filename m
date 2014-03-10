@@ -1,122 +1,105 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] rev-parse --parseopt: option argument name hints
-Date: Mon, 10 Mar 2014 12:55:00 -0700
-Message-ID: <xmqqk3c1rfqj.fsf@gitster.dls.corp.google.com>
-References: <1393842740-4628-1-git-send-email-ilya.bobyr@gmail.com>
-	<xmqqwqg9kbuk.fsf@gitster.dls.corp.google.com>
-	<531D51EC.6050503@gmail.com>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [RFC/WIP] Pluggable reference backends
+Date: Mon, 10 Mar 2014 20:56:12 +0100
+Message-ID: <87bnxd96ar.fsf@fencepost.gnu.org>
+References: <531D9B50.5030404@alum.mit.edu>
+	<CAJo=hJtiPgByhk9M4ZKD98DARzgeU6z2mmw7fcLTEbBza-_h6A@mail.gmail.com>
+	<20140310155230.GA29801@sigill.intra.peff.net>
+	<87k3c2820l.fsf@fencepost.gnu.org>
+	<20140310194247.GA24568@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Ilya Bobyr <ilya.bobyr@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 10 20:55:15 2014
+Content-Type: text/plain
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	git discussion list <git@vger.kernel.org>,
+	Vicent Marti <tanoku@gmail.com>,
+	Brad King <brad.king@kitware.com>,
+	Johan Herland <johan@herland.net>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Mar 10 20:56:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WN6I5-00057Z-77
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Mar 2014 20:55:13 +0100
+	id 1WN6JZ-0006fp-RP
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Mar 2014 20:56:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753944AbaCJTzG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Mar 2014 15:55:06 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33422 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753244AbaCJTzE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Mar 2014 15:55:04 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 980607300F;
-	Mon, 10 Mar 2014 15:55:03 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=J1g9bbI57XM4MVv7+pCKbOBGn74=; b=agKSh1
-	Oed4oX4bq76RnEDx1an1Jm8z6OVX7aoYDtpgtii2AZn1h0JSRL1DevJyIRGYlmRI
-	dOA+BpU4YtcGrZeUhycchjfEy/eD8NdgGjcs0gR5R5oF74pPYJDZlGzNFkGtiQnm
-	875tCQiSIntyZiV/5nbMPSM9dIz6uFcg031mI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=th1EGdhzI+kQFm50WrorxSWZezinJBye
-	ILF/r/6YeJMjvLbnjr9BZt6LMGnXv4kb7IgXBEU8lZ78PT3imbb2GcyEcnThzE86
-	6i1+jKwox6z2j0UU9G0lvaR6rXp5KRkiWhfnskzPWMDFRYZHmSfk08Z2TV3H7VFW
-	WqHo8C/rXss=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 841757300E;
-	Mon, 10 Mar 2014 15:55:03 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A076473006;
-	Mon, 10 Mar 2014 15:55:02 -0400 (EDT)
-In-Reply-To: <531D51EC.6050503@gmail.com> (Ilya Bobyr's message of "Sun, 09
-	Mar 2014 22:47:24 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: DE6AF956-A88D-11E3-81F9-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754357AbaCJT41 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Mar 2014 15:56:27 -0400
+Received: from fencepost.gnu.org ([208.118.235.10]:47405 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754344AbaCJT4Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Mar 2014 15:56:25 -0400
+Received: from localhost ([127.0.0.1]:46441 helo=lola)
+	by fencepost.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <dak@gnu.org>)
+	id 1WN6JE-0001Fs-0V; Mon, 10 Mar 2014 15:56:24 -0400
+Received: by lola (Postfix, from userid 1000)
+	id 10B39E05E7; Mon, 10 Mar 2014 20:56:12 +0100 (CET)
+In-Reply-To: <20140310194247.GA24568@sigill.intra.peff.net> (Jeff King's
+	message of "Mon, 10 Mar 2014 15:42:47 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243803>
 
-Ilya Bobyr <ilya.bobyr@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> On 3/4/2014 11:22 AM, Junio C Hamano wrote:
->> Ilya Bobyr <ilya.bobyr@gmail.com> writes:
->>> @@ -333,6 +339,7 @@ h,help    show the help
->>>     foo       some nifty option --foo
->>>   bar=      some cool option --bar with an argument
->>> +baz=arg   another cool option --baz with an argument named <arg>
->> It probably is better not to have " named <arg>" at the end here, as
->> that gives an apparent-but-false contradiction with the "Angle
->> brackets are added *automatically*" and confuse readers.  At least,
->> it confused _this_ reader.
+> On Mon, Mar 10, 2014 at 05:14:02PM +0100, David Kastrup wrote:
 >
-> I am not sure I understand what is confusing here.  But I removed the
-> " named <arg>" part.
-
-After reading "Angle brackets are automatically given", seeing that
-the argument description has manually spelled "<arg>" gave me "Huh?".
-
-Without " named <arg>" there is no such confusion.
-
-> If there would be an example, I think, it is easy to understand how it
-> works.
-
-Of course.  That is why I suggested to do without " named <arg>"
-part---I didn't mean to suggest not to add the example.  I also
-think that you can demonstrate something other than '=' (whose usage
-is already shown with "bar=" above) here as well, but I think we can
-go either way.
-
->> After the "eval" in the existing example to parse the "$@" argument
->> list in this part of the documentation, it may be a good idea to say
->> something like:
+>> [storing refs in sqlite]
 >>
->> 	The above command, when "$@" is "--help", produces the
->> 	following help output:
->>
->> 	... sample output here ...
->>
->> to show the actual output.  That way, we can illustrate how input
->> "baz?arg description of baz" is turned into "--baz[=<arg>]" output
->> clearly (yes, I am suggesting to use '?' in the new example, not '='
->> whose usage is already shown in the existing example).
+>> Of course, the basic premise for this feature is "let's assume that our
+>> file and/or operating system suck at providing file system functionality
+>> at file name granularity".  There have been two historically approaches
+>> to that problem that are not independent: a) use Linux b) kick Linus.
 >
-> Documentation on the whole argument parsing is quite short, so, I
-> though, adding an example just to show how usage is generated would
-> look like I am trying to make this feature look important than it is
-> :)
+> You didn't define "suck" here, but there are a number of issues with the
+> current ref storage system. Here is a sampling:
+>
+>   1. The filesystem does not present an atomic view of the data (e.g.,
+>      you read "a", then while you are reading "b", somebody else updates
+>      "a"; your view is one that never existed at any point in time).
 
-You already are by saying the "Angle brackets are automatic", aren't
-you?
+If there are no system calls suitable for addressing this problem that
+fundamentally concerns the use of the file system as a file-name
+addressed data store, I don't see why "kick Linus" would not apply here.
 
-> At the same time the target structure that holds the option
-> description calls this string "argh".
+>   2. Using the filesystem creates D/F conflicts between branches "foo"
+>      and "foo/bar". Because this name is a primary key even for the
+>      reflogs, we cannot easily persist reflogs after the ref is
+>      removed.
 
-OK, that is fine, then (I'd prefer a field name not to sound like
-arrrgh, but that is an entirely different topic).
+That actually sounds more like "kick Junio" territory (the wonderful
+times when "kick Linus" could achieve almost anything are over).  To
+wit: this sounds like a design shortcoming in Git's use of filesystems,
+not something that is actually inherent in the use of files.
 
-> I've renamed it to "end".  It is used to remember possible end of the
-> argument name in just one paragraph of code.
+>   3. We use packed-refs in conjunction with loose ones to achieve
+>      reasonable performance when there are a large number of refs. The
+>      scheme for determining the current value of a ref is complicated
+>      and error-prone (we had several race conditions that caused real
+>      data loss).
 
-Sounds good.
+Again, that sounds like we are talking about a scenario that is not a
+problem of files inherently but rather of Git's ways of managing them.
+
+> Those things can be solved through better support from the filesystem.
+> But they were also solved decades ago by relational databases.
+
+Relational databases that are not implemented on raw storage managed by
+database servers will still map their operations to file operations.
+
+> But they are also a proven technology for solving exactly the sorts of
+> problems that some people are having with git. I do not see a reason
+> not to consider them as an option for a pluggable refs system.
+
+But I think it would be wrong to try solving "2." above at the database
+level when its actual problem lies with the reference->filename mapping
+scheme.
+
+-- 
+David Kastrup
