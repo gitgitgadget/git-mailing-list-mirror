@@ -1,120 +1,108 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] clean: respect pathspecs with "-d"
-Date: Mon, 10 Mar 2014 13:22:15 -0400
-Message-ID: <20140310172215.GC29801@sigill.intra.peff.net>
+Subject: [PATCH] clean: simplify dir/not-dir logic
+Date: Mon, 10 Mar 2014 13:24:47 -0400
+Message-ID: <20140310172447.GD29801@sigill.intra.peff.net>
 References: <CABN9-fcpyDogh45WPwuS1qgkE1jLuOAtejuW=fGCKNNyNm3DEQ@mail.gmail.com>
  <20140310172002.GB29801@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
 To: Robin Pedersen <robinp@snap.tv>
-X-From: git-owner@vger.kernel.org Mon Mar 10 18:22:25 2014
+X-From: git-owner@vger.kernel.org Mon Mar 10 18:24:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WN3uB-0005tT-0a
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Mar 2014 18:22:23 +0100
+	id 1WN3wd-0000Bm-1l
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Mar 2014 18:24:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753952AbaCJRWS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Mar 2014 13:22:18 -0400
-Received: from cloud.peff.net ([50.56.180.127]:36571 "HELO peff.net"
+	id S1754475AbaCJRYv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Mar 2014 13:24:51 -0400
+Received: from cloud.peff.net ([50.56.180.127]:36576 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753219AbaCJRWR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Mar 2014 13:22:17 -0400
-Received: (qmail 9188 invoked by uid 102); 10 Mar 2014 17:22:17 -0000
+	id S1754422AbaCJRYt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Mar 2014 13:24:49 -0400
+Received: (qmail 9342 invoked by uid 102); 10 Mar 2014 17:24:49 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 10 Mar 2014 12:22:17 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Mar 2014 13:22:15 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 10 Mar 2014 12:24:49 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Mar 2014 13:24:47 -0400
 Content-Disposition: inline
 In-Reply-To: <20140310172002.GB29801@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243778>
 
 On Mon, Mar 10, 2014 at 01:20:02PM -0400, Jeff King wrote:
 
-> On Mon, Mar 10, 2014 at 11:31:37AM +0100, Robin Pedersen wrote:
+> git-clean uses read_directory to fill in a `struct dir` with
+> potential hits. However, read_directory does not actually
+> check against our pathspec. It uses a simplified version
+> that may turn up false positives. As a result, we need to
+> check that any hits match our pathspec. We do so reliably
+> for non-directories. For directories, if "-d" is not given
+> we check that the pathspec matched exactly (i.e., we are
+> even stricter, and require an explicit "git clean foo" to
+> clean "foo/"). But if "-d" is given, rather than relaxing
+> the exact match to allow a recursive match, we do not check
+> the pathspec at all.
 > 
-> > I accidentially deleted a directory using git clean. I would think
-> > this is a bug, but I'm not sure. Was using 1.8.1, but upgraded to
-> > 1.9.0 just to see if it was still reproducable, and it was.
-> 
-> Definitely a bug, and it dates back quite a while.  Thanks for a very
-> clear bug report.
-> 
-> -- >8 --
+> This regression was introduced in 113f10f (Make git-clean a
+> builtin, 2007-11-11).
 
-Whoops, accidentally included a scissors line here that will break
-people using "git am --scissors" to pick up the patch. Here it is
-correctly formatted.
+The code has been cleaned up quite a bit from that original version, and
+it was pretty easy to see the discrepancy between the two code paths.
+However, if the code were structured like the cleanup patch below, I
+think it would have been even easier.
+
+This comes on top of my other patch. So the bug is already fixed, but I
+think the end result is more readable.
 
 -- >8 --
-Subject: clean: respect pathspecs with "-d"
+When we get a list of paths from read_directory, we further
+prune it to create the final list of items to remove. The
+code paths for directories and non-directories repeat the
+same "add to list" code.
 
-git-clean uses read_directory to fill in a `struct dir` with
-potential hits. However, read_directory does not actually
-check against our pathspec. It uses a simplified version
-that may turn up false positives. As a result, we need to
-check that any hits match our pathspec. We do so reliably
-for non-directories. For directories, if "-d" is not given
-we check that the pathspec matched exactly (i.e., we are
-even stricter, and require an explicit "git clean foo" to
-clean "foo/"). But if "-d" is given, rather than relaxing
-the exact match to allow a recursive match, we do not check
-the pathspec at all.
-
-This regression was introduced in 113f10f (Make git-clean a
-builtin, 2007-11-11).
+This patch restructures the code so that we don't repeat
+ourselves. Also, by following a "if (condition) continue"
+pattern like the pathspec check above, it makes it more
+obvious that the conditional is about excluding directories
+under certain circumstances.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/clean.c  | 5 +++--
- t/t7300-clean.sh | 8 ++++++++
- 2 files changed, 11 insertions(+), 2 deletions(-)
+ builtin/clean.c | 15 ++++++---------
+ 1 file changed, 6 insertions(+), 9 deletions(-)
 
 diff --git a/builtin/clean.c b/builtin/clean.c
-index 114d7bf..31c1488 100644
+index 31c1488..cf76b1f 100644
 --- a/builtin/clean.c
 +++ b/builtin/clean.c
-@@ -947,14 +947,15 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 		if (pathspec.nr)
- 			matches = dir_path_match(ent, &pathspec, 0, NULL);
+@@ -950,15 +950,12 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 		if (pathspec.nr && !matches)
+ 			continue;
  
-+		if (pathspec.nr && !matches)
+-		if (S_ISDIR(st.st_mode)) {
+-			if (remove_directories || (matches == MATCHED_EXACTLY)) {
+-				rel = relative_path(ent->name, prefix, &buf);
+-				string_list_append(&del_list, rel);
+-			}
+-		} else {
+-			rel = relative_path(ent->name, prefix, &buf);
+-			string_list_append(&del_list, rel);
+-		}
++		if (S_ISDIR(st.st_mode) && !remove_directories &&
++		    matches != MATCHED_EXACTLY)
 +			continue;
 +
- 		if (S_ISDIR(st.st_mode)) {
- 			if (remove_directories || (matches == MATCHED_EXACTLY)) {
- 				rel = relative_path(ent->name, prefix, &buf);
- 				string_list_append(&del_list, rel);
- 			}
- 		} else {
--			if (pathspec.nr && !matches)
--				continue;
- 			rel = relative_path(ent->name, prefix, &buf);
- 			string_list_append(&del_list, rel);
- 		}
-diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
-index 710be90..0c602de 100755
---- a/t/t7300-clean.sh
-+++ b/t/t7300-clean.sh
-@@ -511,4 +511,12 @@ test_expect_success SANITY 'git clean -d with an unreadable empty directory' '
- 	! test -d foo
- '
++		rel = relative_path(ent->name, prefix, &buf);
++		string_list_append(&del_list, rel);
+ 	}
  
-+test_expect_success 'git clean -d respects pathspecs' '
-+	mkdir foo &&
-+	mkdir foobar &&
-+	git clean -df foobar &&
-+	test_path_is_dir foo &&
-+	test_path_is_missing foobar
-+'
-+
- test_done
+ 	if (interactive && del_list.nr > 0)
 -- 
 1.9.0.403.g7a2f4b0
