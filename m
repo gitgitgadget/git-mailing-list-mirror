@@ -1,131 +1,113 @@
-From: =?UTF-8?q?Pawe=C5=82=20Wawruch?= <pawlo@aleg.pl>
-Subject: [PATCH v3] install_branch_config: simplify verbose diagnostic logic
-Date: Tue, 11 Mar 2014 14:26:52 +0100
-Message-ID: <1394544412-28409-1-git-send-email-pawlo@aleg.pl>
+From: =?utf-8?B?T25kxZllaiBCw61sa2E=?= <neleai@seznam.cz>
+Subject: Re: question about: Facebook makes Mercurial faster than Git
+Date: Tue, 11 Mar 2014 15:23:25 +0100
+Message-ID: <20140311142325.GB17336@domone.podge>
+References: <531D8ED9.7040305@gmx.net>
+ <alpine.DEB.2.02.1403100310080.25193@nftneq.ynat.uz>
+ <20140310175102.GA17336@domone.podge>
+ <alpine.DEB.2.02.1403101053120.20306@nftneq.ynat.uz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 11 14:27:13 2014
+Cc: Dennis Luehring <dl.soluz@gmx.net>, git@vger.kernel.org
+To: David Lang <david@lang.hm>
+X-From: git-owner@vger.kernel.org Tue Mar 11 15:23:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WNMi6-0001qy-3b
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Mar 2014 14:27:10 +0100
+	id 1WNNam-0007hM-3c
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Mar 2014 15:23:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754296AbaCKN1F convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Mar 2014 09:27:05 -0400
-Received: from mail-ee0-f54.google.com ([74.125.83.54]:33208 "EHLO
-	mail-ee0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752078AbaCKN1B (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Mar 2014 09:27:01 -0400
-Received: by mail-ee0-f54.google.com with SMTP id d49so3755421eek.27
-        for <git@vger.kernel.org>; Tue, 11 Mar 2014 06:27:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:subject:date:message-id:mime-version:content-type
-         :content-transfer-encoding;
-        bh=1je/+Jxsydr5n5QYkw45xa87qjHGGpzAjtN4F7Je/Gw=;
-        b=XNNCDXvLtAZ5Ud0OItmhd09GeI4X2M/rPkBN/vhK6eJc0mB5fmaxYyGpZ7wphSBZMq
-         42FloOs09Eb9uwQmYj4oJGL+fggFpoIP1WsYGcMtJrG8BBRJy9sy/sLsIjSQrDCTIgZp
-         6Iz49sB6TzuK3hbQ2XTd3LtJiCYvBlNQaduF63IlW32lUEb2SG3eR+0Oo+USMzsjR5ap
-         9C0Bs52TTYmBkdLDlIeymBnmZiqEFs3xx7huDTdt8HzjPlzRqH2D5+3M3UxaiTEFgfQb
-         zbQWR9+KCKVztq7OkPEuX3h+b4kc17b8zxp4kN4qk9SRgIIDkq9z/2pCfzrW6Bl2z16y
-         qhbA==
-X-Received: by 10.15.55.193 with SMTP id v41mr3758464eew.80.1394544420183;
-        Tue, 11 Mar 2014 06:27:00 -0700 (PDT)
-Received: from endymion.pwifi-studets.pw.edu.pl ([194.29.130.10])
-        by mx.google.com with ESMTPSA id 46sm57545241ees.4.2014.03.11.06.26.58
-        for <git@vger.kernel.org>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 11 Mar 2014 06:26:59 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.2
+	id S1752582AbaCKOXf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Mar 2014 10:23:35 -0400
+Received: from popelka.ms.mff.cuni.cz ([195.113.20.131]:35103 "EHLO
+	popelka.ms.mff.cuni.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751843AbaCKOXe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Mar 2014 10:23:34 -0400
+Received: from domone.kolej.mff.cuni.cz (popelka.ms.mff.cuni.cz [195.113.20.131])
+	by popelka.ms.mff.cuni.cz (Postfix) with ESMTPS id 8028056F47;
+	Tue, 11 Mar 2014 15:23:26 +0100 (CET)
+Received: by domone.kolej.mff.cuni.cz (Postfix, from userid 1000)
+	id 585595F802; Tue, 11 Mar 2014 15:23:26 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.2.02.1403101053120.20306@nftneq.ynat.uz>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Virus-Scanned: clamav-milter 0.97.8 at popelka.ms.mff.cuni.cz
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-1.9 required=5.0 tests=AWL,BAYES_00,FREEMAIL_FROM,
+	UNPARSEABLE_RELAY autolearn=ham version=3.3.1
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on
+	popelka.ms.mff.cuni.cz
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243866>
 
-Replace the chain of if statements with table of strings.
-
-Signed-off-by: Pawe=C5=82 Wawruch <pawlo@aleg.pl>
----
-I changed the commit message. Logic of table has changed. To make it mo=
-re
-clear I added three dimensions of the table.=20
-
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/243502
-[2]: http://thread.gmane.org/gmane.comp.version-control.git/243849
-
- branch.c | 42 ++++++++++++++++++++----------------------
- 1 file changed, 20 insertions(+), 22 deletions(-)
-
-diff --git a/branch.c b/branch.c
-index 723a36b..741551a 100644
---- a/branch.c
-+++ b/branch.c
-@@ -53,6 +53,21 @@ void install_branch_config(int flag, const char *loc=
-al, const char *origin, cons
- 	int remote_is_branch =3D starts_with(remote, "refs/heads/");
- 	struct strbuf key =3D STRBUF_INIT;
- 	int rebasing =3D should_setup_rebase(origin);
-+	const char *message[][2][2] =3D {{{
-+			N_("Branch %s set up to track remote branch %s from %s by rebasing.=
-"),
-+			N_("Branch %s set up to track remote branch %s from %s."),
-+		},{
-+			N_("Branch %s set up to track local branch %s by rebasing."),
-+			N_("Branch %s set up to track local branch %s."),
-+		}},{{
-+			N_("Branch %s set up to track remote ref %s by rebasing."),
-+			N_("Branch %s set up to track remote ref %s."),
-+		},{
-+			N_("Branch %s set up to track local ref %s by rebasing."),
-+			N_("Branch %s set up to track local ref %s.")
-+	}}};
-+	const char *name =3D remote_is_branch ? remote : shortname;
-+	int message_number;
+On Mon, Mar 10, 2014 at 10:56:51AM -0700, David Lang wrote:
+> On Mon, 10 Mar 2014, Ond=C5=99ej B=C3=ADlka wrote:
+>=20
+> >On Mon, Mar 10, 2014 at 03:13:45AM -0700, David Lang wrote:
+> >>On Mon, 10 Mar 2014, Dennis Luehring wrote:
+> >>
+> >>>according to these blog posts
+> >>>
+> >>>http://www.infoq.com/news/2014/01/facebook-scaling-hg
+> >>>https://code.facebook.com/posts/218678814984400/scaling-mercurial-=
+at-facebook/
+> >>>
+> >>>mercurial "can" be faster then git
+> >>>
+> >>>but i don't found any reply from the git community if it is a real=
+ problem
+> >>>or if there a ongoing (maybe git 2.0) changes to compete better in=
+ this case
+> >>
+> >>As I understand this, the biggest part of what happened is that
+> >>Facebook made a tweak to mercurial so that when it needs to know
+> >>what files have changed in their massive tree, their version asks
+> >>their special storage array, while git would have to look at it
+> >>through the filesystem interface (by doing stat calls on the
+> >>directories and files to see if anything has changed)
+> >>
+> >That is mostly a kernel problem. Long ago there was proposed patch t=
+o
+> >add a recursive mtime so you could check what subtrees changed. If
+> >somebody ressurected that patch it would gave similar boost.
+>=20
+> btrfs could actually implement this efficiently, but for a lot of
+> other filesysems this could be very expensive. The question is if it
+> could be enough of a win to make it a good choice for people who are
+> doing a heavy git workload as opposed to more generic uses.
+>
+Read next paragraph how do that efficiently, a directory update needs t=
+o be done
+only between application runs. Also there is no overhead when not used
+(except if that makes headers bigger.)
 =20
- 	if (remote_is_branch
- 	    && !strcmp(local, shortname)
-@@ -77,29 +92,12 @@ void install_branch_config(int flag, const char *lo=
-cal, const char *origin, cons
- 	strbuf_release(&key);
+> there's also the issue of managed vs generated files, if you update
+> the mtime all the way up the tree because a source file was compiled
+> and a binary created, that will quickly defeat the value of the
+> recursive mtime.
+>
+You could do marking on per-file basis. I am not sure if that is needed
+as larger projects use makefiles to not recompile everything so its
+probably recompiled because source at same directory changed. Also if
+your compile time is five minutes a half second status would not make
+much difference.
+
 =20
- 	if (flag & BRANCH_CONFIG_VERBOSE) {
--		if (remote_is_branch && origin)
--			printf_ln(rebasing ?
--				  _("Branch %s set up to track remote branch %s from %s by rebasin=
-g.") :
--				  _("Branch %s set up to track remote branch %s from %s."),
--				  local, shortname, origin);
--		else if (remote_is_branch && !origin)
--			printf_ln(rebasing ?
--				  _("Branch %s set up to track local branch %s by rebasing.") :
--				  _("Branch %s set up to track local branch %s."),
--				  local, shortname);
--		else if (!remote_is_branch && origin)
--			printf_ln(rebasing ?
--				  _("Branch %s set up to track remote ref %s by rebasing.") :
--				  _("Branch %s set up to track remote ref %s."),
--				  local, remote);
--		else if (!remote_is_branch && !origin)
--			printf_ln(rebasing ?
--				  _("Branch %s set up to track local ref %s by rebasing.") :
--				  _("Branch %s set up to track local ref %s."),
--				  local, remote);
-+		if (origin && remote_is_branch)
-+			printf_ln(_(messages[!remote_is_branch][!origin][!rebasing]),
-+				local, name, origin);
- 		else
--			die("BUG: impossible combination of %d and %p",
--			    remote_is_branch, origin);
-+			printf_ln(_(messages[!remote_is_branch][!origin][!rebasing]),
-+				local, name);
- 	}
- }
-=20
---=20
-1.8.3.2
+>=20
+> >There are two issues that need to be handled, first if you are conce=
+rned
+> >about one mtime change doing lot of updates a application needs to m=
+ark
+> >all directories it is interested on, when we do update we unmark
+> >directory and by that we update each directory at most once per
+> >application run.
+> >
+> >Second problem were hard links where probably a best course is keep =
+list
+> >of these and stat them separately.
