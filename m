@@ -1,103 +1,113 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH 7/7] run-command: mark run_hook_with_custom_index as
- deprecated
-Date: Tue, 11 Mar 2014 01:00:39 +0000
-Message-ID: <20140311010039.GD4271@vauxhall.crustytoothpaste.net>
-References: <1394477377-10994-1-git-send-email-benoit.pierre@gmail.com>
- <1394477377-10994-8-git-send-email-benoit.pierre@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [GSoC14][RFC] Proposal Draft: Refactor tempfile handling
+Date: Mon, 10 Mar 2014 21:33:17 -0400
+Message-ID: <20140311013316.GA11524@sigill.intra.peff.net>
+References: <CAN7MxmVQuk96dmXfxZ5kRZPTXNwpz2RY=y8HyqX4mZzrZUVbNg@mail.gmail.com>
+ <20140303224238.GA2699@sigill.intra.peff.net>
+ <CAN7MxmW-aWgTQpTMuEx=kzyHVUf5E7unZR-LmLQrY-AmmrZxjA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="wLAMOaPNJ0fu1fTG"
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Benoit Pierre <benoit.pierre@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 11 02:00:48 2014
+To: Brian Gesiak <modocache@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 11 02:33:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WNB3o-0001cT-C3
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Mar 2014 02:00:48 +0100
+	id 1WNBZL-00088f-O2
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Mar 2014 02:33:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754188AbaCKBAo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Mar 2014 21:00:44 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:52494 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753840AbaCKBAn (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Mar 2014 21:00:43 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:7922:e1f9:69f1:ac6c])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id EFEDE28074;
-	Tue, 11 Mar 2014 01:00:42 +0000 (UTC)
-Mail-Followup-To: Benoit Pierre <benoit.pierre@gmail.com>,
-	git@vger.kernel.org
+	id S1752787AbaCKBdU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Mar 2014 21:33:20 -0400
+Received: from cloud.peff.net ([50.56.180.127]:36967 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751812AbaCKBdT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Mar 2014 21:33:19 -0400
+Received: (qmail 3135 invoked by uid 102); 11 Mar 2014 01:33:19 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 10 Mar 2014 20:33:19 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Mar 2014 21:33:17 -0400
 Content-Disposition: inline
-In-Reply-To: <1394477377-10994-8-git-send-email-benoit.pierre@gmail.com>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.13-1-amd64)
-User-Agent: Mutt/1.5.22 (2013-10-16)
-X-Spam-Score: -0.272 () BAYES_00,RDNS_NONE
+In-Reply-To: <CAN7MxmW-aWgTQpTMuEx=kzyHVUf5E7unZR-LmLQrY-AmmrZxjA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243829>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243830>
 
+On Sun, Mar 09, 2014 at 02:04:16AM +0900, Brian Gesiak wrote:
 
---wLAMOaPNJ0fu1fTG
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> > Once the logic is extracted into a nice API, there are
+> > several other places that can use it, too: ...
+> 
+> I've found the following four areas so far:
+> 
+> 1. lockfile.lock_file
+> 2. git-compat-util.odb_mkstemp
+> 3. git-compat-util.odb_pack_keep
+> 4. diff.prepare_temp_file
+> 
+> Tons of files use (1) and (2). (3) is less common, and (4) is only
+> used for external diffs.
 
-On Mon, Mar 10, 2014 at 07:49:37PM +0100, Benoit Pierre wrote:
-> ---
->  run-command.h | 1 +
->  1 file changed, 1 insertion(+)
->=20
-> diff --git a/run-command.h b/run-command.h
-> index 88460f9..3653bfa 100644
-> --- a/run-command.h
-> +++ b/run-command.h
-> @@ -51,6 +51,7 @@ extern int run_hook_le(const char *const *env, const ch=
-ar *name, ...);
->  extern int run_hook_ve(const char *const *env, const char *name, va_list=
- args);
-> =20
->  LAST_ARG_MUST_BE_NULL
-> +__attribute__((deprecated))
+Yeah, I would expect (1) and (2) to be the most frequent. (3) gets
+written on every push and fetch, but only for a short period. (4) is
+also used for diff's textconv, though like external diffs, they are
+relatively rare.
 
-It doesn't appear that we use the deprecated attribute anywhere else in
-the code.  Wouldn't it just be better to change the places that use this
-and then remove the function altogether?  I imagine your current patch
-might introduce a number of warnings that some people would rather
-avoid.
+In my experience, most of the cruft that gets left is from (2), since a
+push or fetch will spool to a tmpfile, then verify the results via "git
+index-pack". Any failure there leaves the file in place.
 
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+There are a few other potential candidates we can find by grepping for
+mkstemp. Not all of those might want cleanup, but it's a starting point
+for investigation.
 
---wLAMOaPNJ0fu1fTG
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+> > the shallow_XXXXXX tempfiles
+> 
+> I'm not sure I was able to find this one. Are you referring to the
+> lock files used when fetching, such as in fetch-pack.c?
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+I mean the xmkstemp from setup_temporary_shallow in shallow.c.
 
-iQIcBAEBCgAGBQJTHmA3AAoJEL9TXYEfUvaLXeoQAKDnmK8UTdC6BgYnLLU36X9T
-4vxvzLW99H8OvxRildKrxihus3STNZHDytjOyTPs4LK/I7Wnxg9R+8Y2g5v/O7kZ
-G42pkOx3zqGtfjUPm9riJ7z2WQoFkeHNyf+3GsWGHUhJFVUPMzBjYHKCJWJTfTNq
-C8vN49otrBiBwV04AtrIwwHvpzhz89F7qOVGdZGRPjiIiERBI3tcc1syWFnqbuqU
-9pDeisL+1GuUGUsY1V+GnC/yYDSEcAFWnRVftSoQPx6x3zo9CSfR/tEcFmem7liI
-rsjJfyBNbFOic8/EgGwzLIc6bJfyPQMrpxazVsg4fsFw52lm6+ceQ+hDB4Li+UCV
-nkfZtXAnxNXeImMainZrd0+P2E+Z8GGbq2GsBZQrRPQ506LdfTmRsjzINyx9j3rz
-IQLA2ZwgPIncDx1a7zQQzK/RA0xMQw6An81LVX+al5C2xuhPvMFHXsn0peRMnCXP
-n25eqF3XmCteR3vZLpCSRw9sPcApNmTDBR6QRplOabSJvd+hLr/JJK2Ar7n1rRFB
-SolkbMUHo/hMuldpLDaEdvfWWbMpg1Bh8xea9Bwxd7Hfauz7Mhdi/i/iEUP5Qzf8
-vHzlG5WtiMRUqRWiZ9nGcC2FjY0fATDrnvJwXAKb8MzNaZ3HcRjlOtCkNpjfdiTz
-ddBvIdsjKSQAfa1NIR8v
-=QZEd
------END PGP SIGNATURE-----
+> I'd say the biggest difference between lockfiles and object files is
+> that tempfile methods like odb_mkstemp need to know the location of
+> the object directory. Aside from that, lockfiles and the external diff
+> files appear to be cleaned up at exit, while temporary object files
+> tend to have a more finely controlled lifecycle. I'm still
+> investigating this aspect of the proposal, though.
 
---wLAMOaPNJ0fu1fTG--
+The diff tempfiles are true tempfiles; they always go away in the end
+(though of course we want to clean them up as we finish with them,
+rather than doing it all at the end). Lockfiles may get committed into
+place (i.e., via atomic rename) or rolled back (deleted).
+
+Object files should generally be hard-linked into place, but there is
+some extra magic in move_temp_to_file to fallback to renames.  Some of
+that we may be able to get rid of (e.g., we try to avoid doing
+cross-directory renames at all these days, so the comment there may be
+out of date).
+
+> One question, though: the idea on the ideas page specifies that
+> temporary pack and object files may "optionally" be cleaned up in case
+> of error during program execution. How will users specify their
+> preference? I think the API for creating temporary files should allow
+> cleanup options to be specified on a per-file basis. That way each
+> part of the program that creates tempfiles can specify a different
+> config value to determine the cleanup policy.
+
+That probably makes sense. I certainly had a config option in mind. I
+mentioned above that the most common cruft is leftover packfiles from
+pushes and fetches. We haven't deleted those historically because the
+same person often controls both the client and the server, and they
+would want to possibly do forensics on the packfile sent to the remote,
+or even rescue objects out of it. But the remote end may simply have
+rejected the pack by some policy, and has no interest in forensics.
+
+Having a config option for each type of file may be cool, but I don't
+know how useful it would be in practice. Still, it's certainly worth
+thinking about and looking into.
+
+-Peff
