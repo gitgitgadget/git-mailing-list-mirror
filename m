@@ -1,84 +1,141 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC memory leak?] Minor memory leak fix
-Date: Tue, 11 Mar 2014 12:42:38 -0700
-Message-ID: <xmqqmwgwpln5.fsf@gitster.dls.corp.google.com>
-References: <1394534706-28987-1-git-send-email-iveqy@iveqy.com>
-	<CACsJy8Bp6rpe4hLg0eMBCjPjL5uDwXj-7ZVmZtUZvR26unAuoQ@mail.gmail.com>
-	<20140311124009.GI14327@paksenarrion.iveqy.com>
+Subject: Re: [PATCH v3] install_branch_config: simplify verbose diagnostic logic
+Date: Tue, 11 Mar 2014 12:56:01 -0700
+Message-ID: <xmqqiorkpl0u.fsf@gitster.dls.corp.google.com>
+References: <1394544412-28409-1-git-send-email-pawlo@aleg.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Fredrik Gustafsson <iveqy@iveqy.com>
-X-From: git-owner@vger.kernel.org Tue Mar 11 20:42:48 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?Q?Pawe=C5=82?= Wawruch <pawlo@aleg.pl>
+X-From: git-owner@vger.kernel.org Tue Mar 11 20:56:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WNSZb-0004MP-7j
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Mar 2014 20:42:47 +0100
+	id 1WNSml-0005QZ-HX
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Mar 2014 20:56:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755516AbaCKTmn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Mar 2014 15:42:43 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60002 "EHLO
+	id S1755629AbaCKT4V convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Mar 2014 15:56:21 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64102 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755286AbaCKTmm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Mar 2014 15:42:42 -0400
+	id S1755452AbaCKT4O convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Mar 2014 15:56:14 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AC26074F92;
-	Tue, 11 Mar 2014 15:42:41 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DC43D743E0;
+	Tue, 11 Mar 2014 15:56:13 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=miY8CAilRK/X7oRCKKdkj/blekY=; b=kmcJJP
-	4HI3o0bsdkykMKi+95SLtTk3hFgYX4As43Dil1SVMJq/cS8nDirLpvEwkBnasTgx
-	jfFY5QpErWTsQJsD5oBN3pozADsBmNMCQWGD083b71Y424zMo77d0JrIC3y0hFAN
-	nq8tCfIPiYQLl1ERrZ3qo4g5mCiaT+//P3HaU=
+	:content-type:content-transfer-encoding; s=sasl; bh=C+ZhUJAbRwkZ
+	gCxyP+k1F7JKrPM=; b=TyMDwXd5ItoGZ7DxIk6RXXGbGnuz67qFv+tWGbD5d9+W
+	twrCVtcx5/NMRt9rJvj79fZjc0w0hwqihmo8jotM5SSOR6eJOWppoJWAZZaeUCiq
+	KsDq9IbysDNR2IYvguJn3pNVR5vw9Hz4ysZ/RdUqA9ePym3It2wHrnVwvwEf3Y8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=DDMPuXg7LKjHU88uX0MePDZETnL4+P5L
-	H5xo1q5/z0tMBz+jPyeJ0vrlODBH8xr1NdNMVJBjtU3JZR7JGVV1K7O1B9c7L5BH
-	7L/XqkJZLQYIllsi5M73/WCeMnRHA1hlRsMTiAiEbAhvYayD0bF/G4vTRx1ZJMYG
-	Hmv5KFVeIDU=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=rDW3LL
+	PEhjtRflSgfCl0LcFD8AyyuBespU/YMWjnwpPb8NJcSBE5/nM6mECc4Q/z090DFP
+	1xemCZag8zx48hvlhQy5YOQnc7gFNZdjOQdipxw+ZPIqBLFOLXS4RzlM4O5KGDR0
+	WZdvnNo1KOvF+/X7Fcn6mBFbGvdMtyy5t4or8=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 96FAB74F91;
-	Tue, 11 Mar 2014 15:42:41 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C755D743DF;
+	Tue, 11 Mar 2014 15:56:13 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C164D74F8F;
-	Tue, 11 Mar 2014 15:42:40 -0400 (EDT)
-In-Reply-To: <20140311124009.GI14327@paksenarrion.iveqy.com> (Fredrik
-	Gustafsson's message of "Tue, 11 Mar 2014 13:40:09 +0100")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DFEB9743D1;
+	Tue, 11 Mar 2014 15:56:10 -0400 (EDT)
+In-Reply-To: <1394544412-28409-1-git-send-email-pawlo@aleg.pl>
+ (=?utf-8?Q?=22Pawe=C5=82?=
+	Wawruch"'s message of "Tue, 11 Mar 2014 14:26:52 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 4EA53E3A-A955-11E3-A92E-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 31847648-A957-11E3-83DA-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243886>
 
-Fredrik Gustafsson <iveqy@iveqy.com> writes:
+Pawe=C5=82 Wawruch <pawlo@aleg.pl> writes:
 
-> On Tue, Mar 11, 2014 at 06:58:11PM +0700, Duy Nguyen wrote:
->> On Tue, Mar 11, 2014 at 5:45 PM, Fredrik Gustafsson <iveqy@iveqy.com> wrote:
->> > Strbuf needs to be released even if it's locally declared.
->> 
->> "path" is declared static. So yes it's a leak but the leak is minimum.
->> Your patch would make more sense if "static" is gone and it's leaked
->> after every write_archive_entry call.
+> Replace the chain of if statements with table of strings.
 >
-> That's one of the reasons of the RFC. I know Junio thinks that minor
-> things shouldn't be fixed by themselfes because it takes up review
-> bandwidth, so it's better to fix them once you touch that part of the
-> code anyway. (At least that's how I've understood him).
+> Signed-off-by: Pawe=C5=82 Wawruch <pawlo@aleg.pl>
+> ---
+> I changed the commit message. Logic of table has changed. To make it =
+more
+> clear I added three dimensions of the table.=20
 
-Yes, but I at the same time think this "static struct strbuf" is a
-clear statement by the original author that this is not a leak
-per-se.  The trade-off, if I am reading the code right, is between
-keeping a piece of memory that is large enough to hold the longest
-pathname until exit() vs saving repeated allocations and frees for
-each of the thousands of paths in the resulting archive.
+I am not sure if the message is "diagnostic"; it looks more like
+reminder text to me.
 
-I tend to think the original strikes a better balance between the
-two.
+
+> diff --git a/branch.c b/branch.c
+> index 723a36b..741551a 100644
+> --- a/branch.c
+> +++ b/branch.c
+> @@ -53,6 +53,21 @@ void install_branch_config(int flag, const char *l=
+ocal, const char *origin, cons
+>  	int remote_is_branch =3D starts_with(remote, "refs/heads/");
+>  	struct strbuf key =3D STRBUF_INIT;
+>  	int rebasing =3D should_setup_rebase(origin);
+> +	const char *message[][2][2] =3D {{{
+> +			N_("Branch %s set up to track remote branch %s from %s by rebasin=
+g."),
+> +			N_("Branch %s set up to track remote branch %s from %s."),
+> +		},{
+> +			N_("Branch %s set up to track local branch %s by rebasing."),
+> +			N_("Branch %s set up to track local branch %s."),
+> +		}},{{
+> +			N_("Branch %s set up to track remote ref %s by rebasing."),
+> +			N_("Branch %s set up to track remote ref %s."),
+> +		},{
+> +			N_("Branch %s set up to track local ref %s by rebasing."),
+> +			N_("Branch %s set up to track local ref %s.")
+> +	}}};
+
+I almost agree with the above use of a strange brace opening/closing
+convention in order to reduce the indentation levels [*1*]
+but then perhaps the above can be dedented even further?
+
+> +	const char *message[][2][2] =3D {{{
+> +		N_("Branch %s set up to track remote branch %s from %s by rebasing=
+=2E"),
+> +		N_("Branch %s set up to track remote branch %s from %s."),
+> +		}, {
+> +		N_("Branch %s set up to track local branch %s by rebasing."),
+> +		N_("Branch %s set up to track local branch %s."),
+> +		}}, {{
+> +		N_("Branch %s set up to track remote ref %s by rebasing."),
+> +		N_("Branch %s set up to track remote ref %s."),
+> +		}, {
+> +		N_("Branch %s set up to track local ref %s by rebasing."),
+> +		N_("Branch %s set up to track local ref %s.")
+> +	}}};
+
+
+> +	const char *name =3D remote_is_branch ? remote : shortname;
+> +	int message_number;
+
+Do you still need this variable after making it a multi-dimentional
+array?
+
+
+[Footnote]
+
+*1* i.e. otherwise we would need something like
+
+	message[][][] =3D {
+				{
+					{
+                                        	...,
+                                                ...
+					},
+					{
+                                        	...,
+                                                ...
+					},
+				},
+                                ...
+			};
