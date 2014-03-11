@@ -1,113 +1,69 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [GSoC14][RFC] Proposal Draft: Refactor tempfile handling
-Date: Mon, 10 Mar 2014 21:33:17 -0400
-Message-ID: <20140311013316.GA11524@sigill.intra.peff.net>
-References: <CAN7MxmVQuk96dmXfxZ5kRZPTXNwpz2RY=y8HyqX4mZzrZUVbNg@mail.gmail.com>
- <20140303224238.GA2699@sigill.intra.peff.net>
- <CAN7MxmW-aWgTQpTMuEx=kzyHVUf5E7unZR-LmLQrY-AmmrZxjA@mail.gmail.com>
+Subject: Re: GSoC idea: allow "git rebase --interactive" todo lines to take
+ options
+Date: Mon, 10 Mar 2014 21:37:49 -0400
+Message-ID: <20140311013749.GA12033@sigill.intra.peff.net>
+References: <530DA00E.4090402@alum.mit.edu>
+ <20140226105249.GE25711@sigill.intra.peff.net>
+ <CANUGeEY2qE2LPq=-bhaKrKrv+uJUaPRqAeW_X1sFyZH-_PRVeA@mail.gmail.com>
+ <20140228125241.GA23448@sigill.intra.peff.net>
+ <53109748.3090507@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Brian Gesiak <modocache@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 11 02:33:24 2014
+Cc: Brandon McCaig <bamccaig@gmail.com>,
+	git discussion list <git@vger.kernel.org>,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Mar 11 02:37:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WNBZL-00088f-O2
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Mar 2014 02:33:24 +0100
+	id 1WNBdk-0002Pq-G0
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Mar 2014 02:37:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752787AbaCKBdU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Mar 2014 21:33:20 -0400
-Received: from cloud.peff.net ([50.56.180.127]:36967 "HELO peff.net"
+	id S1752582AbaCKBhw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Mar 2014 21:37:52 -0400
+Received: from cloud.peff.net ([50.56.180.127]:36972 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751812AbaCKBdT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Mar 2014 21:33:19 -0400
-Received: (qmail 3135 invoked by uid 102); 11 Mar 2014 01:33:19 -0000
+	id S1752323AbaCKBhv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Mar 2014 21:37:51 -0400
+Received: (qmail 3382 invoked by uid 102); 11 Mar 2014 01:37:51 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 10 Mar 2014 20:33:19 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Mar 2014 21:33:17 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 10 Mar 2014 20:37:51 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Mar 2014 21:37:49 -0400
 Content-Disposition: inline
-In-Reply-To: <CAN7MxmW-aWgTQpTMuEx=kzyHVUf5E7unZR-LmLQrY-AmmrZxjA@mail.gmail.com>
+In-Reply-To: <53109748.3090507@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243831>
 
-On Sun, Mar 09, 2014 at 02:04:16AM +0900, Brian Gesiak wrote:
+On Fri, Feb 28, 2014 at 03:03:52PM +0100, Michael Haggerty wrote:
 
-> > Once the logic is extracted into a nice API, there are
-> > several other places that can use it, too: ...
+> > I'm not sure whether it is a good idea or not. But I think it is looking
+> > decreasingly like a good GSoC project.
 > 
-> I've found the following four areas so far:
-> 
-> 1. lockfile.lock_file
-> 2. git-compat-util.odb_mkstemp
-> 3. git-compat-util.odb_pack_keep
-> 4. diff.prepare_temp_file
-> 
-> Tons of files use (1) and (2). (3) is less common, and (4) is only
-> used for external diffs.
+> I guess I misread the sentiment of the mailing list, because I merged
+> this idea into the list about two hours ago.
 
-Yeah, I would expect (1) and (2) to be the most frequent. (3) gets
-written on every push and fetch, but only for a short period. (4) is
-also used for diff's textconv, though like external diffs, they are
-relatively rare.
+Yeesh, sorry to be so slow on the reply to this. It floated to the
+bottom of my "to respond" list.
 
-In my experience, most of the cruft that gets left is from (2), since a
-push or fetch will spool to a tmpfile, then verify the results via "git
-index-pack". Any failure there leaves the file in place.
+> But if you think that even the proposal's simpler sub-ideas are
+> controversial, then let me know and I will delete the idea from the list
+> again.  I don't want a GSoC student to have to fight battles of my own
+> creation :-)
 
-There are a few other potential candidates we can find by grepping for
-mkstemp. Not all of those might want cleanup, but it's a starting point
-for investigation.
-
-> > the shallow_XXXXXX tempfiles
-> 
-> I'm not sure I was able to find this one. Are you referring to the
-> lock files used when fetching, such as in fetch-pack.c?
-
-I mean the xmkstemp from setup_temporary_shallow in shallow.c.
-
-> I'd say the biggest difference between lockfiles and object files is
-> that tempfile methods like odb_mkstemp need to know the location of
-> the object directory. Aside from that, lockfiles and the external diff
-> files appear to be cleaned up at exit, while temporary object files
-> tend to have a more finely controlled lifecycle. I'm still
-> investigating this aspect of the proposal, though.
-
-The diff tempfiles are true tempfiles; they always go away in the end
-(though of course we want to clean them up as we finish with them,
-rather than doing it all at the end). Lockfiles may get committed into
-place (i.e., via atomic rename) or rolled back (deleted).
-
-Object files should generally be hard-linked into place, but there is
-some extra magic in move_temp_to_file to fallback to renames.  Some of
-that we may be able to get rid of (e.g., we try to avoid doing
-cross-directory renames at all these days, so the comment there may be
-out of date).
-
-> One question, though: the idea on the ideas page specifies that
-> temporary pack and object files may "optionally" be cleaned up in case
-> of error during program execution. How will users specify their
-> preference? I think the API for creating temporary files should allow
-> cleanup options to be specified on a per-file basis. That way each
-> part of the program that creates tempfiles can specify a different
-> config value to determine the cleanup policy.
-
-That probably makes sense. I certainly had a config option in mind. I
-mentioned above that the most common cruft is leftover packfiles from
-pushes and fetches. We haven't deleted those historically because the
-same person often controls both the client and the server, and they
-would want to possibly do forensics on the packfile sent to the remote,
-or even rescue objects out of it. But the remote end may simply have
-rejected the pack by some policy, and has no interest in forensics.
-
-Having a config option for each type of file may be cool, but I don't
-know how useful it would be in practice. Still, it's certainly worth
-thinking about and looking into.
+I'd say keep it at this point. I think there _are_ some good ideas here,
+and part of a project is figuring out what is good. And part of the role
+of the mentor is applying some taste. There are probably students who
+would be a good fit, and students who would not. That is true for just
+about every project, of course, but I think this one is just a little
+trickier than some.
 
 -Peff
