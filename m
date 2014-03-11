@@ -1,101 +1,127 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH][GSoC]simplified branch.c:install_branch_config() if() statement
-Date: Tue, 11 Mar 2014 04:11:34 -0400
-Message-ID: <CAPig+cT2You1WLkyoWbwo84xMQGyyeu6t0HB7tcsnyN+HxiLLQ@mail.gmail.com>
-References: <loom.20140310T083649-236@post.gmane.org>
-	<loom.20140310T085652-521@post.gmane.org>
-	<CAPig+cRAqEQ8320Gq2Njoioq5UU=d+W+hzF+YZAZ7Po9XjMq0g@mail.gmail.com>
-	<loom.20140311T081018-894@post.gmane.org>
+From: =?UTF-8?q?Pawe=C5=82=20Wawruch?= <pawlo@aleg.pl>
+Subject: [PATHv2] branch.c:install_branch_config():Simplify code generating verbose message.
+Date: Tue, 11 Mar 2014 09:40:07 +0100
+Message-ID: <1394527207-23065-1-git-send-email-pawlo@aleg.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>
-To: Nemina Amarasinghe <neminaa@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 11 09:11:44 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 11 09:40:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WNHmp-0004sv-Ae
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Mar 2014 09:11:43 +0100
+	id 1WNIEf-0004cE-E0
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Mar 2014 09:40:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752609AbaCKILi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Mar 2014 04:11:38 -0400
-Received: from mail-yh0-f46.google.com ([209.85.213.46]:47164 "EHLO
-	mail-yh0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752357AbaCKILf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Mar 2014 04:11:35 -0400
-Received: by mail-yh0-f46.google.com with SMTP id b6so5237411yha.19
-        for <git@vger.kernel.org>; Tue, 11 Mar 2014 01:11:34 -0700 (PDT)
+	id S1753513AbaCKIkX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Mar 2014 04:40:23 -0400
+Received: from mail-ee0-f41.google.com ([74.125.83.41]:42588 "EHLO
+	mail-ee0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750713AbaCKIkU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Mar 2014 04:40:20 -0400
+Received: by mail-ee0-f41.google.com with SMTP id t10so3606072eei.0
+        for <git@vger.kernel.org>; Tue, 11 Mar 2014 01:40:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=dW/RG1ynxkPW16Ib4J5LSXfWIvAnq4VZ6kJPaeW//cQ=;
-        b=BAUOf9RLd+Ce7uw1Cdt+kc557hL18eqSa0moIw8MGUyr/ivPMx6VsUFlCckjbCI28q
-         4dEZbzNxAg5M+XH7gBJXNOvZ1EzGkD8ggOf2rSzWJLUYKTem2u/tVS5YqO3QJEOUj1KJ
-         1sQxUDZNmWNgwAK51CGUCOJ/teF6YRLDGw0eImOX0ZqwuinIU3/C8IXcGUbQUe4p2Pr4
-         7ztb9YFxEJAP9FmK8HJ+EMVMVs/6hC+mQdRQGB248MensVxa3YR2oS+VyoAnQ80BLywj
-         /JeYU8aG6t/nlhXUbgPAw9gEFPKJHs1uG4q0b3mPHk88JYui0MYwf15EkV4PdzxwhvZk
-         XrQQ==
-X-Received: by 10.236.87.6 with SMTP id x6mr33621yhe.149.1394525494755; Tue,
- 11 Mar 2014 01:11:34 -0700 (PDT)
-Received: by 10.170.180.134 with HTTP; Tue, 11 Mar 2014 01:11:34 -0700 (PDT)
-In-Reply-To: <loom.20140311T081018-894@post.gmane.org>
-X-Google-Sender-Auth: YIlf23ab0xhyA2271Plj37XWl0Y
+        h=sender:from:to:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=IPGlVhmWthHGFOdIFYvGw8M0Ibn1fwCv7eRZmX8QRBQ=;
+        b=PZ127aA1VPwRn9qoZqxqJEfN3xbFUtlbe3OGi1cqLqkt9yN9PqKz895eq2ZzxD3qwz
+         GCzd0rmut5XUDy1tVG8BVzDdXCAQtcCIF3jmP3eDJE/l1pH43BKYVSOEGpXKDRG2UxNf
+         Qd6BsnOiEdSHnP6qycYZgXBJYCRgzWNb0UvdcdpLXPVqvCvDCGLiX0qxJ995tox+3UYZ
+         73t/tu3UD/FFvKmEYg6hb2Y4ewyJUANOd4s/LUkrQxvaJ7UxNoOYiEY7HXdBTWBIqCm0
+         BVggCQojl0NwjPA/8G4a+Q3qf8AZclAA2+Vg5eNYD8xXMAHaUjuCBkN58OmM5qotS22E
+         KIFQ==
+X-Received: by 10.15.27.200 with SMTP id p48mr789167eeu.105.1394527219298;
+        Tue, 11 Mar 2014 01:40:19 -0700 (PDT)
+Received: from endymion.chello.pl (89-74-49-157.dynamic.chello.pl. [89.74.49.157])
+        by mx.google.com with ESMTPSA id x6sm54978562eew.20.2014.03.11.01.40.18
+        for <git@vger.kernel.org>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 11 Mar 2014 01:40:18 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243848>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243849>
 
-On Tue, Mar 11, 2014 at 3:16 AM, Nemina Amarasinghe <neminaa@gmail.com> wrote:
-> Subject: simplified branch.c:install_branch_config() if() statement
+Simplify the long if chain in install_branch_config().
 
-Use imperative tone: "simplify ..."
+There is a long chain of if statements. The code can be more clear.
+Replace the chain with table of strings. New approach is more
+compact.
 
-> I hope this is the correct format for  patch. Please comment on this if
-> something is wrong.
+Signed-off-by: Pawe=C5=82 Wawruch <pawlo@aleg.pl>
+---
+ branch.c | 40 ++++++++++++++++++----------------------
+ 1 file changed, 18 insertions(+), 22 deletions(-)
 
-This commentary is relevant to the email discussion but not to the
-commit description, so it should be placed below the "---" line just
-under your sign-0ff.
-
-> Signed-off-by:Nemina Amarasinghe <neminaa@gmail.com>
-> ---
->  branch.c | 7 +------
->  1 file changed, 1 insertion(+), 6 deletions(-)
->
-> diff --git a/branch.c b/branch.c
-> index 0304a7a..fd93603 100644
-> --- a/branch.c
-> +++ b/branch.c
-> @@ -87,12 +87,7 @@ void install_branch_config(int flag, const char *local,
-> const char *origin, cons
->                                   _("Branch %s set up to track local branch %s by rebasing.") :
->                                   _("Branch %s set up to track local branch %s."),
->                                   local, shortname);
-> -               else if (!remote_is_branch && origin)
-> -                       printf_ln(rebasing ?
-> -                                 _("Branch %s set up to track remote ref %s by rebasing.") :
-> -                                 _("Branch %s set up to track remote ref %s."),
-> -                                 local, remote);
-> -               else if (!remote_is_branch && !origin)
-> +               else if (!remote_is_branch)
->                         printf_ln(rebasing ?
->                                   _("Branch %s set up to track remote ref %s by rebasing.") :
->                                   _("Branch %s set up to track remote ref %s."),
-
-The patch itself is broken in a couple ways.
-
-First, it is whitespace-damaged, possibly due to being pasted into
-your email client. Using "git send-email" can help avoid this problem.
-
-Second, the code against which this patch was made does not exist in
-git.git. You are likely making this change atop some other local
-modifications which you already made. Simplest at this point would
-probably be for you to make a fresh clone of git.git and start from
-scratch by editing branch.c in the 'master' branch.
-
-> --
-> 1.9.0.152.g6ab4ae2
+diff --git a/branch.c b/branch.c
+index 723a36b..8d3b219 100644
+--- a/branch.c
++++ b/branch.c
+@@ -53,6 +53,18 @@ void install_branch_config(int flag, const char *loc=
+al, const char *origin, cons
+ 	int remote_is_branch =3D starts_with(remote, "refs/heads/");
+ 	struct strbuf key =3D STRBUF_INIT;
+ 	int rebasing =3D should_setup_rebase(origin);
++	const char *messages[] =3D {
++		N_("Branch %s set up to track remote branch %s from %s by rebasing."=
+),
++		N_("Branch %s set up to track remote branch %s from %s."),
++		N_("Branch %s set up to track local branch %s by rebasing."),
++		N_("Branch %s set up to track local branch %s."),
++		N_("Branch %s set up to track remote ref %s by rebasing."),
++		N_("Branch %s set up to track remote ref %s."),
++		N_("Branch %s set up to track local ref %s by rebasing."),
++		N_("Branch %s set up to track local ref %s.")
++	};
++	const char *name =3D remote_is_branch ? remote : shortname;
++	int message_number;
+=20
+ 	if (remote_is_branch
+ 	    && !strcmp(local, shortname)
+@@ -77,29 +89,13 @@ void install_branch_config(int flag, const char *lo=
+cal, const char *origin, cons
+ 	strbuf_release(&key);
+=20
+ 	if (flag & BRANCH_CONFIG_VERBOSE) {
+-		if (remote_is_branch && origin)
+-			printf_ln(rebasing ?
+-				  _("Branch %s set up to track remote branch %s from %s by rebasin=
+g.") :
+-				  _("Branch %s set up to track remote branch %s from %s."),
+-				  local, shortname, origin);
+-		else if (remote_is_branch && !origin)
+-			printf_ln(rebasing ?
+-				  _("Branch %s set up to track local branch %s by rebasing.") :
+-				  _("Branch %s set up to track local branch %s."),
+-				  local, shortname);
+-		else if (!remote_is_branch && origin)
+-			printf_ln(rebasing ?
+-				  _("Branch %s set up to track remote ref %s by rebasing.") :
+-				  _("Branch %s set up to track remote ref %s."),
+-				  local, remote);
+-		else if (!remote_is_branch && !origin)
+-			printf_ln(rebasing ?
+-				  _("Branch %s set up to track local ref %s by rebasing.") :
+-				  _("Branch %s set up to track local ref %s."),
+-				  local, remote);
++		message_number =3D (!!rebasing) + 2 * (!!origin) + 4 * (!!remote_is_=
+branch);
++		assert(message_number < ARRAY_SIZE(messages));
++
++		if (message_number < 2)
++			printf_ln(messages[message_number], local, name, origin);
+ 		else
+-			die("BUG: impossible combination of %d and %p",
+-			    remote_is_branch, origin);
++			printf_ln(messages[message_number], local, name);
+ 	}
+ }
+=20
+--=20
+1.8.3.2
