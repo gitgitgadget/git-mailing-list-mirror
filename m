@@ -1,106 +1,84 @@
-From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <l.s.r@web.de>
-Subject: Re: [[RFC memory leak, v.2]] Minor memory leak fix
-Date: Tue, 11 Mar 2014 20:40:07 +0100
-Message-ID: <531F6697.1030703@web.de>
-References: <CACsJy8Bp6rpe4hLg0eMBCjPjL5uDwXj-7ZVmZtUZvR26unAuoQ@mail.gmail.com> <1394541371-2960-1-git-send-email-iveqy@iveqy.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC memory leak?] Minor memory leak fix
+Date: Tue, 11 Mar 2014 12:42:38 -0700
+Message-ID: <xmqqmwgwpln5.fsf@gitster.dls.corp.google.com>
+References: <1394534706-28987-1-git-send-email-iveqy@iveqy.com>
+	<CACsJy8Bp6rpe4hLg0eMBCjPjL5uDwXj-7ZVmZtUZvR26unAuoQ@mail.gmail.com>
+	<20140311124009.GI14327@paksenarrion.iveqy.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Fredrik Gustafsson <iveqy@iveqy.com>, pclouds@gmail.com
-X-From: git-owner@vger.kernel.org Tue Mar 11 20:41:29 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Fredrik Gustafsson <iveqy@iveqy.com>
+X-From: git-owner@vger.kernel.org Tue Mar 11 20:42:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WNSYK-0003QH-2U
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Mar 2014 20:41:28 +0100
+	id 1WNSZb-0004MP-7j
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Mar 2014 20:42:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755477AbaCKTlR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Mar 2014 15:41:17 -0400
-Received: from mout.web.de ([212.227.17.12]:59840 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755472AbaCKTlO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Mar 2014 15:41:14 -0400
-Received: from [192.168.178.27] ([79.250.161.106]) by smtp.web.de (mrweb103)
- with ESMTPSA (Nemesis) id 0LsyRS-1XKLVC2cQM-012b7T; Tue, 11 Mar 2014 20:41:12
- +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
-In-Reply-To: <1394541371-2960-1-git-send-email-iveqy@iveqy.com>
-X-Provags-ID: V03:K0:DBxSa/ItsFtq+YCtTJKJ1eQcZ70btD+0UivKy7ZZMukMhTzER8n
- MdQvc8k0rkiDifRVcNWTEe8UC1KmmWkryC6Dqpk7EBq7zbg1whWLWFc9dkAVNroEmAcatY9
- UYLnNoBGZbqp7u0J05GRDsaguIx0qDEeY2AtZBIKdXDmeo96g1O/VUF+938TdtRQpNpbSTl
- praEG6WCoRlkXHRc65FOQ==
+	id S1755516AbaCKTmn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Mar 2014 15:42:43 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60002 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755286AbaCKTmm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Mar 2014 15:42:42 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AC26074F92;
+	Tue, 11 Mar 2014 15:42:41 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=miY8CAilRK/X7oRCKKdkj/blekY=; b=kmcJJP
+	4HI3o0bsdkykMKi+95SLtTk3hFgYX4As43Dil1SVMJq/cS8nDirLpvEwkBnasTgx
+	jfFY5QpErWTsQJsD5oBN3pozADsBmNMCQWGD083b71Y424zMo77d0JrIC3y0hFAN
+	nq8tCfIPiYQLl1ERrZ3qo4g5mCiaT+//P3HaU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=DDMPuXg7LKjHU88uX0MePDZETnL4+P5L
+	H5xo1q5/z0tMBz+jPyeJ0vrlODBH8xr1NdNMVJBjtU3JZR7JGVV1K7O1B9c7L5BH
+	7L/XqkJZLQYIllsi5M73/WCeMnRHA1hlRsMTiAiEbAhvYayD0bF/G4vTRx1ZJMYG
+	Hmv5KFVeIDU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 96FAB74F91;
+	Tue, 11 Mar 2014 15:42:41 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C164D74F8F;
+	Tue, 11 Mar 2014 15:42:40 -0400 (EDT)
+In-Reply-To: <20140311124009.GI14327@paksenarrion.iveqy.com> (Fredrik
+	Gustafsson's message of "Tue, 11 Mar 2014 13:40:09 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 4EA53E3A-A955-11E3-A92E-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243884>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243885>
 
-Am 11.03.2014 13:36, schrieb Fredrik Gustafsson:
-> Strbuf needs to be released even if it's locally declared.
->
-> Signed-off-by: Fredrik Gustafsson <iveqy@iveqy.com>
-> ---
->   archive.c | 16 ++++++++++------
->   1 file changed, 10 insertions(+), 6 deletions(-)
->
-> diff --git a/archive.c b/archive.c
-> index 346f3b2..dfc557d 100644
-> --- a/archive.c
-> +++ b/archive.c
-> @@ -113,6 +113,7 @@ static int write_archive_entry(const unsigned char *sha1, const char *base,
->   	struct git_attr_check check[2];
->   	const char *path_without_prefix;
->   	int err;
-> +	int to_ret = 0;
->
->   	args->convert = 0;
->   	strbuf_reset(&path);
-> @@ -127,22 +128,25 @@ static int write_archive_entry(const unsigned char *sha1, const char *base,
->   	setup_archive_check(check);
->   	if (!git_check_attr(path_without_prefix, ARRAY_SIZE(check), check)) {
->   		if (ATTR_TRUE(check[0].value))
-> -			return 0;
-> +			goto cleanup;
->   		args->convert = ATTR_TRUE(check[1].value);
->   	}
->
->   	if (S_ISDIR(mode) || S_ISGITLINK(mode)) {
->   		if (args->verbose)
->   			fprintf(stderr, "%.*s\n", (int)path.len, path.buf);
-> -		err = write_entry(args, sha1, path.buf, path.len, mode);
-> -		if (err)
-> -			return err;
-> -		return (S_ISDIR(mode) ? READ_TREE_RECURSIVE : 0);
-> +		to_ret = write_entry(args, sha1, path.buf, path.len, mode);
-> +		if (!to_ret)
-> +			to_ret = (S_ISDIR(mode) ? READ_TREE_RECURSIVE : 0);
-> +		goto cleanup;
+Fredrik Gustafsson <iveqy@iveqy.com> writes:
 
-Why add to_ret when you can use the existing variable err directly?  Or 
-at least remove it when it's not used anymore.
-
->   	}
+> On Tue, Mar 11, 2014 at 06:58:11PM +0700, Duy Nguyen wrote:
+>> On Tue, Mar 11, 2014 at 5:45 PM, Fredrik Gustafsson <iveqy@iveqy.com> wrote:
+>> > Strbuf needs to be released even if it's locally declared.
+>> 
+>> "path" is declared static. So yes it's a leak but the leak is minimum.
+>> Your patch would make more sense if "static" is gone and it's leaked
+>> after every write_archive_entry call.
 >
->   	if (args->verbose)
->   		fprintf(stderr, "%.*s\n", (int)path.len, path.buf);
-> -	return write_entry(args, sha1, path.buf, path.len, mode);
-> +	to_ret = write_entry(args, sha1, path.buf, path.len, mode);
-> +cleanup:
-> +	strbuf_release(&path);
-> +	return to_ret;
+> That's one of the reasons of the RFC. I know Junio thinks that minor
+> things shouldn't be fixed by themselfes because it takes up review
+> bandwidth, so it's better to fix them once you touch that part of the
+> code anyway. (At least that's how I've understood him).
 
-If you free the memory of the strbuf at the end of the function then 
-there is no point in keeping it static anymore.  Growing it to PATH_MAX 
-also doesn't make as much sense as before then.
+Yes, but I at the same time think this "static struct strbuf" is a
+clear statement by the original author that this is not a leak
+per-se.  The trade-off, if I am reading the code right, is between
+keeping a piece of memory that is large enough to hold the longest
+pathname until exit() vs saving repeated allocations and frees for
+each of the thousands of paths in the resulting archive.
 
-The patch makes git archive allocate and free the path strbuf once per 
-archive entry, while before it allocated only once per run and left 
-freeing to the OS.  What's the performance impact of this change?
-
->   }
->
->   int write_archive_entries(struct archiver_args *args,
->
+I tend to think the original strikes a better balance between the
+two.
