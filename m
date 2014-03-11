@@ -1,133 +1,90 @@
-From: Brad King <brad.king@kitware.com>
-Subject: Re: [PATCH 03/26] t1400: Pass a legitimate <newvalue> to update command
-Date: Tue, 11 Mar 2014 17:41:18 -0400
-Message-ID: <531F82FE.9030305@kitware.com>
-References: <1394455603-2968-1-git-send-email-mhagger@alum.mit.edu> <1394455603-2968-4-git-send-email-mhagger@alum.mit.edu> <531DF079.9050909@kitware.com> <531E30D7.40208@alum.mit.edu> <xmqqa9cwpkiw.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] mv: prevent mismatched data when ignoring errors.
+Date: Tue, 11 Mar 2014 14:45:59 -0700
+Message-ID: <xmqqfvmoo1d4.fsf@gitster.dls.corp.google.com>
+References: <20140308183501.GH18371@serenity.lan>
+	<1394306499-50871-1-git-send-email-sandals@crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Vicent Marti <tanoku@gmail.com>,
-	Johan Herland <johan@herland.net>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Mar 11 22:40:50 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>,
+	John Keeping <john@keeping.me.uk>,
+	Guillaume Gelin <contact@ramnes.eu>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+X-From: git-owner@vger.kernel.org Tue Mar 11 22:46:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WNUPm-0001jq-91
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Mar 2014 22:40:46 +0100
+	id 1WNUV6-0005Uj-Lv
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Mar 2014 22:46:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755492AbaCKVkl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Mar 2014 17:40:41 -0400
-Received: from na3sys009aog110.obsmtp.com ([74.125.149.203]:33802 "HELO
-	na3sys009aog110.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1752213AbaCKVkj (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Mar 2014 17:40:39 -0400
-Received: from mail-oa0-f47.google.com ([209.85.219.47]) (using TLSv1) by na3sys009aob110.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKUx+C1qSsZeRA3fFR9fRrw1EkPtneohMe@postini.com; Tue, 11 Mar 2014 14:40:39 PDT
-Received: by mail-oa0-f47.google.com with SMTP id i11so9289001oag.34
-        for <git@vger.kernel.org>; Tue, 11 Mar 2014 14:40:36 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=Z7tYyCR0kS32HBer8ot3SRViBQjRPoNJ7WwI7tW1YAw=;
-        b=mrhXJBXjTCXxXj9FvaKj32SoB+h/pEr4rE/yT6cJHb4yeWKFhxLq4RmY6qVgPGBcmv
-         yzx8EeMLGgtLKlS8n0024vowsMfMzv0Vz8gEAP2U3H7Mqyfg6VX3JB4fyXki13ODfoNI
-         ECqeaj8vUOLSNNqrDL8eoFTGrjfs7xp4jUl/2uL/yAg1dyMf0QtV+SpjYy2VXEDe+0aI
-         Q8LshMMyDnWGFQzTnTneIPnawrZUHgLoOacWtUt+wzoJAucb17my7Z+cJtR3E6BU6YL3
-         OLY6QmiakNF/xAkIxsn1OZtPDvPoN+73rXhoT8mg71NOf+qWVovcyGIuTk62jKdHJLFi
-         X3qA==
-X-Gm-Message-State: ALoCoQl4cEafppCa4iJd5poiQroYqhK1G2o5GtDQ805Qihdgyt9Q5zQk4F+QGIOyxNS6pozHmmGNNJSw+2sQlTKmCbOjjwfnspP9SgBMBC/5q2fjmD1iWrGEp0JGoAjRE7imy3sv+4KzhVsHvK0VfBkDEBJewpvpiA==
-X-Received: by 10.182.233.201 with SMTP id ty9mr35757234obc.29.1394574036470;
-        Tue, 11 Mar 2014 14:40:36 -0700 (PDT)
-X-Received: by 10.182.233.201 with SMTP id ty9mr35757223obc.29.1394574036336;
-        Tue, 11 Mar 2014 14:40:36 -0700 (PDT)
-Received: from [192.168.1.225] (tripoint.kitware.com. [66.194.253.20])
-        by mx.google.com with ESMTPSA id wc1sm60553126obc.2.2014.03.11.14.40.34
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 11 Mar 2014 14:40:35 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
-In-Reply-To: <xmqqa9cwpkiw.fsf@gitster.dls.corp.google.com>
-X-Enigmail-Version: 1.6
+	id S1755660AbaCKVqK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Mar 2014 17:46:10 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46044 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755642AbaCKVqI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Mar 2014 17:46:08 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9D47871BF1;
+	Tue, 11 Mar 2014 17:46:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=3KW3PviIv+9d2sN4+Hb4UUf9YQg=; b=QxPuk6
+	h+syrXDJ9Vv5B0n56UkSFIjiYgz/n2eka1+GSfv8v6Tl6CGCcwSQ95jYT9lbQxgq
+	A0PCd4AA+Hwbou/gAZQ4PcTmXRugY8xR+QKEovOVe2zBrPBV7vEpSfivHDZCqFIh
+	r0NVAvLy5zpzlqvAz4QnYrWC8woQMGdjOJksk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=iqOiQgOP2Rab17HbcoSlS0W9ANnWCk1Y
+	SrBJEA8EeHMjP3tP+tuZmkwIMth8vMMmpQbeQFXCrJsfBuOPWDjS5ofj4omosz4P
+	/hNQ72heUcXad8wJNA4ahbDAR0AVHpt6r2qK1Ovhi8rDqVUu4xFAC1Ky+IohTe93
+	Y8mq261Bvgs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 89B1271BF0;
+	Tue, 11 Mar 2014 17:46:07 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8E63871BED;
+	Tue, 11 Mar 2014 17:46:06 -0400 (EDT)
+In-Reply-To: <1394306499-50871-1-git-send-email-sandals@crustytoothpaste.net>
+	(brian m. carlson's message of "Sat, 8 Mar 2014 19:21:39 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 8CD8A8D4-A966-11E3-9507-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243902>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243903>
 
-On Tue, Mar 11, 2014 at 4:06 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> I may be misremembering things, but your first sentence quoted above
-> was exactly my reaction while reviewing the original change, and I
-> might have even raised that as an issue myself, saying something
-> like "consistency across values is more important than type-saving
-> in a machine format".
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-For reference, the original design discussion of the format was here:
+> We shrink the source and destination arrays, but not the modes or
+> submodule_gitfile arrays, resulting in potentially mismatched data.  Shrink
+> all the arrays at the same time to prevent this.
+>
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+>  builtin/mv.c | 5 +++++
+>  1 file changed, 5 insertions(+)
+>
+> diff --git a/builtin/mv.c b/builtin/mv.c
+> index f99c91e..b20cd95 100644
+> --- a/builtin/mv.c
+> +++ b/builtin/mv.c
+> @@ -230,6 +230,11 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+>  					memmove(destination + i,
+>  						destination + i + 1,
+>  						(argc - i) * sizeof(char *));
+> +					memmove(modes + i, modes + i + 1,
+> +						(argc - i) * sizeof(char *));
+> +					memmove(submodule_gitfile + i,
+> +						submodule_gitfile + i + 1,
+> +						(argc - i) * sizeof(char *));
+>  					i--;
+>  				}
+>  			} else
 
- http://thread.gmane.org/gmane.comp.version-control.git/233842
-
-I do not recall this issue being raised before, but now that it has
-been raised I fully agree:
-
- http://thread.gmane.org/gmane.comp.version-control.git/243754/focus=243862
-
-In -z mode an empty <newvalue> should be treated as missing just as
-it is for <oldvalue>.  This is obvious now in hindsight and I wish I
-had realized this at the time.  Back then I went through a lot of
-iterations on the format and missed this simplification in the final
-version :(
-
-Moving forward:
-
-The "create" command rejects a zero <newvalue> so the change in
-question for that command is merely the wording of the error message
-and there is no compatibility issue.
-
-The "update" command supports a zero <newvalue> so that it can
-be used for all operations (create, update, delete, verify) with
-the proper combination of old and new values.  The change in question
-makes an empty <newvalue> an error where it was previously treated
-as zero.  (BTW, Michael, I do not see a test case for the new error
-in your series.  Something like the patch below should work.)
-
-> I am not against deprecating and removing
-> the support for it in the longer term, though.
-
-As I reported in my above-linked response, I'm not depending on
-the old behavior myself.  Also if one were to start seeing this
-error then generated input needs only trivial changes to avoid it.
-If we do want to preserve compatibility for others then perhaps an
-empty <newvalue> with -z should produce:
-
- warning: update $ref: missing <newvalue>, treating as zero
-
-Then after a few releases it can be switched to an error.
-
-Thanks,
--Brad
-
-
-diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
-index 3cc5c66..1e9fe7c 100755
---- a/t/t1400-update-ref.sh
-+++ b/t/t1400-update-ref.sh
-@@ -730,6 +730,12 @@ test_expect_success 'stdin -z fails update with bad ref name' '
- 	grep "fatal: invalid ref format: ~a" err
- '
-
-+test_expect_success 'stdin -z fails update with empty new value' '
-+	printf $F "update $a" "" >stdin &&
-+	test_must_fail git update-ref -z --stdin <stdin 2>err &&
-+	grep "fatal: update $a: missing <newvalue>" err
-+'
-+
- test_expect_success 'stdin -z fails update with no new value' '
- 	printf $F "update $a" >stdin &&
- 	test_must_fail git update-ref -z --stdin <stdin 2>err &&
--- 
-1.8.5.2
+Thanks.  Neither this nor John's seems to describe the user-visible
+way to trigger the symptom.  Can we have tests for them?
