@@ -1,85 +1,131 @@
-From: karthik nayak <karthik.188@gmail.com>
-Subject: [GSOC] Git Configuration API improvements
-Date: Tue, 11 Mar 2014 18:42:37 +0530
-Message-ID: <CAOLa=ZSKDg9DKxTRMy4yWW7=ZHcudGmK4guYmaP2okxH8Q044Q@mail.gmail.com>
+From: =?UTF-8?q?Pawe=C5=82=20Wawruch?= <pawlo@aleg.pl>
+Subject: [PATCH v3] install_branch_config: simplify verbose diagnostic logic
+Date: Tue, 11 Mar 2014 14:26:52 +0100
+Message-ID: <1394544412-28409-1-git-send-email-pawlo@aleg.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Jeff King <peff@peff.net>, mhagger@alum.mit.edu,
-	Matthieu.Moy@grenoble-inp.fr
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Mar 11 14:13:08 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 11 14:27:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WNMUV-0008AX-07
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Mar 2014 14:13:07 +0100
+	id 1WNMi6-0001qy-3b
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Mar 2014 14:27:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752853AbaCKNNB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Mar 2014 09:13:01 -0400
-Received: from mail-pb0-f54.google.com ([209.85.160.54]:56129 "EHLO
-	mail-pb0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752545AbaCKNNA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Mar 2014 09:13:00 -0400
-Received: by mail-pb0-f54.google.com with SMTP id ma3so8796597pbc.13
-        for <git@vger.kernel.org>; Tue, 11 Mar 2014 06:13:00 -0700 (PDT)
+	id S1754296AbaCKN1F convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Mar 2014 09:27:05 -0400
+Received: from mail-ee0-f54.google.com ([74.125.83.54]:33208 "EHLO
+	mail-ee0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752078AbaCKN1B (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Mar 2014 09:27:01 -0400
+Received: by mail-ee0-f54.google.com with SMTP id d49so3755421eek.27
+        for <git@vger.kernel.org>; Tue, 11 Mar 2014 06:27:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc:content-type;
-        bh=2xtAvt49asr5DMNzUwvqb/d/ElY5FXGlZTFHKWquQsg=;
-        b=OHCHmOEsy1iFDSo9/D+U5+ymz0r8txwYZ1tye2Qk51449gGozjTy7nuwtNnbZW9d4T
-         HAmQIGMq0F1lJUPIQUhcZORTdj6BfvN8ACovdWcl9JjJlqcClVj4XTRg98TKjHaHzSGZ
-         QjocafD+RAVxkSd/xOqXkmvnEWfICd2v06ntwYWVczA5TyklUqcpEX1bJMg29qWqQSq6
-         13ofJbqB/zigeJGt3bzhWYzhu0sRna9ducNw1ErMBAQEBwgmN+3Ya3yTDSvVvfOB3/sj
-         Ha+W9a9ESVSGUc5fx3S5vHBfFHDfGyKYJ8vOhVoFchZ5x4p8NaZmKrrp5m/fP7F3BAY/
-         WiKA==
-X-Received: by 10.66.66.66 with SMTP id d2mr47416596pat.80.1394543579082; Tue,
- 11 Mar 2014 06:12:59 -0700 (PDT)
-Received: by 10.68.189.2 with HTTP; Tue, 11 Mar 2014 06:12:37 -0700 (PDT)
+        h=sender:from:to:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=1je/+Jxsydr5n5QYkw45xa87qjHGGpzAjtN4F7Je/Gw=;
+        b=XNNCDXvLtAZ5Ud0OItmhd09GeI4X2M/rPkBN/vhK6eJc0mB5fmaxYyGpZ7wphSBZMq
+         42FloOs09Eb9uwQmYj4oJGL+fggFpoIP1WsYGcMtJrG8BBRJy9sy/sLsIjSQrDCTIgZp
+         6Iz49sB6TzuK3hbQ2XTd3LtJiCYvBlNQaduF63IlW32lUEb2SG3eR+0Oo+USMzsjR5ap
+         9C0Bs52TTYmBkdLDlIeymBnmZiqEFs3xx7huDTdt8HzjPlzRqH2D5+3M3UxaiTEFgfQb
+         zbQWR9+KCKVztq7OkPEuX3h+b4kc17b8zxp4kN4qk9SRgIIDkq9z/2pCfzrW6Bl2z16y
+         qhbA==
+X-Received: by 10.15.55.193 with SMTP id v41mr3758464eew.80.1394544420183;
+        Tue, 11 Mar 2014 06:27:00 -0700 (PDT)
+Received: from endymion.pwifi-studets.pw.edu.pl ([194.29.130.10])
+        by mx.google.com with ESMTPSA id 46sm57545241ees.4.2014.03.11.06.26.58
+        for <git@vger.kernel.org>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 11 Mar 2014 06:26:59 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243865>
 
-Hello to all,
+Replace the chain of if statements with table of strings.
 
-I'm Karthik Nayak, a Computer Science student from Bangalore India. I
-will be applying for GSOC 2014. This is my first time applying for
-GSOC. I have been using Git for a long time now, so it would be an
-ideal organisation for me to contribute to.
-As suggested I completed the Micro Project under the guidance of Eric
-Sunshine.[1]
+Signed-off-by: Pawe=C5=82 Wawruch <pawlo@aleg.pl>
+---
+I changed the commit message. Logic of table has changed. To make it mo=
+re
+clear I added three dimensions of the table.=20
 
-I went through the Idea's page[2] and the mails corresponding to the
-topic[3]. Currently we have multiple invocation of git_config() in an
-individual invocation of git() which is not efficient. Also, it is
-hard to implement new features, as mentioned -- such as allowing a
-configuration to be unset.
+[1]: http://thread.gmane.org/gmane.comp.version-control.git/243502
+[2]: http://thread.gmane.org/gmane.comp.version-control.git/243849
 
-The basic idea is to use a data structure to store the config, the
-first time the git_config() is called. And refer to this each and
-every time we invoke git_config() further. Jeff suggested [4] to use a
-tree or a mapping of keys to values which are stored in a string. I
-think that the idea of storing using the config as a tree data
-structure would be really advantageous.
+ branch.c | 42 ++++++++++++++++++++----------------------
+ 1 file changed, 20 insertions(+), 22 deletions(-)
 
-This would allow us to easily implement modifications later, and can
-help to easily take care of duplicates being created on multiple usage
-of config set and unset. As, whenever a node's children have been
-deleted the node can also be automatically deleted. The tree can be a
-struct with values, header link and link to other configs. This way we
-can also create functions to work on the tree easily.
-
-Would be great to hear your thoughts on this topic and also I plan to
-start creating a proposal. Nice to have any suggestions or feedback of
-any kind.
-
-Thank you,
-Karthik
-
-[1] : http://article.gmane.org/gmane.comp.version-control.git/243695/match=karthik+188+gmail+com
-[2] : http://git.github.io/SoC-2014-Ideas.html
-[3] : http://article.gmane.org/gmane.comp.version-control.git/243500/match=git+configuration+caching
-[4] : http://article.gmane.org/gmane.comp.version-control.git/243542
+diff --git a/branch.c b/branch.c
+index 723a36b..741551a 100644
+--- a/branch.c
++++ b/branch.c
+@@ -53,6 +53,21 @@ void install_branch_config(int flag, const char *loc=
+al, const char *origin, cons
+ 	int remote_is_branch =3D starts_with(remote, "refs/heads/");
+ 	struct strbuf key =3D STRBUF_INIT;
+ 	int rebasing =3D should_setup_rebase(origin);
++	const char *message[][2][2] =3D {{{
++			N_("Branch %s set up to track remote branch %s from %s by rebasing.=
+"),
++			N_("Branch %s set up to track remote branch %s from %s."),
++		},{
++			N_("Branch %s set up to track local branch %s by rebasing."),
++			N_("Branch %s set up to track local branch %s."),
++		}},{{
++			N_("Branch %s set up to track remote ref %s by rebasing."),
++			N_("Branch %s set up to track remote ref %s."),
++		},{
++			N_("Branch %s set up to track local ref %s by rebasing."),
++			N_("Branch %s set up to track local ref %s.")
++	}}};
++	const char *name =3D remote_is_branch ? remote : shortname;
++	int message_number;
+=20
+ 	if (remote_is_branch
+ 	    && !strcmp(local, shortname)
+@@ -77,29 +92,12 @@ void install_branch_config(int flag, const char *lo=
+cal, const char *origin, cons
+ 	strbuf_release(&key);
+=20
+ 	if (flag & BRANCH_CONFIG_VERBOSE) {
+-		if (remote_is_branch && origin)
+-			printf_ln(rebasing ?
+-				  _("Branch %s set up to track remote branch %s from %s by rebasin=
+g.") :
+-				  _("Branch %s set up to track remote branch %s from %s."),
+-				  local, shortname, origin);
+-		else if (remote_is_branch && !origin)
+-			printf_ln(rebasing ?
+-				  _("Branch %s set up to track local branch %s by rebasing.") :
+-				  _("Branch %s set up to track local branch %s."),
+-				  local, shortname);
+-		else if (!remote_is_branch && origin)
+-			printf_ln(rebasing ?
+-				  _("Branch %s set up to track remote ref %s by rebasing.") :
+-				  _("Branch %s set up to track remote ref %s."),
+-				  local, remote);
+-		else if (!remote_is_branch && !origin)
+-			printf_ln(rebasing ?
+-				  _("Branch %s set up to track local ref %s by rebasing.") :
+-				  _("Branch %s set up to track local ref %s."),
+-				  local, remote);
++		if (origin && remote_is_branch)
++			printf_ln(_(messages[!remote_is_branch][!origin][!rebasing]),
++				local, name, origin);
+ 		else
+-			die("BUG: impossible combination of %d and %p",
+-			    remote_is_branch, origin);
++			printf_ln(_(messages[!remote_is_branch][!origin][!rebasing]),
++				local, name);
+ 	}
+ }
+=20
+--=20
+1.8.3.2
