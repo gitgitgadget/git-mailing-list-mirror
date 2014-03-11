@@ -1,77 +1,74 @@
-From: Dmitry Marakasov <amdmi3@amdmi3.ru>
-Subject: [PATCH] configure.ac: link with -liconv for locale_charset()
-Date: Tue, 11 Mar 2014 22:35:29 +0400
-Message-ID: <20140311183529.GA73693@hades.panopticon>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] rev-parse --parseopt: option argument name hints
+Date: Tue, 11 Mar 2014 12:10:13 -0700
+Message-ID: <xmqq7g80r1pm.fsf@gitster.dls.corp.google.com>
+References: <1393842740-4628-1-git-send-email-ilya.bobyr@gmail.com>
+	<xmqqwqg9kbuk.fsf@gitster.dls.corp.google.com>
+	<531D51EC.6050503@gmail.com>
+	<xmqqk3c1rfqj.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: wxs@FreeBSD.org
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 11 19:51:51 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Ilya Bobyr <ilya.bobyr@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 11 20:10:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WNRmI-0002bh-Dg
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Mar 2014 19:51:50 +0100
+	id 1WNS4G-000751-Ja
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Mar 2014 20:10:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753489AbaCKSvq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Mar 2014 14:51:46 -0400
-Received: from smtpout6.timeweb.ru ([92.53.117.39]:22953 "EHLO
-	smtpout6.timeweb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751718AbaCKSvp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Mar 2014 14:51:45 -0400
-X-Greylist: delayed 971 seconds by postgrey-1.27 at vger.kernel.org; Tue, 11 Mar 2014 14:51:45 EDT
-Received: from [213.148.20.85] (helo=hive.panopticon)
-	by smtp.timeweb.ru with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.76)
-	(envelope-from <amdmi3@amdmi3.ru>)
-	id 1WNRWT-0002z4-Ny; Tue, 11 Mar 2014 22:35:29 +0400
-Received: from hades.panopticon (hades.panopticon [192.168.0.32])
-	by hive.panopticon (Postfix) with ESMTP id 63C5069B;
-	Tue, 11 Mar 2014 22:35:29 +0400 (MSK)
-Received: by hades.panopticon (Postfix, from userid 1000)
-	id 4B120B219; Tue, 11 Mar 2014 22:35:29 +0400 (MSK)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.22 (2013-10-16)
+	id S1753588AbaCKTKS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Mar 2014 15:10:18 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51658 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752478AbaCKTKR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Mar 2014 15:10:17 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 94C2F74594;
+	Tue, 11 Mar 2014 15:10:16 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=DtiHpPpIf9wzoTXUfVA+WG54jAg=; b=Ba3N0J
+	rnFF3yMAKJDiZs1aLWJn+ypi8YJNtyH8PJefecVuzDfRFMYhf1OhgGWKC6sE57jH
+	MLjDSCNT/Y4pmQNalrb47v6mAZE8Lu/uJytXAMzqsPCnq5F6TPfeSJLyTv4B0lvz
+	S5Y+twdMHi17volOvNa+1pMHHspx0QrmBu06Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=r6vT3gFokTF0SiofwVvjRtSUzTMLDK/l
+	FDPoE0qQx6/r5WAtAGNAlpQufW/5ZKHJnaPc0DBWBUaaQzJ3j1Q5KNFx0egpXRmi
+	RNXO8HKsDVQATfAv2ONJ0VZplOQeLGlCc+CUbCOxYVGi4Bg5BfhW8A7j/GqBN3DP
+	eptjDnrykf8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7BD6274593;
+	Tue, 11 Mar 2014 15:10:16 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B06F674590;
+	Tue, 11 Mar 2014 15:10:15 -0400 (EDT)
+In-Reply-To: <xmqqk3c1rfqj.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Mon, 10 Mar 2014 12:55:00 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: C74B5540-A950-11E3-A6BE-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243879>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243880>
 
-On e.g. FreeBSD 10.x, the following situation is common:
-- there's iconv implementation in libc, which has no locale_charset()
-  function
-- there's GNU libiconv installed from Ports Collection
+Junio C Hamano <gitster@pobox.com> writes:
 
-Git build process
-- detects that iconv is in libc and thus -liconv is not needed for it
-- detects locale_charset in -liconv, but for some reason doesn't add it
-  to CHARSET_LIB (as it would do with -lcharset if locale_charset() was
-  found there instead of -liconv)
-- git doesn't build due to unresolved external locale_charset()
+>> Documentation on the whole argument parsing is quite short, so, I
+>> though, adding an example just to show how usage is generated would
+>> look like I am trying to make this feature look important than it is
+>> :)
+>
+> You already are by saying the "Angle brackets are automatic", aren't
+> you?
 
-Fix this by adding -liconv to CHARSET_LIB if locale_charset() is
-detected in this library.
-
-Signed-off-by: Dmitry Marakasov <amdmi3@amdmi3.ru>
----
- configure.ac | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git configure.ac configure.ac
-index 2f43393..3f5c644 100644
---- configure.ac
-+++ configure.ac
-@@ -890,7 +890,7 @@ GIT_CONF_SUBST([HAVE_STRINGS_H])
- # and libcharset does
- CHARSET_LIB=
- AC_CHECK_LIB([iconv], [locale_charset],
--       [],
-+       [CHARSET_LIB=-liconv],
-        [AC_CHECK_LIB([charset], [locale_charset],
-                      [CHARSET_LIB=-lcharset])])
- GIT_CONF_SUBST([CHARSET_LIB])
--- 
-1.9.0
+That is, among the things --parseopt mode does, the above stresses
+what happens _only_ when it emits help text for items that use this
+feature.
