@@ -1,95 +1,140 @@
-From: Henri GEIST <geist.henri@laposte.net>
-Subject: Re: [PATCH/RFC] git-gui: Add a 'recursive' checkbox in the clone
- menu.
-Date: Tue, 11 Mar 2014 12:07:18 +0100
-Message-ID: <1394536038.7891.59.camel@Naugrim>
-References: <1393974076.7891.27.camel@Naugrim> <5317662C.6010404@web.de>
+From: Tamer TAS <tamertas@outlook.com>
+Subject: Re: [PATCH][GSOC2014] changed logical chain in branch.c to lookup
+ tables
+Date: Tue, 11 Mar 2014 04:33:24 -0700 (PDT)
+Message-ID: <1394537604079-7605407.post@n2.nabble.com>
+References: <BLU0-SMTP15131ED34F192C9871ACC0CD5740@phx.gbl> <CAPig+cS3H_8gZOuyro_Vt0ay3xphvsB92zFgwFfCdgKsXjU0Gg@mail.gmail.com> <1394488063227-7605372.post@n2.nabble.com> <CAPig+cTOZrQY1azPCmzdrfut0S_-8ZDoob3cEqT7Z1kDpj+PQw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-Bk2OYth4b0UM9/Iaiz55"
-Cc: git@vger.kernel.org, Pat Thoyts <patthoyts@users.sourceforge.net>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Tue Mar 11 12:07:32 2014
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 11 12:33:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WNKWx-0002Yr-Ug
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Mar 2014 12:07:32 +0100
+	id 1WNKw5-0001Tk-MF
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Mar 2014 12:33:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754626AbaCKLH0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Mar 2014 07:07:26 -0400
-Received: from smtpout7.laposte.net ([193.253.67.232]:25277 "EHLO
-	smtpout.laposte.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753316AbaCKLHZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Mar 2014 07:07:25 -0400
-Received: from [192.168.0.8] ([82.242.149.125])
-	by mwinf8513-out with ME
-	id cB7J1n0042iaXuy03B7J2g; Tue, 11 Mar 2014 12:07:20 +0100
-In-Reply-To: <5317662C.6010404@web.de>
-X-Mailer: Evolution 3.4.4-3 
+	id S1752972AbaCKLdZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Mar 2014 07:33:25 -0400
+Received: from sam.nabble.com ([216.139.236.26]:53141 "EHLO sam.nabble.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752705AbaCKLdY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Mar 2014 07:33:24 -0400
+Received: from jim.nabble.com ([192.168.236.80])
+	by sam.nabble.com with esmtp (Exim 4.72)
+	(envelope-from <tamertas@outlook.com>)
+	id 1WNKw0-0006I5-2t
+	for git@vger.kernel.org; Tue, 11 Mar 2014 04:33:24 -0700
+In-Reply-To: <CAPig+cTOZrQY1azPCmzdrfut0S_-8ZDoob3cEqT7Z1kDpj+PQw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243857>
+
+Eric Sunshine wrote
+> On Mon, Mar 10, 2014 at 5:47 PM, Tamer TAS &lt;
+
+> tamertas@
+
+> &gt; wrote:
+> 
+> Section 4.3 of the GNU gettext manual [1] explains the issues in more
+> detail. I urge you to read it. The upshot is that translators fare
+> best when handed full sentences.
+> 
+> Note also that your change effectively reverts d53a35032a67 [2], which
+> did away with the sort of string composition used in your patch.
+
+Eric thank you for your constructive feedbacks.
+I read the section 4.3 of GNU gettext manual and also checked the commit you
+mentioned.
+It seems like that my previous changes were not internationalization
+compatible.
+In order for a table-driven change to be compatible, the sentences has to be
+meaningful and not tokenized.
+I made the following change to the branch.c in order for the function to be
+both table-driven and
+internationalization compatible. Let me know if there are any oversights on
+my part.
+
+Signed-off-by: TamerTas <tamertas@outlook.com>
+---
+ branch.c |   39 ++++++++++++++++-----------------------
+ 1 file changed, 16 insertions(+), 23 deletions(-)
+
+diff --git a/branch.c b/branch.c
+index 723a36b..4c04638 100644
+--- a/branch.c
++++ b/branch.c
+@@ -50,10 +50,25 @@ static int should_setup_rebase(const char *origin)
+ void install_branch_config(int flag, const char *local, const char *origin,
+const char *remote)
+ {
+ 	const char *shortname = remote + 11;
++    const char *setup_messages[] = {
++		_("Branch %s set up to track remote branch %s from %s."),
++		_("Branch %s set up to track local branch %s."),
++		_("Branch %s set up to track remote ref %s."),
++		_("Branch %s set up to track local ref %s."),
++		_("Branch %s set up to track remote branch %s from %s by rebasing."),
++		_("Branch %s set up to track local branch %s by rebasing."),
++		_("Branch %s set up to track remote ref %s by rebasing."),
++		_("Branch %s set up to track local ref %s by rebasing.")
++	}; 
++
+ 	int remote_is_branch = starts_with(remote, "refs/heads/");
+ 	struct strbuf key = STRBUF_INIT;
+ 	int rebasing = should_setup_rebase(origin);
+ 
++    int msg_index = (!!origin           >> 0) +
++					(!!remote_is_branch >> 1) +
++					(!!rebasing         >> 2);
++   
+ 	if (remote_is_branch
+ 	    && !strcmp(local, shortname)
+ 	    && !origin) {
+@@ -77,29 +92,7 @@ void install_branch_config(int flag, const char *local,
+const char *origin, cons
+ 	strbuf_release(&key);
+ 
+ 	if (flag & BRANCH_CONFIG_VERBOSE) {
+-		if (remote_is_branch && origin)
+-			printf_ln(rebasing ?
+-				  _("Branch %s set up to track remote branch %s from %s by rebasing.")
+:
+-				  _("Branch %s set up to track remote branch %s from %s."),
+-				  local, shortname, origin);
+-		else if (remote_is_branch && !origin)
+-			printf_ln(rebasing ?
+-				  _("Branch %s set up to track local branch %s by rebasing.") :
+-				  _("Branch %s set up to track local branch %s."),
+-				  local, shortname);
+-		else if (!remote_is_branch && origin)
+-			printf_ln(rebasing ?
+-				  _("Branch %s set up to track remote ref %s by rebasing.") :
+-				  _("Branch %s set up to track remote ref %s."),
+-				  local, remote);
+-		else if (!remote_is_branch && !origin)
+-			printf_ln(rebasing ?
+-				  _("Branch %s set up to track local ref %s by rebasing.") :
+-				  _("Branch %s set up to track local ref %s."),
+-				  local, remote);
+-		else
+-			die("BUG: impossible combination of %d and %p",
+-			    remote_is_branch, origin);
++		printf_ln(setup_messages[msg_index], local, remote);
+ 	}
+ }
+ 
+-- 
+1.7.9.5
 
 
---=-Bk2OYth4b0UM9/Iaiz55
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Le mercredi 05 mars 2014 =C3=A0 19:00 +0100, Jens Lehmann a =C3=A9crit :
-> Am 05.03.2014 00:01, schrieb Henri GEIST:
-> > Permit to do a 'git clone --recursive' through git-gui.
->=20
-> I really like where this is heading!
->=20
-> Some minor issues:
->=20
-> - I think we should be more verbose in the commit message,
->   including that and why the default should be "on". Maybe
->   like this?
->=20
->   "Permit to do a 'git clone --recursive' through git-gui.
->   Add a 'recursive' checkbox in the clone menu which allows
->   users to clone a repository and all its submodules in one
->   go (unless the 'update' flag is set to "none" in the
->   .gitmodules file for a submodule, in that case that
->   specific submodule is not cloned automatically).
->=20
->   Enable this new option per default, as most users want to
->   clone all submodules too when cloning the superproject
->   (This is currently not possible without leaving git gui
->   or adding a custom tool entry for that)."
->=20
->=20
-> - I'd rather change the button text from "Recursive (For
->   submodules)" to something like "Recursively clone
->   submodules too" or such.
->=20
->
-
-Perfect.
-Would you like me to send the new version of the patch in this thread
-Or to make a new thread [patch v2] ?
-
-
-
---=-Bk2OYth4b0UM9/Iaiz55
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iF0EABEKAAYFAlMe7mYACgkQkKuHPdwEGdRB0gD3USzPWTHuAqYx/1qeXtJAJ+Np
-vvT+lR6DFIqMEAWj1gD/QY8eEWbxzZ4/shrwv/mj3BDsm13VynDn5VevShKdyK0=
-=wzPL
------END PGP SIGNATURE-----
-
---=-Bk2OYth4b0UM9/Iaiz55--
+--
+View this message in context: http://git.661346.n2.nabble.com/PATCH-GSOC2014-changed-logical-chain-in-branch-c-to-lookup-tables-tp7605343p7605407.html
+Sent from the git mailing list archive at Nabble.com.
