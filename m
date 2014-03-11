@@ -1,72 +1,95 @@
-From: Karsten Blees <karsten.blees@gmail.com>
-Subject: Re: [RFC/WIP] Pluggable reference backends
-Date: Tue, 11 Mar 2014 11:56:12 +0100
-Message-ID: <531EEBCC.10409@gmail.com>
-References: <531D9B50.5030404@alum.mit.edu>
+From: Henri GEIST <geist.henri@laposte.net>
+Subject: Re: [PATCH/RFC] git-gui: Add a 'recursive' checkbox in the clone
+ menu.
+Date: Tue, 11 Mar 2014 12:07:18 +0100
+Message-ID: <1394536038.7891.59.camel@Naugrim>
+References: <1393974076.7891.27.camel@Naugrim> <5317662C.6010404@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Vicent Marti <tanoku@gmail.com>,
-	Brad King <brad.king@kitware.com>,
-	Johan Herland <johan@herland.net>
-To: Michael Haggerty <mhagger@alum.mit.edu>,
-	git discussion list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Mar 11 11:56:22 2014
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-Bk2OYth4b0UM9/Iaiz55"
+Cc: git@vger.kernel.org, Pat Thoyts <patthoyts@users.sourceforge.net>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Tue Mar 11 12:07:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WNKM6-0003iI-BN
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Mar 2014 11:56:18 +0100
+	id 1WNKWx-0002Yr-Ug
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Mar 2014 12:07:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754617AbaCKK4O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Mar 2014 06:56:14 -0400
-Received: from mail-wg0-f46.google.com ([74.125.82.46]:49239 "EHLO
-	mail-wg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754495AbaCKK4N (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Mar 2014 06:56:13 -0400
-Received: by mail-wg0-f46.google.com with SMTP id b13so3727307wgh.17
-        for <git@vger.kernel.org>; Tue, 11 Mar 2014 03:56:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=ECRYF715lf4y29e7uEgFH9QIqki0Q0VyEume/mZPl88=;
-        b=vfd+lQxe7PWfVhpZOYeb3QnvfuXC+EPv8iJX3v3M8EDjmmjf5b8XWicICACAWtMtsx
-         VtxkawW1dyrmyh5tg3Pf3QPQRgZIte1rMSeUQS5gOEGhnI44gZJdAgYN/PGgGYpZb75G
-         rhFHYGbm3CGStsgkXMimI3TpGcRiUIUNUxAschA7BB1AK3XNBQz7oPPyAxcr1lYDqjwF
-         KoT2PGJ45yP0Uja1knV5QgCwnt07+pQrUWRTwfPTS3I35vNJpzNmOsCmVSCHCwvM6576
-         jhdkYRO2X8uZhfPrOMCjeAi47kg3N9qW5r3991LXi0bwEviFRigu8GSDcpsBQDe/Ytfb
-         0Zqg==
-X-Received: by 10.180.8.170 with SMTP id s10mr2500175wia.35.1394535372634;
-        Tue, 11 Mar 2014 03:56:12 -0700 (PDT)
-Received: from [10.1.100.54] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id ci4sm60533245wjc.21.2014.03.11.03.56.11
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 11 Mar 2014 03:56:11 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
-In-Reply-To: <531D9B50.5030404@alum.mit.edu>
+	id S1754626AbaCKLH0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Mar 2014 07:07:26 -0400
+Received: from smtpout7.laposte.net ([193.253.67.232]:25277 "EHLO
+	smtpout.laposte.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753316AbaCKLHZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Mar 2014 07:07:25 -0400
+Received: from [192.168.0.8] ([82.242.149.125])
+	by mwinf8513-out with ME
+	id cB7J1n0042iaXuy03B7J2g; Tue, 11 Mar 2014 12:07:20 +0100
+In-Reply-To: <5317662C.6010404@web.de>
+X-Mailer: Evolution 3.4.4-3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243855>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243856>
 
-Am 10.03.2014 12:00, schrieb Michael Haggerty:
-> 
-> Reference transactions
-> ----------------------
-> 
 
-Very cool ideas indeed.
+--=-Bk2OYth4b0UM9/Iaiz55
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-However, I'm concerned a bit that transactions are conceptual overkill. How many concurrent updates do you expect in a repository? Wouldn't a single repo-wide lock suffice (and be _much_ simpler to implement with any backend, esp. file-based)?
+Le mercredi 05 mars 2014 =C3=A0 19:00 +0100, Jens Lehmann a =C3=A9crit :
+> Am 05.03.2014 00:01, schrieb Henri GEIST:
+> > Permit to do a 'git clone --recursive' through git-gui.
+>=20
+> I really like where this is heading!
+>=20
+> Some minor issues:
+>=20
+> - I think we should be more verbose in the commit message,
+>   including that and why the default should be "on". Maybe
+>   like this?
+>=20
+>   "Permit to do a 'git clone --recursive' through git-gui.
+>   Add a 'recursive' checkbox in the clone menu which allows
+>   users to clone a repository and all its submodules in one
+>   go (unless the 'update' flag is set to "none" in the
+>   .gitmodules file for a submodule, in that case that
+>   specific submodule is not cloned automatically).
+>=20
+>   Enable this new option per default, as most users want to
+>   clone all submodules too when cloning the superproject
+>   (This is currently not possible without leaving git gui
+>   or adding a custom tool entry for that)."
+>=20
+>=20
+> - I'd rather change the button text from "Recursive (For
+>   submodules)" to something like "Recursively clone
+>   submodules too" or such.
+>=20
+>
 
-The API you posted in [1] doesn't look very much like a transaction API either (rather like batch-updates). E.g. there's no rollback, the queue* methods cannot report failure, and there's no way to read a ref as part of the transaction. So I'm afraid that backends that support transactions out of the box (e.g. RDBMSs) will be hard to adapt to this.
+Perfect.
+Would you like me to send the new version of the patch in this thread
+Or to make a new thread [patch v2] ?
 
-Just my 2cents,
-Karsten
 
-[1] http://article.gmane.org/gmane.comp.version-control.git/243748
+
+--=-Bk2OYth4b0UM9/Iaiz55
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iF0EABEKAAYFAlMe7mYACgkQkKuHPdwEGdRB0gD3USzPWTHuAqYx/1qeXtJAJ+Np
+vvT+lR6DFIqMEAWj1gD/QY8eEWbxzZ4/shrwv/mj3BDsm13VynDn5VevShKdyK0=
+=wzPL
+-----END PGP SIGNATURE-----
+
+--=-Bk2OYth4b0UM9/Iaiz55--
