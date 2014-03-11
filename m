@@ -1,74 +1,187 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/7] test patch hunk editing with "commit -p -m"
-Date: Tue, 11 Mar 2014 14:03:08 -0700
-Message-ID: <xmqqk3c0o3cj.fsf@gitster.dls.corp.google.com>
-References: <1394477377-10994-1-git-send-email-benoit.pierre@gmail.com>
-	<1394477377-10994-4-git-send-email-benoit.pierre@gmail.com>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH 1/2] t7810: add missing variables to tests in loop
+Date: Tue, 11 Mar 2014 22:07:58 +0100
+Message-ID: <531F7B2E.20209@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Benoit Pierre <benoit.pierre@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 11 22:03:29 2014
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Mar 11 22:09:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WNTpg-000168-Dh
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Mar 2014 22:03:28 +0100
+	id 1WNTuy-0004rt-0T
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Mar 2014 22:08:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755485AbaCKVDS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Mar 2014 17:03:18 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44421 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754358AbaCKVDM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Mar 2014 17:03:12 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 75B6070BAD;
-	Tue, 11 Mar 2014 17:03:11 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=sodjp3riul01eeHpO6Y0KRn+mg0=; b=vc2xlE
-	SQLFbSecEU1VF2qRB2rFdTpMnvRm53xuiTCbYyu+pXXJu7qxyP6Sd/mK9y72trAv
-	sJITbALvp+WBuLtt+0GqbV0lBgnsDs4pGHYsIP8XAOyhd7rt3PmiZ1p7EeuShcUQ
-	qdU32qN54+zgI2dpd6+XIh+Izg3MnLYm8L5Lg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Ya6uQSCqanD+aSWdSyYQaCUwpvkP6kzh
-	t5HT6VmdVSkyO1mZwRkh8OK8mI90/Dvn+uvAkkoOPqviraZ2conWfy/Wi3TBxFfC
-	/ImbQ9yFqLNJoanoV/7rGpr9x4ltDI3juEuOPg70xjML9xUn0HvtBECjruxLTZ/0
-	Dp7PXLlbpT0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6127F70BAC;
-	Tue, 11 Mar 2014 17:03:11 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 970F270BAB;
-	Tue, 11 Mar 2014 17:03:10 -0400 (EDT)
-In-Reply-To: <1394477377-10994-4-git-send-email-benoit.pierre@gmail.com>
-	(Benoit Pierre's message of "Mon, 10 Mar 2014 19:49:33 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 8D72288E-A960-11E3-BE4B-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755719AbaCKVIw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Mar 2014 17:08:52 -0400
+Received: from mout.web.de ([212.227.17.11]:53740 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755709AbaCKVIv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Mar 2014 17:08:51 -0400
+Received: from [192.168.178.27] ([79.250.161.106]) by smtp.web.de (mrweb102)
+ with ESMTPSA (Nemesis) id 0M2dg1-1XCyXQ42ir-00sPh5; Tue, 11 Mar 2014 22:08:46
+ +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
+X-Provags-ID: V03:K0:M8HDIkwQZqaND8khUBcw+uivErvtjIshhN6yoBs0YUO+Gz5aEJZ
+ uO4f3olWPQHVTIdpmGv8tQYUHltKULwRBUPxKKcZL3LAJH4FdESXL5z4wH0CZzAkzuUa5E6
+ ud0IpnroQzHDgm4Vm6ik5CtOKc+dicuPSIWLinRDg1LZUuO6Gy6BcbkprTbEhVW37+bPCSZ
+ iKMfnh2g5fMvirdn4FOKQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243899>
 
-Benoit Pierre <benoit.pierre@gmail.com> writes:
+Some tests in t7810-grep.sh are in a loop that runs them against HEAD and
+the work tree.  In order for that to work the test code should use the
+variables $L (display name), $H (HEAD or empty string) and $HC (revision
+prefix for result lines); otherwise tests are just repeated with the same
+target.  Add the variables where they're missing and make sure the test
+description is wrapped in double quotes (instead of single quotes) to
+allow variables to be expanded.
 
-> Add (failing) test: with commit changing the environment to let hooks
-> now that no editor will be used (by setting GIT_EDITOR to ":"), the
-> "edit hunk" functionality does not work (no editor is launched and the
-> whole hunk is committed).
->
-> Signed-off-by: Benoit Pierre <benoit.pierre@gmail.com>
-> ---
->  t/t7513-commit_-p_-m_hunk_edit.sh | 34 ++++++++++++++++++++++++++++++++++
->  1 file changed, 34 insertions(+)
->  create mode 100755 t/t7513-commit_-p_-m_hunk_edit.sh
->
-> diff --git a/t/t7513-commit_-p_-m_hunk_edit.sh b/t/t7513-commit_-p_-m_hunk_edit.sh
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ t/t7810-grep.sh | 58 ++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 29 insertions(+), 29 deletions(-)
 
-I'll move this to t/t7514-commit-patch.sh for now while queuing.
+diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+index f698001..46aaebc 100755
+--- a/t/t7810-grep.sh
++++ b/t/t7810-grep.sh
+@@ -105,7 +105,7 @@ do
+ 
+ 	test_expect_success "grep -w $L (w)" '
+ 		: >expected &&
+-		test_must_fail git grep -n -w -e "^w" >actual &&
++		test_must_fail git grep -n -w -e "^w" $H >actual &&
+ 		test_cmp expected actual
+ 	'
+ 
+@@ -240,92 +240,92 @@ do
+ 		test_cmp expected actual
+ 	'
+ 	test_expect_success "grep $L with grep.extendedRegexp=false" '
+-		echo "ab:a+bc" >expected &&
+-		git -c grep.extendedRegexp=false grep "a+b*c" ab >actual &&
++		echo "${HC}ab:a+bc" >expected &&
++		git -c grep.extendedRegexp=false grep "a+b*c" $H ab >actual &&
+ 		test_cmp expected actual
+ 	'
+ 
+ 	test_expect_success "grep $L with grep.extendedRegexp=true" '
+-		echo "ab:abc" >expected &&
+-		git -c grep.extendedRegexp=true grep "a+b*c" ab >actual &&
++		echo "${HC}ab:abc" >expected &&
++		git -c grep.extendedRegexp=true grep "a+b*c" $H ab >actual &&
+ 		test_cmp expected actual
+ 	'
+ 
+ 	test_expect_success "grep $L with grep.patterntype=basic" '
+-		echo "ab:a+bc" >expected &&
+-		git -c grep.patterntype=basic grep "a+b*c" ab >actual &&
++		echo "${HC}ab:a+bc" >expected &&
++		git -c grep.patterntype=basic grep "a+b*c" $H ab >actual &&
+ 		test_cmp expected actual
+ 	'
+ 
+ 	test_expect_success "grep $L with grep.patterntype=extended" '
+-		echo "ab:abc" >expected &&
+-		git -c grep.patterntype=extended grep "a+b*c" ab >actual &&
++		echo "${HC}ab:abc" >expected &&
++		git -c grep.patterntype=extended grep "a+b*c" $H ab >actual &&
+ 		test_cmp expected actual
+ 	'
+ 
+ 	test_expect_success "grep $L with grep.patterntype=fixed" '
+-		echo "ab:a+b*c" >expected &&
+-		git -c grep.patterntype=fixed grep "a+b*c" ab >actual &&
++		echo "${HC}ab:a+b*c" >expected &&
++		git -c grep.patterntype=fixed grep "a+b*c" $H ab >actual &&
+ 		test_cmp expected actual
+ 	'
+ 
+ 	test_expect_success LIBPCRE "grep $L with grep.patterntype=perl" '
+-		echo "ab:a+b*c" >expected &&
+-		git -c grep.patterntype=perl grep "a\x{2b}b\x{2a}c" ab >actual &&
++		echo "${HC}ab:a+b*c" >expected &&
++		git -c grep.patterntype=perl grep "a\x{2b}b\x{2a}c" $H ab >actual &&
+ 		test_cmp expected actual
+ 	'
+ 
+ 	test_expect_success "grep $L with grep.patternType=default and grep.extendedRegexp=true" '
+-		echo "ab:abc" >expected &&
++		echo "${HC}ab:abc" >expected &&
+ 		git \
+ 			-c grep.patternType=default \
+ 			-c grep.extendedRegexp=true \
+-			grep "a+b*c" ab >actual &&
++			grep "a+b*c" $H ab >actual &&
+ 		test_cmp expected actual
+ 	'
+ 
+ 	test_expect_success "grep $L with grep.extendedRegexp=true and grep.patternType=default" '
+-		echo "ab:abc" >expected &&
++		echo "${HC}ab:abc" >expected &&
+ 		git \
+ 			-c grep.extendedRegexp=true \
+ 			-c grep.patternType=default \
+-			grep "a+b*c" ab >actual &&
++			grep "a+b*c" $H ab >actual &&
+ 		test_cmp expected actual
+ 	'
+ 
+-	test_expect_success 'grep $L with grep.patternType=extended and grep.extendedRegexp=false' '
+-		echo "ab:abc" >expected &&
++	test_expect_success "grep $L with grep.patternType=extended and grep.extendedRegexp=false" '
++		echo "${HC}ab:abc" >expected &&
+ 		git \
+ 			-c grep.patternType=extended \
+ 			-c grep.extendedRegexp=false \
+-			grep "a+b*c" ab >actual &&
++			grep "a+b*c" $H ab >actual &&
+ 		test_cmp expected actual
+ 	'
+ 
+-	test_expect_success 'grep $L with grep.patternType=basic and grep.extendedRegexp=true' '
+-		echo "ab:a+bc" >expected &&
++	test_expect_success "grep $L with grep.patternType=basic and grep.extendedRegexp=true" '
++		echo "${HC}ab:a+bc" >expected &&
+ 		git \
+ 			-c grep.patternType=basic \
+ 			-c grep.extendedRegexp=true \
+-			grep "a+b*c" ab >actual &&
++			grep "a+b*c" $H ab >actual &&
+ 		test_cmp expected actual
+ 	'
+ 
+-	test_expect_success 'grep $L with grep.extendedRegexp=false and grep.patternType=extended' '
+-		echo "ab:abc" >expected &&
++	test_expect_success "grep $L with grep.extendedRegexp=false and grep.patternType=extended" '
++		echo "${HC}ab:abc" >expected &&
+ 		git \
+ 			-c grep.extendedRegexp=false \
+ 			-c grep.patternType=extended \
+-			grep "a+b*c" ab >actual &&
++			grep "a+b*c" $H ab >actual &&
+ 		test_cmp expected actual
+ 	'
+ 
+-	test_expect_success 'grep $L with grep.extendedRegexp=true and grep.patternType=basic' '
+-		echo "ab:a+bc" >expected &&
++	test_expect_success "grep $L with grep.extendedRegexp=true and grep.patternType=basic" '
++		echo "${HC}ab:a+bc" >expected &&
+ 		git \
+ 			-c grep.extendedRegexp=true \
+ 			-c grep.patternType=basic \
+-			grep "a+b*c" ab >actual &&
++			grep "a+b*c" $H ab >actual &&
+ 		test_cmp expected actual
+ 	'
+ done
+-- 
+1.9.0
