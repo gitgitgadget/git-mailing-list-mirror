@@ -1,85 +1,80 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH/RFC] git-gui: Add a 'recursive' checkbox in the clone
- menu.
-Date: Tue, 11 Mar 2014 18:34:43 +0100
-Message-ID: <531F4933.7080701@web.de>
-References: <1393974076.7891.27.camel@Naugrim> <5317662C.6010404@web.de> <1394536038.7891.59.camel@Naugrim>
+From: Benoit Pierre <benoit.pierre@gmail.com>
+Subject: Re: [PATCH 7/7] run-command: mark run_hook_with_custom_index as deprecated
+Date: Tue, 11 Mar 2014 18:37:38 +0100
+Message-ID: <CA+SSzV3z5zQaEgJX_LC6j7FmfNYi-eC_7_UA=KWQBBooOpkgBQ@mail.gmail.com>
+References: <1394477377-10994-1-git-send-email-benoit.pierre@gmail.com>
+	<1394477377-10994-8-git-send-email-benoit.pierre@gmail.com>
+	<20140311010039.GD4271@vauxhall.crustytoothpaste.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Pat Thoyts <patthoyts@users.sourceforge.net>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Henri GEIST <geist.henri@laposte.net>
-X-From: git-owner@vger.kernel.org Tue Mar 11 18:35:08 2014
+To: Benoit Pierre <benoit.pierre@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 11 18:38:09 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WNQa2-0008Ga-Dl
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Mar 2014 18:35:06 +0100
+	id 1WNQcx-0001zk-Q8
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Mar 2014 18:38:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754355AbaCKRfA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Mar 2014 13:35:00 -0400
-Received: from mout.web.de ([212.227.15.3]:59760 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753466AbaCKRe7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Mar 2014 13:34:59 -0400
-Received: from [192.168.178.41] ([84.132.149.241]) by smtp.web.de (mrweb103)
- with ESMTPSA (Nemesis) id 0LeLSr-1WxdOH07Ar-00qAus; Tue, 11 Mar 2014 18:34:48
- +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
-In-Reply-To: <1394536038.7891.59.camel@Naugrim>
-X-Enigmail-Version: 1.6
-X-Provags-ID: V03:K0:15MWbWSF7TvwubRCc0TLlOxU0w7HrTflmFdiG4/B3JlBDoDwNiS
- F4t4elA3DJiDkmrajla1+9ZI24AO8y0FsiMJz81X8GIZRN7j7jw5yqtmEPlf5kXTH/O0jxH
- d9bdZebVJLmFFb+AG25ItHnjTaoYADRZD0cSPcsdMWcS4HoqDxnp8MVq2uhDXEBJpmM140Q
- +/iDstm3ZItJUw6aPKovw==
+	id S1753644AbaCKRh7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Mar 2014 13:37:59 -0400
+Received: from mail-ob0-f180.google.com ([209.85.214.180]:59136 "EHLO
+	mail-ob0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754851AbaCKRhi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Mar 2014 13:37:38 -0400
+Received: by mail-ob0-f180.google.com with SMTP id wn1so8775036obc.11
+        for <git@vger.kernel.org>; Tue, 11 Mar 2014 10:37:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        bh=IIIv49IUZ+htKzu4NENdZcyLCEo8t5HWFVKDFUR5rrQ=;
+        b=pAk1cswscfV52Z08WizAQXDTzO8+KGJ/mYU7oD7Le4I+ZBkwIRM3hQflEeeBSTMlCE
+         /upDtGZq9L16XuvAnqFprF5mtNwpisdZ1QcdBRERiK8R2+YtPglvuiq9YAe6fSpZEAl/
+         q8ZZRll6q3huj9CiMZIQBErojFAm9ti5PsZs5siGUIWQJ3turG8qYG5p7zXmxWfLsPdi
+         PK4pxZWdsJeTtCbFCNTwNEYZp0joZW1Kan6WLjmJrSuURznSMdaoMp3WaVifJGXU0Mmv
+         v8bOop7fuogCaY3IWDyPQT0Gd60geD6rCFGL3R7da9K82TfdhjUO+W3qAb/4RZOW4DYm
+         T1Qg==
+X-Received: by 10.182.22.18 with SMTP id z18mr11767556obe.42.1394559458388;
+ Tue, 11 Mar 2014 10:37:38 -0700 (PDT)
+Received: by 10.76.94.143 with HTTP; Tue, 11 Mar 2014 10:37:38 -0700 (PDT)
+In-Reply-To: <20140311010039.GD4271@vauxhall.crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243872>
 
-Am 11.03.2014 12:07, schrieb Henri GEIST:
-> Le mercredi 05 mars 2014 =C3=A0 19:00 +0100, Jens Lehmann a =C3=A9cri=
-t :
->> Am 05.03.2014 00:01, schrieb Henri GEIST:
->>> Permit to do a 'git clone --recursive' through git-gui.
+On Tue, Mar 11, 2014 at 2:00 AM, brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> On Mon, Mar 10, 2014 at 07:49:37PM +0100, Benoit Pierre wrote:
+>> ---
+>>  run-command.h | 1 +
+>>  1 file changed, 1 insertion(+)
 >>
->> I really like where this is heading!
+>> diff --git a/run-command.h b/run-command.h
+>> index 88460f9..3653bfa 100644
+>> --- a/run-command.h
+>> +++ b/run-command.h
+>> @@ -51,6 +51,7 @@ extern int run_hook_le(const char *const *env, const char *name, ...);
+>>  extern int run_hook_ve(const char *const *env, const char *name, va_list args);
 >>
->> Some minor issues:
->>
->> - I think we should be more verbose in the commit message,
->>   including that and why the default should be "on". Maybe
->>   like this?
->>
->>   "Permit to do a 'git clone --recursive' through git-gui.
->>   Add a 'recursive' checkbox in the clone menu which allows
->>   users to clone a repository and all its submodules in one
->>   go (unless the 'update' flag is set to "none" in the
->>   .gitmodules file for a submodule, in that case that
->>   specific submodule is not cloned automatically).
->>
->>   Enable this new option per default, as most users want to
->>   clone all submodules too when cloning the superproject
->>   (This is currently not possible without leaving git gui
->>   or adding a custom tool entry for that)."
->>
->>
->> - I'd rather change the button text from "Recursive (For
->>   submodules)" to something like "Recursively clone
->>   submodules too" or such.
->>
->>
->=20
-> Perfect.
-> Would you like me to send the new version of the patch in this thread
-> Or to make a new thread [patch v2] ?
+>>  LAST_ARG_MUST_BE_NULL
+>> +__attribute__((deprecated))
+>
+> It doesn't appear that we use the deprecated attribute anywhere else in
+> the code.  Wouldn't it just be better to change the places that use this
+> and then remove the function altogether?  I imagine your current patch
+> might introduce a number of warnings that some people would rather
+> avoid.
 
-It doesn't matter that much as long as you start the subject with
-"[PATCH v2]". But I believe you should send it to Pat and create
-the diff from inside the git-gui directory so he can simply apply
-it to his repository.
+This last patch is optional. There are no callers to
+run_hook_with_custom_index, so no warnings for now. See discussion on
+first draft as to why I added it:
+
+http://article.gmane.org/gmane.comp.version-control.git/243561
+
+-- 
+A: Because it destroys the flow of conversation.
+Q: Why is top posting dumb?
