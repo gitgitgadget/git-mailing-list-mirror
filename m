@@ -1,98 +1,78 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 0/8] Hiding refs
-Date: Tue, 11 Mar 2014 16:36:50 -0400
-Message-ID: <20140311203650.GA31173@sigill.intra.peff.net>
-References: <5110DF1D.8010505@alum.mit.edu>
- <CACsJy8BhL4qDb8BgOVuaUFF_9GXvgu55urYyKqPuZMZCTCoLwA@mail.gmail.com>
- <7v4nhpckwd.fsf@alter.siamese.dyndns.org>
- <CACBZZX6xLvuMEhPnfYLj8W9pMLwdoS7Zb+mTtn+3DanJPiWfXw@mail.gmail.com>
- <7vmwvh9e3p.fsf@alter.siamese.dyndns.org>
- <CACsJy8Aas3tRoDp9LQw7Nwf6+S3QnvwA7h7s-sHVY+1yFKhTYg@mail.gmail.com>
- <20140311014945.GB12033@sigill.intra.peff.net>
- <xmqqtxb4pm3u.fsf@gitster.dls.corp.google.com>
- <20140311200513.GB29102@sigill.intra.peff.net>
- <xmqq4n34pjnw.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/7] commit: fix patch hunk editing with "commit -p -m"
+Date: Tue, 11 Mar 2014 14:02:28 -0700
+Message-ID: <xmqqob1co3dm.fsf@gitster.dls.corp.google.com>
+References: <1394477377-10994-1-git-send-email-benoit.pierre@gmail.com>
+	<1394477377-10994-5-git-send-email-benoit.pierre@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Shawn Pearce <spearce@spearce.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 11 21:36:58 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Benoit Pierre <benoit.pierre@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 11 22:02:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WNTQ1-0008HQ-PR
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Mar 2014 21:36:58 +0100
+	id 1WNTor-0000VH-MV
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Mar 2014 22:02:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755753AbaCKUgx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Mar 2014 16:36:53 -0400
-Received: from cloud.peff.net ([50.56.180.127]:37621 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755745AbaCKUgw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Mar 2014 16:36:52 -0400
-Received: (qmail 28887 invoked by uid 102); 11 Mar 2014 20:36:52 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 11 Mar 2014 15:36:52 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 11 Mar 2014 16:36:50 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqq4n34pjnw.fsf@gitster.dls.corp.google.com>
+	id S1755140AbaCKVCc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Mar 2014 17:02:32 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37024 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752919AbaCKVCc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Mar 2014 17:02:32 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 77F4B70B6B;
+	Tue, 11 Mar 2014 17:02:31 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/vn8860DJKYMxwYVE3rASR4TtoM=; b=RGmXC1
+	JUdA4Xy8hMV1WPdsSDYsoCuVOgSvmhqRG3sA4EJjZwsy53Gich5nwgyEMwMZalLY
+	TnAqi2UGugtJwhol6Mo5YMxXmv/3o4cGtBlFfbXP38Tw8WI0ei7psQx2bLU4VRdT
+	VYWkPjgR4VgSleQnvD5RxP6agA0sJEPJTCjx0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qOsBLcSTb9jUUVgCyOqAh/jijP9AzFcf
+	H4JREDPrdwqa+SpptsFR5fuKfWE6/JZUx8FlS6H1cQltxPf9uZiOj78Z0XaSOuq4
+	wmQ54Z03MW1yw/jFhwafgCfWu4YlVXiyRnwNgTbcdEjDtkZbLDX9RylAAb3U5jnh
+	vpQ5lbrezU8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6440670B6A;
+	Tue, 11 Mar 2014 17:02:31 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 95ADA70B68;
+	Tue, 11 Mar 2014 17:02:30 -0400 (EDT)
+In-Reply-To: <1394477377-10994-5-git-send-email-benoit.pierre@gmail.com>
+	(Benoit Pierre's message of "Mon, 10 Mar 2014 19:49:34 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 7599D00E-A960-11E3-AFEE-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243897>
 
-On Tue, Mar 11, 2014 at 01:25:23PM -0700, Junio C Hamano wrote:
+Benoit Pierre <benoit.pierre@gmail.com> writes:
 
-> > Yeah, good idea. I might be misremembering some complications, but we
-> > can probably do it with:
-> >
-> >   1. Teach the client to send an "advertise-symrefs" flag before the ref
-> >      advertisement.
-> >
-> >   2. Teach the server to include symrefs in the ref advertisement; we
-> >      can invent a new syntax because we know the client has asked for
-> >      it.
-> 
-> I was thinking more about the underlying protocol, not advertisement
-> in particular, and I think we came to the same conclusion.
-> 
-> The capability advertisement deserves to have its own separate
-> packet message type, when both sides say that they understand it, so
-> that we do not have to be limited by the pkt-line length limit.  We
-> could do one message per capability, and at the same time can lift
-> the traditional "capability hidden after the NUL is purged every
-> time, so we need to repeat them if we want to later change it,
-> because that is how older clients and servers use that information"
-> insanity, for example.
+> diff --git a/builtin/checkout.c b/builtin/checkout.c
+> index 5df3837..da423b2 100644
+> --- a/builtin/checkout.c
+> +++ b/builtin/checkout.c
+> @@ -53,10 +53,10 @@ struct checkout_opts {
+>  static int post_checkout_hook(struct commit *old, struct commit *new,
+>  			      int changed)
+>  {
+> -	return run_hook(NULL, "post-checkout",
+> -			sha1_to_hex(old ? old->object.sha1 : null_sha1),
+> -			sha1_to_hex(new ? new->object.sha1 : null_sha1),
+> -			changed ? "1" : "0", NULL);
+> +    return run_hook_le(NULL, "post-checkout",
+> +		       sha1_to_hex(old ? old->object.sha1 : null_sha1),
+> +		       sha1_to_hex(new ? new->object.sha1 : null_sha1),
+> +		       changed ? "1" : "0", NULL);
 
-So this may be entering the "more radical changes" realm I mentioned
-earlier.
-
-If the client is limited to setting a few flags, then something like
-http can get away with:
-
-  GET foo.git/info/refs?service=git-upload-pack&advertise-symrefs&refspec=refs/heads/*
-
-And it does not need to worry about upload-pack2 at all. Either the
-server recognizes and acts on them, or it ignores them.
-
-But given that we do not have such a magic out-of-band method for
-passing values over ssh and git, maybe it is not worth worrying about.
-Http can move to upload-pack2 along with the rest.
-
-One thing that _is_ worth considering for http is how the protocol
-starts. We do not want to introduce an extra http round-trip to the
-protocol if we can help it. If the initial GET becomes a POST, then it
-could pass along the pkt-line of client capabilities with the initial
-request, and the server would respond with the ref advertisement as
-usual.
-
--Peff
+Funny indentation.
