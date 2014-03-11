@@ -1,75 +1,80 @@
-From: Nemina Amarasinghe <neminaa@gmail.com>
-Subject: Re: [PATCH][GSoC]simplified =?utf-8?b?YnJhbmNoLmM6aW5zdGFsbF9icmFuY2hfY29uZmlnKCk=?= if() statement
-Date: Tue, 11 Mar 2014 07:16:22 +0000 (UTC)
-Message-ID: <loom.20140311T081018-894@post.gmane.org>
-References: <loom.20140310T083649-236@post.gmane.org> <loom.20140310T085652-521@post.gmane.org> <CAPig+cRAqEQ8320Gq2Njoioq5UU=d+W+hzF+YZAZ7Po9XjMq0g@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: [PATCH nd/gitignore-trailing-whitespace] t0008: skip trailing space
+ test on Windows
+Date: Tue, 11 Mar 2014 08:46:40 +0100
+Message-ID: <531EBF60.90309@viscovery.net>
+References: <xmqqiortijxp.fsf@gitster.dls.corp.google.com>	<531D764E.2000809@viscovery.net> <xmqqfvmprfly.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 11 08:16:57 2014
+Cc: git@vger.kernel.org,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 11 08:46:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WNGvo-0007sI-DJ
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Mar 2014 08:16:56 +0100
+	id 1WNHOl-0007in-UZ
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Mar 2014 08:46:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753262AbaCKHQw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Mar 2014 03:16:52 -0400
-Received: from plane.gmane.org ([80.91.229.3]:40852 "EHLO plane.gmane.org"
+	id S1752696AbaCKHqr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Mar 2014 03:46:47 -0400
+Received: from so.liwest.at ([212.33.55.23]:53383 "EHLO so.liwest.at"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752784AbaCKHQv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Mar 2014 03:16:51 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1WNGvh-0007p6-IZ
-	for git@vger.kernel.org; Tue, 11 Mar 2014 08:16:49 +0100
-Received: from 61.245.163.17 ([61.245.163.17])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 11 Mar 2014 08:16:49 +0100
-Received: from neminaa by 61.245.163.17 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 11 Mar 2014 08:16:49 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 61.245.163.17 (Mozilla/5.0 (Windows NT 6.3; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0)
+	id S1751985AbaCKHqq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Mar 2014 03:46:46 -0400
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.80.1)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1WNHOb-0001UP-ES; Tue, 11 Mar 2014 08:46:41 +0100
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 0684C16613;
+	Tue, 11 Mar 2014 08:46:40 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
+In-Reply-To: <xmqqfvmprfly.fsf@gitster.dls.corp.google.com>
+X-Enigmail-Version: 1.6
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243845>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243846>
 
-I hope this is the correct format for  patch. Please comment on this if
-something is wrong. 
+From: Johannes Sixt <j6t@kdbg.org>
 
-Signed-off-by:Nemina Amarasinghe <neminaa@gmail.com>
+The Windows API does not preserve file names with trailing spaces (and
+dots), but rather strips them. Our tools (MSYS bash, git) base the POSIX
+emulation on the Windows API. As a consequence, it is impossible for bash
+on Windows to allocate a file whose name has trailing spaces, and for git
+to stat such a file. Both operate on a file whose name has the spaces
+stripped. Skip the test that needs such a file name.
+
+Note that we do not use (another incarnation of) prerequisite FUNNYNAMES.
+The reason is that FUNNYNAMES is intended to represent a property of the
+file system. But the inability to have trailing spaces in a file name is
+a property of the Windows API. The file system (NTFS) does not have this
+limitation.
+
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
 ---
- branch.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ t/t0008-ignores.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/branch.c b/branch.c
-index 0304a7a..fd93603 100644
---- a/branch.c
-+++ b/branch.c
-@@ -87,12 +87,7 @@ void install_branch_config(int flag, const char *local,
-const char *origin, cons
- 				  _("Branch %s set up to track local branch %s by rebasing.") :
- 				  _("Branch %s set up to track local branch %s."),
- 				  local, shortname);
--		else if (!remote_is_branch && origin)
--			printf_ln(rebasing ?
--				  _("Branch %s set up to track remote ref %s by rebasing.") :
--				  _("Branch %s set up to track remote ref %s."),
--				  local, remote);
--		else if (!remote_is_branch && !origin)
-+		else if (!remote_is_branch)
- 			printf_ln(rebasing ?
- 				  _("Branch %s set up to track remote ref %s by rebasing.") :
- 				  _("Branch %s set up to track remote ref %s."),
+diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
+index bbaf6b5..63beb99 100755
+--- a/t/t0008-ignores.sh
++++ b/t/t0008-ignores.sh
+@@ -793,7 +793,7 @@ EOF
+ 	test_cmp err.expect err
+ '
+
+-test_expect_success 'quoting allows trailing whitespace' '
++test_expect_success !MINGW 'quoting allows trailing whitespace' '
+ 	rm -rf whitespace &&
+ 	mkdir whitespace &&
+ 	>"whitespace/trailing  " &&
 -- 
-1.9.0.152.g6ab4ae2
+1.9.0.1534.ga05fa03
