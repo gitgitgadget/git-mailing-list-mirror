@@ -1,124 +1,73 @@
-From: TamerTas <tamertas@outlook.com>
-Subject: [PATCH][GSOC2014] install_branch_config: change logical chain to lookup table
-Date: Wed, 12 Mar 2014 23:24:10 +0200
-Message-ID: <BLU0-SMTP223196BC56240FAE28FF9DD5760@phx.gbl>
-References: <http://git.661346.n2.nabble.com/PATCH-GSOC2014-changed-logical-chain-in-branch-c-to-lookup-tables-tp7605343p7605444.html>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] general style: replaces memcmp() with proper
+ starts_with()
+Date: Wed, 12 Mar 2014 17:39:44 -0400
+Message-ID: <20140312213944.GA12818@sigill.intra.peff.net>
+References: <1394635434-44979-1-git-send-email-quintus.public@gmail.com>
+ <20140312175624.GA7982@sigill.intra.peff.net>
+ <xmqqiorjky0a.fsf@gitster.dls.corp.google.com>
+ <20140312194943.GA2912@sigill.intra.peff.net>
+ <xmqq61njkwnw.fsf@gitster.dls.corp.google.com>
+ <20140312211415.GA10305@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: TamerTas <tamertas@outlook.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 12 22:24:33 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Quint Guvernator <quintus.public@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 12 22:39:54 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WNqdb-0006IP-10
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Mar 2014 22:24:31 +0100
+	id 1WNqsR-0003r5-RC
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Mar 2014 22:39:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751963AbaCLVY1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Mar 2014 17:24:27 -0400
-Received: from blu0-omc3-s16.blu0.hotmail.com ([65.55.116.91]:35485 "EHLO
-	blu0-omc3-s16.blu0.hotmail.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751244AbaCLVY0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 12 Mar 2014 17:24:26 -0400
-Received: from BLU0-SMTP22 ([65.55.116.72]) by blu0-omc3-s16.blu0.hotmail.com with Microsoft SMTPSVC(6.0.3790.4675);
-	 Wed, 12 Mar 2014 14:24:25 -0700
-X-TMN: [67WML7A1WkveYEo+7yXvwn702EIok1/N]
-X-Originating-Email: [tamertas@outlook.com]
-Received: from localhost.localdomain ([24.133.189.163]) by BLU0-SMTP22.phx.gbl over TLS secured channel with Microsoft SMTPSVC(6.0.3790.4675);
-	 Wed, 12 Mar 2014 14:24:23 -0700
-X-Mailer: git-send-email 1.7.9.5
-In-Reply-To: <http://git.661346.n2.nabble.com/PATCH-GSOC2014-changed-logical-chain-in-branch-c-to-lookup-tables-tp7605343p7605444.html>
-X-OriginalArrivalTime: 12 Mar 2014 21:24:24.0115 (UTC) FILETIME=[70A80030:01CF3E39]
+	id S1752608AbaCLVjr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Mar 2014 17:39:47 -0400
+Received: from cloud.peff.net ([50.56.180.127]:38386 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750981AbaCLVjq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Mar 2014 17:39:46 -0400
+Received: (qmail 6458 invoked by uid 102); 12 Mar 2014 21:39:46 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 12 Mar 2014 16:39:46 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Mar 2014 17:39:44 -0400
+Content-Disposition: inline
+In-Reply-To: <20140312211415.GA10305@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244001>
 
+On Wed, Mar 12, 2014 at 05:14:15PM -0400, Jeff King wrote:
 
-Signed-off-by: TamerTas <tamertas@outlook.com>
---
-Thanks for the feedback. Comments below. 
+> I also think that "eof = next" (which I retained here) is off-by-one.
+> "next" here is not the newline, but the start of the next line. And I'm
+> guessing the code actually wanted the newline (otherwise "it->key" ends
+> up with the newline in it). But we cannot just subtract one, because if
+> we hit "eob", it really is in the right spot.
 
-I've made the suggested changes [1] to patch [2] 
-but, since there are different number of format 
-specifiers, an if-else clause is necessary. 
-Removing the if-else chain completely doesn't seem to be possible. 
-So making the format table-driven seems to be like an optional change.
+I started on a patch for this, but found another interesting corner
+case. If we do not find a newline and hit end-of-buffer (which
+_shouldn't_ happen, as that is a malformed commit object), we set "next"
+to "eob". But then we copy the whole string, including *next into the
+"value" of the header.
 
-[1]: http://git.661346.n2.nabble.com/PATCH-GSOC2014-changed-logical-chain-in-branch-c-to-lookup-tables-tp7605343p7605444.html
-[2]: http://git.661346.n2.nabble.com/PATCH-GSOC2014-changed-logical-chain-in-branch-c-to-lookup-tables-tp7605343p7605407.html
---
- branch.c |   44 +++++++++++++++++++++-----------------------
- 1 file changed, 21 insertions(+), 23 deletions(-)
+So we intend to capture the trailing newline in the value, and do in the
+normal case. But in the end-of-buffer case, we capture an extra NUL. I
+think that's OK, because the eventual fate of the buffer is to become a
+C-string. But it does mean that the result sometimes has a
+newline-terminator and sometimes doesn't, and the calling code needs to
+handle this when printing, or risk lines running together.
 
-diff --git a/branch.c b/branch.c
-index 723a36b..1ccf30f 100644
---- a/branch.c
-+++ b/branch.c
-@@ -50,10 +50,25 @@ static int should_setup_rebase(const char *origin)
- void install_branch_config(int flag, const char *local, const char *origin, const char *remote)
- {
- 	const char *shortname = remote + 11;
-+	const char *setup_message[] = {
-+		N_("Branch %s set up to track local ref %s."),
-+		N_("Branch %s set up to track local branch %s."),
-+		N_("Branch %s set up to track remote ref %s."),
-+		N_("Branch %s set up to track remote branch %s from %s."),
-+		N_("Branch %s set up to track local ref %s by rebasing.")
-+		N_("Branch %s set up to track local branch %s by rebasing."),
-+		N_("Branch %s set up to track remote ref %s by rebasing."),
-+		N_("Branch %s set up to track remote branch %s from %s by rebasing."),
-+	}; 
-+
- 	int remote_is_branch = starts_with(remote, "refs/heads/");
- 	struct strbuf key = STRBUF_INIT;
- 	int rebasing = should_setup_rebase(origin);
- 
-+	int msg_index = (!!remote_is_branch << 0) +
-+			(!!origin << 1) +
-+			(!!rebasing << 2);
-+
- 	if (remote_is_branch
- 	    && !strcmp(local, shortname)
- 	    && !origin) {
-@@ -77,29 +92,12 @@ void install_branch_config(int flag, const char *local, const char *origin, cons
- 	strbuf_release(&key);
- 
- 	if (flag & BRANCH_CONFIG_VERBOSE) {
--		if (remote_is_branch && origin)
--			printf_ln(rebasing ?
--				  _("Branch %s set up to track remote branch %s from %s by rebasing.") :
--				  _("Branch %s set up to track remote branch %s from %s."),
--				  local, shortname, origin);
--		else if (remote_is_branch && !origin)
--			printf_ln(rebasing ?
--				  _("Branch %s set up to track local branch %s by rebasing.") :
--				  _("Branch %s set up to track local branch %s."),
--				  local, shortname);
--		else if (!remote_is_branch && origin)
--			printf_ln(rebasing ?
--				  _("Branch %s set up to track remote ref %s by rebasing.") :
--				  _("Branch %s set up to track remote ref %s."),
--				  local, remote);
--		else if (!remote_is_branch && !origin)
--			printf_ln(rebasing ?
--				  _("Branch %s set up to track local ref %s by rebasing.") :
--				  _("Branch %s set up to track local ref %s."),
--				  local, remote);
--		else
--			die("BUG: impossible combination of %d and %p",
--			    remote_is_branch, origin);
-+	    if(remote_is_branch && origin)
-+		printf_ln(_(setup_message[msg_index]), local, shortname, origin);
-+	    else if (remote_is_branch && !origin)
-+		printf_ln(_(setup_message[msg_index]), local, shortname);
-+	    else
-+		printf_ln(_(setup_message[msg_index]), local, remote);
- 	}
- }
- 
--- 
-1.7.9.5
+Should this function append a newline if there is not already one? If
+it's a mergetag header, we feed the result to gpg, etc, and expect to
+get the data out verbatim. We would not want to mess that up. OTOH, the
+commit object is bogus (and possibly truncated) in the first place, so
+it probably doesn't really matter. And the GPG signature on tag objects
+has its own delimiters, so a stray newline present or not at the end
+should not matter.
+
+-Peff
