@@ -1,92 +1,131 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH] mv: prevent mismatched data when ignoring errors.
-Date: Wed, 12 Mar 2014 23:21:26 +0000
-Message-ID: <20140312232126.GG4271@vauxhall.crustytoothpaste.net>
-References: <20140308183501.GH18371@serenity.lan>
- <1394306499-50871-1-git-send-email-sandals@crustytoothpaste.net>
- <xmqqfvmoo1d4.fsf@gitster.dls.corp.google.com>
+From: =?UTF-8?q?Pawe=C5=82=20Wawruch?= <pawlo@aleg.pl>
+Subject: [PATCH v5] install_branch_config: simplify verbose messages logic
+Date: Thu, 13 Mar 2014 00:47:45 +0100
+Message-ID: <1394668065-14629-1-git-send-email-pawlo@aleg.pl>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="DWg365Y4B18r8evw"
-Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>,
-	John Keeping <john@keeping.me.uk>,
-	Guillaume Gelin <contact@ramnes.eu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 13 00:46:11 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 13 00:55:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WNsqg-0001it-Dx
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Mar 2014 00:46:10 +0100
+	id 1WNszu-00023o-8h
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Mar 2014 00:55:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751575AbaCLXqE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Mar 2014 19:46:04 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:52550 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751230AbaCLXqD (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 12 Mar 2014 19:46:03 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:7922:e1f9:69f1:ac6c])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 1F56A28074;
-	Wed, 12 Mar 2014 23:21:32 +0000 (UTC)
-Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	John Keeping <john@keeping.me.uk>,
-	Guillaume Gelin <contact@ramnes.eu>
-Content-Disposition: inline
-In-Reply-To: <xmqqfvmoo1d4.fsf@gitster.dls.corp.google.com>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.13-1-amd64)
-User-Agent: Mutt/1.5.22 (2013-10-16)
-X-Spam-Score: -0.272 () BAYES_00,RDNS_NONE
+	id S1752407AbaCLXzb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Mar 2014 19:55:31 -0400
+Received: from mail-ea0-f172.google.com ([209.85.215.172]:65032 "EHLO
+	mail-ea0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751283AbaCLXzb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Mar 2014 19:55:31 -0400
+Received: by mail-ea0-f172.google.com with SMTP id l9so160914eaj.3
+        for <git@vger.kernel.org>; Wed, 12 Mar 2014 16:55:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=qxbiatNQCtG5OYNMlCX2GL3MtzZex4P/nea1heKuQik=;
+        b=zdYx97qaIi834SN+BjOiVH/0vmjAIwAB/w6FCQTtcUUK2Re9kTIr0qDGPlztjp/Qqc
+         UStON1UxxdqYT16nlOerJOcW/+/Rl9b9BmurYwCvXjTaJlKumWCBZNzGjYp2rA+251xa
+         jPK1Ba5h0faC8tUziXcQkjFGyg5UPkY2GKDXtqZfcC4EjMVvS/Dz1jyYwB3rRCe+KLMZ
+         /5X12FWB7A+sXD2AbcwU/CHYorkC6bMdMbKmEANzLIquOYH4IhPxF/TCY656W7E9dOMc
+         ygSAL9bqaSrUStLUULkk0n+6zs9jvt76p4X97hd0HeewRbEN5LJQYiKECKPHDlzqF+FQ
+         NAfg==
+X-Received: by 10.14.106.193 with SMTP id m41mr318804eeg.62.1394668071831;
+        Wed, 12 Mar 2014 16:47:51 -0700 (PDT)
+Received: from endymion.chello.pl (89-74-49-157.dynamic.chello.pl. [89.74.49.157])
+        by mx.google.com with ESMTPSA id m42sm1571525eex.21.2014.03.12.16.47.50
+        for <git@vger.kernel.org>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 12 Mar 2014 16:47:51 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244011>
 
+Replace the chain of if statements with table of strings.
 
---DWg365Y4B18r8evw
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Pawe=C5=82 Wawruch <pawlo@aleg.pl>
+---
+Thanks to Eric Sunshine and Junio C Hamano.
+Simplified printing logic. The name moved to a table.
 
-On Tue, Mar 11, 2014 at 02:45:59PM -0700, Junio C Hamano wrote:
-> Thanks.  Neither this nor John's seems to describe the user-visible
-> way to trigger the symptom.  Can we have tests for them?
+v4: http://thread.gmane.org/gmane.comp.version-control.git/243914
+v3: http://thread.gmane.org/gmane.comp.version-control.git/243865
+v2: http://thread.gmane.org/gmane.comp.version-control.git/243849
+v1: http://thread.gmane.org/gmane.comp.version-control.git/243502
 
-I'll try to get to writing some test today or tomorrow.  I just noticed
-the bugginess by looking at the code, so I'll need to actually spend
-time reproducing the problem.
+ branch.c | 42 +++++++++++++++++-------------------------
+ 1 file changed, 17 insertions(+), 25 deletions(-)
 
+diff --git a/branch.c b/branch.c
+index 723a36b..c17817c 100644
+--- a/branch.c
++++ b/branch.c
+@@ -53,6 +53,20 @@ void install_branch_config(int flag, const char *loc=
+al, const char *origin, cons
+ 	int remote_is_branch =3D starts_with(remote, "refs/heads/");
+ 	struct strbuf key =3D STRBUF_INIT;
+ 	int rebasing =3D should_setup_rebase(origin);
++	const char *message[][2][2] =3D {{{
++		N_("Branch %s set up to track remote branch %s from %s by rebasing."=
+),
++		N_("Branch %s set up to track remote branch %s from %s."),
++		},{
++		N_("Branch %s set up to track local branch %s by rebasing."),
++		N_("Branch %s set up to track local branch %s."),
++		}},{{
++		N_("Branch %s set up to track remote ref %s by rebasing."),
++		N_("Branch %s set up to track remote ref %s."),
++		},{
++		N_("Branch %s set up to track local ref %s by rebasing."),
++		N_("Branch %s set up to track local ref %s.")
++	}}};
++	const char *name[] =3D {remote, shortname};
+=20
+ 	if (remote_is_branch
+ 	    && !strcmp(local, shortname)
+@@ -76,31 +90,9 @@ void install_branch_config(int flag, const char *loc=
+al, const char *origin, cons
+ 	}
+ 	strbuf_release(&key);
+=20
+-	if (flag & BRANCH_CONFIG_VERBOSE) {
+-		if (remote_is_branch && origin)
+-			printf_ln(rebasing ?
+-				  _("Branch %s set up to track remote branch %s from %s by rebasin=
+g.") :
+-				  _("Branch %s set up to track remote branch %s from %s."),
+-				  local, shortname, origin);
+-		else if (remote_is_branch && !origin)
+-			printf_ln(rebasing ?
+-				  _("Branch %s set up to track local branch %s by rebasing.") :
+-				  _("Branch %s set up to track local branch %s."),
+-				  local, shortname);
+-		else if (!remote_is_branch && origin)
+-			printf_ln(rebasing ?
+-				  _("Branch %s set up to track remote ref %s by rebasing.") :
+-				  _("Branch %s set up to track remote ref %s."),
+-				  local, remote);
+-		else if (!remote_is_branch && !origin)
+-			printf_ln(rebasing ?
+-				  _("Branch %s set up to track local ref %s by rebasing.") :
+-				  _("Branch %s set up to track local ref %s."),
+-				  local, remote);
+-		else
+-			die("BUG: impossible combination of %d and %p",
+-			    remote_is_branch, origin);
+-	}
++	if (flag & BRANCH_CONFIG_VERBOSE)
++		printf_ln(_(message[!remote_is_branch][!origin][!rebasing]),
++				local, name[!remote_is_branch], origin);
+ }
+=20
+ /*
 --=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
-
---DWg365Y4B18r8evw
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCgAGBQJTIOv2AAoJEL9TXYEfUvaLmusQAMN19atr/zGyKl/xiP2I3gzp
-cSVZfdULZOg6G1rHCHg/ECNEUDEJGW+M2/qlYFtQUfAsLcXIktms7avwsJP9gbJT
-DrpRx7PEiStcP8FT5TzMArN+aLw5Ima4Iyxqaac5fRNABLRpnyLeXAN6ZCjYdZ/D
-PumZRIIbg14JzbnEBoBC2CHl5SyN1tX/Omwo8PX6LUit9rV9k/CKuUaGITUlQA4b
-0q5RPvHtuO+vYW7ah0tMyDfATw3J2gZrCbIXLZXctGQe2q+sgn4c2FONhZdhfpyN
-F9QYqdbZUkLDCkOb/sPiP7qyoS/AlM8sA9FhRMbScVXCxjd6oWLrpEDp9CKSNGEa
-rUsOuZKvB4NADVd/Ae/OomuFwXGbxgnARdJQ+CWTenzbhkgu/j82CNOmJMe9kaHq
-OOtDXTtq0HmR7IIRsK0BwTI1cg9H9S5K91sEhIyjarYV/H9AT1ac9H+KrKFBtxzf
-6jGxI8zjTuNaRaQUIEac8sfyky6/kZVuE7SJ8BzLFWvZvsqPTHPjTTFGcrBCC0ul
-DWfl1/B6QMzN/oYgKjql9OQK2N8Ur65jSN4b85Rp4hUHT+bqgRZ0BjkRjcBq89jf
-XuzL4p7RuXUcUg9OcWI2ZAbETpTI2Qmpui7jKkZ+dqdT73mdzpHN8MEpevE5bm/o
-OpfPSzRtxqgvkLyFqzFx
-=Qgq7
------END PGP SIGNATURE-----
-
---DWg365Y4B18r8evw--
+1.8.3.2
