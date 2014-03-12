@@ -1,59 +1,180 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: What's cooking in git.git (Mar 2014, #01; Tue, 4)
-Date: Wed, 12 Mar 2014 19:55:51 +0700
-Message-ID: <CACsJy8Do8nL1CcZ=jNz=_A2j8EWgcSAZBsqYZMF=SvTv0itRpg@mail.gmail.com>
-References: <xmqqiortijxp.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 12 14:02:56 2014
+From: Orgad Shaneh <orgads@gmail.com>
+Subject: [PATCH] submodule: add verbose mode for add/update
+Date: Wed, 12 Mar 2014 15:42:11 +0200
+Message-ID: <1394631731-4678-1-git-send-email-orgad.shaneh@audiocodes.com>
+Cc: Orgad Shaneh <orgads@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 12 14:42:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WNio9-0007rn-TD
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Mar 2014 14:02:54 +0100
+	id 1WNjQW-00017y-GK
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Mar 2014 14:42:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752147AbaCLNCt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Mar 2014 09:02:49 -0400
-Received: from mail-qa0-f44.google.com ([209.85.216.44]:56755 "EHLO
-	mail-qa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751412AbaCLNCs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Mar 2014 09:02:48 -0400
-Received: by mail-qa0-f44.google.com with SMTP id f11so9914723qae.31
-        for <git@vger.kernel.org>; Wed, 12 Mar 2014 06:02:48 -0700 (PDT)
+	id S1753975AbaCLNm1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Mar 2014 09:42:27 -0400
+Received: from mail-we0-f178.google.com ([74.125.82.178]:59455 "EHLO
+	mail-we0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753620AbaCLNm0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Mar 2014 09:42:26 -0400
+Received: by mail-we0-f178.google.com with SMTP id u56so11077327wes.23
+        for <git@vger.kernel.org>; Wed, 12 Mar 2014 06:42:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=Cv7QDAsWVQQhUDq/ungkNu0i0jMYNyRYOxA7xVN45yM=;
-        b=QKH3DZX5F0B7D1qIIoAWmJd0yRREgQ0AEazNMGtU0957b59xs8Sga5eTHdL3l3Y/sp
-         3FGWLS24XKQaShGpoI1WnzUJfgMf518J7Pwjis1LJXi+M4Sj/2LHVD9YvQeVM7yhRxuf
-         uyMq2tSBGl7eGr6GoBUOIz9L7CUWx5yqJU+E/vcfk+oXsbVcJT215nv+DIn7+RijA9RG
-         8FA5J5ARG4ltPKoF6DBb8cDyq9tdXrDD+7QH+3cj6WoEOwmRuW3jTBJXToDj12/c2XhB
-         rEOAIXT5lLwStTRyySmrDqOZk3enizD0zUp4/BKRTjXgEs6pGICwU/P+zF3Dy4WbgLjU
-         SfyQ==
-X-Received: by 10.140.93.244 with SMTP id d107mr14107364qge.41.1394628981675;
- Wed, 12 Mar 2014 05:56:21 -0700 (PDT)
-Received: by 10.96.215.102 with HTTP; Wed, 12 Mar 2014 05:55:51 -0700 (PDT)
-In-Reply-To: <xmqqiortijxp.fsf@gitster.dls.corp.google.com>
+        h=from:to:cc:subject:date:message-id;
+        bh=xtdrauV9IKDzZigpGDtsUDGJ5A6nctUEynZ5DtOJtCI=;
+        b=VPazrE9JFh8hIen0rAXaI33uGwBjDi9gQh2JJgE8Cnkbi+mbfh+gUDAo3UslP13t7M
+         NvsZxzloByn55a5IsIaDXD8SGvfIw9MVWf4ciCYZECR2UGT/RyU1X3RbLWgK8bQNcI9B
+         ljruJDgcIi9NZ9BSedYiXlYVw9uNHFVaALEmZAzU7e8DEcdv6RLHSJ+X2yM+fUoYOXGc
+         ytFhS5zFxeo0+cFjqKJHTGYZV69G7krz0OQKBF4y1k4YUhQgqyQdvHEKbQFNnlDoswGU
+         pz2Agu4uFrIgGP8SfFnJahtX6WOXy1Fr2qVgylIhkFbChG6CXIHUTPseRVnoknt8AZFo
+         z2nQ==
+X-Received: by 10.180.21.225 with SMTP id y1mr7412919wie.24.1394631745138;
+        Wed, 12 Mar 2014 06:42:25 -0700 (PDT)
+Received: from localhost.localdomain ([95.86.83.168])
+        by mx.google.com with ESMTPSA id q15sm69883511wjw.18.2014.03.12.06.42.22
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 12 Mar 2014 06:42:23 -0700 (PDT)
+X-Mailer: git-send-email 1.9.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243936>
 
-On Wed, Mar 5, 2014 at 7:10 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> [Graduated to "master"]
-> * jk/pack-bitmap (2014-02-12) 26 commits
->   (merged to 'next' on 2014-02-25 at 5f65d26)
+From: Orgad Shaneh <orgads@gmail.com>
 
-And it's finally in! Shall we start thinking about the next on-disk
-format? It was put aside last time to focus on getting this series in.
-My concern is shallow support (surprise?) so that cloning from a
-1-year-long shallow repo is not slower than a complete one. An
-extensible format is enough without going into details.
+Executes checkout without -q
+
+Signed-off-by: Orgad Shaneh <orgads@gmail.com>
+---
+ Documentation/git-submodule.txt |  7 +++++--
+ git-submodule.sh                | 24 +++++++++++++++++++-----
+ t/t7406-submodule-update.sh     |  9 +++++++++
+ 3 files changed, 33 insertions(+), 7 deletions(-)
+
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index 21cb59a..1867e94 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -10,13 +10,13 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git submodule' [--quiet] add [-b <branch>] [-f|--force] [--name <name>]
+-	      [--reference <repository>] [--depth <depth>] [--] <repository> [<path>]
++	      [--reference <repository>] [--depth <depth>] [-v|--verbose] [--] <repository> [<path>]
+ 'git submodule' [--quiet] status [--cached] [--recursive] [--] [<path>...]
+ 'git submodule' [--quiet] init [--] [<path>...]
+ 'git submodule' [--quiet] deinit [-f|--force] [--] <path>...
+ 'git submodule' [--quiet] update [--init] [--remote] [-N|--no-fetch]
+ 	      [-f|--force] [--rebase|--merge|--checkout] [--reference <repository>]
+-	      [--depth <depth>] [--recursive] [--] [<path>...]
++	      [--depth <depth>] [--recursive] [-v|--verbose] [--] [<path>...]
+ 'git submodule' [--quiet] summary [--cached|--files] [(-n|--summary-limit) <n>]
+ 	      [commit] [--] [<path>...]
+ 'git submodule' [--quiet] foreach [--recursive] <command>
+@@ -363,6 +363,9 @@ for linkgit:git-clone[1]'s `--reference` and `--shared` options carefully.
+ 	clone with a history truncated to the specified number of revisions.
+ 	See linkgit:git-clone[1]
+ 
++--verbose::
++  This option is valid for add and update commands. Show output of
++  checkout.
+ 
+ <path>...::
+ 	Paths to submodule(s). When specified this will restrict the command
+diff --git a/git-submodule.sh b/git-submodule.sh
+index a33f68d..5c4e057 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -5,11 +5,11 @@
+ # Copyright (c) 2007 Lars Hjemli
+ 
+ dashless=$(basename "$0" | sed -e 's/-/ /')
+-USAGE="[--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <repository>] [--] <repository> [<path>]
++USAGE="[--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <repository>] [-v|--verbose] [--] <repository> [<path>]
+    or: $dashless [--quiet] status [--cached] [--recursive] [--] [<path>...]
+    or: $dashless [--quiet] init [--] [<path>...]
+    or: $dashless [--quiet] deinit [-f|--force] [--] <path>...
+-   or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch] [-f|--force] [--rebase] [--reference <repository>] [--merge] [--recursive] [--] [<path>...]
++   or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch] [-f|--force] [--rebase] [--reference <repository>] [--merge] [--recursive] [-v|--verbose] [--] [<path>...]
+    or: $dashless [--quiet] summary [--cached|--files] [--summary-limit <n>] [commit] [--] [<path>...]
+    or: $dashless [--quiet] foreach [--recursive] <command>
+    or: $dashless [--quiet] sync [--recursive] [--] [<path>...]"
+@@ -319,12 +319,16 @@ module_clone()
+ 	rel=$(echo $a | sed -e 's|[^/][^/]*|..|g')
+ 	(
+ 		clear_local_git_env
++		if test -z "$verbose"
++		then
++			subquiet=-q
++		fi
+ 		cd "$sm_path" &&
+ 		GIT_WORK_TREE=. git config core.worktree "$rel/$b" &&
+ 		# ash fails to wordsplit ${local_branch:+-B "$local_branch"...}
+ 		case "$local_branch" in
+-		'') git checkout -f -q ${start_point:+"$start_point"} ;;
+-		?*) git checkout -f -q -B "$local_branch" ${start_point:+"$start_point"} ;;
++		'') git checkout -f $subquiet ${start_point:+"$start_point"} ;;
++		?*) git checkout -f $subquiet -B "$local_branch" ${start_point:+"$start_point"} ;;
+ 		esac
+ 	) || die "$(eval_gettext "Unable to setup cloned submodule '\$sm_path'")"
+ }
+@@ -380,6 +384,9 @@ cmd_add()
+ 		--depth=*)
+ 			depth=$1
+ 			;;
++		-v|--verbose)
++			verbose=1
++			;;
+ 		--)
+ 			shift
+ 			break
+@@ -786,6 +793,9 @@ cmd_update()
+ 		--depth=*)
+ 			depth=$1
+ 			;;
++		-v|--verbose)
++			verbose=1
++			;;
+ 		--)
+ 			shift
+ 			break
+@@ -913,7 +923,11 @@ Maybe you want to use 'update --init'?")"
+ 			must_die_on_failure=
+ 			case "$update_module" in
+ 			checkout)
+-				command="git checkout $subforce -q"
++				if test -z "$verbose"
++				then
++					subquiet=-q
++				fi
++				command="git checkout $subforce $subquiet"
+ 				die_msg="$(eval_gettext "Unable to checkout '\$sha1' in submodule path '\$displaypath'")"
+ 				say_msg="$(eval_gettext "Submodule path '\$displaypath': checked out '\$sha1'")"
+ 				;;
+diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+index 28ca763..04a0fcc 100755
+--- a/t/t7406-submodule-update.sh
++++ b/t/t7406-submodule-update.sh
+@@ -83,6 +83,15 @@ test_expect_success 'submodule update detaching the HEAD ' '
+ 	)
+ '
+ 
++test_expect_success 'submodule update verbose' '
++	(cd super/submodule &&
++	 git checkout master
++	) &&
++	(cd super &&
++	 git submodule update --verbose submodule 2>&1 | grep -q "HEAD is now at"
++	)
++'
++
+ test_expect_success 'submodule update from subdirectory' '
+ 	(cd super/submodule &&
+ 	 git reset --hard HEAD~1
 -- 
-Duy
+1.9.0.msysgit.0
