@@ -1,112 +1,143 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH][GSoC] parse-options: Add OPT_SET_INT_NONEG.
-Date: Wed, 12 Mar 2014 17:47:19 +0700
-Message-ID: <CACsJy8Dq5QyZdzCtew0qF37qThH8+05iTrD-ZOeBgbEukmCY5Q@mail.gmail.com>
-References: <1394535016-9424-1-git-send-email-yshuiv7@gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [RFC/WIP] Pluggable reference backends
+Date: Wed, 12 Mar 2014 12:43:35 +0100
+Message-ID: <53204867.4010809@alum.mit.edu>
+References: <531D9B50.5030404@alum.mit.edu> <531EEBCC.10409@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Yuxuan Shui <yshuiv7@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 12 11:48:00 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git discussion list <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>, Vicent Marti <tanoku@gmail.com>,
+	Brad King <brad.king@kitware.com>,
+	Johan Herland <johan@herland.net>
+To: Karsten Blees <karsten.blees@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 12 12:43:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WNghb-0006pm-Bb
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Mar 2014 11:47:59 +0100
+	id 1WNhZf-0004t8-AK
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Mar 2014 12:43:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753656AbaCLKrx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Mar 2014 06:47:53 -0400
-Received: from mail-qa0-f45.google.com ([209.85.216.45]:33952 "EHLO
-	mail-qa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753633AbaCLKrt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Mar 2014 06:47:49 -0400
-Received: by mail-qa0-f45.google.com with SMTP id hw13so9651339qab.18
-        for <git@vger.kernel.org>; Wed, 12 Mar 2014 03:47:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=GiCylKcjeXFbox53CCLOtEa7TOY09DJO3S6q4BTRpco=;
-        b=vWauY46CD62Ex53DsWejIh6xU/F36lcoIM9K6/fK2h8e7+Qfbf70VB5ygBG5OAvxFX
-         9slbepVfjoRRW9rEO8AmPIycFEJJ/FOb3KSFzK+AVitaTyvBgUnj9fnIaHSKM6MPPv4h
-         6Cjl7ClYGKDAMD8JL3V5FPRdayx/v7+aSR0WnjH5bI6MkpCaPIQKErAzLTzoMzBu481+
-         s7hmaAZk1kNxypabpnLyobLJBHv5FSYsEa209kk5ZNTTGtjw2O6BeihsLq7BmLTMJ2UP
-         yYZGcQJGNFSWxqHNKYBlipBg7Df3kTuUfUxxfZGRYsXurYigjxnCfIYGGh6NOGVxIx6G
-         nvNw==
-X-Received: by 10.140.93.244 with SMTP id d107mr13407064qge.41.1394621269101;
- Wed, 12 Mar 2014 03:47:49 -0700 (PDT)
-Received: by 10.96.215.102 with HTTP; Wed, 12 Mar 2014 03:47:19 -0700 (PDT)
-In-Reply-To: <1394535016-9424-1-git-send-email-yshuiv7@gmail.com>
+	id S1754101AbaCLLnn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Mar 2014 07:43:43 -0400
+Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:52903 "EHLO
+	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754082AbaCLLnk (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 12 Mar 2014 07:43:40 -0400
+X-AuditID: 12074414-f79d96d000002d2b-fa-5320486b6867
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 00.6E.11563.B6840235; Wed, 12 Mar 2014 07:43:39 -0400 (EDT)
+Received: from [192.168.69.148] (p57A2455B.dip0.t-ipconnect.de [87.162.69.91])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s2CBhZ2s023995
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Wed, 12 Mar 2014 07:43:36 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
+In-Reply-To: <531EEBCC.10409@gmail.com>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrOKsWRmVeSWpSXmKPExsUixO6iqJvtoRBs0DiX32LnOgmLrivdTBbz
+	7u5islj47yi7xY+WHmaLj50LmB3YPHbOusvucenldzaPj8+Ws3s8693D6PF5k1wAaxS3TVJi
+	SVlwZnqevl0Cd8bfnr0sBbfkKyatncPUwPhEsouRk0NCwETix4lHbBC2mMSFe+uBbC4OIYHL
+	jBJ3Jy9igXDOMUms/rmNHaSKV0BbYs/WdiCbg4NFQFXi63sDkDCbgK7Eop5mJhBbVCBYYvXl
+	BywQ5YISJ2c+AbNFgFrnt95jApnJLHCQUeLMnNlgCWEBY4knLxaygthCAm4Sp9a9BdvFKaAu
+	seDWNiaQXRIC4hI9jUEgYWYBHYl3fQ+YIWx5ie1v5zBPYBSchWTdLCRls5CULWBkXsUol5hT
+	mqubm5iZU5yarFucnJiXl1qka6GXm1mil5pSuokREgUiOxiPnJQ7xCjAwajEwztDST5YiDWx
+	rLgy9xCjJAeTkijvHDeFYCG+pPyUyozE4oz4otKc1OJDjBIczEoivLtsgXK8KYmVValF+TAp
+	aQ4WJXHeb4vV/YQE0hNLUrNTUwtSi2CyMhwcShK809yBGgWLUtNTK9Iyc0oQ0kwcnCDDuaRE
+	ilPzUlKLEktLMuJBERxfDIxhkBQP0N4MkHbe4oLEXKAoROspRmOO222/PjFyfP727xOjEEte
+	fl6qlDivL0ipAEhpRmke3CJY+nvFKA70tzDve5AqHmDqhJv3CmgVE9CqHwHyIKtKEhFSUg2M
+	FZzuXspPah/uTUgrOccSlf1BuekEz9E3qU8CX/jN2WZ1MubvMWb+JZJy0c1dDM8c 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243932>
 
-By convention, no full stop in the subject line. The subject should
-summarize your changes and "add ..NONEG" is just one part of it. The
-other is "convert to use ...NONEG". So I suggest "parse-options:
-convert to use new macro OPT_SET_INT_NONEG()" or something like that.
+Karsten,
 
-You should also explain in the message body (before Signed-off-by:)
-why this is a good thing to do. My guess is better readability and
-harder to make mistakes in the future when you have to declare new
-options with noneg.
+Thanks for your feedback!
 
-On Tue, Mar 11, 2014 at 5:50 PM, Yuxuan Shui <yshuiv7@gmail.com> wrote:
-> Reference: http://git.github.io/SoC-2014-Microprojects.html
+On 03/11/2014 11:56 AM, Karsten Blees wrote:
+> Am 10.03.2014 12:00, schrieb Michael Haggerty:
+>> 
+>> Reference transactions ----------------------
+> 
+> Very cool ideas indeed.
+> 
+> However, I'm concerned a bit that transactions are conceptual
+> overkill. How many concurrent updates do you expect in a repository?
+> Wouldn't a single repo-wide lock suffice (and be _much_ simpler to
+> implement with any backend, esp. file-based)?
 
-I think this project is actually two: one is convert current
-{OPTION_SET_INT, ... _NONEG} to the new macro, which is truly a micro
-project. The other is to find OPT_...(..) that should have NONEG but
-does not. This one may need more time because you need to check what
-those options do and if it makes sense to have --no- form.
+I am mostly thinking about long-running processes, like "gc" and
+"prune-refs", which need to be made race-free without blocking other
+processes for the whole time they are running (whereas it might be quite
+tolerable to have them fail or only complete part of their work in any
+given invocation).  Also, I work at GitHub, where we have quite a few
+repositories, some of which are quite active :-)
 
-I think we can focus on the {OPTION_..., _NONEG} conversion, which
-should be enough get you familiar with git community.
+Remember that I'm not yet proposing anything like hard-core ACID
+reference transactions.  I'm just clearing the way for various possible
+changes in reference handling.  I listed the ideas only to whet people's
+appetites and motivate the refactoring, which will take a while before
+it bears any real fruit.
 
-> diff --git a/parse-options.h b/parse-options.h
-> index d670cb9..7d20cf9 100644
-> --- a/parse-options.h
-> +++ b/parse-options.h
-> @@ -125,6 +125,10 @@ struct option {
->                                       (h), PARSE_OPT_NOARG }
->  #define OPT_SET_INT(s, l, v, h, i)  { OPTION_SET_INT, (s), (l), (v), NULL, \
->                                       (h), PARSE_OPT_NOARG, NULL, (i) }
-> +#define OPT_SET_INT_NONEG(s, l, v, h, i)  \
-> +                                     { OPTION_SET_INT, (s), (l), (v), NULL, \
-> +                                     (h), PARSE_OPT_NOARG | PARSE_OPT_NONEG, \
-> +                                     NULL, (i) }
->  #define OPT_BOOL(s, l, v, h)        OPT_SET_INT(s, l, v, h, 1)
->  #define OPT_HIDDEN_BOOL(s, l, v, h) { OPTION_SET_INT, (s), (l), (v), NULL, \
->                                       (h), PARSE_OPT_NOARG | PARSE_OPT_HIDDEN, NULL, 1}
+> The API you posted in [1] doesn't look very much like a transaction
+> API either (rather like batch-updates). E.g. there's no rollback, the
+> queue* methods cannot report failure, and there's no way to read a
+> ref as part of the transaction. So I'm afraid that backends that
+> support transactions out of the box (e.g. RDBMSs) will be hard to
+> adapt to this.
 
-To avoid the proliferation of similar macros in future, I think we
-should make a macro that takes any flags, e.g.
+Gmane is down at the moment but I assume you are referring to my patch
+series and the ref_transaction implementation therein.
 
-#define OPT_SET_INT_X(s, l, v, h, i, flags) {  ....., PARSE_OPT_NOARG
-| PARSE_OPT_ ## flags, NULL, (i) }
+No explicit rollback is necessary at this stage, because the "commit"
+function first locks all of the references that it wants to change
+(first verifying that they have the expected values), and then modifies
+them all.  By the time the references are locked, the whole transaction
+is guaranteed to succeed [1].  If the locks can't all be acquired, then
+any locks that were obtained are released.
 
-and we can use it for NONEG like "OPT_SET_INT_X(...., NONEG)". We
-could even redefine OPT_SET_INT() to use OPT_SET_INT_X() to reduce
-duplication.
+If a caller wants to rollback a transaction, it only needs to free the
+transaction instead of committing.  I should probably make that clearer
+by renaming free_ref_transaction() to rollback_ref_transaction().  By
+the time we start implementing other reference backends, that function
+will of course have to do more.  For that matter, maybe
+create_ref_transaction() should be renamed to begin_ref_transaction().
+Now would be a good time for concrete bikeshedding suggestions about
+function names or other details of the API :-)
 
-While we're at NONEG, I see that builtin/grep.c has this construct "{
-OPTION_INTEGER...NONEG}" and builtin/read-tree.c has "{
-OPTION_STRING..NONEG}". It would be great if you could look at them
-and see if NONEG is really needed there, or simpler forms
-OPT_INTEGER(...) and OPT_STRING(...) are enough.
+Yes, the queue_*() methods should probably later make a preliminary
+check of the reference's old value and return an error if the expected
+value is already incorrect.  This would allow callers to fail fast if
+the transaction is doomed to failure.  But that wasn't needed yet for
+the one existing caller, which builds up a transaction and commits it
+immediately, so I didn't implement it yet.  And the early checks would
+add overhead for this caller, so maybe they should be optional anyway.
+Maybe these functions should already be declared to return an error
+status, but there should be an option passed to create_ref_transaction()
+that selects whether fast checks should be performed or not for that
+transaction.
 
-You might need to read parse-options.c to understand these options.
-Documentation/technical/api-parse-options.txt should give you a good
-overview.
+Really, all that this first patch series does is put a different API
+around the mechanism that was already there, in update_refs().  There
+will be a lot more steps before we see anything approaching real
+reference transactions.  But I think your (implied) suggestion, to make
+the API more reminiscent of something like database transactions, is a
+good one and I will work on it.
 
-You could also think if we could transform "{ OPTION_CALLBACK.... }"
-to OPT_CALLBACK(...). But if you do and decide to do it, please make
-it a separate patch (one patch deals with one thing).
+Cheers,
+Michael
 
-That remaining of your patch looks good.
+[1] "Guaranteed" here is of course relative.  The commit could still
+fail due to the process being killed, disk errors, etc.  But it can't
+fail due to lock contention with another git process.
+
 -- 
-Duy
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
