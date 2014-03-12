@@ -1,101 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] status merge: guarentee space between msg and path
-Date: Wed, 12 Mar 2014 12:28:07 -0700
-Message-ID: <xmqqmwgvkyig.fsf@gitster.dls.corp.google.com>
-References: <1394555447-1805-1-git-send-email-sandy.carter@savoirfairelinux.com>
-	<1394580211-13383-1-git-send-email-sandy.carter@savoirfairelinux.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: What's cooking in git.git (Mar 2014, #02; Tue, 11)
+Date: Wed, 12 Mar 2014 15:35:09 -0400
+Message-ID: <20140312193509.GA1816@sigill.intra.peff.net>
+References: <xmqq7g80o05g.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, pclouds@gmail.com
-To: Sandy Carter <sandy.carter@savoirfairelinux.com>
-X-From: git-owner@vger.kernel.org Wed Mar 12 20:28:19 2014
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 12 20:35:21 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WNop7-0007Jv-Am
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Mar 2014 20:28:17 +0100
+	id 1WNovu-0005IV-KG
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Mar 2014 20:35:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751039AbaCLT2N convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Mar 2014 15:28:13 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50326 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750791AbaCLT2M convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 12 Mar 2014 15:28:12 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F072E71896;
-	Wed, 12 Mar 2014 15:28:11 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=KaTXucXKQV/O
-	fd6dIAOifBoX5+Q=; b=QwpYzZxKIkW4HEKCV6T7DebbBjyNvVaPEULoOBNLpozw
-	/xXzYXM/uE5QmwMy80BUgyqpqGpGjUJRHkPSnnPL0l91EfAPL1I6bZm2gM/xNl5Z
-	PwZIbud4plmO3iLBnYSZXJmeMy+XIk5mZMnRyqopSSUWJ2Y67GOMWrdBs/SIybE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=m+//9h
-	TtuU9C/oAFydGglpQzp8jkFwcB6O3SiqLc7HzHZVQQ0noBT7D0lcL7aNHUfcLPYp
-	oJmVC4N06+pbt5J5IqJgBf3idaRXbk+W7WeQXmXm4IKYu+FrHygFACCx1yfwS2kE
-	OakyHr3NK+IaOTwwJHoMMZ7yUcZd/daHhmDG4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D7D9B71895;
-	Wed, 12 Mar 2014 15:28:11 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2EE4571891;
-	Wed, 12 Mar 2014 15:28:11 -0400 (EDT)
-In-Reply-To: <1394580211-13383-1-git-send-email-sandy.carter@savoirfairelinux.com>
-	(Sandy Carter's message of "Tue, 11 Mar 2014 19:23:31 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 72BC85EA-AA1C-11E3-8309-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753008AbaCLTfM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Mar 2014 15:35:12 -0400
+Received: from cloud.peff.net ([50.56.180.127]:38267 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752935AbaCLTfL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Mar 2014 15:35:11 -0400
+Received: (qmail 29461 invoked by uid 102); 12 Mar 2014 19:35:10 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 12 Mar 2014 14:35:10 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Mar 2014 15:35:09 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqq7g80o05g.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243970>
 
-Sandy Carter <sandy.carter@savoirfairelinux.com> writes:
+On Tue, Mar 11, 2014 at 03:12:11PM -0700, Junio C Hamano wrote:
 
-> Add space between how and one when printing status of unmerged data.
-> This fixes an appending of the how message when it is longer than 20,
-> such  is the case in some translations such as the french one where t=
-he
-> colon gets appended to the file:
->     supprim=C3=A9 par nous :wt-status.c
->     modifi=C3=A9 des deux c=C3=B4t=C3=A9s :wt-status.h
-> Additionally, having a space makes the file in question easier to sel=
-ect
-> in console to quickly address the problem. Without the space, the col=
-on
-> (and, sometimes the last word) of the message is selected along with =
-the
-> file.
->
-> The previous french example should now print as, which is more proper=
-:
->     supprim=C3=A9 par nous :      wt-status.c
->     modifi=C3=A9 des deux c=C3=B4t=C3=A9s : wt-status.h
->
-> try 2:
-> Add function so wt_status_print_unmerged_data() and
-> wt_status_print_change_data() make use of the same padding technique
-> defined as wt_status_status_padding_string()
->
-> This has the additionnal advantage of aligning unmerged paths with pa=
-ths
-> of regular statuses.
->
-> Signed-off-by: Sandy Carter <sandy.carter@savoirfairelinux.com>
-> ---
->  t/t7060-wtstatus.sh         |  16 +++----
->  t/t7506-status-submodule.sh |  18 ++++----
->  t/t7508-status.sh           |  94 +++++++++++++++++++---------------=
------
->  t/t7512-status-help.sh      |  30 ++++++-------
+> * jk/warn-on-object-refname-ambiguity (2014-01-09) 6 commits
+>  - get_sha1: drop object/refname ambiguity flag
+>  - get_sha1: speed up ambiguous 40-hex test
+>  - FIXUP: teach DO_FOR_EACH_NO_RECURSE to prime_ref_dir()
+>  - refs: teach for_each_ref a flag to avoid recursion
+>  - cat-file: fix a minor memory leak in batch_objects
+>  - cat-file: refactor error handling of batch_objects
+> 
+>  Expecting a reroll.
 
-This is too noisy a patch to be reviewed.  I tried to resurrect
-Jonathan's fix from Dec 2013 and posted it elsewhere---does it work
-for you?
+I finally got a chance to return to this one. Michael had some good
+comments on the refactoring that was going on in the middle patches. He
+ended with:
+
+  Yes.  Still, the code is really piling up for this one warning for the
+  contrived eventuality that somebody wants to pass SHA-1s and branch
+  names together in a single cat-file invocation *and* wants to pass
+  lots of inputs at once and so is worried about performance *and* has
+  reference names that look like SHA-1s.  Otherwise we could just leave
+  the warning disabled in this case, as now.  Or we could add a new
+  "--hashes-only" option that tells cat-file to treat all of its
+  arguments/inputs as SHA-1s; such an option would permit an even faster
+  code path for bulk callers.
+
+Having looked at it again, I really think it is not worth pursuing. The
+end goal is not that interesting, there is a lot of code introduced, and
+a reasonable chance of accidentally introducing regressions and/or
+making the code less maintainable.  Keeping the existing code (which
+just disables the check for cat-file) is probably the sanest course of
+action. We can do a similar thing for "rev-list --stdin" if we want, or
+we can wait until somebody complains.
+
+The bottom two patches are reasonable cleanups we should keep, though
+(and the rest can just be discarded).
+
+-Peff
