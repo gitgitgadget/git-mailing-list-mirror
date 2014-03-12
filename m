@@ -1,89 +1,77 @@
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <l.s.r@web.de>
-Subject: Re: [PATCH] general style: replaces memcmp() with proper starts_with()
-Date: Wed, 12 Mar 2014 22:45:15 +0100
-Message-ID: <5320D56B.8060101@web.de>
-References: <1394635434-44979-1-git-send-email-quintus.public@gmail.com>	<20140312175624.GA7982@sigill.intra.peff.net>	<xmqqiorjky0a.fsf@gitster.dls.corp.google.com>	<5320C8CC.3010404@web.de> <87fvmni0de.fsf@fencepost.gnu.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4] install_branch_config: simplify verbose messages logic
+Date: Wed, 12 Mar 2014 15:02:01 -0700
+Message-ID: <xmqqob1bjcti.fsf@gitster.dls.corp.google.com>
+References: <1394584412-7735-1-git-send-email-pawlo@aleg.pl>
+	<CAPig+cTmdF06PrWboJFNFEGKLCa=3rmGrcPusSsYZxdtfSEewA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Quint Guvernator <quintus.public@gmail.com>,
-	git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Wed Mar 12 22:46:20 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?Q?Pawe=C5=82?= Wawruch <pawlo@aleg.pl>,
+	Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Wed Mar 12 23:02:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WNqyh-0001Th-7S
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Mar 2014 22:46:19 +0100
+	id 1WNrEX-0008MB-IP
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Mar 2014 23:02:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753162AbaCLVqO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Mar 2014 17:46:14 -0400
-Received: from mout.web.de ([212.227.15.3]:52445 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753137AbaCLVqO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Mar 2014 17:46:14 -0400
-Received: from [192.168.178.27] ([79.250.169.126]) by smtp.web.de (mrweb103)
- with ESMTPSA (Nemesis) id 0M0yeJ-1XIZco2IN5-00v8VZ; Wed, 12 Mar 2014 22:46:05
- +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
-In-Reply-To: <87fvmni0de.fsf@fencepost.gnu.org>
-X-Provags-ID: V03:K0:4X2es7mf0Ej0L3rQ8KmDi8kNLrk9tUh9xXkMXGvbCVvr+OZrcfs
- ffTQIbvoNZ5hygAV/4FJoVf6pB2ITJOac7r8IXmMK5sTweWcjx5sLbwQH9Kjc5QM0LQqZLD
- +iWP58fIKwbO/XgtFJ9kYZqii/Wmmd1eKeywT2ld5CocrD5evYHg6fhTiOOcrIAHJaMh3zS
- owIAdc/Q0BeeganH5OuAw==
+	id S1752416AbaCLWCg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Mar 2014 18:02:36 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35163 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752137AbaCLWCf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Mar 2014 18:02:35 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 16FFE74712;
+	Wed, 12 Mar 2014 18:02:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=OG/GoMRKxaSdWBL8MaaCo89RS5M=; b=gx9up1
+	h0US/P7TPBjKtxt274Lmv/W3dUVLA0ltV822h1JE9AuFCTVDVikxQMqTVrD9zhmC
+	r+u5OmpZEaWBSPKlfqHu6AQyhP0oAEnYL5CkjgQwVJOzJcsckAYi8DBxvBsC9pOf
+	/poafKLLYUSrx1IlXgb39X3AnpEUXPRWtavAQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=VOA+DhI4i8G3FAPCiIrxvXFRbY4lhL/D
+	OhOhq65aExGWKINeKqAzyy9MKE/U3htsQwM5+ldW2T1MimnDIDlLBtKmr6vQHlWA
+	BaKzYJl6RmBnhgG1KQvMpolrKuW7KNI4uaHqEGbs37p0ogoHcDq7VrI5Wkjs61FE
+	cLrAaFO32OM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0926874711;
+	Wed, 12 Mar 2014 18:02:35 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 552CA74710;
+	Wed, 12 Mar 2014 18:02:34 -0400 (EDT)
+In-Reply-To: <CAPig+cTmdF06PrWboJFNFEGKLCa=3rmGrcPusSsYZxdtfSEewA@mail.gmail.com>
+	(Eric Sunshine's message of "Wed, 12 Mar 2014 01:36:57 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 040265B4-AA32-11E3-A1C5-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244002>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244003>
 
-Am 12.03.2014 22:16, schrieb David Kastrup:
-> Ren=E9 Scharfe <l.s.r@web.de> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
+
+>> +               if (origin && remote_is_branch)
+>> +                       printf_ln(_(message[!remote_is_branch][!origin][!rebasing]),
+>> +                               local, name, origin);
+>>                 else
+>> -                       die("BUG: impossible combination of %d and %p",
+>> -                           remote_is_branch, origin);
+>> +                       printf_ln(_(message[!remote_is_branch][!origin][!rebasing]),
+>> +                               local, name);
 >
->> Am 12.03.2014 20:39, schrieb Junio C Hamano:
->>> Jeff King <peff@peff.net> writes:
->>>
->>>>>    static inline int standard_header_field(const char *field, siz=
-e_t len)
->>>>>    {
->>>>> -	return ((len =3D=3D 4 && !memcmp(field, "tree ", 5)) ||
->>>>> -		(len =3D=3D 6 && !memcmp(field, "parent ", 7)) ||
->>>>> -		(len =3D=3D 6 && !memcmp(field, "author ", 7)) ||
->>>>> -		(len =3D=3D 9 && !memcmp(field, "committer ", 10)) ||
->>>>> -		(len =3D=3D 8 && !memcmp(field, "encoding ", 9)));
->>>>> +	return ((len =3D=3D 4 && starts_with(field, "tree ")) ||
->>>>> +		(len =3D=3D 6 && starts_with(field, "parent ")) ||
->>>>> +		(len =3D=3D 6 && starts_with(field, "author ")) ||
->>>>> +		(len =3D=3D 9 && starts_with(field, "committer ")) ||
->>>>> +		(len =3D=3D 8 && starts_with(field, "encoding ")));
->>>>
->>>> These extra "len" checks are interesting.  They look like an attem=
-pt to
->>>> optimize lookup, since the caller will already have scanned forwar=
-d to
->>>> the space.
->>
->> I wonder what the performance impact might be.  The length checks ar=
-e
->> also needed for correctness, however, to avoid running over the end =
-of
->> the buffer.
->
-> Depends on whether memcmp is guaranteed to stop immediately on mismat=
-ch.
-> Then memcmp(field, "tree ", 5) cannot walk across a NUL byte in field=
-=2E
+> Shouldn't this logic also be encoded in the table? After all, the
+> point of making the code table-driven is so that such hard-coded logic
+> can be avoided. It shouldn't be difficult to do.
 
-I'm not sure we can rely on that property.  But anyway -- if field=20
-points to, say, a one-byte buffer containing the letter t, then memcmp=20
-would overrun that buffer.  If field was guaranteed to be NUL-terminate=
-d=20
-then at least starts_with would stop at the end, but the signature of=20
-standard_header_field() suggests that it can be used with arbitrary=20
-buffers, not just C strings.
-
-Ren=E9
+Hmph.  Is it even necessary in the first place?  Does it hurt if you
+give more parameters than the number of placeholders in the format
+string?
