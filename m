@@ -1,73 +1,92 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Microproject idea: new OPT_* macros for PARSE_OPT_NONEG
-Date: Thu, 13 Mar 2014 06:37:41 +0700
-Message-ID: <CACsJy8Dw=43m_4KzAxwCqLsFq2E23rT=bT3zmGUue6RYTnrOYg@mail.gmail.com>
-References: <CACsJy8CBVVJN3V8N_djLF4XKfTbxvdcJCnWmZJxVZOwy8AMQWA@mail.gmail.com>
- <531977AF.4060907@alum.mit.edu> <CACsJy8AUhHE8=Yaj6_G46V6w5ZbA3z403GkBfsbZL7MxgeA3RQ@mail.gmail.com>
- <xmqqzjl1u87n.fsf@gitster.dls.corp.google.com>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH] mv: prevent mismatched data when ignoring errors.
+Date: Wed, 12 Mar 2014 23:21:26 +0000
+Message-ID: <20140312232126.GG4271@vauxhall.crustytoothpaste.net>
+References: <20140308183501.GH18371@serenity.lan>
+ <1394306499-50871-1-git-send-email-sandals@crustytoothpaste.net>
+ <xmqqfvmoo1d4.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="DWg365Y4B18r8evw"
+Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>,
+	John Keeping <john@keeping.me.uk>,
+	Guillaume Gelin <contact@ramnes.eu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 13 00:38:24 2014
+X-From: git-owner@vger.kernel.org Thu Mar 13 00:46:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WNsj9-0002vi-5X
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Mar 2014 00:38:23 +0100
+	id 1WNsqg-0001it-Dx
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Mar 2014 00:46:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752535AbaCLXiN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Mar 2014 19:38:13 -0400
-Received: from mail-qc0-f180.google.com ([209.85.216.180]:62628 "EHLO
-	mail-qc0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751767AbaCLXiL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Mar 2014 19:38:11 -0400
-Received: by mail-qc0-f180.google.com with SMTP id x3so300756qcv.11
-        for <git@vger.kernel.org>; Wed, 12 Mar 2014 16:38:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=ysDxwbTsKe8/9VoUnaBmb/ZWOpZBFurmXXzT3jBDuSw=;
-        b=Rca7DmNyzyrmu3YYh4HWZE1rTfYx2rUq3MFeCluFyDjICmN+hf8jnXQkuWhida7ozB
-         DOCX1CPG/l+/6blD/LgH+k7Rsdn7W125xX/g371tigi1HwdyUZTKE3lV6JdIh8BtBAGW
-         Ii3CDouItpODDLZ1FJLtZZB6hwhR1EM49mr9GY+uG2y4aoH6xPM0SuhExtZeVyZxwkad
-         nuLJSng+fwbiU4xZVOHxoJ4N4zNMLvCX/DmbAa+U+hkA5ZU+5SfWuVsOKXzaVuFXihZw
-         QZ8eK+X4hNbB9S6sX4x6/CQzbDqsS/vWjTqt/aRcBFn6kOR17jjc0oFCK0zjsK8eNiZL
-         aDAA==
-X-Received: by 10.140.83.203 with SMTP id j69mr359388qgd.42.1394667491211;
- Wed, 12 Mar 2014 16:38:11 -0700 (PDT)
-Received: by 10.96.215.102 with HTTP; Wed, 12 Mar 2014 16:37:41 -0700 (PDT)
-In-Reply-To: <xmqqzjl1u87n.fsf@gitster.dls.corp.google.com>
+	id S1751575AbaCLXqE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Mar 2014 19:46:04 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:52550 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751230AbaCLXqD (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 12 Mar 2014 19:46:03 -0400
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:7922:e1f9:69f1:ac6c])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 1F56A28074;
+	Wed, 12 Mar 2014 23:21:32 +0000 (UTC)
+Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	John Keeping <john@keeping.me.uk>,
+	Guillaume Gelin <contact@ramnes.eu>
+Content-Disposition: inline
+In-Reply-To: <xmqqfvmoo1d4.fsf@gitster.dls.corp.google.com>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.13-1-amd64)
+User-Agent: Mutt/1.5.22 (2013-10-16)
+X-Spam-Score: -0.272 () BAYES_00,RDNS_NONE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244010>
 
-On Sat, Mar 8, 2014 at 2:20 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Looking at "git grep -B3 OPT_NONEG" output, it seems that NONEG is
-> associated mostly with OPTION_CALLBACK and OPTION_SET_INT in the
-> existing code.
->
-> Perhaps OPT_SET_INT should default to not just OPT_NOARG but also
-> OPT_NONEG?
 
-There are OPT_SET_INT() that should not have NONEG in current code. So
-there are two sets of SET_INT anyway. Either we convert them all to a
-new macro that takes an extra flag, or we add OPT_SET_INT_NONEG() that
-covers one set and leave the other set alone.
+--DWg365Y4B18r8evw
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> I have a suspition that most users of other OPT_SET_<TYPE>
-> short-hands may also want them to default to NONEG (and the rare
-> ones that want to allow "--no-value-of-this-type=Heh" for some
-> reason to use the fully spelled form).  IIRC NONEG is relatively a
-> new addition, and many existing OPT_STRING() may predate it.
+On Tue, Mar 11, 2014 at 02:45:59PM -0700, Junio C Hamano wrote:
+> Thanks.  Neither this nor John's seems to describe the user-visible
+> way to trigger the symptom.  Can we have tests for them?
 
-I haven't checked how NONEG affects other types. But that's something
-I should probably look into.
--- 
-Duy
+I'll try to get to writing some test today or tomorrow.  I just noticed
+the bugginess by looking at the code, so I'll need to actually spend
+time reproducing the problem.
+
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+
+--DWg365Y4B18r8evw
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCgAGBQJTIOv2AAoJEL9TXYEfUvaLmusQAMN19atr/zGyKl/xiP2I3gzp
+cSVZfdULZOg6G1rHCHg/ECNEUDEJGW+M2/qlYFtQUfAsLcXIktms7avwsJP9gbJT
+DrpRx7PEiStcP8FT5TzMArN+aLw5Ima4Iyxqaac5fRNABLRpnyLeXAN6ZCjYdZ/D
+PumZRIIbg14JzbnEBoBC2CHl5SyN1tX/Omwo8PX6LUit9rV9k/CKuUaGITUlQA4b
+0q5RPvHtuO+vYW7ah0tMyDfATw3J2gZrCbIXLZXctGQe2q+sgn4c2FONhZdhfpyN
+F9QYqdbZUkLDCkOb/sPiP7qyoS/AlM8sA9FhRMbScVXCxjd6oWLrpEDp9CKSNGEa
+rUsOuZKvB4NADVd/Ae/OomuFwXGbxgnARdJQ+CWTenzbhkgu/j82CNOmJMe9kaHq
+OOtDXTtq0HmR7IIRsK0BwTI1cg9H9S5K91sEhIyjarYV/H9AT1ac9H+KrKFBtxzf
+6jGxI8zjTuNaRaQUIEac8sfyky6/kZVuE7SJ8BzLFWvZvsqPTHPjTTFGcrBCC0ul
+DWfl1/B6QMzN/oYgKjql9OQK2N8Ur65jSN4b85Rp4hUHT+bqgRZ0BjkRjcBq89jf
+XuzL4p7RuXUcUg9OcWI2ZAbETpTI2Qmpui7jKkZ+dqdT73mdzpHN8MEpevE5bm/o
+OpfPSzRtxqgvkLyFqzFx
+=Qgq7
+-----END PGP SIGNATURE-----
+
+--DWg365Y4B18r8evw--
