@@ -1,123 +1,127 @@
-From: Sandy Carter <sandy.carter@savoirfairelinux.com>
-Subject: Re: [PATCH] wt-status: i18n of section labels
-Date: Wed, 12 Mar 2014 16:17:33 -0400
-Message-ID: <5320C0DD.1090803@savoirfairelinux.com>
-References: <20131008085036.11434.25160.reportbug@x230-buxy.home.ouaza.com>	<20131219104613.GA18379@x230-buxy.home.ouaza.com>	<20131219194319.GB20443@google.com>	<xmqqa9cvmeod.fsf@gitster.dls.corp.google.com>	<xmqqtxb3kyr2.fsf_-_@gitster.dls.corp.google.com>	<5320BE1C.9020307@savoirfairelinux.com> <xmqq1ty7kwfp.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] submodule: add verbose mode for add/update
+Date: Wed, 12 Mar 2014 13:19:59 -0700
+Message-ID: <xmqqwqfzjhjk.fsf@gitster.dls.corp.google.com>
+References: <1394654625-4586-1-git-send-email-orgads@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Raphael Hertzog <hertzog@debian.org>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>, Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 12 21:15:54 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Orgad Shaneh <orgads@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 12 21:20:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WNpZB-0001AS-Ks
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Mar 2014 21:15:53 +0100
+	id 1WNpdW-0005Gj-7S
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Mar 2014 21:20:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752640AbaCLUPs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Mar 2014 16:15:48 -0400
-Received: from mail.savoirfairelinux.com ([209.172.62.77]:51415 "EHLO
-	mail.savoirfairelinux.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752315AbaCLUPr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Mar 2014 16:15:47 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mail.savoirfairelinux.com (Postfix) with ESMTP id 54AAEC96008;
-	Wed, 12 Mar 2014 16:15:47 -0400 (EDT)
-X-Virus-Scanned: amavisd-new at mail.savoirfairelinux.com
-Received: from mail.savoirfairelinux.com ([127.0.0.1])
-	by localhost (mail.savoirfairelinux.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Ggrg8X3cctTW; Wed, 12 Mar 2014 16:15:47 -0400 (EDT)
-Received: from [192.168.49.85] (mtl.savoirfairelinux.net [208.88.110.46])
-	by mail.savoirfairelinux.com (Postfix) with ESMTPSA id F00ACC96006;
-	Wed, 12 Mar 2014 16:15:46 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
-In-Reply-To: <xmqq1ty7kwfp.fsf@gitster.dls.corp.google.com>
+	id S1752419AbaCLUUP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Mar 2014 16:20:15 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55548 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752324AbaCLUUK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Mar 2014 16:20:10 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5F757740FC;
+	Wed, 12 Mar 2014 16:20:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=qVLK0joHfW3UxGyV+lD4L83PkuI=; b=THvmGN
+	YR8/WIBbIAY6G12drptjTg9evnD7hIxapqlljB3Ntyajg9ODqT726cWWV8U14sXl
+	qc4UlQVVx8/+fuorPuv24fCDlKxx3y1KLnZhkO6JQjgOwQKb8dQhoVSW97Z7F/Tm
+	dr6QWudJKTBbXKZScTZvMLtH+QmvAxYTlyGV8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Jv2VU7dImGr2v7V7qoCVci2O4th/T6FE
+	wwyTQFhXr9sCP1WNvJkCsZxX8MK08U5fY8DTJK7+0835AluavY7X3eTwsk13pWMb
+	XC1uCWnpFozLuBNXGnAgLMLYj4GzwnMCqfDTe3RotlL9+ULBY3ML+3UrQ+g7fekH
+	uc5bXhEBo8g=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4A0D9740FB;
+	Wed, 12 Mar 2014 16:20:10 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 46636740E6;
+	Wed, 12 Mar 2014 16:20:01 -0400 (EDT)
+In-Reply-To: <1394654625-4586-1-git-send-email-orgads@gmail.com> (Orgad
+	Shaneh's message of "Wed, 12 Mar 2014 22:03:45 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: B07FCD72-AA23-11E3-AA67-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243985>
 
-Le 2014-03-12 16:12, Junio C Hamano a =C3=A9crit :
-> Sandy Carter <sandy.carter@savoirfairelinux.com> writes:
->
->> Le 2014-03-12 15:22, Junio C Hamano a =C3=A9crit :
->>>    static const char *wt_status_diff_status_string(int status)
->>>    {
->>>    	switch (status) {
->>>    	case DIFF_STATUS_ADDED:
->>> -		return _("new file");
->>> +		return _("new file:");
->>>    	case DIFF_STATUS_COPIED:
->>> -		return _("copied");
->>> +		return _("copied:");
->>>    	case DIFF_STATUS_DELETED:
->>> -		return _("deleted");
->>> +		return _("deleted:");
->>>    	case DIFF_STATUS_MODIFIED:
->>> -		return _("modified");
->>> +		return _("modified:");
->>>    	case DIFF_STATUS_RENAMED:
->>> -		return _("renamed");
->>> +		return _("renamed:");
->>>    	case DIFF_STATUS_TYPE_CHANGED:
->>> -		return _("typechange");
->>> +		return _("typechange:");
->>>    	case DIFF_STATUS_UNKNOWN:
->>> -		return _("unknown");
->>> +		return _("unknown:");
->>>    	case DIFF_STATUS_UNMERGED:
->>> -		return _("unmerged");
->>> +		return _("unmerged:");
->>>    	default:
->>> -		return NULL;
->>> +		return _("bug");
->>> +	}
->>> +}
->>
->> I don't see why _("bug") is returned when, later down,
->
-> When there is a bug in the caller.
->
->>
->>> @@ -305,21 +346,16 @@ static void wt_status_print_change_data(struc=
-t wt_status *s,
->>>    	struct strbuf onebuf =3D STRBUF_INIT, twobuf =3D STRBUF_INIT;
->>>    	struct strbuf extra =3D STRBUF_INIT;
->>>    	static char *padding;
->>> +	static int label_width;
->>>    	const char *what;
->>>    	int len;
->>>
->>>    	if (!padding) {
->>> -		int width =3D 0;
->>> -		/* If DIFF_STATUS_* uses outside this range, we're in trouble */
->>> -		for (status =3D 'A'; status <=3D 'Z'; status++) {
->>> -			what =3D wt_status_diff_status_string(status);
->>> -			len =3D what ? strlen(what) : 0;
->>
->> checks for NULL.
->
-> That extra NULL-ness check can go, I think.  Thanks for
-> double-checking.
->
+Orgad Shaneh <orgads@gmail.com> writes:
 
-I refered to the wrong lines, the ones I was refering to were:
+> +--verbose::
+> +	This option is valid for add and update commands. Display the progress
+> +	of the actual submodule	checkout.
 
- > +static int maxwidth(const char *(*label)(int), int minval, int maxv=
-al)
- > +{
- > +	int result =3D 0, i;
- > +
- > +	for (i =3D minval; i <=3D maxval; i++) {
- > +		const char *s =3D label(i);
- > +		int len =3D s ? utf8_strwidth(s) : 0;
+Hmm, is the "valid for add and update" part we want to keep?  I do
+not think it is a crime if some other subcommand accepted --verbose
+option but its output under verbose mode and normal mode happened to
+be the same.
 
-Sorry about that
+I doubt it would take a lot of imagination to see that people would
+want to see "git submodule status --verbose" to get richer output,
+and at that point, "progress of checkout" as part of the description
+of the "--verbose" option does not make any sense.  Perhaps the
+second part that is specific to "add" and "update" subcommands
+should move to the description of these two subcommands?
+
+I dunno.
+
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index a33f68d..e1df2c8 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -5,11 +5,11 @@
+>  # Copyright (c) 2007 Lars Hjemli
+>  
+>  dashless=$(basename "$0" | sed -e 's/-/ /')
+> -USAGE="[--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <repository>] [--] <repository> [<path>]
+> +USAGE="[--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <repository>] [-v|--verbose] [--] <repository> [<path>]
+>     or: $dashless [--quiet] status [--cached] [--recursive] [--] [<path>...]
+>     or: $dashless [--quiet] init [--] [<path>...]
+>     or: $dashless [--quiet] deinit [-f|--force] [--] <path>...
+> -   or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch] [-f|--force] [--rebase] [--reference <repository>] [--merge] [--recursive] [--] [<path>...]
+> +   or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch] [-f|--force] [--rebase] [--reference <repository>] [--merge] [--recursive] [-v|--verbose] [--] [<path>...]
+>     or: $dashless [--quiet] summary [--cached|--files] [--summary-limit <n>] [commit] [--] [<path>...]
+>     or: $dashless [--quiet] foreach [--recursive] <command>
+>     or: $dashless [--quiet] sync [--recursive] [--] [<path>...]"
+> @@ -319,12 +319,16 @@ module_clone()
+>  	rel=$(echo $a | sed -e 's|[^/][^/]*|..|g')
+>  	(
+>  		clear_local_git_env
+> +		if test -z "$verbose"
+> +		then
+> +			subquiet=-q
+> +		fi
+>  		cd "$sm_path" &&
+>  		GIT_WORK_TREE=. git config core.worktree "$rel/$b" &&
+>  		# ash fails to wordsplit ${local_branch:+-B "$local_branch"...}
+>  		case "$local_branch" in
+> -		'') git checkout -f -q ${start_point:+"$start_point"} ;;
+> -		?*) git checkout -f -q -B "$local_branch" ${start_point:+"$start_point"} ;;
+> +		'') git checkout -f ${subquiet:+"$subquiet"} ${start_point:+"$start_point"} ;;
+> +		?*) git checkout -f ${subquiet:+"$subquiet"} -B "$local_branch" ${start_point:+"$start_point"} ;;
+>  		esac
+>  	) || die "$(eval_gettext "Unable to setup cloned submodule '\$sm_path'")"
+>  }
+> @@ -380,6 +384,9 @@ cmd_add()
+>  		--depth=*)
+>  			depth=$1
+>  			;;
+> +		-v|--verbose)
+> +			verbose=1
+> +			;;
+
+Compare $depth and $verbose, and think what would happen if the end
+user had an environment variable whose name happened to be $depth or
+$verbose.  Does this script misbehave under such a stray $verbose?
+What does the existing script do to prevent it from misbehaving when
+a stray $depth exists in the environment?
