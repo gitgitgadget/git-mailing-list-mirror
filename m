@@ -1,157 +1,208 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] submodule: add verbose mode for add/update
-Date: Wed, 12 Mar 2014 04:35:47 -0400
-Message-ID: <5FD334C9-9AD9-40AE-ADFB-B96B8E2D8F66@sunshineco.com>
-References: <CAGHpTBJ29oyuNojiAtsd73wau4Xsz2zuxxg04mFG0TdekeSRxA@mail.gmail.com>
-Mime-Version: 1.0 (Mac OS X Mail 7.2 \(1874\))
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: Orgad Shaneh <orgads@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 12 09:35:58 2014
+Subject: Re: [PATCH] SoC 2014 MicroProject No.8:change multiple if-else
+ statement to table-driven approach
+Date: Wed, 12 Mar 2014 05:21:06 -0400
+Message-ID: <CAPig+cQu7D3AUghOSUOZBwf5+iHCPkxPbY1WuQmPJk1muCk7tQ@mail.gmail.com>
+References: <zhaox383@umn.edu>
+	<1394596049-8767-1-git-send-email-zhaox383@umn.edu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>
+To: Yao Zhao <zhaox383@umn.edu>
+X-From: git-owner@vger.kernel.org Wed Mar 12 10:21:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WNedp-0006ps-Um
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Mar 2014 09:35:58 +0100
+	id 1WNfLh-0000cm-Ev
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Mar 2014 10:21:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756675AbaCLIfw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Mar 2014 04:35:52 -0400
-Received: from mail-ig0-f182.google.com ([209.85.213.182]:61129 "EHLO
-	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756336AbaCLIfu convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 12 Mar 2014 04:35:50 -0400
-Received: by mail-ig0-f182.google.com with SMTP id uy17so13591817igb.3
-        for <git@vger.kernel.org>; Wed, 12 Mar 2014 01:35:49 -0700 (PDT)
+	id S1752637AbaCLJVI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Mar 2014 05:21:08 -0400
+Received: from mail-yh0-f48.google.com ([209.85.213.48]:41326 "EHLO
+	mail-yh0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751800AbaCLJVH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Mar 2014 05:21:07 -0400
+Received: by mail-yh0-f48.google.com with SMTP id z6so9809786yhz.21
+        for <git@vger.kernel.org>; Wed, 12 Mar 2014 02:21:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:content-type:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=WzlWjYDds28kcORYRFw9ngipodM5zQltx9OqWFqjolo=;
-        b=bkp1W/KEpzaBj3Pgg8Vb8BszhUd7tYWUAIFd4TCdCaDy7IwWdmiv8RAu4LMRnlXvQV
-         qAcShs4niRI4RDNkD98RUT8UqFEo9BuzD8dzq+ObuiT3XNFhWiUGqnSIkWM3WidE3vhB
-         6ciz+WieDBTWo3rMD9lxYgALpcb9HRoC8af1ok7l09YEGosNF/6XmAyh41Yy++Y+4nHo
-         dBhC11wYEOObWFgkPfXNjC6a3NmC+R+u03o2Qlm1OW3YuNq2XZEdFesoWb3RPbdhK8E3
-         EmPwbQyL/OxLig0odsFdzF1LzvNP/bvoOI6ToU3HWH5qjHWILqg+meny+OSvtJnsZnKA
-         N5NQ==
-X-Received: by 10.50.122.9 with SMTP id lo9mr28884449igb.27.1394613349581;
-        Wed, 12 Mar 2014 01:35:49 -0700 (PDT)
-Received: from [192.168.0.104] (user-12l3cpl.cable.mindspring.com. [69.81.179.53])
-        by mx.google.com with ESMTPSA id an1sm53323434igc.0.2014.03.12.01.35.48
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 12 Mar 2014 01:35:49 -0700 (PDT)
-In-Reply-To: <CAGHpTBJ29oyuNojiAtsd73wau4Xsz2zuxxg04mFG0TdekeSRxA@mail.gmail.com>
-X-Mailer: Apple Mail (2.1874)
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=SbARFm3Au8YOfN/PuLYFcwlNmkwt/UM/5vYfg/C7rus=;
+        b=NDw3g7XvZ3RdFHZCifjdIvF+QUQ8K+8hnbe7ElUTcmmIwrARjkA5ORszUVNH3Mlxsn
+         ivLXeV0WkyaCQQAcxfVcSSQMLCkv97SDm6OvsvDJJWHS5igPCTzioPSEfYb76Sd0hUqK
+         6850CeIt9uhIvCib5Tk2xFKPfWmEc/r2K3WRL5Qpss36vFQbcJT4PydmGK3axVuExya+
+         Sqsza+fhJusjfUk66UoIfEamYM99h3VbhOCqVOcxW6qLMyFKgD7Wy7rZC77NLDnAid6f
+         6eMeJ3V2k7xnPeYEL3NlghgFeQCN8nyzFUy2bySnqiHQN4GSlcrfA3ftLCPEVNop6ide
+         gx4w==
+X-Received: by 10.236.152.36 with SMTP id c24mr951610yhk.118.1394616066215;
+ Wed, 12 Mar 2014 02:21:06 -0700 (PDT)
+Received: by 10.170.180.134 with HTTP; Wed, 12 Mar 2014 02:21:06 -0700 (PDT)
+In-Reply-To: <1394596049-8767-1-git-send-email-zhaox383@umn.edu>
+X-Google-Sender-Auth: V3vwX4tOuHy4UZrb0yLCBl1OtNw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243927>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243928>
 
-On Mar 12, 2014, at 2:38 AM, Orgad Shaneh <orgads@gmail.com> wrote:
-> Executes checkout without -q
-> =97
+Thanks for the submission. Comments below to give you a taste of the
+Git review process...
 
-Missing sign-off. See Documentation/SubmittingPatches.
+On Tue, Mar 11, 2014 at 11:47 PM, Yao Zhao <zhaox383@umn.edu> wrote:
+> Subject: SoC 2014 MicroProject No.8:change multiple if-else statement to table-driven approach
 
-Your patch is badly whitespace-damaged, as if it was pasted into your e=
-mail client. =93git send-email=94 can avoid this problem.
+The email subject is extracted automatically by "git am" as the first
+line of the patch's commit message so it should contain only text
+which is relevant to the commit message. In this case, everything
+before "changes" is merely commentary for readers of the email, and
+not relevant to the commit message.
 
-As I=92m not a submodule user, I won=92t review the content of the patc=
-h other than to say that such a change should be accompanied by documen=
-tation update (Documentation/git-submodule.txt) and additional tests.
+It is indeed a good idea to let reviewers know that this submission is
+for GSoC, and you can indicate this as such:
 
-> git-submodule.sh | 24 +++++++++++++++++++-----
-> 1 file changed, 19 insertions(+), 5 deletions(-)
->=20
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index a33f68d..5c4e057 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -5,11 +5,11 @@
-> # Copyright (c) 2007 Lars Hjemli
->=20
-> dashless=3D$(basename "$0" | sed -e 's/-/ /')
-> -USAGE=3D"[--quiet] add [-b <branch>] [-f|--force] [--name <name>]
-> [--reference <repository>] [--] <repository> [<path>]
-> +USAGE=3D"[--quiet] add [-b <branch>] [-f|--force] [--name <name>]
-> [--reference <repository>] [-v|--verbose] [--] <repository> [<path>]
-> or: $dashless [--quiet] status [--cached] [--recursive] [--] [<path>.=
-=2E.]
-> or: $dashless [--quiet] init [--] [<path>...]
-> or: $dashless [--quiet] deinit [-f|--force] [--] <path>...
-> -   or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch=
-]
-> [-f|--force] [--rebase] [--reference <repository>] [--merge]
-> [--recursive] [--] [<path>...]
-> +   or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch=
-]
-> [-f|--force] [--rebase] [--reference <repository>] [--merge]
-> [--recursive] [-v|--verbose] [--] [<path>...]
-> or: $dashless [--quiet] summary [--cached|--files]
-> [--summary-limit <n>] [commit] [--] [<path>...]
-> or: $dashless [--quiet] foreach [--recursive] <command>
-> or: $dashless [--quiet] sync [--recursive] [--] [<path>...]"
-> @@ -319,12 +319,16 @@ module_clone()
-> rel=3D$(echo $a | sed -e 's|[^/][^/]*|..|g')
-> (
-> clear_local_git_env
-> + if test -z "$verbose"
-> + then
-> + subquiet=3D-q
-> + fi
-> cd "$sm_path" &&
-> GIT_WORK_TREE=3D. git config core.worktree "$rel/$b" &&
-> # ash fails to wordsplit ${local_branch:+-B "$local_branch"...}
-> case "$local_branch" in
-> - '') git checkout -f -q ${start_point:+"$start_point"} ;;
-> - ?*) git checkout -f -q -B "$local_branch" ${start_point:+"$start_po=
-int"} ;;
-> + '') git checkout -f $subquiet ${start_point:+"$start_point"} ;;
-> + ?*) git checkout -f $subquiet -B "$local_branch"
-> ${start_point:+"$start_point"} ;;
-> esac
-> ) || die "$(eval_gettext "Unable to setup cloned submodule '\$sm_path=
-'")"
-> }
-> @@ -380,6 +384,9 @@ cmd_add()
-> --depth=3D*)
-> depth=3D$1
-> ;;
-> + -v|--verbose)
-> + verbose=3D1
-> + ;;
-> --)
-> shift
-> break
-> @@ -786,6 +793,9 @@ cmd_update()
-> --depth=3D*)
-> depth=3D$1
-> ;;
-> + -v|--verbose)
-> + verbose=3D1
-> + ;;
-> --)
-> shift
-> break
-> @@ -913,7 +923,11 @@ Maybe you want to use 'update --init'?")"
-> must_die_on_failure=3D
-> case "$update_module" in
-> checkout)
-> - command=3D"git checkout $subforce -q"
-> + if test -z "$verbose"
-> + then
-> + subquiet=3D-q
-> + fi
-> + command=3D"git checkout $subforce $subquiet"
-> die_msg=3D"$(eval_gettext "Unable to checkout '\$sha1' in submodule
-> path '\$displaypath'")"
-> say_msg=3D"$(eval_gettext "Submodule path '\$displaypath': checked ou=
-t
-> '\$sha1'")"
-> ;;
-> --=20
-> 1.9.0.msysgit.0
+    Subject: [PATCH GSoC] change multiple if-else statements to be table-driven
+
+> Signed-off-by: Yao Zhao <zhaox383@umn.edu>
+> ---
+
+The additional information that this is GSoC microproject #8 would go
+in the "commentary" area right here after the "---" following your
+sign-off.
+
+>  branch.c | 55 +++++++++++++++++++++++++++++++++++++++++++++++++++++--
+>  1 file changed, 53 insertions(+), 2 deletions(-)
+
+The patch is rife with style violations. I'll point out the first
+instance of each violation, but do be sure to fix all remaining ones
+when you resubmit. See Documentation/CodingGuidelines for details.
+
+> diff --git a/branch.c b/branch.c
+> index 723a36b..6432e27 100644
+> --- a/branch.c
+> +++ b/branch.c
+> @@ -53,7 +53,20 @@ void install_branch_config(int flag, const char *local, const char *origin, cons
+>         int remote_is_branch = starts_with(remote, "refs/heads/");
+>         struct strbuf key = STRBUF_INIT;
+>         int rebasing = should_setup_rebase(origin);
+> -
+> +       char** print_list = malloc(8 * sizeof(char*));
+
+Style: char **print_list
+
+Why allocate 'print_list' on the heap? An automatic variable 'char
+const *print_list[]' would be more idiomatic and less likely to be
+leaked.
+
+In fact, your heap-allocated 'print_list' _is_ being leaked a few
+lines down when the function returns early after warning that a branch
+can not be its own upstream.
+
+> +       char* arg1=NULL;
+> +       char* arg2=NULL;
+> +       char* arg3=NULL;
+
+Style: char *var
+Style: whitespace: var = NULL
+
+> +       int index=0;
+> +
+> +       print_list[7] = _("Branch %s set up to track remote branch %s from %s by rebasing.");
+> +       print_list[6] = _("Branch %s set up to track remote branch %s from %s.");
+> +       print_list[5] = _("Branch %s set up to track local branch %s by rebasing.");
+> +       print_list[4] = _("Branch %s set up to track local branch %s.");
+> +       print_list[3] = _("Branch %s set up to track remote ref %s by rebasing.");
+> +       print_list[2] = _("Branch %s set up to track remote ref %s.");
+> +       print_list[1] = _("Branch %s set up to track local ref %s by rebasing.");
+> +       print_list[0] = _("Branch %s set up to track local ref %s.");
+
+If you make print_list[] an automatic variable, then you can declare
+and populate it via a simple initializer. No need for this manual
+approach.
+
+>         if (remote_is_branch
+>             && !strcmp(local, shortname)
+>             && !origin) {
+> @@ -77,7 +90,44 @@ void install_branch_config(int flag, const char *local, const char *origin, cons
+>         strbuf_release(&key);
+>
+>         if (flag & BRANCH_CONFIG_VERBOSE) {
+> -               if (remote_is_branch && origin)
+> +               if(remote_is_branch)
+
+Style: whitespace: if (...)
+
+> +                               index += 4;
+> +               if(origin)
+> +                               index += 2;
+> +               if(rebasing)
+> +                               index += 1;
+> +
+> +               if(index < 0 || index > 7)
+> +               {
+> +                       die("BUG: impossible combination of %d and %p",
+> +                           remote_is_branch, origin);
+> +               }
+> +
+> +               if(index <= 4) {
+> +                       arg1 = local;
+> +                       arg2 = remote;
+> +               }
+> +               else if(index > 6) {
+
+Style: } else if (...) {
+
+> +                       arg1 = local;
+> +                       arg2 = shortname;
+> +                       arg3 = origin;
+> +               }
+> +               else {
+> +                       arg1 = local;
+> +                       arg2 = shortname;
+> +               }
+> +
+> +               if(!arg3) {
+> +                       printf_ln(print_list[index],arg1,arg2);
+
+Style: whitespace: printf_ln(x, y, z)
+
+> +               }
+> +               else {
+> +                       printf_ln(print_list[index],arg1,arg2,arg3);
+> +               }
+
+Unfortunately, this is quite a bit more verbose and complex than the
+original code, and all the magic numbers (4, 2, 1, 0, 7, 4, 6) place a
+higher cognitive load on the reader, so this change probably is a net
+loss as far as clarity is concerned.
+
+Take a step back and consider again the GSoC miniproject: It talks
+about making the code table-driven. Certainly, you have moved the
+strings into a table, but all the complex logic is still in the code,
+and not in a table, hence it's not table-driven. To make this
+table-driven, you should try to figure out how most or all of this
+logic can be moved into a table.
+
+> +               free(print_list);
+> +
+> +
+> +/*             if (remote_is_branch && origin)
+>                         printf_ln(rebasing ?
+>                                   _("Branch %s set up to track remote branch %s from %s by rebasing.") :
+>                                   _("Branch %s set up to track remote branch %s from %s."),
+> @@ -100,6 +150,7 @@ void install_branch_config(int flag, const char *local, const char *origin, cons
+>                 else
+>                         die("BUG: impossible combination of %d and %p",
+>                             remote_is_branch, origin);
+> +*/
+
+The code you wrote is meant to replace the old code, so your patch
+should actually remove the old code, not just comment it out.
+
+>         }
+>  }
+>
+> --
+> 1.8.3.2
