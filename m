@@ -1,85 +1,69 @@
-From: Ilya Bobyr <ilya.bobyr@gmail.com>
-Subject: Re: [PATCH] rev-parse --parseopt: option argument name hints
-Date: Wed, 12 Mar 2014 00:26:18 -0700
-Message-ID: <53200C1A.7070002@gmail.com>
-References: <1393842740-4628-1-git-send-email-ilya.bobyr@gmail.com>	<xmqqwqg9kbuk.fsf@gitster.dls.corp.google.com>	<531D51EC.6050503@gmail.com>	<xmqqk3c1rfqj.fsf@gitster.dls.corp.google.com> <xmqq7g80r1pm.fsf@gitster.dls.corp.google.com>
+From: Yuxuan Shui <yshuiv7@gmail.com>
+Subject: GSoC proposal: port pack bitmap support to libgit2.
+Date: Wed, 12 Mar 2014 16:19:23 +0800
+Message-ID: <CAGqt0zz1W1k92B+XRWEmMEv1=iyej+zi9QUCp2EhA=g+VnCt0g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 12 08:26:38 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: peff@peff.net, tanoku@gmail.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 12 09:19:51 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WNdYi-0003bd-Ux
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Mar 2014 08:26:37 +0100
+	id 1WNeOE-0002iD-Nq
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Mar 2014 09:19:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756496AbaCLH0d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Mar 2014 03:26:33 -0400
-Received: from mail-pb0-f45.google.com ([209.85.160.45]:56513 "EHLO
-	mail-pb0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756211AbaCLH0c (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Mar 2014 03:26:32 -0400
-Received: by mail-pb0-f45.google.com with SMTP id uo5so706794pbc.32
-        for <git@vger.kernel.org>; Wed, 12 Mar 2014 00:26:31 -0700 (PDT)
+	id S1756434AbaCLIT1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Mar 2014 04:19:27 -0400
+Received: from mail-vc0-f195.google.com ([209.85.220.195]:53122 "EHLO
+	mail-vc0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756336AbaCLITY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Mar 2014 04:19:24 -0400
+Received: by mail-vc0-f195.google.com with SMTP id lg15so1275859vcb.10
+        for <git@vger.kernel.org>; Wed, 12 Mar 2014 01:19:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=xhzhbVLkBScyxA9qYqBRpBBgItRzaOVc155RNeBv1TE=;
-        b=KQck6IqWgb6kzO1gRPLYccyqeQW3h1oi4X/2RpHBNe7HZWM74xsOvKlN+evH2WhTS5
-         cH+W0ZC4JFLoO6uREYfZCHxtIwJybqlI5DTMr5qtJejzgRzY/jnxQrTgYanXjBu/xzJB
-         M51mABAQcp8WwEJDzNz6f9CrnFG5W1n2TtdnJhAPcPNDkhgIk1R/Bp8oJC7oTSb3tv16
-         zQRsiHI5vUbcrKSo9ok2kKW6L/mopnuWii9FhbNf7WZYx//iHgNuMzXnVv/Q7CROfjvn
-         yyKufO0cb7bC06/lsck36YkGp6yWuouI78jaP/n9SQtGpKI6H1WUergL9F308uc7vp2x
-         yPDA==
-X-Received: by 10.68.190.228 with SMTP id gt4mr3067180pbc.94.1394609191766;
-        Wed, 12 Mar 2014 00:26:31 -0700 (PDT)
-Received: from [192.168.1.2] (c-50-136-172-14.hsd1.ca.comcast.net. [50.136.172.14])
-        by mx.google.com with ESMTPSA id ns7sm4172950pbc.32.2014.03.12.00.26.30
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 12 Mar 2014 00:26:31 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:28.0) Gecko/20100101 Thunderbird/28.0
-In-Reply-To: <xmqq7g80r1pm.fsf@gitster.dls.corp.google.com>
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        bh=KoEc0D5cn1kqz3mdKfvXbgIVwwYKA6Vp2tu1BPo0NQo=;
+        b=wIxU6hNe+3dOP+oniJCRMZgtZkKlhA+s9HQoUcI6VdKmvlOp0fF4Cl5L8n0fLTh2CI
+         T+b6KRPJWXVl95bZZBNy1kZELwu9aljplep2wbAB4KOkA6QnMaBBBNWaAptQ+qZUfVuI
+         wlSsTbC+Fcp1pIlLCRspfh8u3UJGw2POqE/mxD2sIwoVhlQdLEhE8W515DcxaHzaZOe/
+         r11WpG8ZreU0v7SA2gTPg2oYB+wnRjAK4C42Ae9IN4MK7N/Pa4WSzIXOFW0uJ2sig/U9
+         4KC0Ej3ZcovUhPkj5s8sAaHIZcx66uIYLgc46hSCnhmDHiPcaZLIrDslAcVjj112Qw9n
+         oYLA==
+X-Received: by 10.52.250.236 with SMTP id zf12mr29759310vdc.9.1394612363896;
+ Wed, 12 Mar 2014 01:19:23 -0700 (PDT)
+Received: by 10.220.89.209 with HTTP; Wed, 12 Mar 2014 01:19:23 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243924>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243925>
 
-On 3/11/2014 12:10 PM, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->>> Documentation on the whole argument parsing is quite short, so, I
->>> though, adding an example just to show how usage is generated would
->>> look like I am trying to make this feature look important than it is
->>> :)
->> You already are by saying the "Angle brackets are automatic", aren't
->> you?
-> That is, among the things --parseopt mode does, the above stresses
-> what happens _only_ when it emits help text for items that use this
-> feature.
+Hi,
 
-`argh' is used only while help text is generated.  So, there seems to be 
-no way around it :)
-I was talking not about the automatic addition of angle brackets, but 
-about the documentation on `argh' in general.
-The section where I've added a paragraph, is not specific to the help 
-output, but describes --parseopt.
-I though that an example just to describe `argh' while useful would look 
-a bit disproportional, compared to the amount of text on --parseopt.
+I'm Yuxuan Shui, a undergraduate student from China. I'm applying for
+GSoC 2014, and here is my proposal:
 
-But now that I've added a "Usage text" section to looks quite in place.
+I found this idea on the ideas page, and did some research about it.
+The pack bitmap patchset add a new .bitmap file for every pack file
+which contains the reachability information of selected commits. This
+information is used to speed up git fetching and cloning, and produce
+a very convincing results.
 
-I just realized that the second patch I sent did not contain the 
-changes.  Sorry about - I will resend it.
+The goal of my project is to port the pack bitmap implementation in
+core git to libgit2, so users of libgit2 could benefit from this
+optimization as well.
 
-I was also wondering about the possible next step(s).
-If you like the patch will you just take it from the maillist and it 
-would appear in the next "What's cooking in git.git"?
-Or the process is different?
+Please let me know if my proposal makes sense, thanks.
+
+P.S. I've submitted by microproject patch[1], but haven't received any
+response yet.
+
+[1]: http://thread.gmane.org/gmane.comp.version-control.git/243854
+
+-- 
+Regards
+Yuxuan Shui
