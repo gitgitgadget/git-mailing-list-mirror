@@ -1,69 +1,78 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: New GSoC microproject ideas
-Date: Wed, 12 Mar 2014 12:48:55 +0100
-Message-ID: <532049A7.6000304@alum.mit.edu>
+From: Brian Gesiak <modocache@gmail.com>
+Subject: Re: [GSoC14][RFC] Proposal Draft: Refactor tempfile handling
+Date: Wed, 12 Mar 2014 21:26:21 +0900
+Message-ID: <CAN7MxmXzowHjPFKS_+Dw8n8GUX7ooqTXW6MAGpNLA-VxnFY9uQ@mail.gmail.com>
+References: <CAN7MxmVQuk96dmXfxZ5kRZPTXNwpz2RY=y8HyqX4mZzrZUVbNg@mail.gmail.com>
+	<531F3959.4060608@alum.mit.edu>
+	<20140311180559.GB28154@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Fabian <bafain@gmail.com>,
-	Quint Guvernator <quintus.public@gmail.com>
-To: git discussion list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Mar 12 12:49:12 2014
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 12 13:26:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WNhel-00011U-4C
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Mar 2014 12:49:07 +0100
+	id 1WNiEt-0000Y4-Rp
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Mar 2014 13:26:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754277AbaCLLs7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Mar 2014 07:48:59 -0400
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:52926 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754269AbaCLLs6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 12 Mar 2014 07:48:58 -0400
-X-AuditID: 12074414-f79d96d000002d2b-c2-532049a9248c
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 74.8E.11563.9A940235; Wed, 12 Mar 2014 07:48:57 -0400 (EDT)
-Received: from [192.168.69.148] (p57A2455B.dip0.t-ipconnect.de [87.162.69.91])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s2CBmtSx024200
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Wed, 12 Mar 2014 07:48:56 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
-X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupileLIzCtJLcpLzFFi42IRYndR1F3pqRBssL9NweLQ3HvsFl1Xupks
-	3nX3Mzswe+ycdZfd4/MmuQCmKG6bpMSSsuDM9Dx9uwTujI6pm5kLPjFVfPuR2MC4lqmLkZND
-	QsBEYsPZ61C2mMSFe+vZuhi5OIQELjNKrH+xngUkISRwjknizmMtEJtXQFvi5ZyrYA0sAqoS
-	DTcngtlsAroSi3qawWxRgWCJ1ZcfsEDUC0qcnPkEzBYBqtn17CobiM0s4CWx9MQmsHphARWJ
-	x9cWA9kcQEeIS/Q0BkGU6Ei863vADGHLS2x/O4d5AiP/LCRTZyEpm4WkbAEj8ypGucSc0lzd
-	3MTMnOLUZN3i5MS8vNQiXQu93MwSvdSU0k2MkLAU2cF45KTcIUYBDkYlHt4ZSvLBQqyJZcWV
-	uYcYJTmYlER557gpBAvxJeWnVGYkFmfEF5XmpBYfYpTgYFYS4d1lC5TjTUmsrEotyodJSXOw
-	KInzflus7ickkJ5YkpqdmlqQWgSTleHgUJLgbfMAahQsSk1PrUjLzClBSDNxcIIM55ISKU7N
-	S0ktSiwtyYgHRWN8MTAeQVI8QHsz3EH2Fhck5gJFIVpPMepy3G779YlRiCUvPy9VSpzXF6RI
-	AKQoozQPbgUsCb1iFAf6WJh3AcglPMAEBjfpFdASJqAlPwLkQZaUJCKkpBoY3V+LiJ5dd18p
-	SLZKfur6OMWgYvaoz2yyykW/zoV5FW6+ExVR8WnN1Lur235w7rMMYXga8WX9/ZkWM2M4nF/P
-	jwoUivzu3reqd/WdpfOZ9T5z90av1fdNL0/lNFvq3TL/+8Y/Gz36DC4zHlFusLF0 
+	id S1753467AbaCLM0X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Mar 2014 08:26:23 -0400
+Received: from mail-ie0-f172.google.com ([209.85.223.172]:63199 "EHLO
+	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752558AbaCLM0W (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Mar 2014 08:26:22 -0400
+Received: by mail-ie0-f172.google.com with SMTP id as1so10443354iec.17
+        for <git@vger.kernel.org>; Wed, 12 Mar 2014 05:26:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=RTKvMZxOLI5Jvcy4XzQnzCBA+/FqNTFvKCozTrCTMPA=;
+        b=HMAGmZ3MQ4xMXGJqc2Q/Oi0Vvvkk7hqmTyK3c4oLXIwNweYnKepW8jEW/1Fl5XXFMu
+         J4MvFBh/tE48/X6v0DGhDvawMjzgygqTZJQs4UzAHwxcOZ1LdmlmP8twUjIDDQfqv13r
+         VfPSbGhJerog72X/nfcMEzgO+SDufq6CFjeEwoLxlhGqsEjux414ajp9suPc7y3i1PaA
+         9nTOPWkM1ayz6rEWYt5PNQ3Wfj39Rc627LSzv12d+3ju0ArbGkahIbmdm38UnUDfGURS
+         nXln5dyN5EBEJ2cy9d8oXixHzp3DxB7nR4t2IM8hIHBAsrRzUQCo17JQShKhf+UBnsgg
+         x8Gw==
+X-Received: by 10.43.155.209 with SMTP id lj17mr93926icc.94.1394627181989;
+ Wed, 12 Mar 2014 05:26:21 -0700 (PDT)
+Received: by 10.64.55.161 with HTTP; Wed, 12 Mar 2014 05:26:21 -0700 (PDT)
+In-Reply-To: <20140311180559.GB28154@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243934>
 
-Hi,
+> Currently the linked list of lockfiles only grows, never shrinks.  Once
+> an object has been linked into the list, there is no way to remove it
+> again even after the lock has been released.  So if a lock needs to be
+> created dynamically at a random place in the code, its memory is
+> unavoidably leaked.
 
-I just added a few microproject suggestions to the list for
-newly-arriving students [1].  A couple of them are weak, but I think
-number 17 has enough aspects to keep a whole crew of students busy for a
-while.
+Ah yes, I see. I think a good example is
+config.git_config_set_multivar_in_file, which even contains a comment
+detailing the problem: "Since lockfile.c keeps a linked list of all
+created lock_file structures, it isn't safe to free(lock).  It's
+better to just leave it hanging around."
 
-Michael
+> But I have a feeling that if we want to use a similar mechanism to
+> handle all temporary files (of which there can be more), then it would
+> be a good idea to lift this limitation.  It will require some care,
+> though, to make sure that record removal is done in a way that is
+> threadsafe and safe in the event of all expected kinds of process death.
 
-[1] http://git.github.io/SoC-2014-Microprojects.html
+It sounds like a threadsafe linked-list with an interface to manually
+remove elements from the list is the solution here; does that sound
+reasonable? Ensuring thread safety without sacrificing readability is
+probably more difficult than it sounds, but I don't think it's
+impossible.
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+I'll add some more details on this to my proposal[1]. Thank you!
+
+- Brian Gesiak
+
+[1] https://www.google-melange.com/gsoc/proposal/review/student/google/gsoc2014/modocache/5629499534213120
