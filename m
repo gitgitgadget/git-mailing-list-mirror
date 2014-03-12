@@ -1,88 +1,71 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: New GSoC microproject ideas
-Date: Wed, 12 Mar 2014 21:37:41 +0100
-Message-ID: <87siqni25m.fsf@fencepost.gnu.org>
-References: <532049A7.6000304@alum.mit.edu>
-	<xmqq1ty7me6a.fsf@gitster.dls.corp.google.com>
-	<87wqfzi5wa.fsf@fencepost.gnu.org>
-	<20140312192108.GA1601@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] status merge: guarentee space between msg and path
+Date: Wed, 12 Mar 2014 13:43:11 -0700
+Message-ID: <xmqqsiqnjggw.fsf@gitster.dls.corp.google.com>
+References: <1394555447-1805-1-git-send-email-sandy.carter@savoirfairelinux.com>
+	<1394580211-13383-1-git-send-email-sandy.carter@savoirfairelinux.com>
+	<xmqqmwgvkyig.fsf@gitster.dls.corp.google.com>
+	<5320BED8.3040108@savoirfairelinux.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	git discussion list <git@vger.kernel.org>,
-	Fabian <bafain@gmail.com>,
-	Quint Guvernator <quintus.public@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 12 21:37:49 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, pclouds@gmail.com
+To: Sandy Carter <sandy.carter@savoirfairelinux.com>
+X-From: git-owner@vger.kernel.org Wed Mar 12 21:43:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WNpuO-0004gX-PZ
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Mar 2014 21:37:49 +0100
+	id 1WNpzl-0001ST-Os
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Mar 2014 21:43:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751321AbaCLUho (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Mar 2014 16:37:44 -0400
-Received: from fencepost.gnu.org ([208.118.235.10]:40727 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751039AbaCLUhn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Mar 2014 16:37:43 -0400
-Received: from localhost ([127.0.0.1]:39765 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1WNpuI-00088d-CY; Wed, 12 Mar 2014 16:37:42 -0400
-Received: by lola (Postfix, from userid 1000)
-	id E4705E05D9; Wed, 12 Mar 2014 21:37:41 +0100 (CET)
-In-Reply-To: <20140312192108.GA1601@sigill.intra.peff.net> (Jeff King's
-	message of "Wed, 12 Mar 2014 15:21:08 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
+	id S1751873AbaCLUnR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Mar 2014 16:43:17 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44134 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751321AbaCLUnQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Mar 2014 16:43:16 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3F8C474B1A;
+	Wed, 12 Mar 2014 16:43:16 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=nU9amhCrzkWpLfCrX+D+0c7ko1o=; b=mXvCBh
+	2WPGZZZSEqA+2352ZogD6cC3UxeeLHwlP8gxXnQaxprWzyuadLLwyfhlal2ijkkm
+	ewDMIs7cMyQs5yn/sj/nxwt6wxJ9+4TtkdPctQdTT2awSPhGtlbpNxS9WldVNF7C
+	yIWam39ybBGgS5SpZQZiLSZCnIUYOGy4JJl1c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KvvbCxs2i+z0l4dfrDTZI8y2JFD1ZPlX
+	djsYUH6SbThFfqCYtcmhXbDJ8iLtWaGabjwQU3RqZ6h9Hwof34fmczdcqi7YPznq
+	PGtjclRQYFL7IZ4lidpLGZy0NNUWM9viX6Py3vRwNmdsNgb5k2jfYpdamjxmtgbU
+	sOGxG1TaEOE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2EF1074B19;
+	Wed, 12 Mar 2014 16:43:16 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7B95C74B0F;
+	Wed, 12 Mar 2014 16:43:14 -0400 (EDT)
+In-Reply-To: <5320BED8.3040108@savoirfairelinux.com> (Sandy Carter's message
+	of "Wed, 12 Mar 2014 16:08:56 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: EEEB83D2-AA26-11E3-B993-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243987>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243988>
 
-Jeff King <peff@peff.net> writes:
+Sandy Carter <sandy.carter@savoirfairelinux.com> writes:
 
-> On Wed, Mar 12, 2014 at 08:16:53PM +0100, David Kastrup wrote:
+> Seems fine except for the bit about returning _("bug"), which I brought up.
 >
->> Junio C Hamano <gitster@pobox.com> writes:
->> 
->> > Here is another, as I seem to have managed to kill another one ;-)
->> >
->> > -- >8 --
->> >
->> > "VAR=VAL command" is sufficient to run 'command' with environment
->> > variable VAR set to value VAL without affecting the environment of
->> > the shell itself, but we cannot do the same with a shell function
->> > (most notably, "test_must_fail");
->> 
->> No? bash:
->> 
->> dak@lola:/usr/local/tmp/lilypond$ zippo()
->> > {
->> > echo $XXX
->> > echo $XXX
->> > }
->> dak@lola:/usr/local/tmp/lilypond$ XXX=8 zippo
->> 8
->> 8
+> Seems to do the same thing as my proposal without changing the
+> alignment of paths in of regular status output. No changes to tests
+> necessary, less noisy.
 >
-> Try:
->
->   zippo() {
->     echo $XXX
->   }
->   XXX=8 zippo
->   zippo
->
-> XXX remains set after the first call under dash (but not bash). I
-> believe "ash" has the same behavior.
+> It works for me.
 
-Yes.  I would lean towards considering this a bug.  But I agree that it
-does not help.
-
--- 
-David Kastrup
+Thanks.  I'll work on a better split, then, and resend them later.
