@@ -1,208 +1,133 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] SoC 2014 MicroProject No.8:change multiple if-else
- statement to table-driven approach
-Date: Wed, 12 Mar 2014 05:21:06 -0400
-Message-ID: <CAPig+cQu7D3AUghOSUOZBwf5+iHCPkxPbY1WuQmPJk1muCk7tQ@mail.gmail.com>
-References: <zhaox383@umn.edu>
-	<1394596049-8767-1-git-send-email-zhaox383@umn.edu>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] install_branch_config(): switch from 'else-if' series to 'nested if-else'
+Date: Wed, 12 Mar 2014 10:23:01 +0100
+Message-ID: <vpqmwgvrcsq.fsf@anie.imag.fr>
+References: <1394613275-3327-1-git-send-email-nishgaba9@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>
-To: Yao Zhao <zhaox383@umn.edu>
-X-From: git-owner@vger.kernel.org Wed Mar 12 10:21:18 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Nishhal Gaba <nishgaba9@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 12 10:23:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WNfLh-0000cm-Ev
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Mar 2014 10:21:17 +0100
+	id 1WNfNb-0002JS-Q2
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Mar 2014 10:23:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752637AbaCLJVI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Mar 2014 05:21:08 -0400
-Received: from mail-yh0-f48.google.com ([209.85.213.48]:41326 "EHLO
-	mail-yh0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751800AbaCLJVH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Mar 2014 05:21:07 -0400
-Received: by mail-yh0-f48.google.com with SMTP id z6so9809786yhz.21
-        for <git@vger.kernel.org>; Wed, 12 Mar 2014 02:21:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=SbARFm3Au8YOfN/PuLYFcwlNmkwt/UM/5vYfg/C7rus=;
-        b=NDw3g7XvZ3RdFHZCifjdIvF+QUQ8K+8hnbe7ElUTcmmIwrARjkA5ORszUVNH3Mlxsn
-         ivLXeV0WkyaCQQAcxfVcSSQMLCkv97SDm6OvsvDJJWHS5igPCTzioPSEfYb76Sd0hUqK
-         6850CeIt9uhIvCib5Tk2xFKPfWmEc/r2K3WRL5Qpss36vFQbcJT4PydmGK3axVuExya+
-         Sqsza+fhJusjfUk66UoIfEamYM99h3VbhOCqVOcxW6qLMyFKgD7Wy7rZC77NLDnAid6f
-         6eMeJ3V2k7xnPeYEL3NlghgFeQCN8nyzFUy2bySnqiHQN4GSlcrfA3ftLCPEVNop6ide
-         gx4w==
-X-Received: by 10.236.152.36 with SMTP id c24mr951610yhk.118.1394616066215;
- Wed, 12 Mar 2014 02:21:06 -0700 (PDT)
-Received: by 10.170.180.134 with HTTP; Wed, 12 Mar 2014 02:21:06 -0700 (PDT)
-In-Reply-To: <1394596049-8767-1-git-send-email-zhaox383@umn.edu>
-X-Google-Sender-Auth: V3vwX4tOuHy4UZrb0yLCBl1OtNw
+	id S1752386AbaCLJXI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Mar 2014 05:23:08 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:35614 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751804AbaCLJXH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Mar 2014 05:23:07 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s2C9N0vi002817
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 12 Mar 2014 10:23:00 +0100
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s2C9N1ws019401;
+	Wed, 12 Mar 2014 10:23:01 +0100
+In-Reply-To: <1394613275-3327-1-git-send-email-nishgaba9@gmail.com> (Nishhal
+	Gaba's message of "Wed, 12 Mar 2014 14:04:35 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 12 Mar 2014 10:23:00 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s2C9N0vi002817
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1395220981.98114@Km/e8c4BXkxQa0X7lT6Ltg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243929>
 
-Thanks for the submission. Comments below to give you a taste of the
-Git review process...
+Nishhal Gaba <nishgaba9@gmail.com> writes:
 
-On Tue, Mar 11, 2014 at 11:47 PM, Yao Zhao <zhaox383@umn.edu> wrote:
-> Subject: SoC 2014 MicroProject No.8:change multiple if-else statement to table-driven approach
+> From: Nishchal <nishgaba9@gmail.com>
 
-The email subject is extracted automatically by "git am" as the first
-line of the patch's commit message so it should contain only text
-which is relevant to the commit message. In this case, everything
-before "changes" is merely commentary for readers of the email, and
-not relevant to the commit message.
+Set user.email/user.name and sendemail.from to the same address to avoid
+this inline From:.
 
-It is indeed a good idea to let reviewers know that this submission is
-for GSoC, and you can indicate this as such:
+> I am Nishchal Gaba, a GSOC 2014 aspirant, submitting patch in response to microproject(8)
 
-    Subject: [PATCH GSoC] change multiple if-else statements to be table-driven
+This part of your message is the commit message. It should justify why
+the change is good, but who you are is not very interesting here (think
+of someone running "git log" or "git blame" a year from now and going
+through your commit, what would he expect?). The first sentence could go
+below the ---.
 
-> Signed-off-by: Yao Zhao <zhaox383@umn.edu>
-> ---
+Please, wrap your messages (less than 80 characters per line).
 
-The additional information that this is GSoC microproject #8 would go
-in the "commentary" area right here after the "---" following your
-sign-off.
+> Similar Execution Time, but increased readability
 
->  branch.c | 55 +++++++++++++++++++++++++++++++++++++++++++++++++++++--
->  1 file changed, 53 insertions(+), 2 deletions(-)
+Why capitalize Execution Time?
 
-The patch is rife with style violations. I'll point out the first
-instance of each violation, but do be sure to fix all remaining ones
-when you resubmit. See Documentation/CodingGuidelines for details.
+> +		if (origin){
 
-> diff --git a/branch.c b/branch.c
-> index 723a36b..6432e27 100644
-> --- a/branch.c
-> +++ b/branch.c
-> @@ -53,7 +53,20 @@ void install_branch_config(int flag, const char *local, const char *origin, cons
->         int remote_is_branch = starts_with(remote, "refs/heads/");
->         struct strbuf key = STRBUF_INIT;
->         int rebasing = should_setup_rebase(origin);
-> -
-> +       char** print_list = malloc(8 * sizeof(char*));
+Here and below: space before {
 
-Style: char **print_list
+> +			if(remote_is_branch)
 
-Why allocate 'print_list' on the heap? An automatic variable 'char
-const *print_list[]' would be more idiomatic and less likely to be
-leaked.
+space before (
 
-In fact, your heap-allocated 'print_list' _is_ being leaked a few
-lines down when the function returns early after warning that a branch
-can not be its own upstream.
+> +				printf_ln(rebasing ?
+>  				  _("Branch %s set up to track remote branch %s from %s by rebasing.") :
+>  				  _("Branch %s set up to track remote branch %s from %s."),
+>  				  local, shortname, origin);
+> -		else if (remote_is_branch && !origin)
+> -			printf_ln(rebasing ?
+> -				  _("Branch %s set up to track local branch %s by rebasing.") :
+> -				  _("Branch %s set up to track local branch %s."),
+> -				  local, shortname);
+> -		else if (!remote_is_branch && origin)
+> -			printf_ln(rebasing ?
+> +			else
+> +				printf_ln(rebasing ?
+>  				  _("Branch %s set up to track remote ref %s by rebasing.") :
+>  				  _("Branch %s set up to track remote ref %s."),
 
-> +       char* arg1=NULL;
-> +       char* arg2=NULL;
-> +       char* arg3=NULL;
+At this point, it would make sense to me to factor the printf_ln call
+like
 
-Style: char *var
-Style: whitespace: var = NULL
+const char *msg;
+if (...)
+	msg = rebasing ? _("...") : _("...");
+else
+	msg = rebasing ? _("...") : _("...");
+printf_ln(msg, local, shortname);
 
-> +       int index=0;
+(but that's very subjective)
+
+> -		else if (!remote_is_branch && !origin)
+> -			printf_ln(rebasing ?
+> +		}
 > +
-> +       print_list[7] = _("Branch %s set up to track remote branch %s from %s by rebasing.");
-> +       print_list[6] = _("Branch %s set up to track remote branch %s from %s.");
-> +       print_list[5] = _("Branch %s set up to track local branch %s by rebasing.");
-> +       print_list[4] = _("Branch %s set up to track local branch %s.");
-> +       print_list[3] = _("Branch %s set up to track remote ref %s by rebasing.");
-> +       print_list[2] = _("Branch %s set up to track remote ref %s.");
-> +       print_list[1] = _("Branch %s set up to track local ref %s by rebasing.");
-> +       print_list[0] = _("Branch %s set up to track local ref %s.");
+> +		else if (!origin){
 
-If you make print_list[] an automatic variable, then you can declare
-and populate it via a simple initializer. No need for this manual
-approach.
+Err, isn't this the else branch of "if (origin)" ? If so, why repeat
+"!origin", and more specifically, isn't the next "else" branch dead
+code:
 
->         if (remote_is_branch
->             && !strcmp(local, shortname)
->             && !origin) {
-> @@ -77,7 +90,44 @@ void install_branch_config(int flag, const char *local, const char *origin, cons
->         strbuf_release(&key);
->
->         if (flag & BRANCH_CONFIG_VERBOSE) {
-> -               if (remote_is_branch && origin)
-> +               if(remote_is_branch)
-
-Style: whitespace: if (...)
-
-> +                               index += 4;
-> +               if(origin)
-> +                               index += 2;
-> +               if(rebasing)
-> +                               index += 1;
+> +		}
 > +
-> +               if(index < 0 || index > 7)
-> +               {
-> +                       die("BUG: impossible combination of %d and %p",
-> +                           remote_is_branch, origin);
-> +               }
-> +
-> +               if(index <= 4) {
-> +                       arg1 = local;
-> +                       arg2 = remote;
-> +               }
-> +               else if(index > 6) {
+>  		else
+>  			die("BUG: impossible combination of %d and %p",
+>  			    remote_is_branch, origin);
 
-Style: } else if (...) {
+I mean: obviously, it has to be dead code, but it seems a bit strange to
+read
 
-> +                       arg1 = local;
-> +                       arg2 = shortname;
-> +                       arg3 = origin;
-> +               }
-> +               else {
-> +                       arg1 = local;
-> +                       arg2 = shortname;
-> +               }
-> +
-> +               if(!arg3) {
-> +                       printf_ln(print_list[index],arg1,arg2);
+if (x)
+	...
+else if (!x)
+	...
+else
+	die(...)
 
-Style: whitespace: printf_ln(x, y, z)
-
-> +               }
-> +               else {
-> +                       printf_ln(print_list[index],arg1,arg2,arg3);
-> +               }
-
-Unfortunately, this is quite a bit more verbose and complex than the
-original code, and all the magic numbers (4, 2, 1, 0, 7, 4, 6) place a
-higher cognitive load on the reader, so this change probably is a net
-loss as far as clarity is concerned.
-
-Take a step back and consider again the GSoC miniproject: It talks
-about making the code table-driven. Certainly, you have moved the
-strings into a table, but all the complex logic is still in the code,
-and not in a table, hence it's not table-driven. To make this
-table-driven, you should try to figure out how most or all of this
-logic can be moved into a table.
-
-> +               free(print_list);
-> +
-> +
-> +/*             if (remote_is_branch && origin)
->                         printf_ln(rebasing ?
->                                   _("Branch %s set up to track remote branch %s from %s by rebasing.") :
->                                   _("Branch %s set up to track remote branch %s from %s."),
-> @@ -100,6 +150,7 @@ void install_branch_config(int flag, const char *local, const char *origin, cons
->                 else
->                         die("BUG: impossible combination of %d and %p",
->                             remote_is_branch, origin);
-> +*/
-
-The code you wrote is meant to replace the old code, so your patch
-should actually remove the old code, not just comment it out.
-
->         }
->  }
->
-> --
-> 1.8.3.2
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
