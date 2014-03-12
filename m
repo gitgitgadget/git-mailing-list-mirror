@@ -1,74 +1,116 @@
-From: Yuxuan Shui <yshuiv7@gmail.com>
-Subject: [PATCH v2 1/2] fsck.c: Change the type of fsck_ident()'s first argument
-Date: Thu, 13 Mar 2014 02:51:29 +0800
-Message-ID: <1394650290-3750-2-git-send-email-yshuiv7@gmail.com>
-References: <1394650290-3750-1-git-send-email-yshuiv7@gmail.com>
-Cc: Yuxuan Shui <yshuiv7@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 12 19:51:56 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git: problematic git status output with some translations (such as fr_FR)
+Date: Wed, 12 Mar 2014 11:53:38 -0700
+Message-ID: <xmqqa9cvmeod.fsf@gitster.dls.corp.google.com>
+References: <20131008085036.11434.25160.reportbug@x230-buxy.home.ouaza.com>
+	<20131219104613.GA18379@x230-buxy.home.ouaza.com>
+	<20131219194319.GB20443@google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Raphael Hertzog <hertzog@debian.org>, git@vger.kernel.org,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 12 19:53:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WNoFv-0007ID-Tg
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Mar 2014 19:51:56 +0100
+	id 1WNoHi-0000ZO-9c
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Mar 2014 19:53:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751203AbaCLSvq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Mar 2014 14:51:46 -0400
-Received: from mail-pb0-f42.google.com ([209.85.160.42]:43451 "EHLO
-	mail-pb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751011AbaCLSvp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Mar 2014 14:51:45 -0400
-Received: by mail-pb0-f42.google.com with SMTP id rr13so1497125pbb.29
-        for <git@vger.kernel.org>; Wed, 12 Mar 2014 11:51:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=1LqjKRQKiw82pteiwln1Wj/uO7LxtC1R3StCdDuzRE4=;
-        b=rLWmXRCGsASSOkgUzLRabqSyKA1+nfnm65pamVqENVeApe9xw9+ldCSotHHRW5njlK
-         XR4kAp/Y3ButEohvkAnNAUCcRT+F7r2TPbrelNcOaOvMag1y4+gsgK9MvEBYqhgM1M4w
-         1oWg/2FvZfmvd8/icIAi9kQy6fgohUFkRG14xX1w32qfKaf+EBtO20xO1o2rfqKEnvG2
-         AfaLeKG2LBVKgWtSopnDrGbXXV2RBu/TYbTwZa2ZzpGU3uDoZjzc3sSnMigLRXJqoxO7
-         8uMhPNFTjgi0qBQPkOCtx4KPVuOI0dUoLUZPd3S8zipT1SQAYrOBQZflVPO/AU9/ErFN
-         ll2g==
-X-Received: by 10.68.66.1 with SMTP id b1mr6914874pbt.43.1394650304668;
-        Wed, 12 Mar 2014 11:51:44 -0700 (PDT)
-Received: from localhost.localdomain ([123.151.32.162])
-        by mx.google.com with ESMTPSA id tu3sm25142283pab.1.2014.03.12.11.51.42
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 12 Mar 2014 11:51:44 -0700 (PDT)
-X-Mailer: git-send-email 1.9.0
-In-Reply-To: <1394650290-3750-1-git-send-email-yshuiv7@gmail.com>
+	id S1751745AbaCLSxm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Mar 2014 14:53:42 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55545 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750736AbaCLSxl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Mar 2014 14:53:41 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B0060736CD;
+	Wed, 12 Mar 2014 14:53:40 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ujzi5YFyH2V0AwqNKXuatSYn6bM=; b=mxPpGX
+	O33/ZSFZNS0pHN+1GMowCGZ/0epqVcbMPJBiGgM88mA/m0D0SOZt91EybJ/O5Ig/
+	iI6zHZeZz0yk6aG3xyNMPCAk1+fdicTZYFkjduSXbKaXjLT79LWVDKAQ8KGQq4pf
+	3nkLqX1uqoDWeVSEMEOAeLdBdW/NIQkHIl07s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=GjRhvKuZtnyrjP+FpNIonV2weRNbSfH8
+	3JqU85/AOkSm4gZ7q9Fwyku9UFbgnvxzG1razVIh1bYpT7yFPlEIoZTwwSeWs/Fg
+	5vAo0dwmmZp7Lndv25tJ4cY+Za6JJsrsP2EGfdU71SpFyhcykc79rCdWWWzA8psA
+	uAH1oPArCqw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9CA31736CC;
+	Wed, 12 Mar 2014 14:53:40 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D6862736CB;
+	Wed, 12 Mar 2014 14:53:39 -0400 (EDT)
+In-Reply-To: <20131219194319.GB20443@google.com> (Jonathan Nieder's message of
+	"Thu, 19 Dec 2013 11:43:19 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: A0232F52-AA17-11E3-B0A7-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243962>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/243963>
 
-Since fsck_ident doesn't change the content of **ident, the type of
-ident could be const char **.
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-This change is required to rewrite fsck_commit() to use skip_prefix().
+> @@ -292,6 +291,48 @@ static const char *wt_status_diff_status_string(int status)
+>  	}
+>  }
+>  
+> +static int maxwidth(const char *(*label)(int), int minval, int maxval)
+> +{
+> +	const char *s;
+> +	int result = 0, i;
+> +
+> +	for (i = minval; i <= maxval; i++) {
+> +		const char *s = label(i);
+> +		int len = s ? strlen(s) : 0;
 
-Signed-off-by: Yuxuan Shui <yshuiv7@gmail.com>
----
- fsck.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Shouldn't this be a utf8_strwidth(), as the value is to count number
+of display columns to be used by the leading label part?
 
-diff --git a/fsck.c b/fsck.c
-index 99c0497..1789c34 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -243,7 +243,7 @@ static int fsck_tree(struct tree *item, int strict, fsck_error error_func)
- 	return retval;
- }
- 
--static int fsck_ident(char **ident, struct object *obj, fsck_error error_func)
-+static int fsck_ident(const char **ident, struct object *obj, fsck_error error_func)
- {
- 	if (**ident == '<')
- 		return error_func(obj, FSCK_ERROR, "invalid author/committer line - missing space before email");
--- 
-1.9.0
+> +		if (len > result)
+> +			result = len;
+> +	}
+> +	return result;
+> +}
+> +
+> +static void wt_status_print_unmerged_data(struct wt_status *s,
+> +					  struct string_list_item *it)
+> +{
+> +	const char *c = color(WT_STATUS_UNMERGED, s);
+> +	struct wt_status_change_data *d = it->util;
+> +	struct strbuf onebuf = STRBUF_INIT;
+> +	static char *padding;
+> +	const char *one, *how;
+> +	int len;
+> +
+> +	if (!padding) {
+> +		int width = maxwidth(wt_status_unmerged_status_string, 1, 7);
+> +		width += strlen(" ");
+> +		padding = xmallocz(width);
+> +		memset(padding, ' ', width);
+> +	}
+> +
+> +	one = quote_path(it->string, s->prefix, &onebuf);
+> +	status_printf(s, color(WT_STATUS_HEADER, s), "\t");
+> +
+> +	how = wt_status_unmerged_status_string(d->stagemask);
+> +	if (!how)
+> +		how = _("bug");
+
+I'd rather see the callee do this _("bug") thing, not this
+particular caller.
+
+> +	len = strlen(padding) - utf8_strwidth(how);
+> +	status_printf_more(s, c, "%s%.*s%s\n", how, len, padding, one);
+> +	strbuf_release(&onebuf);
+> +}
