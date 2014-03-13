@@ -1,195 +1,175 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 2/2] fsck.c: Rewrite fsck_commit() to use skip_prefix()
-Date: Thu, 13 Mar 2014 12:42:36 -0700
-Message-ID: <xmqq38ilj36b.fsf@gitster.dls.corp.google.com>
-References: <1394685951-9726-1-git-send-email-yshuiv7@gmail.com>
-	<1394685951-9726-3-git-send-email-yshuiv7@gmail.com>
-	<xmqq7g7xj4hz.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Yuxuan Shui <yshuiv7@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 13 20:42:56 2014
+From: Yao Zhao <zhaox383@umn.edu>
+Subject: [PATCH] GSoC Change multiple if-else statements to be table-driven
+Date: Thu, 13 Mar 2014 15:20:59 -0500
+Message-ID: <1394742059-7300-1-git-send-email-zhaox383@umn.edu>
+References: <CAPig+cQu7D3AUghOSUOZBwf5+iHCPkxPbY1WuQmPJk1muCk7tQ@mail.gmail.com>
+Cc: git@vger.kernel.org, Yao Zhao <zhaox383@umn.edu>
+To: sunshine@sunshineco.com
+X-From: git-owner@vger.kernel.org Thu Mar 13 21:21:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WOBWo-00031r-QK
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Mar 2014 20:42:55 +0100
+	id 1WOC8M-0007wd-0L
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Mar 2014 21:21:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755177AbaCMTmn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Mar 2014 15:42:43 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35136 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755169AbaCMTmk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Mar 2014 15:42:40 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DFFCD73FC5;
-	Thu, 13 Mar 2014 15:42:39 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=KUZKF6a0gH35glLuB1d4+G9MA6M=; b=W3W8ea
-	SpPYPtWbUxl6ViteDbUvcs5kNtNf4tvZq5f6OUKAEx+UKk0I+3XnV+cnrfj0Li/e
-	SRI6N7GLTbLfkSYHLyBSlOqd6iFaH64cn9B0SC9hq3S1YWuH6H5tSURLoWwggPHf
-	Z6PIjWCpfHXyyjpFm0ZenrALnwLuAiNaSP+U0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wlWiONYITi+TbkCYacTi2Wc+9vAcDv1Y
-	fR+0XPmpTocmeLtRdgSh6ko5H/PuISDFbqSVd90Yaa8PWFWY89sjHmpYINdtqPpy
-	25AHSSB2JZFYSy1tLMZaf0oXWVRkA/KhonIn7CPjPOIU1i3IhMWXiHPa1PsoBLqR
-	IKzXCVTBvHY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C963173FC1;
-	Thu, 13 Mar 2014 15:42:39 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2293673FB7;
-	Thu, 13 Mar 2014 15:42:39 -0400 (EDT)
-In-Reply-To: <xmqq7g7xj4hz.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Thu, 13 Mar 2014 12:14:00 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: A27CC1FC-AAE7-11E3-8B6B-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755272AbaCMUVi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Mar 2014 16:21:38 -0400
+Received: from vs-a.tc.umn.edu ([134.84.135.107]:53279 "EHLO vs-a.tc.umn.edu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755021AbaCMUVh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Mar 2014 16:21:37 -0400
+Received: from mail-ig0-f177.google.com (mail-ig0-f177.google.com [209.85.213.177])
+	by vs-a.tc.umn.edu (UMN smtpd) with ESMTP
+	for <git@vger.kernel.org>; Thu, 13 Mar 2014 15:21:33 -0500 (CDT)
+X-Umn-Remote-Mta: [N] mail-ig0-f177.google.com [209.85.213.177] #+LO+TS+TR
+X-Umn-Classification: local
+Received: by mail-ig0-f177.google.com with SMTP id ur14so3348692igb.4
+        for <git@vger.kernel.org>; Thu, 13 Mar 2014 13:21:32 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=UbdgsJCr1CiuOySPjSyacyJay/x83MLWTzbOS1Be9h8=;
+        b=jrzghBuuyNeF00ce+Prr2SNoKUSZmRLUADyMCWfYYk0yAFxvmwVyvhn3kmUuQ7H3Yf
+         aj8aFI7S8Vo99zHxaPYx5RJ3mu1gQ0oPBg8UaMm8mnoxlQZcf/cogGU/ZgEQUSgHQZV5
+         t/XZzCreYFDtO3p+vm7nWjLTHG4opBYrwwBw7w7GpO8r5+vWC8f5SmGSd4GnLDn4+hw+
+         SiTUX7JXgn/rtmYeqPmH9uA0zn+bLet6vcGI3Rormgt2Xt2nhfbUxtmdD3XCnKnU2G5d
+         iexsaTpkPTec/YK3gqcb41gLknJljsQbw43VBWkEc0S1Gmq61EsJBwRdcTITrIWmClZu
+         qYDw==
+X-Gm-Message-State: ALoCoQkZINOh7z0AswB2WsV0eMAMyn7hxl2osFZKWbPLXO6Sh3ptTDxlBcFukbBRz529sXN49M7VxIZLiCuIvBk4BFPoERfOiRZPy6O+OMphXokc127jDKKban3Wokop2S8TzHLQyUZFP+lZHbP75tpNWhAmB0Bgvw==
+X-Received: by 10.50.66.227 with SMTP id i3mr3867482igt.19.1394742092710;
+        Thu, 13 Mar 2014 13:21:32 -0700 (PDT)
+X-Received: by 10.50.66.227 with SMTP id i3mr3867478igt.19.1394742092628;
+        Thu, 13 Mar 2014 13:21:32 -0700 (PDT)
+Received: from Yao-Laptop.umn.edu (x-128-101-252-144.uofm-secure.wireless.umn.edu. [128.101.252.144])
+        by mx.google.com with ESMTPSA id v2sm11708481igk.7.2014.03.13.13.21.29
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 13 Mar 2014 13:21:32 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.2
+In-Reply-To: <CAPig+cQu7D3AUghOSUOZBwf5+iHCPkxPbY1WuQmPJk1muCk7tQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244049>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Signed-off-by: Yao Zhao <zhaox383@umn.edu>
+---
+GSoC_MicroProject_#8
 
->> -	if (memcmp(buffer, "tree ", 5))
->> +	buffer = skip_prefix(buffer, "tree ");
->> +	if (buffer == NULL)
->
-> We encourage people to write this as:
->
-> 	if (!buffer)
->
-> The same comment applies to other new lines in this patch.
+Hello Eric,
 
-I also see a lot of repetitions in the code, before or after the
-patch.  I wonder if a further refactoring along this line on top of
-these two patches might be worth considering.
+Thanks for reviewing my code. I implemented table-driven method this time and correct the style
+problems indicated in review.
 
-No, I am not proud of sneaking tree_sha1[] array pointers as a
-seemingly boolean-looking must-match-header parameter into the
-helper, but this is merely a "how about going in this direction"
-weather-balloon patch, so....
+Thank you,
 
- fsck.c | 83 ++++++++++++++++++++++++++++++++++++++++++++++++------------------
- 1 file changed, 61 insertions(+), 22 deletions(-)
+Yao
 
-diff --git a/fsck.c b/fsck.c
-index 6aab23b..a3eea7f 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -279,10 +279,55 @@ static int fsck_ident(const char **ident, struct object *obj, fsck_error error_f
- 	return 0;
+ branch.c | 72 ++++++++++++++++++++++++++++++++++++++++++++--------------------
+ 1 file changed, 50 insertions(+), 22 deletions(-)
+
+diff --git a/branch.c b/branch.c
+index 723a36b..6451c99 100644
+--- a/branch.c
++++ b/branch.c
+@@ -49,10 +49,43 @@ static int should_setup_rebase(const char *origin)
+ 
+ void install_branch_config(int flag, const char *local, const char *origin, const char *remote)
+ {
++
+ 	const char *shortname = remote + 11;
+ 	int remote_is_branch = starts_with(remote, "refs/heads/");
+ 	struct strbuf key = STRBUF_INIT;
+ 	int rebasing = should_setup_rebase(origin);
++	int size=8, i;
++
++	typedef struct PRINT_LIST {
++		const char *print_str;
++		const char *arg2; 
++		//arg1 is always local, so I only add arg2 and arg3 in struct
++		const char *arg3;
++		int b_rebasing;
++	  int b_remote_is_branch;
++		int b_origin;
++	} PRINT_LIST;
++
++	PRINT_LIST print_list[] = {
++		{.print_str = _("Branch %s set up to track remote branch %s from %s by rebasing."), 
++				.arg2 = shortname, .arg3 = origin,
++					 .b_rebasing = 1, .b_remote_is_branch = 1, .b_origin = 1},
++	  {.print_str = _("Branch %s set up to track remote branch %s from %s."), 
++				.arg2 = shortname, .arg3 = origin,
++					 .b_rebasing = 0, .b_remote_is_branch = 1, .b_origin = 1},
++    {.print_str = _("Branch %s set up to track local branch %s by rebasing."), 
++				.arg2 = shortname, .b_rebasing = 1, .b_remote_is_branch = 1, .b_origin = 0},
++		{.print_str = _("Branch %s set up to track local branch %s."), 
++				.arg2 = shortname, .b_rebasing = 0, .b_remote_is_branch = 1, .b_origin = 0},
++		{.print_str = _("Branch %s set up to track remote ref %s by rebasing."), 
++				.arg2 = remote, .b_rebasing = 1, .b_remote_is_branch = 0, .b_origin = 1},
++		{.print_str = _("Branch %s set up to track remote ref %s."), 
++				.arg2 = remote, .b_rebasing = 0, .b_remote_is_branch = 0, .b_origin = 1},
++		{.print_str = _("Branch %s set up to track local ref %s by rebasing."), 
++				.arg2 = remote, .b_rebasing = 1, .b_remote_is_branch = 0, .b_origin = 0},
++		{.print_str = _("Branch %s set up to track local ref %s."), 
++				.arg2 = remote, .b_rebasing = 0, .b_remote_is_branch = 0, .b_origin = 0},
++};
+I am confused here: I use struct initializer and I am not sure if it's ok
+because it is only supported by ANSI 
+
+ 	if (remote_is_branch
+ 	    && !strcmp(local, shortname)
+@@ -75,31 +108,26 @@ void install_branch_config(int flag, const char *local, const char *origin, cons
+ 		git_config_set(key.buf, "true");
+ 	}
+ 	strbuf_release(&key);
+-
+ 	if (flag & BRANCH_CONFIG_VERBOSE) {
+-		if (remote_is_branch && origin)
+-			printf_ln(rebasing ?
+-				  _("Branch %s set up to track remote branch %s from %s by rebasing.") :
+-				  _("Branch %s set up to track remote branch %s from %s."),
+-				  local, shortname, origin);
+-		else if (remote_is_branch && !origin)
+-			printf_ln(rebasing ?
+-				  _("Branch %s set up to track local branch %s by rebasing.") :
+-				  _("Branch %s set up to track local branch %s."),
+-				  local, shortname);
+-		else if (!remote_is_branch && origin)
+-			printf_ln(rebasing ?
+-				  _("Branch %s set up to track remote ref %s by rebasing.") :
+-				  _("Branch %s set up to track remote ref %s."),
+-				  local, remote);
+-		else if (!remote_is_branch && !origin)
+-			printf_ln(rebasing ?
+-				  _("Branch %s set up to track local ref %s by rebasing.") :
+-				  _("Branch %s set up to track local ref %s."),
+-				  local, remote);
+-		else
++		for (i=0;i<size;i++)
++		{
++			if (print_list[i].b_rebasing == (rebasing? 1 : 0) && 
++								print_list[i].b_remote_is_branch == (remote_is_branch? 1 : 0) &&
++								print_list[i].b_origin == (origin? 1 : 0))
++			{
++				if (print_list[i].arg3 == NULL)
++					printf_ln (print_list[i].print_str, local, print_list[i].arg2);
++				else
++					printf_ln (print_list[i].print_str, local, 
++							print_list[i].arg2, print_list[i].arg3);
++				
++				break;
++			}
++		}
++		if (i == size)
+ 			die("BUG: impossible combination of %d and %p",
+ 			    remote_is_branch, origin);
++
+ 	}
  }
  
-+static int fsck_object_line(struct commit *commit, fsck_error error_func,
-+			    const char **buffer, const char *header,
-+			    unsigned char must_match_header[])
-+{
-+	unsigned char sha1_buf[20];
-+	unsigned char *sha1 = must_match_header ? must_match_header : sha1_buf;
-+	const char *buf;
-+
-+	buf = skip_prefix(*buffer, header);
-+	if (!buf) {
-+		if (must_match_header)
-+			return error_func(&commit->object, FSCK_ERROR,
-+					  "invalid format - expected '%.*s' line",
-+					  (int) strlen(header) - 1,
-+					  header);
-+		return 1;
-+	}
-+	if (get_sha1_hex(buf, sha1) || buf[40] != '\n')
-+		return error_func(&commit->object, FSCK_ERROR,
-+				  "invalid '%.*s' line format - bad sha1",
-+				  (int) strlen(header) - 1,
-+				  header);
-+	*buffer = buf + 41;
-+	return 0;
-+}
-+
-+static int fsck_ident_line(struct commit *commit, fsck_error error_func,
-+			   const char **buffer, const char *header)
-+{
-+	const char *buf;
-+	int err;
-+
-+	buf = skip_prefix(*buffer, header);
-+	if (!buf)
-+		return error_func(&commit->object, FSCK_ERROR,
-+				  "invalid format - expected '%.*s' line",
-+				  (int) strlen(header) - 1,
-+				  header);
-+	err = fsck_ident(&buf, &commit->object, error_func);
-+	if (err)
-+		return err;
-+	*buffer = buf;
-+	return 0;
-+}
-+
- static int fsck_commit(struct commit *commit, fsck_error error_func)
- {
--	const char *buffer = commit->buffer, *tmp;
--	unsigned char tree_sha1[20], sha1[20];
-+	const char *buffer = commit->buffer;
-+	unsigned char tree_sha1[20];
- 	struct commit_graft *graft;
- 	int parents = 0;
- 	int err;
-@@ -290,18 +335,17 @@ static int fsck_commit(struct commit *commit, fsck_error error_func)
- 	if (commit->date == ULONG_MAX)
- 		return error_func(&commit->object, FSCK_ERROR, "invalid author/committer line");
- 
--	buffer = skip_prefix(buffer, "tree ");
--	if (!buffer)
--		return error_func(&commit->object, FSCK_ERROR, "invalid format - expected 'tree' line");
--	if (get_sha1_hex(buffer, tree_sha1) || buffer[40] != '\n')
--		return error_func(&commit->object, FSCK_ERROR, "invalid 'tree' line format - bad sha1");
--	buffer += 41;
--	while ((tmp = skip_prefix(buffer, "parent "))) {
--		buffer = tmp;
--		if (get_sha1_hex(buffer, sha1) || buffer[40] != '\n')
--			return error_func(&commit->object, FSCK_ERROR, "invalid 'parent' line format - bad sha1");
--		buffer += 41;
--		parents++;
-+	err = fsck_object_line(commit, error_func, &buffer, "tree ", tree_sha1);
-+	if (err)
-+		return err;
-+	while (1) {
-+		err = fsck_object_line(commit, error_func, &buffer, "parent ", NULL);
-+		if (err < 0)
-+			return err;
-+		else if (!err)
-+			parents++;
-+		else
-+			break;
- 	}
- 	graft = lookup_commit_graft(commit->object.sha1);
- 	if (graft) {
-@@ -324,16 +368,11 @@ static int fsck_commit(struct commit *commit, fsck_error error_func)
- 		if (p || parents)
- 			return error_func(&commit->object, FSCK_ERROR, "parent objects missing");
- 	}
--	buffer = skip_prefix(buffer, "author ");
--	if (!buffer)
--		return error_func(&commit->object, FSCK_ERROR, "invalid format - expected 'author' line");
--	err = fsck_ident(&buffer, &commit->object, error_func);
-+
-+	err = fsck_ident_line(commit, error_func, &buffer, "author ");
- 	if (err)
- 		return err;
--	buffer = skip_prefix(buffer, "committer ");
--	if (!buffer)
--		return error_func(&commit->object, FSCK_ERROR, "invalid format - expected 'committer' line");
--	err = fsck_ident(&buffer, &commit->object, error_func);
-+	err = fsck_ident_line(commit, error_func, &buffer, "committer ");
- 	if (err)
- 		return err;
- 	if (!commit->tree)
+-- 
+1.8.3.2
