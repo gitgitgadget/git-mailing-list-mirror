@@ -1,94 +1,75 @@
-From: Brandon McCaig <bamccaig@gmail.com>
-Subject: Re: Committing a change from one branch another branch
-Date: Thu, 13 Mar 2014 10:36:06 -0500
-Message-ID: <CANUGeEZc8BoV0MxUGRRGc8SK=-xB2YXoEkRkBTyGZ8FxSjnVTQ@mail.gmail.com>
-References: <CAD6G_RRQVDxQj==-2vAT3WCiYMC=BmZhi__JWi4yy86Uaoa-og@mail.gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH] general style: replaces memcmp() with starts_with()
+Date: Thu, 13 Mar 2014 17:05:47 +0100
+Message-ID: <5321D75B.5020600@alum.mit.edu>
+References: <1394631854-11208-1-git-send-email-quintus.public@gmail.com> <CACsJy8DUhqn_ESzT-KpAdrWvWcLbPUiXDmBZXu7UtHU+M0GLgw@mail.gmail.com> <CALs4jVFM58Yiku4B8NrVeac0Hmt5YsPNYb_EjY6bOr=JO6pP+A@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Jagan Teki <jagannadh.teki@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 13 16:36:34 2014
+Content-Transfer-Encoding: 7bit
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Quint Guvernator <quintus.public@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 13 17:06:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WO7gP-0005qW-FT
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Mar 2014 16:36:33 +0100
+	id 1WO88q-000159-Hq
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Mar 2014 17:05:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753922AbaCMPg3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Mar 2014 11:36:29 -0400
-Received: from mail-we0-f181.google.com ([74.125.82.181]:36554 "EHLO
-	mail-we0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753709AbaCMPg1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Mar 2014 11:36:27 -0400
-Received: by mail-we0-f181.google.com with SMTP id q58so1018252wes.12
-        for <git@vger.kernel.org>; Thu, 13 Mar 2014 08:36:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=WiygzbYhI1kU8WJQGhypk78ghP6szDDhrvnAPUKk8R8=;
-        b=x69DgPQqb09LDn+0YqQV/6W50JJRfU1zf9RAYVfLFqw3X7xWv91iHU/DV2qfpMEBHT
-         SE00WfaSWIxdFMqQWDx3WARHdb++ecAAR9o2pxndf/M5QlZtsM1PrxJ8WSuKNEst6HiF
-         Z5bIj5407nFRu+qMF5f3UO+DSzkvt+TacFAt02o9ySfqs/ORZv6A49xlJbrz7YLOPr+1
-         H9CFAaI6QRXJ4KVldDUvbDKOJIdVlGQwfTbsH71GjOdDchMPqzVrUtYt6H2DOKgAnGJb
-         /L4fUFSZc9URfra3kP86C9ubC27n807jQfS3sVF3EFz+GrA9jCBxc/rCqmzFa56VvbEp
-         uleg==
-X-Received: by 10.194.86.130 with SMTP id p2mr193160wjz.88.1394724986725; Thu,
- 13 Mar 2014 08:36:26 -0700 (PDT)
-Received: by 10.217.120.8 with HTTP; Thu, 13 Mar 2014 08:36:06 -0700 (PDT)
-In-Reply-To: <CAD6G_RRQVDxQj==-2vAT3WCiYMC=BmZhi__JWi4yy86Uaoa-og@mail.gmail.com>
+	id S1753495AbaCMQFv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Mar 2014 12:05:51 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:55626 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752289AbaCMQFu (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 13 Mar 2014 12:05:50 -0400
+X-AuditID: 12074413-f79076d000002d17-c2-5321d75d97fa
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 71.92.11543.D57D1235; Thu, 13 Mar 2014 12:05:49 -0400 (EDT)
+Received: from [192.168.69.148] (p57A24737.dip0.t-ipconnect.de [87.162.71.55])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s2DG5lE5004420
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Thu, 13 Mar 2014 12:05:48 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
+In-Reply-To: <CALs4jVFM58Yiku4B8NrVeac0Hmt5YsPNYb_EjY6bOr=JO6pP+A@mail.gmail.com>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrIKsWRmVeSWpSXmKPExsUixO6iqBt7XTHY4McWU4uuK91MFt1T3jJa
+	vOvuZ3Zg9tg56y67x+dNcgFMUdw2SYklZcGZ6Xn6dgncGdvnnGItWMlacWTiV/YGxhUsXYyc
+	HBICJhKzzkxkhbDFJC7cW8/WxcjFISRwmVHi8+tP7BDOOSaJH719YFW8AtoSn85+BetmEVCV
+	ePjhFjuIzSagK7Gop5kJxBYVCJZYffkBC0S9oMTJmU/AbBEBfYkpe+aygdjMAl4SU9ZeZgSx
+	hQU8JLp/LWcGsYUELjFKfLmv1sXIwcEpECixeRUviCkhIC7R0xgEYjILqEusnycEMUReYvvb
+	OcwTGAVnIdk1C6FqFpKqBYzMqxjlEnNKc3VzEzNzilOTdYuTE/PyUot0zfVyM0v0UlNKNzFC
+	glh4B+Ouk3KHGAU4GJV4eGccVQwWYk0sK67MPcQoycGkJMrLfgEoxJeUn1KZkVicEV9UmpNa
+	fIhRgoNZSYRX5jJQjjclsbIqtSgfJiXNwaIkzqu2RN1PSCA9sSQ1OzW1ILUIJivDwaEkwfv3
+	KlCjYFFqempFWmZOCUKaiYMTZDiXlEhxal5KalFiaUlGPCh244uB0QuS4gHam34NZG9xQWIu
+	UBSi9RSjLsfttl+fGIVY8vLzUqXEeX+C7BAAKcoozYNbAUtZrxjFgT4W5i0HGcUDTHdwk14B
+	LWECWvIjQB5kSUkiQkqqgXGJ7KOpJZwH1nKxaGuFPnojkdVmarjWJMRoWtFlna7X2exTzaUr
+	wpUWp67uKIqYdn1LpKOjyq6wpc/m1Qa8rI6J+Zq1LqFIakaE7dOaXYcWpkw4uG7v 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244034>
 
-Jagan:
+On 03/12/2014 03:06 PM, Quint Guvernator wrote:
+> 2014-03-12 9:51 GMT-04:00 Duy Nguyen <pclouds@gmail.com>:
+>> starts_with(..) == !memcmp(...). So
+>> you need to negate every replacement.
+> 
+> My apologies--it doesn't look like the tests caught it either. I will
+> fix this and submit a new patch.
 
-On Thu, Mar 13, 2014 at 4:56 AM, Jagan Teki <jagannadh.teki@gmail.com> wrote:
-> Hi,
+It is very, very unlikely that you inverted the sense of dozens of tests
+throughout the Git code base and the tests ran correctly.  I rather
+think that you made a mistake when testing.  You should double- and
+triple-check that you really ran the tests and ran them correctly.
 
-Hello,
-
-> I have two branches.
-> - master-b1
-> - master-b2
->
-> Suppose I'm in master-b1 then did a change
-> on master-b1
-> $ git add test/init.c
-> $ git commit -s -m "init.c Changed!"
-> $ git log
-> Author: Jagan Teki <jagannadh.teki@gmail.com>
-> Date:   Thu Mar 13 00:48:44 2014 -0700
->
-> init.c Changed!
->
-> $ git checkout master-b2
-> $ git log
-> Author: Jagan Teki <jagannadh.teki@gmail.com>
-> Date:   Thu Mar 13 00:48:44 2014 -0700
->
-> init.c Changed!
->
-> How can we do this, any idea?
-
-What you're asking is ambiguous and vague. The example output that you
-give doesn't even really make sense. You need to give more details
-about what you have and what you want to do to get proper help.
-
-Or join #git on irc.freenode.net for real-time help if you aren't sure
-how to explain it.
-
-Regards,
-
+Michael
 
 -- 
-Brandon McCaig <bamccaig@gmail.com> <bamccaig@castopulence.org>
-Castopulence Software <https://www.castopulence.org/>
-Blog <http://www.bamccaig.com/>
-perl -E '$_=q{V zrna gur orfg jvgu jung V fnl. }.
-q{Vg qbrfa'\''g nyjnlf fbhaq gung jnl.};
-tr/A-Ma-mN-Zn-z/N-Zn-zA-Ma-m/;say'
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
