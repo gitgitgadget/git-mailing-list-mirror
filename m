@@ -1,71 +1,83 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4] install_branch_config: simplify verbose messages logic
-Date: Thu, 13 Mar 2014 18:45:06 -0400
-Message-ID: <CAPig+cS9n64boSSgoK-z=V9QFkvr=1Z2Db5KRrsyZNDthDE27A@mail.gmail.com>
-References: <1394584412-7735-1-git-send-email-pawlo@aleg.pl>
-	<CAPig+cTmdF06PrWboJFNFEGKLCa=3rmGrcPusSsYZxdtfSEewA@mail.gmail.com>
-	<xmqqr466hrru.fsf@gitster.dls.corp.google.com>
-	<CAPig+cQU5__EPA2C3QvCPAT4od3Ux8kCgq-2H8nCddGdNqaG0A@mail.gmail.com>
+From: John Butterfield <johnb003@gmail.com>
+Subject: Proposal: Write git subtree info to .git/config
+Date: Thu, 13 Mar 2014 16:18:42 -0700
+Message-ID: <CAJ2ZDL+HuBCv_xJCXEBb3Pex-qt86ocEX9yu=uV+CzdvqwECDA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: =?UTF-8?Q?Pawe=C5=82_Wawruch?= <pawlo@aleg.pl>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 13 23:45:17 2014
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 14 00:18:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WOENI-0001iH-7y
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Mar 2014 23:45:16 +0100
+	id 1WOEtk-0001zI-PW
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Mar 2014 00:18:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754201AbaCMWpI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Mar 2014 18:45:08 -0400
-Received: from mail-yh0-f49.google.com ([209.85.213.49]:42499 "EHLO
-	mail-yh0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754124AbaCMWpH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Mar 2014 18:45:07 -0400
-Received: by mail-yh0-f49.google.com with SMTP id z6so1794020yhz.8
-        for <git@vger.kernel.org>; Thu, 13 Mar 2014 15:45:06 -0700 (PDT)
+	id S1754366AbaCMXSo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Mar 2014 19:18:44 -0400
+Received: from mail-wi0-f171.google.com ([209.85.212.171]:40689 "EHLO
+	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753601AbaCMXSo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Mar 2014 19:18:44 -0400
+Received: by mail-wi0-f171.google.com with SMTP id hn9so4638167wib.4
+        for <git@vger.kernel.org>; Thu, 13 Mar 2014 16:18:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=7U4UWsHK4BPKQFTJjZvY+Ix5g4pi5cd6+zSz/u3RAoE=;
-        b=cMWiC/5u9gRxdlOyyQjFTsoCtlUR6ooIu2y70PxqjqZmR7+DgL8K2YMyh67PwUwgfG
-         w1nfNMTzRbM7pCxs+r9xJV/KoxReqXYFZEL4n7uhcF7bKp90lQBEbmAGu6z9sH/y5SUw
-         6RarlAJ49GXbaEK/JnaUprGGVU4M2tEQ1RbnocNvDPtQy+Tjeqsb7CcPZ2deeVC7sU8q
-         4zeZ4PHq6+C9IAXX5qTIwkP5n/mdcTfYTlc4XhoPrlAjTzc9tL2VGbCyC5D5t8iC9SH1
-         80Zq6HbpKaiSPTqGYJR2Ceh9rkG8/wiQ35JrCRVEdpvjqRUstHoeRgZY6pW2KhqC5Aef
-         oGFA==
-X-Received: by 10.236.122.99 with SMTP id s63mr6038124yhh.19.1394750706213;
- Thu, 13 Mar 2014 15:45:06 -0700 (PDT)
-Received: by 10.170.180.134 with HTTP; Thu, 13 Mar 2014 15:45:06 -0700 (PDT)
-In-Reply-To: <CAPig+cQU5__EPA2C3QvCPAT4od3Ux8kCgq-2H8nCddGdNqaG0A@mail.gmail.com>
-X-Google-Sender-Auth: c_4HiCFg5VT-qrgcDyiRna9BN9Q
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=08n51Fy3c97cAl4q0M4bPPDfJYhiT4ANL0Y0wsOaPPw=;
+        b=MYNMBcIfwPSiHRxJ9FJpeDdCMQdqaLEyMc54jA5Nx3Dc8gTnu9xA5oqINyNmYvwPEK
+         6Vi+f4LAxQEmKw9puz2qh4f2yfsltijYdWZFNc+NrXOP6cvswG9UYyRC95L3KdD6eH3x
+         H20gBAhrZFKHVR1D71pGhig6fGHpHOO7YkoIi7DAyzXXbw8uHGlMJ8ahkqAtlkehq4xd
+         6BaSVo5IOlogSeldhPl3e6XP8Y0kPpgBo4wsNIp50jO5aRoxcEk/xgDKiuoFtM0ZIfoX
+         AMk8lvDym6gQZGswOVxhdr09wdVbvLFxrzGNm1a2dj1A8ck/FRsfwbm4qEjq0vj9C1z3
+         hURQ==
+X-Received: by 10.180.106.167 with SMTP id gv7mr3686475wib.40.1394752722925;
+ Thu, 13 Mar 2014 16:18:42 -0700 (PDT)
+Received: by 10.194.174.226 with HTTP; Thu, 13 Mar 2014 16:18:42 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244059>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244060>
 
-On Thu, Mar 13, 2014 at 4:35 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> A more table-driven approach might look something
-> like this:
->
->     struct M { const char *s; const char **a1; const char **a2; }
->     message[][2][2] = {{{
->         { "Branch %s set ... %s ... %s", &shortname, &origin },
->         ...
->     }},{{
->         { "Branch %s set ... %s", &remote, NULL },
->         ...
->     }}};
->
->     const struct M *m = message[!remote_is_branch][!origin][!rebasing];
->     printf_ln(m->s, local, *m->a1, *m->a2);
+Has there been any talk about adding a stub for git subtrees in .git/config?
 
-Of course, using NULL in the table like that would crash when
-dereferenced: *m->a2. It was just an quick example typed on-the-fly.
-Real code would want to be more careful.
+The primary benefits would be:
+
+1. Determine what sub directories of the project were at one time
+pulled from another repo (where from and which commit id), without
+having to attempt to infer this by scanning the log.
+2. Simplify command syntax by providing a predictable default (ie.
+last pulled from, last pushed to), and not requiring the repo argument
+optional.
+3. Improvement for default commit id to start split operations over
+using --rejoin which creates blank log entries just so the log scan
+can find it (afaict). It's a default either way, so it can still
+always be explicitly specified.
+
+If this information were available in the config, I think additional
+features could be added as well:
+
+- The command 'git subtree pull' for instance could be made to pull
+*all* subtrees, similar to the way 'git submodule update' works.
+- An option -i (interactive), or -p (prompt), etc. could be added that
+confirms the defaults read from the config before actually executing
+the command with implicit arguments, and the ability to modify the
+arguments before the command actually executes.
+- If the current working directory from which the command is run
+happens to be a subtree specified in the config, the --prefix could
+even be implied.
+
+
+None of these ideas would break the way the command currently works
+since it can still always take explicit arguments. There's a comment
+in the documentation about the command that says:
+
+> Unlike submodules, subtrees do not need any special constructions (like .gitmodule files or gitlinks) be present in your repository
+
+It would still be true that subtrees do not *need* any special config
+settings, but that doesn't mean they are bad, and by having them the
+command could be improved and made easier to use.
+
+I'm happy to contribute the changes myself if this proposal is acceptable.
