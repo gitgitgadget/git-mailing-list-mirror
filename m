@@ -1,71 +1,88 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH] general style: replaces memcmp() with starts_with()
-Date: Thu, 13 Mar 2014 17:05:47 +0100
-Message-ID: <5321D75B.5020600@alum.mit.edu>
-References: <1394631854-11208-1-git-send-email-quintus.public@gmail.com> <CACsJy8DUhqn_ESzT-KpAdrWvWcLbPUiXDmBZXu7UtHU+M0GLgw@mail.gmail.com> <CALs4jVFM58Yiku4B8NrVeac0Hmt5YsPNYb_EjY6bOr=JO6pP+A@mail.gmail.com>
+Subject: Re: New GSoC microproject ideas
+Date: Thu, 13 Mar 2014 18:06:39 +0100
+Message-ID: <5321E59F.8020003@alum.mit.edu>
+References: <532049A7.6000304@alum.mit.edu> <xmqq1ty7me6a.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Quint Guvernator <quintus.public@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 13 17:06:00 2014
+Cc: git discussion list <git@vger.kernel.org>,
+	Fabian <bafain@gmail.com>,
+	Quint Guvernator <quintus.public@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 13 18:06:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WO88q-000159-Hq
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Mar 2014 17:05:56 +0100
+	id 1WO95k-0001Sf-Gl
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Mar 2014 18:06:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753495AbaCMQFv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Mar 2014 12:05:51 -0400
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:55626 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752289AbaCMQFu (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 Mar 2014 12:05:50 -0400
-X-AuditID: 12074413-f79076d000002d17-c2-5321d75d97fa
+	id S1754402AbaCMRGo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Mar 2014 13:06:44 -0400
+Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:54620 "EHLO
+	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753950AbaCMRGn (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 13 Mar 2014 13:06:43 -0400
+X-AuditID: 1207440d-f79d86d0000043db-a1-5321e5a21357
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 71.92.11543.D57D1235; Thu, 13 Mar 2014 12:05:49 -0400 (EDT)
+	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 35.3F.17371.2A5E1235; Thu, 13 Mar 2014 13:06:42 -0400 (EDT)
 Received: from [192.168.69.148] (p57A24737.dip0.t-ipconnect.de [87.162.71.55])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s2DG5lE5004420
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s2DH6evH007407
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Thu, 13 Mar 2014 12:05:48 -0400
+	Thu, 13 Mar 2014 13:06:41 -0400
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
-In-Reply-To: <CALs4jVFM58Yiku4B8NrVeac0Hmt5YsPNYb_EjY6bOr=JO6pP+A@mail.gmail.com>
+In-Reply-To: <xmqq1ty7me6a.fsf@gitster.dls.corp.google.com>
 X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrIKsWRmVeSWpSXmKPExsUixO6iqBt7XTHY4McWU4uuK91MFt1T3jJa
-	vOvuZ3Zg9tg56y67x+dNcgFMUdw2SYklZcGZ6Xn6dgncGdvnnGItWMlacWTiV/YGxhUsXYyc
-	HBICJhKzzkxkhbDFJC7cW8/WxcjFISRwmVHi8+tP7BDOOSaJH719YFW8AtoSn85+BetmEVCV
-	ePjhFjuIzSagK7Gop5kJxBYVCJZYffkBC0S9oMTJmU/AbBEBfYkpe+aygdjMAl4SU9ZeZgSx
-	hQU8JLp/LWcGsYUELjFKfLmv1sXIwcEpECixeRUviCkhIC7R0xgEYjILqEusnycEMUReYvvb
-	OcwTGAVnIdk1C6FqFpKqBYzMqxjlEnNKc3VzEzNzilOTdYuTE/PyUot0zfVyM0v0UlNKNzFC
-	glh4B+Ouk3KHGAU4GJV4eGccVQwWYk0sK67MPcQoycGkJMrLfgEoxJeUn1KZkVicEV9UmpNa
-	fIhRgoNZSYRX5jJQjjclsbIqtSgfJiXNwaIkzqu2RN1PSCA9sSQ1OzW1ILUIJivDwaEkwfv3
-	KlCjYFFqempFWmZOCUKaiYMTZDiXlEhxal5KalFiaUlGPCh244uB0QuS4gHam34NZG9xQWIu
-	UBSi9RSjLsfttl+fGIVY8vLzUqXEeX+C7BAAKcoozYNbAUtZrxjFgT4W5i0HGcUDTHdwk14B
-	LWECWvIjQB5kSUkiQkqqgXGJ7KOpJZwH1nKxaGuFPnojkdVmarjWJMRoWtFlna7X2exTzaUr
-	wpUWp67uKIqYdn1LpKOjyq6wpc/m1Qa8rI6J+Zq1LqFIakaE7dOaXYcWpkw4uG7v 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrNKsWRmVeSWpSXmKPExsUixO6iqLvoqWKwwdGPohaH5t5jt+i60s1k
+	0dB7hdniXXc/swOLx85Zd9k9Ll5S9vi8SS6AOYrbJimxpCw4Mz1P3y6BO+PTnu3sBX/ZKuY0
+	lTYwNrF2MXJySAiYSBz69I8FwhaTuHBvPVsXIxeHkMBlRom1U08zQTjnmCQ+tKxgAqniFdCW
+	OPOkHaybRUBVorV3ITOIzSagK7GopxmsRlQgWGL15QcsEPWCEidnPgGzRQTUJCa2HQKyOTiY
+	Beokfr50AAkLC2hIfL7+CGykkECUxOwf98BsTgFriUnr17GDlEsIiEv0NAaBhJkFdCTe9T1g
+	hrDlJba/ncM8gVFwFpJls5CUzUJStoCReRWjXGJOaa5ubmJmTnFqsm5xcmJeXmqRrpFebmaJ
+	XmpK6SZGSGDz7mD8v07mEKMAB6MSD6/DYcVgIdbEsuLK3EOMkhxMSqK87I+BQnxJ+SmVGYnF
+	GfFFpTmpxYcYJTiYlUR4ZS4D5XhTEiurUovyYVLSHCxK4rxqS9T9hATSE0tSs1NTC1KLYLIy
+	HBxKErzHngA1ChalpqdWpGXmlCCkmTg4QYZzSYkUp+alpBYllpZkxIOiN74YGL8gKR6gvTtB
+	2nmLCxJzgaIQracYdTlut/36xCjEkpeflyolzvsQ5HABkKKM0jy4FbA09opRHOhjYd7TIKN4
+	gCkQbtIroCVMQEt+BMiDLClJREhJNTAq7f1iWcVX1/LxsfPrF7u8mJmErK3TrzM4zxEX9xM8
+	cb/PzEvF/dqHNpNHnMlrd3TkLj7SkOvMca4wlP3j26mpM7YzvytRqLezdukqe/gy 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244035>
 
-On 03/12/2014 03:06 PM, Quint Guvernator wrote:
-> 2014-03-12 9:51 GMT-04:00 Duy Nguyen <pclouds@gmail.com>:
->> starts_with(..) == !memcmp(...). So
->> you need to negate every replacement.
+On 03/12/2014 08:04 PM, Junio C Hamano wrote:
+> Here is another, as I seem to have managed to kill another one ;-)
 > 
-> My apologies--it doesn't look like the tests caught it either. I will
-> fix this and submit a new patch.
+> -- >8 --
+> 
+> "VAR=VAL command" is sufficient to run 'command' with environment
+> variable VAR set to value VAL without affecting the environment of
+> the shell itself, but we cannot do the same with a shell function
+> (most notably, "test_must_fail"); we have subshell invocations with
+> multiple lines like this:
+> 
+> 	... &&
+> 	(
+>         	VAR=VAL &&
+>                 export VAR &&
+>                 test_must_fail git command
+> 	) &&
+>         ...
+> 
+> but that could be expressed as
+> 
+> 	... &&
+>         test_must_fail env VAR=VAL git comand &&
+> 	...
+> 
+> Find and shorten such constructs in existing test scripts.
 
-It is very, very unlikely that you inverted the sense of dozens of tests
-throughout the Git code base and the tests ran correctly.  I rather
-think that you made a mistake when testing.  You should double- and
-triple-check that you really ran the tests and ran them correctly.
+Thanks; I just added it.
 
 Michael
 
