@@ -1,108 +1,93 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4] install_branch_config: simplify verbose messages logic
-Date: Thu, 13 Mar 2014 16:35:31 -0400
-Message-ID: <CAPig+cQU5__EPA2C3QvCPAT4od3Ux8kCgq-2H8nCddGdNqaG0A@mail.gmail.com>
-References: <1394584412-7735-1-git-send-email-pawlo@aleg.pl>
-	<CAPig+cTmdF06PrWboJFNFEGKLCa=3rmGrcPusSsYZxdtfSEewA@mail.gmail.com>
-	<xmqqr466hrru.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Re* [RFC PATCH 2/1] Make request-pull able to take a refspec of form local:remote
+Date: Thu, 13 Mar 2014 14:22:00 -0700
+Message-ID: <xmqqvbvhhk07.fsf@gitster.dls.corp.google.com>
+References: <alpine.LFD.2.11.1401221535140.18207@i7.linux-foundation.org>
+	<xmqqlhy6trfp.fsf@gitster.dls.corp.google.com>
+	<CA+55aFyGaaMOL5pBhZ1BHMr07oDi2MuS-fPu4nnxhjoy+F0AQw@mail.gmail.com>
+	<xmqqsises3u0.fsf@gitster.dls.corp.google.com>
+	<CA+55aFyN7WWAF6pGfP+0j29nf6ETao0J5sUu+5UDaXUYC9_Geg@mail.gmail.com>
+	<xmqqvbx9qgo7.fsf@gitster.dls.corp.google.com>
+	<xmqqfvo6icqf.fsf_-_@gitster.dls.corp.google.com>
+	<CA+55aFyWM+VDa4mdqseNy3tSnp23x=2sPtHf5KpxsfROeHbVGw@mail.gmail.com>
+	<xmqqob1u6f5d.fsf@gitster.dls.corp.google.com>
+	<xmqqvbvjmgys.fsf@gitster.dls.corp.google.com>
+	<CAPig+cQTRFgbbyXsWraNTbL+nOY2y09KEJPfGc3wynFA+RWswQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: =?UTF-8?Q?Pawe=C5=82_Wawruch?= <pawlo@aleg.pl>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 13 21:35:37 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Tejun Heo <tj@kernel.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Thu Mar 13 22:22:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WOCLp-0005B2-9t
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Mar 2014 21:35:37 +0100
+	id 1WOD5D-0001oc-FE
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Mar 2014 22:22:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754994AbaCMUfd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Mar 2014 16:35:33 -0400
-Received: from mail-yk0-f173.google.com ([209.85.160.173]:57055 "EHLO
-	mail-yk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754884AbaCMUfc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Mar 2014 16:35:32 -0400
-Received: by mail-yk0-f173.google.com with SMTP id 10so4158862ykt.4
-        for <git@vger.kernel.org>; Thu, 13 Mar 2014 13:35:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=CBejCyNs/lcBFU/QxWaDrGjTPDeLD4ZXVgpWs4+lWXo=;
-        b=pfgaA2NM+R6P/5nvS/FNX28qgekP/+T6C2VVpZLwByRx76xtcka6BC0OzaqpoifXSB
-         CpaxoXloLcTxyu+KK5sPEbGb8sSGAjf4ZgzXztD64dpVx/b7038+rdd8L/71sVXViIUs
-         gffIJ0vehOGDYoTn5fEUSBD/V5nl72kEawurLv1p7e+w7OiF2mdWSQsITv84RBwQDdiR
-         AFABicDqU32Dx11kF+6UC0mSXnmmoh5IMfSX20fND19DEIACnKCIyzntBTGx6UYW0Pq+
-         AUmUKhjhyiPVCsNpPoG6WfSZ5JA6p95RFhDkL2QaA8ihlVDRWCEaDGQA2S/JCq4OsQh8
-         o3wg==
-X-Received: by 10.236.17.195 with SMTP id j43mr4934894yhj.121.1394742931863;
- Thu, 13 Mar 2014 13:35:31 -0700 (PDT)
-Received: by 10.170.180.134 with HTTP; Thu, 13 Mar 2014 13:35:31 -0700 (PDT)
-In-Reply-To: <xmqqr466hrru.fsf@gitster.dls.corp.google.com>
-X-Google-Sender-Auth: GdGw7NwnzS0av3AwL8FEC3ZwOF8
+	id S1753754AbaCMVWY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Mar 2014 17:22:24 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62062 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753219AbaCMVWW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Mar 2014 17:22:22 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AA83673538;
+	Thu, 13 Mar 2014 17:22:21 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=oIZA5TkyZd1j/bgPumPN4gTh+lk=; b=NVsGLE
+	6YHnlDVVEn3rtzClNVeRRIbn7r0WX9siV/YVHKjk4PD5giLw7YNPZ0O6yoh+jPjW
+	lX/AHzxfaUzxm6mtTPsdJw6GucNfMawRwVgMHqn0Gy/j6iJlSxGVmXhBrooCdzOM
+	JrEJ4tpwABDJAZ74qBteOwFA8+2Ug3dIuxa1E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=E0u9AB2VqL+SUd3GLQM5x+PGtVhL4Y4t
+	UJLP54yw+E4iur6knjSNeCCvm9UAMoIFmjjdbhJAmVhV2DWM/51GYw1ZTZP1/XoQ
+	tibEOszJr1WNUbh1h6kICPWcscUnT7q3bCalrdxgJViB6QEF7DbRBjyTnB1DNGRV
+	GiCEB/Na44Y=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 95F2273535;
+	Thu, 13 Mar 2014 17:22:21 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 504D0734E2;
+	Thu, 13 Mar 2014 17:22:07 -0400 (EDT)
+In-Reply-To: <CAPig+cQTRFgbbyXsWraNTbL+nOY2y09KEJPfGc3wynFA+RWswQ@mail.gmail.com>
+	(Eric Sunshine's message of "Wed, 12 Mar 2014 19:18:44 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 88667BE2-AAF5-11E3-B213-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244051>
 
-On Thu, Mar 13, 2014 at 2:34 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
+
+>> +Prepare a request to your upstream project to pull your changes to
+>> +their tree to the standard output, by summarizing your changes and
+>> +showing where your changes can be pulled from.
 >
->> Shouldn't this logic [to decide what the printf arguments should
->> be] also be encoded in the table?
->> ...
->> The same argument also applies to computation of the 'name' variable
->> above. It too can be pushed into the the table.
+> Perhaps splitting this into two sentence (and using fewer to's) would
+> make it a bit easier to grok? Something like:
 >
-> Because the "printf argument" logic does not have to be in the
-> table, the same argument does not apply to the 'name' thing.
+>     Generate a request asking your upstream project to pull changes
+>     into their tree. The request, printed to standard output,
+>     summarizes the changes and indicates from where they can be
+>     pulled.
+
+Thanks.
+
+>> +When the repository named by `<url>` has the commit at a tip of a
+>> +ref that is different from the ref you have it locally, you can use
 >
-> After looking at the v5 patch, I do not think an extra two-element
-> array to switch between remote vs shortname is making it any easier
-> to read.  I would have to say that personally I find that
->
->         const char *name[] = {remote, shortname};
->         ... long swath of code ...
->         printf_ln(... name[!remote_is_branch] ...);
->
-> is a lot harder to read than:
->
->         printf_ln(... remote_is_branch ? shortname : branch ...);
+> Did you want to drop "it" from this sentence? Or did you mean to say
+> "the ref as you have it locally"?
 
-Indeed, that's a step backward, and is not what was asked. Merely
-pushing data into tables does not make the logic table-driven
-(emphasis on *driven*). The GSoC microproject did not demand a
-table-driven approach, but instead asked students if such an approach
-would make sense. A more table-driven approach might look something
-like this:
-
-    struct M { const char *s; const char **a1; const char **a2; }
-    message[][2][2] = {{{
-        { "Branch %s set ... %s ... %s", &shortname, &origin },
-        ...
-    }},{{
-        { "Branch %s set ... %s", &remote, NULL },
-        ...
-    }}};
-
-    const struct M *m = message[!remote_is_branch][!origin][!rebasing];
-    printf_ln(m->s, local, *m->a1, *m->a2);
-
-Whether this approach is more clear than the original code is a matter
-for debate [1], however, it's obvious from the table which arguments
-belong with each message, and the printf_ln() invocation does not
-require any logic. When moving only messages into a table, they become
-disconnected from their arguments which makes reasoning about them a
-bit more difficult. The original code does not have this problem, nor
-does a table-driven approach.
-
-[1]: While ungainly, the original code may not be sufficiently bad to
-warrant the extra complications of a table. A simple refactoring, such
-as [2], can make the code a bit easier to read without adding
-complexity.
-
-[2]: http://thread.gmane.org/gmane.comp.version-control.git/243704
+Thanks for your careful reading.  Will drop "it".
