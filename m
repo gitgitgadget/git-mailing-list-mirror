@@ -1,106 +1,84 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: An idea for "git bisect" and a GSoC enquiry
-Date: Thu, 13 Mar 2014 18:19:35 +0100
-Message-ID: <5321E8A7.3080907@alum.mit.edu>
-References: <CAL0uuq0=Zo0X8mYRD6q-Q+QAcZhfmxOwKiRegDrRm3O_i0Q+EA@mail.gmail.com> <530F1F11.7060403@alum.mit.edu> <CAL0uuq0msXWZDDWzpetfBG0cgGQLKrtwhNp-DqbD6Q3aytaCdQ@mail.gmail.com> <xmqqtxbjum06.fsf@gitster.dls.corp.google.com> <CAL0uuq3eWnLz3=wiexSsJgArUYx95EjLMDWyDvQb9=_ieQUvBA@mail.gmail.com> <xmqqr46jqgfq.fsf@gitster.dls.corp.google.com> <CAL0uuq0LpQTQPeNVJgKGS2YLTT0gi_BM0wi02c0EP+kvBE4DyA@mail.gmail.com> <xmqqmwgvmfpk.fsf@gitster.dls.corp.google.com>
+From: Yuxuan Shui <yshuiv7@gmail.com>
+Subject: Re: GSoC proposal: port pack bitmap support to libgit2.
+Date: Fri, 14 Mar 2014 01:20:58 +0800
+Message-ID: <CAGqt0zy=av=V--REMz2Q1VRZW9mU5Ng=NN=TAAZiUbzskUZbgQ@mail.gmail.com>
+References: <CAGqt0zz1W1k92B+XRWEmMEv1=iyej+zi9QUCp2EhA=g+VnCt0g@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jacopo Notarstefano <jacopo.notarstefano@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 13 18:19:52 2014
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Mar 13 18:21:07 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WO9IH-00060f-3a
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Mar 2014 18:19:45 +0100
+	id 1WO9Ja-0007Gx-2k
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Mar 2014 18:21:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754281AbaCMRTk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Mar 2014 13:19:40 -0400
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:54571 "EHLO
-	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753238AbaCMRTj (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 Mar 2014 13:19:39 -0400
-X-AuditID: 12074412-f79d46d000002e58-5e-5321e8aaa6eb
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 48.81.11864.AA8E1235; Thu, 13 Mar 2014 13:19:38 -0400 (EDT)
-Received: from [192.168.69.148] (p57A24737.dip0.t-ipconnect.de [87.162.71.55])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s2DHJa0p008035
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Thu, 13 Mar 2014 13:19:37 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
-In-Reply-To: <xmqqmwgvmfpk.fsf@gitster.dls.corp.google.com>
-X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrLKsWRmVeSWpSXmKPExsUixO6iqLvqhWKwwZHp5ha3Z7YwW3Rd6Way
-	aOi9wmyxfP4aFgcWj52z7rJ7XLyk7PF5k1wAcxS3TVJiSVlwZnqevl0Cd8bb3wUFzYIVj18k
-	NTAu5u1i5OSQEDCRODbtOxuELSZx4d56IJuLQ0jgMqPE5o2HmSGcc0wSf+88YAWp4hXQllj0
-	aQsziM0ioCrRdLsbzGYT0JVY1NPMBGKLCgRLrL78gAWiXlDi5MwnYLaIgJrExLZDLCBDmQUW
-	MEoc6+kEWy0sYCFxe/0KqG1nmCXWdTaBdXAKWEv82voeaCoH0H3iEj2NQSBhZgEdiXd9D5gh
-	bHmJ7W/nME9gFJyFZN8sJGWzkJQtYGRexSiXmFOaq5ubmJlTnJqsW5ycmJeXWqRrppebWaKX
-	mlK6iRES3EI7GNeflDvEKMDBqMTDO+OoYrAQa2JZcWXuIUZJDiYlUd6q50AhvqT8lMqMxOKM
-	+KLSnNTiQ4wSHMxKIrwyl4FyvCmJlVWpRfkwKWkOFiVx3p+L1f2EBNITS1KzU1MLUotgsjIc
-	HEoSvAkgQwWLUtNTK9Iyc0oQ0kwcnCDDuaREilPzUlKLEktLMuJBERxfDIxhkBQP0N42kHbe
-	4oLEXKAoROspRl2O222/PjEKseTl56VKifMueQZUJABSlFGaB7cClspeMYoDfSzMGw0yigeY
-	BuEmvQJawgS05EeAPMiSkkSElFQDY0XYHf2/LD/PNDiucXr9vUSic9OGG1bZvNG71lkfU8rY
-	dPuPVNCZ/4FGH+rzQs9ePfRlsvjq/Jb/XLyyEwUaWJ3vrHffZ/FCylJ5b1Tgk7kf 
+	id S1754608AbaCMRVA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Mar 2014 13:21:00 -0400
+Received: from mail-vc0-f177.google.com ([209.85.220.177]:33953 "EHLO
+	mail-vc0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754499AbaCMRU7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Mar 2014 13:20:59 -0400
+Received: by mail-vc0-f177.google.com with SMTP id if17so1436280vcb.22
+        for <git@vger.kernel.org>; Thu, 13 Mar 2014 10:20:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        bh=v2z4bigSzpnSCWTU9u6wNUAZsqjZQ2xAaZbmViQIxBg=;
+        b=TcbIOxU+LOZpCcev4eAGF2KvwPScfcokbM9S+Rpeu9T1rbYTFKFHo+HQYVhSTn66Qw
+         yPWXduuzEEfqKXCEMOjJQBlk92d9I7vEZ8OIqTeUOcv7+PurUZVj8S6E5Sdtigk6soEB
+         t/G++Yg/KFEtuImFjcF8pkvSNdFDsI5XIkK9Kj8PGH/oq4u3gZIJYWE1rC4V7W7dq6lb
+         NPFR0Js7vouhVfcS71vA+0V+LrBQFwefcVvM40z2fAKjN6ZD+Ukosl2w2YMVGUOxGQu1
+         q6+0A2ekrNiNMjrYjOqEl1WkmxnzMsglPzKpIEY5ImtHRwahRjXVsScpxAes+xXrhiRW
+         eaFQ==
+X-Received: by 10.52.7.69 with SMTP id h5mr27537vda.68.1394731258970; Thu, 13
+ Mar 2014 10:20:58 -0700 (PDT)
+Received: by 10.220.89.209 with HTTP; Thu, 13 Mar 2014 10:20:58 -0700 (PDT)
+In-Reply-To: <CAGqt0zz1W1k92B+XRWEmMEv1=iyej+zi9QUCp2EhA=g+VnCt0g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244037>
 
-On 03/12/2014 07:31 PM, Junio C Hamano wrote:
-> Jacopo Notarstefano <jacopo.notarstefano@gmail.com> writes:
-> 
->> On Mon, Mar 3, 2014 at 7:34 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>> I think you fundamentally cannot use two labels that are merely
->>> "distinct" and bisect correctly.  You need to know which ones
->>> (i.e. good) are to be excluded and the other (i.e. bad) are to be
->>> included when computing the "remaining to be tested" set of commits.
->>
->> Good point. Yes, this isn't viable.
-> 
-> But if you make them into --no-longer-X vs --still-X, then it will
-> be viable without us knowing what X means.
+Hi,
 
-Yes, but who wants to type such long and inelegant option names?
+On Wed, Mar 12, 2014 at 4:19 PM, Yuxuan Shui <yshuiv7@gmail.com> wrote:
+> Hi,
+>
+> I'm Yuxuan Shui, a undergraduate student from China. I'm applying for
+> GSoC 2014, and here is my proposal:
+>
+> I found this idea on the ideas page, and did some research about it.
+> The pack bitmap patchset add a new .bitmap file for every pack file
+> which contains the reachability information of selected commits. This
+> information is used to speed up git fetching and cloning, and produce
+> a very convincing results.
+>
+> The goal of my project is to port the pack bitmap implementation in
+> core git to libgit2, so users of libgit2 could benefit from this
+> optimization as well.
+>
+> Please let me know if my proposal makes sense, thanks.
+>
+> P.S. I've submitted by microproject patch[1], but haven't received any
+> response yet.
+>
+> [1]: http://thread.gmane.org/gmane.comp.version-control.git/243854
+>
+> --
+> Regards
+> Yuxuan Shui
 
-It seems to me that we can infer which mark is which from the normal
-bisect user interaction.  At the startup phase of a bisect, there are
-only three cases:
+Could anyone please review my proposal a little bit? Is this project
+helpful and worth doing? Did I get anything wrong in my proposal?
 
-1. There are fewer than two different types of marks on tested commits.
-   For example, maybe one commit has been marked "bad".  Or two commits
-   have both been marked "slow".  In this case we wait for the user to
-   choose another commit manually, so we don't have to know the meaning
-   of the mark.
-
-2. There are two different types of marks, but no commits with
-   differing marks are ancestors of each other.  In this case, we pick
-   the merge base of two commits with differing marks and present it
-   to the user for testing.  But we can do that without knowing which
-   mark is "before the change" and which mark means "after the
-   change".  So just defer the inference.
-
-3. There are two different types of marks, and a commit with one mark
-   is an ancestor of a commit with the other mark.  In this case, it is
-   clear from the ancestry which mark means "before the change" and
-   which mark means "after the change".  So record the "orientation" of
-   the marks and continue like in the old days.
-
-Of course, there are still details to be worked out, like how to tag the
-commits before we know which mark means what.  But that is just a
-clerical problem, not a fundamental one.
-
-Michael
+Thanks.
 
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+
+Regards
+Yuxuan Shui
