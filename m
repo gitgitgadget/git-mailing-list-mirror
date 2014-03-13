@@ -1,80 +1,113 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Microproject idea: new OPT_* macros for PARSE_OPT_NONEG
-Date: Thu, 13 Mar 2014 12:00:24 -0700
-Message-ID: <xmqqfvmlj54n.fsf@gitster.dls.corp.google.com>
-References: <CACsJy8CBVVJN3V8N_djLF4XKfTbxvdcJCnWmZJxVZOwy8AMQWA@mail.gmail.com>
-	<531977AF.4060907@alum.mit.edu>
-	<CACsJy8AUhHE8=Yaj6_G46V6w5ZbA3z403GkBfsbZL7MxgeA3RQ@mail.gmail.com>
-	<xmqqzjl1u87n.fsf@gitster.dls.corp.google.com>
-	<CACsJy8Dw=43m_4KzAxwCqLsFq2E23rT=bT3zmGUue6RYTnrOYg@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] fsck.c: Change the type of fsck_ident()'s first argument
+Date: Thu, 13 Mar 2014 12:11:03 -0700
+Message-ID: <xmqqbnx9j4mw.fsf@gitster.dls.corp.google.com>
+References: <1394685951-9726-1-git-send-email-yshuiv7@gmail.com>
+	<1394685951-9726-2-git-send-email-yshuiv7@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 13 20:00:41 2014
+Cc: git@vger.kernel.org
+To: Yuxuan Shui <yshuiv7@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 13 20:11:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WOArw-0002fQ-Ny
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Mar 2014 20:00:41 +0100
+	id 1WOB29-00056l-Nk
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Mar 2014 20:11:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754885AbaCMTAb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Mar 2014 15:00:31 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52686 "EHLO
+	id S1754920AbaCMTLI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Mar 2014 15:11:08 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34506 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753626AbaCMTA1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Mar 2014 15:00:27 -0400
+	id S1754593AbaCMTLH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Mar 2014 15:11:07 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A6C82739B8;
-	Thu, 13 Mar 2014 15:00:26 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B0B5C74275;
+	Thu, 13 Mar 2014 15:11:06 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=hD1Kz14Vmi34JNnQ8IJBQHgRbrk=; b=GxXuZL
-	mU75ef4AuZKhT3QKQqb+PxNgCDieEobgmAxnMcW3HS4yPdm36UAXJaqdpMPQPxug
-	giduNzr9knkPVypZL4CrwMmigwNfvQSMUPvud6mrsRstoAPqHkQ0R7xB5pzBU+NM
-	EdZreiYyup4DWUQwa02mu+4nkIIRrEcWpP9n0=
+	:content-type; s=sasl; bh=i0/AJsxh0omjbOpD+i2XMP/Z4jw=; b=u3EQCJ
+	pp1I6s/hmvPwchAj+9xK+YYerEXVTcNkmKjgS0uATLl4y2P8LbslOayHvE+l5NKA
+	5Q1rDK77+/9v1LypszGA4YKYUSvcQT7yeKOd1Jb97hb7S+rdAl4ToYHQnuvbAjZ8
+	YTllvYfbYI0Iq3/MiFlV86rvbvvS/2GPUYNj0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=sq1l8U1COFwiqaecIF6u39h0Ju9y3inO
-	8IcoWwMU5nDnGF2ACgCKj+9vvrlGzAULBzSSacp11fh+0nB619FxiMcbT9T3yhu/
-	BHH8iPQS4iBohN52DxAmX00qQ3Q5Ad6GO2kd1TyEDREJkZ51J+rUN85GTKmU/zO9
-	Egv0U0uCgjs=
+	:content-type; q=dns; s=sasl; b=cdcyYPaMx0Yy1oO+CJl7AH//79yiVmCt
+	hyjlgEwIvk7Bllmi2lKXq8HR+FtUUKuXdwgdK9zZrOjOj0QoP5gpPXQLxOfd7J32
+	ea77uudM0vSBUfchxfr1tdgq6xKkcdaXC5WNNtZXQuE2H1M+CHTDq0N7Wm31eFvM
+	knwuo+b4nAw=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 92BE1739B6;
-	Thu, 13 Mar 2014 15:00:26 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8C16274274;
+	Thu, 13 Mar 2014 15:11:06 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DC4A8739B4;
-	Thu, 13 Mar 2014 15:00:25 -0400 (EDT)
-In-Reply-To: <CACsJy8Dw=43m_4KzAxwCqLsFq2E23rT=bT3zmGUue6RYTnrOYg@mail.gmail.com>
-	(Duy Nguyen's message of "Thu, 13 Mar 2014 06:37:41 +0700")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id ACC247426E;
+	Thu, 13 Mar 2014 15:11:05 -0400 (EDT)
+In-Reply-To: <1394685951-9726-2-git-send-email-yshuiv7@gmail.com> (Yuxuan
+	Shui's message of "Thu, 13 Mar 2014 12:45:50 +0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: BC8F4EC6-AAE1-11E3-BC4B-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 39E9BC98-AAE3-11E3-AC59-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244046>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Yuxuan Shui <yshuiv7@gmail.com> writes:
 
-> On Sat, Mar 8, 2014 at 2:20 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Looking at "git grep -B3 OPT_NONEG" output, it seems that NONEG is
->> associated mostly with OPTION_CALLBACK and OPTION_SET_INT in the
->> existing code.
->>
->> Perhaps OPT_SET_INT should default to not just OPT_NOARG but also
->> OPT_NONEG?
+> Since fsck_ident doesn't change the content of **ident, the type of
+> ident could be const char **.
 >
-> There are OPT_SET_INT() that should not have NONEG in current code. So
-> there are two sets of SET_INT anyway. Either we convert them all to a
-> new macro that takes an extra flag, or we add OPT_SET_INT_NONEG() that
-> covers one set and leave the other set alone.
+> This change is required to rewrite fsck_commit() to use skip_prefix().
+>
+> Signed-off-by: Yuxuan Shui <yshuiv7@gmail.com>
+> ---
 
-Are you forgetting the third alternative, of swapping the default,
-if the ones that do not want NONEG are in the minority, to reduce
-the number of spelled-out instances?
+It may not be a bad idea to read and understand reviews other people
+are receiving for their microprojects, e.g. $gmane/243852.
+
+"Change the type" is not technically incorrect per-se, but when
+viewed in "git shortlog" output, it wastes more bytes than it
+conveys information about this change if stated differently.  Any
+patch that touch existing code is a "change" by definition.
+
+Perhaps
+
+	fsck.c:fsck_ident(): ident argument points at a const string
+
+or something?
+
+I see that the body of the patch follows the review by Peff on the
+previous round of this series, so I'll forge a Helped-by: or
+something into the log message when I queue this patch.
+
+Thanks.
+
+>  fsck.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/fsck.c b/fsck.c
+> index 99c0497..7776660 100644
+> --- a/fsck.c
+> +++ b/fsck.c
+> @@ -243,7 +243,7 @@ static int fsck_tree(struct tree *item, int strict, fsck_error error_func)
+>  	return retval;
+>  }
+>  
+> -static int fsck_ident(char **ident, struct object *obj, fsck_error error_func)
+> +static int fsck_ident(const char **ident, struct object *obj, fsck_error error_func)
+>  {
+>  	if (**ident == '<')
+>  		return error_func(obj, FSCK_ERROR, "invalid author/committer line - missing space before email");
+> @@ -281,7 +281,7 @@ static int fsck_ident(char **ident, struct object *obj, fsck_error error_func)
+>  
+>  static int fsck_commit(struct commit *commit, fsck_error error_func)
+>  {
+> -	char *buffer = commit->buffer;
+> +	const char *buffer = commit->buffer;
+>  	unsigned char tree_sha1[20], sha1[20];
+>  	struct commit_graft *graft;
+>  	int parents = 0;
