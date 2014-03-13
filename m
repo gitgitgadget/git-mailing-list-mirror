@@ -1,89 +1,83 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] wt-status: i18n of section labels
-Date: Thu, 13 Mar 2014 11:01:52 -0700
-Message-ID: <xmqqvbviht9r.fsf@gitster.dls.corp.google.com>
-References: <20131008085036.11434.25160.reportbug@x230-buxy.home.ouaza.com>
-	<20131219104613.GA18379@x230-buxy.home.ouaza.com>
-	<20131219194319.GB20443@google.com>
-	<xmqqa9cvmeod.fsf@gitster.dls.corp.google.com>
-	<xmqqtxb3kyr2.fsf_-_@gitster.dls.corp.google.com>
-	<5320BE1C.9020307@savoirfairelinux.com>
-	<xmqq1ty7kwfp.fsf@gitster.dls.corp.google.com>
-	<5320C0DD.1090803@savoirfairelinux.com>
+Subject: Re: [PATCH v4] install_branch_config: simplify verbose messages logic
+Date: Thu, 13 Mar 2014 11:34:13 -0700
+Message-ID: <xmqqr466hrru.fsf@gitster.dls.corp.google.com>
+References: <1394584412-7735-1-git-send-email-pawlo@aleg.pl>
+	<CAPig+cTmdF06PrWboJFNFEGKLCa=3rmGrcPusSsYZxdtfSEewA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Raphael Hertzog <hertzog@debian.org>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Sandy Carter <sandy.carter@savoirfairelinux.com>
-X-From: git-owner@vger.kernel.org Thu Mar 13 19:02:04 2014
+Cc: =?utf-8?Q?Pawe=C5=82?= Wawruch <pawlo@aleg.pl>,
+	Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Thu Mar 13 19:34:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WO9xD-0004Vu-HI
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Mar 2014 19:02:03 +0100
+	id 1WOASZ-0002O8-UN
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Mar 2014 19:34:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754617AbaCMSB4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Mar 2014 14:01:56 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60423 "EHLO
+	id S1754945AbaCMSeX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Mar 2014 14:34:23 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44020 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754166AbaCMSBz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Mar 2014 14:01:55 -0400
+	id S1754927AbaCMSeW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Mar 2014 14:34:22 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1772073B06;
-	Thu, 13 Mar 2014 14:01:55 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BC7C8730BE;
+	Thu, 13 Mar 2014 14:34:16 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=NFgWU7H78rs2hClmSb1HuyaoTkI=; b=jwlSyT
-	2aMivldtmJaQ+Sakau3UIukP5MmQCjU2aZwj8UbCe+/ybZEJiH/B+N4I8pnS4yDR
-	zfoUdGUzz/i4PSrEUb8h1MGjKEz9zRgyk6eOLEHa74gJezonrEog5TxYSc6PGV/Y
-	aE8jp8CoxNpOTMLhzS1ZE4UeIeaQ4dPWcCFPQ=
+	:content-type; s=sasl; bh=R2UjpW8yaGGgkFIWRzUpKTXSIkc=; b=QmH8EG
+	dD4ug0j5DkKG7Jd5vn875eOmFRKAn0RLJQp6SF4PalWAmjRvoFALPnjoIs4vh1Zw
+	V5RVkmTEzwtjgHzlexi8SHJHbaP0uUiz0G6mciqXHzMmSqKmbcY69AvLVeKvisGV
+	fQFpJOXGusMGz4eq5UMi4Mj8hJujycI8xJlc8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=D7dk/AOmEgdlVwBfL8tci5LR5/Nw7T3Y
-	tQ533yrzEHGDN3hqDTAP6f3WAKHuN3VUfIIfMBgIB+aTvMupsRl091E1rhm3BAS4
-	sAeIm/iyrjGseIaLU5c4kz27y6FCjBHiC8anR2FGMoP7nVUJdj2qKoy5EDqt8EWS
-	GaKEA1GdZ7Y=
+	:content-type; q=dns; s=sasl; b=KNaPoJQv6Cdtddbl2YF3IvGOwF+TZQ4Z
+	V9VjEpiL7eASP3Nr7JHxX7eExgVtPSmuSNzElj8Y2LozXSqdcb70jLgx7hTEQsXm
+	ju8mtk042hN20+E4yRdUBHoAqVYANf7H9xRQsfZNmdECCiXwWZGHx1Yf1rD8vcZr
+	/iLzMikmVsU=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 010B673B05;
-	Thu, 13 Mar 2014 14:01:55 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AADD7730BD;
+	Thu, 13 Mar 2014 14:34:16 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4E4BC73B03;
-	Thu, 13 Mar 2014 14:01:54 -0400 (EDT)
-In-Reply-To: <5320C0DD.1090803@savoirfairelinux.com> (Sandy Carter's message
-	of "Wed, 12 Mar 2014 16:17:33 -0400")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EC46B730BB;
+	Thu, 13 Mar 2014 14:34:15 -0400 (EDT)
+In-Reply-To: <CAPig+cTmdF06PrWboJFNFEGKLCa=3rmGrcPusSsYZxdtfSEewA@mail.gmail.com>
+	(Eric Sunshine's message of "Wed, 12 Mar 2014 01:36:57 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 8F7E6FC8-AAD9-11E3-80B8-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 14CE255C-AADE-11E3-B24B-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244042>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244043>
 
-Sandy Carter <sandy.carter@savoirfairelinux.com> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> I refered to the wrong lines, the ones I was refering to were:
->
->> +static int maxwidth(const char *(*label)(int), int minval, int maxval)
->> +{
->> +	int result = 0, i;
->> +
->> +	for (i = minval; i <= maxval; i++) {
->> +		const char *s = label(i);
->> +		int len = s ? utf8_strwidth(s) : 0;
->
-> Sorry about that
+> Shouldn't this logic [to decide what the printf arguments should
+> be] also be encoded in the table?
+> ...
+> The same argument also applies to computation of the 'name' variable
+> above. It too can be pushed into the the table.
 
-Oh, yes, you are right.  wt_status_diff_status_string() is meant to
-be asked with a bogus status character and expected to return NULL,
-so diagnosing anything it does not understand as a "bug" is indeed a
-bug I added.
+Because the "printf argument" logic does not have to be in the
+table, the same argument does not apply to the 'name' thing.
 
-I think I fixed in my latest reroll ($gmane/243996).
+After looking at the v5 patch, I do not think an extra two-element
+array to switch between remote vs shortname is making it any easier
+to read.  I would have to say that personally I find that
 
-Thanks for catching that.
+	const char *name[] = {remote, shortname};
+	... long swath of code ...
+	printf_ln(... name[!remote_is_branch] ...);
+
+is a lot harder to read than:
+
+	printf_ln(... remote_is_branch ? shortname : branch ...);
+
+HTH, and thanks.
