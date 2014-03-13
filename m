@@ -1,83 +1,66 @@
-From: Yuxuan Shui <yshuiv7@gmail.com>
-Subject: [PATCH v3 1/2] fsck.c: Change the type of fsck_ident()'s first argument
-Date: Thu, 13 Mar 2014 12:45:50 +0800
-Message-ID: <1394685951-9726-2-git-send-email-yshuiv7@gmail.com>
-References: <1394685951-9726-1-git-send-email-yshuiv7@gmail.com>
-Cc: Yuxuan Shui <yshuiv7@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 13 05:46:28 2014
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH] general style: replaces memcmp() with proper starts_with()
+Date: Thu, 13 Mar 2014 07:27:22 +0100
+Message-ID: <877g7yipf9.fsf@fencepost.gnu.org>
+References: <1394635434-44979-1-git-send-email-quintus.public@gmail.com>
+	<20140312175624.GA7982@sigill.intra.peff.net>
+	<xmqqha73jb6q.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>,
+	Quint Guvernator <quintus.public@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 13 07:28:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WNxXE-00079G-HK
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Mar 2014 05:46:24 +0100
+	id 1WNz7m-0006Df-EQ
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Mar 2014 07:28:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751144AbaCMEqL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Mar 2014 00:46:11 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:42839 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751092AbaCMEqJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Mar 2014 00:46:09 -0400
-Received: by mail-pa0-f46.google.com with SMTP id kp14so549305pab.5
-        for <git@vger.kernel.org>; Wed, 12 Mar 2014 21:46:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=wHRaOxkP8DkMjqP/x4l2MaU4mRsQ4lfLdBo6DtcmHq4=;
-        b=btqsLijpwWT55ZtjIG/DAOzp0sKsBQfCAK31OeLbjvBr+UjcAWmIym7xWjxzHdoGVR
-         07gLqukVnSyTVg/FamJJSRBKu50Y4uLnAD/7ZGax3BIIuQG+Y8slmyp4EB5jbE8uomES
-         oPcN9waGP0sPXoFh4sRT23ZqGQG22OFDcDYQA1tp4KOOU1roRM6GrlS87bKdZIehYBlE
-         ypTKxO3yLW08tTQ8XwzqdzCP7b6NHVRyqZeAogGJR1ofxskPGMhKg9WRbwoBdCMYBNQu
-         lPrE+Dseiq6sWwAqKbWmUEY6zem2AbTbUzQK89PG9V5Z/mHEiGEDhnNc3bGtQ4J1zyqw
-         1R4Q==
-X-Received: by 10.66.228.201 with SMTP id sk9mr1755844pac.134.1394685969385;
-        Wed, 12 Mar 2014 21:46:09 -0700 (PDT)
-Received: from localhost.localdomain ([123.151.32.162])
-        by mx.google.com with ESMTPSA id zb2sm2528040pbc.30.2014.03.12.21.46.05
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 12 Mar 2014 21:46:08 -0700 (PDT)
-X-Mailer: git-send-email 1.9.0
-In-Reply-To: <1394685951-9726-1-git-send-email-yshuiv7@gmail.com>
+	id S1753276AbaCMG2I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Mar 2014 02:28:08 -0400
+Received: from fencepost.gnu.org ([208.118.235.10]:50248 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751499AbaCMG2H (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Mar 2014 02:28:07 -0400
+Received: from localhost ([127.0.0.1]:49288 helo=lola)
+	by fencepost.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <dak@gnu.org>)
+	id 1WNz7d-0006tu-LN; Thu, 13 Mar 2014 02:28:05 -0400
+Received: by lola (Postfix, from userid 1000)
+	id 06A51DF3D0; Thu, 13 Mar 2014 07:27:22 +0100 (CET)
+In-Reply-To: <xmqqha73jb6q.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Wed, 12 Mar 2014 15:37:17 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244021>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244022>
 
-Since fsck_ident doesn't change the content of **ident, the type of
-ident could be const char **.
+Junio C Hamano <gitster@pobox.com> writes:
 
-This change is required to rewrite fsck_commit() to use skip_prefix().
+> Taking two random examples from an early and a late parts of the
+> patch:
+>
+> --- a/builtin/cat-file.c
+> +++ b/builtin/cat-file.c
+> @@ -82,7 +82,7 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name)
+>  				enum object_type type;
+>  				unsigned long size;
+>  				char *buffer = read_sha1_file(sha1, &type, &size);
+> -				if (memcmp(buffer, "object ", 7) ||
+> +				if (!starts_with(buffer, "object ") ||
 
-Signed-off-by: Yuxuan Shui <yshuiv7@gmail.com>
----
- fsck.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+[...]
 
-diff --git a/fsck.c b/fsck.c
-index 99c0497..7776660 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -243,7 +243,7 @@ static int fsck_tree(struct tree *item, int strict, fsck_error error_func)
- 	return retval;
- }
- 
--static int fsck_ident(char **ident, struct object *obj, fsck_error error_func)
-+static int fsck_ident(const char **ident, struct object *obj, fsck_error error_func)
- {
- 	if (**ident == '<')
- 		return error_func(obj, FSCK_ERROR, "invalid author/committer line - missing space before email");
-@@ -281,7 +281,7 @@ static int fsck_ident(char **ident, struct object *obj, fsck_error error_func)
- 
- static int fsck_commit(struct commit *commit, fsck_error error_func)
- {
--	char *buffer = commit->buffer;
-+	const char *buffer = commit->buffer;
- 	unsigned char tree_sha1[20], sha1[20];
- 	struct commit_graft *graft;
- 	int parents = 0;
+> The original hunks show that the code knows and relies on magic
+> numbers 7 and 8 very clearly and there are rooms for improvement.
+
+Like: what if the file is empty?
+
 -- 
-1.9.0
+David Kastrup
