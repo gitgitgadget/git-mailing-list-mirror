@@ -1,97 +1,160 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: No progress from push when using bitmaps
-Date: Thu, 13 Mar 2014 18:24:28 -0400
-Message-ID: <20140313222428.GA18406@sigill.intra.peff.net>
-References: <CAJo=hJth1YB+u2Y9S0X3xk7s2-HcPP4_k03qprHBU4A9721i8g@mail.gmail.com>
- <20140313212626.GA23618@sigill.intra.peff.net>
- <CAJo=hJu1WscibwectWzrUcoOV4-9xk4hBm1JA+RjONmgvZTXwQ@mail.gmail.com>
- <20140313220754.GA20173@sigill.intra.peff.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v5] install_branch_config: simplify verbose messages logic
+Date: Thu, 13 Mar 2014 18:36:29 -0400
+Message-ID: <CAPig+cSh5qRyDnD3hAcdjswGZk+rGzU5ekDbNBTB-XNBSa806Q@mail.gmail.com>
+References: <1394668065-14629-1-git-send-email-pawlo@aleg.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git <git@vger.kernel.org>
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Mar 13 23:24:38 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>
+To: =?UTF-8?Q?Pawe=C5=82_Wawruch?= <pawlo@aleg.pl>
+X-From: git-owner@vger.kernel.org Thu Mar 13 23:36:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WOE3G-0005pi-JH
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Mar 2014 23:24:34 +0100
+	id 1WOEEt-0001K7-EP
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Mar 2014 23:36:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754725AbaCMWYa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Mar 2014 18:24:30 -0400
-Received: from cloud.peff.net ([50.56.180.127]:39069 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753769AbaCMWYa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Mar 2014 18:24:30 -0400
-Received: (qmail 15988 invoked by uid 102); 13 Mar 2014 22:24:30 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 13 Mar 2014 17:24:30 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 13 Mar 2014 18:24:28 -0400
-Content-Disposition: inline
-In-Reply-To: <20140313220754.GA20173@sigill.intra.peff.net>
+	id S1754704AbaCMWga convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Mar 2014 18:36:30 -0400
+Received: from mail-yk0-f170.google.com ([209.85.160.170]:60268 "EHLO
+	mail-yk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754036AbaCMWg3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 13 Mar 2014 18:36:29 -0400
+Received: by mail-yk0-f170.google.com with SMTP id 9so4537904ykp.1
+        for <git@vger.kernel.org>; Thu, 13 Mar 2014 15:36:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=+/82kFAW5/qk/QpX7LBYTdnwxSE0VKts1Qlm/vDau6I=;
+        b=M1sWNmWpZyqQwMahedZ0pa3PAr5D2rz7fZPTHU2Mg7fo6HnUyGYdAij8lB8Z6R3Wnd
+         XoNCaQb1jRUNWgQHWG1aXc3XqYWSBkCfrGNl3HN9cpreLjfMgDwCW/5qWQvbhonqVyjE
+         Iy9NG4xQM4YVkIIXAQtzlhVMUL2kjr/Ba5NWvjOK4jBrkrZyxxFuL3uUopyowUi1+/JQ
+         KK+cSNaBsEy7cbwP9ZAEOCRrsRqhp9QqGNUhZcTF7xgkF7SCruQrvqV4omZ/KnD1jkm+
+         yqXZZj6qQQq4xEqabtm6dENu9UJBCvLVKw9SS+uq5RFRj7CEQBvlCHeKn17HfQBsF4ZC
+         wuRw==
+X-Received: by 10.236.132.48 with SMTP id n36mr221873yhi.149.1394750189154;
+ Thu, 13 Mar 2014 15:36:29 -0700 (PDT)
+Received: by 10.170.180.134 with HTTP; Thu, 13 Mar 2014 15:36:29 -0700 (PDT)
+In-Reply-To: <1394668065-14629-1-git-send-email-pawlo@aleg.pl>
+X-Google-Sender-Auth: A6P04-BRk441f3T16RNfvyu7L8w
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244058>
 
-On Thu, Mar 13, 2014 at 06:07:54PM -0400, Jeff King wrote:
+On Wed, Mar 12, 2014 at 7:47 PM, Pawe=C5=82 Wawruch <pawlo@aleg.pl> wro=
+te:
+> Replace the chain of if statements with table of strings.
+>
+> Signed-off-by: Pawe=C5=82 Wawruch <pawlo@aleg.pl>
+> ---
+> Thanks to Eric Sunshine and Junio C Hamano.
+> Simplified printing logic. The name moved to a table.
+>
+> v4: http://thread.gmane.org/gmane.comp.version-control.git/243914
+> v3: http://thread.gmane.org/gmane.comp.version-control.git/243865
+> v2: http://thread.gmane.org/gmane.comp.version-control.git/243849
+> v1: http://thread.gmane.org/gmane.comp.version-control.git/243502
 
->   3. Use the regular "Writing objects" progress, but fake the object
->      count. We know we are writing M bytes with N objects. Bump the
->      counter by 1 for every M/N bytes we write.
+Thanks. Using the vN notation makes these links self-explanatory.
 
-Here is that strategy. I think it looks pretty nice, and it seamlessly
-handles the case where you have extra objects to send on top of the
-reused pack (we just keep the same progress meter counting up).
+>  branch.c | 42 +++++++++++++++++-------------------------
+>  1 file changed, 17 insertions(+), 25 deletions(-)
+>
+> diff --git a/branch.c b/branch.c
+> index 723a36b..c17817c 100644
+> --- a/branch.c
+> +++ b/branch.c
+> @@ -53,6 +53,20 @@ void install_branch_config(int flag, const char *l=
+ocal, const char *origin, cons
+>         int remote_is_branch =3D starts_with(remote, "refs/heads/");
+>         struct strbuf key =3D STRBUF_INIT;
+>         int rebasing =3D should_setup_rebase(origin);
+> +       const char *message[][2][2] =3D {{{
+> +               N_("Branch %s set up to track remote branch %s from %=
+s by rebasing."),
+> +               N_("Branch %s set up to track remote branch %s from %=
+s."),
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 831dd05..f187859 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -709,7 +709,7 @@ static struct object_entry **compute_write_order(void)
- static off_t write_reused_pack(struct sha1file *f)
- {
- 	unsigned char buffer[8192];
--	off_t to_write;
-+	off_t to_write, total;
- 	int fd;
- 
- 	if (!is_pack_valid(reuse_packfile))
-@@ -726,7 +726,7 @@ static off_t write_reused_pack(struct sha1file *f)
- 	if (reuse_packfile_offset < 0)
- 		reuse_packfile_offset = reuse_packfile->pack_size - 20;
- 
--	to_write = reuse_packfile_offset - sizeof(struct pack_header);
-+	total = to_write = reuse_packfile_offset - sizeof(struct pack_header);
- 
- 	while (to_write) {
- 		int read_pack = xread(fd, buffer, sizeof(buffer));
-@@ -739,10 +739,23 @@ static off_t write_reused_pack(struct sha1file *f)
- 
- 		sha1write(f, buffer, read_pack);
- 		to_write -= read_pack;
-+
-+		/*
-+		 * We don't know the actual number of objects written,
-+		 * only how many bytes written, how many bytes total, and
-+		 * how many objects total. So we can fake it by pretending all
-+		 * objects we are writing are the same size. This gives us a
-+		 * smooth progress meter, and at the end it matches the true
-+		 * answer.
-+		 */
-+		written = reuse_packfile_objects *
-+				(((double)(total - to_write)) / total);
-+		display_progress(progress_state, written);
- 	}
- 
- 	close(fd);
--	written += reuse_packfile_objects;
-+	written = reuse_packfile_objects;
-+	display_progress(progress_state, written);
- 	return reuse_packfile_offset - sizeof(struct pack_header);
- }
- 
+Some compilers may complain about the trailing comma. Ditto for the one=
+s below.
+
+> +               },{
+> +               N_("Branch %s set up to track local branch %s by reba=
+sing."),
+> +               N_("Branch %s set up to track local branch %s."),
+> +               }},{{
+> +               N_("Branch %s set up to track remote ref %s by rebasi=
+ng."),
+> +               N_("Branch %s set up to track remote ref %s."),
+> +               },{
+> +               N_("Branch %s set up to track local ref %s by rebasin=
+g."),
+> +               N_("Branch %s set up to track local ref %s.")
+> +       }}};
+> +       const char *name[] =3D {remote, shortname};
+
+See [1] and the messages following it for commentary about this change.
+
+>         if (remote_is_branch
+>             && !strcmp(local, shortname)
+> @@ -76,31 +90,9 @@ void install_branch_config(int flag, const char *l=
+ocal, const char *origin, cons
+>         }
+>         strbuf_release(&key);
+>
+> -       if (flag & BRANCH_CONFIG_VERBOSE) {
+> -               if (remote_is_branch && origin)
+> -                       printf_ln(rebasing ?
+> -                                 _("Branch %s set up to track remote=
+ branch %s from %s by rebasing.") :
+> -                                 _("Branch %s set up to track remote=
+ branch %s from %s."),
+> -                                 local, shortname, origin);
+> -               else if (remote_is_branch && !origin)
+> -                       printf_ln(rebasing ?
+> -                                 _("Branch %s set up to track local =
+branch %s by rebasing.") :
+> -                                 _("Branch %s set up to track local =
+branch %s."),
+> -                                 local, shortname);
+> -               else if (!remote_is_branch && origin)
+> -                       printf_ln(rebasing ?
+> -                                 _("Branch %s set up to track remote=
+ ref %s by rebasing.") :
+> -                                 _("Branch %s set up to track remote=
+ ref %s."),
+> -                                 local, remote);
+> -               else if (!remote_is_branch && !origin)
+> -                       printf_ln(rebasing ?
+> -                                 _("Branch %s set up to track local =
+ref %s by rebasing.") :
+> -                                 _("Branch %s set up to track local =
+ref %s."),
+> -                                 local, remote);
+> -               else
+> -                       die("BUG: impossible combination of %d and %p=
+",
+> -                           remote_is_branch, origin);
+> -       }
+> +       if (flag & BRANCH_CONFIG_VERBOSE)
+> +               printf_ln(_(message[!remote_is_branch][!origin][!reba=
+sing]),
+> +                               local, name[!remote_is_branch], origi=
+n);
+
+Much simpler than the previous versions (sans [1] commentary)
+
+[1]: http://thread.gmane.org/gmane.comp.version-control.git/243914/focu=
+s=3D244043
+
+>  }
+>
+>  /*
+> --
+> 1.8.3.2
