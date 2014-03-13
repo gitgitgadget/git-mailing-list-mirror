@@ -1,59 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] connect.c: SP after "}", not TAB
-Date: Thu, 13 Mar 2014 10:54:26 -0700
-Message-ID: <xmqqzjkuhtm5.fsf@gitster.dls.corp.google.com>
-References: <1394711131-14703-1-git-send-email-pclouds@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] general style: replaces memcmp() with proper
+ starts_with()
+Date: Thu, 13 Mar 2014 13:55:15 -0400
+Message-ID: <20140313175515.GA18897@sigill.intra.peff.net>
+References: <1394635434-44979-1-git-send-email-quintus.public@gmail.com>
+ <20140312175624.GA7982@sigill.intra.peff.net>
+ <xmqqha73jb6q.fsf@gitster.dls.corp.google.com>
+ <877g7yipf9.fsf@fencepost.gnu.org>
+ <xmqq4n32j8i7.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 13 18:54:36 2014
+Content-Type: text/plain; charset=utf-8
+Cc: David Kastrup <dak@gnu.org>,
+	Quint Guvernator <quintus.public@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 13 18:55:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WO9pz-0005c6-Da
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Mar 2014 18:54:35 +0100
+	id 1WO9qn-0006PG-W6
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Mar 2014 18:55:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754713AbaCMRya (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Mar 2014 13:54:30 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54373 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754213AbaCMRy3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Mar 2014 13:54:29 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8230B73823;
-	Thu, 13 Mar 2014 13:54:29 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=OCg+Ye6XwSGTQhbQuxLGq1gB+s8=; b=r5zXvT
-	icqa1DAWU8wBc0ttZAEeR/U5Od8jyDeugz3EX00g7RDo4hmE2Qv8XneDeAhdQdvf
-	sn1NyBmEs4DZ/i+wI7lRfhJiC0IgJzbzBellWtEx+EX3pP0LXpj1wk9MTvlpVm8j
-	Cj/DoqEKqez/7toFYJkBDG9kx0ctIUn63vWJk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=tqd2B5eL1uS+ypmo1Vc4vawvk/m/If5i
-	4AGeho3YI1sSLxXttqxrs4eoy0ACq2puyDVF1kuvPDTQFKi32x892yTbNWkXOA5A
-	gVL7fHY3q+2/JnFEoxhl3+ZZj2trt2o1CsUYdK018isg6Y/rLbgDmC4yCTWTVOVC
-	NnWk9NiIPEs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6BB5773820;
-	Thu, 13 Mar 2014 13:54:29 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A2CF87381E;
-	Thu, 13 Mar 2014 13:54:28 -0400 (EDT)
-In-Reply-To: <1394711131-14703-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Thu, 13
- Mar 2014 18:45:31 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 85DD2884-AAD8-11E3-9496-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754547AbaCMRzS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Mar 2014 13:55:18 -0400
+Received: from cloud.peff.net ([50.56.180.127]:38948 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754213AbaCMRzR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Mar 2014 13:55:17 -0400
+Received: (qmail 2962 invoked by uid 102); 13 Mar 2014 17:55:17 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 13 Mar 2014 12:55:17 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 13 Mar 2014 13:55:15 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqq4n32j8i7.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244041>
 
-Thanks ;-)
+On Thu, Mar 13, 2014 at 10:47:28AM -0700, Junio C Hamano wrote:
+
+> >> --- a/builtin/cat-file.c
+> >> +++ b/builtin/cat-file.c
+> >> @@ -82,7 +82,7 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name)
+> >>  				enum object_type type;
+> >>  				unsigned long size;
+> >>  				char *buffer = read_sha1_file(sha1, &type, &size);
+> >> -				if (memcmp(buffer, "object ", 7) ||
+> >> +				if (!starts_with(buffer, "object ") ||
+> >
+> > [...]
+> >
+> >> The original hunks show that the code knows and relies on magic
+> >> numbers 7 and 8 very clearly and there are rooms for improvement.
+> >
+> > Like: what if the file is empty?
+> 
+> Yes.
+
+I think this one is actually OK. The result of read_sha1_file is
+NUL-terminated, and we know that starts_with reads byte-by-byte (the
+prior memcmp is wrong, but only if you care about accessing bytes past
+the end of the NUL).
+
+That whole piece of code seems silly, though, IMHO. It should be using
+parse_tag or peel_to_type.
+
+-Peff
