@@ -1,63 +1,115 @@
-From: Peter Wolanin <pwolanin@gmail.com>
-Subject: bug report: regression in git subtree add
-Date: Fri, 14 Mar 2014 16:49:37 -0400
-Message-ID: <CANae7MgZQs4tV9QcJvU3_anABSj-uTdwO+Y4x4mWKySprOEnBA@mail.gmail.com>
+From: Jagan Teki <jagannadh.teki@gmail.com>
+Subject: Re: Apply commits from one branch to another branch (tree structure
+ is different)
+Date: Sat, 15 Mar 2014 02:27:31 +0530
+Message-ID: <CAD6G_RTzbJGc10doV_ZbC5bd=Zpr6rPbNXni+Yo7cxD38DCLMQ@mail.gmail.com>
+References: <CAD6G_RTZaaYBP0MrmRYhce2v+A+WwvY=97Do3LoWW-SYzkHM2g@mail.gmail.com>
+	<CADeaMWpw4gx00QpUJ7u49sQvu7KbhvhH14TMdHXBRXq4wCNDZA@mail.gmail.com>
+	<CAD6G_RSmpfhTr_qtdaChR9TqMZgn8BAuSNDmK5B3HJDZMyoM1Q@mail.gmail.com>
+	<CADgNjan2SQXXfYfMP0sk5tqY_=c68=y0dfANF_KFaPQpzNG3yA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 14 21:57:06 2014
+Cc: Git List <git@vger.kernel.org>, Brandon McCaig <bamccaig@gmail.com>
+To: Andrew Wong <andrew.kw.w@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 14 21:57:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WOZA5-0002sM-IN
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Mar 2014 21:57:01 +0100
+	id 1WOZAe-0003Lx-RH
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Mar 2014 21:57:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755812AbaCNU46 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Mar 2014 16:56:58 -0400
-Received: from mail-qg0-f46.google.com ([209.85.192.46]:64084 "EHLO
-	mail-qg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754459AbaCNU45 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Mar 2014 16:56:57 -0400
-Received: by mail-qg0-f46.google.com with SMTP id e89so8933662qgf.5
-        for <git@vger.kernel.org>; Fri, 14 Mar 2014 13:56:56 -0700 (PDT)
+	id S1755798AbaCNU5c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Mar 2014 16:57:32 -0400
+Received: from mail-yk0-f170.google.com ([209.85.160.170]:58320 "EHLO
+	mail-yk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755198AbaCNU5c (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Mar 2014 16:57:32 -0400
+Received: by mail-yk0-f170.google.com with SMTP id 9so8146148ykp.1
+        for <git@vger.kernel.org>; Fri, 14 Mar 2014 13:57:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=KGvOBSMyQJtd8v4ZoSoqFIyNBFQ28pwinu/IYJAUdYY=;
-        b=KrZrfoYCOM2SRzYks0L2tblxJGLJ82UaX0RUyolTVFrGUcdcKa9PUblh055N6xb1re
-         rXFQQ3flWgIxC3C+ZM6l52imFR2z715Y1S488SRZTO4fo0OtsiWseUQqbyxCtnjNdpah
-         n9L1pd9foYFRpojDn+ika8pENEvmrH/EBxmMjEVPFx2l6VxBqe6R80dVuouWdC6v/U+9
-         zFvAONFhGiNZeliYYhwucSZqpoo96L0s/ZI5cnZh8vRVPsJjcfemaaSMjfY3VQCK6RhL
-         tdMT5wMBMQGnE9aivRoEyhXMhVS2nIj/7q9OMx8sruDqYjdud65uAO5mDUf0/uTbjar0
-         8xag==
-X-Received: by 10.224.123.137 with SMTP id p9mr12396629qar.39.1394830177727;
- Fri, 14 Mar 2014 13:49:37 -0700 (PDT)
-Received: by 10.96.118.227 with HTTP; Fri, 14 Mar 2014 13:49:37 -0700 (PDT)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=iqd23Fd3/iAfHd64e+IwPfjnozu9Y/HgWPerXxC26To=;
+        b=HV4TCCketlpSlWtWyAL7Ab631M15HoDTubGXHlR1mQgqaZXdFO+sTQdU2IrGSzeRAg
+         HpgXtTfJ6NTcclza/NHdMzVRFwzj9DFdQG0M/1gRWXT/+g6J1PXyASUvf6uuTZWismxb
+         BSjooZzuDw/iJekO0ycK8E057/uCiC/fIOKskoHUD3YArbAprvkV0ALDOQoD9KfcPQqt
+         vvwd1wvW3jgb3j63thQ5vsBK2S3U7QDpV61+B+8gUqdI+ySRQs3etSGgqcsN5N9h2wiF
+         xXzH1C1pTf2UO2NKn0s3B+FpGZQE59mnQxaITe/2fyV4ofxZATaXcpJUn+BDN2SqmeM/
+         eImA==
+X-Received: by 10.236.66.143 with SMTP id h15mr13752160yhd.36.1394830651558;
+ Fri, 14 Mar 2014 13:57:31 -0700 (PDT)
+Received: by 10.170.34.215 with HTTP; Fri, 14 Mar 2014 13:57:31 -0700 (PDT)
+In-Reply-To: <CADgNjan2SQXXfYfMP0sk5tqY_=c68=y0dfANF_KFaPQpzNG3yA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244110>
 
-In this commit:
-https://github.com/git/git/commit/10a49587fabde88c0afbc80a99d97fae91811f5f
+On Sat, Mar 15, 2014 at 2:07 AM, Andrew Wong <andrew.kw.w@gmail.com> wrote:
+> On Fri, Mar 14, 2014 at 4:01 PM, Jagan Teki <jagannadh.teki@gmail.com> wrote:
+>> On Sat, Mar 15, 2014 at 12:48 AM, Andrew Wong <andrew.kw.w@gmail.com> wrote:
+>>> On Fri, Mar 14, 2014 at 1:39 PM, Jagan Teki <jagannadh.teki@gmail.com> wrote:
+>>>> Suppose developer send 10 patches on branch1 where are changes in terms
+>>>> of <dir>_<version>/ then I need to apply on my local repo branch1, till now
+>>>> is fine then I need to apply same 10 patches on to my branch2 where source
+>>>> tree <dir> which is quite question here how can I do.
+>>>
+>>> You might be able to use the subtree option in recursive merge. Try
+>>> something like:
+>>>
+>>>     git cherry-pick -X subtree=foo <commit>
+>>>
+>>> This tells git to apply the changes to the "foo" directory in your
+>>> current branch (branch2).
+>>
+>> How do I do this?
+>>
+>> Suppose I'm in branch1 with two commits on foo_v2 and I need to apply them
+>> on branch2 where in foo.
+>
+> Since this uses cherry-pick, the changes that you want to apply have
+> to be on branch1 already.
+>
+> Let's say your branch1 looks like:
+>     --A--B--C--D
+> and branch2 looks like:
+>     --1--2--3--4
+>
+> And you want to apply commits B and C on branch2, but they modify
+> "foo_v1/" on branch1. You can tell git to apply the commits onto the
+> directory "foo/" on branch2:
+>     git checkout branch2    # make sure you're on branch2
+>     git cherry-pick -X subtree=foo B C    # pick the commits
+>
+> If there's no conflict, the commits should apply cleanly, and your
+> branch2 would become like:
+>     --1--2--3--4--B'--C'
 
-git subtree add for a remote repository and branch was fundamentally broken.
+I created two commits on foo_v2 when I move branch2 and
+did cherry-pick it shows below:
 
-It works by chance if a local branch exists that matches the name of
-the desired remote branch.  Thus, "master" happens to work and the bug
-possibly escapes common notice.
+Mr.J> git cherry-pick -X subtree=foo
+cc70089614de16b46c08f32ea61c972fea2132ce
+14e9c9b20e3bf914f6a38ec720896b3d67f94c90
+error: could not apply cc70089... AAAAAAAAAAAAAAAAA
+hint: after resolving the conflicts, mark the corrected paths
+hint: with 'git add <paths>' or 'git rm <paths>'
+hint: and commit the result with 'git commit'
+Mr.J> ls
+foo
+Mr.J> gs
+# On branch branch2
+# Unmerged paths:
+#   (use "git add/rm <file>..." as appropriate to mark resolution)
+#
+#    deleted by us:      foo/foo_v2/test.txt
+#
+no changes added to commit (use "git add" and/or "git commit -a")
 
-cmd_add_repository() does a git fetch - the desired remote refspec can
-never be found in the local repo until that git fetch is run, so the
-attempt to validate it within cmd_add() is wrong - if desired, that
-should happen after the fetch in cmd_add_repository().
-
-I think the additions shown in lines 505 and 506 should be reverted,
-since the rev is also checked in cmd_add_commit()
-
-Best,
-
-Peter Wolanin
+thanks!
+-- 
+Jagan.
