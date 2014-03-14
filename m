@@ -1,74 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] general style: replaces memcmp() with proper starts_with()
-Date: Fri, 14 Mar 2014 09:56:49 -0700
-Message-ID: <xmqqeh24hg6m.fsf@gitster.dls.corp.google.com>
-References: <1394635434-44979-1-git-send-email-quintus.public@gmail.com>
-	<20140312175624.GA7982@sigill.intra.peff.net>
-	<xmqqiorjky0a.fsf@gitster.dls.corp.google.com>
-	<20140312194943.GA2912@sigill.intra.peff.net>
-	<xmqq61njkwnw.fsf@gitster.dls.corp.google.com>
-	<20140312211415.GA10305@sigill.intra.peff.net>
-	<20140312220640.GA14802@sigill.intra.peff.net>
-	<xmqqd2hrjb4d.fsf@gitster.dls.corp.google.com>
-	<CALs4jVHTBH3wTAQsv8+jb15Do1_oy0pcThsDL8ssE7fgrx5NxA@mail.gmail.com>
-	<20140314045758.GA32748@sigill.intra.peff.net>
-	<CALs4jVHcPFjf-12mXvvSxctNJZgLD=P3=57u6_FYePDOB7txQQ@mail.gmail.com>
+From: Andrew Wong <andrew.kw.w@gmail.com>
+Subject: Re: [PATCH 3/3] reset: Print a warning when user uses "git reset"
+ during a merge
+Date: Fri, 14 Mar 2014 13:04:42 -0400
+Message-ID: <CADgNjan9kCTMPczFzO4jQvM63EU4x7KnJKszhno5PjHivE9ENg@mail.gmail.com>
+References: <1394771872-25940-1-git-send-email-andrew.kw.w@gmail.com>
+	<1394771872-25940-4-git-send-email-andrew.kw.w@gmail.com>
+	<5323131C.7070506@xiplink.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
-To: Quint Guvernator <quintus.public@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 14 17:57:09 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Marc Branchaud <marcnarc@xiplink.com>
+X-From: git-owner@vger.kernel.org Fri Mar 14 18:05:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WOVPw-0007wu-FG
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Mar 2014 17:57:08 +0100
+	id 1WOVXr-0006Cg-Bh
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Mar 2014 18:05:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755195AbaCNQ5E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Mar 2014 12:57:04 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40947 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754977AbaCNQ5C (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Mar 2014 12:57:02 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BA4A0756E6;
-	Fri, 14 Mar 2014 12:57:01 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SDK7xADTduEHfmG/Ii5VQonwNuo=; b=kv0Q8D
-	LbvwFOXyHYOhkewYOnjqMfPWS+DuW/yVlZlNoBPi1J9S7ggYpssIruPWKNNq7+xw
-	1WMeavvIyo29w7Zwv+FabxXfWw7Nmhmul1FTwVJ/SM7XxKHliaKqTICOjzd0uo8E
-	u9AV6B5VNK9eohTX/fQHfC5wiq5+odZGdt9fo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XM/jgjgYKZR1lM5nam4Y8o8pse9QkgFe
-	i5iZRA1QzJYfI6v6UNKQm7NJJN0DVxuDpqXwkAvQubUdRvq73klqHbHNcVjnYnVR
-	NL1lDfJ/dwu7RGYthhi2ogFxoDHXfo5Oxorz5ne6QjIf5iFWoBbQ+OYnccoQfq8O
-	mZgoB9TE/U8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A5B4A756E5;
-	Fri, 14 Mar 2014 12:57:01 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 999A6756BC;
-	Fri, 14 Mar 2014 12:56:51 -0400 (EDT)
-In-Reply-To: <CALs4jVHcPFjf-12mXvvSxctNJZgLD=P3=57u6_FYePDOB7txQQ@mail.gmail.com>
-	(Quint Guvernator's message of "Fri, 14 Mar 2014 10:51:53 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: A3B8F218-AB99-11E3-B801-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755052AbaCNREp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Mar 2014 13:04:45 -0400
+Received: from mail-wg0-f42.google.com ([74.125.82.42]:45103 "EHLO
+	mail-wg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754809AbaCNREo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Mar 2014 13:04:44 -0400
+Received: by mail-wg0-f42.google.com with SMTP id y10so2368484wgg.1
+        for <git@vger.kernel.org>; Fri, 14 Mar 2014 10:04:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=aQKLar2Di9T554sRM5x1Uf3Wyt+7tqOGmyfLdp/Jg9w=;
+        b=kxcJyFY3NZt+DoX07L9epP6/Dx90yYmeD4WeQrE5IocHH/xtoF4YUtKI8UNu0JU08T
+         Gq/Aaq6a06UoA2jPvJ5yhvAga0lTH/ubchobvotndU3OLGN+3a4UBYW9YtfZnwrBuPj2
+         bxwk/JEkLBY9K19XhlryEwOjjRoMdwoZaJkFq4NfF7uO7svpYZlrIC0Y6QsNq27ooQPx
+         FZUUjTP1/zTjlr59qp06sdtku6c7u03Crd/FPZMI8VTatMx3fg/JjBGdhb304RQrTFtY
+         2P1YqINvcPA4ib5jzPUvuDwO2G+PeDV45GRtWvo9G2GcTmDljF2XQbRyG0ZrsIi8XcBX
+         EAFQ==
+X-Received: by 10.180.97.72 with SMTP id dy8mr7019133wib.5.1394816682926; Fri,
+ 14 Mar 2014 10:04:42 -0700 (PDT)
+Received: by 10.194.81.65 with HTTP; Fri, 14 Mar 2014 10:04:42 -0700 (PDT)
+In-Reply-To: <5323131C.7070506@xiplink.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244096>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244097>
 
-Quint Guvernator <quintus.public@gmail.com> writes:
+On Fri, Mar 14, 2014 at 10:33 AM, Marc Branchaud <marcnarc@xiplink.com> wrote:
+> I know this approach was suggested earlier, but given these dangers it seems
+> silly to give this big warning on a plain "git reset" but still go ahead and
+> do the things the warning talks about.
+>
+> Is there any issue with changing "git reset" to error-out now but letting
+> "git reset --mixed" proceed?  Something like (note the reworded warning message):
 
-> I'll be re-reading this thread and working on this patch over the
-> weekend to try to identify the more straightforward hunks I could
-> submit in a patch.
+Yeah, I would have preferred to have "git reset" error out right now,
+because the messed up work tree can be quite a pain to clean up. The
+main argument for issuing the warning is about maintaining
+compatibility.
 
-Thanks.
+For the users that really did mean "--merge", the warning is silly.
+It's basically saying "We know that you're about to mess up your work
+tree, but we let you mess up anyway. Learn the correct way so that you
+don't mess up next time".
+
+It actually doesn't seem too bad if we did make "git reset" to error
+out (during a merge) right away. By erroring out, the command won't
+cause some irreversible damage, and users don't lose data. Yes, it
+breaks compatibility, but perhaps not in a bad way?
+
+I'm really fine with either. Junio?
