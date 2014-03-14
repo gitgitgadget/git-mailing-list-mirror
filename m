@@ -1,120 +1,81 @@
-From: Uwe Storbeck <uwe@ibr.ch>
-Subject: Corner case bug caused by shell dependent behavior
-Date: Fri, 14 Mar 2014 01:02:13 +0100
-Message-ID: <20140314000213.GA3739@ibr.ch>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Corner case bug caused by shell dependent behavior
+Date: Thu, 13 Mar 2014 17:37:01 -0700
+Message-ID: <20140314003701.GF15625@google.com>
+References: <20140314000213.GA3739@ibr.ch>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="rwEMma7ioTxnRzrJ"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 14 01:12:16 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Uwe Storbeck <uwe@ibr.ch>
+X-From: git-owner@vger.kernel.org Fri Mar 14 01:37:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WOFjS-0000pN-EJ
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Mar 2014 01:12:14 +0100
+	id 1WOG7y-00024M-IY
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Mar 2014 01:37:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752808AbaCNAMJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Mar 2014 20:12:09 -0400
-Received: from gate.ibr.ch ([83.150.36.130]:44059 "EHLO gate.ibr.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752771AbaCNAMI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Mar 2014 20:12:08 -0400
-X-Greylist: delayed 592 seconds by postgrey-1.27 at vger.kernel.org; Thu, 13 Mar 2014 20:12:08 EDT
-Received: from bacardi.ibr.ch (bacardi.ibr.ch [172.16.1.1])
-	by gate.ibr.ch (Postfix) with ESMTP id 4889E17F5A
-	for <git@vger.kernel.org>; Fri, 14 Mar 2014 01:02:14 +0100 (CET)
-Received: from grappa.ibr.ch (grappa [172.16.8.20])
-	by bacardi.ibr.ch (Postfix) with ESMTP id 6F0341544E
-	for <git@vger.kernel.org>; Fri, 14 Mar 2014 01:02:13 +0100 (CET)
-Received: by grappa.ibr.ch (Postfix, from userid 1111)
-	id EECA6D0A7A; Fri, 14 Mar 2014 01:02:13 +0100 (CET)
+	id S1753952AbaCNAhF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Mar 2014 20:37:05 -0400
+Received: from mail-pb0-f44.google.com ([209.85.160.44]:44447 "EHLO
+	mail-pb0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753692AbaCNAhE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Mar 2014 20:37:04 -0400
+Received: by mail-pb0-f44.google.com with SMTP id rp16so1845301pbb.31
+        for <git@vger.kernel.org>; Thu, 13 Mar 2014 17:37:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=vpotlLDqgZIM03BOjFGzsGz5hk7diC//M3tp7G3HT30=;
+        b=BEvcvJ+SIWD7kFcxxrfHmlou6KHOkEdd6wobevZqI0+dvwneu+LJO9JbYHUktZwKYC
+         jx0vBpaiY85gOdnUf51IDw04prFUdeN7o7S2X3AqK4OkxhL+9UX06X4ngg6m6dDzm+tj
+         jfpW1xzlNUan/SEMrGmSjjOqnTm5Sge3ozNnTEB2bU5HboBNP5almIBxpDOD3k/0E1qM
+         BSDWlYyjh3eZQmSya+sMnitr6DEeomFy2hMOcil98fcmF9Yvaex+tSdxVjQK7cL7fNth
+         r8uf4QUCsmFZq3gftUaYSU0XYPqNm8i+cUstFtOm6lIaJ1LuFjorwRaSvuHZF4XWyADm
+         oN9Q==
+X-Received: by 10.66.9.41 with SMTP id w9mr5711072paa.39.1394757424297;
+        Thu, 13 Mar 2014 17:37:04 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id xk1sm16807115pac.21.2014.03.13.17.37.03
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 13 Mar 2014 17:37:03 -0700 (PDT)
 Content-Disposition: inline
+In-Reply-To: <20140314000213.GA3739@ibr.ch>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244064>
 
+Hi,
 
---rwEMma7ioTxnRzrJ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Uwe Storbeck wrote:
 
-Hi
+> To reproduce the behavior (with dash as /bin/sh):
+>
+>   mkdir test && cd test && git init
+>   echo 1 >foo && git add foo
+>   git commit -m"this commit message ends with '\n'"
+>   echo 2 >foo && git commit -a --fixup HEAD
+>   git rebase -i --autosquash --root
+>
+> Now the editor opens with garbage in line 3 which has to be
+> removed or the rebase fails.
 
-When your system shell (/bin/sh) is a dash control sequences in
-strings get interpreted by the echo command. A commit message
-which ends with the string '\n' may result in a garbage line in
-the todo list of an interactive rebase which causes the rebase
-to fail.
+Would it make sense to add this as a test to e.g.
+t/t3404-rebase-interactive.sh?
 
-To reproduce the behavior (with dash as /bin/sh):
+> The attached one-line patch fixes the bug.
 
-  mkdir test && cd test && git init
-  echo 1 >foo && git add foo
-  git commit -m"this commit message ends with '\n'"
-  echo 2 >foo && git commit -a --fixup HEAD
-  git rebase -i --autosquash --root
+May we have your sign-off?  (See Documentation/SubmittingPatches
+section "Sign your work" for what this means.
 
-Now the editor opens with garbage in line 3 which has to be
-removed or the rebase fails.
+Looks obviously correct, so for what it's worth,
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-The attached one-line patch fixes the bug. Be free to edit the
-commit message when it's too long.
-
-Maybe there are more places where it would be more robust to use
-printf instead of echo.
-
-Uwe
-
---rwEMma7ioTxnRzrJ
-Content-Type: text/x-diff; charset=us-ascii
-Content-Disposition: attachment; filename="0001-git-rebase-interactive-replace-echo-by-printf.patch"
-
->From 53262bc8a7a3ec9d9a6b0e8ecaaea598257b87fe Mon Sep 17 00:00:00 2001
-From: Uwe Storbeck <uwe@ibr.ch>
-Date: Fri, 14 Mar 2014 00:28:33 +0100
-Subject: [PATCH] git-rebase--interactive: replace echo by printf
-
-to avoid shell dependent behavior.
-
-When your system shell (/bin/sh) is a dash control sequences in
-strings get interpreted by the echo command. A commit message
-which ends with the string '\n' may result in a garbage line in
-the todo list of an interactive rebase which causes the rebase
-to fail.
-
-To reproduce the behavior (with dash as /bin/sh):
-
-  mkdir test && cd test && git init
-  echo 1 >foo && git add foo
-  git commit -m"this commit message ends with '\n'"
-  echo 2 >foo && git commit -a --fixup HEAD
-  git rebase -i --autosquash --root
-
-Now the editor opens with garbage in line 3 which has to be
-removed or the rebase fails.
----
- git-rebase--interactive.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index a1adae8..3ffe14c 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -749,7 +749,7 @@ rearrange_squash () {
- 					;;
- 				esac
- 			done
--			echo "$sha1 $action $prefix $rest"
-+			printf "%s %s %s %s\n" "$sha1" "$action" "$prefix" "$rest"
- 			# if it's a single word, try to resolve to a full sha1 and
- 			# emit a second copy. This allows us to match on both message
- 			# and on sha1 prefix
--- 
-1.9.0
-
-
---rwEMma7ioTxnRzrJ--
+Thanks,
+Jonathan
