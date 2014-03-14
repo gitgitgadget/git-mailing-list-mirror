@@ -1,67 +1,120 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Corner case bug caused by shell dependent behavior
-Date: Fri, 14 Mar 2014 07:08:36 +0100
-Message-ID: <87d2hpgvmj.fsf@fencepost.gnu.org>
-References: <20140314000213.GA3739@ibr.ch>
-	<20140314022845.GA19757@sigill.intra.peff.net>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [RFC/PATCH] diff: simplify cpp funcname regex
+Date: Fri, 14 Mar 2014 07:56:46 +0100
+Message-ID: <5322A82E.9060808@viscovery.net>
+References: <20140305003639.GA9474@sigill.intra.peff.net> <5316D922.9010501@viscovery.net> <20140306212835.GA11743@sigill.intra.peff.net> <531973D9.9070803@viscovery.net> <20140314035457.GA31906@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Uwe Storbeck <uwe@ibr.ch>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Thomas Rast <tr@thomasrast.ch>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Mar 14 07:09:11 2014
+X-From: git-owner@vger.kernel.org Fri Mar 14 07:57:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WOLIs-0003D2-Ri
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Mar 2014 07:09:11 +0100
+	id 1WOM3W-0003Xb-Ce
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Mar 2014 07:57:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752648AbaCNGIj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Mar 2014 02:08:39 -0400
-Received: from fencepost.gnu.org ([208.118.235.10]:47836 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752455AbaCNGIi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Mar 2014 02:08:38 -0400
-Received: from localhost ([127.0.0.1]:46877 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1WOLIK-0002d6-Kr; Fri, 14 Mar 2014 02:08:36 -0400
-Received: by lola (Postfix, from userid 1000)
-	id 4CC9AE9463; Fri, 14 Mar 2014 07:08:36 +0100 (CET)
-In-Reply-To: <20140314022845.GA19757@sigill.intra.peff.net> (Jeff King's
-	message of "Thu, 13 Mar 2014 22:28:46 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
+	id S1755328AbaCNG4x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Mar 2014 02:56:53 -0400
+Received: from so.liwest.at ([212.33.55.23]:45265 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755234AbaCNG4w (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Mar 2014 02:56:52 -0400
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.80.1)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1WOM2x-0005b0-CC; Fri, 14 Mar 2014 07:56:47 +0100
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 20B2F16613;
+	Fri, 14 Mar 2014 07:56:47 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
+In-Reply-To: <20140314035457.GA31906@sigill.intra.peff.net>
+X-Enigmail-Version: 1.6
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244083>
 
-Jeff King <peff@peff.net> writes:
+Am 3/14/2014 4:54, schrieb Jeff King:
+> On Fri, Mar 07, 2014 at 08:23:05AM +0100, Johannes Sixt wrote:
+> 
+>> No, I meant lines like
+>>
+>>     static double var;
+>>    -static int old;
+>>    +static int new;
+>>
+>> The motivation is to show hints where in a file the change is located:
+>> Anything that could be of significance for the author should be picked up.
+> 
+> I see. Coupled with what you said below:
+> 
+>> As I said, my motivation is not so much to find a "container", but rather
+>> a clue to help locate a change while reading the patch text. I can speak
+>> for myself, but I have no idea what is more important for the majority.
+> 
+> your proposal makes a lot more sense to me, and I think that is really
+> at the center of our discussion. I do not have a gut feeling for which
+> is "more right" (i.e., "container" versus "context").
+> 
+> But given that most of the cases we are discussing are ones where the
+> "diff -p" default regex gets it right (or at least better than) compared
+> to the C regex, I am tempted to say that we should be erring in the
+> direction of simplicity, and just finding interesting lines without
+> worrying about containers (i.e., it argues for your patch).
 
-> Hmph. We ran into this before and fixed all of the sites (e.g., d1c3b10
-> and 938791c). This one appears to have been added a few months later
-> (by 68d5d03).
->
->> Maybe there are more places where it would be more robust to use
->> printf instead of echo.
->
-> FWIW, I just looked through the other uses of "echo" in git-rebase*.sh,
-> and I think this is the only problematic case.
->
->> -			echo "$sha1 $action $prefix $rest"
->> +			printf "%s %s %s %s\n" "$sha1" "$action" "$prefix" "$rest"
->
-> Looks obviously correct. The echo just below here does not need the same
-> treatment, as "$rest" is the problematic bit ("$prefix" is always
-> "fixup" or "squash").
+We are in agreement here. So, let's base a decision on the implications on
+git grep.
 
-I'd not rationalize this away by deep analysis.  Copy&paste is a thing,
-so to just use printf whenever _any_ seriously variable strings (source
-not immediately the shell script itself, perhaps even _any_ nonconstant
-strings) are involved keeps people from introducing bugs by following
-apparent practice.
+> ... but I'm not sure if I understand all
+> of the implications for "git grep". Can you give some concrete examples?
 
--- 
-David Kastrup
+Consider this code:
+
+  void above()
+  {}
+  static int Y;
+  static int A;
+  int bar()
+  {
+    return X;
+  }
+  void below()
+  {}
+
+When you 'git grep --function-context X', then you get this output with
+the current pattern, you proposal, and my proposal (file name etc omitted
+for brevity):
+
+  int bar()
+  {
+    return X;
+  }
+
+because we start the context at the last hunk header pattern above *or
+including the matching line* (and write it in the output), and we stop at
+the next hunk header pattern below the match (and do not write it in the
+output).
+
+When you 'git grep --function-context Y', what do you want to see? With
+the current pattern, and with your pattern that forbids semicolon we get:
+
+  void above()
+  {}
+  static int Y;
+  static int A;
+
+and with my simple pattern, which allows semicolon, we get merely
+
+  static int Y;
+
+because the line itself is a hunk header (and we do not look back any
+further) and the next line is as well. That is not exactly "function
+context", and that is what I'm a bit worried about.
+
+-- Hannes
