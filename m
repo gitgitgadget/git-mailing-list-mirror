@@ -1,97 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: RFC GSoC idea: new "git config" features
-Date: Fri, 14 Mar 2014 14:00:56 -0700
-Message-ID: <xmqq61ngh4vr.fsf@gitster.dls.corp.google.com>
-References: <53108650.2020708@alum.mit.edu>
-	<xmqqwqgft3bj.fsf@gitster.dls.corp.google.com>
-	<53112794.2070007@alum.mit.edu>
-	<20140301075247.GF20397@sigill.intra.peff.net>
-	<vpq38j2tc6f.fsf@anie.imag.fr>
-	<20140314044326.GE31906@sigill.intra.peff.net>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: [PATCH] t5541: don't call start_httpd after sourcing lib-terminal.sh
+Date: Fri, 14 Mar 2014 22:18:32 +0100
+Message-ID: <53237228.10809@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	git discussion list <git@vger.kernel.org>
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Mar 14 22:01:05 2014
+X-From: git-owner@vger.kernel.org Fri Mar 14 22:18:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WOZE0-0006Qh-PL
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Mar 2014 22:01:05 +0100
+	id 1WOZV6-0005GZ-9i
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Mar 2014 22:18:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755808AbaCNVBA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Mar 2014 17:01:00 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48082 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753570AbaCNVA6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Mar 2014 17:00:58 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 756B1753ED;
-	Fri, 14 Mar 2014 17:00:58 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=tfY522l81ZmnC8TvBP3Q+VPNrJg=; b=DuloXC
-	nhm6nyvUUnqVsa8sG3P20pU7AgeIA/zsFcVnS8EHi+8w6+FtnZZgoPQGso5nukWu
-	47zhJx6cfdTaCS/T6g0NDNytfr2t3W/An4rYeDlYkdo0Mc7ipodUypAIYleJGjnb
-	lkpAW3btYPJvnqUJbryZ6MPbu/2kPBbS+LtmQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=B+qFdq7g03mDLMKdVN2pdnnwUpBdCAHU
-	XB/gQKnZjZ1kwN2tn3WMJZFthraC+WSPyKVP6XdgtQ5M+ZDk0tolc7E6vXUjIoLs
-	tZsvvKXufTLfT6AjcW0NQT7PlqNzgOxhO/lUJVqNWnOpypz3OMTIv+a8rfsVeRME
-	qOz/WijHZ38=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5CF41753EC;
-	Fri, 14 Mar 2014 17:00:58 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A1FC5753EA;
-	Fri, 14 Mar 2014 17:00:57 -0400 (EDT)
-In-Reply-To: <20140314044326.GE31906@sigill.intra.peff.net> (Jeff King's
-	message of "Fri, 14 Mar 2014 00:43:26 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: BD703E2E-ABBB-11E3-872E-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756353AbaCNVSj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Mar 2014 17:18:39 -0400
+Received: from mout.web.de ([212.227.15.4]:65026 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755992AbaCNVSj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Mar 2014 17:18:39 -0400
+Received: from [192.168.178.41] ([84.132.148.173]) by smtp.web.de (mrweb001)
+ with ESMTPSA (Nemesis) id 0MXYjm-1WcCd83Sju-00WVyt; Fri, 14 Mar 2014 22:18:36
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
+X-Enigmail-Version: 1.6
+X-Provags-ID: V03:K0:LENkDPPa9pdxW+M5z3RdFtcGweHqUiJHw+XV0WqwcbfeFEmcXfp
+ WEMECjcucHP01wibs+0kCeGiWgMj+6J0x4Wt5msSsjBGqtDKAz6Cjb4Z4dcEP+AqAQtUfqn
+ r1wXSvXs1qy5uP6OppehsC0324WgNr5f+XvrEvGXKTbFxUaRSbg+aM8Gf2RiEA/yWWYUSwx
+ F/nLU+F10/ZXBUW6Dn4Hg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244112>
 
-Jeff King <peff@peff.net> writes:
+Since 83d842dc8 "make test" using prove fails for some setups in t5541
+with:
 
-> On Sat, Mar 01, 2014 at 12:01:44PM +0100, Matthieu Moy wrote:
->
->> Jeff King <peff@peff.net> writes:
->> 
->> > If we had the keys in-memory, we could reverse this: config code asks
->> > for keys it cares about, and we can do an optimized lookup (binary
->> > search, hash, etc).
->> 
->> I'm actually dreaming of a system where a configuration variable could
->> be "declared" in Git's source code, with associated type (list/single
->> value, boolean/string/path/...), default value and documentation (and
->> then Documentation/config.txt could become a generated file). One could
->> imagine a lot of possibilities like
->
-> Yes, I think something like that would be very nice. ...
-> ...
->> Migrating the whole code to such system would take time, but creating
->> the system and applying it to a few examples might be feasible as a GSoC
->> project.
->
-> Agreed, as long as we have enough examples to feel confident that the
-> infrastructure is sufficient.
+   "Parse errors: No plan found in TAP output"
 
-I agree that it would give us a lot of enhancement opportunities if
-we had a central catalog of what the supported configuration
-variables are and what semantics (e.g. type, multi-value-ness, etc.)
-they have.
+Running t5541 on its own fails with:
 
-One thing we need to be careful about is that we still must support
-random configuration items that git-core does not care about at all
-but scripts (and future versions of git-core) read off of, though.
+   "error: Can't use skip_all after running some tests"
+
+This happens because "start_httpd" (which determines if the test is to
+be skipped) is called after sourcing lib-terminal.sh (which sets up the
+terminal using test_expect_success).
+
+Fix that by calling "start_httpd" before sourcing lib-terminal.sh.
+
+Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+---
+
+Since recently t5541 fails for me on master and pu. I'm not sure what
+detail in my setup causes this breakage (I have httpd installed and it
+is running), but this patch fixes it for me.
+
+
+ t/t5541-http-push-smart.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/t/t5541-http-push-smart.sh b/t/t5541-http-push-smart.sh
+index 73af16f..597fb96 100755
+--- a/t/t5541-http-push-smart.sh
++++ b/t/t5541-http-push-smart.sh
+@@ -13,8 +13,8 @@ fi
+
+ ROOT_PATH="$PWD"
+ . "$TEST_DIRECTORY"/lib-httpd.sh
+-. "$TEST_DIRECTORY"/lib-terminal.sh
+ start_httpd
++. "$TEST_DIRECTORY"/lib-terminal.sh
+
+ test_expect_success 'setup remote repository' '
+ 	cd "$ROOT_PATH" &&
+-- 
+1.9.0.168.g1119394
