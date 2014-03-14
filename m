@@ -1,119 +1,107 @@
-From: Jagan Teki <jagannadh.teki@gmail.com>
-Subject: Re: Committing a change from one branch another branch
-Date: Fri, 14 Mar 2014 15:04:25 +0530
-Message-ID: <CAD6G_RT5mBWUKz18ZkSQkKiMnz8WXRK7scb+_xAscYQX4zR9xw@mail.gmail.com>
-References: <CAD6G_RRQVDxQj==-2vAT3WCiYMC=BmZhi__JWi4yy86Uaoa-og@mail.gmail.com>
-	<CANUGeEZc8BoV0MxUGRRGc8SK=-xB2YXoEkRkBTyGZ8FxSjnVTQ@mail.gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: No progress from push when using bitmaps
+Date: Fri, 14 Mar 2014 10:43:52 +0100
+Message-ID: <5322CF58.6060506@alum.mit.edu>
+References: <CAJo=hJth1YB+u2Y9S0X3xk7s2-HcPP4_k03qprHBU4A9721i8g@mail.gmail.com> <20140313212626.GA23618@sigill.intra.peff.net> <CAJo=hJu1WscibwectWzrUcoOV4-9xk4hBm1JA+RjONmgvZTXwQ@mail.gmail.com> <20140313220754.GA20173@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Brandon McCaig <bamccaig@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 14 10:34:36 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Shawn Pearce <spearce@spearce.org>, git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Mar 14 10:44:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WOOVf-0001FX-QF
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Mar 2014 10:34:36 +0100
+	id 1WOOem-0002oZ-VA
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Mar 2014 10:44:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756188AbaCNJe2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Mar 2014 05:34:28 -0400
-Received: from mail-yk0-f171.google.com ([209.85.160.171]:50928 "EHLO
-	mail-yk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755907AbaCNJe0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Mar 2014 05:34:26 -0400
-Received: by mail-yk0-f171.google.com with SMTP id q9so6005242ykb.2
-        for <git@vger.kernel.org>; Fri, 14 Mar 2014 02:34:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=L0+EMQZOVYNo1TIQX7rh5UJi/D0fVAuYQWQmpmzYs2c=;
-        b=i3W2gLOVajxd3B4+49aMtbMqgy/sVFRNke3ucK8EzSgZY6W9vF4H0H5nUTCiTmmqy6
-         ghmCRzaxGqvvqRDd/TW8Arau/SwBRZBqffGdHTB1HodchT2FHRcMwdpmtjY7ygBIcNGF
-         z+0UQna53rKLfTqTZDBMqtisTpnredHZUToVBtmTzpPsvtdhrgpOCki2nlKMPtwsI/qs
-         LfgFQLW1xOEhaMJBWybTZR2xNHQwRAxf65L5GylUufCIEoEXvSe8slQ0+DGUYc25TpJp
-         SZrNk0eB3Td76zy6CjUdOE7RD7KGnnUDcM6jtPpxpTdzdMs8bG2mc+NN32yq2uxCBcWV
-         GUhQ==
-X-Received: by 10.236.39.51 with SMTP id c39mr462505yhb.128.1394789665903;
- Fri, 14 Mar 2014 02:34:25 -0700 (PDT)
-Received: by 10.170.34.215 with HTTP; Fri, 14 Mar 2014 02:34:25 -0700 (PDT)
-In-Reply-To: <CANUGeEZc8BoV0MxUGRRGc8SK=-xB2YXoEkRkBTyGZ8FxSjnVTQ@mail.gmail.com>
+	id S1755812AbaCNJn5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Mar 2014 05:43:57 -0400
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:49115 "EHLO
+	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755543AbaCNJn4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Mar 2014 05:43:56 -0400
+X-AuditID: 1207440e-f79c76d000003e2c-50-5322cf5a2486
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id DC.C3.15916.A5FC2235; Fri, 14 Mar 2014 05:43:55 -0400 (EDT)
+Received: from [192.168.69.148] (p57A2431A.dip0.t-ipconnect.de [87.162.67.26])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s2E9hqMb018886
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Fri, 14 Mar 2014 05:43:53 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
+In-Reply-To: <20140313220754.GA20173@sigill.intra.peff.net>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrGKsWRmVeSWpSXmKPExsUixO6iqBt9XinY4MF7RouuK91MFj9aepgt
+	5h+ayOrA7PGsdw+jx5/ze1g9Pm+SC2CO4rZJSiwpC85Mz9O3S+DOmNI6i7mgV6ji4qqYBsZ+
+	vi5GTg4JAROJnkf/mCFsMYkL99azdTFycQgJXGaU6J9/jhXCOcck0XnuEztIFa+AtsTse4fB
+	bBYBVYmHn9eB2WwCuhKLepqZQGxRgWCJ1ZcfsEDUC0qcnPkEzBYRkJX4fngjI4jNLOAoceDa
+	G7C4sICpxPb7Z8BsIYHPjBLzb5SB2JwC1hJ9XUeA5nMAXScu0dMYBGIyC6hLrJ8nBDFFXmL7
+	2znMExgFZyFZNguhahaSqgWMzKsY5RJzSnN1cxMzc4pTk3WLkxPz8lKLdI31cjNL9FJTSjcx
+	QsKZbwdj+3qZQ4wCHIxKPLwOhxWDhVgTy4orcw8xSnIwKYnyhp5UChbiS8pPqcxILM6ILyrN
+	SS0+xCjBwawkwut6BijHm5JYWZValA+TkuZgURLnVVui7ickkJ5YkpqdmlqQWgSTleHgUJLg
+	jT8H1ChYlJqeWpGWmVOCkGbi4AQZziUlUpyal5JalFhakhEPit34YmD0gqR4gPZGgrTzFhck
+	5gJFIVpPMepybNi2ppFJiCUvPy9VSpx3+lmgIgGQoozSPLgVsOT1ilEc6GNhXkOQUTzAxAc3
+	6RXQEiagJYnrwJaUJCKkpBoYu+rOpsyKW2Im9iDs8Ln7/9dtsj/+zmWnm2Iv+9T72XMqrKJb
+	ru4zVJJVumrc/Cy9qGjW517/E7MY2Q9oSzlVd784Weu7f3JGgVpvd+jsOcJmh5/n 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244085>
 
-Hi Brandon McCaig,
-
-On Thu, Mar 13, 2014 at 9:06 PM, Brandon McCaig <bamccaig@gmail.com> wrote:
-> Jagan:
->
-> On Thu, Mar 13, 2014 at 4:56 AM, Jagan Teki <jagannadh.teki@gmail.com> wrote:
->> Hi,
->
-> Hello,
->
->> I have two branches.
->> - master-b1
->> - master-b2
+On 03/13/2014 11:07 PM, Jeff King wrote:
+> On Thu, Mar 13, 2014 at 03:01:09PM -0700, Shawn Pearce wrote:
+> 
+>>> It would definitely be good to have throughput measurements while
+>>> writing out the pack. However, I'm not sure we have anything useful to
+>>> count. We know the total number of objects we're reusing, but we're not
+>>> actually parsing the data; we're just blitting it out as a stream. I
+>>> think the progress code will need some refactoring to handle a
+>>> throughput-only case.
 >>
->> Suppose I'm in master-b1 then did a change
->> on master-b1
->> $ git add test/init.c
->> $ git commit -s -m "init.c Changed!"
->> $ git log
->> Author: Jagan Teki <jagannadh.teki@gmail.com>
->> Date:   Thu Mar 13 00:48:44 2014 -0700
+>> Yes. I think JGit suffers from this same bug, and again we never
+>> noticed it because usually only the servers are bitmapped, not the
+>> clients.
 >>
->> init.c Changed!
->>
->> $ git checkout master-b2
->> $ git log
->> Author: Jagan Teki <jagannadh.teki@gmail.com>
->> Date:   Thu Mar 13 00:48:44 2014 -0700
->>
->> init.c Changed!
->>
->> How can we do this, any idea?
->
-> What you're asking is ambiguous and vague. The example output that you
-> give doesn't even really make sense. You need to give more details
-> about what you have and what you want to do to get proper help.
->
-> Or join #git on irc.freenode.net for real-time help if you aren't sure
-> how to explain it.
+>> pack-objects writes a throughput meter when its writing objects.
+>> Really just the bytes out/second would be enough to let the user know
+>> the client is working. Unfortunately I think that is still tied to the
+>> overall progress system having some other counter?
+> 
+> Yes, I'm looking at it right now. The throughput meter is actually
+> connected to the sha1fd output. So really we just need to call
+> display_progress periodically as we loop through the data. It's a
+> one-liner fix.
+> 
+> _But_ it still looks ugly, because, as you mention, it's tied to the
+> progress meter, which is counting up to N objects. So we basically sit
+> there at "0", pumping data, and then after the pack is done, we can say
+> we sent N. :)
+> 
+> There are a few ways around this:
+> 
+>   1. Add a new phase "Writing packs" which counts from 0 to 1. Even
+>      though it's more accurate, moving from 0 to 1 really isn't that
+>      useful (the throughput is, but the 0/1 just looks like noise).
+> 
+>   2. Add a new phase "Writing reused objects" that counts from 0 bytes
+>      up to N bytes. This looks stupid, though, because we are repeating
+>      the current byte count both here and in the throughput.
+> 
+>   3. Use the regular "Writing objects" progress, but fake the object
+>      count. We know we are writing M bytes with N objects. Bump the
+>      counter by 1 for every M/N bytes we write.
 
-I tried #git irc channel, looks like I'm facing some firewall issue on my end.!
-OK - Let me explain my query again.
+Would it be practical to change it to a percentage of bytes written?
+Then we'd have progress info that is both convenient *and* truthful.
 
-I've a git repository with 2 branches.
-- master-b1
-- master-b2
+Michael
 
-I have to work both these branches since I need two different deliveries.
-
-master-b1 have a contents of
-joo_v1/test.txt
-joo_v2/test.txt
-
-master-b2
-joo/test.txt
-
-Here, joo_v2 on master-b1 is same as joo on master-b2 means the latest updates
-on master-b1 with <DIR_NAME>_<VERSION> becomes <DIR> on master-b2
-
-Suppose, if user is change the contents on joo_v2 on master-b1 will change
-the contents on joo on master-b2 (files contains particular directories are same
-name with same contents - joo_v2/test.txt and joo/text.txt)
-
-The moment user commit the change on master-b1 will create a commit on master-b2
-
-Please let me know if you still need any more information.
-I will come to IRC soon, for more discussion.
-
-thanks!
 -- 
-Jagan.
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
