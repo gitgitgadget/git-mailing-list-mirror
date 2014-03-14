@@ -1,110 +1,63 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] reset: Print a warning when user uses "git reset" during a merge
-Date: Fri, 14 Mar 2014 13:55:44 -0700
-Message-ID: <xmqqa9csh54f.fsf@gitster.dls.corp.google.com>
-References: <1394771872-25940-1-git-send-email-andrew.kw.w@gmail.com>
-	<1394771872-25940-4-git-send-email-andrew.kw.w@gmail.com>
-	<5323131C.7070506@xiplink.com>
-	<CADgNjan9kCTMPczFzO4jQvM63EU4x7KnJKszhno5PjHivE9ENg@mail.gmail.com>
+From: Peter Wolanin <pwolanin@gmail.com>
+Subject: bug report: regression in git subtree add
+Date: Fri, 14 Mar 2014 16:49:37 -0400
+Message-ID: <CANae7MgZQs4tV9QcJvU3_anABSj-uTdwO+Y4x4mWKySprOEnBA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Marc Branchaud <marcnarc@xiplink.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Andrew Wong <andrew.kw.w@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 14 21:56:04 2014
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 14 21:57:06 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WOZ98-0001x5-Mn
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Mar 2014 21:56:03 +0100
+	id 1WOZA5-0002sM-IN
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Mar 2014 21:57:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755602AbaCNUz6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Mar 2014 16:55:58 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45991 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755812AbaCNUzs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Mar 2014 16:55:48 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DC0D575FCF;
-	Fri, 14 Mar 2014 16:55:47 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=kut/bRBiDlyF9xO8xfI7+3DUlZg=; b=RZkZvB
-	3eoTBUSu944hmrBlLd67NaXL3FDZfkh0NFU+HCin+iAIBCMJmnDiOVUMWv4S3m7W
-	1RX+YontJFklwU/PvUlilqhS4Sy2zl9aGHGnWuNAG2zYSexltoYdWsZKiVRinIvo
-	kO2JTwBOdTI0WV1apzUOvYcb8QFWqPCRQLkj8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xlHj01IuOpJT6wjBik8PPcXiZ+TV7Fsd
-	2dmtp+CBmdr8LuUxrWnwQ1+Dng+5GxorcLtTPoEdwiZVh7C7AIh5/2cwImUP3X7Z
-	e1b2W0HVan5nMzx+qV76eU/dBRO4SRn5GlkB/3Vr0E4vCi/TexPgfe7uA6NwCeyi
-	Vyfyi+sqchg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C5E7C75FCE;
-	Fri, 14 Mar 2014 16:55:47 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DAE2F75FCD;
-	Fri, 14 Mar 2014 16:55:46 -0400 (EDT)
-In-Reply-To: <CADgNjan9kCTMPczFzO4jQvM63EU4x7KnJKszhno5PjHivE9ENg@mail.gmail.com>
-	(Andrew Wong's message of "Fri, 14 Mar 2014 13:04:42 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 0434EF86-ABBB-11E3-8AEB-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755812AbaCNU46 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Mar 2014 16:56:58 -0400
+Received: from mail-qg0-f46.google.com ([209.85.192.46]:64084 "EHLO
+	mail-qg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754459AbaCNU45 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Mar 2014 16:56:57 -0400
+Received: by mail-qg0-f46.google.com with SMTP id e89so8933662qgf.5
+        for <git@vger.kernel.org>; Fri, 14 Mar 2014 13:56:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=KGvOBSMyQJtd8v4ZoSoqFIyNBFQ28pwinu/IYJAUdYY=;
+        b=KrZrfoYCOM2SRzYks0L2tblxJGLJ82UaX0RUyolTVFrGUcdcKa9PUblh055N6xb1re
+         rXFQQ3flWgIxC3C+ZM6l52imFR2z715Y1S488SRZTO4fo0OtsiWseUQqbyxCtnjNdpah
+         n9L1pd9foYFRpojDn+ika8pENEvmrH/EBxmMjEVPFx2l6VxBqe6R80dVuouWdC6v/U+9
+         zFvAONFhGiNZeliYYhwucSZqpoo96L0s/ZI5cnZh8vRVPsJjcfemaaSMjfY3VQCK6RhL
+         tdMT5wMBMQGnE9aivRoEyhXMhVS2nIj/7q9OMx8sruDqYjdud65uAO5mDUf0/uTbjar0
+         8xag==
+X-Received: by 10.224.123.137 with SMTP id p9mr12396629qar.39.1394830177727;
+ Fri, 14 Mar 2014 13:49:37 -0700 (PDT)
+Received: by 10.96.118.227 with HTTP; Fri, 14 Mar 2014 13:49:37 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244108>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244109>
 
-Andrew Wong <andrew.kw.w@gmail.com> writes:
+In this commit:
+https://github.com/git/git/commit/10a49587fabde88c0afbc80a99d97fae91811f5f
 
-> On Fri, Mar 14, 2014 at 10:33 AM, Marc Branchaud <marcnarc@xiplink.com> wrote:
->> I know this approach was suggested earlier, but given these dangers it seems
->> silly to give this big warning on a plain "git reset" but still go ahead and
->> do the things the warning talks about.
->>
->> Is there any issue with changing "git reset" to error-out now but letting
->> "git reset --mixed" proceed?  Something like (note the reworded warning message):
->
-> Yeah, I would have preferred to have "git reset" error out right now,
-> because the messed up work tree can be quite a pain to clean up. The
-> main argument for issuing the warning is about maintaining
-> compatibility.
->
-> For the users that really did mean "--merge", the warning is silly.
-> It's basically saying "We know that you're about to mess up your work
-> tree, but we let you mess up anyway. Learn the correct way so that you
-> don't mess up next time".
+git subtree add for a remote repository and branch was fundamentally broken.
 
-I suspect that you meant "--mixed" instead of "--merge" here.
+It works by chance if a local branch exists that matches the name of
+the desired remote branch.  Thus, "master" happens to work and the bug
+possibly escapes common notice.
 
-I do not agree with the "We know that you are about to mess up"
-above.  Whoever is issuing that warning message may not know better
-than the user who is running "reset".  As you wrote "most likely not
-what the user wants" in your proposed log message, the only thing we
-know is that it _often_ is a newbie mistake.
+cmd_add_repository() does a git fetch - the desired remote refspec can
+never be found in the local repo until that git fetch is run, so the
+attempt to validate it within cmd_add() is wrong - if desired, that
+should happen after the fetch in cmd_add_repository().
 
-I recently needed to manually cherry-pick only one half of a patch,
-and the way I did so was
+I think the additions shown in lines 505 and 506 should be reverted,
+since the rev is also checked in cmd_add_commit()
 
-	git show $that_commit >P.diff
-        git apply -3 P.diff
-        ... conflicts are expected; that is why I used -3 in the
-        ... first place
-        git reset
-        git diff HEAD
-	edit
-        ... edit away the other half I did not want to cherry-pick
-        ... while fixing the conflicted parts that happened to be
-        ... in the part I did want to cherry-pick
+Best,
 
-"git cherry-pick --no-commit $that_commit" could have been used as
-a replacement for the first two steps but being able to run the
-"reset" without erroring out was an essential part to make this
-workflow usable.
-
-So I am OK with "eventually error out by default", but not OK with
-"we know better than the user and will not allow it at all".
+Peter Wolanin
