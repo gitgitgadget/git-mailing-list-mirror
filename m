@@ -1,81 +1,106 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Corner case bug caused by shell dependent behavior
-Date: Thu, 13 Mar 2014 17:37:01 -0700
-Message-ID: <20140314003701.GF15625@google.com>
-References: <20140314000213.GA3739@ibr.ch>
+From: John Butterfield <johnb003@gmail.com>
+Subject: Re: Proposal: Write git subtree info to .git/config
+Date: Thu, 13 Mar 2014 17:43:38 -0700
+Message-ID: <CAJ2ZDLK2wGJ5PG585dQRmp7Ck9bctRRtz1unwQ9S0OfVe8G-Bg@mail.gmail.com>
+References: <CAJ2ZDL+HuBCv_xJCXEBb3Pex-qt86ocEX9yu=uV+CzdvqwECDA@mail.gmail.com>
+	<xmqqmwgthdsp.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Uwe Storbeck <uwe@ibr.ch>
-X-From: git-owner@vger.kernel.org Fri Mar 14 01:37:37 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 14 01:44:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WOG7y-00024M-IY
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Mar 2014 01:37:34 +0100
+	id 1WOGER-0001Yj-Js
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Mar 2014 01:44:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753952AbaCNAhF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Mar 2014 20:37:05 -0400
-Received: from mail-pb0-f44.google.com ([209.85.160.44]:44447 "EHLO
-	mail-pb0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753692AbaCNAhE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Mar 2014 20:37:04 -0400
-Received: by mail-pb0-f44.google.com with SMTP id rp16so1845301pbb.31
-        for <git@vger.kernel.org>; Thu, 13 Mar 2014 17:37:04 -0700 (PDT)
+	id S1754129AbaCNAn6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Mar 2014 20:43:58 -0400
+Received: from mail-we0-f171.google.com ([74.125.82.171]:40026 "EHLO
+	mail-we0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754119AbaCNAnj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Mar 2014 20:43:39 -0400
+Received: by mail-we0-f171.google.com with SMTP id t61so1536938wes.16
+        for <git@vger.kernel.org>; Thu, 13 Mar 2014 17:43:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=vpotlLDqgZIM03BOjFGzsGz5hk7diC//M3tp7G3HT30=;
-        b=BEvcvJ+SIWD7kFcxxrfHmlou6KHOkEdd6wobevZqI0+dvwneu+LJO9JbYHUktZwKYC
-         jx0vBpaiY85gOdnUf51IDw04prFUdeN7o7S2X3AqK4OkxhL+9UX06X4ngg6m6dDzm+tj
-         jfpW1xzlNUan/SEMrGmSjjOqnTm5Sge3ozNnTEB2bU5HboBNP5almIBxpDOD3k/0E1qM
-         BSDWlYyjh3eZQmSya+sMnitr6DEeomFy2hMOcil98fcmF9Yvaex+tSdxVjQK7cL7fNth
-         r8uf4QUCsmFZq3gftUaYSU0XYPqNm8i+cUstFtOm6lIaJ1LuFjorwRaSvuHZF4XWyADm
-         oN9Q==
-X-Received: by 10.66.9.41 with SMTP id w9mr5711072paa.39.1394757424297;
-        Thu, 13 Mar 2014 17:37:04 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id xk1sm16807115pac.21.2014.03.13.17.37.03
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 13 Mar 2014 17:37:03 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20140314000213.GA3739@ibr.ch>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=WO900IrjLNb/6Hgt/ECc4qjTPcZ/gjZr4fLyzl/JlW8=;
+        b=jVRcl0jwujKFIhoTlkOndWx3708ACeJiX1J1yV2ShcTfpVfC22QvTwMnP+rOp+3wQv
+         fJog6GnWjaYLyuVuW9+KwBbRh0R0e6wP3V45gYFs/LC1CLFC6nAGCSTm8PkcekAjL4bE
+         7wCXwITHwoJbQ1icRIa2EpMCANhMyF4/ycZ7VpkkaqbwxTpkUMK4ZI6KfDW298ZG+Ra6
+         djxdRw58sC7BOFqQcJNgktyhnA8NP1rhtHuNiP/Pd6VzPaaUa+UpOhYFpw1j+KO+UVek
+         JuhlZeV9HxhYG//Ka24QgVkSrqQX3kqL1VrAyFmUrs3cvRBSFr+yTnxJMhdeRPp43Sku
+         pgXA==
+X-Received: by 10.180.83.137 with SMTP id q9mr3729062wiy.55.1394757818377;
+ Thu, 13 Mar 2014 17:43:38 -0700 (PDT)
+Received: by 10.194.174.226 with HTTP; Thu, 13 Mar 2014 17:43:38 -0700 (PDT)
+In-Reply-To: <xmqqmwgthdsp.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244064>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244065>
 
-Hi,
+> A subtree biding can change over time, but .git/config is about
+recording information that do not change depending on what tree you
+are looking at, so there is an impedance mismatch---storing that
+information in .git/config is probably a wrong way to go about it.
 
-Uwe Storbeck wrote:
+I see. How about a .gitsubtrees config file in the root of a project?
 
-> To reproduce the behavior (with dash as /bin/sh):
+> It might help to keep track of "In this tree, the tip of that other
+history is bound as a subtree at this path", which means that
+information more naturally belongs to each tree, I would think.
+
+Anything in the subdirectory must be part of the contents of the
+subtree repo. It should not know how it is linked to it's parent
+project; parents should know how their children are fetched. Therefore
+it cannot live in the subtree.
+
+Subtrees could be nested. So, should the config be in the root of the
+parent subtree? This makes sense to me.
+
+Example:
+
+/
+  A/
+  B/    # a subtree of (blah)
+    X/
+    Y/  # a subtree of (yada-yada)
+    Z/
+
+So, lets say B has many updates remotely, including pushing and
+pulling changes to Y.
+
+When pulling the changes from B, it would be convenient for it to come
+with the meta data, (subtree repo and commit info) for Y.
+
+So how does that sound; Could we store subtree repo and commit id
+references per folder in a .gitsubtrees file in the root of every
+project?
+
+(Project B is technically it's own project so it would pull it's own
+.gitsubtrees in /B/.gitsubtrees)
+
+`John
+
+On Thu, Mar 13, 2014 at 4:36 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> John Butterfield <johnb003@gmail.com> writes:
 >
->   mkdir test && cd test && git init
->   echo 1 >foo && git add foo
->   git commit -m"this commit message ends with '\n'"
->   echo 2 >foo && git commit -a --fixup HEAD
->   git rebase -i --autosquash --root
+>> Has there been any talk about adding a stub for git subtrees in .git/config?
 >
-> Now the editor opens with garbage in line 3 which has to be
-> removed or the rebase fails.
-
-Would it make sense to add this as a test to e.g.
-t/t3404-rebase-interactive.sh?
-
-> The attached one-line patch fixes the bug.
-
-May we have your sign-off?  (See Documentation/SubmittingPatches
-section "Sign your work" for what this means.
-
-Looks obviously correct, so for what it's worth,
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-
-Thanks,
-Jonathan
+> I do not think so, and that is probably for a good reason.
+>
+> A subtree biding can change over time, but .git/config is about
+> recording information that do not change depending on what tree you
+> are looking at, so there is an impedance mismatch---storing that
+> information in .git/config is probably a wrong way to go about it.
+>
+> It might help to keep track of "In this tree, the tip of that other
+> history is bound as a subtree at this path", which means that
+> information more naturally belongs to each tree, I would think.
