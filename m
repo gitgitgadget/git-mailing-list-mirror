@@ -1,75 +1,97 @@
-From: Andrew Wong <andrew.kw.w@gmail.com>
-Subject: Re: [PATCH 3/3] reset: Print a warning when user uses "git reset"
- during a merge
-Date: Fri, 14 Mar 2014 13:04:42 -0400
-Message-ID: <CADgNjan9kCTMPczFzO4jQvM63EU4x7KnJKszhno5PjHivE9ENg@mail.gmail.com>
-References: <1394771872-25940-1-git-send-email-andrew.kw.w@gmail.com>
-	<1394771872-25940-4-git-send-email-andrew.kw.w@gmail.com>
-	<5323131C.7070506@xiplink.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] microproject for GSOC
+Date: Fri, 14 Mar 2014 18:10:57 +0100
+Message-ID: <vpq4n30aeou.fsf@anie.imag.fr>
+References: <1394815367-9706-1-git-send-email-ubuntu2012@126.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Marc Branchaud <marcnarc@xiplink.com>
-X-From: git-owner@vger.kernel.org Fri Mar 14 18:05:29 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: ubuntu733 <ubuntu2012@126.com>
+X-From: git-owner@vger.kernel.org Fri Mar 14 18:11:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WOVXr-0006Cg-Bh
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Mar 2014 18:05:19 +0100
+	id 1WOVda-0002qw-HV
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Mar 2014 18:11:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755052AbaCNREp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Mar 2014 13:04:45 -0400
-Received: from mail-wg0-f42.google.com ([74.125.82.42]:45103 "EHLO
-	mail-wg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754809AbaCNREo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Mar 2014 13:04:44 -0400
-Received: by mail-wg0-f42.google.com with SMTP id y10so2368484wgg.1
-        for <git@vger.kernel.org>; Fri, 14 Mar 2014 10:04:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=aQKLar2Di9T554sRM5x1Uf3Wyt+7tqOGmyfLdp/Jg9w=;
-        b=kxcJyFY3NZt+DoX07L9epP6/Dx90yYmeD4WeQrE5IocHH/xtoF4YUtKI8UNu0JU08T
-         Gq/Aaq6a06UoA2jPvJ5yhvAga0lTH/ubchobvotndU3OLGN+3a4UBYW9YtfZnwrBuPj2
-         bxwk/JEkLBY9K19XhlryEwOjjRoMdwoZaJkFq4NfF7uO7svpYZlrIC0Y6QsNq27ooQPx
-         FZUUjTP1/zTjlr59qp06sdtku6c7u03Crd/FPZMI8VTatMx3fg/JjBGdhb304RQrTFtY
-         2P1YqINvcPA4ib5jzPUvuDwO2G+PeDV45GRtWvo9G2GcTmDljF2XQbRyG0ZrsIi8XcBX
-         EAFQ==
-X-Received: by 10.180.97.72 with SMTP id dy8mr7019133wib.5.1394816682926; Fri,
- 14 Mar 2014 10:04:42 -0700 (PDT)
-Received: by 10.194.81.65 with HTTP; Fri, 14 Mar 2014 10:04:42 -0700 (PDT)
-In-Reply-To: <5323131C.7070506@xiplink.com>
+	id S1755351AbaCNRLJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Mar 2014 13:11:09 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:52014 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755182AbaCNRLI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Mar 2014 13:11:08 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s2EHAt0F032191
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 14 Mar 2014 18:10:55 +0100
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s2EHAv69027126;
+	Fri, 14 Mar 2014 18:10:57 +0100
+In-Reply-To: <1394815367-9706-1-git-send-email-ubuntu2012@126.com> (ubuntu's
+	message of "Sat, 15 Mar 2014 00:42:47 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 14 Mar 2014 18:10:56 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s2EHAt0F032191
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1395421856.45881@iT6E9x+pAF8OVgqwPDkSmw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244098>
 
-On Fri, Mar 14, 2014 at 10:33 AM, Marc Branchaud <marcnarc@xiplink.com> wrote:
-> I know this approach was suggested earlier, but given these dangers it seems
-> silly to give this big warning on a plain "git reset" but still go ahead and
-> do the things the warning talks about.
->
-> Is there any issue with changing "git reset" to error-out now but letting
-> "git reset --mixed" proceed?  Something like (note the reworded warning message):
+Hi,
 
-Yeah, I would have preferred to have "git reset" error out right now,
-because the messed up work tree can be quite a pain to clean up. The
-main argument for issuing the warning is about maintaining
-compatibility.
+Welcome to the Git community, and welcome to the GSOC program. Below are
+some comments to give you a taste of what a review looks like on this
+list. Do take the comments seriously (they should be addressed), but
+don't take them badly: critic is meant to be constructive.
 
-For the users that really did mean "--merge", the warning is silly.
-It's basically saying "We know that you're about to mess up your work
-tree, but we let you mess up anyway. Learn the correct way so that you
-don't mess up next time".
+ubuntu733 <ubuntu2012@126.com> writes:
+^^^^^^^^^
 
-It actually doesn't seem too bad if we did make "git reset" to error
-out (during a merge) right away. By erroring out, the command won't
-cause some irreversible damage, and users don't lose data. Yes, it
-breaks compatibility, but perhaps not in a bad way?
+Please, use a real name when you contribute to Git.
 
-I'm really fine with either. Junio?
+> Apply for GSOC.The microprojects is rewriter diff-index.c
+
+This part of your message will become the commit message (i.e. cast in
+stone forever in git.git's history). The point is not that you want to
+apply for GSOC, but what the patch does and more importantly why it does
+it.
+
+> +#define REMOVE 1
+
+If the code is to be removed, then remove it. That's why we use a
+version control system ;-).
+
+> -	while ((e = readdir(dir)))
+> -		if (strcmp(".", e->d_name) && strcmp("..", e->d_name))
+> -			string_list_insert(list, e->d_name);
+> -
+> +	while ((e = readdir(dir))) {
+> +		while(is_dot_or_dotdot(e->d_name))
+
+Missing space between "while" and "(".
+
+> +                      break;
+
+Broken indentation (indent with space).
+
+This while (...) break; seems really weird to me: if the condition is
+false, then you exit the loop because it's a while loop, and if the
+condition is true, you exit the loop because of the break. Isn't that a
+no-op?
+
+> +		string_list_insert(list, e->d_name);
+> +              }
+
+Broken indentation (misplaced }).
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
