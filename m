@@ -1,81 +1,126 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: [PATCH] t5541: don't call start_httpd after sourcing lib-terminal.sh
-Date: Fri, 14 Mar 2014 22:18:32 +0100
-Message-ID: <53237228.10809@web.de>
+From: TamerTas <tamertas@outlook.com>
+Subject: [PATCH][GSOC2014] install_branch_config: change logical chain to lookup table
+Date: Fri, 14 Mar 2014 23:30:54 +0200
+Message-ID: <BLU0-SMTP430B54F52C27DDA0C405A5D5700@phx.gbl>
+References: <CAPig+cRCKCcfYQVM=pyXUQtTsbaD8g=OKff+K5+Bd+kBgqAufg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Mar 14 22:18:48 2014
+Content-Type: text/plain
+Cc: TamerTas <tamertas@outlook.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 14 22:32:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WOZV6-0005GZ-9i
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Mar 2014 22:18:44 +0100
+	id 1WOZib-0000ma-Px
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Mar 2014 22:32:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756353AbaCNVSj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Mar 2014 17:18:39 -0400
-Received: from mout.web.de ([212.227.15.4]:65026 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755992AbaCNVSj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Mar 2014 17:18:39 -0400
-Received: from [192.168.178.41] ([84.132.148.173]) by smtp.web.de (mrweb001)
- with ESMTPSA (Nemesis) id 0MXYjm-1WcCd83Sju-00WVyt; Fri, 14 Mar 2014 22:18:36
- +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
-X-Enigmail-Version: 1.6
-X-Provags-ID: V03:K0:LENkDPPa9pdxW+M5z3RdFtcGweHqUiJHw+XV0WqwcbfeFEmcXfp
- WEMECjcucHP01wibs+0kCeGiWgMj+6J0x4Wt5msSsjBGqtDKAz6Cjb4Z4dcEP+AqAQtUfqn
- r1wXSvXs1qy5uP6OppehsC0324WgNr5f+XvrEvGXKTbFxUaRSbg+aM8Gf2RiEA/yWWYUSwx
- F/nLU+F10/ZXBUW6Dn4Hg==
+	id S1161032AbaCNVcR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Mar 2014 17:32:17 -0400
+Received: from [65.55.116.100] ([65.55.116.100]:13025 "EHLO
+	blu0-omc3-s25.blu0.hotmail.com" rhost-flags-FAIL-FAIL-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1161029AbaCNVcQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Mar 2014 17:32:16 -0400
+Received: from BLU0-SMTP43 ([65.55.116.74]) by blu0-omc3-s25.blu0.hotmail.com with Microsoft SMTPSVC(6.0.3790.4675);
+	 Fri, 14 Mar 2014 14:31:15 -0700
+X-TMN: [x680QRPpmphTwbWDGgHcPSwAtsHLa4nY]
+X-Originating-Email: [tamertas@outlook.com]
+Received: from localhost.localdomain ([24.133.189.163]) by BLU0-SMTP43.phx.gbl over TLS secured channel with Microsoft SMTPSVC(6.0.3790.4675);
+	 Fri, 14 Mar 2014 14:31:14 -0700
+X-Mailer: git-send-email 1.7.9.5
+In-Reply-To: <CAPig+cRCKCcfYQVM=pyXUQtTsbaD8g=OKff+K5+Bd+kBgqAufg@mail.gmail.com>
+X-OriginalArrivalTime: 14 Mar 2014 21:31:14.0362 (UTC) FILETIME=[BA0239A0:01CF3FCC]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244113>
 
-Since 83d842dc8 "make test" using prove fails for some setups in t5541
-with:
-
-   "Parse errors: No plan found in TAP output"
-
-Running t5541 on its own fails with:
-
-   "error: Can't use skip_all after running some tests"
-
-This happens because "start_httpd" (which determines if the test is to
-be skipped) is called after sourcing lib-terminal.sh (which sets up the
-terminal using test_expect_success).
-
-Fix that by calling "start_httpd" before sourcing lib-terminal.sh.
-
-Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+Signed-off-by: TamerTas <tamertas@outlook.com>
 ---
 
-Since recently t5541 fails for me on master and pu. I'm not sure what
-detail in my setup causes this breakage (I have httpd installed and it
-is running), but this patch fixes it for me.
+Thanks again for the feedback it's been a great learning experience. Comments Below :)
 
+I have refactored the commit [1] to * suggested changes [2].
+format-patch was placing 2 hyphens instead of 3 but it's fixed now.
+I've turned the table into a multidimensional one and I didn't put
+the inner braces since this was used method in other multidimensional arrays
+throughout the project.
+I've also changed shortname to short_name since that seems to be how variables are named
+in this project.
+It appears that table-driven code might be more readable after all.
 
- t/t5541-http-push-smart.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+[1]http://git.661346.n2.nabble.com/PATCH-GSOC2014-install-branch-config-change-logical-chain-to-lookup-table-tp7605550.html
+[2]http://git.661346.n2.nabble.com/PATCH-GSOC2014-install-branch-config-change-logical-chain-to-lookup-table-tp7605550p7605605.html
+---
+ branch.c |   42 +++++++++++++++++-------------------------
+ 1 file changed, 17 insertions(+), 25 deletions(-)
 
-diff --git a/t/t5541-http-push-smart.sh b/t/t5541-http-push-smart.sh
-index 73af16f..597fb96 100755
---- a/t/t5541-http-push-smart.sh
-+++ b/t/t5541-http-push-smart.sh
-@@ -13,8 +13,8 @@ fi
-
- ROOT_PATH="$PWD"
- . "$TEST_DIRECTORY"/lib-httpd.sh
--. "$TEST_DIRECTORY"/lib-terminal.sh
- start_httpd
-+. "$TEST_DIRECTORY"/lib-terminal.sh
-
- test_expect_success 'setup remote repository' '
- 	cd "$ROOT_PATH" &&
--- 
-1.9.0.168.g1119394
+diff --git a/branch.c b/branch.c
+index 723a36b..eab6fa4 100644
+--- a/branch.c
++++ b/branch.c
+@@ -49,13 +49,27 @@ static int should_setup_rebase(const char *origin)
+ 
+ void install_branch_config(int flag, const char *local, const char *origin, const char *remote)
+ {
+-	const char *shortname = remote + 11;
++	const char *short_name = remote + 11;
++	const char *setup_message[][2][2] = {
++		N_("Branch %s set up to track local ref %s."), 
++		N_("Branch %s set up to track local branch %s."),
++		N_("Branch %s set up to track remote ref %s."), 
++		N_("Branch %s set up to track remote branch %s from %s."),
++		N_("Branch %s set up to track local ref %s by rebasing."), 
++		N_("Branch %s set up to track local branch %s by rebasing."),
++		N_("Branch %s set up to track remote ref %s by rebasing."), 
++		N_("Branch %s set up to track remote branch %s from %s by rebasing.")
++	}; 
++
+ 	int remote_is_branch = starts_with(remote, "refs/heads/");
+ 	struct strbuf key = STRBUF_INIT;
+ 	int rebasing = should_setup_rebase(origin);
+ 
++	const char *remote_name = remote_is_branch? short_name : remote;
++	const char *message = setup_message[!!rebasing][!!origin][!!remote_is_branch];
++
+ 	if (remote_is_branch
+-	    && !strcmp(local, shortname)
++	    && !strcmp(local, short_name)
+ 	    && !origin) {
+ 		warning(_("Not setting branch %s as its own upstream."),
+ 			local);
+@@ -77,29 +91,7 @@ void install_branch_config(int flag, const char *local, const char *origin, cons
+ 	strbuf_release(&key);
+ 
+ 	if (flag & BRANCH_CONFIG_VERBOSE) {
+-		if (remote_is_branch && origin)
+-			printf_ln(rebasing ?
+-				  _("Branch %s set up to track remote branch %s from %s by rebasing.") :
+-				  _("Branch %s set up to track remote branch %s from %s."),
+-				  local, shortname, origin);
+-		else if (remote_is_branch && !origin)
+-			printf_ln(rebasing ?
+-				  _("Branch %s set up to track local branch %s by rebasing.") :
+-				  _("Branch %s set up to track local branch %s."),
+-				  local, shortname);
+-		else if (!remote_is_branch && origin)
+-			printf_ln(rebasing ?
+-				  _("Branch %s set up to track remote ref %s by rebasing.") :
+-				  _("Branch %s set up to track remote ref %s."),
+-				  local, remote);
+-		else if (!remote_is_branch && !origin)
+-			printf_ln(rebasing ?
+-				  _("Branch %s set up to track local ref %s by rebasing.") :
+-				  _("Branch %s set up to track local ref %s."),
+-				  local, remote);
+-		else
+-			die("BUG: impossible combination of %d and %p",
+-			    remote_is_branch, origin);
++		printf_ln(_(message), local, remote_name, origin);
+ 	}
+ }
+ 
+---
+1.7.9.5
