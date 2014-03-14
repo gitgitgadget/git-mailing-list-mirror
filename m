@@ -1,79 +1,115 @@
-From: =?GBK?B?yfKz0Lb3?= <ubuntu2012@126.com>
-Subject: Re:Re: [PATCH] microproject for GSOC
-Date: Sat, 15 Mar 2014 01:44:43 +0800 (CST)
-Message-ID: <6c0ae8fc.7d.144c1b22cd7.Coremail.ubuntu2012@126.com>
-References: <1394815367-9706-1-git-send-email-ubuntu2012@126.com>
- <vpq4n30aeou.fsf@anie.imag.fr>
+From: Phil Hord <phil.hord@gmail.com>
+Subject: Re: Git Config pushInsteadOf is not working
+Date: Fri, 14 Mar 2014 14:42:01 -0400
+Message-ID: <CABURp0qdq_Ch0bpz82707iEOQ2catCUWF_dbc6T_q=qF03ypMw@mail.gmail.com>
+References: <f6c69381-0f8d-4a91-8593-e1c915171718@googlegroups.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=GBK
-Content-Transfer-Encoding: base64
-Cc: git@vger.kernel.org
-To: "Matthieu Moy" <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Mar 14 19:16:33 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Repo and Gerrit Discussion <repo-discuss@googlegroups.com>, 
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Raf <rafeah.rahim10@gmail.com>
+X-From: repo-discuss+bncBDYMHBPJ3QORBDM3RWMQKGQEKTBHXSI@googlegroups.com Fri Mar 14 19:42:24 2014
+Return-path: <repo-discuss+bncBDYMHBPJ3QORBDM3RWMQKGQEKTBHXSI@googlegroups.com>
+Envelope-to: gcvr-repo-discuss@m.gmane.org
+Received: from mail-lb0-f183.google.com ([209.85.217.183])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WOWem-0005nm-5X
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Mar 2014 19:16:32 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755817AbaCNSQW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Mar 2014 14:16:22 -0400
-Received: from m15-19.126.com ([220.181.15.19]:59389 "EHLO m15-19.126.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755761AbaCNSQU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Mar 2014 14:16:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
-	s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=sh+PK
-	bmIYp70sU61Pd8Ih5wIr7dhQkZuOSleyAQM+Kc=; b=fQmchtHcn+IvKb9RuVmtU
-	ro3R8UVWWYfP1tjBxgjqU7CiZjI0QG2sWpiLszzHw9dzNh65JqxGQAYNw3bHOuP4
-	rySaxt+SQeYHaps0I91XAk42TnNY2Nz+HWUx+lxwxJz7nHA6zmiYPn8Rxo1whzfa
-	Ji8d5WdpsyssVeQlZ7PSr8=
-Received: from ubuntu2012$126.com ( [125.71.195.57] ) by
- ajax-webmail-wmsvr19 (Coremail) ; Sat, 15 Mar 2014 01:44:43 +0800 (CST)
-X-Originating-IP: [125.71.195.57]
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version SP_ntes V3.5 build
- 20131204(24406.5820.5783) Copyright (c) 2002-2014 www.mailtech.cn 126com
-In-Reply-To: <vpq4n30aeou.fsf@anie.imag.fr>
-X-CM-TRANSID: E8qowGCJekEMQCNT4hYNAA--.38933W
-X-CM-SenderInfo: hxex03jxsqija6rslhhfrp/1tbi1AFOqEsK460BhgACs5
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244102>
+	(envelope-from <repo-discuss+bncBDYMHBPJ3QORBDM3RWMQKGQEKTBHXSI@googlegroups.com>)
+	id 1WOX3o-0001Nr-6x
+	for gcvr-repo-discuss@m.gmane.org; Fri, 14 Mar 2014 19:42:24 +0100
+Received: by mail-lb0-f183.google.com with SMTP id q8sf165825lbi.0
+        for <gcvr-repo-discuss@m.gmane.org>; Fri, 14 Mar 2014 11:42:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:x-original-sender:x-original-authentication-results:precedence
+         :mailing-list:list-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=ayXEsv+PGGW02tA7jwOBPQCwqIABWUiDyV9SaondVKM=;
+        b=jcef+aGL/L57GnMnAB1YosEhjE8LTNk7ijW+vQ0y7G3BjRnIK9QMVdH49Vbcn88gN/
+         zvcIijjyB8Qi1dNHkdWZKjmCeqnCHF5Fhuld+0G+jdEanZcV+dp4CT3G9Ahik9MbG3PT
+         B0n2ge5VKZE4MEDYmnv5a/XmiXAZ7XgO4JygrUwHNG7kkRCMFG6ygZPYIL/ArQWSKQ+4
+         TY+wcj7PeofrFxy3rslnOhlGWwQQ4Eij+in1glLOttSvguv/hojGnmokmf9uAZUTSA61
+         hdbP0QA68jSTn70HLMgYYl0XmAVcTl+HOlws4PlPgiySJYcfg937t/pkia0SPrHcl7Yp
+         Jsqg==
+X-Received: by 10.152.183.35 with SMTP id ej3mr22904lac.15.1394822544013;
+        Fri, 14 Mar 2014 11:42:24 -0700 (PDT)
+X-BeenThere: repo-discuss@googlegroups.com
+Received: by 10.152.37.163 with SMTP id z3ls10350laj.66.gmail; Fri, 14 Mar
+ 2014 11:42:21 -0700 (PDT)
+X-Received: by 10.112.162.193 with SMTP id yc1mr1801812lbb.19.1394822541413;
+        Fri, 14 Mar 2014 11:42:21 -0700 (PDT)
+Received: from mail-wi0-x229.google.com (mail-wi0-x229.google.com [2a00:1450:400c:c05::229])
+        by gmr-mx.google.com with ESMTPS id i3si164613wib.0.2014.03.14.11.42.21
+        for <repo-discuss@googlegroups.com>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 14 Mar 2014 11:42:21 -0700 (PDT)
+Received-SPF: pass (google.com: domain of phil.hord@gmail.com designates 2a00:1450:400c:c05::229 as permitted sender) client-ip=2a00:1450:400c:c05::229;
+Received: by mail-wi0-f169.google.com with SMTP id hm4so79649wib.4
+        for <repo-discuss@googlegroups.com>; Fri, 14 Mar 2014 11:42:21 -0700 (PDT)
+X-Received: by 10.180.101.166 with SMTP id fh6mr7452816wib.2.1394822541293;
+ Fri, 14 Mar 2014 11:42:21 -0700 (PDT)
+Received: by 10.227.147.3 with HTTP; Fri, 14 Mar 2014 11:42:01 -0700 (PDT)
+In-Reply-To: <f6c69381-0f8d-4a91-8593-e1c915171718@googlegroups.com>
+X-Original-Sender: phil.hord@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of phil.hord@gmail.com designates 2a00:1450:400c:c05::229
+ as permitted sender) smtp.mail=phil.hord@gmail.com;       dkim=pass
+ header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Precedence: list
+Mailing-list: list repo-discuss@googlegroups.com; contact repo-discuss+owners@googlegroups.com
+List-ID: <repo-discuss.googlegroups.com>
+X-Google-Group-Id: 540870184241
+List-Post: <http://groups.google.com/group/repo-discuss/post>, <mailto:repo-discuss@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:repo-discuss+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/repo-discuss>
+Sender: repo-discuss@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/repo-discuss/subscribe>, <mailto:repo-discuss+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/repo-discuss/subscribe>, <mailto:googlegroups-manage+540870184241+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244103>
 
-VGhhbmsgeW91IGZvciB5b3VyIGNvbW1lbnRzLkkgd2lsbCBhbWVuZCB0aG9zZSBpc3N1ZXMgLkFz
-IGEgQ2hpbmVzZSBzdHVkZW50LHdoYXQgbmFtZSBzaG91bGQgSSB1c2U/TXkgQ2hpbmVzZSBuYW1l
-IGlzIG9rPwpBdCAyMDE0LTAzLTE1IDAxOjEwOjU3LCJNYXR0aGlldSBNb3kiIDxNYXR0aGlldS5N
-b3lAZ3Jlbm9ibGUtaW5wLmZyPiB3cm90ZToKPkhpLA0KPg0KPldlbGNvbWUgdG8gdGhlIEdpdCBj
-b21tdW5pdHksIGFuZCB3ZWxjb21lIHRvIHRoZSBHU09DIHByb2dyYW0uIEJlbG93IGFyZQ0KPnNv
-bWUgY29tbWVudHMgdG8gZ2l2ZSB5b3UgYSB0YXN0ZSBvZiB3aGF0IGEgcmV2aWV3IGxvb2tzIGxp
-a2Ugb24gdGhpcw0KPmxpc3QuIERvIHRha2UgdGhlIGNvbW1lbnRzIHNlcmlvdXNseSAodGhleSBz
-aG91bGQgYmUgYWRkcmVzc2VkKSwgYnV0DQo+ZG9uJ3QgdGFrZSB0aGVtIGJhZGx5OiBjcml0aWMg
-aXMgbWVhbnQgdG8gYmUgY29uc3RydWN0aXZlLg0KPg0KPnVidW50dTczMyA8dWJ1bnR1MjAxMkAx
-MjYuY29tPiB3cml0ZXM6DQo+Xl5eXl5eXl5eDQo+DQo+UGxlYXNlLCB1c2UgYSByZWFsIG5hbWUg
-d2hlbiB5b3UgY29udHJpYnV0ZSB0byBHaXQuDQo+DQo+PiBBcHBseSBmb3IgR1NPQy5UaGUgbWlj
-cm9wcm9qZWN0cyBpcyByZXdyaXRlciBkaWZmLWluZGV4LmMNCj4NCj5UaGlzIHBhcnQgb2YgeW91
-ciBtZXNzYWdlIHdpbGwgYmVjb21lIHRoZSBjb21taXQgbWVzc2FnZSAoaS5lLiBjYXN0IGluDQo+
-c3RvbmUgZm9yZXZlciBpbiBnaXQuZ2l0J3MgaGlzdG9yeSkuIFRoZSBwb2ludCBpcyBub3QgdGhh
-dCB5b3Ugd2FudCB0bw0KPmFwcGx5IGZvciBHU09DLCBidXQgd2hhdCB0aGUgcGF0Y2ggZG9lcyBh
-bmQgbW9yZSBpbXBvcnRhbnRseSB3aHkgaXQgZG9lcw0KPml0Lg0KPg0KPj4gKyNkZWZpbmUgUkVN
-T1ZFIDENCj4NCj5JZiB0aGUgY29kZSBpcyB0byBiZSByZW1vdmVkLCB0aGVuIHJlbW92ZSBpdC4g
-VGhhdCdzIHdoeSB3ZSB1c2UgYQ0KPnZlcnNpb24gY29udHJvbCBzeXN0ZW0gOy0pLg0KPg0KPj4g
-LQl3aGlsZSAoKGUgPSByZWFkZGlyKGRpcikpKQ0KPj4gLQkJaWYgKHN0cmNtcCgiLiIsIGUtPmRf
-bmFtZSkgJiYgc3RyY21wKCIuLiIsIGUtPmRfbmFtZSkpDQo+PiAtCQkJc3RyaW5nX2xpc3RfaW5z
-ZXJ0KGxpc3QsIGUtPmRfbmFtZSk7DQo+PiAtDQo+PiArCXdoaWxlICgoZSA9IHJlYWRkaXIoZGly
-KSkpIHsNCj4+ICsJCXdoaWxlKGlzX2RvdF9vcl9kb3Rkb3QoZS0+ZF9uYW1lKSkNCj4NCj5NaXNz
-aW5nIHNwYWNlIGJldHdlZW4gIndoaWxlIiBhbmQgIigiLg0KPg0KPj4gKyAgICAgICAgICAgICAg
-ICAgICAgICBicmVhazsNCj4NCj5Ccm9rZW4gaW5kZW50YXRpb24gKGluZGVudCB3aXRoIHNwYWNl
-KS4NCj4NCj5UaGlzIHdoaWxlICguLi4pIGJyZWFrOyBzZWVtcyByZWFsbHkgd2VpcmQgdG8gbWU6
-IGlmIHRoZSBjb25kaXRpb24gaXMNCj5mYWxzZSwgdGhlbiB5b3UgZXhpdCB0aGUgbG9vcCBiZWNh
-dXNlIGl0J3MgYSB3aGlsZSBsb29wLCBhbmQgaWYgdGhlDQo+Y29uZGl0aW9uIGlzIHRydWUsIHlv
-dSBleGl0IHRoZSBsb29wIGJlY2F1c2Ugb2YgdGhlIGJyZWFrLiBJc24ndCB0aGF0IGENCj5uby1v
-cD8NCj4NCj4+ICsJCXN0cmluZ19saXN0X2luc2VydChsaXN0LCBlLT5kX25hbWUpOw0KPj4gKyAg
-ICAgICAgICAgICAgfQ0KPg0KPkJyb2tlbiBpbmRlbnRhdGlvbiAobWlzcGxhY2VkIH0pLg0KPg0K
-Pi0tIA0KPk1hdHRoaWV1IE1veQ0KPmh0dHA6Ly93d3ctdmVyaW1hZy5pbWFnLmZyL35tb3kvDQo=
+I thought you had the URLs backwards, but that doesn't seem to be the
+problem, assuming I am reading your transcription correctly. Maybe the
+'insteadOf' is being applied in addition to (and cancelling out) the
+pushInsteadOf.  Does it work as expected if you remove one or the
+other?
+
+In any case, it sounds like a Git issue, not a Gerrit one. You should
+ask on git@vger.kernel.org, which I have cc'ed here.
+
+Phil
+
+On Tue, Mar 11, 2014 at 4:44 AM, Raf <rafeah.rahim10@gmail.com> wrote:
+> Hi All,
+>
+> I have been searching high and low for this issue, but somehow I do not see
+> anyone encountering the same issue as me.
+>
+> Here is the scenario:
+>
+> I have created a local mirror for my group of developers to download the
+> AOSP code from an external gerrit server.
+> So the developers will download the code from the mirror but push to the
+> external gerrit server.
+>
+> Hence, I have edited my /home/user/.gitconfig file to add the following:
+> #To download from
+>         [url "ssh://localMirror"]
+>         insteadOf=ssh://gerritServer
+> #to push
+>         [url "ssh://gerritServer"]
+>         pushInsteadOf = ssh://localMirror
+>
+>
+> Some how, the pushInsteadOf does not work, when i tried to push the changes
+> to the external gerrit server, it still pushes to the local mirror server.
+>
+> Also, when I tried to manually add the remote to the repository: git remote
+> add gerrit_origin ssh://gerritServer
+> I tried to push to the gerrit_origin, it still pushes to the local mirror
+> server. Which is strange..
+>
+> Please help. I have spent whole day looking for this solution to no avail.
+>
+> Thanks.
+
+-- 
