@@ -1,68 +1,147 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: GSoC proposal: port pack bitmap support to libgit2.
-Date: Fri, 14 Mar 2014 00:34:04 -0400
-Message-ID: <20140314043404.GD31906@sigill.intra.peff.net>
-References: <CAGqt0zz1W1k92B+XRWEmMEv1=iyej+zi9QUCp2EhA=g+VnCt0g@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, tanoku@gmail.com
-To: Yuxuan Shui <yshuiv7@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 14 05:34:16 2014
+From: Andrew Wong <andrew.kw.w@gmail.com>
+Subject: [PATCH 1/3] wt-status: Make status messages more consistent with others
+Date: Fri, 14 Mar 2014 00:37:50 -0400
+Message-ID: <1394771872-25940-2-git-send-email-andrew.kw.w@gmail.com>
+References: <1394771872-25940-1-git-send-email-andrew.kw.w@gmail.com>
+Cc: Andrew Wong <andrew.kw.w@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 14 05:39:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WOJoz-0005mC-7R
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Mar 2014 05:34:13 +0100
+	id 1WOJu9-0002wf-It
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Mar 2014 05:39:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751536AbaCNEeI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Mar 2014 00:34:08 -0400
-Received: from cloud.peff.net ([50.56.180.127]:39238 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750709AbaCNEeH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Mar 2014 00:34:07 -0400
-Received: (qmail 1242 invoked by uid 102); 14 Mar 2014 04:34:06 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 13 Mar 2014 23:34:06 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 14 Mar 2014 00:34:04 -0400
-Content-Disposition: inline
-In-Reply-To: <CAGqt0zz1W1k92B+XRWEmMEv1=iyej+zi9QUCp2EhA=g+VnCt0g@mail.gmail.com>
+	id S1751863AbaCNEjL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Mar 2014 00:39:11 -0400
+Received: from mail-ie0-f173.google.com ([209.85.223.173]:35771 "EHLO
+	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751216AbaCNEjD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Mar 2014 00:39:03 -0400
+Received: by mail-ie0-f173.google.com with SMTP id rl12so2069887iec.4
+        for <git@vger.kernel.org>; Thu, 13 Mar 2014 21:39:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=3VXU10sbxOQC8MsKO0YaidHmo3ebMDpFQGhzLzmRLlI=;
+        b=jwGl4ljlBZZsjrYCV372DFemFvUyH+kfnRXdgd1rGk//gKGNfIX5OeTMkXQARoFlWv
+         5QF7OjGXcQOzCQX03+hFVFiHeGxa2SkPUJH+xiP0Xwe0GZ2IBJLWTMd166OUgMnVXduY
+         R4MQvjLD2g/qP3U9cA58oIuRcXJ63/ak3zlVWRIOGxiXs0ETUvVElnCs4YrbvW0d+8no
+         /GmQj8aZyhJWXdK+CKHK8MM6tSONylvkR0AncaNs2WWTS53cztFExhQrX03Vosumpwe2
+         EaznCU9SuaCXTist31TLRHG0fYMsEBulS5DypAqCB9AMvKYwmQolt1LgkCJVPEjVdTwp
+         /kqA==
+X-Received: by 10.50.137.100 with SMTP id qh4mr5744304igb.4.1394771942174;
+        Thu, 13 Mar 2014 21:39:02 -0700 (PDT)
+Received: from dresden.sidefx.com (nat.sidefx.com. [38.104.156.10])
+        by mx.google.com with ESMTPSA id ji9sm2293656igb.1.2014.03.13.21.39.00
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 13 Mar 2014 21:39:01 -0700 (PDT)
+X-Mailer: git-send-email 1.9.0.175.gb69385f
+In-Reply-To: <1394771872-25940-1-git-send-email-andrew.kw.w@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244075>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244076>
 
-On Wed, Mar 12, 2014 at 04:19:23PM +0800, Yuxuan Shui wrote:
+This is mainly changing messages that say:
+    run "git foo --bar"
+to
+    use "git foo --bar" to baz
 
-> I'm Yuxuan Shui, a undergraduate student from China. I'm applying for
-> GSoC 2014, and here is my proposal:
-> 
-> I found this idea on the ideas page, and did some research about it.
-> The pack bitmap patchset add a new .bitmap file for every pack file
-> which contains the reachability information of selected commits. This
-> information is used to speed up git fetching and cloning, and produce
-> a very convincing results.
-> 
-> The goal of my project is to port the pack bitmap implementation in
-> core git to libgit2, so users of libgit2 could benefit from this
-> optimization as well.
-> 
-> Please let me know if my proposal makes sense, thanks.
+Although the commands and flags are usually self-explanatory, this is
+more consistent with other status messages, and gives some sort of
+explanation to the user.
 
-You'd want to flesh it out a bit more to show how you're thinking about
-tackling the problem:
+Signed-off-by: Andrew Wong <andrew.kw.w@gmail.com>
+---
+ wt-status.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-  - What are the areas of libgit2 that you will need to touch? Be
-    specific. What's the current state of the packing code? What
-    files and functions will you need to touch?
-
-  - What are the challenges you expect to encounter in porting the code?
-
-  - Can you give a detailed schedule of the summer's work? What will you
-    work on in each week? What milestones do you expect to hit, and
-    when?
-
--Peff
+diff --git a/wt-status.c b/wt-status.c
+index a452407..9f2358a 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -899,13 +899,13 @@ static void show_merge_in_progress(struct wt_status *s,
+ 		status_printf_ln(s, color, _("You have unmerged paths."));
+ 		if (s->hints)
+ 			status_printf_ln(s, color,
+-				_("  (fix conflicts and run \"git commit\")"));
++				_("  (fix conflicts and use \"git commit\" to conclude the merge)"));
+ 	} else {
+ 		status_printf_ln(s, color,
+ 			_("All conflicts fixed but you are still merging."));
+ 		if (s->hints)
+ 			status_printf_ln(s, color,
+-				_("  (use \"git commit\" to conclude merge)"));
++				_("  (use \"git commit\" to conclude the merge)"));
+ 	}
+ 	wt_status_print_trailer(s);
+ }
+@@ -922,7 +922,7 @@ static void show_am_in_progress(struct wt_status *s,
+ 	if (s->hints) {
+ 		if (!state->am_empty_patch)
+ 			status_printf_ln(s, color,
+-				_("  (fix conflicts and then run \"git am --continue\")"));
++				_("  (fix conflicts and then use \"git am --continue\" to continue)"));
+ 		status_printf_ln(s, color,
+ 			_("  (use \"git am --skip\" to skip this patch)"));
+ 		status_printf_ln(s, color,
+@@ -994,7 +994,7 @@ static void show_rebase_in_progress(struct wt_status *s,
+ 					 _("You are currently rebasing."));
+ 		if (s->hints) {
+ 			status_printf_ln(s, color,
+-				_("  (fix conflicts and then run \"git rebase --continue\")"));
++				_("  (fix conflicts and then use \"git rebase --continue\" to continue)"));
+ 			status_printf_ln(s, color,
+ 				_("  (use \"git rebase --skip\" to skip this patch)"));
+ 			status_printf_ln(s, color,
+@@ -1011,7 +1011,7 @@ static void show_rebase_in_progress(struct wt_status *s,
+ 					 _("You are currently rebasing."));
+ 		if (s->hints)
+ 			status_printf_ln(s, color,
+-				_("  (all conflicts fixed: run \"git rebase --continue\")"));
++				_("  (all conflicts fixed: use \"git rebase --continue\" to continue)"));
+ 	} else if (split_commit_in_progress(s)) {
+ 		if (state->branch)
+ 			status_printf_ln(s, color,
+@@ -1023,7 +1023,7 @@ static void show_rebase_in_progress(struct wt_status *s,
+ 					 _("You are currently splitting a commit during a rebase."));
+ 		if (s->hints)
+ 			status_printf_ln(s, color,
+-				_("  (Once your working directory is clean, run \"git rebase --continue\")"));
++				_("  (Once your working directory is clean, use \"git rebase --continue\" to continue)"));
+ 	} else {
+ 		if (state->branch)
+ 			status_printf_ln(s, color,
+@@ -1052,10 +1052,10 @@ static void show_cherry_pick_in_progress(struct wt_status *s,
+ 	if (s->hints) {
+ 		if (has_unmerged(s))
+ 			status_printf_ln(s, color,
+-				_("  (fix conflicts and run \"git cherry-pick --continue\")"));
++				_("  (fix conflicts and use \"git cherry-pick --continue\" to continue)"));
+ 		else
+ 			status_printf_ln(s, color,
+-				_("  (all conflicts fixed: run \"git cherry-pick --continue\")"));
++				_("  (all conflicts fixed: use \"git cherry-pick --continue\" to continue)"));
+ 		status_printf_ln(s, color,
+ 			_("  (use \"git cherry-pick --abort\" to cancel the cherry-pick operation)"));
+ 	}
+@@ -1071,10 +1071,10 @@ static void show_revert_in_progress(struct wt_status *s,
+ 	if (s->hints) {
+ 		if (has_unmerged(s))
+ 			status_printf_ln(s, color,
+-				_("  (fix conflicts and run \"git revert --continue\")"));
++				_("  (fix conflicts and use \"git revert --continue\" to continue)"));
+ 		else
+ 			status_printf_ln(s, color,
+-				_("  (all conflicts fixed: run \"git revert --continue\")"));
++				_("  (all conflicts fixed: use \"git revert --continue\" to continue)"));
+ 		status_printf_ln(s, color,
+ 			_("  (use \"git revert --abort\" to cancel the revert operation)"));
+ 	}
+-- 
+1.9.0.174.g6f75b8f
