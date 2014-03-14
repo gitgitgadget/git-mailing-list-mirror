@@ -1,115 +1,97 @@
-From: Jagan Teki <jagannadh.teki@gmail.com>
-Subject: Re: Apply commits from one branch to another branch (tree structure
- is different)
-Date: Sat, 15 Mar 2014 02:27:31 +0530
-Message-ID: <CAD6G_RTzbJGc10doV_ZbC5bd=Zpr6rPbNXni+Yo7cxD38DCLMQ@mail.gmail.com>
-References: <CAD6G_RTZaaYBP0MrmRYhce2v+A+WwvY=97Do3LoWW-SYzkHM2g@mail.gmail.com>
-	<CADeaMWpw4gx00QpUJ7u49sQvu7KbhvhH14TMdHXBRXq4wCNDZA@mail.gmail.com>
-	<CAD6G_RSmpfhTr_qtdaChR9TqMZgn8BAuSNDmK5B3HJDZMyoM1Q@mail.gmail.com>
-	<CADgNjan2SQXXfYfMP0sk5tqY_=c68=y0dfANF_KFaPQpzNG3yA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: RFC GSoC idea: new "git config" features
+Date: Fri, 14 Mar 2014 14:00:56 -0700
+Message-ID: <xmqq61ngh4vr.fsf@gitster.dls.corp.google.com>
+References: <53108650.2020708@alum.mit.edu>
+	<xmqqwqgft3bj.fsf@gitster.dls.corp.google.com>
+	<53112794.2070007@alum.mit.edu>
+	<20140301075247.GF20397@sigill.intra.peff.net>
+	<vpq38j2tc6f.fsf@anie.imag.fr>
+	<20140314044326.GE31906@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>, Brandon McCaig <bamccaig@gmail.com>
-To: Andrew Wong <andrew.kw.w@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 14 21:57:37 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	git discussion list <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Mar 14 22:01:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WOZAe-0003Lx-RH
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Mar 2014 21:57:37 +0100
+	id 1WOZE0-0006Qh-PL
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Mar 2014 22:01:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755798AbaCNU5c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Mar 2014 16:57:32 -0400
-Received: from mail-yk0-f170.google.com ([209.85.160.170]:58320 "EHLO
-	mail-yk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755198AbaCNU5c (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Mar 2014 16:57:32 -0400
-Received: by mail-yk0-f170.google.com with SMTP id 9so8146148ykp.1
-        for <git@vger.kernel.org>; Fri, 14 Mar 2014 13:57:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=iqd23Fd3/iAfHd64e+IwPfjnozu9Y/HgWPerXxC26To=;
-        b=HV4TCCketlpSlWtWyAL7Ab631M15HoDTubGXHlR1mQgqaZXdFO+sTQdU2IrGSzeRAg
-         HpgXtTfJ6NTcclza/NHdMzVRFwzj9DFdQG0M/1gRWXT/+g6J1PXyASUvf6uuTZWismxb
-         BSjooZzuDw/iJekO0ycK8E057/uCiC/fIOKskoHUD3YArbAprvkV0ALDOQoD9KfcPQqt
-         vvwd1wvW3jgb3j63thQ5vsBK2S3U7QDpV61+B+8gUqdI+ySRQs3etSGgqcsN5N9h2wiF
-         xXzH1C1pTf2UO2NKn0s3B+FpGZQE59mnQxaITe/2fyV4ofxZATaXcpJUn+BDN2SqmeM/
-         eImA==
-X-Received: by 10.236.66.143 with SMTP id h15mr13752160yhd.36.1394830651558;
- Fri, 14 Mar 2014 13:57:31 -0700 (PDT)
-Received: by 10.170.34.215 with HTTP; Fri, 14 Mar 2014 13:57:31 -0700 (PDT)
-In-Reply-To: <CADgNjan2SQXXfYfMP0sk5tqY_=c68=y0dfANF_KFaPQpzNG3yA@mail.gmail.com>
+	id S1755808AbaCNVBA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Mar 2014 17:01:00 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48082 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753570AbaCNVA6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Mar 2014 17:00:58 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 756B1753ED;
+	Fri, 14 Mar 2014 17:00:58 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=tfY522l81ZmnC8TvBP3Q+VPNrJg=; b=DuloXC
+	nhm6nyvUUnqVsa8sG3P20pU7AgeIA/zsFcVnS8EHi+8w6+FtnZZgoPQGso5nukWu
+	47zhJx6cfdTaCS/T6g0NDNytfr2t3W/An4rYeDlYkdo0Mc7ipodUypAIYleJGjnb
+	lkpAW3btYPJvnqUJbryZ6MPbu/2kPBbS+LtmQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=B+qFdq7g03mDLMKdVN2pdnnwUpBdCAHU
+	XB/gQKnZjZ1kwN2tn3WMJZFthraC+WSPyKVP6XdgtQ5M+ZDk0tolc7E6vXUjIoLs
+	tZsvvKXufTLfT6AjcW0NQT7PlqNzgOxhO/lUJVqNWnOpypz3OMTIv+a8rfsVeRME
+	qOz/WijHZ38=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5CF41753EC;
+	Fri, 14 Mar 2014 17:00:58 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A1FC5753EA;
+	Fri, 14 Mar 2014 17:00:57 -0400 (EDT)
+In-Reply-To: <20140314044326.GE31906@sigill.intra.peff.net> (Jeff King's
+	message of "Fri, 14 Mar 2014 00:43:26 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: BD703E2E-ABBB-11E3-872E-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244111>
 
-On Sat, Mar 15, 2014 at 2:07 AM, Andrew Wong <andrew.kw.w@gmail.com> wrote:
-> On Fri, Mar 14, 2014 at 4:01 PM, Jagan Teki <jagannadh.teki@gmail.com> wrote:
->> On Sat, Mar 15, 2014 at 12:48 AM, Andrew Wong <andrew.kw.w@gmail.com> wrote:
->>> On Fri, Mar 14, 2014 at 1:39 PM, Jagan Teki <jagannadh.teki@gmail.com> wrote:
->>>> Suppose developer send 10 patches on branch1 where are changes in terms
->>>> of <dir>_<version>/ then I need to apply on my local repo branch1, till now
->>>> is fine then I need to apply same 10 patches on to my branch2 where source
->>>> tree <dir> which is quite question here how can I do.
->>>
->>> You might be able to use the subtree option in recursive merge. Try
->>> something like:
->>>
->>>     git cherry-pick -X subtree=foo <commit>
->>>
->>> This tells git to apply the changes to the "foo" directory in your
->>> current branch (branch2).
->>
->> How do I do this?
->>
->> Suppose I'm in branch1 with two commits on foo_v2 and I need to apply them
->> on branch2 where in foo.
->
-> Since this uses cherry-pick, the changes that you want to apply have
-> to be on branch1 already.
->
-> Let's say your branch1 looks like:
->     --A--B--C--D
-> and branch2 looks like:
->     --1--2--3--4
->
-> And you want to apply commits B and C on branch2, but they modify
-> "foo_v1/" on branch1. You can tell git to apply the commits onto the
-> directory "foo/" on branch2:
->     git checkout branch2    # make sure you're on branch2
->     git cherry-pick -X subtree=foo B C    # pick the commits
->
-> If there's no conflict, the commits should apply cleanly, and your
-> branch2 would become like:
->     --1--2--3--4--B'--C'
+Jeff King <peff@peff.net> writes:
 
-I created two commits on foo_v2 when I move branch2 and
-did cherry-pick it shows below:
+> On Sat, Mar 01, 2014 at 12:01:44PM +0100, Matthieu Moy wrote:
+>
+>> Jeff King <peff@peff.net> writes:
+>> 
+>> > If we had the keys in-memory, we could reverse this: config code asks
+>> > for keys it cares about, and we can do an optimized lookup (binary
+>> > search, hash, etc).
+>> 
+>> I'm actually dreaming of a system where a configuration variable could
+>> be "declared" in Git's source code, with associated type (list/single
+>> value, boolean/string/path/...), default value and documentation (and
+>> then Documentation/config.txt could become a generated file). One could
+>> imagine a lot of possibilities like
+>
+> Yes, I think something like that would be very nice. ...
+> ...
+>> Migrating the whole code to such system would take time, but creating
+>> the system and applying it to a few examples might be feasible as a GSoC
+>> project.
+>
+> Agreed, as long as we have enough examples to feel confident that the
+> infrastructure is sufficient.
 
-Mr.J> git cherry-pick -X subtree=foo
-cc70089614de16b46c08f32ea61c972fea2132ce
-14e9c9b20e3bf914f6a38ec720896b3d67f94c90
-error: could not apply cc70089... AAAAAAAAAAAAAAAAA
-hint: after resolving the conflicts, mark the corrected paths
-hint: with 'git add <paths>' or 'git rm <paths>'
-hint: and commit the result with 'git commit'
-Mr.J> ls
-foo
-Mr.J> gs
-# On branch branch2
-# Unmerged paths:
-#   (use "git add/rm <file>..." as appropriate to mark resolution)
-#
-#    deleted by us:      foo/foo_v2/test.txt
-#
-no changes added to commit (use "git add" and/or "git commit -a")
+I agree that it would give us a lot of enhancement opportunities if
+we had a central catalog of what the supported configuration
+variables are and what semantics (e.g. type, multi-value-ness, etc.)
+they have.
 
-thanks!
--- 
-Jagan.
+One thing we need to be careful about is that we still must support
+random configuration items that git-core does not care about at all
+but scripts (and future versions of git-core) read off of, though.
