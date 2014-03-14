@@ -1,102 +1,141 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH v3 0/8] Hiding refs
-Date: Fri, 14 Mar 2014 09:45:30 -0700
-Message-ID: <CAJo=hJvy6KKMNT9iyZAnKy18Pa+rQkKPQtfqT1e+ddXoVwX0yg@mail.gmail.com>
-References: <5110DF1D.8010505@alum.mit.edu> <CACsJy8BhL4qDb8BgOVuaUFF_9GXvgu55urYyKqPuZMZCTCoLwA@mail.gmail.com>
- <7v4nhpckwd.fsf@alter.siamese.dyndns.org> <CACBZZX6xLvuMEhPnfYLj8W9pMLwdoS7Zb+mTtn+3DanJPiWfXw@mail.gmail.com>
- <7vmwvh9e3p.fsf@alter.siamese.dyndns.org> <CACsJy8Aas3tRoDp9LQw7Nwf6+S3QnvwA7h7s-sHVY+1yFKhTYg@mail.gmail.com>
- <20140311014945.GB12033@sigill.intra.peff.net> <xmqqtxb4pm3u.fsf@gitster.dls.corp.google.com>
- <20140311200513.GB29102@sigill.intra.peff.net> <xmqq4n34pjnw.fsf@gitster.dls.corp.google.com>
- <20140311203650.GA31173@sigill.intra.peff.net> <CACsJy8AZ0CfqHRYDrnQD+z0ibVQnsFuSzktEHKRhCVwaXPQryg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] GSoC Change multiple if-else statements to be table-driven
+Date: Fri, 14 Mar 2014 09:54:28 -0700
+Message-ID: <xmqqiorghgaj.fsf@gitster.dls.corp.google.com>
+References: <CAPig+cQu7D3AUghOSUOZBwf5+iHCPkxPbY1WuQmPJk1muCk7tQ@mail.gmail.com>
+	<1394742059-7300-1-git-send-email-zhaox383@umn.edu>
+	<CAPig+cRF_eQiGugR8TSks5ki375y-5wiQ7HWKyKRudJ5apd4cg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 14 17:45:57 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Yao Zhao <zhaox383@umn.edu>, Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Fri Mar 14 17:54:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WOVF7-0007Qr-3P
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Mar 2014 17:45:57 +0100
+	id 1WOVNW-00066q-80
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Mar 2014 17:54:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755570AbaCNQpw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Mar 2014 12:45:52 -0400
-Received: from mail-we0-f175.google.com ([74.125.82.175]:41679 "EHLO
-	mail-we0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755031AbaCNQpv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Mar 2014 12:45:51 -0400
-Received: by mail-we0-f175.google.com with SMTP id q58so2377415wes.34
-        for <git@vger.kernel.org>; Fri, 14 Mar 2014 09:45:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=PSbTI2qBYYPN5rVhPwr5ktgmDQsiuiSxu3OeJunIay8=;
-        b=ZHlp6lmiTIpEuW6ifNVIzgXBDtXp7P1CueGPIWg2MUYnb9pPW5A2R9fWlszwPqx/+w
-         HglRLVR0nozPgkVy4XdpknwZAdI4jbHjo5jXt6neqoLrOqQdcxA5CwyQ37LyTZFbIKi+
-         TtmEMOE9Dpj9eXv8v+k8h2hgNkVSgBfpOneBQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=PSbTI2qBYYPN5rVhPwr5ktgmDQsiuiSxu3OeJunIay8=;
-        b=iKsdnX0d4uItp8PSyd3LoKlBtdLwD9Mhx7pSj8GuHuYVEdIhhxzdnM1P7KIGbWSVe8
-         n7CIqkan16GnDfdtB9Ln1M8v7qrKEjUYpX1Xf5HYLEKPLa0mQFs66X7WXB/YKepprRxK
-         Vyqrv+52yH/X+P+lTPumfauGDv8OCpjLTP4uBkV+maAy5XRCWiQc67VEnkscdL8lTL/k
-         t3+MyJmYeyT4PJrk3WNOpM8/wqZFJocKBqBKgG4tw32TraRHTvfa7429ctVKjBAWNuk5
-         8vxJWRgHNPTlXpXxAyIRdBkdW3T3EkMzlvIbosMVsnukTLpZDTAY0AxHGcEgig4coQhh
-         T1/A==
-X-Gm-Message-State: ALoCoQmOY0Ya+Bu9yPU7PrEEk/uIWHqxhIL4LxicjCFwy4BH2B53JQahEklp6dASZVkq/D7UpaQH
-X-Received: by 10.194.241.132 with SMTP id wi4mr7458685wjc.14.1394815550538;
- Fri, 14 Mar 2014 09:45:50 -0700 (PDT)
-Received: by 10.227.7.131 with HTTP; Fri, 14 Mar 2014 09:45:30 -0700 (PDT)
-In-Reply-To: <CACsJy8AZ0CfqHRYDrnQD+z0ibVQnsFuSzktEHKRhCVwaXPQryg@mail.gmail.com>
+	id S1756068AbaCNQye convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Mar 2014 12:54:34 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36453 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756061AbaCNQyd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Mar 2014 12:54:33 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AC556754D6;
+	Fri, 14 Mar 2014 12:54:30 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=jd5mZ1URFZow
+	V8SjU3ACcrABmJQ=; b=GYF1sM7y8zO9aOtCwnZ5j8wSASaJb9oIiYKOs0yyGJ+B
+	siUZfgNRzqeMkgNWXF/L+ix2p2bzT5Bg0qYxxDP+K9155qCyxRNjORkLySn/xqmb
+	6e4niu2oOuq6ZnNED2I99Lr8w8su9+oBCfhOhui2TRU5WJFPBkwXM1scMIGC2vc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=E/Xd+F
+	VJ25Mdn7wkKi0YT4IG/zI8IOIxFjXGhpuLq1kVY1MRNSQphwq4XxcrF5K0aLnHCP
+	TDxhFeUGSsX4tUw0oiDWRz/W3jCsYkrNJRRJg02CSIakbZ3SyJuj5yCG2y7YMRfi
+	vIg1Z3co+Crdmb0Z2l5hQzRCfX3eyXrsbLFnc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 99DA2754D5;
+	Fri, 14 Mar 2014 12:54:30 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D1F08754D3;
+	Fri, 14 Mar 2014 12:54:29 -0400 (EDT)
+In-Reply-To: <CAPig+cRF_eQiGugR8TSks5ki375y-5wiQ7HWKyKRudJ5apd4cg@mail.gmail.com>
+	(Eric Sunshine's message of "Thu, 13 Mar 2014 22:16:41 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 4F3894D2-AB99-11E3-8672-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244095>
 
-On Fri, Mar 14, 2014 at 5:37 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Wed, Mar 12, 2014 at 3:36 AM, Jeff King <peff@peff.net> wrote:
->> If the client is limited to setting a few flags, then something like
->> http can get away with:
->>
->>   GET foo.git/info/refs?service=git-upload-pack&advertise-symrefs&refspec=refs/heads/*
->>
->> And it does not need to worry about upload-pack2 at all. Either the
->> server recognizes and acts on them, or it ignores them.
->>
->> But given that we do not have such a magic out-of-band method for
->> passing values over ssh and git, maybe it is not worth worrying about.
+Eric Sunshine <sunshine@sunshineco.com> writes:
+
+> Thanks for the resubmission. Comments below.
+
+Thanks, Eric, for helping so many micro exercises.
+
+> On Thu, Mar 13, 2014 at 4:20 PM, Yao Zhao <zhaox383@umn.edu> wrote:
+>> Subject: [PATCH] GSoC Change multiple if-else statements to be table=
+-driven
 >
-> git could go the same if we lift the restriction in 73bb33a (daemon:
-> Strictly parse the "extra arg" part of the command - 2009-06-04). It's
-> been five years. Old daemons hopefully have all died out by now. For
-> ssh, I suppose upload-pack and receive-pack can take an extra argument
-> like "advertise-symrefs&refspec=refs/heads/*" (daemon would use it too
-> to pass the advertiment to upload-pack and receive-pack).
+> It's a good idea to let reviewers know that this is attempt 2. Do so
+> by saying [PATCH v2]. Your next one will be [PATCH v3]. The -v option
+> for "git format-email" can help.
 
-Heh. IIRC you are talking about the DoS attack for git-daemon where
-you send an extra header and the process infinite loops forever? We
-really don't want a modern client attempting to upgrade the protocol
-with an ancient daemon to DoS attack that server.
+Yao, I think Eric meant "git format-patch".
 
-> That would make all three not need to change the underlying protocol
-> for capability advertisement. Old git-daemon, upload-pack and
-> receive-pack will fail hard on the new advertisement though, unlike
-> http. But that's no worse than upload-pack2.
+> When your patch is applied via "git am", text inside [...] gets
+> stripped automatically. The "GSoC" tells email readers what this
+> submission is about, but isn't relevant to the actual commit message.
+> It should be placed inside [...]. For instance: [PATCH/GSoC v2].
 
-You missed the SSH case. It doesn't have this slot to hide the data into.
+So in short,
 
->> Http can move to upload-pack2 along with the rest.
->
-> Or maybe http may lead the rest to another way.
-> --
-> Duy
+	Subject: [PATCH/GSoC v2] branch.c: turn nested if-else logic to table-=
+driven
+
+or something.
+
+>> +       typedef struct PRINT_LIST {
+> ...
+>> +               int b_origin;
+>> +       } PRINT_LIST;
+
+We do not do ALL_CAPS names and tend not to introduce one-off
+typedefs for struct.  Instead we would just use "struct print_list"
+throughout (if we were to indeed use such a new struct, that is).
+
+>> +       PRINT_LIST print_list[] =3D {
+>> +               {.print_str =3D _("Branch %s set up to track remote =
+branch %s from %s by rebasing."),
+>> +                               .arg2 =3D shortname, .arg3 =3D origi=
+n,
+>> +                                        .b_rebasing =3D 1, .b_remot=
+e_is_branch =3D 1, .b_origin =3D 1},
+
+>> I am confused here: I use struct initializer and I am not sure if it=
+'s ok
+>> because it is only supported by ANSI
+> ...
+> Indeed, you want to avoid named field initializers in this project an=
+d
+> instead use positional initializers.
+
+Correct.
+
+> Translatable strings in an initializer should be wrapped with N_()
+> instead of _(). You will still need to use _() later on when you
+> reference the string from the table. See section 4.7 [2] of the GNU
+> gettext manual for details.
+
+Correct.
+
+> An alternate approach might be to use a multi-dimensional array,
+> where the boolean values of rebasing, remote_is_branch, and origin
+> are keys into the array. This would allow you to pick out the
+> correct PRINT_LIST entry directly (no looping), thus eliminating
+> the need for those b_rebasing, b_remote_is_branch, and b_origin
+> members.
+
+Correct.
+
+After seeing so many "table driven" submissions, I however tend to
+agree with your earlier comment on another thread on this same
+micro, where you said an nested if-else cascade that was rewritten
+in a clearer way (sorry, I do not remember whose submission it was
+offhand) may be the best answer to the "Would it make sense to make
+the code table-driven?" question, even though I tentatively queued
+d7ea7894 (install_branch_config(): simplify verbose messages logic,
+2014-03-13) from Pawe=C5=82 on 'pu'.
+
+Thanks for a review.
