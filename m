@@ -1,97 +1,73 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] microproject for GSOC
-Date: Fri, 14 Mar 2014 18:10:57 +0100
-Message-ID: <vpq4n30aeou.fsf@anie.imag.fr>
-References: <1394815367-9706-1-git-send-email-ubuntu2012@126.com>
+From: Jagan Teki <jagannadh.teki@gmail.com>
+Subject: Apply commits from one branch to another branch (tree structure is different)
+Date: Fri, 14 Mar 2014 23:09:31 +0530
+Message-ID: <CAD6G_RTZaaYBP0MrmRYhce2v+A+WwvY=97Do3LoWW-SYzkHM2g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: ubuntu733 <ubuntu2012@126.com>
-X-From: git-owner@vger.kernel.org Fri Mar 14 18:11:17 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Brandon McCaig <bamccaig@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 14 18:39:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WOVda-0002qw-HV
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Mar 2014 18:11:14 +0100
+	id 1WOW55-0000W5-2J
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Mar 2014 18:39:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755351AbaCNRLJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Mar 2014 13:11:09 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:52014 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755182AbaCNRLI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Mar 2014 13:11:08 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s2EHAt0F032191
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 14 Mar 2014 18:10:55 +0100
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s2EHAv69027126;
-	Fri, 14 Mar 2014 18:10:57 +0100
-In-Reply-To: <1394815367-9706-1-git-send-email-ubuntu2012@126.com> (ubuntu's
-	message of "Sat, 15 Mar 2014 00:42:47 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 14 Mar 2014 18:10:56 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s2EHAt0F032191
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1395421856.45881@iT6E9x+pAF8OVgqwPDkSmw
+	id S1754263AbaCNRjc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Mar 2014 13:39:32 -0400
+Received: from mail-yh0-f46.google.com ([209.85.213.46]:50752 "EHLO
+	mail-yh0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753822AbaCNRjb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Mar 2014 13:39:31 -0400
+Received: by mail-yh0-f46.google.com with SMTP id b6so2878234yha.19
+        for <git@vger.kernel.org>; Fri, 14 Mar 2014 10:39:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        bh=t1wce6Csxv3nwjWXXlKe2SAsh8403Geym74xQM4RfnM=;
+        b=iOcgX+duC9w/hZOffVp2OY94S9bPmZLk6FS6otk4gE5Q/JXaTJN4gM16DwXYi8eTYu
+         TxO8hvFKiKRtFv2r2+QOI0pUlNs4qgUj/a6nOrKFyYrQZchTbKufhsggExdkNjTacBVF
+         bc0xXfW8OddI88y1GBwhIbsfOQ6DEuxHOgybg2ihfdeztMbADfFWguFpxOPk5Qz0qQGj
+         PlX7WF6HoDptEEB2cWFOBQOprCdUCjmb4koaynX/5z7AFrjq9eZDG6LJImd6QIi8UdRH
+         z78UtRzoSEG2zdAfwq88uCX5ckMrzOdbgSRU8We1i+W6tQxgm3BoycE6YTvtA5zHn6NA
+         Ec8w==
+X-Received: by 10.236.202.15 with SMTP id c15mr12783787yho.94.1394818771326;
+ Fri, 14 Mar 2014 10:39:31 -0700 (PDT)
+Received: by 10.170.34.215 with HTTP; Fri, 14 Mar 2014 10:39:31 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244099>
 
 Hi,
 
-Welcome to the Git community, and welcome to the GSOC program. Below are
-some comments to give you a taste of what a review looks like on this
-list. Do take the comments seriously (they should be addressed), but
-don't take them badly: critic is meant to be constructive.
+I have two branch in one repo that I need to maintain for 2 different
+deliveries.
+Say branch1 and branch2 in test.git repo.
 
-ubuntu733 <ubuntu2012@126.com> writes:
-^^^^^^^^^
+test.git
+- branch1
+     foo_v1/text.txt
+     foo_v2/text.txt
+- branch2
+     foo/text.txt
 
-Please, use a real name when you contribute to Git.
+branch1 is developers branch all source looks version'ed manner and
+branch2 is superset for branch1, example foo_v1 and foo_v2 are the directories
+in branch1 where developer will update the latest one here foo_v2 and branch2
+foo is same as the latest one of branch1 for an instance.
 
-> Apply for GSOC.The microprojects is rewriter diff-index.c
+Suppose developer send 10 patches on branch1 where are changes in terms
+of <dir>_<version>/ then I need to apply on my local repo branch1, till now
+is fine then I need to apply same 10 patches on to my branch2 where source
+tree <dir> which is quite question here how can I do.
 
-This part of your message will become the commit message (i.e. cast in
-stone forever in git.git's history). The point is not that you want to
-apply for GSOC, but what the patch does and more importantly why it does
-it.
+Request for any help! let me know for any questions.
 
-> +#define REMOVE 1
 
-If the code is to be removed, then remove it. That's why we use a
-version control system ;-).
-
-> -	while ((e = readdir(dir)))
-> -		if (strcmp(".", e->d_name) && strcmp("..", e->d_name))
-> -			string_list_insert(list, e->d_name);
-> -
-> +	while ((e = readdir(dir))) {
-> +		while(is_dot_or_dotdot(e->d_name))
-
-Missing space between "while" and "(".
-
-> +                      break;
-
-Broken indentation (indent with space).
-
-This while (...) break; seems really weird to me: if the condition is
-false, then you exit the loop because it's a while loop, and if the
-condition is true, you exit the loop because of the break. Isn't that a
-no-op?
-
-> +		string_list_insert(list, e->d_name);
-> +              }
-
-Broken indentation (misplaced }).
-
+thanks!
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Jagan.
