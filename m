@@ -1,58 +1,51 @@
-From: shyam218 <krishnah014@gmail.com>
-Subject: Migration from Github hosted git repository to local server.
-Date: Sat, 15 Mar 2014 11:58:13 -0700 (PDT)
-Message-ID: <1394909893698-7605713.post@n2.nabble.com>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: [PATCH 3/3] reset: Print a warning when user uses "git reset"
+ during a merge
+Date: Sat, 15 Mar 2014 15:23:43 -0400
+Message-ID: <5324A8BF.80308@xiplink.com>
+References: <1394771872-25940-1-git-send-email-andrew.kw.w@gmail.com>	<1394771872-25940-4-git-send-email-andrew.kw.w@gmail.com>	<5323131C.7070506@xiplink.com>	<CADgNjan9kCTMPczFzO4jQvM63EU4x7KnJKszhno5PjHivE9ENg@mail.gmail.com> <xmqqa9csh54f.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 15 19:58:20 2014
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>,
+	Andrew Wong <andrew.kw.w@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 15 20:32:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WOtmk-0003Xl-JQ
-	for gcvg-git-2@plane.gmane.org; Sat, 15 Mar 2014 19:58:18 +0100
+	id 1WOuJU-0004TX-53
+	for gcvg-git-2@plane.gmane.org; Sat, 15 Mar 2014 20:32:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756114AbaCOS6O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Mar 2014 14:58:14 -0400
-Received: from sam.nabble.com ([216.139.236.26]:50172 "EHLO sam.nabble.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755951AbaCOS6O (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Mar 2014 14:58:14 -0400
-Received: from jim.nabble.com ([192.168.236.80])
-	by sam.nabble.com with esmtp (Exim 4.72)
-	(envelope-from <krishnah014@gmail.com>)
-	id 1WOtmf-0006wR-Ms
-	for git@vger.kernel.org; Sat, 15 Mar 2014 11:58:13 -0700
+	id S1753778AbaCOTbj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Mar 2014 15:31:39 -0400
+Received: from smtp130.ord.emailsrvr.com ([173.203.6.130]:53935 "EHLO
+	smtp130.ord.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750900AbaCOTbi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Mar 2014 15:31:38 -0400
+X-Greylist: delayed 473 seconds by postgrey-1.27 at vger.kernel.org; Sat, 15 Mar 2014 15:31:38 EDT
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp13.relay.ord1a.emailsrvr.com (SMTP Server) with ESMTP id A8A1A198645;
+	Sat, 15 Mar 2014 15:23:44 -0400 (EDT)
+X-Virus-Scanned: OK
+Received: by smtp13.relay.ord1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 4081B198D94;
+	Sat, 15 Mar 2014 15:23:44 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
+In-Reply-To: <xmqqa9csh54f.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244163>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244164>
 
-Hi All,
+On 14-03-14 04:55 PM, Junio C Hamano wrote:
+>
+> So I am OK with "eventually error out by default", but not OK with
+> "we know better than the user and will not allow it at all".
 
-Could some one help me on this please,we have few repositories in the Github
-and out of them couple of them are using encryption with
-git-encrypt(https://github.com/shadowhand/git-encrypt)using this they have
-encrypted the whole repo.
+Can I interpret that as you being OK with my proposed "Cowardly 
+refusing" approach?
 
-Now,we got a requirement to move all those repositories to In house
-server,just for preserving the source code from hosting in third party tool.
-
-Anybody help me in migrating them with out loosing any history and i really
-appreciate if some one can give a detailed steps on how to decrypt the
-encrypted file(procedure mentioned in the git-encrypt wasn't helpful
-(https://github.com/shadowhand/git-encrypt) and the link for decryption
-mentioned in it is also not working)
-
-Regards,
-Shyam.
-
-
-
---
-View this message in context: http://git.661346.n2.nabble.com/Migration-from-Github-hosted-git-repository-to-local-server-tp7605713.html
-Sent from the git mailing list archive at Nabble.com.
+		M.
