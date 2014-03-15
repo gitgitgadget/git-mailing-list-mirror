@@ -1,402 +1,411 @@
 From: Justin Lebar <jlebar@google.com>
-Subject: [PATCH 4/6] Fix misuses of "nor" in comments
-Date: Sat, 15 Mar 2014 01:42:00 -0700
-Message-ID: <1394872922-2000-5-git-send-email-jlebar@google.com>
+Subject: [PATCH 3/6] l10n: Fix misuses of "nor"
+Date: Sat, 15 Mar 2014 01:41:59 -0700
+Message-ID: <1394872922-2000-4-git-send-email-jlebar@google.com>
 References: <1394872922-2000-1-git-send-email-jlebar@google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Justin Lebar <jlebar@google.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>, Justin Lebar <jlebar@gmail.com>
+	Jiang Xin <worldhello.net@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 15 09:43:26 2014
+X-From: git-owner@vger.kernel.org Sat Mar 15 09:43:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WOkBf-0006NS-4f
-	for gcvg-git-2@plane.gmane.org; Sat, 15 Mar 2014 09:43:23 +0100
+	id 1WOkBn-0006Vl-4P
+	for gcvg-git-2@plane.gmane.org; Sat, 15 Mar 2014 09:43:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755079AbaCOInM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Mar 2014 04:43:12 -0400
-Received: from mail-pa0-f73.google.com ([209.85.220.73]:48459 "EHLO
-	mail-pa0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752774AbaCOImz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Mar 2014 04:42:55 -0400
-Received: by mail-pa0-f73.google.com with SMTP id kq14so445759pab.2
-        for <git@vger.kernel.org>; Sat, 15 Mar 2014 01:42:54 -0700 (PDT)
+	id S1754791AbaCOInJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 15 Mar 2014 04:43:09 -0400
+Received: from mail-vc0-f202.google.com ([209.85.220.202]:62640 "EHLO
+	mail-vc0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752773AbaCOImx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Mar 2014 04:42:53 -0400
+Received: by mail-vc0-f202.google.com with SMTP id lh14so438981vcb.5
+        for <git@vger.kernel.org>; Sat, 15 Mar 2014 01:42:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=yzcV6KY+I+gbC3RURUYbw5wLoPv6KtVTZVHt94BGL5U=;
-        b=JaxYD1X9ptLAUjJkrbnxnPRRG8m13I1OmkQnfOfz0T/29fouef/YA/5ZtW4QdKU9G0
-         GyWb3Bj29CGPowMvCiqss7mVijeIp4DjTKtUxIBkIBmalDAe9VEdPxEUsx83xaHwiE8p
-         eK9o1HYS8hT94qzImI5b7T2JTgsn6itbK+qdwZ9WWUKLZ48U3Cfm8S+AQ5kpIqnp7oUg
-         rRTY9aeckWWYIUg6uCl8STtcjXXcGUYENVztA4aFg+zBUjYC/SPUmA3jGNy/SQjZkLSK
-         C8JBRaMcvamFAmFPkYiT0IncX7HXWLdqgR1J67cbkYQqssBNELph7H3I24QckdEC/KkB
-         EXjw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=OPouqUpFDMofCxSFAZ8TkogCqUW5qXHBUA12Duc+mEI=;
+        b=hAG2l3JcT9lowpjwbl6DEwa3MJS/nyVo4VKyOEJ6SZB5BDiZx3X3a/bQSPdyEfAiwq
+         Fc9ppaY6r3g9xkCbouPWXcVjQ/jDFki1iHVfMh2sbZPqsi3THi4Qy0gLRhbneSn8wW/E
+         /JXFwEeJWkNykk68ok4r/eAYPWwqjeRPT6hg2MD5CZjEKkZm2z2MZm43C+3RW1Nj/Vpt
+         pJyICIJwkOntGjqHw09WG1qhwwonFUNXi3gBUblJGe9UnY0GVuaSyb5N2/xtKQKeEbw6
+         xFaGo0qQ04zFV+Y63yweNaChcayZ94c4mPiCiXJT6tYD2cjzYQOzznxJ4LDDMBX1++8x
+         gMwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=yzcV6KY+I+gbC3RURUYbw5wLoPv6KtVTZVHt94BGL5U=;
-        b=AyamDYU9f5Rng6GQ8Ufukmi0EhUdamp3jPPpDX9cI/AoalYyFEh9sppO708ScBigFc
-         QoSOZ70D4tttGQcJFGQYrsJZZ09RTLIXcllDRbtNTqmJZm1dFGzY4biCmlet7AZnD5KJ
-         FG0jMImMCCtDrHdo9MAYHcTeUyZYYGoZZ8ZRxu8v0mlULmwIom9Cw0LsTTh6XKK6WByg
-         ocWKJKQH1BkXCBTdJW8gZ1IKaGZRuk1pwAzzfx3H5ccKy3sn4A1CKiH2YI6at6tZ8U5r
-         atW/da31z0afPtQxMlv+lEFj2XQX2ZbSHECe5teu47RB4DGK9AwwW0I98dBmjFLwUjwP
-         7HJQ==
-X-Gm-Message-State: ALoCoQnUyBry1OT2SKFjDZw4v0HvXwXd0mOEB488wlntbPJkhBh3BcDGyu4xla9OgNCSKrPsdU4QE0WQOjthZAxXYClwtXa8t2CqyNpNlSwwciRMnuhI7pB8yZHAE87VLsQkyrVC5xTaLczYHJUYZmKcu692Jkz8h1IXz7cHUD3l2o1V4ncZHZo43d4s8OcYo8sIMjL8GEAG
-X-Received: by 10.66.66.196 with SMTP id h4mr4740867pat.22.1394872974442;
-        Sat, 15 Mar 2014 01:42:54 -0700 (PDT)
+         :references:mime-version:content-type:content-transfer-encoding;
+        bh=OPouqUpFDMofCxSFAZ8TkogCqUW5qXHBUA12Duc+mEI=;
+        b=FOQDwC+IKi3/5V1dutumqfde02lAMpeDqwC0AWLd1vG4A6oVrJxRDYAEgyin9YN0k7
+         G9mt3K5PvxWUMtGsspk6Nc7BAdhSGr3NCLjgpxSFG7k6k76XIL2V5gDNONP2qWaKr2Ax
+         mb9qrRNf3DDKkX6nfP4QcKVUXZZGiqr7XML7DWg+z8Wa9M871zf4AjXXC6WKP05Xc9T2
+         DOsGlfnRUBUocf20NQtF/+nAx0HEBhaR1PtOVR+rg2T9AqW72ScH5fwdKfG5Ht/yE4Yc
+         boFGQn+J5+8hvDTt6fLH8P7p2nPNScRaNXvWX0xIkDxy0Ma17ZsGpZfWO0EQXlPUkMjt
+         HPww==
+X-Gm-Message-State: ALoCoQn881SsYkDG+anfPcUaiTKIcF2x/+DCNB6C+5+eaL5pdUPb7hQ2mRRGgaFgmxucAtMjx+U8P7Era/tDaElaOET6Po+QAcn7W9PVQVqmraox9SeDQAxg+YVc9sC01Qjw9KCDt46Vd6DOAhITPu0WvPs2cKwjatn+2y07gojwwWUuwxe9GmHfAgLR1uFqZcGzD7PPGvHe
+X-Received: by 10.224.20.133 with SMTP id f5mr4928654qab.8.1394872972827;
+        Sat, 15 Mar 2014 01:42:52 -0700 (PDT)
 Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
-        by gmr-mx.google.com with ESMTPS id k45si1296835yhn.4.2014.03.15.01.42.54
+        by gmr-mx.google.com with ESMTPS id u4si1296274yhb.5.2014.03.15.01.42.52
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 15 Mar 2014 01:42:54 -0700 (PDT)
+        Sat, 15 Mar 2014 01:42:52 -0700 (PDT)
 Received: from jlebar0.mtv.corp.google.com (jlebar0.mtv.corp.google.com [172.17.132.58])
-	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id E64B05A4241;
-	Sat, 15 Mar 2014 01:42:53 -0700 (PDT)
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 745745A4241;
+	Sat, 15 Mar 2014 01:42:52 -0700 (PDT)
 Received: by jlebar0.mtv.corp.google.com (Postfix, from userid 214119)
-	id AB0751A0889; Sat, 15 Mar 2014 01:42:53 -0700 (PDT)
+	id 38D6F1A0889; Sat, 15 Mar 2014 01:42:52 -0700 (PDT)
 X-Mailer: git-send-email 1.9.0.279.gdc9e3eb
 In-Reply-To: <1394872922-2000-1-git-send-email-jlebar@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244146>
 
-Signed-off-by: Justin Lebar <jlebar@gmail.com>
+Signed-off-by: Justin Lebar <jlebar@google.com>
 ---
- Makefile                                    | 2 +-
- builtin/apply.c                             | 2 +-
- builtin/checkout.c                          | 2 +-
- builtin/log.c                               | 2 +-
- builtin/pack-objects.c                      | 2 +-
- builtin/reset.c                             | 4 ++--
- builtin/show-branch.c                       | 2 +-
- column.c                                    | 2 +-
- contrib/examples/git-checkout.sh            | 2 +-
- contrib/examples/git-reset.sh               | 4 ++--
- contrib/fast-import/import-directories.perl | 4 ++--
- delta.h                                     | 2 +-
- diff.c                                      | 2 +-
- git-am.sh                                   | 2 +-
- gitweb/gitweb.perl                          | 2 +-
- http.h                                      | 4 ++--
- perl/Git/SVN.pm                             | 2 +-
- perl/Git/SVN/Migration.pm                   | 2 +-
- pkt-line.h                                  | 2 +-
- remote.c                                    | 2 +-
- sha1_file.c                                 | 2 +-
- test-chmtime.c                              | 2 +-
- 22 files changed, 26 insertions(+), 26 deletions(-)
+ po/bg.po    | 6 +++---
+ po/de.po    | 6 +++---
+ po/fr.po    | 6 +++---
+ po/git.pot  | 6 +++---
+ po/it.po    | 2 +-
+ po/pt_PT.po | 2 +-
+ po/sv.po    | 6 +++---
+ po/vi.po    | 6 +++---
+ po/zh_CN.po | 6 +++---
+ 9 files changed, 23 insertions(+), 23 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index dddaf4f..fc02788 100644
---- a/Makefile
-+++ b/Makefile
-@@ -159,7 +159,7 @@ all::
- #
- # Define NEEDS_LIBINTL_BEFORE_LIBICONV if you need libintl before libiconv.
- #
--# Define NO_INTPTR_T if you don't have intptr_t nor uintptr_t.
-+# Define NO_INTPTR_T if you don't have intptr_t or uintptr_t.
- #
- # Define NO_UINTMAX_T if you don't have uintmax_t.
- #
-diff --git a/builtin/apply.c b/builtin/apply.c
-index b0d0986..6013e19 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -4061,7 +4061,7 @@ static int write_out_one_reject(struct patch *patch)
- 		return error(_("cannot open %s: %s"), namebuf, strerror(errno));
- 
- 	/* Normal git tools never deal with .rej, so do not pretend
--	 * this is a git patch by saying --git nor give extended
-+	 * this is a git patch by saying --git or giving extended
- 	 * headers.  While at it, maybe please "kompare" that wants
- 	 * the trailing TAB and some garbage at the end of line ;-).
- 	 */
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 5df3837..ec21b13 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -896,7 +896,7 @@ static int parse_branchname_arg(int argc, const char **argv,
- 	 *       between A and B, A...B names that merge base.
- 	 *
- 	 *   (b) If <something> is _not_ a commit, either "--" is present
--	 *       or <something> is not a path, no -t nor -b was given, and
-+	 *       or <something> is not a path, no -t or -b was given, and
- 	 *       and there is a tracking branch whose name is <something>
- 	 *       in one and only one remote, then this is a short-hand to
- 	 *       fork local <something> from that remote-tracking branch.
-diff --git a/builtin/log.c b/builtin/log.c
-index b97373d..39e8836 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -503,7 +503,7 @@ static void show_rev_tweak_rev(struct rev_info *rev, struct setup_revision_opt *
- 		/* There was no "-m" on the command line */
- 		rev->ignore_merges = 0;
- 		if (!rev->first_parent_only && !rev->combine_merges) {
--			/* No "--first-parent", "-c", nor "--cc" */
-+			/* No "--first-parent", "-c", or "--cc" */
- 			rev->combine_merges = 1;
- 			rev->dense_combined_merges = 1;
- 		}
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 541667f..ef1f20e 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -999,7 +999,7 @@ static int pbase_tree_cache_ix_incr(int ix)
- static struct pbase_tree {
- 	struct pbase_tree *next;
- 	/* This is a phony "cache" entry; we are not
--	 * going to evict it nor find it through _get()
-+	 * going to evict it or find it through _get()
- 	 * mechanism -- this is for the toplevel node that
- 	 * would almost always change with any commit.
- 	 */
-diff --git a/builtin/reset.c b/builtin/reset.c
-index 6004803..ef3249e 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -309,7 +309,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 
- 	/* git reset tree [--] paths... can be used to
- 	 * load chosen paths from the tree into the index without
--	 * affecting the working tree nor HEAD. */
-+	 * affecting the working tree or HEAD. */
- 	if (pathspec.nr) {
- 		if (reset_type == MIXED)
- 			warning(_("--mixed with paths is deprecated; use 'git reset -- <paths>' instead."));
-@@ -327,7 +327,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 		die(_("%s reset is not allowed in a bare repository"),
- 		    _(reset_type_names[reset_type]));
- 
--	/* Soft reset does not touch the index file nor the working tree
-+	/* Soft reset does not touch the index file or the working tree
- 	 * at all, but requires them in a good order.  Other resets reset
- 	 * the index file to the tree object we are switching to. */
- 	if (reset_type == SOFT || reset_type == KEEP)
-diff --git a/builtin/show-branch.c b/builtin/show-branch.c
-index d9217ce..53dc042 100644
---- a/builtin/show-branch.c
-+++ b/builtin/show-branch.c
-@@ -698,7 +698,7 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
- 
- 	if (extra || reflog) {
- 		/* "listing" mode is incompatible with
--		 * independent nor merge-base modes.
-+		 * independent and merge-base modes.
- 		 */
- 		if (independent || merge_base)
- 			usage_with_options(show_branch_usage,
-diff --git a/column.c b/column.c
-index 9367ba5..1854540 100644
---- a/column.c
-+++ b/column.c
-@@ -311,7 +311,7 @@ static int parse_config(unsigned int *colopts, const char *value)
- 		value += strspn(value, sep);
- 	}
- 	/*
--	 * Setting layout implies "always" if neither always, never
-+	 * Setting layout implies "always" if neither always, never,
- 	 * nor auto is specified.
- 	 *
- 	 * Current value in COL_ENABLE_MASK is disregarded. This means if
-diff --git a/contrib/examples/git-checkout.sh b/contrib/examples/git-checkout.sh
-index 1a7689a..d2c1f98 100755
---- a/contrib/examples/git-checkout.sh
-+++ b/contrib/examples/git-checkout.sh
-@@ -168,7 +168,7 @@ cd_to_toplevel
- # branch.  However, if "git checkout HEAD" detaches the HEAD
- # from the current branch, even though that may be logically
- # correct, it feels somewhat funny.  More importantly, we do not
--# want "git checkout" nor "git checkout -f" to detach HEAD.
-+# want "git checkout" or "git checkout -f" to detach HEAD.
- 
- detached=
- detach_warn=
-diff --git a/contrib/examples/git-reset.sh b/contrib/examples/git-reset.sh
-index bafeb52..cb1bbf3 100755
---- a/contrib/examples/git-reset.sh
-+++ b/contrib/examples/git-reset.sh
-@@ -40,7 +40,7 @@ case "$1" in --) shift ;; esac
- 
- # git reset --mixed tree [--] paths... can be used to
- # load chosen paths from the tree into the index without
--# affecting the working tree nor HEAD.
-+# affecting the working tree or HEAD.
- if test $# != 0
- then
- 	test "$reset_type" = "--mixed" ||
-@@ -60,7 +60,7 @@ then
- 	update=-u
- fi
- 
--# Soft reset does not touch the index file nor the working tree
-+# Soft reset does not touch the index file or the working tree
- # at all, but requires them in a good order.  Other resets reset
- # the index file to the tree object we are switching to.
- if test "$reset_type" = "--soft"
-diff --git a/contrib/fast-import/import-directories.perl b/contrib/fast-import/import-directories.perl
-index 7f3afa5..4dec1f1 100755
---- a/contrib/fast-import/import-directories.perl
-+++ b/contrib/fast-import/import-directories.perl
-@@ -109,8 +109,8 @@ was available previously is not included in this revision, it will
- be removed.
- 
- If an on-disk revision is incomplete, you can point to files from
--a previous revision. There are no restriction as to where the source
--files are located, nor to the names of them.
-+a previous revision. There are no restrictions on where the source
-+files are located, nor on their names.
- 
-  [3.files]
-  ; the key is the path inside the repository, the value is the path
-diff --git a/delta.h b/delta.h
-index b9d333d..9b67531 100644
---- a/delta.h
-+++ b/delta.h
-@@ -9,7 +9,7 @@ struct delta_index;
-  *
-  * This returns a pointer to a struct delta_index that should be passed to
-  * subsequent create_delta() calls, or to free_delta_index().  A NULL pointer
-- * is returned on failure.  The given buffer must not be freed nor altered
-+ * is returned on failure.  The given buffer must not be freed or altered
-  * before free_delta_index() is called.  The returned pointer must be freed
-  * using free_delta_index().
-  */
-diff --git a/diff.c b/diff.c
-index 8e4a6a9..4842869 100644
---- a/diff.c
-+++ b/diff.c
-@@ -3941,7 +3941,7 @@ static int diff_scoreopt_parse(const char *opt)
- 		}
- 	}
- 	if (cmd != 'M' && cmd != 'C' && cmd != 'B')
--		return -1; /* that is not a -M, -C nor -B option */
-+		return -1; /* that is not a -M, -C, or -B option */
- 
- 	opt1 = parse_rename_score(&opt);
- 	if (cmd != 'B')
-diff --git a/git-am.sh b/git-am.sh
-index bbea430..e92e5bb 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -523,7 +523,7 @@ Use \"git am --abort\" to remove it.")"
- 		esac
- 	fi
- 
--	# Make sure we are not given --skip, --continue, nor --abort
-+	# Make sure we are not given --skip, --continue, or --abort
- 	test "$skip$resolved$abort" = "" ||
- 		die "$(gettext "Resolve operation not in progress, we are not resuming.")"
- 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 3bc0f0b..52108b9 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -1490,7 +1490,7 @@ sub is_valid_pathname {
- 	my $input = shift;
- 
- 	return undef unless defined $input;
--	# no '.' or '..' as elements of path, i.e. no '.' nor '..'
-+	# no '.' or '..' as elements of path, i.e. no '.' or '..'
- 	# at the beginning, at the end, and between slashes.
- 	# also this catches doubled slashes
- 	if ($input =~ m!(^|/)(|\.|\.\.)(/|$)!) {
-diff --git a/http.h b/http.h
-index cd37d58..cba09d1 100644
---- a/http.h
-+++ b/http.h
-@@ -13,8 +13,8 @@
- /*
-  * We detect based on the cURL version if multi-transfer is
-  * usable in this implementation and define this symbol accordingly.
-- * This is not something Makefile should set nor users should pass
-- * via CFLAGS.
-+ * This is not something Makefile should set nor something users should
-+ * pass via CFLAGS.
-  */
- #undef USE_CURL_MULTI
- 
-diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
-index 6e804a2..62f3293 100644
---- a/perl/Git/SVN.pm
-+++ b/perl/Git/SVN.pm
-@@ -1191,7 +1191,7 @@ sub do_fetch {
- 		# we can have a branch that was deleted, then re-added
- 		# under the same name but copied from another path, in
- 		# which case we'll have multiple parents (we don't
--		# want to break the original ref, nor lose copypath info):
-+		# want to break the original ref or lose copypath info):
- 		if (my $log_entry = $self->find_parent_branch($paths, $rev)) {
- 			push @{$log_entry->{parents}}, $lc;
- 			return $log_entry;
-diff --git a/perl/Git/SVN/Migration.pm b/perl/Git/SVN/Migration.pm
-index 30daf35..cf6ffa7 100644
---- a/perl/Git/SVN/Migration.pm
-+++ b/perl/Git/SVN/Migration.pm
-@@ -1,6 +1,6 @@
- package Git::SVN::Migration;
- # these version numbers do NOT correspond to actual version numbers
--# of git nor git-svn.  They are just relative.
-+# of git or git-svn.  They are just relative.
- #
- # v0 layout: .git/$id/info/url, refs/heads/$id-HEAD
- #
-diff --git a/pkt-line.h b/pkt-line.h
-index 0a838d1..b6bd8b5 100644
---- a/pkt-line.h
-+++ b/pkt-line.h
-@@ -28,7 +28,7 @@ void packet_buf_write(struct strbuf *buf, const char *fmt, ...) __attribute__((f
-  * Read a packetized line into the buffer, which must be at least size bytes
-  * long. The return value specifies the number of bytes read into the buffer.
-  *
-- * If src_buffer is not NULL (and nor is *src_buffer), it should point to a
-+ * If src_buffer is not NULL (and neither is *src_buffer), it should point to a
-  * buffer containing the packet data to parse, of at least *src_len bytes.
-  * After the function returns, src_buf will be incremented and src_len
-  * decremented by the number of bytes consumed.
-diff --git a/remote.c b/remote.c
-index e41251e..886aef5 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1404,7 +1404,7 @@ int match_push_refs(struct ref *src, struct ref **dst,
- 				/*
- 				 * Remote doesn't have it, and we have no
- 				 * explicit pattern, and we don't have
--				 * --all nor --mirror.
-+				 * --all or --mirror.
- 				 */
- 				goto free_name;
- 
-diff --git a/sha1_file.c b/sha1_file.c
-index 6e8c05d..b79efe4 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -787,7 +787,7 @@ void close_pack_index(struct packed_git *p)
-  * contain the same set of objects as an existing one.  In that case
-  * the resulting file might be different even if its name would be the
-  * same.  It is best to close any reference to the old pack before it is
-- * replaced on disk.  Of course no index pointers nor windows for given pack
-+ * replaced on disk.  Of course no index pointers or windows for given pack
-  * must subsist at this point.  If ever objects from this pack are requested
-  * again, the new version of the pack will be reinitialized through
-  * reprepare_packed_git().
-diff --git a/test-chmtime.c b/test-chmtime.c
-index 0df7487..dfe8a83 100644
---- a/test-chmtime.c
-+++ b/test-chmtime.c
-@@ -1,6 +1,6 @@
- /*
-  * This program can either change modification time of the given
-- * file(s) or just print it. The program does not change atime nor
-+ * file(s) or just print it. The program does not change atime or
-  * ctime (their values are explicitly preserved).
-  *
-  * The mtime can be changed to an absolute value:
--- 
+diff --git a/po/bg.po b/po/bg.po
+index fb450b2..983e575 100644
+--- a/po/bg.po
++++ b/po/bg.po
+@@ -3699,13 +3699,13 @@ msgstr ""
+=20
+ #: builtin/clean.c:906
+ msgid ""
+-"clean.requireForce set to true and neither -i, -n nor -f given; refus=
+ing to "
++"clean.requireForce set to true and neither -i, -n, nor -f given; refu=
+sing to "
+ "clean"
+ msgstr ""
+=20
+ #: builtin/clean.c:909
+ msgid ""
+-"clean.requireForce defaults to true and neither -i, -n nor -f given; =
+"
++"clean.requireForce defaults to true and neither -i, -n, nor -f given;=
+ "
+ "refusing to clean"
+ msgstr ""
+=20
+@@ -4253,7 +4253,7 @@ msgid "Clever... amending the last one with dirty=
+ index."
+ msgstr ""
+=20
+ #: builtin/commit.c:1126
+-msgid "Explicit paths specified without -i nor -o; assuming --only pat=
+hs..."
++msgid "Explicit paths specified without -i or -o; assuming --only path=
+s..."
+ msgstr ""
+=20
+ #: builtin/commit.c:1136 builtin/tag.c:572
+diff --git a/po/de.po b/po/de.po
+index b777ef4..f539bf5 100644
+--- a/po/de.po
++++ b/po/de.po
+@@ -3876,7 +3876,7 @@ msgstr "Die Optionen -x und -X k=C3=B6nnen nicht =
+gemeinsam verwendet werden."
+=20
+ #: builtin/clean.c:906
+ msgid ""
+-"clean.requireForce set to true and neither -i, -n nor -f given; refus=
+ing to "
++"clean.requireForce set to true and neither -i, -n, or -f given; refus=
+ing to "
+ "clean"
+ msgstr ""
+ "clean.requireForce auf \"true\" gesetzt und weder -i, -n noch -f gege=
+ben; "
+@@ -3884,7 +3884,7 @@ msgstr ""
+=20
+ #: builtin/clean.c:909
+ msgid ""
+-"clean.requireForce defaults to true and neither -i, -n nor -f given; =
+"
++"clean.requireForce defaults to true and neither -i, -n, or -f given; =
+"
+ "refusing to clean"
+ msgstr ""
+ "clean.requireForce standardm=C3=A4=C3=9Fig auf \"true\" gesetzt und w=
+eder -i, -n noch -"
+@@ -4496,7 +4496,7 @@ msgstr ""
+ "Klug... den letzten Commit mit einer ge=C3=A4nderten Staging-Area nac=
+hbessern."
+=20
+ #: builtin/commit.c:1126
+-msgid "Explicit paths specified without -i nor -o; assuming --only pat=
+hs..."
++msgid "Explicit paths specified without -i or -o; assuming --only path=
+s..."
+ msgstr ""
+ "Explizite Pfade ohne -i oder -o angegeben; unter der Annahme von --on=
+ly "
+ "Pfaden..."
+diff --git a/po/fr.po b/po/fr.po
+index 0b9d59e..9683264 100644
+--- a/po/fr.po
++++ b/po/fr.po
+@@ -3917,7 +3917,7 @@ msgstr "-x et -X ne peuvent pas =C3=AAtre utilis=C3=
+=A9s ensemble"
+=20
+ #: builtin/clean.c:906
+ msgid ""
+-"clean.requireForce set to true and neither -i, -n nor -f given; refus=
+ing to "
++"clean.requireForce set to true and neither -i, -n, or -f given; refus=
+ing to "
+ "clean"
+ msgstr ""
+ "clean.requireForce positionn=C3=A9 =C3=A0 true et ni -i, -n ou -f fou=
+rni ; refus de "
+@@ -3925,7 +3925,7 @@ msgstr ""
+=20
+ #: builtin/clean.c:909
+ msgid ""
+-"clean.requireForce defaults to true and neither -i, -n nor -f given; =
+"
++"clean.requireForce defaults to true and neither -i, -n, or -f given; =
+"
+ "refusing to clean"
+ msgstr ""
+ "clean.requireForce =C3=A0 true par d=C3=A9faut et ni -i, -n ou -f fou=
+rni ; refus de "
+@@ -4526,7 +4526,7 @@ msgid "Clever... amending the last one with dirty=
+ index."
+ msgstr "Malin... correction du dernier avec un index sale."
+=20
+ #: builtin/commit.c:1126
+-msgid "Explicit paths specified without -i nor -o; assuming --only pat=
+hs..."
++msgid "Explicit paths specified without -i or -o; assuming --only path=
+s..."
+ msgstr "Chemins explicites sp=C3=A9cifi=C3=A9s sans -i ni -o ; --only =
+suppos=C3=A9..."
+=20
+ #: builtin/commit.c:1136 builtin/tag.c:572
+diff --git a/po/git.pot b/po/git.pot
+index 33cc31d..3553bfc 100644
+--- a/po/git.pot
++++ b/po/git.pot
+@@ -3598,13 +3598,13 @@ msgstr ""
+=20
+ #: builtin/clean.c:906
+ msgid ""
+-"clean.requireForce set to true and neither -i, -n nor -f given; refus=
+ing to "
++"clean.requireForce set to true and neither -i, -n, or -f given; refus=
+ing to "
+ "clean"
+ msgstr ""
+=20
+ #: builtin/clean.c:909
+ msgid ""
+-"clean.requireForce defaults to true and neither -i, -n nor -f given; =
+"
++"clean.requireForce defaults to true and neither -i, -n, or -f given; =
+"
+ "refusing to clean"
+ msgstr ""
+=20
+@@ -4150,7 +4150,7 @@ msgid "Clever... amending the last one with dirty=
+ index."
+ msgstr ""
+=20
+ #: builtin/commit.c:1126
+-msgid "Explicit paths specified without -i nor -o; assuming --only pat=
+hs..."
++msgid "Explicit paths specified without -i or -o; assuming --only path=
+s..."
+ msgstr ""
+=20
+ #: builtin/commit.c:1136 builtin/tag.c:572
+diff --git a/po/it.po b/po/it.po
+index 9080219..e0ad39a 100644
+--- a/po/it.po
++++ b/po/it.po
+@@ -2316,7 +2316,7 @@ msgid "Clever... amending the last one with dirty=
+ index."
+ msgstr ""
+=20
+ #: builtin/commit.c:1059
+-msgid "Explicit paths specified without -i nor -o; assuming --only pat=
+hs..."
++msgid "Explicit paths specified without -i or -o; assuming --only path=
+s..."
+ msgstr ""
+=20
+ #: builtin/commit.c:1069 builtin/tag.c:577
+diff --git a/po/pt_PT.po b/po/pt_PT.po
+index 689ad1b..d749524 100644
+--- a/po/pt_PT.po
++++ b/po/pt_PT.po
+@@ -2153,7 +2153,7 @@ msgid "Clever... amending the last one with dirty=
+ index."
+ msgstr ""
+=20
+ #: builtin/commit.c:1116
+-msgid "Explicit paths specified without -i nor -o; assuming --only pat=
+hs..."
++msgid "Explicit paths specified without -i or -o; assuming --only path=
+s..."
+ msgstr ""
+=20
+ #: builtin/commit.c:1126
+diff --git a/po/sv.po b/po/sv.po
+index 8c3c59a..06feb39 100644
+--- a/po/sv.po
++++ b/po/sv.po
+@@ -3773,7 +3773,7 @@ msgstr "-x och -X kan inte anv=C3=A4ndas samtidig=
+t"
+=20
+ #: builtin/clean.c:906
+ msgid ""
+-"clean.requireForce set to true and neither -i, -n nor -f given; refus=
+ing to "
++"clean.requireForce set to true and neither -i, -n, nor -f given; refu=
+sing to "
+ "clean"
+ msgstr ""
+ "clean.requireForce satt till true, men varken -i, -n eller -f angavs;=
+ v=C3=A4grar "
+@@ -3781,7 +3781,7 @@ msgstr ""
+=20
+ #: builtin/clean.c:909
+ msgid ""
+-"clean.requireForce defaults to true and neither -i, -n nor -f given; =
+"
++"clean.requireForce defaults to true and neither -i, -n, nor -f given;=
+ "
+ "refusing to clean"
+ msgstr ""
+ "clean.requireForce har standardv=C3=A4rdet true och varken -i, -n ell=
+er -f "
+@@ -4375,7 +4375,7 @@ msgid "Clever... amending the last one with dirty=
+ index."
+ msgstr "Smart... ut=C3=B6ka den senaste med smutsigt index."
+=20
+ #: builtin/commit.c:1126
+-msgid "Explicit paths specified without -i nor -o; assuming --only pat=
+hs..."
++msgid "Explicit paths specified without -i or -o; assuming --only path=
+s..."
+ msgstr "Explicita s=C3=B6kv=C3=A4gar angavs utan -i eller -o; antar --=
+only s=C3=B6kv=C3=A4gar..."
+=20
+ #: builtin/commit.c:1136 builtin/tag.c:572
+diff --git a/po/vi.po b/po/vi.po
+index b9676a8..e2d8c48 100644
+--- a/po/vi.po
++++ b/po/vi.po
+@@ -3842,7 +3842,7 @@ msgstr "-x v=C3=A0 -X kh=C3=B4ng th=E1=BB=83 d=C3=
+=B9ng c=C3=B9ng m=E1=BB=99t l=C3=BAc v=E1=BB=9Bi nhau"
+=20
+ #: builtin/clean.c:906
+ msgid ""
+-"clean.requireForce set to true and neither -i, -n nor -f given; refus=
+ing to "
++"clean.requireForce set to true and neither -i, -n, nor -f given; refu=
+sing to "
+ "clean"
+ msgstr ""
+ "clean.requireForce =C4=91=C6=B0=E1=BB=A3c =C4=91=E1=BA=B7t th=C3=A0nh=
+ true v=C3=A0 kh=C3=B4ng =C4=91=C6=B0a ra t=C3=B9y ch=E1=BB=8Dn -n m=C3=
+=A0 c=C5=A9ng "
+@@ -3850,7 +3850,7 @@ msgstr ""
+=20
+ #: builtin/clean.c:909
+ msgid ""
+-"clean.requireForce defaults to true and neither -i, -n nor -f given; =
+"
++"clean.requireForce defaults to true and neither -i, -n, nor -f given;=
+ "
+ "refusing to clean"
+ msgstr ""
+ "clean.requireForce m=E1=BA=B7c =C4=91=E1=BB=8Bnh =C4=91=C6=B0=E1=BB=A3=
+c =C4=91=E1=BA=B7t l=C3=A0 true v=C3=A0 kh=C3=B4ng =C4=91=C6=B0a ra t=C3=
+=B9y ch=E1=BB=8Dn -n m=C3=A0 "
+@@ -4460,7 +4460,7 @@ msgid "Clever... amending the last one with dirty=
+ index."
+ msgstr "Gi=E1=BB=8Fi...  =E2=80=9Ctu b=E1=BB=95=E2=80=9D c=C3=A1i cu=E1=
+=BB=91i v=E1=BB=9Bi b=E1=BA=A3ng m=E1=BB=A5c l=E1=BB=A5c b=E1=BA=A9n."
+=20
+ #: builtin/commit.c:1126
+-msgid "Explicit paths specified without -i nor -o; assuming --only pat=
+hs..."
++msgid "Explicit paths specified without -i or -o; assuming --only path=
+s..."
+ msgstr ""
+ "Nh=E1=BB=AFng =C4=91=C6=B0=E1=BB=9Dng d=E1=BA=ABn r=C3=B5 r=C3=A0ng =C4=
+=91=C6=B0=E1=BB=A3c ch=E1=BB=89 ra kh=C3=B4ng c=C3=B3 t=C3=B9y ch=E1=BB=
+=8Dn -i c=C5=A9ng kh=C3=B4ng -o; =C4=91ang "
+ "gi=E1=BA=A3 =C4=91=E1=BB=8Bnh --only nh=E1=BB=AFng-=C4=91=C6=B0=E1=BB=
+=9Dng-d=E1=BA=ABn..."
+diff --git a/po/zh_CN.po b/po/zh_CN.po
+index 0942835..04a926d 100644
+--- a/po/zh_CN.po
++++ b/po/zh_CN.po
+@@ -3778,14 +3778,14 @@ msgstr "-x =E5=92=8C -X =E4=B8=8D=E8=83=BD=E5=90=
+=8C=E6=97=B6=E4=BD=BF=E7=94=A8"
+=20
+ #: builtin/clean.c:906
+ msgid ""
+-"clean.requireForce set to true and neither -i, -n nor -f given; refus=
+ing to "
++"clean.requireForce set to true and neither -i, -n, nor -f given; refu=
+sing to "
+ "clean"
+ msgstr ""
+ "clean.requireForce =E8=AE=BE=E7=BD=AE=E4=B8=BA true =E4=B8=94=E6=9C=AA=
+=E6=8F=90=E4=BE=9B -i=E3=80=81-n =E6=88=96 -f =E9=80=89=E9=A1=B9=EF=BC=8C=
+=E6=8B=92=E7=BB=9D=E6=89=A7=E8=A1=8C=E6=B8=85=E7=90=86=E5=8A=A8=E4=BD=9C=
+"
+=20
+ #: builtin/clean.c:909
+ msgid ""
+-"clean.requireForce defaults to true and neither -i, -n nor -f given; =
+"
++"clean.requireForce defaults to true and neither -i, -n, nor -f given;=
+ "
+ "refusing to clean"
+ msgstr ""
+ "clean.requireForce =E9=BB=98=E8=AE=A4=E4=B8=BA true =E4=B8=94=E6=9C=AA=
+=E6=8F=90=E4=BE=9B -i=E3=80=81-n =E6=88=96 -f =E9=80=89=E9=A1=B9=EF=BC=8C=
+=E6=8B=92=E7=BB=9D=E6=89=A7=E8=A1=8C=E6=B8=85=E7=90=86=E5=8A=A8=E4=BD=9C=
+"
+@@ -4371,7 +4371,7 @@ msgid "Clever... amending the last one with dirty=
+ index."
+ msgstr "=E8=81=AA=E6=98=8E... =E5=9C=A8=E7=B4=A2=E5=BC=95=E4=B8=8D=E5=B9=
+=B2=E5=87=80=E4=B8=8B=E4=BF=AE=E8=A1=A5=E6=9C=80=E5=90=8E=E7=9A=84=E6=8F=
+=90=E4=BA=A4=E3=80=82"
+=20
+ #: builtin/commit.c:1126
+-msgid "Explicit paths specified without -i nor -o; assuming --only pat=
+hs..."
++msgid "Explicit paths specified without -i or -o; assuming --only path=
+s..."
+ msgstr "=E6=8C=87=E5=AE=9A=E4=BA=86=E6=98=8E=E7=A1=AE=E7=9A=84=E8=B7=AF=
+=E5=BE=84=E8=80=8C=E6=B2=A1=E6=9C=89=E4=BD=BF=E7=94=A8 -i =E6=88=96 -o =
+=E9=80=89=E9=A1=B9=EF=BC=9B=E8=AE=A4=E4=B8=BA=E6=98=AF --only paths..."
+=20
+ #: builtin/commit.c:1136 builtin/tag.c:572
+--=20
 1.9.0.279.gdc9e3eb
