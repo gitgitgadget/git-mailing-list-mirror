@@ -1,77 +1,80 @@
-From: Uwe Storbeck <uwe@ibr.ch>
-Subject: [PATCH/RFC] t3404: test autosquash for fixup! commits with funny
- messages
-Date: Sat, 15 Mar 2014 00:58:11 +0100
-Message-ID: <20140314235811.GA4213@ibr.ch>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH v3 0/8] Hiding refs
+Date: Fri, 14 Mar 2014 17:09:45 -0700
+Message-ID: <CAJo=hJuGBgkseQ_mvbxFnYbkFDDWEuassf2+ttj_F53AMzU_Nw@mail.gmail.com>
+References: <5110DF1D.8010505@alum.mit.edu> <CACsJy8BhL4qDb8BgOVuaUFF_9GXvgu55urYyKqPuZMZCTCoLwA@mail.gmail.com>
+ <7v4nhpckwd.fsf@alter.siamese.dyndns.org> <CACBZZX6xLvuMEhPnfYLj8W9pMLwdoS7Zb+mTtn+3DanJPiWfXw@mail.gmail.com>
+ <7vmwvh9e3p.fsf@alter.siamese.dyndns.org> <CACsJy8Aas3tRoDp9LQw7Nwf6+S3QnvwA7h7s-sHVY+1yFKhTYg@mail.gmail.com>
+ <20140311014945.GB12033@sigill.intra.peff.net> <xmqqtxb4pm3u.fsf@gitster.dls.corp.google.com>
+ <20140311200513.GB29102@sigill.intra.peff.net> <xmqq4n34pjnw.fsf@gitster.dls.corp.google.com>
+ <20140311203650.GA31173@sigill.intra.peff.net> <CACsJy8AZ0CfqHRYDrnQD+z0ibVQnsFuSzktEHKRhCVwaXPQryg@mail.gmail.com>
+ <CAJo=hJvy6KKMNT9iyZAnKy18Pa+rQkKPQtfqT1e+ddXoVwX0yg@mail.gmail.com> <CACsJy8DtuCCYmmsEFB_m-YPHOOQ4FuchvnYQeuv75-vcSMej_w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 15 00:58:19 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 15 01:10:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WObzV-0008EI-9q
-	for gcvg-git-2@plane.gmane.org; Sat, 15 Mar 2014 00:58:17 +0100
+	id 1WOcB5-0001b0-20
+	for gcvg-git-2@plane.gmane.org; Sat, 15 Mar 2014 01:10:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756315AbaCNX6N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Mar 2014 19:58:13 -0400
-Received: from gate.ibr.ch ([83.150.36.130]:47256 "EHLO gate.ibr.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752030AbaCNX6N (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Mar 2014 19:58:13 -0400
-Received: from bacardi.ibr.ch (bacardi.ibr.ch [172.16.1.1])
-	by gate.ibr.ch (Postfix) with ESMTP id 33F6613B62A
-	for <git@vger.kernel.org>; Sat, 15 Mar 2014 00:58:12 +0100 (CET)
-Received: from grappa.ibr.ch (grappa [172.16.8.20])
-	by bacardi.ibr.ch (Postfix) with ESMTP id A6953153F5
-	for <git@vger.kernel.org>; Sat, 15 Mar 2014 00:58:11 +0100 (CET)
-Received: by grappa.ibr.ch (Postfix, from userid 1111)
-	id 043B9D0AF7; Sat, 15 Mar 2014 00:58:11 +0100 (CET)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755511AbaCOAKI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Mar 2014 20:10:08 -0400
+Received: from mail-wg0-f51.google.com ([74.125.82.51]:32952 "EHLO
+	mail-wg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752030AbaCOAKH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Mar 2014 20:10:07 -0400
+Received: by mail-wg0-f51.google.com with SMTP id k14so2777537wgh.10
+        for <git@vger.kernel.org>; Fri, 14 Mar 2014 17:10:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spearce.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=5+6x0BmnX3pk5chuEgECI4gAZ51In5aorhv5y/XejS8=;
+        b=N7ZwjG/iNhOdkSLL8NefN0RHjbaHBPUNl1GyodVvhD95tnqkvgwahBn6EzJhIiPtD6
+         PoqW0fjAPLkjaOIVXas5NjIZkT46UU4smJnQmXBsDzfH1NzIGkTthMm/FVXPcjoriZRW
+         hOrmGW4WqCb8hLRgRIiX5dq9V44/O2Rvk1uzY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=5+6x0BmnX3pk5chuEgECI4gAZ51In5aorhv5y/XejS8=;
+        b=lcQJLNPyPRTWEMbhSkjiRePyB3KB6gasPi0DlR/mv2WOL8FPzbU2SWA3iHyNEnxs90
+         dw51KU30+/tmG4eG/Keglk4SQ2m8SHr6NRS1A8TEisI2KGvD2Uaby1PCYKQjBpEvWxN0
+         HefByA3+y+RrpLrhDI8U76iBYj9LeL4lrc3EQ7lfo6jILDOQ7LO7lSdr9UmWIZLEB6ef
+         jo7TsxYxvFTXBw0NRkYUAFS1FQv2f/fgFlya/64vQwFG+5Yi6vp24papT7X3TUciiIXl
+         bUZjhDhTJF6pjoWpSQwmkHZZ7hvpqY9l9vUORTUZbLtyAdA+DdtGJdtipw73NcHV09m+
+         etnw==
+X-Gm-Message-State: ALoCoQmxPIzoUtAxIvOlkHk31L+hr919T0azRgVbuBMx0OR7xLJZCT06qnKCGUDdHQbWWcrMQXeE
+X-Received: by 10.180.87.164 with SMTP id az4mr586911wib.2.1394842206244; Fri,
+ 14 Mar 2014 17:10:06 -0700 (PDT)
+Received: by 10.227.7.131 with HTTP; Fri, 14 Mar 2014 17:09:45 -0700 (PDT)
+In-Reply-To: <CACsJy8DtuCCYmmsEFB_m-YPHOOQ4FuchvnYQeuv75-vcSMej_w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244128>
 
-This commit adds a test to verify the correct behavior when
-rebase -i is used to autosquash fixup! commits where the commit
-message contains a backslash sequence (\n).
+On Fri, Mar 14, 2014 at 4:30 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Fri, Mar 14, 2014 at 11:45 PM, Shawn Pearce <spearce@spearce.org> wrote:
+>>
+>> You missed the SSH case. It doesn't have this slot to hide the data into.
+>
+> Right now we run this for ssh case: "ssh <host> git-upload-pack
+> <repo-path>". New client can do this instead
+>
+> ssh <host> git-upload-pack <repo-path> <client capability flags>
 
-When echo is used instead of printf to handle such a commit
-message the test will fail on shells (e.g. dash) where the echo
-command interprets backslash sequences as control characters.
-
-Signed-off-by: Uwe Storbeck <uwe@ibr.ch>
----
- t/t3404-rebase-interactive.sh | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
-
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 50e22b1..6d32661 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -798,6 +798,18 @@ test_expect_success 'rebase-i history with funny messages' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'autosquash fixup! commits with funny messages' '
-+	test_when_finished "git rebase --abort || :" &&
-+	echo >>file1 &&
-+	git commit -a -m "something that looks like a newline (\n)" &&
-+	echo >>file1 &&
-+	git commit -a --fixup HEAD &&
-+	set_fake_editor &&
-+	FAKE_LINES="" &&
-+	export FAKE_LINES &&
-+	git rebase -i --autosquash HEAD~2
-+'
-+
- 
- test_expect_success 'prepare for rebase -i --exec' '
- 	git checkout master &&
--- 
-1.9.0
+Older servers will fail on this command, and the client must reconnect
+over SSH, which may mean supplying their password/passphrase again.
+But its remembered that the uploadPack2 didn't work so this can be
+blacklisted and not retried for a while.
