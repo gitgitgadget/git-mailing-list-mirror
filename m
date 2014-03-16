@@ -1,103 +1,106 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: difftool sends malformed path to exernal tool on Windows
-Date: Sun, 16 Mar 2014 00:27:47 -0700
-Message-ID: <CAJDDKr7=OVF0eJQFjFqrzNvOW0K0pZfRJL+CHB32kHoJFJ_csg@mail.gmail.com>
-References: <011301cf2c2d$90442810$b0cc7830$@lsst.org>
-	<20140221103821.GA21414@gmail.com>
-	<000801cf317f$ac1be2b0$0453a810$@lsst.org>
-	<CAJDDKr751=c2AOBfjbg2_im6UCBvwWSVjJ7QX8=76vXMsLSw4g@mail.gmail.com>
-	<00bc01cf3737$b1474280$13d5c780$@lsst.org>
-	<20140305082517.GA86532@gmail.com>
-	<019d01cf3a1f$4ebfe5f0$ec3fb1d0$@lsst.org>
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Re: [PATCH] Documentation/git-am: Document supported --patch-format
+ options
+Date: Sun, 16 Mar 2014 20:59:14 +1300
+Message-ID: <532559D2.3050802@gmail.com>
+References: <1394509917-9679-1-git-send-email-judge.packham@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Paul Lotz <plotz@lsst.org>
-X-From: git-owner@vger.kernel.org Sun Mar 16 08:28:26 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 16 08:59:51 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WP5Ub-0001E1-K8
-	for gcvg-git-2@plane.gmane.org; Sun, 16 Mar 2014 08:28:21 +0100
+	id 1WP5z5-0007t8-GZ
+	for gcvg-git-2@plane.gmane.org; Sun, 16 Mar 2014 08:59:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751333AbaCPH1t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Mar 2014 03:27:49 -0400
-Received: from mail-qc0-f171.google.com ([209.85.216.171]:45036 "EHLO
-	mail-qc0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751075AbaCPH1s convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 16 Mar 2014 03:27:48 -0400
-Received: by mail-qc0-f171.google.com with SMTP id x13so4677834qcv.16
-        for <git@vger.kernel.org>; Sun, 16 Mar 2014 00:27:47 -0700 (PDT)
+	id S1751274AbaCPH7U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Mar 2014 03:59:20 -0400
+Received: from mail-pd0-f174.google.com ([209.85.192.174]:44220 "EHLO
+	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750973AbaCPH7T (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Mar 2014 03:59:19 -0400
+Received: by mail-pd0-f174.google.com with SMTP id y13so4292972pdi.19
+        for <git@vger.kernel.org>; Sun, 16 Mar 2014 00:59:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=ioRiZQZc2DD9SPse32SjgtJiz4r+0+hXS2jD9dclmH8=;
-        b=qK2kcTOXA2MhTF6kIUNsv5fd68PNhzMbxW1iPME4wh1DvzW1Lj7TqJ7YJ/i2CworVG
-         R6V4luZtEfAUupT2PyzgAIv7BrFi6M4xNa9ixYYMPtD1duj8nOEGL8LlXbZ2OlGwzI8f
-         LgDTLNl+xU4eMAaSEGARBAtiG8rS2zQ/lSBrNYsCtbumF2FCpacd37l3681dgh81COrZ
-         LrIGhh1kcEWliCBYnOEhehm7pGo/QDpxVRxdcW93ViAXVEd4RERBuPPk+cLZEaYZo/2G
-         X7yrflbtS91cznvuT9BQYNBPPUOgUWHSDAFuIwIRu1Uiq24PSyOEZGYq5ZTtHaXOVBn9
-         itDA==
-X-Received: by 10.140.37.214 with SMTP id r80mr19536434qgr.61.1394954867289;
- Sun, 16 Mar 2014 00:27:47 -0700 (PDT)
-Received: by 10.229.163.75 with HTTP; Sun, 16 Mar 2014 00:27:47 -0700 (PDT)
-In-Reply-To: <019d01cf3a1f$4ebfe5f0$ec3fb1d0$@lsst.org>
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=CHe5ucLvb2PKxeiXzcmHnK5rUJQep3Y/klS55VJ5ZKA=;
+        b=iSGi3Ag/gZIA87Cj2ozETW6LG9cX5Tk2MpgdDiL0UVM35ZAdoiWfK1chwYsHfnPile
+         Xgw2xVSsC59HQFFUmmeGevvp1vqHam6K970BK3uQCrqVi9g/paPS1uCikiLKSJGyCkxH
+         F6QZ7UjUMBiJSKE0TjzIEfP7IMfz8+ktO+5Dy0jhDP4v276mFqv/4J5Dx94QDkusYLp9
+         Bb44XvEJepsbH9CrLi0CfEb55/0RWwHO7IkBgy0SFhaqsjTq//tuzKT5GPvItV9N77Wg
+         Ktqc9/oO17Nsryo//0ZiyLDJgSTG5ZQM35QChOh/8HkEKGYsHi3V/l1yx0Rk05Lw8ITy
+         wupg==
+X-Received: by 10.66.218.170 with SMTP id ph10mr18593237pac.53.1394956759251;
+        Sun, 16 Mar 2014 00:59:19 -0700 (PDT)
+Received: from linux.site (115-188-15-163.jetstream.xtra.co.nz. [115.188.15.163])
+        by mx.google.com with ESMTPSA id yz5sm53032623pac.9.2014.03.16.00.59.16
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sun, 16 Mar 2014 00:59:18 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
+In-Reply-To: <1394509917-9679-1-git-send-email-judge.packham@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244182>
 
-On Fri, Mar 7, 2014 at 8:07 AM, Paul Lotz <plotz@lsst.org> wrote:
-> David,
->
-> I investigated further and found that \"$LOCAL\" \"$REMOTE\" return the remote and local files (reversed).  (One can easily see this in my 2/28 e-mail.)  Reversing these (\"$REMOTE\" \"$LOCAL\") does indeed reverse the output.  It is easy to work around this issue, but how can this be?
->
-> Paul
+On 11/03/14 16:51, Chris Packham wrote:
+> The --patch-format option has been supported for a while but it is not
+> mentioned in the man page and the short help cannot tell the user what
+> the supported formats are. Add the option to the man page along with the
+> supported options.
+> 
+> Signed-off-by: Chris Packham <judge.packham@gmail.com>
+> ---
+> I've not bothered to actually explain what the options mean. I'm not
+> sure if readers will care aside from just trying them until one works
+> (that's all I did when I had a patch that failed detection).
+> 
+>  Documentation/git-am.txt |   12 +++++++++---
+>  1 file changed, 9 insertions(+), 3 deletions(-)
+> 
+> diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
+> index 54d8461..76bd359 100644
+> --- a/Documentation/git-am.txt
+> +++ b/Documentation/git-am.txt
+> @@ -12,9 +12,9 @@ SYNOPSIS
+>  'git am' [--signoff] [--keep] [--[no-]keep-cr] [--[no-]utf8]
+>  	 [--3way] [--interactive] [--committer-date-is-author-date]
+>  	 [--ignore-date] [--ignore-space-change | --ignore-whitespace]
+> -	 [--whitespace=<option>] [-C<n>] [-p<n>] [--directory=<dir>]
+> -	 [--exclude=<path>] [--include=<path>] [--reject] [-q | --quiet]
+> -	 [--[no-]scissors]
+> +	 [--whitespace=<option>] [-C<n>] [-p<n>] [--patch-format=<format>]
+> +	 [--directory=<dir>] [--exclude=<path>] [--include=<path>]
+> +	 [--reject] [-q | --quiet] [--[no-]scissors]
+>  	 [(<mbox> | <Maildir>)...]
+>  'git am' (--continue | --skip | --abort)
+>  
+> @@ -97,6 +97,12 @@ default.   You can use `--no-utf8` to override this.
+>  	program that applies
+>  	the patch.
+>  
+> +--patch-format::
+> +	By default the command will try to detect the patch format
+> +	automatically. This option allows the user to bypass the automatic
+> +	detection and specify the patch format that the patch(es) should be
+> +	intepreted as. Valid formats are mbox, stgit, stgit-series and hg.
+> +
+>  -i::
+>  --interactive::
+>  	Run interactively.
+> 
 
-It's probably working as intended.
+Ping?
 
-The $LOCAL and $REMOTE names come from "git mergetool", where they
-have better defined semantics.
-
-In the context of a diff, where we're really comparing "A" and "B"
-they have a little less meaning, but the behavior is well-defined.
-
-When you modify a file locally, the default behavior for "git diff" is
-to compare your working tree against the index.
-
-The diff will show the changes that will permute the index's copy into
-the the worktree's copy. In a sense, your modifications are the
-"remote" thing that is being compared against.
-
-That's why you see a temporary file for $LOCAL ("A") and your
-worktree's file for $REMOTE (B).
-
-If compare two other things, e.g. "git difftool HEAD~3 HEAD~" then
-$LOCAL is HEAD~3 and $REMOTE is HEAD~, and they'll all be temporary
-files.
-
-One analogy is that the $LOCAL thing is the starting point and the
-$REMOTE thing is what was modified (by the merge) if you think of it
-from the merging perspective.
-
-Specific tools (e.g. lvcompare) may need the arguments to be specified
-in a specific order for them to make sense, so it's perfectly
-acceptable for specific tools to require that $LOCAL and $REMOTE are
-swapped.
-
-BTW.. we went through a lot of back-and-forth getting the difftool
-setup correct for lvcompare. In the Git source tree there's a
-mergetools/ directory where all of the built-in diff/merge tools are
-defined. Do you think you might be able to contribute a scriptlet for
-lvcompare so that it is natively supported? That'll save future poor
-souls from needing to rediscover the correct recipe for getting
-lvcompare working with difftool.  Just a thought.
-
-cheers,
--- 
-David
+Actually now that I have the patch in a MUA I see the a simple
+s/intepreted/interpreted/ fixup is required.
