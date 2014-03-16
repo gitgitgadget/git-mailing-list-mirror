@@ -1,90 +1,343 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] index-pack: do not segfault when keep_name is NULL
-Date: Sun, 16 Mar 2014 17:31:02 +0700
-Message-ID: <1394965862-8173-1-git-send-email-pclouds@gmail.com>
+From: Michael Andreen <harv@ruin.nu>
+Subject: [PATCH] Make XDF_NEED_MINIMAL default in blame.
+Date: Sun, 16 Mar 2014 11:43:03 +0100
+Message-ID: <154997837.FlSR2gFiUN@river>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
+Content-Type: multipart/mixed; boundary="nextPart3067410.H4kOPeA8MZ"
+Content-Transfer-Encoding: 7Bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 16 11:30:35 2014
+X-From: git-owner@vger.kernel.org Sun Mar 16 11:53:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WP8Kw-00086i-Ke
-	for gcvg-git-2@plane.gmane.org; Sun, 16 Mar 2014 11:30:34 +0100
+	id 1WP8hC-0004TB-S7
+	for gcvg-git-2@plane.gmane.org; Sun, 16 Mar 2014 11:53:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752581AbaCPKaa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 16 Mar 2014 06:30:30 -0400
-Received: from mail-pb0-f53.google.com ([209.85.160.53]:51814 "EHLO
-	mail-pb0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752452AbaCPKa3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Mar 2014 06:30:29 -0400
-Received: by mail-pb0-f53.google.com with SMTP id rp16so4452320pbb.26
-        for <git@vger.kernel.org>; Sun, 16 Mar 2014 03:30:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version:content-type
-         :content-transfer-encoding;
-        bh=Q8ytwZAGjAg1h0C3ks+BBgKjCCMMfuWbLTj4RChvJTU=;
-        b=tELch+1JkJPQvmdDe0ylpJ9D68LdZUDtEYiQHk4RJMkupmOG76nRP5aS55eflAONCG
-         1AqnRRrtwMxjHizf/OaoSMqwu3/8INCzjSlupm6SUhBWzIVXa+EOHuqkljSLzzUkaiKD
-         80ymwrNMDeupNdb0+OIACZRemfg9bR/ZAp/l3HsK9nSoz/X7JEnr9m/ZPR4FiUFnhurd
-         umUfrcaYyGDDEz5gpdLhyB3Tk2IgM3KKWurPvmZmCU5ycQ/ykpP0ByKmvZTCklXQD6l3
-         kewPNier20Lkubn3q+/04Ts2I44ZUYhuDr4TDhWWiqoMb3x6+kLJkzpKjojhCpzslSyX
-         fV2Q==
-X-Received: by 10.66.177.168 with SMTP id cr8mr1892407pac.128.1394965828958;
-        Sun, 16 Mar 2014 03:30:28 -0700 (PDT)
-Received: from lanh ([115.73.203.48])
-        by mx.google.com with ESMTPSA id f5sm54711539pat.11.2014.03.16.03.30.25
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 16 Mar 2014 03:30:27 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Sun, 16 Mar 2014 17:31:10 +0700
-X-Mailer: git-send-email 1.9.0.40.gaa8c3ea
+	id S1751621AbaCPKxM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Mar 2014 06:53:12 -0400
+Received: from n.ruin.nu ([213.180.83.247]:43982 "EHLO n.ruin.nu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751466AbaCPKxM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Mar 2014 06:53:12 -0400
+X-Greylist: delayed 605 seconds by postgrey-1.27 at vger.kernel.org; Sun, 16 Mar 2014 06:53:11 EDT
+Received: from river.localnet (h-40-196.a336.priv.bahnhof.se [79.136.40.196])
+	by n.ruin.nu (Postfix) with ESMTPSA id CE44C1DC0078
+	for <git@vger.kernel.org>; Sun, 16 Mar 2014 11:43:03 +0100 (CET)
+User-Agent: KMail/4.11.5 (Linux/3.12.13-gentoo; KDE/4.11.5; x86_64; ; )
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244185>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244186>
 
-keep_name is used to print error messages a couple lines down. Reset
-it to the real path returned by odb_pack_keep() if it's set to NULL by
-caller.
+This is a multi-part message in MIME format.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
+--nextPart3067410.H4kOPeA8MZ
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+
+Currently git blame has a big problem finding copies and moves when you
+split up a big file into smaller ones. One example in the git repository
+is 2cf565c, which split the documentation into smaller files.
+
+In 582aa00 XDF_NEED_MINIMAL was removed as the default for performance
+reasons, mainly for diff and rebase, but blame was also changed.
+
+In 059a500 the problem with blame was noticed and the flag --minimal was
+introduced. However this flag is not documented and it is not possible
+to set when using "git gui blame".
+
+Setting XDF_NEED_MINIMAL as default has a small performance impact when
+you run on a file with few modifications. However, if you run it on a
+file with a bigger number of modifications, the performance impact is
+small enough to not be noticable.
+
+((2cf565c...))$ time PAGER=cat git blame -C -M
+    Documentation/git-ls-files.txt > /dev/null
+
+real    0m0.003s
+user    0m0.002s
+sys 0m0.000s
+
+((2cf565c...))$ time PAGER=cat git blame --minimal -C -M
+    Documentation/git-ls-files.txt > /dev/null
+
+real    0m0.010s
+user    0m0.009s
+sys 0m0.000s
+
+((2cf565c...))$ time PAGER=cat git blame -C -C -C -M
+    Documentation/git-ls-files.txt > /dev/null
+
+real    0m0.010s
+user    0m0.010s
+sys 0m0.000s
+
+((2cf565c...))$ time PAGER=cat git blame --minimal -C -C -C -M
+    Documentation/git-ls-files.txt > /dev/null
+
+real    0m0.028s
+user    0m0.027s
+sys 0m0.000s
+
+(master)$ time PAGER=cat git blame -C -C -C -M
+    Documentation/git-ls-files.txt > /dev/null
+
+real    0m2.338s
+user    0m2.283s
+sys 0m0.056s
+
+(master)$ time PAGER=cat git blame --minimal -C -C -C -M
+    Documentation/git-ls-files.txt > /dev/null
+
+real    0m2.355s
+user    0m2.285s
+sys 0m0.069s
+
+(master)$ time PAGER=cat git blame -C -M cache.h > /dev/null
+
+real    0m1.755s
+user    0m1.730s
+sys 0m0.024s
+
+(master)$ time PAGER=cat git blame --minimal -C -M cache.h > /dev/null
+
+real    0m1.785s
+user    0m1.770s
+sys 0m0.014s
+
+(master)$ time PAGER=cat git blame -C -C -C -M cache.h > /dev/null
+
+real    0m31.515s
+user    0m30.810s
+sys 0m0.684s
+
+(master)$ time PAGER=cat git blame --minimal -C -C -C -M cache.h >
+/dev/null
+
+real    0m31.504s
+user    0m30.885s
+sys 0m0.598s
+
+Signed-off-by: Michael Andreen <harv@ruin.nu>
 ---
- One of these moments I will make git log and friends optionally recogn=
-ize
- "Diff-Options:" line in commit message. Adding -U14 in this case
- should help the reviewer to see how those error messages are printed.
+Additional measurements attached, the variation is fairly small.
 
- builtin/index-pack.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+The --minimal flag is still there, but didn't want to break scripts
+depending on it.
 
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index a6b1c17..d95c3dc 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -1283,9 +1283,10 @@ static void final(const char *final_pack_name, c=
-onst char *curr_pack_name,
- 	if (keep_msg) {
- 		int keep_fd, keep_msg_len =3D strlen(keep_msg);
-=20
--		if (!keep_name)
-+		if (!keep_name) {
- 			keep_fd =3D odb_pack_keep(name, sizeof(name), sha1);
--		else
-+			keep_name =3D name;
-+		} else
- 			keep_fd =3D open(keep_name, O_RDWR|O_CREAT|O_EXCL, 0600);
-=20
- 		if (keep_fd < 0) {
---=20
-1.9.0.40.gaa8c3ea
+ builtin/blame.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/builtin/blame.c b/builtin/blame.c
+index e5b5d71..0e7ebd0 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -42,7 +42,7 @@ static int show_root;
+ static int reverse;
+ static int blank_boundary;
+ static int incremental;
+-static int xdl_opts;
++static int xdl_opts = XDF_NEED_MINIMAL;
+ static int abbrev = -1;
+ static int no_whole_file_rename;
+ 
+-- 
+1.8.3.2
+
+
+--nextPart3067410.H4kOPeA8MZ
+Content-Disposition: attachment; filename="blame-time.txt"
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="UTF-8"; name="blame-time.txt"
+
+(master)$ time PAGER=cat git blame -C -M cache.h > /dev/null
+
+real	0m1.767s
+user	0m1.747s
+sys	0m0.018s
+(master)$ time PAGER=cat git blame -C -M cache.h > /dev/null
+
+real	0m1.755s
+user	0m1.730s
+sys	0m0.024s
+(master)$ time PAGER=cat git blame -C -M cache.h > /dev/null
+
+real	0m1.784s
+user	0m1.757s
+sys	0m0.025s
+(master)$ time PAGER=cat git blame --minimal -C -M cache.h > /dev/null
+
+real	0m1.813s
+user	0m1.797s
+sys	0m0.014s
+(master)$ time PAGER=cat git blame --minimal -C -M cache.h > /dev/null
+
+real	0m1.790s
+user	0m1.770s
+sys	0m0.018s
+(master)$ time PAGER=cat git blame --minimal -C -M cache.h > /dev/null
+
+real	0m1.785s
+user	0m1.770s
+sys	0m0.014s
+(master)$ time PAGER=cat git blame --minimal -C -M cache.h > /dev/null
+
+real	0m1.794s
+user	0m1.770s
+sys	0m0.022s
+(master)$ time PAGER=cat git blame -C -C -C -M cache.h > /dev/null
+
+real	0m31.515s
+user	0m30.810s
+sys	0m0.684s
+(master)$ time PAGER=cat git blame -C -C -C -M cache.h > /dev/null
+
+real	0m31.594s
+user	0m30.879s
+sys	0m0.695s
+(master)$ time PAGER=cat git blame --minimal -C -C -C -M cache.h > /dev/null
+
+real	0m31.666s
+user	0m31.054s
+sys	0m0.591s
+(master)$ time PAGER=cat git blame --minimal -C -C -C -M cache.h > /dev/null
+
+real	0m31.504s
+user	0m30.885s
+sys	0m0.598s
+
+(master)$ time PAGER=cat git blame -C -C -C -M Documentation/git-ls-files.txt > /dev/null
+
+real	0m2.355s
+user	0m2.319s
+sys	0m0.035s
+(master)$ time PAGER=cat git blame -C -C -C -M Documentation/git-ls-files.txt > /dev/null
+
+real	0m2.352s
+user	0m2.292s
+sys	0m0.059s
+(master)$ time PAGER=cat git blame -C -C -C -M Documentation/git-ls-files.txt > /dev/null
+
+real	0m2.354s
+user	0m2.312s
+sys	0m0.040s
+(master)$ time PAGER=cat git blame -C -C -C -M Documentation/git-ls-files.txt > /dev/null
+
+real	0m2.338s
+user	0m2.283s
+sys	0m0.056s
+(master)$ time PAGER=cat git blame --minimal -C -C -C -M Documentation/git-ls-files.txt > /dev/null
+
+real	0m2.376s
+user	0m2.302s
+sys	0m0.071s
+(master)$ time PAGER=cat git blame --minimal -C -C -C -M Documentation/git-ls-files.txt > /dev/null
+
+real	0m2.362s
+user	0m2.312s
+sys	0m0.049s
+(master)$ time PAGER=cat git blame --minimal -C -C -C -M Documentation/git-ls-files.txt > /dev/null
+
+real	0m2.360s
+user	0m2.301s
+sys	0m0.057s
+(master)$ time PAGER=cat git blame --minimal -C -C -C -M Documentation/git-ls-files.txt > /dev/null
+
+real	0m2.355s
+user	0m2.285s
+sys	0m0.069s
+
+
+---------------------------------------------------
+
+((2cf565c...))$ time PAGER=cat git blame -C -M Documentation/git-ls-files.txt > /dev/null
+
+real	0m0.003s
+user	0m0.002s
+sys	0m0.000s
+((2cf565c...))$ time PAGER=cat git blame -C -M Documentation/git-ls-files.txt > /dev/null
+
+real	0m0.003s
+user	0m0.003s
+sys	0m0.000s
+((2cf565c...))$ time PAGER=cat git blame -C -M Documentation/git-ls-files.txt > /dev/null
+
+real	0m0.004s
+user	0m0.003s
+sys	0m0.001s
+((2cf565c...))$ time PAGER=cat git blame -C -M Documentation/git-ls-files.txt > /dev/null
+
+real	0m0.004s
+user	0m0.003s
+sys	0m0.001s
+((2cf565c...))$ time PAGER=cat git blame -C -M Documentation/git-ls-files.txt > /dev/null
+
+real	0m0.003s
+user	0m0.002s
+sys	0m0.001s
+((2cf565c...))$ time PAGER=cat git blame --minimal -C -M Documentation/git-ls-files.txt > /dev/null
+
+real	0m0.010s
+user	0m0.009s
+sys	0m0.000s
+((2cf565c...))$ time PAGER=cat git blame --minimal -C -M Documentation/git-ls-files.txt > /dev/null
+
+real	0m0.011s
+user	0m0.010s
+sys	0m0.001s
+((2cf565c...))$ time PAGER=cat git blame --minimal -C -M Documentation/git-ls-files.txt > /dev/null
+
+real	0m0.012s
+user	0m0.012s
+sys	0m0.000s
+((2cf565c...))$ time PAGER=cat git blame --minimal -C -M Documentation/git-ls-files.txt > /dev/null
+
+real	0m0.011s
+user	0m0.011s
+sys	0m0.000s
+((2cf565c...))$ time PAGER=cat git blame -C -C -C -M Documentation/git-ls-files.txt > /dev/null
+
+real	0m0.008s
+user	0m0.007s
+sys	0m0.002s
+((2cf565c...))$ time PAGER=cat git blame -C -C -C -M Documentation/git-ls-files.txt > /dev/null
+
+real	0m0.011s
+user	0m0.011s
+sys	0m0.000s
+((2cf565c...))$ time PAGER=cat git blame -C -C -C -M Documentation/git-ls-files.txt > /dev/null
+
+real	0m0.010s
+user	0m0.010s
+sys	0m0.000s
+((2cf565c...))$ time PAGER=cat git blame -C -C -C -M Documentation/git-ls-files.txt > /dev/null
+
+real	0m0.010s
+user	0m0.009s
+sys	0m0.000s
+((2cf565c...))$ time PAGER=cat git blame --minimal -C -C -C -M Documentation/git-ls-files.txt > /dev/null
+
+real	0m0.028s
+user	0m0.024s
+sys	0m0.003s
+((2cf565c...))$ time PAGER=cat git blame --minimal -C -C -C -M Documentation/git-ls-files.txt > /dev/null
+
+real	0m0.032s
+user	0m0.029s
+sys	0m0.002s
+((2cf565c...))$ time PAGER=cat git blame --minimal -C -C -C -M Documentation/git-ls-files.txt > /dev/null
+
+real	0m0.027s
+user	0m0.025s
+sys	0m0.001s
+((2cf565c...))$ time PAGER=cat git blame --minimal -C -C -C -M Documentation/git-ls-files.txt > /dev/null
+
+real	0m0.028s
+user	0m0.027s
+sys	0m0.000s
+
+
+--nextPart3067410.H4kOPeA8MZ--
