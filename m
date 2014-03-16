@@ -1,88 +1,74 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Should 'git reset --hard' keep a stashed backup?
-Date: Mon, 17 Mar 2014 06:14:57 +0700
-Message-ID: <CACsJy8CGvwEk4whaiEn5ccTyRKD4ZwUXqYVM9hTGfU7tYUdX=A@mail.gmail.com>
-References: <EF7B8A31C59946F8821697F3BA129043@PhilipOakley>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: What's cooking in git.git (Mar 2014, #03; Fri, 14)
+Date: Sun, 16 Mar 2014 19:15:06 -0400
+Message-ID: <CALkWK0npxgi2gWQbuYZLn_N0GxgTdPTR8c-yhgCxEV=mM2Zngw@mail.gmail.com>
+References: <xmqqlhwcfn4a.fsf@gitster.dls.corp.google.com> <EA1EF5746EA7414CAE1320AA61100178@PhilipOakley>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
 To: Philip Oakley <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Mon Mar 17 00:15:34 2014
+X-From: git-owner@vger.kernel.org Mon Mar 17 00:15:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WPKHE-000068-MN
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Mar 2014 00:15:33 +0100
+	id 1WPKHX-0000Rr-SZ
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Mar 2014 00:15:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932081AbaCPXP3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Mar 2014 19:15:29 -0400
-Received: from mail-qa0-f46.google.com ([209.85.216.46]:55859 "EHLO
-	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751980AbaCPXP2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Mar 2014 19:15:28 -0400
-Received: by mail-qa0-f46.google.com with SMTP id i13so4653763qae.33
-        for <git@vger.kernel.org>; Sun, 16 Mar 2014 16:15:27 -0700 (PDT)
+	id S932115AbaCPXPs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Mar 2014 19:15:48 -0400
+Received: from mail-ie0-f179.google.com ([209.85.223.179]:63877 "EHLO
+	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755770AbaCPXPr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Mar 2014 19:15:47 -0400
+Received: by mail-ie0-f179.google.com with SMTP id lx4so4589582iec.24
+        for <git@vger.kernel.org>; Sun, 16 Mar 2014 16:15:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=lSHrkMon0qnoL2dIX5f/jEr+MRFavfUsuD37IUMj0KU=;
-        b=zrVnEG4+CopcBJGV1LtZF0mHe6GOVpjtxU8G7/JR1p+8w6GOKpkJVXVvxj2jNF6ZQT
-         K9m6YfxUqnFcjK7ClxoSmvbbAbcJQhA9KQMH+i6A2XVh5qyaHZS6ZCbTrfiBC7+t1GWj
-         ylGJz5k3YbCxCPo6OQYL16VtzpVpXTmcuke6Cp9rIEXgJ3fofYOT/d2XPTNjSIRlo+3G
-         TIKN1D25N76meEBXvviFiycwQYT11mHMOH0M9/L8M2qwMo8umCHU0jCVDz78xXO+ThOj
-         WW0sVNKUFjgpqKWph5YdRLaVePLWuMaRPhMeJ6YxSfFCttRyQ1g4KOOmVXJ72So/ui36
-         fbvA==
-X-Received: by 10.140.94.134 with SMTP id g6mr23649648qge.19.1395011727691;
- Sun, 16 Mar 2014 16:15:27 -0700 (PDT)
-Received: by 10.96.146.102 with HTTP; Sun, 16 Mar 2014 16:14:57 -0700 (PDT)
-In-Reply-To: <EF7B8A31C59946F8821697F3BA129043@PhilipOakley>
+        bh=VvhPKAexcwlgQU14fsa6NPGNtzkQPhZ5uR5vKwMXDis=;
+        b=Aa05BRM9tDH8zAY2JV2euEu4RQQPdggpA4aZ5UWnFt6BBYCrG5EuRNIBdoOBYrCel9
+         OXS86taWIMSVwnLMaS+J3kOPj4wZ22g5akMbQZFrOwizP38iMsHKUMPmJjyhdpYmVjkQ
+         d0xxOvS0LINYYa/ly26QQtqm74v3JZsmxgEULp2X/1yTJp5ZYrPXrw0uB5k9O4wnnzud
+         MEzL1JAIKYPwiCbgrPMXv3M7XM3dRgGyX0tSGUsYSKC/U8AiCWpoj4C3Li/Y+hDfj9F1
+         YkYOGQfB6wH4crcY5ZiOglkqQAWELCFCdDBhvuNFwqxLCpg8XD7WXZiDo8vfIrRx+W3H
+         lulw==
+X-Received: by 10.50.79.193 with SMTP id l1mr9955889igx.36.1395011747320; Sun,
+ 16 Mar 2014 16:15:47 -0700 (PDT)
+Received: by 10.64.10.42 with HTTP; Sun, 16 Mar 2014 16:15:06 -0700 (PDT)
+In-Reply-To: <EA1EF5746EA7414CAE1320AA61100178@PhilipOakley>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244216>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244217>
 
-On Mon, Mar 17, 2014 at 5:17 AM, Philip Oakley <philipoakley@iee.org> wrote:
-> A bike-shedding thought:
-> Many inexperienced users do a 'git reset --hard' only to discover they have
-> deleted something important and want it back. (e.g. git-users yesterday [1])
+Philip Oakley wrote:
+>> * po/everyday-doc (2014-01-27) 1 commit
+>> - Make 'git help everyday' work
+>>
+>> This may make the said command to emit something, but the source is
+>> not meant to be formatted into a manual pages to begin with, and
+>> also its contents are a bit stale.  It may be a good first step in
+>> the right direction, but needs more work to at least get the
+>> mark-up right before public consumption.
 >
-> One possible option is that Git could "stash" the current work-tree contents
-> (git stash create) into a commit and store its commit_id in a suitable
-> file/variable such as RESET_HARD_HEAD (or GIT_RESET_HARD_HEAD), similar to
-> FETCH_HEAD & MERGE_HEAD, so that it would be relatively easy to recover the
-> prior state.
+> I'm not sure what elements you feel need adjustment. At the moment the
+> markup formats quite reasonably to my eyes, both as an HTML page and as a
+> man page.
 
-A while back I started to implement "undo" function for "git add". I
-think we could do the same here, when reset --hard is issued, store
-current SHA-1 in index to an index extension, also hash overwritten
-files in worktree and store it in the index extension as well. "reset
---undo" can bring it back. Experienced user can turn this off via
-config variable, but it's default to on.
+I sent you a small patch fixing some minor markup issues.
 
+> That said, the (lack of) introduction could do with a paragraph to introduce
+> the "guide". I have something in draft..
 >
-> By only storing the id in the file/env it would be overwritten on each
-> usage, and the loose commits would be garbage collected eventually.
+> I had a thought that it may be worth a slight rearrangement to add a section
+> covering the setting up of one's remotes, depending whether it was forked,
+> corporate, or independent, but the lack of resolution on the next
+> {publish/push} topic makes such a re-write awkward at this stage. (Ram cc'd)
 
-We have similar ideas, except I choose to store in the index instead.
-
->
-> A suitable config variable would allow it to be enabled/disabled as
-> appropriate to the user. (Perhaps enabled by default eventually?)
-
-Yes. We could even bundle it to an advice.* knob. Experienced users
-will usually turn the advice off (and this behavior will be gone as
-the result).
-
-> Given the prevalence of 'git reset --hard' within internet forum advice,
-> would something like this be useful?  It could even be wrapped into a GSoC
-> project.
-
-We could go further to provide "git undo" interface that covers other
-areas as well, easier to discover than "reset --undo", but I'm not
-sure how this interface should work..
--- 
-Duy
+Before attempting to introduce remote.pushdefault and triangular
+workflows, I'd first fix the main issue: stale content. I'm not sure
+who uses git show-branch or mailx anymore, for instance.
