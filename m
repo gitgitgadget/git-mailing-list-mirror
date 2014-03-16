@@ -1,343 +1,115 @@
-From: Michael Andreen <harv@ruin.nu>
-Subject: [PATCH] Make XDF_NEED_MINIMAL default in blame.
-Date: Sun, 16 Mar 2014 11:43:03 +0100
-Message-ID: <154997837.FlSR2gFiUN@river>
+From: Thomas Rast <tr@thomasrast.ch>
+Subject: Re: [PATCH] Rewrite diff-no-index.c:read_directory() to use is_dot_or_dotdot() and rename it to read_dir()
+Date: Sun, 16 Mar 2014 12:07:20 +0100
+Message-ID: <87eh22xuzb.fsf@thomasrast.ch>
+References: <1394800759-87648-1-git-send-email-akshayaurora@yahoo.com>
+	<CAPGnZZn_Wz=LywVevmuXWQX4nO67EKMPazB8jKv-jTZ178=HdQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="nextPart3067410.H4kOPeA8MZ"
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 16 11:53:38 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Akshay Aurora <akshayaurora@yahoo.com>
+X-From: git-owner@vger.kernel.org Sun Mar 16 12:07:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WP8hC-0004TB-S7
-	for gcvg-git-2@plane.gmane.org; Sun, 16 Mar 2014 11:53:35 +0100
+	id 1WP8uq-0000dT-SW
+	for gcvg-git-2@plane.gmane.org; Sun, 16 Mar 2014 12:07:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751621AbaCPKxM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Mar 2014 06:53:12 -0400
-Received: from n.ruin.nu ([213.180.83.247]:43982 "EHLO n.ruin.nu"
+	id S1752066AbaCPLHe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Mar 2014 07:07:34 -0400
+Received: from ip1.thgersdorf.net ([148.251.9.194]:56800 "EHLO mail.psioc.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751466AbaCPKxM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Mar 2014 06:53:12 -0400
-X-Greylist: delayed 605 seconds by postgrey-1.27 at vger.kernel.org; Sun, 16 Mar 2014 06:53:11 EDT
-Received: from river.localnet (h-40-196.a336.priv.bahnhof.se [79.136.40.196])
-	by n.ruin.nu (Postfix) with ESMTPSA id CE44C1DC0078
-	for <git@vger.kernel.org>; Sun, 16 Mar 2014 11:43:03 +0100 (CET)
-User-Agent: KMail/4.11.5 (Linux/3.12.13-gentoo; KDE/4.11.5; x86_64; ; )
+	id S1751947AbaCPLHd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Mar 2014 07:07:33 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.psioc.net (Postfix) with ESMTP id A1E9F4D6510;
+	Sun, 16 Mar 2014 12:07:30 +0100 (CET)
+X-Virus-Scanned: amavisd-new at psioc.net
+Received: from mail.psioc.net ([127.0.0.1])
+	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 4weOiAitfefk; Sun, 16 Mar 2014 12:07:20 +0100 (CET)
+Received: from hexa.thomasrast.ch (46-126-8-85.dynamic.hispeed.ch [46.126.8.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(Client did not present a certificate)
+	by mail.psioc.net (Postfix) with ESMTPSA id A4FFD4D64BD;
+	Sun, 16 Mar 2014 12:07:20 +0100 (CET)
+In-Reply-To: <CAPGnZZn_Wz=LywVevmuXWQX4nO67EKMPazB8jKv-jTZ178=HdQ@mail.gmail.com>
+	(Akshay Aurora's message of "Sat, 15 Mar 2014 12:14:18 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244187>
 
-This is a multi-part message in MIME format.
+Akshay Aurora <akshayaurora@yahoo.com> writes:
 
---nextPart3067410.H4kOPeA8MZ
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+> Forgot to mention, this is one of the microprojects for GSoC this
+> year. Would be great to have some feedback.
+>
+> On Fri, Mar 14, 2014 at 6:09 PM, Akshay Aurora <akshayaurora@yahoo.com> wrote:
+>> I have renamed diff-no-index.c:read_directory() to read_dir() to avoid name collision with dir.c:read_directory()
+>>
+>> Signed-off-by: Akshay Aurora <akshayaurora@yahoo.com>
 
-Currently git blame has a big problem finding copies and moves when you
-split up a big file into smaller ones. One example in the git repository
-is 2cf565c, which split the documentation into smaller files.
+Hmm, the original mail never made it through to me, and gmane doesn't
+seem to have it either.  What happened here?  The headers suggest you
+used git-send-email, which should avoid these problems.  Can you dig up
+the command and configuration you used to send it (but be careful to not
+post your password!)?
 
-In 582aa00 XDF_NEED_MINIMAL was removed as the default for performance
-reasons, mainly for diff and rebase, but blame was also changed.
+On the patch itself:
 
-In 059a500 the problem with blame was noticed and the flag --minimal was
-introduced. However this flag is not documented and it is not possible
-to set when using "git gui blame".
+> Subject: Re: [PATCH] Rewrite diff-no-index.c:read_directory() to use is_dot_or_dotdot() and rename it to read_dir()
 
-Setting XDF_NEED_MINIMAL as default has a small performance impact when
-you run on a file with few modifications. However, if you run it on a
-file with a bigger number of modifications, the performance impact is
-small enough to not be noticable.
+The subject line is very long.  Aim for 50 characters, but certainly no
+more than 72.
 
-((2cf565c...))$ time PAGER=cat git blame -C -M
-    Documentation/git-ls-files.txt > /dev/null
+You are also conflating two separate things into one patch.  Try to
+avoid doing that.
 
-real    0m0.003s
-user    0m0.002s
-sys 0m0.000s
+Furthermore I am unconvinced that renaming a function from
+read_directory() to read_dir() is a win.  What are you trying to improve
+by the rename?  Renames are good if they improve clarity and/or
+consistency, but read_dir() just risks confusion with readdir() and I
+cannot see any gain in consistency that would compensate for it.
 
-((2cf565c...))$ time PAGER=cat git blame --minimal -C -M
-    Documentation/git-ls-files.txt > /dev/null
+>> I have renamed diff-no-index.c:read_directory() to read_dir() to avoid name collision with dir.c:read_directory()
 
-real    0m0.010s
-user    0m0.009s
-sys 0m0.000s
+Please stick to the style outlined in SubmittingPatches:
 
-((2cf565c...))$ time PAGER=cat git blame -C -C -C -M
-    Documentation/git-ls-files.txt > /dev/null
+  The body should provide a meaningful commit message, which:
 
-real    0m0.010s
-user    0m0.010s
-sys 0m0.000s
+    . explains the problem the change tries to solve, iow, what is wrong
+      with the current code without the change.
 
-((2cf565c...))$ time PAGER=cat git blame --minimal -C -C -C -M
-    Documentation/git-ls-files.txt > /dev/null
+    . justifies the way the change solves the problem, iow, why the
+      result with the change is better.
 
-real    0m0.028s
-user    0m0.027s
-sys 0m0.000s
+    . alternate solutions considered but discarded, if any.
 
-(master)$ time PAGER=cat git blame -C -C -C -M
-    Documentation/git-ls-files.txt > /dev/null
+  Describe your changes in imperative mood, e.g. "make xyzzy do frotz"
+  instead of "[This patch] makes xyzzy do frotz" or "[I] changed xyzzy
+  to do frotz", as if you are giving orders to the codebase to change
+  its behaviour.  Try to make sure your explanation can be understood
+  without external resources. Instead of giving a URL to a mailing list
+  archive, summarize the relevant points of the discussion.
 
-real    0m2.338s
-user    0m2.283s
-sys 0m0.056s
+Also, please wrap your commit messages at 72 characters.
 
-(master)$ time PAGER=cat git blame --minimal -C -C -C -M
-    Documentation/git-ls-files.txt > /dev/null
+>> ---
+>>  diff-no-index.c | 9 +++++----
 
-real    0m2.355s
-user    0m2.285s
-sys 0m0.069s
+The microproject idea said
 
-(master)$ time PAGER=cat git blame -C -M cache.h > /dev/null
+  Rewrite diff-no-index.c:read_directory() to use
+  is_dot_or_dotdot(). Try to find other sites that can use that
+  function.
 
-real    0m1.755s
-user    0m1.730s
-sys 0m0.024s
+Are there any others?
 
-(master)$ time PAGER=cat git blame --minimal -C -M cache.h > /dev/null
-
-real    0m1.785s
-user    0m1.770s
-sys 0m0.014s
-
-(master)$ time PAGER=cat git blame -C -C -C -M cache.h > /dev/null
-
-real    0m31.515s
-user    0m30.810s
-sys 0m0.684s
-
-(master)$ time PAGER=cat git blame --minimal -C -C -C -M cache.h >
-/dev/null
-
-real    0m31.504s
-user    0m30.885s
-sys 0m0.598s
-
-Signed-off-by: Michael Andreen <harv@ruin.nu>
----
-Additional measurements attached, the variation is fairly small.
-
-The --minimal flag is still there, but didn't want to break scripts
-depending on it.
-
- builtin/blame.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/builtin/blame.c b/builtin/blame.c
-index e5b5d71..0e7ebd0 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -42,7 +42,7 @@ static int show_root;
- static int reverse;
- static int blank_boundary;
- static int incremental;
--static int xdl_opts;
-+static int xdl_opts = XDF_NEED_MINIMAL;
- static int abbrev = -1;
- static int no_whole_file_rename;
- 
 -- 
-1.8.3.2
-
-
---nextPart3067410.H4kOPeA8MZ
-Content-Disposition: attachment; filename="blame-time.txt"
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="UTF-8"; name="blame-time.txt"
-
-(master)$ time PAGER=cat git blame -C -M cache.h > /dev/null
-
-real	0m1.767s
-user	0m1.747s
-sys	0m0.018s
-(master)$ time PAGER=cat git blame -C -M cache.h > /dev/null
-
-real	0m1.755s
-user	0m1.730s
-sys	0m0.024s
-(master)$ time PAGER=cat git blame -C -M cache.h > /dev/null
-
-real	0m1.784s
-user	0m1.757s
-sys	0m0.025s
-(master)$ time PAGER=cat git blame --minimal -C -M cache.h > /dev/null
-
-real	0m1.813s
-user	0m1.797s
-sys	0m0.014s
-(master)$ time PAGER=cat git blame --minimal -C -M cache.h > /dev/null
-
-real	0m1.790s
-user	0m1.770s
-sys	0m0.018s
-(master)$ time PAGER=cat git blame --minimal -C -M cache.h > /dev/null
-
-real	0m1.785s
-user	0m1.770s
-sys	0m0.014s
-(master)$ time PAGER=cat git blame --minimal -C -M cache.h > /dev/null
-
-real	0m1.794s
-user	0m1.770s
-sys	0m0.022s
-(master)$ time PAGER=cat git blame -C -C -C -M cache.h > /dev/null
-
-real	0m31.515s
-user	0m30.810s
-sys	0m0.684s
-(master)$ time PAGER=cat git blame -C -C -C -M cache.h > /dev/null
-
-real	0m31.594s
-user	0m30.879s
-sys	0m0.695s
-(master)$ time PAGER=cat git blame --minimal -C -C -C -M cache.h > /dev/null
-
-real	0m31.666s
-user	0m31.054s
-sys	0m0.591s
-(master)$ time PAGER=cat git blame --minimal -C -C -C -M cache.h > /dev/null
-
-real	0m31.504s
-user	0m30.885s
-sys	0m0.598s
-
-(master)$ time PAGER=cat git blame -C -C -C -M Documentation/git-ls-files.txt > /dev/null
-
-real	0m2.355s
-user	0m2.319s
-sys	0m0.035s
-(master)$ time PAGER=cat git blame -C -C -C -M Documentation/git-ls-files.txt > /dev/null
-
-real	0m2.352s
-user	0m2.292s
-sys	0m0.059s
-(master)$ time PAGER=cat git blame -C -C -C -M Documentation/git-ls-files.txt > /dev/null
-
-real	0m2.354s
-user	0m2.312s
-sys	0m0.040s
-(master)$ time PAGER=cat git blame -C -C -C -M Documentation/git-ls-files.txt > /dev/null
-
-real	0m2.338s
-user	0m2.283s
-sys	0m0.056s
-(master)$ time PAGER=cat git blame --minimal -C -C -C -M Documentation/git-ls-files.txt > /dev/null
-
-real	0m2.376s
-user	0m2.302s
-sys	0m0.071s
-(master)$ time PAGER=cat git blame --minimal -C -C -C -M Documentation/git-ls-files.txt > /dev/null
-
-real	0m2.362s
-user	0m2.312s
-sys	0m0.049s
-(master)$ time PAGER=cat git blame --minimal -C -C -C -M Documentation/git-ls-files.txt > /dev/null
-
-real	0m2.360s
-user	0m2.301s
-sys	0m0.057s
-(master)$ time PAGER=cat git blame --minimal -C -C -C -M Documentation/git-ls-files.txt > /dev/null
-
-real	0m2.355s
-user	0m2.285s
-sys	0m0.069s
-
-
----------------------------------------------------
-
-((2cf565c...))$ time PAGER=cat git blame -C -M Documentation/git-ls-files.txt > /dev/null
-
-real	0m0.003s
-user	0m0.002s
-sys	0m0.000s
-((2cf565c...))$ time PAGER=cat git blame -C -M Documentation/git-ls-files.txt > /dev/null
-
-real	0m0.003s
-user	0m0.003s
-sys	0m0.000s
-((2cf565c...))$ time PAGER=cat git blame -C -M Documentation/git-ls-files.txt > /dev/null
-
-real	0m0.004s
-user	0m0.003s
-sys	0m0.001s
-((2cf565c...))$ time PAGER=cat git blame -C -M Documentation/git-ls-files.txt > /dev/null
-
-real	0m0.004s
-user	0m0.003s
-sys	0m0.001s
-((2cf565c...))$ time PAGER=cat git blame -C -M Documentation/git-ls-files.txt > /dev/null
-
-real	0m0.003s
-user	0m0.002s
-sys	0m0.001s
-((2cf565c...))$ time PAGER=cat git blame --minimal -C -M Documentation/git-ls-files.txt > /dev/null
-
-real	0m0.010s
-user	0m0.009s
-sys	0m0.000s
-((2cf565c...))$ time PAGER=cat git blame --minimal -C -M Documentation/git-ls-files.txt > /dev/null
-
-real	0m0.011s
-user	0m0.010s
-sys	0m0.001s
-((2cf565c...))$ time PAGER=cat git blame --minimal -C -M Documentation/git-ls-files.txt > /dev/null
-
-real	0m0.012s
-user	0m0.012s
-sys	0m0.000s
-((2cf565c...))$ time PAGER=cat git blame --minimal -C -M Documentation/git-ls-files.txt > /dev/null
-
-real	0m0.011s
-user	0m0.011s
-sys	0m0.000s
-((2cf565c...))$ time PAGER=cat git blame -C -C -C -M Documentation/git-ls-files.txt > /dev/null
-
-real	0m0.008s
-user	0m0.007s
-sys	0m0.002s
-((2cf565c...))$ time PAGER=cat git blame -C -C -C -M Documentation/git-ls-files.txt > /dev/null
-
-real	0m0.011s
-user	0m0.011s
-sys	0m0.000s
-((2cf565c...))$ time PAGER=cat git blame -C -C -C -M Documentation/git-ls-files.txt > /dev/null
-
-real	0m0.010s
-user	0m0.010s
-sys	0m0.000s
-((2cf565c...))$ time PAGER=cat git blame -C -C -C -M Documentation/git-ls-files.txt > /dev/null
-
-real	0m0.010s
-user	0m0.009s
-sys	0m0.000s
-((2cf565c...))$ time PAGER=cat git blame --minimal -C -C -C -M Documentation/git-ls-files.txt > /dev/null
-
-real	0m0.028s
-user	0m0.024s
-sys	0m0.003s
-((2cf565c...))$ time PAGER=cat git blame --minimal -C -C -C -M Documentation/git-ls-files.txt > /dev/null
-
-real	0m0.032s
-user	0m0.029s
-sys	0m0.002s
-((2cf565c...))$ time PAGER=cat git blame --minimal -C -C -C -M Documentation/git-ls-files.txt > /dev/null
-
-real	0m0.027s
-user	0m0.025s
-sys	0m0.001s
-((2cf565c...))$ time PAGER=cat git blame --minimal -C -C -C -M Documentation/git-ls-files.txt > /dev/null
-
-real	0m0.028s
-user	0m0.027s
-sys	0m0.000s
-
-
---nextPart3067410.H4kOPeA8MZ--
+Thomas Rast
+tr@thomasrast.ch
