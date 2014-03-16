@@ -1,72 +1,69 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Should 'git reset --hard' keep a stashed backup?
-Date: Sun, 16 Mar 2014 22:17:03 -0000
-Organization: OPDS
-Message-ID: <EF7B8A31C59946F8821697F3BA129043@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-To: "Git List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Mar 16 23:17:28 2014
+From: Dragos Foianu <dragos.foianu@gmail.com>
+Subject: [GSoC 2014] git config API improvements
+Date: Mon, 17 Mar 2014 00:27:58 +0200
+Message-ID: <1395008878-18677-1-git-send-email-dragos.foianu@gmail.com>
+Cc: Dragos Foianu <dragos.foianu@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 16 23:28:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WPJN0-0001U3-Rl
-	for gcvg-git-2@plane.gmane.org; Sun, 16 Mar 2014 23:17:27 +0100
+	id 1WPJXt-0004IX-Rd
+	for gcvg-git-2@plane.gmane.org; Sun, 16 Mar 2014 23:28:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754957AbaCPWQx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Mar 2014 18:16:53 -0400
-Received: from out1.ip03ir2.opaltelecom.net ([62.24.128.239]:29025 "EHLO
-	out1.ip03ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752544AbaCPWQw (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 16 Mar 2014 18:16:52 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: ApVMAHwhJlMCYJvU/2dsb2JhbABYgnEKCwE6EAMbiG2xfYc9AQIBDIEMF3RpAQGBHwEBFAETAQEuHgEBLAIIAgEkOQEEGgYHHRsCAQIDAYU4BwGCByUJoQ+HFY1fnDkEjX2BIIJ2gRQEiRqGIJs7gy09
-X-IPAS-Result: ApVMAHwhJlMCYJvU/2dsb2JhbABYgnEKCwE6EAMbiG2xfYc9AQIBDIEMF3RpAQGBHwEBFAETAQEuHgEBLAIIAgEkOQEEGgYHHRsCAQIDAYU4BwGCByUJoQ+HFY1fnDkEjX2BIIJ2gRQEiRqGIJs7gy09
-X-IronPort-AV: E=Sophos;i="4.97,666,1389744000"; 
-   d="scan'208";a="452932175"
-Received: from host-2-96-155-212.as13285.net (HELO PhilipOakley) ([2.96.155.212])
-  by out1.ip03ir2.opaltelecom.net with SMTP; 16 Mar 2014 22:16:50 +0000
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1755682AbaCPW2N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Mar 2014 18:28:13 -0400
+Received: from mail-ee0-f50.google.com ([74.125.83.50]:57644 "EHLO
+	mail-ee0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752786AbaCPW2M (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Mar 2014 18:28:12 -0400
+Received: by mail-ee0-f50.google.com with SMTP id c13so3444932eek.37
+        for <git@vger.kernel.org>; Sun, 16 Mar 2014 15:28:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=u4woUJ4shQXVLzm8M3xNgw70VcNa0cQLdDJSaF/x3+U=;
+        b=ehcCtgJzMinznOLttZWPlHeG8m6N1ZGYZHnjioW46W9Z9FwcdbsjM2ik6G09EMorWW
+         6f89RQfSmfDIYSXR7IHluDy1fgvwbgZqspFZqseNMeeVNKtzD6fIk8FaldvlOsHuWv0R
+         RmOt/fmXRWsW6T1W8J4orOd2UAPLNI/fK3W0VWqcgdhGnuSPcNwWmUapXnTJnDKgo2CH
+         ZKxJkJAox9QTNc4B3c/RvtVzHAqIaK9D3oeXx9goCOmMRQeUdHE4A+DS4QRSqivDM9d4
+         gUW8zuBljEJe09xNLJwto9GiywHIHgCiHK1wqtEQ5prg+OLev0THsFDXv9AgNUosYMHk
+         XH3g==
+X-Received: by 10.14.10.73 with SMTP id 49mr20609671eeu.52.1395008891329;
+        Sun, 16 Mar 2014 15:28:11 -0700 (PDT)
+Received: from localhost.localdomain ([109.100.93.176])
+        by mx.google.com with ESMTPSA id m42sm35150199eex.21.2014.03.16.15.28.10
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 16 Mar 2014 15:28:10 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244212>
 
-A bike-shedding thought:
-Many inexperienced users do a 'git reset --hard' only to discover they 
-have deleted something important and want it back. (e.g. git-users 
-yesterday [1])
+Hello,
 
-One possible option is that Git could "stash" the current work-tree 
-contents (git stash create) into a commit and store its commit_id in a 
-suitable file/variable such as RESET_HARD_HEAD (or GIT_RESET_HARD_HEAD), 
-similar to FETCH_HEAD & MERGE_HEAD, so that it would be relatively easy 
-to recover the prior state.
+My name is Dragos Foianu and I am an undergraduate student at University Politehnica of Bucharest in Romania. This is my final year and I'm planning on doing something more exciting than the simple 
+assignments I get from the university.
 
-By only storing the id in the file/env it would be overwritten on each 
-usage, and the loose commits would be garbage collected eventually.
+I have been working with git for quite some time now and I'm currently using it for my diploma project. It was annoying at first but now I love it and it has helped me many times in the past. I wanted to 
+contribute to the project and I feel that GSoC 2014 is the perfect opportunity for this.
 
-A suitable config variable would allow it to be enabled/disabled as 
-appropriate to the user. (Perhaps enabled by default eventually?)
+I am primarily interested in the "git config API improvements" project. I have glanced over the code in order to get an idea of how git-config currently works. The project idea page gives a very good 
+description of what is desired. Caching and retrieving values by name sounds to me like a hint to use a hashtable-like data structure. Conveniently, there is already a hashmap implementation in git and 
+even more conveniently, there is a cache implementation that uses that data structure. So that part is fairly straightforward.
 
-Given the prevalence of 'git reset --hard' within internet forum advice, 
-would something like this be useful?  It could even be wrapped into a 
-GSoC project.
+I have a question, however: how would I go about detecting when a cache invalidation is necessary? Considering I have read a configuration file and cached the configuration in memory, what can trigger 
+one of the existing cache entries to be invalidated?
 
---
+That is all I have to ask for now. I will look over the code during the next few days to get the bigger picture and submit my application. At [1] you can find my microproject patch. I am eagerly awaiting 
+for any questions you might have.
 
-Philip
+All the best,
+Dragos
 
-
-[1] https://groups.google.com/forum/#!topic/git-users/CwQyfwnzCVM 
+[1] http://thread.gmane.org/gmane.comp.version-control.git/244210
