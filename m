@@ -1,76 +1,120 @@
-From: Quint Guvernator <quintus.public@gmail.com>
-Subject: [GSoC 2014] Refactoring git rebase --interactive
-Date: Sun, 16 Mar 2014 16:13:52 -0400
-Message-ID: <CALs4jVE16V41z6X7dg-kyYeRi0b=mZZ=iSN_sOUmcZREezN_ew@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] mv: prevent mismatched data when ignoring errors.
+Date: Sun, 16 Mar 2014 14:20:14 -0700
+Message-ID: <7v1ty14z8x.fsf@alter.siamese.dyndns.org>
+References: <20140308183501.GH18371@serenity.lan>
+	<1394306499-50871-1-git-send-email-sandals@crustytoothpaste.net>
+	<8738ijzbue.fsf@thomasrast.ch>
+	<20140316020018.GA20019@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Mar 16 21:14:20 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Rast <tr@thomasrast.ch>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>,
+	John Keeping <john@keeping.me.uk>,
+	Guillaume Gelin <contact@ramnes.eu>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Mar 16 22:19:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WPHRr-0006Jx-2K
-	for gcvg-git-2@plane.gmane.org; Sun, 16 Mar 2014 21:14:19 +0100
+	id 1WPISh-000351-N3
+	for gcvg-git-2@plane.gmane.org; Sun, 16 Mar 2014 22:19:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755573AbaCPUOO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Mar 2014 16:14:14 -0400
-Received: from mail-wi0-f180.google.com ([209.85.212.180]:41271 "EHLO
-	mail-wi0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754917AbaCPUON (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Mar 2014 16:14:13 -0400
-Received: by mail-wi0-f180.google.com with SMTP id hn9so1366168wib.1
-        for <git@vger.kernel.org>; Sun, 16 Mar 2014 13:14:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=f6D9x91nn8iUJxVlVkuYwt9Sb0YK5AtrRg6pTQ2PH0g=;
-        b=Sa+K6kOslMb9oQ3RrvFzoBVyW3Vf5nkGs9Ou8jIGUwNg0tApCOygk+SHpD2tSEsiEK
-         LQRhOu4jOU4aNq2oD7ats+mvAdXcaata1finJDiCruAFgQCNuwXVM8kPqT1BDckL3xD1
-         7oIt+G1Z6np8BtJUH9Q4tqdttz7DkYNnm/M7yGvDCOTGtC8RsqRaGe0T2qdJb6JjBUuH
-         W9jVJVSSTIsG3l3UoGncLUysJNm7eFx0MZXN6gl6JbSFXySizbzpl+DmF5MpOH5tHMDd
-         52H1b1hX+cl1qXaKRowFr04c6OAzTfmZf4ktxn2pwsxfVaFnHPs2A7BD8Ak8gTD3Lnk4
-         On0w==
-X-Received: by 10.180.100.169 with SMTP id ez9mr6761387wib.15.1395000852043;
- Sun, 16 Mar 2014 13:14:12 -0700 (PDT)
-Received: by 10.216.231.138 with HTTP; Sun, 16 Mar 2014 13:13:52 -0700 (PDT)
+	id S932089AbaCPVTJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Mar 2014 17:19:09 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35206 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932079AbaCPVTH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Mar 2014 17:19:07 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9E6997203B;
+	Sun, 16 Mar 2014 17:19:06 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=k2IV1r2hk9uxhLKC8xw2pv7mSNk=; b=JTRWi8
+	i38K8I4SPKjjmo9shzt6kF/NnIpGym96SdFggjWTCTdhr+qxtLeZB3mo6p+1OR4f
+	I2gNZ51brAIPjZHQgTm/MDy2AVk593KiBZtHBvot7drhDXlMwChAn7uhZSruo7om
+	N7DWd30xNSPyBpfu/WF2U7DTHyTj6db6CzfpI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=i01hSYb8PcVxpVHjY/OjtMfgiOawA3vM
+	oyP49agFVd6O0yO6xrkhdbxEgeR6+yNgpl7e9qTGujLMvJmflnKRDfLT4BkpGRGt
+	GlYqccg7+Rma/PBvNOhvjMad+9RjblCV05Wf9D1+bUYAG74FALv5Acf1iHIkLxs7
+	BPIm1nej2wA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8A70472038;
+	Sun, 16 Mar 2014 17:19:06 -0400 (EDT)
+Received: from pobox.com (unknown [198.0.213.178])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9328C72031;
+	Sun, 16 Mar 2014 17:19:05 -0400 (EDT)
+In-Reply-To: <20140316020018.GA20019@sigill.intra.peff.net> (Jeff King's
+	message of "Sat, 15 Mar 2014 22:00:19 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.4 (gnu/linux)
+X-Pobox-Relay-ID: 9AB9F85C-AD50-11E3-B628-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244209>
 
-Hi again, Git community!
+Jeff King <peff@peff.net> writes:
 
-My name is Quint Guvernator, and I am participating in the Google
-Summer of Code program. I am in university at the College of William
-and Mary in Williamsburg, VA and plan to major in Computer Science and
-Linguistics.
+> On Sat, Mar 15, 2014 at 05:05:29PM +0100, Thomas Rast wrote:
+>
+>> > diff --git a/builtin/mv.c b/builtin/mv.c
+>> > index f99c91e..b20cd95 100644
+>> > --- a/builtin/mv.c
+>> > +++ b/builtin/mv.c
+>> > @@ -230,6 +230,11 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+>> >  					memmove(destination + i,
+>> >  						destination + i + 1,
+>> >  						(argc - i) * sizeof(char *));
+>> > +					memmove(modes + i, modes + i + 1,
+>> > +						(argc - i) * sizeof(char *));
+>> 
+>> This isn't right -- you are computing the size of things to be moved
+>> based on a type of char*, but 'modes' is an enum.
+>> 
+>> (Valgrind spotted this.)
+>
+> Maybe using sizeof(*destination) and sizeof(*modes) would make this less
+> error-prone?
+>
+> -Peff
 
-I have been working on a microproject [1][2] to get the hang of
-submitting patches and working with the mailing list.
+Would it make sense to go one step further to introduce two macros
+to make this kind of screw-up less likely?
 
-I have just submitted my proposal for git rebase --interactive through
-the google-melange website. In brief, I plan to refactor the shell
-script, cleaning up parts where the code is incohesive or difficult to
-decipher; add functionality to the script; and improve documentation
-by describing the script in comments and improving our user docs. I
-think it is important not to rush into new features, however, and
-detail in my proposal the extent to which I will stay in contact with
-the community through this list and on IRC.
+ 1. "array" is an array that holds "nr" elements.  Move "count"
+    elements starting at index "at" down to remove them.
 
-Should the work on rebase --interactive not take all summer, I would
-work to improve the quality of Git documentation. I am a native
-English speaker and copy-edit a local newspaper, so I feel I am
-qualified to edit and extend the Git documentation.
+    #define MOVE_DOWN(array, nr, at, count)
 
-I am happy to receive private mail, so please send any issues or
-questions you may have either to the list or directly to my inbox.
+    The implementation should take advantage of sizeof(*array) to
+    come up with the number of bytes to move.
 
-Thanks for your consideration for GSoC.
 
---Quint
+ 2. "array" is an array that holds "nr" elements.  Move "count"
+    elements starting at index "at" up to make room to copy new
+    elements in.
 
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/243940
-[2]: http://thread.gmane.org/gmane.comp.version-control.git/244159
+    #define MOVE_UP(array, nr, at, count)
+
+    The implementation should take advantage of sizeof(*array) to
+    come up with the number of bytes to move.
+
+Optionally, to make 2. even safer, these macros could take "alloc"
+to say that "array" has memory allocated to hold "alloc" elements,
+and the implementation may check "nr + count" does not overflow
+"alloc".  This would make 1. and 2. asymmetric (move-down can do no
+validation using "alloc", but move-up would be helped), so I am not
+sure it is a good idea.
+
+After letting my eyes coast over hits from "git grep memmove", there
+do seem to be some places that these would help readability, but not
+very many.
