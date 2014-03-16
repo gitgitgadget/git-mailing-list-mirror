@@ -1,112 +1,84 @@
-From: ubuntu2012@126.com
-Subject: [PATCH] Rewrite the diff-no-index.c
-Date: Sun, 16 Mar 2014 20:44:18 +0800
-Message-ID: <1394973858-16505-1-git-send-email-ubuntu2012@126.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH 0/4] Better "gc --aggressive"
+Date: Sun, 16 Mar 2014 20:34:59 +0700
+Message-ID: <1394976904-15395-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?=E6=B2=88=E6=89=BF=E6=81=A9?= <ubuntu2012@126.com>
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 16 14:15:54 2014
+X-From: git-owner@vger.kernel.org Sun Mar 16 14:34:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WPAuw-0004LK-0p
-	for gcvg-git-2@plane.gmane.org; Sun, 16 Mar 2014 14:15:54 +0100
+	id 1WPBCw-0005gN-7d
+	for gcvg-git-2@plane.gmane.org; Sun, 16 Mar 2014 14:34:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751322AbaCPNPZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 16 Mar 2014 09:15:25 -0400
-Received: from m15-114.126.com ([220.181.15.114]:49433 "EHLO m15-114.126.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751019AbaCPNPY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Mar 2014 09:15:24 -0400
-X-Greylist: delayed 1858 seconds by postgrey-1.27 at vger.kernel.org; Sun, 16 Mar 2014 09:15:23 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
-	s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=6g1C4
-	RZ2TZlebU1fcJe25PcfqdCGqy46uCeQdVIAUfE=; b=NoTAi8roLfihkmzlJWI2R
-	ovIwL9GbZokYeCp9ekMdZrao/oNO2BlWNmKTa0x3cMrEgUn9xCxtMIPbK6vgwgHG
-	L3bi4xMmEaDze7IvJlCSjJCIzIjAiz1m2mWjXvOqX9P7XJiHjLybHKs2z41kxjU5
-	9kbxEFoc1NnDokZcfvxZB0=
-Received: from localhost (unknown [182.148.251.140])
-	by smtp7 (Coremail) with SMTP id DsmowEAp90KjnCVTvS0NAQ--.923S2;
-	Sun, 16 Mar 2014 20:44:19 +0800 (CST)
-X-Mailer: git-send-email 1.7.9.5
-X-CM-TRANSID: DsmowEAp90KjnCVTvS0NAQ--.923S2
-X-Coremail-Antispam: 1Uf129KBjvJXoW7Zw17WF1xJr4DZw4DCF15Jwb_yoW8Cr4UpF
-	s3Cw1YkrW8JF43u3s7XF47CwnxK3yqgr4xCrW8u3s8Zr1ag3yUXFWFgF1akF15GrZ8u347
-	uF4YqrnYva15Cr7anT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07UbAw-UUUUU=
-X-Originating-IP: [182.148.251.140]
-X-CM-SenderInfo: hxex03jxsqija6rslhhfrp/1tbicwRQqFD61PaidgAAsT
+	id S1751601AbaCPNe0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 16 Mar 2014 09:34:26 -0400
+Received: from mail-pa0-f48.google.com ([209.85.220.48]:48735 "EHLO
+	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751418AbaCPNeZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Mar 2014 09:34:25 -0400
+Received: by mail-pa0-f48.google.com with SMTP id hz1so4609524pad.7
+        for <git@vger.kernel.org>; Sun, 16 Mar 2014 06:34:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=xFUZLpqZ4k/xd9gzIsTS/n3cze/ExFQQ+6Wpm/VIhXc=;
+        b=U4usPkPHxAHq0tBzwTKY43xTotU+UWh0vG7BOUdP8PxDmNiA7LCABKvncmNmYp+cLL
+         bqwDxwUpS+ieUKF1+7tRoXEg94GNA3SooB8pSJRuCQRTNbjydDnwoQyw2fSjFswv1eBB
+         1YkUcb3nsCvyX/fYWVS5avdg42ilCCFnNTl+POGZ5rIntVcDLxy+J3E83rdOfjq+TvzK
+         lgOalvFFIXQuXslTd2DvLZexpIWj4u5tFRmGepc90ORbfbexjVZIzGcispcIC+CTIpuL
+         TLSmbQ35NCNiOKYYqnqS62XcCTwoHEgyfn6PC67by+bQcC/7SP8lfQZ8u+WXYmNrfud2
+         qjHw==
+X-Received: by 10.68.93.3 with SMTP id cq3mr2263697pbb.145.1394976864610;
+        Sun, 16 Mar 2014 06:34:24 -0700 (PDT)
+Received: from lanh ([115.73.203.48])
+        by mx.google.com with ESMTPSA id z3sm56698086pas.15.2014.03.16.06.34.21
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sun, 16 Mar 2014 06:34:23 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sun, 16 Mar 2014 20:35:06 +0700
+X-Mailer: git-send-email 1.9.0.40.gaa8c3ea
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244193>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244194>
 
-=46rom: =E6=B2=88=E6=89=BF=E6=81=A9 <ubuntu2012@126.com>
+See [1] for the discussion that led to this series. It attempts to
+pack the repo with two different depths: old history tightly packed
+(smaller but also takes longer time to access) and recent history on
+the opposite.
 
-I am sorry for that I send this agian.Last patch I have some error.(May=
-be this time will like the previous).It is apply for GSOC
+=46irst draft, probably still some bugs lurking in pack_old_history().
+It would be great if people could try it out on large repos and report
+back the results (pack size between the old and new aggressive, gc
+time, git log and blame speed...)
 
-Signed-off-by: =E6=B2=88=E6=89=BF=E6=81=A9 <ubuntu2012@126.com>
----
- diff-no-index.c |    5 +++--
- dir.h           |    3 ++-
- 2 files changed, 5 insertions(+), 3 deletions(-)
+[1] http://thread.gmane.org/gmane.comp.version-control.git/242277
 
-diff --git a/diff-no-index.c b/diff-no-index.c
-index 8e10bff..1fb0c0f 100644
---- a/diff-no-index.c
-+++ b/diff-no-index.c
-@@ -3,13 +3,14 @@
-  * Copyright (c) 2007 by Johannes Schindelin
-  * Copyright (c) 2008 by Junio C Hamano
-  */
--
-+#define EXIT
- #include "cache.h"
- #include "color.h"
- #include "commit.h"
- #include "blob.h"
- #include "tag.h"
- #include "diff.h"
-+#include "dir.h"
- #include "diffcore.h"
- #include "revision.h"
- #include "log-tree.h"
-@@ -25,7 +26,7 @@ static int read_directory(const char *path, struct st=
-ring_list *list)
- 		return error("Could not open directory %s", path);
-=20
- 	while ((e =3D readdir(dir)))
--		if (strcmp(".", e->d_name) && strcmp("..", e->d_name))
-+		if (is_dot_or_dotdot(e->d_name))
- 			string_list_insert(list, e->d_name);
-=20
- 	closedir(dir);
-diff --git a/dir.h b/dir.h
-index 55e5345..c0e45c8 100644
---- a/dir.h
-+++ b/dir.h
-@@ -138,8 +138,9 @@ extern int match_pathspec(const struct pathspec *pa=
-thspec,
- extern int within_depth(const char *name, int namelen, int depth, int =
-max_depth);
-=20
- extern int fill_directory(struct dir_struct *dir, const struct pathspe=
-c *pathspec);
-+#ifndef EXIT
- extern int read_directory(struct dir_struct *, const char *path, int l=
-en, const struct pathspec *pathspec);
--
-+#endif
- extern int is_excluded_from_list(const char *pathname, int pathlen, co=
-nst char *basename,
- 				 int *dtype, struct exclude_list *el);
- struct dir_entry *dir_add_ignored(struct dir_struct *dir, const char *=
-pathname, int len);
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (4):
+  environment.c: fix constness for odb_pack_keep()
+  pack-objects: support --keep
+  gc --aggressive: make --depth configurable
+  gc --aggressive: three phase repacking
+
+ Documentation/config.txt           |  24 ++++++++
+ Documentation/git-gc.txt           |   3 +
+ Documentation/git-pack-objects.txt |   4 ++
+ builtin/gc.c                       | 113 +++++++++++++++++++++++++++++=
++++++++-
+ builtin/pack-objects.c             |  26 +++++++++
+ environment.c                      |   2 +-
+ git-compat-util.h                  |   2 +-
+ 7 files changed, 169 insertions(+), 5 deletions(-)
+
 --=20
-1.7.9.5
+1.9.0.40.gaa8c3ea
