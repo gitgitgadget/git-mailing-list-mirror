@@ -1,55 +1,48 @@
-From: Thomas Rast <tr@thomasrast.ch>
+From: Michael Andreen <harv@ruin.nu>
 Subject: Re: [PATCH] Make XDF_NEED_MINIMAL default in blame.
-Date: Sun, 16 Mar 2014 13:12:01 +0100
-Message-ID: <8738iixrzi.fsf@thomasrast.ch>
-References: <154997837.FlSR2gFiUN@river>
+Date: Sun, 16 Mar 2014 13:32:16 +0100
+Message-ID: <1688337.Jf0jlzSU63@river>
+References: <154997837.FlSR2gFiUN@river> <8738iixrzi.fsf@thomasrast.ch>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Michael Andreen <harv@ruin.nu>
-X-From: git-owner@vger.kernel.org Sun Mar 16 13:12:21 2014
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7Bit
+Cc: Thomas Rast <tr@thomasrast.ch>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 16 13:32:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WP9vQ-0003AM-Ki
-	for gcvg-git-2@plane.gmane.org; Sun, 16 Mar 2014 13:12:20 +0100
+	id 1WPAEo-0005uC-5b
+	for gcvg-git-2@plane.gmane.org; Sun, 16 Mar 2014 13:32:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751980AbaCPMMP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Mar 2014 08:12:15 -0400
-Received: from ip1.thgersdorf.net ([148.251.9.194]:56908 "EHLO mail.psioc.net"
+	id S1752187AbaCPMcS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Mar 2014 08:32:18 -0400
+Received: from n.ruin.nu ([213.180.83.247]:42385 "EHLO n.ruin.nu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750842AbaCPMMP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Mar 2014 08:12:15 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.psioc.net (Postfix) with ESMTP id 3C8184D6510;
-	Sun, 16 Mar 2014 13:12:14 +0100 (CET)
-X-Virus-Scanned: amavisd-new at psioc.net
-Received: from mail.psioc.net ([127.0.0.1])
-	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id uGcz44eYeMa6; Sun, 16 Mar 2014 13:12:02 +0100 (CET)
-Received: from hexa.thomasrast.ch (46-126-8-85.dynamic.hispeed.ch [46.126.8.85])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(Client did not present a certificate)
-	by mail.psioc.net (Postfix) with ESMTPSA id 6A39E4D64BD;
-	Sun, 16 Mar 2014 13:12:02 +0100 (CET)
-In-Reply-To: <154997837.FlSR2gFiUN@river> (Michael Andreen's message of "Sun,
-	16 Mar 2014 11:43:03 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1750899AbaCPMcS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Mar 2014 08:32:18 -0400
+Received: from river.localnet (h-40-196.a336.priv.bahnhof.se [79.136.40.196])
+	by n.ruin.nu (Postfix) with ESMTPSA id 044BE1DC0078;
+	Sun, 16 Mar 2014 13:32:15 +0100 (CET)
+User-Agent: KMail/4.11.5 (Linux/3.12.13-gentoo; KDE/4.11.5; x86_64; ; )
+In-Reply-To: <8738iixrzi.fsf@thomasrast.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244190>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244192>
 
-Michael Andreen <harv@ruin.nu> writes:
+On Sunday, March 16, 2014 01:12:01 PM Thomas Rast wrote:
+> Michael Andreen <harv@ruin.nu> writes:
+> 
+> > The --minimal flag is still there, but didn't want to break scripts
+> > depending on it.
+> 
+> If I specify --no-minimal, does that turn it off again?
+> 
 
-> The --minimal flag is still there, but didn't want to break scripts
-> depending on it.
+Yes, that works.
 
-If I specify --no-minimal, does that turn it off again?
-
--- 
-Thomas Rast
-tr@thomasrast.ch
+/Michael
