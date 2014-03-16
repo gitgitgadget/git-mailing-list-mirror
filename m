@@ -1,120 +1,114 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] mv: prevent mismatched data when ignoring errors.
-Date: Sun, 16 Mar 2014 14:20:14 -0700
-Message-ID: <7v1ty14z8x.fsf@alter.siamese.dyndns.org>
-References: <20140308183501.GH18371@serenity.lan>
-	<1394306499-50871-1-git-send-email-sandals@crustytoothpaste.net>
-	<8738ijzbue.fsf@thomasrast.ch>
-	<20140316020018.GA20019@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <tr@thomasrast.ch>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>,
-	John Keeping <john@keeping.me.uk>,
-	Guillaume Gelin <contact@ramnes.eu>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Mar 16 22:19:17 2014
+From: Dragos Foianu <dragos.foianu@gmail.com>
+Subject: [PATCH] branch.c: simplify chain of if statements
+Date: Sun, 16 Mar 2014 23:22:42 +0200
+Message-ID: <1395004962-18200-1-git-send-email-dragos.foianu@gmail.com>
+Cc: Dragos Foianu <dragos.foianu@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 16 22:23:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WPISh-000351-N3
-	for gcvg-git-2@plane.gmane.org; Sun, 16 Mar 2014 22:19:16 +0100
+	id 1WPIWL-0006o0-3a
+	for gcvg-git-2@plane.gmane.org; Sun, 16 Mar 2014 22:23:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932089AbaCPVTJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Mar 2014 17:19:09 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35206 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932079AbaCPVTH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Mar 2014 17:19:07 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9E6997203B;
-	Sun, 16 Mar 2014 17:19:06 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=k2IV1r2hk9uxhLKC8xw2pv7mSNk=; b=JTRWi8
-	i38K8I4SPKjjmo9shzt6kF/NnIpGym96SdFggjWTCTdhr+qxtLeZB3mo6p+1OR4f
-	I2gNZ51brAIPjZHQgTm/MDy2AVk593KiBZtHBvot7drhDXlMwChAn7uhZSruo7om
-	N7DWd30xNSPyBpfu/WF2U7DTHyTj6db6CzfpI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=i01hSYb8PcVxpVHjY/OjtMfgiOawA3vM
-	oyP49agFVd6O0yO6xrkhdbxEgeR6+yNgpl7e9qTGujLMvJmflnKRDfLT4BkpGRGt
-	GlYqccg7+Rma/PBvNOhvjMad+9RjblCV05Wf9D1+bUYAG74FALv5Acf1iHIkLxs7
-	BPIm1nej2wA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8A70472038;
-	Sun, 16 Mar 2014 17:19:06 -0400 (EDT)
-Received: from pobox.com (unknown [198.0.213.178])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9328C72031;
-	Sun, 16 Mar 2014 17:19:05 -0400 (EDT)
-In-Reply-To: <20140316020018.GA20019@sigill.intra.peff.net> (Jeff King's
-	message of "Sat, 15 Mar 2014 22:00:19 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.4 (gnu/linux)
-X-Pobox-Relay-ID: 9AB9F85C-AD50-11E3-B628-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755644AbaCPVW5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Mar 2014 17:22:57 -0400
+Received: from mail-ee0-f52.google.com ([74.125.83.52]:35493 "EHLO
+	mail-ee0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754829AbaCPVW4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Mar 2014 17:22:56 -0400
+Received: by mail-ee0-f52.google.com with SMTP id e49so3455735eek.11
+        for <git@vger.kernel.org>; Sun, 16 Mar 2014 14:22:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=qdxZ3ei+rI567Uy1hTo9qZC82WPdryGza4ydzAALpT4=;
+        b=qOYNhmE35RlgQzKelMZSHGE0LdS6ieICKKHc7Gniv8B0M3GO9L7Xntv0sTDCH2diNv
+         y90qW8PpfPKWTFk+xTULY3RcJ8ENeu5dCKPsLx330LNdR1Cw36dUk3FJ7HE6IPtQ4DVh
+         beU9Coc5xnp69uqMDTVrqRP9dDqsHT0KURMuuUYgZ8iCgpTukwoVTRfvplO/6JhZzJag
+         HTXNRT81kqrtE79iSUpYkh4DUfwrSbYvji6PmGnCP0I12AXANI9KUe1Z412VHcYOMgj3
+         wD4m8/N7l9hUtXNqe58ADft0swcMyny/Bt6O+oYYjqf6zcVIsYo1yX63w44LVWhH9Bu9
+         3JyQ==
+X-Received: by 10.14.39.3 with SMTP id c3mr20214101eeb.42.1395004975388;
+        Sun, 16 Mar 2014 14:22:55 -0700 (PDT)
+Received: from localhost.localdomain ([109.100.93.176])
+        by mx.google.com with ESMTPSA id 46sm34864721ees.4.2014.03.16.14.22.54
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 16 Mar 2014 14:22:54 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244209>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244210>
 
-Jeff King <peff@peff.net> writes:
+This patch uses a table-driven approach in order to make the code
+cleaner. Although not necessary, it helps code reability by not
+forcing the user to read the print message when trying to
+understand what the code does. The rebase check has been moved to
+the verbose if statement to avoid making the same check in each of
+the four if statements.
 
-> On Sat, Mar 15, 2014 at 05:05:29PM +0100, Thomas Rast wrote:
->
->> > diff --git a/builtin/mv.c b/builtin/mv.c
->> > index f99c91e..b20cd95 100644
->> > --- a/builtin/mv.c
->> > +++ b/builtin/mv.c
->> > @@ -230,6 +230,11 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
->> >  					memmove(destination + i,
->> >  						destination + i + 1,
->> >  						(argc - i) * sizeof(char *));
->> > +					memmove(modes + i, modes + i + 1,
->> > +						(argc - i) * sizeof(char *));
->> 
->> This isn't right -- you are computing the size of things to be moved
->> based on a type of char*, but 'modes' is an enum.
->> 
->> (Valgrind spotted this.)
->
-> Maybe using sizeof(*destination) and sizeof(*modes) would make this less
-> error-prone?
->
-> -Peff
+Signed-off-by: Dragos Foianu <dragos.foianu@gmail.com>
+---
+ branch.c | 32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
-Would it make sense to go one step further to introduce two macros
-to make this kind of screw-up less likely?
-
- 1. "array" is an array that holds "nr" elements.  Move "count"
-    elements starting at index "at" down to remove them.
-
-    #define MOVE_DOWN(array, nr, at, count)
-
-    The implementation should take advantage of sizeof(*array) to
-    come up with the number of bytes to move.
-
-
- 2. "array" is an array that holds "nr" elements.  Move "count"
-    elements starting at index "at" up to make room to copy new
-    elements in.
-
-    #define MOVE_UP(array, nr, at, count)
-
-    The implementation should take advantage of sizeof(*array) to
-    come up with the number of bytes to move.
-
-Optionally, to make 2. even safer, these macros could take "alloc"
-to say that "array" has memory allocated to hold "alloc" elements,
-and the implementation may check "nr + count" does not overflow
-"alloc".  This would make 1. and 2. asymmetric (move-down can do no
-validation using "alloc", but move-up would be helped), so I am not
-sure it is a good idea.
-
-After letting my eyes coast over hits from "git grep memmove", there
-do seem to be some places that these would help readability, but not
-very many.
+diff --git a/branch.c b/branch.c
+index 723a36b..e2fe455 100644
+--- a/branch.c
++++ b/branch.c
+@@ -54,6 +54,14 @@ void install_branch_config(int flag, const char *local, const char *origin, cons
+ 	struct strbuf key = STRBUF_INIT;
+ 	int rebasing = should_setup_rebase(origin);
+ 
++	const char *verbose_prints[4] = {
++		"Branch %s set up to track remote branch %s from %s%s",
++		"Branch %s set up to track local branch %s%s",
++		"Branch %s set up to track remote ref %s%s",
++		"Branch %s set up to track local ref %s%s"
++	};
++	char *verbose_rebasing = rebasing ? " by rebasing." : ".";
++
+ 	if (remote_is_branch
+ 	    && !strcmp(local, shortname)
+ 	    && !origin) {
+@@ -78,25 +86,17 @@ void install_branch_config(int flag, const char *local, const char *origin, cons
+ 
+ 	if (flag & BRANCH_CONFIG_VERBOSE) {
+ 		if (remote_is_branch && origin)
+-			printf_ln(rebasing ?
+-				  _("Branch %s set up to track remote branch %s from %s by rebasing.") :
+-				  _("Branch %s set up to track remote branch %s from %s."),
+-				  local, shortname, origin);
++			printf_ln(_(verbose_prints[0]),
++				local, shortname, origin, verbose_rebasing);
+ 		else if (remote_is_branch && !origin)
+-			printf_ln(rebasing ?
+-				  _("Branch %s set up to track local branch %s by rebasing.") :
+-				  _("Branch %s set up to track local branch %s."),
+-				  local, shortname);
++			printf_ln(_(verbose_prints[1]),
++				local, shortname, verbose_rebasing);
+ 		else if (!remote_is_branch && origin)
+-			printf_ln(rebasing ?
+-				  _("Branch %s set up to track remote ref %s by rebasing.") :
+-				  _("Branch %s set up to track remote ref %s."),
+-				  local, remote);
++			printf_ln(_(verbose_prints[2]),
++				local, remote, verbose_rebasing);
+ 		else if (!remote_is_branch && !origin)
+-			printf_ln(rebasing ?
+-				  _("Branch %s set up to track local ref %s by rebasing.") :
+-				  _("Branch %s set up to track local ref %s."),
+-				  local, remote);
++			printf_ln(_(verbose_prints[3]),
++				local, remote, verbose_rebasing);
+ 		else
+ 			die("BUG: impossible combination of %d and %p",
+ 			    remote_is_branch, origin);
+-- 
+1.8.3.2
