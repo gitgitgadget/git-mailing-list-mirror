@@ -1,99 +1,141 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] GSoC Change multiple if-else statements to be table-driven
-Date: Mon, 17 Mar 2014 02:29:10 -0400
-Message-ID: <CAPig+cSG0YsdTGWWyxWrg+s235qDe7Xr-jXT2mOkpvA6OaGWyg@mail.gmail.com>
-References: <CAPig+cQu7D3AUghOSUOZBwf5+iHCPkxPbY1WuQmPJk1muCk7tQ@mail.gmail.com>
-	<1394742059-7300-1-git-send-email-zhaox383@umn.edu>
-	<CAPig+cRF_eQiGugR8TSks5ki375y-5wiQ7HWKyKRudJ5apd4cg@mail.gmail.com>
-	<xmqqiorghgaj.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] mv: prevent mismatched data when ignoring errors.
+Date: Sun, 16 Mar 2014 23:33:53 -0700
+Message-ID: <7vtxax2v1q.fsf@alter.siamese.dyndns.org>
+References: <20140308183501.GH18371@serenity.lan>
+	<1394306499-50871-1-git-send-email-sandals@crustytoothpaste.net>
+	<8738ijzbue.fsf@thomasrast.ch>
+	<20140316020018.GA20019@sigill.intra.peff.net>
+	<7v1ty14z8x.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Yao Zhao <zhaox383@umn.edu>, Git List <git@vger.kernel.org>,
-	Adam <adam@sigterm.info>, Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 17 07:29:39 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Rast <tr@thomasrast.ch>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>,
+	John Keeping <john@keeping.me.uk>,
+	Guillaume Gelin <contact@ramnes.eu>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Mar 17 07:32:51 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WPR3K-0001Eh-KL
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Mar 2014 07:29:38 +0100
+	id 1WPR6Q-0004ir-OQ
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Mar 2014 07:32:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752033AbaCQG3N convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Mar 2014 02:29:13 -0400
-Received: from mail-yk0-f177.google.com ([209.85.160.177]:63317 "EHLO
-	mail-yk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751127AbaCQG3L convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Mar 2014 02:29:11 -0400
-Received: by mail-yk0-f177.google.com with SMTP id q200so13940510ykb.8
-        for <git@vger.kernel.org>; Sun, 16 Mar 2014 23:29:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=Xn76ahTNnKbHouT+OspX/lOYx7JOWlvJCOXVi5jiX1c=;
-        b=l8ErzoBpCzZHJEgtFKzXW2ixwwSTiPa+JWwIrP0XPdbM5OYkhduykWjpiKgvIc26Y9
-         ZtoX2jKCotvwsNJiqo+8FNhh4CBYGK/NOFLqs+hxI9M9abZAN086DY87V7WkmmCT65DA
-         Lxewtbq0u73GyjN7P5++p1rBhZO7GhQ3c8AI7brE+pQUQDCXQGuDAVD9Zop+OPgulkkk
-         Pvp8wbIx4Atek0HmQdbDpdthJRpYwXsEM9FaNuKlT7ZLdhBbFNFWOlPVo39OGepUDAIZ
-         uo0Ys2D3aXa+k9NWoyCF6Iw0D5SI3pZ8OG1jF9pNqu2k+ooPnJFr925JCmbkme/osadm
-         G8pQ==
-X-Received: by 10.236.65.72 with SMTP id e48mr1898348yhd.17.1395037750895;
- Sun, 16 Mar 2014 23:29:10 -0700 (PDT)
-Received: by 10.170.180.134 with HTTP; Sun, 16 Mar 2014 23:29:10 -0700 (PDT)
-In-Reply-To: <xmqqiorghgaj.fsf@gitster.dls.corp.google.com>
-X-Google-Sender-Auth: hNDdjgShKJ-NmGRjAYxhCdTOFjU
+	id S1752908AbaCQGcr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Mar 2014 02:32:47 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61894 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751258AbaCQGcq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Mar 2014 02:32:46 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5D1A26B51A;
+	Mon, 17 Mar 2014 02:32:45 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ST6LPbGGn9CGfUHzojjIKWiRJ2I=; b=hSTzq0
+	T2GJsJh2lOUzXl9DDhHkwsFoxipn0WjscqRDV2nMD1xO94Ed8ewYsSeeh20o+U5d
+	f/gpEBcqzjPNWLnJ8RqV7V7gA8RvQIBrd6T8VRjwRFvzN0aHUS4tgO+Jojqq4tyZ
+	Y5lzVF8NW4YftH4VVBloEpJXbP30YlXUoYTo0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=foJWYWonuWtiEybEgFqtaOuvJLQrE4gA
+	kYB6jNDZ2y1Z+c9rofThxX+v8YhyB7/1WhzWzBJnZ+2B7kY6I5rqKBC3fyOyM7aM
+	voqPOPqnHNbHZ9cLpSRtZGvyvgGDNr//KkvoKnys8Dg15jrDqEgWrhhy4nYdssAe
+	DE6zUIYge9w=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 44A116B519;
+	Mon, 17 Mar 2014 02:32:45 -0400 (EDT)
+Received: from pobox.com (unknown [198.0.213.178])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 651306B515;
+	Mon, 17 Mar 2014 02:32:44 -0400 (EDT)
+In-Reply-To: <7v1ty14z8x.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Sun, 16 Mar 2014 14:20:14 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.4 (gnu/linux)
+X-Pobox-Relay-ID: F2AE5092-AD9D-11E3-ABD0-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244221>
 
-On Fri, Mar 14, 2014 at 12:54 PM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
->
->> On Thu, Mar 13, 2014 at 4:20 PM, Yao Zhao <zhaox383@umn.edu> wrote:
->>> Subject: [PATCH] GSoC Change multiple if-else statements to be tabl=
-e-driven
->>
->> It's a good idea to let reviewers know that this is attempt 2. Do so
->> by saying [PATCH v2]. Your next one will be [PATCH v3]. The -v optio=
-n
->> for "git format-email" can help.
->
-> Yao, I think Eric meant "git format-patch".
+Junio C Hamano <gitster@pobox.com> writes:
 
-Correct. Sorry for the confusion.
+> Would it make sense to go one step further to introduce two macros
+> to make this kind of screw-up less likely?
+> ...
+> After letting my eyes coast over hits from "git grep memmove", there
+> do seem to be some places that these would help readability, but not
+> very many.
 
->> An alternate approach might be to use a multi-dimensional array,
->> where the boolean values of rebasing, remote_is_branch, and origin
->> are keys into the array. This would allow you to pick out the
->> correct PRINT_LIST entry directly (no looping), thus eliminating
->> the need for those b_rebasing, b_remote_is_branch, and b_origin
->> members.
->
-> Correct.
->
-> After seeing so many "table driven" submissions, I however tend to
-> agree with your earlier comment on another thread on this same
-> micro, where you said an nested if-else cascade that was rewritten
-> in a clearer way (sorry, I do not remember whose submission it was
+I see quite a many hits that follow this pattern
 
-It was Adam NoLastName [1].
+	memmove(array + pos, array + pos + 1, sizeof(*array) * (nr - pos))
 
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/243704
+to make a single slot in a middle of array available, which would be
+good candidates to use MOVE_DOWN().  Just to show a few:
 
-> offhand) may be the best answer to the "Would it make sense to make
-> the code table-driven?" question, even though I tentatively queued
-> d7ea7894 (install_branch_config(): simplify verbose messages logic,
-> 2014-03-13) from Pawe=C5=82 on 'pu'.
+builtin/mv.c:226:	memmove(source + i, source + i + 1,
+builtin/mv.c-227-		(argc - i) * sizeof(char *));
+builtin/mv.c:228:	memmove(destination + i,
+builtin/mv.c-229-		destination + i + 1,
+builtin/mv.c-230-		(argc - i) * sizeof(char *));
+cache-tree.c:92:	memmove(it->down + pos + 1,
+cache-tree.c-93-		it->down + pos,
+cache-tree.c-94-		sizeof(down) * (it->subtree_nr - pos - 1));
 
-Perhaps it is time to mark this microproject as "taken" on the GSoC
-page [2], along a fews others for which we have received multiple
-submissions.
 
-[2]: https://github.com/git/git.github.io/blob/master/SoC-2014-Micropro=
-jects.md
+Perhaps something like this patch to start off; I am not sure
+MOVE_DOWN_BOUNDED is needed, though.
+
+ cache.h | 33 +++++++++++++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)
+
+diff --git a/cache.h b/cache.h
+index b66cb49..b2615ab 100644
+--- a/cache.h
++++ b/cache.h
+@@ -455,6 +455,39 @@ extern int daemonize(void);
+ 		} \
+ 	} while (0)
+ 
++/*
++ * With an array "array" that currently holds "nr" elements, move
++ * elements at "at" and later down by "count" elements to make room to
++ * add in new elements.  The caller is responsible for making sure
++ * that the array has enough room to hold "nr" + "count" slots.
++ */
++#define MOVE_DOWN(array, nr, at, count)			\
++	memmove((array) + (at) + (count),		\
++		(array) + (at),				\
++		sizeof((array)[0]) * ((nr) - (at)))
++
++/*
++ * With an array "array" that has enough memory to hold "alloc"
++ * elements allocated and currently holds "nr" elements, move elements
++ * at "at" and later down by "count" elements to make room to add in
++ * new elements.
++ */
++#define MOVE_DOWN_BOUNDED(array, nr, at, count, alloc)		     \
++	do {							     \
++		if ((alloc) <= (nr) + (count))			     \
++			BUG("MOVE_DOWN beyond the end of an array"); \
++		MOVE_DOWN((array), (nr), (at), (count));	     \
++	} while (0)
++
++/*
++ * With an array "array" that curently holds "nr" elements, move elements
++ * at "at" + "count" and later down by "count" elements, removing the
++ * elements between "at" and "at" + "count".
++ */
++#define MOVE_UP(array, nr, at, count)				\
++	memmove((array) + (at), (array) + (at) + (count),	\
++		sizeof((array)[0]) * ((nr) - ((at) + (count))))
++
+ /* Initialize and use the cache information */
+ extern int read_index(struct index_state *);
+ extern int read_index_preload(struct index_state *, const struct pathspec *pathspec);
