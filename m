@@ -1,130 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] wt-status: Make status messages more consistent with others
-Date: Mon, 17 Mar 2014 14:51:42 -0700
-Message-ID: <xmqq1ty0cx3l.fsf@gitster.dls.corp.google.com>
-References: <1394771872-25940-1-git-send-email-andrew.kw.w@gmail.com>
-	<1394771872-25940-2-git-send-email-andrew.kw.w@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Andrew Wong <andrew.kw.w@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 17 22:51:53 2014
+From: Quint Guvernator <quintus.public@gmail.com>
+Subject: [PATCH v4 0/1] general style: replaces memcmp() with starts_with()
+Date: Mon, 17 Mar 2014 17:52:23 -0400
+Message-ID: <1395093144-6786-1-git-send-email-quintus.public@gmail.com>
+Cc: Quint Guvernator <quintus.public@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 17 22:52:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WPfRo-0003OK-5a
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Mar 2014 22:51:52 +0100
+	id 1WPfSW-0004Dt-LH
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Mar 2014 22:52:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752414AbaCQVvr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Mar 2014 17:51:47 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40010 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752202AbaCQVvq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Mar 2014 17:51:46 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D524576BC4;
-	Mon, 17 Mar 2014 17:51:45 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=dc8ekmKIYgf5dq41o7cGSDIjNAc=; b=yUj5v+
-	KzpbWzIh2irRwt2JYqmF5Z2n6fp7D3h2PCJ7VDHXMF+xkYavF6vSbaGr2gi5QgNT
-	MNE5pFuoiLKm4Vr783Cg4GDliJRMh34URK0ukEo2TH/0OzF0FF931QT+2Evw1EgK
-	mF6/+6SMB4BHlm2I4FVYBmyS1ms3SNA555w8s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Z9Yu8exVypzQnsnocvYd5kp4YcbWFAkn
-	EnC1dxRUrWlPwFBJdidN+Gvjwdlt2Em07xie3RQYBkAJVXbVTmVB+EzVsZO9lvyw
-	Z3gb645EBWQVOEdnSfQqrGqxJwsShPMFTFo/ClK17W0eauckCNAI16uzPcYdcQb1
-	h2GdwYccupY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C537476BC3;
-	Mon, 17 Mar 2014 17:51:45 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id ECA0476BC2;
-	Mon, 17 Mar 2014 17:51:44 -0400 (EDT)
-In-Reply-To: <1394771872-25940-2-git-send-email-andrew.kw.w@gmail.com> (Andrew
-	Wong's message of "Fri, 14 Mar 2014 00:37:50 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 5503A654-AE1E-11E3-8525-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752584AbaCQVwc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Mar 2014 17:52:32 -0400
+Received: from mail-qa0-f47.google.com ([209.85.216.47]:45971 "EHLO
+	mail-qa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752516AbaCQVwc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Mar 2014 17:52:32 -0400
+Received: by mail-qa0-f47.google.com with SMTP id w5so6061128qac.34
+        for <git@vger.kernel.org>; Mon, 17 Mar 2014 14:52:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=uZ7o9f9ttP/w+IFklg++lrGFtfpOctSIpQxGLZOPbEQ=;
+        b=r6JaLV1Yxs5mUPBTOJRMwTtVmjfaEp3ENj7eGrKvZ6qh/5ew2N+bNTsqBIOasmXzS8
+         k5D2cz3RCuYp7GAh8u+Rde3qbA2+6AA43IoOjIBKCg0hOPUu3nobjuTTNzilywceDpl9
+         ALNWa7UDsvykvXav6O95O6kQUDHX2/jifEUEAOFWJIrmnwrLWXTHB9SWHOvnvJUL1kQK
+         xZXC+HhlgllqssCgY8aS0mMXzvJNViTCHgXjrpRvWV0CJzHXcERp0XXt6QxEfQaygQU7
+         Os+CbPB+N/EyrbTEiXSAni6MsSRP3FDIMQqQyO/7IcSFu6wu2hAJ0F1D8Y2mqP7pj/06
+         SwCg==
+X-Received: by 10.229.176.72 with SMTP id bd8mr31462733qcb.12.1395093151448;
+        Mon, 17 Mar 2014 14:52:31 -0700 (PDT)
+Received: from lovelace.wm.edu ([128.239.171.194])
+        by mx.google.com with ESMTPSA id 21sm18928351qgh.23.2014.03.17.14.52.29
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Mon, 17 Mar 2014 14:52:30 -0700 (PDT)
+X-Mailer: git-send-email 1.9.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244291>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244292>
 
-Andrew Wong <andrew.kw.w@gmail.com> writes:
+Hi again, all.
 
-> This is mainly changing messages that say:
->     run "git foo --bar"
-> to
->     use "git foo --bar" to baz
+I've gone through the patch again to filter for the use of magic numbers so
+that I can leave those hunks alone. Junio says, and Michael agrees, that:
 
-"git foo --bar" is fine, but "to baz" was hard to read without first
-realizing that 'baz' stands for some/any verb.  I think rephrasing
-it to
+> The original hunks show that the code knows and relies on magic numbers 7
+> and 8 very clearly and there are rooms for improvement.  The result after
+> the conversion, however, still have the same magic numbers, but one less
+> of them each.  Doesn't it make it harder to later spot the patterns to
+> come up with a better abstraction that does not rely on the magic number?
 
-	use "git foo --bar" to do baz
+I cut this one down very sharply; Michael says:
 
-would reduce confusion.
+> It would be much better for you to submit only a handful of changes (or
+> even only one!) that is perfect, rather than throwing a bunch at the wall
+> and asking the reviewer to pick between the good and the bad.
 
-> diff --git a/wt-status.c b/wt-status.c
-> index a452407..9f2358a 100644
-> --- a/wt-status.c
-> +++ b/wt-status.c
-> @@ -899,13 +899,13 @@ static void show_merge_in_progress(struct wt_status *s,
->  		status_printf_ln(s, color, _("You have unmerged paths."));
->  		if (s->hints)
->  			status_printf_ln(s, color,
-> -				_("  (fix conflicts and run \"git commit\")"));
-> +				_("  (fix conflicts and use \"git commit\" to conclude the merge)"));
->  	} else {
->  		status_printf_ln(s, color,
->  			_("All conflicts fixed but you are still merging."));
->  		if (s->hints)
->  			status_printf_ln(s, color,
-> -				_("  (use \"git commit\" to conclude merge)"));
-> +				_("  (use \"git commit\" to conclude the merge)"));
->  	}
->  	wt_status_print_trailer(s);
->  }
+Thanks for the guidance, everyone.
 
-The above hunk makes sense.
+This work is microproject #14 for GSoC.
 
-At first glance, I felt that none of the remainder made much sense.
-My reaction was: "git foo --continue" to continue?  What else could
-the --continue option even mean?
+Quint Guvernator (1):
+  general style: replaces memcmp() with starts_with()
 
-The real value I see in these conversions is by saying "use this to
-continue" instead of an unconditional "run this", it implies "*IF*
-you wanted to continue, you can do this", meaning that user also has
-the option of *not* continuing.  But the proposed update falls short
-of realizing the full potential, if that is the value we are trying
-to add.  I'd say
+ builtin/apply.c        |  6 +++---
+ builtin/for-each-ref.c |  2 +-
+ builtin/mktag.c        |  4 ++--
+ builtin/patch-id.c     | 10 +++++-----
+ connect.c              |  4 ++--
+ imap-send.c            |  6 +++---
+ remote.c               |  2 +-
+ 7 files changed, 17 insertions(+), 17 deletions(-)
 
-	fix conflicts and then use "git am --continue" if you want
-	to continue.
-
-or an even more explicit
-
-	fix conflicts and then use "git am --continue" if you want
-	to continue; or you can "git am --abort" to discontinue.
-
-would be an improvement, but
-
-	fix conflicts and then use "git am --continue" to continue
-
-is probably not quite.
-
-> @@ -922,7 +922,7 @@ static void show_am_in_progress(struct wt_status *s,
->  	if (s->hints) {
->  		if (!state->am_empty_patch)
->  			status_printf_ln(s, color,
-> -				_("  (fix conflicts and then run \"git am --continue\")"));
-> +				_("  (fix conflicts and then use \"git am --continue\" to continue)"));
->  		status_printf_ln(s, color,
->  			_("  (use \"git am --skip\" to skip this patch)"));
->  		status_printf_ln(s, color,
+-- 
+1.9.0
