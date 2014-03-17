@@ -1,87 +1,87 @@
-From: Hiroyuki Sano <sh19910711@gmail.com>
-Subject: [PATCH 3/3][GSOC] fsck: use is_dot_or_dotdot() instead of strcmp()
-Date: Tue, 18 Mar 2014 06:30:25 +0900
-Message-ID: <1395091825-8330-3-git-send-email-sh19910711@gmail.com>
-References: <1395091825-8330-1-git-send-email-sh19910711@gmail.com>
-Cc: Hiroyuki Sano <sh19910711@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 17 22:30:54 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/7] test patch hunk editing with "commit -p -m"
+Date: Mon, 17 Mar 2014 14:33:16 -0700
+Message-ID: <xmqqa9cocxyb.fsf@gitster.dls.corp.google.com>
+References: <CA+SSzV1LcuTWMGrJrto3cJ13-MxgFsJP6z3zTYjHp=qZGPoraw@mail.gmail.com>
+	<1394919750-28432-1-git-send-email-benoit.pierre@gmail.com>
+	<1394919750-28432-3-git-send-email-benoit.pierre@gmail.com>
+	<xmqqr460ek3k.fsf@gitster.dls.corp.google.com>
+	<CA+SSzV3CZjpNaFuf1U1DcPXiKy=rpJH8M2q1xeMvyh9uEHxvOA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Benoit Pierre <benoit.pierre@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 17 22:33:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WPf7V-0005NI-Qu
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Mar 2014 22:30:54 +0100
+	id 1WPfA2-00085t-J7
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Mar 2014 22:33:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752619AbaCQVaq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Mar 2014 17:30:46 -0400
-Received: from mail-pb0-f45.google.com ([209.85.160.45]:42562 "EHLO
-	mail-pb0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751606AbaCQVap (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Mar 2014 17:30:45 -0400
-Received: by mail-pb0-f45.google.com with SMTP id uo5so6263582pbc.32
-        for <git@vger.kernel.org>; Mon, 17 Mar 2014 14:30:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=FD0XIlOHsOP2AygU87sX7HgEQzeapAC/P10K2viSR+o=;
-        b=hSZsyT0YS54GwkpOEaISYiWi+WhBMotivykmOpgQY752koNmaqXbs38hYDz0yxQw/u
-         8bLHJNmEOsMDxNQm9VfKwXtlGclBKRB8/anYXjmlVL3Xt+dZRZxAzN+0P8Sui75luxFl
-         VGSsDlvIKPBDcl5h9kja/3kkM3/GoU++9udtTdL1EPeRVIyFC/V02GShbnJEkzSfCWSM
-         RP/ib8GHDWoEh47/NH5Ok2/2ZYeCoQ6pEFetahAf4RANcX7YyXAAPzMNk5AwGEAbyVEQ
-         jox1CVpV2qvbdpc0xljYoF95kgXtGobo+kyBT0tO9rhEqKE0iUV3S7nP3ZSuEXjaQgGe
-         o2uw==
-X-Received: by 10.68.43.2 with SMTP id s2mr28888353pbl.60.1395091844650;
-        Mon, 17 Mar 2014 14:30:44 -0700 (PDT)
-Received: from localhost (ntfkok023001.fkok.nt.adsl.ppp.infoweb.ne.jp. [218.217.179.1])
-        by mx.google.com with ESMTPSA id my6sm46155580pbc.36.2014.03.17.14.30.43
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 17 Mar 2014 14:30:43 -0700 (PDT)
-X-Mailer: git-send-email 1.9.0
-In-Reply-To: <1395091825-8330-1-git-send-email-sh19910711@gmail.com>
+	id S1752697AbaCQVdX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Mar 2014 17:33:23 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63184 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752680AbaCQVdU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Mar 2014 17:33:20 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 39ADE76043;
+	Mon, 17 Mar 2014 17:33:19 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=kXY8pTgtOhopb/9Pgqgjx+aT14Y=; b=eFVTzo
+	yEuoOacB3MpTnpHr01uQkKI0/sZMY1bYMa15DAZSnK3nIsG2xvqFBc+mNGoyp1P7
+	A28uoyuN2pq0BK80pT49kaGVHzlnWxmRPw69vGnX7oGBzYPszFcvXZtY2NEdA0i+
+	i/sV6+FrxrpAFI6Nlyp+E/3eoAe4rebCuh+lg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=u+YJdz7DR4IbpRrStpbQgEoVodI6j67J
+	Yehadp/WJuISREWQzzW/vP6LFdO7iY2bpYZ9MJjtcqwHLOLwZdGfnHgJVE/rkH1M
+	8mZyJDhAxdWeQVXvkNCaQpXSGoy3jBK3j9kVfLBQHjlMQfLuwiigM1X2U6e/nQuO
+	G9ZB+yLWQhM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1750676042;
+	Mon, 17 Mar 2014 17:33:19 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EC26A76038;
+	Mon, 17 Mar 2014 17:33:17 -0400 (EDT)
+In-Reply-To: <CA+SSzV3CZjpNaFuf1U1DcPXiKy=rpJH8M2q1xeMvyh9uEHxvOA@mail.gmail.com>
+	(Benoit Pierre's message of "Mon, 17 Mar 2014 20:46:18 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: C1305D7A-AE1B-11E3-9B53-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244289>
 
-The is_dot_or_dotdot() is used to check if the string is either "." or "..".
+Benoit Pierre <benoit.pierre@gmail.com> writes:
 
-Signed-off-by: Hiroyuki Sano <sh19910711@gmail.com>
----
- fsck.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+> On Mon, Mar 17, 2014 at 7:49 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Benoit Pierre <benoit.pierre@gmail.com> writes:
+>>
+>>> Add (failing) tests: with commit changing the environment to let hooks
+>>> know that no editor will be used (by setting GIT_EDITOR to ":"), the
+>>> "edit hunk" functionality does not work (no editor is launched and the
+>>> whole hunk is committed).
+>>>
+>>> Signed-off-by: Benoit Pierre <benoit.pierre@gmail.com>
+>>> ---
+>>>  t/t7513-commit-patch.sh | 32 ++++++++++++++++++++++++++++++++
+>>>  1 file changed, 32 insertions(+)
+>>>  create mode 100755 t/t7513-commit-patch.sh
+>>>
+>>> diff --git a/t/t7513-commit-patch.sh b/t/t7513-commit-patch.sh
+>>
+>> Again, as I said, I'll rename this to t7514-commit.patch.sh while I
+>> queue this.
+>
+> I assumed the "14" was a typo, will rename, but to
+> t7514-commit-patch.sh right? (with 2 '-').
 
-diff --git a/fsck.c b/fsck.c
-index b3022ad..c9d7784 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -6,6 +6,7 @@
- #include "commit.h"
- #include "tag.h"
- #include "fsck.h"
-+#include "dir.h"
- 
- static int fsck_walk_tree(struct tree *tree, fsck_walk_func walk, void *data)
- {
-@@ -171,10 +172,12 @@ static int fsck_tree(struct tree *item, int strict, fsck_error error_func)
- 			has_full_path = 1;
- 		if (!*name)
- 			has_empty_name = 1;
--		if (!strcmp(name, "."))
--			has_dot = 1;
--		if (!strcmp(name, ".."))
--			has_dotdot = 1;
-+		if (is_dot_or_dotdot(name)) {
-+			if (!name[1])
-+				has_dot = 1;
-+			else
-+				has_dotdot = 1;
-+		}
- 		if (!strcmp(name, ".git"))
- 			has_dotgit = 1;
- 		has_zero_pad |= *(char *)desc.buffer == '0';
--- 
-1.9.0
+Thanks, yes.  That is how I queued the previous one on 'pu', I
+think.
