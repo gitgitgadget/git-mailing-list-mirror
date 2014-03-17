@@ -1,92 +1,93 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH v2] index-pack: do not segfault when keep_name is NULL
-Date: Tue, 18 Mar 2014 06:07:27 +0700
-Message-ID: <1395097647-29362-1-git-send-email-pclouds@gmail.com>
-References: <1394965862-8173-1-git-send-email-pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/1] general style: replaces memcmp() with starts_with()
+Date: Mon, 17 Mar 2014 16:07:00 -0700
+Message-ID: <xmqqd2hka0h7.fsf@gitster.dls.corp.google.com>
+References: <1395093144-6786-1-git-send-email-quintus.public@gmail.com>
+	<1395093144-6786-2-git-send-email-quintus.public@gmail.com>
+	<xmqqob14a14s.fsf@gitster.dls.corp.google.com>
+	<20140317230139.GB19578@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 18 00:07:03 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Quint Guvernator <quintus.public@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Mar 18 00:07:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WPgcY-0003Nx-RL
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Mar 2014 00:07:03 +0100
+	id 1WPgch-0003Yq-UW
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Mar 2014 00:07:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752961AbaCQXG6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Mar 2014 19:06:58 -0400
-Received: from mail-pd0-f180.google.com ([209.85.192.180]:63012 "EHLO
-	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751417AbaCQXG5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Mar 2014 19:06:57 -0400
-Received: by mail-pd0-f180.google.com with SMTP id v10so6225681pde.11
-        for <git@vger.kernel.org>; Mon, 17 Mar 2014 16:06:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=xatqunwrKOY3HVJDsI/FOeMWhdZqGM5lN2L5cfKmSXk=;
-        b=L1uhw9Z58TyX24anOpj6RxskHLQBVEzqDMKS3P9b3V88wu9TxbaMkl8PDfoVCsgFLi
-         s7mBL4oNoLMLy5XBvHGkfPqx+nzL4OKyUnHIXTaqrp7y1JYhVWG0ynF1F7dp/M8EXVWQ
-         7Nobphl8Z/BirHPzamoZupNp9A1VIa2MNNP+zFhIXNhxyB72su2CVRol6imEYJfpolox
-         crbOO9PyKtX1h4TIQcMss6I4WddT1v9VqjPcIIwXuJn0JVv9WKHMLWuUXcRqjDQHttgt
-         zUfJMLWizzZKJsp7SigNq4My7zhJqEEx5dY08+JPDU6slwBMF6aYizVPWKi6/VxyXFoq
-         aZlg==
-X-Received: by 10.66.192.133 with SMTP id hg5mr11584647pac.122.1395097617230;
-        Mon, 17 Mar 2014 16:06:57 -0700 (PDT)
-Received: from lanh ([115.73.237.95])
-        by mx.google.com with ESMTPSA id eb5sm77961806pad.22.2014.03.17.16.06.54
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 17 Mar 2014 16:06:56 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Tue, 18 Mar 2014 06:07:40 +0700
-X-Mailer: git-send-email 1.9.0.40.gaa8c3ea
-In-Reply-To: <1394965862-8173-1-git-send-email-pclouds@gmail.com>
+	id S1753047AbaCQXHF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Mar 2014 19:07:05 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61385 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752994AbaCQXHD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Mar 2014 19:07:03 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C878C757EC;
+	Mon, 17 Mar 2014 19:07:02 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+rBLNZhZwJrW5O9Gv6yBKb++crg=; b=Q5nTdl
+	jc8RQYuDSq7Qq4gEAUhisC8WdVrEfsOqKerHBlU+d2Hk56DY4cNRfSaYbHhffAhA
+	YOJXpU5ZQ6oOBjYZCWuk3xC3ZLGleQ4Pt+5YpuUljwvZWL4Eg0KAqPHXuPz6NDuN
+	VvgO9vdnyM48ae9X/p/ywEPpGU9Da2/Pn8WZo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=tbucwyK4lPWeZqlnUxA9R55FXGGoi3jd
+	SPLhXIKW8kDuAezU07Wc90Xl10zTSt1IyhdTrP4VEOTFje/aJL4Lc6PmWZ84XYPc
+	npTdeWH+YExM61NG+JB+qALUsm09H/iKWbE9MAgPsbWSSNCvEV2zolY0W7zjD/co
+	CS2cH4tdB70=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AA33F757EB;
+	Mon, 17 Mar 2014 19:07:02 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0E0AE757EA;
+	Mon, 17 Mar 2014 19:07:01 -0400 (EDT)
+In-Reply-To: <20140317230139.GB19578@sigill.intra.peff.net> (Jeff King's
+	message of "Mon, 17 Mar 2014 19:01:39 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: D968779E-AE28-11E3-97F8-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244310>
 
-Use the name that is returned by odb_pack_keep() when the caller
-passes NULL in keep_name.
+Jeff King <peff@peff.net> writes:
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- builtin/index-pack.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+> On Mon, Mar 17, 2014 at 03:52:51PM -0700, Junio C Hamano wrote:
+>
+>> > diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+>> > index 3e1d5c3..4135980 100644
+>> > --- a/builtin/for-each-ref.c
+>> > +++ b/builtin/for-each-ref.c
+>> > @@ -193,7 +193,7 @@ static int verify_format(const char *format)
+>> >  		at = parse_atom(sp + 2, ep);
+>> >  		cp = ep + 1;
+>> >  
+>> > -		if (!memcmp(used_atom[at], "color:", 6))
+>> > +		if (starts_with(used_atom[at], "color:"))
+>> >  			need_color_reset_at_eol = !!strcmp(used_atom[at], color_reset);
+>> >  	}
+>> >  	return 0;
+>> 
+>> Good.
+>
+> Actually, I found this one confusing. We are looking for "color:", but
+> if we find it, we _don't_ skip past and look at what comes after.
+> Instead, we compare the whole string. Which works because color_reset
+> actually contains "color:reset", and we end up just re-comparing the
+> first bit of the string. So the memcmp here is redundant, and this can
+> simply become:
+>
+>   need_color_reset_at_eol = !!strcmp(used_atom[at], color_reset);
+>
+> Or am I missing something?
 
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index a6b1c17..b9f6e12 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -1291,7 +1291,7 @@ static void final(const char *final_pack_name, co=
-nst char *curr_pack_name,
- 		if (keep_fd < 0) {
- 			if (errno !=3D EEXIST)
- 				die_errno(_("cannot write keep file '%s'"),
--					  keep_name);
-+					  keep_name ? keep_name : name);
- 		} else {
- 			if (keep_msg_len > 0) {
- 				write_or_die(keep_fd, keep_msg, keep_msg_len);
-@@ -1299,7 +1299,7 @@ static void final(const char *final_pack_name, co=
-nst char *curr_pack_name,
- 			}
- 			if (close(keep_fd) !=3D 0)
- 				die_errno(_("cannot close written keep file '%s'"),
--				    keep_name);
-+					  keep_name ? keep_name : name);
- 			report =3D "keep";
- 		}
- 	}
---=20
-1.9.0.40.gaa8c3ea
+What if used_atom[at] is not related to color at all?  We do not
+want to touch the variable.
