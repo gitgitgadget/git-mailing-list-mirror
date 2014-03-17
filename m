@@ -1,101 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] test-lib.sh: use printf instead of echo
-Date: Mon, 17 Mar 2014 12:26:42 -0700
-Message-ID: <xmqq61nceidp.fsf@gitster.dls.corp.google.com>
-References: <20140314235735.GA6959@ibr.ch> <20140315001855.GK15625@google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] GSoC Change multiple if-else statements to be table-driven
+Date: Mon, 17 Mar 2014 15:27:23 -0400
+Message-ID: <CAPig+cQ07mqZDsHQ7qgWARx6eZ2mD+-w0YF3pJXwiJxufj-peg@mail.gmail.com>
+References: <CAPig+cQu7D3AUghOSUOZBwf5+iHCPkxPbY1WuQmPJk1muCk7tQ@mail.gmail.com>
+	<1394742059-7300-1-git-send-email-zhaox383@umn.edu>
+	<CAPig+cRF_eQiGugR8TSks5ki375y-5wiQ7HWKyKRudJ5apd4cg@mail.gmail.com>
+	<xmqqiorghgaj.fsf@gitster.dls.corp.google.com>
+	<CAPig+cSG0YsdTGWWyxWrg+s235qDe7Xr-jXT2mOkpvA6OaGWyg@mail.gmail.com>
+	<7v38ihuvq7.fsf@alter.siamese.dyndns.org>
+	<5327027D.6090500@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Uwe Storbeck <uwe@ibr.ch>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 17 20:26:52 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Mon Mar 17 20:27:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WPdBT-0001pv-O7
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Mar 2014 20:26:52 +0100
+	id 1WPdC4-0002S7-K5
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Mar 2014 20:27:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750813AbaCQT0r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Mar 2014 15:26:47 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47293 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750749AbaCQT0q (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Mar 2014 15:26:46 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4D3E276898;
-	Mon, 17 Mar 2014 15:26:46 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+w2E7TSh9B2FEnWWK6jmc4Ad8ak=; b=nvgqGK
-	ieEIBfL4ciblWYp5UligRV22ayu7pM5Fh9EggV8gmF/o84/DdvZQB3BKMu70A0xu
-	rW3Lwu4xDQ5AG6+09VixLjNIootzAcN9S46N3tWnSceFFKol5BuYFbIyNxdM31VP
-	M5/ferP8T3kGcTD1i9XOz2RVz0stLzdS6/NGk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fBciI2E9vUNdUXUf3Rzxw0CNpmNGjr78
-	B4oYX3XlHj3EZjINi8GqA2xUGEicRDbdOaalNIoqFKM9Hn+r92zQcC+QRW26RRek
-	kNlwEe4ayeSUdSLS+uE+uq5nHKMXyohVArFhToUvLv+dF1uN5JZh1bk+pSKs8OOa
-	nMZ6Mr4ZLxs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 38C6876896;
-	Mon, 17 Mar 2014 15:26:46 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8C59A76894;
-	Mon, 17 Mar 2014 15:26:45 -0400 (EDT)
-In-Reply-To: <20140315001855.GK15625@google.com> (Jonathan Nieder's message of
-	"Fri, 14 Mar 2014 17:18:55 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 13C55A98-AE0A-11E3-B994-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1750893AbaCQT1Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Mar 2014 15:27:24 -0400
+Received: from mail-yh0-f43.google.com ([209.85.213.43]:62073 "EHLO
+	mail-yh0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750749AbaCQT1X (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Mar 2014 15:27:23 -0400
+Received: by mail-yh0-f43.google.com with SMTP id b6so5783967yha.16
+        for <git@vger.kernel.org>; Mon, 17 Mar 2014 12:27:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=GvykHgomLH+/FheUrnPiemU5RGWIK5l683FYoB61Wt0=;
+        b=ZgBWwPQBvD0G+M/r5pN0tsiSgG6xRD1tJC7Jvv/zKTWbUZ7wRJshkx1GQckIMIseyT
+         uI5s9NdaErpkztkYiDvgp4rL9z9RM4hBMgUz4YMXb46HAAvJIo22Hc9217eu/WNJCnpn
+         B5tP867TjD/2DQQjoXslmo+5zUP8RzbszTJ0v9FF4IjbSVg9Vk4oJBuEyaQS1Pl98jfx
+         5gnRlmKTzaLyhAI8DvTl2ciZG0luz9au8jWfRZrh/+NHJCpQRAZRUidamlppF/Pn1NVe
+         b6VkUEZRXzVlAbdhLUWfd0AQTYzFqIDjx4y2TZMaFqaO6o/m9D6Bqu3joGN0RkEJKfsy
+         +Q7w==
+X-Received: by 10.236.137.8 with SMTP id x8mr12291910yhi.4.1395084443260; Mon,
+ 17 Mar 2014 12:27:23 -0700 (PDT)
+Received: by 10.170.180.134 with HTTP; Mon, 17 Mar 2014 12:27:23 -0700 (PDT)
+In-Reply-To: <5327027D.6090500@alum.mit.edu>
+X-Google-Sender-Auth: dBaBtCK17upwlQYKkhPhEfeY6zs
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244271>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244272>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+On Mon, Mar 17, 2014 at 10:11 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> On 03/17/2014 08:31 AM, Junio C Hamano wrote:
+>> Eric Sunshine <sunshine@sunshineco.com> writes:
+>>
+>>> Perhaps it is time to mark this microproject as "taken" on the GSoC
+>>> page [2], along a fews others for which we have received multiple
+>>> submissions.
+>
+> I just marked #8 as taken, as it's been beaten to death.
+>
+> I haven't been keeping careful track of which other microprojects have
+> been overused.  If you have suggestions for the chopping block, let me know.
 
-> Uwe Storbeck wrote:
->
->> Backslash sequences are interpreted as control characters
->> by the echo command of some shells (e.g. dash).
->
-> This has bothered me for a while but never enough to do anything about
-> it.  Thanks for fixing it.
->
->> Signed-off-by: Uwe Storbeck <uwe@ibr.ch>
->
-> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
->
-> (patch left unsnipped for reference)
->> ---
->>  t/test-lib.sh | 4 ++--
->>  1 file changed, 2 insertions(+), 2 deletions(-)
->> 
->> diff --git a/t/test-lib.sh b/t/test-lib.sh
->> index 1531c24..8209204 100644
->> --- a/t/test-lib.sh
->> +++ b/t/test-lib.sh
->> @@ -277,7 +277,7 @@ error "Test script did not set test_description."
->>  
->>  if test "$help" = "t"
->>  then
->> -	echo "$test_description"
->> +	printf '%s\n' "$test_description"
->>  	exit 0
->>  fi
->>  
->> @@ -328,7 +328,7 @@ test_failure_ () {
->>  	test_failure=$(($test_failure + 1))
->>  	say_color error "not ok $test_count - $1"
->>  	shift
->> -	echo "$@" | sed -e 's/^/#	/'
->> +	printf '%s\n' "$@" | sed -e 's/^/#	/'
-
-This is wrong, isn't it?  Why do we want one line per item here?
-
->>  	test "$immediate" = "" || { GIT_EXIT_OK=t; exit 1; }
->>  }
->>  
+A quick (perhaps inaccurate) search of the mailing list shows that, of
+the remaining "untaken" items, #10, 11, 12, 15, 16, and 18 have had
+just one submission, and #13 had two, so we're okay. (When I wrote the
+above, I was probably thinking of some of the earlier items on the
+list which we saw submitted repeatedly.)
