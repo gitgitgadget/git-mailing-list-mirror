@@ -1,119 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] GSoC Change multiple if-else statements to be table-driven
-Date: Mon, 17 Mar 2014 00:31:44 -0700
-Message-ID: <7v38ihuvq7.fsf@alter.siamese.dyndns.org>
-References: <CAPig+cQu7D3AUghOSUOZBwf5+iHCPkxPbY1WuQmPJk1muCk7tQ@mail.gmail.com>
-	<1394742059-7300-1-git-send-email-zhaox383@umn.edu>
-	<CAPig+cRF_eQiGugR8TSks5ki375y-5wiQ7HWKyKRudJ5apd4cg@mail.gmail.com>
-	<xmqqiorghgaj.fsf@gitster.dls.corp.google.com>
-	<CAPig+cSG0YsdTGWWyxWrg+s235qDe7Xr-jXT2mOkpvA6OaGWyg@mail.gmail.com>
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Re: [PATCH] Documentation/git-am: Document supported --patch-format
+ options
+Date: Mon, 17 Mar 2014 20:35:55 +1300
+Message-ID: <5326A5DB.5070407@gmail.com>
+References: <1394509917-9679-1-git-send-email-judge.packham@gmail.com>	<532559D2.3050802@gmail.com> <7vlhw92us1.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Yao Zhao <zhaox383@umn.edu>, Git List <git@vger.kernel.org>,
-	Adam <adam@sigterm.info>, Michael Haggerty <mhagger@alum.mit.edu>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Mar 17 08:30:42 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Mar 17 08:36:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WPS0P-0007bn-Iv
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Mar 2014 08:30:41 +0100
+	id 1WPS5i-0004i6-33
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Mar 2014 08:36:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756542AbaCQHah (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Mar 2014 03:30:37 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37290 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756205AbaCQHag (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Mar 2014 03:30:36 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 140C96E255;
-	Mon, 17 Mar 2014 03:30:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=IXQeb/sIzJmnyJBePI3KcbUNe38=; b=lTkxvr
-	w4/F4NYUalNehJ5BeEXd/h0k4VpENxOyjrnlFlhfRK+08EbLsayL+EuWw0uCbrs1
-	7OWMdOiBn7YEOiK01dVctBdKAg2H7znezmSANY3VZqafQenylXWWKJu7u7DvM9af
-	/Jiq6zy2w3BZUJlieyBuuuLZ10JiAhYuCHUek=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rL4asx8kqN7QlJjy2jS4y0MDVNHD6PkK
-	id7WLmyiAjB30MYKXgQwzHCytG2p3EhrkJ6cy0uaxCdel0UsODa6HuIT81eAfCZC
-	EgHhrfu3j/+S5IBCGmIMAFAM5Gu/Tn2lZcwGgXZMO56gT3LfNAqUSaG9lFnn24L0
-	vodas2MhrAw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F2E2D6E254;
-	Mon, 17 Mar 2014 03:30:35 -0400 (EDT)
-Received: from pobox.com (unknown [198.0.213.178])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1E7CF6E250;
-	Mon, 17 Mar 2014 03:30:35 -0400 (EDT)
-In-Reply-To: <CAPig+cSG0YsdTGWWyxWrg+s235qDe7Xr-jXT2mOkpvA6OaGWyg@mail.gmail.com>
-	(Eric Sunshine's message of "Mon, 17 Mar 2014 02:29:10 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.4 (gnu/linux)
-X-Pobox-Relay-ID: 076338BA-ADA6-11E3-AC9A-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S932243AbaCQHgF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Mar 2014 03:36:05 -0400
+Received: from mail-pd0-f180.google.com ([209.85.192.180]:51549 "EHLO
+	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932124AbaCQHgE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Mar 2014 03:36:04 -0400
+Received: by mail-pd0-f180.google.com with SMTP id v10so5246879pde.11
+        for <git@vger.kernel.org>; Mon, 17 Mar 2014 00:36:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=LlnIbwWIYmMxMZsURlSnY2zcKNw1h/8FvwB3SxxRjTg=;
+        b=Jk6H23B1LLW04hCQpGYJbq9KHhChCwzOLFTlI2gx6HmNVW1bazoNCBlmEDqL9fJkji
+         rrdk2Nb8DagZFHAYvecuYnqsDDoWiU9+ChxvlDzEUyF8CIvHoqadvF5p3jKLDZcw77FL
+         YwkReFWY7s8cdaaXVb0vS0rLKqC6jHcLYLxF/5f205IqF/wmQMfA54+scHcZoaCN+kGA
+         pLD9jj/BDOhr29DI4GRIqXQ0m1hqXd3d6at2ZvnR5BOTf5fSP7/A3nIOPuT7H2T2sDO5
+         9PO51yPy1fsW9xKkuJmvR4OVyKQKeTz7VjkQk6CO7pTCIQDOrJ0hr28Wbx70P8Z0x79Q
+         y5Og==
+X-Received: by 10.66.158.132 with SMTP id wu4mr24503193pab.66.1395041763049;
+        Mon, 17 Mar 2014 00:36:03 -0700 (PDT)
+Received: from linux.site (115-188-15-163.jetstream.xtra.co.nz. [115.188.15.163])
+        by mx.google.com with ESMTPSA id gg3sm40582398pbc.34.2014.03.17.00.35.57
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 17 Mar 2014 00:35:59 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
+In-Reply-To: <7vlhw92us1.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244228>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+On 17/03/14 19:39, Junio C Hamano wrote:
+> Chris Packham <judge.packham@gmail.com> writes:
+> 
+>> Ping?
+> 
+> Hasn't it been already cooking in 'next' for a few days?
+> 
 
-> Perhaps it is time to mark this microproject as "taken" on the GSoC
-> page [2], along a fews others for which we have received multiple
-> submissions.
->
-> [2]: https://github.com/git/git.github.io/blob/master/SoC-2014-Microprojects.md
-
-I actually have been of multiple minds on this.
-
- * After seeing that many candidates tried to solve the same micro,
-   apparently without checking answers by other people, and seeing
-   how they responded to the reviews given to them, I found that we
-   had as equally good interactions with them to judge their skills,
-   both techincal and social, as we would have had if each of them
-   solved different micros.
-
- * Many reviewers may have gotten tired of seeing many novice
-   attempts on the same micro over and over again, giving gentle
-   suggestions for improvements. Because the _sole_ purpose of these
-   micros were to help candidates get their toes wet in the process,
-   duplicated efforts on the candidates' side are not wasted---they
-   each hopefully learned how to interact with this community.
-
-   But it is true that, if we were wishing to also get some trivial
-   clean-ups in the codebase as a side effect of these micros, we
-   have wasted reviewer bandwidth by not having enough micros, and
-   reviewers may have had some feeling that their efforts did not
-   fully contribute to improving our codebase, which may have been
-   discouraging.
-
-   Big thanks go to all reviewers who participated despite this.  If
-   we had more micros, the apparent wastage of the reviewer efforts
-   might have been avoided.
-
- * Many candidates did not even bother to check if others are
-   working on the same micro, however, which would be a bad sign by
-   itself. Concentrating on one's own topic, without paying any
-   attention to what others are working on the same software, is
-   never a good discipline.
-
-   Some may argue that it would be unfair to blame the candidates on
-   this---they may have picked up micros that haven't been solved if
-   we had more---but after seeing that many candidates' submissions
-   apparently did not take into account the reviews given to others'
-   submissions on the same micro and/or had many exactly the same
-   issues like log message styles as submissions on other micros
-   that have already been reviewed, I personally do not think they
-   are blameless.
-
-So in short, yes it would have been nicer if we had more micros than
-candidates, but I do not think it was detrimental for the purpose of
-these micro exercises that multiple candidates ended up attempting
-the same micro.
-
-Again, Big Thanks to Michael for the excellent "micro" idea, and all
-reviewers who participated.
+Indeed I think I missed a "What's cooking". Do you want me to submit a
+fixup for the spelling mistake?
