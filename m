@@ -1,156 +1,116 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH][GSOC] Selection of the verbose message is replaced with
- generated message in install_branch_config()
-Date: Mon, 17 Mar 2014 06:53:22 -0400
-Message-ID: <CAPig+cQ_gvDWKkgN543TZtfGOqDkH0EYS39w+eEw8CdJO9Ux3Q@mail.gmail.com>
-References: <1395050104-19152-1-git-send-email-moxobukob@gmail.com>
+From: =?UTF-8?B?5rKI5om/5oGp?= <ubuntu2012@126.com>
+Subject: Re:Re: [PATCH] Rewrite the diff-no-index.c
+Date: Mon, 17 Mar 2014 18:24:02 +0800 (CST)
+Message-ID: <d6981b9.14361.144cf91cb20.Coremail.ubuntu2012@126.com>
+References: <1394973858-16505-1-git-send-email-ubuntu2012@126.com>
+ <CAPig+cRjGonML5NLyv3eqsKuM45O+whVCOQKNdj-E=zW9mRy4g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Git List <git@vger.kernel.org>
-To: Aleksey Mokhovikov <moxobukob@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 17 11:53:29 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
+Cc: "Git List" <git@vger.kernel.org>
+To: "Eric Sunshine" <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Mon Mar 17 11:54:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WPVAe-0005Ll-IY
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Mar 2014 11:53:29 +0100
+	id 1WPVBz-0006pd-Vn
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Mar 2014 11:54:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932555AbaCQKxY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Mar 2014 06:53:24 -0400
-Received: from mail-yh0-f43.google.com ([209.85.213.43]:50043 "EHLO
-	mail-yh0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932457AbaCQKxX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Mar 2014 06:53:23 -0400
-Received: by mail-yh0-f43.google.com with SMTP id b6so4999407yha.16
-        for <git@vger.kernel.org>; Mon, 17 Mar 2014 03:53:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=raevCD/hLz9cj7azRn+nEDBigcVzmijuNbuRvVvS4bo=;
-        b=MdK30fsw2VckUKqTYjD052ClscoYbH44FkbEbglTTSwMk6lV9nmg5hnjVSWKTp6Va7
-         tI44T4i5zPy1Q3NLCIR7bpqYLg7AsRfHmrGppOxbV8wahhQjm1Qu2DjL+gKEKQJcHdmZ
-         50zEkExshR1ohJA3Jo6OH3rzYuPPgFGVgLxFZUqykHRAzRMNbUWakEmz3K6XCEKj3Ko4
-         CaocYqpSm/XjwX2Ka1cFiyq0/Ci6EJTZnE71afDKQG1Cwv7Phw34ifvPUsjWvZyfnELh
-         yW7JAaQeIwU81AHevjvKOi8Wlk9DOj+fJ1Zpc754D+rlj5pNkq/AL6WJIuueDYTz1lGn
-         b22A==
-X-Received: by 10.236.71.100 with SMTP id q64mr785112yhd.133.1395053602998;
- Mon, 17 Mar 2014 03:53:22 -0700 (PDT)
-Received: by 10.170.180.134 with HTTP; Mon, 17 Mar 2014 03:53:22 -0700 (PDT)
-In-Reply-To: <1395050104-19152-1-git-send-email-moxobukob@gmail.com>
-X-Google-Sender-Auth: L0iigEpMst-FFuE-YKW-IF1tdKM
+	id S932573AbaCQKyr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Mar 2014 06:54:47 -0400
+Received: from m15-2.126.com ([220.181.15.2]:47088 "EHLO m15-2.126.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932457AbaCQKyr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Mar 2014 06:54:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
+	s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=LhQ/h
+	zp5GaOuK3dXuzrfolFR7sz8CD8P7ofWVsnqJmQ=; b=lpHnlV7NDTykzlxibaeVQ
+	OVZuUh4o1ftiaGfjNx0SeDgyNgNqtLRRF/Q2FRsnGW/syRp2Bg+IOkeUQ98/V/RW
+	+XlLuiA+dUpcXwlGt1Hpm1XkYMi9H/3aQlX1McBbWP6LnpuoC8B5yUN1IXPF4Q49
+	GlNUUBeOoEmFPUP/rR+UJ0=
+Received: from ubuntu2012$126.com ( [182.148.250.78] ) by
+ ajax-webmail-wmsvr2 (Coremail) ; Mon, 17 Mar 2014 18:24:02 +0800 (CST)
+X-Originating-IP: [182.148.250.78]
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version SP_ntes V3.5 build
+ 20131204(24406.5820.5783) Copyright (c) 2002-2014 www.mailtech.cn 126com
+In-Reply-To: <CAPig+cRjGonML5NLyv3eqsKuM45O+whVCOQKNdj-E=zW9mRy4g@mail.gmail.com>
+X-CM-TRANSID: AsqowADX3UZDzSZTqiAdAA--.30274W
+X-CM-SenderInfo: hxex03jxsqija6rslhhfrp/1tbikAlRqE0vVZjQ3gACsD
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244244>
 
-Thanks for the submission. Comments below to give you a taste of the
-Git review process...
-
-On Mon, Mar 17, 2014 at 5:55 AM, Aleksey Mokhovikov <moxobukob@gmail.com> wrote:
-> Subject: [GSOC] Selection of the verbose message is replaced with generated message in install_branch_config()
-
-Mentioning [GSoC] in the subject is indeed a good idea.
-
-The subject should be concise. Try to keep it at 65-70 characters or
-less. More detailed information can be written following the subject
-(separated from the subject by a blank line).
-
-Write in imperative tone: say "replace X with Y" rather than "X is
-replaced with Y".
-
-Mention the module or function you're touching.
-
-You might say something like this:
-
-    Subject: install_branch_config: replace if-chain with string composition
-
-(But read below since that's not what you really want to do...)
-
-> This is a milliproject from git google summer of code page. The current code that selects the output message is quite easy to understand. So I tried to improve it by removing nested conditions and code duplication. The output string is generated by selecting the proper parts of the message and concatenating them the into one template string.
-
-Wrap lines to 65-70 characters.
-
-I suspect you meant "not quite easy" rather than "quite easy".
-
-This prose is almost pure email commentary. It doesn't really convey
-useful information to a person reading the patch months or years from
-now. Place commentary below the "---" line under your sign-off.
-
-Matthieu already pointed you at [1] which explains why this approach
-of composing the strings is not GNU gettext-friendly, so I'll review
-other aspects of the patch.
-
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/244210
-
-> Signed-off-by: Aleksey Mokhovikov <moxobukob@gmail.com>
-> ---
->  branch.c | 39 ++++++++++++++++-----------------------
->  1 file changed, 16 insertions(+), 23 deletions(-)
->
-> diff --git a/branch.c b/branch.c
-> index 723a36b..2ee353f 100644
-> --- a/branch.c
-> +++ b/branch.c
-> @@ -77,29 +77,22 @@ void install_branch_config(int flag, const char *local, const char *origin, cons
->         strbuf_release(&key);
->
->         if (flag & BRANCH_CONFIG_VERBOSE) {
-> -               if (remote_is_branch && origin)
-> -                       printf_ln(rebasing ?
-> -                                 _("Branch %s set up to track remote branch %s from %s by rebasing.") :
-> -                                 _("Branch %s set up to track remote branch %s from %s."),
-> -                                 local, shortname, origin);
-> -               else if (remote_is_branch && !origin)
-> -                       printf_ln(rebasing ?
-> -                                 _("Branch %s set up to track local branch %s by rebasing.") :
-> -                                 _("Branch %s set up to track local branch %s."),
-> -                                 local, shortname);
-> -               else if (!remote_is_branch && origin)
-> -                       printf_ln(rebasing ?
-> -                                 _("Branch %s set up to track remote ref %s by rebasing.") :
-> -                                 _("Branch %s set up to track remote ref %s."),
-> -                                 local, remote);
-> -               else if (!remote_is_branch && !origin)
-> -                       printf_ln(rebasing ?
-> -                                 _("Branch %s set up to track local ref %s by rebasing.") :
-> -                                 _("Branch %s set up to track local ref %s."),
-> -                                 local, remote);
-> -               else
-> -                       die("BUG: impossible combination of %d and %p",
-> -                           remote_is_branch, origin);
-> +               const char *message_template_parts[] = {
-> +                       "Branch %s set up to track",
-> +                       origin ? " remote" : " local",
-> +                       remote_is_branch ? " branch %s" : " ref %s",
-> +                       (remote_is_branch && origin) ? " from %s" : "",
-> +                       rebasing ? " by rebasing." : "."};
-
-For portability, this project is still mostly restricted to C89, so
-these non-constant C99 initializer expressions are probably a no-go.
-
-> +               struct strbuf message_template = STRBUF_INIT;
-> +               size_t i = 0;
-> +
-> +               for (i = 0; i < sizeof(message_template_parts)/sizeof(const char *); ++i) {
-
-You can use the ARRAY_SIZE() macro instead of sizeof(...)/sizeof(...).
-
-On this project, i++ is preferred when the context does not
-specifically demand ++i.
-
-> +                       strbuf_addstr(&message_template, message_template_parts[i]);
-> +               }
-> +
-> +               printf_ln(_(message_template.buf), local, remote_is_branch ? shortname : remote, origin);
-> +
-> +               strbuf_release(&message_template);
->         }
->  }
->
-> --
-> 1.8.3.2
+dGhhbmsgeW91IGZvciB5b3VyIGNvbW1lbnRzCkF0IDIwMTQtMDMtMTcgMTc6MTM6MzgsIkVyaWMg
+U3Vuc2hpbmUiIDxzdW5zaGluZUBzdW5zaGluZWNvLmNvbT4gd3JvdGU6Cj5UaGFua3MgZm9yIHRo
+ZSByZXN1Ym1pc3Npb24uIENvbW1lbnRzIGJlbG93Li4uDQo+DQo+T24gU3VuLCBNYXIgMTYsIDIw
+MTQgYXQgODo0NCBBTSwgIDx1YnVudHUyMDEyQDEyNi5jb20+IHdyb3RlOg0KPj4gRnJvbTog5rKI
+5om/5oGpIDx1YnVudHUyMDEyQDEyNi5jb20+DQo+PiBTdWJqZWN0OiBbUEFUQ0hdIFJld3JpdGUg
+dGhlIGRpZmYtbm8taW5kZXguYw0KPg0KPlRoaXMgaXMgeW91ciBzZWNvbmQgdmVyc2lvbiBvZiB0
+aGUgcGF0Y2gsIHNvIHlvdSBzaG91bGQgc2F5IFtQQVRDSCB2Ml0uDQo+DQo+TW9zdCBwYXRjaGVz
+IHJld3JpdGUgc29tZXRoaW5nLCBzbyAicmV3cml0ZSIgaW4gdGhlIHN1YmplY3QgZG9lcyBub3QN
+Cj5jb252ZXkgbXVjaC4gQmV0dGVyIHdvdWxkIGJlIHRvIGV4cGxhaW4gd2hhdCB0aGUgcGF0Y2gg
+ZG9lcy4gRm9yDQo+aW5zdGFuY2U6DQo+DQo+ICAgIFN1YmplY3Q6IGRpZmYtbm8taW5kZXg6IHJl
+cGxhY2UgbWFudWFsICIuIiAmICIuLiIgY2hlY2sgd2l0aA0KPmlzX2RvdF9vcl9kb3Rkb3QoKQ0K
+Pg0KPj4gSSBhbSBzb3JyeSBmb3IgdGhhdCBJIHNlbmQgdGhpcyBhZ2lhbi5MYXN0IHBhdGNoIEkg
+aGF2ZSBzb21lIGVycm9yLihNYXliZSB0aGlzIHRpbWUgd2lsbCBsaWtlIHRoZSBwcmV2aW91cyku
+SXQgaXMgYXBwbHkgZm9yIEdTT0MNCj4NCj5UaGlzIGNvbW1lbnRhcnkgaXMgcmVsZXZhbnQgdG8g
+dGhlIG9uZ29pbmcgZW1haWwgY29udmVyc2F0aW9uIGJ1dCBkb2VzDQo+bm90IGJlbG9uZyBpbiB0
+aGUgY29tbWl0IG1lc3NhZ2UsIHNvIHlvdSBzaG91bGQgcGxhY2UgaXQgYmVsb3cgdGhlDQo+Ii0t
+LSIgbGluZSBhZnRlciB5b3VyIHNpZ24tb2ZmLg0KPg0KPj4gU2lnbmVkLW9mZi1ieTog5rKI5om/
+5oGpIDx1YnVudHUyMDEyQDEyNi5jb20+DQo+PiAtLS0NCj4NCj5UaGlzIGlzIHdoZXJlIHlvdSB3
+b3VsZCBwbGFjZSBjb21tZW50YXJ5LiBJdCBpcyBhbHNvIGdvb2QgZXRpcXVldHRlIHRvDQo+dGVs
+bCByZXZpZXdlcnMgd2hhdCBjaGFuZ2VkIGluIHRoaXMgdmVyc2lvbiBvZiB0aGUgcGF0Y2ggYW5k
+IHRvDQo+cHJvdmlkZSBhIGxpbmsgdG8gdGhlIHByZXZpb3VzIHZlcnNpb24sIGxpa2UgdGhpcyBb
+MV0uDQo+DQo+WzFdOiBodHRwOi8vdGhyZWFkLmdtYW5lLm9yZy9nbWFuZS5jb21wLnZlcnNpb24t
+Y29udHJvbC5naXQvMjQ0MDkzDQo+DQo+PiAgZGlmZi1uby1pbmRleC5jIHwgICAgNSArKystLQ0K
+Pj4gIGRpci5oICAgICAgICAgICB8ICAgIDMgKystDQo+PiAgMiBmaWxlcyBjaGFuZ2VkLCA1IGlu
+c2VydGlvbnMoKyksIDMgZGVsZXRpb25zKC0pDQo+Pg0KPj4gZGlmZiAtLWdpdCBhL2RpZmYtbm8t
+aW5kZXguYyBiL2RpZmYtbm8taW5kZXguYw0KPj4gaW5kZXggOGUxMGJmZi4uMWZiMGMwZiAxMDA2
+NDQNCj4+IC0tLSBhL2RpZmYtbm8taW5kZXguYw0KPj4gKysrIGIvZGlmZi1uby1pbmRleC5jDQo+
+PiBAQCAtMywxMyArMywxNCBAQA0KPj4gICAqIENvcHlyaWdodCAoYykgMjAwNyBieSBKb2hhbm5l
+cyBTY2hpbmRlbGluDQo+PiAgICogQ29weXJpZ2h0IChjKSAyMDA4IGJ5IEp1bmlvIEMgSGFtYW5v
+DQo+PiAgICovDQo+PiAtDQo+PiArI2RlZmluZSBFWElUDQo+DQo+VGhpcyBjaGFuZ2UgaXMgbm9u
+LW9idmlvdXMgYW5kIHNob3VsZCBiZSBleHBsYWluZWQgaW4gdGhlIGNvbW1pdA0KPm1lc3NhZ2Us
+IG90aGVyd2lzZSByZXZpZXdlcnMgd2lsbCBub3QgdW5kZXJzdGFuZCBpdHMgcHVycG9zZS4NCj4N
+Cj5JbiBmYWN0LCB5b3UgYXJlIGRvaW5nIHRoaXMgYmVjYXVzZSB5b3Ugd2FudCB0byBvbWl0IHRo
+ZSBkZWNsYXJhdGlvbg0KPm9mIHJlYWRfZGlyZWN0b3J5KCkgZnJvbSBkaXIuaCB3aGVuIGl0IGlz
+IGluY2x1ZGVkIGluIHRoaXMgZmlsZSB0bw0KPmF2b2lkIGNvbmZsaWN0IHdpdGggdGhlIChkaWZm
+ZXJlbnQpIHJlYWRfZGlyZWN0b3J5KCkgaW1wbGVtZW50YXRpb24gaW4NCj50aGlzIGZpbGUuIFRo
+aXMgaXMgYW4gdWdseSB3YXkgdG8gc29sdmUgdGhlIHByb2JsZW0uIFJlbmFtaW5nDQo+cmVhZF9k
+aXJlY3RvcnkoKSBpbiB0aGlzIGZpbGUgd291bGQgYmUgYSBtdWNoIGNsZWFuZXIgc29sdXRpb24g
+KGJ1dA0KPnNob3VsZCBiZSBkb25lIGFzIGEgc2VwYXJhdGUgcHJlcGFyYXRvcnkgcGF0Y2gpLg0K
+Pg0KPj4gICNpbmNsdWRlICJjYWNoZS5oIg0KPj4gICNpbmNsdWRlICJjb2xvci5oIg0KPj4gICNp
+bmNsdWRlICJjb21taXQuaCINCj4+ICAjaW5jbHVkZSAiYmxvYi5oIg0KPj4gICNpbmNsdWRlICJ0
+YWcuaCINCj4+ICAjaW5jbHVkZSAiZGlmZi5oIg0KPj4gKyNpbmNsdWRlICJkaXIuaCINCj4+ICAj
+aW5jbHVkZSAiZGlmZmNvcmUuaCINCj4+ICAjaW5jbHVkZSAicmV2aXNpb24uaCINCj4+ICAjaW5j
+bHVkZSAibG9nLXRyZWUuaCINCj4+IEBAIC0yNSw3ICsyNiw3IEBAIHN0YXRpYyBpbnQgcmVhZF9k
+aXJlY3RvcnkoY29uc3QgY2hhciAqcGF0aCwgc3RydWN0IHN0cmluZ19saXN0ICpsaXN0KQ0KPj4g
+ICAgICAgICAgICAgICAgIHJldHVybiBlcnJvcigiQ291bGQgbm90IG9wZW4gZGlyZWN0b3J5ICVz
+IiwgcGF0aCk7DQo+Pg0KPj4gICAgICAgICB3aGlsZSAoKGUgPSByZWFkZGlyKGRpcikpKQ0KPj4g
+LSAgICAgICAgICAgICAgIGlmIChzdHJjbXAoIi4iLCBlLT5kX25hbWUpICYmIHN0cmNtcCgiLi4i
+LCBlLT5kX25hbWUpKQ0KPj4gKyAgICAgICAgICAgICAgIGlmIChpc19kb3Rfb3JfZG90ZG90KGUt
+PmRfbmFtZSkpDQo+DQo+VGhpcyBsb2dpYyBpcyBiYWNrd2FyZC4gS2VlcCBpbiBtaW5kIHRoZSBy
+ZXR1cm4gdmFsdWUgb2Ygc3RyY21wKCkgYW5kDQo+dGhlbiB0aGluayBjYXJlZnVsbHkgYWJvdXQg
+dGhlIGV4cHJlc3Npb24gJ3N0cmNtcCguLi4pICYmDQo+c3RyY21wKC4uLiknLg0KPg0KPj4gICAg
+ICAgICAgICAgICAgICAgICAgICAgc3RyaW5nX2xpc3RfaW5zZXJ0KGxpc3QsIGUtPmRfbmFtZSk7
+DQo+Pg0KPj4gICAgICAgICBjbG9zZWRpcihkaXIpOw0KPj4gZGlmZiAtLWdpdCBhL2Rpci5oIGIv
+ZGlyLmgNCj4+IGluZGV4IDU1ZTUzNDUuLmMwZTQ1YzggMTAwNjQ0DQo+PiAtLS0gYS9kaXIuaA0K
+Pj4gKysrIGIvZGlyLmgNCj4+IEBAIC0xMzgsOCArMTM4LDkgQEAgZXh0ZXJuIGludCBtYXRjaF9w
+YXRoc3BlYyhjb25zdCBzdHJ1Y3QgcGF0aHNwZWMgKnBhdGhzcGVjLA0KPj4gIGV4dGVybiBpbnQg
+d2l0aGluX2RlcHRoKGNvbnN0IGNoYXIgKm5hbWUsIGludCBuYW1lbGVuLCBpbnQgZGVwdGgsIGlu
+dCBtYXhfZGVwdGgpOw0KPj4NCj4+ICBleHRlcm4gaW50IGZpbGxfZGlyZWN0b3J5KHN0cnVjdCBk
+aXJfc3RydWN0ICpkaXIsIGNvbnN0IHN0cnVjdCBwYXRoc3BlYyAqcGF0aHNwZWMpOw0KPj4gKyNp
+Zm5kZWYgRVhJVA0KPj4gIGV4dGVybiBpbnQgcmVhZF9kaXJlY3Rvcnkoc3RydWN0IGRpcl9zdHJ1
+Y3QgKiwgY29uc3QgY2hhciAqcGF0aCwgaW50IGxlbiwgY29uc3Qgc3RydWN0IHBhdGhzcGVjICpw
+YXRoc3BlYyk7DQo+PiAtDQo+PiArI2VuZGlmDQo+DQo+U2VlIGFib3ZlLg0KPg0KPj4gIGV4dGVy
+biBpbnQgaXNfZXhjbHVkZWRfZnJvbV9saXN0KGNvbnN0IGNoYXIgKnBhdGhuYW1lLCBpbnQgcGF0
+aGxlbiwgY29uc3QgY2hhciAqYmFzZW5hbWUsDQo+PiAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICBpbnQgKmR0eXBlLCBzdHJ1Y3QgZXhjbHVkZV9saXN0ICplbCk7DQo+PiAgc3RydWN0
+IGRpcl9lbnRyeSAqZGlyX2FkZF9pZ25vcmVkKHN0cnVjdCBkaXJfc3RydWN0ICpkaXIsIGNvbnN0
+IGNoYXIgKnBhdGhuYW1lLCBpbnQgbGVuKTsNCj4+IC0tDQo+PiAxLjcuOS41DQo=
