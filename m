@@ -1,93 +1,206 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] subtree: initialize "prefix" variable
-Date: Mon, 17 Mar 2014 16:08:50 -0400
-Message-ID: <CAPig+cSbi7X1z+u8EzXhdMb6_ENbLcTiHyXG0erfpCR=a5BEYQ@mail.gmail.com>
-References: <5326F158.4050402@free.fr>
-	<20140317195946.GA29839@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] log: add --nonlinear-barrier to help see non-linear history
+Date: Mon, 17 Mar 2014 13:32:56 -0700
+Message-ID: <xmqqob14d0qv.fsf@gitster.dls.corp.google.com>
+References: <1391867417-979-1-git-send-email-pclouds@gmail.com>
+	<1395060676-23144-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Gilles Filippini <gilles.filippini@free.fr>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Mar 17 21:09:04 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 17 21:33:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WPdqH-0006Qg-0A
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Mar 2014 21:09:01 +0100
+	id 1WPeDc-0007hy-Vm
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Mar 2014 21:33:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751211AbaCQUIy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Mar 2014 16:08:54 -0400
-Received: from mail-yk0-f169.google.com ([209.85.160.169]:58690 "EHLO
-	mail-yk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750888AbaCQUIu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Mar 2014 16:08:50 -0400
-Received: by mail-yk0-f169.google.com with SMTP id 142so16328078ykq.0
-        for <git@vger.kernel.org>; Mon, 17 Mar 2014 13:08:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=jPGJlN6qPKsRl9eY4cs3xUDiqPK/9qTuGN5Cby/9l2U=;
-        b=qt9drhRJCCJtX+CP3penVEHHjHS+Ss38xlbINQEOomAqg6DAT+W/rhGkddx0EuqMmX
-         R8xlTIkYSC5AEx1jtO4JSsHaUk50638K1JtxXk186fsq+Rtxay2qLo1mFaPz4QKVxmQA
-         SIqS5L9y5ZnCWovtRUkFt9Vwr4In4CctQ7nvs4ay89H9t/TpzTf+yAMMB0vm83B3TTyb
-         5SSKbAOfsmajy5W3rpN9OPsvuAbLFMQOkUK09Ha/FlrPL3TKTCayhnzQ0qvvHafDAQVv
-         PCT/ws+mdD8oOfWx5sIe2CnnhVbXe2OUIUmjgu32h1N6fxwTSt1nx4hXZk8A1pVCDiKv
-         fBTQ==
-X-Received: by 10.236.126.81 with SMTP id a57mr11919039yhi.95.1395086930164;
- Mon, 17 Mar 2014 13:08:50 -0700 (PDT)
-Received: by 10.170.180.134 with HTTP; Mon, 17 Mar 2014 13:08:50 -0700 (PDT)
-In-Reply-To: <20140317195946.GA29839@sigill.intra.peff.net>
-X-Google-Sender-Auth: kq9QQM8-bVd4x0RJOKpHdwdtS9U
+	id S1751010AbaCQUdD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Mar 2014 16:33:03 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61455 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750716AbaCQUdB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 17 Mar 2014 16:33:01 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C32FF75534;
+	Mon, 17 Mar 2014 16:33:00 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=h4A1VQB3IHv7
+	NXb9dzJTypsDcIs=; b=jCBGbmA0niBpW3dHJO7CzAbiFOdfbL/IaYLQy4oD2zva
+	2hzIAzS/r0ZCV2PLs8Z9oZM6u/6dCtp+ZGkDI67Upowx5sOTTWIsa6FdPVulN+SH
+	MKAeTJoUuifa/ouQp/sEtI928nMQvBT9WK0lubkGS08akB4urQZngCu0kUNn4/o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=u6NlTq
+	C64lDa/vK8B1HjW/YFbaicFVuw0h7h2IR2VqJV4UVniGYn2rv6psRguV9O5CydTs
+	M8vLk/ZIWvQ9a3odp2INU46rfka9LEERw47HGpvYVOfrPvkvwC/EGU0xAFvwKvTt
+	xuDI7XYvYHNt2OpYEB0bTj8ZTLU0r47j6CRzc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AEEA375533;
+	Mon, 17 Mar 2014 16:33:00 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C61E07552F;
+	Mon, 17 Mar 2014 16:32:59 -0400 (EDT)
+In-Reply-To: <1395060676-23144-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Mon, 17
+ Mar 2014 19:51:16 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 54995958-AE13-11E3-94E5-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244279>
 
-On Mon, Mar 17, 2014 at 3:59 PM, Jeff King <peff@peff.net> wrote:
-> On Mon, Mar 17, 2014 at 01:58:00PM +0100, Gilles Filippini wrote:
->
->> Test 21 from contrib/subtree/t/t7900-subtree.sh fails when an
->> environment variable 'prefix' is set. For instance here is what happens
->> when prefix=/usr:
->
-> I think it just needs the patch below.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-Gilles submitted this same patch [1] a couple weeks ago but it appears
-to have been lost in the noise. Your commit message is a bit nicer.
-
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/243103/
-
-> -- >8 --
-> We parse the "--prefix" command-line option into the
-> "$prefix" shell variable. However, if we do not see such an
-> option, the variable is left with whatever value it had in
-> the environment. We should initialize it to a known value,
-> like we do for other variables.
->
-> Signed-off-by: Jeff King <peff@peff.net>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
 > ---
-> I checked, and this looks like the only variable in this situation.
+>  v2 renames the option name to --nonlinear-barrier and fixes using it
+>  with --dense. Best used with --no-merges to see patch series.
+
+I think that the earlier name "show linear-break" is more easily
+understood than the new name, but maybe that is just me.  It's not
+like you are blocking something from going forward with a barrier,
+and internally it is called a "break-bar".
+
+>  Documentation/rev-list-options.txt |  7 ++++++
+>  log-tree.c                         |  4 +++
+>  revision.c                         | 51 ++++++++++++++++++++++++++++=
++++++++---
+>  revision.h                         |  6 +++++
+>  4 files changed, 65 insertions(+), 3 deletions(-)
 >
->  contrib/subtree/git-subtree.sh | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-> index dc59a91..db925ca 100755
-> --- a/contrib/subtree/git-subtree.sh
-> +++ b/contrib/subtree/git-subtree.sh
-> @@ -46,6 +46,7 @@ ignore_joins=
->  annotate=
->  squash=
->  message=
-> +prefix=
->
->  debug()
->  {
-> --
-> 1.9.0.532.gc4c322d
+> diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-l=
+ist-options.txt
+> index 03533af..435aa2d 100644
+> --- a/Documentation/rev-list-options.txt
+> +++ b/Documentation/rev-list-options.txt
+> @@ -750,6 +750,13 @@ This enables parent rewriting, see 'History Simp=
+lification' below.
+>  This implies the `--topo-order` option by default, but the
+>  `--date-order` option may also be specified.
+> =20
+> +--nonlinear-barrier[=3D<barrier>]::
+> +	When --graph is not used, all history branches are flatten and
+
+s/flatten and/flattened and it/, perhaps?
+
+> +	could be hard to see that the two consecutive commits do not
+> +	belong to a linear branch. This option puts a barrier in
+> +	between them in that case. If `<barrier>` is specified, it
+> +	is the string that will be shown instead of the default one.
+> +
+>  ifdef::git-rev-list[]
+>  --count::
+>  	Print a number stating how many commits would have been
+> diff --git a/log-tree.c b/log-tree.c
+> index 08970bf..17862f6 100644
+> --- a/log-tree.c
+> +++ b/log-tree.c
+> @@ -805,12 +805,16 @@ int log_tree_commit(struct rev_info *opt, struc=
+t commit *commit)
+>  	if (opt->line_level_traverse)
+>  		return line_log_print(opt, commit);
+> =20
+> +	if (opt->track_linear && !opt->linear && !opt->reverse_output_stage=
+)
+> +		printf("\n%s\n", opt->break_bar);
+>  	shown =3D log_tree_diff(opt, commit, &log);
+>  	if (!shown && opt->loginfo && opt->always_show_header) {
+>  		log.parent =3D NULL;
+>  		show_log(opt);
+>  		shown =3D 1;
+>  	}
+> +	if (opt->track_linear && !opt->linear && opt->reverse_output_stage)
+> +		printf("\n%s\n", opt->break_bar);
+
+Each time get_revision() returns a commit, it is inspected and
+opt->linear is updated, this function is called and we show the
+break in the single-strand-of-pearls if this is not a parent of the
+commit we showed immediately before.  If we are showing the commit
+in reverse, we have to go the other way around, showing the commit
+and then the break.
+
+OK.  It makes sense to me.
+
+>  	opt->loginfo =3D NULL;
+>  	maybe_flush_or_die(stdout, "stdout");
+>  	return shown;
+
+Does this new feature interact with -z format output in any way?
+Should it, and if so how?
+
+> diff --git a/revision.c b/revision.c
+> index a68fde6..0a4849e 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -1832,6 +1832,12 @@ static int handle_revision_opt(struct rev_info=
+ *revs, int argc, const char **arg
+>  		revs->notes_opt.use_default_notes =3D 1;
+>  	} else if (!strcmp(arg, "--show-signature")) {
+>  		revs->show_signature =3D 1;
+> +	} else if (!strcmp(arg, "--nonlinear-barrier")) {
+> +		revs->track_linear =3D 1;
+> +		revs->break_bar =3D "                    ..........";
+> +	} else if (starts_with(arg, "--nonlinear-barrier=3D")) {
+> +		revs->track_linear =3D 1;
+> +		revs->break_bar =3D xstrdup(arg + 20);
+>  	} else if (starts_with(arg, "--show-notes=3D") ||
+>  		   starts_with(arg, "--notes=3D")) {
+>  		struct strbuf buf =3D STRBUF_INIT;
+> @@ -2897,6 +2903,32 @@ enum commit_action simplify_commit(struct rev_=
+info *revs, struct commit *commit)
+>  	return action;
+>  }
+> =20
+> +define_commit_slab(saved_linear, int);
+> +
+> +static void track_linear(struct rev_info *revs, struct commit *commi=
+t)
+> +{
+> +	struct commit_list *p =3D revs->previous_parents;
+> +
+> +	if (p) {
+> +		int got_parent =3D 0;
+> +		for (; p && !got_parent; p =3D p->next)
+> +			got_parent =3D !hashcmp(p->item->object.sha1,
+> +					      commit->object.sha1);
+> +		revs->linear =3D got_parent;
+> +		free_commit_list(revs->previous_parents);
+> +	} else
+> +		revs->linear =3D 1;
+> +	if (revs->reverse) {
+> +		if (!revs->saved_linear_slab) {
+> +			revs->saved_linear_slab =3D xmalloc(sizeof(struct saved_linear));
+> +			init_saved_linear(revs->saved_linear_slab);
+> +		}
+> +
+> +		*saved_linear_at(revs->saved_linear_slab, commit) =3D revs->linear=
+;
+> +	}
+> +	revs->previous_parents =3D copy_commit_list(commit->parents);
+
+We are showing commit, and the parents (after history
+simplification) of the commit we showed before this commit is kept
+in previous-parents.  If we are one of them, we are showing
+linearly, which makes sense.  While we are accumulating the output
+in the forward direction in preparation for later emitting them in
+reverse, we need to save away the linear-ness bit somewhere, and a
+slab is a logical place to save that, which also makes sense.  But
+why do you need a full int?  Doesn't an unsigned char wide enough?
+
+I also wondered if the saved-parents slab we already have can be
+easily reused for this, but it probably would not help.
+
+I do not quite understand the "if we do not have previous parents"
+bit, though.  Is it meant to trigger only at the very beginning?
+
+Thanks.
