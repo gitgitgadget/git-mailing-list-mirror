@@ -1,69 +1,81 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/1] general style: replaces memcmp() with starts_with()
-Date: Mon, 17 Mar 2014 19:01:39 -0400
-Message-ID: <20140317230139.GB19578@sigill.intra.peff.net>
-References: <1395093144-6786-1-git-send-email-quintus.public@gmail.com>
- <1395093144-6786-2-git-send-email-quintus.public@gmail.com>
- <xmqqob14a14s.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/3] Make git more user-friendly during a merge conflict
+Date: Mon, 17 Mar 2014 16:04:20 -0700
+Message-ID: <xmqqha6wa0ln.fsf@gitster.dls.corp.google.com>
+References: <1394771872-25940-1-git-send-email-andrew.kw.w@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Quint Guvernator <quintus.public@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 18 00:01:49 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Andrew Wong <andrew.kw.w@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 18 00:04:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WPgXS-00062U-EV
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Mar 2014 00:01:46 +0100
+	id 1WPga4-0000Ww-HX
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Mar 2014 00:04:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752881AbaCQXBm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Mar 2014 19:01:42 -0400
-Received: from cloud.peff.net ([50.56.180.127]:41451 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751854AbaCQXBl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Mar 2014 19:01:41 -0400
-Received: (qmail 3300 invoked by uid 102); 17 Mar 2014 23:01:41 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 17 Mar 2014 18:01:41 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 17 Mar 2014 19:01:39 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqqob14a14s.fsf@gitster.dls.corp.google.com>
+	id S1751946AbaCQXEY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Mar 2014 19:04:24 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42125 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751295AbaCQXEX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Mar 2014 19:04:23 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7D49C75634;
+	Mon, 17 Mar 2014 19:04:22 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=aDanLX57It+yPVRXsMFMJjPBPPo=; b=ObOF7NLv2do6Yx/VYH+o
+	9HdekAnfU5JBuxdaNVyXQBcNLJamT0mN/H0kg+n1Yiprf+5HwWxpF3FRrLHw+B6l
+	UTinHuWyf0OZGyu0MclX0TiMM+1HsfvyLNEp6ShP/YLr1PSxQnvPZmFbXwfR1hT7
+	pFGljMiFdqFN+VMB8PeYqJ0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=Tkx5S8zDf7WJXRj/DfamyRYV7md8mvd1KeJRuH+TerSZ8I
+	gthpv1amwUwu9rsj8rjt3CkeO/bUGMU4iOqYokbS0QrdF3uBCxy9peIlWAscBiNP
+	HQzS378ykLTNjLAkjpfMM0xzQ49+Me6gyOPE8hZuLhJs4tI9agfWDGtUy9qnI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6A95F75633;
+	Mon, 17 Mar 2014 19:04:22 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A985C75631;
+	Mon, 17 Mar 2014 19:04:21 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 79D2B150-AE28-11E3-BC73-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244307>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244308>
 
-On Mon, Mar 17, 2014 at 03:52:51PM -0700, Junio C Hamano wrote:
+Andrew Wong <andrew.kw.w@gmail.com> writes:
 
-> > diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-> > index 3e1d5c3..4135980 100644
-> > --- a/builtin/for-each-ref.c
-> > +++ b/builtin/for-each-ref.c
-> > @@ -193,7 +193,7 @@ static int verify_format(const char *format)
-> >  		at = parse_atom(sp + 2, ep);
-> >  		cp = ep + 1;
-> >  
-> > -		if (!memcmp(used_atom[at], "color:", 6))
-> > +		if (starts_with(used_atom[at], "color:"))
-> >  			need_color_reset_at_eol = !!strcmp(used_atom[at], color_reset);
-> >  	}
-> >  	return 0;
-> 
-> Good.
+> 2/3: I've added advice.mergeHints to silent the messages that suggests "git
+> merge--abort".
+>
+> 3/3: I've added a warning message when users used "git reset" during a merge.
+> This warning will be printed if the user is in the middle of a merge. In future
+> releases, we'll change this into an error to prevent work tree from becoming a
+> mess.
+>
+> Andrew Wong (3):
+>   wt-status: Make status messages more consistent with others
+>   merge: Advise user to use "git merge --abort" to abort merges
+>   reset: Print a warning when user uses "git reset" during a merge
+>
+>  Documentation/config.txt |  3 +++
+>  advice.c                 |  2 ++
+>  advice.h                 |  1 +
+>  builtin/merge.c          |  6 ++++++
+>  builtin/reset.c          | 21 +++++++++++++++++++++
+>  wt-status.c              | 23 +++++++++++++----------
+>  6 files changed, 46 insertions(+), 10 deletions(-)
 
-Actually, I found this one confusing. We are looking for "color:", but
-if we find it, we _don't_ skip past and look at what comes after.
-Instead, we compare the whole string. Which works because color_reset
-actually contains "color:reset", and we end up just re-comparing the
-first bit of the string. So the memcmp here is redundant, and this can
-simply become:
-
-  need_color_reset_at_eol = !!strcmp(used_atom[at], color_reset);
-
-Or am I missing something?
-
--Peff
+Has this series been tested with existing test suite?  I tentatively
+queued it to 'pu' but then had to revert because many tests started
+failing, causing me to redo the today's integration cycle for 'pu'
+once again.
