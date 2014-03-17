@@ -1,63 +1,118 @@
-From: Quint Guvernator <quintus.public@gmail.com>
-Subject: Re: [PATCH] GSoC Change multiple if-else statements to be table-driven
-Date: Mon, 17 Mar 2014 16:39:34 -0400
-Message-ID: <CALs4jVEqAVXEjioHniu8Wf8c+nb_JQXG5gn__AZ+urc5tbx=Ag@mail.gmail.com>
-References: <CAPig+cQu7D3AUghOSUOZBwf5+iHCPkxPbY1WuQmPJk1muCk7tQ@mail.gmail.com>
- <1394742059-7300-1-git-send-email-zhaox383@umn.edu> <CAPig+cRF_eQiGugR8TSks5ki375y-5wiQ7HWKyKRudJ5apd4cg@mail.gmail.com>
- <xmqqiorghgaj.fsf@gitster.dls.corp.google.com> <CAPig+cSG0YsdTGWWyxWrg+s235qDe7Xr-jXT2mOkpvA6OaGWyg@mail.gmail.com>
- <7v38ihuvq7.fsf@alter.siamese.dyndns.org> <5327027D.6090500@alum.mit.edu> <CAPig+cQ07mqZDsHQ7qgWARx6eZ2mD+-w0YF3pJXwiJxufj-peg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUG] contrib/subtree: t/t7900-subtree.sh: test 21 fails when environment variable 'prefix' is set
+Date: Mon, 17 Mar 2014 13:44:07 -0700
+Message-ID: <xmqqiorcd088.fsf@gitster.dls.corp.google.com>
+References: <5326F158.4050402@free.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Mar 17 21:40:02 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "David A. Greene" <greened@obbligato.org>
+To: Gilles Filippini <gilles.filippini@free.fr>
+X-From: git-owner@vger.kernel.org Mon Mar 17 21:44:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WPeKH-00070T-Ar
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Mar 2014 21:40:01 +0100
+	id 1WPeOV-0003Vf-4m
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Mar 2014 21:44:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751975AbaCQUj5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Mar 2014 16:39:57 -0400
-Received: from mail-wi0-f181.google.com ([209.85.212.181]:37590 "EHLO
-	mail-wi0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751227AbaCQUj4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Mar 2014 16:39:56 -0400
-Received: by mail-wi0-f181.google.com with SMTP id hm4so2804846wib.8
-        for <git@vger.kernel.org>; Mon, 17 Mar 2014 13:39:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=QY+2XLM2lbhhG2UqsBggBOQqUvpNnL3RCr55ewvJy3w=;
-        b=B6jd3/lse04S6mJEbn7Jnn0Nz8qk3XDNrNBmypfIx/6f01sl2HKGKxmA/G8a20TAhx
-         2OQTj7hoP4rxJbFQBUuAlmguaZxIKHgWAMKvTlBKpnm+THnGNYJpneGRRc3Xsz7AwTHC
-         ZJfRYFKlLnp1CuPlsBSuKBhviRZlRONuCox9sO1PR1JObH87Wl52o7Kj1lUu/Xr4LEPx
-         LoYysO7Irs1ikZDKW2LwMTtQx/qVGUJxkWjs/Zs6OEehLXSOK9JbQnQRYgI2kgOty3Up
-         TNc56tD81pCZ5JdLmldBRRziUV288UXCpS2zMLdDu25TZDWQ3rg1/ZC7ngoFXhPgXYG6
-         +TEw==
-X-Received: by 10.180.100.169 with SMTP id ez9mr11520342wib.15.1395088795000;
- Mon, 17 Mar 2014 13:39:55 -0700 (PDT)
-Received: by 10.216.231.138 with HTTP; Mon, 17 Mar 2014 13:39:34 -0700 (PDT)
-In-Reply-To: <CAPig+cQ07mqZDsHQ7qgWARx6eZ2mD+-w0YF3pJXwiJxufj-peg@mail.gmail.com>
+	id S1752108AbaCQUoQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Mar 2014 16:44:16 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34067 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752031AbaCQUoM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Mar 2014 16:44:12 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 83E6575DCD;
+	Mon, 17 Mar 2014 16:44:11 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=BIl6yufkzC3cZiFcUJuT3mIiqYI=; b=TiwW8n
+	cxVlluRJ29aZdZkY0xGmI5nuT6VtuS+9bZPZpJ9TlglpFgHH8ja/53UWViLVCoyE
+	3xWc/gGb85t9yLFGBZG1dZbCeJ2vFqraLROJ9bCSdXJzJyIvzav0V2/jOw5aNTVD
+	yjoxp4fI8lm+m8BG04DBart7k+6+4f/8Axtac=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=pvyLfj0fm46sIHYreihJetSVAzgXtiIt
+	941PDZHHaB/oPsAGSjh1wrcNRGGXKaa9ShPOOS8Wed3ieUbvfdsH9dJVLngW2zMa
+	dTsx9GDkNTDNiOuOhlXXvDPBSrEbsO9DoZcYAQOyKKmSQd2UtHltwQeM7fIVUeES
+	UxygNEvVD4I=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6F7C275DCC;
+	Mon, 17 Mar 2014 16:44:11 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7899275DC9;
+	Mon, 17 Mar 2014 16:44:10 -0400 (EDT)
+In-Reply-To: <5326F158.4050402@free.fr> (Gilles Filippini's message of "Mon,
+	17 Mar 2014 13:58:00 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: E45B7E1C-AE14-11E3-A93F-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244282>
 
-2014-03-17 15:27 GMT-04:00 Eric Sunshine <sunshine@sunshineco.com>:
-> A quick (perhaps inaccurate) search of the mailing list shows that, of
-> the remaining "untaken" items, #10, 11, 12, 15, 16, and 18 have had
-> just one submission, and #13 had two, so we're okay.
+Gilles Filippini <gilles.filippini@free.fr> writes:
 
-I am still working on #14: "Change fetch-pack.c:filter_refs() to use
-starts_with() instead of memcmp(). Try to find other sites that could
-be rewritten similarly."
-Another version of the patch should be on this list within the hour.
+> Test 21 from contrib/subtree/t/t7900-subtree.sh fails when an
+> environment variable 'prefix' is set. For instance here is what happens
+> when prefix=/usr:
+>
+> expecting success:
+>         echo "You must provide the --prefix option." > expected &&
+>         test_must_fail git subtree split > actual 2>&1 &&
+> 	test_debug "printf 'expected: '" &&
+>         test_debug "cat expected" &&
+> 	test_debug "printf 'actual: '" &&
+>         test_debug "cat actual" &&
+>         test_cmp expected actual &&
+>         rm -f expected actual
+>
+> --- expected	2014-03-17 10:39:34.907594853 +0000
+> +++ actual	2014-03-17 10:39:34.979595322 +0000
+> @@ -1 +1,9 @@
+> -You must provide the --prefix option.
+> fatal: /usr: '/usr' is outside repository
+> fatal: /usr: '/usr' is outside repository
+> fatal: /usr: '/usr' is outside repository
+> fatal: /usr: '/usr' is outside repository
+> fatal: /usr: '/usr' is outside repository
+> fatal: /usr: '/usr' is outside repository
+> fatal: /usr: '/usr' is outside repository
+> fatal: /usr: '/usr' is outside repository
+> +No new revisions were found
+> not ok 21 - Check that prefix argument is required for split
 
-Quint
+Thanks.  Although I do not use nor touch git-subtree, I am
+reasonably confident that this patch should fix it.
+
+-- >8 --
+Subject: subtree: initialise all variables to known state
+
+Parsing the command line options may set prefix to the given value
+with --prefix=value or an empty string with --no-prefix, but the
+script forgets to protect against a stray environment variable.
+
+Make sure all the variables that can be assigned in the command line
+parsing are initialized to empty.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ contrib/subtree/git-subtree.sh | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+index 7d7af03..90e0b7e 100755
+--- a/contrib/subtree/git-subtree.sh
++++ b/contrib/subtree/git-subtree.sh
+@@ -46,6 +46,7 @@ ignore_joins=
+ annotate=
+ squash=
+ message=
++prefix=
+ 
+ debug()
+ {
