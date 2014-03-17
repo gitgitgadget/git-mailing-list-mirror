@@ -1,74 +1,85 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: What's cooking in git.git (Mar 2014, #03; Fri, 14)
-Date: Sun, 16 Mar 2014 19:15:06 -0400
-Message-ID: <CALkWK0npxgi2gWQbuYZLn_N0GxgTdPTR8c-yhgCxEV=mM2Zngw@mail.gmail.com>
-References: <xmqqlhwcfn4a.fsf@gitster.dls.corp.google.com> <EA1EF5746EA7414CAE1320AA61100178@PhilipOakley>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: Re: [PATCH 3/6] l10n: Fix misuses of "nor"
+Date: Mon, 17 Mar 2014 09:45:46 +0800
+Message-ID: <CANYiYbE_WRhCAfDCpAskw4JqEnbZ3xg0MvK2FrYLZrhmkKuKhA@mail.gmail.com>
+References: <1394872922-2000-1-git-send-email-jlebar@google.com>
+	<1394872922-2000-4-git-send-email-jlebar@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-To: Philip Oakley <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Mon Mar 17 00:15:52 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>
+To: Justin Lebar <jlebar@google.com>
+X-From: git-owner@vger.kernel.org Mon Mar 17 02:45:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WPKHX-0000Rr-SZ
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Mar 2014 00:15:52 +0100
+	id 1WPMck-0004dm-B5
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Mar 2014 02:45:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932115AbaCPXPs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Mar 2014 19:15:48 -0400
-Received: from mail-ie0-f179.google.com ([209.85.223.179]:63877 "EHLO
-	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755770AbaCPXPr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Mar 2014 19:15:47 -0400
-Received: by mail-ie0-f179.google.com with SMTP id lx4so4589582iec.24
-        for <git@vger.kernel.org>; Sun, 16 Mar 2014 16:15:47 -0700 (PDT)
+	id S932127AbaCQBpt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Mar 2014 21:45:49 -0400
+Received: from mail-we0-f175.google.com ([74.125.82.175]:35152 "EHLO
+	mail-we0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932070AbaCQBps (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Mar 2014 21:45:48 -0400
+Received: by mail-we0-f175.google.com with SMTP id q58so3949440wes.20
+        for <git@vger.kernel.org>; Sun, 16 Mar 2014 18:45:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=VvhPKAexcwlgQU14fsa6NPGNtzkQPhZ5uR5vKwMXDis=;
-        b=Aa05BRM9tDH8zAY2JV2euEu4RQQPdggpA4aZ5UWnFt6BBYCrG5EuRNIBdoOBYrCel9
-         OXS86taWIMSVwnLMaS+J3kOPj4wZ22g5akMbQZFrOwizP38iMsHKUMPmJjyhdpYmVjkQ
-         d0xxOvS0LINYYa/ly26QQtqm74v3JZsmxgEULp2X/1yTJp5ZYrPXrw0uB5k9O4wnnzud
-         MEzL1JAIKYPwiCbgrPMXv3M7XM3dRgGyX0tSGUsYSKC/U8AiCWpoj4C3Li/Y+hDfj9F1
-         YkYOGQfB6wH4crcY5ZiOglkqQAWELCFCdDBhvuNFwqxLCpg8XD7WXZiDo8vfIrRx+W3H
-         lulw==
-X-Received: by 10.50.79.193 with SMTP id l1mr9955889igx.36.1395011747320; Sun,
- 16 Mar 2014 16:15:47 -0700 (PDT)
-Received: by 10.64.10.42 with HTTP; Sun, 16 Mar 2014 16:15:06 -0700 (PDT)
-In-Reply-To: <EA1EF5746EA7414CAE1320AA61100178@PhilipOakley>
+        bh=3olfKZ0na7TKkSHsuS0uOUdtOGYd7/NYjfJLC89OWHM=;
+        b=iP6e5WFakqWfQTCy52Li0ksf8SKl/IDAxZuUZTb3DHlvZ+b9jA9C6wI8JUawbvTaO4
+         /2M5X9sjjTSg38VskiDHbSZ8g5ihb1wAAOmHDj6IKTYQlN/kBGGwS/0ScQfk97dqRyok
+         bB21mkzcpUHDBNtBGwpav3cV3qLFbYbENXly0nR7hcb5VjVdu6DPy/sP3YhEEKk4abI9
+         UXNgfSF0GGHIh2XOniOd/9cImr6Nd1HtV/Fdt273ROYP0cqq+BhBhmhoN0TFygB46mUN
+         iwNgsv/bL+8MMM1EFiBLFkJgWD3LHMXATMqezBSp4Aos1tMQzf0jjJwqhhMpNU9dhwm6
+         Eeug==
+X-Received: by 10.195.13.234 with SMTP id fb10mr40706wjd.50.1395020747029;
+ Sun, 16 Mar 2014 18:45:47 -0700 (PDT)
+Received: by 10.217.58.65 with HTTP; Sun, 16 Mar 2014 18:45:46 -0700 (PDT)
+In-Reply-To: <1394872922-2000-4-git-send-email-jlebar@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244217>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244218>
 
-Philip Oakley wrote:
->> * po/everyday-doc (2014-01-27) 1 commit
->> - Make 'git help everyday' work
->>
->> This may make the said command to emit something, but the source is
->> not meant to be formatted into a manual pages to begin with, and
->> also its contents are a bit stale.  It may be a good first step in
->> the right direction, but needs more work to at least get the
->> mark-up right before public consumption.
+2014-03-15 16:41 GMT+08:00 Justin Lebar <jlebar@google.com>:
+> Signed-off-by: Justin Lebar <jlebar@google.com>
+> ---
+>  po/bg.po    | 6 +++---
+>  po/de.po    | 6 +++---
+>  po/fr.po    | 6 +++---
+>  po/git.pot  | 6 +++---
+>  po/it.po    | 2 +-
+>  po/pt_PT.po | 2 +-
+>  po/sv.po    | 6 +++---
+>  po/vi.po    | 6 +++---
+>  po/zh_CN.po | 6 +++---
+>  9 files changed, 23 insertions(+), 23 deletions(-)
 >
-> I'm not sure what elements you feel need adjustment. At the moment the
-> markup formats quite reasonably to my eyes, both as an HTML page and as a
-> man page.
-
-I sent you a small patch fixing some minor markup issues.
-
-> That said, the (lack of) introduction could do with a paragraph to introduce
-> the "guide". I have something in draft..
+> diff --git a/po/bg.po b/po/bg.po
+> index fb450b2..983e575 100644
+> --- a/po/bg.po
+> +++ b/po/bg.po
+> @@ -3699,13 +3699,13 @@ msgstr ""
 >
-> I had a thought that it may be worth a slight rearrangement to add a section
-> covering the setting up of one's remotes, depending whether it was forked,
-> corporate, or independent, but the lack of resolution on the next
-> {publish/push} topic makes such a re-write awkward at this stage. (Ram cc'd)
+>  #: builtin/clean.c:906
+>  msgid ""
+> -"clean.requireForce set to true and neither -i, -n nor -f given; refusing to "
+> +"clean.requireForce set to true and neither -i, -n, nor -f given; refusing to "
+>  "clean"
+>  msgstr ""
+>
 
-Before attempting to introduce remote.pushdefault and triangular
-workflows, I'd first fix the main issue: stale content. I'm not sure
-who uses git show-branch or mailx anymore, for instance.
+Hi Justin,
+
+All the msgids you patched are extracted from Git source code using gettext,
+So please patch the original files where the msgids are came from, such as
+builtin/clean.c.
+
+
+-- 
+Jiang Xin
