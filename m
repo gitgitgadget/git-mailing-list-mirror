@@ -1,79 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] merge: Advise user to use "git merge --abort" to abort merges
-Date: Mon, 17 Mar 2014 14:58:41 -0700
-Message-ID: <xmqqr460bi7i.fsf@gitster.dls.corp.google.com>
-References: <1394771872-25940-1-git-send-email-andrew.kw.w@gmail.com>
-	<1394771872-25940-3-git-send-email-andrew.kw.w@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] mv: prevent mismatched data when ignoring errors.
+Date: Mon, 17 Mar 2014 18:04:27 -0400
+Message-ID: <20140317220427.GA19300@sigill.intra.peff.net>
+References: <20140308183501.GH18371@serenity.lan>
+ <1394306499-50871-1-git-send-email-sandals@crustytoothpaste.net>
+ <8738ijzbue.fsf@thomasrast.ch>
+ <20140316020018.GA20019@sigill.intra.peff.net>
+ <7v1ty14z8x.fsf@alter.siamese.dyndns.org>
+ <7vtxax2v1q.fsf@alter.siamese.dyndns.org>
+ <53270FC2.2030701@alum.mit.edu>
+ <CAPig+cTs23=j_1OsB4FUUb1PZWubhad+XBCa1iEx4jChZE2x4w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Andrew Wong <andrew.kw.w@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 17 22:58:52 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <tr@thomasrast.ch>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Git List <git@vger.kernel.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	John Keeping <john@keeping.me.uk>,
+	Guillaume Gelin <contact@ramnes.eu>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Mon Mar 17 23:04:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WPfYX-0002rE-Rl
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Mar 2014 22:58:50 +0100
+	id 1WPfe6-0000wt-MW
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Mar 2014 23:04:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752795AbaCQV6p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Mar 2014 17:58:45 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63926 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752774AbaCQV6o (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Mar 2014 17:58:44 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3C0F976FCF;
-	Mon, 17 Mar 2014 17:58:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=3Ae8BtW1Kw1o9i1lq+Hah/GYwM0=; b=BmGUaG
-	lBv1aFVHxdLTFT1LCBLm3nxtz4//vMAGQEdoA1wRWthkuCSVlNDzr0d6jNP1d7YO
-	ASlSSPn9Mk9bn8cZcC0vJ60atez3MhBV2Zz561m3amafNvXIR+D3qJ6Rti9TiR3g
-	EEx8IAlmgfLbhXz0U29Du+7e9aJIlzBiiM3AM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wGm+ueavR+TC67Av000a4fZpXjbtkA6a
-	VJ6CcmijJdZyY94Xc8iWxwm48iNE+tygkTLTtu+2/Devysu343VfNUuUie5ATru/
-	3pAg4CNowztyP6qvPt2gOMXqyM76zI3mJrjUH/kRzLcIgdMW61gMFkEtbi3Zqol2
-	9iOihB/E0Dg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2D3EA76FCE;
-	Mon, 17 Mar 2014 17:58:44 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7A92876FCA;
-	Mon, 17 Mar 2014 17:58:43 -0400 (EDT)
-In-Reply-To: <1394771872-25940-3-git-send-email-andrew.kw.w@gmail.com> (Andrew
-	Wong's message of "Fri, 14 Mar 2014 00:37:51 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 4E7A44A4-AE1F-11E3-A1CE-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752634AbaCQWEa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Mar 2014 18:04:30 -0400
+Received: from cloud.peff.net ([50.56.180.127]:41403 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752173AbaCQWE3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Mar 2014 18:04:29 -0400
+Received: (qmail 354 invoked by uid 102); 17 Mar 2014 22:04:29 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 17 Mar 2014 17:04:29 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 17 Mar 2014 18:04:27 -0400
+Content-Disposition: inline
+In-Reply-To: <CAPig+cTs23=j_1OsB4FUUb1PZWubhad+XBCa1iEx4jChZE2x4w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244297>
 
-Andrew Wong <andrew.kw.w@gmail.com> writes:
+On Mon, Mar 17, 2014 at 03:06:02PM -0400, Eric Sunshine wrote:
 
-> Print message during "git merge" and "git status".
->
-> Add a new "mergeHints" advice to silence these messages.
+> On Mon, Mar 17, 2014 at 11:07 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> > On 03/17/2014 07:33 AM, Junio C Hamano wrote:
+> >> Junio C Hamano <gitster@pobox.com> writes:
+> >>
+> >>> Would it make sense to go one step further to introduce two macros
+> >>> to make this kind of screw-up less likely?
+> > potential callers that I noticed, ALLOC_GROW() was used immediately
+> > before making space in the array for a new element.  So I suggest
+> > something more like
+> >
+> > +#define MOVE_DOWN(array, nr, at, count)        \
+> > +       memmove((array) + (at) + (count),               \
+> > +               (array) + (at),                         \
+> > +               sizeof((array)[0]) * ((nr) - (at)))
+> 
+> Each time I read these, my brain (for whatever reason) interprets the
+> names UP and DOWN opposite of the intended meaning, which makes them
+> confusing. Perhaps INSERT_GAP and CLOSE_GAP would avoid such problems,
+> and be more consistent with Michael's proposed ALLOC_INSERT_GAP.
 
-This sounds sensible.  Don't we want to have this one take effect on
-the places where advice.resolveConflict is used in git-pull?
-I.e. something like:
+Yeah, the UP/DOWN are very confusing to me. Something like SHRINK/EXPAND
+(with the latter handling the ALLOC_GROW for us) makes more sense to me.
+Those terms do not explicitly specify that we are doing it in the middle
+(whereas GAP does), but I think it is fairly obvious from the parameters
+what each is used for.
 
-	do_we_advise=no
-	if advice.resolveConflict is not set:
-		if advice.mergeHints is set to false:
-                	do_we_advise=no
-		else:
-                	do_we_advise=yes
-	else:
-        	do_we_advise=yes
+Side note: I had _almost_ added something to my original email
+suggesting more use of macros to embody common idioms. For example, in
+the vast majority of malloc cases, you could using something like:
 
-        if do_we_advise == 'yes':
-        	give advice in die_conflict and die_merge
+  #define ALLOC_OBJS(x,n) do { x = xmalloc(sizeof(*x) * (n)); } while(0)
+  #define ALLOC_OBJ(x) ALLOC_OBJS(x,1)
+
+That eliminates a whole possible class of errors. But it's also
+un-idiomatic as hell, and the resulting confusion can cause its own
+problems. So I refrained from suggesting it.
+
+I think as long as a macro is expressing a more high-level intent,
+though, paying that cost can be worth it. By itself, wrapping memmove
+to use sizeof(*array) does not seem all that exciting. But wrapping a
+few specific cases like shrink/expand probably does make the code more
+readable.
+
+-Peff
