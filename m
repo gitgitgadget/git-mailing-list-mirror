@@ -1,78 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/4] gc --aggressive: three phase repacking
-Date: Mon, 17 Mar 2014 16:07:23 -0700
-Message-ID: <xmqq8us8a0gk.fsf@gitster.dls.corp.google.com>
-References: <1394976904-15395-1-git-send-email-pclouds@gmail.com>
-	<1394976904-15395-6-git-send-email-pclouds@gmail.com>
-	<xmqqfvmgbhlb.fsf@gitster.dls.corp.google.com>
-	<CACsJy8BgHp=w3RU==9tiebnOPxzCnwurpZbNjxtS5O=q_kDcOA@mail.gmail.com>
+From: Andrew Wong <andrew.kw.w@gmail.com>
+Subject: Re: [PATCH 0/3] Make git more user-friendly during a merge conflict
+Date: Mon, 17 Mar 2014 19:25:00 -0400
+Message-ID: <CADgNjakRSw-S4VbKnLC9PpmAcEi7iO=r0SBEy2XO3XhtDq=uJg@mail.gmail.com>
+References: <1394771872-25940-1-git-send-email-andrew.kw.w@gmail.com>
+	<xmqqha6wa0ln.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 18 00:07:35 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 18 00:25:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WPgd1-0003y4-GC
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Mar 2014 00:07:31 +0100
+	id 1WPguW-0007GK-R3
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Mar 2014 00:25:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752942AbaCQXH1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Mar 2014 19:07:27 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55510 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751343AbaCQXH0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Mar 2014 19:07:26 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A986375836;
-	Mon, 17 Mar 2014 19:07:25 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=MwXCXP869Opl
-	3HUZJ/JVqnaW/IA=; b=vP8nrUcia3oC/wnaIZf7CuxQT2E6Ln2XBNIqX5zFqWnS
-	qeFOd8FG2N1pOqXBwt5nBok0/8FDRm53C6T4mO5dvSA4sgZH6ZSkY5f81Of21BLF
-	JUqmdM1N8DqbZiC9ldpuaDU4JGnEQFIbZTOVEw30UjROf9io3wQfw1VggMPsCl0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=t63Szi
-	lRONz3pZq2I29teDUFTkoXgXqPEGrG/H7JEGFlBIN6WPgJbvx847q7r2fZ5FYg/o
-	rVszDYHH1VE2PwUD1nDu9s/qOg/njiSruFoyO/Yef5wHRq8I/T8fXPmNcrL8jhBu
-	BVfE+Su4FgEOTUqBU5QIyo49b51kjIA53Twc0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9791575835;
-	Mon, 17 Mar 2014 19:07:25 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EA0C975834;
-	Mon, 17 Mar 2014 19:07:24 -0400 (EDT)
-In-Reply-To: <CACsJy8BgHp=w3RU==9tiebnOPxzCnwurpZbNjxtS5O=q_kDcOA@mail.gmail.com>
-	(Duy Nguyen's message of "Tue, 18 Mar 2014 05:59:32 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: E70E9A22-AE28-11E3-9C34-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751273AbaCQXZS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Mar 2014 19:25:18 -0400
+Received: from mail-qg0-f46.google.com ([209.85.192.46]:62501 "EHLO
+	mail-qg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752011AbaCQXZC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Mar 2014 19:25:02 -0400
+Received: by mail-qg0-f46.google.com with SMTP id e89so18795343qgf.5
+        for <git@vger.kernel.org>; Mon, 17 Mar 2014 16:25:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=rdcpu3xrOR3bmoRwWqxYCLaf121MhfZrqompJQKoBSI=;
+        b=x0no0MBHGxI6H+WlhIpqgcek+nHZz7D2vJhpEKuqo6kKgI9hDa5Fiwb2R+UVVuFqAs
+         79PQuXeOUKvby4pgfH5JHl+zfYRk9oEfsPWjaoE3fxGwYIQbJwoKQSrz+0rZoauqBw4S
+         DP89H1015PoxdbkpTbjQ8aNArM+1H0JpEdTAUGoGzSoF7wJacRTuoYXycZoINoFf1Psa
+         61z1Zk7sEZKpu9yZ8KgUO76zz95sTI4ER7cowhLujlUkpMPOtdLvqjvdpfevTyLHz5WB
+         hMeGcnR27Ix94HFQBIn296UcELPRHJqfr+fQII803xfr68xXfuX18iD3NXwecX9ft7KI
+         PqCA==
+X-Received: by 10.224.22.147 with SMTP id n19mr5756533qab.93.1395098700759;
+ Mon, 17 Mar 2014 16:25:00 -0700 (PDT)
+Received: by 10.224.72.140 with HTTP; Mon, 17 Mar 2014 16:25:00 -0700 (PDT)
+In-Reply-To: <xmqqha6wa0ln.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244311>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244312>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+On Mon, Mar 17, 2014 at 7:04 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Has this series been tested with existing test suite?  I tentatively
+> queued it to 'pu' but then had to revert because many tests started
+> failing, causing me to redo the today's integration cycle for 'pu'
+> once again.
 
-> On Tue, Mar 18, 2014 at 5:12 AM, Junio C Hamano <gitster@pobox.com> w=
-rote:
->> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> write=
-s:
->>
->>> As explained in the previous commit,...
->>
->> [PATCH 3/4] becomes a commit with an empty log message for some
->> reason.  Have you tried running "am -s" on it?
->
-> "am -s" worked fine. "am -s --scissors" did not (because of my use of
-> scissors in the commit message). Not sure what happened on your side.=
-=2E
+I tested it during RFC, but missed it when I sent it as patch. The
+problem is here:
 
-Yeah, I meant "am -c".
+@@ -1559,6 +1563,8 @@ int cmd_merge(int argc, const char **argv, const
+char *prefix)
+        if (merge_was_ok)
+                fprintf(stderr, _("Automatic merge went well; "
+                        "stopped before committing as requested\n"));
++       if (advice_merge_hints)
++               printf(_("  (use \"git merge --abort\" to abort the merge)\n"));
+        else
+                ret = suggest_conflicts(option_
+renormalize);
+
+I'll fix the problem. Sorry about that.
