@@ -1,63 +1,156 @@
-From: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-Subject: Re: [PATCH] Rewrite the diff-no-index.c
-Date: Mon, 17 Mar 2014 11:43:10 +0100 (CET)
-Message-ID: <282721457.578099.1395052990145.JavaMail.zimbra@imag.fr>
-References: <1394973858-16505-1-git-send-email-ubuntu2012@126.com> <CAPig+cRjGonML5NLyv3eqsKuM45O+whVCOQKNdj-E=zW9mRy4g@mail.gmail.com> <57a096bd.145a2.144cf9c12d4.Coremail.ubuntu2012@126.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH][GSOC] Selection of the verbose message is replaced with
+ generated message in install_branch_config()
+Date: Mon, 17 Mar 2014 06:53:22 -0400
+Message-ID: <CAPig+cQ_gvDWKkgN543TZtfGOqDkH0EYS39w+eEw8CdJO9Ux3Q@mail.gmail.com>
+References: <1395050104-19152-1-git-send-email-moxobukob@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>
-To: =?utf-8?B?5rKI5om/5oGp?= <ubuntu2012@126.com>
-X-From: git-owner@vger.kernel.org Mon Mar 17 11:43:36 2014
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Git List <git@vger.kernel.org>
+To: Aleksey Mokhovikov <moxobukob@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 17 11:53:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WPV14-00032R-76
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Mar 2014 11:43:34 +0100
+	id 1WPVAe-0005Ll-IY
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Mar 2014 11:53:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932543AbaCQKna (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Mar 2014 06:43:30 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:35006 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932471AbaCQKn3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Mar 2014 06:43:29 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s2HAhFWO014446
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 17 Mar 2014 11:43:15 +0100
-Received: from z8-mb-verimag.imag.fr (z8-mb-verimag.imag.fr [129.88.4.38])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s2HAhGnk027373;
-	Mon, 17 Mar 2014 11:43:16 +0100
-In-Reply-To: <57a096bd.145a2.144cf9c12d4.Coremail.ubuntu2012@126.com>
-X-Originating-IP: [129.88.6.115]
-X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - FF27 (Linux)/8.0.6_GA_5922)
-Thread-Topic: Rewrite the diff-no-index.c
-Thread-Index: uUOTwbNh4mEU/uGJ4UMNe/A+hyRtlQ==
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 17 Mar 2014 11:43:15 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s2HAhFWO014446
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@imag.fr
-MailScanner-NULL-Check: 1395657796.1231@8EzbDdKAwoiUB/RgjDiLTA
+	id S932555AbaCQKxY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Mar 2014 06:53:24 -0400
+Received: from mail-yh0-f43.google.com ([209.85.213.43]:50043 "EHLO
+	mail-yh0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932457AbaCQKxX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 17 Mar 2014 06:53:23 -0400
+Received: by mail-yh0-f43.google.com with SMTP id b6so4999407yha.16
+        for <git@vger.kernel.org>; Mon, 17 Mar 2014 03:53:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=raevCD/hLz9cj7azRn+nEDBigcVzmijuNbuRvVvS4bo=;
+        b=MdK30fsw2VckUKqTYjD052ClscoYbH44FkbEbglTTSwMk6lV9nmg5hnjVSWKTp6Va7
+         tI44T4i5zPy1Q3NLCIR7bpqYLg7AsRfHmrGppOxbV8wahhQjm1Qu2DjL+gKEKQJcHdmZ
+         50zEkExshR1ohJA3Jo6OH3rzYuPPgFGVgLxFZUqykHRAzRMNbUWakEmz3K6XCEKj3Ko4
+         CaocYqpSm/XjwX2Ka1cFiyq0/Ci6EJTZnE71afDKQG1Cwv7Phw34ifvPUsjWvZyfnELh
+         yW7JAaQeIwU81AHevjvKOi8Wlk9DOj+fJ1Zpc754D+rlj5pNkq/AL6WJIuueDYTz1lGn
+         b22A==
+X-Received: by 10.236.71.100 with SMTP id q64mr785112yhd.133.1395053602998;
+ Mon, 17 Mar 2014 03:53:22 -0700 (PDT)
+Received: by 10.170.180.134 with HTTP; Mon, 17 Mar 2014 03:53:22 -0700 (PDT)
+In-Reply-To: <1395050104-19152-1-git-send-email-moxobukob@gmail.com>
+X-Google-Sender-Auth: L0iigEpMst-FFuE-YKW-IF1tdKM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244243>
 
------ Original Message -----
-> Thank you for your comments.If I rename some function when I work on a large
-> project like git,whether it will cause other error that I can not solve .So
-> I use the ugly way for this reason.
+Thanks for the submission. Comments below to give you a taste of the
+Git review process...
 
-(please, don't top-post on this list).
+On Mon, Mar 17, 2014 at 5:55 AM, Aleksey Mokhovikov <moxobukob@gmail.com> wrote:
+> Subject: [GSOC] Selection of the verbose message is replaced with generated message in install_branch_config()
 
-The read_directory to be renamed is a static function, called twice. I don't see any reason not to rename it.
+Mentioning [GSoC] in the subject is indeed a good idea.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+The subject should be concise. Try to keep it at 65-70 characters or
+less. More detailed information can be written following the subject
+(separated from the subject by a blank line).
+
+Write in imperative tone: say "replace X with Y" rather than "X is
+replaced with Y".
+
+Mention the module or function you're touching.
+
+You might say something like this:
+
+    Subject: install_branch_config: replace if-chain with string composition
+
+(But read below since that's not what you really want to do...)
+
+> This is a milliproject from git google summer of code page. The current code that selects the output message is quite easy to understand. So I tried to improve it by removing nested conditions and code duplication. The output string is generated by selecting the proper parts of the message and concatenating them the into one template string.
+
+Wrap lines to 65-70 characters.
+
+I suspect you meant "not quite easy" rather than "quite easy".
+
+This prose is almost pure email commentary. It doesn't really convey
+useful information to a person reading the patch months or years from
+now. Place commentary below the "---" line under your sign-off.
+
+Matthieu already pointed you at [1] which explains why this approach
+of composing the strings is not GNU gettext-friendly, so I'll review
+other aspects of the patch.
+
+[1]: http://thread.gmane.org/gmane.comp.version-control.git/244210
+
+> Signed-off-by: Aleksey Mokhovikov <moxobukob@gmail.com>
+> ---
+>  branch.c | 39 ++++++++++++++++-----------------------
+>  1 file changed, 16 insertions(+), 23 deletions(-)
+>
+> diff --git a/branch.c b/branch.c
+> index 723a36b..2ee353f 100644
+> --- a/branch.c
+> +++ b/branch.c
+> @@ -77,29 +77,22 @@ void install_branch_config(int flag, const char *local, const char *origin, cons
+>         strbuf_release(&key);
+>
+>         if (flag & BRANCH_CONFIG_VERBOSE) {
+> -               if (remote_is_branch && origin)
+> -                       printf_ln(rebasing ?
+> -                                 _("Branch %s set up to track remote branch %s from %s by rebasing.") :
+> -                                 _("Branch %s set up to track remote branch %s from %s."),
+> -                                 local, shortname, origin);
+> -               else if (remote_is_branch && !origin)
+> -                       printf_ln(rebasing ?
+> -                                 _("Branch %s set up to track local branch %s by rebasing.") :
+> -                                 _("Branch %s set up to track local branch %s."),
+> -                                 local, shortname);
+> -               else if (!remote_is_branch && origin)
+> -                       printf_ln(rebasing ?
+> -                                 _("Branch %s set up to track remote ref %s by rebasing.") :
+> -                                 _("Branch %s set up to track remote ref %s."),
+> -                                 local, remote);
+> -               else if (!remote_is_branch && !origin)
+> -                       printf_ln(rebasing ?
+> -                                 _("Branch %s set up to track local ref %s by rebasing.") :
+> -                                 _("Branch %s set up to track local ref %s."),
+> -                                 local, remote);
+> -               else
+> -                       die("BUG: impossible combination of %d and %p",
+> -                           remote_is_branch, origin);
+> +               const char *message_template_parts[] = {
+> +                       "Branch %s set up to track",
+> +                       origin ? " remote" : " local",
+> +                       remote_is_branch ? " branch %s" : " ref %s",
+> +                       (remote_is_branch && origin) ? " from %s" : "",
+> +                       rebasing ? " by rebasing." : "."};
+
+For portability, this project is still mostly restricted to C89, so
+these non-constant C99 initializer expressions are probably a no-go.
+
+> +               struct strbuf message_template = STRBUF_INIT;
+> +               size_t i = 0;
+> +
+> +               for (i = 0; i < sizeof(message_template_parts)/sizeof(const char *); ++i) {
+
+You can use the ARRAY_SIZE() macro instead of sizeof(...)/sizeof(...).
+
+On this project, i++ is preferred when the context does not
+specifically demand ++i.
+
+> +                       strbuf_addstr(&message_template, message_template_parts[i]);
+> +               }
+> +
+> +               printf_ln(_(message_template.buf), local, remote_is_branch ? shortname : remote, origin);
+> +
+> +               strbuf_release(&message_template);
+>         }
+>  }
+>
+> --
+> 1.8.3.2
