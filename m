@@ -1,450 +1,575 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v3 1/1] general style: replaces memcmp() with starts_with()
-Date: Mon, 17 Mar 2014 17:29:33 +0100
-Message-ID: <532722ED.1010500@alum.mit.edu>
-References: <1394901553-69548-1-git-send-email-quintus.public@gmail.com> <1394901553-69548-2-git-send-email-quintus.public@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Quint Guvernator <quintus.public@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 17 17:29:51 2014
+From: David Tran <unsignedzero@gmail.com>
+Subject: [PATCH] tests: set temp variables using 'env' in test function instead of subshell
+Date: Mon, 17 Mar 2014 08:56:33 +0000
+Message-ID: <1395046593-4057-1-git-send-email-unsignedzero@gmail.com>
+References: <244240>
+Cc: David Tran <unsignedzero@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 17 17:52:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WPaQ9-0000us-7U
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Mar 2014 17:29:50 +0100
+	id 1WPamK-0001l5-HZ
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Mar 2014 17:52:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756622AbaCQQ3k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Mar 2014 12:29:40 -0400
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:55560 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755513AbaCQQ3h (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Mar 2014 12:29:37 -0400
-X-AuditID: 1207440d-f79d86d0000043db-b4-532722f0f1e5
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id F6.A3.17371.0F227235; Mon, 17 Mar 2014 12:29:36 -0400 (EDT)
-Received: from [192.168.69.148] (p4FDD44AD.dip0.t-ipconnect.de [79.221.68.173])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s2HGTYLf017637
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Mon, 17 Mar 2014 12:29:35 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
-In-Reply-To: <1394901553-69548-2-git-send-email-quintus.public@gmail.com>
-X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprLKsWRmVeSWpSXmKPExsUixO6iqPtBST3Y4Mt2SYuuK91MFu+6+5kd
-	mDx2zrrL7vF5k1wAUxS3TVJiSVlwZnqevl0Cd0bH+Y2MBa/KKj5M4GpgfB/ZxcjBISFgIrHl
-	FmsXIyeQKSZx4d56ti5GLg4hgcuMEid/T2KHcM4zSRzeu4wZpIpXQFvi04TdbCA2i4CqxN9j
-	R8DibAK6Eot6mplAbFGBYInVlx+wQNQLSpyc+QTMFhHQl5iyZy4byGJmAXGJ/n9gYWEBf4nr
-	bz8yQ+xqZZTon7wYbD6ngKfEqru/mCAOFZfoaQwCCTML6Ei863vADGHLS2x/O4d5AqPgLCTb
-	ZiEpm4WkbAEj8ypGucSc0lzd3MTMnOLUZN3i5MS8vNQiXSO93MwSvdSU0k2MkODl3cH4f53M
-	IUYBDkYlHt4XbOrBQqyJZcWVuYcYJTmYlER5/8gDhfiS8lMqMxKLM+KLSnNSiw8xSnAwK4nw
-	XuIFyvGmJFZWpRblw6SkOViUxHnVlqj7CQmkJ5akZqemFqQWwWRlODiUJHh/KQI1ChalpqdW
-	pGXmlCCkmTg4QYZzSYkUp+alpBYllpZkxIOiN74YGL8gKR6gve9A2nmLCxJzgaIQracYdTk2
-	bFvTyCTEkpeflyolzvtIAahIAKQoozQPbgUsVb1iFAf6WJhXFpi4hHiAaQ5u0iugJUxASxZN
-	VwNZUpKIkJJqYFSeX+/jKrIoert0/V2FnVuvPZv3M0bDWbHm0tZnr16H7JO4pStR+mLKrauN
-	9xx+RDS77JL1Vzlg6Tmt+sauz0dWCryP/rLsSf/d+rtlkWzqjHO8t3+00T66MSo0 
+	id S1756714AbaCQQwi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Mar 2014 12:52:38 -0400
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:51806 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754600AbaCQQwh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Mar 2014 12:52:37 -0400
+Received: by mail-pa0-f54.google.com with SMTP id lf10so6004715pab.27
+        for <git@vger.kernel.org>; Mon, 17 Mar 2014 09:52:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=jjhOvdEzSgPdFZjp3WWU4FJCFizo7U0dcnmtKrw/4yc=;
+        b=L9A14YfY8WkhXDp0cnphny4t0K29rWadXhl6vuh98iex/1IoT6THjK+OU2JXM/Fumx
+         RqtmUsgqiNAwkpxWm6rKnCJkRanhSTN057UN9bBbnjFMbYyREa7k+01PH64J5dyFb4gS
+         wdRCA6fGwlz9zwfIyG62dub58bT95GElmzTSrOo6hCwV5zGEaUwwDnnsm8ZZrm1jBmnP
+         TyLCgaopfCBk+zIJx6WkOu2f49KYD8ljjLUCQoRbEJzv5ky9Ou5fMM1iozmLB+Fb1jh9
+         FXuCe+OQXT0y2mXxwr1v8WWg33wqEC7S54AKgVTZJfYY3xX7zsSV087elIK/5XIYcBvI
+         4Uog==
+X-Received: by 10.68.201.97 with SMTP id jz1mr26819592pbc.26.1395075156463;
+        Mon, 17 Mar 2014 09:52:36 -0700 (PDT)
+Received: from localhost.localdomain (c-24-130-104-43.hsd1.ca.comcast.net. [24.130.104.43])
+        by mx.google.com with ESMTPSA id yx3sm44746274pbb.6.2014.03.17.09.52.34
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Mon, 17 Mar 2014 09:52:35 -0700 (PDT)
+X-Mailer: git-send-email 1.7.2.5
+In-Reply-To: <244240>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244256>
 
-Quint,
+Originally, the code used subshells instead of FOO=BAR command because
+the variable would otherwise leak into the surrounding context of the POSIX
+shell when 'command' is a shell function. The subshell was used to hold the
+context for the test. Using 'env' in the test function sets the temp variables
+without leaking, removing the need of a subshell.
 
-Thanks for v3 of the patch and for sticking with it.  See a few comments
-below.
+Signed-off-by: David Tran <unsignedzero@gmail.com>
 
-On 03/15/2014 05:39 PM, Quint Guvernator wrote:
-> memcmp() is replaced with negated starts_with() when comparing strings
-> from the beginning and when it is logical to do so. starts_with() looks
-> nicer and it saves the extra argument of the length of the comparing
-> string.
-> 
-> Signed-off-by: Quint Guvernator <quintus.public@gmail.com>
-> ---
->  builtin/apply.c                           |  6 +++---
->  builtin/for-each-ref.c                    |  2 +-
->  builtin/get-tar-commit-id.c               |  2 +-
->  builtin/mktag.c                           |  8 ++++----
->  builtin/patch-id.c                        | 18 +++++++++---------
->  commit.c                                  |  4 ++--
->  connect.c                                 |  6 +++---
->  contrib/convert-objects/convert-objects.c |  6 +++---
->  convert.c                                 |  2 +-
->  http-walker.c                             |  2 +-
->  imap-send.c                               |  6 +++---
->  pack-write.c                              |  2 +-
->  remote.c                                  |  2 +-
->  13 files changed, 33 insertions(+), 33 deletions(-)
-> 
-> diff --git a/builtin/apply.c b/builtin/apply.c
-> index 0189523..de84dce 100644
-> --- a/builtin/apply.c
-> +++ b/builtin/apply.c
-> @@ -1631,7 +1631,7 @@ static int parse_fragment(const char *line, unsigned long size,
->  		 * l10n of "\ No newline..." is at least that long.
->  		 */
->  		case '\\':
-> -			if (len < 12 || memcmp(line, "\\ ", 2))
-> +			if (len < 12 || !starts_with(line, "\\ "))
->  				return -1;
->  			break;
->  		}
-> @@ -1646,7 +1646,7 @@ static int parse_fragment(const char *line, unsigned long size,
->  	 * it in the above loop because we hit oldlines == newlines == 0
->  	 * before seeing it.
->  	 */
-> -	if (12 < size && !memcmp(line, "\\ ", 2))
-> +	if (12 < size && starts_with(line, "\\ "))
->  		offset += linelen(line, size);
->  
->  	patch->lines_added += added;
-> @@ -1673,7 +1673,7 @@ static int parse_single_patch(const char *line, unsigned long size, struct patch
->  	unsigned long oldlines = 0, newlines = 0, context = 0;
->  	struct fragment **fragp = &patch->fragments;
->  
-> -	while (size > 4 && !memcmp(line, "@@ -", 4)) {
-> +	while (size > 4 && starts_with(line, "@@ -")) {
->  		struct fragment *fragment;
->  		int len;
->  
-> diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-> index 3e1d5c3..4135980 100644
-> --- a/builtin/for-each-ref.c
-> +++ b/builtin/for-each-ref.c
-> @@ -193,7 +193,7 @@ static int verify_format(const char *format)
->  		at = parse_atom(sp + 2, ep);
->  		cp = ep + 1;
->  
-> -		if (!memcmp(used_atom[at], "color:", 6))
-> +		if (starts_with(used_atom[at], "color:"))
->  			need_color_reset_at_eol = !!strcmp(used_atom[at], color_reset);
->  	}
->  	return 0;
-> diff --git a/builtin/get-tar-commit-id.c b/builtin/get-tar-commit-id.c
-> index aa72596..6409c26 100644
-> --- a/builtin/get-tar-commit-id.c
-> +++ b/builtin/get-tar-commit-id.c
-> @@ -29,7 +29,7 @@ int cmd_get_tar_commit_id(int argc, const char **argv, const char *prefix)
->  		die("git get-tar-commit-id: read error");
->  	if (header->typeflag[0] != 'g')
->  		return 1;
-> -	if (memcmp(content, "52 comment=", 11))
-> +	if (!starts_with(content, "52 comment="))
->  		return 1;
->  
->  	n = write_in_full(1, content + 11, 41);
+---
 
-This hunk uses the magic number "11" a couple lines later.  Junio (I
-think rightly) objected [1] to rewrites in these circumstances because
-they make it even less obvious where the constant came from and thereby
-make the complete elimination of the hard-coded constant *more* difficult.
+Let's see if I replied correctly with send-email.
 
-> diff --git a/builtin/mktag.c b/builtin/mktag.c
-> index 640ab64..70385ac 100644
-> --- a/builtin/mktag.c
-> +++ b/builtin/mktag.c
-> @@ -49,7 +49,7 @@ static int verify_tag(char *buffer, unsigned long size)
->  
->  	/* Verify object line */
->  	object = buffer;
-> -	if (memcmp(object, "object ", 7))
-> +	if (!starts_with(object, "object "))
->  		return error("char%d: does not start with \"object \"", 0);
->  
->  	if (get_sha1_hex(object + 7, sha1))
+I am David Tran a graduating CS/Math senior from Sonoma State University,
+United States. I would like to work with git for GSoC'14, specifically the line
+options for git rebase --interactive [1]. I have used git for a few years and
+know how destructive but important rebase is to git. I have created a few shell
+scripts here and there to make life using bash/zsh easier. I would like to
+apply these skills and work with the best.
 
-Ditto.
+Github: unsignedzero
 
-> @@ -57,7 +57,7 @@ static int verify_tag(char *buffer, unsigned long size)
->  
->  	/* Verify type line */
->  	type_line = object + 48;
-> -	if (memcmp(type_line - 1, "\ntype ", 6))
-> +	if (!starts_with(type_line - 1, "\ntype "))
->  		return error("char%d: could not find \"\\ntype \"", 47);
->  
->  	/* Verify tag-line */
-> @@ -66,7 +66,7 @@ static int verify_tag(char *buffer, unsigned long size)
->  		return error("char%"PRIuMAX": could not find next \"\\n\"",
->  				(uintmax_t) (type_line - buffer));
->  	tag_line++;
-> -	if (memcmp(tag_line, "tag ", 4) || tag_line[4] == '\n')
-> +	if (!starts_with(tag_line, "tag ") || tag_line[4] == '\n')
->  		return error("char%"PRIuMAX": no \"tag \" found",
->  				(uintmax_t) (tag_line - buffer));
->  
-> @@ -98,7 +98,7 @@ static int verify_tag(char *buffer, unsigned long size)
->  	/* Verify the tagger line */
->  	tagger_line = tag_line;
->  
-> -	if (memcmp(tagger_line, "tagger ", 7))
-> +	if (!starts_with(tagger_line, "tagger "))
->  		return error("char%"PRIuMAX": could not find \"tagger \"",
->  			(uintmax_t) (tagger_line - buffer));
->  
+[1]: http://thread.gmane.org/gmane.comp.version-control.git/243933/focus=243967
 
-Ditto.
+> The patch itself has some problems. See comments below.
 
-> diff --git a/builtin/patch-id.c b/builtin/patch-id.c
-> index 3cfe02d..7e02f2c 100644
-> --- a/builtin/patch-id.c
-> +++ b/builtin/patch-id.c
-> @@ -66,13 +66,13 @@ static int get_one_patchid(unsigned char *next_sha1, git_SHA_CTX *ctx, struct st
->  		char *p = line;
->  		int len;
->  
-> -		if (!memcmp(line, "diff-tree ", 10))
-> +		if (starts_with(line, "diff-tree "))
->  			p += 10;
+Fixed the broken &&-chain and the tests run correctly. The double env is
+fixed to be a single env. The useless subshells are removed.
 
-Ditto.  OK, I'm starting to see a pattern here so I'll leave you to look
-for similar problems with later changes.
+>>         echo "edited again" > file7 &&
+>>         git add file7 &&
+>>  <at>  <at>  -949,9 +924,7  <at>  <at>  test_expect_success 'rebase -i --root temporary sentinel commit' '
+>>         git checkout B &&
+>>         (
+>>                 set_fake_editor &&
+>> -               FAKE_LINES="2" &&
+>> -               export FAKE_LINES &&
+>> -               test_must_fail git rebase -i --root
+>> +               test_must_fail env FAKE_LINES="2" git rebase -i --root
+>>         ) &&
+> And maybe here (or does this test or later tests break if
+> set_fake_editor is taken out of the subshell)?
 
-> -		else if (!memcmp(line, "commit ", 7))
-> +		else if (starts_with(line, "commit "))
->  			p += 7;
-> -		else if (!memcmp(line, "From ", 5))
-> +		else if (starts_with(line, "From "))
->  			p += 5;
-> -		else if (!memcmp(line, "\\ ", 2) && 12 < strlen(line))
-> +		else if (starts_with(line, "\\ ") && 12 < strlen(line))
->  			continue;
->  
->  		if (!get_sha1_hex(p, next_sha1)) {
-> @@ -81,14 +81,14 @@ static int get_one_patchid(unsigned char *next_sha1, git_SHA_CTX *ctx, struct st
->  		}
->  
->  		/* Ignore commit comments */
-> -		if (!patchlen && memcmp(line, "diff ", 5))
-> +		if (!patchlen && !starts_with(line, "diff "))
->  			continue;
->  
->  		/* Parsing diff header?  */
->  		if (before == -1) {
-> -			if (!memcmp(line, "index ", 6))
-> +			if (starts_with(line, "index "))
->  				continue;
-> -			else if (!memcmp(line, "--- ", 4))
-> +			else if (starts_with(line, "--- "))
->  				before = after = 1;
->  			else if (!isalpha(line[0]))
->  				break;
-> @@ -96,14 +96,14 @@ static int get_one_patchid(unsigned char *next_sha1, git_SHA_CTX *ctx, struct st
->  
->  		/* Looking for a valid hunk header?  */
->  		if (before == 0 && after == 0) {
-> -			if (!memcmp(line, "@@ -", 4)) {
-> +			if (starts_with(line, "@@ -")) {
->  				/* Parse next hunk, but ignore line numbers.  */
->  				scan_hunk_header(line, &before, &after);
->  				continue;
->  			}
->  
->  			/* Split at the end of the patch.  */
-> -			if (memcmp(line, "diff ", 5))
-> +			if (!starts_with(line, "diff "))
->  				break;
->  
->  			/* Else we're parsing another header.  */
-> diff --git a/commit.c b/commit.c
-> index fa401ae..f3ca1db 100644
-> --- a/commit.c
-> +++ b/commit.c
-> @@ -90,13 +90,13 @@ static unsigned long parse_commit_date(const char *buf, const char *tail)
->  
->  	if (buf + 6 >= tail)
->  		return 0;
-> -	if (memcmp(buf, "author", 6))
-> +	if (!starts_with(buf, "author"))
+I thought it did but when I ran it, it doesn't. Fixed.
 
-Ditto, except that here the magic number is used *before* your change.
+>> diff --git a/t/t6006-rev-list-format.sh b/t/t6006-rev-list-format.sh
+>> index 9874403..b43fb67 100755
+>> --- a/t/t6006-rev-list-format.sh
+>> +++ b/t/t6006-rev-list-format.sh
+>>  <at>  <at>  -191,8 +191,7  <at>  <at>  test_expect_success '%C(auto) respects --no-color' '
+>>
+>>  test_expect_success TTY '%C(auto) respects --color=auto (stdout is tty)' '
+>>         (
+>> -               TERM=vt100 && export TERM &&
+>> -               test_terminal \
+>> +               test_terminal env TERM=vt100 \
+>>                         git log --format=$AUTO_COLOR -1 --color=auto >actual &&
+>>                 has_color actual
+>>         )
+> Is this subshell still necessary? Does has_color rely upon the value of TERM?
 
-I stopped reading the changes here because I expect there will be a lot
-more of the same problem.
+Like above, I thought it did but it doesn't need it. Fixed.
 
->  		return 0;
->  	while (buf < tail && *buf++ != '\n')
->  		/* nada */;
->  	if (buf + 9 >= tail)
->  		return 0;
-> -	if (memcmp(buf, "committer", 9))
-> +	if (!starts_with(buf, "committer"))
->  		return 0;
->  	while (buf < tail && *buf++ != '>')
->  		/* nada */;
-> diff --git a/connect.c b/connect.c
-> index 4150412..1ff0540 100644
-> --- a/connect.c
-> +++ b/connect.c
-> @@ -18,7 +18,7 @@ static int check_ref(const char *name, int len, unsigned int flags)
->  	if (!flags)
->  		return 1;
->  
-> -	if (len < 5 || memcmp(name, "refs/", 5))
-> +	if (len < 5 || !starts_with(name, "refs/"))
->  		return 0;
->  
->  	/* Skip the "refs/" part */
-> @@ -30,11 +30,11 @@ static int check_ref(const char *name, int len, unsigned int flags)
->  		return 0;
->  
->  	/* REF_HEADS means that we want regular branch heads */
-> -	if ((flags & REF_HEADS) && !memcmp(name, "heads/", 6))
-> +	if ((flags & REF_HEADS) && starts_with(name, "heads/"))
->  		return 1;
->  
->  	/* REF_TAGS means that we want tags */
-> -	if ((flags & REF_TAGS) && !memcmp(name, "tags/", 5))
-> +	if ((flags & REF_TAGS) && starts_with(name, "tags/"))
->  		return 1;
->  
->  	/* All type bits clear means that we are ok with anything */
-> diff --git a/contrib/convert-objects/convert-objects.c b/contrib/convert-objects/convert-objects.c
-> index f3b57bf..9fdc730 100644
-> --- a/contrib/convert-objects/convert-objects.c
-> +++ b/contrib/convert-objects/convert-objects.c
-> @@ -245,7 +245,7 @@ static void convert_date(void *buffer, unsigned long size, unsigned char *result
->  	size -= 46;
->  
->  	/* "parent <sha1>\n" */
-> -	while (!memcmp(buffer, "parent ", 7)) {
-> +	while (starts_with(buffer, "parent ")) {
->  		memcpy(new + newlen, buffer, 48);
->  		newlen += 48;
->  		buffer = (char *) buffer + 48;
-> @@ -270,11 +270,11 @@ static void convert_commit(void *buffer, unsigned long size, unsigned char *resu
->  	void *orig_buffer = buffer;
->  	unsigned long orig_size = size;
->  
-> -	if (memcmp(buffer, "tree ", 5))
-> +	if (!starts_with(buffer, "tree "))
->  		die("Bad commit '%s'", (char *) buffer);
->  	convert_ascii_sha1((char *) buffer + 5);
->  	buffer = (char *) buffer + 46;    /* "tree " + "hex sha1" + "\n" */
-> -	while (!memcmp(buffer, "parent ", 7)) {
-> +	while (starts_with(buffer, "parent ")) {
->  		convert_ascii_sha1((char *) buffer + 7);
->  		buffer = (char *) buffer + 48;
->  	}
-> diff --git a/convert.c b/convert.c
-> index ab80b72..30882e2 100644
-> --- a/convert.c
-> +++ b/convert.c
-> @@ -543,7 +543,7 @@ static int ident_to_git(const char *path, const char *src, size_t len,
->  		len -= dollar + 1 - src;
->  		src  = dollar + 1;
->  
-> -		if (len > 3 && !memcmp(src, "Id:", 3)) {
-> +		if (len > 3 && starts_with(src, "Id:")) {
->  			dollar = memchr(src + 3, '$', len - 3);
->  			if (!dollar)
->  				break;
-> diff --git a/http-walker.c b/http-walker.c
-> index 1516c5e..8ae7d69 100644
-> --- a/http-walker.c
-> +++ b/http-walker.c
-> @@ -267,7 +267,7 @@ static void process_alternates_response(void *callback_data)
->  				i += 3;
->  				serverlen = strlen(base);
->  				while (i + 2 < posn &&
-> -				       !memcmp(data + i, "../", 3)) {
-> +				       starts_with(data + i, "../")) {
->  					do {
->  						serverlen--;
->  					} while (serverlen &&
-> diff --git a/imap-send.c b/imap-send.c
-> index 0bc6f7f..019de18 100644
-> --- a/imap-send.c
-> +++ b/imap-send.c
-> @@ -524,7 +524,7 @@ static struct imap_cmd *v_issue_imap_cmd(struct imap_store *ctx,
->  	if (Verbose) {
->  		if (imap->num_in_progress)
->  			printf("(%d in progress) ", imap->num_in_progress);
-> -		if (memcmp(cmd->cmd, "LOGIN", 5))
-> +		if (!starts_with(cmd->cmd, "LOGIN"))
->  			printf(">>> %s", buf);
->  		else
->  			printf(">>> %d LOGIN <user> <pass>\n", cmd->tag);
-> @@ -802,7 +802,7 @@ static int get_cmd_result(struct imap_store *ctx, struct imap_cmd *tcmd)
->  				resp = DRV_OK;
->  			else {
->  				if (!strcmp("NO", arg)) {
-> -					if (cmdp->cb.create && cmd && (cmdp->cb.trycreate || !memcmp(cmd, "[TRYCREATE]", 11))) { /* SELECT, APPEND or UID COPY */
-> +					if (cmdp->cb.create && cmd && (cmdp->cb.trycreate || starts_with(cmd, "[TRYCREATE]"))) { /* SELECT, APPEND or UID COPY */
->  						p = strchr(cmdp->cmd, '"');
->  						if (!issue_imap_cmd(ctx, NULL, "CREATE \"%.*s\"", (int)(strchr(p + 1, '"') - p + 1), p)) {
->  							resp = RESP_BAD;
-> @@ -827,7 +827,7 @@ static int get_cmd_result(struct imap_store *ctx, struct imap_cmd *tcmd)
->  				} else /*if (!strcmp("BAD", arg))*/
->  					resp = RESP_BAD;
->  				fprintf(stderr, "IMAP command '%s' returned response (%s) - %s\n",
-> -					 memcmp(cmdp->cmd, "LOGIN", 5) ?
-> +					 !starts_with(cmdp->cmd, "LOGIN") ?
->  							cmdp->cmd : "LOGIN <user> <pass>",
->  							arg, cmd ? cmd : "");
->  			}
-> diff --git a/pack-write.c b/pack-write.c
-> index 9b8308b..c3bfa16 100644
-> --- a/pack-write.c
-> +++ b/pack-write.c
-> @@ -289,7 +289,7 @@ char *index_pack_lockfile(int ip_out)
->  	 * later on.  If we don't get that then tough luck with it.
->  	 */
->  	if (read_in_full(ip_out, packname, 46) == 46 && packname[45] == '\n' &&
-> -	    memcmp(packname, "keep\t", 5) == 0) {
-> +	    !starts_with(packname, "keep\t") == 0) {
->  		char path[PATH_MAX];
->  		packname[45] = 0;
->  		snprintf(path, sizeof(path), "%s/pack/pack-%s.keep",
-> diff --git a/remote.c b/remote.c
-> index 5f63d55..bd02b0e 100644
-> --- a/remote.c
-> +++ b/remote.c
-> @@ -1149,7 +1149,7 @@ static int match_explicit(struct ref *src, struct ref *dst,
->  	case 1:
->  		break;
->  	case 0:
-> -		if (!memcmp(dst_value, "refs/", 5))
-> +		if (starts_with(dst_value, "refs/"))
->  			matched_dst = make_linked_ref(dst_value, dst_tail);
->  		else if (is_null_sha1(matched_src->new_sha1))
->  			error("unable to delete '%s': remote ref does not exist",
-> 
+Signed-off-by: David Tran <unsignedzero@gmail.com>
+---
+ t/t1300-repo-config.sh        |   17 ++--------
+ t/t1510-repo-setup.sh         |    4 +--
+ t/t3200-branch.sh             |   12 +------
+ t/t3301-notes.sh              |   22 ++++----------
+ t/t3404-rebase-interactive.sh |   63 ++++++++--------------------------------
+ t/t3413-rebase-hook.sh        |    6 +---
+ t/t4014-format-patch.sh       |   14 ++-------
+ t/t5305-include-tag.sh        |    4 +--
+ t/t5602-clone-remote-exec.sh  |   13 ++------
+ t/t5801-remote-helpers.sh     |    6 +--
+ t/t6006-rev-list-format.sh    |    9 ++----
+ t/t7006-pager.sh              |   18 ++----------
+ 12 files changed, 42 insertions(+), 146 deletions(-)
 
-In your cover letter you said:
-
-> I've looked through the list's responses and removed the most objectionable
-> hunks from the patch v2, especially in cases where starts_with either hurts
-> readability or further obscures the use of magic numbers. Let me know what you
-> all think about the changes.
-
-In any open-source project it is important to optimize for the time of
-the reviewer, because code-review is a relatively tedious task and is
-therefore often the bottleneck for progress.  Therefore I suggest that
-you turn your approach on its head.  Don't "remove the most
-objectionable hunks" but rather *include only the best hunks*--the ones
-that you can stand behind 100%, which you think are an unambiguous
-improvement, and that the reviewer can accept without reservations.
-
-It would be much better for you to submit only a handful of changes (or
-even only one!) that is perfect, rather than throwing a bunch at the
-wall and asking the reviewer to pick between the good and the bad.  As
-you gain experience and learn about the preferences of the Git project,
-you will get a better feel for the boundary between
-acceptable/unacceptable patches, and *then* you will be able to start
-submitting patches closer to the boundary.
-
-Cheers,
-Michael
-
-[1] http://article.gmane.org/gmane.comp.version-control.git/244005
-
+diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
+index c9c426c..3e3f77b 100755
+--- a/t/t1300-repo-config.sh
++++ b/t/t1300-repo-config.sh
+@@ -974,24 +974,15 @@ test_expect_success SYMLINKS 'symlinked configuration' '
+ '
+ 
+ test_expect_success 'nonexistent configuration' '
+-	(
+-		GIT_CONFIG=doesnotexist &&
+-		export GIT_CONFIG &&
+-		test_must_fail git config --list &&
+-		test_must_fail git config test.xyzzy
+-	)
++	test_must_fail env GIT_CONFIG=doesnotexist git config --list &&
++	test_must_fail env GIT_CONFIG=doesnotexist git config test.xyzzy
+ '
+ 
+ test_expect_success SYMLINKS 'symlink to nonexistent configuration' '
+ 	ln -s doesnotexist linktonada &&
+ 	ln -s linktonada linktolinktonada &&
+-	(
+-		GIT_CONFIG=linktonada &&
+-		export GIT_CONFIG &&
+-		test_must_fail git config --list &&
+-		GIT_CONFIG=linktolinktonada &&
+-		test_must_fail git config --list
+-	)
++	test_must_fail env GIT_CONFIG=linktonada git config --list &&
++	test_must_fail env GIT_CONFIG=linktolinktonada git config --list
+ '
+ 
+ test_expect_success 'check split_cmdline return' "
+diff --git a/t/t1510-repo-setup.sh b/t/t1510-repo-setup.sh
+index cf2ee78..e1b2a99 100755
+--- a/t/t1510-repo-setup.sh
++++ b/t/t1510-repo-setup.sh
+@@ -777,9 +777,7 @@ test_expect_success '#30: core.worktree and core.bare conflict (gitfile version)
+ 	setup_repo 30 "$here/30" gitfile true &&
+ 	(
+ 		cd 30 &&
+-		GIT_DIR=.git &&
+-		export GIT_DIR &&
+-		test_must_fail git symbolic-ref HEAD 2>result
++		test_must_fail env GIT_DIR=.git git symbolic-ref HEAD 2>result
+ 	) &&
+ 	grep "core.bare and core.worktree" 30/result
+ '
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index fcdb867..d45e95c 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -849,11 +849,7 @@ test_expect_success 'detect typo in branch name when using --edit-description' '
+ 	write_script editor <<-\EOF &&
+ 		echo "New contents" >"$1"
+ 	EOF
+-	(
+-		EDITOR=./editor &&
+-		export EDITOR &&
+-		test_must_fail git branch --edit-description no-such-branch
+-	)
++	test_must_fail env EDITOR=./editor git branch --edit-description no-such-branch
+ '
+ 
+ test_expect_success 'refuse --edit-description on unborn branch for now' '
+@@ -861,11 +857,7 @@ test_expect_success 'refuse --edit-description on unborn branch for now' '
+ 		echo "New contents" >"$1"
+ 	EOF
+ 	git checkout --orphan unborn &&
+-	(
+-		EDITOR=./editor &&
+-		export EDITOR &&
+-		test_must_fail git branch --edit-description
+-	)
++	test_must_fail env EDITOR=./editor git branch --edit-description
+ '
+ 
+ test_expect_success '--merged catches invalid object names' '
+diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
+index 3bb79a4..db491ac 100755
+--- a/t/t3301-notes.sh
++++ b/t/t3301-notes.sh
+@@ -17,7 +17,7 @@ GIT_EDITOR=./fake_editor.sh
+ export GIT_EDITOR
+ 
+ test_expect_success 'cannot annotate non-existing HEAD' '
+-	(MSG=3 && export MSG && test_must_fail git notes add)
++	test_must_fail env MSG=3 git notes add
+ '
+ 
+ test_expect_success setup '
+@@ -32,22 +32,16 @@ test_expect_success setup '
+ '
+ 
+ test_expect_success 'need valid notes ref' '
+-	(MSG=1 GIT_NOTES_REF=/ && export MSG GIT_NOTES_REF &&
+-	 test_must_fail git notes add) &&
+-	(MSG=2 GIT_NOTES_REF=/ && export MSG GIT_NOTES_REF &&
+-	 test_must_fail git notes show)
++	test_must_fail env MSG=1 env GIT_NOTES_REF=/ git notes show &&
++	test_must_fail env MSG=2 env GIT_NOTES_REF=/ git notes show
+ '
+ 
+ test_expect_success 'refusing to add notes in refs/heads/' '
+-	(MSG=1 GIT_NOTES_REF=refs/heads/bogus &&
+-	 export MSG GIT_NOTES_REF &&
+-	 test_must_fail git notes add)
++	test_must_fail env MSG=1 GIT_NOTES_REF=refs/heads/bogus git notes add
+ '
+ 
+ test_expect_success 'refusing to edit notes in refs/remotes/' '
+-	(MSG=1 GIT_NOTES_REF=refs/remotes/bogus &&
+-	 export MSG GIT_NOTES_REF &&
+-	 test_must_fail git notes edit)
++	test_must_fail env MSG=1 GIT_NOTES_REF=refs/heads/bogus git notes edit
+ '
+ 
+ # 1 indicates caught gracefully by die, 128 means git-show barked
+@@ -865,11 +859,7 @@ test_expect_success 'create note from non-existing note with "git notes add -c"
+ 	git add a10 &&
+ 	test_tick &&
+ 	git commit -m 10th &&
+-	(
+-		MSG="yet another note" &&
+-		export MSG &&
+-		test_must_fail git notes add -c deadbeef
+-	) &&
++	test_must_fail env MSG="yet another note" git notes add -c deadbeef &&
+ 	test_must_fail git notes list HEAD
+ '
+ 
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 50e22b1..2e75e4d 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -104,9 +104,7 @@ test_expect_success 'rebase -i with the exec command checks tree cleanness' '
+ 	git checkout master &&
+ 	(
+ 	set_fake_editor &&
+-	FAKE_LINES="exec_echo_foo_>file1 1" &&
+-	export FAKE_LINES &&
+-	test_must_fail git rebase -i HEAD^
++	test_must_fail env FAKE_LINES="exec_echo_foo_>file1 1" git rebase -i HEAD^
+ 	) &&
+ 	test_cmp_rev master^ HEAD &&
+ 	git reset --hard &&
+@@ -118,9 +116,8 @@ test_expect_success 'rebase -i with exec of inexistent command' '
+ 	test_when_finished "git rebase --abort" &&
+ 	(
+ 	set_fake_editor &&
+-	FAKE_LINES="exec_this-command-does-not-exist 1" &&
+-	export FAKE_LINES &&
+-	test_must_fail git rebase -i HEAD^ >actual 2>&1
++	test_must_fail env FAKE_LINES="exec_this-command-does-not-exist 1" \
++	git rebase -i HEAD^ >actual 2>&1
+ 	) &&
+ 	! grep "Maybe git-rebase is broken" actual
+ '
+@@ -375,11 +372,7 @@ test_expect_success 'commit message used after conflict' '
+ 	git checkout -b conflict-fixup conflict-branch &&
+ 	base=$(git rev-parse HEAD~4) &&
+ 	set_fake_editor &&
+-	(
+-		FAKE_LINES="1 fixup 3 fixup 4" &&
+-		export FAKE_LINES &&
+-		test_must_fail git rebase -i $base
+-	) &&
++	test_must_fail env FAKE_LINES="1 fixup 3 fixup 4" git rebase -i $base &&
+ 	echo three > conflict &&
+ 	git add conflict &&
+ 	FAKE_COMMIT_AMEND="ONCE" EXPECT_HEADER_COUNT=2 \
+@@ -394,11 +387,7 @@ test_expect_success 'commit message retained after conflict' '
+ 	git checkout -b conflict-squash conflict-branch &&
+ 	base=$(git rev-parse HEAD~4) &&
+ 	set_fake_editor &&
+-	(
+-		FAKE_LINES="1 fixup 3 squash 4" &&
+-		export FAKE_LINES &&
+-		test_must_fail git rebase -i $base
+-	) &&
++	test_must_fail env FAKE_LINES="1 fixup 3 squash 4" git rebase -i $base &&
+ 	echo three > conflict &&
+ 	git add conflict &&
+ 	FAKE_COMMIT_AMEND="TWICE" EXPECT_HEADER_COUNT=2 \
+@@ -469,11 +458,7 @@ test_expect_success 'interrupted squash works as expected' '
+ 	git checkout -b interrupted-squash conflict-branch &&
+ 	one=$(git rev-parse HEAD~3) &&
+ 	set_fake_editor &&
+-	(
+-		FAKE_LINES="1 squash 3 2" &&
+-		export FAKE_LINES &&
+-		test_must_fail git rebase -i HEAD~3
+-	) &&
++	test_must_fail env FAKE_LINES="1 squash 3 2" git rebase -i HEAD~3 &&
+ 	(echo one; echo two; echo four) > conflict &&
+ 	git add conflict &&
+ 	test_must_fail git rebase --continue &&
+@@ -487,11 +472,7 @@ test_expect_success 'interrupted squash works as expected (case 2)' '
+ 	git checkout -b interrupted-squash2 conflict-branch &&
+ 	one=$(git rev-parse HEAD~3) &&
+ 	set_fake_editor &&
+-	(
+-		FAKE_LINES="3 squash 1 2" &&
+-		export FAKE_LINES &&
+-		test_must_fail git rebase -i HEAD~3
+-	) &&
++	test_must_fail env FAKE_LINES="3 squash 1 2" git rebase -i HEAD~3 &&
+ 	(echo one; echo four) > conflict &&
+ 	git add conflict &&
+ 	test_must_fail git rebase --continue &&
+@@ -529,9 +510,7 @@ test_expect_success 'aborted --continue does not squash commits after "edit"' '
+ 	echo "edited again" > file7 &&
+ 	git add file7 &&
+ 	(
+-		FAKE_COMMIT_MESSAGE=" " &&
+-		export FAKE_COMMIT_MESSAGE &&
+-		test_must_fail git rebase --continue
++		test_must_fail env FAKE_COMMIT_MESSAGE=" " git rebase --continue
+ 	) &&
+ 	test $old = $(git rev-parse HEAD) &&
+ 	git rebase --abort
+@@ -547,11 +526,7 @@ test_expect_success 'auto-amend only edited commits after "edit"' '
+ 	echo "and again" > file7 &&
+ 	git add file7 &&
+ 	test_tick &&
+-	(
+-		FAKE_COMMIT_MESSAGE="and again" &&
+-		export FAKE_COMMIT_MESSAGE &&
+-		test_must_fail git rebase --continue
+-	) &&
++	test_must_fail env FAKE_COMMIT_MESSAGE="and again" git rebase --continue &&
+ 	git rebase --abort
+ '
+ 
+@@ -559,11 +534,7 @@ test_expect_success 'clean error after failed "exec"' '
+ 	test_tick &&
+ 	test_when_finished "git rebase --abort || :" &&
+ 	set_fake_editor &&
+-	(
+-		FAKE_LINES="1 exec_false" &&
+-		export FAKE_LINES &&
+-		test_must_fail git rebase -i HEAD^
+-	) &&
++	test_must_fail env FAKE_LINES="1 exec_false" git rebase -i HEAD^ &&
+ 	echo "edited again" > file7 &&
+ 	git add file7 &&
+ 	test_must_fail git rebase --continue 2>error &&
+@@ -947,12 +918,8 @@ test_expect_success 'rebase -i --root retain root commit author and message' '
+ 
+ test_expect_success 'rebase -i --root temporary sentinel commit' '
+ 	git checkout B &&
+-	(
+-		set_fake_editor &&
+-		FAKE_LINES="2" &&
+-		export FAKE_LINES &&
+-		test_must_fail git rebase -i --root
+-	) &&
++	set_fake_editor &&
++	test_must_fail env FAKE_LINES="2" git rebase -i --root &&
+ 	git cat-file commit HEAD | grep "^tree 4b825dc642cb" &&
+ 	git rebase --abort
+ '
+@@ -1042,11 +1009,7 @@ test_expect_success 'rebase -i error on commits with \ in message' '
+ 	test_when_finished "git rebase --abort; git reset --hard $current_head; rm -f error" &&
+ 	test_commit TO-REMOVE will-conflict old-content &&
+ 	test_commit "\temp" will-conflict new-content dummy &&
+-	(
+-	EDITOR=true &&
+-	export EDITOR &&
+-	test_must_fail git rebase -i HEAD^ --onto HEAD^^ 2>error
+-	) &&
++	test_must_fail env EDITOR=true git rebase -i HEAD^ --onto HEAD^^ 2>error &&
+ 	test_expect_code 1 grep  "	emp" error
+ '
+ 
+diff --git a/t/t3413-rebase-hook.sh b/t/t3413-rebase-hook.sh
+index 098b755..b6833e9 100755
+--- a/t/t3413-rebase-hook.sh
++++ b/t/t3413-rebase-hook.sh
+@@ -118,11 +118,7 @@ test_expect_success 'pre-rebase hook stops rebase (1)' '
+ test_expect_success 'pre-rebase hook stops rebase (2)' '
+ 	git checkout test &&
+ 	git reset --hard side &&
+-	(
+-		EDITOR=:
+-		export EDITOR
+-		test_must_fail git rebase -i master
+-	) &&
++	test_must_fail env EDITOR=: git rebase -i master &&
+ 	test "z$(git symbolic-ref HEAD)" = zrefs/heads/test &&
+ 	test 0 = $(git rev-list HEAD...side | wc -l)
+ '
+diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+index 73194b2..9c80633 100755
+--- a/t/t4014-format-patch.sh
++++ b/t/t4014-format-patch.sh
+@@ -764,22 +764,14 @@ test_expect_success 'format-patch --signature="" suppresses signatures' '
+ 
+ test_expect_success TTY 'format-patch --stdout paginates' '
+ 	rm -f pager_used &&
+-	(
+-		GIT_PAGER="wc >pager_used" &&
+-		export GIT_PAGER &&
+-		test_terminal git format-patch --stdout --all
+-	) &&
++	test_terminal env GIT_PAGER="wc >pager_used" git format-patch --stdout --all &&
+ 	test_path_is_file pager_used
+ '
+ 
+  test_expect_success TTY 'format-patch --stdout pagination can be disabled' '
+ 	rm -f pager_used &&
+-	(
+-		GIT_PAGER="wc >pager_used" &&
+-		export GIT_PAGER &&
+-		test_terminal git --no-pager format-patch --stdout --all &&
+-		test_terminal git -c "pager.format-patch=false" format-patch --stdout --all
+-	) &&
++	test_terminal env GIT_PAGER="wc >pager_used" git --no-pager format-patch --stdout --all &&
++	test_terminal env GIT_PAGER="wc >pager_used" git -c "pager.format-patch=false" format-patch --stdout --all &&
+ 	test_path_is_missing pager_used &&
+ 	test_path_is_missing .git/pager_used
+ '
+diff --git a/t/t5305-include-tag.sh b/t/t5305-include-tag.sh
+index b061864..21517c7 100755
+--- a/t/t5305-include-tag.sh
++++ b/t/t5305-include-tag.sh
+@@ -45,9 +45,7 @@ test_expect_success 'unpack objects' '
+ test_expect_success 'check unpacked result (have commit, no tag)' '
+ 	git rev-list --objects $commit >list.expect &&
+ 	(
+-		GIT_DIR=clone.git &&
+-		export GIT_DIR &&
+-		test_must_fail git cat-file -e $tag &&
++		test_must_fail env GIT_DIR=clone.git git cat-file -e $tag &&
+ 		git rev-list --objects $commit
+ 	) >list.actual &&
+ 	test_cmp list.expect list.actual
+diff --git a/t/t5602-clone-remote-exec.sh b/t/t5602-clone-remote-exec.sh
+index 3f353d9..cbcceab 100755
+--- a/t/t5602-clone-remote-exec.sh
++++ b/t/t5602-clone-remote-exec.sh
+@@ -12,21 +12,14 @@ test_expect_success setup '
+ '
+ 
+ test_expect_success 'clone calls git upload-pack unqualified with no -u option' '
+-	(
+-		GIT_SSH=./not_ssh &&
+-		export GIT_SSH &&
+-		test_must_fail git clone localhost:/path/to/repo junk
+-	) &&
++	test_must_fail env GIT_SSH=./not_ssh git clone localhost:/path/to/repo junk &&
+ 	echo "localhost git-upload-pack '\''/path/to/repo'\''" >expected &&
+ 	test_cmp expected not_ssh_output
+ '
+ 
+ test_expect_success 'clone calls specified git upload-pack with -u option' '
+-	(
+-		GIT_SSH=./not_ssh &&
+-		export GIT_SSH &&
+-		test_must_fail git clone -u ./something/bin/git-upload-pack localhost:/path/to/repo junk
+-	) &&
++	test_must_fail env GIT_SSH=./not_ssh \
++		git clone -u ./something/bin/git-upload-pack localhost:/path/to/repo junk &&
+ 	echo "localhost ./something/bin/git-upload-pack '\''/path/to/repo'\''" >expected &&
+ 	test_cmp expected not_ssh_output
+ '
+diff --git a/t/t5801-remote-helpers.sh b/t/t5801-remote-helpers.sh
+index 613f69a..ca19838 100755
+--- a/t/t5801-remote-helpers.sh
++++ b/t/t5801-remote-helpers.sh
+@@ -218,10 +218,8 @@ test_expect_success 'proper failure checks for fetching' '
+ '
+ 
+ test_expect_success 'proper failure checks for pushing' '
+-	(GIT_REMOTE_TESTGIT_FAILURE=1 &&
+-	export GIT_REMOTE_TESTGIT_FAILURE &&
+-	cd local &&
+-	test_must_fail git push --all
++	(cd local &&
++	test_must_fail env GIT_REMOTE_TESTGIT_FAILURE=1 git push --all
+ 	)
+ '
+ 
+diff --git a/t/t6006-rev-list-format.sh b/t/t6006-rev-list-format.sh
+index 9874403..9d9d9de 100755
+--- a/t/t6006-rev-list-format.sh
++++ b/t/t6006-rev-list-format.sh
+@@ -190,12 +190,9 @@ test_expect_success '%C(auto) respects --no-color' '
+ '
+ 
+ test_expect_success TTY '%C(auto) respects --color=auto (stdout is tty)' '
+-	(
+-		TERM=vt100 && export TERM &&
+-		test_terminal \
+-			git log --format=$AUTO_COLOR -1 --color=auto >actual &&
+-		has_color actual
+-	)
++	test_terminal env TERM=vt100 \
++		git log --format=$AUTO_COLOR -1 --color=auto >actual &&
++	has_color actual
+ '
+ 
+ test_expect_success '%C(auto) respects --color=auto (stdout not tty)' '
+diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
+index b9365b4..da958a8 100755
+--- a/t/t7006-pager.sh
++++ b/t/t7006-pager.sh
+@@ -146,11 +146,7 @@ test_expect_success 'no color when stdout is a regular file' '
+ test_expect_success TTY 'color when writing to a pager' '
+ 	rm -f paginated.out &&
+ 	test_config color.ui auto &&
+-	(
+-		TERM=vt100 &&
+-		export TERM &&
+-		test_terminal git log
+-	) &&
++	test_terminal env TERM=vt100 git log &&
+ 	colorful paginated.out
+ '
+ 
+@@ -158,11 +154,7 @@ test_expect_success TTY 'colors are suppressed by color.pager' '
+ 	rm -f paginated.out &&
+ 	test_config color.ui auto &&
+ 	test_config color.pager false &&
+-	(
+-		TERM=vt100 &&
+-		export TERM &&
+-		test_terminal git log
+-	) &&
++	test_terminal env TERM=vt100 git log &&
+ 	! colorful paginated.out
+ '
+ 
+@@ -181,11 +173,7 @@ test_expect_success 'color when writing to a file intended for a pager' '
+ test_expect_success TTY 'colors are sent to pager for external commands' '
+ 	test_config alias.externallog "!git log" &&
+ 	test_config color.ui auto &&
+-	(
+-		TERM=vt100 &&
+-		export TERM &&
+-		test_terminal git -p externallog
+-	) &&
++	test_terminal env TERM=vt100 git -p externallog &&
+ 	colorful paginated.out
+ '
+ 
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+1.7.9
