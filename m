@@ -1,120 +1,63 @@
-From: =?UTF-8?B?5rKI5om/5oGp?= <ubuntu2012@126.com>
-Subject: Re:Re: [PATCH] Rewrite the diff-no-index.c
-Date: Mon, 17 Mar 2014 18:35:16 +0800 (CST)
-Message-ID: <57a096bd.145a2.144cf9c12d4.Coremail.ubuntu2012@126.com>
-References: <1394973858-16505-1-git-send-email-ubuntu2012@126.com>
- <CAPig+cRjGonML5NLyv3eqsKuM45O+whVCOQKNdj-E=zW9mRy4g@mail.gmail.com>
+From: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+Subject: Re: [PATCH] Rewrite the diff-no-index.c
+Date: Mon, 17 Mar 2014 11:43:10 +0100 (CET)
+Message-ID: <282721457.578099.1395052990145.JavaMail.zimbra@imag.fr>
+References: <1394973858-16505-1-git-send-email-ubuntu2012@126.com> <CAPig+cRjGonML5NLyv3eqsKuM45O+whVCOQKNdj-E=zW9mRy4g@mail.gmail.com> <57a096bd.145a2.144cf9c12d4.Coremail.ubuntu2012@126.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-Cc: "Git List" <git@vger.kernel.org>
-To: "Eric Sunshine" <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Mar 17 11:35:28 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>
+To: =?utf-8?B?5rKI5om/5oGp?= <ubuntu2012@126.com>
+X-From: git-owner@vger.kernel.org Mon Mar 17 11:43:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WPUtD-0002dM-IY
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Mar 2014 11:35:28 +0100
+	id 1WPV14-00032R-76
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Mar 2014 11:43:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932430AbaCQKfX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Mar 2014 06:35:23 -0400
-Received: from m15-2.126.com ([220.181.15.2]:34882 "EHLO m15-2.126.com"
+	id S932543AbaCQKna (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Mar 2014 06:43:30 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:35006 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756151AbaCQKfW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Mar 2014 06:35:22 -0400
-X-Greylist: delayed 671 seconds by postgrey-1.27 at vger.kernel.org; Mon, 17 Mar 2014 06:35:22 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
-	s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=yGVMP
-	6j4VG5sU2JDsTdW8XAfqyd4J91afE8O8uBXVZ4=; b=ItSl4PCOHto9Cs7UUSRQt
-	SHXK4dpDchHP4/9jZGRqRPZISy6qv9l4tpaE9Tc8b0+qLN0YqfXDQHBeax98cVS+
-	J9tttVHb609miKP2zdx/lREZCB2UC7Pl4fMidUCBw6pg+jn9hyIb2lujJOe7TUkD
-	lDXCSH8bYQqH4R3SKd0/q4=
-Received: from ubuntu2012$126.com ( [182.148.250.78] ) by
- ajax-webmail-wmsvr2 (Coremail) ; Mon, 17 Mar 2014 18:35:16 +0800 (CST)
-X-Originating-IP: [182.148.250.78]
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version SP_ntes V3.5 build
- 20131204(24406.5820.5783) Copyright (c) 2002-2014 www.mailtech.cn 126com
-In-Reply-To: <CAPig+cRjGonML5NLyv3eqsKuM45O+whVCOQKNdj-E=zW9mRy4g@mail.gmail.com>
-X-CM-TRANSID: AsqowAAHL0blzyZTkiMdAA--.2584W
-X-CM-SenderInfo: hxex03jxsqija6rslhhfrp/1tbikAlRqE0vVZjQ3gADsC
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+	id S932471AbaCQKn3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Mar 2014 06:43:29 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s2HAhFWO014446
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 17 Mar 2014 11:43:15 +0100
+Received: from z8-mb-verimag.imag.fr (z8-mb-verimag.imag.fr [129.88.4.38])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s2HAhGnk027373;
+	Mon, 17 Mar 2014 11:43:16 +0100
+In-Reply-To: <57a096bd.145a2.144cf9c12d4.Coremail.ubuntu2012@126.com>
+X-Originating-IP: [129.88.6.115]
+X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - FF27 (Linux)/8.0.6_GA_5922)
+Thread-Topic: Rewrite the diff-no-index.c
+Thread-Index: uUOTwbNh4mEU/uGJ4UMNe/A+hyRtlQ==
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 17 Mar 2014 11:43:15 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s2HAhFWO014446
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@imag.fr
+MailScanner-NULL-Check: 1395657796.1231@8EzbDdKAwoiUB/RgjDiLTA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244241>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244242>
 
-VGhhbmsgeW91IGZvciB5b3VyIGNvbW1lbnRzLklmIEkgcmVuYW1lIHNvbWUgZnVuY3Rpb24gd2hl
-biBJIHdvcmsgb24gYSBsYXJnZSBwcm9qZWN0IGxpa2UgZ2l0LHdoZXRoZXIgaXQgd2lsbCBjYXVz
-ZSBvdGhlciBlcnJvciB0aGF0IEkgY2FuIG5vdCBzb2x2ZSAuU28gSSB1c2UgdGhlIHVnbHkgd2F5
-IGZvciB0aGlzIHJlYXNvbi4KQXQgMjAxNC0wMy0xNyAxNzoxMzozOCwiRXJpYyBTdW5zaGluZSIg
-PHN1bnNoaW5lQHN1bnNoaW5lY28uY29tPiB3cm90ZToKPlRoYW5rcyBmb3IgdGhlIHJlc3VibWlz
-c2lvbi4gQ29tbWVudHMgYmVsb3cuLi4NCj4NCj5PbiBTdW4sIE1hciAxNiwgMjAxNCBhdCA4OjQ0
-IEFNLCAgPHVidW50dTIwMTJAMTI2LmNvbT4gd3JvdGU6DQo+PiBGcm9tOiDmsojmib/mgakgPHVi
-dW50dTIwMTJAMTI2LmNvbT4NCj4+IFN1YmplY3Q6IFtQQVRDSF0gUmV3cml0ZSB0aGUgZGlmZi1u
-by1pbmRleC5jDQo+DQo+VGhpcyBpcyB5b3VyIHNlY29uZCB2ZXJzaW9uIG9mIHRoZSBwYXRjaCwg
-c28geW91IHNob3VsZCBzYXkgW1BBVENIIHYyXS4NCj4NCj5Nb3N0IHBhdGNoZXMgcmV3cml0ZSBz
-b21ldGhpbmcsIHNvICJyZXdyaXRlIiBpbiB0aGUgc3ViamVjdCBkb2VzIG5vdA0KPmNvbnZleSBt
-dWNoLiBCZXR0ZXIgd291bGQgYmUgdG8gZXhwbGFpbiB3aGF0IHRoZSBwYXRjaCBkb2VzLiBGb3IN
-Cj5pbnN0YW5jZToNCj4NCj4gICAgU3ViamVjdDogZGlmZi1uby1pbmRleDogcmVwbGFjZSBtYW51
-YWwgIi4iICYgIi4uIiBjaGVjayB3aXRoDQo+aXNfZG90X29yX2RvdGRvdCgpDQo+DQo+PiBJIGFt
-IHNvcnJ5IGZvciB0aGF0IEkgc2VuZCB0aGlzIGFnaWFuLkxhc3QgcGF0Y2ggSSBoYXZlIHNvbWUg
-ZXJyb3IuKE1heWJlIHRoaXMgdGltZSB3aWxsIGxpa2UgdGhlIHByZXZpb3VzKS5JdCBpcyBhcHBs
-eSBmb3IgR1NPQw0KPg0KPlRoaXMgY29tbWVudGFyeSBpcyByZWxldmFudCB0byB0aGUgb25nb2lu
-ZyBlbWFpbCBjb252ZXJzYXRpb24gYnV0IGRvZXMNCj5ub3QgYmVsb25nIGluIHRoZSBjb21taXQg
-bWVzc2FnZSwgc28geW91IHNob3VsZCBwbGFjZSBpdCBiZWxvdyB0aGUNCj4iLS0tIiBsaW5lIGFm
-dGVyIHlvdXIgc2lnbi1vZmYuDQo+DQo+PiBTaWduZWQtb2ZmLWJ5OiDmsojmib/mgakgPHVidW50
-dTIwMTJAMTI2LmNvbT4NCj4+IC0tLQ0KPg0KPlRoaXMgaXMgd2hlcmUgeW91IHdvdWxkIHBsYWNl
-IGNvbW1lbnRhcnkuIEl0IGlzIGFsc28gZ29vZCBldGlxdWV0dGUgdG8NCj50ZWxsIHJldmlld2Vy
-cyB3aGF0IGNoYW5nZWQgaW4gdGhpcyB2ZXJzaW9uIG9mIHRoZSBwYXRjaCBhbmQgdG8NCj5wcm92
-aWRlIGEgbGluayB0byB0aGUgcHJldmlvdXMgdmVyc2lvbiwgbGlrZSB0aGlzIFsxXS4NCj4NCj5b
-MV06IGh0dHA6Ly90aHJlYWQuZ21hbmUub3JnL2dtYW5lLmNvbXAudmVyc2lvbi1jb250cm9sLmdp
-dC8yNDQwOTMNCj4NCj4+ICBkaWZmLW5vLWluZGV4LmMgfCAgICA1ICsrKy0tDQo+PiAgZGlyLmgg
-ICAgICAgICAgIHwgICAgMyArKy0NCj4+ICAyIGZpbGVzIGNoYW5nZWQsIDUgaW5zZXJ0aW9ucygr
-KSwgMyBkZWxldGlvbnMoLSkNCj4+DQo+PiBkaWZmIC0tZ2l0IGEvZGlmZi1uby1pbmRleC5jIGIv
-ZGlmZi1uby1pbmRleC5jDQo+PiBpbmRleCA4ZTEwYmZmLi4xZmIwYzBmIDEwMDY0NA0KPj4gLS0t
-IGEvZGlmZi1uby1pbmRleC5jDQo+PiArKysgYi9kaWZmLW5vLWluZGV4LmMNCj4+IEBAIC0zLDEz
-ICszLDE0IEBADQo+PiAgICogQ29weXJpZ2h0IChjKSAyMDA3IGJ5IEpvaGFubmVzIFNjaGluZGVs
-aW4NCj4+ICAgKiBDb3B5cmlnaHQgKGMpIDIwMDggYnkgSnVuaW8gQyBIYW1hbm8NCj4+ICAgKi8N
-Cj4+IC0NCj4+ICsjZGVmaW5lIEVYSVQNCj4NCj5UaGlzIGNoYW5nZSBpcyBub24tb2J2aW91cyBh
-bmQgc2hvdWxkIGJlIGV4cGxhaW5lZCBpbiB0aGUgY29tbWl0DQo+bWVzc2FnZSwgb3RoZXJ3aXNl
-IHJldmlld2VycyB3aWxsIG5vdCB1bmRlcnN0YW5kIGl0cyBwdXJwb3NlLg0KPg0KPkluIGZhY3Qs
-IHlvdSBhcmUgZG9pbmcgdGhpcyBiZWNhdXNlIHlvdSB3YW50IHRvIG9taXQgdGhlIGRlY2xhcmF0
-aW9uDQo+b2YgcmVhZF9kaXJlY3RvcnkoKSBmcm9tIGRpci5oIHdoZW4gaXQgaXMgaW5jbHVkZWQg
-aW4gdGhpcyBmaWxlIHRvDQo+YXZvaWQgY29uZmxpY3Qgd2l0aCB0aGUgKGRpZmZlcmVudCkgcmVh
-ZF9kaXJlY3RvcnkoKSBpbXBsZW1lbnRhdGlvbiBpbg0KPnRoaXMgZmlsZS4gVGhpcyBpcyBhbiB1
-Z2x5IHdheSB0byBzb2x2ZSB0aGUgcHJvYmxlbS4gUmVuYW1pbmcNCj5yZWFkX2RpcmVjdG9yeSgp
-IGluIHRoaXMgZmlsZSB3b3VsZCBiZSBhIG11Y2ggY2xlYW5lciBzb2x1dGlvbiAoYnV0DQo+c2hv
-dWxkIGJlIGRvbmUgYXMgYSBzZXBhcmF0ZSBwcmVwYXJhdG9yeSBwYXRjaCkuDQo+DQo+PiAgI2lu
-Y2x1ZGUgImNhY2hlLmgiDQo+PiAgI2luY2x1ZGUgImNvbG9yLmgiDQo+PiAgI2luY2x1ZGUgImNv
-bW1pdC5oIg0KPj4gICNpbmNsdWRlICJibG9iLmgiDQo+PiAgI2luY2x1ZGUgInRhZy5oIg0KPj4g
-ICNpbmNsdWRlICJkaWZmLmgiDQo+PiArI2luY2x1ZGUgImRpci5oIg0KPj4gICNpbmNsdWRlICJk
-aWZmY29yZS5oIg0KPj4gICNpbmNsdWRlICJyZXZpc2lvbi5oIg0KPj4gICNpbmNsdWRlICJsb2ct
-dHJlZS5oIg0KPj4gQEAgLTI1LDcgKzI2LDcgQEAgc3RhdGljIGludCByZWFkX2RpcmVjdG9yeShj
-b25zdCBjaGFyICpwYXRoLCBzdHJ1Y3Qgc3RyaW5nX2xpc3QgKmxpc3QpDQo+PiAgICAgICAgICAg
-ICAgICAgcmV0dXJuIGVycm9yKCJDb3VsZCBub3Qgb3BlbiBkaXJlY3RvcnkgJXMiLCBwYXRoKTsN
-Cj4+DQo+PiAgICAgICAgIHdoaWxlICgoZSA9IHJlYWRkaXIoZGlyKSkpDQo+PiAtICAgICAgICAg
-ICAgICAgaWYgKHN0cmNtcCgiLiIsIGUtPmRfbmFtZSkgJiYgc3RyY21wKCIuLiIsIGUtPmRfbmFt
-ZSkpDQo+PiArICAgICAgICAgICAgICAgaWYgKGlzX2RvdF9vcl9kb3Rkb3QoZS0+ZF9uYW1lKSkN
-Cj4NCj5UaGlzIGxvZ2ljIGlzIGJhY2t3YXJkLiBLZWVwIGluIG1pbmQgdGhlIHJldHVybiB2YWx1
-ZSBvZiBzdHJjbXAoKSBhbmQNCj50aGVuIHRoaW5rIGNhcmVmdWxseSBhYm91dCB0aGUgZXhwcmVz
-c2lvbiAnc3RyY21wKC4uLikgJiYNCj5zdHJjbXAoLi4uKScuDQo+DQo+PiAgICAgICAgICAgICAg
-ICAgICAgICAgICBzdHJpbmdfbGlzdF9pbnNlcnQobGlzdCwgZS0+ZF9uYW1lKTsNCj4+DQo+PiAg
-ICAgICAgIGNsb3NlZGlyKGRpcik7DQo+PiBkaWZmIC0tZ2l0IGEvZGlyLmggYi9kaXIuaA0KPj4g
-aW5kZXggNTVlNTM0NS4uYzBlNDVjOCAxMDA2NDQNCj4+IC0tLSBhL2Rpci5oDQo+PiArKysgYi9k
-aXIuaA0KPj4gQEAgLTEzOCw4ICsxMzgsOSBAQCBleHRlcm4gaW50IG1hdGNoX3BhdGhzcGVjKGNv
-bnN0IHN0cnVjdCBwYXRoc3BlYyAqcGF0aHNwZWMsDQo+PiAgZXh0ZXJuIGludCB3aXRoaW5fZGVw
-dGgoY29uc3QgY2hhciAqbmFtZSwgaW50IG5hbWVsZW4sIGludCBkZXB0aCwgaW50IG1heF9kZXB0
-aCk7DQo+Pg0KPj4gIGV4dGVybiBpbnQgZmlsbF9kaXJlY3Rvcnkoc3RydWN0IGRpcl9zdHJ1Y3Qg
-KmRpciwgY29uc3Qgc3RydWN0IHBhdGhzcGVjICpwYXRoc3BlYyk7DQo+PiArI2lmbmRlZiBFWElU
-DQo+PiAgZXh0ZXJuIGludCByZWFkX2RpcmVjdG9yeShzdHJ1Y3QgZGlyX3N0cnVjdCAqLCBjb25z
-dCBjaGFyICpwYXRoLCBpbnQgbGVuLCBjb25zdCBzdHJ1Y3QgcGF0aHNwZWMgKnBhdGhzcGVjKTsN
-Cj4+IC0NCj4+ICsjZW5kaWYNCj4NCj5TZWUgYWJvdmUuDQo+DQo+PiAgZXh0ZXJuIGludCBpc19l
-eGNsdWRlZF9mcm9tX2xpc3QoY29uc3QgY2hhciAqcGF0aG5hbWUsIGludCBwYXRobGVuLCBjb25z
-dCBjaGFyICpiYXNlbmFtZSwNCj4+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGlu
-dCAqZHR5cGUsIHN0cnVjdCBleGNsdWRlX2xpc3QgKmVsKTsNCj4+ICBzdHJ1Y3QgZGlyX2VudHJ5
-ICpkaXJfYWRkX2lnbm9yZWQoc3RydWN0IGRpcl9zdHJ1Y3QgKmRpciwgY29uc3QgY2hhciAqcGF0
-aG5hbWUsIGludCBsZW4pOw0KPj4gLS0NCj4+IDEuNy45LjUNCg==
+----- Original Message -----
+> Thank you for your comments.If I rename some function when I work on a large
+> project like git,whether it will cause other error that I can not solve .So
+> I use the ugly way for this reason.
+
+(please, don't top-post on this list).
+
+The read_directory to be renamed is a static function, called twice. I don't see any reason not to rename it.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
