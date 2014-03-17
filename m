@@ -1,70 +1,49 @@
-From: Gilles Filippini <gilles.filippini@free.fr>
-Subject: [BUG] contrib/subtree: t/t7900-subtree.sh: test 21 fails when environment
- variable 'prefix' is set
-Date: Mon, 17 Mar 2014 13:58:00 +0100
-Message-ID: <5326F158.4050402@free.fr>
+From: shawn wilson <ag4ve.us@gmail.com>
+Subject: push fail
+Date: Mon, 17 Mar 2014 09:06:56 -0400
+Message-ID: <CAH_OBie+KrSjtqLinbv8sJAOCu26j8xVzBQJHdHTB44V07GsXg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 17 13:58:16 2014
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Mar 17 14:07:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WPX7P-0003JL-Nr
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Mar 2014 13:58:16 +0100
+	id 1WPXGF-000515-J3
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Mar 2014 14:07:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932951AbaCQM6L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Mar 2014 08:58:11 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:58386 "EHLO smtp3-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932631AbaCQM6K (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Mar 2014 08:58:10 -0400
-Received: from [129.200.100.4] (unknown [88.189.102.17])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id BEDF2A624C
-	for <git@vger.kernel.org>; Mon, 17 Mar 2014 13:58:02 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20131103 Icedove/17.0.10
-X-Enigmail-Version: 1.6
+	id S933011AbaCQNHS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Mar 2014 09:07:18 -0400
+Received: from mail-vc0-f170.google.com ([209.85.220.170]:50624 "EHLO
+	mail-vc0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932895AbaCQNHR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Mar 2014 09:07:17 -0400
+Received: by mail-vc0-f170.google.com with SMTP id hu19so5808465vcb.29
+        for <git@vger.kernel.org>; Mon, 17 Mar 2014 06:07:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=sOjdtzDWL2bvYGO/sGGllrnFkXZRnjXBe0m1YUZl2cY=;
+        b=p5p7Q0BFUYJeR7RfnJrBHlHOWyXheVoX8iAExmoi4uiw0YjwMRS/HPaQdnb0e64GR/
+         l2Rmv0uDtAO5Mo9PpU6BDPUUjzrUOaIP3W8ArTl0O46ILtC614v9St5GY8yi79pr8w5j
+         IDIkmlNZNV47vGG/aBFW1GZshXuYTo3uauJwbP3+SNvI1OS/jt4zoYrSxp3Bewt2wX9d
+         GNob6HK2kYBQJq1jE9SQY6TJL/4p0hofFmH7jHoUlnRXe06dBZZvKiNWrujHZa8X4vCB
+         HaxrNwXpEhZobmSeMmSH7SQ/8+pWBEDkNWLGVhpvZ1txZc6IOC72yycvevKGaetn3O7d
+         D2zg==
+X-Received: by 10.221.74.65 with SMTP id yv1mr344628vcb.31.1395061636667; Mon,
+ 17 Mar 2014 06:07:16 -0700 (PDT)
+Received: by 10.52.227.233 with HTTP; Mon, 17 Mar 2014 06:06:56 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244249>
 
-Hi,
+How do I get more info here (and hopefully resolve this)?
 
-Test 21 from contrib/subtree/t/t7900-subtree.sh fails when an
-environment variable 'prefix' is set. For instance here is what happens
-when prefix=/usr:
-
-expecting success:
-        echo "You must provide the --prefix option." > expected &&
-        test_must_fail git subtree split > actual 2>&1 &&
-	test_debug "printf 'expected: '" &&
-        test_debug "cat expected" &&
-	test_debug "printf 'actual: '" &&
-        test_debug "cat actual" &&
-        test_cmp expected actual &&
-        rm -f expected actual
-
---- expected	2014-03-17 10:39:34.907594853 +0000
-+++ actual	2014-03-17 10:39:34.979595322 +0000
-@@ -1 +1,9 @@
--You must provide the --prefix option.
-fatal: /usr: '/usr' is outside repository
-fatal: /usr: '/usr' is outside repository
-fatal: /usr: '/usr' is outside repository
-fatal: /usr: '/usr' is outside repository
-fatal: /usr: '/usr' is outside repository
-fatal: /usr: '/usr' is outside repository
-fatal: /usr: '/usr' is outside repository
-fatal: /usr: '/usr' is outside repository
-+No new revisions were found
-not ok 21 - Check that prefix argument is required for split
-
-
-Thanks,
-
-_g.
+ % git push
+To ssh://server/foo/repo.git
+ ! [rejected]        test -> test (non-fast-forward)
+error: failed to push some refs to 'ssh://server/foo/repo.git'
