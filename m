@@ -1,66 +1,84 @@
-From: Dragos Foianu <dragos.foianu@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: push fail
-Date: Mon, 17 Mar 2014 13:34:24 +0000 (UTC)
-Message-ID: <loom.20140317T142900-203@post.gmane.org>
+Date: Mon, 17 Mar 2014 14:36:04 +0100
+Message-ID: <vpq38ih7xrv.fsf@anie.imag.fr>
 References: <CAH_OBie+KrSjtqLinbv8sJAOCu26j8xVzBQJHdHTB44V07GsXg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 17 14:35:08 2014
+Content-Type: text/plain
+Cc: Git List <git@vger.kernel.org>
+To: shawn wilson <ag4ve.us@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 17 14:36:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WPXh2-00018i-UV
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Mar 2014 14:35:05 +0100
+	id 1WPXiC-0002Nx-L3
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Mar 2014 14:36:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933481AbaCQNe4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Mar 2014 09:34:56 -0400
-Received: from plane.gmane.org ([80.91.229.3]:48891 "EHLO plane.gmane.org"
+	id S933046AbaCQNgJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Mar 2014 09:36:09 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:49713 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756489AbaCQNev (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Mar 2014 09:34:51 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1WPXgn-0000pH-BP
-	for git@vger.kernel.org; Mon, 17 Mar 2014 14:34:49 +0100
-Received: from nat-labs-cs.cs.pub.ro ([nat-labs-cs.cs.pub.ro])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 17 Mar 2014 14:34:49 +0100
-Received: from dragos.foianu by nat-labs-cs.cs.pub.ro with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 17 Mar 2014 14:34:49 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 141.85.225.204 (Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Firefox/24.0)
+	id S932816AbaCQNgH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Mar 2014 09:36:07 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s2HDa3EK008391
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 17 Mar 2014 14:36:03 +0100
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s2HDa4Ut030571;
+	Mon, 17 Mar 2014 14:36:04 +0100
+In-Reply-To: <CAH_OBie+KrSjtqLinbv8sJAOCu26j8xVzBQJHdHTB44V07GsXg@mail.gmail.com>
+	(shawn wilson's message of "Mon, 17 Mar 2014 09:06:56 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 17 Mar 2014 14:36:03 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s2HDa3EK008391
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1395668164.55316@2YrR10TRdhV2jUV0EAtgvg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244250>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244251>
 
-shawn wilson <ag4ve.us <at> gmail.com> writes:
+shawn wilson <ag4ve.us@gmail.com> writes:
 
-> 
 > How do I get more info here (and hopefully resolve this)?
-> 
+>
 >  % git push
 > To ssh://server/foo/repo.git
 >  ! [rejected]        test -> test (non-fast-forward)
 > error: failed to push some refs to 'ssh://server/foo/repo.git'
-> 
 
-"non-fast-forward" means that someone else pushed to branch test before you
-did and your push would end up overwriting their changes. Make sure you
-merge your local branch with the remote branch:
+You probably have a configuration that disables advices (look in
+~/.gitconfig for an [advice] section. If you're a beginner, you probably
+shouldn't deactivate these advices).
 
-git pull origin test
+Git normally says something like this:
 
-It might also be a result of local destructive changes made by "git rebase".
-If you're absolutely certain you will not mess up the remote branch you can
-add the "--force" parameter when you push.
+To /tmp/git
+ ! [rejected]        branch3 -> branch3 (non-fast-forward)
+error: failed to push some refs to '/tmp/git'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. Merge the remote changes (e.g. 'git pull')
+hint: before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
+The latest version says this which you may find clearer:
+
+To /tmp/git
+ ! [rejected]        branch3 -> branch3 (fetch first)
+error: failed to push some refs to '/tmp/git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
