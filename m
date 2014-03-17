@@ -1,86 +1,113 @@
 From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: What's cooking in git.git (Mar 2014, #03; Fri, 14)
-Date: Mon, 17 Mar 2014 10:21:27 -0700
-Message-ID: <xmqqd2hkg2qw.fsf@gitster.dls.corp.google.com>
+Date: Mon, 17 Mar 2014 11:01:25 -0700
+Message-ID: <xmqq4n2wg0wa.fsf@gitster.dls.corp.google.com>
 References: <xmqqlhwcfn4a.fsf@gitster.dls.corp.google.com>
 	<EA1EF5746EA7414CAE1320AA61100178@PhilipOakley>
+	<CALkWK0npxgi2gWQbuYZLn_N0GxgTdPTR8c-yhgCxEV=mM2Zngw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>, "Ramkumar Ramachandra" <artagnon@gmail.com>
-To: "Philip Oakley" <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Mon Mar 17 18:21:43 2014
+Cc: Philip Oakley <philipoakley@iee.org>,
+	Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 17 19:01:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WPbEN-0001fj-89
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Mar 2014 18:21:43 +0100
+	id 1WPbqx-0005uk-E3
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Mar 2014 19:01:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756756AbaCQRVd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Mar 2014 13:21:33 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47000 "EHLO
+	id S1755462AbaCQSBb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Mar 2014 14:01:31 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56659 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754910AbaCQRVb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Mar 2014 13:21:31 -0400
+	id S1753210AbaCQSBa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Mar 2014 14:01:30 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 273677526D;
-	Mon, 17 Mar 2014 13:21:31 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 41F0371FEB;
+	Mon, 17 Mar 2014 14:01:29 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5BFsWzPev2zuBYpm7D7LCoPdWcU=; b=OWpv/z
-	UGwqwww8ANzzWSt3r1r1xm4GmY8Lp2RMnLFzs5SWRxPh1I/RwxEGV8OAFKaPqFUf
-	eUUg/N0100IBVkO79+CdcfzM6FQoc9l5m5eg6XFrm43Dx29/3qFVmeVYS+hSO2KR
-	KCPTfOMussDFXhfXPB8G52JTNItIs7E74faoY=
+	:content-type; s=sasl; bh=KURKxWWjO38THFpwiaxnDwQ4rrE=; b=DAayfr
+	ExgFf3cOt2btZK2+YPtwAYi0DTscIJG7K5h0L97hhNQiCTsXoVZwf1q/R3DQtPjY
+	4MFKny0Oe9zgFtexMdrkfmom1ukve+Oa8ieT/9b+iJSSn5GBmSN/5ajcpuriUKLw
+	y04/Cu4z0DvEuAc6zreZnKU+T6EHnUuHjh8Zc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jwtUY47wYKr7suQQcdTY9oZIzhFe3a32
-	yNbf1oDDpCfnpsx7iReD55Ybi0zLWgS2iT3Sbc9bwBdl5bZkVAb9QlqrUQQm4dfS
-	aAUbRcP9bitpQ8jfNbrutT80500Dd5FK0wMclLOEQwXrQew/AI3mnTWd0J6WPJur
-	yc+vZP07Z90=
+	:content-type; q=dns; s=sasl; b=xNfg+Bo3fIBlZFWafu18eCXNSimGUnwf
+	gHqJ7KEPxLo6TwVhnb4WlwtBhBMuKR1JiE0awKuhwG0ojX8htnfAZkweDU8BUoqw
+	AHEUIrZ20E7cD3yR1sxY9PNYlhuFLB2KD2HADGL3x07Mx/sOqd5VcPSgtRghwLye
+	FNhLg1MP1pk=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 152E57526C;
-	Mon, 17 Mar 2014 13:21:31 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2FBE371FE9;
+	Mon, 17 Mar 2014 14:01:29 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5DAF175269;
-	Mon, 17 Mar 2014 13:21:30 -0400 (EDT)
-In-Reply-To: <EA1EF5746EA7414CAE1320AA61100178@PhilipOakley> (Philip Oakley's
-	message of "Sun, 16 Mar 2014 18:30:49 -0000")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4BF9171FE6;
+	Mon, 17 Mar 2014 14:01:28 -0400 (EDT)
+In-Reply-To: <CALkWK0npxgi2gWQbuYZLn_N0GxgTdPTR8c-yhgCxEV=mM2Zngw@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Sun, 16 Mar 2014 19:15:06 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 945DF140-ADF8-11E3-83BA-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 29A47BF2-ADFE-11E3-B5FA-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244258>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244259>
 
-"Philip Oakley" <philipoakley@iee.org> writes:
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
->> * po/git-help-user-manual (2014-02-18) 1 commit
->> - Provide a 'git help user-manual' route to the docbook
->>
->> I am not sure if this is even needed.
->
-> My rhetorical question would be "what should 'git help user-manual'
-> do?" for the beginner, ...
+> ... I'd first fix the main issue: stale content. I'm not sure
+> who uses git show-branch or mailx anymore, for instance.
 
-Why would any _beginner_ even be expected to ask "git help"
-everything, including "user-manual", in the first place?  Wouldn't
-things like /usr/share/doc/git-doc/ be the place to help them in a
-consistent manner across different programs instead?
+Unfortunately, I haven't seen a representation better than what
+show-branch gives me when assessing what needs to happen during
+rebases of multiple topics some of which depend on other topics.
+"git log --oneline --graph" is *not* it, with too much clutter.
 
-> ... do we have a sort of policy on ensuring
-> that the majority of user documentation should be available (or at
-> least referenced) via the 'git help' mechanism?
+I do not think "stale" is the issue.  Common-ness may be an issue,
+as the usage of Git surely does not have to involve show-branch for
+a simple workflow, e.g. a beginning standalone developer's.
 
-I doubt that there should be such a policy.
+The show-branch (and mailx) example are headed by "My typical Git
+day" in the "Integrator" section (emphasis on "My"---it was not
+meant to be "You ought to do like I do because I know this is the
+best current practice" back when it was written, as none of us had
+enough experience to declare what the BCP was).  You may argue the
+command set shown there may be specific to "My" usage, and it is
+atypical for the "Integrator" workflow.
 
-"git help" is primarily to show the manual pages, and some technical
-details docs that are referenced from manpages may need to be
-reachable from it.  The user manual, on the other hand, may
-reference individual manpages but because it is primarily a document
-that shows the overall flow to employ different commands, individual
-manpages referring to the user manual feels entirely the other way
-around.
+We could try to come up with a different/better workflows for each
+classes of developers to replace that "examples" sections, and that
+will be the first step to update the listed set of commands for each
+classes, I would think.  You need to realize that the workflow
+described in the examples section is a real, battle tested one, not
+something that came out of thin air, though.
+
+The way forward would be to think about the following things, in the
+order listed here:
+
+ (1) Review the classes of developers.  Is the classification we
+     have in the document still good?  Do we need to add new classes
+     of developers?  Do we need to collapse some into one?
+
+ (2) For each class of developers, review the workflow illustrated
+     in the "Examples":
+
+     . Do the steps illustrate a typical flow of activities for the
+       class of developers?  Are there steps that typically happens
+       during a developer's day that are missing in the flow?  Are
+       some of the steps in the example unnecessary?
+
+     . Have we made improvements to various Porcelain commands since
+       the document was written?  Do we have better ways to achieve
+       some steps illustrated there?
+
+ (3) For each class of developers, review the commands listed before
+     the "Examples" section and adjust to the "Examples" updated in
+     the second step.
+
+Thanks.
