@@ -1,176 +1,95 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCHv2] branch.c: simplify chain of if statements
-Date: Tue, 18 Mar 2014 18:31:07 -0400
-Message-ID: <CAPig+cS9QApn1T3-R8n+W+1ee9FbNftsmhrr90SJKs+gqzvC5A@mail.gmail.com>
-References: <1395071493-31435-1-git-send-email-dragos.foianu@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] mv: prevent mismatched data when ignoring errors.
+Date: Tue, 18 Mar 2014 15:31:26 -0700
+Message-ID: <xmqqtxav5ebl.fsf@gitster.dls.corp.google.com>
+References: <20140308183501.GH18371@serenity.lan>
+	<1394306499-50871-1-git-send-email-sandals@crustytoothpaste.net>
+	<8738ijzbue.fsf@thomasrast.ch>
+	<20140316020018.GA20019@sigill.intra.peff.net>
+	<7v1ty14z8x.fsf@alter.siamese.dyndns.org>
+	<7vtxax2v1q.fsf@alter.siamese.dyndns.org>
+	<53270FC2.2030701@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>
-To: Dragos Foianu <dragos.foianu@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 18 23:31:25 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Thomas Rast <tr@thomasrast.ch>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>,
+	John Keeping <john@keeping.me.uk>,
+	Guillaume Gelin <contact@ramnes.eu>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Mar 18 23:31:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQ2Xc-0005K5-7B
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Mar 2014 23:31:24 +0100
+	id 1WQ2Xm-0005fo-Ov
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Mar 2014 23:31:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756775AbaCRWbK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Mar 2014 18:31:10 -0400
-Received: from mail-yh0-f53.google.com ([209.85.213.53]:33761 "EHLO
-	mail-yh0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755175AbaCRWbI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Mar 2014 18:31:08 -0400
-Received: by mail-yh0-f53.google.com with SMTP id v1so7617878yhn.26
-        for <git@vger.kernel.org>; Tue, 18 Mar 2014 15:31:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=9whfwyh9pxaGsuau8jcY7R3+1r3rDfGE2Ef3QENHQYg=;
-        b=AJ/DeTdRn0L+62Y5FD6OzPHnk1/L/XVO7kjvbl92l7DgRanyIuuL254SOsgHOiIeAC
-         WtrbAvV5KoLy2pLPGoI4SIBDLwTq5g051YFglVu9pHj1OM154dzXsuN+GLZ/8k71aXdC
-         FuINWh/sLHz1ekpaa+9tKScTSFmbvyWsoQ19bFxCrydtDt97Lqnj24KKOanUsUGDmRgK
-         XcRiUtOwYSmP8orf24gNG7YVtnkGkEtf1i4iNdmLNey+8Nc1ddtWH4f2tKECGuBUH90j
-         GTMP+JOYJRLANm3P7t36rwyaJF+Jfz9bt+75+7E3SrRH6JK5auKrAEPMhwL6Rcvt8LgZ
-         EGng==
-X-Received: by 10.236.139.70 with SMTP id b46mr21627995yhj.63.1395181867725;
- Tue, 18 Mar 2014 15:31:07 -0700 (PDT)
-Received: by 10.170.180.134 with HTTP; Tue, 18 Mar 2014 15:31:07 -0700 (PDT)
-In-Reply-To: <1395071493-31435-1-git-send-email-dragos.foianu@gmail.com>
-X-Google-Sender-Auth: bC5_S5CyhFzYf-GWAQpF4qZdiJ0
+	id S1756997AbaCRWba (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Mar 2014 18:31:30 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62833 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755175AbaCRWb3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Mar 2014 18:31:29 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6636C72E00;
+	Tue, 18 Mar 2014 18:31:29 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=49xS1XJnpIc2Izaer764B7wNBVE=; b=X9jxMP
+	9ZkIJob+YbrBzMwHEjoBboXcAdlOi74HPgCX/UDcmws2CCzk2V3+JhY5kPIvn8YF
+	E+s5xv5DJI+n3PQHmY2EZe5WJGkS55DOVTLX/u1ytt19Pm7+Xx72j/cQZ97R2Njm
+	ulIeyQK+mIPT8ceHlvU9VtXkRyiCsJhZfizro=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=N/IsuY8M896jHZlwn9yq3eAVnkcT82bz
+	CTgfeOrM2FyDyk94UebIhQ4oGuHII2mTrVlbBb4Irr1GlE4sm9K/pzF1wt5O/f5c
+	H3wwdpSaSiPg0qKUSDAE7I0AE6uDnfV9EQTI5SxH5CKW2+eKZyulPcqnw12EHccW
+	ndCZoi3p9Es=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5379572DFE;
+	Tue, 18 Mar 2014 18:31:29 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 960CB72DFD;
+	Tue, 18 Mar 2014 18:31:28 -0400 (EDT)
+In-Reply-To: <53270FC2.2030701@alum.mit.edu> (Michael Haggerty's message of
+	"Mon, 17 Mar 2014 16:07:46 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 0C3AF5C4-AEED-11E3-A64B-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244390>
 
-Thanks for the resubmission. Comments below...
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-On Mon, Mar 17, 2014 at 11:51 AM, Dragos Foianu <dragos.foianu@gmail.com> wrote:
-> This patch uses a table to store the different messages that can
-> be emitted by the verbose install_branch_config function. It
-> computes an index based on the three flags and prints the message
-> located at the specific index in the table of messages. If the
-> index somehow is not within the table, we have a bug.
-
-Most of this text can be dropped due to redundancy.
-
-Saying "This patch..." is unnecessary.
-
-The remaining text primarily says in prose what the patch itself
-conveys more concisely and precisely. It's easier to read and
-understand the actual code than it is to wade through a lengthy
-description of the code change.
-
-Speak in imperative voice: "Use a table to store..."
-
-You might, for instance, say instead something like this:
-
-    install_branch_config() uses a long, somewhat complex if-chain to
-    select a message to display in verbose mode.  Simplify the logic
-    by moving the messages to a table from which they can be
-    easily retrieved without complex logic.
-
-> Signed-off-by: Dragos Foianu <dragos.foianu@gmail.com>
-> ---
->  branch.c | 44 +++++++++++++++++++++++++-------------------
->  1 file changed, 25 insertions(+), 19 deletions(-)
+> I had recently been thinking along the same lines.  In many of the
+> potential callers that I noticed, ALLOC_GROW() was used immediately
+> before making space in the array for a new element.  So I suggest
+> something more like
 >
-> diff --git a/branch.c b/branch.c
-> index 723a36b..95645d5 100644
-> --- a/branch.c
-> +++ b/branch.c
-> @@ -54,6 +54,18 @@ void install_branch_config(int flag, const char *local, const char *origin, cons
->         struct strbuf key = STRBUF_INIT;
->         int rebasing = should_setup_rebase(origin);
+> +#define MOVE_DOWN(array, nr, at, count)	\
+> +	memmove((array) + (at) + (count),		\
+> +		(array) + (at),				\
+> +		sizeof((array)[0]) * ((nr) - (at)))
+> +#define ALLOC_INSERT_GAP(array, nr, at, count, alloc)		     \
+> +	do {							     \
+> +		ALLOC_GROW((array), (nr) + (count), (alloc));        \
+> +		MOVE_DOWN((array), (nr), (at), (count));	     \
+> +	} while (0)
 >
-> +       const char *messages[] = {
-> +               N_("Branch %s set up to track local ref %s."),
-> +               N_("Branch %s set up to track remote ref %s."),
-> +               N_("Branch %s set up to track local branch %s."),
-> +               N_("Branch %s set up to track remote branch %s from %s."),
-> +               N_("Branch %s set up to track local ref %s by rebasing."),
-> +               N_("Branch %s set up to track remote ref %s by rebasing."),
-> +               N_("Branch %s set up to track local branch %s by rebasing."),
-> +               N_("Branch %s set up to track remote branch %s from %s by rebasing.")
-> +       };
-> +       int index = 0;
-> +
->         if (remote_is_branch
->             && !strcmp(local, shortname)
->             && !origin) {
-> @@ -76,28 +88,22 @@ void install_branch_config(int flag, const char *local, const char *origin, cons
->         }
->         strbuf_release(&key);
->
-> +       if (origin)
-> +               index += 1;
-> +       if (remote_is_branch)
-> +               index += 2;
-> +       if (rebasing)
-> +               index += 4;
+> Also, count==1 is so frequent that this special case might deserve its
+> own macro pair.
 
-Other submissions have computed this value mathematically without need
-for conditionals. For instance, we've seen:
+Yeah, probably.
 
-    index = (!!origin << 0) + (!!remote_is_branch << 1) + (!!rebasing << 2)
+> I'm not inspired by these macro names, though.
 
-as, well as the equivalent:
+Me neither, about ups and downs.
 
-    index = !!origin + !!remote_is_branch * 2 + !!rebasing * 4
-
-Although this works, it does place greater cognitive demands on the
-reader by requiring more effort to figure out what is going on and how
-it relates to table position. The original (ungainly) chain of 'if'
-statements in the original code does not suffer this problem. It
-likewise is harder to understand than merely indexing into a
-multi-dimension table where each variable is a key.
-
->         if (flag & BRANCH_CONFIG_VERBOSE) {
->                 if (remote_is_branch && origin)
-> -                       printf_ln(rebasing ?
-> -                                 _("Branch %s set up to track remote branch %s from %s by rebasing.") :
-> -                                 _("Branch %s set up to track remote branch %s from %s."),
-> -                                 local, shortname, origin);
-> -               else if (remote_is_branch && !origin)
-> -                       printf_ln(rebasing ?
-> -                                 _("Branch %s set up to track local branch %s by rebasing.") :
-> -                                 _("Branch %s set up to track local branch %s."),
-> -                                 local, shortname);
-> -               else if (!remote_is_branch && origin)
-> -                       printf_ln(rebasing ?
-> -                                 _("Branch %s set up to track remote ref %s by rebasing.") :
-> -                                 _("Branch %s set up to track remote ref %s."),
-> -                                 local, remote);
-> -               else if (!remote_is_branch && !origin)
-> -                       printf_ln(rebasing ?
-> -                                 _("Branch %s set up to track local ref %s by rebasing.") :
-> -                                 _("Branch %s set up to track local ref %s."),
-> -                                 local, remote);
-> +                       printf_ln(_(messages[index]),
-> +                               local, shortname, origin);
->                 else
-> +                       printf_ln(_(messages[index]),
-> +                               local, (!remote_is_branch) ? remote : shortname);
-
-It's possible to simplify this logic and have only a single
-printf_ln() invocation. Hint: It's safe to pass in more arguments than
-there are %s directives in the format string.
-
-> +
-> +               if (index < 0 || index > sizeof(messages) / sizeof(*messages))
->                         die("BUG: impossible combination of %d and %p",
->                             remote_is_branch, origin);
-
-You can use ARRAY_SIZE() in place of sizeof(...)/sizeof(...).
-
-Since an out-of-bound index would be a programmer bug, it would
-probably be more appropriate to use an assert(), just after 'index' is
-computed, rather than if+die(). The original code used die() because
-it couldn't detect the error until the end of the if-chain.
-
->         }
-> --
-> 1.8.3.2
+Peff's suggestion to name these around the concept of "gap" sounded
+sensible.
