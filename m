@@ -1,101 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/1] general style: replaces memcmp() with starts_with()
-Date: Tue, 18 Mar 2014 12:23:31 -0700
-Message-ID: <xmqqiorb8g5o.fsf@gitster.dls.corp.google.com>
-References: <1395093144-6786-1-git-send-email-quintus.public@gmail.com>
-	<1395093144-6786-2-git-send-email-quintus.public@gmail.com>
-	<xmqqob14a14s.fsf@gitster.dls.corp.google.com>
-	<CALs4jVGxmirDdO03kaKco7=NrTaXBinY=1U71=fYwX1mbqNDOA@mail.gmail.com>
-	<CAPig+cRGwBV5CE3X9yGZGRNtKojCagz_F_f4Kd+S+D_qX+ZwJw@mail.gmail.com>
-	<CALs4jVFVO8Jf-nn0PMtOYeMMKsB869KWQv8vV5kAg1itC1isiQ@mail.gmail.com>
-	<CAPig+cSu=zgXdd55dj-u6mOzHqpUme7r-7OH+jjnOEt2P6C0vw@mail.gmail.com>
+From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH] git-rebase: Teach rebase "-" shorthand.
+Date: Tue, 18 Mar 2014 20:26:32 +0100
+Message-ID: <53289DE8.2070104@web.de>
+References: <1395132268-69488-1-git-send-email-modocache@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Quint Guvernator <quintus.public@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue Mar 18 20:23:52 2014
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Brian Gesiak <modocache@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 18 20:26:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WPzc7-0003Hn-93
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Mar 2014 20:23:51 +0100
+	id 1WPzew-0007QF-Q4
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Mar 2014 20:26:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757696AbaCRTXp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Mar 2014 15:23:45 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62893 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757689AbaCRTXo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Mar 2014 15:23:44 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1273F73DDC;
-	Tue, 18 Mar 2014 15:23:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1Y7OPlQL3OLPfaR7yeGC3KthC4k=; b=uGu7Aq
-	TshV5+eK+rJVbk+DTrsfeZkk/r3MJd5JuDN+gM9ZrQFnbldUScFPRVnr3YngIdyc
-	dtB2/ZqW4r6Q3IczY9NqPsjWB6PZEnUvNIbyUa+FKXnOwnwXnLu/4zpc34YRdgDg
-	O4Ywqi6v9FCT0IWnITDGu84NHYhhp6WW/K7qQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OLY6wMQRTJ1xYmkAQS1fvOGeR8I3eRGu
-	n+2ngzuydaLC/J+Oco35E/aMhoAsUJZ4zMoBGbMRGJsbhqyJE3+p9T2thKIvmOqk
-	9F3s4ABj97q3RxJgJhGg7Esh/5tV7t6TxoUmradlUqzsdwW+gjWQAUWZomRkMqds
-	iMf6aOfsK4Y=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E5AE273DDB;
-	Tue, 18 Mar 2014 15:23:43 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F2B8C73DBD;
-	Tue, 18 Mar 2014 15:23:33 -0400 (EDT)
-In-Reply-To: <CAPig+cSu=zgXdd55dj-u6mOzHqpUme7r-7OH+jjnOEt2P6C0vw@mail.gmail.com>
-	(Eric Sunshine's message of "Tue, 18 Mar 2014 00:07:41 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: CBFE34B8-AED2-11E3-B428-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757852AbaCRT0o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Mar 2014 15:26:44 -0400
+Received: from mout.web.de ([212.227.15.3]:57326 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757845AbaCRT0l (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Mar 2014 15:26:41 -0400
+Received: from [10.0.2.15] ([217.41.18.1]) by smtp.web.de (mrweb103) with
+ ESMTPSA (Nemesis) id 0LdF0f-1WqYtt0hSj-00iRwj; Tue, 18 Mar 2014 20:26:40
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20131104 Icedove/17.0.10
+In-Reply-To: <1395132268-69488-1-git-send-email-modocache@gmail.com>
+X-Provags-ID: V03:K0:c2BJLxOFY++Q0XP3FuY3FLuyyvq4cohilznvxXrQ7iE/9OPcw8D
+ zvEldWJvyZZn1r1YDbbak2qK9AkbXPCdm+ErLIusKLTgWSoBcWPyh34UQOHrgdob23voAfh
+ XFwLHv8aDP5XpZgtgNjnzTkeghSIY2cZWDfdx2XywysO7sQKRQGmZ8Syj4jmxbBlycrQm7K
+ dk77EkOmX9SCO8/DZ9+ww==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244371>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
-
->>> A patch of this nature doesn't require much more description than
->>> stating what it does ("replace memcmp() with starts_with()") and why
->>> ("improve code clarity"). The following rewrite might be sufficient:
->>>
->>>     Subject: replace memcmp() with starts_with()
->>>
->>>     starts_with() indicates the intention of the check more clearly
->>>     than memcmp().
->>
->> This is more concise; thank you. I will adapt this as the message for
->> the next version of this patch. Would it be wise to mention magic
->> numbers, as the discussion surrounding the rationale of this patch,
->> especially with Junio and Michael, has centered around that?
+On 03/18/2014 09:44 AM, Brian Gesiak wrote:
+> Teach rebase the same shorthand as checkout and merge; that is, that "-"
+> means "the branch we were previously on".
 >
-> I was thinking of mentioning magic numbers in the example, but decided
-> that their removal was a natural and obvious consequence of the
-> improvement to code clarity, so it wasn't strictly necessary to talk
-> about it. On the other hand, it is a good secondary justification,
-> thus it should be perfectly acceptable to mention it. If I was writing
-> the commit message, I might start by saying "As an additional
-> benefit..." and then talk a bit about magic number retirement.
-
-I think your subject is good (as you said, it makes it clear that it
-is a project-wide clean-up by not mentioning any specific area), but
-"indicates the intention of the check more clearly" would not tell
-new readers who are unfamiliar with the helper API what "intention"
-it is talking about very much, so perhaps
-
-	Subject: use starts_with() instead of !memcmp()
-
-	When checking if a string begins with a constant string,
-	using starts_with() is less error prone than calling
-	!memcmp() with an explicit byte count.
-
-or something?
+> Reported-by: Tim Chase <git@tim.thechases.com>
+> Signed-off-by: Brian Gesiak <modocache@gmail.com>
+> ---
+>   git-rebase.sh     | 4 ++++
+>   t/t3400-rebase.sh | 6 ++++++
+>   2 files changed, 10 insertions(+)
+>
+> diff --git a/git-rebase.sh b/git-rebase.sh
+> index 5f6732b..2c75e9f 100755
+> --- a/git-rebase.sh
+> +++ b/git-rebase.sh
+> @@ -453,6 +453,10 @@ then
+>   		test "$fork_point" = auto && fork_point=t
+>   		;;
+>   	*)	upstream_name="$1"
+> +		if test "$upstream_name" = "-"
+> +		then
+> +			upstream_name="@{-1}"
+> +		fi
+>   		shift
+>   		;;
+>   	esac
+> diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
+> index 6d94b1f..00aba9f 100755
+> --- a/t/t3400-rebase.sh
+> +++ b/t/t3400-rebase.sh
+> @@ -88,6 +88,12 @@ test_expect_success 'rebase from ambiguous branch name' '
+>   	git rebase master
+>   '
+>
+> +test_expect_success 'rebase using shorthand' '
+> +	git checkout master
+we schould have the "&&"   ^^
+> +	git checkout -b shorthand HEAD^
+               we schould have the "&&"  ^^
+> +	GIT_TRACE=1 git rebase -
+And why the GIT_TRACE ?
+> +'
+> +
+>   test_expect_success 'rebase a single mode change' '
+>   	git checkout master &&
+>   	git branch -D topic &&
+>
