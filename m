@@ -1,129 +1,176 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] test-lib.sh: use printf instead of echo
-Date: Tue, 18 Mar 2014 15:18:44 -0700
-Message-ID: <20140318221844.GA828@google.com>
-References: <20140314235735.GA6959@ibr.ch>
- <20140315001855.GK15625@google.com>
- <xmqq61nceidp.fsf@gitster.dls.corp.google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCHv2] branch.c: simplify chain of if statements
+Date: Tue, 18 Mar 2014 18:31:07 -0400
+Message-ID: <CAPig+cS9QApn1T3-R8n+W+1ee9FbNftsmhrr90SJKs+gqzvC5A@mail.gmail.com>
+References: <1395071493-31435-1-git-send-email-dragos.foianu@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Uwe Storbeck <uwe@ibr.ch>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 18 23:19:05 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>
+To: Dragos Foianu <dragos.foianu@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 18 23:31:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQ2Lg-0007bR-Ej
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Mar 2014 23:19:04 +0100
+	id 1WQ2Xc-0005K5-7B
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Mar 2014 23:31:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933070AbaCRWSw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Mar 2014 18:18:52 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:54233 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933314AbaCRWSv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Mar 2014 18:18:51 -0400
-Received: by mail-pa0-f42.google.com with SMTP id fb1so8027592pad.1
-        for <git@vger.kernel.org>; Tue, 18 Mar 2014 15:18:50 -0700 (PDT)
+	id S1756775AbaCRWbK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Mar 2014 18:31:10 -0400
+Received: from mail-yh0-f53.google.com ([209.85.213.53]:33761 "EHLO
+	mail-yh0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755175AbaCRWbI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Mar 2014 18:31:08 -0400
+Received: by mail-yh0-f53.google.com with SMTP id v1so7617878yhn.26
+        for <git@vger.kernel.org>; Tue, 18 Mar 2014 15:31:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=0h4r7k8yW6tjwLO+E08fXE3BPSIVODsM1RVngwJgv0Q=;
-        b=xlK3dG7kUsi5nLwGR3R5FljgC7GxVAv/py5mgf1l/M3MfJNzDQcwv/sZmb/7cglu64
-         LHk0/qFoN70jfFKp5yaJxBnwNRFgwKzZ1SaxsQx6TAeqr45xG5QiTbYkIR2I6htqLbYs
-         oWNlBew80zJEfxyRPLtIXk2BDsRFtmauejTlwlXmd7LL5MVyoa86rgoRImaVMZZtGqkJ
-         XIkwEhjqk1CLTJFAOmKJ+f3sBEPXtVocx4n18RIHMtWahgmkPyblRoeXGlodJjU5CXYr
-         TpZdx8yJUqbBl/VnHXR8wgPQB2uP9gjkO6ZjMnWg2j2GsYBo47Pj8OYn7UAT9DHTPHCH
-         7ZXw==
-X-Received: by 10.68.194.202 with SMTP id hy10mr35632373pbc.94.1395181130693;
-        Tue, 18 Mar 2014 15:18:50 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id vo1sm93520911pab.32.2014.03.18.15.18.49
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 18 Mar 2014 15:18:50 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <xmqq61nceidp.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=9whfwyh9pxaGsuau8jcY7R3+1r3rDfGE2Ef3QENHQYg=;
+        b=AJ/DeTdRn0L+62Y5FD6OzPHnk1/L/XVO7kjvbl92l7DgRanyIuuL254SOsgHOiIeAC
+         WtrbAvV5KoLy2pLPGoI4SIBDLwTq5g051YFglVu9pHj1OM154dzXsuN+GLZ/8k71aXdC
+         FuINWh/sLHz1ekpaa+9tKScTSFmbvyWsoQ19bFxCrydtDt97Lqnj24KKOanUsUGDmRgK
+         XcRiUtOwYSmP8orf24gNG7YVtnkGkEtf1i4iNdmLNey+8Nc1ddtWH4f2tKECGuBUH90j
+         GTMP+JOYJRLANm3P7t36rwyaJF+Jfz9bt+75+7E3SrRH6JK5auKrAEPMhwL6Rcvt8LgZ
+         EGng==
+X-Received: by 10.236.139.70 with SMTP id b46mr21627995yhj.63.1395181867725;
+ Tue, 18 Mar 2014 15:31:07 -0700 (PDT)
+Received: by 10.170.180.134 with HTTP; Tue, 18 Mar 2014 15:31:07 -0700 (PDT)
+In-Reply-To: <1395071493-31435-1-git-send-email-dragos.foianu@gmail.com>
+X-Google-Sender-Auth: bC5_S5CyhFzYf-GWAQpF4qZdiJ0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244388>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244389>
 
-Junio C Hamano wrote:
->> Uwe Storbeck wrote:
+Thanks for the resubmission. Comments below...
 
->>> +	printf '%s\n' "$@" | sed -e 's/^/#	/'
+On Mon, Mar 17, 2014 at 11:51 AM, Dragos Foianu <dragos.foianu@gmail.com> wrote:
+> This patch uses a table to store the different messages that can
+> be emitted by the verbose install_branch_config function. It
+> computes an index based on the three flags and prints the message
+> located at the specific index in the table of messages. If the
+> index somehow is not within the table, we have a bug.
+
+Most of this text can be dropped due to redundancy.
+
+Saying "This patch..." is unnecessary.
+
+The remaining text primarily says in prose what the patch itself
+conveys more concisely and precisely. It's easier to read and
+understand the actual code than it is to wade through a lengthy
+description of the code change.
+
+Speak in imperative voice: "Use a table to store..."
+
+You might, for instance, say instead something like this:
+
+    install_branch_config() uses a long, somewhat complex if-chain to
+    select a message to display in verbose mode.  Simplify the logic
+    by moving the messages to a table from which they can be
+    easily retrieved without complex logic.
+
+> Signed-off-by: Dragos Foianu <dragos.foianu@gmail.com>
+> ---
+>  branch.c | 44 +++++++++++++++++++++++++-------------------
+>  1 file changed, 25 insertions(+), 19 deletions(-)
 >
-> This is wrong, isn't it?  Why do we want one line per item here?
+> diff --git a/branch.c b/branch.c
+> index 723a36b..95645d5 100644
+> --- a/branch.c
+> +++ b/branch.c
+> @@ -54,6 +54,18 @@ void install_branch_config(int flag, const char *local, const char *origin, cons
+>         struct strbuf key = STRBUF_INIT;
+>         int rebasing = should_setup_rebase(origin);
+>
+> +       const char *messages[] = {
+> +               N_("Branch %s set up to track local ref %s."),
+> +               N_("Branch %s set up to track remote ref %s."),
+> +               N_("Branch %s set up to track local branch %s."),
+> +               N_("Branch %s set up to track remote branch %s from %s."),
+> +               N_("Branch %s set up to track local ref %s by rebasing."),
+> +               N_("Branch %s set up to track remote ref %s by rebasing."),
+> +               N_("Branch %s set up to track local branch %s by rebasing."),
+> +               N_("Branch %s set up to track remote branch %s from %s by rebasing.")
+> +       };
+> +       int index = 0;
+> +
+>         if (remote_is_branch
+>             && !strcmp(local, shortname)
+>             && !origin) {
+> @@ -76,28 +88,22 @@ void install_branch_config(int flag, const char *local, const char *origin, cons
+>         }
+>         strbuf_release(&key);
+>
+> +       if (origin)
+> +               index += 1;
+> +       if (remote_is_branch)
+> +               index += 2;
+> +       if (rebasing)
+> +               index += 4;
 
-Yes, Hannes caught the same, too.  Sorry for the sloppiness.
+Other submissions have computed this value mathematically without need
+for conditionals. For instance, we've seen:
 
-We currently use "echo" all over the place (e.g., 'echo "$path"' in
-git-sh-setup), and every time we fix it there is a chance of making
-mistakes.  I wonder if it would make sense to add a helper to make the
-echo calls easier to replace:
+    index = (!!origin << 0) + (!!remote_is_branch << 1) + (!!rebasing << 2)
 
--- >8 --
-Subject: git-sh-setup: introduce sane_echo helper
+as, well as the equivalent:
 
-Using 'echo' with arguments that might contain backslashes or "-e" or
-"-n" can produce confusing results that vary from platform to platform
-(e.g., dash always interprets \ escape sequences and echoes "-e"
-verbatim, whereas bash does not interpret \ escapes unless "-e" is
-passed as an argument to echo and suppresses the "-e" from its
-output).
+    index = !!origin + !!remote_is_branch * 2 + !!rebasing * 4
 
-Instead, we should use printf, which is more predictable:
+Although this works, it does place greater cognitive demands on the
+reader by requiring more effort to figure out what is going on and how
+it relates to table position. The original (ungainly) chain of 'if'
+statements in the original code does not suffer this problem. It
+likewise is harder to understand than merely indexing into a
+multi-dimension table where each variable is a key.
 
-	printf '%s\n' "$foo"; # Just prints $foo, on all platforms.
+>         if (flag & BRANCH_CONFIG_VERBOSE) {
+>                 if (remote_is_branch && origin)
+> -                       printf_ln(rebasing ?
+> -                                 _("Branch %s set up to track remote branch %s from %s by rebasing.") :
+> -                                 _("Branch %s set up to track remote branch %s from %s."),
+> -                                 local, shortname, origin);
+> -               else if (remote_is_branch && !origin)
+> -                       printf_ln(rebasing ?
+> -                                 _("Branch %s set up to track local branch %s by rebasing.") :
+> -                                 _("Branch %s set up to track local branch %s."),
+> -                                 local, shortname);
+> -               else if (!remote_is_branch && origin)
+> -                       printf_ln(rebasing ?
+> -                                 _("Branch %s set up to track remote ref %s by rebasing.") :
+> -                                 _("Branch %s set up to track remote ref %s."),
+> -                                 local, remote);
+> -               else if (!remote_is_branch && !origin)
+> -                       printf_ln(rebasing ?
+> -                                 _("Branch %s set up to track local ref %s by rebasing.") :
+> -                                 _("Branch %s set up to track local ref %s."),
+> -                                 local, remote);
+> +                       printf_ln(_(messages[index]),
+> +                               local, shortname, origin);
+>                 else
+> +                       printf_ln(_(messages[index]),
+> +                               local, (!remote_is_branch) ? remote : shortname);
 
-Blindly replacing echo with "printf '%s\n'" would not be good enough
-because that printf prints each argument on its own line.  Provide a
-sane_echo helper that prints its arguments, space-delimited, on a
-single line, to make this easier to remember, and tweak 'say'
-and 'die_with_status' to illustrate how it is used.
+It's possible to simplify this logic and have only a single
+printf_ln() invocation. Hint: It's safe to pass in more arguments than
+there are %s directives in the format string.
 
-No functional change intended.
+> +
+> +               if (index < 0 || index > sizeof(messages) / sizeof(*messages))
+>                         die("BUG: impossible combination of %d and %p",
+>                             remote_is_branch, origin);
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- git-sh-setup.sh | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+You can use ARRAY_SIZE() in place of sizeof(...)/sizeof(...).
 
-diff --git i/git-sh-setup.sh w/git-sh-setup.sh
-index 256c89a..f35b5b9 100644
---- i/git-sh-setup.sh
-+++ w/git-sh-setup.sh
-@@ -43,6 +43,10 @@ git_broken_path_fix () {
- 
- # @@BROKEN_PATH_FIX@@
- 
-+sane_echo () {
-+	printf '%s\n' "$*"
-+}
-+
- die () {
- 	die_with_status 1 "$@"
- }
-@@ -50,7 +54,7 @@ die () {
- die_with_status () {
- 	status=$1
- 	shift
--	printf >&2 '%s\n' "$*"
-+	sane_echo >&2 "$*"
- 	exit "$status"
- }
- 
-@@ -59,7 +63,7 @@ GIT_QUIET=
- say () {
- 	if test -z "$GIT_QUIET"
- 	then
--		printf '%s\n' "$*"
-+		sane_echo "$*"
- 	fi
- }
- 
+Since an out-of-bound index would be a programmer bug, it would
+probably be more appropriate to use an assert(), just after 'index' is
+computed, rather than if+die(). The original code used die() because
+it couldn't detect the error until the end of the if-chain.
+
+>         }
+> --
+> 1.8.3.2
