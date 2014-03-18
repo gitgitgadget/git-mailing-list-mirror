@@ -1,110 +1,73 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Documentation/gitk: Document new config file location
-Date: Tue, 18 Mar 2014 13:07:56 -0700
-Message-ID: <xmqqr45z6zj7.fsf@gitster.dls.corp.google.com>
-References: <1395165187-3629-1-git-send-email-astrilhayato@gmail.com>
+Subject: Re: [PATCH] Add grep.fullName config variable
+Date: Tue, 18 Mar 2014 13:16:35 -0700
+Message-ID: <xmqqmwgn6z4s.fsf@gitster.dls.corp.google.com>
+References: <874n2w3abu.fsf@igel.home>
+	<xmqq7g7sbh56.fsf@gitster.dls.corp.google.com>
+	<mvmy507stf1.fsf@hawking.suse.de>
+	<xmqqzjkn8i78.fsf@gitster.dls.corp.google.com>
+	<87d2hj9tfg.fsf@igel.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Astril Hayato <astrilhayato@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 18 21:08:05 2014
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Tue Mar 18 21:16:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQ0Iu-0003gV-PV
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Mar 2014 21:08:05 +0100
+	id 1WQ0RK-0000Ue-2Q
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Mar 2014 21:16:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757068AbaCRUIA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Mar 2014 16:08:00 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60051 "EHLO
+	id S1757478AbaCRUQl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Mar 2014 16:16:41 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35076 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756109AbaCRUH7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Mar 2014 16:07:59 -0400
+	id S1757169AbaCRUQk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Mar 2014 16:16:40 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CAEBE7392E;
-	Tue, 18 Mar 2014 16:07:58 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 84F4373E1E;
+	Tue, 18 Mar 2014 16:16:39 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=91Zvu76dyHC985sws0d6HV8M09g=; b=uOn8XX
-	5WqFjuvz8utmTWjPSU4FCTVvHUUvQHResP/ijAXJjy1o06gse9NxHNcpylKrTclf
-	ftOjmiDBYTQaWWVVd9ztsI7x2EI0GHiphkmef2XW+k9y7IL7OUD0PUlHeQ/Btz8L
-	ugtKHkmedYPRoCJtODoJ9evubyq7FBMzLwfKw=
+	:content-type; s=sasl; bh=bTbdwW2z9zFaZgThnf6LaZwBKvI=; b=BThHM3
+	tzMgPq1tX4tPImTXcIn8icumqE+/srfvlhmRTdJO6ns8BlME4L0b9a/P6B7Wbvwb
+	+Tf29mr3R3jt/aGetkJeQmBeXnf7QO1M1c2DuMSO4vY6VufpfgmiKQsbvkLjiW4F
+	V0mLHCz2fR3jzaDuL7oMuD9w9ul1uehMYlGEc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fOrCZlhVK5Q3Rt4mGZ8IJ91owF/a7w6J
-	0HClg0Gfy9lysU1ql9RlsWVDuN8wYfxImDPpoh9TRLRd33CCwl4KPLtrP2bKWvlu
-	g62ZjOXwqGVky8+9kDPEAIT7uEN/MvmX3gJeqY2mCZbdQOpby2twhCvWlLwD0lOQ
-	ePA28CeHF/I=
+	:content-type; q=dns; s=sasl; b=V+IbKrf1sHDCPR7PVgjgsfo4bY58cIL9
+	g7mOmfO78s/FAVhkOHJk3mVU3MVy4dKt2pV2oWRmSN1Rl3dFjbq2O01Rj36huXUp
+	ucZrn6DZIaOvnakmeJpzVXsaFpzgMOgnPOPaw+ov6g+STaH689MzivIICE9osBuI
+	viSjGQX6YB8=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B7B837392D;
-	Tue, 18 Mar 2014 16:07:58 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7751A73E1C;
+	Tue, 18 Mar 2014 16:16:39 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0942A7392A;
-	Tue, 18 Mar 2014 16:07:57 -0400 (EDT)
-In-Reply-To: <1395165187-3629-1-git-send-email-astrilhayato@gmail.com> (Astril
-	Hayato's message of "Tue, 18 Mar 2014 17:53:07 +0000")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B1E8B73E0F;
+	Tue, 18 Mar 2014 16:16:38 -0400 (EDT)
+In-Reply-To: <87d2hj9tfg.fsf@igel.home> (Andreas Schwab's message of "Tue, 18
+	Mar 2014 20:51:31 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: FFE2E822-AED8-11E3-81C8-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 363DD4B2-AEDA-11E3-9E18-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244380>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244381>
 
-Astril Hayato <astrilhayato@gmail.com> writes:
+Andreas Schwab <schwab@linux-m68k.org> writes:
 
-> User config file location now complies with XDG base directory specification
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> Signed-off-by: Astril Hayato <astrilhayato@gmail.com>
-> ---
->  Documentation/gitk.txt | 9 +++++++--
->  1 file changed, 7 insertions(+), 2 deletions(-)
+>> Don't we have the exact same issue for the editor, by the way?
+>> Shouldn't we be running it in the original subdirectory as well?
 >
-> diff --git a/Documentation/gitk.txt b/Documentation/gitk.txt
-> index 1e9e38a..c2aa514 100644
-> --- a/Documentation/gitk.txt
-> +++ b/Documentation/gitk.txt
-> @@ -166,8 +166,13 @@ gitk --max-count=100 --all \-- Makefile::
->  
->  Files
->  -----
-> -Gitk creates the .gitk file in your $HOME directory to store preferences
-> -such as display options, font, and colors.
-> +User configuration and preferences are stored at (in order of priority):
-> +
-> +* '$XDG_CONFIG_HOME/git/gitk' if it exists and '$XDG_CONFIG_HOME' is set
-> +* '$HOME/.config/git/gitk' if it exists
-> +* '$HOME/.gitk' if it exists
-> +
-> +If none of the above exist then '$HOME/.config/git/gitk' is created and used by default.
+> It's called with an absolute name, so it shouldn't care.
 
-The last line is a bit of a lie, isn't it?
-
-If XDG_CONFIG_HOME is set to an non-empty string, config_file is set
-to $XDG_CONFIG_HOME/git/gitk.  Otherwise config_file is set to
-$HOME/.config/git/gitk.
-
-After that happens:
-
- - if that file exists, it is used;
-
- - otherwise:
-
-   . if $HOME/.gitk exists, we use it (in other words, $HOME/.gitk
-     is never used unless the user is an old timer who has one);
-
-   . if $HOME/.gitk does not exist (in other words, if none of the
-     above exists), then an empty $config_file is created and used.
-
-We use either $HOME/.config/git/gitk or $XDG_CONFIG_HOME/git/gitk
-and never $HOME/.gitk when none of the above exists, and the choice
-between the two depends on XDG_CONFIG_HOME.
-
-I'll queue this patch as-is, but we may want to further clarify with
-a follow-up patch.
-
-Thanks.
+But we should not have to call with absolute paths when a short and
+sweet pathname relative to the user's current directory. That is the
+primary point of my comment.
