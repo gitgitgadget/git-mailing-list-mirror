@@ -1,67 +1,80 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: [PATCH] Add grep.fullName config variable
-Date: Tue, 18 Mar 2014 20:51:31 +0100
-Message-ID: <87d2hj9tfg.fsf@igel.home>
-References: <874n2w3abu.fsf@igel.home>
-	<xmqq7g7sbh56.fsf@gitster.dls.corp.google.com>
-	<mvmy507stf1.fsf@hawking.suse.de>
-	<xmqqzjkn8i78.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Git won Linux Magazine's Linux New Media Award in the category "Outstanding Contribution to Open Source/Linux/Free Software"
+Date: Tue, 18 Mar 2014 12:53:06 -0700
+Message-ID: <xmqqwqfr707x.fsf@gitster.dls.corp.google.com>
+References: <CAD77+gQcvE-20cbgQtf4A5d=EY5s+gx7TPauyq1dr+xopQOpgQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 18 20:51:44 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>, Jens Lehmann <Jens.Lehmann@web.de>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: Richard Hartmann <richih.mailinglist@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 18 20:53:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQ035-00055y-K0
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Mar 2014 20:51:43 +0100
+	id 1WQ04a-0007Uk-R7
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Mar 2014 20:53:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757064AbaCRTvi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Mar 2014 15:51:38 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:55580 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751590AbaCRTvh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Mar 2014 15:51:37 -0400
-Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3fpQ4R5qqlz3hhkk;
-	Tue, 18 Mar 2014 20:51:32 +0100 (CET)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3fpQ4N50pLzbbgQ;
-	Tue, 18 Mar 2014 20:51:32 +0100 (CET)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.180])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id Gy4v4BXGBlnr; Tue, 18 Mar 2014 20:51:32 +0100 (CET)
-X-Auth-Info: gc7hxeveLYK6IPRDmDYzSUl4W7DPuRxPWSiE58aTiWQ=
-Received: from igel.home (ppp-88-217-55-80.dynamic.mnet-online.de [88.217.55.80])
-	by mail.mnet-online.de (Postfix) with ESMTPA;
-	Tue, 18 Mar 2014 20:51:32 +0100 (CET)
-Received: by igel.home (Postfix, from userid 1000)
-	id C6EF32C1AC7; Tue, 18 Mar 2014 20:51:31 +0100 (CET)
-X-Yow: YOW!!  Now I understand advanced MICROBIOLOGY
- and th' new TAX REFORM laws!!
-In-Reply-To: <xmqqzjkn8i78.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Tue, 18 Mar 2014 11:39:23 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1757282AbaCRTxL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Mar 2014 15:53:11 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49036 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756280AbaCRTxJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Mar 2014 15:53:09 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 02F4472EF8;
+	Tue, 18 Mar 2014 15:53:09 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=tRJQxmQRfLBWKIW5KPfh5iC87fQ=; b=xGbun0
+	4pzsEyifKX+vUiL9Vk+SekQ3WN1KP2c8bTn/M+Gf+uHenQNIHOGuqNiY3jO4VPov
+	Q7aqMBr9p2DJBfJU4f23mgF5OgXG+LCD2ewD8eBOYOYPMTrkUH2cTM2jUqysjbFp
+	k/N0J7ILpAMPyJo5cj6d41P/h7sfhXnfEfv7g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=J309wMsmhoknyGW8hnjku11BOmXFHv3w
+	craIbjWm5DDHLdACnfFOTC79fWySZojql7BqtsGr5uDrMPtVAs62WQjMlTl24f3W
+	LHYhudv0NKsz44W3zZAk0e/lIIuqhib7kO3xxHb/dPhyQQvjL8qOr+zIVJQkm7BX
+	SDsv8g9p8B8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E356872EF7;
+	Tue, 18 Mar 2014 15:53:08 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4000B72EF6;
+	Tue, 18 Mar 2014 15:53:08 -0400 (EDT)
+In-Reply-To: <CAD77+gQcvE-20cbgQtf4A5d=EY5s+gx7TPauyq1dr+xopQOpgQ@mail.gmail.com>
+	(Richard Hartmann's message of "Tue, 18 Mar 2014 14:35:36 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: ED89B64E-AED6-11E3-AC63-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244377>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Richard Hartmann <richih.mailinglist@gmail.com> writes:
 
-> Don't we have the exact same issue for the editor, by the way?
-> Shouldn't we be running it in the original subdirectory as well?
+> Dear all,
+>
+> Git won an award in the main category of the English & German Linux
+> Magazine at CeBIT, this year. Jens Lehmann, Heiko Voigt, and myself
+> were present to accept the award on behalf of the Git community as a
+> whole.
+>
+> You can find a short blurb on my blog[1], including a picture of the
+> physical prize.
+>
+> It seems the video of the award ceremony is not up yet, but I have
+> been told it will come soon(tm).
+>
+>
+> Best regards,
+> Richard
+>
+> [1] http://richardhartmann.de/blog/posts/2014/03/14-Git_prize-Outstanding_Contribution_to_Open_Source__Linux__Free_Software/
 
-It's called with an absolute name, so it shouldn't care.
-
-Andreas.
-
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+Thanks, all.
