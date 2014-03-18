@@ -1,92 +1,129 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] tests: set temp variables using 'env' in test function instead of subshell
-Date: Tue, 18 Mar 2014 15:16:27 -0700
-Message-ID: <xmqqy5075f0k.fsf@gitster.dls.corp.google.com>
-References: <244284@gmane.comp.version-control.git>
-	<1395144518-2489-1-git-send-email-unsignedzero@gmail.com>
-	<xmqqd2hj6y5o.fsf@gitster.dls.corp.google.com>
-	<20140318214536.GA10076@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] test-lib.sh: use printf instead of echo
+Date: Tue, 18 Mar 2014 15:18:44 -0700
+Message-ID: <20140318221844.GA828@google.com>
+References: <20140314235735.GA6959@ibr.ch>
+ <20140315001855.GK15625@google.com>
+ <xmqq61nceidp.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: David Tran <unsignedzero@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Mar 18 23:18:13 2014
+Cc: Uwe Storbeck <uwe@ibr.ch>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 18 23:19:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQ2Kn-0006Bt-MO
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Mar 2014 23:18:10 +0100
+	id 1WQ2Lg-0007bR-Ej
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Mar 2014 23:19:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932693AbaCRWQe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Mar 2014 18:16:34 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39224 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932605AbaCRWQb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Mar 2014 18:16:31 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D865372571;
-	Tue, 18 Mar 2014 18:16:30 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+uJtQb2LqXzh3xDVoMOPT8k8xo0=; b=eOBp6i
-	eOFUlJx2ie82/PdOttZCJYYf2FrlZevWiqF6xP/DPQkVH8vpx8nRiDL/R8dmSQEn
-	G7OPzrgzdNtfhqfH5aydoLBo3yX7FeGglCxXpmzUL5Y2IDPzW6Cts4LdACSKNOxY
-	Rc9W1uFJM9aVBu9nBz+R8gjlfn+Vq8r+khphM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XUWDEuE1YdXaSuYW62m0/mo0milUbmiy
-	hWntXyVyoUvwZYgeP8oOSNrlzApbQ2Dp/1CYPBVN+tJq5kW0CMf+AYfgYAJW7xdH
-	QGu2/uVJ2/mldCgEUH8U32T2xts73PQD4zdxp+9o6vOfKiWJBLvbZKqAlwRhQJ6+
-	gIoRMYGq8+E=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C66F872570;
-	Tue, 18 Mar 2014 18:16:30 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E1C077256D;
-	Tue, 18 Mar 2014 18:16:29 -0400 (EDT)
-In-Reply-To: <20140318214536.GA10076@sigill.intra.peff.net> (Jeff King's
-	message of "Tue, 18 Mar 2014 17:45:36 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: F487790E-AEEA-11E3-A7CB-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S933070AbaCRWSw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Mar 2014 18:18:52 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:54233 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933314AbaCRWSv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Mar 2014 18:18:51 -0400
+Received: by mail-pa0-f42.google.com with SMTP id fb1so8027592pad.1
+        for <git@vger.kernel.org>; Tue, 18 Mar 2014 15:18:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=0h4r7k8yW6tjwLO+E08fXE3BPSIVODsM1RVngwJgv0Q=;
+        b=xlK3dG7kUsi5nLwGR3R5FljgC7GxVAv/py5mgf1l/M3MfJNzDQcwv/sZmb/7cglu64
+         LHk0/qFoN70jfFKp5yaJxBnwNRFgwKzZ1SaxsQx6TAeqr45xG5QiTbYkIR2I6htqLbYs
+         oWNlBew80zJEfxyRPLtIXk2BDsRFtmauejTlwlXmd7LL5MVyoa86rgoRImaVMZZtGqkJ
+         XIkwEhjqk1CLTJFAOmKJ+f3sBEPXtVocx4n18RIHMtWahgmkPyblRoeXGlodJjU5CXYr
+         TpZdx8yJUqbBl/VnHXR8wgPQB2uP9gjkO6ZjMnWg2j2GsYBo47Pj8OYn7UAT9DHTPHCH
+         7ZXw==
+X-Received: by 10.68.194.202 with SMTP id hy10mr35632373pbc.94.1395181130693;
+        Tue, 18 Mar 2014 15:18:50 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id vo1sm93520911pab.32.2014.03.18.15.18.49
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 18 Mar 2014 15:18:50 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <xmqq61nceidp.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244387>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244388>
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano wrote:
+>> Uwe Storbeck wrote:
 
-> On Tue, Mar 18, 2014 at 01:37:39PM -0700, Junio C Hamano wrote:
+>>> +	printf '%s\n' "$@" | sed -e 's/^/#	/'
 >
->> > diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
->> > index c9c426c..3e3f77b 100755
->> > --- a/t/t1300-repo-config.sh
->> > +++ b/t/t1300-repo-config.sh
->> > @@ -974,24 +974,15 @@ test_expect_success SYMLINKS 'symlinked configuration' '
->> >  '
->> >
->> >  test_expect_success 'nonexistent configuration' '
->> > -	(
->> > -		GIT_CONFIG=doesnotexist &&
->> > -		export GIT_CONFIG &&
->> > -		test_must_fail git config --list &&
->> > -		test_must_fail git config test.xyzzy
->> > -	)
->> > +	test_must_fail env GIT_CONFIG=doesnotexist git config --list &&
->> > +	test_must_fail env GIT_CONFIG=doesnotexist git config test.xyzzy
->> >  '
->
-> Isn't GIT_CONFIG here another way of saying:
->
->   test_must_fail git config -f doesnotexist --list
->
-> Perhaps that is shorter and more readable still (and there are a few
-> similar cases in this patch.
+> This is wrong, isn't it?  Why do we want one line per item here?
 
-Surely, but are we assuming that "git config" correctly honors the
-equivalence between GIT_CONFIG=file and -f file, or is that also
-something we are testing in these tests?
+Yes, Hannes caught the same, too.  Sorry for the sloppiness.
+
+We currently use "echo" all over the place (e.g., 'echo "$path"' in
+git-sh-setup), and every time we fix it there is a chance of making
+mistakes.  I wonder if it would make sense to add a helper to make the
+echo calls easier to replace:
+
+-- >8 --
+Subject: git-sh-setup: introduce sane_echo helper
+
+Using 'echo' with arguments that might contain backslashes or "-e" or
+"-n" can produce confusing results that vary from platform to platform
+(e.g., dash always interprets \ escape sequences and echoes "-e"
+verbatim, whereas bash does not interpret \ escapes unless "-e" is
+passed as an argument to echo and suppresses the "-e" from its
+output).
+
+Instead, we should use printf, which is more predictable:
+
+	printf '%s\n' "$foo"; # Just prints $foo, on all platforms.
+
+Blindly replacing echo with "printf '%s\n'" would not be good enough
+because that printf prints each argument on its own line.  Provide a
+sane_echo helper that prints its arguments, space-delimited, on a
+single line, to make this easier to remember, and tweak 'say'
+and 'die_with_status' to illustrate how it is used.
+
+No functional change intended.
+
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ git-sh-setup.sh | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git i/git-sh-setup.sh w/git-sh-setup.sh
+index 256c89a..f35b5b9 100644
+--- i/git-sh-setup.sh
++++ w/git-sh-setup.sh
+@@ -43,6 +43,10 @@ git_broken_path_fix () {
+ 
+ # @@BROKEN_PATH_FIX@@
+ 
++sane_echo () {
++	printf '%s\n' "$*"
++}
++
+ die () {
+ 	die_with_status 1 "$@"
+ }
+@@ -50,7 +54,7 @@ die () {
+ die_with_status () {
+ 	status=$1
+ 	shift
+-	printf >&2 '%s\n' "$*"
++	sane_echo >&2 "$*"
+ 	exit "$status"
+ }
+ 
+@@ -59,7 +63,7 @@ GIT_QUIET=
+ say () {
+ 	if test -z "$GIT_QUIET"
+ 	then
+-		printf '%s\n' "$*"
++		sane_echo "$*"
+ 	fi
+ }
+ 
