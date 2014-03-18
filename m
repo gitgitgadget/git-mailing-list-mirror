@@ -1,68 +1,74 @@
-From: Benoit Pierre <benoit.pierre@gmail.com>
-Subject: [PATCH 7/7] run-command: mark run_hook_with_custom_index as deprecated
-Date: Tue, 18 Mar 2014 11:00:56 +0100
-Message-ID: <1395136856-17225-7-git-send-email-benoit.pierre@gmail.com>
-References: <xmqqmwgoejwq.fsf@gitster.dls.corp.google.com>
- <1395136856-17225-1-git-send-email-benoit.pierre@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 18 11:01:45 2014
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [PATCH] Add grep.fullName config variable
+Date: Tue, 18 Mar 2014 11:16:50 +0100
+Message-ID: <mvmy507stf1.fsf@hawking.suse.de>
+References: <874n2w3abu.fsf@igel.home>
+	<xmqq7g7sbh56.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 18 11:17:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WPqq5-0003wX-W1
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Mar 2014 11:01:42 +0100
+	id 1WPr4w-0007pF-AV
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Mar 2014 11:17:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754706AbaCRKBh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Mar 2014 06:01:37 -0400
-Received: from mail-we0-f175.google.com ([74.125.82.175]:38104 "EHLO
-	mail-we0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754647AbaCRKBf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Mar 2014 06:01:35 -0400
-Received: by mail-we0-f175.google.com with SMTP id q58so5536176wes.6
-        for <git@vger.kernel.org>; Tue, 18 Mar 2014 03:01:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:subject:date:message-id:in-reply-to:references;
-        bh=7jvnbhQK5C24zzot95UlHBN9QaKV3667nEJd66aPPX4=;
-        b=TEbYJL4Rez4mDi+DKLw/19YwGlz2fKFGulESjipyLcRxZLB23UDa0blfiVFAo6FfKK
-         rArNsqyaN/2n97sCT2OpyiauRR8nViThNmqSmMJp71+/LKBmed+iBs/eh2SJ0i2c/ILi
-         kllERb0AA0alSs7r224g6+T2wr/3lsmRCTlp5GVZv66VB1M/aR88gzAhxccNBCDivA18
-         4HhjgMwQ3V0JAqbRPZZvW+VI36MJrvl+HBJXYCqeUyJEytQZYlocYNf7myxv0cG344LT
-         cN4YJ09b8DhHxFbGEAeQq814667GwDoVpLjFgGDVgAR+2+zbuur8JHQCp3Conn4Yskqs
-         zdOw==
-X-Received: by 10.180.82.37 with SMTP id f5mr13355881wiy.6.1395136894495;
-        Tue, 18 Mar 2014 03:01:34 -0700 (PDT)
-Received: from localhost (121.12.70.86.rev.sfr.net. [86.70.12.121])
-        by mx.google.com with ESMTPSA id pm2sm40225106wic.0.2014.03.18.03.01.33
-        for <git@vger.kernel.org>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 18 Mar 2014 03:01:33 -0700 (PDT)
-X-Mailer: git-send-email 1.9.0
-In-Reply-To: <1395136856-17225-1-git-send-email-benoit.pierre@gmail.com>
+	id S1753673AbaCRKQ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Mar 2014 06:16:57 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:39586 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752147AbaCRKQ4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Mar 2014 06:16:56 -0400
+Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3fp9KL5hq1z4KK6C;
+	Tue, 18 Mar 2014 11:16:54 +0100 (CET)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+	by mail.m-online.net (Postfix) with ESMTP id 3fp9KL0QQdzbbgs;
+	Tue, 18 Mar 2014 11:16:54 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.180])
+	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
+	with ESMTP id QTQttszulLy8; Tue, 18 Mar 2014 11:16:51 +0100 (CET)
+X-Auth-Info: an+tAFzj/hzFOEuNgsygHbdkEncexyRSC6ZNIJx9Gfk=
+Received: from hawking.suse.de (charybdis-ext.suse.de [195.135.221.2])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by mail.mnet-online.de (Postfix) with ESMTPSA;
+	Tue, 18 Mar 2014 11:16:50 +0100 (CET)
+X-Yow: WHY are we missing KOJAK?
+In-Reply-To: <xmqq7g7sbh56.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Mon, 17 Mar 2014 15:21:41 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244348>
 
-Signed-off-by: Benoit Pierre <benoit.pierre@gmail.com>
----
- run-command.h | 1 +
- 1 file changed, 1 insertion(+)
+Junio C Hamano <gitster@pobox.com> writes:
 
-diff --git a/run-command.h b/run-command.h
-index 88460f9..3653bfa 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -51,6 +51,7 @@ extern int run_hook_le(const char *const *env, const char *name, ...);
- extern int run_hook_ve(const char *const *env, const char *name, va_list args);
- 
- LAST_ARG_MUST_BE_NULL
-+__attribute__((deprecated))
- extern int run_hook_with_custom_index(const char *index_file, const char *name, ...);
- 
- #define RUN_COMMAND_NO_STDIN 1
+> Andreas Schwab <schwab@linux-m68k.org> writes:
+>
+>> This configuration variable sets the default for the --full-name option.
+>>
+>> Signed-off-by: Andreas Schwab <schwab@linux-m68k.org>
+>> ---
+>
+> Would this change break Porcelains (e.g. Emacs modes) and force them
+> to be updated to explicitly pass --no-full-name to unbreak them?
+
+Yes, that would be required.  On the other hand, currently it is
+impossible to cut-n-paste a file name without --full-name, since the
+pager is always started in top-level.  Perhaps it is better to fix the
+latter?
+
+Andreas.
+
 -- 
-1.9.0
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
