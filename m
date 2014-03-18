@@ -1,80 +1,74 @@
-From: Jeff King <peff@peff.net>
+From: Duy Nguyen <pclouds@gmail.com>
 Subject: Re: [PATCH 4/4] gc --aggressive: three phase repacking
-Date: Tue, 18 Mar 2014 01:13:43 -0400
-Message-ID: <20140318051342.GA17200@sigill.intra.peff.net>
+Date: Tue, 18 Mar 2014 12:16:04 +0700
+Message-ID: <CACsJy8DZsH_2CpaUUpc5xyunHD42CN24m6Mb+9vsKyaRqJ6q3w@mail.gmail.com>
 References: <1394976904-15395-1-git-send-email-pclouds@gmail.com>
- <1394976904-15395-6-git-send-email-pclouds@gmail.com>
- <20140318045050.GB8240@sigill.intra.peff.net>
- <CACsJy8CU3JyL74OuurjDr5-FHmBOCRahtXukukCqGx1cTdjvMQ@mail.gmail.com>
+ <1394976904-15395-6-git-send-email-pclouds@gmail.com> <20140318045050.GB8240@sigill.intra.peff.net>
+ <20140318050727.GA14769@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=UTF-8
 Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 18 06:13:50 2014
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Mar 18 06:17:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WPmLW-0001Nf-55
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Mar 2014 06:13:50 +0100
+	id 1WPmOa-0005ev-7I
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Mar 2014 06:17:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751813AbaCRFNp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Mar 2014 01:13:45 -0400
-Received: from cloud.peff.net ([50.56.180.127]:41643 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751384AbaCRFNo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Mar 2014 01:13:44 -0400
-Received: (qmail 22409 invoked by uid 102); 18 Mar 2014 05:13:44 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 18 Mar 2014 00:13:44 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 18 Mar 2014 01:13:43 -0400
-Content-Disposition: inline
-In-Reply-To: <CACsJy8CU3JyL74OuurjDr5-FHmBOCRahtXukukCqGx1cTdjvMQ@mail.gmail.com>
+	id S1751749AbaCRFQg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Mar 2014 01:16:36 -0400
+Received: from mail-qg0-f45.google.com ([209.85.192.45]:48452 "EHLO
+	mail-qg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751083AbaCRFQf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Mar 2014 01:16:35 -0400
+Received: by mail-qg0-f45.google.com with SMTP id j5so19743147qga.4
+        for <git@vger.kernel.org>; Mon, 17 Mar 2014 22:16:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=M14y6uTm6zHNP1eO+5WOX08WQS7Fi5Y5f6xBSbPETds=;
+        b=ViAYDgwdSn2Gplfk/Qw7j5rqV08xlnjKUrckXAlbeTENNHq4lKSu1r+zSMd/u1Jqoo
+         S3tBJqGOFobCpBnhpdENpI1Jh0MjmBHcrqyKXtUCl44pIONmoxG7EadhQYc++bXfkAsy
+         bTVwG5OF4jSOSaIFFGjGO7lSmRLP07I4Ov5tdoNuugLCYPuC2TsWZ1LqzDqH2hvfeJQx
+         8UT2ZlZoeHFvOajdqTIvRrlyyQ1TRDjP+1FeirXkl/De2UBQCo/BeeSOe6L3j6qE5WhK
+         KKI8xXiHK0TBO+BRP284qbKeTl8KCipqMefAdZGr+/XfLM5qoDSKbiUue1+khONmgiUc
+         vXBQ==
+X-Received: by 10.140.91.228 with SMTP id z91mr31362407qgd.32.1395119795056;
+ Mon, 17 Mar 2014 22:16:35 -0700 (PDT)
+Received: by 10.96.146.102 with HTTP; Mon, 17 Mar 2014 22:16:04 -0700 (PDT)
+In-Reply-To: <20140318050727.GA14769@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244332>
 
-On Tue, Mar 18, 2014 at 12:00:48PM +0700, Duy Nguyen wrote:
+On Tue, Mar 18, 2014 at 12:07 PM, Jeff King <peff@peff.net> wrote:
+>   [before]
+>   real    0m28.824s
+>   user    0m28.620s
+>   sys     0m0.232s
+>
+>   [after]
+>   real    0m21.694s
+>   user    0m21.544s
+>   sys     0m0.172s
+>
+> The numbers below are completely pulled out of a hat, so we can perhaps
+> do even better. But I think it shows that there is room for improvement
+> in the delta base cache.
 
-> On Tue, Mar 18, 2014 at 11:50 AM, Jeff King <peff@peff.net> wrote:
-> > On Sun, Mar 16, 2014 at 08:35:04PM +0700, Nguy=E1=BB=85n Th=C3=A1i =
-Ng=E1=BB=8Dc Duy wrote:
-> >
-> >> As explained in the previous commit, current aggressive settings
-> >> --depth=3D250 --window=3D250 could slow down repository access
-> >> significantly. Notice that people usually work on recent history o=
-nly,
-> >> we could keep recent history more loosely packed, so that repo acc=
-ess
-> >> is fast most of the time while the pack file remains small.
-> >
-> > One thing I have not seen is real-world timings showing the slowdow=
-n
-> > based on --depth. Did I miss them, or are we just making assumption=
-s
-> > based on one old case from 2009 (that, AFAIK does not have real num=
-bers,
-> > just speculation)? Has anyone measured the effect of bumping the de=
-lta
-> > cache size (and its hash implementation)?
->=20
-> David tested it with git-blame [1]. I should probably run some tests
-> too (I don't remember if I tested some operations last time).
->=20
-> http://thread.gmane.org/gmane.comp.version-control.git/242277/focus=3D=
-242435
-
-Ah, thanks. I do remember that thread now.
-
-It looks like David's last word is that he gets a significant
-performance from bumping the delta base cache size (and number of
-buckets). And that matches the timings I just did. I suspect there are
-still pathological cases that could behave worse, but it really sounds
-like we should be looking into improving that cache as a first step.
-
--Peff
+There is definitely room for improvement in delta base cache:
+increasing cache size, better eviction strategies.. But I think it's
+orthogonal to gc --aggressive improvement. From what Linus described
+---aggressive is more for archival purposes but I think people have
+been using it for upstream repos as well. Better packed repos could
+speed up current clients immediately (although this argument is
+somewhat flawed, server updates are usually at slower pace than
+clients..).
+-- 
+Duy
