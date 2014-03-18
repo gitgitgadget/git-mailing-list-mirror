@@ -1,71 +1,91 @@
-From: Ray Hengst <rkhengst@gmail.com>
-Subject: Bug report -- "Illegal instruction" on Mac 10.6.8 without XCode installed
-Date: Tue, 18 Mar 2014 01:33:25 -0700
-Message-ID: <CAJjOWVqtWMrexdDyfVWY4=s=XT28RfD5Mbi9j1rdasU9v_rYAw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+From: Brian Gesiak <modocache@gmail.com>
+Subject: [PATCH] git-rebase: Teach rebase "-" shorthand.
+Date: Tue, 18 Mar 2014 17:44:28 +0900
+Message-ID: <1395132268-69488-1-git-send-email-modocache@gmail.com>
+Cc: Brian Gesiak <modocache@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 18 09:33:38 2014
+X-From: git-owner@vger.kernel.org Tue Mar 18 09:44:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WPpSr-0008JI-Dh
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Mar 2014 09:33:37 +0100
+	id 1WPpdh-0005yQ-DP
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Mar 2014 09:44:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754612AbaCRIda (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Mar 2014 04:33:30 -0400
-Received: from mail-qa0-f48.google.com ([209.85.216.48]:64578 "EHLO
-	mail-qa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754118AbaCRId0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Mar 2014 04:33:26 -0400
-Received: by mail-qa0-f48.google.com with SMTP id m5so6491225qaj.7
-        for <git@vger.kernel.org>; Tue, 18 Mar 2014 01:33:25 -0700 (PDT)
+	id S1754131AbaCRIon (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Mar 2014 04:44:43 -0400
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:46787 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753858AbaCRIol (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Mar 2014 04:44:41 -0400
+Received: by mail-pa0-f43.google.com with SMTP id bj1so6945015pad.16
+        for <git@vger.kernel.org>; Tue, 18 Mar 2014 01:44:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=oqZrWMv7D+LwqDTKGNNsz1VY79ypT6W00/+mLIpEvGw=;
-        b=I+Srt0W2jIbKOclnNUdpnEn1a1Nfm1E9GPJbSorRqG08otjHcRTFtW82s1BFyFG+v7
-         1BTkR+1BWk7D+ousHy2po2ydmWdlNbpR3ZKDnbseIldatI5+DYSb2NUpkRppRnFpahYD
-         2IqcVP00Qte9g0WJAQ/3BY4jbEXrgbLWvyRZ2DL50SqyEbEgFxcA8Fx+T+FSqCSZXKyy
-         zdLK4YQQvn5hXjus6YdTzwVE1K4epVrYPxfXVHLBz2ZCPyGblXpBK++kLgcVBt9yA8cF
-         Rr6DvY3/I/LvlZM4hvh1LjoeO2Wn/gbVSVOhFLQ5hX3fP29y8Ea6P4vbiZH9/oaKy75z
-         pY1A==
-X-Received: by 10.224.123.212 with SMTP id q20mr824024qar.95.1395131605540;
- Tue, 18 Mar 2014 01:33:25 -0700 (PDT)
-Received: by 10.140.42.228 with HTTP; Tue, 18 Mar 2014 01:33:25 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id;
+        bh=yqIbN6P2ZBqjt28mWN3pIc5DcCaYcObBJvuHAN7jtmk=;
+        b=XB4fWWzUc19JquRo364Xk0egZw1PGZQi8/4FNn70pLAsZ+3g7Ni0xZv3LTcdSD0ikp
+         gYgxOaM+iVFj60XQkGxs79CeM/Z4Gom991dbLAEvHqaxdC6Am+KApVjiKKWslBTQU2iO
+         Xbaj3stiVPhniceMm7zQgLsJTDouSJbK/mcjbmip9KVg0hpVIBzIZlvbxJMpU+t8t1GD
+         mvBkeVj59zUU8Ham0BBqoDxp4UBsC0rja99BC2BYxR6vTDazTqzlBkQV4VsAbpsYh+sq
+         wHH/ZHhkQgHN1/hE8xJOpXslRWr7sMWaDubXSVWGGkpq56pC8Cu/B4jtf1G4qraoxR5Y
+         Qniw==
+X-Received: by 10.66.122.36 with SMTP id lp4mr31773897pab.82.1395132281404;
+        Tue, 18 Mar 2014 01:44:41 -0700 (PDT)
+Received: from localhost.localdomain (p1157-ipbf5204marunouchi.tokyo.ocn.ne.jp. [118.8.132.157])
+        by mx.google.com with ESMTPSA id ff4sm84364191pad.24.2014.03.18.01.44.39
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Tue, 18 Mar 2014 01:44:40 -0700 (PDT)
+X-Mailer: git-send-email 1.8.5.2 (Apple Git-48)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244340>
 
-Hi,
-I am running a Mac 10.6.8 and tried to install git-1.9.0 off of the
-installer (git-1.9.0-intel-universal-snow-leopard.dmg). The
-installation worked fine and gave no error messages. But whenever I
-type in a git command (see below for some I tried), it gives me this
-error message:
-Illegal instruction
+Teach rebase the same shorthand as checkout and merge; that is, that "-"
+means "the branch we were previously on".
 
-I am completely new to git and mostly new of Unix, but here are some
-commands I tried:
-git
-git help
-git config
-git init
-git clean
-git config --global user.name "John Doe"
-git status
+Reported-by: Tim Chase <git@tim.thechases.com>
+Signed-off-by: Brian Gesiak <modocache@gmail.com>
+---
+ git-rebase.sh     | 4 ++++
+ t/t3400-rebase.sh | 6 ++++++
+ 2 files changed, 10 insertions(+)
 
-However, typing "man git" displays typical man pages.
-I do not have Xcode installed. (it's very hard to find a legacy copy);
-the "make" command also is not present, so I can't use any of the
-workarounds I saw listed.
-I uninstalled git-1.9.0 successfully using the provided script, then
-downloaded the same file again (and installed it) to make sure I
-didn't get a corrupt copy. I had the same problem, however.
-If I can provide any more information just let me know.
-Thanks for any help you can provide.
--Ray
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 5f6732b..2c75e9f 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -453,6 +453,10 @@ then
+ 		test "$fork_point" = auto && fork_point=t
+ 		;;
+ 	*)	upstream_name="$1"
++		if test "$upstream_name" = "-"
++		then
++			upstream_name="@{-1}"
++		fi
+ 		shift
+ 		;;
+ 	esac
+diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
+index 6d94b1f..00aba9f 100755
+--- a/t/t3400-rebase.sh
++++ b/t/t3400-rebase.sh
+@@ -88,6 +88,12 @@ test_expect_success 'rebase from ambiguous branch name' '
+ 	git rebase master
+ '
+ 
++test_expect_success 'rebase using shorthand' '
++	git checkout master
++	git checkout -b shorthand HEAD^
++	GIT_TRACE=1 git rebase -
++'
++
+ test_expect_success 'rebase a single mode change' '
+ 	git checkout master &&
+ 	git branch -D topic &&
+-- 
+1.8.5.2 (Apple Git-48)
