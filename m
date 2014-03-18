@@ -1,78 +1,90 @@
-From: Jacopo Notarstefano <jacopo.notarstefano@gmail.com>
-Subject: [GSoC14][RFC] Is there any interest in adding a port of checkpatch.pl
- to contrib/?
-Date: Tue, 18 Mar 2014 02:38:04 +0100
-Message-ID: <CAL0uuq0RWpWPa2TOk09xE9SjG0-Z=EAMG2iQ9Y0z_XMYvRsJ3g@mail.gmail.com>
+From: Tim Chase <git@tim.thechases.com>
+Subject: Re: Using "-" for "previous branch" failing with rebase
+Date: Mon, 17 Mar 2014 20:47:44 -0500
+Message-ID: <20140317204744.6ac795a0@bigbox.christie.dr>
+References: <20140315152924.26c3294e@bigbox.christie.dr>
+	<7vppll2uvp.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Mar 18 02:38:29 2014
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Mar 18 02:47:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WPiz3-0008Ba-Pk
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Mar 2014 02:38:26 +0100
+	id 1WPj7w-0001XW-Lg
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Mar 2014 02:47:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752701AbaCRBiH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Mar 2014 21:38:07 -0400
-Received: from mail-ve0-f173.google.com ([209.85.128.173]:42566 "EHLO
-	mail-ve0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752582AbaCRBiF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Mar 2014 21:38:05 -0400
-Received: by mail-ve0-f173.google.com with SMTP id oy12so6277215veb.18
-        for <git@vger.kernel.org>; Mon, 17 Mar 2014 18:38:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=5T8OrcPqz/2M4TrMYy051DialDgsJCNJgwclcuGHhnM=;
-        b=oXsdQWu8uh4Hd/fuBOrNuj8CxYQucMT1sTkM+7/uCaNQhTHbyNfEfx+q8KdeKEbwwY
-         Q8mJd0nrDFXsjGbBGPi9FwkUANotJNuAIK4gDBA0yBRPehB2xXoV4dJcJdj/umtuyR/r
-         n7y+fVglGLjZjKpkPYAvUI7Vr0jQu36aGqal64bHPO8n3j4mnr6r9Trcpnf+jmULDXAb
-         qdy+cYDqgD1dfSp1/ldnJC3OdtCzWmuYzfcRRemPr+Y9BXp56TqIHn9GtZrQ3wjHiZYl
-         lHjwC4gRnpXVRvhuZ4VvNzz2w/HIzx2n2zFtlEQUKqfVg6uUeRq3v0kaBnUopqeLxsL5
-         WDrw==
-X-Received: by 10.58.202.106 with SMTP id kh10mr1344976vec.31.1395106684492;
- Mon, 17 Mar 2014 18:38:04 -0700 (PDT)
-Received: by 10.52.2.165 with HTTP; Mon, 17 Mar 2014 18:38:04 -0700 (PDT)
+	id S1752802AbaCRBra (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Mar 2014 21:47:30 -0400
+Received: from boston.accountservergroup.com ([50.22.11.22]:57370 "EHLO
+	boston.accountservergroup.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752582AbaCRBr3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 17 Mar 2014 21:47:29 -0400
+Received: from 172-0-250-128.lightspeed.rcsntx.sbcglobal.net ([172.0.250.128]:60735 helo=bigbox.christie.dr)
+	by boston.accountservergroup.com with esmtpsa (SSLv3:DHE-RSA-AES128-SHA:128)
+	(Exim 4.82)
+	(envelope-from <git@tim.thechases.com>)
+	id 1WPj7o-0004PB-ON; Mon, 17 Mar 2014 20:47:28 -0500
+In-Reply-To: <7vppll2uvp.fsf@alter.siamese.dyndns.org>
+X-Mailer: Claws Mail 3.8.1 (GTK+ 2.24.10; x86_64-pc-linux-gnu)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - boston.accountservergroup.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - tim.thechases.com
+X-Get-Message-Sender-Via: boston.accountservergroup.com: authenticated_id: tim@thechases.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244318>
 
-It seems to me that the topic of adding the checkpatch.pl script to
-Git's source tree has cropped up several times in the past, as
-recently as a couple of days ago: $gmane/243607.
+On 2014-03-16 23:37, Junio C Hamano wrote:
+> Tim Chase <git@tim.thechases.com> writes:
+> 
+> > Is this just an interface inconsistency or is there a some
+> > technical reason this doesn't work (or, has it been
+> > addressed/fixed, and just not pulled into Debian Stable's
+> > 1.7.10.4 version of git)?
+> 
+> It is merely that nobody thought "rebase" would benefit from such a
+> short-hand, I think.
+> 
+>     Teach more commands that operate on branch names about "-"
+>     shorthand for "the branch we were previously on", like we did
+>     for "git merge -" sometime after we introduced "git checkout -"
+> 
+> has been sitting in my "leftover bits" list at
+> 
+>     http://git-blame.blogspot.com/p/leftover-bits.html
+> 
+> for quite some time.  Hint, hint...
 
-It should be noted that its usage for its sake has been discouraged by
-Junio Hamano in $gmane/205998. Also, its use is somewhat controversial
-and has led to flames and even a public fork.
+Not sure if the "Hint, hint" was intended for me, as I'm not exactly
+a git hacker.  I did find another place where I reached for it
+instinctively (now that I use it regularly with checkout/merge):
+git-diff.
 
-Despite this, I think that git might benefit from a port of
-checkpatch.pl. In fact, even Junio had admitted to use part of its
-features later in $gmane/205998.
+  git checkout some_branch
+  #hack
+  git commit -m "..."
+  git checkout other_branch
+  # hmm...what's different between these branches?
+  git diff -
 
-We could simply use linux's script/checkpatch.pl, but I think a port
-is needed for these reasons:
+which I would have expected to act something like
 
-1. Git style guidelines are somewhat different and less strict than
-their Linux equivalents.
-2. Several patch threads bounce back and forth because of style fixes.
-A checkpatch script added as a hook could help reduce these and use
-more efficiently our time.
-3. As far as I can tell, checkpatch needs to be run from the root
-folder of a linux repository clone. Cloning several hundred MBs for a
-single perl script looks a little foolish to me.
+  git diff some_branch..other_branch
 
-So, is there any interest in adding a port of checkpatch.pl to
-contrib/? I might work on this as part of GSoC. I still haven't
-submitted my application about git bisect (life got in the way!), but
-Michael Heggarty remarked in $gmane/242703 that my original idea had
-too little meat in it to constitute a good GSoC proposal.
+Just for the archives.
 
-Cheers,
-Jacopo Notarstefano
+-tkc
+
+
+
+
+(or possibly the reverse)
