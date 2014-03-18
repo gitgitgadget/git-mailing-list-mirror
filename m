@@ -1,97 +1,62 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [GSoC14][RFC] Is there any interest in adding a port of
- checkpatch.pl to contrib/?
-Date: Tue, 18 Mar 2014 00:40:13 -0400
-Message-ID: <CAPig+cQPZrHf_Bm_s_qmP6nX2dKcFNi+EUKoPObXHn1novuaHw@mail.gmail.com>
-References: <CAL0uuq0RWpWPa2TOk09xE9SjG0-Z=EAMG2iQ9Y0z_XMYvRsJ3g@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: What's cooking in git.git (Mar 2014, #03; Fri, 14)
+Date: Tue, 18 Mar 2014 00:40:16 -0400
+Message-ID: <20140318044016.GA8240@sigill.intra.peff.net>
+References: <xmqqlhwcfn4a.fsf@gitster.dls.corp.google.com>
+ <EA1EF5746EA7414CAE1320AA61100178@PhilipOakley>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Jacopo Notarstefano <jacopo.notarstefano@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Philip Oakley <philipoakley@iee.org>
 X-From: git-owner@vger.kernel.org Tue Mar 18 05:40:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WPlpg-0001tV-I6
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Mar 2014 05:40:56 +0100
+	id 1WPlph-0001tV-4a
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Mar 2014 05:40:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750881AbaCREkP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Mar 2014 00:40:15 -0400
-Received: from mail-yh0-f47.google.com ([209.85.213.47]:61914 "EHLO
-	mail-yh0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750815AbaCREkO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Mar 2014 00:40:14 -0400
-Received: by mail-yh0-f47.google.com with SMTP id 29so6364558yhl.34
-        for <git@vger.kernel.org>; Mon, 17 Mar 2014 21:40:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=BEqSEAygxBFU3+NvfxCIxr71b5YagAiopnzNZ4FFivo=;
-        b=0qmXdgDyjCNOvU3vjyw1Rj102aDgD/jPG+cREvkfOdF6iUREXlWzJEQP7k/WMaCth3
-         r8027HcVquoWA2JB8+ryxy7JjCbLzADZ1vEyqrJatcUKtCS16jA5b5d/7juxkexOL+nJ
-         GZusaFP0L8M2SFUphSAAmAWeC0GjFHxi4V3j9EsQ356er1G9igraNQIiuuX/KXF0VVLx
-         saRkfkHiy7OBSJLkWHpfHZlPw/MHA5YGVV8ODZlrgg0UPEE1+2EYFoqxCKPX3qrW1r9H
-         USTHPJBVRKoMJPyQow1N509YhLsHNeMZsLpvWieQu4ag5TAO6MkpSP9NM1apvXtAT+dX
-         b/PA==
-X-Received: by 10.236.5.174 with SMTP id 34mr15491437yhl.48.1395117613591;
- Mon, 17 Mar 2014 21:40:13 -0700 (PDT)
-Received: by 10.170.180.134 with HTTP; Mon, 17 Mar 2014 21:40:13 -0700 (PDT)
-In-Reply-To: <CAL0uuq0RWpWPa2TOk09xE9SjG0-Z=EAMG2iQ9Y0z_XMYvRsJ3g@mail.gmail.com>
-X-Google-Sender-Auth: yvTY1CRYgQXCJxe9cNJuJJvY6Vw
+	id S1751077AbaCREka (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Mar 2014 00:40:30 -0400
+Received: from cloud.peff.net ([50.56.180.127]:41622 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750907AbaCREkS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Mar 2014 00:40:18 -0400
+Received: (qmail 20232 invoked by uid 102); 18 Mar 2014 04:40:18 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 17 Mar 2014 23:40:18 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 18 Mar 2014 00:40:16 -0400
+Content-Disposition: inline
+In-Reply-To: <EA1EF5746EA7414CAE1320AA61100178@PhilipOakley>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244327>
 
-On Mon, Mar 17, 2014 at 9:38 PM, Jacopo Notarstefano
-<jacopo.notarstefano@gmail.com> wrote:
-> It seems to me that the topic of adding the checkpatch.pl script to
-> Git's source tree has cropped up several times in the past, as
-> recently as a couple of days ago: $gmane/243607.
->
-> It should be noted that its usage for its sake has been discouraged by
-> Junio Hamano in $gmane/205998.
+On Sun, Mar 16, 2014 at 06:30:49PM -0000, Philip Oakley wrote:
 
-In the referenced message, Junio says that he often runs checkpatch.pl
-on incoming patches.
+> >* jk/branch-at-publish-rebased (2014-01-17) 5 commits
+> >- t1507 (rev-parse-upstream): fix typo in test title
+> >- implement @{publish} shorthand
+> >- branch_get: provide per-branch pushremote pointers
+> >- branch_get: return early on error
+> >- sha1_name: refactor upstream_mark
+> >
+> >Give an easier access to the tracking branches from "other" side in
+> >a triangular workflow by introducing B@{publish} that works in a
+> >similar way to how B@{upstream} does.
+> >
+> >Meant to be used as a basis for whatever Ram wants to build on.
+> 
+> To me 'publish' didn't fel right, though the later 'push' suggestion felt
+> honest.
+> (http://git.661346.n2.nabble.com/RFC-PATCH-format-patch-introduce-branch-forkedFrom-tp7601682p7603725.html)
 
-> Also, its use is somewhat controversial
-> and has led to flames and even a public fork.
->
-> Despite this, I think that git might benefit from a port of
-> checkpatch.pl. In fact, even Junio had admitted to use part of its
-> features later in $gmane/205998.
->
-> We could simply use linux's script/checkpatch.pl, but I think a port
-> is needed for these reasons:
->
-> 1. Git style guidelines are somewhat different and less strict than
-> their Linux equivalents.
+FWIW, I think I like "@{push}" at this point, and we should perhaps add
+"@{pull}" as an alias for "@{upstream}" for consistency.
 
-Are checkpatch.pl's customization options, such as --ignore,
-insufficient to make it behave in the desired fashion for git?
-
-> 2. Several patch threads bounce back and forth because of style fixes.
-> A checkpatch script added as a hook could help reduce these and use
-> more efficiently our time.
-> 3. As far as I can tell, checkpatch needs to be run from the root
-> folder of a linux repository clone. Cloning several hundred MBs for a
-> single perl script looks a little foolish to me.
-
-No need to clone the kernel. checkpatch.pl runs fine standalone with
-the --no-tree option.
-
-> So, is there any interest in adding a port of checkpatch.pl to
-> contrib/? I might work on this as part of GSoC. I still haven't
-> submitted my application about git bisect (life got in the way!), but
-> Michael Heggarty remarked in $gmane/242703 that my original idea had
-> too little meat in it to constitute a good GSoC proposal.
->
-> Cheers,
-> Jacopo Notarstefano
+-Peff
