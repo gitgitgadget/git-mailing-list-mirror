@@ -1,131 +1,193 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2] log: add --nonlinear-barrier to help see non-linear history
-Date: Tue, 18 Mar 2014 18:46:28 +0700
-Message-ID: <CACsJy8BsEsyrcis=+2HyocYWi9WM2oHKtSFPXzSt5ji6zVgeXA@mail.gmail.com>
-References: <1391867417-979-1-git-send-email-pclouds@gmail.com>
- <1395060676-23144-1-git-send-email-pclouds@gmail.com> <xmqqob14d0qv.fsf@gitster.dls.corp.google.com>
+From: Aleksey Mokhovikov <moxobukob@gmail.com>
+Subject: Re: [PATCH][GSOC] Selection of the verbose message is replaced with generated message in =?utf-8?b?aW5zdGFsbF9icmFuY2hfY29uZmlnKCk=?=
+Date: Tue, 18 Mar 2014 12:22:06 +0000 (UTC)
+Message-ID: <loom.20140318T124348-742@post.gmane.org>
+References: <1395050104-19152-1-git-send-email-moxobukob@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 18 12:47:08 2014
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 18 13:25:21 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WPsU6-0008CY-3t
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Mar 2014 12:47:06 +0100
+	id 1WPt54-0003Tk-MN
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Mar 2014 13:25:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753790AbaCRLrC convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Mar 2014 07:47:02 -0400
-Received: from mail-qg0-f50.google.com ([209.85.192.50]:33404 "EHLO
-	mail-qg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752829AbaCRLrA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 18 Mar 2014 07:47:00 -0400
-Received: by mail-qg0-f50.google.com with SMTP id q108so20674102qgd.9
-        for <git@vger.kernel.org>; Tue, 18 Mar 2014 04:46:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=gisOvMz453vwI4kTaHLO3ivBjt+Xqt9iXUDOUOnSWag=;
-        b=URdKKZNC3LxAEfbjcQG4vwm+qi5hnXS32GPLYsk1dDu2EcJTupBHT7tweabBY7aRoi
-         kIhB/4E5wwN5czgx4y+HeQ24RejT7kyZJeaIGgm2psmdS9Lj572PMPacKTYXc5J+dmJN
-         AujV/pqlaVoywWxiXt8QZqLusbEEpk8iT+sOIWU0RCSIIpOSTmfHSpWVbJrpm3st2On1
-         lkJlf3WcfQNojyvlLnlKhC+B5eO0sOULmghl4nBA7Z2GnGSoKA1sMkYiN2FPRFUN1eTt
-         4srNa97XlWHpI29AziLU/jg5xHqeSMcDKXRKRvnZ3nXaDqxrNUqyVlVURiffFp3yzJX4
-         CQ/g==
-X-Received: by 10.224.161.4 with SMTP id p4mr2124676qax.89.1395143219675; Tue,
- 18 Mar 2014 04:46:59 -0700 (PDT)
-Received: by 10.96.146.102 with HTTP; Tue, 18 Mar 2014 04:46:28 -0700 (PDT)
-In-Reply-To: <xmqqob14d0qv.fsf@gitster.dls.corp.google.com>
+	id S1754083AbaCRMZL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Mar 2014 08:25:11 -0400
+Received: from plane.gmane.org ([80.91.229.3]:35494 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752205AbaCRMZK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Mar 2014 08:25:10 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1WPt4q-0003BX-Hu
+	for git@vger.kernel.org; Tue, 18 Mar 2014 13:25:04 +0100
+Received: from l37-193-248-93.novotelecom.ru ([37.193.248.93])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 18 Mar 2014 13:25:04 +0100
+Received: from moxobukob by l37-193-248-93.novotelecom.ru with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 18 Mar 2014 13:25:04 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 37.193.248.93 (Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.149 Safari/537.36)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244352>
 
-On Tue, Mar 18, 2014 at 3:32 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
-:
->
->> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
-ail.com>
->> ---
->>  v2 renames the option name to --nonlinear-barrier and fixes using i=
-t
->>  with --dense. Best used with --no-merges to see patch series.
->
-> I think that the earlier name "show linear-break" is more easily
-> understood than the new name, but maybe that is just me.  It's not
-> like you are blocking something from going forward with a barrier,
-> and internally it is called a "break-bar".
 
-I'll change it back.
+This patch replaces if chain that selects the message with
+2 dimensional array of format strings and arguments.
 
->>       opt->loginfo =3D NULL;
->>       maybe_flush_or_die(stdout, "stdout");
->>       return shown;
->
-> Does this new feature interact with -z format output in any way?
 
-Hmm.. never thought of it. Right now it's part of the previous commit.
+Signed-off-by: Aleksey Mokhovikov <moxobukob@gmail.com>
+---
+This patch is unrelated with previous one, but related to GSoC.
+So I don't know if I should create new thread for this patch.
 
-> Should it, and if so how?
+Compare with original construction
+Pros:
+1) Remove if chain.
+2) Single table contains all messages with arguments in one contruction.
+3) Less code duplication.
+Cons:
+1) Harder to associate the case with message.
+2) Harder for compiler to warn the programmer about not
+   enough arguments for format string. 
+3) Harder to add non-string argument to messages.
 
-No idea.
+If !!(x) is out of the coding guide, then message_id construction
+can be rewritten in several other ways.
+The guideline tells that !!(x) is not welcome and should not be
+unless needed. But looks like this is normal place for it.
 
->> +define_commit_slab(saved_linear, int);
->> +
->> +static void track_linear(struct rev_info *revs, struct commit *comm=
-it)
->> +{
->> +     struct commit_list *p =3D revs->previous_parents;
->> +
->> +     if (p) {
->> +             int got_parent =3D 0;
->> +             for (; p && !got_parent; p =3D p->next)
->> +                     got_parent =3D !hashcmp(p->item->object.sha1,
->> +                                           commit->object.sha1);
->> +             revs->linear =3D got_parent;
->> +             free_commit_list(revs->previous_parents);
->> +     } else
->> +             revs->linear =3D 1;
->> +     if (revs->reverse) {
->> +             if (!revs->saved_linear_slab) {
->> +                     revs->saved_linear_slab =3D xmalloc(sizeof(str=
-uct saved_linear));
->> +                     init_saved_linear(revs->saved_linear_slab);
->> +             }
->> +
->> +             *saved_linear_at(revs->saved_linear_slab, commit) =3D =
-revs->linear;
->> +     }
->> +     revs->previous_parents =3D copy_commit_list(commit->parents);
->
-> We are showing commit, and the parents (after history
-> simplification) of the commit we showed before this commit is kept
-> in previous-parents.  If we are one of them, we are showing
-> linearly, which makes sense.  While we are accumulating the output
-> in the forward direction in preparation for later emitting them in
-> reverse, we need to save away the linear-ness bit somewhere, and a
-> slab is a logical place to save that, which also makes sense.  But
-> why do you need a full int?  Doesn't an unsigned char wide enough?
+P.S.
+Thanks to comments I got, so
+I've read more GNU gettext manual to get info
+about translation workflow. When I posted a first patch
+I've passed the same message format strings to gettext /*_()*/
+as in original, to save the context of the message. And they
+will be translated if every possible string combination
+will be marked separately for translation. Because of
+xgettext can extract string from source automatically,
+it ruins the idea to generate message from parts. Even if the
+exaclty same message format string is passed to gettext.
 
-Yes it is. Will change.
+ branch.c | 53 ++++++++++++++++++++++++++++++-----------------------
+ 1 file changed, 30 insertions(+), 23 deletions(-)
 
-> I also wondered if the saved-parents slab we already have can be
-> easily reused for this, but it probably would not help.
-
-That could end up a maintenance nightmare. revision.c is complex
-enough as it is.
-
-> I do not quite understand the "if we do not have previous parents"
-> bit, though.  Is it meant to trigger only at the very beginning?
-
-Only at the beginning.
---=20
-Duy
+diff --git a/branch.c b/branch.c
+index 723a36b..51a5faf 100644
+--- a/branch.c
++++ b/branch.c
+@@ -47,12 +47,32 @@ static int should_setup_rebase(const char *origin)
+ 	return 0;
+ }
+ 
++	
+ void install_branch_config(int flag, const char *local, const char *origin, 
+const char *remote)
+ {
+ 	const char *shortname = remote + 11;
+ 	int remote_is_branch = starts_with(remote, "refs/heads/");
+ 	struct strbuf key = STRBUF_INIT;
+ 	int rebasing = should_setup_rebase(origin);
++	int message_id = (!!remote_is_branch << 2) | (!!origin << 1) | 
+(!!rebasing);
++	const char *message_table[][4] =
++		{{N_("Branch %s set up to track local ref %s."),
++		  local, remote},
++		 {N_("Branch %s set up to track local ref %s by rebasing."),
++		  local, remote},
++		 {N_("Branch %s set up to track remote ref %s."),
++		  local, remote},
++		 {N_("Branch %s set up to track remote ref %s by 
+rebasing."),
++		  local, remote},
++		 {N_("Branch %s set up to track local branch %s."),
++		  local, shortname},
++		 {N_("Branch %s set up to track local branch %s by 
+rebasing."),
++		  local, shortname},
++		 {N_("Branch %s set up to track remote branch %s from %s."),
++		  local, shortname, origin},
++		 {N_("Branch %s set up to track remote branch %s from %s by 
+rebasing."),
++		  local, shortname, origin}};
++	const char **message = NULL;
+ 
+ 	if (remote_is_branch
+ 	    && !strcmp(local, shortname)
+@@ -68,7 +88,7 @@ void install_branch_config(int flag, const char *local, 
+const char *origin, cons
+ 	strbuf_reset(&key);
+ 	strbuf_addf(&key, "branch.%s.merge", local);
+ 	git_config_set(key.buf, remote);
+-
++	
+ 	if (rebasing) {
+ 		strbuf_reset(&key);
+ 		strbuf_addf(&key, "branch.%s.rebase", local);
+@@ -77,29 +97,16 @@ void install_branch_config(int flag, const char *local, 
+const char *origin, cons
+ 	strbuf_release(&key);
+ 
+ 	if (flag & BRANCH_CONFIG_VERBOSE) {
+-		if (remote_is_branch && origin)
+-			printf_ln(rebasing ?
+-				  _("Branch %s set up to track remote branch 
+%s from %s by rebasing.") :
+-				  _("Branch %s set up to track remote branch 
+%s from %s."),
+-				  local, shortname, origin);
+-		else if (remote_is_branch && !origin)
+-			printf_ln(rebasing ?
+-				  _("Branch %s set up to track local branch 
+%s by rebasing.") :
+-				  _("Branch %s set up to track local branch 
+%s."),
+-				  local, shortname);
+-		else if (!remote_is_branch && origin)
+-			printf_ln(rebasing ?
+-				  _("Branch %s set up to track remote ref %s 
+by rebasing.") :
+-				  _("Branch %s set up to track remote ref 
+%s."),
+-				  local, remote);
+-		else if (!remote_is_branch && !origin)
+-			printf_ln(rebasing ?
+-				  _("Branch %s set up to track local ref %s 
+by rebasing.") :
+-				  _("Branch %s set up to track local ref 
+%s."),
+-				  local, remote);
++		if ((0 <= message_id) && (message_id < 
+ARRAY_SIZE(message_table)))
++			message = message_table[message_id];
+ 		else
+-			die("BUG: impossible combination of %d and %p",
+-			    remote_is_branch, origin);
++			die("BUG: id is out of range:id=%d (is_branch=%d, 
+origin=%p, rebasing=%d)",
++			    message_id, remote_is_branch, origin, rebasing);
++
++		if (!message || !message[0])
++			die("BUG: message is NULL. Fix verbose message 
+table.");
++
++		printf_ln(_(message[0]), message[1], message[2], 
+message[3]);
+ 	}
+ }
+ 
+-- 
+1.8.3.2
