@@ -1,76 +1,59 @@
-From: Astril Hayato <astrilhayato@gmail.com>
-Subject: [PATCH v2] Documentation/gitk: Document new config file location
-Date: Tue, 18 Mar 2014 17:53:07 +0000
-Message-ID: <1395165187-3629-1-git-send-email-astrilhayato@gmail.com>
-Cc: gitster@pobox.com, Astril Hayato <astrilhayato@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 18 18:53:50 2014
+From: Robert Dailey <rcdailey.lists@gmail.com>
+Subject: Rebasing merge commits
+Date: Tue, 18 Mar 2014 13:11:06 -0500
+Message-ID: <CAHd499BFAmfDAjNr0RhCiy4vEBn2xJzCtTmwrB-U51qJryB+Dw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Mar 18 19:11:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WPyCz-0001dR-0e
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Mar 2014 18:53:49 +0100
+	id 1WPyTq-0001x0-8Y
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Mar 2014 19:11:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757317AbaCRRxo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Mar 2014 13:53:44 -0400
-Received: from mail-we0-f181.google.com ([74.125.82.181]:39332 "EHLO
-	mail-we0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755527AbaCRRxn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Mar 2014 13:53:43 -0400
-Received: by mail-we0-f181.google.com with SMTP id q58so6071129wes.40
-        for <git@vger.kernel.org>; Tue, 18 Mar 2014 10:53:42 -0700 (PDT)
+	id S1756580AbaCRSLJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Mar 2014 14:11:09 -0400
+Received: from mail-vc0-f171.google.com ([209.85.220.171]:50610 "EHLO
+	mail-vc0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754788AbaCRSLI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Mar 2014 14:11:08 -0400
+Received: by mail-vc0-f171.google.com with SMTP id lg15so7663939vcb.2
+        for <git@vger.kernel.org>; Tue, 18 Mar 2014 11:11:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=fQYaoUZQ5Fdz1PAwg9Xvv3VWjAV8tzsiuO8lpeqOKnQ=;
-        b=ZJaTqQY5iDIJxxAEs7zd4hY9M494oG+3V1b1Un0J3MKDWtMgPXNvU1pxHy2cYInegs
-         JWpx/Cc3ENfzKoLw9f9mMXRFTOtLNOYkbhOOR7JJyYgl1qFW56unN4aibjcxnRn8F42x
-         XHG3AXT93BbKupBAM5iHMeaN4Nk+FTOMlNxdwwLFSKtAIE0f6c97epRz3hJOGzvkzWi1
-         iictPhLwhVcHo4Om9fqNh7PBAKNMBajrPb+JmK6TtmwQ9ku36vGeDyipcx/yGGLHCMOj
-         9B/3UGXZDSR5AWEbS7F99Z3z734SvOd4+VT8vl6X6FgBMLnY1Ra8ePieBTJ6CS/n9D/j
-         umnA==
-X-Received: by 10.180.37.178 with SMTP id z18mr15938507wij.46.1395165222784;
-        Tue, 18 Mar 2014 10:53:42 -0700 (PDT)
-Received: from localhost.localdomain (cpc4-blbn8-2-0-cust14.10-1.cable.virginm.net. [86.22.6.15])
-        by mx.google.com with ESMTPSA id at10sm43598990wjc.6.2014.03.18.10.53.40
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 18 Mar 2014 10:53:41 -0700 (PDT)
-X-Mailer: git-send-email 1.9.0
+        h=mime-version:sender:date:message-id:subject:from:to:content-type;
+        bh=EIfhcfvYGpAUigocVivyMLwZPlX8CaUf5HjZD7YW1Sk=;
+        b=lUuMdqm+uKOPe9ayBBlRMF2USGpCQ1mSL8MC1JoENWqkw1vQcIggQuV9+RmdMLfJyS
+         WWo8pTCw/6OUp3dFujV0fdFQ/w8iQz3RNfm3AvTXWMKMVlLlLw11nDL5ck92ERUAWlL4
+         3V1oD0hCkksmLEK1X9CT+noJSOPtJc7P2gPwxqI6QN7k62wyJupS0PrLOgSfZBy4lJRX
+         p8HzrBrnktUZSRgCdSARTrYylJX5AswmnmfFl6+LbEi/rYhUvQVaMt9q3x9xXe/AdDD7
+         NOESGfH5WV+xddGnBAe/R416KgGKPdIff1tv3H9SaX0jggMdLZ71UCpblZN3VKkssLI+
+         sQ8Q==
+X-Received: by 10.58.37.232 with SMTP id b8mr5594930vek.27.1395166266739; Tue,
+ 18 Mar 2014 11:11:06 -0700 (PDT)
+X-Google-Sender-Delegation: rcdailey@gmail.com
+Received: by 10.221.2.79 with HTTP; Tue, 18 Mar 2014 11:11:06 -0700 (PDT)
+X-Google-Sender-Auth: CtQ20XzA4HQd86UJ1ISvMIVTYv8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244364>
 
-User config file location now complies with XDG base directory specification
+What's the general recommendation on rebasing after creating a merge
+commit on my branch? I realize rebase has the -p option but it seems
+like it does a lot of complicated stuff, and it discourages
+interactive rebase with the option.
 
-Signed-off-by: Astril Hayato <astrilhayato@gmail.com>
----
- Documentation/gitk.txt | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+My situation is simple: I have a topic1 branch that has a few commits
+on it. During my work, I notice someone else implements a small bug
+fix that I need. I do a `git merge --no-ff` to force that into my
+branch as a separate merge commit. After that, I continue my work on
+my local topic1 branch as usual. When I want latest from master, I do
+`git rebase master`. However now that I have a merge commit on my
+branch, things get complicated.
 
-diff --git a/Documentation/gitk.txt b/Documentation/gitk.txt
-index 1e9e38a..c2aa514 100644
---- a/Documentation/gitk.txt
-+++ b/Documentation/gitk.txt
-@@ -166,8 +166,13 @@ gitk --max-count=100 --all \-- Makefile::
- 
- Files
- -----
--Gitk creates the .gitk file in your $HOME directory to store preferences
--such as display options, font, and colors.
-+User configuration and preferences are stored at (in order of priority):
-+
-+* '$XDG_CONFIG_HOME/git/gitk' if it exists and '$XDG_CONFIG_HOME' is set
-+* '$HOME/.config/git/gitk' if it exists
-+* '$HOME/.gitk' if it exists
-+
-+If none of the above exist then '$HOME/.config/git/gitk' is created and used by default.
- 
- History
- -------
--- 
-1.9.0
+What's a good workflow for this, since it seems pretty common?
