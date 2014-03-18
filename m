@@ -1,90 +1,78 @@
-From: Tim Chase <git@tim.thechases.com>
-Subject: Re: Using "-" for "previous branch" failing with rebase
-Date: Mon, 17 Mar 2014 20:47:44 -0500
-Message-ID: <20140317204744.6ac795a0@bigbox.christie.dr>
-References: <20140315152924.26c3294e@bigbox.christie.dr>
-	<7vppll2uvp.fsf@alter.siamese.dyndns.org>
+From: shawn wilson <ag4ve.us@gmail.com>
+Subject: Re: push fail
+Date: Mon, 17 Mar 2014 21:58:06 -0400
+Message-ID: <CAH_OBiegRbR6MXx2awuxpOkagLcPG-w4vE0zh78Z+SdUK_7vAg@mail.gmail.com>
+References: <CAH_OBie+KrSjtqLinbv8sJAOCu26j8xVzBQJHdHTB44V07GsXg@mail.gmail.com>
+ <loom.20140317T142900-203@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 18 02:47:37 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Dragos Foianu <dragos.foianu@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 18 02:59:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WPj7w-0001XW-Lg
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Mar 2014 02:47:37 +0100
+	id 1WPjIz-00077d-1b
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Mar 2014 02:59:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752802AbaCRBra (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Mar 2014 21:47:30 -0400
-Received: from boston.accountservergroup.com ([50.22.11.22]:57370 "EHLO
-	boston.accountservergroup.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752582AbaCRBr3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Mar 2014 21:47:29 -0400
-Received: from 172-0-250-128.lightspeed.rcsntx.sbcglobal.net ([172.0.250.128]:60735 helo=bigbox.christie.dr)
-	by boston.accountservergroup.com with esmtpsa (SSLv3:DHE-RSA-AES128-SHA:128)
-	(Exim 4.82)
-	(envelope-from <git@tim.thechases.com>)
-	id 1WPj7o-0004PB-ON; Mon, 17 Mar 2014 20:47:28 -0500
-In-Reply-To: <7vppll2uvp.fsf@alter.siamese.dyndns.org>
-X-Mailer: Claws Mail 3.8.1 (GTK+ 2.24.10; x86_64-pc-linux-gnu)
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - boston.accountservergroup.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - tim.thechases.com
-X-Get-Message-Sender-Via: boston.accountservergroup.com: authenticated_id: tim@thechases.com
+	id S1752628AbaCRB62 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Mar 2014 21:58:28 -0400
+Received: from mail-ve0-f172.google.com ([209.85.128.172]:58396 "EHLO
+	mail-ve0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752147AbaCRB61 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Mar 2014 21:58:27 -0400
+Received: by mail-ve0-f172.google.com with SMTP id jx11so6427365veb.3
+        for <git@vger.kernel.org>; Mon, 17 Mar 2014 18:58:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=Iob2WYq1VwHc752OEbCFu3QxZczfWH2yNbUS5A6Xw80=;
+        b=slnsYljdC91LA/DByVlSiw9AZtgFWByx4w7k15LIdsEB89QOPiwnivom0JQwfKk1oF
+         MWoAK1WgQk0kgsBDAR2Pu0WUaKZrzamiqRT7ZM2qyYYlc++Cwfo8W/v4uEwS9dZ22Y2O
+         eb9Xpve4U0QpbtYVAE0N+5yqbkBjjXBwC+/VnWLFAAC9UYdyQkma7J1xk6xss8QMFJEa
+         mqyRETDB8isXaQf+T+cvkcS6Y8L+osJr920LVjz+0PvYIdh0CmUxQavpsxX7rKr6hdza
+         PhXZoNAVr6G9AJKc78i31AgWoE/SfRY3anlr3sBioyJL/BFyFgw9CoKjgbmy2TLXPhk9
+         Gs7g==
+X-Received: by 10.58.162.168 with SMTP id yb8mr1833074veb.9.1395107906845;
+ Mon, 17 Mar 2014 18:58:26 -0700 (PDT)
+Received: by 10.52.227.233 with HTTP; Mon, 17 Mar 2014 18:58:06 -0700 (PDT)
+In-Reply-To: <loom.20140317T142900-203@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244319>
 
-On 2014-03-16 23:37, Junio C Hamano wrote:
-> Tim Chase <git@tim.thechases.com> writes:
-> 
-> > Is this just an interface inconsistency or is there a some
-> > technical reason this doesn't work (or, has it been
-> > addressed/fixed, and just not pulled into Debian Stable's
-> > 1.7.10.4 version of git)?
-> 
-> It is merely that nobody thought "rebase" would benefit from such a
-> short-hand, I think.
-> 
->     Teach more commands that operate on branch names about "-"
->     shorthand for "the branch we were previously on", like we did
->     for "git merge -" sometime after we introduced "git checkout -"
-> 
-> has been sitting in my "leftover bits" list at
-> 
->     http://git-blame.blogspot.com/p/leftover-bits.html
-> 
-> for quite some time.  Hint, hint...
+Thanks.
 
-Not sure if the "Hint, hint" was intended for me, as I'm not exactly
-a git hacker.  I did find another place where I reached for it
-instinctively (now that I use it regularly with checkout/merge):
-git-diff.
+Yeah, I should've thought to do a pull....
 
-  git checkout some_branch
-  #hack
-  git commit -m "..."
-  git checkout other_branch
-  # hmm...what's different between these branches?
-  git diff -
-
-which I would have expected to act something like
-
-  git diff some_branch..other_branch
-
-Just for the archives.
-
--tkc
-
-
-
-
-(or possibly the reverse)
+On Mon, Mar 17, 2014 at 9:34 AM, Dragos Foianu <dragos.foianu@gmail.com> wrote:
+> shawn wilson <ag4ve.us <at> gmail.com> writes:
+>
+>>
+>> How do I get more info here (and hopefully resolve this)?
+>>
+>>  % git push
+>> To ssh://server/foo/repo.git
+>>  ! [rejected]        test -> test (non-fast-forward)
+>> error: failed to push some refs to 'ssh://server/foo/repo.git'
+>>
+>
+> "non-fast-forward" means that someone else pushed to branch test before you
+> did and your push would end up overwriting their changes. Make sure you
+> merge your local branch with the remote branch:
+>
+> git pull origin test
+>
+> It might also be a result of local destructive changes made by "git rebase".
+> If you're absolutely certain you will not mess up the remote branch you can
+> add the "--force" parameter when you push.
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
