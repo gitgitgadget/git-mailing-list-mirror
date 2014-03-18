@@ -1,59 +1,59 @@
-From: Robert Dailey <rcdailey.lists@gmail.com>
-Subject: Rebasing merge commits
-Date: Tue, 18 Mar 2014 13:11:06 -0500
-Message-ID: <CAHd499BFAmfDAjNr0RhCiy4vEBn2xJzCtTmwrB-U51qJryB+Dw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/7] merge hook tests: fix missing '&&' in test
+Date: Tue, 18 Mar 2014 11:27:18 -0700
+Message-ID: <xmqq4n2v9xbt.fsf@gitster.dls.corp.google.com>
+References: <xmqqmwgoejwq.fsf@gitster.dls.corp.google.com>
+	<1395136856-17225-1-git-send-email-benoit.pierre@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Mar 18 19:11:15 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Benoit Pierre <benoit.pierre@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 18 19:27:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WPyTq-0001x0-8Y
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Mar 2014 19:11:14 +0100
+	id 1WPyjY-0000al-DT
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Mar 2014 19:27:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756580AbaCRSLJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Mar 2014 14:11:09 -0400
-Received: from mail-vc0-f171.google.com ([209.85.220.171]:50610 "EHLO
-	mail-vc0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754788AbaCRSLI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Mar 2014 14:11:08 -0400
-Received: by mail-vc0-f171.google.com with SMTP id lg15so7663939vcb.2
-        for <git@vger.kernel.org>; Tue, 18 Mar 2014 11:11:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:date:message-id:subject:from:to:content-type;
-        bh=EIfhcfvYGpAUigocVivyMLwZPlX8CaUf5HjZD7YW1Sk=;
-        b=lUuMdqm+uKOPe9ayBBlRMF2USGpCQ1mSL8MC1JoENWqkw1vQcIggQuV9+RmdMLfJyS
-         WWo8pTCw/6OUp3dFujV0fdFQ/w8iQz3RNfm3AvTXWMKMVlLlLw11nDL5ck92ERUAWlL4
-         3V1oD0hCkksmLEK1X9CT+noJSOPtJc7P2gPwxqI6QN7k62wyJupS0PrLOgSfZBy4lJRX
-         p8HzrBrnktUZSRgCdSARTrYylJX5AswmnmfFl6+LbEi/rYhUvQVaMt9q3x9xXe/AdDD7
-         NOESGfH5WV+xddGnBAe/R416KgGKPdIff1tv3H9SaX0jggMdLZ71UCpblZN3VKkssLI+
-         sQ8Q==
-X-Received: by 10.58.37.232 with SMTP id b8mr5594930vek.27.1395166266739; Tue,
- 18 Mar 2014 11:11:06 -0700 (PDT)
-X-Google-Sender-Delegation: rcdailey@gmail.com
-Received: by 10.221.2.79 with HTTP; Tue, 18 Mar 2014 11:11:06 -0700 (PDT)
-X-Google-Sender-Auth: CtQ20XzA4HQd86UJ1ISvMIVTYv8
+	id S1757396AbaCRS1X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Mar 2014 14:27:23 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61780 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757234AbaCRS1W (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Mar 2014 14:27:22 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 00EF77232F;
+	Tue, 18 Mar 2014 14:27:22 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6geOqD3Fn2e0LWD9omU62mC0bG8=; b=Bn+Am6
+	SjmmZsJm38noDiHZMLYFRwNJ6ldtCchewwvFhe+wMGqbIJmkVTqk6ZuY6SXK4DVV
+	78ObLL9ubPUH16+ZMXfy2VDzU95r0T6vcc+9i9+TlJROj2WSv9UjfXOaA+V7xi3h
+	nTQyvBSHCLOdw9PpJCmdZxxHTD8S1uiQvnQKQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=c7KGiefqRi+bTjJi4PRzPApe+kJVtJKL
+	JTE12yT44OOhOeJQyD37v7LyMQG9rsnesVurv5XJkIyAc9H0zXWX5oC72TFKsCZD
+	63oK3pVtgmp9p4Qo/4vskmuJQjb9VDnHqStx9Z4TcZQeEIicJI54sxJA6rAxRKY6
+	bhm2qRWxEwU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E13847232E;
+	Tue, 18 Mar 2014 14:27:21 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2F6AE7232D;
+	Tue, 18 Mar 2014 14:27:21 -0400 (EDT)
+In-Reply-To: <1395136856-17225-1-git-send-email-benoit.pierre@gmail.com>
+	(Benoit Pierre's message of "Tue, 18 Mar 2014 11:00:50 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: F1A57B3E-AECA-11E3-8E76-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244364>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244365>
 
-What's the general recommendation on rebasing after creating a merge
-commit on my branch? I realize rebase has the -p option but it seems
-like it does a lot of complicated stuff, and it discourages
-interactive rebase with the option.
-
-My situation is simple: I have a topic1 branch that has a few commits
-on it. During my work, I notice someone else implements a small bug
-fix that I need. I do a `git merge --no-ff` to force that into my
-branch as a separate merge commit. After that, I continue my work on
-my local topic1 branch as usual. When I want latest from master, I do
-`git rebase master`. However now that I have a merge commit on my
-branch, things get complicated.
-
-What's a good workflow for this, since it seems pretty common?
+Thanks; will replace what has been on 'pu' with the updated series.
