@@ -1,115 +1,71 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [RFC/PATCH] diff: simplify cpp funcname regex
-Date: Tue, 18 Mar 2014 09:02:09 +0100
-Message-ID: <5327FD81.4040508@viscovery.net>
-References: <20140305003639.GA9474@sigill.intra.peff.net> <5316D922.9010501@viscovery.net> <20140306212835.GA11743@sigill.intra.peff.net> <531973D9.9070803@viscovery.net> <20140314035457.GA31906@sigill.intra.peff.net> <5322A82E.9060808@viscovery.net> <20140318052456.GA17454@sigill.intra.peff.net>
+From: Ray Hengst <rkhengst@gmail.com>
+Subject: Bug report -- "Illegal instruction" on Mac 10.6.8 without XCode installed
+Date: Tue, 18 Mar 2014 01:33:25 -0700
+Message-ID: <CAJjOWVqtWMrexdDyfVWY4=s=XT28RfD5Mbi9j1rdasU9v_rYAw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Thomas Rast <tr@thomasrast.ch>,
-	=?UTF-8?B?UmVuw6k=?= =?UTF-8?B?IFNjaGFyZmU=?= 
-	<rene.scharfe@lsrfire.ath.cx>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Mar 18 09:02:26 2014
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 18 09:33:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WPoye-0002xS-Gm
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Mar 2014 09:02:24 +0100
+	id 1WPpSr-0008JI-Dh
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Mar 2014 09:33:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753960AbaCRICR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Mar 2014 04:02:17 -0400
-Received: from so.liwest.at ([212.33.55.23]:56406 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752040AbaCRICO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Mar 2014 04:02:14 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.80.1)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1WPoyP-0004wN-Vz; Tue, 18 Mar 2014 09:02:10 +0100
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 9B3E616613;
-	Tue, 18 Mar 2014 09:02:09 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
-In-Reply-To: <20140318052456.GA17454@sigill.intra.peff.net>
-X-Enigmail-Version: 1.6
-X-Spam-Score: -1.0 (-)
+	id S1754612AbaCRIda (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Mar 2014 04:33:30 -0400
+Received: from mail-qa0-f48.google.com ([209.85.216.48]:64578 "EHLO
+	mail-qa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754118AbaCRId0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Mar 2014 04:33:26 -0400
+Received: by mail-qa0-f48.google.com with SMTP id m5so6491225qaj.7
+        for <git@vger.kernel.org>; Tue, 18 Mar 2014 01:33:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=oqZrWMv7D+LwqDTKGNNsz1VY79ypT6W00/+mLIpEvGw=;
+        b=I+Srt0W2jIbKOclnNUdpnEn1a1Nfm1E9GPJbSorRqG08otjHcRTFtW82s1BFyFG+v7
+         1BTkR+1BWk7D+ousHy2po2ydmWdlNbpR3ZKDnbseIldatI5+DYSb2NUpkRppRnFpahYD
+         2IqcVP00Qte9g0WJAQ/3BY4jbEXrgbLWvyRZ2DL50SqyEbEgFxcA8Fx+T+FSqCSZXKyy
+         zdLK4YQQvn5hXjus6YdTzwVE1K4epVrYPxfXVHLBz2ZCPyGblXpBK++kLgcVBt9yA8cF
+         Rr6DvY3/I/LvlZM4hvh1LjoeO2Wn/gbVSVOhFLQ5hX3fP29y8Ea6P4vbiZH9/oaKy75z
+         pY1A==
+X-Received: by 10.224.123.212 with SMTP id q20mr824024qar.95.1395131605540;
+ Tue, 18 Mar 2014 01:33:25 -0700 (PDT)
+Received: by 10.140.42.228 with HTTP; Tue, 18 Mar 2014 01:33:25 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244339>
 
-Cc Ren=C3=A9; do you have any comments regarding grep --function-contex=
-t?
+Hi,
+I am running a Mac 10.6.8 and tried to install git-1.9.0 off of the
+installer (git-1.9.0-intel-universal-snow-leopard.dmg). The
+installation worked fine and gave no error messages. But whenever I
+type in a git command (see below for some I tried), it gives me this
+error message:
+Illegal instruction
 
-Am 3/18/2014 6:24, schrieb Jeff King:
-> On Fri, Mar 14, 2014 at 07:56:46AM +0100, Johannes Sixt wrote:
->=20
->> Consider this code:
->>
->>   void above()
->>   {}
->>   static int Y;
->>   static int A;
->>   int bar()
->>   {
->>     return X;
->>   }
->>   void below()
->>   {}
->=20
-> Thanks, this example is very helpful.
->=20
->> When you 'git grep --function-context X', then you get this output w=
-ith
->> the current pattern, you proposal, and my proposal (file name etc om=
-itted
->> for brevity):
->>
->>   int bar()
->>   {
->>     return X;
->>   }
->=20
-> Right, that makes sense to me.
->=20
->> When you 'git grep --function-context Y', what do you want to see? W=
-ith
->> the current pattern, and with your pattern that forbids semicolon we=
- get:
->>
->>   void above()
->>   {}
->>   static int Y;
->>   static int A;
->>
->> and with my simple pattern, which allows semicolon, we get merely
->>
->>   static int Y;
->>
->> because the line itself is a hunk header (and we do not look back an=
-y
->> further) and the next line is as well. That is not exactly "function
->> context", and that is what I'm a bit worried about.
->=20
-> Hmm. To be honest, I do not see yours as all that bad. Is "above()" o=
-r
-> "A" actually interesting here? I'm not sure that they are. But then I=
- do
-> not use --function-context myself.
->=20
-> I guess it violates the "show things that are vaguely nearby, rather
-> than a container" view of context that we discussed earlier. But some=
-how
-> that seems less important to me with "--function-context".
->=20
-> So I dunno. I kind of like your version.
+I am completely new to git and mostly new of Unix, but here are some
+commands I tried:
+git
+git help
+git config
+git init
+git clean
+git config --global user.name "John Doe"
+git status
 
-Then I'll polish my patch series (it also rewrites the test framework) =
-and
-post it.
-
--- Hannes
+However, typing "man git" displays typical man pages.
+I do not have Xcode installed. (it's very hard to find a legacy copy);
+the "make" command also is not present, so I can't use any of the
+workarounds I saw listed.
+I uninstalled git-1.9.0 successfully using the provided script, then
+downloaded the same file again (and installed it) to make sure I
+didn't get a corrupt copy. I had the same problem, however.
+If I can provide any more information just let me know.
+Thanks for any help you can provide.
+-Ray
