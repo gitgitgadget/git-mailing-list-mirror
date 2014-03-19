@@ -1,89 +1,105 @@
-From: Andrei Dinu <mandrei.dinu@gmail.com>
-Subject: [PATCH v5] fsck.c: fsck_tree() now use is_dot_or_dotdot().
-Date: Wed, 19 Mar 2014 18:08:10 +0200
-Message-ID: <1395245290-6677-1-git-send-email-mandrei.dinu@gmail.com>
-Cc: Andrei Dinu <mandrei.dinu@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 19 17:08:25 2014
+From: Stefan Zager <szager@chromium.org>
+Subject: Re: [PATCH] Enable index-pack threading in msysgit.
+Date: Wed, 19 Mar 2014 09:57:02 -0700
+Message-ID: <CAHOQ7J9c_ZfzYEmO861Oa64YZeArQQBMnah1yWAkChME7dA+TA@mail.gmail.com>
+References: <5328e903.joAd1dfenJmScBNr%szager@chromium.org>
+	<CACsJy8BOZa6vJU_s9sxYrtSdpL-4PDTpbo6r6TC8z2LD1GtkMQ@mail.gmail.com>
+	<CAHOQ7J_Wmjo6AJRQra2UDWX3WRboD+-4SaGCHYOUgRR+NyUX4A@mail.gmail.com>
+	<CACsJy8A7ESSjfHqr96_yYjNsE-A1Sf=8+rmRfGrjML0+fCWTTg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Stefan Zager <szager@chromium.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 19 17:57:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQJ2V-0001IP-20
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Mar 2014 17:08:23 +0100
+	id 1WQJnj-0007hR-RY
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Mar 2014 17:57:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965079AbaCSQIR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Mar 2014 12:08:17 -0400
-Received: from mail-ee0-f54.google.com ([74.125.83.54]:45280 "EHLO
-	mail-ee0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933859AbaCSQIR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Mar 2014 12:08:17 -0400
-Received: by mail-ee0-f54.google.com with SMTP id d49so6891320eek.27
-        for <git@vger.kernel.org>; Wed, 19 Mar 2014 09:08:16 -0700 (PDT)
+	id S933896AbaCSQ5G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Mar 2014 12:57:06 -0400
+Received: from mail-oa0-f54.google.com ([209.85.219.54]:36501 "EHLO
+	mail-oa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933853AbaCSQ5E (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Mar 2014 12:57:04 -0400
+Received: by mail-oa0-f54.google.com with SMTP id n16so8579123oag.41
+        for <git@vger.kernel.org>; Wed, 19 Mar 2014 09:57:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=EeVYw5TVnUXu3RMOreG7klqAEnttlTpT85m9cMR+Wlg=;
-        b=AbWnK1EuR6I05jI5Qi9l698qXNMJwqMKCwjp8pR+ZVEVksjZYSce+NGWirquYRUrnh
-         JEMjbp74YLu0D36znuSkiYLkTxEPVF4rrf+1Ev07lBkRs4ByFgyDO5/SGdD6Cpgi+q56
-         QeksEUO1Gy328SmTbrLN3u8I7SusEdE+aRMlmSFh8910HJ6vE1rPYbzHQlm48ZMovNcJ
-         n+1uLyZOJedw5XB9mxVOaK+5ElreDEFKIl9WitOXGdV6kAduBmDa6id8zG7sL2ZEQUnf
-         YjhnNNigNH2bmyd8lQz1Q1Gb8oOR34XlCRYxRIKTL/vcIN/CdqsDVCVVRTURM2CbAzGq
-         NkhQ==
-X-Received: by 10.14.172.69 with SMTP id s45mr36682913eel.26.1395245294240;
-        Wed, 19 Mar 2014 09:08:14 -0700 (PDT)
-Received: from localhost.localdomain (p5.eregie.pub.ro. [141.85.0.105])
-        by mx.google.com with ESMTPSA id t50sm43256713eev.28.2014.03.19.09.08.12
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 19 Mar 2014 09:08:13 -0700 (PDT)
-X-Mailer: git-send-email 1.7.9.5
+        d=google.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=EjViOux3BmBFrr68dHhdubB6wM73wwQuyzfQ5fqfmNY=;
+        b=SxNDa2wm2Qij7VI5fTHp0mPsmw8UqPafqcYVfwFJT6dG34jd3OJErg839NBKIW34A4
+         zLk08Hk/l2Ni60NRwa1B6wJWnUKNfxqPHS0vx2pmuus+lN+vrG09o0JWExp4wmPkdlt8
+         sWPiNvcL6B3FS/AVYmaIup5agnu2wsxD0hsDm93sMIvn8cmrtGQKNEab99lLYOE3bHPD
+         s2xfSU0y//Bm6GJzSDGsEHXvF5PG+OS5JsEs7W0wi3EgBDxQlMezj2FLMeB/L+Cd8xu0
+         3Fg96xMLEznJrriaKfeoSSqJcfXT/Pc19jh2x5J6xE3r3gsAwLyC1NJ1SM0z0U1n4z/M
+         4eNw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=EjViOux3BmBFrr68dHhdubB6wM73wwQuyzfQ5fqfmNY=;
+        b=UAeHXeS77a30DrXmkEG/uG30uxeti2oA7Ml5HxLdc9JhJBboKy1iktPyH+TW1r/yhX
+         00GlNEk9rh6Umq2YWNNI2VasIslGBkxhrJ1q3LqNdw+o8ssaLn/BT6czJBBemSpAEbSs
+         ReQ5FYXcGqslIA3vNec2XAcXHUHofp7Y02d9M=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=EjViOux3BmBFrr68dHhdubB6wM73wwQuyzfQ5fqfmNY=;
+        b=D+OQ21g4jPt5LxVDyXwMzYdWgaalqyNsL5bfZrq1SS394Xp8NSmP4+DyNxqQ1hx1EP
+         lEjoa7AuNmm390s4/CXhJbV/H9z3ojM0pDW0WmicnaxKy9PV6fCQpDRRpmRgcvki18fO
+         NCg0nBywGOn1taQ3UCeCh/mRQJMgEhHiWikGIVvtI2OmaK4Y1CJZrsWJ/KxqntvyPPPX
+         CJLPsIA0AcvzTgIEHzStG3gfoqXcLBABLDAFs/JQqQb6el28aNaj06NGjDulaG1caELk
+         jI74of9bBL/094SxMgx8lHSUnRB8gacfd6oLWLfuGRztnqNmbuKuppdhdL4V78R+x9Th
+         ImoQ==
+X-Gm-Message-State: ALoCoQmtcqEyF6sFbIsSPcKyqfMe+Gmxvj9YyYHcUtdpjfw1w1rizHOTXgMZmOFE98aNZOVd7zbHpiiozSJRRyJQGH+5uLgsCxiiX2n38uKpMaMR1ydssVg0QgotEmpDZ9DHo7dc8RgKmWgC2bPqicwur//xkofj4WmyMrH6ciQ5CDBIye9ADnH0E9Tv8EprFBVXR2SDabwG
+X-Received: by 10.182.19.164 with SMTP id g4mr1938089obe.58.1395248223161;
+ Wed, 19 Mar 2014 09:57:03 -0700 (PDT)
+Received: by 10.182.233.201 with HTTP; Wed, 19 Mar 2014 09:57:02 -0700 (PDT)
+In-Reply-To: <CACsJy8A7ESSjfHqr96_yYjNsE-A1Sf=8+rmRfGrjML0+fCWTTg@mail.gmail.com>
+X-Google-Sender-Auth: AdBs6whSdk9ePr8LdpR4AiqLCLg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244459>
 
-Rewrite fsck_tree() to use is_dot_or_dotdot() from "dir.h".
+On Wed, Mar 19, 2014 at 3:28 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Wed, Mar 19, 2014 at 2:50 PM, Stefan Zager <szager@chromium.org> wrote:
+>>
+>> I suppose it would be possible to fix the immediate problem just by
+>> using one fd per thread, without a new pread implementation.  But it
+>> seems better overall to have a pread() implementation that is
+>> thread-safe as long as read() and pread() aren't interspersed; and
+>> then convert all existing read() calls to pread().  That would be a
+>> good follow-up patch...
+>
+> I still don't understand how compat/pread.c does not work with pack_fd
+> per thread. I don't have Windows to test, but I forced compat/pread.c
+> on on Linux with similar pack_fd changes and it worked fine, helgrind
+> only complained about progress.c.
+>
+> A pread() implementation that is thread-safe with condition sounds
+> like an invite for trouble later. And I don't think converting read()
+> to pread() is a good idea. Platforms that rely on pread() will hit
+> first because of more use of compat/pread.c. read() seeks while
+> pread() does not, so we have to audit more code..
 
-Signed-off-by: Andrei Dinu <mandrei.dinu@gmail.com>
+Using one fd per thread is all well and good for something like
+index-pack, which only accesses a single pack file.  But using that
+heuristic to add threading elsewhere is probably not going to work.
+For example, I have a patch in progress to add threading to checkout,
+and another one planned to add threading to status.  In both cases, we
+would need one fd per thread per pack file, which is pretty
+ridiculous.
 
-
----
- I try to find other sites that can use id_dot_or_dotdot() function.
-
- fsck.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
-
-diff --git a/fsck.c b/fsck.c
-index 64bf279..82a55ab 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -6,6 +6,7 @@
- #include "commit.h"
- #include "tag.h"
- #include "fsck.h"
-+#include "dir.h"
- 
- static int fsck_walk_tree(struct tree *tree, fsck_walk_func walk, void *data)
- {
-@@ -171,10 +172,12 @@ static int fsck_tree(struct tree *item, int strict, fsck_error error_func)
- 			has_full_path = 1;
- 		if (!*name)
- 			has_empty_name = 1;
--		if (!strcmp(name, "."))
--			has_dot = 1;
--		if (!strcmp(name, ".."))
--			has_dotdot = 1;
-+		if (is_dot_or_dotdot(name)) {
-+            if (name[1] == '\0')
-+			    has_dot = 1;
-+            else
-+			    has_dotdot = 1;
-+        }
- 		if (!strcmp(name, ".git"))
- 			has_dotgit = 1;
- 		has_zero_pad |= *(char *)desc.buffer == '0';
--- 
-1.7.9.5
+There really aren't very many calls to read() in the code.  I don't
+think it would be very difficult to eliminate the remaining ones.  The
+more interesting question, I think is: what platforms still don't have
+a thread-safe pread implementation?
