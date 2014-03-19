@@ -1,118 +1,155 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Mar 2014, #03; Fri, 14)
-Date: Wed, 19 Mar 2014 10:04:37 -0700
-Message-ID: <xmqqlhw65dcq.fsf@gitster.dls.corp.google.com>
-References: <xmqqlhwcfn4a.fsf@gitster.dls.corp.google.com>
-	<53240C0F.2050204@web.de>
-	<xmqqha6wg3o1.fsf@gitster.dls.corp.google.com>
-	<906CACC0-FB16-4BB8-812D-59067DE0CC89@quendi.de>
+Subject: Re: [PATCH] test-lib.sh: use printf instead of echo
+Date: Wed, 19 Mar 2014 10:17:54 -0700
+Message-ID: <xmqqfvme5cql.fsf@gitster.dls.corp.google.com>
+References: <20140314235735.GA6959@ibr.ch> <20140315001855.GK15625@google.com>
+	<xmqq61nceidp.fsf@gitster.dls.corp.google.com>
+	<20140318221844.GA828@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org, Antoine Pelisse <apelisse@gmail.com>
-To: Max Horn <max@quendi.de>
-X-From: git-owner@vger.kernel.org Wed Mar 19 18:04:49 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Uwe Storbeck <uwe@ibr.ch>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 19 18:18:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQJv6-0002Pg-R4
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Mar 2014 18:04:49 +0100
+	id 1WQK8D-0005Zo-Ls
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Mar 2014 18:18:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934327AbaCSREm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Mar 2014 13:04:42 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64344 "EHLO
+	id S1759386AbaCSRSF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Mar 2014 13:18:05 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40919 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933574AbaCSREl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 19 Mar 2014 13:04:41 -0400
+	id S1751277AbaCSRR6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Mar 2014 13:17:58 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B765473D7E;
-	Wed, 19 Mar 2014 13:04:40 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0BDEA74304;
+	Wed, 19 Mar 2014 13:17:58 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=/CW9XqRY0e5j
-	4Enfpd2NKmIvJL4=; b=gclYD26nKyT8pOJuLbW8zLYvJ3u8MVghGcKEK9XsaTNJ
-	fsA677TgTvlvAKD2SX8K+VCtmu3d9jyfR3XpdeZwpOizkNujCKERRhtrJtBreUMW
-	qbizeZkjF4rqa5Z7Dh/i24RKhNTqI4Yce1OhqN4UGvChMD2E5WpIbvkfqdvUcY0=
+	:content-type; s=sasl; bh=revfiCLdWPfHJOChtLFU33bp7KU=; b=gEDZYq
+	4QFtQWgTKZBkxetPmfseem4YyMqk7o5BPDc4VAQDVXI4+SFzLFwkTNOPBYLzXx2X
+	GvUj2puX12iF/+aESVEBHAnmfLCuSiPxjrQugQImlQkr756XGP85RhHzKAfESDN1
+	V7TIBNgDCFSnKL5Z0Gh6QZ94e8VsMs0OccedY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=sP6vJ9
-	4i5Jsgh5llfPJBVFB8cugh5i5P9X2z+1CdQM7XyHvPcqnfskDxa27XIz5Yx2MWc5
-	QI4zRyVY7H/lrMqCszRWVat8ul/v0ul41qVzCvD1lwXJVytXuLLAMprC3sDc6NxA
-	pSW1fbpDe/DXD24giXx76DkYyk1uNmOjieZjA=
+	:content-type; q=dns; s=sasl; b=eLES8cuj33DeWtaON4yVd5fbUpkLHUeD
+	/a6rAQgtpiXtgCcfsOALUnXM8DiuKOld/O6D6fqIYuk83EUycciu8tosMyTogf2j
+	CeGr5Uy0SFsgBcPOAbRjpRa/h1DqqJIbV+rmx6er2fZRg7cqqQFl0F1+56tesWVj
+	99+0kpFASc0=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A360773D7D;
-	Wed, 19 Mar 2014 13:04:40 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EBCFB74303;
+	Wed, 19 Mar 2014 13:17:57 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A5FF573D79;
-	Wed, 19 Mar 2014 13:04:39 -0400 (EDT)
-In-Reply-To: <906CACC0-FB16-4BB8-812D-59067DE0CC89@quendi.de> (Max Horn's
-	message of "Wed, 19 Mar 2014 11:53:57 +0100")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2B083742FF;
+	Wed, 19 Mar 2014 13:17:57 -0400 (EDT)
+In-Reply-To: <20140318221844.GA828@google.com> (Jonathan Nieder's message of
+	"Tue, 18 Mar 2014 15:18:44 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 8EC45292-AF88-11E3-AB02-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 6A1CD246-AF8A-11E3-BB6F-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244461>
 
-Max Horn <max@quendi.de> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> On 17.03.2014, at 18:01, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano wrote:
+>>> Uwe Storbeck wrote:
 >
->> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
->>=20
->>> On 2014-03-14 23.09, Junio C Hamano wrote:
->>>> * ap/remote-hg-skip-null-bookmarks (2014-01-02) 1 commit
->>>> - remote-hg: do not fail on invalid bookmarks
->>>>=20
->>>> Reported to break tests ($gmane/240005)
->>>> Expecting a reroll.
->>> I wonder what should happen here.
->>> The change breaks all the tests in test-hg-hg-git.sh
->>> (And the breakage may prevent us from detecting other breakages)
->>>=20
->>> The ideal situation would be to have an extra test case for the pro=
-blem
->>> which we try to fix with this patch.
->>>=20
->>> Antoine, is there any way to make your problem reproducable ?
->>> And based on that, to make a patch which passes all test cases ?
->>=20
->> After re-reading the thread briefly (there're just five messages)
->>=20
->>  http://thread.gmane.org/gmane.comp.version-control.git/239797/focus=
-=3D240069
+>>>> +	printf '%s\n' "$@" | sed -e 's/^/#	/'
+>>
+>> This is wrong, isn't it?  Why do we want one line per item here?
 >
-> For some reason, that link does not contain all messages from that
-> conversation (unfortunately, I have seen GMane do that on multiple
-> occasions. I hence try not to rely on it for reviewing email
-> history -- I just don't trust it). In particular, it misses this
-> crucial post:
+> Yes, Hannes caught the same, too.  Sorry for the sloppiness.
+>
+> We currently use "echo" all over the place (e.g., 'echo "$path"' in
+> git-sh-setup), and every time we fix it there is a chance of making
+> mistakes.  I wonder if it would make sense to add a helper to make the
+> echo calls easier to replace:
 
-[jc: please avoid overlong lines; I re-flowed above]
+I agree that we would benefit from having a helper to print a single
+line, which we very often do, without having to worry about the
+boilerplate '%s\n' of printf or the portability gotcha of echo.
 
->   http://thread.gmane.org/gmane.comp.version-control.git/239830
+I am a bit reluctant to name the helper "sane_echo" to declare "echo
+that interprets backslashes in the string is insane", though.  For
+these "print a single line" uses, we are only interested in using a
+subset of the features offered by 'echo', but that does not mean the
+other features we do not want to trigger in our use is of no use to
+any sane person.  It very different from "sane_unset" that works
+around "unset" on an unset variable that can trigger an error when
+nobody sane is interested in that error condition.  If somebody is
+interested if a variable is not yet set and behave differently,
+there are more direct ways to see the "set-ness" of a variable, and
+asking "unset" for that information is insane, hence I think the
+name "sane_unset" is justified.  I do not feel the same way for
+"sane_echo".
 
-Interesting.
+I would have called it "say" if the name weren't taken.
 
-> The (or at least "a") root cause has actually been
-> discovered. Would a patch that adds an xfail test case for it be
-> acceptable?
-
-Do you mean a patch that only adds a new test that expects a failure
-to the current code, without touching the current code that has the
-bug it exposes?  That would be a good place to start.
-
-> ... As a matter of fact, I a know a few more bugs in remote-hg for
-> which I could produce xfail test cases. Of course I'd prefer to
-> put them in together with a fix, but I don't know when I can get
-> to that, if ever. So, would such changes be welcome?
-
-Surely.  That is to keep tabs on bugs in an actionable form; it is a
-better way of bug tracking than having a bug-tracker that is not
-actively maintained, I would think.
+> -- >8 --
+> Subject: git-sh-setup: introduce sane_echo helper
+>
+> Using 'echo' with arguments that might contain backslashes or "-e" or
+> "-n" can produce confusing results that vary from platform to platform
+> (e.g., dash always interprets \ escape sequences and echoes "-e"
+> verbatim, whereas bash does not interpret \ escapes unless "-e" is
+> passed as an argument to echo and suppresses the "-e" from its
+> output).
+>
+> Instead, we should use printf, which is more predictable:
+>
+> 	printf '%s\n' "$foo"; # Just prints $foo, on all platforms.
+>
+> Blindly replacing echo with "printf '%s\n'" would not be good enough
+> because that printf prints each argument on its own line.  Provide a
+> sane_echo helper that prints its arguments, space-delimited, on a
+> single line, to make this easier to remember, and tweak 'say'
+> and 'die_with_status' to illustrate how it is used.
+>
+> No functional change intended.
+>
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+> ---
+>  git-sh-setup.sh | 8 ++++++--
+>  1 file changed, 6 insertions(+), 2 deletions(-)
+>
+> diff --git i/git-sh-setup.sh w/git-sh-setup.sh
+> index 256c89a..f35b5b9 100644
+> --- i/git-sh-setup.sh
+> +++ w/git-sh-setup.sh
+> @@ -43,6 +43,10 @@ git_broken_path_fix () {
+>  
+>  # @@BROKEN_PATH_FIX@@
+>  
+> +sane_echo () {
+> +	printf '%s\n' "$*"
+> +}
+> +
+>  die () {
+>  	die_with_status 1 "$@"
+>  }
+> @@ -50,7 +54,7 @@ die () {
+>  die_with_status () {
+>  	status=$1
+>  	shift
+> -	printf >&2 '%s\n' "$*"
+> +	sane_echo >&2 "$*"
+>  	exit "$status"
+>  }
+>  
+> @@ -59,7 +63,7 @@ GIT_QUIET=
+>  say () {
+>  	if test -z "$GIT_QUIET"
+>  	then
+> -		printf '%s\n' "$*"
+> +		sane_echo "$*"
+>  	fi
+>  }
+>  
