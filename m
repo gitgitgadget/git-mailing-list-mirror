@@ -1,101 +1,99 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 1/3][GSOC] diff: rename read_directory() to get_path_list()
-Date: Wed, 19 Mar 2014 17:15:48 -0400
-Message-ID: <CAPig+cRSh5XoKKBZ6iyAwEvUf90N4Ajfp_459ME3zoBGS2h23Q@mail.gmail.com>
+Subject: Re: [PATCH v2 2/3][GSOC] diff: use is_dot_or_dotdot() instead of strcmp()
+Date: Wed, 19 Mar 2014 17:15:53 -0400
+Message-ID: <CAPig+cT5TMHoLDeavsV89Mopgd59rUBFF8QUj68zbX6ZDNZE7g@mail.gmail.com>
 References: <1395228230-10189-1-git-send-email-sh19910711@gmail.com>
+	<1395228230-10189-2-git-send-email-sh19910711@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 To: Hiroyuki Sano <sh19910711@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 19 22:15:54 2014
+X-From: git-owner@vger.kernel.org Wed Mar 19 22:16:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQNq6-00019Y-00
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Mar 2014 22:15:54 +0100
+	id 1WQNqF-0001OA-DD
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Mar 2014 22:16:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752262AbaCSVPt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Mar 2014 17:15:49 -0400
-Received: from mail-yk0-f169.google.com ([209.85.160.169]:42007 "EHLO
-	mail-yk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750934AbaCSVPs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Mar 2014 17:15:48 -0400
-Received: by mail-yk0-f169.google.com with SMTP id 142so24772729ykq.0
-        for <git@vger.kernel.org>; Wed, 19 Mar 2014 14:15:48 -0700 (PDT)
+	id S1754419AbaCSVPy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Mar 2014 17:15:54 -0400
+Received: from mail-yh0-f54.google.com ([209.85.213.54]:54705 "EHLO
+	mail-yh0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753819AbaCSVPy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Mar 2014 17:15:54 -0400
+Received: by mail-yh0-f54.google.com with SMTP id f73so9285956yha.13
+        for <git@vger.kernel.org>; Wed, 19 Mar 2014 14:15:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc:content-type;
-        bh=4bjmnIzE9vRLIWdnLaJqCRGn/Q2Z45CvhutGl6QnqCA=;
-        b=dkbe8R6QpQOeELdWe8xSXwM1+P/mG3mHdbBnHZicujtrT6s8oN54pP9GnTSxMKP/1W
-         OF6r2q2suh9dx4g1WpFkatEoTfo36EPfgYwdzerO7BcFQ22ylDUEKiqGgmvJQSGVWAy6
-         Fa7EybptmHej1DRdj/Ugc+uKtCR5ltsO/awI2O6FxLUmQY7Jn71hNcsXqZBVvapO8LVh
-         TjHVzuiC3BWG7yNrhdTptRimbvZRmMiXKRbZIx9dZwrGQBp7qp5xy+Mee6XuvDWlK4Mp
-         IqEXQTJOgMZY/B85yZ9M2feabkIc7DVDb7aue+SkRB6LnMRTG0AzMEktGf/I6l/7i0WZ
-         lYbQ==
-X-Received: by 10.236.14.196 with SMTP id d44mr44425yhd.159.1395263748278;
- Wed, 19 Mar 2014 14:15:48 -0700 (PDT)
-Received: by 10.170.180.134 with HTTP; Wed, 19 Mar 2014 14:15:48 -0700 (PDT)
-In-Reply-To: <1395228230-10189-1-git-send-email-sh19910711@gmail.com>
-X-Google-Sender-Auth: 87996wOmBLHPQuMFfGC6FmDSVVE
+        bh=djEWPkPvDXEJ3u4h1RLNWZ8/8dmrJrLDKkUIoqwEMKk=;
+        b=SpLCr70ws38mQiH+9ABL7Hc/sJoJs9920rIHp7qNG7gmnyKjllrm2IZP4QyttzbJQE
+         xK41pWinWjg+18+XeGUaPxbie8qUEYmAz9TwFI7adda5jkTdnvnY2LN/HDCx88YUFQEo
+         9EcCdqfchiW813BbPLT/L8EKoqFgLLHdQv2JoRlalF7raBkkaUToUkWl5vljzp29CdrV
+         FHPMzjga4dPI+UoDpwvbjSWhVMwHwkyq6JEkkKJA6S6o39pSvgeuhQVClcwPZFNyuer1
+         8PK2gs0pIK5CGwHmG/hKwIandRFx10kRXiEAHO4oiHPuKfToCW4pbSZsuEpKPSNtQJBr
+         XDrQ==
+X-Received: by 10.236.102.39 with SMTP id c27mr53895528yhg.26.1395263753224;
+ Wed, 19 Mar 2014 14:15:53 -0700 (PDT)
+Received: by 10.170.180.134 with HTTP; Wed, 19 Mar 2014 14:15:53 -0700 (PDT)
+In-Reply-To: <1395228230-10189-2-git-send-email-sh19910711@gmail.com>
+X-Google-Sender-Auth: RbWeZQrri9n2-_JQhTIDGojnMvk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244495>
 
 On Wed, Mar 19, 2014 at 7:23 AM, Hiroyuki Sano <sh19910711@gmail.com> wrote:
-> Subject: diff: rename read_directory() to get_path_list()
+> Subject: diff: use is_dot_or_dotdot() instead of strcmp()
 
-You probably mean 'diff-no-index' here rather than 'diff'.
+You probably meant 'diff-no-index' rather than 'diff'.
 
-> Including "dir.h" in "diff-no-index.c", it causes a compile error, because
-> the same name function read_directory() is declared globally in "dir.h".
+You could make the subject a bit more explanatory by saying:
 
-It might be a bit clearer to give a hint as to why dir.h will be a problem:
+    use is_dot_or_dotdot() instead of a manual "."/".." check
 
-    A subsequent patch will include dir.h in diff-no-index.c,
-    however, dir.h declares a read_directory() which is different
-    from the one defined statically by diff-no-index.c.
+> The is_dot_or_dotdot() is used to check if the string is either "." or "..".
 
-> This change is to avoid conflicts as above.
+It's pretty obvious what this function does, so it's not necessary to
+explain it.
 
-Good explanation, but write in imperative mood:
+> Include the "dir.h" header file to use is_dot_or_dotdot().
 
-    Rename the local read_directory() to avoid the conflict.
+Including dir.h is a obvious requirement of using is_dot_or_dotdot(),
+thus also does not require explanation.
+
+Otherwise, the patch looks fine.
 
 > Signed-off-by: Hiroyuki Sano <sh19910711@gmail.com>
 > ---
->  diff-no-index.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
+>  diff-no-index.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 >
 > diff --git a/diff-no-index.c b/diff-no-index.c
-> index 8e10bff..20b6a8a 100644
+> index 20b6a8a..8e642b3 100644
 > --- a/diff-no-index.c
 > +++ b/diff-no-index.c
-> @@ -16,7 +16,7 @@
+> @@ -11,6 +11,7 @@
+>  #include "tag.h"
+>  #include "diff.h"
+>  #include "diffcore.h"
+> +#include "dir.h"
+>  #include "revision.h"
+>  #include "log-tree.h"
 >  #include "builtin.h"
->  #include "string-list.h"
+> @@ -25,7 +26,7 @@ static int get_path_list(const char *path, struct string_list *list)
+>                 return error("Could not open directory %s", path);
 >
-> -static int read_directory(const char *path, struct string_list *list)
-> +static int get_path_list(const char *path, struct string_list *list)
->  {
->         DIR *dir;
->         struct dirent *e;
-> @@ -107,9 +107,9 @@ static int queue_diff(struct diff_options *o,
->                 int i1, i2, ret = 0;
->                 size_t len1 = 0, len2 = 0;
+>         while ((e = readdir(dir)))
+> -               if (strcmp(".", e->d_name) && strcmp("..", e->d_name))
+> +               if (!is_dot_or_dotdot(e->d_name))
+>                         string_list_insert(list, e->d_name);
 >
-> -               if (name1 && read_directory(name1, &p1))
-> +               if (name1 && get_path_list(name1, &p1))
->                         return -1;
-> -               if (name2 && read_directory(name2, &p2)) {
-> +               if (name2 && get_path_list(name2, &p2)) {
->                         string_list_clear(&p1, 0);
->                         return -1;
->                 }
+>         closedir(dir);
 > --
 > 1.9.0
 >
