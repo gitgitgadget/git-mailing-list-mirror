@@ -1,72 +1,83 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 1/3] diff-no-index.c read_directory() use is_dot_or_dotdot().
-Date: Wed, 19 Mar 2014 16:21:18 +0100
-Message-ID: <vpqfvmefc41.fsf@anie.imag.fr>
-References: <1395242180-4559-1-git-send-email-mandrei.dinu@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Andrei Dinu <mandrei.dinu@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 19 16:21:30 2014
+From: Andrei Dinu <mandrei.dinu@gmail.com>
+Subject: [PATCH v4 1/2] diff-no-index.c: rename read_directory()
+Date: Wed, 19 Mar 2014 17:38:35 +0200
+Message-ID: <1395243516-5753-1-git-send-email-mandrei.dinu@gmail.com>
+Cc: Andrei Dinu <mandrei.dinu@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 19 16:39:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQIJ6-0005J7-UH
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Mar 2014 16:21:29 +0100
+	id 1WQIaq-0007k0-By
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Mar 2014 16:39:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965329AbaCSPVZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Mar 2014 11:21:25 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:55464 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965001AbaCSPVY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Mar 2014 11:21:24 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s2JFLG8Q006609
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 19 Mar 2014 16:21:16 +0100
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s2JFLILs003239;
-	Wed, 19 Mar 2014 16:21:18 +0100
-In-Reply-To: <1395242180-4559-1-git-send-email-mandrei.dinu@gmail.com> (Andrei
-	Dinu's message of "Wed, 19 Mar 2014 17:16:20 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 19 Mar 2014 16:21:16 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s2JFLG8Q006609
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1395847279.27639@u/7dqr2dzujEGGfRJtak2Q
+	id S965509AbaCSPji (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Mar 2014 11:39:38 -0400
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:52705 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965431AbaCSPjd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Mar 2014 11:39:33 -0400
+Received: by mail-ee0-f46.google.com with SMTP id t10so6646640eei.5
+        for <git@vger.kernel.org>; Wed, 19 Mar 2014 08:39:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=qgvV0RxVNb4QlaM1trbB982rYQWQo6l+phVqrNtv4fk=;
+        b=lxHy20WW/7H/nTqv9NN5O3nGwM7iUIrlxYulikFL+ibRjGlpzpDItUhy2+e+lvVFnD
+         FHHvA0pgD9xBe8zcxLcSeSgFS8I8nUW1GWcjHt5lCqj9ecSNLxVjx1n+tPF08A5TZvfY
+         smDLYsIrAuh2oXadNOXzINdXuco46zmGNSa3UPkLh2ObzdwN0tqA7fsk8B6fDU/hwUGk
+         f3iYzrA2ryFfgK5QV7+iqwIXb1MqYBtKMNylFraZyL7bplUTfsVVIM6BMq+k6LIik3fi
+         DznJ8TW7gCONU3rzszzlEureSMpLH2tVKdofWgeHdSmXD0b6QwkKojqUARb0JG4qAsU3
+         A4PA==
+X-Received: by 10.15.31.137 with SMTP id y9mr36556941eeu.12.1395243572334;
+        Wed, 19 Mar 2014 08:39:32 -0700 (PDT)
+Received: from localhost.localdomain (p5.eregie.pub.ro. [141.85.0.105])
+        by mx.google.com with ESMTPSA id j41sm55401395eeg.10.2014.03.19.08.39.30
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 19 Mar 2014 08:39:31 -0700 (PDT)
+X-Mailer: git-send-email 1.7.9.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244454>
 
-> Subject: Re: [PATCH 1/3]
-                      ^^^
-I guess you meant PATCH v3. 1/3 means that this is the first patch out
-of 3.
 
-Andrei Dinu <mandrei.dinu@gmail.com> writes:
+Signed-off-by: Andrei Dinu <mandrei.dinu@gmail.com>
 
-> Implement read_directory() to use is_dot_or_dotdot() function from dir.h
-> instead of strcmp().
->
-> Rename read_directory() in read_directory_path() to avoid conflicting with
-> read_directory() from dir.h.
+---
+ I plan on applying to GSoc 2014
 
-Ideally, these should be two distinct patches. One to rename
-read_directory (no real change), and the next one to use
-is_dot_or_dotdot.
+ diff-no-index.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-You may want to take this as an exercice to learn how to split a patch,
-but I won't insist on that.
-
-Other than that, the patch looks good.
-
+diff --git a/diff-no-index.c b/diff-no-index.c
+index 8e10bff..5e4a76c 100644
+--- a/diff-no-index.c
++++ b/diff-no-index.c
+@@ -16,7 +16,7 @@
+ #include "builtin.h"
+ #include "string-list.h"
+ 
+-static int read_directory(const char *path, struct string_list *list)
++static int read_directory_path(const char *path, struct string_list *list)
+ {
+ 	DIR *dir;
+ 	struct dirent *e;
+@@ -107,9 +107,9 @@ static int queue_diff(struct diff_options *o,
+ 		int i1, i2, ret = 0;
+ 		size_t len1 = 0, len2 = 0;
+ 
+-		if (name1 && read_directory(name1, &p1))
++		if (name1 && read_directory_path(name1, &p1))
+ 			return -1;
+-		if (name2 && read_directory(name2, &p2)) {
++		if (name2 && read_directory_path(name2, &p2)) {
+ 			string_list_clear(&p1, 0);
+ 			return -1;
+ 		}
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+1.7.9.5
