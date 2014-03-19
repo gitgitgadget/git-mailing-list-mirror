@@ -1,60 +1,58 @@
 From: szager@chromium.org
-Subject: (unknown)
-Date: Tue, 18 Mar 2014 17:45:49 -0700
-Message-ID: <5328e8bd.fNxY4x6POKCJfhV6%szager@chromium.org>
+Subject: [PATCH] Enable index-pack threading in msysgit.
+Date: Tue, 18 Mar 2014 17:46:59 -0700
+Message-ID: <5328e903.joAd1dfenJmScBNr%szager@chromium.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 19 01:45:58 2014
+X-From: git-owner@vger.kernel.org Wed Mar 19 01:54:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQ4do-00089h-3l
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Mar 2014 01:45:56 +0100
+	id 1WQ4m6-00058w-E3
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Mar 2014 01:54:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933327AbaCSApw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Mar 2014 20:45:52 -0400
-Received: from mail-oa0-f73.google.com ([209.85.219.73]:54008 "EHLO
-	mail-oa0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933312AbaCSApv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Mar 2014 20:45:51 -0400
-Received: by mail-oa0-f73.google.com with SMTP id n16so1538787oag.2
-        for <git@vger.kernel.org>; Tue, 18 Mar 2014 17:45:50 -0700 (PDT)
+	id S1758697AbaCSAyL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Mar 2014 20:54:11 -0400
+Received: from mail-qc0-f201.google.com ([209.85.216.201]:62903 "EHLO
+	mail-qc0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758493AbaCSAyI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Mar 2014 20:54:08 -0400
+Received: by mail-qc0-f201.google.com with SMTP id c9so344592qcz.2
+        for <git@vger.kernel.org>; Tue, 18 Mar 2014 17:54:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:message-id:user-agent:mime-version
-         :content-type:content-transfer-encoding;
-        bh=9uI/9Fckp7ku6ZZSYFR4qiOsWw0zKFbV9P6baqJiBSA=;
-        b=e9vcXqxvF2pLfCA5FD/haUQxTcD7Fh4KhLFjeoQLnOx4QbYk6bY6e9nEKLFZPrsBCc
-         9gXmkz5s3RecGmDZ2PtFhDgiytpCRdt5+X+93Lwwo9eN+DYYiiYDAqitTV2uFQF8i8Or
-         gfF/Vzko+4nyzqlFhaf6XJ48QVHSKsv0Ag2cjI79jHry+LWMTq75pOUz2erlOXWV7jZE
-         ox1OpWiG3Ba9Sr0uAxoGDD0PO9T6UrTlfeqP3VgbzFWhB0WmgZAMhMJaXzAMi1Hs5Sgo
-         4SfQlHOBxSmow0BKCSB06esGqdJxDF3cLfm8chQgcVKo6Ja00hz7eLac4+TO3g5Cxvty
-         TWiA==
-X-Gm-Message-State: ALoCoQnyPtehMWxL6jHamH068+96811F/HfZqvs12XDfOajAui3Sm04rGOx2l8mUgRBoS7uDuR02
-X-Received: by 10.43.79.196 with SMTP id zr4mr12465681icb.3.1395189950422;
-        Tue, 18 Mar 2014 17:45:50 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:subject:message-id:user-agent
+         :mime-version:content-type:content-transfer-encoding;
+        bh=0kWxljQPjGstrD/CY8sYXbL/DG/xDOdgrO+EMKhGpks=;
+        b=H3sqqfutDE3e33q6dvW6gVYp+QHwOu/rw2qgYCoBPbkuYYPA7xTkTONu6AvCYP9dJl
+         7XRaMwl6nkgL3c0RgMNDoBKxR7i9yb0ffNNEzyIwaHzzhX+IWmbFabqDXnX7jT3MVPyT
+         MinIdT9Kh0WOmqKmcJZkaX5Uuqo3fJjMAFR7vRlNT4nXLBW7AZeY+zzoz2fMdG7Nxgpl
+         daNAsq/KHqetA4MbvWjfYZqmLNc7/pmm8+a0ZBf/QTJcDCpgq31R6n/cfP/vqzLuJBeL
+         0qzpz4lQzlLcHSLPDsSjG2KoZWHAWZoj6KRYF3s0Z9HQal6ZCfKA4Wg52HnbdsXwCi8n
+         vzaw==
+X-Gm-Message-State: ALoCoQnh9rd0a96kE8mCkpQILCjxhvZ5T4KCxTD5Wrc0z+E0cMRLdVjbw9l99En/bwWhZ0WWMsJc
+X-Received: by 10.224.163.71 with SMTP id z7mr13309868qax.5.1395190020253;
+        Tue, 18 Mar 2014 17:47:00 -0700 (PDT)
 Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
-        by gmr-mx.google.com with ESMTPS id k45si3173532yhn.4.2014.03.18.17.45.50
+        by gmr-mx.google.com with ESMTPS id a66si1207525yhb.6.2014.03.18.17.47.00
         for <git@vger.kernel.org>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 18 Mar 2014 17:45:50 -0700 (PDT)
+        Tue, 18 Mar 2014 17:47:00 -0700 (PDT)
 Received: from wince.sfo.corp.google.com (wince.sfo.corp.google.com [172.31.53.43])
-	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 2DD6E5A420B
-	for <git@vger.kernel.org>; Tue, 18 Mar 2014 17:45:50 -0700 (PDT)
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 0ED855A4293
+	for <git@vger.kernel.org>; Tue, 18 Mar 2014 17:47:00 -0700 (PDT)
 Received: by wince.sfo.corp.google.com (Postfix, from userid 138314)
-	id 4BCAE40360; Tue, 18 Mar 2014 17:45:49 -0700 (PDT)
+	id 202AA40360; Tue, 18 Mar 2014 17:46:59 -0700 (PDT)
 User-Agent: Heirloom mailx 12.5 6/20/10
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244400>
-
-Subject: [PATCH] Enable index-pack threading in msysgit.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244401>
 
 This adds a Windows implementation of pread.  Note that it is NOT
 safe to intersperse calls to read() and pread() on a file
