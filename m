@@ -1,250 +1,253 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC][GSoC] Calling for comments regarding rough draft of proposal
-Date: Wed, 19 Mar 2014 14:30:59 -0700
-Message-ID: <xmqqtxat27vw.fsf@gitster.dls.corp.google.com>
-References: <CAEc54XAvdOFQLFE_odEKDGjrqNo+vtYfHafUvKS0OazUQ1r-Ag@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: tanay abhra <tanayabh@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 19 22:31:25 2014
+From: szager@chromium.org (Stefan Zager)
+Subject: [PATCH] Enable index-pack threading in msysgit.
+Date: Wed, 19 Mar 2014 14:35:56 -0700 (PDT)
+Message-ID: <20140319213556.2FC3D4062B@wince.sfo.corp.google.com>
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Wed Mar 19 22:36:06 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQO4x-0007gk-Qq
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Mar 2014 22:31:16 +0100
+	id 1WQO9b-0006jD-Gr
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Mar 2014 22:36:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755432AbaCSVbK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Mar 2014 17:31:10 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50971 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755395AbaCSVbC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Mar 2014 17:31:02 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0112074816;
-	Wed, 19 Mar 2014 17:31:02 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+We11H0lkXOw0/QB2KYqrqrkJnU=; b=NQkEQP
-	wXWPm1aEqzZ+D4eqcDJFxzNNsL1pB+hQuPvZb0yWcZ6AMNGXPBLkAZPV1495FYrY
-	9oVP2ErumN/bJOBWrB/lquiGMuBQwhGFTJ8aTi3wBXiQvC1rqsrKKRcJRZGWBQ19
-	P3ioZTdYBx/fDVRRR8qpM0Myx0eDTrRAoj+bc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=aZhSSE9L5UfqZjskjwfeFLao6+Y/Cs37
-	TUZcyfomg0JnNLxHCxiSqLSx7Fa23fs+rjV282P7jFYe8rjdPtumxRi8LC/Dlvz8
-	S/FAqtzZrl+EXVpJnTQ3A0kD8x3BdA5inGWDY9AinJg6yt+S7qPRzI6ga2z7OHgA
-	nojFP45pkMc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DDD4074815;
-	Wed, 19 Mar 2014 17:31:01 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2A3EC74813;
-	Wed, 19 Mar 2014 17:31:01 -0400 (EDT)
-In-Reply-To: <CAEc54XAvdOFQLFE_odEKDGjrqNo+vtYfHafUvKS0OazUQ1r-Ag@mail.gmail.com>
-	(tanay abhra's message of "Thu, 20 Mar 2014 01:22:28 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: C47AAB64-AFAD-11E3-A3B6-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754975AbaCSVf7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Mar 2014 17:35:59 -0400
+Received: from mail-ob0-f201.google.com ([209.85.214.201]:48868 "EHLO
+	mail-ob0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753953AbaCSVf5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Mar 2014 17:35:57 -0400
+Received: by mail-ob0-f201.google.com with SMTP id gq1so1799261obb.0
+        for <git@vger.kernel.org>; Wed, 19 Mar 2014 14:35:57 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:subject:message-id:date:from;
+        bh=FepUbB1m96otOshtTpF6yUal04x527haIBzreQikSgI=;
+        b=Qsnp9CjvLrp4lROf+753u0piXKnshAR9ksnMZx8Vp74Sb3ant/6odVswLRq/I6VxHT
+         PVDpBMxPwqFLzAhmxNp8N4jl+aZsP4rVb58hr8BZvusY1So8AKNyvfgNO+W/4507N9+T
+         Urhk27JBRdG6TvdthWv6Dh3xBsJG6r9SM7JeQPgJOXsOEAeYiUCGr6UozZtUOOkNfxvb
+         ms78DHdFnM1CuSWPbr7b7VCvt8KxCxI4RMhmEQLY7fsjpZI0Ibxu861XmmR3ezYQmBBQ
+         N5VyMurVw3MTDrwJ+hLRqYmchklJoiMqq0qFtgfnR26P4jgvYLCfHV0AVvRr1sIcLn5/
+         /Bvg==
+X-Gm-Message-State: ALoCoQmJbdRpA7pQzaKGyFrtyVVu880+Q7lqGcxING98WytqnMBoW97pQFdcppdC/A4NuG1BuB9m
+X-Received: by 10.43.4.4 with SMTP id oa4mr13584621icb.2.1395264957329;
+        Wed, 19 Mar 2014 14:35:57 -0700 (PDT)
+Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
+        by gmr-mx.google.com with ESMTPS id x29si3677192yha.0.2014.03.19.14.35.57
+        for <git@vger.kernel.org>
+        (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 19 Mar 2014 14:35:57 -0700 (PDT)
+Received: from wince.sfo.corp.google.com (wince.sfo.corp.google.com [172.31.53.43])
+	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 1A0CE31C1F4
+	for <git@vger.kernel.org>; Wed, 19 Mar 2014 14:35:57 -0700 (PDT)
+Received: by wince.sfo.corp.google.com (Postfix, from userid 138314)
+	id 2FC3D4062B; Wed, 19 Mar 2014 14:35:56 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244498>
 
-tanay abhra <tanayabh@gmail.com> writes:
+This adds a Windows implementation of pread.  Note that it is NOT
+safe to intersperse calls to read() and pread() on a file
+descriptor.  According to the ReadFile spec, using the 'overlapped'
+argument should not affect the implicit position pointer of the
+descriptor.  Experiments have shown that this is, in fact, a lie.
 
-> 2.Other things I should add to the proposal that I have left off?I am
-> getting confused what extra details I should add to the proposal. I
-> will add
-> the informal parts(my background, schedule for summer etc) of the
-> proposal later.
+To accomodate that fact, this change also incorporates:
 
-I would not label the schedule and success criteria "informal";
-without them how would one judge if the proposal has merits?
+http://article.gmane.org/gmane.comp.version-control.git/196042
 
-Other things like your background and previous achievements would
-become relevant, after it is decided that the proposed project has
-merits, to see if you are a good fit to work on that project, so I
-agree with your message that it is sensible to defer them before the
-other parts of the proposal is ironed out.
+... which gives each index-pack thread its own file descriptor.
 
-> #Proposed Improvements
->
-> * Fix "git config --unset" to clean up detritus from sections that are
-> left empty.
->
-> * Read the configuration from files once and cache the results in an
-> appropriate data structure in memory.
->
-> * Change `git_config()` to iterate through the pre-read values in
-> memory rather than re-reading the configuration
->   files.
->
-> * Add new API calls that allow the cache to be inquired easily and
-> efficiently.  Rewrite other functions like
->  `git_config_int()` to be cache-aware.
+Signed-off-by: Stefan Zager <szager@chromium.org>
+---
+ builtin/index-pack.c | 30 ++++++++++++++++++++----------
+ compat/mingw.c       | 37 ++++++++++++++++++++++++++++++++++++-
+ compat/mingw.h       |  3 +++
+ config.mak.uname     |  1 -
+ 4 files changed, 59 insertions(+), 12 deletions(-)
 
-I think we already had a discussion to point out git_config_int() is
-not a good example for this bullet point (check the list archive).
-The approach seciton seems to use a more sensible example (point 2).
-
-> * Rewrite callers to use the new API wherever possible.
->
-> * How to invalidate the cache correctly in the case that the
-> configuration is changed while `git` is executing.
-
-I wouldn't list this as an item of "list of improvements".
-
-It is merely a point you have to be careful about because you are
-doing other "improvements" based on "read all into memory first and
-do not re-read files" approach, no?  In the current code, when
-somebody does git_config_set() and then later uses git_config() to
-grab the value of the variable set with the first call, we will read
-the value written to the file with the first call.  With the
-proposed change, if you parse from the file upfront, callers to
-git_config_set() will need to somehow invalidate that stale copy in
-memory, either updating only the changed part (harder) or just
-discarding the cache (easy).
-
-> ##Changing the git_config api to retrieve values from memory
->
-> Approach:-
->
-> We parse the config file once, storing the raw values to records in
-> memory. After the whole config has been read, iterate through the records,
-> feeding the surviving values into the callback in the order they were
-> originally read
-> (minus deletions).
->
-> Path to follow for the api conversion,
->
-> 1. Convert the parser to read into an in-memory representation, but
->    leave git_config() as a wrapper which iterates over it.
->
-> 2. Add query functions like config_string_get() which will inquire
-> cache for values efficiently.
->
-> 3. Convert callbacks to query functions one by one.
->
-> I propose two approaches for the format of the internal cache,
->
-> 1.Using a hashmap to map keys to their values.This would bring as an
->  advantage, constant time lookups for the values.The implementation
->  will be similar to "dict" data structure in python,
->
->  for example, section.subsection --mapped-to--> multi_value_string
-
-I have no idea what you wanted to illustrate with that "example" at
-all.
-
->  This approach loses the relative order of different config keys.
-
-As long as it keeps the order of multi-value elements, it should
-not be a problem.
-
-> 2.Another approach would be to actually represent the syntax tree of the
->   config file in memory. That would make lookups of individual keys more
->   expensive, but would enable other manipulation. E.g., if the syntax
->   tree included nodes for comments and other non-semantic constructs, then
->   we can use it for a complete rewrite.
-
-"for a complete rewrite" of what?
-
->  And "git config" becomes:
->
->   1. Read the tree.
->
->   2. Perform operations on the tree (add nodes, delete nodes, etc).
->
->   3. Write out the tree.
->
-> and things like "remove the section header when the last item in the
-> section is removed" become trivial during step 2.
-
-Are you saying you will try both approaches during the summer?
-
-You should be able to look-up quickly *and* to preserve order at the
-same time within one approach, by either annotating the tree with a
-hash, or the other way around to annotate the hash with each node
-remembering where in the original file it came from (which you will
-need to keep in order to report errors anyway).
-
-> ----------------------------------------------------------------------
-> ##Tidy configuration files
->
-> When a configuration file is repeatedly modified, often garbage is
-> left behind.  For example, after
->
->     git config pull.rebase true
->     git config --unset pull.rebase
->     git config pull.rebase true
->     git config --unset pull.rebase
->
-> the bottom of the configuration file is left with the useless lines
->
->     [pull]
->     [pull]
->
-> Also,setting a config value, appends the key-value pair at the end of
-> file without checking for empty main keys
-> even if the main key(like [my]) is already present and empty.It works
-> fine if the main key with an already present
-> sub-key.
->
-> for example:-
->     git config pull.rebase true
->     git config --unset pull.rebase
->     git config pull.rebase true
->     git config pull.option true
-> gives
->     [pull]
->     [pull]
->         rebase = true
->         option = true
->
-> Also, a possible detriment is presence of comments,
-> For Example:-
->     [my]
->             # This section is for my own private settings
-
-Another example you need to consider is
-
-	# Comment regarding the entire [my] section
-        [my]
-        	# Comment on the item foo
-                foo = true
-		# Comment on the item bar
-                bar = false
-
-
-What should "git config --unset my.foo && git config -unset my.bar" do?
-What if these are done in a different order?
-
->
-> Expected output:
->
->   1. When we delete the last key in a section, we should be
->      able to delete the section header.
->
->   2. When we add a key into a section, we should be able to
->      reuse the same section header, even if that section did
->      not have any keys in it already.
->
-> Possible approaches:-
->
-> 1.Leave the empty section header as it was and when a new value is set,
->   reuse the header instead of appending at the end of the config file.
->   I am going through the code to find find other solution for this problem.
->
-> links:-
-> [1]http://thread.gmane.org/gmane.comp.version-control.git/219505
-> [2]http://thread.gmane.org/gmane.comp.version-control.git/208113
->
-> -----------------------------------------------------------------------
->
-> Thanks,
-> Tanay Abhra.
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 2f37a38..63b8b0e 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -40,17 +40,17 @@ struct base_data {
+ 	int ofs_first, ofs_last;
+ };
+ 
+-#if !defined(NO_PTHREADS) && defined(NO_THREAD_SAFE_PREAD)
+-/* pread() emulation is not thread-safe. Disable threading. */
+-#define NO_PTHREADS
+-#endif
+-
+ struct thread_local {
+ #ifndef NO_PTHREADS
+ 	pthread_t thread;
+ #endif
+ 	struct base_data *base_cache;
+ 	size_t base_cache_used;
++    /*
++     * To accomodate platforms that have pthreads, but don't have a
++     * thread-safe pread, give each thread its own file descriptor.
++     */
++	int pack_fd;
+ };
+ 
+ /*
+@@ -91,7 +91,8 @@ static off_t consumed_bytes;
+ static unsigned deepest_delta;
+ static git_SHA_CTX input_ctx;
+ static uint32_t input_crc32;
+-static int input_fd, output_fd, pack_fd;
++static const char *curr_pack;
++static int input_fd, output_fd;
+ 
+ #ifndef NO_PTHREADS
+ 
+@@ -134,6 +135,7 @@ static inline void unlock_mutex(pthread_mutex_t *mutex)
+  */
+ static void init_thread(void)
+ {
++	int i;
+ 	init_recursive_mutex(&read_mutex);
+ 	pthread_mutex_init(&counter_mutex, NULL);
+ 	pthread_mutex_init(&work_mutex, NULL);
+@@ -141,11 +143,17 @@ static void init_thread(void)
+ 		pthread_mutex_init(&deepest_delta_mutex, NULL);
+ 	pthread_key_create(&key, NULL);
+ 	thread_data = xcalloc(nr_threads, sizeof(*thread_data));
++	for (i = 0; i < nr_threads; i++) {
++		thread_data[i].pack_fd = open(curr_pack, O_RDONLY);
++		if (thread_data[i].pack_fd == -1)
++			die_errno("unable to open %s", curr_pack);
++	}
+ 	threads_active = 1;
+ }
+ 
+ static void cleanup_thread(void)
+ {
++	int i;
+ 	if (!threads_active)
+ 		return;
+ 	threads_active = 0;
+@@ -155,6 +163,8 @@ static void cleanup_thread(void)
+ 	if (show_stat)
+ 		pthread_mutex_destroy(&deepest_delta_mutex);
+ 	pthread_key_delete(key);
++	for (i = 0; i < nr_threads; i++)
++		close(thread_data[i].pack_fd);
+ 	free(thread_data);
+ }
+ 
+@@ -288,13 +298,13 @@ static const char *open_pack_file(const char *pack_name)
+ 			output_fd = open(pack_name, O_CREAT|O_EXCL|O_RDWR, 0600);
+ 		if (output_fd < 0)
+ 			die_errno(_("unable to create '%s'"), pack_name);
+-		pack_fd = output_fd;
++		nothread_data.pack_fd = output_fd;
+ 	} else {
+ 		input_fd = open(pack_name, O_RDONLY);
+ 		if (input_fd < 0)
+ 			die_errno(_("cannot open packfile '%s'"), pack_name);
+ 		output_fd = -1;
+-		pack_fd = input_fd;
++		nothread_data.pack_fd = input_fd;
+ 	}
+ 	git_SHA1_Init(&input_ctx);
+ 	return pack_name;
+@@ -542,7 +552,7 @@ static void *unpack_data(struct object_entry *obj,
+ 
+ 	do {
+ 		ssize_t n = (len < 64*1024) ? len : 64*1024;
+-		n = pread(pack_fd, inbuf, n, from);
++		n = pread(get_thread_data()->pack_fd, inbuf, n, from);
+ 		if (n < 0)
+ 			die_errno(_("cannot pread pack file"));
+ 		if (!n)
+@@ -1490,7 +1500,7 @@ static void show_pack_info(int stat_only)
+ int cmd_index_pack(int argc, const char **argv, const char *prefix)
+ {
+ 	int i, fix_thin_pack = 0, verify = 0, stat_only = 0;
+-	const char *curr_pack, *curr_index;
++	const char *curr_index;
+ 	const char *index_name = NULL, *pack_name = NULL;
+ 	const char *keep_name = NULL, *keep_msg = NULL;
+ 	char *index_name_buf = NULL, *keep_name_buf = NULL;
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 383cafe..0efc570 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -329,7 +329,42 @@ int mingw_mkdir(const char *path, int mode)
+ 	return ret;
+ }
+ 
+-int mingw_open (const char *filename, int oflags, ...)
++
++/*
++ * Warning: contrary to the specificiation, when ReadFile() is called
++ * with an 'overlapped' argument, it *will* modify the implict position
++ * pointer for the file descriptor.  As a result, it is *not* safe to
++ * intersperse calls to read() and pread() on a single file descriptor.
++ */
++ssize_t mingw_pread(int fd, void *buf, size_t count, off64_t offset)
++{
++	HANDLE hand = (HANDLE)_get_osfhandle(fd);
++	if (hand == INVALID_HANDLE_VALUE) {
++		errno = EBADF;
++		return -1;
++	}
++
++	LARGE_INTEGER offset_value;
++	offset_value.QuadPart = offset;
++
++	DWORD bytes_read = 0;
++	OVERLAPPED overlapped = {0};
++	overlapped.Offset = offset_value.LowPart;
++	overlapped.OffsetHigh = offset_value.HighPart;
++	BOOL result = ReadFile(hand, buf, count, &bytes_read, &overlapped);
++
++	ssize_t ret = bytes_read;
++
++	if (!result && GetLastError() != ERROR_HANDLE_EOF)
++	{
++		errno = err_win_to_posix(GetLastError());
++		ret = -1;
++	}
++
++	return ret;
++}
++
++int mingw_open(const char *filename, int oflags, ...)
+ {
+ 	va_list args;
+ 	unsigned mode;
+diff --git a/compat/mingw.h b/compat/mingw.h
+index 08b83fe..377ba50 100644
+--- a/compat/mingw.h
++++ b/compat/mingw.h
+@@ -174,6 +174,9 @@ int mingw_unlink(const char *pathname);
+ int mingw_rmdir(const char *path);
+ #define rmdir mingw_rmdir
+ 
++ssize_t mingw_pread(int fd, void *buf, size_t count, off64_t offset);
++#define pread mingw_pread
++
+ int mingw_open (const char *filename, int oflags, ...);
+ #define open mingw_open
+ 
+diff --git a/config.mak.uname b/config.mak.uname
+index e8acc39..b405524 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -474,7 +474,6 @@ ifeq ($(uname_S),NONSTOP_KERNEL)
+ endif
+ ifneq (,$(findstring MINGW,$(uname_S)))
+ 	pathsep = ;
+-	NO_PREAD = YesPlease
+ 	NEEDS_CRYPTO_WITH_SSL = YesPlease
+ 	NO_LIBGEN_H = YesPlease
+ 	NO_POLL = YesPlease
+-- 
+1.9.0.279.gdc9e3eb
