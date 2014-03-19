@@ -1,102 +1,105 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH v2] git-rebase: Teach rebase "-" shorthand.
-Date: Wed, 19 Mar 2014 19:12:17 +0000
-Message-ID: <20140319191217.GC11018@serenity.lan>
-References: <xmqq61nb8fap.fsf@gitster.dls.corp.google.com>
- <1395226935-53044-1-git-send-email-modocache@gmail.com>
- <xmqqob123wjm.fsf@gitster.dls.corp.google.com>
- <20140319180213.GB11018@serenity.lan>
- <xmqqsiqe2es6.fsf@gitster.dls.corp.google.com>
+From: Stefan Zager <szager@chromium.org>
+Subject: Re: [PATCH] Enable index-pack threading in msysgit.
+Date: Wed, 19 Mar 2014 12:15:41 -0700
+Message-ID: <CAHOQ7J9sJv-L2xeKOiq1YvG5HhUP_XWCEdrtJogfZW6-NaDmWA@mail.gmail.com>
+References: <5328e903.joAd1dfenJmScBNr%szager@chromium.org>
+	<CACsJy8BOZa6vJU_s9sxYrtSdpL-4PDTpbo6r6TC8z2LD1GtkMQ@mail.gmail.com>
+	<CAHOQ7J_Wmjo6AJRQra2UDWX3WRboD+-4SaGCHYOUgRR+NyUX4A@mail.gmail.com>
+	<CACsJy8A7ESSjfHqr96_yYjNsE-A1Sf=8+rmRfGrjML0+fCWTTg@mail.gmail.com>
+	<CAHOQ7J9c_ZfzYEmO861Oa64YZeArQQBMnah1yWAkChME7dA+TA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Brian Gesiak <modocache@gmail.com>, git@vger.kernel.org,
-	Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>,
-	Tim Chase <git@tim.thechases.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 19 20:12:35 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Stefan Zager <szager@chromium.org>
+X-From: git-owner@vger.kernel.org Wed Mar 19 20:16:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQLul-00013m-2O
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Mar 2014 20:12:35 +0100
+	id 1WQLy2-00065s-AA
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Mar 2014 20:15:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754384AbaCSTMb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Mar 2014 15:12:31 -0400
-Received: from hyena.aluminati.org ([64.22.123.221]:57718 "EHLO
-	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752042AbaCSTMa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Mar 2014 15:12:30 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by hyena.aluminati.org (Postfix) with ESMTP id AE96B24E37;
-	Wed, 19 Mar 2014 19:12:29 +0000 (GMT)
-X-Quarantine-ID: <8dZNK28DDo8G>
-X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -1
-X-Spam-Level: 
-X-Spam-Status: No, score=-1 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1] autolearn=disabled
-Received: from hyena.aluminati.org ([127.0.0.1])
-	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 8dZNK28DDo8G; Wed, 19 Mar 2014 19:12:29 +0000 (GMT)
-Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by hyena.aluminati.org (Postfix) with ESMTP id EA36124E4F;
-	Wed, 19 Mar 2014 19:12:28 +0000 (GMT)
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id 389ED161E53E;
-	Wed, 19 Mar 2014 19:12:27 +0000 (GMT)
-X-Quarantine-ID: <OlEJQ0AuIgBu>
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id OlEJQ0AuIgBu; Wed, 19 Mar 2014 19:12:26 +0000 (GMT)
-Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id AA09E161E3A7;
-	Wed, 19 Mar 2014 19:12:19 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <xmqqsiqe2es6.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.22 (2013-10-16)
+	id S1753823AbaCSTPo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Mar 2014 15:15:44 -0400
+Received: from mail-ob0-f173.google.com ([209.85.214.173]:39983 "EHLO
+	mail-ob0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753818AbaCSTPm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Mar 2014 15:15:42 -0400
+Received: by mail-ob0-f173.google.com with SMTP id gq1so8700209obb.32
+        for <git@vger.kernel.org>; Wed, 19 Mar 2014 12:15:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=5AyZH3bGRlmLFHPR3UhAJX9TYVLbxb25vEElUpFpyDU=;
+        b=EDhbCS41nVcDPi3B5j3fOU8pZlS0R/gbw1j7oJMfh7h+cR5gEA68J2iwQIxLrzFvE+
+         xWTREnc03/awPdG+jBgKPxL7REmm4bMYjKu6BYM0zer4JN/bNftre5WeWxDwHPEHmofE
+         qJaABAQV1Pq8L5bKeqGmCax9lwG1E5bdthbm0hrAQQ5bet/44srCqCF5VtXdmSHLHivI
+         uhH6rrVKDDEc3PXmsP1AZqsWJsv6FJTw6CvQguO6hW+QKE2RQIJ+OjmT0S4GpiwOSnx7
+         CaJB3UIQFUlS1ayrZU+XJ+d8rqHo77U4MtYdXEXbiCoUZ2jVrWcpFE4dbTPD1Vjg+FPm
+         0s4w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=5AyZH3bGRlmLFHPR3UhAJX9TYVLbxb25vEElUpFpyDU=;
+        b=POkWI7WYjMwpD6HkP3/rtEf7PrihQXs77po/WqHJkJWzrhMuZh4ttSu0Da3/njUjpq
+         NVqx3tKaNzn7HscRNNJ55HIA2OfjRMxk40hdakTkcg/GBppVFLNpc/J1Yudfz/OXBo1d
+         OJnk642CBEeZy4u+NYjuoSiigqrSqs3MXUghU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=5AyZH3bGRlmLFHPR3UhAJX9TYVLbxb25vEElUpFpyDU=;
+        b=XQlJe5+rsSWZ330yk/RSNCxLNBzjsecSAkD/hhxTsvsc1qTDRcFQvu+b0yuhweVKDS
+         eNJDmbgErobrb8e7Xwy65LDvnUTJOPZwZchV2IFPKVxYZW64DQ4eXXoNsmBAp18J1dmb
+         zX+0S2cAZcooUICc+STuLRqlaUpAklGGAwt+9cmc6wydhCd32BpFeq71c3GQItJt9fLF
+         AdCQ/2xP0aHL3R1zuyCpDkgnhjvM1if2Ww0H4CKJYqrV7Vot1oEs1FzMqJoPMxOgpc2U
+         pembGRzrdx+sl5ZoodKGEvZ6pwIFRgioPcUXa+IHEI8m5DUpQ5j4C7llQuEVmZj+3qDr
+         yzZw==
+X-Gm-Message-State: ALoCoQmZ3rMIXsfcH9w96DnbkvpdureAP25w4URuB6+Wptiwzt+eFGk0oBWyLf+sJjwh/rreiE7LAGjjqopsMLLXzCQe9ZloVH25KRS5AQo7dsqw/ekp1fHpY7FnegGbUIw0iiVs4l78ZntKFdxfxx7+l8b8GdSphwZkAMZb2Byyb4wDHZLG6woGW+sl46NZWEYET8QTUkwG
+X-Received: by 10.182.149.168 with SMTP id ub8mr2039164obb.74.1395256541388;
+ Wed, 19 Mar 2014 12:15:41 -0700 (PDT)
+Received: by 10.182.233.201 with HTTP; Wed, 19 Mar 2014 12:15:41 -0700 (PDT)
+In-Reply-To: <CAHOQ7J9c_ZfzYEmO861Oa64YZeArQQBMnah1yWAkChME7dA+TA@mail.gmail.com>
+X-Google-Sender-Auth: JWQhKEBoCSO1HJmdbWUlsVrh2p0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244480>
 
-On Wed, Mar 19, 2014 at 12:02:01PM -0700, Junio C Hamano wrote:
-> John Keeping <john@keeping.me.uk> writes:
-> 
-> > On Wed, Mar 19, 2014 at 10:53:01AM -0700, Junio C Hamano wrote:
-> >>    "rebase -" with your change still says something like this:
-> >> 
-> >>         First, rewinding head to replay your work on top of it...
-> >>         Fast-forwarded HEAD to @{-1}.
-> >> 
-> >>    instead of "Fast-forwarded HEAD to -".  Somebody may later want
-> >>    to "fix" this, making these two eye-candy output to be different
-> >>    from each other, and what your test expects will no longer hold
-> >>    (not that I think it is better to say "-" instead of @{-1}
-> >>    there).
-> >
-> > I don't think either of these is correct.  When using "-" with the
-> > commands that already support it, I have occasionally found that "-"
-> > isn't what I thought it was.
-> >
-> > Can we use `git name-rev` to put the actual name here, so that people
-> > who have not done what they intended can hopefully notice sooner?
-> 
-> That sounds like a right thing to do.  It however is totally
-> orthogonal to the change we are discussing, and should be done as a
-> separate patch.
+On Wed, Mar 19, 2014 at 9:57 AM, Stefan Zager <szager@chromium.org> wrote:
+>>
+>> I still don't understand how compat/pread.c does not work with pack_fd
+>> per thread. I don't have Windows to test, but I forced compat/pread.c
+>> on on Linux with similar pack_fd changes and it worked fine, helgrind
+>> only complained about progress.c.
+>>
+>> A pread() implementation that is thread-safe with condition sounds
+>> like an invite for trouble later. And I don't think converting read()
+>> to pread() is a good idea. Platforms that rely on pread() will hit
+>> first because of more use of compat/pread.c. read() seeks while
+>> pread() does not, so we have to audit more code..
+>
+> Using one fd per thread is all well and good for something like
+> index-pack, which only accesses a single pack file.  But using that
+> heuristic to add threading elsewhere is probably not going to work.
+> For example, I have a patch in progress to add threading to checkout,
+> and another one planned to add threading to status.  In both cases, we
+> would need one fd per thread per pack file, which is pretty
+> ridiculous.
+>
+> There really aren't very many calls to read() in the code.  I don't
+> think it would be very difficult to eliminate the remaining ones.  The
+> more interesting question, I think is: what platforms still don't have
+> a thread-safe pread implementation?
 
-Is it not part of adding support for "-"?
+I don't want to go too deep down the rabbit hole here.  We don't have
+to solve the read() vs. pread() issue once for all right now; that can
+wait for another day.  The pread() implementation in this patch is
+certainly no worse than the one in compat/pread.c.
 
-I'm not arguing for a change to any existing functionality, just to the
-behaviour introduced by this patch, which is basically a change from
-"@{-1}" to "$(git name-rev --name-only @{-1})" in the patch.  (The error
-handling of name-rev appears not to be very useful here when the
-previous branch has been deleted, so I don't think it's quite that
-simple, but that's the principle.)
+Stefan
