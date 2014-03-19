@@ -1,100 +1,66 @@
-From: Brian Gesiak <modocache@gmail.com>
-Subject: [PATCH v2] git-rebase: Teach rebase "-" shorthand.
-Date: Wed, 19 Mar 2014 20:02:15 +0900
-Message-ID: <1395226935-53044-1-git-send-email-modocache@gmail.com>
-References: <xmqq61nb8fap.fsf@gitster.dls.corp.google.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
-	Brian Gesiak <modocache@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 19 12:02:35 2014
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 4/4] gc --aggressive: three phase repacking
+Date: Wed, 19 Mar 2014 18:03:41 +0700
+Message-ID: <CACsJy8BVmc0K5Rdr_putTQM5Hs2agizyW8cxAPFLb0LnXntG7Q@mail.gmail.com>
+References: <1394976904-15395-1-git-send-email-pclouds@gmail.com>
+ <1394976904-15395-6-git-send-email-pclouds@gmail.com> <20140318045050.GB8240@sigill.intra.peff.net>
+ <CACsJy8CU3JyL74OuurjDr5-FHmBOCRahtXukukCqGx1cTdjvMQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 19 12:04:21 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQEGY-0000u1-FM
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Mar 2014 12:02:34 +0100
+	id 1WQEIE-0003p8-Dk
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Mar 2014 12:04:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933627AbaCSLCa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Mar 2014 07:02:30 -0400
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:47069 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933367AbaCSLC3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Mar 2014 07:02:29 -0400
-Received: by mail-pa0-f52.google.com with SMTP id rd3so8804529pab.39
-        for <git@vger.kernel.org>; Wed, 19 Mar 2014 04:02:29 -0700 (PDT)
+	id S1759086AbaCSLEO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Mar 2014 07:04:14 -0400
+Received: from mail-qa0-f46.google.com ([209.85.216.46]:55556 "EHLO
+	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759053AbaCSLEM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Mar 2014 07:04:12 -0400
+Received: by mail-qa0-f46.google.com with SMTP id i13so8374477qae.33
+        for <git@vger.kernel.org>; Wed, 19 Mar 2014 04:04:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=600x+i+bohPxSX5VqCDd3Baq9hJ9YFlYtg17tIYFyZA=;
-        b=tdOZaElgx1xKyw6w3uQ1Gr+CoTLkXJbqOcWykjzG7eamE6ltXnS8D6Ic2LB9ibZ5qP
-         q5EMWHWFx2pOt9JLH/7CmFtehZz18Hd+QViRY+AYLp2KDP+6+rNmx8jX9KbsIv9DQLoq
-         8JZzQS7qJcwlZDwDwK0qxYezaohF12dsLZGHP1u8ynah60IhjdFknaR0cd7oWN/x1V83
-         x7RxJ66QEDjWo+kUd0ooUPBxzvDB1PTop6/PVRlfW9CqgaSoudhj2+TvZOI5kd4/OYOR
-         YtJcyXzcz2LcANTXC0E23IXpgLX90CPgXdYJmOJQpdSmhJStb0YfuXLgNihR9hUOPmII
-         siiQ==
-X-Received: by 10.66.41.106 with SMTP id e10mr39262960pal.109.1395226949052;
-        Wed, 19 Mar 2014 04:02:29 -0700 (PDT)
-Received: from localhost.localdomain (p841739.tokynt01.ap.so-net.ne.jp. [223.132.23.57])
-        by mx.google.com with ESMTPSA id iq10sm61217404pbc.14.2014.03.19.04.02.24
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 19 Mar 2014 04:02:26 -0700 (PDT)
-X-Mailer: git-send-email 1.8.5.2 (Apple Git-48)
-In-Reply-To: <xmqq61nb8fap.fsf@gitster.dls.corp.google.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=TBpETjR+w/SrrDQq/un+w9j1tMq/6Thgcbwx4edai40=;
+        b=rfqXvEa7Q5ZuJqxP2qvSYihPt0OBQ2b6SU7jlSVS3mvSw9JSYYfFogBjnLwZwKbKRR
+         kdLHFyHIYe1UR8xRHlAUBmpCBLlwEvUjc/aFRgnjSBDhE1iLyRAK6y1ya1vxyd1I3Sg0
+         yO4V4qVKFqyXdrqfL6gnikaRVuiBesy4uFwWEQZbrMhGwF5q6sIMoM2GHV2xb9ibaRUR
+         h+HF9LCWRp08dk6Pfwo1Rh5oyOMbkBLtnt0vRquv2oYKvdxLdwXq+LwrIaBbgLPZFxZ9
+         5YXVvK85bH3O1gC4Of0Lo9UY5+YBC2Dim0oiy8cQNUo6dV0SIds4DTzD8fcfQ8jl9dsK
+         Wtag==
+X-Received: by 10.140.84.40 with SMTP id k37mr1634536qgd.98.1395227051774;
+ Wed, 19 Mar 2014 04:04:11 -0700 (PDT)
+Received: by 10.96.146.102 with HTTP; Wed, 19 Mar 2014 04:03:41 -0700 (PDT)
+In-Reply-To: <CACsJy8CU3JyL74OuurjDr5-FHmBOCRahtXukukCqGx1cTdjvMQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244432>
 
-Teach rebase the same shorthand as checkout and merge; that is, that "-"
-means "the branch we were previously on".
+On Tue, Mar 18, 2014 at 12:00 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+>>>             size  time
+>>> old aggr.   36MB  5m51
+>>> new aggr.   37MB  6m13
+>>> repack -adf 48MB  1m12
+>>
+>> I am not clear on what these times mean. It looks like the new code is
+>> slower _and_ bigger. Can you explain them?
+>
+> That's right :) The upside is faster operations, which is complely
+> missed here. The good thing from those numbers is pack size does not
+> increase much (the upper limit would be repack -adf with default
+> settings).
 
-Reported-by: Tim Chase <git@tim.thechases.com>
-Signed-off-by: Brian Gesiak <modocache@gmail.com>
----
- git-rebase.sh     |  4 ++++
- t/t3400-rebase.sh | 11 +++++++++++
- 2 files changed, 15 insertions(+)
-
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 5f6732b..2c75e9f 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -453,6 +453,10 @@ then
- 		test "$fork_point" = auto && fork_point=t
- 		;;
- 	*)	upstream_name="$1"
-+		if test "$upstream_name" = "-"
-+		then
-+			upstream_name="@{-1}"
-+		fi
- 		shift
- 		;;
- 	esac
-diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-index 6d94b1f..6176754 100755
---- a/t/t3400-rebase.sh
-+++ b/t/t3400-rebase.sh
-@@ -88,6 +88,17 @@ test_expect_success 'rebase from ambiguous branch name' '
- 	git rebase master
- '
- 
-+test_expect_success 'rebase using shorthand' '
-+	git checkout master &&
-+	git checkout -b shorthand HEAD^ &&
-+	git rebase - 1>shorthand.stdout &&
-+	git checkout master &&
-+	git branch -D shorthand &&
-+	git checkout -b shorthand HEAD^ &&
-+	git rebase @{-1} 1>without_shorthand.stdout &&
-+	test_i18ncmp without_shorthand.stdout shorthand.stdout
-+'
-+
- test_expect_success 'rebase a single mode change' '
- 	git checkout master &&
- 	git branch -D topic &&
+Something is not right. The performance numbers are against me. Still looking..
 -- 
-1.8.5.2 (Apple Git-48)
+Duy
