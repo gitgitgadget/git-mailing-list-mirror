@@ -1,95 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] disable grafts during fetch/push/bundle
-Date: Wed, 19 Mar 2014 15:39:42 -0700
-Message-ID: <xmqq8us524pd.fsf@gitster.dls.corp.google.com>
-References: <20140305185212.GA23907@sigill.intra.peff.net>
-	<xmqqppm0h2ti.fsf@gitster.dls.corp.google.com>
-	<53183506.5080002@alum.mit.edu>
-	<20140306155626.GB18519@sigill.intra.peff.net>
-	<5318A537.4010400@alum.mit.edu>
-	<20140306174803.GA30486@sigill.intra.peff.net>
-	<08A515BA063C44E5A9EFC754793B2AD8@PhilipOakley>
-	<531904E1.6010606@alum.mit.edu>
-	<xmqqob1ivqv4.fsf@gitster.dls.corp.google.com>
-	<CAP8UFD0UnUGZb9hWyLS1vPJ6fh3QR-g_p5HNQk79Gqhs9YWi0A@mail.gmail.com>
-	<20140307171936.GC23587@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Christian Couder <christian.couder@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Philip Oakley <philipoakley@iee.org>, git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 19 23:39:54 2014
+From: Hiroyuki Sano <sh19910711@gmail.com>
+Subject: [PATCH v3][GSOC] fsck: use bitwise-or assignment operator to set flag
+Date: Thu, 20 Mar 2014 08:02:04 +0900
+Message-ID: <1395270124-2242-1-git-send-email-sh19910711@gmail.com>
+Cc: Hiroyuki Sano <sh19910711@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 20 00:02:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQP9L-0003WY-7z
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Mar 2014 23:39:51 +0100
+	id 1WQPV2-0004i2-CW
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 00:02:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758073AbaCSWjq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Mar 2014 18:39:46 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40822 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757812AbaCSWjp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Mar 2014 18:39:45 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 25B64743A0;
-	Wed, 19 Mar 2014 18:39:45 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Vbm+D//Ohjq7VKN30tZZrU4XMcM=; b=UJs7uq
-	sgmUvJP6PEhYN6PSbLTXIbyhUkOG1w3n4HnrQBNZIl7REgJn6MlHV7BCCxH16q7l
-	vKueKZnjwu9BZdAu2kvL9gsD2L1N6KZDrBEw9oGGtrKGI64I7ET4pD44tzcOoNcZ
-	dwRh62zjud6nRLz0KxPq15587gdQY8uPs3jcc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=b++UZrU+NMNQDlE1LNZEtEtp7fuwEADS
-	Rw96cQJ8/c+0ePJvvCqUSSs2MS2ivUpU9ptBp9MdLDKOA5Lsxsa5mEXSNjtKdQ69
-	VGw2oG2zdSuqAqwuNe/hElIKNB4cUpHrrOizUb0HkJeeyWIn7lxYrcKEuA7PgEad
-	1EmWhPOihRY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0C8207439E;
-	Wed, 19 Mar 2014 18:39:45 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 50F5474398;
-	Wed, 19 Mar 2014 18:39:44 -0400 (EDT)
-In-Reply-To: <20140307171936.GC23587@sigill.intra.peff.net> (Jeff King's
-	message of "Fri, 7 Mar 2014 12:19:36 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 5E1CC30C-AFB7-11E3-934E-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756119AbaCSXCL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Mar 2014 19:02:11 -0400
+Received: from mail-pb0-f52.google.com ([209.85.160.52]:49554 "EHLO
+	mail-pb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755665AbaCSXCJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Mar 2014 19:02:09 -0400
+Received: by mail-pb0-f52.google.com with SMTP id rr13so31014pbb.11
+        for <git@vger.kernel.org>; Wed, 19 Mar 2014 16:02:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=IR4CNIRuXK6zB1cRQw5uJcySMH+BuWKcqqst9D8nv7w=;
+        b=Hjh2HKiNhZYs/LnS5GyZWW7ruy2YoMXZRmtyC1qMuFh0UaBWR/j1fIn2DPeuWWM0WP
+         ur+DxtOaaAZZ5tti7LY39276aMrdT3dXnBi7G9k0ZZ/oSw4r1T4VSAlHxN270fSTOzYJ
+         TyJ8WM3X1OpiHKzMVEdblvcMJXvki4KHXvjLnLwDhmPfpcGrGN01RyciZrqUGX+hvACE
+         jrcS1SMYBUXLHWcZR2srjZnjbO8iJPM1PA74YJhFOV/48tv5dzmm2dunuBHPrIQSFulx
+         FuD9Tdvfri3qM50FiX8vTukLdcTpVMLgrsaxKtLYuyFnWM79VtMIOcM668fZP3CFqH4D
+         KVyw==
+X-Received: by 10.66.156.4 with SMTP id wa4mr43101819pab.49.1395270129134;
+        Wed, 19 Mar 2014 16:02:09 -0700 (PDT)
+Received: from localhost (ntfkok023001.fkok.nt.adsl.ppp.infoweb.ne.jp. [218.217.179.1])
+        by mx.google.com with ESMTPSA id pv4sm9344pbb.55.2014.03.19.16.02.07
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 19 Mar 2014 16:02:08 -0700 (PDT)
+X-Mailer: git-send-email 1.9.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244505>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244506>
 
-Jeff King <peff@peff.net> writes:
+fsck_tree() has two different ways to set a flag,
+which are the followings:
 
-> On Fri, Mar 07, 2014 at 08:08:37AM +0100, Christian Couder wrote:
->
->> > Be it graft or replace, I do not think we want to invite people to
->> > use these mechansims too lightly to locally rewrite their history
->> > willy-nilly without fixing their mistakes at the object layer with
->> > "commit --amend", "rebase", "bfg", etc. in the longer term.  So in
->> > that sense, adding a command to make it easy is not something I am
->> > enthusiastic about.
->> >
->> > On the other hand, if the user does need to use graft or replace
->> > (perhaps to prepare for casting the fixed history in stone with
->> > filter-branch), it would be good to help them avoid making mistakes
->> > while doing so and tool support may be a way to do so.
->> >
->> > So, ... I am of two minds.
-> ...
-> I do not think the features we are talking about are significantly more
-> dangerous than "git replace" is in the first place. If we want to make
-> people aware of the dangers, perhaps git-replace.1 is the right place to
-> do it.
+  1. Using a if-statement that guards assignment.
 
-Sure.
+  2. Using a bitwise-or assignment operator.
 
-So should we take the four-patch series for "git replace --edit"?
+Currently, many with the former way,
+and one with the latter way.
+
+In this patch, unify them to the latter way,
+because it makes the code shorter and easier to read,
+and it is brief and to the point.
+
+Signed-off-by: Hiroyuki Sano <sh19910711@gmail.com>
+---
+ fsck.c | 18 ++++++------------
+ 1 file changed, 6 insertions(+), 12 deletions(-)
+
+diff --git a/fsck.c b/fsck.c
+index b3022ad..abed62b 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -165,18 +165,12 @@ static int fsck_tree(struct tree *item, int strict, fsck_error error_func)
+ 
+ 		sha1 = tree_entry_extract(&desc, &name, &mode);
+ 
+-		if (is_null_sha1(sha1))
+-			has_null_sha1 = 1;
+-		if (strchr(name, '/'))
+-			has_full_path = 1;
+-		if (!*name)
+-			has_empty_name = 1;
+-		if (!strcmp(name, "."))
+-			has_dot = 1;
+-		if (!strcmp(name, ".."))
+-			has_dotdot = 1;
+-		if (!strcmp(name, ".git"))
+-			has_dotgit = 1;
++		has_null_sha1 |= is_null_sha1(sha1);
++		has_full_path |= !!strchr(name, '/');
++		has_empty_name |= !*name;
++		has_dot |= !strcmp(name, ".");
++		has_dotdot |= !strcmp(name, "..");
++		has_dotgit |= !strcmp(name, ".git");
+ 		has_zero_pad |= *(char *)desc.buffer == '0';
+ 		update_tree_entry(&desc);
+ 
+-- 
+1.9.0
