@@ -1,129 +1,100 @@
-From: Max Horn <max@quendi.de>
-Subject: Re: [PATCH 2/3] remote-hg: allow invalid bookmarks in a few edge cases
-Date: Wed, 19 Mar 2014 16:00:53 +0100
-Message-ID: <CDB4DDFC-FF7F-4BE0-A0B5-0933A506F690@quendi.de>
-References: <1395232399-60112-1-git-send-email-max@quendi.de> <1395232399-60112-2-git-send-email-max@quendi.de> <CALWbr2yb9_Kumm697w2c68xE6JPpkF9OfxvP2acsPjPFq=zboQ@mail.gmail.com>
-Mime-Version: 1.0 (Mac OS X Mail 6.6 \(1510\))
-Content-Type: multipart/signed; boundary="Apple-Mail=_90D5BD50-E95E-46F4-A5E1-283A1D445B12"; protocol="application/pgp-signature"; micalg=pgp-sha256
-Cc: git <git@vger.kernel.org>
-To: Antoine Pelisse <apelisse@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 19 16:01:01 2014
+From: Andrei Dinu <mandrei.dinu@gmail.com>
+Subject: [PATCH 1/3] diff-no-index.c read_directory() use is_dot_or_dotdot().
+Date: Wed, 19 Mar 2014 17:16:20 +0200
+Message-ID: <1395242180-4559-1-git-send-email-mandrei.dinu@gmail.com>
+Cc: Andrei Dinu <mandrei.dinu@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 19 16:16:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQHzJ-0008MR-1v
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Mar 2014 16:01:01 +0100
+	id 1WQIEH-0006MD-HD
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Mar 2014 16:16:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965199AbaCSPA4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Mar 2014 11:00:56 -0400
-Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:53901 "EHLO
-	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S933897AbaCSPAy (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 19 Mar 2014 11:00:54 -0400
-Received: from fb07-alg-gast1.math.uni-giessen.de ([134.176.24.161]); authenticated
-	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
-	id 1WQHzA-0001i7-U0; Wed, 19 Mar 2014 16:00:52 +0100
-In-Reply-To: <CALWbr2yb9_Kumm697w2c68xE6JPpkF9OfxvP2acsPjPFq=zboQ@mail.gmail.com>
-X-Mailer: Apple Mail (2.1510)
-X-bounce-key: webpack.hosteurope.de;max@quendi.de;1395241254;6464f371;
+	id S965375AbaCSPQ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Mar 2014 11:16:26 -0400
+Received: from mail-ee0-f49.google.com ([74.125.83.49]:60999 "EHLO
+	mail-ee0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965061AbaCSPQY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Mar 2014 11:16:24 -0400
+Received: by mail-ee0-f49.google.com with SMTP id c41so6720998eek.36
+        for <git@vger.kernel.org>; Wed, 19 Mar 2014 08:16:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=Jy5nBNyfN03YH+OVasMkS3fJmxglmA9i4i8MaM0DpzM=;
+        b=zlMU5j5bBT7MX8s8uY9RPYk+0hymHi5amxoi70gCCX0qLxanFhV4hF8AG50M55V7W4
+         LVtqoh+kpqHV5mg2etcVPk8ViW2eApVoxiHo01Z9tgJ6TWZn+tPBH9RdV7s30lZbGr1o
+         Ob07/z3yotg/tUxKycEID8sLc8XpYOsoGGi66bIJquJG/vDfPzKSqq7okuEgITBVXMGm
+         Jcws+ke2MQOpk4LQwyeCyAkAE9L3/XDBIBb7wrT83Oaag5M2jPTC11GSOO4ofPs2D+Ie
+         znj2TJ1gj1XD0eSmbsJRLFKqidFOfpBGEL0b4H2A+8Ws4wIystw59hs07e70d3QQGTtY
+         nO7w==
+X-Received: by 10.15.32.206 with SMTP id a54mr36007240eev.51.1395242183784;
+        Wed, 19 Mar 2014 08:16:23 -0700 (PDT)
+Received: from localhost.localdomain (p5.eregie.pub.ro. [141.85.0.105])
+        by mx.google.com with ESMTPSA id x45sm42976809eeu.23.2014.03.19.08.16.22
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 19 Mar 2014 08:16:23 -0700 (PDT)
+X-Mailer: git-send-email 1.7.9.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244451>
+
+Implement read_directory() to use is_dot_or_dotdot() function from dir.h
+instead of strcmp().
+
+Rename read_directory() in read_directory_path() to avoid conflicting with
+read_directory() from dir.h.
+
+Signed-off-by: Andrei Dinu <mandrei.dinu@gmail.com>
 
 
---Apple-Mail=_90D5BD50-E95E-46F4-A5E1-283A1D445B12
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=us-ascii
+---
+ I plan on applying to GSoc 2014.
 
-Hi Antoine,
+ diff-no-index.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-On 19.03.2014, at 14:07, Antoine Pelisse <apelisse@gmail.com> wrote:
-
-> Hi Max,
->=20
-> Thank you for working on this.
-> I believe it would be fair that you forget about patch 1/3 as you fix
-> it in this patch (2/3).
-> Also, I think it would be best NOT to integrate a patch (mine) that
-> breaks a test, as it
-> would make bisect harder to use.
-
-
-OK, makes sense. I didn't want to step on anybodies feet by hijacking =
-previously made work (however small or big it might be -- I've been =
-burned by this before). Anyway, so I'll squash the first two commits =
-together (or all three even?), and edit the message. But I'd like to =
-properly attribute that you discovered the issue, so perhaps I can add =
-something like "Reported-by: Antoine Pelisse" or so?
-
-Max
-
->=20
-> Thanks,
-> Antoine
->=20
-> On Wed, Mar 19, 2014 at 1:33 PM, Max Horn <max@quendi.de> wrote:
->> Fix the previous commit to workaround issues with edge cases: =
-Specifically,
->> remote-hg inserts a fake 'master' branch, unless the cloned hg =
-repository
->> already contains a 'master' bookmark. If that 'master' bookmark =
-happens
->> to reference the 'null' commit, the preceding fix ignores it. This
->> would leave us in an inconsistent state. Avoid this by NOT ignoring
->> null bookmarks named 'master' or 'default' under suitable =
-circumstances.
->>=20
->> Signed-off-by: Max Horn <max@quendi.de>
->> ---
->> contrib/remote-helpers/git-remote-hg | 7 +++++--
->> 1 file changed, 5 insertions(+), 2 deletions(-)
->>=20
->> diff --git a/contrib/remote-helpers/git-remote-hg =
-b/contrib/remote-helpers/git-remote-hg
->> index 12d850e..49b2c2e 100755
->> --- a/contrib/remote-helpers/git-remote-hg
->> +++ b/contrib/remote-helpers/git-remote-hg
->> @@ -626,8 +626,11 @@ def do_list(parser):
->>     repo =3D parser.repo
->>     for bmark, node in bookmarks.listbookmarks(repo).iteritems():
->>         if node =3D=3D '0000000000000000000000000000000000000000':
->> -            warn("Ignoring invalid bookmark '%s'", bmark)
->> -            continue
->> +            if fake_bmark =3D=3D 'default' and bmark =3D=3D =
-'master':
->> +                pass
->> +            else:
->> +                warn("Ignoring invalid bookmark '%s'", bmark)
->> +                continue
->>         bmarks[bmark] =3D repo[node]
->>=20
->>     cur =3D repo.dirstate.branch()
->> --
->> 1.9.0.7.ga299b13
->>=20
->=20
-
-
---Apple-Mail=_90D5BD50-E95E-46F4-A5E1-283A1D445B12
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename=signature.asc
-Content-Type: application/pgp-signature;
-	name=signature.asc
-Content-Description: Message signed with OpenPGP using GPGMail
-
------BEGIN PGP SIGNATURE-----
-Comment: GPGTools - http://gpgtools.org
-
-iF4EAREIAAYFAlMpsSgACgkQIpJVslrhe1lzFQD/cWIuOedbaVQWZDHT7H46+un4
-7pb2ynpEzYxM/4aKHykA/Rqg8y4QeYVZ2z4uusu0TYcPF/YdLY7VyGcyjBZpi8tQ
-=96Ki
------END PGP SIGNATURE-----
-
---Apple-Mail=_90D5BD50-E95E-46F4-A5E1-283A1D445B12--
+diff --git a/diff-no-index.c b/diff-no-index.c
+index 8e10bff..2d1165f 100644
+--- a/diff-no-index.c
++++ b/diff-no-index.c
+@@ -15,8 +15,9 @@
+ #include "log-tree.h"
+ #include "builtin.h"
+ #include "string-list.h"
++#include "dir.h"
+ 
+-static int read_directory(const char *path, struct string_list *list)
++static int read_directory_path(const char *path, struct string_list *list)
+ {
+ 	DIR *dir;
+ 	struct dirent *e;
+@@ -25,7 +26,7 @@ static int read_directory(const char *path, struct string_list *list)
+ 		return error("Could not open directory %s", path);
+ 
+ 	while ((e = readdir(dir)))
+-		if (strcmp(".", e->d_name) && strcmp("..", e->d_name))
++		if (!is_dot_or_dotdot(e->d_name))
+ 			string_list_insert(list, e->d_name);
+ 
+ 	closedir(dir);
+@@ -107,9 +108,9 @@ static int queue_diff(struct diff_options *o,
+ 		int i1, i2, ret = 0;
+ 		size_t len1 = 0, len2 = 0;
+ 
+-		if (name1 && read_directory(name1, &p1))
++		if (name1 && read_directory_path(name1, &p1))
+ 			return -1;
+-		if (name2 && read_directory(name2, &p2)) {
++		if (name2 && read_directory_path(name2, &p2)) {
+ 			string_list_clear(&p1, 0);
+ 			return -1;
+ 		}
+-- 
+1.7.9.5
