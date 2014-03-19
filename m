@@ -1,69 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/3] Make git more user-friendly during a merge conflict
-Date: Wed, 19 Mar 2014 15:30:26 -0700
-Message-ID: <xmqqd2hh254t.fsf@gitster.dls.corp.google.com>
-References: <1394771872-25940-1-git-send-email-andrew.kw.w@gmail.com>
-	<xmqqha6wa0ln.fsf@gitster.dls.corp.google.com>
-	<CADgNjakRSw-S4VbKnLC9PpmAcEi7iO=r0SBEy2XO3XhtDq=uJg@mail.gmail.com>
+From: Dragos Foianu <dragos.foianu@gmail.com>
+Subject: Re: [BUG] Segfault on git describe
+Date: Wed, 19 Mar 2014 22:34:29 +0000 (UTC)
+Message-ID: <loom.20140319T224201-156@post.gmane.org>
+References: <532975FB.9030803@mozilla.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
-To: Andrew Wong <andrew.kw.w@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 19 23:30:47 2014
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 19 23:35:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQP0U-0006Cx-1Q
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Mar 2014 23:30:42 +0100
+	id 1WQP4d-0004Kw-Og
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Mar 2014 23:35:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757704AbaCSWae (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Mar 2014 18:30:34 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54349 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757627AbaCSWaa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Mar 2014 18:30:30 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 69B8A7403A;
-	Wed, 19 Mar 2014 18:30:29 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=MfMexdw58vTWXysAlXMD4IjANX4=; b=GOcXkM
-	UyAhQvUupNBOUV7hAiI5ckz2vSyOKnM/QWVFQ6PRsnEM06Mil+REUihcQiCPsP+m
-	lOnfA9/uv8HTt5JYUlSh998wI+GcUz48sxlRikryH8lyQ5iyVflbzqbdPMEy0jLy
-	SLESuJ5Qagl53SvyZLloa0TcUs/AiaW4/13H8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=kB5sNa71m1fk+AgBJSUy+7fEgKCMPmTy
-	w2e6ps3dgjKUA7Havbi6ofxVDMadifa96kPN0ib77mmRUzJmXaecGQHjcM8aiQ6c
-	ku5hgj2HQBk2/ulUr0MkYBVFoUXFVRPt+gR0vZ/LDaudIt1eCKc45gufqF9Ig4Lr
-	T3rjkzWbWrU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 542C174038;
-	Wed, 19 Mar 2014 18:30:29 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7F4FF74035;
-	Wed, 19 Mar 2014 18:30:28 -0400 (EDT)
-In-Reply-To: <CADgNjakRSw-S4VbKnLC9PpmAcEi7iO=r0SBEy2XO3XhtDq=uJg@mail.gmail.com>
-	(Andrew Wong's message of "Mon, 17 Mar 2014 19:25:00 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 12C89350-AFB6-11E3-826F-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756049AbaCSWez (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Mar 2014 18:34:55 -0400
+Received: from plane.gmane.org ([80.91.229.3]:54824 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753890AbaCSWey (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Mar 2014 18:34:54 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1WQP4X-0004CY-Mg
+	for git@vger.kernel.org; Wed, 19 Mar 2014 23:34:53 +0100
+Received: from 109.100.93.176 ([109.100.93.176])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 19 Mar 2014 23:34:53 +0100
+Received: from dragos.foianu by 109.100.93.176 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 19 Mar 2014 23:34:53 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 109.100.93.176 (Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Firefox/24.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244504>
 
-Andrew Wong <andrew.kw.w@gmail.com> writes:
+Sylvestre Ledru <sylvestre <at> mozilla.com> writes:
 
-> On Mon, Mar 17, 2014 at 7:04 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Has this series been tested with existing test suite? ...
-> I tested it during RFC, but missed it when I sent it as patch.
-> ...
-> I'll fix the problem. Sorry about that.
+> 
+> Hello,
+> 
+> Trying to do some stats using the Firefox git repository
+> (https://github.com/mozilla/gecko-dev), I found a bug
+> on git describe. The following command will segfault:
+> git describe --contains a9ff31aebd6dbda82a3c733a72eeeaa0b0525b96
+> 
+> Please note that the Firefox history is a pretty long and this commit
+> date is 2001.
+> 
+> I experience this issue with the git version, and Debian packages
+> (1.9.0-1 and 2.0~next.20140214-2)
+> 
+> As attachment, the backtrace. I removed about 87250 calls to the
+> name_rev function. I guess that is a potential source of problem.
+> 
+> Full is available here:
+> http://people.mozilla.org/~sledru/bt-git-on-ff.txt (21 MB)
+> 
+> I am available to test patches if needed.
+> 
+> Thanks,
+> Sylvestre
+> PS: I am not registered, please cc me.
 
-Thanks.  Will hold onto the topic branch lest I forget, but will
-keep it out of 'pu' in the meantime.
+Hello,
+
+The name_rev function recursively calls itself which is why the backtrace is
+so big. Unfortunately, for repos with long histories it can lead to Stack
+Overflows. This is pretty much what happened in your case.
+
+I tested it on my computer and I get the same results. I managed to get it
+working by doubling my default stacksize:
+
+ulimit -S -s 16192
+
+Considering your project is a very large one and merely allocating a few
+more resources fixes the problem, I'm not sure it warrants rewriting the
+function to use less stack. You will have to wait for one of the maintainers
+to give you a definitive answer.
+
+All the best,
+Dragos
