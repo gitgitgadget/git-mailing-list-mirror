@@ -1,82 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t5510: Do not use $(pwd) when fetching / pushing / pulling via rsync
-Date: Wed, 19 Mar 2014 14:10:25 -0700
-Message-ID: <xmqqy50528u6.fsf@gitster.dls.corp.google.com>
-References: <5329F379.3010508@gmail.com>
-	<alpine.DEB.1.00.1403192103300.14982@s15462909.onlinehome-server.info>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 1/3][GSOC] diff: rename read_directory() to get_path_list()
+Date: Wed, 19 Mar 2014 17:15:48 -0400
+Message-ID: <CAPig+cRSh5XoKKBZ6iyAwEvUf90N4Ajfp_459ME3zoBGS2h23Q@mail.gmail.com>
+References: <1395228230-10189-1-git-send-email-sh19910711@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sebastian Schuberth <sschuberth@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>, thomas.braun@byte-physics.de,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Mar 19 22:11:32 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Hiroyuki Sano <sh19910711@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 19 22:15:54 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQNlr-0002is-0v
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Mar 2014 22:11:31 +0100
+	id 1WQNq6-00019Y-00
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Mar 2014 22:15:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754845AbaCSVL0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Mar 2014 17:11:26 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53247 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751295AbaCSVLZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Mar 2014 17:11:25 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EE9B175D17;
-	Wed, 19 Mar 2014 17:11:24 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=E6J4ThmIYflIt98NwCTvPu4ACe4=; b=eXA6lN
-	uOc/IHdmz25vBjZI+LVOC9sXCJNI0/ydPdxpY7y9cojfoUc+UDespho0J5x7dE8a
-	h1H2VotOGT9HtDybWnIcfYba0sf5C6080B3UTzH+gkNtHfdY9sRCJs+TgaC4yzzM
-	49qIpBF6Wm9w2LnF+eag3l8UZhGhLRz7CbA88=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=PT6t7n/ZfgsvH/lsIXtWv/mVTdu77NVd
-	Ka2PUssvztrJDuGDlUe7/W0R+J+3qd8ASh7p9k6qwQr3vgBTXDebvkWL4Ujyhmov
-	7a5Snd4eV+34dxscaYsKhBI2Ys/cQpAI0W+wTmW5b4FIrVcor26sSqymV2b/LYqO
-	Uq3iWcESVhY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D7B4975D16;
-	Wed, 19 Mar 2014 17:11:24 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3156175C4D;
-	Wed, 19 Mar 2014 17:10:27 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.1403192103300.14982@s15462909.onlinehome-server.info>
-	(Johannes Schindelin's message of "Wed, 19 Mar 2014 21:03:57 +0100
-	(CET)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: E4F9875A-AFAA-11E3-BD1D-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752262AbaCSVPt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Mar 2014 17:15:49 -0400
+Received: from mail-yk0-f169.google.com ([209.85.160.169]:42007 "EHLO
+	mail-yk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750934AbaCSVPs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Mar 2014 17:15:48 -0400
+Received: by mail-yk0-f169.google.com with SMTP id 142so24772729ykq.0
+        for <git@vger.kernel.org>; Wed, 19 Mar 2014 14:15:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=4bjmnIzE9vRLIWdnLaJqCRGn/Q2Z45CvhutGl6QnqCA=;
+        b=dkbe8R6QpQOeELdWe8xSXwM1+P/mG3mHdbBnHZicujtrT6s8oN54pP9GnTSxMKP/1W
+         OF6r2q2suh9dx4g1WpFkatEoTfo36EPfgYwdzerO7BcFQ22ylDUEKiqGgmvJQSGVWAy6
+         Fa7EybptmHej1DRdj/Ugc+uKtCR5ltsO/awI2O6FxLUmQY7Jn71hNcsXqZBVvapO8LVh
+         TjHVzuiC3BWG7yNrhdTptRimbvZRmMiXKRbZIx9dZwrGQBp7qp5xy+Mee6XuvDWlK4Mp
+         IqEXQTJOgMZY/B85yZ9M2feabkIc7DVDb7aue+SkRB6LnMRTG0AzMEktGf/I6l/7i0WZ
+         lYbQ==
+X-Received: by 10.236.14.196 with SMTP id d44mr44425yhd.159.1395263748278;
+ Wed, 19 Mar 2014 14:15:48 -0700 (PDT)
+Received: by 10.170.180.134 with HTTP; Wed, 19 Mar 2014 14:15:48 -0700 (PDT)
+In-Reply-To: <1395228230-10189-1-git-send-email-sh19910711@gmail.com>
+X-Google-Sender-Auth: 87996wOmBLHPQuMFfGC6FmDSVVE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244493>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244494>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Wed, Mar 19, 2014 at 7:23 AM, Hiroyuki Sano <sh19910711@gmail.com> wrote:
+> Subject: diff: rename read_directory() to get_path_list()
 
-> Hi Sebastian,
->
-> On Wed, 19 Mar 2014, Sebastian Schuberth wrote:
->
->> On MINGW, "pwd" is defined as "pwd -W" in test-lib.sh. This usually is the
->> right thing, but the absolute Windows path with a colon confuses rsync. We
->> could use $PWD in this case to work around the issue, but in fact there is
->> no need to use an absolute path in the first place, so get rid of it.
->> 
->> This was discovered in the context of the mingwGitDevEnv project and only
->> did not surface before with msysgit because the latter does not ship
->> rsync.
->
-> ACK
->
-> Ciao,
-> Dscho
+You probably mean 'diff-no-index' here rather than 'diff'.
 
-Thanks.
+> Including "dir.h" in "diff-no-index.c", it causes a compile error, because
+> the same name function read_directory() is declared globally in "dir.h".
+
+It might be a bit clearer to give a hint as to why dir.h will be a problem:
+
+    A subsequent patch will include dir.h in diff-no-index.c,
+    however, dir.h declares a read_directory() which is different
+    from the one defined statically by diff-no-index.c.
+
+> This change is to avoid conflicts as above.
+
+Good explanation, but write in imperative mood:
+
+    Rename the local read_directory() to avoid the conflict.
+
+> Signed-off-by: Hiroyuki Sano <sh19910711@gmail.com>
+> ---
+>  diff-no-index.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/diff-no-index.c b/diff-no-index.c
+> index 8e10bff..20b6a8a 100644
+> --- a/diff-no-index.c
+> +++ b/diff-no-index.c
+> @@ -16,7 +16,7 @@
+>  #include "builtin.h"
+>  #include "string-list.h"
+>
+> -static int read_directory(const char *path, struct string_list *list)
+> +static int get_path_list(const char *path, struct string_list *list)
+>  {
+>         DIR *dir;
+>         struct dirent *e;
+> @@ -107,9 +107,9 @@ static int queue_diff(struct diff_options *o,
+>                 int i1, i2, ret = 0;
+>                 size_t len1 = 0, len2 = 0;
+>
+> -               if (name1 && read_directory(name1, &p1))
+> +               if (name1 && get_path_list(name1, &p1))
+>                         return -1;
+> -               if (name2 && read_directory(name2, &p2)) {
+> +               if (name2 && get_path_list(name2, &p2)) {
+>                         string_list_clear(&p1, 0);
+>                         return -1;
+>                 }
+> --
+> 1.9.0
+>
