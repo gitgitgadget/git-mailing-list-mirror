@@ -1,210 +1,96 @@
-From: tanay abhra <tanayabh@gmail.com>
-Subject: [RFC][GSoC] Calling for comments regarding rough draft of proposal
-Date: Thu, 20 Mar 2014 01:22:28 +0530
-Message-ID: <CAEc54XAvdOFQLFE_odEKDGjrqNo+vtYfHafUvKS0OazUQ1r-Ag@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] tests: use "env" to run commands with temporary env-var settings
+Date: Wed, 19 Mar 2014 12:55:06 -0700
+Message-ID: <xmqqfvme2cbp.fsf@gitster.dls.corp.google.com>
+References: <244379@gmane.comp.version-control.git>
+	<1395168845-1972-1-git-send-email-unsignedzero@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 19 20:52:38 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: David Tran <unsignedzero@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 19 20:55:21 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQMXT-0001jW-Ap
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Mar 2014 20:52:35 +0100
+	id 1WQMa6-00063W-O3
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Mar 2014 20:55:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754194AbaCSTwa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Mar 2014 15:52:30 -0400
-Received: from mail-vc0-f196.google.com ([209.85.220.196]:52115 "EHLO
-	mail-vc0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753978AbaCSTw2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Mar 2014 15:52:28 -0400
-Received: by mail-vc0-f196.google.com with SMTP id il7so2281975vcb.11
-        for <git@vger.kernel.org>; Wed, 19 Mar 2014 12:52:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=Qeom3czEF4r8aZqpQZLUZ6+4ukcPXQ58BTbVGNOUYmc=;
-        b=O8sMQfcqQUpa4A9DCSBuunn3/rerfTGMKDJ9i60M/2yE3jHXa+N7k/RWNJMCj9QKdu
-         NBUYFzkNTz7PgOSVN/8MhHf4dcJoeMSRmcnLj0KhRI/RVnnPCjXvf7LncJSt32cNsVmS
-         dZnv4pbw7oITiyFWiNKPI3voNZQjvq73tonnTaQ+l5MXDQOhAZbE0VDNTCFdoGyy1zyC
-         mLDS/sUdm95SKWtYl5iBL/BPFZOvcq/lx0zAQfnrh8mfKktGdPsQq8UfK3S7D7guh7zb
-         7cAYlNJb1zgR4+V3PZOHzBUqO1Qvc4l0q/3EtQlLU9z+YAVkPzMT8SQl46URubxhi6AC
-         BusA==
-X-Received: by 10.58.161.101 with SMTP id xr5mr1464535veb.36.1395258748289;
- Wed, 19 Mar 2014 12:52:28 -0700 (PDT)
-Received: by 10.58.111.202 with HTTP; Wed, 19 Mar 2014 12:52:28 -0700 (PDT)
+	id S1753743AbaCSTzL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Mar 2014 15:55:11 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55023 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750978AbaCSTzJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Mar 2014 15:55:09 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B7C0A74F6A;
+	Wed, 19 Mar 2014 15:55:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=V/1dFVir0Jt7gGUFSb+qjJC3GQY=; b=Gu/FOp
+	9fUD6LDUQx9mDFI40U96CfJnUUrodYw534AM2tqIUs/8Rz5Aia+vbSwk9Rh5JQkA
+	ggeeTQ4RWXAX1GoSlCSyfmI2f48sl0sNV9muu6AnjzQJf55o44zWnfTubQADoXZg
+	fS+AMKUwuPo4dn+DmKmf/wphxfBA47NmFXVTY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=e+QP7UvQEV8iBKJihXyiipIy7+5Srbyh
+	JmjxtGMH/HMVI6fJA+Q/d2U7Z6aS8H/q2/z0kQc66DdjJZgTrvL1accvt26Op13e
+	9h0ozLRa5ZDXz7cY7FEz1lRAMFUXM2elsgZ/MFkkVoFSVBx9igmivgmsA4fH/dt5
+	fX6qDocdQ6g=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A615474F69;
+	Wed, 19 Mar 2014 15:55:08 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E2C9B74F64;
+	Wed, 19 Mar 2014 15:55:07 -0400 (EDT)
+In-Reply-To: <1395168845-1972-1-git-send-email-unsignedzero@gmail.com> (David
+	Tran's message of "Tue, 18 Mar 2014 18:54:05 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 5F47513C-AFA0-11E3-AD5E-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244486>
 
-Hi,
-      I have already done the microproject, which has been merged into
-main last week. I have prepared a rough draft of my proposal for
-review, read all the previous mailing list threads about it.I am
-reading the codebase little by little.
+David Tran <unsignedzero@gmail.com> writes:
 
-Please suggest improvements on the following topics,
+> Originally, we would use "VAR=VAL command" to execute a test command with
+> environment variable(s) only for that command. This does not work for commands
+> that are shell functions (most notably test functions like "test_must_fail");
+> the result of the assignment is retained and affects later commands.
+>
+> To avoid this, we assigned and exported the environment variables and run
+> the test(s) in a subshell like this,
+>
+> 	(
+> 		VAR=VAL &&
+> 		export VAR
+> 		test_must_fail git command to be tested
+> 	)
+>
+> Using the "env" utility, we should be able to say
+>
+> 	test_must_fail git command to be tested
+>
+> which is much short and easier to read.
 
-1.I have read one-third of config.c and will complete reading it by
-tomorrow.Is there any other  piece of code relevant to this proposal?
+Looks familiar ;-) but it seems the changes from the original you
+took it from all look worsening, not improvements, to me.
 
-2.Other things I should add to the proposal that I have left off?I am
-getting confused what extra details I should add to the proposal. I
-will add
-the informal parts(my background, schedule for summer etc) of the
-proposal later.
+>>Isn't GIT_CONFIG here another way of saying:
+>>
+>>	test_must_fail git config -f doesnotexist --list
+>>
+>>Perhaps that is shorter and more readable still (and there are a few
+>>similar cases in this patch.
+> I'll ignore this for now. If needed I can make another patch to resolve this.
 
-3.Did I understand anything wrong or if my approach to solving
-problems is incorrect,if yes, I will redraft my proposal according to
-your suggestions.
+Yes, I think that is sensible.  And it does not have to be done by you.
 
-------------------------------------------------------------------------------
-#GSoC Proposal : Git configuration API improvements
--------------------------------------------------------------------------------
+> Hopefully this should be all of it.
 
-#Proposed Improvements
-
-* Fix "git config --unset" to clean up detritus from sections that are
-left empty.
-
-* Read the configuration from files once and cache the results in an
-appropriate data structure in memory.
-
-* Change `git_config()` to iterate through the pre-read values in
-memory rather than re-reading the configuration
-  files.
-
-* Add new API calls that allow the cache to be inquired easily and
-efficiently.  Rewrite other functions like
- `git_config_int()` to be cache-aware.
-
-* Rewrite callers to use the new API wherever possible.
-
-* How to invalidate the cache correctly in the case that the
-configuration is changed while `git` is executing.
-
-#Future Improvements
-
-*Allow configuration values to be unset via a config file
-
---------------------------------------------------------------------------
-##Changing the git_config api to retrieve values from memory
-
-Approach:-
-
-We parse the config file once, storing the raw values to records in
-memory. After the whole config has been read, iterate through the records,
-feeding the surviving values into the callback in the order they were
-originally read
-(minus deletions).
-
-Path to follow for the api conversion,
-
-1. Convert the parser to read into an in-memory representation, but
-   leave git_config() as a wrapper which iterates over it.
-
-2. Add query functions like config_string_get() which will inquire
-cache for values efficiently.
-
-3. Convert callbacks to query functions one by one.
-
-I propose two approaches for the format of the internal cache,
-
-1.Using a hashmap to map keys to their values.This would bring as an
- advantage, constant time lookups for the values.The implementation
- will be similar to "dict" data structure in python,
-
- for example, section.subsection --mapped-to--> multi_value_string
-
- This approach loses the relative order of different config keys.
-
-2.Another approach would be to actually represent the syntax tree of the
-  config file in memory. That would make lookups of individual keys more
-  expensive, but would enable other manipulation. E.g., if the syntax
-  tree included nodes for comments and other non-semantic constructs, then
-  we can use it for a complete rewrite.
-
- And "git config" becomes:
-
-  1. Read the tree.
-
-  2. Perform operations on the tree (add nodes, delete nodes, etc).
-
-  3. Write out the tree.
-
-and things like "remove the section header when the last item in the
-section is removed" become trivial during step 2.
-
-
-I still prefer the hashmap way of implementing the cache,as empty
-section headers  are not so problematic(no processing pitfalls) and
-are sometimes annotated with comments  which become redundant and
-confusing if the section header is removed.As for the aesthetic
-problem
-I propose a different solution for it below.
-
-----------------------------------------------------------------------
-##Tidy configuration files
-
-When a configuration file is repeatedly modified, often garbage is
-left behind.  For example, after
-
-    git config pull.rebase true
-    git config --unset pull.rebase
-    git config pull.rebase true
-    git config --unset pull.rebase
-
-the bottom of the configuration file is left with the useless lines
-
-    [pull]
-    [pull]
-
-Also,setting a config value, appends the key-value pair at the end of
-file without checking for empty main keys
-even if the main key(like [my]) is already present and empty.It works
-fine if the main key with an already present
-sub-key.
-
-for example:-
-    git config pull.rebase true
-    git config --unset pull.rebase
-    git config pull.rebase true
-    git config pull.option true
-gives
-    [pull]
-    [pull]
-        rebase = true
-        option = true
-
-Also, a possible detriment is presence of comments,
-For Example:-
-    [my]
-            # This section is for my own private settings
-
-Expected output:
-
-  1. When we delete the last key in a section, we should be
-     able to delete the section header.
-
-  2. When we add a key into a section, we should be able to
-     reuse the same section header, even if that section did
-     not have any keys in it already.
-
-Possible approaches:-
-
-1.Leave the empty section header as it was and when a new value is set,
-  reuse the header instead of appending at the end of the config file.
-  I am going through the code to find find other solution for this problem.
-
-links:-
-[1]http://thread.gmane.org/gmane.comp.version-control.git/219505
-[2]http://thread.gmane.org/gmane.comp.version-control.git/208113
-
------------------------------------------------------------------------
-
-Thanks,
-Tanay Abhra.
+Seems to be well done.  Thanks.
