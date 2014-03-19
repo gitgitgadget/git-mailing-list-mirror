@@ -1,96 +1,112 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] tests: use "env" to run commands with temporary env-var settings
-Date: Wed, 19 Mar 2014 12:55:06 -0700
-Message-ID: <xmqqfvme2cbp.fsf@gitster.dls.corp.google.com>
-References: <244379@gmane.comp.version-control.git>
-	<1395168845-1972-1-git-send-email-unsignedzero@gmail.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH v2] git-rebase: Teach rebase "-" shorthand.
+Date: Wed, 19 Mar 2014 19:55:03 +0000
+Message-ID: <20140319195503.GD11018@serenity.lan>
+References: <xmqq61nb8fap.fsf@gitster.dls.corp.google.com>
+ <1395226935-53044-1-git-send-email-modocache@gmail.com>
+ <xmqqob123wjm.fsf@gitster.dls.corp.google.com>
+ <20140319180213.GB11018@serenity.lan>
+ <xmqqsiqe2es6.fsf@gitster.dls.corp.google.com>
+ <20140319191217.GC11018@serenity.lan>
+ <xmqqk3bq2cyc.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Tran <unsignedzero@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 19 20:55:21 2014
+Cc: Brian Gesiak <modocache@gmail.com>, git@vger.kernel.org,
+	Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>,
+	Tim Chase <git@tim.thechases.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 19 20:55:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQMa6-00063W-O3
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Mar 2014 20:55:19 +0100
+	id 1WQMaD-00069u-Jj
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Mar 2014 20:55:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753743AbaCSTzL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Mar 2014 15:55:11 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55023 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750978AbaCSTzJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Mar 2014 15:55:09 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B7C0A74F6A;
-	Wed, 19 Mar 2014 15:55:08 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=V/1dFVir0Jt7gGUFSb+qjJC3GQY=; b=Gu/FOp
-	9fUD6LDUQx9mDFI40U96CfJnUUrodYw534AM2tqIUs/8Rz5Aia+vbSwk9Rh5JQkA
-	ggeeTQ4RWXAX1GoSlCSyfmI2f48sl0sNV9muu6AnjzQJf55o44zWnfTubQADoXZg
-	fS+AMKUwuPo4dn+DmKmf/wphxfBA47NmFXVTY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=e+QP7UvQEV8iBKJihXyiipIy7+5Srbyh
-	JmjxtGMH/HMVI6fJA+Q/d2U7Z6aS8H/q2/z0kQc66DdjJZgTrvL1accvt26Op13e
-	9h0ozLRa5ZDXz7cY7FEz1lRAMFUXM2elsgZ/MFkkVoFSVBx9igmivgmsA4fH/dt5
-	fX6qDocdQ6g=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A615474F69;
-	Wed, 19 Mar 2014 15:55:08 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S1753957AbaCSTzP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Mar 2014 15:55:15 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:41146 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752457AbaCSTzN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Mar 2014 15:55:13 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 15AE4CDA587;
+	Wed, 19 Mar 2014 19:55:13 +0000 (GMT)
+X-Quarantine-ID: <l1rluIi1wgY4>
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -1
+X-Spam-Level: 
+X-Spam-Status: No, score=-1 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1] autolearn=disabled
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id l1rluIi1wgY4; Wed, 19 Mar 2014 19:55:12 +0000 (GMT)
+Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E2C9B74F64;
-	Wed, 19 Mar 2014 15:55:07 -0400 (EDT)
-In-Reply-To: <1395168845-1972-1-git-send-email-unsignedzero@gmail.com> (David
-	Tran's message of "Tue, 18 Mar 2014 18:54:05 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 5F47513C-AFA0-11E3-AD5E-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 9A3A6CDA330;
+	Wed, 19 Mar 2014 19:55:05 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <xmqqk3bq2cyc.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.22 (2013-10-16)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244487>
 
-David Tran <unsignedzero@gmail.com> writes:
+On Wed, Mar 19, 2014 at 12:41:31PM -0700, Junio C Hamano wrote:
+> John Keeping <john@keeping.me.uk> writes:
+> 
+> > On Wed, Mar 19, 2014 at 12:02:01PM -0700, Junio C Hamano wrote:
+> >> John Keeping <john@keeping.me.uk> writes:
+> >> 
+> >> > On Wed, Mar 19, 2014 at 10:53:01AM -0700, Junio C Hamano wrote:
+> >> >>    "rebase -" with your change still says something like this:
+> >> >> 
+> >> >>         First, rewinding head to replay your work on top of it...
+> >> >>         Fast-forwarded HEAD to @{-1}.
+> >> >> 
+> >> >>    instead of "Fast-forwarded HEAD to -".  Somebody may later want
+> >> >>    to "fix" this, making these two eye-candy output to be different
+> >> >>    from each other, and what your test expects will no longer hold
+> >> >>    (not that I think it is better to say "-" instead of @{-1}
+> >> >>    there).
+> >> >
+> >> > I don't think either of these is correct.  When using "-" with the
+> >> > commands that already support it, I have occasionally found that "-"
+> >> > isn't what I thought it was.
+> >> >
+> >> > Can we use `git name-rev` to put the actual name here, so that people
+> >> > who have not done what they intended can hopefully notice sooner?
+> >> 
+> >> That sounds like a right thing to do.  It however is totally
+> >> orthogonal to the change we are discussing, and should be done as a
+> >> separate patch.
+> >
+> > Is it not part of adding support for "-"?
+> 
+> I thought your suggestion was:
+> 
+>     'rebase @{-1}' says 'Fast-fowarded HEAD to @{-1}'. It should say
+>     'Fast-forwarded HEAD to 4f407407 (rebase: allow "-" short-hand
+>     for the previous branch, 2014-03-19)' instead.
+> 
+> Or it could be:
+> 
+>     'rebase @{-1}' says 'Fast-fowarded HEAD to @{-1}'. It should say
+>     'Fast-forwarded HEAD to master' instead.
+> 
+> In either case, it does not look like such a change is about
+> teaching "-" as a synonym to "@{-1}".
 
-> Originally, we would use "VAR=VAL command" to execute a test command with
-> environment variable(s) only for that command. This does not work for commands
-> that are shell functions (most notably test functions like "test_must_fail");
-> the result of the assignment is retained and affects later commands.
->
-> To avoid this, we assigned and exported the environment variables and run
-> the test(s) in a subshell like this,
->
-> 	(
-> 		VAR=VAL &&
-> 		export VAR
-> 		test_must_fail git command to be tested
-> 	)
->
-> Using the "env" utility, we should be able to say
->
-> 	test_must_fail git command to be tested
->
-> which is much short and easier to read.
+My suggestion was specifically:
 
-Looks familiar ;-) but it seems the changes from the original you
-took it from all look worsening, not improvements, to me.
+    'rebase -' says 'Fast-forwarded HEAD to -'.  It should say
+    'Fast-forwarded HEAD to master' instead.
 
->>Isn't GIT_CONFIG here another way of saying:
->>
->>	test_must_fail git config -f doesnotexist --list
->>
->>Perhaps that is shorter and more readable still (and there are a few
->>similar cases in this patch.
-> I'll ignore this for now. If needed I can make another patch to resolve this.
-
-Yes, I think that is sensible.  And it does not have to be done by you.
-
-> Hopefully this should be all of it.
-
-Seems to be well done.  Thanks.
+I'm not sure it's desirable to attempt to canonicalise whatever the user
+writes on the command line, but since we're special-casing '-' I think
+it is a good thing to print the branch name in that case.
