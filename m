@@ -1,104 +1,100 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 1/2] [GSoC] diff: rename read_directory()
-Date: Wed, 19 Mar 2014 04:12:55 -0400
-Message-ID: <CAPig+cQ+9WNoNU54DHE-GnHQ=BCix9Efm+O_jP+a6mFL_yvmxg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] [GSoC] diff:use is_dot_or_dotdot() in code
+Date: Wed, 19 Mar 2014 04:21:04 -0400
+Message-ID: <CAPig+cQF8p0qeNWhGOZ1tqzvEaUGwSd4S0-7FxcuXCvKNE33Kw@mail.gmail.com>
 References: <1395210578-1532-1-git-send-email-ba.bourn@gmail.com>
+	<1395210578-1532-2-git-send-email-ba.bourn@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Cc: Git List <git@vger.kernel.org>
 To: Brian Bourn <ba.bourn@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 19 09:13:22 2014
+X-From: git-owner@vger.kernel.org Wed Mar 19 09:21:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQBcn-0007u3-NL
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Mar 2014 09:13:22 +0100
+	id 1WQBkf-0003pE-Hm
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Mar 2014 09:21:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753359AbaCSINN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Mar 2014 04:13:13 -0400
-Received: from mail-yk0-f172.google.com ([209.85.160.172]:56732 "EHLO
-	mail-yk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754348AbaCSIM4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Mar 2014 04:12:56 -0400
-Received: by mail-yk0-f172.google.com with SMTP id 200so22273122ykr.3
-        for <git@vger.kernel.org>; Wed, 19 Mar 2014 01:12:55 -0700 (PDT)
+	id S1758172AbaCSIVJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Mar 2014 04:21:09 -0400
+Received: from mail-yh0-f42.google.com ([209.85.213.42]:53849 "EHLO
+	mail-yh0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752817AbaCSIVE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Mar 2014 04:21:04 -0400
+Received: by mail-yh0-f42.google.com with SMTP id t59so8249768yho.29
+        for <git@vger.kernel.org>; Wed, 19 Mar 2014 01:21:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc:content-type;
-        bh=/LPp2maA2KcmAq53nJAB+2d0gHJBc0DbWUvBQ+OGVx0=;
-        b=d3xpuQHR2G0w/Q79FQ1Yp739W5xtXStVf/P13myUpdPxYW2ljotP9FifLHYc28raQ4
-         lipWfPnB9PbHXcn+Z01ITkctA0ZgG58AGf0scHCHadf+tE83WiF7ZszpPZi6vftE0JEU
-         HKpOv0Mk6eNoDkawFz/dGIpS7hgyyEmpgFaY9j5sxHs8iWJdHD39vgD0kxcqVOcZsX4/
-         BqOEUXRzYWKecRKslS+uOppWi39aZMVzeNjJE3Li0ls4FxE6D8kucXBmdaniJThLaeC+
-         WqvWScKYBGpxbyqLGwWxJJiYSLp3Qze62EK03RiuNOumwoY1ltQZvwHaKnwxjF7vHvtN
-         WZOg==
-X-Received: by 10.236.229.130 with SMTP id h2mr24487533yhq.68.1395216775586;
- Wed, 19 Mar 2014 01:12:55 -0700 (PDT)
-Received: by 10.170.180.134 with HTTP; Wed, 19 Mar 2014 01:12:55 -0700 (PDT)
-In-Reply-To: <1395210578-1532-1-git-send-email-ba.bourn@gmail.com>
-X-Google-Sender-Auth: b2MMfjHid0QvzIRuKWMDNrdOMFY
+        bh=8rcD0xCvOu+c91M34cxSEIXzovfxUPTpASpnieeOa5I=;
+        b=hw1A2dF/vxinYerwIZBmEnfk2gIC5ZzziZM2jW22VeOK4lFP5iVEzn13nStUu3mx2e
+         Zar6NBKHAO73+YuOOva4XljY2PxS1oWVs+06JbHrq3GdaIoq6cK3VrYQ/UQyUztYRagV
+         /6GB3T4BHVOrmKWaYGyet4OiC4rAmnSsfEGNLTt73zRQipFqsA+U3Glhi1fNIOKLAruj
+         QqGmxt2b2QbWwiLTAZUhD3txG2IH8wMcqgs9u6fMy9NgLzPLzH497n32Fq12RibaDDWG
+         WYvVcMXBr73UZgikGxDesCt0F+46/M3Jy4ACCeOwprxxpujsnmu7grXzbboT9wL4VlEo
+         UGvg==
+X-Received: by 10.236.132.48 with SMTP id n36mr83833yhi.149.1395217264065;
+ Wed, 19 Mar 2014 01:21:04 -0700 (PDT)
+Received: by 10.170.180.134 with HTTP; Wed, 19 Mar 2014 01:21:04 -0700 (PDT)
+In-Reply-To: <1395210578-1532-2-git-send-email-ba.bourn@gmail.com>
+X-Google-Sender-Auth: x4t9zMLePM8J6PSKoluIgG4yQtg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244418>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244419>
 
 On Wed, Mar 19, 2014 at 2:29 AM, Brian Bourn <ba.bourn@gmail.com> wrote:
-> Subject: diff: rename read_directory()
+> Subject: diff:use is_dot_or_dotdot() in code
 
-I think you mean "diff-no-index" rather than "diff".
+Wrong subject. See below.
 
 > From: Brian Bourn <ba.bourn@gmail.com>
 
-Unless this is intentionally different from the address from which you
-sent the email, you shouldn't include it here. "git am" will
-automatically pick up your name and address directly from the email
-header when applying your patch.
+Drop this. "git am" will grab your name and address automatically from
+the email header when applying the patch.
 
-> It is desirable to replace manual checking of "." or ".."
-> in diff-no-index.c with is_dot_or_dotdot(), which is defined
-> in dir.h. However, dir.h declares a read_directory which conflicts
-> with a (different) static read_directory() defined in
-> in diff-no-index.c. As a preparatory step, rename the local
-> read_directory() to avoid the collision
+> Subject: replace manual "."/".." check with is_dot_or_dotdot()
 
-Better. Add a period at the end.
+This should be the actual subject of this email; and the old, less
+informative subject, which is still present, should be dropped. Stated
+differently, make this text the first line of your commit message.
+"git format-patch" will automatically extract that line as the email's
+Subject:, and "git am" will convert the Subject: back to the first
+line of the commit message (without the "Subject:" prefix) when
+applying the patch.
 
-Other than these minor points, the patch looks good.
+Other than that, the patch looks fine.
 
 > Signed-off-by: Brian Bourn <ba.bourn@gmail.com>
 > ---
-> Part 1 of my GSoC submission
->  diff-no-index.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
+> Part 2 of my GSoC submission where the actual change is made
+>  diff-no-index.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 >
 > diff --git a/diff-no-index.c b/diff-no-index.c
-> index 8e10bff..ec51106 100644
+> index ec51106..c554691 100644
 > --- a/diff-no-index.c
 > +++ b/diff-no-index.c
-> @@ -16,7 +16,7 @@
+> @@ -15,6 +15,7 @@
+>  #include "log-tree.h"
 >  #include "builtin.h"
 >  #include "string-list.h"
+> +#include "dir.h"
 >
-> -static int read_directory(const char *path, struct string_list *list)
-> +static int read_directory_contents(const char *path, struct string_list *list)
+>  static int read_directory_contents(const char *path, struct string_list *list)
 >  {
->         DIR *dir;
->         struct dirent *e;
-> @@ -107,9 +107,9 @@ static int queue_diff(struct diff_options *o,
->                 int i1, i2, ret = 0;
->                 size_t len1 = 0, len2 = 0;
+> @@ -25,7 +26,7 @@ static int read_directory_contents(const char *path, struct string_list *list)
+>                 return error("Could not open directory %s", path);
 >
-> -               if (name1 && read_directory(name1, &p1))
-> +               if (name1 && read_directory_contents(name1, &p1))
->                         return -1;
-> -               if (name2 && read_directory(name2, &p2)) {
-> +               if (name2 && read_directory_contents(name2, &p2)) {
->                         string_list_clear(&p1, 0);
->                         return -1;
->                 }
+>         while ((e = readdir(dir)))
+> -               if (strcmp(".", e->d_name) && strcmp("..", e->d_name))
+> +               if (!is_dot_or_dotdot(e->d_name))
+>                         string_list_insert(list, e->d_name);
+>
+>         closedir(dir);
 > --
 > 1.9.0
