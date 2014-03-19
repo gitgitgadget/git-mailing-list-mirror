@@ -1,93 +1,237 @@
-From: Brian Bourn <ba.bourn@gmail.com>
-Subject: [PATCH] [GSoC 2014]diff: Imported dir.h and renamed read_directory()
-Date: Tue, 18 Mar 2014 20:35:35 -0400
-Message-ID: <CAM+=D-Ac2yL02-6qGQFuV_qz4FKt_6EGwRHk4+MLDnSb5CgucQ@mail.gmail.com>
+From: szager@chromium.org
+Subject: (unknown)
+Date: Tue, 18 Mar 2014 17:45:49 -0700
+Message-ID: <5328e8bd.fNxY4x6POKCJfhV6%szager@chromium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 19 01:35:44 2014
+X-From: git-owner@vger.kernel.org Wed Mar 19 01:45:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQ4Tv-0008VC-Go
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Mar 2014 01:35:43 +0100
+	id 1WQ4do-00089h-3l
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Mar 2014 01:45:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757702AbaCSAfg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Mar 2014 20:35:36 -0400
-Received: from mail-qa0-f46.google.com ([209.85.216.46]:53952 "EHLO
-	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756662AbaCSAfg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Mar 2014 20:35:36 -0400
-Received: by mail-qa0-f46.google.com with SMTP id i13so7654764qae.5
-        for <git@vger.kernel.org>; Tue, 18 Mar 2014 17:35:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=2ooZ4NjWd8sRbPjoofUh4H6cg6gFV9Id4KZkJ0s2HwU=;
-        b=isix+eeYhwysGF5lT790B9lxSX574BNdQAXwfvzV7jpihvLxTa8enMRGGRBiEg8aVd
-         lBg99nNQtgS23hlGMr0AdTdI0oFtZjWBPcekJky+wkIv1SbpPOlvrOUggtjgN5LI2Mek
-         +3bzZrWYuT0jMEqqYhRpk6YGhM8LROl46FSZUjEbLWtUuEE6vy+mnlCWVspPLgbGxOGO
-         9R8jCQuJFP+3cYKLxBohjcthUCLwTgHaGZkcVtuscuAF0IsHqn2VPSf769JQN6XB0NsH
-         5Uv+f8b9pjxOqQa85bUwo+Mx+qn7Zp/cFtb/tzal2qiPoudau39YB+I61VYgaNWtsfho
-         QYIA==
-X-Received: by 10.224.56.5 with SMTP id w5mr39327165qag.60.1395189335636; Tue,
- 18 Mar 2014 17:35:35 -0700 (PDT)
-Received: by 10.96.86.38 with HTTP; Tue, 18 Mar 2014 17:35:35 -0700 (PDT)
+	id S933327AbaCSApw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Mar 2014 20:45:52 -0400
+Received: from mail-oa0-f73.google.com ([209.85.219.73]:54008 "EHLO
+	mail-oa0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933312AbaCSApv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Mar 2014 20:45:51 -0400
+Received: by mail-oa0-f73.google.com with SMTP id n16so1538787oag.2
+        for <git@vger.kernel.org>; Tue, 18 Mar 2014 17:45:50 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:date:from:to:message-id:user-agent:mime-version
+         :content-type:content-transfer-encoding;
+        bh=9uI/9Fckp7ku6ZZSYFR4qiOsWw0zKFbV9P6baqJiBSA=;
+        b=e9vcXqxvF2pLfCA5FD/haUQxTcD7Fh4KhLFjeoQLnOx4QbYk6bY6e9nEKLFZPrsBCc
+         9gXmkz5s3RecGmDZ2PtFhDgiytpCRdt5+X+93Lwwo9eN+DYYiiYDAqitTV2uFQF8i8Or
+         gfF/Vzko+4nyzqlFhaf6XJ48QVHSKsv0Ag2cjI79jHry+LWMTq75pOUz2erlOXWV7jZE
+         ox1OpWiG3Ba9Sr0uAxoGDD0PO9T6UrTlfeqP3VgbzFWhB0WmgZAMhMJaXzAMi1Hs5Sgo
+         4SfQlHOBxSmow0BKCSB06esGqdJxDF3cLfm8chQgcVKo6Ja00hz7eLac4+TO3g5Cxvty
+         TWiA==
+X-Gm-Message-State: ALoCoQnyPtehMWxL6jHamH068+96811F/HfZqvs12XDfOajAui3Sm04rGOx2l8mUgRBoS7uDuR02
+X-Received: by 10.43.79.196 with SMTP id zr4mr12465681icb.3.1395189950422;
+        Tue, 18 Mar 2014 17:45:50 -0700 (PDT)
+Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
+        by gmr-mx.google.com with ESMTPS id k45si3173532yhn.4.2014.03.18.17.45.50
+        for <git@vger.kernel.org>
+        (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 18 Mar 2014 17:45:50 -0700 (PDT)
+Received: from wince.sfo.corp.google.com (wince.sfo.corp.google.com [172.31.53.43])
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 2DD6E5A420B
+	for <git@vger.kernel.org>; Tue, 18 Mar 2014 17:45:50 -0700 (PDT)
+Received: by wince.sfo.corp.google.com (Postfix, from userid 138314)
+	id 4BCAE40360; Tue, 18 Mar 2014 17:45:49 -0700 (PDT)
+User-Agent: Heirloom mailx 12.5 6/20/10
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244399>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244400>
 
-this was done in order to implement the GSoC
-Micro project for diff-no-index.c this is the
-first patch importing dir.h, for the use of
-is_dot_or_dotdot(), and renaming
-read_directory() to read_directory_contents()
-in order to deal with the conflicting function
-in dir.h
+Subject: [PATCH] Enable index-pack threading in msysgit.
 
-Signed-off-by: Brian Bourn <bab2177@columbia.edu>
+This adds a Windows implementation of pread.  Note that it is NOT
+safe to intersperse calls to read() and pread() on a file
+descriptor.  According to the ReadFile spec, using the 'overlapped'
+argument should not affect the implicit position pointer of the
+descriptor.  Experiments have shown that this is, in fact, a lie.
+
+To accomodate that fact, this change also incorporates:
+
+http://article.gmane.org/gmane.comp.version-control.git/196042
+
+... which gives each index-pack thread its own file descriptor.
 ---
+ builtin/index-pack.c | 21 ++++++++++++++++-----
+ compat/mingw.c       | 31 ++++++++++++++++++++++++++++++-
+ compat/mingw.h       |  3 +++
+ config.mak.uname     |  1 -
+ 4 files changed, 49 insertions(+), 7 deletions(-)
 
-I plan on applying to GSoC 2014
-
- diff-no-index.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
-
-diff --git a/diff-no-index.c b/diff-no-index.c
-index 8e10bff..ba915af 100644
---- a/diff-no-index.c
-+++ b/diff-no-index.c
-@@ -10,13 +10,14 @@
- #include "blob.h"
- #include "tag.h"
- #include "diff.h"
-+#include "dir.h"
- #include "diffcore.h"
- #include "revision.h"
- #include "log-tree.h"
- #include "builtin.h"
- #include "string-list.h"
-
--static int read_directory(const char *path, struct string_list *list)
-+static int read_directory_contents(const char *path, struct string_list *list)
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 2f37a38..c02dd4c 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -51,6 +51,7 @@ struct thread_local {
+ #endif
+ 	struct base_data *base_cache;
+ 	size_t base_cache_used;
++	int pack_fd;
+ };
+ 
+ /*
+@@ -91,7 +92,8 @@ static off_t consumed_bytes;
+ static unsigned deepest_delta;
+ static git_SHA_CTX input_ctx;
+ static uint32_t input_crc32;
+-static int input_fd, output_fd, pack_fd;
++static const char *curr_pack;
++static int input_fd, output_fd;
+ 
+ #ifndef NO_PTHREADS
+ 
+@@ -134,6 +136,7 @@ static inline void unlock_mutex(pthread_mutex_t *mutex)
+  */
+ static void init_thread(void)
  {
-  DIR *dir;
-  struct dirent *e;
-@@ -107,9 +108,9 @@ static int queue_diff(struct diff_options *o,
-  int i1, i2, ret = 0;
-  size_t len1 = 0, len2 = 0;
-
-- if (name1 && read_directory(name1, &p1))
-+ if (name1 && read_directory_contents(name1, &p1))
-  return -1;
-- if (name2 && read_directory(name2, &p2)) {
-+ if (name2 && read_directory_contents(name2, &p2)) {
-  string_list_clear(&p1, 0);
-  return -1;
-  }
++	int i;
+ 	init_recursive_mutex(&read_mutex);
+ 	pthread_mutex_init(&counter_mutex, NULL);
+ 	pthread_mutex_init(&work_mutex, NULL);
+@@ -141,11 +144,17 @@ static void init_thread(void)
+ 		pthread_mutex_init(&deepest_delta_mutex, NULL);
+ 	pthread_key_create(&key, NULL);
+ 	thread_data = xcalloc(nr_threads, sizeof(*thread_data));
++	for (i = 0; i < nr_threads; i++) {
++		thread_data[i].pack_fd = open(curr_pack, O_RDONLY);
++		if (thread_data[i].pack_fd == -1)
++			die_errno("unable to open %s", curr_pack);
++	}
+ 	threads_active = 1;
+ }
+ 
+ static void cleanup_thread(void)
+ {
++	int i;
+ 	if (!threads_active)
+ 		return;
+ 	threads_active = 0;
+@@ -155,6 +164,8 @@ static void cleanup_thread(void)
+ 	if (show_stat)
+ 		pthread_mutex_destroy(&deepest_delta_mutex);
+ 	pthread_key_delete(key);
++	for (i = 0; i < nr_threads; i++)
++		close(thread_data[i].pack_fd);
+ 	free(thread_data);
+ }
+ 
+@@ -288,13 +299,13 @@ static const char *open_pack_file(const char *pack_name)
+ 			output_fd = open(pack_name, O_CREAT|O_EXCL|O_RDWR, 0600);
+ 		if (output_fd < 0)
+ 			die_errno(_("unable to create '%s'"), pack_name);
+-		pack_fd = output_fd;
++		nothread_data.pack_fd = output_fd;
+ 	} else {
+ 		input_fd = open(pack_name, O_RDONLY);
+ 		if (input_fd < 0)
+ 			die_errno(_("cannot open packfile '%s'"), pack_name);
+ 		output_fd = -1;
+-		pack_fd = input_fd;
++		nothread_data.pack_fd = input_fd;
+ 	}
+ 	git_SHA1_Init(&input_ctx);
+ 	return pack_name;
+@@ -542,7 +553,7 @@ static void *unpack_data(struct object_entry *obj,
+ 
+ 	do {
+ 		ssize_t n = (len < 64*1024) ? len : 64*1024;
+-		n = pread(pack_fd, inbuf, n, from);
++		n = pread(get_thread_data()->pack_fd, inbuf, n, from);
+ 		if (n < 0)
+ 			die_errno(_("cannot pread pack file"));
+ 		if (!n)
+@@ -1490,7 +1501,7 @@ static void show_pack_info(int stat_only)
+ int cmd_index_pack(int argc, const char **argv, const char *prefix)
+ {
+ 	int i, fix_thin_pack = 0, verify = 0, stat_only = 0;
+-	const char *curr_pack, *curr_index;
++	const char *curr_index;
+ 	const char *index_name = NULL, *pack_name = NULL;
+ 	const char *keep_name = NULL, *keep_msg = NULL;
+ 	char *index_name_buf = NULL, *keep_name_buf = NULL;
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 383cafe..6cc85d6 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -329,7 +329,36 @@ int mingw_mkdir(const char *path, int mode)
+ 	return ret;
+ }
+ 
+-int mingw_open (const char *filename, int oflags, ...)
++
++ssize_t mingw_pread(int fd, void *buf, size_t count, off64_t offset)
++{
++	HANDLE hand = (HANDLE)_get_osfhandle(fd);
++	if (hand == INVALID_HANDLE_VALUE) {
++		errno = EBADF;
++		return -1;
++	}
++
++	LARGE_INTEGER offset_value;
++	offset_value.QuadPart = offset;
++
++	DWORD bytes_read = 0;
++	OVERLAPPED overlapped = {0};
++	overlapped.Offset = offset_value.LowPart;
++	overlapped.OffsetHigh = offset_value.HighPart;
++	BOOL result = ReadFile(hand, buf, count, &bytes_read, &overlapped);
++
++	ssize_t ret = bytes_read;
++
++	if (!result && GetLastError() != ERROR_HANDLE_EOF)
++	{
++		errno = err_win_to_posix(GetLastError());
++		ret = -1;
++	}
++
++	return ret;
++}
++
++int mingw_open(const char *filename, int oflags, ...)
+ {
+ 	va_list args;
+ 	unsigned mode;
+diff --git a/compat/mingw.h b/compat/mingw.h
+index 08b83fe..377ba50 100644
+--- a/compat/mingw.h
++++ b/compat/mingw.h
+@@ -174,6 +174,9 @@ int mingw_unlink(const char *pathname);
+ int mingw_rmdir(const char *path);
+ #define rmdir mingw_rmdir
+ 
++ssize_t mingw_pread(int fd, void *buf, size_t count, off64_t offset);
++#define pread mingw_pread
++
+ int mingw_open (const char *filename, int oflags, ...);
+ #define open mingw_open
+ 
+diff --git a/config.mak.uname b/config.mak.uname
+index e8acc39..b405524 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -474,7 +474,6 @@ ifeq ($(uname_S),NONSTOP_KERNEL)
+ endif
+ ifneq (,$(findstring MINGW,$(uname_S)))
+ 	pathsep = ;
+-	NO_PREAD = YesPlease
+ 	NEEDS_CRYPTO_WITH_SSL = YesPlease
+ 	NO_LIBGEN_H = YesPlease
+ 	NO_POLL = YesPlease
 -- 
-1.9.0
+1.9.0.279.gdc9e3eb
