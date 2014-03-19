@@ -1,129 +1,93 @@
-From: Max Horn <max@quendi.de>
-Subject: Re: What's cooking in git.git (Mar 2014, #03; Fri, 14)
-Date: Wed, 19 Mar 2014 18:21:04 +0100
-Message-ID: <0CF0981E-FFF8-4A38-B690-17826686BEA6@quendi.de>
-References: <xmqqlhwcfn4a.fsf@gitster.dls.corp.google.com> <53240C0F.2050204@web.de> <xmqqha6wg3o1.fsf@gitster.dls.corp.google.com> <906CACC0-FB16-4BB8-812D-59067DE0CC89@quendi.de> <xmqqlhw65dcq.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0 (1.0)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Antoine Pelisse <apelisse@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 19 18:21:24 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/3][GSOC] diff: rename read_directory() to get_directory_list()
+Date: Wed, 19 Mar 2014 10:22:48 -0700
+Message-ID: <xmqq4n2u5cif.fsf@gitster.dls.corp.google.com>
+References: <1395091825-8330-1-git-send-email-sh19910711@gmail.com>
+	<xmqqy508a1up.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Hiroyuki Sano <sh19910711@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 19 18:23:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQKB5-0001dB-2F
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Mar 2014 18:21:19 +0100
+	id 1WQKCe-00044D-Ok
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Mar 2014 18:22:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759425AbaCSRVN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Mar 2014 13:21:13 -0400
-Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:60570 "EHLO
-	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1759422AbaCSRVL convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Mar 2014 13:21:11 -0400
-Received: from [82.113.99.177] (helo=[10.51.175.177]); authenticated
-	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
-	id 1WQKAu-0000Ps-R3; Wed, 19 Mar 2014 18:21:08 +0100
-X-Mailer: iPhone Mail (11D167)
-In-Reply-To: <xmqqlhw65dcq.fsf@gitster.dls.corp.google.com>
-X-bounce-key: webpack.hosteurope.de;max@quendi.de;1395249670;9a8f85a0;
+	id S1759452AbaCSRWw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Mar 2014 13:22:52 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40840 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759444AbaCSRWv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Mar 2014 13:22:51 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F2C0D744F4;
+	Wed, 19 Mar 2014 13:22:50 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=UiNd1OpeGnUK9Pe2eHhsfnF7Xfk=; b=EOXOy+
+	42cdG/bG8fPe7vE/u9rBKY+JuvHKEaFjIZS/2v6CwKdh9jMqCZr3PVsV4csMSZ5v
+	Xr99AF5IHw1A4FwMME4AsPONEy8yOnRSdMzo0Yss7bDE1dS+fUx5HsEHuEyd7+c5
+	R6Tq2LFds2fl0MOOpvSFNR2Fa39GDR+Xuo0mg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=P+nh4SOhpxiUMQ4E2B8Rl3aIZ+fcFmJq
+	YZP0HOoNWDeS5MasaCjhAl3Gw7LrfG9k56RLndfAu6iRVwUfGQGe6ZzqN8fIxsTz
+	OkcF63OV9A1t8PPAUHLYnP6RtUSBXnCzYvqJMYwOB1k0XlNLmQR4j0n60rVYbwUP
+	IjCrCBI8xwI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E1BE6744F3;
+	Wed, 19 Mar 2014 13:22:50 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 42125744F2;
+	Wed, 19 Mar 2014 13:22:50 -0400 (EDT)
+In-Reply-To: <xmqqy508a1up.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Mon, 17 Mar 2014 15:37:18 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 18CF160A-AF8B-11E3-8CEA-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244464>
 
+Junio C Hamano <gitster@pobox.com> writes:
 
+> Hiroyuki Sano <sh19910711@gmail.com> writes:
+>
+>> Including "dir.h" in "diff-no-index.c", it causes a compile error, because
+>> the same name function read_directory() is declared globally in "dir.h".
+>>
+>> This change is to avoid conflicts as above.
+>>
+>> Signed-off-by: Hiroyuki Sano <sh19910711@gmail.com>
+>> ---
+>>  diff-no-index.c | 6 +++---
+>>  1 file changed, 3 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/diff-no-index.c b/diff-no-index.c
+>> index 8e10bff..1ed5c9d 100644
+>> --- a/diff-no-index.c
+>> +++ b/diff-no-index.c
+>> @@ -16,7 +16,7 @@
+>>  #include "builtin.h"
+>>  #include "string-list.h"
+>>  
+>> -static int read_directory(const char *path, struct string_list *list)
+>> +static int get_directory_list(const char *path, struct string_list *list)
+>
+> Renaming is a good idea but the new name sounds like you are
+> grabbing the names of directories, ignoring all the files, no?
 
-> Am 19.03.2014 um 18:04 schrieb Junio C Hamano <gitster@pobox.com>:
->=20
-> Max Horn <max@quendi.de> writes:
->=20
->>> On 17.03.2014, at 18:01, Junio C Hamano <gitster@pobox.com> wrote:
->>>=20
->>> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
->>>=20
->>>>> On 2014-03-14 23.09, Junio C Hamano wrote:
->>>>> * ap/remote-hg-skip-null-bookmarks (2014-01-02) 1 commit
->>>>> - remote-hg: do not fail on invalid bookmarks
->>>>>=20
->>>>> Reported to break tests ($gmane/240005)
->>>>> Expecting a reroll.
->>>> I wonder what should happen here.
->>>> The change breaks all the tests in test-hg-hg-git.sh
->>>> (And the breakage may prevent us from detecting other breakages)
->>>>=20
->>>> The ideal situation would be to have an extra test case for the pr=
-oblem
->>>> which we try to fix with this patch.
->>>>=20
->>>> Antoine, is there any way to make your problem reproducable ?
->>>> And based on that, to make a patch which passes all test cases ?
->>>=20
->>> After re-reading the thread briefly (there're just five messages)
->>>=20
->>> http://thread.gmane.org/gmane.comp.version-control.git/239797/focus=
-=3D240069
->>=20
->> For some reason, that link does not contain all messages from that
->> conversation (unfortunately, I have seen GMane do that on multiple
->> occasions. I hence try not to rely on it for reviewing email
->> history -- I just don't trust it). In particular, it misses this
->> crucial post:
->=20
-> [jc: please avoid overlong lines; I re-flowed above]
+I am tempted to suggest, because this is an internal implementation
+detail only visible to this narrow corner of the system, calling
+this just 
 
-Sorry. If anybody knows a way to tech Mail.app to auto-wrap
-long lines, I'd appreciate a hint.=20
+	static int ls(const char *path, struct string_list *result)
 
->=20
->>  http://thread.gmane.org/gmane.comp.version-control.git/239830
->=20
-> Interesting.
->=20
->> The (or at least "a") root cause has actually been
->> discovered. Would a patch that adds an xfail test case for it be
->> acceptable?
->=20
-> Do you mean a patch that only adds a new test that expects a failure
-> to the current code, without touching the current code that has the
-> bug it exposes?
-
-Exactly.
-
->  That would be a good place to start.
-
-Ok.
-
->=20
->> ... As a matter of fact, I a know a few more bugs in remote-hg for
->> which I could produce xfail test cases. Of course I'd prefer to
->> put them in together with a fix, but I don't know when I can get
->> to that, if ever. So, would such changes be welcome?
->=20
-> Surely.  That is to keep tabs on bugs in an actionable form; it is a
-> better way of bug tracking than having a bug-tracker that is not
-> actively maintained, I would think.
-
-Yeah, makes sense.
-
-So, one more silly (bikeshedding) question: should I do this as one big
-patch adding multiple xfail tests - or one commit per test, with perhap=
-s a
-brief description of the issue at hand? Or should a code comment next t=
-o
-the failing test explain things?
-
-Actually, some of those bugs might require a lengthy background
-explanation, so yet another variant would be to write an email here
-With an explanation, then add a gmane ref to the commit message...
-
->=20
->=20
->=20
->=20
+;-)
