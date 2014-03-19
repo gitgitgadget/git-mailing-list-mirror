@@ -1,71 +1,151 @@
-From: Brian Gesiak <modocache@gmail.com>
-Subject: Re: [PATCH v2] git-rebase: Teach rebase "-" shorthand.
-Date: Thu, 20 Mar 2014 03:09:05 +0900
-Message-ID: <CAN7MxmVny80BYvYBZ=iBybx_ffVhOCfkP3pU6fYzHpxNu4QYHA@mail.gmail.com>
-References: <xmqq61nb8fap.fsf@gitster.dls.corp.google.com>
-	<1395226935-53044-1-git-send-email-modocache@gmail.com>
-	<xmqqob123wjm.fsf@gitster.dls.corp.google.com>
-	<20140319180213.GB11018@serenity.lan>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 3/3][GSOC] fsck: replace if-statements to logical expressions
+Date: Wed, 19 Mar 2014 11:29:02 -0700
+Message-ID: <xmqqha6u3uvl.fsf@gitster.dls.corp.google.com>
+References: <1395228230-10189-1-git-send-email-sh19910711@gmail.com>
+	<1395228230-10189-3-git-send-email-sh19910711@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	=?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
-	Tim Chase <git@tim.thechases.com>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Wed Mar 19 19:09:43 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
+To: Hiroyuki Sano <sh19910711@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 19 19:29:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQKvu-0007JJ-6j
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Mar 2014 19:09:42 +0100
+	id 1WQLEp-0003et-Hp
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Mar 2014 19:29:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752031AbaCSSJI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Mar 2014 14:09:08 -0400
-Received: from mail-ie0-f169.google.com ([209.85.223.169]:64401 "EHLO
-	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751221AbaCSSJG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Mar 2014 14:09:06 -0400
-Received: by mail-ie0-f169.google.com with SMTP id to1so9388959ieb.0
-        for <git@vger.kernel.org>; Wed, 19 Mar 2014 11:09:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=1wS1IIQpTg2Dn1LcGKTKR0sMIgnNyx0xFUvbfx50AoI=;
-        b=MFwCyCbm7LWeU5O/S2f+iqYWscPII7sGVMWsbOKjzY7gdUPZwbRqHoeX3K1iCTLqoe
-         13jZ91h6kGkQlZ32eNgDsFiD//oLqOl8QO7f9yveRLWwEfa5lJ36yknvgX3FShuKgkPm
-         QEpY+E8gV6H3XeDpILHnhOuetxfxU3y3Jnmu4LMZ/MmWxdzvoAp3zMEsI0wuYLIuqevC
-         9n62M5mjp7P2id/QoTkaxBkdcgWvtsa0+KxF7I2q0LO0YnPTdVQoTsxmHX6msOXhfzXn
-         YSqX7zPzAZFoIi7fBgh+3+JCnOqloi5jjyAj+7aHYxk3CPuJDUAepdQ5ofzofeIbD435
-         3lOA==
-X-Received: by 10.43.150.80 with SMTP id kn16mr8200069icc.63.1395252545486;
- Wed, 19 Mar 2014 11:09:05 -0700 (PDT)
-Received: by 10.64.55.161 with HTTP; Wed, 19 Mar 2014 11:09:05 -0700 (PDT)
-In-Reply-To: <20140319180213.GB11018@serenity.lan>
+	id S1753242AbaCSS3J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Mar 2014 14:29:09 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41776 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753187AbaCSS3G (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Mar 2014 14:29:06 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D233274106;
+	Wed, 19 Mar 2014 14:29:05 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/UDaSrdrgXEWRVorQTGTmqVMVUY=; b=PhVR1g
+	J9+xRHhjcSpk9JC8AFoTz2NjwCLhdDOYMaLHkyhUYFpqHuWhIEhjUUtHf6BkaJWd
+	F+CdNCGiEt/SNRjwr96s8eV1Ddu2qVVKbGskT/3PISOILu4yeqg7ZnhmitEZqRbK
+	rm9wvhj8QCA4JvM89tgFK4i5XqsEwLq+9QZg8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=yH5xVrCqw/y29HtSJhL2UeeUPMRyzSk9
+	gcIVjG9z6MrMN9HD6zaJwAXmPD/5ReDMQHjXXmF3IdZ6L0MIzO421BKZRdf88RzT
+	ou8dGD+7ikxgb5p6WF3udbVq53YsjrjoGwpHnTNKDyc7DdVtWuqpDAz5/Fpw7nC/
+	CFU6YcHN41o=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BD19974105;
+	Wed, 19 Mar 2014 14:29:05 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1520974103;
+	Wed, 19 Mar 2014 14:29:05 -0400 (EDT)
+In-Reply-To: <1395228230-10189-3-git-send-email-sh19910711@gmail.com>
+	(Hiroyuki Sano's message of "Wed, 19 Mar 2014 20:23:50 +0900")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 59FC4AB8-AF94-11E3-A465-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244473>
 
-Thank you for the feedback and tweaks!
+Hiroyuki Sano <sh19910711@gmail.com> writes:
 
-> Is the eye-candy output to the standard output what is the most
-> interesting during the execution of a rebase?  Wouldn't we be
-> more interested to make sure that we did transplant the history
-> on the same commit between two cases?
+> There were two different ways to check flag values, one way is
+> using if-statement, and the other way is using logical expression.
+>
+> To make sensible, replace if-statements to logical expressions in
+> fsck_tree().
 
-I agree. I'll consult the other tests to see how to write such a test.
+The change described by these two paragraphs makes sense to me, but
+the "to make sensible" phrasing made me hiccup while reading it.
 
-> Can we use `git name-rev` to put the actual name here, so that people
-> who have not done what they intended can hopefully notice sooner?
+	fsck_tree() uses two different ways to set flag values, many
+	with a simple if () condition that guards an assignment, and
+	one with an bitwise-or assignment operator.
 
-This sounds like a great idea! Doing so would mirror how `git checkout`
-behaves; checkout informs the user of which branch they have switched
-to when using the "-" shorthand: "Switched to branch 'master'".
+	Unify them to the latter, as it is shorter and easier to
+	read when the condition is short and to the point, which all
+	of them are.
 
-Should I submit a new patch, or reroll this one?
+or something?
 
-- Brian Gesiak
+> When checking "has_dot" and "has_dotdot", use is_dot_or_dotdot()
+> instead of strcmp() to avoid hard coding.
+
+I am not sure how this change is an improvement.  Besides being
+seemingly inefficient by checking name[1] twice (which is not a huge
+objection, as a sensible compiler would notice and optimize), the
+caller that checks name[1] already hardcodes its knowledge on what
+is_dot_or_dotdot() does, e.g. when it returns true, name[0] is never
+NUL, and name[1] is NUL only when it saw a dot and not a dotdot, so
+the "to avoid hard coding" does not really justify this change.
+
+I further wonder if
+
+	...
+	if (!name[0]) {
+		has_empty_name = 1;
+	} else if (name[0] == '.') {
+        	has_dot |= !name[1];
+                has_dotdot |= name[1] == '.' && !name[2];
+		has_dotgit |= !strcmp(name + 1, "git");
+	}
+	...
+
+may be an improvement (this is not a suggestion--when I say I
+wonder, I usually do not know the answer).  It defeats the "unify
+the two styles" theme of this change, so...
+
+> The is_dot_or_dotdot() is used to check if the string is
+> either "." or "..".
+> Include the "dir.h" header file to use is_dot_or_dotdot().
+>
+> Signed-off-by: Hiroyuki Sano <sh19910711@gmail.com>
+> ---
+>  fsck.c | 19 +++++++------------
+>  1 file changed, 7 insertions(+), 12 deletions(-)
+>
+> diff --git a/fsck.c b/fsck.c
+> index b3022ad..08f613d 100644
+> --- a/fsck.c
+> +++ b/fsck.c
+> @@ -6,6 +6,7 @@
+>  #include "commit.h"
+>  #include "tag.h"
+>  #include "fsck.h"
+> +#include "dir.h"
+>  
+>  static int fsck_walk_tree(struct tree *tree, fsck_walk_func walk, void *data)
+>  {
+> @@ -165,18 +166,12 @@ static int fsck_tree(struct tree *item, int strict, fsck_error error_func)
+>  
+>  		sha1 = tree_entry_extract(&desc, &name, &mode);
+>  
+> -		if (is_null_sha1(sha1))
+> -			has_null_sha1 = 1;
+> -		if (strchr(name, '/'))
+> -			has_full_path = 1;
+> -		if (!*name)
+> -			has_empty_name = 1;
+> -		if (!strcmp(name, "."))
+> -			has_dot = 1;
+> -		if (!strcmp(name, ".."))
+> -			has_dotdot = 1;
+> -		if (!strcmp(name, ".git"))
+> -			has_dotgit = 1;
+> +		has_null_sha1 |= is_null_sha1(sha1);
+> +		has_full_path |= !!strchr(name, '/');
+> +		has_empty_name |= !*name;
+> +		has_dot |= is_dot_or_dotdot(name) && !name[1];
+> +		has_dotdot |= is_dot_or_dotdot(name) && name[1];
+> +		has_dotgit |= !strcmp(name, ".git");
+>  		has_zero_pad |= *(char *)desc.buffer == '0';
+>  		update_tree_entry(&desc);
