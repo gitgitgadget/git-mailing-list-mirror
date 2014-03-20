@@ -1,144 +1,69 @@
-From: Michael Andreen <harv@ruin.nu>
-Subject: [PATCH] Make XDF_NEED_MINIMAL default in blame.
-Date: Thu, 20 Mar 2014 21:18:58 +0100
-Message-ID: <6555655.XSJ9EnW4BY@mako>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Make XDF_NEED_MINIMAL default in blame.
+Date: Thu, 20 Mar 2014 13:45:21 -0700
+Message-ID: <xmqq8us4y4ym.fsf@gitster.dls.corp.google.com>
+References: <6555655.XSJ9EnW4BY@mako>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Mar 20 21:19:19 2014
+To: Michael Andreen <harv@ruin.nu>
+X-From: git-owner@vger.kernel.org Thu Mar 20 21:45:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQjQs-0001pd-0s
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 21:19:18 +0100
+	id 1WQjqQ-0006Rs-N5
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 21:45:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759834AbaCTUTM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Mar 2014 16:19:12 -0400
-Received: from n.ruin.nu ([213.180.83.247]:36381 "EHLO n.ruin.nu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759829AbaCTUTL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Mar 2014 16:19:11 -0400
-Received: from mako.localnet (h-40-196.a336.priv.bahnhof.se [79.136.40.196])
-	by n.ruin.nu (Postfix) with ESMTPSA id 334251DC0BB8;
-	Thu, 20 Mar 2014 21:19:09 +0100 (CET)
-User-Agent: KMail/4.11.5 (Linux/3.11.0-18-generic; KDE/4.11.5; x86_64; ; )
+	id S1760016AbaCTUpd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Mar 2014 16:45:33 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65297 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759883AbaCTUp2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Mar 2014 16:45:28 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 137A2761B9;
+	Thu, 20 Mar 2014 16:45:25 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=t5E9wREjXxcJpvYUzzw5XI/iSg0=; b=pqDxLo
+	zeoGgXqX7b3hmCKiA3+sJ60u5LCr8eybhqK4XJ4fZr0OtJ55an1B/W9p3p7d1M4G
+	p4LoABDunq9EbuV3DB5dRPEcTQUdeub6oop5lXcphD27WvVuFhihI1FVJ6SEdZ2c
+	JJetB3CKsKRbXn0LE0Gilws6WCxVDYAHJF+Xk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=rTrrdbB+nmSFRf0l7sLIATfH2AbC0QlI
+	zH2YiY/PZgVdYuEBy41GyDJX/xe+oVy26Wl+Z/lLdrvCQRTNmesO7/BASNY+Yz7H
+	M4MJHUhTwPCyxDWvldv1x2Gjh67PQPj67CqXJ1C2ij9BwZs42GwKzARQlR94gf2U
+	hHOU6aYK0Cs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F381A761B8;
+	Thu, 20 Mar 2014 16:45:24 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 50D76761B7;
+	Thu, 20 Mar 2014 16:45:24 -0400 (EDT)
+In-Reply-To: <6555655.XSJ9EnW4BY@mako> (Michael Andreen's message of "Thu, 20
+	Mar 2014 21:18:58 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 8F9B3DD2-B070-11E3-876B-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244582>
 
-Currently git blame has a big problem finding copies and moves when you
-split up a big file into smaller ones. One example in the git repository
-is 2cf565c, which split the documentation into smaller files.
+Michael Andreen <harv@ruin.nu> writes:
 
-In 582aa00 XDF_NEED_MINIMAL was removed as the default for performance
-reasons, mainly for diff and rebase, but blame was also changed.
+> There hasn't been any arguments against this patch. Just updated the message 
+> with a note about --no-minimal.
 
-In 059a500 the problem with blame was noticed and the flag --minimal was
-introduced. However this flag is not documented and it is not possible
-to set when using "git gui blame".
+There hasn't been any argument for this patch, either.
 
-Setting XDF_NEED_MINIMAL as default has a small performance impact when
-you run on a file with few modifications. However, if you run it on a
-file with a bigger number of modifications, the performance impact is
-small enough to not be noticable.
-
-The previous behavior can still be activated with --no-minimal.
-
-((2cf565c...))$ time PAGER=cat git blame -C -M
-    Documentation/git-ls-files.txt > /dev/null
-
-real    0m0.003s
-user    0m0.002s
-sys 0m0.000s
-
-((2cf565c...))$ time PAGER=cat git blame --minimal -C -M
-    Documentation/git-ls-files.txt > /dev/null
-
-real    0m0.010s
-user    0m0.009s
-sys 0m0.000s
-
-((2cf565c...))$ time PAGER=cat git blame -C -C -C -M
-    Documentation/git-ls-files.txt > /dev/null
-
-real    0m0.010s
-user    0m0.010s
-sys 0m0.000s
-
-((2cf565c...))$ time PAGER=cat git blame --minimal -C -C -C -M
-    Documentation/git-ls-files.txt > /dev/null
-
-real    0m0.028s
-user    0m0.027s
-sys 0m0.000s
-
-(master)$ time PAGER=cat git blame -C -C -C -M
-    Documentation/git-ls-files.txt > /dev/null
-
-real    0m2.338s
-user    0m2.283s
-sys 0m0.056s
-
-(master)$ time PAGER=cat git blame --minimal -C -C -C -M
-    Documentation/git-ls-files.txt > /dev/null
-
-real    0m2.355s
-user    0m2.285s
-sys 0m0.069s
-
-(master)$ time PAGER=cat git blame -C -M cache.h > /dev/null
-
-real    0m1.755s
-user    0m1.730s
-sys 0m0.024s
-
-(master)$ time PAGER=cat git blame --minimal -C -M cache.h > /dev/null
-
-real    0m1.785s
-user    0m1.770s
-sys 0m0.014s
-
-(master)$ time PAGER=cat git blame -C -C -C -M cache.h > /dev/null
-
-real    0m31.515s
-user    0m30.810s
-sys 0m0.684s
-
-(master)$ time PAGER=cat git blame --minimal -C -C -C -M cache.h >
-/dev/null
-
-real    0m31.504s
-user    0m30.885s
-sys 0m0.598s
-
-Signed-off-by: Michael Andreen <harv@ruin.nu>
----
-There hasn't been any arguments against this patch. Just updated the message 
-with a note about --no-minimal.
-
-Applies cleanly on both master and maint.
-
- builtin/blame.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/builtin/blame.c b/builtin/blame.c
-index e5b5d71..0e7ebd0 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -42,7 +42,7 @@ static int show_root;
- static int reverse;
- static int blank_boundary;
- static int incremental;
--static int xdl_opts;
-+static int xdl_opts = XDF_NEED_MINIMAL;
- static int abbrev = -1;
- static int no_whole_file_rename;
- 
--- 
-1.8.3.2
+It is not like we are still in year 2007; timing result in a small
+project like Git itself is not a good enough argument to change a
+well established default at this late in the game, especially when
+there are ways like command line options for users to specify their
+preferred settings.
