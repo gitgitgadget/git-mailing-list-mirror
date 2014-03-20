@@ -1,110 +1,116 @@
 From: Dragos Foianu <dragos.foianu@gmail.com>
-Subject: Re: [PATCHv2] branch.c: simplify chain of if statements
-Date: Wed, 19 Mar 2014 23:12:14 +0000 (UTC)
-Message-ID: <loom.20140320T001131-702@post.gmane.org>
-References: <1395071493-31435-1-git-send-email-dragos.foianu@gmail.com> <CAPig+cS9QApn1T3-R8n+W+1ee9FbNftsmhrr90SJKs+gqzvC5A@mail.gmail.com> <CAPig+cQKHQFNBob18g9UmZuE_mOpF3UMCBPfSKJYEYQpk1Z_tw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Subject: [PATCH] diff: optimise parse_dirstat_params() to only compare strings when necessary
+Date: Thu, 20 Mar 2014 02:07:56 +0200
+Message-ID: <1395274076-6720-1-git-send-email-dragos.foianu@gmail.com>
+Cc: Dragos Foianu <dragos.foianu@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 20 00:13:14 2014
+X-From: git-owner@vger.kernel.org Thu Mar 20 01:08:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQPfb-0004Ae-Jk
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 00:13:11 +0100
+	id 1WQQX2-0003NG-OI
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 01:08:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754882AbaCSXMr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Mar 2014 19:12:47 -0400
-Received: from plane.gmane.org ([80.91.229.3]:38966 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751295AbaCSXMq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Mar 2014 19:12:46 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1WQPfA-0003Ss-IB
-	for git@vger.kernel.org; Thu, 20 Mar 2014 00:12:44 +0100
-Received: from 109.100.93.176 ([109.100.93.176])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 20 Mar 2014 00:12:44 +0100
-Received: from dragos.foianu by 109.100.93.176 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 20 Mar 2014 00:12:44 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 109.100.93.176 (Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Firefox/24.0)
+	id S964799AbaCTAIU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Mar 2014 20:08:20 -0400
+Received: from mail-ee0-f42.google.com ([74.125.83.42]:52978 "EHLO
+	mail-ee0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933813AbaCTAIU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Mar 2014 20:08:20 -0400
+Received: by mail-ee0-f42.google.com with SMTP id d17so57958eek.1
+        for <git@vger.kernel.org>; Wed, 19 Mar 2014 17:08:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=l0t2s5Wl9+YBTXb4HmZYu/MFkE4i6oRpz+mb8nrMWsU=;
+        b=NI9QRTny0W4Bmuj51dx2HDOkp2I00FAputsWeoTJsB6kYp6td/ugrx/20pVup2pKCD
+         ETRlFtfPKhUB07xmQuci9aiEcQi7K6x3YHT0ohdFlbpZnK0tDhVVHsdLlENgCq1rDOdv
+         EDWwxaqUFEoD67UPaha95I9kE3Tg8P4HmL9zABNxQF98HyF90YLBBlN04c4EJyNVmJLE
+         0XuEwmOjUr7AHnWxQMnQ1j71O8dLaFd+lAbsuDpVIKjDonLXRv01K5YgzKe9vliuzjVr
+         E7UABCaRbfn+3UeNGo7jMnArlLrJv9JYj5SGCoq7K72VVnyrW7Z3puNNuVrpMNAQGeDM
+         Iuww==
+X-Received: by 10.14.213.135 with SMTP id a7mr38732819eep.57.1395274097904;
+        Wed, 19 Mar 2014 17:08:17 -0700 (PDT)
+Received: from localhost.localdomain ([109.100.93.176])
+        by mx.google.com with ESMTPSA id 48sm327214eei.24.2014.03.19.17.08.16
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 19 Mar 2014 17:08:17 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244508>
 
-Eric Sunshine <sunshine <at> sunshineco.com> writes:
+parse_dirstat_params() goes through a chain of if statements using
+strcmp to parse parameters. When the parameter is a digit, the
+value must go through all comparisons before the function realises
+it is a digit. Optimise this logic by only going through the chain
+of string compares when the parameter is not a digit.
 
-> 
-> Other submissions have computed this value mathematically without need
-> for conditionals. For instance, we've seen:
-> 
->     index = (!!origin << 0) + (!!remote_is_branch << 1) + (!!rebasing << 2)
-> 
-> as, well as the equivalent:
-> 
->     index = !!origin + !!remote_is_branch * 2 + !!rebasing * 4
-> 
-> Although this works, it does place greater cognitive demands on the
-> reader by requiring more effort to figure out what is going on and how
-> it relates to table position. The original (ungainly) chain of 'if'
-> statements in the original code does not suffer this problem. It
-> likewise is harder to understand than merely indexing into a
-> multi-dimension table where each variable is a key.
+Signed-off-by: Dragos Foianu <dragos.foianu@gmail.com>
+---
+ diff.c | 37 +++++++++++++++++++------------------
+ 1 file changed, 19 insertions(+), 18 deletions(-)
 
-I have seen other submissions using this logic, but I didn't think it
-accomplished the goal of the patch - simplifying the code. Not that my
-approach does either, but I found it a little easier to understand.
-
-Indexing into a table like this is always going to have this problem so this
-is probably not the right approach to accomplishing the microproject's goals.
-
-> It's possible to simplify this logic and have only a single
-> printf_ln() invocation. Hint: It's safe to pass in more arguments than
-> there are %s directives in the format string.
-
-Indeed. It's a habit of mine to pass the exact number of arguments to printf
-functions and I can't seem to get away from it.
-
-> You can use ARRAY_SIZE() in place of sizeof(...)/sizeof(...).
-> 
-> Since an out-of-bound index would be a programmer bug, it would
-> probably be more appropriate to use an assert(), just after 'index' is
-> computed, rather than if+die(). The original code used die() because
-> it couldn't detect the error until the end of the if-chain.
-
-Thank you for this hint. Using already defined helpers in the project is
-better and will prevent the need to patch the constructs later on.
-
-> On Tue, Mar 18, 2014 at 6:31 PM, Eric Sunshine <sunshine <at>
-sunshineco.com> wrote:
-> 
-> One other observation: You have a one-off error in your out-of-bounds
-> check. It should be 'index >= sizeof...'
-
-Well this is embarrasing.
-
-Thank you again for the feedback. It's incredibily helpful and I learned a
-lot from submitting these patches. Making the code simple is harder than it
-appears at first sight.
-
-I'm not sure it's worth pursuing the table approach further, especially
-since a solution has already been accepted and merged into the codebase.
-
-In this case, is it okay to try another microproject? I was thinking about
-trying #17 (finding bugs/inefficiencies in builtin/apply.c), but I've
-already had my one microproject.
-
-All the best,
-Dragos
+diff --git a/diff.c b/diff.c
+index e343191..733764e 100644
+--- a/diff.c
++++ b/diff.c
+@@ -84,20 +84,25 @@ static int parse_dirstat_params(struct diff_options *options, const char *params
+ 		string_list_split_in_place(&params, params_copy, ',', -1);
+ 	for (i = 0; i < params.nr; i++) {
+ 		const char *p = params.items[i].string;
+-		if (!strcmp(p, "changes")) {
+-			DIFF_OPT_CLR(options, DIRSTAT_BY_LINE);
+-			DIFF_OPT_CLR(options, DIRSTAT_BY_FILE);
+-		} else if (!strcmp(p, "lines")) {
+-			DIFF_OPT_SET(options, DIRSTAT_BY_LINE);
+-			DIFF_OPT_CLR(options, DIRSTAT_BY_FILE);
+-		} else if (!strcmp(p, "files")) {
+-			DIFF_OPT_CLR(options, DIRSTAT_BY_LINE);
+-			DIFF_OPT_SET(options, DIRSTAT_BY_FILE);
+-		} else if (!strcmp(p, "noncumulative")) {
+-			DIFF_OPT_CLR(options, DIRSTAT_CUMULATIVE);
+-		} else if (!strcmp(p, "cumulative")) {
+-			DIFF_OPT_SET(options, DIRSTAT_CUMULATIVE);
+-		} else if (isdigit(*p)) {
++		if (!isdigit(*p)) {
++			if (!strcmp(p, "changes")) {
++				DIFF_OPT_CLR(options, DIRSTAT_BY_LINE);
++				DIFF_OPT_CLR(options, DIRSTAT_BY_FILE);
++			} else if (!strcmp(p, "lines")) {
++				DIFF_OPT_SET(options, DIRSTAT_BY_LINE);
++				DIFF_OPT_CLR(options, DIRSTAT_BY_FILE);
++			} else if (!strcmp(p, "files")) {
++				DIFF_OPT_CLR(options, DIRSTAT_BY_LINE);
++				DIFF_OPT_SET(options, DIRSTAT_BY_FILE);
++			} else if (!strcmp(p, "noncumulative")) {
++				DIFF_OPT_CLR(options, DIRSTAT_CUMULATIVE);
++			} else if (!strcmp(p, "cumulative")) {
++				DIFF_OPT_SET(options, DIRSTAT_CUMULATIVE);
++			} else {
++				strbuf_addf(errmsg, _("  Unknown dirstat parameter '%s'\n"), p);
++				ret++;
++			}
++		} else  {
+ 			char *end;
+ 			int permille = strtoul(p, &end, 10) * 10;
+ 			if (*end == '.' && isdigit(*++end)) {
+@@ -114,11 +119,7 @@ static int parse_dirstat_params(struct diff_options *options, const char *params
+ 					    p);
+ 				ret++;
+ 			}
+-		} else {
+-			strbuf_addf(errmsg, _("  Unknown dirstat parameter '%s'\n"), p);
+-			ret++;
+ 		}
+-
+ 	}
+ 	string_list_clear(&params, 0);
+ 	free(params_copy);
+-- 
+1.8.3.2
