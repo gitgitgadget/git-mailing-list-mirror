@@ -1,85 +1,94 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] test-lib.sh: use printf instead of echo
-Date: Wed, 19 Mar 2014 17:17:18 -0700
-Message-ID: <20140320001718.GM15625@google.com>
-References: <20140314235735.GA6959@ibr.ch>
- <20140315001855.GK15625@google.com>
- <xmqq61nceidp.fsf@gitster.dls.corp.google.com>
- <20140318221844.GA828@google.com>
- <xmqqfvme5cql.fsf@gitster.dls.corp.google.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] Enable index-pack threading in msysgit.
+Date: Thu, 20 Mar 2014 08:25:40 +0700
+Message-ID: <CACsJy8D01gxeSoxgD9QkLgS85B=Af8aXytuqn6CBkF+_7WjZtQ@mail.gmail.com>
+References: <20140319213556.2FC3D4062B@wince.sfo.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Uwe Storbeck <uwe@ibr.ch>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 20 01:17:28 2014
+Content-Type: text/plain; charset=UTF-8
+To: Stefan Zager <szager@chromium.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Mar 20 02:26:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQQfm-0000Ep-Hz
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 01:17:26 +0100
+	id 1WQRkp-0000V7-Ac
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 02:26:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759556AbaCTARW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Mar 2014 20:17:22 -0400
-Received: from mail-pd0-f181.google.com ([209.85.192.181]:62206 "EHLO
-	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756174AbaCTARV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Mar 2014 20:17:21 -0400
-Received: by mail-pd0-f181.google.com with SMTP id p10so103162pdj.12
-        for <git@vger.kernel.org>; Wed, 19 Mar 2014 17:17:21 -0700 (PDT)
+	id S1751346AbaCTB0N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Mar 2014 21:26:13 -0400
+Received: from mail-qa0-f43.google.com ([209.85.216.43]:33945 "EHLO
+	mail-qa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750853AbaCTB0M (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Mar 2014 21:26:12 -0400
+Received: by mail-qa0-f43.google.com with SMTP id j15so164141qaq.2
+        for <git@vger.kernel.org>; Wed, 19 Mar 2014 18:26:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=sWGiVdnPAxICvqRdkBAkfIl8WU3tlWEp1qPN1pqny4c=;
-        b=raulvDw948rkikBASL38q8p4OyKc+DxsT4BwfraC5KPGH3OpjKMgM8+MH8zUeCYBx5
-         GHedPylOyKNzAb28n0zhXe7Ijdv8YYn9TCw3KqDBiPjfVDEuGoZuQ8Wi+6ZdqiH3Hk9c
-         ARSm5MxeOD5dkYykJBmyifi/IMPS0z8pvnWrtsDwJmkojcp1EGR3ognZ/xrKGdcKYH/W
-         TxZbCVzAKEmnrwexHavA5tWWOqw5hXQCwPW1N5nLpJGipRg3bdeSD/m1mu8UU6Y5162K
-         H8rpLtjZUaNUKzT7cIvcc37I9jlrF15A+UVcKrEmmouW7Jwyo0lY/M7Wth0PiAafhuBp
-         GyiA==
-X-Received: by 10.68.60.131 with SMTP id h3mr42891782pbr.50.1395274641326;
-        Wed, 19 Mar 2014 17:17:21 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id vg1sm217938pbc.44.2014.03.19.17.17.20
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 19 Mar 2014 17:17:20 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <xmqqfvme5cql.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        bh=3oQPdPJLf8QVhHTIwkQLzl1XIGKT4mHqaOMSdjGb5Rg=;
+        b=sJmWbPhjSXF55riWd6In0t04Gs4++WgAP7q9A58Zk+MF1qKlptRm3Z6uxsq1HYhzF9
+         pYv+TClXIIlbWeOGinqM3yEc65BsgmQIpmT7C6BxSmbrs3inJ1dn9o+bbZc1HAbz5ip7
+         BcthwFslhz2lfZcxq5iq17PhLVYqBCl3awftqUeXjfe0afA9nVr8f54nivEz+7uvmwkz
+         RJkP4QYLUEBWr+9CUYNH3Mqnqd+sb0BXraX3Vi6xLCVYiO9aOhbR7W0rf523sIhdD+N6
+         /SGQKDfif6GIOVfXJ6tiFB9mK8ljNvDrfudHKTW7NmcaVkl8/IW+2p+Ee7Nj3A4pOs0x
+         d8wA==
+X-Received: by 10.140.51.161 with SMTP id u30mr27677385qga.69.1395278771921;
+ Wed, 19 Mar 2014 18:26:11 -0700 (PDT)
+Received: by 10.96.146.102 with HTTP; Wed, 19 Mar 2014 18:25:40 -0700 (PDT)
+In-Reply-To: <20140319213556.2FC3D4062B@wince.sfo.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244512>
 
-Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
-
->> We currently use "echo" all over the place (e.g., 'echo "$path"' in
->> git-sh-setup), and every time we fix it there is a chance of making
->> mistakes.  I wonder if it would make sense to add a helper to make the
->> echo calls easier to replace:
+On Thu, Mar 20, 2014 at 4:35 AM, Stefan Zager <szager@chromium.org> wrote:
+> This adds a Windows implementation of pread.  Note that it is NOT
+> safe to intersperse calls to read() and pread() on a file
+> descriptor.  According to the ReadFile spec, using the 'overlapped'
+> argument should not affect the implicit position pointer of the
+> descriptor.  Experiments have shown that this is, in fact, a lie.
 >
-> I agree that we would benefit from having a helper to print a single
-> line, which we very often do, without having to worry about the
-> boilerplate '%s\n' of printf or the portability gotcha of echo.
+> To accomodate that fact, this change also incorporates:
 >
-> I am a bit reluctant to name the helper "sane_echo" to declare "echo
-> that interprets backslashes in the string is insane", though.  For
-> these "print a single line" uses, we are only interested in using a
-> subset of the features offered by 'echo', but that does not mean the
-> other features we do not want to trigger in our use is of no use to
-> any sane person.
+> http://article.gmane.org/gmane.comp.version-control.git/196042
+>
+> ... which gives each index-pack thread its own file descriptor.
 
-In a portable script, uncareful use of 'echo' is always insane.
+If the problem is mixing read() and pread() then perhaps it's enough to do
 
-In a script tailored to an environment where echo behaves consistently
-it is perfectly reasonable to use 'echo', but that's a different
-story.  In the context of git, saying "Here is the thing you should
-always use instead of echo" is a good thing, in my opinion.
+output_fd = dup(output_fd);
 
-Hoping that clarifies,
-Jonathan
+after pack_fd is set in open_pack_file(), to make sure that
+fixup_pack_header_footer() has its own file handle. If that works, we
+don't need one pack_fd per thread.
+
+compat/mmap.c uses pread() and its bad interaction with read() could
+turn it into a nightmare. Fortunately Windows (except Cygwin) does not
+use this implementation. Not sure if we should make a note about this.
+
+It makes me wonder if sliding mmap window (like we do for pack access
+in sha1_file.c) would be better than pread(). index-pack used to do
+mmap() [1] in the past with poor performance but I don't think sliding
+window was mentioned.
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/34741/focus=34832
+
+> --- a/config.mak.uname
+> +++ b/config.mak.uname
+> @@ -474,7 +474,6 @@ ifeq ($(uname_S),NONSTOP_KERNEL)
+>  endif
+>  ifneq (,$(findstring MINGW,$(uname_S)))
+>         pathsep = ;
+> -       NO_PREAD = YesPlease
+>         NEEDS_CRYPTO_WITH_SSL = YesPlease
+>         NO_LIBGEN_H = YesPlease
+>         NO_POLL = YesPlease
+
+What about the "ifeq ($(uname_S),Windows)" section? I think MSVC and
+MinGW builds share a lot of code.
+-- 
+Duy
