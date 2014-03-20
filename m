@@ -1,149 +1,121 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3][GSOC] fsck: use bitwise-or assignment operator to set flag
-Date: Thu, 20 Mar 2014 11:20:47 -0700
-Message-ID: <xmqqtxasybnk.fsf@gitster.dls.corp.google.com>
-References: <1395270124-2242-1-git-send-email-sh19910711@gmail.com>
+From: Brian Bourn <ba.bourn@gmail.com>
+Subject: [RFC] [GSoC] Draft of Proposal for GSoC
+Date: Thu, 20 Mar 2014 14:15:29 -0400
+Message-ID: <CAM+=D-BWCt9kNSUUQ19ZcPykb6j-tuEr=igBz0ukEk2TA3vWkg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Hiroyuki Sano <sh19910711@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 20 19:21:00 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: peff@peff.net
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Mar 20 19:22:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQhaK-0003XH-U5
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 19:20:57 +0100
+	id 1WQhc2-00065u-7R
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 19:22:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933312AbaCTSUv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Mar 2014 14:20:51 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48834 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933099AbaCTSUu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Mar 2014 14:20:50 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 31CF976B4C;
-	Thu, 20 Mar 2014 14:20:50 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6X76pF7x0xRlpm/IwKWKeGkLAis=; b=IhQjc6
-	fYjMG0+lfT0d3ACZ7XuiQvHk7B4v89Oc4XwLw9NuPckjXAmszmrI8kH5XK07jDP3
-	7B+HpiimXBxIE/dXnJVZaRa4+SeQnGpFkUZ/kZryULPz3VPwMmKZoUH7DdbJkMe7
-	t9J1sam4enAaaGmtxJz4rZSob1N1h4YuL9saE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=J85/VN+WY2RtzFfNVWN1sYivqaFNdJXr
-	FYFN98U1rL4cbBW1LvA7TG4JhIW7g+h6XnxbQ/+HSNztgUKCz4yUKPEFPChsSrVh
-	IT40Gb6+Krkl9TCo7eE0uByo9JXUUvt3aRaUtnLBb55XTjORCexIypyR/rTj/fnv
-	xV9J+O9nvSw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1F1D876B4B;
-	Thu, 20 Mar 2014 14:20:50 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 04BB776B4A;
-	Thu, 20 Mar 2014 14:20:48 -0400 (EDT)
-In-Reply-To: <1395270124-2242-1-git-send-email-sh19910711@gmail.com> (Hiroyuki
-	Sano's message of "Thu, 20 Mar 2014 08:02:04 +0900")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 5CB816D8-B05C-11E3-92A1-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S933787AbaCTSWg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Mar 2014 14:22:36 -0400
+Received: from mail-qa0-f44.google.com ([209.85.216.44]:58979 "EHLO
+	mail-qa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933560AbaCTSWf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Mar 2014 14:22:35 -0400
+Received: by mail-qa0-f44.google.com with SMTP id f11so1317473qae.31
+        for <git@vger.kernel.org>; Thu, 20 Mar 2014 11:22:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        bh=uQzuU9jAeEqUPnTs0+WYbq9yzzD8LZLLFzRfo4TuJVM=;
+        b=puRDF8HPF7XkxbOrBAuPAgATj41hwZcWajch/aKUqoHT66CARcVuNcezedwtLbktkJ
+         isNSyLlENAnYviFxOzi5bDNEC3JAA9z3Wuqz449zoCGtiidH0dX1wA85/FDxYdPKcjxp
+         WDeRdbTIiFX0GTIT7rhXT/VrD3E7Mt/Lj/4v775FTN2bJxZbyKKNGDIxBAd30Yvw8sPN
+         aTugEXuuOTi25OVPZrbuyw/Dka+cPg9WB76PhHfyfpJAkeNoi3koOJwv+1eBkY3ACuIM
+         KNzufktrMQ9Y9vJpzCv3AY+GMRGQadIpHasVqXD+souD7BeoGZM2yOSpICAOYIa9aUYa
+         Qkxg==
+X-Received: by 10.140.97.137 with SMTP id m9mr11224065qge.95.1395339329947;
+ Thu, 20 Mar 2014 11:15:29 -0700 (PDT)
+Received: by 10.96.86.38 with HTTP; Thu, 20 Mar 2014 11:15:29 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244567>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244568>
 
-Hiroyuki Sano <sh19910711@gmail.com> writes:
+Hi all,
 
-> fsck_tree() has two different ways to set a flag,
-> which are the followings:
->
->   1. Using a if-statement that guards assignment.
->
->   2. Using a bitwise-or assignment operator.
->
-> Currently, many with the former way,
-> and one with the latter way.
->
-> In this patch, unify them to the latter way,
-> because it makes the code shorter and easier to read,
-> and it is brief and to the point.
+This is a first draft of my Proposal for GSoC, I'd love feedback about
+what I might be missing and any other files I should read regarding
+this, so far I have read most of tag.c, branch.c,
+builtin/for-each-ref.c, parse-options.c. once again I hope I can get
+the same amount of helpful feedback as when I submitted my
+Microproject.
 
-Two issues:
+My name is Brian Bourn, I'm currently a computer engineering student
+at Columbia university in the city of New York.  I've used git since
+my freshman year however this past week has been my first time
+attempting to contribute to the project, and I loved it. I'd
+particularly like to tackle Unifying git branch -l, git tag -l, and
+git for-each-ref.  This functionality seems like an important update
+to me as it will simplify usage of git throughout three different
+commands, a noble pursuit which is not contained in any other project.
 
- * "In this patch," is redundant.
+Going through the annals of the listserve thus far I've found a few
+discussions which provide some insight towards this process as well as
+some experimental patches that never seem to have made it
+through[1][2][3][4]
 
- * "it is brief and to the point" are equally applicable to both
-   styles, so that is not a *reason* to choose one over the other.
+I would start by beginning a deprecation plan for git branch -l very
+similar to the one Junio presents in [5], moving -create-reflog to -g,
 
-If a condition were *not* brief and to the point, then a rewrite to
-the latter style will make the resulting code worse:
+Following this I would begin the real work of the project which would
+involve moving the following flag operations into a standard library
+say 'list-options.h'
 
-	if (a very complex condition
-            that potentially have to consume a
-            lot of brain-cycles to understand) {
-		has_that_condition = 1;
-	}
+--contains [6]
+--merged [7]
+--no-merged[8]
+--format
+This Library would build these options for later interpretation by parse_options
 
-is a lot easier to extend than
+Next I would implement these flags in the three files so that they are
+uniform and the same formatting and list capabilities can be used on
+all three. The formatting option will be especially useful for branch
+and tag as it will allow users to better understand what is in each
+ref that they grab.
 
-	has_that_condition = (a very complex condition
-                              that potentially have to consume a
-                              lot of brain-cycles to understand);
+For the most part I haven't finalized my weekly schedule but a basic
+breakdown would be
 
-because it is a lot more likely that we would need to later extend
-such a complex condition is more likely than a simple singleton
-condition, and we could end up with
+Start-Midterm
+Begin deprecation of -l
+Spend some time reading *.c files even deeper
+Build Library(dedicate Minimum one week per function moved)
 
-	if (a very complex condition
-            that potentially have to consume a
-            lot of brain-cycles to understand) {
-		futher computation to check if
-                the condition really holds
-                will be added here later
-                if (does that condition really hold true?)
-			has_that_condition = 1;
-	}
+Midterm-finish
+Implement the list flags
+Implement the format flags
+(if time is left over, add some formatting)
+
+Additionally I am thinking about adding some more formatting tools
+such as numbering outputs. What do you all think of this?
 
 
-which may be harder to express in the latter form.
+[1]http://git.661346.n2.nabble.com/More-formatting-with-git-tag-l-tt6739049.html
 
-In other words, "it is brief and to the point" merely _allows_ these
-statements to be expressed in the latter form; it does not say
-anything about which is better between the former and the latter.
+[2]http://git.661346.n2.nabble.com/RFC-branch-list-branches-by-single-remote-tt6645679.html#a6725483
 
-> Signed-off-by: Hiroyuki Sano <sh19910711@gmail.com>
-> ---
->  fsck.c | 18 ++++++------------
->  1 file changed, 6 insertions(+), 12 deletions(-)
->
-> diff --git a/fsck.c b/fsck.c
-> index b3022ad..abed62b 100644
-> --- a/fsck.c
-> +++ b/fsck.c
-> @@ -165,18 +165,12 @@ static int fsck_tree(struct tree *item, int strict, fsck_error error_func)
->  
->  		sha1 = tree_entry_extract(&desc, &name, &mode);
->  
-> -		if (is_null_sha1(sha1))
-> -			has_null_sha1 = 1;
-> -		if (strchr(name, '/'))
-> -			has_full_path = 1;
-> -		if (!*name)
-> -			has_empty_name = 1;
-> -		if (!strcmp(name, "."))
-> -			has_dot = 1;
-> -		if (!strcmp(name, ".."))
-> -			has_dotdot = 1;
-> -		if (!strcmp(name, ".git"))
-> -			has_dotgit = 1;
-> +		has_null_sha1 |= is_null_sha1(sha1);
-> +		has_full_path |= !!strchr(name, '/');
-> +		has_empty_name |= !*name;
-> +		has_dot |= !strcmp(name, ".");
-> +		has_dotdot |= !strcmp(name, "..");
-> +		has_dotgit |= !strcmp(name, ".git");
->  		has_zero_pad |= *(char *)desc.buffer == '0';
->  		update_tree_entry(&desc);
+[3]http://git.661346.n2.nabble.com/RFC-PATCH-tag-make-list-exclude-lt-pattern-gt-tt7270451.html#a7338712
+
+ [4]http://git.661346.n2.nabble.com/RFC-branch-list-branches-by-single-remote-tt6645679.html#a6728878
+
+[5]http://git.661346.n2.nabble.com/RFC-PATCH-0-2-RFC-POC-patterns-for-branch-list-tt6309233.html
+
+[6]https://github.com/git/git/blob/master/builtin/branch.c#L817
+
+[7] https://github.com/git/git/blob/master/builtin/branch.c#L849
+
+[8] https://github.com/git/git/blob/master/builtin/branch.c#L843
+
+Regards,
+Brian Bourn
