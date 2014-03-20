@@ -1,93 +1,144 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3] rev-parse --parseopt: option argument name hints
-Date: Thu, 20 Mar 2014 16:18:19 -0400
-Message-ID: <CAPig+cTGYufCtVJDxG8RUJgyMbb7c3ZdiYMuoAbhQQaitVWRnQ@mail.gmail.com>
-References: <532AA923.6030409@gmail.com>
-	<1395305092-1928-1-git-send-email-ilya.bobyr@gmail.com>
+From: Michael Andreen <harv@ruin.nu>
+Subject: [PATCH] Make XDF_NEED_MINIMAL default in blame.
+Date: Thu, 20 Mar 2014 21:18:58 +0100
+Message-ID: <6555655.XSJ9EnW4BY@mako>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>
-To: Ilya Bobyr <ilya.bobyr@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 20 21:18:29 2014
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7Bit
+Cc: git@vger.kernel.org
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Mar 20 21:19:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQjQ2-0000Z3-Lb
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 21:18:27 +0100
+	id 1WQjQs-0001pd-0s
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 21:19:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759791AbaCTUSV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Mar 2014 16:18:21 -0400
-Received: from mail-yh0-f53.google.com ([209.85.213.53]:43640 "EHLO
-	mail-yh0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759465AbaCTUST (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Mar 2014 16:18:19 -0400
-Received: by mail-yh0-f53.google.com with SMTP id v1so1419330yhn.26
-        for <git@vger.kernel.org>; Thu, 20 Mar 2014 13:18:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=KJ5FqWh3uOTxWDYHBDxhdFSS1Gz8Eg4xBcWNqI+Xgfw=;
-        b=HMRR4KOYlv0+bmVWzAiyejn1g/RNb37DnaI+iVlBrxXr3yUOIbDRsCVI0VrhYlQ92E
-         yu+cIiMtipIucTGOkTsLrLEvTQNgY/3ELiOdZXxY7wWxNuXcivjtZnkkRxM0OxgIXdIM
-         GZCxRd73PE3cu2fQLNiVNEfzZWhYuw9PFFpZYoADGbQ6NNOK4lmlUonPJbIfmD+u4PDv
-         7kcjbLQVwxx6B1RBOTprFQ4lJ45M3HjfDtkh6vKCqCUmQz5600ydpqV+FRooAdgCtucJ
-         Xy9iO8fxwAnzJ84ll+/jp/9BtvZzwPv+K+IqVJFYRIHdnovAvFuD3Lujsg/FumZZ9D9x
-         rUHw==
-X-Received: by 10.236.122.99 with SMTP id s63mr37783770yhh.19.1395346699143;
- Thu, 20 Mar 2014 13:18:19 -0700 (PDT)
-Received: by 10.170.180.134 with HTTP; Thu, 20 Mar 2014 13:18:19 -0700 (PDT)
-In-Reply-To: <1395305092-1928-1-git-send-email-ilya.bobyr@gmail.com>
-X-Google-Sender-Auth: Gcd18bsgylzt48GblhLVf7tEHHY
+	id S1759834AbaCTUTM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Mar 2014 16:19:12 -0400
+Received: from n.ruin.nu ([213.180.83.247]:36381 "EHLO n.ruin.nu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759829AbaCTUTL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Mar 2014 16:19:11 -0400
+Received: from mako.localnet (h-40-196.a336.priv.bahnhof.se [79.136.40.196])
+	by n.ruin.nu (Postfix) with ESMTPSA id 334251DC0BB8;
+	Thu, 20 Mar 2014 21:19:09 +0100 (CET)
+User-Agent: KMail/4.11.5 (Linux/3.11.0-18-generic; KDE/4.11.5; x86_64; ; )
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244580>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244581>
 
-On Thu, Mar 20, 2014 at 4:44 AM, Ilya Bobyr <ilya.bobyr@gmail.com> wrote:
-> Built-in commands can specify names for option arguments when usage text
-> is generated for a command.  sh based commands should be able to do the
-> same.
->
-> Option argument name hint is any text that comes after [*=?!] after the
-> argument name up to the first whitespace.  Underscores are replaced with
-> whitespace.  It is unlikely that an underscore would be useful in the
-> hint text.
->
-> Signed-off-by: Ilya Bobyr <ilya.bobyr@gmail.com>
-> ---
->  Changed according to the last comments.  Added "Usage text" paragraph in the
->  documentation and updated variable names.
+Currently git blame has a big problem finding copies and moves when you
+split up a big file into smaller ones. One example in the git repository
+is 2cf565c, which split the documentation into smaller files.
 
-As this is a high-traffic list, it can be difficult for reviewers to
-remember all the comments regarding the previous version. It can help
-a lot if you include a reference to the previous attempt, like this
-[1].
+In 582aa00 XDF_NEED_MINIMAL was removed as the default for performance
+reasons, mainly for diff and rebase, but blame was also changed.
 
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/243216/focus=243945
+In 059a500 the problem with blame was noticed and the flag --minimal was
+introduced. However this flag is not documented and it is not possible
+to set when using "git gui blame".
 
-One more comment below...
+Setting XDF_NEED_MINIMAL as default has a small performance impact when
+you run on a file with few modifications. However, if you run it on a
+file with a bigger number of modifications, the performance impact is
+small enough to not be noticable.
 
-> diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
-> index 0d2cdcd..b8aabc9 100644
-> --- a/Documentation/git-rev-parse.txt
-> +++ b/Documentation/git-rev-parse.txt
-> @@ -313,6 +313,12 @@ Each line of options has this format:
->
->         * Use `!` to not make the corresponding negated long option available.
->
-> +`<arg_hint>`::
-> +       `<arg_hing>`, if specified, is used as a name of the argument in the
+The previous behavior can still be activated with --no-minimal.
 
-arg_hing?
+((2cf565c...))$ time PAGER=cat git blame -C -M
+    Documentation/git-ls-files.txt > /dev/null
 
-> +       help output, for options that take arguments. `<arg_hint>` is
-> +       terminated by the first whitespace. When output the name is shown in
-> +       angle braces.  Underscore symbols are replaced with spaces.
-> +
->  The remainder of the line, after stripping the spaces, is used
->  as the help associated to the option.
+real    0m0.003s
+user    0m0.002s
+sys 0m0.000s
+
+((2cf565c...))$ time PAGER=cat git blame --minimal -C -M
+    Documentation/git-ls-files.txt > /dev/null
+
+real    0m0.010s
+user    0m0.009s
+sys 0m0.000s
+
+((2cf565c...))$ time PAGER=cat git blame -C -C -C -M
+    Documentation/git-ls-files.txt > /dev/null
+
+real    0m0.010s
+user    0m0.010s
+sys 0m0.000s
+
+((2cf565c...))$ time PAGER=cat git blame --minimal -C -C -C -M
+    Documentation/git-ls-files.txt > /dev/null
+
+real    0m0.028s
+user    0m0.027s
+sys 0m0.000s
+
+(master)$ time PAGER=cat git blame -C -C -C -M
+    Documentation/git-ls-files.txt > /dev/null
+
+real    0m2.338s
+user    0m2.283s
+sys 0m0.056s
+
+(master)$ time PAGER=cat git blame --minimal -C -C -C -M
+    Documentation/git-ls-files.txt > /dev/null
+
+real    0m2.355s
+user    0m2.285s
+sys 0m0.069s
+
+(master)$ time PAGER=cat git blame -C -M cache.h > /dev/null
+
+real    0m1.755s
+user    0m1.730s
+sys 0m0.024s
+
+(master)$ time PAGER=cat git blame --minimal -C -M cache.h > /dev/null
+
+real    0m1.785s
+user    0m1.770s
+sys 0m0.014s
+
+(master)$ time PAGER=cat git blame -C -C -C -M cache.h > /dev/null
+
+real    0m31.515s
+user    0m30.810s
+sys 0m0.684s
+
+(master)$ time PAGER=cat git blame --minimal -C -C -C -M cache.h >
+/dev/null
+
+real    0m31.504s
+user    0m30.885s
+sys 0m0.598s
+
+Signed-off-by: Michael Andreen <harv@ruin.nu>
+---
+There hasn't been any arguments against this patch. Just updated the message 
+with a note about --no-minimal.
+
+Applies cleanly on both master and maint.
+
+ builtin/blame.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/builtin/blame.c b/builtin/blame.c
+index e5b5d71..0e7ebd0 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -42,7 +42,7 @@ static int show_root;
+ static int reverse;
+ static int blank_boundary;
+ static int incremental;
+-static int xdl_opts;
++static int xdl_opts = XDF_NEED_MINIMAL;
+ static int abbrev = -1;
+ static int no_whole_file_rename;
+ 
+-- 
+1.8.3.2
