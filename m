@@ -1,77 +1,124 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: [GSOC 2014]idea:Git Configuration API Improvement
-Date: Thu, 20 Mar 2014 09:47:53 +0100
-Message-ID: <532AAB39.3010507@alum.mit.edu>
+Date: Thu, 20 Mar 2014 10:10:23 +0100
+Message-ID: <vpqd2hh5j7k.fsf@anie.imag.fr>
 References: <1395300220-7540-1-git-send-email-zhaox383@umn.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Matthieu.Moy@grenoble-inp.fr, peff@peff.net, git@vger.kernel.org
+Content-Type: text/plain
+Cc: mhagger@alum.mit.edu, peff@peff.net, git@vger.kernel.org
 To: Yao Zhao <zhaox383@umn.edu>
-X-From: git-owner@vger.kernel.org Thu Mar 20 09:56:00 2014
+X-From: git-owner@vger.kernel.org Thu Mar 20 10:10:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQYlc-0001N2-DE
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 09:56:00 +0100
+	id 1WQZ05-0004yN-Kb
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 10:10:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751505AbaCTIzD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Mar 2014 04:55:03 -0400
-Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:58590 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750743AbaCTIzA (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 20 Mar 2014 04:55:00 -0400
-X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Thu, 20 Mar 2014 04:54:59 EDT
-X-AuditID: 1207440c-f79656d000003eba-4a-532aab3d81af
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 95.01.16058.D3BAA235; Thu, 20 Mar 2014 04:47:57 -0400 (EDT)
-Received: from [192.168.69.148] (p5B15629D.dip0.t-ipconnect.de [91.21.98.157])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s2K8lsgJ000629
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Thu, 20 Mar 2014 04:47:55 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
-In-Reply-To: <1395300220-7540-1-git-send-email-zhaox383@umn.edu>
-X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrMKsWRmVeSWpSXmKPExsUixO6iqGu7WivYYEqHkEXXlW4mi0uf17Na
-	/GjpYbZ4NeEZmwOLx8Qvx1k9nvXuYfS4urCJ3ePzJrkAlihum6TEkrLgzPQ8fbsE7oyn23+w
-	FDSwV/Rt28fSwHiatYuRk0NCwESit307E4QtJnHh3nq2LkYuDiGBy4wSm2a3M0E455gkXlxc
-	wgZSxSugLfF4eR8jiM0ioCrxccY/ZhCbTUBXYlFPM9gkUYFgidWXH7BA1AtKnJz5BMwWEZCX
-	uPv/NpjNLOAisejtLrCZwgJ2Eg0fesBmCgnYS+z41QZmcwo4SJz78hvI5gC6TlyipzEIolVH
-	4l3fA2YIW15i+9s5zBMYBWch2TYLSdksJGULGJlXMcol5pTm6uYmZuYUpybrFicn5uWlFuka
-	6uVmluilppRuYoQEOs8Oxm/rZA4xCnAwKvHwrtijGSzEmlhWXJl7iFGSg0lJlPf9Sq1gIb6k
-	/JTKjMTijPii0pzU4kOMEhzMSiK81u5AOd6UxMqq1KJ8mJQ0B4uSOK/qEnU/IYH0xJLU7NTU
-	gtQimKwMB4eSBK/xKqBGwaLU9NSKtMycEoQ0EwcnyHAuKZHi1LyU1KLE0pKMeFAExxcDYxgk
-	xQO0Nwmknbe4IDEXKArReopRl2PDtjWNTEIsefl5qVLivB4ghwuAFGWU5sGtgKW1V4ziQB8L
-	86aAjOIBpkS4Sa+AljABLeGfCrakJBEhJdXAKGi2R9rl95Oud1OyA6ctPdq9d2FZ5OTLMX+K
-	4kRWf1NTl9kk9Ped+86keX1B3w8vWVRVuWbqg7JvgTs7pzc7a8zQsy5lUl1cOPFZ 
+	id S1754084AbaCTJKv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Mar 2014 05:10:51 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:48409 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751407AbaCTJKs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Mar 2014 05:10:48 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s2K9AN2o028333
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 20 Mar 2014 10:10:23 +0100
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s2K9ANBR014714;
+	Thu, 20 Mar 2014 10:10:23 +0100
+In-Reply-To: <1395300220-7540-1-git-send-email-zhaox383@umn.edu> (Yao Zhao's
+	message of "Thu, 20 Mar 2014 02:23:40 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 20 Mar 2014 10:10:23 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s2K9AN2o028333
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1395911427.90472@NuBD01nmaqcgxC9GFLBTdA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244526>
 
-On 03/20/2014 08:23 AM, Yao Zhao wrote:
+Hi,
+
+Yao Zhao <zhaox383@umn.edu> writes:
+
+> First is about when to start reading configuration file to cache. My
+> idea is the time user starts call command that need configuration
+> information (need to read configuration file).
+
+I'd actually load the configuration lazily, when Git first requires a
+configuration variable's value. Something like
+
+int config_has_been_loaded = 0;
+
+git_config() {
+	if (!config_has_been_loaded) {
+		load_config();
+		config_has_been_loaded = 1;
+	} else if (cache_is_outdated()) {
+		load_config();
+	} else { /* Nothing to do, we're good */ }
+	do_something_with_loaded_config();
+}
+
+> Second is about data structure. I read Peff's email listed on idea
+> page. He indicated two methods and I prefer syntax tree.
+
+Why?
+
+(In general, explaining why you chose something is more important than
+explaining what you chose)
+
+> I think there should be three or more syntax tree in the cache. One
+> for system, one for global and one for local. If user indicate a file
+> to be configuration file, add one more tree. Or maybe we can build one
+> tree and tag every node to indicate where it belongs to.
+
+A tree (AST, Abstract syntax tree) can be interesting if you have some
+source-to-source transformations to do on the configuration files (i.e.
+edit the config files themselves).
+
+For read-only accesses, I would find it more natural to have a
+data-structure that reflects the configuration variables themselves, not
+the way they appear in the config file. For example, a map (hashtable)
+associating to each config variable the corresponding value (which may
+be a scalar value or a list, depending on the variable).
+
+But the really important part here is the API exposed to the user, not
+the internal data-structure. A map would be "more efficient" (O(1) or
+O(log(n)) access), but traversing the AST for each config request would
+not really harm: this is currently what we're doing, except that we
+currently re-parse the file each time. OTOH, the API should hide the AST
+for most uses. If the user wants the value of configuration variable
+"foo", the code to do that should not be much more complex than
+get_value_for_config_variable("foo"). (well, I did oversimplify a bit
+here).
+
 > Third one is about when to write back to file, I am really confused
 > about it. I think one way could be when user leave git repository
 > using "cd" to go back. But I am not sure if git could detect user
 > calls "cd" to leave repository.
 
-I don't understand.  The cache would be in memory, and would only live
-as long as a single "git" process.  Within that process, if somebody
-wants to change the config, they might (for example) call one function
-to lock the config file, a second function to change the value(s) in
-memory, and then a third function to flush the new config out to disk
-and unlock the config file again.  The cache would usually only live for
-milliseconds, not minutes/hours, so I don't think your question really
-makes sense.
+There semes to be a misunderstanding here. The point of the project is
+to have a per-process cache, but Git does not normally store a state in
+memory between two calls. IOW, when you run
 
-Michael
+  git status
+  cd ../
+  git log
+
+The call to "git status" creates a process, but the process dies before
+you run "cd". The call to "git log" is a different process. It can
+re-use things that "git status" left on disk, but not in-memory data
+structures.
 
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
