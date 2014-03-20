@@ -1,87 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git 1.9.1 tarball
-Date: Thu, 20 Mar 2014 00:18:36 -0700
-Message-ID: <7vy505tk1f.fsf@alter.siamese.dyndns.org>
-References: <CAHtLG6Tgu6soDQXcnh=1htz_mv9ESF_KDhFRrcijZyEWeCHnpQ@mail.gmail.com>
-	<CAEjxke_zZrrkvQ+2cL9m0kgJTVVxVz=WmQcz8_sQKoggHwO4Eg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?5LmZ6YW46Yuw?= <ch3cooli@gmail.com>,
-	git <git@vger.kernel.org>
-To: "Jason St. John" <jstjohn@purdue.edu>
-X-From: git-owner@vger.kernel.org Thu Mar 20 08:17:34 2014
+From: Yao Zhao <zhaox383@umn.edu>
+Subject: [GSOC 2014]idea:Git Configuration API Improvement
+Date: Thu, 20 Mar 2014 02:23:40 -0500
+Message-ID: <1395300220-7540-1-git-send-email-zhaox383@umn.edu>
+Cc: git@vger.kernel.org, Yao Zhao <zhaox383@umn.edu>
+To: mhagger@alum.mit.edu, Matthieu.Moy@grenoble-inp.fr, peff@peff.net
+X-From: git-owner@vger.kernel.org Thu Mar 20 08:24:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQXEL-0005Pv-Cq
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 08:17:33 +0100
+	id 1WQXKx-00064F-9W
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 08:24:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751223AbaCTHR0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Mar 2014 03:17:26 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50594 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750922AbaCTHRZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 20 Mar 2014 03:17:25 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CD7026AA69;
-	Thu, 20 Mar 2014 03:17:24 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=g2vv68KBVryU
-	HzDUBQxKhj0LgD4=; b=Y7xI+rk71GQfwAfQLWmdPcMYPwNi4S5TJYUTVJ3WSysy
-	w729QsOQlLgpJi3kLe8DNwxQrdywz9hn1cLKxXre88nA/PgnJx0OR1ddmmEngYOt
-	5yYfbGyREn+TU5RQaBj3Rjr1NxwS12eOLbKF+6+bXTQkprvpb80etmcRT74BdT8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=q6yuT0
-	bRv6yrzXIkmrwKyA+xdsR0dx2RreLnRXDdC2L+upwWMZy+0KWBoi/4QtJEVh33IK
-	JbQV+WG1QSiyb5U/4X2x40Uz8JUpPIoUI38aqs9C8hbZvaRBg12eTaN1jjSSYen/
-	bLW1UqFGD1u09aYvu15uhN8pO4AklkCKDD9gg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BBB896AA68;
-	Thu, 20 Mar 2014 03:17:24 -0400 (EDT)
-Received: from pobox.com (unknown [198.0.213.178])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D70EA6AA65;
-	Thu, 20 Mar 2014 03:17:23 -0400 (EDT)
-In-Reply-To: <CAEjxke_zZrrkvQ+2cL9m0kgJTVVxVz=WmQcz8_sQKoggHwO4Eg@mail.gmail.com>
-	(Jason St. John's message of "Wed, 19 Mar 2014 23:28:39 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.4 (gnu/linux)
-X-Pobox-Relay-ID: AF01FD08-AFFF-11E3-A012-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751153AbaCTHYI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Mar 2014 03:24:08 -0400
+Received: from vs-w.tc.umn.edu ([134.84.135.88]:54770 "EHLO vs-w.tc.umn.edu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750788AbaCTHYH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Mar 2014 03:24:07 -0400
+Received: from mail-ie0-f179.google.com (mail-ie0-f179.google.com [209.85.223.179])
+	by vs-w.tc.umn.edu (UMN smtpd) with ESMTP
+	for <git@vger.kernel.org>; Thu, 20 Mar 2014 02:24:04 -0500 (CDT)
+X-Umn-Remote-Mta: [N] mail-ie0-f179.google.com [209.85.223.179] #+LO+TS+TR
+X-Umn-Classification: local
+Received: by mail-ie0-f179.google.com with SMTP id lx4so446906iec.38
+        for <git@vger.kernel.org>; Thu, 20 Mar 2014 00:24:04 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=9bllje3Rrsws529wxGISdbH+jfwMLIoabS+TAXUBILg=;
+        b=VkHqoX1F+NiqfFKNDT5C+TlkFarX731FI82pCUkaYbeTwd4Lgd9TpK8SjWl0XxWNaW
+         ugrqP3Ef7/J9OTOatbzMKTDN7DhXtDwGCPFOl9Ne6/UNRq3xCTnNP9dJW0ZipAqjxN/B
+         H8k6h3DnGHO7S4qusgLLCMf8iRLmEKfCzp2iS5hKE4PpnXmBxXjL6V7e+pQZ53uR5DEE
+         dk2OfHwo0zribrcYezYw6EYPRR+bz9FuEYt5lPDbK8ztLE4gl1X2/7qa+5ywmaJJycFo
+         pGzKh5244OcEgqywlQK2e1U4bdi7r+r5qmhUNvM4e5s0zNxNaI1I0F2hlk2o50jzOiVy
+         avvg==
+X-Gm-Message-State: ALoCoQkwgD994/ioEdo1+r6QxhSpTkrRfMVIpQY74s3kIuPXFQM82NwhCsPdpotTRM8u2bNlLouBIB/Bf/FyEhM/LkrOgg35kHBmy+C8oV2l80VWMTJKIBmf0kYIRe1nz4cKPbTOuOBtV1Vg77A/Cava05tiAGmklQ==
+X-Received: by 10.50.189.228 with SMTP id gl4mr29515793igc.22.1395300244231;
+        Thu, 20 Mar 2014 00:24:04 -0700 (PDT)
+X-Received: by 10.50.189.228 with SMTP id gl4mr29515787igc.22.1395300244144;
+        Thu, 20 Mar 2014 00:24:04 -0700 (PDT)
+Received: from localhost.localdomain (c-71-63-157-152.hsd1.mn.comcast.net. [71.63.157.152])
+        by mx.google.com with ESMTPSA id i16sm35006661igf.11.2014.03.20.00.24.02
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 20 Mar 2014 00:24:03 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244522>
 
-"Jason St. John" <jstjohn@purdue.edu> writes:
+Hello, Michael, Matthieu and peff,
 
-> On Wed, Mar 19, 2014 at 8:09 PM, =E4=B9=99=E9=85=B8=E9=8B=B0 <ch3cool=
-i@gmail.com> wrote:
->>
->> Hi,
->>
->> Where to find git 1.9.1 tarball?
->> It is not uploaded to google code.
->> --
->
-> You can download a tarball for 1.9.1 from GitHub:
-> https://github.com/git/git/archive/v1.9.1.tar.gz
->
-> Jason
+My name is Yao and I am interested in Git Configuration API Improvements listed in idea page in Git. I came up some ideas and really want to discuss them with you.
 
-The announcement message starts like this:
+First is about when to start reading configuration file to cache. My idea is the time user starts call command that need configuration information (need to read configuration file).
 
-    The latest maintenance release Git v1.9.1 is now available at
-    the usual places.
+Second is about data structure. I read Peff's email listed on idea page. He indicated two methods and I prefer syntax tree. I think there should be three or more syntax tree in the cache. One for system, one for global and one for local. If user indicate a file to be configuration file, add one more tree. Or maybe we can build one tree and tag every node to indicate where it belongs to.
 
-    The release tarballs are found at:
+Third one is about when to write back to file, I am really confused about it. I think one way could be when user leave git repository using "cd" to go back. But I am not sure if git could detect user calls "cd" to leave repository.
 
-        https://www.kernel.org/pub/software/scm/git/
+Thank you,
 
-It is somewhat strange that nobody seems to read the announcement
-that has that exact information before asking.
+Yao
