@@ -1,112 +1,139 @@
-From: Chris Angelico <rosuav@gmail.com>
-Subject: Re: Configuring a third-party git hook
-Date: Fri, 21 Mar 2014 04:10:35 +1100
-Message-ID: <CAPTjJmoDZRmFVnNmn_865Tcv6=GJucuKEo_Y-ezQ4s5vsHmguA@mail.gmail.com>
-References: <CAPTjJmomAnrjjyfSvDJijBP2pUN_kqVCRr+UbZkQHQy295A85A@mail.gmail.com>
-	<xmqqwqfozu9t.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] diff: optimise parse_dirstat_params() to only compare strings when necessary
+Date: Thu, 20 Mar 2014 10:18:54 -0700
+Message-ID: <xmqqmwgkzt35.fsf@gitster.dls.corp.google.com>
+References: <1395274076-6720-1-git-send-email-dragos.foianu@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 20 18:10:47 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Dragos Foianu <dragos.foianu@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 20 18:19:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQgUN-0001Et-VH
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 18:10:44 +0100
+	id 1WQgca-0005Ob-Cp
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 18:19:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758065AbaCTRKh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Mar 2014 13:10:37 -0400
-Received: from mail-pb0-f44.google.com ([209.85.160.44]:35506 "EHLO
-	mail-pb0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756651AbaCTRKf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Mar 2014 13:10:35 -0400
-Received: by mail-pb0-f44.google.com with SMTP id rp16so1223500pbb.31
-        for <git@vger.kernel.org>; Thu, 20 Mar 2014 10:10:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=j+DCcJQt58lxoD6cQ0Y7vLvSuaqsU/OxU0OzZg4P2Lg=;
-        b=KSjoOhnRcLU7fQ3f9+on1+M2zi8r7lw5RoX1b3uCtgE8CNqrmYH/gb8nbsTFiw9Lg8
-         FSHqv8ocw2sglK4og++Wu3EeQGFcc+pcL7rSsV3B9XW5c7+gYxPk5CEHxlFZK8UnDOF9
-         4+boeLIbBY/vKVryHwfYIlB/tXMxxtI9A3rUi2E2gEmpe61wQMHFpFPdUPvoAIqhZY+9
-         W+4ehC0p2vn23H5WbmEa/DRlzLvxjrDd/7mBI4ZsyI9IBQCIyed03d8Ap5/PlQyUmleb
-         tNyjSwZuqm+fkhvWJPBQpXk9+OkUQuUnosIoweHihqrJb5zTA34HrcLmWlpIlZ+Irpa6
-         Y79Q==
-X-Received: by 10.66.164.229 with SMTP id yt5mr49132157pab.67.1395335435168;
- Thu, 20 Mar 2014 10:10:35 -0700 (PDT)
-Received: by 10.68.33.7 with HTTP; Thu, 20 Mar 2014 10:10:35 -0700 (PDT)
-In-Reply-To: <xmqqwqfozu9t.fsf@gitster.dls.corp.google.com>
+	id S1759419AbaCTRTE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Mar 2014 13:19:04 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36462 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759353AbaCTRTA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Mar 2014 13:19:00 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E112D7635A;
+	Thu, 20 Mar 2014 13:18:59 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=laGONZ4xZpUgBmsvA+RdWTesnJI=; b=TRxZ8d
+	aZ3sXpQvSYEsxHm26VcNcQYvj+p6Qvr9BmiKkOc0KCFb/k5URemXEqpRvwyyKcYI
+	SIPx0o17nOUzV7QWfJliEPYiKXI41YYu4gXgiYY6qugT7MxpUKP48osoG8OrfwOT
+	0Jq5sgReqveepbCEx5fC8UtJ0jEwf60n/R9pU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=i4OBY2m64uT+RBPS0/Y36BBMzn3LDT3P
+	TLkBaNaC3gjIF/tMtRwyiaF0W4S+/SfPNHpLaYMSRUmBvbxnx39GU3KKscjHFodf
+	HHVFk0oR4Um8Wgflm2r49b1S7lNkeyThBB2exuPM6LxlmG51IKp2gZ2IrynLYFc/
+	QcFoHlxIz6Q=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C7C2D76358;
+	Thu, 20 Mar 2014 13:18:59 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D017A7634D;
+	Thu, 20 Mar 2014 13:18:58 -0400 (EDT)
+In-Reply-To: <1395274076-6720-1-git-send-email-dragos.foianu@gmail.com>
+	(Dragos Foianu's message of "Thu, 20 Mar 2014 02:07:56 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: B9493FC0-B053-11E3-83D5-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244561>
 
-On Fri, Mar 21, 2014 at 3:53 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Chris Angelico <rosuav@gmail.com> writes:
+Dragos Foianu <dragos.foianu@gmail.com> writes:
+
+> parse_dirstat_params() goes through a chain of if statements using
+> strcmp to parse parameters. When the parameter is a digit, the
+> value must go through all comparisons before the function realises
+> it is a digit. Optimise this logic by only going through the chain
+> of string compares when the parameter is not a digit.
+
+This change could be an optimization only if parse_dirstat_params()
+is called with a param that begins with a digit a lot more often
+than with other forms of params, but that is a mere assumption.
+Unless that assumption is substantiated, this change can be a
+pessimization.
+
+Even if the assumption were true (which I doubt), a simpler solution
+to optimize such a call pattern would be to simply tweak of the
+order if/else cascade to check if the param begins with a digit
+first before checking other keywords, wouldn't it?  I am not sure
+why you even need to change the structure into a nested if
+statement.
+
+> Signed-off-by: Dragos Foianu <dragos.foianu@gmail.com>
+> ---
+>  diff.c | 37 +++++++++++++++++++------------------
+>  1 file changed, 19 insertions(+), 18 deletions(-)
 >
->> file. It doesn't really care about the full history, and wants to be
->> reasonably fast (as the user is waiting for it). It's just a
->> convenience, so correctness isn't a huge issue. The easiest way to
->> keep it moving through quickly is to limit the search:
->>
->> $ git log ...other options... HEAD~100 some-file.pike
->>
->> The problem with this is that it doesn't work if HEAD doesn't have 100
->> great-great-...-grandparents
->
-> Did you really mean that you are *not* interested in what happened
-> to the most recent 100 commits?  Or is it a typo of "HEAD~100.."?
-
-Oops, yes, HEAD~100.. is what I actually use in the source code. Same
-difference; it doesn't work if there aren't that many commits.
-
-> "git log -100" should traverse from the HEAD and stop after showing
-> at most 100 items, even if you only had 20 in the history.
-
-Yes, and I use that to limit the results (to 10, actually); but
-there's one degenerate case left, and that's a new or moved/renamed
-file in a long-standing repository. Let's say the repo has 760 commits
-(which is currently the case for Gypsum; I'd say this is fairly small
-as repos go), and a file was moved a little while ago and then not
-edited much.
-
-$ git log plugins-more/threshtime.pike
-
-Four results, the oldest being "Move three plugins into -more" which
-moved the file without any edits at all. If I edit that file now, the
-prepare-commit-msg hook will execute the following (or would, if I
-hadn't set the config option):
-
-$ git log --shortstat --full-diff -10 --oneline plugins-more/threshtime.pike
-fca89fe Threshtime: Drop a comment from the old C++ plugin
- 1 file changed, 1 insertion(+), 1 deletion(-)
-df8bcf0 Threshtime: Make use of statusevent
- 1 file changed, 2 insertions(+), 11 deletions(-)
-1207213 Threshtime: Use the tooltip to hint at the converter
- 1 file changed, 1 insertion(+)
-c22dfbc Move three plugins into -more so they're loaded by default but
-unloadable
- 6 files changed, 426 insertions(+), 426 deletions(-)
-
-Since it says "-10" and hasn't found ten results yet, git log will
-keep on searching back in history. I don't know of a way to say "give
-up searching once you find the commit that creates this file",
-although that would also do what I want. The end result is the same,
-but it's very slow if the git log isn't in the OS/disk cache. On my
-main development box, it is cached, but I just tried it on my Windows
-box and it took about fifteen seconds to finish; and 760 commits is
-not huge as repositories go - the Pike repo has over 30,000 commits,
-and git's own repo is of similar size.
-
-Bounding the search is potentially a huge improvement here, since the
-user's waiting. But the exact limit depends on the repo itself, and
-it'd be nice to be able to disable it ("huh, didn't find any
-results... I'll de-limit the search and try again"). Hence the config
-option, which I'm very happy to hear *is* a viable technique.
-
-ChrisA
+> diff --git a/diff.c b/diff.c
+> index e343191..733764e 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -84,20 +84,25 @@ static int parse_dirstat_params(struct diff_options *options, const char *params
+>  		string_list_split_in_place(&params, params_copy, ',', -1);
+>  	for (i = 0; i < params.nr; i++) {
+>  		const char *p = params.items[i].string;
+> -		if (!strcmp(p, "changes")) {
+> -			DIFF_OPT_CLR(options, DIRSTAT_BY_LINE);
+> -			DIFF_OPT_CLR(options, DIRSTAT_BY_FILE);
+> -		} else if (!strcmp(p, "lines")) {
+> -			DIFF_OPT_SET(options, DIRSTAT_BY_LINE);
+> -			DIFF_OPT_CLR(options, DIRSTAT_BY_FILE);
+> -		} else if (!strcmp(p, "files")) {
+> -			DIFF_OPT_CLR(options, DIRSTAT_BY_LINE);
+> -			DIFF_OPT_SET(options, DIRSTAT_BY_FILE);
+> -		} else if (!strcmp(p, "noncumulative")) {
+> -			DIFF_OPT_CLR(options, DIRSTAT_CUMULATIVE);
+> -		} else if (!strcmp(p, "cumulative")) {
+> -			DIFF_OPT_SET(options, DIRSTAT_CUMULATIVE);
+> -		} else if (isdigit(*p)) {
+> +		if (!isdigit(*p)) {
+> +			if (!strcmp(p, "changes")) {
+> +				DIFF_OPT_CLR(options, DIRSTAT_BY_LINE);
+> +				DIFF_OPT_CLR(options, DIRSTAT_BY_FILE);
+> +			} else if (!strcmp(p, "lines")) {
+> +				DIFF_OPT_SET(options, DIRSTAT_BY_LINE);
+> +				DIFF_OPT_CLR(options, DIRSTAT_BY_FILE);
+> +			} else if (!strcmp(p, "files")) {
+> +				DIFF_OPT_CLR(options, DIRSTAT_BY_LINE);
+> +				DIFF_OPT_SET(options, DIRSTAT_BY_FILE);
+> +			} else if (!strcmp(p, "noncumulative")) {
+> +				DIFF_OPT_CLR(options, DIRSTAT_CUMULATIVE);
+> +			} else if (!strcmp(p, "cumulative")) {
+> +				DIFF_OPT_SET(options, DIRSTAT_CUMULATIVE);
+> +			} else {
+> +				strbuf_addf(errmsg, _("  Unknown dirstat parameter '%s'\n"), p);
+> +				ret++;
+> +			}
+> +		} else  {
+>  			char *end;
+>  			int permille = strtoul(p, &end, 10) * 10;
+>  			if (*end == '.' && isdigit(*++end)) {
+> @@ -114,11 +119,7 @@ static int parse_dirstat_params(struct diff_options *options, const char *params
+>  					    p);
+>  				ret++;
+>  			}
+> -		} else {
+> -			strbuf_addf(errmsg, _("  Unknown dirstat parameter '%s'\n"), p);
+> -			ret++;
+>  		}
+> -
+>  	}
+>  	string_list_clear(&params, 0);
+>  	free(params_copy);
