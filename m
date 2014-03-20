@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 4/8] ls_colors.c: new color descriptors
-Date: Thu, 20 Mar 2014 17:15:47 +0700
-Message-ID: <1395310551-23201-5-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 6/8] ls-files: add --column
+Date: Thu, 20 Mar 2014 17:15:49 +0700
+Message-ID: <1395310551-23201-7-git-send-email-pclouds@gmail.com>
 References: <1395310551-23201-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,123 +10,127 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 20 11:16:18 2014
+X-From: git-owner@vger.kernel.org Thu Mar 20 11:16:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQa1C-00018k-7B
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 11:16:10 +0100
+	id 1WQa1N-0001LY-IC
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 11:16:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751449AbaCTKQE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Mar 2014 06:16:04 -0400
-Received: from mail-pd0-f173.google.com ([209.85.192.173]:53355 "EHLO
-	mail-pd0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755217AbaCTKQC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Mar 2014 06:16:02 -0400
-Received: by mail-pd0-f173.google.com with SMTP id z10so714951pdj.18
-        for <git@vger.kernel.org>; Thu, 20 Mar 2014 03:16:02 -0700 (PDT)
+	id S1756012AbaCTKQP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Mar 2014 06:16:15 -0400
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:42072 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754398AbaCTKQN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Mar 2014 06:16:13 -0400
+Received: by mail-pa0-f53.google.com with SMTP id ld10so729463pab.12
+        for <git@vger.kernel.org>; Thu, 20 Mar 2014 03:16:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=jZiy5ws1wNrpivRBOcJCgFlAzb1OFcJcCxlXwfz6+7o=;
-        b=TnLpqXSz1GwJqqVf8XFnNsfEJDaJwGzJXUlB3Hni1sTu5aOiSaHBqwxWEE4CORv8ii
-         0AVf1oYjZ4ooPDidE9Tso26+eMMl+h3sVby/vOhVyEQLIQcgwmBB6GwbUX4PIM7AXjRS
-         SRLcFP3dwTb/j45xk+SdjoBvj7jRbyTZIQLm1dXhe6pyA8khQmJHMw2MB/V/HwIFKvdx
-         JhwoUM0w6goebPPUCMYtH7IrZ75mCEkO4PDW9yk3euHDGK7yd1ptPDfT0LhiEP8po2bd
-         lyj6wSaSIG3vXp4BGQREWW1lw1a6MzmOzZrEPTjoDfyfqNfuxvT7npl40Jekvzf9FS2x
-         tltw==
-X-Received: by 10.68.170.36 with SMTP id aj4mr47249380pbc.54.1395310562134;
-        Thu, 20 Mar 2014 03:16:02 -0700 (PDT)
+        bh=zMOTZWjtNcj2N7LYfRc0aMrqrssDVluED8HDAproj+k=;
+        b=h4M63MUOoews6wygZUymM/Ip0lx2rSAuD5PTWFr2N8wAbiJe4CWwFH4R/FlBNLWPDQ
+         k2R24BTYNyPH+KYL0khTFQP7MMfh/FSwuwW8RoaJygurVDcGMTa87/48zRCATywa43BN
+         x27pmYw7YB36v50fT2EXdfcqqXkvTx25f/47ljVm97WqFW4esUPIB/HZ4IMGTB+ZvaeI
+         kpQYHL4DjSXBoE4+bMUusqI2IdIPE7CMLvnRRnH1014bocgBdNxQA+Kgv9mqDc2RRw52
+         tHH01lzfln7UcLjgmzIXB681sZamvbYRT0e+Ly0KGIhWY7MRNwEpsyRBtHt1/DyTp5FI
+         7LJw==
+X-Received: by 10.69.17.230 with SMTP id gh6mr4765272pbd.0.1395310573369;
+        Thu, 20 Mar 2014 03:16:13 -0700 (PDT)
 Received: from lanh ([115.73.251.167])
-        by mx.google.com with ESMTPSA id dk1sm2958035pbc.46.2014.03.20.03.15.59
+        by mx.google.com with ESMTPSA id un5sm7880461pab.3.2014.03.20.03.16.10
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 20 Mar 2014 03:16:01 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Thu, 20 Mar 2014 17:16:49 +0700
+        Thu, 20 Mar 2014 03:16:12 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Thu, 20 Mar 2014 17:17:00 +0700
 X-Mailer: git-send-email 1.9.0.40.gaa8c3ea
 In-Reply-To: <1395310551-23201-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244536>
 
-After coreutils moved to GPL-3 a couple more color descriptors were
-added. parse_ls_color() will abort if it finds any of these so just
-add them recognized (but never actually use them).
+Default pathspec behavior is recursive which includes too many files
+for effective column output. But if you can do
 
-Reference commits (in coreutils.git)
+git ls-files --column ':(glob)*'
 
-0df338f (ls --color: do not colorize files with multiple hard links by =
-default - 2009-06-10)
-adc62b5 (ls: clean up after wrapped+colored file names with clear-to-EO=
-L - 2008-12-31)
-1e48b1f (ls: --color now highlights hard linked files, too - 2008-10-27=
-)
-84f6abf (ls: --color now highlights files with capabilities, too - 2008=
--08-01)
-483297d (ls --color no longer outputs unnecessary escape sequences - 20=
-08-02-12)
+to limit to one level only. It's not exactly the same as GNU ls
+(e.g. directories are never shown) but much closer.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- ls_colors.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ builtin/ls-files.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/ls_colors.c b/ls_colors.c
-index 23f1e0b..02fc632 100644
---- a/ls_colors.c
-+++ b/ls_colors.c
-@@ -5,9 +5,12 @@
- #define STREQ(a, b) (strcmp(a, b) =3D=3D 0)
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index 463280e..a43abdb 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -16,6 +16,7 @@
+ #include "pathspec.h"
+ #include "color.h"
+ #include "ls_colors.h"
++#include "column.h"
 =20
- enum indicator_no {
--	C_LEFT, C_RIGHT, C_END, C_NORM, C_FILE, C_DIR, C_LINK, C_FIFO, C_SOCK=
-,
-+	C_LEFT, C_RIGHT, C_END, C_RESET, C_NORM,
-+	C_FILE, C_DIR, C_LINK, C_FIFO, C_SOCK,
- 	C_BLK, C_CHR, C_MISSING, C_ORPHAN, C_EXEC, C_DOOR, C_SETUID, C_SETGID=
-,
--	C_STICKY, C_OTHER_WRITABLE, C_STICKY_OTHER_WRITABLE
-+	C_STICKY, C_OTHER_WRITABLE, C_STICKY_OTHER_WRITABLE,
-+	C_CAP, C_MULTIHARDLINK, C_CLR_TO_EOL
+ static int abbrev;
+ static int show_deleted;
+@@ -476,6 +477,7 @@ static int option_parse_exclude_standard(const stru=
+ct option *opt,
+ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+ {
+ 	int require_work_tree =3D 0, show_tag =3D 0, i;
++	unsigned int colopts =3D 0;
+ 	const char *max_prefix;
+ 	struct dir_struct dir;
+ 	struct exclude_list *el;
+@@ -532,6 +534,7 @@ int cmd_ls_files(int argc, const char **argv, const=
+ char *cmd_prefix)
+ 		OPT_STRING(0, "with-tree", &with_tree, N_("tree-ish"),
+ 			N_("pretend that paths removed since <tree-ish> are still present")=
+),
+ 		OPT__COLOR(&use_color, N_("show color")),
++		OPT_COLUMN(0, "column", &colopts, N_("show files in columns")),
+ 		OPT__ABBREV(&abbrev),
+ 		OPT_BOOL(0, "debug", &debug_mode, N_("show debugging data")),
+ 		OPT_END()
+@@ -576,6 +579,10 @@ int cmd_ls_files(int argc, const char **argv, cons=
+t char *cmd_prefix)
+ 	if (dir.exclude_per_dir)
+ 		exc_given =3D 1;
+=20
++	finalize_colopts(&colopts, -1);
++	if (!line_terminator && explicitly_enable_column(colopts))
++		die(_("--column and -z are incompatible"));
 +
- };
+ 	if (require_work_tree && !is_inside_work_tree())
+ 		setup_work_tree();
 =20
- #define FILETYPE_INDICATORS				\
-@@ -28,9 +31,9 @@ struct color_ext_type {
- };
+@@ -614,10 +621,19 @@ int cmd_ls_files(int argc, const char **argv, con=
+st char *cmd_prefix)
+ 			die("ls-files --with-tree is incompatible with -s or -u");
+ 		overlay_tree_on_cache(with_tree, max_prefix);
+ 	}
++
++	if (column_active(colopts)) {
++		struct column_options copts;
++		memset(&copts, 0, sizeof(copts));
++		run_column_filter(colopts, &copts);
++	}
+ 	show_files(&dir);
+ 	if (show_resolve_undo)
+ 		show_ru_info();
 =20
- static const char *const indicator_name[]=3D {
--	"lc", "rc", "ec", "no", "fi", "di", "ln", "pi", "so",
-+	"lc", "rc", "ec", "rs", "no", "fi", "di", "ln", "pi", "so",
- 	"bd", "cd", "mi", "or", "ex", "do", "su", "sg", "st",
--	"ow", "tw", NULL
-+	"ow", "tw", "ca", "mh", "cl", NULL
- };
-=20
- #define LEN_STR_PAIR(s) sizeof(s) - 1, s
-@@ -38,6 +41,7 @@ static struct bin_str color_indicator[] =3D {
- 	{ LEN_STR_PAIR("\033[") },	/* lc: Left of color sequence */
- 	{ LEN_STR_PAIR("m") },		/* rc: Right of color sequence */
- 	{ 0, NULL },			/* ec: End color (replaces lc+no+rc) */
-+	{ 0, NULL },			/* rs: Reset to ordinary colors */
- 	{ LEN_STR_PAIR("0") },		/* no: Normal */
- 	{ LEN_STR_PAIR("0") },		/* fi: File: default */
- 	{ LEN_STR_PAIR("01;34") },	/* di: Directory: bright blue */
-@@ -55,6 +59,9 @@ static struct bin_str color_indicator[] =3D {
- 	{ LEN_STR_PAIR("37;44") },	/* st: sticky: black on blue */
- 	{ LEN_STR_PAIR("34;42") },	/* ow: other-writable: blue on green */
- 	{ LEN_STR_PAIR("30;42") },	/* tw: ow w/ sticky: black on green */
-+	{ 0, NULL },			/* ca: black on red */
-+	{ 0, NULL },			/* mh: disabled by default */
-+	{ 0, NULL },			/* cl: clear to end of line */
- };
-=20
- static struct color_ext_type *color_ext_list =3D NULL;
++	if (column_active(colopts))
++		stop_column_filter();
++
+ 	if (ps_matched) {
+ 		int bad;
+ 		bad =3D report_path_error(ps_matched, &pathspec, prefix);
 --=20
 1.9.0.40.gaa8c3ea
