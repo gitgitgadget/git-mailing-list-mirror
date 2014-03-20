@@ -1,116 +1,71 @@
-From: Robert Dailey <rcdailey.lists@gmail.com>
-Subject: Lost commit during rebase!
-Date: Thu, 20 Mar 2014 14:37:12 -0500
-Message-ID: <CAHd499CBkuCJvZ+U3GEcnw0UFot5JooZVdj2sHT_3p0s6ScwcQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Mar 20 20:37:23 2014
+From: George Papanikolaou <g3orge.app@gmail.com>
+Subject: [PATCH] builtin/apply.c: use iswspace() to detect line-ending-like chars
+Date: Thu, 20 Mar 2014 21:39:44 +0200
+Message-ID: <1395344384-7975-1-git-send-email-g3orge.app@gmail.com>
+Cc: git@vger.kernel.org, George Papanikolaou <g3orge.app@gmail.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Mar 20 20:37:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQimI-00004y-3U
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 20:37:22 +0100
+	id 1WQimZ-0000WO-HR
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 20:37:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759710AbaCTThP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Mar 2014 15:37:15 -0400
-Received: from mail-ve0-f179.google.com ([209.85.128.179]:62017 "EHLO
-	mail-ve0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964943AbaCTThN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Mar 2014 15:37:13 -0400
-Received: by mail-ve0-f179.google.com with SMTP id db12so1472890veb.24
-        for <git@vger.kernel.org>; Thu, 20 Mar 2014 12:37:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:date:message-id:subject:from:to:content-type;
-        bh=mAvQH1t+t6t7yQEQS9bLGNIJ3z1yfx35g1z9bOyAF0k=;
-        b=mo3zNfb7bn0N/s7aI2yUw+ZellAQkKrq8PGCSFXlyC1PX0elFvRWwRGHmi81yJLhUJ
-         xlGLH69dv6oN85CeUZMomTAIFzQqpL2N+hocis5TIGG5k+q5TKMiqSZQhWhEM2t+2gmg
-         IVaGDDY9psotffHHoZBuctOZCvjAD+2Z7LHqith/JB08EzbN2o1M61my9cJxjJcKwp26
-         Hab33kD2SnpBymlwyCTLYYVXp1MF/yRL7EEzfHiCq5e+Nc7lLFqrCgMQcZRguH5id4ZE
-         Oy3xMJz7I1IgdXhhMo5RpUa+llEB8Ec8GFAnyoO+M1GCymBVuWTQjMwbQSYyQ7GmfbA0
-         2hjQ==
-X-Received: by 10.58.69.20 with SMTP id a20mr169637veu.63.1395344232442; Thu,
- 20 Mar 2014 12:37:12 -0700 (PDT)
-X-Google-Sender-Delegation: rcdailey@gmail.com
-Received: by 10.221.2.79 with HTTP; Thu, 20 Mar 2014 12:37:12 -0700 (PDT)
-X-Google-Sender-Auth: Tl_CLNLz1u_2i3mXZtKPWDfGpqo
+	id S1759830AbaCTThY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Mar 2014 15:37:24 -0400
+Received: from poseidon.ceid.upatras.gr ([150.140.141.169]:59414 "EHLO
+	poseidon.ceid.upatras.gr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759824AbaCTThV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Mar 2014 15:37:21 -0400
+Received: from mail.ceid.upatras.gr (mta.ceid.upatras.gr [10.1.0.174])
+	by poseidon.ceid.upatras.gr (Postfix) with ESMTP id 2388280315;
+	Thu, 20 Mar 2014 21:37:16 +0200 (EET)
+Received: from localhost (ppp089210130219.access.hol.gr [89.210.130.219])
+	(Authenticated sender: papanikge)
+	by mail.ceid.upatras.gr (Postfix) with ESMTPSA id 7C81F20040;
+	Thu, 20 Mar 2014 21:37:14 +0200 (EET)
+X-Mailer: git-send-email 1.9.0
+X-Spam-Status: No, score=-1.0 required=5.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	FREEMAIL_FROM,NML_ADSP_CUSTOM_MED,UNPARSEABLE_RELAY autolearn=no version=3.3.1
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on mtax.ceid.upatras.gr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244575>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244576>
 
-I have a local-only branch with just under 70 commits. I also have
-merge commits on this branch.
+Removing the bloat of checking for both '\r' and '\n' with the prettier
+iswspace() function which checks for other characters as well. (read: \f \t \v)
+---
 
-The log of the top few commits on my branch looks like so:
+This is one more try to clean up this fuzzy_matchlines() function as part of a
+microproject for GSOC. The rest more clarrified microprojects were taken.
+I'm obviously planning on applying.
 
-* de651ff       (20 minutes ago) (HEAD, survey) Robert Dailey - WIP:
-GOTO implementation
-* 2a68a23       (21 minutes ago) Robert Dailey - Move boost::phoenix
-include & namespace changes to own header file
-* e1cd568       (19 hours ago) Robert Dailey - WIP: GOTO flow changes
-* b039bb5       (19 hours ago) Robert Dailey - Remove superfluous
-include of own header
-* 4bdeb27       (20 hours ago) Robert Dailey - Rename NavigateBackwards()
+Thanks
 
-I had two commits that I wanted to squash and also reorder another
-one. The command I ran is:
+Signed-of-by: George 'papanikge' Papanikolaou <g3orge.app@gmail.com>
 
-git rebase -pi `git merge-base origin/master survey`
+ builtin/apply.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-I ran this command with 'survey' branch checked out. Once my editor
-appears, the last few commits in the file look like so:
-
-pick 4bdeb27 Rename NavigateBackwards()
-pick b039bb5 Remove superfluous include of own header
-pick e1cd568 WIP: GOTO flow changes
-pick 2a68a23 Move boost::phoenix include & namespace changes to own header file
-pick de651ff WIP: GOTO implementation
-
-I modify the last 3 commits in the file so now it looks like this:
-
-pick 4bdeb27 Rename NavigateBackwards()
-pick b039bb5 Remove superfluous include of own header
-pick 2a68a23 Move boost::phoenix include & namespace changes to own header file
-pick e1cd568 WIP: GOTO flow changes
-squash de651ff WIP: GOTO implementation
-
-What I did was:
-
-1. Move 2a68a23 back one commit
-2. Mark de651ff for squash
-
-After this, I save the file, close, and rebase operations begin. After
-the rebase is done, my log looks like this:
-
-* 94d06df       (19 hours ago) (HEAD, survey) Robert Dailey - WIP:
-GOTO flow changes
-* b039bb5       (19 hours ago) Robert Dailey - Remove superfluous
-include of own header
-* 4bdeb27       (20 hours ago) Robert Dailey - Rename NavigateBackwards()
-
-Notice that the commit with description "Move boost::phoenix include &
-namespace changes to own header file" is missing! I looked at reflog:
-
-$ git reflog
-94d06df HEAD@{0}: rebase -i (finish): returning to refs/heads/survey
-94d06df HEAD@{1}: rebase -i (squash): WIP: GOTO flow changes
-e1cd568 HEAD@{2}: rebase -i (pick): updating HEAD
-2a7b27a HEAD@{3}: rebase -i (pick): Move boost::phoenix include &
-namespace changes to own header file
-b039bb5 HEAD@{4}: rebase -i (pick): updating HEAD
-4bdeb27 HEAD@{5}: rebase -i (pick): updating HEAD
-2e40bcd HEAD@{6}: rebase -i (pick): updating HEAD
-3ca6bb3 HEAD@{7}: rebase -i (pick): updating HEAD
-e63b1e5 HEAD@{8}: rebase -i (pick): updating HEAD
-4d40c00 HEAD@{9}: rebase -i (pick): updating HEAD
-ec078c1 HEAD@{10}: rebase -i (pick): updating HEAD
-de48c5d HEAD@{11}: rebase -i (pick): updating HEAD
-
-It shows that it "picked" the commit that's missing now. Is this a bug
-or am I not doing something right? I'm using Git for Windows version
+diff --git a/builtin/apply.c b/builtin/apply.c
+index b0d0986..912a53a 100644
+--- a/builtin/apply.c
++++ b/builtin/apply.c
+@@ -295,9 +295,9 @@ static int fuzzy_matchlines(const char *s1, size_t n1,
+ 	int result = 0;
+ 
+ 	/* ignore line endings */
+-	while ((*last1 == '\r') || (*last1 == '\n'))
++	while (iswspace(*last1))
+ 		last1--;
+-	while ((*last2 == '\r') || (*last2 == '\n'))
++	while (iswspace(*last2))
+ 		last2--;
+ 
+ 	/* skip leading whitespace */
+-- 
 1.9.0
