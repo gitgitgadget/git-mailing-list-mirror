@@ -1,57 +1,77 @@
-From: Kevin <ikke@ikke.info>
-Subject: Re: Configuring a third-party git hook
-Date: Thu, 20 Mar 2014 13:53:44 +0100
-Message-ID: <CAO54GHC1B6hj-OvibHn2=-B25Xd5EmfWsphJ1S7vE4bgUUX3Bw@mail.gmail.com>
-References: <CAPTjJmomAnrjjyfSvDJijBP2pUN_kqVCRr+UbZkQHQy295A85A@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Chris Angelico <rosuav@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 20 13:54:16 2014
+From: Astril Hayato <astrilhayato@gmail.com>
+Subject: [PATCH v3] Documentation/gitk: Document new config file location
+Date: Thu, 20 Mar 2014 13:33:49 +0000
+Message-ID: <1395322429-1501-1-git-send-email-astrilhayato@gmail.com>
+Cc: gitster@pobox.com, Astril Hayato <astrilhayato@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 20 14:34:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQcU8-00087W-1s
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 13:54:12 +0100
+	id 1WQd7G-00055h-3W
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 14:34:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757308AbaCTMyH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Mar 2014 08:54:07 -0400
-Received: from mail-yk0-f169.google.com ([209.85.160.169]:38746 "EHLO
-	mail-yk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756651AbaCTMyF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Mar 2014 08:54:05 -0400
-Received: by mail-yk0-f169.google.com with SMTP id 142so2119326ykq.0
-        for <git@vger.kernel.org>; Thu, 20 Mar 2014 05:54:04 -0700 (PDT)
+	id S1754398AbaCTNed (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Mar 2014 09:34:33 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:61857 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751226AbaCTNec (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Mar 2014 09:34:32 -0400
+Received: by mail-wi0-f172.google.com with SMTP id hi5so6234776wib.11
+        for <git@vger.kernel.org>; Thu, 20 Mar 2014 06:34:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=Y6j/tQvnDM7CrIYj9qRqf3DE/M9i/z/8h+d2cK8/6gA=;
-        b=uX7XSdOI0/xnCL5BLO/lctT2yAiIwAwt+oJ0/N79kb78ETyHshJ/+PVggu7cBw2yHt
-         KGG/PwtGnybVMzbCsZJkEg98VFbSc0h1I0hDjNVUABFugKXfWasvE40jLbCd3U0tPC/S
-         t6AHVZZgMw5riWDyHCrwNtM17Kb9vJH0XIoo9ILkbe3ybEKhPV6CmfvoZ+v3KXcXtO2s
-         nA11xKyXWJWdbRqReXpxWvvLQitR6uAtgAkohh+dH+319zVzzUkYYUZsFDw3eB7uHchu
-         Q2AogjjgXrgbHQzd/5WMo5EHNk2hJewFhjqVgeeN8nH7K01TsbmTgBAqa5zNiWrxqUtw
-         AW5A==
-X-Received: by 10.236.89.3 with SMTP id b3mr34384822yhf.54.1395320044522; Thu,
- 20 Mar 2014 05:54:04 -0700 (PDT)
-Received: by 10.170.170.133 with HTTP; Thu, 20 Mar 2014 05:53:44 -0700 (PDT)
-In-Reply-To: <CAPTjJmomAnrjjyfSvDJijBP2pUN_kqVCRr+UbZkQHQy295A85A@mail.gmail.com>
-X-Google-Sender-Auth: _mK2Oi2X9cuDP2SnbnyGouIKt1M
+        h=from:to:cc:subject:date:message-id;
+        bh=nS5EJ06yignaFEFymafPZI4pgEmNb7Va+tBp8kSB4VQ=;
+        b=wxYYj1qhZrfvmudBGN8z18gaINu682NLTtzPfENMEksYxmIV18go2+b5aaMujIbCH2
+         snZ4HOjPKoWSZHNZ/j/P68xv6Vc09Hipf+CzFfTWTNuUpbi2uj/insdrTdFyJwQpUXJ1
+         5Ohf6LM8GLDqd9GpSN1gsvBkw+eY1PhQXqYhSwQPyvyIXy2lPZohfemx//6iLLINxRGG
+         wId/FfkugjQgA28AQvdTHITpEyHxhxALh7PIOLCn1eBTDZKVy6N31SXaC3ngD9/dShAt
+         ZhoYMErjLugeCX30+DqRoKPudKggERjNvp6AqIi8qrGSJTkrWB2UftTCZ20ZMGHo9LpT
+         Frsw==
+X-Received: by 10.180.91.164 with SMTP id cf4mr3049754wib.37.1395322471042;
+        Thu, 20 Mar 2014 06:34:31 -0700 (PDT)
+Received: from localhost.localdomain (cpc4-blbn8-2-0-cust14.10-1.cable.virginm.net. [86.22.6.15])
+        by mx.google.com with ESMTPSA id bm8sm5106775wjc.12.2014.03.20.06.34.29
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 20 Mar 2014 06:34:30 -0700 (PDT)
+X-Mailer: git-send-email 1.9.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244547>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244548>
 
-On Wed, Mar 19, 2014 at 12:16 PM, Chris Angelico <rosuav@gmail.com> wrote:
-> Two parts to the question, then. Firstly, is it acceptable to use 'git
-> config' for a hook like this? And secondly, either: Is there a naming
-> convention to follow? or, what alternative would you recommend?
+User config file location now complies with the XDG base directory specification
 
-1. I would say yes. git config is made to be extended and doesn't
-require a config item to be known.
-2. Namespacing the config items like you did is a good thing to do so
-it won't interfere with other options.
+Signed-off-by: Astril Hayato <astrilhayato@gmail.com>
+---
+ Documentation/gitk.txt | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/gitk.txt b/Documentation/gitk.txt
+index 1e9e38a..7e03fcc 100644
+--- a/Documentation/gitk.txt
++++ b/Documentation/gitk.txt
+@@ -166,8 +166,14 @@ gitk --max-count=100 --all \-- Makefile::
+ 
+ Files
+ -----
+-Gitk creates the .gitk file in your $HOME directory to store preferences
+-such as display options, font, and colors.
++User configuration and preferences are stored at:
++
++* '$XDG_CONFIG_HOME/git/gitk' if it exists, otherwise
++* '$HOME/.gitk' if it exists
++
++If neither of the above exist then '$XDG_CONFIG_HOME/git/gitk' is created and
++used by default. If '$XDG_CONFIG_HOME' is not set it defaults to
++'$HOME/.config' in all cases.
+ 
+ History
+ -------
+-- 
+1.9.0
