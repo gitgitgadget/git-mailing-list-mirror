@@ -1,151 +1,254 @@
 From: Justin Lebar <jlebar@google.com>
-Subject: [PATCH 0/4] Fix misuses of "nor" (v2)
-Date: Thu, 20 Mar 2014 15:16:21 -0700
-Message-ID: <1395353785-23611-1-git-send-email-jlebar@google.com>
-Cc: Justin Lebar <jlebar@google.com>, Jeff King <peff@peff.net>,
+Subject: [PATCH 4/4] Fix misuses of "nor" outside comments and in tests
+Date: Thu, 20 Mar 2014 15:16:25 -0700
+Message-ID: <1395353785-23611-5-git-send-email-jlebar@google.com>
+References: <1395353785-23611-1-git-send-email-jlebar@google.com>
+Cc: Justin Lebar <jlebar@google.com>, Richard Hansen <rhansen@bbn.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>, Jeff King <peff@peff.net>,
 	Jonathan Nieder <jrnieder@gmail.com>,
-	Richard Hansen <rhansen@bbn.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
+	Justin Lebar <jlebar@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 20 23:45:55 2014
+X-From: git-owner@vger.kernel.org Thu Mar 20 23:46:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQlik-0006Gb-Gc
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 23:45:55 +0100
+	id 1WQljT-0007HJ-JO
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 23:46:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759667AbaCTWpu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Mar 2014 18:45:50 -0400
-Received: from mail-pb0-f73.google.com ([209.85.160.73]:53083 "EHLO
-	mail-pb0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759312AbaCTWpt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Mar 2014 18:45:49 -0400
-Received: by mail-pb0-f73.google.com with SMTP id rp16so201039pbb.2
-        for <git@vger.kernel.org>; Thu, 20 Mar 2014 15:45:49 -0700 (PDT)
+	id S1759837AbaCTWqf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Mar 2014 18:46:35 -0400
+Received: from mail-yh0-f74.google.com ([209.85.213.74]:46009 "EHLO
+	mail-yh0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759697AbaCTWqe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Mar 2014 18:46:34 -0400
+Received: by mail-yh0-f74.google.com with SMTP id f10so191981yha.5
+        for <git@vger.kernel.org>; Thu, 20 Mar 2014 15:46:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=z+XhrriCigW9Qqw/piAHWxs2CcJ443pNibcXCBmfc60=;
-        b=n+3r95hmi1gn9OkohXd3YA2qarJL6dIb+vCttdmvwm0TxEVXIyI49WnqWnNV0k6xL8
-         ZmVVRzxKg5fz4DlCuJItFP299oNDjIFR/6ZwmbQnuDU7+OMj1huOL1Tn6cltxDNHnUVF
-         T9CaINX9NGmEIFPVVpmbrYdiNUFOXL3zR+CGFduQOCtJAghht59GurtCHhIj2g4vilfK
-         9J0ove9Ke49vpqExwAC+/zpcRgFC3FmJSbAL/1sCRqOgrmbl5l7yLHOEKWUpTq+PyEwd
-         sJEMOVw3MEQ3Vv0pQ8XG/YSBitwG/xSS+zenAAJDNCpL6i+Txle+dZZ+1a5+VZZPUgEQ
-         eAxg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=MzB6e/KmrZc1x9WiGIHj2unNbN95H+ABJH3VpngLdtg=;
+        b=PuZdDe5kideZmGIjSGV8Q2pV0af4+8QCh8SySzb7Pkz7FbUi1fixjP+7TWvoZXssCy
+         2PnDXb2gt6UhpWnW3QGnu685KVehDLPB2gvaekkjZzZRW2IChYjpsP/WZ9aMoruZSXEW
+         SXq5gozBqq3L7f1WRUF1XzW9pJjyl/QcIf8pAxoxBLZX6Ej4mgxvimgthnsE8pmqtgRr
+         s8O1dB3cueI+9tz5McvsLG89Sb0RMQWTLQH/RkWss/irNe34duQfaTgB38iyQ5UpV2As
+         QPxKKHJ8u7+DWO13dQLBnM28hWxAz+ZzOV6/GrKVwvewnSQWy6AfiOiXXaUVx9bEfO2L
+         SW9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=z+XhrriCigW9Qqw/piAHWxs2CcJ443pNibcXCBmfc60=;
-        b=UNarqghUqAUe45Jbw48XJUtePQhIEE4bY32Jx/GpnDbibZKAW7jgdIYahSHK5fOYNX
-         fp8J5HVCtNdxzS3IGUtj4sdRdadFhsh4wDHiKErkiA1L6V5x2KJMjr90Q2Uaw08wUGh9
-         nLLa+Co72/Li+EZSc6W8KsJJRhhi48Dq8c4x31pG6GjEEmrS3kJ5LLSbPFTMZQlhDLYb
-         YT37x+417OQaQk4Su7QzrX2orzHDv17/izqJM+Sg6Fx3ISA4CMX45gTGTBawPIt6G/r3
-         NRHY02iPIvJpPL3k6R3XOaeIgLckt0/eWpAMLyZ5P9ld822JWuzop8u+G7yu/o4SDhIS
-         HSWA==
-X-Gm-Message-State: ALoCoQnUQu6gHxmfDbI4uStJNXHUdEPAWeKOWleXh6s6qOW3KvpZ4UPkPcTcOayPnUAUX3R/NkH+4S3CjJRCDAnVywyGDcdtplpNTxCcSRzM3NKpDYLoxtKqzbFV5Yg5yLcoN4MzKW5VFxz+pOfem6sqJx7EzN/6v9CwKDk2Gb25LaPkzHXQHHzOvrMcuE2hUL43MoA8WYhi
-X-Received: by 10.66.163.70 with SMTP id yg6mr12589683pab.44.1395353809695;
-        Thu, 20 Mar 2014 15:16:49 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=MzB6e/KmrZc1x9WiGIHj2unNbN95H+ABJH3VpngLdtg=;
+        b=FBw7o2vH4lzQ3xlguEoMKUlr9tzvkyVL/fYK8bN9ge5OgB27iMy7bqt+voXY/hIaIr
+         VzjOzf5ZxfzF4nhPkusOjI0N/0EfSTXBGC85FcbgncUZmy7UQf7Z0ex8LW6Q9dxWLubQ
+         aHt9zo5jcQSq5iIa2uLK9fgwpnhu9JIQPZtPyZq+RlpK7vtMuByJoYCvLA2niE3L+laW
+         d6b9oQvLVfo7GeM5xdQMM6TR7T6mnaxKff/HlBDPxZY+YH1ku5VqK4Qj5S6qwm4byd+T
+         wEVLUpcXBsIQNypriiLNMo5TsFgVo6T9SaIdbX2nXpvCwfHBM0oWq4jsMJQdrafkxH7u
+         P/Fg==
+X-Gm-Message-State: ALoCoQnAw/OP62ewFHl0QNfAOogFqARe4EDaMUro1Gij5vJxjCZidhDr2nqXomW39qPnA996JXssytYzKVtEmTioNqt5N8TFGoViOWlQ0hRcmTsKhCsCmE1vibiy6AAIR2XyjgGiz1Pas0xHCTIbuHMohqDhux1zpgNGCj6NFsqumJsb9xyzJFHtRx9aOPGBAnQ8RcXCBObb
+X-Received: by 10.52.61.197 with SMTP id s5mr3236908vdr.8.1395353819914;
+        Thu, 20 Mar 2014 15:16:59 -0700 (PDT)
 Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
-        by gmr-mx.google.com with ESMTPS id k45si571040yhn.4.2014.03.20.15.16.49
+        by gmr-mx.google.com with ESMTPS id x22si403914yhd.5.2014.03.20.15.16.59
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 20 Mar 2014 15:16:49 -0700 (PDT)
+        Thu, 20 Mar 2014 15:16:59 -0700 (PDT)
 Received: from jlebar0.mtv.corp.google.com (jlebar0.mtv.corp.google.com [172.17.132.58])
-	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 651825A422C;
-	Thu, 20 Mar 2014 15:16:49 -0700 (PDT)
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id AADF15A422C;
+	Thu, 20 Mar 2014 15:16:59 -0700 (PDT)
 Received: by jlebar0.mtv.corp.google.com (Postfix, from userid 214119)
-	id 064931A1653; Thu, 20 Mar 2014 15:16:48 -0700 (PDT)
+	id 6EFD31A1653; Thu, 20 Mar 2014 15:16:59 -0700 (PDT)
 X-Mailer: git-send-email 1.9.0.279.gdc9e3eb
+In-Reply-To: <1395353785-23611-1-git-send-email-jlebar@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244599>
 
-I got annoyed by git's awkward use of "nor" in man pages and in git add -p, so
-I went ahead and audited all uses of "nor" in the tree.  One might be able to
-argue that some of the uses I've changed are technically acceptable, but that's
-a pretty low bar to set for ourselves.  I aimed to make everything both correct
-and idiomatic.
+Signed-off-by: Justin Lebar <jlebar@gmail.com>
+---
+ builtin/clean.c                   | 6 +++---
+ builtin/commit.c                  | 2 +-
+ git-add--interactive.perl         | 4 ++--
+ perl/Git/SVN.pm                   | 4 ++--
+ sha1_file.c                       | 2 +-
+ t/t1001-read-tree-m-2way.sh       | 2 +-
+ t/t4005-diff-rename-2.sh          | 2 +-
+ t/t4009-diff-rename-4.sh          | 2 +-
+ t/t5304-prune.sh                  | 2 +-
+ t/t6036-recursive-corner-cases.sh | 2 +-
+ t/t7104-reset.sh                  | 2 +-
+ t/t9400-git-cvsserver-server.sh   | 2 +-
+ 12 files changed, 16 insertions(+), 16 deletions(-)
 
-All I really care about is git-add--interactive.perl and (to a lesser extent)
-the docs, so if any of these other changes are controversial or annoying to
-take, I'm happy to drop them.
-
-Changes from v1 are:
-
-- Drop the l10n patch (changes will be automatically picked up later).
-- Fold the inside-tests and outside-tests patches.
-- CC different people, as Duy indicated he wasn't comfortable reviewing.
-
-Justin Lebar (4):
-  Documentation: Fix misuses of "nor"
-  contrib: Fix misuses of "nor"
-  Fix misuses of "nor" in comments
-  Fix misuses of "nor" outside comments and in tests
-
- Documentation/CodingGuidelines                      |  4 ++--
- Documentation/config.txt                            |  6 +++---
- Documentation/diff-generate-patch.txt               |  2 +-
- Documentation/diff-options.txt                      |  2 +-
- Documentation/everyday.txt                          |  2 +-
- Documentation/git-add.txt                           |  4 ++--
- Documentation/git-count-objects.txt                 |  4 ++--
- Documentation/git-diff.txt                          |  4 ++--
- Documentation/git-prune.txt                         |  2 +-
- Documentation/git-push.txt                          |  2 +-
- Documentation/git-read-tree.txt                     |  2 +-
- Documentation/git-reset.txt                         |  6 +++---
- Documentation/git-show-branch.txt                   |  2 +-
- Documentation/git-show-ref.txt                      |  2 +-
- Documentation/howto/rebase-from-internal-branch.txt |  2 +-
- Documentation/howto/revert-a-faulty-merge.txt       |  4 ++--
- Documentation/howto/revert-branch-rebase.txt        |  2 +-
- Documentation/merge-options.txt                     | 15 +++++++--------
- Documentation/pretty-formats.txt                    |  2 +-
- Documentation/pretty-options.txt                    |  2 +-
- Documentation/rev-list-options.txt                  |  2 +-
- Documentation/technical/api-gitattributes.txt       |  2 +-
- Documentation/technical/pack-protocol.txt           |  8 ++++----
- Documentation/technical/protocol-common.txt         |  2 +-
- Documentation/user-manual.txt                       |  2 +-
- Makefile                                            |  2 +-
- builtin/apply.c                                     |  2 +-
- builtin/checkout.c                                  |  2 +-
- builtin/clean.c                                     |  6 +++---
- builtin/commit.c                                    |  2 +-
- builtin/log.c                                       |  2 +-
- builtin/pack-objects.c                              |  2 +-
- builtin/reset.c                                     |  4 ++--
- builtin/show-branch.c                               |  2 +-
- column.c                                            |  2 +-
- contrib/examples/git-checkout.sh                    |  2 +-
- contrib/examples/git-commit.sh                      |  2 +-
- contrib/examples/git-reset.sh                       |  4 ++--
- contrib/fast-import/import-directories.perl         |  4 ++--
- contrib/svn-fe/svn-fe.txt                           |  4 ++--
- delta.h                                             |  2 +-
- diff.c                                              |  2 +-
- git-add--interactive.perl                           |  4 ++--
- git-am.sh                                           |  2 +-
- gitweb/gitweb.perl                                  |  2 +-
- http.h                                              |  4 ++--
- perl/Git/SVN.pm                                     |  6 +++---
- perl/Git/SVN/Migration.pm                           |  2 +-
- pkt-line.h                                          |  2 +-
- remote.c                                            |  2 +-
- sha1_file.c                                         |  4 ++--
- t/t1001-read-tree-m-2way.sh                         |  2 +-
- t/t4005-diff-rename-2.sh                            |  2 +-
- t/t4009-diff-rename-4.sh                            |  2 +-
- t/t5304-prune.sh                                    |  2 +-
- t/t6036-recursive-corner-cases.sh                   |  2 +-
- t/t7104-reset.sh                                    |  2 +-
- t/t9400-git-cvsserver-server.sh                     |  2 +-
- test-chmtime.c                                      |  2 +-
- 59 files changed, 88 insertions(+), 89 deletions(-)
-
+diff --git a/builtin/clean.c b/builtin/clean.c
+index 5502957..977a068 100644
+--- a/builtin/clean.c
++++ b/builtin/clean.c
+@@ -903,11 +903,11 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 
+ 	if (!interactive && !dry_run && !force) {
+ 		if (config_set)
+-			die(_("clean.requireForce set to true and neither -i, -n nor -f given; "
++			die(_("clean.requireForce set to true and neither -i, -n, nor -f given; "
+ 				  "refusing to clean"));
+ 		else
+-			die(_("clean.requireForce defaults to true and neither -i, -n nor -f given; "
+-				  "refusing to clean"));
++			die(_("clean.requireForce defaults to true and neither -i, -n, nor -f given;"
++				  " refusing to clean"));
+ 	}
+ 
+ 	if (force > 1)
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 26b2986..5d594a4 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1123,7 +1123,7 @@ static int parse_and_validate_options(int argc, const char *argv[],
+ 	if (argc == 0 && only && amend)
+ 		only_include_assumed = _("Clever... amending the last one with dirty index.");
+ 	if (argc > 0 && !also && !only)
+-		only_include_assumed = _("Explicit paths specified without -i nor -o; assuming --only paths...");
++		only_include_assumed = _("Explicit paths specified without -i or -o; assuming --only paths...");
+ 	if (!cleanup_arg || !strcmp(cleanup_arg, "default"))
+ 		cleanup_mode = use_editor ? CLEANUP_ALL : CLEANUP_SPACE;
+ 	else if (!strcmp(cleanup_arg, "verbatim"))
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index 24bb1ab..32c2f9c 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -1156,9 +1156,9 @@ sub help_patch_cmd {
+ 	print colored $help_color, <<EOF ;
+ y - $verb this hunk$target
+ n - do not $verb this hunk$target
+-q - quit; do not $verb this hunk nor any of the remaining ones
++q - quit; do not $verb this hunk or any of the remaining ones
+ a - $verb this hunk and all later hunks in the file
+-d - do not $verb this hunk nor any of the later hunks in the file
++d - do not $verb this hunk or any of the later hunks in the file
+ g - select a hunk to go to
+ / - search for a hunk matching the given regex
+ j - leave this hunk undecided, see next undecided hunk
+diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
+index 62f3293..a59564f 100644
+--- a/perl/Git/SVN.pm
++++ b/perl/Git/SVN.pm
+@@ -480,8 +480,8 @@ sub refname {
+ 	# It cannot end with a slash /, we'll throw up on this because
+ 	# SVN can't have directories with a slash in their name, either:
+ 	if ($refname =~ m{/$}) {
+-		die "ref: '$refname' ends with a trailing slash, this is ",
+-		    "not permitted by git nor Subversion\n";
++		die "ref: '$refname' ends with a trailing slash; this is ",
++		    "not permitted by git or Subversion\n";
+ 	}
+ 
+ 	# It cannot have ASCII control character space, tilde ~, caret ^,
+diff --git a/sha1_file.c b/sha1_file.c
+index b79efe4..77dbb56 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1123,7 +1123,7 @@ static void report_helper(const struct string_list *list,
+ 	const char *msg;
+ 	switch (seen_bits) {
+ 	case 0:
+-		msg = "no corresponding .idx nor .pack";
++		msg = "no corresponding .idx or .pack";
+ 		break;
+ 	case 1:
+ 		msg = "no corresponding .idx";
+diff --git a/t/t1001-read-tree-m-2way.sh b/t/t1001-read-tree-m-2way.sh
+index acaab07..1731383 100755
+--- a/t/t1001-read-tree-m-2way.sh
++++ b/t/t1001-read-tree-m-2way.sh
+@@ -18,7 +18,7 @@ In the test, these paths are used:
+         frotz   - not in H added in M
+         nitfol  - in H, stays in M unmodified
+         rezrov  - in H, deleted in M
+-        yomin   - not in H nor M
++        yomin   - not in H or M
+ '
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-read-tree.sh
+diff --git a/t/t4005-diff-rename-2.sh b/t/t4005-diff-rename-2.sh
+index 77d7f49..7d2c6e1 100755
+--- a/t/t4005-diff-rename-2.sh
++++ b/t/t4005-diff-rename-2.sh
+@@ -66,7 +66,7 @@ test_expect_success \
+ 
+ # tree has COPYING and rezrov.  work tree has the same COPYING and
+ # copy-edited COPYING.1, and unchanged rezrov.  We should not say
+-# anything about rezrov nor COPYING, since the revised again diff-raw
++# anything about rezrov or COPYING, since the revised again diff-raw
+ # nows how to say Copy.
+ 
+ test_expect_success \
+diff --git a/t/t4009-diff-rename-4.sh b/t/t4009-diff-rename-4.sh
+index f22c8e3..57c094f 100755
+--- a/t/t4009-diff-rename-4.sh
++++ b/t/t4009-diff-rename-4.sh
+@@ -73,7 +73,7 @@ test_expect_success \
+ 
+ # tree has COPYING and rezrov.  work tree has the same COPYING and
+ # copy-edited COPYING.1, and unchanged rezrov.  We should not say
+-# anything about rezrov nor COPYING, since the revised again diff-raw
++# anything about rezrov or COPYING, since the revised again diff-raw
+ # nows how to say Copy.
+ 
+ test_expect_success \
+diff --git a/t/t5304-prune.sh b/t/t5304-prune.sh
+index 66c9a41..377d3d3 100755
+--- a/t/t5304-prune.sh
++++ b/t/t5304-prune.sh
+@@ -213,7 +213,7 @@ test_expect_success 'garbage report in count-objects -v' '
+ warning: garbage found: .git/objects/pack/fake.bar
+ warning: garbage found: .git/objects/pack/foo
+ warning: garbage found: .git/objects/pack/foo.bar
+-warning: no corresponding .idx nor .pack: .git/objects/pack/fake2.keep
++warning: no corresponding .idx or .pack: .git/objects/pack/fake2.keep
+ warning: no corresponding .idx: .git/objects/pack/foo.keep
+ warning: no corresponding .idx: .git/objects/pack/foo.pack
+ warning: no corresponding .pack: .git/objects/pack/fake3.idx
+diff --git a/t/t6036-recursive-corner-cases.sh b/t/t6036-recursive-corner-cases.sh
+index dfee7d1..a86087b 100755
+--- a/t/t6036-recursive-corner-cases.sh
++++ b/t/t6036-recursive-corner-cases.sh
+@@ -388,7 +388,7 @@ test_expect_failure 'git detects conflict w/ criss-cross+contrived resolution' '
+ 
+ #
+ # criss-cross + d/f conflict via add/add:
+-#   Commit A: Neither file 'a' nor directory 'a/' exist.
++#   Commit A: Neither file 'a' nor directory 'a/' exists.
+ #   Commit B: Introduce 'a'
+ #   Commit C: Introduce 'a/file'
+ #   Commit D: Merge B & C, keeping 'a' and deleting 'a/'
+diff --git a/t/t7104-reset.sh b/t/t7104-reset.sh
+index f136ee7..16faa07 100755
+--- a/t/t7104-reset.sh
++++ b/t/t7104-reset.sh
+@@ -33,7 +33,7 @@ test_expect_success 'reset --hard should restore unmerged ones' '
+ 
+ '
+ 
+-test_expect_success 'reset --hard did not corrupt index nor cached-tree' '
++test_expect_success 'reset --hard did not corrupt index or cached-tree' '
+ 
+ 	T=$(git write-tree) &&
+ 	rm -f .git/index &&
+diff --git a/t/t9400-git-cvsserver-server.sh b/t/t9400-git-cvsserver-server.sh
+index 3edc408..1f06e25 100755
+--- a/t/t9400-git-cvsserver-server.sh
++++ b/t/t9400-git-cvsserver-server.sh
+@@ -512,7 +512,7 @@ test_expect_success 'cvs co -c (shows module database)' '
+ # Known issues with git-cvsserver current log output:
+ #  - Hard coded "lines: +2 -3" placeholder, instead of real numbers.
+ #  - CVS normally does not internally add a blank first line
+-#    nor a last line with nothing but a space to log messages.
++#    or a last line with nothing but a space to log messages.
+ #  - The latest cvs 1.12.x server sends +0000 timezone (with some hidden "MT"
+ #    tagging in the protocol), and if cvs 1.12.x client sees the MT tags,
+ #    it converts to local time zone.  git-cvsserver doesn't do the +0000
 -- 
 1.9.0.279.gdc9e3eb
