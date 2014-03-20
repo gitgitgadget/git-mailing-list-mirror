@@ -1,88 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] test-lib.sh: use printf instead of echo
-Date: Thu, 20 Mar 2014 09:42:00 -0700
-Message-ID: <xmqq4n2s255z.fsf@gitster.dls.corp.google.com>
-References: <20140314235735.GA6959@ibr.ch> <20140315001855.GK15625@google.com>
-	<xmqq61nceidp.fsf@gitster.dls.corp.google.com>
-	<20140318221844.GA828@google.com>
-	<xmqqfvme5cql.fsf@gitster.dls.corp.google.com>
-	<20140320001718.GM15625@google.com>
+From: Chris Angelico <rosuav@gmail.com>
+Subject: Re: Configuring a third-party git hook
+Date: Fri, 21 Mar 2014 03:51:16 +1100
+Message-ID: <CAPTjJmpAcmVGgJK8iUvFuXJq_ZukisRZ6OD9TM=feuxDYm5iPQ@mail.gmail.com>
+References: <CAPTjJmomAnrjjyfSvDJijBP2pUN_kqVCRr+UbZkQHQy295A85A@mail.gmail.com>
+	<CAO54GHC1B6hj-OvibHn2=-B25Xd5EmfWsphJ1S7vE4bgUUX3Bw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Uwe Storbeck <uwe@ibr.ch>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 20 17:42:14 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>
+To: Kevin <ikke@ikke.info>
+X-From: git-owner@vger.kernel.org Thu Mar 20 17:51:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQg2n-0001DQ-GB
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 17:42:13 +0100
+	id 1WQgBe-0005yU-2W
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 17:51:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757754AbaCTQmG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Mar 2014 12:42:06 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64243 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757116AbaCTQmF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Mar 2014 12:42:05 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5841D76C65;
-	Thu, 20 Mar 2014 12:42:03 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bgIYcj3EsVlm8GWsGwWwrH8dphU=; b=fQtlb8
-	WYoz46b/lvG4wZaWwpOI1YNIPimg721yti9qDK6JtdAs0HYjRtW8lDmn7mp9bnjP
-	u2B9lA5x9IFLpmvoFcRF3/7edoEKl7SRc5jrYmoyxVO/+ifSWntULiKpBQCp12HH
-	2sXDQvaS2t0o5Wm64fAJWeqnrS+GlcYKw3ihg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=HS/jYGMIYmJCzSwiI+fGOsYLOCbWE9c+
-	jXgK9gN8YkEbsUOPoV8wmeMGllywh3P6ZDvv6GQYe56Rwiu6E8fCqzxc2I4X6Ppp
-	mjwa5HlsNICb7nCsEs6+O1BwWNp0W7t6TPp3+DrZQO5fa9MgZOeMshAHzlvMhZGr
-	jpbkEKGcDdU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 424F076C64;
-	Thu, 20 Mar 2014 12:42:03 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3138176C62;
-	Thu, 20 Mar 2014 12:42:02 -0400 (EDT)
-In-Reply-To: <20140320001718.GM15625@google.com> (Jonathan Nieder's message of
-	"Wed, 19 Mar 2014 17:17:18 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 900F9582-B04E-11E3-AC7B-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754216AbaCTQvS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Mar 2014 12:51:18 -0400
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:40848 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751271AbaCTQvR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Mar 2014 12:51:17 -0400
+Received: by mail-pa0-f53.google.com with SMTP id ld10so1193977pab.40
+        for <git@vger.kernel.org>; Thu, 20 Mar 2014 09:51:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=LsAP9pkPydGv5edzU8Fn+GgiUeBfd3zFmQ9MKZnHK4o=;
+        b=KsC4kn0skjeha4ugbERq+AQgh6kuUXuoO8pX3Vw3DGHdonHxULTTF/k+fhqljc2Kr6
+         y0+y0NmntlIvk5OoJy0M7ozF1J5L8oFOM8K4NfYNQZkQX4n0oK4vC2GBBx4VQNazKrfB
+         p8kB4kIJBzqeF+0lhC67hABTNM49drr5C9ueF7yX0kxOU35p2pg24blUqW3DaDPSauVu
+         hZ5++1EY0go6abIisyCS+J9AJGle7Ud10EzhTOxZFGW6SThmHsRNEv8e0Lgeg8qM26EC
+         HW8TNN70EvFasWpjHf6RTuJwvHok28xtOj6thlLinSKhsw2PX+qdL1pN2bBHtuSB7biw
+         n9Jg==
+X-Received: by 10.68.197.36 with SMTP id ir4mr47158514pbc.46.1395334276906;
+ Thu, 20 Mar 2014 09:51:16 -0700 (PDT)
+Received: by 10.68.33.7 with HTTP; Thu, 20 Mar 2014 09:51:16 -0700 (PDT)
+In-Reply-To: <CAO54GHC1B6hj-OvibHn2=-B25Xd5EmfWsphJ1S7vE4bgUUX3Bw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244555>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244556>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
-
-> Junio C Hamano wrote:
-> ...
->> I am a bit reluctant to name the helper "sane_echo" to declare "echo
->> that interprets backslashes in the string is insane", though.  For
->> these "print a single line" uses, we are only interested in using a
->> subset of the features offered by 'echo', but that does not mean the
->> other features we do not want to trigger in our use is of no use to
->> any sane person.
+On Thu, Mar 20, 2014 at 11:53 PM, Kevin <ikke@ikke.info> wrote:
+> On Wed, Mar 19, 2014 at 12:16 PM, Chris Angelico <rosuav@gmail.com> wrote:
+>> Two parts to the question, then. Firstly, is it acceptable to use 'git
+>> config' for a hook like this? And secondly, either: Is there a naming
+>> convention to follow? or, what alternative would you recommend?
 >
-> In a portable script, uncareful use of 'echo' is always insane.
+> 1. I would say yes. git config is made to be extended and doesn't
+> require a config item to be known.
+> 2. Namespacing the config items like you did is a good thing to do so
+> it won't interfere with other options.
 
-I agree that makes sense and I actually think that it is a bit
-stronger than that.  If a script is meant to be portable, there is
-no way to use "echo" on a string whose contents is unknown sanely.
-There is no "careful use is OK".
+Excellent! Thank you.
 
-> In a script tailored to an environment where echo behaves consistently
-> it is perfectly reasonable to use 'echo', but that's a different
-> story.  In the context of git, saying "Here is the thing you should
-> always use instead of echo" is a good thing, in my opinion.
+Is this documented anywhere? The git config man page says to look to
+other git man pages:
 
-That is true in my opinion, but that thing is also what you should
-always use instead of "printf '%s\n'".  A guideline more useful for
-the users is "Here is the thing you should always use when literally
-emitting a single line.", isn't it?
+https://www.kernel.org/pub/software/scm/git/docs/git-config.html#_variables
+
+A comment there to the effect that "Third party tools may also define
+their own variables" or something would make it clear that this is the
+intention.
+
+ChrisA
