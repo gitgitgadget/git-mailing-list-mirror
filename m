@@ -1,71 +1,74 @@
-From: Chris Angelico <rosuav@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Configuring a third-party git hook
-Date: Fri, 21 Mar 2014 03:51:16 +1100
-Message-ID: <CAPTjJmpAcmVGgJK8iUvFuXJq_ZukisRZ6OD9TM=feuxDYm5iPQ@mail.gmail.com>
+Date: Thu, 20 Mar 2014 09:53:18 -0700
+Message-ID: <xmqqwqfozu9t.fsf@gitster.dls.corp.google.com>
 References: <CAPTjJmomAnrjjyfSvDJijBP2pUN_kqVCRr+UbZkQHQy295A85A@mail.gmail.com>
-	<CAO54GHC1B6hj-OvibHn2=-B25Xd5EmfWsphJ1S7vE4bgUUX3Bw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Kevin <ikke@ikke.info>
-X-From: git-owner@vger.kernel.org Thu Mar 20 17:51:23 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Chris Angelico <rosuav@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 20 17:53:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQgBe-0005yU-2W
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 17:51:22 +0100
+	id 1WQgDg-0000rA-Dw
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 17:53:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754216AbaCTQvS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Mar 2014 12:51:18 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:40848 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751271AbaCTQvR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Mar 2014 12:51:17 -0400
-Received: by mail-pa0-f53.google.com with SMTP id ld10so1193977pab.40
-        for <git@vger.kernel.org>; Thu, 20 Mar 2014 09:51:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=LsAP9pkPydGv5edzU8Fn+GgiUeBfd3zFmQ9MKZnHK4o=;
-        b=KsC4kn0skjeha4ugbERq+AQgh6kuUXuoO8pX3Vw3DGHdonHxULTTF/k+fhqljc2Kr6
-         y0+y0NmntlIvk5OoJy0M7ozF1J5L8oFOM8K4NfYNQZkQX4n0oK4vC2GBBx4VQNazKrfB
-         p8kB4kIJBzqeF+0lhC67hABTNM49drr5C9ueF7yX0kxOU35p2pg24blUqW3DaDPSauVu
-         hZ5++1EY0go6abIisyCS+J9AJGle7Ud10EzhTOxZFGW6SThmHsRNEv8e0Lgeg8qM26EC
-         HW8TNN70EvFasWpjHf6RTuJwvHok28xtOj6thlLinSKhsw2PX+qdL1pN2bBHtuSB7biw
-         n9Jg==
-X-Received: by 10.68.197.36 with SMTP id ir4mr47158514pbc.46.1395334276906;
- Thu, 20 Mar 2014 09:51:16 -0700 (PDT)
-Received: by 10.68.33.7 with HTTP; Thu, 20 Mar 2014 09:51:16 -0700 (PDT)
-In-Reply-To: <CAO54GHC1B6hj-OvibHn2=-B25Xd5EmfWsphJ1S7vE4bgUUX3Bw@mail.gmail.com>
+	id S1752354AbaCTQxY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Mar 2014 12:53:24 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56075 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750960AbaCTQxY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Mar 2014 12:53:24 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9557D74353;
+	Thu, 20 Mar 2014 12:53:23 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=YDfqhS9bf6h7xc0KOx9yoylcys4=; b=L8czLA
+	Jcy0gSnTxl133FmtoXmkgpIt5sVXxLR1S35Gv+5qaevpX995U2ofaT2VsyZBcyD4
+	4trUUtBSLekhE35ouA2Jp5gsgaam83hXdGp71vbTM/adAX/2eW0pV4a3tj5cyCI0
+	c3zh4wLSboFtez6UxFg6Gd9Ef82dyVCGkHP6Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=N8D5u9UMN/IYi+Q3paJ58OmZ0iQi01Y5
+	GUykiE+L+gf6PE5a+PH29O949XsClhAIyt4jQ4rm3HHIzYgStGhgGb3JtJWTwX9l
+	eCQf5e349APihqwXZYQk5ubF0aC32ANlZGKEQqjFuGb+IsytSSDJ+C3E06Gk+S0d
+	23e8SzXuyiw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 84C6374352;
+	Thu, 20 Mar 2014 12:53:23 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C2F4E74350;
+	Thu, 20 Mar 2014 12:53:22 -0400 (EDT)
+In-Reply-To: <CAPTjJmomAnrjjyfSvDJijBP2pUN_kqVCRr+UbZkQHQy295A85A@mail.gmail.com>
+	(Chris Angelico's message of "Wed, 19 Mar 2014 22:16:51 +1100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 25B9EBE0-B050-11E3-9C8A-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244557>
 
-On Thu, Mar 20, 2014 at 11:53 PM, Kevin <ikke@ikke.info> wrote:
-> On Wed, Mar 19, 2014 at 12:16 PM, Chris Angelico <rosuav@gmail.com> wrote:
->> Two parts to the question, then. Firstly, is it acceptable to use 'git
->> config' for a hook like this? And secondly, either: Is there a naming
->> convention to follow? or, what alternative would you recommend?
+Chris Angelico <rosuav@gmail.com> writes:
+
+> file. It doesn't really care about the full history, and wants to be
+> reasonably fast (as the user is waiting for it). It's just a
+> convenience, so correctness isn't a huge issue. The easiest way to
+> keep it moving through quickly is to limit the search:
 >
-> 1. I would say yes. git config is made to be extended and doesn't
-> require a config item to be known.
-> 2. Namespacing the config items like you did is a good thing to do so
-> it won't interfere with other options.
+> $ git log ...other options... HEAD~100 some-file.pike
+>
+> The problem with this is that it doesn't work if HEAD doesn't have 100
+> great-great-...-grandparents
 
-Excellent! Thank you.
+Did you really mean that you are *not* interested in what happened
+to the most recent 100 commits?  Or is it a typo of "HEAD~100.."?
 
-Is this documented anywhere? The git config man page says to look to
-other git man pages:
-
-https://www.kernel.org/pub/software/scm/git/docs/git-config.html#_variables
-
-A comment there to the effect that "Third party tools may also define
-their own variables" or something would make it clear that this is the
-intention.
-
-ChrisA
+"git log -100" should traverse from the HEAD and stop after showing
+at most 100 items, even if you only had 20 in the history.
