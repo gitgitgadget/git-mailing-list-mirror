@@ -1,113 +1,64 @@
-From: George Papanikolaou <g3orge.app@gmail.com>
-Subject: [PATCH] builtin/apply.c: fuzzy_matchlines:trying to fix some inefficiencies
-Date: Thu, 20 Mar 2014 03:32:47 +0200
-Message-ID: <1395279167-20354-1-git-send-email-g3orge.app@gmail.com>
-Cc: git@vger.kernel.org, George Papanikolaou <g3orge.app@gmail.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Mar 20 02:39:11 2014
+From: Brian Bourn <ba.bourn@gmail.com>
+Subject: [GSoC] Choosing a Project Proposal
+Date: Wed, 19 Mar 2014 22:32:45 -0400
+Message-ID: <CAM+=D-ArKn=F_M0BnjE_nUZes9qyLc_ceyUU=04ZvNRWomJc2Q@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Mar 20 03:32:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQRwt-0001qN-32
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 02:39:11 +0100
+	id 1WQSmp-0005mK-K8
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 03:32:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752388AbaCTBjG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Mar 2014 21:39:06 -0400
-Received: from poseidon.ceid.upatras.gr ([150.140.141.169]:54645 "EHLO
-	poseidon.ceid.upatras.gr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751888AbaCTBjF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Mar 2014 21:39:05 -0400
-X-Greylist: delayed 499 seconds by postgrey-1.27 at vger.kernel.org; Wed, 19 Mar 2014 21:39:04 EDT
-Received: from mail.ceid.upatras.gr (mail.ceid.upatras.gr [10.1.0.174])
-	by poseidon.ceid.upatras.gr (Postfix) with ESMTP id 12D9280499;
-	Thu, 20 Mar 2014 03:30:25 +0200 (EET)
-Received: from localhost (ppp089210130219.access.hol.gr [89.210.130.219])
-	(Authenticated sender: papanikge)
-	by mail.ceid.upatras.gr (Postfix) with ESMTPSA id 7AE241FF72;
-	Thu, 20 Mar 2014 03:30:21 +0200 (EET)
-X-Mailer: git-send-email 1.9.0
-X-Spam-Status: No, score=-1.0 required=5.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	FREEMAIL_FROM,NML_ADSP_CUSTOM_MED,UNPARSEABLE_RELAY autolearn=no version=3.3.1
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on mtax.ceid.upatras.gr
+	id S1752978AbaCTCcr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Mar 2014 22:32:47 -0400
+Received: from mail-qa0-f45.google.com ([209.85.216.45]:50089 "EHLO
+	mail-qa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751305AbaCTCcq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Mar 2014 22:32:46 -0400
+Received: by mail-qa0-f45.google.com with SMTP id hw13so219272qab.4
+        for <git@vger.kernel.org>; Wed, 19 Mar 2014 19:32:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=Yei8KUOT25u++ytGmvsF0wVET19XpJtkIT+i0saLQtc=;
+        b=GBrYVVRkl6BN91ihmlSiSt5140vrRuhNjeSX3YYbGTYQfZnSxXD20JsfU5thO8TeES
+         o8a5Px+UB64zKuP7o6FG73/Pe0F8dav/FKRd85YSEQmwJl7KlhNfoXEaxBYc+q7IU34c
+         8wbRYz+BrMApng0NAo6jqomsEii/yj2QDZ7gdCJDhEpSpN5ijRqA9XkbhqxhJ5eYrzgy
+         g9nfgcWgNaxpz0rDaxL2jnKvnyqN45Z2zQD5mdeqlSgsynpvWMd7Z7Bd0qd5E4WmP7/m
+         9wcwjZ3EXhuVeyMDAU8Ptgc0UAv7CVkagpwfa6IsH6bpXwZcQy9vzV1LJ2CAdZWTi2Fv
+         gEvg==
+X-Received: by 10.224.137.202 with SMTP id x10mr23020410qat.80.1395282765558;
+ Wed, 19 Mar 2014 19:32:45 -0700 (PDT)
+Received: by 10.96.86.38 with HTTP; Wed, 19 Mar 2014 19:32:45 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244515>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244516>
 
-Hi fellows,
-I'm planning on applying on GSOC 2014...
+Hi all,
 
-I tried my luck with that kinda weird microproject about inefficiencies,
-and I think I've discovered some.
+I'm Currently trying to decide on a project to work on in for Google
+Summer of Code, I'm stuck choosing between three which I find really
+interesting and I was wondering if any of them are particularly more
+pressing then the others.  I would also love some comments on each of
+these three if possible expanding on them. the three projects I'm
+considering are,
 
-(also on a totally different mood, there are some warning about empty format
-strings during compilation that could easily be silenced with some #pragma
-calls on "-Wformat-zero-length". Is there a way you're not adding this?)
+1.  Unifying git branch -l, git tag -l, and git for-each-ref
 
-The empty buffers check could happen at the beggining.
-Leading whitespace check was unnecessary.
-Some style changes
+2.  Refactor tempfile handling
 
-Thanks.
----
- builtin/apply.c | 25 +++++++++----------------
- 1 file changed, 9 insertions(+), 16 deletions(-)
+3.  Improve triangular workflow support
 
-diff --git a/builtin/apply.c b/builtin/apply.c
-index b0d0986..df2435f 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -294,20 +294,16 @@ static int fuzzy_matchlines(const char *s1, size_t n1,
- 	const char *last2 = s2 + n2 - 1;
- 	int result = 0;
- 
-+	/* early return if both lines are empty */
-+	if ((s1 > last1) && (s2 > last2))
-+		return 1;
-+
- 	/* ignore line endings */
- 	while ((*last1 == '\r') || (*last1 == '\n'))
- 		last1--;
- 	while ((*last2 == '\r') || (*last2 == '\n'))
- 		last2--;
- 
--	/* skip leading whitespace */
--	while (isspace(*s1) && (s1 <= last1))
--		s1++;
--	while (isspace(*s2) && (s2 <= last2))
--		s2++;
--	/* early return if both lines are empty */
--	if ((s1 > last1) && (s2 > last2))
--		return 1;
- 	while (!result) {
- 		result = *s1++ - *s2++;
- 		/*
-@@ -315,18 +311,15 @@ static int fuzzy_matchlines(const char *s1, size_t n1,
- 		 * both buffers because we don't want "a b" to match
- 		 * "ab"
- 		 */
--		if (isspace(*s1) && isspace(*s2)) {
--			while (isspace(*s1) && s1 <= last1)
--				s1++;
--			while (isspace(*s2) && s2 <= last2)
--				s2++;
--		}
-+		while (isspace(*s1) && s1 <= last1)
-+			s1++;
-+		while (isspace(*s2) && s2 <= last2)
-+			s2++;
- 		/*
- 		 * If we reached the end on one side only,
- 		 * lines don't match
- 		 */
--		if (
--		    ((s2 > last2) && (s1 <= last1)) ||
-+		if (((s2 > last2) && (s1 <= last1)) ||
- 		    ((s1 > last1) && (s2 <= last2)))
- 			return 0;
- 		if ((s1 > last1) && (s2 > last2))
--- 
-1.9.0
+
+Once again, I would appreciate all feedback on which of these are most
+important.
+
+Thanks for the Help,
+Brian Bourn
