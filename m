@@ -1,88 +1,62 @@
-From: George Papanikolaou <g3orge.app@gmail.com>
-Subject: Re: [PATCH] builtin/apply.c: fuzzy_matchlines:trying to fix some inefficiencies
-Date: Thu, 20 Mar 2014 12:58:12 +0200
-Message-ID: <CAByyCQAsjoBiv54PR+AP=2ci60o39TNw5FhM0aNOhzbZpLd7gg@mail.gmail.com>
-References: <1395279167-20354-1-git-send-email-g3orge.app@gmail.com>
-	<532ABBE1.4090001@alum.mit.edu>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 3/8] ls_colors.c: enable coloring on u+x files
+Date: Thu, 20 Mar 2014 12:46:52 +0100
+Message-ID: <vpqpplhks7n.fsf@anie.imag.fr>
+References: <1395310551-23201-1-git-send-email-pclouds@gmail.com>
+	<1395310551-23201-4-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Mar 20 11:58:20 2014
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 20 12:47:06 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQafy-0006r1-H6
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 11:58:18 +0100
+	id 1WQbRB-0007Hn-9q
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 12:47:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755070AbaCTK6O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Mar 2014 06:58:14 -0400
-Received: from mail-ve0-f179.google.com ([209.85.128.179]:59328 "EHLO
-	mail-ve0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750740AbaCTK6N (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Mar 2014 06:58:13 -0400
-Received: by mail-ve0-f179.google.com with SMTP id db12so704354veb.38
-        for <git@vger.kernel.org>; Thu, 20 Mar 2014 03:58:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=tzQZ00aG0u00Sq8bNEUjyWhAk/TR6d6kvs6964eD0F0=;
-        b=yFGltP6eMIZ8lXF0kgaM5QLD9Tvw5XpAlpnLYZgZhcYks+nNcwXOu1VzZivyogeevK
-         1qms4TbbvrzgKIL1HpkNeLvC69t4cgzRk1Is3ggZEL6aJAmULJr7RGV/Xl62sLe0zT0s
-         VzyAZ0GdPF1PNqFbz3uM0tgUoLrecBiWyonKi9TGVViOn4IUP9VBWnNt9Qd2x4gquyKe
-         teKnRZJhnavNNCHkiaZsQFl0hrg0ZmhpwmCOvP4K3Tomy/mggv3J7u3h8bYnqY7cMNDb
-         oXtguF/Sflxq+GAAT39BGo8Acw4An5/lW0y/WPnU3juWC8fdljct+Nbqnes+deRMvhNG
-         TpqA==
-X-Received: by 10.52.8.225 with SMTP id u1mr108082vda.64.1395313092396; Thu,
- 20 Mar 2014 03:58:12 -0700 (PDT)
-Received: by 10.58.29.48 with HTTP; Thu, 20 Mar 2014 03:58:12 -0700 (PDT)
-In-Reply-To: <532ABBE1.4090001@alum.mit.edu>
+	id S1755232AbaCTLrA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Mar 2014 07:47:00 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:36153 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750916AbaCTLq7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Mar 2014 07:46:59 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s2KBkpxU027676
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 20 Mar 2014 12:46:51 +0100
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s2KBkqci017279;
+	Thu, 20 Mar 2014 12:46:52 +0100
+In-Reply-To: <1395310551-23201-4-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Thu, 20
+ Mar 2014 17:15:46 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 20 Mar 2014 12:46:51 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s2KBkpxU027676
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1395920815.87416@G0XtpAsTvYB2sLHGQvoRDQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244541>
 
-Hi,
-Thanks for the feedback,
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
 
-On Thu, Mar 20, 2014 at 11:58 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->
-> Why is this an improvement?  Do you expect this function to be called
-> often for empty lines (as opposed, for example, to lines consisting
-> solely of whitespace characters)?
->
+> git-compat-util.h does not seem to carry S_IXUGO. Anyway as far as Gi=
+t
+> is concerned, we only care one executable bit. Hard code it.
 
-Yes, you are probably right, we are not gonna get much (if any)
-completely empty lines
+Why not use S_IXUSR instead of a hardcoded value? (already used in
+path.c, so shouldn't be a problem wrt portability)
 
->
-> The comment just above this change gives a justification for putting an
-> "if" statement surrounding the "while" statements.  Do you think the
-> comment's argument is incorrect?  If so, please explain why, and remove
-> or change the comment.
->
-
-I see what I did wrong. I thought since that the if-condition is double checked
-(from the while clause) so I removed it.
-
-Also this lead me to see that since the while clause is now unconditioned, there
-is no point of it being replicated exactly the same above, so I
-removed that too. =(
-
-I'm trying to find other inefficiencies/irregularities on that
-function. I'm currently
-thinking on merging the first checks with a call to iswspace() or
-something similar.
-
-Also thanks for clarifying the way patches/mails work.
-
-Cheers.
-
----
-papanikge's surrogate email.
-I may reply back.
-http://www.5slingshots.com/
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
