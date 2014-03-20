@@ -1,95 +1,76 @@
-From: Karsten Blees <karsten.blees@gmail.com>
-Subject: Re: [PATCH] Enable index-pack threading in msysgit.
-Date: Thu, 20 Mar 2014 14:54:12 +0100
-Message-ID: <532AF304.7040301@gmail.com>
-References: <5328e903.joAd1dfenJmScBNr%szager@chromium.org>
+From: Guanglin Xu <mzguanglin@gmail.com>
+Subject: [GSoC 2014] Replacing object loading/writing layer by libgit2
+Date: Thu, 20 Mar 2014 23:37:02 +0800
+Message-ID: <CAATe9uhR3P=C8f10VoiEksXiQCnUXqRdXO5vQr_NUe2YP33xJQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: szager@chromium.org, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 20 14:54:20 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: vicent@github.com, tr@thomasrast.ch
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Mar 20 16:37:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQdQJ-000601-Rj
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 14:54:20 +0100
+	id 1WQf1y-0000Do-Rx
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 16:37:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757571AbaCTNyQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Mar 2014 09:54:16 -0400
-Received: from mail-wg0-f47.google.com ([74.125.82.47]:36968 "EHLO
-	mail-wg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755870AbaCTNyO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Mar 2014 09:54:14 -0400
-Received: by mail-wg0-f47.google.com with SMTP id x12so635137wgg.30
-        for <git@vger.kernel.org>; Thu, 20 Mar 2014 06:54:13 -0700 (PDT)
+	id S1759159AbaCTPhJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Mar 2014 11:37:09 -0400
+Received: from mail-ie0-f179.google.com ([209.85.223.179]:60689 "EHLO
+	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759144AbaCTPhD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Mar 2014 11:37:03 -0400
+Received: by mail-ie0-f179.google.com with SMTP id lx4so1059027iec.10
+        for <git@vger.kernel.org>; Thu, 20 Mar 2014 08:37:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=aBDDvKtAGn3uFNLsrPAS2frsH8YM5K630oLkFcGOoec=;
-        b=b6ofFuNXBPor2bt+N3ARual4+sA+a2qN0BTHx9SdFgSxP0aConHJjWx4jF2c/rD77F
-         HAWwkOxaIz5puGirKHakZuPzqvD7fFM/drmV4zvU+1DgE1FBztwVbW7GCbTp+A8697Rb
-         W+NmvIT5xgLYD2VEXPJmeUyf66vVkAyMqValpBtdS7QSrXRkFhCJF+/kLw1H9AIRRtal
-         nNGyzYMC1S1HnrZcKCx+wZPa6OM+QNmFF6frmBka4o5yplo5+3TECvc4Pg001Wjee/eJ
-         tOFfSMXUG0ApEMpjGgqVuZhBCkE241s/MI57bsSR0elf7AoRGJpKL7+BZ/GSUTJkfYnI
-         cCVQ==
-X-Received: by 10.194.242.231 with SMTP id wt7mr7853720wjc.52.1395323653621;
-        Thu, 20 Mar 2014 06:54:13 -0700 (PDT)
-Received: from [10.1.100.55] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id t5sm5231284wjw.15.2014.03.20.06.54.11
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 20 Mar 2014 06:54:12 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
-In-Reply-To: <5328e903.joAd1dfenJmScBNr%szager@chromium.org>
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        bh=ItJuLaWpQCZiAqAeB8uG3pdRTv7BZGwXmUdZeiPjwG8=;
+        b=r0XcXanK5/qJRdpBKkHZ3CMZk3l7wuy3YtDnBRGv9c/9W19FSGmkp8Ld8GoGXZxh0m
+         gnXSUsW7R+ir8OsI4U6JyKd8DsqKj5eEJVqQgMKXZkAWWnFdy8qXRYKUC/rbcuS1Js0r
+         Z9POZermItneCDirVyrZXlXxipgHRr5yeJcFctYQdGxwNKaCugejZ39HrF/6/78kJyKt
+         Tz1eNGwjjWpBzzxfV0Jb6MAEfh/VkABMOJaHhetfuBJrqtyHlEWJ+SJ9thN37YH7m0y2
+         QG36GFv+9uq4JKT5vi/JxRwCO7P3KjL/VR7Yj1toukWbtCZGKXMs38pSP9TpJ8unfn4l
+         /Ddw==
+X-Received: by 10.42.204.197 with SMTP id fn5mr279115icb.95.1395329822870;
+ Thu, 20 Mar 2014 08:37:02 -0700 (PDT)
+Received: by 10.64.14.135 with HTTP; Thu, 20 Mar 2014 08:37:02 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244552>
 
-Am 19.03.2014 01:46, schrieb szager@chromium.org:
-> This adds a Windows implementation of pread.  Note that it is NOT
-> safe to intersperse calls to read() and pread() on a file
-> descriptor.
+Hello,
 
-This is a bad idea. You're basically fixing the multi-threaded issue twice, while at the same time breaking single-threaded read/pread interop on the mingw and msvc platform. Users of pread already have to take care that its not thread-safe on some platforms, now you're adding another breakage that has to be considered in future development.
+My name is Guanglin Xu. I am a second-year master student at Sun
+Yat-sen University in China, majoring in Software Engineering. I am
+also a perspective PhD student matriculated in the US. I'm planning on
+doing summer projects which I can work remotely. The GSoC 2014 program
+of Git project is a great choice.
 
-The mingw_pread implementation in [1] is both thread-safe and allows mixing read/pread in single-threaded scenarios, why not use this instead?
+I am kind of a "skillful" Git user with 4 years' experience in 3
+projects. For example, I am a Top 5 contributor in LibVMI project
+(https://github.com/bdpayne/libvmi); I host a team-made mobile app in
+Github (https://itunes.apple.com/us/app/ying-yue/id689566688?ls=1&mt=8).
+For more of my projects see here
+(http://www.andrew.cmu.edu/user/guanglin)
 
-[1] http://article.gmane.org/gmane.comp.version-control.git/242120
+To get familiar with the flow of Git development, I worked on
+microproject [2] and had corresponding conversations with Eric
+Sunshine, Jacopo Notarstefano and Sun He in threads. Thank you for
+their comments on my work.
 
-> 
-> http://article.gmane.org/gmane.comp.version-control.git/196042
-> 
+Now I've submitted my proposal to google-melange. In brief, I propose
+to replace object loading/writing layer by libgit2, which comes from
+the GSoC 2014 ideas page of Git project. Particularly, since I didn't
+realize where the hardest part is when I looked into the initial aim
+of this idea, I added a performance requirement that the new
+implementation should at least not run slower than previous one. Maybe
+I underestimated specific challenge in working with Git, suggestions
+or warnings for this topic are all welcomed.
 
-Duy's patch alone enables multi-threaded index-pack on all platforms (including cygwin), so IMO this should be a separate patch.
+Thanks for your consideration for GSoC 2014.
 
-> +	if (hand == INVALID_HANDLE_VALUE) {
-> +		errno = EBADF;
-> +		return -1;
-> +	}
-
-This check is redundant, ReadFile already ckecks for invalid handles and err_win_to_posix converts to EBADF.
-
-> +
-> +	LARGE_INTEGER offset_value;
-> +	offset_value.QuadPart = offset;
-> +
-> +	DWORD bytes_read = 0;
-> +	OVERLAPPED overlapped = {0};
-> +	overlapped.Offset = offset_value.LowPart;
-> +	overlapped.OffsetHigh = offset_value.HighPart;
-> +	BOOL result = ReadFile(hand, buf, count, &bytes_read, &overlapped);
-> +
-> +	ssize_t ret = bytes_read;
-> +
-> +	if (!result && GetLastError() != ERROR_HANDLE_EOF)
-
-According to MSDN docs, ReadFile never fails with ERROR_HANDLE_EOF, or is this another case where the documentation is wrong?
-
-"When a synchronous read operation reaches the end of a file, ReadFile returns TRUE and sets *lpNumberOfBytesRead to zero."
-
-Karsten
+Guanglin
