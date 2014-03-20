@@ -1,116 +1,101 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 03/26] t1400: Pass a legitimate <newvalue> to update command
-Date: Thu, 20 Mar 2014 18:01:05 +0100
-Message-ID: <532B1ED1.3090208@alum.mit.edu>
-References: <1394455603-2968-1-git-send-email-mhagger@alum.mit.edu> <1394455603-2968-4-git-send-email-mhagger@alum.mit.edu> <531DF079.9050909@kitware.com> <531E30D7.40208@alum.mit.edu> <xmqqa9cwpkiw.fsf@gitster.dls.corp.google.com> <531F82FE.9030305@kitware.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Bump core.deltaBaseCacheLimit to 128MiB
+Date: Thu, 20 Mar 2014 10:02:39 -0700
+Message-ID: <xmqqsiqcztu8.fsf@gitster.dls.corp.google.com>
+References: <1395232712-6412-1-git-send-email-dak@gnu.org>
+	<xmqq38id3nfs.fsf@gitster.dls.corp.google.com>
+	<87ob11g9st.fsf@fencepost.gnu.org>
+	<xmqqlhw5260l.fsf@gitster.dls.corp.google.com>
+	<CACsJy8C3=bz1HmVgQuJRdixMhhb-JKouM7b1L7M047L_4PBViA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Vicent Marti <tanoku@gmail.com>,
-	Johan Herland <johan@herland.net>, git@vger.kernel.org
-To: Brad King <brad.king@kitware.com>
-X-From: git-owner@vger.kernel.org Thu Mar 20 18:01:23 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: David Kastrup <dak@gnu.org>, Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 20 18:03:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQgLF-0004BC-Lv
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 18:01:18 +0100
+	id 1WQgN3-0006wz-Ql
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 18:03:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754438AbaCTRBM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Mar 2014 13:01:12 -0400
-Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:43425 "EHLO
-	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751271AbaCTRBK (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 20 Mar 2014 13:01:10 -0400
-X-AuditID: 12074411-f79ab6d000002f0e-95-532b1ed548fe
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 01.B9.12046.5DE1B235; Thu, 20 Mar 2014 13:01:09 -0400 (EDT)
-Received: from [192.168.69.148] (p5B15629D.dip0.t-ipconnect.de [91.21.98.157])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s2KH163D022654
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Thu, 20 Mar 2014 13:01:07 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
-In-Reply-To: <531F82FE.9030305@kitware.com>
-X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrEKsWRmVeSWpSXmKPExsUixO6iqHtVTjvYYMVpPYud6yQsuq50M1k0
-	9F5htph3dxeTxY+WHmaLj50LmB3YPHbOusvucenldzaPj8+Ws3s8693D6HHxkrLH501yAWxR
-	3DZJiSVlwZnpefp2CdwZG+fNZyt4KlyxqHU2YwPjC/4uRk4OCQETiQ0Hf7FB2GISF+6tB7K5
-	OIQELjNKLPv7lAkkISRwjkni/bWALkYODl4BbYnLDZ4gYRYBVYn1sycxg9hsAroSi3qawcpF
-	BYIlVl9+wAJi8woISpyc+QTMFgGqX7WuAWwXs8AaRombG2tAbGGBAIk9P5qh9rYxSVy5cJ8R
-	JMEJtOv517NsIHslBMQlehqDQExmAXWJ9fOEIMbIS2x/O4d5AqPgLCTbZiFUzUJStYCReRWj
-	XGJOaa5ubmJmTnFqsm5xcmJeXmqRrqlebmaJXmpK6SZGSBwI7mCccVLuEKMAB6MSD+9Fbu1g
-	IdbEsuLK3EOMkhxMSqK8b2SAQnxJ+SmVGYnFGfFFpTmpxYcYJTiYlUR480ByvCmJlVWpRfkw
-	KWkOFiVxXr4l6n5CAumJJanZqakFqUUwWRkODiUJ3ihgvAsJFqWmp1akZeaUIKSZODhBhnNJ
-	iRSn5qWkFiWWlmTEg2I3vhgYvSApHqC9H8H2Fhck5gJFIVpPMepybNi2ppFJiCUvPy9VSpxX
-	FGSHAEhRRmke3ApY0nvFKA70sTCvCUgVDzBhwk16BbSECWgJ/1QtkCUliQgpqQZG38rTCo83
-	fFy/d0P1kyX6Ygxnz3YyP59+2y7H9aF8qXFh/gyxWu9GXdHigv//cy4x/1Te9Kvm 
+	id S1758436AbaCTRCp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Mar 2014 13:02:45 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59343 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757510AbaCTRCn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Mar 2014 13:02:43 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 38AEE748E9;
+	Thu, 20 Mar 2014 13:02:43 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=XHpvWyckKDKxfW1s+iNhVs6hw2g=; b=uF4kFJ
+	6jJcm6GarJx/kG1PIUQkey9KI1VI+G9t8LgnSH8NjfoMSTrT8Qnup4KvgY8ipxoF
+	Rg4f4EXwqeEuIzxssgeHI3XI6OrHtkY5CgtkVDIjLwPjH3WwYPMXG6RXDM3kKt5y
+	TgH3t//pT/Tvmuxdrq95HWtr3Pyl5MFV/U0i8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ZGk6vg/GoABkFLyGVIXHpwMY5beNbe0W
+	/jZCmWbba002t8iV9BsXngdT2syjpqqZkF+jmWThnanS+0OlSQfQZV2Jk0biqJbd
+	lbFPfF5tC43V8pL+Xy/G/0SHMuIDzpleKVgNWz3TnXAjjdaFZOcehTcE7SyH6ykg
+	K3j3g5kUQFc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 255D1748E8;
+	Thu, 20 Mar 2014 13:02:43 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3B9A4748E2;
+	Thu, 20 Mar 2014 13:02:42 -0400 (EDT)
+In-Reply-To: <CACsJy8C3=bz1HmVgQuJRdixMhhb-JKouM7b1L7M047L_4PBViA@mail.gmail.com>
+	(Duy Nguyen's message of "Thu, 20 Mar 2014 08:38:18 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 732EC5CA-B051-11E3-810C-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244559>
 
-On 03/11/2014 10:41 PM, Brad King wrote:
-> On Tue, Mar 11, 2014 at 4:06 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> I may be misremembering things, but your first sentence quoted above
->> was exactly my reaction while reviewing the original change, and I
->> might have even raised that as an issue myself, saying something
->> like "consistency across values is more important than type-saving
->> in a machine format".
-> 
-> For reference, the original design discussion of the format was here:
-> 
->  http://thread.gmane.org/gmane.comp.version-control.git/233842
-> 
-> I do not recall this issue being raised before, but now that it has
-> been raised I fully agree:
-> 
->  http://thread.gmane.org/gmane.comp.version-control.git/243754/focus=243862
-> 
-> In -z mode an empty <newvalue> should be treated as missing just as
-> it is for <oldvalue>.  This is obvious now in hindsight and I wish I
-> had realized this at the time.  Back then I went through a lot of
-> iterations on the format and missed this simplification in the final
-> version :(
+Duy Nguyen <pclouds@gmail.com> writes:
 
-It's not your fault; anybody could have reviewed your code at the time
-(I most of all, because I have been so active in this area of the code).
+> On Thu, Mar 20, 2014 at 5:11 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> ...
+>> I know that the 512MiB default for the bitFileThreashold (aka
+>> "forget about delta compression") came out of thin air.  It was just
+>> "1GB is always too huge for anybody, so let's cut it in half and
+>> declare that value the initial version of a sane threashold",
+>> nothing more.
+>>
+>> So it might be that the problem is 512MiB is still too big, relative
+>> to the 16MiB of delta base cache, and the former may be what needs
+>> to be tweaked.  If a blob close to but below 512MiB is a problem for
+>> 16MiB delta base cache, it would still be too big to cause the same
+>> problem for 128MiB delta base cache---it would evict all the other
+>> objects and then end up not being able to fit in the limit itself,
+>> busting the limit immediately, no?
+>>
+>> I would understand if the change were to update the definition of
+>> deltaBaseCacheLimit and link it to the value of bigFileThreashold,
+>> for example.  With the presented discussion, I am still not sure if
+>> we can say that bumping deltaBaseCacheLimit is the right solution to
+>> the "description with the current setting is clearly wrong" (which
+>> is a real issue).
+>
+> I vote make big_file_threshold smaller. 512MB is already unfriendly
+> for many smaller machines. I'm thinking somewhere around 32MB-64MB
+> (and maybe increase delta cache base limit to match).
 
-> Moving forward:
-> 
-> The "create" command rejects a zero <newvalue> so the change in
-> question for that command is merely the wording of the error message
-> and there is no compatibility issue.
-> 
-> The "update" command supports a zero <newvalue> so that it can
-> be used for all operations (create, update, delete, verify) with
-> the proper combination of old and new values.  The change in question
-> makes an empty <newvalue> an error where it was previously treated
-> as zero.  (BTW, Michael, I do not see a test case for the new error
-> in your series.  Something like the patch below should work.)
-> 
->> I am not against deprecating and removing
->> the support for it in the longer term, though.
-> 
-> As I reported in my above-linked response, I'm not depending on
-> the old behavior myself.  Also if one were to start seeing this
-> error then generated input needs only trivial changes to avoid it.
-> If we do want to preserve compatibility for others then perhaps an
-> empty <newvalue> with -z should produce:
-> 
->  warning: update $ref: missing <newvalue>, treating as zero
+These numbers match my gut feeling (e.g. 4k*4k*32-bit uncompressed
+would be 64MB); delta cash base that is sized to the same as (or
+perhaps twice as big as) that limit may be a good default.
 
-This last suggestion is what I am implementing for the re-roll (coming
-shortly).  Thanks for the discussion.
+> The only
+> downside I see is large blobs will be packed  undeltified, which could
+> increase pack size if you have lots of them.
 
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+I think that is something that can be tweaked, unless the user tells
+us otherwise via command line override, when running the improved
+"gc --aggressive" ;-)
