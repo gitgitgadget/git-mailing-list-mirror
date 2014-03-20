@@ -1,101 +1,112 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Bump core.deltaBaseCacheLimit to 128MiB
-Date: Thu, 20 Mar 2014 10:02:39 -0700
-Message-ID: <xmqqsiqcztu8.fsf@gitster.dls.corp.google.com>
-References: <1395232712-6412-1-git-send-email-dak@gnu.org>
-	<xmqq38id3nfs.fsf@gitster.dls.corp.google.com>
-	<87ob11g9st.fsf@fencepost.gnu.org>
-	<xmqqlhw5260l.fsf@gitster.dls.corp.google.com>
-	<CACsJy8C3=bz1HmVgQuJRdixMhhb-JKouM7b1L7M047L_4PBViA@mail.gmail.com>
+From: Chris Angelico <rosuav@gmail.com>
+Subject: Re: Configuring a third-party git hook
+Date: Fri, 21 Mar 2014 04:10:35 +1100
+Message-ID: <CAPTjJmoDZRmFVnNmn_865Tcv6=GJucuKEo_Y-ezQ4s5vsHmguA@mail.gmail.com>
+References: <CAPTjJmomAnrjjyfSvDJijBP2pUN_kqVCRr+UbZkQHQy295A85A@mail.gmail.com>
+	<xmqqwqfozu9t.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Kastrup <dak@gnu.org>, Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 20 18:03:11 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 20 18:10:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQgN3-0006wz-Ql
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 18:03:10 +0100
+	id 1WQgUN-0001Et-VH
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 18:10:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758436AbaCTRCp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Mar 2014 13:02:45 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59343 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757510AbaCTRCn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Mar 2014 13:02:43 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 38AEE748E9;
-	Thu, 20 Mar 2014 13:02:43 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=XHpvWyckKDKxfW1s+iNhVs6hw2g=; b=uF4kFJ
-	6jJcm6GarJx/kG1PIUQkey9KI1VI+G9t8LgnSH8NjfoMSTrT8Qnup4KvgY8ipxoF
-	Rg4f4EXwqeEuIzxssgeHI3XI6OrHtkY5CgtkVDIjLwPjH3WwYPMXG6RXDM3kKt5y
-	TgH3t//pT/Tvmuxdrq95HWtr3Pyl5MFV/U0i8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZGk6vg/GoABkFLyGVIXHpwMY5beNbe0W
-	/jZCmWbba002t8iV9BsXngdT2syjpqqZkF+jmWThnanS+0OlSQfQZV2Jk0biqJbd
-	lbFPfF5tC43V8pL+Xy/G/0SHMuIDzpleKVgNWz3TnXAjjdaFZOcehTcE7SyH6ykg
-	K3j3g5kUQFc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 255D1748E8;
-	Thu, 20 Mar 2014 13:02:43 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3B9A4748E2;
-	Thu, 20 Mar 2014 13:02:42 -0400 (EDT)
-In-Reply-To: <CACsJy8C3=bz1HmVgQuJRdixMhhb-JKouM7b1L7M047L_4PBViA@mail.gmail.com>
-	(Duy Nguyen's message of "Thu, 20 Mar 2014 08:38:18 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 732EC5CA-B051-11E3-810C-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758065AbaCTRKh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Mar 2014 13:10:37 -0400
+Received: from mail-pb0-f44.google.com ([209.85.160.44]:35506 "EHLO
+	mail-pb0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756651AbaCTRKf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Mar 2014 13:10:35 -0400
+Received: by mail-pb0-f44.google.com with SMTP id rp16so1223500pbb.31
+        for <git@vger.kernel.org>; Thu, 20 Mar 2014 10:10:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=j+DCcJQt58lxoD6cQ0Y7vLvSuaqsU/OxU0OzZg4P2Lg=;
+        b=KSjoOhnRcLU7fQ3f9+on1+M2zi8r7lw5RoX1b3uCtgE8CNqrmYH/gb8nbsTFiw9Lg8
+         FSHqv8ocw2sglK4og++Wu3EeQGFcc+pcL7rSsV3B9XW5c7+gYxPk5CEHxlFZK8UnDOF9
+         4+boeLIbBY/vKVryHwfYIlB/tXMxxtI9A3rUi2E2gEmpe61wQMHFpFPdUPvoAIqhZY+9
+         W+4ehC0p2vn23H5WbmEa/DRlzLvxjrDd/7mBI4ZsyI9IBQCIyed03d8Ap5/PlQyUmleb
+         tNyjSwZuqm+fkhvWJPBQpXk9+OkUQuUnosIoweHihqrJb5zTA34HrcLmWlpIlZ+Irpa6
+         Y79Q==
+X-Received: by 10.66.164.229 with SMTP id yt5mr49132157pab.67.1395335435168;
+ Thu, 20 Mar 2014 10:10:35 -0700 (PDT)
+Received: by 10.68.33.7 with HTTP; Thu, 20 Mar 2014 10:10:35 -0700 (PDT)
+In-Reply-To: <xmqqwqfozu9t.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244560>
 
-Duy Nguyen <pclouds@gmail.com> writes:
-
-> On Thu, Mar 20, 2014 at 5:11 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> ...
->> I know that the 512MiB default for the bitFileThreashold (aka
->> "forget about delta compression") came out of thin air.  It was just
->> "1GB is always too huge for anybody, so let's cut it in half and
->> declare that value the initial version of a sane threashold",
->> nothing more.
->>
->> So it might be that the problem is 512MiB is still too big, relative
->> to the 16MiB of delta base cache, and the former may be what needs
->> to be tweaked.  If a blob close to but below 512MiB is a problem for
->> 16MiB delta base cache, it would still be too big to cause the same
->> problem for 128MiB delta base cache---it would evict all the other
->> objects and then end up not being able to fit in the limit itself,
->> busting the limit immediately, no?
->>
->> I would understand if the change were to update the definition of
->> deltaBaseCacheLimit and link it to the value of bigFileThreashold,
->> for example.  With the presented discussion, I am still not sure if
->> we can say that bumping deltaBaseCacheLimit is the right solution to
->> the "description with the current setting is clearly wrong" (which
->> is a real issue).
+On Fri, Mar 21, 2014 at 3:53 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Chris Angelico <rosuav@gmail.com> writes:
 >
-> I vote make big_file_threshold smaller. 512MB is already unfriendly
-> for many smaller machines. I'm thinking somewhere around 32MB-64MB
-> (and maybe increase delta cache base limit to match).
+>> file. It doesn't really care about the full history, and wants to be
+>> reasonably fast (as the user is waiting for it). It's just a
+>> convenience, so correctness isn't a huge issue. The easiest way to
+>> keep it moving through quickly is to limit the search:
+>>
+>> $ git log ...other options... HEAD~100 some-file.pike
+>>
+>> The problem with this is that it doesn't work if HEAD doesn't have 100
+>> great-great-...-grandparents
+>
+> Did you really mean that you are *not* interested in what happened
+> to the most recent 100 commits?  Or is it a typo of "HEAD~100.."?
 
-These numbers match my gut feeling (e.g. 4k*4k*32-bit uncompressed
-would be 64MB); delta cash base that is sized to the same as (or
-perhaps twice as big as) that limit may be a good default.
+Oops, yes, HEAD~100.. is what I actually use in the source code. Same
+difference; it doesn't work if there aren't that many commits.
 
-> The only
-> downside I see is large blobs will be packed  undeltified, which could
-> increase pack size if you have lots of them.
+> "git log -100" should traverse from the HEAD and stop after showing
+> at most 100 items, even if you only had 20 in the history.
 
-I think that is something that can be tweaked, unless the user tells
-us otherwise via command line override, when running the improved
-"gc --aggressive" ;-)
+Yes, and I use that to limit the results (to 10, actually); but
+there's one degenerate case left, and that's a new or moved/renamed
+file in a long-standing repository. Let's say the repo has 760 commits
+(which is currently the case for Gypsum; I'd say this is fairly small
+as repos go), and a file was moved a little while ago and then not
+edited much.
+
+$ git log plugins-more/threshtime.pike
+
+Four results, the oldest being "Move three plugins into -more" which
+moved the file without any edits at all. If I edit that file now, the
+prepare-commit-msg hook will execute the following (or would, if I
+hadn't set the config option):
+
+$ git log --shortstat --full-diff -10 --oneline plugins-more/threshtime.pike
+fca89fe Threshtime: Drop a comment from the old C++ plugin
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+df8bcf0 Threshtime: Make use of statusevent
+ 1 file changed, 2 insertions(+), 11 deletions(-)
+1207213 Threshtime: Use the tooltip to hint at the converter
+ 1 file changed, 1 insertion(+)
+c22dfbc Move three plugins into -more so they're loaded by default but
+unloadable
+ 6 files changed, 426 insertions(+), 426 deletions(-)
+
+Since it says "-10" and hasn't found ten results yet, git log will
+keep on searching back in history. I don't know of a way to say "give
+up searching once you find the commit that creates this file",
+although that would also do what I want. The end result is the same,
+but it's very slow if the git log isn't in the OS/disk cache. On my
+main development box, it is cached, but I just tried it on my Windows
+box and it took about fifteen seconds to finish; and 760 commits is
+not huge as repositories go - the Pike repo has over 30,000 commits,
+and git's own repo is of similar size.
+
+Bounding the search is potentially a huge improvement here, since the
+user's waiting. But the exact limit depends on the repo itself, and
+it'd be nice to be able to disable it ("huh, didn't find any
+results... I'll de-limit the search and try again"). Hence the config
+option, which I'm very happy to hear *is* a viable technique.
+
+ChrisA
