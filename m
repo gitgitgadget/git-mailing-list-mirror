@@ -1,121 +1,154 @@
-From: Brian Bourn <ba.bourn@gmail.com>
-Subject: [RFC] [GSoC] Draft of Proposal for GSoC
-Date: Thu, 20 Mar 2014 14:15:29 -0400
-Message-ID: <CAM+=D-BWCt9kNSUUQ19ZcPykb6j-tuEr=igBz0ukEk2TA3vWkg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] rev-parse --parseopt: option argument name hints
+Date: Thu, 20 Mar 2014 11:38:17 -0700
+Message-ID: <xmqqpplgyaud.fsf@gitster.dls.corp.google.com>
+References: <532AA923.6030409@gmail.com>
+	<1395305092-1928-1-git-send-email-ilya.bobyr@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: peff@peff.net
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Mar 20 19:22:46 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Ilya Bobyr <ilya.bobyr@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 20 19:38:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQhc2-00065u-7R
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 19:22:42 +0100
+	id 1WQhrI-0004Rd-QT
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 19:38:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933787AbaCTSWg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Mar 2014 14:22:36 -0400
-Received: from mail-qa0-f44.google.com ([209.85.216.44]:58979 "EHLO
-	mail-qa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933560AbaCTSWf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Mar 2014 14:22:35 -0400
-Received: by mail-qa0-f44.google.com with SMTP id f11so1317473qae.31
-        for <git@vger.kernel.org>; Thu, 20 Mar 2014 11:22:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=uQzuU9jAeEqUPnTs0+WYbq9yzzD8LZLLFzRfo4TuJVM=;
-        b=puRDF8HPF7XkxbOrBAuPAgATj41hwZcWajch/aKUqoHT66CARcVuNcezedwtLbktkJ
-         isNSyLlENAnYviFxOzi5bDNEC3JAA9z3Wuqz449zoCGtiidH0dX1wA85/FDxYdPKcjxp
-         WDeRdbTIiFX0GTIT7rhXT/VrD3E7Mt/Lj/4v775FTN2bJxZbyKKNGDIxBAd30Yvw8sPN
-         aTugEXuuOTi25OVPZrbuyw/Dka+cPg9WB76PhHfyfpJAkeNoi3koOJwv+1eBkY3ACuIM
-         KNzufktrMQ9Y9vJpzCv3AY+GMRGQadIpHasVqXD+souD7BeoGZM2yOSpICAOYIa9aUYa
-         Qkxg==
-X-Received: by 10.140.97.137 with SMTP id m9mr11224065qge.95.1395339329947;
- Thu, 20 Mar 2014 11:15:29 -0700 (PDT)
-Received: by 10.96.86.38 with HTTP; Thu, 20 Mar 2014 11:15:29 -0700 (PDT)
+	id S933478AbaCTSiX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Mar 2014 14:38:23 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44574 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933434AbaCTSiU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Mar 2014 14:38:20 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3C55F74743;
+	Thu, 20 Mar 2014 14:38:20 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=8EefaiZiwywC4XcmloRsJUTt3qc=; b=riXe7q
+	GGwnVF/wHaGgBUh6dVOhQ/piNW4Rdibibt9K8o2N63eLXeGqlUUSgPfTBhSfzVDv
+	Iu9FpoWg+AQyf3DN6oY84Kbe+peJ5Y8brM1/JfT/qQE4/cUHCQ3RzqCjt8f6AYQD
+	MmZIpgB/PDTABTdCbWOoL+C8YV/vJNSUXNu9g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=u5Ikvc/6Kd1DC5BljaxyGRc+Xdbc+eJo
+	XS9d1yFlrNyZ7TRY8/4OKw/i5jzkdULv0KHssMWBaH/l+cJGl/lF7dwNzqNN5qT/
+	q+n163f6qD8bdwCKI4lY6b2CkQIA8A7qwnmsV2r+MkY+RsxN/Ze8LvR3Synki2US
+	2tg9x15ZvFo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 251A374735;
+	Thu, 20 Mar 2014 14:38:20 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 65A2774732;
+	Thu, 20 Mar 2014 14:38:19 -0400 (EDT)
+In-Reply-To: <1395305092-1928-1-git-send-email-ilya.bobyr@gmail.com> (Ilya
+	Bobyr's message of "Thu, 20 Mar 2014 01:44:52 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: CECE0F32-B05E-11E3-A663-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244569>
 
-Hi all,
+Ilya Bobyr <ilya.bobyr@gmail.com> writes:
 
-This is a first draft of my Proposal for GSoC, I'd love feedback about
-what I might be missing and any other files I should read regarding
-this, so far I have read most of tag.c, branch.c,
-builtin/for-each-ref.c, parse-options.c. once again I hope I can get
-the same amount of helpful feedback as when I submitted my
-Microproject.
+> Built-in commands can specify names for option arguments when usage text
+> is generated for a command.  sh based commands should be able to do the
+> same.
+>
+> Option argument name hint is any text that comes after [*=?!] after the
+> argument name up to the first whitespace.  Underscores are replaced with
+> whitespace.  It is unlikely that an underscore would be useful in the
+> hint text.
+>
+> Signed-off-by: Ilya Bobyr <ilya.bobyr@gmail.com>
+> ---
+>  Changed according to the last comments.  Added "Usage text" paragraph in the
+>  documentation and updated variable names.
+>
+>  Documentation/git-rev-parse.txt |   34 ++++++++++++++++++++++++++++++++--
+>  builtin/rev-parse.c             |   17 ++++++++++++++++-
+>  t/t1502-rev-parse-parseopt.sh   |   20 ++++++++++++++++++++
+>  3 files changed, 68 insertions(+), 3 deletions(-)
+>
+> diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
+> index 0d2cdcd..b8aabc9 100644
+> --- a/Documentation/git-rev-parse.txt
+> +++ b/Documentation/git-rev-parse.txt
+> @@ -284,13 +284,13 @@ Input Format
+>  
+>  'git rev-parse --parseopt' input format is fully text based. It has two parts,
+>  separated by a line that contains only `--`. The lines before the separator
+> -(should be more than one) are used for the usage.
+> +(should be one or more) are used for the usage.
+>  The lines after the separator describe the options.
+>  
+>  Each line of options has this format:
+>  
+>  ------------
+> -<opt_spec><flags>* SP+ help LF
+> +<opt_spec><flags>*<arg_hint>? SP+ help LF
+>  ------------
+>  
+>  `<opt_spec>`::
+> @@ -313,6 +313,12 @@ Each line of options has this format:
+>  
+>  	* Use `!` to not make the corresponding negated long option available.
+>  
+> +`<arg_hint>`::
+> +	`<arg_hing>`, if specified, is used as a name of the argument in the
+> +	help output, for options that take arguments. `<arg_hint>` is
+> +	terminated by the first whitespace. When output the name is shown in
+> +	angle braces.  Underscore symbols are replaced with spaces.
 
-My name is Brian Bourn, I'm currently a computer engineering student
-at Columbia university in the city of New York.  I've used git since
-my freshman year however this past week has been my first time
-attempting to contribute to the project, and I loved it. I'd
-particularly like to tackle Unifying git branch -l, git tag -l, and
-git for-each-ref.  This functionality seems like an important update
-to me as it will simplify usage of git throughout three different
-commands, a noble pursuit which is not contained in any other project.
+The last part is troubling (and sounds not very sane).  Do we do
+such a munging anywhere else, or is it just here?  If the latter I'd
+prefer not to see such a hack.
 
-Going through the annals of the listserve thus far I've found a few
-discussions which provide some insight towards this process as well as
-some experimental patches that never seem to have made it
-through[1][2][3][4]
+> @@ -333,6 +339,8 @@ h,help    show the help
+>  
+>  foo       some nifty option --foo
+>  bar=      some cool option --bar with an argument
+> +baz=arg   another cool option --baz with a named argument
+> +qux?path  qux may take a path argument but has meaning by itself
+>  
+>    An option group Header
+>  C?        option C with an optional argument"
+> @@ -340,6 +348,28 @@ C?        option C with an optional argument"
+>  eval "$(echo "$OPTS_SPEC" | git rev-parse --parseopt -- "$@" || echo exit $?)"
+>  ------------
+>  
+> +
+> +Usage text
+> +~~~~~~~~~~
+> +
+> +When "$@" is "-h" or "--help" the above example would produce the following
+> +usage text:
 
-I would start by beginning a deprecation plan for git branch -l very
-similar to the one Junio presents in [5], moving -create-reflog to -g,
+Sounds like a good idea to add this; all the above arguments inside
+double quotes should be typeset `as-typed`, though.
 
-Following this I would begin the real work of the project which would
-involve moving the following flag operations into a standard library
-say 'list-options.h'
+> @@ -419,6 +420,20 @@ static int cmd_parseopt(int argc, const char **argv, const char *prefix)
+>  		o->value = &parsed;
+>  		o->flags = PARSE_OPT_NOARG;
+>  		o->callback = &parseopt_dump;
+> +
+> +		/* Possible argument name hint */
+> +		end = s;
+> +		while (s > sb.buf && strchr("*=?!", s[-1]) == NULL)
+> +			--s;
+> +		if (s != sb.buf && s != end) {
+> +			char *a;
+> +			o->argh = a = xmemdupz(s, end - s);
+> +			while (a = strchr(a, '_'))
+> +				*a = ' ';
 
---contains [6]
---merged [7]
---no-merged[8]
---format
-This Library would build these options for later interpretation by parse_options
-
-Next I would implement these flags in the three files so that they are
-uniform and the same formatting and list capabilities can be used on
-all three. The formatting option will be especially useful for branch
-and tag as it will allow users to better understand what is in each
-ref that they grab.
-
-For the most part I haven't finalized my weekly schedule but a basic
-breakdown would be
-
-Start-Midterm
-Begin deprecation of -l
-Spend some time reading *.c files even deeper
-Build Library(dedicate Minimum one week per function moved)
-
-Midterm-finish
-Implement the list flags
-Implement the format flags
-(if time is left over, add some formatting)
-
-Additionally I am thinking about adding some more formatting tools
-such as numbering outputs. What do you all think of this?
-
-
-[1]http://git.661346.n2.nabble.com/More-formatting-with-git-tag-l-tt6739049.html
-
-[2]http://git.661346.n2.nabble.com/RFC-branch-list-branches-by-single-remote-tt6645679.html#a6725483
-
-[3]http://git.661346.n2.nabble.com/RFC-PATCH-tag-make-list-exclude-lt-pattern-gt-tt7270451.html#a7338712
-
- [4]http://git.661346.n2.nabble.com/RFC-branch-list-branches-by-single-remote-tt6645679.html#a6728878
-
-[5]http://git.661346.n2.nabble.com/RFC-PATCH-0-2-RFC-POC-patterns-for-branch-list-tt6309233.html
-
-[6]https://github.com/git/git/blob/master/builtin/branch.c#L817
-
-[7] https://github.com/git/git/blob/master/builtin/branch.c#L849
-
-[8] https://github.com/git/git/blob/master/builtin/branch.c#L843
-
-Regards,
-Brian Bourn
+... and without the "underscore" munging, we do not have to allocate
+a new piece of memory, either.
