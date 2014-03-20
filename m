@@ -1,99 +1,116 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4] tests: use "env" to run commands with temporary env-var settings
-Date: Thu, 20 Mar 2014 12:25:48 -0700
-Message-ID: <xmqqd2hgy8n7.fsf@gitster.dls.corp.google.com>
-References: <1395312670-1843-1-git-send-email-unsignedzero@gmail.com>
+From: Robert Dailey <rcdailey.lists@gmail.com>
+Subject: Lost commit during rebase!
+Date: Thu, 20 Mar 2014 14:37:12 -0500
+Message-ID: <CAHd499CBkuCJvZ+U3GEcnw0UFot5JooZVdj2sHT_3p0s6ScwcQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Tran <unsignedzero@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 20 20:26:32 2014
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Mar 20 20:37:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQibn-0000ip-CM
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 20:26:31 +0100
+	id 1WQimI-00004y-3U
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 20:37:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759731AbaCTT0T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Mar 2014 15:26:19 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45852 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759725AbaCTT0Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Mar 2014 15:26:16 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4E94A74B5F;
-	Thu, 20 Mar 2014 15:26:16 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xBjht659jv7JsCekH00X6bOoQYk=; b=EOFDQr
-	GK8lUvu+IlMKWRJtixnz9kIM3KBE73IZCK0y8dWQtOfCyKhFpnfA5qaazRB5raV5
-	j5/eYyObjC6lLPAZCHpl4MQp2CZKlwaQJWwY11xWIFou22EeuDXE6mil5yEpNH/4
-	GhP28vTKEPek/M6LctLJ0mZ+UP93+7/bRLFCM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=K+QdWTO556hrXo1Q8t17OW7IInFJe7hW
-	0taEath5w3H4UeQnIkBFsYioPzTrNChklybjfmHc0Ga+q0lWrjOiuZu4VN9o2lfr
-	fxJpkz8Kbt+cpHTmbueeIF1bYf3xeaOjSya/ABdehMvmAUDVuuhXz7GRtHqyZV8V
-	NRBmf3vX6ec=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3851174B5B;
-	Thu, 20 Mar 2014 15:26:16 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D2CF474ADD;
-	Thu, 20 Mar 2014 15:25:50 -0400 (EDT)
-In-Reply-To: <1395312670-1843-1-git-send-email-unsignedzero@gmail.com> (David
-	Tran's message of "Thu, 20 Mar 2014 10:51:10 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 7266933E-B065-11E3-9EE0-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759710AbaCTThP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Mar 2014 15:37:15 -0400
+Received: from mail-ve0-f179.google.com ([209.85.128.179]:62017 "EHLO
+	mail-ve0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964943AbaCTThN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Mar 2014 15:37:13 -0400
+Received: by mail-ve0-f179.google.com with SMTP id db12so1472890veb.24
+        for <git@vger.kernel.org>; Thu, 20 Mar 2014 12:37:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:date:message-id:subject:from:to:content-type;
+        bh=mAvQH1t+t6t7yQEQS9bLGNIJ3z1yfx35g1z9bOyAF0k=;
+        b=mo3zNfb7bn0N/s7aI2yUw+ZellAQkKrq8PGCSFXlyC1PX0elFvRWwRGHmi81yJLhUJ
+         xlGLH69dv6oN85CeUZMomTAIFzQqpL2N+hocis5TIGG5k+q5TKMiqSZQhWhEM2t+2gmg
+         IVaGDDY9psotffHHoZBuctOZCvjAD+2Z7LHqith/JB08EzbN2o1M61my9cJxjJcKwp26
+         Hab33kD2SnpBymlwyCTLYYVXp1MF/yRL7EEzfHiCq5e+Nc7lLFqrCgMQcZRguH5id4ZE
+         Oy3xMJz7I1IgdXhhMo5RpUa+llEB8Ec8GFAnyoO+M1GCymBVuWTQjMwbQSYyQ7GmfbA0
+         2hjQ==
+X-Received: by 10.58.69.20 with SMTP id a20mr169637veu.63.1395344232442; Thu,
+ 20 Mar 2014 12:37:12 -0700 (PDT)
+X-Google-Sender-Delegation: rcdailey@gmail.com
+Received: by 10.221.2.79 with HTTP; Thu, 20 Mar 2014 12:37:12 -0700 (PDT)
+X-Google-Sender-Auth: Tl_CLNLz1u_2i3mXZtKPWDfGpqo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244574>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244575>
 
-David Tran <unsignedzero@gmail.com> writes:
+I have a local-only branch with just under 70 commits. I also have
+merge commits on this branch.
 
-> Ordinarily, we would say "VAR=VAL command" to execute a tested command with
-> environment variable(s) set only for that command. This however does not work
-> if 'command' is a shell function (most notably 'test_must_fail'); the result
-> of the assignment is retained and affects later commands.
->
-> To avoid this, we assigned and exported the environment variables and run such
-> test(s) in a subshell like this,
->
-> 	(
-> 		VAR=VAL &&
-> 		export VAR &&
-> 		test_must_fail git command to be tested
-> 	)
->
-> Using the "env" utility, we should be able to say
->
-> 	test_must_fail git command to be tested
->
-> which is much shorter and easier to read.
->
-> Signed-off-by: David Tran <unsignedzero@gmail.com>
->
-> ---
-> ...
->>Looks familiar ;-) but it seems the changes from the original you
->>took it from all look worsening, not improvements, to me.
-> I learn more from rewriting than copying and pasting but I'll change most of it
-> back then.
+The log of the top few commits on my branch looks like so:
 
-Sigh.  Your edits again butchered the correctness.
+* de651ff       (20 minutes ago) (HEAD, survey) Robert Dailey - WIP:
+GOTO implementation
+* 2a68a23       (21 minutes ago) Robert Dailey - Move boost::phoenix
+include & namespace changes to own header file
+* e1cd568       (19 hours ago) Robert Dailey - WIP: GOTO flow changes
+* b039bb5       (19 hours ago) Robert Dailey - Remove superfluous
+include of own header
+* 4bdeb27       (20 hours ago) Robert Dailey - Rename NavigateBackwards()
 
-Re-read your "this is a new and better way to write test_must_fail"
-example above, and compare it with what was queued on 'pu'.
+I had two commits that I wanted to squash and also reorder another
+one. The command I ran is:
 
-I think we are hitting the point of diminishing or negative returns
-at this point.  Let's keep 512477b1 (tests: use "env" to run
-commands with temporary env-var settings, 2014-03-18) and go forward
-with it.
+git rebase -pi `git merge-base origin/master survey`
 
-Thanks.
+I ran this command with 'survey' branch checked out. Once my editor
+appears, the last few commits in the file look like so:
+
+pick 4bdeb27 Rename NavigateBackwards()
+pick b039bb5 Remove superfluous include of own header
+pick e1cd568 WIP: GOTO flow changes
+pick 2a68a23 Move boost::phoenix include & namespace changes to own header file
+pick de651ff WIP: GOTO implementation
+
+I modify the last 3 commits in the file so now it looks like this:
+
+pick 4bdeb27 Rename NavigateBackwards()
+pick b039bb5 Remove superfluous include of own header
+pick 2a68a23 Move boost::phoenix include & namespace changes to own header file
+pick e1cd568 WIP: GOTO flow changes
+squash de651ff WIP: GOTO implementation
+
+What I did was:
+
+1. Move 2a68a23 back one commit
+2. Mark de651ff for squash
+
+After this, I save the file, close, and rebase operations begin. After
+the rebase is done, my log looks like this:
+
+* 94d06df       (19 hours ago) (HEAD, survey) Robert Dailey - WIP:
+GOTO flow changes
+* b039bb5       (19 hours ago) Robert Dailey - Remove superfluous
+include of own header
+* 4bdeb27       (20 hours ago) Robert Dailey - Rename NavigateBackwards()
+
+Notice that the commit with description "Move boost::phoenix include &
+namespace changes to own header file" is missing! I looked at reflog:
+
+$ git reflog
+94d06df HEAD@{0}: rebase -i (finish): returning to refs/heads/survey
+94d06df HEAD@{1}: rebase -i (squash): WIP: GOTO flow changes
+e1cd568 HEAD@{2}: rebase -i (pick): updating HEAD
+2a7b27a HEAD@{3}: rebase -i (pick): Move boost::phoenix include &
+namespace changes to own header file
+b039bb5 HEAD@{4}: rebase -i (pick): updating HEAD
+4bdeb27 HEAD@{5}: rebase -i (pick): updating HEAD
+2e40bcd HEAD@{6}: rebase -i (pick): updating HEAD
+3ca6bb3 HEAD@{7}: rebase -i (pick): updating HEAD
+e63b1e5 HEAD@{8}: rebase -i (pick): updating HEAD
+4d40c00 HEAD@{9}: rebase -i (pick): updating HEAD
+ec078c1 HEAD@{10}: rebase -i (pick): updating HEAD
+de48c5d HEAD@{11}: rebase -i (pick): updating HEAD
+
+It shows that it "picked" the commit that's missing now. Is this a bug
+or am I not doing something right? I'm using Git for Windows version
+1.9.0
