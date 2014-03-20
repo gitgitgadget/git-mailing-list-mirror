@@ -1,51 +1,88 @@
-From: Anarky <ghostanarky@gmail.com>
-Subject: Bug? git status --porcelain --branch is translated
-Date: Thu, 20 Mar 2014 11:31:59 +0100
-Message-ID: <CAPP0M7Rw50hPHm49FetNXPGESXOoAND4NXU9F=rajv+NA=G32Q@mail.gmail.com>
+From: George Papanikolaou <g3orge.app@gmail.com>
+Subject: Re: [PATCH] builtin/apply.c: fuzzy_matchlines:trying to fix some inefficiencies
+Date: Thu, 20 Mar 2014 12:58:12 +0200
+Message-ID: <CAByyCQAsjoBiv54PR+AP=2ci60o39TNw5FhM0aNOhzbZpLd7gg@mail.gmail.com>
+References: <1395279167-20354-1-git-send-email-g3orge.app@gmail.com>
+	<532ABBE1.4090001@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 20 11:32:10 2014
+Cc: git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Thu Mar 20 11:58:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQaGf-0004Mu-1s
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 11:32:09 +0100
+	id 1WQafy-0006r1-H6
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 11:58:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753949AbaCTKcA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Mar 2014 06:32:00 -0400
-Received: from mail-qg0-f46.google.com ([209.85.192.46]:52024 "EHLO
-	mail-qg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750743AbaCTKb7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Mar 2014 06:31:59 -0400
-Received: by mail-qg0-f46.google.com with SMTP id e89so1979392qgf.5
-        for <git@vger.kernel.org>; Thu, 20 Mar 2014 03:31:59 -0700 (PDT)
+	id S1755070AbaCTK6O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Mar 2014 06:58:14 -0400
+Received: from mail-ve0-f179.google.com ([209.85.128.179]:59328 "EHLO
+	mail-ve0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750740AbaCTK6N (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Mar 2014 06:58:13 -0400
+Received: by mail-ve0-f179.google.com with SMTP id db12so704354veb.38
+        for <git@vger.kernel.org>; Thu, 20 Mar 2014 03:58:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=saRnHepE6XaAEpEoHraqvAXABmdtvPOTDrkNFVZRtqg=;
-        b=FRB5K6m5Qqmfo6Rlld9Dbtys3Q9lO7mNQVGxlybGInhkjFvZrA8MRXQEUZdJct/ssK
-         jVktrV0vLGnlWRn+iux8FlNh7eDxGz3qZG2RjTzfEryZcTc+FvfBX7/EKSIUMBLirQ35
-         dBveUdPfgyFnDOGkMW8L5gZaWTXa+0ix8uFLifUHL4GcptMqk6bapp8jFLDvlZWHXszt
-         bZDVN4KfzonsdFKNQZ1a65DRt6Q4JzupJ0WskE98XPzAbZb/tFgP5xplPFKbeeAo1M8j
-         G2UcV8bPxHBNUof4TNFlSjV94XRgCtzJRVIZMQF8kyywAAJxO3F46DR2qoPYrUoI//S7
-         BB2A==
-X-Received: by 10.140.96.230 with SMTP id k93mr46482932qge.60.1395311519339;
- Thu, 20 Mar 2014 03:31:59 -0700 (PDT)
-Received: by 10.140.101.232 with HTTP; Thu, 20 Mar 2014 03:31:59 -0700 (PDT)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=tzQZ00aG0u00Sq8bNEUjyWhAk/TR6d6kvs6964eD0F0=;
+        b=yFGltP6eMIZ8lXF0kgaM5QLD9Tvw5XpAlpnLYZgZhcYks+nNcwXOu1VzZivyogeevK
+         1qms4TbbvrzgKIL1HpkNeLvC69t4cgzRk1Is3ggZEL6aJAmULJr7RGV/Xl62sLe0zT0s
+         VzyAZ0GdPF1PNqFbz3uM0tgUoLrecBiWyonKi9TGVViOn4IUP9VBWnNt9Qd2x4gquyKe
+         teKnRZJhnavNNCHkiaZsQFl0hrg0ZmhpwmCOvP4K3Tomy/mggv3J7u3h8bYnqY7cMNDb
+         oXtguF/Sflxq+GAAT39BGo8Acw4An5/lW0y/WPnU3juWC8fdljct+Nbqnes+deRMvhNG
+         TpqA==
+X-Received: by 10.52.8.225 with SMTP id u1mr108082vda.64.1395313092396; Thu,
+ 20 Mar 2014 03:58:12 -0700 (PDT)
+Received: by 10.58.29.48 with HTTP; Thu, 20 Mar 2014 03:58:12 -0700 (PDT)
+In-Reply-To: <532ABBE1.4090001@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244540>
 
-Hello,
+Hi,
+Thanks for the feedback,
 
-The porcelain format of git status is described as not based on user
-configuration.
-But with --branch, behind/ahead are translated following the user's locale.
-Is it normal that scripts need to take care of that?
+On Thu, Mar 20, 2014 at 11:58 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+>
+> Why is this an improvement?  Do you expect this function to be called
+> often for empty lines (as opposed, for example, to lines consisting
+> solely of whitespace characters)?
+>
 
-Thanks.
+Yes, you are probably right, we are not gonna get much (if any)
+completely empty lines
+
+>
+> The comment just above this change gives a justification for putting an
+> "if" statement surrounding the "while" statements.  Do you think the
+> comment's argument is incorrect?  If so, please explain why, and remove
+> or change the comment.
+>
+
+I see what I did wrong. I thought since that the if-condition is double checked
+(from the while clause) so I removed it.
+
+Also this lead me to see that since the while clause is now unconditioned, there
+is no point of it being replicated exactly the same above, so I
+removed that too. =(
+
+I'm trying to find other inefficiencies/irregularities on that
+function. I'm currently
+thinking on merging the first checks with a call to iswspace() or
+something similar.
+
+Also thanks for clarifying the way patches/mails work.
+
+Cheers.
+
+---
+papanikge's surrogate email.
+I may reply back.
+http://www.5slingshots.com/
