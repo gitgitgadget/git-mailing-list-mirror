@@ -1,119 +1,95 @@
-From: Yuxuan Shui <yshuiv7@gmail.com>
-Subject: Re: GSoC proposal: port pack bitmap support to libgit2.
-Date: Thu, 20 Mar 2014 21:38:28 +0800
-Message-ID: <CAGqt0zwp2a6wrzLY0KOmH1zd0Bj5wmwvyBjy0j1JDjm3X4cSQg@mail.gmail.com>
-References: <CAGqt0zz1W1k92B+XRWEmMEv1=iyej+zi9QUCp2EhA=g+VnCt0g@mail.gmail.com>
-	<20140314043404.GD31906@sigill.intra.peff.net>
+From: Karsten Blees <karsten.blees@gmail.com>
+Subject: Re: [PATCH] Enable index-pack threading in msysgit.
+Date: Thu, 20 Mar 2014 14:54:12 +0100
+Message-ID: <532AF304.7040301@gmail.com>
+References: <5328e903.joAd1dfenJmScBNr%szager@chromium.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: =?ISO-8859-1?Q?Vicent_Mart=ED?= <tanoku@gmail.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Mar 20 14:38:43 2014
+Content-Transfer-Encoding: 7bit
+To: szager@chromium.org, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 20 14:54:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQdBC-0001vl-2M
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 14:38:42 +0100
+	id 1WQdQJ-000601-Rj
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 14:54:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932681AbaCTNia (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Mar 2014 09:38:30 -0400
-Received: from mail-ve0-f177.google.com ([209.85.128.177]:49041 "EHLO
-	mail-ve0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932438AbaCTNi3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Mar 2014 09:38:29 -0400
-Received: by mail-ve0-f177.google.com with SMTP id sa20so907387veb.22
-        for <git@vger.kernel.org>; Thu, 20 Mar 2014 06:38:28 -0700 (PDT)
+	id S1757571AbaCTNyQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Mar 2014 09:54:16 -0400
+Received: from mail-wg0-f47.google.com ([74.125.82.47]:36968 "EHLO
+	mail-wg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755870AbaCTNyO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Mar 2014 09:54:14 -0400
+Received: by mail-wg0-f47.google.com with SMTP id x12so635137wgg.30
+        for <git@vger.kernel.org>; Thu, 20 Mar 2014 06:54:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=Y58+k3Jtp58GehvwSs/aoknuCsQ0QgqTh40sx8CZisg=;
-        b=RR/4s1HgI4W4GAjMT5uTQVb6ZAmM7rljOOCiAasewVB69rVoHWPQvLrZ9ZQj2D7rK9
-         7O37hmL41SwXfg5kldKd3jHD+4722Slf0vychN76ywD4a175XRO8OptbdvJ2DtSM8IIM
-         HZVPvxBbBLmFkiXLMWjWVY8T/hPDNAQ3KCrgexzfpHSP7298CKlQvaW3AR+031JnvdWw
-         RU/3zc52bL+6iGk5KqX0NCvQ02ekLIGj6VrayHubCchXIjuvz6exoXDDiKvvyCA+FTgM
-         cJUEwx1Ta8tPMkirtRk7tNg4yuRtN1TUoFhaxlcpjK/WrfiF8inlhtqppwMoehnp2H+v
-         mWPA==
-X-Received: by 10.220.87.211 with SMTP id x19mr88966vcl.68.1395322708327; Thu,
- 20 Mar 2014 06:38:28 -0700 (PDT)
-Received: by 10.220.89.209 with HTTP; Thu, 20 Mar 2014 06:38:28 -0700 (PDT)
-In-Reply-To: <20140314043404.GD31906@sigill.intra.peff.net>
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=aBDDvKtAGn3uFNLsrPAS2frsH8YM5K630oLkFcGOoec=;
+        b=b6ofFuNXBPor2bt+N3ARual4+sA+a2qN0BTHx9SdFgSxP0aConHJjWx4jF2c/rD77F
+         HAWwkOxaIz5puGirKHakZuPzqvD7fFM/drmV4zvU+1DgE1FBztwVbW7GCbTp+A8697Rb
+         W+NmvIT5xgLYD2VEXPJmeUyf66vVkAyMqValpBtdS7QSrXRkFhCJF+/kLw1H9AIRRtal
+         nNGyzYMC1S1HnrZcKCx+wZPa6OM+QNmFF6frmBka4o5yplo5+3TECvc4Pg001Wjee/eJ
+         tOFfSMXUG0ApEMpjGgqVuZhBCkE241s/MI57bsSR0elf7AoRGJpKL7+BZ/GSUTJkfYnI
+         cCVQ==
+X-Received: by 10.194.242.231 with SMTP id wt7mr7853720wjc.52.1395323653621;
+        Thu, 20 Mar 2014 06:54:13 -0700 (PDT)
+Received: from [10.1.100.55] (ns.dcon.de. [77.244.111.149])
+        by mx.google.com with ESMTPSA id t5sm5231284wjw.15.2014.03.20.06.54.11
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 20 Mar 2014 06:54:12 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
+In-Reply-To: <5328e903.joAd1dfenJmScBNr%szager@chromium.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244550>
 
-Hi,
+Am 19.03.2014 01:46, schrieb szager@chromium.org:
+> This adds a Windows implementation of pread.  Note that it is NOT
+> safe to intersperse calls to read() and pread() on a file
+> descriptor.
 
-Sorry for this late reply, I was busy for past few days.
+This is a bad idea. You're basically fixing the multi-threaded issue twice, while at the same time breaking single-threaded read/pread interop on the mingw and msvc platform. Users of pread already have to take care that its not thread-safe on some platforms, now you're adding another breakage that has to be considered in future development.
 
-On Fri, Mar 14, 2014 at 12:34 PM, Jeff King <peff@peff.net> wrote:
-> On Wed, Mar 12, 2014 at 04:19:23PM +0800, Yuxuan Shui wrote:
->
->> I'm Yuxuan Shui, a undergraduate student from China. I'm applying for
->> GSoC 2014, and here is my proposal:
->>
->> I found this idea on the ideas page, and did some research about it.
->> The pack bitmap patchset add a new .bitmap file for every pack file
->> which contains the reachability information of selected commits. This
->> information is used to speed up git fetching and cloning, and produce
->> a very convincing results.
->>
->> The goal of my project is to port the pack bitmap implementation in
->> core git to libgit2, so users of libgit2 could benefit from this
->> optimization as well.
->>
->> Please let me know if my proposal makes sense, thanks.
->
-> You'd want to flesh it out a bit more to show how you're thinking about
-> tackling the problem:
->
->   - What are the areas of libgit2 that you will need to touch? Be
->     specific. What's the current state of the packing code? What
->     files and functions will you need to touch?
+The mingw_pread implementation in [1] is both thread-safe and allows mixing read/pread in single-threaded scenarios, why not use this instead?
 
-Firstly I will need to implement bitmap creation in libgit2's
-git_packbuilder_* functions (probably also git_odb_write_pack), so
-libgit2 could support bitmap creation. Then I will need to change
-git_revwalk_* functions to make them use bitmap. Since the operations
-that can benefit from bitmap is, if my understanding is correct, all
-using the git_revwalk_* functions, having bitmap support in revwalk
-functions should be enough.
+[1] http://article.gmane.org/gmane.comp.version-control.git/242120
 
-Files I need to touch probably are: revwalk.c pack-objects.c
-If I need to change the API of packbuilder or revwalk functions I will
-have to change the callers as well: push.c fetch.c and
-transport/smart_protocol.c
+> 
+> http://article.gmane.org/gmane.comp.version-control.git/196042
+> 
 
-I haven't read all the code to put together a list of functions I need
-to change, but I think the list will be long.
+Duy's patch alone enables multi-threaded index-pack on all platforms (including cygwin), so IMO this should be a separate patch.
 
->
->   - What are the challenges you expect to encounter in porting the code?
+> +	if (hand == INVALID_HANDLE_VALUE) {
+> +		errno = EBADF;
+> +		return -1;
+> +	}
 
-The architecture differences between git and libgit2 will probably be
-a challenge.
+This check is redundant, ReadFile already ckecks for invalid handles and err_win_to_posix converts to EBADF.
 
->
->   - Can you give a detailed schedule of the summer's work? What will you
->     work on in each week? What milestones do you expect to hit, and
->     when?
+> +
+> +	LARGE_INTEGER offset_value;
+> +	offset_value.QuadPart = offset;
+> +
+> +	DWORD bytes_read = 0;
+> +	OVERLAPPED overlapped = {0};
+> +	overlapped.Offset = offset_value.LowPart;
+> +	overlapped.OffsetHigh = offset_value.HighPart;
+> +	BOOL result = ReadFile(hand, buf, count, &bytes_read, &overlapped);
+> +
+> +	ssize_t ret = bytes_read;
+> +
+> +	if (!result && GetLastError() != ERROR_HANDLE_EOF)
 
-I don't really have a plan, but I'll try to provide a rough schedule.
+According to MSDN docs, ReadFile never fails with ERROR_HANDLE_EOF, or is this another case where the documentation is wrong?
 
-I'll read the code and try to understand the code, to the point where
-I can start to add new code. This will probably take a week. For next
-three or four weeks I should be implementing bitmap creation in
-packbuilder. Then for the rest of time I will be optimizing revwalk
-using bitmap.
+"When a synchronous read operation reaches the end of a file, ReadFile returns TRUE and sets *lpNumberOfBytesRead to zero."
 
->
-> -Peff
-
---
-
-Regards
-Yuxuan Shui
+Karsten
