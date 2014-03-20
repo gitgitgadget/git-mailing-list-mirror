@@ -1,115 +1,218 @@
 From: Ilya Bobyr <ilya.bobyr@gmail.com>
-Subject: Re: [PATCH] rev-parse --parseopt: option argument name hints
-Date: Thu, 20 Mar 2014 01:38:59 -0700
-Message-ID: <532AA923.6030409@gmail.com>
-References: <1393842740-4628-1-git-send-email-ilya.bobyr@gmail.com>	<xmqqwqg9kbuk.fsf@gitster.dls.corp.google.com>	<531D51EC.6050503@gmail.com>	<xmqqk3c1rfqj.fsf@gitster.dls.corp.google.com>	<xmqq7g80r1pm.fsf@gitster.dls.corp.google.com>	<53200C1A.7070002@gmail.com>	<xmqq38innyjq.fsf@gitster.dls.corp.google.com>	<53295D30.8090307@gmail.com> <xmqq61na3u2m.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 20 09:39:51 2014
+Subject: [PATCH v3] rev-parse --parseopt: option argument name hints
+Date: Thu, 20 Mar 2014 01:44:52 -0700
+Message-ID: <1395305092-1928-1-git-send-email-ilya.bobyr@gmail.com>
+References: <532AA923.6030409@gmail.com>
+Cc: Ilya Bobyr <ilya.bobyr@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 20 09:45:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQYVy-0003aj-1o
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 09:39:50 +0100
+	id 1WQYbg-0003cL-CA
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 09:45:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756081AbaCTIjn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Mar 2014 04:39:43 -0400
-Received: from mail-pb0-f53.google.com ([209.85.160.53]:52995 "EHLO
-	mail-pb0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750863AbaCTIjP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Mar 2014 04:39:15 -0400
-Received: by mail-pb0-f53.google.com with SMTP id rp16so620256pbb.12
-        for <git@vger.kernel.org>; Thu, 20 Mar 2014 01:39:14 -0700 (PDT)
+	id S1755345AbaCTIpg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Mar 2014 04:45:36 -0400
+Received: from mail-pb0-f52.google.com ([209.85.160.52]:56759 "EHLO
+	mail-pb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752354AbaCTIpb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Mar 2014 04:45:31 -0400
+Received: by mail-pb0-f52.google.com with SMTP id rr13so623318pbb.25
+        for <git@vger.kernel.org>; Thu, 20 Mar 2014 01:45:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=zve1ZDGH3pGpxBIMGpA9i77VvJS2zxqgqD4U7Sl1fCI=;
-        b=m5AVDtMLJYoUrs3WA+Arg6cuNSM9K5qF6FqbzK0zfWnKPUYQKy0Yn7lAkK0Xz7WMwF
-         inqJjcWeWWO6BQOubqZRHMYU8DJjtg9ne+oquW2+3wUiXnSBewSeBMvfjQuaVzjpq4ZT
-         dC7zMQ8QAKG7laB+TEjSKwvyz+kt+q3x496JZs2ufsXwUPnNI54O5qaN2ffWhKO7eX5i
-         CYsJ77bMmAB38QAy9MFOKYoPGIpMfhcafIK08CiwDM+xzFZVaHSEBt8ItRft1ylOKXRU
-         Ab2qzIUDoHiTayRUUBZ7RZLz19zDRbtc6i8i4BoD5+Mx2Zpsih11FC/MIQJmq5oN9+js
-         arng==
-X-Received: by 10.66.13.138 with SMTP id h10mr23088941pac.148.1395304754226;
-        Thu, 20 Mar 2014 01:39:14 -0700 (PDT)
-Received: from [192.168.1.2] (c-50-136-172-14.hsd1.ca.comcast.net. [50.136.172.14])
-        by mx.google.com with ESMTPSA id yo9sm6567806pab.16.2014.03.20.01.38.58
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=2RHJwIaauhrrv/laxjuo8wOaXtYm7+N7rabGiwqgnhI=;
+        b=0dULlgBDIJ+4mgglZYqlWKsi9d77PHPNXder7sGr1i7j4jKz5BQXymgny0T9kkCUqZ
+         Y17OdoDoTQbfLwVw3OVQynrkA7PT1M7kaAhW2+JkQIho97ahlbtg8Uw1/51jEGIwNJTx
+         pyFjgisv2/JYzrUaIP+2PimP365CqWhDFPDXGe0adOJ81IehmB49y4mNB6sVD14AQEFa
+         XZxV7YtccN/10Rl8pAf+PWNxWa5Q4wahRFpRGuQRVO2Gm/GuK6GDWFuQsFbPsbsNUGIg
+         hn+97ciFilHdFs2BDe9rAWrV/kUASOCaESLO2H1sD2yKbTUhH9OWOS6wAUZ0JLHDb3xa
+         fVXA==
+X-Received: by 10.68.171.4 with SMTP id aq4mr22729344pbc.150.1395305130742;
+        Thu, 20 Mar 2014 01:45:30 -0700 (PDT)
+Received: from localhost.localdomain (c-50-136-172-14.hsd1.ca.comcast.net. [50.136.172.14])
+        by mx.google.com with ESMTPSA id yo9sm6651225pab.16.2014.03.20.01.45.27
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 20 Mar 2014 01:39:00 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:28.0) Gecko/20100101 Thunderbird/28.0
-In-Reply-To: <xmqq61na3u2m.fsf@gitster.dls.corp.google.com>
+        Thu, 20 Mar 2014 01:45:30 -0700 (PDT)
+X-Mailer: git-send-email 1.7.9
+In-Reply-To: <532AA923.6030409@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244524>
 
-On 3/19/2014 11:46 AM, Junio C Hamano wrote:
-> Ilya Bobyr <ilya.bobyr@gmail.com> writes:
->
->> I can not find this particular patch in the latest "What's cooking" email.
->> Is there something I can do?
-> IIRC, I think I was waiting for the version with a new "Usage text"
-> section to the documentation you alluded to in this exchange
-> ($gmane/243924):
->
->      Ilya Bobyr <ilya.bobyr@gmail.com> writes:
->
->      > On 3/11/2014 12:10 PM, Junio C Hamano wrote:
->      >>
->      >>>> Documentation on the whole argument parsing is quite short, so,...
->      > ...
->      > I though that an example just to describe `argh' while useful would
->      > look a bit disproportional, compared to the amount of text on
->      > --parseopt.
->      >
->      > But now that I've added a "Usage text" section to looks quite in place.
->      >
->      > I just realized that the second patch I sent did not contain the
->      > changes.  Sorry about - I will resend it.
+Built-in commands can specify names for option arguments when usage text
+is generated for a command.  sh based commands should be able to do the
+same.
 
-Oh %)
-I did sent it in the next minute.  And did receive a copy myself.
-But it seems it never showed up in the list.
-I am still a bit new to the tools, maybe I did something wrong.
-Will try again :)
+Option argument name hint is any text that comes after [*=?!] after the
+argument name up to the first whitespace.  Underscores are replaced with
+whitespace.  It is unlikely that an underscore would be useful in the
+hint text.
 
->> It does not seems like there is a lot of interest, so I am not sure
->> there will be a lot of discussion.
->> It is a minor fix and considering the number of the emails on the
->> list, I do not unexpected this kind of stuff to be very popular.
->> But it seems like a valid improvement to me.
->> Maybe I am missing something?
-> You did the right thing by sending a reminder message with a pointer
-> to help others locate the original (like the one I am responding
-> to), as nobody can keep up with a busy list traffic.
+Signed-off-by: Ilya Bobyr <ilya.bobyr@gmail.com>
+---
+ Changed according to the last comments.  Added "Usage text" paragraph in the
+ documentation and updated variable names.
 
-Thanks :)
+ Documentation/git-rev-parse.txt |   34 ++++++++++++++++++++++++++++++++--
+ builtin/rev-parse.c             |   17 ++++++++++++++++-
+ t/t1502-rev-parse-parseopt.sh   |   20 ++++++++++++++++++++
+ 3 files changed, 68 insertions(+), 3 deletions(-)
 
->> Same questions about this one:
->>
->>      [PATCH] gitk: replace SHA1 entry field on keyboard paste
->>      http://www.mail-archive.com/git@vger.kernel.org/msg45040.html
->>
->> I think they are more or less similar, except that the second one is
->> just trivial.
-> I do not remember if I forwarded the patch to the area maintainer
-> Paul Mackerras <paulus@samba.org>, but if I didn't please do so
-> yourself.  The changes to gitk and git-gui come to me via their own
-> project repositories.
-
-You did and I even replied with additional details, that I should have 
-included as a cover letter.
-I can see those messages in the web archive.
-It seems that Paul Mackerras gitk repository is here: 
-git://ozlabs.org/~paulus/gitk.git
-At least that is what is online.  I do not see the change in there.
-I will remind him about it.
+diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
+index 0d2cdcd..b8aabc9 100644
+--- a/Documentation/git-rev-parse.txt
++++ b/Documentation/git-rev-parse.txt
+@@ -284,13 +284,13 @@ Input Format
+ 
+ 'git rev-parse --parseopt' input format is fully text based. It has two parts,
+ separated by a line that contains only `--`. The lines before the separator
+-(should be more than one) are used for the usage.
++(should be one or more) are used for the usage.
+ The lines after the separator describe the options.
+ 
+ Each line of options has this format:
+ 
+ ------------
+-<opt_spec><flags>* SP+ help LF
++<opt_spec><flags>*<arg_hint>? SP+ help LF
+ ------------
+ 
+ `<opt_spec>`::
+@@ -313,6 +313,12 @@ Each line of options has this format:
+ 
+ 	* Use `!` to not make the corresponding negated long option available.
+ 
++`<arg_hint>`::
++	`<arg_hing>`, if specified, is used as a name of the argument in the
++	help output, for options that take arguments. `<arg_hint>` is
++	terminated by the first whitespace. When output the name is shown in
++	angle braces.  Underscore symbols are replaced with spaces.
++
+ The remainder of the line, after stripping the spaces, is used
+ as the help associated to the option.
+ 
+@@ -333,6 +339,8 @@ h,help    show the help
+ 
+ foo       some nifty option --foo
+ bar=      some cool option --bar with an argument
++baz=arg   another cool option --baz with a named argument
++qux?path  qux may take a path argument but has meaning by itself
+ 
+   An option group Header
+ C?        option C with an optional argument"
+@@ -340,6 +348,28 @@ C?        option C with an optional argument"
+ eval "$(echo "$OPTS_SPEC" | git rev-parse --parseopt -- "$@" || echo exit $?)"
+ ------------
+ 
++
++Usage text
++~~~~~~~~~~
++
++When "$@" is "-h" or "--help" the above example would produce the following
++usage text:
++
++------------
++usage: some-command [options] <args>...
++
++    some-command does foo and bar!
++
++    -h, --help            show the help
++    --foo                 some nifty option --foo
++    --bar ...             some cool option --bar with an argument
++    --bar <arg>           another cool option --baz with a named argument
++    --qux[=<path>]        qux may take a path argument but has meaning by itself
++
++An option group Header
++    -C[...]               option C with an optional argument
++------------
++
+ SQ-QUOTE
+ --------
+ 
+diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+index 45901df..a4c9fdf 100644
+--- a/builtin/rev-parse.c
++++ b/builtin/rev-parse.c
+@@ -395,9 +395,10 @@ static int cmd_parseopt(int argc, const char **argv, const char *prefix)
+ 		usage[unb++] = strbuf_detach(&sb, NULL);
+ 	}
+ 
+-	/* parse: (<short>|<short>,<long>|<long>)[=?]? SP+ <help> */
++	/* parse: (<short>|<short>,<long>|<long>)[*=?!]*<arghint>? SP+ <help> */
+ 	while (strbuf_getline(&sb, stdin, '\n') != EOF) {
+ 		const char *s;
++		const char *end;
+ 		struct option *o;
+ 
+ 		if (!sb.len)
+@@ -419,6 +420,20 @@ static int cmd_parseopt(int argc, const char **argv, const char *prefix)
+ 		o->value = &parsed;
+ 		o->flags = PARSE_OPT_NOARG;
+ 		o->callback = &parseopt_dump;
++
++		/* Possible argument name hint */
++		end = s;
++		while (s > sb.buf && strchr("*=?!", s[-1]) == NULL)
++			--s;
++		if (s != sb.buf && s != end) {
++			char *a;
++			o->argh = a = xmemdupz(s, end - s);
++			while (a = strchr(a, '_'))
++				*a = ' ';
++		}
++		if (s == sb.buf)
++			s = end;
++
+ 		while (s > sb.buf && strchr("*=?!", s[-1])) {
+ 			switch (*--s) {
+ 			case '=':
+diff --git a/t/t1502-rev-parse-parseopt.sh b/t/t1502-rev-parse-parseopt.sh
+index 83b1300..bf0db05 100755
+--- a/t/t1502-rev-parse-parseopt.sh
++++ b/t/t1502-rev-parse-parseopt.sh
+@@ -18,6 +18,17 @@ An option group Header
+     -C[...]               option C with an optional argument
+     -d, --data[=...]      short and long option with an optional argument
+ 
++Argument hints
++    -b <arg>              short option required argument
++    --bar2 <arg>          long option required argument
++    -e, --fuz <with spaces>
++                          short and long option required argument
++    -s[<some>]            short option optional argument
++    --long[=<data>]       long option optional argument
++    -g, --fluf[=<path>]   short and long option optional argument
++    --longest <a very long argument hint>
++                          a very long argument hint
++
+ Extras
+     --extra1              line above used to cause a segfault but no longer does
+ 
+@@ -39,6 +50,15 @@ b,baz     a short and long option
+ C?        option C with an optional argument
+ d,data?   short and long option with an optional argument
+ 
++ Argument hints
++b=arg     short option required argument
++bar2=arg  long option required argument
++e,fuz=with_spaces  short and long option required argument
++s?some    short option optional argument
++long?data long option optional argument
++g,fluf?path     short and long option optional argument
++longest=a_very_long_argument_hint  a very long argument hint
++
+ Extras
+ extra1    line above used to cause a segfault but no longer does
+ EOF
+-- 
+1.7.9
