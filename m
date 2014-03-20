@@ -1,107 +1,227 @@
-From: Stefan Zager <szager@chromium.org>
-Subject: Re: [PATCH] Enable index-pack threading in msysgit.
-Date: Thu, 20 Mar 2014 09:08:04 -0700
-Message-ID: <CAHOQ7J9drXwcTt4b0Tcyw97KTGcifwsO5rtFNQYf7CVr3WD7zQ@mail.gmail.com>
-References: <5328e903.joAd1dfenJmScBNr%szager@chromium.org>
-	<532AF304.7040301@gmail.com>
+From: karthik nayak <karthik.188@gmail.com>
+Subject: [RFC][GSOC] Proposal Draft for GSoC, Suggest Changes
+Date: Thu, 20 Mar 2014 22:06:18 +0530
+Message-ID: <CAOLa=ZRdxHz8VVT+iRaNSrj=EdpAFO2kjOhJ-++S9hODwDFmGg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-Cc: Stefan Zager <szager@chromium.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Karsten Blees <karsten.blees@gmail.com>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 20 17:08:18 2014
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Mar 20 17:36:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQfVu-0001xX-Av
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 17:08:14 +0100
+	id 1WQfxa-0001eX-14
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 17:36:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757167AbaCTQII (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Mar 2014 12:08:08 -0400
-Received: from mail-oa0-f54.google.com ([209.85.219.54]:35369 "EHLO
-	mail-oa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752493AbaCTQIF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 20 Mar 2014 12:08:05 -0400
-Received: by mail-oa0-f54.google.com with SMTP id n16so1152643oag.41
-        for <git@vger.kernel.org>; Thu, 20 Mar 2014 09:08:04 -0700 (PDT)
+	id S1759351AbaCTQgp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Mar 2014 12:36:45 -0400
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:53214 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756146AbaCTQgl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Mar 2014 12:36:41 -0400
+Received: by mail-pa0-f49.google.com with SMTP id lj1so1173953pab.8
+        for <git@vger.kernel.org>; Thu, 20 Mar 2014 09:36:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=uoGiJh013yxxVcc102mknXkdgWwjwk4zdsYGLLAe/a4=;
-        b=EKL0wmDoUgkMIrmQUcsq9sZBWxrI05HEo7u+EG1QF83A+12CvLuoqu0WOrKIwn3dDA
-         xjFpifVkeJUwr6XKdfvx4SRXJ2j6elYUQFCM1vUUInOoEl4JzI/Qwqta7Dq0k3NiqF9A
-         LsogHUhyeCoGt4ad1GnmEXwzOx1ksrpIQg5zLKnqu3flRizROr8oegQBK4VV3aH3+83+
-         Zy797l0jRtNZ13ueRG4JbcnuqePc49CoqFlRgXH0RLfSu2xCqH7VSrW3SFDwIPW6vogx
-         yIe+HO8HF6E6r/p4YEYyryV6AlxZx2YlKSwjCYxIC3ajfHFnLLEHy0dOXctTS7IIIf25
-         C8fg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=uoGiJh013yxxVcc102mknXkdgWwjwk4zdsYGLLAe/a4=;
-        b=UmZkdsyZ+EagBNkL9+8fb0JBrqN3tiQm9ZoYV6GtwVClEfg9c6AcESNVWMobH46Bg2
-         aFiwM5K722IkZo10zY53jvaBohWhFY+sxXjxccoA/uBI4ERTO4bKIaaBF/krH1hfVhtK
-         bENtK+mY7n9pQ9tvULi4BX8meoACPKnu8xwx4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=uoGiJh013yxxVcc102mknXkdgWwjwk4zdsYGLLAe/a4=;
-        b=U1ZGCbrcRc1ACOKEcfZDjjrRoUSNFqArTNLR0TyXMY9+oMlF8cVrtXdsTsK3shmk8W
-         3HAWRx1v7lPL1B014GHZ6pJAGZDd9VdDasOw07MYyentpmr7W4miyeauxfrlWml/K8ht
-         txCm4Px6HfoLg2xBWtwx2ZH50ISeoLDfzSdRlgTRKSb57DpWnmtgNK4Dz/7ffbhS+wGa
-         7lXTf3fxEQUoKNxfALfOG/5VAg9Dr5YqF40zHCOOs/CkvW32ScU8Z3nvTXt3d1uZxoDI
-         ad1CDTkfoOC4ikrIjVc6NQVrIrqFT+zl1lEbGcP39X/yKv5kdjNTIsjYrMXGv+zuh9YU
-         qMCg==
-X-Gm-Message-State: ALoCoQlUUhV+xibwxCsUmf7HhMUWuiJAky48zUpDztxV6SgM3p26cuiW0rwbfQyPB1ebTiAATJLW6TKHP3w2laUQ3tnCw6833CceXLratLrQgbnDS9nnA+Mp32X+iu97jlCEIeLZEHOVzisBf/MWshxDmiCN3WUpRL4LNEaKg1H1Nc5gG91WvmJG7F/5mIzhRZkDWrDeq/Sd
-X-Received: by 10.60.145.225 with SMTP id sx1mr38912959oeb.30.1395331684661;
- Thu, 20 Mar 2014 09:08:04 -0700 (PDT)
-Received: by 10.182.233.201 with HTTP; Thu, 20 Mar 2014 09:08:04 -0700 (PDT)
-In-Reply-To: <532AF304.7040301@gmail.com>
-X-Google-Sender-Auth: f82BiZYLl5Y0VoyVEYqrXvnaMe0
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=7RQzja3QV8zAUJ8UFt3e5OzEFu32DAwDN33+JVSXNes=;
+        b=h2hLcHfWXrhr6KGeIzgrqpz7thq8E8r5ppCwC2jWaQ0Rl7O0+Qk53SdCuDSCwk439v
+         gqF446cxayYNUxy4OzK7Q2OXMwHrbMSkxMyAf9JOM08PplnnpIN/42xN+7xc/1DPJi9Y
+         6IwBJMyDexC5s3NV/ncqy2cs/yN3bUzRI2fivH0A/S+BHDTvQOu5rrPs53wTPDSL2FsU
+         NnDh1oOxLlUzKueO6IbTPxicNrgh6a/fWjkin7BH85BBpld5L6G+wKjFY72NWM7guE22
+         nklRvIR4g2hP/d0n+1BgJ2s3AiqO5cTyXk9hmvmmSAxKO3kFPR+6lE7RfU58BnpwHuRV
+         klZA==
+X-Received: by 10.68.235.6 with SMTP id ui6mr46635516pbc.45.1395333398849;
+ Thu, 20 Mar 2014 09:36:38 -0700 (PDT)
+Received: by 10.68.189.2 with HTTP; Thu, 20 Mar 2014 09:36:18 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244553>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244554>
 
-On Thu, Mar 20, 2014 at 6:54 AM, Karsten Blees <karsten.blees@gmail.com> wrote:
-> Am 19.03.2014 01:46, schrieb szager@chromium.org:
->> This adds a Windows implementation of pread.  Note that it is NOT
->> safe to intersperse calls to read() and pread() on a file
->> descriptor.
->
-> This is a bad idea. You're basically fixing the multi-threaded issue twice, while at the same time breaking single-threaded read/pread interop on the mingw and msvc platform. Users of pread already have to take care that its not thread-safe on some platforms, now you're adding another breakage that has to be considered in future development.
->
-> The mingw_pread implementation in [1] is both thread-safe and allows mixing read/pread in single-threaded scenarios, why not use this instead?
->
-> [1] http://article.gmane.org/gmane.comp.version-control.git/242120
+Hello,
+I have completed my microproject under the guidance of Eric, After
+going through the code and
+previous mailing lists. I have drafted my Proposal. Still going
+through the code
+as of now and figuring things out. Would be great to have your
+suggestions on my proposal, so that i can improve it before submitting
+it. Also have written the proposal in markdown for easier formatting.
+Doesn't look pretty on plain text.
+Thanks
+Karthik
 
 
-That's not thread-safe.  There is, presumably, a point between the
-first and second calls to lseek64 when the implicit position pointer
-is incorrect.  If another thread executes its first call to lseek64 at
-that time, then the file descriptor may end up with an incorrect
-position pointer after all threads have finished.
+Git configuration API improvements
 
-> Duy's patch alone enables multi-threaded index-pack on all platforms (including cygwin), so IMO this should be a separate patch.
+Abstract
 
-Fair enough, and it's a good first step.  I would love to see it
-landed soon.  On the Chrome project, we're currently distributing a
-patched version of msysgit; I would very much like for us to stop
-doing that, but the performance penalty is too significant right now.
+Currently git_config() has a few issues which need to be addressed:
 
-Duy, would you like to re-post your patch without the new pread implementation?
+Reads and parses the configuration files each time.
+Values cannot be unset,only can be set to false which has different
+implications.
+Repeated setting and un-setting of value in a particular new header,
+leaves trails.
 
-Going forward, there is still a lot of performance that gets left on
-the table when you rule out threaded file access.  There are not so
-many calls to read, mmap, and pread in the code; it should be possible
-to rationalize them and make them thread-safe -- at least, thread-safe
-for posix-compliant systems and msysgit, which covers the great
-majority of git users, I would hope.
+This project is to fix these problems while also retaining backward
+compatibility
+wherever git_config() is called, by implementing a cache for the config's in a
+tree data structure, which provides for easier modification.
+
+About Me
+
+Name : Karthik Nayak
+Email : Karthik.188@gmail.com
+College : BMS Institute of Technology
+Studying : Engineering In Computer Science
+IRC : nayak94
+Phone : 91-XXXX-XXX-XXX
+Country : India
+Interests : Guitar, Photography, Craft.
+Github : KarthikNayak
+
+Technical Experience
+
+Have been Learning about the Linux Kernel and its implementation on the android
+platform. Released also on XDA-Dev for the phones LG P500 and Xperia SP.
+Working on a Library in C on various Sorting Techniques.
+Contributed to the Open-Source Lab Manual for Colleges under VTU.
+Active Member of Gnu/Linux Users Group in College and Free Software
+Movement of Karnataka.
+
+Why i Picked Git
+
+This is my first attempt at GSOC and as I began going through the list
+of organisations, what struck me is that
+I haven't really used any of the software's of most of the listed
+organisations. That's when I realized why
+not contribute to something I use on a daily basis, this way I wont be
+contributing only because I want to take
+part in GSOC, rather I'd contribute because I would love to be a part
+of something I use on a regular basis
+and would be able to contribute to the project even after GSOC.
+
+Proposal
+
+Ideas Page : Git configuration API improvements
+
+The Following improvements have to be made to how configs are handled in git :
+
+Read all the config files once and store them in an appropriate data structure.
+
+I suggest the use of an tree data structure to store the cache of the
+config files.
+I think tree data structure is a better choice over a hash - key data
+structure as a tree data
+structure although has a lower time efficiency than a hash - key data
+structure while traversing
+for a config request. A tree data structure can more optimal for
+further improvements like
+the problem with setting and unsetting of configs can be easily
+handled as when a node under
+a particular header is deleted the header can check if it has no
+children nodes and on being true
+can delete the header from the config file.
+
+Change git_config() to iterate through the pre-read values in memory
+rather than re-reading
+the configuration files. This function should remain
+backwards-compatible with the old implementation
+so that callers don't have to all be rewritten at once.
+
+Now whenever git_config() is called within a single invocation of git
+it can traverse the
+tree data structure already created and get the particular config.
+This needs to maintain backward
+compatibility. So the Basic functioning of functions like git_config()
+and so on would change the
+API should remain the same for the user invoking these calls.
+
+Add new API functions that allow the cache to be inquired easily and
+efficiently.
+Rewrite callers to use the new API wherever possible.
+
+Now that the base data structure and underlying changes have been made
+for the data structure
+to work have been made, we can now add various new API functions to
+assist the usage of the data
+structure. And also rewrite callers to use the new API's made available
+
+Issues to be addressed
+
+Headers and comments left are all configs under a header is deleted.
+
+whenever we set and unset configs under a particular header it leaves
+garbage value
+behind, for example :
+
+git config pull.rebase true
+git config --unset pull.rebase
+git config pull.rebase true
+git config --unset pull.rebase
+
+would result in :
+
+[pull]
+[pull]
+
+And further changes made appear under the last header.
+The issue also gives rise to comments being stranded within a header.
+
+Possible Solution :
+
+Make sure that the header is deleted whenever the last config under it
+is deleted.
+Also delete comments within a header and comments made above a particular config
+when a config is removed and comments made above a header when the whole header
+is being removed.
+
+How to invalidate the cache correctly in the case that the
+configuration is changed
+while git is executing.
+
+If config is being changed while git is currently running then the
+changes need to be considered.
+
+Possible Solution :
+
+A simple solution would be to discard the whole cache made and when an
+invocation is
+made the cache, is rebuilt again. Else we can find a way to update
+only the changed config
+although this would be a harder implementation.
+
+Timeline
+
+Before Coding Starts
+
+Week 1 : Discuss the flow of course with the mentor.
+Week 2-3 : Discuss the adequate Data Structure for caching config values.
+Week 4 : Discuss on changing of git_config() to correspond to the new
+Data Structure.
+
+Coding Starts
+
+Week 1-2 : Submit Code for a new data structure. This will cache the
+config after its been read the first
+and this is stored as per to provide backward compatibility.
+Week 3-5 : Make git_config() iterate over the new data structure when
+it is called, and make sure it is
+backward compatible, until changes have been made to the calling functions.
+
+Mid Term Evaluation
+
+Week 6-11 : Add new API functions to allow integration and allow to
+retrieve configuration
+as per the data type (string, bool, int ... etc).
+Week 11-12 : Small changes and cleaning up and fix for duplication of
+Config Header after config
+being deleted.
+Week 13 : Final Cleanup and Mentor suggested final touches to be made.
+
+Pen Down Date
+
+Submission of Code to GSOC
