@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 5/8] ls-files: add --color to highlight based on $LS_COLORS
-Date: Thu, 20 Mar 2014 17:15:48 +0700
-Message-ID: <1395310551-23201-6-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 4/8] ls_colors.c: new color descriptors
+Date: Thu, 20 Mar 2014 17:15:47 +0700
+Message-ID: <1395310551-23201-5-git-send-email-pclouds@gmail.com>
 References: <1395310551-23201-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -16,145 +16,117 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQa1H-0001FI-Jb
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 11:16:15 +0100
+	id 1WQa1C-00018k-7B
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Mar 2014 11:16:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755427AbaCTKQL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Mar 2014 06:16:11 -0400
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:53769 "EHLO
-	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754398AbaCTKQI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Mar 2014 06:16:08 -0400
-Received: by mail-pa0-f51.google.com with SMTP id kq14so724380pab.24
-        for <git@vger.kernel.org>; Thu, 20 Mar 2014 03:16:07 -0700 (PDT)
+	id S1751449AbaCTKQE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Mar 2014 06:16:04 -0400
+Received: from mail-pd0-f173.google.com ([209.85.192.173]:53355 "EHLO
+	mail-pd0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755217AbaCTKQC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Mar 2014 06:16:02 -0400
+Received: by mail-pd0-f173.google.com with SMTP id z10so714951pdj.18
+        for <git@vger.kernel.org>; Thu, 20 Mar 2014 03:16:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=mtW5cf+tBAV3cnmIgn5nCgo+72Wz0SPjH4vRvJJ403Q=;
-        b=NQyKTis6aTqzQMcqURFafm9C2yvSx8uwuQFH5bQwRwts1L76yYOVgxwrfW4lmTHKqp
-         A9JDLKqtSM9/Po+T83W75WdIafVLYc5VJAzWR0frmVScGtuplG+AP2VDk96IcauxbjbZ
-         SYBUYXuEbswcFvrdNg3scn/xR9dir/vQkXH2ODEtYnhYJrKdRgngZRcp1r1DZi0Tvx+Y
-         NH1vSj4XQvEV13pPKza7T9bPjpM6NpYok9JYEfVc1q9FsYCjPvccRJFwd0h/K/azDJvl
-         GDJDaoF3nBos70/eP9NKsJbjNP/+Q5B9LmxDAtXag3VTzgIQtf2rEYlwKihFd/zUp2mQ
-         10/g==
-X-Received: by 10.67.3.97 with SMTP id bv1mr46492432pad.54.1395310567707;
-        Thu, 20 Mar 2014 03:16:07 -0700 (PDT)
+        bh=jZiy5ws1wNrpivRBOcJCgFlAzb1OFcJcCxlXwfz6+7o=;
+        b=TnLpqXSz1GwJqqVf8XFnNsfEJDaJwGzJXUlB3Hni1sTu5aOiSaHBqwxWEE4CORv8ii
+         0AVf1oYjZ4ooPDidE9Tso26+eMMl+h3sVby/vOhVyEQLIQcgwmBB6GwbUX4PIM7AXjRS
+         SRLcFP3dwTb/j45xk+SdjoBvj7jRbyTZIQLm1dXhe6pyA8khQmJHMw2MB/V/HwIFKvdx
+         JhwoUM0w6goebPPUCMYtH7IrZ75mCEkO4PDW9yk3euHDGK7yd1ptPDfT0LhiEP8po2bd
+         lyj6wSaSIG3vXp4BGQREWW1lw1a6MzmOzZrEPTjoDfyfqNfuxvT7npl40Jekvzf9FS2x
+         tltw==
+X-Received: by 10.68.170.36 with SMTP id aj4mr47249380pbc.54.1395310562134;
+        Thu, 20 Mar 2014 03:16:02 -0700 (PDT)
 Received: from lanh ([115.73.251.167])
-        by mx.google.com with ESMTPSA id ff4sm7799774pad.24.2014.03.20.03.16.04
+        by mx.google.com with ESMTPSA id dk1sm2958035pbc.46.2014.03.20.03.15.59
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 20 Mar 2014 03:16:06 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Thu, 20 Mar 2014 17:16:54 +0700
+        Thu, 20 Mar 2014 03:16:01 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Thu, 20 Mar 2014 17:16:49 +0700
 X-Mailer: git-send-email 1.9.0.40.gaa8c3ea
 In-Reply-To: <1395310551-23201-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244535>
+
+After coreutils moved to GPL-3 a couple more color descriptors were
+added. parse_ls_color() will abort if it finds any of these so just
+add them recognized (but never actually use them).
+
+Reference commits (in coreutils.git)
+
+0df338f (ls --color: do not colorize files with multiple hard links by =
+default - 2009-06-10)
+adc62b5 (ls: clean up after wrapped+colored file names with clear-to-EO=
+L - 2008-12-31)
+1e48b1f (ls: --color now highlights hard linked files, too - 2008-10-27=
+)
+84f6abf (ls: --color now highlights files with capabilities, too - 2008=
+-08-01)
+483297d (ls --color no longer outputs unnecessary escape sequences - 20=
+08-02-12)
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/ls-files.c | 38 ++++++++++++++++++++++++++++++++++++--
- 1 file changed, 36 insertions(+), 2 deletions(-)
+ ls_colors.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index 47c3880..463280e 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -14,6 +14,8 @@
- #include "resolve-undo.h"
- #include "string-list.h"
- #include "pathspec.h"
-+#include "color.h"
-+#include "ls_colors.h"
+diff --git a/ls_colors.c b/ls_colors.c
+index 23f1e0b..02fc632 100644
+--- a/ls_colors.c
++++ b/ls_colors.c
+@@ -5,9 +5,12 @@
+ #define STREQ(a, b) (strcmp(a, b) =3D=3D 0)
 =20
- static int abbrev;
- static int show_deleted;
-@@ -27,6 +29,7 @@ static int show_killed;
- static int show_valid_bit;
- static int line_terminator =3D '\n';
- static int debug_mode;
-+static int use_color;
-=20
- static const char *prefix;
- static int max_prefix_len;
-@@ -57,6 +60,33 @@ static void write_name(const char *name)
- 				   stdout, line_terminator);
- }
-=20
-+static void write_dir_entry(const struct dir_entry *ent)
-+{
-+	if (want_color(use_color)) {
-+		static struct strbuf sb =3D STRBUF_INIT;
-+		struct stat st;
-+		int statok;
-+		quote_path_relative(ent->name, prefix_len ? prefix : NULL, &sb);
-+		statok =3D stat(ent->name, &st) =3D=3D 0;
-+		print_color_indicator(sb.buf, st.st_mode, 0, statok, 0);
-+		fputs(sb.buf, stdout);
-+		printf("%s%c", GIT_COLOR_RESET, line_terminator);
-+	} else
-+		write_name(ent->name);
-+}
+ enum indicator_no {
+-	C_LEFT, C_RIGHT, C_END, C_NORM, C_FILE, C_DIR, C_LINK, C_FIFO, C_SOCK=
+,
++	C_LEFT, C_RIGHT, C_END, C_RESET, C_NORM,
++	C_FILE, C_DIR, C_LINK, C_FIFO, C_SOCK,
+ 	C_BLK, C_CHR, C_MISSING, C_ORPHAN, C_EXEC, C_DOOR, C_SETUID, C_SETGID=
+,
+-	C_STICKY, C_OTHER_WRITABLE, C_STICKY_OTHER_WRITABLE
++	C_STICKY, C_OTHER_WRITABLE, C_STICKY_OTHER_WRITABLE,
++	C_CAP, C_MULTIHARDLINK, C_CLR_TO_EOL
 +
-+static void write_ce_name(const struct cache_entry *ce)
-+{
-+	if (want_color(use_color)) {
-+		static struct strbuf sb =3D STRBUF_INIT;
-+		quote_path_relative(ce->name, prefix_len ? prefix : NULL, &sb);
-+		print_color_indicator(sb.buf, ce->ce_mode, 1, 1, 0);
-+		fputs(sb.buf, stdout);
-+		printf("%s%c", GIT_COLOR_RESET, line_terminator);
-+	} else
-+		write_name(ce->name);
-+}
-+
- static void show_dir_entry(const char *tag, struct dir_entry *ent)
- {
- 	int len =3D max_prefix_len;
-@@ -68,7 +98,7 @@ static void show_dir_entry(const char *tag, struct di=
-r_entry *ent)
- 		return;
+ };
 =20
- 	fputs(tag, stdout);
--	write_name(ent->name);
-+	write_dir_entry(ent);
- }
+ #define FILETYPE_INDICATORS				\
+@@ -28,9 +31,9 @@ struct color_ext_type {
+ };
 =20
- static void show_other_files(struct dir_struct *dir)
-@@ -170,7 +200,7 @@ static void show_ce_entry(const char *tag, const st=
-ruct cache_entry *ce)
- 		       find_unique_abbrev(ce->sha1,abbrev),
- 		       ce_stage(ce));
- 	}
--	write_name(ce->name);
-+	write_ce_name(ce);
- 	if (debug_mode) {
- 		const struct stat_data *sd =3D &ce->ce_stat_data;
+ static const char *const indicator_name[]=3D {
+-	"lc", "rc", "ec", "no", "fi", "di", "ln", "pi", "so",
++	"lc", "rc", "ec", "rs", "no", "fi", "di", "ln", "pi", "so",
+ 	"bd", "cd", "mi", "or", "ex", "do", "su", "sg", "st",
+-	"ow", "tw", NULL
++	"ow", "tw", "ca", "mh", "cl", NULL
+ };
 =20
-@@ -501,6 +531,7 @@ int cmd_ls_files(int argc, const char **argv, const=
- char *cmd_prefix)
- 			N_("if any <file> is not in the index, treat this as an error")),
- 		OPT_STRING(0, "with-tree", &with_tree, N_("tree-ish"),
- 			N_("pretend that paths removed since <tree-ish> are still present")=
-),
-+		OPT__COLOR(&use_color, N_("show color")),
- 		OPT__ABBREV(&abbrev),
- 		OPT_BOOL(0, "debug", &debug_mode, N_("show debugging data")),
- 		OPT_END()
-@@ -548,6 +579,9 @@ int cmd_ls_files(int argc, const char **argv, const=
- char *cmd_prefix)
- 	if (require_work_tree && !is_inside_work_tree())
- 		setup_work_tree();
+ #define LEN_STR_PAIR(s) sizeof(s) - 1, s
+@@ -38,6 +41,7 @@ static struct bin_str color_indicator[] =3D {
+ 	{ LEN_STR_PAIR("\033[") },	/* lc: Left of color sequence */
+ 	{ LEN_STR_PAIR("m") },		/* rc: Right of color sequence */
+ 	{ 0, NULL },			/* ec: End color (replaces lc+no+rc) */
++	{ 0, NULL },			/* rs: Reset to ordinary colors */
+ 	{ LEN_STR_PAIR("0") },		/* no: Normal */
+ 	{ LEN_STR_PAIR("0") },		/* fi: File: default */
+ 	{ LEN_STR_PAIR("01;34") },	/* di: Directory: bright blue */
+@@ -55,6 +59,9 @@ static struct bin_str color_indicator[] =3D {
+ 	{ LEN_STR_PAIR("37;44") },	/* st: sticky: black on blue */
+ 	{ LEN_STR_PAIR("34;42") },	/* ow: other-writable: blue on green */
+ 	{ LEN_STR_PAIR("30;42") },	/* tw: ow w/ sticky: black on green */
++	{ 0, NULL },			/* ca: black on red */
++	{ 0, NULL },			/* mh: disabled by default */
++	{ 0, NULL },			/* cl: clear to end of line */
+ };
 =20
-+	if (want_color(use_color))
-+		parse_ls_color();
-+
- 	parse_pathspec(&pathspec, 0,
- 		       PATHSPEC_PREFER_CWD |
- 		       PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP,
+ static struct color_ext_type *color_ext_list =3D NULL;
 --=20
 1.9.0.40.gaa8c3ea
