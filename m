@@ -1,296 +1,89 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH 10/10] userdiff: have 'cpp' hunk header pattern catch more C++ anchor points
-Date: Fri, 21 Mar 2014 22:07:22 +0100
-Message-ID: <49db8b0f66c725ef6ff0b8a4d536c43e6397879a.1395433874.git.j6t@kdbg.org>
-References: <53282741.5010609@web.de> <cover.1395433874.git.j6t@kdbg.org>
-Cc: Brandon Casey <drafnel@gmail.com>, git@vger.kernel.org,
-	Thomas Rast <tr@thomasrast.ch>, l.s.r@web.de,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <j6t@kdbg.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Mar 21 22:09:21 2014
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH][GSOC] Selection of the verbose message is replaced with
+ generated message in install_branch_config()
+Date: Fri, 21 Mar 2014 22:13:45 +0100
+Message-ID: <532CAB89.7030303@alum.mit.edu>
+References: <1395050104-19152-1-git-send-email-moxobukob@gmail.com> <loom.20140318T124348-742@post.gmane.org> <lg9l22$qto$1@ger.gmane.org> <CAPig+cQLACyFwVypi08ZGQ14mpc0zt0fRRNhPzswRjsTaFQz2A@mail.gmail.com> <lgekju$u6t$1@ger.gmane.org> <CAPig+cRv-WvoMVY0PDgtLawywe0QfpX8oPetzNwD-9Jq6BOjyw@mail.gmail.com> <xmqqr45vv5q8.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Aleksey Mokhovikov <moxobukob@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 21 22:13:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WR6gq-0003oA-Ep
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Mar 2014 22:09:20 +0100
+	id 1WR6lF-0001jo-VT
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Mar 2014 22:13:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751804AbaCUVJM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Mar 2014 17:09:12 -0400
-Received: from bsmtp4.bon.at ([195.3.86.186]:62485 "EHLO lbmfmo03.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751241AbaCUVJJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Mar 2014 17:09:09 -0400
-Received: from bsmtp.bon.at (unknown [192.168.181.102])
-	by lbmfmo03.bon.at (Postfix) with ESMTP id 1863ECEA73
-	for <git@vger.kernel.org>; Fri, 21 Mar 2014 22:09:08 +0100 (CET)
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 1FDBEA7EB3;
-	Fri, 21 Mar 2014 22:08:55 +0100 (CET)
-Received: from dx.sixt.local (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id C0C7119F6A4;
-	Fri, 21 Mar 2014 22:08:54 +0100 (CET)
-X-Mailer: git-send-email 1.8.5.2.244.g9fb3fb1
-In-Reply-To: <cover.1395433874.git.j6t@kdbg.org>
+	id S1750759AbaCUVNt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Mar 2014 17:13:49 -0400
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:47096 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750710AbaCUVNt (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 21 Mar 2014 17:13:49 -0400
+X-AuditID: 1207440c-f79656d000003eba-b4-532cab8cabce
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id B2.D7.16058.C8BAC235; Fri, 21 Mar 2014 17:13:48 -0400 (EDT)
+Received: from [192.168.69.148] (p57A25836.dip0.t-ipconnect.de [87.162.88.54])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s2LLDjsr003847
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Fri, 21 Mar 2014 17:13:47 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
+In-Reply-To: <xmqqr45vv5q8.fsf@gitster.dls.corp.google.com>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrMKsWRmVeSWpSXmKPExsUixO6iqNuzWifYYMcKUYuuK91MFg29V5gt
+	Lq+ayWZx5k0jowOLx85Zd9k9Ll5S9lj8wMvj8ya5AJYobpukxJKy4Mz0PH27BO6MW02PWQrm
+	cVXcXPuQpYFxCUcXIyeHhICJxMonE5ggbDGJC/fWs3UxcnEICVxmlFi1ey0rhHOOSeLN13+M
+	IFW8AtoSTcuvsIPYLAKqEkc/3AGLswnoSizqaQabJCoQLLH68gMWiHpBiZMzn4DZIgJqEhPb
+	DrGADGUWaGeUaNjVBTZIWKBa4sSu+VDbHjBJLD/7FmwSp4C1xISmK0AdHED3iUv0NAaBhJkF
+	dCTe9T1ghrDlJba/ncM8gVFwFpJ9s5CUzUJStoCReRWjXGJOaa5ubmJmTnFqsm5xcmJeXmqR
+	rqFebmaJXmpK6SZGSKDz7GD8tk7mEKMAB6MSD28Fp3awEGtiWXFl7iFGSQ4mJVHe0GU6wUJ8
+	SfkplRmJxRnxRaU5qcWHGCU4mJVEeANBcrwpiZVVqUX5MClpDhYlcV7VJep+QgLpiSWp2amp
+	BalFMFkZDg4lCd7iVUCNgkWp6akVaZk5JQhpJg5OkOFcUiLFqXkpqUWJpSUZ8aAoji8GxjFI
+	igdob8EKkL3FBYm5QFGI1lOMuhwbtq1pZBJiycvPS5US59UB2SEAUpRRmge3ApbWXjGKA30s
+	zJsIUsUDTIlwk14BLWECWsI/VQtkSUkiQkqqgXFh4Lwlz4v3zSs9LepdIN9rxHbIlL0xYt37
+	W7/iXkpasG6R/V9vGX6riX9h+OEP8pVf7j482SKxRdvVcdmh874cEwoerFx/Zs+O 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244748>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244749>
 
-The hunk header pattern 'cpp' is intended for C and C++ source code, but
-it is actually not particularly useful for the latter, and even misses
-some use-cases for the former.
+On 03/21/2014 06:09 PM, Junio C Hamano wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> 
+>> Sorry, you're right about message[0] case not being a crasher (though
+>> the assert() still seems overkill).
+> 
+> Assert() often becomes no-op in production build.  I think this may
+> be an indication that "table-driven" may not be as good an approach
+> as many candidates thought.  The microproject suggestion asks them
+> to think _if_ that makes sense, and it is perfectly fine for them if
+> they answer "no, it introduces more problems than it solves".
 
-The parts of the pattern have the following flaws:
+My expectation when I invented that microproject was that converting the
+code to be table-driven would be judged *not* to be an improvement.  I
+was hoping that a student would say "the 'if' statement is OK, but let's
+delete this ridiculous unreachable else branch".  Possibly they would
+convert the "if" chain into nested "if"s, which I think would allow some
+code consolidation in one of the branches.
 
-- The first part matches an identifier followed immediately by a colon
-  and arbitrary text and is intended to reject goto labels and C++
-  access specifiers (public, private, protected). But this pattern also
-  rejects C++ constructs, which look like this:
+But not a single student agreed with me, so I must be in a minority of
+one (which, unfortunately, is the definition of lunacy).
 
-    MyClass::MyClass()
-    MyClass::~MyClass()
-    MyClass::Item MyClass::Find(...
+The multidimensional array lookup table is not so terrible, but I
+personally still prefer the "if".
 
-- The second part matches an identifier followed by a list of qualified
-  names (i.e. identifiers separated by the C++ scope operator '::')
-  separated by space or '*' followed by an opening parenthesis (with
-  space between the tokens). It matches function declarations like
+Michael
 
-    struct item* get_head(...
-    int Outer::Inner::Func(...
-
-  Since the pattern requires at least two identifiers, GNU-style
-  function definitions are ignored:
-
-    void
-    func(...
-
-  Moreover, since the pattern does not allow punctuation other than '*',
-  the following C++ constructs are not recognized:
-
-  . template definitions:
-      template<class T> int func(T arg)
-
-  . functions returning references:
-      const string& get_message()
-
-  . functions returning templated types:
-      vector<int> foo()
-
-  . operator definitions:
-      Value operator+(Value l, Value r)
-
-- The third part of the pattern finally matches compound definitions.
-  But it forgets about unions and namespaces, and also skips single-line
-  definitions
-
-    struct random_iterator_tag {};
-
-  because no semicolon can occur on the line.
-
-Change the first pattern to require a colon at the end of the line
-(except for trailing space and comments), so that it does not reject
-constructor or destructor definitions.
-
-Notice that all interesting anchor points begin with an identifier or
-keyword. But since there is a large variety of syntactical constructs
-after the first "word", the simplest is to require only this word and
-accept everything else. Therefore, this boils down to a line that begins
-with a letter or underscore (optionally preceded by the C++ scope
-operator '::' to accept functions returning a type anchored at the
-global namespace). Replace the second and third part by a single pattern
-that picks such a line.
-
-This has the following desirable consequence:
-
-- All constructs mentioned above are recognized.
-
-and the following likely desirable consequences:
-
-- Definitions of global variables and typedefs are recognized:
-
-    int num_entries = 0;
-    extern const char* help_text;
-    typedef basic_string<wchar_t> wstring;
-
-- Commonly used marco-ized boilerplate code is recognized:
-
-    BEGIN_MESSAGE_MAP(CCanvas,CWnd)
-    Q_DECLARE_METATYPE(MyStruct)
-    PATTERNS("tex",...)
-
-  (The last one is from this very patch.)
-
-but also the following possibly undesirable consequence:
-
-- When a label is not on a line by itself (except for a comment) it is
-  no longer rejected, but can appear as a hunk header if it occurs at
-  the beginning of a line:
-
-    next:;
-
-IMO, the benefits of the change outweigh the (possible) regressions by a
-large margin.
-
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- t/t4018/cpp-class-constructor              | 1 -
- t/t4018/cpp-class-constructor-mem-init     | 1 -
- t/t4018/cpp-class-destructor               | 1 -
- t/t4018/cpp-function-returning-global-type | 1 -
- t/t4018/cpp-function-returning-nested      | 1 -
- t/t4018/cpp-function-returning-reference   | 1 -
- t/t4018/cpp-gnu-style-function             | 1 -
- t/t4018/cpp-namespace-definition           | 1 -
- t/t4018/cpp-operator-definition            | 1 -
- t/t4018/cpp-struct-single-line             | 1 -
- t/t4018/cpp-template-function-definition   | 1 -
- t/t4018/cpp-union-definition               | 1 -
- userdiff.c                                 | 8 +++-----
- 13 files changed, 3 insertions(+), 17 deletions(-)
-
-diff --git a/t/t4018/cpp-class-constructor b/t/t4018/cpp-class-constructor
-index 4c4925c..ec4f115 100644
---- a/t/t4018/cpp-class-constructor
-+++ b/t/t4018/cpp-class-constructor
-@@ -1,5 +1,4 @@
- Item::Item(int RIGHT)
- {
- 	ChangeMe;
--	broken;
- }
-diff --git a/t/t4018/cpp-class-constructor-mem-init b/t/t4018/cpp-class-constructor-mem-init
-index eec1d7c..49a69f3 100644
---- a/t/t4018/cpp-class-constructor-mem-init
-+++ b/t/t4018/cpp-class-constructor-mem-init
-@@ -2,5 +2,4 @@ Item::Item(int RIGHT) :
- 	member(0)
- {
- 	ChangeMe;
--	broken;
- }
-diff --git a/t/t4018/cpp-class-destructor b/t/t4018/cpp-class-destructor
-index 03aa51c..5487665 100644
---- a/t/t4018/cpp-class-destructor
-+++ b/t/t4018/cpp-class-destructor
-@@ -1,5 +1,4 @@
- RIGHT::~RIGHT()
- {
- 	ChangeMe;
--	broken;
- }
-diff --git a/t/t4018/cpp-function-returning-global-type b/t/t4018/cpp-function-returning-global-type
-index bff3e5f..1084d59 100644
---- a/t/t4018/cpp-function-returning-global-type
-+++ b/t/t4018/cpp-function-returning-global-type
-@@ -1,5 +1,4 @@
- ::Item get::it::RIGHT()
- {
- 	ChangeMe;
--	broken;
- }
-diff --git a/t/t4018/cpp-function-returning-nested b/t/t4018/cpp-function-returning-nested
-index 41700f2..d9750aa 100644
---- a/t/t4018/cpp-function-returning-nested
-+++ b/t/t4018/cpp-function-returning-nested
-@@ -1,6 +1,5 @@
- get::Item get::it::RIGHT()
- {
- 	ChangeMe;
--	broken;
- }
- 
-diff --git a/t/t4018/cpp-function-returning-reference b/t/t4018/cpp-function-returning-reference
-index 29e2bd4..01b051d 100644
---- a/t/t4018/cpp-function-returning-reference
-+++ b/t/t4018/cpp-function-returning-reference
-@@ -1,5 +1,4 @@
- string& get::it::RIGHT(char *ptr)
- {
- 	ChangeMe;
--	broken;
- }
-diff --git a/t/t4018/cpp-gnu-style-function b/t/t4018/cpp-gnu-style-function
-index d65fc74..08c7c75 100644
---- a/t/t4018/cpp-gnu-style-function
-+++ b/t/t4018/cpp-gnu-style-function
-@@ -2,5 +2,4 @@ const char *
- RIGHT(int arg)
- {
- 	ChangeMe;
--	broken;
- }
-diff --git a/t/t4018/cpp-namespace-definition b/t/t4018/cpp-namespace-definition
-index 6b88dd9..6749980 100644
---- a/t/t4018/cpp-namespace-definition
-+++ b/t/t4018/cpp-namespace-definition
-@@ -1,5 +1,4 @@
- namespace RIGHT
- {
- 	ChangeMe;
--	broken;
- }
-diff --git a/t/t4018/cpp-operator-definition b/t/t4018/cpp-operator-definition
-index f2bd167..1acd827 100644
---- a/t/t4018/cpp-operator-definition
-+++ b/t/t4018/cpp-operator-definition
-@@ -1,5 +1,4 @@
- Value operator+(Value LEFT, Value RIGHT)
- {
- 	ChangeMe;
--	broken;
- }
-diff --git a/t/t4018/cpp-struct-single-line b/t/t4018/cpp-struct-single-line
-index ad6fa8b..a0de5fb 100644
---- a/t/t4018/cpp-struct-single-line
-+++ b/t/t4018/cpp-struct-single-line
-@@ -5,4 +5,3 @@ void wrong()
- struct RIGHT_iterator_tag {};
- 
- int ChangeMe;
--// broken
-diff --git a/t/t4018/cpp-template-function-definition b/t/t4018/cpp-template-function-definition
-index a410298..0cdf5ba 100644
---- a/t/t4018/cpp-template-function-definition
-+++ b/t/t4018/cpp-template-function-definition
-@@ -1,5 +1,4 @@
- template<class T> int RIGHT(T arg)
- {
- 	ChangeMe;
--	broken;
- }
-diff --git a/t/t4018/cpp-union-definition b/t/t4018/cpp-union-definition
-index 133b662..7ec94df 100644
---- a/t/t4018/cpp-union-definition
-+++ b/t/t4018/cpp-union-definition
-@@ -1,5 +1,4 @@
- union RIGHT {
- 	double v;
- 	int ChangeMe;
--	broken;
- };
-diff --git a/userdiff.c b/userdiff.c
-index 8830417..fad52d6 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -125,11 +125,9 @@
- 	 "\\\\[a-zA-Z@]+|\\\\.|[a-zA-Z0-9\x80-\xff]+"),
- PATTERNS("cpp",
- 	 /* Jump targets or access declarations */
--	 "!^[ \t]*[A-Za-z_][A-Za-z_0-9]*:.*$\n"
--	 /* C/++ functions/methods at top level */
--	 "^([A-Za-z_][A-Za-z_0-9]*([ \t*]+[A-Za-z_][A-Za-z_0-9]*([ \t]*::[ \t]*[^[:space:]]+)?){1,}[ \t]*\\([^;]*)$\n"
--	 /* compound type at top level */
--	 "^((struct|class|enum)[^;]*)$",
-+	 "!^[ \t]*[A-Za-z_][A-Za-z_0-9]*:[[:space:]]*($|/[/*])\n"
-+	 /* functions/methods, variables, and compounds at top level */
-+	 "^((::[[:space:]]*)?[A-Za-z_].*)$",
- 	 /* -- */
- 	 "[a-zA-Z_][a-zA-Z0-9_]*"
- 	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lLuU]*"
 -- 
-1.8.5.2.244.g9fb3fb1
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
