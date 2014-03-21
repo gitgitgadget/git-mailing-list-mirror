@@ -1,82 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] doc: status, remove leftover statement about '#' prefix
-Date: Fri, 21 Mar 2014 11:00:30 -0700
-Message-ID: <xmqqvbv7tosh.fsf@gitster.dls.corp.google.com>
-References: <20140321141006.GA2126@t-online.de>
+From: Brian Bourn <ba.bourn@gmail.com>
+Subject: Re: [RFC] [GSoC] Draft of Proposal for GSoC
+Date: Fri, 21 Mar 2014 14:03:41 -0400
+Message-ID: <CAM+=D-D=PW=ZJFvc0y+Zhs8tPcbXnP-q4w-MeeLwT+t-QD_55w@mail.gmail.com>
+References: <CAM+=D-BWCt9kNSUUQ19ZcPykb6j-tuEr=igBz0ukEk2TA3vWkg@mail.gmail.com>
+	<20140321054208.GA31737@sigill.intra.peff.net>
+	<CAM+=D-ATimdXmcYpqSyKwZXE=TYXg9cZFG9kyjEOg22K1wF+3Q@mail.gmail.com>
+	<xmqq8us3v42o.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Dirk Wallenstein <halsmit@t-online.de>
-X-From: git-owner@vger.kernel.org Fri Mar 21 19:00:39 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 21 19:03:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WR3kD-0000rZ-RJ
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Mar 2014 19:00:38 +0100
+	id 1WR3nH-0005Dm-80
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Mar 2014 19:03:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750733AbaCUSAe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Mar 2014 14:00:34 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36667 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750706AbaCUSAd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Mar 2014 14:00:33 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E23AE74E5A;
-	Fri, 21 Mar 2014 14:00:32 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6CzFMuAV92CdSP6q/zi4x9Yz3bI=; b=QiIBz4
-	O0BfLid6QCEd3Py7sWI3x/EJK8iwUt4aiadOgc3dT4olfA/0h/FxbmGzDAmduRC+
-	4FjyaM0vJUyZWBxhv0yxA52fbh+L/USsNsQTnU9gMw7FjMKmmsDRJyWWtvYWCSPt
-	CA0+fQFfmmy3Z0/iSj/eFdd/QU57H/3iQ+MQ4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=s+dVbuVH9JS5dtRAN6oWhhkpJ8Z3snue
-	F+drqT4wHUpnVYSCq92/3nffxjDrbM0wOU45ldpd+d7tRDlweUGT8mrewSUGsa1b
-	W6k61DDkrP8P1MEdld3vP7MMtT+0jA8hW0e2332Yow5BAOefPyphSlZgk6xC55tY
-	eg9ijut1CXc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D09D874E59;
-	Fri, 21 Mar 2014 14:00:32 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1605A74E58;
-	Fri, 21 Mar 2014 14:00:32 -0400 (EDT)
-In-Reply-To: <20140321141006.GA2126@t-online.de> (Dirk Wallenstein's message
-	of "Fri, 21 Mar 2014 15:10:18 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: B1C9314A-B122-11E3-B43D-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1750745AbaCUSDo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Mar 2014 14:03:44 -0400
+Received: from mail-qg0-f47.google.com ([209.85.192.47]:43220 "EHLO
+	mail-qg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750706AbaCUSDm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Mar 2014 14:03:42 -0400
+Received: by mail-qg0-f47.google.com with SMTP id 63so8046601qgz.6
+        for <git@vger.kernel.org>; Fri, 21 Mar 2014 11:03:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=e87z8I1sZCvMOIUjgC/aYXY6x5TjzDXVHc4O4faHm04=;
+        b=msUu9MbwR6v2xhbe+mq/c/FCLGl7/xrf8vxoh8WXQPSTTDeDkD+7Bi1gW633fJ8aUi
+         hoyASuRUB1EBnDnZOzLboJLmdcn74BqziHvwgLiHoHsAsm9F8wMOAqJCwohhmDzSL170
+         6ryu4F/9wvXRSsChhYQ0D885IOWjy4wULN+eEZ/rZES2e7g9gT/Mbpu59u3dH7Feh9/Q
+         leOwI9fJmxWYbg1LpDjMxAv0Bf+K+4yj/GrYIbD7zDsBJIrl4KmoQxjifINDhR8hmbBu
+         nYzVj97AduOqjDchDszYBHMCNW7KYsLoURpypKfWDsNFXCBgdVGdBR14Yx1a4T0O0FX8
+         Q6pQ==
+X-Received: by 10.140.87.67 with SMTP id q61mr7470172qgd.94.1395425021809;
+ Fri, 21 Mar 2014 11:03:41 -0700 (PDT)
+Received: by 10.96.86.38 with HTTP; Fri, 21 Mar 2014 11:03:41 -0700 (PDT)
+In-Reply-To: <xmqq8us3v42o.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244713>
 
-Dirk Wallenstein <halsmit@t-online.de> writes:
-
-> This hasn't been true since 2556b9962e7c0353d562b7bf70eed11d8f29d0b0
+On Fri, Mar 21, 2014 at 1:45 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Brian Bourn <ba.bourn@gmail.com> writes:
 >
-> Signed-off-by: Dirk Wallenstein <halsmit@t-online.de>
-> ---
-
-Good eyes.  Thanks.
-
->  Documentation/git-status.txt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>> Something like this?
+>>
+>> Sample api calls
+>> Add_Opt_Group()
+>> Parse_with_contains()
+>> Parse_with_merged()
+>> Parse_with_no_merged()
+>> Parse_with_formatting()
+>> (each of the 4 calls above may have internal calls within the library
+>> in order to parse the option for each of the different function which
+>> may call these functions)
 >
-> diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
-> index a4acaa0..def635f 100644
-> --- a/Documentation/git-status.txt
-> +++ b/Documentation/git-status.txt
-> @@ -97,7 +97,7 @@ configuration variable documented in linkgit:git-config[1].
->  OUTPUT
->  ------
->  The output from this command is designed to be used as a commit
-> -template comment, and all the output lines are prefixed with '#'.
-> +template comment.
->  The default, long format, is designed to be human readable,
->  verbose and descriptive.  Its contents and format are subject to change
->  at any time.
+> This list is a bit too sketchy to be called "sample api calls", at
+> least to me.  Can you elaborate a bit more?
+>
+> What do they do, what does the caller expect to see (do they get
+> something as return values?  do they expect some side effects?)?
+
+so something like this would be better I'm assuming?
+
+Some basic sample API calls are found below, each of these would hold
+code to complete parsing and/or formatting the flags.
+Add_Opt_Group() - returns an OPT_CALLBACK with contains, merged,
+no-merged, or formatting which can be used in a commands options list.
+
+Execute_list()-the main call into the library and would pass into the
+library all of the necessary flags and arguments for parsing the
+request and executing it. This would accept the flags like
+-contain, with arguments such as the commit or pattern that is being
+searched for.
+
+The next four commands would be called by execute_list() to execute
+the original command with respect to the flags that are passed into
+this library.
+Parse_with_contains()
+Parse_with_merged()
+Parse_with_no_merged()
+Parse_with_formatting()
