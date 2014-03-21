@@ -1,736 +1,779 @@
 From: Per Cederqvist <cederp@opera.com>
-Subject: [GUILT 28/28] Added guilt.reusebranch configuration option.
-Date: Fri, 21 Mar 2014 08:32:06 +0100
-Message-ID: <1395387126-13681-29-git-send-email-cederp@opera.com>
+Subject: [GUILT 15/28] Produce legal patch names in guilt-import-commit.
+Date: Fri, 21 Mar 2014 08:31:53 +0100
+Message-ID: <1395387126-13681-16-git-send-email-cederp@opera.com>
 References: <1395387126-13681-1-git-send-email-cederp@opera.com>
-Cc: git@vger.kernel.org, Per Cederqvist <ceder@lysator.liu.se>,
-	Per Cederqvist <cederp@opera.com>
+Cc: git@vger.kernel.org, Per Cederqvist <cederp@opera.com>
 To: Jeff Sipek <jeffpc@josefsipek.net>
-X-From: git-owner@vger.kernel.org Fri Mar 21 08:34:15 2014
+X-From: git-owner@vger.kernel.org Fri Mar 21 08:34:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQtxy-00035m-W7
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Mar 2014 08:34:11 +0100
+	id 1WQtxw-00035m-QZ
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Mar 2014 08:34:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964962AbaCUHdt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Mar 2014 03:33:49 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:64637 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964903AbaCUHdo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Mar 2014 03:33:44 -0400
-Received: by mail-lb0-f174.google.com with SMTP id u14so1374692lbd.19
-        for <git@vger.kernel.org>; Fri, 21 Mar 2014 00:33:42 -0700 (PDT)
+	id S1759839AbaCUHdd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Mar 2014 03:33:33 -0400
+Received: from mail-la0-f41.google.com ([209.85.215.41]:42365 "EHLO
+	mail-la0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753853AbaCUHdY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Mar 2014 03:33:24 -0400
+Received: by mail-la0-f41.google.com with SMTP id gl10so1423648lab.0
+        for <git@vger.kernel.org>; Fri, 21 Mar 2014 00:33:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=/F2BJhjfejVv9MQjxfTpmNhPMY+Q6qpevQpXfzdMn50=;
-        b=mRlVD/Q4wuuiYp5r9qLLIFjC2pSm02sWpZYd4LadaulJLuzqFhuxgeaaPo844Vgtle
-         OKAN3z0WjDqGIQhv4EB5NXJ2vW2Bz+hLdasLR/8099W7x/JoQNu8X20z9R8mR2SLUblF
-         qmw/3duaDIpO+q9jaRUJRSKgatDT6vtX3CnheXCbN+c4DUZGJsyGkKMSvRZFmNBjyrAR
-         TZcWTf81suFNxDHpTuYNp/a2hhuhAQ7rc1/idPp7RB2SZSX9OXBD5qGJ1U9e6q9Jb/Ok
-         s7EYLwBSZtqT32j6soIzzon/bUBIRa0leEa1JzROBiPb5yyguA3wbYUkAg2ZXx2ZBv7L
-         ZC3A==
-X-Gm-Message-State: ALoCoQnbu/KwlFE6mH5vM0dn7q5XqP6L6BgBERAqpWLiaEcbdYPObxYSMZF22olAlcwgl55qSdU3
-X-Received: by 10.152.115.178 with SMTP id jp18mr32794954lab.23.1395387222512;
-        Fri, 21 Mar 2014 00:33:42 -0700 (PDT)
+        bh=ywjyaB0QFyPw9mC2H/uMWIsUliWAbNan2t7GgimqE/I=;
+        b=WOqLy6QtDW3r13xHUK05kbWaqJsfv/OKta9biXe1COOx7CArOL6tDyCRZohpghsP0S
+         QmN84NGaR/EmWBdPYl/+D+iM03pUwKpypCthxamC8Z694jaaveShi9ukzVIbJnTYBKsv
+         1cndRoh89A8/gTYuJTnUtp3QABVexnixLPW9mYzMPN1U0dFKQl68J+B+MNnz3Z9zYCpa
+         uDx7oSR2/N+lg/6oHln1r1OHfJKa4TD9b1mq9cbm/PSATAl884Mh3Or55IuxhXp/DiQV
+         pUqsXricV6ncuyV+GLslC+yKm28ZigB5BFzQEOnuhPK3KGExKuYMWFBN8WK4/pwnXjSs
+         Q/6Q==
+X-Gm-Message-State: ALoCoQluaCiFE0qaCvIvPs8yujehjFvIMB02DnJRrmcfYG41y6fNuBaYIz3BpRw3HUSND3FaiIp5
+X-Received: by 10.112.35.130 with SMTP id h2mr31113145lbj.15.1395387202271;
+        Fri, 21 Mar 2014 00:33:22 -0700 (PDT)
 Received: from dualla.linkoping.osa (ip-200.t2.se.opera.com. [212.247.211.200])
-        by mx.google.com with ESMTPSA id j2sm3986624lag.12.2014.03.21.00.33.40
+        by mx.google.com with ESMTPSA id j2sm3986624lag.12.2014.03.21.00.33.20
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 21 Mar 2014 00:33:41 -0700 (PDT)
+        Fri, 21 Mar 2014 00:33:20 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1395387126-13681-1-git-send-email-cederp@opera.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244659>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244660>
 
-From: Per Cederqvist <ceder@lysator.liu.se>
+Try harder to create patch names that adhere to the rules in
+git-check-ref-format(1) when deriving a patch name from the commit
+message.  Verify that the derived name using "git check-ref-format",
+and as a final fallback simply use the patch name "x" (to ensure that
+the code is future-proof in case new rules are added in the future).
 
-When the option is true (the default), Guilt does not create a new Git
-branch when patches are applied.  This way, you can switch between
-Guilt 0.35 and the current version of Guilt with no issues.
+Always append a ".patch" suffix to the patch name.
 
-At a future time, maybe a year after Guilt with guilt.reusebranch
-support is released, the default should be changed to "false" to take
-advantage of the ability to use a separate Git branch when patches are
-applied.
+Added test cases.
 
 Signed-off-by: Per Cederqvist <cederp@opera.com>
 ---
- guilt                |  29 +++-
- regression/scaffold  |   1 +
- regression/t-062.out | 441 +++++++++++++++++++++++++++++++++++++++++++++++++++
- regression/t-062.sh  | 140 ++++++++++++++++
- 4 files changed, 606 insertions(+), 5 deletions(-)
- create mode 100644 regression/t-062.out
- create mode 100755 regression/t-062.sh
+ guilt-import-commit  |  22 +-
+ regression/t-034.out | 567 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ regression/t-034.sh  |  72 +++++++
+ 3 files changed, 659 insertions(+), 2 deletions(-)
+ create mode 100644 regression/t-034.out
+ create mode 100755 regression/t-034.sh
 
-diff --git a/guilt b/guilt
-index 36cfd1e..c89d939 100755
---- a/guilt
-+++ b/guilt
-@@ -850,6 +850,9 @@ guilt_push_diff_context=1
- # default diffstat value: true or false
- DIFFSTAT_DEFAULT="false"
+diff --git a/guilt-import-commit b/guilt-import-commit
+index 9488ded..a4119d6 100755
+--- a/guilt-import-commit
++++ b/guilt-import-commit
+@@ -28,19 +28,37 @@ disp "Current head: `cat \"$GIT_DIR\"/refs/heads/\`git_branch\``" >&2
+ for rev in `git rev-list $rhash`; do
+ 	s=`git log --pretty=oneline -1 $rev | cut -c 42-`
  
-+# default old_style_prefix value: true or false
-+REUSE_BRANCH_DEFAULT="true"
++	# Try to convert the first line of the commit message to a
++	# valid patch name.
+ 	fname=`echo $s | sed -e "s/&/and/g" -e "s/[ :]/_/g" -e "s,[/\\],-,g" \
+ 			-e "s/['\\[{}]//g" -e 's/]//g' -e 's/\*/-/g' \
+-			-e 's/\?/-/g' | tr A-Z a-z`
++			-e 's/\?/-/g' -e 's/\.\.\.*/./g' -e 's/^\.//' \
++			-e 's/\.patch$//' -e 's/\.$//' | tr A-Z a-z`
 +
- # Prefix for guilt branches.
- GUILT_PREFIX=guilt/
- 
-@@ -861,6 +864,10 @@ GUILT_PREFIX=guilt/
- diffstat=`git config --bool guilt.diffstat`
- [ -z "$diffstat" ] && diffstat=$DIFFSTAT_DEFAULT
- 
-+# reuse Git branch?
-+reuse_branch=`git config --bool guilt.reusebranch`
-+[ -z "$reuse_branch" ] && reuse_branch=$REUSE_BRANCH_DEFAULT
-+
- #
- # The following gets run every time this file is source'd
- #
-@@ -925,13 +932,25 @@ else
- 	die "Unsupported operating system: $UNAME_S"
- fi
- 
--if [ "$branch" = "$raw_git_branch" ] && [ -n "`get_top 2>/dev/null`" ]
-+if [ -n "`get_top 2>/dev/null`" ]
- then
--    # This is for compat with old repositories that still have a
--    # pushed patch without the new-style branch prefix.
--    old_style_prefix=true
-+	# If there is at least one pushed patch, we set
-+	# old_style_prefix according to how it was pushed.  It is only
-+	# possible to change the prefix style while no patches are
-+	# applied.
-+	if [ "$branch" = "$raw_git_branch" ]
++	if ! valid_patchname "$fname"
 +	then
-+		old_style_prefix=true
-+	else
-+		old_style_prefix=false
++		# Try harder to make it a legal commit name by
++		# removing all but a few safe characters.
++		fname=`echo $fname|tr -d -c _a-zA-Z0-9---/\\n`
 +	fi
- else
--    old_style_prefix=false
-+	if $reuse_branch
++	if ! valid_patchname "$fname"
 +	then
-+		old_style_prefix=true
-+	else
-+		old_style_prefix=false
++		# If we failed to derive a legal patch name, use the
++		# name "x".  (If this happens, we likely have to
++		# append a suffix to make the name unique.)
++		fname=x
 +	fi
- fi
  
- _main "$@"
-diff --git a/regression/scaffold b/regression/scaffold
-index e4d7487..e4d2f35 100644
---- a/regression/scaffold
-+++ b/regression/scaffold
-@@ -93,6 +93,7 @@ function setup_git_repo
- 	git config log.date default
- 	git config log.decorate no
- 	git config guilt.diffstat false
-+	git config guilt.reusebranch false
- }
+ 	disp "Converting `echo $rev | cut -c 1-8` as $fname"
  
- function setup_guilt_repo
-diff --git a/regression/t-062.out b/regression/t-062.out
+ 	mangle_prefix=1
+ 	fname_base=$fname
+-	while [ -f "$GUILT_DIR/$branch/$fname" ]; do
++	while [ -f "$GUILT_DIR/$branch/$fname.patch" ]; do
+ 		fname="$fname_base-$mangle_prefix"
+ 	        mangle_prefix=`expr $mangle_prefix + 1`
+ 		disp "Patch under that name exists...trying '$fname'"
+ 	done
++	fname="$fname".patch
+ 
+ 	(
+ 		do_make_header $rev
+diff --git a/regression/t-034.out b/regression/t-034.out
 new file mode 100644
-index 0000000..727b436
+index 0000000..7bc9459
 --- /dev/null
-+++ b/regression/t-062.out
-@@ -0,0 +1,441 @@
-+% setup_repo
-+% git config guilt.reusebranch true
++++ b/regression/t-034.out
+@@ -0,0 +1,567 @@
++% setup_git_repo
++% git tag base
++% create_commit a The sequence /. is forbidden.
++[master eebb76e] The sequence /. is forbidden.
++ Author: Author Name <author@email>
++ 1 file changed, 1 insertion(+)
++ create mode 100644 a
++% create_commit a The sequence .lock/ is forbidden.
++[master 45e81b5] The sequence .lock/ is forbidden.
++ Author: Author Name <author@email>
++ 1 file changed, 1 insertion(+)
++% create_commit a A/component/may/not/end/in/foo.lock
++[master bbf3f59] A/component/may/not/end/in/foo.lock
++ Author: Author Name <author@email>
++ 1 file changed, 1 insertion(+)
++% create_commit a Two consecutive dots (..) is forbidden.
++[master 1535e67] Two consecutive dots (..) is forbidden.
++ Author: Author Name <author@email>
++ 1 file changed, 1 insertion(+)
++% create_commit a Check/multiple/../dots/...../foo..patch
++[master 48eb60c] Check/multiple/../dots/...../foo..patch
++ Author: Author Name <author@email>
++ 1 file changed, 1 insertion(+)
++% create_commit a Space is forbidden.
++[master 10dea83] Space is forbidden.
++ Author: Author Name <author@email>
++ 1 file changed, 1 insertion(+)
++% create_commit a Tilde~is~forbidden.
++[master 70a83b7] Tilde~is~forbidden.
++ Author: Author Name <author@email>
++ 1 file changed, 1 insertion(+)
++% create_commit a Caret^is^forbidden.
++[master ee6ef2c] Caret^is^forbidden.
++ Author: Author Name <author@email>
++ 1 file changed, 1 insertion(+)
++% create_commit a Colon:is:forbidden.
++[master c077fe2] Colon:is:forbidden.
++ Author: Author Name <author@email>
++ 1 file changed, 1 insertion(+)
++% create_commit a Delisforbidden.
++[master 589ee30] Delisforbidden.
++ Author: Author Name <author@email>
++ 1 file changed, 1 insertion(+)
++% git branch some-branch
++% git tag some-tag
++% create_commit a Ctrlisforbidden.
++[master e63cdde] Ctrlisforbidden.
++ Author: Author Name <author@email>
++ 1 file changed, 1 insertion(+)
++% create_commit a CR
+is
+also
+forbidden.
++[master 21ad093] CR
+is
+also
+forbidden.
++ Author: Author Name <author@email>
++ 1 file changed, 1 insertion(+)
++% create_commit a Question-mark?is?forbidden.
++[master be2fa9b] Question-mark?is?forbidden.
++ Author: Author Name <author@email>
++ 1 file changed, 1 insertion(+)
++% create_commit a Asterisk*is*forbidden.
++[master af7b50f] Asterisk*is*forbidden.
++ Author: Author Name <author@email>
++ 1 file changed, 1 insertion(+)
++% create_commit a Open[bracket[is[forbidden.
++[master 689f618] Open[bracket[is[forbidden.
++ Author: Author Name <author@email>
++ 1 file changed, 1 insertion(+)
++% create_commit a Multiple/slashes//are//forbidden.
++[master 6e7d52a] Multiple/slashes//are//forbidden.
++ Author: Author Name <author@email>
++ 1 file changed, 1 insertion(+)
++% create_commit a Cannot/end/in/slash/
++[master 95bb6cd] Cannot/end/in/slash/
++ Author: Author Name <author@email>
++ 1 file changed, 1 insertion(+)
++% create_commit a Cannot end in ..
++[master 106e8e5] Cannot end in ..
++ Author: Author Name <author@email>
++ 1 file changed, 1 insertion(+)
++% create_commit a Cannot@{have@{the@{sequence@{at-brace.
++[master 30187ed] Cannot@{have@{the@{sequence@{at-brace.
++ Author: Author Name <author@email>
++ 1 file changed, 1 insertion(+)
++% create_commit a @
++[master aedb74f] @
++ Author: Author Name <author@email>
++ 1 file changed, 1 insertion(+)
++% create_commit a Backslash\is\forbidden.
++[master 0a46f8f] Backslash\is\forbidden.
++ Author: Author Name <author@email>
++ 1 file changed, 1 insertion(+)
++% create_commit a Can/have/embedded/single/slashes
++[master 2a8b188] Can/have/embedded/single/slashes
++ Author: Author Name <author@email>
++ 1 file changed, 1 insertion(+)
++% git log
++commit 2a8b1889aa5066193bac978e6bf5073ffcfa6541
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    Can/have/embedded/single/slashes
++
++commit 0a46f8fa7c8c5a6f1039f842fe5cbd21d3a2a2a6
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    Backslash\is\forbidden.
++
++commit aedb74fd8388282fd7af50cb191a7f62bfc45eb5
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    @
++
++commit 30187ed0f47d12df9cedcbb846647d0d52130c12
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    Cannot@{have@{the@{sequence@{at-brace.
++
++commit 106e8e5a8cceec7297af97376ca5f93506643d0b
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    Cannot end in ..
++
++commit 95bb6cd7edf7b1e634a1e7d02c8faa99e39cbbf2
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    Cannot/end/in/slash/
++
++commit 6e7d52a7dacc684225c11b4edd2bac25fb52bd9b
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    Multiple/slashes//are//forbidden.
++
++commit 689f618085195775d204898254154b8bb50897a5
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    Open[bracket[is[forbidden.
++
++commit af7b50f93854bc5f46de5a389c1f3dea081eae2f
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    Asterisk*is*forbidden.
++
++commit be2fa9b5c5788dc05c4036f1b8197a1d33169610
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    Question-mark?is?forbidden.
++
++commit 21ad093a0c1b4a96285180a3d7b99a4045ef9202
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    CR
+is
+also
+forbidden.
++
++commit e63cdde7a1c90b66d7d411683528200f3f067d5f
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    Ctrlisforbidden.
++
++commit 589ee305a82aacf155529e75cbc84e661c37c83d
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    Delisforbidden.
++
++commit c077fe203fd18036fb00b56eec1763673d1769c6
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    Colon:is:forbidden.
++
++commit ee6ef2cc9dd5525409300377b013c0d9734bd931
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    Caret^is^forbidden.
++
++commit 70a83b705a2602a9493aba7f8f22e7abd13adc63
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    Tilde~is~forbidden.
++
++commit 10dea8380135f4d10cd10324e13da659261ceda3
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    Space is forbidden.
++
++commit 48eb60cddaefdaac5f78655f9028a9da741a18d1
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    Check/multiple/../dots/...../foo..patch
++
++commit 1535e67718949abf72f843685a1672ebfe4bd21f
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    Two consecutive dots (..) is forbidden.
++
++commit bbf3f5926e11d97b08cdb6e833c9deb603453d1b
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    A/component/may/not/end/in/foo.lock
++
++commit 45e81b5163ec3ed656b058ac3fd95b8986824e0f
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    The sequence .lock/ is forbidden.
++
++commit eebb76e96913d2dc78aef5f233fadc74af770b3b
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    The sequence /. is forbidden.
++
++commit d4850419ccc1146c7169f500725ce504b9774ed0
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    initial
++    
++    Signed-off-by: Commiter Name <commiter@email>
++% guilt init
++% guilt import-commit base..HEAD
++About to begin conversion...
++Current head: 2a8b1889aa5066193bac978e6bf5073ffcfa6541
++Converting 2a8b1889 as can-have-embedded-single-slashes
++Converting 0a46f8fa as backslash-isorbidden
++Converting aedb74fd as x
++Converting 30187ed0 as cannot@have@the@sequence@at-brace
++Converting 106e8e5a as cannot_end_in_
++Converting 95bb6cd7 as cannot-end-in-slash-
++Converting 6e7d52a7 as multiple-slashes--are--forbidden
++Converting 689f6180 as openbracketisforbidden
++Converting af7b50f9 as asterisk-is-forbidden
++Converting be2fa9b5 as question-mark-is-forbidden
++Converting 21ad093a as crisalsoforbidden
++Converting e63cdde7 as ctrlisforbidden
++Converting 589ee305 as delisforbidden
++Converting c077fe20 as colon_is_forbidden
++Converting ee6ef2cc as caretisforbidden
++Converting 70a83b70 as tildeisforbidden
++Converting 10dea838 as space_is_forbidden
++Converting 48eb60cd as check-multiple-.-dots-.-foo
++Converting 1535e677 as two_consecutive_dots_(.)_is_forbidden
++Converting bbf3f592 as a-component-may-not-end-in-foolock
++Converting 45e81b51 as the_sequence_.lock-_is_forbidden
++Converting eebb76e9 as the_sequence_-._is_forbidden
++Done.
++Current head: d4850419ccc1146c7169f500725ce504b9774ed0
 +% guilt push -a
-+Applying patch..modify
++Applying patch..the_sequence_-._is_forbidden.patch
 +Patch applied.
-+Applying patch..add
++Applying patch..the_sequence_.lock-_is_forbidden.patch
 +Patch applied.
-+Applying patch..remove
++Applying patch..a-component-may-not-end-in-foolock.patch
 +Patch applied.
-+Applying patch..mode
++Applying patch..two_consecutive_dots_(.)_is_forbidden.patch
 +Patch applied.
++Applying patch..check-multiple-.-dots-.-foo.patch
++Patch applied.
++Applying patch..space_is_forbidden.patch
++Patch applied.
++Applying patch..tildeisforbidden.patch
++Patch applied.
++Applying patch..caretisforbidden.patch
++Patch applied.
++Applying patch..colon_is_forbidden.patch
++Patch applied.
++Applying patch..delisforbidden.patch
++Patch applied.
++Applying patch..ctrlisforbidden.patch
++Patch applied.
++Applying patch..crisalsoforbidden.patch
++Patch applied.
++Applying patch..question-mark-is-forbidden.patch
++Patch applied.
++Applying patch..asterisk-is-forbidden.patch
++Patch applied.
++Applying patch..openbracketisforbidden.patch
++Patch applied.
++Applying patch..multiple-slashes--are--forbidden.patch
++Patch applied.
++Applying patch..cannot-end-in-slash-.patch
++Patch applied.
++Applying patch..cannot_end_in_.patch
++Patch applied.
++Applying patch..cannot@have@the@sequence@at-brace.patch
++Patch applied.
++Applying patch..x.patch
++Patch applied.
++Applying patch..backslash-isorbidden.patch
++Patch applied.
++Applying patch..can-have-embedded-single-slashes.patch
++Patch applied.
++% git log --decorate
++commit 434e07cacdd8e7eb4723e67cb2d100b3a4121a3a (HEAD, refs/patches/master/can-have-embedded-single-slashes.patch, guilt/master)
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    Can/have/embedded/single/slashes
++
++commit 7c3ffa4f940c862e9f11f5d4a5ae421f7a8d3141 (refs/patches/master/backslash-isorbidden.patch)
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    Backslash\is\forbidden.
++
++commit ea46f435d4d8f3c5349dce1aabc1a39fbf7ef803 (refs/patches/master/x.patch)
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    @
++
++commit a275ed5d7f10ea88c986852ee95a7d5a61663b5f (refs/patches/master/cannot@have@the@sequence@at-brace.patch)
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    Cannot@{have@{the@{sequence@{at-brace.
++
++commit f091fee39457e64ebd35410c1cf95e6613816a54 (refs/patches/master/cannot_end_in_.patch)
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    Cannot end in ..
++
++commit 025672497aff5c910c8ff86aaedc662f14c2f4ad (refs/patches/master/cannot-end-in-slash-.patch)
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    Cannot/end/in/slash/
++
++commit f13e243c7c56f39422567a431bccceec8b789596 (refs/patches/master/multiple-slashes--are--forbidden.patch)
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    Multiple/slashes//are//forbidden.
++
++commit edef5e925083d445f71c170d3293fac9619bc7a2 (refs/patches/master/openbracketisforbidden.patch)
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    Open[bracket[is[forbidden.
++
++commit 1626a11d979a1e9e775c766484172212277153df (refs/patches/master/asterisk-is-forbidden.patch)
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    Asterisk*is*forbidden.
++
++commit 74df14ab3a0ec9a0382998fbf167ebb1b0a36c6a (refs/patches/master/question-mark-is-forbidden.patch)
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    Question-mark?is?forbidden.
++
++commit ec46429125abdb0c5ac2b46cc399bdcd7cfc73fd (refs/patches/master/crisalsoforbidden.patch)
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    CR
+is
+also
+forbidden.
++
++commit 01524f9921af2a041cc88c068f76baa39e436cb2 (refs/patches/master/ctrlisforbidden.patch)
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    Ctrlisforbidden.
++
++commit 9fc9677b61880f9159838e89f714893e0a2fcafb (refs/patches/master/delisforbidden.patch)
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    Delisforbidden.
++
++commit 10433fd7206b7f79aabb4da514710d93c8deed4a (refs/patches/master/colon_is_forbidden.patch)
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    Colon:is:forbidden.
++
++commit fb1edb753c97ec865ceea316420b1df586caaa2b (refs/patches/master/caretisforbidden.patch)
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    Caret^is^forbidden.
++
++commit 3a0d5ccef0359004fcaa9cee98fbd6a2c4432e74 (refs/patches/master/tildeisforbidden.patch)
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    Tilde~is~forbidden.
++
++commit ea22c3b49c448dba8d7eaa6b805f9f1bc83fbedc (refs/patches/master/space_is_forbidden.patch)
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    Space is forbidden.
++
++commit db6ea8252440b04811344336f510a5469b2ddab0 (refs/patches/master/check-multiple-.-dots-.-foo.patch)
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    Check/multiple/../dots/...../foo..patch
++
++commit fe07105cd62660f4440ad24b9fc7dfdd9e71d764 (refs/patches/master/two_consecutive_dots_(.)_is_forbidden.patch)
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    Two consecutive dots (..) is forbidden.
++
++commit 96a3e92c4df85f52362ce4f6d31983c462db9ae9 (refs/patches/master/a-component-may-not-end-in-foolock.patch)
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    A/component/may/not/end/in/foo.lock
++
++commit ee4f0f96dfc9c94f5410c1e6414f9004325a37fc (refs/patches/master/the_sequence_.lock-_is_forbidden.patch)
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    The sequence .lock/ is forbidden.
++
++commit fdcb23c3072209bea3d9e0a2594132b936c5347e (refs/patches/master/the_sequence_-._is_forbidden.patch)
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    The sequence /. is forbidden.
++
++commit d4850419ccc1146c7169f500725ce504b9774ed0 (tag: base, master)
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    initial
++    
++    Signed-off-by: Commiter Name <commiter@email>
++% git log --decorate some-branch
++commit 589ee305a82aacf155529e75cbc84e661c37c83d (tag: some-tag, some-branch)
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    Delisforbidden.
++
++commit c077fe203fd18036fb00b56eec1763673d1769c6
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    Colon:is:forbidden.
++
++commit ee6ef2cc9dd5525409300377b013c0d9734bd931
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    Caret^is^forbidden.
++
++commit 70a83b705a2602a9493aba7f8f22e7abd13adc63
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    Tilde~is~forbidden.
++
++commit 10dea8380135f4d10cd10324e13da659261ceda3
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    Space is forbidden.
++
++commit 48eb60cddaefdaac5f78655f9028a9da741a18d1
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    Check/multiple/../dots/...../foo..patch
++
++commit 1535e67718949abf72f843685a1672ebfe4bd21f
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    Two consecutive dots (..) is forbidden.
++
++commit bbf3f5926e11d97b08cdb6e833c9deb603453d1b
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    A/component/may/not/end/in/foo.lock
++
++commit 45e81b5163ec3ed656b058ac3fd95b8986824e0f
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    The sequence .lock/ is forbidden.
++
++commit eebb76e96913d2dc78aef5f233fadc74af770b3b
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    The sequence /. is forbidden.
++
++commit d4850419ccc1146c7169f500725ce504b9774ed0 (tag: base, master)
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    initial
++    
++    Signed-off-by: Commiter Name <commiter@email>
 +% list_files
 +d .git/patches
 +d .git/patches/master
 +d .git/refs/patches
 +d .git/refs/patches/master
-+f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
-+f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
-+f 71596bf71b72c2717e1aee378aabefbfa19ab7c8  .git/patches/master/status
-+f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
-+f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
-+f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
-+r 33633e7a1aa31972f125878baf7807be57b1672d  .git/refs/patches/master/modify
-+r 37d588cc39848368810e88332bd03b083f2ce3ac  .git/refs/patches/master/add
-+r ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba  .git/refs/patches/master/mode
-+r ffb7faa126a6d91bcdd44a494f76b96dd860b8b9  .git/refs/patches/master/remove
-+% git for-each-ref
-+ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba commit	refs/heads/master
-+37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/patches/master/add
-+ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba commit	refs/patches/master/mode
-+33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/master/modify
-+ffb7faa126a6d91bcdd44a494f76b96dd860b8b9 commit	refs/patches/master/remove
-+% git for-each-ref
-+ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba commit	refs/heads/master
-+37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/patches/master/add
-+ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba commit	refs/patches/master/mode
-+33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/master/modify
-+ffb7faa126a6d91bcdd44a494f76b96dd860b8b9 commit	refs/patches/master/remove
-+% list_files
-+d .git/patches
-+d .git/patches/master
-+d .git/refs/patches
-+d .git/refs/patches/master
-+f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
-+f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
-+f 71596bf71b72c2717e1aee378aabefbfa19ab7c8  .git/patches/master/status
-+f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
-+f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
-+f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
-+r 33633e7a1aa31972f125878baf7807be57b1672d  .git/refs/patches/master/modify
-+r 37d588cc39848368810e88332bd03b083f2ce3ac  .git/refs/patches/master/add
-+r ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba  .git/refs/patches/master/mode
-+r ffb7faa126a6d91bcdd44a494f76b96dd860b8b9  .git/refs/patches/master/remove
-+% guilt pop
-+Now at remove.
-+% git for-each-ref
-+ffb7faa126a6d91bcdd44a494f76b96dd860b8b9 commit	refs/heads/master
-+37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/patches/master/add
-+33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/master/modify
-+ffb7faa126a6d91bcdd44a494f76b96dd860b8b9 commit	refs/patches/master/remove
-+% guilt push
-+Applying patch..mode
-+Patch applied.
-+% git for-each-ref
-+ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba commit	refs/heads/master
-+37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/patches/master/add
-+ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba commit	refs/patches/master/mode
-+33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/master/modify
-+ffb7faa126a6d91bcdd44a494f76b96dd860b8b9 commit	refs/patches/master/remove
-+% guilt pop
-+Now at remove.
-+% git for-each-ref
-+ffb7faa126a6d91bcdd44a494f76b96dd860b8b9 commit	refs/heads/master
-+37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/patches/master/add
-+33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/master/modify
-+ffb7faa126a6d91bcdd44a494f76b96dd860b8b9 commit	refs/patches/master/remove
-+% guilt pop
-+Now at add.
-+% git for-each-ref
-+37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/heads/master
-+37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/patches/master/add
-+33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/master/modify
-+% guilt push
-+Applying patch..remove
-+Patch applied.
-+% git for-each-ref
-+ffb7faa126a6d91bcdd44a494f76b96dd860b8b9 commit	refs/heads/master
-+37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/patches/master/add
-+33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/master/modify
-+ffb7faa126a6d91bcdd44a494f76b96dd860b8b9 commit	refs/patches/master/remove
-+% guilt pop
-+Now at add.
-+% git for-each-ref
-+37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/heads/master
-+37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/patches/master/add
-+33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/master/modify
-+% guilt pop
-+Now at modify.
-+% git for-each-ref
-+33633e7a1aa31972f125878baf7807be57b1672d commit	refs/heads/master
-+33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/master/modify
-+% guilt push
-+Applying patch..add
-+Patch applied.
-+% git for-each-ref
-+37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/heads/master
-+37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/patches/master/add
-+33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/master/modify
-+% guilt pop
-+Now at modify.
-+% git for-each-ref
-+33633e7a1aa31972f125878baf7807be57b1672d commit	refs/heads/master
-+33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/master/modify
-+% guilt pop
-+All patches popped.
-+% git for-each-ref
-+d4850419ccc1146c7169f500725ce504b9774ed0 commit	refs/heads/master
-+% guilt push
-+Applying patch..modify
-+Patch applied.
-+% git for-each-ref
-+33633e7a1aa31972f125878baf7807be57b1672d commit	refs/heads/master
-+33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/master/modify
-+% guilt pop
-+All patches popped.
-+% git for-each-ref
-+d4850419ccc1146c7169f500725ce504b9774ed0 commit	refs/heads/master
-+% guilt pop
-+No patches applied.
-+% git for-each-ref
-+d4850419ccc1146c7169f500725ce504b9774ed0 commit	refs/heads/master
-+% guilt push
-+Applying patch..modify
-+Patch applied.
-+% git for-each-ref
-+33633e7a1aa31972f125878baf7807be57b1672d commit	refs/heads/master
-+33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/master/modify
-+% guilt pop
-+All patches popped.
-+% git for-each-ref
-+d4850419ccc1146c7169f500725ce504b9774ed0 commit	refs/heads/master
-+% guilt push -a
-+Applying patch..modify
-+Patch applied.
-+Applying patch..add
-+Patch applied.
-+Applying patch..remove
-+Patch applied.
-+Applying patch..mode
-+Patch applied.
-+% git for-each-ref
-+ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba commit	refs/heads/master
-+37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/patches/master/add
-+ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba commit	refs/patches/master/mode
-+33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/master/modify
-+ffb7faa126a6d91bcdd44a494f76b96dd860b8b9 commit	refs/patches/master/remove
++f 06beca7069b9e576bd431f65d13862ed5d3e2a0f  .git/patches/master/ctrlisforbidden.patch
++f 08267ec6783ea9d1adae55b275198f7594764ed0  .git/patches/master/series
++f 08267ec6783ea9d1adae55b275198f7594764ed0  .git/patches/master/status
++f 09b7e9be44ae5ec3a4bb30f5ee9d4ebc2c042f64  .git/patches/master/two_consecutive_dots_(.)_is_forbidden.patch
++f 0b971c9a17aeca2319c93d700ffd98acc2a93451  .git/patches/master/question-mark-is-forbidden.patch
++f 2b8392f63d61efc12add554555adae30883993cc  .git/patches/master/cannot-end-in-slash-.patch
++f 2cd7c9ad392e071be03c051c6793e9b1e31d33c4  .git/patches/master/can-have-embedded-single-slashes.patch
++f 3136e448a4c820f6d2642f9d894c4087d3d109ab  .git/patches/master/cannot_end_in_.patch
++f 34e07c584032df137f19bdb66d93f316f00a5ac8  .git/patches/master/tildeisforbidden.patch
++f 49bab499826b63deb2bd704629d60c7268c57aee  .git/patches/master/the_sequence_-._is_forbidden.patch
++f 5bcddb8ccb6e6e5e8a61e9e56cb2e0f70cbab2f5  .git/patches/master/cannot@have@the@sequence@at-brace.patch
++f 637b982fe14a240de181ae63226b27e0c406b3dc  .git/patches/master/asterisk-is-forbidden.patch
++f 698f8a7d41a64e3b6be1a3eba86574078b22a5f3  .git/patches/master/backslash-isorbidden.patch
++f 7b103c3c7ae298cd2334f6f49da48bae1424f77b  .git/patches/master/crisalsoforbidden.patch
++f 9b810b8c63779c51d2e7f61ab59cd49835041563  .git/patches/master/x.patch
++f a22958d9ae9976fd7b2b5a9d0bcd44bf7ad9b08a  .git/patches/master/caretisforbidden.patch
++f ab325bf5a432937fc6f231d3e8a773a62d53952b  .git/patches/master/multiple-slashes--are--forbidden.patch
++f cb9cffbd4465bddee266c20ccebd14eb687eaa89  .git/patches/master/delisforbidden.patch
++f d0885a1a1fdee0fd1e4fedce3f7acd3100540bc4  .git/patches/master/openbracketisforbidden.patch
++f d2903523fb66a346596eabbdd1bda4e52b266440  .git/patches/master/check-multiple-.-dots-.-foo.patch
++f dfc11f76394059909671af036598c5fbe33001ba  .git/patches/master/space_is_forbidden.patch
++f e47474c52d6c893f36d0457f885a6dd1267742bb  .git/patches/master/colon_is_forbidden.patch
++f e7a5f8912592d9891e6159f5827c8b4f372cc406  .git/patches/master/the_sequence_.lock-_is_forbidden.patch
++f edfaa5e06bd662ae1f6a642834324fd9b849bbd9  .git/patches/master/a-component-may-not-end-in-foolock.patch
++r 01524f9921af2a041cc88c068f76baa39e436cb2  .git/refs/patches/master/ctrlisforbidden.patch
++r 025672497aff5c910c8ff86aaedc662f14c2f4ad  .git/refs/patches/master/cannot-end-in-slash-.patch
++r 10433fd7206b7f79aabb4da514710d93c8deed4a  .git/refs/patches/master/colon_is_forbidden.patch
++r 1626a11d979a1e9e775c766484172212277153df  .git/refs/patches/master/asterisk-is-forbidden.patch
++r 3a0d5ccef0359004fcaa9cee98fbd6a2c4432e74  .git/refs/patches/master/tildeisforbidden.patch
++r 434e07cacdd8e7eb4723e67cb2d100b3a4121a3a  .git/refs/patches/master/can-have-embedded-single-slashes.patch
++r 74df14ab3a0ec9a0382998fbf167ebb1b0a36c6a  .git/refs/patches/master/question-mark-is-forbidden.patch
++r 7c3ffa4f940c862e9f11f5d4a5ae421f7a8d3141  .git/refs/patches/master/backslash-isorbidden.patch
++r 96a3e92c4df85f52362ce4f6d31983c462db9ae9  .git/refs/patches/master/a-component-may-not-end-in-foolock.patch
++r 9fc9677b61880f9159838e89f714893e0a2fcafb  .git/refs/patches/master/delisforbidden.patch
++r a275ed5d7f10ea88c986852ee95a7d5a61663b5f  .git/refs/patches/master/cannot@have@the@sequence@at-brace.patch
++r db6ea8252440b04811344336f510a5469b2ddab0  .git/refs/patches/master/check-multiple-.-dots-.-foo.patch
++r ea22c3b49c448dba8d7eaa6b805f9f1bc83fbedc  .git/refs/patches/master/space_is_forbidden.patch
++r ea46f435d4d8f3c5349dce1aabc1a39fbf7ef803  .git/refs/patches/master/x.patch
++r ec46429125abdb0c5ac2b46cc399bdcd7cfc73fd  .git/refs/patches/master/crisalsoforbidden.patch
++r edef5e925083d445f71c170d3293fac9619bc7a2  .git/refs/patches/master/openbracketisforbidden.patch
++r ee4f0f96dfc9c94f5410c1e6414f9004325a37fc  .git/refs/patches/master/the_sequence_.lock-_is_forbidden.patch
++r f091fee39457e64ebd35410c1cf95e6613816a54  .git/refs/patches/master/cannot_end_in_.patch
++r f13e243c7c56f39422567a431bccceec8b789596  .git/refs/patches/master/multiple-slashes--are--forbidden.patch
++r fb1edb753c97ec865ceea316420b1df586caaa2b  .git/refs/patches/master/caretisforbidden.patch
++r fdcb23c3072209bea3d9e0a2594132b936c5347e  .git/refs/patches/master/the_sequence_-._is_forbidden.patch
++r fe07105cd62660f4440ad24b9fc7dfdd9e71d764  .git/refs/patches/master/two_consecutive_dots_(.)_is_forbidden.patch
 +% guilt pop -a
 +All patches popped.
-+% git for-each-ref
-+d4850419ccc1146c7169f500725ce504b9774ed0 commit	refs/heads/master
-+% guilt push add
-+Applying patch..modify
-+Patch applied.
-+Applying patch..add
-+Patch applied.
-+% git for-each-ref
-+37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/heads/master
-+37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/patches/master/add
-+33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/master/modify
-+% guilt branch topic
-+Switched to branch "topic"
-+% git for-each-ref
-+37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/heads/master
-+37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/heads/topic
-+37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/patches/master/add
-+33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/master/modify
-+37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/patches/topic/add
-+33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/topic/modify
-+% guilt pop -a
-+All patches popped.
-+% guilt push
-+Applying patch..modify
-+Patch applied.
-+% git for-each-ref
-+37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/heads/master
-+33633e7a1aa31972f125878baf7807be57b1672d commit	refs/heads/topic
-+37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/patches/master/add
-+33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/master/modify
-+33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/topic/modify
-+% guilt pop -a
-+All patches popped.
-+% git checkout master
-+Switched to branch "master"
-+% guilt pop -a
-+All patches popped.
-+% git branch -d topic
-+Deleted branch topic (was d485041).
-+% rm -r .git/patches/topic
-+% git for-each-ref
-+d4850419ccc1146c7169f500725ce504b9774ed0 commit	refs/heads/master
-+% list_files
-+d .git/patches
-+d .git/patches/master
-+d .git/refs/patches
-+d .git/refs/patches/master
-+d .git/refs/patches/topic
-+f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
-+f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
-+f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
-+f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
-+f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/status
-+% guilt push -a
-+Applying patch..modify
-+Patch applied.
-+Applying patch..add
-+Patch applied.
-+Applying patch..remove
-+Patch applied.
-+Applying patch..mode
-+Patch applied.
-+% guilt branch topic
-+Switched to branch "topic"
-+% git for-each-ref
-+ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba commit	refs/heads/master
-+ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba commit	refs/heads/topic
-+37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/patches/master/add
-+ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba commit	refs/patches/master/mode
-+33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/master/modify
-+ffb7faa126a6d91bcdd44a494f76b96dd860b8b9 commit	refs/patches/master/remove
-+37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/patches/topic/add
-+ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba commit	refs/patches/topic/mode
-+33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/topic/modify
-+ffb7faa126a6d91bcdd44a494f76b96dd860b8b9 commit	refs/patches/topic/remove
-+% guilt pop -a
-+All patches popped.
-+% git checkout master
-+Switched to branch "master"
-+% guilt pop -a
-+All patches popped.
-+% git branch -d topic
-+Deleted branch topic (was d485041).
-+% rm -r .git/patches/topic
-+% git for-each-ref
-+d4850419ccc1146c7169f500725ce504b9774ed0 commit	refs/heads/master
-+% list_files
-+d .git/patches
-+d .git/patches/master
-+d .git/refs/patches
-+d .git/refs/patches/master
-+d .git/refs/patches/topic
-+f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
-+f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
-+f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
-+f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
-+f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/status
-+% guilt branch topic
-+Switched to branch "topic"
-+% git for-each-ref
-+d4850419ccc1146c7169f500725ce504b9774ed0 commit	refs/heads/master
-+d4850419ccc1146c7169f500725ce504b9774ed0 commit	refs/heads/topic
-+% list_files
-+d .git/patches
-+d .git/patches/master
-+d .git/patches/topic
-+d .git/refs/patches
-+d .git/refs/patches/master
-+d .git/refs/patches/topic
-+f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
-+f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/topic/mode
-+f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
-+f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/topic/remove
-+f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
-+f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/topic/add
-+f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
-+f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/topic/series
-+f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
-+f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/topic/modify
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/status
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/topic/status
-+% guilt pop -a
-+No patches applied.
-+% git checkout master
-+Switched to branch "master"
-+% guilt pop -a
-+No patches applied.
-+% git branch -d topic
-+Deleted branch topic (was d485041).
-+% rm -r .git/patches/topic
-+% git for-each-ref
-+d4850419ccc1146c7169f500725ce504b9774ed0 commit	refs/heads/master
-+% list_files
-+d .git/patches
-+d .git/patches/master
-+d .git/refs/patches
-+d .git/refs/patches/master
-+d .git/refs/patches/topic
-+f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
-+f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
-+f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
-+f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
-+f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/status
-+% guilt push -a
-+Applying patch..modify
-+Patch applied.
-+Applying patch..add
-+Patch applied.
-+Applying patch..remove
-+Patch applied.
-+Applying patch..mode
-+Patch applied.
-+% guilt branch topic
-+Switched to branch "topic"
-+% git for-each-ref
-+ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba commit	refs/heads/master
-+ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba commit	refs/heads/topic
-+37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/patches/master/add
-+ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba commit	refs/patches/master/mode
-+33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/master/modify
-+ffb7faa126a6d91bcdd44a494f76b96dd860b8b9 commit	refs/patches/master/remove
-+37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/patches/topic/add
-+ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba commit	refs/patches/topic/mode
-+33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/topic/modify
-+ffb7faa126a6d91bcdd44a494f76b96dd860b8b9 commit	refs/patches/topic/remove
-+% list_files
-+d .git/patches
-+d .git/patches/master
-+d .git/patches/topic
-+d .git/refs/patches
-+d .git/refs/patches/master
-+d .git/refs/patches/topic
-+f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
-+f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/topic/mode
-+f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
-+f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/topic/remove
-+f 71596bf71b72c2717e1aee378aabefbfa19ab7c8  .git/patches/master/status
-+f 71596bf71b72c2717e1aee378aabefbfa19ab7c8  .git/patches/topic/status
-+f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
-+f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/topic/add
-+f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
-+f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/topic/series
-+f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
-+f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/topic/modify
-+r 33633e7a1aa31972f125878baf7807be57b1672d  .git/refs/patches/master/modify
-+r 33633e7a1aa31972f125878baf7807be57b1672d  .git/refs/patches/topic/modify
-+r 37d588cc39848368810e88332bd03b083f2ce3ac  .git/refs/patches/master/add
-+r 37d588cc39848368810e88332bd03b083f2ce3ac  .git/refs/patches/topic/add
-+r ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba  .git/refs/patches/master/mode
-+r ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba  .git/refs/patches/topic/mode
-+r ffb7faa126a6d91bcdd44a494f76b96dd860b8b9  .git/refs/patches/master/remove
-+r ffb7faa126a6d91bcdd44a494f76b96dd860b8b9  .git/refs/patches/topic/remove
-+% guilt pop -a
-+All patches popped.
-+% git for-each-ref
-+ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba commit	refs/heads/master
-+d4850419ccc1146c7169f500725ce504b9774ed0 commit	refs/heads/topic
-+37d588cc39848368810e88332bd03b083f2ce3ac commit	refs/patches/master/add
-+ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba commit	refs/patches/master/mode
-+33633e7a1aa31972f125878baf7807be57b1672d commit	refs/patches/master/modify
-+ffb7faa126a6d91bcdd44a494f76b96dd860b8b9 commit	refs/patches/master/remove
-+% guilt pop -a
-+No patches applied.
-+% git checkout master
-+Switched to branch "master"
-+% guilt pop -a
-+All patches popped.
-+% git branch -d topic
-+Deleted branch topic (was d485041).
-+% rm -r .git/patches/topic
-+% git for-each-ref
-+d4850419ccc1146c7169f500725ce504b9774ed0 commit	refs/heads/master
-+% list_files
-+d .git/patches
-+d .git/patches/master
-+d .git/refs/patches
-+d .git/refs/patches/master
-+d .git/refs/patches/topic
-+f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
-+f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
-+f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
-+f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
-+f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/status
-+% guilt new newpatch
-+% git for-each-ref --format=%(refname)
-+refs/heads/master
-+refs/patches/master/newpatch
-+% guilt pop
-+All patches popped.
-+% guilt push
-+Applying patch..newpatch
-+Patch applied.
-+% git for-each-ref
-+25465dc1687f3833ecbd4e8bca437e522d7026db commit	refs/heads/master
-+25465dc1687f3833ecbd4e8bca437e522d7026db commit	refs/patches/master/newpatch
-+% git branch
-+* master
-+% guilt applied
-+newpatch
-+% guilt commit -a
-+% git for-each-ref
-+25465dc1687f3833ecbd4e8bca437e522d7026db commit	refs/heads/master
-+% git branch
-+* master
-+% guilt push -a
-+Applying patch..modify
-+Patch applied.
-+Applying patch..add
-+Patch applied.
-+Applying patch..remove
-+Patch applied.
-+Applying patch..mode
-+Patch applied.
-+% guilt applied
-+modify
-+add
-+remove
-+mode
-+% git branch
-+* master
-+% git for-each-ref
-+fefbdcef61022d473838926619f31e030dd04fdc commit	refs/heads/master
-+5effcbeb303e8433935151d8c69f3bf63db1e8ef commit	refs/patches/master/add
-+fefbdcef61022d473838926619f31e030dd04fdc commit	refs/patches/master/mode
-+9509f22e2e627756d87b42432931c45955b74234 commit	refs/patches/master/modify
-+9cbe2fc643b1a9e2179a8738f80424a1c2aa202d commit	refs/patches/master/remove
-+% guilt commit -n 2
-+% git for-each-ref
-+fefbdcef61022d473838926619f31e030dd04fdc commit	refs/heads/master
-+fefbdcef61022d473838926619f31e030dd04fdc commit	refs/patches/master/mode
-+9cbe2fc643b1a9e2179a8738f80424a1c2aa202d commit	refs/patches/master/remove
-+% git branch
-+* master
-+% guilt commit -n 2
-+% git for-each-ref
-+fefbdcef61022d473838926619f31e030dd04fdc commit	refs/heads/master
-+% git branch
-+* master
-+% guilt series
-diff --git a/regression/t-062.sh b/regression/t-062.sh
+diff --git a/regression/t-034.sh b/regression/t-034.sh
 new file mode 100755
-index 0000000..e5d2e2d
+index 0000000..1055ddb
 --- /dev/null
-+++ b/regression/t-062.sh
-@@ -0,0 +1,140 @@
++++ b/regression/t-034.sh
+@@ -0,0 +1,72 @@
 +#!/bin/bash
 +#
-+# Test the branch-switching upgrade code
++# Test import-commit
 +#
 +
-+source $REG_DIR/scaffold
-+
-+remove_topic() {
-+	cmd guilt pop -a
-+	if git rev-parse --verify --quiet guilt/master >/dev/null
-+	then
-+		cmd git checkout guilt/master
-+	else
-+		cmd git checkout master
-+	fi
-+	cmd guilt pop -a
-+	cmd git branch -d $1
-+	cmd rm -r .git/patches/$1
-+	cmd git for-each-ref
-+	cmd list_files
-+}
-+
-+function fixup_time_info
++function create_commit
 +{
-+	touch -a -m -t "$TOUCH_DATE" ".git/patches/master/$1"
++	echo $1 >> $1 &&
++		git add $1 &&
++		git commit -m"$2"
 +}
 +
-+cmd setup_repo
++source "$REG_DIR/scaffold"
 +
-+cmd git config guilt.reusebranch true
++b()
++{
++    printf "%b" "$1"
++}
 +
-+cmd guilt push -a
-+cmd list_files
-+cmd git for-each-ref
++cmd setup_git_repo
 +
-+cmd git for-each-ref
++cmd git tag base
 +
-+cmd list_files
++# Create a series of commits whose first line of the commit message
++# each violates one of the rules in get-check-ref-format(1).
 +
-+for i in `seq 5`
++cmd create_commit a "The sequence /. is forbidden."
++cmd create_commit a "The sequence .lock/ is forbidden."
++cmd create_commit a "A/component/may/not/end/in/foo.lock"
++cmd create_commit a "Two consecutive dots (..) is forbidden."
++cmd create_commit a "Check/multiple/../dots/...../foo..patch"
++cmd create_commit a "Space is forbidden."
++cmd create_commit a "Tilde~is~forbidden."
++cmd create_commit a "Caret^is^forbidden."
++cmd create_commit a "Colon:is:forbidden."
++cmd create_commit a `b 'Del\177is\177forbidden.'`
++# Create a branch and a tag from the current commit, to ensure that
++# doing so does not affect how the commit is imported.
++cmd git branch some-branch
++cmd git tag some-tag
++cmd create_commit a `b 'Ctrl\001is\002forbidden.'`
++cmd create_commit a `b 'CR\ris\ralso\rforbidden.'`
++cmd create_commit a "Question-mark?is?forbidden."
++cmd create_commit a "Asterisk*is*forbidden."
++cmd create_commit a "Open[bracket[is[forbidden."
++cmd create_commit a "Multiple/slashes//are//forbidden."
++cmd create_commit a "Cannot/end/in/slash/"
++cmd create_commit a "Cannot end in .."
++cmd create_commit a "Cannot@{have@{the@{sequence@{at-brace."
++cmd create_commit a "@"
++cmd create_commit a "Backslash\\is\\forbidden."
++
++# Slash is sometimes allowed; this is not problematic.
++cmd create_commit a "Can/have/embedded/single/slashes"
++
++cmd git log
++
++# Import all the commits to guilt.
++cmd guilt init
++cmd guilt import-commit base..HEAD
++
++for patch in .git/patches/master/*.patch
 +do
-+	if [ $i -ge 5 ]
-+	then
-+		shouldfail guilt pop
-+	else
-+		cmd guilt pop
-+	fi
-+	cmd git for-each-ref
-+	cmd guilt push
-+	cmd git for-each-ref
-+	cmd guilt pop
-+	cmd git for-each-ref
++	touch -a -m -t "$TOUCH_DATE" "$patch"
 +done
 +
-+# Check that "pop -a" does the right thing.
++# If push and pop works, the names we created are good.
 +cmd guilt push -a
-+
-+cmd git for-each-ref
-+
-+cmd guilt pop -a
-+
-+cmd git for-each-ref
-+
-+# Check that pushing two patches converts the repo to now-style (since
-+# it currently has no patches applied).
-+cmd guilt push add
-+cmd git for-each-ref
-+
-+# Check guilt branch with a few patches applied.
-+cmd guilt branch topic
-+cmd git for-each-ref
-+
-+# Check that the topic branch is converted to new-style.
-+cmd guilt pop -a
-+cmd guilt push
-+cmd git for-each-ref
-+
-+remove_topic topic
-+
-+# Check guilt branch with the full patch series applied.
-+cmd guilt push -a
-+cmd guilt branch topic
-+cmd git for-each-ref
-+
-+remove_topic topic
-+
-+# Check guilt branch with no patches applied.
-+# This gives us a new-style checkout.
-+cmd guilt branch topic
-+cmd git for-each-ref
-+cmd list_files
-+
-+remove_topic topic
-+
-+# Check guilt branch in a new-style directory with all patches
-+# applied.  (Strictly speaking, this test should probably move to a
-+# file devoted to testing "guilt branch".)
-+cmd guilt push -a
-+cmd guilt branch topic
-+cmd git for-each-ref
++cmd git log --decorate
++cmd git log --decorate some-branch
 +cmd list_files
 +cmd guilt pop -a
-+cmd git for-each-ref
-+
-+remove_topic topic
-+
-+# Check that "guilt new" does the right thing when no patches are
-+# applied.  (Strictly speaking, this test should maybe move to
-+# t-025.sh).
-+
-+cmd guilt new newpatch
-+cmd git for-each-ref '--format=%(refname)'
-+cmd guilt pop
-+fixup_time_info newpatch
-+cmd guilt push
-+cmd git for-each-ref
-+
-+# Check that "guilt commit" does the right thing when committing all
-+# applied patches.  (Strictly speaking, this test should maybe move to
-+# t-030.sh).
-+cmd git branch
-+cmd guilt applied
-+cmd guilt commit -a
-+cmd git for-each-ref
-+cmd git branch
-+
-+# Check that "guilt commit" does the right thing when committing only
-+# a few of the applied patches.  (Strictly speaking, this test should
-+# maybe move to t-030.sh).
-+cmd guilt push -a
-+cmd guilt applied
-+cmd git branch
-+cmd git for-each-ref
-+cmd guilt commit -n 2
-+cmd git for-each-ref
-+cmd git branch
-+cmd guilt commit -n 2
-+cmd git for-each-ref
-+cmd git branch
-+cmd guilt series
 -- 
 1.8.3.1
