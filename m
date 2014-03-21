@@ -1,75 +1,71 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2] branch.c: simplify chain of if statements
-Date: Fri, 21 Mar 2014 09:50:58 -0700
-Message-ID: <xmqq4n2rwl59.fsf@gitster.dls.corp.google.com>
-References: <1395071493-31435-1-git-send-email-dragos.foianu@gmail.com>
-	<CAPig+cS9QApn1T3-R8n+W+1ee9FbNftsmhrr90SJKs+gqzvC5A@mail.gmail.com>
-	<CAPig+cQKHQFNBob18g9UmZuE_mOpF3UMCBPfSKJYEYQpk1Z_tw@mail.gmail.com>
-	<loom.20140320T001131-702@post.gmane.org>
+Subject: Re: [PATCH v5] use starts_with() instead of !memcmp()
+Date: Fri, 21 Mar 2014 09:53:18 -0700
+Message-ID: <xmqqzjkjv6gx.fsf@gitster.dls.corp.google.com>
+References: <1395191883-42409-1-git-send-email-quintus.public@gmail.com>
+	<CAPig+cTWV0PWOh88u+rbMPvnn3O+OhTJATEtXXi4oLKUN25Ezw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Dragos Foianu <dragos.foianu@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 21 17:51:11 2014
+Cc: Quint Guvernator <quintus.public@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Fri Mar 21 17:53:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WR2ez-0007sF-7O
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Mar 2014 17:51:09 +0100
+	id 1WR2hG-0002e4-I0
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Mar 2014 17:53:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760225AbaCUQvF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Mar 2014 12:51:05 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45125 "EHLO
+	id S1754936AbaCUQxZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Mar 2014 12:53:25 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63341 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754057AbaCUQvC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Mar 2014 12:51:02 -0400
+	id S1761150AbaCUQxU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Mar 2014 12:53:20 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 78DDA76F6E;
-	Fri, 21 Mar 2014 12:51:01 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3709E74173;
+	Fri, 21 Mar 2014 12:53:20 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=s6IKx3nOtpDzfDL8TvosVgiNnEo=; b=eYvaKL
-	AUeA6KYRnmVO1/4mK8kSMffaBzSpXdc5Q2w0coo1rK/nbGI39DLkppH08s0fO2tw
-	vZE8yZgUqHmoNevy43lXiCw6SsUtBdnem7mu5GFpP+czozmUf9LwVJHhIZqMnDBU
-	Q3q+/1QYFWxeQ5HHZHoBdpdA1hkZms6RHeOzo=
+	:content-type; s=sasl; bh=7/1Te7rY2lwKvtScMWqrq6o3sho=; b=fyrSYW
+	c5xyGqqSNlkor16HEUMrsDbCV7YYPG490xDvovgFPoVYB7sZKdGjb3UaoexbOzQf
+	t71/IOLJHqMQN8f1YvJaLbOInABWV7mBGYSGz7K+qE3Z4CQztbso3+OQdX0pY2T0
+	H+UUjtkpyad0xwknvWKwtjwyzs/0qvL9Dgr1g=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wr+GnmeBilYXnEqX5i9PXlbJnM8wnvSC
-	8WIDdVy0IOrlPLmnbuwOcp4Szmk9MkTDnk92Mi20ZmeH4rUVoqZ7GdiPq1Jv+J1/
-	RIn0rK/O3tGrTzyy/Rzahaf0dWYgts5bOX1qHTbRrEp7xiQ12p/5fyoTz2NwEZ+c
-	j4P3kHNfAjk=
+	:content-type; q=dns; s=sasl; b=ZFnBpk+OLFqqfyYkns14h7n+c+ghiPiA
+	HAVRLEMq+J49hnQoYx165F7i1ica4lCupqPhKU07XhW0K5MwtI7hedoF+DONUFX6
+	QmJZGtgmdg8qeaVVHbTtFrVpQY2bt0OGyy4pseUvJK0KulVe0/ig6qVnO+PYLZX+
+	747hQvLYDv0=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5B64076F6C;
-	Fri, 21 Mar 2014 12:51:01 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 20A7774172;
+	Fri, 21 Mar 2014 12:53:20 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 799D176F68;
-	Fri, 21 Mar 2014 12:51:00 -0400 (EDT)
-In-Reply-To: <loom.20140320T001131-702@post.gmane.org> (Dragos Foianu's
-	message of "Wed, 19 Mar 2014 23:12:14 +0000 (UTC)")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7AAEC74171;
+	Fri, 21 Mar 2014 12:53:19 -0400 (EDT)
+In-Reply-To: <CAPig+cTWV0PWOh88u+rbMPvnn3O+OhTJATEtXXi4oLKUN25Ezw@mail.gmail.com>
+	(Eric Sunshine's message of "Wed, 19 Mar 2014 00:13:13 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: FB553BF6-B118-11E3-B0A9-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 4E2D0F84-B119-11E3-AE58-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244700>
 
-Dragos Foianu <dragos.foianu@gmail.com> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> I'm not sure it's worth pursuing the table approach further, especially
-> since a solution has already been accepted and merged into the codebase.
+> On Tue, Mar 18, 2014 at 9:18 PM, Quint Guvernator
+> <quintus.public@gmail.com> wrote:
+>> Another version, this time very in line with the review and commentary of
+>> Junio, Eric, and Michael.  This version boasts a revamped commit message and
+>> fewer but surer hunks changed.
+>
+> Explaining what changed in this version is indeed a courtesy to
+> reviewers. Thanks.
 
-Yes.
-
-I would further say that you already qualify as having finished a
-microproject, if I were a part of the candidate selection panel.
-
-The important thing is for potential candidates to learn the
-process, not to have their change merged somewhere my tree, and you
-and many others who did a microproject and tasted the process of
-proposing a change, getting reviewed and learning what are expected
-of their patch submissions have finished that part already.
+So, is that a "reviewed-by: Eric"?
