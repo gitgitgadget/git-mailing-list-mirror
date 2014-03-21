@@ -1,117 +1,72 @@
-From: Per Cederqvist <cederp@opera.com>
-Subject: [GUILT 12/28] "guilt header": more robust header selection.
-Date: Fri, 21 Mar 2014 08:31:50 +0100
-Message-ID: <1395387126-13681-13-git-send-email-cederp@opera.com>
-References: <1395387126-13681-1-git-send-email-cederp@opera.com>
-Cc: git@vger.kernel.org, Per Cederqvist <cederp@opera.com>
-To: Jeff Sipek <jeffpc@josefsipek.net>
-X-From: git-owner@vger.kernel.org Fri Mar 21 08:35:16 2014
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH v2] Bump core.deltaBaseCacheLimit to 128MiB
+Date: Fri, 21 Mar 2014 07:12:40 +0100
+Message-ID: <87txascc6f.fsf@fencepost.gnu.org>
+References: <1395232712-6412-1-git-send-email-dak@gnu.org>
+	<20140320234859.GD7774@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Mar 21 08:48:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQtz1-0004dR-SD
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Mar 2014 08:35:16 +0100
+	id 1WQuBa-0006Gr-C2
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Mar 2014 08:48:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759950AbaCUHe6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Mar 2014 03:34:58 -0400
-Received: from mail-la0-f47.google.com ([209.85.215.47]:48233 "EHLO
-	mail-la0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756886AbaCUHdS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Mar 2014 03:33:18 -0400
-Received: by mail-la0-f47.google.com with SMTP id y1so1396602lam.34
-        for <git@vger.kernel.org>; Fri, 21 Mar 2014 00:33:17 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=tt2VfBe89JW47LGno+wiuh3lZEvxJzmRgS7YdE4oeX4=;
-        b=XISSLGZsi5f+hf8fIZ01VW0cE2a60cll+7XloVD13u/kDGwgjWOF5lEXr8IYMdT797
-         fXYBNdJ6fNdi3zpmcflXcN284GEFG2Z3ZnarQIPvIzOPIW5z6JOjwBxNy2pnbNGBEtNZ
-         Xv+xv290zI6mbhcRuX8XlCROU1nH2r1d37f32HLFDvJLjGc9FjV+lCFZYxuxXWfpGDZK
-         lAc2LxcwwO3GXAFegz4dzOSuvu6AGG3f/k74ShhLuON4EgFpVeU+wgVPLnL1jZ1t6YPQ
-         W7Ib9LjD5NStSN/dx1UiN9jzDgqErbj6voU+YrsuS8m74lc2a+B+eiOuT5mOc1c6/Cod
-         fyCg==
-X-Gm-Message-State: ALoCoQnb4aK7Stzq4RvmAH3JMi9TWtWBNALd0FnjK3X5aiLrXSqTkSPJD+9pg35C2hHBwes6UWoY
-X-Received: by 10.152.116.43 with SMTP id jt11mr488753lab.41.1395387197180;
-        Fri, 21 Mar 2014 00:33:17 -0700 (PDT)
-Received: from dualla.linkoping.osa (ip-200.t2.se.opera.com. [212.247.211.200])
-        by mx.google.com with ESMTPSA id j2sm3986624lag.12.2014.03.21.00.33.15
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 21 Mar 2014 00:33:16 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.1
-In-Reply-To: <1395387126-13681-1-git-send-email-cederp@opera.com>
+	id S1755016AbaCUHsB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Mar 2014 03:48:01 -0400
+Received: from fencepost.gnu.org ([208.118.235.10]:41250 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754768AbaCUHsA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Mar 2014 03:48:00 -0400
+Received: from localhost ([127.0.0.1]:40286 helo=lola)
+	by fencepost.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <dak@gnu.org>)
+	id 1WQuBL-00025N-DI; Fri, 21 Mar 2014 03:47:59 -0400
+Received: by lola (Postfix, from userid 1000)
+	id D0DFDE08C8; Fri, 21 Mar 2014 07:12:40 +0100 (CET)
+In-Reply-To: <20140320234859.GD7774@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 20 Mar 2014 19:48:59 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244674>
 
-If you run something like "guilt header '.*'" the command would crash,
-because the grep comand that tries to ensure that the patch exist
-would detect a match, but the later code expected the match to be
-exact.
+Jeff King <peff@peff.net> writes:
 
-Fixed by comparing exact strings.
+> On Wed, Mar 19, 2014 at 01:38:32PM +0100, David Kastrup wrote:
+>
+>> The default of 16MiB causes serious thrashing for large delta chains
+>> combined with large files.
+>
+> Does it make much sense to bump this without also bumping
+> MAX_DELTA_CACHE in sha1_file.c? In my measurements of linux.git, bumping
+> the memory limit did not help much without also bumping the number of
+> slots.
 
-And as a creeping feature "guilt header" will now try to use the
-supplied patch name as an unachored regexp if no exact match was
-found.  If the regexp yields a unique match, it is used; if more than
-one patch matches, the names of all patches are listed and the command
-fails.  (Exercise left to the reader: generalized this so that "guilt
-push" also accepts a unique regular expression.)
+In the cases I checked, bumping MAX_DELTA_CACHE did not help much.
+Bumping it once to 512 could be a slight improvement; larger values then
+caused performance to regress.
 
-Signed-off-by: Per Cederqvist <cederp@opera.com>
----
- guilt-header | 33 ++++++++++++++++++++++++++++++---
- 1 file changed, 30 insertions(+), 3 deletions(-)
+> I guess that just bumping the memory limit would help with repos which
+> have deltas on large-ish files (whereas the kernel just has a lot of
+> deltas on a lot of little directories),
 
-diff --git a/guilt-header b/guilt-header
-index 41e00cc..2e96406 100755
---- a/guilt-header
-+++ b/guilt-header
-@@ -45,10 +45,37 @@ esac
- [ -z "$patch" ] && die "No patches applied."
- 
- # check that patch exists in the series
--ret=`get_full_series | grep -e "^$patch\$" | wc -l`
--if [ $ret -eq 0 ]; then
--	die "Patch $patch is not in the series"
-+full_series=`get_tmp_file series`
-+get_full_series > "$full_series"
-+found_patch=
-+while read x
-+do
-+	if [ "$x" = "$patch" ]
-+	then
-+		found_patch="$patch"
-+		break
-+	fi
-+done < "$full_series"
-+if [ -z "$found_patch" ]
-+then
-+	TMP_MATCHES=`get_tmp_file series`
-+	grep "$patch" < "$full_series" > "$TMP_MATCHES"
-+	nr=`wc -l < $TMP_MATCHES`
-+	if [ $nr -gt 1 ]
-+	then
-+		echo "$patch does not uniquely identify a patch. Did you mean any of these?" >&2
-+		sed 's/^/  /' "$TMP_MATCHES" >&2
-+		rm -f "$TMP_MATCHES"
-+		exit 1
-+	elif [ $nr -eq 0 ]
-+	then
-+		rm -f "$TMP_MATCHES"
-+		die "Patch $patch is not in the series"
-+	fi
-+	found_patch=`cat $TMP_MATCHES`
-+	rm -f "$TMP_MATCHES"
- fi
-+patch="$found_patch"
- 
- # FIXME: warn if we're editing an applied patch
- 
+Well, those were the most pathological for git-blame so I was somewhat
+focused on them.
+
+> but I'd be curious how much.
+
+http://repo.or.cz/r/wortliste.git
+
+consists basically of adding lines to a single alphabetically sorted
+file wortliste of currently size 15MB.
+
 -- 
-1.8.3.1
+David Kastrup
