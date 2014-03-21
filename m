@@ -1,89 +1,254 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH][GSOC] Selection of the verbose message is replaced with
- generated message in install_branch_config()
-Date: Fri, 21 Mar 2014 22:13:45 +0100
-Message-ID: <532CAB89.7030303@alum.mit.edu>
-References: <1395050104-19152-1-git-send-email-moxobukob@gmail.com> <loom.20140318T124348-742@post.gmane.org> <lg9l22$qto$1@ger.gmane.org> <CAPig+cQLACyFwVypi08ZGQ14mpc0zt0fRRNhPzswRjsTaFQz2A@mail.gmail.com> <lgekju$u6t$1@ger.gmane.org> <CAPig+cRv-WvoMVY0PDgtLawywe0QfpX8oPetzNwD-9Jq6BOjyw@mail.gmail.com> <xmqqr45vv5q8.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 03/12] t: drop useless sane_unset GIT_* calls
+Date: Fri, 21 Mar 2014 14:24:31 -0700
+Message-ID: <xmqqy503s0s0.fsf@gitster.dls.corp.google.com>
+References: <20140320231159.GA7774@sigill.intra.peff.net>
+	<20140320231433.GC8479@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Aleksey Mokhovikov <moxobukob@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 21 22:13:56 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: David Tran <unsignedzero@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Mar 21 22:24:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WR6lF-0001jo-VT
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Mar 2014 22:13:54 +0100
+	id 1WR6vh-00087A-9l
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Mar 2014 22:24:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750759AbaCUVNt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Mar 2014 17:13:49 -0400
-Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:47096 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750710AbaCUVNt (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 21 Mar 2014 17:13:49 -0400
-X-AuditID: 1207440c-f79656d000003eba-b4-532cab8cabce
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id B2.D7.16058.C8BAC235; Fri, 21 Mar 2014 17:13:48 -0400 (EDT)
-Received: from [192.168.69.148] (p57A25836.dip0.t-ipconnect.de [87.162.88.54])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s2LLDjsr003847
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Fri, 21 Mar 2014 17:13:47 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
-In-Reply-To: <xmqqr45vv5q8.fsf@gitster.dls.corp.google.com>
-X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrMKsWRmVeSWpSXmKPExsUixO6iqNuzWifYYMcKUYuuK91MFg29V5gt
-	Lq+ayWZx5k0jowOLx85Zd9k9Ll5S9lj8wMvj8ya5AJYobpukxJKy4Mz0PH27BO6MW02PWQrm
-	cVXcXPuQpYFxCUcXIyeHhICJxMonE5ggbDGJC/fWs3UxcnEICVxmlFi1ey0rhHOOSeLN13+M
-	IFW8AtoSTcuvsIPYLAKqEkc/3AGLswnoSizqaQabJCoQLLH68gMWiHpBiZMzn4DZIgJqEhPb
-	DrGADGUWaGeUaNjVBTZIWKBa4sSu+VDbHjBJLD/7FmwSp4C1xISmK0AdHED3iUv0NAaBhJkF
-	dCTe9T1ghrDlJba/ncM8gVFwFpJ9s5CUzUJStoCReRWjXGJOaa5ubmJmTnFqsm5xcmJeXmqR
-	rqFebmaJXmpK6SZGSKDz7GD8tk7mEKMAB6MSD28Fp3awEGtiWXFl7iFGSQ4mJVHe0GU6wUJ8
-	SfkplRmJxRnxRaU5qcWHGCU4mJVEeANBcrwpiZVVqUX5MClpDhYlcV7VJep+QgLpiSWp2amp
-	BalFMFkZDg4lCd7iVUCNgkWp6akVaZk5JQhpJg5OkOFcUiLFqXkpqUWJpSUZ8aAoji8GxjFI
-	igdob8EKkL3FBYm5QFGI1lOMuhwbtq1pZBJiycvPS5US59UB2SEAUpRRmge3ApbWXjGKA30s
-	zJsIUsUDTIlwk14BLWECWsI/VQtkSUkiQkqqgXFh4Lwlz4v3zSs9LepdIN9rxHbIlL0xYt37
-	W7/iXkpasG6R/V9vGX6riX9h+OEP8pVf7j482SKxRdvVcdmh874cEwoerFx/Zs+O 
+	id S1752223AbaCUVYg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Mar 2014 17:24:36 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36321 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750853AbaCUVYf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Mar 2014 17:24:35 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3F15076E47;
+	Fri, 21 Mar 2014 17:24:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=QpoPA9utafa3HMYzLOPOTQbMVFg=; b=W9AA9E
+	SS/HSSrcig9eif5Yv0Ko3KMBsjKyLIyPB3sd4vsSMtvWwmI6Db4aTn4roCqz30WE
+	MN2P6bsR9o1CyeKnDexlAzEUoB9AEZjEvAUGX1gTTIiYbWTcjRPsDE5cVFPKrPej
+	x3nMNZePIhiuqIBddEwvhawLHWzNIzJnya5r8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=bkQTP8LtX0AFiqM30gBrg/AxLY7BUvs+
+	4G1aQUVWLTWKpxWdnAoy6j63hXLkrx7WE5qsYkjYasfZt0AnZjImkSvLd+dv0c/M
+	DDQIISeIHEcY65UmheCHyFZK1/IVTWYieoBTC7To0VHNlBp1sa08SEfZ0kxEp7yB
+	xiuaY7OyxIM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2911976E46;
+	Fri, 21 Mar 2014 17:24:35 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6865176E44;
+	Fri, 21 Mar 2014 17:24:34 -0400 (EDT)
+In-Reply-To: <20140320231433.GC8479@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 20 Mar 2014 19:14:33 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 32C97F54-B13F-11E3-9967-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244750>
 
-On 03/21/2014 06:09 PM, Junio C Hamano wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
-> 
->> Sorry, you're right about message[0] case not being a crasher (though
->> the assert() still seems overkill).
-> 
-> Assert() often becomes no-op in production build.  I think this may
-> be an indication that "table-driven" may not be as good an approach
-> as many candidates thought.  The microproject suggestion asks them
-> to think _if_ that makes sense, and it is perfectly fine for them if
-> they answer "no, it introduces more problems than it solves".
+Jeff King <peff@peff.net> writes:
 
-My expectation when I invented that microproject was that converting the
-code to be table-driven would be judged *not* to be an improvement.  I
-was hoping that a student would say "the 'if' statement is OK, but let's
-delete this ridiculous unreachable else branch".  Possibly they would
-convert the "if" chain into nested "if"s, which I think would allow some
-code consolidation in one of the branches.
+> Several test scripts manually unset GIT_CONFIG and other
+> GIT_* variables. These are generally taken care of for us by
+> test-lib.sh already.
+>
+> Unsetting these is not only useless, but can be confusing to
+> a reader, who may wonder why some tests in a script unset
+> them and others do not (t0001 is particularly guilty of this
+> inconsistency, probably because many of its tests predate
+> the test-lib.sh environment-cleansing).
 
-But not a single student agreed with me, so I must be in a minority of
-one (which, unfortunately, is the definition of lunacy).
+> Note that we cannot always get rid of such unsetting. For
+> example, t9130 can drop the GIT_CONFIG unset, but not the
+> GIT_DIR one, because lib-git-svn.sh sets the latter. And in
+> t1000, we unset GIT_TEMPLATE_DIR, which is explicitly
+> initialized by test-lib.sh.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> I suppose one could make an argument that test-lib.sh may later change
+> the set of variables it clears, and these unsets are documenting an
+> explicit need of each test. I'd find that more compelling if it were
+> actually applied consistently.
 
-The multidimensional array lookup table is not so terrible, but I
-personally still prefer the "if".
+Hmph.  I am looking at "git show HEAD^:t/t0001-init.sh" after
+applying this patch, and it does look consistently done with
+GIT_CONFIG and GIT_DIR (I am not sure about GIT_WORK_TREE but from a
+cursory read it is done consistently for tests on non-bare
+repositories).
 
-Michael
+So I would actually agree with your alternative interpretation
+"Unsetting these is useless, but it does serve documentation
+purpose---without having to see what the state of the environment
+when the subprocess is started, the reader can understand what is
+being tested", rather than the one in the log message.
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+Having said that, I am perfectly OK with the change to t0001 in this
+patch, if we added at the very beginning of the test sequence a
+comment that says:
+
+    Below, creation and use of repositories are tested with various
+    combinations of environment settings and command line flags.
+    They are done inside subshells to avoid leaking temporary
+    environment settings to later tests *and* assumes that the
+    initial environment does not have have GIT_DIR, GIT_CONFIG, and
+    GIT_WORK_TREE defined.
+
+or something.
+
+>  t/t0001-init.sh                 | 15 ---------------
+>  t/t9130-git-svn-authors-file.sh |  1 -
+>  t/t9400-git-cvsserver-server.sh |  1 -
+>  3 files changed, 17 deletions(-)
+>
+> diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+> index 9fb582b..ddc8160 100755
+> --- a/t/t0001-init.sh
+> +++ b/t/t0001-init.sh
+> @@ -25,7 +25,6 @@ check_config () {
+>  
+>  test_expect_success 'plain' '
+>  	(
+> -		sane_unset GIT_DIR GIT_WORK_TREE &&
+>  		mkdir plain &&
+>  		cd plain &&
+>  		git init
+> @@ -35,7 +34,6 @@ test_expect_success 'plain' '
+>  
+>  test_expect_success 'plain nested in bare' '
+>  	(
+> -		sane_unset GIT_DIR GIT_WORK_TREE &&
+>  		git init --bare bare-ancestor.git &&
+>  		cd bare-ancestor.git &&
+>  		mkdir plain-nested &&
+> @@ -47,7 +45,6 @@ test_expect_success 'plain nested in bare' '
+>  
+>  test_expect_success 'plain through aliased command, outside any git repo' '
+>  	(
+> -		sane_unset GIT_DIR GIT_WORK_TREE &&
+>  		HOME=$(pwd)/alias-config &&
+>  		export HOME &&
+>  		mkdir alias-config &&
+> @@ -65,7 +62,6 @@ test_expect_success 'plain through aliased command, outside any git repo' '
+>  
+>  test_expect_failure 'plain nested through aliased command' '
+>  	(
+> -		sane_unset GIT_DIR GIT_WORK_TREE &&
+>  		git init plain-ancestor-aliased &&
+>  		cd plain-ancestor-aliased &&
+>  		echo "[alias] aliasedinit = init" >>.git/config &&
+> @@ -78,7 +74,6 @@ test_expect_failure 'plain nested through aliased command' '
+>  
+>  test_expect_failure 'plain nested in bare through aliased command' '
+>  	(
+> -		sane_unset GIT_DIR GIT_WORK_TREE &&
+>  		git init --bare bare-ancestor-aliased.git &&
+>  		cd bare-ancestor-aliased.git &&
+>  		echo "[alias] aliasedinit = init" >>config &&
+> @@ -91,7 +86,6 @@ test_expect_failure 'plain nested in bare through aliased command' '
+>  
+>  test_expect_success 'plain with GIT_WORK_TREE' '
+>  	if (
+> -		sane_unset GIT_DIR &&
+>  		mkdir plain-wt &&
+>  		cd plain-wt &&
+>  		GIT_WORK_TREE=$(pwd) git init
+> @@ -104,7 +98,6 @@ test_expect_success 'plain with GIT_WORK_TREE' '
+>  
+>  test_expect_success 'plain bare' '
+>  	(
+> -		sane_unset GIT_DIR GIT_WORK_TREE GIT_CONFIG &&
+>  		mkdir plain-bare-1 &&
+>  		cd plain-bare-1 &&
+>  		git --bare init
+> @@ -114,7 +107,6 @@ test_expect_success 'plain bare' '
+>  
+>  test_expect_success 'plain bare with GIT_WORK_TREE' '
+>  	if (
+> -		sane_unset GIT_DIR GIT_CONFIG &&
+>  		mkdir plain-bare-2 &&
+>  		cd plain-bare-2 &&
+>  		GIT_WORK_TREE=$(pwd) git --bare init
+> @@ -128,7 +120,6 @@ test_expect_success 'plain bare with GIT_WORK_TREE' '
+>  test_expect_success 'GIT_DIR bare' '
+>  
+>  	(
+> -		sane_unset GIT_CONFIG &&
+>  		mkdir git-dir-bare.git &&
+>  		GIT_DIR=git-dir-bare.git git init
+>  	) &&
+> @@ -138,7 +129,6 @@ test_expect_success 'GIT_DIR bare' '
+>  test_expect_success 'init --bare' '
+>  
+>  	(
+> -		sane_unset GIT_DIR GIT_WORK_TREE GIT_CONFIG &&
+>  		mkdir init-bare.git &&
+>  		cd init-bare.git &&
+>  		git init --bare
+> @@ -149,7 +139,6 @@ test_expect_success 'init --bare' '
+>  test_expect_success 'GIT_DIR non-bare' '
+>  
+>  	(
+> -		sane_unset GIT_CONFIG &&
+>  		mkdir non-bare &&
+>  		cd non-bare &&
+>  		GIT_DIR=.git git init
+> @@ -160,7 +149,6 @@ test_expect_success 'GIT_DIR non-bare' '
+>  test_expect_success 'GIT_DIR & GIT_WORK_TREE (1)' '
+>  
+>  	(
+> -		sane_unset GIT_CONFIG &&
+>  		mkdir git-dir-wt-1.git &&
+>  		GIT_WORK_TREE=$(pwd) GIT_DIR=git-dir-wt-1.git git init
+>  	) &&
+> @@ -170,7 +158,6 @@ test_expect_success 'GIT_DIR & GIT_WORK_TREE (1)' '
+>  test_expect_success 'GIT_DIR & GIT_WORK_TREE (2)' '
+>  
+>  	if (
+> -		sane_unset GIT_CONFIG &&
+>  		mkdir git-dir-wt-2.git &&
+>  		GIT_WORK_TREE=$(pwd) GIT_DIR=git-dir-wt-2.git git --bare init
+>  	)
+> @@ -183,8 +170,6 @@ test_expect_success 'GIT_DIR & GIT_WORK_TREE (2)' '
+>  test_expect_success 'reinit' '
+>  
+>  	(
+> -		sane_unset GIT_CONFIG GIT_WORK_TREE GIT_CONFIG &&
+> -
+>  		mkdir again &&
+>  		cd again &&
+>  		git init >out1 2>err1 &&
+> diff --git a/t/t9130-git-svn-authors-file.sh b/t/t9130-git-svn-authors-file.sh
+> index c3443ce..a812783 100755
+> --- a/t/t9130-git-svn-authors-file.sh
+> +++ b/t/t9130-git-svn-authors-file.sh
+> @@ -97,7 +97,6 @@ test_expect_success 'fresh clone with svn.authors-file in config' '
+>  		test x = x"$(git config svn.authorsfile)" &&
+>  		test_config="$HOME"/.gitconfig &&
+>  		sane_unset GIT_DIR &&
+> -		sane_unset GIT_CONFIG &&
+>  		git config --global \
+>  		  svn.authorsfile "$HOME"/svn-authors &&
+>  		test x"$HOME"/svn-authors = x"$(git config svn.authorsfile)" &&
+> diff --git a/t/t9400-git-cvsserver-server.sh b/t/t9400-git-cvsserver-server.sh
+> index 3edc408..ed98e64 100755
+> --- a/t/t9400-git-cvsserver-server.sh
+> +++ b/t/t9400-git-cvsserver-server.sh
+> @@ -25,7 +25,6 @@ perl -e 'use DBI; use DBD::SQLite' >/dev/null 2>&1 || {
+>      test_done
+>  }
+>  
+> -unset GIT_DIR GIT_CONFIG
+>  WORKDIR=$(pwd)
+>  SERVERDIR=$(pwd)/gitcvs.git
+>  git_config="$SERVERDIR/config"
