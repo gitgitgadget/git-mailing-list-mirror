@@ -1,72 +1,72 @@
 From: David Kastrup <dak@gnu.org>
 Subject: Re: [PATCH v2] Bump core.deltaBaseCacheLimit to 128MiB
-Date: Fri, 21 Mar 2014 07:12:40 +0100
-Message-ID: <87txascc6f.fsf@fencepost.gnu.org>
+Date: Fri, 21 Mar 2014 07:04:17 +0100
+Message-ID: <87y504ccke.fsf@fencepost.gnu.org>
 References: <1395232712-6412-1-git-send-email-dak@gnu.org>
-	<20140320234859.GD7774@sigill.intra.peff.net>
+	<xmqq38id3nfs.fsf@gitster.dls.corp.google.com>
+	<87ob11g9st.fsf@fencepost.gnu.org>
+	<xmqqlhw5260l.fsf@gitster.dls.corp.google.com>
+	<CACsJy8C3=bz1HmVgQuJRdixMhhb-JKouM7b1L7M047L_4PBViA@mail.gmail.com>
+	<xmqqsiqcztu8.fsf@gitster.dls.corp.google.com>
+	<87lhw4er2b.fsf@fencepost.gnu.org>
+	<xmqqob10wlac.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Mar 21 08:48:14 2014
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 21 08:48:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQuBa-0006Gr-C2
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Mar 2014 08:48:14 +0100
+	id 1WQuBa-0006Gr-Sp
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Mar 2014 08:48:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755016AbaCUHsB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1754951AbaCUHsB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Fri, 21 Mar 2014 03:48:01 -0400
-Received: from fencepost.gnu.org ([208.118.235.10]:41250 "EHLO
+Received: from fencepost.gnu.org ([208.118.235.10]:41246 "EHLO
 	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754768AbaCUHsA (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1751756AbaCUHsA (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 21 Mar 2014 03:48:00 -0400
-Received: from localhost ([127.0.0.1]:40286 helo=lola)
+Received: from localhost ([127.0.0.1]:40285 helo=lola)
 	by fencepost.gnu.org with esmtp (Exim 4.71)
 	(envelope-from <dak@gnu.org>)
-	id 1WQuBL-00025N-DI; Fri, 21 Mar 2014 03:47:59 -0400
+	id 1WQuBL-00025M-DO; Fri, 21 Mar 2014 03:47:59 -0400
 Received: by lola (Postfix, from userid 1000)
-	id D0DFDE08C8; Fri, 21 Mar 2014 07:12:40 +0100 (CET)
-In-Reply-To: <20140320234859.GD7774@sigill.intra.peff.net> (Jeff King's
-	message of "Thu, 20 Mar 2014 19:48:59 -0400")
+	id AF6F4E08F9; Fri, 21 Mar 2014 07:04:17 +0100 (CET)
+In-Reply-To: <xmqqob10wlac.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Thu, 20 Mar 2014 15:35:39 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244675>
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Wed, Mar 19, 2014 at 01:38:32PM +0100, David Kastrup wrote:
+> David Kastrup <dak@gnu.org> writes:
 >
->> The default of 16MiB causes serious thrashing for large delta chains
->> combined with large files.
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>>> Duy Nguyen <pclouds@gmail.com> writes:
+>>>
+>>>> The only
+>>>> downside I see is large blobs will be packed  undeltified, which could
+>>>> increase pack size if you have lots of them.
+>>>
+>>> I think that is something that can be tweaked, unless the user tells
+>>> us otherwise via command line override, when running the improved
+>>> "gc --aggressive" ;-)
+>>
+>> deltaBaseCacheLimit is used for unpacking, not for packing.
 >
-> Does it make much sense to bump this without also bumping
-> MAX_DELTA_CACHE in sha1_file.c? In my measurements of linux.git, bumping
-> the memory limit did not help much without also bumping the number of
-> slots.
+> Hmm, doesn't packing need to read existing data?
 
-In the cases I checked, bumping MAX_DELTA_CACHE did not help much.
-Bumping it once to 512 could be a slight improvement; larger values then
-caused performance to regress.
-
-> I guess that just bumping the memory limit would help with repos which
-> have deltas on large-ish files (whereas the kernel just has a lot of
-> deltas on a lot of little directories),
-
-Well, those were the most pathological for git-blame so I was somewhat
-focused on them.
-
-> but I'd be curious how much.
-
-http://repo.or.cz/r/wortliste.git
-
-consists basically of adding lines to a single alphabetically sorted
-file wortliste of currently size 15MB.
+Judging from the frequent out-of-memory conditions of git gc
+--aggressive, packing is not restrained by deltaBaseCacheLimit.
 
 -- 
 David Kastrup
