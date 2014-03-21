@@ -1,100 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Mar 2014, #04; Thu, 20)
-Date: Fri, 21 Mar 2014 14:33:32 -0700
-Message-ID: <xmqqpplfs0cz.fsf@gitster.dls.corp.google.com>
-References: <xmqq4n2sy3ux.fsf@gitster.dls.corp.google.com>
-	<532B659D.9010604@web.de>
-	<xmqq38ibtgj1.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Max Horn <max@quendi.de>
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Fri Mar 21 22:33:42 2014
+From: Max Horn <max@quendi.de>
+Subject: Re: [PATCH v3] remote-hg: do not fail on invalid bookmarks
+Date: Fri, 21 Mar 2014 22:44:11 +0100
+Message-ID: <10F8010F-96E2-45E0-B6D4-C3709AED3C28@quendi.de>
+References: <A4F451CA-D1DE-43A9-A4DA-23594C08C4DD@quendi.de> <532CA557.20007@web.de>
+Mime-Version: 1.0 (Mac OS X Mail 6.6 \(1510\))
+Content-Type: multipart/signed; boundary="Apple-Mail=_727C07CB-A033-4B0F-8BE4-3F3531827168"; protocol="application/pgp-signature"; micalg=pgp-sha256
+Cc: git@vger.kernel.org, Antoine Pelisse <apelisse@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: =?iso-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Fri Mar 21 22:44:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WR74Q-0003vT-00
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Mar 2014 22:33:42 +0100
+	id 1WR7Eo-0002SH-4o
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Mar 2014 22:44:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750853AbaCUVdh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Mar 2014 17:33:37 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64219 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750710AbaCUVdg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 21 Mar 2014 17:33:36 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ADF747742B;
-	Fri, 21 Mar 2014 17:33:35 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=87EsqTAHS/3l
-	Jyoi1F+1sEMWSNI=; b=H65WPxDHgA2xZ/AYQJvAZp1RacOoxI/TaUNjIWVjRdt8
-	7hdYsgS+ov5QtUI0Fu/wAL/1FcHXqdL5SabBh8EP0mokfJq0FEXi7buRPS7/dJQW
-	IlquCqJ+lQvr1MJNNh1vDApFcXbvg9fDMDpr6+GXvzm2aYczgMobHb02/dZnL9E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Let3uN
-	5UyN5Xg8xZjEWunzJZkC7sEuvKvSy8+UgfunbpKOQp0ke/AA3xCABunRdoTVHONA
-	U9nqGzdjXq3YA+1Nnkd8AK0RGuSCmO2FPnR5ohx+d3c6D/E951nJtWpIeEqLZY2b
-	5ow9T0R+7UI4YGXd2MNrMblFp/Cp/mpGxTM28=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 99B357742A;
-	Fri, 21 Mar 2014 17:33:35 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F126377429;
-	Fri, 21 Mar 2014 17:33:34 -0400 (EDT)
-In-Reply-To: <xmqq38ibtgj1.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Fri, 21 Mar 2014 13:58:58 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 74FCC65A-B140-11E3-BA4B-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752399AbaCUVoV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Mar 2014 17:44:21 -0400
+Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:47412 "EHLO
+	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752428AbaCUVoR (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 21 Mar 2014 17:44:17 -0400
+Received: from ip-178-202-253-62.unitymediagroup.de ([178.202.253.62] helo=zanovar.fritz.box); authenticated
+	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
+	id 1WR7Ec-00078u-DX; Fri, 21 Mar 2014 22:44:14 +0100
+In-Reply-To: <532CA557.20007@web.de>
+X-Mailer: Apple Mail (2.1510)
+X-bounce-key: webpack.hosteurope.de;max@quendi.de;1395438257;2be8b58b;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244754>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244755>
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
->
->> On 03/20/2014 10:09 PM, Junio C Hamano wrote:
->>> * ap/remote-hg-skip-null-bookmarks (2014-03-19) 1 commit
->>>   - remote-hg: do not fail on invalid bookmarks
->>>
->>>   Will merge to 'next'.
->> Hmm, am I the only one who has 11 failures in test-hg-hg-git.sh,
->> like this:
->> (Tested under Debian 7, commit 04570b241ddb53ad2f355977bae541bd7ff32=
-af5)
->>
->>
->>
->> master cde5672] clear executable bit
->>  Author: A U Thor <author@example.com>
->>  1 file changed, 0 insertions(+), 0 deletions(-)
->>  mode change 100755 =3D> 100644 alpha
->> WARNING: Ignoring invalid bookmark 'master'
->> To hg::../hgrepo-git
->>  ! [remote rejected] master -> master
->> error: failed to push some refs to 'hg::../hgrepo-git'
->> not ok 1 - executable bit
->> []
->> # failed 11 among 11 test(s)
->> 1..11
->
-> This has again been replaced; I'll queue it as d06f17f8 (remote-hg:
-> do not fail on invalid bookmarks, 2014-03-21) on 'pu'.
->
-> Please holler if this still breaks for you.
->
-> Thanks.
+--Apple-Mail=_727C07CB-A033-4B0F-8BE4-3F3531827168
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=iso-8859-1
 
-Ah, you seem to have sent a good review on that patch while I was
-looking at other topics ;-)  And they all make sense, I think.
+Hi Torsten,
 
-Thanks.
+On 21.03.2014, at 21:47, Torsten B=F6gershausen <tboegi@web.de> wrote:
+
+> On 2014-03-21 12.36, Max Horn wrote:
+> All tests passed :-),
+
+Excellent.
+
+> thanks from my side.
+> comments inline, some are debatable
+
+Thanks for having a close look and for the constructive feedback!
+Unfortunately, I won't have time to look into this for the next 7 days
+or so. I wouldn't mind if the patch gets queued with the changes you
+suggest; but of course that might be a tad too much to ask for, so I'll
+also be happy to do a "proper" re-roll, but then it has to wait a bit.
+
+Cheers,
+Max
+
+
+--Apple-Mail=_727C07CB-A033-4B0F-8BE4-3F3531827168
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP using GPGMail
+
+-----BEGIN PGP SIGNATURE-----
+Comment: GPGTools - http://gpgtools.org
+
+iF4EAREIAAYFAlMssq8ACgkQIpJVslrhe1niygD/TRNgAY70zbK4nhn8Aa6BbUsJ
+j6WjaqYR3OMeolZ97iwA/j2qPPwE1c/x3XAkOv4QK5Tg2rVP6SY9+2nkRRSgLq5a
+=jQem
+-----END PGP SIGNATURE-----
+
+--Apple-Mail=_727C07CB-A033-4B0F-8BE4-3F3531827168--
