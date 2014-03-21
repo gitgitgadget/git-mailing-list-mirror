@@ -1,88 +1,68 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] disable grafts during fetch/push/bundle
-Date: Thu, 20 Mar 2014 20:49:06 -0400
-Message-ID: <20140321004906.GE7774@sigill.intra.peff.net>
-References: <53183506.5080002@alum.mit.edu>
- <20140306155626.GB18519@sigill.intra.peff.net>
- <5318A537.4010400@alum.mit.edu>
- <20140306174803.GA30486@sigill.intra.peff.net>
- <08A515BA063C44E5A9EFC754793B2AD8@PhilipOakley>
- <531904E1.6010606@alum.mit.edu>
- <xmqqob1ivqv4.fsf@gitster.dls.corp.google.com>
- <CAP8UFD0UnUGZb9hWyLS1vPJ6fh3QR-g_p5HNQk79Gqhs9YWi0A@mail.gmail.com>
- <20140307171936.GC23587@sigill.intra.peff.net>
- <xmqq8us524pd.fsf@gitster.dls.corp.google.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v3 2/2] log: add --show-linear-break to help see
+ non-linear history
+Date: Fri, 21 Mar 2014 08:02:30 +0700
+Message-ID: <CACsJy8A1XZm1FanJ-QufOHsX44daVSEJA=g7VnA0bYS6uMzNVQ@mail.gmail.com>
+References: <1395060676-23144-1-git-send-email-pclouds@gmail.com>
+ <1395294254-941-1-git-send-email-pclouds@gmail.com> <1395294254-941-2-git-send-email-pclouds@gmail.com>
+ <xmqqha6sy955.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Christian Couder <christian.couder@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Philip Oakley <philipoakley@iee.org>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 21 01:49:19 2014
+X-From: git-owner@vger.kernel.org Fri Mar 21 02:03:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQneB-0006bd-2M
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Mar 2014 01:49:19 +0100
+	id 1WQnra-0000oP-FV
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Mar 2014 02:03:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966171AbaCUAtN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Mar 2014 20:49:13 -0400
-Received: from cloud.peff.net ([50.56.180.127]:43661 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S965764AbaCUAtJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Mar 2014 20:49:09 -0400
-Received: (qmail 900 invoked by uid 102); 21 Mar 2014 00:49:09 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 20 Mar 2014 19:49:09 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Mar 2014 20:49:06 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqq8us524pd.fsf@gitster.dls.corp.google.com>
+	id S966631AbaCUBDF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Mar 2014 21:03:05 -0400
+Received: from mail-qc0-f176.google.com ([209.85.216.176]:32772 "EHLO
+	mail-qc0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S966417AbaCUBDB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Mar 2014 21:03:01 -0400
+Received: by mail-qc0-f176.google.com with SMTP id m20so2027040qcx.21
+        for <git@vger.kernel.org>; Thu, 20 Mar 2014 18:03:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=PRC0uY584DlZzHYc+1QyMshQ0DxyPgBGzqGYNBO1VzA=;
+        b=z3jcN3ffwSTXK6BH7XgglN74ge7lDWETKqxS/Ds9eKlFPXXpX3WXa7R5/qewlejayP
+         xciM773Gn9j7JqwIVTjXuXbbrNh06DJM6N6XIjrKnHBgWWq0iFJnXlKXa+qavEH/KfKN
+         19YJxvA/uG4n10nX/zY5QDPi6HPN86rXfV9tkfb4tA7VSTjmbKmd28fXxxrcmFYPRyU2
+         7cpJbf6eg31Llq6q3OCkb8k151ssYn5p6I8T9vH7WJ9zg7rndJQN26vQRUsByzMvrEVN
+         nVejeVeUuyCk3izn68oawIOVhNxo9654EBqhej2ObBvqmGu3tLJBPdtNNU8+R0TOQiB9
+         XQ4g==
+X-Received: by 10.140.89.234 with SMTP id v97mr51591250qgd.20.1395363780853;
+ Thu, 20 Mar 2014 18:03:00 -0700 (PDT)
+Received: by 10.96.146.102 with HTTP; Thu, 20 Mar 2014 18:02:30 -0700 (PDT)
+In-Reply-To: <xmqqha6sy955.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244625>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244626>
 
-On Wed, Mar 19, 2014 at 03:39:42PM -0700, Junio C Hamano wrote:
+On Fri, Mar 21, 2014 at 2:15 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>>  * Get rid of saved_linear, use another flag in struct object instead
+>
+> I cannot offhand say if I like this change or not.  A flag bit is a
+> scarce and limited resource; commit slabs felt more suited for
+> implementation of corner case eye-candies.
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > On Fri, Mar 07, 2014 at 08:08:37AM +0100, Christian Couder wrote:
-> >
-> >> > Be it graft or replace, I do not think we want to invite people to
-> >> > use these mechansims too lightly to locally rewrite their history
-> >> > willy-nilly without fixing their mistakes at the object layer with
-> >> > "commit --amend", "rebase", "bfg", etc. in the longer term.  So in
-> >> > that sense, adding a command to make it easy is not something I am
-> >> > enthusiastic about.
-> >> >
-> >> > On the other hand, if the user does need to use graft or replace
-> >> > (perhaps to prepare for casting the fixed history in stone with
-> >> > filter-branch), it would be good to help them avoid making mistakes
-> >> > while doing so and tool support may be a way to do so.
-> >> >
-> >> > So, ... I am of two minds.
-> > ...
-> > I do not think the features we are talking about are significantly more
-> > dangerous than "git replace" is in the first place. If we want to make
-> > people aware of the dangers, perhaps git-replace.1 is the right place to
-> > do it.
-> 
-> Sure.
-> 
-> So should we take the four-patch series for "git replace --edit"?
+My thinking was like this:
 
-I think that is certainly going in the right direction, but it is
-missing documentation and tests still. Aside from a one-liner bug (which
-Christian pointed out on the list), I do not think it will _hurt_
-anybody. But it probably should be "finished" before seeing the light of
-day. I'd be happy if you wanted to pick it up for "pu" or even "next"
-waiting and do that finishing in-tree.
-
-Otherwise, I may eventually get to it and re-roll the whole completed
-series.
-
--Peff
+OK an int for a flag is wasteful and Junio suggested that unsigned
+char is used. But that still wastes 7 bits. So what if I rename it to
+commit_flags and make it usable as a flag storage for other parts as
+well? Wait don't we have some flags in struct object#flags. It turns
+out we have _7_ flags left that nobody touches. Let's take one. If we
+run out of flags in future, we can bring back commit_flags slab,
+rearrange the flags and move rarely used ones to commit_flags.
+-- 
+Duy
