@@ -1,74 +1,87 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v2] Rewrite fsck.c:fsck_commit() replace memcmp() with starts_with()
-Date: Fri, 21 Mar 2014 20:01:25 +0100
-Message-ID: <vpqk3bngyuy.fsf@anie.imag.fr>
-References: <1395419838-25527-1-git-send-email-cengoguzhanunlu@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: sunshine@sunshineco.com, git@vger.kernel.org
-To: blacksimit <cengoguzhanunlu@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 21 20:01:49 2014
+From: Andrei Dinu <mandrei.dinu@gmail.com>
+Subject: [PATCH 2/2] diff-no-index.c: read_directory_path() use is_dot_or_dotdot()
+Date: Fri, 21 Mar 2014 21:02:31 +0200
+Message-ID: <1395428551-7769-1-git-send-email-mandrei.dinu@gmail.com>
+Cc: Andrei Dinu <mandrei.dinu@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 21 20:02:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WR4hQ-0007YU-BW
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Mar 2014 20:01:48 +0100
+	id 1WR4iI-0000L5-60
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Mar 2014 20:02:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751304AbaCUTBd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Mar 2014 15:01:33 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:51750 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751291AbaCUTBc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Mar 2014 15:01:32 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s2LJ1N7l015926
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 21 Mar 2014 20:01:23 +0100
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s2LJ1PK6008678;
-	Fri, 21 Mar 2014 20:01:25 +0100
-In-Reply-To: <1395419838-25527-1-git-send-email-cengoguzhanunlu@gmail.com>
-	(blacksimit's message of "Fri, 21 Mar 2014 18:37:18 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 21 Mar 2014 20:01:23 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s2LJ1N7l015926
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1396033284.66428@cbpobgFhJltLvTsGCQLCGg
+	id S1751224AbaCUTCh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Mar 2014 15:02:37 -0400
+Received: from mail-ee0-f54.google.com ([74.125.83.54]:50587 "EHLO
+	mail-ee0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751153AbaCUTCg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Mar 2014 15:02:36 -0400
+Received: by mail-ee0-f54.google.com with SMTP id d49so2163851eek.13
+        for <git@vger.kernel.org>; Fri, 21 Mar 2014 12:02:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=jNc05vjKmRIdDnXVXtQ/fc4Kbic/+oK4cKQDT1gTyCc=;
+        b=rXq061eHvSRUP1tPx8cusF/eCCjKFZ3WplRov4p4V8r5UIsOrhqb5iniXO7o7dW2+4
+         Wg3RZGsYtAejRYcgjF4haibHAOfBvbgzVsoWLVnwQRdZisdlGrswC4bwvWTEMVE70/KD
+         FenVNPvwPDuaFexcNx4eps+5/UcJkPmk8xhpmfYcaVfUaXjHJsovmBTXWNtvOo460v3/
+         MnW0ks5D9YEcqRbs6UCgpzBhugZ9RP4tg6ixBX0B8TLb4Po56gaQz2NySdNhN8O4AJus
+         bmx/s15PyL4D82Fm8bufZxQmTtf/rOIdjGxW4BGXQuwiT8i9O37NgTLHGuI/v2Qzpd71
+         M4PA==
+X-Received: by 10.15.49.65 with SMTP id i41mr17066681eew.87.1395428555308;
+        Fri, 21 Mar 2014 12:02:35 -0700 (PDT)
+Received: from andrei-K52JT.pub.ro ([141.85.219.2])
+        by mx.google.com with ESMTPSA id bc51sm13487019eeb.22.2014.03.21.12.02.33
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 21 Mar 2014 12:02:34 -0700 (PDT)
+X-Mailer: git-send-email 1.7.9.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244727>
 
-blacksimit <cengoguzhanunlu@gmail.com> writes:
+Use is_dot_or_dotdot() instead of manually checking against "." or "..".
 
+Signed-off-by: Andrei Dinu <mandrei.dinu@gmail.com>
 
-> -
-> +    int magic_num;
-> +    
-> +    magic_num = strlen("tree "); /* magic_num is 5 */
->  	if (!starts_with(buffer, "tree "))
+---
 
-Whitespace damage. It seems you have set your tab-width to something
-other than 8, and indented with spaces. Please don't do either.
+ You can check the last version here: 
 
-> +    magic_num = strlen("committer"); /* magic_num is 7 */
+ http://thread.gmane.org/gmane.comp.version-control.git/244578
 
-Typical example of a counter-productive comment. A good comment usually
-explains _why_ the code is as it is, and not _what_ it is doing. C is a
-much better lanuage than english to describe algorithm, so if you want
-magic_num to become equal to 7, then write "magic_num = 7" in code, not
-in a comment.
+ I received the feedback and make the changes.
 
-Here, the reader has to spend time and energy to check the
-correspondance between the code and the redundant comment ... and see
-than they do not match!
+ I plan on applying to GSoC 2014
 
+ diff-no-index.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/diff-no-index.c b/diff-no-index.c
+index 5e4a76c..2d1165f 100644
+--- a/diff-no-index.c
++++ b/diff-no-index.c
+@@ -15,6 +15,7 @@
+ #include "log-tree.h"
+ #include "builtin.h"
+ #include "string-list.h"
++#include "dir.h"
+ 
+ static int read_directory_path(const char *path, struct string_list *list)
+ {
+@@ -25,7 +26,7 @@ static int read_directory_path(const char *path, struct string_list *list)
+ 		return error("Could not open directory %s", path);
+ 
+ 	while ((e = readdir(dir)))
+-		if (strcmp(".", e->d_name) && strcmp("..", e->d_name))
++		if (!is_dot_or_dotdot(e->d_name))
+ 			string_list_insert(list, e->d_name);
+ 
+ 	closedir(dir);
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+1.7.9.5
