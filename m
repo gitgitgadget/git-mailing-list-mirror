@@ -1,90 +1,137 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Mar 2014, #04; Thu, 20)
-Date: Fri, 21 Mar 2014 13:58:58 -0700
-Message-ID: <xmqq38ibtgj1.fsf@gitster.dls.corp.google.com>
-References: <xmqq4n2sy3ux.fsf@gitster.dls.corp.google.com>
-	<532B659D.9010604@web.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Max Horn <max@quendi.de>
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Fri Mar 21 21:59:41 2014
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: [PATCH 00/10] userdiff: cpp pattern simplification and test framework
+Date: Fri, 21 Mar 2014 22:07:12 +0100
+Message-ID: <cover.1395433874.git.j6t@kdbg.org>
+References: <53282741.5010609@web.de>
+Cc: Brandon Casey <drafnel@gmail.com>, git@vger.kernel.org,
+	Thomas Rast <tr@thomasrast.ch>, l.s.r@web.de,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johannes Sixt <j6t@kdbg.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Mar 21 22:08:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WR6XO-0007AW-DD
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Mar 2014 21:59:34 +0100
+	id 1WR6fu-0002UC-W4
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Mar 2014 22:08:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750868AbaCUU7F convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Mar 2014 16:59:05 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62460 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750710AbaCUU7C convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 21 Mar 2014 16:59:02 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E10D0779DC;
-	Fri, 21 Mar 2014 16:59:01 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=UuOsLeWEyrdz+TA9g3Pc/yzoB
-	Ew=; b=YAryk1e3s+lBqq8lvIgY/Hk3nRS6msqnE7XBoTUp6tXJDsR3MBMo3yKxn
-	bfVlFO6OXrN6ujj0qa5G3jV+ONP5XRYY3zFwu8BgqQ0Oi6Jh4CS7ZgG99+P2SdYD
-	mkID01oUEQ5VypHsbRsF2zRK77OqujY9kBUArWeCre3HtZusMQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=pc/L7wv32ShgEGECVSu
-	q1ZuOQxpACzWGJQTsHv6epSIcKi+KjOvmm7ciWeTLlQ5cIm1eqaUFiEczhpyu1RD
-	RSZ7BmDFKjFLpSSPvk7XqVwf7ifRfBkRvl+RhtWpl+teWbaOuMCLfZ4A5TFiieB/
-	lFYqYZYW0isabAz0xoYq5Jow=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CDA0E779DB;
-	Fri, 21 Mar 2014 16:59:01 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 273CF779D5;
-	Fri, 21 Mar 2014 16:59:01 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: A0E34C80-B13B-11E3-8C30-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751123AbaCUVIT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Mar 2014 17:08:19 -0400
+Received: from bsmtp4.bon.at ([195.3.86.186]:23325 "EHLO lbmfmo03.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1750710AbaCUVIS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Mar 2014 17:08:18 -0400
+Received: from bsmtp.bon.at (unknown [192.168.181.108])
+	by lbmfmo03.bon.at (Postfix) with ESMTP id A090ACEA57
+	for <git@vger.kernel.org>; Fri, 21 Mar 2014 22:08:16 +0100 (CET)
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 0108913004D;
+	Fri, 21 Mar 2014 22:08:00 +0100 (CET)
+Received: from dx.sixt.local (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id 2EDCD19F6A4;
+	Fri, 21 Mar 2014 22:08:00 +0100 (CET)
+X-Mailer: git-send-email 1.8.5.2.244.g9fb3fb1
+In-Reply-To: <53282741.5010609@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244738>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+Here is a series that makes the hunk header pattern for C and C++ even
+simpler than suggested by Peff in [1] to catch a lot more C++ functions
+and two more C patterns.
 
-> On 03/20/2014 10:09 PM, Junio C Hamano wrote:
->> * ap/remote-hg-skip-null-bookmarks (2014-03-19) 1 commit
->>   - remote-hg: do not fail on invalid bookmarks
->>
->>   Will merge to 'next'.
-> Hmm, am I the only one who has 11 failures in test-hg-hg-git.sh,
-> like this:
-> (Tested under Debian 7, commit 04570b241ddb53ad2f355977bae541bd7ff32a=
-f5)
->
->
->
-> master cde5672] clear executable bit
->  Author: A U Thor <author@example.com>
->  1 file changed, 0 insertions(+), 0 deletions(-)
->  mode change 100755 =3D> 100644 alpha
-> WARNING: Ignoring invalid bookmark 'master'
-> To hg::../hgrepo-git
->  ! [remote rejected] master -> master
-> error: failed to push some refs to 'hg::../hgrepo-git'
-> not ok 1 - executable bit
-> []
-> # failed 11 among 11 test(s)
-> 1..11
+As a preparatory work, the test cases are totally rewritten to make it
+a lot simpler to drop in new tests. There was an earlier attempt to
+change the infrastructure [2], and it is the reason for the widened Cc
+list.
 
-This has again been replaced; I'll queue it as d06f17f8 (remote-hg:
-do not fail on invalid bookmarks, 2014-03-21) on 'pu'.
+Two patches also extend the word regexp.
 
-Please holler if this still breaks for you.
+[1] http://article.gmane.org/gmane.comp.version-control.git/243408
+[2] http://thread.gmane.org/gmane.comp.version-control.git/187269/focus=187497
 
-Thanks.
+Johannes Sixt (10):
+  userdiff: support C++ ->* and .* operators in the word regexp
+  userdiff: support unsigned and long long suffixes of integer constants
+  t4018: an infrastructure to test hunk headers
+  t4018: convert perl pattern tests to the new infrastructure
+  t4018: convert java pattern test to the new infrastructure
+  t4018: convert custom pattern test to the new infrastructure
+  t4018: reduce test files for pattern compilation tests
+  t4018: test cases for the built-in cpp pattern
+  t4018: test cases showing that the cpp pattern misses many anchor
+    points
+  userdiff: have 'cpp' hunk header pattern catch more C++ anchor points
+
+ t/t4018-diff-funcname.sh                   | 230 ++++++++++-------------------
+ t/t4018/README                             |  18 +++
+ t/t4018/cpp-c++-function                   |   4 +
+ t/t4018/cpp-class-constructor              |   4 +
+ t/t4018/cpp-class-constructor-mem-init     |   5 +
+ t/t4018/cpp-class-definition               |   4 +
+ t/t4018/cpp-class-definition-derived       |   5 +
+ t/t4018/cpp-class-destructor               |   4 +
+ t/t4018/cpp-function-returning-global-type |   4 +
+ t/t4018/cpp-function-returning-nested      |   5 +
+ t/t4018/cpp-function-returning-pointer     |   4 +
+ t/t4018/cpp-function-returning-reference   |   4 +
+ t/t4018/cpp-gnu-style-function             |   5 +
+ t/t4018/cpp-namespace-definition           |   4 +
+ t/t4018/cpp-operator-definition            |   4 +
+ t/t4018/cpp-skip-access-specifiers         |   8 +
+ t/t4018/cpp-skip-comment-block             |   9 ++
+ t/t4018/cpp-skip-labels                    |   8 +
+ t/t4018/cpp-struct-definition              |   9 ++
+ t/t4018/cpp-struct-single-line             |   7 +
+ t/t4018/cpp-template-function-definition   |   4 +
+ t/t4018/cpp-union-definition               |   4 +
+ t/t4018/cpp-void-c-function                |   4 +
+ t/t4018/custom1-pattern                    |  17 +++
+ t/t4018/custom2-match-to-end-of-line       |   8 +
+ t/t4018/custom3-alternation-in-pattern     |  17 +++
+ t/t4018/java-class-member-function         |   8 +
+ t/t4018/perl-skip-end-of-heredoc           |   8 +
+ t/t4018/perl-skip-forward-decl             |  10 ++
+ t/t4018/perl-skip-sub-in-pod               |  18 +++
+ t/t4018/perl-sub-definition                |   4 +
+ t/t4018/perl-sub-definition-kr-brace       |   4 +
+ userdiff.c                                 |  12 +-
+ 33 files changed, 303 insertions(+), 160 deletions(-)
+ create mode 100644 t/t4018/README
+ create mode 100644 t/t4018/cpp-c++-function
+ create mode 100644 t/t4018/cpp-class-constructor
+ create mode 100644 t/t4018/cpp-class-constructor-mem-init
+ create mode 100644 t/t4018/cpp-class-definition
+ create mode 100644 t/t4018/cpp-class-definition-derived
+ create mode 100644 t/t4018/cpp-class-destructor
+ create mode 100644 t/t4018/cpp-function-returning-global-type
+ create mode 100644 t/t4018/cpp-function-returning-nested
+ create mode 100644 t/t4018/cpp-function-returning-pointer
+ create mode 100644 t/t4018/cpp-function-returning-reference
+ create mode 100644 t/t4018/cpp-gnu-style-function
+ create mode 100644 t/t4018/cpp-namespace-definition
+ create mode 100644 t/t4018/cpp-operator-definition
+ create mode 100644 t/t4018/cpp-skip-access-specifiers
+ create mode 100644 t/t4018/cpp-skip-comment-block
+ create mode 100644 t/t4018/cpp-skip-labels
+ create mode 100644 t/t4018/cpp-struct-definition
+ create mode 100644 t/t4018/cpp-struct-single-line
+ create mode 100644 t/t4018/cpp-template-function-definition
+ create mode 100644 t/t4018/cpp-union-definition
+ create mode 100644 t/t4018/cpp-void-c-function
+ create mode 100644 t/t4018/custom1-pattern
+ create mode 100644 t/t4018/custom2-match-to-end-of-line
+ create mode 100644 t/t4018/custom3-alternation-in-pattern
+ create mode 100644 t/t4018/java-class-member-function
+ create mode 100644 t/t4018/perl-skip-end-of-heredoc
+ create mode 100644 t/t4018/perl-skip-forward-decl
+ create mode 100644 t/t4018/perl-skip-sub-in-pod
+ create mode 100644 t/t4018/perl-sub-definition
+ create mode 100644 t/t4018/perl-sub-definition-kr-brace
+
+-- 
+1.8.5.2.244.g9fb3fb1
