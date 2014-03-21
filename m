@@ -1,224 +1,84 @@
-From: Ashwin Jha <ajha.dev@gmail.com>
-Subject: Re: [PATCH] GSoC Miniproject 15. Rewrite fsck.c:fsck_commit()
-Date: Sat, 22 Mar 2014 01:26:42 +0530
-Message-ID: <532C997A.1070202@gmail.com>
-References: <CADi-0_PN=jV4TmS=_SH2rebHvE9zEveG6Eo8zrJt_43=b-_Ryw@mail.gmail.com> <CAPig+cRhiuQ1HQ5H6Wd6iMdQ3vAO7AdqfKL3Vf8gdh3-gGemDw@mail.gmail.com>
+From: Karsten Blees <karsten.blees@gmail.com>
+Subject: Re: [PATCH] Enable index-pack threading in msysgit.
+Date: Fri, 21 Mar 2014 21:01:45 +0100
+Message-ID: <532C9AA9.1010102@gmail.com>
+References: <5328e903.joAd1dfenJmScBNr%szager@chromium.org>	<532AF304.7040301@gmail.com>	<CAHOQ7J9drXwcTt4b0Tcyw97KTGcifwsO5rtFNQYf7CVr3WD7zQ@mail.gmail.com>	<532B5F0D.2070300@gmail.com> <CAHOQ7J-sUt3HGYNE7n=X3ZmV3Q-n+n9hMDAtzLbH3YU8iAqoqA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Fri Mar 21 20:57:35 2014
+Cc: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Stefan Zager <szager@chromium.org>
+X-From: git-owner@vger.kernel.org Fri Mar 21 21:01:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WR5ZN-0006zw-RR
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Mar 2014 20:57:34 +0100
+	id 1WR5dX-0004dW-SB
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Mar 2014 21:01:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750920AbaCUT53 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Mar 2014 15:57:29 -0400
-Received: from mail-pd0-f172.google.com ([209.85.192.172]:51464 "EHLO
-	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750784AbaCUT52 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Mar 2014 15:57:28 -0400
-Received: by mail-pd0-f172.google.com with SMTP id p10so2779162pdj.3
-        for <git@vger.kernel.org>; Fri, 21 Mar 2014 12:57:28 -0700 (PDT)
+	id S1751297AbaCUUBq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Mar 2014 16:01:46 -0400
+Received: from mail-ee0-f47.google.com ([74.125.83.47]:60802 "EHLO
+	mail-ee0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751272AbaCUUBo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Mar 2014 16:01:44 -0400
+Received: by mail-ee0-f47.google.com with SMTP id b15so2201390eek.34
+        for <git@vger.kernel.org>; Fri, 21 Mar 2014 13:01:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=message-id:date:from:user-agent:mime-version:to:cc:subject
          :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=16vu4fJfAtRhkY2I+qlcl5pvdU+Wckk0xMeLscffi1s=;
-        b=l8Sm1/v0TrJHu8IaVy6NytZDhCnj3zphyMopxSBscwUbC+HLlbBzd6rdSekIi+XRix
-         mMSwhGzDiZl+hjHXQFNT2smhuv3rvQLZjfTpGRUbyfex9ag+pWgfUflhUIL4mSfZogdf
-         7OFCkmR5Tf6ggARDsLMxY7H509dT3rXWtMrSzy3HkmaxuWAj8Wsoccu4ScsXZMRVlqBq
-         50rewC/TlsNm61765lqmvxPMtKe8DfHE4hS0YddlYz5tPgiV29xbCIi3v0EwJIPPP2XD
-         5Yom52rSzr7ZwCiBG9W+/69WoPhS/4Sf0B+jxOst8SJpLSysbbwsU9+7RSbnKnkdduHH
-         K70w==
-X-Received: by 10.68.137.136 with SMTP id qi8mr55647973pbb.79.1395431848140;
-        Fri, 21 Mar 2014 12:57:28 -0700 (PDT)
-Received: from [192.168.23.7] (nkn-admin-map.isical.ac.in. [14.139.222.67])
-        by mx.google.com with ESMTPSA id y4sm11447689pbk.76.2014.03.21.12.57.25
+        bh=kQ2NIs0lXZvuF+l64PKfBZZJhKqAak5k5/h5xr88i68=;
+        b=SuCSa+VT/sCFXD3hOtHI3lAUhUNqHePoNikaUPP/++tX7fJ6MqpM7H1fG58z9aWNzm
+         /gCq3ef89eEazNdmibD5KxQQ8cE/SChgYXVUbmhU8Ju2AYHWYgaQi2YU3xCPQ/1htSjJ
+         XFyqW/615CRm/xukV8w0+q91+Qlji0qv3BdZaHsDXayEt8RwdjXtfkgDrHjkK2F6ieJC
+         NtGe4ALeBcCP76SSCyLn/piCsY7DZbrC2AUCry/88lSdEaI/oWMCD0QNAgLUMdu4Bljf
+         qFVfHxLiwmzMRaDU0ZXzWAwe2U7O+5rCP3Dx5CCCjFt0xE3dYMWNiopecoMsayB08UB5
+         GXIg==
+X-Received: by 10.14.69.201 with SMTP id n49mr3592782eed.106.1395432103888;
+        Fri, 21 Mar 2014 13:01:43 -0700 (PDT)
+Received: from [10.1.100.55] (ns.dcon.de. [77.244.111.149])
+        by mx.google.com with ESMTPSA id e42sm13804672eev.32.2014.03.21.13.01.42
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 21 Mar 2014 12:57:27 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
-In-Reply-To: <CAPig+cRhiuQ1HQ5H6Wd6iMdQ3vAO7AdqfKL3Vf8gdh3-gGemDw@mail.gmail.com>
+        Fri, 21 Mar 2014 13:01:42 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
+In-Reply-To: <CAHOQ7J-sUt3HGYNE7n=X3ZmV3Q-n+n9hMDAtzLbH3YU8iAqoqA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244731>
 
-
-On 03/22/2014 12:11 AM, Eric Sunshine wrote:
-> On Fri, Mar 21, 2014 at 5:18 AM, Ashwin Jha <ajha.dev@gmail.com> wrote:
->> On Fri, Mar 21, 2014 at 9:03 AM, Eric Sunshine <sunshine@sunshineco.com>
->> wrote:
->>> On Thu, Mar 20, 2014 at 9:54 PM, Ashwin Jha <ajha.dev@gmail.com> wrote:
->>>> Subject: [PATCH] GSoC Miniproject 15. Rewrite fsck.c:fsck_commit()
->>>> starts_with() seems much more relevant than memcmp(). It uses one less
->>>> argument and its return value makes more sense.
->>> As a justification, "uses one less argument" falls flat, and really
->>> has nothing to do with the decision to make the change. The bit about
->>> the return value is a slightly better but is still weak.
->>>
->>> You might instead justify the change by pointing out that the name
->>> starts_with()
->>> does a better job of conveying the intention of the code, which is to
->>> check the string for a prefix, than does memcmp().
->> Actually, from the line "starts_with() seems much more relevant than
->> memcmp()" my intention was to say that "starts_with() does a better job of
->> conveying the intention of the code, which is to check the string for a
->> prefix, than does memcmp()" as mentioned by you.
-> Good to hear. When you resubmit (if you do), perhaps use that wording
-> or something similar to justify the change.
->
->>>> skip_prefix() is not used as it uses strcmp() internally which seems
->>>> unnecessarily
->>>> for current task. The current task can be easily done by providing
->>>> offsets to the
->>>> buffer pointer (the way it is implemented currently).
->>> Not sure what this means. What is the "current task", and what is
->>> implemented where currently?
->>  From current task, I meant to say the task of offsetting the buffer pointer
->> to get the correct substring as in:
->> get_sha1_hex(buffer+5, tree_sha1)
+Am 20.03.2014 22:56, schrieb Stefan Zager:
+> On Thu, Mar 20, 2014 at 2:35 PM, Karsten Blees <karsten.blees@gmail.com> wrote:
+>> Am 20.03.2014 17:08, schrieb Stefan Zager:
 >>
->> Please forgive me for this. I should have written this in a better way.
-> Thanks for the clarification.
->
->>>> Signed-off-by: Ashwin Jha <ajha.dev@gmail.com>
->>>> ---
->>>>   fsck.c |   11 ++++++-----
->>>>   1 file changed, 6 insertions(+), 5 deletions(-)
->>>>
->>>> diff --git a/fsck.c b/fsck.c
->>>> index 64bf279..82e1640 100644
->>>> --- a/fsck.c
->>>> +++ b/fsck.c
->>>> @@ -6,6 +6,7 @@
->>>>   #include "commit.h"
->>>>   #include "tag.h"
->>>>   #include "fsck.h"
->>>> +#include "strbuf.h"
->>>>
->>>>   static int fsck_walk_tree(struct tree *tree, fsck_walk_func walk, void
->>>> *data)
->>>>   {
->>>> @@ -290,12 +291,12 @@ static int fsck_commit(struct commit *commit,
->>>> fsck_error error_func)
->>>>          int parents = 0;
->>>>          int err;
->>>>
->>>> -       if (memcmp(buffer, "tree ", 5))
->>>> +       if (!starts_with(buffer, "tree "))
->>>>                  return error_func(&commit->object, FSCK_ERROR, "invalid
->>>> format - expected 'tree' line");
->>>>          if (get_sha1_hex(buffer+5, tree_sha1) || buffer[45] != '\n')
->>> One of the benefits of starts_with() and skip_prefix() is that they
->>> allow you to eliminate magic numbers, such as 5 in the memcmp()
->>> invocation. However, if you look a couple lines below, you see in the
->>> expression 'buffer+5' that the magic number is still present. In fact,
->>> the code becomes less clear with your change because the 5 in
->>> 'buffer+5' is much more mysterious without the preceding
->>> memcmp(foo,"bar",5). It is possible to eliminate this magic number,
->>> but starts_with() is not the answer.
+>>> Going forward, there is still a lot of performance that gets left on
+>>> the table when you rule out threaded file access.  There are not so
+>>> many calls to read, mmap, and pread in the code; it should be possible
+>>> to rationalize them and make them thread-safe -- at least, thread-safe
+>>> for posix-compliant systems and msysgit, which covers the great
+>>> majority of git users, I would hope.
 >>>
->> I considered this point while making the changes. But, I thought that since
->> all that is required is a constant offset to the buffer pointer, using
->> skip_prefix() will only add to the overhead of function calling.
->>>>                  return error_func(&commit->object, FSCK_ERROR, "invalid
->>>> 'tree' line format - bad sha1");
->>>>          buffer += 46;
->> And as you can see here (buffer +=46) will still be a problem even if I
->> replace the buffer+5 code.
->> I think a more better way would be to define these magic no. as macros.
 >>
->> But, I guess you are right. The current changes do make it a bit unclear.
-> I understand your argument: since magic numbers remain elsewhere, then
-> little is gained by eliminating only a few of them via skip_prefix().
-> A counterargument might be that even that small gain can be a
-> maintenance bonus, since it reduces the number of potential places
-> where errors can be made when modifying the code. (But you are welcome
-> to counter that argument if you feel strongly about it.)
->
->> To summarize, I can think of two ways:
->> 1. skip_prefix() can be used, in place of both starts_with() and memcmp().
->> The return value of skip_prefix can
->>      be checked against NULL to determine whether correct format is used or
->> not.
->>      Though, even this change will left some of the magic no (as shown
->> above). ;-)
->> 2. Define macros for all the magic no. (and tags like "tree", "parent"
->> etc.). This way the code will be more clear
->>      and any future changes to these magic no. (or tag names) will be much
->> easier to handle.
-> Perhaps provide an illustration to explain what you mean.
-I think you want some explanation on point 2. What I have suggested here 
-is that
-all the keywords (like "tree", "parent") and magic no. (which are 
-nothing but suitable
-pointer offsets, used to fetch these keywords) be defined as macros.
-This will serve two purposes:
-1. The code will be more readable in the sense that each magic no. will 
-have a meaningful name.
-2. Following scenario will be avoided:
-     In the event of change in a particular keyword string, all 
-occurrences of that keyword as well as
-     the magic no. associated with it (string length) will have to be 
-changed.
+>> IMO a "mostly" XSI compliant pread (or even the git_pread() emulation) is still better than forbidding the use of read() entirely. Switching from read to pread everywhere requires that all callers have to keep track of the file position, which means a _lot_ of code changes (read/xread/strbuf_read is used in ~70 places throughout git). And how do you plan to deal with platforms that don't have a thread-safe pread (HP, Cygwin)?
+>>
+>> Considering all that, Duy's solution of opening separate file descriptors per thread seems to be the best pattern for future multi-threaded work.
+> 
+> Does that mean you would endorse the (N threads) * (M pack files)
+> approach to threading checkout and status?  That seems kind of
+> crazy-town to me.  Not to mention that pack windows are not shared, so
+> this approach to multi-threading can have the side-effect of blowing
+> out memory consumption.  We have already had to dial back settings for
+> pack.threads and core.deltaBaseCacheLimit, because threaded index-pack
+> was causing OOM errors on 32-bit platforms.
+> 
 
-But, since these changes will be very rare, I think skip_prefix will be 
-a good choice.
-I will submit a patch after doing the necessary changes.
->
->> In my opinion, 2 will be a better option. But, I can understand that I may
->> have overlooked some potential flaws in this method.
->> Please guide me to the correct approach. :-)
-> There isn't necessarily one correct approach. Judging from reviewer
-> responses to submissions by other GSoC hopefuls who tackled this
-> microproject, one may conclude that skip_prefix() would be a welcome
-> improvement, even if it doesn't eliminate all magic numbers in the
-> code.
->
->>>> -       while (!memcmp(buffer, "parent ", 7)) {
->>>> +       while (starts_with(buffer, "parent ")) {
->>>>                  if (get_sha1_hex(buffer+7, sha1) || buffer[47] != '\n')
->>> Ditto here with magic number 7 in 'buffer+7'.
->>>
->>>>                          return error_func(&commit->object, FSCK_ERROR,
->>>> "invalid 'parent' line format - bad sha1");
->>>>                  buffer += 48;
->>>> @@ -322,15 +323,15 @@ static int fsck_commit(struct commit *commit,
->>>> fsck_error error_func)
->>>>                  if (p || parents)
->>>>                          return error_func(&commit->object, FSCK_ERROR,
->>>> "parent objects missing");
->>>>          }
->>>> -       if (memcmp(buffer, "author ", 7))
->>>> +       if (!starts_with(buffer, "author "))
->>>>                  return error_func(&commit->object, FSCK_ERROR, "invalid
->>>> format - expected 'author' line");
->>>>          buffer += 7;
->>> And again with 7.
->>>
->>>>          err = fsck_ident(&buffer, &commit->object, error_func);
->>>>          if (err)
->>>>                  return err;
->>>> -       if (memcmp(buffer, "committer ", strlen("committer ")))
->>>> +       if (!starts_with(buffer, "committer "))
->>>>                  return error_func(&commit->object, FSCK_ERROR, "invalid
->>>> format - expected 'committer' line");
->>>> -       buffer += strlen("committer ");
->>>> +       buffer += 10;
->>> Again with 10 (newly introduced).
->>>
->>>>          err = fsck_ident(&buffer, &commit->object, error_func);
->>>>          if (err)
->>>>                  return err;
->>>> --
->>>> 1.7.9.5
-Regards,
-Ashwin
+Opening more file descriptors doesn't significantly increase the memory footprint, so it shouldn't matter whether the threads read data via shared or private descriptors.
+
+git-status with core.preloadindex is already multithreaded (at least the first part), and AFAIK doesn't read pack files at all.
+
+I'm still not convinced that multi-threaded git-checkout is a good idea. According to my tests this is actually slower than sequential checkout. You'd have to be very careful to only multi-thread the parts that don't do any IO, such as unpacking / undeltifying.
