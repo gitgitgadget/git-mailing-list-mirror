@@ -1,72 +1,124 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH v2] Bump core.deltaBaseCacheLimit to 128MiB
-Date: Fri, 21 Mar 2014 07:04:17 +0100
-Message-ID: <87y504ccke.fsf@fencepost.gnu.org>
-References: <1395232712-6412-1-git-send-email-dak@gnu.org>
-	<xmqq38id3nfs.fsf@gitster.dls.corp.google.com>
-	<87ob11g9st.fsf@fencepost.gnu.org>
-	<xmqqlhw5260l.fsf@gitster.dls.corp.google.com>
-	<CACsJy8C3=bz1HmVgQuJRdixMhhb-JKouM7b1L7M047L_4PBViA@mail.gmail.com>
-	<xmqqsiqcztu8.fsf@gitster.dls.corp.google.com>
-	<87lhw4er2b.fsf@fencepost.gnu.org>
-	<xmqqob10wlac.fsf@gitster.dls.corp.google.com>
+From: Ilya Bobyr <ilya.bobyr@gmail.com>
+Subject: Re: [PATCH v3] rev-parse --parseopt: option argument name hints
+Date: Fri, 21 Mar 2014 00:55:09 -0700
+Message-ID: <532BF05D.8070104@gmail.com>
+References: <532AA923.6030409@gmail.com>	<1395305092-1928-1-git-send-email-ilya.bobyr@gmail.com> <xmqqpplgyaud.fsf@gitster.dls.corp.google.com> <532B7774.30308@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 21 08:48:15 2014
+X-From: git-owner@vger.kernel.org Fri Mar 21 08:55:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQuBa-0006Gr-Sp
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Mar 2014 08:48:15 +0100
+	id 1WQuId-0007dW-4m
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Mar 2014 08:55:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754951AbaCUHsB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Mar 2014 03:48:01 -0400
-Received: from fencepost.gnu.org ([208.118.235.10]:41246 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751756AbaCUHsA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Mar 2014 03:48:00 -0400
-Received: from localhost ([127.0.0.1]:40285 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1WQuBL-00025M-DO; Fri, 21 Mar 2014 03:47:59 -0400
-Received: by lola (Postfix, from userid 1000)
-	id AF6F4E08F9; Fri, 21 Mar 2014 07:04:17 +0100 (CET)
-In-Reply-To: <xmqqob10wlac.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Thu, 20 Mar 2014 15:35:39 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
+	id S1759361AbaCUHz1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Mar 2014 03:55:27 -0400
+Received: from mail-pb0-f42.google.com ([209.85.160.42]:40908 "EHLO
+	mail-pb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752456AbaCUHzZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Mar 2014 03:55:25 -0400
+Received: by mail-pb0-f42.google.com with SMTP id rr13so2086462pbb.29
+        for <git@vger.kernel.org>; Fri, 21 Mar 2014 00:55:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=jIY9Fu/fLzdCyifV9PGWLFY5dR/kvHRMXFq0YXTNXYk=;
+        b=LMeiLK1PGDlmoI9OlqKrI/YReMw1XeOoCIMJeAYwUPfjy4Z+RlnoPJce7yAfVQpn/4
+         bCN5+6KR6mhMKge9aebBIZ+GUACxkqY2NOzoqXzE3Ds43AJsMeCARV0ObcKv315TGjep
+         llHZIA2D/dcId23/IbFppHNMuSSUGVgJjou+QsJQ3lc/x1Cb5kMck/NC6NLDB6Ftn7nZ
+         44wowTN41Mp34/RZdzY0qih/S698VpnxnfIgII7n5V8XeiUxsqaHwS+kbYp1b0Js0mec
+         0/Bga99aZGwXsgTUKYRu+UWFnI7SKvo+eCxY8kkutIjjtt8o8EXckGovpa4g6pugjirk
+         cHPA==
+X-Received: by 10.69.25.69 with SMTP id io5mr53198732pbd.22.1395388525466;
+        Fri, 21 Mar 2014 00:55:25 -0700 (PDT)
+Received: from [192.168.1.2] (c-50-136-172-14.hsd1.ca.comcast.net. [50.136.172.14])
+        by mx.google.com with ESMTPSA id qx11sm22189603pab.35.2014.03.21.00.55.12
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 21 Mar 2014 00:55:13 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:28.0) Gecko/20100101 Thunderbird/28.0
+In-Reply-To: <532B7774.30308@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244676>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> David Kastrup <dak@gnu.org> writes:
->
->> Junio C Hamano <gitster@pobox.com> writes:
+On 3/20/2014 4:19 PM, Ilya Bobyr wrote:
+> On 3/20/2014 11:38 AM, Junio C Hamano wrote:
+>> Ilya Bobyr <ilya.bobyr@gmail.com> writes:
 >>
->>> Duy Nguyen <pclouds@gmail.com> writes:
->>>
->>>> The only
->>>> downside I see is large blobs will be packed  undeltified, which could
->>>> increase pack size if you have lots of them.
->>>
->>> I think that is something that can be tweaked, unless the user tells
->>> us otherwise via command line override, when running the improved
->>> "gc --aggressive" ;-)
->>
->> deltaBaseCacheLimit is used for unpacking, not for packing.
+>>> [...]
+>>>     ------------
+>>> -<opt_spec><flags>* SP+ help LF
+>>> +<opt_spec><flags>*<arg_hint>? SP+ help LF
+>>>   ------------
+>>>     `<opt_spec>`::
+>>> @@ -313,6 +313,12 @@ Each line of options has this format:
+>>>         * Use `!` to not make the corresponding negated long option
+>>> available.
+>>>   +`<arg_hint>`::
+>>> +    `<arg_hing>`, if specified, is used as a name of the argument
+>>> in the
+>>> +    help output, for options that take arguments. `<arg_hint>` is
+>>> +    terminated by the first whitespace. When output the name is
+>>> shown in
+>>> +    angle braces.  Underscore symbols are replaced with spaces.
+>> The last part is troubling (and sounds not very sane).  Do we do
+>> such a munging anywhere else, or is it just here?  If the latter I'd
+>> prefer not to see such a hack.
 >
-> Hmm, doesn't packing need to read existing data?
+> The following commands have spaces in argument names in the "-h"
+> output for one or two arguments:
+>   * clone
+s/clone/checkout/
+>   * commit
+>   * merge
+>
+> A number of commands use dashes to separate words in arguments names.
+>
+> "git notes" is the only command that uses an underscore in one
+> argument name.
+>
+> At the moment space is used to separate option specification from the
+> help line.  As argument name hint is part of the option specification
+> it ends at the first space.
+>
+> It seems a bit unfair if sh based commands would not be able to use
+> spaces while the build-in ones can.
+> As underscores are not used in the UI (at least that was my impression
+> so far), I thought that to be a good option.
+>
+> Do you think a different kind of escaping should be used? Backslashes?
+> Or no spaces?
 
-Judging from the frequent out-of-memory conditions of git gc
---aggressive, packing is not restrained by deltaBaseCacheLimit.
+"git merge" also uses equals sign in one of the argument names.  That
+would not be possible for sh based commands either.
 
--- 
-David Kastrup
+As a lot of commands are using dashes instead of spaces, so not
+supporting spaces is probably fine.
+
+Another option I can think of is to use (or just allow) angle brackets
+around argument names.  That would look similar to the actual output.
+"git shortlog" has some punctuation in an argument name, which braces
+would make a bit easier to read.
+This is how an option description would look like then:
+
+OPTION_SPEC="\
+...
+S,gpg-sign?<key id>     GPG sign commit from "commit"
+w?<w[,i1[,i2]]>         "shortlog" option with a complicated argument name
+...
+"
+
+If there is interest in this, I could code it up and post for discussion.
+
+> [...]
