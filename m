@@ -1,101 +1,75 @@
-From: Matthias Beyer <mail@beyermatthias.de>
-Subject: Re: File extension conflict when working with git and latex
-Date: Fri, 21 Mar 2014 17:46:51 +0100
-Message-ID: <20140321164651.GD2965@fu.192.168.200.1>
-References: <20140321161324.GC2965@fu.192.168.200.1>
- <20140321163628.GA28121@ruderich.org>
-Reply-To: Matthias Beyer <mail@beyermatthias.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv2] branch.c: simplify chain of if statements
+Date: Fri, 21 Mar 2014 09:50:58 -0700
+Message-ID: <xmqq4n2rwl59.fsf@gitster.dls.corp.google.com>
+References: <1395071493-31435-1-git-send-email-dragos.foianu@gmail.com>
+	<CAPig+cS9QApn1T3-R8n+W+1ee9FbNftsmhrr90SJKs+gqzvC5A@mail.gmail.com>
+	<CAPig+cQKHQFNBob18g9UmZuE_mOpF3UMCBPfSKJYEYQpk1Z_tw@mail.gmail.com>
+	<loom.20140320T001131-702@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="DrWhICOqskFTAXiy"
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Simon Ruderich <simon@ruderich.org>
-X-From: git-owner@vger.kernel.org Fri Mar 21 17:48:45 2014
+To: Dragos Foianu <dragos.foianu@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 21 17:51:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WR2cd-0004d9-Fk
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Mar 2014 17:48:43 +0100
+	id 1WR2ez-0007sF-7O
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Mar 2014 17:51:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760614AbaCUQsj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Mar 2014 12:48:39 -0400
-Received: from libra.uberspace.de ([95.143.172.171]:33536 "HELO
-	libra.uberspace.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1754428AbaCUQsi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Mar 2014 12:48:38 -0400
-Received: (qmail 8058 invoked from network); 21 Mar 2014 16:48:40 -0000
-Received: from unknown (HELO localhost) (149.172.90.15)
-  by libra.uberspace.de with SMTP; 21 Mar 2014 16:48:40 -0000
-Content-Disposition: inline
-In-Reply-To: <20140321163628.GA28121@ruderich.org>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1760225AbaCUQvF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Mar 2014 12:51:05 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45125 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754057AbaCUQvC (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Mar 2014 12:51:02 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 78DDA76F6E;
+	Fri, 21 Mar 2014 12:51:01 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=s6IKx3nOtpDzfDL8TvosVgiNnEo=; b=eYvaKL
+	AUeA6KYRnmVO1/4mK8kSMffaBzSpXdc5Q2w0coo1rK/nbGI39DLkppH08s0fO2tw
+	vZE8yZgUqHmoNevy43lXiCw6SsUtBdnem7mu5GFpP+czozmUf9LwVJHhIZqMnDBU
+	Q3q+/1QYFWxeQ5HHZHoBdpdA1hkZms6RHeOzo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=wr+GnmeBilYXnEqX5i9PXlbJnM8wnvSC
+	8WIDdVy0IOrlPLmnbuwOcp4Szmk9MkTDnk92Mi20ZmeH4rUVoqZ7GdiPq1Jv+J1/
+	RIn0rK/O3tGrTzyy/Rzahaf0dWYgts5bOX1qHTbRrEp7xiQ12p/5fyoTz2NwEZ+c
+	j4P3kHNfAjk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5B64076F6C;
+	Fri, 21 Mar 2014 12:51:01 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 799D176F68;
+	Fri, 21 Mar 2014 12:51:00 -0400 (EDT)
+In-Reply-To: <loom.20140320T001131-702@post.gmane.org> (Dragos Foianu's
+	message of "Wed, 19 Mar 2014 23:12:14 +0000 (UTC)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: FB553BF6-B118-11E3-B0A9-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244699>
 
+Dragos Foianu <dragos.foianu@gmail.com> writes:
 
---DrWhICOqskFTAXiy
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> I'm not sure it's worth pursuing the table approach further, especially
+> since a solution has already been accepted and merged into the codebase.
 
-On 21-03-2014 17:36:28, Simon Ruderich wrote:
-> On Fri, Mar 21, 2014 at 05:13:24PM +0100, Matthias Beyer wrote:
-> > Unfortunetely, we wrote our `make clean` task recursively. I think you
-> > can imagine what went wrong: The clean-task corrupted the repository,
-> > as it removed .idx files from within .git/.
-> >
-> > I lost work because of this ugly name collision.
->
-> Hello Matthias,
->
-> You can recreate the .idx files by running
->
->     git index-pack .git/objects/pack/pack-<hash>.pack
->
-> for each pack file.
+Yes.
 
-Hi Simon,
+I would further say that you already qualify as having finished a
+microproject, if I were a part of the candidate selection panel.
 
-I think so. I executed:
-
-    git fsck # reports N missing blobs, commits, trees and dangling stuff
-    git index-pack ...
-    git fsck # reports only dangling commits and blobs
-
-I don't know if this means that the repository is fixed now?
-
---=20
-Mit freundlichen Gr=FC=DFen,
-Kind regards,
-Matthias Beyer
-
-Proudly sent with mutt.
-Happily signed with gnupg.
-
---DrWhICOqskFTAXiy
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
-
-iQIcBAEBAgAGBQJTLGz7AAoJEJi+S08gyg+UOIwQAIKw6u35w+v7UCn6SUqefZ47
-E2ZvCH7snpeCZMzTUDzMu9+08IiTrCVqhSvTVEvlC4vSPVQYgx7hgvqjVn6kqevl
-KooqOqzlEqQXmD4wscEdREz6s6w8LAWiopIu6yyedmFna+ncQgeRD1nnBhj+Crms
-uvgpWdCeWgSIZ+wKqIeT1YUw9grzMJvF/fM8nsZ1HUD6jxog747EOBjU5t+Igoc5
-f8GIEaxhudQk6VcROB3hZvv1iGxyVJBz3ZSABNcMaptVMzDB6fHH8m5h/c+N5FRv
-wCsJY94MqLubLsiL7pnVqColnkUreSp6KhuwgG1q8HBv9mHUvK6h+ggqSF5FlqgG
-KYoy9bEOp4reejPTdT/4QEwhXdcR88hhgE2JzoFPzb1j4HVLcZke/pAlk4ypJe6H
-6YNNHv9d+ExjsEk+dU+xnFIOldyhfQPfME4GMwOKFP5IOrzqwNBEb/GMYF/O4ODE
-aCXWN20ywujTIhtsGF4D9y5P5P0FcUBt9upl8VjwdkIdE/NV2GmYiqr6PgH2PUsN
-kXYQCw1iBEkUx27zV0dO2OkCOT2T88UCqmYOguJYNO3Pi0MBYFG9tl7o1q+4zCGO
-KeMiDzs7m2We3jycBjMEP/m+1vZyVFkvkj5R0iuxrKAXm30pLUG9jZGhZO8brsU+
-jYH8EhPCLqYq68hauN3L
-=V0FM
------END PGP SIGNATURE-----
-
---DrWhICOqskFTAXiy--
+The important thing is for potential candidates to learn the
+process, not to have their change merged somewhere my tree, and you
+and many others who did a microproject and tasted the process of
+proposing a change, getting reviewed and learning what are expected
+of their patch submissions have finished that part already.
