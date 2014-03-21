@@ -1,73 +1,84 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v5] use starts_with() instead of !memcmp()
-Date: Fri, 21 Mar 2014 14:05:07 -0400
-Message-ID: <CAPig+cQeVYhndNEmiKFVxfGv=p2vZWmoP_nwwc+NTPLGQfbeng@mail.gmail.com>
-References: <1395191883-42409-1-git-send-email-quintus.public@gmail.com>
-	<CAPig+cTWV0PWOh88u+rbMPvnn3O+OhTJATEtXXi4oLKUN25Ezw@mail.gmail.com>
-	<xmqqzjkjv6gx.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC] [GSoC] Draft of Proposal for GSoC
+Date: Fri, 21 Mar 2014 14:07:45 -0400
+Message-ID: <20140321180745.GB15508@sigill.intra.peff.net>
+References: <CAM+=D-BWCt9kNSUUQ19ZcPykb6j-tuEr=igBz0ukEk2TA3vWkg@mail.gmail.com>
+ <20140321054208.GA31737@sigill.intra.peff.net>
+ <CAM+=D-ATimdXmcYpqSyKwZXE=TYXg9cZFG9kyjEOg22K1wF+3Q@mail.gmail.com>
+ <xmqq8us3v42o.fsf@gitster.dls.corp.google.com>
+ <CAM+=D-D=PW=ZJFvc0y+Zhs8tPcbXnP-q4w-MeeLwT+t-QD_55w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Quint Guvernator <quintus.public@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 21 19:05:14 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Brian Bourn <ba.bourn@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 21 19:08:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WR3of-0007D2-I2
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Mar 2014 19:05:13 +0100
+	id 1WR3rK-0002RK-Te
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Mar 2014 19:07:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750748AbaCUSFK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Mar 2014 14:05:10 -0400
-Received: from mail-yh0-f45.google.com ([209.85.213.45]:34487 "EHLO
-	mail-yh0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750706AbaCUSFI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Mar 2014 14:05:08 -0400
-Received: by mail-yh0-f45.google.com with SMTP id a41so2740844yho.18
-        for <git@vger.kernel.org>; Fri, 21 Mar 2014 11:05:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=OxTQIVOuLhp9h4d0JH2VFYA2TitZBYiHJeEod6aDniM=;
-        b=XyIH7zsPcFdeIdQhglpeiTGOp9TI/od35nbyI2CnLhOJUNa6j8kr9Xxv4btqn23/EJ
-         lE2jfHKNnl03215dOGUSUI0tHwIqK/xy0QrWQtmg3tgl7PLjrrFIacaNBh9y3Edh4CBa
-         bzPFY99StSd8i6BhbTKlPV2vupY3sAeVX5sYJIvQec6Yja7avgqmWOx6wJO728Z3xcfa
-         MAlBU3xZ6KLjq8CL94O0kgCHQ68frizUf5I++45Jt5WLU7jaGA3z0FyGiilgivDRCP5Y
-         y0vL0cnP32WlonEpX7KwSu01Wll/pM5eRMdpuehEXeQl24b6xgRgom2amkfuOYxh0to0
-         yHsQ==
-X-Received: by 10.236.127.68 with SMTP id c44mr41908822yhi.1.1395425107967;
- Fri, 21 Mar 2014 11:05:07 -0700 (PDT)
-Received: by 10.170.180.134 with HTTP; Fri, 21 Mar 2014 11:05:07 -0700 (PDT)
-In-Reply-To: <xmqqzjkjv6gx.fsf@gitster.dls.corp.google.com>
-X-Google-Sender-Auth: my5TNJLnVMztPcsUzCqCdUQ9RuA
+	id S1751120AbaCUSHt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Mar 2014 14:07:49 -0400
+Received: from cloud.peff.net ([50.56.180.127]:44210 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750785AbaCUSHr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Mar 2014 14:07:47 -0400
+Received: (qmail 24453 invoked by uid 102); 21 Mar 2014 18:07:46 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 21 Mar 2014 13:07:46 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 21 Mar 2014 14:07:45 -0400
+Content-Disposition: inline
+In-Reply-To: <CAM+=D-D=PW=ZJFvc0y+Zhs8tPcbXnP-q4w-MeeLwT+t-QD_55w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244715>
 
-On Fri, Mar 21, 2014 at 12:53 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
->
->> On Tue, Mar 18, 2014 at 9:18 PM, Quint Guvernator
->> <quintus.public@gmail.com> wrote:
->>> Another version, this time very in line with the review and commentary of
->>> Junio, Eric, and Michael.  This version boasts a revamped commit message and
->>> fewer but surer hunks changed.
->>
->> Explaining what changed in this version is indeed a courtesy to
->> reviewers. Thanks.
->
-> So, is that a "reviewed-by: Eric"?
+On Fri, Mar 21, 2014 at 02:03:41PM -0400, Brian Bourn wrote:
 
-No, sorry. You and Peff were actively reviewing Quint's submissions,
-so I merely scanned them quickly without making a careful examination.
-I've been commenting upon so many GSoC submissions that it's hard to
-remember which is which, and upon reading "Another version, this time
-very in line with the review and commentary Junio, Eric, and Michael",
-I had to search the list archive to figure out why my name was listed.
-Hence, the suggestion from me that providing a link to the previous
-attempt is a welcome courtesy.
+> > What do they do, what does the caller expect to see (do they get
+> > something as return values?  do they expect some side effects?)?
+> 
+> so something like this would be better I'm assuming?
+> 
+> Some basic sample API calls are found below, each of these would hold
+> code to complete parsing and/or formatting the flags.
+> Add_Opt_Group() - returns an OPT_CALLBACK with contains, merged,
+> no-merged, or formatting which can be used in a commands options list.
+> 
+> Execute_list()-the main call into the library and would pass into the
+> library all of the necessary flags and arguments for parsing the
+> request and executing it. This would accept the flags like
+> -contain, with arguments such as the commit or pattern that is being
+> searched for.
+> 
+> The next four commands would be called by execute_list() to execute
+> the original command with respect to the flags that are passed into
+> this library.
+> Parse_with_contains()
+> Parse_with_merged()
+> Parse_with_no_merged()
+> Parse_with_formatting()
+
+Think about how the callers would use them. Will git-branch just call
+Parse_with_contains? If so, where would that call go? What arguments
+would it take, and what would it do?
+
+I don't think those calls are enough. We probably need:
+
+  1. Some structure to represent a "list of refs" and store its
+     intermediate state.
+
+  2. Some mechanism for telling that structure about the various
+     filters, sorters, and formatters we want to use (and this needs to
+     be hooked into the option-parsing somehow).
+
+  3. Some mechanism for getting the listed refs out of that structure,
+     formatting them, etc.
+
+-Peff
