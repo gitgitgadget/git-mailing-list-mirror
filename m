@@ -1,113 +1,101 @@
 From: Per Cederqvist <cederp@opera.com>
-Subject: [GUILT 21/28] The log.decorate setting should not influence import-commit.
-Date: Fri, 21 Mar 2014 08:31:59 +0100
-Message-ID: <1395387126-13681-22-git-send-email-cederp@opera.com>
+Subject: [GUILT 11/28] test suite: remove pointless redirection.
+Date: Fri, 21 Mar 2014 08:31:49 +0100
+Message-ID: <1395387126-13681-12-git-send-email-cederp@opera.com>
 References: <1395387126-13681-1-git-send-email-cederp@opera.com>
 Cc: git@vger.kernel.org, Per Cederqvist <cederp@opera.com>
 To: Jeff Sipek <jeffpc@josefsipek.net>
-X-From: git-owner@vger.kernel.org Fri Mar 21 08:34:14 2014
+X-From: git-owner@vger.kernel.org Fri Mar 21 08:34:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQty0-00035m-QK
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Mar 2014 08:34:13 +0100
+	id 1WQty0-00035m-8B
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Mar 2014 08:34:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965045AbaCUHeJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Mar 2014 03:34:09 -0400
-Received: from mail-la0-f45.google.com ([209.85.215.45]:64877 "EHLO
-	mail-la0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756809AbaCUHdc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Mar 2014 03:33:32 -0400
-Received: by mail-la0-f45.google.com with SMTP id hr17so1399806lab.32
-        for <git@vger.kernel.org>; Fri, 21 Mar 2014 00:33:31 -0700 (PDT)
+	id S1759824AbaCUHdb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Mar 2014 03:33:31 -0400
+Received: from mail-la0-f50.google.com ([209.85.215.50]:45366 "EHLO
+	mail-la0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756809AbaCUHdR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Mar 2014 03:33:17 -0400
+Received: by mail-la0-f50.google.com with SMTP id y1so1370011lam.37
+        for <git@vger.kernel.org>; Fri, 21 Mar 2014 00:33:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=mQoRXqb+4kMCyX+INrPeOydI9uNUn4fuFRIw4Hsx8EA=;
-        b=AihBhP5jJVYYHN4LOToo8OX1y1RgIOMEbJoVgeRkl+FYLNUraUDQByd7g6ACMIE7LR
-         dRJbQi9YvSI4LASH77aigg4IlmCqs77X+R9FoC2YB00Gd1Ux0lDAUfP5FeAaT8MQJP+Z
-         JMsvp+ZO90ks84Indsne/UUVkn3Fp0t3sFI0HL75gXO1V4bBtkSinRdfxM9zj3sTFaz4
-         a1V3qR2hmMmWNx8i+CnF1wkP3QBL/MTBm7J8uGnB6LgHCTtnaQTCVgZiOiPNz9V3+UuI
-         nbXZlSb5H/yJeCA8FhkjPDzTBTDhp3D7Bt5X5O2XF28k1bzl5rTi7eoEDmqYICQzZV5A
-         PadQ==
-X-Gm-Message-State: ALoCoQn0k3wf19hEVG7FZb/jmnU9iy5hSYR1LyN1lzmE4D2kbr2c6q5Wbprh81fJ8KhJH5eDSVjt
-X-Received: by 10.112.171.67 with SMTP id as3mr31093845lbc.10.1395387211665;
-        Fri, 21 Mar 2014 00:33:31 -0700 (PDT)
+        bh=Bed7oVQHVNSAUdeVdKFONvolZs6x0OJeJWyJ9bc9rjY=;
+        b=cD2HIhppdYMyavKS/nmSGekpyDL2/G2hZklUgpdSfbUYzDlkb6+wyG6u4uu/nNOjJM
+         bc/CNY0q3aldPyDN+YkZZWeNJG4jSFS0Gn8OqeT6H/h7KL+7o/yMNTSTyALz6BLSyNkD
+         jDxTyztk+PPR+UIUhcDGevpCP3lG/Impn0tV+eS2hUvdiNjnHBpxPs/vIBE8Q7rGpg4n
+         CEMSKXorX/8GjCgdvqJk+5sF7xtVrxzb876NXt7CBfvaw7p8rwMhBRAsaps94b/Hez7s
+         r9RsFMq5tHJtcirZYEeHjj95eLmS+L6MenBq9ntD/UCIJCU/oDBZzwRraPI4SNRP3aez
+         4IDw==
+X-Gm-Message-State: ALoCoQmibL+5Qf8SVr+fOH3hvlWcpocpKz6FnQbMo6tLTY38s4W60l17x1kkm8dnir6riQ2sTtoz
+X-Received: by 10.152.36.73 with SMTP id o9mr869112laj.30.1395387195786;
+        Fri, 21 Mar 2014 00:33:15 -0700 (PDT)
 Received: from dualla.linkoping.osa (ip-200.t2.se.opera.com. [212.247.211.200])
-        by mx.google.com with ESMTPSA id j2sm3986624lag.12.2014.03.21.00.33.30
+        by mx.google.com with ESMTPSA id j2sm3986624lag.12.2014.03.21.00.33.14
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 21 Mar 2014 00:33:30 -0700 (PDT)
+        Fri, 21 Mar 2014 00:33:14 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1395387126-13681-1-git-send-email-cederp@opera.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244658>
 
-Use --no-decorate in the call to git log that tries to read the commit
-message to produce patch names.  Otherwise, if the user has set
-log.decorate to short or full, the patch name will be less useful.
-
-Modify the t-034.sh test case to demonstrate that this is needed.
+The shouldfail function already redirects stderr to stdout, so there
+is no need to do the same in t-028.sh and t-021.sh.
 
 Signed-off-by: Per Cederqvist <cederp@opera.com>
 ---
- guilt-import-commit  | 2 +-
- regression/t-034.out | 2 ++
- regression/t-034.sh  | 2 ++
- 3 files changed, 5 insertions(+), 1 deletion(-)
+ regression/t-021.sh | 2 +-
+ regression/t-025.sh | 2 +-
+ regression/t-028.sh | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/guilt-import-commit b/guilt-import-commit
-index 6eb2f4e..703f034 100755
---- a/guilt-import-commit
-+++ b/guilt-import-commit
-@@ -26,7 +26,7 @@ disp "About to begin conversion..." >&2
- disp "Current head: `cat \"$GIT_DIR\"/refs/heads/\`git_branch\``" >&2
+diff --git a/regression/t-021.sh b/regression/t-021.sh
+index 6337d7b..614e870 100755
+--- a/regression/t-021.sh
++++ b/regression/t-021.sh
+@@ -61,7 +61,7 @@ for n in `_seq -2 $npatches`; do
+ 	if [ $n -gt 0 ]; then
+ 		cmd guilt pop -n $n
+ 	else
+-		shouldfail guilt pop -n $n 2>&1
++		shouldfail guilt pop -n $n
+ 	fi
  
- for rev in `git rev-list $rhash`; do
--	s=`git log --pretty=oneline -1 $rev | cut -c 42-`
-+	s=`git log --no-decorate --pretty=oneline -1 $rev | cut -c 42-`
+ 	cmd list_files
+diff --git a/regression/t-025.sh b/regression/t-025.sh
+index 3824608..985fed4 100755
+--- a/regression/t-025.sh
++++ b/regression/t-025.sh
+@@ -44,7 +44,7 @@ shouldfail guilt new "white space"
+ cmd list_files
  
- 	# Try to convert the first line of the commit message to a
- 	# valid patch name.
-diff --git a/regression/t-034.out b/regression/t-034.out
-index bda4399..5d81bd4 100644
---- a/regression/t-034.out
-+++ b/regression/t-034.out
-@@ -232,6 +232,7 @@ Date:   Mon Jan 1 00:00:00 2007 +0000
-     
-     Signed-off-by: Commiter Name <commiter@email>
- % guilt init
-+% git config log.decorate short
- % guilt import-commit base..HEAD
- About to begin conversion...
- Current head: 2a8b1889aa5066193bac978e6bf5073ffcfa6541
-@@ -259,6 +260,7 @@ Converting 45e81b51 as the_sequence_.lock-_is_forbidden
- Converting eebb76e9 as the_sequence_-._is_forbidden
- Done.
- Current head: d4850419ccc1146c7169f500725ce504b9774ed0
-+% git config log.decorate no
- % guilt push -a
- Applying patch..the_sequence_-._is_forbidden.patch
- Patch applied.
-diff --git a/regression/t-034.sh b/regression/t-034.sh
-index 1055ddb..8179bc7 100755
---- a/regression/t-034.sh
-+++ b/regression/t-034.sh
-@@ -57,7 +57,9 @@ cmd git log
+ for pname in prepend mode /abc ./blah ../blah abc/./blah abc/../blah abc/. abc/.. abc/ ; do
+-	shouldfail guilt new "$pname" 2>&1
++	shouldfail guilt new "$pname"
  
- # Import all the commits to guilt.
- cmd guilt init
-+cmd git config log.decorate short
- cmd guilt import-commit base..HEAD
-+cmd git config log.decorate no
+ 	cmd list_files
+ done
+diff --git a/regression/t-028.sh b/regression/t-028.sh
+index 8480100..88e9adb 100755
+--- a/regression/t-028.sh
++++ b/regression/t-028.sh
+@@ -29,6 +29,6 @@ guilt series | while read n; do
+ 	cmd guilt header $n
+ done
  
- for patch in .git/patches/master/*.patch
- do
+-shouldfail guilt header non-existant 2>&1
++shouldfail guilt header non-existant
+ 
+ # FIXME: how do we check that -e works?
 -- 
 1.8.3.1
