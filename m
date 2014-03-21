@@ -1,190 +1,213 @@
 From: Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH 06/10] t4018: convert custom pattern test to the new infrastructure
-Date: Fri, 21 Mar 2014 22:07:18 +0100
-Message-ID: <55ac94cf04b486da0dc6402557455b148971be01.1395433874.git.j6t@kdbg.org>
+Subject: [PATCH 09/10] t4018: test cases showing that the cpp pattern misses many anchor points
+Date: Fri, 21 Mar 2014 22:07:21 +0100
+Message-ID: <4f5a35463f5edc7274d4dd124aa03f1262887aad.1395433874.git.j6t@kdbg.org>
 References: <53282741.5010609@web.de> <cover.1395433874.git.j6t@kdbg.org>
 Cc: Brandon Casey <drafnel@gmail.com>, git@vger.kernel.org,
 	Thomas Rast <tr@thomasrast.ch>, l.s.r@web.de,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Johannes Sixt <j6t@kdbg.org>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Mar 21 22:09:15 2014
+X-From: git-owner@vger.kernel.org Fri Mar 21 22:09:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WR6gi-0003fP-M6
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Mar 2014 22:09:13 +0100
+	id 1WR6gp-0003oA-UB
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Mar 2014 22:09:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751749AbaCUVJA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Mar 2014 17:09:00 -0400
-Received: from bsmtp4.bon.at ([195.3.86.186]:23353 "EHLO lbmfmo03.bon.at"
+	id S1751797AbaCUVJL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Mar 2014 17:09:11 -0400
+Received: from bsmtp4.bon.at ([195.3.86.186]:23357 "EHLO lbmfmo03.bon.at"
 	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751725AbaCUVI6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Mar 2014 17:08:58 -0400
-Received: from bsmtp.bon.at (unknown [192.168.181.104])
-	by lbmfmo03.bon.at (Postfix) with ESMTP id 7B9B6CEA73
-	for <git@vger.kernel.org>; Fri, 21 Mar 2014 22:08:56 +0100 (CET)
+	id S1751774AbaCUVJF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Mar 2014 17:09:05 -0400
+Received: from bsmtp.bon.at (unknown [192.168.181.101])
+	by lbmfmo03.bon.at (Postfix) with ESMTP id E8E4DCEA78
+	for <git@vger.kernel.org>; Fri, 21 Mar 2014 22:09:03 +0100 (CET)
 Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 4068A130052;
-	Fri, 21 Mar 2014 22:08:43 +0100 (CET)
+	by bsmtp.bon.at (Postfix) with ESMTP id EC1CACDF86;
+	Fri, 21 Mar 2014 22:08:51 +0100 (CET)
 Received: from dx.sixt.local (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id D637D19F6A4;
-	Fri, 21 Mar 2014 22:08:42 +0100 (CET)
+	by dx.sixt.local (Postfix) with ESMTP id 8DEAC19F6A4;
+	Fri, 21 Mar 2014 22:08:51 +0100 (CET)
 X-Mailer: git-send-email 1.8.5.2.244.g9fb3fb1
 In-Reply-To: <cover.1395433874.git.j6t@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244747>
 
-For the test case "matches to end of line", extend the pattern by a few
-wildcards so that the pattern captures the "RIGHT" token, which is needed
-for verification, without mentioning it in the pattern.
+Most of the tests show C++ code, but there is also a union definition and
+a GNU style function definition that are not recognized.
 
 Signed-off-by: Johannes Sixt <j6t@kdbg.org>
 ---
- t/t4018-diff-funcname.sh               | 40 ++++++++++++++--------------------
- t/t4018/custom1-pattern                | 17 +++++++++++++++
- t/t4018/custom2-match-to-end-of-line   |  8 +++++++
- t/t4018/custom3-alternation-in-pattern | 17 +++++++++++++++
- 4 files changed, 58 insertions(+), 24 deletions(-)
- create mode 100644 t/t4018/custom1-pattern
- create mode 100644 t/t4018/custom2-match-to-end-of-line
- create mode 100644 t/t4018/custom3-alternation-in-pattern
+ t/t4018/cpp-class-constructor              | 5 +++++
+ t/t4018/cpp-class-constructor-mem-init     | 6 ++++++
+ t/t4018/cpp-class-destructor               | 5 +++++
+ t/t4018/cpp-function-returning-global-type | 5 +++++
+ t/t4018/cpp-function-returning-nested      | 6 ++++++
+ t/t4018/cpp-function-returning-reference   | 5 +++++
+ t/t4018/cpp-gnu-style-function             | 6 ++++++
+ t/t4018/cpp-namespace-definition           | 5 +++++
+ t/t4018/cpp-operator-definition            | 5 +++++
+ t/t4018/cpp-struct-single-line             | 8 ++++++++
+ t/t4018/cpp-template-function-definition   | 5 +++++
+ t/t4018/cpp-union-definition               | 5 +++++
+ 12 files changed, 66 insertions(+)
+ create mode 100644 t/t4018/cpp-class-constructor
+ create mode 100644 t/t4018/cpp-class-constructor-mem-init
+ create mode 100644 t/t4018/cpp-class-destructor
+ create mode 100644 t/t4018/cpp-function-returning-global-type
+ create mode 100644 t/t4018/cpp-function-returning-nested
+ create mode 100644 t/t4018/cpp-function-returning-reference
+ create mode 100644 t/t4018/cpp-gnu-style-function
+ create mode 100644 t/t4018/cpp-namespace-definition
+ create mode 100644 t/t4018/cpp-operator-definition
+ create mode 100644 t/t4018/cpp-struct-single-line
+ create mode 100644 t/t4018/cpp-template-function-definition
+ create mode 100644 t/t4018/cpp-union-definition
 
-diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
-index 008325f..5ac744f 100755
---- a/t/t4018-diff-funcname.sh
-+++ b/t/t4018-diff-funcname.sh
-@@ -30,12 +30,19 @@ public class Beer
- EOF
- sed 's/beer\\/beer,\\/' <Beer.java >Beer-correct.java
- 
--test_expect_funcname () {
--	lang=${2-java}
--	test_expect_code 1 git diff --no-index -U1 \
--		"Beer.$lang" "Beer-correct.$lang" >diff &&
--	grep "^@@.*@@ $1" diff
--}
-+test_expect_success 'setup' '
-+	# a non-trivial custom pattern
-+	git config diff.custom1.funcname "!static
-+!String
-+[^ 	].*s.*" &&
-+
-+	# a custom pattern which matches to end of line
-+	git config diff.custom2.funcname "......Beer\$" &&
-+
-+	# alternation in pattern
-+	git config diff.custom3.funcname "Beer$" &&
-+	git config diff.custom3.xfuncname "^[ 	]*((public|static).*)$"
-+'
- 
- diffpatterns="
- 	ada
-@@ -53,6 +60,9 @@ diffpatterns="
- 	python
- 	ruby
- 	tex
-+	custom1
-+	custom2
-+	custom3
- "
- 
- for p in $diffpatterns
-@@ -79,30 +89,12 @@ test_expect_success 'set up .gitattributes declaring drivers to test' '
- 	EOF
- '
- 
--test_expect_success 'custom pattern' '
--	test_config diff.java.funcname "!static
--!String
--[^ 	].*s.*" &&
--	test_expect_funcname "int special;\$"
--'
--
- test_expect_success 'last regexp must not be negated' '
- 	test_config diff.java.funcname "!static" &&
- 	test_expect_code 128 git diff --no-index Beer.java Beer-correct.java 2>msg &&
- 	grep ": Last expression must not be negated:" msg
- '
- 
--test_expect_success 'pattern which matches to end of line' '
--	test_config diff.java.funcname "Beer\$" &&
--	test_expect_funcname "Beer\$"
--'
--
--test_expect_success 'alternation in pattern' '
--	test_config diff.java.funcname "Beer$" &&
--	test_config diff.java.xfuncname "^[ 	]*((public|static).*)$" &&
--	test_expect_funcname "public static void main("
--'
--
- test_expect_success 'setup hunk header tests' '
- 	for i in $diffpatterns
- 	do
-diff --git a/t/t4018/custom1-pattern b/t/t4018/custom1-pattern
+diff --git a/t/t4018/cpp-class-constructor b/t/t4018/cpp-class-constructor
 new file mode 100644
-index 0000000..e8fd59f
+index 0000000..4c4925c
 --- /dev/null
-+++ b/t/t4018/custom1-pattern
-@@ -0,0 +1,17 @@
-+public class Beer
++++ b/t/t4018/cpp-class-constructor
+@@ -0,0 +1,5 @@
++Item::Item(int RIGHT)
 +{
-+	int special, RIGHT;
-+	public static void main(String args[])
-+	{
-+		String s=" ";
-+		for(int x = 99; x > 0; x--)
-+		{
-+			System.out.print(x + " bottles of beer on the wall "
-+				+ x + " bottles of beer\n" // ChangeMe
-+				+ "Take one down, pass it around, " + (x - 1)
-+				+ " bottles of beer on the wall.\n");
-+		}
-+		System.out.print("Go to the store, buy some more,\n"
-+			+ "99 bottles of beer on the wall.\n");
-+	}
++	ChangeMe;
++	broken;
 +}
-diff --git a/t/t4018/custom2-match-to-end-of-line b/t/t4018/custom2-match-to-end-of-line
+diff --git a/t/t4018/cpp-class-constructor-mem-init b/t/t4018/cpp-class-constructor-mem-init
 new file mode 100644
-index 0000000..f88ac31
+index 0000000..eec1d7c
 --- /dev/null
-+++ b/t/t4018/custom2-match-to-end-of-line
++++ b/t/t4018/cpp-class-constructor-mem-init
+@@ -0,0 +1,6 @@
++Item::Item(int RIGHT) :
++	member(0)
++{
++	ChangeMe;
++	broken;
++}
+diff --git a/t/t4018/cpp-class-destructor b/t/t4018/cpp-class-destructor
+new file mode 100644
+index 0000000..03aa51c
+--- /dev/null
++++ b/t/t4018/cpp-class-destructor
+@@ -0,0 +1,5 @@
++RIGHT::~RIGHT()
++{
++	ChangeMe;
++	broken;
++}
+diff --git a/t/t4018/cpp-function-returning-global-type b/t/t4018/cpp-function-returning-global-type
+new file mode 100644
+index 0000000..bff3e5f
+--- /dev/null
++++ b/t/t4018/cpp-function-returning-global-type
+@@ -0,0 +1,5 @@
++::Item get::it::RIGHT()
++{
++	ChangeMe;
++	broken;
++}
+diff --git a/t/t4018/cpp-function-returning-nested b/t/t4018/cpp-function-returning-nested
+new file mode 100644
+index 0000000..41700f2
+--- /dev/null
++++ b/t/t4018/cpp-function-returning-nested
+@@ -0,0 +1,6 @@
++get::Item get::it::RIGHT()
++{
++	ChangeMe;
++	broken;
++}
++
+diff --git a/t/t4018/cpp-function-returning-reference b/t/t4018/cpp-function-returning-reference
+new file mode 100644
+index 0000000..29e2bd4
+--- /dev/null
++++ b/t/t4018/cpp-function-returning-reference
+@@ -0,0 +1,5 @@
++string& get::it::RIGHT(char *ptr)
++{
++	ChangeMe;
++	broken;
++}
+diff --git a/t/t4018/cpp-gnu-style-function b/t/t4018/cpp-gnu-style-function
+new file mode 100644
+index 0000000..d65fc74
+--- /dev/null
++++ b/t/t4018/cpp-gnu-style-function
+@@ -0,0 +1,6 @@
++const char *
++RIGHT(int arg)
++{
++	ChangeMe;
++	broken;
++}
+diff --git a/t/t4018/cpp-namespace-definition b/t/t4018/cpp-namespace-definition
+new file mode 100644
+index 0000000..6b88dd9
+--- /dev/null
++++ b/t/t4018/cpp-namespace-definition
+@@ -0,0 +1,5 @@
++namespace RIGHT
++{
++	ChangeMe;
++	broken;
++}
+diff --git a/t/t4018/cpp-operator-definition b/t/t4018/cpp-operator-definition
+new file mode 100644
+index 0000000..f2bd167
+--- /dev/null
++++ b/t/t4018/cpp-operator-definition
+@@ -0,0 +1,5 @@
++Value operator+(Value LEFT, Value RIGHT)
++{
++	ChangeMe;
++	broken;
++}
+diff --git a/t/t4018/cpp-struct-single-line b/t/t4018/cpp-struct-single-line
+new file mode 100644
+index 0000000..ad6fa8b
+--- /dev/null
++++ b/t/t4018/cpp-struct-single-line
 @@ -0,0 +1,8 @@
-+public class RIGHT_Beer
++void wrong()
 +{
-+	int special;
-+	public static void main(String args[])
-+	{
-+		System.out.print("ChangeMe");
-+	}
 +}
-diff --git a/t/t4018/custom3-alternation-in-pattern b/t/t4018/custom3-alternation-in-pattern
++
++struct RIGHT_iterator_tag {};
++
++int ChangeMe;
++// broken
+diff --git a/t/t4018/cpp-template-function-definition b/t/t4018/cpp-template-function-definition
 new file mode 100644
-index 0000000..5f3769c
+index 0000000..a410298
 --- /dev/null
-+++ b/t/t4018/custom3-alternation-in-pattern
-@@ -0,0 +1,17 @@
-+public class Beer
++++ b/t/t4018/cpp-template-function-definition
+@@ -0,0 +1,5 @@
++template<class T> int RIGHT(T arg)
 +{
-+	int special;
-+	public static void main(String RIGHT[])
-+	{
-+		String s=" ";
-+		for(int x = 99; x > 0; x--)
-+		{
-+			System.out.print(x + " bottles of beer on the wall "
-+				+ x + " bottles of beer\n" // ChangeMe
-+				+ "Take one down, pass it around, " + (x - 1)
-+				+ " bottles of beer on the wall.\n");
-+		}
-+		System.out.print("Go to the store, buy some more,\n"
-+			+ "99 bottles of beer on the wall.\n");
-+	}
++	ChangeMe;
++	broken;
 +}
+diff --git a/t/t4018/cpp-union-definition b/t/t4018/cpp-union-definition
+new file mode 100644
+index 0000000..133b662
+--- /dev/null
++++ b/t/t4018/cpp-union-definition
+@@ -0,0 +1,5 @@
++union RIGHT {
++	double v;
++	int ChangeMe;
++	broken;
++};
 -- 
 1.8.5.2.244.g9fb3fb1
