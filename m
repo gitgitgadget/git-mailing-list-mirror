@@ -1,149 +1,123 @@
 From: Per Cederqvist <cederp@opera.com>
-Subject: [GUILT 26/28] "guilt pop" now fails when there are no more patches to pop.
-Date: Fri, 21 Mar 2014 08:32:04 +0100
-Message-ID: <1395387126-13681-27-git-send-email-cederp@opera.com>
+Subject: [GUILT 20/28] "guilt graph": Handle patch names containing quotes.
+Date: Fri, 21 Mar 2014 08:31:58 +0100
+Message-ID: <1395387126-13681-21-git-send-email-cederp@opera.com>
 References: <1395387126-13681-1-git-send-email-cederp@opera.com>
 Cc: git@vger.kernel.org, Per Cederqvist <cederp@opera.com>
 To: Jeff Sipek <jeffpc@josefsipek.net>
-X-From: git-owner@vger.kernel.org Fri Mar 21 08:33:50 2014
+X-From: git-owner@vger.kernel.org Fri Mar 21 08:33:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WQtxd-0002XC-JP
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Mar 2014 08:33:49 +0100
+	id 1WQtxb-0002XC-UN
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Mar 2014 08:33:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964776AbaCUHdp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Mar 2014 03:33:45 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:58524 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759932AbaCUHdk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Mar 2014 03:33:40 -0400
-Received: by mail-lb0-f174.google.com with SMTP id u14so1374674lbd.19
-        for <git@vger.kernel.org>; Fri, 21 Mar 2014 00:33:39 -0700 (PDT)
+	id S1759879AbaCUHdf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Mar 2014 03:33:35 -0400
+Received: from mail-la0-f46.google.com ([209.85.215.46]:61962 "EHLO
+	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755780AbaCUHdb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Mar 2014 03:33:31 -0400
+Received: by mail-la0-f46.google.com with SMTP id hr17so1380335lab.33
+        for <git@vger.kernel.org>; Fri, 21 Mar 2014 00:33:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=ZPtgDsvhqqIcxeT/8lGXLQo5Yy8X7q7JKAyyeYtfh7U=;
-        b=EHV1CunnsWWmILSQMfrlvP5yp6y2bygNhwFDtDBykwybIiedSePqFtM20VCP29O3Q5
-         Dm4sr7102xd3+WMswLVunJQv80ozjm1gQ+K1vDkOB0B4gJ61vp7NVkqmWCgKIFejUUte
-         QctWL4KLeuLIeEdQ6LHxAjubmbh/yf6jpLnQFYrfx6hkBfb7SBdjVBeX6Iee9BDEd4fL
-         eG2BiHKHYKdz22PGxEop2iyXYsYaT4e0zK5wnWv6DiJ+7ikIgDOUYLTM6HCRw4pvqIvp
-         aZ+LJvECpKrUeQjt11IMQ8Pec3CpOMp1a3n6Ogwx4s8rZjcZbnUaeWi35yXerIRJ4mQs
-         ntVA==
-X-Gm-Message-State: ALoCoQnm3HbD+N0Zp59M8N0at27j8Gy+Gl13AyU1ELOFc5Emo8v/fla4Youe9wT/2r2GYIV+JAoz
-X-Received: by 10.152.190.135 with SMTP id gq7mr32811651lac.28.1395387219262;
-        Fri, 21 Mar 2014 00:33:39 -0700 (PDT)
+        bh=lJiqixPQtccdQS4/y5WknzNqxUStCrWxEVKiIFjvk+c=;
+        b=M+2DaiXBgogFpzR6CX2uUP3ycQIHLnkkgl0YlyztLXe+v4VUDAGdDbpcmG9L1xMGUX
+         Pgk+RS43rZq9Afd49jUKF/+1wKNaQl4Xf+C9w8vOWK+U1CFSJYv4Vvitump1/PhqsR0a
+         6iEQmS5t9pRNv6rCGEsJL7uDmmW1EEuGPe74TmIKf9o/H1MYQgmhRe9TWhqwHw4Tv4eh
+         Ibt793AykTBI0L5EAkHmBYkdr/RfI0ZCDsNBwYveOOqsMCg8LiEoB74a0LjFBDbKjs9k
+         I2LQNMPqJCgfGtLsE7e2+e1lxWdx580U6Q/4orp1BBWbbtDFaonQtw2XCQfAvHKT5GMq
+         VZhA==
+X-Gm-Message-State: ALoCoQlyeWr2i2tXzfeT2RmNc+A/HgkmxIUfcy4tTxSmX2F5e8cWB7o632Xtrf9s0EZhO4eD/0H0
+X-Received: by 10.112.137.5 with SMTP id qe5mr31380512lbb.16.1395387210049;
+        Fri, 21 Mar 2014 00:33:30 -0700 (PDT)
 Received: from dualla.linkoping.osa (ip-200.t2.se.opera.com. [212.247.211.200])
-        by mx.google.com with ESMTPSA id j2sm3986624lag.12.2014.03.21.00.33.37
+        by mx.google.com with ESMTPSA id j2sm3986624lag.12.2014.03.21.00.33.28
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 21 Mar 2014 00:33:38 -0700 (PDT)
+        Fri, 21 Mar 2014 00:33:28 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1395387126-13681-1-git-send-email-cederp@opera.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244651>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244652>
 
-This is analogous to how "guilt push" now fails when there are no more
-patches to push.  Like push, the "--all" argument still succeeds even
-if there was no need to pop anything.
+Quote quotes with a backslash in the "guitl graph" output.  Otherwise,
+the "dot" file could contain syntax errors.
 
-Updated the test suite.
-
-Signed-off-by: Per Cederqvist <cederp@opera.com>
+Added a test case.
 ---
- guilt-pop            | 13 +++++++------
- regression/t-021.out |  2 ++
- regression/t-021.sh  |  6 ++++++
- regression/t-061.sh  |  7 ++++++-
- 4 files changed, 21 insertions(+), 7 deletions(-)
+ guilt-graph          |  2 ++
+ regression/t-033.out | 22 ++++++++++++++++++++++
+ regression/t-033.sh  |  9 +++++++++
+ 3 files changed, 33 insertions(+)
 
-diff --git a/guilt-pop b/guilt-pop
-index f0e647f..208f868 100755
---- a/guilt-pop
-+++ b/guilt-pop
-@@ -48,10 +48,16 @@ fi
+diff --git a/guilt-graph b/guilt-graph
+index 575f03b..24ab83b 100755
+--- a/guilt-graph
++++ b/guilt-graph
+@@ -58,6 +58,8 @@ while [ "$current" != "$base" ]; do
+ }"`
+ 	[ -z "$pname" ] && pname="?"
  
- patch="$1"
- [ ! -z "$all" ] && patch="-a"
-+[ -z "$patch" ] && { patch=1; num=t; }
++	pname="`printf \"%s\" $pname|sed 's/\"/\\\\\"/g'`"
++
+ 	disp "# checking rev $current"
+ 	disp "	\"$current\" [label=\"$pname\"]"
  
- if [ ! -s "$applied" ]; then
- 	disp "No patches applied."
--	exit 0
-+	if [ "$patch" = "-a" ]
-+	then
-+		exit 0
-+	else
-+		exit 1
-+	fi
- elif [ "$patch" = "-a" ]; then
- 	# we are supposed to pop all patches
- 
-@@ -68,11 +74,6 @@ elif [ ! -z "$num" ]; then
- 	# catch underflow
- 	[ $eidx -lt 0 ] && eidx=0
- 	[ $eidx -eq $sidx ] && die "No patches requested to be removed."
--elif [ -z "$patch" ]; then
--	# we are supposed to pop only the current patch on the stack
--
--	sidx=`wc -l < "$applied"`
--	eidx=`expr $sidx - 1`
- else
- 	# we're supposed to pop only up to a patch, make sure the patch is
- 	# in the series
-diff --git a/regression/t-021.out b/regression/t-021.out
-index 9b42d9c..58be12f 100644
---- a/regression/t-021.out
-+++ b/regression/t-021.out
-@@ -287,6 +287,8 @@ index 0000000..8baef1b
- +++ b/def
- @@ -0,0 +1 @@
- +abc
+diff --git a/regression/t-033.out b/regression/t-033.out
+index e638d7b..1c28ea9 100644
+--- a/regression/t-033.out
++++ b/regression/t-033.out
+@@ -63,3 +63,25 @@ digraph G {
+ 	"ff2775f8d1dc753f635830adcc3a067e0b681e2d" [label="a.patch"]
+ 	"891bc14b5603474c9743fd04f3da888644413dc5" -> "ff2775f8d1dc753f635830adcc3a067e0b681e2d"; // ?
+ }
++% guilt new a-"better&quicker'-patch.patch
++% git add file.txt
++% guilt refresh
++Patch a-"better&quicker'-patch.patch refreshed
 +% guilt pop
-+No patches applied.
- % guilt push --all
- Applying patch..modify
- Patch applied.
-diff --git a/regression/t-021.sh b/regression/t-021.sh
-index 614e870..e0d2dc1 100755
---- a/regression/t-021.sh
-+++ b/regression/t-021.sh
-@@ -23,6 +23,12 @@ guilt series | _tac | while read n ; do
- done
- 
- #
-+# pop when there is nothing to pop
-+#
++Now at c.patch.
++% guilt push
++Applying patch..a-"better&quicker'-patch.patch
++Patch applied.
++% guilt graph
++digraph G {
++# checking rev bc7df666a646739eaf559af23cab72f2bfd01f0e
++	"bc7df666a646739eaf559af23cab72f2bfd01f0e" [label="a-\"better&quicker'-patch.patch"]
++# checking rev 891bc14b5603474c9743fd04f3da888644413dc5
++	"891bc14b5603474c9743fd04f3da888644413dc5" [label="c.patch"]
++	"bc7df666a646739eaf559af23cab72f2bfd01f0e" -> "891bc14b5603474c9743fd04f3da888644413dc5"; // ?
++# checking rev c7014443c33d2b0237293687ceb9cbd38313df65
++	"c7014443c33d2b0237293687ceb9cbd38313df65" [label="b.patch"]
++# checking rev ff2775f8d1dc753f635830adcc3a067e0b681e2d
++	"ff2775f8d1dc753f635830adcc3a067e0b681e2d" [label="a.patch"]
++	"891bc14b5603474c9743fd04f3da888644413dc5" -> "ff2775f8d1dc753f635830adcc3a067e0b681e2d"; // ?
++}
+diff --git a/regression/t-033.sh b/regression/t-033.sh
+index 57dce78..968292c 100755
+--- a/regression/t-033.sh
++++ b/regression/t-033.sh
+@@ -46,3 +46,12 @@ cmd git add file.txt
+ cmd guilt refresh
+ fixup_time_info c.patch
+ cmd guilt graph
 +
-+shouldfail guilt pop
-+
-+#
- # push all
- #
- cmd guilt push --all
-diff --git a/regression/t-061.sh b/regression/t-061.sh
-index 1411baa..a9a4fea 100755
---- a/regression/t-061.sh
-+++ b/regression/t-061.sh
-@@ -48,7 +48,12 @@ cmd list_files
- 
- for i in `seq 5`
- do
--	cmd guilt pop
-+	if [ $i -ge 5 ]
-+	then
-+		shouldfail guilt pop
-+	else
-+		cmd guilt pop
-+	fi
- 	cmd git for-each-ref
- 	cmd guilt push
- 	cmd git for-each-ref
++# A patch name that contains funky characters, including unbalanced
++# quotes.
++cmd guilt new "a-\"better&quicker'-patch.patch"
++cmd echo d >> file.txt
++cmd git add file.txt
++cmd guilt refresh
++fixup_time_info "a-\"better&quicker'-patch.patch"
++cmd guilt graph
 -- 
 1.8.3.1
