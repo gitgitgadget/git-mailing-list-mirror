@@ -1,217 +1,112 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] remote-hg: do not fail on invalid bookmarks
-Date: Fri, 21 Mar 2014 15:32:24 -0700
-Message-ID: <xmqq7g7nrxmv.fsf@gitster.dls.corp.google.com>
-References: <A4F451CA-D1DE-43A9-A4DA-23594C08C4DD@quendi.de>
-	<532CA557.20007@web.de>
-	<10F8010F-96E2-45E0-B6D4-C3709AED3C28@quendi.de>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] builtin/apply.c: use iswspace() to detect
+ line-ending-like chars
+Date: Fri, 21 Mar 2014 19:07:34 -0400
+Message-ID: <CAPig+cRcW8jv7LNZmLfrSGLaqE7yHycbmfvtNETPo51QoM7N2g@mail.gmail.com>
+References: <1395344384-7975-1-git-send-email-g3orge.app@gmail.com>
+	<CAPig+cTw8pyRVOHToGRPBdxv+TX8Vcj5OrX-CmLWRCigZRS4MA@mail.gmail.com>
+	<CAByyCQBmCTfW0HBL04MMqwm+bDe4Rb6n+MfWdYUQ6M6yW_u=yw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Antoine Pelisse <apelisse@gmail.com>
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	Max Horn <max@quendi.de>
-X-From: git-owner@vger.kernel.org Fri Mar 21 23:32:50 2014
+Content-Type: text/plain; charset=ISO-8859-1
+To: George Papanikolaou <g3orge.app@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Sat Mar 22 00:08:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WR7ze-0002Rn-0b
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Mar 2014 23:32:50 +0100
+	id 1WR8Xp-000145-Ae
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Mar 2014 00:08:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752691AbaCUWc3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Mar 2014 18:32:29 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44516 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752348AbaCUWc2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 21 Mar 2014 18:32:28 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B52DF75BB2;
-	Fri, 21 Mar 2014 18:32:27 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=MKXFbljSJXqS
-	iMXDAbRDtR+c+/E=; b=tWu2NFYxTV8BRc6IVTqMAzX3Iwetq4J8tb4n2HZfzlCp
-	lJJanj7gsg3QQUNFXUz8FVMXgTfxOHIW3V6F7QjZ2ZndtOOTO3dA5EMorN+c1j/M
-	twhxPxNTx879HvsetN5AFp/ur3bAdazsiM0SzUQOTswzYRALpBPhsJfQxGM90Pc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=PUYFUI
-	PHQz3Znfnyq3VHDUXep/o7pgIj/YkNnoJwjxE6KuIZRuOZKm0TreWPTlkLWI4iLj
-	QLP9VcNt1XTtmsP4emm/J7v+AjEI1T/LneDb7ZQb9IvbKAr6Hp8BrP+yrb0e92Gt
-	/Y3Udrbd6r+heK6mpszlfJw80omJNCGpXwvk8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A443975BB1;
-	Fri, 21 Mar 2014 18:32:27 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D0CE675BAC;
-	Fri, 21 Mar 2014 18:32:26 -0400 (EDT)
-In-Reply-To: <10F8010F-96E2-45E0-B6D4-C3709AED3C28@quendi.de> (Max Horn's
-	message of "Fri, 21 Mar 2014 22:44:11 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: AE24ED38-B148-11E3-83AF-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1750858AbaCUXHg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Mar 2014 19:07:36 -0400
+Received: from mail-yh0-f45.google.com ([209.85.213.45]:37046 "EHLO
+	mail-yh0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750789AbaCUXHf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Mar 2014 19:07:35 -0400
+Received: by mail-yh0-f45.google.com with SMTP id a41so3118612yho.4
+        for <git@vger.kernel.org>; Fri, 21 Mar 2014 16:07:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:content-type;
+        bh=057oDnAk5YyP0oPrtCO2R22cmepW48+xDn5iMLl88Uc=;
+        b=IUe6/z8UbPq5lI2jpR9gXNt6guCvS43axoo3SkBtU3G2p8S1Cr1MOXUhCYR3JtQkFT
+         hDAIGnt4E/NMCsli2NVzcV3aSAuv2PXkNs/LI8YWRuMeaoC9Kwz9lXA+sCCuEyv69fMH
+         bCrTVC3xz4dpF6blxuvon5MLATA4UmndnpSAt2I/hVaisuD3uGGd2QuPnKLCLPIeYUka
+         OSviRStbx6n2dcn9dVYopnT/kbFIhKecLPxOX3zYojEcII6HC5biIaKF/9r4WabOHj+A
+         UaqVfGDw1R7OaBnlmqKiBvLU9iZCw+ViRslAvQb2PciLI7/84IPWXyATl0sWTr+PuGbL
+         y2BA==
+X-Received: by 10.236.97.102 with SMTP id s66mr45611704yhf.45.1395443254740;
+ Fri, 21 Mar 2014 16:07:34 -0700 (PDT)
+Received: by 10.170.180.134 with HTTP; Fri, 21 Mar 2014 16:07:34 -0700 (PDT)
+In-Reply-To: <CAByyCQBmCTfW0HBL04MMqwm+bDe4Rb6n+MfWdYUQ6M6yW_u=yw@mail.gmail.com>
+X-Google-Sender-Auth: d3nMRPS88DgF40Ondm5lHOiA43w
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244760>
 
-Max Horn <max@quendi.de> writes:
+[Please reply on-list to review comments. Other people may learn from
+the discussion or have comments of their own.]
 
-> Hi Torsten,
+On Fri, Mar 21, 2014 at 6:00 PM, George Papanikolaou
+<g3orge.app@gmail.com> wrote:
+> On Fri, Mar 21, 2014 at 4:48 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>>
+>> Did you verify that it is safe to strip all whitespace characters
+>> rather than only line-endings? Perhaps say so in the commit message.
+>>
+>> Why the choice of iswspace()? These are normal-width character
+>> strings, so why apply a wide-character function?
+>>
+> why not?
+
+Because it's unnecessary and invites confusion from people reading
+code since they now have to wonder if there is something unusual and
+non-obvious going on. Worse, the two loops immediately below the ones
+you changed, as well as the rest of the function, use plain isspace(),
+which really ramps up the "huh?"-factor from the reader.
+
+The original code has the asset of being clear and obvious. Changing
+these two loops to use a wide-character function makes it less so.
+
+> since at this point it is checking for any non-readable
+> characters at the end of the buffer, I figured we should check for the
+> "wide-character" function that covers these.
+
+Neither the function comment nor the existing code implies that it is
+checking for "any non-readable characters". (I'm not even sure what
+that means.) The only thing the existing code says at that point is
+that it is ignoring line-endings.
+
+> It is true that the
+> comment should change in that matter.
 >
-> On 21.03.2014, at 21:47, Torsten B=C3=B6gershausen <tboegi@web.de> wr=
-ote:
+> Also why wouldn't it be safe? And how can I check?
+
+You're changing the behavior of the function (assuming I'm reading
+correctly), which is why I asked if you verified that doing so was
+safe. The existing code considers "foo bar" and "foo bar " to be
+different. With your change, they are considered equal, which is
+actually more in line with what the function comment says.
+Nevertheless, callers may be relying upon the existing behavior.
+
+At the very least, the unit tests should be run as a quick check of
+whether this behavior change introduces problems. Manual inspection of
+callers also wouldn't hurt.
+
+There's also the issue that Michael raised when he asked what would
+happen if either string was composed of whitespace only. The existing
+code is not robust and can crash, but your change may increase the
+likelihood of the crash.
+
+> Thanks
 >
->> On 2014-03-21 12.36, Max Horn wrote:
->> All tests passed :-),
->
-> Excellent.
->
->> thanks from my side.
->> comments inline, some are debatable
->
-> Thanks for having a close look and for the constructive feedback!
-> Unfortunately, I won't have time to look into this for the next 7 day=
-s
-> or so. I wouldn't mind if the patch gets queued with the changes you
-> suggest; but of course that might be a tad too much to ask for, so I'=
-ll
-> also be happy to do a "proper" re-roll, but then it has to wait a bit=
-=2E
-
-In the meantime, I'll pile this on top as "SQUASH???".
-
-I am not sure how the original, which went into a subdirectory
-gitrepo that is to be cleaned with test_when_finished, was working.
-Perhaps it didn't clean and dug the trash directory hierarchy deeper
-and deeper, or something?
-
-
- contrib/remote-helpers/test-hg.sh | 80 +++++++++++++++++++++----------=
---------
- 1 file changed, 43 insertions(+), 37 deletions(-)
-
-diff --git a/contrib/remote-helpers/test-hg.sh b/contrib/remote-helpers=
-/test-hg.sh
-index 6925ca3..8834482 100755
---- a/contrib/remote-helpers/test-hg.sh
-+++ b/contrib/remote-helpers/test-hg.sh
-@@ -694,68 +694,74 @@ test_expect_success 'remote double failed push' '
- test_expect_success 'clone remote with master null bookmark, then push=
- to the bookmark' '
- 	test_when_finished "rm -rf gitrepo* hgrepo*" &&
-=20
--	(
- 	hg init hgrepo &&
--	cd hgrepo &&
--	echo a >a &&
--	hg add a &&
--	hg commit -m a &&
--	hg bookmark -r null master
-+	(
-+		cd hgrepo &&
-+		echo a >a &&
-+		hg add a &&
-+		hg commit -m a &&
-+		hg bookmark -r null master
- 	) &&
-=20
- 	git clone "hg::hgrepo" gitrepo &&
- 	check gitrepo HEAD a &&
--	cd gitrepo &&
--	git checkout --quiet -b master &&
--	echo b >b &&
--	git add b &&
--	git commit -m b &&
--	git push origin master
-+	(
-+		cd gitrepo &&
-+		git checkout --quiet -b master &&
-+		echo b >b &&
-+		git add b &&
-+		git commit -m b &&
-+		git push origin master
-+	)
- '
-=20
- test_expect_success 'clone remote with default null bookmark, then pus=
-h to the bookmark' '
- 	test_when_finished "rm -rf gitrepo* hgrepo*" &&
-=20
--	(
- 	hg init hgrepo &&
--	cd hgrepo &&
--	echo a >a &&
--	hg add a &&
--	hg commit -m a &&
--	hg bookmark -r null -f default
-+	(
-+		cd hgrepo &&
-+		echo a >a &&
-+		hg add a &&
-+		hg commit -m a &&
-+		hg bookmark -r null -f default
- 	) &&
-=20
- 	git clone "hg::hgrepo" gitrepo &&
- 	check gitrepo HEAD a &&
--	cd gitrepo &&
--	git checkout --quiet -b default &&
--	echo b >b &&
--	git add b &&
--	git commit -m b &&
--	git push origin default
-+	(
-+		cd gitrepo &&
-+		git checkout --quiet -b default &&
-+		echo b >b &&
-+		git add b &&
-+		git commit -m b &&
-+		git push origin default
-+	)
- '
-=20
- test_expect_success 'clone remote with generic null bookmark, then pus=
-h to the bookmark' '
- 	test_when_finished "rm -rf gitrepo* hgrepo*" &&
-=20
--	(
- 	hg init hgrepo &&
--	cd hgrepo &&
--	echo a >a &&
--	hg add a &&
--	hg commit -m a &&
--	hg bookmark -r null bmark
-+	(
-+		cd hgrepo &&
-+		echo a >a &&
-+		hg add a &&
-+		hg commit -m a &&
-+		hg bookmark -r null bmark
- 	) &&
-=20
- 	git clone "hg::hgrepo" gitrepo &&
- 	check gitrepo HEAD a &&
--	cd gitrepo &&
--	git checkout --quiet -b bmark &&
--	git remote -v &&
--	echo b >b &&
--	git add b &&
--	git commit -m b &&
--	git push origin bmark
-+	(
-+		cd gitrepo &&
-+		git checkout --quiet -b bmark &&
-+		git remote -v &&
-+		echo b >b &&
-+		git add b &&
-+		git commit -m b &&
-+		git push origin bmark
-+	)
- '
-=20
- test_done
+> --
+> papanikge's surrogate email.
+> I may reply back.
+> http://www.5slingshots.com/
