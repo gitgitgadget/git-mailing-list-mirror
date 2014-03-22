@@ -1,99 +1,212 @@
-From: George Papanikolaou <g3orge.app@gmail.com>
-Subject: Re: [PATCH] builtin/apply.c: use iswspace() to detect
- line-ending-like chars
-Date: Sat, 22 Mar 2014 11:33:56 +0200
-Message-ID: <CAByyCQAqZnnc91ZgmxdKgc7T0POLqd+iXmKvaKEPMOx6CNQkKQ@mail.gmail.com>
-References: <1395344384-7975-1-git-send-email-g3orge.app@gmail.com>
-	<CAPig+cTw8pyRVOHToGRPBdxv+TX8Vcj5OrX-CmLWRCigZRS4MA@mail.gmail.com>
-	<CAByyCQBmCTfW0HBL04MMqwm+bDe4Rb6n+MfWdYUQ6M6yW_u=yw@mail.gmail.com>
-	<CAPig+cTct-42w5S=OUS_DQ2cD5X9nWa_eUVoFBGTT7nAEahi5g@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Sat Mar 22 10:34:02 2014
+From: Ilya Bobyr <ilya.bobyr@gmail.com>
+Subject: [PATCH v4] rev-parse --parseopt: option argument name hints
+Date: Sat, 22 Mar 2014 02:47:34 -0700
+Message-ID: <1395481654-5920-1-git-send-email-ilya.bobyr@gmail.com>
+References: <xmqqvbv7v5xh.fsf@gitster.dls.corp.google.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Ilya Bobyr <ilya.bobyr@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 22 10:48:08 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WRIJV-0003CB-Uq
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Mar 2014 10:34:02 +0100
+	id 1WRIXA-0000SU-6E
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Mar 2014 10:48:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750814AbaCVJd6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Mar 2014 05:33:58 -0400
-Received: from mail-ve0-f170.google.com ([209.85.128.170]:44507 "EHLO
-	mail-ve0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750759AbaCVJd5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Mar 2014 05:33:57 -0400
-Received: by mail-ve0-f170.google.com with SMTP id pa12so3686694veb.29
-        for <git@vger.kernel.org>; Sat, 22 Mar 2014 02:33:56 -0700 (PDT)
+	id S1750921AbaCVJsA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Mar 2014 05:48:00 -0400
+Received: from mail-pd0-f181.google.com ([209.85.192.181]:49463 "EHLO
+	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750841AbaCVJr7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Mar 2014 05:47:59 -0400
+Received: by mail-pd0-f181.google.com with SMTP id p10so3330327pdj.40
+        for <git@vger.kernel.org>; Sat, 22 Mar 2014 02:47:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=xDqoYP9rdPmSEonTdXfOXmjwsQASKEqPf2S0VyRcIyE=;
-        b=axgUg6JkkdGcV3kgNzH/SL92nlkXb10HpI+5uola8uzg4QcN5uU5N6KtReJyqlUywC
-         ZNcE8NGST9Zf1AmdkFBG9K/j81OSerVItRYyz2UyzI0iUfj/mUNdSuk/Qz9m/2bgWWht
-         pZmtjU9IUM7ih3qFKk9wiUZdwmU/C1i0yfa9qY6+/PiOdtRVsZt2PPqmGtmK9GSGxNOW
-         iLzXfhbapinhzpEbvZjD4di2HlysFQMEE106Kxg/rMIdJ6g7p+Pij5p5caT6ujd3VyxE
-         uDgS9qPe6z1PUem3ebXl4zDwHCVHFYVUv0jFe6IQvVahIBvtSl8e7OconEyfXkaYnZKY
-         7RVg==
-X-Received: by 10.58.162.168 with SMTP id yb8mr20538508veb.9.1395480836226;
- Sat, 22 Mar 2014 02:33:56 -0700 (PDT)
-Received: by 10.58.29.48 with HTTP; Sat, 22 Mar 2014 02:33:56 -0700 (PDT)
-In-Reply-To: <CAPig+cTct-42w5S=OUS_DQ2cD5X9nWa_eUVoFBGTT7nAEahi5g@mail.gmail.com>
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=U4lwlbizWreP8YTaGRObtpqLA1rbq2dzk4xyYplVGnw=;
+        b=cjaTRbFQvACrSzTybQ0yztLuP3RWYmsO/7gCl+7YYybokG7YOwvzLw0wSuXsJLwIqV
+         AcAgT7IbavZH1M8uqf1qZ9u9nd0UClMRIpDyCTROQLgWabURSbyJV656JN11u5bZXMrH
+         CLEKuiMJ9CwY4hV1ZG84uw+G6Haa43AyZ7LnagkVe+i3H+dMPa/pDDv+UDOlIFo+QAFi
+         Ba9zIdeahtERxX34lLWQSFPzSVGt5Z02WMdYCM0vsdoHtXHn7gmqraM7WWICMn+veH5x
+         jccu8rIAQFJ2hcTcomokv+2L3u0mjrAfN86Cru/ERT4b/lEzl+OFAX9vtpqQkfRbB4YJ
+         1JKQ==
+X-Received: by 10.68.215.40 with SMTP id of8mr58343139pbc.15.1395481678579;
+        Sat, 22 Mar 2014 02:47:58 -0700 (PDT)
+Received: from localhost.localdomain (c-50-136-172-14.hsd1.ca.comcast.net. [50.136.172.14])
+        by mx.google.com with ESMTPSA id xk1sm39632540pac.21.2014.03.22.02.47.57
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 22 Mar 2014 02:47:57 -0700 (PDT)
+X-Mailer: git-send-email 1.7.9
+In-Reply-To: <xmqqvbv7v5xh.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244766>
 
-On Sat, Mar 22, 2014 at 12:46 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->
-> Because it's unnecessary and invites confusion from people reading the
-> code since they now have to wonder if there is something unusual and
-> non-obvious going. Worse, the two loops immediately below the ones you
-> changed, as well as the rest of the function, use plain isspace(),
-> which really ramps up the "huh?"-factor from the reader.
->
-> The original code has the asset of being clear and obvious. Changing
-> these two loops to use a wide-character function makes it less so.
->
+Built-in commands can specify names for option arguments when usage text
+is generated for a command.  sh based commands should be able to do the
+same.
 
-Yes I understand it does add a factor of ambiguity.
+Option argument name hint is any text that comes after [*=?!] after the
+argument name up to the first whitespace.
 
->
-> Neither the function comment nor the existing code implies that it is
-> checking for "any non-readable characters". (I'm not even sure what
-> that means.) The only thing the existing code says at that point is
-> that it is ignoring line-endings.
->
+Signed-off-by: Ilya Bobyr <ilya.bobyr@gmail.com>
+---
+ Fixed "arg_hing" typo, decoration for `-h` and `--help` and removed
+ underscore replacement for the hint text.
 
-I mean characters that are not printable like letters, numbers, dots etc
+ Documentation/git-rev-parse.txt |   34 ++++++++++++++++++++++++++++++++--
+ builtin/rev-parse.c             |   13 ++++++++++++-
+ t/t1502-rev-parse-parseopt.sh   |   20 ++++++++++++++++++++
+ 3 files changed, 64 insertions(+), 3 deletions(-)
 
->
-> You're changing the behavior of the function (assuming I'm reading it
-> correctly), which is why I asked if you verified that doing so was
-> safe. The existing code considers "foo bar" and "foo bar " to be
-> different. With your change, they are considered equal, which is
-> actually more in line with what the function comment says.
-> Nevertheless, callers may be relying upon the existing behavior.
->
-> At the very least, the unit tests should be run as a quick check of
-> whether if this behavior change introduces problems. Manual inspection
-> of callers also wouldn't hurt.
->
-
-I did not think about that possibility, because I ran `make` and the
-tests passed so I thought that that would be ok.
-
-Anyway, do you have any ideas on how to improve that function?
-
-Thanks again for the feedback.
-
+diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
+index 0d2cdcd..be85023 100644
+--- a/Documentation/git-rev-parse.txt
++++ b/Documentation/git-rev-parse.txt
+@@ -284,13 +284,13 @@ Input Format
+ 
+ 'git rev-parse --parseopt' input format is fully text based. It has two parts,
+ separated by a line that contains only `--`. The lines before the separator
+-(should be more than one) are used for the usage.
++(should be one or more) are used for the usage.
+ The lines after the separator describe the options.
+ 
+ Each line of options has this format:
+ 
+ ------------
+-<opt_spec><flags>* SP+ help LF
++<opt_spec><flags>*<arg_hint>? SP+ help LF
+ ------------
+ 
+ `<opt_spec>`::
+@@ -313,6 +313,12 @@ Each line of options has this format:
+ 
+ 	* Use `!` to not make the corresponding negated long option available.
+ 
++`<arg_hint>`::
++	`<arg_hint>`, if specified, is used as a name of the argument in the
++	help output, for options that take arguments. `<arg_hint>` is
++	terminated by the first whitespace. When you need to use space in the
++	argument hint use dash instead.
++
+ The remainder of the line, after stripping the spaces, is used
+ as the help associated to the option.
+ 
+@@ -333,6 +339,8 @@ h,help    show the help
+ 
+ foo       some nifty option --foo
+ bar=      some cool option --bar with an argument
++baz=arg   another cool option --baz with a named argument
++qux?path  qux may take a path argument but has meaning by itself
+ 
+   An option group Header
+ C?        option C with an optional argument"
+@@ -340,6 +348,28 @@ C?        option C with an optional argument"
+ eval "$(echo "$OPTS_SPEC" | git rev-parse --parseopt -- "$@" || echo exit $?)"
+ ------------
+ 
++
++Usage text
++~~~~~~~~~~
++
++When "$@" is `-h` or `--help` the above example would produce the following
++usage text:
++
++------------
++usage: some-command [options] <args>...
++
++    some-command does foo and bar!
++
++    -h, --help            show the help
++    --foo                 some nifty option --foo
++    --bar ...             some cool option --bar with an argument
++    --bar <arg>           another cool option --baz with a named argument
++    --qux[=<path>]        qux may take a path argument but has meaning by itself
++
++An option group Header
++    -C[...]               option C with an optional argument
++------------
++
+ SQ-QUOTE
+ --------
+ 
+diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+index 45901df..1a6122d 100644
+--- a/builtin/rev-parse.c
++++ b/builtin/rev-parse.c
+@@ -395,9 +395,10 @@ static int cmd_parseopt(int argc, const char **argv, const char *prefix)
+ 		usage[unb++] = strbuf_detach(&sb, NULL);
+ 	}
+ 
+-	/* parse: (<short>|<short>,<long>|<long>)[=?]? SP+ <help> */
++	/* parse: (<short>|<short>,<long>|<long>)[*=?!]*<arghint>? SP+ <help> */
+ 	while (strbuf_getline(&sb, stdin, '\n') != EOF) {
+ 		const char *s;
++		const char *end;
+ 		struct option *o;
+ 
+ 		if (!sb.len)
+@@ -419,6 +420,16 @@ static int cmd_parseopt(int argc, const char **argv, const char *prefix)
+ 		o->value = &parsed;
+ 		o->flags = PARSE_OPT_NOARG;
+ 		o->callback = &parseopt_dump;
++
++		/* Possible argument name hint */
++		end = s;
++		while (s > sb.buf && strchr("*=?!", s[-1]) == NULL)
++			--s;
++		if (s != sb.buf && s != end)
++			o->argh = xmemdupz(s, end - s);
++		if (s == sb.buf)
++			s = end;
++
+ 		while (s > sb.buf && strchr("*=?!", s[-1])) {
+ 			switch (*--s) {
+ 			case '=':
+diff --git a/t/t1502-rev-parse-parseopt.sh b/t/t1502-rev-parse-parseopt.sh
+index 83b1300..e3c6f02 100755
+--- a/t/t1502-rev-parse-parseopt.sh
++++ b/t/t1502-rev-parse-parseopt.sh
+@@ -18,6 +18,17 @@ An option group Header
+     -C[...]               option C with an optional argument
+     -d, --data[=...]      short and long option with an optional argument
+ 
++Argument hints
++    -b <arg>              short option required argument
++    --bar2 <arg>          long option required argument
++    -e, --fuz <with-space>
++                          short and long option required argument
++    -s[<some>]            short option optional argument
++    --long[=<data>]       long option optional argument
++    -g, --fluf[=<path>]   short and long option optional argument
++    --longest <very-long-argument-hint>
++                          a very long argument hint
++
+ Extras
+     --extra1              line above used to cause a segfault but no longer does
+ 
+@@ -39,6 +50,15 @@ b,baz     a short and long option
+ C?        option C with an optional argument
+ d,data?   short and long option with an optional argument
+ 
++ Argument hints
++b=arg     short option required argument
++bar2=arg  long option required argument
++e,fuz=with-space  short and long option required argument
++s?some    short option optional argument
++long?data long option optional argument
++g,fluf?path     short and long option optional argument
++longest=very-long-argument-hint  a very long argument hint
++
+ Extras
+ extra1    line above used to cause a segfault but no longer does
+ EOF
 -- 
-papanikge's surrogate email.
-I may reply back.
-http://www.5slingshots.com/I did not think about that possibility.
+1.7.9
