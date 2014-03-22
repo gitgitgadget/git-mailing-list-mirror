@@ -1,58 +1,83 @@
-From: Alexandru Guduleasa <alexandru.guduleasa@gmail.com>
+From: David Kastrup <dak@gnu.org>
 Subject: Re: [PATCH v2] Rewrite strbuf.c:strbuf_cmp() replace memcmp() with starts_with()
-Date: Sat, 22 Mar 2014 23:58:02 +0200
-Message-ID: <CA+ph3SoiNtX+ghTZsWetgAJ23SYYsAzyq+RSwHhtaxQhq-Pk7g@mail.gmail.com>
+Date: Sat, 22 Mar 2014 22:58:45 +0100
+Message-ID: <87fvm928ve.fsf@fencepost.gnu.org>
 References: <1395523516-10181-1-git-send-email-mustafaorkunacar@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain
 Cc: sunshine@sunshineco.com, git@vger.kernel.org
 To: Mustafa Orkun Acar <mustafaorkunacar@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 22 22:58:11 2014
+X-From: git-owner@vger.kernel.org Sat Mar 22 22:59:09 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WRTvd-0001WW-Uq
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Mar 2014 22:58:10 +0100
+	id 1WRTwW-0002VS-RZ
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Mar 2014 22:59:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752101AbaCVV6F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Mar 2014 17:58:05 -0400
-Received: from mail-wi0-f175.google.com ([209.85.212.175]:39240 "EHLO
-	mail-wi0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751066AbaCVV6E (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Mar 2014 17:58:04 -0400
-Received: by mail-wi0-f175.google.com with SMTP id cc10so1431600wib.8
-        for <git@vger.kernel.org>; Sat, 22 Mar 2014 14:58:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=RbhlArLPRqbKTDE3EiJUZ6rKGjkRkNmpTEzwa5qJ+5c=;
-        b=u5kkZRroTMMyFC2vKx10jzu6z4kYEgwF1KFe8JUAJgp6xq2Eu6gTFnhtMolrOQcUIJ
-         hSwm75qpQnWcekNzdW4yauYybpsyFiXW1Aq9upsc30+o4eiKLSlw1V2s+qgCZ9izieAy
-         lurs8C3pb7QzN6a+m/cq2qNl9wnYJ1U6COYnnU1HzUTnkrfpb+n+hCfPz9MQLyFCyUHi
-         qH6LtVr+O/3P0+D7/61mNo80OEiv3h2RWVJbs21U1xAzKqX97K3aD5D9D+eBz07E/GQn
-         ymfuwCycV1YJuUoj6JOffSojL45+A9BpvFQuSxn9Ir/sSlwfEhBUVgLEDuXMj9m5QVQw
-         1dBQ==
-X-Received: by 10.180.164.106 with SMTP id yp10mr5903528wib.48.1395525482329;
- Sat, 22 Mar 2014 14:58:02 -0700 (PDT)
-Received: by 10.227.175.200 with HTTP; Sat, 22 Mar 2014 14:58:02 -0700 (PDT)
+	id S1751460AbaCVV7A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Mar 2014 17:59:00 -0400
+Received: from fencepost.gnu.org ([208.118.235.10]:36536 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751066AbaCVV67 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Mar 2014 17:58:59 -0400
+Received: from localhost ([127.0.0.1]:35577 helo=lola)
+	by fencepost.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <dak@gnu.org>)
+	id 1WRTwQ-0001vm-ML; Sat, 22 Mar 2014 17:58:58 -0400
+Received: by lola (Postfix, from userid 1000)
+	id 7BCB4E09FD; Sat, 22 Mar 2014 22:58:45 +0100 (CET)
 In-Reply-To: <1395523516-10181-1-git-send-email-mustafaorkunacar@gmail.com>
+	(Mustafa Orkun Acar's message of "Sat, 22 Mar 2014 23:25:16 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244785>
 
-Hi,
+Mustafa Orkun Acar <mustafaorkunacar@gmail.com> writes:
 
-This does not seam correct to me.
-The memcmp function could have returned 3 relevant values (zero,
-positive and negative) and a non-zero result would have been returned
-by the if statement.
-With you modification, you replace a negative value from memcmp with a
-positive one.
+> I reviewed all functions using memcmp(). It generally makes code more understandable. But here it might be used for the sake of simplicity.
+>
+> Signed-off-by: Mustafa Orkun Acar <mustafaorkunacar@gmail.com>
+> ---
+> I applied to GSoC 2014. I expect your feedbacks and comments!
+>  strbuf.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/strbuf.c b/strbuf.c
+> index ee96dcf..50d0875 100644
+> --- a/strbuf.c
+> +++ b/strbuf.c
+> @@ -147,7 +147,7 @@ void strbuf_list_free(struct strbuf **sbs)
+>  int strbuf_cmp(const struct strbuf *a, const struct strbuf *b)
+>  {
+>  	int len = a->len < b->len ? a->len: b->len;
+> -	int cmp = memcmp(a->buf, b->buf, len);
+> +	int cmp = !starts_with(a->buf, b->buf);
+>  	if (cmp)
+>  		return cmp;
+>  	return a->len < b->len ? -1: a->len != b->len;
 
-Best regards,
-Alex Guduleasa
+Not correct.  The original code clearly takes care to return a signed
+result with the same definition of signedness as memcmp.  While this
+intent has not been written down in a comment or description in either
+strbuf.c or strbuf.h, the code does not make sense without it.
+
+rerere.c contains the following lines:
+
+                        if (strbuf_cmp(&one, &two) > 0)
+                                strbuf_swap(&one, &two);
+
+and that only makes sense when there is an actual meaning to the sign of
+the result.
+
+Your version would return 1 when either comparing "1" with "2" OR "2"
+with "1".  It requires NUL-terminated strings: if that was a valid
+constraint for strbuf, this function would be using strcmp in the first
+place.
+
+-- 
+David Kastrup
