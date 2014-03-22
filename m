@@ -1,121 +1,71 @@
-From: Ashwin Jha <ajha.dev@gmail.com>
-Subject: [PATCH] Modify fsck_commit. Replace memcmp by skip_prefix
-Date: Sat, 22 Mar 2014 20:42:12 +0530
-Message-ID: <1395501132-12894-1-git-send-email-ajha.dev@gmail.com>
-Cc: Ashwin Jha <ajha.dev@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 22 16:13:46 2014
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH v3] remote-hg: do not fail on invalid bookmarks
+Date: Sat, 22 Mar 2014 17:41:37 +0100
+Message-ID: <532DBD41.6080008@web.de>
+References: <A4F451CA-D1DE-43A9-A4DA-23594C08C4DD@quendi.de>	<532CA557.20007@web.de>	<10F8010F-96E2-45E0-B6D4-C3709AED3C28@quendi.de> <xmqq7g7nrxmv.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Antoine Pelisse <apelisse@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1?= =?UTF-8?B?c2Vu?= 
+	<tboegi@web.de>, Max Horn <max@quendi.de>
+X-From: git-owner@vger.kernel.org Sat Mar 22 17:42:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WRNcG-0007Hn-0z
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Mar 2014 16:13:44 +0100
+	id 1WROzg-0005lV-Ml
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Mar 2014 17:42:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751107AbaCVPNJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Mar 2014 11:13:09 -0400
-Received: from mail-pa0-f44.google.com ([209.85.220.44]:46251 "EHLO
-	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750770AbaCVPNI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Mar 2014 11:13:08 -0400
-Received: by mail-pa0-f44.google.com with SMTP id bj1so3614498pad.31
-        for <git@vger.kernel.org>; Sat, 22 Mar 2014 08:13:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=A3DkCYgPYZc1I3OGf9RRxsvphvOSWAI4xpVeWt6HTWU=;
-        b=M0CvZuD1XpThU+3YvVnI7cwrCi9/0Hc/UJZiRzjptQTMOVq7rHUgbZ8rpEC36ve4HT
-         704X6JpomOk/Tz/I6fi0Cegj4SFUCK25wxka9EFqK06u/66u9p9emp2At15WQHsk6zFD
-         0Jy++1MNcq9vqjzTx+oBzrx1qweVPZGpWntwxnWVQRv9Ym3iNkH9XLstLE2hseNZREeA
-         O7Z8YrxZvfjhR/GrSnw8Fd5IH8vC4Z6v2NLHKd4fXTZY8H8oZvIeFFwE9oO84fJ7vkLj
-         yf64AZnT2U0vZJPul578ewc7Q2MR1xDjMpEf1U1Q36vCKuVChaC6TOkx0JKF3KrrqQ9v
-         71HQ==
-X-Received: by 10.66.197.164 with SMTP id iv4mr60502726pac.18.1395501187752;
-        Sat, 22 Mar 2014 08:13:07 -0700 (PDT)
-Received: from ubuntu.59.160.212.34 (nkn-admin-map.isical.ac.in. [14.139.222.67])
-        by mx.google.com with ESMTPSA id pv4sm16159676pbb.55.2014.03.22.08.13.05
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 22 Mar 2014 08:13:07 -0700 (PDT)
-X-Mailer: git-send-email 1.7.9.5
+	id S1751375AbaCVQlz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 22 Mar 2014 12:41:55 -0400
+Received: from mout.web.de ([212.227.15.14]:49727 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751199AbaCVQly (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Mar 2014 12:41:54 -0400
+Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb101)
+ with ESMTPSA (Nemesis) id 0MLgZ5-1WRg6X3yTb-000rml; Sat, 22 Mar 2014 17:41:43
+ +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
+In-Reply-To: <xmqq7g7nrxmv.fsf@gitster.dls.corp.google.com>
+X-Provags-ID: V03:K0:QsJVYqjFDzqPaKkUc+ic6EBUwxIJfTYZKGatSyI9IGatvJYNTFn
+ aS+2mafKbOfZcL7RuaCL5UvNbyM+EpTSaLOFE9KENm9afKJTi3lFmY4BPOYIoA6yvO3rImQ
+ 1Eejbo1awVOYE7ZsBedQ+G75dU11K3P+wRGre/iO3nuc6gT7RPIyjp6ZhvP+/HMr574J1Xh
+ 0I7Rp3wcAJPVw677omvtw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244771>
 
-Replace memcmp by skip_prefix as it serves the dual
-purpose of checking the string for a prefix as well
-as skipping that prefix.
+On 2014-03-21 23.32, Junio C Hamano wrote:
+> Max Horn <max@quendi.de> writes:
+>=20
+>> Hi Torsten,
+>>
+>> On 21.03.2014, at 21:47, Torsten B=C3=B6gershausen <tboegi@web.de> w=
+rote:
+>>
+>>> On 2014-03-21 12.36, Max Horn wrote:
+>>> All tests passed :-),
+>>
+>> Excellent.
+>>
+>>> thanks from my side.
+>>> comments inline, some are debatable
+>>
+>> Thanks for having a close look and for the constructive feedback!
+>> Unfortunately, I won't have time to look into this for the next 7 da=
+ys
+>> or so. I wouldn't mind if the patch gets queued with the changes you
+>> suggest; but of course that might be a tad too much to ask for, so I=
+'ll
+>> also be happy to do a "proper" re-roll, but then it has to wait a bi=
+t.
+>=20
+> In the meantime, I'll pile this on top as "SQUASH???".
 
-Signed-off-by: Ashwin Jha <ajha.dev@gmail.com>
----
- fsck.c |   25 ++++++++++++++-----------
- 1 file changed, 14 insertions(+), 11 deletions(-)
-
-diff --git a/fsck.c b/fsck.c
-index 64bf279..021b3fc 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -6,6 +6,7 @@
- #include "commit.h"
- #include "tag.h"
- #include "fsck.h"
-+#include "git-compat-util.h"
- 
- static int fsck_walk_tree(struct tree *tree, fsck_walk_func walk, void *data)
- {
-@@ -284,21 +285,23 @@ static int fsck_ident(char **ident, struct object *obj, fsck_error error_func)
- 
- static int fsck_commit(struct commit *commit, fsck_error error_func)
- {
--	char *buffer = commit->buffer;
-+	char *next_parent, *buffer = commit->buffer;
- 	unsigned char tree_sha1[20], sha1[20];
- 	struct commit_graft *graft;
- 	int parents = 0;
- 	int err;
- 
--	if (memcmp(buffer, "tree ", 5))
-+	buffer = (char *)skip_prefix(buffer, "tree ");
-+	if (buffer == NULL)
- 		return error_func(&commit->object, FSCK_ERROR, "invalid format - expected 'tree' line");
--	if (get_sha1_hex(buffer+5, tree_sha1) || buffer[45] != '\n')
-+	if (get_sha1_hex(buffer, tree_sha1) || buffer[40] != '\n')
- 		return error_func(&commit->object, FSCK_ERROR, "invalid 'tree' line format - bad sha1");
--	buffer += 46;
--	while (!memcmp(buffer, "parent ", 7)) {
--		if (get_sha1_hex(buffer+7, sha1) || buffer[47] != '\n')
-+	buffer += 41;
-+	while ((next_parent = (char *)skip_prefix(buffer, "parent ")) != NULL) {
-+		buffer = next_parent;
-+		if (get_sha1_hex(buffer, sha1) || buffer[40] != '\n')
- 			return error_func(&commit->object, FSCK_ERROR, "invalid 'parent' line format - bad sha1");
--		buffer += 48;
-+		buffer += 41;
- 		parents++;
- 	}
- 	graft = lookup_commit_graft(commit->object.sha1);
-@@ -322,15 +325,15 @@ static int fsck_commit(struct commit *commit, fsck_error error_func)
- 		if (p || parents)
- 			return error_func(&commit->object, FSCK_ERROR, "parent objects missing");
- 	}
--	if (memcmp(buffer, "author ", 7))
-+	buffer = (char *)skip_prefix(buffer, "author ");
-+	if (buffer == NULL)
- 		return error_func(&commit->object, FSCK_ERROR, "invalid format - expected 'author' line");
--	buffer += 7;
- 	err = fsck_ident(&buffer, &commit->object, error_func);
- 	if (err)
- 		return err;
--	if (memcmp(buffer, "committer ", strlen("committer ")))
-+	buffer = (char *)skip_prefix(buffer, "committer ");
-+	if (buffer == NULL)
- 		return error_func(&commit->object, FSCK_ERROR, "invalid format - expected 'committer' line");
--	buffer += strlen("committer ");
- 	err = fsck_ident(&buffer, &commit->object, error_func);
- 	if (err)
- 		return err;
--- 
-1.7.9.5
+Test OK under Linux and Mac,
+(so this is a little ACK).
