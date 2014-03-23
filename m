@@ -1,119 +1,189 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] builtin/apply.c: use iswspace() to detect
- line-ending-like chars
-Date: Sun, 23 Mar 2014 05:35:43 -0400
-Message-ID: <CAPig+cTFNsmQPmUpax-rbqkk5JzgAw4fK0tM4U013Z_x7o-ZyA@mail.gmail.com>
-References: <1395344384-7975-1-git-send-email-g3orge.app@gmail.com>
-	<CAPig+cTw8pyRVOHToGRPBdxv+TX8Vcj5OrX-CmLWRCigZRS4MA@mail.gmail.com>
-	<CAByyCQBmCTfW0HBL04MMqwm+bDe4Rb6n+MfWdYUQ6M6yW_u=yw@mail.gmail.com>
-	<CAPig+cTct-42w5S=OUS_DQ2cD5X9nWa_eUVoFBGTT7nAEahi5g@mail.gmail.com>
-	<CAByyCQAqZnnc91ZgmxdKgc7T0POLqd+iXmKvaKEPMOx6CNQkKQ@mail.gmail.com>
+From: Ashwin Jha <ajha.dev@gmail.com>
+Subject: Re: [PATCH] Modify fsck_commit. Replace memcmp by skip_prefix
+Date: Sun, 23 Mar 2014 18:40:55 +0530
+Message-ID: <532EDD5F.9020402@gmail.com>
+References: <1395501132-12894-1-git-send-email-ajha.dev@gmail.com> <CAPig+cRL3zFWtBq_yJQqwGa7Wc6GsdBqA_jrGm8p5ZMJVmr-yw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: George Papanikolaou <g3orge.app@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 23 10:36:18 2014
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Eric Sunshine <sunshine@sunshineco.com>, tanayabh@gmail.com
+X-From: git-owner@vger.kernel.org Sun Mar 23 14:12:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WRepG-0001Ow-9Q
-	for gcvg-git-2@plane.gmane.org; Sun, 23 Mar 2014 10:36:18 +0100
+	id 1WRiCM-0007m1-BG
+	for gcvg-git-2@plane.gmane.org; Sun, 23 Mar 2014 14:12:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751879AbaCWJfp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Mar 2014 05:35:45 -0400
-Received: from mail-yk0-f173.google.com ([209.85.160.173]:40679 "EHLO
-	mail-yk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751235AbaCWJfo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Mar 2014 05:35:44 -0400
-Received: by mail-yk0-f173.google.com with SMTP id 10so11392387ykt.4
-        for <git@vger.kernel.org>; Sun, 23 Mar 2014 02:35:43 -0700 (PDT)
+	id S1751286AbaCWNLq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Mar 2014 09:11:46 -0400
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:32928 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751230AbaCWNLp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Mar 2014 09:11:45 -0400
+Received: by mail-pa0-f43.google.com with SMTP id bj1so4335922pad.30
+        for <git@vger.kernel.org>; Sun, 23 Mar 2014 06:11:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=odyK/2iD2WJQswvKVUd3VdOi9n0Z0wrLB8FxnL2NETA=;
-        b=0RpnsPVIDVqKaJLsp2r7JoWTG3IliALB+2y8vgBpjmlxFU+I8uh80ZoB4KX9KP70GX
-         z6YKE7Vbnmm+FQ00DtxjjR+1fmIRAzCo+kkqCdYuZsRnmxjstnYX9n23Uaw+taJfBNRE
-         1PrdPYNXMlRfN2H+yFRKrvWegmabjeDET2hwgh0+DOGuH9Wlh+Yhst41TzME57EIfpI2
-         vt23ZOMhusVOKXowfIXgWZtBaf1K7XdecpPRXAtRZqa1BAKY6fbr/phSAAErlbtoA1CW
-         GjruG+ckuLd3Un3K3fAOIlBXF+WqwRR8PswzniWnqreSWGHFVE3jOWk2IYoxPaIJpbJt
-         6s2A==
-X-Received: by 10.236.71.161 with SMTP id r21mr156817yhd.112.1395567343266;
- Sun, 23 Mar 2014 02:35:43 -0700 (PDT)
-Received: by 10.170.180.134 with HTTP; Sun, 23 Mar 2014 02:35:43 -0700 (PDT)
-In-Reply-To: <CAByyCQAqZnnc91ZgmxdKgc7T0POLqd+iXmKvaKEPMOx6CNQkKQ@mail.gmail.com>
-X-Google-Sender-Auth: 5qdt5baVdTv1qjXDO0RT3cUDlyY
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=MhRz0CM95ht3zf1Ty2/5mXD/2gilmUM463oys6exTrY=;
+        b=jLa6xQWgmviBL0K3Nfa6qdtZdWxsjVOwAhYbgSyW6BDmoTjvkL8gQ2ZB/pMZglOgH3
+         D4AV+6YKOLsLYMaZWdmAeC2TW8wJN9sua3t8O0+7RIoKYbVsAu1o5UGMeoSr0aHY9abq
+         GHNJCjrPLT80YXMd2I7WPggRQdxLclHEM/fumqKV6Q9LNI9QS2vWxI9eEa+OCaa84jWP
+         j5vXB3CubolpkJbruplmQIBLpJRLnRjlUY6ckjm8FxTUh1eEYv8Y+V1x2PSzGGnst6xZ
+         OwS5DvjFRHvYVhNAI9hUBppvMmP6aMbwe2KS5czusr383bFEmBJOFtm21xLd1RE8fw7t
+         no6Q==
+X-Received: by 10.66.193.202 with SMTP id hq10mr65773789pac.57.1395580304862;
+        Sun, 23 Mar 2014 06:11:44 -0700 (PDT)
+Received: from [192.168.23.7] (nkn-admin-map.isical.ac.in. [14.139.222.67])
+        by mx.google.com with ESMTPSA id vg1sm23241155pbc.44.2014.03.23.06.11.40
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sun, 23 Mar 2014 06:11:44 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
+In-Reply-To: <CAPig+cRL3zFWtBq_yJQqwGa7Wc6GsdBqA_jrGm8p5ZMJVmr-yw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244793>
 
-On Sat, Mar 22, 2014 at 5:33 AM, George Papanikolaou
-<g3orge.app@gmail.com> wrote:
-> On Sat, Mar 22, 2014 at 12:46 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> Because it's unnecessary and invites confusion from people reading the
->> code since they now have to wonder if there is something unusual and
->> non-obvious going. Worse, the two loops immediately below the ones you
->> changed, as well as the rest of the function, use plain isspace(),
->> which really ramps up the "huh?"-factor from the reader.
->>
->> The original code has the asset of being clear and obvious. Changing
->> these two loops to use a wide-character function makes it less so.
->>
-> Yes I understand it does add a factor of ambiguity.
+
+Thanks for your comments, Tanay and Eric.
+
+Regarding the [PATCH v2], I will keep this in mind for the subsequent 
+patches.
+
+On 03/23/2014 02:10 PM, Eric Sunshine wrote:
+> Thanks for the resubmission. Comments below...
 >
->> Neither the function comment nor the existing code implies that it is
->> checking for "any non-readable characters". (I'm not even sure what
->> that means.) The only thing the existing code says at that point is
->> that it is ignoring line-endings.
->>
-> I mean characters that are not printable like letters, numbers, dots etc
-
-It's still not clear how this answer relates to my question about why
-you used iswspace() rather than isspace().
-
-Nothing in the code or comments indicates that it wants to ignore
-non-printing characters. Even if the intention of your change had
-indeed been to ignore such characters, you would have used !isprint()
-or !iswprint().
-
->> You're changing the behavior of the function (assuming I'm reading it
->> correctly), which is why I asked if you verified that doing so was
->> safe. The existing code considers "foo bar" and "foo bar " to be
->> different. With your change, they are considered equal, which is
->> actually more in line with what the function comment says.
->> Nevertheless, callers may be relying upon the existing behavior.
->>
->> At the very least, the unit tests should be run as a quick check of
->> whether if this behavior change introduces problems. Manual inspection
->> of callers also wouldn't hurt.
->>
-> I did not think about that possibility, because I ran `make` and the
-> tests passed so I thought that that would be ok.
-
-Unit tests may cover a lot of functionality, but there will always be
-holes in the coverage. Thus, it's a good idea to examine callers and
-surrounding code manually, as well.
-
-Since this is a behavior change, it deserves mention in the commit
-message, as well as assurance that you verified (as best you can) that
-it did not break existing callers. (It also wouldn't hurt to mention
-that it brings the code more in line with the function documentation.)
-
-> Anyway, do you have any ideas on how to improve that function?
-
-Michael gave you a strong clue when he asked what would happen, with
-your change in place, if the string consisted only of whitespace. The
-loops you touched are already fragile, even without your change.
-Making them more robust would likely be considered an improvement.
-
-> Thanks again for the feedback.
+> On Sat, Mar 22, 2014 at 11:12 AM, Ashwin Jha <ajha.dev@gmail.com> wrote:
+>> Subject: [PATCH] Modify fsck_commit. Replace memcmp by skip_prefix
+> In his review, Tanay already mentioned indicating a resubmission via
+> [PATCH vN]. Additionally, specify the module or function being
+> modified, followed by a colon and space. On this project, it is
+> customary to forego capitalization in the subject (and only the
+> subject). So, you might write:
 >
-> --
-> papanikge's surrogate email.
-> I may reply back.
-> http://www.5slingshots.com/I did not think about that possibility.
+>      Subject: [PATCH v2] fsck_commit: replace memcmp() by skip_prefix()
+>
+>> Replace memcmp by skip_prefix as it serves the dual
+>> purpose of checking the string for a prefix as well
+>> as skipping that prefix.
+> Good.
+>
+>> Signed-off-by: Ashwin Jha <ajha.dev@gmail.com>
+>> ---
+> Tanay mentioned this already: Below the "---" line under your sign-off
+> is where you should, as a courtesy to reviewers, explain what changed
+> since the previous attempt. Also, provide a link to the previous
+> version, like this [1].
+>
+> [1]: http://git.661346.n2.nabble.com/PATCH-GSoC-Miniproject-15-Rewrite-fsck-c-fsck-commit-td7606180.html
+>
+>>   fsck.c |   25 ++++++++++++++-----------
+>>   1 file changed, 14 insertions(+), 11 deletions(-)
+>>
+>> diff --git a/fsck.c b/fsck.c
+>> index 64bf279..021b3fc 100644
+>> --- a/fsck.c
+>> +++ b/fsck.c
+>> @@ -6,6 +6,7 @@
+>>   #include "commit.h"
+>>   #include "tag.h"
+>>   #include "fsck.h"
+>> +#include "git-compat-util.h"
+>>
+>>   static int fsck_walk_tree(struct tree *tree, fsck_walk_func walk, void *data)
+>>   {
+>> @@ -284,21 +285,23 @@ static int fsck_ident(char **ident, struct object *obj, fsck_error error_func)
+>>
+>>   static int fsck_commit(struct commit *commit, fsck_error error_func)
+>>   {
+>> -       char *buffer = commit->buffer;
+>> +       char *next_parent, *buffer = commit->buffer;
+> The name 'next_parent' doesn't seem correct. After invoking
+> skip_prefix(), this variable will point at the hex representation of
+> the parent's SHA1, so a better name might be 'parent_id'.
+>
+>>          unsigned char tree_sha1[20], sha1[20];
+>>          struct commit_graft *graft;
+>>          int parents = 0;
+>>          int err;
+>>
+>> -       if (memcmp(buffer, "tree ", 5))
+>> +       buffer = (char *)skip_prefix(buffer, "tree ");
+> These casts are ugly. It should be possible to get rid of all of them.
+> Hint: Does this function modify the memory referenced by 'buffer'?
+> (The answer is very slightly involved, though not difficult. A proper
+> fix would involve turning this submission into a 2-patch series: one a
+> preparatory patch, and the other this patch without the casts.)
+Eric, certainly this function does not modify the memory referenced by 
+'buffer'.
+So, 'buffer' should be declared as a const char *.
+But, what about the argument to fsck_ident(). First argument required is 
+a char **.
+Now, the compiler will correctly give a warning for incorrect argument type.
+
+I have seen the code of fsck_ident(), and it is nowhere modifying the 
+memory referenced by
+buffer. So, I know that this will not cause any problem. But, still it 
+will be a bad practice to do away with
+warnings.
+
+And can you explain me a bit about a 2-patch series.
+
+Once again thanks for your help.
+>> +       if (buffer == NULL)
+>>
+>> On this project, it is customary to say !buffer. Ditto for the
+>> remaining instances.
+>>
+>>                  return error_func(&commit->object, FSCK_ERROR, "invalid format - expected 'tree' line");
+>> -       if (get_sha1_hex(buffer+5, tree_sha1) || buffer[45] != '\n')
+>> +       if (get_sha1_hex(buffer, tree_sha1) || buffer[40] != '\n')
+>>                  return error_func(&commit->object, FSCK_ERROR, "invalid 'tree' line format - bad sha1");
+>> -       buffer += 46;
+>> -       while (!memcmp(buffer, "parent ", 7)) {
+>> -               if (get_sha1_hex(buffer+7, sha1) || buffer[47] != '\n')
+>> +       buffer += 41;
+>> +       while ((next_parent = (char *)skip_prefix(buffer, "parent ")) != NULL) {
+> Likewise, on this project, it is customary to omit the '!= NULL'.
+>
+>> +               buffer = next_parent;
+>> +               if (get_sha1_hex(buffer, sha1) || buffer[40] != '\n')
+>>                          return error_func(&commit->object, FSCK_ERROR, "invalid 'parent' line format - bad sha1");
+>> -               buffer += 48;
+>> +               buffer += 41;
+>>                  parents++;
+>>          }
+>>          graft = lookup_commit_graft(commit->object.sha1);
+>> @@ -322,15 +325,15 @@ static int fsck_commit(struct commit *commit, fsck_error error_func)
+>>                  if (p || parents)
+>>                          return error_func(&commit->object, FSCK_ERROR, "parent objects missing");
+>>          }
+>> -       if (memcmp(buffer, "author ", 7))
+>> +       buffer = (char *)skip_prefix(buffer, "author ");
+>> +       if (buffer == NULL)
+>>                  return error_func(&commit->object, FSCK_ERROR, "invalid format - expected 'author' line");
+>> -       buffer += 7;
+>>          err = fsck_ident(&buffer, &commit->object, error_func);
+>>          if (err)
+>>                  return err;
+>> -       if (memcmp(buffer, "committer ", strlen("committer ")))
+>> +       buffer = (char *)skip_prefix(buffer, "committer ");
+>> +       if (buffer == NULL)
+>>                  return error_func(&commit->object, FSCK_ERROR, "invalid format - expected 'committer' line");
+>> -       buffer += strlen("committer ");
+>>          err = fsck_ident(&buffer, &commit->object, error_func);
+>>          if (err)
+>>                  return err;
+> Other than the minor points mentioned above, the patch looks good. Thanks.
+>
+>> --
+>> 1.7.9.5
+Regards,
+Ashwin
