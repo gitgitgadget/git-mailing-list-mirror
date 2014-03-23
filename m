@@ -1,103 +1,119 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2] Rewrite strbuf.c:strbuf_cmp() replace memcmp() with starts_with()
-Date: Sun, 23 Mar 2014 05:02:06 -0400
-Message-ID: <CAPig+cRVRSDktaQhXNHZfWJ+G=k6XhP6HxjJ4iOxsUfrDcYmWg@mail.gmail.com>
-References: <1395523516-10181-1-git-send-email-mustafaorkunacar@gmail.com>
+Subject: Re: [PATCH] builtin/apply.c: use iswspace() to detect
+ line-ending-like chars
+Date: Sun, 23 Mar 2014 05:35:43 -0400
+Message-ID: <CAPig+cTFNsmQPmUpax-rbqkk5JzgAw4fK0tM4U013Z_x7o-ZyA@mail.gmail.com>
+References: <1395344384-7975-1-git-send-email-g3orge.app@gmail.com>
+	<CAPig+cTw8pyRVOHToGRPBdxv+TX8Vcj5OrX-CmLWRCigZRS4MA@mail.gmail.com>
+	<CAByyCQBmCTfW0HBL04MMqwm+bDe4Rb6n+MfWdYUQ6M6yW_u=yw@mail.gmail.com>
+	<CAPig+cTct-42w5S=OUS_DQ2cD5X9nWa_eUVoFBGTT7nAEahi5g@mail.gmail.com>
+	<CAByyCQAqZnnc91ZgmxdKgc7T0POLqd+iXmKvaKEPMOx6CNQkKQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>
-To: Mustafa Orkun Acar <mustafaorkunacar@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 23 10:02:18 2014
+Cc: Git List <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: George Papanikolaou <g3orge.app@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 23 10:36:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WReIJ-0003oI-Hw
-	for gcvg-git-2@plane.gmane.org; Sun, 23 Mar 2014 10:02:15 +0100
+	id 1WRepG-0001Ow-9Q
+	for gcvg-git-2@plane.gmane.org; Sun, 23 Mar 2014 10:36:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752253AbaCWJCK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Mar 2014 05:02:10 -0400
-Received: from mail-yh0-f45.google.com ([209.85.213.45]:50939 "EHLO
-	mail-yh0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750974AbaCWJCI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Mar 2014 05:02:08 -0400
-Received: by mail-yh0-f45.google.com with SMTP id a41so4068212yho.4
-        for <git@vger.kernel.org>; Sun, 23 Mar 2014 02:02:07 -0700 (PDT)
+	id S1751879AbaCWJfp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Mar 2014 05:35:45 -0400
+Received: from mail-yk0-f173.google.com ([209.85.160.173]:40679 "EHLO
+	mail-yk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751235AbaCWJfo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Mar 2014 05:35:44 -0400
+Received: by mail-yk0-f173.google.com with SMTP id 10so11392387ykt.4
+        for <git@vger.kernel.org>; Sun, 23 Mar 2014 02:35:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc:content-type;
-        bh=Ar6pcA6MSi6MYcHPMG0SPZeYtF2Oy/HrInQxIW7q9GI=;
-        b=I5em3oofz5dMOvOXaEiveRAeiDeX6r0nrnin3vz3luylkYkd9S/Xhd2axv4JGfntQz
-         d2owT+U1c7Kc8MAx3TtO5m+ek7b3KI0UioLAbEnyVQ5qciOx2yCcq/TxXRH+E8dl0oQ0
-         5Bj2kU3zhl17NhJ+KYgANSLPXc6Kf8yy8CckTYK+/BhjnDuWbSOgDqTgZCgpTctXbyXQ
-         4DufmSypy3N0P7fRd3ThG+ogeZdnANCAfW2MienUMziE2YW8urZ2vnWPH6vuFI4U2o7L
-         0B1m3W7YPRncbyb7PecfxDelRYUfcFrbL+38Qp1y+ecTe5h3k0bJ/dfdG3MhfpefFdY0
-         gbFA==
-X-Received: by 10.236.113.194 with SMTP id a42mr207yhh.116.1395565326361; Sun,
- 23 Mar 2014 02:02:06 -0700 (PDT)
-Received: by 10.170.180.134 with HTTP; Sun, 23 Mar 2014 02:02:06 -0700 (PDT)
-In-Reply-To: <1395523516-10181-1-git-send-email-mustafaorkunacar@gmail.com>
-X-Google-Sender-Auth: 8mTiKbTJjQCMEFPOT5-ky58EifY
+        bh=odyK/2iD2WJQswvKVUd3VdOi9n0Z0wrLB8FxnL2NETA=;
+        b=0RpnsPVIDVqKaJLsp2r7JoWTG3IliALB+2y8vgBpjmlxFU+I8uh80ZoB4KX9KP70GX
+         z6YKE7Vbnmm+FQ00DtxjjR+1fmIRAzCo+kkqCdYuZsRnmxjstnYX9n23Uaw+taJfBNRE
+         1PrdPYNXMlRfN2H+yFRKrvWegmabjeDET2hwgh0+DOGuH9Wlh+Yhst41TzME57EIfpI2
+         vt23ZOMhusVOKXowfIXgWZtBaf1K7XdecpPRXAtRZqa1BAKY6fbr/phSAAErlbtoA1CW
+         GjruG+ckuLd3Un3K3fAOIlBXF+WqwRR8PswzniWnqreSWGHFVE3jOWk2IYoxPaIJpbJt
+         6s2A==
+X-Received: by 10.236.71.161 with SMTP id r21mr156817yhd.112.1395567343266;
+ Sun, 23 Mar 2014 02:35:43 -0700 (PDT)
+Received: by 10.170.180.134 with HTTP; Sun, 23 Mar 2014 02:35:43 -0700 (PDT)
+In-Reply-To: <CAByyCQAqZnnc91ZgmxdKgc7T0POLqd+iXmKvaKEPMOx6CNQkKQ@mail.gmail.com>
+X-Google-Sender-Auth: 5qdt5baVdTv1qjXDO0RT3cUDlyY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244791>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244792>
 
-In addition to the valuable review comments already provided by
-Alexandru and David, see a few more below.
-
-On Sat, Mar 22, 2014 at 5:25 PM, Mustafa Orkun Acar
-<mustafaorkunacar@gmail.com> wrote:
-> Subject: [PATCH v2] Rewrite strbuf.c:strbuf_cmp() replace memcmp() with starts_with()
-
-This isn't actually v2. It would have been v2 if it was a reroll of
-your original patch [1], but this patch is entirely distinct from that
-attempt.
-
-Take a close look at the example Subject I wrote [2] in the review of
-your first patch. Try to emulate it when writing the subject for your
-patches. (You seem to have ignored it for this patch.)
-
-> I reviewed all functions using memcmp(). It generally makes code more understandable. But here it might be used for the sake of simplicity.
-
-Likewise, re-read the review [2] of your original patch. In
-particular, see the part about wrapping text to 65-70 characters
-(which you also seem to have ignored).
-
-The sentence "I reviewed all functions using memcmp()" is primarily
-commentary that won't be meaningful to someone reading the official
-project history months or years from now. Place it below the "---"
-line under your sign-off.
-
-The second and third sentences are somewhat weak. You might instead
-want to say something about how starts_with() does a better job
-conveying the intention of the logic than does memcmp().
-
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/244529
-[2]: http://thread.gmane.org/gmane.comp.version-control.git/244529/focus=244643
-
-> Signed-off-by: Mustafa Orkun Acar <mustafaorkunacar@gmail.com>
-> ---
-> I applied to GSoC 2014. I expect your feedbacks and comments!
->  strbuf.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+On Sat, Mar 22, 2014 at 5:33 AM, George Papanikolaou
+<g3orge.app@gmail.com> wrote:
+> On Sat, Mar 22, 2014 at 12:46 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>> Because it's unnecessary and invites confusion from people reading the
+>> code since they now have to wonder if there is something unusual and
+>> non-obvious going. Worse, the two loops immediately below the ones you
+>> changed, as well as the rest of the function, use plain isspace(),
+>> which really ramps up the "huh?"-factor from the reader.
+>>
+>> The original code has the asset of being clear and obvious. Changing
+>> these two loops to use a wide-character function makes it less so.
+>>
+> Yes I understand it does add a factor of ambiguity.
 >
-> diff --git a/strbuf.c b/strbuf.c
-> index ee96dcf..50d0875 100644
-> --- a/strbuf.c
-> +++ b/strbuf.c
-> @@ -147,7 +147,7 @@ void strbuf_list_free(struct strbuf **sbs)
->  int strbuf_cmp(const struct strbuf *a, const struct strbuf *b)
->  {
->         int len = a->len < b->len ? a->len: b->len;
-> -       int cmp = memcmp(a->buf, b->buf, len);
-> +       int cmp = !starts_with(a->buf, b->buf);
->         if (cmp)
->                 return cmp;
->         return a->len < b->len ? -1: a->len != b->len;
+>> Neither the function comment nor the existing code implies that it is
+>> checking for "any non-readable characters". (I'm not even sure what
+>> that means.) The only thing the existing code says at that point is
+>> that it is ignoring line-endings.
+>>
+> I mean characters that are not printable like letters, numbers, dots etc
+
+It's still not clear how this answer relates to my question about why
+you used iswspace() rather than isspace().
+
+Nothing in the code or comments indicates that it wants to ignore
+non-printing characters. Even if the intention of your change had
+indeed been to ignore such characters, you would have used !isprint()
+or !iswprint().
+
+>> You're changing the behavior of the function (assuming I'm reading it
+>> correctly), which is why I asked if you verified that doing so was
+>> safe. The existing code considers "foo bar" and "foo bar " to be
+>> different. With your change, they are considered equal, which is
+>> actually more in line with what the function comment says.
+>> Nevertheless, callers may be relying upon the existing behavior.
+>>
+>> At the very least, the unit tests should be run as a quick check of
+>> whether if this behavior change introduces problems. Manual inspection
+>> of callers also wouldn't hurt.
+>>
+> I did not think about that possibility, because I ran `make` and the
+> tests passed so I thought that that would be ok.
+
+Unit tests may cover a lot of functionality, but there will always be
+holes in the coverage. Thus, it's a good idea to examine callers and
+surrounding code manually, as well.
+
+Since this is a behavior change, it deserves mention in the commit
+message, as well as assurance that you verified (as best you can) that
+it did not break existing callers. (It also wouldn't hurt to mention
+that it brings the code more in line with the function documentation.)
+
+> Anyway, do you have any ideas on how to improve that function?
+
+Michael gave you a strong clue when he asked what would happen, with
+your change in place, if the string consisted only of whitespace. The
+loops you touched are already fragile, even without your change.
+Making them more robust would likely be considered an improvement.
+
+> Thanks again for the feedback.
+>
 > --
-> 1.9.1.286.g5172cb3
->
+> papanikge's surrogate email.
+> I may reply back.
+> http://www.5slingshots.com/I did not think about that possibility.
