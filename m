@@ -1,50 +1,60 @@
-From: David Cowden <dcow90@gmail.com>
-Subject: Git-hooks pre-push script does not receive input on stdin
-Date: Sat, 22 Mar 2014 17:44:07 -0700
-Message-ID: <CAC1XvcPshKQXuRPDd8reb6fsDU3BNOsBAUKO25_dVBD331=yRQ@mail.gmail.com>
+From: Tanay Abhra <tanayabh@gmail.com>
+Subject: Re: [PATCH] Modify =?utf-8?b?ZnNja19jb21taXQu?= Replace memcmp by =?utf-8?b?c2tpcF9wcmVmaXg=?=
+Date: Sun, 23 Mar 2014 06:08:19 +0000 (UTC)
+Message-ID: <loom.20140323T065455-697@post.gmane.org>
+References: <1395501132-12894-1-git-send-email-ajha.dev@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 23 01:44:17 2014
+X-From: git-owner@vger.kernel.org Sun Mar 23 07:09:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WRWWN-0001FQ-Sa
-	for gcvg-git-2@plane.gmane.org; Sun, 23 Mar 2014 01:44:16 +0100
+	id 1WRbb4-0002Ya-Ld
+	for gcvg-git-2@plane.gmane.org; Sun, 23 Mar 2014 07:09:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751658AbaCWAoK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Mar 2014 20:44:10 -0400
-Received: from mail-qg0-f49.google.com ([209.85.192.49]:55416 "EHLO
-	mail-qg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751092AbaCWAoI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Mar 2014 20:44:08 -0400
-Received: by mail-qg0-f49.google.com with SMTP id z60so12023502qgd.8
-        for <git@vger.kernel.org>; Sat, 22 Mar 2014 17:44:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=D5oayq+B6PWES24cp+R48b4+7rQwhLb5PU7rXW+lyuI=;
-        b=0GGTzsz/Que3L4QmHcu7gALUSLNQ2nt+TQjY79OH0/QoqiYXQwEvzdrUIHDYTHdY3M
-         /bL8a/0eVa9PmJjA6wCDzNV4hghYj2BC7Fm7qOBwpktNNZg2gljmXRRNqEfTg85dxtzK
-         HlYnXiXJyIR/GjvZlooiE5IxJHfPwA3TDjfRLElznQH6ROy9hVFpsDTUs5TOvpyYNsO8
-         c/PIsl2iNAGfZqN8Rf3aALDRfVaZ4YABa68no1lpW9ReqCJGK/ue7Db9J9klqqjW+q43
-         Rz8KSkNcrfJsd/flE5uSlMU1XdKqGM5v+9M3aQ0A5glca3cS4N5kWYy3KPtrx1SkOCmQ
-         PM6Q==
-X-Received: by 10.140.102.2 with SMTP id v2mr64304298qge.27.1395535447920;
- Sat, 22 Mar 2014 17:44:07 -0700 (PDT)
-Received: by 10.140.91.14 with HTTP; Sat, 22 Mar 2014 17:44:07 -0700 (PDT)
+	id S1750798AbaCWGIt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Mar 2014 02:08:49 -0400
+Received: from plane.gmane.org ([80.91.229.3]:50945 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750737AbaCWGIs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Mar 2014 02:08:48 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1WRbaP-0001uh-1i
+	for git@vger.kernel.org; Sun, 23 Mar 2014 07:08:45 +0100
+Received: from 117.254.218.89 ([117.254.218.89])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 23 Mar 2014 07:08:45 +0100
+Received: from tanayabh by 117.254.218.89 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 23 Mar 2014 07:08:45 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 117.254.218.89 (Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Firefox/24.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244788>
 
-http://stackoverflow.com/questions/22585091/git-hooks-pre-push-script-does-not-receive-input-via-stdin
+Hi,
 
-Is this a bug in git?  Or am I just a shell noob?
+Nit: In subject, patch should be like [PATCH v2] for each increasing order
+of revision.
 
-Thanks in advance,
+Also, after the --- (three dashes), you can write what you changed with each
+patch revision. Also to link the previous patches if you can.
 
-David
+So the corrected mail subject header will look something like this,
+ 
+  [PATCH v2] fsck_commit.c: Replace memcmp() by skip_prefix()
+
+Cheers,
+Tanay Abhra.
