@@ -1,75 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 04/10] t4209: use helper functions to test --grep
-Date: Mon, 24 Mar 2014 11:22:58 -0700
-Message-ID: <xmqq38i7qwvx.fsf@gitster.dls.corp.google.com>
-References: <1395508560-19893-1-git-send-email-l.s.r@web.de>
-	<1395508560-19893-5-git-send-email-l.s.r@web.de>
+From: Scott Sandler <scott.m.sandler@gmail.com>
+Subject: Git push race condition?
+Date: Mon, 24 Mar 2014 15:18:14 -0400
+Message-ID: <CAAyEjTN53+5B9Od9wW698wODNL3hR6Upot8-ZLwEksn3ir_zjA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-X-From: git-owner@vger.kernel.org Mon Mar 24 19:23:31 2014
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 24 20:18:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WS9X0-0006T7-9P
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Mar 2014 19:23:30 +0100
+	id 1WSAOC-0004bJ-3W
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Mar 2014 20:18:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753785AbaCXSXE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Mar 2014 14:23:04 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42249 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753610AbaCXSXC convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 Mar 2014 14:23:02 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0E40474613;
-	Mon, 24 Mar 2014 14:23:02 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=iyApkIlGIZJJKEKwb82BSQfPJ
-	+s=; b=kYpXy/6NKiDjebnYR8ozZRaSlRmnroySGiw6sLwuKrj1ssiNDEyn2bUtN
-	huhh0wK0ZDak8ceItN4O8xuo6NGMvnZumrDu4VNxkb3reNd4j2qX8kJc0qXTQdz9
-	bBuoVcqdssr/GqhuroOzh1SSAtFL7bl0egFGu5l0t0U3y9mDg8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=KSgAqm4i6DDWjY4qEPl
-	9jDLWIXH0eCHDl0BUV5nC0EtWND0meLa35T1TIxDvm7vlzarvXWFPh50qe7kV2hH
-	0K4T8DVcAq/izrHofmna9GwvOZeDYhB2iwEkuyALJPSZw/mP9kebBEv6H6O0LyrQ
-	5K6+zWV67JNkearY8ij+eJUI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E95B174612;
-	Mon, 24 Mar 2014 14:23:01 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4A1DB74611;
-	Mon, 24 Mar 2014 14:23:01 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 5537B198-B381-11E3-B86D-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753931AbaCXTSU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Mar 2014 15:18:20 -0400
+Received: from mail-la0-f52.google.com ([209.85.215.52]:42129 "EHLO
+	mail-la0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753928AbaCXTSQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Mar 2014 15:18:16 -0400
+Received: by mail-la0-f52.google.com with SMTP id ec20so3975595lab.39
+        for <git@vger.kernel.org>; Mon, 24 Mar 2014 12:18:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=/Cy0NY6uvZ8sG0MYolSprX98jOWfOcTdU6VmeDbcLiI=;
+        b=ulTNOzI/cZeMe7eO3GpSUFLu+sY0P32HT9Ii73uGwCVCamf0wIlwxK0Ih4gAS9BCJU
+         b7ELZaMEXSx4HcfjMFKSohiszZHzZbLEYN37K1Z4ix1kx36eJXftHY4/SfXL0G2a59gd
+         stw03/jDz4ZmhlMIv8Rp/zbpGBG2FL9dM7kfAEJ8LkA9QxEgLeZkg2oPaaYBM2Zn35Jw
+         rqi/DLWmTk1NuCnkTKmtijaXOmh5LfM985cK6Kr0u0ecvhdCHw8QaIHygRWV7nFgIQcb
+         KONlR+ng7fOYEUHUT3xpN6cJY1qhCHgWa0HP52+TXJ4vnNaAVs9Q5TkW1MvyXOw1ykFv
+         h6qQ==
+X-Received: by 10.112.118.20 with SMTP id ki20mr2098659lbb.45.1395688694589;
+ Mon, 24 Mar 2014 12:18:14 -0700 (PDT)
+Received: by 10.114.64.103 with HTTP; Mon, 24 Mar 2014 12:18:14 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244860>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244861>
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+Hi folks,
 
-> -test_expect_success 'log --grep -i' '
-> -	git log -i --grep=3DInItial --format=3D%H >actual &&
-> -	test_cmp expect_initial actual
-> -'
-> +test_log	expect_initial	--grep initial
-> +test_log	expect_nomatch	--grep InItial
+I run a private Git repository (using Gitlab) with about 200 users
+doing about 100 pushes per day.
 
-This, and the next --author one, assumes that we will never break
-"--grep=3Dfoo" without breaking "--grep foo".  That should be OK, but
-we might want to add separate tests e.g.
+I've noticed that a few times in the past several weeks, we've had
+events where pushes have been lost when two people pushed at just
+about the same time. The scenario is that two users both have commits
+based on commit A, call them B and B'. The user with commit B pushes
+at about the same time as the user who pushes B'. Both pushes are
+determined to be fast-forwards and both succeed, but B' overwrites B
+and B is no longer on origin/master. The server does have B in its
+.git directory but the commit isn't on any branch.
 
-	test_log expect_initial --grep=3Dinitial
+I'm confident nobody is force pushing (we have a hook to disallow it
+on master branches and I've seen screenshots of both user's clients
+after they pushed). Both git clients say "successfully pushed A..B
+master -> master" (or A..B') in the output of their push commands.
+However, when the user that had B does a fetch, it shows master as
+having been force updated.
 
-perhaps?  I dunno.
+We have a few pre-receive hooks and post-receive hooks that run on
+pushes, and Gitlab has an update hook as well. My original theory was
+that this was happening because Git checks if it's a fast-forward
+before running hooks, and that the hooks taking a few seconds creates
+more opportunity for a race condition to occur.
 
-Queued without any tweaks for now.  Thanks.
+However, after reading
+http://git.661346.n2.nabble.com/push-race-td7569254.html and doing
+some of my own testing (creating a hook that runs for 60 seconds and
+pushing from two locations to a test repo) this theory seems to be
+wrong. With the 60 second sleep hook (tried as an update hook and a
+pre-receive hook), I wasn't able to reproduce the problem. The second
+pusher always got an error like this:
+
+error: Ref refs/heads/master is at
+4584c1f34e07cea2df6abc8e0d407fe016017130 but expected
+61b79b6d35b066d054fb3deab550f1c51598cf5f
+remote: error: failed to lock refs/heads/master
+
+Which looks like exactly what I'd want Git to be doing in this
+scenario, and supports what that archived thread says about how this
+should work.
+
+So the question is, how might this be happening and what can I do about it?
+
+Thanks,
+Scott
