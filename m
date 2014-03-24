@@ -1,91 +1,72 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 03/12] t: drop useless sane_unset GIT_* calls
-Date: Mon, 24 Mar 2014 17:56:38 -0400
-Message-ID: <20140324215638.GH13728@sigill.intra.peff.net>
+Subject: Re: [PATCH 04/12] t: stop using GIT_CONFIG to cross repo boundaries
+Date: Mon, 24 Mar 2014 18:00:11 -0400
+Message-ID: <20140324220011.GI13728@sigill.intra.peff.net>
 References: <20140320231159.GA7774@sigill.intra.peff.net>
- <20140320231433.GC8479@sigill.intra.peff.net>
- <xmqqy503s0s0.fsf@gitster.dls.corp.google.com>
+ <20140320231524.GD8479@sigill.intra.peff.net>
+ <xmqqtxars0ph.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: David Tran <unsignedzero@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 24 22:56:45 2014
+X-From: git-owner@vger.kernel.org Mon Mar 24 23:00:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSCrM-0006y9-Sk
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Mar 2014 22:56:45 +0100
+	id 1WSCus-0002mu-Gr
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Mar 2014 23:00:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751076AbaCXV4l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Mar 2014 17:56:41 -0400
-Received: from cloud.peff.net ([50.56.180.127]:46139 "HELO peff.net"
+	id S1751176AbaCXWAP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Mar 2014 18:00:15 -0400
+Received: from cloud.peff.net ([50.56.180.127]:46163 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750790AbaCXV4k (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Mar 2014 17:56:40 -0400
-Received: (qmail 10215 invoked by uid 102); 24 Mar 2014 21:56:40 -0000
+	id S1750790AbaCXWAN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Mar 2014 18:00:13 -0400
+Received: (qmail 10384 invoked by uid 102); 24 Mar 2014 22:00:13 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 24 Mar 2014 16:56:40 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 24 Mar 2014 17:56:38 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 24 Mar 2014 17:00:13 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 24 Mar 2014 18:00:11 -0400
 Content-Disposition: inline
-In-Reply-To: <xmqqy503s0s0.fsf@gitster.dls.corp.google.com>
+In-Reply-To: <xmqqtxars0ph.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244886>
 
-On Fri, Mar 21, 2014 at 02:24:31PM -0700, Junio C Hamano wrote:
+On Fri, Mar 21, 2014 at 02:26:02PM -0700, Junio C Hamano wrote:
 
-> > Unsetting these is not only useless, but can be confusing to
-> > a reader, who may wonder why some tests in a script unset
-> > them and others do not (t0001 is particularly guilty of this
-> > inconsistency, probably because many of its tests predate
-> > the test-lib.sh environment-cleansing).
-> [...]
-> > I suppose one could make an argument that test-lib.sh may later change
-> > the set of variables it clears, and these unsets are documenting an
-> > explicit need of each test. I'd find that more compelling if it were
-> > actually applied consistently.
+> Jeff King <peff@peff.net> writes:
 > 
-> Hmph.  I am looking at "git show HEAD^:t/t0001-init.sh" after
-> applying this patch, and it does look consistently done with
-> GIT_CONFIG and GIT_DIR (I am not sure about GIT_WORK_TREE but from a
-> cursory read it is done consistently for tests on non-bare
-> repositories).
-
-I don't understand why we stop bothering with the unsets starting with
-"init with --template". Are those variables not important to the outcome
-of that and later tests, or did the author simply not bother because
-they are noops?
-
-> So I would actually agree with your alternative interpretation
-> "Unsetting these is useless, but it does serve documentation
-> purpose---without having to see what the state of the environment
-> when the subprocess is started, the reader can understand what is
-> being tested", rather than the one in the log message.
-
-I'd agree with that if I were convinced that the presence of them there
-versus the absence of them later was meaningful.
-
-> Having said that, I am perfectly OK with the change to t0001 in this
-> patch, if we added at the very beginning of the test sequence a
-> comment that says:
+> > Some tests want to check or set config in another
+> > repository. E.g., t1000 creates repositories and makes sure
+> > that their core.bare and core.worktree settings are what we
+> > expect. We can do this with:
+> >
+> >   GIT_CONFIG=$repo/.git/config git config ...
+> >
+> > but it better shows the intent to just enter the repository
+> > and let "git config" do the normal lookups:
+> >
+> >   (cd $repo && git config ...)
+> >
+> > In theory, this would cause us to use an extra subshell, but
+> > in all such cases, we are actually already in a subshell.
 > 
->     Below, creation and use of repositories are tested with various
->     combinations of environment settings and command line flags.
->     They are done inside subshells to avoid leaking temporary
->     environment settings to later tests *and* assumes that the
->     initial environment does not have have GIT_DIR, GIT_CONFIG, and
->     GIT_WORK_TREE defined.
-> 
-> or something.
+> Sure; alternatively we could use "git -C $there", but this rewrite
+> is fine by me.
 
-I do not have a problem with that, as it implicitly covers all of the
-tests following it. I do not think it is particularly necessary, though.
-Assuming we start with a known test environment and avoiding polluting
-it for further tests are basic principles of _all_ test scripts.
+The existing callers all pass actual $GIT_DIRs, so I initially wrote it
+as "git --git-dir=$repo config ...". Doing it as "-C" is perhaps nicer,
+as callers could potentially pass a shorter string to the repo root,
+and not bother with adding "/.git". However, t0001 needs the actual
+$GIT_DIR (because it looks for things like the refs/ directory in the
+same function), and the other callers are just passing bare repos.
+
+So I'm fine with any of them. Feel free to mark it up if you have a
+preference.
 
 -Peff
