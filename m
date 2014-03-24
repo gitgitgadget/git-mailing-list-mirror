@@ -1,73 +1,65 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 04/10] t4209: use helper functions to test --grep
-Date: Mon, 24 Mar 2014 17:14:12 -0400
-Message-ID: <20140324211412.GB13728@sigill.intra.peff.net>
-References: <1395508560-19893-1-git-send-email-l.s.r@web.de>
- <1395508560-19893-5-git-send-email-l.s.r@web.de>
- <xmqq38i7qwvx.fsf@gitster.dls.corp.google.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: Git push race condition?
+Date: Mon, 24 Mar 2014 22:16:52 +0100
+Message-ID: <CACBZZX4ZEPA3sBp4-3QF6de0EWXzPkcOiqSxH3_CXV27Z=gxtw@mail.gmail.com>
+References: <CAAyEjTN53+5B9Od9wW698wODNL3hR6Upot8-ZLwEksn3ir_zjA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 24 22:14:20 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Scott Sandler <scott.m.sandler@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 24 22:17:21 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSCCI-0007Vk-Uw
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Mar 2014 22:14:19 +0100
+	id 1WSCFE-0002hr-JT
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Mar 2014 22:17:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750921AbaCXVOP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Mar 2014 17:14:15 -0400
-Received: from cloud.peff.net ([50.56.180.127]:46019 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750790AbaCXVOO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Mar 2014 17:14:14 -0400
-Received: (qmail 7605 invoked by uid 102); 24 Mar 2014 21:14:13 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 24 Mar 2014 16:14:13 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 24 Mar 2014 17:14:12 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqq38i7qwvx.fsf@gitster.dls.corp.google.com>
+	id S1751046AbaCXVRO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Mar 2014 17:17:14 -0400
+Received: from mail-oa0-f45.google.com ([209.85.219.45]:56566 "EHLO
+	mail-oa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750972AbaCXVRN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Mar 2014 17:17:13 -0400
+Received: by mail-oa0-f45.google.com with SMTP id eb12so6204765oac.4
+        for <git@vger.kernel.org>; Mon, 24 Mar 2014 14:17:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=YmmIfQTrz7NJudDcn6aeXio4svUGx2a6cQGY3JGUUXo=;
+        b=d+C1j0krsqlABO0a6R1I4IM8Jsccmrz3xTwDNiMmtnI47Ho13QHAC+WFGcCufGNw+R
+         EcXpo3vqJYFgGG2zOSykwqkAOAqQuinyRQfHAUIK+NB8gLC3+RFrtFNPbDDSVYnFGhQl
+         +AkU79zv+lipF3b4qzztSLxq322PNmYg7sezKqqafbNFukeLmwdDPfncao7L1A7kCnMx
+         WYIoaWMCDJMYlQdeAVbegMXBUME5R4rZVtOPn/UN3qzkpRvdz8qH5GI12qrCtUEJlsjk
+         Kl5aaOyoGw17Ai4fDc349egLH+OCBfZfqBdCPtLjG3gKqnXcnVic+jeXs/dUjvA3ShaZ
+         zitw==
+X-Received: by 10.182.2.170 with SMTP id 10mr4161954obv.50.1395695832484; Mon,
+ 24 Mar 2014 14:17:12 -0700 (PDT)
+Received: by 10.76.33.161 with HTTP; Mon, 24 Mar 2014 14:16:52 -0700 (PDT)
+In-Reply-To: <CAAyEjTN53+5B9Od9wW698wODNL3hR6Upot8-ZLwEksn3ir_zjA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244869>
 
-On Mon, Mar 24, 2014 at 11:22:58AM -0700, Junio C Hamano wrote:
+On Mon, Mar 24, 2014 at 8:18 PM, Scott Sandler
+<scott.m.sandler@gmail.com> wrote:
+> I run a private Git repository (using Gitlab) with about 200 users
+> doing about 100 pushes per day.
 
-> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
->=20
-> > -test_expect_success 'log --grep -i' '
-> > -	git log -i --grep=3DInItial --format=3D%H >actual &&
-> > -	test_cmp expect_initial actual
-> > -'
-> > +test_log	expect_initial	--grep initial
-> > +test_log	expect_nomatch	--grep InItial
->=20
-> This, and the next --author one, assumes that we will never break
-> "--grep=3Dfoo" without breaking "--grep foo".  That should be OK, but
-> we might want to add separate tests e.g.
->=20
-> 	test_log expect_initial --grep=3Dinitial
->=20
-> perhaps?  I dunno.
+Ditto but about 2x those numbers.
 
-Yeah, I I'd prefer "--grep=3D" here (and in all scripts).  In general, =
-I
-think our attitude should be that "--foo=3Dbar" is guaranteed to work
-forever, but "--foo bar" is not. The latter only works if the argument
-is non-optional, so that leaves us room to "break" compatibility to mak=
-e
-an argument optional in a future version.
+> error: Ref refs/heads/master is at
+> 4584c1f34e07cea2df6abc8e0d407fe016017130 but expected
+> 61b79b6d35b066d054fb3deab550f1c51598cf5f
+> remote: error: failed to lock refs/heads/master
 
-Now, whether the rest of the world and its script-writers are aware of
-this fact, I don't know. So it may be too late already (but it does loo=
-k
-like we mention it in gitcli(7)).
+I also see this error once in a while. I read the code a while back
+and it's basically because there's two levels of locks that
+receive-pack tries to get, and it's possible for two pushers to get
+the first lock due to a race condition.
 
--Peff
+I've never seen data loss due to this though, because the inner lock is atomic.
