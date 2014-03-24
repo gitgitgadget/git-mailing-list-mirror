@@ -1,65 +1,169 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: Git push race condition?
-Date: Mon, 24 Mar 2014 22:16:52 +0100
-Message-ID: <CACBZZX4ZEPA3sBp4-3QF6de0EWXzPkcOiqSxH3_CXV27Z=gxtw@mail.gmail.com>
-References: <CAAyEjTN53+5B9Od9wW698wODNL3hR6Upot8-ZLwEksn3ir_zjA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 12/19] tree-diff: remove special-case diff-emitting code for empty-tree cases
+Date: Mon, 24 Mar 2014 14:18:10 -0700
+Message-ID: <xmqqior3pa7h.fsf@gitster.dls.corp.google.com>
+References: <cover.1393257006.git.kirr@mns.spb.ru>
+	<dad40b2cf785e5951c105cac936d86a7bc6db8a3.1393257006.git.kirr@mns.spb.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Scott Sandler <scott.m.sandler@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 24 22:17:21 2014
+Content-Type: text/plain; charset=iso-2022-jp
+Cc: git@vger.kernel.org
+To: Kirill Smelkov <kirr@mns.spb.ru>
+X-From: git-owner@vger.kernel.org Mon Mar 24 22:18:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSCFE-0002hr-JT
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Mar 2014 22:17:20 +0100
+	id 1WSCGC-0003tp-Gm
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Mar 2014 22:18:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751046AbaCXVRO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Mar 2014 17:17:14 -0400
-Received: from mail-oa0-f45.google.com ([209.85.219.45]:56566 "EHLO
-	mail-oa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750972AbaCXVRN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Mar 2014 17:17:13 -0400
-Received: by mail-oa0-f45.google.com with SMTP id eb12so6204765oac.4
-        for <git@vger.kernel.org>; Mon, 24 Mar 2014 14:17:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=YmmIfQTrz7NJudDcn6aeXio4svUGx2a6cQGY3JGUUXo=;
-        b=d+C1j0krsqlABO0a6R1I4IM8Jsccmrz3xTwDNiMmtnI47Ho13QHAC+WFGcCufGNw+R
-         EcXpo3vqJYFgGG2zOSykwqkAOAqQuinyRQfHAUIK+NB8gLC3+RFrtFNPbDDSVYnFGhQl
-         +AkU79zv+lipF3b4qzztSLxq322PNmYg7sezKqqafbNFukeLmwdDPfncao7L1A7kCnMx
-         WYIoaWMCDJMYlQdeAVbegMXBUME5R4rZVtOPn/UN3qzkpRvdz8qH5GI12qrCtUEJlsjk
-         Kl5aaOyoGw17Ai4fDc349egLH+OCBfZfqBdCPtLjG3gKqnXcnVic+jeXs/dUjvA3ShaZ
-         zitw==
-X-Received: by 10.182.2.170 with SMTP id 10mr4161954obv.50.1395695832484; Mon,
- 24 Mar 2014 14:17:12 -0700 (PDT)
-Received: by 10.76.33.161 with HTTP; Mon, 24 Mar 2014 14:16:52 -0700 (PDT)
-In-Reply-To: <CAAyEjTN53+5B9Od9wW698wODNL3hR6Upot8-ZLwEksn3ir_zjA@mail.gmail.com>
+	id S1751141AbaCXVSQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Mar 2014 17:18:16 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60184 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751070AbaCXVSP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Mar 2014 17:18:15 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3BCB077A35;
+	Mon, 24 Mar 2014 17:18:14 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=OTXUDP7HvslJz06lBLxuRiRGdBQ=; b=haFvTV
+	3zbnXYm3SvIXTY2XcNi0P5AgYYFPoRfmuZC41BZBAi2UHulbuGzsOSRwuPcHpKxu
+	fIfvRnfSRqpW6Cjy2AfwwQmahhXJFeGiAm3qjC7UH682Y99sO6ot9LWVY9ePAI8X
+	Pu1/iSRz7FI0igJob70OQyYDz2Ij7v/bmC5fc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Yh2VVeDRyzAmyX0zlTKRtc56AD5w0vN3
+	ncoC0pzoaCP3K1m5yR6IDzG51OqnCzeJbzOUhePjrGIOnAdK8ot/hCUKsi4OwxVN
+	B4ri/hbzXO9rrPveWa42B1vDLhhQBtPmSPW+eO1WD3UT0RvY8kFuOp2H8ld/WAXS
+	mTWeL3iFNfs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2266E77A34;
+	Mon, 24 Mar 2014 17:18:14 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6858D77A31;
+	Mon, 24 Mar 2014 17:18:13 -0400 (EDT)
+In-Reply-To: <dad40b2cf785e5951c105cac936d86a7bc6db8a3.1393257006.git.kirr@mns.spb.ru>
+	(Kirill Smelkov's message of "Mon, 24 Feb 2014 20:21:44 +0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: CEEE9016-B399-11E3-B67A-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244869>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244870>
 
-On Mon, Mar 24, 2014 at 8:18 PM, Scott Sandler
-<scott.m.sandler@gmail.com> wrote:
-> I run a private Git repository (using Gitlab) with about 200 users
-> doing about 100 pushes per day.
+Kirill Smelkov <kirr@mns.spb.ru> writes:
 
-Ditto but about 2x those numbers.
+> via teaching tree_entry_pathcmp() how to compare empty tree descriptors:
 
-> error: Ref refs/heads/master is at
-> 4584c1f34e07cea2df6abc8e0d407fe016017130 but expected
-> 61b79b6d35b066d054fb3deab550f1c51598cf5f
-> remote: error: failed to lock refs/heads/master
+Drop this line, as you explain the "pretend empty compares bigger
+than anything else" idea later anyway?  This early part of the
+proposed log message made me hiccup while reading it.
 
-I also see this error once in a while. I read the code a while back
-and it's basically because there's two levels of locks that
-receive-pack tries to get, and it's possible for two pushers to get
-the first lock due to a race condition.
+> While walking trees, we iterate their entries from lowest to highest in
+> sort order, so empty tree means all entries were already went over.
+>
+> If we artificially assign +infinity value to such tree "entry", it will
+> go after all usual entries, and through the usual driver loop we will be
+> taking the same actions, which were hand-coded for special cases, i.e.
+>
+>     t1 empty, t2 non-empty
+>         pathcmp(+∞, t2) -> +1
+>         show_path(/*t1=*/NULL, t2);     /* = t1 > t2 case in main loop */
+>
+>     t1 non-empty, t2-empty
+>         pathcmp(t1, +∞) -> -1
+>         show_path(t1, /*t2=*/NULL);     /* = t1 < t2 case in main loop */
 
-I've never seen data loss due to this though, because the inner lock is atomic.
+Sounds good.  I would have phrased a bit differently, though:
+
+    When we have T1 and T2, we return a sign that tells the caller
+    to indicate the "earlier" one to be emitted, and by returning
+    the sign that causes the non-empty side to be emitted, we will
+    automatically cause the entries from the remaining side to be
+    emitted, without attempting to touch the empty side at all.  We
+    can teach tree_entry_pathcmp() to pretend that an empty tree has
+    an element that sorts after anything else to achieve this.
+
+without saying "infinity".
+
+> Right now we never go to when compared tree descriptors are infinity,...
+
+Sorry, but I cannot parse this.
+
+> as
+> this condition is checked in the loop beginning as finishing criteria,
+
+What condition and which loop?  The loop that immediately surrounds
+the callsite of tree_entry_pathcmp() is the infinite "for (;;) {" loop,
+and after it prepares t1 and t2 by skipping paths outside pathspec,
+we check if both are empty (i.e. we ran out).  Is that the condition
+you are referring to?
+
+> but will do in the future, when there will be several parents iterated
+> simultaneously, and some pair of them would run to the end.
+>
+> Signed-off-by: Kirill Smelkov <kirr@mns.spb.ru>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>
+> ( re-posting without change )
+>
+>  tree-diff.c | 21 +++++++++------------
+>  1 file changed, 9 insertions(+), 12 deletions(-)
+>
+> diff --git a/tree-diff.c b/tree-diff.c
+> index cf96ad7..2fd6d0e 100644
+> --- a/tree-diff.c
+> +++ b/tree-diff.c
+> @@ -12,12 +12,19 @@
+>   *
+>   * NOTE files and directories *always* compare differently, even when having
+>   *      the same name - thanks to base_name_compare().
+> + *
+> + * NOTE empty (=invalid) descriptor(s) take part in comparison as +infty.
+
+The basic idea is very sane.  It is a nice (and obvious---once you
+are told about the trick) and clean restructuring of the code.
+
+>   */
+>  static int tree_entry_pathcmp(struct tree_desc *t1, struct tree_desc *t2)
+>  {
+>  	struct name_entry *e1, *e2;
+>  	int cmp;
+>  
+> +	if (!t1->size)
+> +		return t2->size ? +1 /* +∞ > c */  : 0 /* +∞ = +∞ */;
+> +	else if (!t2->size)
+> +		return -1;	/* c < +∞ */
+
+Where do these "c" come from?  I somehow feel that these comments
+are making it harder to understand what is going on.
+
+>  	e1 = &t1->entry;
+>  	e2 = &t2->entry;
+>  	cmp = base_name_compare(e1->path, tree_entry_len(e1), e1->mode,
+> @@ -151,18 +158,8 @@ int diff_tree(struct tree_desc *t1, struct tree_desc *t2,
+>  			skip_uninteresting(t1, &base, opt);
+>  			skip_uninteresting(t2, &base, opt);
+>  		}
+> -		if (!t1->size) {
+> -			if (!t2->size)
+> -				break;
+> -			show_path(&base, opt, /*t1=*/NULL, t2);
+> -			update_tree_entry(t2);
+> -			continue;
+> -		}
+> -		if (!t2->size) {
+> -			show_path(&base, opt, t1, /*t2=*/NULL);
+> -			update_tree_entry(t1);
+> -			continue;
+> -		}
+> +		if (!t1->size && !t2->size)
+> +			break;
+>  
+>  		cmp = tree_entry_pathcmp(t1, t2);
