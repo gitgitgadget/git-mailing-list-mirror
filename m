@@ -1,125 +1,117 @@
-From: Per Cederqvist <cederp@opera.com>
-Subject: Re: [GUILT 04/28] Allow "guilt import-commit" to run from a dir which
- contains spaces.
-Date: Sun, 23 Mar 2014 22:13:53 +0100
-Message-ID: <CAP=KgsTVfJ-P9OvpHOHf8kOtf+nZAwY94Dr4FcPDnwr23XP7+Q@mail.gmail.com>
-References: <1395387126-13681-1-git-send-email-cederp@opera.com>
-	<1395387126-13681-5-git-send-email-cederp@opera.com>
-	<20140323170409.GG1661@meili.valhalla.31bits.net>
-	<CAP=KgsSBcsG1kMfyc=MbUDCuC+4W9Boa2Fwf-FSg6XNxaCAt8g@mail.gmail.com>
-	<20140323200739.GJ1661@meili.valhalla.31bits.net>
+From: Siddharth Agarwal <sid0@fb.com>
+Subject: Re: with reuse-delta patches, fetching with bitmaps segfaults due
+ to possibly incomplete bitmap traverse
+Date: Sun, 23 Mar 2014 17:01:00 -0700
+Message-ID: <532F75BC.7080301@fb.com>
+References: <532CFC6F.8000008@fb.com> <20140322125626.GA22890@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Jeff Sipek <jeffpc@josefsipek.net>
-X-From: git-owner@vger.kernel.org Sun Mar 23 22:14:27 2014
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>, <bmaurer@fb.com>,
+	Aaron Kushner <akushner@fb.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Mar 24 01:01:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WRpit-0005l4-4G
-	for gcvg-git-2@plane.gmane.org; Sun, 23 Mar 2014 22:14:27 +0100
+	id 1WRsKo-0002H2-Ov
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Mar 2014 01:01:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750920AbaCWVNy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Mar 2014 17:13:54 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:51384 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750749AbaCWVNy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Mar 2014 17:13:54 -0400
-Received: by mail-ie0-f174.google.com with SMTP id rp18so4632604iec.19
-        for <git@vger.kernel.org>; Sun, 23 Mar 2014 14:13:53 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=y9AEHH9ptAgzze5DZKhwq7XVKkaYh9Ya8ZawLB5p2Ho=;
-        b=gV1kbc9XoltQLOk5ZpwZapu/F9avkpKDBrDlznqivUW7BksVMHTgLxmq8GFKOUZ9QR
-         +ERnju5V8pV7kTq6i/DY/o5eJuUEeLKBDsUccX6zxLrX0JkE9t1RijBBwqoSCdvvQ0zM
-         I+stCETjhyf7+AU7LUyT8G7NlJOiZ/Gvc5VNzZDXA0FXkTaIGWD3/vhbUPY0VGZ4ipMc
-         TCk8JNSWOiLXmkj0s6Mcv8T7qeqqEM4kafixDN+LBk5At90g8GGBuxLSFPPPX9Q9YnaA
-         hOz53phFiBsa1emymKprFavPmMr0LZyRo4oTfr5s8XxsKsQ6jIHUocfkgVGfBLdDSU9z
-         7dQA==
-X-Gm-Message-State: ALoCoQlAJL0LffqSKBWkv1YxZUkUyLjSe99IxAQOyqG8N/WOi3flhDLVw1RpShruFemuM0kEq4MS
-X-Received: by 10.50.225.134 with SMTP id rk6mr8251707igc.31.1395609233610;
- Sun, 23 Mar 2014 14:13:53 -0700 (PDT)
-Received: by 10.42.44.198 with HTTP; Sun, 23 Mar 2014 14:13:53 -0700 (PDT)
-In-Reply-To: <20140323200739.GJ1661@meili.valhalla.31bits.net>
+	id S1750881AbaCXABH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Mar 2014 20:01:07 -0400
+Received: from mx0b-00082601.pphosted.com ([67.231.153.30]:8205 "EHLO
+	mx0b-00082601.pphosted.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750823AbaCXABF (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 23 Mar 2014 20:01:05 -0400
+Received: from pps.filterd (m0004060 [127.0.0.1])
+	by mx0b-00082601.pphosted.com (8.14.5/8.14.5) with SMTP id s2NNovBa024149;
+	Sun, 23 Mar 2014 17:01:04 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fb.com; h=message-id : date : from :
+ mime-version : to : cc : subject : references : in-reply-to : content-type
+ : content-transfer-encoding; s=facebook;
+ bh=q198JlQbeiIhMWtx6O9n4kkriJ/BqrkW5nUKqrraytg=;
+ b=NGaYB059q6243g5yVeeExIvmQybkHDz9hmNK+iyOX9MlyYrUIxVWINoEV9GqndBypu+E
+ DclUdA6mALr3KbRp+HtIzIuJzWhOyy83+IROpUK34wvZQkSzQ9Fy4oJkk9CazQHRm0B3
+ NBKSjvpAAQkXthVHNUsuMSfcRu3iPeZJHtE= 
+Received: from mail.thefacebook.com (mailwest.thefacebook.com [173.252.71.148])
+	by mx0b-00082601.pphosted.com with ESMTP id 1jt8ge03ng-1
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=OK);
+	Sun, 23 Mar 2014 17:01:03 -0700
+Received: from [172.26.2.4] (192.168.57.29) by mail.thefacebook.com
+ (192.168.16.11) with Microsoft SMTP Server (TLS) id 14.3.174.1; Sun, 23 Mar
+ 2014 17:01:01 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
+In-Reply-To: <20140322125626.GA22890@sigill.intra.peff.net>
+X-Originating-IP: [192.168.57.29]
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:5.11.87,1.0.14,0.0.0000
+ definitions=2014-03-23_02:2014-03-21,2014-03-23,1970-01-01 signatures=0
+X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
+ kscore.is_bulkscore=6.62758736780233e-12 kscore.compositescore=0
+ circleOfTrustscore=0 compositescore=0.997600857122248
+ urlsuspect_oldscore=0.997600857122248 suspectscore=0
+ recipient_domain_to_sender_totalscore=0 phishscore=0 bulkscore=0
+ kscore.is_spamscore=0 recipient_to_sender_totalscore=0
+ recipient_domain_to_sender_domain_totalscore=64355
+ rbsscore=0.997600857122248 spamscore=0
+ recipient_to_sender_domain_totalscore=0 urlsuspectscore=0.9 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=7.0.1-1402240000
+ definitions=main-1403230170
+X-FB-Internal: deliver
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244808>
 
-On Sun, Mar 23, 2014 at 9:07 PM, Jeff Sipek <jeffpc@josefsipek.net> wrote:
-> On Sun, Mar 23, 2014 at 08:57:08PM +0100, Per Cederqvist wrote:
->> On Sun, Mar 23, 2014 at 6:04 PM, Jeff Sipek <jeffpc@josefsipek.net> wrote:
->>
->> > On Fri, Mar 21, 2014 at 08:31:42AM +0100, Per Cederqvist wrote:
->> >
->> >> Signed-off-by: Per Cederqvist <cederp@opera.com>
->> >> ---
->> >>  guilt-import-commit | 6 +++---
->> >>  1 file changed, 3 insertions(+), 3 deletions(-)
->> >>
->> >> diff --git a/guilt-import-commit b/guilt-import-commit
->> >> index 20dcee2..9488ded 100755
->> >> --- a/guilt-import-commit
->> >> +++ b/guilt-import-commit
->> >> @@ -23,7 +23,7 @@ if ! must_commit_first; then
->> >>  fi
->> >>
->> >>  disp "About to begin conversion..." >&2
->> >> -disp "Current head: `cat $GIT_DIR/refs/heads/\`git_branch\``" >&2
->> >> +disp "Current head: `cat \"$GIT_DIR\"/refs/heads/\`git_branch\``" >&2
->> >
->> > I wonder if it'd be better to use 'git rev-parse' here instead of looking at
->> > the refs directly.
->> >
->> > IOW,
->> >
->> > disp "Current head: `git rev-parse \`git_branch\``" >&2
->>
->> That is probably a good idea. I only made the minimum change
->> required to get the test suite to pass.
+On 03/22/2014 05:56 AM, Jeff King wrote:
+> On Fri, Mar 21, 2014 at 07:58:55PM -0700, Siddharth Agarwal wrote:
 >
-> I totally understand.
+> Is it also reproducible just with the tip of "next"? Note that the
+> patches in jk/bitmap-reuse-delta have not been widely deployed (in
+> particular, we are not yet using them at GitHub, and we track segfaults
+> on our servers closely and have not seen any related to this).
+
+I cannot reproduce this with the tip of next (tested with 4443bfd). 
+That's also --  unsurprisingly -- significantly slower in the 
+compression phase and sends much more data (3x for the pair of repos in 
+the OP) over the wire than a Git that doesn't use bitmaps.
+
+> Those patches allocate extra "fake" entries in the entry->delta fields,
+> which are not accounted for in to_pack.nr_objects. It's entirely
+> possible that those entries are related to the bug you are seeing.
+
+That sounds like it could be the problem, yes.
+
+> Hmm, yeah, that confirms my suspicion. In the earlier loops, we call
+> add_to_write_order, which only adds the object in question, and can
+> never exceed to_pack.nr_objects. In this final loop, we call
+> add_family_to_write_order, which is going to add any deltas that were
+> not already included.
 >
->> > Maybe even $() instead of the inner `` to clean it up some more.
->>
->> Yes, given that that construct is already used in several places
->> it is apparently portable enough for guilt. (I guess nobody uses
->> /bin/sh on Solaris to run guilt. It doesn't support the $(...)
->> construct.)
+> The patch below may fix your problem, but I have a feeling it is not the
+> right thing to do. The point of 81cdec28 is to try to point to a delta
+> entry as if it were a "preferred base" (i.e., something we know that the
+> other side has already). We perhaps want to add these entries to the
+> actual packing list, and skip them as we do with normal preferred_base
+> objects.
+
+The patch does stop Git from segfaulting. I know too little to judge its 
+correctness, though.
+
 >
-> Hrm?  I'm using OpenIndiana (OpenSolaris derivative) and my /bin/sh seems to
-> be a symlink to ksh93.  What version of Solaris are you seeing this behavior
-> on?
-
-Solaris 10:
-
-Last login: Sun Mar 23 20:53:28 2014 from c80-217-121-12.
-Sun Microsystems Inc.   SunOS 5.10      Generic January 2005
-You have mail.
-500 ceder@bacon> uname -a
-SunOS bacon 5.10 Generic_147147-26 sun4u sparc SUNW,Sun-Fire-15000
-501 ceder@bacon> /bin/sh
-$ echo `id`
-uid=105(ceder) gid=20105(ceder)
-$ echo $(id)
-syntax error: `(' unexpected
-
-/bin/sh is a symlink to /sbin/sh.
-
-On Solaris 10, you are supposed to use /usr/xpg4/bin/sh if you want
-a competent standards-compliant shell. /bin/sh is provided as a very
-backward-compatible shell.
-
-> Jeff.
-
-    /ceder
-> --
-> The reasonable man adapts himself to the world; the unreasonable one
-> persists in trying to adapt the world to himself. Therefore all progress
-> depends on the unreasonable man.
->                 - George Bernard Shaw
+> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> index 9fc5321..ca1b0f7 100644
+> --- a/builtin/pack-objects.c
+> +++ b/builtin/pack-objects.c
+> @@ -1437,6 +1437,7 @@ static void check_object(struct object_entry *entry)
+>   			entry->delta = xcalloc(1, sizeof(*entry->delta));
+>   			hashcpy(entry->delta->idx.sha1, base_ref);
+>   			entry->delta->preferred_base = 1;
+> +			entry->delta->filled = 1;
+>   			unuse_pack(&w_curs);
+>   			return;
+>   		}
+>
+> -Peff
