@@ -1,86 +1,80 @@
-From: Ilya Bobyr <ilya.bobyr@gmail.com>
-Subject: Re: [PATCH 1/3] test-lib: Document short options in t/README
-Date: Mon, 24 Mar 2014 10:19:12 -0700
-Message-ID: <53306910.3090807@gmail.com>
-References: <1395650987-5960-1-git-send-email-ilya.bobyr@gmail.com> <1395650987-5960-2-git-send-email-ilya.bobyr@gmail.com> <5330196A.3030101@ramsay1.demon.co.uk>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@inf.ethz.ch>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 24 18:19:31 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 3/3] parse-options: make sure argh string does not have SP or _
+Date: Mon, 24 Mar 2014 10:52:05 -0700
+Message-ID: <1395683525-2868-4-git-send-email-gitster@pobox.com>
+References: <1395481654-5920-1-git-send-email-ilya.bobyr@gmail.com>
+ <1395683525-2868-1-git-send-email-gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 24 18:52:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WS8X1-0006CA-TK
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Mar 2014 18:19:28 +0100
+	id 1WS92w-00038Z-Ov
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Mar 2014 18:52:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753599AbaCXRTX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Mar 2014 13:19:23 -0400
-Received: from mail-pa0-f44.google.com ([209.85.220.44]:43295 "EHLO
-	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753596AbaCXRTV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Mar 2014 13:19:21 -0400
-Received: by mail-pa0-f44.google.com with SMTP id bj1so5771931pad.3
-        for <git@vger.kernel.org>; Mon, 24 Mar 2014 10:19:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=MiYpbvWUCVCgQdswY6BGYOHF6psTLCxBhQwyBGQPnGc=;
-        b=e4YK+R9Ltf87UO+5gGzXBqk6Fz1l5sTxqHVxatn5MNuoq2zdWl/wOlZHuxm/4TjKVZ
-         OXVb4+J8FXO0Xv/erbKs/R+qTo1OkInw+/9TD+GCeWh2Z/th9iL00JUco+FSM04uhG7D
-         mqBVNx8dXSw5Chimm6evQCqInWGzjpvIrBw14LHWPyDgcIu5OQEbZqQALWcfQ/KLqcG6
-         mUBAjP/d1bUUdljEpiUviILPepPB02Q4AN1yT6bVfgVEb67dnzT2lq61TUTG26uTD/DY
-         awshLlC+qOCubCrEAhzWoG0g0jxScpar7/8/oO7jXKb5jrZjdTG0ERzkkQqZIsSor3uW
-         3uGQ==
-X-Received: by 10.66.66.202 with SMTP id h10mr72748705pat.70.1395681561108;
-        Mon, 24 Mar 2014 10:19:21 -0700 (PDT)
-Received: from [192.168.1.2] (c-50-136-172-14.hsd1.ca.comcast.net. [50.136.172.14])
-        by mx.google.com with ESMTPSA id yx3sm34310939pbb.6.2014.03.24.10.19.19
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 24 Mar 2014 10:19:20 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:28.0) Gecko/20100101 Thunderbird/28.0
-In-Reply-To: <5330196A.3030101@ramsay1.demon.co.uk>
+	id S1753726AbaCXRwV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Mar 2014 13:52:21 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48637 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753697AbaCXRwT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Mar 2014 13:52:19 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BAD2875B24;
+	Mon, 24 Mar 2014 13:52:18 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=mAAt
+	fbfZ14fOCyM1jMjMIKRqIJc=; b=Z0XJO1ulB3yGFYr0mNZDv8AJYa0pDu5hktlx
+	NPuu3LkOAyKs6KmM3bWdJ1fGmbxTs5h6NEpvTZWwfttyAoIe00NF7ACM6pyDlQnZ
+	Wp5dJLgjeRshrRmgNByYAus2cd8F3rOoZxGXnWpAcBk+S2JnLDC8cXB6OWod18bk
+	RSvnIg8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=Q/OXCL
+	NXISrgMSHLGVtKj+6YAyQE6E551wo3t27n8hw4nBgOeby0pOB3l7WxwA5TS2ETpc
+	GB6zIeFeFSb7YwihNvYx5VT1JnxV7KFI374fjAcUGKmCwIa/FBDtjIoHiiR8UGEg
+	zFG9w2A0NFVITmou1a3RZ8c1IHYK+kInBXHjM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A7FEC75B23;
+	Mon, 24 Mar 2014 13:52:18 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 938A375B1F;
+	Mon, 24 Mar 2014 13:52:16 -0400 (EDT)
+X-Mailer: git-send-email 1.9.1-471-g8d9dec6
+In-Reply-To: <1395683525-2868-1-git-send-email-gitster@pobox.com>
+X-Pobox-Relay-ID: 09B19328-B37D-11E3-9A94-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244825>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244826>
 
-On 3/24/2014 4:39 AM, Ramsay Jones wrote:
-> On 24/03/14 08:49, Ilya Bobyr wrote:
->> Most arguments that could be provided to a test have short forms.
->> Unless documented the only way to learn then is to read the code.
->>
->> Signed-off-by: Ilya Bobyr <ilya.bobyr@gmail.com>
->> ---
->>  t/README |   10 +++++-----
->>  1 files changed, 5 insertions(+), 5 deletions(-)
->>
->> diff --git a/t/README b/t/README
->> index caeeb9d..ccb5989 100644
->> --- a/t/README
->> +++ b/t/README
->> @@ -71,7 +71,7 @@ You can pass --verbose (or -v), --debug (or -d), and --immediate
->>  (or -i) command line argument to the test, or by setting GIT_TEST_OPTS
->>  appropriately before running "make".
->>  
->> ---verbose::
->> +-v,--verbose::
-> OK
->
->> [...]
->>  
->> ---valgrind=<tool>::
->> +-v,--valgrind=<tool>::
-> The -v short option is taken, above ... :-P
+We encourage to spell an argument hint that consists of multiple
+words as a single-token separated with dashes.  In order to help
+catching violations added by new callers of parse-options, make sure
+argh does not contain SP or _ when the code validates the option
+definitions.
 
-Right %)
-Thanks :)
-This one starts only with "--va", will fix it.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ parse-options.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/parse-options.c b/parse-options.c
+index a5fa0b8..c81d3a0 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -375,6 +375,9 @@ static void parse_options_check(const struct option *opts)
+ 		default:
+ 			; /* ok. (usually accepts an argument) */
+ 		}
++		if (opts->argh &&
++		    strcspn(opts->argh, " _") != strlen(opts->argh))
++			err |= optbug(opts, "multi-word argh should use dash to separate words");
+ 	}
+ 	if (err)
+ 		exit(128);
+-- 
+1.9.1-471-gcccbd8b
