@@ -1,68 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: Git push race condition?
-Date: Mon, 24 Mar 2014 15:44:20 -0700
-Message-ID: <xmqqob0vnrnf.fsf@gitster.dls.corp.google.com>
+Date: Mon, 24 Mar 2014 18:51:36 -0400
+Message-ID: <20140324225136.GA17080@sigill.intra.peff.net>
 References: <CAAyEjTN53+5B9Od9wW698wODNL3hR6Upot8-ZLwEksn3ir_zjA@mail.gmail.com>
-	<vpq61n3bcve.fsf@anie.imag.fr>
-	<CAAyEjTNPqPHswbrrV9pRyXUUqD8dYzJaXQpWr+g3kuBERNLMRw@mail.gmail.com>
-	<vpqa9cf9rkv.fsf@anie.imag.fr>
+ <CACBZZX4ZEPA3sBp4-3QF6de0EWXzPkcOiqSxH3_CXV27Z=gxtw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Scott Sandler <scott.m.sandler@gmail.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Mar 24 23:44:34 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Scott Sandler <scott.m.sandler@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 24 23:51:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSDbe-0004iY-13
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Mar 2014 23:44:34 +0100
+	id 1WSDiY-0004vG-J5
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Mar 2014 23:51:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751141AbaCXWo1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Mar 2014 18:44:27 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50030 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751067AbaCXWo0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Mar 2014 18:44:26 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D123F770CA;
-	Mon, 24 Mar 2014 18:44:25 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=aelSVhaXUdRvwLUZrwiK+4MnyhM=; b=TL8UtW
-	RPp45q575S+SlfPcqr6/n29X98GOObrQQ/ysrBqJqjZt6EeskDt7Bajjd+MaEP0h
-	JXdkWIjrf9q68N03denQ9ZTJYbfTvbYIuCkFDyyUD7zdyUxCU/y3+IqDfQscjO2x
-	kX7K8gJ+wAnz48Nt++vHiy4X0BXi0lMJs+WQM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hy4WLXYCezepTzOe7FTnVAM2Evn8W9nT
-	uCt7XM2qpIldtNrOb3B2S19B6mP4INnXXmfDyQuOMbqkNIjd+28PNS7+BVMdhu4G
-	EvOtNeAvysfuwsb01ZqFv7jETyycfTGMqmNSHnwhwec2oiN64h6jcfLkikRyLAx1
-	BAaIxz5cdas=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BC055770C9;
-	Mon, 24 Mar 2014 18:44:25 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1306D770C8;
-	Mon, 24 Mar 2014 18:44:25 -0400 (EDT)
-In-Reply-To: <vpqa9cf9rkv.fsf@anie.imag.fr> (Matthieu Moy's message of "Mon,
-	24 Mar 2014 23:09:36 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: D97A49A6-B3A5-11E3-AA7C-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751305AbaCXWvi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Mar 2014 18:51:38 -0400
+Received: from cloud.peff.net ([50.56.180.127]:46225 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750816AbaCXWvi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Mar 2014 18:51:38 -0400
+Received: (qmail 13173 invoked by uid 102); 24 Mar 2014 22:51:38 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 24 Mar 2014 17:51:38 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 24 Mar 2014 18:51:36 -0400
+Content-Disposition: inline
+In-Reply-To: <CACBZZX4ZEPA3sBp4-3QF6de0EWXzPkcOiqSxH3_CXV27Z=gxtw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244894>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+On Mon, Mar 24, 2014 at 10:16:52PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 =
+Bjarmason wrote:
 
-> What you describe really looks like a force-push, or a hook doing a ref
-> update (e.g. a hook on a dev branch that updates master if the code
-> passes tests or so).
+> > error: Ref refs/heads/master is at
+> > 4584c1f34e07cea2df6abc8e0d407fe016017130 but expected
+> > 61b79b6d35b066d054fb3deab550f1c51598cf5f
+> > remote: error: failed to lock refs/heads/master
+>=20
+> I also see this error once in a while. I read the code a while back
+> and it's basically because there's two levels of locks that
+> receive-pack tries to get, and it's possible for two pushers to get
+> the first lock due to a race condition.
+>=20
+> I've never seen data loss due to this though, because the inner lock =
+is atomic.
 
-... or a filesystem that is broken.  But I thought this is just a
-plain-vanilla ext4, nothing exotic, so....  Puzzled.
+The reason is that there are not 2 locks. Each side remembers the "old"
+value when it started the operation, and only takes a lock when it come=
+s
+time to write the ref (and then checks that the old value is still
+current). Two pushes happening simultaneously do not have any idea that
+the other is occurring.
+
+-Peff
