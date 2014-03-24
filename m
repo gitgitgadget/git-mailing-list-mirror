@@ -1,72 +1,129 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 04/12] t: stop using GIT_CONFIG to cross repo boundaries
-Date: Mon, 24 Mar 2014 18:00:11 -0400
-Message-ID: <20140324220011.GI13728@sigill.intra.peff.net>
-References: <20140320231159.GA7774@sigill.intra.peff.net>
- <20140320231524.GD8479@sigill.intra.peff.net>
- <xmqqtxars0ph.fsf@gitster.dls.corp.google.com>
+From: Luis Henriques <henrix@camandro.org>
+Subject: [RFC][PATCH] send-email: add --[no-]xmailer option
+Date: Mon, 24 Mar 2014 21:38:27 +0000
+Message-ID: <20140324213814.GA1267@achilles.my.domain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: David Tran <unsignedzero@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 24 23:00:24 2014
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 24 23:03:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSCus-0002mu-Gr
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Mar 2014 23:00:22 +0100
+	id 1WSCy6-0006ru-PP
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Mar 2014 23:03:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751176AbaCXWAP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Mar 2014 18:00:15 -0400
-Received: from cloud.peff.net ([50.56.180.127]:46163 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750790AbaCXWAN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Mar 2014 18:00:13 -0400
-Received: (qmail 10384 invoked by uid 102); 24 Mar 2014 22:00:13 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 24 Mar 2014 17:00:13 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 24 Mar 2014 18:00:11 -0400
+	id S1751119AbaCXWDj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Mar 2014 18:03:39 -0400
+Received: from balrog.mythic-beasts.com ([93.93.130.6]:40508 "EHLO
+	balrog.mythic-beasts.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750790AbaCXWDi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Mar 2014 18:03:38 -0400
+X-Greylist: delayed 1502 seconds by postgrey-1.27 at vger.kernel.org; Mon, 24 Mar 2014 18:03:38 EDT
+Received: from [2.80.169.38] (port=59841 helo=localhost)
+	by balrog.mythic-beasts.com with esmtpsa (TLS1.2:DHE_RSA_AES_256_CBC_SHA256:256)
+	(Exim 4.80)
+	(envelope-from <henrix@camandro.org>)
+	id 1WSCZm-0005vO-F2
+	for git@vger.kernel.org; Mon, 24 Mar 2014 21:38:35 +0000
 Content-Disposition: inline
-In-Reply-To: <xmqqtxars0ph.fsf@gitster.dls.corp.google.com>
+X-BlackCat-Spam-Score: -28
+X-Mythic-Debug: Threshold =  On = 
+X-Spam-Status: No, score=-2.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244887>
 
-On Fri, Mar 21, 2014 at 02:26:02PM -0700, Junio C Hamano wrote:
+Add --[no-]xmailer that allows a user to disable adding the 'X-Mailer:'
+header to the email being sent.
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > Some tests want to check or set config in another
-> > repository. E.g., t1000 creates repositories and makes sure
-> > that their core.bare and core.worktree settings are what we
-> > expect. We can do this with:
-> >
-> >   GIT_CONFIG=$repo/.git/config git config ...
-> >
-> > but it better shows the intent to just enter the repository
-> > and let "git config" do the normal lookups:
-> >
-> >   (cd $repo && git config ...)
-> >
-> > In theory, this would cause us to use an extra subshell, but
-> > in all such cases, we are actually already in a subshell.
-> 
-> Sure; alternatively we could use "git -C $there", but this rewrite
-> is fine by me.
+Signed-off-by: Luis Henriques <henrix@camandro.org>
+---
+ Documentation/config.txt         |  1 +
+ Documentation/git-send-email.txt |  3 +++
+ git-send-email.perl              | 12 ++++++++++--
+ 3 files changed, 14 insertions(+), 2 deletions(-)
 
-The existing callers all pass actual $GIT_DIRs, so I initially wrote it
-as "git --git-dir=$repo config ...". Doing it as "-C" is perhaps nicer,
-as callers could potentially pass a shorter string to the repo root,
-and not bother with adding "/.git". However, t0001 needs the actual
-$GIT_DIR (because it looks for things like the refs/ directory in the
-same function), and the other callers are just passing bare repos.
-
-So I'm fine with any of them. Feel free to mark it up if you have a
-preference.
-
--Peff
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 73c8973..c33d5a1 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2222,6 +2222,7 @@ sendemail.smtpserveroption::
+ sendemail.smtpuser::
+ sendemail.thread::
+ sendemail.validate::
++sendemail.xmailer::
+ 	See linkgit:git-send-email[1] for description.
+ 
+ sendemail.signedoffcc::
+diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+index f0e57a5..fab6264 100644
+--- a/Documentation/git-send-email.txt
++++ b/Documentation/git-send-email.txt
+@@ -131,6 +131,9 @@ Note that no attempts whatsoever are made to validate the encoding.
+ 	Specify encoding of compose message. Default is the value of the
+ 	'sendemail.composeencoding'; if that is unspecified, UTF-8 is assumed.
+ 
++--xmailer::
++	Prevent adding the "X-Mailer:" header.  Default value is
++	'sendemail.xmailer'.
+ 
+ Sending
+ ~~~~~~~
+diff --git a/git-send-email.perl b/git-send-email.perl
+index fdb0029..8789124 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -54,6 +54,7 @@ git send-email [options] <file | directory | rev-list options >
+     --[no-]bcc              <str>  * Email Bcc:
+     --subject               <str>  * Email "Subject:"
+     --in-reply-to           <str>  * Email "In-Reply-To:"
++    --[no-]xmailer                 * Don't add "X-Mailer:" header.  Default on.
+     --[no-]annotate                * Review each patch that will be sent in an editor.
+     --compose                      * Open an editor for introduction.
+     --compose-encoding      <str>  * Encoding to assume for introduction.
+@@ -174,6 +175,9 @@ my $force = 0;
+ my $multiedit;
+ my $editor;
+ 
++# Usage of X-Mailer email header
++my $xmailer;
++
+ sub do_edit {
+ 	if (!defined($editor)) {
+ 		$editor = Git::command_oneline('var', 'GIT_EDITOR');
+@@ -214,7 +218,8 @@ my %config_bool_settings = (
+     "signedoffcc" => [\$signed_off_by_cc, undef],      # Deprecated
+     "validate" => [\$validate, 1],
+     "multiedit" => [\$multiedit, undef],
+-    "annotate" => [\$annotate, undef]
++    "annotate" => [\$annotate, undef],
++    "xmailer" => [\$xmailer, 1]
+ );
+ 
+ my %config_settings = (
+@@ -311,6 +316,7 @@ my $rc = GetOptions("h" => \$help,
+ 		    "8bit-encoding=s" => \$auto_8bit_encoding,
+ 		    "compose-encoding=s" => \$compose_encoding,
+ 		    "force" => \$force,
++		    "xmailer!" => \$xmailer,
+ 	 );
+ 
+ usage() if $help;
+@@ -1144,8 +1150,10 @@ To: $to${ccline}
+ Subject: $subject
+ Date: $date
+ Message-Id: $message_id
+-X-Mailer: git-send-email $gitversion
+ ";
++	if ($xmailer) {
++		$header .= "X-Mailer: git-send-email $gitversion\n";
++	}
+ 	if ($reply_to) {
+ 
+ 		$header .= "In-Reply-To: $reply_to\n";
+-- 
+1.9.1
