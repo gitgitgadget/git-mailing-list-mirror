@@ -1,55 +1,55 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 073/142] t5570-git-daemon.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:23:34 -0700
-Message-ID: <1395768283-31135-74-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 089/142] t7406-submodule-update.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:23:50 -0700
+Message-ID: <1395768283-31135-90-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 25 18:33:07 2014
+X-From: git-owner@vger.kernel.org Tue Mar 25 18:33:08 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVDc-0004n1-Ac
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:32:56 +0100
+	id 1WSVDg-0004n1-K9
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755429AbaCYR0U convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:26:20 -0400
-Received: from mail-pb0-f53.google.com ([209.85.160.53]:44277 "EHLO
-	mail-pb0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754685AbaCYR0Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:26:16 -0400
-Received: by mail-pb0-f53.google.com with SMTP id rp16so740062pbb.26
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:26:16 -0700 (PDT)
+	id S932152AbaCYR0g convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:26:36 -0400
+Received: from mail-pd0-f174.google.com ([209.85.192.174]:55115 "EHLO
+	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755427AbaCYR0b (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:26:31 -0400
+Received: by mail-pd0-f174.google.com with SMTP id y13so714647pdi.5
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:26:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=CTnDH2wY/1Mo96m0xrWeaczy6Y3cfFYFcqRUOMK/VBI=;
-        b=ETHhIY+xwvSGNmkhrF9qeND5hD9wHPxpDaq+SuhWKegEIG56GtARp6+QBym273K34q
-         d7W4tJN3UmxQVHULYPldDob7sUBIlgAjfuYYCVjoZ9IlMnug+BE+AtpLQEiQG0KQL1yV
-         prpETeud6PD4yQLC3l+oS63o8x3lSqnxPqbdjDkG6+WEnSwq10ia4dB2milnlsXLIMOS
-         S83JGwZNU4AMWU2RZRt+ni5fRMZJ9V1xS2aoW6kIWBGFeSkXmZVyW1c41qpEM0NJfLEj
-         RJO0GKVhA2+uBSeHAi9JF8GPYnZ3qFO8vJMGBbSDzndjAdTfEQU2nV/7mOMifRluRR/U
-         BMUA==
-X-Received: by 10.66.139.38 with SMTP id qv6mr63406663pab.123.1395768371785;
-        Tue, 25 Mar 2014 10:26:11 -0700 (PDT)
+        bh=2ownRlwKBmH5bkN6EGy8XpOfbmT55vIApGC0MQvJivk=;
+        b=tOpiZUFGL7oruZWZJjfMCMkix+4z2BK8p/XOvPkIrrCSmf05saEnEQDnb0pJrOV9CQ
+         /lofsUIxxNsxYC5pylcZw3aJoQsCxYaTfhATZ77HZCsAxikKgEPy9arAzMKYdF7oSpUZ
+         tbb17Q5FzuvwkAFIfHYUbuI9QtSZIfUBaO9RkBri1URHwrV85SgV5fko6dFGG+l63/QP
+         zlSwQ1IeOnlKcNgTsr0jZ7Zpw6br6b0ScJr8IpxTzv727GetVZ2/Hh+ghBsKA61hN8uw
+         b1SEXdg2YmCYivuRBCAcPlemwMy7TAh8KbTt5C0/iohAJIEiYf9YBEWuoUOvij++Eg2v
+         Vl/w==
+X-Received: by 10.66.122.101 with SMTP id lr5mr17556245pab.130.1395768390640;
+        Tue, 25 Mar 2014 10:26:30 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.26.10
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.26.29
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:26:11 -0700 (PDT)
+        Tue, 25 Mar 2014 10:26:30 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245089>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245090>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,51 +72,24 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t5570-git-daemon.sh |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ t/t7406-submodule-update.sh |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/t5570-git-daemon.sh b/t/t5570-git-daemon.sh
-index 6b16379..eb07dbe 100755
---- a/t/t5570-git-daemon.sh
-+++ b/t/t5570-git-daemon.sh
-@@ -57,7 +57,7 @@ test_expect_success 'prepare pack objects' '
- test_expect_success 'fetch notices corrupt pack' '
- 	cp -R "$GIT_DAEMON_DOCUMENT_ROOT_PATH"/repo_pack.git "$GIT_DAEMON_DOC=
-UMENT_ROOT_PATH"/repo_bad1.git &&
- 	(cd "$GIT_DAEMON_DOCUMENT_ROOT_PATH"/repo_bad1.git &&
--	 p=3D`ls objects/pack/pack-*.pack` &&
-+	 p=3D$(ls objects/pack/pack-*.pack) &&
- 	 chmod u+w $p &&
- 	 printf %0256d 0 | dd of=3D$p bs=3D256 count=3D1 seek=3D1 conv=3Dnotr=
-unc
- 	) &&
-@@ -65,14 +65,14 @@ test_expect_success 'fetch notices corrupt pack' '
- 	(cd repo_bad1.git &&
- 	 git --bare init &&
- 	 test_must_fail git --bare fetch "$GIT_DAEMON_URL/repo_bad1.git" &&
--	 test 0 =3D `ls objects/pack/pack-*.pack | wc -l`
-+	 test 0 =3D $(ls objects/pack/pack-*.pack | wc -l)
- 	)
- '
+diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+index 28ca763..294a4a6 100755
+--- a/t/t7406-submodule-update.sh
++++ b/t/t7406-submodule-update.sh
+@@ -14,8 +14,8 @@ submodule and "git submodule update --rebase/--merge"=
+ does not detach the HEAD.
 =20
- test_expect_success 'fetch notices corrupt idx' '
- 	cp -R "$GIT_DAEMON_DOCUMENT_ROOT_PATH"/repo_pack.git "$GIT_DAEMON_DOC=
-UMENT_ROOT_PATH"/repo_bad2.git &&
- 	(cd "$GIT_DAEMON_DOCUMENT_ROOT_PATH"/repo_bad2.git &&
--	 p=3D`ls objects/pack/pack-*.idx` &&
-+	 p=3D$(ls objects/pack/pack-*.idx) &&
- 	 chmod u+w $p &&
- 	 printf %0256d 0 | dd of=3D$p bs=3D256 count=3D1 seek=3D1 conv=3Dnotr=
-unc
- 	) &&
-@@ -80,7 +80,7 @@ test_expect_success 'fetch notices corrupt idx' '
- 	(cd repo_bad2.git &&
- 	 git --bare init &&
- 	 test_must_fail git --bare fetch "$GIT_DAEMON_URL/repo_bad2.git" &&
--	 test 0 =3D `ls objects/pack | wc -l`
-+	 test 0 =3D $(ls objects/pack | wc -l)
- 	)
- '
+ compare_head()
+ {
+-    sha_master=3D`git rev-list --max-count=3D1 master`
+-    sha_head=3D`git rev-list --max-count=3D1 HEAD`
++    sha_master=3D$(git rev-list --max-count=3D1 master)
++    sha_head=3D$(git rev-list --max-count=3D1 HEAD)
 =20
+     test "$sha_master" =3D "$sha_head"
+ }
 --=20
 1.7.10.4
