@@ -1,136 +1,71 @@
 From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH v2 001/142] check-builtins.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 13:36:44 -0700
-Message-ID: <xmqqeh1qkobn.fsf@gitster.dls.corp.google.com>
+Date: Tue, 25 Mar 2014 13:38:24 -0700
+Message-ID: <xmqqa9ceko8v.fsf@gitster.dls.corp.google.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 	<1395768283-31135-2-git-send-email-gitter.spiros@gmail.com>
 	<xmqqtxamkq4b.fsf@gitster.dls.corp.google.com>
+	<xmqqeh1qkobn.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Elia Pinto <gitter.spiros@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 25 21:37:01 2014
+X-From: git-owner@vger.kernel.org Tue Mar 25 21:38:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSY5k-0007oR-A8
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 21:37:00 +0100
+	id 1WSY7E-00019V-TR
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 21:38:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754871AbaCYUg4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 16:36:56 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49090 "EHLO
+	id S1755030AbaCYUi2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Mar 2014 16:38:28 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60675 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754816AbaCYUgz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 Mar 2014 16:36:55 -0400
+	id S1754876AbaCYUi1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 16:38:27 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4E7F377C45;
-	Tue, 25 Mar 2014 16:36:54 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5C17877D84;
+	Tue, 25 Mar 2014 16:38:27 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=OEqulKzdRzp9
-	5CvBFAOWKNKALcg=; b=VLbKnLy4EiFcfWzEkZk1r8woP/0fk1xBVaYTnqUPod8T
-	6FQ3a8+RxDRUTgCBwGkYiEhGW8IMj48BL22dnMWbrEFwfeumZ0KJmgEYtYkwe0I6
-	gsM9qJgiJ/CK82ftLkUFqAjgT9BFx2oY5kDsQT9TG95XMcp49L9aCsA8BlkHFac=
+	:content-type; s=sasl; bh=QCupQY7QFGACutPf1fLnu1ONzQk=; b=CNMNtN
+	kVHQ/mhS1KMRrs7JqqpeRlUYWehHwIKbvgwyxRrZBuSXl+P2Yljf+a9dR/6aoqmA
+	TyuwWR0ZxKecHAvcQvz++1Jfq8zqvRs0pNG8o54h603nYQ/lkdGBBCrog8TD3Nq1
+	9W2CVitgtN8Eea6s22qfMVF8rNyhnyo+c1BQE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=vClD/U
-	7Q+8NECQuIAdvhWVBk7J46+cWFKMujy8LInrCqxcg/kJitH24xxtABrXcafO5zEQ
-	Mb0SrRWDyMfQgoJm0hA83HBfBQ14pJCYLZGHw50ixfJV2A0burGa4zW2f4xsVbO+
-	wtNXbfK6PWxkPWR90Ih+uf4+XyNna8xuQRFZ0=
+	:content-type; q=dns; s=sasl; b=FF86MUEHNVIUkHdBVV9GOmAeJzeEyOLQ
+	viZq4TsVI7jrYKcgSzb/go7Akc4o8d9NVEFW+CAM3Eu8b0L/M1Y/BHOYIJLEF6Lu
+	H8cq7Rhr5ijycaQieSvjf3G9/t3gWZCqzzhaZa1Oy4j3PlTvwdruwi/Pgqqns/zP
+	z6tUfNFARNU=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3A49F77C44;
-	Tue, 25 Mar 2014 16:36:54 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3EBF977D83;
+	Tue, 25 Mar 2014 16:38:27 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9CD1C77C30;
-	Tue, 25 Mar 2014 16:36:48 -0400 (EDT)
-In-Reply-To: <xmqqtxamkq4b.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Tue, 25 Mar 2014 12:57:56 -0700")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7595177D7F;
+	Tue, 25 Mar 2014 16:38:26 -0400 (EDT)
+In-Reply-To: <xmqqeh1qkobn.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Tue, 25 Mar 2014 13:36:44 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 304C1586-B45D-11E3-91DA-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 6A9D8972-B45D-11E3-9968-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245150>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245151>
 
 Junio C Hamano <gitster@pobox.com> writes:
 
-> Elia Pinto <gitter.spiros@gmail.com> writes:
+> I've reworded the above like so:
 >
->> The Git CodingGuidelines prefer the $( ... ) construct for command
->> substitution instead of using the back-quotes, or grave accents (`..=
-`).
->>
->> The backquoted form is the historical method for command substitutio=
-n,
->> and is supported by POSIX. However, all but the simplest uses become
->> complicated quickly. In particular, embedded command substitutions
->> and/or the use of double quotes require careful escaping with the ba=
-ckslash
->> character. Because of this the POSIX shell adopted the $(=E2=80=A6) =
-feature from
->> the Korn shell.
->>
->> The patch was generated by the simple script
->>
->> for _f in $(find . -name "*.sh")
->> do
->> =C2=A0 sed -i 's@`\(.*\)`@$(\1)@g' ${_f}
->> done
->
-> "and then carefully proofread" is sorely needed here.
->
-> What is that non-breaking space doing at the beginning of an
-> indented line, or is it just my environment, by the way?
+>     check-builtins.sh: use the $(...) construct for command substitution
+>     
+>     The Git CodingGuidelines prefer the $(...) construct for command
+>     substitution instead of using the backquotes, or grave accents
+>     (`...`).
 
-I've reworded the above like so:
-
-    check-builtins.sh: use the $(...) construct for command substitutio=
-n
-   =20
-    The Git CodingGuidelines prefer the $(...) construct for command
-    substitution instead of using the backquotes, or grave accents
-    (`...`).
-   =20
-    The backquoted form is the historical method for command
-    substitution, and is supported by POSIX.  However, all but the
-    simplest uses become complicated quickly.  In particular, embedded
-    command substitutions and/or the use of double quotes require
-    careful escaping with the backslash character.
-   =20
-    The patch was generated by:
-   =20
-        for _f in $(find . -name "*.sh")
-        do
-          sed -i 's@`\(.*\)`@$(\1)@g' ${_f}
-        done
-   =20
-    and then carefully proof-read.
-   =20
-    Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-
-I looked at [*1*] to pick between "back-quote" and "backquote"; this
-is a related tangent, but in that page, you will find this gem:
-
-    Within the backquoted style of command substitution, <backslash>
-    shall retain its literal meaning, except when followed by: '$',
-    '`', or <backslash>.
-
-Stated another way, `` =3D> $() conversion will make backslash inside
-to bahave differently, and we would need to be careful when doing
-such a change.
-
-I've looked at and queued 001 and 002.
-
-
-[Reference]
-
-*1* http://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02=
-=2Ehtml#tag_18_06_03
+... but I think the ", or grave accents" should go.
