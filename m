@@ -1,7 +1,7 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 011/142] t0020-crlf.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:22:32 -0700
-Message-ID: <1395768283-31135-12-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 012/142] t0025-crlf-auto.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:22:33 -0700
+Message-ID: <1395768283-31135-13-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -14,42 +14,42 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVHw-0001NU-3q
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:37:24 +0100
+	id 1WSVHu-0001NU-E1
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:37:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755675AbaCYReQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:34:16 -0400
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:45014 "EHLO
-	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754657AbaCYRZC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:25:02 -0400
-Received: by mail-pa0-f41.google.com with SMTP id fa1so741774pad.28
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:01 -0700 (PDT)
+	id S1755634AbaCYRdp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:33:45 -0400
+Received: from mail-pb0-f42.google.com ([209.85.160.42]:47814 "EHLO
+	mail-pb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755314AbaCYRZD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:25:03 -0400
+Received: by mail-pb0-f42.google.com with SMTP id rr13so745491pbb.15
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=bGdXWPUgetmPWD7v2uK15qOmRN/zN4rgjz08BbiDLZ0=;
-        b=TWCO33C8cQedxjWEFhAWcqNzulNQEi1/Q8BeBfBezfjlwQtF5aWaS7nrtbEVIeqIjT
-         +QJPW4ZawmNTcyfKpLii1ezXjl8pWCd7yh3IoVqZC9Ij4Z9LB95ODYolkEhXwAo83XLa
-         eAsTFmIDOpdtbK8luuQQ09m2CU3lR0QTBQqN38FCT2Aqc1XvdYWJ3k/4D8JCAewNy3eN
-         VFklOkmvUYW+cewE2IQQ3OiJBNF5YUk4fEh1XLV9jNg4Bu1hUpcP9rKkBTATm+gdGFaa
-         ypgt4rCRZVQl1cpQUbdA4SAz4SAGQ+I/sRiuXsgnLjiYvWzcx2AOX4zLclKH6Con6WzK
-         zp3w==
-X-Received: by 10.66.218.234 with SMTP id pj10mr11082450pac.156.1395768301538;
-        Tue, 25 Mar 2014 10:25:01 -0700 (PDT)
+        bh=c5glfy7YLq1Gp6dleijDPoaN4w4NwvMSlq6630Hk0/0=;
+        b=epXWINkkR4NbVQpVUdtnD5abBXUesWwIdH6W5ugECwEi2hyPS0dz34DWdwwO6YU2o1
+         PX11x+Dknf+LseF4KdsfxTsKgzT6+62eSh8yoI4mmnSKmsga8V2Nd2r54kPz0zO4XKoC
+         Zdlxoh0/b+zDbhuoh0/MNh+Z3gecw2XxlBWufoHj17kVNzYCqTLrqnFNzcnvSRsashiK
+         7Wql8SjvzURogkjIapCzBMTqAyydIEvaUBfr0wm7mFR6vxQfKq5Mjxtxzwq3UTDpOEVe
+         2bD1vh9C+IMUt8kxiYDjnS5Vyb26nmkZZtuWJHA/FaiPLZjsOQdbkLSiUzS18nSi7JwC
+         TUjQ==
+X-Received: by 10.66.141.165 with SMTP id rp5mr80745147pab.90.1395768303012;
+        Tue, 25 Mar 2014 10:25:03 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.00
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.01
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:25:00 -0700 (PDT)
+        Tue, 25 Mar 2014 10:25:02 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245138>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245139>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,145 +72,137 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t0020-crlf.sh |   42 +++++++++++++++++++++---------------------
- 1 file changed, 21 insertions(+), 21 deletions(-)
+ t/t0025-crlf-auto.sh |   38 +++++++++++++++++++-------------------
+ 1 file changed, 19 insertions(+), 19 deletions(-)
 
-diff --git a/t/t0020-crlf.sh b/t/t0020-crlf.sh
-index e526184..d2e51a8 100755
---- a/t/t0020-crlf.sh
-+++ b/t/t0020-crlf.sh
-@@ -20,14 +20,14 @@ test_expect_success setup '
+diff --git a/t/t0025-crlf-auto.sh b/t/t0025-crlf-auto.sh
+index f5f67a6..b0e5694 100755
+--- a/t/t0025-crlf-auto.sh
++++ b/t/t0025-crlf-auto.sh
+@@ -19,9 +19,9 @@ test_expect_success setup '
 =20
  	git commit -m initial &&
 =20
 -	one=3D`git rev-parse HEAD:one` &&
--	dir=3D`git rev-parse HEAD:dir` &&
--	two=3D`git rev-parse HEAD:dir/two` &&
+-	two=3D`git rev-parse HEAD:two` &&
 -	three=3D`git rev-parse HEAD:three` &&
 +	one=3D$(git rev-parse HEAD:one) &&
-+	dir=3D$(git rev-parse HEAD:dir) &&
-+	two=3D$(git rev-parse HEAD:dir/two) &&
++	two=3D$(git rev-parse HEAD:two) &&
 +	three=3D$(git rev-parse HEAD:three) &&
 =20
- 	for w in Some extra lines here; do echo $w; done >>one &&
- 	git diff >patch.file &&
--	patched=3D`git hash-object --stdin <one` &&
-+	patched=3D$(git hash-object --stdin <one) &&
- 	git read-tree --reset -u HEAD &&
-=20
  	echo happy.
-@@ -111,7 +111,7 @@ test_expect_success 'update with autocrlf=3Dinput' =
-'
- 		}
- 	done &&
-=20
--	differs=3D`git diff-index --cached HEAD` &&
-+	differs=3D$(git diff-index --cached HEAD) &&
- 	test -z "$differs" || {
- 		echo Oops "$differs"
- 		false
-@@ -135,7 +135,7 @@ test_expect_success 'update with autocrlf=3Dtrue' '
- 		}
- 	done &&
-=20
--	differs=3D`git diff-index --cached HEAD` &&
-+	differs=3D$(git diff-index --cached HEAD) &&
- 	test -z "$differs" || {
- 		echo Oops "$differs"
- 		false
-@@ -158,9 +158,9 @@ test_expect_success 'checkout with autocrlf=3Dtrue'=
  '
- 			break
- 		}
- 	done &&
--	test "$one" =3D `git hash-object --stdin <one` &&
--	test "$two" =3D `git hash-object --stdin <dir/two` &&
--	differs=3D`git diff-index --cached HEAD` &&
-+	test "$one" =3D $(git hash-object --stdin <one) &&
-+	test "$two" =3D $(git hash-object --stdin <dir/two) &&
-+	differs=3D$(git diff-index --cached HEAD) &&
- 	test -z "$differs" || {
- 		echo Oops "$differs"
- 		false
-@@ -184,9 +184,9 @@ test_expect_success 'checkout with autocrlf=3Dinput=
-' '
- 			git update-index -- $f
- 		fi
- 	done &&
--	test "$one" =3D `git hash-object --stdin <one` &&
--	test "$two" =3D `git hash-object --stdin <dir/two` &&
--	differs=3D`git diff-index --cached HEAD` &&
-+	test "$one" =3D $(git hash-object --stdin <one) &&
-+	test "$two" =3D $(git hash-object --stdin <dir/two) &&
-+	differs=3D$(git diff-index --cached HEAD) &&
- 	test -z "$differs" || {
- 		echo Oops "$differs"
- 		false
-@@ -200,7 +200,7 @@ test_expect_success 'apply patch (autocrlf=3Dinput)=
-' '
- 	git read-tree --reset -u HEAD &&
+@@ -33,9 +33,9 @@ test_expect_success 'default settings cause no change=
+s' '
 =20
- 	git apply patch.file &&
--	test "$patched" =3D "`git hash-object --stdin <one`" || {
-+	test "$patched" =3D "$(git hash-object --stdin <one)" || {
- 		echo "Eh?  apply without index"
- 		false
- 	}
-@@ -213,7 +213,7 @@ test_expect_success 'apply patch --cached (autocrlf=
-=3Dinput)' '
- 	git read-tree --reset -u HEAD &&
-=20
- 	git apply --cached patch.file &&
--	test "$patched" =3D `git rev-parse :one` || {
-+	test "$patched" =3D $(git rev-parse :one) || {
- 		echo "Eh?  apply with --cached"
- 		false
- 	}
-@@ -226,8 +226,8 @@ test_expect_success 'apply patch --index (autocrlf=3D=
-input)' '
- 	git read-tree --reset -u HEAD &&
-=20
- 	git apply --index patch.file &&
--	test "$patched" =3D `git rev-parse :one` &&
--	test "$patched" =3D `git hash-object --stdin <one` || {
-+	test "$patched" =3D $(git rev-parse :one) &&
-+	test "$patched" =3D $(git hash-object --stdin <one) || {
- 		echo "Eh?  apply with --index"
- 		false
- 	}
-@@ -240,7 +240,7 @@ test_expect_success 'apply patch (autocrlf=3Dtrue)'=
+ 	! has_cr one &&
+ 	has_cr two &&
+-	onediff=3D`git diff one` &&
+-	twodiff=3D`git diff two` &&
+-	threediff=3D`git diff three` &&
++	onediff=3D$(git diff one) &&
++	twodiff=3D$(git diff two) &&
++	threediff=3D$(git diff three) &&
+ 	test -z "$onediff" -a -z "$twodiff" -a -z "$threediff"
  '
+=20
+@@ -48,7 +48,7 @@ test_expect_success 'crlf=3Dtrue causes a CRLF file t=
+o be normalized' '
+=20
+ 	# Note, "normalized" means that git will normalize it if added
+ 	has_cr two &&
+-	twodiff=3D`git diff two` &&
++	twodiff=3D$(git diff two) &&
+ 	test -n "$twodiff"
+ '
+=20
+@@ -60,7 +60,7 @@ test_expect_success 'text=3Dtrue causes a CRLF file t=
+o be normalized' '
+=20
+ 	# Note, "normalized" means that git will normalize it if added
+ 	has_cr two &&
+-	twodiff=3D`git diff two` &&
++	twodiff=3D$(git diff two) &&
+ 	test -n "$twodiff"
+ '
+=20
+@@ -72,7 +72,7 @@ test_expect_success 'eol=3Dcrlf gives a normalized fi=
+le CRLFs with autocrlf=3Dfalse'
  	git read-tree --reset -u HEAD &&
 =20
- 	git apply patch.file &&
--	test "$patched" =3D "`remove_cr <one | git hash-object --stdin`" || {
-+	test "$patched" =3D "$(remove_cr <one | git hash-object --stdin)" || =
-{
- 		echo "Eh?  apply without index"
- 		false
- 	}
-@@ -253,7 +253,7 @@ test_expect_success 'apply patch --cached (autocrlf=
-=3Dtrue)' '
+ 	has_cr one &&
+-	onediff=3D`git diff one` &&
++	onediff=3D$(git diff one) &&
+ 	test -z "$onediff"
+ '
+=20
+@@ -84,7 +84,7 @@ test_expect_success 'eol=3Dcrlf gives a normalized fi=
+le CRLFs with autocrlf=3Dinput'
  	git read-tree --reset -u HEAD &&
 =20
- 	git apply --cached patch.file &&
--	test "$patched" =3D `git rev-parse :one` || {
-+	test "$patched" =3D $(git rev-parse :one) || {
- 		echo "Eh?  apply without index"
- 		false
- 	}
-@@ -266,8 +266,8 @@ test_expect_success 'apply patch --index (autocrlf=3D=
-true)' '
+ 	has_cr one &&
+-	onediff=3D`git diff one` &&
++	onediff=3D$(git diff one) &&
+ 	test -z "$onediff"
+ '
+=20
+@@ -96,7 +96,7 @@ test_expect_success 'eol=3Dlf gives a normalized file=
+ LFs with autocrlf=3Dtrue' '
  	git read-tree --reset -u HEAD &&
 =20
- 	git apply --index patch.file &&
--	test "$patched" =3D `git rev-parse :one` &&
--	test "$patched" =3D "`remove_cr <one | git hash-object --stdin`" || {
-+	test "$patched" =3D $(git rev-parse :one) &&
-+	test "$patched" =3D "$(remove_cr <one | git hash-object --stdin)" || =
-{
- 		echo "Eh?  apply with --index"
- 		false
- 	}
+ 	! has_cr one &&
+-	onediff=3D`git diff one` &&
++	onediff=3D$(git diff one) &&
+ 	test -z "$onediff"
+ '
+=20
+@@ -108,9 +108,9 @@ test_expect_success 'autocrlf=3Dtrue does not norma=
+lize CRLF files' '
+=20
+ 	has_cr one &&
+ 	has_cr two &&
+-	onediff=3D`git diff one` &&
+-	twodiff=3D`git diff two` &&
+-	threediff=3D`git diff three` &&
++	onediff=3D$(git diff one) &&
++	twodiff=3D$(git diff two) &&
++	threediff=3D$(git diff three) &&
+ 	test -z "$onediff" -a -z "$twodiff" -a -z "$threediff"
+ '
+=20
+@@ -123,9 +123,9 @@ test_expect_success 'text=3Dauto, autocrlf=3Dtrue _=
+does_ normalize CRLF files' '
+=20
+ 	has_cr one &&
+ 	has_cr two &&
+-	onediff=3D`git diff one` &&
+-	twodiff=3D`git diff two` &&
+-	threediff=3D`git diff three` &&
++	onediff=3D$(git diff one) &&
++	twodiff=3D$(git diff two) &&
++	threediff=3D$(git diff three) &&
+ 	test -z "$onediff" -a -n "$twodiff" -a -z "$threediff"
+ '
+=20
+@@ -137,7 +137,7 @@ test_expect_success 'text=3Dauto, autocrlf=3Dtrue d=
+oes not normalize binary files' '
+ 	git read-tree --reset -u HEAD &&
+=20
+ 	! has_cr three &&
+-	threediff=3D`git diff three` &&
++	threediff=3D$(git diff three) &&
+ 	test -z "$threediff"
+ '
+=20
+@@ -148,7 +148,7 @@ test_expect_success 'eol=3Dcrlf _does_ normalize bi=
+nary files' '
+ 	git read-tree --reset -u HEAD &&
+=20
+ 	has_cr three &&
+-	threediff=3D`git diff three` &&
++	threediff=3D$(git diff three) &&
+ 	test -z "$threediff"
+ '
+=20
 --=20
 1.7.10.4
