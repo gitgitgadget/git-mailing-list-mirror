@@ -1,7 +1,7 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 048/142] t4119-apply-config.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:23:09 -0700
-Message-ID: <1395768283-31135-49-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 078/142] t6001-rev-list-graft.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:23:39 -0700
+Message-ID: <1395768283-31135-79-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -14,42 +14,42 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVE1-0004n1-Se
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:22 +0100
+	id 1WSVDs-0004n1-D3
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755209AbaCYRbX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:31:23 -0400
-Received: from mail-pa0-f44.google.com ([209.85.220.44]:35678 "EHLO
-	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755363AbaCYRZp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:25:45 -0400
-Received: by mail-pa0-f44.google.com with SMTP id bj1so742835pad.17
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:45 -0700 (PDT)
+	id S1754970AbaCYR31 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:29:27 -0400
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:56270 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754717AbaCYR0R (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:26:17 -0400
+Received: by mail-pa0-f54.google.com with SMTP id lf10so735885pab.41
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:26:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=5X9eoTVAGLvp1cqze40Bqp88Sdu5QnFF21tN+9iMFOw=;
-        b=xecTc9hWoSgWnOqgCdAUmC9qDOoP0l7FvlJBdZNjjadkiP26wmvLpyF1fKgsvZYQ/5
-         JDjHaLu51wvCKQ8vuuDle/Pry1RZKWp2IRGzEF9HyJ7ATZOGryUBWazhukYdI5niykCH
-         Wj/2yNem76TauyfxkU4M6wJLA5aSq7lesFgoj4SDUZcaZJNswnpE+oFO2ar1ncYrSo4i
-         8Zm0lg1bK/wS911Itl4ME/Y5uk0RNetOaptzieyY3H78g3wlye2MxY4VipgQupsC4VuF
-         NGhfY3La3cqExfk2opn1XlZO3wUiQC2EF1KxLNqtObU9y855jSV7QPh8udN87+aLAJWq
-         Jf4w==
-X-Received: by 10.69.31.171 with SMTP id kn11mr81184602pbd.47.1395768345006;
-        Tue, 25 Mar 2014 10:25:45 -0700 (PDT)
+        bh=Yxbil40dhwNStJjmy7iOLQzlOtS1B6aO32wILEYAB2k=;
+        b=eWuODEi+xe/mXMCJRM8FH9j6QQ/ttCTZSTFcz8uljYJ5dy431Ee2on8VjGbos7Hwod
+         x1gF394j18I5ddb2jTfWwwTwYLjAcmi116e807yP0mKiqmMZMrs+uxp4l9cY8rBFhBHk
+         1D6u3qbIUcyd1XlWQMO6miAHtFbDMDllqMr6CyxgIT2n29PmcDAtrz5a34l1gpgW2APp
+         XOWs1YamV0gtUIxWeVZpU2Q/QzJE31AVQ+W8jf7NTvc+EGHN6VoOt7HCpG4jU7UhCtsj
+         iqpRe2ZHFcHeGIVAI4zRJmg64sTCF78XFIQiRPra6g5riw1nPFxgqVRF4mQiUGFLdj3l
+         MgVw==
+X-Received: by 10.67.8.102 with SMTP id dj6mr80321324pad.10.1395768377191;
+        Tue, 25 Mar 2014 10:26:17 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.44
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.26.15
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:25:44 -0700 (PDT)
+        Tue, 25 Mar 2014 10:26:16 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245114>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245115>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,22 +72,50 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t4119-apply-config.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t6001-rev-list-graft.sh |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/t/t4119-apply-config.sh b/t/t4119-apply-config.sh
-index 3d0384d..c393be6 100755
---- a/t/t4119-apply-config.sh
-+++ b/t/t4119-apply-config.sh
-@@ -68,7 +68,7 @@ test_expect_success 'apply --whitespace=3Dstrip from =
-config' '
- 	check_result sub/file1
+diff --git a/t/t6001-rev-list-graft.sh b/t/t6001-rev-list-graft.sh
+index 8efcd13..05ddc69 100755
+--- a/t/t6001-rev-list-graft.sh
++++ b/t/t6001-rev-list-graft.sh
+@@ -10,15 +10,15 @@ test_expect_success setup '
+ 	echo >subdir/fileB fileB &&
+ 	git add fileA subdir/fileB &&
+ 	git commit -a -m "Initial in one history." &&
+-	A0=3D`git rev-parse --verify HEAD` &&
++	A0=3D$(git rev-parse --verify HEAD) &&
+=20
+ 	echo >fileA fileA modified &&
+ 	git commit -a -m "Second in one history." &&
+-	A1=3D`git rev-parse --verify HEAD` &&
++	A1=3D$(git rev-parse --verify HEAD) &&
+=20
+ 	echo >subdir/fileB fileB modified &&
+ 	git commit -a -m "Third in one history." &&
+-	A2=3D`git rev-parse --verify HEAD` &&
++	A2=3D$(git rev-parse --verify HEAD) &&
+=20
+ 	rm -f .git/refs/heads/master .git/index &&
+=20
+@@ -26,15 +26,15 @@ test_expect_success setup '
+ 	echo >subdir/fileB fileB again &&
+ 	git add fileA subdir/fileB &&
+ 	git commit -a -m "Initial in alternate history." &&
+-	B0=3D`git rev-parse --verify HEAD` &&
++	B0=3D$(git rev-parse --verify HEAD) &&
+=20
+ 	echo >fileA fileA modified in alternate history &&
+ 	git commit -a -m "Second in alternate history." &&
+-	B1=3D`git rev-parse --verify HEAD` &&
++	B1=3D$(git rev-parse --verify HEAD) &&
+=20
+ 	echo >subdir/fileB fileB modified in alternate history &&
+ 	git commit -a -m "Third in alternate history." &&
+-	B2=3D`git rev-parse --verify HEAD` &&
++	B2=3D$(git rev-parse --verify HEAD) &&
+ 	: done
  '
-=20
--D=3D`pwd`
-+D=3D$(pwd)
-=20
- test_expect_success 'apply --whitespace=3Dstrip in subdir' '
 =20
 --=20
 1.7.10.4
