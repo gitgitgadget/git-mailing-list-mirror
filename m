@@ -1,55 +1,55 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 005/142] git-rebase.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:22:26 -0700
-Message-ID: <1395768283-31135-6-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 051/142] t5003-archive-zip.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:23:12 -0700
+Message-ID: <1395768283-31135-52-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 25 18:33:25 2014
+X-From: git-owner@vger.kernel.org Tue Mar 25 18:33:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVE3-0004n1-QQ
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:24 +0100
+	id 1WSVE0-0004n1-Rj
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755262AbaCYRbz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:31:55 -0400
-Received: from mail-pb0-f52.google.com ([209.85.160.52]:60715 "EHLO
-	mail-pb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932139AbaCYRZj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:25:39 -0400
-Received: by mail-pb0-f52.google.com with SMTP id rr13so746106pbb.39
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:39 -0700 (PDT)
+	id S1755204AbaCYRbL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:31:11 -0400
+Received: from mail-pa0-f41.google.com ([209.85.220.41]:39077 "EHLO
+	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754688AbaCYRZs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:25:48 -0400
+Received: by mail-pa0-f41.google.com with SMTP id fa1so749458pad.0
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=meXSrokQwvNr2SAPBQ6jaXWAsoOWIpcj9mbs9gIfMQo=;
-        b=rHmGIyh0VwaVsA+jE9g6bvt5whGGLUurYr+vFbrLyF+LMRg8wg6sbOiN72XiH3msCy
-         RaeoGfNf9H/uGMiTQIlU2inuxw/mCWNM4dYG/h8qCGQcdktbCuFBK6UFKL7T6TYO+svy
-         asXIUHoL4AfsLjXafPIYBLW+uBlXKDvpriRDgQbmrr7nufQuKWdVGOdO3iQ9g434Xx9R
-         LZmP3sL2/TSTd/GPtwvjL5AhKl7iEWygcjoh9yticBLcU592UMGykeVcX2UU6V0IP0gK
-         E1m/I+Wbyq6s+peNrhxPymQFKWDVRvxDrW8sKGBTPo2r7Mh4cu5LvpJ1vGNZJMpnIGXS
-         E2qQ==
-X-Received: by 10.66.145.166 with SMTP id sv6mr81148138pab.31.1395768293471;
-        Tue, 25 Mar 2014 10:24:53 -0700 (PDT)
+        bh=y8n/6VimsPsYpwSQ99I/wK23kxkPBiiCP3R8qz0pkaI=;
+        b=Y8XVP+oCu52enaFhJiNxIBk+brEstb9eQdYVjrXMIAea5AKSynEcqBF5Uvko6XrUA2
+         to8WasDDy8THF6O0ROaG78TKtAZ5s3xhVzB5U5CIPSJQe1haY05SRCd1xsFY/f4gUM9B
+         pFQjCoJDcV1BEfFRG6NeVUFwNuYg945elRyKGiUl7e+dG+ghVfL6NA0b2mdzqSvpmTxH
+         FJ7WrHcQUSPLUSYos//gSsHWddMpHoIpW6Ak/xS5B6+xoa5LKzWaJRqgci4DBB/G4MBi
+         x1w+In70+NIm2xy3zRg4W71AlGAjZs2bJKZA6tCC/1IW9mW4md8W/e9PEef8e7/ghL/F
+         3Prg==
+X-Received: by 10.66.164.165 with SMTP id yr5mr80104412pab.63.1395768347943;
+        Tue, 25 Mar 2014 10:25:47 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.24.51
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.46
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:24:52 -0700 (PDT)
+        Tue, 25 Mar 2014 10:25:47 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245103>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,36 +72,22 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- git-rebase.sh |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ t/t5003-archive-zip.sh |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 5f6732b..a209ab9 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -462,8 +462,8 @@ then
- else
- 	if test -z "$onto"
- 	then
--		empty_tree=3D`git hash-object -t tree /dev/null`
--		onto=3D`git commit-tree $empty_tree </dev/null`
-+		empty_tree=3D$(git hash-object -t tree /dev/null)
-+		onto=3D$(git commit-tree $empty_tree </dev/null)
- 		squash_onto=3D"$onto"
- 	fi
- 	unset upstream_name
-@@ -521,10 +521,10 @@ case "$#" in
- 	;;
- 0)
- 	# Do not need to switch branches, we are already on it.
--	if branch_name=3D`git symbolic-ref -q HEAD`
-+	if branch_name=3D$(git symbolic-ref -q HEAD)
- 	then
- 		head_name=3D$branch_name
--		branch_name=3D`expr "z$branch_name" : 'zrefs/heads/\(.*\)'`
-+		branch_name=3D$(expr "z$branch_name" : 'zrefs/heads/\(.*\)')
- 	else
- 		head_name=3D"detached HEAD"
- 		branch_name=3DHEAD ;# detached
+diff --git a/t/t5003-archive-zip.sh b/t/t5003-archive-zip.sh
+index c72f71e..8f04a56 100755
+--- a/t/t5003-archive-zip.sh
++++ b/t/t5003-archive-zip.sh
+@@ -65,7 +65,7 @@ test_expect_success \
+     'add files to repository' \
+     'find a -type f | xargs git update-index --add &&
+      find a -type l | xargs git update-index --add &&
+-     treeid=3D`git write-tree` &&
++     treeid=3D$(git write-tree) &&
+      echo $treeid >treeid &&
+      git update-ref HEAD $(TZ=3DGMT GIT_COMMITTER_DATE=3D"2005-05-27 2=
+2:00:00" \
+      git commit-tree $treeid </dev/null)'
 --=20
 1.7.10.4
