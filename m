@@ -1,55 +1,55 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 067/142] t5522-pull-symlink.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:23:28 -0700
-Message-ID: <1395768283-31135-68-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 057/142] t5304-prune.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:23:18 -0700
+Message-ID: <1395768283-31135-58-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 25 18:33:17 2014
+X-From: git-owner@vger.kernel.org Tue Mar 25 18:33:21 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVDw-0004n1-53
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:16 +0100
+	id 1WSVDz-0004n1-8V
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755555AbaCYR35 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:29:57 -0400
-Received: from mail-pb0-f41.google.com ([209.85.160.41]:54121 "EHLO
-	mail-pb0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754650AbaCYR0F (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:26:05 -0400
-Received: by mail-pb0-f41.google.com with SMTP id jt11so754890pbb.0
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:26:05 -0700 (PDT)
+	id S1754148AbaCYRal convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:30:41 -0400
+Received: from mail-pa0-f48.google.com ([209.85.220.48]:55883 "EHLO
+	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755381AbaCYRZz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:25:55 -0400
+Received: by mail-pa0-f48.google.com with SMTP id hz1so736363pad.21
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=bWFckMafYRU8YCUChGig5C/KgNZ9+nWC0A82OSMpiH0=;
-        b=Euk+6necl7p4a4CfBXo8AKyuxioGQktK1HPOWpfiF1YFKVLnKMJeD/c+Ft3kKN/v+Y
-         wZsYXKWwA2Cs4p167uMOl5CeuVKYdGcmKNUfuKA87pERzS9S5htS7GLIJBa77PJG/Bji
-         dqKKRfuOXtpNJUa4HVAdPSLIBOjNlAisWY3y0lpmUdGEkoA0DS6AoMjL7qkAcx7N80hr
-         PhnwG2FjzMBJ8A0qfWVEcyy1NKKG3MT1LslVDPdqKnnv5+5ELlB6S/8DNEP2sqaZrhzq
-         0fwCy3Fx9QjK2lPMRcKK5mea+oDYDlCWqIh5jx6xqB3kQ1f2LUbPiyJZ4bgYhmsUjlum
-         l4Mw==
-X-Received: by 10.68.52.132 with SMTP id t4mr79955634pbo.102.1395768365201;
-        Tue, 25 Mar 2014 10:26:05 -0700 (PDT)
+        bh=7MipbN51Cn5KujugsZ3jcVWzk6nCNmrZCp0P/53fQ/0=;
+        b=FUsuRw/TxnFJqlSY4BgfDJEiX1AD4fK6687FRwZs7gyd1L2oRgTUHmDi6jm2iBG0x8
+         kQxzPyKaWv7CNrp+7g/jL6bHkNmOU1kSJCIwuIKVA+iNvvxriX/VhTLtwUuPa2DaS7Ka
+         DB/PY5HqQdMSlxL5wjvdMxq0x1qazVC6oJEpCvG5qP2b1hD7yTL9UBpgu7A+NeS5SsHd
+         nfcePROAvyroy5KBasrAeW0MBfpKJSN09ekEFGEDGPshLziC15qLsEmUeY7DFbdmdGN9
+         t1m6VpbfsknuaH8MGVPU2pJnDOs2sK6X95+/u8tTmf5PlGP82BIEsxIbc5fDy/wd74D9
+         9F8A==
+X-Received: by 10.68.76.68 with SMTP id i4mr80832765pbw.73.1395768354991;
+        Tue, 25 Mar 2014 10:25:54 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.26.04
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.53
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:26:04 -0700 (PDT)
+        Tue, 25 Mar 2014 10:25:54 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245096>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245097>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,22 +72,21 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t5522-pull-symlink.sh |    2 +-
+ t/t5304-prune.sh |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t5522-pull-symlink.sh b/t/t5522-pull-symlink.sh
-index 8e9b204..bcff460 100755
---- a/t/t5522-pull-symlink.sh
-+++ b/t/t5522-pull-symlink.sh
-@@ -54,7 +54,7 @@ test_expect_success SYMLINKS 'pulling from real subdi=
-r' '
- # git rev-parse --show-cdup printed a path relative to
- # clone-repo/subdir/, not subdir-link/.  Git rev-parse --show-cdup
- # used the correct .git, but when the git pull shell script did
--# "cd `git rev-parse --show-cdup`", it ended up in the wrong
-+# "cd $(git rev-parse --show-cdup)", it ended up in the wrong
- # directory.  A POSIX shell's "cd" works a little differently
- # than chdir() in C; "cd -P" is much closer to chdir().
- #
+diff --git a/t/t5304-prune.sh b/t/t5304-prune.sh
+index 66c9a41..84501a5 100755
+--- a/t/t5304-prune.sh
++++ b/t/t5304-prune.sh
+@@ -222,7 +222,7 @@ EOF
+ '
+=20
+ test_expect_success 'prune .git/shallow' '
+-	SHA1=3D`echo hi|git commit-tree HEAD^{tree}` &&
++	SHA1=3D$(echo hi|git commit-tree HEAD^{tree}) &&
+ 	echo $SHA1 >.git/shallow &&
+ 	git prune --dry-run >out &&
+ 	grep $SHA1 .git/shallow &&
 --=20
 1.7.10.4
