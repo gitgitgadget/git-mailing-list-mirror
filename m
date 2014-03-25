@@ -1,61 +1,73 @@
-From: Charles Bailey <cbailey32@bloomberg.net>
-Subject: Re: [PATCH 5/5] log: do not segfault on gmtime errors
-Date: Wed, 26 Mar 2014 11:05:59 +0000
-Message-ID: <20140326110559.GA32625@hashpling.org>
-References: <20140224073348.GA20221@sigill.intra.peff.net>
- <20140224074905.GE9969@sigill.intra.peff.net>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH v2 001/142] check-builtins.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 21:32:44 +0100
+Message-ID: <8738i6uihf.fsf@fencepost.gnu.org>
+References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
+	<1395768283-31135-2-git-send-email-gitter.spiros@gmail.com>
+	<xmqqtxamkq4b.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 26 12:12:16 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 26 12:51:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSlkl-0000u5-Cg
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Mar 2014 12:12:15 +0100
+	id 1WSmNB-0007iA-ME
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Mar 2014 12:51:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754161AbaCZLMJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Mar 2014 07:12:09 -0400
-Received: from avasout05.plus.net ([84.93.230.250]:43352 "EHLO
-	avasout05.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754076AbaCZLMI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Mar 2014 07:12:08 -0400
-X-Greylist: delayed 365 seconds by postgrey-1.27 at vger.kernel.org; Wed, 26 Mar 2014 07:12:08 EDT
-Received: from hashpling.plus.com ([212.159.69.125])
-	by avasout05 with smtp
-	id iB5z1n00B2iA9hg01B60ck; Wed, 26 Mar 2014 11:06:01 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.1 cv=SYp5d5hu c=1 sm=1 tr=0
- a=wpJ/2au8Z6V/NgdivHIBow==:117 a=wpJ/2au8Z6V/NgdivHIBow==:17 a=EBOSESyhAAAA:8
- a=0Bzu9jTXAAAA:8 a=zd_RDMET5nsA:10 a=k1DKI6lHGiAA:10 a=N2sEI2mohSIA:10
- a=BHUvooL90DcA:10 a=kj9zAlcOel0A:10 a=BNFp--SqAAAA:8 a=Ew9TdX-QAAAA:8
- a=dVxzUTg7KSEBX5nH1q0A:9 a=CjuIK1q_8ugA:10
-Received: from charles by hashpling.plus.com with local (Exim 4.72)
-	(envelope-from <charles@hashpling.org>)
-	id 1WSleh-00007v-Q2; Wed, 26 Mar 2014 11:05:59 +0000
-Content-Disposition: inline
-In-Reply-To: <20140224074905.GE9969@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.20 (2009-08-17)
+	id S1754328AbaCZLvy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Mar 2014 07:51:54 -0400
+Received: from fencepost.gnu.org ([208.118.235.10]:59759 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753126AbaCZLvv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 26 Mar 2014 07:51:51 -0400
+Received: from localhost ([127.0.0.1]:58797 helo=lola)
+	by fencepost.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <dak@gnu.org>)
+	id 1WSmN4-0007PR-IG; Wed, 26 Mar 2014 07:51:50 -0400
+Received: by lola (Postfix, from userid 1000)
+	id A5101E3856; Tue, 25 Mar 2014 21:32:44 +0100 (CET)
+In-Reply-To: <xmqqtxamkq4b.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Tue, 25 Mar 2014 12:57:56 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245175>
 
-On Mon, Feb 24, 2014 at 02:49:05AM -0500, Jeff King wrote:
-> +# date is within 2^63-1, but enough to choke glibc's gmtime
-> +test_expect_success 'absurdly far-in-future dates produce sentinel' '
-> +	commit=$(munge_author_date HEAD 999999999999999999) &&
-> +	echo "Thu Jan 1 00:00:00 1970 +0000" >expect &&
-> +	git log -1 --format=%ad $commit >actual &&
-> +	test_cmp expect actual
-> +'
+Junio C Hamano <gitster@pobox.com> writes:
 
-Git on AIX seems happy to convert this to Thu Oct 24 18:46:39
-162396404 -0700. I don't know if this is correct for the given input
-but the test fails.
+> Elia Pinto <gitter.spiros@gmail.com> writes:
+>
+>> The Git CodingGuidelines prefer the $( ... ) construct for command
+>> substitution instead of using the back-quotes, or grave accents (`..=
+`).
+>>
+>> The backquoted form is the historical method for command substitutio=
+n,
+>> and is supported by POSIX. However, all but the simplest uses become
+>> complicated quickly. In particular, embedded command substitutions
+>> and/or the use of double quotes require careful escaping with the ba=
+ckslash
+>> character. Because of this the POSIX shell adopted the $(=E2=80=A6) =
+feature from
+>> the Korn shell.
+>>
+>> The patch was generated by the simple script
+>>
+>> for _f in $(find . -name "*.sh")
+>> do
+>> =C2=A0 sed -i 's@`\(.*\)`@$(\1)@g' ${_f}
+>> done
+>
+> "and then carefully proofread" is sorely needed here.
 
-Charles.
+It would already help to skip comment lines.
+
+--=20
+David Kastrup
