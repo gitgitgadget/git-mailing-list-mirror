@@ -1,55 +1,55 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 002/142] git-am.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:22:23 -0700
-Message-ID: <1395768283-31135-3-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 003/142] git-pull.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:22:24 -0700
+Message-ID: <1395768283-31135-4-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 25 18:37:37 2014
+X-From: git-owner@vger.kernel.org Tue Mar 25 18:37:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVHx-0001NU-7V
+	id 1WSVHw-0001NU-LC
 	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:37:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755483AbaCYRev convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:34:51 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:48398 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754076AbaCYRYu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:24:50 -0400
-Received: by mail-pb0-f46.google.com with SMTP id rq2so742185pbb.5
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:24:49 -0700 (PDT)
+	id S1755307AbaCYReh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:34:37 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:61309 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754637AbaCYRYv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:24:51 -0400
+Received: by mail-pa0-f42.google.com with SMTP id fb1so748701pad.1
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:24:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=RxkM6XxeAmbajNH0r/5U9fFQ+8uhJUloZ2/A2ohmqlk=;
-        b=fNJwhyFOMmc7UgY3y1S8mktUvK3B7DBaynWp/Dg4fAUiaQzVAB4jSRQMMS3lHTxqoQ
-         2xg8xqYw/12Jc41U2q6QVxSQo9MWGWFYVsZOva16uJDqhTQRYm5sSKLwfpy+CwVmweHC
-         XoanPHCdbceNbXY5j/owP3uJ06QdDPKp7gTbqfLRVEtHV7HiAN8msiTTdSQTatyoz10l
-         qtZ+dgMoMlVzwjdWjbIKh6etcGHL9AHw0HQaCmPolWqRVrqfUS7Gsjw6Liy3xIsE5qQj
-         WC9LdyVqWg6XupbVG/p5KoYNKjVhyFXedz4Jld2A0oHHGl+y1aIbzRppJjpP8jhVTPSL
-         tf+Q==
-X-Received: by 10.68.196.226 with SMTP id ip2mr79557013pbc.106.1395768289590;
-        Tue, 25 Mar 2014 10:24:49 -0700 (PDT)
+        bh=x9SR09lOGkFYIYch1DvF0exSRaQSJbgbljlXFVWTthI=;
+        b=Kqnw/iNcjundEjW7aRmP6YTiu+pXvrGNVOQ+rK/VzyOQ0G2u+rJCaMJofHYhZcY9lZ
+         Yt7lUV1kkE/xm+N/E1EHOTCmmDcd+g2dpu7gDpGCIuKBWnm0xzo/8qe+A/TPPTtf7DOe
+         WZPhzsNzig7Qin2s34SPm42MzCST0XqsvgwWyzc2myygu0F8qgzJqFIISTb6zDZVV8WG
+         a0Pt6dE+bUpREgYZCq24ynhk7+5Eq1fOy6ku8uhCW1mtJ+okIiC4OG5Tq1XZiZb/2aep
+         s3AOD53VgrYO8jQXuKxS4vcV+2Uw9B0ArmIvvIZqFU62bOlr9/+1dkTrnD1gX5rEYxG+
+         xu8Q==
+X-Received: by 10.66.118.71 with SMTP id kk7mr79380027pab.14.1395768290763;
+        Tue, 25 Mar 2014 10:24:50 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.24.48
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.24.49
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:24:49 -0700 (PDT)
+        Tue, 25 Mar 2014 10:24:50 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245141>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,98 +72,21 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- git-am.sh |   30 +++++++++++++++---------------
- 1 file changed, 15 insertions(+), 15 deletions(-)
+ git-pull.sh |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/git-am.sh b/git-am.sh
-index 78517f2..1b638e8 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -125,7 +125,7 @@ cannot_fallback () {
- }
-=20
- fall_back_3way () {
--    O_OBJECT=3D`cd "$GIT_OBJECT_DIRECTORY" && pwd`
-+    O_OBJECT=3D$(cd "$GIT_OBJECT_DIRECTORY" && pwd)
-=20
-     rm -fr "$dotest"/patch-merge-*
-     mkdir "$dotest/patch-merge-tmp-dir"
-@@ -275,7 +275,7 @@ split_patches () {
- 		then
- 			clean_abort "$(gettext "Only one StGIT patch series can be applied =
-at once")"
- 		fi
--		series_dir=3D`dirname "$1"`
-+		series_dir=3D$(dirname "$1")
- 		series_file=3D"$1"
- 		shift
- 		{
-@@ -298,8 +298,8 @@ split_patches () {
- 		this=3D0
- 		for stgit in "$@"
- 		do
--			this=3D`expr "$this" + 1`
--			msgnum=3D`printf "%0${prec}d" $this`
-+			this=3D$(expr "$this" + 1)
-+			msgnum=3D$(printf "%0${prec}d" $this)
- 			# Perl version of StGIT parse_patch. The first nonemptyline
- 			# not starting with Author, From or Date is the
- 			# subject, and the body starts with the next nonempty
-@@ -644,26 +644,26 @@ fi
- git_apply_opt=3D$(cat "$dotest/apply-opt")
- if test "$(cat "$dotest/sign")" =3D t
- then
--	SIGNOFF=3D`git var GIT_COMMITTER_IDENT | sed -e '
-+	SIGNOFF=3D$(git var GIT_COMMITTER_IDENT | sed -e '
- 			s/>.*/>/
- 			s/^/Signed-off-by: /'
--		`
-+		)
- else
- 	SIGNOFF=3D
- fi
-=20
--last=3D`cat "$dotest/last"`
--this=3D`cat "$dotest/next"`
-+last=3D$(cat "$dotest/last")
-+this=3D$(cat "$dotest/next")
- if test "$skip" =3D t
- then
--	this=3D`expr "$this" + 1`
-+	this=3D$(expr "$this" + 1)
- 	resume=3D
- fi
-=20
- while test "$this" -le "$last"
- do
--	msgnum=3D`printf "%0${prec}d" $this`
--	next=3D`expr "$this" + 1`
-+	msgnum=3D$(printf "%0${prec}d" $this)
-+	next=3D$(expr "$this" + 1)
- 	test -f "$dotest/$msgnum" || {
- 		resume=3D
- 		go_next
-@@ -739,16 +739,16 @@ To restore the original branch and stop patching =
-run \"\$cmdline --abort\"."
- 	'')
- 	    if test '' !=3D "$SIGNOFF"
- 	    then
--		LAST_SIGNED_OFF_BY=3D`
-+		LAST_SIGNED_OFF_BY=3D$(
- 		    sed -ne '/^Signed-off-by: /p' \
- 		    "$dotest/msg-clean" |
- 		    sed -ne '$p'
--		`
--		ADD_SIGNOFF=3D`
-+		)
-+		ADD_SIGNOFF=3D$(
- 		    test "$LAST_SIGNED_OFF_BY" =3D "$SIGNOFF" || {
- 		    test '' =3D "$LAST_SIGNED_OFF_BY" && echo
- 		    echo "$SIGNOFF"
--		}`
-+		})
- 	    else
- 		ADD_SIGNOFF=3D
- 	    fi
+diff --git a/git-pull.sh b/git-pull.sh
+index 6cd8ebc..cfc589d 100755
+--- a/git-pull.sh
++++ b/git-pull.sh
+@@ -108,7 +108,7 @@ do
+ 	-s|--s|--st|--str|--stra|--strat|--strate|--strateg|--strategy)
+ 		case "$#,$1" in
+ 		*,*=3D*)
+-			strategy=3D`expr "z$1" : 'z-[^=3D]*=3D\(.*\)'` ;;
++			strategy=3D$(expr "z$1" : 'z-[^=3D]*=3D\(.*\)') ;;
+ 		1,*)
+ 			usage ;;
+ 		*)
 --=20
 1.7.10.4
