@@ -1,77 +1,73 @@
-From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: Re: [PATCH 001/144] check-builtins.sh: use the $( ... ) construct for
- command substitution
-Date: Tue, 25 Mar 2014 11:03:42 +0100
-Message-ID: <CA+EOSBnzcBA433-HwmnRh4Xefh54NLg8e+bYhx5K8j9j5RvmSQ@mail.gmail.com>
-References: <1395735989-3396-1-git-send-email-gitter.spiros@gmail.com>
-	<1395735989-3396-2-git-send-email-gitter.spiros@gmail.com>
-	<vpqa9ce7k1x.fsf@anie.imag.fr>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: What's cooking in git.git (Mar 2014, #05; Mon, 24)
+Date: Tue, 25 Mar 2014 12:01:11 +0100
+Message-ID: <533161F7.5010508@alum.mit.edu>
+References: <xmqqr45rpcjm.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Mar 25 11:03:49 2014
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>, Adam <adam@sigterm.info>
+X-From: git-owner@vger.kernel.org Tue Mar 25 12:01:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSOCy-0000DO-1s
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 11:03:48 +0100
+	id 1WSP6f-0005Fu-IA
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 12:01:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752090AbaCYKDo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Mar 2014 06:03:44 -0400
-Received: from mail-vc0-f172.google.com ([209.85.220.172]:56588 "EHLO
-	mail-vc0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751074AbaCYKDn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 06:03:43 -0400
-Received: by mail-vc0-f172.google.com with SMTP id la4so253800vcb.3
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 03:03:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=1nmRLKqLUznSj/R3GamuRqnan3oQOCEX71cCMmXFsVM=;
-        b=mhvT6Epdp3attoTSdTJC696Wp7L+pmv4JVFAzlJk+VBmgkx2wW9K7e/mWFDJPsFMGk
-         45050AKKUYZeKBmWoevzbnMp44AKM+UQNo88/eVfZPWGCrb1WRUZml5+LLtWOLlUYeEQ
-         xpq65roVZMLQgkLR60e1gPE1VzJcJRdfTjVupfkocN1u7ZMcR/VWtgXU7djLfrY4eAGz
-         Pje5jTwXRI03bJeJTCqwRmXpzdYTvxFIJ36WV7aVcrbyTS3ftflk+X8Dj4xhU72DGJsc
-         8GPKzmVL6WplZ9/72Wc0V3rBDbj9gmR1a0s6D+YSnnKVI0GnHNxRPXIKEdLcgzhORA3Q
-         gnCA==
-X-Received: by 10.52.251.199 with SMTP id zm7mr47152187vdc.21.1395741822793;
- Tue, 25 Mar 2014 03:03:42 -0700 (PDT)
-Received: by 10.52.15.33 with HTTP; Tue, 25 Mar 2014 03:03:42 -0700 (PDT)
-In-Reply-To: <vpqa9ce7k1x.fsf@anie.imag.fr>
+	id S1752382AbaCYLBQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Mar 2014 07:01:16 -0400
+Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:62946 "EHLO
+	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751448AbaCYLBP (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 Mar 2014 07:01:15 -0400
+X-AuditID: 12074414-f79d96d000002d2b-ef-533161fac580
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 9E.C5.11563.AF161335; Tue, 25 Mar 2014 07:01:14 -0400 (EDT)
+Received: from [192.168.69.148] (p57A25AC4.dip0.t-ipconnect.de [87.162.90.196])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s2PB1C7d027380
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Tue, 25 Mar 2014 07:01:13 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
+In-Reply-To: <xmqqr45rpcjm.fsf@gitster.dls.corp.google.com>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrFKsWRmVeSWpSXmKPExsUixO6iqPsr0TDYYO8WRYvNneIWXVe6mSwa
+	eq8wOzB7XLyk7DH72E9Wj8+b5AKYo7htkhJLyoIz0/P07RK4M9b9Ky5Yw1Ix80JwA+Mh5i5G
+	Tg4JAROJW5v/MUHYYhIX7q1n62Lk4hASuMwo0TX7GSOEc55JYtHtBSwgVbwC2hJLd1wD62AR
+	UJVovLgYLM4moCuxqKcZLC4qECyx+vIDqHpBiZMzn4DZIgIOEhuWrAUaysHBLCAu0f8PLCws
+	YC/xbnkD2EFCAlYSLeuOsIHYnALWEkse3WEGKZcAKu9pDAIJMwvoSLzre8AMYctLbH87h3kC
+	o+AsJMtmISmbhaRsASPzKka5xJzSXN3cxMyc4tRk3eLkxLy81CJdC73czBK91JTSTYyQUBbZ
+	wXjkpNwhRgEORiUe3ghjg2Ah1sSy4srcQ4ySHExKoryyUYbBQnxJ+SmVGYnFGfFFpTmpxYcY
+	JTiYlUR4DcOAcrwpiZVVqUX5MClpDhYlcd5vi9X9hATSE0tSs1NTC1KLYLIyHBxKErwmwJgV
+	EixKTU+tSMvMKUFIM3FwggznkhIpTs1LSS1KLC3JiAfFbnwxMHpBUjxAe2/Eg+wtLkjMBYpC
+	tJ5iNOa4tWFNIxPHhm1AUoglLz8vVUqcVx1kkwBIaUZpHtwiWBJ7xSgO9LcwrwdIFQ8wAcLN
+	ewW0igloVXiTHsiqkkSElFQD48LLC+bpW8eUMssub7mWufnSllmKDnfXVd32ndAdmbqgMmT2
+	/EyRGdsuPZ51a1eFDc/asEsPe9gmnr26/mPY9Py3xic0fk5J79GT0vv6ru3KnRXm 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245026>
 
-2014-03-25 9:35 GMT+01:00 Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>:
-> Elia Pinto <gitter.spiros@gmail.com> writes:
->
->> and is supported by POSIX. However,all but the simplest uses become
->
-> Missing space after comma.
->
->> complicated quickly. In particular,embedded command substitutions
->
-> Ditto.
->
-> (neither should block merging, but they would be worth fixing if you
-> need a reroll)
->
-> Did you do these 144 patches by hand, or did you use a script (e.g. perl
-> substitution or so) to do it? If the later, then you should include
-> explanations in your commit message.
+On 03/24/2014 09:27 PM, Junio C Hamano wrote:
+> [...]
+> * an/branch-config-message (2014-03-24) 1 commit
+>  - branch.c: install_branch_config: simplify if chain
+> 
+>  Will merge to 'next'.
 
-I had used a toy sed script. No bulletproof.  Then I did a manual review.
+The Signed-off-by line in this commit shows the name as only "Adam".
+Adam, unless this is your full name, please add a S-o-b line with your
+full name as per Documentation/SubmittingPatches.  This is important to
+help us track the provenance of all code in Git.
 
-I review the patch series, adjust the comment was added, and resend the V2.
+Michael
 
-Thanks again
->
-> --
-> Matthieu Moy
-> http://www-verimag.imag.fr/~moy/
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
