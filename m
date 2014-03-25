@@ -1,55 +1,55 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 064/142] t5516-fetch-push.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:23:25 -0700
-Message-ID: <1395768283-31135-65-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 042/142] t4013-diff-various.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:23:03 -0700
+Message-ID: <1395768283-31135-43-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 25 18:33:29 2014
+X-From: git-owner@vger.kernel.org Tue Mar 25 18:33:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVDw-0004n1-Ld
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:17 +0100
+	id 1WSVE4-0004n1-Ax
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755556AbaCYR36 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:29:58 -0400
-Received: from mail-pb0-f53.google.com ([209.85.160.53]:38894 "EHLO
-	mail-pb0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755392AbaCYR0C (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:26:02 -0400
-Received: by mail-pb0-f53.google.com with SMTP id rp16so750894pbb.12
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:26:02 -0700 (PDT)
+	id S1755365AbaCYRbz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:31:55 -0400
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:51483 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932102AbaCYRZj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:25:39 -0400
+Received: by mail-pa0-f50.google.com with SMTP id kq14so734697pab.23
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=S9wbLDhtoqpQ+UQvUEoapo6bEvAzgwFlrw1QrSpRShs=;
-        b=g/r3rnRBBKPTgH2sveBoB+wXQAWw13C1nrYWUAs5sKET//bL4AskAljwHHVolaX51D
-         iRBUKm30M/e+WCWDKA3Hmx5OhicslTJezZ2RWLd4V6cLzuM9UJ2fK4GPGoJhrQT7k4/D
-         neu9tpVinM1qoWFAzD8zADWjbNc00m8a1Z96PtD0GYC2AgoZfusDkVrXdmgg3OYZaFel
-         P25cA7wkvEU1gHIr6B8vU+4kRxhFI3CyodMGaf9aimj+4ze7Acb1T/QvSRQwfx9G+oVO
-         rTGllZAP1q191+K28Arxyvcbz8AQHUVYRe9btqqtMM4q3G3rytPmpGE+AMcH1yvmEk0n
-         /VMQ==
-X-Received: by 10.68.191.200 with SMTP id ha8mr79640322pbc.66.1395768362218;
-        Tue, 25 Mar 2014 10:26:02 -0700 (PDT)
+        bh=IpdYlmMsS3SR4b3Bya3liPbTB0bL/v6yGQJGHBfh1hE=;
+        b=MfeJcJuoEMxzl2UFwhLqSHB+qsVCGPJ9/A+ma/Vgn6D6GLyp9WwGxrXj0Vxn1z8ttJ
+         Ob9/yQvIzM3ydyy3dgxT4+5vAxI4hfgfhGrSjf48W9XQs0n5mBdFvpDj015nco4kz1Hg
+         rAPY6sgn83T8u7d7TizbaqfkGJuP2akAfYkPbh2yJ8evmncZ/4PQl+ZNyZk52Fmvc5U0
+         ax6cdz5VN5eIJ6bcArq9nmgqqvm5sI/cdyq6RxkTUO557xAouXPFmGkgoEwYB5PQnm3L
+         +/0UFVfvSz+StVMptbnloJZsmyexlLPd9bdxU9xWkyTlBzWltg/QW6mOhD/AwGqY5f0E
+         SYww==
+X-Received: by 10.68.161.101 with SMTP id xr5mr11038278pbb.168.1395768338757;
+        Tue, 25 Mar 2014 10:25:38 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.26.01
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.37
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:26:01 -0700 (PDT)
+        Tue, 25 Mar 2014 10:25:38 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245108>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,31 +72,30 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t5516-fetch-push.sh |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t4013-diff-various.sh |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 67e0ab3..a9ed84e 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -15,7 +15,7 @@ This test checks the following functionality:
+diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+index e77c09c..805b055 100755
+--- a/t/t4013-diff-various.sh
++++ b/t/t4013-diff-various.sh
+@@ -107,14 +107,14 @@ test_expect_success setup '
+ +*++ [initial] Initial
+ EOF
 =20
- . ./test-lib.sh
-=20
--D=3D`pwd`
-+D=3D$(pwd)
-=20
- mk_empty () {
- 	repo_name=3D"$1"
-@@ -421,7 +421,7 @@ test_expect_success 'push tag with non-existent, in=
-complete dest' '
- test_expect_success 'push sha1 with non-existent, incomplete dest' '
-=20
- 	mk_test testrepo &&
--	test_must_fail git push testrepo `git rev-parse master`:foo
-+	test_must_fail git push testrepo $(git rev-parse master):foo
-=20
- '
+-V=3D`git version | sed -e 's/^git version //' -e 's/\./\\./g'`
++V=3D$(git version | sed -e 's/^git version //' -e 's/\./\\./g')
+ while read cmd
+ do
+ 	case "$cmd" in
+ 	'' | '#'*) continue ;;
+ 	esac
+-	test=3D`echo "$cmd" | sed -e 's|[/ ][/ ]*|_|g'`
+-	pfx=3D`printf "%04d" $test_count`
++	test=3D$(echo "$cmd" | sed -e 's|[/ ][/ ]*|_|g')
++	pfx=3D$(printf "%04d" $test_count)
+ 	expect=3D"$TEST_DIRECTORY/t4013/diff.$test"
+ 	actual=3D"$pfx-diff.$test"
 =20
 --=20
 1.7.10.4
