@@ -1,55 +1,55 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 037/142] t3905-stash-include-untracked.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:22:58 -0700
-Message-ID: <1395768283-31135-38-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 025/142] t1410-reflog.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:22:46 -0700
+Message-ID: <1395768283-31135-26-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 25 18:33:44 2014
+X-From: git-owner@vger.kernel.org Tue Mar 25 18:33:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVE5-0004n1-Cx
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:25 +0100
+	id 1WSVE9-0004n1-4U
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755576AbaCYRcJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:32:09 -0400
-Received: from mail-pb0-f44.google.com ([209.85.160.44]:46211 "EHLO
-	mail-pb0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932124AbaCYRZc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:25:32 -0400
-Received: by mail-pb0-f44.google.com with SMTP id rp16so742145pbb.31
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:31 -0700 (PDT)
+	id S932110AbaCYRZW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:25:22 -0400
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:46539 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755349AbaCYRZU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:25:20 -0400
+Received: by mail-pa0-f47.google.com with SMTP id lj1so740504pab.20
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=HS5iC54h1tFAGTh2RtSOdBz3IeSg7oHfEHXJSP0YAck=;
-        b=jfNIdz2lSU5ZfU3Q+RXH91Xi9hanGR7I1TWrNs+YuUYdeWHfC3kzGdB/ypO3e0bKAR
-         uPlcEV+TtVG7BnfgTvLzfGCa/rg8BCdsAFWdHtHuHmv3gCFiBkJFmEJax+vQu0ccFJgz
-         AU+nsxAPrx9k1laouAji4YqqDfJ5JJXXRy2bJiU0E1Tzc8w7w0vocGxPqhJsBVn2BLk/
-         li8eeG0Oqd0T1g8qvbKwTta7gJgBgNk9yitBjVZ6YXF4VDed3alH6F/ZlvYMZWnjFxxu
-         Y+RBru0denEZxiER9EhBO7FQTAf45dDN8wM9owF8Meg+2PpytUBMvAix8GISdTwZ3L1B
-         Uu0A==
-X-Received: by 10.68.139.2 with SMTP id qu2mr11163551pbb.164.1395768331912;
-        Tue, 25 Mar 2014 10:25:31 -0700 (PDT)
+        bh=28jTDcPElsFVnK+O7Coug+O37ZDrxGx8OqAuDdaO+8k=;
+        b=YFQO8TYyYxqoo4i+EdsUDpGVA+Bji1r+8r/pVoCumeStFEMgaBu4TZMpAZ47CXCaWM
+         eztKW+Gm0Cl/xMUhQ59SCZS2Km0UxQxuoVUxDh7BvUmExvCHcTcw+2IX9oJ6RMMFF0/r
+         KnZC7caRBFzPZriZKLK0ei0n2wopzbjPsDSTwoTnDB6tRotTTUPmjN8Q9QozOsdfA3QB
+         A1oZTbjrbxleBCZd/kHD8YhFWpJQk6/UY2SaB8Hg3f2g4HJffqyg+cEEd8lAlAFDtQaQ
+         LlZL94eBAjatBCg/O/qoY+jfkwvR+qbD9SEIIGyuOOErMdg+BxFm8BP0FwgZ8cPXJc6j
+         ynZQ==
+X-Received: by 10.67.2.34 with SMTP id bl2mr80007502pad.58.1395768318664;
+        Tue, 25 Mar 2014 10:25:18 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.30
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.17
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:25:31 -0700 (PDT)
+        Tue, 25 Mar 2014 10:25:18 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245128>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,25 +72,59 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t3905-stash-include-untracked.sh |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t1410-reflog.sh |   24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/t/t3905-stash-include-untracked.sh b/t/t3905-stash-include=
--untracked.sh
-index a5e7e6b..f372fc8 100755
---- a/t/t3905-stash-include-untracked.sh
-+++ b/t/t3905-stash-include-untracked.sh
-@@ -96,8 +96,8 @@ test_expect_success 'stash pop after save --include-u=
-ntracked leaves files untra
- 	git stash pop &&
- 	git status --porcelain >actual &&
- 	test_cmp expect actual &&
--	test "1" =3D "`cat file2`" &&
--	test untracked =3D "`cat untracked/untracked`"
-+	test "1" =3D "$(cat file2)" &&
-+	test untracked =3D "$(cat untracked/untracked)"
- '
+diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
+index 236b13a..0a9502a 100755
+--- a/t/t1410-reflog.sh
++++ b/t/t1410-reflog.sh
+@@ -62,18 +62,18 @@ test_expect_success setup '
+ 	git add . &&
 =20
- git clean --force --quiet -d
+ 	test_tick && git commit -m rabbit &&
+-	H=3D`git rev-parse --verify HEAD` &&
+-	A=3D`git rev-parse --verify HEAD:A` &&
+-	B=3D`git rev-parse --verify HEAD:A/B` &&
+-	C=3D`git rev-parse --verify HEAD:C` &&
+-	D=3D`git rev-parse --verify HEAD:A/D` &&
+-	E=3D`git rev-parse --verify HEAD:A/B/E` &&
++	H=3D$(git rev-parse --verify HEAD) &&
++	A=3D$(git rev-parse --verify HEAD:A) &&
++	B=3D$(git rev-parse --verify HEAD:A/B) &&
++	C=3D$(git rev-parse --verify HEAD:C) &&
++	D=3D$(git rev-parse --verify HEAD:A/D) &&
++	E=3D$(git rev-parse --verify HEAD:A/B/E) &&
+ 	check_fsck &&
+=20
+ 	test_chmod +x C &&
+ 	git add C &&
+ 	test_tick && git commit -m dragon &&
+-	L=3D`git rev-parse --verify HEAD` &&
++	L=3D$(git rev-parse --verify HEAD) &&
+ 	check_fsck &&
+=20
+ 	rm -f C A/B/E &&
+@@ -81,15 +81,15 @@ test_expect_success setup '
+ 	echo horse >A/G &&
+ 	git add F A/G &&
+ 	test_tick && git commit -a -m sheep &&
+-	F=3D`git rev-parse --verify HEAD:F` &&
+-	G=3D`git rev-parse --verify HEAD:A/G` &&
+-	I=3D`git rev-parse --verify HEAD:A` &&
+-	J=3D`git rev-parse --verify HEAD` &&
++	F=3D$(git rev-parse --verify HEAD:F) &&
++	G=3D$(git rev-parse --verify HEAD:A/G) &&
++	I=3D$(git rev-parse --verify HEAD:A) &&
++	J=3D$(git rev-parse --verify HEAD) &&
+ 	check_fsck &&
+=20
+ 	rm -f A/G &&
+ 	test_tick && git commit -a -m monkey &&
+-	K=3D`git rev-parse --verify HEAD` &&
++	K=3D$(git rev-parse --verify HEAD) &&
+ 	check_fsck &&
+=20
+ 	check_have A B C D E F G H I J K L &&
 --=20
 1.7.10.4
