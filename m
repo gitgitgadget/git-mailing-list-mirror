@@ -1,7 +1,7 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 072/142] t5551-http-fetch-smart.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:23:33 -0700
-Message-ID: <1395768283-31135-73-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 048/142] t4119-apply-config.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:23:09 -0700
+Message-ID: <1395768283-31135-49-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -14,42 +14,42 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVDt-0004n1-FC
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:13 +0100
+	id 1WSVE1-0004n1-Se
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755281AbaCYR3m convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:29:42 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:64896 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755420AbaCYR0L (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:26:11 -0400
-Received: by mail-pa0-f42.google.com with SMTP id fb1so742880pad.15
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:26:10 -0700 (PDT)
+	id S1755209AbaCYRbX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:31:23 -0400
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:35678 "EHLO
+	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755363AbaCYRZp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:25:45 -0400
+Received: by mail-pa0-f44.google.com with SMTP id bj1so742835pad.17
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=+uT1P9Za2wxQhaJodzQApgCGAcvF3vAe2ukWUUcLEzU=;
-        b=QP+22waxCR0/09JVjbIBb3aKH4knDiNgHv2N4+ddCm+KtE/WDcSwwc16mEaH3jw9jU
-         QBTJjgPtUjoEjoyQwRmICETIvaB+UHrt0LAfqquDi67J/5FgR1XDBit2WhP5w2wLQJZl
-         kRO44ACC6IgE9j0U08DmL/+UFWrXiR/F5qEG0nxqMzAHHJyMZSebYi2l/jXxtvYVulFh
-         sRc+EQ1VM3Jltfd2RKjZT0l4SqdqK9ztRjSebT8tgi+aM3X0JdP7woXzsXvPMk3M6iv2
-         hQfRnL7GmjlynKKPr5nWRu9orXmFeDOA3u6XB28YGz12mvPB2FNNZoGhol+Hp/Jqsw/v
-         Ygjg==
-X-Received: by 10.66.21.73 with SMTP id t9mr24510412pae.36.1395768370682;
-        Tue, 25 Mar 2014 10:26:10 -0700 (PDT)
+        bh=5X9eoTVAGLvp1cqze40Bqp88Sdu5QnFF21tN+9iMFOw=;
+        b=xecTc9hWoSgWnOqgCdAUmC9qDOoP0l7FvlJBdZNjjadkiP26wmvLpyF1fKgsvZYQ/5
+         JDjHaLu51wvCKQ8vuuDle/Pry1RZKWp2IRGzEF9HyJ7ATZOGryUBWazhukYdI5niykCH
+         Wj/2yNem76TauyfxkU4M6wJLA5aSq7lesFgoj4SDUZcaZJNswnpE+oFO2ar1ncYrSo4i
+         8Zm0lg1bK/wS911Itl4ME/Y5uk0RNetOaptzieyY3H78g3wlye2MxY4VipgQupsC4VuF
+         NGhfY3La3cqExfk2opn1XlZO3wUiQC2EF1KxLNqtObU9y855jSV7QPh8udN87+aLAJWq
+         Jf4w==
+X-Received: by 10.69.31.171 with SMTP id kn11mr81184602pbd.47.1395768345006;
+        Tue, 25 Mar 2014 10:25:45 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.26.09
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.44
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:26:10 -0700 (PDT)
+        Tue, 25 Mar 2014 10:25:44 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245113>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245114>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,22 +72,22 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t5551-http-fetch-smart.sh |    2 +-
+ t/t4119-apply-config.sh |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
-index e07eaf3..232c5ac 100755
---- a/t/t5551-http-fetch-smart.sh
-+++ b/t/t5551-http-fetch-smart.sh
-@@ -218,7 +218,7 @@ test -n "$GIT_TEST_LONG" && test_set_prereq EXPENSI=
-VE
- test_expect_success EXPENSIVE 'create 50,000 tags in the repo' '
- 	(
- 	cd "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
--	for i in `test_seq 50000`
-+	for i in $(test_seq 50000)
- 	do
- 		echo "commit refs/heads/too-many-refs"
- 		echo "mark :$i"
+diff --git a/t/t4119-apply-config.sh b/t/t4119-apply-config.sh
+index 3d0384d..c393be6 100755
+--- a/t/t4119-apply-config.sh
++++ b/t/t4119-apply-config.sh
+@@ -68,7 +68,7 @@ test_expect_success 'apply --whitespace=3Dstrip from =
+config' '
+ 	check_result sub/file1
+ '
+=20
+-D=3D`pwd`
++D=3D$(pwd)
+=20
+ test_expect_success 'apply --whitespace=3Dstrip in subdir' '
+=20
 --=20
 1.7.10.4
