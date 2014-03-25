@@ -1,55 +1,55 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 024/142] t1401-symbolic-ref.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:22:45 -0700
-Message-ID: <1395768283-31135-25-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 015/142] t0300-credentials.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:22:36 -0700
+Message-ID: <1395768283-31135-16-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 25 18:33:35 2014
+X-From: git-owner@vger.kernel.org Tue Mar 25 18:33:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVEA-0004n1-Lm
+	id 1WSVEB-0004n1-7E
 	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755617AbaCYRdB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:33:01 -0400
-Received: from mail-pb0-f41.google.com ([209.85.160.41]:32804 "EHLO
-	mail-pb0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755343AbaCYRZS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:25:18 -0400
-Received: by mail-pb0-f41.google.com with SMTP id jt11so754036pbb.0
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:17 -0700 (PDT)
+	id S1755336AbaCYRZO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:25:14 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:43935 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754049AbaCYRZH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:25:07 -0400
+Received: by mail-pa0-f42.google.com with SMTP id fb1so741625pad.15
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=Iw1AGqzOkWi0ksc4bF23xx4qeNNAcyEd3Z7r20/CXIs=;
-        b=XzY++JNb0Vn/aa2EwNJ+O5VWzbpTChqhoBg8J5yd6GZbED0wiOFPffp8qKWcUWoman
-         QvvUtCbrwnjExdZG4ZV6pZANZ4umlmeOgbIwovl66p+0xYzYshuyxBPSYy5gL5eKOTPp
-         PA73SImAPXrt9OjOPyPNzAHNIT5P23x2d+/bgBTqkyVkVoGfna13I7W7cGxtulbWV9eM
-         DqlU8UzsWe0+MK6wFRxLE5e6wSLEKHrHvznObyarUP3tykVBQqQ2SR7/+NCHoNS3tVwN
-         zPnMhN60t2ke1o43w5ODg1h+FtA50Hr6EuLPV2tpbPd4UIlBm0U0NLeIRA1kpyUA6cjK
-         aPlQ==
-X-Received: by 10.68.60.225 with SMTP id k1mr80363048pbr.58.1395768317670;
-        Tue, 25 Mar 2014 10:25:17 -0700 (PDT)
+        bh=ZmS6Ol+xBatFqoM6Z3AymO+itCM5OAI/V7zKAoXloGY=;
+        b=wjd9+Y8XbAROp0Jdfg9HAcLxgDgB1sxV77RDxhC95UHuPyLFg1D7086R8ksk2hFUN2
+         MfS/DWAHLwe8nYpDI+0kEIXQIVNQZ0+37vSYsJzZnp3dU6MsnTgWYZb+7XYL5QtPtW4u
+         XdtOwcnWzwJIhC7rK5IODwLLDIHxBj1rYB5epupSD/5nY3kspwV0bPNmA6zXLw3MpD0s
+         3qbNYvTok1JB+xvX/lL4GYWD3104sPponyBmvhGNMO0CxLJIKLJiZV86ktlXZq3f5JII
+         X7HxYeUjv/LIdeGoBtJQdBpzILc6RT7bNKV+C5hNScCS3DOEWGnOujWdM8O39kVXSk0T
+         nHAA==
+X-Received: by 10.66.146.170 with SMTP id td10mr80960506pab.105.1395768307415;
+        Tue, 25 Mar 2014 10:25:07 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.16
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.06
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:25:17 -0700 (PDT)
+        Tue, 25 Mar 2014 10:25:06 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245119>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245120>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,21 +72,21 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t1401-symbolic-ref.sh |    2 +-
+ t/t0300-credentials.sh |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t1401-symbolic-ref.sh b/t/t1401-symbolic-ref.sh
-index 36378b0..6ea8985 100755
---- a/t/t1401-symbolic-ref.sh
-+++ b/t/t1401-symbolic-ref.sh
-@@ -29,7 +29,7 @@ reset_to_sane
+diff --git a/t/t0300-credentials.sh b/t/t0300-credentials.sh
+index 538ea5f..57ea5a1 100755
+--- a/t/t0300-credentials.sh
++++ b/t/t0300-credentials.sh
+@@ -6,7 +6,7 @@ test_description=3D'basic credential helper tests'
 =20
- test_expect_success 'symbolic-ref refuses bare sha1' '
- 	echo content >file && git add file && git commit -m one &&
--	test_must_fail git symbolic-ref HEAD `git rev-parse HEAD`
-+	test_must_fail git symbolic-ref HEAD $(git rev-parse HEAD)
- '
- reset_to_sane
-=20
+ test_expect_success 'setup helper scripts' '
+ 	cat >dump <<-\EOF &&
+-	whoami=3D`echo $0 | sed s/.*git-credential-//`
++	whoami=3D$(echo $0 | sed s/.*git-credential-//)
+ 	echo >&2 "$whoami: $*"
+ 	OIFS=3D$IFS
+ 	IFS=3D=3D
 --=20
 1.7.10.4
