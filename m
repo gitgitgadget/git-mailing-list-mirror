@@ -1,55 +1,55 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 020/142] t1004-read-tree-m-u-wf.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:22:41 -0700
-Message-ID: <1395768283-31135-21-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 029/142] t3030-merge-recursive.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:22:50 -0700
+Message-ID: <1395768283-31135-30-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 25 18:33:38 2014
+X-From: git-owner@vger.kernel.org Tue Mar 25 18:33:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVEC-0004n1-A2
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:32 +0100
+	id 1WSVE7-0004n1-Gg
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755619AbaCYRdS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:33:18 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:65474 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755321AbaCYRZN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:25:13 -0400
-Received: by mail-pa0-f53.google.com with SMTP id ld10so740018pab.12
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:13 -0700 (PDT)
+	id S1755600AbaCYRcm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:32:42 -0400
+Received: from mail-pb0-f48.google.com ([209.85.160.48]:38002 "EHLO
+	mail-pb0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754665AbaCYRZX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:25:23 -0400
+Received: by mail-pb0-f48.google.com with SMTP id md12so743272pbc.7
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=snMbggtIYSXQolYQ8PV+aNr0jyXL6FADEOPL1h72df0=;
-        b=ebf2D33aP528HLdEG5/UxX+oGuuQ2qTIJrndJAUPvlZgZUbmVCrRIl8vQC+PIvOT2s
-         Loq6FqftUAAgxoXzegh/iXjSvHT7gUNGbnIUfoza/iheJ/l7UNf72KVgFAdiRdJpKewO
-         SpTPksDt8hyOhlmGiIx9x9sSXVK1BT5hhMG5txdrVwQiLvXruMtWOJ4H0bA5B1Cp5XLT
-         Z5L8bcTMDAQ2MR4YQWHNr6dp3WEKNXQ0OW7RrPQ+RL7EBSm649EAEHO5NAR3RTXL8CXt
-         teVhYfj6O8jNkGTnlrSS2q9buM69OGo5lLMHpCcuCSZ3jrXL7XZCl/nQ+ZToR8I5XPBk
-         d9dg==
-X-Received: by 10.68.125.164 with SMTP id mr4mr79181455pbb.27.1395768313330;
-        Tue, 25 Mar 2014 10:25:13 -0700 (PDT)
+        bh=ouAVpT+uxI+C4BVfqU7iVtYbZ+VmO8hpVJkrVnjz6zY=;
+        b=N46nj0EP6x8eSxAMFjSadCYW+km6Orq36f89i/95vxr/ldmfzZZPzK9FPOZI7XEQhp
+         dq4zi2sFSXdp54JhfQmjECxiRWdc+w8o5H01Dd2xrZUDmSiKH4Y/gC2WztKN9TpdSF1E
+         OcTaNP4FMGMzwo5fNVdkZgQyhc2OdY49lqEMlMXwslfDdyR4L0pgP3cQ5kLIfXXaxXkP
+         KuqqlDn2243W+STsaXaRbsLOEOHNRwPqRFnhAZGBn8CAowTxckKfLOCsZ7A7MegJ3VGw
+         AAQVeLDbszUcetWcHnY4dUXZYAKrdgQeEo/PGWV93dbQH8XiOh2VAD/wFjBDmx+aP/1Z
+         o/kA==
+X-Received: by 10.66.161.38 with SMTP id xp6mr12372038pab.145.1395768323088;
+        Tue, 25 Mar 2014 10:25:23 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.12
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.21
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:25:12 -0700 (PDT)
+        Tue, 25 Mar 2014 10:25:22 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245121>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245122>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,58 +72,21 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t1004-read-tree-m-u-wf.sh |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ t/t3030-merge-recursive.sh |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t1004-read-tree-m-u-wf.sh b/t/t1004-read-tree-m-u-wf.sh
-index 3e72aff..c70cf42 100755
---- a/t/t1004-read-tree-m-u-wf.sh
-+++ b/t/t1004-read-tree-m-u-wf.sh
-@@ -30,7 +30,7 @@ test_expect_success 'two-way not clobbering' '
+diff --git a/t/t3030-merge-recursive.sh b/t/t3030-merge-recursive.sh
+index 82e1854..e9757c4 100755
+--- a/t/t3030-merge-recursive.sh
++++ b/t/t3030-merge-recursive.sh
+@@ -263,7 +263,7 @@ test_expect_success 'setup 8' '
+ 	test_ln_s_add e a &&
+ 	test_tick &&
+ 	git commit -m "rename a->e, symlink a->e" &&
+-	oln=3D`printf e | git hash-object --stdin`
++	oln=3D$(printf e | git hash-object --stdin)
+ '
 =20
- 	echo >file2 master creates untracked file2 &&
- 	echo >subdir/file2 master creates untracked subdir/file2 &&
--	if err=3D`read_tree_u_must_succeed -m -u master side 2>&1`
-+	if err=3D$(read_tree_u_must_succeed -m -u master side 2>&1)
- 	then
- 		echo should have complained
- 		false
-@@ -43,7 +43,7 @@ echo file2 >.gitignore
-=20
- test_expect_success 'two-way with incorrect --exclude-per-directory (1=
-)' '
-=20
--	if err=3D`read_tree_u_must_succeed -m --exclude-per-directory=3D.giti=
-gnore master side 2>&1`
-+	if err=3D$(read_tree_u_must_succeed -m --exclude-per-directory=3D.git=
-ignore master side 2>&1)
- 	then
- 		echo should have complained
- 		false
-@@ -54,7 +54,7 @@ test_expect_success 'two-way with incorrect --exclude=
--per-directory (1)' '
-=20
- test_expect_success 'two-way with incorrect --exclude-per-directory (2=
-)' '
-=20
--	if err=3D`read_tree_u_must_succeed -m -u --exclude-per-directory=3Dfo=
-o --exclude-per-directory=3D.gitignore master side 2>&1`
-+	if err=3D$(read_tree_u_must_succeed -m -u --exclude-per-directory=3Df=
-oo --exclude-per-directory=3D.gitignore master side 2>&1)
- 	then
- 		echo should have complained
- 		false
-@@ -95,7 +95,7 @@ test_expect_success 'three-way not clobbering a worki=
-ng tree file' '
- 	git checkout master &&
- 	echo >file3 file three created in master, untracked &&
- 	echo >subdir/file3 file three created in master, untracked &&
--	if err=3D`read_tree_u_must_succeed -m -u branch-point master side 2>&=
-1`
-+	if err=3D$(read_tree_u_must_succeed -m -u branch-point master side 2>=
-&1)
- 	then
- 		echo should have complained
- 		false
+ test_expect_success 'setup 9' '
 --=20
 1.7.10.4
