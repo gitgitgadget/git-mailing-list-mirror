@@ -1,55 +1,55 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 004/142] git-rebase--merge.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:22:25 -0700
-Message-ID: <1395768283-31135-5-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 032/142] t3210-pack-refs.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:22:53 -0700
+Message-ID: <1395768283-31135-33-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 25 18:25:38 2014
+X-From: git-owner@vger.kernel.org Tue Mar 25 18:32:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSV6H-0005m3-Ol
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:25:22 +0100
+	id 1WSVDO-0004n1-SQ
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:32:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755306AbaCYRYy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:24:54 -0400
-Received: from mail-pb0-f43.google.com ([209.85.160.43]:44551 "EHLO
-	mail-pb0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755296AbaCYRYw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:24:52 -0400
-Received: by mail-pb0-f43.google.com with SMTP id um1so746270pbc.30
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:24:51 -0700 (PDT)
+	id S932117AbaCYRZ2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:25:28 -0400
+Received: from mail-pd0-f176.google.com ([209.85.192.176]:37277 "EHLO
+	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932113AbaCYRZ0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:25:26 -0400
+Received: by mail-pd0-f176.google.com with SMTP id r10so718083pdi.7
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=eJ5VrsOcL/VNCqGwD+7QrwCACm3QdLrJSq8T+30BzvA=;
-        b=ZUbwZsri70jkXeYf2VvmlK/9x2OR6+s9POd/21oLH54Gy4FkpU4aOoUUiH9TRpcO0j
-         Ip3agWOHmYItJvVJkFU9FwuUkmgJGZv+KQIkMXGtcbrtd4tTwbkHQkvXXqjciG6GlUPy
-         xIyHgF6OtzMgCy6lfK5MQH4az3muvgJiq493MBCxHvEEicGEIHU+1HnBoJnl7WxTcxbp
-         3RBeIvzS9ihT9BDIx67hHiv82LKnzNKNs/g2acZz7+ZhIU1SJ4zxHBGW4RgsbgQHVFe6
-         2Dfs301VUgHtVvfe0LixLFAYFAq90TA+Vxwd5J74LA0tplfB2T9sgsyP2jtyVna1DNTs
-         TNFw==
-X-Received: by 10.67.13.134 with SMTP id ey6mr80555464pad.44.1395768291749;
-        Tue, 25 Mar 2014 10:24:51 -0700 (PDT)
+        bh=sPU0bKf9Ia9F1V27gcTj7rWbhvofoZOdpINVKBwF3WM=;
+        b=WOw10jgDcdS8id6ZyCTra8sPJf2En4q603CYarWIwnOTHfE4dg0nAAmtCEBZXNJkn8
+         bTW2fnJ6wikdoGT261NRZ/7yunJrtOu6P2CjWZtDNPHvTC9mn9mQE+AQZ8jhW6Bu/G8z
+         4pRx6+GB/geulD/XKi59a2+mF4x2eXrxcTiNv+mRPh9jQ35qlc5JM1nfRPsELJlwVVpu
+         LPCXC4xn8iX2RjRmFgo40GKKtrjyw0v67jOrWOZe5849fdYiwNo3rdnjoSqNQJVj+ttn
+         nmhkF8Vxwmr8CFagJvPIHsdVA920ow3sgUM3h/uhvy9/nQ2vWXvqz7w9k3WN3sQ82Crs
+         8cLA==
+X-Received: by 10.66.232.68 with SMTP id tm4mr79628271pac.114.1395768326483;
+        Tue, 25 Mar 2014 10:25:26 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.24.50
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.25
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:24:51 -0700 (PDT)
+        Tue, 25 Mar 2014 10:25:25 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245059>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245060>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,31 +72,21 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- git-rebase--merge.sh |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t3210-pack-refs.sh |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/git-rebase--merge.sh b/git-rebase--merge.sh
-index 5381857..dc064f8 100644
---- a/git-rebase--merge.sh
-+++ b/git-rebase--merge.sh
-@@ -24,7 +24,7 @@ continue_merge () {
- 		die "$resolvemsg"
- 	fi
-=20
--	cmt=3D`cat "$state_dir/current"`
-+	cmt=3D$(cat "$state_dir/current")
- 	if ! git diff-index --quiet --ignore-submodules HEAD --
- 	then
- 		if ! git commit ${gpg_sign_opt:+"$gpg_sign_opt"} --no-verify -C "$cm=
-t"
-@@ -132,7 +132,7 @@ echo "$onto_name" > "$state_dir/onto_name"
- write_basic_state
-=20
- msgnum=3D0
--for cmt in `git rev-list --reverse --no-merges "$revisions"`
-+for cmt in $(git rev-list --reverse --no-merges "$revisions")
- do
- 	msgnum=3D$(($msgnum + 1))
- 	echo "$cmt" > "$state_dir/cmt.$msgnum"
+diff --git a/t/t3210-pack-refs.sh b/t/t3210-pack-refs.sh
+index 1a2080e..b0eaf22 100755
+--- a/t/t3210-pack-refs.sh
++++ b/t/t3210-pack-refs.sh
+@@ -25,7 +25,7 @@ SHA1=3D
+ test_expect_success \
+     'see if git show-ref works as expected' \
+     'git branch a &&
+-     SHA1=3D`cat .git/refs/heads/a` &&
++     SHA1=3D$(cat .git/refs/heads/a) &&
+      echo "$SHA1 refs/heads/a" >expect &&
+      git show-ref a >result &&
+      test_cmp expect result'
 --=20
 1.7.10.4
