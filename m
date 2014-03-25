@@ -1,55 +1,55 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 042/142] t4013-diff-various.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:23:03 -0700
-Message-ID: <1395768283-31135-43-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 062/142] t5510-fetch.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:23:23 -0700
+Message-ID: <1395768283-31135-63-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 25 18:33:31 2014
+X-From: git-owner@vger.kernel.org Tue Mar 25 18:33:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVE4-0004n1-Ax
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:24 +0100
+	id 1WSVDx-0004n1-MQ
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755365AbaCYRbz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:31:55 -0400
-Received: from mail-pa0-f50.google.com ([209.85.220.50]:51483 "EHLO
-	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932102AbaCYRZj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:25:39 -0400
-Received: by mail-pa0-f50.google.com with SMTP id kq14so734697pab.23
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:38 -0700 (PDT)
+	id S1755235AbaCYRaS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:30:18 -0400
+Received: from mail-pb0-f43.google.com ([209.85.160.43]:54670 "EHLO
+	mail-pb0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755386AbaCYR0A (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:26:00 -0400
+Received: by mail-pb0-f43.google.com with SMTP id um1so742740pbc.16
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:26:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=IpdYlmMsS3SR4b3Bya3liPbTB0bL/v6yGQJGHBfh1hE=;
-        b=MfeJcJuoEMxzl2UFwhLqSHB+qsVCGPJ9/A+ma/Vgn6D6GLyp9WwGxrXj0Vxn1z8ttJ
-         Ob9/yQvIzM3ydyy3dgxT4+5vAxI4hfgfhGrSjf48W9XQs0n5mBdFvpDj015nco4kz1Hg
-         rAPY6sgn83T8u7d7TizbaqfkGJuP2akAfYkPbh2yJ8evmncZ/4PQl+ZNyZk52Fmvc5U0
-         ax6cdz5VN5eIJ6bcArq9nmgqqvm5sI/cdyq6RxkTUO557xAouXPFmGkgoEwYB5PQnm3L
-         +/0UFVfvSz+StVMptbnloJZsmyexlLPd9bdxU9xWkyTlBzWltg/QW6mOhD/AwGqY5f0E
-         SYww==
-X-Received: by 10.68.161.101 with SMTP id xr5mr11038278pbb.168.1395768338757;
-        Tue, 25 Mar 2014 10:25:38 -0700 (PDT)
+        bh=Br6OjnmvV8xQekfWuRk67PMMr1DHdaxPEQCxN7fG6aY=;
+        b=nrBMKUTwETpBnd+f0YxRqNP/xE2s908MimoO+xb+ryXG0I6/UrueOBvoG8liCT3usp
+         61jFqxy4i1EkmyFPUlH1j1ZYEvJLDgc2vatGpudlvJf3m03A/b5+VQ/jk512ukOKuEPX
+         /25ukzjmyPsRP+AjYVDBz9PfAylu7L7kbkuDeCfLpwEnwzuoDUxycpY2yvOIk12isjp/
+         0QqBq9p7/8gZNe9vgL3g2JqtCix6cQHE4pnlv/Systs7zdmK4xCReNSzPInDWYUr6cev
+         02XdblKQnCkhYTvBD10f9UTKU0jfaVOUWprnIn7RwCe2FLVWr/dbi4KjyehCr3E+ah7W
+         zcug==
+X-Received: by 10.66.25.7 with SMTP id y7mr11780755paf.151.1395768360028;
+        Tue, 25 Mar 2014 10:26:00 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.37
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.59
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:25:38 -0700 (PDT)
+        Tue, 25 Mar 2014 10:25:59 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245108>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245109>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,30 +72,44 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t4013-diff-various.sh |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ t/t5510-fetch.sh |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-index e77c09c..805b055 100755
---- a/t/t4013-diff-various.sh
-+++ b/t/t4013-diff-various.sh
-@@ -107,14 +107,14 @@ test_expect_success setup '
- +*++ [initial] Initial
- EOF
+diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+index ab28594..31b185e 100755
+--- a/t/t5510-fetch.sh
++++ b/t/t5510-fetch.sh
+@@ -7,7 +7,7 @@ test_description=3D'Per branch config variables affects=
+ "git fetch".
 =20
--V=3D`git version | sed -e 's/^git version //' -e 's/\./\\./g'`
-+V=3D$(git version | sed -e 's/^git version //' -e 's/\./\\./g')
- while read cmd
- do
- 	case "$cmd" in
- 	'' | '#'*) continue ;;
- 	esac
--	test=3D`echo "$cmd" | sed -e 's|[/ ][/ ]*|_|g'`
--	pfx=3D`printf "%04d" $test_count`
-+	test=3D$(echo "$cmd" | sed -e 's|[/ ][/ ]*|_|g')
-+	pfx=3D$(printf "%04d" $test_count)
- 	expect=3D"$TEST_DIRECTORY/t4013/diff.$test"
- 	actual=3D"$pfx-diff.$test"
+ . ./test-lib.sh
 =20
+-D=3D`pwd`
++D=3D$(pwd)
+=20
+ test_bundle_object_count () {
+ 	git verify-pack -v "$1" >verify.out &&
+@@ -64,8 +64,8 @@ test_expect_success "fetch test" '
+ 	cd two &&
+ 	git fetch &&
+ 	test -f .git/refs/heads/one &&
+-	mine=3D`git rev-parse refs/heads/one` &&
+-	his=3D`cd ../one && git rev-parse refs/heads/master` &&
++	mine=3D$(git rev-parse refs/heads/one) &&
++	his=3D$(cd ../one && git rev-parse refs/heads/master) &&
+ 	test "z$mine" =3D "z$his"
+ '
+=20
+@@ -75,8 +75,8 @@ test_expect_success "fetch test for-merge" '
+ 	git fetch &&
+ 	test -f .git/refs/heads/two &&
+ 	test -f .git/refs/heads/one &&
+-	master_in_two=3D`cd ../two && git rev-parse master` &&
+-	one_in_two=3D`cd ../two && git rev-parse one` &&
++	master_in_two=3D$(cd ../two && git rev-parse master) &&
++	one_in_two=3D$(cd ../two && git rev-parse one) &&
+ 	{
+ 		echo "$one_in_two	"
+ 		echo "$master_in_two	not-for-merge"
 --=20
 1.7.10.4
