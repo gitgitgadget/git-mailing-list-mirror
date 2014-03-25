@@ -1,55 +1,55 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 060/142] t5505-remote.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:23:21 -0700
-Message-ID: <1395768283-31135-61-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 052/142] t5100-mailinfo.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:23:13 -0700
+Message-ID: <1395768283-31135-53-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 25 18:33:01 2014
+X-From: git-owner@vger.kernel.org Tue Mar 25 18:33:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVDX-0004n1-U5
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:32:52 +0100
+	id 1WSVDf-0004n1-IL
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:32:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755398AbaCYR0B convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:26:01 -0400
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:41614 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755392AbaCYRZ6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:25:58 -0400
-Received: by mail-pa0-f49.google.com with SMTP id lj1so732320pab.36
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:58 -0700 (PDT)
+	id S1754929AbaCYR0a convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:26:30 -0400
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:51264 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755427AbaCYR0U (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:26:20 -0400
+Received: by mail-pa0-f45.google.com with SMTP id kl14so744865pab.4
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:26:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=gLPeAhqOgsG2djXCFSASIELDk4ghUe+Wrh9aviI9Rn8=;
-        b=pPqik5vyLMRzO2eJQuK9r/KBX8L1qs2jZecvrzJp8/EF467BuNuLiXZyGCns4ipGcP
-         ii6yRnzG/p5nPEjrBYH5Ds9ata4V9Mzk4+LnL4g3BiJI9qpSOfVXry2cD5AXtmydDJdO
-         b+kYNLnjQb9B4nWq+XhJW7KtLRrWtYTXavUlqHxYn4T/bVoCHCY93qoeUSpVUqU54XJ6
-         9H24qymbNiJsZ/iNxC6DfVBCXu7DHiEEJSroNF2gmY5dv7Pz3lqOT/BGxEfAWYEgZCok
-         emi2gu7tQi43UifTbTm2lENmFOFMD29kwfhv1QUJ2aKT6kRxRbyoHVSTn5I/zvHK7ksD
-         bn4g==
-X-Received: by 10.67.2.34 with SMTP id bl2mr80011160pad.58.1395768358026;
-        Tue, 25 Mar 2014 10:25:58 -0700 (PDT)
+        bh=p+oXiGjaLf+KFw3unMhpdlLXndYGuQmPWXCzdc0uooA=;
+        b=w5PvGMeb8MzUcU47XnfYXKBiev7b7MkoTTdwXAX68dXdcTeUUtztbEcp9nDdHlCqgb
+         gQAww8SVc5zdjdl5lPGuU7iklQ+g6S9LNCTYEeLox3TFHBFkLhkPmoIAd/QeOoIyXMZk
+         9FrKpOl8d2XhpQeVxSDUjxIK6Ncwg+cq8wT9Um7W3hfBaryhkpm2EALKU4KwEpk3r/wH
+         cA2m/YYUAYZc4tr/bmJuos9gWlF7KnshxPOIzr8RG8ein4avTXTH2qY4wdVNpyeotXq2
+         8t+tKasJoZZbLh3YLBqqrQFmbHQXCQjjVx/gdU8noCUOEpUu5943Gk3gxQdSJ0f1mq7Z
+         yGTw==
+X-Received: by 10.66.193.202 with SMTP id hq10mr80506857pac.57.1395768349065;
+        Tue, 25 Mar 2014 10:25:49 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.57
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.47
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:25:57 -0700 (PDT)
+        Tue, 25 Mar 2014 10:25:48 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245081>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,22 +72,51 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t5505-remote.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t5100-mailinfo.sh |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index ac79dd9..366a583 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -85,7 +85,7 @@ test_expect_success C_LOCALE_OUTPUT 'check remote-tra=
-cking' '
- test_expect_success 'remote forces tracking branches' '
- 	(
- 		cd test &&
--		case `git config remote.second.fetch` in
-+		case $(git config remote.second.fetch) in
- 		+*) true ;;
- 		 *) false ;;
- 		esac
+diff --git a/t/t5100-mailinfo.sh b/t/t5100-mailinfo.sh
+index 3e64a7a..c279410 100755
+--- a/t/t5100-mailinfo.sh
++++ b/t/t5100-mailinfo.sh
+@@ -9,9 +9,9 @@ test_description=3D'git mailinfo and git mailsplit test=
+'
+=20
+ test_expect_success 'split sample box' \
+ 	'git mailsplit -o. "$TEST_DIRECTORY"/t5100/sample.mbox >last &&
+-	last=3D`cat last` &&
++	last=3D$(cat last) &&
+ 	echo total is $last &&
+-	test `cat last` =3D 17'
++	test $(cat last) =3D 17'
+=20
+ check_mailinfo () {
+ 	mail=3D$1 opt=3D$2
+@@ -23,7 +23,7 @@ check_mailinfo () {
+ }
+=20
+=20
+-for mail in `echo 00*`
++for mail in $(echo 00*)
+ do
+ 	test_expect_success "mailinfo $mail" '
+ 		check_mailinfo $mail "" &&
+@@ -43,11 +43,11 @@ test_expect_success 'split box with rfc2047 samples=
+' \
+ 	'mkdir rfc2047 &&
+ 	git mailsplit -orfc2047 "$TEST_DIRECTORY"/t5100/rfc2047-samples.mbox =
+\
+ 	  >rfc2047/last &&
+-	last=3D`cat rfc2047/last` &&
++	last=3D$(cat rfc2047/last) &&
+ 	echo total is $last &&
+-	test `cat rfc2047/last` =3D 11'
++	test $(cat rfc2047/last) =3D 11'
+=20
+-for mail in `echo rfc2047/00*`
++for mail in $(echo rfc2047/00*)
+ do
+ 	test_expect_success "mailinfo $mail" '
+ 		git mailinfo -u $mail-msg $mail-patch <$mail >$mail-info &&
 --=20
 1.7.10.4
