@@ -1,55 +1,55 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 046/142] t4057-diff-combined-paths.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:23:07 -0700
-Message-ID: <1395768283-31135-47-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 059/142] t5500-fetch-pack.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:23:20 -0700
+Message-ID: <1395768283-31135-60-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 25 18:32:53 2014
+X-From: git-owner@vger.kernel.org Tue Mar 25 18:32:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVDT-0004n1-Ou
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:32:48 +0100
+	id 1WSVDY-0004n1-FV
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:32:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755358AbaCYRZt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:25:49 -0400
-Received: from mail-pd0-f182.google.com ([209.85.192.182]:42491 "EHLO
-	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755362AbaCYRZn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:25:43 -0400
-Received: by mail-pd0-f182.google.com with SMTP id y10so720190pdj.13
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:42 -0700 (PDT)
+	id S1755403AbaCYR0D convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:26:03 -0400
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:44045 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754650AbaCYRZ5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:25:57 -0400
+Received: by mail-pa0-f54.google.com with SMTP id lf10so743427pab.13
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=dCQXTb0xbYqVK5pVeNGM2KcaXyQ/8Myuw3F0YQ7Y+/E=;
-        b=WP7yKrcLklLB4g/mF2cS1Nskx7j3OjykVWzhhl5PO4FdO642sO5EAlIG3ydF009b4M
-         aA0prIUDRFwb4mJ8eOGTaboAj4SBgAgHh8/g7M2Oja/oLobQ4uZekNevyg49Dg2Urrq0
-         03FY2Y4KBvd0WN3SWNwEc7V7NVtBeevmlxhUo0OYIeNWdCuqsdPBXaSgVmWytrTwmxzx
-         tM56rlus7MmJBPd5sL6qahrtdP+r5StkQIDTNeYCcOOoeOfauwsvFkT5aPXSI3XJyL7q
-         eJ9SE57quKkTZyCYXLLzJP1+Ag+aAtw87P0q/rUqhok13zYshIBxHR9fGhRA615tJKgs
-         q61w==
-X-Received: by 10.67.8.102 with SMTP id dj6mr80318337pad.10.1395768342851;
-        Tue, 25 Mar 2014 10:25:42 -0700 (PDT)
+        bh=H7dCLXKrThc7CTp1ti8MNOel0Rbn92WMxD4+InQ7sgo=;
+        b=GUx3g4SnQBU5WQbrKrHLuvOM7u3gT2gyHBlBKCggl075iyghqVGa4GXiBviRkcTlMb
+         MVPzyrJmCIAprf8Qh/HYZyP7crwVu4rl+4CVMEySiR62vGpx6cqr6/YNqPCa7WoFN6jF
+         ybWBwYkgxDQc9pyia8DYZO/9EWusQ6XQ2xZyEhpntW50/aRZi8QCE/QW8t4/pRIWOyul
+         2JWtPb964E/z+1Jhn5HgwSZlVkjwpbKxosSd07uCuq/o59Pv+NEsL1qx61ByHaK573mO
+         C66fLD6nhvsfXC/28UJgDwnhC3H4UQWmHiQRIps8e/zwHqJMwMEayfUs1ErTlxuN410h
+         yMuQ==
+X-Received: by 10.66.240.4 with SMTP id vw4mr80012789pac.26.1395768356979;
+        Tue, 25 Mar 2014 10:25:56 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.41
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.56
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:25:42 -0700 (PDT)
+        Tue, 25 Mar 2014 10:25:56 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245071>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,23 +72,75 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t4057-diff-combined-paths.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t5500-fetch-pack.sh |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/t/t4057-diff-combined-paths.sh b/t/t4057-diff-combined-pat=
-hs.sh
-index 097e632..dff36b7 100755
---- a/t/t4057-diff-combined-paths.sh
-+++ b/t/t4057-diff-combined-paths.sh
-@@ -5,7 +5,7 @@ test_description=3D'combined diff show only paths that =
-are different to all parent
- . ./test-lib.sh
+diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+index 5b2b1c2..99b81e2 100755
+--- a/t/t5500-fetch-pack.sh
++++ b/t/t5500-fetch-pack.sh
+@@ -14,7 +14,7 @@ test_description=3D'Testing multi_ack pack fetching'
+ add () {
+ 	name=3D$1 &&
+ 	text=3D"$@" &&
+-	branch=3D`echo $name | sed -e 's/^\(.\).*$/\1/'` &&
++	branch=3D$(echo $name | sed -e 's/^\(.\).*$/\1/') &&
+ 	parents=3D"" &&
 =20
- # verify that diffc.expect matches output of
--# `git diff -c --name-only HEAD HEAD^ HEAD^2`
-+# $(git diff -c --name-only HEAD HEAD^ HEAD^2)
- diffc_verify () {
- 	git diff -c --name-only HEAD HEAD^ HEAD^2 >diffc.actual &&
- 	test_cmp diffc.expect diffc.actual
+ 	shift &&
+@@ -56,12 +56,12 @@ pull_to_client () {
+ 			git fsck --full &&
+=20
+ 			mv .git/objects/pack/pack-* . &&
+-			p=3D`ls -1 pack-*.pack` &&
++			p=3D$(ls -1 pack-*.pack) &&
+ 			git unpack-objects <$p &&
+ 			git fsck --full &&
+=20
+-			idx=3D`echo pack-*.idx` &&
+-			pack_count=3D`git show-index <$idx | wc -l` &&
++			idx=3D$(echo pack-*.idx) &&
++			pack_count=3D$(git show-index <$idx | wc -l) &&
+ 			test $pack_count =3D $count &&
+ 			rm -f pack-*
+ 		)
+@@ -132,13 +132,13 @@ test_expect_success 'single given branch clone' '
+=20
+ test_expect_success 'clone shallow depth 1' '
+ 	git clone --no-single-branch --depth 1 "file://$(pwd)/." shallow0 &&
+-	test "`git --git-dir=3Dshallow0/.git rev-list --count HEAD`" =3D 1
++	test "$(git --git-dir=3Dshallow0/.git rev-list --count HEAD)" =3D 1
+ '
+=20
+ test_expect_success 'clone shallow depth 1 with fsck' '
+ 	git config --global fetch.fsckobjects true &&
+ 	git clone --no-single-branch --depth 1 "file://$(pwd)/." shallow0fsck=
+ &&
+-	test "`git --git-dir=3Dshallow0fsck/.git rev-list --count HEAD`" =3D =
+1 &&
++	test "$(git --git-dir=3Dshallow0fsck/.git rev-list --count HEAD)" =3D=
+ 1 &&
+ 	git config --global --unset fetch.fsckobjects
+ '
+=20
+@@ -147,7 +147,7 @@ test_expect_success 'clone shallow' '
+ '
+=20
+ test_expect_success 'clone shallow depth count' '
+-	test "`git --git-dir=3Dshallow/.git rev-list --count HEAD`" =3D 2
++	test "$(git --git-dir=3Dshallow/.git rev-list --count HEAD)" =3D 2
+ '
+=20
+ test_expect_success 'clone shallow object count' '
+@@ -273,7 +273,7 @@ test_expect_success 'additional simple shallow deep=
+enings' '
+ '
+=20
+ test_expect_success 'clone shallow depth count' '
+-	test "`git --git-dir=3Dshallow/.git rev-list --count HEAD`" =3D 11
++	test "$(git --git-dir=3Dshallow/.git rev-list --count HEAD)" =3D 11
+ '
+=20
+ test_expect_success 'clone shallow object count' '
 --=20
 1.7.10.4
