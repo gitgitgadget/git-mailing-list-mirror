@@ -1,7 +1,7 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 085/142] t7003-filter-branch.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:23:46 -0700
-Message-ID: <1395768283-31135-86-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 079/142] t6002-rev-list-bisect.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:23:40 -0700
+Message-ID: <1395768283-31135-80-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -14,42 +14,42 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVDo-0004n1-OW
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:09 +0100
+	id 1WSVDq-0004n1-Rl
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754697AbaCYR2d convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:28:33 -0400
-Received: from mail-pd0-f177.google.com ([209.85.192.177]:59939 "EHLO
-	mail-pd0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754711AbaCYR00 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:26:26 -0400
-Received: by mail-pd0-f177.google.com with SMTP id y10so720934pdj.36
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:26:25 -0700 (PDT)
+	id S1755425AbaCYR2t convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:28:49 -0400
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:41167 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755423AbaCYR0S (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:26:18 -0400
+Received: by mail-pa0-f45.google.com with SMTP id kl14so744831pab.4
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:26:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=+8DUnnvrLbO5ZD1TONP2KYb26+AUAnN7LizY95+dvrw=;
-        b=hRHKwHAGzB5ONMyvRjFsbRubRRi4mQHFpbPElOOGCtkADpq6OgzYoh3LUWlhX1kTem
-         fMwIZnJ9h+HOMqpRo3/WJ26OaV75a1dyPw+EKNJPzo44MTiG5weK0z/0drUBm/r6VYs3
-         TPcZPjcMtsGwqbaGatYvNPI+p9ik4hgk9X9zGTSODoqCuJlO75Yznbcxv4uGV1W2adPy
-         sQ2Hox6vJTVXhlSmOh9E9OClOOMqupR1OdSA59QILE0RqElFg9Fm6J9J5TJ7xOvEWnmn
-         Q/+TcVAdp8Eysl937z1FCWu6vhgLmOhg3+wcOK1IffZB1hEB2wBsFXn4WbB/uKpN+GDO
-         jPSA==
-X-Received: by 10.67.4.169 with SMTP id cf9mr80321290pad.45.1395768385771;
-        Tue, 25 Mar 2014 10:26:25 -0700 (PDT)
+        bh=szA8xYnHR1J7hMrGohwA32GzKE3UJUe0vXqoq7mWQdM=;
+        b=cgYugWVjG4Qr7TGNTpHXK0zaGX5EUswUDQSCLIQiQhiiVgmGj1ITDz1zdeSIbrBDKc
+         0ixTh2tSmJ8fnYJiT2Sl8eg3p12K+LJfDGbGESln5ArnxLNuyUvwkOiwlcSHV+IdlVcz
+         PMp7yeLR3iKf1/zJ9EZ1ltEFCBbYDZFRVyq3HaPsF3P7uzWT9yB+PFTVjlcVQ0DX0RA7
+         MMCfFkL7DQKsMtuiRJsqYAqcjVkHTksUPnofc/1eQTcDrdycuYhoD9gGlMFf9kXoXyWo
+         XeSXp2lVnQuI3G7s2LF9SBJ0/kLsgirN/ZMyM6dw7HCFGsU26zO4vEZYp9jdeode+Iir
+         NqzA==
+X-Received: by 10.66.141.165 with SMTP id rp5mr80752044pab.90.1395768378174;
+        Tue, 25 Mar 2014 10:26:18 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.26.24
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.26.17
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:26:25 -0700 (PDT)
+        Tue, 25 Mar 2014 10:26:17 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245093>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,41 +72,25 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t7003-filter-branch.sh |    6 +++---
+ t/t6002-rev-list-bisect.sh |    6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
-index 9496736..87459a5 100755
---- a/t/t7003-filter-branch.sh
-+++ b/t/t7003-filter-branch.sh
-@@ -362,7 +362,7 @@ test_expect_success 'setup submodule' '
- 	git branch original HEAD
- '
+diff --git a/t/t6002-rev-list-bisect.sh b/t/t6002-rev-list-bisect.sh
+index 43ad772..3bf2759 100755
+--- a/t/t6002-rev-list-bisect.sh
++++ b/t/t6002-rev-list-bisect.sh
+@@ -27,9 +27,9 @@ test_bisection_diff()
+ 	# Test if bisection size is close to half of list size within
+ 	# tolerance.
+ 	#
+-	_bisect_err=3D`expr $_list_size - $_bisection_size \* 2`
+-	test "$_bisect_err" -lt 0 && _bisect_err=3D`expr 0 - $_bisect_err`
+-	_bisect_err=3D`expr $_bisect_err / 2` ; # floor
++	_bisect_err=3D$(expr $_list_size - $_bisection_size \* 2)
++	test "$_bisect_err" -lt 0 && _bisect_err=3D$(expr 0 - $_bisect_err)
++	_bisect_err=3D$(expr $_bisect_err / 2) ; # floor
 =20
--orig_head=3D`git show-ref --hash --head HEAD`
-+orig_head=3D$(git show-ref --hash --head HEAD)
-=20
- test_expect_success 'rewrite submodule with another content' '
- 	git filter-branch --tree-filter "test -d submod && {
-@@ -371,7 +371,7 @@ test_expect_success 'rewrite submodule with another=
- content' '
- 					 mkdir submod &&
- 					 : > submod/file
- 					 } || :" HEAD &&
--	test $orig_head !=3D `git show-ref --hash --head HEAD`
-+	test $orig_head !=3D $(git show-ref --hash --head HEAD)
- '
-=20
- test_expect_success 'replace submodule revision' '
-@@ -380,7 +380,7 @@ test_expect_success 'replace submodule revision' '
- 	    "if git ls-files --error-unmatch -- submod > /dev/null 2>&1
- 	     then git update-index --cacheinfo 160000 01234567890123456789012=
-34567890123456789 submod
- 	     fi" HEAD &&
--	test $orig_head !=3D `git show-ref --hash --head HEAD`
-+	test $orig_head !=3D $(git show-ref --hash --head HEAD)
- '
-=20
- test_done
+ 	test_expect_success \
+ 	"bisection diff $_bisect_option $_head $* <=3D $_max_diff" \
 --=20
 1.7.10.4
