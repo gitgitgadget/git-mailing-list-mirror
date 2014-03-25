@@ -1,117 +1,234 @@
 From: Kirill Smelkov <kirr@navytux.spb.ru>
-Subject: Re: [PATCH 11/19] tree-diff: simplify tree_entry_pathcmp
-Date: Tue, 25 Mar 2014 13:23:36 +0400
+Subject: Re: [PATCH v2 16/19] tree-diff: reuse base str(buf) memory on
+ sub-tree recursion
+Date: Tue, 25 Mar 2014 13:23:20 +0400
 Organization: NAVYTUX.SPB.RU
-Message-ID: <20140325092336.GD3777@mini.zxlink>
+Message-ID: <20140325092320.GC3777@mini.zxlink>
 References: <cover.1393257006.git.kirr@mns.spb.ru>
- <54aeccfe65926ff00147c3045c5bbae1583d68a7.1393257006.git.kirr@mns.spb.ru>
- <xmqqeh1rp9vz.fsf@gitster.dls.corp.google.com>
+ <301eb2377e0c5f670ffc26bda085d14dbee4f431.1393257006.git.kirr@mns.spb.ru>
+ <xmqq61n3p913.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: kirr@mns.spb.ru, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 25 10:25:51 2014
+X-From: git-owner@vger.kernel.org Tue Mar 25 10:27:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSNcE-0000EC-Gp
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 10:25:50 +0100
+	id 1WSNdO-0001d7-77
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 10:27:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751906AbaCYJZq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Mar 2014 05:25:46 -0400
-Received: from forward7.mail.yandex.net ([77.88.61.37]:46869 "EHLO
-	forward7.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751251AbaCYJZp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 05:25:45 -0400
-X-Greylist: delayed 332 seconds by postgrey-1.27 at vger.kernel.org; Tue, 25 Mar 2014 05:25:45 EDT
-Received: from smtp9.mail.yandex.net (smtp9.mail.yandex.net [77.88.61.35])
-	by forward7.mail.yandex.net (Yandex) with ESMTP id 885191C0AEF;
-	Tue, 25 Mar 2014 13:20:10 +0400 (MSK)
-Received: from smtp9.mail.yandex.net (localhost [127.0.0.1])
-	by smtp9.mail.yandex.net (Yandex) with ESMTP id 2A32F15200F8;
-	Tue, 25 Mar 2014 13:20:10 +0400 (MSK)
+	id S1751499AbaCYJ06 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Mar 2014 05:26:58 -0400
+Received: from forward8l.mail.yandex.net ([84.201.143.141]:33137 "EHLO
+	forward8l.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751251AbaCYJ05 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 05:26:57 -0400
+Received: from smtp19.mail.yandex.net (smtp19.mail.yandex.net [95.108.252.19])
+	by forward8l.mail.yandex.net (Yandex) with ESMTP id 38CBA1A4112C;
+	Tue, 25 Mar 2014 13:19:57 +0400 (MSK)
+Received: from smtp19.mail.yandex.net (localhost [127.0.0.1])
+	by smtp19.mail.yandex.net (Yandex) with ESMTP id B3375BE00E9;
+	Tue, 25 Mar 2014 13:19:56 +0400 (MSK)
 Received: from unknown (unknown [78.25.121.154])
-	by smtp9.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id 2ckdx6zFDq-K8FmSZER;
-	Tue, 25 Mar 2014 13:20:09 +0400
+	by smtp19.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id 2GOF7Q5pIJ-Jsaisatl;
+	Tue, 25 Mar 2014 13:19:54 +0400
 	(using TLSv1.2 with cipher AES256-GCM-SHA384 (256/256 bits))
 	(Client certificate not present)
-X-Yandex-Uniq: 12e5fd73-0fd9-4994-9d7f-b5232a608b4b
+X-Yandex-Uniq: fe68d546-e513-4f6f-a2d1-08e3b996aac3
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=navytux.spb.ru; s=mail;
-	t=1395739209; bh=pQRUM8A73a0CEYzEhR56Az1Rv46W3gLNNr40ehwPD9g=;
+	t=1395739196; bh=gLCJJZZEa/GVgnqqwp+xvXtJIah44B6GYjPpHpjhD+Q=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
 	 Content-Type:Content-Disposition:In-Reply-To:Organization:
 	 User-Agent;
-	b=aSThpeMOEDIAh1nyyhQl5jclaNfE+6c254FDEKvPVd30IJOyZkZxfN2SsmZvKZNA2
-	 KgIONAzvYk+MQuE8EHki6X+3RtfZy2AUMe+eMaEA2ZsvyynK1bTE5VMzw1Uha2vWMe
-	 jotGRLrxH+6Iq/wBzpKqqkhWotdH92icz+VlzD3o=
-Authentication-Results: smtp9.mail.yandex.net; dkim=pass header.i=@navytux.spb.ru
+	b=qy2f6mqQZatsCasljM0HCTpZ8K1HjAzOk+D7v1J0abOnoSflxDKnXH5Bzu+0PbrTe
+	 0bhMSVVo+utqoyyimni0vJzhOqkZrrNoAtW3ToDNkuhb0GQGNq5zTczyXmJmRhjSkF
+	 In7kuxpbRnoP8kfXFONci7fXhC4jtuKoks7WFFcc=
+Authentication-Results: smtp19.mail.yandex.net; dkim=pass header.i=@navytux.spb.ru
 Received: from kirr by mini.zxlink with local (Exim 4.82)
 	(envelope-from <kirr@mini.zxlink>)
-	id 1WSNa4-0002zv-PD; Tue, 25 Mar 2014 13:23:36 +0400
+	id 1WSNZo-0002za-SQ; Tue, 25 Mar 2014 13:23:20 +0400
 Content-Disposition: inline
-In-Reply-To: <xmqqeh1rp9vz.fsf@gitster.dls.corp.google.com>
+In-Reply-To: <xmqq61n3p913.fsf@gitster.dls.corp.google.com>
 User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245021>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245022>
 
-On Mon, Mar 24, 2014 at 02:25:04PM -0700, Junio C Hamano wrote:
+On Mon, Mar 24, 2014 at 02:43:36PM -0700, Junio C Hamano wrote:
 > Kirill Smelkov <kirr@mns.spb.ru> writes:
 > 
-> > Since an earlier "Finally switch over tree descriptors to contain a
-> > pre-parsed entry", we can safely access all tree_desc->entry fields
-> > directly instead of first "extracting" them through
-> > tree_entry_extract.
+> > instead of allocating it all the time for every subtree in
+> > __diff_tree_sha1, let's allocate it once in diff_tree_sha1, and then all
+> > callee just use it in stacking style, without memory allocations.
 > >
-> > Use it. The code generated stays the same - only it now visually looks
-> > cleaner.
+> > This should be faster, and for me this change gives the following
+> > slight speedups for
+> >
+> >     git log --raw --no-abbrev --no-renames --format='%H'
+> >
+> >                 navy.git    linux.git v3.10..v3.11
+> >
+> >     before      0.618s      1.903s
+> >     after       0.611s      1.889s
+> >     speedup     1.1%        0.7%
 > >
 > > Signed-off-by: Kirill Smelkov <kirr@mns.spb.ru>
-> > Signed-off-by: Junio C Hamano <gitster@pobox.com>
 > > ---
 > >
-> > ( re-posting without change )
-> 
-> Thanks.
-> 
-> Hopefully I'll be merging the series up to this point to 'next'
-> soonish.
-
-Thanks a lot!
-
-
-> >  tree-diff.c | 17 ++++++-----------
-> >  1 file changed, 6 insertions(+), 11 deletions(-)
+> > Changes since v1:
+> >
+> >  - don't need to touch diff.h, as the function we are changing became static.
+> >
+> >  tree-diff.c | 36 ++++++++++++++++++------------------
+> >  1 file changed, 18 insertions(+), 18 deletions(-)
 > >
 > > diff --git a/tree-diff.c b/tree-diff.c
-> > index 20a4fda..cf96ad7 100644
+> > index aea0297..c76821d 100644
 > > --- a/tree-diff.c
 > > +++ b/tree-diff.c
-> > @@ -15,18 +15,13 @@
-> >   */
-> >  static int tree_entry_pathcmp(struct tree_desc *t1, struct tree_desc *t2)
-> >  {
-> > -	unsigned mode1, mode2;
-> > -	const char *path1, *path2;
-> > -	const unsigned char *sha1, *sha2;
-> > -	int cmp, pathlen1, pathlen2;
-> > +	struct name_entry *e1, *e2;
-> > +	int cmp;
+> > @@ -115,7 +115,7 @@ static void show_path(struct strbuf *base, struct diff_options *opt,
+> >  	if (recurse) {
+> >  		strbuf_addch(base, '/');
+> >  		__diff_tree_sha1(t1 ? t1->entry.sha1 : NULL,
+> > -				 t2 ? t2->entry.sha1 : NULL, base->buf, opt);
+> > +				 t2 ? t2->entry.sha1 : NULL, base, opt);
+> >  	}
 > >  
-> > -	sha1 = tree_entry_extract(t1, &path1, &mode1);
-> > -	sha2 = tree_entry_extract(t2, &path2, &mode2);
+> >  	strbuf_setlen(base, old_baselen);
+> 
+> I was scratching my head for a while, after seeing that there does
+> not seem to be any *new* code added by this patch in order to
+> store-away the original length and restore the singleton base buffer
+> to the original length after using addch/addstr to extend it.
+> 
+> But I see that the code has already been prepared to do this
+> conversion.  I wonder why we didn't do this earlier ;-)
+
+The conversion to reusing memory started in 48932677 "diff-tree: convert
+base+baselen to writable strbuf" which allowed to avoid "quite a bit of
+malloc() and memcpy()", but for this to work allocation at diff_tree()
+entry had to be there.
+
+In particular it had to be there, because diff_tree() accepted base as C
+string, not strbuf, and since diff_tree() was calling itself
+recursively - oops - new allocation on every subtree.
+
+I've opened the door for avoiding allocations via splitting diff_tree
+into high-level and low-level parts. The high-level part still accepts
+`char *base`, but low-level function operates on strbuf and recurses
+into low-level self.
+
+The high-level diff_tree_sha1() still allocates memory for every
+diff(tree1,tree2), but that is significantly lower compared to
+allocating memory on every subtree...
+
+The lesson here is: better use strbuf for api unless there is a reason
+not to.
+
+
+> Looks good.  Thanks.
+
+Thanks.
+
+> > @@ -138,12 +138,10 @@ static void skip_uninteresting(struct tree_desc *t, struct strbuf *base,
+> >  }
+> >  
+> >  static int __diff_tree_sha1(const unsigned char *old, const unsigned char *new,
+> > -			    const char *base_str, struct diff_options *opt)
+> > +			    struct strbuf *base, struct diff_options *opt)
+> >  {
+> >  	struct tree_desc t1, t2;
+> >  	void *t1tree, *t2tree;
+> > -	struct strbuf base;
+> > -	int baselen = strlen(base_str);
+> >  
+> >  	t1tree = fill_tree_descriptor(&t1, old);
+> >  	t2tree = fill_tree_descriptor(&t2, new);
+> > @@ -151,17 +149,14 @@ static int __diff_tree_sha1(const unsigned char *old, const unsigned char *new,
+> >  	/* Enable recursion indefinitely */
+> >  	opt->pathspec.recursive = DIFF_OPT_TST(opt, RECURSIVE);
+> >  
+> > -	strbuf_init(&base, PATH_MAX);
+> > -	strbuf_add(&base, base_str, baselen);
 > > -
-> > -	pathlen1 = tree_entry_len(&t1->entry);
-> > -	pathlen2 = tree_entry_len(&t2->entry);
-> > -
-> > -	cmp = base_name_compare(path1, pathlen1, mode1, path2, pathlen2, mode2);
-> > +	e1 = &t1->entry;
-> > +	e2 = &t2->entry;
-> > +	cmp = base_name_compare(e1->path, tree_entry_len(e1), e1->mode,
-> > +				e2->path, tree_entry_len(e2), e2->mode);
-> >  	return cmp;
+> >  	for (;;) {
+> >  		int cmp;
+> >  
+> >  		if (diff_can_quit_early(opt))
+> >  			break;
+> >  		if (opt->pathspec.nr) {
+> > -			skip_uninteresting(&t1, &base, opt);
+> > -			skip_uninteresting(&t2, &base, opt);
+> > +			skip_uninteresting(&t1, base, opt);
+> > +			skip_uninteresting(&t2, base, opt);
+> >  		}
+> >  		if (!t1.size && !t2.size)
+> >  			break;
+> > @@ -173,7 +168,7 @@ static int __diff_tree_sha1(const unsigned char *old, const unsigned char *new,
+> >  			if (DIFF_OPT_TST(opt, FIND_COPIES_HARDER) ||
+> >  			    hashcmp(t1.entry.sha1, t2.entry.sha1) ||
+> >  			    (t1.entry.mode != t2.entry.mode))
+> > -				show_path(&base, opt, &t1, &t2);
+> > +				show_path(base, opt, &t1, &t2);
+> >  
+> >  			update_tree_entry(&t1);
+> >  			update_tree_entry(&t2);
+> > @@ -181,18 +176,17 @@ static int __diff_tree_sha1(const unsigned char *old, const unsigned char *new,
+> >  
+> >  		/* t1 < t2 */
+> >  		else if (cmp < 0) {
+> > -			show_path(&base, opt, &t1, /*t2=*/NULL);
+> > +			show_path(base, opt, &t1, /*t2=*/NULL);
+> >  			update_tree_entry(&t1);
+> >  		}
+> >  
+> >  		/* t1 > t2 */
+> >  		else {
+> > -			show_path(&base, opt, /*t1=*/NULL, &t2);
+> > +			show_path(base, opt, /*t1=*/NULL, &t2);
+> >  			update_tree_entry(&t2);
+> >  		}
+> >  	}
+> >  
+> > -	strbuf_release(&base);
+> >  	free(t2tree);
+> >  	free(t1tree);
+> >  	return 0;
+> > @@ -209,7 +203,7 @@ static inline int diff_might_be_rename(void)
+> >  		!DIFF_FILE_VALID(diff_queued_diff.queue[0]->one);
+> >  }
+> >  
+> > -static void try_to_follow_renames(const unsigned char *old, const unsigned char *new, const char *base, struct diff_options *opt)
+> > +static void try_to_follow_renames(const unsigned char *old, const unsigned char *new, struct strbuf *base, struct diff_options *opt)
+> >  {
+> >  	struct diff_options diff_opts;
+> >  	struct diff_queue_struct *q = &diff_queued_diff;
+> > @@ -306,13 +300,19 @@ static void try_to_follow_renames(const unsigned char *old, const unsigned char
+> >  	q->nr = 1;
+> >  }
+> >  
+> > -int diff_tree_sha1(const unsigned char *old, const unsigned char *new, const char *base, struct diff_options *opt)
+> > +int diff_tree_sha1(const unsigned char *old, const unsigned char *new, const char *base_str, struct diff_options *opt)
+> >  {
+> > +	struct strbuf base;
+> >  	int retval;
+> >  
+> > -	retval = __diff_tree_sha1(old, new, base, opt);
+> > -	if (!*base && DIFF_OPT_TST(opt, FOLLOW_RENAMES) && diff_might_be_rename())
+> > -		try_to_follow_renames(old, new, base, opt);
+> > +	strbuf_init(&base, PATH_MAX);
+> > +	strbuf_addstr(&base, base_str);
+> > +
+> > +	retval = __diff_tree_sha1(old, new, &base, opt);
+> > +	if (!*base_str && DIFF_OPT_TST(opt, FOLLOW_RENAMES) && diff_might_be_rename())
+> > +		try_to_follow_renames(old, new, &base, opt);
+> > +
+> > +	strbuf_release(&base);
+> >  
+> >  	return retval;
 > >  }
