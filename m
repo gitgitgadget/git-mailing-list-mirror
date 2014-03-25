@@ -1,55 +1,55 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 081/142] t6032-merge-large-rename.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:23:42 -0700
-Message-ID: <1395768283-31135-82-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 069/142] t5537-fetch-shallow.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:23:30 -0700
+Message-ID: <1395768283-31135-70-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 25 18:33:06 2014
+X-From: git-owner@vger.kernel.org Tue Mar 25 18:33:07 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVDe-0004n1-FD
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:32:58 +0100
+	id 1WSVDa-0004n1-N3
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:32:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932142AbaCYR01 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:26:27 -0400
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:49932 "EHLO
-	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754685AbaCYR0U (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:26:20 -0400
-Received: by mail-pa0-f41.google.com with SMTP id fa1so750041pad.0
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:26:20 -0700 (PDT)
+	id S932141AbaCYR0N convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:26:13 -0400
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:48215 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754717AbaCYR0H (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:26:07 -0400
+Received: by mail-pa0-f53.google.com with SMTP id ld10so734995pab.40
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:26:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=nk2Yz2ixkKGCAYF/vpYkSEQMRh1Ld1NoCXQ6xnomYQA=;
-        b=YcJBK0v6VaH+SmU9aifLeU1H9/TVNycm7jrSz77ExyD289uXElqImN1DkQ3w8F6KoT
-         B3oAyOUwNNAqH1FKeOvtpDQsihZFesjUo630z9V7EtOocg65Ki+wYXSFcCSIWocR7OW4
-         OT+rqHGMN525A8Ts4wIaAwi1XkSRP8Z9qk/F/u+K3S3sA5JGz23EdZI8sOTAsSWxeBJF
-         eyl+pJzWTwp+fkzR2BKmfMIq6AlyYNmqULjAInJM035gUPAGiZgwb747NKtV4/WtKotR
-         /nuTaaJ5kSVWFaWgtfwnhe/5QbAa2I1lhC4mfKCplDZH8lfIoH6YMftpyEDeYM6WZeQA
-         cOcg==
-X-Received: by 10.68.52.132 with SMTP id t4mr79956944pbo.102.1395768380489;
-        Tue, 25 Mar 2014 10:26:20 -0700 (PDT)
+        bh=N1+2D/TaP3syRVQ/bxMb+wD83EbQEiW5b/7IJzDi618=;
+        b=VHdNr7OsxvpA2IWFaXLj8N/JwH+KNZuuGH/Xs3r2TBTMpG7wnxV015fHYrGel+7XiN
+         YBivDZbpP6MkwrRO6ssvDlp6TCvQYKHyoagGROZvKi1FrZ+xXAhmtbpV178+f0WVXu3w
+         qXIr0TmB8Yg0LwzgCLfn9ie+98xlUBIZFbNfjaxQi7BOLpZBpyQoXSGSyCNEeK7zZcyQ
+         wLB8JTSJ4L7T6Qpe0+Gy3jwypZKmKW2PpctpIC+zWh1Gqr+DyM1vAnkvjJqyzHR9pdVO
+         tbWlFavkbdg+8e+qAm1VXlmHVSSSlw6uu0U+q913aTU3GWamHtztTaABNmljs+//wfXA
+         DN3A==
+X-Received: by 10.68.60.225 with SMTP id k1mr80367664pbr.58.1395768367272;
+        Tue, 25 Mar 2014 10:26:07 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.26.19
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.26.06
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:26:19 -0700 (PDT)
+        Tue, 25 Mar 2014 10:26:06 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245088>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,22 +72,35 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t6032-merge-large-rename.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t5537-fetch-shallow.sh |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/t6032-merge-large-rename.sh b/t/t6032-merge-large-rename=
-=2Esh
-index 15beecc..36019df 100755
---- a/t/t6032-merge-large-rename.sh
-+++ b/t/t6032-merge-large-rename.sh
-@@ -20,7 +20,7 @@ test_expect_success 'setup (initial)' '
+diff --git a/t/t5537-fetch-shallow.sh b/t/t5537-fetch-shallow.sh
+index be951a4..d9ea98a 100755
+--- a/t/t5537-fetch-shallow.sh
++++ b/t/t5537-fetch-shallow.sh
+@@ -98,7 +98,7 @@ EOF
+ test_expect_success 'fetch something upstream has but hidden by client=
+s shallow boundaries' '
+ 	# the blob "1" is available in .git but hidden by the
+ 	# shallow2/.git/shallow and it should be resent
+-	! git --git-dir=3Dshallow2/.git cat-file blob `echo 1|git hash-object=
+ --stdin` >/dev/null &&
++	! git --git-dir=3Dshallow2/.git cat-file blob $(echo 1|git hash-objec=
+t --stdin) >/dev/null &&
+ 	echo 1 >1.t &&
+ 	git add 1.t &&
+ 	git commit -m add-1-back &&
+@@ -114,7 +114,7 @@ add-1-back
+ EOF
+ 	test_cmp expect actual
+ 	) &&
+-	git --git-dir=3Dshallow2/.git cat-file blob `echo 1|git hash-object -=
+-stdin` >/dev/null
++	git --git-dir=3Dshallow2/.git cat-file blob $(echo 1|git hash-object =
+--stdin) >/dev/null
 =20
- make_text() {
- 	echo $1: $2
--	for i in `count 20`; do
-+	for i in $(count 20); do
- 		echo $1: $i
- 	done
- 	echo $1: $3
+ '
+=20
 --=20
 1.7.10.4
