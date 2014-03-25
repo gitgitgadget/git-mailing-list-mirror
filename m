@@ -1,55 +1,55 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 001/142] check-builtins.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:22:22 -0700
-Message-ID: <1395768283-31135-2-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 008/142] unimplemented.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:22:29 -0700
+Message-ID: <1395768283-31135-9-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 25 18:37:27 2014
+X-From: git-owner@vger.kernel.org Tue Mar 25 18:37:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVHq-0001NU-OV
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:37:19 +0100
+	id 1WSVHs-0001NU-Pd
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:37:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755290AbaCYRYv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:24:51 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:59644 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753002AbaCYRYt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:24:49 -0400
-Received: by mail-pa0-f53.google.com with SMTP id ld10so728701pab.26
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:24:48 -0700 (PDT)
+	id S1755316AbaCYRZD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:25:03 -0400
+Received: from mail-pb0-f54.google.com ([209.85.160.54]:55595 "EHLO
+	mail-pb0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755309AbaCYRY4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:24:56 -0400
+Received: by mail-pb0-f54.google.com with SMTP id ma3so751281pbc.27
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:24:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=y+wq4mEa60m2TUlZIxvvSm6U0MlPMEhISpydRKTShSo=;
-        b=lQDJ+9qYcrHl81laYjeDM8aVBAtp14x1f/0CDKyou7wlxrMXZSe4ZLlN8sEaO/Y0Cs
-         C1Qgsh/59Ek/SYWp2A2LoNAGApz971L7iRFgZf85fd09Cp8R9uEI8/3z1M2D0cMBKVPh
-         scQcfaKeUEurO131e85K8vg7xzQA/odpsYPoweSTH8DjYVAF1S5My8p4GjTw07u3/1DF
-         eZCnpDvdxqESRuUrMwT/zma0EddBXf2cM+xEP7RNy9ewdF4+dLnVfkeovd96/vkRbnYQ
-         z3WBijUTWMsuUsw1fH6OYBhKEncqD23UrkkXu+/mmp6PVuD/ngNsxqm3fFaYcdaLzcsm
-         DNkQ==
-X-Received: by 10.68.136.162 with SMTP id qb2mr79119581pbb.88.1395768288598;
-        Tue, 25 Mar 2014 10:24:48 -0700 (PDT)
+        bh=4Wc60UOYCI1X3nW4w3sKLkK17l3bwlVI0OYZXEmaYwo=;
+        b=uWvSJhcaIix03NgDOM7vXpOxTolbDtZaF3wqdX0ZZzX9simZdSebP/hXFhQfPMlMV0
+         EQchDI2mjYKnSNxbkpuh80/dUjsfXRP8OF6TRZdcuvEunLSvybePa7oCiFMMSHGZBBXT
+         CDaFkKntMUd5PorHZhSE9NlBasfbMnBk4k9VGmlkgmO2N29lQt+ojq150euAhjevXEvN
+         jqPLJcbAUSwcsMHisQu2A3eFPEAHo4F+DXXOTClG4qqbDq8C7idwA5ABj5VjftZtW7P9
+         dgH0iUdXoLAvQPEn+BrvF94TevCrwmqy5DI88dYotTo8k5ocLCu7AbGu4GjPxyS/gdMp
+         zVdA==
+X-Received: by 10.68.129.5 with SMTP id ns5mr12400002pbb.147.1395768296522;
+        Tue, 25 Mar 2014 10:24:56 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.24.47
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.24.55
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:24:48 -0700 (PDT)
+        Tue, 25 Mar 2014 10:24:55 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245136>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245137>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,23 +72,20 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- check-builtins.sh |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ unimplemented.sh |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/check-builtins.sh b/check-builtins.sh
-index d6fe6cf..07cff69 100755
---- a/check-builtins.sh
-+++ b/check-builtins.sh
-@@ -14,8 +14,8 @@ sort |
-     bad=3D0
-     while read builtin
-     do
--	base=3D`expr "$builtin" : 'git-\(.*\)'`
--	x=3D`sed -ne 's/.*{ "'$base'", \(cmd_[^, ]*\).*/'$base'	\1/p' git.c`
-+	base=3D$(expr "$builtin" : 'git-\(.*\)')
-+	x=3D$(sed -ne 's/.*{ "'$base'", \(cmd_[^, ]*\).*/'$base'	\1/p' git.c)
- 	if test -z "$x"
- 	then
- 		echo "$base is builtin but not listed in git.c command list"
+diff --git a/unimplemented.sh b/unimplemented.sh
+index 5252de4..fee21d2 100644
+--- a/unimplemented.sh
++++ b/unimplemented.sh
+@@ -1,4 +1,4 @@
+ #!/bin/sh
+=20
+-echo >&2 "fatal: git was built without support for `basename $0` (@@RE=
+ASON@@)."
++echo >&2 "fatal: git was built without support for $(basename $0) (@@R=
+EASON@@)."
+ exit 128
 --=20
 1.7.10.4
