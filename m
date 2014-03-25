@@ -1,55 +1,55 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 016/142] t1000-read-tree-m-3way.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:22:37 -0700
-Message-ID: <1395768283-31135-17-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 028/142] t2102-update-index-symlinks.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:22:49 -0700
+Message-ID: <1395768283-31135-29-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 25 18:33:47 2014
+X-From: git-owner@vger.kernel.org Tue Mar 25 18:33:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVEC-0004n1-QP
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:33 +0100
+	id 1WSVE9-0004n1-L2
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755327AbaCYRZL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:25:11 -0400
-Received: from mail-pb0-f51.google.com ([209.85.160.51]:51139 "EHLO
+	id S1755607AbaCYRcu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:32:50 -0400
+Received: from mail-pb0-f51.google.com ([209.85.160.51]:65497 "EHLO
 	mail-pb0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754698AbaCYRZJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:25:09 -0400
-Received: by mail-pb0-f51.google.com with SMTP id uo5so740886pbc.24
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:08 -0700 (PDT)
+	with ESMTP id S932108AbaCYRZW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:25:22 -0400
+Received: by mail-pb0-f51.google.com with SMTP id uo5so748052pbc.38
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=eqKCsM3G4yAHBFN4x2+zUcMCdGYzT5Cx0/OZuSbkuUU=;
-        b=EQs8418NUg4bLy6c4U2PR6vmInmyBsDl0NLaHZWnn0NxYk9YOja0lrGMfOWDs+2Clm
-         LTQyLVN506BQAizBVb1MQn/Uah9rhQQOhUlqZzhM8CWG4d1QuSMOntHoVP+RU4gXpd3d
-         5d39xeJftPVU06qZKqNi+jU7JGSZ3RuvaxD8+oawNX8X7aexBnNOcouYoQluie+XkMk3
-         dcZmBIS1BciPtg3bj+5hiKt+P3Gj1qxZiOW//NRFgpqaBwMWV3Mk422lpmTzUf4YpQcC
-         xXVRzRVUL0RxY44IUGJwR/Po/O6SeU4539+sVIpY+m6KGVVKgb+ucTtMdXBruDF2p1R2
-         AgoQ==
-X-Received: by 10.66.119.172 with SMTP id kv12mr80345997pab.34.1395768308581;
-        Tue, 25 Mar 2014 10:25:08 -0700 (PDT)
+        bh=473hZYb0NCw/FGXzDCqbUdiI27tZK58f9Z5sbmD9P7M=;
+        b=IIi0N8FWc5KKJ4n5bhBs8TLetdB/VWaaJB7Wge8FpeKrIJVm/9hzLLEwPer9cEuTDY
+         ZaDMp1yn9C/do/XFaZQijNGNuuUFfyRCDKoDZetMq/BdZmFQm1RzIy+5K5VhyMkuDVOt
+         oaUK70KeBH4D2/gClEzSZXuiTVVQIC04tq078oBYtDsPY3nHPmN34g/7yDsx682pA3Kr
+         iLGKgJG0OmcERhY6JqySoM5fWooUHBnJiJrSSJGObxrv6eEJiRVGWBimWyZ2fYLA/Ciy
+         IoLjKjVIzbG1bJWsGL4zXR2TcVaf/O3hQd//NeSaxD4860hms5a7fnlqDe3rs4hXKpDX
+         DOTQ==
+X-Received: by 10.67.5.7 with SMTP id ci7mr78993449pad.99.1395768321949;
+        Tue, 25 Mar 2014 10:25:21 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.07
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.20
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:25:07 -0700 (PDT)
+        Tue, 25 Mar 2014 10:25:21 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245130>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245131>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,25 +72,22 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t1000-read-tree-m-3way.sh |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t2102-update-index-symlinks.sh |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t1000-read-tree-m-3way.sh b/t/t1000-read-tree-m-3way.sh
-index babcdd2..a0b79b4 100755
---- a/t/t1000-read-tree-m-3way.sh
-+++ b/t/t1000-read-tree-m-3way.sh
-@@ -519,10 +519,10 @@ test_expect_success \
-     'rm -f .git/index F16 &&
-     echo F16 >F16 &&
-     git update-index --add F16 &&
--    tree0=3D`git write-tree` &&
-+    tree0=3D$(git write-tree) &&
-     echo E16 >F16 &&
-     git update-index F16 &&
--    tree1=3D`git write-tree` &&
-+    tree1=3D$(git write-tree) &&
-     read_tree_must_succeed -m $tree0 $tree1 $tree1 $tree0 &&
-     git ls-files --stage'
+diff --git a/t/t2102-update-index-symlinks.sh b/t/t2102-update-index-sy=
+mlinks.sh
+index 4d0d0a3..22f2c73 100755
+--- a/t/t2102-update-index-symlinks.sh
++++ b/t/t2102-update-index-symlinks.sh
+@@ -23,7 +23,7 @@ git update-index symlink'
 =20
+ test_expect_success \
+ 'the index entry must still be a symbolic link' '
+-case "`git ls-files --stage --cached symlink`" in
++case "$(git ls-files --stage --cached symlink)" in
+ 120000" "*symlink) echo pass;;
+ *) echo fail; git ls-files --stage --cached symlink; (exit 1);;
+ esac'
 --=20
 1.7.10.4
