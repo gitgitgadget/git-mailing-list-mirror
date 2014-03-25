@@ -1,90 +1,168 @@
-From: David Cowden <dcow90@gmail.com>
-Subject: [PATCH v3] Clarify pre-push hook documentation
-Date: Mon, 24 Mar 2014 16:51:28 -0700
-Message-ID: <1395705088-82216-1-git-send-email-dcow90@gmail.com>
-References: <1395704609-81957-1-git-send-email-dcow90@gmail.com>
-Cc: David Cowden <dcow90@gmail.com>, philipoakley@iee.org,
-	sunshine@sunshineco.com, gitster@pobox.com
+From: Cyril Roelandt <tipecaml@gmail.com>
+Subject: [PATCH] Allow --pretty to be passed to git-describe.
+Date: Tue, 25 Mar 2014 02:04:04 +0100
+Message-ID: <1395709444-11220-1-git-send-email-tipecaml@gmail.com>
+Cc: Cyril Roelandt <tipecaml@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 25 00:56:19 2014
+X-From: git-owner@vger.kernel.org Tue Mar 25 02:09:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSEj4-00065U-DM
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 00:56:18 +0100
+	id 1WSFsF-0002gi-67
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 02:09:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751131AbaCXXz7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Mar 2014 19:55:59 -0400
-Received: from mail-pd0-f171.google.com ([209.85.192.171]:39529 "EHLO
-	mail-pd0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751367AbaCXXz6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Mar 2014 19:55:58 -0400
-Received: by mail-pd0-f171.google.com with SMTP id r10so6004947pdi.2
-        for <git@vger.kernel.org>; Mon, 24 Mar 2014 16:55:57 -0700 (PDT)
+	id S1751921AbaCYBJr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Mar 2014 21:09:47 -0400
+Received: from mail-wi0-f171.google.com ([209.85.212.171]:53063 "EHLO
+	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751232AbaCYBJq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Mar 2014 21:09:46 -0400
+Received: by mail-wi0-f171.google.com with SMTP id hr14so1499894wib.10
+        for <git@vger.kernel.org>; Mon, 24 Mar 2014 18:09:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=3ienz7LNmU1rJbEowLZENhGDRq1Atw+/2dNd8qyIQ/4=;
-        b=0wozZZc/Zj6VWySCoTf4D9U9y88sFzk+CtC8wBkfCNVv/eCtz1fVA2lBIVPb9LyAZU
-         qVoraWiM6SLuPBMcanR5kmgZGawXmZbdZF02QXEYpwmDgnR2qj5zopjP8OsZtZ5LDg9S
-         0e2qxIiB1iWeaV3lVhJMhxCQj0q9ZCcgnNQiPkKn/QRgLI2ORIacghkYh6828piu/r5X
-         1NM0RHRxhOfT4L3pU6xw98eD5QcYicTTXxkoaBCzPTdQaYjYtfNKqXIgkMvNuvVkLTKR
-         5JEgYXrwNfLHLFOmbzYqXiTgRpJEbvf/TP3EZXoDigMF5dFycDcNTPx1raAaUv4d/W8s
-         dGyg==
-X-Received: by 10.66.193.161 with SMTP id hp1mr66431101pac.20.1395705357697;
-        Mon, 24 Mar 2014 16:55:57 -0700 (PDT)
-Received: from Davids-MacBook-Pro-2.local.com ([69.170.160.74])
-        by mx.google.com with ESMTPSA id iu7sm36508728pbc.60.2014.03.24.16.55.56
+        h=from:to:cc:subject:date:message-id;
+        bh=LRQtUCDe9+hmKw5cvr9rOy0L2rRVXf9TLao69BHhB4A=;
+        b=h/BcTZ2VoFe0EI0UVsA0jzKZIvO6PDOyR1ON+Mu90ucr5NkOgM1N9fiwZN2FewXY0F
+         gJxRi/df93tykkZ5/Fr6t/kxUQvByUYuy7oVVlMudvILn6ORU/XSQ11PmBFvgx50klht
+         NsbUZ/uLKAZanaIdD5um6YG7g7B7X6SO2BkmKV+cp0dZgzvkuo+GNiITJC1+eGN1VL1e
+         voIlvPn602izXMYbff805Go1x+Xk9qS/fdsOtxaH5lDvxcA47+YCbol2/ZOYybdrXfcb
+         svFYkw6uCV06JOZPlSti5QTKzeJi8a1u0ap7zCgXIaJFGROM/kTKay+MYzL7TBUjuZJ/
+         6R1Q==
+X-Received: by 10.181.13.112 with SMTP id ex16mr19488329wid.23.1395709784970;
+        Mon, 24 Mar 2014 18:09:44 -0700 (PDT)
+Received: from localhost.localdomain (tal33-3-82-233-82-24.fbx.proxad.net. [82.233.82.24])
+        by mx.google.com with ESMTPSA id ee5sm44770635wib.8.2014.03.24.18.09.42
         for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Mon, 24 Mar 2014 16:55:56 -0700 (PDT)
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 24 Mar 2014 18:09:44 -0700 (PDT)
 X-Mailer: git-send-email 1.9.1
-In-Reply-To: <1395704609-81957-1-git-send-email-dcow90@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244900>
 
-The documentation as-is does not mention that the pre-push hook is
-executed even when there is nothing to push.  This can lead a new
-reader to believe there will always be lines fed to the script's
-standard input and cause minor confusion as to what is happening
-when there are no lines provided to the pre-push script.
+In some cases, ony may want to find the the most recent tag that is reachable
+from a commit and have it pretty printed, using the formatting options available
+in git-log and git-show.
 
-Signed-off-by: David Cowden <dcow90@gmail.com>
+Signed-off-by: Cyril Roelandt <tipecaml@gmail.com>
 ---
+ Documentation/git-describe.txt |  4 ++++
+ builtin/describe.c             | 39 ++++++++++++++++++++++++++++++++++-----
+ 2 files changed, 38 insertions(+), 5 deletions(-)
 
-Notes:
-    I'm not sure if I've covered every case here.  If there are more cases to
-    consider, please let me know and I can update to include them.
-    
-    c.f. http://stackoverflow.com/questions/22585091/git-hooks-pre-push-script-does-not-receive-input-via-stdin
-
- Documentation/githooks.txt | 9 +++++++++
- 1 file changed, 9 insertions(+)
-
-diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index d954bf6..1fd6da9 100644
---- a/Documentation/githooks.txt
-+++ b/Documentation/githooks.txt
-@@ -203,6 +203,15 @@ SHA-1>` will be 40 `0`.  If the local commit was specified by something other
- than a name which could be expanded (such as `HEAD~`, or a SHA-1) it will be
- supplied as it was originally given.
+diff --git a/Documentation/git-describe.txt b/Documentation/git-describe.txt
+index d20ca40..fae4713 100644
+--- a/Documentation/git-describe.txt
++++ b/Documentation/git-describe.txt
+@@ -93,6 +93,10 @@ OPTIONS
+ 	This is useful when you wish to not match tags on branches merged
+ 	in the history of the target commit.
  
-+The hook is executed regardless of whether changes will actually be pushed or
-+not.  This may happen when 'git push' is called and:
++include::pretty-options.txt[]
 +
-+ - the remote ref is already up to date, or
-+ - pushing to the remote ref cannot be handled by a simple fast-forward
++include::pretty-formats.txt[]
 +
-+In other words, the script is called for every push.  In the event that nothing
-+is to be pushed, no data will be provided on the script's standard input.
+ EXAMPLES
+ --------
+ 
+diff --git a/builtin/describe.c b/builtin/describe.c
+index 24d740c..4c0ebae 100644
+--- a/builtin/describe.c
++++ b/builtin/describe.c
+@@ -8,8 +8,8 @@
+ #include "diff.h"
+ #include "hashmap.h"
+ #include "argv-array.h"
++#include "revision.h"
+ 
+-#define SEEN		(1u << 0)
+ #define MAX_TAGS	(FLAG_BITS - 1)
+ 
+ static const char * const describe_usage[] = {
+@@ -30,6 +30,8 @@ static int have_util;
+ static const char *pattern;
+ static int always;
+ static const char *dirty;
++static const char *fmt_pretty;
++static enum cmit_fmt commit_format;
+ 
+ /* diff-index command arguments to check if working tree is dirty. */
+ static const char *diff_index_args[] = {
+@@ -266,8 +268,14 @@ static void describe(const char *arg, int last_one)
+ 		 * Exact match to an existing ref.
+ 		 */
+ 		display_name(n);
+-		if (longformat)
++		if (longformat) {
+ 			show_suffix(0, n->tag ? n->tag->tagged->sha1 : sha1);
++		} else if (fmt_pretty) {
++			struct strbuf buf = STRBUF_INIT;
++			pp_commit_easy(commit_format, cmit, &buf);
++			printf("%s", buf.buf);
++			strbuf_release(&buf);
++		}
+ 		if (dirty)
+ 			printf("%s", dirty);
+ 		printf("\n");
+@@ -386,9 +394,16 @@ static void describe(const char *arg, int last_one)
+ 		}
+ 	}
+ 
+-	display_name(all_matches[0].name);
+-	if (abbrev)
+-		show_suffix(all_matches[0].depth, cmit->object.sha1);
++	if (fmt_pretty) {
++		struct strbuf buf = STRBUF_INIT;
++		pp_commit_easy(commit_format, cmit, &buf);
++		printf("%s", buf.buf);
++		strbuf_release(&buf);
++	} else {
++		display_name(all_matches[0].name);
++		if (abbrev)
++			show_suffix(all_matches[0].depth, cmit->object.sha1);
++	}
+ 	if (dirty)
+ 		printf("%s", dirty);
+ 	printf("\n");
+@@ -419,6 +434,10 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
+ 		{OPTION_STRING, 0, "dirty",  &dirty, N_("mark"),
+ 			N_("append <mark> on dirty working tree (default: \"-dirty\")"),
+ 			PARSE_OPT_OPTARG, NULL, (intptr_t) "-dirty"},
++		OPT_STRING(0, "pretty",      &fmt_pretty, N_("pattern"),
++			   N_("pretty print")),
++		OPT_STRING(0, "format",      &fmt_pretty, N_("pattern"),
++			   N_("pretty print")),
+ 		OPT_END(),
+ 	};
+ 
+@@ -437,6 +456,9 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
+ 	if (longformat && abbrev == 0)
+ 		die(_("--long is incompatible with --abbrev=0"));
+ 
++	if (longformat && fmt_pretty)
++		die(_("--long is incompatible with --pretty"));
 +
- If this hook exits with a non-zero status, 'git push' will abort without
- pushing anything.  Information about why the push is rejected may be sent
- to the user by writing to standard error.
+ 	if (contains) {
+ 		struct argv_array args;
+ 
+@@ -458,6 +480,13 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
+ 		return cmd_name_rev(args.argc, args.argv, prefix);
+ 	}
+ 
++	if (fmt_pretty) {
++		struct rev_info rev;
++		init_revisions(&rev, prefix);
++		get_commit_format(fmt_pretty, &rev);
++		commit_format = rev.commit_format;
++	}
++
+ 	hashmap_init(&names, (hashmap_cmp_fn) commit_name_cmp, 0);
+ 	for_each_rawref(get_name, NULL);
+ 	if (!names.size && !always)
 -- 
 1.9.1
