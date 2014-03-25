@@ -1,55 +1,55 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 077/142] t5900-repo-selection.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:23:38 -0700
-Message-ID: <1395768283-31135-78-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 071/142] t5550-http-fetch-dumb.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:23:32 -0700
+Message-ID: <1395768283-31135-72-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 25 18:33:27 2014
+X-From: git-owner@vger.kernel.org Tue Mar 25 18:33:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVDq-0004n1-A4
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:10 +0100
+	id 1WSVDu-0004n1-0u
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755261AbaCYR2s convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:28:48 -0400
-Received: from mail-pb0-f42.google.com ([209.85.160.42]:36247 "EHLO
-	mail-pb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755425AbaCYR0T (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:26:19 -0400
-Received: by mail-pb0-f42.google.com with SMTP id rr13so757182pbb.1
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:26:18 -0700 (PDT)
+	id S1755551AbaCYR3n convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:29:43 -0400
+Received: from mail-pd0-f172.google.com ([209.85.192.172]:43843 "EHLO
+	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755415AbaCYR0K (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:26:10 -0400
+Received: by mail-pd0-f172.google.com with SMTP id p10so720942pdj.17
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:26:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=K4Wo9ftUDvVG6YRtkSNxMhPYQCo4CU4Pmw06P4KRcII=;
-        b=HZPd6j7oxvKmoKzgBN3jrgLg1lyzYSTWebReAxmE/DtH7H7MizKgPSA/c/z0bW7np9
-         emlMO6omk0+NN2g2spd4Sst+lqtUyjnLhw2byLlJBvEmD6Lt0U6tq3etV/A6k7UvXYe9
-         5YGjj76euuUHrYEfAv8E0tqQp8ZLvmlBJahV6eNrvBKo/KgPormk2v0NU+5XCIry/Z6e
-         jTGXN5avCD8kCmYh17vugZRVQCKTQzkokFjaecV7XC7H7+vv1e3qUBWtv2lt97yMzGSp
-         NFf+oYrpN3nYFjifyTNCnkNey46yzNai11yqKdDfaDtYoGPQ0eTwLYBWg73E0f5jMU5S
-         NiRA==
-X-Received: by 10.66.5.135 with SMTP id s7mr11720131pas.154.1395768375921;
-        Tue, 25 Mar 2014 10:26:15 -0700 (PDT)
+        bh=r0JzFfHxMG+j5lQdQlWeo9iNZ+i4Bi258oP/GVXuJVs=;
+        b=RiozhaTpniVOzmoZkQ9/LuXwBwGsyvDECnWZzFMjK8Bn+dDo1kDwapQdBQ0JfpxpIN
+         tPcaGjbn8srI0Qe2vb6NU9YVe0opmQJBcVDBkoEzBwAyhH9jFOH0dLhDHAuiYNZ8Ny6+
+         9ZdeSUp4/gd5Ukbv1AyFaox1L6Fdllm7goRHP36hGcVpM67mkam19Xhd/7NfVQLaGdDz
+         8p0kirtz2DgmUW0Jag925H5nzX3LCfYTkvs+iYIXdhJ9tOMyHQy4+y+4YukoRzlIrPLZ
+         xZnQ7Wv3gCUXZhRnoXJtGuiOl2rAhUmZ7cz1NGwSRvk404F/OrqS9BowCM+JQd9CpCRM
+         Qfuw==
+X-Received: by 10.68.138.165 with SMTP id qr5mr80575121pbb.123.1395768369672;
+        Tue, 25 Mar 2014 10:26:09 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.26.14
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.26.08
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:26:15 -0700 (PDT)
+        Tue, 25 Mar 2014 10:26:09 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245105>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245106>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,21 +72,52 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t5900-repo-selection.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t5550-http-fetch-dumb.sh |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/t/t5900-repo-selection.sh b/t/t5900-repo-selection.sh
-index 3d5b418..14e59c5 100755
---- a/t/t5900-repo-selection.sh
-+++ b/t/t5900-repo-selection.sh
-@@ -15,7 +15,7 @@ make_tree() {
- make_bare() {
- 	git init --bare "$1" &&
- 	(cd "$1" &&
--	 tree=3D`git hash-object -w -t tree /dev/null` &&
-+	 tree=3D$(git hash-object -w -t tree /dev/null) &&
- 	 commit=3D$(echo "$1" | git commit-tree $tree) &&
- 	 git update-ref HEAD $commit
+diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
+index 1a3a2b6..5ccb271 100755
+--- a/t/t5550-http-fetch-dumb.sh
++++ b/t/t5550-http-fetch-dumb.sh
+@@ -138,7 +138,7 @@ test_expect_success 'fetch packed objects' '
+ test_expect_success 'fetch notices corrupt pack' '
+ 	cp -R "$HTTPD_DOCUMENT_ROOT_PATH"/repo_pack.git "$HTTPD_DOCUMENT_ROOT=
+_PATH"/repo_bad1.git &&
+ 	(cd "$HTTPD_DOCUMENT_ROOT_PATH"/repo_bad1.git &&
+-	 p=3D`ls objects/pack/pack-*.pack` &&
++	 p=3D$(ls objects/pack/pack-*.pack) &&
+ 	 chmod u+w $p &&
+ 	 printf %0256d 0 | dd of=3D$p bs=3D256 count=3D1 seek=3D1 conv=3Dnotr=
+unc
+ 	) &&
+@@ -146,14 +146,14 @@ test_expect_success 'fetch notices corrupt pack' =
+'
+ 	(cd repo_bad1.git &&
+ 	 git --bare init &&
+ 	 test_must_fail git --bare fetch $HTTPD_URL/dumb/repo_bad1.git &&
+-	 test 0 =3D `ls objects/pack/pack-*.pack | wc -l`
++	 test 0 =3D $(ls objects/pack/pack-*.pack | wc -l)
  	)
+ '
+=20
+ test_expect_success 'fetch notices corrupt idx' '
+ 	cp -R "$HTTPD_DOCUMENT_ROOT_PATH"/repo_pack.git "$HTTPD_DOCUMENT_ROOT=
+_PATH"/repo_bad2.git &&
+ 	(cd "$HTTPD_DOCUMENT_ROOT_PATH"/repo_bad2.git &&
+-	 p=3D`ls objects/pack/pack-*.idx` &&
++	 p=3D$(ls objects/pack/pack-*.idx) &&
+ 	 chmod u+w $p &&
+ 	 printf %0256d 0 | dd of=3D$p bs=3D256 count=3D1 seek=3D1 conv=3Dnotr=
+unc
+ 	) &&
+@@ -161,7 +161,7 @@ test_expect_success 'fetch notices corrupt idx' '
+ 	(cd repo_bad2.git &&
+ 	 git --bare init &&
+ 	 test_must_fail git --bare fetch $HTTPD_URL/dumb/repo_bad2.git &&
+-	 test 0 =3D `ls objects/pack | wc -l`
++	 test 0 =3D $(ls objects/pack | wc -l)
+ 	)
+ '
+=20
 --=20
 1.7.10.4
