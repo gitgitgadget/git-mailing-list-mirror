@@ -1,7 +1,7 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 069/142] t5537-fetch-shallow.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:23:30 -0700
-Message-ID: <1395768283-31135-70-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 073/142] t5570-git-daemon.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:23:34 -0700
+Message-ID: <1395768283-31135-74-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -14,42 +14,42 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVDa-0004n1-N3
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:32:55 +0100
+	id 1WSVDc-0004n1-Ac
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:32:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932141AbaCYR0N convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:26:13 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:48215 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754717AbaCYR0H (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:26:07 -0400
-Received: by mail-pa0-f53.google.com with SMTP id ld10so734995pab.40
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:26:07 -0700 (PDT)
+	id S1755429AbaCYR0U convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:26:20 -0400
+Received: from mail-pb0-f53.google.com ([209.85.160.53]:44277 "EHLO
+	mail-pb0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754685AbaCYR0Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:26:16 -0400
+Received: by mail-pb0-f53.google.com with SMTP id rp16so740062pbb.26
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:26:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=N1+2D/TaP3syRVQ/bxMb+wD83EbQEiW5b/7IJzDi618=;
-        b=VHdNr7OsxvpA2IWFaXLj8N/JwH+KNZuuGH/Xs3r2TBTMpG7wnxV015fHYrGel+7XiN
-         YBivDZbpP6MkwrRO6ssvDlp6TCvQYKHyoagGROZvKi1FrZ+xXAhmtbpV178+f0WVXu3w
-         qXIr0TmB8Yg0LwzgCLfn9ie+98xlUBIZFbNfjaxQi7BOLpZBpyQoXSGSyCNEeK7zZcyQ
-         wLB8JTSJ4L7T6Qpe0+Gy3jwypZKmKW2PpctpIC+zWh1Gqr+DyM1vAnkvjJqyzHR9pdVO
-         tbWlFavkbdg+8e+qAm1VXlmHVSSSlw6uu0U+q913aTU3GWamHtztTaABNmljs+//wfXA
-         DN3A==
-X-Received: by 10.68.60.225 with SMTP id k1mr80367664pbr.58.1395768367272;
-        Tue, 25 Mar 2014 10:26:07 -0700 (PDT)
+        bh=CTnDH2wY/1Mo96m0xrWeaczy6Y3cfFYFcqRUOMK/VBI=;
+        b=ETHhIY+xwvSGNmkhrF9qeND5hD9wHPxpDaq+SuhWKegEIG56GtARp6+QBym273K34q
+         d7W4tJN3UmxQVHULYPldDob7sUBIlgAjfuYYCVjoZ9IlMnug+BE+AtpLQEiQG0KQL1yV
+         prpETeud6PD4yQLC3l+oS63o8x3lSqnxPqbdjDkG6+WEnSwq10ia4dB2milnlsXLIMOS
+         S83JGwZNU4AMWU2RZRt+ni5fRMZJ9V1xS2aoW6kIWBGFeSkXmZVyW1c41qpEM0NJfLEj
+         RJO0GKVhA2+uBSeHAi9JF8GPYnZ3qFO8vJMGBbSDzndjAdTfEQU2nV/7mOMifRluRR/U
+         BMUA==
+X-Received: by 10.66.139.38 with SMTP id qv6mr63406663pab.123.1395768371785;
+        Tue, 25 Mar 2014 10:26:11 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.26.06
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.26.10
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:26:06 -0700 (PDT)
+        Tue, 25 Mar 2014 10:26:11 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245089>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,34 +72,50 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t5537-fetch-shallow.sh |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t5570-git-daemon.sh |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/t/t5537-fetch-shallow.sh b/t/t5537-fetch-shallow.sh
-index be951a4..d9ea98a 100755
---- a/t/t5537-fetch-shallow.sh
-+++ b/t/t5537-fetch-shallow.sh
-@@ -98,7 +98,7 @@ EOF
- test_expect_success 'fetch something upstream has but hidden by client=
-s shallow boundaries' '
- 	# the blob "1" is available in .git but hidden by the
- 	# shallow2/.git/shallow and it should be resent
--	! git --git-dir=3Dshallow2/.git cat-file blob `echo 1|git hash-object=
- --stdin` >/dev/null &&
-+	! git --git-dir=3Dshallow2/.git cat-file blob $(echo 1|git hash-objec=
-t --stdin) >/dev/null &&
- 	echo 1 >1.t &&
- 	git add 1.t &&
- 	git commit -m add-1-back &&
-@@ -114,7 +114,7 @@ add-1-back
- EOF
- 	test_cmp expect actual
+diff --git a/t/t5570-git-daemon.sh b/t/t5570-git-daemon.sh
+index 6b16379..eb07dbe 100755
+--- a/t/t5570-git-daemon.sh
++++ b/t/t5570-git-daemon.sh
+@@ -57,7 +57,7 @@ test_expect_success 'prepare pack objects' '
+ test_expect_success 'fetch notices corrupt pack' '
+ 	cp -R "$GIT_DAEMON_DOCUMENT_ROOT_PATH"/repo_pack.git "$GIT_DAEMON_DOC=
+UMENT_ROOT_PATH"/repo_bad1.git &&
+ 	(cd "$GIT_DAEMON_DOCUMENT_ROOT_PATH"/repo_bad1.git &&
+-	 p=3D`ls objects/pack/pack-*.pack` &&
++	 p=3D$(ls objects/pack/pack-*.pack) &&
+ 	 chmod u+w $p &&
+ 	 printf %0256d 0 | dd of=3D$p bs=3D256 count=3D1 seek=3D1 conv=3Dnotr=
+unc
  	) &&
--	git --git-dir=3Dshallow2/.git cat-file blob `echo 1|git hash-object -=
--stdin` >/dev/null
-+	git --git-dir=3Dshallow2/.git cat-file blob $(echo 1|git hash-object =
---stdin) >/dev/null
+@@ -65,14 +65,14 @@ test_expect_success 'fetch notices corrupt pack' '
+ 	(cd repo_bad1.git &&
+ 	 git --bare init &&
+ 	 test_must_fail git --bare fetch "$GIT_DAEMON_URL/repo_bad1.git" &&
+-	 test 0 =3D `ls objects/pack/pack-*.pack | wc -l`
++	 test 0 =3D $(ls objects/pack/pack-*.pack | wc -l)
+ 	)
+ '
 =20
+ test_expect_success 'fetch notices corrupt idx' '
+ 	cp -R "$GIT_DAEMON_DOCUMENT_ROOT_PATH"/repo_pack.git "$GIT_DAEMON_DOC=
+UMENT_ROOT_PATH"/repo_bad2.git &&
+ 	(cd "$GIT_DAEMON_DOCUMENT_ROOT_PATH"/repo_bad2.git &&
+-	 p=3D`ls objects/pack/pack-*.idx` &&
++	 p=3D$(ls objects/pack/pack-*.idx) &&
+ 	 chmod u+w $p &&
+ 	 printf %0256d 0 | dd of=3D$p bs=3D256 count=3D1 seek=3D1 conv=3Dnotr=
+unc
+ 	) &&
+@@ -80,7 +80,7 @@ test_expect_success 'fetch notices corrupt idx' '
+ 	(cd repo_bad2.git &&
+ 	 git --bare init &&
+ 	 test_must_fail git --bare fetch "$GIT_DAEMON_URL/repo_bad2.git" &&
+-	 test 0 =3D `ls objects/pack | wc -l`
++	 test 0 =3D $(ls objects/pack | wc -l)
+ 	)
  '
 =20
 --=20
