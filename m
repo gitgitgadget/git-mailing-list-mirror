@@ -1,7 +1,7 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 029/142] t3030-merge-recursive.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:22:50 -0700
-Message-ID: <1395768283-31135-30-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 018/142] t1002-read-tree-m-u-2way.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:22:39 -0700
+Message-ID: <1395768283-31135-19-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -14,42 +14,42 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVE7-0004n1-Gg
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:27 +0100
+	id 1WSVED-0004n1-B5
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755600AbaCYRcm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:32:42 -0400
-Received: from mail-pb0-f48.google.com ([209.85.160.48]:38002 "EHLO
-	mail-pb0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754665AbaCYRZX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:25:23 -0400
-Received: by mail-pb0-f48.google.com with SMTP id md12so743272pbc.7
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:23 -0700 (PDT)
+	id S1755622AbaCYRdX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:33:23 -0400
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:60852 "EHLO
+	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755324AbaCYRZL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:25:11 -0400
+Received: by mail-pa0-f44.google.com with SMTP id bj1so747666pad.3
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=ouAVpT+uxI+C4BVfqU7iVtYbZ+VmO8hpVJkrVnjz6zY=;
-        b=N46nj0EP6x8eSxAMFjSadCYW+km6Orq36f89i/95vxr/ldmfzZZPzK9FPOZI7XEQhp
-         dq4zi2sFSXdp54JhfQmjECxiRWdc+w8o5H01Dd2xrZUDmSiKH4Y/gC2WztKN9TpdSF1E
-         OcTaNP4FMGMzwo5fNVdkZgQyhc2OdY49lqEMlMXwslfDdyR4L0pgP3cQ5kLIfXXaxXkP
-         KuqqlDn2243W+STsaXaRbsLOEOHNRwPqRFnhAZGBn8CAowTxckKfLOCsZ7A7MegJ3VGw
-         AAQVeLDbszUcetWcHnY4dUXZYAKrdgQeEo/PGWV93dbQH8XiOh2VAD/wFjBDmx+aP/1Z
-         o/kA==
-X-Received: by 10.66.161.38 with SMTP id xp6mr12372038pab.145.1395768323088;
-        Tue, 25 Mar 2014 10:25:23 -0700 (PDT)
+        bh=KIknArcLbnzzbBj27rQ3qFKM0HTDJouWxP8IQvirmMU=;
+        b=jLKOVPWSI2ZEm2pu/2cFyyfcFj2czdnEdw6e864bRSiTe711/fEUrPFfu431e3h+wf
+         0/XXpb59rVbb4jlYtgKqtZUJcu3yJjWdvxiML59PY/C290o5qj7IPiK6CbEVdG4tleti
+         V4h35owdpxl8f8FeCGKaC5xGiIU2vC7WmPIch1NXJfEKG1dfcE4pCY3it7SpoQaDdj4b
+         vjf9m9Or5IG/GXkucSlVtnMaBrezfbiUN3KY5ZRK9yldQWdsdRldMDpsjT4reExw6ixM
+         c+TftrA6ReSFzNMt/5MYk5eDZMdujwPMfkcsuTdz9N7GKBtxawMwVD4SFX6+ToWvKYPP
+         xnPg==
+X-Received: by 10.68.138.165 with SMTP id qr5mr80569837pbb.123.1395768311169;
+        Tue, 25 Mar 2014 10:25:11 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.21
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.10
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:25:22 -0700 (PDT)
+        Tue, 25 Mar 2014 10:25:10 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245123>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,21 +72,57 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t3030-merge-recursive.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t1002-read-tree-m-u-2way.sh |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/t/t3030-merge-recursive.sh b/t/t3030-merge-recursive.sh
-index 82e1854..e9757c4 100755
---- a/t/t3030-merge-recursive.sh
-+++ b/t/t3030-merge-recursive.sh
-@@ -263,7 +263,7 @@ test_expect_success 'setup 8' '
- 	test_ln_s_add e a &&
- 	test_tick &&
- 	git commit -m "rename a->e, symlink a->e" &&
--	oln=3D`printf e | git hash-object --stdin`
-+	oln=3D$(printf e | git hash-object --stdin)
- '
+diff --git a/t/t1002-read-tree-m-u-2way.sh b/t/t1002-read-tree-m-u-2way=
+=2Esh
+index a847709..fed877b 100755
+--- a/t/t1002-read-tree-m-u-2way.sh
++++ b/t/t1002-read-tree-m-u-2way.sh
+@@ -21,7 +21,7 @@ compare_change () {
+ }
 =20
- test_expect_success 'setup 9' '
+ check_cache_at () {
+-	clean_if_empty=3D`git diff-files -- "$1"`
++	clean_if_empty=3D$(git diff-files -- "$1")
+ 	case "$clean_if_empty" in
+ 	'')  echo "$1: clean" ;;
+ 	?*)  echo "$1: dirty" ;;
+@@ -41,14 +41,14 @@ test_expect_success \
+      echo bozbar >bozbar &&
+      echo rezrov >rezrov &&
+      git update-index --add nitfol bozbar rezrov &&
+-     treeH=3D`git write-tree` &&
++     treeH=3D$(git write-tree) &&
+      echo treeH $treeH &&
+      git ls-tree $treeH &&
+=20
+      echo gnusto >bozbar &&
+      git update-index --add frotz bozbar --force-remove rezrov &&
+      git ls-files --stage >M.out &&
+-     treeM=3D`git write-tree` &&
++     treeM=3D$(git write-tree) &&
+      echo treeM $treeM &&
+      git ls-tree $treeM &&
+      sum bozbar frotz nitfol >M.sum &&
+@@ -318,7 +318,7 @@ test_expect_success \
+     'rm -f .git/index &&
+      echo DF >DF &&
+      git update-index --add DF &&
+-     treeDF=3D`git write-tree` &&
++     treeDF=3D$(git write-tree) &&
+      echo treeDF $treeDF &&
+      git ls-tree $treeDF &&
+=20
+@@ -326,7 +326,7 @@ test_expect_success \
+      mkdir DF &&
+      echo DF/DF >DF/DF &&
+      git update-index --add --remove DF DF/DF &&
+-     treeDFDF=3D`git write-tree` &&
++     treeDFDF=3D$(git write-tree) &&
+      echo treeDFDF $treeDFDF &&
+      git ls-tree $treeDFDF &&
+      git ls-files --stage >DFDF.out'
 --=20
 1.7.10.4
