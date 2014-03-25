@@ -1,55 +1,55 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 074/142] t5601-clone.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:23:35 -0700
-Message-ID: <1395768283-31135-75-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 005/142] git-rebase.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:22:26 -0700
+Message-ID: <1395768283-31135-6-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 25 18:33:23 2014
+X-From: git-owner@vger.kernel.org Tue Mar 25 18:33:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVDs-0004n1-TQ
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:13 +0100
+	id 1WSVE3-0004n1-QQ
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755224AbaCYR32 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:29:28 -0400
-Received: from mail-pd0-f171.google.com ([209.85.192.171]:52089 "EHLO
-	mail-pd0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932131AbaCYR0N (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:26:13 -0400
-Received: by mail-pd0-f171.google.com with SMTP id r10so722595pdi.2
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:26:12 -0700 (PDT)
+	id S1755262AbaCYRbz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:31:55 -0400
+Received: from mail-pb0-f52.google.com ([209.85.160.52]:60715 "EHLO
+	mail-pb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932139AbaCYRZj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:25:39 -0400
+Received: by mail-pb0-f52.google.com with SMTP id rr13so746106pbb.39
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=aGhAIDubQw8WcxY2+iQMTOBoIw0b6NNpe+hYo9aJRhc=;
-        b=hiEpEBDBSd1d4iYqOq4a7/mC0e6xvhumy1yXqOLIv6xlA7VTvktUey9fc6dqdQmFRD
-         t20i/oWiNVvjZWZXwsPqGUP+QDEqVXW2nXakcJh4809ydQ8s809v8Yme9oARnlRP91oc
-         9nNYGHNLlyrpcF9ED5s9MtaTxuRpsiH2HU3oLQqaJgPuB0uBj1EQBM9BRyADGKmKjd8H
-         GbMXa/VapQfcjFgLeyk40wMKAR3qbQL6EerXeDaMpp+Hxi7ZoGULryx3XMRV9EVFEH1t
-         +bo0YXyV+icR2uTJCNAfX1N3kv75KrWSahOU1QzM8HWdNnMPCStGY5FyHQoybbTGT8fT
-         5YGw==
-X-Received: by 10.68.76.68 with SMTP id i4mr80834342pbw.73.1395768372911;
-        Tue, 25 Mar 2014 10:26:12 -0700 (PDT)
+        bh=meXSrokQwvNr2SAPBQ6jaXWAsoOWIpcj9mbs9gIfMQo=;
+        b=rHmGIyh0VwaVsA+jE9g6bvt5whGGLUurYr+vFbrLyF+LMRg8wg6sbOiN72XiH3msCy
+         RaeoGfNf9H/uGMiTQIlU2inuxw/mCWNM4dYG/h8qCGQcdktbCuFBK6UFKL7T6TYO+svy
+         asXIUHoL4AfsLjXafPIYBLW+uBlXKDvpriRDgQbmrr7nufQuKWdVGOdO3iQ9g434Xx9R
+         LZmP3sL2/TSTd/GPtwvjL5AhKl7iEWygcjoh9yticBLcU592UMGykeVcX2UU6V0IP0gK
+         E1m/I+Wbyq6s+peNrhxPymQFKWDVRvxDrW8sKGBTPo2r7Mh4cu5LvpJ1vGNZJMpnIGXS
+         E2qQ==
+X-Received: by 10.66.145.166 with SMTP id sv6mr81148138pab.31.1395768293471;
+        Tue, 25 Mar 2014 10:24:53 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.26.11
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.24.51
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:26:12 -0700 (PDT)
+        Tue, 25 Mar 2014 10:24:52 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245102>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,21 +72,36 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t5601-clone.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ git-rebase.sh |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index 5e67035..fbe83a1 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -221,7 +221,7 @@ test_expect_success 'clone separate gitdir' '
- '
-=20
- test_expect_success 'clone separate gitdir: output' '
--	echo "gitdir: `pwd`/realgitdir" >expected &&
-+	echo "gitdir: $(pwd)/realgitdir" >expected &&
- 	test_cmp expected dst/.git
- '
-=20
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 5f6732b..a209ab9 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -462,8 +462,8 @@ then
+ else
+ 	if test -z "$onto"
+ 	then
+-		empty_tree=3D`git hash-object -t tree /dev/null`
+-		onto=3D`git commit-tree $empty_tree </dev/null`
++		empty_tree=3D$(git hash-object -t tree /dev/null)
++		onto=3D$(git commit-tree $empty_tree </dev/null)
+ 		squash_onto=3D"$onto"
+ 	fi
+ 	unset upstream_name
+@@ -521,10 +521,10 @@ case "$#" in
+ 	;;
+ 0)
+ 	# Do not need to switch branches, we are already on it.
+-	if branch_name=3D`git symbolic-ref -q HEAD`
++	if branch_name=3D$(git symbolic-ref -q HEAD)
+ 	then
+ 		head_name=3D$branch_name
+-		branch_name=3D`expr "z$branch_name" : 'zrefs/heads/\(.*\)'`
++		branch_name=3D$(expr "z$branch_name" : 'zrefs/heads/\(.*\)')
+ 	else
+ 		head_name=3D"detached HEAD"
+ 		branch_name=3DHEAD ;# detached
 --=20
 1.7.10.4
