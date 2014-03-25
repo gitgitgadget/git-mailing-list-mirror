@@ -1,55 +1,55 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 088/142] t7103-reset-bare.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:23:49 -0700
-Message-ID: <1395768283-31135-89-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 085/142] t7003-filter-branch.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:23:46 -0700
+Message-ID: <1395768283-31135-86-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 25 18:33:09 2014
+X-From: git-owner@vger.kernel.org Tue Mar 25 18:33:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVDg-0004n1-2S
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:00 +0100
+	id 1WSVDo-0004n1-OW
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755447AbaCYR0c convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:26:32 -0400
-Received: from mail-pd0-f169.google.com ([209.85.192.169]:45435 "EHLO
-	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754765AbaCYR0a (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:26:30 -0400
-Received: by mail-pd0-f169.google.com with SMTP id fp1so723756pdb.14
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:26:29 -0700 (PDT)
+	id S1754697AbaCYR2d convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:28:33 -0400
+Received: from mail-pd0-f177.google.com ([209.85.192.177]:59939 "EHLO
+	mail-pd0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754711AbaCYR00 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:26:26 -0400
+Received: by mail-pd0-f177.google.com with SMTP id y10so720934pdj.36
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:26:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=gNQgQDWcQAwlHXax9wNF/dYvXv2/CAYKIGRESqJIYlA=;
-        b=EgXRKg+9I0WR20HSaqDm/xT/kjoB1HTJPWL3/d+7bxVipxymzO35t3dyOhTlv89Kly
-         wRhXoMGSXlpe0cEjetqCbcOicZbX+v4zhY+45CP2Ius9Wcmrnb3JAZb+10yM0oXTL9+p
-         vj1ZdejX0Q/uv5xp5XVkXdINHcDTA/6VsZnpKT9ZNULv/RyQlNyiNwQRRB3CPSdPm1J0
-         ddcgud85xURERJe7XAZQkNIf7mc4Cd7hckhiLR2xZKM+XjCXbT4SgNLQqUOrJJGPmVWQ
-         IcuABQ+6gRUNTfMYIz7Lm13Q5dM66YmTiS0Lzo7BrvJ6fGAdJ8KNl/ssntBaElNI0F7l
-         dACA==
-X-Received: by 10.68.191.200 with SMTP id ha8mr79642892pbc.66.1395768389562;
-        Tue, 25 Mar 2014 10:26:29 -0700 (PDT)
+        bh=+8DUnnvrLbO5ZD1TONP2KYb26+AUAnN7LizY95+dvrw=;
+        b=hRHKwHAGzB5ONMyvRjFsbRubRRi4mQHFpbPElOOGCtkADpq6OgzYoh3LUWlhX1kTem
+         fMwIZnJ9h+HOMqpRo3/WJ26OaV75a1dyPw+EKNJPzo44MTiG5weK0z/0drUBm/r6VYs3
+         TPcZPjcMtsGwqbaGatYvNPI+p9ik4hgk9X9zGTSODoqCuJlO75Yznbcxv4uGV1W2adPy
+         sQ2Hox6vJTVXhlSmOh9E9OClOOMqupR1OdSA59QILE0RqElFg9Fm6J9J5TJ7xOvEWnmn
+         Q/+TcVAdp8Eysl937z1FCWu6vhgLmOhg3+wcOK1IffZB1hEB2wBsFXn4WbB/uKpN+GDO
+         jPSA==
+X-Received: by 10.67.4.169 with SMTP id cf9mr80321290pad.45.1395768385771;
+        Tue, 25 Mar 2014 10:26:25 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.26.28
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.26.24
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:26:28 -0700 (PDT)
+        Tue, 25 Mar 2014 10:26:25 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245091>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245092>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,20 +72,39 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t7103-reset-bare.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t7003-filter-branch.sh |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/t/t7103-reset-bare.sh b/t/t7103-reset-bare.sh
-index 1eef93c..afe36a5 100755
---- a/t/t7103-reset-bare.sh
-+++ b/t/t7103-reset-bare.sh
-@@ -63,7 +63,7 @@ test_expect_success '"mixed" reset is not allowed in =
-bare' '
+diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
+index 9496736..87459a5 100755
+--- a/t/t7003-filter-branch.sh
++++ b/t/t7003-filter-branch.sh
+@@ -362,7 +362,7 @@ test_expect_success 'setup submodule' '
+ 	git branch original HEAD
+ '
 =20
- test_expect_success '"soft" reset is allowed in bare' '
- 	git reset --soft HEAD^ &&
--	test "`git show --pretty=3Dformat:%s | head -n 1`" =3D "one"
-+	test "$(git show --pretty=3Dformat:%s | head -n 1)" =3D "one"
+-orig_head=3D`git show-ref --hash --head HEAD`
++orig_head=3D$(git show-ref --hash --head HEAD)
+=20
+ test_expect_success 'rewrite submodule with another content' '
+ 	git filter-branch --tree-filter "test -d submod && {
+@@ -371,7 +371,7 @@ test_expect_success 'rewrite submodule with another=
+ content' '
+ 					 mkdir submod &&
+ 					 : > submod/file
+ 					 } || :" HEAD &&
+-	test $orig_head !=3D `git show-ref --hash --head HEAD`
++	test $orig_head !=3D $(git show-ref --hash --head HEAD)
+ '
+=20
+ test_expect_success 'replace submodule revision' '
+@@ -380,7 +380,7 @@ test_expect_success 'replace submodule revision' '
+ 	    "if git ls-files --error-unmatch -- submod > /dev/null 2>&1
+ 	     then git update-index --cacheinfo 160000 01234567890123456789012=
+34567890123456789 submod
+ 	     fi" HEAD &&
+-	test $orig_head !=3D `git show-ref --hash --head HEAD`
++	test $orig_head !=3D $(git show-ref --hash --head HEAD)
  '
 =20
  test_done
