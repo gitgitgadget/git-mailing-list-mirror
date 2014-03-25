@@ -1,131 +1,145 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] test-lib: Document short options in t/README
-Date: Tue, 25 Mar 2014 10:23:38 -0700
-Message-ID: <xmqqior2mbtx.fsf@gitster.dls.corp.google.com>
-References: <1395650987-5960-1-git-send-email-ilya.bobyr@gmail.com>
-	<1395650987-5960-2-git-send-email-ilya.bobyr@gmail.com>
-	<5330196A.3030101@ramsay1.demon.co.uk> <53306910.3090807@gmail.com>
+From: Elia Pinto <gitter.spiros@gmail.com>
+Subject: [PATCH v2 009/142] t0001-init.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:22:30 -0700
+Message-ID: <1395768283-31135-10-git-send-email-gitter.spiros@gmail.com>
+References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>, git@vger.kernel.org,
-	Thomas Rast <trast@inf.ethz.ch>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Ilya Bobyr <ilya.bobyr@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Elia Pinto <gitter.spiros@gmail.com>
+To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Tue Mar 25 18:25:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSV6G-0005m3-Kz
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:25:21 +0100
+	id 1WSV6J-0005m3-E1
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:25:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755289AbaCYRXo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Mar 2014 13:23:44 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33447 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753612AbaCYRXl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:23:41 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 27D6977F48;
-	Tue, 25 Mar 2014 13:23:41 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=7GYIfuC2NF4XSU4JfWOJgQae47k=; b=fQDQzo
-	LVikLnPRmeX5wSrCLa3FXnUjlRpqe94I5cunNzPJSoJU5DPfcjbiKBYigbnTkCTP
-	uX8Ewx+UGiyLG6Zq6WvgRASJpyBH2rRgz7VfvUZbKtLR6PnJVQa9q03XOrtsNeFG
-	Q89bhY0qwtXsvYh+bqvZAYg4Z7rfzBZJTdUPU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=g0mpiBPH+EQNlgUHPBtFgoRj7r4UlEqR
-	5FBz2/P02Fq2wkxxsG4GoyhMEem1JUP1uMuk6TsXHMXxhjEjyPLwhvhQ1GNDSAk4
-	8aKTfDJN1x0qYpe3YC87pu/8i9AMFWHX0P59x6lxXubYS2pFyrDHU21wjosPARVG
-	n5HokDJIW1U=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 184F377F46;
-	Tue, 25 Mar 2014 13:23:41 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4869B77F45;
-	Tue, 25 Mar 2014 13:23:40 -0400 (EDT)
-In-Reply-To: <53306910.3090807@gmail.com> (Ilya Bobyr's message of "Mon, 24
-	Mar 2014 10:19:12 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 351B06FA-B442-11E3-971D-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755318AbaCYRZF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:25:05 -0400
+Received: from mail-pd0-f170.google.com ([209.85.192.170]:38176 "EHLO
+	mail-pd0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755296AbaCYRY6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:24:58 -0400
+Received: by mail-pd0-f170.google.com with SMTP id v10so722441pde.29
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:24:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=OYreVkK8kLZZ5d+00Yo81zQfJ0o1MkuH2MFZ4o9kGPg=;
+        b=OjtJMlb/aUrwn4Q7fzFp06jJi8ElVtEBlVr2rgCOaZudYO+npKXPFx2bH9pDw9X0RO
+         rsT+Em5FPuNqnDENErJTSdtyxg4TiOfDYPjwxSPDDMHr5KOdtB5PddPJwbT+9qpfGqAa
+         SCfq0xzV464C1ILljwY5d7iouhh4motrT28ha9vG6yO+oDzDpR2RrIlUCsItdB9tPjYZ
+         3ZBRgnX8zmWmigiyYXDPYeIVXCTbSBoAx2KN02Y1XOgZ/1WYoCXlZrcT7q2PPLGXxqGm
+         SHe/JnIUpNxdE7DUYkKKQ9cHsXAjrMIlMlUUPQiM4q7+VlNG2jNQckcpQ1jgz/CQwLzS
+         +fRg==
+X-Received: by 10.68.217.234 with SMTP id pb10mr17540183pbc.142.1395768297574;
+        Tue, 25 Mar 2014 10:24:57 -0700 (PDT)
+Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.24.56
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 25 Mar 2014 10:24:57 -0700 (PDT)
+X-Mailer: git-send-email 1.7.10.4
+In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245058>
 
-Ilya Bobyr <ilya.bobyr@gmail.com> writes:
+The Git CodingGuidelines prefer the $( ... ) construct for command
+substitution instead of using the back-quotes, or grave accents (`..`).
 
-> On 3/24/2014 4:39 AM, Ramsay Jones wrote:
->> On 24/03/14 08:49, Ilya Bobyr wrote:
->>> Most arguments that could be provided to a test have short forms.
->>> Unless documented the only way to learn then is to read the code.
->>>
->>> Signed-off-by: Ilya Bobyr <ilya.bobyr@gmail.com>
->>> ---
->>>  t/README |   10 +++++-----
->>>  1 files changed, 5 insertions(+), 5 deletions(-)
->>>
->>> diff --git a/t/README b/t/README
->>> index caeeb9d..ccb5989 100644
->>> --- a/t/README
->>> +++ b/t/README
->>> @@ -71,7 +71,7 @@ You can pass --verbose (or -v), --debug (or -d), and --immediate
->>>  (or -i) command line argument to the test, or by setting GIT_TEST_OPTS
->>>  appropriately before running "make".
->>>  
->>> ---verbose::
->>> +-v,--verbose::
->> OK
->>
->>> [...]
->>>  
->>> ---valgrind=<tool>::
->>> +-v,--valgrind=<tool>::
->> The -v short option is taken, above ... :-P
->
-> Right %)
-> Thanks :)
-> This one starts only with "--va", will fix it.
+The backquoted form is the historical method for command substitution,
+and is supported by POSIX. However, all but the simplest uses become
+complicated quickly. In particular, embedded command substitutions
+and/or the use of double quotes require careful escaping with the backs=
+lash
+character. Because of this the POSIX shell adopted the $(=E2=80=A6) fea=
+ture from
+the Korn shell.
 
-Please don't.
+The patch was generated by the simple script
 
-In general, when option names can be shortened by taking a unique
-prefix, it is better not to give short form in the documentation at
-all.  There is no guarantee that the short form you happen to pick
-when you document it will continue to be unique forever.  When we
-add another --vasomething option, --va will become ambiguous and one
-of these two things must happen:
+for _f in $(find . -name "*.sh")
+do
+=C2=A0 sed -i 's@`\(.*\)`@$(\1)@g' ${_f}
+done
 
- (1) --valgrind and --vasomething are equally useful and often used.
-     Neither will get --va and either --val or --vas needs to be
-     given.
+Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+---
+ t/t0001-init.sh |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
- (2) Because we documented --va as --valgrind, people feel that they
-     are entitled to expect --va will stay forever to be a shorthand
-     for --valgrind and nothing else.  The shortened forms will be
-     between --va (or longer prefix of --valgrind) and --vas (or
-     longer prefix of --vasomething).
-
-We would rather want to see (1), as people new to the system do not
-have to learn that --valgrind can be spelled --va merely by being
-the first to appear, and --vasomething must be spelled --vas because
-it happened to come later.  Longer term, nobody should care how the
-system evolved into the current shape, but (2) will require that to
-understand and remember why one is --va and the other has to be --vas.
-
-We already have this suboptimal (2) situation between "--valgrind"
-and "--verbose" options, but a shorter form "v" that is used for
-"verbose" is so widely understood and used that I think it is an
-acceptable exception.  So
-
-         --verbose::
-        +-v::
-                Give verbose output from the test
-
-is OK, but "--valgrind can be shortened to --va" is not.
+diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+index 9fb582b..32821fe 100755
+--- a/t/t0001-init.sh
++++ b/t/t0001-init.sh
+@@ -250,7 +250,7 @@ test_expect_success 'init --bare/--shared overrides=
+ system/global config' '
+ 	) &&
+ 	check_config init-bare-shared-override true unset &&
+ 	test x0666 =3D \
+-	x`git config -f init-bare-shared-override/config core.sharedRepositor=
+y`
++	x$(git config -f init-bare-shared-override/config core.sharedReposito=
+ry)
+ '
+=20
+ test_expect_success 'init honors global core.sharedRepository' '
+@@ -262,7 +262,7 @@ test_expect_success 'init honors global core.shared=
+Repository' '
+ 		git init
+ 	) &&
+ 	test x0666 =3D \
+-	x`git config -f shared-honor-global/.git/config core.sharedRepository=
+`
++	x$(git config -f shared-honor-global/.git/config core.sharedRepositor=
+y)
+ '
+=20
+ test_expect_success 'init rejects insanely long --template' '
+@@ -374,7 +374,7 @@ test_expect_success 'init prefers command line to G=
+IT_DIR' '
+ test_expect_success 'init with separate gitdir' '
+ 	rm -rf newdir &&
+ 	git init --separate-git-dir realgitdir newdir &&
+-	echo "gitdir: `pwd`/realgitdir" >expected &&
++	echo "gitdir: $(pwd)/realgitdir" >expected &&
+ 	test_cmp expected newdir/.git &&
+ 	test -d realgitdir/refs
+ '
+@@ -388,7 +388,7 @@ test_expect_success 're-init to update git link' '
+ 	cd newdir &&
+ 	git init --separate-git-dir ../surrealgitdir
+ 	) &&
+-	echo "gitdir: `pwd`/surrealgitdir" >expected &&
++	echo "gitdir: $(pwd)/surrealgitdir" >expected &&
+ 	test_cmp expected newdir/.git &&
+ 	test -d surrealgitdir/refs &&
+ 	! test -d realgitdir/refs
+@@ -401,7 +401,7 @@ test_expect_success 're-init to move gitdir' '
+ 	cd newdir &&
+ 	git init --separate-git-dir ../realgitdir
+ 	) &&
+-	echo "gitdir: `pwd`/realgitdir" >expected &&
++	echo "gitdir: $(pwd)/realgitdir" >expected &&
+ 	test_cmp expected newdir/.git &&
+ 	test -d realgitdir/refs
+ '
+@@ -415,7 +415,7 @@ test_expect_success SYMLINKS 're-init to move gitdi=
+r symlink' '
+ 	ln -s here .git &&
+ 	git init --separate-git-dir ../realgitdir
+ 	) &&
+-	echo "gitdir: `pwd`/realgitdir" >expected &&
++	echo "gitdir: $(pwd)/realgitdir" >expected &&
+ 	test_cmp expected newdir/.git &&
+ 	test -d realgitdir/refs &&
+ 	! test -d newdir/here
+--=20
+1.7.10.4
