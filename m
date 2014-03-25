@@ -1,55 +1,55 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 044/142] t4036-format-patch-signer-mime.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:23:05 -0700
-Message-ID: <1395768283-31135-45-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 075/142] t5700-clone-reference.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:23:36 -0700
+Message-ID: <1395768283-31135-76-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 25 18:32:57 2014
+X-From: git-owner@vger.kernel.org Tue Mar 25 18:32:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVDV-0004n1-B7
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:32:49 +0100
+	id 1WSVDb-0004n1-P4
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:32:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755375AbaCYRZu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:25:50 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:42666 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754148AbaCYRZl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:25:41 -0400
-Received: by mail-pb0-f46.google.com with SMTP id rq2so743007pbb.5
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:40 -0700 (PDT)
+	id S1755424AbaCYR0S convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:26:18 -0400
+Received: from mail-pb0-f45.google.com ([209.85.160.45]:51012 "EHLO
+	mail-pb0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932142AbaCYR0O (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:26:14 -0400
+Received: by mail-pb0-f45.google.com with SMTP id uo5so750268pbc.4
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:26:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=tplPcwfu4O1lfW9n38BovbIVltlhUZU2dCTxWOpae+c=;
-        b=mIzyjCClDuJT4IKmMPubBwResrz4HtvQS19IdGRAaQsOomaelDOL2SL/t1aVRvxPyF
-         kCm+WAcW2lSDpzyuMPY+EY+s+riWshBEPqdzpjBFOYmOokNFCfZsdlo+SImC3mWFNUhl
-         R7fOuOj8LY7j4qolrUPHYr7NXN4rOujCiMhvU67kcgBDTPinka1LaN7s9lmKxCTfGxM0
-         ko+mptnKlcMcZSDZgZYBBBLc3+qO1RP6Wre+CHPYNrVymEfqW8Y42GTtoZNiRLVfghR8
-         22RNzhpcMKtMfci7D13mlzCsUOoWssqlL67CHXiEzXCcMAD5KmKrHWtu7EGJHedrR/d5
-         3FSg==
-X-Received: by 10.66.146.170 with SMTP id td10mr80963517pab.105.1395768340872;
-        Tue, 25 Mar 2014 10:25:40 -0700 (PDT)
+        bh=SjV+u3K9jdhXar+W+9kSiWtgxlmDzmAPX0tUfoqQs80=;
+        b=mTK823f8oAyf55O5skrpja89ZjR9+ibmmcR/m1WdkAjVR9w3s7xR9TsVmhCINggau0
+         3baxuQDLLDAAIioroM/48gUAdKX//pHBtb+JClhqY7tO4PDZt1dx7ID2g5ZnsI3+YqF1
+         rl0ZvzmQoAsHGl8ZPyxf33dc/F2kYnxZrI9cIyT6FW+I029CoeSaQLjl7itIkoguLySc
+         tRxyLpLmLCyh7XwAeKElulpPrZ3HZqQSgZ1/vufoP2QQYB0xji3BqEQPxylCG1TONOVL
+         ngM/4UNf7LDyMqRRmWS/aZGNViJfSMX8ucpdTTRepHLJa4p05eVNxDBaiDUQrYI/RbYz
+         9FdQ==
+X-Received: by 10.68.110.165 with SMTP id ib5mr80190144pbb.61.1395768373905;
+        Tue, 25 Mar 2014 10:26:13 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.39
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.26.12
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:25:40 -0700 (PDT)
+        Tue, 25 Mar 2014 10:26:13 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245075>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,24 +72,21 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t4036-format-patch-signer-mime.sh |    2 +-
+ t/t5700-clone-reference.sh |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t4036-format-patch-signer-mime.sh b/t/t4036-format-patch=
--signer-mime.sh
-index ba43f18..98d9713 100755
---- a/t/t4036-format-patch-signer-mime.sh
-+++ b/t/t4036-format-patch-signer-mime.sh
-@@ -42,7 +42,7 @@ test_expect_success 'attach and signoff do not duplic=
-ate mime headers' '
+diff --git a/t/t5700-clone-reference.sh b/t/t5700-clone-reference.sh
+index 6537911..571aee4 100755
+--- a/t/t5700-clone-reference.sh
++++ b/t/t5700-clone-reference.sh
+@@ -6,7 +6,7 @@
+ test_description=3D'test clone --reference'
+ . ./test-lib.sh
 =20
- 	GIT_COMMITTER_NAME=3D"=E3=81=AF=E3=81=BE=E3=81=AE =E3=81=B5=E3=81=AB=E3=
-=81=8A=E3=81=86" \
- 	git format-patch -s --stdout -1 --attach >output &&
--	test `grep -ci ^MIME-Version: output` =3D 1
-+	test $(grep -ci ^MIME-Version: output) =3D 1
+-base_dir=3D`pwd`
++base_dir=3D$(pwd)
 =20
- '
+ U=3D$base_dir/UPLOAD_LOG
 =20
 --=20
 1.7.10.4
