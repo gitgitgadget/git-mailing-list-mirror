@@ -1,55 +1,55 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 062/142] t5510-fetch.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:23:23 -0700
-Message-ID: <1395768283-31135-63-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 050/142] t5000-tar-tree.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:23:11 -0700
+Message-ID: <1395768283-31135-51-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 25 18:33:32 2014
+X-From: git-owner@vger.kernel.org Tue Mar 25 18:33:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVDx-0004n1-MQ
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:18 +0100
+	id 1WSVE1-0004n1-Bs
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755235AbaCYRaS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:30:18 -0400
-Received: from mail-pb0-f43.google.com ([209.85.160.43]:54670 "EHLO
-	mail-pb0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755386AbaCYR0A (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:26:00 -0400
-Received: by mail-pb0-f43.google.com with SMTP id um1so742740pbc.16
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:26:00 -0700 (PDT)
+	id S1755243AbaCYRbM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:31:12 -0400
+Received: from mail-pb0-f53.google.com ([209.85.160.53]:64049 "EHLO
+	mail-pb0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755367AbaCYRZr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:25:47 -0400
+Received: by mail-pb0-f53.google.com with SMTP id rp16so739568pbb.26
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=Br6OjnmvV8xQekfWuRk67PMMr1DHdaxPEQCxN7fG6aY=;
-        b=nrBMKUTwETpBnd+f0YxRqNP/xE2s908MimoO+xb+ryXG0I6/UrueOBvoG8liCT3usp
-         61jFqxy4i1EkmyFPUlH1j1ZYEvJLDgc2vatGpudlvJf3m03A/b5+VQ/jk512ukOKuEPX
-         /25ukzjmyPsRP+AjYVDBz9PfAylu7L7kbkuDeCfLpwEnwzuoDUxycpY2yvOIk12isjp/
-         0QqBq9p7/8gZNe9vgL3g2JqtCix6cQHE4pnlv/Systs7zdmK4xCReNSzPInDWYUr6cev
-         02XdblKQnCkhYTvBD10f9UTKU0jfaVOUWprnIn7RwCe2FLVWr/dbi4KjyehCr3E+ah7W
-         zcug==
-X-Received: by 10.66.25.7 with SMTP id y7mr11780755paf.151.1395768360028;
-        Tue, 25 Mar 2014 10:26:00 -0700 (PDT)
+        bh=0yjUD1R92ltTzjcUV5xFzotfbpT+0t72qvucgeLplcU=;
+        b=tjtLf2vK1fbdd+lgk3pr1kNqdmPKl1jpT2UHZvjdXEV0nczrRHMaek/QQ9ljMH9lHz
+         bDi+uTZ5VbbQdRVU5mM6z1LPtA6Att2xKrtyYaAgDIVbovH6wjBiPGJvHXFUYxkFgpeI
+         Fjx6QQjB+BXrdt6Vekgv3NGR9Yt86mcfG1I+VpmzvQXo4fN7zDdNv/xLpXj7t2akBH62
+         g+jHxZoVwGHxRe4WR8HPZR2veqZhb4VhE32VCyWaS/qAyvKzh7eOn5jrpP2fqm8n7BpY
+         NZil1ODRE5doCjjG8HadOKupSQD8xZ8KSGqXQbqRpc5RXuLUt20P8TbqiivZOWi07l4V
+         Z96A==
+X-Received: by 10.66.12.67 with SMTP id w3mr81829899pab.29.1395768346903;
+        Tue, 25 Mar 2014 10:25:46 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.59
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.46
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:25:59 -0700 (PDT)
+        Tue, 25 Mar 2014 10:25:46 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245110>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,44 +72,41 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t5510-fetch.sh |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ t/t5000-tar-tree.sh |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index ab28594..31b185e 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -7,7 +7,7 @@ test_description=3D'Per branch config variables affects=
- "git fetch".
+diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
+index 1cf0a4e..74fc5a8 100755
+--- a/t/t5000-tar-tree.sh
++++ b/t/t5000-tar-tree.sh
+@@ -123,7 +123,7 @@ test_expect_success \
+     'add files to repository' \
+     'find a -type f | xargs git update-index --add &&
+      find a -type l | xargs git update-index --add &&
+-     treeid=3D`git write-tree` &&
++     treeid=3D$(git write-tree) &&
+      echo $treeid >treeid &&
+      git update-ref HEAD $(TZ=3DGMT GIT_COMMITTER_DATE=3D"2005-05-27 2=
+2:00:00" \
+      git commit-tree $treeid </dev/null)'
+@@ -207,7 +207,7 @@ test_expect_success \
 =20
- . ./test-lib.sh
+ test_expect_success 'clients cannot access unreachable commits' '
+ 	test_commit unreachable &&
+-	sha1=3D`git rev-parse HEAD` &&
++	sha1=3D$(git rev-parse HEAD) &&
+ 	git reset --hard HEAD^ &&
+ 	git archive $sha1 >remote.tar &&
+ 	test_must_fail git archive --remote=3D. $sha1 >remote.tar
+@@ -215,7 +215,7 @@ test_expect_success 'clients cannot access unreacha=
+ble commits' '
 =20
--D=3D`pwd`
-+D=3D$(pwd)
-=20
- test_bundle_object_count () {
- 	git verify-pack -v "$1" >verify.out &&
-@@ -64,8 +64,8 @@ test_expect_success "fetch test" '
- 	cd two &&
- 	git fetch &&
- 	test -f .git/refs/heads/one &&
--	mine=3D`git rev-parse refs/heads/one` &&
--	his=3D`cd ../one && git rev-parse refs/heads/master` &&
-+	mine=3D$(git rev-parse refs/heads/one) &&
-+	his=3D$(cd ../one && git rev-parse refs/heads/master) &&
- 	test "z$mine" =3D "z$his"
- '
-=20
-@@ -75,8 +75,8 @@ test_expect_success "fetch test for-merge" '
- 	git fetch &&
- 	test -f .git/refs/heads/two &&
- 	test -f .git/refs/heads/one &&
--	master_in_two=3D`cd ../two && git rev-parse master` &&
--	one_in_two=3D`cd ../two && git rev-parse one` &&
-+	master_in_two=3D$(cd ../two && git rev-parse master) &&
-+	one_in_two=3D$(cd ../two && git rev-parse one) &&
- 	{
- 		echo "$one_in_two	"
- 		echo "$master_in_two	not-for-merge"
+ test_expect_success 'upload-archive can allow unreachable commits' '
+ 	test_commit unreachable1 &&
+-	sha1=3D`git rev-parse HEAD` &&
++	sha1=3D$(git rev-parse HEAD) &&
+ 	git reset --hard HEAD^ &&
+ 	git archive $sha1 >remote.tar &&
+ 	test_config uploadarchive.allowUnreachable true &&
 --=20
 1.7.10.4
