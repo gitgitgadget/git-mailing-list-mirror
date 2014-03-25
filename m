@@ -1,7 +1,7 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 068/142] t5530-upload-pack-error.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:23:29 -0700
-Message-ID: <1395768283-31135-69-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 086/142] t7004-tag.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:23:47 -0700
+Message-ID: <1395768283-31135-87-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -14,42 +14,42 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVDb-0004n1-7D
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:32:55 +0100
+	id 1WSVDh-0004n1-4H
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932145AbaCYR0O convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:26:14 -0400
-Received: from mail-pa0-f50.google.com ([209.85.220.50]:44785 "EHLO
-	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755400AbaCYR0G (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:26:06 -0400
-Received: by mail-pa0-f50.google.com with SMTP id kq14so742794pab.9
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:26:06 -0700 (PDT)
+	id S1755450AbaCYR0k convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:26:40 -0400
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:34527 "EHLO
+	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755443AbaCYR01 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:26:27 -0400
+Received: by mail-pa0-f52.google.com with SMTP id rd3so739192pab.25
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:26:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=xCD3pXxiOpO/X0PAM3uo1omDtZ6MrO42c+WIWymIPLs=;
-        b=jUvYwp18dwPW5SfqsPtXgFncTr1IwCr8iH0CBUKIVFytmZ4KY4SHjQ8Tv0UEA8uaov
-         VeYzSImFup9fLz/8zgrVFx1G7u2rPb2zTm9g0PYuDZxqe7/WUGylENg70ps9OZJNJjBy
-         1LXCxFsEH31gC1uTEBry74156PU4TARlvoHxhNclpaccZRCwJVzL6EWcw76J6hEfiCGG
-         E+p0kPn1ucuNh0anfMu5M69/KfcwBoDJ513Em6UKykZJh/dQOJp1Iku88tr9Sp9mPJFN
-         Ow1Lj0eEwQtlaeg6LTqWxvE47xxDgI2Kwlc/6ZhZ1bkDVlQGKjzWaZpGFcuolnGIVcKo
-         28jQ==
-X-Received: by 10.68.239.70 with SMTP id vq6mr12100218pbc.152.1395768366358;
-        Tue, 25 Mar 2014 10:26:06 -0700 (PDT)
+        bh=GPA2OnnVDiLSpSyC39jshKnhA01DI0qdJGkq8bP7NSc=;
+        b=jLp8NR3sQboOqVZciCA0l0sqk/KG4UmXHTb5TuGHdj6Wvd5hbg8UNzesS4aCK+MgrF
+         iwG5kpoAnoSKFa5MccTrcZRVsnyGnnryiCoS+CTO0f/IsQLc8bs9QKJsCHOhSJWsuZni
+         FmZbFGoL0XssHn4Pkr/XNYSfzlsvNZj+974wHIiIbqkKak1vyRE5pQ8ec0wzygrhVnLp
+         evTLctzZW7LvXGVh9A0NOhPrxiYNHfj/40KJ67gU0T76vSIvvdAYzhU2kgdUGysiyoyZ
+         P8DdA+RyW8dPHMt9NfTaJZDWyURGZGYuUc61Gqe+QyOa7XTqlej2xAbZORtEioWGpmOI
+         eFiA==
+X-Received: by 10.68.129.34 with SMTP id nt2mr6292973pbb.18.1395768386854;
+        Tue, 25 Mar 2014 10:26:26 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.26.05
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.26.25
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:26:05 -0700 (PDT)
+        Tue, 25 Mar 2014 10:26:26 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245083>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,22 +72,75 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t5530-upload-pack-error.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t7004-tag.sh |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/t/t5530-upload-pack-error.sh b/t/t5530-upload-pack-error.s=
-h
-index 3932e79..4f6e32b 100755
---- a/t/t5530-upload-pack-error.sh
-+++ b/t/t5530-upload-pack-error.sh
-@@ -4,7 +4,7 @@ test_description=3D'errors in upload-pack'
+diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+index 143a8ea..2ed8fc0 100755
+--- a/t/t7004-tag.sh
++++ b/t/t7004-tag.sh
+@@ -23,8 +23,8 @@ test_expect_success 'listing all tags in an empty tre=
+e should succeed' '
+ '
 =20
- . ./test-lib.sh
+ test_expect_success 'listing all tags in an empty tree should output n=
+othing' '
+-	test `git tag -l | wc -l` -eq 0 &&
+-	test `git tag | wc -l` -eq 0
++	test $(git tag -l | wc -l) -eq 0 &&
++	test $(git tag | wc -l) -eq 0
+ '
 =20
--D=3D`pwd`
-+D=3D$(pwd)
+ test_expect_success 'looking for a tag in an empty tree should fail' \
+@@ -60,8 +60,8 @@ test_expect_success 'listing all tags if one exists s=
+hould succeed' '
+ '
 =20
- corrupt_repo () {
- 	object_sha1=3D$(git rev-parse "$1") &&
+ test_expect_success 'listing all tags if one exists should output that=
+ tag' '
+-	test `git tag -l` =3D mytag &&
+-	test `git tag` =3D mytag
++	test $(git tag -l) =3D mytag &&
++	test $(git tag) =3D mytag
+ '
+=20
+ # pattern matching:
+@@ -71,7 +71,7 @@ test_expect_success 'listing a tag using a matching p=
+attern should succeed' \
+=20
+ test_expect_success \
+ 	'listing a tag using a matching pattern should output that tag' \
+-	'test `git tag -l mytag` =3D mytag'
++	'test $(git tag -l mytag) =3D mytag'
+=20
+ # todo: git tag -l now returns always zero, when fixed, change this te=
+st
+ test_expect_success \
+@@ -80,7 +80,7 @@ test_expect_success \
+=20
+ test_expect_success \
+ 	'listing tags using a non-matching pattern should output nothing' \
+-	'test `git tag -l xxx | wc -l` -eq 0'
++	'test $(git tag -l xxx | wc -l) -eq 0'
+=20
+ # special cases for creating tags:
+=20
+@@ -90,13 +90,13 @@ test_expect_success \
+=20
+ test_expect_success \
+ 	'trying to create a tag with a non-valid name should fail' '
+-	test `git tag -l | wc -l` -eq 1 &&
++	test $(git tag -l | wc -l) -eq 1 &&
+ 	test_must_fail git tag "" &&
+ 	test_must_fail git tag .othertag &&
+ 	test_must_fail git tag "other tag" &&
+ 	test_must_fail git tag "othertag^" &&
+ 	test_must_fail git tag "other~tag" &&
+-	test `git tag -l | wc -l` -eq 1
++	test $(git tag -l | wc -l) -eq 1
+ '
+=20
+ test_expect_success 'creating a tag using HEAD directly should succeed=
+' '
 --=20
 1.7.10.4
