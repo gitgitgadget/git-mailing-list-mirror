@@ -1,59 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 009/142] t0001-init.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 13:02:14 -0700
-Message-ID: <xmqqpplakpx5.fsf@gitster.dls.corp.google.com>
-References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
-	<1395768283-31135-10-git-send-email-gitter.spiros@gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 03/10] t4018: an infrastructure to test hunk headers
+Date: Tue, 25 Mar 2014 21:07:18 +0100
+Message-ID: <5331E1F6.1070506@kdbg.org>
+References: <53282741.5010609@web.de> <cover.1395433874.git.j6t@kdbg.org> <52505977c20a480941ae1f85f50ffb7a0bbffedb.1395433874.git.j6t@kdbg.org> <20140324213659.GF13728@sigill.intra.peff.net> <20140324213913.GA14890@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Elia Pinto <gitter.spiros@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 25 21:02:29 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Brandon Casey <drafnel@gmail.com>, git@vger.kernel.org,
+	Thomas Rast <tr@thomasrast.ch>, l.s.r@web.de,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Mar 25 21:07:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSXYJ-0003TO-0V
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 21:02:27 +0100
+	id 1WSXdD-0000j1-7I
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 21:07:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754429AbaCYUCW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Mar 2014 16:02:22 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41532 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753545AbaCYUCV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 16:02:21 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 282E876467;
-	Tue, 25 Mar 2014 16:02:21 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=mDnwLjb6G9wXPnSDZvXjzPpAGFA=; b=L/EW5k
-	q6p+KBuB9Cxt46lIca7D9u/s/Hpy4qjZzIGCbLxb+UW4fH5pZ+iCcidfNvPdDwDK
-	Txq/NPrnrd3EwfnxGmpnBgk+uZZXzJwqk29gkCmVnu7m/c7/UQbqu+VpM+T+vcz4
-	VS9nxJEuhPKpl/j3mBXQYIOGEN6VVUPWyxApU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=h4D0VDVhuixfs+VRD3vv0sEC6NmuLoAL
-	OtwS+xU4NTwjwtZdjeP0s3DBrI2iHOF06ZKglvbXFdsnAqUboJ/F6iH/6Ayskfyl
-	7bAs+QWQRyjKdTuo+VyUQ21p+tgCgRROMxcXn2F0BHpcFmaEVMeB629dXGnfsvtO
-	ziB/lPP+5Hg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0EB1176459;
-	Tue, 25 Mar 2014 16:02:21 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 15B6D76448;
-	Tue, 25 Mar 2014 16:02:18 -0400 (EDT)
-In-Reply-To: <1395768283-31135-10-git-send-email-gitter.spiros@gmail.com>
-	(Elia Pinto's message of "Tue, 25 Mar 2014 10:22:30 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 5E26D9D2-B458-11E3-BB1D-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754023AbaCYUHY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Mar 2014 16:07:24 -0400
+Received: from bsmtp2.bon.at ([213.33.87.16]:25615 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751877AbaCYUHX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 16:07:23 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 5D562130052;
+	Tue, 25 Mar 2014 21:07:19 +0100 (CET)
+Received: from dx.sixt.local (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id D00AC19F405;
+	Tue, 25 Mar 2014 21:07:18 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
+In-Reply-To: <20140324213913.GA14890@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245147>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245148>
 
-This conflicts with a topic in flight.
+Am 24.03.2014 22:39, schrieb Jeff King:
+> On Mon, Mar 24, 2014 at 05:36:59PM -0400, Jeff King wrote:
+> 
+>>> +How to write RIGHT test cases
+>>> +=============================
+>>> +
+>>> +Insert the word "ChangeMe" (exactly this form) at a distance of
+>>> +at least two lines from the line that must appear in the hunk header.
+>>
+>> The existing tests use -U1 to make writing cases simpler. Is there a
+>> reason not to continue that (or if you found that porting the existing
+>> cases was not a chore with -U3, I can buy that argument, too)?
+> 
+> I take it back. You did keep "-U1" in the result. Is this "two lines"
+> rule necessary, then?
+
+When we have
+
+   one
+   two
+   three
+
+how would you describe the distance between "one" and "three"?
+
+Or do you have a wrong expectation how we determine the hunk header? The
+hunk header is searched in the text *before* the pre-context. Therefore,
+we need at least as many lines between the intended hunk header line
+(with tag RIGHT) and the changed line (ChangeMe) as we request with -U
+for the context.
+
+So: yes, we need the rule.
+
+-- Hannes
