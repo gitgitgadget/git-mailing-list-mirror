@@ -1,55 +1,55 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 027/142] t1512-rev-parse-disambiguation.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:22:48 -0700
-Message-ID: <1395768283-31135-28-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 038/142] t3910-mac-os-precompose.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:22:59 -0700
+Message-ID: <1395768283-31135-39-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 25 18:32:46 2014
+X-From: git-owner@vger.kernel.org Tue Mar 25 18:32:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVDO-0004n1-BS
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:32:42 +0100
+	id 1WSVDR-0004n1-MO
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:32:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932112AbaCYRZZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:25:25 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:59046 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932102AbaCYRZV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:25:21 -0400
-Received: by mail-pa0-f46.google.com with SMTP id kp14so739133pab.33
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:20 -0700 (PDT)
+	id S932132AbaCYRZi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:25:38 -0400
+Received: from mail-pd0-f171.google.com ([209.85.192.171]:36045 "EHLO
+	mail-pd0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932102AbaCYRZe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:25:34 -0400
+Received: by mail-pd0-f171.google.com with SMTP id r10so721726pdi.2
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=FeX2Q982LokWlez8UDP3BOlx8Ld5nDo+79JtQKvghow=;
-        b=FLJrOvqNURqFLhFn7L+PRstdSV5GRXh6xES83p3RfUcrNJ8Gs+CfjBYWKP+Es8lfBG
-         WvQ0MA/no15FF/QWEAkbKWkzoclt+tFrTmwxc7lclFhvftuJByrJO7O6765RUCal0RT9
-         u2ya8XKFsoXQzK/8jeoWlk5JgklfZPIkOAoy+eRlgDbVy+lorO2S0bOyRLZOQBT0hcKB
-         cPVjx/+LRzumGfDZ7E65HxODL82P0x2q45SacIwGNNBWs9+qrdZH3VWDdYZ2bdeI5Epl
-         /EakDNNzwUHbyyVSclS3G2YAyl36/weTgCm33du98W3OLm0gP80oWv+F5phZKsUYMc6R
-         ZC5w==
-X-Received: by 10.68.159.228 with SMTP id xf4mr80417796pbb.74.1395768320920;
-        Tue, 25 Mar 2014 10:25:20 -0700 (PDT)
+        bh=kTTRaTuUeadAnrCVVZBObwxWchT9ky4PbnRWf05QeJk=;
+        b=K21nrXiPW4L6VUbNPaW1DN0D2jdHWaqKs2/5ky32jHYpVQBxIyU75Dulx8uAUf7ZIU
+         MaOqhzwKkWUxYG8yb1YYz+vNy1AhQ5sghNEbQCy4kE+w/yI7Og8Q2Ew03iqEY6oVeXgO
+         iXv8RPCjn01CYxYG21sdQFduSw+ApE0qWKcD5rj+1JYhuGgzhuAK9jApxNrXI/gB/q9k
+         KJ14qApsvx4VSLLszpOb6Q2Y7ANDQuHyv7Z9R+OQ3p6zUTHonqz+TPKElBG4sF6JYD0m
+         Tkf1U53mkQP0+mA3QeSeDht6rTNvTutcMsJCrXbieWdglHCxEavcGxmK72NVvT7M8Z8d
+         KjPA==
+X-Received: by 10.68.159.228 with SMTP id xf4mr80418910pbb.74.1395768333070;
+        Tue, 25 Mar 2014 10:25:33 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.19
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.31
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:25:20 -0700 (PDT)
+        Tue, 25 Mar 2014 10:25:32 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245064>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,36 +72,52 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t1512-rev-parse-disambiguation.sh |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ t/t3910-mac-os-precompose.sh |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/t/t1512-rev-parse-disambiguation.sh b/t/t1512-rev-parse-di=
-sambiguation.sh
-index 4a155c8..e221167 100755
---- a/t/t1512-rev-parse-disambiguation.sh
-+++ b/t/t1512-rev-parse-disambiguation.sh
-@@ -275,19 +275,19 @@ test_expect_success 'rev-parse --disambiguate' '
+diff --git a/t/t3910-mac-os-precompose.sh b/t/t3910-mac-os-precompose.s=
+h
+index e4ba601..96941e9 100755
+--- a/t/t3910-mac-os-precompose.sh
++++ b/t/t3910-mac-os-precompose.sh
+@@ -14,13 +14,13 @@ then
+ fi
 =20
- test_expect_success 'ambiguous 40-hex ref' '
- 	TREE=3D$(git mktree </dev/null) &&
--	REF=3D`git rev-parse HEAD` &&
-+	REF=3D$(git rev-parse HEAD) &&
- 	VAL=3D$(git commit-tree $TREE </dev/null) &&
- 	git update-ref refs/heads/$REF $VAL &&
--	test `git rev-parse $REF 2>err` =3D $REF &&
-+	test $(git rev-parse $REF 2>err) =3D $REF &&
- 	grep "refname.*${REF}.*ambiguous" err
+ # create utf-8 variables
+-Adiarnfc=3D`printf '\303\204'`
+-Adiarnfd=3D`printf 'A\314\210'`
++Adiarnfc=3D$(printf '\303\204')
++Adiarnfd=3D$(printf 'A\314\210')
+=20
+-Odiarnfc=3D`printf '\303\226'`
+-Odiarnfd=3D`printf 'O\314\210'`
+-AEligatu=3D`printf '\303\206'`
+-Invalidu=3D`printf '\303\377'`
++Odiarnfc=3D$(printf '\303\226')
++Odiarnfd=3D$(printf 'O\314\210')
++AEligatu=3D$(printf '\303\206')
++Invalidu=3D$(printf '\303\377')
+=20
+=20
+ #Create a string with 255 bytes (decomposed)
+@@ -35,7 +35,7 @@ Alongc=3D$Alongc$Alongc$Alongc$Alongc$Alongc         =
+  #250 Byte
+ Alongc=3D$Alongc$AEligatu$AEligatu                     #254 Byte
+=20
+ test_expect_success "detect if nfd needed" '
+-	precomposeunicode=3D`git config core.precomposeunicode` &&
++	precomposeunicode=3D$(git config core.precomposeunicode) &&
+ 	test "$precomposeunicode" =3D true &&
+ 	git config core.precomposeunicode true
  '
-=20
- test_expect_success 'ambiguous short sha1 ref' '
- 	TREE=3D$(git mktree </dev/null) &&
--	REF=3D`git rev-parse --short HEAD` &&
-+	REF=3D$(git rev-parse --short HEAD) &&
- 	VAL=3D$(git commit-tree $TREE </dev/null) &&
- 	git update-ref refs/heads/$REF $VAL &&
--	test `git rev-parse $REF 2>err` =3D $VAL &&
-+	test $(git rev-parse $REF 2>err) =3D $VAL &&
- 	grep "refname.*${REF}.*ambiguous" err
+@@ -146,7 +146,7 @@ test_expect_success "respect git config --global co=
+re.precomposeunicode" '
+ 	git config --global core.precomposeunicode true &&
+ 	rm -rf .git &&
+ 	git init &&
+-	precomposeunicode=3D`git config core.precomposeunicode` &&
++	precomposeunicode=3D$(git config core.precomposeunicode) &&
+ 	test "$precomposeunicode" =3D "true"
  '
 =20
 --=20
