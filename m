@@ -1,86 +1,111 @@
-From: Raymond Piller <ray@vertigion.com>
-Subject: Windows Git pre-commit check file signature
-Date: Tue, 25 Mar 2014 14:37:36 -0500
-Message-ID: <CAJymQJz=Tu5cAJYUw3fxOyMkn4v-m_91NhcZ9BjjHz2CX9xnyg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 001/142] check-builtins.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 12:57:56 -0700
+Message-ID: <xmqqtxamkq4b.fsf@gitster.dls.corp.google.com>
+References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
+	<1395768283-31135-2-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Jacob Rhoads <rhoadsjacob@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 25 20:43:15 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Elia Pinto <gitter.spiros@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 25 20:58:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSXFi-0006wd-12
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 20:43:14 +0100
+	id 1WSXUA-0007CO-8j
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 20:58:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754204AbaCYTnI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Mar 2014 15:43:08 -0400
-Received: from mail-qg0-f46.google.com ([209.85.192.46]:60121 "EHLO
-	mail-qg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753751AbaCYTnH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 15:43:07 -0400
-Received: by mail-qg0-f46.google.com with SMTP id e89so2445276qgf.5
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 12:43:06 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
-         :content-type;
-        bh=0q4LG/UO+q2okU24AujUm2fqd4a6w9lcHVIKceNzIO0=;
-        b=EU7LyINpyxhHOW5mo6KDUcnjcY+4+dga5ANiEC1E6L5CPSGFjOsntCpGWQN7O3QZ2o
-         lcU56yCKIPtg8H8yNmw3UAIOVrE7MOuC2VByKVktJJiS8GFfk2Jbh3ip2X5acUIL/qvg
-         aQXxIWJtCAFeBlahz7PefL8MD8cOl7r00Moi/Omv1apjqAvOaJTalRsrxLrriTkOgmuN
-         6JYEXRdiuOd/5VKq2RVdcRK9cZeLmmABNw/darXA73sgTyFhjFfS7cdVMBUy45d9xgwc
-         zlU9KBA/f7uwyqnO+4SMl9DnY0Obh/hF9sGz8qnoQC8JapyVnDJif+PKPbif5d6qcIeH
-         SXCg==
-X-Gm-Message-State: ALoCoQlhFSpnfQ2JcdYY1o1gCFsnARZueE+NhhtcczzEzUcmghWSQDhD930h2ScrimFZAyQVjNyl
-X-Received: by 10.229.58.68 with SMTP id f4mr12875890qch.18.1395776276430;
- Tue, 25 Mar 2014 12:37:56 -0700 (PDT)
-Received: by 10.140.50.45 with HTTP; Tue, 25 Mar 2014 12:37:36 -0700 (PDT)
+	id S1754680AbaCYT6E convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 15:58:04 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60583 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754034AbaCYT6C convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 Mar 2014 15:58:02 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3CBED761E5;
+	Tue, 25 Mar 2014 15:57:59 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=vkmddLtoQRAf
+	YJbc6nM+hDi1E+c=; b=uqifbmXtdf9q6SbzGOy3L7pZ1d0XirCa5ae3SA8EWyOQ
+	AfjFiOIZuQwLujocg7v4hiPfLCfmSlX+avMhg6spvAxoNQZKcS+qHeq41wSje+FK
+	EcAtD6sTgCabk08hggn+NH9jsy83Ig2UphRkRA5QESNR1N2J9xCS816wZ/B7jWs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=hwDO/u
+	mVtuzeI0A0uXxEOU9gZAl5EeItRb/uQyS4dg3xpt0CujIYVXYiFhY93+hvUy7Yuv
+	qbrtVmiuQ0FQWbyc4f/GLSynM378dSc2q9P3Ad/Ucsn23ZQ5WQFz/2xP/V3G+h5G
+	88z7vMwT1CxtOZQEIGNKJ4HVzqHEbeBnb4XvM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2AA84761E4;
+	Tue, 25 Mar 2014 15:57:59 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 65C89761E2;
+	Tue, 25 Mar 2014 15:57:58 -0400 (EDT)
+In-Reply-To: <1395768283-31135-2-git-send-email-gitter.spiros@gmail.com> (Elia
+	Pinto's message of "Tue, 25 Mar 2014 10:22:22 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: C36044EC-B457-11E3-A769-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245146>
 
-I'm trying to ensure that a specific file is signed properly before
-allowing the file to be commited.  I'm using powershell to do this,
-but this isn't a powershell issue.  Here's the command I'm using to do
-the check:
+Elia Pinto <gitter.spiros@gmail.com> writes:
 
-    /c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -Command
-"If ((Get-AuthenticodeSignature .\test.ps1).Status -ne 'Valid') { Exit
-1 }"
+> The Git CodingGuidelines prefer the $( ... ) construct for command
+> substitution instead of using the back-quotes, or grave accents (`..`=
+).
+>
+> The backquoted form is the historical method for command substitution=
+,
+> and is supported by POSIX. However, all but the simplest uses become
+> complicated quickly. In particular, embedded command substitutions
+> and/or the use of double quotes require careful escaping with the bac=
+kslash
+> character. Because of this the POSIX shell adopted the $(=E2=80=A6) f=
+eature from
+> the Korn shell.
+>
+> The patch was generated by the simple script
+>
+> for _f in $(find . -name "*.sh")
+> do
+> =C2=A0 sed -i 's@`\(.*\)`@$(\1)@g' ${_f}
+> done
 
-Note: I've tried with variation of the following powershell switches:
+"and then carefully proofread" is sorely needed here.
 
-    -NoLogo -NonInteractive -NoProfile
+What is that non-breaking space doing at the beginning of an
+indented line, or is it just my environment, by the way?
 
-At first, the appeared to be that the exit code is lost and is always
-0.  After further investigation, it appears that this command doesn't
-even run.  For example, here's a test command:
+> Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+> ---
+>  check-builtins.sh |    4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/check-builtins.sh b/check-builtins.sh
+> index d6fe6cf..07cff69 100755
+> --- a/check-builtins.sh
+> +++ b/check-builtins.sh
+> @@ -14,8 +14,8 @@ sort |
+>      bad=3D0
+>      while read builtin
+>      do
+> -	base=3D`expr "$builtin" : 'git-\(.*\)'`
+> -	x=3D`sed -ne 's/.*{ "'$base'", \(cmd_[^, ]*\).*/'$base'	\1/p' git.c=
+`
+> +	base=3D$(expr "$builtin" : 'git-\(.*\)')
+> +	x=3D$(sed -ne 's/.*{ "'$base'", \(cmd_[^, ]*\).*/'$base'	\1/p' git.=
+c)
+>  	if test -z "$x"
+>  	then
+>  		echo "$base is builtin but not listed in git.c command list"
 
-    /c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -Command
-"Get-Location | Out-File C:\Temp\test.txt"
-
-This *test* command runs fine when executed from the GitBash shell;
-the test.txt file is created.  When in the pre-commit hook file, it
-fails to create the test.txt file; this is technically TortoiseGit
-running this part.
-
-**Question:**  On windows, how do I ensure that a specific file is
-signed properly before allowing the file to be commited?  Is there a
-way to have the `gpg` command use the windows cert store for
-validation of a signature?
-
-I feel like this is a TortoiseGit issue, but wanted to bounce this on
-you all.  I've submitted an issue:
-https://code.google.com/p/tortoisegit/issues/detail?id=2143
-
---
-~Ray
-` ` ` ` ` ` ` ` ' ` ` ` ` ` ' ` ` ` ` ` ` `
-Raymond A. S. Piller
-http://Vertigion.com
-682-651-5653
+Looks ok to me.
