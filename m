@@ -1,55 +1,55 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 023/142] t1100-commit-tree-options.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:22:44 -0700
-Message-ID: <1395768283-31135-24-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 007/142] git-web--browse.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:22:28 -0700
+Message-ID: <1395768283-31135-8-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 25 18:25:26 2014
+X-From: git-owner@vger.kernel.org Tue Mar 25 18:25:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSV6L-0005m3-O0
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:25:26 +0100
+	id 1WSV6I-0005m3-9v
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:25:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932101AbaCYRZU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:25:20 -0400
-Received: from mail-pa0-f50.google.com ([209.85.220.50]:46178 "EHLO
-	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754665AbaCYRZR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:25:17 -0400
-Received: by mail-pa0-f50.google.com with SMTP id kq14so741768pab.9
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:16 -0700 (PDT)
+	id S1755311AbaCYRY5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:24:57 -0400
+Received: from mail-pd0-f169.google.com ([209.85.192.169]:58521 "EHLO
+	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755296AbaCYRYz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:24:55 -0400
+Received: by mail-pd0-f169.google.com with SMTP id fp1so722146pdb.14
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:24:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=PnWpkFGatt/ooyLCJ607vcYqPCyuqd0zaUj7EB6Nwwg=;
-        b=nTDZJp3MCLznT7pp/e5ijyoqVF1oolqT+PEsJRjzPf5c8crg+7FuykUgpXOdAT7id5
-         x3avJuI+hSgyKNy5yz3Cp0FaqBKlbr2dfconb1jr3m0wqSpw2/iYBZvbPI1yKr5FyQpO
-         FTOVIBJ4dr6ug1JRLaKltIx015+VCh/r0QFU37ovzVPQetJSqwW1HY37hyQUVe5T7V7h
-         DMX5uch4Z4W3duNKCNeJ0LWtmLI/4nuKIHgq6MOcjWrUrRN4yK38aiAv3Q0Toqqzg8Wo
-         fD6bGhhqGUnuXfgE5ESq+Q93lHvbVCryq2f69gz5hwRp+lo1UYsBSuCLikBs37d14vBy
-         JXtg==
-X-Received: by 10.66.146.170 with SMTP id td10mr80961311pab.105.1395768316754;
-        Tue, 25 Mar 2014 10:25:16 -0700 (PDT)
+        bh=GT4o3bz6pM9wOr13K1zxkwLsY4O8hTNDZ5tNfDqV6KI=;
+        b=O2EehGSn8y7jyGIKQqAjIVkp++O6xK6uSyB1Bm8VjjcVINueRR3L44eDOQwl4Ersre
+         Fpl2pAH1sq3RreQh/RJUnmLUFJbPjkc0B3wcfKsmm7Oq8+q+GyPivvgqMbR4ip+5nKZw
+         FSvJ9//9rCcbWUeWQy6cWeCCeHKo4yvAh9BGAVZL+iKXaJGcB+2vbPF4L4NkKDZJKu1v
+         kq5JvDvPOiGmY7FCtWjBhIc2HgIv/pAHtBsVCH7MtS55Zg+iBNwE1EI9pwq0hzg/ePzI
+         iLbZ6UedxuyhcYJQtH6W9rYjf5ImkU0I0yhRSA+Q3E/BmYO5/cidONCoodKkzB6E6JrQ
+         1mAA==
+X-Received: by 10.68.231.35 with SMTP id td3mr17392371pbc.137.1395768295433;
+        Tue, 25 Mar 2014 10:24:55 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.15
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.24.54
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:25:16 -0700 (PDT)
+        Tue, 25 Mar 2014 10:24:54 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245052>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245053>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,27 +72,39 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t1100-commit-tree-options.sh |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ git-web--browse.sh |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/t/t1100-commit-tree-options.sh b/t/t1100-commit-tree-optio=
-ns.sh
-index f8457f9..b7e9b4fc 100755
---- a/t/t1100-commit-tree-options.sh
-+++ b/t/t1100-commit-tree-options.sh
-@@ -35,11 +35,11 @@ test_expect_success \
-      GIT_COMMITTER_NAME=3D"Committer Name" \
-      GIT_COMMITTER_EMAIL=3D"committer@email" \
-      GIT_COMMITTER_DATE=3D"2005-05-26 23:30" \
--     TZ=3DGMT git commit-tree `cat treeid` >commitid 2>/dev/null'
-+     TZ=3DGMT git commit-tree $(cat treeid) >commitid 2>/dev/null'
-=20
- test_expect_success \
-     'read commit' \
--    'git cat-file commit `cat commitid` >commit'
-+    'git cat-file commit $(cat commitid) >commit'
-=20
- test_expect_success \
-     'compare commit' \
+diff --git a/git-web--browse.sh b/git-web--browse.sh
+index ebdfba6..ae15253 100755
+--- a/git-web--browse.sh
++++ b/git-web--browse.sh
+@@ -59,7 +59,7 @@ do
+ 	-b|--browser*|-t|--tool*)
+ 		case "$#,$1" in
+ 		*,*=3D*)
+-			browser=3D`expr "z$1" : 'z-[^=3D]*=3D\(.*\)'`
++			browser=3D$(expr "z$1" : 'z-[^=3D]*=3D\(.*\)')
+ 			;;
+ 		1,*)
+ 			usage ;;
+@@ -71,7 +71,7 @@ do
+ 	-c|--config*)
+ 		case "$#,$1" in
+ 		*,*=3D*)
+-			conf=3D`expr "z$1" : 'z-[^=3D]*=3D\(.*\)'`
++			conf=3D$(expr "z$1" : 'z-[^=3D]*=3D\(.*\)')
+ 			;;
+ 		1,*)
+ 			usage ;;
+@@ -100,7 +100,7 @@ then
+ 	for opt in "$conf" "web.browser"
+ 	do
+ 		test -z "$opt" && continue
+-		browser=3D"`git config $opt`"
++		browser=3D"$(git config $opt)"
+ 		test -z "$browser" || break
+ 	done
+ 	if test -n "$browser" && ! valid_tool "$browser"; then
 --=20
 1.7.10.4
