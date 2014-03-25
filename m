@@ -1,55 +1,55 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 078/144] t5900-repo-selection.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 01:25:23 -0700
-Message-ID: <1395735989-3396-79-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 067/144] t5520-pull.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 01:25:12 -0700
+Message-ID: <1395735989-3396-68-git-send-email-gitter.spiros@gmail.com>
 References: <1395735989-3396-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 25 09:32:00 2014
+X-From: git-owner@vger.kernel.org Tue Mar 25 09:32:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSMm4-0004DJ-Mb
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 09:31:57 +0100
+	id 1WSMm8-0004GO-Vg
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 09:32:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753915AbaCYIaj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 04:30:39 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:41396 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752935AbaCYI2D (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 04:28:03 -0400
-Received: by mail-pa0-f53.google.com with SMTP id ld10so123976pab.40
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 01:28:02 -0700 (PDT)
+	id S1753452AbaCYIby convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 04:31:54 -0400
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:40197 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752619AbaCYI1v (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 04:27:51 -0400
+Received: by mail-pa0-f46.google.com with SMTP id kp14so123996pab.33
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 01:27:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=sXmRsFX5xqcK4tS5tuBd4H1ndppYPDqqRq34b7tlMko=;
-        b=iRSRvxQLcaQMNuKi9Fkxmd+OHeFkGulLtbuiz0VG53D15LvxwnJQwu+BeqW2Q0U4QZ
-         kVw/R2xhMKvVuUKex4BjIgIqv0pbhe82PheI9u4xQso+6JXcIjvx40PxiNL8toO1Phqu
-         BQCR3npj1HI1wwaqYS+/rBXZTLZYpV3X9VVVjLaMBnhJd77tYbk0WDQ+6f3njlB7n79S
-         uaS40kFl6YtR/vwRZLGIUIXl8VFysBUwPS9vzqnZouXhxPs9YAyL6B3vwOtvaqLo+TCT
-         LMzdH4Ysy2gLFox7DGCBLPYl6eaPR4ATyGCszNooh/z6/6eOdt7l30dVMzbLGYN8g+Ps
-         kz/w==
-X-Received: by 10.66.144.200 with SMTP id so8mr78159931pab.15.1395736082912;
-        Tue, 25 Mar 2014 01:28:02 -0700 (PDT)
+        bh=Ti9CgwTedQL2SfYL4XlHJENMk7qWcU+ovBBskOgYvX4=;
+        b=tMxcJ7AlMJit2MjQ9oPE1zKxrlLMOH3Ve5PcIrgnBNUVPryZSnGXLjnJu7QYMUeorZ
+         GW0vL7yHAilFI7FHJYlUmDqRpcSMGdrr6NiIBc71/ILLg2yi7wSWms9cRXWX8PSPcMbI
+         vjuT9xJKWC/YtxWum4QoyEaTA+RlArxZO1Gg7wXLHaItsuuKO5eKbJA4znodCjroH8cj
+         DXwEU1hw99aCaZwodD9CiO6MagnIO+FxaTxlJS9K6R1K2yuoe0KPTKGqkd1LCiRTzZ6y
+         dnKFtybZwa7v58GtTtCYiBxZPaS7lt4dboN6HqHAq95xyC0p/HQ2SF+sGLtG3DTzlWZL
+         J2Tw==
+X-Received: by 10.68.224.195 with SMTP id re3mr76805097pbc.93.1395736070934;
+        Tue, 25 Mar 2014 01:27:50 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id pr4sm41327198pbb.53.2014.03.25.01.28.01
+        by mx.google.com with ESMTPSA id pr4sm41327198pbb.53.2014.03.25.01.27.50
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 01:28:02 -0700 (PDT)
+        Tue, 25 Mar 2014 01:27:50 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395735989-3396-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244964>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244965>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -65,21 +65,47 @@ the Korn shell.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t5900-repo-selection.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t5520-pull.sh |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/t/t5900-repo-selection.sh b/t/t5900-repo-selection.sh
-index 3d5b418..14e59c5 100755
---- a/t/t5900-repo-selection.sh
-+++ b/t/t5900-repo-selection.sh
-@@ -15,7 +15,7 @@ make_tree() {
- make_bare() {
- 	git init --bare "$1" &&
- 	(cd "$1" &&
--	 tree=3D`git hash-object -w -t tree /dev/null` &&
-+	 tree=3D$(git hash-object -w -t tree /dev/null) &&
- 	 commit=3D$(echo "$1" | git commit-tree $tree) &&
- 	 git update-ref HEAD $commit
- 	)
+diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
+index 227d293..a68c099 100755
+--- a/t/t5520-pull.sh
++++ b/t/t5520-pull.sh
+@@ -9,7 +9,7 @@ modify () {
+ 	mv "$2.x" "$2"
+ }
+=20
+-D=3D`pwd`
++D=3D$(pwd)
+=20
+ test_expect_success setup '
+=20
+@@ -94,9 +94,9 @@ test_expect_success 'test . as a remote' '
+ 	echo updated >file &&
+ 	git commit -a -m updated &&
+ 	git checkout copy &&
+-	test `cat file` =3D file &&
++	test $(cat file) =3D file &&
+ 	git pull &&
+-	test `cat file` =3D updated
++	test $(cat file) =3D updated
+ '
+=20
+ test_expect_success 'the default remote . should not break explicit pu=
+ll' '
+@@ -105,9 +105,9 @@ test_expect_success 'the default remote . should no=
+t break explicit pull' '
+ 	git commit -a -m modified &&
+ 	git checkout copy &&
+ 	git reset --hard HEAD^ &&
+-	test `cat file` =3D file &&
++	test $(cat file) =3D file &&
+ 	git pull . second &&
+-	test `cat file` =3D modified
++	test $(cat file) =3D modified
+ '
+=20
+ test_expect_success '--rebase' '
 --=20
 1.7.10.4
