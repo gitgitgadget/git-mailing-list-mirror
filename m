@@ -1,111 +1,59 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 001/142] check-builtins.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 12:57:56 -0700
-Message-ID: <xmqqtxamkq4b.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH v2 009/142] t0001-init.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 13:02:14 -0700
+Message-ID: <xmqqpplakpx5.fsf@gitster.dls.corp.google.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
-	<1395768283-31135-2-git-send-email-gitter.spiros@gmail.com>
+	<1395768283-31135-10-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Elia Pinto <gitter.spiros@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 25 20:58:10 2014
+X-From: git-owner@vger.kernel.org Tue Mar 25 21:02:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSXUA-0007CO-8j
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 20:58:10 +0100
+	id 1WSXYJ-0003TO-0V
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 21:02:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754680AbaCYT6E convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 15:58:04 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60583 "EHLO
+	id S1754429AbaCYUCW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Mar 2014 16:02:22 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41532 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754034AbaCYT6C convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 Mar 2014 15:58:02 -0400
+	id S1753545AbaCYUCV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 16:02:21 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3CBED761E5;
-	Tue, 25 Mar 2014 15:57:59 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 282E876467;
+	Tue, 25 Mar 2014 16:02:21 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=vkmddLtoQRAf
-	YJbc6nM+hDi1E+c=; b=uqifbmXtdf9q6SbzGOy3L7pZ1d0XirCa5ae3SA8EWyOQ
-	AfjFiOIZuQwLujocg7v4hiPfLCfmSlX+avMhg6spvAxoNQZKcS+qHeq41wSje+FK
-	EcAtD6sTgCabk08hggn+NH9jsy83Ig2UphRkRA5QESNR1N2J9xCS816wZ/B7jWs=
+	:content-type; s=sasl; bh=mDnwLjb6G9wXPnSDZvXjzPpAGFA=; b=L/EW5k
+	q6p+KBuB9Cxt46lIca7D9u/s/Hpy4qjZzIGCbLxb+UW4fH5pZ+iCcidfNvPdDwDK
+	Txq/NPrnrd3EwfnxGmpnBgk+uZZXzJwqk29gkCmVnu7m/c7/UQbqu+VpM+T+vcz4
+	VS9nxJEuhPKpl/j3mBXQYIOGEN6VVUPWyxApU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=hwDO/u
-	mVtuzeI0A0uXxEOU9gZAl5EeItRb/uQyS4dg3xpt0CujIYVXYiFhY93+hvUy7Yuv
-	qbrtVmiuQ0FQWbyc4f/GLSynM378dSc2q9P3Ad/Ucsn23ZQ5WQFz/2xP/V3G+h5G
-	88z7vMwT1CxtOZQEIGNKJ4HVzqHEbeBnb4XvM=
+	:content-type; q=dns; s=sasl; b=h4D0VDVhuixfs+VRD3vv0sEC6NmuLoAL
+	OtwS+xU4NTwjwtZdjeP0s3DBrI2iHOF06ZKglvbXFdsnAqUboJ/F6iH/6Ayskfyl
+	7bAs+QWQRyjKdTuo+VyUQ21p+tgCgRROMxcXn2F0BHpcFmaEVMeB629dXGnfsvtO
+	ziB/lPP+5Hg=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2AA84761E4;
-	Tue, 25 Mar 2014 15:57:59 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0EB1176459;
+	Tue, 25 Mar 2014 16:02:21 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 65C89761E2;
-	Tue, 25 Mar 2014 15:57:58 -0400 (EDT)
-In-Reply-To: <1395768283-31135-2-git-send-email-gitter.spiros@gmail.com> (Elia
-	Pinto's message of "Tue, 25 Mar 2014 10:22:22 -0700")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 15B6D76448;
+	Tue, 25 Mar 2014 16:02:18 -0400 (EDT)
+In-Reply-To: <1395768283-31135-10-git-send-email-gitter.spiros@gmail.com>
+	(Elia Pinto's message of "Tue, 25 Mar 2014 10:22:30 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: C36044EC-B457-11E3-A769-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 5E26D9D2-B458-11E3-BB1D-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245147>
 
-Elia Pinto <gitter.spiros@gmail.com> writes:
-
-> The Git CodingGuidelines prefer the $( ... ) construct for command
-> substitution instead of using the back-quotes, or grave accents (`..`=
-).
->
-> The backquoted form is the historical method for command substitution=
-,
-> and is supported by POSIX. However, all but the simplest uses become
-> complicated quickly. In particular, embedded command substitutions
-> and/or the use of double quotes require careful escaping with the bac=
-kslash
-> character. Because of this the POSIX shell adopted the $(=E2=80=A6) f=
-eature from
-> the Korn shell.
->
-> The patch was generated by the simple script
->
-> for _f in $(find . -name "*.sh")
-> do
-> =C2=A0 sed -i 's@`\(.*\)`@$(\1)@g' ${_f}
-> done
-
-"and then carefully proofread" is sorely needed here.
-
-What is that non-breaking space doing at the beginning of an
-indented line, or is it just my environment, by the way?
-
-> Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
-> ---
->  check-builtins.sh |    4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/check-builtins.sh b/check-builtins.sh
-> index d6fe6cf..07cff69 100755
-> --- a/check-builtins.sh
-> +++ b/check-builtins.sh
-> @@ -14,8 +14,8 @@ sort |
->      bad=3D0
->      while read builtin
->      do
-> -	base=3D`expr "$builtin" : 'git-\(.*\)'`
-> -	x=3D`sed -ne 's/.*{ "'$base'", \(cmd_[^, ]*\).*/'$base'	\1/p' git.c=
-`
-> +	base=3D$(expr "$builtin" : 'git-\(.*\)')
-> +	x=3D$(sed -ne 's/.*{ "'$base'", \(cmd_[^, ]*\).*/'$base'	\1/p' git.=
-c)
->  	if test -z "$x"
->  	then
->  		echo "$base is builtin but not listed in git.c command list"
-
-Looks ok to me.
+This conflicts with a topic in flight.
