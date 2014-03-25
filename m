@@ -1,55 +1,55 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 013/142] t0026-eol-config.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:22:34 -0700
-Message-ID: <1395768283-31135-14-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 010/142] t0010-racy-git.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:22:31 -0700
+Message-ID: <1395768283-31135-11-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 25 18:25:30 2014
+X-From: git-owner@vger.kernel.org Tue Mar 25 18:25:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSV6K-0005m3-IA
+	id 1WSV6K-0005m3-00
 	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:25:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755331AbaCYRZM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:25:12 -0400
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:38485 "EHLO
-	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755321AbaCYRZJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:25:09 -0400
-Received: by mail-pa0-f51.google.com with SMTP id kq14so733523pab.38
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:08 -0700 (PDT)
+	id S1754669AbaCYRZH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:25:07 -0400
+Received: from mail-pb0-f50.google.com ([209.85.160.50]:61113 "EHLO
+	mail-pb0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754049AbaCYRY7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:24:59 -0400
+Received: by mail-pb0-f50.google.com with SMTP id md12so750342pbc.9
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:24:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=syKYz0cynHrVutrfXXgGGLE6NGBjP84BtKTRcnK/8l8=;
-        b=Jc2IUGRNYGNyX/Wtopy4yxsm+gK5BNIK79RdNdu/WFCugdAZtHM/B/DouSlZR+cimB
-         10rCy7dpIQ6h6dFaIUfRWCuZp0xuJUNqI61GU+jBhSN7sk2V5LOhqK1od+3DyjFShDdF
-         zRLV1oMDN0ONfrTN4szVpL4n4mw6IdzCGNc5s0ZtbjnszKudzfPzESEFhFn1yB9i0zVk
-         v+oXk7KQFTlKoxprZqu07VFdxB4gluroxZGciB0O6FHApbeoUyZyX5gKN83XxuHWE49m
-         c6JS/KL+oQvX7u2qhWuhavWaYGNTTXnf0fZEApBnvOFpTFaDFSiSCNEF31Qu/G34zl5X
-         J5PQ==
-X-Received: by 10.66.139.38 with SMTP id qv6mr63400716pab.123.1395768304381;
-        Tue, 25 Mar 2014 10:25:04 -0700 (PDT)
+        bh=8QI66GZt3S3EfPR6tJ1/DmABMy2sW3mWNCbGwlRTbY0=;
+        b=HEBRwlkdItqkvB/Pz9iGVyP1hh9GQ2LfZMsIAml5ApoLstlpLPeMrYUfTzDGq9BXQt
+         kRGcVWsQOQQtJDR0mvCUC6pOihV5rFMfvuKPWU+JUG73pIkk6DU00UvB0PS4CHkqUBui
+         Zf5M6rxfTwmYNbLJqG3JD4hyc1O+vSrk31oWX6AzCZ0RIOx+Ut403T4OsIOfet1RFUbd
+         Gseg/Tvdzb3FNGKoOWXatiDv3fAhh6+EZS2Km6ob8t0cRwLwiDFde5ou+Avp/4uC1PrZ
+         EE1UoHB8s4GtWwgZepqZDEKjkuqNaWTaX2JtePfwCf+8IXc5thK2qot7QHg6lsynI12B
+         4Ppw==
+X-Received: by 10.66.119.172 with SMTP id kv12mr80345185pab.34.1395768298730;
+        Tue, 25 Mar 2014 10:24:58 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.03
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.24.57
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:25:03 -0700 (PDT)
+        Tue, 25 Mar 2014 10:24:58 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245055>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245056>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,71 +72,30 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t0026-eol-config.sh |   20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ t/t0010-racy-git.sh |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/t0026-eol-config.sh b/t/t0026-eol-config.sh
-index fe0164b..e1126aa 100755
---- a/t/t0026-eol-config.sh
-+++ b/t/t0026-eol-config.sh
-@@ -20,8 +20,8 @@ test_expect_success setup '
+diff --git a/t/t0010-racy-git.sh b/t/t0010-racy-git.sh
+index e45a9e4..5657c5a 100755
+--- a/t/t0010-racy-git.sh
++++ b/t/t0010-racy-git.sh
+@@ -14,7 +14,7 @@ do
+ 	git update-index --add infocom
+ 	echo xyzzy >infocom
 =20
- 	git commit -m initial &&
+-	files=3D`git diff-files -p`
++	files=3D$(git diff-files -p)
+ 	test_expect_success \
+ 	"Racy GIT trial #$trial part A" \
+ 	'test "" !=3D "$files"'
+@@ -23,7 +23,7 @@ do
+ 	echo xyzzy >cornerstone
+ 	git update-index --add cornerstone
 =20
--	one=3D`git rev-parse HEAD:one` &&
--	two=3D`git rev-parse HEAD:two` &&
-+	one=3D$(git rev-parse HEAD:one) &&
-+	two=3D$(git rev-parse HEAD:two) &&
-=20
- 	echo happy.
- '
-@@ -34,8 +34,8 @@ test_expect_success 'eol=3Dlf puts LFs in normalized =
-file' '
-=20
- 	! has_cr one &&
- 	! has_cr two &&
--	onediff=3D`git diff one` &&
--	twodiff=3D`git diff two` &&
-+	onediff=3D$(git diff one) &&
-+	twodiff=3D$(git diff two) &&
- 	test -z "$onediff" -a -z "$twodiff"
- '
-=20
-@@ -47,8 +47,8 @@ test_expect_success 'eol=3Dcrlf puts CRLFs in normali=
-zed file' '
-=20
- 	has_cr one &&
- 	! has_cr two &&
--	onediff=3D`git diff one` &&
--	twodiff=3D`git diff two` &&
-+	onediff=3D$(git diff one) &&
-+	twodiff=3D$(git diff two) &&
- 	test -z "$onediff" -a -z "$twodiff"
- '
-=20
-@@ -61,8 +61,8 @@ test_expect_success 'autocrlf=3Dtrue overrides eol=3D=
-lf' '
-=20
- 	has_cr one &&
- 	has_cr two &&
--	onediff=3D`git diff one` &&
--	twodiff=3D`git diff two` &&
-+	onediff=3D$(git diff one) &&
-+	twodiff=3D$(git diff two) &&
- 	test -z "$onediff" -a -z "$twodiff"
- '
-=20
-@@ -75,8 +75,8 @@ test_expect_success 'autocrlf=3Dtrue overrides unset =
-eol' '
-=20
- 	has_cr one &&
- 	has_cr two &&
--	onediff=3D`git diff one` &&
--	twodiff=3D`git diff two` &&
-+	onediff=3D$(git diff one) &&
-+	twodiff=3D$(git diff two) &&
- 	test -z "$onediff" -a -z "$twodiff"
- '
-=20
+-	files=3D`git diff-files -p`
++	files=3D$(git diff-files -p)
+ 	test_expect_success \
+ 	"Racy GIT trial #$trial part B" \
+ 	'test "" !=3D "$files"'
 --=20
 1.7.10.4
