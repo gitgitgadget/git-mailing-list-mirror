@@ -1,7 +1,7 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 055/142] t5302-pack-index.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:23:16 -0700
-Message-ID: <1395768283-31135-56-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 022/142] t1050-large.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:22:43 -0700
+Message-ID: <1395768283-31135-23-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -14,42 +14,42 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVDz-0004n1-Q9
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:20 +0100
+	id 1WSVEA-0004n1-5R
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754449AbaCYRax convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:30:53 -0400
-Received: from mail-pd0-f170.google.com ([209.85.192.170]:64181 "EHLO
-	mail-pd0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755359AbaCYRZx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:25:53 -0400
-Received: by mail-pd0-f170.google.com with SMTP id v10so728562pde.1
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:52 -0700 (PDT)
+	id S1755348AbaCYRZS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:25:18 -0400
+Received: from mail-pd0-f177.google.com ([209.85.192.177]:45980 "EHLO
+	mail-pd0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755339AbaCYRZQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:25:16 -0400
+Received: by mail-pd0-f177.google.com with SMTP id y10so717634pdj.22
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=vtUnlTu3NhsmE5LOpxWUqEhMTESW/kpHQK0jUVFNzv4=;
-        b=cxJ6Y552iMvCaTxO3i1UPctTbSwv37dstTrKBfBvRqpSB2CB3v9aXwfk/tPQLJrnuw
-         YzeIAw28yXak+LaLkOkdPMb7kzCZrWF168bTwjEr9UYfU2xljAec3EFcaED3l/ZI0JjB
-         I6gnREfhEGS+phwsg3Yvoz55ZbQhWe8j20/oLZHC59bAbD87gTs2YMrolO7pgK4vlBOl
-         TnwXZHsVGXA+9D0sIF/EldhAWSsAgsHpQR7x4wgLbtJ+kEEJiWJ+tErxuk5bbCdOA+nY
-         ocXYubvU2Pyu0oBqB49uWOMahDRn92VUj3bIi9uQdkOhOyhFQ7iirnZKn2KytqUn0mPs
-         qHsA==
-X-Received: by 10.66.218.234 with SMTP id pj10mr11086935pac.156.1395768352673;
-        Tue, 25 Mar 2014 10:25:52 -0700 (PDT)
+        bh=tu5mxQiYUiIhvDIPyhrPVYCbHHR3MyWYE73RblOFB18=;
+        b=tl2xJ4yFgnWfspwRpmaCNf4wZsLfcavQbwmKRyjQHToTBNYDLidEzE/UKW+KC5zw7W
+         2ATWJzOhamFYsjNFsCQht79dbHSypCr/1CiYtzPiUI9FE0P2T9kRhk8dN3XNHs39r9OF
+         9+A2ESDb0FNE0dT0D9wz44Uk4++2CgwyZ6zJkcWdhUKO/QYqmRf8juMXEFSSW7ftc7Yp
+         MFq3yBmpf0Uf5WouCvmYj1QX2v/97TEVMwAe7vNFZnoOePIoqDO6oDwORPN/u4coIEgC
+         fn9jsQQgXGIee4UZdtOHg4kK+xm57gO90Ae2qVVvhvRsD85b6Z4/d4ktmn063LgQPmo8
+         jo1w==
+X-Received: by 10.68.76.68 with SMTP id i4mr80829136pbw.73.1395768315661;
+        Tue, 25 Mar 2014 10:25:15 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.51
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.14
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:25:52 -0700 (PDT)
+        Tue, 25 Mar 2014 10:25:15 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245112>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,97 +72,31 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t5302-pack-index.sh |   34 +++++++++++++++++-----------------
- 1 file changed, 17 insertions(+), 17 deletions(-)
+ t/t1050-large.sh |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/t5302-pack-index.sh b/t/t5302-pack-index.sh
-index 4bbb718..442ee5c 100755
---- a/t/t5302-pack-index.sh
-+++ b/t/t5302-pack-index.sh
-@@ -14,21 +14,21 @@ test_expect_success \
-      i=3D1 &&
-      while test $i -le 100
-      do
--         iii=3D`printf '%03i' $i`
-+         iii=3D$(printf '%03i' $i)
-          test-genrandom "bar" 200 > wide_delta_$iii &&
-          test-genrandom "baz $iii" 50 >> wide_delta_$iii &&
-          test-genrandom "foo"$i 100 > deep_delta_$iii &&
--         test-genrandom "foo"`expr $i + 1` 100 >> deep_delta_$iii &&
--         test-genrandom "foo"`expr $i + 2` 100 >> deep_delta_$iii &&
-+         test-genrandom "foo"$(expr $i + 1) 100 >> deep_delta_$iii &&
-+         test-genrandom "foo"$(expr $i + 2) 100 >> deep_delta_$iii &&
-          echo $iii >file_$iii &&
-          test-genrandom "$iii" 8192 >>file_$iii &&
-          git update-index --add file_$iii deep_delta_$iii wide_delta_$=
-iii &&
--         i=3D`expr $i + 1` || return 1
-+         i=3D$(expr $i + 1) || return 1
-      done &&
-      { echo 101 && test-genrandom 100 8192; } >file_101 &&
-      git update-index --add file_101 &&
--     tree=3D`git write-tree` &&
--     commit=3D`git commit-tree $tree </dev/null` && {
-+     tree=3D$(git write-tree) &&
-+     commit=3D$(git commit-tree $tree </dev/null) && {
- 	 echo $tree &&
- 	 git ls-tree $tree | sed -e "s/.* \\([0-9a-f]*\\)	.*/\\1/"
-      } >obj-list &&
-@@ -152,10 +152,10 @@ test_expect_success \
-     '[index v1] 2) create a stealth corruption in a delta base referen=
-ce' \
-     '# This test assumes file_101 is a delta smaller than 16 bytes.
-      # It should be against file_100 but we substitute its base for fi=
-le_099
--     sha1_101=3D`git hash-object file_101` &&
--     sha1_099=3D`git hash-object file_099` &&
--     offs_101=3D`index_obj_offset 1.idx $sha1_101` &&
--     nr_099=3D`index_obj_nr 1.idx $sha1_099` &&
-+     sha1_101=3D$(git hash-object file_101) &&
-+     sha1_099=3D$(git hash-object file_099) &&
-+     offs_101=3D$(index_obj_offset 1.idx $sha1_101) &&
-+     nr_099=3D$(index_obj_nr 1.idx $sha1_099) &&
-      chmod +w ".git/objects/pack/pack-${pack1}.pack" &&
-      dd of=3D".git/objects/pack/pack-${pack1}.pack" seek=3D$(($offs_10=
-1 + 1)) \
-         if=3D".git/objects/pack/pack-${pack1}.idx" \
-@@ -193,10 +193,10 @@ test_expect_success \
-     '[index v2] 2) create a stealth corruption in a delta base referen=
-ce' \
-     '# This test assumes file_101 is a delta smaller than 16 bytes.
-      # It should be against file_100 but we substitute its base for fi=
-le_099
--     sha1_101=3D`git hash-object file_101` &&
--     sha1_099=3D`git hash-object file_099` &&
--     offs_101=3D`index_obj_offset 1.idx $sha1_101` &&
--     nr_099=3D`index_obj_nr 1.idx $sha1_099` &&
-+     sha1_101=3D$(git hash-object file_101) &&
-+     sha1_099=3D$(git hash-object file_099) &&
-+     offs_101=3D$(index_obj_offset 1.idx $sha1_101) &&
-+     nr_099=3D$(index_obj_nr 1.idx $sha1_099) &&
-      chmod +w ".git/objects/pack/pack-${pack1}.pack" &&
-      dd of=3D".git/objects/pack/pack-${pack1}.pack" seek=3D$(($offs_10=
-1 + 1)) \
-         if=3D".git/objects/pack/pack-${pack1}.idx" \
-@@ -222,11 +222,11 @@ test_expect_success \
-     'rm -f .git/objects/pack/* &&
-      git index-pack --index-version=3D2 --stdin < "test-1-${pack1}.pac=
-k" &&
-      git verify-pack ".git/objects/pack/pack-${pack1}.pack" &&
--     obj=3D`git hash-object file_001` &&
--     nr=3D`index_obj_nr ".git/objects/pack/pack-${pack1}.idx" $obj` &&
-+     obj=3D$(git hash-object file_001) &&
-+     nr=3D$(index_obj_nr ".git/objects/pack/pack-${pack1}.idx" $obj) &=
-&
-      chmod +w ".git/objects/pack/pack-${pack1}.idx" &&
-      printf xxxx | dd of=3D".git/objects/pack/pack-${pack1}.idx" conv=3D=
-notrunc \
--        bs=3D1 count=3D4 seek=3D$((8 + 256 * 4 + `wc -l <obj-list` * 2=
-0 + $nr * 4)) &&
-+        bs=3D1 count=3D4 seek=3D$((8 + 256 * 4 + $(wc -l <obj-list) * =
-20 + $nr * 4)) &&
-      ( while read obj
-        do git cat-file -p $obj >/dev/null || exit 1
-        done <obj-list ) &&
+diff --git a/t/t1050-large.sh b/t/t1050-large.sh
+index fd10528..aea4936 100755
+--- a/t/t1050-large.sh
++++ b/t/t1050-large.sh
+@@ -131,7 +131,7 @@ test_expect_success 'git-show a large file' '
+ '
+=20
+ test_expect_success 'index-pack' '
+-	git clone file://"`pwd`"/.git foo &&
++	git clone file://"$(pwd)"/.git foo &&
+ 	GIT_DIR=3Dnon-existent git index-pack --strict --verify foo/.git/obje=
+cts/pack/*.pack
+ '
+=20
+@@ -140,7 +140,7 @@ test_expect_success 'repack' '
+ '
+=20
+ test_expect_success 'pack-objects with large loose object' '
+-	SHA1=3D`git hash-object huge` &&
++	SHA1=3D$(git hash-object huge) &&
+ 	test_create_repo loose &&
+ 	echo $SHA1 | git pack-objects --stdout |
+ 		GIT_ALLOC_LIMIT=3D0 GIT_DIR=3Dloose/.git git unpack-objects &&
 --=20
 1.7.10.4
