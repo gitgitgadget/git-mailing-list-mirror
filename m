@@ -1,55 +1,55 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 012/142] t0025-crlf-auto.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:22:33 -0700
-Message-ID: <1395768283-31135-13-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 002/142] git-am.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:22:23 -0700
+Message-ID: <1395768283-31135-3-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 25 18:37:29 2014
+X-From: git-owner@vger.kernel.org Tue Mar 25 18:37:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVHu-0001NU-E1
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:37:22 +0100
+	id 1WSVHx-0001NU-7V
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:37:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755634AbaCYRdp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:33:45 -0400
-Received: from mail-pb0-f42.google.com ([209.85.160.42]:47814 "EHLO
-	mail-pb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755314AbaCYRZD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:25:03 -0400
-Received: by mail-pb0-f42.google.com with SMTP id rr13so745491pbb.15
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:03 -0700 (PDT)
+	id S1755483AbaCYRev convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:34:51 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:48398 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754076AbaCYRYu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:24:50 -0400
+Received: by mail-pb0-f46.google.com with SMTP id rq2so742185pbb.5
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:24:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=c5glfy7YLq1Gp6dleijDPoaN4w4NwvMSlq6630Hk0/0=;
-        b=epXWINkkR4NbVQpVUdtnD5abBXUesWwIdH6W5ugECwEi2hyPS0dz34DWdwwO6YU2o1
-         PX11x+Dknf+LseF4KdsfxTsKgzT6+62eSh8yoI4mmnSKmsga8V2Nd2r54kPz0zO4XKoC
-         Zdlxoh0/b+zDbhuoh0/MNh+Z3gecw2XxlBWufoHj17kVNzYCqTLrqnFNzcnvSRsashiK
-         7Wql8SjvzURogkjIapCzBMTqAyydIEvaUBfr0wm7mFR6vxQfKq5Mjxtxzwq3UTDpOEVe
-         2bD1vh9C+IMUt8kxiYDjnS5Vyb26nmkZZtuWJHA/FaiPLZjsOQdbkLSiUzS18nSi7JwC
-         TUjQ==
-X-Received: by 10.66.141.165 with SMTP id rp5mr80745147pab.90.1395768303012;
-        Tue, 25 Mar 2014 10:25:03 -0700 (PDT)
+        bh=RxkM6XxeAmbajNH0r/5U9fFQ+8uhJUloZ2/A2ohmqlk=;
+        b=fNJwhyFOMmc7UgY3y1S8mktUvK3B7DBaynWp/Dg4fAUiaQzVAB4jSRQMMS3lHTxqoQ
+         2xg8xqYw/12Jc41U2q6QVxSQo9MWGWFYVsZOva16uJDqhTQRYm5sSKLwfpy+CwVmweHC
+         XoanPHCdbceNbXY5j/owP3uJ06QdDPKp7gTbqfLRVEtHV7HiAN8msiTTdSQTatyoz10l
+         qtZ+dgMoMlVzwjdWjbIKh6etcGHL9AHw0HQaCmPolWqRVrqfUS7Gsjw6Liy3xIsE5qQj
+         WC9LdyVqWg6XupbVG/p5KoYNKjVhyFXedz4Jld2A0oHHGl+y1aIbzRppJjpP8jhVTPSL
+         tf+Q==
+X-Received: by 10.68.196.226 with SMTP id ip2mr79557013pbc.106.1395768289590;
+        Tue, 25 Mar 2014 10:24:49 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.01
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.24.48
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:25:02 -0700 (PDT)
+        Tue, 25 Mar 2014 10:24:49 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245139>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245140>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,137 +72,98 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t0025-crlf-auto.sh |   38 +++++++++++++++++++-------------------
- 1 file changed, 19 insertions(+), 19 deletions(-)
+ git-am.sh |   30 +++++++++++++++---------------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/t/t0025-crlf-auto.sh b/t/t0025-crlf-auto.sh
-index f5f67a6..b0e5694 100755
---- a/t/t0025-crlf-auto.sh
-+++ b/t/t0025-crlf-auto.sh
-@@ -19,9 +19,9 @@ test_expect_success setup '
+diff --git a/git-am.sh b/git-am.sh
+index 78517f2..1b638e8 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -125,7 +125,7 @@ cannot_fallback () {
+ }
 =20
- 	git commit -m initial &&
+ fall_back_3way () {
+-    O_OBJECT=3D`cd "$GIT_OBJECT_DIRECTORY" && pwd`
++    O_OBJECT=3D$(cd "$GIT_OBJECT_DIRECTORY" && pwd)
 =20
--	one=3D`git rev-parse HEAD:one` &&
--	two=3D`git rev-parse HEAD:two` &&
--	three=3D`git rev-parse HEAD:three` &&
-+	one=3D$(git rev-parse HEAD:one) &&
-+	two=3D$(git rev-parse HEAD:two) &&
-+	three=3D$(git rev-parse HEAD:three) &&
+     rm -fr "$dotest"/patch-merge-*
+     mkdir "$dotest/patch-merge-tmp-dir"
+@@ -275,7 +275,7 @@ split_patches () {
+ 		then
+ 			clean_abort "$(gettext "Only one StGIT patch series can be applied =
+at once")"
+ 		fi
+-		series_dir=3D`dirname "$1"`
++		series_dir=3D$(dirname "$1")
+ 		series_file=3D"$1"
+ 		shift
+ 		{
+@@ -298,8 +298,8 @@ split_patches () {
+ 		this=3D0
+ 		for stgit in "$@"
+ 		do
+-			this=3D`expr "$this" + 1`
+-			msgnum=3D`printf "%0${prec}d" $this`
++			this=3D$(expr "$this" + 1)
++			msgnum=3D$(printf "%0${prec}d" $this)
+ 			# Perl version of StGIT parse_patch. The first nonemptyline
+ 			# not starting with Author, From or Date is the
+ 			# subject, and the body starts with the next nonempty
+@@ -644,26 +644,26 @@ fi
+ git_apply_opt=3D$(cat "$dotest/apply-opt")
+ if test "$(cat "$dotest/sign")" =3D t
+ then
+-	SIGNOFF=3D`git var GIT_COMMITTER_IDENT | sed -e '
++	SIGNOFF=3D$(git var GIT_COMMITTER_IDENT | sed -e '
+ 			s/>.*/>/
+ 			s/^/Signed-off-by: /'
+-		`
++		)
+ else
+ 	SIGNOFF=3D
+ fi
 =20
- 	echo happy.
- '
-@@ -33,9 +33,9 @@ test_expect_success 'default settings cause no change=
-s' '
+-last=3D`cat "$dotest/last"`
+-this=3D`cat "$dotest/next"`
++last=3D$(cat "$dotest/last")
++this=3D$(cat "$dotest/next")
+ if test "$skip" =3D t
+ then
+-	this=3D`expr "$this" + 1`
++	this=3D$(expr "$this" + 1)
+ 	resume=3D
+ fi
 =20
- 	! has_cr one &&
- 	has_cr two &&
--	onediff=3D`git diff one` &&
--	twodiff=3D`git diff two` &&
--	threediff=3D`git diff three` &&
-+	onediff=3D$(git diff one) &&
-+	twodiff=3D$(git diff two) &&
-+	threediff=3D$(git diff three) &&
- 	test -z "$onediff" -a -z "$twodiff" -a -z "$threediff"
- '
-=20
-@@ -48,7 +48,7 @@ test_expect_success 'crlf=3Dtrue causes a CRLF file t=
-o be normalized' '
-=20
- 	# Note, "normalized" means that git will normalize it if added
- 	has_cr two &&
--	twodiff=3D`git diff two` &&
-+	twodiff=3D$(git diff two) &&
- 	test -n "$twodiff"
- '
-=20
-@@ -60,7 +60,7 @@ test_expect_success 'text=3Dtrue causes a CRLF file t=
-o be normalized' '
-=20
- 	# Note, "normalized" means that git will normalize it if added
- 	has_cr two &&
--	twodiff=3D`git diff two` &&
-+	twodiff=3D$(git diff two) &&
- 	test -n "$twodiff"
- '
-=20
-@@ -72,7 +72,7 @@ test_expect_success 'eol=3Dcrlf gives a normalized fi=
-le CRLFs with autocrlf=3Dfalse'
- 	git read-tree --reset -u HEAD &&
-=20
- 	has_cr one &&
--	onediff=3D`git diff one` &&
-+	onediff=3D$(git diff one) &&
- 	test -z "$onediff"
- '
-=20
-@@ -84,7 +84,7 @@ test_expect_success 'eol=3Dcrlf gives a normalized fi=
-le CRLFs with autocrlf=3Dinput'
- 	git read-tree --reset -u HEAD &&
-=20
- 	has_cr one &&
--	onediff=3D`git diff one` &&
-+	onediff=3D$(git diff one) &&
- 	test -z "$onediff"
- '
-=20
-@@ -96,7 +96,7 @@ test_expect_success 'eol=3Dlf gives a normalized file=
- LFs with autocrlf=3Dtrue' '
- 	git read-tree --reset -u HEAD &&
-=20
- 	! has_cr one &&
--	onediff=3D`git diff one` &&
-+	onediff=3D$(git diff one) &&
- 	test -z "$onediff"
- '
-=20
-@@ -108,9 +108,9 @@ test_expect_success 'autocrlf=3Dtrue does not norma=
-lize CRLF files' '
-=20
- 	has_cr one &&
- 	has_cr two &&
--	onediff=3D`git diff one` &&
--	twodiff=3D`git diff two` &&
--	threediff=3D`git diff three` &&
-+	onediff=3D$(git diff one) &&
-+	twodiff=3D$(git diff two) &&
-+	threediff=3D$(git diff three) &&
- 	test -z "$onediff" -a -z "$twodiff" -a -z "$threediff"
- '
-=20
-@@ -123,9 +123,9 @@ test_expect_success 'text=3Dauto, autocrlf=3Dtrue _=
-does_ normalize CRLF files' '
-=20
- 	has_cr one &&
- 	has_cr two &&
--	onediff=3D`git diff one` &&
--	twodiff=3D`git diff two` &&
--	threediff=3D`git diff three` &&
-+	onediff=3D$(git diff one) &&
-+	twodiff=3D$(git diff two) &&
-+	threediff=3D$(git diff three) &&
- 	test -z "$onediff" -a -n "$twodiff" -a -z "$threediff"
- '
-=20
-@@ -137,7 +137,7 @@ test_expect_success 'text=3Dauto, autocrlf=3Dtrue d=
-oes not normalize binary files' '
- 	git read-tree --reset -u HEAD &&
-=20
- 	! has_cr three &&
--	threediff=3D`git diff three` &&
-+	threediff=3D$(git diff three) &&
- 	test -z "$threediff"
- '
-=20
-@@ -148,7 +148,7 @@ test_expect_success 'eol=3Dcrlf _does_ normalize bi=
-nary files' '
- 	git read-tree --reset -u HEAD &&
-=20
- 	has_cr three &&
--	threediff=3D`git diff three` &&
-+	threediff=3D$(git diff three) &&
- 	test -z "$threediff"
- '
-=20
+ while test "$this" -le "$last"
+ do
+-	msgnum=3D`printf "%0${prec}d" $this`
+-	next=3D`expr "$this" + 1`
++	msgnum=3D$(printf "%0${prec}d" $this)
++	next=3D$(expr "$this" + 1)
+ 	test -f "$dotest/$msgnum" || {
+ 		resume=3D
+ 		go_next
+@@ -739,16 +739,16 @@ To restore the original branch and stop patching =
+run \"\$cmdline --abort\"."
+ 	'')
+ 	    if test '' !=3D "$SIGNOFF"
+ 	    then
+-		LAST_SIGNED_OFF_BY=3D`
++		LAST_SIGNED_OFF_BY=3D$(
+ 		    sed -ne '/^Signed-off-by: /p' \
+ 		    "$dotest/msg-clean" |
+ 		    sed -ne '$p'
+-		`
+-		ADD_SIGNOFF=3D`
++		)
++		ADD_SIGNOFF=3D$(
+ 		    test "$LAST_SIGNED_OFF_BY" =3D "$SIGNOFF" || {
+ 		    test '' =3D "$LAST_SIGNED_OFF_BY" && echo
+ 		    echo "$SIGNOFF"
+-		}`
++		})
+ 	    else
+ 		ADD_SIGNOFF=3D
+ 	    fi
 --=20
 1.7.10.4
