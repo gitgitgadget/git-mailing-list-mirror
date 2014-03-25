@@ -1,55 +1,55 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 057/144] t5303-pack-corruption-resilience.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 01:25:02 -0700
-Message-ID: <1395735989-3396-58-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 066/144] t5517-push-mirror.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 01:25:11 -0700
+Message-ID: <1395735989-3396-67-git-send-email-gitter.spiros@gmail.com>
 References: <1395735989-3396-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 25 09:32:13 2014
+X-From: git-owner@vger.kernel.org Tue Mar 25 09:32:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSMmK-0004Uz-Iv
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 09:32:12 +0100
+	id 1WSMmQ-0004ep-DT
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 09:32:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753888AbaCYI1u convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 04:27:50 -0400
-Received: from mail-pa0-f54.google.com ([209.85.220.54]:45150 "EHLO
-	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753831AbaCYI1l (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 04:27:41 -0400
-Received: by mail-pa0-f54.google.com with SMTP id lf10so129702pab.13
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 01:27:41 -0700 (PDT)
+	id S1753440AbaCYIcH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 04:32:07 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:43130 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753885AbaCYI1u (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 04:27:50 -0400
+Received: by mail-pb0-f46.google.com with SMTP id rq2so130844pbb.33
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 01:27:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=4/CzLnxPAvsXrmxqQ+2+3Gr1JfNAFXaGWQNsfvxle7k=;
-        b=q4F7K0IeT8PTKN6WOZwlZCcKAoWFcplMuN0sg7T5CW4uyqIhuyiDRyaYtu4/BQjFCg
-         08y6zsjp0kAp1PCaqcOZMZnX2oPkryF3XbNBgnAE/YKdwGsGAFEy1bxoEf+Lt9vvdw1C
-         b0742Pv0pdGnPWfLfDibIineXnaGxerhrTntC57+3lIfmWWw5iiHRQBjlVuOL5GfrPAI
-         h8xay5e2D6cHYXDpNYUriB0AWd+cwHaw6kVHe8/tKYQMX87Q9QS/2x38o62ju5pP93xo
-         /AaPauOUPheQQB+DnpJ7uEktTpFfTCxfSQCW7prW2P7fzGl9KtUfgv6u+/uBlFcGOpDG
-         iacw==
-X-Received: by 10.66.217.133 with SMTP id oy5mr78280247pac.46.1395736061038;
-        Tue, 25 Mar 2014 01:27:41 -0700 (PDT)
+        bh=i3KHKbLEaXLsaASThihPDvA9Jqnukf7vWakG3iUOdec=;
+        b=LWHMkH/4DUVAwXZTwdQ6JqsgmM65t0ANKC18H20LyOlku3Ascap9HU4BQJWJ7MlIDk
+         Ls08w//cPk2cDoalt4XnDQtleLXl4dddAeAZ0//JZJkxszwXEqQzdGLHqGxF2WPqshIQ
+         TG34FI1XQ3eoSa1bMCWyGfa+IaQm63+NUQe/ycsCWGmZfDnML6YK2Km6FHkGPOhHqCha
+         fR2Y1xAHlcuOptUjMJ3A5aAdtyrgcfH74SFHzGVswKAPjVwTekB+talpc7EN4jhbDVsx
+         0o7TuLUAJVKuap+heNYQzA3KX/KNJCrqC8xWV6jQe9pDoihQ9wEUggIj9f/9kpvXnxbm
+         Whjg==
+X-Received: by 10.68.202.194 with SMTP id kk2mr9050087pbc.156.1395736069985;
+        Tue, 25 Mar 2014 01:27:49 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id pr4sm41327198pbb.53.2014.03.25.01.27.40
+        by mx.google.com with ESMTPSA id pr4sm41327198pbb.53.2014.03.25.01.27.49
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 01:27:40 -0700 (PDT)
+        Tue, 25 Mar 2014 01:27:49 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395735989-3396-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244967>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244968>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -65,35 +65,21 @@ the Korn shell.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t5303-pack-corruption-resilience.sh |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ t/t5517-push-mirror.sh |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t5303-pack-corruption-resilience.sh b/t/t5303-pack-corru=
-ption-resilience.sh
-index 663b02b..98bed18 100755
---- a/t/t5303-pack-corruption-resilience.sh
-+++ b/t/t5303-pack-corruption-resilience.sh
-@@ -32,9 +32,9 @@ create_test_files() {
- create_new_pack() {
-     rm -rf .git &&
-     git init &&
--    blob_1=3D`git hash-object -t blob -w file_1` &&
--    blob_2=3D`git hash-object -t blob -w file_2` &&
--    blob_3=3D`git hash-object -t blob -w file_3` &&
-+    blob_1=3D$(git hash-object -t blob -w file_1) &&
-+    blob_2=3D$(git hash-object -t blob -w file_2) &&
-+    blob_3=3D$(git hash-object -t blob -w file_3) &&
-     pack=3D`printf "$blob_1\n$blob_2\n$blob_3\n" |
-           git pack-objects $@ .git/objects/pack/pack` &&
-     pack=3D".git/objects/pack/pack-${pack}" &&
-@@ -48,7 +48,7 @@ do_repack() {
- }
+diff --git a/t/t5517-push-mirror.sh b/t/t5517-push-mirror.sh
+index 12a5dfb..02f160a 100755
+--- a/t/t5517-push-mirror.sh
++++ b/t/t5517-push-mirror.sh
+@@ -4,7 +4,7 @@ test_description=3D'pushing to a mirror repository'
 =20
- do_corrupt_object() {
--    ofs=3D`git show-index < ${pack}.idx | grep $1 | cut -f1 -d" "` &&
-+    ofs=3D$(git show-index < ${pack}.idx | grep $1 | cut -f1 -d" ") &&
-     ofs=3D$(($ofs + $2)) &&
-     chmod +w ${pack}.pack &&
-     dd of=3D${pack}.pack bs=3D1 conv=3Dnotrunc seek=3D$ofs &&
+ . ./test-lib.sh
+=20
+-D=3D`pwd`
++D=3D$(pwd)
+=20
+ invert () {
+ 	if "$@"; then
 --=20
 1.7.10.4
