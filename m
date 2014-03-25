@@ -1,55 +1,55 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 045/142] t4038-diff-combined.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:23:06 -0700
-Message-ID: <1395768283-31135-46-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 040/142] t4010-diff-pathspec.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:23:01 -0700
+Message-ID: <1395768283-31135-41-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 25 18:32:51 2014
+X-From: git-owner@vger.kernel.org Tue Mar 25 18:32:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVDT-0004n1-8Q
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:32:47 +0100
+	id 1WSVDS-0004n1-6b
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:32:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755370AbaCYRZr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:25:47 -0400
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:57615 "EHLO
-	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754688AbaCYRZm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:25:42 -0400
-Received: by mail-pa0-f51.google.com with SMTP id kq14so749741pab.10
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:41 -0700 (PDT)
+	id S1755360AbaCYRZk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:25:40 -0400
+Received: from mail-pd0-f181.google.com ([209.85.192.181]:49634 "EHLO
+	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932131AbaCYRZh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:25:37 -0400
+Received: by mail-pd0-f181.google.com with SMTP id p10so715543pdj.40
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=HlEIgukYCLKUt6VmcwKrmgSMJorTmiTGlMb4VmhB79Q=;
-        b=HiaSi6dnmcEvdTAoRKomkjfPGTZWt24H1OOT6EpuQdPabXQgyynB3Hh4P3ga4z3F82
-         Kq1xDurItQJPbjF2+L8MNj8H9l80YTnI35AFWC0ozQQIQlqdv79fGfIFjWo0tVBUfGWI
-         tWRNXqHhH9B4x/hx9J+1kldHgYrPpdFnddoQO/sAVjLq/siNlI6Y3EQeCnqzCqmxJT/b
-         ayTydBfsuZStN9mrv1XxajbxrWE80OptNgImgdGyYynFxf8HW8RACHJ75D9PlMg+g9QJ
-         3Vd75lECSxqjMqUCM8zMtofAPmf60SNBdSExoP3j140QeJ0sRLu4CYEWusEP2WbJJesJ
-         6U5Q==
-X-Received: by 10.66.25.7 with SMTP id y7mr11779095paf.151.1395768341851;
-        Tue, 25 Mar 2014 10:25:41 -0700 (PDT)
+        bh=6xlTr6MOKVPkdIROnLBdhy0XlV1uRJCqnzOEZBk56T8=;
+        b=FlzGHRO2izrB50WxeM+19TksOPRce0iKrZvSNj2bKWO4A0zeWfb2isN1fnM0Fs6ADq
+         +cnIGfuo656bZRhr3UBDEv6YstQTom/lE3CeGnxHA52SpYacNWZzpdO9thB0eSkq78E7
+         TpjjJetP+e8KI8O6hPg/vUzkBADkgBpnco8lRXJyfEMAxCkH75NJVPvWWNg6K+6J7Wht
+         K7JNBV0o+ECXVbbpstoQTvxx4zquy0fvqWaBG0UYlVJqk343h+UuqW8QA57yAZvIsCec
+         uBZ4zJm/uiys/6/qwYiYOYZcF7AOuFwVH0UsKVAAHbrMnZwSj1i4rsZUJQEXdjJwqA06
+         I+kw==
+X-Received: by 10.68.129.5 with SMTP id ns5mr12403609pbb.147.1395768336620;
+        Tue, 25 Mar 2014 10:25:36 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.40
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.34
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:25:41 -0700 (PDT)
+        Tue, 25 Mar 2014 10:25:36 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245069>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,21 +72,31 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t4038-diff-combined.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t4010-diff-pathspec.sh |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/t4038-diff-combined.sh b/t/t4038-diff-combined.sh
-index 1019d7b..41913c3 100755
---- a/t/t4038-diff-combined.sh
-+++ b/t/t4038-diff-combined.sh
-@@ -94,7 +94,7 @@ test_expect_success 'setup for --cc --raw' '
- 	blob=3D$(echo file | git hash-object --stdin -w) &&
- 	base_tree=3D$(echo "100644 blob $blob	file" | git mktree) &&
- 	trees=3D &&
--	for i in `test_seq 1 40`
-+	for i in $(test_seq 1 40)
- 	do
- 		blob=3D$(echo file$i | git hash-object --stdin -w) &&
- 		trees=3D"$trees$(echo "100644 blob $blob	file" | git mktree)$LF"
+diff --git a/t/t4010-diff-pathspec.sh b/t/t4010-diff-pathspec.sh
+index 2bb9736..bf07841 100755
+--- a/t/t4010-diff-pathspec.sh
++++ b/t/t4010-diff-pathspec.sh
+@@ -18,7 +18,7 @@ test_expect_success \
+      mkdir path1 &&
+      echo rezrov >path1/file1 &&
+      git update-index --add file0 path1/file1 &&
+-     tree=3D`git write-tree` &&
++     tree=3D$(git write-tree) &&
+      echo "$tree" &&
+      echo nitfol >file0 &&
+      echo yomin >path1/file1 &&
+@@ -131,7 +131,7 @@ test_expect_success 'diff multiple wildcard pathspe=
+cs' '
+ 	mkdir path2 &&
+ 	echo rezrov >path2/file1 &&
+ 	git update-index --add path2/file1 &&
+-	tree3=3D`git write-tree` &&
++	tree3=3D$(git write-tree) &&
+ 	git diff --name-only $tree $tree3 -- "path2*1" "path1*1" >actual &&
+ 	cat <<-\EOF >expect &&
+ 	path1/file1
 --=20
 1.7.10.4
