@@ -1,234 +1,81 @@
-From: Kirill Smelkov <kirr@navytux.spb.ru>
-Subject: Re: [PATCH v2 16/19] tree-diff: reuse base str(buf) memory on
- sub-tree recursion
-Date: Tue, 25 Mar 2014 13:23:20 +0400
-Organization: NAVYTUX.SPB.RU
-Message-ID: <20140325092320.GC3777@mini.zxlink>
-References: <cover.1393257006.git.kirr@mns.spb.ru>
- <301eb2377e0c5f670ffc26bda085d14dbee4f431.1393257006.git.kirr@mns.spb.ru>
- <xmqq61n3p913.fsf@gitster.dls.corp.google.com>
+From: Elia Pinto <gitter.spiros@gmail.com>
+Subject: Re: [PATCH 015/144] t0204-gettext-reencode-sanity.sh: use the $( ...
+ ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:51:36 +0100
+Message-ID: <CA+EOSBk0p3ZXafAMWKjvqcOYDHR3ZSFvxFJ1ixqKuouPPqZ9pg@mail.gmail.com>
+References: <1395735989-3396-1-git-send-email-gitter.spiros@gmail.com>
+	<1395735989-3396-16-git-send-email-gitter.spiros@gmail.com>
+	<vpq4n2m7jz7.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: kirr@mns.spb.ru, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Mar 25 10:27:03 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Mar 25 10:51:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSNdO-0001d7-77
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 10:27:02 +0100
+	id 1WSO1G-0004Bm-GT
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 10:51:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751499AbaCYJ06 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Mar 2014 05:26:58 -0400
-Received: from forward8l.mail.yandex.net ([84.201.143.141]:33137 "EHLO
-	forward8l.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751251AbaCYJ05 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 05:26:57 -0400
-Received: from smtp19.mail.yandex.net (smtp19.mail.yandex.net [95.108.252.19])
-	by forward8l.mail.yandex.net (Yandex) with ESMTP id 38CBA1A4112C;
-	Tue, 25 Mar 2014 13:19:57 +0400 (MSK)
-Received: from smtp19.mail.yandex.net (localhost [127.0.0.1])
-	by smtp19.mail.yandex.net (Yandex) with ESMTP id B3375BE00E9;
-	Tue, 25 Mar 2014 13:19:56 +0400 (MSK)
-Received: from unknown (unknown [78.25.121.154])
-	by smtp19.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id 2GOF7Q5pIJ-Jsaisatl;
-	Tue, 25 Mar 2014 13:19:54 +0400
-	(using TLSv1.2 with cipher AES256-GCM-SHA384 (256/256 bits))
-	(Client certificate not present)
-X-Yandex-Uniq: fe68d546-e513-4f6f-a2d1-08e3b996aac3
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=navytux.spb.ru; s=mail;
-	t=1395739196; bh=gLCJJZZEa/GVgnqqwp+xvXtJIah44B6GYjPpHpjhD+Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To:Organization:
-	 User-Agent;
-	b=qy2f6mqQZatsCasljM0HCTpZ8K1HjAzOk+D7v1J0abOnoSflxDKnXH5Bzu+0PbrTe
-	 0bhMSVVo+utqoyyimni0vJzhOqkZrrNoAtW3ToDNkuhb0GQGNq5zTczyXmJmRhjSkF
-	 In7kuxpbRnoP8kfXFONci7fXhC4jtuKoks7WFFcc=
-Authentication-Results: smtp19.mail.yandex.net; dkim=pass header.i=@navytux.spb.ru
-Received: from kirr by mini.zxlink with local (Exim 4.82)
-	(envelope-from <kirr@mini.zxlink>)
-	id 1WSNZo-0002za-SQ; Tue, 25 Mar 2014 13:23:20 +0400
-Content-Disposition: inline
-In-Reply-To: <xmqq61n3p913.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1752861AbaCYJvi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 05:51:38 -0400
+Received: from mail-vc0-f179.google.com ([209.85.220.179]:43250 "EHLO
+	mail-vc0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752691AbaCYJvh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 Mar 2014 05:51:37 -0400
+Received: by mail-vc0-f179.google.com with SMTP id ij19so222871vcb.38
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 02:51:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=eGuI5n9fY0PjQ5uRIMnULj9QmQ8EvyjZeUevd/0HLZU=;
+        b=GN7ZL0vP9DCLVX4XdEzQUso4wNfaQ/BvInB1DiauiFrS508VNBzLLj9YcebJeEU/Vr
+         vNTnOMfOHaPHu1btD6R/tKMkHCR8EhEjE6lCTDRXgplDFvqDGVkVsDIP5nlqbEvdyvyb
+         mg4OUFWkQ/5sjPHgsiXEVysDooPAiqWRc7E78tibp3GQuv1JRnQnrpXrKIuqgGY7GgQG
+         /Y0PY9zCZNYL5yUd5fMJ1T25bCY05ZqwwxYbV5O/KdM7xCwwAuDgncaFi9hsL6erfdpb
+         or2ffo45MQCjyBBQ2TRtu2tMDtjKBdqqDe9eiJy/zf8acLYe60meObVJyv2nLmEXRash
+         +WZw==
+X-Received: by 10.52.173.165 with SMTP id bl5mr37499823vdc.13.1395741096348;
+ Tue, 25 Mar 2014 02:51:36 -0700 (PDT)
+Received: by 10.52.15.33 with HTTP; Tue, 25 Mar 2014 02:51:36 -0700 (PDT)
+In-Reply-To: <vpq4n2m7jz7.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245023>
 
-On Mon, Mar 24, 2014 at 02:43:36PM -0700, Junio C Hamano wrote:
-> Kirill Smelkov <kirr@mns.spb.ru> writes:
-> 
-> > instead of allocating it all the time for every subtree in
-> > __diff_tree_sha1, let's allocate it once in diff_tree_sha1, and then all
-> > callee just use it in stacking style, without memory allocations.
-> >
-> > This should be faster, and for me this change gives the following
-> > slight speedups for
-> >
-> >     git log --raw --no-abbrev --no-renames --format='%H'
-> >
-> >                 navy.git    linux.git v3.10..v3.11
-> >
-> >     before      0.618s      1.903s
-> >     after       0.611s      1.889s
-> >     speedup     1.1%        0.7%
-> >
-> > Signed-off-by: Kirill Smelkov <kirr@mns.spb.ru>
-> > ---
-> >
-> > Changes since v1:
-> >
-> >  - don't need to touch diff.h, as the function we are changing became static.
-> >
-> >  tree-diff.c | 36 ++++++++++++++++++------------------
-> >  1 file changed, 18 insertions(+), 18 deletions(-)
-> >
-> > diff --git a/tree-diff.c b/tree-diff.c
-> > index aea0297..c76821d 100644
-> > --- a/tree-diff.c
-> > +++ b/tree-diff.c
-> > @@ -115,7 +115,7 @@ static void show_path(struct strbuf *base, struct diff_options *opt,
-> >  	if (recurse) {
-> >  		strbuf_addch(base, '/');
-> >  		__diff_tree_sha1(t1 ? t1->entry.sha1 : NULL,
-> > -				 t2 ? t2->entry.sha1 : NULL, base->buf, opt);
-> > +				 t2 ? t2->entry.sha1 : NULL, base, opt);
-> >  	}
-> >  
-> >  	strbuf_setlen(base, old_baselen);
-> 
-> I was scratching my head for a while, after seeing that there does
-> not seem to be any *new* code added by this patch in order to
-> store-away the original length and restore the singleton base buffer
-> to the original length after using addch/addstr to extend it.
-> 
-> But I see that the code has already been prepared to do this
-> conversion.  I wonder why we didn't do this earlier ;-)
+2014-03-25 9:36 GMT+01:00 Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>:
+> Elia Pinto <gitter.spiros@gmail.com> writes:
+>
+>> --- a/t/t0204-gettext-reencode-sanity.sh
+>> +++ b/t/t0204-gettext-reencode-sanity.sh
+>> @@ -58,7 +58,7 @@ test_expect_success GETTEXT_LOCALE 'gettext: Fetch=
+ing a UTF-8 msgid -> UTF-8' '
+>>  # How these quotes get transliterated depends on the gettext implem=
+entation:
+>>  #
+>>  #   Debian:  ,einfaldar' og ,,tv=F6faldar" [GNU libintl]
+>> -#   FreeBSD: `einfaldar` og "tv=F6faldar"  [GNU libintl]
+>> +#   FreeBSD: $(einfaldar) og "tv=F6faldar"  [GNU libintl]
+>>  #   Solaris: ?einfaldar? og ?tv=F6faldar?  [Solaris libintl]
+>
+> I don't think you wanted this to be changed.
 
-The conversion to reusing memory started in 48932677 "diff-tree: convert
-base+baselen to writable strbuf" which allowed to avoid "quite a bit of
-malloc() and memcpy()", but for this to work allocation at diff_tree()
-entry had to be there.
+Certainly not. The change was made by an automated script, can happen
+that i missed something.
 
-In particular it had to be there, because diff_tree() accepted base as C
-string, not strbuf, and since diff_tree() was calling itself
-recursively - oops - new allocation on every subtree.
+Please skip this patch.
 
-I've opened the door for avoiding allocations via splitting diff_tree
-into high-level and low-level parts. The high-level part still accepts
-`char *base`, but low-level function operates on strbuf and recurses
-into low-level self.
-
-The high-level diff_tree_sha1() still allocates memory for every
-diff(tree1,tree2), but that is significantly lower compared to
-allocating memory on every subtree...
-
-The lesson here is: better use strbuf for api unless there is a reason
-not to.
+Thank you very much for the review.
 
 
-> Looks good.  Thanks.
-
-Thanks.
-
-> > @@ -138,12 +138,10 @@ static void skip_uninteresting(struct tree_desc *t, struct strbuf *base,
-> >  }
-> >  
-> >  static int __diff_tree_sha1(const unsigned char *old, const unsigned char *new,
-> > -			    const char *base_str, struct diff_options *opt)
-> > +			    struct strbuf *base, struct diff_options *opt)
-> >  {
-> >  	struct tree_desc t1, t2;
-> >  	void *t1tree, *t2tree;
-> > -	struct strbuf base;
-> > -	int baselen = strlen(base_str);
-> >  
-> >  	t1tree = fill_tree_descriptor(&t1, old);
-> >  	t2tree = fill_tree_descriptor(&t2, new);
-> > @@ -151,17 +149,14 @@ static int __diff_tree_sha1(const unsigned char *old, const unsigned char *new,
-> >  	/* Enable recursion indefinitely */
-> >  	opt->pathspec.recursive = DIFF_OPT_TST(opt, RECURSIVE);
-> >  
-> > -	strbuf_init(&base, PATH_MAX);
-> > -	strbuf_add(&base, base_str, baselen);
-> > -
-> >  	for (;;) {
-> >  		int cmp;
-> >  
-> >  		if (diff_can_quit_early(opt))
-> >  			break;
-> >  		if (opt->pathspec.nr) {
-> > -			skip_uninteresting(&t1, &base, opt);
-> > -			skip_uninteresting(&t2, &base, opt);
-> > +			skip_uninteresting(&t1, base, opt);
-> > +			skip_uninteresting(&t2, base, opt);
-> >  		}
-> >  		if (!t1.size && !t2.size)
-> >  			break;
-> > @@ -173,7 +168,7 @@ static int __diff_tree_sha1(const unsigned char *old, const unsigned char *new,
-> >  			if (DIFF_OPT_TST(opt, FIND_COPIES_HARDER) ||
-> >  			    hashcmp(t1.entry.sha1, t2.entry.sha1) ||
-> >  			    (t1.entry.mode != t2.entry.mode))
-> > -				show_path(&base, opt, &t1, &t2);
-> > +				show_path(base, opt, &t1, &t2);
-> >  
-> >  			update_tree_entry(&t1);
-> >  			update_tree_entry(&t2);
-> > @@ -181,18 +176,17 @@ static int __diff_tree_sha1(const unsigned char *old, const unsigned char *new,
-> >  
-> >  		/* t1 < t2 */
-> >  		else if (cmp < 0) {
-> > -			show_path(&base, opt, &t1, /*t2=*/NULL);
-> > +			show_path(base, opt, &t1, /*t2=*/NULL);
-> >  			update_tree_entry(&t1);
-> >  		}
-> >  
-> >  		/* t1 > t2 */
-> >  		else {
-> > -			show_path(&base, opt, /*t1=*/NULL, &t2);
-> > +			show_path(base, opt, /*t1=*/NULL, &t2);
-> >  			update_tree_entry(&t2);
-> >  		}
-> >  	}
-> >  
-> > -	strbuf_release(&base);
-> >  	free(t2tree);
-> >  	free(t1tree);
-> >  	return 0;
-> > @@ -209,7 +203,7 @@ static inline int diff_might_be_rename(void)
-> >  		!DIFF_FILE_VALID(diff_queued_diff.queue[0]->one);
-> >  }
-> >  
-> > -static void try_to_follow_renames(const unsigned char *old, const unsigned char *new, const char *base, struct diff_options *opt)
-> > +static void try_to_follow_renames(const unsigned char *old, const unsigned char *new, struct strbuf *base, struct diff_options *opt)
-> >  {
-> >  	struct diff_options diff_opts;
-> >  	struct diff_queue_struct *q = &diff_queued_diff;
-> > @@ -306,13 +300,19 @@ static void try_to_follow_renames(const unsigned char *old, const unsigned char
-> >  	q->nr = 1;
-> >  }
-> >  
-> > -int diff_tree_sha1(const unsigned char *old, const unsigned char *new, const char *base, struct diff_options *opt)
-> > +int diff_tree_sha1(const unsigned char *old, const unsigned char *new, const char *base_str, struct diff_options *opt)
-> >  {
-> > +	struct strbuf base;
-> >  	int retval;
-> >  
-> > -	retval = __diff_tree_sha1(old, new, base, opt);
-> > -	if (!*base && DIFF_OPT_TST(opt, FOLLOW_RENAMES) && diff_might_be_rename())
-> > -		try_to_follow_renames(old, new, base, opt);
-> > +	strbuf_init(&base, PATH_MAX);
-> > +	strbuf_addstr(&base, base_str);
-> > +
-> > +	retval = __diff_tree_sha1(old, new, &base, opt);
-> > +	if (!*base_str && DIFF_OPT_TST(opt, FOLLOW_RENAMES) && diff_might_be_rename())
-> > +		try_to_follow_renames(old, new, &base, opt);
-> > +
-> > +	strbuf_release(&base);
-> >  
-> >  	return retval;
-> >  }
+Elia
+>
+> --
+> Matthieu Moy
+> http://www-verimag.imag.fr/~moy/
