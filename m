@@ -1,55 +1,55 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 026/142] t1511-rev-parse-caret.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:22:47 -0700
-Message-ID: <1395768283-31135-27-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 036/142] t3700-add.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:22:57 -0700
+Message-ID: <1395768283-31135-37-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 25 18:33:43 2014
+X-From: git-owner@vger.kernel.org Tue Mar 25 18:33:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVE6-0004n1-W1
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:27 +0100
+	id 1WSVE5-0004n1-UA
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755354AbaCYRZX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:25:23 -0400
-Received: from mail-pb0-f45.google.com ([209.85.160.45]:58935 "EHLO
-	mail-pb0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755351AbaCYRZU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:25:20 -0400
-Received: by mail-pb0-f45.google.com with SMTP id uo5so743562pbc.32
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:19 -0700 (PDT)
+	id S1755579AbaCYRcL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:32:11 -0400
+Received: from mail-pd0-f180.google.com ([209.85.192.180]:39993 "EHLO
+	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932114AbaCYRZb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:25:31 -0400
+Received: by mail-pd0-f180.google.com with SMTP id v10so726419pde.11
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=aDFTYdekXPCQFXhem/s37sNktezYD7Iq/3YQcxNUQAc=;
-        b=R1VcV1ccRlx3+ouznbk5Mz6sZO6B7tYHbd89fzj03cizcAKnI8CSbREn057Y7yiB5l
-         onKVOBVKmOyAd8+frnxOiUHNdk5CqndZWsYTs4gt3kge+qNlF2ihsg1c6PJG+abZyvgp
-         dLacmNP0Wr75rVioU0DZbujc7IB21M9NQMHZy6JXR7hLeM2BZr0kXpHsb6g061pg3bQx
-         sV7CtmNDXBHt/4VSifmZagtYNcrxIFrBWH4u9hwXdrcH5HjEFPpOLZ0GFzFaLjnXErRO
-         jSj78hJDKArRe7Dc8EKHZvbiEBTHEoH1zqkuo3HjLaN5urt1uDvy9gzm/Zf5Rjll+8xf
-         2GmQ==
-X-Received: by 10.67.4.169 with SMTP id cf9mr80315312pad.45.1395768319596;
-        Tue, 25 Mar 2014 10:25:19 -0700 (PDT)
+        bh=J+tJEhT2YxiiILwPpx9RNdr00QGBSwoDsV8YL8SX5o8=;
+        b=rWlt1DTg2h2pbL9Rr1BPQ3Uybc4mB0wLQ3kkcfqBBXVxZgl5eANLRJUYDK+/bRzoFv
+         ABhLZfcPIpQ6vCEkmrNFzOyAPCrs/WtBgvuZVsIsGsdilmu3iTrnHfdeBpYaFya0++8L
+         D6tDc8Tu4sl8VWYNH2dInK313EupryGMaxXAm5yKBGgEtUx7vgSERcyx8nGBwyb2Cxr/
+         ZJOiPRZOCzcDrPbwX4Mt4odn+uiMsXcdVAkGac4nx6NCjnTEpuQC493RcxQ0Va0ew0ms
+         1X6obeKNU1l6fhZRTqIxj6pHlVNGqvHXGYTZV1YsV051MTVXxxmd/o44bbz+jOvXO0kk
+         9Pbw==
+X-Received: by 10.66.218.170 with SMTP id ph10mr79765947pac.53.1395768330812;
+        Tue, 25 Mar 2014 10:25:30 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.18
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.29
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:25:19 -0700 (PDT)
+        Tue, 25 Mar 2014 10:25:30 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245125>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,26 +72,78 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t1511-rev-parse-caret.sh |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t3700-add.sh |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/t/t1511-rev-parse-caret.sh b/t/t1511-rev-parse-caret.sh
-index 15973f2..7043ba7 100755
---- a/t/t1511-rev-parse-caret.sh
-+++ b/t/t1511-rev-parse-caret.sh
-@@ -6,11 +6,11 @@ test_description=3D'tests for ref^{stuff}'
+diff --git a/t/t3700-add.sh b/t/t3700-add.sh
+index fe274e2..95eb234 100755
+--- a/t/t3700-add.sh
++++ b/t/t3700-add.sh
+@@ -25,7 +25,7 @@ test_expect_success \
+ 	 echo foo >xfoo1 &&
+ 	 chmod 755 xfoo1 &&
+ 	 git add xfoo1 &&
+-	 case "`git ls-files --stage xfoo1`" in
++	 case "$(git ls-files --stage xfoo1)" in
+ 	 100644" "*xfoo1) echo pass;;
+ 	 *) echo fail; git ls-files --stage xfoo1; (exit 1);;
+ 	 esac'
+@@ -33,7 +33,7 @@ test_expect_success \
+ test_expect_success 'git add: filemode=3D0 should not get confused by =
+symlink' '
+ 	rm -f xfoo1 &&
+ 	test_ln_s_add foo xfoo1 &&
+-	case "`git ls-files --stage xfoo1`" in
++	case "$(git ls-files --stage xfoo1)" in
+ 	120000" "*xfoo1) echo pass;;
+ 	*) echo fail; git ls-files --stage xfoo1; (exit 1);;
+ 	esac
+@@ -45,7 +45,7 @@ test_expect_success \
+ 	 echo foo >xfoo2 &&
+ 	 chmod 755 xfoo2 &&
+ 	 git update-index --add xfoo2 &&
+-	 case "`git ls-files --stage xfoo2`" in
++	 case "$(git ls-files --stage xfoo2)" in
+ 	 100644" "*xfoo2) echo pass;;
+ 	 *) echo fail; git ls-files --stage xfoo2; (exit 1);;
+ 	 esac'
+@@ -53,7 +53,7 @@ test_expect_success \
+ test_expect_success 'git add: filemode=3D0 should not get confused by =
+symlink' '
+ 	rm -f xfoo2 &&
+ 	test_ln_s_add foo xfoo2 &&
+-	case "`git ls-files --stage xfoo2`" in
++	case "$(git ls-files --stage xfoo2)" in
+ 	120000" "*xfoo2) echo pass;;
+ 	*) echo fail; git ls-files --stage xfoo2; (exit 1);;
+ 	esac
+@@ -63,7 +63,7 @@ test_expect_success \
+ 	'git update-index --add: Test that executable bit is not used...' \
+ 	'git config core.filemode 0 &&
+ 	 test_ln_s_add xfoo2 xfoo3 &&	# runs git update-index --add
+-	 case "`git ls-files --stage xfoo3`" in
++	 case "$(git ls-files --stage xfoo3)" in
+ 	 120000" "*xfoo3) echo pass;;
+ 	 *) echo fail; git ls-files --stage xfoo3; (exit 1);;
+ 	 esac'
+@@ -166,14 +166,14 @@ test_expect_success 'git add with filemode=3D0, s=
+ymlinks=3D0 prefers stage 2 over st
 =20
- test_expect_success 'setup' '
- 	echo blob >a-blob &&
--	git tag -a -m blob blob-tag `git hash-object -w a-blob` &&
-+	git tag -a -m blob blob-tag $(git hash-object -w a-blob) &&
- 	mkdir a-tree &&
- 	echo moreblobs >a-tree/another-blob &&
- 	git add . &&
--	TREE_SHA1=3D`git write-tree` &&
-+	TREE_SHA1=3D$(git write-tree) &&
- 	git tag -a -m tree tree-tag "$TREE_SHA1" &&
- 	git commit -m Initial &&
- 	git tag -a -m commit commit-tag &&
+ test_expect_success 'git add --refresh' '
+ 	>foo && git add foo && git commit -a -m "commit all" &&
+-	test -z "`git diff-index HEAD -- foo`" &&
++	test -z "$(git diff-index HEAD -- foo)" &&
+ 	git read-tree HEAD &&
+-	case "`git diff-index HEAD -- foo`" in
++	case "$(git diff-index HEAD -- foo)" in
+ 	:100644" "*"M	foo") echo pass;;
+ 	*) echo fail; (exit 1);;
+ 	esac &&
+ 	git add --refresh -- foo &&
+-	test -z "`git diff-index HEAD -- foo`"
++	test -z "$(git diff-index HEAD -- foo)"
+ '
+=20
+ test_expect_success 'git add --refresh with pathspec' '
 --=20
 1.7.10.4
