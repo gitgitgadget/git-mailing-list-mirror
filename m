@@ -1,55 +1,55 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 014/142] t0030-stripspace.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:22:35 -0700
-Message-ID: <1395768283-31135-15-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 001/142] check-builtins.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:22:22 -0700
+Message-ID: <1395768283-31135-2-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 25 18:37:23 2014
+X-From: git-owner@vger.kernel.org Tue Mar 25 18:37:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVHt-0001NU-T7
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:37:22 +0100
+	id 1WSVHq-0001NU-OV
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:37:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755630AbaCYRdg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:33:36 -0400
-Received: from mail-pa0-f45.google.com ([209.85.220.45]:40455 "EHLO
-	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755296AbaCYRZG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:25:06 -0400
-Received: by mail-pa0-f45.google.com with SMTP id kl14so735051pab.32
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:06 -0700 (PDT)
+	id S1755290AbaCYRYv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:24:51 -0400
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:59644 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753002AbaCYRYt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:24:49 -0400
+Received: by mail-pa0-f53.google.com with SMTP id ld10so728701pab.26
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:24:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=9Y49X6atFU6ZVN3BecUNTl2Cd4OQnu/eTu6I+Dk3QB0=;
-        b=uv7rJaFgP8HaDMPS9SvYGIUQRUdY9ItkvvmcE9rJiUAt1GxRkfzAP8hx/6dPC0VOiC
-         T0BZCjJCfhHFx6YswhCgDlFBZkGyZLjb/fdeKFo+5wCYJP3N8Dtg0pkEa97krs7SNf0H
-         EzYiCDMhj6WsCz5n5RjkeZo5zdsVyjwuB7d54jsQjoY2QbQtE1odiVm/iw5c3XvCMm0f
-         SqO3NT1u8l7VyUMDFgkeiuFD4uZgqZCwT5WF9yMDyxCkk/4LeGvAPYOnkRyv6ltdhE5C
-         Xw6D5V4wbeAvw/LpVhSMu6uw7C87FJ2M7V5sAlUIFSgw152VJgjlyYzLyjFudyBYWXEU
-         Yklw==
-X-Received: by 10.66.217.133 with SMTP id oy5mr81440684pac.46.1395768306433;
-        Tue, 25 Mar 2014 10:25:06 -0700 (PDT)
+        bh=y+wq4mEa60m2TUlZIxvvSm6U0MlPMEhISpydRKTShSo=;
+        b=lQDJ+9qYcrHl81laYjeDM8aVBAtp14x1f/0CDKyou7wlxrMXZSe4ZLlN8sEaO/Y0Cs
+         C1Qgsh/59Ek/SYWp2A2LoNAGApz971L7iRFgZf85fd09Cp8R9uEI8/3z1M2D0cMBKVPh
+         scQcfaKeUEurO131e85K8vg7xzQA/odpsYPoweSTH8DjYVAF1S5My8p4GjTw07u3/1DF
+         eZCnpDvdxqESRuUrMwT/zma0EddBXf2cM+xEP7RNy9ewdF4+dLnVfkeovd96/vkRbnYQ
+         z3WBijUTWMsuUsw1fH6OYBhKEncqD23UrkkXu+/mmp6PVuD/ngNsxqm3fFaYcdaLzcsm
+         DNkQ==
+X-Received: by 10.68.136.162 with SMTP id qb2mr79119581pbb.88.1395768288598;
+        Tue, 25 Mar 2014 10:24:48 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.04
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.24.47
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:25:05 -0700 (PDT)
+        Tue, 25 Mar 2014 10:24:48 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245136>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,48 +72,23 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t0030-stripspace.sh |   20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ check-builtins.sh |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/t0030-stripspace.sh b/t/t0030-stripspace.sh
-index a8e84d8..0333dd9 100755
---- a/t/t0030-stripspace.sh
-+++ b/t/t0030-stripspace.sh
-@@ -225,22 +225,22 @@ test_expect_success \
-=20
- test_expect_success \
-     'text without newline at end should end with newline' '
--    test `printf "$ttt" | git stripspace | wc -l` -gt 0 &&
--    test `printf "$ttt$ttt" | git stripspace | wc -l` -gt 0 &&
--    test `printf "$ttt$ttt$ttt" | git stripspace | wc -l` -gt 0 &&
--    test `printf "$ttt$ttt$ttt$ttt" | git stripspace | wc -l` -gt 0
-+    test $(printf "$ttt" | git stripspace | wc -l) -gt 0 &&
-+    test $(printf "$ttt$ttt" | git stripspace | wc -l) -gt 0 &&
-+    test $(printf "$ttt$ttt$ttt" | git stripspace | wc -l) -gt 0 &&
-+    test $(printf "$ttt$ttt$ttt$ttt" | git stripspace | wc -l) -gt 0
- '
-=20
- # text plus spaces at the end:
-=20
- test_expect_success \
-     'text plus spaces without newline at end should end with newline' =
-'
--    test `printf "$ttt$sss" | git stripspace | wc -l` -gt 0 &&
--    test `printf "$ttt$ttt$sss" | git stripspace | wc -l` -gt 0 &&
--    test `printf "$ttt$ttt$ttt$sss" | git stripspace | wc -l` -gt 0 &&
--    test `printf "$ttt$sss$sss" | git stripspace | wc -l` -gt 0 &&
--    test `printf "$ttt$ttt$sss$sss" | git stripspace | wc -l` -gt 0 &&
--    test `printf "$ttt$sss$sss$sss" | git stripspace | wc -l` -gt 0
-+    test $(printf "$ttt$sss" | git stripspace | wc -l) -gt 0 &&
-+    test $(printf "$ttt$ttt$sss" | git stripspace | wc -l) -gt 0 &&
-+    test $(printf "$ttt$ttt$ttt$sss" | git stripspace | wc -l) -gt 0 &=
-&
-+    test $(printf "$ttt$sss$sss" | git stripspace | wc -l) -gt 0 &&
-+    test $(printf "$ttt$ttt$sss$sss" | git stripspace | wc -l) -gt 0 &=
-&
-+    test $(printf "$ttt$sss$sss$sss" | git stripspace | wc -l) -gt 0
- '
-=20
- test_expect_success \
+diff --git a/check-builtins.sh b/check-builtins.sh
+index d6fe6cf..07cff69 100755
+--- a/check-builtins.sh
++++ b/check-builtins.sh
+@@ -14,8 +14,8 @@ sort |
+     bad=3D0
+     while read builtin
+     do
+-	base=3D`expr "$builtin" : 'git-\(.*\)'`
+-	x=3D`sed -ne 's/.*{ "'$base'", \(cmd_[^, ]*\).*/'$base'	\1/p' git.c`
++	base=3D$(expr "$builtin" : 'git-\(.*\)')
++	x=3D$(sed -ne 's/.*{ "'$base'", \(cmd_[^, ]*\).*/'$base'	\1/p' git.c)
+ 	if test -z "$x"
+ 	then
+ 		echo "$base is builtin but not listed in git.c command list"
 --=20
 1.7.10.4
