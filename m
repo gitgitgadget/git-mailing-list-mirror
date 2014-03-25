@@ -1,168 +1,91 @@
-From: Cyril Roelandt <tipecaml@gmail.com>
-Subject: [PATCH] Allow --pretty to be passed to git-describe.
-Date: Tue, 25 Mar 2014 02:04:04 +0100
-Message-ID: <1395709444-11220-1-git-send-email-tipecaml@gmail.com>
-Cc: Cyril Roelandt <tipecaml@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 25 02:09:52 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] builtin/apply.c: use iswspace() to detect line-ending-like chars
+Date: Mon, 24 Mar 2014 21:54:38 -0700
+Message-ID: <7vd2haq3n5.fsf@alter.siamese.dyndns.org>
+References: <1395344384-7975-1-git-send-email-g3orge.app@gmail.com>
+	<532C1EFA.3000109@alum.mit.edu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: George Papanikolaou <g3orge.app@gmail.com>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Mar 25 05:54:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSFsF-0002gi-67
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 02:09:51 +0100
+	id 1WSJN8-0004kK-Q7
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 05:53:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751921AbaCYBJr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Mar 2014 21:09:47 -0400
-Received: from mail-wi0-f171.google.com ([209.85.212.171]:53063 "EHLO
-	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751232AbaCYBJq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Mar 2014 21:09:46 -0400
-Received: by mail-wi0-f171.google.com with SMTP id hr14so1499894wib.10
-        for <git@vger.kernel.org>; Mon, 24 Mar 2014 18:09:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=LRQtUCDe9+hmKw5cvr9rOy0L2rRVXf9TLao69BHhB4A=;
-        b=h/BcTZ2VoFe0EI0UVsA0jzKZIvO6PDOyR1ON+Mu90ucr5NkOgM1N9fiwZN2FewXY0F
-         gJxRi/df93tykkZ5/Fr6t/kxUQvByUYuy7oVVlMudvILn6ORU/XSQ11PmBFvgx50klht
-         NsbUZ/uLKAZanaIdD5um6YG7g7B7X6SO2BkmKV+cp0dZgzvkuo+GNiITJC1+eGN1VL1e
-         voIlvPn602izXMYbff805Go1x+Xk9qS/fdsOtxaH5lDvxcA47+YCbol2/ZOYybdrXfcb
-         svFYkw6uCV06JOZPlSti5QTKzeJi8a1u0ap7zCgXIaJFGROM/kTKay+MYzL7TBUjuZJ/
-         6R1Q==
-X-Received: by 10.181.13.112 with SMTP id ex16mr19488329wid.23.1395709784970;
-        Mon, 24 Mar 2014 18:09:44 -0700 (PDT)
-Received: from localhost.localdomain (tal33-3-82-233-82-24.fbx.proxad.net. [82.233.82.24])
-        by mx.google.com with ESMTPSA id ee5sm44770635wib.8.2014.03.24.18.09.42
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 24 Mar 2014 18:09:44 -0700 (PDT)
-X-Mailer: git-send-email 1.9.1
+	id S1751254AbaCYExY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Mar 2014 00:53:24 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60008 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750877AbaCYExX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 00:53:23 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 14E3367707;
+	Tue, 25 Mar 2014 00:53:23 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=8Ug9u+yyZTTF+5neh6FBTHJnd2E=; b=PHVrm5
+	PYIJSnZAewnu1Q2twZjEgu8xMMu5AENsajHwkCv2zfph3X7DSxiAzq4JLx/Usqim
+	B8SVHKwI6Yjc/DDxH/FQ76FaFKVzMlH2Ufj+vgSh/r2OCDQyfuwKFrcqm7kSnpui
+	7qQYh0Q3VZovX2Hb9vXHr/9VVlsBba/Fdk80I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=lz8F0ZfpNQk376IdVfTr/hntS+3uSatY
+	tBMIcLwfS+zEOX9k2lGkzDyvfM8Dje359eqOtH3wYIpSUUn0DEHNpkMVYLigVLil
+	Q5lE49gXs6AMsQLUkoKGAL7hEgIsPG/nS6LCpcwXoNOwBgfHbdVEL6H9hlRsaMDd
+	mupAQ3h3O/U=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 038DF67706;
+	Tue, 25 Mar 2014 00:53:23 -0400 (EDT)
+Received: from pobox.com (unknown [198.0.213.178])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 33D3B67703;
+	Tue, 25 Mar 2014 00:53:22 -0400 (EDT)
+In-Reply-To: <532C1EFA.3000109@alum.mit.edu> (Michael Haggerty's message of
+	"Fri, 21 Mar 2014 12:14:02 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.4 (gnu/linux)
+X-Pobox-Relay-ID: 643CE3CC-B3D9-11E3-AA59-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244901>
 
-In some cases, ony may want to find the the most recent tag that is reachable
-from a commit and have it pretty printed, using the formatting options available
-in git-log and git-show.
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-Signed-off-by: Cyril Roelandt <tipecaml@gmail.com>
----
- Documentation/git-describe.txt |  4 ++++
- builtin/describe.c             | 39 ++++++++++++++++++++++++++++++++++-----
- 2 files changed, 38 insertions(+), 5 deletions(-)
+>> -	while ((*last1 == '\r') || (*last1 == '\n'))
+>> +	while (iswspace(*last1))
+>>  		last1--;
+>> -	while ((*last2 == '\r') || (*last2 == '\n'))
+>> +	while (iswspace(*last2))
+>>  		last2--;
+>>  
+>>  	/* skip leading whitespace */
+>> 
+>
+> In addition to Eric's comments...
+>
+> What happens if the string consists *only* of whitespace?
 
-diff --git a/Documentation/git-describe.txt b/Documentation/git-describe.txt
-index d20ca40..fae4713 100644
---- a/Documentation/git-describe.txt
-+++ b/Documentation/git-describe.txt
-@@ -93,6 +93,10 @@ OPTIONS
- 	This is useful when you wish to not match tags on branches merged
- 	in the history of the target commit.
- 
-+include::pretty-options.txt[]
-+
-+include::pretty-formats.txt[]
-+
- EXAMPLES
- --------
- 
-diff --git a/builtin/describe.c b/builtin/describe.c
-index 24d740c..4c0ebae 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -8,8 +8,8 @@
- #include "diff.h"
- #include "hashmap.h"
- #include "argv-array.h"
-+#include "revision.h"
- 
--#define SEEN		(1u << 0)
- #define MAX_TAGS	(FLAG_BITS - 1)
- 
- static const char * const describe_usage[] = {
-@@ -30,6 +30,8 @@ static int have_util;
- static const char *pattern;
- static int always;
- static const char *dirty;
-+static const char *fmt_pretty;
-+static enum cmit_fmt commit_format;
- 
- /* diff-index command arguments to check if working tree is dirty. */
- static const char *diff_index_args[] = {
-@@ -266,8 +268,14 @@ static void describe(const char *arg, int last_one)
- 		 * Exact match to an existing ref.
- 		 */
- 		display_name(n);
--		if (longformat)
-+		if (longformat) {
- 			show_suffix(0, n->tag ? n->tag->tagged->sha1 : sha1);
-+		} else if (fmt_pretty) {
-+			struct strbuf buf = STRBUF_INIT;
-+			pp_commit_easy(commit_format, cmit, &buf);
-+			printf("%s", buf.buf);
-+			strbuf_release(&buf);
-+		}
- 		if (dirty)
- 			printf("%s", dirty);
- 		printf("\n");
-@@ -386,9 +394,16 @@ static void describe(const char *arg, int last_one)
- 		}
- 	}
- 
--	display_name(all_matches[0].name);
--	if (abbrev)
--		show_suffix(all_matches[0].depth, cmit->object.sha1);
-+	if (fmt_pretty) {
-+		struct strbuf buf = STRBUF_INIT;
-+		pp_commit_easy(commit_format, cmit, &buf);
-+		printf("%s", buf.buf);
-+		strbuf_release(&buf);
-+	} else {
-+		display_name(all_matches[0].name);
-+		if (abbrev)
-+			show_suffix(all_matches[0].depth, cmit->object.sha1);
-+	}
- 	if (dirty)
- 		printf("%s", dirty);
- 	printf("\n");
-@@ -419,6 +434,10 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
- 		{OPTION_STRING, 0, "dirty",  &dirty, N_("mark"),
- 			N_("append <mark> on dirty working tree (default: \"-dirty\")"),
- 			PARSE_OPT_OPTARG, NULL, (intptr_t) "-dirty"},
-+		OPT_STRING(0, "pretty",      &fmt_pretty, N_("pattern"),
-+			   N_("pretty print")),
-+		OPT_STRING(0, "format",      &fmt_pretty, N_("pattern"),
-+			   N_("pretty print")),
- 		OPT_END(),
- 	};
- 
-@@ -437,6 +456,9 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
- 	if (longformat && abbrev == 0)
- 		die(_("--long is incompatible with --abbrev=0"));
- 
-+	if (longformat && fmt_pretty)
-+		die(_("--long is incompatible with --pretty"));
-+
- 	if (contains) {
- 		struct argv_array args;
- 
-@@ -458,6 +480,13 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
- 		return cmd_name_rev(args.argc, args.argv, prefix);
- 	}
- 
-+	if (fmt_pretty) {
-+		struct rev_info rev;
-+		init_revisions(&rev, prefix);
-+		get_commit_format(fmt_pretty, &rev);
-+		commit_format = rev.commit_format;
-+	}
-+
- 	hashmap_init(&names, (hashmap_cmp_fn) commit_name_cmp, 0);
- 	for_each_rawref(get_name, NULL);
- 	if (!names.size && !always)
--- 
-1.9.1
+Also, why would casting char to wchar_t without any conversion be
+safe and/or sane?
+
+I would sort-of understand if the change were to use isspace(), but
+I do not think that is a correct conversion, either.  Isn't a pair
+of strings "a bc" and "a bc " supposed not to match?
+
+My understanding is that two strings that differ only at places
+where they have runs of whitespaces whose length differ are to
+compare the same, e.g. "a_bc__" and "a__bc_" (SP replaced with _ to
+make them stand out).  Ignoring whitespace change is very different
+from ignoring all whitespaces (the latter of which would make "a b"
+and "ab" match).
+
+As a tangent, I have a suspicion that the current implementation may
+be wrong at the beginning of the string.  Wouldn't it match " abc"
+and "abc", even though these two strings shouldn't match?
