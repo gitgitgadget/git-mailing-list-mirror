@@ -1,55 +1,55 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 068/144] t5522-pull-symlink.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 01:25:13 -0700
-Message-ID: <1395735989-3396-69-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 057/144] t5303-pack-corruption-resilience.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 01:25:02 -0700
+Message-ID: <1395735989-3396-58-git-send-email-gitter.spiros@gmail.com>
 References: <1395735989-3396-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 25 09:32:10 2014
+X-From: git-owner@vger.kernel.org Tue Mar 25 09:32:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSMmG-0004SA-JD
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 09:32:08 +0100
+	id 1WSMmK-0004Uz-Iv
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 09:32:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753354AbaCYIbw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 04:31:52 -0400
-Received: from mail-pb0-f53.google.com ([209.85.160.53]:41134 "EHLO
-	mail-pb0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753841AbaCYI1w (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 04:27:52 -0400
-Received: by mail-pb0-f53.google.com with SMTP id rp16so130629pbb.26
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 01:27:51 -0700 (PDT)
+	id S1753888AbaCYI1u convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 04:27:50 -0400
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:45150 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753831AbaCYI1l (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 04:27:41 -0400
+Received: by mail-pa0-f54.google.com with SMTP id lf10so129702pab.13
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 01:27:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=hCuqt2AdPxiFJEWQbaA5FUNJoODRXrc5d3tbM/eabOg=;
-        b=KeLkrHKubxqI5Oviou+zutJz4O349TOVcBErID4lJrfU9xGvCozcxcMB1+g+8+dlc4
-         ZI+ho6yDq1OXEKc5rldhPsii/GJmFoUqED+Vn/B1TQ6icVRR9Owbzn+WHwKbVmG4x9ed
-         tbyZSGq0uR6/hP/fHKhnXuVyn1epHsMdiXBYZu8MLqX8/PhTI07J7h/XetI4mZHhA+Tz
-         YmwSVOttRsIQ0f7eGrN2/kfNaWlPqLzU5glmkFguo7NX5wUZRKnELlbMzHQrkIlZAsVQ
-         zuDs+g2uX38L4ep3vWE9E40NhHWtnzIeCSxC/CYbtTLEz16LXTBTnwk9EH0fODmwuJBu
-         lhyw==
-X-Received: by 10.68.244.229 with SMTP id xj5mr78742248pbc.108.1395736071874;
-        Tue, 25 Mar 2014 01:27:51 -0700 (PDT)
+        bh=4/CzLnxPAvsXrmxqQ+2+3Gr1JfNAFXaGWQNsfvxle7k=;
+        b=q4F7K0IeT8PTKN6WOZwlZCcKAoWFcplMuN0sg7T5CW4uyqIhuyiDRyaYtu4/BQjFCg
+         08y6zsjp0kAp1PCaqcOZMZnX2oPkryF3XbNBgnAE/YKdwGsGAFEy1bxoEf+Lt9vvdw1C
+         b0742Pv0pdGnPWfLfDibIineXnaGxerhrTntC57+3lIfmWWw5iiHRQBjlVuOL5GfrPAI
+         h8xay5e2D6cHYXDpNYUriB0AWd+cwHaw6kVHe8/tKYQMX87Q9QS/2x38o62ju5pP93xo
+         /AaPauOUPheQQB+DnpJ7uEktTpFfTCxfSQCW7prW2P7fzGl9KtUfgv6u+/uBlFcGOpDG
+         iacw==
+X-Received: by 10.66.217.133 with SMTP id oy5mr78280247pac.46.1395736061038;
+        Tue, 25 Mar 2014 01:27:41 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id pr4sm41327198pbb.53.2014.03.25.01.27.50
+        by mx.google.com with ESMTPSA id pr4sm41327198pbb.53.2014.03.25.01.27.40
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 01:27:51 -0700 (PDT)
+        Tue, 25 Mar 2014 01:27:40 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395735989-3396-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244966>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244967>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -65,22 +65,35 @@ the Korn shell.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t5522-pull-symlink.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t5303-pack-corruption-resilience.sh |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/t/t5522-pull-symlink.sh b/t/t5522-pull-symlink.sh
-index 8e9b204..bcff460 100755
---- a/t/t5522-pull-symlink.sh
-+++ b/t/t5522-pull-symlink.sh
-@@ -54,7 +54,7 @@ test_expect_success SYMLINKS 'pulling from real subdi=
-r' '
- # git rev-parse --show-cdup printed a path relative to
- # clone-repo/subdir/, not subdir-link/.  Git rev-parse --show-cdup
- # used the correct .git, but when the git pull shell script did
--# "cd `git rev-parse --show-cdup`", it ended up in the wrong
-+# "cd $(git rev-parse --show-cdup)", it ended up in the wrong
- # directory.  A POSIX shell's "cd" works a little differently
- # than chdir() in C; "cd -P" is much closer to chdir().
- #
+diff --git a/t/t5303-pack-corruption-resilience.sh b/t/t5303-pack-corru=
+ption-resilience.sh
+index 663b02b..98bed18 100755
+--- a/t/t5303-pack-corruption-resilience.sh
++++ b/t/t5303-pack-corruption-resilience.sh
+@@ -32,9 +32,9 @@ create_test_files() {
+ create_new_pack() {
+     rm -rf .git &&
+     git init &&
+-    blob_1=3D`git hash-object -t blob -w file_1` &&
+-    blob_2=3D`git hash-object -t blob -w file_2` &&
+-    blob_3=3D`git hash-object -t blob -w file_3` &&
++    blob_1=3D$(git hash-object -t blob -w file_1) &&
++    blob_2=3D$(git hash-object -t blob -w file_2) &&
++    blob_3=3D$(git hash-object -t blob -w file_3) &&
+     pack=3D`printf "$blob_1\n$blob_2\n$blob_3\n" |
+           git pack-objects $@ .git/objects/pack/pack` &&
+     pack=3D".git/objects/pack/pack-${pack}" &&
+@@ -48,7 +48,7 @@ do_repack() {
+ }
+=20
+ do_corrupt_object() {
+-    ofs=3D`git show-index < ${pack}.idx | grep $1 | cut -f1 -d" "` &&
++    ofs=3D$(git show-index < ${pack}.idx | grep $1 | cut -f1 -d" ") &&
+     ofs=3D$(($ofs + $2)) &&
+     chmod +w ${pack}.pack &&
+     dd of=3D${pack}.pack bs=3D1 conv=3Dnotrunc seek=3D$ofs &&
 --=20
 1.7.10.4
