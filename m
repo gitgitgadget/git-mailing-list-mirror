@@ -1,92 +1,65 @@
-From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 003/142] git-pull.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:22:24 -0700
-Message-ID: <1395768283-31135-4-git-send-email-gitter.spiros@gmail.com>
-References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 14/19] tree-diff: rework diff_tree interface to be sha1 based
+Date: Tue, 25 Mar 2014 10:46:32 -0700
+Message-ID: <xmqq4n2mmarr.fsf@gitster.dls.corp.google.com>
+References: <cover.1393257006.git.kirr@mns.spb.ru>
+	<0b82e2de0edee4a590e7b4165c65938aef7090f5.1393257006.git.kirr@mns.spb.ru>
+	<xmqqa9cfp9d5.fsf@gitster.dls.corp.google.com>
+	<20140325092215.GB3777@mini.zxlink>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Elia Pinto <gitter.spiros@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 25 18:37:42 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: kirr@mns.spb.ru, git@vger.kernel.org
+To: Kirill Smelkov <kirr@navytux.spb.ru>
+X-From: git-owner@vger.kernel.org Tue Mar 25 18:48:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVHw-0001NU-LC
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:37:25 +0100
+	id 1WSVSM-0004uD-0i
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:48:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755307AbaCYReh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:34:37 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:61309 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754637AbaCYRYv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:24:51 -0400
-Received: by mail-pa0-f42.google.com with SMTP id fb1so748701pad.1
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:24:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=x9SR09lOGkFYIYch1DvF0exSRaQSJbgbljlXFVWTthI=;
-        b=Kqnw/iNcjundEjW7aRmP6YTiu+pXvrGNVOQ+rK/VzyOQ0G2u+rJCaMJofHYhZcY9lZ
-         Yt7lUV1kkE/xm+N/E1EHOTCmmDcd+g2dpu7gDpGCIuKBWnm0xzo/8qe+A/TPPTtf7DOe
-         WZPhzsNzig7Qin2s34SPm42MzCST0XqsvgwWyzc2myygu0F8qgzJqFIISTb6zDZVV8WG
-         a0Pt6dE+bUpREgYZCq24ynhk7+5Eq1fOy6ku8uhCW1mtJ+okIiC4OG5Tq1XZiZb/2aep
-         s3AOD53VgrYO8jQXuKxS4vcV+2Uw9B0ArmIvvIZqFU62bOlr9/+1dkTrnD1gX5rEYxG+
-         xu8Q==
-X-Received: by 10.66.118.71 with SMTP id kk7mr79380027pab.14.1395768290763;
-        Tue, 25 Mar 2014 10:24:50 -0700 (PDT)
-Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.24.49
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:24:50 -0700 (PDT)
-X-Mailer: git-send-email 1.7.10.4
-In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
+	id S1754474AbaCYRqj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Mar 2014 13:46:39 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56871 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752382AbaCYRqg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:46:36 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E6C6076ABE;
+	Tue, 25 Mar 2014 13:46:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=oDnYG/qzYuCI5g5hTraOfFYNP94=; b=dnNZ/5
+	0Xa3FIfVBt7NAZ8ts5NKE03GaSAkBwtex9zE2t2FBHxjWQbryg5tiXcxAiQek+R0
+	RbPvkVVpWtWWndZOoVB3J+tWm2g5bbG3oFhPWKea6IGNMo2WxKAjjLfy1DUigXdn
+	yQwaOA0R+tKnlLMrXog30ctraM/v9cLymkEy4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=XlILEoHdSHzmqAc5DwJK7gyhpiRjzU8Z
+	AFpQKARe4cIIr/D+AGrqEu7cw1k2IbaPhwnlXooWe5zASyAA4arW41ee2M7YE3s+
+	mefhOjuN5hy3sYH2Dfdc5yr7hXj+RH/1WElYw8EmR5R+V+hMnPp75IGpvWH0TqtL
+	NhNcoV86qiY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D2BBE76ABD;
+	Tue, 25 Mar 2014 13:46:35 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2846C76ABA;
+	Tue, 25 Mar 2014 13:46:35 -0400 (EDT)
+In-Reply-To: <20140325092215.GB3777@mini.zxlink> (Kirill Smelkov's message of
+	"Tue, 25 Mar 2014 13:22:15 +0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 6897671E-B445-11E3-B617-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245142>
 
-The Git CodingGuidelines prefer the $( ... ) construct for command
-substitution instead of using the back-quotes, or grave accents (`..`).
+Kirill Smelkov <kirr@navytux.spb.ru> writes:
 
-The backquoted form is the historical method for command substitution,
-and is supported by POSIX. However, all but the simplest uses become
-complicated quickly. In particular, embedded command substitutions
-and/or the use of double quotes require careful escaping with the backs=
-lash
-character. Because of this the POSIX shell adopted the $(=E2=80=A6) fea=
-ture from
-the Korn shell.
+> What are the downsides of "__" prefix by the way?
 
-The patch was generated by the simple script
-
-for _f in $(find . -name "*.sh")
-do
-=C2=A0 sed -i 's@`\(.*\)`@$(\1)@g' ${_f}
-done
-
-Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
----
- git-pull.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/git-pull.sh b/git-pull.sh
-index 6cd8ebc..cfc589d 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -108,7 +108,7 @@ do
- 	-s|--s|--st|--str|--stra|--strat|--strate|--strateg|--strategy)
- 		case "$#,$1" in
- 		*,*=3D*)
--			strategy=3D`expr "z$1" : 'z-[^=3D]*=3D\(.*\)'` ;;
-+			strategy=3D$(expr "z$1" : 'z-[^=3D]*=3D\(.*\)') ;;
- 		1,*)
- 			usage ;;
- 		*)
---=20
-1.7.10.4
+Aren't these names reserved for compiler/runtime implementations?
