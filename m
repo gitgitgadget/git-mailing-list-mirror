@@ -1,7 +1,7 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 078/142] t6001-rev-list-graft.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:23:39 -0700
-Message-ID: <1395768283-31135-79-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 061/142] t5506-remote-groups.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:23:22 -0700
+Message-ID: <1395768283-31135-62-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -14,42 +14,42 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVDs-0004n1-D3
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:12 +0100
+	id 1WSVDy-0004n1-6a
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754970AbaCYR31 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:29:27 -0400
-Received: from mail-pa0-f54.google.com ([209.85.220.54]:56270 "EHLO
-	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754717AbaCYR0R (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:26:17 -0400
-Received: by mail-pa0-f54.google.com with SMTP id lf10so735885pab.41
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:26:17 -0700 (PDT)
+	id S1755386AbaCYRaU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:30:20 -0400
+Received: from mail-pd0-f177.google.com ([209.85.192.177]:58053 "EHLO
+	mail-pd0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755394AbaCYRZ7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:25:59 -0400
+Received: by mail-pd0-f177.google.com with SMTP id y10so718550pdj.22
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=Yxbil40dhwNStJjmy7iOLQzlOtS1B6aO32wILEYAB2k=;
-        b=eWuODEi+xe/mXMCJRM8FH9j6QQ/ttCTZSTFcz8uljYJ5dy431Ee2on8VjGbos7Hwod
-         x1gF394j18I5ddb2jTfWwwTwYLjAcmi116e807yP0mKiqmMZMrs+uxp4l9cY8rBFhBHk
-         1D6u3qbIUcyd1XlWQMO6miAHtFbDMDllqMr6CyxgIT2n29PmcDAtrz5a34l1gpgW2APp
-         XOWs1YamV0gtUIxWeVZpU2Q/QzJE31AVQ+W8jf7NTvc+EGHN6VoOt7HCpG4jU7UhCtsj
-         iqpRe2ZHFcHeGIVAI4zRJmg64sTCF78XFIQiRPra6g5riw1nPFxgqVRF4mQiUGFLdj3l
-         MgVw==
-X-Received: by 10.67.8.102 with SMTP id dj6mr80321324pad.10.1395768377191;
-        Tue, 25 Mar 2014 10:26:17 -0700 (PDT)
+        bh=AvntMwrChwO6ux44U6Px2N7VA+qWxN+Y8Wl8KWyQG+U=;
+        b=ZEN64Jzr1uESVTFFV04PBo/Z1gkOl52o6mxsCsXN88BV2dY2KDtqtX0wsQlIudKIey
+         ABwDtVVisH9esdLWzkeLzfXQhZZ2yCZB+jAEXk0OYcG5XlV72+E90rRHqQl4j0fPDv3t
+         9Ee+EfAxwSYsnw45d6lJugLpwDF8m94kH6v5U/xC2TDi/PpgQBV7Yb/OShrT8qjgStvQ
+         zqOJDuxZNBxMbN/n9zFnCoZb393vBtQDww8sglvzdcBoflHlTO1Hg8qMedEPwam609ge
+         yX2L8tSOQewP6uRTXTZ7w98Mwwxt9/iwYbF8NY048q88mqMFj0tJgNYYJBh01+r1R0zn
+         EZbg==
+X-Received: by 10.66.119.172 with SMTP id kv12mr80350564pab.34.1395768358976;
+        Tue, 25 Mar 2014 10:25:58 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.26.15
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.58
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:26:16 -0700 (PDT)
+        Tue, 25 Mar 2014 10:25:58 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245116>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,50 +72,23 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t6001-rev-list-graft.sh |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ t/t5506-remote-groups.sh |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t6001-rev-list-graft.sh b/t/t6001-rev-list-graft.sh
-index 8efcd13..05ddc69 100755
---- a/t/t6001-rev-list-graft.sh
-+++ b/t/t6001-rev-list-graft.sh
-@@ -10,15 +10,15 @@ test_expect_success setup '
- 	echo >subdir/fileB fileB &&
- 	git add fileA subdir/fileB &&
- 	git commit -a -m "Initial in one history." &&
--	A0=3D`git rev-parse --verify HEAD` &&
-+	A0=3D$(git rev-parse --verify HEAD) &&
+diff --git a/t/t5506-remote-groups.sh b/t/t5506-remote-groups.sh
+index 530b016..83d5558 100755
+--- a/t/t5506-remote-groups.sh
++++ b/t/t5506-remote-groups.sh
+@@ -20,7 +20,7 @@ update_repos() {
+ }
 =20
- 	echo >fileA fileA modified &&
- 	git commit -a -m "Second in one history." &&
--	A1=3D`git rev-parse --verify HEAD` &&
-+	A1=3D$(git rev-parse --verify HEAD) &&
-=20
- 	echo >subdir/fileB fileB modified &&
- 	git commit -a -m "Third in one history." &&
--	A2=3D`git rev-parse --verify HEAD` &&
-+	A2=3D$(git rev-parse --verify HEAD) &&
-=20
- 	rm -f .git/refs/heads/master .git/index &&
-=20
-@@ -26,15 +26,15 @@ test_expect_success setup '
- 	echo >subdir/fileB fileB again &&
- 	git add fileA subdir/fileB &&
- 	git commit -a -m "Initial in alternate history." &&
--	B0=3D`git rev-parse --verify HEAD` &&
-+	B0=3D$(git rev-parse --verify HEAD) &&
-=20
- 	echo >fileA fileA modified in alternate history &&
- 	git commit -a -m "Second in alternate history." &&
--	B1=3D`git rev-parse --verify HEAD` &&
-+	B1=3D$(git rev-parse --verify HEAD) &&
-=20
- 	echo >subdir/fileB fileB modified in alternate history &&
- 	git commit -a -m "Third in alternate history." &&
--	B2=3D`git rev-parse --verify HEAD` &&
-+	B2=3D$(git rev-parse --verify HEAD) &&
- 	: done
- '
-=20
+ repo_fetched() {
+-	if test "`git log -1 --pretty=3Dformat:%s $1 --`" =3D "`cat mark`"; t=
+hen
++	if test "$(git log -1 --pretty=3Dformat:%s $1 --)" =3D "$(cat mark)";=
+ then
+ 		echo >&2 "repo was fetched: $1"
+ 		return 0
+ 	fi
 --=20
 1.7.10.4
