@@ -1,7 +1,7 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 017/142] t1001-read-tree-m-2way.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:22:38 -0700
-Message-ID: <1395768283-31135-18-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 014/142] t0030-stripspace.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:22:35 -0700
+Message-ID: <1395768283-31135-15-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -14,42 +14,42 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVHt-0001NU-Bq
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:37:21 +0100
+	id 1WSVHt-0001NU-T7
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:37:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755629AbaCYRdf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:33:35 -0400
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:45671 "EHLO
-	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755322AbaCYRZK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:25:10 -0400
-Received: by mail-pa0-f51.google.com with SMTP id kq14so749142pab.10
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:10 -0700 (PDT)
+	id S1755630AbaCYRdg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:33:36 -0400
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:40455 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755296AbaCYRZG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:25:06 -0400
+Received: by mail-pa0-f45.google.com with SMTP id kl14so735051pab.32
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=ouJjIkH3xSJGAc1Qdhr9OfE7Fq5Il1XZLAoDK+s3xDc=;
-        b=B8Gk1OXn8qAcw1Olq/wdwUsvWbfRJeKaAPyPuR97wy0b17NfFCL0mS9iU7vC26LKxr
-         ABJaviQ40H2GmgJ1/9IfdD0yWJI9kOv6G2cCcItZUtCUHFd03JN4j+LciZ1Tnd4ZhB6E
-         8x2lN7v891oqqliiDVCK6PbOmRMyFZDW4DgWAaHmoMn5L5iUzPbgrmIwcDpwAsYRZVqs
-         yIpQKe92ItuvUwHc67fP49GSUQfY6yN7Ku6FUgEmNct67wD4aw7t3jw48CKdT2e/YWT6
-         SK5eRdmS6/4ZvURnQatLT4fZzHETKKFgZ7uti87Z037vabxpW2ASbXvhaflaON0TlMjN
-         TJ4A==
-X-Received: by 10.68.37.42 with SMTP id v10mr63050027pbj.127.1395768310159;
-        Tue, 25 Mar 2014 10:25:10 -0700 (PDT)
+        bh=9Y49X6atFU6ZVN3BecUNTl2Cd4OQnu/eTu6I+Dk3QB0=;
+        b=uv7rJaFgP8HaDMPS9SvYGIUQRUdY9ItkvvmcE9rJiUAt1GxRkfzAP8hx/6dPC0VOiC
+         T0BZCjJCfhHFx6YswhCgDlFBZkGyZLjb/fdeKFo+5wCYJP3N8Dtg0pkEa97krs7SNf0H
+         EzYiCDMhj6WsCz5n5RjkeZo5zdsVyjwuB7d54jsQjoY2QbQtE1odiVm/iw5c3XvCMm0f
+         SqO3NT1u8l7VyUMDFgkeiuFD4uZgqZCwT5WF9yMDyxCkk/4LeGvAPYOnkRyv6ltdhE5C
+         Xw6D5V4wbeAvw/LpVhSMu6uw7C87FJ2M7V5sAlUIFSgw152VJgjlyYzLyjFudyBYWXEU
+         Yklw==
+X-Received: by 10.66.217.133 with SMTP id oy5mr81440684pac.46.1395768306433;
+        Tue, 25 Mar 2014 10:25:06 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.08
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.04
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:25:09 -0700 (PDT)
+        Tue, 25 Mar 2014 10:25:05 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245135>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,92 +72,48 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t1001-read-tree-m-2way.sh |   18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ t/t0030-stripspace.sh |   20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/t/t1001-read-tree-m-2way.sh b/t/t1001-read-tree-m-2way.sh
-index acaab07..f0d8eb9 100755
---- a/t/t1001-read-tree-m-2way.sh
-+++ b/t/t1001-read-tree-m-2way.sh
-@@ -36,7 +36,7 @@ compare_change () {
- }
+diff --git a/t/t0030-stripspace.sh b/t/t0030-stripspace.sh
+index a8e84d8..0333dd9 100755
+--- a/t/t0030-stripspace.sh
++++ b/t/t0030-stripspace.sh
+@@ -225,22 +225,22 @@ test_expect_success \
 =20
- check_cache_at () {
--	clean_if_empty=3D`git diff-files -- "$1"`
-+	clean_if_empty=3D$(git diff-files -- "$1")
- 	case "$clean_if_empty" in
- 	'')  echo "$1: clean" ;;
- 	?*)  echo "$1: dirty" ;;
-@@ -68,14 +68,14 @@ test_expect_success \
-      echo rezrov >rezrov &&
-      echo yomin >yomin &&
-      git update-index --add nitfol bozbar rezrov &&
--     treeH=3D`git write-tree` &&
-+     treeH=3D$(git write-tree) &&
-      echo treeH $treeH &&
-      git ls-tree $treeH &&
+ test_expect_success \
+     'text without newline at end should end with newline' '
+-    test `printf "$ttt" | git stripspace | wc -l` -gt 0 &&
+-    test `printf "$ttt$ttt" | git stripspace | wc -l` -gt 0 &&
+-    test `printf "$ttt$ttt$ttt" | git stripspace | wc -l` -gt 0 &&
+-    test `printf "$ttt$ttt$ttt$ttt" | git stripspace | wc -l` -gt 0
++    test $(printf "$ttt" | git stripspace | wc -l) -gt 0 &&
++    test $(printf "$ttt$ttt" | git stripspace | wc -l) -gt 0 &&
++    test $(printf "$ttt$ttt$ttt" | git stripspace | wc -l) -gt 0 &&
++    test $(printf "$ttt$ttt$ttt$ttt" | git stripspace | wc -l) -gt 0
+ '
 =20
-      cat bozbar-new >bozbar &&
-      git update-index --add frotz bozbar --force-remove rezrov &&
-      git ls-files --stage >M.out &&
--     treeM=3D`git write-tree` &&
-+     treeM=3D$(git write-tree) &&
-      echo treeM $treeM &&
-      git ls-tree $treeM &&
-      git diff-tree $treeH $treeM'
-@@ -315,7 +315,7 @@ test_expect_success \
-     'rm -f .git/index &&
-      echo DF >DF &&
-      git update-index --add DF &&
--     treeDF=3D`git write-tree` &&
-+     treeDF=3D$(git write-tree) &&
-      echo treeDF $treeDF &&
-      git ls-tree $treeDF &&
+ # text plus spaces at the end:
 =20
-@@ -323,7 +323,7 @@ test_expect_success \
-      mkdir DF &&
-      echo DF/DF >DF/DF &&
-      git update-index --add --remove DF DF/DF &&
--     treeDFDF=3D`git write-tree` &&
-+     treeDFDF=3D$(git write-tree) &&
-      echo treeDFDF $treeDFDF &&
-      git ls-tree $treeDFDF &&
-      git ls-files --stage >DFDF.out'
-@@ -345,7 +345,7 @@ test_expect_success \
-     'rm -f .git/index &&
-      : >a &&
-      git update-index --add a &&
--     treeM=3D`git write-tree` &&
-+     treeM=3D$(git write-tree) &&
-      echo treeM $treeM &&
-      git ls-tree $treeM &&
-      git ls-files --stage >treeM.out &&
-@@ -354,7 +354,7 @@ test_expect_success \
-      git update-index --remove a &&
-      mkdir a &&
-      : >a/b &&
--     treeH=3D`git write-tree` &&
-+     treeH=3D$(git write-tree) &&
-      echo treeH $treeH &&
-      git ls-tree $treeH'
+ test_expect_success \
+     'text plus spaces without newline at end should end with newline' =
+'
+-    test `printf "$ttt$sss" | git stripspace | wc -l` -gt 0 &&
+-    test `printf "$ttt$ttt$sss" | git stripspace | wc -l` -gt 0 &&
+-    test `printf "$ttt$ttt$ttt$sss" | git stripspace | wc -l` -gt 0 &&
+-    test `printf "$ttt$sss$sss" | git stripspace | wc -l` -gt 0 &&
+-    test `printf "$ttt$ttt$sss$sss" | git stripspace | wc -l` -gt 0 &&
+-    test `printf "$ttt$sss$sss$sss" | git stripspace | wc -l` -gt 0
++    test $(printf "$ttt$sss" | git stripspace | wc -l) -gt 0 &&
++    test $(printf "$ttt$ttt$sss" | git stripspace | wc -l) -gt 0 &&
++    test $(printf "$ttt$ttt$ttt$sss" | git stripspace | wc -l) -gt 0 &=
+&
++    test $(printf "$ttt$sss$sss" | git stripspace | wc -l) -gt 0 &&
++    test $(printf "$ttt$ttt$sss$sss" | git stripspace | wc -l) -gt 0 &=
+&
++    test $(printf "$ttt$sss$sss$sss" | git stripspace | wc -l) -gt 0
+ '
 =20
-@@ -372,7 +372,7 @@ test_expect_success \
-      mkdir c &&
-      : >c/d &&
-      git update-index --add a c/d &&
--     treeM=3D`git write-tree` &&
-+     treeM=3D$(git write-tree) &&
-      echo treeM $treeM &&
-      git ls-tree $treeM &&
-      git ls-files --stage >treeM.out &&
-@@ -381,7 +381,7 @@ test_expect_success \
-      mkdir a &&
-      : >a/b &&
-      git update-index --add --remove a a/b &&
--     treeH=3D`git write-tree` &&
-+     treeH=3D$(git write-tree) &&
-      echo treeH $treeH &&
-      git ls-tree $treeH'
-=20
+ test_expect_success \
 --=20
 1.7.10.4
