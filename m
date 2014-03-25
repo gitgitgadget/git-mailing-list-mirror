@@ -1,55 +1,55 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 041/142] t4012-diff-binary.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:23:02 -0700
-Message-ID: <1395768283-31135-42-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 053/142] t5300-pack-object.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:23:14 -0700
+Message-ID: <1395768283-31135-54-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 25 18:32:50 2014
+X-From: git-owner@vger.kernel.org Tue Mar 25 18:32:51 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVDS-0004n1-Mz
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:32:47 +0100
+	id 1WSVDW-0004n1-Bl
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:32:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755361AbaCYRZm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:25:42 -0400
-Received: from mail-pb0-f54.google.com ([209.85.160.54]:51863 "EHLO
-	mail-pb0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932135AbaCYRZi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:25:38 -0400
-Received: by mail-pb0-f54.google.com with SMTP id ma3so752090pbc.27
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:37 -0700 (PDT)
+	id S1755380AbaCYRZx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:25:53 -0400
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:63447 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754148AbaCYRZv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:25:51 -0400
+Received: by mail-pa0-f43.google.com with SMTP id bj1so737040pad.30
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=I3bJVubhu0MKV0K/Ii/e3wcKFcxbrZlmEz0DqyeyiNY=;
-        b=hr8YBzgKyiAG1q8uoo9IFVjFbER57qilfieX/994DnTYGZ6EEl0r16X1EiYCugSWA/
-         tdcr2LLU1mdGjrFEZhP7pj8vj/DM9pJqhAuUoFlTKFy3hpttPm8JK2lx2jdIuvLpMKgQ
-         834PumekcdNFXgDnlm/rxoZZLApTRAE0W7dOEcCxM9mgOYXX2TLaTr/z4UPiLzn96Bk4
-         lvyFGaz57uR5yJ3o6z7DMEVES3iy6vksAxXwwwfJzWuuc0FXWZFdO3IwFjTfjCCIqn17
-         SzRgDWfmghIn7vVyb93Y6cMj6zxNezLIogLNSP93ZSluk+YZoRCBtllheJOBS5AkS4M5
-         sm1g==
-X-Received: by 10.66.118.71 with SMTP id kk7mr79384249pab.14.1395768337649;
-        Tue, 25 Mar 2014 10:25:37 -0700 (PDT)
+        bh=Z6JcbN7MqkaAfyyPmFCtf04vdjxz4amsbko3cqHazzA=;
+        b=DcJAgBcTBPSF8h8ouXNfP5tdjAu/ZZzb3kGiqgJh+fXxzIbAfzuzQqafppSqri7sVW
+         xc021vrkSZUHyRelfcoVp+pgB5k03HXIj0QjGEGfZ2tr+5vTHaO4F2XlihEleY7iVa19
+         qVElPEFXpTp8CHdzLrTNhVQydKB60YsPGjMz/6imNIA1MTMNp2KBlVGJ71lRhvjDqH9+
+         EmtVtu0s2xKv6BnFbOqQ2kXSEmLB2xYlPNYNkqQRXfFlwScLjQoY6+gM7+vT2mbicZdo
+         1L8aRWmlEj/ctcX10TwZ45vGtvFXkPldRztfhtJM7vObxXECTDJ0oq85gOff2ImaoYpv
+         QWaA==
+X-Received: by 10.66.146.170 with SMTP id td10mr80964382pab.105.1395768350515;
+        Tue, 25 Mar 2014 10:25:50 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.36
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.49
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:25:37 -0700 (PDT)
+        Tue, 25 Mar 2014 10:25:49 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245067>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,58 +72,80 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t4012-diff-binary.sh |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ t/t5300-pack-object.sh |   18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/t/t4012-diff-binary.sh b/t/t4012-diff-binary.sh
-index 1215ae5..643d729 100755
---- a/t/t4012-diff-binary.sh
-+++ b/t/t4012-diff-binary.sh
-@@ -67,18 +67,18 @@ test_expect_success C_LOCALE_OUTPUT 'apply detectin=
-g corrupt patch correctly' '
- 	git diff >output &&
- 	sed -e "s/-CIT/xCIT/" <output >broken &&
- 	test_must_fail git apply --stat --summary broken 2>detected &&
--	detected=3D`cat detected` &&
--	detected=3D`expr "$detected" : "fatal.*at line \\([0-9]*\\)\$"` &&
--	detected=3D`sed -ne "${detected}p" broken` &&
-+	detected=3D$(cat detected) &&
-+	detected=3D$(expr "$detected" : "fatal.*at line \\([0-9]*\\)\$") &&
-+	detected=3D$(sed -ne "${detected}p" broken) &&
- 	test "$detected" =3D xCIT
+diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
+index 20c1961..fc2be63 100755
+--- a/t/t5300-pack-object.sh
++++ b/t/t5300-pack-object.sh
+@@ -8,7 +8,7 @@ test_description=3D'git pack-object
  '
+ . ./test-lib.sh
 =20
- test_expect_success C_LOCALE_OUTPUT 'apply detecting corrupt patch cor=
-rectly' '
- 	git diff --binary | sed -e "s/-CIT/xCIT/" >broken &&
- 	test_must_fail git apply --stat --summary broken 2>detected &&
--	detected=3D`cat detected` &&
--	detected=3D`expr "$detected" : "fatal.*at line \\([0-9]*\\)\$"` &&
--	detected=3D`sed -ne "${detected}p" broken` &&
-+	detected=3D$(cat detected) &&
-+	detected=3D$(expr "$detected" : "fatal.*at line \\([0-9]*\\)\$") &&
-+	detected=3D$(sed -ne "${detected}p" broken) &&
- 	test "$detected" =3D xCIT
- '
+-TRASH=3D`pwd`
++TRASH=3D$(pwd)
 =20
-@@ -88,7 +88,7 @@ test_expect_success 'initial commit' 'git commit -a -=
-m initial'
- test_expect_success 'diff-index with --binary' '
- 	echo AIT >a && mv b e && echo CIT >c && cat e >d &&
- 	git update-index --add --remove a b c d e &&
--	tree0=3D`git write-tree` &&
-+	tree0=3D$(git write-tree) &&
- 	git diff --cached --binary >current &&
- 	git apply --stat --summary current
- '
-@@ -96,7 +96,7 @@ test_expect_success 'diff-index with --binary' '
- test_expect_success 'apply binary patch' '
- 	git reset --hard &&
- 	git apply --binary --index <current &&
--	tree1=3D`git write-tree` &&
-+	tree1=3D$(git write-tree) &&
- 	test "$tree1" =3D "$tree0"
- '
+ test_expect_success \
+     'setup' \
+@@ -20,8 +20,8 @@ test_expect_success \
+      test-genrandom "seed b" 2097152 > b_big &&
+      git update-index --add a a_big b b_big c &&
+      cat c >d && echo foo >>d && git update-index --add d &&
+-     tree=3D`git write-tree` &&
+-     commit=3D`git commit-tree $tree </dev/null` && {
++     tree=3D$(git write-tree) &&
++     commit=3D$(git commit-tree $tree </dev/null) && {
+ 	 echo $tree &&
+ 	 echo $commit &&
+ 	 git ls-tree $tree | sed -e "s/.* \\([0-9a-f]*\\)	.*/\\1/"
+@@ -29,7 +29,7 @@ test_expect_success \
+ 	 git diff-tree --root -p $commit &&
+ 	 while read object
+ 	 do
+-	    t=3D`git cat-file -t $object` &&
++	    t=3D$(git cat-file -t $object) &&
+ 	    git cat-file $t $object || return 1
+ 	 done <obj-list
+      } >expect'
+@@ -147,7 +147,7 @@ test_expect_success \
+ 	 git diff-tree --root -p $commit &&
+ 	 while read object
+ 	 do
+-	    t=3D`git cat-file -t $object` &&
++	    t=3D$(git cat-file -t $object) &&
+ 	    git cat-file $t $object || return 1
+ 	 done <obj-list
+     } >current &&
+@@ -162,7 +162,7 @@ test_expect_success \
+ 	 git diff-tree --root -p $commit &&
+ 	 while read object
+ 	 do
+-	    t=3D`git cat-file -t $object` &&
++	    t=3D$(git cat-file -t $object) &&
+ 	    git cat-file $t $object || return 1
+ 	 done <obj-list
+     } >current &&
+@@ -177,7 +177,7 @@ test_expect_success \
+ 	 git diff-tree --root -p $commit &&
+ 	 while read object
+ 	 do
+-	    t=3D`git cat-file -t $object` &&
++	    t=3D$(git cat-file -t $object) &&
+ 	    git cat-file $t $object || return 1
+ 	 done <obj-list
+     } >current &&
+@@ -252,8 +252,8 @@ test_expect_success \
 =20
+ test_expect_success \
+     'verify-pack catches a corrupted sum of the index file itself' \
+-    'l=3D`wc -c <test-3.idx` &&
+-     l=3D`expr $l - 20` &&
++    'l=3D$(wc -c <test-3.idx) &&
++     l=3D$(expr $l - 20) &&
+      cat test-1-${packname_1}.pack >test-3.pack &&
+      printf "%20s" "" | dd of=3Dtest-3.idx count=3D20 bs=3D1 conv=3Dno=
+trunc seek=3D$l &&
+      if git verify-pack test-3.pack
 --=20
 1.7.10.4
