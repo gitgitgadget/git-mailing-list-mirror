@@ -1,55 +1,55 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 022/142] t1050-large.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:22:43 -0700
-Message-ID: <1395768283-31135-23-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 072/142] t5551-http-fetch-smart.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:23:33 -0700
+Message-ID: <1395768283-31135-73-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 25 18:33:32 2014
+X-From: git-owner@vger.kernel.org Tue Mar 25 18:33:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVEA-0004n1-5R
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:30 +0100
+	id 1WSVDt-0004n1-FC
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755348AbaCYRZS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:25:18 -0400
-Received: from mail-pd0-f177.google.com ([209.85.192.177]:45980 "EHLO
-	mail-pd0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755339AbaCYRZQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:25:16 -0400
-Received: by mail-pd0-f177.google.com with SMTP id y10so717634pdj.22
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:15 -0700 (PDT)
+	id S1755281AbaCYR3m convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:29:42 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:64896 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755420AbaCYR0L (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:26:11 -0400
+Received: by mail-pa0-f42.google.com with SMTP id fb1so742880pad.15
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:26:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=tu5mxQiYUiIhvDIPyhrPVYCbHHR3MyWYE73RblOFB18=;
-        b=tl2xJ4yFgnWfspwRpmaCNf4wZsLfcavQbwmKRyjQHToTBNYDLidEzE/UKW+KC5zw7W
-         2ATWJzOhamFYsjNFsCQht79dbHSypCr/1CiYtzPiUI9FE0P2T9kRhk8dN3XNHs39r9OF
-         9+A2ESDb0FNE0dT0D9wz44Uk4++2CgwyZ6zJkcWdhUKO/QYqmRf8juMXEFSSW7ftc7Yp
-         MFq3yBmpf0Uf5WouCvmYj1QX2v/97TEVMwAe7vNFZnoOePIoqDO6oDwORPN/u4coIEgC
-         fn9jsQQgXGIee4UZdtOHg4kK+xm57gO90Ae2qVVvhvRsD85b6Z4/d4ktmn063LgQPmo8
-         jo1w==
-X-Received: by 10.68.76.68 with SMTP id i4mr80829136pbw.73.1395768315661;
-        Tue, 25 Mar 2014 10:25:15 -0700 (PDT)
+        bh=+uT1P9Za2wxQhaJodzQApgCGAcvF3vAe2ukWUUcLEzU=;
+        b=QP+22waxCR0/09JVjbIBb3aKH4knDiNgHv2N4+ddCm+KtE/WDcSwwc16mEaH3jw9jU
+         QBTJjgPtUjoEjoyQwRmICETIvaB+UHrt0LAfqquDi67J/5FgR1XDBit2WhP5w2wLQJZl
+         kRO44ACC6IgE9j0U08DmL/+UFWrXiR/F5qEG0nxqMzAHHJyMZSebYi2l/jXxtvYVulFh
+         sRc+EQ1VM3Jltfd2RKjZT0l4SqdqK9ztRjSebT8tgi+aM3X0JdP7woXzsXvPMk3M6iv2
+         hQfRnL7GmjlynKKPr5nWRu9orXmFeDOA3u6XB28YGz12mvPB2FNNZoGhol+Hp/Jqsw/v
+         Ygjg==
+X-Received: by 10.66.21.73 with SMTP id t9mr24510412pae.36.1395768370682;
+        Tue, 25 Mar 2014 10:26:10 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.14
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.26.09
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:25:15 -0700 (PDT)
+        Tue, 25 Mar 2014 10:26:10 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245113>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,31 +72,22 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t1050-large.sh |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t5551-http-fetch-smart.sh |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t1050-large.sh b/t/t1050-large.sh
-index fd10528..aea4936 100755
---- a/t/t1050-large.sh
-+++ b/t/t1050-large.sh
-@@ -131,7 +131,7 @@ test_expect_success 'git-show a large file' '
- '
-=20
- test_expect_success 'index-pack' '
--	git clone file://"`pwd`"/.git foo &&
-+	git clone file://"$(pwd)"/.git foo &&
- 	GIT_DIR=3Dnon-existent git index-pack --strict --verify foo/.git/obje=
-cts/pack/*.pack
- '
-=20
-@@ -140,7 +140,7 @@ test_expect_success 'repack' '
- '
-=20
- test_expect_success 'pack-objects with large loose object' '
--	SHA1=3D`git hash-object huge` &&
-+	SHA1=3D$(git hash-object huge) &&
- 	test_create_repo loose &&
- 	echo $SHA1 | git pack-objects --stdout |
- 		GIT_ALLOC_LIMIT=3D0 GIT_DIR=3Dloose/.git git unpack-objects &&
+diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
+index e07eaf3..232c5ac 100755
+--- a/t/t5551-http-fetch-smart.sh
++++ b/t/t5551-http-fetch-smart.sh
+@@ -218,7 +218,7 @@ test -n "$GIT_TEST_LONG" && test_set_prereq EXPENSI=
+VE
+ test_expect_success EXPENSIVE 'create 50,000 tags in the repo' '
+ 	(
+ 	cd "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
+-	for i in `test_seq 50000`
++	for i in $(test_seq 50000)
+ 	do
+ 		echo "commit refs/heads/too-many-refs"
+ 		echo "mark :$i"
 --=20
 1.7.10.4
