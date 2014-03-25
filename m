@@ -1,85 +1,64 @@
-From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 003/144] git-pull.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 01:24:08 -0700
-Message-ID: <1395735989-3396-4-git-send-email-gitter.spiros@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 084/144] t6111-rev-list-treesame.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 09:52:45 +0100
+Message-ID: <vpqob0u3bj6.fsf@anie.imag.fr>
 References: <1395735989-3396-1-git-send-email-gitter.spiros@gmail.com>
+	<1395735989-3396-85-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Elia Pinto <gitter.spiros@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 25 09:39:53 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Elia Pinto <gitter.spiros@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 25 09:53:04 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSMtl-0005Dm-1r
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 09:39:53 +0100
+	id 1WSN6U-0003ov-Ob
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 09:53:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754197AbaCYIjY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 04:39:24 -0400
-Received: from mail-pa0-f54.google.com ([209.85.220.54]:43157 "EHLO
-	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753612AbaCYI0j (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 04:26:39 -0400
-Received: by mail-pa0-f54.google.com with SMTP id lf10so128719pab.13
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 01:26:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=QV+eKs38L2JoewY9w0v33zg64GvTQuxC5fE+SnaJ/ZY=;
-        b=FXuW8Z6O2/QmB1wUb9DDVh65z3KbUNhONpTL3l8EUx2t35k107Dc26SxYSP/edNMfc
-         os7pg838b/lwvvf7Ub9fPEfP5ewp42AwAXUCRW/F6wK9F5OH+K0bmRPDbgLnWS9nhfM9
-         JmwJiWLAqp8Q94+pcno/FOfbqR8LnT29S6JJPxYXeTu3V6m7CtgjVj/C8lkXeC0oKO3k
-         lnP5ZUcaF2vLfboQPFX+1QZz1f5SVxo1mO6TossdD5R0xUofMcCZhBUmyrTaozlorl9W
-         9l2yyk57xoyFKy0r2VYOJ37tqdY9qtnRbyeCmmUJt4tGYq7CwQ48tXcDMes/dQYt1/pt
-         C1wg==
-X-Received: by 10.69.26.103 with SMTP id ix7mr77816191pbd.41.1395735999050;
-        Tue, 25 Mar 2014 01:26:39 -0700 (PDT)
-Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id pr4sm41327198pbb.53.2014.03.25.01.26.38
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 01:26:38 -0700 (PDT)
-X-Mailer: git-send-email 1.7.10.4
-In-Reply-To: <1395735989-3396-1-git-send-email-gitter.spiros@gmail.com>
+	id S1753903AbaCYIww (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Mar 2014 04:52:52 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:32961 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753187AbaCYIwt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 04:52:49 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s2P8qivq032519
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 25 Mar 2014 09:52:44 +0100
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s2P8qjHW022976;
+	Tue, 25 Mar 2014 09:52:45 +0100
+In-Reply-To: <1395735989-3396-85-git-send-email-gitter.spiros@gmail.com> (Elia
+	Pinto's message of "Tue, 25 Mar 2014 01:25:29 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 25 Mar 2014 09:52:44 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s2P8qivq032519
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1396342365.80811@cRlUD/IEM4O/H7PR8gXkwQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245016>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245017>
 
-The Git CodingGuidelines prefer the $( ... ) construct for command
-substitution instead of using the back-quotes, or grave accents (`..`).
+Elia Pinto <gitter.spiros@gmail.com> writes:
 
-The backquoted form is the historical method for command substitution,
-and is supported by POSIX. However,all but the simplest uses become
-complicated quickly. In particular,embedded command substitutions
-and/or the use of double quotes require careful escaping with the backs=
-lash
-character. Because of this the POSIX shell adopted the $(=E2=80=A6) fea=
-ture from
-the Korn shell.
+> --- a/t/t6111-rev-list-treesame.sh
+> +++ b/t/t6111-rev-list-treesame.sh
+> @@ -4,7 +4,7 @@
+>  #       /        \ /             \*
+>  # *A--*B---D--*F-*G---------K-*L-*M
+>  #   \     /*       \       /
+> -#    `-C-'          `-*I-*J
+> +#    $(-C-'          )-*I-*J
 
-Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
----
- git-pull.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+The original version was more readable ;-).
 
-diff --git a/git-pull.sh b/git-pull.sh
-index 6cd8ebc..cfc589d 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -108,7 +108,7 @@ do
- 	-s|--s|--st|--str|--stra|--strat|--strate|--strateg|--strategy)
- 		case "$#,$1" in
- 		*,*=3D*)
--			strategy=3D`expr "z$1" : 'z-[^=3D]*=3D\(.*\)'` ;;
-+			strategy=3D$(expr "z$1" : 'z-[^=3D]*=3D\(.*\)') ;;
- 		1,*)
- 			usage ;;
- 		*)
---=20
-1.7.10.4
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
