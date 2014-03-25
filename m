@@ -1,68 +1,85 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 001/144] check-builtins.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 09:35:06 +0100
-Message-ID: <vpqa9ce7k1x.fsf@anie.imag.fr>
+From: Elia Pinto <gitter.spiros@gmail.com>
+Subject: [PATCH 031/144] t3100-ls-tree-restrict.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 01:24:36 -0700
+Message-ID: <1395735989-3396-32-git-send-email-gitter.spiros@gmail.com>
 References: <1395735989-3396-1-git-send-email-gitter.spiros@gmail.com>
-	<1395735989-3396-2-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Elia Pinto <gitter.spiros@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 25 09:35:27 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Elia Pinto <gitter.spiros@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 25 09:35:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSMpS-0008MO-4k
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 09:35:26 +0100
+	id 1WSMpZ-000060-4L
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 09:35:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753291AbaCYIfS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Mar 2014 04:35:18 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:57949 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751886AbaCYIfO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 04:35:14 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s2P8Z6Jr009205
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 25 Mar 2014 09:35:06 +0100
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s2P8Z6QB022217;
-	Tue, 25 Mar 2014 09:35:06 +0100
-In-Reply-To: <1395735989-3396-2-git-send-email-gitter.spiros@gmail.com> (Elia
-	Pinto's message of "Tue, 25 Mar 2014 01:24:06 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 25 Mar 2014 09:35:06 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s2P8Z6Jr009205
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1396341309.37599@7cNpSDfygTF3rT9Fao7x6A
+	id S1753751AbaCYI1O convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 04:27:14 -0400
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:64482 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753088AbaCYI1N (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 04:27:13 -0400
+Received: by mail-pa0-f53.google.com with SMTP id ld10so123183pab.40
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 01:27:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=cd/9rq4qLprCmOf0PEyXv6rvUcLUMDk2uu4oo8ThE+c=;
+        b=ASTg9CoZCLnf+EhQ/sjs20n5wMciI/3EUWZ3A8apW4z5dh5CHRQvKwhjtnptIpW/wG
+         /t+1Y+TPvMazT8WQJvLxXgltp9u9AyZ9C/nWnegYqfIm3mcVsCQKHqPPOsN8WrNjmdsh
+         Xa/W8qDkhzryXnsbiPu9UcizGViZ0IN5YYZ5lmBXzHh/IMhlGDNx2mjr086yVcxsenMd
+         mOY6+4D+9zD8mAcUbABKFwNylsWLTZxFJQnbBpcUgtT2PxV7prraNSYKsJSvhg7gGWET
+         iXGf5JlPsvu+tSJWkyQETual1R1bOew8hYWdKPoeqh5tA+fyfuGR5lKglMeO8X/Qfp99
+         5a5Q==
+X-Received: by 10.68.202.8 with SMTP id ke8mr78007646pbc.86.1395736033147;
+        Tue, 25 Mar 2014 01:27:13 -0700 (PDT)
+Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
+        by mx.google.com with ESMTPSA id pr4sm41327198pbb.53.2014.03.25.01.27.12
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 25 Mar 2014 01:27:12 -0700 (PDT)
+X-Mailer: git-send-email 1.7.10.4
+In-Reply-To: <1395735989-3396-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/244991>
 
-Elia Pinto <gitter.spiros@gmail.com> writes:
+The Git CodingGuidelines prefer the $( ... ) construct for command
+substitution instead of using the back-quotes, or grave accents (`..`).
 
-> and is supported by POSIX. However,all but the simplest uses become
+The backquoted form is the historical method for command substitution,
+and is supported by POSIX. However,all but the simplest uses become
+complicated quickly. In particular,embedded command substitutions
+and/or the use of double quotes require careful escaping with the backs=
+lash
+character. Because of this the POSIX shell adopted the $(=E2=80=A6) fea=
+ture from
+the Korn shell.
 
-Missing space after comma.
+Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+---
+ t/t3100-ls-tree-restrict.sh |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> complicated quickly. In particular,embedded command substitutions
-
-Ditto.
-
-(neither should block merging, but they would be worth fixing if you
-need a reroll)
-
-Did you do these 144 patches by hand, or did you use a script (e.g. perl
-substitution or so) to do it? If the later, then you should include
-explanations in your commit message.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+diff --git a/t/t3100-ls-tree-restrict.sh b/t/t3100-ls-tree-restrict.sh
+index eb73c06..325114f 100755
+--- a/t/t3100-ls-tree-restrict.sh
++++ b/t/t3100-ls-tree-restrict.sh
+@@ -28,7 +28,7 @@ test_expect_success \
+      echo Mi >path2/baz/b &&
+      find path? \( -type f -o -type l \) -print |
+      xargs git update-index --add &&
+-     tree=3D`git write-tree` &&
++     tree=3D$(git write-tree) &&
+      echo $tree'
+=20
+ test_output () {
+--=20
+1.7.10.4
