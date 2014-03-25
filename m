@@ -1,55 +1,55 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 040/142] t4010-diff-pathspec.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:23:01 -0700
-Message-ID: <1395768283-31135-41-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 046/142] t4057-diff-combined-paths.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:23:07 -0700
+Message-ID: <1395768283-31135-47-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 25 18:32:52 2014
+X-From: git-owner@vger.kernel.org Tue Mar 25 18:32:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVDS-0004n1-6b
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:32:46 +0100
+	id 1WSVDT-0004n1-Ou
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:32:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755360AbaCYRZk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:25:40 -0400
-Received: from mail-pd0-f181.google.com ([209.85.192.181]:49634 "EHLO
-	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932131AbaCYRZh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:25:37 -0400
-Received: by mail-pd0-f181.google.com with SMTP id p10so715543pdj.40
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:36 -0700 (PDT)
+	id S1755358AbaCYRZt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:25:49 -0400
+Received: from mail-pd0-f182.google.com ([209.85.192.182]:42491 "EHLO
+	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755362AbaCYRZn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:25:43 -0400
+Received: by mail-pd0-f182.google.com with SMTP id y10so720190pdj.13
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=6xlTr6MOKVPkdIROnLBdhy0XlV1uRJCqnzOEZBk56T8=;
-        b=FlzGHRO2izrB50WxeM+19TksOPRce0iKrZvSNj2bKWO4A0zeWfb2isN1fnM0Fs6ADq
-         +cnIGfuo656bZRhr3UBDEv6YstQTom/lE3CeGnxHA52SpYacNWZzpdO9thB0eSkq78E7
-         TpjjJetP+e8KI8O6hPg/vUzkBADkgBpnco8lRXJyfEMAxCkH75NJVPvWWNg6K+6J7Wht
-         K7JNBV0o+ECXVbbpstoQTvxx4zquy0fvqWaBG0UYlVJqk343h+UuqW8QA57yAZvIsCec
-         uBZ4zJm/uiys/6/qwYiYOYZcF7AOuFwVH0UsKVAAHbrMnZwSj1i4rsZUJQEXdjJwqA06
-         I+kw==
-X-Received: by 10.68.129.5 with SMTP id ns5mr12403609pbb.147.1395768336620;
-        Tue, 25 Mar 2014 10:25:36 -0700 (PDT)
+        bh=dCQXTb0xbYqVK5pVeNGM2KcaXyQ/8Myuw3F0YQ7Y+/E=;
+        b=WP7yKrcLklLB4g/mF2cS1Nskx7j3OjykVWzhhl5PO4FdO642sO5EAlIG3ydF009b4M
+         aA0prIUDRFwb4mJ8eOGTaboAj4SBgAgHh8/g7M2Oja/oLobQ4uZekNevyg49Dg2Urrq0
+         03FY2Y4KBvd0WN3SWNwEc7V7NVtBeevmlxhUo0OYIeNWdCuqsdPBXaSgVmWytrTwmxzx
+         tM56rlus7MmJBPd5sL6qahrtdP+r5StkQIDTNeYCcOOoeOfauwsvFkT5aPXSI3XJyL7q
+         eJ9SE57quKkTZyCYXLLzJP1+Ag+aAtw87P0q/rUqhok13zYshIBxHR9fGhRA615tJKgs
+         q61w==
+X-Received: by 10.67.8.102 with SMTP id dj6mr80318337pad.10.1395768342851;
+        Tue, 25 Mar 2014 10:25:42 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.34
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.41
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:25:36 -0700 (PDT)
+        Tue, 25 Mar 2014 10:25:42 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245069>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245070>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,31 +72,23 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t4010-diff-pathspec.sh |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t4057-diff-combined-paths.sh |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t4010-diff-pathspec.sh b/t/t4010-diff-pathspec.sh
-index 2bb9736..bf07841 100755
---- a/t/t4010-diff-pathspec.sh
-+++ b/t/t4010-diff-pathspec.sh
-@@ -18,7 +18,7 @@ test_expect_success \
-      mkdir path1 &&
-      echo rezrov >path1/file1 &&
-      git update-index --add file0 path1/file1 &&
--     tree=3D`git write-tree` &&
-+     tree=3D$(git write-tree) &&
-      echo "$tree" &&
-      echo nitfol >file0 &&
-      echo yomin >path1/file1 &&
-@@ -131,7 +131,7 @@ test_expect_success 'diff multiple wildcard pathspe=
-cs' '
- 	mkdir path2 &&
- 	echo rezrov >path2/file1 &&
- 	git update-index --add path2/file1 &&
--	tree3=3D`git write-tree` &&
-+	tree3=3D$(git write-tree) &&
- 	git diff --name-only $tree $tree3 -- "path2*1" "path1*1" >actual &&
- 	cat <<-\EOF >expect &&
- 	path1/file1
+diff --git a/t/t4057-diff-combined-paths.sh b/t/t4057-diff-combined-pat=
+hs.sh
+index 097e632..dff36b7 100755
+--- a/t/t4057-diff-combined-paths.sh
++++ b/t/t4057-diff-combined-paths.sh
+@@ -5,7 +5,7 @@ test_description=3D'combined diff show only paths that =
+are different to all parent
+ . ./test-lib.sh
+=20
+ # verify that diffc.expect matches output of
+-# `git diff -c --name-only HEAD HEAD^ HEAD^2`
++# $(git diff -c --name-only HEAD HEAD^ HEAD^2)
+ diffc_verify () {
+ 	git diff -c --name-only HEAD HEAD^ HEAD^2 >diffc.actual &&
+ 	test_cmp diffc.expect diffc.actual
 --=20
 1.7.10.4
