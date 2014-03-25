@@ -1,7 +1,7 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 066/142] t5520-pull.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:23:27 -0700
-Message-ID: <1395768283-31135-67-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 082/142] t6034-merge-rename-nocruft.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:23:43 -0700
+Message-ID: <1395768283-31135-83-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -14,42 +14,42 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVDZ-0004n1-HR
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:32:53 +0100
+	id 1WSVDd-0004n1-Tq
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:32:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755419AbaCYR0K convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:26:10 -0400
-Received: from mail-pa0-f45.google.com ([209.85.220.45]:40143 "EHLO
-	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755412AbaCYR0I (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:26:08 -0400
-Received: by mail-pa0-f45.google.com with SMTP id kl14so739095pab.18
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:26:08 -0700 (PDT)
+	id S1755441AbaCYR00 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:26:26 -0400
+Received: from mail-pd0-f170.google.com ([209.85.192.170]:35986 "EHLO
+	mail-pd0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754784AbaCYR0W (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:26:22 -0400
+Received: by mail-pd0-f170.google.com with SMTP id v10so715557pde.15
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:26:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=ZeNpsvOgUfvrBkCLQfmRXKeWOlIWlmL9G3lsy5eS3H4=;
-        b=i7/Rp7jvDf9WKN2twBMPkniLb6jzPgu1wL9U7Es86Ei6v2lLAi8R+l3h4pl/5LkU+Q
-         Ykkpcp3z1axcIBSy/9NCqsC7cxTFdTXNfsOOj2sIi9I0GOyevsRu2nPNyEEx5c9U8rxM
-         6XBS6hsiDWtYsA57qKaQhFPRJ2fjOjTUHiIrFQmJxd9+g21OqNTbuEPnd4ZirD35nRh3
-         6CXhgq4xLEmHaKtkEfcup7QDxxyC7dK9/CZXxtAF/BDw2PxU+YxIDW+MYhU3ne8xP6PO
-         K/LlHOwseFVwQ/INGXXgFadL5vo5lLcS1hzc3JFVRpBwED5SFcqP6G2IYBqWsM3H4VwM
-         Uyhw==
-X-Received: by 10.66.145.166 with SMTP id sv6mr81154336pab.31.1395768364280;
-        Tue, 25 Mar 2014 10:26:04 -0700 (PDT)
+        bh=glYJRX7yYOrrJskW0ci1LAwyt8EvPFoWSXDPiZ1vP4o=;
+        b=fbh6p9lWYN12DFlT6pcUeR5cfNDRR9R8XnKH7rT5Y88zCStixUf9ZIneejgZKPNjRk
+         Ok+JV8b90u5DHfrTyjC9q2OtNSrAGpRF0/RzJvBJw11AtbXaOJmI5pTnzag3DEkXjVpp
+         kqtlFbPjL2mNz5q6Bko1Tj4co56+MxDTg5n7FcYIVKR9Uh7gpOK3WEJy5f3qSi45oWBX
+         +zufuLVSBKT98QO7K3b2KfLhkTzc9AOafPBk4iURSCC5ANvnLxPy0nFLZgV8kWShYnZm
+         xVYg/UJtbP9ajd68syGb8A9AK73Jb9zt6OtzKnPzNXBVTtvMqyGQBF9zCExI18EY7RTH
+         lXgw==
+X-Received: by 10.68.125.164 with SMTP id mr4mr79187515pbb.27.1395768381946;
+        Tue, 25 Mar 2014 10:26:21 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.26.03
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.26.20
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:26:03 -0700 (PDT)
+        Tue, 25 Mar 2014 10:26:21 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245077>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,47 +72,23 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t5520-pull.sh |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ t/t6034-merge-rename-nocruft.sh |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index 227d293..a68c099 100755
---- a/t/t5520-pull.sh
-+++ b/t/t5520-pull.sh
-@@ -9,7 +9,7 @@ modify () {
- 	mv "$2.x" "$2"
- }
-=20
--D=3D`pwd`
-+D=3D$(pwd)
-=20
- test_expect_success setup '
-=20
-@@ -94,9 +94,9 @@ test_expect_success 'test . as a remote' '
- 	echo updated >file &&
- 	git commit -a -m updated &&
- 	git checkout copy &&
--	test `cat file` =3D file &&
-+	test $(cat file) =3D file &&
- 	git pull &&
--	test `cat file` =3D updated
-+	test $(cat file) =3D updated
- '
-=20
- test_expect_success 'the default remote . should not break explicit pu=
-ll' '
-@@ -105,9 +105,9 @@ test_expect_success 'the default remote . should no=
-t break explicit pull' '
- 	git commit -a -m modified &&
- 	git checkout copy &&
- 	git reset --hard HEAD^ &&
--	test `cat file` =3D file &&
-+	test $(cat file) =3D file &&
- 	git pull . second &&
--	test `cat file` =3D modified
-+	test $(cat file) =3D modified
- '
-=20
- test_expect_success '--rebase' '
+diff --git a/t/t6034-merge-rename-nocruft.sh b/t/t6034-merge-rename-noc=
+ruft.sh
+index 65be95f..34f17be 100755
+--- a/t/t6034-merge-rename-nocruft.sh
++++ b/t/t6034-merge-rename-nocruft.sh
+@@ -117,7 +117,7 @@ test_expect_success 'merge blue into white (A->B, m=
+od A, A untracked)' \
+ 		echo "BAD: A does not exist in working directory"
+ 		return 1
+ 	}
+-	test `cat A` =3D dirty || {
++	test $(cat A) =3D dirty || {
+ 		echo "BAD: A content is wrong"
+ 		return 1
+ 	}
 --=20
 1.7.10.4
