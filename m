@@ -1,107 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH 1/4] test-lib: add test_dir_is_empty()
-Date: Tue, 25 Mar 2014 13:49:28 -0700
-Message-ID: <xmqq4n2mknqf.fsf@gitster.dls.corp.google.com>
-References: <5331B6F6.60501@web.de> <5331B717.5010600@web.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 03/10] t4018: an infrastructure to test hunk headers
+Date: Tue, 25 Mar 2014 17:42:33 -0400
+Message-ID: <20140325214232.GA18217@sigill.intra.peff.net>
+References: <53282741.5010609@web.de>
+ <cover.1395433874.git.j6t@kdbg.org>
+ <52505977c20a480941ae1f85f50ffb7a0bbffedb.1395433874.git.j6t@kdbg.org>
+ <20140324213659.GF13728@sigill.intra.peff.net>
+ <20140324213913.GA14890@sigill.intra.peff.net>
+ <5331E1F6.1070506@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Jonathan Nieder p <jrnieder@gmail.com>,
-	Jeff King <peff@peff.net>, Heiko Voigt <hvoigt@hvoigt.net>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Tue Mar 25 21:49:39 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Brandon Casey <drafnel@gmail.com>, git@vger.kernel.org,
+	Thomas Rast <tr@thomasrast.ch>, l.s.r@web.de,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Tue Mar 25 22:42:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSYHy-0004na-4C
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 21:49:38 +0100
+	id 1WSZ7J-0004kV-2L
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 22:42:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754817AbaCYUtc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Mar 2014 16:49:32 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55048 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754412AbaCYUtb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 16:49:31 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BF2B3763AD;
-	Tue, 25 Mar 2014 16:49:30 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+KL/Ay0ttlzydprsjRXEn3aSbQk=; b=OLZst9
-	dPBgK3ZYhr6z9qaY/bwTdDVgdbw1GbnX9FQiaurPpMnGEFRY5mb+w/krtEnAyrHD
-	kwq+mw+pDeTqv8aBD9IyQIlLfAwqqpfL3X7ECOi4A+VgWRIOKYVVxslMxvSdc5nq
-	oeJZiIL7OjU9dgw41K6w91uhiZPIOm6y78pY4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Ges5sKm8MWQixJE73GiwzafxCFqVZph1
-	+DXF1TgbItJPXzLvre1WwhrzLLvC1YwGtruVYoZdd9SU5O2+jnit/hA5lID/hA8E
-	IzI/Kri3aZklM6bjKkW1kTtfnG80tfSIn4/hQPfN3db//Z78MsUjPpn1Fz6BJJ9w
-	ZZrgbUbrfGI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AEC7B763AC;
-	Tue, 25 Mar 2014 16:49:30 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0BA4A763AB;
-	Tue, 25 Mar 2014 16:49:29 -0400 (EDT)
-In-Reply-To: <5331B717.5010600@web.de> (Jens Lehmann's message of "Tue, 25 Mar
-	2014 18:04:23 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: F621FE5A-B45E-11E3-9E18-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751821AbaCYVmg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Mar 2014 17:42:36 -0400
+Received: from cloud.peff.net ([50.56.180.127]:47158 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751380AbaCYVmf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 17:42:35 -0400
+Received: (qmail 18711 invoked by uid 102); 25 Mar 2014 21:42:35 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 25 Mar 2014 16:42:35 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 25 Mar 2014 17:42:33 -0400
+Content-Disposition: inline
+In-Reply-To: <5331E1F6.1070506@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245154>
 
-Jens Lehmann <Jens.Lehmann@web.de> writes:
+On Tue, Mar 25, 2014 at 09:07:18PM +0100, Johannes Sixt wrote:
 
-> For the upcoming submodule test framework we often need to assert that an
-> empty directory exists in the work tree. Add the test_dir_is_empty()
-> function which asserts that the given argument is an empty directory.
->
-> Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
-> ---
->
-> I believe this one is pretty straightforward (unless I missed that this
-> functionality already exists someplace I forgot to look ;-).
+> Am 24.03.2014 22:39, schrieb Jeff King:
+> > On Mon, Mar 24, 2014 at 05:36:59PM -0400, Jeff King wrote:
+> > 
+> >>> +How to write RIGHT test cases
+> >>> +=============================
+> >>> +
+> >>> +Insert the word "ChangeMe" (exactly this form) at a distance of
+> >>> +at least two lines from the line that must appear in the hunk header.
+> >>
+> >> The existing tests use -U1 to make writing cases simpler. Is there a
+> >> reason not to continue that (or if you found that porting the existing
+> >> cases was not a chore with -U3, I can buy that argument, too)?
+> > 
+> > I take it back. You did keep "-U1" in the result. Is this "two lines"
+> > rule necessary, then?
+> 
+> When we have
+> 
+>    one
+>    two
+>    three
+> 
+> how would you describe the distance between "one" and "three"?
 
-I am not very thrilled to see that it depends on "." and ".." to
-always exist, which may be true for all POSIX filesystems, but
-still...
+I read it as "two lines between". Though that would be appropriate for
+-U2, so I think I probably had an off-by-one in my head, then, too.
 
-Do expected callsites of this helper care if "$1" is a symbolic link
-that points at an empty directory?
+So it is probably fine as-is, and this was mostly just me confusing
+myself. Sorry for the noise.
 
-What do expected callsites really want to ensure?  In other words,
-why do they care if the directory is empty?  Is it to make sure,
-after some operation, they can "rmdir" the directory?
-
->  t/test-lib-functions.sh | 11 +++++++++++
->  1 file changed, 11 insertions(+)
->
-> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-> index 158e10a..93d10cd 100644
-> --- a/t/test-lib-functions.sh
-> +++ b/t/test-lib-functions.sh
-> @@ -489,6 +489,17 @@ test_path_is_dir () {
->  	fi
->  }
->
-> +# Check if the directory exists and is empty as expected, barf otherwise.
-> +test_dir_is_empty () {
-> +	test_path_is_dir "$1" &&
-> +	if test $(ls -a1 "$1" | wc -l) != 2
-> +	then
-> +		echo "Directory '$1' is not empty, it contains:"
-> +		ls -la "$1"
-> +		return 1
-> +	fi
-> +}
-> +
->  test_path_is_missing () {
->  	if [ -e "$1" ]
->  	then
+-Peff
