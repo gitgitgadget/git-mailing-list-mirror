@@ -1,7 +1,7 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 021/142] t1020-subdirectory.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:22:42 -0700
-Message-ID: <1395768283-31135-22-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 037/142] t3905-stash-include-untracked.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:22:58 -0700
+Message-ID: <1395768283-31135-38-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -14,42 +14,42 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVEB-0004n1-Ov
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:32 +0100
+	id 1WSVE5-0004n1-Cx
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755343AbaCYRdI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:33:08 -0400
-Received: from mail-pd0-f169.google.com ([209.85.192.169]:50946 "EHLO
-	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754049AbaCYRZP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:25:15 -0400
-Received: by mail-pd0-f169.google.com with SMTP id fp1so722458pdb.14
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:14 -0700 (PDT)
+	id S1755576AbaCYRcJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:32:09 -0400
+Received: from mail-pb0-f44.google.com ([209.85.160.44]:46211 "EHLO
+	mail-pb0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932124AbaCYRZc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:25:32 -0400
+Received: by mail-pb0-f44.google.com with SMTP id rp16so742145pbb.31
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=9ykslSj0OgU9XhUTfgbifg7TqCMo+KWJCHwXOnsd/Fk=;
-        b=wOjy/gsjl/v7iE1kZpL+LE6nnn05oeGSTJCcqGBZ/1pWCMrOYoDU9tpGihqI+ZwUkt
-         CT43ZigUkEYDkQVP1Mbb1SbkV+aCRBl7hvYOWbnvZ0myQAJ7JqTVbIL6e1SIXmZfTXIr
-         lbk7n5ZojIxZpAKQsAyzNPZq+hIW56YexaRLGWZ+DBfJoSNoyzPrYB8vkJfP2+0qM8Sp
-         Ehca23ngiJ4B/oFJbSCrpwbWJNPTKp7xni9qAl2vzkgEyDiucEB/u2d1onVRit8EH2xD
-         8AdyORB72XSyW898MtMWy/5YvxQwOP4BNDCN+wyB3c4b0fQlPNhd/Ru5IKwBWpFX7AXt
-         SpdQ==
-X-Received: by 10.66.164.165 with SMTP id yr5mr80101316pab.63.1395768314429;
-        Tue, 25 Mar 2014 10:25:14 -0700 (PDT)
+        bh=HS5iC54h1tFAGTh2RtSOdBz3IeSg7oHfEHXJSP0YAck=;
+        b=jfNIdz2lSU5ZfU3Q+RXH91Xi9hanGR7I1TWrNs+YuUYdeWHfC3kzGdB/ypO3e0bKAR
+         uPlcEV+TtVG7BnfgTvLzfGCa/rg8BCdsAFWdHtHuHmv3gCFiBkJFmEJax+vQu0ccFJgz
+         AU+nsxAPrx9k1laouAji4YqqDfJ5JJXXRy2bJiU0E1Tzc8w7w0vocGxPqhJsBVn2BLk/
+         li8eeG0Oqd0T1g8qvbKwTta7gJgBgNk9yitBjVZ6YXF4VDed3alH6F/ZlvYMZWnjFxxu
+         Y+RBru0denEZxiER9EhBO7FQTAf45dDN8wM9owF8Meg+2PpytUBMvAix8GISdTwZ3L1B
+         Uu0A==
+X-Received: by 10.68.139.2 with SMTP id qu2mr11163551pbb.164.1395768331912;
+        Tue, 25 Mar 2014 10:25:31 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.13
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.30
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:25:13 -0700 (PDT)
+        Tue, 25 Mar 2014 10:25:31 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245127>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,90 +72,25 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t1020-subdirectory.sh |   22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ t/t3905-stash-include-untracked.sh |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/t1020-subdirectory.sh b/t/t1020-subdirectory.sh
-index 6902320..62c0d25 100755
---- a/t/t1020-subdirectory.sh
-+++ b/t/t1020-subdirectory.sh
-@@ -20,27 +20,27 @@ test_expect_success setup '
-=20
- test_expect_success 'update-index and ls-files' '
- 	git update-index --add one &&
--	case "`git ls-files`" in
-+	case "$(git ls-files)" in
- 	one) echo pass one ;;
- 	*) echo bad one; exit 1 ;;
- 	esac &&
- 	(
- 		cd dir &&
- 		git update-index --add two &&
--		case "`git ls-files`" in
-+		case "$(git ls-files)" in
- 		two) echo pass two ;;
- 		*) echo bad two; exit 1 ;;
- 		esac
- 	) &&
--	case "`git ls-files`" in
-+	case "$(git ls-files)" in
- 	dir/two"$LF"one) echo pass both ;;
- 	*) echo bad; exit 1 ;;
- 	esac
+diff --git a/t/t3905-stash-include-untracked.sh b/t/t3905-stash-include=
+-untracked.sh
+index a5e7e6b..f372fc8 100755
+--- a/t/t3905-stash-include-untracked.sh
++++ b/t/t3905-stash-include-untracked.sh
+@@ -96,8 +96,8 @@ test_expect_success 'stash pop after save --include-u=
+ntracked leaves files untra
+ 	git stash pop &&
+ 	git status --porcelain >actual &&
+ 	test_cmp expect actual &&
+-	test "1" =3D "`cat file2`" &&
+-	test untracked =3D "`cat untracked/untracked`"
++	test "1" =3D "$(cat file2)" &&
++	test untracked =3D "$(cat untracked/untracked)"
  '
 =20
- test_expect_success 'cat-file' '
--	two=3D`git ls-files -s dir/two` &&
--	two=3D`expr "$two" : "[0-7]* \\([0-9a-f]*\\)"` &&
-+	two=3D$(git ls-files -s dir/two) &&
-+	two=3D$(expr "$two" : "[0-7]* \\([0-9a-f]*\\)") &&
- 	echo "$two" &&
- 	git cat-file -p "$two" >actual &&
- 	cmp dir/two actual &&
-@@ -55,18 +55,18 @@ rm -f actual dir/actual
- test_expect_success 'diff-files' '
- 	echo a >>one &&
- 	echo d >>dir/two &&
--	case "`git diff-files --name-only`" in
-+	case "$(git diff-files --name-only)" in
- 	dir/two"$LF"one) echo pass top ;;
- 	*) echo bad top; exit 1 ;;
- 	esac &&
- 	# diff should not omit leading paths
- 	(
- 		cd dir &&
--		case "`git diff-files --name-only`" in
-+		case "$(git diff-files --name-only)" in
- 		dir/two"$LF"one) echo pass subdir ;;
- 		*) echo bad subdir; exit 1 ;;
- 		esac &&
--		case "`git diff-files --name-only .`" in
-+		case "$(git diff-files --name-only .)" in
- 		dir/two) echo pass subdir limited ;;
- 		*) echo bad subdir limited; exit 1 ;;
- 		esac
-@@ -74,11 +74,11 @@ test_expect_success 'diff-files' '
- '
-=20
- test_expect_success 'write-tree' '
--	top=3D`git write-tree` &&
-+	top=3D$(git write-tree) &&
- 	echo $top &&
- 	(
- 		cd dir &&
--		sub=3D`git write-tree` &&
-+		sub=3D$(git write-tree) &&
- 		echo $sub &&
- 		test "z$top" =3D "z$sub"
- 	)
-@@ -96,7 +96,7 @@ test_expect_success 'checkout-index' '
-=20
- test_expect_success 'read-tree' '
- 	rm -f one dir/two &&
--	tree=3D`git write-tree` &&
-+	tree=3D$(git write-tree) &&
- 	read_tree_u_must_succeed --reset -u "$tree" &&
- 	cmp one original.one &&
- 	cmp dir/two original.two &&
+ git clean --force --quiet -d
 --=20
 1.7.10.4
