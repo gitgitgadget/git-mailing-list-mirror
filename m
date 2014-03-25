@@ -1,55 +1,55 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 043/142] t4014-format-patch.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:23:04 -0700
-Message-ID: <1395768283-31135-44-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 044/142] t4036-format-patch-signer-mime.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:23:05 -0700
+Message-ID: <1395768283-31135-45-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 25 18:32:56 2014
+X-From: git-owner@vger.kernel.org Tue Mar 25 18:32:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVDV-0004n1-RV
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:32:50 +0100
+	id 1WSVDV-0004n1-B7
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:32:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755377AbaCYRZw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:25:52 -0400
-Received: from mail-pb0-f41.google.com ([209.85.160.41]:35025 "EHLO
-	mail-pb0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755359AbaCYRZk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:25:40 -0400
-Received: by mail-pb0-f41.google.com with SMTP id jt11so750450pbb.14
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:39 -0700 (PDT)
+	id S1755375AbaCYRZu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:25:50 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:42666 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754148AbaCYRZl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:25:41 -0400
+Received: by mail-pb0-f46.google.com with SMTP id rq2so743007pbb.5
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=R2iYvWZi+WlBxUFsoWXiKwaeSLm4cTCpoS77CSz8CVM=;
-        b=qniPqMCjVvgl3UwPAGfFO78llx9LnJBHpBYQMbMgCpRTnhDgFb6kJrLy+GMT3dnrKG
-         NaghoegoX+35sXzwq8b/l4bP4rPWmSELhN7iY/qR4RMm9GVVIPjqVybsKuTCR5Y2P3Qs
-         ABFr3MLMldxnxg4gK2bQtjB+WzgQFVtOMo9k+kbOHCFGKznr6lgLaRkAwq6IExLRrn/F
-         bPpqVBCWRHz3TD9d09C5dk14uWGKqqeB7bzCi79ylydGlKQl5/AfySAZpDvZpkbYWIaE
-         SBy8HNTZ9b9O2cyCEExfereHmA0KwBGTGp466gqzKhvwax8lQbO4KCeEs0bZonSb+VEZ
-         rQvA==
-X-Received: by 10.66.164.165 with SMTP id yr5mr80103657pab.63.1395768339783;
-        Tue, 25 Mar 2014 10:25:39 -0700 (PDT)
+        bh=tplPcwfu4O1lfW9n38BovbIVltlhUZU2dCTxWOpae+c=;
+        b=mIzyjCClDuJT4IKmMPubBwResrz4HtvQS19IdGRAaQsOomaelDOL2SL/t1aVRvxPyF
+         kCm+WAcW2lSDpzyuMPY+EY+s+riWshBEPqdzpjBFOYmOokNFCfZsdlo+SImC3mWFNUhl
+         R7fOuOj8LY7j4qolrUPHYr7NXN4rOujCiMhvU67kcgBDTPinka1LaN7s9lmKxCTfGxM0
+         ko+mptnKlcMcZSDZgZYBBBLc3+qO1RP6Wre+CHPYNrVymEfqW8Y42GTtoZNiRLVfghR8
+         22RNzhpcMKtMfci7D13mlzCsUOoWssqlL67CHXiEzXCcMAD5KmKrHWtu7EGJHedrR/d5
+         3FSg==
+X-Received: by 10.66.146.170 with SMTP id td10mr80963517pab.105.1395768340872;
+        Tue, 25 Mar 2014 10:25:40 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.38
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.39
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:25:39 -0700 (PDT)
+        Tue, 25 Mar 2014 10:25:40 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245074>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,59 +72,23 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t4014-format-patch.sh |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ t/t4036-format-patch-signer-mime.sh |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index 73194b2..f9ed598 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -43,7 +43,7 @@ test_expect_success setup '
- test_expect_success "format-patch --ignore-if-in-upstream" '
+diff --git a/t/t4036-format-patch-signer-mime.sh b/t/t4036-format-patch=
+-signer-mime.sh
+index ba43f18..98d9713 100755
+--- a/t/t4036-format-patch-signer-mime.sh
++++ b/t/t4036-format-patch-signer-mime.sh
+@@ -42,7 +42,7 @@ test_expect_success 'attach and signoff do not duplic=
+ate mime headers' '
 =20
- 	git format-patch --stdout master..side >patch0 &&
--	cnt=3D`grep "^From " patch0 | wc -l` &&
-+	cnt=3D$(grep "^From " patch0 | wc -l) &&
- 	test $cnt =3D 3
+ 	GIT_COMMITTER_NAME=3D"=E3=81=AF=E3=81=BE=E3=81=AE =E3=81=B5=E3=81=AB=E3=
+=81=8A=E3=81=86" \
+ 	git format-patch -s --stdout -1 --attach >output &&
+-	test `grep -ci ^MIME-Version: output` =3D 1
++	test $(grep -ci ^MIME-Version: output) =3D 1
 =20
- '
-@@ -52,7 +52,7 @@ test_expect_success "format-patch --ignore-if-in-upst=
-ream" '
-=20
- 	git format-patch --stdout \
- 		--ignore-if-in-upstream master..side >patch1 &&
--	cnt=3D`grep "^From " patch1 | wc -l` &&
-+	cnt=3D$(grep "^From " patch1 | wc -l) &&
- 	test $cnt =3D 2
-=20
- '
-@@ -69,7 +69,7 @@ test_expect_success "format-patch doesn't consider me=
-rge commits" '
- 	git checkout -b merger master &&
- 	test_tick &&
- 	git merge --no-ff slave &&
--	cnt=3D`git format-patch -3 --stdout | grep "^From " | wc -l` &&
-+	cnt=3D$(git format-patch -3 --stdout | grep "^From " | wc -l) &&
- 	test $cnt =3D 3
- '
-=20
-@@ -77,7 +77,7 @@ test_expect_success "format-patch result applies" '
-=20
- 	git checkout -b rebuild-0 master &&
- 	git am -3 patch0 &&
--	cnt=3D`git rev-list master.. | wc -l` &&
-+	cnt=3D$(git rev-list master.. | wc -l) &&
- 	test $cnt =3D 2
- '
-=20
-@@ -85,7 +85,7 @@ test_expect_success "format-patch --ignore-if-in-upst=
-ream result applies" '
-=20
- 	git checkout -b rebuild-1 master &&
- 	git am -3 patch1 &&
--	cnt=3D`git rev-list master.. | wc -l` &&
-+	cnt=3D$(git rev-list master.. | wc -l) &&
- 	test $cnt =3D 2
  '
 =20
 --=20
