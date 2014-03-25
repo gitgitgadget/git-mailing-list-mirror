@@ -1,55 +1,55 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 057/142] t5304-prune.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:23:18 -0700
-Message-ID: <1395768283-31135-58-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 054/142] t5301-sliding-window.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:23:15 -0700
+Message-ID: <1395768283-31135-55-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 25 18:33:21 2014
+X-From: git-owner@vger.kernel.org Tue Mar 25 18:33:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVDz-0004n1-8V
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:19 +0100
+	id 1WSVE0-0004n1-BF
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754148AbaCYRal convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:30:41 -0400
-Received: from mail-pa0-f48.google.com ([209.85.220.48]:55883 "EHLO
-	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755381AbaCYRZz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:25:55 -0400
-Received: by mail-pa0-f48.google.com with SMTP id hz1so736363pad.21
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:55 -0700 (PDT)
+	id S1755125AbaCYRay convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:30:54 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:52242 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755376AbaCYRZw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:25:52 -0400
+Received: by mail-pb0-f46.google.com with SMTP id rq2so749097pbb.33
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=7MipbN51Cn5KujugsZ3jcVWzk6nCNmrZCp0P/53fQ/0=;
-        b=FUsuRw/TxnFJqlSY4BgfDJEiX1AD4fK6687FRwZs7gyd1L2oRgTUHmDi6jm2iBG0x8
-         kQxzPyKaWv7CNrp+7g/jL6bHkNmOU1kSJCIwuIKVA+iNvvxriX/VhTLtwUuPa2DaS7Ka
-         DB/PY5HqQdMSlxL5wjvdMxq0x1qazVC6oJEpCvG5qP2b1hD7yTL9UBpgu7A+NeS5SsHd
-         nfcePROAvyroy5KBasrAeW0MBfpKJSN09ekEFGEDGPshLziC15qLsEmUeY7DFbdmdGN9
-         t1m6VpbfsknuaH8MGVPU2pJnDOs2sK6X95+/u8tTmf5PlGP82BIEsxIbc5fDy/wd74D9
-         9F8A==
-X-Received: by 10.68.76.68 with SMTP id i4mr80832765pbw.73.1395768354991;
-        Tue, 25 Mar 2014 10:25:54 -0700 (PDT)
+        bh=hIlcm0jRqvpee6nBXYDhkkY+oD1HCShmbIHZ1vAq6Yo=;
+        b=mb3U7ue33MdV2AQQFNOLVu5sqWTZAl1Plm8530ELsJx9qDbdPMkk0Qfsn7bthwnY3G
+         zMN0jejop2AxXGRCfJOfrujmPGw8P5xCNE7wL9o+7NoQ5EzIrn3Hx4W7Wu2x3VG5WZ7O
+         aDvzz8omlg6GQfyWS1/gpEiRXIp2dshAw53JA0YLPoQmjwBHNd6YyP5cCSUAaHd9dVbZ
+         zqiDqhsZJAhpe63pUqYoJPFgOH2Ssl08nI7WTbdQaNuGHawJ8mEA37a0/iSKwf6/HrfU
+         vLrhypBuylog//daZGECdIKYUg4FNK+n1hO9xE2ho73yA2BYZKL3O76WTvf02/czaS5F
+         V02w==
+X-Received: by 10.68.217.234 with SMTP id pb10mr17545218pbc.142.1395768351698;
+        Tue, 25 Mar 2014 10:25:51 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.53
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.50
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:25:54 -0700 (PDT)
+        Tue, 25 Mar 2014 10:25:51 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245098>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,21 +72,44 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t5304-prune.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t5301-sliding-window.sh |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/t/t5304-prune.sh b/t/t5304-prune.sh
-index 66c9a41..84501a5 100755
---- a/t/t5304-prune.sh
-+++ b/t/t5304-prune.sh
-@@ -222,7 +222,7 @@ EOF
- '
+diff --git a/t/t5301-sliding-window.sh b/t/t5301-sliding-window.sh
+index 2fc5af6..cae8c2e 100755
+--- a/t/t5301-sliding-window.sh
++++ b/t/t5301-sliding-window.sh
+@@ -16,12 +16,12 @@ test_expect_success \
+          git update-index --add $i || return 1
+      done &&
+      echo d >d && cat c >>d && git update-index --add d &&
+-     tree=3D`git write-tree` &&
+-     commit1=3D`git commit-tree $tree </dev/null` &&
++     tree=3D$(git write-tree) &&
++     commit1=3D$(git commit-tree $tree </dev/null) &&
+      git update-ref HEAD $commit1 &&
+      git repack -a -d &&
+-     test "`git count-objects`" =3D "0 objects, 0 kilobytes" &&
+-     pack1=3D`ls .git/objects/pack/*.pack` &&
++     test "$(git count-objects)" =3D "0 objects, 0 kilobytes" &&
++     pack1=3D$(ls .git/objects/pack/*.pack) &&
+      test -f "$pack1"'
 =20
- test_expect_success 'prune .git/shallow' '
--	SHA1=3D`echo hi|git commit-tree HEAD^{tree}` &&
-+	SHA1=3D$(echo hi|git commit-tree HEAD^{tree}) &&
- 	echo $SHA1 >.git/shallow &&
- 	git prune --dry-run >out &&
- 	grep $SHA1 .git/shallow &&
+ test_expect_success \
+@@ -43,11 +43,11 @@ test_expect_success \
+     'repack -a -d, packedGit{WindowSize,Limit} =3D=3D 1 page' \
+     'git config core.packedGitWindowSize 512 &&
+      git config core.packedGitLimit 512 &&
+-     commit2=3D`git commit-tree $tree -p $commit1 </dev/null` &&
++     commit2=3D$(git commit-tree $tree -p $commit1 </dev/null) &&
+      git update-ref HEAD $commit2 &&
+      git repack -a -d &&
+-     test "`git count-objects`" =3D "0 objects, 0 kilobytes" &&
+-     pack2=3D`ls .git/objects/pack/*.pack` &&
++     test "$(git count-objects)" =3D "0 objects, 0 kilobytes" &&
++     pack2=3D$(ls .git/objects/pack/*.pack) &&
+      test -f "$pack2" &&
+      test "$pack1" \!=3D "$pack2"'
+=20
 --=20
 1.7.10.4
