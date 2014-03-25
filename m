@@ -1,98 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Borrowing objects from nearby repositories
-Date: Tue, 25 Mar 2014 10:02:23 -0700
-Message-ID: <xmqqtxammctc.fsf@gitster.dls.corp.google.com>
-References: <BFF5FBC7-8F53-4958-8D56-90EADD3AD626@kellerfarm.com>
-	<CACBZZX5teZuqtNkPT4PdXJn=g34cOhRH2oNehROT8kJ_M2cgfg@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: [RFC/PATCH 1/4] test-lib: add test_dir_is_empty()
+Date: Tue, 25 Mar 2014 18:04:23 +0100
+Message-ID: <5331B717.5010600@web.de>
+References: <5331B6F6.60501@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Andrew Keller <andrew@kellerfarm.com>,
-	Git List <git@vger.kernel.org>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 25 18:02:36 2014
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder p <jrnieder@gmail.com>,
+	Jeff King <peff@peff.net>, Heiko Voigt <hvoigt@hvoigt.net>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Mar 25 18:04:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSUkD-0006Mn-Mi
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:02:34 +0100
+	id 1WSUmA-0000Jz-0b
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:04:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754036AbaCYRC2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:02:28 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57834 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753948AbaCYRC1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 Mar 2014 13:02:27 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 426517740B;
-	Tue, 25 Mar 2014 13:02:27 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=dzYhJInQaNpt
-	MGdPwNXwJFZjkAo=; b=DOlBQZJUTNtPyYWnTEwIB3YxhvgRIxG5P9kZTQYv5QQZ
-	Ikre+2RKaHDM+x1eGNan0JLMTtSKzOe0KTthbLQkp4/U4sTl9qMIo7Y/3bwee5if
-	bJTydl3oU5iyRW3y7ZFRlEHRlhWq4PkKmvbgrnyQfLexkbmGYPL7plVVJjg58jc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=CIg9DY
-	tAw/Sgyg5atLLk5lM47kZXGN5Y9y6OXWMCgVMw0DxgTbMOY1nQmbuLLfhpyURRXQ
-	rTpRTgLAQ1em4wJb73v7fnt8IQ0sPh/B8NPYGHli4ORf+BFAistCVIDxFmMVdBfN
-	c6iIlqRCq75DUVhmsEsYZv2CkleKdD1KqPb9M=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2E06977409;
-	Tue, 25 Mar 2014 13:02:27 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 703AB77407;
-	Tue, 25 Mar 2014 13:02:26 -0400 (EDT)
-In-Reply-To: <CACBZZX5teZuqtNkPT4PdXJn=g34cOhRH2oNehROT8kJ_M2cgfg@mail.gmail.com>
-	(=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Mon, 24 Mar
- 2014 22:21:03
-	+0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 3DD6E9F6-B43F-11E3-B983-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753547AbaCYRE1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Mar 2014 13:04:27 -0400
+Received: from mout.web.de ([212.227.15.3]:61476 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751722AbaCYRE1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:04:27 -0400
+Received: from [192.168.178.41] ([84.132.146.250]) by smtp.web.de (mrweb102)
+ with ESMTPSA (Nemesis) id 0MZDP6-1WnT2C3Jfg-00KzYv; Tue, 25 Mar 2014 18:04:24
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
+In-Reply-To: <5331B6F6.60501@web.de>
+X-Enigmail-Version: 1.6
+X-Provags-ID: V03:K0:5dcPtXQN1sV9pZpaba0tdRkyuBl+HajVqQnFO7NwmphuHjPlDzo
+ fTSjMc4W4cDJOTvPZ0G3oUMq97EDrHIgox7sU0xQBV59sBhVUUWwWzcQ9necRr1XfQlqYES
+ XV1a5VLNt6loZUAQxcK4qnCZKxOLu7Y6oGh/zLAgHbINOw6qWIvKV8zMwCEHdSXvGCDI3fU
+ S0UG3Z41bf+LT+H8xpMWg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245045>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+For the upcoming submodule test framework we often need to assert that an
+empty directory exists in the work tree. Add the test_dir_is_empty()
+function which asserts that the given argument is an empty directory.
 
->> 1) Introduce '--borrow' to `git-fetch`.  This would behave similarly
-> to '--reference', except that it operates on a temporary basis, and
-> does not assume that the reference repository will exist after the
-> operation completes, so any used objects are copied into the local
-> objects database.  In theory, this mechanism would be distinct from
-> --reference', so if both are used, some objects would be copied, and
-> some objects would be accessible via a reference repository reference=
-d
-> by the alternates file.
->
-> Isn't this the same as git clone --reference <path> --no-hardlinks
-> <url> ?
->
-> Also without --no-hardlinks we're not assuming that the other repo
-> doesn't go away (you could rm-rf it), just that the files won't be
-> *modified*, which Git won't do, but you could manually do with other
-> tools, so the default is to hardlink.
+Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+---
 
-I think that the standard practice with the existing toolset is to
-clone with reference and then repack.  That is:
+I believe this one is pretty straightforward (unless I missed that this
+functionality already exists someplace I forgot to look ;-).
 
-    $ git clone --reference <borrowee> git://over/there mine
-    $ cd mine
-    $ git repack -a -d
+ t/test-lib-functions.sh | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-And then you can try this:
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 158e10a..93d10cd 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -489,6 +489,17 @@ test_path_is_dir () {
+ 	fi
+ }
 
-    $ mv .git/objects/info/alternates .git/objects/info/alternates.disa=
-bled
-    $ git fsck
-
-to make sure that you are no longer borrowing anything from the
-borrowee.  Once you are satisfied, you can remove the saved-away
-alternates.disabled file.
++# Check if the directory exists and is empty as expected, barf otherwise.
++test_dir_is_empty () {
++	test_path_is_dir "$1" &&
++	if test $(ls -a1 "$1" | wc -l) != 2
++	then
++		echo "Directory '$1' is not empty, it contains:"
++		ls -la "$1"
++		return 1
++	fi
++}
++
+ test_path_is_missing () {
+ 	if [ -e "$1" ]
+ 	then
+-- 
+1.9.1.327.g3d8d896
