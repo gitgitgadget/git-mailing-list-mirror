@@ -1,7 +1,7 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 015/142] t0300-credentials.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:22:36 -0700
-Message-ID: <1395768283-31135-16-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 020/142] t1004-read-tree-m-u-wf.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:22:41 -0700
+Message-ID: <1395768283-31135-21-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -14,42 +14,42 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVEB-0004n1-7E
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:31 +0100
+	id 1WSVEC-0004n1-A2
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755336AbaCYRZO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:25:14 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:43935 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754049AbaCYRZH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:25:07 -0400
-Received: by mail-pa0-f42.google.com with SMTP id fb1so741625pad.15
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:07 -0700 (PDT)
+	id S1755619AbaCYRdS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:33:18 -0400
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:65474 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755321AbaCYRZN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:25:13 -0400
+Received: by mail-pa0-f53.google.com with SMTP id ld10so740018pab.12
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:25:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=ZmS6Ol+xBatFqoM6Z3AymO+itCM5OAI/V7zKAoXloGY=;
-        b=wjd9+Y8XbAROp0Jdfg9HAcLxgDgB1sxV77RDxhC95UHuPyLFg1D7086R8ksk2hFUN2
-         MfS/DWAHLwe8nYpDI+0kEIXQIVNQZ0+37vSYsJzZnp3dU6MsnTgWYZb+7XYL5QtPtW4u
-         XdtOwcnWzwJIhC7rK5IODwLLDIHxBj1rYB5epupSD/5nY3kspwV0bPNmA6zXLw3MpD0s
-         3qbNYvTok1JB+xvX/lL4GYWD3104sPponyBmvhGNMO0CxLJIKLJiZV86ktlXZq3f5JII
-         X7HxYeUjv/LIdeGoBtJQdBpzILc6RT7bNKV+C5hNScCS3DOEWGnOujWdM8O39kVXSk0T
-         nHAA==
-X-Received: by 10.66.146.170 with SMTP id td10mr80960506pab.105.1395768307415;
-        Tue, 25 Mar 2014 10:25:07 -0700 (PDT)
+        bh=snMbggtIYSXQolYQ8PV+aNr0jyXL6FADEOPL1h72df0=;
+        b=ebf2D33aP528HLdEG5/UxX+oGuuQ2qTIJrndJAUPvlZgZUbmVCrRIl8vQC+PIvOT2s
+         Loq6FqftUAAgxoXzegh/iXjSvHT7gUNGbnIUfoza/iheJ/l7UNf72KVgFAdiRdJpKewO
+         SpTPksDt8hyOhlmGiIx9x9sSXVK1BT5hhMG5txdrVwQiLvXruMtWOJ4H0bA5B1Cp5XLT
+         Z5L8bcTMDAQ2MR4YQWHNr6dp3WEKNXQ0OW7RrPQ+RL7EBSm649EAEHO5NAR3RTXL8CXt
+         teVhYfj6O8jNkGTnlrSS2q9buM69OGo5lLMHpCcuCSZ3jrXL7XZCl/nQ+ZToR8I5XPBk
+         d9dg==
+X-Received: by 10.68.125.164 with SMTP id mr4mr79181455pbb.27.1395768313330;
+        Tue, 25 Mar 2014 10:25:13 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.06
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.25.12
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:25:06 -0700 (PDT)
+        Tue, 25 Mar 2014 10:25:12 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245120>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245121>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,21 +72,58 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t0300-credentials.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t1004-read-tree-m-u-wf.sh |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/t/t0300-credentials.sh b/t/t0300-credentials.sh
-index 538ea5f..57ea5a1 100755
---- a/t/t0300-credentials.sh
-+++ b/t/t0300-credentials.sh
-@@ -6,7 +6,7 @@ test_description=3D'basic credential helper tests'
+diff --git a/t/t1004-read-tree-m-u-wf.sh b/t/t1004-read-tree-m-u-wf.sh
+index 3e72aff..c70cf42 100755
+--- a/t/t1004-read-tree-m-u-wf.sh
++++ b/t/t1004-read-tree-m-u-wf.sh
+@@ -30,7 +30,7 @@ test_expect_success 'two-way not clobbering' '
 =20
- test_expect_success 'setup helper scripts' '
- 	cat >dump <<-\EOF &&
--	whoami=3D`echo $0 | sed s/.*git-credential-//`
-+	whoami=3D$(echo $0 | sed s/.*git-credential-//)
- 	echo >&2 "$whoami: $*"
- 	OIFS=3D$IFS
- 	IFS=3D=3D
+ 	echo >file2 master creates untracked file2 &&
+ 	echo >subdir/file2 master creates untracked subdir/file2 &&
+-	if err=3D`read_tree_u_must_succeed -m -u master side 2>&1`
++	if err=3D$(read_tree_u_must_succeed -m -u master side 2>&1)
+ 	then
+ 		echo should have complained
+ 		false
+@@ -43,7 +43,7 @@ echo file2 >.gitignore
+=20
+ test_expect_success 'two-way with incorrect --exclude-per-directory (1=
+)' '
+=20
+-	if err=3D`read_tree_u_must_succeed -m --exclude-per-directory=3D.giti=
+gnore master side 2>&1`
++	if err=3D$(read_tree_u_must_succeed -m --exclude-per-directory=3D.git=
+ignore master side 2>&1)
+ 	then
+ 		echo should have complained
+ 		false
+@@ -54,7 +54,7 @@ test_expect_success 'two-way with incorrect --exclude=
+-per-directory (1)' '
+=20
+ test_expect_success 'two-way with incorrect --exclude-per-directory (2=
+)' '
+=20
+-	if err=3D`read_tree_u_must_succeed -m -u --exclude-per-directory=3Dfo=
+o --exclude-per-directory=3D.gitignore master side 2>&1`
++	if err=3D$(read_tree_u_must_succeed -m -u --exclude-per-directory=3Df=
+oo --exclude-per-directory=3D.gitignore master side 2>&1)
+ 	then
+ 		echo should have complained
+ 		false
+@@ -95,7 +95,7 @@ test_expect_success 'three-way not clobbering a worki=
+ng tree file' '
+ 	git checkout master &&
+ 	echo >file3 file three created in master, untracked &&
+ 	echo >subdir/file3 file three created in master, untracked &&
+-	if err=3D`read_tree_u_must_succeed -m -u branch-point master side 2>&=
+1`
++	if err=3D$(read_tree_u_must_succeed -m -u branch-point master side 2>=
+&1)
+ 	then
+ 		echo should have complained
+ 		false
 --=20
 1.7.10.4
