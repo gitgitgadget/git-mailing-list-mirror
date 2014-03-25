@@ -1,55 +1,55 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2 087/142] t7006-pager.sh: use the $( ... ) construct for command substitution
-Date: Tue, 25 Mar 2014 10:23:48 -0700
-Message-ID: <1395768283-31135-88-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH v2 080/142] t6015-rev-list-show-all-parents.sh: use the $( ... ) construct for command substitution
+Date: Tue, 25 Mar 2014 10:23:41 -0700
+Message-ID: <1395768283-31135-81-git-send-email-gitter.spiros@gmail.com>
 References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 25 18:33:13 2014
+X-From: git-owner@vger.kernel.org Tue Mar 25 18:33:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSVDh-0004n1-LO
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:02 +0100
+	id 1WSVDp-0004n1-Pv
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 18:33:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754995AbaCYR0k convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:26:40 -0400
-Received: from mail-pb0-f42.google.com ([209.85.160.42]:49200 "EHLO
-	mail-pb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932148AbaCYR02 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Mar 2014 13:26:28 -0400
-Received: by mail-pb0-f42.google.com with SMTP id rr13so757402pbb.1
-        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:26:28 -0700 (PDT)
+	id S1755252AbaCYR2r convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 13:28:47 -0400
+Received: from mail-pa0-f41.google.com ([209.85.220.41]:49215 "EHLO
+	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754752AbaCYR0T (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Mar 2014 13:26:19 -0400
+Received: by mail-pa0-f41.google.com with SMTP id fa1so743078pad.28
+        for <git@vger.kernel.org>; Tue, 25 Mar 2014 10:26:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=ueYWnfz2BV4S1aMQVMEhCh/hSTKqkqSre84QpPPTzmw=;
-        b=J/e/+YADKbqcc8HHOPMFbcUEiumkE7A5FpQzqF8zGeTRziyeArjLcMcfJihfqxkgCR
-         44Xcw/haqimmgDhG40DcbdWwZtkvshFQMNRP+Lp+sLAH+eWFxIa9oitm/qnznVgzkifY
-         b8VRr7uJ/QiNtr7DpssHcg6pNyfvgrdl7SvwD6Oqz4OUm8xiFadF1L9sXrGw6AjEpYl7
-         RvEaCyJxSf3xSBPMoU6LrgDVZQVdopl8NlAD9gw88ezKbMF+C8qjNQdAiJLn3o9UR4jo
-         aBT40bhnhlVaIlHOo3NUTE4sOtpKJYYNiqNTZiH2waCHHBkvaln2jATy7ccj1zaHd49/
-         KSdQ==
-X-Received: by 10.66.218.234 with SMTP id pj10mr11090117pac.156.1395768388197;
-        Tue, 25 Mar 2014 10:26:28 -0700 (PDT)
+        bh=NhzZP2Ca8cZJgoDvv0iXYw+J2rBnjiogBHYS7C6JvG4=;
+        b=NCDiSrbrbHTLVFW/mEWl20jx3vnVJbFOixvgA9cGZCcEMwpKFAYSya/79neQYXYOkY
+         T3PX8fdFG56b/pBQtF9XPBlJF9rKnzK9v4HUnRnoP+yEadqzKtLPgaTjoS/PyvIeGUZZ
+         smui69Usp3zs673MvqAm7I5xhaSYuQthKnxC0/Ycu1Mwtkoi8UP7wSCso5Xkb74T7ocp
+         QvifuIUp5AlXN64i0Rz0JFLc+8LouYhniN8QERuGgh6UvqCzJoEGroMiyPMptocaIe9l
+         wXcAmfZ8iai0AdCCyOvcBa4eFLJAei1SvDAbyoVy/ooXmXld3YNi38Icc1K6JYhNvZIf
+         C5gw==
+X-Received: by 10.66.161.38 with SMTP id xp6mr12377059pab.145.1395768379123;
+        Tue, 25 Mar 2014 10:26:19 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.26.26
+        by mx.google.com with ESMTPSA id x5sm47105136pbw.26.2014.03.25.10.26.18
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 25 Mar 2014 10:26:27 -0700 (PDT)
+        Tue, 25 Mar 2014 10:26:18 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245095>
 
 The Git CodingGuidelines prefer the $( ... ) construct for command
 substitution instead of using the back-quotes, or grave accents (`..`).
@@ -72,24 +72,29 @@ done
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t7006-pager.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t6015-rev-list-show-all-parents.sh |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
-index b9365b4..7576fa9 100755
---- a/t/t7006-pager.sh
-+++ b/t/t7006-pager.sh
-@@ -436,7 +436,7 @@ test_expect_success TTY 'command-specific pager wor=
-ks for external commands' '
- 	echo "foo:initial" >expect &&
- 	>actual &&
- 	test_config pager.external "sed s/^/foo:/ >actual" &&
--	test_terminal git --exec-path=3D"`pwd`" external log --format=3D%s -1=
- &&
-+	test_terminal git --exec-path=3D"$(pwd)" external log --format=3D%s -=
-1 &&
- 	test_cmp expect actual
- '
+diff --git a/t/t6015-rev-list-show-all-parents.sh b/t/t6015-rev-list-sh=
+ow-all-parents.sh
+index 8b146fb..3c73c93 100755
+--- a/t/t6015-rev-list-show-all-parents.sh
++++ b/t/t6015-rev-list-show-all-parents.sh
+@@ -6,11 +6,11 @@ test_description=3D'--show-all --parents does not rew=
+rite TREESAME commits'
 =20
+ test_expect_success 'set up --show-all --parents test' '
+ 	test_commit one foo.txt &&
+-	commit1=3D`git rev-list -1 HEAD` &&
++	commit1=3D$(git rev-list -1 HEAD) &&
+ 	test_commit two bar.txt &&
+-	commit2=3D`git rev-list -1 HEAD` &&
++	commit2=3D$(git rev-list -1 HEAD) &&
+ 	test_commit three foo.txt &&
+-	commit3=3D`git rev-list -1 HEAD`
++	commit3=3D$(git rev-list -1 HEAD)
+ 	'
+=20
+ test_expect_success '--parents rewrites TREESAME parents correctly' '
 --=20
 1.7.10.4
