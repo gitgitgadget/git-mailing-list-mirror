@@ -1,124 +1,108 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v8 01/12] Add data structures and basic functions for commit
- trailers
-Date: Wed, 26 Mar 2014 23:15:19 +0100
-Message-ID: <20140326221531.11352.50524.chriscool@tuxfamily.org>
-References: <20140326215858.11352.89243.chriscool@tuxfamily.org>
-Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
-	Josh Triplett <josh@joshtriplett.org>,
-	Thomas Rast <tr@thomasrast.ch>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 26 23:17:12 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC 0/6] reuse deltas found by bitmaps
+Date: Wed, 26 Mar 2014 15:31:41 -0700
+Message-ID: <xmqqvbv0h9rm.fsf@gitster.dls.corp.google.com>
+References: <20140326072215.GA31739@sigill.intra.peff.net>
+	<xmqq7g7gkgp6.fsf@gitster.dls.corp.google.com>
+	<20140326181300.GA7087@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Ben Maurer <bmaurer@fb.com>,
+	Siddharth Agarwal <sid0@fb.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 26 23:31:54 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSw8E-0002Z8-RY
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Mar 2014 23:17:11 +0100
+	id 1WSwMR-0001be-7K
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Mar 2014 23:31:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756136AbaCZWQX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Mar 2014 18:16:23 -0400
-Received: from [194.158.98.15] ([194.158.98.15]:45115 "EHLO mail-2y.bbox.fr"
-	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753861AbaCZWQV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Mar 2014 18:16:21 -0400
-Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-2y.bbox.fr (Postfix) with ESMTP id AA97C37;
-	Wed, 26 Mar 2014 23:15:59 +0100 (CET)
-X-git-sha1: 448b57568089d2acd8765a575664a0d1a409b50c 
-X-Mailer: git-mail-commits v0.5.2
-In-Reply-To: <20140326215858.11352.89243.chriscool@tuxfamily.org>
+	id S1756157AbaCZWbr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Mar 2014 18:31:47 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46364 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756074AbaCZWbq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Mar 2014 18:31:46 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4316078E4E;
+	Wed, 26 Mar 2014 18:31:45 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6GXPgLFTqWEl/jHQ0pdniTyyqGM=; b=vTk6UL
+	Eh0tRZKAH9T5y6m5mXChF1JI+rX5ietpShCGYRKn+3Zs2/5kGpxf9MeL1OEhoRRQ
+	nhS2bsfvMqYdr5xEE64tJa0pTvol0Q9LErEO06eQHzJkX2wGZTMSGMyNqsp+tmma
+	iF/4TdDcjwgeJ99GJ7O71HB3e62D4dmUoom5E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Y+Dnq7ULvt3Mcp5M+hpkk0O+3ePI4yIq
+	mJz91OBhSujspMhph1EYUTkfZHFSEHH1P/2Dnphfxz4XRLEIlUm6BsnMwroasayL
+	ZvOTM813b1Iue+qQWaJT+rUEPPeqof8TRPgFJmddbXPTapchvtXceD/AJUi+2JGq
+	tiWnv96iw0g=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 268F878E4D;
+	Wed, 26 Mar 2014 18:31:45 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4953678E45;
+	Wed, 26 Mar 2014 18:31:44 -0400 (EDT)
+In-Reply-To: <20140326181300.GA7087@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 26 Mar 2014 14:13:00 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 68D83680-B536-11E3-AFFC-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245248>
 
-We will use a doubly linked list to store all information
-about trailers and their configuration.
+Jeff King <peff@peff.net> writes:
 
-This way we can easily remove or add trailers to or from
-trailer lists while traversing the lists in either direction.
+> Just looking at the 128-day case again, using bitmaps increased our
+> server CPU time _and_ made a much bigger pack. This series not only
+> fixes the CPU time regression, but it also drops the server CPU time to
+> almost nothing. That's a nice improvement, and it makes perfect sense:
+> we are reusing on-disk deltas instead of on-the-fly computing deltas
+> against the preferred bases.
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- Makefile  |  1 +
- trailer.c | 49 +++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 50 insertions(+)
- create mode 100644 trailer.c
+True.
 
-diff --git a/Makefile b/Makefile
-index d4ce53a..ec67ae1 100644
---- a/Makefile
-+++ b/Makefile
-@@ -883,6 +883,7 @@ LIB_OBJS += submodule.o
- LIB_OBJS += symlinks.o
- LIB_OBJS += tag.o
- LIB_OBJS += trace.o
-+LIB_OBJS += trailer.o
- LIB_OBJS += transport.o
- LIB_OBJS += transport-helper.o
- LIB_OBJS += tree-diff.o
-diff --git a/trailer.c b/trailer.c
-new file mode 100644
-index 0000000..db93a63
---- /dev/null
-+++ b/trailer.c
-@@ -0,0 +1,49 @@
-+#include "cache.h"
-+/*
-+ * Copyright (c) 2013, 2014 Christian Couder <chriscool@tuxfamily.org>
-+ */
-+
-+enum action_where { WHERE_AFTER, WHERE_BEFORE };
-+enum action_if_exists { EXISTS_ADD_IF_DIFFERENT, EXISTS_ADD_IF_DIFFERENT_NEIGHBOR,
-+			EXISTS_ADD, EXISTS_OVERWRITE, EXISTS_DO_NOTHING };
-+enum action_if_missing { MISSING_ADD, MISSING_DO_NOTHING };
-+
-+struct conf_info {
-+	char *name;
-+	char *key;
-+	char *command;
-+	enum action_where where;
-+	enum action_if_exists if_exists;
-+	enum action_if_missing if_missing;
-+};
-+
-+struct trailer_item {
-+	struct trailer_item *previous;
-+	struct trailer_item *next;
-+	const char *token;
-+	const char *value;
-+	struct conf_info conf;
-+};
-+
-+static int same_token(struct trailer_item *a, struct trailer_item *b, int alnum_len)
-+{
-+	return !strncasecmp(a->token, b->token, alnum_len);
-+}
-+
-+static int same_value(struct trailer_item *a, struct trailer_item *b)
-+{
-+	return !strcasecmp(a->value, b->value);
-+}
-+
-+static int same_trailer(struct trailer_item *a, struct trailer_item *b, int alnum_len)
-+{
-+	return same_token(a, b, alnum_len) && same_value(a, b);
-+}
-+
-+/* Get the length of buf from its beginning until its last alphanumeric character */
-+static size_t alnum_len(const char *buf, size_t len)
-+{
-+	while (len > 0 && !isalnum(buf[len - 1]))
-+		len--;
-+	return len;
-+}
--- 
-1.9.0.164.g3aa33cd.dirty
+> I think we could still add the objects from the tip of the client's HAVE
+> list.
+
+That should make the result at least per to the non-bitmap case,
+right?
+
+> This patch would still be a CPU win on top of that, because it
+> would reduce the number of objects which need a delta search in the
+> first place.
+
+Yes.
+
+> So I think the next steps are probably:
+>
+>   1. Measure the "all objects are preferred bases" approach and confirm
+>      that it is bad.
+
+;-)
+
+>   2. Measure the "reused deltas become preferred bases" approach. I
+>      expect the resulting size to be slightly better than what I have
+>      now, but not as good as v1.9.0's size (but taking less CPU time).
+
+Do you mean "the bases for reused deltas become preferred bases, so
+that we can deltify more objects off of them"?
+
+>   3. Measure the "figure out boundaries and add them as preferred bases,
+>      like we do without bitmaps" approach. I expect this to behave
+>      similarly to v1.9.0.
+
+Yes.
+
+>   4. Combine (2) and (3) and measure them. I'm _hoping_ this will give
+>      us the best of both worlds, but I still want to do the individual
+>      measurements so we can see where any improvement is coming from.
+
+Sensible.  Thanks.
