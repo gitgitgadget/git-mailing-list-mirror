@@ -1,112 +1,109 @@
-From: Andrew Keller <andrew@kellerfarm.com>
-Subject: Re: Borrowing objects from nearby repositories
-Date: Wed, 26 Mar 2014 09:36:09 -0400
-Message-ID: <3533946C-DE97-4214-9B55-F5B788DDD952@kellerfarm.com>
-References: <BFF5FBC7-8F53-4958-8D56-90EADD3AD626@kellerfarm.com> <CACBZZX5teZuqtNkPT4PdXJn=g34cOhRH2oNehROT8kJ_M2cgfg@mail.gmail.com> <xmqqtxammctc.fsf@gitster.dls.corp.google.com> <xmqqvbv1kjoc.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0 (Mac OS X Mail 6.6 \(1510\))
-Content-Type: text/plain; charset=iso-8859-1
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH v2 00/17] git-ls
+Date: Wed, 26 Mar 2014 20:48:00 +0700
+Message-ID: <1395841697-11742-1-git-send-email-pclouds@gmail.com>
+References: <1395310551-23201-1-git-send-email-pclouds@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 26 14:36:20 2014
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 26 14:47:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSo0B-0004QK-8b
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Mar 2014 14:36:19 +0100
+	id 1WSoBD-0007TE-20
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Mar 2014 14:47:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753545AbaCZNgO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Mar 2014 09:36:14 -0400
-Received: from atl4mhob03.myregisteredsite.com ([209.17.115.41]:38810 "EHLO
-	atl4mhob03.myregisteredsite.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753438AbaCZNgO convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Mar 2014 09:36:14 -0400
-Received: from mailpod.hostingplatform.com ([10.30.71.203])
-	by atl4mhob03.myregisteredsite.com (8.14.4/8.14.4) with ESMTP id s2QDa9df011602
-	for <git@vger.kernel.org>; Wed, 26 Mar 2014 09:36:09 -0400
-Received: (qmail 3182 invoked by uid 0); 26 Mar 2014 13:36:09 -0000
-X-TCPREMOTEIP: 69.41.14.217
-X-Authenticated-UID: andrew@kellerfarm.com
-Received: from unknown (HELO devnet.ces.cvnt.net) (andrew@kellerfarm.com@69.41.14.217)
-  by 0 with ESMTPA; 26 Mar 2014 13:36:09 -0000
-In-Reply-To: <xmqqvbv1kjoc.fsf@gitster.dls.corp.google.com>
-X-Mailer: Apple Mail (2.1510)
+	id S1754076AbaCZNrj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Mar 2014 09:47:39 -0400
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:56424 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750956AbaCZNri (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Mar 2014 09:47:38 -0400
+Received: by mail-pa0-f43.google.com with SMTP id bj1so1951403pad.30
+        for <git@vger.kernel.org>; Wed, 26 Mar 2014 06:47:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=2Al6XOGW0nlFt99KO3Zs0D7Ln9zYwT2izfMZM9jT8eA=;
+        b=IMa3iMrbPXUx0cbvDNkfKqzYdhfgnCrJi28mS36+NT9QBlufRlEyQ2BkTgbij7LaNm
+         kq5+q3DDWzghTvxenRDQ2vO3sfZesmh/ugWGxpeZzSU6pXxzilDIBJhxJgVbnF2y2w3e
+         IsPdAscGW8+cOT6X22SWrU9VjIOr0K5hyHKDnFH4AfGENi0ruskIU2tkldOe2J6p51e6
+         TpHaVAdsWAUUPdU1AVM/UDMIppzLZkEPRbyj0FL7XO1DzpQNbCDIUDKb/VwpC+3hIxVV
+         KXvD9t9gBuFU8FMqS77aay9tnwIG8CgBFpLtu7pUmmSEcBBPMFuR9ojBpiSTJuX3NHj2
+         qetw==
+X-Received: by 10.68.2.99 with SMTP id 3mr86778497pbt.49.1395841657569;
+        Wed, 26 Mar 2014 06:47:37 -0700 (PDT)
+Received: from lanh ([115.73.224.106])
+        by mx.google.com with ESMTPSA id oz7sm58523165pbc.41.2014.03.26.06.47.33
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 26 Mar 2014 06:47:35 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Wed, 26 Mar 2014 20:48:29 +0700
+X-Mailer: git-send-email 1.9.1.345.ga1a145c
+In-Reply-To: <1395310551-23201-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245179>
 
-On Mar 25, 2014, at 6:17 PM, Junio C Hamano <gitster@pobox.com> wrote:
+Compared to v1, git-ls now does not accept ls-files options (previous
+git-ls is more like an alias of ls-files). I want this because ls may
+take a different set of options than ls-files. Most functionality is
+shared so if you're not happy with ls, you can fall back to ls-files.
 
-> Junio C Hamano <gitster@pobox.com> writes:
->=20
->> =C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com> writes:
->>=20
->>>> 1) Introduce '--borrow' to `git-fetch`.  This would behave similar=
-ly
->>> to '--reference', except that it operates on a temporary basis, and
->>> does not assume that the reference repository will exist after the
->>> operation completes, so any used objects are copied into the local
->>> objects database.  In theory, this mechanism would be distinct from
->>> --reference', so if both are used, some objects would be copied, an=
-d
->>> some objects would be accessible via a reference repository referen=
-ced
->>> by the alternates file.
->>>=20
->>> Isn't this the same as git clone --reference <path> --no-hardlinks
->>> <url> ?
->>>=20
->>> Also without --no-hardlinks we're not assuming that the other repo
->>> doesn't go away (you could rm-rf it), just that the files won't be
->>> *modified*, which Git won't do, but you could manually do with othe=
-r
->>> tools, so the default is to hardlink.
->>=20
->> I think that the standard practice with the existing toolset is to
->> clone with reference and then repack.  That is:
->>=20
->>    $ git clone --reference <borrowee> git://over/there mine
->>    $ cd mine
->>    $ git repack -a -d
->>=20
->> And then you can try this:
->>=20
->>    $ mv .git/objects/info/alternates .git/objects/info/alternates.di=
-sabled
->>    $ git fsck
->>=20
->> to make sure that you are no longer borrowing anything from the
->> borrowee.  Once you are satisfied, you can remove the saved-away
->> alternates.disabled file.
->=20
-> Oh, I forgot to say that I am not opposed if somebody wants to teach
-> "git clone" a new option to copy its objects from two places,
-> (hopefully) the majority from near-by reference repository and the
-> remainder over the network, without permanently relying on the
-> former via the alternates mechanism.  The implementation of such a
-> feature could even literally be "clone with reference first and then
-> repack" at least initially but even in the final version.
+New alias options are supported, -1 =3D=3D --no-column, -R =3D=3D
+--max-depth=3D-1. If more than one file criteria is chosen (e.g. "ls -c=
+mo")
+then --tag is implied. File order is fixed ("ls-files -cmo" actually
+shows two or three separate listings, "ls -cmo" shows one sorted
+listing). It also shows directories from the index.
 
-That was actually one of my first ideas - adding some sort of '--auto-r=
-epack' option to git-clone.  It's a relatively small change, and would =
-work.  However, keeping in mind my end goal of automating the feature t=
-o the point where you could run simply 'git clone <url>', an '--auto-re=
-pack' option is more difficult to undo.  You would need a new parameter=
- to disable the automatic adding of reference repositories, and a new p=
-arameter to undo '--auto-repack', and you'd have to remember to actuall=
-y undo both of those settings.
+Documentation is there. No tests yet because the behavior may still
+need some polishing.
 
-In contrast, if the new feature was '--borrow', and the evolution of th=
-e feature was a global configuration 'fetch.autoBorrow', then to turn i=
-t off temporarily, one only needs a single new parameter '--no-auto-bor=
-row'.  I think this is a cleaner approach than the former, although muc=
-h more work.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (17):
+  ls_colors.c: add $LS_COLORS parsing code
+  ls_colors.c: parse color.ls.* from config file
+  ls_colors.c: add function to color a file name
+  ls_colors.c: highlight submodules like directories
+  ls-files: buffer full item in strbuf before printing
+  ls-files: add --color to highlight file names
+  ls-files: add --column
+  ls-files: support --max-depth
+  ls-files: split main ls-files logic into ls_files() function
+  Add git-ls, a user friendly version of ls-files and more
+  ls: -u does not imply showing stages
+  ls: add -R/--recursive short for --max-depth=3D-1
+  ls: add -1 short for --no-column in the spirit of GNU ls
+  ls: add -t back
+  ls: sort output and remove duplicates
+  ls: do not show duplicate cached entries
+  ls: show directories as well as files
 
-Thanks,
- - Andrew Keller
+ .gitignore                     |   1 +
+ Documentation/config.txt       |  22 ++
+ Documentation/git-ls-files.txt |  22 ++
+ Documentation/git-ls.txt (new) |  95 ++++++++
+ Makefile                       |   2 +
+ builtin.h                      |   1 +
+ builtin/ls-files.c             | 446 +++++++++++++++++++++++++++++----=
+---
+ color.h                        |  10 +
+ command-list.txt               |   1 +
+ git.c                          |   1 +
+ ls_colors.c (new)              | 496 +++++++++++++++++++++++++++++++++=
+++++++++
+ 11 files changed, 1012 insertions(+), 85 deletions(-)
+ create mode 100644 Documentation/git-ls.txt
+ create mode 100644 ls_colors.c
+
+--=20
+1.9.1.345.ga1a145c
