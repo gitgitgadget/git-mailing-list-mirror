@@ -1,120 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 2/2] log: add --show-linear-break to help see non-linear history
-Date: Tue, 25 Mar 2014 15:30:43 -0700
-Message-ID: <xmqqr45pkj1o.fsf@gitster.dls.corp.google.com>
-References: <1395294254-941-1-git-send-email-pclouds@gmail.com>
-	<1395753807-23228-1-git-send-email-pclouds@gmail.com>
-	<1395753807-23228-2-git-send-email-pclouds@gmail.com>
+From: Siddharth Agarwal <sid0@fb.com>
+Subject: fetches with bitmaps enabled can cause accesses to already GC'd objects
+Date: Tue, 25 Mar 2014 19:22:37 -0700
+Message-ID: <533239ED.5040503@fb.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 25 23:30:54 2014
+Content-Type: text/plain; charset="ISO-8859-1"; format=flowed
+Content-Transfer-Encoding: 7bit
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Mar 26 03:23:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSZrx-00064X-Bc
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Mar 2014 23:30:53 +0100
+	id 1WSdUp-0007GQ-7u
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Mar 2014 03:23:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754617AbaCYWat convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Mar 2014 18:30:49 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55865 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754189AbaCYWas convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 Mar 2014 18:30:48 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9DFA877F7E;
-	Tue, 25 Mar 2014 18:30:47 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=OWZC5nhhJQf1
-	Xylrc2G3IkQjVj0=; b=i0UVaG7EHQVOTxe9ToVe40mbUntu13XiP6oGSHN8GDSO
-	Vsry4W3cOlEiF76JzJU744zaQ5XllfRYaYOqiNGsimz868rC83N2OoTFECql8vBR
-	MIre4jG/0Tufi83LzY1y8/FNgddBy9RE41Ci3PeSvWmIZpVYj7CwwPv1WcuMM3k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=CYntUU
-	IZdx6rQ6hFpO0NBNPlfYQyWExRQhRe1BCh2u4FgxiW3AAKUc7jznj+u4X+81ewbX
-	yU/GriLOGmjHdpy88rjTVc310qAto1LxXGJRViRuRHfjvX/2HELDZ0qZrd9Pvu4D
-	bM1Yv5hkXBOLvuDpEb8x3rs7E4VuAdjLeo5NU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8B49977F7B;
-	Tue, 25 Mar 2014 18:30:47 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AA13577F78;
-	Tue, 25 Mar 2014 18:30:46 -0400 (EDT)
-In-Reply-To: <1395753807-23228-2-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Tue, 25
- Mar 2014 20:23:27 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 1C18A36C-B46D-11E3-B76F-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751721AbaCZCWl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Mar 2014 22:22:41 -0400
+Received: from mx0b-00082601.pphosted.com ([67.231.153.30]:8022 "EHLO
+	mx0a-00082601.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751246AbaCZCWl (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 Mar 2014 22:22:41 -0400
+Received: from pps.filterd (m0004003 [127.0.0.1])
+	by mx0b-00082601.pphosted.com (8.14.5/8.14.5) with SMTP id s2Q2KCCr025203
+	for <git@vger.kernel.org>; Tue, 25 Mar 2014 19:22:40 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fb.com; h=message-id : date : from :
+ mime-version : to : subject : content-type : content-transfer-encoding;
+ s=facebook; bh=spUeeVoDoocIT7m7zkH30+nSENRB1hDBgJXMJqeABYs=;
+ b=WGTeF7U2aue2kOZ5/SuZ7NMp23Qz1R5oGNeTU+TGg7lA02R3X7YRiqA9hrzfxtkXZtO+
+ UxXh5vw3TgQN4syeZJTDxbGdR5kIkNZe5+KRCCHIU9E9wfa1acLbtaFnRIWETJphiSJQ
+ 4mmmRpvkPwUDe3+pTPY/LljFuhZSE3lnntU= 
+Received: from mail.thefacebook.com (mailwest.thefacebook.com [173.252.71.148])
+	by mx0b-00082601.pphosted.com with ESMTP id 1jujyarh3c-1
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=OK)
+	for <git@vger.kernel.org>; Tue, 25 Mar 2014 19:22:39 -0700
+Received: from [172.26.1.186] (192.168.57.29) by mail.thefacebook.com
+ (192.168.16.21) with Microsoft SMTP Server (TLS) id 14.3.174.1; Tue, 25 Mar
+ 2014 19:22:38 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
+X-Originating-IP: [192.168.57.29]
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:5.11.87,1.0.14,0.0.0000
+ definitions=2014-03-25_07:2014-03-25,2014-03-25,1970-01-01 signatures=0
+X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
+ kscore.is_bulkscore=2.18693119169444e-10 kscore.compositescore=0
+ circleOfTrustscore=514.84 compositescore=0.999787071573508
+ urlsuspect_oldscore=0.999787071573508 suspectscore=1
+ recipient_domain_to_sender_totalscore=0 phishscore=0 bulkscore=0
+ kscore.is_spamscore=0 recipient_to_sender_totalscore=0
+ recipient_domain_to_sender_domain_totalscore=64355
+ rbsscore=0.999787071573508 spamscore=0
+ recipient_to_sender_domain_totalscore=0 urlsuspectscore=0.9 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=7.0.1-1402240000
+ definitions=main-1403250164
+X-FB-Internal: deliver
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245157>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245158>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+Hi,
 
-> Option explanation is in rev-list-options.txt. The interaction with -=
-z
-> is left undecided.
->
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
->  On Fri, Mar 21, 2014 at 2:15 AM, Junio C Hamano <gitster@pobox.com> =
-wrote:
->  >>  * Get rid of saved_linear, use another flag in struct object ins=
-tead
->  >
->  > I cannot offhand say if I like this change or not.  A flag bit is =
-a
->  > scarce and limited resource; commit slabs felt more suited for
->  > implementation of corner case eye-candies.
->
->  I leave it in bit 26. We can move it out when we run low on flag bit=
-s.
->
->  >>  * Fix not showing the break bar after a root commit if the dag g=
-raph
->  >>    has multiple roots
->  >
->  > I definitely do not like the way a commit-list data structure is
->  > abused to hold a phoney element that points at a NULL with its ite=
-m
->  > pointer.  Allocate a single bit in revs that says "I haven't done
->  > anything yet" if you want to catch the "first-ness" without breaki=
-ng
->  > what commit_list_insert() and friends are expecting to see---they
->  > never expect to see a NULL asked to be on the list, AFAIK.
->
->  Fixed.
->
->  >>  * Make it work with --graph (although I don't really see the poi=
-nt of
->  >>    using both at the same time)
->  >
->  > I do not see the point, either.  I vaguely recall that the previou=
-s
->  > iteration refused the combination at the option parser level, whic=
-h
->  > I think would be the right thing to do.
->
->  Fixed.
+We're still experimenting with bitmaps, and we've have run into issues 
+where fetching from a repository with bitmaps enabled can lead to 
+objects that used to be present on the server but have since been GC'd 
+being accessed, and git pack-objects on the server failing because of that.
 
-All changes look good to me.
+I can consistently reproduce this with a particular pair of repos, and 
+tip of git master (3f09db0) with no patches on top running on both ends. 
+git fetch fails with
 
-Especially on the last one because the new "printf()" calls do not
-even attempt to call into the graph API to tell it that it created
-a gutter above or give it a chance to draw all vertical lines to
-connect the graph part.
+remote: error: Could not read be7cbe440a7b9a34f53515af4075e971c811cfb2
+remote: fatal: bad tree object be7cbe440a7b9a34f53515af4075e971c811cfb2
+error: git upload-pack: git-pack-objects died with error.
+fatal: git upload-pack: aborting due to possible repository corruption 
+on the remote side.
+remote: aborting due to possible repository corruption on the remote side.
+fatal: protocol error: bad pack header
 
-Will replace and advance them to "Will merge to 'next'" state.
+Removing the bitmap fixes this.
 
-Thanks.
+be7cbe440a7b9a34f53515af4075e971c811cfb2 is a tree object that is 
+present on the client but not on the server. It used to be present on 
+the server, but the any refs that it was reachable from have been 
+removed and the object has since been garbage collected. One ref that 
+this object was reachable from and that used to be on the server is 
+still present on the client though, under refs/remotes/origin/.
+
+This tree object seems to be reachable from exactly one other tree 
+object, and so on, until I reach a commit object. Note that the commit 
+and root tree pointing to be7cbe440a7b9a34f53515af4075e971c811cfb2 is 
+still present as a loose object in the repo.
+
+I dug into this a bit, and it looks like the bad access is inside 
+https://github.com/git/git/blob/3f09db0/pack-bitmap.c#L730, and from 
+there inside https://github.com/git/git/blob/3f09db0/pack-bitmap.c#L575. 
+This ultimately calls traverse_commit_list at 
+https://github.com/git/git/blob/3f09db0/list-objects.c#L195, which adds 
+the tree that transitively points to 
+be7cbe440a7b9a34f53515af4075e971c811cfb2 as pending. (Note again that 
+the commit and root tree objects still exist in the repo as loose 
+objects.) Further down in that function, process_tree is called, which 
+traverses the tree and ultimately dies at 
+https://github.com/git/git/blob/3f09db0/list-objects.c#L85.
+
+Unfortunately, as before, I can't share the repo this is happening in.
