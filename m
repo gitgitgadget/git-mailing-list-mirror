@@ -1,186 +1,82 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 05/17] ls-files: buffer full item in strbuf before printing
-Date: Wed, 26 Mar 2014 15:22:03 -0400
-Message-ID: <CAPig+cRpL9PYKLEH8DocKWo2-ZnqtD6j30TLES1NyOnk52D+Mw@mail.gmail.com>
-References: <1395310551-23201-1-git-send-email-pclouds@gmail.com>
-	<1395841697-11742-1-git-send-email-pclouds@gmail.com>
-	<1395841697-11742-6-git-send-email-pclouds@gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [RFC/PATCH 1/4] test-lib: add test_dir_is_empty()
+Date: Wed, 26 Mar 2014 20:22:45 +0100
+Message-ID: <53332905.2050808@web.de>
+References: <5331B6F6.60501@web.de> <5331B717.5010600@web.de> <xmqq4n2mknqf.fsf@gitster.dls.corp.google.com> <53328FD8.4050907@web.de> <5332AF6B.1050108@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 26 20:22:12 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Jonathan Nieder p <jrnieder@gmail.com>,
+	Jeff King <peff@peff.net>, Heiko Voigt <hvoigt@hvoigt.net>
+To: Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 26 20:23:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WStOt-0008Q0-Ox
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Mar 2014 20:22:12 +0100
+	id 1WStPf-0000ix-Tv
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Mar 2014 20:23:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755910AbaCZTWG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Mar 2014 15:22:06 -0400
-Received: from mail-yh0-f42.google.com ([209.85.213.42]:36405 "EHLO
-	mail-yh0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755896AbaCZTWD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 26 Mar 2014 15:22:03 -0400
-Received: by mail-yh0-f42.google.com with SMTP id t59so2556369yho.15
-        for <git@vger.kernel.org>; Wed, 26 Mar 2014 12:22:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=2j/vDxKRpaLbKKfIFVsOVaddPMosqwl7e450I492O+s=;
-        b=mbHV+V+FgmHGnzbUEjjJAqCM2BMRLuuzYAji6oLy6BNmvhy2memy6YPacI4ndoRs4K
-         XyEPsvlkGe5DcBSpTayff5Lio+PrsrdGD+wEhO1RK0eOiz+000bB66ZpPKmL0/A0xJyV
-         yuxIpty16idFlFVhFgAlNOJodoZ4fT/SGGgpGqvH1/md5FoP23LpTfvth+gbfTxxBv7d
-         u98FTVl6mK53oJkDClhXMQFgMxkhit98nidxvqFLxR47iV/f7NcwQQ5WiDjqswTKOG7+
-         5FxLwjr+ijzjHxro/N8Oln0eitjcMFVV7cYy0qtk8njaogg8wRb8YMrkpbCLXazYNtq7
-         ZhiA==
-X-Received: by 10.236.147.10 with SMTP id s10mr37135925yhj.88.1395861723286;
- Wed, 26 Mar 2014 12:22:03 -0700 (PDT)
-Received: by 10.170.180.134 with HTTP; Wed, 26 Mar 2014 12:22:03 -0700 (PDT)
-In-Reply-To: <1395841697-11742-6-git-send-email-pclouds@gmail.com>
-X-Google-Sender-Auth: sldXkeQobSALr0CDsf2V8jHzwjs
+	id S1755896AbaCZTW4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Mar 2014 15:22:56 -0400
+Received: from mout.web.de ([212.227.15.3]:65467 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754037AbaCZTWz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Mar 2014 15:22:55 -0400
+Received: from [192.168.178.41] ([84.132.147.65]) by smtp.web.de (mrweb101)
+ with ESMTPSA (Nemesis) id 0MGRVU-1WFg0f3Uie-00DDdt; Wed, 26 Mar 2014 20:22:49
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
+In-Reply-To: <5332AF6B.1050108@alum.mit.edu>
+X-Enigmail-Version: 1.6
+X-Provags-ID: V03:K0:c1q92TUq6fEs948Df/y1TkSUPsCYW/nXTmBh3HK1TQ8S0UACnnN
+ z+ytFf9iRFqKsfzeSnuEBuElBNvb+Uz5taXxqqxdAy8OwBsbJ15pWR3YBZ6aXRldLRg9e2u
+ sb5m18pWwEF2CM2Wt7UcAMFcmXY16a8+EWuopMou+hrr5R65PzXp1FcD2iRwiaVfmPEhd/p
+ 8kdfzEl05gfQkdRBv2e1A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245215>
 
-On Wed, Mar 26, 2014 at 9:48 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
-Duy <pclouds@gmail.com> wrote:
-> Buffering so that we can manipulate the strings (e.g. coloring)
-> further before finally printing them.
->
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
->  builtin/ls-files.c | 48 +++++++++++++++++++++++++++++++++++---------=
-----
->  1 file changed, 35 insertions(+), 13 deletions(-)
->
-> diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-> index 47c3880..6e30592 100644
-> --- a/builtin/ls-files.c
-> +++ b/builtin/ls-files.c
-> @@ -47,18 +47,30 @@ static const char *tag_modified =3D "";
->  static const char *tag_skip_worktree =3D "";
->  static const char *tag_resolve_undo =3D "";
->
-> -static void write_name(const char *name)
-> +static void write_name(struct strbuf *sb, const char *name)
->  {
->         /*
->          * With "--full-name", prefix_len=3D0; this caller needs to p=
-ass
->          * an empty string in that case (a NULL is good for "").
->          */
-> -       write_name_quoted_relative(name, prefix_len ? prefix : NULL,
-> -                                  stdout, line_terminator);
-> +       const char *real_prefix =3D prefix_len ? prefix : NULL;
-> +       if (!line_terminator) {
-> +               struct strbuf sb2 =3D STRBUF_INIT;
-> +               strbuf_addstr(sb, relative_path(name, real_prefix, &s=
-b2));
-> +               strbuf_release(&sb2);
-> +       } else
-> +               quote_path_relative(name, real_prefix, sb);
-> +       strbuf_addch(sb, line_terminator);
-> +}
-> +
-> +static void strbuf_fputs(struct strbuf *sb, FILE *fp)
-> +{
-> +       fwrite(sb->buf, sb->len, 1, fp);
->  }
->
->  static void show_dir_entry(const char *tag, struct dir_entry *ent)
->  {
-> +       static struct strbuf sb =3D STRBUF_INIT;
->         int len =3D max_prefix_len;
->
->         if (len >=3D ent->len)
-> @@ -67,8 +79,10 @@ static void show_dir_entry(const char *tag, struct=
- dir_entry *ent)
->         if (!dir_path_match(ent, &pathspec, len, ps_matched))
->                 return;
->
-> -       fputs(tag, stdout);
-> -       write_name(ent->name);
-> +       strbuf_reset(&sb);
-> +       strbuf_addstr(&sb, tag);
-> +       write_name(&sb, ent->name);
-> +       strbuf_fputs(&sb, stdout);
+Am 26.03.2014 11:43, schrieb Michael Haggerty:
+> On 03/26/2014 09:29 AM, Jens Lehmann wrote:
+>> Am 25.03.2014 21:49, schrieb Junio C Hamano:
+>>> Jens Lehmann <Jens.Lehmann@web.de> writes:
+>>>>  t/test-lib-functions.sh | 11 +++++++++++
+>>>>  1 file changed, 11 insertions(+)
+>>>>
+>>>> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+>>>> index 158e10a..93d10cd 100644
+>>>> --- a/t/test-lib-functions.sh
+>>>> +++ b/t/test-lib-functions.sh
+>>>> @@ -489,6 +489,17 @@ test_path_is_dir () {
+>>>>  	fi
+>>>>  }
+>>>>
+>>>> +# Check if the directory exists and is empty as expected, barf otherwise.
+>>>> +test_dir_is_empty () {
+>>>> +	test_path_is_dir "$1" &&
+>>>> +	if test $(ls -a1 "$1" | wc -l) != 2
+>>>> +	then
+>>>> +		echo "Directory '$1' is not empty, it contains:"
+>>>> +		ls -la "$1"
+>>>> +		return 1
+>>>> +	fi
+>>>> +}
+>>>> +
+>>>>  test_path_is_missing () {
+>>>>  	if [ -e "$1" ]
+>>>>  	then
+> 
+> Why not do something like
+> 
+>     test -z "$(ls -a1 "$1" | egrep -v '^\.\.?$')"
+> 
+> I.e., make the test ignore "." and ".." without depending on their
+> existence?
 
-strbuf_release(&sb);
-
->  }
->
->  static void show_other_files(struct dir_struct *dir)
-> @@ -134,6 +148,7 @@ static void show_killed_files(struct dir_struct *=
-dir)
->
->  static void show_ce_entry(const char *tag, const struct cache_entry =
-*ce)
->  {
-> +       static struct strbuf sb =3D STRBUF_INIT;
->         int len =3D max_prefix_len;
->
->         if (len >=3D ce_namelen(ce))
-> @@ -161,16 +176,18 @@ static void show_ce_entry(const char *tag, cons=
-t struct cache_entry *ce)
->                 tag =3D alttag;
->         }
->
-> +       strbuf_reset(&sb);
-
-'sb' is empty at this point. Why reset it?
-
->         if (!show_stage) {
-> -               fputs(tag, stdout);
-> +               strbuf_addstr(&sb, tag);
->         } else {
-> -               printf("%s%06o %s %d\t",
-> -                      tag,
-> -                      ce->ce_mode,
-> -                      find_unique_abbrev(ce->sha1,abbrev),
-> -                      ce_stage(ce));
-> +               strbuf_addf(&sb, "%s%06o %s %d\t",
-> +                           tag,
-> +                           ce->ce_mode,
-> +                           find_unique_abbrev(ce->sha1,abbrev),
-> +                           ce_stage(ce));
->         }
-> -       write_name(ce->name);
-> +       write_name(&sb, ce->name);
-> +       strbuf_fputs(&sb, stdout);
-
-strbuf_release(&sb);
-
->         if (debug_mode) {
->                 const struct stat_data *sd =3D &ce->ce_stat_data;
->
-> @@ -206,7 +223,12 @@ static void show_ru_info(void)
->                         printf("%s%06o %s %d\t", tag_resolve_undo, ui=
-->mode[i],
->                                find_unique_abbrev(ui->sha1[i], abbrev=
-),
->                                i + 1);
-> -                       write_name(path);
-> +                       /*
-> +                        * With "--full-name", prefix_len=3D0; this c=
-aller needs to pass
-> +                        * an empty string in that case (a NULL is go=
-od for "").
-> +                        */
-> +                       write_name_quoted_relative(path, prefix_len ?=
- prefix : NULL,
-> +                                                  stdout, line_termi=
-nator);
->                 }
->         }
->  }
-> --
-> 1.9.1.345.ga1a145c
+Thanks, will do so in the next round.
