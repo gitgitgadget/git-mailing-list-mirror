@@ -1,89 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 14/19] tree-diff: rework diff_tree interface to be sha1 based
-Date: Wed, 26 Mar 2014 14:34:24 -0700
-Message-ID: <xmqq1txoiqzj.fsf@gitster.dls.corp.google.com>
-References: <cover.1393257006.git.kirr@mns.spb.ru>
-	<0b82e2de0edee4a590e7b4165c65938aef7090f5.1393257006.git.kirr@mns.spb.ru>
-	<xmqqa9cfp9d5.fsf@gitster.dls.corp.google.com>
-	<20140325092215.GB3777@mini.zxlink>
-	<xmqq4n2mmarr.fsf@gitster.dls.corp.google.com>
-	<20140326195201.GB16002@mini.zxlink>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v2 19/27] refs: Add a concept of a reference transaction
+Date: Wed, 26 Mar 2014 22:42:55 +0100
+Message-ID: <533349DF.8090004@alum.mit.edu>
+References: <1395683820-17304-1-git-send-email-mhagger@alum.mit.edu> <1395683820-17304-20-git-send-email-mhagger@alum.mit.edu> <53331ED7.9020004@kitware.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: kirr@mns.spb.ru, git@vger.kernel.org
-To: Kirill Smelkov <kirr@navytux.spb.ru>
-X-From: git-owner@vger.kernel.org Wed Mar 26 22:34:36 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johan Herland <johan@herland.net>, Jeff King <peff@peff.net>,
+	Vicent Marti <tanoku@gmail.com>, git@vger.kernel.org
+To: Brad King <brad.king@kitware.com>
+X-From: git-owner@vger.kernel.org Wed Mar 26 22:43:08 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSvSz-0001VW-7Z
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Mar 2014 22:34:33 +0100
+	id 1WSvbH-0001Kc-ON
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Mar 2014 22:43:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755940AbaCZVe3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Mar 2014 17:34:29 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42797 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752126AbaCZVe2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Mar 2014 17:34:28 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5768277F76;
-	Wed, 26 Mar 2014 17:34:27 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=k5aGwGoK+Gq7yRPehNkdQgWBYKk=; b=Iz2XMi
-	ZH9YH1S9AJScfG8F6zPy7oeM+6Stf6pTJAdWXqaj9sy04xEKKLUeL/TooZE5Ou5C
-	Avv+ul4WJu12GsYqsNkz4es1fwLZEWnXsNyIZuZFyFvbkwyOC6s5d8SjWhv4427F
-	fAMXt88f8vSJr4u0BVj0Sqs6qLkFIphnsAsQk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=erevKBgHlqJ9l6sZi89raRdBiBnvSSQT
-	NR6nZ2K/E9kb5yC6mDT2T389CgItgR2fdvXCfe+8NFJCZIkbrzwGId2FOy0nSyqe
-	VWVkEa9WfZw7JyfBMeqbTcrSosm+0nSgygg7w5TQbvNEH/oIG7tKOHUd+TOh1QdI
-	Th3Vv0JjKw8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4762C77F75;
-	Wed, 26 Mar 2014 17:34:27 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 95CB677F73;
-	Wed, 26 Mar 2014 17:34:26 -0400 (EDT)
-In-Reply-To: <20140326195201.GB16002@mini.zxlink> (Kirill Smelkov's message of
-	"Wed, 26 Mar 2014 23:52:01 +0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 67D29DF0-B52E-11E3-845B-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756399AbaCZVnB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Mar 2014 17:43:01 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:45061 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752126AbaCZVnA (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 26 Mar 2014 17:43:00 -0400
+X-AuditID: 12074413-f79076d000002d17-19-533349e344f8
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 4B.44.11543.3E943335; Wed, 26 Mar 2014 17:43:00 -0400 (EDT)
+Received: from [192.168.69.148] (p57A25757.dip0.t-ipconnect.de [87.162.87.87])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s2QLguvw001456
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Wed, 26 Mar 2014 17:42:57 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.3.0
+In-Reply-To: <53331ED7.9020004@kitware.com>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrGKsWRmVeSWpSXmKPExsUixO6iqPvE0zjYYNdVRoud6yQsuq50M1k0
+	9F5htph3dxeTxY+WHmaLj50LmB3YPHbOusvucenldzaPj8+Ws3s8693D6HHxkrLH501yAWxR
+	3DZJiSVlwZnpefp2CdwZj19+Zy+Yz1WxdNU05gbGX+xdjJwcEgImEqdf7mKBsMUkLtxbz9bF
+	yMUhJHCZUWLRoy2MEM45JonXrZOYQap4BbQlji7awQhiswioSqzv2g02iU1AV2JRTzMTiC0q
+	ECRxeMMpVoh6QYmTM5+AbRABql+1rgFsA7PAGkaJtT+awJqFBXwkmmc+hlo9l1Hi3qqJQNs4
+	ODiBtk37WAliSgiIS/Q0BoGUMwvoSLzre8AMYctLbH87h3kCo+AsJOtmISmbhaRsASPzKka5
+	xJzSXN3cxMyc4tRk3eLkxLy81CJdc73czBK91JTSTYyQeBDewbjrpNwhRgEORiUe3oS7RsFC
+	rIllxZW5hxglOZiURHl7HY2DhfiS8lMqMxKLM+KLSnNSiw8xSnAwK4nwdnsA5XhTEiurUovy
+	YVLSHCxK4rxqS9T9hATSE0tSs1NTC1KLYLIyHBxKErz5II2CRanpqRVpmTklCGkmDk6Q4VxS
+	IsWpeSmpRYmlJRnxoBiOLwZGMUiKB2jvT7C9xQWJuUBRiNZTjLocG7ataWQSYsnLz0uVEufd
+	5Q5UJABSlFGaB7cClvxeMYoDfSzMex9kFA8wccJNegW0hAloCVeVEciSkkSElFQDo++G6ppn
+	h+Or7Sx1pESTfsv0zvINsqsMnuZ9OlBL2HSJTd7pVeK3d0+dl2XLYWsQmd/F/S9I 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245232>
 
-Kirill Smelkov <kirr@navytux.spb.ru> writes:
+On 03/26/2014 07:39 PM, Brad King wrote:
+> On 03/24/2014 01:56 PM, Michael Haggerty wrote:
+>> +void ref_transaction_update(struct ref_transaction *transaction,
+>> +			    const char *refname,
+>> +			    unsigned char *new_sha1, unsigned char *old_sha1,
+>> +			    int flags, int have_old);
+> [snip]
+>> +void ref_transaction_create(struct ref_transaction *transaction,
+>> +			    const char *refname,
+>> +			    unsigned char *new_sha1,
+>> +			    int flags);
+> [snip]
+>> +void ref_transaction_delete(struct ref_transaction *transaction,
+>> +			    const char *refname,
+>> +			    unsigned char *old_sha1,
+>> +			    int flags, int have_old);
+> 
+> Perhaps we also need:
+> 
+> void ref_transaction_verify(struct ref_transaction *transaction,
+> 			    const char *refname,
+> 			    unsigned char *old_sha1,
+> 			    int flags, int have_old);
+> 
+> as equivalent to the "verify" command in "update-ref --stdin"?
 
-> On Tue, Mar 25, 2014 at 10:46:32AM -0700, Junio C Hamano wrote:
->> Kirill Smelkov <kirr@navytux.spb.ru> writes:
->> 
->> > What are the downsides of "__" prefix by the way?
->> 
->> Aren't these names reserved for compiler/runtime implementations?
->
-> Yes, but there are precedents when people don't obey it widely and
-> in practice everything works :)
+Yes.  That's already on my todo list for a future batch of patches.  But
+first I was going to beef up the ref_update structure to handle verify
+actions directly rather than as updates with oldvalue==newvalue,
+probably by turning has_old into a flag with HAS_OLD and HAS_NEW bits.
 
-I think you are alluding to the practice in the Linux kernel, but
-their requirement is vastly different---their product do not even
-link with libc and they always compile with specific selected
-versions of gcc, no?
+Michael
 
-> Let it be something portable anyway -
-> how about diff_tree_sha1_low() ?
-
-Sure.
-
-As this is a file-scope static, I do not think the exact naming
-matters that much.  Just FYI, we seem to use ll_ prefix (standing
-for low-level) in some places.
-
-Thanks.
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
