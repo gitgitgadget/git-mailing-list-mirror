@@ -1,90 +1,157 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 5/5] log: do not segfault on gmtime errors
-Date: Wed, 26 Mar 2014 17:09:29 -0400
-Message-ID: <20140326210929.GA16581@sigill.intra.peff.net>
-References: <20140224073348.GA20221@sigill.intra.peff.net>
- <20140224074905.GE9969@sigill.intra.peff.net>
- <20140326110559.GA32625@hashpling.org>
- <20140326182103.GB7087@sigill.intra.peff.net>
- <xmqqvbv0iy6u.fsf@gitster.dls.corp.google.com>
- <20140326190157.GB12912@sigill.intra.peff.net>
- <xmqqeh1oisim.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] apply --ignore-space-change: lines with and without leading whitespaces do not match
+Date: Wed, 26 Mar 2014 14:14:13 -0700
+Message-ID: <xmqq61n0irx6.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Charles Bailey <cbailey32@bloomberg.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 26 22:09:37 2014
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 26 22:14:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSv4q-0002Km-Ff
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Mar 2014 22:09:36 +0100
+	id 1WSv9R-00077t-E8
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Mar 2014 22:14:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755422AbaCZVJc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Mar 2014 17:09:32 -0400
-Received: from cloud.peff.net ([50.56.180.127]:47958 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753544AbaCZVJb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Mar 2014 17:09:31 -0400
-Received: (qmail 24365 invoked by uid 102); 26 Mar 2014 21:09:31 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 26 Mar 2014 16:09:31 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 26 Mar 2014 17:09:29 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqqeh1oisim.fsf@gitster.dls.corp.google.com>
+	id S1754582AbaCZVOR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Mar 2014 17:14:17 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46196 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753544AbaCZVOQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Mar 2014 17:14:16 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 74C72771D8;
+	Wed, 26 Mar 2014 17:14:15 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=k
+	Vf9F1Psm2wkIhGSrHC0gN/Gpic=; b=KyXYa/aivY6ZSWvTaFJ2i/6F7GYG7S7IW
+	XgEzlWDMIXYMkiIh6bTuxOvDPIeSGmWqsIHZTQ5zx+hjmRTWB+RIJ6D4vW3YLPmZ
+	wHqvAC3RcLxppSx5ZuMoH0cujXx+mK4lIG1ANAqVTKLzPg+eOzn5Y8wbV+xdMxjO
+	G0wwW76wNk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=F+u
+	omvEX+UK1fnbBy1GifAeddGZ2rvzt6YvjLKd+RgoyKJjoVVGoJUmEqOeC1QiZ4yY
+	lGatxJk6+Ntf+5IMy0rOgGteNhV81KKrLEHr+lfYM2kGzG1tNWoXM2CaA7tS7X6Y
+	it7bILdnF9aVeHZESzwROx5+h2e7lSMyVvohebUM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5FD05771D7;
+	Wed, 26 Mar 2014 17:14:15 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B6EAD771CC;
+	Wed, 26 Mar 2014 17:14:14 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 957E90CC-B52B-11E3-A100-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245228>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245229>
 
-On Wed, Mar 26, 2014 at 02:01:21PM -0700, Junio C Hamano wrote:
+The fuzzy_matchlines() function is used when attempting to resurrect
+a patch that is whitespace-damaged, or when applying a patch that
+was produced against an old codebase to the codebase after
+indentation change.
 
-> > I don't know how important that is. This is such a minor feature that it
-> > is not worth a lot of maintenance headache in the test. But I also do
-> > not know if this is going to be the last report, or we will have a bunch
-> > of other systems that need their own special values put into the test.
-> 
-> I didn't quite realize that your objective of the change was to
-> signal the failure of gmtime for all implementations,
+The patch may want to change a line "a_bc" ("_" is used throught
+this description for a whitespace to make it stand out) in the
+original into something else, and we may not find "a_bc" in the
+current source, but there may be "a__bc" (two spaces instead of one
+the whitespace-damaged patch claims to expect).  By ignoring the
+amount of whitespaces, it forces "git apply" to consider that "a_bc"
+in the broken patch meant to refer to "a__bc" in reality.
 
-I didn't realize it at the time I wrote the test, either. It was my goal
-to recognize such failures, but I didn't now at the time that there were
-failures that would be signaled by anything besides a NULL return.
+However, the implementation special cases a run of whitespaces at
+the beginning of a line and makes "abc" match "_abc", even though a
+whitespace in the middle of string never matches a 0-width gap,
+e.g. "a_bc" does not match "abc".  A run of whitespace at the end of
+one string does not match a 0-width end of line on the other line,
+either, e.g. "abc_" does not match "abc".
 
-> the ones that signal an error by giving NULL back to us and (2) the
-> ones that fail to signal an error but leave bogus result (FreeBSD,
-> but it appears AIX might be also giving us another bogus value), by
-> using a single sane sentinel value.  If we can do that consistently
-> on every platform, that would indeed be great.
+Fix this inconsistency by making the code skip leading whitespaces
+only when both strings begin with a whitespace.  This makes the
+option mean the same as the option of the same name in "diff" and
+"git diff".
 
-Agreed. I am not sure we can do so. For FreeBSD, I think it is not hard.
-I am not sure what the pattern is for AIX. I am hoping Charles will
-reveal some pattern, but there may not be one.
+Note that I am not sure if anybody sane should use this option in
+the first place.  The fuzzy match logic may be able to find the
+original line that the patch author may have meant to touch because
+it does not fully trust what the original lines say (i.e. context
+lines prefixed by " " and old lines prefixed by "-" does not have to
+exactly match the contents the patch is applied to).  There is no
+reason for us to trust what the replacement lines (i.e. new lines
+prefixed by "+") say, either, but with this option enabled, we end
+up copying these new lines with suspicious whitespace distributions
+literally into the patched result.  But as long as we keep it, we
+should make it do its insane thing consistently.
 
-> But if that is the case, we should not have to maintain special case
-> values in the test code, I would think.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin/apply.c                    | 12 +++++++-----
+ t/t4107-apply-ignore-whitespace.sh | 12 ++++--------
+ 2 files changed, 11 insertions(+), 13 deletions(-)
 
-Right. All of my suggestions to accommodate special values in the test
-were assuming that the system gmtime was smarter than we are. That it
-produced a good value for this crazy time and _didn't_ fail.
-
-But after having done the basic math, I don't think that is what is
-going on here.
-
-> The test instead should expect the output to have that single sentinel
-> value, and if the workaround code fails to detect a breakage in the
-> platform gmtime(), the special case logic to catch these
-> platform-specific breakages should go that "timestamp that cannot be
-> grokked by gmtime---replace it with a sentinel" logic, no?
-
-Yes, exactly. That is the preferable solution, if we can come up with
-such logic. Personally I am not optimistic.
-
-The fallback is to accept that we cannot cover all cases, and just
-loosen the test (i.e., the second patch I posted today).
-
--Peff
+diff --git a/builtin/apply.c b/builtin/apply.c
+index 0189523..8b9d3de 100644
+--- a/builtin/apply.c
++++ b/builtin/apply.c
+@@ -300,11 +300,13 @@ static int fuzzy_matchlines(const char *s1, size_t n1,
+ 	while ((*last2 == '\r') || (*last2 == '\n'))
+ 		last2--;
+ 
+-	/* skip leading whitespace */
+-	while (isspace(*s1) && (s1 <= last1))
+-		s1++;
+-	while (isspace(*s2) && (s2 <= last2))
+-		s2++;
++	/* skip leading whitespaces, if both begin with whitespace */
++	if (s1 <= last1 && s2 <= last2 && isspace(*s1) && isspace(*s2)) {
++		while (isspace(*s1) && (s1 <= last1))
++			s1++;
++		while (isspace(*s2) && (s2 <= last2))
++			s2++;
++	}
+ 	/* early return if both lines are empty */
+ 	if ((s1 > last1) && (s2 > last2))
+ 		return 1;
+diff --git a/t/t4107-apply-ignore-whitespace.sh b/t/t4107-apply-ignore-whitespace.sh
+index b04fc8f..9e29b52 100755
+--- a/t/t4107-apply-ignore-whitespace.sh
++++ b/t/t4107-apply-ignore-whitespace.sh
+@@ -111,7 +111,6 @@ sed -e 's/T/	/g' > main.c.final <<\EOF
+ #include <stdio.h>
+ 
+ void print_int(int num);
+-T/* a comment */
+ int func(int num);
+ 
+ int main() {
+@@ -154,7 +153,8 @@ test_expect_success 'patch2 reverse applies with --ignore-space-change' '
+ git config apply.ignorewhitespace change
+ 
+ test_expect_success 'patch2 applies (apply.ignorewhitespace = change)' '
+-	git apply patch2.patch
++	git apply patch2.patch &&
++	test_cmp main.c.final main.c
+ '
+ 
+ test_expect_success 'patch3 fails (missing string at EOL)' '
+@@ -165,12 +165,8 @@ test_expect_success 'patch4 fails (missing EOL at EOF)' '
+ 	test_must_fail git apply patch4.patch
+ '
+ 
+-test_expect_success 'patch5 applies (leading whitespace)' '
+-	git apply patch5.patch
+-'
+-
+-test_expect_success 'patches do not mangle whitespace' '
+-	test_cmp main.c main.c.final
++test_expect_success 'patch5 fails (leading whitespace differences matter)' '
++	test_must_fail git apply patch5.patch
+ '
+ 
+ test_expect_success 're-create file (with --ignore-whitespace)' '
+-- 
+1.9.1-497-g6f5ca27
