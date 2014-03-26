@@ -1,66 +1,90 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [RFC/PATCH 1/4] test-lib: add test_dir_is_empty()
-Date: Tue, 25 Mar 2014 22:06:36 +0100
-Message-ID: <87y4zyt2cj.fsf@fencepost.gnu.org>
-References: <5331B6F6.60501@web.de> <5331B717.5010600@web.de>
-	<xmqq4n2mknqf.fsf@gitster.dls.corp.google.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v2 001/142] check-builtins.sh: use the $( ... ) construct for command substitution
+Date: Wed, 26 Mar 2014 13:19:54 +0100
+Message-ID: <vpqha6l5ez9.fsf@anie.imag.fr>
+References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
+	<1395768283-31135-2-git-send-email-gitter.spiros@gmail.com>
+	<xmqqtxamkq4b.fsf@gitster.dls.corp.google.com>
+	<8738i6uihf.fsf@fencepost.gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jonathan Nieder p <jrnieder@gmail.com>,
-	Jeff King <peff@peff.net>, Heiko Voigt <hvoigt@hvoigt.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Mar 26 12:52:05 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Wed Mar 26 13:20:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSmNI-0007qK-WC
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Mar 2014 12:52:05 +0100
+	id 1WSmoZ-0002Uz-H0
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Mar 2014 13:20:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754164AbaCZLvx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Mar 2014 07:51:53 -0400
-Received: from fencepost.gnu.org ([208.118.235.10]:59767 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753438AbaCZLvw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Mar 2014 07:51:52 -0400
-Received: from localhost ([127.0.0.1]:58799 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1WSmN4-0007PT-Lw; Wed, 26 Mar 2014 07:51:50 -0400
-Received: by lola (Postfix, from userid 1000)
-	id 64346DF3CE; Tue, 25 Mar 2014 22:06:36 +0100 (CET)
-In-Reply-To: <xmqq4n2mknqf.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Tue, 25 Mar 2014 13:49:28 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
+	id S1754203AbaCZMUH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Mar 2014 08:20:07 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:43358 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753743AbaCZMUG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Mar 2014 08:20:06 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s2QCJrne023357
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 26 Mar 2014 13:19:53 +0100
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s2QCJseJ011112;
+	Wed, 26 Mar 2014 13:19:54 +0100
+In-Reply-To: <8738i6uihf.fsf@fencepost.gnu.org> (David Kastrup's message of
+	"Tue, 25 Mar 2014 21:32:44 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 26 Mar 2014 13:19:53 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s2QCJrne023357
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1396441194.73191@Y+P5nSiuBks8O08E1zNaYQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245177>
 
-Junio C Hamano <gitster@pobox.com> writes:
+David Kastrup <dak@gnu.org> writes:
 
-> Jens Lehmann <Jens.Lehmann@web.de> writes:
+> Junio C Hamano <gitster@pobox.com> writes:
 >
->> For the upcoming submodule test framework we often need to assert that an
->> empty directory exists in the work tree. Add the test_dir_is_empty()
->> function which asserts that the given argument is an empty directory.
+>> Elia Pinto <gitter.spiros@gmail.com> writes:
 >>
->> Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
->> ---
+>>> The Git CodingGuidelines prefer the $( ... ) construct for command
+>>> substitution instead of using the back-quotes, or grave accents (`.=
+=2E`).
+>>>
+>>> The backquoted form is the historical method for command substituti=
+on,
+>>> and is supported by POSIX. However, all but the simplest uses becom=
+e
+>>> complicated quickly. In particular, embedded command substitutions
+>>> and/or the use of double quotes require careful escaping with the b=
+ackslash
+>>> character. Because of this the POSIX shell adopted the $(=E2=80=A6)=
+ feature from
+>>> the Korn shell.
+>>>
+>>> The patch was generated by the simple script
+>>>
+>>> for _f in $(find . -name "*.sh")
+>>> do
+>>> =C2=A0 sed -i 's@`\(.*\)`@$(\1)@g' ${_f}
+>>> done
 >>
->> I believe this one is pretty straightforward (unless I missed that this
->> functionality already exists someplace I forgot to look ;-).
+>> "and then carefully proofread" is sorely needed here.
 >
-> I am not very thrilled to see that it depends on "." and ".." to
-> always exist, which may be true for all POSIX filesystems, but
-> still...
+> It would already help to skip comment lines.
 
-Not even there, though few people will likely use / as their work
-tree...
+Actually no: most comments including `...` are code examples that we
+want to fix too, except 3 instances (see my other message).
 
--- 
-David Kastrup
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
