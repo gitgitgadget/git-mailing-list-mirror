@@ -1,145 +1,65 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH v2 17/17] ls: show directories as well as files
-Date: Wed, 26 Mar 2014 20:48:17 +0700
-Message-ID: <1395841697-11742-18-git-send-email-pclouds@gmail.com>
-References: <1395310551-23201-1-git-send-email-pclouds@gmail.com>
- <1395841697-11742-1-git-send-email-pclouds@gmail.com>
+From: George Papanikolaou <g3orge.app@gmail.com>
+Subject: Re: [PATCH] builtin/apply.c: use iswspace() to detect
+ line-ending-like chars
+Date: Wed, 26 Mar 2014 18:58:19 +0200
+Message-ID: <CAByyCQBX+xfDdMwFOE2bZg8W2S0jwj2nLV36JwH1N3D4Fn2BUw@mail.gmail.com>
+References: <1395344384-7975-1-git-send-email-g3orge.app@gmail.com>
+	<532C1EFA.3000109@alum.mit.edu>
+	<7vd2haq3n5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 26 14:49:36 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 26 17:58:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSoD1-0000zH-6Q
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Mar 2014 14:49:35 +0100
+	id 1WSr9r-0001gG-61
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Mar 2014 17:58:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754891AbaCZNt3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Mar 2014 09:49:29 -0400
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:51284 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754178AbaCZNt3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Mar 2014 09:49:29 -0400
-Received: by mail-pa0-f43.google.com with SMTP id bj1so1962257pad.2
-        for <git@vger.kernel.org>; Wed, 26 Mar 2014 06:49:28 -0700 (PDT)
+	id S932221AbaCZQ6Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Mar 2014 12:58:25 -0400
+Received: from mail-vc0-f181.google.com ([209.85.220.181]:46689 "EHLO
+	mail-vc0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932095AbaCZQ6U (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Mar 2014 12:58:20 -0400
+Received: by mail-vc0-f181.google.com with SMTP id id10so2820539vcb.12
+        for <git@vger.kernel.org>; Wed, 26 Mar 2014 09:58:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=W890Be/HdoX5M1XXEptzDahMxcu3rod4VL8JDy/1Ing=;
-        b=mXGGxInInEb3jMjW2DByhCZ8kj8w84I0diDHOnISgDtw+/Qt5y69Iz4CcVizJi2rg0
-         ODf/vz4HQTe1hbmEsLIEktbzuKxsMaIMO22S/y+/guUsLY4J9gFh5ANl1GUPoZlImKA6
-         +BHFyO7njnB+GXrlmrOnKF+Ma8+IcxltrKy1abJ2x3blTp3IQ0/D6lTf63+fiQJnmBjF
-         hL0NRZB/r39LZIROYvxcvv6DtNfNebq9hYOzY8pMSwYwxGDOq9Qa4SC6kCYr4XlKcP9A
-         aJ0v1sG10jZ7I10FHmqa08DdXMmPPViLgjSEY1xWiLjahbg1TS2ZfkbFlad7DTJ/1zM2
-         /f4g==
-X-Received: by 10.68.7.66 with SMTP id h2mr85742875pba.91.1395841768621;
-        Wed, 26 Mar 2014 06:49:28 -0700 (PDT)
-Received: from lanh ([115.73.224.106])
-        by mx.google.com with ESMTPSA id vw9sm58542642pbc.68.2014.03.26.06.49.25
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 26 Mar 2014 06:49:27 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Wed, 26 Mar 2014 20:50:20 +0700
-X-Mailer: git-send-email 1.9.1.345.ga1a145c
-In-Reply-To: <1395841697-11742-1-git-send-email-pclouds@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=P/kqcBPqF4RBItF4JqRHbA6mdVfA4/8l3AGEf5hFyT4=;
+        b=NA/XzCZcsE1Gbc7ThsxMsTyzXPsjhvq920rWnjsGPeCnHZ1eA1h8Rd2xqc8Y8POPgq
+         kndDDC294C+PFWHE/WxrOu3Tg8GV2cgodIcBtGgVw1S+PznGnltQ2JV3MT6bHKjVy2Kt
+         aSQcIAK7NDM5E9QgqTe8Er+dyn2TrlXuN4TuYN40reXykYFQa5+cMOMyCAGeBXWbCMKq
+         ywM4VrEwZ1CZGo5ZbiSIEIqduSAfWUTQaKQcWRV+ofKLlpRMMFBXV7ixOi+4npdB1Ebw
+         EDjjCWePZZqdSFBt4q0X8laS8nAI2pRgEC6My1iOfHOVMKnHw8CgU1WyaFXZfChM8lk+
+         xT7g==
+X-Received: by 10.221.4.66 with SMTP id ob2mr1401926vcb.28.1395853099675; Wed,
+ 26 Mar 2014 09:58:19 -0700 (PDT)
+Received: by 10.58.29.48 with HTTP; Wed, 26 Mar 2014 09:58:19 -0700 (PDT)
+In-Reply-To: <7vd2haq3n5.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245196>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245197>
 
-The index does not store directories explicitly (except submodules) so
-we have to figure them out from file list. The function
-show_directories() deliberately generates duplicate directories and
-expects the previous patch to remove duplicates.
+On Tue, Mar 25, 2014 at 6:54 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> As a tangent, I have a suspicion that the current implementation may
+> be wrong at the beginning of the string.  Wouldn't it match " abc"
+> and "abc", even though these two strings shouldn't match?
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- builtin/ls-files.c | 41 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+Wouldn't that be accomplished by just removing the leading whitespace check?
 
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index cd8e35c..7e50192 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -27,6 +27,7 @@ static int show_resolve_undo;
- static int show_modified;
- static int show_killed;
- static int show_valid_bit;
-+static int show_dirs;
- static int line_terminator =3D '\n';
- static int debug_mode;
- static int use_color;
-@@ -337,6 +338,43 @@ static void show_files(struct dir_struct *dir)
- 	}
- }
-=20
-+static void show_directories(const struct cache_entry *ce)
-+{
-+	static const char *last_directory;
-+	struct strbuf sb =3D STRBUF_INIT;
-+	const char *p =3D ce->name + prefix_len;
-+	const char *sep;
-+
-+	if (last_directory) {
-+		int len =3D strlen(last_directory);
-+		if (!strncmp(ce->name, last_directory, len) &&
-+		    ce->name[len] =3D=3D '/')
-+			p +=3D len + 1;
-+	}
-+
-+	while (*p && (sep =3D strchr(p, '/'))) {
-+		struct strbuf sb2 =3D STRBUF_INIT;
-+		strbuf_reset(&sb);
-+		strbuf_add(&sb, ce->name, sep - ce->name);
-+		p =3D sep + 1;
-+		if (!match_pathspec(&pathspec, sb.buf, sb.len,
-+				    prefix_len, NULL, 1))
-+			continue;
-+		write_name(&sb2, sb.buf);
-+		if (want_color(use_color)) {
-+			struct strbuf sb3 =3D STRBUF_INIT;
-+			color_filename(&sb3, ce->name, sb2.buf, S_IFDIR, 1);
-+			strbuf_release(&sb2);
-+			sb2 =3D sb3;
-+		}
-+		if (show_tag)
-+			strbuf_insert(&sb2, 0, tag_cached, strlen(tag_cached));
-+		last_directory =3D strbuf_detach(&sb, NULL);
-+		strbuf_fputs(&sb2, last_directory, NULL);
-+		strbuf_release(&sb2);
-+	}
-+}
-+
- static void show_files_compact(struct dir_struct *dir)
- {
- 	int i;
-@@ -357,6 +395,8 @@ static void show_files_compact(struct dir_struct *d=
-ir)
- 		const struct cache_entry *ce =3D active_cache[i];
- 		struct stat st;
- 		int err, shown =3D 0;
-+		if (show_dirs)
-+			show_directories(ce);
- 		if ((dir->flags & DIR_SHOW_IGNORED) &&
- 		    !ce_excluded(dir, ce))
- 			continue;
-@@ -825,6 +865,7 @@ int cmd_ls(int argc, const char **argv, const char =
-*cmd_prefix)
- 	use_color =3D -1;
- 	max_depth =3D 0;
- 	show_tag =3D -1;
-+	show_dirs =3D 1;
-=20
- 	argc =3D parse_options(argc, argv, prefix, builtin_ls_options,
- 			     ls_usage, 0);
---=20
-1.9.1.345.ga1a145c
+I'm somewhat confused about what the function should match. I haven't
+grasped it.
+
+--
+papanikge's surrogate email.
+I may reply back.
+http://www.5slingshots.com/
