@@ -1,104 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v8 03/12] Move lower case functions into wrapper.c
-Date: Wed, 26 Mar 2014 16:07:34 -0700
-Message-ID: <xmqqppl8ftjd.fsf@gitster.dls.corp.google.com>
-References: <20140326215858.11352.89243.chriscool@tuxfamily.org>
-	<20140326221531.11352.86408.chriscool@tuxfamily.org>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v2 06/17] ls-files: add --color to highlight file names
+Date: Thu, 27 Mar 2014 06:15:15 +0700
+Message-ID: <CACsJy8BjWVJu=_xyey=oBfCgemVBU4p98b+w0PaUQbFk0HG3Hw@mail.gmail.com>
+References: <1395310551-23201-1-git-send-email-pclouds@gmail.com>
+ <1395841697-11742-1-git-send-email-pclouds@gmail.com> <1395841697-11742-7-git-send-email-pclouds@gmail.com>
+ <CAPig+cTMRHi2sWQLZzdHZGWT6GBX-3v8exx8B4jpWm0Tgvg6+Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
-	Josh Triplett <josh@joshtriplett.org>,
-	Thomas Rast <tr@thomasrast.ch>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Thu Mar 27 00:07:47 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Thu Mar 27 00:16:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSwvB-0008DA-LC
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Mar 2014 00:07:46 +0100
+	id 1WSx39-0000cO-4F
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Mar 2014 00:15:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756671AbaCZXHi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Mar 2014 19:07:38 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51772 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756652AbaCZXHg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Mar 2014 19:07:36 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 627D478021;
-	Wed, 26 Mar 2014 19:07:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=50GF7GfvI+PWSU1wbDWtDDbBCfw=; b=dg5/wueWRe2z17d9NQuk
-	0CHvMqIQsSK9DqMCLDE5irzmKHg1H3zOEO/cBZGn/Q+rrnmlr+WKg28QlmWMQZ9g
-	syFU+l3UXBMsrUZrlsCwHZmUCOgmYKGM3IqK8qC0E2zZDSZivYxVuKe/OdWgyMch
-	nCf00pM/fdaQDwT/w0FZFbM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=IPBz+o4OkKAyijiAg4cb6qtE1zJiA/7/wF7tp8YqXXTTaD
-	Oc9XcmbWpiZ6BOzAHcNHSH6sbv5GtjS9VOuqpXxo10qba9TwsDfLQniqEHb/AN8g
-	scHHCXuxDSz4dDjQvD6vsHeQ0rJQE54CEvMNWlOeEpp8yGoj6BQB/YoqUxHYE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 506197801F;
-	Wed, 26 Mar 2014 19:07:36 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 936C27801D;
-	Wed, 26 Mar 2014 19:07:35 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 6B28F64A-B53B-11E3-9279-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756203AbaCZXPz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Mar 2014 19:15:55 -0400
+Received: from mail-qg0-f42.google.com ([209.85.192.42]:39675 "EHLO
+	mail-qg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756166AbaCZXPy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 26 Mar 2014 19:15:54 -0400
+Received: by mail-qg0-f42.google.com with SMTP id q107so1800483qgd.15
+        for <git@vger.kernel.org>; Wed, 26 Mar 2014 16:15:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=rbtgC2CxHBDMr6tCTRLV0RpU/HQzmbkpX2XYSYFeJjA=;
+        b=zqqgVj15kggVHFVvVo0B+si/xCQ9iEj3mosMKF+oqTSZXp+QgXktSweKsKfhuHF6VK
+         tudm3MakOxinSqsnXDo5YU53Kfk4ITvdXTKazN0iJLElElgAVLoFG2IBf0JOlNKloSmC
+         eLG94m0Un9eaEhT5+JWdFZNs44eLzKjpU+lxMXZlbORhAivjFnb11A/5wUENi2LW40jy
+         ZjA3yDKzOwHYDXid3nCGJXDzTiTK4e74vB5777D/blgacx6sXdzPXh7ruxbxw7eyoT7V
+         pCvkoD9mVg1NgYylaRRNolMh1fiKoWM1fxXKJEHwaBpN3uhnQ2bJ8xu7vHEHFXj7Z6VT
+         Wvrg==
+X-Received: by 10.229.192.7 with SMTP id do7mr93176532qcb.1.1395875745574;
+ Wed, 26 Mar 2014 16:15:45 -0700 (PDT)
+Received: by 10.96.103.166 with HTTP; Wed, 26 Mar 2014 16:15:15 -0700 (PDT)
+In-Reply-To: <CAPig+cTMRHi2sWQLZzdHZGWT6GBX-3v8exx8B4jpWm0Tgvg6+Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245256>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+On Thu, Mar 27, 2014 at 2:13 AM, Eric Sunshine <sunshine@sunshineco.com=
+> wrote:
+> On Wed, Mar 26, 2014 at 9:48 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8D=
+c Duy <pclouds@gmail.com> wrote:
+>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
+ail.com>
+>> ---
+>>  Documentation/git-ls-files.txt |  9 +++++++++
+>>  builtin/ls-files.c             | 38 +++++++++++++++++++++++++++++++=
+++++---
+>>  2 files changed, 44 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-f=
+iles.txt
+>> index c0856a6..5c1b7f3 100644
+>> --- a/Documentation/git-ls-files.txt
+>> +++ b/Documentation/git-ls-files.txt
+>> @@ -147,6 +147,15 @@ a space) at the start of each line:
+>>         possible for manual inspection; the exact format may change =
+at
+>>         any time.
+>>
+>> +--color[=3D<when>]::
+>> +       Color file names. The value must be always (default), never,
+>> +       or auto.
+>
+> Here, the default is "always"...
 
-> diff --git a/wrapper.c b/wrapper.c
-> index 0cc5636..c46026a 100644
-> --- a/wrapper.c
-> +++ b/wrapper.c
-> @@ -455,3 +455,17 @@ struct passwd *xgetpwuid_self(void)
->  		    errno ? strerror(errno) : _("no such user"));
->  	return pw;
->  }
-> +
-> +void lowercase(char *p)
-> +{
-> +	for (; *p; p++)
-> +		*p = tolower(*p);
-> +}
-> +
-> +char *xstrdup_tolower(const char *str)
-> +{
-> +	char *dup = xstrdup(str);
-> +	lowercase(dup);
-> +	return dup;
-> +}
-> +
+These (.txt changes in other patches as well) are mostly copy and
+paste from existing .txt files. You may want to grep through and fix
+other places as well, in a separate series.
 
-As a pure code-movement step, this may be OK, but I am not sure if
-both of them want to be public functions in this shape.
+>
+>> +--no-color::
+>> +       Turn off coloring, even when the configuration file gives th=
+e
+>> +       default to color output, same as `--color=3Dnever`. This is =
+the
+>> +       default.
+>
+> But, here the default is "never".
 
-Perhaps
-
-char *downcase_copy(const char *str)
-{
-	char *copy = xmalloc(strlen(str) + 1);
-        int i;
-        for (i = 0; str[i]; i++)
-        	copy[i] = tolower(str[i]);
-	copy[i] = '\0';
-        return copy;
-}
-
-may avoid having to copy things twice.  Do you need the other
-function exposed?
+What I mean is color is turned off by default for ls-files (in
+contrast, ls has color on by default). The default 'always' means that
+if you write --color without the <when> part, then it's
+--color=3Dalways. How do I phrase to make it clear?
+--=20
+Duy
