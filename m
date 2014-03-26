@@ -1,105 +1,186 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t4212: handle systems with post-apocalyptic gmtime
-Date: Wed, 26 Mar 2014 12:18:25 -0700
-Message-ID: <xmqqr45oixa6.fsf@gitster.dls.corp.google.com>
-References: <20140224073348.GA20221@sigill.intra.peff.net>
-	<20140224074905.GE9969@sigill.intra.peff.net>
-	<20140326110559.GA32625@hashpling.org>
-	<20140326182103.GB7087@sigill.intra.peff.net>
-	<20140326185153.GA12912@sigill.intra.peff.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 05/17] ls-files: buffer full item in strbuf before printing
+Date: Wed, 26 Mar 2014 15:22:03 -0400
+Message-ID: <CAPig+cRpL9PYKLEH8DocKWo2-ZnqtD6j30TLES1NyOnk52D+Mw@mail.gmail.com>
+References: <1395310551-23201-1-git-send-email-pclouds@gmail.com>
+	<1395841697-11742-1-git-send-email-pclouds@gmail.com>
+	<1395841697-11742-6-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Charles Bailey <cbailey32@bloomberg.net>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 26 20:18:36 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 26 20:22:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WStLN-0004uR-Ul
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Mar 2014 20:18:34 +0100
+	id 1WStOt-0008Q0-Ox
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Mar 2014 20:22:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754779AbaCZTS3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Mar 2014 15:18:29 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35566 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751147AbaCZTS2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Mar 2014 15:18:28 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 64FA4765BB;
-	Wed, 26 Mar 2014 15:18:28 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=eIDsy/dsMIwBA+lXs9CqBkqAlcw=; b=ZnzHar
-	uUdRl9sIbIecZf8iQZnBVF30LEwjBArFROHd4PMkWQJiGxuE9nspPjCKOjw1hO7/
-	VXe2cd9Ls4v/lzyo+7WbN+8Cq5mdrk2T+IX5CKrqmFPWb2NEQ8JXVC/tzSIQdArW
-	5xdyhPgRc4SE166/LVGe8hzANVvHNd4yJl1CY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YgTzILFQwomBbVJ/KujQ+jn5gdp0bkyq
-	47l8lzoPfBlyec3dBd6/o0urkGqXql525c5BJgopNzzlNaEuCGNp8Stn4tWE9GJ/
-	hdeLQ2Tpc5rzeb2W0CNpg/yFIb0gHehzp0eURbwia4pHjB+pL1OQxSwnx7KnPsib
-	yxgKNgNMuX8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3E7EA765BA;
-	Wed, 26 Mar 2014 15:18:28 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8355D765B5;
-	Wed, 26 Mar 2014 15:18:27 -0400 (EDT)
-In-Reply-To: <20140326185153.GA12912@sigill.intra.peff.net> (Jeff King's
-	message of "Wed, 26 Mar 2014 14:51:53 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 68A264A8-B51B-11E3-9D2F-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755910AbaCZTWG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Mar 2014 15:22:06 -0400
+Received: from mail-yh0-f42.google.com ([209.85.213.42]:36405 "EHLO
+	mail-yh0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755896AbaCZTWD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 26 Mar 2014 15:22:03 -0400
+Received: by mail-yh0-f42.google.com with SMTP id t59so2556369yho.15
+        for <git@vger.kernel.org>; Wed, 26 Mar 2014 12:22:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=2j/vDxKRpaLbKKfIFVsOVaddPMosqwl7e450I492O+s=;
+        b=mbHV+V+FgmHGnzbUEjjJAqCM2BMRLuuzYAji6oLy6BNmvhy2memy6YPacI4ndoRs4K
+         XyEPsvlkGe5DcBSpTayff5Lio+PrsrdGD+wEhO1RK0eOiz+000bB66ZpPKmL0/A0xJyV
+         yuxIpty16idFlFVhFgAlNOJodoZ4fT/SGGgpGqvH1/md5FoP23LpTfvth+gbfTxxBv7d
+         u98FTVl6mK53oJkDClhXMQFgMxkhit98nidxvqFLxR47iV/f7NcwQQ5WiDjqswTKOG7+
+         5FxLwjr+ijzjHxro/N8Oln0eitjcMFVV7cYy0qtk8njaogg8wRb8YMrkpbCLXazYNtq7
+         ZhiA==
+X-Received: by 10.236.147.10 with SMTP id s10mr37135925yhj.88.1395861723286;
+ Wed, 26 Mar 2014 12:22:03 -0700 (PDT)
+Received: by 10.170.180.134 with HTTP; Wed, 26 Mar 2014 12:22:03 -0700 (PDT)
+In-Reply-To: <1395841697-11742-6-git-send-email-pclouds@gmail.com>
+X-Google-Sender-Auth: sldXkeQobSALr0CDsf2V8jHzwjs
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245214>
 
-Jeff King <peff@peff.net> writes:
-
-> +cmp_one_of () {
-> +	for candidate in "$@"; do
-
-Style ;-)
-
-> +		echo "$candidate" >expect &&
-> +		test_cmp expect actual &&
-> +		return 0
-> +	done
-> +	return 1
+On Wed, Mar 26, 2014 at 9:48 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
+Duy <pclouds@gmail.com> wrote:
+> Buffering so that we can manipulate the strings (e.g. coloring)
+> further before finally printing them.
+>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+>  builtin/ls-files.c | 48 +++++++++++++++++++++++++++++++++++---------=
+----
+>  1 file changed, 35 insertions(+), 13 deletions(-)
+>
+> diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+> index 47c3880..6e30592 100644
+> --- a/builtin/ls-files.c
+> +++ b/builtin/ls-files.c
+> @@ -47,18 +47,30 @@ static const char *tag_modified =3D "";
+>  static const char *tag_skip_worktree =3D "";
+>  static const char *tag_resolve_undo =3D "";
+>
+> -static void write_name(const char *name)
+> +static void write_name(struct strbuf *sb, const char *name)
+>  {
+>         /*
+>          * With "--full-name", prefix_len=3D0; this caller needs to p=
+ass
+>          * an empty string in that case (a NULL is good for "").
+>          */
+> -       write_name_quoted_relative(name, prefix_len ? prefix : NULL,
+> -                                  stdout, line_terminator);
+> +       const char *real_prefix =3D prefix_len ? prefix : NULL;
+> +       if (!line_terminator) {
+> +               struct strbuf sb2 =3D STRBUF_INIT;
+> +               strbuf_addstr(sb, relative_path(name, real_prefix, &s=
+b2));
+> +               strbuf_release(&sb2);
+> +       } else
+> +               quote_path_relative(name, real_prefix, sb);
+> +       strbuf_addch(sb, line_terminator);
 > +}
+> +
+> +static void strbuf_fputs(struct strbuf *sb, FILE *fp)
+> +{
+> +       fwrite(sb->buf, sb->len, 1, fp);
+>  }
+>
+>  static void show_dir_entry(const char *tag, struct dir_entry *ent)
+>  {
+> +       static struct strbuf sb =3D STRBUF_INIT;
+>         int len =3D max_prefix_len;
+>
+>         if (len >=3D ent->len)
+> @@ -67,8 +79,10 @@ static void show_dir_entry(const char *tag, struct=
+ dir_entry *ent)
+>         if (!dir_path_match(ent, &pathspec, len, ps_matched))
+>                 return;
+>
+> -       fputs(tag, stdout);
+> -       write_name(ent->name);
+> +       strbuf_reset(&sb);
+> +       strbuf_addstr(&sb, tag);
+> +       write_name(&sb, ent->name);
+> +       strbuf_fputs(&sb, stdout);
 
-It actually may be easier to understand if you write a trivial case
-statement at the sole calling site of this helper function, though.
+strbuf_release(&sb);
 
-In any case, would it really be essential to make sure that the
-output shows a phony (or a seemingly real) datestamp for this test?
+>  }
+>
+>  static void show_other_files(struct dir_struct *dir)
+> @@ -134,6 +148,7 @@ static void show_killed_files(struct dir_struct *=
+dir)
+>
+>  static void show_ce_entry(const char *tag, const struct cache_entry =
+*ce)
+>  {
+> +       static struct strbuf sb =3D STRBUF_INIT;
+>         int len =3D max_prefix_len;
+>
+>         if (len >=3D ce_namelen(ce))
+> @@ -161,16 +176,18 @@ static void show_ce_entry(const char *tag, cons=
+t struct cache_entry *ce)
+>                 tag =3D alttag;
+>         }
+>
+> +       strbuf_reset(&sb);
 
-The primary thing you wanted to achieve by the "gmtime gave us NULL,
-let's substitute it with an arbitrary value to avoid dereferencing
-the NULL" change was *not* that we see that same arbitrary value
-comes out of the system, but that we do not die by attempting to
-reference the NULL, I think.  Not dying is the primary thing we want
-to (and we already do) test, no?
+'sb' is empty at this point. Why reset it?
 
-> +# date is within 2^63-1, but enough to choke glibc's gmtime.
-> +# We check that either the date broke gmtime (and we return the
-> +# usual epoch value), or gmtime gave us some sensible value.
-> +#
-> +# The sensible values are determined experimentally. The first
-> +# is from AIX.
-> +test_expect_success 'absurdly far-in-future dates' '
->  	commit=$(munge_author_date HEAD 999999999999999999) &&
-> -	echo "Thu Jan 1 00:00:00 1970 +0000" >expect &&
->  	git log -1 --format=%ad $commit >actual &&
-> -	test_cmp expect actual
-> +	cmp_one_of \
-> +		"Thu Jan 1 00:00:00 1970 +0000" \
-> +		"Thu Oct 24 18:46:39 162396404 -0700"
->  '
->  
->  test_done
+>         if (!show_stage) {
+> -               fputs(tag, stdout);
+> +               strbuf_addstr(&sb, tag);
+>         } else {
+> -               printf("%s%06o %s %d\t",
+> -                      tag,
+> -                      ce->ce_mode,
+> -                      find_unique_abbrev(ce->sha1,abbrev),
+> -                      ce_stage(ce));
+> +               strbuf_addf(&sb, "%s%06o %s %d\t",
+> +                           tag,
+> +                           ce->ce_mode,
+> +                           find_unique_abbrev(ce->sha1,abbrev),
+> +                           ce_stage(ce));
+>         }
+> -       write_name(ce->name);
+> +       write_name(&sb, ce->name);
+> +       strbuf_fputs(&sb, stdout);
+
+strbuf_release(&sb);
+
+>         if (debug_mode) {
+>                 const struct stat_data *sd =3D &ce->ce_stat_data;
+>
+> @@ -206,7 +223,12 @@ static void show_ru_info(void)
+>                         printf("%s%06o %s %d\t", tag_resolve_undo, ui=
+->mode[i],
+>                                find_unique_abbrev(ui->sha1[i], abbrev=
+),
+>                                i + 1);
+> -                       write_name(path);
+> +                       /*
+> +                        * With "--full-name", prefix_len=3D0; this c=
+aller needs to pass
+> +                        * an empty string in that case (a NULL is go=
+od for "").
+> +                        */
+> +                       write_name_quoted_relative(path, prefix_len ?=
+ prefix : NULL,
+> +                                                  stdout, line_termi=
+nator);
+>                 }
+>         }
+>  }
+> --
+> 1.9.1.345.ga1a145c
