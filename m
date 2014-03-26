@@ -1,77 +1,129 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] t4212: handle systems with post-apocalyptic gmtime
-Date: Wed, 26 Mar 2014 17:57:41 -0400
-Message-ID: <20140326215741.GA17716@sigill.intra.peff.net>
-References: <20140224073348.GA20221@sigill.intra.peff.net>
- <20140224074905.GE9969@sigill.intra.peff.net>
- <20140326110559.GA32625@hashpling.org>
- <20140326182103.GB7087@sigill.intra.peff.net>
- <20140326185153.GA12912@sigill.intra.peff.net>
- <xmqqr45oixa6.fsf@gitster.dls.corp.google.com>
- <20140326192536.GA13989@sigill.intra.peff.net>
- <20140326193359.GA14105@sigill.intra.peff.net>
- <20140326212227.GC6991@hashpling.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Charles Bailey <cbailey32@bloomberg.net>
-X-From: git-owner@vger.kernel.org Wed Mar 26 22:57:51 2014
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v8 03/12] Move lower case functions into wrapper.c
+Date: Wed, 26 Mar 2014 23:15:21 +0100
+Message-ID: <20140326221531.11352.86408.chriscool@tuxfamily.org>
+References: <20140326215858.11352.89243.chriscool@tuxfamily.org>
+Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Thomas Rast <tr@thomasrast.ch>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 26 23:16:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSvpW-00077L-Da
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Mar 2014 22:57:50 +0100
+	id 1WSw7Y-0001mb-TW
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Mar 2014 23:16:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756337AbaCZV5o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Mar 2014 17:57:44 -0400
-Received: from cloud.peff.net ([50.56.180.127]:48008 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755940AbaCZV5n (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Mar 2014 17:57:43 -0400
-Received: (qmail 27272 invoked by uid 102); 26 Mar 2014 21:57:43 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 26 Mar 2014 16:57:43 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 26 Mar 2014 17:57:41 -0400
-Content-Disposition: inline
-In-Reply-To: <20140326212227.GC6991@hashpling.org>
+	id S1756248AbaCZWQY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Mar 2014 18:16:24 -0400
+Received: from [194.158.98.45] ([194.158.98.45]:48955 "EHLO mail-3y.bbox.fr"
+	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1756094AbaCZWQW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Mar 2014 18:16:22 -0400
+Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
+	by mail-3y.bbox.fr (Postfix) with ESMTP id 1FB9538;
+	Wed, 26 Mar 2014 23:16:01 +0100 (CET)
+X-git-sha1: d8783a927f590fc96319366090352c3d06b1b784 
+X-Mailer: git-mail-commits v0.5.2
+In-Reply-To: <20140326215858.11352.89243.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245234>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245235>
 
-On Wed, Mar 26, 2014 at 09:22:27PM +0000, Charles Bailey wrote:
+The lowercase() function from config.c and the xstrdup_tolower()
+function from daemon.c can benefit from being moved to the same
+place because this way the latter can use the former.
 
-> On Wed, Mar 26, 2014 at 03:33:59PM -0400, Jeff King wrote:
-> > 
-> > That being said, is the AIX value actually right? I did not look closely
-> > at first, but just assumed that it was vaguely right. But:
-> > 
-> >   999999999999999999 / (86400 * 365)
-> > 
-> > is something like 31 billion years in the future, not 160 million.
-> > A real date calculation will have a few tweaks (leap years, etc), but
-> > that is orders of magnitude off.
-> 
-> Well, this is embarrassing, while moving this through the corporate
-> firewall (aka typing on one machine while looking at another), I
-> munged the date. It still doesn't seem right but at least you can now
-> see the actual data.
+Also let's make them available globally so we can use them from
+other places like trailer.c.
 
-Hmm, so the year you got is actually: 1623969404. That still seems off
-to me by a factor 20. I don't know if this is really worth digging into
-that much further, but I wonder what you would get for timestamps of:
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ config.c          |  6 ------
+ daemon.c          |  8 --------
+ git-compat-util.h |  4 ++++
+ wrapper.c         | 14 ++++++++++++++
+ 4 files changed, 18 insertions(+), 14 deletions(-)
 
-  99999999999999999
-  9999999999999999
-  999999999999999
-  etc.
-
-Do we start generating weird values at some particular size? Or is AIX
-gmtime really more clever than I am, and is accounting for wobble of the
-Earth or something over the next billion years?
-
--Peff
+diff --git a/config.c b/config.c
+index 314d8ee..dde128e 100644
+--- a/config.c
++++ b/config.c
+@@ -146,12 +146,6 @@ int git_config_include(const char *var, const char *value, void *data)
+ 	return ret;
+ }
+ 
+-static void lowercase(char *p)
+-{
+-	for (; *p; p++)
+-		*p = tolower(*p);
+-}
+-
+ void git_config_push_parameter(const char *text)
+ {
+ 	struct strbuf env = STRBUF_INIT;
+diff --git a/daemon.c b/daemon.c
+index eba1255..f9c63e9 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -475,14 +475,6 @@ static void make_service_overridable(const char *name, int ena)
+ 	die("No such service %s", name);
+ }
+ 
+-static char *xstrdup_tolower(const char *str)
+-{
+-	char *p, *dup = xstrdup(str);
+-	for (p = dup; *p; p++)
+-		*p = tolower(*p);
+-	return dup;
+-}
+-
+ static void parse_host_and_port(char *hostport, char **host,
+ 	char **port)
+ {
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 614a5e9..2397706 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -727,4 +727,8 @@ void warn_on_inaccessible(const char *path);
+ /* Get the passwd entry for the UID of the current process. */
+ struct passwd *xgetpwuid_self(void);
+ 
++/* Lowercase strings */
++extern void lowercase(char *str);
++extern char *xstrdup_tolower(const char *str);
++
+ #endif
+diff --git a/wrapper.c b/wrapper.c
+index 0cc5636..c46026a 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -455,3 +455,17 @@ struct passwd *xgetpwuid_self(void)
+ 		    errno ? strerror(errno) : _("no such user"));
+ 	return pw;
+ }
++
++void lowercase(char *p)
++{
++	for (; *p; p++)
++		*p = tolower(*p);
++}
++
++char *xstrdup_tolower(const char *str)
++{
++	char *dup = xstrdup(str);
++	lowercase(dup);
++	return dup;
++}
++
+-- 
+1.9.0.164.g3aa33cd.dirty
