@@ -1,72 +1,115 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 000/142] Use the $( ... ) construct for command
- substitution instead of using the back-quotes
-Date: Wed, 26 Mar 2014 03:44:25 -0400
-Message-ID: <CAPig+cSaOK_EaEcyiuhNKDG=DGpt=NxhM+eJYq34C5=7pSuO1A@mail.gmail.com>
-References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
-	<xmqqy4zyktng.fsf@gitster.dls.corp.google.com>
-	<vpqlhvx8mt8.fsf@anie.imag.fr>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [RFC/PATCH 1/4] test-lib: add test_dir_is_empty()
+Date: Wed, 26 Mar 2014 09:29:12 +0100
+Message-ID: <53328FD8.4050907@web.de>
+References: <5331B6F6.60501@web.de> <5331B717.5010600@web.de> <xmqq4n2mknqf.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Elia Pinto <gitter.spiros@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Mar 26 08:44:41 2014
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Jonathan Nieder p <jrnieder@gmail.com>,
+	Jeff King <peff@peff.net>, Heiko Voigt <hvoigt@hvoigt.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Mar 26 09:31:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSiVi-0004JJ-Ac
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Mar 2014 08:44:30 +0100
+	id 1WSjFM-0006dL-Qs
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Mar 2014 09:31:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751156AbaCZHo0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Mar 2014 03:44:26 -0400
-Received: from mail-yk0-f175.google.com ([209.85.160.175]:33693 "EHLO
-	mail-yk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750832AbaCZHoZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Mar 2014 03:44:25 -0400
-Received: by mail-yk0-f175.google.com with SMTP id 131so336367ykp.34
-        for <git@vger.kernel.org>; Wed, 26 Mar 2014 00:44:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=BWQ8DamJSxJoU7j+jhHRuxUESUBYC1YRFlv7noJHGnQ=;
-        b=N/QLowv/eADV/qyHaLgvEW9Ho3s0SGdgVYiwZQDmtOLOhcizISaeHtGnt+6sOOrpLA
-         74QGYgYy9tQMa2osZpQiL/ckdsSxgmY/06IyAGHyhSxBodE+yvuFsSzGB5aLTE0xbkTa
-         BH4NqBBawUj48kqf6OQBjem4yJW9BcesvHjbzLMdr7F0/ugjMS3HiKC8lycUkzAlplG4
-         qEggvxutKGSPfp6OBtG9acemnwMDK2KDtHP1c9QNKFS6C71xiA2xJv09yO+Q8D3jIzU2
-         hBr6bcIFV7P4fNaNmLAclZKqm3BQ5ZdUs9bcKAFm+GZ7mYrbxmtCklfiKeU90jH86YKD
-         CvTg==
-X-Received: by 10.236.46.5 with SMTP id q5mr80010758yhb.21.1395819865308; Wed,
- 26 Mar 2014 00:44:25 -0700 (PDT)
-Received: by 10.170.180.134 with HTTP; Wed, 26 Mar 2014 00:44:25 -0700 (PDT)
-In-Reply-To: <vpqlhvx8mt8.fsf@anie.imag.fr>
-X-Google-Sender-Auth: KevZL4ePS2MHr5Bm7BF7NsJxg6Y
+	id S1751356AbaCZIbd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Mar 2014 04:31:33 -0400
+Received: from mout.web.de ([212.227.15.3]:53982 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751130AbaCZIbb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Mar 2014 04:31:31 -0400
+Received: from [192.168.178.41] ([84.132.147.65]) by smtp.web.de (mrweb101)
+ with ESMTPSA (Nemesis) id 0M2dTd-1XKpCO40n7-00sPyQ; Wed, 26 Mar 2014 09:29:14
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
+In-Reply-To: <xmqq4n2mknqf.fsf@gitster.dls.corp.google.com>
+X-Enigmail-Version: 1.6
+X-Provags-ID: V03:K0:TPa/6tTL05+U2d5ThDrF31Wn/QU5CW17JLGxGZoan1fIHq0GznV
+ BSPR7NV1L5JDEUohfWJGv13wx9qygg8DB4O9onBR4unRJOq2NQ8cwPZWK44XjQxPRTKc98h
+ jcERyR9EVz5q5SPRjPabiGjBHiRBUbb5L/6XlDBnT3NqH21w8I/Frmj79o0Pg6qLFDVUnM0
+ p4dP7iZd1ypvDajT2TyrA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245169>
 
-On Wed, Mar 26, 2014 at 3:02 AM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->>  - Nobody has time or energy to go through 140+ patches in one go,
->>    with enough concentration necessary to do so without making
->>    mistakes (this applies to yourself, too---producing mechanical
->>    replacement is a no-cost thing, finding mistakes in mechanical
->>    replacement takes real effort).
->
-> It's a bit less bad than it seems:
->
->  142 files changed, 609 insertions(+), 609 deletions(-)
->
-> The first pass I did was a very quick one, but I already went through
-> the patches I received (apparently not the whole series) and it wasn't
-> that long.
+Am 25.03.2014 21:49, schrieb Junio C Hamano:
+> Jens Lehmann <Jens.Lehmann@web.de> writes:
+> 
+>> For the upcoming submodule test framework we often need to assert that an
+>> empty directory exists in the work tree. Add the test_dir_is_empty()
+>> function which asserts that the given argument is an empty directory.
+>>
+>> Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+>> ---
+>>
+>> I believe this one is pretty straightforward (unless I missed that this
+>> functionality already exists someplace I forgot to look ;-).
+> 
+> I am not very thrilled to see that it depends on "." and ".." to
+> always exist, which may be true for all POSIX filesystems, but
+> still...
 
-I also gave v2 a read-through. Nothing jumped out as a red-flag.
+Agreed. I didn't find any one-liners to do that ("ls -A" isn't
+POSIX), so I decided to wrap that in a function. Testing that
+"rmdir" on the directory succeeds (because the directory is
+empty) would kinda work, but then we'd have to re-create the
+directory afterwards, which really doesn't sound like a good
+strategy either as the test would manipulate the to-be-tested
+object. I'm not terribly happy with depending on "." and ".."
+either, but couldn't come up with something better. At least
+the test should fail for any filesystem not having the dot
+files ...
+
+> Do expected callsites of this helper care if "$1" is a symbolic link
+> that points at an empty directory?
+
+Yep, a symbolic link pointing to an empty directory should make
+the test fail.
+
+> What do expected callsites really want to ensure?  In other words,
+> why do they care if the directory is empty?  Is it to make sure,
+> after some operation, they can "rmdir" the directory?
+
+To assert that a submodule is created but *not* populated. This
+is intended to catch any possible fallout from the recursive
+checkout later, in case that would kick in when it shouldn't.
+
+>>  t/test-lib-functions.sh | 11 +++++++++++
+>>  1 file changed, 11 insertions(+)
+>>
+>> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+>> index 158e10a..93d10cd 100644
+>> --- a/t/test-lib-functions.sh
+>> +++ b/t/test-lib-functions.sh
+>> @@ -489,6 +489,17 @@ test_path_is_dir () {
+>>  	fi
+>>  }
+>>
+>> +# Check if the directory exists and is empty as expected, barf otherwise.
+>> +test_dir_is_empty () {
+>> +	test_path_is_dir "$1" &&
+>> +	if test $(ls -a1 "$1" | wc -l) != 2
+>> +	then
+>> +		echo "Directory '$1' is not empty, it contains:"
+>> +		ls -la "$1"
+>> +		return 1
+>> +	fi
+>> +}
+>> +
+>>  test_path_is_missing () {
+>>  	if [ -e "$1" ]
+>>  	then
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
