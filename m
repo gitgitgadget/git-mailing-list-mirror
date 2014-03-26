@@ -1,83 +1,112 @@
-From: Charles Bailey <cbailey32@bloomberg.net>
-Subject: Re: [PATCH] t4212: handle systems with post-apocalyptic gmtime
-Date: Wed, 26 Mar 2014 22:46:16 +0000
-Message-ID: <20140326224616.GA9454@hashpling.org>
-References: <20140224073348.GA20221@sigill.intra.peff.net>
- <20140224074905.GE9969@sigill.intra.peff.net>
- <20140326110559.GA32625@hashpling.org>
- <20140326182103.GB7087@sigill.intra.peff.net>
- <20140326185153.GA12912@sigill.intra.peff.net>
- <xmqqr45oixa6.fsf@gitster.dls.corp.google.com>
- <20140326192536.GA13989@sigill.intra.peff.net>
- <20140326193359.GA14105@sigill.intra.peff.net>
- <20140326212227.GC6991@hashpling.org>
- <20140326215741.GA17716@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v8 00/12] Add interpret-trailers builtin
+Date: Wed, 26 Mar 2014 16:05:55 -0700
+Message-ID: <xmqq4n2kh86k.fsf@gitster.dls.corp.google.com>
+References: <20140326215858.11352.89243.chriscool@tuxfamily.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 26 23:46:28 2014
+Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Thomas Rast <tr@thomasrast.ch>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Thu Mar 27 00:06:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSwaZ-0000zI-Pr
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Mar 2014 23:46:28 +0100
+	id 1WSwuB-00074F-7l
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Mar 2014 00:06:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756199AbaCZWqW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Mar 2014 18:46:22 -0400
-Received: from avasout06.plus.net ([212.159.14.18]:35120 "EHLO
-	avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755910AbaCZWqW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Mar 2014 18:46:22 -0400
-Received: from hashpling.plus.com ([212.159.69.125])
-	by avasout06 with smtp
-	id iNmG1n0052iA9hg01NmH58; Wed, 26 Mar 2014 22:46:20 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.1 cv=dodVCjQ4 c=1 sm=1 tr=0
- a=wpJ/2au8Z6V/NgdivHIBow==:117 a=wpJ/2au8Z6V/NgdivHIBow==:17 a=EBOSESyhAAAA:8
- a=0Bzu9jTXAAAA:8 a=zd_RDMET5nsA:10 a=ZWHkJ8qrxXAA:10 a=N2sEI2mohSIA:10
- a=BHUvooL90DcA:10 a=kj9zAlcOel0A:10 a=BNFp--SqAAAA:8 a=Ew9TdX-QAAAA:8
- a=3uCvuFcehay2wOQzRW4A:9 a=CjuIK1q_8ugA:10
-Received: from charles by hashpling.plus.com with local (Exim 4.72)
-	(envelope-from <charles@hashpling.org>)
-	id 1WSwaO-0002WY-9M; Wed, 26 Mar 2014 22:46:16 +0000
-Content-Disposition: inline
-In-Reply-To: <20140326215741.GA17716@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.20 (2009-08-17)
+	id S1755876AbaCZXGB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Mar 2014 19:06:01 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34589 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753861AbaCZXF7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Mar 2014 19:05:59 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 256E078F65;
+	Wed, 26 Mar 2014 19:05:59 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=yFIE9AlydWF8xZsXUOKZIB0gnkA=; b=U+YNLfWefIAQjJa0mRu2
+	JiVllnx5d/e/IXKyiss50Kjj0mQq5eE2PhhNSCvKeft9S//ivin/nwDKEY6GyEqv
+	5WD1gg0JP1gCpIyvjGdzFLKopJv78waKDMccOlnKmwenzwp8krRflkPgHqmMgIc+
+	y+mVPvcSGMzmOLaAEmdTH7g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=miiQBagE3lFVGJCsYV8Iuuwd2nSHbAeFEVyML91SjliVdg
+	WjQ1Az5fFaF9+TXNU878j+WA89G6fI+LSdtp3chvTZEbd60vUr86lmVmfOUnSgSC
+	HOl4WtGSHWmeoBYvav95nGQB2NlBtbednqfrxPGnTfVZjyBXWLK1MjXHQ22+o=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0F48778F64;
+	Wed, 26 Mar 2014 19:05:59 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1BDB078F61;
+	Wed, 26 Mar 2014 19:05:58 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 310E0F04-B53B-11E3-AC25-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245253>
 
-On Wed, Mar 26, 2014 at 05:57:41PM -0400, Jeff King wrote:
-> Hmm, so the year you got is actually: 1623969404. That still seems off
-> to me by a factor 20. I don't know if this is really worth digging into
-> that much further, but I wonder what you would get for timestamps of:
-> 
->   99999999999999999
->   9999999999999999
->   999999999999999
->   etc.
-> 
+Christian Couder <chriscool@tuxfamily.org> writes:
 
-AIX goes negative at about the same time Linux and Solaris segfault:
+> Until now git commit has only supported the well known
+> "Signed-off-by: " trailer, that is used by many projects like
+> the Linux kernel and Git.
+>
+> It is better to implement features for these trailers first in a
+> new command rather than in builtin/commit.c, because this way the
+> prepare-commit-msg and commit-msg hooks can reuse this command.
 
-9999999 Sun Apr 26 10:46:39 1970 -0700
-99999999 Sat Mar 3 02:46:39 1973 -0700
-999999999 Sat Sep 8 18:46:39 2001 -0700
-9999999999 Sat Nov 20 10:46:39 2286 -0700
-99999999999 Wed Nov 16 02:46:39 5138 -0700
-999999999999 Thu Sep 26 18:46:39 33658 -0700
-9999999999999 Sun May 20 10:46:39 318857 -0700
-99999999999999 Sat Nov 7 02:46:39 3170843 -0700
-999999999999999 Sat Jul 4 18:46:39 31690708 -0700
-9999999999999999 Sat Jan 25 10:46:39 316889355 -0700
-99999999999999999 Wed Sep 6 02:46:39 -1126091476 -0700
-999999999999999999 Thu Oct 24 18:46:39 1623969404 -0700
+The "first" is somewhat questionable.
 
-So, very bogus values.
+It is better to keep builtin/commit.c uncontaminated by any more
+hard-wired logic, like what we have for the signed-off-by line.  Any
+new things can and should be doable in hooks, and this filter would
+help writing these hooks.
 
-Charles.
+And that is why the design goal of the filter is to make it at least
+as powerful as the built-in logic we have for signed-off-by lines;
+that would allow us to later eject the hard-wired logic for
+signed-off-by line from the main codepath, if/when we wanted to.
+
+Alternatively, we could build a library-ish API around this filter
+code and replace the hard-wired logic for signed-off-by line with a
+call into that API, if/when we wanted to, but that requires (in
+addition to the "at least as powerful as the built-in logic") that
+the implementation of this stand-alone filter can be cleanly made
+into a reusable library, so that is a bit higher bar to cross than
+"everything can be doable with hooks" alternative.
+
+> 3) Changes since version 7, thanks to Junio:
+>
+> * improved handling of empty trailer token
+> * clearer way to create 'expected' files in tests
+> * other small test cleanups
+> * improved commit message
+> * new way to parse config keys
+> * strcasecmp() is not used anymore in some config related functions
+
+It is unclear which of the 12 patches are unchanged since the last
+round.  Are reviewers expected to re-read all of them?
+
+> Some values from the config file are lowercased instead.
+> To enable that a new patch (3/12) is introduced to rationalize
+> lowercase related functions. I am not very happy with these
+> changes.
+
+I can see why you are not very happy.  Perhaps it may make you
+happier if you did not move lowercase() at all, did the
+xstrdup_tolower() in a cleaner and more efficient way, and only used
+the latter in the code?
