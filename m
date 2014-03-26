@@ -1,108 +1,162 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC 0/6] reuse deltas found by bitmaps
-Date: Wed, 26 Mar 2014 15:31:41 -0700
-Message-ID: <xmqqvbv0h9rm.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH 1/6] t/perf-lib: factor boilerplate out of test_perf
+Date: Wed, 26 Mar 2014 15:34:23 -0700
+Message-ID: <xmqqr45oh9n4.fsf@gitster.dls.corp.google.com>
 References: <20140326072215.GA31739@sigill.intra.peff.net>
-	<xmqq7g7gkgp6.fsf@gitster.dls.corp.google.com>
-	<20140326181300.GA7087@sigill.intra.peff.net>
+	<20140326072232.GA32193@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Ben Maurer <bmaurer@fb.com>,
 	Siddharth Agarwal <sid0@fb.com>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 26 23:31:54 2014
+X-From: git-owner@vger.kernel.org Wed Mar 26 23:34:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSwMR-0001be-7K
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Mar 2014 23:31:51 +0100
+	id 1WSwP2-0004XF-3c
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Mar 2014 23:34:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756157AbaCZWbr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Mar 2014 18:31:47 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46364 "EHLO
+	id S1756471AbaCZWe1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Mar 2014 18:34:27 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34769 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756074AbaCZWbq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Mar 2014 18:31:46 -0400
+	id S1755627AbaCZWe0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Mar 2014 18:34:26 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4316078E4E;
-	Wed, 26 Mar 2014 18:31:45 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DC4CE78FD2;
+	Wed, 26 Mar 2014 18:34:25 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6GXPgLFTqWEl/jHQ0pdniTyyqGM=; b=vTk6UL
-	Eh0tRZKAH9T5y6m5mXChF1JI+rX5ietpShCGYRKn+3Zs2/5kGpxf9MeL1OEhoRRQ
-	nhS2bsfvMqYdr5xEE64tJa0pTvol0Q9LErEO06eQHzJkX2wGZTMSGMyNqsp+tmma
-	iF/4TdDcjwgeJ99GJ7O71HB3e62D4dmUoom5E=
+	:content-type; s=sasl; bh=4d6sQtqkpqTjA0rl3HqXhfDDnKU=; b=s8t6vT
+	XzSJXvynn3eXzeqOkiLXWJ++i/FUrUmtOHgPDfW2ohv2bowF9Yh6Yq595DHhn6fR
+	Gcywj+fwOub00mNeNX41aTzsoSXFK9JNxEpdgIgy63mgyZNzy7XFP5LXfds5pVfE
+	3KoW48osh6IAXYkFSGBgnwxTyKJWvBKyB3Dic=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Y+Dnq7ULvt3Mcp5M+hpkk0O+3ePI4yIq
-	mJz91OBhSujspMhph1EYUTkfZHFSEHH1P/2Dnphfxz4XRLEIlUm6BsnMwroasayL
-	ZvOTM813b1Iue+qQWaJT+rUEPPeqof8TRPgFJmddbXPTapchvtXceD/AJUi+2JGq
-	tiWnv96iw0g=
+	:content-type; q=dns; s=sasl; b=xE2ywuDbMMLmUSfjOJI+Ld0NTLyVovlA
+	1X4VPgqBYpbY5htjMFbi/DTmQdnngS2ZjfEwL77l9sCB4bHlQdom3iFEGVwgZRGW
+	nJhgyXOytIFxeRkZpheWt/9nSLjYK1LQTWPmBIhYXUnZHGsWynXAt0wiAu1JCR66
+	Rzt3gsd69g0=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 268F878E4D;
-	Wed, 26 Mar 2014 18:31:45 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C3BDB78FD1;
+	Wed, 26 Mar 2014 18:34:25 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4953678E45;
-	Wed, 26 Mar 2014 18:31:44 -0400 (EDT)
-In-Reply-To: <20140326181300.GA7087@sigill.intra.peff.net> (Jeff King's
-	message of "Wed, 26 Mar 2014 14:13:00 -0400")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EFCDD78FD0;
+	Wed, 26 Mar 2014 18:34:24 -0400 (EDT)
+In-Reply-To: <20140326072232.GA32193@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 26 Mar 2014 03:22:33 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 68D83680-B536-11E3-AFFC-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: C89E26CE-B536-11E3-995B-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245249>
 
 Jeff King <peff@peff.net> writes:
 
-> Just looking at the 128-day case again, using bitmaps increased our
-> server CPU time _and_ made a much bigger pack. This series not only
-> fixes the CPU time regression, but it also drops the server CPU time to
-> almost nothing. That's a nice improvement, and it makes perfect sense:
-> we are reusing on-disk deltas instead of on-the-fly computing deltas
-> against the preferred bases.
-
-True.
-
-> I think we could still add the objects from the tip of the client's HAVE
-> list.
-
-That should make the result at least per to the non-bitmap case,
-right?
-
-> This patch would still be a CPU win on top of that, because it
-> would reduce the number of objects which need a delta search in the
-> first place.
-
-Yes.
-
-> So I think the next steps are probably:
+> About half of test_perf() is boilerplate, and half is
+> actually related to running the perf test. Let's split it
+> into two functions, so that we can reuse the boilerplate in
+> future commits.
 >
->   1. Measure the "all objects are preferred bases" approach and confirm
->      that it is bad.
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  t/perf/perf-lib.sh | 61 +++++++++++++++++++++++++++++++-----------------------
+>  1 file changed, 35 insertions(+), 26 deletions(-)
 
-;-)
+These early steps somewhat conflict with another topic that is
+stalled (due to having no real users) on 'pu'.  I do not think we
+would terribly mind dropping tg/perf-lib-test-perf-cleanup and have
+it rebased if the author or somebody else wants to have it in my
+tree later, but just FYI.
 
->   2. Measure the "reused deltas become preferred bases" approach. I
->      expect the resulting size to be slightly better than what I have
->      now, but not as good as v1.9.0's size (but taking less CPU time).
-
-Do you mean "the bases for reused deltas become preferred bases, so
-that we can deltify more objects off of them"?
-
->   3. Measure the "figure out boundaries and add them as preferred bases,
->      like we do without bitmaps" approach. I expect this to behave
->      similarly to v1.9.0.
-
-Yes.
-
->   4. Combine (2) and (3) and measure them. I'm _hoping_ this will give
->      us the best of both worlds, but I still want to do the individual
->      measurements so we can see where any improvement is coming from.
-
-Sensible.  Thanks.
+>
+> diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
+> index a8c9574..20f306a 100644
+> --- a/t/perf/perf-lib.sh
+> +++ b/t/perf/perf-lib.sh
+> @@ -150,8 +150,8 @@ exit $ret' >&3 2>&4
+>  	return "$eval_ret"
+>  }
+>  
+> -
+> -test_perf () {
+> +test_wrapper_ () {
+> +	test_wrapper_func_=$1; shift
+>  	test_start_
+>  	test "$#" = 3 && { test_prereq=$1; shift; } || test_prereq=
+>  	test "$#" = 2 ||
+> @@ -162,35 +162,44 @@ test_perf () {
+>  		base=$(basename "$0" .sh)
+>  		echo "$test_count" >>"$perf_results_dir"/$base.subtests
+>  		echo "$1" >"$perf_results_dir"/$base.$test_count.descr
+> -		if test -z "$verbose"; then
+> -			printf "%s" "perf $test_count - $1:"
+> -		else
+> -			echo "perf $test_count - $1:"
+> -		fi
+> -		for i in $(test_seq 1 $GIT_PERF_REPEAT_COUNT); do
+> -			say >&3 "running: $2"
+> -			if test_run_perf_ "$2"
+> -			then
+> -				if test -z "$verbose"; then
+> -					printf " %s" "$i"
+> -				else
+> -					echo "* timing run $i/$GIT_PERF_REPEAT_COUNT:"
+> -				fi
+> +		base="$perf_results_dir"/"$perf_results_prefix$(basename "$0" .sh)"."$test_count"
+> +		"$test_wrapper_func_" "$@"
+> +	fi
+> +
+> +	test_finish_
+> +}
+> +
+> +test_perf_ () {
+> +	if test -z "$verbose"; then
+> +		printf "%s" "perf $test_count - $1:"
+> +	else
+> +		echo "perf $test_count - $1:"
+> +	fi
+> +	for i in $(test_seq 1 $GIT_PERF_REPEAT_COUNT); do
+> +		say >&3 "running: $2"
+> +		if test_run_perf_ "$2"
+> +		then
+> +			if test -z "$verbose"; then
+> +				printf " %s" "$i"
+>  			else
+> -				test -z "$verbose" && echo
+> -				test_failure_ "$@"
+> -				break
+> +				echo "* timing run $i/$GIT_PERF_REPEAT_COUNT:"
+>  			fi
+> -		done
+> -		if test -z "$verbose"; then
+> -			echo " ok"
+>  		else
+> -			test_ok_ "$1"
+> +			test -z "$verbose" && echo
+> +			test_failure_ "$@"
+> +			break
+>  		fi
+> -		base="$perf_results_dir"/"$perf_results_prefix$(basename "$0" .sh)"."$test_count"
+> -		"$TEST_DIRECTORY"/perf/min_time.perl test_time.* >"$base".times
+> +	done
+> +	if test -z "$verbose"; then
+> +		echo " ok"
+> +	else
+> +		test_ok_ "$1"
+>  	fi
+> -	test_finish_
+> +	"$TEST_DIRECTORY"/perf/min_time.perl test_time.* >"$base".times
+> +}
+> +
+> +test_perf () {
+> +	test_wrapper_ test_perf_ "$@"
+>  }
+>  
+>  # We extend test_done to print timings at the end (./run disables this
