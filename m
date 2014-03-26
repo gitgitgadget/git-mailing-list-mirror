@@ -1,96 +1,72 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 6/6] pack-objects: reuse deltas for thin "have" objects
-Date: Wed, 26 Mar 2014 03:23:38 -0400
-Message-ID: <20140326072338.GF32193@sigill.intra.peff.net>
-References: <20140326072215.GA31739@sigill.intra.peff.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 000/142] Use the $( ... ) construct for command
+ substitution instead of using the back-quotes
+Date: Wed, 26 Mar 2014 03:44:25 -0400
+Message-ID: <CAPig+cSaOK_EaEcyiuhNKDG=DGpt=NxhM+eJYq34C5=7pSuO1A@mail.gmail.com>
+References: <1395768283-31135-1-git-send-email-gitter.spiros@gmail.com>
+	<xmqqy4zyktng.fsf@gitster.dls.corp.google.com>
+	<vpqlhvx8mt8.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Ben Maurer <bmaurer@fb.com>, Siddharth Agarwal <sid0@fb.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 26 08:23:46 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Elia Pinto <gitter.spiros@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Mar 26 08:44:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSiBd-0006MG-Pz
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Mar 2014 08:23:46 +0100
+	id 1WSiVi-0004JJ-Ac
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Mar 2014 08:44:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753446AbaCZHXk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Mar 2014 03:23:40 -0400
-Received: from cloud.peff.net ([50.56.180.127]:47402 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753440AbaCZHXk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Mar 2014 03:23:40 -0400
-Received: (qmail 14614 invoked by uid 102); 26 Mar 2014 07:23:40 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 26 Mar 2014 02:23:40 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 26 Mar 2014 03:23:38 -0400
-Content-Disposition: inline
-In-Reply-To: <20140326072215.GA31739@sigill.intra.peff.net>
+	id S1751156AbaCZHo0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Mar 2014 03:44:26 -0400
+Received: from mail-yk0-f175.google.com ([209.85.160.175]:33693 "EHLO
+	mail-yk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750832AbaCZHoZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Mar 2014 03:44:25 -0400
+Received: by mail-yk0-f175.google.com with SMTP id 131so336367ykp.34
+        for <git@vger.kernel.org>; Wed, 26 Mar 2014 00:44:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=BWQ8DamJSxJoU7j+jhHRuxUESUBYC1YRFlv7noJHGnQ=;
+        b=N/QLowv/eADV/qyHaLgvEW9Ho3s0SGdgVYiwZQDmtOLOhcizISaeHtGnt+6sOOrpLA
+         74QGYgYy9tQMa2osZpQiL/ckdsSxgmY/06IyAGHyhSxBodE+yvuFsSzGB5aLTE0xbkTa
+         BH4NqBBawUj48kqf6OQBjem4yJW9BcesvHjbzLMdr7F0/ugjMS3HiKC8lycUkzAlplG4
+         qEggvxutKGSPfp6OBtG9acemnwMDK2KDtHP1c9QNKFS6C71xiA2xJv09yO+Q8D3jIzU2
+         hBr6bcIFV7P4fNaNmLAclZKqm3BQ5ZdUs9bcKAFm+GZ7mYrbxmtCklfiKeU90jH86YKD
+         CvTg==
+X-Received: by 10.236.46.5 with SMTP id q5mr80010758yhb.21.1395819865308; Wed,
+ 26 Mar 2014 00:44:25 -0700 (PDT)
+Received: by 10.170.180.134 with HTTP; Wed, 26 Mar 2014 00:44:25 -0700 (PDT)
+In-Reply-To: <vpqlhvx8mt8.fsf@anie.imag.fr>
+X-Google-Sender-Auth: KevZL4ePS2MHr5Bm7BF7NsJxg6Y
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245168>
 
-When we calculate the "wants" and "haves" for a pack, we
-only add the objects in the boundary commits as preferred
-bases. However, we know that every object reachable from the
-"haves" could be a preferred base.
+On Wed, Mar 26, 2014 at 3:02 AM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>>  - Nobody has time or energy to go through 140+ patches in one go,
+>>    with enough concentration necessary to do so without making
+>>    mistakes (this applies to yourself, too---producing mechanical
+>>    replacement is a no-cost thing, finding mistakes in mechanical
+>>    replacement takes real effort).
+>
+> It's a bit less bad than it seems:
+>
+>  142 files changed, 609 insertions(+), 609 deletions(-)
+>
+> The first pass I did was a very quick one, but I already went through
+> the patches I received (apparently not the whole series) and it wasn't
+> that long.
 
-We probably don't want to add these to our preferred base
-list, because they would clog the delta-search window.
-However, there is no reason we cannot reuse an on-disk delta
-against such a deep "have" base, avoiding the delta search
-for that object altogether.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/pack-objects.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 7950c43..92bd682 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -53,6 +53,7 @@ static unsigned long pack_size_limit;
- static int depth = 50;
- static int delta_search_threads;
- static int pack_to_stdout;
-+static int thin = 0;
- static int num_preferred_base;
- static struct progress *progress_state;
- static int pack_compression_level = Z_DEFAULT_COMPRESSION;
-@@ -1419,6 +1420,20 @@ static void check_object(struct object_entry *entry)
- 			base_entry->delta_child = entry;
- 			unuse_pack(&w_curs);
- 			return;
-+		} else if(thin && base_ref && bitmap_have(base_ref)) {
-+			entry->type = entry->in_pack_type;
-+			entry->delta_size = entry->size;
-+			/*
-+			 * XXX we'll leak this, but it's probably OK
-+			 * since we'll exit immediately after the packing
-+			 * is done
-+			 */
-+			entry->delta = xcalloc(1, sizeof(*entry->delta));
-+			hashcpy(entry->delta->idx.sha1, base_ref);
-+			entry->delta->preferred_base = 1;
-+			entry->delta->filled = 1;
-+			unuse_pack(&w_curs);
-+			return;
- 		}
- 
- 		if (entry->type) {
-@@ -2559,7 +2574,6 @@ static int option_parse_ulong(const struct option *opt,
- int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- {
- 	int use_internal_rev_list = 0;
--	int thin = 0;
- 	int all_progress_implied = 0;
- 	const char *rp_av[6];
- 	int rp_ac = 0;
--- 
-1.9.1.601.g7ec968e
+I also gave v2 a read-through. Nothing jumped out as a red-flag.
