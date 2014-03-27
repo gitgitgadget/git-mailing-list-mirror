@@ -1,149 +1,189 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH v3] Clarify pre-push hook documentation
-Date: Wed, 26 Mar 2014 23:21:21 -0000
-Organization: OPDS
-Message-ID: <3CA35D0B7B7C411292360D1516EF409B@PhilipOakley>
-References: <1395704609-81957-1-git-send-email-dcow90@gmail.com><1395705088-82216-1-git-send-email-dcow90@gmail.com> <xmqqmwgemceq.fsf@gitster.dls.corp.google.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH/RFC 0/6] reuse deltas found by bitmaps
+Date: Wed, 26 Mar 2014 21:13:23 -0400
+Message-ID: <20140327011323.GA9266@sigill.intra.peff.net>
+References: <20140326072215.GA31739@sigill.intra.peff.net>
+ <xmqq7g7gkgp6.fsf@gitster.dls.corp.google.com>
+ <20140326181300.GA7087@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Git List" <git@vger.kernel.org>, <sunshine@sunshineco.com>
-To: "Junio C Hamano" <gitster@pobox.com>,
-	"David Cowden" <dcow90@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 27 00:21:28 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, Ben Maurer <bmaurer@fb.com>,
+	Siddharth Agarwal <sid0@fb.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 27 02:13:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WSx8N-0006nL-Hr
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Mar 2014 00:21:23 +0100
+	id 1WSyst-0004iK-CD
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Mar 2014 02:13:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755750AbaCZXVT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Mar 2014 19:21:19 -0400
-Received: from out1.ip05ir2.opaltelecom.net ([62.24.128.241]:58486 "EHLO
-	out1.ip05ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752126AbaCZXVS (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 26 Mar 2014 19:21:18 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AvEYADtgM1NZ8YM+/2dsb2JhbABZgwY7iSC6LAEBAgEBgRgXdGkBAYEfAQEUAQQBAQEBAgEIAQEuHgEBIQsCAwUCAQMVDCUUAQQIEgYHFwYBEggCAQIDAYU4BwGCBw0DCQwJtDeVMQ2HX4xVghyDK4EUBIkahiSHIoMgizaFSoMuPQ
-X-IPAS-Result: AvEYADtgM1NZ8YM+/2dsb2JhbABZgwY7iSC6LAEBAgEBgRgXdGkBAYEfAQEUAQQBAQEBAgEIAQEuHgEBIQsCAwUCAQMVDCUUAQQIEgYHFwYBEggCAQIDAYU4BwGCBw0DCQwJtDeVMQ2HX4xVghyDK4EUBIkahiSHIoMgizaFSoMuPQ
-X-IronPort-AV: E=Sophos;i="4.97,738,1389744000"; 
-   d="scan'208";a="449634798"
-Received: from host-89-241-131-62.as13285.net (HELO PhilipOakley) ([89.241.131.62])
-  by out1.ip05ir2.opaltelecom.net with SMTP; 26 Mar 2014 23:21:16 +0000
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1755910AbaC0BN1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Mar 2014 21:13:27 -0400
+Received: from cloud.peff.net ([50.56.180.127]:48173 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754369AbaC0BN0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Mar 2014 21:13:26 -0400
+Received: (qmail 5950 invoked by uid 102); 27 Mar 2014 01:13:26 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 26 Mar 2014 20:13:26 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 26 Mar 2014 21:13:23 -0400
+Content-Disposition: inline
+In-Reply-To: <20140326181300.GA7087@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245258>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245259>
 
-From: "Junio C Hamano" <gitster@pobox.com>
-> David Cowden <dcow90@gmail.com> writes:
->
->> The documentation as-is does not mention that the pre-push hook is
->> executed even when there is nothing to push.  This can lead a new
->> reader to believe there will always be lines fed to the script's
->> standard input and cause minor confusion as to what is happening
->> when there are no lines provided to the pre-push script.
->>
->> Signed-off-by: David Cowden <dcow90@gmail.com>
->> ---
->>
->> Notes:
->>     I'm not sure if I've covered every case here.  If there are more
->> cases to
->>     consider, please let me know and I can update to include them.
->
-> I do not think of any offhand, but a more important point that I was
-> trying to get at was that we should not give an incorrect impression
-> to the readers that the scenario that is described is the only case
-> they need to be worried about by pretending to be exhaustive.
->
-> The "may" in your wording "This may happen when" may be good enough
-> to hint that these may not be the only cases.
->
->>     c.f.
->> http://stackoverflow.com/questions/22585091/git-hooks-pre-push-script-does-not-receive-input-via-stdin
->>
->>  Documentation/githooks.txt | 9 +++++++++
->>  1 file changed, 9 insertions(+)
->>
->> diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
->> index d954bf6..1fd6da9 100644
->> --- a/Documentation/githooks.txt
->> +++ b/Documentation/githooks.txt
->> @@ -203,6 +203,15 @@ SHA-1>` will be 40 `0`.  If the local commit was
->> specified by something other
->>  than a name which could be expanded (such as `HEAD~`, or a SHA-1) it
->> will be
->>  supplied as it was originally given.
->>
->> +The hook is executed regardless of whether changes will actually be
->> pushed or
->> +not.  This may happen when 'git push' is called and:
->> +
->> + - the remote ref is already up to date, or
->> + - pushing to the remote ref cannot be handled by a simple
->> fast-forward
->> +
->> +In other words, the script is called for every push.  In the event
->> that nothing
->> +is to be pushed, no data will be provided on the script's standard
->> input.
+On Wed, Mar 26, 2014 at 02:13:00PM -0400, Jeff King wrote:
 
-Doesn't an 'in other words' indicate it could be further tightened?
-Maybe
-    "If there is nothing to push, the hook will still run, but the input
-    line will be empty.
+> So I think the next steps are probably:
+> 
+>   1. Measure the "all objects are preferred bases" approach and confirm
+>      that it is bad.
 
-    Likewise the hook will still run for other cases such as:
-    - the remote ref is already up to date,
-    - pushing to the remote ref cannot be handled by a simple
-      fast-forward,
-    - etc."
+Below is a very rough patch to accomplish this. It just traverses the
+"have" bitmap and adds every object with the "exclude" flag. The result
+is as comically bad as I expected.
 
->
-> When two things are to be pushed, the script will see the two
-> things.  When one thing is to be pushed, the script will see the one
-> thing.  When no thing is to be pushed, the script will see no thing
-> on its standard input.
->
-> But isn't that obvious?  I still wonder if we really need to single
-> out that "nothing" case.  The more important thing is that it is
-> invoked even in the "0-thing pushed" case, and "the list of things
-> pushed that is given to the hook happens to be empty" is an obvious
-> natural fallout.
+For a big fetch, it seems like it's working (numbers against v1.9.0):
 
-Personally I think it should be mentioned in that paragraph, which is
-covering all the various special cases. The 'nothing' case often causes
-confusion when it's not specified in documentation.
->
->>  If this hook exits with a non-zero status, 'git push' will abort
->> without
->>  pushing anything.  Information about why the push is rejected may be
->> sent
->>  to the user by writing to standard error.
-> --
+  5311.31: server (128 days)   4.49(7.35+0.23)   4.98(6.82+3.31) +10.9%
+  5311.32: size   (128 days)             25.8M             32.0M +24.2%
+  5311.33: client (128 days)   7.17(7.38+0.20)   7.33(7.90+0.20) +2.2%
 
-It may be that the documentation should include the caveat
+A modest increase in CPU time, and we get back most of our size
+(remember that our "bad" case here is ~80M).
 
-    "Hooks, when enabled, are executed unconditionally by their calling
-    functions.
-     Script writers should ensure they handle all conditions."
+But for a small fetch...
 
-somewhere near the top of the page to cover all hooks, which IIRC
-started David's journey. That would allow my second paragraph
-"Likewise.." to be dropped.
+  5311.3: server   (1 days)    0.20(0.17+0.03)   4.39(4.03+6.59) +2095.0%
+  5311.4: size     (1 days)              57.2K             59.5K +4.1%
+  5311.5: client   (1 days)    0.08(0.08+0.00)   0.08(0.08+0.00) +0.0%
 
-Philip
---
-[apologies for any whitespace damage]
+Yikes. Besides spending lots of CPU on handling the enlarged object
+list, notice that we still only dropped the size in the 128-day case to
+32M. Which is almost exactly what the earlier "reuse on-disk deltas"
+patch achieved.
+
+What I think is happening is that we manage to reuse those on-disk
+deltas (since they are now preferred bases, and we know we can). But we
+never actually come up with any _new_ deltas, because the search window
+is overwhelmed with candidates. So not only do we waste a huge amount of
+CPU, but we just end up at the same not-quite-optimal result as before.
+
+So this is a dead end, but I think it was good to double-check that.
+
+The patch below is messy and would probably be better split into a few
+patches, but I don't expect anyone to apply it (or even read it,
+really). It's just for reference.
+
+---
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 0ee5f1f..1a5d401 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -1026,7 +1026,7 @@ static int add_object_entry_from_bitmap(const unsigned char *sha1,
+ 	if (have_duplicate_entry(sha1, 0, &index_pos))
+ 		return 0;
+ 
+-	create_object_entry(sha1, type, name_hash, 0, 0, index_pos, pack, offset);
++	create_object_entry(sha1, type, name_hash, flags, 0, index_pos, pack, offset);
+ 
+ 	display_progress(progress_state, to_pack.nr_objects);
+ 	return 1;
+@@ -2436,6 +2436,7 @@ static int get_object_list_from_bitmap(struct rev_info *revs)
+ 	}
+ 
+ 	traverse_bitmap_commit_list(&add_object_entry_from_bitmap);
++	bitmap_have_foreach(&add_object_entry_from_bitmap);
+ 	return 0;
+ }
+ 
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index 1bae7e8..f4e30f5 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -605,6 +605,7 @@ static void show_objects_for_type(
+ 	struct bitmap *objects,
+ 	struct ewah_bitmap *type_filter,
+ 	enum object_type object_type,
++	int flags,
+ 	show_reachable_fn show_reach)
+ {
+ 	size_t pos = 0, i = 0;
+@@ -613,9 +614,6 @@ static void show_objects_for_type(
+ 	struct ewah_iterator it;
+ 	eword_t filter;
+ 
+-	if (bitmap_git.reuse_objects == bitmap_git.pack->num_objects)
+-		return;
+-
+ 	ewah_iterator_init(&it, type_filter);
+ 
+ 	while (i < objects->word_alloc && ewah_iterator_next(&filter, &it)) {
+@@ -640,7 +638,7 @@ static void show_objects_for_type(
+ 			if (bitmap_git.hashes)
+ 				hash = ntohl(bitmap_git.hashes[entry->nr]);
+ 
+-			show_reach(sha1, object_type, 0, hash, bitmap_git.pack, entry->offset);
++			show_reach(sha1, object_type, flags, hash, bitmap_git.pack, entry->offset);
+ 		}
+ 
+ 		pos += BITS_IN_WORD;
+@@ -816,14 +814,17 @@ void traverse_bitmap_commit_list(show_reachable_fn show_reachable)
+ {
+ 	assert(bitmap_git.result);
+ 
++	if (bitmap_git.reuse_objects == bitmap_git.pack->num_objects)
++		return;
++
+ 	show_objects_for_type(bitmap_git.result, bitmap_git.commits,
+-		OBJ_COMMIT, show_reachable);
++		OBJ_COMMIT, 0, show_reachable);
+ 	show_objects_for_type(bitmap_git.result, bitmap_git.trees,
+-		OBJ_TREE, show_reachable);
++		OBJ_TREE, 0, show_reachable);
+ 	show_objects_for_type(bitmap_git.result, bitmap_git.blobs,
+-		OBJ_BLOB, show_reachable);
++		OBJ_BLOB, 0, show_reachable);
+ 	show_objects_for_type(bitmap_git.result, bitmap_git.tags,
+-		OBJ_TAG, show_reachable);
++		OBJ_TAG, 0, show_reachable);
+ 
+ 	show_extended_objects(bitmap_git.result, show_reachable);
+ 
+@@ -1090,3 +1091,18 @@ int bitmap_have(const unsigned char *sha1)
+ 
+ 	return bitmap_get(bitmap_git.haves, pos);
+ }
++
++void bitmap_have_foreach(show_reachable_fn show_reachable)
++{
++	if (!bitmap_git.haves)
++		return;
++
++	show_objects_for_type(bitmap_git.haves, bitmap_git.commits,
++		OBJ_COMMIT, 1, show_reachable);
++	show_objects_for_type(bitmap_git.haves, bitmap_git.trees,
++		OBJ_TREE, 1, show_reachable);
++	show_objects_for_type(bitmap_git.haves, bitmap_git.blobs,
++		OBJ_BLOB, 1, show_reachable);
++	show_objects_for_type(bitmap_git.haves, bitmap_git.tags,
++		OBJ_TAG, 1, show_reachable);
++}
+diff --git a/pack-bitmap.h b/pack-bitmap.h
+index a63ee6b..02c08f8 100644
+--- a/pack-bitmap.h
++++ b/pack-bitmap.h
+@@ -50,6 +50,7 @@ int reuse_partial_packfile_from_bitmap(struct packed_git **packfile, uint32_t *e
+ int rebuild_existing_bitmaps(struct packing_data *mapping, khash_sha1 *reused_bitmaps, int show_progress);
+ 
+ int bitmap_have(const unsigned char *sha1);
++void bitmap_have_foreach(show_reachable_fn);
+ 
+ void bitmap_writer_show_progress(int show);
+ void bitmap_writer_set_checksum(unsigned char *sha1);
