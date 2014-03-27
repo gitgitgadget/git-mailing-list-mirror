@@ -1,145 +1,147 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Possible regression in master? (submodules without a "master" branch)
-Date: Thu, 27 Mar 2014 12:39:03 -0700
-Message-ID: <xmqqwqffctyg.fsf@gitster.dls.corp.google.com>
-References: <CALKQrgeRJRoyC-UV7J98U1qQfqEFr_H1sEfAWd0GbstZagUisw@mail.gmail.com>
-	<xmqqob0ref3v.fsf@gitster.dls.corp.google.com>
-	<5334606F.5010109@web.de> <20140327185405.GS4008@odin.tremily.us>
+From: Kirill Smelkov <kirr@navytux.spb.ru>
+Subject: Re: [PATCH v2 14/19] tree-diff: rework diff_tree interface to be
+ sha1 based
+Date: Thu, 27 Mar 2014 23:43:00 +0400
+Organization: NAVYTUX.SPB.RU
+Message-ID: <20140327194300.GA5510@mini.zxlink>
+References: <cover.1393257006.git.kirr@mns.spb.ru>
+ <0b82e2de0edee4a590e7b4165c65938aef7090f5.1393257006.git.kirr@mns.spb.ru>
+ <xmqqa9cfp9d5.fsf@gitster.dls.corp.google.com>
+ <20140325092215.GB3777@mini.zxlink>
+ <xmqq4n2mmarr.fsf@gitster.dls.corp.google.com>
+ <20140326195201.GB16002@mini.zxlink>
+ <xmqq1txoiqzj.fsf@gitster.dls.corp.google.com>
+ <20140327142438.GE17333@mini.zxlink>
+ <xmqq1txneavo.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Johan Herland <johan@herland.net>,
-	Git mailing list <git@vger.kernel.org>
-To: "W. Trevor King" <wking@tremily.us>
-X-From: git-owner@vger.kernel.org Thu Mar 27 20:39:20 2014
+Cc: Stefan Beller <stefanbeller@googlemail.com>, kirr@mns.spb.ru,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 27 20:39:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WTG8z-00051Z-F4
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Mar 2014 20:39:17 +0100
+	id 1WTG9Y-0005Tk-4F
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Mar 2014 20:39:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755170AbaC0TjL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Mar 2014 15:39:11 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46562 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754643AbaC0TjH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Mar 2014 15:39:07 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D58E877CC7;
-	Thu, 27 Mar 2014 15:39:06 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=wpkdG7Hel9K93YDxDnEiyL1OxDE=; b=BJB8dE
-	6EDYVrhWQZBha9+31wIka1YhwXOkk7JwpITgGh/r7l7ybCcVSo57snerE3ZEswLG
-	/KuXgl2oadLwoUH2lhMdqu0XE68ZjsSEDqe309qK6V41SRLiaa8N9JtJ9Zvh/p1T
-	rEYW1CBdYAOEWZauwu7EZ6hGs4STqxe3Yx9KY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=f4CV9JJLQizQE0SSFlImvN6H5Q4f4ukP
-	wepQbzVWs57m7C+FJ08BKlaZ5JINR6yy7n0wBBzhy6Xm/YQJCxMC3MYa3LpcAJeP
-	7ES/FF1hES34QlJkomp+USgdMST9t8pw25+YyVF8bKxBkCP2dOdT/Y3xfTWkRqIs
-	8GjNz8x6fNA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C497877CC6;
-	Thu, 27 Mar 2014 15:39:06 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 660A777CC3;
-	Thu, 27 Mar 2014 15:39:05 -0400 (EDT)
-In-Reply-To: <20140327185405.GS4008@odin.tremily.us> (W. Trevor King's message
-	of "Thu, 27 Mar 2014 11:54:05 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 74E22E0C-B5E7-11E3-81B7-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755359AbaC0Tjr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Mar 2014 15:39:47 -0400
+Received: from forward6l.mail.yandex.net ([84.201.143.139]:58784 "EHLO
+	forward6l.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754902AbaC0Tjp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Mar 2014 15:39:45 -0400
+Received: from smtp3o.mail.yandex.net (smtp3o.mail.yandex.net [37.140.190.28])
+	by forward6l.mail.yandex.net (Yandex) with ESMTP id B29BA14E0E78;
+	Thu, 27 Mar 2014 23:39:42 +0400 (MSK)
+Received: from smtp3o.mail.yandex.net (localhost [127.0.0.1])
+	by smtp3o.mail.yandex.net (Yandex) with ESMTP id 2A7301E0FDA;
+	Thu, 27 Mar 2014 23:39:42 +0400 (MSK)
+Received: from unknown (unknown [93.185.17.156])
+	by smtp3o.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id 3u6cLRPfUm-dbbOJ0Dw;
+	Thu, 27 Mar 2014 23:39:40 +0400
+	(using TLSv1.2 with cipher AES256-GCM-SHA384 (256/256 bits))
+	(Client certificate not present)
+X-Yandex-Uniq: e5e10c87-505a-4957-a8ab-3b8ac4e450a3
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=navytux.spb.ru; s=mail;
+	t=1395949181; bh=DyP1REaV4YXkjt935gUeTuU7dcEMDIY+ccJEwgQXx+M=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To:Organization:
+	 User-Agent;
+	b=nJXwX8wsvEjPoo8cP1JoAswlYOPpgtlFOFUiH81dpZ37J3tsrPziVZ/iPi1SAaF2T
+	 XlMp4Mzx6gWFLAE430nXWVKsSLtTWO04sF/PQYl4cQZ0YLYBrkawtICc5ZmkW9pkMm
+	 YsmkSPnwKe9wAQxlMypr57yanZCDb253vTxCt2Fk=
+Authentication-Results: smtp3o.mail.yandex.net; dkim=pass header.i=@navytux.spb.ru
+Received: from kirr by mini.zxlink with local (Exim 4.82)
+	(envelope-from <kirr@mini.zxlink>)
+	id 1WTGCa-0001Zt-TF; Thu, 27 Mar 2014 23:43:00 +0400
+Content-Disposition: inline
+In-Reply-To: <xmqq1txneavo.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245321>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245322>
 
-"W. Trevor King" <wking@tremily.us> writes:
++stefanbeller
 
-> On Thu, Mar 27, 2014 at 06:31:27PM +0100, Jens Lehmann wrote:
->> Am 27.03.2014 18:16, schrieb Junio C Hamano:
->> > Johan Herland <johan@herland.net> writes:
->> > 
->> >> I just found a failure to checkout a project with submodules where
->> >> there is no explicit submodule branch configuration, and the
->> >> submodules happen to not have a "master" branch:
->> >>
->> >>   git clone git://gitorious.org/qt/qt5.git qt5
->> >>   cd qt5
->> >>   git submodule init qtbase
->> >>   git submodule update
->> >>
->> >> In current master, the last command fails with the following output:
->> > 
->> > ... and with a bug-free system, what does it do instead?  Just clone
->> > 'qtbase' and make a detached-head checkout at the commit recorded in
->> > the superproject's tree, or something else?
->> 
->> After reverting 23d25e48f5ead73 on current master it clones 'qtbase'
->> nicely with a detached HEAD.
->
-> Fixing this for initial update clone is pretty easy, we just need to
-> unset start_point before calling module_clone if
-> submodule.<name>.branch is not set. 
+On Thu, Mar 27, 2014 at 11:48:11AM -0700, Junio C Hamano wrote:
+> Kirill Smelkov <kirr@navytux.spb.ru> writes:
+> 
+> > (please keep author email)
+> > ---- 8< ----
+> > From: Kirill Smelkov <kirr@mns.spb.ru>
+> > Date: Mon, 24 Feb 2014 20:21:46 +0400
+> > Subject: [PATCH v3a] tree-diff: rework diff_tree interface to be sha1 based
+> 
+> "git am -c" will discard everything above the scissors and then
+> start parsing the in-body headers from there, so the above From:
+> will be used.
 
-There is this bit for "update" in git-submodule.txt:
+Thanks.
 
-  For updates that clone missing submodules, checkout-mode updates
-  will create submodules with detached HEADs; all other modes will
-  create submodules with a local branch named after
-  submodule.<path>.branch.
+> But you have a few entries in .mailmap; do you want to update them
+> as well?
 
-  [side note] Isn't that a typo of submodule.<name>.branch?
+When Stefan Beller was contacting me on emails, if I recall correctly, I
+told him all those kirr@... entries are mine, but the one this patch is
+authored with indicates that something was done at work, and I'd prefer to
+acknowledge that. So maybe
 
-So the proposed change is to make the part before semicolon true?
-If we are not newly cloning (because we already have it), if the
-submodule.<name>.branch is not set *OR* refers to a branch that does
-not even exist, shouldn't we either (1) abort as an error, or (2) do
-the same and detach?
+---- 8< ----
+From: Kirill Smelkov <kirr@navytux.spb.ru>
+Date: Thu, 27 Mar 2014 23:32:14 +0400
+Subject: [PATCH] .mailmap: Separate Kirill Smelkov personal and work addresses
 
-> However, that's just going to
-> push remote branch ambiguity problems back to the --remote update
-> functionality.  What should happen when submodule.<name>.branch is not
-> set and you run a --remote update, which has used:
->
->     git rev-parse "${remote_name}/${branch}"
->
-> since the submodule.<name>.branch setting was introduced in 06b1abb
-> (submodule update: add --remote for submodule's upstream changes,
-> 2012-12-19)?
+The address kirr@mns.spb.ru indicates that a patch was done at work and
+I'd like to acknowledge that.
 
-Isn't --remote about following one specific branch the user who
-issues that command has in mind?  If you as the end user did not
-give any indication which branch you meant, e.g. by leaving the
-submodule.<name>.branch empty, shouldn't that be diagnosed as an
-error?
+The address kirr@navytux.spb.ru is my personal email and indicates that
+a contribution is done completely on my own time and resources.
 
-> gitmodules(5) is pretty clear that 'submodule.<name>.branch' defaults
-> to master (and not upstream's HEAD), do we want to adjust this at the
-> same time?
+kirr@landau.phys.spbu.ru is old university account which no longer works
+(sigh, to much spam "because of me" on the server) and maps to
+kirr@navytux.spb.ru which should be considered as primary.
 
-That may be likely.  If the value set to a configuration variable
-causes an established behaviour of a program change a lot, silently
-defaulting that variable to something many people are expected to
-have (e.g. 'master') would likely to cause a usability regression.
+Signed-off-by: Kirill Smelkov <kirr@navytux.spb.ru>
+---
+ .mailmap | 1 -
+ 1 file changed, 1 deletion(-)
 
->> > If an existing set-up that was working in a sensible way is broken
->> > by a change that assumes something that should not be assumed,
->> > then that is a serious regression, I would have to say.
->> 
->> Yes, especially as it promised to not change this use case.
->
-> Sorry.  A side effect of relying too much on our existing
-> documentation and not enough on testing actual use cases.  I can work
-> up some non-master submodule tests to go with the fix.
+diff --git a/.mailmap b/.mailmap
+index 11057cb..0be5e02 100644
+--- a/.mailmap
++++ b/.mailmap
+@@ -117,7 +117,6 @@ Keith Cascio <keith@CS.UCLA.EDU> <keith@cs.ucla.edu>
+ Kent Engstrom <kent@lysator.liu.se>
+ Kevin Leung <kevinlsk@gmail.com>
+ Kirill Smelkov <kirr@navytux.spb.ru> <kirr@landau.phys.spbu.ru>
+-Kirill Smelkov <kirr@navytux.spb.ru> <kirr@mns.spb.ru>
+ Knut Franke <Knut.Franke@gmx.de> <k.franke@science-computing.de>
+ Lars Doelle <lars.doelle@on-line ! de>
+ Lars Doelle <lars.doelle@on-line.de>
+-- 
+1.9.rc0.143.g6fd479e
+---- 8< ----
 
-I was wondering if we need to revert the merge with that
-branch out of 'master', or submodule folks can work on a set of
-fixes to apply on top.
+On the other hand, it is still all me, and the main address (navytux) is
+indicated correctly, so I dunno...
 
-Will wait to see how it goes.  Thanks.
+> By the way, in general I do not appreciate people lying on the Date:
+> with an in-body header in their patches, either in the original or
+> in rerolls.
+> 
+> Thanks.
+
+I see. Somehow it is pity that the date of original work is lost via
+this approach, as now we are only changing cosmetics etc, and the bulk
+of the work was done earlier.
+
+Anyway, we can drop the date, but please keep the email, as it is used
+for the acknowledgment.
+
+Thanks,
+Kirill
