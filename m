@@ -1,130 +1,143 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: Possible regression in master? (submodules without a "master"
- branch)
-Date: Thu, 27 Mar 2014 08:57:48 -0700
-Message-ID: <20140327155748.GN4008@odin.tremily.us>
-References: <CALKQrgeRJRoyC-UV7J98U1qQfqEFr_H1sEfAWd0GbstZagUisw@mail.gmail.com>
- <20140327155208.GM4008@odin.tremily.us>
+From: "Jonas Bang" <email@jonasbang.dk>
+Subject: Git feature request: Option to force Git to abort a checkout if working directory is dirty (i.e. disregarding the check for conflicts)
+Date: Thu, 27 Mar 2014 17:15:33 +0100
+Message-ID: <004d01cf49d7$c8b9cd90$5a2d68b0$@jonasbang.dk>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="0aF+6pWUK5w8WdCh"
-Cc: Git mailing list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Thu Mar 27 17:04:03 2014
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Mar 27 17:25:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WTCmf-0006NH-MR
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Mar 2014 17:04:02 +0100
+	id 1WTD7O-0004UU-Bu
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Mar 2014 17:25:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756525AbaC0QD5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Mar 2014 12:03:57 -0400
-Received: from qmta11.westchester.pa.mail.comcast.net ([76.96.59.211]:53322
-	"EHLO QMTA11.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755131AbaC0QD4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Mar 2014 12:03:56 -0400
-X-Greylist: delayed 365 seconds by postgrey-1.27 at vger.kernel.org; Thu, 27 Mar 2014 12:03:56 EDT
-Received: from omta21.westchester.pa.mail.comcast.net ([76.96.62.72])
-	by QMTA11.westchester.pa.mail.comcast.net with comcast
-	id iay21n0081ZXKqc5Bfxql3; Thu, 27 Mar 2014 15:57:50 +0000
-Received: from odin.tremily.us ([24.18.63.50])
-	by omta21.westchester.pa.mail.comcast.net with comcast
-	id ifxp1n007152l3L3hfxpTz; Thu, 27 Mar 2014 15:57:50 +0000
-Received: by odin.tremily.us (Postfix, from userid 1000)
-	id C2A1010DD462; Thu, 27 Mar 2014 08:57:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1395935868; bh=DJmtvEAuB2cnxl2XRHC5HEGQhJD7g4Y1biAzW+eRcYw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=nL2+v2he8QmnBZN68m4Tydyy1XvzIwyl3wpm8+1KWsD3auOwojkAuI57UOOHDZVqj
-	 fBjZXepFPc1nkbPYbXpknkghBmAbvsGIJi3uks+pG2XkH7Foju6fDLNxkx8k6JrdSG
-	 YzBziP1T3U6cWW0d/XCEaRVEuwABcTVUyQT2tnt4=
-Content-Disposition: inline
-In-Reply-To: <20140327155208.GM4008@odin.tremily.us>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.22 (2013-10-16)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20140121; t=1395935870;
-	bh=+aKQKhnpr2D3wLR5sqfXeFFFkR12izSpV0wSR1SdeSQ=;
-	h=Received:Received:Received:Date:From:To:Subject:Message-ID:
-	 MIME-Version:Content-Type;
-	b=f992U/3kqTVfh5KqHpKZcRcGUrd+YX0pC7zDu6BOInsSsWCvL5bfNpZEeu8d5u9Mc
-	 BcPWogS8nsVWbIUbXnvyH3dVBXPkzY8YWYPq//7NOXlXxLaazmXMNk3n+7L7Dn098V
-	 0ERzq8tj4PF/RRe9WQKQ8ZZUi3KiAdu1xZkmvRQxjLsnetMwiYWX0NdXj9SNNBne0L
-	 vvhJbx19gAREGD6udHqQPmSyYh4TypaXMTydXMqnUa9/xR55shx/41uoAmaJezSXUJ
-	 F2dk/UwJN9Td4ZKhuKcKEvCaqdbOvB9WENy21r+rh7OLnUBemsi8lVMXu1N7qmLgQf
-	 uBtkbASIpGAhA==
+	id S1756955AbaC0QZT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Mar 2014 12:25:19 -0400
+Received: from mail6.surf-town.net ([212.97.132.46]:51681 "EHLO
+	mailgw13.surf-town.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756953AbaC0QZQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Mar 2014 12:25:16 -0400
+X-Greylist: delayed 571 seconds by postgrey-1.27 at vger.kernel.org; Thu, 27 Mar 2014 12:25:15 EDT
+Received: by mailgw13.surf-town.net (Postfix, from userid 65534)
+	id ECBFA40293; Thu, 27 Mar 2014 17:15:40 +0100 (CET)
+Received: from localhost (unknown [127.0.0.1])
+	by mailgw13.surf-town.net (Postfix) with ESMTP id D66E24025D
+	for <git@vger.kernel.org>; Thu, 27 Mar 2014 17:15:40 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at mailgw13.surf-town.net
+X-Spam-Flag: NO
+X-Spam-Score: -1.44
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.44 tagged_above=-999 required=7
+	tests=[ALL_TRUSTED=-1.44] autolearn=disabled
+Received: from mailgw13.surf-town.net ([127.0.0.1])
+	by localhost (mailgw13.surf-town.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 4GMZTXDEr7y1 for <git@vger.kernel.org>;
+	Thu, 27 Mar 2014 17:15:34 +0100 (CET)
+Received: from Mainframe (unknown [5.103.38.58])
+	(Authenticated sender: email@jonasbang.dk)
+	by mailgw13.surf-town.net (Postfix) with ESMTPA id E8D0740299
+	for <git@vger.kernel.org>; Thu, 27 Mar 2014 17:15:32 +0100 (CET)
+X-Mailer: Microsoft Outlook 14.0
+Thread-Index: Ac9J17qOWDGONsycSNCfLslGDF24Pg==
+Content-Language: da
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245289>
 
+Hi Git developers,=20
 
---0aF+6pWUK5w8WdCh
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This is my first Git feature request, I hope it won=92t get me hanged o=
+n the
+gallows ;o)=20
 
-On Thu, Mar 27, 2014 at 08:52:08AM -0700, W. Trevor King wrote:
-> Working around that to default to the upstream submodule's HEAD is
-> possible (you can just use --branch HEAD)
+*Git feature request:*
+Add an option to Git config to configure the criteria for when a "git
+checkout" should abort.=20
 
-Actually, this is probably not a good idea.  The initial submodule
-addition works:
+*Name proposal and options:*
+checkout.clean false <default>=20
+checkout.clean true=20
 
-  $ git submodule add -b HEAD /tmp/submod.git submod
-  Cloning into 'submod'...
-  done.
+*False behavior:*
+As is:=20
+When doing a checkout then Git will check if your working directory is
+dirty, and if so check if the checkout will result in any conflicts, an=
+d if
+so abort the checkout with a message:=20
 
-But subsequent log calls (from the superproject) do not:
+$ git checkout some_branch
+error: Your local changes to the following files would be overwritten b=
+y
+checkout:
+=A0 =A0 =A0 =A0some_file
+Please, commit your changes or stash them before you can switch branche=
+s.
+Aborting=20
 
-  $ git log
-  fatal: bad default revision 'HEAD'
-  $ echo $?
-  128
+If no conflicts then:=20
 
-and status calls (from the superproject) also have trouble:
+$ git checkout some_branch
+M =A0 =A0 =A0 some_file
+M =A0 =A0 =A0 some_other_file
+Switched to branch 'some_branch'=20
 
-  $ git status
-  warning: refname 'HEAD' is ambiguous
-  warning: refname 'HEAD' is ambiguous.
-  On branch master
-  =E2=80=A6
+I.e. it will only abort if there are conflicts.=20
 
-So it's better to just specify your preferred upstream branch directly
-(e.g. --branch next).
+*True behavior:*
+When doing a checkout then Git will check if your working directory is =
+dirty
+(checking for both modified and added untracked files), and if so abort=
+ the
+checkout with a message:=20
 
-Cheers,
-Trevor
+$ git checkout some_branch
+error: Your working directory is not clean.
+Please, commit your changes or stash them before you can switch branche=
+s.
+Aborting=20
 
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
+I.e. it will abort if working directory is dirty (checking for both mod=
+ified
+and added untracked files).=20
+I.e. you can only do checkout if you get "nothing to commit, working
+directory clean" when running "git status" (ignoring ignored files thou=
+gh).=20
 
---0aF+6pWUK5w8WdCh
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
+*Usecase in short:*
+If you use an IDE (like e.g. Eclipse) and do a checkout
+of=A0'some_branch'=A0with a dirty working directory which will not resu=
+lt in any
+conflicts, then you will not be nicely notified (as you would in Git Ba=
+sh)
+that the changes you were working on in=A0'previous_branch'=A0are still=
+ present
+in your working directory after changing to=A0'some_branch'. I.e. when =
+you
+compile your code your uncommitted changes from=A0'previous_branch'=A0a=
+re still
+present in your working directory on=A0'some_branch'.=20
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
+As I see it Git is extremely strong in context switching (i.e. working =
+on
+multiple issues on multiple branches), and I could see a use for a sett=
+ing
+which setup a strict check for if working directory is not clean
+(disregarding the check for conflicts). This would mean that your chang=
+es
+created while on branch #1 will not be carried over when changing to br=
+anch
+#2, i.e. you will work strictly context based always.=20
 
-iQIcBAEBAgAGBQJTNEp7AAoJEKKfehoaNkbtg3kQAKXHammX2xgQ7Z9zVRHiJj/q
-yGSiAM/OTmzydU1x82Q13whP3JUMM2B9Vsi2Qr7HqZevgZz5Zogk2X6yc2rXWrgE
-Fb4IFj7eyIsxzCsGBxqdNoLOrnvIVQa8+JYVps116O4d6hGGa8fNs/jqt/pIudNw
-LpNi6pq6J/nUaxQ4L/w/O5vGdwYVQvut2PK9l3Be5HD5NWCS9roiAZZ7fQ4TjaI0
-zmdZL0DJb1VdPSFdhvCDFoRVJdBjlIIJ/5sU61e0zZ/QV3RlAyArUCK1GyqHJH09
-umW6JT7k9CBCEl5Rj6JTaGaj7YeSjG10jEj8RvEgtLpgiRX6wr63m/xBYbrIBKdi
-H1JN9Q8T3G/ymp3pI4OULaS8gHeKzyV1GHahBBA2zQeVzyzGXU1CHR+JCN5UPCQh
-xVcZRWVO4vFSzGF+GJkRofO+2+doFuc1RYjRUnFX4wA3lQ/hn/ZyKwYddJmpeDzE
-+CLyXGbJn1SMvaMH87Tgfn6bAeYeMGlM8VVeNcupde9TUejJmuaknnQfzefK7BFy
-D2PZC+XMACU2ouhl+X/CHjrB1uw9DFiR3E8pq7H6RiV3gBR0GghVkIGCyFfMgSMv
-u/Kre3hcAnTowALIXjGhlwcR42ijxR3HUrtGAFzYbNvGD+lFuSJM6WxgqZP7TIwd
-THAHHTiaccs7NJjXBgSn
-=Te+N
------END PGP SIGNATURE-----
+*Usecase also described here:*
+http://stackoverflow.com/questions/22609566/how-to-force-git-to-abort-a=
+-chec
+kout-if-working-directory-is-not-clean-i-e-dis=20
 
---0aF+6pWUK5w8WdCh--
+Br,=20
+Jonas Bang Christensen
