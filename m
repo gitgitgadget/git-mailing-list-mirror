@@ -1,98 +1,75 @@
 From: "David A. Dalrymple (and Bhushan G. Lodha)" <dad-bgl@mit.edu>
-Subject: [PATCH 00/10] [RFC] pickaxe for function names
-Date: Thu, 27 Mar 2014 14:50:46 -0400
-Message-ID: <1395946256-67124-1-git-send-email-dad-bgl@mit.edu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: peff@peff.net, l.s.r@web.de
+Subject: [PATCH 01/10] .gitattributes: specify the language used
+Date: Thu, 27 Mar 2014 14:50:47 -0400
+Message-ID: <a833f392bebae7a2441d0a6e81a1c6dc52fa682e.1395942768.git.davidad@alum.mit.edu>
+References: <1395946256-67124-1-git-send-email-dad-bgl@mit.edu>
+Cc: peff@peff.net, l.s.r@web.de,
+	"Bhushan G. Lodha & David A. Dalrymple" <dad-bgl@mit.edu>,
+	"David Dalrymple (on zayin)" <davidad@alum.mit.edu>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 27 19:51:22 2014
+X-From: git-owner@vger.kernel.org Thu Mar 27 19:51:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WTFOZ-0004iE-Uk
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Mar 2014 19:51:20 +0100
+	id 1WTFOi-0004oC-Qg
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Mar 2014 19:51:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757154AbaC0SvP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Mar 2014 14:51:15 -0400
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:50312 "EHLO
+	id S1757206AbaC0SvY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Mar 2014 14:51:24 -0400
+Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:50315 "EHLO
 	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757031AbaC0SvP (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Mar 2014 14:51:15 -0400
-X-AuditID: 1207440d-f79d86d0000043db-0a-533473212010
+	by vger.kernel.org with ESMTP id S1757137AbaC0SvX (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Mar 2014 14:51:23 -0400
+X-AuditID: 1207440d-f79d86d0000043db-3b-5334732a9191
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 1D.36.17371.12374335; Thu, 27 Mar 2014 14:51:13 -0400 (EDT)
+	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 7E.36.17371.A2374335; Thu, 27 Mar 2014 14:51:22 -0400 (EDT)
 Received: from zayin.local.com ([74.212.183.186])
 	(authenticated bits=0)
         (User authenticated as davidad@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s2RIp9TI013586
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s2RIp9TJ013586
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Thu, 27 Mar 2014 14:51:12 -0400
+	Thu, 27 Mar 2014 14:51:21 -0400
 X-Mailer: git-send-email 1.7.12.4 (Apple Git-37)
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrDLMWRmVeSWpSXmKPExsUixO6iqKtYbBJs0DDPxqLrSjeTxZmt/cwW
-	P1p6mB2YPZ717mH0+LxJzuP2s20sAcxRXDYpqTmZZalF+nYJXBkzW9sZCxr5Kw6uvsjawNjO
-	3cXIySEhYCLxffocVghbTOLCvfVsILaQwGVGiVcfZboYuYDslUwSi1/eYQFJsAk4S2z6tZ8J
-	xBYREJd4e3wmO4jNLCAv8fDrVjBbWMBcouf+H7B6FgFVidsfpoDV8wrYS2xavB1qmYHEp2dn
-	mCHighInZz4BqucAmqMusX6eEMzI5q2zmScw8s1CUjULoWoWkqoFjMyrGOUSc0pzdXMTM3OK
-	U5N1i5MT8/JSi3SN9HIzS/RSU0o3MULCkHcH4/91MocYBTgYlXh4HSxMgoVYE8uKK3MPMUpw
-	MCuJ8M4tAArxpiRWVqUW5ccXleakFh9ilOZgURLnVVui7ickkJ5YkpqdmlqQWgSTZeLglGpg
-	lMrNlpApZF0YmL5od6BeFqutq6rZ8xfzTJMP6s2/niMXzRvc0fzmBN+EPaeUsjofmljtD/zh
-	8bqwJirVup1Z+WPyeW51pby1jAoCj1Pb9U9ILPL+/GaK4MaJoSKOW7alf44RurO/8FzhprCc
-	PY77CzfdXKrRaKqbwKi38+9+QZ/pUcs5r0gqsRRnJBpqMRcVJwIAsozSIT8CAAA=
+In-Reply-To: <1395946256-67124-1-git-send-email-dad-bgl@mit.edu>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprELMWRmVeSWpSXmKPExsUixO6iqKtVbBJs8HShhMXclU1MFl/O3WKz
+	6LrSzWRxZms/s8WPlh5mB1aPv+8/MHk0nTnK7PGsdw+jx+dNch63n21jCWCN4rJJSc3JLEst
+	0rdL4Mo4PeU0U8EktorJL6+wNjBOYe1i5OSQEDCRWPz5EZQtJnHh3no2EFtI4DKjxJodhV2M
+	XED2SiaJ5geHWEASbALOEpt+7WcCsUUExCXeHp/JDlLELLCQUeLtnsnMIAlhAQeJjqdzwKay
+	CKhKbDi9FizOKxAlMbdxKxPENgOJT8/OgMU5geonz98IZHMAbbOX+LjUdgIj7wJGhlWMcok5
+	pbm6uYmZOcWpybrFyYl5ealFukZ6uZkleqkppZsYISHFu4Px/zqZQ4wCHIxKPLwOFibBQqyJ
+	ZcWVuYcYJTiYlUR45xYAhXhTEiurUovy44tKc1KLDzFKc7AoifOqLVH3ExJITyxJzU5NLUgt
+	gskycXBKNTD68jTsvmaQZr5qruurtLtKE8/UKZ18WNPrpb7hzuFvHY+vGszZa/H1dbiKwtLv
+	0/7mV3xUTfIrcNt+z+mTvSm7+NqG/F/+70Nuzq+JefbB47SqZXDH2c1rahm8Vv97dW2jiefH
+	mcXdMfPXh+brK1fssHUMm7EvNm/Sg0liZZla+8997slicz2nxFKckWioxVxUnAgAWROfLiUC
+	AAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245309>
 
-This series introduces a --function-name=3D<pattern> option for git-log=
-, intended
-to search for commits which touch a function matching a certain pattern=
- (a
-feature we've seen requested and are interested in using ourselves).
+From: "Bhushan G. Lodha & David A. Dalrymple" <dad-bgl@mit.edu>
 
-This is our first attempt to patch git; we've tried to observe and foll=
-ow the
-community standards, but we would greatly appreciate feedback. We've be=
-en
-working on this for a few weeks, and I just noticed that Ren=C3=A9 Scha=
-rfe has done
-conflicing (and better) refactoring work in diffcore-pickaxe.c a few da=
-ys ago.
-We'd be happy to rebase our changes and resolve the conflicts once Ren=C3=
-=A9's
-patches are committed to master, but we thought we may as well ask for =
-comments
-on the version we have working now.
+Since git can intelligently emit diff hunk headers based on the
+programming language of each file, assuming that the language is
+specified in .gitattributes, it makes sense to specify our own
+language (cpp) in our own .gitattributes file.
 
-Thanks for your time!
+Signed-off-by: David Dalrymple (on zayin) <davidad@alum.mit.edu>
+---
+ .gitattributes | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-  .gitattributes: specify the language used
-  diffcore-pickaxe.c: refactor regex compilation
-  diffcore-pickaxe.c: Refactor pickaxe_fn signature
-  diff.c/diff.h: expose userdiff_funcname
-  diffcore-pickaxe.c: set up funcname pattern
-  log: --function-name pickaxe
-  xdiff: add XDL_EMIT_MOREFUNCNAMES to try harder
-  xdiff: add XDL_EMIT_MOREHUNKHEADS to split hunks
-  t4213: test --function-name option
-  Documentation: Document --function-name usage
-
- .gitattributes                 |   2 +-
- Documentation/diff-options.txt |   9 +++
- Documentation/gitdiffcore.txt  |  17 ++++-
- builtin/log.c                  |   2 +-
- diff.c                         |  13 +++-
- diff.h                         |   3 +
- diffcore-pickaxe.c             | 162 +++++++++++++++++++++++++++++++++=
-++-----------
- revision.c                     |   3 +-
- t/t4213-log-function-name.sh   |  73 +++++++++++++++++++++
- xdiff/xdiff.h                  |   2 +
- xdiff/xdiffi.c                 |   2 +-
- xdiff/xemit.c                  |  99 ++++++++++++++++++++++------
- xdiff/xemit.h                  |   4 +-
- 13 files changed, 323 insertions(+), 68 deletions(-)
+diff --git a/.gitattributes b/.gitattributes
+index 5e98806..320e33c 100644
+--- a/.gitattributes
++++ b/.gitattributes
+@@ -1,3 +1,3 @@
+ * whitespace=!indent,trail,space
+-*.[ch] whitespace=indent,trail,space
++*.[ch] whitespace=indent,trail,space diff=cpp
+ *.sh whitespace=indent,trail,space
+-- 
+1.7.12.4 (Apple Git-37)
