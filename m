@@ -1,176 +1,136 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] gitweb: gpg signature status indication for commits
-Date: Thu, 27 Mar 2014 16:12:48 -0400
-Message-ID: <CAPig+cR0_7c8Km3JP_282ENGSa+4nOA=-xi2=V3DoQhTz7kNwA@mail.gmail.com>
-References: <1395932180-19454-1-git-send-email-victor.kartashov@gmail.com>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: Re: Possible regression in master? (submodules without a
+ "master" branch)
+Date: Thu, 27 Mar 2014 21:27:02 +0100
+Message-ID: <20140327202702.GA3984@sandbox-ub>
+References: <CALKQrgeRJRoyC-UV7J98U1qQfqEFr_H1sEfAWd0GbstZagUisw@mail.gmail.com>
+ <xmqqob0ref3v.fsf@gitster.dls.corp.google.com>
+ <5334606F.5010109@web.de>
+ <20140327185405.GS4008@odin.tremily.us>
+ <xmqqwqffctyg.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>
-To: Victor Kartashov <victor.kartashov@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 27 21:12:57 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: "W. Trevor King" <wking@tremily.us>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Johan Herland <johan@herland.net>,
+	Git mailing list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Mar 27 21:27:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WTGfY-0003rk-8j
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Mar 2014 21:12:56 +0100
+	id 1WTGtV-0005mp-FF
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Mar 2014 21:27:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757050AbaC0UMu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Mar 2014 16:12:50 -0400
-Received: from mail-yh0-f51.google.com ([209.85.213.51]:63836 "EHLO
-	mail-yh0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756679AbaC0UMt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Mar 2014 16:12:49 -0400
-Received: by mail-yh0-f51.google.com with SMTP id f10so4111446yha.24
-        for <git@vger.kernel.org>; Thu, 27 Mar 2014 13:12:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=tBjjLw5ArAZMN70VR/6sr76jOta4iB8GiI1Kf/DVNxY=;
-        b=uejYEZ1mn6uViiBpSPpyQaqOmYmoWD11bBlM8aGIiH9yFPvpvq+FCpZfzAu9tIrVwW
-         z594w8RyQ2cvmpkbdOrOQv+XXhWVDmKz5qZ7SmDMLrbkJtwg4DycDNGSbjStpIuDLO1c
-         7yXkvIDwvJJwGt0iP6SycUJW5vToFLez+bO0BV1VL1BIvBNCHaCZ5a6qkEdAPdbZUgrI
-         lx4kudLFx338JUHIzpXFH+7rkCUISC3L2hPo/Utgbm3jwVjJYHjdPBvRESKCF3DcNXk1
-         xIbtFl/lLrZU4ZBCKkDvgTJ0Et+go0GqUdFnsXqI3xv8P+4jV4XqmVSM76TY2wZOmhLB
-         Wjrg==
-X-Received: by 10.236.132.48 with SMTP id n36mr3439266yhi.149.1395951168410;
- Thu, 27 Mar 2014 13:12:48 -0700 (PDT)
-Received: by 10.170.180.134 with HTTP; Thu, 27 Mar 2014 13:12:48 -0700 (PDT)
-In-Reply-To: <1395932180-19454-1-git-send-email-victor.kartashov@gmail.com>
-X-Google-Sender-Auth: APnrRuuAvzg3e809LoxJ5ftNvVY
+	id S1757281AbaC0U1P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Mar 2014 16:27:15 -0400
+Received: from smtprelay04.ispgateway.de ([80.67.31.42]:58895 "EHLO
+	smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757057AbaC0U1O (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Mar 2014 16:27:14 -0400
+Received: from [77.20.146.74] (helo=sandbox-ub)
+	by smtprelay04.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1WTGtH-0004rc-Bv; Thu, 27 Mar 2014 21:27:07 +0100
+Content-Disposition: inline
+In-Reply-To: <xmqqwqffctyg.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245323>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245324>
 
-On Thu, Mar 27, 2014 at 10:56 AM, Victor Kartashov
-<victor.kartashov@gmail.com> wrote:
-> shows gpg signature (if any) for commit message in gitweb
-> in case of successfully verifying the signature highlights it with green
+On Thu, Mar 27, 2014 at 12:39:03PM -0700, Junio C Hamano wrote:
+> "W. Trevor King" <wking@tremily.us> writes:
+> 
+> > On Thu, Mar 27, 2014 at 06:31:27PM +0100, Jens Lehmann wrote:
+> >> Am 27.03.2014 18:16, schrieb Junio C Hamano:
+> >> > Johan Herland <johan@herland.net> writes:
+> >> > 
+> >> >> I just found a failure to checkout a project with submodules where
+> >> >> there is no explicit submodule branch configuration, and the
+> >> >> submodules happen to not have a "master" branch:
+> >> >>
+> >> >>   git clone git://gitorious.org/qt/qt5.git qt5
+> >> >>   cd qt5
+> >> >>   git submodule init qtbase
+> >> >>   git submodule update
+> >> >>
+> >> >> In current master, the last command fails with the following output:
+> >> > 
+> >> > ... and with a bug-free system, what does it do instead?  Just clone
+> >> > 'qtbase' and make a detached-head checkout at the commit recorded in
+> >> > the superproject's tree, or something else?
+> >> 
+> >> After reverting 23d25e48f5ead73 on current master it clones 'qtbase'
+> >> nicely with a detached HEAD.
+> >
+> > Fixing this for initial update clone is pretty easy, we just need to
+> > unset start_point before calling module_clone if
+> > submodule.<name>.branch is not set. 
+> 
+> There is this bit for "update" in git-submodule.txt:
+> 
+>   For updates that clone missing submodules, checkout-mode updates
+>   will create submodules with detached HEADs; all other modes will
+>   create submodules with a local branch named after
+>   submodule.<path>.branch.
+> 
+>   [side note] Isn't that a typo of submodule.<name>.branch?
 
-Write in imperative mood: "Show gpg ... highlight it..."
+Yep, thats is a typo. Trevor will you fix that as well? Or how should be
+do that? Since its just such a small change.
 
-As a corollary, would it be meaningful to highlight a bad signature with red?
+> So the proposed change is to make the part before semicolon true?
+> If we are not newly cloning (because we already have it), if the
+> submodule.<name>.branch is not set *OR* refers to a branch that does
+> not even exist, shouldn't we either (1) abort as an error, or (2) do
+> the same and detach?
 
-> Signed-off-by: Victor Kartashov <victor.kartashov@gmail.com>
-> ---
->  gitweb/gitweb.perl       | 33 ++++++++++++++++++++++++++-------
->  gitweb/static/gitweb.css |  5 +++++
->  2 files changed, 31 insertions(+), 7 deletions(-)
->
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index 79057b7..0b41392 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -3430,8 +3430,9 @@ sub parse_commit_text {
->         my ($commit_text, $withparents) = @_;
->         my @commit_lines = split '\n', $commit_text;
->         my %co;
-> +       my @signature = ();
->
-> -       pop @commit_lines; # Remove '\0'
-> +       pop @commit_lines if ($commit_lines[-1] eq "\0"); # Remove '\0'
+I would expect "(1) abort as an error" since the user is not getting what
+he would expect.
 
-What is this change about? Is it related to your gpg change or something else?
+> > However, that's just going to
+> > push remote branch ambiguity problems back to the --remote update
+> > functionality.  What should happen when submodule.<name>.branch is not
+> > set and you run a --remote update, which has used:
+> >
+> >     git rev-parse "${remote_name}/${branch}"
+> >
+> > since the submodule.<name>.branch setting was introduced in 06b1abb
+> > (submodule update: add --remote for submodule's upstream changes,
+> > 2012-12-19)?
+> 
+> Isn't --remote about following one specific branch the user who
+> issues that command has in mind?  If you as the end user did not
+> give any indication which branch you meant, e.g. by leaving the
+> submodule.<name>.branch empty, shouldn't that be diagnosed as an
+> error?
 
->         if (! @commit_lines) {
->                 return;
-> @@ -3469,6 +3470,10 @@ sub parse_commit_text {
->                                 $co{'committer_name'} = $co{'committer'};
->                         }
->                 }
-> +               elsif ($line =~ /^gpg: /)
+Well to simplify things there was this fallback to origin/master
+(similar to the master branch we create on init) since that is a branch
+which many projects have. E.g. for the users that share one central
+server and just directly commit, push and pull to/from master. They
+would have an easy way to start working in a submodule, by simply saying
+--remote and then committing to master. At least that is what I
+imagine.
 
-Inconsistent 'elsif' placement. (Cuddle it with the close-brace.)
+> > gitmodules(5) is pretty clear that 'submodule.<name>.branch' defaults
+> > to master (and not upstream's HEAD), do we want to adjust this at the
+> > same time?
+> 
+> That may be likely.  If the value set to a configuration variable
+> causes an established behaviour of a program change a lot, silently
+> defaulting that variable to something many people are expected to
+> have (e.g. 'master') would likely to cause a usability regression.
 
-> +               {
+IMO this branch configuration should completely ignored in the default,
+non --remote, usage. Since we simply checkout a specific SHA1 in this
+case, that should be possible.
 
-Inconsistent open-brace placement.
-
-> +                       push @signature, $line;
-> +               }
->         }
->         if (!defined $co{'tree'}) {
->                 return;
-> @@ -3508,6 +3513,11 @@ sub parse_commit_text {
->         foreach my $line (@commit_lines) {
->                 $line =~ s/^    //;
->         }
-> +       push(@commit_lines, "") if(scalar(@signature) > 0);
-
-Missing space after 'if'.
-
-In this Perl file, it would be more consistent to drop the '> 0' and
-say merely 'if scalar @signature'.
-
-> +       foreach my $sig (@signature)
-> +       {
-
-Brace placement.
-
-> +               push(@commit_lines, $sig);
-> +       }
->         $co{'comment'} = \@commit_lines;
->
->         my $age = time - $co{'committer_epoch'};
-> @@ -3530,13 +3540,15 @@ sub parse_commit {
->
->         local $/ = "\0";
->
-> -       open my $fd, "-|", git_cmd(), "rev-list",
-> -               "--parents",
-> -               "--header",
-> -               "--max-count=1",
-> +
-> +
-
-Unnecessary two extra blank lines.
-
-> +       open my $fd, "-|", git_cmd(), "show",
-> +               "--quiet",
-> +               "--date=raw",
-> +               "--pretty=format:%H %P%ntree %T%nparent %P%nauthor %an <%ae> %ad%ncommitter %cn <%ce> %cd%n%GG%n%s%n%n%b",
->                 $commit_id,
->                 "--",
-> -               or die_error(500, "Open git-rev-list failed");
-> +               or die_error(500, "Open git-show failed");
->         %co = parse_commit_text(<$fd>, 1);
->         close $fd;
->
-> @@ -4571,7 +4583,14 @@ sub git_print_log {
->         # print log
->         my $skip_blank_line = 0;
->         foreach my $line (@$log) {
-> -               if ($line =~ m/^\s*([A-Z][-A-Za-z]*-[Bb]y|C[Cc]): /) {
-> +               if ($line =~ m/^gpg:(.)+Good(.)+/) {
-> +                       if (! $opts{'-remove_signoff'}) {
-> +                               print "<span class=\"good_sign\">" . esc_html($line) . "</span><br/>\n";
-> +                               $skip_blank_line = 1;
-> +                       }
-> +                       next;
-> +               }
-> +               elsif ($line =~ m/^\s*([A-Z][-A-Za-z]*-[Bb]y|C[Cc]): /) {
->                         if (! $opts{'-remove_signoff'}) {
->                                 print "<span class=\"signoff\">" . esc_html($line) . "</span><br/>\n";
->                                 $skip_blank_line = 1;
-> diff --git a/gitweb/static/gitweb.css b/gitweb/static/gitweb.css
-> index 3212601..0b7479c 100644
-> --- a/gitweb/static/gitweb.css
-> +++ b/gitweb/static/gitweb.css
-> @@ -136,6 +136,11 @@ span.signoff {
->         color: #888888;
->  }
->
-> +span.good_sign {
-> +       font-weight: bold;
-> +       background-color: #aaffaa;
-> +}
-> +
->  div.log_link {
->         padding: 0px 8px;
->         font-size: 70%;
-> --
-> 1.8.3.2
+Cheers Heiko
