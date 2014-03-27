@@ -1,94 +1,148 @@
-From: Siggi <siggin@gmail.com>
-Subject: Bug report: Git 1.8 on Ubuntu 13.10 refs not valid
-Date: Thu, 27 Mar 2014 15:45:34 +0100
-Message-ID: <5334398E.8090402@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
+From: Victor Kartashov <victor.kartashov@gmail.com>
+Subject: [PATCH] gitweb: gpg signature status indication for commits
+Date: Thu, 27 Mar 2014 18:56:20 +0400
+Message-ID: <1395932180-19454-1-git-send-email-victor.kartashov@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 27 15:45:45 2014
+X-From: git-owner@vger.kernel.org Thu Mar 27 15:56:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WTBYt-0004Qr-Le
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Mar 2014 15:45:44 +0100
+	id 1WTBjK-0002wm-V5
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Mar 2014 15:56:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755128AbaC0Opj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Mar 2014 10:45:39 -0400
-Received: from mail-bk0-f48.google.com ([209.85.214.48]:61559 "EHLO
-	mail-bk0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754638AbaC0Opi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Mar 2014 10:45:38 -0400
-Received: by mail-bk0-f48.google.com with SMTP id mx12so770068bkb.21
-        for <git@vger.kernel.org>; Thu, 27 Mar 2014 07:45:37 -0700 (PDT)
+	id S1756824AbaC0O41 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Mar 2014 10:56:27 -0400
+Received: from mail-lb0-f169.google.com ([209.85.217.169]:49341 "EHLO
+	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754896AbaC0O40 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Mar 2014 10:56:26 -0400
+Received: by mail-lb0-f169.google.com with SMTP id q8so2708564lbi.14
+        for <git@vger.kernel.org>; Thu, 27 Mar 2014 07:56:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        bh=Qq0bG5aqwBiP840Cd/osqk2Gyi0g0oM8XluDYJVLkrU=;
-        b=PuG7PCy5vtX0dyUx2K8xClFaTqX1aaywKS5Ntxam80rijXwpXJTbSlvsS/jwDLHXQj
-         0sUXnDWfCVGMPEQYARxIMJdngBQg4wfdd/Raf6CBLnBhvd0vAZOd9dhtsQTbOUc+blQP
-         TPoFJ3CJT761PIQN5rU1+4VVYkoqyU0lU5go3s9rxe/Pq4u2BZ3/lgABYkaoH6g67cMz
-         VwNgXc3FcdBc7pzziyK/OneC186DGDpxrJmS+vP0wTppMDTM6JY5r6Ot0Y9rSs/jzwrG
-         40Bv21nj6AFaezdYYu7Dsy2YL4VoYsRoHP+R9zc+eY3kR0/2fmpXF4kvzahXoUHjImaa
-         1bMQ==
-X-Received: by 10.204.180.67 with SMTP id bt3mr3070419bkb.16.1395931537274;
-        Thu, 27 Mar 2014 07:45:37 -0700 (PDT)
-Received: from [10.18.250.137] (era126.goemobile.de. [134.76.0.126])
-        by mx.google.com with ESMTPSA id zl9sm2322540bkb.11.2014.03.27.07.45.35
+        h=from:to:subject:date:message-id;
+        bh=pxFNGg+fwC58XViO709mSYi8sEZFYCxyaUXlKBt4U8g=;
+        b=ffaVGTZsaMDKKZ89ejh3rIC/lM19C+Iov0HbXKVjNHQH+TexpuEljI6Th2s0xKtNmS
+         S1nKgshoiW8AxsOUa7A30fXsIZS2/yzGzfXUbH7EZsoYv9FsOkB3lUVQKTWe6suTEq7H
+         vYvQvjgbuUpSxBTMg2GnDZWrRHAGDnA/jErGrMERYzw9GSZQ+lfCOEtl0tRwADT+AEt3
+         5BrrXw4I/kGcOa/ZVLmWcnPtSW2L83eGIWVFAnOsR+DKgiXiOT6PV+C7/b3fKQFGL8q5
+         9MhHuraeJ3xm2ojJ8O2Njob4PBUdexYuSYfRg5ubzV7veR+HIeq3m0Sx0aOtPtsR/k0A
+         w1iQ==
+X-Received: by 10.112.163.69 with SMTP id yg5mr1234525lbb.14.1395932184669;
+        Thu, 27 Mar 2014 07:56:24 -0700 (PDT)
+Received: from merlin-PC.echelon.lan ([85.202.231.172])
+        by mx.google.com with ESMTPSA id tq9sm1581102lbb.10.2014.03.27.07.56.23
         for <git@vger.kernel.org>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 27 Mar 2014 07:45:36 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 27 Mar 2014 07:56:24 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245286>
 
-Hi,
-I'm running:
+shows gpg signature (if any) for commit message in gitweb
+in case of successfully verifying the signature highlights it with green
 
-Ubuntu 13.10 64 bit
+Signed-off-by: Victor Kartashov <victor.kartashov@gmail.com>
+---
+ gitweb/gitweb.perl       | 33 ++++++++++++++++++++++++++-------
+ gitweb/static/gitweb.css |  5 +++++
+ 2 files changed, 31 insertions(+), 7 deletions(-)
 
-and git version
-git:amd64/saucy 1:1.8.3.2-1 uptodate
-
-my remote repository is on a Chiliprojekt server (a fork of Redmine).
-
-cloning the repo over http results in following error:
-
-sneher@sneher-XPS:~/Dokumente/test$ git clone 
-http://sneher@git.projects.gwdg.de/xrd-csd.git
-Klone nach 'xrd-csd'...
-Password for 'http://sneher@git.projects.gwdg.de':
-fatal: http://sneher@git.projects.gwdg.de/xrd-csd.git/info/refs not 
-valid: is this a git repository?
-
-the content of ../info/refs looks like this
-
-e49ae34096fd6fff3d1e7b8e7b6e78ae29bad913	refs/heads/0.2.2
-3d375b2f7eeeb7bc12b24cc8181aa085f471ba10	refs/heads/master
-f7a69735c1e2cb8363be849afa9e9bfdf2db61c6	refs/heads/new_lab
-879ccace941ea6dc83876b1dcfcc099e5c7e5b42	refs/heads/testing
-2f9504da3febcdafb9cb92806e7e178144fec0c9	refs/remotes/origin/HEAD
-2f9504da3febcdafb9cb92806e7e178144fec0c9	refs/remotes/origin/master
-f7a69735c1e2cb8363be849afa9e9bfdf2db61c6	refs/remotes/origin/new_lab
-58fe57f5a2a0c8e8096c62f8ab8be2077c592e53	refs/remotes/origin/testing
-4b64a990dc1534abcccfb7f8c22f0cc5388e9db8	refs/tags/0.1.0
-a90ce817ca3bde41ce6c88cf22a9993bd7560f55	refs/tags/0.1.1
-9a25635e866979b044b83f914cfd993a7031a9ca	refs/tags/0.1.2
-5a94e698b1042b34a25c87ced98f5f42d40e2578	refs/tags/0.2.0
-7cb00e325c1fb9a4112700744237f873bd5bae16	refs/tags/0.2.1
-
-
-
-I use to have the same problem on a different Ubuntu version (12.10). There the problem occurede with the git 1.8 update. I just switcht back to the older version.
-
-Problem is, there is no older version for saucy.
-
-Thanks for your help! and, in case this do to my inability, sorry for bugging you!
-
-Siggi
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 79057b7..0b41392 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -3430,8 +3430,9 @@ sub parse_commit_text {
+ 	my ($commit_text, $withparents) = @_;
+ 	my @commit_lines = split '\n', $commit_text;
+ 	my %co;
++	my @signature = ();
+ 
+-	pop @commit_lines; # Remove '\0'
++	pop @commit_lines if ($commit_lines[-1] eq "\0"); # Remove '\0'
+ 
+ 	if (! @commit_lines) {
+ 		return;
+@@ -3469,6 +3470,10 @@ sub parse_commit_text {
+ 				$co{'committer_name'} = $co{'committer'};
+ 			}
+ 		}
++		elsif ($line =~ /^gpg: /)
++		{
++			push @signature, $line;
++		}
+ 	}
+ 	if (!defined $co{'tree'}) {
+ 		return;
+@@ -3508,6 +3513,11 @@ sub parse_commit_text {
+ 	foreach my $line (@commit_lines) {
+ 		$line =~ s/^    //;
+ 	}
++	push(@commit_lines, "") if(scalar(@signature) > 0);
++	foreach my $sig (@signature)
++	{
++		push(@commit_lines, $sig);
++	}
+ 	$co{'comment'} = \@commit_lines;
+ 
+ 	my $age = time - $co{'committer_epoch'};
+@@ -3530,13 +3540,15 @@ sub parse_commit {
+ 
+ 	local $/ = "\0";
+ 
+-	open my $fd, "-|", git_cmd(), "rev-list",
+-		"--parents",
+-		"--header",
+-		"--max-count=1",
++
++
++	open my $fd, "-|", git_cmd(), "show",
++		"--quiet",
++		"--date=raw",
++		"--pretty=format:%H %P%ntree %T%nparent %P%nauthor %an <%ae> %ad%ncommitter %cn <%ce> %cd%n%GG%n%s%n%n%b",
+ 		$commit_id,
+ 		"--",
+-		or die_error(500, "Open git-rev-list failed");
++		or die_error(500, "Open git-show failed");
+ 	%co = parse_commit_text(<$fd>, 1);
+ 	close $fd;
+ 
+@@ -4571,7 +4583,14 @@ sub git_print_log {
+ 	# print log
+ 	my $skip_blank_line = 0;
+ 	foreach my $line (@$log) {
+-		if ($line =~ m/^\s*([A-Z][-A-Za-z]*-[Bb]y|C[Cc]): /) {
++		if ($line =~ m/^gpg:(.)+Good(.)+/) {
++			if (! $opts{'-remove_signoff'}) {
++				print "<span class=\"good_sign\">" . esc_html($line) . "</span><br/>\n";
++				$skip_blank_line = 1;
++			}
++			next;
++		}
++		elsif ($line =~ m/^\s*([A-Z][-A-Za-z]*-[Bb]y|C[Cc]): /) {
+ 			if (! $opts{'-remove_signoff'}) {
+ 				print "<span class=\"signoff\">" . esc_html($line) . "</span><br/>\n";
+ 				$skip_blank_line = 1;
+diff --git a/gitweb/static/gitweb.css b/gitweb/static/gitweb.css
+index 3212601..0b7479c 100644
+--- a/gitweb/static/gitweb.css
++++ b/gitweb/static/gitweb.css
+@@ -136,6 +136,11 @@ span.signoff {
+ 	color: #888888;
+ }
+ 
++span.good_sign {
++	font-weight: bold;
++	background-color: #aaffaa;
++}
++
+ div.log_link {
+ 	padding: 0px 8px;
+ 	font-size: 70%;
+-- 
+1.8.3.2
