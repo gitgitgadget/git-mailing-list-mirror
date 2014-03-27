@@ -1,98 +1,82 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: Possible regression in master? (submodules without a "master" branch)
-Date: Fri, 28 Mar 2014 00:27:29 +0100
-Message-ID: <CALKQrgeLY2ziW2jOoWgNcsBR6EE4rnmkYN6Z1iiGXDtiECE8og@mail.gmail.com>
-References: <CALKQrgeRJRoyC-UV7J98U1qQfqEFr_H1sEfAWd0GbstZagUisw@mail.gmail.com>
-	<20140327155208.GM4008@odin.tremily.us>
-	<53345E85.7070205@web.de>
-	<xmqq8urvebok.fsf@gitster.dls.corp.google.com>
-	<5334AC59.7010605@web.de>
+From: Ronald Weiss <weiss.ronald@gmail.com>
+Subject: git commit vs. ignore-submodules
+Date: Fri, 28 Mar 2014 00:36:00 +0100
+Message-ID: <CABxC_L92v=cV=+e_DNa0L6f21LB0BRP5duai2h_heGJN_PRoUQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"W. Trevor King" <wking@tremily.us>,
-	Git mailing list <git@vger.kernel.org>,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Fri Mar 28 00:27:59 2014
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 28 00:36:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WTJiJ-0006Ua-CU
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Mar 2014 00:27:59 +0100
+	id 1WTJqC-000348-8K
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Mar 2014 00:36:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757409AbaC0X1u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Mar 2014 19:27:50 -0400
-Received: from locusts.copyleft.no ([188.94.218.116]:63979 "EHLO
-	mail.mailgateway.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757398AbaC0X1e (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Mar 2014 19:27:34 -0400
-Received: from mail-pd0-f169.google.com ([209.85.192.169])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1WTJhs-0005ZZ-RT
-	for git@vger.kernel.org; Fri, 28 Mar 2014 00:27:33 +0100
-Received: by mail-pd0-f169.google.com with SMTP id fp1so4037987pdb.0
-        for <git@vger.kernel.org>; Thu, 27 Mar 2014 16:27:29 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=oP1zP9TIfGsyZManuE3nUeAeGB9QLS+vcyIMaZp6Frk=;
-        b=hSZoMG2OFVXbJJRyLFij9GxQUxcnZAg7j1SpU95jEmfqXfME4WHMpTChRaSQwz+T4M
-         Wh1dCGMNGndn9BTgOfsk1uiXc2t3pjbtKfgTvtifIdgoY75MZV8iXT529jo3KjqhCU7o
-         +4IB/1wbnJlIAwhgWLQUS6BWFETmh65MmnmOUdaHcl39i2e8HVKOkSxjHYKeS7gjZeST
-         k3yzZq55mF/UCgJozsLTEWMFwI9sTufMM/KJvA2QpK4Lj4s6U8DxDwG3wyjfSciVsPJz
-         lZTyX3QWbacMqfM0NtCvhb1EHXW3aCZ08dJWeRiMIR8ZGrnRpjXjldVFeuLguvP+AQdi
-         yEDw==
-X-Received: by 10.66.156.4 with SMTP id wa4mr4761184pab.49.1395962849324; Thu,
- 27 Mar 2014 16:27:29 -0700 (PDT)
-Received: by 10.70.48.232 with HTTP; Thu, 27 Mar 2014 16:27:29 -0700 (PDT)
-In-Reply-To: <5334AC59.7010605@web.de>
+	id S1755487AbaC0XgC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Mar 2014 19:36:02 -0400
+Received: from mail-ob0-f169.google.com ([209.85.214.169]:43227 "EHLO
+	mail-ob0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755279AbaC0XgA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Mar 2014 19:36:00 -0400
+Received: by mail-ob0-f169.google.com with SMTP id va2so5083292obc.14
+        for <git@vger.kernel.org>; Thu, 27 Mar 2014 16:36:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=093ZkRAI7DNhXoaHqSo7nihN+oBsSbw+pq4vSk2iWoo=;
+        b=Jts7F/9SnfQ4xzekxspOHxb6Bmi3xSJ7kag7QWQso+ee+tXn+AUJEJ2h/PGDQ46c6u
+         EiY0gKvT2NnSbl16as8KEzfDzxikd9ZjARtax1MqOaXny5qNjhj/9LRAS3m2T01px44O
+         QExCMl4NDJKjHAqiR/17K69kTAL1VWpEemnfVLyRy0Y4uFTZ6ZfKgO7Iy7EvX0Qo3e4p
+         UZkJQM9PNXRrO0P5y49PZJLBgZkvzAdH/D11ccZnjGlU464bqMcPIEOLMn8lF6nS6cGI
+         33c0IMWqWm+DnlvqGkGHSc9+PeINm7ReXxGd17qQQDVYPjBsTeXf3x/mWW7DcsERKJVP
+         6IjA==
+X-Received: by 10.182.44.167 with SMTP id f7mr3799013obm.3.1395963360462; Thu,
+ 27 Mar 2014 16:36:00 -0700 (PDT)
+Received: by 10.76.154.68 with HTTP; Thu, 27 Mar 2014 16:36:00 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245341>
 
-On Thu, Mar 27, 2014 at 11:55 PM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
-> Am 27.03.2014 19:30, schrieb Junio C Hamano:
->>  - For a repository that does not have that "branch" thing
->>    configured, the doc says that it will default to 'master'.
->>
->>    I do not think this was brought up during the review, but is it a
->>    sensible default if the project does not even have that branch?
->>
->>    What are viable alternatives?
->>
->>    - use 'master' and fail just the way Johan saw?
->>
->>    - use any random branch that happens to be at the same commit as
->>      what is being checked out?
->>
->>    - use the branch "clone" for the submodule repository saw the
->>      upstream was pointing at with its HEAD?
->>
->>    - something else?
->
-> Good question. Me thinks that when a superproject doesn't have
-> 'branch' configured and does set 'update' to something other than
-> 'checkout' for a submodule it should better make sure 'master'
-> is a valid branch in there. Everything else sounds like a
-> misconfiguration on the superproject's part that warrants an
-> error. But I may be wrong here as I only use 'checkout' together
-> with a detached HEADs myself. Comments welcome.
+Hello.
 
-I believe unset 'branch' and 'update' != 'checkout' is somewhat
-analogous to unset branch.<name>.merge while pulling. I.e. "you have
-told me to merge/rebase, but you have not told me against which
-branch, therefore error out".
+As this is my first post to this list, let me first thank all the
+people involved in Git development - it's really a great tool.
 
-...Johan
+Now to the point. Since Git 1.8 (I think), git commit command honours
+the submodules' ignore settings, configured either in .gitmodules, or
+in .git/config. That's very nice and certainly correct for "git commit
+-a", but it's less clear if one explicitely stages an updated
+submodule using git add. Git commit will ignore it anyway, if
+ignore=all is configured in .gitmodules. Maybe that's correct too, I'm
+not sure about that, but it's inconvenient in our use case, especially
+combined with the lack of --ignore-submodule parameter to git commit,
+as git status and git diff have.
 
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+We use submodules in such a way that normally we don't ever want to
+see changes in them in output of git diff and git status. So we set
+ignore=all in .gitmodules for each submodule. But occasionally, we
+need to add a new submodule, and sometimes also commit changed
+submodule. This got harder with Git 1.8, we have to "git config
+submodule.<name>.ignore none" before the commit, and "git config
+--unset ..." after.
+
+I'd like to at least add an --ignore-submodules parameter to git
+commit. I though about posting a patch, but as I looked into the
+commit source file, I didn't see any straightforward way to implement
+it. I don't have enough free time for a deeper analysis of the
+sources, I'm sorry.
+
+So please, let me first know, whether you could possibly accept such
+patch, and if so, then I'd really appreciate some hints on how to do
+it.
+
+And also, I'd like to know git folks' opinion on whether it's OK that
+git commit with ignore=all in .gitmodules ignores submodules even when
+they are explicitely staged with git add.
+
+Thanks in advance for any reply,
+Ronald Weiss
