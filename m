@@ -1,136 +1,130 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Re: Possible regression in master? (submodules without a
- "master" branch)
-Date: Thu, 27 Mar 2014 21:27:02 +0100
-Message-ID: <20140327202702.GA3984@sandbox-ub>
+From: "W. Trevor King" <wking@tremily.us>
+Subject: submodule.<path>.branch vs. submodule.<name>.branch (was: Possible
+ regression in master? (submodules without a "master" branch).
+Date: Thu, 27 Mar 2014 14:01:07 -0700
+Message-ID: <20140327210106.GV4008@odin.tremily.us>
 References: <CALKQrgeRJRoyC-UV7J98U1qQfqEFr_H1sEfAWd0GbstZagUisw@mail.gmail.com>
  <xmqqob0ref3v.fsf@gitster.dls.corp.google.com>
  <5334606F.5010109@web.de>
  <20140327185405.GS4008@odin.tremily.us>
  <xmqqwqffctyg.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "W. Trevor King" <wking@tremily.us>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="R10gueRtU1pFqy+X"
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
 	Johan Herland <johan@herland.net>,
 	Git mailing list <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 27 21:27:26 2014
+X-From: git-owner@vger.kernel.org Thu Mar 27 22:01:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WTGtV-0005mp-FF
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Mar 2014 21:27:21 +0100
+	id 1WTHQL-0004mF-7S
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Mar 2014 22:01:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757281AbaC0U1P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Mar 2014 16:27:15 -0400
-Received: from smtprelay04.ispgateway.de ([80.67.31.42]:58895 "EHLO
-	smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757057AbaC0U1O (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Mar 2014 16:27:14 -0400
-Received: from [77.20.146.74] (helo=sandbox-ub)
-	by smtprelay04.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.68)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1WTGtH-0004rc-Bv; Thu, 27 Mar 2014 21:27:07 +0100
+	id S1756794AbaC0VBM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Mar 2014 17:01:12 -0400
+Received: from qmta07.westchester.pa.mail.comcast.net ([76.96.62.64]:52919
+	"EHLO qmta07.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755441AbaC0VBK (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Mar 2014 17:01:10 -0400
+Received: from omta14.westchester.pa.mail.comcast.net ([76.96.62.60])
+	by qmta07.westchester.pa.mail.comcast.net with comcast
+	id ibUt1n0031HzFnQ57l19ty; Thu, 27 Mar 2014 21:01:09 +0000
+Received: from odin.tremily.us ([24.18.63.50])
+	by omta14.westchester.pa.mail.comcast.net with comcast
+	id il171n00k152l3L3al185e; Thu, 27 Mar 2014 21:01:09 +0000
+Received: by odin.tremily.us (Postfix, from userid 1000)
+	id 300BC10DDBCF; Thu, 27 Mar 2014 14:01:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
+	t=1395954067; bh=krDyIOrpE4KukVQZsozc8NWiX2cAwg7ghi78O0vj0gw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=iU/Qk2Pubsq/kxK7fQ1km2zCEr6fWPh7VOR+cUKR9Duour33sfB3VZbpICOdRp0+D
+	 1WhS8zL1RBUDsf4wnq46989VBQjOeWgbo3QATTPIki40N2+4QxLAV9OKzuifoAS38p
+	 WmEQhGdAz7yPCgoUlpBBmLeaJ35OsLFrJdH+XCcE=
 Content-Disposition: inline
 In-Reply-To: <xmqqwqffctyg.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
+ url=http://tremily.us/pubkey.txt
+User-Agent: Mutt/1.5.22 (2013-10-16)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+	s=q20140121; t=1395954069;
+	bh=IgJm6YdbHmEv0N2qiRA6DA+DFMSkR2w1CSBUryCOiOA=;
+	h=Received:Received:Received:Date:From:To:Subject:Message-ID:
+	 MIME-Version:Content-Type;
+	b=TdaPU8JFcT2W1QfvSLCWpCUFrIeysjj5oB5OnL+YFP91d3il/JXhxE6NJq1HNW3j0
+	 d7V0u70VtMAlrGWYibhYG7paY0QvbJ4/gqlDvTXH4VU5WZMjNK3xmdqLcaX5oNRyWe
+	 1zwwii+/E2O6sr3zIvirTULxCPif44jLw9BK/EZ3Z97pkXZUayNNCjconfhaxrfRKN
+	 9Szw2ux/PMTw1rFMSobeHhKvfzy9uXnVdGJxU8DH5lIqU8hjQX+SryC8zh1sk0zOBP
+	 2sy6UuPXeKA+GvxZjnJN0nW91UQ/0b1E1g9+RxxCpUUdWPeGvrzsKjx4g8Y9mRrXWW
+	 qrXUAkvrWih1w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245324>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245326>
+
+
+--R10gueRtU1pFqy+X
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+I'm breaking this off into a sub-thread, so it doesn't distract from
+the main issue.
 
 On Thu, Mar 27, 2014 at 12:39:03PM -0700, Junio C Hamano wrote:
-> "W. Trevor King" <wking@tremily.us> writes:
-> 
-> > On Thu, Mar 27, 2014 at 06:31:27PM +0100, Jens Lehmann wrote:
-> >> Am 27.03.2014 18:16, schrieb Junio C Hamano:
-> >> > Johan Herland <johan@herland.net> writes:
-> >> > 
-> >> >> I just found a failure to checkout a project with submodules where
-> >> >> there is no explicit submodule branch configuration, and the
-> >> >> submodules happen to not have a "master" branch:
-> >> >>
-> >> >>   git clone git://gitorious.org/qt/qt5.git qt5
-> >> >>   cd qt5
-> >> >>   git submodule init qtbase
-> >> >>   git submodule update
-> >> >>
-> >> >> In current master, the last command fails with the following output:
-> >> > 
-> >> > ... and with a bug-free system, what does it do instead?  Just clone
-> >> > 'qtbase' and make a detached-head checkout at the commit recorded in
-> >> > the superproject's tree, or something else?
-> >> 
-> >> After reverting 23d25e48f5ead73 on current master it clones 'qtbase'
-> >> nicely with a detached HEAD.
-> >
-> > Fixing this for initial update clone is pretty easy, we just need to
-> > unset start_point before calling module_clone if
-> > submodule.<name>.branch is not set. 
-> 
 > There is this bit for "update" in git-submodule.txt:
-> 
+>=20
 >   For updates that clone missing submodules, checkout-mode updates
 >   will create submodules with detached HEADs; all other modes will
 >   create submodules with a local branch named after
 >   submodule.<path>.branch.
-> 
+>=20
 >   [side note] Isn't that a typo of submodule.<name>.branch?
 
-Yep, thats is a typo. Trevor will you fix that as well? Or how should be
-do that? Since its just such a small change.
+Good catch.
 
-> So the proposed change is to make the part before semicolon true?
-> If we are not newly cloning (because we already have it), if the
-> submodule.<name>.branch is not set *OR* refers to a branch that does
-> not even exist, shouldn't we either (1) abort as an error, or (2) do
-> the same and detach?
+The transition from submodule.<path>.* to submodule.<name>.* happened
+in 73b0898d (Teach "git submodule add" the --name option, 2012-09-30),
+which landed in v1.8.1-rc0 on 2012-12-03.  The first
+submodule.<path>.branch reference landed a short time later in
+b9289227 (submodule add: If --branch is given, record it in
+=2Egitmodules, 2012-12-19), and I was probably just not aware of
+73b0898d.  The second submodule.<path>.branch reference landed in
+23d25e48 (submodule: explicit local branch creation in module_clone,
+2014-01-26), and is just a copy paste error.  Both should be updated
+to submodule.<name>.branch.
 
-I would expect "(1) abort as an error" since the user is not getting what
-he would expect.
+Cheers,
+Trevor
 
-> > However, that's just going to
-> > push remote branch ambiguity problems back to the --remote update
-> > functionality.  What should happen when submodule.<name>.branch is not
-> > set and you run a --remote update, which has used:
-> >
-> >     git rev-parse "${remote_name}/${branch}"
-> >
-> > since the submodule.<name>.branch setting was introduced in 06b1abb
-> > (submodule update: add --remote for submodule's upstream changes,
-> > 2012-12-19)?
-> 
-> Isn't --remote about following one specific branch the user who
-> issues that command has in mind?  If you as the end user did not
-> give any indication which branch you meant, e.g. by leaving the
-> submodule.<name>.branch empty, shouldn't that be diagnosed as an
-> error?
+--=20
+This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
+For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
 
-Well to simplify things there was this fallback to origin/master
-(similar to the master branch we create on init) since that is a branch
-which many projects have. E.g. for the users that share one central
-server and just directly commit, push and pull to/from master. They
-would have an easy way to start working in a submodule, by simply saying
---remote and then committing to master. At least that is what I
-imagine.
+--R10gueRtU1pFqy+X
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
 
-> > gitmodules(5) is pretty clear that 'submodule.<name>.branch' defaults
-> > to master (and not upstream's HEAD), do we want to adjust this at the
-> > same time?
-> 
-> That may be likely.  If the value set to a configuration variable
-> causes an established behaviour of a program change a lot, silently
-> defaulting that variable to something many people are expected to
-> have (e.g. 'master') would likely to cause a usability regression.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
 
-IMO this branch configuration should completely ignored in the default,
-non --remote, usage. Since we simply checkout a specific SHA1 in this
-case, that should be possible.
+iQIcBAEBAgAGBQJTNJGRAAoJEKKfehoaNkbtrOwQAKPlsY68JPCwDD4SKFsRL3v4
+aNLUDnWgX0Ui1LkLDfO14BxLTjoEqr4ocDpJgztGW/rmXqTqCyhnPZqcK2tSBKxh
+dhx4AijHu4VD3fvdqyNAKa2OjJl3zqytbV+EUEXIX/psbVJY734ziqnrc3X4+z0p
+nQxt3Qt9kBgOLZf/2flv3jSR9CW7K43KSkvDHvC6uV/ptrcmdZbeLwbTAHtfZ1qy
+TAs3DJU/TNiI1T6x9+UHc4HTo5pdjoeOlhcte+6uS8QTA1ErrU/1fjBcQMx1BcPM
+/XxLpv/1oj/L8hX1LgW4gUcUfXWMkuk5jt+1MTtIkCIvAmfH+PzN9qs5vMSqtBoR
+npgl1p3BjBKiuvQSlWbd+dAdmaOPz/7O/y/hI+Sfu9LhbvsQc6QKcvqHPNcx51Cq
+vjOEtJ2ObmO0HGDNIL1jqaTrYxZ+QG0xap9bNIAL8231V5U8feU9IlPUOp0i3479
+2Cx+pvlpGuau7F4MaSQltPDs/g9cIorzvCPUTATCAsuEvj9iw3sXpKP2DUnrcF1f
+UQUZmdqtzPzQ/d9Ld4gILADl16PGiabMUUT+g+etu/TDIvrJca35tFzeg+NRl93v
+mEl+KYWUoul30Ga9+ej0fGe4J2sVYOJYuehKqeHtyvWI8fxhZxjlIl123mUyeWFz
+h8oY8YqyzNUpy34A4Fcw
+=Ma6V
+-----END PGP SIGNATURE-----
 
-Cheers Heiko
+--R10gueRtU1pFqy+X--
