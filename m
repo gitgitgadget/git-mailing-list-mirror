@@ -1,85 +1,74 @@
-From: Johan Herland <johan@herland.net>
-Subject: Possible regression in master? (submodules without a "master" branch)
-Date: Thu, 27 Mar 2014 15:21:49 +0100
-Message-ID: <CALKQrgeRJRoyC-UV7J98U1qQfqEFr_H1sEfAWd0GbstZagUisw@mail.gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 7/8] ls-files: support --max-depth
+Date: Thu, 27 Mar 2014 21:36:08 +0700
+Message-ID: <CACsJy8ANjMd+jMmrXfAdNEdggwhmpPt0QsnvUKdsbscorkqwkw@mail.gmail.com>
+References: <1395310551-23201-1-git-send-email-pclouds@gmail.com>
+ <1395310551-23201-8-git-send-email-pclouds@gmail.com> <1457323768.788823.1395737758945.JavaMail.zimbra@imag.fr>
+ <CACsJy8Awu6oNOS-m5_DNh_HGeHKgcnowUY+iz4efo3s1HYycnQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"W. Trevor King" <wking@tremily.us>
-To: Git mailing list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Mar 27 15:22:01 2014
+Content-Transfer-Encoding: 8BIT
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Mar 27 15:36:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WTBBw-00067j-IU
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Mar 2014 15:22:00 +0100
+	id 1WTBQB-0007ES-Uu
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Mar 2014 15:36:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756855AbaC0OV5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Mar 2014 10:21:57 -0400
-Received: from locusts.copyleft.no ([188.94.218.116]:60322 "EHLO
-	mail.mailgateway.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755244AbaC0OVz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Mar 2014 10:21:55 -0400
-Received: from mail-pa0-f51.google.com ([209.85.220.51])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1WTBBp-000KCW-Fo
-	for git@vger.kernel.org; Thu, 27 Mar 2014 15:21:53 +0100
-Received: by mail-pa0-f51.google.com with SMTP id kq14so3550444pab.38
-        for <git@vger.kernel.org>; Thu, 27 Mar 2014 07:21:49 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=s9mhPuenSTE1xCEMKvs5bLSAOgp+MrChNTVRfQKlrRI=;
-        b=LMGQLoV0SesU4wKgAAl2HTbXRUJ6RpMbOyUX7uh+Ne+YmnFR1cEFXHQnCTvq+65yCK
-         TvYEP+S9epYIvu7c/zWXzsIDhihRXpv1QbT3fApzfMusUjQ8yyXoTITpv88+hMutNXNI
-         hPIKNal4y67NgkoiUkPpFvEpFBqMQxDv60yOrJ0j5XXHK1hNn1YhuTtShRwc2XNmg9OP
-         dz1Dh2Rc9pN59EpW7IJSywn9Fs4cc34N5OS/wk3izPcjYiXZciJwV6UBXWtiXs3mpYxQ
-         WEaCjzFJSZvAk7Lbu+VrON/Efv++HEDLifctDUMMbRKePG42pXJEwqaXt9ZricDEL58D
-         2XVg==
-X-Received: by 10.66.20.10 with SMTP id j10mr2113247pae.11.1395930109820; Thu,
- 27 Mar 2014 07:21:49 -0700 (PDT)
-Received: by 10.70.48.232 with HTTP; Thu, 27 Mar 2014 07:21:49 -0700 (PDT)
+	id S1755729AbaC0Ogk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Mar 2014 10:36:40 -0400
+Received: from mail-qc0-f181.google.com ([209.85.216.181]:53158 "EHLO
+	mail-qc0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755034AbaC0Ogj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Mar 2014 10:36:39 -0400
+Received: by mail-qc0-f181.google.com with SMTP id e9so4375892qcy.12
+        for <git@vger.kernel.org>; Thu, 27 Mar 2014 07:36:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=hxkEedYlgo7FJiAQWWpheOdAzQVFjGjSlYhXkfRD+4I=;
+        b=HEJtIMD4J3E5eEic9HUAcfqVnkujsQXE/IVrJtIsCHYOCcfoupuEsGbRAVXXLc5lT4
+         Gtiwo+LVoJPhh4Egbe4Riy7Z6PxiSO+piD8sgGUEs0roiYhCqc3vXOM08crxh9Bq2ruP
+         7ptahIPLzur5qqQ59W+ae8dz7hw4odeQZ6RUEXDbNRtJOoVnR8gjTzBp9g299bOS7AGT
+         nE/3OBepi37NePL8szpCuVAisSmNWJ00+AiHAoQT6kGs/p1HvG7/UUmfSROvLOcwlg9f
+         XZf4u+/cAFVKs6jaLiR2ThjhXpDULiMuu/Wrpu3ffurCTrO+jJCqlsJ0DyAQjksq9yDT
+         HnNA==
+X-Received: by 10.224.161.140 with SMTP id r12mr2591827qax.24.1395930998424;
+ Thu, 27 Mar 2014 07:36:38 -0700 (PDT)
+Received: by 10.96.103.166 with HTTP; Thu, 27 Mar 2014 07:36:08 -0700 (PDT)
+In-Reply-To: <CACsJy8Awu6oNOS-m5_DNh_HGeHKgcnowUY+iz4efo3s1HYycnQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245283>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245284>
 
-Hi,
+On Tue, Mar 25, 2014 at 6:15 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Tue, Mar 25, 2014 at 3:55 PM, Matthieu Moy
+> <matthieu.moy@grenoble-inp.fr> wrote:
+>> ----- Original Message -----
+>>> The use case in mind is --max-depth=0 to stop recursion. With this we can do
+>>>
+>>> git config --global alias.ls 'ls-files --column --color --max-depth=0'
+>>>
+>>> and have "git ls" with an output very similar to GNU ls.
+>>
+>> One big difference though: your "git ls" does not show directories. I understand that this is easier to implement, but from the user point of view it resulted in a "wtf" from me running "git ls" in a repository containing essentially directories, and seeing just a README file in the output.
+>
+> I was hoping you didn't notice :) It'll be more difficult but not impossible.
+>
+>> Ideally (for me), directories should be shown with a trailing / like "ls -F" does.
+>
+> I'd rather go with no trailing slash by default and add -F (which
+> seems to be more than just '/')
 
-I just found a failure to checkout a project with submodules where
-there is no explicit submodule branch configuration, and the
-submodules happen to not have a "master" branch:
-
-  git clone git://gitorious.org/qt/qt5.git qt5
-  cd qt5
-  git submodule init qtbase
-  git submodule update
-
-In current master, the last command fails with the following output:
-
-  Cloning into 'qtbase'...
-  remote: Counting objects: 267400, done.
-  remote: Compressing objects: 100% (61070/61070), done.
-  remote: Total 267400 (delta 210431), reused 258876 (delta 202642)
-  Receiving objects: 100% (267400/267400), 136.23 MiB | 6.73 MiB/s, done.
-  Resolving deltas: 100% (210431/210431), done.
-  Checking connectivity... done.
-  error: pathspec 'origin/master' did not match any file(s) known to git.
-  Unable to setup cloned submodule 'qtbase'
-
-Bisection points to 23d25e48f5ead73c9ce233986f90791abec9f1e8 (W.
-Trevor King: submodule: explicit local branch creation in
-module_clone). Looking at the patch, it seems to introduce an implicit
-assumption on the submodule origin having a "master" branch. Is this
-an intended change in behaviour?
-
-...Johan
-
+And we need a new indicator for submodules when -F is used. I think it
+should be different than '/'. I randomly picked '&' for now. Any
+suggestions welcome.
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Duy
