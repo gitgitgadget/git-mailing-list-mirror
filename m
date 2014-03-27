@@ -1,94 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Possible regression in master? (submodules without a "master" branch)
-Date: Thu, 27 Mar 2014 10:16:52 -0700
-Message-ID: <xmqqob0ref3v.fsf@gitster.dls.corp.google.com>
-References: <CALKQrgeRJRoyC-UV7J98U1qQfqEFr_H1sEfAWd0GbstZagUisw@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: Possible regression in master? (submodules without a "master"
+ branch)
+Date: Thu, 27 Mar 2014 18:23:17 +0100
+Message-ID: <53345E85.7070205@web.de>
+References: <CALKQrgeRJRoyC-UV7J98U1qQfqEFr_H1sEfAWd0GbstZagUisw@mail.gmail.com> <20140327155208.GM4008@odin.tremily.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: Git mailing list <git@vger.kernel.org>,
-	"W. Trevor King" <wking@tremily.us>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Thu Mar 27 18:17:05 2014
+	Junio C Hamano <gitster@pobox.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: "W. Trevor King" <wking@tremily.us>,
+	Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Thu Mar 27 18:24:08 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WTDvJ-0006rX-1l
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Mar 2014 18:17:01 +0100
+	id 1WTE2B-0003PS-FR
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Mar 2014 18:24:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756742AbaC0RQ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Mar 2014 13:16:56 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59207 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754873AbaC0RQz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Mar 2014 13:16:55 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0C17E76D5C;
-	Thu, 27 Mar 2014 13:16:55 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=BIafgfgxRUuZWEbxRT9p8ONuoZ0=; b=wJiNq5
-	osy1T+3WNzTXbBv+qNMQkRHTWohlR/GFUsErTDNB2IdMxawGT91B2QGjlLL7vqIo
-	/UhfRPnQwc2GPImz6ZDijjDptmJqH5n+2fb25vSKwBV2EKoyZzXLFYynQc69mcOX
-	8CNdU8X3mldEPNrHrZjmf3BQMgiNokWjIWoAU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cewkL7OGT0UcYMLeSBKH0ETIMwQszo0F
-	at2fB5pvXyERmI9vs9i+Z5lT82WMzvrJz7ODg7FntDUfO++2v398d1rg6/4zUD5M
-	kLN5stVjTqmOkWKIdjiNZXuU02y8niL1c4r39JX6Np3ywpGH0nNB9O3Ofz6WiSEe
-	mCSDRs1szMU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EC85976D5B;
-	Thu, 27 Mar 2014 13:16:54 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 50D9D76D5A;
-	Thu, 27 Mar 2014 13:16:54 -0400 (EDT)
-In-Reply-To: <CALKQrgeRJRoyC-UV7J98U1qQfqEFr_H1sEfAWd0GbstZagUisw@mail.gmail.com>
-	(Johan Herland's message of "Thu, 27 Mar 2014 15:21:49 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 97F4F0A0-B5D3-11E3-8525-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757202AbaC0RX6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Mar 2014 13:23:58 -0400
+Received: from mout.web.de ([212.227.15.3]:63949 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757195AbaC0RXy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Mar 2014 13:23:54 -0400
+Received: from [192.168.178.41] ([84.132.148.44]) by smtp.web.de (mrweb102)
+ with ESMTPSA (Nemesis) id 0MWB8f-1Wa2bh0cOH-00XNT0; Thu, 27 Mar 2014 18:23:28
+ +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
+In-Reply-To: <20140327155208.GM4008@odin.tremily.us>
+X-Enigmail-Version: 1.6
+X-Provags-ID: V03:K0:TT037r6SgeYy1g9wo+Ht7ZrYzD0aFOG6iCH+uGC8Bln/ihN2rX6
+ eO02W1Dh1FI5Itm6FNHyYfH9EL2GZHKM+D556W5MLWW73kYbrR+yydEBmd908ZsYsjCXnvJ
+ cpjLkrydjpW/3C1z8Gp0yUNzsKHVNCxosCuFPC0RhR8xyd42nHDJ3jtdIFHt83z9xyJTdqN
+ OHFATvNITzW4GBLyK2F4w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245295>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245296>
 
-Johan Herland <johan@herland.net> writes:
+Am 27.03.2014 16:52, schrieb W. Trevor King:
+> On Thu, Mar 27, 2014 at 03:21:49PM +0100, Johan Herland wrote:
+>> I just found a failure to checkout a project with submodules where
+>> there is no explicit submodule branch configuration, and the
+>> submodules happen to not have a "master" branch:
+> 
+> The docs say [1]:
+> 
+>   A remote branch name for tracking updates in the upstream submodule.
+>   If the option is not specified, it defaults to 'master'.
 
-> I just found a failure to checkout a project with submodules where
-> there is no explicit submodule branch configuration, and the
-> submodules happen to not have a "master" branch:
->
->   git clone git://gitorious.org/qt/qt5.git qt5
->   cd qt5
->   git submodule init qtbase
->   git submodule update
->
-> In current master, the last command fails with the following output:
+But the "branch" setting isn't configured for Qt, the .gitmodules
+file contains only this:
 
-... and with a bug-free system, what does it do instead?  Just clone
-'qtbase' and make a detached-head checkout at the commit recorded in
-the superproject's tree, or something else?
+[submodule "qtbase"]
+	path = qtbase
+	url = ../qtbase.git
+...
 
->   Cloning into 'qtbase'...
->   remote: Counting objects: 267400, done.
->   remote: Compressing objects: 100% (61070/61070), done.
->   remote: Total 267400 (delta 210431), reused 258876 (delta 202642)
->   Receiving objects: 100% (267400/267400), 136.23 MiB | 6.73 MiB/s, done.
->   Resolving deltas: 100% (210431/210431), done.
->   Checking connectivity... done.
->   error: pathspec 'origin/master' did not match any file(s) known to git.
->   Unable to setup cloned submodule 'qtbase'
->
-> Bisection points to 23d25e48f5ead73c9ce233986f90791abec9f1e8 (W.
-> Trevor King: submodule: explicit local branch creation in
-> module_clone). Looking at the patch, it seems to introduce an implicit
-> assumption on the submodule origin having a "master" branch. Is this
-> an intended change in behaviour?
+> which is what we do now.  Working around that to default to the
+> upstream submodule's HEAD is possible (you can just use --branch
+> HEAD), but I think it's easier to just explicitly specify your
+> preferred branch.
 
-If an existing set-up that was working in a sensible way is broken
-by a change that assumes something that should not be assumed, then
-that is a serious regression, I would have to say.
+That is *not* easier, as Johan did not have to do that before.
+
+I think your patch 23d25e48f5ead73c9ce233986f90791abec9f1e8 does
+not do what the commit message promised:
+
+    With this change, folks cloning submodules for the first time via:
+
+      $ git submodule update ...
+
+    will get a local branch instead of a detached HEAD, unless they are
+    using the default checkout-mode updates.
+
+And Qt uses the "default checkout-mode updates" and doesn't have
+"branch" configured either. So we are facing a serious regression
+here.
+
+> Cheers,
+> Trevor
+> 
+> [1]: submodule.<name>.branch in gitmodules(5)
+>      http://git-scm.com/docs/gitmodules.html
+> 
