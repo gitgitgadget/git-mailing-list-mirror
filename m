@@ -1,143 +1,86 @@
-From: "Jonas Bang" <email@jonasbang.dk>
-Subject: Git feature request: Option to force Git to abort a checkout if working directory is dirty (i.e. disregarding the check for conflicts)
-Date: Thu, 27 Mar 2014 17:15:33 +0100
-Message-ID: <004d01cf49d7$c8b9cd90$5a2d68b0$@jonasbang.dk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/3] test-lib: Document short options in t/README
+Date: Thu, 27 Mar 2014 09:35:43 -0700
+Message-ID: <xmqqd2h7fvkw.fsf@gitster.dls.corp.google.com>
+References: <1395650987-5960-1-git-send-email-ilya.bobyr@gmail.com>
+	<1395650987-5960-2-git-send-email-ilya.bobyr@gmail.com>
+	<5330196A.3030101@ramsay1.demon.co.uk> <53306910.3090807@gmail.com>
+	<xmqqior2mbtx.fsf@gitster.dls.corp.google.com>
+	<5333F1E6.5060009@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Mar 27 17:25:26 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>, git@vger.kernel.org,
+	Thomas Rast <trast@inf.ethz.ch>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Ilya Bobyr <ilya.bobyr@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 27 17:36:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WTD7O-0004UU-Bu
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Mar 2014 17:25:26 +0100
+	id 1WTDHl-0003bm-1x
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Mar 2014 17:36:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756955AbaC0QZT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Mar 2014 12:25:19 -0400
-Received: from mail6.surf-town.net ([212.97.132.46]:51681 "EHLO
-	mailgw13.surf-town.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756953AbaC0QZQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Mar 2014 12:25:16 -0400
-X-Greylist: delayed 571 seconds by postgrey-1.27 at vger.kernel.org; Thu, 27 Mar 2014 12:25:15 EDT
-Received: by mailgw13.surf-town.net (Postfix, from userid 65534)
-	id ECBFA40293; Thu, 27 Mar 2014 17:15:40 +0100 (CET)
-Received: from localhost (unknown [127.0.0.1])
-	by mailgw13.surf-town.net (Postfix) with ESMTP id D66E24025D
-	for <git@vger.kernel.org>; Thu, 27 Mar 2014 17:15:40 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at mailgw13.surf-town.net
-X-Spam-Flag: NO
-X-Spam-Score: -1.44
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.44 tagged_above=-999 required=7
-	tests=[ALL_TRUSTED=-1.44] autolearn=disabled
-Received: from mailgw13.surf-town.net ([127.0.0.1])
-	by localhost (mailgw13.surf-town.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 4GMZTXDEr7y1 for <git@vger.kernel.org>;
-	Thu, 27 Mar 2014 17:15:34 +0100 (CET)
-Received: from Mainframe (unknown [5.103.38.58])
-	(Authenticated sender: email@jonasbang.dk)
-	by mailgw13.surf-town.net (Postfix) with ESMTPA id E8D0740299
-	for <git@vger.kernel.org>; Thu, 27 Mar 2014 17:15:32 +0100 (CET)
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: Ac9J17qOWDGONsycSNCfLslGDF24Pg==
-Content-Language: da
+	id S1755175AbaC0QgC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Mar 2014 12:36:02 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63773 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754761AbaC0QgA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Mar 2014 12:36:00 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 27F6B76E38;
+	Thu, 27 Mar 2014 12:36:00 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=MVVNRyUHdyD8vNG9WevP5VRLxVw=; b=Kb4J04
+	kjdnr6GLuW/iTMBUTllypvUzjkKiVMxQaRzWQ0GqqEZOYmXDI2G51S1DXzkMjf2I
+	a688FaZD7yHbG5wfYF9mcQEOE6DB0wXHxOjUbPlzmD5d3AD3yrjQh28VHM2Ce5Mo
+	o4vhYGOIYV8sDqY3AomYuem8X9yaYglzHQpQo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=IlbC1K762W1vF7Xjk6ylaywV0xOC68RA
+	IHKQri5WYnE8QWLwsBLOvOFvM4wVqfv4MLiI3/oKNeA9deevBxlf9pgISYKpiz54
+	1GTJ3aw6/odK97YKb7UUtl/GRYLSDS2e2pDIG4C9G8fqEQOHq9Hs874aQFzqnJ3w
+	rn1Xno0TOx8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 15D8676E35;
+	Thu, 27 Mar 2014 12:36:00 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 547F676DE5;
+	Thu, 27 Mar 2014 12:35:45 -0400 (EDT)
+In-Reply-To: <5333F1E6.5060009@gmail.com> (Ilya Bobyr's message of "Thu, 27
+	Mar 2014 02:39:50 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: D85442DC-B5CD-11E3-8D9E-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245290>
 
-Hi Git developers,=20
+Ilya Bobyr <ilya.bobyr@gmail.com> writes:
 
-This is my first Git feature request, I hope it won=92t get me hanged o=
-n the
-gallows ;o)=20
+> If there is decision on how shortening should work for all the
+> options, maybe I could add a paragraph on that and make existing
+> options more consistent.
 
-*Git feature request:*
-Add an option to Git config to configure the criteria for when a "git
-checkout" should abort.=20
+We should strive to make the following from gitcli.txt apply
+throughout the system:
 
-*Name proposal and options:*
-checkout.clean false <default>=20
-checkout.clean true=20
+ * many commands allow a long option `--option` to be abbreviated
+   only to their unique prefix (e.g. if there is no other option
+   whose name begins with `opt`, you may be able to spell `--opt` to
+   invoke the `--option` flag), but you should fully spell them out
+   when writing your scripts; later versions of Git may introduce a
+   new option whose name shares the same prefix, e.g. `--optimize`,
+   to make a short prefix that used to be unique no longer unique.
 
-*False behavior:*
-As is:=20
-When doing a checkout then Git will check if your working directory is
-dirty, and if so check if the checkout will result in any conflicts, an=
-d if
-so abort the checkout with a message:=20
+> If so, '--valgrind' becomes impossible to shorten because there
+> is '--valgrind-only' that is a separate option.  Same for
+> '--verbose'  and '--verbose-only'.
 
-$ git checkout some_branch
-error: Your local changes to the following files would be overwritten b=
-y
-checkout:
-=A0 =A0 =A0 =A0some_file
-Please, commit your changes or stash them before you can switch branche=
-s.
-Aborting=20
-
-If no conflicts then:=20
-
-$ git checkout some_branch
-M =A0 =A0 =A0 some_file
-M =A0 =A0 =A0 some_other_file
-Switched to branch 'some_branch'=20
-
-I.e. it will only abort if there are conflicts.=20
-
-*True behavior:*
-When doing a checkout then Git will check if your working directory is =
-dirty
-(checking for both modified and added untracked files), and if so abort=
- the
-checkout with a message:=20
-
-$ git checkout some_branch
-error: Your working directory is not clean.
-Please, commit your changes or stash them before you can switch branche=
-s.
-Aborting=20
-
-I.e. it will abort if working directory is dirty (checking for both mod=
-ified
-and added untracked files).=20
-I.e. you can only do checkout if you get "nothing to commit, working
-directory clean" when running "git status" (ignoring ignored files thou=
-gh).=20
-
-*Usecase in short:*
-If you use an IDE (like e.g. Eclipse) and do a checkout
-of=A0'some_branch'=A0with a dirty working directory which will not resu=
-lt in any
-conflicts, then you will not be nicely notified (as you would in Git Ba=
-sh)
-that the changes you were working on in=A0'previous_branch'=A0are still=
- present
-in your working directory after changing to=A0'some_branch'. I.e. when =
-you
-compile your code your uncommitted changes from=A0'previous_branch'=A0a=
-re still
-present in your working directory on=A0'some_branch'.=20
-
-As I see it Git is extremely strong in context switching (i.e. working =
-on
-multiple issues on multiple branches), and I could see a use for a sett=
-ing
-which setup a strict check for if working directory is not clean
-(disregarding the check for conflicts). This would mean that your chang=
-es
-created while on branch #1 will not be carried over when changing to br=
-anch
-#2, i.e. you will work strictly context based always.=20
-
-*Usecase also described here:*
-http://stackoverflow.com/questions/22609566/how-to-force-git-to-abort-a=
--chec
-kout-if-working-directory-is-not-clean-i-e-dis=20
-
-Br,=20
-Jonas Bang Christensen
+Correct.  If you really cared, --valgrind={yes,no,only} would be (or
+have been) a better possibility, though.
