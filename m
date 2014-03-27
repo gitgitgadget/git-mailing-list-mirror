@@ -1,59 +1,145 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 00/10] [RFC] pickaxe for function names
-Date: Thu, 27 Mar 2014 15:03:14 -0400
-Message-ID: <20140327190314.GB28668@sigill.intra.peff.net>
-References: <1395946256-67124-1-git-send-email-dad-bgl@mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Possible regression in master? (submodules without a "master" branch)
+Date: Thu, 27 Mar 2014 12:39:03 -0700
+Message-ID: <xmqqwqffctyg.fsf@gitster.dls.corp.google.com>
+References: <CALKQrgeRJRoyC-UV7J98U1qQfqEFr_H1sEfAWd0GbstZagUisw@mail.gmail.com>
+	<xmqqob0ref3v.fsf@gitster.dls.corp.google.com>
+	<5334606F.5010109@web.de> <20140327185405.GS4008@odin.tremily.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, l.s.r@web.de
-To: "David A. Dalrymple (and Bhushan G. Lodha)" <dad-bgl@mit.edu>
-X-From: git-owner@vger.kernel.org Thu Mar 27 20:03:23 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Johan Herland <johan@herland.net>,
+	Git mailing list <git@vger.kernel.org>
+To: "W. Trevor King" <wking@tremily.us>
+X-From: git-owner@vger.kernel.org Thu Mar 27 20:39:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WTFaE-0004ai-KO
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Mar 2014 20:03:22 +0100
+	id 1WTG8z-00051Z-F4
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Mar 2014 20:39:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757249AbaC0TDR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Mar 2014 15:03:17 -0400
-Received: from cloud.peff.net ([50.56.180.127]:48668 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757177AbaC0TDR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Mar 2014 15:03:17 -0400
-Received: (qmail 25656 invoked by uid 102); 27 Mar 2014 19:03:16 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 27 Mar 2014 14:03:16 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 27 Mar 2014 15:03:14 -0400
-Content-Disposition: inline
-In-Reply-To: <1395946256-67124-1-git-send-email-dad-bgl@mit.edu>
+	id S1755170AbaC0TjL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Mar 2014 15:39:11 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46562 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754643AbaC0TjH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Mar 2014 15:39:07 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D58E877CC7;
+	Thu, 27 Mar 2014 15:39:06 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=wpkdG7Hel9K93YDxDnEiyL1OxDE=; b=BJB8dE
+	6EDYVrhWQZBha9+31wIka1YhwXOkk7JwpITgGh/r7l7ybCcVSo57snerE3ZEswLG
+	/KuXgl2oadLwoUH2lhMdqu0XE68ZjsSEDqe309qK6V41SRLiaa8N9JtJ9Zvh/p1T
+	rEYW1CBdYAOEWZauwu7EZ6hGs4STqxe3Yx9KY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=f4CV9JJLQizQE0SSFlImvN6H5Q4f4ukP
+	wepQbzVWs57m7C+FJ08BKlaZ5JINR6yy7n0wBBzhy6Xm/YQJCxMC3MYa3LpcAJeP
+	7ES/FF1hES34QlJkomp+USgdMST9t8pw25+YyVF8bKxBkCP2dOdT/Y3xfTWkRqIs
+	8GjNz8x6fNA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C497877CC6;
+	Thu, 27 Mar 2014 15:39:06 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 660A777CC3;
+	Thu, 27 Mar 2014 15:39:05 -0400 (EDT)
+In-Reply-To: <20140327185405.GS4008@odin.tremily.us> (W. Trevor King's message
+	of "Thu, 27 Mar 2014 11:54:05 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 74E22E0C-B5E7-11E3-81B7-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245320>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245321>
 
-On Thu, Mar 27, 2014 at 02:50:46PM -0400, David A. Dalrymple (and Bhushan G. Lodha) wrote:
+"W. Trevor King" <wking@tremily.us> writes:
 
-> This series introduces a --function-name=<pattern> option for git-log, intended
-> to search for commits which touch a function matching a certain pattern (a
-> feature we've seen requested and are interested in using ourselves).
+> On Thu, Mar 27, 2014 at 06:31:27PM +0100, Jens Lehmann wrote:
+>> Am 27.03.2014 18:16, schrieb Junio C Hamano:
+>> > Johan Herland <johan@herland.net> writes:
+>> > 
+>> >> I just found a failure to checkout a project with submodules where
+>> >> there is no explicit submodule branch configuration, and the
+>> >> submodules happen to not have a "master" branch:
+>> >>
+>> >>   git clone git://gitorious.org/qt/qt5.git qt5
+>> >>   cd qt5
+>> >>   git submodule init qtbase
+>> >>   git submodule update
+>> >>
+>> >> In current master, the last command fails with the following output:
+>> > 
+>> > ... and with a bug-free system, what does it do instead?  Just clone
+>> > 'qtbase' and make a detached-head checkout at the commit recorded in
+>> > the superproject's tree, or something else?
+>> 
+>> After reverting 23d25e48f5ead73 on current master it clones 'qtbase'
+>> nicely with a detached HEAD.
+>
+> Fixing this for initial update clone is pretty easy, we just need to
+> unset start_point before calling module_clone if
+> submodule.<name>.branch is not set. 
 
-How does your feature compare with the line-level history viewer? E.g.:
+There is this bit for "update" in git-submodule.txt:
 
-  git log -L:myfunc:foo.c
+  For updates that clone missing submodules, checkout-mode updates
+  will create submodules with detached HEADs; all other modes will
+  create submodules with a local branch named after
+  submodule.<path>.branch.
 
-I guess by being part of pickaxe, it can be used to generally select
-commits (whereas "-L" is about drilling down a particular set of lines,
-so something like --full-diff would not work).
+  [side note] Isn't that a typo of submodule.<name>.branch?
 
-But "-L" can do many things that pickaxe can't. It is not just about
-finding lines touched within a pattern, but uses the pattern to
-determine an initial set of lines, and then recursively "blames" those
-lines going back through history. So how you specify the pattern is more
-flexible (you can give any line range, for example), and it should be
-able to cross boundaries like function renames.
+So the proposed change is to make the part before semicolon true?
+If we are not newly cloning (because we already have it), if the
+submodule.<name>.branch is not set *OR* refers to a branch that does
+not even exist, shouldn't we either (1) abort as an error, or (2) do
+the same and detach?
 
--Peff
+> However, that's just going to
+> push remote branch ambiguity problems back to the --remote update
+> functionality.  What should happen when submodule.<name>.branch is not
+> set and you run a --remote update, which has used:
+>
+>     git rev-parse "${remote_name}/${branch}"
+>
+> since the submodule.<name>.branch setting was introduced in 06b1abb
+> (submodule update: add --remote for submodule's upstream changes,
+> 2012-12-19)?
+
+Isn't --remote about following one specific branch the user who
+issues that command has in mind?  If you as the end user did not
+give any indication which branch you meant, e.g. by leaving the
+submodule.<name>.branch empty, shouldn't that be diagnosed as an
+error?
+
+> gitmodules(5) is pretty clear that 'submodule.<name>.branch' defaults
+> to master (and not upstream's HEAD), do we want to adjust this at the
+> same time?
+
+That may be likely.  If the value set to a configuration variable
+causes an established behaviour of a program change a lot, silently
+defaulting that variable to something many people are expected to
+have (e.g. 'master') would likely to cause a usability regression.
+
+>> > If an existing set-up that was working in a sensible way is broken
+>> > by a change that assumes something that should not be assumed,
+>> > then that is a serious regression, I would have to say.
+>> 
+>> Yes, especially as it promised to not change this use case.
+>
+> Sorry.  A side effect of relying too much on our existing
+> documentation and not enough on testing actual use cases.  I can work
+> up some non-master submodule tests to go with the fix.
+
+I was wondering if we need to revert the merge with that
+branch out of 'master', or submodule folks can work on a set of
+fixes to apply on top.
+
+Will wait to see how it goes.  Thanks.
