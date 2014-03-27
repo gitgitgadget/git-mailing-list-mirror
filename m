@@ -1,100 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v8 03/12] Move lower case functions into wrapper.c
-Date: Thu, 27 Mar 2014 15:47:01 -0700
-Message-ID: <xmqqha6jcl96.fsf@gitster.dls.corp.google.com>
-References: <20140326215858.11352.89243.chriscool@tuxfamily.org>
-	<20140326221531.11352.86408.chriscool@tuxfamily.org>
-	<xmqqppl8ftjd.fsf@gitster.dls.corp.google.com>
-	<20140327.084745.2069840957131666658.chriscool@tuxfamily.org>
-	<xmqq4n2jfva5.fsf@gitster.dls.corp.google.com>
-	<xmqqlhvvcmnj.fsf@gitster.dls.corp.google.com>
-	<20140327223406.GA32434@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] t4212: handle systems with post-apocalyptic gmtime
+Date: Thu, 27 Mar 2014 18:48:38 -0400
+Message-ID: <20140327224837.GB32434@sigill.intra.peff.net>
+References: <20140224074905.GE9969@sigill.intra.peff.net>
+ <20140326110559.GA32625@hashpling.org>
+ <20140326182103.GB7087@sigill.intra.peff.net>
+ <20140326185153.GA12912@sigill.intra.peff.net>
+ <xmqqr45oixa6.fsf@gitster.dls.corp.google.com>
+ <20140326192536.GA13989@sigill.intra.peff.net>
+ <20140326193359.GA14105@sigill.intra.peff.net>
+ <20140326212227.GC6991@hashpling.org>
+ <20140326215741.GA17716@sigill.intra.peff.net>
+ <20140326224616.GA9454@hashpling.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org,
-	johan@herland.net, josh@joshtriplett.org, tr@thomasrast.ch,
-	mhagger@alum.mit.edu, dan.carpenter@oracle.com, greg@kroah.com,
-	sunshine@sunshineco.com, ramsay@ramsay1.demon.co.uk
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Mar 27 23:47:43 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Charles Bailey <cbailey32@bloomberg.net>
+X-From: git-owner@vger.kernel.org Thu Mar 27 23:48:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WTJ5K-0007K1-Mm
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Mar 2014 23:47:43 +0100
+	id 1WTJ6K-0007xw-Ey
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Mar 2014 23:48:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757348AbaC0WrK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Mar 2014 18:47:10 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48777 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756879AbaC0WrG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Mar 2014 18:47:06 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 153FC781E7;
-	Thu, 27 Mar 2014 18:47:05 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=MQkAUFmFffr1zl+1/F9Tza4Fe08=; b=sTMQEE
-	XmHum0a2Vp2vCVz6vme9+BbU+Z5FE7TMHp9obm5hxu4vbap4yyPOzshXX27YQX8l
-	nUgidJdasm4PFYz5O/R4Y/y4MASBFRT8E7waiF8LIB9hNsOLbFBFXhRq6iKoRFsC
-	jLkGqrgK6uxKb7OedjTpz1x1Txc8JsFUNsTh0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NdQxQfrR1ffW9eKxTzA5PmH4+8jBvbEo
-	X43cvLhra4r3zX8bxAmecM6yLAIvsQyLfCOisHOpZ58OPS4J7QbPOYAMFBgu40jV
-	0dP/NyvUHiXmcfkwELcRLnDa+rC3rKJ9lAVrR6g9fSU9eapKAkctztHwKQos2bj1
-	NSF9wlUiJ2I=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EED30781E6;
-	Thu, 27 Mar 2014 18:47:04 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 12D00781E5;
-	Thu, 27 Mar 2014 18:47:04 -0400 (EDT)
-In-Reply-To: <20140327223406.GA32434@sigill.intra.peff.net> (Jeff King's
-	message of "Thu, 27 Mar 2014 18:34:06 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: B78821DE-B601-11E3-85FA-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757138AbaC0Wsk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Mar 2014 18:48:40 -0400
+Received: from cloud.peff.net ([50.56.180.127]:48807 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755487AbaC0Wsj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Mar 2014 18:48:39 -0400
+Received: (qmail 4347 invoked by uid 102); 27 Mar 2014 22:48:40 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 27 Mar 2014 17:48:39 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 27 Mar 2014 18:48:38 -0400
+Content-Disposition: inline
+In-Reply-To: <20140326224616.GA9454@hashpling.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245332>
 
-Jeff King <peff@peff.net> writes:
+On Wed, Mar 26, 2014 at 10:46:16PM +0000, Charles Bailey wrote:
 
-> All bool config values allow "tRuE".
+> On Wed, Mar 26, 2014 at 05:57:41PM -0400, Jeff King wrote:
+> > Hmm, so the year you got is actually: 1623969404. That still seems off
+> > to me by a factor 20. I don't know if this is really worth digging into
+> > that much further, but I wonder what you would get for timestamps of:
+> > 
+> >   99999999999999999
+> >   9999999999999999
+> >   999999999999999
+> >   etc.
+> > 
+> 
+> AIX goes negative at about the same time Linux and Solaris segfault:
+> 
+> 9999999 Sun Apr 26 10:46:39 1970 -0700
+> 99999999 Sat Mar 3 02:46:39 1973 -0700
+> 999999999 Sat Sep 8 18:46:39 2001 -0700
+> 9999999999 Sat Nov 20 10:46:39 2286 -0700
+> 99999999999 Wed Nov 16 02:46:39 5138 -0700
+> 999999999999 Thu Sep 26 18:46:39 33658 -0700
+> 9999999999999 Sun May 20 10:46:39 318857 -0700
+> 99999999999999 Sat Nov 7 02:46:39 3170843 -0700
+> 999999999999999 Sat Jul 4 18:46:39 31690708 -0700
+> 9999999999999999 Sat Jan 25 10:46:39 316889355 -0700
+> 99999999999999999 Wed Sep 6 02:46:39 -1126091476 -0700
+> 999999999999999999 Thu Oct 24 18:46:39 1623969404 -0700
 
-I was expecting somebody will bring it up, but think about it.  Bool
-is a very special case.  Even among CS folks, depending on your
-background, true may be True may be TRUE may be 1.
+Thanks. Given the value where it fails, it kind of looks like there is
+some signed 32-bit value at work (~300 million years is OK, but 10 times
+that, rather than yielding ~3 billion, gets us -1 billion). Perhaps
+tm.tm_year is 32-bit.
 
-Conflating it with some random enum does not make a good argument.
+So what do we want to do? I think the options are:
 
-> Ones that take "auto" often use
-> strcasecmp (e.g., diff.*.binary). "blame.date" and "help.format" choose
-> from a fixed set of tokens, but use strcmp.
+  1. Try to guess when we have a bogus timestamp value with an arbitrary
+     cutoff like "greater than 1 million years from now" (and enforce it
+     via time_t seconds, and avoid gmtime entirely). That is made-up and
+     arbitrary, but it also is sufficiently far that it won't ever
+     matter, and sufficiently close that any gmtime should behave
+     sensibly with it.
 
-I would say that the latter is the right thing to do.
+  2. Accept that we can't guess at every broken gmtime's output, and
+     just loosen the test to make sure we don't segfault.
 
-> In general I do not see any reason _not_ to use strcasecmp for config
-> values that are matching a fixed set. It's friendlier to the user,...
-
-Actually, I think it ends up being hostile to the users to accept
-random cases without a good reason.  If you see two trailer elements
-whose where are specified as "after" and "AFTER" in somebody's
-configuration file, wouldn't that give a wrong impression that a new
-line with the latter somehow has a stronger desire to come later
-than the former?
-
-If you consistently take only the fixed strings, you do not have to
-worry about many people writing the same things in different ways,
-confusing each other.
-
-I would however fully agree with you that using strcasecmp() would
-be the cleanest when reading and maintaining the code **IF** we want
-to accept values in random case, but I do not agree that accepting
-random cases is a good thing, so...
+-Peff
