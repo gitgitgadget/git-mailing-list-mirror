@@ -1,147 +1,176 @@
-From: Kirill Smelkov <kirr@navytux.spb.ru>
-Subject: Re: [PATCH v2 14/19] tree-diff: rework diff_tree interface to be
- sha1 based
-Date: Thu, 27 Mar 2014 23:43:00 +0400
-Organization: NAVYTUX.SPB.RU
-Message-ID: <20140327194300.GA5510@mini.zxlink>
-References: <cover.1393257006.git.kirr@mns.spb.ru>
- <0b82e2de0edee4a590e7b4165c65938aef7090f5.1393257006.git.kirr@mns.spb.ru>
- <xmqqa9cfp9d5.fsf@gitster.dls.corp.google.com>
- <20140325092215.GB3777@mini.zxlink>
- <xmqq4n2mmarr.fsf@gitster.dls.corp.google.com>
- <20140326195201.GB16002@mini.zxlink>
- <xmqq1txoiqzj.fsf@gitster.dls.corp.google.com>
- <20140327142438.GE17333@mini.zxlink>
- <xmqq1txneavo.fsf@gitster.dls.corp.google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] gitweb: gpg signature status indication for commits
+Date: Thu, 27 Mar 2014 16:12:48 -0400
+Message-ID: <CAPig+cR0_7c8Km3JP_282ENGSa+4nOA=-xi2=V3DoQhTz7kNwA@mail.gmail.com>
+References: <1395932180-19454-1-git-send-email-victor.kartashov@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Stefan Beller <stefanbeller@googlemail.com>, kirr@mns.spb.ru,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Mar 27 20:39:53 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>
+To: Victor Kartashov <victor.kartashov@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 27 21:12:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WTG9Y-0005Tk-4F
-	for gcvg-git-2@plane.gmane.org; Thu, 27 Mar 2014 20:39:52 +0100
+	id 1WTGfY-0003rk-8j
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Mar 2014 21:12:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755359AbaC0Tjr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Mar 2014 15:39:47 -0400
-Received: from forward6l.mail.yandex.net ([84.201.143.139]:58784 "EHLO
-	forward6l.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754902AbaC0Tjp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Mar 2014 15:39:45 -0400
-Received: from smtp3o.mail.yandex.net (smtp3o.mail.yandex.net [37.140.190.28])
-	by forward6l.mail.yandex.net (Yandex) with ESMTP id B29BA14E0E78;
-	Thu, 27 Mar 2014 23:39:42 +0400 (MSK)
-Received: from smtp3o.mail.yandex.net (localhost [127.0.0.1])
-	by smtp3o.mail.yandex.net (Yandex) with ESMTP id 2A7301E0FDA;
-	Thu, 27 Mar 2014 23:39:42 +0400 (MSK)
-Received: from unknown (unknown [93.185.17.156])
-	by smtp3o.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id 3u6cLRPfUm-dbbOJ0Dw;
-	Thu, 27 Mar 2014 23:39:40 +0400
-	(using TLSv1.2 with cipher AES256-GCM-SHA384 (256/256 bits))
-	(Client certificate not present)
-X-Yandex-Uniq: e5e10c87-505a-4957-a8ab-3b8ac4e450a3
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=navytux.spb.ru; s=mail;
-	t=1395949181; bh=DyP1REaV4YXkjt935gUeTuU7dcEMDIY+ccJEwgQXx+M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To:Organization:
-	 User-Agent;
-	b=nJXwX8wsvEjPoo8cP1JoAswlYOPpgtlFOFUiH81dpZ37J3tsrPziVZ/iPi1SAaF2T
-	 XlMp4Mzx6gWFLAE430nXWVKsSLtTWO04sF/PQYl4cQZ0YLYBrkawtICc5ZmkW9pkMm
-	 YsmkSPnwKe9wAQxlMypr57yanZCDb253vTxCt2Fk=
-Authentication-Results: smtp3o.mail.yandex.net; dkim=pass header.i=@navytux.spb.ru
-Received: from kirr by mini.zxlink with local (Exim 4.82)
-	(envelope-from <kirr@mini.zxlink>)
-	id 1WTGCa-0001Zt-TF; Thu, 27 Mar 2014 23:43:00 +0400
-Content-Disposition: inline
-In-Reply-To: <xmqq1txneavo.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1757050AbaC0UMu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Mar 2014 16:12:50 -0400
+Received: from mail-yh0-f51.google.com ([209.85.213.51]:63836 "EHLO
+	mail-yh0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756679AbaC0UMt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Mar 2014 16:12:49 -0400
+Received: by mail-yh0-f51.google.com with SMTP id f10so4111446yha.24
+        for <git@vger.kernel.org>; Thu, 27 Mar 2014 13:12:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=tBjjLw5ArAZMN70VR/6sr76jOta4iB8GiI1Kf/DVNxY=;
+        b=uejYEZ1mn6uViiBpSPpyQaqOmYmoWD11bBlM8aGIiH9yFPvpvq+FCpZfzAu9tIrVwW
+         z594w8RyQ2cvmpkbdOrOQv+XXhWVDmKz5qZ7SmDMLrbkJtwg4DycDNGSbjStpIuDLO1c
+         7yXkvIDwvJJwGt0iP6SycUJW5vToFLez+bO0BV1VL1BIvBNCHaCZ5a6qkEdAPdbZUgrI
+         lx4kudLFx338JUHIzpXFH+7rkCUISC3L2hPo/Utgbm3jwVjJYHjdPBvRESKCF3DcNXk1
+         xIbtFl/lLrZU4ZBCKkDvgTJ0Et+go0GqUdFnsXqI3xv8P+4jV4XqmVSM76TY2wZOmhLB
+         Wjrg==
+X-Received: by 10.236.132.48 with SMTP id n36mr3439266yhi.149.1395951168410;
+ Thu, 27 Mar 2014 13:12:48 -0700 (PDT)
+Received: by 10.170.180.134 with HTTP; Thu, 27 Mar 2014 13:12:48 -0700 (PDT)
+In-Reply-To: <1395932180-19454-1-git-send-email-victor.kartashov@gmail.com>
+X-Google-Sender-Auth: APnrRuuAvzg3e809LoxJ5ftNvVY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245323>
 
-+stefanbeller
+On Thu, Mar 27, 2014 at 10:56 AM, Victor Kartashov
+<victor.kartashov@gmail.com> wrote:
+> shows gpg signature (if any) for commit message in gitweb
+> in case of successfully verifying the signature highlights it with green
 
-On Thu, Mar 27, 2014 at 11:48:11AM -0700, Junio C Hamano wrote:
-> Kirill Smelkov <kirr@navytux.spb.ru> writes:
-> 
-> > (please keep author email)
-> > ---- 8< ----
-> > From: Kirill Smelkov <kirr@mns.spb.ru>
-> > Date: Mon, 24 Feb 2014 20:21:46 +0400
-> > Subject: [PATCH v3a] tree-diff: rework diff_tree interface to be sha1 based
-> 
-> "git am -c" will discard everything above the scissors and then
-> start parsing the in-body headers from there, so the above From:
-> will be used.
+Write in imperative mood: "Show gpg ... highlight it..."
 
-Thanks.
+As a corollary, would it be meaningful to highlight a bad signature with red?
 
-> But you have a few entries in .mailmap; do you want to update them
-> as well?
+> Signed-off-by: Victor Kartashov <victor.kartashov@gmail.com>
+> ---
+>  gitweb/gitweb.perl       | 33 ++++++++++++++++++++++++++-------
+>  gitweb/static/gitweb.css |  5 +++++
+>  2 files changed, 31 insertions(+), 7 deletions(-)
+>
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index 79057b7..0b41392 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -3430,8 +3430,9 @@ sub parse_commit_text {
+>         my ($commit_text, $withparents) = @_;
+>         my @commit_lines = split '\n', $commit_text;
+>         my %co;
+> +       my @signature = ();
+>
+> -       pop @commit_lines; # Remove '\0'
+> +       pop @commit_lines if ($commit_lines[-1] eq "\0"); # Remove '\0'
 
-When Stefan Beller was contacting me on emails, if I recall correctly, I
-told him all those kirr@... entries are mine, but the one this patch is
-authored with indicates that something was done at work, and I'd prefer to
-acknowledge that. So maybe
+What is this change about? Is it related to your gpg change or something else?
 
----- 8< ----
-From: Kirill Smelkov <kirr@navytux.spb.ru>
-Date: Thu, 27 Mar 2014 23:32:14 +0400
-Subject: [PATCH] .mailmap: Separate Kirill Smelkov personal and work addresses
+>         if (! @commit_lines) {
+>                 return;
+> @@ -3469,6 +3470,10 @@ sub parse_commit_text {
+>                                 $co{'committer_name'} = $co{'committer'};
+>                         }
+>                 }
+> +               elsif ($line =~ /^gpg: /)
 
-The address kirr@mns.spb.ru indicates that a patch was done at work and
-I'd like to acknowledge that.
+Inconsistent 'elsif' placement. (Cuddle it with the close-brace.)
 
-The address kirr@navytux.spb.ru is my personal email and indicates that
-a contribution is done completely on my own time and resources.
+> +               {
 
-kirr@landau.phys.spbu.ru is old university account which no longer works
-(sigh, to much spam "because of me" on the server) and maps to
-kirr@navytux.spb.ru which should be considered as primary.
+Inconsistent open-brace placement.
 
-Signed-off-by: Kirill Smelkov <kirr@navytux.spb.ru>
----
- .mailmap | 1 -
- 1 file changed, 1 deletion(-)
+> +                       push @signature, $line;
+> +               }
+>         }
+>         if (!defined $co{'tree'}) {
+>                 return;
+> @@ -3508,6 +3513,11 @@ sub parse_commit_text {
+>         foreach my $line (@commit_lines) {
+>                 $line =~ s/^    //;
+>         }
+> +       push(@commit_lines, "") if(scalar(@signature) > 0);
 
-diff --git a/.mailmap b/.mailmap
-index 11057cb..0be5e02 100644
---- a/.mailmap
-+++ b/.mailmap
-@@ -117,7 +117,6 @@ Keith Cascio <keith@CS.UCLA.EDU> <keith@cs.ucla.edu>
- Kent Engstrom <kent@lysator.liu.se>
- Kevin Leung <kevinlsk@gmail.com>
- Kirill Smelkov <kirr@navytux.spb.ru> <kirr@landau.phys.spbu.ru>
--Kirill Smelkov <kirr@navytux.spb.ru> <kirr@mns.spb.ru>
- Knut Franke <Knut.Franke@gmx.de> <k.franke@science-computing.de>
- Lars Doelle <lars.doelle@on-line ! de>
- Lars Doelle <lars.doelle@on-line.de>
--- 
-1.9.rc0.143.g6fd479e
----- 8< ----
+Missing space after 'if'.
 
-On the other hand, it is still all me, and the main address (navytux) is
-indicated correctly, so I dunno...
+In this Perl file, it would be more consistent to drop the '> 0' and
+say merely 'if scalar @signature'.
 
-> By the way, in general I do not appreciate people lying on the Date:
-> with an in-body header in their patches, either in the original or
-> in rerolls.
-> 
-> Thanks.
+> +       foreach my $sig (@signature)
+> +       {
 
-I see. Somehow it is pity that the date of original work is lost via
-this approach, as now we are only changing cosmetics etc, and the bulk
-of the work was done earlier.
+Brace placement.
 
-Anyway, we can drop the date, but please keep the email, as it is used
-for the acknowledgment.
+> +               push(@commit_lines, $sig);
+> +       }
+>         $co{'comment'} = \@commit_lines;
+>
+>         my $age = time - $co{'committer_epoch'};
+> @@ -3530,13 +3540,15 @@ sub parse_commit {
+>
+>         local $/ = "\0";
+>
+> -       open my $fd, "-|", git_cmd(), "rev-list",
+> -               "--parents",
+> -               "--header",
+> -               "--max-count=1",
+> +
+> +
 
-Thanks,
-Kirill
+Unnecessary two extra blank lines.
+
+> +       open my $fd, "-|", git_cmd(), "show",
+> +               "--quiet",
+> +               "--date=raw",
+> +               "--pretty=format:%H %P%ntree %T%nparent %P%nauthor %an <%ae> %ad%ncommitter %cn <%ce> %cd%n%GG%n%s%n%n%b",
+>                 $commit_id,
+>                 "--",
+> -               or die_error(500, "Open git-rev-list failed");
+> +               or die_error(500, "Open git-show failed");
+>         %co = parse_commit_text(<$fd>, 1);
+>         close $fd;
+>
+> @@ -4571,7 +4583,14 @@ sub git_print_log {
+>         # print log
+>         my $skip_blank_line = 0;
+>         foreach my $line (@$log) {
+> -               if ($line =~ m/^\s*([A-Z][-A-Za-z]*-[Bb]y|C[Cc]): /) {
+> +               if ($line =~ m/^gpg:(.)+Good(.)+/) {
+> +                       if (! $opts{'-remove_signoff'}) {
+> +                               print "<span class=\"good_sign\">" . esc_html($line) . "</span><br/>\n";
+> +                               $skip_blank_line = 1;
+> +                       }
+> +                       next;
+> +               }
+> +               elsif ($line =~ m/^\s*([A-Z][-A-Za-z]*-[Bb]y|C[Cc]): /) {
+>                         if (! $opts{'-remove_signoff'}) {
+>                                 print "<span class=\"signoff\">" . esc_html($line) . "</span><br/>\n";
+>                                 $skip_blank_line = 1;
+> diff --git a/gitweb/static/gitweb.css b/gitweb/static/gitweb.css
+> index 3212601..0b7479c 100644
+> --- a/gitweb/static/gitweb.css
+> +++ b/gitweb/static/gitweb.css
+> @@ -136,6 +136,11 @@ span.signoff {
+>         color: #888888;
+>  }
+>
+> +span.good_sign {
+> +       font-weight: bold;
+> +       background-color: #aaffaa;
+> +}
+> +
+>  div.log_link {
+>         padding: 0px 8px;
+>         font-size: 70%;
+> --
+> 1.8.3.2
