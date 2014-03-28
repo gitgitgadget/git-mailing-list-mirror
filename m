@@ -1,86 +1,114 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Problems with git 1.8.5.3 on HP-UX 11.11
-Date: Fri, 28 Mar 2014 15:01:56 -0400
-Message-ID: <20140328190156.GA30739@sigill.intra.peff.net>
-References: <9D24AD27564FAE4CB8D0C15D080DEFCB0106A89226@m4ukex08.intranet.macro4.com>
- <8FDD21D28EC16844948E2A773083574A03363EBC@m4ukex08.intranet.macro4.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t4212: handle systems with post-apocalyptic gmtime
+Date: Fri, 28 Mar 2014 12:02:46 -0700
+Message-ID: <xmqqppl69meh.fsf@gitster.dls.corp.google.com>
+References: <20140326182103.GB7087@sigill.intra.peff.net>
+	<20140326185153.GA12912@sigill.intra.peff.net>
+	<xmqqr45oixa6.fsf@gitster.dls.corp.google.com>
+	<20140326192536.GA13989@sigill.intra.peff.net>
+	<20140326193359.GA14105@sigill.intra.peff.net>
+	<20140326212227.GC6991@hashpling.org>
+	<20140326215741.GA17716@sigill.intra.peff.net>
+	<20140326224616.GA9454@hashpling.org>
+	<20140327224837.GB32434@sigill.intra.peff.net>
+	<xmqqd2h6cm26.fsf@gitster.dls.corp.google.com>
+	<20140328184710.GA29987@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Gerhard Grimm <gerhard.grimm@detec.com>
-X-From: git-owner@vger.kernel.org Fri Mar 28 20:02:07 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Charles Bailey <cbailey32@bloomberg.net>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Mar 28 20:02:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WTc2W-00045M-GD
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Mar 2014 20:02:04 +0100
+	id 1WTc3L-0004bk-Nt
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Mar 2014 20:02:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752132AbaC1TB7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Mar 2014 15:01:59 -0400
-Received: from cloud.peff.net ([50.56.180.127]:49526 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751782AbaC1TB6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Mar 2014 15:01:58 -0400
-Received: (qmail 597 invoked by uid 102); 28 Mar 2014 19:01:58 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 28 Mar 2014 14:01:58 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 28 Mar 2014 15:01:56 -0400
-Content-Disposition: inline
-In-Reply-To: <8FDD21D28EC16844948E2A773083574A03363EBC@m4ukex08.intranet.macro4.com>
+	id S1752479AbaC1TCv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Mar 2014 15:02:51 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43412 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752149AbaC1TCt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Mar 2014 15:02:49 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 04C29786E6;
+	Fri, 28 Mar 2014 15:02:49 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=wbZvZxgOzOvwhkAQgmV4XxndVNg=; b=hvRyX8
+	Szcoa0Qkba/S9VS0zGehgZrgoJtUI2fruTpMlKTsz2dhKSCZBx02wqfGcdEyKNhA
+	D9bzpnveJUqWfvKPUDjl66hWxrPT36ZM0EV/dfHVewpwOODN3qZBAAOkTuw/wsjO
+	untvWEBcspETpPZoOyDiWaQ47+y7IE39c28hM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=elHuchFmBlb/cYBJdV6Sj3La93Z8oc1L
+	JEQ+qohzP0uCShXnwxJsa2kmGyBphiQbHn/VddBMUQAkyGR8I1TpBuZDkGc50OYr
+	xBHWz/XJC/eTKG2v7b6jC+IFxUmplk8SS/msghEGTuW/q4JOOSZfVei290mkOKgW
+	Lkuplwc1pOI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E3A9F786E4;
+	Fri, 28 Mar 2014 15:02:48 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F41BF786E2;
+	Fri, 28 Mar 2014 15:02:47 -0400 (EDT)
+In-Reply-To: <20140328184710.GA29987@sigill.intra.peff.net> (Jeff King's
+	message of "Fri, 28 Mar 2014 14:47:10 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 8D74372A-B6AB-11E3-A381-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245414>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245415>
 
-On Fri, Mar 28, 2014 at 11:09:14AM -0000, Gerhard Grimm wrote:
+Jeff King <peff@peff.net> writes:
 
-> So I examined the git source package and found that the author of the
-> HP-UX port forgot to set
->=20
-> PTHREAD_CFLAGS=3D-mt
->=20
-> in config.mak.autogen to enable threading.
+> On Fri, Mar 28, 2014 at 09:41:53AM -0700, Junio C Hamano wrote:
+>
+>> Offhand, the three possible failure modes this thread identified
+>> sounds to me like the only plausible ones, and I think the best way
+>> forward might be to
+>> 
+>>  - teach the "is the result sane, even though we may have got a
+>>    non-NULL from gmtime?  otherwise let's signal a failure by
+>>    replacing it with a known sentinel value" codepath the new
+>>    failure mode Charles's report suggests---if we feed a positive
+>>    timestamp and gmtime gave us back a tm_year+1900 < 0, that is
+>>    certainly an overflow; and
+>
+> I don't think we can analyze the output from gmtime. If it wraps the
+> year at N, then won't N+2014 look like a valid value?
 
-You probably want to place such manual settings in config.mak. If you
-use the "./configure" script, it will overwrite config.mak.autogen.
+Yes, but I was hoping that there are small number of possible N's
+;-)
 
-> git submodule init
->=20
-> fails with the output
->=20
-> =C2=A0=C2=A0=C2=A0 Assertion failed: err =3D=3D REG_ESPACE, file comp=
-at/regex/regexec.c, line 1096
-> =C2=A0=C2=A0=C2=A0 No submodule mapping found in .gitmodules for path=
- 'module'
->=20
-> and the stacktrace of the resulting core dump is
->=20
-> #0=C2=A0 0xc020ced0 in kill+0x10 () from /usr/lib/libc.2
-> #1=C2=A0 0xc01a7f84 in raise+0x24 () from /usr/lib/libc.2
-> #2=C2=A0 0xc01e9308 in abort_C+0x160 () from /usr/lib/libc.2
-> #3=C2=A0 0xc01e9364 in abort+0x1c () from /usr/lib/libc.2
-> #4=C2=A0 0xc0176998 in _assert+0x178 () from /usr/lib/libc.2
-> #5=C2=A0 0x205fa0 in check_matching+0x290 ()
-> #6=C2=A0 0x2053b8 in re_search_internal+0x128 ()
-> #7=C2=A0 0x204ac0 in regexec+0xc8 ()
-> #8=C2=A0 0x4da40 in collect_config+0x60 ()
-> #9=C2=A0 0x108b30 in get_value+0xd8 ()
-> [...]
+> If we are going to do something trustworthy I think it has to be before
+> we hand off to gmtime. Like:
+>
+> diff --git a/date.c b/date.c
+> index e1a2cee..e0c43c4 100644
+> --- a/date.c
+> +++ b/date.c
+> @@ -57,6 +57,8 @@ static time_t gm_time_t(unsigned long time, int tz)
+>  static struct tm *time_to_tm(unsigned long time, int tz)
+>  {
+>  	time_t t = gm_time_t(time, tz);
+> +	if (t > 9999999999999999)
+> +		return NULL;
+>  	return gmtime(&t);
+>  }
+>
+> I suspect that would handle the FreeBSD case, as well.
+>
+> By the way, I have a suspicion that the gm_time_t above can overflow if
+> you specially craft a value at the edge of what time_t can handle (we
+> check that our value will not overflow time_t earlier, but now we might
+> be adding up to 86400 seconds to it). <sigh>
 
-The regexes we use here are not particularly complicated. So either
-there is a bug (but nobody else has reported anything on any other
-platform) or your system regex library has some problem with what we ar=
-e
-feeding it. The simplest solution may be to compile with:
+Yuck.  Let's not go there.
 
-  NO_REGEX=3DYesPlease
-
-which will build and use the glibc implementation in compat/regex
-instead.
-
--Peff
+Thanks.
