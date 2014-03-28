@@ -1,73 +1,67 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Problems with git 1.8.5.3 on HP-UX 11.11
-Date: Fri, 28 Mar 2014 16:02:19 -0400
-Message-ID: <20140328200218.GA3145@sigill.intra.peff.net>
-References: <9D24AD27564FAE4CB8D0C15D080DEFCB0106A89226@m4ukex08.intranet.macro4.com>
- <8FDD21D28EC16844948E2A773083574A03363EBC@m4ukex08.intranet.macro4.com>
- <20140328190156.GA30739@sigill.intra.peff.net>
- <CAPig+cQKZ-oKTQ4Y2=qDaeQRXVZYOKRcSadOx2RwfjCziuu6fw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Gerhard Grimm <gerhard.grimm@detec.com>,
-	Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Fri Mar 28 21:02:29 2014
+From: Marat Radchenko <marat@slonopotamus.org>
+Subject: [PATCH v2] MSVC: link in invalidcontinue.obj for better POSIX compatibility
+Date: Sat, 29 Mar 2014 00:08:02 +0400
+Message-ID: <1396037282-26081-1-git-send-email-marat@slonopotamus.org>
+References: <xmqqlhvu9m8x.fsf@gitster.dls.corp.google.com>
+Cc: Marat Radchenko <marat@slonopotamus.org>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 28 21:09:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WTcyy-0007iZ-Id
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Mar 2014 21:02:28 +0100
+	id 1WTd5g-0003b6-LV
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Mar 2014 21:09:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751921AbaC1UCV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Mar 2014 16:02:21 -0400
-Received: from cloud.peff.net ([50.56.180.127]:49588 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751435AbaC1UCV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Mar 2014 16:02:21 -0400
-Received: (qmail 4112 invoked by uid 102); 28 Mar 2014 20:02:20 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 28 Mar 2014 15:02:20 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 28 Mar 2014 16:02:19 -0400
-Content-Disposition: inline
-In-Reply-To: <CAPig+cQKZ-oKTQ4Y2=qDaeQRXVZYOKRcSadOx2RwfjCziuu6fw@mail.gmail.com>
+	id S1752761AbaC1UJT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Mar 2014 16:09:19 -0400
+Received: from seldon.slonopotamus.org ([94.242.204.247]:55090 "EHLO
+	slonopotamus.org" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
+	with ESMTP id S1752033AbaC1UJS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Mar 2014 16:09:18 -0400
+Received: from [176.57.72.72] (helo=noblesse.home.ru)
+	by slonopotamus.org with esmtpsa (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256)
+	(Exim 4.80.1)
+	(envelope-from <marat@slonopotamus.org>)
+	id 1WTd5O-000342-HI; Sat, 29 Mar 2014 00:09:08 +0400
+X-Mailer: git-send-email 1.9.0
+In-Reply-To: <xmqqlhvu9m8x.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245425>
 
-On Fri, Mar 28, 2014 at 03:43:29PM -0400, Eric Sunshine wrote:
+By default, Windows abort()'s instead of setting
+errno=EINVAL when invalid arguments are passed to standard functions.
 
-> On Fri, Mar 28, 2014 at 3:01 PM, Jeff King <peff@peff.net> wrote:
-> > On Fri, Mar 28, 2014 at 11:09:14AM -0000, Gerhard Grimm wrote:
-> >> git submodule init
-> >>
-> >> fails with the output
-> >>
-> >>     Assertion failed: err == REG_ESPACE, file compat/regex/regexec.c, line 1096
-> >>     No submodule mapping found in .gitmodules for path 'module'
-> >
-> > The regexes we use here are not particularly complicated. So either
-> > there is a bug (but nobody else has reported anything on any other
-> > platform) or your system regex library has some problem with what we are
-> > feeding it. The simplest solution may be to compile with:
-> >
-> >   NO_REGEX=YesPlease
-> >
-> > which will build and use the glibc implementation in compat/regex
-> > instead.
-> 
-> Based upon the assertion-failure message, it looks like he's already
-> using compat/regex.
+For example, when PAGER quits and git detects it with
+errno=EPIPE on write(), check_pipe() in write_or_die.c tries raise(SIGPIPE)
+but since there is no SIGPIPE on Windows, it is treated as invalid argument,
+causing abort() and crash report window.
 
-Heh, I didn't even notice that. I just looked at all of the libc calls
-at the top of the backtrace, but of course that is just from assert() on
-up.
+Linking in invalidcontinue.obj (provided along with MS compiler) allows
+raise(SIGPIPE) to return with errno=EINVAL.
 
-So now it seems doubly odd to me, since it is running the same regex
-library that is used elsewhere.
+Signed-off-by: Marat Radchenko <marat@slonopotamus.org>
+---
+ config.mak.uname | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
--Peff
+diff --git a/config.mak.uname b/config.mak.uname
+index 38c60af..8e7ec6e 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -366,7 +366,7 @@ ifeq ($(uname_S),Windows)
+ 		compat/win32/dirent.o
+ 	COMPAT_CFLAGS = -D__USE_MINGW_ACCESS -DNOGDI -DHAVE_STRING_H -Icompat -Icompat/regex -Icompat/win32 -DSTRIP_EXTENSION=\".exe\"
+ 	BASIC_LDFLAGS = -IGNORE:4217 -IGNORE:4049 -NOLOGO -SUBSYSTEM:CONSOLE -NODEFAULTLIB:MSVCRT.lib
+-	EXTLIBS = user32.lib advapi32.lib shell32.lib wininet.lib ws2_32.lib
++	EXTLIBS = user32.lib advapi32.lib shell32.lib wininet.lib ws2_32.lib invalidcontinue.obj
+ 	PTHREAD_LIBS =
+ 	lib =
+ ifndef DEBUG
+-- 
+1.8.3.2
