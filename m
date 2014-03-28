@@ -1,94 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] t4212: handle systems with post-apocalyptic gmtime
-Date: Fri, 28 Mar 2014 15:05:48 -0400
-Message-ID: <20140328190548.GB30739@sigill.intra.peff.net>
-References: <xmqqr45oixa6.fsf@gitster.dls.corp.google.com>
- <20140326192536.GA13989@sigill.intra.peff.net>
- <20140326193359.GA14105@sigill.intra.peff.net>
- <20140326212227.GC6991@hashpling.org>
- <20140326215741.GA17716@sigill.intra.peff.net>
- <20140326224616.GA9454@hashpling.org>
- <20140327224837.GB32434@sigill.intra.peff.net>
- <xmqqd2h6cm26.fsf@gitster.dls.corp.google.com>
- <20140328184710.GA29987@sigill.intra.peff.net>
- <xmqqppl69meh.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] MSVC: link in invalidcontinue.obj for better POSIX compatibility
+Date: Fri, 28 Mar 2014 12:06:06 -0700
+Message-ID: <xmqqlhvu9m8x.fsf@gitster.dls.corp.google.com>
+References: <53354EE3.2050908@viscovery.net>
+	<1396005570-948-1-git-send-email-marat@slonopotamus.org>
+	<xmqqy4zu9o0j.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Charles Bailey <cbailey32@bloomberg.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 28 20:05:55 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>,
+	Jeff King <peff@peff.net>
+To: Marat Radchenko <marat@slonopotamus.org>
+X-From: git-owner@vger.kernel.org Fri Mar 28 20:06:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WTc6F-0006Wi-1t
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Mar 2014 20:05:55 +0100
+	id 1WTc6b-0006ki-Sv
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Mar 2014 20:06:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752153AbaC1TFu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Mar 2014 15:05:50 -0400
-Received: from cloud.peff.net ([50.56.180.127]:49533 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751680AbaC1TFu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Mar 2014 15:05:50 -0400
-Received: (qmail 850 invoked by uid 102); 28 Mar 2014 19:05:49 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 28 Mar 2014 14:05:49 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 28 Mar 2014 15:05:48 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqqppl69meh.fsf@gitster.dls.corp.google.com>
+	id S1752274AbaC1TGL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Mar 2014 15:06:11 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57479 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751680AbaC1TGK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Mar 2014 15:06:10 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1AB8B7888B;
+	Fri, 28 Mar 2014 15:06:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=TjmPoATfoUf3JVf559mT1opA6pw=; b=H5cvOr
+	IRTSQfg48x8MWTpuT7Qg0IG1b3tMqgSn75Ni5HIlT4OIMubpaf+rN7MqaDD2JPx7
+	T3H23a9pgNMHkc+1lwq4Lh+sGZEe69PQ0nJC4NqeXltJgvq+A/8M1PGAuJwRFhgN
+	H2RWhfVXMPU8MLZ4aE90G8SirGxcnPLSlSe7Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gsDjs9vrdAV2xc1AE6bMfCRmwqDQGaiy
+	kSQHGlkYqGZugw1D+dhAxMIYVfIAo+7N+lrMmIGkG9BeGqLcGLZVMKKgbCPiK+iF
+	FHjzNglfqy7fcuM1292RXGvQXj6tX21JZdCsqFyX2YfbzRW/99QJ9AEre8UkVUe3
+	LeRyj0pWNuY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0144A78888;
+	Fri, 28 Mar 2014 15:06:10 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3BF6B78872;
+	Fri, 28 Mar 2014 15:06:08 -0400 (EDT)
+In-Reply-To: <xmqqy4zu9o0j.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Fri, 28 Mar 2014 11:27:56 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 04CF1344-B6AC-11E3-BF29-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245417>
 
-On Fri, Mar 28, 2014 at 12:02:46PM -0700, Junio C Hamano wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> >>  - teach the "is the result sane, even though we may have got a
-> >>    non-NULL from gmtime?  otherwise let's signal a failure by
-> >>    replacing it with a known sentinel value" codepath the new
-> >>    failure mode Charles's report suggests---if we feed a positive
-> >>    timestamp and gmtime gave us back a tm_year+1900 < 0, that is
-> >>    certainly an overflow; and
-> >
-> > I don't think we can analyze the output from gmtime. If it wraps the
-> > year at N, then won't N+2014 look like a valid value?
-> 
-> Yes, but I was hoping that there are small number of possible N's
-> ;-)
+> Marat Radchenko <marat@slonopotamus.org> writes:
+>
+>> This patch fixes crashes caused by quitting from PAGER.
+>
+> Can you elaborate a bit more on the underlying cause, summarizing
+> what you learned from this discussion, so that those who read "git
+> log" output two weeks from now do not have to come back to this
+> thread in the mail archive in order to figure out why we suddenly
+> needs to link with yet another library?
+>
+> Thanks.
 
-I'm not sure I understand. Even if we know N, we've lost information
-during the truncation done by time_t (we cannot distingiuish true M from
-N+M).
+Just to avoid getting misunderstood, I am not asking it to be
+explained to me in an e-mail.  I want to see a patch with its
+proposed commit log message to explain it to readers of "git log".
 
-> > diff --git a/date.c b/date.c
-> > index e1a2cee..e0c43c4 100644
-> > --- a/date.c
-> > +++ b/date.c
-> > @@ -57,6 +57,8 @@ static time_t gm_time_t(unsigned long time, int tz)
-> >  static struct tm *time_to_tm(unsigned long time, int tz)
-> >  {
-> >  	time_t t = gm_time_t(time, tz);
-> > +	if (t > 9999999999999999)
-> > +		return NULL;
-> >  	return gmtime(&t);
-> >  }
-> >
-> > I suspect that would handle the FreeBSD case, as well.
-> >
-> > By the way, I have a suspicion that the gm_time_t above can overflow if
-> > you specially craft a value at the edge of what time_t can handle (we
-> > check that our value will not overflow time_t earlier, but now we might
-> > be adding up to 86400 seconds to it). <sigh>
-> 
-> Yuck.  Let's not go there.
-
-Do you mean "let's not worry about the absurdly specific overflow case",
-or "let's not do this gross time_to_tm hack?"
-
-This (non-)issue has consumed a lot more brain power than it is probably
-worth. I'd like to figure out which patch to go with and be done. :)
-
--Peff
+Thanks.
