@@ -1,124 +1,132 @@
 From: "W. Trevor King" <wking@tremily.us>
 Subject: Re: [RFC] submodule: change submodule.<name>.branch default from
  master to HEAD
-Date: Thu, 27 Mar 2014 20:52:55 -0700
-Message-ID: <20140328035255.GF25485@odin.tremily.us>
+Date: Thu, 27 Mar 2014 20:58:27 -0700
+Message-ID: <20140328035827.GG25485@odin.tremily.us>
 References: <20140328030556.GD25485@odin.tremily.us>
  <c66d89d854407469b6fd223213a09e5d60eeec0a.1395977055.git.wking@tremily.us>
  <CAPig+cT7tmxvYz+sLQY68SgF6osM+pAj-gFb7xvyuH+Gnw5xrg@mail.gmail.com>
+ <20140328035255.GF25485@odin.tremily.us>
 Mime-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="5Mfx4RzfBqgnTE/w"
+	protocol="application/pgp-signature"; boundary="Z0mFw3+mXTC5ycVe"
 Cc: Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
 	Heiko Voigt <hvoigt@hvoigt.net>,
 	Jens Lehmann <Jens.Lehmann@web.de>,
 	Johan Herland <johan@herland.net>
 To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Fri Mar 28 04:53:07 2014
+X-From: git-owner@vger.kernel.org Fri Mar 28 04:58:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WTNqs-0005fF-N9
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Mar 2014 04:53:07 +0100
+	id 1WTNwF-0000Ds-Ak
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Mar 2014 04:58:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757469AbaC1Dw7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Mar 2014 23:52:59 -0400
-Received: from qmta08.westchester.pa.mail.comcast.net ([76.96.62.80]:42687
-	"EHLO qmta08.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751883AbaC1Dw6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Mar 2014 23:52:58 -0400
-Received: from omta24.westchester.pa.mail.comcast.net ([76.96.62.76])
-	by qmta08.westchester.pa.mail.comcast.net with comcast
-	id irmV1n0041ei1Bg58rsxBk; Fri, 28 Mar 2014 03:52:57 +0000
+	id S1757512AbaC1D6d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Mar 2014 23:58:33 -0400
+Received: from qmta06.westchester.pa.mail.comcast.net ([76.96.62.56]:40776
+	"EHLO qmta06.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755140AbaC1D6a (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Mar 2014 23:58:30 -0400
+Received: from omta21.westchester.pa.mail.comcast.net ([76.96.62.72])
+	by qmta06.westchester.pa.mail.comcast.net with comcast
+	id irwy1n0041ZXKqc56ryVnE; Fri, 28 Mar 2014 03:58:29 +0000
 Received: from odin.tremily.us ([24.18.63.50])
-	by omta24.westchester.pa.mail.comcast.net with comcast
-	id irsv1n00j152l3L3krswtX; Fri, 28 Mar 2014 03:52:57 +0000
+	by omta21.westchester.pa.mail.comcast.net with comcast
+	id iryU1n00C152l3L3hryUA6; Fri, 28 Mar 2014 03:58:29 +0000
 Received: by odin.tremily.us (Postfix, from userid 1000)
-	id 9176A10DE2DF; Thu, 27 Mar 2014 20:52:55 -0700 (PDT)
+	id E1D5110DE346; Thu, 27 Mar 2014 20:58:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1395978775; bh=aBlV0L/NVWewG7Spov/4iO25gCgU9KKszH05HPs5Vhk=;
+	t=1395979107; bh=b89jS9XaOWpUk1Po6tw8dodqWRy0wVnenUIuLH/VEMI=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=M2vEw8UIQmfX/p71H+3ztTmGxB9h204Vr7qQNrV5eCl958sjTPpeSs1IaQDhFBoGM
-	 rNhgGAQFRpgxA3Xq2J3l2iidn5uENQmvn4ArIYDSiPxOaDb+23wUwXXGTzoQ57wILN
-	 pOcMLyvCaEzlhURFaMbBKhCkuMzSTJSOrlb5L8GE=
+	b=CXJmZnE9MeVvYgE1A88jKyKGaZWUOXeVb9KHkLZqSfc9q5nlGqy9AhSwPtjzjSCaR
+	 aQl0pUmTBzGVzlPsEWyQ/7MYLHFAHR26M1g2/+7GOOYQQgKOmvywignFNjx2PXgfDc
+	 4PDH2TLpixl3bVhgc1dc273CFzSErihTBt2LVhCE=
 Content-Disposition: inline
-In-Reply-To: <CAPig+cT7tmxvYz+sLQY68SgF6osM+pAj-gFb7xvyuH+Gnw5xrg@mail.gmail.com>
+In-Reply-To: <20140328035255.GF25485@odin.tremily.us>
 OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
  url=http://tremily.us/pubkey.txt
 User-Agent: Mutt/1.5.22 (2013-10-16)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20140121; t=1395978777;
-	bh=TOMDfZbcflUGS15qB6Tiyav/5shIEoYsxtyuNcdvbmc=;
+	s=q20140121; t=1395979109;
+	bh=Bmo5cLofUr3l+wEDeFEpKObqePFo3CHGvGWWsliogP8=;
 	h=Received:Received:Received:Date:From:To:Subject:Message-ID:
 	 MIME-Version:Content-Type;
-	b=Tphf+RL1CdBfuYEyfTRvIFDo47QFWI3Ka/G5J/K295CfGNn9EcONzzn+2fIqByITn
-	 bVBV8JUGhjfutUim2oz6bQIEvV36KXOtCfp0WSbcD8B795qQKmF9vh/i0ksqJnrZXo
-	 KVx2PAKusul4LfohrsJ+xTOLgeQtQaV+vrvq4DRLA9K+ZbOaIwEdJUTmT7jfBTMO9/
-	 dMoDMsmYFIkUlbeDibJsevCEd3qgtBD4Ym3BlFbk7UXhMXSfx4nyuniI446V0hVYqL
-	 Ar3FtKxlSIFjfot3KG/JgcSJ2M0iN6OZxQj+iYLjBBBHkzvmzji6yJgCEms7eLe90p
-	 eFJyZTjHfkCxw==
+	b=avLnxQeTM30PynmEQnf+jH1JcIvVqZODEPrGTROwLfeEYCBcKRHFLE+jxf6wf1FR3
+	 5YKKmjiKUsQvtEk2UWygFuPP25TTnjXmzWvbrf64rNcREYxXQipeJ+isEIaMdnXgSD
+	 Xiqs7ibmBO8FzK3WzjXH6rbiKY4ypCCgRB+JOKIRHC+t5Ep5b13gPTaveh9as9lL3I
+	 G+0IahBr735o8JyPSQizMiazs0aLf5y6OLGxLCqcLRHAFFWEFz3LowlYuREJXZNube
+	 5bnNbfx1Hc/9p5yqeQ48z1pO0QXT3UJ+54EUfnvNapFfrddcqBjwnTeP6BItG2UQvQ
+	 9/FAjlLry4j7Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245361>
 
 
---5Mfx4RzfBqgnTE/w
+--Z0mFw3+mXTC5ycVe
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Mar 27, 2014 at 11:43:47PM -0400, Eric Sunshine wrote:
-> On Thu, Mar 27, 2014 at 11:36 PM, W. Trevor King <wking@tremily.us> wrote:
-> >  submodule.<name>.branch::
-> >         A remote branch name for tracking updates in the upstream submo=
-dule.
-> > -       If the option is not specified, it defaults to 'master'.  See t=
-he
-> > -       `--remote` documentation in linkgit:git-submodule[1] for detail=
-s.
-> > +       If the option is not specified, it defaults to the subproject's
+On Thu, Mar 27, 2014 at 08:52:55PM -0700, W. Trevor King wrote:
+> On Thu, Mar 27, 2014 at 11:43:47PM -0400, Eric Sunshine wrote:
+> > On Thu, Mar 27, 2014 at 11:36 PM, W. Trevor King <wking@tremily.us> wro=
+te:
+> > >  submodule.<name>.branch::
+> > >         A remote branch name for tracking updates in the upstream sub=
+module.
+> > > -       If the option is not specified, it defaults to 'master'.  See=
+ the
+> > > -       `--remote` documentation in linkgit:git-submodule[1] for deta=
+ils.
+> > > +       If the option is not specified, it defaults to the subproject=
+'s
+> >=20
+> > Did you mean s/subproject/submodule/ ?
+> >=20
+> > > +       HEAD.  See the `--remote` documentation in linkgit:git-submod=
+ule[1]
+> > > +       for details.
 >=20
-> Did you mean s/subproject/submodule/ ?
->=20
-> > +       HEAD.  See the `--remote` documentation in linkgit:git-submodul=
-e[1]
-> > +       for details.
+> No the remote branch is in the upstream subproject.  I suppose I meant
+> =E2=80=9Cthe submodule's remote-tracking branch following the upstream
+> subproject's HEAD which we just fetched so it's fairly current=E2=80=9D ;=
+).
 
-No the remote branch is in the upstream subproject.  I suppose I meant
-=E2=80=9Cthe submodule's remote-tracking branch following the upstream
-subproject's HEAD which we just fetched so it's fairly current=E2=80=9D ;).
+Hmm, maybe we should change the existing =E2=80=9Cupstream submodule=E2=80=
+=9D to
+=E2=80=9Cupstream subproject=E2=80=9D for consistency?
 
-Cheers,
 Trevor
 
 --=20
 This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
 For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
 
---5Mfx4RzfBqgnTE/w
+--Z0mFw3+mXTC5ycVe
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: OpenPGP digital signature
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.0.22 (GNU/Linux)
 
-iQIcBAEBAgAGBQJTNPIWAAoJEKKfehoaNkbtvjEP+gPByOr/4KEQA1t3VoWSYY57
-/5Zlo6CaS/7s/592cSnUFrnnM3drd56nR7bAOEEAdyZT8HMK9cQTdODAx+H9SVHU
-utj0Cf0+W2E+E+/QA7/MDG8RHVH6xVRyQT/C0zsiLIR0A4gm+85kwK18iChfH7OJ
-wiM930woOlFADBK/JQ26uqf33d8+9Co7Mfv09rYSfwE/OjKtRRsFX6C/58TEbKzf
-bVAZ32voupzQIeCOx35gFJfjBzpvEnlY9yWTDTYdFBr5C2Jtw958H/ewpgCacoOQ
-JQ+O6pcJ7MlnjtbuQbW5H+O9JJfRNnlPKd3UH4ooKGDU5WAAJ5P4W7SOk8ncKLeH
-F32iMMGt5fSM+8X03sC3fHSY7XIGBW7PifBxDjDKOnUx+0ZRa1+ec/QbUGrVqqHY
-abuvEkL109Nl336m6FhE6394/mofBhcqnCPc0SHeZwg+aTDGjL+K0GCloMdWDoI8
-H+VoEU8vN5xSF36sPwrchSM5iBglM+6PlfivNbCcSUSUlLyT7Vfgg3Tstxy0569a
-hxwY9vyjRuV737fx1Kdkk5Hc4SDfbCCRSn1bxIiE70xLP1KYTnonv/SoWCuZSAof
-u2DOJfiCnl5l82oR4pbCzK59HoZkptGQumXv2hE/nbTdETzrFi4+nanQq+ZRW9iI
-UMCXSxfY9p+5Gttvm8cC
-=FqVD
+iQIcBAEBAgAGBQJTNPNiAAoJEKKfehoaNkbtdLUP/jztQn9u2dMeBXUi3k3AFcMP
+UbOzfg+BNBUzljw8BjPQpROwcnmvlwIUQiwqVCmrafrT7tEYKI2hm8BENew0agQK
+P0cZXIml1mHq4W7tHs/x5eooiUzbmzUyesgS+2w1NbaICz/zuZbfRFUqQH3Z8U++
+LDScTrLHkkXwSR9IfUHwsYqXpJnVFNx/Jg8/eIWom0u2PoZwvuaKo8VdCOc/Jz4b
++T/mwRWFBQEbfLe3i9yKN10Ge7+vXr1QCmZIswpDQhu4YS5hq84GJCA+Lrvs5xko
+4yT9Hl0KHaxgna+Ne67lEc+j4Iyinnb8vckS5HkJOrXipZglJubCjKJz2mukGLpS
+LeTp5ATWEk9416EJlmsv1X0VrZVhp1sSoXoJJULX+Hw88kuDdAmMXT8NRTM3HoWt
+M2M7tLz347hBXw0XFVRsg4CRhfGtBeHUlML5rQ/5DkRWLd+kZ1wHZwmtyQW/pkQQ
+mfavAuqiq6GLqFxxLW1BkppCR2bIZlQcua91XbE3S+Mtzj3BHWUF0Pkkz7L39g/W
+g5E/yibTg9vWZQCTqjpZP880cRA+U+Ou5hQKXC/tNZnY68ju0ATW/T2yuS8zWzk3
+r40Uxcl+mBTFwEUpRmpZPU1H/4Gq3DDi8DuyuO4DKZuiqFXZj6Ee4gbF9e7t7MQ9
+jd/uUsd3WHpHYAHrTPI7
+=8kPG
 -----END PGP SIGNATURE-----
 
---5Mfx4RzfBqgnTE/w--
+--Z0mFw3+mXTC5ycVe--
