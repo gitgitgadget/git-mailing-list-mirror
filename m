@@ -1,61 +1,61 @@
-From: Thomas Ackermann <th.acker@arcor.de>
-Subject: Re: Problems with git 1.8.5.3 on HP-UX 11.11
-Date: Fri, 28 Mar 2014 11:48:00 +0000 (UTC)
-Message-ID: <loom.20140328T124555-537@post.gmane.org>
-References: <9D24AD27564FAE4CB8D0C15D080DEFCB0106A89226@m4ukex08.intranet.macro4.com> <8FDD21D28EC16844948E2A773083574A03363EBC@m4ukex08.intranet.macro4.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+From: Marat Radchenko <marat@slonopotamus.org>
+Subject: [PATCH] MSVC: fix t0040-parse-options
+Date: Fri, 28 Mar 2014 16:04:58 +0400
+Message-ID: <1396008298-1434-1-git-send-email-marat@slonopotamus.org>
+Cc: Marat Radchenko <marat@slonopotamus.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 28 12:48:31 2014
+X-From: git-owner@vger.kernel.org Fri Mar 28 13:05:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WTVGw-0007au-Qc
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Mar 2014 12:48:31 +0100
+	id 1WTVXJ-0000bM-GE
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Mar 2014 13:05:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751638AbaC1Ls0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Mar 2014 07:48:26 -0400
-Received: from plane.gmane.org ([80.91.229.3]:39828 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751073AbaC1Ls0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Mar 2014 07:48:26 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1WTVGq-0007Xs-II
-	for git@vger.kernel.org; Fri, 28 Mar 2014 12:48:24 +0100
-Received: from proxy45.sbs.de ([194.138.39.59])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 28 Mar 2014 12:48:24 +0100
-Received: from th.acker by proxy45.sbs.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 28 Mar 2014 12:48:24 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 194.138.39.59 (Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.154 Safari/537.36)
+	id S1752051AbaC1MFS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Mar 2014 08:05:18 -0400
+Received: from seldon.slonopotamus.org ([94.242.204.247]:51219 "EHLO
+	slonopotamus.org" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
+	with ESMTP id S1751304AbaC1MFR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Mar 2014 08:05:17 -0400
+Received: from [185.6.245.138] (helo=radchenko-d-lnx.mail.msk)
+	by slonopotamus.org with esmtpsa (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256)
+	(Exim 4.80.1)
+	(envelope-from <marat@slonopotamus.org>)
+	id 1WTVX9-0002YS-69; Fri, 28 Mar 2014 16:05:15 +0400
+X-Mailer: git-send-email 1.9.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245383>
 
-Gerhard Grimm <gerhard.grimm <at> detec.com> writes:
-
-> 
-> In order to set up automated builds and tests of the CMake toolchain 
-(www.cmake.org) on HP-UX 11.11 (hppa)
-> and 11.23 (ia64), I needed to install git on those platforms.
-> The latest binary package available from hpux.connect.org.uk is version 
-1.8.5.3, which I installed with
-> all of its dependencies.
-
-Did you try to build the most current version v1.9.1 by using
-autoconf as described in 'INSTALL'?
-
+Signed-off-by: Marat Radchenko <marat@slonopotamus.org>
 ---
-Thomas
+ test-parse-options.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/test-parse-options.c b/test-parse-options.c
+index 434e8b8..7840493 100644
+--- a/test-parse-options.c
++++ b/test-parse-options.c
+@@ -11,6 +11,7 @@ static char *string = NULL;
+ static char *file = NULL;
+ static int ambiguous;
+ static struct string_list list;
++static const char *default_string = "default";
+ 
+ static int length_callback(const struct option *opt, const char *arg, int unset)
+ {
+@@ -60,7 +61,7 @@ int main(int argc, char **argv)
+ 		OPT_STRING('o', NULL, &string, "str", "get another string"),
+ 		OPT_NOOP_NOARG(0, "obsolete"),
+ 		OPT_SET_PTR(0, "default-string", &string,
+-			"set string to default", (unsigned long)"default"),
++			"set string to default", default_string),
+ 		OPT_STRING_LIST(0, "list", &list, "str", "add str to list"),
+ 		OPT_GROUP("Magic arguments"),
+ 		OPT_ARGUMENT("quux", "means --quux"),
+-- 
+1.9.1.501.gfbd1a76.dirty.MSVC
