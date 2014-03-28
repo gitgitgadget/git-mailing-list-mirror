@@ -1,94 +1,120 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [BUG] MSVC: error box when interrupting `gitlog` by quitting
- less
-Date: Fri, 28 Mar 2014 11:28:51 +0100
-Message-ID: <53354EE3.2050908@viscovery.net>
-References: <20130220195147.GA25332@sigill.intra.peff.net> <20130220200136.GH25647@sigill.intra.peff.net> <loom.20140328T093203-852@post.gmane.org> <loom.20140328T101113-154@post.gmane.org> <20140328094443.GA16370@sigill.intra.peff.net> <loom.20140328T105136-494@post.gmane.org>
+From: "Gerhard Grimm" <gerhard.grimm@detec.com>
+Subject: Problems with git 1.8.5.3 on HP-UX 11.11
+Date: Fri, 28 Mar 2014 11:09:14 -0000
+Message-ID: <8FDD21D28EC16844948E2A773083574A03363EBC@m4ukex08.intranet.macro4.com>
+References: <9D24AD27564FAE4CB8D0C15D080DEFCB0106A89226@m4ukex08.intranet.macro4.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Marat Radchenko <marat@slonopotamus.org>
-X-From: git-owner@vger.kernel.org Fri Mar 28 11:28:59 2014
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Mar 28 12:09:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WTU1y-00045Q-4B
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Mar 2014 11:28:58 +0100
+	id 1WTUf6-0002VG-Ct
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Mar 2014 12:09:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751385AbaC1K2y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Mar 2014 06:28:54 -0400
-Received: from so.liwest.at ([212.33.55.23]:53262 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751370AbaC1K2x (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Mar 2014 06:28:53 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.80.1)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1WTU1q-0002VP-2F; Fri, 28 Mar 2014 11:28:50 +0100
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id BD70216613;
-	Fri, 28 Mar 2014 11:28:49 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
-In-Reply-To: <loom.20140328T105136-494@post.gmane.org>
-X-Spam-Score: -1.0 (-)
+	id S1751228AbaC1LJS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Mar 2014 07:09:18 -0400
+Received: from eu1sys200aog113.obsmtp.com ([207.126.144.135]:45343 "HELO
+	eu1sys200aog113.obsmtp.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1751119AbaC1LJR convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Mar 2014 07:09:17 -0400
+Received: from m4ukex01.intranet.macro4.com ([217.32.206.41]) by eu1sys200aob113.postini.com ([207.126.147.11]) with SMTP
+	ID DSNKUzVYW3tqsJz4cnns5ai9XBZJzjJGMBgN@postini.com; Fri, 28 Mar 2014 11:09:16 UTC
+Received: from m4ukex08.intranet.macro4.com ([10.0.24.51]) by m4ukex01.intranet.macro4.com with Microsoft SMTPSVC(6.0.3790.4675);
+	 Fri, 28 Mar 2014 11:09:15 +0000
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+In-Reply-To: <9D24AD27564FAE4CB8D0C15D080DEFCB0106A89226@m4ukex08.intranet.macro4.com>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: Problems with git 1.8.5.3 on HP-UX 11.11
+Thread-Index: Ac9J5Hlf9BjLdD4LRz6lQa2SJjlKfQAkOjug
+X-OriginalArrivalTime: 28 Mar 2014 11:09:15.0424 (UTC) FILETIME=[27F8B200:01CF4A76]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245378>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245379>
 
-Please do not cull the Cc list.
+In order to set up automated builds and tests of the CMake toolchain (w=
+ww.cmake.org) on HP-UX 11.11 (hppa) and 11.23 (ia64), I needed to insta=
+ll git on those platforms.
+The latest binary package available from hpux.connect.org.uk is version=
+ 1.8.5.3, which I installed with all of its dependencies.
+When trying to set up the CMake build, I ran into the first problem:
 
-Am 3/28/2014 11:07, schrieb Marat Radchenko:
-> Jeff King <peff <at> peff.net> writes:
-> 
->>
->> I'm not sure what an actual SIGPIPE death looks like on Windows.
-> 
-> There is no SIGPIPE death on Windows due to total absence of SIGPIPE.
-> raise(unsupported int) just causes ugly "git.exe has stopped working"
-> window and possibly ends up as SIGABT (I don't know how to check this).
+$ git pull origin
+error: cannot create thread: Function is not available
+fatal: fetch-pack: unable to fork off sideband demultiplexer
 
-This happens "only" with newer Microsoft C runtime libraries. They do not
-return EINVAL (because that usually indicates a bug caused by insufficient
-checks before the function call), but crash the program by default in the
-way that you observed.
+So I examined the git source package and found that the author of the H=
+P-UX port forgot to set
 
->> What
->> happens if git is still writing data to the pager and the pager exits?
->> Does it receive a signal of some sort?
+PTHREAD_CFLAGS=3D-mt
 
-No; the write attempt returns with EPIPE.
+in config.mak.autogen to enable threading. I added this setting and reb=
+uilt git. On 11.23, everything was fine now - no further issues.
+On 11.11 though, git now crashed with a Bus Error. Some debugging showe=
+d that this was due to a multithreading issue - obviously some dependen=
+cy library has not been built as reentrant code. To fix this, I disable=
+d threading by setting
 
-> 
-> I'm not sure what you mean, sorry. check_pipe properly detects pager exit.
-> The problem is with the way it tries to die.
-> 
->> The point of the code in check_pipe is to simulate that death. So
->> whatever happens to git in that case is what we would want to happen
->> when we call raise(SIGPIPE).
-> 
-> That's what I'm talking about. On Windows, you can't raise(SIGPIPE).
-> You can only raise(Windows_supported_signal) where signal is one of:
-> SIGABRT, SIGFPE, SIGILL, SIGINT, SIGSEGV, SIGTERM as MSDN tells us.
+PTHREAD_CFLAGS=3D
+NO_PTHREADS=3DYesPlease
 
-Correct. All other signal number should return EINVAL. But, as I said,
-that does not happen by default.
+in config.mak.autogen and rebuilt git again. After that, "git pull" and=
+ "git fetch" worked correctly and I could proceed to set up the CMake b=
+uild and test.
+Alas, the CMake tests include a test case "CTest.UpdateGIT" that create=
+s a git repository, creates a submodule, imports some content and attem=
+pts to check out a revision. At that point, the command
 
-The correct solution is to link against invalidcontinue.obj in the MSVC
-build. This is a compiler-provided object file that changes the default
-behavior to the "expected" kind, i.e., C runtime functions return EINVAL
-when appropriate instead of crashing the application.
+git submodule init
 
->> A possibly simpler option would be to just have the MSVC build skip the
->> raise() call, and do the exit(141) that comes just after. That is
->> probably close enough simulation of SIGPIPE death.
+fails with the output
 
-Correct. The MinGW build uses an older C runtime library, which does not
-have the strange default behavior, and we do use that exit(141). And with
-the fix to the MSVC build suggested above, that version would do likewise.
+=A0=A0=A0 Assertion failed: err =3D=3D REG_ESPACE, file compat/regex/re=
+gexec.c, line 1096
+=A0=A0=A0 No submodule mapping found in .gitmodules for path 'module'
 
--- Hannes
+and the stacktrace of the resulting core dump is
+
+#0=A0 0xc020ced0 in kill+0x10 () from /usr/lib/libc.2
+#1=A0 0xc01a7f84 in raise+0x24 () from /usr/lib/libc.2
+#2=A0 0xc01e9308 in abort_C+0x160 () from /usr/lib/libc.2
+#3=A0 0xc01e9364 in abort+0x1c () from /usr/lib/libc.2
+#4=A0 0xc0176998 in _assert+0x178 () from /usr/lib/libc.2
+#5=A0 0x205fa0 in check_matching+0x290 ()
+#6=A0 0x2053b8 in re_search_internal+0x128 ()
+#7=A0 0x204ac0 in regexec+0xc8 ()
+#8=A0 0x4da40 in collect_config+0x60 ()
+#9=A0 0x108b30 in get_value+0xd8 ()
+#10 0x108efc in git_parse_source+0x1bc ()
+#11 0x10ac70 in do_config_from+0x70 ()
+#12 0x10ad3c in git_config_from_file+0x8c ()
+#13 0x10b274 in git_config_with_options+0x84 ()
+#14 0x4dd6c in get_value+0x224 ()
+#15 0x4eed4 in cmd_config+0x744 ()
+#16 0x17150 in run_builtin+0x110 ()
+#17 0x1739c in handle_internal_command+0xcc ()
+#18 0x174fc in run_argv+0x2c ()
+#19 0x17724 in main+0x194 ()
+
+Since I'm no git expert (I'm not even a regular git user in fact), ther=
+e's nothing left for me to do except asking for help...
+Please CC me (gerhard dot grimm at detec dot com) with any replies sinc=
+e I'm not subscribed to the list. Thank you!
+
+Best regards,
+
+Gerhard
+This e-mail message has been scanned and cleared by Postini / Google Me=
+ssage Security and the UNICOM Global security systems. This message is =
+for the named person's use only. If you receive this message in error, =
+please delete it and notify the sender.=20
+=0D
