@@ -1,195 +1,336 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: Re: Possible regression in master? (submodules without a
- "master" branch)
-Date: Thu, 27 Mar 2014 20:05:56 -0700
-Message-ID: <20140328030556.GD25485@odin.tremily.us>
-References: <CALKQrgeRJRoyC-UV7J98U1qQfqEFr_H1sEfAWd0GbstZagUisw@mail.gmail.com>
- <xmqqob0ref3v.fsf@gitster.dls.corp.google.com>
- <5334606F.5010109@web.de>
- <20140327185405.GS4008@odin.tremily.us>
- <xmqqwqffctyg.fsf@gitster.dls.corp.google.com>
- <20140327202702.GA3984@sandbox-ub>
- <CALKQrgdAhe0AKk51=__fDWX9QqFH=WVCO=gU+mtO6sb250==0A@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 3/3] test-lib: '--run' to run only specific tests
+Date: Thu, 27 Mar 2014 23:36:31 -0400
+Message-ID: <CAPig+cQeS6PAZN0nN_0LBfnFF_bGxC000cPSQFdSTVaHQD_haw@mail.gmail.com>
+References: <1395650987-5960-1-git-send-email-ilya.bobyr@gmail.com>
+	<1395916370-1404-1-git-send-email-ilya.bobyr@gmail.com>
+	<1395916370-1404-4-git-send-email-ilya.bobyr@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="GpGaEY17fSl8rd50"
-Cc: Heiko Voigt <hvoigt@hvoigt.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Git mailing list <git@vger.kernel.org>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Fri Mar 28 04:06:10 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@inf.ethz.ch>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+To: Ilya Bobyr <ilya.bobyr@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 28 04:36:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WTN7N-0003zu-T9
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Mar 2014 04:06:06 +0100
+	id 1WTNaw-00054O-5a
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Mar 2014 04:36:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757485AbaC1DGA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Mar 2014 23:06:00 -0400
-Received: from qmta04.westchester.pa.mail.comcast.net ([76.96.62.40]:51511
-	"EHLO qmta04.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757211AbaC1DF7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Mar 2014 23:05:59 -0400
-Received: from omta19.westchester.pa.mail.comcast.net ([76.96.62.98])
-	by qmta04.westchester.pa.mail.comcast.net with comcast
-	id ir4m1n00227AodY54r5ztV; Fri, 28 Mar 2014 03:05:59 +0000
-Received: from odin.tremily.us ([24.18.63.50])
-	by omta19.westchester.pa.mail.comcast.net with comcast
-	id ir5x1n00E152l3L3fr5yCr; Fri, 28 Mar 2014 03:05:59 +0000
-Received: by odin.tremily.us (Postfix, from userid 1000)
-	id F074310DE218; Thu, 27 Mar 2014 20:05:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1395975956; bh=qKbujaBdL3Cic1pyAefFzlMY8ikcesuSKhAshd+I/9s=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=J0kKckJiBcNF01XGsy7z4KuakNIiNAWDsTy5mf2fT4SHzpnub+4NRpcP7DPAUCey/
-	 G0wiI96nVm3WA2akup8NulFdcx7AE64f3+j9f1sp+CoRJN2malNX10dpMikA4lxso3
-	 BnaHX5Ub5ZcQM0L3oYiEYKqTx4ysqqJQnEad+BYk=
-Content-Disposition: inline
-In-Reply-To: <CALKQrgdAhe0AKk51=__fDWX9QqFH=WVCO=gU+mtO6sb250==0A@mail.gmail.com>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.22 (2013-10-16)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20140121; t=1395975959;
-	bh=Q15RRYs2O7JA3kkQS+2eyuw/0PbsewahtX+9ef34RL8=;
-	h=Received:Received:Received:Date:From:To:Subject:Message-ID:
-	 MIME-Version:Content-Type;
-	b=psnAtpSW0SW1wZUR1aYmHz9Ddj1RPgECYSkurc+IwnL/DnZa2wPSmmDz2hoB3KtaV
-	 lvFpCC8QMwwiVOzbk7EDFL+UYX+MmhIihbd5ESI9HDlpbBiNlPcy4p2PbQezYFdJBp
-	 EWGpuYYMptbpSdenndyDNQ3hVaen8jxQhZlq14GAS4wW2ZwtgP776NZpxqCskb1MUD
-	 FALTttheTMQ+CFioArtQux2YCE9L/Z2SzBnFDrIAFNMuCy/oflTSufCd248PUOKMlS
-	 1+5JTAhIviOH1yvO2K18BUpBgyVfFei5zi6YZHAFzdF/BhAtQCF3avWIjNDmF0E+7T
-	 WXqeiS6gxOKGQ==
+	id S1757281AbaC1Dge (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Mar 2014 23:36:34 -0400
+Received: from mail-yk0-f179.google.com ([209.85.160.179]:51348 "EHLO
+	mail-yk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757251AbaC1Dgc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Mar 2014 23:36:32 -0400
+Received: by mail-yk0-f179.google.com with SMTP id 9so291551ykp.24
+        for <git@vger.kernel.org>; Thu, 27 Mar 2014 20:36:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=L3hz7pkqDjFVyjN8nyjLuw/KcT2Hj5Aas+gbnG5hLPw=;
+        b=MtnqiFul3Sbky9J+6ntXJLRdOcsF38dKYmN8wCq942JeWu7apS0FkVnPNpeOTWbgrE
+         Pkn/hDMJL1n2hx//bpgMPgEJCNT+FwyF7C5dB2geZuEqKIuVNxNqNiCGk5CefddDa6VY
+         XIqqrYg3yUm8/1pl5qT4TzOD8P48EX3wCpso/P5GgTAQcxyU0yEpJ+uJHif2O1B0regR
+         N6tDWY4/8ur8SPKWfvyGtqEeVh3fW4J/O7I2KFMuuDXa1zvuKclMcZ4fEaG1ETvKsNNT
+         Gmj8vmHHv52UT5TEGIh84qOsAyLCGssxApQ4vtRmaGNuPj/Lwn0GFc8yVgqfdpZ1sCEP
+         SXAw==
+X-Received: by 10.236.139.70 with SMTP id b46mr7903471yhj.63.1395977791668;
+ Thu, 27 Mar 2014 20:36:31 -0700 (PDT)
+Received: by 10.170.180.134 with HTTP; Thu, 27 Mar 2014 20:36:31 -0700 (PDT)
+In-Reply-To: <1395916370-1404-4-git-send-email-ilya.bobyr@gmail.com>
+X-Google-Sender-Auth: BQfldlFu_L_THIiy_dJMLQn33wY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245356>
 
+On Thu, Mar 27, 2014 at 6:32 AM, Ilya Bobyr <ilya.bobyr@gmail.com> wrote:
+> Allow better control of the set of tests that will be executed for a
+> single test suite.  Mostly useful while debugging or developing as it
+> allows to focus on a specific test.
+>
+> Signed-off-by: Ilya Bobyr <ilya.bobyr@gmail.com>
+> ---
+>  No changes from the previous version.
+>
+>  t/README         |   65 ++++++++++++++-
+>  t/t0000-basic.sh |  233 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+>  t/test-lib.sh    |   85 ++++++++++++++++++++
+>  3 files changed, 379 insertions(+), 4 deletions(-)
+>
+> diff --git a/t/README b/t/README
+> index 6b93aca..c911f89 100644
+> --- a/t/README
+> +++ b/t/README
+> @@ -100,6 +100,10 @@ appropriately before running "make".
+>         This causes additional long-running tests to be run (where
+>         available), for more exhaustive testing.
+>
+> +-r,--run=<test numbers>::
 
---GpGaEY17fSl8rd50
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Perhaps <test-selection> or something similar would be closer to the truth.
 
-On Fri, Mar 28, 2014 at 12:21:23AM +0100, Johan Herland wrote:
-> On Thu, Mar 27, 2014 at 9:27 PM, Heiko Voigt wrote:
-> > On Thu, Mar 27, 2014 at 12:39:03PM -0700, Junio C Hamano wrote:
-> >> There is this bit for "update" in git-submodule.txt:
-> >>
-> >>   For updates that clone missing submodules, checkout-mode
-> >>   updates will create submodules with detached HEADs; all other
-> >>   modes will create submodules with a local branch named after
-> >>   submodule.<path>.branch.
-> >>
-> >> =E2=80=A6
-> >> So the proposed change is to make the part before semicolon true?
-> >> If we are not newly cloning (because we already have it), if the
-> >> submodule.<name>.branch is not set *OR* refers to a branch that
-> >> does not even exist, shouldn't we either (1) abort as an error,
-> >> or (2) do the same and detach?
-> >
-> > I would expect "(1) abort as an error" since the user is not
-> > getting what he would expect.
+> +       This causes only specific tests to be included or excluded.  See
 
-Branch-attachment is mostly a function of submodule.<name>.update, not
-a function of submodule.<name>.branch.  We could certainly interpret a
-missing submodule.<name>.branch as:
+This is phrased somewhat oddly, as if you had already been talking
+about tests being included or excluded, and that this option merely
+changes that selection. Perhaps something like:
 
-* Use the subproject's HEAD for the initial clone (clear start_point
-  in cmd_update if submodule."$name".branch is not set).
-* Don't change the branch name on subsequent local updates (what we
-  already do).
-* Do $something if the user tries a --remote update.
+    Run only the subset of tests indicated by <test-selection>.
 
-I just don't know what that $something should be.
+> +       section "Skipping Tests" below for "<test numbers>" syntax.
+> +
+>  --valgrind=<tool>::
+>         Execute all Git binaries under valgrind tool <tool> and exit
+>         with status 126 on errors (just like regular tests, this will
+> @@ -187,10 +191,63 @@ and either can match the "t[0-9]{4}" part to skip the whole
+>  test, or t[0-9]{4} followed by ".$number" to say which
+>  particular test to skip.
+>
+> -Note that some tests in the existing test suite rely on previous
+> -test item, so you cannot arbitrarily disable one and expect the
+> -remainder of test to check what the test originally was intended
+> -to check.
+> +For an individual test suite --run could be used to specify that
+> +only some tests should be run or that some tests should be
+> +excluded from a run.
+> +
+> +--run argument is a list of patterns with optional prefixes that
 
-> FWIW, here is the behaviour I would expect from "git submodule
-> update":
->=20
->  - In checkout-mode, if submodule.<name>.branch is not set, we
-> should _always_ detach. Whether or not the submodule is already
-> cloned does not matter.
+"The argument for --run is a list...
 
-Agreed, checkout-mode should *always* detach the submodule's HEAD.
+> +are matched against test numbers within the current test suite.
+> +Supported pattern:
+> +
+> + - A number matches a test with that number.
+> +
+> + - sh metacharacters such as '*', '?' and '[]' match as usual in
+> +   shell.
+> +
+> + - A number prefixed with '<', '<=', '>', or '>=' matches all
+> +   tests 'before', 'before or including', 'after', or 'after or
+> +   including' the specified one.
 
->  - In rebase/merge-mode, if submodule.<name>.branch is not set, we
-> should _always_ abort with an error.
+I think you want "and" rather than "or": "before and including",
+"after and including".
 
-Why?  Can't we mimic clone and use the remote's HEAD (for --remote
-updates)?  That seems more intuitive to me.  For local updates, we're
-just integrating the gitlinked commit with the submodule's HEAD, and
-you don't need submodule.<name>.branch for that at all.
+> +Optional prefixes are:
+> +
+> + - '+' or no prefix: test(s) matching the pattern are included in
+> +   the run.
+> +
+> + - '-' or '!': test(s) matching the pattern are exluded from the
+> +   run.
 
->  - If submodule.<name>.branch is set - but the branch it refers to
-> does not exist - we should _always_ abort with an error. The current
-> checkout/rebase/merge-mode does not matter.
+I've been playing with --run, and I find that test selection is not
+especially intuitive. For instance, ">=16 !>24 !20" is easier to
+reason about when written instead with ranges, such as "16-19 21-24",
+or perhaps "16-24 !20". Open-ended ranges make sense too: "5-" means
+tests 5 through the last, and "-5" means tests 1 through 5. (Yes, this
+conflicts with your use of '-' to mean negation, but you already have
+the perfectly serviceable '!' as an alias for negation.)
 
-Sounds good to me, and should match the current functionality.
+> +If --run starts with '+' or unprefixed pattern the initial set of
+> +tests to run is empty. If the first pattern starts with '-' or
+> +'!' all the tests are added to the initial set.  After initial
+> +set is determined every pattern, test number or range is added or
+> +excluded from the set one by one, from left to right.
+> +
+> +For example, common case is to run several setup tests and then a
+> +specific test that relies on that setup:
 
-> In other words, submodule.<name>.branch is _necessary_ in
-> rebase/merge mode, but _optional_ in checkout-mode (its absence
-> indicating that we should detach).
+Perhaps be a bit more specific:
 
-The main trigger for =E2=80=9Cwe should detach=E2=80=9D is the update mode
-(checkout-mode detaches, all others integrate with the submodule's
-HEAD (without changing submodule branches).  You only need
-submodule.<name>.branch for determining which *remote* commit you're
-trying to integrate (or clone from).  HEAD, master, and =E2=80=9Cdie
-screaming=E2=80=9D all sound like reasonable defaults in that case.  Decidi=
-ng
-between them is a policy/UI decision, not a technical decision.
+    ...run several setup tests (1, 2, 3) and then a
+    specific test (21) that relies...
 
-> >> > gitmodules(5) is pretty clear that 'submodule.<name>.branch'
-> >> > defaults to master (and not upstream's HEAD), do we want to
-> >> > adjust this at the same time?
-> >>
-> >> That may be likely.  If the value set to a configuration variable
-> >> causes an established behaviour of a program change a lot,
-> >> silently defaulting that variable to something many people are
-> >> expected to have (e.g. 'master') would likely to cause a
-> >> usability regression.
-> >
-> > IMO this branch configuration should completely ignored in the
-> > default, non --remote, usage. Since we simply checkout a specific
-> > SHA1 in this case, that should be possible.
->=20
-> Yes. Checkout-mode with no submodule.<name>.branch configured should
-> always detach.
+> +    $ sh ./t9200-git-cvsexport-commit.sh --run='1 2 3 21'
+> +
+> +or:
+> +
+> +    $ sh ./t9200-git-cvsexport-commit.sh --run='<4 21'
 
-Except for the initial clone (where it's easy to fix),
-submodule.<name>.branch *is* ignored in non --remote updates.
+It might be clearer to say "<=3" rather than "<4".
 
-Cheers,
-Trevor
+> +To run only tests up to a specific test one could do this:
 
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
+s/specific test/specific test,/
 
---GpGaEY17fSl8rd50
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
+Also perhaps:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
+    ...up to a specific test (21), one...
 
-iQIcBAEBAgAGBQJTNOcSAAoJEKKfehoaNkbt2awP/j4FfylEoO1Ar5xNEjMNLFxn
-dMo3ABz6RfIy5q1JeMZYxcDECpmBx5regGOtTJvCExXu3mhn5bOdoitxhQFo0aua
-idhQEZi1Ch/0pj56LxM2jRBWtLshYP8AOhdbxlNzRfOK2EV7pSaw6jX6mOpjEhhg
-c6m8V/PJ4btdJ3iy3pn3/Q/jNUtpKLyzahZMSQVRhmyO61aJ+zZ6WC2kSbh/qPdV
-LumRw+3of5D6Q7W7Uq36wn0+w7I9JkNIpKRKlSNSC+AgV4xATEmpxH4GB5OCufeY
-5HUWtyoBBYsbBzuG1v3BPIUUchwJWvYAte/inH9bGhuAVcf2yCYsxSkUdyr1yKZf
-4iwMFa4JRWTNbvDJg6J0UZYD4SL9Na46LKhxl3vLSE4zGvhT7iIif+nzibOkcXFf
-KlsK77h3s901guY/1wGx+9kwifvX/Hvza0vkomCJbwm/RWbQYU/kgcBD6+ovpSik
-41a2jGYvh84/IaQpx154UjNfcMIraL+ZakeMswdOrnAC9yUyNqe7Q/K7NKKfrZOT
-/3IZlvDCsIWN4vVtKBHxbXGhws65ixY2kCaj/3ul03Ov8iepT3SetqFuca8nZySI
-j4cPOjEk3EPZ3UdwrAX1QNsRNaTnXgKe77MWW1UO5EXaxJxBejMxofuI/Ebrn66N
-9qtcCIP2NRIjRdnHg1U/
-=1JpK
------END PGP SIGNATURE-----
+> +    $ sh ./t9200-git-cvsexport-commit.sh --run='!>=21'
+> +
+> +As noted above test set is build going though patterns left to
 
---GpGaEY17fSl8rd50--
+s/above/above,/
+s/test set/the test set/
+s/build/built/
+
+    As noted above, the test set is built...
+
+> +right, so this:
+> +
+> +    $ sh ./t9200-git-cvsexport-commit.sh --run='<5 !3'
+> +
+> +will run tests 1, 2, and 4.
+> +
+> +Some tests in the existing test suite rely on previous test item,
+> +so you cannot arbitrarily disable one and expect the remainder of
+> +test to check what the test originally was intended to check.
+> +--run is mostly useful when you want to focus on a specific test
+> +and know what you are doing.  Or when you want to run up to a
+> +certain test.
+>
+>
+>  Naming Tests
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index e035f36..63e481a 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -191,6 +191,14 @@ do
+>                 immediate=t; shift ;;
+>         -l|--l|--lo|--lon|--long|--long-|--long-t|--long-te|--long-tes|--long-test|--long-tests)
+>                 GIT_TEST_LONG=t; export GIT_TEST_LONG; shift ;;
+> +       -r)
+> +               shift; test "$#" -ne 0 || {
+> +                       echo 'error: -r requires an argument' >&2;
+> +                       exit 1;
+> +               }
+> +               run_list=$1; shift ;;
+> +       --run=*)
+> +               run_list=$(expr "z$1" : 'z[^=]*=\(.*\)'); shift ;;
+>         -h|--h|--he|--hel|--help)
+>                 help=t; shift ;;
+>         -v|--v|--ve|--ver|--verb|--verbo|--verbos|--verbose)
+> @@ -366,6 +374,76 @@ match_pattern_list () {
+>         return 1
+>  }
+>
+> +match_run_pattern_list () {
+> +       arg="$1"
+> +       shift
+> +       test -z "$*" && return 0
+> +
+> +       # If the first patern is negative we include by default.
+
+s/patern/pattern/
+
+> +       include=
+> +       case "$1" in
+> +               [-!]*) include=t ;;
+> +       esac
+> +
+> +       for pattern_
+> +       do
+> +               orig_pattern=$pattern_
+> +
+> +               positive=t
+> +               case "$pattern_" in
+> +                       [-!]*)
+> +                               positive=
+> +                               pattern_=${pattern_##?}
+> +                               ;;
+> +               esac
+> +
+> +               # Short cut for "obvious" cases
+> +               [ "x$include" = "x" -a "x$positive" = "x" ] && continue
+
+Although there are a few exceptions in this script, 'test' is
+generally preferred over '['. Also, -a doesn't have great portability,
+so && may be better.
+
+    test -z "$include" && test -z "$positive" && continue
+
+> +               [ "x$include" = "xt" -a "x$positive" = "xt" ] && continue
+
+Since you're inside double quotes, you can drop the 'x' prefix:
+
+    test "$include" = t && test "$positive" = t && continue
+
+> +               pattern_op=
+> +               case "$pattern_" in
+> +                       \<=*)
+> +                               pattern_op='-le'
+> +                               pattern_=${pattern_##??}
+> +                               ;;
+> +                       \<*)
+> +                               pattern_op='-lt'
+> +                               pattern_=${pattern_##?}
+> +                               ;;
+> +                       \>=*)
+> +                               pattern_op='-ge'
+> +                               pattern_=${pattern_##??}
+> +                               ;;
+> +                       \>*)
+> +                               pattern_op='-gt'
+> +                               pattern_=${pattern_##?}
+> +                               ;;
+> +               esac
+> +
+> +               if test -n "$pattern_op"
+> +               then
+> +                       if expr "z$pattern_" : "z[0-9]*[^0-9]" >/dev/null
+
+Inside double quotes: you can drop the 'z' prefix.
+
+> +                       then
+> +                               echo "error: --run: test number contains" \
+> +                                       "non-digits: '$orig_pattern'" >&2
+> +                               exit 1
+> +                       fi
+> +                       if test $arg $pattern_op $pattern_
+> +                       then
+> +                               include=$positive
+> +                       fi
+> +               else
+> +                       case "$arg" in
+> +                               $pattern_)
+> +                                       include=$positive
+> +                       esac
+> +               fi
+> +       done
+> +
+> +       test -n "$include"
+> +}
+> +
+>  maybe_teardown_verbose () {
+>         test -z "$verbose_only" && return
+>         exec 4>/dev/null 3>/dev/null
+> @@ -470,6 +548,13 @@ test_skip () {
+>                 fi
+>                 skipped_reason="missing $missing_prereq${of_prereq}"
+>         fi
+> +       if test -z "$to_skip" && test -n "$run_list" &&
+> +               ! match_run_pattern_list $test_count $run_list
+> +       then
+> +               to_skip=t
+> +               skipped_reason="--run"
+
+A few pure bike-shedding comments (to be ignore if desired):
+
+I still don't understand the need to distinguish between a test
+skipped due to --run and and one skipped due to GIT_SKIP_TESTS.
+
+The skip-reason "GIT_SKIP_TESTS" (in patch 2/3) still seems
+unnecessarily verbose and loud.
+
+The skip-reason "excluded" (suggested in an earlier review) is short
+and sweet, and equally applicable to a test skipped either via --run
+or GIT_SKIP_TESTS.
+
+> +       fi
+> +
+>         case "$to_skip" in
+>         t)
+>                 say_color skip >&3 "skipping test: $@"
+> --
+> 1.7.9
+>
