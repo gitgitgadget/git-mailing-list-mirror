@@ -1,97 +1,230 @@
 From: "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH v2 2/3] patch-id: document new behaviour
-Date: Fri, 28 Mar 2014 14:30:15 +0200
-Message-ID: <1396009159-2078-2-git-send-email-mst@redhat.com>
-References: <1396009159-2078-1-git-send-email-mst@redhat.com>
+Subject: [PATCH v2 1/3] patch-id: make it stable against hunk reordering
+Date: Fri, 28 Mar 2014 14:30:11 +0200
+Message-ID: <1396009159-2078-1-git-send-email-mst@redhat.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: sunshine@sunshineco.com, jrnieder@gmail.com, peff@peff.net,
 	gitster@pobox.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 28 13:30:27 2014
+X-From: git-owner@vger.kernel.org Fri Mar 28 13:31:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WTVvU-0007Nl-Ge
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Mar 2014 13:30:24 +0100
+	id 1WTVwW-000847-Pw
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Mar 2014 13:31:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751437AbaC1MaO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Mar 2014 08:30:14 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:37500 "EHLO mx1.redhat.com"
+	id S1752108AbaC1MbW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Mar 2014 08:31:22 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:38531 "EHLO mx1.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751977AbaC1M36 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Mar 2014 08:29:58 -0400
-Received: from int-mx01.intmail.prod.int.phx2.redhat.com (int-mx01.intmail.prod.int.phx2.redhat.com [10.5.11.11])
-	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id s2SCTrea009389
+	id S1752103AbaC1MbR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Mar 2014 08:31:17 -0400
+Received: from int-mx10.intmail.prod.int.phx2.redhat.com (int-mx10.intmail.prod.int.phx2.redhat.com [10.5.11.23])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id s2SCToiZ016163
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Fri, 28 Mar 2014 08:29:53 -0400
+	Fri, 28 Mar 2014 08:29:50 -0400
 Received: from redhat.com (vpn1-7-130.ams2.redhat.com [10.36.7.130])
-	by int-mx01.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with SMTP id s2SCToac009445;
-	Fri, 28 Mar 2014 08:29:51 -0400
+	by int-mx10.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id s2SCTlWl026944;
+	Fri, 28 Mar 2014 08:29:47 -0400
 Content-Disposition: inline
-In-Reply-To: <1396009159-2078-1-git-send-email-mst@redhat.com>
 X-Mutt-Fcc: =sent
-X-Scanned-By: MIMEDefang 2.67 on 10.5.11.11
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245386>
 
-Clarify that patch ID is now a sum of hashes, not a hash.
-Document --stable and --unstable flags.
+Patch id changes if you reorder hunks in a diff.
+As the result is functionally equivalent, this is surprising to many
+people.
+In particular, reordering hunks is helpful to make patches
+more readable (e.g. API header diff before implementation diff).
+In git, it is often done e.g. using the "-O <orderfile>" option,
+so supporting it better has value.
+
+Hunks within file can be reordered manually provided
+the same pathname can appear more than once in the input.
+
+Change patch-id behaviour making it stable against
+hunk reodering:
+	- prepend header to each hunk (if not there)
+		Note: POSIX requires patch to be robust against hunk reordering
+		provided each diff hunk has a header:
+		http://pubs.opengroup.org/onlinepubs/7908799/xcu/patch.html
+		If the patch file contains more than one patch, patch will attempt to
+		apply each of them as if they came from separate patch files. (In this
+		case the name of the patch file must be determinable for each diff
+		listing.)
+
+	- calculate SHA1 hash for each hunk separately
+	- sum all hashes to get patch id
+
+Add a new flag --unstable to get the historical behaviour.
+
+Add --stable which is a nop, for symmetry.
 
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
 
-No change from v1.
+Changes from v1: documented motivation for supporting
+hunk reordering (and not just file reordering).
+No code changes.
 
- Documentation/git-patch-id.txt | 21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+Junio, you didn't respond so I'm not sure whether I convinced
+you that supporting hunk reordering within file has value.
+So I kept this functionality around for now, if
+you think I should drop this, please let me know explicitly.
+Thanks, and sorry about being dense!
 
-diff --git a/Documentation/git-patch-id.txt b/Documentation/git-patch-id.txt
-index 312c3b1..1bc6d52 100644
---- a/Documentation/git-patch-id.txt
-+++ b/Documentation/git-patch-id.txt
-@@ -8,14 +8,14 @@ git-patch-id - Compute unique ID for a patch
- SYNOPSIS
- --------
- [verse]
--'git patch-id' < <patch>
-+'git patch-id' [--stable | --unstable] < <patch>
+ builtin/patch-id.c | 71 ++++++++++++++++++++++++++++++++++++++++++------------
+ 1 file changed, 55 insertions(+), 16 deletions(-)
+
+diff --git a/builtin/patch-id.c b/builtin/patch-id.c
+index 3cfe02d..253ad87 100644
+--- a/builtin/patch-id.c
++++ b/builtin/patch-id.c
+@@ -1,17 +1,14 @@
+ #include "builtin.h"
  
- DESCRIPTION
- -----------
--A "patch ID" is nothing but a SHA-1 of the diff associated with a patch, with
--whitespace and line numbers ignored.  As such, it's "reasonably stable", but at
--the same time also reasonably unique, i.e., two patches that have the same "patch
--ID" are almost guaranteed to be the same thing.
-+A "patch ID" is nothing but a sum of SHA-1 of the diff hunks associated with a
-+patch, with whitespace and line numbers ignored.  As such, it's "reasonably
-+stable", but at the same time also reasonably unique, i.e., two patches that
-+have the same "patch ID" are almost guaranteed to be the same thing.
+-static void flush_current_id(int patchlen, unsigned char *id, git_SHA_CTX *c)
++static void flush_current_id(int patchlen, unsigned char *id, unsigned char *result)
+ {
+-	unsigned char result[20];
+ 	char name[50];
  
- IOW, you can use this thing to look for likely duplicate commits.
+ 	if (!patchlen)
+ 		return;
  
-@@ -27,6 +27,17 @@ This can be used to make a mapping from patch ID to commit ID.
+-	git_SHA1_Final(result, c);
+ 	memcpy(name, sha1_to_hex(id), 41);
+ 	printf("%s %s\n", sha1_to_hex(result), name);
+-	git_SHA1_Init(c);
+ }
  
- OPTIONS
- -------
+ static int remove_space(char *line)
+@@ -56,10 +53,30 @@ static int scan_hunk_header(const char *p, int *p_before, int *p_after)
+ 	return 1;
+ }
+ 
+-static int get_one_patchid(unsigned char *next_sha1, git_SHA_CTX *ctx, struct strbuf *line_buf)
++static void flush_one_hunk(unsigned char *result, git_SHA_CTX *ctx)
+ {
+-	int patchlen = 0, found_next = 0;
++	unsigned char hash[20];
++	unsigned short carry = 0;
++	int i;
 +
-+--stable::
-+	Use a symmetrical sum of hashes, such that order of
-+	hunks in the diff does not affect the ID.
-+	This is the default.
++	git_SHA1_Final(hash, ctx);
++	git_SHA1_Init(ctx);
++	/* 20-byte sum, with carry */
++	for (i = 0; i < 20; ++i) {
++		carry += result[i] + hash[i];
++		result[i] = carry;
++		carry >>= 8;
++	}
++}
++static int get_one_patchid(unsigned char *next_sha1, unsigned char *result,
++			   struct strbuf *line_buf, int stable)
++{
++	int patchlen = 0, found_next = 0, hunks = 0;
+ 	int before = -1, after = -1;
++	git_SHA_CTX ctx, header_ctx;
 +
-+--unstable::
-+	Use a non-symmetrical sum of hashes, such that order of
-+	hunks in the diff affects the ID.
-+	This was the default value for git 1.9 and older.
-+
- <patch>::
- 	The diff to create the ID of.
++	git_SHA1_Init(&ctx);
++	hashclr(result);
  
+ 	while (strbuf_getwholeline(line_buf, stdin, '\n') != EOF) {
+ 		char *line = line_buf->buf;
+@@ -99,6 +116,18 @@ static int get_one_patchid(unsigned char *next_sha1, git_SHA_CTX *ctx, struct st
+ 			if (!memcmp(line, "@@ -", 4)) {
+ 				/* Parse next hunk, but ignore line numbers.  */
+ 				scan_hunk_header(line, &before, &after);
++				if (stable) {
++					if (hunks) {
++						flush_one_hunk(result, &ctx);
++						memcpy(&ctx, &header_ctx,
++						       sizeof ctx);
++					} else {
++						/* Save ctx for next hunk.  */
++						memcpy(&header_ctx, &ctx,
++						       sizeof ctx);
++					}
++				}
++				hunks++;
+ 				continue;
+ 			}
+ 
+@@ -107,7 +136,10 @@ static int get_one_patchid(unsigned char *next_sha1, git_SHA_CTX *ctx, struct st
+ 				break;
+ 
+ 			/* Else we're parsing another header.  */
++			if (stable && hunks)
++				flush_one_hunk(result, &ctx);
+ 			before = after = -1;
++			hunks = 0;
+ 		}
+ 
+ 		/* If we get here, we're inside a hunk.  */
+@@ -119,39 +151,46 @@ static int get_one_patchid(unsigned char *next_sha1, git_SHA_CTX *ctx, struct st
+ 		/* Compute the sha without whitespace */
+ 		len = remove_space(line);
+ 		patchlen += len;
+-		git_SHA1_Update(ctx, line, len);
++		git_SHA1_Update(&ctx, line, len);
+ 	}
+ 
+ 	if (!found_next)
+ 		hashclr(next_sha1);
+ 
++	flush_one_hunk(result, &ctx);
++
+ 	return patchlen;
+ }
+ 
+-static void generate_id_list(void)
++static void generate_id_list(int stable)
+ {
+-	unsigned char sha1[20], n[20];
+-	git_SHA_CTX ctx;
++	unsigned char sha1[20], n[20], result[20];
+ 	int patchlen;
+ 	struct strbuf line_buf = STRBUF_INIT;
+ 
+-	git_SHA1_Init(&ctx);
+ 	hashclr(sha1);
+ 	while (!feof(stdin)) {
+-		patchlen = get_one_patchid(n, &ctx, &line_buf);
+-		flush_current_id(patchlen, sha1, &ctx);
++		patchlen = get_one_patchid(n, result, &line_buf, stable);
++		flush_current_id(patchlen, sha1, result);
+ 		hashcpy(sha1, n);
+ 	}
+ 	strbuf_release(&line_buf);
+ }
+ 
+-static const char patch_id_usage[] = "git patch-id < patch";
++static const char patch_id_usage[] = "git patch-id [--stable | --unstable] < patch";
+ 
+ int cmd_patch_id(int argc, const char **argv, const char *prefix)
+ {
+-	if (argc != 1)
++	int stable;
++	if (argc == 2 && !strcmp(argv[1], "--stable"))
++		stable = 1;
++	else if (argc == 2 && !strcmp(argv[1], "--unstable"))
++		stable = 0;
++	else if (argc == 1)
++		stable = 1;
++	else
+ 		usage(patch_id_usage);
+ 
+-	generate_id_list();
++	generate_id_list(stable);
+ 	return 0;
+ }
 -- 
 MST
