@@ -1,110 +1,97 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 06/17] ls-files: add --color to highlight file names
-Date: Thu, 27 Mar 2014 20:49:55 -0400
-Message-ID: <CAPig+cQ_mXQwYyy8naiSxH8=P5Mj2eqJ7jfQsAS9O2--5VyaJA@mail.gmail.com>
-References: <1395310551-23201-1-git-send-email-pclouds@gmail.com>
-	<1395841697-11742-1-git-send-email-pclouds@gmail.com>
-	<1395841697-11742-7-git-send-email-pclouds@gmail.com>
-	<CAPig+cTMRHi2sWQLZzdHZGWT6GBX-3v8exx8B4jpWm0Tgvg6+Q@mail.gmail.com>
-	<CACsJy8BjWVJu=_xyey=oBfCgemVBU4p98b+w0PaUQbFk0HG3Hw@mail.gmail.com>
+From: =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>
+Subject: Re: Found a "bug" in git 1.9.0 but can't reproduce it without copyrighted
+ source code.
+Date: Fri, 28 Mar 2014 08:04:20 +0700
+Message-ID: <5334CA94.7070708@gmail.com>
+References: <CA+fYBFdzC-_B2Qfk8Hg0pLUNy4oayySs+8B3vWq7uuBeAx9eJQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 28 01:50:03 2014
+Cc: git@vger.kernel.org
+To: yun sheng <uewing@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 28 02:04:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WTKzi-0003vN-HV
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Mar 2014 01:50:02 +0100
+	id 1WTLE0-0003rb-8a
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Mar 2014 02:04:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757030AbaC1At5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Mar 2014 20:49:57 -0400
-Received: from mail-yk0-f179.google.com ([209.85.160.179]:36012 "EHLO
-	mail-yk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756794AbaC1At4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Mar 2014 20:49:56 -0400
-Received: by mail-yk0-f179.google.com with SMTP id 9so183587ykp.24
-        for <git@vger.kernel.org>; Thu, 27 Mar 2014 17:49:55 -0700 (PDT)
+	id S1757008AbaC1BEg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Mar 2014 21:04:36 -0400
+Received: from mail-pb0-f53.google.com ([209.85.160.53]:38047 "EHLO
+	mail-pb0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755633AbaC1BEf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Mar 2014 21:04:35 -0400
+Received: by mail-pb0-f53.google.com with SMTP id rp16so4231078pbb.40
+        for <git@vger.kernel.org>; Thu, 27 Mar 2014 18:04:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=3ixyWXI0UQxTd2tqFmuhyvbB6KUO+XKzmIEan/AGaNY=;
-        b=A68UQjTA31EHN788p+K5qiVjH8MV1G5vYtrforwXnelUMdvcJXh7ha6Xs0MvP9iVxe
-         t5TnJfgW2q3VJo9LlTvVscMVKSFoV3TIaoI87odyiYiOyigLqqJfluKUzcowuhemlZc4
-         GL9ZCwTNuaEPCJMEYd/Q1v9fJ0YmGeqFzvzSGZVDBsk/rOZZaUvkWJBsBsDvF6oU4hRV
-         IjPmc8DoMFJP5Cn7jU/TRLPHYfZjPrC/BhftoTfi5IRbc5g0/4ecMBKeba3MmH4E5yCm
-         rjVFYyqXsw7n4y/Id4i63pLN8uYmVWA20W3aore54ds8el89lL6IsMOTv1bqSXsQSJUz
-         krmA==
-X-Received: by 10.236.139.70 with SMTP id b46mr6908332yhj.63.1395967795540;
- Thu, 27 Mar 2014 17:49:55 -0700 (PDT)
-Received: by 10.170.180.134 with HTTP; Thu, 27 Mar 2014 17:49:55 -0700 (PDT)
-In-Reply-To: <CACsJy8BjWVJu=_xyey=oBfCgemVBU4p98b+w0PaUQbFk0HG3Hw@mail.gmail.com>
-X-Google-Sender-Auth: FhU_Rl2WnTOIyUueSczUrPU3CQk
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=WhKAorJJbcmiPXEWA77VxydR9p2H90OYebouUvDzAes=;
+        b=yzYccmLYnazM8n2XV+s4xEj6YNHpZbqT96qwna3P1+oq0eFNTJxKhRBBKGD/Z5ELrR
+         DkWa2JKNlw7TLUOfrzWKHlCC6cRXlpbJPxv0IEgEvDV95cae29CHz7OBA/aHYojTj1SZ
+         Gw6LizO1a7tFoNMoUsIJWLKUIeRfrWQD1AADPGeF83xAdyqo7RL8EJNg71PucvDOiv7O
+         es91efoIDZgbUfX3L/CAKlQ4XL3OyirLO1CM6LVpuRxLeO9elOOifz8tW85Os071xLrh
+         ZbCHO42JrzlOMkFav5LYPbJL1Gy+SNPKVvTJ4fPCf0NwRdYlUTzyAoF86pYyfMy6yyS4
+         JZEw==
+X-Received: by 10.66.193.202 with SMTP id hq10mr5099636pac.57.1395968675250;
+        Thu, 27 Mar 2014 18:04:35 -0700 (PDT)
+Received: from vnwildman.myftp.org ([113.184.62.220])
+        by mx.google.com with ESMTPSA id dk1sm15150997pbc.46.2014.03.27.18.04.33
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 27 Mar 2014 18:04:34 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
+In-Reply-To: <CA+fYBFdzC-_B2Qfk8Hg0pLUNy4oayySs+8B3vWq7uuBeAx9eJQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245345>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245346>
 
-On Wed, Mar 26, 2014 at 7:15 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Thu, Mar 27, 2014 at 2:13 AM, Eric Sunshine <sunshine@sunshineco.c=
-om> wrote:
->> On Wed, Mar 26, 2014 at 9:48 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8D=
-c Duy <pclouds@gmail.com> wrote:
->>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@g=
-mail.com>
->>> ---
->>>  Documentation/git-ls-files.txt |  9 +++++++++
->>>  builtin/ls-files.c             | 38 ++++++++++++++++++++++++++++++=
-+++++---
->>>  2 files changed, 44 insertions(+), 3 deletions(-)
->>>
->>> diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-=
-files.txt
->>> index c0856a6..5c1b7f3 100644
->>> --- a/Documentation/git-ls-files.txt
->>> +++ b/Documentation/git-ls-files.txt
->>> @@ -147,6 +147,15 @@ a space) at the start of each line:
->>>         possible for manual inspection; the exact format may change=
- at
->>>         any time.
->>>
->>> +--color[=3D<when>]::
->>> +       Color file names. The value must be always (default), never=
-,
->>> +       or auto.
->>
->> Here, the default is "always"...
+On 28/03/2014 07:45, yun sheng wrote:
+> Hi,
 >
-> These (.txt changes in other patches as well) are mostly copy and
-> paste from existing .txt files. You may want to grep through and fix
-> other places as well, in a separate series.
+> I found git sometimes can't detect working trees changes. But I can
+> only reproduce this problem on several specific files, unfortunately
+> these files are copyrighted source files so I can't send them to you.
+> Is there anything I can do to narrow the problem and finally reproduc=
+e
+> the bug without these commercial files?
 >
->>
->>> +--no-color::
->>> +       Turn off coloring, even when the configuration file gives t=
-he
->>> +       default to color output, same as `--color=3Dnever`. This is=
- the
->>> +       default.
->>
->> But, here the default is "never".
+> I posted a question on stackoverflow which shows the process.
 >
-> What I mean is color is turned off by default for ls-files (in
-> contrast, ls has color on by default). The default 'always' means tha=
-t
-> if you write --color without the <when> part, then it's
-> --color=3Dalways. How do I phrase to make it clear?
-
-Perhaps:
-
-    Color file names. The value must be always, never, or auto.
-    `--color` by itself is the same as `--color=3Dalways`.
-
+> http://stackoverflow.com/questions/22684163/cant-reproduce-a-bug-in-g=
+it-without-a-specific-file
+>
+> Actually what I'm doing is:
+>
+> git init
+> " copy the first version of file into the working tree.
+> git add .
+> git commit -m 'init'
+> " copy and replace the file into working tree.
+> git status
+>
+> and nothing is reported by git.
+>
+> these two files have the same timestamp, the same size, bug slightly
+> different contents. These files were generated by `git difftool -d` I
+> just manually copied them out from the temp directory just for future
+> review.
+Don't worry about copyright, please run sha1sum in order to make sure
+the content is changed!
+>
+> Git I'm using is msysgit 1.9.0 on windows 7
+Is it Ok on Linux OS, on other git version?
+>
+> Best regards,
+> Sheng Yun
 > --
-> Duy
+>
+
+--=20
+Tr=E1=BA=A7n Ng=E1=BB=8Dc Qu=C3=A2n.
