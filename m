@@ -1,89 +1,97 @@
 From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: git commit vs. ignore-submodules
-Date: Fri, 28 Mar 2014 17:47:08 +0100
-Message-ID: <5335A78C.60401@web.de>
-References: <CABxC_L92v=cV=+e_DNa0L6f21LB0BRP5duai2h_heGJN_PRoUQ@mail.gmail.com>
+Subject: Re: [PATCH] Documentation/submodule: Fix submodule.<name> -> .<path>
+ typos
+Date: Fri, 28 Mar 2014 17:55:18 +0100
+Message-ID: <5335A976.6050908@web.de>
+References: <f86f6b48f1c840d50d00c591a296821e0a18ee0d.1395954229.git.wking@tremily.us> <5334B0F4.60103@web.de> <20140328020648.GB25485@odin.tremily.us>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Heiko Voigt <hvoigt@hvoigt.net>
-To: Ronald Weiss <weiss.ronald@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 28 17:47:21 2014
+Cc: Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Johan Herland <johan@herland.net>
+To: "W. Trevor King" <wking@tremily.us>
+X-From: git-owner@vger.kernel.org Fri Mar 28 17:55:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WTZw7-0001PR-PC
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Mar 2014 17:47:20 +0100
+	id 1WTa46-0006qb-2b
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Mar 2014 17:55:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752144AbaC1QrP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Mar 2014 12:47:15 -0400
-Received: from mout.web.de ([212.227.15.4]:61807 "EHLO mout.web.de"
+	id S1751699AbaC1Qza (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Mar 2014 12:55:30 -0400
+Received: from mout.web.de ([212.227.15.14]:62291 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751340AbaC1QrO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Mar 2014 12:47:14 -0400
-Received: from [192.168.178.41] ([84.132.146.169]) by smtp.web.de (mrweb003)
- with ESMTPSA (Nemesis) id 0LgHKO-1WoJlc3kXM-00neNS; Fri, 28 Mar 2014 17:47:13
+	id S1751404AbaC1Qz3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Mar 2014 12:55:29 -0400
+Received: from [192.168.178.41] ([84.132.146.169]) by smtp.web.de (mrweb002)
+ with ESMTPSA (Nemesis) id 0MVLsk-1WZgAj2hiw-00YiPG; Fri, 28 Mar 2014 17:55:19
  +0100
 User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
-In-Reply-To: <CABxC_L92v=cV=+e_DNa0L6f21LB0BRP5duai2h_heGJN_PRoUQ@mail.gmail.com>
+In-Reply-To: <20140328020648.GB25485@odin.tremily.us>
 X-Enigmail-Version: 1.6
-X-Provags-ID: V03:K0:JqksI/WhgkXf50n4TAQe2ZX630NDk+OPjtquMVZco7lrg0izZSi
- dlezSOQn1kyh4nQdWA//0vKdrm59q8JBaH1CRIUgJ0wdgUMKkYLR4+HkclXSzfhvnCk0z44
- Vg732CEJsNIKIUHhKk3D3p0+kMWYtlnUKzunl9kaZ893p+8R8RNtM+G7oI8elbNcjx/AQP2
- x0lMIE39YAMrF6ao0brlA==
+X-Provags-ID: V03:K0:N4b+uANlcC1dBhnR8mEJTNm/LX+BIdsP+PBzQ8hmWFVyUPYwjHg
+ LaaTb7t1U/oobAmhKPkjZb+ZitW9nFAn/iR1B7t7hQahJJ1w2VfrQMPbzhj5SBN7IzYlDFQ
+ v00DKJKA/Tpa/yUleFZkN3vA8+OrLipkp3kKQfo/V+gJR8V82PmxlT/SWWg9Y7yT8tES0z3
+ W/D5q4Xu/Yx9xzcNax4GA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245394>
 
-Am 28.03.2014 00:36, schrieb Ronald Weiss:
-> Hello.
+I just noticed that the two patches Junio added to pu have a reworded
+commit message I'm perfectly happy with.
+
+Thanks all.
+
+Am 28.03.2014 03:06, schrieb W. Trevor King:
+> On Fri, Mar 28, 2014 at 12:15:00AM +0100, Jens Lehmann wrote:
+>> Am 27.03.2014 22:06, schrieb W. Trevor King:
+>>> The transition from submodule.<path>.* to submodule.<name>.* happened
+>>> in 73b0898d (Teach "git submodule add" the --name option, 2012-09-30),
+>>> which landed in v1.8.1-rc0 on 2012-12-03.
+>>
+>> Nope, the distinction between path and name is way older (AFAIK it
+>> is there from day one). That was just the point in time where you
+>> could choose a different name without editing .gitmodules. And the
+>> fact that the name is initialized with the path confused a lot of
+>> people.
 > 
-> As this is my first post to this list, let me first thank all the
-> people involved in Git development - it's really a great tool.
-
-Welcome and thanks for the feedback!
-
-> Now to the point. Since Git 1.8 (I think), git commit command honours
-> the submodules' ignore settings, configured either in .gitmodules, or
-> in .git/config. That's very nice and certainly correct for "git commit
-> -a", but it's less clear if one explicitely stages an updated
-> submodule using git add. Git commit will ignore it anyway, if
-> ignore=all is configured in .gitmodules. Maybe that's correct too, I'm
-> not sure about that, but it's inconvenient in our use case, especially
-> combined with the lack of --ignore-submodule parameter to git commit,
-> as git status and git diff have.
+> Before 73b0898d, cmd_add used:
 > 
-> We use submodules in such a way that normally we don't ever want to
-> see changes in them in output of git diff and git status. So we set
-> ignore=all in .gitmodules for each submodule. But occasionally, we
-> need to add a new submodule, and sometimes also commit changed
-> submodule. This got harder with Git 1.8, we have to "git config
-> submodule.<name>.ignore none" before the commit, and "git config
-> --unset ..." after.
+>   git config -f .gitmodules submodule."$sm_path".path "$sm_path"
 > 
-> I'd like to at least add an --ignore-submodules parameter to git
-> commit. I though about posting a patch, but as I looked into the
-> commit source file, I didn't see any straightforward way to implement
-> it. I don't have enough free time for a deeper analysis of the
-> sources, I'm sorry.
+> and similar, so I used submodule.<path>.branch in my initial
+> documentation of this patch (v5 of that series) [1].  By the final v8
+> (which rebased onto the then-current master with 73b0898d), the
+> surrounding calls were [2]:
 > 
-> So please, let me first know, whether you could possibly accept such
-> patch, and if so, then I'd really appreciate some hints on how to do
-> it.
-
-Such a patch would be very much appreciated. You might want to look
-into other commands that already have the --ignore-submodules option
-to get an idea how to do that. cmd_status() in builtin/commit.c
-should be a good starting point.
-
-> And also, I'd like to know git folks' opinion on whether it's OK that
-> git commit with ignore=all in .gitmodules ignores submodules even when
-> they are explicitely staged with git add.
-
-No, they should be visible in status and commit when the user chose
-to add them. I see if I can hack something up (as I've been bitten
-myself by that recently ;-).
+>   git config -f .gitmodules submodule."$sm_name".path "$sm_path"
+> 
+> but I missed the update to <name> in my rebasing.  I suppose I could
+> have used <name> instead of <path> in my initial v5 patch, but I was
+> one of the folks confused by the old name == path behavior ;).
+> 
+>>> This patch is against master, because 23d25e48 hasn't landed in maint
+>>> yet.  If you want, I can split this into two patches, one against
+>>> maint fixing the b9289227 typo and another against master fixing the
+>>> 23d25e48 typo.
+>>
+>> This fixes the only two usages of 'submodule.<path>.*' in the
+>> Documentation I can see in current master.
+> 
+> Right.  However, this patch won't apply to the maint branch (where
+> 23d25e48 hasn't landed).  I'm just saying that we may want to split
+> this patch in half and push the fix for b9289227 in a maintenance
+> release.  On the other hand, we've survived since 2012 with the
+> current docs, so *not* splitting this patch apart works for me too.
+> 
+> Cheers,
+> Trevor
+> 
+> [1]: http://article.gmane.org/gmane.comp.version-control.git/210763
+> [2]: http://article.gmane.org/gmane.comp.version-control.git/211832
+> 
