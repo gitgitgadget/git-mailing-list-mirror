@@ -1,109 +1,116 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: [PATCH] Documentation/submodule: Fix submodule.<name> -> .<path>
- typos
-Date: Fri, 28 Mar 2014 10:01:30 -0700
-Message-ID: <20140328170130.GI25485@odin.tremily.us>
-References: <f86f6b48f1c840d50d00c591a296821e0a18ee0d.1395954229.git.wking@tremily.us>
- <5334B0F4.60103@web.de>
- <20140328020648.GB25485@odin.tremily.us>
- <5335A976.6050908@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Borrowing objects from nearby repositories
+Date: Fri, 28 Mar 2014 10:02:31 -0700
+Message-ID: <xmqq8urucl3s.fsf@gitster.dls.corp.google.com>
+References: <BFF5FBC7-8F53-4958-8D56-90EADD3AD626@kellerfarm.com>
+	<CACBZZX5teZuqtNkPT4PdXJn=g34cOhRH2oNehROT8kJ_M2cgfg@mail.gmail.com>
+	<xmqqtxammctc.fsf@gitster.dls.corp.google.com>
+	<xmqqvbv1kjoc.fsf@gitster.dls.corp.google.com>
+	<3533946C-DE97-4214-9B55-F5B788DDD952@kellerfarm.com>
+	<xmqqbnwskgwd.fsf@gitster.dls.corp.google.com>
+	<8030ADEA-B11F-47E8-AFE7-8F46E861F560@kellerfarm.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="FK65GREB+Evh/hTL"
-Cc: Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Johan Herland <johan@herland.net>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Fri Mar 28 18:01:39 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Andrew Keller <andrew@kellerfarm.com>
+X-From: git-owner@vger.kernel.org Fri Mar 28 18:02:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WTa9y-0002Qq-MC
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Mar 2014 18:01:39 +0100
+	id 1WTaAx-000360-Ls
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Mar 2014 18:02:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751701AbaC1RBe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Mar 2014 13:01:34 -0400
-Received: from qmta03.westchester.pa.mail.comcast.net ([76.96.62.32]:53077
-	"EHLO qmta03.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751340AbaC1RBd (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 Mar 2014 13:01:33 -0400
-Received: from omta05.westchester.pa.mail.comcast.net ([76.96.62.43])
-	by qmta03.westchester.pa.mail.comcast.net with comcast
-	id j4XJ1n0020vyq2s5351Yql; Fri, 28 Mar 2014 17:01:32 +0000
-Received: from odin.tremily.us ([24.18.63.50])
-	by omta05.westchester.pa.mail.comcast.net with comcast
-	id j51W1n00R152l3L3R51XJj; Fri, 28 Mar 2014 17:01:32 +0000
-Received: by odin.tremily.us (Postfix, from userid 1000)
-	id 5754310DEBF7; Fri, 28 Mar 2014 10:01:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1396026090; bh=ww2i2HOCblSwmqOWakX5ASIynPzXfWgIExbln6Ntfbc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=PDw83p/L1Z5pkO3smTQHhAWjEb5muONisyIcEbvuZpUMkduGcX/c/fxTlrqtLv1cH
-	 lDF3UigvmhF0b9kzvpv/MREqftmMTz0sXcdTfHA1PE1u0i/hdVwJzGNARf96YC0ZzZ
-	 fH9EpsJR0haO2eWTRPLp7kHOwWdN0j9A+GrgXkNc=
-Content-Disposition: inline
-In-Reply-To: <5335A976.6050908@web.de>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.22 (2013-10-16)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20140121; t=1396026092;
-	bh=ww2i2HOCblSwmqOWakX5ASIynPzXfWgIExbln6Ntfbc=;
-	h=Received:Received:Received:Date:From:To:Subject:Message-ID:
-	 MIME-Version:Content-Type;
-	b=rBxLF3JPB1tkrBgo4RQPQ91pIUgq0TBlJKPNs6ldjcg8Usq/wakBAz0JAS9mObDlL
-	 XoDidZ8SjX/ZD1c+gxLZlLS3vX6SNCt4TPF0YsC3PaFl6Ujov2tt08ijQI4HU33Qme
-	 gkNAnTgajRm4u+8cwtEH7YOyyxhSunVj/3uHqHyMW+epVVPUZ99MzGpWNvn/VRJsOx
-	 y/35QMNls2s27frvv7c+AQ8a1sCtcvmWwMZTvztas691v7FYxOehg9UDIwToeAdFiv
-	 2Uki5zL53zpgvc51NUbxv6WccLwBuBiI5UVnsMksusRr6KzutNl5/y+ndkCCW0Iwap
-	 u/nJwBebSbndg==
+	id S1751809AbaC1RCg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Mar 2014 13:02:36 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59443 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751760AbaC1RCf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Mar 2014 13:02:35 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8F21E77281;
+	Fri, 28 Mar 2014 13:02:34 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=b/ObeCt8lvonl5Ko7odLzaszzp4=; b=M3CTrc
+	ViaDMLzzhfLiKgLPLKXtfJ5GlTD90PhfzyqNUxLS2WuxjjeBgeNjLd6EPG68t4nY
+	gJyqGcegp6Bz8dJqJWFqy3bd2KxwD4+BzXbDaq1gHb6oyB7Or+YApyKj0Auqxd0b
+	Joh/klJvgExdk1a7AmpD+CtScbXS38+a57MbU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=rcrHkf0RFX07kf4boboF7LGEm0yWjdOv
+	UQHYGxnq1piROIvLq/wpxB9iMb+ZKygViVNNG77VpDx1XLV4RRnxt/JW6t0/04fH
+	ovbR7XF9jXDyK7k682fBy3QNBh6yugsXPOUpCdLYuckImpGNa0LUsgmeP2nM5SIs
+	u4Ws029dTEI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7152977280;
+	Fri, 28 Mar 2014 13:02:34 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 76A5F7727E;
+	Fri, 28 Mar 2014 13:02:33 -0400 (EDT)
+In-Reply-To: <8030ADEA-B11F-47E8-AFE7-8F46E861F560@kellerfarm.com> (Andrew
+	Keller's message of "Fri, 28 Mar 2014 10:52:20 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: C1448C32-B69A-11E3-8912-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245397>
+
+Andrew Keller <andrew@kellerfarm.com> writes:
+
+> Okay, so to re-frame my idea, like you said, the goal is to find a user-
+> friendly way for the user to tell git-clone to set up the alternates file
+> (or perhaps just use the --alternates parameter), and run a repack,
+> and disconnect the alternate.  And yet, we still want to be able to use
+> --reference on its own, because there are existing use cases for that.
+
+Here are a few possible action items that came out of this
+discussion:
+
+ 1. Introduce a new "--borrow" option to "git clone".
+
+    The updates to the SYNOPSIS section may go like this:
+
+    -'git clone' [--reference <repository>] ...other options...
+    +'git clone' [[--reference|--borrow] <repository>] ...other options...
+
+    The new option can be used instead of "--reference" and they
+    will be mutually incompatible.  The first implementation of the
+    "--borrow" option would do the following:
+
+      (1) run the same "git clone" with the same command line but
+          replacing "--borrow" with "--reference"; if this fails, exit
+          with the same failure.
+
+      (2) in the resulting repository, run "git repack -a -d"; if this
+          fails, remove the entire directory the first step created,
+          and exit with failure.
+
+      (3) remove .git/objects/info/alternates from the resulting
+          repository and exit with success.
+
+    and it may be acceptable as the final implementation as well.
 
 
---FK65GREB+Evh/hTL
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+ 2. Make "git repack" safer for the users of "clone --reference" who
+    want to keep sharing objects from the original.
 
-On Fri, Mar 28, 2014 at 05:55:18PM +0100, Jens Lehmann wrote:
-> I just noticed that the two patches Junio added to pu have a
-> reworded commit message I'm perfectly happy with.
+    - Introduce the "repack.local" configuration variable that can
+      be set to either true or false.  Missing variable defaults to
+      "false".  
 
-The revised wording works for me too.
+    - A "repack" that is run without "-l" option on the command line
+      will pretend as if it was given "-l" from the command line if
+      "repack.local" is set to "true".  Add "repack --no-local"
+      option to countermand this configuration variable from the
+      command line.
 
-Cheers,
-Trevor
-
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
-
---FK65GREB+Evh/hTL
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
-
-iQIcBAEBAgAGBQJTNaroAAoJEKKfehoaNkbtkIkQALFdebqPOIEFcCzqdEeOHVL/
-llWwE4Th4E9x8Gsv4adLeBKMrXinl2Qe4q+K2ON8DZ8eBItse2ks4Eotco1vlqio
-bHV5BWYxUwwNnJ1bMjfSgPShkDHUJFS9pYGgwAXSYT1GWAVSIPDMWNW72BgSuTg1
-dYPvxqfvxLIWFuJ4XQa6jaEO9IbL/QxTEvHC/6rxVh//o4zyj93oQjxe67VfgeGc
-DMVBHHf8Dejs1NPp/qScD0RsRnkGwPLMK+VJoQtIkYfgHcjt2qipfq7Z5KJw2Vb+
-KHWnFMEcFZTOTCCrxTwen5atc6Wngx1srYIXEpjj/XXXaRb/HnfnIr2+JD3bgPR/
-ekm9Ntkq5xjXxUOK16Bulu+9FCP6la+KICrBnKe9OWAKSHn8y45pqoG8/nNroEbS
-+3kC5lPHMjg1Oyj1Nj0yy2smz560lY3WRlJ6Q4NaQy2gK2ioit1FuLjM9DB0iisH
-340Y7WccCuTEAHwu9Idm95qGF1/qqpaTmkvoZ756g5jX3jq4GJ5pakYI/OoEepos
-tsYPXYi8g1s/ywVLGng8fzbe+SbwhFtO2yLAgKEaucVWnAE7Y9CTMqainc67oiUd
-nkh6jlXxcy34U/VRwMVOl3Seqk88cHWQTyAtkw4xQ5Ol6WMJpoIq/c1oKzX9zRN8
-LBfzlN2+XZYQnjepaMKj
-=jAIv
------END PGP SIGNATURE-----
-
---FK65GREB+Evh/hTL--
+    - Teach "git clone --reference" (but not "git clone --borrow")
+      to set "repack.local = true" in the configuration of the
+      resulting repository.
