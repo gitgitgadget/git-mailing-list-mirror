@@ -1,109 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 14/19] tree-diff: rework diff_tree interface to be sha1 based
-Date: Fri, 28 Mar 2014 11:36:13 -0700
-Message-ID: <xmqqtxai9nmq.fsf@gitster.dls.corp.google.com>
-References: <cover.1393257006.git.kirr@mns.spb.ru>
-	<0b82e2de0edee4a590e7b4165c65938aef7090f5.1393257006.git.kirr@mns.spb.ru>
-	<xmqqa9cfp9d5.fsf@gitster.dls.corp.google.com>
-	<20140325092215.GB3777@mini.zxlink>
-	<xmqq4n2mmarr.fsf@gitster.dls.corp.google.com>
-	<20140326195201.GB16002@mini.zxlink>
-	<xmqq1txoiqzj.fsf@gitster.dls.corp.google.com>
-	<20140327142438.GE17333@mini.zxlink>
-	<xmqq1txneavo.fsf@gitster.dls.corp.google.com>
-	<53351C1B.6040609@viscovery.net>
-	<xmqq4n2ickx4.fsf@gitster.dls.corp.google.com>
-	<5335B57B.4080606@kdbg.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] t4212: handle systems with post-apocalyptic gmtime
+Date: Fri, 28 Mar 2014 14:47:10 -0400
+Message-ID: <20140328184710.GA29987@sigill.intra.peff.net>
+References: <20140326182103.GB7087@sigill.intra.peff.net>
+ <20140326185153.GA12912@sigill.intra.peff.net>
+ <xmqqr45oixa6.fsf@gitster.dls.corp.google.com>
+ <20140326192536.GA13989@sigill.intra.peff.net>
+ <20140326193359.GA14105@sigill.intra.peff.net>
+ <20140326212227.GC6991@hashpling.org>
+ <20140326215741.GA17716@sigill.intra.peff.net>
+ <20140326224616.GA9454@hashpling.org>
+ <20140327224837.GB32434@sigill.intra.peff.net>
+ <xmqqd2h6cm26.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Kirill Smelkov <kirr@navytux.spb.ru>, kirr@mns.spb.ru,
-	git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Fri Mar 28 19:36:32 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Charles Bailey <cbailey32@bloomberg.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 28 19:47:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WTbdn-0004rR-R2
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Mar 2014 19:36:32 +0100
+	id 1WTboF-0003Hu-WE
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Mar 2014 19:47:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751667AbaC1SgR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Mar 2014 14:36:17 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62313 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751305AbaC1SgQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Mar 2014 14:36:16 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 494DA778CD;
-	Fri, 28 Mar 2014 14:36:16 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=X72seT9TG+U/zdn1vA6rrZLM6x8=; b=tcsmEE
-	iDuvugbn5R3SewIRd0Gthj7Jf2oHwxIwEvxYfs8lvdsEIUR3PtnqdIkZAsla2akQ
-	gIzxVUkL4w2j2EOTBqq8MuRAmByhO9ZKhQ2IKRfijtr5MwFsUQ0XsD1oOTkPQ+4a
-	UZoCgL85mm6TXw+NkfLcbOTJEjzCVdP2K+jzA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=RHkXFW1dKLbg7kkvo/Ki1yED2lZ14jEb
-	MTDpv1MxofyKxp9kAMIlMe7qfB7WShJCI/OysfzTElSG1ixCaVBq1XLKDGChokXJ
-	f2c5oVJP/6bKp21Pe4wrJV4odd+dSTgWtxXYud91llog91EDPsn4g7K4T8Cd1BrL
-	sp9Y/lubiwk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 32A54778C8;
-	Fri, 28 Mar 2014 14:36:16 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 489D4778C5;
-	Fri, 28 Mar 2014 14:36:15 -0400 (EDT)
-In-Reply-To: <5335B57B.4080606@kdbg.org> (Johannes Sixt's message of "Fri, 28
-	Mar 2014 18:46:35 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: D821298A-B6A7-11E3-BC6B-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752225AbaC1SrO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Mar 2014 14:47:14 -0400
+Received: from cloud.peff.net ([50.56.180.127]:49470 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751735AbaC1SrM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Mar 2014 14:47:12 -0400
+Received: (qmail 32334 invoked by uid 102); 28 Mar 2014 18:47:12 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 28 Mar 2014 13:47:12 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 28 Mar 2014 14:47:10 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqd2h6cm26.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245411>
 
-Johannes Sixt <j6t@kdbg.org> writes:
+On Fri, Mar 28, 2014 at 09:41:53AM -0700, Junio C Hamano wrote:
 
-> Am 28.03.2014 18:06, schrieb Junio C Hamano:
->> Johannes Sixt <j.sixt@viscovery.net> writes:
->> 
->>> Am 3/27/2014 19:48, schrieb Junio C Hamano:
->>>>> From: Kirill Smelkov <kirr@mns.spb.ru>
->>>>> Date: Mon, 24 Feb 2014 20:21:46 +0400
->>>>> ...
->>>>
->>>> By the way, in general I do not appreciate people lying on the Date:
->>>> with an in-body header in their patches, either in the original or
->>>> in rerolls.
->>>
->>> format-patch is not very cooperative in this aspect. When I prepare a
->>> patch series with format-patch, I find myself editing out the Date: line
->>> from all patches it produces again and again. :-(
->> 
->> I am not sure what you mean.  If you are pasting the format-patch
->> output into an editor your MUA is using to receive the body of the
->> message from you, you would remove all the non-body lines, not just
->> Date: but Subject: and From:, no?
->
-> Correct. So I should add that my gripe is about when I want to send a
-> patch series with git-send-email that was prepared with git-format-patch.
+> Offhand, the three possible failure modes this thread identified
+> sounds to me like the only plausible ones, and I think the best way
+> forward might be to
+> 
+>  - teach the "is the result sane, even though we may have got a
+>    non-NULL from gmtime?  otherwise let's signal a failure by
+>    replacing it with a known sentinel value" codepath the new
+>    failure mode Charles's report suggests---if we feed a positive
+>    timestamp and gmtime gave us back a tm_year+1900 < 0, that is
+>    certainly an overflow; and
 
-Hmph.  Don't you get fresh timestamps for your messages in such a
-case, ignoring whatever is at the beginning of the input files?
+I don't think we can analyze the output from gmtime. If it wraps the
+year at N, then won't N+2014 look like a valid value?
 
-My reading of git-send-email is:
+If we are going to do something trustworthy I think it has to be before
+we hand off to gmtime. Like:
 
- * "$time = time - scalar $#files" prepares the initial "timestamp",
-   so that running two "git send-email" back to back will give
-   timestamps to the series sent out by the first invocation that
-   are older than the ones the second series will get;
+diff --git a/date.c b/date.c
+index e1a2cee..e0c43c4 100644
+--- a/date.c
++++ b/date.c
+@@ -57,6 +57,8 @@ static time_t gm_time_t(unsigned long time, int tz)
+ static struct tm *time_to_tm(unsigned long time, int tz)
+ {
+ 	time_t t = gm_time_t(time, tz);
++	if (t > 9999999999999999)
++		return NULL;
+ 	return gmtime(&t);
+ }
 
- * "sub send_message" calls "format_2822_time($time++)" to send the
-   first message with that initial "timestamp", incrementing the
-   timestamps by 1 second intervals (without having to actually wait
-   1 second in between messages) for each patch.
+I suspect that would handle the FreeBSD case, as well.
+
+By the way, I have a suspicion that the gm_time_t above can overflow if
+you specially craft a value at the edge of what time_t can handle (we
+check that our value will not overflow time_t earlier, but now we might
+be adding up to 86400 seconds to it). <sigh>
+
+-Peff
