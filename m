@@ -1,132 +1,160 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: [RFC] submodule: change submodule.<name>.branch default from
- master to HEAD
-Date: Thu, 27 Mar 2014 20:58:27 -0700
-Message-ID: <20140328035827.GG25485@odin.tremily.us>
-References: <20140328030556.GD25485@odin.tremily.us>
- <c66d89d854407469b6fd223213a09e5d60eeec0a.1395977055.git.wking@tremily.us>
- <CAPig+cT7tmxvYz+sLQY68SgF6osM+pAj-gFb7xvyuH+Gnw5xrg@mail.gmail.com>
- <20140328035255.GF25485@odin.tremily.us>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 16/17] ls: do not show duplicate cached entries
+Date: Fri, 28 Mar 2014 00:04:35 -0400
+Message-ID: <CAPig+cRurqCHyFtpCFOisc=1u06JSpmE9rHQa0ioLxrQMuJ4Dw@mail.gmail.com>
+References: <1395310551-23201-1-git-send-email-pclouds@gmail.com>
+	<1395841697-11742-1-git-send-email-pclouds@gmail.com>
+	<1395841697-11742-17-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Z0mFw3+mXTC5ycVe"
-Cc: Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Johan Herland <johan@herland.net>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Fri Mar 28 04:58:39 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 28 05:04:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WTNwF-0000Ds-Ak
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Mar 2014 04:58:39 +0100
+	id 1WTO25-0003am-CZ
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Mar 2014 05:04:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757512AbaC1D6d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Mar 2014 23:58:33 -0400
-Received: from qmta06.westchester.pa.mail.comcast.net ([76.96.62.56]:40776
-	"EHLO qmta06.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755140AbaC1D6a (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Mar 2014 23:58:30 -0400
-Received: from omta21.westchester.pa.mail.comcast.net ([76.96.62.72])
-	by qmta06.westchester.pa.mail.comcast.net with comcast
-	id irwy1n0041ZXKqc56ryVnE; Fri, 28 Mar 2014 03:58:29 +0000
-Received: from odin.tremily.us ([24.18.63.50])
-	by omta21.westchester.pa.mail.comcast.net with comcast
-	id iryU1n00C152l3L3hryUA6; Fri, 28 Mar 2014 03:58:29 +0000
-Received: by odin.tremily.us (Postfix, from userid 1000)
-	id E1D5110DE346; Thu, 27 Mar 2014 20:58:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1395979107; bh=b89jS9XaOWpUk1Po6tw8dodqWRy0wVnenUIuLH/VEMI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=CXJmZnE9MeVvYgE1A88jKyKGaZWUOXeVb9KHkLZqSfc9q5nlGqy9AhSwPtjzjSCaR
-	 aQl0pUmTBzGVzlPsEWyQ/7MYLHFAHR26M1g2/+7GOOYQQgKOmvywignFNjx2PXgfDc
-	 4PDH2TLpixl3bVhgc1dc273CFzSErihTBt2LVhCE=
-Content-Disposition: inline
-In-Reply-To: <20140328035255.GF25485@odin.tremily.us>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.22 (2013-10-16)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20140121; t=1395979109;
-	bh=Bmo5cLofUr3l+wEDeFEpKObqePFo3CHGvGWWsliogP8=;
-	h=Received:Received:Received:Date:From:To:Subject:Message-ID:
-	 MIME-Version:Content-Type;
-	b=avLnxQeTM30PynmEQnf+jH1JcIvVqZODEPrGTROwLfeEYCBcKRHFLE+jxf6wf1FR3
-	 5YKKmjiKUsQvtEk2UWygFuPP25TTnjXmzWvbrf64rNcREYxXQipeJ+isEIaMdnXgSD
-	 Xiqs7ibmBO8FzK3WzjXH6rbiKY4ypCCgRB+JOKIRHC+t5Ep5b13gPTaveh9as9lL3I
-	 G+0IahBr735o8JyPSQizMiazs0aLf5y6OLGxLCqcLRHAFFWEFz3LowlYuREJXZNube
-	 5bnNbfx1Hc/9p5yqeQ48z1pO0QXT3UJ+54EUfnvNapFfrddcqBjwnTeP6BItG2UQvQ
-	 9/FAjlLry4j7Q==
+	id S1752109AbaC1EEg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Mar 2014 00:04:36 -0400
+Received: from mail-yk0-f179.google.com ([209.85.160.179]:62639 "EHLO
+	mail-yk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751733AbaC1EEf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Mar 2014 00:04:35 -0400
+Received: by mail-yk0-f179.google.com with SMTP id 9so307893ykp.24
+        for <git@vger.kernel.org>; Thu, 27 Mar 2014 21:04:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=s/sGPfdZI+yRbVRDppXo4qVdoYEUiG67Pp/jRf63gEk=;
+        b=QMSGtnhEAC7FJgfSto2FxZfRkp7FOHHn3kXWtg2Kkr0dNx4AWOSR+MwbvHJpz/H4JN
+         Ka7MHsuyetyn7ZbbNF7puLZSq0BTzosYzP85tqzrQPhtDUNhyCLLPYIyABm9UohrKhib
+         v4/xZTX2l9bH7vgKsT2IVD0zONgtsuv0VHZIN1WIrVr7/5jq51sDpq/EGiwUmm84SDir
+         ZorDpe/a7ORBKsXXj5Njk2cZyjz/11LpU8IN8u0CWp6Q+tS58MACvWEIbmykC0zJ23Dh
+         kmXaMSU17LyW7jT8E10lDghBywFi2LxYLiNm5yEjyxPZmLBiQphC5L2MKNJZaDu6MKw3
+         +88g==
+X-Received: by 10.236.83.6 with SMTP id p6mr8037401yhe.56.1395979475245; Thu,
+ 27 Mar 2014 21:04:35 -0700 (PDT)
+Received: by 10.170.180.134 with HTTP; Thu, 27 Mar 2014 21:04:35 -0700 (PDT)
+In-Reply-To: <1395841697-11742-17-git-send-email-pclouds@gmail.com>
+X-Google-Sender-Auth: 4oouWBbnhYCramlo_WrBFFhWnd0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245362>
 
+On Wed, Mar 26, 2014 at 9:48 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
+Duy <pclouds@gmail.com> wrote:
+> With the current show_files() "ls -tcm" will show
+>
+>   foo.c
+> M foo.c
+>
+> The first item is redundant. If "foo.c" is modified, we know it's in
+> the cache. Introduce show_files_compact to do that because ls-files i=
+s
+> plumbing and scripts may already depend on current display behavior.
+>
+> Another difference in show_files_compact() is it does not show
+> skip-worktree (aka outside sparse checkout) entries anymore, which
+> makes sense in porcelain context.
+>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+>  builtin/ls-files.c | 52 ++++++++++++++++++++++++++++++++++++++++++++=
++++++++-
+>  1 file changed, 51 insertions(+), 1 deletion(-)
+>
+> diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+> index 709d8b1..cd8e35c 100644
+> --- a/builtin/ls-files.c
+> +++ b/builtin/ls-files.c
+> @@ -337,6 +337,53 @@ static void show_files(struct dir_struct *dir)
+>         }
+>  }
+>
+> +static void show_files_compact(struct dir_struct *dir)
+> +{
+> +       int i;
+> +
+> +       /* For cached/deleted files we don't need to even do the read=
+dir */
+> +       if (show_others || show_killed) {
+> +               if (!show_others)
+> +                       dir->flags |=3D DIR_COLLECT_KILLED_ONLY;
+> +               fill_directory(dir, &pathspec);
+> +               if (show_others)
+> +                       show_other_files(dir);
+> +               if (show_killed)
+> +                       show_killed_files(dir);
+> +       }
+> +       if (!(show_cached || show_stage || show_deleted || show_modif=
+ied))
+> +               return;
+> +       for (i =3D 0; i < active_nr; i++) {
+> +               const struct cache_entry *ce =3D active_cache[i];
+> +               struct stat st;
+> +               int err, shown =3D 0;
+> +               if ((dir->flags & DIR_SHOW_IGNORED) &&
+> +                   !ce_excluded(dir, ce))
+> +                       continue;
+> +               if (show_unmerged && !ce_stage(ce))
+> +                       continue;
+> +               if (ce->ce_flags & CE_UPDATE)
+> +                       continue;
+> +               if (ce_skip_worktree(ce))
+> +                       continue;
+> +               err =3D lstat(ce->name, &st);
+> +               if (show_deleted && err) {
+> +                       show_ce_entry(tag_removed, ce);
+> +                       shown =3D 1;
+> +               }
+> +               if (show_modified && ce_modified(ce, &st, 0)) {
 
---Z0mFw3+mXTC5ycVe
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Is it possible for the lstat() to have failed for some reason when we
+get here? If so, relying upon 'st' is unsafe, isn't it?
 
-On Thu, Mar 27, 2014 at 08:52:55PM -0700, W. Trevor King wrote:
-> On Thu, Mar 27, 2014 at 11:43:47PM -0400, Eric Sunshine wrote:
-> > On Thu, Mar 27, 2014 at 11:36 PM, W. Trevor King <wking@tremily.us> wro=
-te:
-> > >  submodule.<name>.branch::
-> > >         A remote branch name for tracking updates in the upstream sub=
-module.
-> > > -       If the option is not specified, it defaults to 'master'.  See=
- the
-> > > -       `--remote` documentation in linkgit:git-submodule[1] for deta=
-ils.
-> > > +       If the option is not specified, it defaults to the subproject=
-'s
-> >=20
-> > Did you mean s/subproject/submodule/ ?
-> >=20
-> > > +       HEAD.  See the `--remote` documentation in linkgit:git-submod=
-ule[1]
-> > > +       for details.
->=20
-> No the remote branch is in the upstream subproject.  I suppose I meant
-> =E2=80=9Cthe submodule's remote-tracking branch following the upstream
-> subproject's HEAD which we just fetched so it's fairly current=E2=80=9D ;=
-).
-
-Hmm, maybe we should change the existing =E2=80=9Cupstream submodule=E2=80=
-=9D to
-=E2=80=9Cupstream subproject=E2=80=9D for consistency?
-
-Trevor
-
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
-
---Z0mFw3+mXTC5ycVe
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
-
-iQIcBAEBAgAGBQJTNPNiAAoJEKKfehoaNkbtdLUP/jztQn9u2dMeBXUi3k3AFcMP
-UbOzfg+BNBUzljw8BjPQpROwcnmvlwIUQiwqVCmrafrT7tEYKI2hm8BENew0agQK
-P0cZXIml1mHq4W7tHs/x5eooiUzbmzUyesgS+2w1NbaICz/zuZbfRFUqQH3Z8U++
-LDScTrLHkkXwSR9IfUHwsYqXpJnVFNx/Jg8/eIWom0u2PoZwvuaKo8VdCOc/Jz4b
-+T/mwRWFBQEbfLe3i9yKN10Ge7+vXr1QCmZIswpDQhu4YS5hq84GJCA+Lrvs5xko
-4yT9Hl0KHaxgna+Ne67lEc+j4Iyinnb8vckS5HkJOrXipZglJubCjKJz2mukGLpS
-LeTp5ATWEk9416EJlmsv1X0VrZVhp1sSoXoJJULX+Hw88kuDdAmMXT8NRTM3HoWt
-M2M7tLz347hBXw0XFVRsg4CRhfGtBeHUlML5rQ/5DkRWLd+kZ1wHZwmtyQW/pkQQ
-mfavAuqiq6GLqFxxLW1BkppCR2bIZlQcua91XbE3S+Mtzj3BHWUF0Pkkz7L39g/W
-g5E/yibTg9vWZQCTqjpZP880cRA+U+Ou5hQKXC/tNZnY68ju0ATW/T2yuS8zWzk3
-r40Uxcl+mBTFwEUpRmpZPU1H/4Gq3DDi8DuyuO4DKZuiqFXZj6Ee4gbF9e7t7MQ9
-jd/uUsd3WHpHYAHrTPI7
-=8kPG
------END PGP SIGNATURE-----
-
---Z0mFw3+mXTC5ycVe--
+> +                       show_ce_entry(tag_modified, ce);
+> +                       shown =3D 1;
+> +               }
+> +               if (ce_stage(ce)) {
+> +                       show_ce_entry(tag_unmerged, ce);
+> +                       shown =3D 1;
+> +               }
+> +               if (!shown && show_cached)
+> +                       show_ce_entry(tag_cached, ce);
+> +       }
+> +}
+> +
+>  /*
+>   * Prune the index to only contain stuff starting with "prefix"
+>   */
+> @@ -606,7 +653,10 @@ static int ls_files(const char **argv, const cha=
+r *prefix)
+>                 refresh_index(&the_index, REFRESH_QUIET, &pathspec, N=
+ULL, NULL);
+>                 setup_pager();
+>         }
+> -       show_files(&dir);
+> +       if (porcelain)
+> +               show_files_compact(&dir);
+> +       else
+> +               show_files(&dir);
+>         if (show_resolve_undo)
+>                 show_ru_info();
+>
+> --
+> 1.9.1.345.ga1a145c
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
