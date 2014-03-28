@@ -1,230 +1,109 @@
-From: "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH v2 1/3] patch-id: make it stable against hunk reordering
-Date: Fri, 28 Mar 2014 14:30:11 +0200
-Message-ID: <1396009159-2078-1-git-send-email-mst@redhat.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] ls-files: do not trust stat info if lstat() fails
+Date: Fri, 28 Mar 2014 20:18:09 +0700
+Message-ID: <1396012689-22480-1-git-send-email-pclouds@gmail.com>
+References: <CAPig+cRurqCHyFtpCFOisc=1u06JSpmE9rHQa0ioLxrQMuJ4Dw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: sunshine@sunshineco.com, jrnieder@gmail.com, peff@peff.net,
-	gitster@pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 28 13:31:29 2014
+X-From: git-owner@vger.kernel.org Fri Mar 28 14:18:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WTVwW-000847-Pw
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Mar 2014 13:31:29 +0100
+	id 1WTWfZ-0003Pb-8l
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Mar 2014 14:18:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752108AbaC1MbW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Mar 2014 08:31:22 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:38531 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752103AbaC1MbR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Mar 2014 08:31:17 -0400
-Received: from int-mx10.intmail.prod.int.phx2.redhat.com (int-mx10.intmail.prod.int.phx2.redhat.com [10.5.11.23])
-	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id s2SCToiZ016163
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Fri, 28 Mar 2014 08:29:50 -0400
-Received: from redhat.com (vpn1-7-130.ams2.redhat.com [10.36.7.130])
-	by int-mx10.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id s2SCTlWl026944;
-	Fri, 28 Mar 2014 08:29:47 -0400
-Content-Disposition: inline
-X-Mutt-Fcc: =sent
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
+	id S1751697AbaC1NRw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Mar 2014 09:17:52 -0400
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:64979 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751311AbaC1NRv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Mar 2014 09:17:51 -0400
+Received: by mail-pa0-f45.google.com with SMTP id kl14so5007168pab.32
+        for <git@vger.kernel.org>; Fri, 28 Mar 2014 06:17:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=+t2+AaoK4Qlo0p8sh1isBtntHM1sZ8g2kHLjQjxKpBs=;
+        b=GxMwBtmwZrAvpnpUJyvsz/NRJPcxYiWkSkVIe9+CeyVMUQ8xrwmyZTXupU0t2fu432
+         hAIBbyWCri+293kmooLw6GJ/J7o2etpXXjipzQbr1RfZLVf3QDTyi47uI5alaKh436Te
+         4tw3eeHCZON+kz3D6xPt+C6PwgbSMfxMJs5py62ygmSs8vMQnuu6hs+ovcsZWEOa8lDQ
+         iCIGxCg9j1lPxSWnPVX9Ya+mr+NJXBTgtcQmb2uVa9/feQHQ8I4/NqAViKtNO3swSsPE
+         sdVOkMHqdKmy39nQhya7Pno3l0EF2zM2rYlclGPczFS0eg3Hjqvx9aQp1lS7yXPtSLiq
+         0EaQ==
+X-Received: by 10.68.40.138 with SMTP id x10mr8732591pbk.8.1396012670661;
+        Fri, 28 Mar 2014 06:17:50 -0700 (PDT)
+Received: from lanh ([115.73.244.146])
+        by mx.google.com with ESMTPSA id cz3sm23075582pbc.9.2014.03.28.06.17.46
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 28 Mar 2014 06:17:49 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Fri, 28 Mar 2014 20:18:43 +0700
+X-Mailer: git-send-email 1.9.1.345.ga1a145c
+In-Reply-To: <CAPig+cRurqCHyFtpCFOisc=1u06JSpmE9rHQa0ioLxrQMuJ4Dw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245387>
 
-Patch id changes if you reorder hunks in a diff.
-As the result is functionally equivalent, this is surprising to many
-people.
-In particular, reordering hunks is helpful to make patches
-more readable (e.g. API header diff before implementation diff).
-In git, it is often done e.g. using the "-O <orderfile>" option,
-so supporting it better has value.
+If 'err' is non-zero, lstat() has failed. Consider the entry modified
+without passing the (unreliable) stat info to ce_modified() in this
+case.
 
-Hunks within file can be reordered manually provided
-the same pathname can appear more than once in the input.
-
-Change patch-id behaviour making it stable against
-hunk reodering:
-	- prepend header to each hunk (if not there)
-		Note: POSIX requires patch to be robust against hunk reordering
-		provided each diff hunk has a header:
-		http://pubs.opengroup.org/onlinepubs/7908799/xcu/patch.html
-		If the patch file contains more than one patch, patch will attempt to
-		apply each of them as if they came from separate patch files. (In this
-		case the name of the patch file must be determinable for each diff
-		listing.)
-
-	- calculate SHA1 hash for each hunk separately
-	- sum all hashes to get patch id
-
-Add a new flag --unstable to get the historical behaviour.
-
-Add --stable which is a nop, for symmetry.
-
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Noticed-by: Eric Sunshine <sunshine@sunshineco.com>
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
 ---
+ On Fri, Mar 28, 2014 at 11:04 AM, Eric Sunshine <sunshine@sunshineco.c=
+om> wrote:
+ > On Wed, Mar 26, 2014 at 9:48 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8D=
+c Duy <pclouds@gmail.com> wrote:
+ >> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 err =3D lstat(ce=
+->name, &st);
+ >> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (show_deleted=
+ && err) {
+ >> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 show_ce_entry(tag_removed, ce);
+ >> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 shown =3D 1;
+ >> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }
+ >> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (show_modifie=
+d && ce_modified(ce, &st, 0)) {
+ >
+ > Is it possible for the lstat() to have failed for some reason when w=
+e
+ > get here? If so, relying upon 'st' is unsafe, isn't it?
 
-Changes from v1: documented motivation for supporting
-hunk reordering (and not just file reordering).
-No code changes.
+ The chance of random stat making ce_modified() return false is pretty
+ low, but you're right. This code is a copy from the old show_files().
+ I'll fix it in the git-ls series. Meanwhile a patch for maint to fix
+ the original function.
 
-Junio, you didn't respond so I'm not sure whether I convinced
-you that supporting hunk reordering within file has value.
-So I kept this functionality around for now, if
-you think I should drop this, please let me know explicitly.
-Thanks, and sorry about being dense!
+ builtin/ls-files.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- builtin/patch-id.c | 71 ++++++++++++++++++++++++++++++++++++++++++------------
- 1 file changed, 55 insertions(+), 16 deletions(-)
-
-diff --git a/builtin/patch-id.c b/builtin/patch-id.c
-index 3cfe02d..253ad87 100644
---- a/builtin/patch-id.c
-+++ b/builtin/patch-id.c
-@@ -1,17 +1,14 @@
- #include "builtin.h"
- 
--static void flush_current_id(int patchlen, unsigned char *id, git_SHA_CTX *c)
-+static void flush_current_id(int patchlen, unsigned char *id, unsigned char *result)
- {
--	unsigned char result[20];
- 	char name[50];
- 
- 	if (!patchlen)
- 		return;
- 
--	git_SHA1_Final(result, c);
- 	memcpy(name, sha1_to_hex(id), 41);
- 	printf("%s %s\n", sha1_to_hex(result), name);
--	git_SHA1_Init(c);
- }
- 
- static int remove_space(char *line)
-@@ -56,10 +53,30 @@ static int scan_hunk_header(const char *p, int *p_before, int *p_after)
- 	return 1;
- }
- 
--static int get_one_patchid(unsigned char *next_sha1, git_SHA_CTX *ctx, struct strbuf *line_buf)
-+static void flush_one_hunk(unsigned char *result, git_SHA_CTX *ctx)
- {
--	int patchlen = 0, found_next = 0;
-+	unsigned char hash[20];
-+	unsigned short carry = 0;
-+	int i;
-+
-+	git_SHA1_Final(hash, ctx);
-+	git_SHA1_Init(ctx);
-+	/* 20-byte sum, with carry */
-+	for (i = 0; i < 20; ++i) {
-+		carry += result[i] + hash[i];
-+		result[i] = carry;
-+		carry >>= 8;
-+	}
-+}
-+static int get_one_patchid(unsigned char *next_sha1, unsigned char *result,
-+			   struct strbuf *line_buf, int stable)
-+{
-+	int patchlen = 0, found_next = 0, hunks = 0;
- 	int before = -1, after = -1;
-+	git_SHA_CTX ctx, header_ctx;
-+
-+	git_SHA1_Init(&ctx);
-+	hashclr(result);
- 
- 	while (strbuf_getwholeline(line_buf, stdin, '\n') != EOF) {
- 		char *line = line_buf->buf;
-@@ -99,6 +116,18 @@ static int get_one_patchid(unsigned char *next_sha1, git_SHA_CTX *ctx, struct st
- 			if (!memcmp(line, "@@ -", 4)) {
- 				/* Parse next hunk, but ignore line numbers.  */
- 				scan_hunk_header(line, &before, &after);
-+				if (stable) {
-+					if (hunks) {
-+						flush_one_hunk(result, &ctx);
-+						memcpy(&ctx, &header_ctx,
-+						       sizeof ctx);
-+					} else {
-+						/* Save ctx for next hunk.  */
-+						memcpy(&header_ctx, &ctx,
-+						       sizeof ctx);
-+					}
-+				}
-+				hunks++;
- 				continue;
- 			}
- 
-@@ -107,7 +136,10 @@ static int get_one_patchid(unsigned char *next_sha1, git_SHA_CTX *ctx, struct st
- 				break;
- 
- 			/* Else we're parsing another header.  */
-+			if (stable && hunks)
-+				flush_one_hunk(result, &ctx);
- 			before = after = -1;
-+			hunks = 0;
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index 47c3880..e6bd00e 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -260,7 +260,7 @@ static void show_files(struct dir_struct *dir)
+ 			err =3D lstat(ce->name, &st);
+ 			if (show_deleted && err)
+ 				show_ce_entry(tag_removed, ce);
+-			if (show_modified && ce_modified(ce, &st, 0))
++			if (show_modified && (err || ce_modified(ce, &st, 0)))
+ 				show_ce_entry(tag_modified, ce);
  		}
- 
- 		/* If we get here, we're inside a hunk.  */
-@@ -119,39 +151,46 @@ static int get_one_patchid(unsigned char *next_sha1, git_SHA_CTX *ctx, struct st
- 		/* Compute the sha without whitespace */
- 		len = remove_space(line);
- 		patchlen += len;
--		git_SHA1_Update(ctx, line, len);
-+		git_SHA1_Update(&ctx, line, len);
  	}
- 
- 	if (!found_next)
- 		hashclr(next_sha1);
- 
-+	flush_one_hunk(result, &ctx);
-+
- 	return patchlen;
- }
- 
--static void generate_id_list(void)
-+static void generate_id_list(int stable)
- {
--	unsigned char sha1[20], n[20];
--	git_SHA_CTX ctx;
-+	unsigned char sha1[20], n[20], result[20];
- 	int patchlen;
- 	struct strbuf line_buf = STRBUF_INIT;
- 
--	git_SHA1_Init(&ctx);
- 	hashclr(sha1);
- 	while (!feof(stdin)) {
--		patchlen = get_one_patchid(n, &ctx, &line_buf);
--		flush_current_id(patchlen, sha1, &ctx);
-+		patchlen = get_one_patchid(n, result, &line_buf, stable);
-+		flush_current_id(patchlen, sha1, result);
- 		hashcpy(sha1, n);
- 	}
- 	strbuf_release(&line_buf);
- }
- 
--static const char patch_id_usage[] = "git patch-id < patch";
-+static const char patch_id_usage[] = "git patch-id [--stable | --unstable] < patch";
- 
- int cmd_patch_id(int argc, const char **argv, const char *prefix)
- {
--	if (argc != 1)
-+	int stable;
-+	if (argc == 2 && !strcmp(argv[1], "--stable"))
-+		stable = 1;
-+	else if (argc == 2 && !strcmp(argv[1], "--unstable"))
-+		stable = 0;
-+	else if (argc == 1)
-+		stable = 1;
-+	else
- 		usage(patch_id_usage);
- 
--	generate_id_list();
-+	generate_id_list(stable);
- 	return 0;
- }
--- 
-MST
+--=20
+1.9.1.345.ga1a145c
