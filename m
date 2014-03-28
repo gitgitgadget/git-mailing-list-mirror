@@ -1,175 +1,330 @@
-From: Victor Kartashov <victor.kartashov@gmail.com>
-Subject: Re: [PATCH] gitweb: gpg signature status indication for commits
-Date: Fri, 28 Mar 2014 23:14:51 +0400
-Message-ID: <CAGfpA8RUaJKxEcqjpmBFeinefK=qu8sYuQHxRTg9ndFG_GJGEA@mail.gmail.com>
-References: <1396000130-10322-1-git-send-email-v.kartashov@npo-echelon.ru>
- <xmqqfvm2b4h1.fsf@gitster.dls.corp.google.com> <CAGfpA8RWnX9DZtDiZ3Zf=8s+ga+DEmTbGDN0b7B0JM5_U4tAPw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/3] patch-id: make it stable against hunk reordering
+Date: Fri, 28 Mar 2014 12:20:13 -0700
+Message-ID: <xmqqha6i9lle.fsf@gitster.dls.corp.google.com>
+References: <1396009159-2078-1-git-send-email-mst@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Mar 28 20:15:39 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, sunshine@sunshineco.com, jrnieder@gmail.com,
+	peff@peff.net
+To: "Michael S. Tsirkin" <mst@redhat.com>
+X-From: git-owner@vger.kernel.org Fri Mar 28 20:20:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WTcFf-00047a-6g
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Mar 2014 20:15:39 +0100
+	id 1WTcKJ-00073E-Ko
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Mar 2014 20:20:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752723AbaC1TPe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Mar 2014 15:15:34 -0400
-Received: from mail-wi0-f176.google.com ([209.85.212.176]:60094 "EHLO
-	mail-wi0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751902AbaC1TPe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Mar 2014 15:15:34 -0400
-Received: by mail-wi0-f176.google.com with SMTP id r20so1089685wiv.15
-        for <git@vger.kernel.org>; Fri, 28 Mar 2014 12:15:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=sae6o1hy/iEPVWQEyGEjTTR6JvdVR3LeO+G452/pn14=;
-        b=JUNJpc/P0HEM+vREqbkPlO2szRsrxLUK0qfpFQ3zSM2Z1sEG9jKAM/iAdtqobPV2sg
-         KXVkTKG+IZu1acEKCi2NWp1OSJ2jwXIcrtGv2yeHW0TVGgxHAPnmBb5406sEmcVQX4nO
-         deFlvlctTsZ2q+JNiecu9PHrY1eCJeTa7p/JjSQ+EFB5S1HdI9yYuuMNrwvy24a60GA2
-         mgJUbO63/ly2406y42mN+7aAvcBTaMeVnT9oD1ZH7Ym1dDWyBKbryTuz/giUnXTQF5Bd
-         EjkNwAp+cbv5yeR7N50AGmjOHBKzm9lYfsSnA1AQF0uvvnZ/Hd5l/JjHGIT3xsWeIkPO
-         q6Ng==
-X-Received: by 10.194.78.77 with SMTP id z13mr369107wjw.64.1396034132232; Fri,
- 28 Mar 2014 12:15:32 -0700 (PDT)
-Received: by 10.217.47.3 with HTTP; Fri, 28 Mar 2014 12:14:51 -0700 (PDT)
-In-Reply-To: <CAGfpA8RWnX9DZtDiZ3Zf=8s+ga+DEmTbGDN0b7B0JM5_U4tAPw@mail.gmail.com>
+	id S1752743AbaC1TUS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Mar 2014 15:20:18 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63572 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752655AbaC1TUQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Mar 2014 15:20:16 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 544B177042;
+	Fri, 28 Mar 2014 15:20:16 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Nhg4/4T9FAhphL2UoIgPIrtwc2c=; b=E4JSwD
+	ks2pgsJz62AGvZv5fa6cbxJdBqwKGs0ZFYpDFBBOLC2YEaJD1YVxjJmJzGuySmQ4
+	roRkf3yGVbGl0cjmXGxAWj9cAh3JYgD1H0JTUTRjZYCRV5uUZluTQdTi0vzOt+cw
+	81/pXMU3upLVyvxZ6NRgzg4O4wz/UnjKwgixU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=sux/+kwiHl9r3C8bXokhgy7O4mBT8J0O
+	J2ctdyjQtgCKLaF9TOWNYacEAxzRHyHLpADmY958kK5c+ACdS2bRAGZSQxVeYEh5
+	RRI0S6gfa5NrPAUF9DLKsOF9zpLuDmhpPJt33m+JdersrVym13wHyKdBB4mQyk/U
+	AXwnGV6c7FM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 40A5777041;
+	Fri, 28 Mar 2014 15:20:16 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4869B7703F;
+	Fri, 28 Mar 2014 15:20:15 -0400 (EDT)
+In-Reply-To: <1396009159-2078-1-git-send-email-mst@redhat.com> (Michael
+	S. Tsirkin's message of "Fri, 28 Mar 2014 14:30:11 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: FDBBB83A-B6AD-11E3-8723-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245419>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245420>
 
- On 28 March 2014 21:47, Junio C Hamano <gitster@pobox.com> wrote:
->
->
->    Teach gitweb to show GPG signature verification status when
->    showing a commit that is signed.  Highlight in green or red to
->    differentiate valid and invalid signatures.
->
-> or something?
+"Michael S. Tsirkin" <mst@redhat.com> writes:
 
+> Patch id changes if you reorder hunks in a diff.
+> As the result is functionally equivalent, this is surprising to many
+> people.
+> In particular, reordering hunks is helpful to make patches
+> more readable (e.g. API header diff before implementation diff).
+> In git, it is often done e.g. using the "-O <orderfile>" option,
+> so supporting it better has value.
+>
+> Hunks within file can be reordered manually provided
+> the same pathname can appear more than once in the input.
+>
+> Change patch-id behaviour making it stable against
+> hunk reodering:
+> 	- prepend header to each hunk (if not there)
+> 		Note: POSIX requires patch to be robust against hunk reordering
+> 		provided each diff hunk has a header:
+> 		http://pubs.opengroup.org/onlinepubs/7908799/xcu/patch.html
+> 		If the patch file contains more than one patch, patch will attempt to
+> 		apply each of them as if they came from separate patch files. (In this
+> 		case the name of the patch file must be determinable for each diff
+> 		listing.)
+>
+> 	- calculate SHA1 hash for each hunk separately
+> 	- sum all hashes to get patch id
+>
+> Add a new flag --unstable to get the historical behaviour.
+>
+> Add --stable which is a nop, for symmetry.
+>
+> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> ---
+>
+> Changes from v1: documented motivation for supporting
+> hunk reordering (and not just file reordering).
+> No code changes.
+>
+> Junio, you didn't respond so I'm not sure whether I convinced
+> you that supporting hunk reordering within file has value.
+> So I kept this functionality around for now, if
+> you think I should drop this, please let me know explicitly.
+> Thanks, and sorry about being dense!
 
- Yes, kind of :)
+The motivation I read from the exchange was that:
 
-> Is it a good idea to do this unconditionally in all repositories?
+ (1) we definitely want to support a mode that is stable with use of
+     "diff -O" (i.e. reordering patches per paths);
 
+ (2) supporting a patch with swapped "hunks" does not have any
+     practical value.  When you have a patch to the same file F with
+     two hunks starting at lines 20 and 40, manually reordering
+     hunks to create a patch that shows the hunk that starts at line
+     40 and then the other hunk that starts at line 20 is not a
+     useful exercise;
 
- Actually, I don't know. It's a question to discuss. This patch
-doesn't affect commits without signature. And if there is a signature,
-you robably would like to validate it.
- There is an option "remove_signoff" that, as I thought, would have an
-effect on this. But I couldn't find where it's defined.
+ (3) but supporting a patch that touches the same path more than
+     once is in line with what "patch" and "git apply" after
+     7a07841c (git-apply: handle a patch that touches the same path
+     more than once better, 2008-06-27) do.
 
->
->
-> This comment, which only says what it intends to do without saying
-> why it wants to do so, does not explain why this is a good change.
->
-> Does the code even know if $commit_lines[-1] is a non-empty string?
-> Is it safe to assume if $commit_lines[-1] has a NUL anywhere, it is
-> always the last line that ends the record, which is not part of the
-> commit log message?
->
-> I am assuming that this $commit_text is read from "log -z" (or
-> "rev-list -z") output and split at NUL boundary, but if that is the
-> case, it might be cleaner to remove the trailing NUL from $commit_text
-> before even attempting to split it into an array at LFs, but that is
-> an unrelated tangent.
->
-> A bigger question is why does the incoming data sometimes ends with
-> NUL that must be stripped out, and sometimes does not?  I see that
-> you are updating the data producer in the later part of the patch;
-> wouldn't it be saner if you have the data producer produce the input
-> to this function in a way that is consistent with the current code,
-> i.e. always terminate the output with a NUL?
+In other words, the goal of this change would be to give the same id
+for all these three:
 
+    (A) straight-forward:
 
- It seems to be a good idea. I'll try to do that.
+        diff --git a/foo.c b/foo.c
+        --- a/foo.c
+        +++ b/foo.c
+        @@ -20,1 +20,1 @@
 
-> > @@ -3469,6 +3470,9 @@ sub parse_commit_text {
-> >                               $co{'committer_name'} = $co{'committer'};
-> >                       }
-> >               }
-> > +             elsif ($line =~ /^gpg: /) {
->
-> I think Eric already pointed out the style issue on this line.
->
-> > @@ -3508,6 +3512,10 @@ sub parse_commit_text {
-> >       foreach my $line (@commit_lines) {
-> >               $line =~ s/^    //;
-> >       }
-> > +     push(@commit_lines, "") if scalar @signature;
-> > +     foreach my $sig (@signature) {
-> > +             push(@commit_lines, $sig);
-> > +     }
->
-> Hmm, is it different from doing:
->
->         push @commit_lines, @signature;
->
-> in some way?
->
-> > @@ -4571,7 +4579,21 @@ sub git_print_log {
-> >       # print log
-> >       my $skip_blank_line = 0;
-> >       foreach my $line (@$log) {
-> > -             if ($line =~ m/^\s*([A-Z][-A-Za-z]*-[Bb]y|C[Cc]): /) {
-> > +             if ($line =~ m/^gpg:(.)+Good(.)+/) {
-> > +                     if (! $opts{'-remove_signoff'}) {
->
-> Sorry, but I fail to see what the "remove-signoff" option has to do
-> with this new feature.  The interaction needs to be explained in the
-> log message.
+        -foo
+        +bar
 
+        @@ -40,1 +40,1 @@
 
- I explained it above. From my point of view, one may want to remove
-gpg signature and "sign-off" inscription together.
- Maybe, we should discuss this question, and after that I'll prepare new patch.
+        -frotz
+        +xyzzy
 
+    (B) as two patches concatenated together:
+
+        diff --git a/foo.c b/foo.c
+        --- a/foo.c
+        +++ b/foo.c
+        @@ -20,1 +20,1 @@
+
+        -foo
+        +bar
+
+        diff --git a/foo.c b/foo.c
+        --- a/foo.c
+        +++ b/foo.c
+        @@ -40,1 +40,1 @@
+
+        -frotz
+        +xyzzy
+
+    (C) the same as (B) but with a swapped order:
+
+        diff --git a/foo.c b/foo.c
+        --- a/foo.c
+        +++ b/foo.c
+        @@ -40,1 +40,1 @@
+
+        -frotz
+        +xyzzy
+        diff --git a/foo.c b/foo.c
+        --- a/foo.c
+        +++ b/foo.c
+        @@ -20,1 +20,1 @@
+
+        -foo
+        +bar
+
+Am I reading you correctly?
+
+If that is the case, I think I can buy such a change.  It appears to
+me that in addition to changing the way the bytes form multiple
+hunks are hashed, it would need to hash the file-level headers
+together with each hunk when processing input (A) in order to make
+the output consistent with the output for the latter two.
+
+Alternatively, you could hash the header for the same path only once
+when processing input like (B) or (C) and mix.  That would also give
+you the same result as processing (A) in a straight-forward way.
+
+>  builtin/patch-id.c | 71 ++++++++++++++++++++++++++++++++++++++++++------------
+>  1 file changed, 55 insertions(+), 16 deletions(-)
 >
->
-> > +                             print "<span class=\"good_sign\">" . esc_html($line) . "</span><br/>\n";
-> > +                             $skip_blank_line = 1;
-> > +                     }
-> > +                     next;
-> > +             }
-> > +             elsif ($line =~ m/^gpg:(.)+BAD(.)+/) {
-> > +                     if (! $opts{'-remove_signoff'}) {
-> > +                             print "<span class=\"bad_sign\">" . esc_html($line) . "</span><br/>\n";
-> > +                             $skip_blank_line = 1;
-> > +                     }
-> > +                     next;
-> > +             }
-> > +             elsif ($line =~ m/^\s*([A-Z][-A-Za-z]*-[Bb]y|C[Cc]): /) {
-> >                       if (! $opts{'-remove_signoff'}) {
-> >                               print "<span class=\"signoff\">" . esc_html($line) . "</span><br/>\n";
-> >                               $skip_blank_line = 1;
-> > diff --git a/gitweb/static/gitweb.css b/gitweb/static/gitweb.css
-> > index 3212601..e99e223 100644
-> > --- a/gitweb/static/gitweb.css
-> > +++ b/gitweb/static/gitweb.css
-> > @@ -136,6 +136,17 @@ span.signoff {
-> >       color: #888888;
-> >  }
-> >
-> > +span.good_sign {
-> > +     font-weight: bold;
-> > +     background-color: #aaffaa;
-> > +}
-> > +
-> > +span.bad_sign {
-> > +     font-weight: bold;
-> > +     background-color: #880000;
-> > +     color: #ffffff
-> > +}
-> > +
-> >  div.log_link {
-> >       padding: 0px 8px;
-> >       font-size: 70%;
+> diff --git a/builtin/patch-id.c b/builtin/patch-id.c
+> index 3cfe02d..253ad87 100644
+> --- a/builtin/patch-id.c
+> +++ b/builtin/patch-id.c
+> @@ -1,17 +1,14 @@
+>  #include "builtin.h"
+>  
+> -static void flush_current_id(int patchlen, unsigned char *id, git_SHA_CTX *c)
+> +static void flush_current_id(int patchlen, unsigned char *id, unsigned char *result)
+>  {
+> -	unsigned char result[20];
+>  	char name[50];
+>  
+>  	if (!patchlen)
+>  		return;
+>  
+> -	git_SHA1_Final(result, c);
+>  	memcpy(name, sha1_to_hex(id), 41);
+>  	printf("%s %s\n", sha1_to_hex(result), name);
+> -	git_SHA1_Init(c);
+>  }
+>  
+>  static int remove_space(char *line)
+> @@ -56,10 +53,30 @@ static int scan_hunk_header(const char *p, int *p_before, int *p_after)
+>  	return 1;
+>  }
+>  
+> -static int get_one_patchid(unsigned char *next_sha1, git_SHA_CTX *ctx, struct strbuf *line_buf)
+> +static void flush_one_hunk(unsigned char *result, git_SHA_CTX *ctx)
+>  {
+> -	int patchlen = 0, found_next = 0;
+> +	unsigned char hash[20];
+> +	unsigned short carry = 0;
+> +	int i;
+> +
+> +	git_SHA1_Final(hash, ctx);
+> +	git_SHA1_Init(ctx);
+> +	/* 20-byte sum, with carry */
+> +	for (i = 0; i < 20; ++i) {
+> +		carry += result[i] + hash[i];
+> +		result[i] = carry;
+> +		carry >>= 8;
+> +	}
+> +}
+> +static int get_one_patchid(unsigned char *next_sha1, unsigned char *result,
+> +			   struct strbuf *line_buf, int stable)
+> +{
+> +	int patchlen = 0, found_next = 0, hunks = 0;
+>  	int before = -1, after = -1;
+> +	git_SHA_CTX ctx, header_ctx;
+> +
+> +	git_SHA1_Init(&ctx);
+> +	hashclr(result);
+>  
+>  	while (strbuf_getwholeline(line_buf, stdin, '\n') != EOF) {
+>  		char *line = line_buf->buf;
+> @@ -99,6 +116,18 @@ static int get_one_patchid(unsigned char *next_sha1, git_SHA_CTX *ctx, struct st
+>  			if (!memcmp(line, "@@ -", 4)) {
+>  				/* Parse next hunk, but ignore line numbers.  */
+>  				scan_hunk_header(line, &before, &after);
+> +				if (stable) {
+> +					if (hunks) {
+> +						flush_one_hunk(result, &ctx);
+> +						memcpy(&ctx, &header_ctx,
+> +						       sizeof ctx);
+> +					} else {
+> +						/* Save ctx for next hunk.  */
+> +						memcpy(&header_ctx, &ctx,
+> +						       sizeof ctx);
+> +					}
+> +				}
+> +				hunks++;
+>  				continue;
+>  			}
+>  
+> @@ -107,7 +136,10 @@ static int get_one_patchid(unsigned char *next_sha1, git_SHA_CTX *ctx, struct st
+>  				break;
+>  
+>  			/* Else we're parsing another header.  */
+> +			if (stable && hunks)
+> +				flush_one_hunk(result, &ctx);
+>  			before = after = -1;
+> +			hunks = 0;
+>  		}
+>  
+>  		/* If we get here, we're inside a hunk.  */
+> @@ -119,39 +151,46 @@ static int get_one_patchid(unsigned char *next_sha1, git_SHA_CTX *ctx, struct st
+>  		/* Compute the sha without whitespace */
+>  		len = remove_space(line);
+>  		patchlen += len;
+> -		git_SHA1_Update(ctx, line, len);
+> +		git_SHA1_Update(&ctx, line, len);
+>  	}
+>  
+>  	if (!found_next)
+>  		hashclr(next_sha1);
+>  
+> +	flush_one_hunk(result, &ctx);
+> +
+>  	return patchlen;
+>  }
+>  
+> -static void generate_id_list(void)
+> +static void generate_id_list(int stable)
+>  {
+> -	unsigned char sha1[20], n[20];
+> -	git_SHA_CTX ctx;
+> +	unsigned char sha1[20], n[20], result[20];
+>  	int patchlen;
+>  	struct strbuf line_buf = STRBUF_INIT;
+>  
+> -	git_SHA1_Init(&ctx);
+>  	hashclr(sha1);
+>  	while (!feof(stdin)) {
+> -		patchlen = get_one_patchid(n, &ctx, &line_buf);
+> -		flush_current_id(patchlen, sha1, &ctx);
+> +		patchlen = get_one_patchid(n, result, &line_buf, stable);
+> +		flush_current_id(patchlen, sha1, result);
+>  		hashcpy(sha1, n);
+>  	}
+>  	strbuf_release(&line_buf);
+>  }
+>  
+> -static const char patch_id_usage[] = "git patch-id < patch";
+> +static const char patch_id_usage[] = "git patch-id [--stable | --unstable] < patch";
+>  
+>  int cmd_patch_id(int argc, const char **argv, const char *prefix)
+>  {
+> -	if (argc != 1)
+> +	int stable;
+> +	if (argc == 2 && !strcmp(argv[1], "--stable"))
+> +		stable = 1;
+> +	else if (argc == 2 && !strcmp(argv[1], "--unstable"))
+> +		stable = 0;
+> +	else if (argc == 1)
+> +		stable = 1;
+> +	else
+>  		usage(patch_id_usage);
+>  
+> -	generate_id_list();
+> +	generate_id_list(stable);
+>  	return 0;
+>  }
