@@ -1,82 +1,172 @@
-From: Ronald Weiss <weiss.ronald@gmail.com>
-Subject: git commit vs. ignore-submodules
-Date: Fri, 28 Mar 2014 00:36:00 +0100
-Message-ID: <CABxC_L92v=cV=+e_DNa0L6f21LB0BRP5duai2h_heGJN_PRoUQ@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 3/3] patch-id-test: test new --stable and --unstable flags
+Date: Thu, 27 Mar 2014 20:25:04 -0400
+Message-ID: <CAPig+cQ4=joCcjyhOLGAiTV2WCLk7a1Vb5R=wNCLwX1gTp8V9A@mail.gmail.com>
+References: <1395912239-29663-1-git-send-email-mst@redhat.com>
+	<1395912239-29663-3-git-send-email-mst@redhat.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 28 00:36:11 2014
+Cc: Git List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+X-From: git-owner@vger.kernel.org Fri Mar 28 01:25:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WTJqC-000348-8K
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Mar 2014 00:36:08 +0100
+	id 1WTKbi-0006cQ-8N
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Mar 2014 01:25:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755487AbaC0XgC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Mar 2014 19:36:02 -0400
-Received: from mail-ob0-f169.google.com ([209.85.214.169]:43227 "EHLO
-	mail-ob0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755279AbaC0XgA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Mar 2014 19:36:00 -0400
-Received: by mail-ob0-f169.google.com with SMTP id va2so5083292obc.14
-        for <git@vger.kernel.org>; Thu, 27 Mar 2014 16:36:00 -0700 (PDT)
+	id S1757055AbaC1AZH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Mar 2014 20:25:07 -0400
+Received: from mail-yk0-f175.google.com ([209.85.160.175]:45696 "EHLO
+	mail-yk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756926AbaC1AZG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Mar 2014 20:25:06 -0400
+Received: by mail-yk0-f175.google.com with SMTP id 131so3113521ykp.6
+        for <git@vger.kernel.org>; Thu, 27 Mar 2014 17:25:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=093ZkRAI7DNhXoaHqSo7nihN+oBsSbw+pq4vSk2iWoo=;
-        b=Jts7F/9SnfQ4xzekxspOHxb6Bmi3xSJ7kag7QWQso+ee+tXn+AUJEJ2h/PGDQ46c6u
-         EiY0gKvT2NnSbl16as8KEzfDzxikd9ZjARtax1MqOaXny5qNjhj/9LRAS3m2T01px44O
-         QExCMl4NDJKjHAqiR/17K69kTAL1VWpEemnfVLyRy0Y4uFTZ6ZfKgO7Iy7EvX0Qo3e4p
-         UZkJQM9PNXRrO0P5y49PZJLBgZkvzAdH/D11ccZnjGlU464bqMcPIEOLMn8lF6nS6cGI
-         33c0IMWqWm+DnlvqGkGHSc9+PeINm7ReXxGd17qQQDVYPjBsTeXf3x/mWW7DcsERKJVP
-         6IjA==
-X-Received: by 10.182.44.167 with SMTP id f7mr3799013obm.3.1395963360462; Thu,
- 27 Mar 2014 16:36:00 -0700 (PDT)
-Received: by 10.76.154.68 with HTTP; Thu, 27 Mar 2014 16:36:00 -0700 (PDT)
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=6Mwt30n09HJdKxj+yrOoKyVbz957bvsrym86ouDTXO4=;
+        b=v++P/0duGvBnjm/5hmpHmdasZTsMbIPJhFhQ3XpsQOWE2lOQgQZyNJg4BJzalBghBY
+         S0c8Qaf1VkbQ0i61XuwUJe6knX7a3QKRSDkzcEmlOMVZd+XvzigOZpYQ2oQhmZzWpM2P
+         j9v2bHFxRNgymNgvWLNq+xEzeKFel8vzQXxFHwRNysyBHgiJwITGsxjRd9ZwBw9/ZNVl
+         q8AGMR8BIZguNCj/0uMHzFrH2wnoWtjxfMtWNpjpk/eekr9yxmp42zemUR7yzWpyUk8k
+         1i5X2lcUARCbZJYAo8llHejtHS4QZ2A+wycWp6sSFtB8bTQj5mBYPDGOScowSdCYb0dt
+         V5ng==
+X-Received: by 10.236.97.102 with SMTP id s66mr6600841yhf.45.1395966304791;
+ Thu, 27 Mar 2014 17:25:04 -0700 (PDT)
+Received: by 10.170.180.134 with HTTP; Thu, 27 Mar 2014 17:25:04 -0700 (PDT)
+In-Reply-To: <1395912239-29663-3-git-send-email-mst@redhat.com>
+X-Google-Sender-Auth: tgPia6ql4dXMJfZSOY2AEpSla78
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245342>
 
-Hello.
+On Thu, Mar 27, 2014 at 5:25 AM, Michael S. Tsirkin <mst@redhat.com> wrote:
+> Verify that patch ID is now stable against hunk reordering.
+>
+> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> ---
+>  t/t4204-patch-id.sh | 68 +++++++++++++++++++++++++++++++++++++++++++++++++----
+>  1 file changed, 63 insertions(+), 5 deletions(-)
+>
+> diff --git a/t/t4204-patch-id.sh b/t/t4204-patch-id.sh
+> index d2c930d..75f77ef 100755
+> --- a/t/t4204-patch-id.sh
+> +++ b/t/t4204-patch-id.sh
+> @@ -5,12 +5,27 @@ test_description='git patch-id'
+>  . ./test-lib.sh
+>
+>  test_expect_success 'setup' '
+> -       test_commit initial foo a &&
+> -       test_commit first foo b &&
+> +       test_commit initial-foo foo a &&
+> +       test_commit initial-bar bar a &&
+> +       echo b > foo &&
+> +       echo b > bar &&
+> +       git commit -a -m first &&
+>         git checkout -b same HEAD^ &&
+> -       test_commit same-msg foo b &&
+> +       echo b > foo &&
+> +       echo b > bar &&
+> +       git commit -a -m same-msg &&
+>         git checkout -b notsame HEAD^ &&
+> -       test_commit notsame-msg foo c
+> +       echo c > foo &&
+> +       echo c > bar &&
+> +       git commit -a -m notsame-msg &&
+> +       cat > bar-then-foo <<EOF
 
-As this is my first post to this list, let me first thank all the
-people involved in Git development - it's really a great tool.
+Broken &&-chain.
 
-Now to the point. Since Git 1.8 (I think), git commit command honours
-the submodules' ignore settings, configured either in .gitmodules, or
-in .git/config. That's very nice and certainly correct for "git commit
--a", but it's less clear if one explicitely stages an updated
-submodule using git add. Git commit will ignore it anyway, if
-ignore=all is configured in .gitmodules. Maybe that's correct too, I'm
-not sure about that, but it's inconvenient in our use case, especially
-combined with the lack of --ignore-submodule parameter to git commit,
-as git status and git diff have.
+If you use -EOF, you can indent the content rather than having to hang
+it on the left margin. Better, use -\EOF to indicate that you're not
+interested in interpolation within the block.
 
-We use submodules in such a way that normally we don't ever want to
-see changes in them in output of git diff and git status. So we set
-ignore=all in .gitmodules for each submodule. But occasionally, we
-need to add a new submodule, and sometimes also commit changed
-submodule. This got harder with Git 1.8, we have to "git config
-submodule.<name>.ignore none" before the commit, and "git config
---unset ..." after.
-
-I'd like to at least add an --ignore-submodules parameter to git
-commit. I though about posting a patch, but as I looked into the
-commit source file, I didn't see any straightforward way to implement
-it. I don't have enough free time for a deeper analysis of the
-sources, I'm sorry.
-
-So please, let me first know, whether you could possibly accept such
-patch, and if so, then I'd really appreciate some hints on how to do
-it.
-
-And also, I'd like to know git folks' opinion on whether it's OK that
-git commit with ignore=all in .gitmodules ignores submodules even when
-they are explicitely staged with git add.
-
-Thanks in advance for any reply,
-Ronald Weiss
+> +bar
+> +foo
+> +EOF
+> +       cat > foo-then-bar <<EOF
+> +foo
+> +bar
+> +EOF
+>  '
+>
+>  test_expect_success 'patch-id output is well-formed' '
+> @@ -23,11 +38,33 @@ calc_patch_id () {
+>                 sed "s# .*##" > patch-id_"$1"
+>  }
+>
+> +calc_patch_id_unstable () {
+> +       git patch-id --unstable |
+> +               sed "s# .*##" > patch-id_"$1"
+> +}
+> +
+> +calc_patch_id_stable () {
+> +       git patch-id --stable |
+> +               sed "s# .*##" > patch-id_"$1"
+> +}
+> +
+> +
+>  get_patch_id () {
+> -       git log -p -1 "$1" | git patch-id |
+> +       git log -p -1 "$1" -O bar-then-foo -- | git patch-id |
+> +               sed "s# .*##" > patch-id_"$1"
+> +}
+> +
+> +get_patch_id_stable () {
+> +       git log -p -1 "$1" -O bar-then-foo | git patch-id --stable |
+> +               sed "s# .*##" > patch-id_"$1"
+> +}
+> +
+> +get_patch_id_unstable () {
+> +       git log -p -1 "$1" -O bar-then-foo | git patch-id --unstable |
+>                 sed "s# .*##" > patch-id_"$1"
+>  }
+>
+> +
+>  test_expect_success 'patch-id detects equality' '
+>         get_patch_id master &&
+>         get_patch_id same &&
+> @@ -56,6 +93,27 @@ test_expect_success 'whitespace is irrelevant in footer' '
+>         test_cmp patch-id_master patch-id_same
+>  '
+>
+> +test_expect_success 'file order is irrelevant by default' '
+> +       get_patch_id master &&
+> +       git checkout same &&
+> +       git format-patch -1 --stdout -O foo-then-bar | calc_patch_id same &&
+> +       test_cmp patch-id_master patch-id_same
+> +'
+> +
+> +test_expect_success 'file order is irrelevant with --stable' '
+> +       get_patch_id_stable master &&
+> +       git checkout same &&
+> +       git format-patch -1 --stdout -O foo-then-bar | calc_patch_id_stable same &&
+> +       test_cmp patch-id_master patch-id_same
+> +'
+> +
+> +test_expect_success 'file order is relevant with --unstable' '
+> +       get_patch_id_unstable master &&
+> +       git checkout same &&
+> +       git format-patch -1 --stdout -O foo-then-bar | calc_patch_id_unstable notsame &&
+> +       ! test_cmp patch-id_master patch-id_notsame
+> +'
+> +
+>  test_expect_success 'patch-id supports git-format-patch MIME output' '
+>         get_patch_id master &&
+>         git checkout same &&
+> --
+> MST
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
