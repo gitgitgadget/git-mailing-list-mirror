@@ -1,79 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] MSVC: link in invalidcontinue.obj for better POSIX compatibility
-Date: Fri, 28 Mar 2014 12:06:06 -0700
-Message-ID: <xmqqlhvu9m8x.fsf@gitster.dls.corp.google.com>
-References: <53354EE3.2050908@viscovery.net>
-	<1396005570-948-1-git-send-email-marat@slonopotamus.org>
-	<xmqqy4zu9o0j.fsf@gitster.dls.corp.google.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2 14/19] tree-diff: rework diff_tree interface to be
+ sha1 based
+Date: Fri, 28 Mar 2014 20:08:10 +0100
+Message-ID: <5335C89A.7040802@kdbg.org>
+References: <cover.1393257006.git.kirr@mns.spb.ru>	<0b82e2de0edee4a590e7b4165c65938aef7090f5.1393257006.git.kirr@mns.spb.ru>	<xmqqa9cfp9d5.fsf@gitster.dls.corp.google.com>	<20140325092215.GB3777@mini.zxlink>	<xmqq4n2mmarr.fsf@gitster.dls.corp.google.com>	<20140326195201.GB16002@mini.zxlink>	<xmqq1txoiqzj.fsf@gitster.dls.corp.google.com>	<20140327142438.GE17333@mini.zxlink>	<xmqq1txneavo.fsf@gitster.dls.corp.google.com>	<53351C1B.6040609@viscovery.net>	<xmqq4n2ickx4.fsf@gitster.dls.corp.google.com>	<5335B57B.4080606@kdbg.org> <xmqqtxai9nmq.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>,
-	Jeff King <peff@peff.net>
-To: Marat Radchenko <marat@slonopotamus.org>
-X-From: git-owner@vger.kernel.org Fri Mar 28 20:06:19 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Kirill Smelkov <kirr@navytux.spb.ru>, kirr@mns.spb.ru,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Mar 28 20:08:21 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WTc6b-0006ki-Sv
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Mar 2014 20:06:18 +0100
+	id 1WTc8Z-00082O-Ll
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Mar 2014 20:08:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752274AbaC1TGL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Mar 2014 15:06:11 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57479 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751680AbaC1TGK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Mar 2014 15:06:10 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1AB8B7888B;
-	Fri, 28 Mar 2014 15:06:10 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=TjmPoATfoUf3JVf559mT1opA6pw=; b=H5cvOr
-	IRTSQfg48x8MWTpuT7Qg0IG1b3tMqgSn75Ni5HIlT4OIMubpaf+rN7MqaDD2JPx7
-	T3H23a9pgNMHkc+1lwq4Lh+sGZEe69PQ0nJC4NqeXltJgvq+A/8M1PGAuJwRFhgN
-	H2RWhfVXMPU8MLZ4aE90G8SirGxcnPLSlSe7Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gsDjs9vrdAV2xc1AE6bMfCRmwqDQGaiy
-	kSQHGlkYqGZugw1D+dhAxMIYVfIAo+7N+lrMmIGkG9BeGqLcGLZVMKKgbCPiK+iF
-	FHjzNglfqy7fcuM1292RXGvQXj6tX21JZdCsqFyX2YfbzRW/99QJ9AEre8UkVUe3
-	LeRyj0pWNuY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0144A78888;
-	Fri, 28 Mar 2014 15:06:10 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3BF6B78872;
-	Fri, 28 Mar 2014 15:06:08 -0400 (EDT)
-In-Reply-To: <xmqqy4zu9o0j.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Fri, 28 Mar 2014 11:27:56 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 04CF1344-B6AC-11E3-BF29-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752541AbaC1TIO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Mar 2014 15:08:14 -0400
+Received: from bsmtp3.bon.at ([213.33.87.17]:19308 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752017AbaC1TIN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Mar 2014 15:08:13 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id C3D2C13005A;
+	Fri, 28 Mar 2014 20:08:10 +0100 (CET)
+Received: from dx.sixt.local (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 4C7C419F409;
+	Fri, 28 Mar 2014 20:08:10 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
+In-Reply-To: <xmqqtxai9nmq.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245418>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Am 28.03.2014 19:36, schrieb Junio C Hamano:
+> Johannes Sixt <j6t@kdbg.org> writes:
+> 
+>> Am 28.03.2014 18:06, schrieb Junio C Hamano:
+>>> Johannes Sixt <j.sixt@viscovery.net> writes:
+>>>
+>>>> Am 3/27/2014 19:48, schrieb Junio C Hamano:
+>>>>>> From: Kirill Smelkov <kirr@mns.spb.ru>
+>>>>>> Date: Mon, 24 Feb 2014 20:21:46 +0400
+>>>>>> ...
+>>>>>
+>>>>> By the way, in general I do not appreciate people lying on the Date:
+>>>>> with an in-body header in their patches, either in the original or
+>>>>> in rerolls.
+>>>>
+>>>> format-patch is not very cooperative in this aspect. When I prepare a
+>>>> patch series with format-patch, I find myself editing out the Date: line
+>>>> from all patches it produces again and again. :-(
+>>>
+>>> I am not sure what you mean.  If you are pasting the format-patch
+>>> output into an editor your MUA is using to receive the body of the
+>>> message from you, you would remove all the non-body lines, not just
+>>> Date: but Subject: and From:, no?
+>>
+>> Correct. So I should add that my gripe is about when I want to send a
+>> patch series with git-send-email that was prepared with git-format-patch.
+> 
+> Hmph.  Don't you get fresh timestamps for your messages in such a
+> case, ignoring whatever is at the beginning of the input files?
+> 
+> My reading of git-send-email is:
+> 
+>  * "$time = time - scalar $#files" prepares the initial "timestamp",
+>    so that running two "git send-email" back to back will give
+>    timestamps to the series sent out by the first invocation that
+>    are older than the ones the second series will get;
+> 
+>  * "sub send_message" calls "format_2822_time($time++)" to send the
+>    first message with that initial "timestamp", incrementing the
+>    timestamps by 1 second intervals (without having to actually wait
+>    1 second in between messages) for each patch.
 
-> Marat Radchenko <marat@slonopotamus.org> writes:
->
->> This patch fixes crashes caused by quitting from PAGER.
->
-> Can you elaborate a bit more on the underlying cause, summarizing
-> what you learned from this discussion, so that those who read "git
-> log" output two weeks from now do not have to come back to this
-> thread in the mail archive in order to figure out why we suddenly
-> needs to link with yet another library?
->
-> Thanks.
+Ah, nice! I didn't know that. I never dared to leave an old author date
+(or any date) in the patches, and assumed that it would be kept and
+disrupt the email time line.
 
-Just to avoid getting misunderstood, I am not asking it to be
-explained to me in an e-mail.  I want to see a patch with its
-proposed commit log message to explain it to readers of "git log".
+Thanks for the hint, and sorry for the noise.
 
-Thanks.
+-- Hannes
