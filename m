@@ -1,163 +1,245 @@
-From: Victor Kartashov <v.kartashov@npo-echelon.ru>
-Subject: Re: [PATCH] gitweb: gpg signature status indication for commits
-Date: Fri, 28 Mar 2014 13:48:50 +0400
-Message-ID: <1396000130-10322-1-git-send-email-v.kartashov@npo-echelon.ru>
-Cc: git@vger.kernel.org, Victor Kartashov <victor.kartashov@gmail.com>
-To: sunshine@sunshineco.com
-X-From: git-owner@vger.kernel.org Fri Mar 28 10:49:04 2014
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] add `ignore_missing_links` mode to revwalk
+Date: Fri, 28 Mar 2014 06:00:43 -0400
+Message-ID: <20140328100043.GA16502@sigill.intra.peff.net>
+References: <533239ED.5040503@fb.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Vicent Marti <tanoku@gmail.com>, git@vger.kernel.org
+To: Siddharth Agarwal <sid0@fb.com>
+X-From: git-owner@vger.kernel.org Fri Mar 28 11:00:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WTTPH-00061R-JV
-	for gcvg-git-2@plane.gmane.org; Fri, 28 Mar 2014 10:48:59 +0100
+	id 1WTTak-0004hi-E0
+	for gcvg-git-2@plane.gmane.org; Fri, 28 Mar 2014 11:00:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751050AbaC1Jsz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Mar 2014 05:48:55 -0400
-Received: from mail-lb0-f172.google.com ([209.85.217.172]:54398 "EHLO
-	mail-lb0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750893AbaC1Jsy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Mar 2014 05:48:54 -0400
-Received: by mail-lb0-f172.google.com with SMTP id c11so3534515lbj.31
-        for <git@vger.kernel.org>; Fri, 28 Mar 2014 02:48:52 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=from:to:cc:subject:date:message-id;
-        bh=vR0RJgub03guJXDRSJVtnRm6kLfQDOe200Sh60bbygU=;
-        b=hA/AsdV/yLc2xGwGKfsv+YMglXB85rRh5SJnvGP9NH/geEWKEtIg7SBT1FktfddcUd
-         6f98Xl0f4wHI9JOQkXMZpXFLdBHkTmDpUNHFPwcNqZG1PtMn/gD3/1dfsbHrongPfSZu
-         EEBsaX2KEZsbnGOdo3Js/xlpb4g1m5FOyLj4EX9n0x6Z0rxsDt2/cqpIQ0sU5psb2v7+
-         zFLRCs5A1AWOv2BIiY1GmqNKPY0A3TM413s1SzRICDp1xovYpnqfjxmlW+72r67Mqc0L
-         7YIAUGzOm1H0LONVqe7BsBSCECtxwToo5E4BiA3BCZ5zd2K4wFIQUj0CW7Bvd8aCpPeK
-         0jqQ==
-X-Received: by 10.152.2.131 with SMTP id 3mr4941050lau.20.1396000132593;
-        Fri, 28 Mar 2014 02:48:52 -0700 (PDT)
-Received: from localhost.localdomain (79-172-117-143.dyn.broadband.iskratelecom.ru. [79.172.117.143])
-        by mx.google.com with ESMTPSA id el7sm4609580lac.10.2014.03.28.02.48.51
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 28 Mar 2014 02:48:51 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.rc0.10.g8974033
+	id S1751156AbaC1KAq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Mar 2014 06:00:46 -0400
+Received: from cloud.peff.net ([50.56.180.127]:49191 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750972AbaC1KAp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Mar 2014 06:00:45 -0400
+Received: (qmail 6237 invoked by uid 102); 28 Mar 2014 10:00:45 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 28 Mar 2014 05:00:45 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 28 Mar 2014 06:00:43 -0400
+Content-Disposition: inline
+In-Reply-To: <533239ED.5040503@fb.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245375>
 
-show gpg signature (if any) for commit message in gitweb
-in case of valid signature highlight it with green
-in case of invalid signature highlight it with red
+From: Vicent Marti <tanoku@gmail.com>
 
-Signed-off-by: Victor Kartashov <victor.kartashov@gmail.com>
+When pack-objects is computing the reachability bitmap to
+serve a fetch request, it can erroneously die() if some of
+the UNINTERESTING objects are not present. Upload-pack
+throws away HAVE lines from the client for objects we do not
+have, but we may have a tip object without all of its
+ancestors (e.g., if the tip is no longer reachable and was
+new enough to survive a `git prune`, but some of its
+reachable objects did get pruned).
+
+In the non-bitmap case, we do a revision walk with the HAVE
+objects marked as UNINTERESTING. The revision walker
+explicitly ignores errors in accessing UNINTERESTING commits
+to handle this case (and we do not bother looking at
+UNINTERESTING trees or blobs at all).
+
+When we have bitmaps, however, the process is quite
+different.  The bitmap index for a pack-objects run is
+calculated in two separate steps:
+
+First, we perform an extensive walk from all the HAVEs to
+find the full set of objects reachable from them. This walk
+is usually optimized away because we are expected to hit an
+object with a bitmap during the traversal, which allows us
+to terminate early.
+
+Secondly, we perform an extensive walk from all the WANTs,
+which usually also terminates early because we hit a commit
+with an existing bitmap.
+
+Once we have the resulting bitmaps from the two walks, we
+AND-NOT them together to obtain the resulting set of objects
+we need to pack.
+
+When we are walking the HAVE objects, the revision walker
+does not know that we are walking it only to mark the
+results as uninteresting. We strip out the UNINTERESTING flag,
+because those objects _are_ interesting to us during the
+first walk. We want to keep going to get a complete set of
+reachable objects if we can.
+
+We need some way to tell the revision walker that it's OK to
+silently truncate the HAVE walk, just like it does for the
+UNINTERESTING case. This patch introduces a new
+`ignore_missing_links` flag to the `rev_info` struct, which
+we set only for the HAVE walk.
+
+It also adds tests to cover UNINTERESTING objects missing
+from several positions: a missing blob, a missing tree, and
+a missing parent commit. The missing blob already worked (as
+we do not care about its contents at all), but the other two
+cases caused us to die().
+
+Note that there are a few cases we do not need to test:
+
+  1. We do not need to test a missing tree, with the blob
+     still present. Without the tree that refers to it, we
+     would not know that the blob is relevant to our walk.
+
+  2. We do not need to test a tip commit that is missing.
+     Upload-pack omits these for us (and in fact, we
+     complain even in the non-bitmap case if it fails to do
+     so).
+
+Reported-by: Siddharth Agarwal <sid0@fb.com>
+Signed-off-by: Vicent Marti <tanoku@gmail.com>
+Signed-off-by: Jeff King <peff@peff.net>
 ---
-here's new patch
-fixed remarks by Eric Sunshine
-"pop @commit_lines" in parse_commit_text() leads to a loss of the last line in commit message ('sign-off' line, for example), so I search for '\0' before removing it.
+I believe this should solve the problem you're seeing, and I think any
+solution is going to be along these lines.
 
- gitweb/gitweb.perl       | 36 +++++++++++++++++++++++++++++-------
- gitweb/static/gitweb.css | 11 +++++++++++
- 2 files changed, 40 insertions(+), 7 deletions(-)
+This covers all code paths that can be triggered by pack-objects.  But
+it does not necessarily cover all code paths that a revision walker
+might use (e.g., it is still possible to die in try_to_simplify_commit,
+but we would never hit that in pack-objects, because we do not do
+pathspec limiting).
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 79057b7..ccde90f 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -3430,8 +3430,9 @@ sub parse_commit_text {
- 	my ($commit_text, $withparents) = @_;
- 	my @commit_lines = split '\n', $commit_text;
- 	my %co;
-+	my @signature = ();
- 
--	pop @commit_lines; # Remove '\0'
-+	pop @commit_lines if ($commit_lines[-1] =~ "\0"); # Remove '\0'
- 
- 	if (! @commit_lines) {
+So it's a tradeoff. On the one hand, leaving it like this creates a flag
+in rev_info that may surprise somebody later by not being as generally
+useful. On the other hand, covering every die() is extra code churn, and
+creates complexity for cases that cannot actually be triggered in
+practice (complexity because each site has to decide how to handle a
+failure to access the object).
+
+ list-objects.c          |  5 ++++-
+ pack-bitmap.c           |  2 ++
+ revision.c              |  8 +++++---
+ revision.h              |  3 ++-
+ t/t5310-pack-bitmaps.sh | 31 +++++++++++++++++++++++++++++++
+ 5 files changed, 44 insertions(+), 5 deletions(-)
+
+diff --git a/list-objects.c b/list-objects.c
+index 206816f..3595ee7 100644
+--- a/list-objects.c
++++ b/list-objects.c
+@@ -81,8 +81,11 @@ static void process_tree(struct rev_info *revs,
+ 		die("bad tree object");
+ 	if (obj->flags & (UNINTERESTING | SEEN))
  		return;
-@@ -3469,6 +3470,9 @@ sub parse_commit_text {
- 				$co{'committer_name'} = $co{'committer'};
- 			}
- 		}
-+		elsif ($line =~ /^gpg: /) {
-+			push @signature, $line;
-+		}
- 	}
- 	if (!defined $co{'tree'}) {
- 		return;
-@@ -3508,6 +3512,10 @@ sub parse_commit_text {
- 	foreach my $line (@commit_lines) {
- 		$line =~ s/^    //;
- 	}
-+	push(@commit_lines, "") if scalar @signature;
-+	foreach my $sig (@signature) {
-+		push(@commit_lines, $sig);
+-	if (parse_tree(tree) < 0)
++	if (parse_tree(tree) < 0) {
++		if (revs->ignore_missing_links)
++			return;
+ 		die("bad tree object %s", sha1_to_hex(obj->sha1));
 +	}
- 	$co{'comment'} = \@commit_lines;
+ 	obj->flags |= SEEN;
+ 	show(obj, path, name, cb_data);
+ 	me.up = path;
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index ae0b57b..91e4101 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -727,8 +727,10 @@ int prepare_bitmap_walk(struct rev_info *revs)
+ 	revs->pending.objects = NULL;
  
- 	my $age = time - $co{'committer_epoch'};
-@@ -3530,13 +3538,13 @@ sub parse_commit {
+ 	if (haves) {
++		revs->ignore_missing_links = 1;
+ 		haves_bitmap = find_objects(revs, haves, NULL);
+ 		reset_revision_walk();
++		revs->ignore_missing_links = 0;
  
- 	local $/ = "\0";
- 
--	open my $fd, "-|", git_cmd(), "rev-list",
--		"--parents",
--		"--header",
--		"--max-count=1",
-+	open my $fd, "-|", git_cmd(), "show",
-+		"--quiet",
-+		"--date=raw",
-+		"--pretty=format:%H %P%ntree %T%nparent %P%nauthor %an <%ae> %ad%ncommitter %cn <%ce> %cd%n%GG%n%s%n%n%b",
- 		$commit_id,
- 		"--",
--		or die_error(500, "Open git-rev-list failed");
-+		or die_error(500, "Open git-show failed");
- 	%co = parse_commit_text(<$fd>, 1);
- 	close $fd;
- 
-@@ -4571,7 +4579,21 @@ sub git_print_log {
- 	# print log
- 	my $skip_blank_line = 0;
- 	foreach my $line (@$log) {
--		if ($line =~ m/^\s*([A-Z][-A-Za-z]*-[Bb]y|C[Cc]): /) {
-+		if ($line =~ m/^gpg:(.)+Good(.)+/) {
-+			if (! $opts{'-remove_signoff'}) {
-+				print "<span class=\"good_sign\">" . esc_html($line) . "</span><br/>\n";
-+				$skip_blank_line = 1;
+ 		if (haves_bitmap == NULL)
+ 			die("BUG: failed to perform bitmap walk");
+diff --git a/revision.c b/revision.c
+index 8508550..b3b88e1 100644
+--- a/revision.c
++++ b/revision.c
+@@ -2929,9 +2929,11 @@ static struct commit *get_revision_1(struct rev_info *revs)
+ 			if (revs->max_age != -1 &&
+ 			    (commit->date < revs->max_age))
+ 				continue;
+-			if (add_parents_to_list(revs, commit, &revs->commits, NULL) < 0)
+-				die("Failed to traverse parents of commit %s",
+-				    sha1_to_hex(commit->object.sha1));
++			if (add_parents_to_list(revs, commit, &revs->commits, NULL) < 0) {
++				if (!revs->ignore_missing_links)
++					die("Failed to traverse parents of commit %s",
++						sha1_to_hex(commit->object.sha1));
 +			}
-+			next;
-+		}
-+		elsif ($line =~ m/^gpg:(.)+BAD(.)+/) {
-+			if (! $opts{'-remove_signoff'}) {
-+				print "<span class=\"bad_sign\">" . esc_html($line) . "</span><br/>\n";
-+				$skip_blank_line = 1;
-+			}
-+			next;
-+		}
-+		elsif ($line =~ m/^\s*([A-Z][-A-Za-z]*-[Bb]y|C[Cc]): /) {
- 			if (! $opts{'-remove_signoff'}) {
- 				print "<span class=\"signoff\">" . esc_html($line) . "</span><br/>\n";
- 				$skip_blank_line = 1;
-diff --git a/gitweb/static/gitweb.css b/gitweb/static/gitweb.css
-index 3212601..e99e223 100644
---- a/gitweb/static/gitweb.css
-+++ b/gitweb/static/gitweb.css
-@@ -136,6 +136,17 @@ span.signoff {
- 	color: #888888;
- }
+ 		}
  
-+span.good_sign {
-+	font-weight: bold;
-+	background-color: #aaffaa;
+ 		switch (simplify_commit(revs, commit)) {
+diff --git a/revision.h b/revision.h
+index 1eb94c1..0d997de 100644
+--- a/revision.h
++++ b/revision.h
+@@ -73,7 +73,8 @@ struct rev_info {
+ 	enum rev_sort_order sort_order;
+ 
+ 	unsigned int	early_output:1,
+-			ignore_missing:1;
++			ignore_missing:1,
++			ignore_missing_links:1;
+ 
+ 	/* Traversal flags */
+ 	unsigned int	dense:1,
+diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
+index d3a3afa..caea802 100755
+--- a/t/t5310-pack-bitmaps.sh
++++ b/t/t5310-pack-bitmaps.sh
+@@ -3,6 +3,10 @@
+ test_description='exercise basic bitmap functionality'
+ . ./test-lib.sh
+ 
++objpath() {
++	echo ".git/objects/$(echo "$1" | sed -e 's|\(..\)|\1/|')"
 +}
 +
-+span.bad_sign {
-+	font-weight: bold;
-+	background-color: #880000;
-+	color: #ffffff
-+}
+ test_expect_success 'setup repo with moderate-sized history' '
+ 	for i in $(test_seq 1 10); do
+ 		test_commit $i
+@@ -112,6 +116,33 @@ test_expect_success 'fetch (full bitmap)' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'create objects for missing-HAVE tests' '
++	blob=$(echo "missing have" | git hash-object -w --stdin) &&
++	tree=$(printf "100644 blob $blob\tfile\n" | git mktree) &&
++	parent=$(echo parent | git commit-tree $tree) &&
++	commit=$(echo commit | git commit-tree $tree -p $parent) &&
++	cat >revs <<-EOF
++	HEAD
++	^HEAD^
++	^$commit
++	EOF
++'
 +
- div.log_link {
- 	padding: 0px 8px;
- 	font-size: 70%;
++test_expect_success 'pack with missing blob' '
++	rm $(objpath $blob) &&
++	git pack-objects --stdout --revs <revs >/dev/null
++'
++
++test_expect_success 'pack with missing tree' '
++	rm $(objpath $tree) &&
++	git pack-objects --stdout --revs <revs >/dev/null
++'
++
++test_expect_success 'pack with missing parent' '
++	rm $(objpath $parent) &&
++	git pack-objects --stdout --revs <revs >/dev/null
++'
++
+ test_lazy_prereq JGIT '
+ 	type jgit
+ '
 -- 
-1.8.3.rc0.10.g8974033
+1.9.1.656.ge8a0637
