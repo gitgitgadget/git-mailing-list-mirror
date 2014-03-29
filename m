@@ -1,62 +1,76 @@
-From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <l.s.r@web.de>
-Subject: Re: [PATCH v3] MSVC: fix t0040-parse-options crash
-Date: Sat, 29 Mar 2014 23:17:11 +0100
-Message-ID: <53374667.3080605@web.de>
-References: <1396008298-1434-1-git-send-email-marat@slonopotamus.org>	<1396123762-28673-1-git-send-email-marat@slonopotamus.org> <87ha6gpu2t.fsf@igel.home>
+From: Ronald Weiss <weiss.ronald@gmail.com>
+Subject: Re: git commit vs. ignore-submodules
+Date: Sat, 29 Mar 2014 23:44:09 +0100
+Message-ID: <CABxC_L-4=qcZiix05dL8GrDJXv=19fw4yB0qFzRRfw=G=_Gxbg@mail.gmail.com>
+References: <CABxC_L92v=cV=+e_DNa0L6f21LB0BRP5duai2h_heGJN_PRoUQ@mail.gmail.com>
+	<5335A78C.60401@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Andreas Schwab <schwab@linux-m68k.org>,
-	Marat Radchenko <marat@slonopotamus.org>
-X-From: git-owner@vger.kernel.org Sat Mar 29 23:17:44 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 29 23:44:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WU1ZO-0006Zw-NI
-	for gcvg-git-2@plane.gmane.org; Sat, 29 Mar 2014 23:17:43 +0100
+	id 1WU1zY-0006nK-Qe
+	for gcvg-git-2@plane.gmane.org; Sat, 29 Mar 2014 23:44:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752007AbaC2WRh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 29 Mar 2014 18:17:37 -0400
-Received: from mout.web.de ([212.227.17.12]:55685 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751775AbaC2WRg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Mar 2014 18:17:36 -0400
-Received: from [192.168.178.27] ([79.253.156.171]) by smtp.web.de (mrweb003)
- with ESMTPSA (Nemesis) id 0LuuSf-1XBqoO3j9N-0106mB; Sat, 29 Mar 2014 23:17:34
- +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
-In-Reply-To: <87ha6gpu2t.fsf@igel.home>
-X-Provags-ID: V03:K0:WOvaOXzfsmEiNxtLrooZma+axU+Vb2FgVwQfQd35fcWIkYXR7RD
- 26b5fHpuiB5A5z4sZoo0hTIsEej/rmlU2W00Xonq4ZZqXQXp0yn1UTZOo9jEnMPpyLON6QO
- I/vOMVpdzeYBN57F5oI0412QB9bMZeZym/c8R4t0ktBPZ0pDAdpZrp1RsEvZqlcfkQFc2k9
- 9m4uJX6G0/zhKI36QlGhw==
+	id S1751991AbaC2Wof (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Mar 2014 18:44:35 -0400
+Received: from mail-oa0-f41.google.com ([209.85.219.41]:34502 "EHLO
+	mail-oa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751878AbaC2WoK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Mar 2014 18:44:10 -0400
+Received: by mail-oa0-f41.google.com with SMTP id j17so7814649oag.0
+        for <git@vger.kernel.org>; Sat, 29 Mar 2014 15:44:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=Znn0AT+BwVOWPltkhpOPjEIxZQ+KQfGFwAgugdPH7rM=;
+        b=EK7PmnRDFIoZkHchou7QwkkxmQGh6RZ4oBCg2TH+eSIVONoy9cfdsXDU2ICgrNr/AD
+         nABqC6sEQ/ELG7ymxwVrm4ocsp6Tccmupuuo9oFOk159kF0Tw6w8G2rVGM5NUC9IJ0Qv
+         MqD42k2f5vPWuyzqlCsFIiyf/0kZNEFxXfUYn+5wfVx+gZKbkzDReGOmOz3+8hWCg60A
+         nYO3jGq8Dmu32hiEuBRNooGCBDsuKHyWgwATm8MxvOsoNBv3DXftCxxsfSIVmMLCUZzN
+         r2e5UjxSa47wjzcLjxz/hAoYSweY1YM3QrxXg6Nz/y1p1YOvhFJegi68iUKVbZv7Ym5+
+         ruSg==
+X-Received: by 10.182.81.197 with SMTP id c5mr13916076oby.40.1396133049375;
+ Sat, 29 Mar 2014 15:44:09 -0700 (PDT)
+Received: by 10.76.154.68 with HTTP; Sat, 29 Mar 2014 15:44:09 -0700 (PDT)
+In-Reply-To: <5335A78C.60401@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245443>
 
-Am 29.03.2014 22:34, schrieb Andreas Schwab:
-> Marat Radchenko <marat@slonopotamus.org> writes:
+On Fri, Mar 28, 2014 at 5:47 PM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
+> Such a patch would be very much appreciated. You might want to look
+> into other commands that already have the --ignore-submodules option
+> to get an idea how to do that. cmd_status() in builtin/commit.c
+> should be a good starting point.
+
+OK, I managed to create a patch, will post it as separate email right
+after this one. I also had to touch builtin/add.c, to make the new
+--ignore-submodes option work with "git commit -a" too.
+
+>> And also, I'd like to know git folks' opinion on whether it's OK that
+>> git commit with ignore=all in .gitmodules ignores submodules even when
+>> they are explicitely staged with git add.
 >
->> diff --git a/test-parse-options.c b/test-parse-options.c
->> index 434e8b8..6f6c656 100644
->> --- a/test-parse-options.c
->> +++ b/test-parse-options.c
->> @@ -60,7 +60,7 @@ int main(int argc, char **argv)
->>   		OPT_STRING('o', NULL, &string, "str", "get another string"),
->>   		OPT_NOOP_NOARG(0, "obsolete"),
->>   		OPT_SET_PTR(0, "default-string", &string,
->> -			"set string to default", (unsigned long)"default"),
->> +			"set string to default", (intptr_t)"default"),
->
-> Why doesn't OPT_SET_PTR take a pointer?
+> No, they should be visible in status and commit when the user chose
+> to add them. I see if I can hack something up (as I've been bitten
+> myself by that recently ;-).
 
-Good question.  Here's another: OPT_SET_PTR (and OPTION_SET_PTR) has=20
-only ever been used by test-parse-options; can we remove it?
-
-Ren=E9
+While I was playing with that now, I discovered that the problem is
+actually not in commit, but only in status. Commit really commits the
+submodule, but it's not visible in the commit message (generated by
+status), that confused me before. And if there are no other changes in
+the index, then commit fails immediately with "no changes". A small
+change in wt-status.c fixes that for me, but I'm not sure about any
+undesired side effects. I'll post a patch for that too, in a few
+moments.
