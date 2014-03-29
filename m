@@ -1,86 +1,78 @@
-From: Charles Bailey <cbailey32@bloomberg.net>
-Subject: [PATCH 2/2] Don't rely on strerror text when testing rmdir failure
-Date: Sat, 29 Mar 2014 15:39:01 +0000
-Message-ID: <1396107541-22974-3-git-send-email-cbailey32@bloomberg.net>
-References: <1396107541-22974-1-git-send-email-cbailey32@bloomberg.net>
-Cc: Charles Bailey <cbailey32@bloomberg.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 29 16:39:28 2014
+From: Max Horn <max@quendi.de>
+Subject: Re: What's cooking in git.git (Mar 2014, #07; Fri, 28)
+Date: Sat, 29 Mar 2014 16:44:38 +0100
+Message-ID: <E47EEF0E-7F4D-4ACB-A957-68588A8D05C5@quendi.de>
+References: <xmqqtxai7ym6.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0 (Mac OS X Mail 6.6 \(1510\))
+Content-Type: multipart/signed; boundary="Apple-Mail=_3794EBA1-95B7-4E74-ABA3-CD66DD4AF8D9"; protocol="application/pgp-signature"; micalg=pgp-sha256
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Mar 29 16:44:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WTvM0-0001nO-4b
-	for gcvg-git-2@plane.gmane.org; Sat, 29 Mar 2014 16:39:28 +0100
+	id 1WTvR5-0005Gk-GO
+	for gcvg-git-2@plane.gmane.org; Sat, 29 Mar 2014 16:44:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751891AbaC2PjP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Mar 2014 11:39:15 -0400
-Received: from avasout05.plus.net ([84.93.230.250]:54321 "EHLO
-	avasout05.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751659AbaC2PjN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Mar 2014 11:39:13 -0400
-Received: from hashpling.plus.com ([212.159.69.125])
-	by avasout05 with smtp
-	id jTfA1n0072iA9hg01TfBou; Sat, 29 Mar 2014 15:39:12 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.1 cv=SYp5d5hu c=1 sm=1 tr=0
- a=wpJ/2au8Z6V/NgdivHIBow==:117 a=wpJ/2au8Z6V/NgdivHIBow==:17 a=EBOSESyhAAAA:8
- a=0Bzu9jTXAAAA:8 a=5x84WwQ-OQAA:10 a=N2sEI2mohSIA:10 a=BHUvooL90DcA:10
- a=BNFp--SqAAAA:8 a=Ew9TdX-QAAAA:8 a=5KG0FKtP7X-Cq3Uui5gA:9 a=92rhvNbd_XgA:10
-Received: from charles by hashpling.plus.com with local (Exim 4.72)
-	(envelope-from <charles@hashpling.org>)
-	id 1WTvLi-00060O-Nm; Sat, 29 Mar 2014 15:39:10 +0000
-X-Mailer: git-send-email 1.8.5.1.2.ge5d1dab
-In-Reply-To: <1396107541-22974-1-git-send-email-cbailey32@bloomberg.net>
+	id S1751725AbaC2Poj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Mar 2014 11:44:39 -0400
+Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:49102 "EHLO
+	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751614AbaC2Poi (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 29 Mar 2014 11:44:38 -0400
+Received: from ip-84-118-176-11.unity-media.net ([84.118.176.11] helo=zanovar.fritz.box); authenticated
+	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
+	id 1WTvQx-0001RS-VG; Sat, 29 Mar 2014 16:44:35 +0100
+In-Reply-To: <xmqqtxai7ym6.fsf@gitster.dls.corp.google.com>
+X-Mailer: Apple Mail (2.1510)
+X-bounce-key: webpack.hosteurope.de;max@quendi.de;1396107878;d9993d1e;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245435>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245436>
 
-AIX doesn't make a distiction between EEXIST and ENOTEMPTY so relying on
-the strerror string for the rmdir failure is fragile. Just test that the
-start of the string matches the Git controlled "failed to rmdir..."
-error. The exact text of the OS generated error string isn't important
-to the test.
 
-Signed-off-by: Charles Bailey <cbailey32@bloomberg.net>
----
- t/t3600-rm.sh | 5 ++---
- t/t7001-mv.sh | 3 +--
- 2 files changed, 3 insertions(+), 5 deletions(-)
+--Apple-Mail=_3794EBA1-95B7-4E74-ABA3-CD66DD4AF8D9
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain;
+	charset=us-ascii
 
-diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
-index 3d30581..23eed17 100755
---- a/t/t3600-rm.sh
-+++ b/t/t3600-rm.sh
-@@ -709,10 +709,9 @@ test_expect_success 'checking out a commit after submodule removal needs manual
- 	git commit -m "submodule removal" submod &&
- 	git checkout HEAD^ &&
- 	git submodule update &&
--	git checkout -q HEAD^ 2>actual &&
-+	git checkout -q HEAD^ 2>/dev/null &&
- 	git checkout -q master 2>actual &&
--	echo "warning: unable to rmdir submod: Directory not empty" >expected &&
--	test_i18ncmp expected actual &&
-+	test_i18ngrep "^warning: unable to rmdir submod:" actual &&
- 	git status -s submod >actual &&
- 	echo "?? submod/" >expected &&
- 	test_cmp expected actual &&
-diff --git a/t/t7001-mv.sh b/t/t7001-mv.sh
-index 215d43d..34fb1af 100755
---- a/t/t7001-mv.sh
-+++ b/t/t7001-mv.sh
-@@ -447,8 +447,7 @@ test_expect_success 'checking out a commit before submodule moved needs manual u
- 	git mv sub sub2 &&
- 	git commit -m "moved sub to sub2" &&
- 	git checkout -q HEAD^ 2>actual &&
--	echo "warning: unable to rmdir sub2: Directory not empty" >expected &&
--	test_i18ncmp expected actual &&
-+	test_i18ngrep "^warning: unable to rmdir sub2:" actual &&
- 	git status -s sub2 >actual &&
- 	echo "?? sub2/" >expected &&
- 	test_cmp expected actual &&
--- 
-1.8.5.1.2.ge5d1dab
+
+On 28.03.2014, at 23:21, Junio C Hamano <gitster@pobox.com> wrote:
+
+[...]
+
+> * ap/remote-hg-skip-null-bookmarks (2014-03-25) 1 commit
+>  (merged to 'next' on 2014-03-25 at a8cd922)
+> + remote-hg: do not fail on invalid bookmarks
+> 
+> Will merge to 'master'.
+
+
+Just got back and had a chance to look at the patch you queued.
+It looks good to me. Considering it is already scheduled to go
+into master, I'll assume no further work from me on this is needed.
+If I am wrong on that, please let me know.
+
+Max
+
+--Apple-Mail=_3794EBA1-95B7-4E74-ABA3-CD66DD4AF8D9
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP using GPGMail
+
+-----BEGIN PGP SIGNATURE-----
+Comment: GPGTools - http://gpgtools.org
+
+iF4EAREIAAYFAlM26moACgkQIpJVslrhe1kYdwD+MfQdqfTziIFsByWraX7AVu3v
++Mr+CG7Rjk+whWABHAMBAJxJokc5GGpAB/ZYr9w1+r/X+GRCtQ7P4L+5ySRxXRBF
+=dDQU
+-----END PGP SIGNATURE-----
+
+--Apple-Mail=_3794EBA1-95B7-4E74-ABA3-CD66DD4AF8D9--
