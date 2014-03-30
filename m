@@ -1,219 +1,370 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: [WIP/PATCH] status/commit: always show staged submodules regardless
- of ignore config
-Date: Sun, 30 Mar 2014 12:14:52 +0200
-Message-ID: <5337EE9C.4080101@web.de>
-References: <CABxC_L92v=cV=+e_DNa0L6f21LB0BRP5duai2h_heGJN_PRoUQ@mail.gmail.com> <5335A78C.60401@web.de>
+From: "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH v2 1/3] patch-id: make it stable against hunk reordering
+Date: Sun, 30 Mar 2014 13:52:02 +0300
+Message-ID: <20140330105202.GA24476@redhat.com>
+References: <1396009159-2078-1-git-send-email-mst@redhat.com>
+ <xmqqha6i9lle.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Heiko Voigt <hvoigt@hvoigt.net>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Sergey Sharybin <sergey.vfx@gmail.com>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-To: Ronald Weiss <weiss.ronald@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 30 12:15:15 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, sunshine@sunshineco.com, jrnieder@gmail.com,
+	peff@peff.net
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Mar 30 12:52:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WUCln-000310-1g
-	for gcvg-git-2@plane.gmane.org; Sun, 30 Mar 2014 12:15:15 +0200
+	id 1WUDLq-0000L3-RH
+	for gcvg-git-2@plane.gmane.org; Sun, 30 Mar 2014 12:52:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752834AbaC3KPE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Mar 2014 06:15:04 -0400
-Received: from mout.web.de ([212.227.15.3]:59338 "EHLO mout.web.de"
+	id S1752834AbaC3Kvz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Mar 2014 06:51:55 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:62565 "EHLO mx1.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752612AbaC3KPC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Mar 2014 06:15:02 -0400
-Received: from [192.168.178.41] ([84.132.177.33]) by smtp.web.de (mrweb103)
- with ESMTPSA (Nemesis) id 0MBCJd-1WJzcK454v-00AD4l; Sun, 30 Mar 2014 12:14:58
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
-In-Reply-To: <5335A78C.60401@web.de>
-X-Enigmail-Version: 1.6
-X-Provags-ID: V03:K0:nrqh1eDV534G+8H6Zof6kn7h/iyJ3eNLTm0uHsZXlnT4YMJERGD
- MPaEVeN+ht65aSaZNAQCDHjRnPwg+g417H5i8oS2I++sWvRbGIvRQzF6VE5+RxLtqWP2CyL
- TwCZyk6WbDGC8hfRF6XWrTSl++lem++CwkffDzCxW3wljYas9fmqwCR4L8lIshYJf+zG/4I
- X+98CB+gZbai0J3ca35PA==
+	id S1752612AbaC3Kvy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Mar 2014 06:51:54 -0400
+Received: from int-mx12.intmail.prod.int.phx2.redhat.com (int-mx12.intmail.prod.int.phx2.redhat.com [10.5.11.25])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id s2UApdBC007025
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Sun, 30 Mar 2014 06:51:40 -0400
+Received: from redhat.com (vpn1-7-238.ams2.redhat.com [10.36.7.238])
+	by int-mx12.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id s2UApYPK009532;
+	Sun, 30 Mar 2014 06:51:37 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqha6i9lle.fsf@gitster.dls.corp.google.com>
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.25
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245458>
 
-Currently setting submodule.<name>.ignore and/or diff.ignoreSubmodules to
-"all" suppresses all output of submodule changes for the diff family,
-status and commit. For status and commit this is really confusing, as it
-even when the user chooses to record a new commit for an ignored submodule
-by adding it manually this change won't show up under the to-be-committed
-changes. To add insult to injury, a later "git commit" will error out with
-"nothing to commit" when only ignored submodules are staged.
-
-Fix that by making wt_status always print staged submodule changes, no
-matter what ignore settings are configured. The only exception is when the
-user explicitly uses the "--ignore-submodules=all" command line option, in
-that case the submodule output is still suppressed. This also makes "git
-commit" work again when only modifications of ignored submodules are
-staged, as that command uses the "commitable" member of the wt_status
-struct to determine if staged changes are present.
-
-Change t7508 to reflect this new behavior. Also mention it in the
-documentation of the ignore config options.
-
-Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
----
-
-
-Am 28.03.2014 17:47, schrieb Jens Lehmann:
-> Am 28.03.2014 00:36, schrieb Ronald Weiss:
->> And also, I'd like to know git folks' opinion on whether it's OK that
->> git commit with ignore=all in .gitmodules ignores submodules even when
->> they are explicitely staged with git add.
+On Fri, Mar 28, 2014 at 12:20:13PM -0700, Junio C Hamano wrote:
+> "Michael S. Tsirkin" <mst@redhat.com> writes:
 > 
-> No, they should be visible in status and commit when the user chose
-> to add them. I see if I can hack something up (as I've been bitten
-> myself by that recently ;-).
+> > Patch id changes if you reorder hunks in a diff.
+> > As the result is functionally equivalent, this is surprising to many
+> > people.
+> > In particular, reordering hunks is helpful to make patches
+> > more readable (e.g. API header diff before implementation diff).
+> > In git, it is often done e.g. using the "-O <orderfile>" option,
+> > so supporting it better has value.
+> >
+> > Hunks within file can be reordered manually provided
+> > the same pathname can appear more than once in the input.
+> >
+> > Change patch-id behaviour making it stable against
+> > hunk reodering:
+> > 	- prepend header to each hunk (if not there)
+> > 		Note: POSIX requires patch to be robust against hunk reordering
+> > 		provided each diff hunk has a header:
+> > 		http://pubs.opengroup.org/onlinepubs/7908799/xcu/patch.html
+> > 		If the patch file contains more than one patch, patch will attempt to
+> > 		apply each of them as if they came from separate patch files. (In this
+> > 		case the name of the patch file must be determinable for each diff
+> > 		listing.)
+> >
+> > 	- calculate SHA1 hash for each hunk separately
+> > 	- sum all hashes to get patch id
+> >
+> > Add a new flag --unstable to get the historical behaviour.
+> >
+> > Add --stable which is a nop, for symmetry.
+> >
+> > Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> > ---
+> >
+> > Changes from v1: documented motivation for supporting
+> > hunk reordering (and not just file reordering).
+> > No code changes.
+> >
+> > Junio, you didn't respond so I'm not sure whether I convinced
+> > you that supporting hunk reordering within file has value.
+> > So I kept this functionality around for now, if
+> > you think I should drop this, please let me know explicitly.
+> > Thanks, and sorry about being dense!
+> 
+> The motivation I read from the exchange was that:
+> 
+>  (1) we definitely want to support a mode that is stable with use of
+>      "diff -O" (i.e. reordering patches per paths);
+> 
+>  (2) supporting a patch with swapped "hunks" does not have any
+>      practical value.  When you have a patch to the same file F with
+>      two hunks starting at lines 20 and 40, manually reordering
+>      hunks to create a patch that shows the hunk that starts at line
+>      40 and then the other hunk that starts at line 20 is not a
+>      useful exercise;
 
-Ok, here we go! As we discussed the same issue last November I
-added the people involved back then to the CC.
+I agree, especially since the resulting patch can't be applied with
+either patch or git apply.
 
-I still need to fix an issue with this patch: committing a single
-ignored submodule sometimes exits with an error code (even though
-the commit succeeds), I'm still looking into that and will provide
-a test for commit too.
+>  (3) but supporting a patch that touches the same path more than
+>      once is in line with what "patch" and "git apply" after
+>      7a07841c (git-apply: handle a patch that touches the same path
+>      more than once better, 2008-06-27) do.
+> 
+> In other words, the goal of this change would be to give the same id
+> for all these three:
+> 
+>     (A) straight-forward:
+> 
+>         diff --git a/foo.c b/foo.c
+>         --- a/foo.c
+>         +++ b/foo.c
+>         @@ -20,1 +20,1 @@
+> 
+>         -foo
+>         +bar
+> 
+>         @@ -40,1 +40,1 @@
+> 
+>         -frotz
+>         +xyzzy
+> 
+>     (B) as two patches concatenated together:
+> 
+>         diff --git a/foo.c b/foo.c
+>         --- a/foo.c
+>         +++ b/foo.c
+>         @@ -20,1 +20,1 @@
+> 
+>         -foo
+>         +bar
+> 
+>         diff --git a/foo.c b/foo.c
+>         --- a/foo.c
+>         +++ b/foo.c
+>         @@ -40,1 +40,1 @@
+> 
+>         -frotz
+>         +xyzzy
+> 
+>     (C) the same as (B) but with a swapped order:
+> 
+>         diff --git a/foo.c b/foo.c
+>         --- a/foo.c
+>         +++ b/foo.c
+>         @@ -40,1 +40,1 @@
+> 
+>         -frotz
+>         +xyzzy
+>         diff --git a/foo.c b/foo.c
+>         --- a/foo.c
+>         +++ b/foo.c
+>         @@ -20,1 +20,1 @@
+> 
+>         -foo
+>         +bar
+> 
+> Am I reading you correctly?
 
-After this we need at least two other patches:
+Absolutely.
 
-- git gui should show staged ignored submodules
+> If that is the case, I think I can buy such a change.  It appears to
+> me that in addition to changing the way the bytes form multiple
+> hunks are hashed, it would need to hash the file-level headers
+> together with each hunk when processing input (A) in order to make
+> the output consistent with the output for the latter two.
 
-- gitk should show staged ignored submodules
+Exactly. This is what this change attempts to do:
++                                   if (hunks) {
++                                           flush_one_hunk(result, &ctx);
++                                           memcpy(&ctx, &header_ctx,
++                                                  sizeof ctx);
++                                   } else {
++                                           /* Save ctx for next hunk.  */
++                                           memcpy(&header_ctx, &ctx,
++                                                  sizeof ctx);
++                                   }
 
-(It'd be great if someone else would tackle these two, just let me
-know if you want to to avoid duplicated work)
+I'll add more code comments to clarify the logic here.
 
-Did I forget a git command that shows what is to be staged?
+> Alternatively, you could hash the header for the same path only once
+> when processing input like (B) or (C) and mix.  That would also give
+> you the same result as processing (A) in a straight-forward way.
 
 
- Documentation/config.txt     |  8 ++++++--
- Documentation/gitmodules.txt |  4 +++-
- t/t7508-status.sh            | 29 +++++++++++++++++++++++++++--
- wt-status.c                  | 12 +++++++++++-
- 4 files changed, 47 insertions(+), 6 deletions(-)
+Yes, that is also possible.
+I think I slightly prefer the former way because this
+variant gives the same result for
+         diff --git a/foo.c b/foo.c
+         --- a/foo.c
+         +++ b/foo.c
+         @@ -20,2 +20,3 @@
+ 
+         +bar
+ 
+         diff --git a/bar.c b/bar.c
+         --- a/bar.c
+         +++ b/bar.c
+         @@ -40,2 +40,3 @@
+ 
+         +foo
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 73c8973..0a2e9ad 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2279,7 +2279,9 @@ status.submodulesummary::
- 	--summary-limit option of linkgit:git-submodule[1]). Please note
- 	that the summary output command will be suppressed for all
- 	submodules when `diff.ignoreSubmodules` is set to 'all' or only
--	for those submodules where `submodule.<name>.ignore=all`. To
-+	for those submodules where `submodule.<name>.ignore=all`. The only
-+	exception to that rule is that status and commit will always show
-+	submodule changes that have been staged. To
- 	also view the summary for ignored submodules you can either use
- 	the --ignore-submodules=dirty command line option or the 'git
- 	submodule summary' command, which shows a similar output but does
-@@ -2310,7 +2312,9 @@ submodule.<name>.fetchRecurseSubmodules::
- submodule.<name>.ignore::
- 	Defines under what circumstances "git status" and the diff family show
- 	a submodule as modified. When set to "all", it will never be considered
--	modified, "dirty" will ignore all changes to the submodules work tree and
-+	modified (but will nonetheless show up in the output of status and
-++	commit when they have been staged), "dirty" will ignore all changes
-+	to the submodules work tree and
- 	takes only differences between the HEAD of the submodule and the commit
- 	recorded in the superproject into account. "untracked" will additionally
- 	let submodules with modified tracked files in their work tree show up.
-diff --git a/Documentation/gitmodules.txt b/Documentation/gitmodules.txt
-index f539e3f..f684963 100644
---- a/Documentation/gitmodules.txt
-+++ b/Documentation/gitmodules.txt
-@@ -71,7 +71,9 @@ submodule.<name>.fetchRecurseSubmodules::
- submodule.<name>.ignore::
- 	Defines under what circumstances "git status" and the diff family show
- 	a submodule as modified. When set to "all", it will never be considered
--	modified, "dirty" will ignore all changes to the submodules work tree and
-+	modified (but will nonetheless show up in the output of status and
-+	commit when they have been staged), "dirty" will ignore all changes
-+	to the submodules work tree and
- 	takes only differences between the HEAD of the submodule and the commit
- 	recorded in the superproject into account. "untracked" will additionally
- 	let submodules with modified tracked files in their work tree show up.
-diff --git a/t/t7508-status.sh b/t/t7508-status.sh
-index c987b5e..f2b89e8 100755
---- a/t/t7508-status.sh
-+++ b/t/t7508-status.sh
-@@ -1380,7 +1380,32 @@ EOF
- 	test_i18ncmp expect output
- '
+and
+         diff --git a/bar.c b/bar.c
+         --- a/bar.c
+         +++ b/bar.c
+         @@ -20,2 +20,3 @@
+ 
+         +foo
+ 
+         diff --git a/foo.c b/foo.c
+         --- a/foo.c
+         +++ b/foo.c
+         @@ -40,2 +40,3 @@
+ 
+         +bar
 
--test_expect_success '.gitmodules ignore=all suppresses submodule summary' '
-+test_expect_success '.gitmodules ignore=all suppresses unstaged submodule summary' '
-+	cat > expect << EOF &&
-+On branch master
-+Changes to be committed:
-+  (use "git reset HEAD <file>..." to unstage)
-+
-+	modified:   sm
-+
-+Changes not staged for commit:
-+  (use "git add <file>..." to update what will be committed)
-+  (use "git checkout -- <file>..." to discard changes in working directory)
-+
-+	modified:   dir1/modified
-+
-+Untracked files:
-+  (use "git add <file>..." to include in what will be committed)
-+
-+	.gitmodules
-+	dir1/untracked
-+	dir2/modified
-+	dir2/untracked
-+	expect
-+	output
-+	untracked
-+
-+EOF
- 	git config --add -f .gitmodules submodule.subname.ignore all &&
- 	git config --add -f .gitmodules submodule.subname.path sm &&
- 	git status > output &&
-@@ -1388,7 +1413,7 @@ test_expect_success '.gitmodules ignore=all suppresses submodule summary' '
- 	git config -f .gitmodules  --remove-section submodule.subname
- '
 
--test_expect_success '.git/config ignore=all suppresses submodule summary' '
-+test_expect_success '.git/config ignore=all suppresses unstaged submodule summary' '
- 	git config --add -f .gitmodules submodule.subname.ignore none &&
- 	git config --add -f .gitmodules submodule.subname.path sm &&
- 	git config --add submodule.subname.ignore all &&
-diff --git a/wt-status.c b/wt-status.c
-index e1827fa..821d10c 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -519,9 +519,19 @@ static void wt_status_collect_changes_index(struct wt_status *s)
- 	opt.def = s->is_initial ? EMPTY_TREE_SHA1_HEX : s->reference;
- 	setup_revisions(0, NULL, &rev, &opt);
+but if you disagree, pls let me know - it's not
+a strong preference.
 
-+	DIFF_OPT_SET(&rev.diffopt, OVERRIDE_SUBMODULE_CONFIG);
- 	if (s->ignore_submodule_arg) {
--		DIFF_OPT_SET(&rev.diffopt, OVERRIDE_SUBMODULE_CONFIG);
- 		handle_ignore_submodules_arg(&rev.diffopt, s->ignore_submodule_arg);
-+	} else {
-+		/*
-+		 * Unless the user did explicitly request a submodule ignore
-+		 * mode by passing a command line option we do not ignore any
-+		 * changed submodule SHA-1s when comparing index and HEAD, no
-+		 * matter what is configured. Otherwise the user won't be
-+		 * shown any submodules she manually added (and which are
-+		 * staged to be committed), which would be really confusing.
-+		 */
-+		handle_ignore_submodules_arg(&rev.diffopt, "dirty");
- 	}
-
- 	rev.diffopt.output_format |= DIFF_FORMAT_CALLBACK;
--- 
-1.9.1.378.g5fbabd4
+> >  builtin/patch-id.c | 71 ++++++++++++++++++++++++++++++++++++++++++------------
+> >  1 file changed, 55 insertions(+), 16 deletions(-)
+> >
+> > diff --git a/builtin/patch-id.c b/builtin/patch-id.c
+> > index 3cfe02d..253ad87 100644
+> > --- a/builtin/patch-id.c
+> > +++ b/builtin/patch-id.c
+> > @@ -1,17 +1,14 @@
+> >  #include "builtin.h"
+> >  
+> > -static void flush_current_id(int patchlen, unsigned char *id, git_SHA_CTX *c)
+> > +static void flush_current_id(int patchlen, unsigned char *id, unsigned char *result)
+> >  {
+> > -	unsigned char result[20];
+> >  	char name[50];
+> >  
+> >  	if (!patchlen)
+> >  		return;
+> >  
+> > -	git_SHA1_Final(result, c);
+> >  	memcpy(name, sha1_to_hex(id), 41);
+> >  	printf("%s %s\n", sha1_to_hex(result), name);
+> > -	git_SHA1_Init(c);
+> >  }
+> >  
+> >  static int remove_space(char *line)
+> > @@ -56,10 +53,30 @@ static int scan_hunk_header(const char *p, int *p_before, int *p_after)
+> >  	return 1;
+> >  }
+> >  
+> > -static int get_one_patchid(unsigned char *next_sha1, git_SHA_CTX *ctx, struct strbuf *line_buf)
+> > +static void flush_one_hunk(unsigned char *result, git_SHA_CTX *ctx)
+> >  {
+> > -	int patchlen = 0, found_next = 0;
+> > +	unsigned char hash[20];
+> > +	unsigned short carry = 0;
+> > +	int i;
+> > +
+> > +	git_SHA1_Final(hash, ctx);
+> > +	git_SHA1_Init(ctx);
+> > +	/* 20-byte sum, with carry */
+> > +	for (i = 0; i < 20; ++i) {
+> > +		carry += result[i] + hash[i];
+> > +		result[i] = carry;
+> > +		carry >>= 8;
+> > +	}
+> > +}
+> > +static int get_one_patchid(unsigned char *next_sha1, unsigned char *result,
+> > +			   struct strbuf *line_buf, int stable)
+> > +{
+> > +	int patchlen = 0, found_next = 0, hunks = 0;
+> >  	int before = -1, after = -1;
+> > +	git_SHA_CTX ctx, header_ctx;
+> > +
+> > +	git_SHA1_Init(&ctx);
+> > +	hashclr(result);
+> >  
+> >  	while (strbuf_getwholeline(line_buf, stdin, '\n') != EOF) {
+> >  		char *line = line_buf->buf;
+> > @@ -99,6 +116,18 @@ static int get_one_patchid(unsigned char *next_sha1, git_SHA_CTX *ctx, struct st
+> >  			if (!memcmp(line, "@@ -", 4)) {
+> >  				/* Parse next hunk, but ignore line numbers.  */
+> >  				scan_hunk_header(line, &before, &after);
+> > +				if (stable) {
+> > +					if (hunks) {
+> > +						flush_one_hunk(result, &ctx);
+> > +						memcpy(&ctx, &header_ctx,
+> > +						       sizeof ctx);
+> > +					} else {
+> > +						/* Save ctx for next hunk.  */
+> > +						memcpy(&header_ctx, &ctx,
+> > +						       sizeof ctx);
+> > +					}
+> > +				}
+> > +				hunks++;
+> >  				continue;
+> >  			}
+> >  
+> > @@ -107,7 +136,10 @@ static int get_one_patchid(unsigned char *next_sha1, git_SHA_CTX *ctx, struct st
+> >  				break;
+> >  
+> >  			/* Else we're parsing another header.  */
+> > +			if (stable && hunks)
+> > +				flush_one_hunk(result, &ctx);
+> >  			before = after = -1;
+> > +			hunks = 0;
+> >  		}
+> >  
+> >  		/* If we get here, we're inside a hunk.  */
+> > @@ -119,39 +151,46 @@ static int get_one_patchid(unsigned char *next_sha1, git_SHA_CTX *ctx, struct st
+> >  		/* Compute the sha without whitespace */
+> >  		len = remove_space(line);
+> >  		patchlen += len;
+> > -		git_SHA1_Update(ctx, line, len);
+> > +		git_SHA1_Update(&ctx, line, len);
+> >  	}
+> >  
+> >  	if (!found_next)
+> >  		hashclr(next_sha1);
+> >  
+> > +	flush_one_hunk(result, &ctx);
+> > +
+> >  	return patchlen;
+> >  }
+> >  
+> > -static void generate_id_list(void)
+> > +static void generate_id_list(int stable)
+> >  {
+> > -	unsigned char sha1[20], n[20];
+> > -	git_SHA_CTX ctx;
+> > +	unsigned char sha1[20], n[20], result[20];
+> >  	int patchlen;
+> >  	struct strbuf line_buf = STRBUF_INIT;
+> >  
+> > -	git_SHA1_Init(&ctx);
+> >  	hashclr(sha1);
+> >  	while (!feof(stdin)) {
+> > -		patchlen = get_one_patchid(n, &ctx, &line_buf);
+> > -		flush_current_id(patchlen, sha1, &ctx);
+> > +		patchlen = get_one_patchid(n, result, &line_buf, stable);
+> > +		flush_current_id(patchlen, sha1, result);
+> >  		hashcpy(sha1, n);
+> >  	}
+> >  	strbuf_release(&line_buf);
+> >  }
+> >  
+> > -static const char patch_id_usage[] = "git patch-id < patch";
+> > +static const char patch_id_usage[] = "git patch-id [--stable | --unstable] < patch";
+> >  
+> >  int cmd_patch_id(int argc, const char **argv, const char *prefix)
+> >  {
+> > -	if (argc != 1)
+> > +	int stable;
+> > +	if (argc == 2 && !strcmp(argv[1], "--stable"))
+> > +		stable = 1;
+> > +	else if (argc == 2 && !strcmp(argv[1], "--unstable"))
+> > +		stable = 0;
+> > +	else if (argc == 1)
+> > +		stable = 1;
+> > +	else
+> >  		usage(patch_id_usage);
+> >  
+> > -	generate_id_list();
+> > +	generate_id_list(stable);
+> >  	return 0;
+> >  }
