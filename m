@@ -1,354 +1,122 @@
-From: Ronald Weiss <weiss.ronald@gmail.com>
-Subject: [PATCH v2.1] commit: add --ignore-submodules[=<when>] parameter
-Date: Mon, 31 Mar 2014 02:07:12 +0200
-Message-ID: <5338B1B0.3050703@gmail.com>
-References: <CABxC_L92v=cV=+e_DNa0L6f21LB0BRP5duai2h_heGJN_PRoUQ@mail.gmail.com>	<5335A78C.60401@web.de> <CABxC_L-4=qcZiix05dL8GrDJXv=19fw4yB0qFzRRfw=G=_Gxbg@mail.gmail.com> <53374E49.9000702@gmail.com> <533874F9.3090802@web.de> <5338AC36.6000109@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Heiko Voigt <hvoigt@hvoigt.net>, Junio C Hamano <gitster@pobox.com>
-To: Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 31 02:07:25 2014
+From: Andrew Keller <andrew@kellerfarm.com>
+Subject: [PATCH] gitweb: Improve diffs when filenames contain problem characters
+Date: Sun, 30 Mar 2014 22:05:11 -0400
+Message-ID: <1394DF8B-FD0D-4E5E-9BDE-79B487A725B6@kellerfarm.com>
+Mime-Version: 1.0 (Apple Message framework v1085)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Krzesimir Nowak <krzesimir@endocode.com>,
+	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Mar 31 04:05:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WUPl6-0007he-1P
-	for gcvg-git-2@plane.gmane.org; Mon, 31 Mar 2014 02:07:24 +0200
+	id 1WURbJ-0001OA-5P
+	for gcvg-git-2@plane.gmane.org; Mon, 31 Mar 2014 04:05:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754605AbaCaAHR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Mar 2014 20:07:17 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:42663 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754247AbaCaAHP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Mar 2014 20:07:15 -0400
-Received: by mail-wg0-f44.google.com with SMTP id m15so5118547wgh.3
-        for <git@vger.kernel.org>; Sun, 30 Mar 2014 17:07:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=luKSpv1pNi0NKshqEDNA/0EYO6Mi5JZ/Gpvq+1e4zwg=;
-        b=fS/tQ5vOmv9c0q/7XFMjWBaIcYaTw+Xp7k8R/RxzfzUKlbnvlQmDUAv6uNPwqRXhMP
-         D0a1Ye82pok/Zn3BxlfEQtJBUaNgj9hP3RgdfOPQ/Si/RFl8izEXz3lm6Did+VMuXGSC
-         JD4ykKHVZBxEcXN1B9t34C/Jg5Vz78oxU9A3PwqP96AaJxC5nLo/BA7HLON3g0+1mMSA
-         bo8HRccsHhzAZjbKRAaPpIoN5vrSvTH/2voYJG5rBETPfwe/PFRVOHzXBleb6ZH/Iq+K
-         KwrclvXFClvMZu0H+SDDGMs25I+/idtChqlnOtGxqmOj5JMgrSss0D18Xta6wclIccOH
-         wZVQ==
-X-Received: by 10.180.98.1 with SMTP id ee1mr8253170wib.10.1396224432983;
-        Sun, 30 Mar 2014 17:07:12 -0700 (PDT)
-Received: from [10.0.1.226] (chello089173067059.chello.sk. [89.173.67.59])
-        by mx.google.com with ESMTPSA id q41sm29088911eez.7.2014.03.30.17.07.11
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 30 Mar 2014 17:07:12 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
-In-Reply-To: <5338AC36.6000109@gmail.com>
+	id S1752264AbaCaCFQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Mar 2014 22:05:16 -0400
+Received: from atl4mhob13.myregisteredsite.com ([209.17.115.51]:51191 "EHLO
+	atl4mhob13.myregisteredsite.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752011AbaCaCFP convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Mar 2014 22:05:15 -0400
+Received: from mailpod.hostingplatform.com ([10.30.71.208])
+	by atl4mhob13.myregisteredsite.com (8.14.4/8.14.4) with ESMTP id s2V25CG9014039
+	for <git@vger.kernel.org>; Sun, 30 Mar 2014 22:05:12 -0400
+Received: (qmail 15299 invoked by uid 0); 31 Mar 2014 02:05:12 -0000
+X-TCPREMOTEIP: 23.28.12.255
+X-Authenticated-UID: andrew@kellerfarm.com
+Received: from unknown (HELO ?192.168.0.103?) (andrew@kellerfarm.com@23.28.12.255)
+  by 0 with ESMTPA; 31 Mar 2014 02:05:12 -0000
+X-Mailer: Apple Mail (2.1085)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245489>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245490>
 
-Git commit honors the 'ignore' setting from .gitmodules or .git/config,
-but didn't allow to override it from command line, like other commands do.
+When formatting a diff header line, be sure to escape the raw output from git
+for use as HTML.  This ensures that when "problem characters" (&, <, >, ?, etc.)
+exist in filenames, gitweb displays them as text, rather than letting the
+browser interpret them as HTML.
 
-Useful <when> values for commit are 'all' (default) or 'none'. The others
-('dirty' and 'untracked') have same effect as 'none', as commit is only
-interested in whether the submodule's HEAD differs from what is commited
-in the superproject.
-
-Changes in add.c and cache.h (and related compilo fix in checkout.c) are
-needed to make it work for "commit -a" too.
-
-Signed-off-by: Ronald Weiss <weiss.ronald@gmail.com>
+Reported-by: Dongsheng Song <dongsheng.song@gmail.com>
+Signed-off-by: Andrew Keller <andrew@kellerfarm.com>
 ---
-The previous patch version (v2) contained bug in the test, by mistake I
-have sent older version than I was testing with, sorry for that.
+Steps to reproduce:
 
-On 30. 3. 2014 21:48, Jens Lehmann wrote:
-> Looking good so far, but we definitely need tests for this new option.
+1)  Create a repository that contains a commit that adds a file:
+    * with an ampersand in the filename
+    * with binary contents
+2)  Make the repository visible to gitweb
+3)  In gitweb, navigate to the page that shows the diff for the commit
+    that added the file
 
-I added two simple tests (one for --ignore-submodules=all, another one
-for =none). But I am sure the tests could be written better, by someone
-more proficient in Git than I am.
+Behavior without patch: Page stops rendering when it gets to one of
+the instances of the filename (in the diff header, to be specific), and
+a light-red box appears a the top of the page, saying something like
+this:
 
-The tests immediately revealed, that the patch was not complete. It
-didn't work with commit message given on command line (-m). To make
-that work, I had to also patch the index_differs_from function in
-diff-lib.c.
+    This page contains the following errors:
 
-> But I wonder if it would make more sense to start by teaching the
-> --ignore-submodules option to git add. Then this patch could reuse
-> that for commit -a.
+    error on line 67 at column 22: xmlParseEntityRef: no name
 
-That sounds reasonable, however I don't think that any code from my
-patch would be affected, or would it? IOW, would commit really "reuse"
-anything? If not (or not much), there is probably no point in
-postponing this patch, support for git add may be added later.
+    Below is a rendering of the page up to the first error.
 
 
- Documentation/git-commit.txt        |  6 ++++++
- builtin/add.c                       | 16 +++++++++++----
- builtin/checkout.c                  |  2 +-
- builtin/commit.c                    | 10 ++++++++--
- cache.h                             |  2 +-
- diff-lib.c                          |  7 ++++++-
- diff.h                              |  3 ++-
- sequencer.c                         |  4 ++--
- t/t7513-commit-ignore-submodules.sh | 39 +++++++++++++++++++++++++++++++++++++
- 9 files changed, 77 insertions(+), 12 deletions(-)
- create mode 100644 t/t7513-commit-ignore-submodules.sh
+(This particular error is what you get with an unescaped ampersand)
 
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index 1a7616c..c8839c8 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -13,6 +13,7 @@ SYNOPSIS
- 	   [-F <file> | -m <msg>] [--reset-author] [--allow-empty]
- 	   [--allow-empty-message] [--no-verify] [-e] [--author=<author>]
- 	   [--date=<date>] [--cleanup=<mode>] [--[no-]status]
-+	   [--ignore-submodules[=<when>]]
- 	   [-i | -o] [-S[<keyid>]] [--] [<file>...]
+Behavior with patch: You see the ampersand in the file name, and the
+page renders as one would expect.
+
+
+Other notes:
+
+Several helper methods exist for escaping HTML, and I was unsure
+about which one to use.  Although this patch fixes the problem,
+it is possible that it may be more correct to use, for example, the
+'esc_html' helper method instead of interacting with $cgi directly.
+
+The first hunk in the diff seems to be all that's required to experience
+the good behavior, however upon inspecting the code, it seems
+prudent to also include the second one.  It's a nearby section of code,
+doing similar work, and is called from the same function as the
+former, and with similar arguments.
+
+
+Thanks,
+Andrew Keller
+
+
+ gitweb/gitweb.perl |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 79057b7..6c559f8 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -2223,6 +2223,8 @@ sub format_git_diff_header_line {
+ 	my $diffinfo = shift;
+ 	my ($from, $to) = @_;
  
- DESCRIPTION
-@@ -271,6 +272,11 @@ The possible options are:
- The default can be changed using the status.showUntrackedFiles
- configuration variable documented in linkgit:git-config[1].
- 
-+--ignore-submodules[=<when>]::
-+	Can be used to override any settings of the 'ignore' option
-+	in linkgit:git-config[1] or linkgit:gitmodules[5].
-+	<when> can be either "none" or "all", which is the default.
++	$line = $cgi->escapeHTML($line);
 +
- -v::
- --verbose::
- 	Show unified diff between the HEAD commit and what
-diff --git a/builtin/add.c b/builtin/add.c
-index 672adc0..1086294 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -168,7 +168,8 @@ static void update_callback(struct diff_queue_struct *q,
+ 	if ($diffinfo->{'nparents'}) {
+ 		# combined diff
+ 		$line =~ s!^(diff (.*?) )"?.*$!$1!;
+@@ -2259,6 +2261,8 @@ sub format_extended_diff_header_line {
+ 	my $diffinfo = shift;
+ 	my ($from, $to) = @_;
  
- static void update_files_in_cache(const char *prefix,
- 				  const struct pathspec *pathspec,
--				  struct update_callback_data *data)
-+				  struct update_callback_data *data,
-+				  const char *ignore_submodules_arg)
- {
- 	struct rev_info rev;
- 
-@@ -180,17 +181,24 @@ static void update_files_in_cache(const char *prefix,
- 	rev.diffopt.format_callback = update_callback;
- 	rev.diffopt.format_callback_data = data;
- 	rev.max_count = 0; /* do not compare unmerged paths with stage #2 */
++	$line = $cgi->escapeHTML($line);
 +
-+	if (ignore_submodules_arg) {
-+		DIFF_OPT_SET(&rev.diffopt, OVERRIDE_SUBMODULE_CONFIG);
-+		handle_ignore_submodules_arg(&rev.diffopt, ignore_submodules_arg);
-+	}
-+
- 	run_diff_files(&rev, DIFF_RACY_IS_MODIFIED);
- }
- 
- int add_files_to_cache(const char *prefix,
--		       const struct pathspec *pathspec, int flags)
-+		       const struct pathspec *pathspec, int flags,
-+		       const char *ignore_submodules_arg)
- {
- 	struct update_callback_data data;
- 
- 	memset(&data, 0, sizeof(data));
- 	data.flags = flags;
--	update_files_in_cache(prefix, pathspec, &data);
-+	update_files_in_cache(prefix, pathspec, &data, ignore_submodules_arg);
- 	return !!data.add_errors;
- }
- 
-@@ -576,7 +584,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 		memset(&pathspec, 0, sizeof(pathspec));
- 	}
- 	update_data.flags = flags & ~ADD_CACHE_IMPLICIT_DOT;
--	update_files_in_cache(prefix, &pathspec, &update_data);
-+	update_files_in_cache(prefix, &pathspec, &update_data, NULL);
- 
- 	exit_status |= !!update_data.add_errors;
- 	if (add_new_files)
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index ada51fa..22a4b48 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -525,7 +525,7 @@ static int merge_working_tree(const struct checkout_opts *opts,
- 			 * entries in the index.
- 			 */
- 
--			add_files_to_cache(NULL, NULL, 0);
-+			add_files_to_cache(NULL, NULL, 0, NULL);
- 			/*
- 			 * NEEDSWORK: carrying over local changes
- 			 * when branches have different end-of-line
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 26b2986..b3fb28e 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -360,7 +360,7 @@ static char *prepare_index(int argc, const char **argv, const char *prefix,
- 	 */
- 	if (all || (also && pathspec.nr)) {
- 		fd = hold_locked_index(&index_lock, 1);
--		add_files_to_cache(also ? prefix : NULL, &pathspec, 0);
-+		add_files_to_cache(also ? prefix : NULL, &pathspec, 0, ignore_submodule_arg);
- 		refresh_cache_or_die(refresh_flags);
- 		update_main_cache_tree(WRITE_TREE_SILENT);
- 		if (write_cache(fd, active_cache, active_nr) ||
-@@ -827,7 +827,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 		if (get_sha1(parent, sha1))
- 			commitable = !!active_nr;
- 		else
--			commitable = index_differs_from(parent, 0);
-+			commitable = index_differs_from(parent, 0, ignore_submodule_arg);
- 	}
- 	strbuf_release(&committer_ident);
- 
-@@ -1492,6 +1492,9 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL(0, "amend", &amend, N_("amend previous commit")),
- 		OPT_BOOL(0, "no-post-rewrite", &no_post_rewrite, N_("bypass post-rewrite hook")),
- 		{ OPTION_STRING, 'u', "untracked-files", &untracked_files_arg, N_("mode"), N_("show untracked files, optional modes: all, normal, no. (Default: all)"), PARSE_OPT_OPTARG, NULL, (intptr_t)"all" },
-+		{ OPTION_STRING, 0, "ignore-submodules", &ignore_submodule_arg, N_("when"),
-+		  N_("ignore changes to submodules, optional when: all, none. (Default: all)"),
-+		  PARSE_OPT_OPTARG, NULL, (intptr_t)"all" },
- 		/* end commit contents options */
- 
- 		OPT_HIDDEN_BOOL(0, "allow-empty", &allow_empty,
-@@ -1531,6 +1534,9 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 	argc = parse_and_validate_options(argc, argv, builtin_commit_options,
- 					  builtin_commit_usage,
- 					  prefix, current_head, &s);
-+
-+	s.ignore_submodule_arg = ignore_submodule_arg;
-+
- 	if (dry_run)
- 		return dry_run_commit(argc, argv, prefix, current_head, &s);
- 	index_file = prepare_index(argc, argv, prefix, current_head, 0);
-diff --git a/cache.h b/cache.h
-index ebe9a40..5ef8dd6 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1282,7 +1282,7 @@ void packet_trace_identity(const char *prog);
-  * return 0 if success, 1 - if addition of a file failed and
-  * ADD_FILES_IGNORE_ERRORS was specified in flags
-  */
--int add_files_to_cache(const char *prefix, const struct pathspec *pathspec, int flags);
-+int add_files_to_cache(const char *prefix, const struct pathspec *pathspec, int flags, const char *ignore_submodules_arg);
- 
- /* diff.c */
- extern int diff_auto_refresh_index;
-diff --git a/diff-lib.c b/diff-lib.c
-index 2eddc66..fec5ad4 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -508,7 +508,8 @@ int do_diff_cache(const unsigned char *tree_sha1, struct diff_options *opt)
- 	return 0;
- }
- 
--int index_differs_from(const char *def, int diff_flags)
-+int index_differs_from(const char *def, int diff_flags,
-+		       const char *ignore_submodules_arg)
- {
- 	struct rev_info rev;
- 	struct setup_revision_opt opt;
-@@ -520,6 +521,10 @@ int index_differs_from(const char *def, int diff_flags)
- 	DIFF_OPT_SET(&rev.diffopt, QUICK);
- 	DIFF_OPT_SET(&rev.diffopt, EXIT_WITH_STATUS);
- 	rev.diffopt.flags |= diff_flags;
-+	if (ignore_submodules_arg) {
-+		DIFF_OPT_SET(&rev.diffopt, OVERRIDE_SUBMODULE_CONFIG);
-+		handle_ignore_submodules_arg(&rev.diffopt, ignore_submodules_arg);
-+	}
- 	run_diff_index(&rev, 1);
- 	if (rev.pending.alloc)
- 		free(rev.pending.objects);
-diff --git a/diff.h b/diff.h
-index ce123fa..0ac869b 100644
---- a/diff.h
-+++ b/diff.h
-@@ -334,7 +334,8 @@ extern int diff_result_code(struct diff_options *, int);
- 
- extern void diff_no_index(struct rev_info *, int, const char **, const char *);
- 
--extern int index_differs_from(const char *def, int diff_flags);
-+extern int index_differs_from(const char *def, int diff_flags,
-+			      const char *ignore_submodules_arg);
- 
- extern size_t fill_textconv(struct userdiff_driver *driver,
- 			    struct diff_filespec *df,
-diff --git a/sequencer.c b/sequencer.c
-index 90cac7b..de9edec 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -496,7 +496,7 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
- 		unborn = get_sha1("HEAD", head);
- 		if (unborn)
- 			hashcpy(head, EMPTY_TREE_SHA1_BIN);
--		if (index_differs_from(unborn ? EMPTY_TREE_SHA1_HEX : "HEAD", 0))
-+		if (index_differs_from(unborn ? EMPTY_TREE_SHA1_HEX : "HEAD", 0, NULL))
- 			return error_dirty_index(opts);
- 	}
- 	discard_cache();
-@@ -1042,7 +1042,7 @@ static int sequencer_continue(struct replay_opts *opts)
- 		if (ret)
- 			return ret;
- 	}
--	if (index_differs_from("HEAD", 0))
-+	if (index_differs_from("HEAD", 0, NULL))
- 		return error_dirty_index(opts);
- 	todo_list = todo_list->next;
- 	return pick_commits(todo_list, opts);
-diff --git a/t/t7513-commit-ignore-submodules.sh b/t/t7513-commit-ignore-submodules.sh
-new file mode 100644
-index 0000000..a7148ce
---- /dev/null
-+++ b/t/t7513-commit-ignore-submodules.sh
-@@ -0,0 +1,39 @@
-+#!/bin/sh
-+
-+test_description='git commit --ignore-submodules'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'create submodule' '
-+	test_create_repo sm && (
-+		cd sm &&
-+		>foo &&
-+		git add foo &&
-+		git commit -m "Add foo"
-+	) &&
-+	git submodule add ./sm &&
-+	git commit -m "Add sm"
-+'
-+
-+update_sm () {
-+	(cd sm &&
-+		echo bar >> foo &&
-+		git add foo &&
-+		git commit -m "Updated foo"
-+	)
-+}
-+
-+test_expect_success 'commit -a --ignore-submodules=all ignores dirty submodule' '
-+	update_sm &&
-+	test_must_fail git commit -a --ignore-submodules=all -m "Update sm"
-+'
-+
-+test_expect_success 'commit -a --ignore-submodules=none overrides ignore=all setting' '
-+	update_sm &&
-+	git config submodule.sm.ignore all &&
-+	git commit -a --ignore-submodules=none -m "Update sm" &&
-+	git diff-index --exit-code --cached --ignore-submodules=none HEAD &&
-+	git diff-files --exit-code --ignore-submodules=none
-+'
-+
-+test_done
+ 	# match <path>
+ 	if ($line =~ s!^((copy|rename) from ).*$!$1! && $from->{'href'}) {
+ 		$line .= $cgi->a({-href=>$from->{'href'}, -class=>"path"},
 -- 
-1.9.0
- 
+1.7.7.1
