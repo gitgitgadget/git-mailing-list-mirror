@@ -1,68 +1,78 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Odd "git diff" breakage
-Date: Mon, 31 Mar 2014 11:05:06 -0700
-Message-ID: <CA+55aFxYBDXs8mGQ3weR2PSOdMgOzMXPT=uWstL4c4BKnykkdA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Bug report: Git 1.8 on Ubuntu 13.10 refs not valid
+Date: Mon, 31 Mar 2014 11:27:53 -0700
+Message-ID: <xmqqbnwm6x5i.fsf@gitster.dls.corp.google.com>
+References: <5334398E.8090402@gmail.com>
+	<20140327184916.GA28668@sigill.intra.peff.net>
+	<5339A38D.1080504@gmail.com>
+	<20140331180118.GA31023@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Mar 31 20:05:18 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Siggi <siggin@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Mar 31 20:28:07 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WUgaA-000337-SV
-	for gcvg-git-2@plane.gmane.org; Mon, 31 Mar 2014 20:05:15 +0200
+	id 1WUgwI-0001pB-Da
+	for gcvg-git-2@plane.gmane.org; Mon, 31 Mar 2014 20:28:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753012AbaCaSFI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Mar 2014 14:05:08 -0400
-Received: from mail-ve0-f177.google.com ([209.85.128.177]:37172 "EHLO
-	mail-ve0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752640AbaCaSFH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Mar 2014 14:05:07 -0400
-Received: by mail-ve0-f177.google.com with SMTP id sa20so8223088veb.22
-        for <git@vger.kernel.org>; Mon, 31 Mar 2014 11:05:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:date:message-id:subject:from:to:content-type;
-        bh=ECiRJX3DKN8lWjdjcZNXjdndhA7Xabut+V6US32xqrw=;
-        b=0D5UQT485IOVJiQic8YMVHzLScZqyxrX4ELkOEsKe+mgD2xoAElxA9Z1F4qsVTsdw6
-         ciJVwpSUunkRnTG+PVtnmtUX/UcQS7vxJPYqKLD6VWpcijEel1vO1WJJVIZPZw0ql5Ay
-         YJOrMOZFl1eZLocgbsnik8nFCSJcPWzOqNY1fkmSVqSyNQtERXLqRAeN49kUoPBKxkBm
-         MlQuksKYOyn7OxHKmBEScQj6aAaEmNKqa/IrwbbXGAedyEDJczs2QDkAOrqlXCPzz5aU
-         g58FluA60r5cxq3DD/JmUxqr2v+GIOAFO0kOE5BRGz1kPuzzt9r/0mw3wVK3gMy1+4yh
-         HJ0A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:sender:date:message-id:subject:from:to:content-type;
-        bh=ECiRJX3DKN8lWjdjcZNXjdndhA7Xabut+V6US32xqrw=;
-        b=Ge0R7klxttJmHGSPgyJjkXN44GwPqqUW4/Wy2HdcnitYqDVQabZyBgz88FmaM5xAkX
-         8GE6LKFKwuczEKBDABRRIbhUP9dDzju1Tyjw+1o5j82wRfR9P5iqKiCLRAURW4TqAasU
-         IMORgE2ox1Gu5wk/UVvZ5Q9a2h+lNkSli5/MA=
-X-Received: by 10.52.6.162 with SMTP id c2mr20458313vda.6.1396289106532; Mon,
- 31 Mar 2014 11:05:06 -0700 (PDT)
-Received: by 10.220.13.2 with HTTP; Mon, 31 Mar 2014 11:05:06 -0700 (PDT)
-X-Google-Sender-Auth: 4m4RJdhQ3-bfv6ddVqLYtu5I9XU
+	id S1753788AbaCaS17 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Mar 2014 14:27:59 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59728 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753273AbaCaS14 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Mar 2014 14:27:56 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4A10B77D43;
+	Mon, 31 Mar 2014 14:27:56 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Hladxi9xbnhfJPtnYDGVeWCrmbs=; b=len23f
+	mN+tgwcsrMP5xQHSxrtLoBI4ekGFGpmkyQyZrGKgIAaEWqD0vC+dsAOPBWhjUdxS
+	rG0vMKlUyH7/c8Lfd2QFQ5JLCQbt4khqw7nVjDjoiGjUoFPhfb9UeIwBBwVbm+cm
+	MK72UIXe638opRdpe1zNtnUrv3RLW57qaSLW8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ZJ2bSKFhvVdezdHbrAALLWyiY/XueB5O
+	FOoMQ6cZNouabp5ONgMXapBXJMPEk7L+RT384QLkMXpHmXp3JTOhBu3N/JOTyk2e
+	xqBswTikCfPrPPyWDm8FYZ//SSs0k9fryETC8AM8uL9m8wmxWeecAxnwhR89wx7w
+	a61NQh9fEBU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3455777D42;
+	Mon, 31 Mar 2014 14:27:56 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9907277D41;
+	Mon, 31 Mar 2014 14:27:55 -0400 (EDT)
+In-Reply-To: <20140331180118.GA31023@sigill.intra.peff.net> (Jeff King's
+	message of "Mon, 31 Mar 2014 14:01:18 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 2D8A1650-B902-11E3-B709-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245504>
 
-I hit this oddity when not remembering the right syntax for --color-words..
+Jeff King <peff@peff.net> writes:
 
-Try this (outside of a git repository):
+> That being said, git _could_ be more liberal in accepting a content-type
+> with parameters (even though it does not know about any parameters, and
+> charset here is completely meaningless). I have mixed feelings on that.
 
-   touch a b
-   git diff -u --color=words a b
+It may be just a matter of replacing strbuf_cmp() with "the initial
+part must be this string" followed by "it could have an optional
+whitespaces and semicolon after that", but I share the mixed
+feelings.
 
-and watch it scroll (infinitely) printing out
-
-   error: option `color' expects "always", "auto", or "never"
-
-forever.
-
-I haven't tried to root-cause it, since I'm supposed to be merging stuff..
-
-                Linus
+I am not sure if it is a right thing to follow "be liberal to
+accept" dictum in this case.  It may be liberal in accepting
+blindly, but if the other end is asking a behaviour that is not
+standard (but perhaps in future versions of Git such an enhanced
+service may be implemented by the client), by ignoring the parameter
+we do not even know about how to handle, we would be giving surprises
+to the overall protocol exchange.
