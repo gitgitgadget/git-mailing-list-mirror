@@ -1,55 +1,55 @@
 From: Ronald Weiss <weiss.ronald@gmail.com>
-Subject: [PATCH v2] commit: add --ignore-submodules[=<when>] parameter
-Date: Mon, 31 Mar 2014 01:43:50 +0200
-Message-ID: <5338AC36.6000109@gmail.com>
-References: <CABxC_L92v=cV=+e_DNa0L6f21LB0BRP5duai2h_heGJN_PRoUQ@mail.gmail.com>	<5335A78C.60401@web.de> <CABxC_L-4=qcZiix05dL8GrDJXv=19fw4yB0qFzRRfw=G=_Gxbg@mail.gmail.com> <53374E49.9000702@gmail.com> <533874F9.3090802@web.de>
+Subject: [PATCH v2.1] commit: add --ignore-submodules[=<when>] parameter
+Date: Mon, 31 Mar 2014 02:07:12 +0200
+Message-ID: <5338B1B0.3050703@gmail.com>
+References: <CABxC_L92v=cV=+e_DNa0L6f21LB0BRP5duai2h_heGJN_PRoUQ@mail.gmail.com>	<5335A78C.60401@web.de> <CABxC_L-4=qcZiix05dL8GrDJXv=19fw4yB0qFzRRfw=G=_Gxbg@mail.gmail.com> <53374E49.9000702@gmail.com> <533874F9.3090802@web.de> <5338AC36.6000109@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: Heiko Voigt <hvoigt@hvoigt.net>, Junio C Hamano <gitster@pobox.com>
 To: Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 31 01:48:16 2014
+X-From: git-owner@vger.kernel.org Mon Mar 31 02:07:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WUPSa-00047K-1z
-	for gcvg-git-2@plane.gmane.org; Mon, 31 Mar 2014 01:48:16 +0200
+	id 1WUPl6-0007he-1P
+	for gcvg-git-2@plane.gmane.org; Mon, 31 Mar 2014 02:07:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754235AbaC3XsJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Mar 2014 19:48:09 -0400
-Received: from mail-we0-f175.google.com ([74.125.82.175]:42994 "EHLO
-	mail-we0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753614AbaC3Xnx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Mar 2014 19:43:53 -0400
-Received: by mail-we0-f175.google.com with SMTP id q58so4117141wes.34
-        for <git@vger.kernel.org>; Sun, 30 Mar 2014 16:43:52 -0700 (PDT)
+	id S1754605AbaCaAHR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Mar 2014 20:07:17 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:42663 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754247AbaCaAHP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Mar 2014 20:07:15 -0400
+Received: by mail-wg0-f44.google.com with SMTP id m15so5118547wgh.3
+        for <git@vger.kernel.org>; Sun, 30 Mar 2014 17:07:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=message-id:date:from:user-agent:mime-version:to:cc:subject
          :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=cUPheeFcgEgzqrY4NsAf96lM8KhiDlQH9/08E/wn188=;
-        b=Awxn5Y+5PPBpBZlbTiwGBdIDRzoOQERCnX4Vgo+9syNLJ3fJswS5+IQk53nRwSPWLG
-         5ddRN5IE02xlV1BUM2zPGmP7WqKWLg0xaJRwbtQWBZzdI3eEtw/VZho+Gr7F++cLFe+9
-         8gaw8MCFL+hyU8BLyYNkhpdyJN8X9ZR70amROLzu0Je08c/uIIO9qUb0JhfdDYlTUQrd
-         SBIoVBNiIw5gmJjbHXqOcq7ZamHPYI0oir+hVkSR6iN3ptZaQKfpr6i4tLOMn8+0qqMB
-         NTmN0NFbQypIwsSf6qMcwhlOuNK3dJ44VSpC+ZFwd+iNuO1+FyugkMNc5Ew30RcPkRG2
-         A14A==
-X-Received: by 10.180.103.227 with SMTP id fz3mr7999619wib.29.1396223032053;
-        Sun, 30 Mar 2014 16:43:52 -0700 (PDT)
+        bh=luKSpv1pNi0NKshqEDNA/0EYO6Mi5JZ/Gpvq+1e4zwg=;
+        b=fS/tQ5vOmv9c0q/7XFMjWBaIcYaTw+Xp7k8R/RxzfzUKlbnvlQmDUAv6uNPwqRXhMP
+         D0a1Ye82pok/Zn3BxlfEQtJBUaNgj9hP3RgdfOPQ/Si/RFl8izEXz3lm6Did+VMuXGSC
+         JD4ykKHVZBxEcXN1B9t34C/Jg5Vz78oxU9A3PwqP96AaJxC5nLo/BA7HLON3g0+1mMSA
+         bo8HRccsHhzAZjbKRAaPpIoN5vrSvTH/2voYJG5rBETPfwe/PFRVOHzXBleb6ZH/Iq+K
+         KwrclvXFClvMZu0H+SDDGMs25I+/idtChqlnOtGxqmOj5JMgrSss0D18Xta6wclIccOH
+         wZVQ==
+X-Received: by 10.180.98.1 with SMTP id ee1mr8253170wib.10.1396224432983;
+        Sun, 30 Mar 2014 17:07:12 -0700 (PDT)
 Received: from [10.0.1.226] (chello089173067059.chello.sk. [89.173.67.59])
-        by mx.google.com with ESMTPSA id w12sm28946785eez.36.2014.03.30.16.43.50
+        by mx.google.com with ESMTPSA id q41sm29088911eez.7.2014.03.30.17.07.11
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 30 Mar 2014 16:43:51 -0700 (PDT)
+        Sun, 30 Mar 2014 17:07:12 -0700 (PDT)
 User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
-In-Reply-To: <533874F9.3090802@web.de>
+In-Reply-To: <5338AC36.6000109@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245488>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245489>
 
 Git commit honors the 'ignore' setting from .gitmodules or .git/config,
 but didn't allow to override it from command line, like other commands do.
@@ -64,6 +64,9 @@ needed to make it work for "commit -a" too.
 
 Signed-off-by: Ronald Weiss <weiss.ronald@gmail.com>
 ---
+The previous patch version (v2) contained bug in the test, by mistake I
+have sent older version than I was testing with, sorry for that.
+
 On 30. 3. 2014 21:48, Jens Lehmann wrote:
 > Looking good so far, but we definitely need tests for this new option.
 
@@ -303,7 +306,7 @@ index 90cac7b..de9edec 100644
  	return pick_commits(todo_list, opts);
 diff --git a/t/t7513-commit-ignore-submodules.sh b/t/t7513-commit-ignore-submodules.sh
 new file mode 100644
-index 0000000..a3a68ce
+index 0000000..a7148ce
 --- /dev/null
 +++ b/t/t7513-commit-ignore-submodules.sh
 @@ -0,0 +1,39 @@
@@ -340,7 +343,7 @@ index 0000000..a3a68ce
 +test_expect_success 'commit -a --ignore-submodules=none overrides ignore=all setting' '
 +	update_sm &&
 +	git config submodule.sm.ignore all &&
-+	git commit -a -m "Update sm" &&
++	git commit -a --ignore-submodules=none -m "Update sm" &&
 +	git diff-index --exit-code --cached --ignore-submodules=none HEAD &&
 +	git diff-files --exit-code --ignore-submodules=none
 +'
