@@ -1,94 +1,170 @@
 From: Jens Lehmann <Jens.Lehmann@web.de>
 Subject: Re: [RFC] submodule: change submodule.<name>.branch default from
  master to HEAD
-Date: Mon, 31 Mar 2014 21:31:39 +0200
-Message-ID: <5339C29B.5030301@web.de>
-References: <20140328030556.GD25485@odin.tremily.us> <c66d89d854407469b6fd223213a09e5d60eeec0a.1395977055.git.wking@tremily.us> <CAPig+cT7tmxvYz+sLQY68SgF6osM+pAj-gFb7xvyuH+Gnw5xrg@mail.gmail.com> <20140328035255.GF25485@odin.tremily.us> <20140328035827.GG25485@odin.tremily.us> <5335AA0E.7000001@web.de> <20140328171059.GJ25485@odin.tremily.us>
+Date: Mon, 31 Mar 2014 21:35:07 +0200
+Message-ID: <5339C36B.5020502@web.de>
+References: <20140328030556.GD25485@odin.tremily.us> <c66d89d854407469b6fd223213a09e5d60eeec0a.1395977055.git.wking@tremily.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Eric Sunshine <sunshine@sunshineco.com>, Git <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
 	Heiko Voigt <hvoigt@hvoigt.net>,
 	Johan Herland <johan@herland.net>
-To: "W. Trevor King" <wking@tremily.us>
-X-From: git-owner@vger.kernel.org Mon Mar 31 21:32:13 2014
+To: "W. Trevor King" <wking@tremily.us>, Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Mar 31 21:35:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WUhwE-0007nY-El
-	for gcvg-git-2@plane.gmane.org; Mon, 31 Mar 2014 21:32:06 +0200
+	id 1WUhzO-0005kG-SE
+	for gcvg-git-2@plane.gmane.org; Mon, 31 Mar 2014 21:35:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751089AbaCaTcA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 31 Mar 2014 15:32:00 -0400
-Received: from mout.web.de ([212.227.17.12]:56739 "EHLO mout.web.de"
+	id S1751243AbaCaTfN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Mar 2014 15:35:13 -0400
+Received: from mout.web.de ([212.227.17.11]:55325 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750974AbaCaTb6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Mar 2014 15:31:58 -0400
-Received: from [192.168.178.41] ([79.193.64.198]) by smtp.web.de (mrweb001)
- with ESMTPSA (Nemesis) id 0MKr7w-1WUhvo4AWu-0002AL; Mon, 31 Mar 2014 21:31:41
+	id S1750925AbaCaTfL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Mar 2014 15:35:11 -0400
+Received: from [192.168.178.41] ([79.193.64.198]) by smtp.web.de (mrweb004)
+ with ESMTPSA (Nemesis) id 0MP2Sl-1WRhaF3wDX-006KdK; Mon, 31 Mar 2014 21:35:09
  +0200
 User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
-In-Reply-To: <20140328171059.GJ25485@odin.tremily.us>
+In-Reply-To: <c66d89d854407469b6fd223213a09e5d60eeec0a.1395977055.git.wking@tremily.us>
 X-Enigmail-Version: 1.6
-X-Provags-ID: V03:K0:LDumr6fLMKwC6zTolqQ+EPn7Dfb85x4nEDMLwQeUU1ZHddDyVov
- CP4AuByg2dif6kxGnxRkXR0zSbOsUdVPQaLYXLPLxPWBn7oogPMNZT1gsPPbHtMgyI4IHkQ
- /skeS0JcIoJwLs9MjbtI2vfxsvC4oepl+54n+wAQCAS1j0ScQcNOZGRSucZEmEf8w4lS5Hf
- wXNBWhbme4f9NsfnmQOQA==
+X-Provags-ID: V03:K0:Dv+FJ8klo/KIr1otej4f7czDg4pnzsyltKh3hBftJ0CRoClu9/H
+ n2FJ8ATmAfN4hUtZVXsgnAipA1Embr/awtFwf5n2WQ6WOdYvKdzl1WlkTcFRUl54AXlqKWq
+ Cj7RuzKt3PpuoasXZwbhYxuUZ7lvnfJVaR/CDEhUzd1B/8AcHUNZoTT8TDi1UdHp5Yituym
+ fHTO5xFuAHuAgzst8USQA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245516>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245517>
 
-Am 28.03.2014 18:10, schrieb W. Trevor King:
-> On Fri, Mar 28, 2014 at 05:57:50PM +0100, Jens Lehmann wrote:
->> Am 28.03.2014 04:58, schrieb W. Trevor King:
->>> On Thu, Mar 27, 2014 at 08:52:55PM -0700, W. Trevor King wrote:
->>>> No the remote branch is in the upstream subproject.  I suppose I m=
-eant
->>>> =E2=80=9Cthe submodule's remote-tracking branch following the upst=
-ream
->>>> subproject's HEAD which we just fetched so it's fairly current=E2=80=
-=9D ;).
->>>
->>> Hmm, maybe we should change the existing =E2=80=9Cupstream submodul=
-e=E2=80=9D to
->>> =E2=80=9Cupstream subproject=E2=80=9D for consistency?
->>
->> For me it's still an "upstream submodule" ...
->=20
-> We have a few existing =E2=80=9C[upstream] subproject=E2=80=9D refere=
-nces though.  I
-> prefer subproject, because the submodule's upstream repository is
-> likely a bare repo and not a submodule itself.  It's also possible
-> (likely?) that the upstream repository is a stand-alone project, and
-> not designed to always be a submodule.  However, =E2=80=9Cupstream su=
-bmodule=E2=80=9D
-> and =E2=80=9Csubmodule's upstream=E2=80=9D are both clear enough, and=
- if they're the
-> consensus phrasing, I'd rather standardize on them than jump back and
-> forth between phrasings in the docs.  I can write up a patch that
-> shifts us to consistently use one form, once we decide what that
-> should be (although I'm happy to let someone else write the patch too
-> ;).
+Am 28.03.2014 04:36, schrieb W. Trevor King:
+> gitmodule(5) mentioned 'master' as the default remote branch, but
+> folks using checkout-style updates are unlikely to care which upstream
+> branch their commit comes from (they only care that the clone fetches
+> that commit).  If they haven't set submodule.<name>.branch, it makes
+> more sense to mirror 'git clone' and use the subproject's HEAD than to
+> default to 'master' (which may not even exist).
+> 
+> After the initial clone, subsequent updates may be local or remote.
+> Local updates (integrating gitlink changes) have no need to fetch a
+> specific remote branch, and get along just fine without
+> submodule.<name>.branch.  Remote updates do need a remote branch, but
+> HEAD works as well here as it did for the initial clone.
+> 
+> Reported-by: Johan Herland <johan@herland.net>
+> Signed-off-by: W. Trevor King <wking@tremily.us>
+> ---
+> This still needs tests, but it gets through the following fine:
+> 
+>   rm -rf superproject subproject &&
+>   mkdir subproject &&
+>   (cd subproject &&
+>    git init &&
+>    echo 'Subproject' > README &&
+>    git add README &&
+>    git commit -m 'Subproject commit' &&
+>    git branch -m master next
+>   ) &&
+>   mkdir superproject &&
+>   (cd superproject &&
+>    git init &&
+>    git submodule add ../subproject submod &&
+>    git commit -am 'Add submod'
+>   )
+>   (cd subproject &&
+>    echo 'work work work' >> README &&
+>    git commit -am 'Subproject commit 2'
+>   ) &&
+>   (cd superproject &&
+>    git submodule update --remote &&
+>    git commit -am 'Add submod'
+>   )
+> 
+> The main drawback to this approach is that we're changing a default,
+> but I agree with John's:
+> 
+> On Fri, Mar 28, 2014 at 12:21:23AM +0100, Johan Herland wrote:
+>> I expect in most cases where "origin/master" happens to be the Right
+>> Answer, using the submodule's upstream's HEAD will yield the same
+>> result.
+> 
+> so the default-change may not be particularly intrusive.
 
-Apart from the RelNotes there are only seven places in the
-Documentation directory where the term "subproject" is used:
+I'd prefer a solution that doesn't change any defaults for the
+checkout use case (again). Maybe it is a better route to revert
+this series, then add tests describing the current behavior for
+checkout submodules as a next step before adding the branch mode
+for rebase and merge users again?
 
-- Two in git-submodule.txt (which are those you recently added in
-  the series that introduced the regression and would be gone if
-  we revert that)
-
-- One in git-write-tree.txt (but as I understand it the --prefix
-  option can be used to record tree objects for other tools too,
-  so the more generic term subproject looks OK to me there)
-
-- Four occurrences in user-manual.txt describing the diff format
-  for submodules (which I assume will always stay "[+-]Subproject"
-  for backwards compatibility reasons)
-
-If we do not revert your series I'll be happy to write up a patch
-replacing the two usages of subproject in git-submodule.txt ;-)
+> Cheers,
+> Trevor
+> 
+>  Documentation/git-submodule.txt |  2 +-
+>  Documentation/gitmodules.txt    |  5 +++--
+>  git-submodule.sh                | 11 ++++++++---
+>  3 files changed, 12 insertions(+), 6 deletions(-)
+> 
+> diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+> index 46c1eeb..c485a17 100644
+> --- a/Documentation/git-submodule.txt
+> +++ b/Documentation/git-submodule.txt
+> @@ -284,7 +284,7 @@ OPTIONS
+>  	the superproject's recorded SHA-1 to update the submodule, use the
+>  	status of the submodule's remote-tracking branch.  The remote used
+>  	is branch's remote (`branch.<name>.remote`), defaulting to `origin`.
+> -	The remote branch used defaults to `master`, but the branch name may
+> +	The remote branch used defaults to `HEAD`, but the branch name may
+>  	be overridden by setting the `submodule.<name>.branch` option in
+>  	either `.gitmodules` or `.git/config` (with `.git/config` taking
+>  	precedence).
+> diff --git a/Documentation/gitmodules.txt b/Documentation/gitmodules.txt
+> index f539e3f..1aecce9 100644
+> --- a/Documentation/gitmodules.txt
+> +++ b/Documentation/gitmodules.txt
+> @@ -53,8 +53,9 @@ submodule.<name>.update::
+>  
+>  submodule.<name>.branch::
+>  	A remote branch name for tracking updates in the upstream submodule.
+> -	If the option is not specified, it defaults to 'master'.  See the
+> -	`--remote` documentation in linkgit:git-submodule[1] for details.
+> +	If the option is not specified, it defaults to the subproject's
+> +	HEAD.  See the `--remote` documentation in linkgit:git-submodule[1]
+> +	for details.
+>  +
+>  This branch name is also used for the local branch created by
+>  non-checkout cloning updates.  See the `update` documentation in
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index 6135cfa..5f08e6c 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -819,8 +819,8 @@ cmd_update()
+>  		name=$(module_name "$sm_path") || exit
+>  		url=$(git config submodule."$name".url)
+>  		config_branch=$(get_submodule_config "$name" branch)
+> -		branch="${config_branch:-master}"
+> -		local_branch="$branch"
+> +		branch="${config_branch:-HEAD}"
+> +		local_branch="$config_branch"
+>  		if ! test -z "$update"
+>  		then
+>  			update_module=$update
+> @@ -860,7 +860,12 @@ Maybe you want to use 'update --init'?")"
+>  
+>  		if ! test -d "$sm_path"/.git -o -f "$sm_path"/.git
+>  		then
+> -			start_point="origin/${branch}"
+> +			if test -n "$config_branch"
+> +			then
+> +				start_point="origin/$branch"
+> +			else
+> +				start_point=""
+> +			fi
+>  			module_clone "$sm_path" "$name" "$url" "$reference" "$depth" "$start_point" "$local_branch" || exit
+>  			cloned_modules="$cloned_modules;$name"
+>  			subsha1=
+> 
