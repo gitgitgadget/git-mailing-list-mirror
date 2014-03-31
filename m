@@ -1,83 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 2/3] patch-id: document new behaviour
-Date: Mon, 31 Mar 2014 12:54:46 -0700
-Message-ID: <xmqq7g7a5ek9.fsf@gitster.dls.corp.google.com>
-References: <1396202583-2572-1-git-send-email-mst@redhat.com>
-	<1396202583-2572-2-git-send-email-mst@redhat.com>
-	<xmqqmwg65gp7.fsf@gitster.dls.corp.google.com>
-	<20140331192604.GF12208@redhat.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: What's cooking in git.git (Mar 2014, #07; Fri, 28)
+Date: Mon, 31 Mar 2014 22:22:19 +0200
+Message-ID: <5339CE7B.2030307@alum.mit.edu>
+References: <xmqqtxai7ym6.fsf@gitster.dls.corp.google.com>	<53360457.1060008@alum.mit.edu> <CAL=YDWnKb7Di3wsw7i1kn0mCGAmqvSY+xQOA5wo2v_EohkHEEg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, sunshine@sunshineco.com, jrnieder@gmail.com,
-	peff@peff.net
-To: "Michael S. Tsirkin" <mst@redhat.com>
-X-From: git-owner@vger.kernel.org Mon Mar 31 21:55:16 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Brad King <brad.king@kitware.com>
+To: Ronnie Sahlberg <sahlberg@google.com>
+X-From: git-owner@vger.kernel.org Mon Mar 31 22:22:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WUiIO-0004F6-4i
-	for gcvg-git-2@plane.gmane.org; Mon, 31 Mar 2014 21:55:00 +0200
+	id 1WUij0-0004X4-3H
+	for gcvg-git-2@plane.gmane.org; Mon, 31 Mar 2014 22:22:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751340AbaCaTy4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Mar 2014 15:54:56 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56339 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750966AbaCaTyz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Mar 2014 15:54:55 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AD06977112;
-	Mon, 31 Mar 2014 15:54:54 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1NhgADWwenewq9AWhphk9rBndKQ=; b=KOKPHo
-	U4R9Wi+rSJ42KoZTMkhPHGzS58qTsQY08FonJJNpKMkvawV3NT2mvGikpHNb6ScY
-	57av0frKCE7OTFWqEoGwaUiirVrbw4Aa5TM1tvBVQXOXG94stMmu/KODlZP4rt85
-	G5Q5rGTav4c9v5+Uy2w5vjXhYsQJvqt4iyOPE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Y7H0xOmJ/Re92HrAi//z0p6SSE9MbM9M
-	c4IbQzLLJ/XpazTbRNqLKuHz/9TwVrucGgVacer1JBi1GdVBsuGSET82nYbyigzQ
-	S6dSGictAJ4sxTpZmjuJkj05WsNuedVsgNnQbzU2dSbqchBX7uNYPmwfuYf5gGaH
-	OHZJzTdovIA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9E2A47710F;
-	Mon, 31 Mar 2014 15:54:54 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E9AF77710D;
-	Mon, 31 Mar 2014 15:54:53 -0400 (EDT)
-In-Reply-To: <20140331192604.GF12208@redhat.com> (Michael S. Tsirkin's message
-	of "Mon, 31 Mar 2014 22:26:04 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 53E91038-B90E-11E3-BF87-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751247AbaCaUWZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Mar 2014 16:22:25 -0400
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:64245 "EHLO
+	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751026AbaCaUWX (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 31 Mar 2014 16:22:23 -0400
+X-AuditID: 1207440e-f79c76d000003e2c-56-5339ce7ede10
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id E9.FA.15916.E7EC9335; Mon, 31 Mar 2014 16:22:22 -0400 (EDT)
+Received: from [192.168.69.148] (p5B156503.dip0.t-ipconnect.de [91.21.101.3])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s2VKMJu6029073
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Mon, 31 Mar 2014 16:22:21 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.3.0
+In-Reply-To: <CAL=YDWnKb7Di3wsw7i1kn0mCGAmqvSY+xQOA5wo2v_EohkHEEg@mail.gmail.com>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrEKsWRmVeSWpSXmKPExsUixO6iqFt3zjLYoOuhjMXOdRIWXVe6mSwa
+	eq8wW/ybUOPA4rFgU6nHx2fL2T0uXlL2+LxJLoAlitsmKbGkLDgzPU/fLoE749LvdWwFZ7gr
+	Lr+fzNLA2MfZxcjBISFgIrGwzaeLkRPIFJO4cG89G4gtJHCZUeLS4oouRi4g+yyTRO/m7Uwg
+	CV4BbYnFlz6BFbEIqEpM7vjLAmKzCehKLOppBqsRFQiSOLzhFCtEvaDEyZlPwGpEBDQlbvaf
+	BqthFkiX+LH8OjuILSxgL9HfvIoVYtl8RokfJ16ALeAUCJS4cOkrI8Sh4hI9jUEgJrOAusT6
+	eUIQY+Qltr+dwzyBUXAWkm2zEKpmIalawMi8ilEuMac0Vzc3MTOnODVZtzg5MS8vtUjXWC83
+	s0QvNaV0EyMktPl2MLavlznEKMDBqMTDa1FuGSzEmlhWXJl7iFGSg0lJlDf0LFCILyk/pTIj
+	sTgjvqg0J7X4EKMEB7OSCO/WBUA53pTEyqrUonyYlDQHi5I4r9oSdT8hgfTEktTs1NSC1CKY
+	rAwHh5IEbx7IUMGi1PTUirTMnBKENBMHJ8hwLimR4tS8lNSixNKSjHhQ7MYXA6MXJMUDtFcZ
+	pJ23uCAxFygK0XqK0Zjj1oY1jUwcG7YBSSGWvPy8VClx3v1ngEoFQEozSvPgFsGS2itGcaC/
+	hXn/gFTxABMi3LxXQKuYgFa5FZmBrCpJREhJNTDyrheoOvV7QnCl3qoWtn/T6lvV/861f5J6
+	dPG0I967pqallu6M9z2fkH73H1tm9YF/GjEfstpEojIfbZjX/Cn//6SjDua74yTV 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245522>
 
-"Michael S. Tsirkin" <mst@redhat.com> writes:
+On 03/31/2014 07:56 PM, Ronnie Sahlberg wrote:
+> I am new to git, so sorry If I overlooked something.
+> 
+> I think there might be a race in ref_transaction_commit() when
+> deleting references.
+> 
+> 	/* Perform deletes now that updates are safely completed */
+> 	for (i = 0; i < n; i++) {
+> 		struct ref_update *update = updates[i];
+> 
+> 		if (update->lock) {
+> 			delnames[delnum++] = update->lock->ref_name;
+> 			ret |= delete_ref_loose(update->lock, update->type);
+> 		}
+> 	}
+> 
+> 	ret |= repack_without_refs(delnames, delnum);
+> 	for (i = 0; i < delnum; i++)
+> 		unlink_or_warn(git_path("logs/%s", delnames[i]));
+> 
+> These two blocks should be reordered so that you first delete the
+> actual refs first, while holding the lock and then release the lock
+> afterward ?
 
-> The hash used is mostly an internal implementation detail, isn't it?
+I think what you suggest is what is already being done.  The locks of
+references that are being deleted are not released until a few lines
+after the code that you quoted:
 
-Yes, but that does not mean we can break people who keep an external
-database indexed with the patch-id by changing the default under
-them, and "they can give --unstable option to work it around" is a
-workaround, not a fix.  Without this change, they did not have to do
-anything.
+> 	for (i = 0; i < n; i++)
+> 		if (updates[i]->lock)
+> 			unlock_ref(updates[i]->lock);
 
-I would imagine that most of these people will be using the plain
-vanilla "git show" output without any ordering or hunk splitting
-when coming up with such a key.  A possible way forward to allow the
-configuration that corresponds to "-O<orderfile>" while not breaking
-the existing users could be to make the "patch-id --stable" kick in
-automatically (of course, do this only when the user did not give
-the "--unstable" command line option to override) when we see the
-orderfile configuration in the repository, or when we see that the
-incoming patch looks like reordered (e.g. has multiple "diff --git"
-header lines that refer to the same path, or the set of files
-mentioned by the "diff --git" lines are not in ascending order),
-perhaps?
+Before the code that you quoted, some locks are released, but only for
+references being updated (not those being deleted).
+
+But maybe I misunderstand your critique.
+
+By the way, there *is* a race here, but it is a subtler one involving
+the interaction between packed and loose references when references are
+deleted.
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
