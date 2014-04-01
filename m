@@ -1,71 +1,129 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 00/22] Lockfile refactoring and pre-activation
-Date: Tue, 1 Apr 2014 16:44:47 -0400
-Message-ID: <20140401204447.GJ21715@sigill.intra.peff.net>
-References: <1396367910-7299-1-git-send-email-mhagger@alum.mit.edu>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
+Subject: Re: [PATCH 1/2] date: recognize bogus FreeBSD gmtime output
+Date: Tue, 01 Apr 2014 23:17:14 +0200
+Message-ID: <533B2CDA.30307@web.de>
+References: <20140401073848.GA22023@sigill.intra.peff.net>	<20140401074251.GA22550@sigill.intra.peff.net>	<533AFA86.2090905@web.de> <xmqq7g7827h8.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Apr 01 22:44:59 2014
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>,
+	Charles Bailey <cbailey32@bloomberg.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 01 23:17:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WV5YH-0000yf-Te
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Apr 2014 22:44:58 +0200
+	id 1WV63z-0006Hk-AS
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Apr 2014 23:17:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751978AbaDAUov (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Apr 2014 16:44:51 -0400
-Received: from cloud.peff.net ([50.56.180.127]:52101 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751728AbaDAUot (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Apr 2014 16:44:49 -0400
-Received: (qmail 23934 invoked by uid 102); 1 Apr 2014 20:44:49 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 01 Apr 2014 15:44:49 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 01 Apr 2014 16:44:47 -0400
-Content-Disposition: inline
-In-Reply-To: <1396367910-7299-1-git-send-email-mhagger@alum.mit.edu>
+	id S1751507AbaDAVRj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Apr 2014 17:17:39 -0400
+Received: from mout.web.de ([212.227.15.14]:64924 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751366AbaDAVRi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Apr 2014 17:17:38 -0400
+Received: from [192.168.178.27] ([79.253.130.66]) by smtp.web.de (mrweb003)
+ with ESMTPSA (Nemesis) id 0M4I79-1XLHEy3m0R-00rt6N; Tue, 01 Apr 2014 23:17:36
+ +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
+In-Reply-To: <xmqq7g7827h8.fsf@gitster.dls.corp.google.com>
+X-Provags-ID: V03:K0:/UeoDGoyKThZlVy6HcQWcF5UZiqvoglemQnro0mJPmAu7nbplz+
+ 4E5HYUM95korP7IngT5b7fbRbETYZYh2rkR9JLnVORjGP1c+R/rw1HWNM4MGDXquMa9PFtX
+ 4nN9OQD8fVJZAoPSLEZwVDPNVlTE/7b8fkaZkccpC1cIpFvtX+YYdnv9z9le70LyYIm9HI4
+ GgVISQDiKhwyJEXLA58DQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245658>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245659>
 
-On Tue, Apr 01, 2014 at 05:58:08PM +0200, Michael Haggerty wrote:
+Am 01.04.2014 21:08, schrieb Junio C Hamano:
+> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+>
+>> Am 01.04.2014 09:42, schrieb Jeff King:
+>>> diff --git a/compat/gmtime.c b/compat/gmtime.c
+>>> new file mode 100644
+>>> index 0000000..ffcabf4
+>>> --- /dev/null
+>>> +++ b/compat/gmtime.c
+>>> @@ -0,0 +1,26 @@
+>>> +#include "../git-compat-util.h"
+>>> +#undef gmtime
+>>> +#undef gmtime_r
+>>> +
+>>> +struct tm *git_gmtime(const time_t *timep)
+>>> +{
+>>> +	static struct tm result;
+>>> +	return git_gmtime_r(timep, &result);
+>>> +}
+>>> +
+>>> +struct tm *git_gmtime_r(const time_t *timep, struct tm *result)
+>>> +{
+>>> +	struct tm *ret;
+>>> +
+>>> +	ret =3D gmtime_r(timep, result);
+>>> +
+>>> +	/*
+>>> +	 * Rather than NULL, FreeBSD gmtime will return a "struct tm" wit=
+h all
+>>> +	 * fields zeroed. Since "mday" cannot otherwise be zero, we can t=
+est
+>>> +	 * this very quickly.
+>>> +	 */
+>>> +	if (ret && !ret->tm_mday)
+>>> +		ret =3D NULL;
+>>> +
+>>> +	return ret;
+>>> +}
+>>
+>> http://pubs.opengroup.org/onlinepubs/009695399/functions/gmtime.html
+>> says that errno shall be set on error and only mentions EOVERFLOW as=
+ a
+>> possible error code.
+>
+> So are you saying we should set EOVERFLOW ourselves, or does FreeBSD
+> set EOVERFLOW for us in this case and we do not have to worry?
 
-> I've had this patch series kicking around for a long time, along with
-> some followup patches to fix a race in reference deletion.  I haven't
-> had the time to get everything done and tested, but let me at least
-> push this first series out there.  I especially want to submit it in
-> case we accept a GSoC student for the project "Refactor tempfile
-> handling", because (1) I don't want me and the student to be stepping
-> on each others' toes, and (2) there are some cleanups and
-> documentation improvements here that will hopefully be useful to the
-> student.
+If we correct the return value then we should correct errno as well.=20
+gmtime() on FreeBSD 10 leaves errno untouched when it encounters an=20
+overflow.
 
-Thanks, this sort of preparation for GSoC students is very much welcome.
+While testing this again I just noticed that FreeBSD doesn't strictly=20
+return a pointer to a cleared struct tm.  It simply leaves its static=20
+buffer untouched.  We should probably clear it (memset in git_gmtime_r)=
+=2E
 
-> The first patch actually demonstrates the race condition that I hope
-> to fix someday.  The last patch introduces the lockfile feature that I
-> think is needed to fix it: the ability to activate a packed-refs file
-> while still holding the lock to prevent another process from
-> overwriting it before the accompanying loose reference updates are all
-> finished.  But the fix itself is not included here, so you might want
-> to keep the last patch on hold until there is a concrete user of the
-> feature.
+Demo program:
 
-I should have read this more carefully when I responded to the final
-patch. I surmised your intent based on our previous work on packed-refs,
-but here you spell out my guesses explicitly. :)
+-- >8 --
+#include <stdio.h>
+#include <time.h>
 
-I think all of the patches look good. I'd prefer to hold back the final
-one (and probably 19/22, which has no purpose except to prepare for
-22/22) until seeing its application in practice.
+const static time_t epoch;
 
-Thanks for a very pleasant read.
+int main(int argc, char **argv)
+{
+         time_t t =3D 99999999999999999;
 
--Peff
+         printf("%s", ctime(&t));
+         printf("%s", asctime(gmtime(&t)));
+
+         printf("%s", ctime(&t));
+         gmtime(&epoch);
+         printf("%s", asctime(gmtime(&t)));
+
+         return 0;
+}
+-- 8< --
+
+Results on FreeBSD 10:
+
+	Wed Sep  6 11:46:39     -1126091476
+	Wed Sep  6 11:46:39     -1126091476
+	Wed Sep  6 11:46:39     -1126091476
+	Thu Jan  1 00:00:00 1970
+
+Ren=C3=A9
