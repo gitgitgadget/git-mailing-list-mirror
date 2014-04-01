@@ -1,67 +1,60 @@
-From: Ram Rachum <ram@rachum.com>
-Subject: git cascade and git forward-merge
-Date: Tue, 01 Apr 2014 13:41:37 +0300
-Message-ID: <533A97E1.5080806@rachum.com>
+From: "rocketscienc01100101 ." <rocketscienc01100101@gmail.com>
+Subject: Bug in git-diff output
+Date: Tue, 1 Apr 2014 12:49:00 +0200
+Message-ID: <CALgQ2n-vPK6_0LnWA_AAD2GLvepjLN4A3UZFCAWzEp9r_=XOVg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 01 12:42:46 2014
+X-From: git-owner@vger.kernel.org Tue Apr 01 12:49:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WUw93-0007v3-RH
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Apr 2014 12:42:18 +0200
+	id 1WUwFg-0000Dk-Kf
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Apr 2014 12:49:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751214AbaDAKmM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Apr 2014 06:42:12 -0400
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:60874 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751089AbaDAKmK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Apr 2014 06:42:10 -0400
-Received: by mail-wi0-f178.google.com with SMTP id bs8so4851232wib.11
-        for <git@vger.kernel.org>; Tue, 01 Apr 2014 03:42:09 -0700 (PDT)
+	id S1751535AbaDAKtB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Apr 2014 06:49:01 -0400
+Received: from mail-ie0-f196.google.com ([209.85.223.196]:45775 "EHLO
+	mail-ie0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751291AbaDAKtB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Apr 2014 06:49:01 -0400
+Received: by mail-ie0-f196.google.com with SMTP id rd18so2531492iec.7
+        for <git@vger.kernel.org>; Tue, 01 Apr 2014 03:49:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        bh=A9rTZRSlAiWBnh35YPUF7Xzytgus0rIiFWl+ZAV5eW8=;
-        b=Afdy3ZjdGkKvk0kIUkJ5eLf11CGSr3DEtWv7WE4ShdMFrJsUZJsLmOUAbG+uvHXX6E
-         IR9m+xM3ChpViKQJRhfm1fx9OjY3BkQFf8jMqVu3RcomcixDbOYqKIxFZJMo+AvFP4TF
-         z7pv6dA27dslsXoWGDOEshPGFwoLowffbLWy8fFHCIj9KvJbInmGI0VjjK37crICPdb7
-         dh2ZIxEbkytFOS0jYdLQoV/YD/rJ0iHNNwz/c5sU46xPpqm/HsAaABCh7Q2lDuy0i3oS
-         GcAAXhT+ZXzyflX/TdTgquLsAlSSGfs0F3CQ4+kFXbwf9SGAx0mXAHva46JLR8xTS9mW
-         4ZeA==
-X-Received: by 10.180.149.240 with SMTP id ud16mr12464379wib.23.1396348929361;
-        Tue, 01 Apr 2014 03:42:09 -0700 (PDT)
-Received: from [192.168.1.100] ([5.144.63.243])
-        by mx.google.com with ESMTPSA id q49sm39637331eem.34.2014.04.01.03.42.05
-        for <git@vger.kernel.org>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 01 Apr 2014 03:42:08 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.0
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=sjI+VxqWIKofUIJ2ZnYNRWPp+Cg9/RR+dYAjx1ldyI4=;
+        b=aut+84J3TP2lK8MLLGzELfgKT3B+xny/KMfSYDARpCpozmexjSsPnQ51RxJeXNWptL
+         7/blyCfXxW1JET3425XvwfUzeKvlujis7gMcy41GoaeVHkni6IDVXafm8D6D9Sriv4wD
+         k+TKUjW+u85SjQyA9hofLGKa11DYj5ORG+6bF/SPP0jJOAKHGWIV+gbkT4u0gLWNrm4N
+         Fr5qoExZL4Jw212ynVecrdcey1U8NyxK7JZA1y7UKGSWDYV9VAg35NXMYu906GJMxlr6
+         wOHyzyO7IHbLNWUtdtLW1ixezOLhw6+pg4te5rrV3VSZf6ioIsM55fmgRYgN9NtHr4VD
+         rexA==
+X-Received: by 10.42.15.142 with SMTP id l14mr22736700ica.64.1396349340575;
+ Tue, 01 Apr 2014 03:49:00 -0700 (PDT)
+Received: by 10.50.25.165 with HTTP; Tue, 1 Apr 2014 03:49:00 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245579>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245580>
 
-Hi guys!
+I tried to get a diff between HEAD and the current version of my
+project, so I did "git diff".
 
-I just made two Git scripts of mine open-source:
+It's a web project with a CSS file that contains the following CSS rule:
 
-https://github.com/cool-RR/git-cascade 
-<https://github.com/cool-RR/git-cascade>
+a[href^=tel] {
+    color:inherit;
+    text-decoration:none;
+}
 
-This project contains two scripts:
+Now, whenever I do "git diff", it will always show the a[href^=tel]
+part and mess up the output, even when I didn't change anything near
+that line. The problem is easily reproducable in a newly created
+repository.
 
-  - git cascade - Cascade changes from each branch to its dependents.
-  - git forward-merge - Merge branches without checking them out.
-
-Click the GitHub link above to read all about them.
-
-
-Thanks,
-Ram.
+git --version
+git version 1.9.1
