@@ -1,96 +1,67 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2 18/27] update-ref --stdin: Harmonize error messages
-Date: Tue, 01 Apr 2014 11:29:22 +0200
-Message-ID: <533A86F2.90508@alum.mit.edu>
-References: <1395683820-17304-1-git-send-email-mhagger@alum.mit.edu>	<1395683820-17304-19-git-send-email-mhagger@alum.mit.edu> <xmqqy4zq2g0b.fsf@gitster.dls.corp.google.com> <5339EE33.7050708@alum.mit.edu>
+From: Ram Rachum <ram@rachum.com>
+Subject: git cascade and git forward-merge
+Date: Tue, 01 Apr 2014 13:41:37 +0300
+Message-ID: <533A97E1.5080806@rachum.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Brad King <brad.king@kitware.com>,
-	Johan Herland <johan@herland.net>, Jeff King <peff@peff.net>,
-	Vicent Marti <tanoku@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 01 11:29:35 2014
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 01 12:42:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WUv0f-00009h-Ne
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Apr 2014 11:29:34 +0200
+	id 1WUw93-0007v3-RH
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Apr 2014 12:42:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751294AbaDAJ33 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Apr 2014 05:29:29 -0400
-Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:51306 "EHLO
-	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751162AbaDAJ31 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Apr 2014 05:29:27 -0400
-X-AuditID: 1207440f-f79326d000003c9f-c4-533a86f62dee
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id B6.83.15519.6F68A335; Tue,  1 Apr 2014 05:29:26 -0400 (EDT)
-Received: from [192.168.69.148] (p57A2460D.dip0.t-ipconnect.de [87.162.70.13])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s319TNDi008448
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Tue, 1 Apr 2014 05:29:24 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.3.0
-In-Reply-To: <5339EE33.7050708@alum.mit.edu>
-X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrNKsWRmVeSWpSXmKPExsUixO6iqPutzSrYYPFZDYud6yQsuq50M1k0
-	9F5htph3dxeTxY+WHmaLj50LmB3YPHbOusvucenldzaPj8+Ws3s8693D6HHxkrLH501yAWxR
-	3DZJiSVlwZnpefp2CdwZP3ZuZiz4xlWx6ukd1gbGOxxdjBwcEgImEqu+23YxcgKZYhIX7q1n
-	62Lk4hASuMwocXTaNUYI5yyTxM4T35lAGngFNCVuPMgDaWARUJVY8xSkgZODTUBXYlFPMxOI
-	LSoQJHF4wylWEJtXQFDi5MwnLCC2iICaxMS2QywgM5kFVjNKLJ0yA6xZWMBL4tv/GaxQyxgl
-	Gme9AOvgFNCR6NzXyQxxqbhET2MQSJgZKPyu7wEzhC0vsf3tHOYJjIKzkOybhaRsFpKyBYzM
-	qxjlEnNKc3VzEzNzilOTdYuTE/PyUot0TfRyM0v0UlNKNzFCooF/B2PXeplDjAIcjEo8vJbl
-	lsFCrIllxZW5hxglOZiURHmFG6yChfiS8lMqMxKLM+KLSnNSiw8xSnAwK4nwfm8GyvGmJFZW
-	pRblw6SkOViUxHnVl6j7CQmkJ5akZqemFqQWwWRlODiUJHiLgFEvJFiUmp5akZaZU4KQZuLg
-	BBnOJSVSnJqXklqUWFqSEQ+K4PhiYAyDpHiA9ma2guwtLkjMBYpCtJ5iNObYsG1NIxPHreUb
-	G5mEWPLy81KlxHnngWwSACnNKM2DWwRLg68YxYH+FuadAlLFA0yhcPNeAa1iAlp1MxFsVUki
-	QkqqgZE3zTvnr+m6psSlO67O5LmwyPKahv2Vzzm7vSwU33I9NXhdFLa478Haa2nC 
+	id S1751214AbaDAKmM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Apr 2014 06:42:12 -0400
+Received: from mail-wi0-f178.google.com ([209.85.212.178]:60874 "EHLO
+	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751089AbaDAKmK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Apr 2014 06:42:10 -0400
+Received: by mail-wi0-f178.google.com with SMTP id bs8so4851232wib.11
+        for <git@vger.kernel.org>; Tue, 01 Apr 2014 03:42:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        bh=A9rTZRSlAiWBnh35YPUF7Xzytgus0rIiFWl+ZAV5eW8=;
+        b=Afdy3ZjdGkKvk0kIUkJ5eLf11CGSr3DEtWv7WE4ShdMFrJsUZJsLmOUAbG+uvHXX6E
+         IR9m+xM3ChpViKQJRhfm1fx9OjY3BkQFf8jMqVu3RcomcixDbOYqKIxFZJMo+AvFP4TF
+         z7pv6dA27dslsXoWGDOEshPGFwoLowffbLWy8fFHCIj9KvJbInmGI0VjjK37crICPdb7
+         dh2ZIxEbkytFOS0jYdLQoV/YD/rJ0iHNNwz/c5sU46xPpqm/HsAaABCh7Q2lDuy0i3oS
+         GcAAXhT+ZXzyflX/TdTgquLsAlSSGfs0F3CQ4+kFXbwf9SGAx0mXAHva46JLR8xTS9mW
+         4ZeA==
+X-Received: by 10.180.149.240 with SMTP id ud16mr12464379wib.23.1396348929361;
+        Tue, 01 Apr 2014 03:42:09 -0700 (PDT)
+Received: from [192.168.1.100] ([5.144.63.243])
+        by mx.google.com with ESMTPSA id q49sm39637331eem.34.2014.04.01.03.42.05
+        for <git@vger.kernel.org>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 01 Apr 2014 03:42:08 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245579>
 
-On 04/01/2014 12:37 AM, Michael Haggerty wrote:
-> On 03/31/2014 11:51 PM, Junio C Hamano wrote:
->> Michael Haggerty <mhagger@alum.mit.edu> writes:
->>
->>> Make (most of) the error messages for invalid input have the same
->>> format [1]:
->>>
->>>     $COMMAND [SP $REFNAME]: $MESSAGE
->>>
->>> Update the tests accordingly.
->>>
->>> [1] A few error messages are left with their old form, because
->>>     $COMMAND and $REFNAME aren't passed all the way down the call
->>>     stack.  Maybe those sites should be changed some day, too.
->>>
->>> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
->>> ---
->>
->> Up to this point, modulo nits that have been pointed out separately,
->> the series looked reasonably well done.
-> 
-> Thanks for the feedback!  Would you like me to expand the commit
-> messages to answer the questions that you asked about the previous
-> patches?  And if so, do you want a v3 sent to the list already or should
-> I wait for you to review patches 19-27 first?
+Hi guys!
 
-Junio, I incorporated your feedback (which so far has only affected
-commit messages).  I also rebased the patch series to the current
-master.  I pushed the result to GitHub [1].  I'll refrain from spamming
-the list with v3 yet.
+I just made two Git scripts of mine open-source:
 
-Michael
+https://github.com/cool-RR/git-cascade 
+<https://github.com/cool-RR/git-cascade>
 
-[1] Branch "ref-transactions" at https://github.com/mhagger/git
+This project contains two scripts:
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+  - git cascade - Cascade changes from each branch to its dependents.
+  - git forward-merge - Merge branches without checking them out.
+
+Click the GitHub link above to read all about them.
+
+
+Thanks,
+Ram.
