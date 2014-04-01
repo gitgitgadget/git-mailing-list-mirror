@@ -1,48 +1,60 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: fast-import deltas
-Date: Tue, 1 Apr 2014 19:25:54 +0900
-Message-ID: <20140401102554.GA32231@glandium.org>
+From: sunny110 <mehran.sunny@hotmail.com>
+Subject: [fatal error] cannot pread pack file: Input/output error
+Date: Tue, 1 Apr 2014 04:22:04 -0700 (PDT)
+Message-ID: <1396351324120-7607133.post@n2.nabble.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 01 13:05:51 2014
+X-From: git-owner@vger.kernel.org Tue Apr 01 13:22:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WUwVp-0008Sq-Ij
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Apr 2014 13:05:49 +0200
+	id 1WUwm3-0006wl-9h
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Apr 2014 13:22:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751096AbaDALFp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Apr 2014 07:05:45 -0400
-Received: from ks3293202.kimsufi.com ([5.135.186.141]:47826 "EHLO
-	zenigata.glandium.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751095AbaDALFo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Apr 2014 07:05:44 -0400
-X-Greylist: delayed 2381 seconds by postgrey-1.27 at vger.kernel.org; Tue, 01 Apr 2014 07:05:43 EDT
-Received: from glandium by zenigata.glandium.org with local (Exim 4.82)
-	(envelope-from <glandium@glandium.org>)
-	id 1WUvtC-0008Rd-Ha
-	for git@vger.kernel.org; Tue, 01 Apr 2014 19:25:54 +0900
-Content-Disposition: inline
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1753211AbaDALWH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Apr 2014 07:22:07 -0400
+Received: from sam.nabble.com ([216.139.236.26]:35578 "EHLO sam.nabble.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752539AbaDALWE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Apr 2014 07:22:04 -0400
+Received: from jim.nabble.com ([192.168.236.80])
+	by sam.nabble.com with esmtp (Exim 4.72)
+	(envelope-from <mehran.sunny@hotmail.com>)
+	id 1WUwlY-0002hs-5L
+	for git@vger.kernel.org; Tue, 01 Apr 2014 04:22:04 -0700
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245582>
 
-Hi,
+Hi;
+I hope this is the right place for my question.
 
-I am currently prototyping a "native" mercurial remote handler for git,
-and it seems silly for git to compute deltas itself when I'm getting
-deltas from the mercurial remote itself, albeit in a different form.
+I wanna build GoldenDict from source, however I get a fattal error when I
+try to clone the repository.
 
-Would adding a fast-import command to handle deltas be considered useful
-for git? If so, what kind of format would be suitable?
+Here is the recorded session:
 
-Cheers,
+    sunny@s9:~/Programs/goldendict$ git clone
+git://github.com/goldendict/goldendict.git
+    Cloning into 'goldendict'...
+    remote: Reusing existing pack: 11370, done.
+    remote: Counting objects: 7, done.
+    remote: Compressing objects: 100% (7/7), done.
+    remote: Total 11377 (delta 1), reused 0 (delta 0)
+    Receiving objects: 100% (11377/11377), 27.17 MiB | 11 KiB/s, done.
+    fatal: cannot pread pack file: Input/output error
+    fatal: index-pack failed 
 
-Mike
+So what's the problem? could anyone help me? Thanks in advance.
+
+
+
+--
+View this message in context: http://git.661346.n2.nabble.com/fatal-error-cannot-pread-pack-file-Input-output-error-tp7607133.html
+Sent from the git mailing list archive at Nabble.com.
