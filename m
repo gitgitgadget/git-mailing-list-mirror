@@ -1,77 +1,96 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] add `ignore_missing_links` mode to revwalk
-Date: Tue, 1 Apr 2014 03:54:52 -0400
-Message-ID: <20140401075452.GB22591@sigill.intra.peff.net>
-References: <533239ED.5040503@fb.com>
- <20140328100043.GA16502@sigill.intra.peff.net>
- <5339E2BD.3090303@fb.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v2 18/27] update-ref --stdin: Harmonize error messages
+Date: Tue, 01 Apr 2014 11:29:22 +0200
+Message-ID: <533A86F2.90508@alum.mit.edu>
+References: <1395683820-17304-1-git-send-email-mhagger@alum.mit.edu>	<1395683820-17304-19-git-send-email-mhagger@alum.mit.edu> <xmqqy4zq2g0b.fsf@gitster.dls.corp.google.com> <5339EE33.7050708@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Vicent Marti <tanoku@gmail.com>, git@vger.kernel.org
-To: Siddharth Agarwal <sid0@fb.com>
-X-From: git-owner@vger.kernel.org Tue Apr 01 09:55:07 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Brad King <brad.king@kitware.com>,
+	Johan Herland <johan@herland.net>, Jeff King <peff@peff.net>,
+	Vicent Marti <tanoku@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 01 11:29:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WUtXA-0001XT-Dh
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Apr 2014 09:55:00 +0200
+	id 1WUv0f-00009h-Ne
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Apr 2014 11:29:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751204AbaDAHyy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Apr 2014 03:54:54 -0400
-Received: from cloud.peff.net ([50.56.180.127]:51562 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750786AbaDAHyy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Apr 2014 03:54:54 -0400
-Received: (qmail 12249 invoked by uid 102); 1 Apr 2014 07:54:54 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 01 Apr 2014 02:54:54 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 01 Apr 2014 03:54:52 -0400
-Content-Disposition: inline
-In-Reply-To: <5339E2BD.3090303@fb.com>
+	id S1751294AbaDAJ33 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Apr 2014 05:29:29 -0400
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:51306 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751162AbaDAJ31 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Apr 2014 05:29:27 -0400
+X-AuditID: 1207440f-f79326d000003c9f-c4-533a86f62dee
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id B6.83.15519.6F68A335; Tue,  1 Apr 2014 05:29:26 -0400 (EDT)
+Received: from [192.168.69.148] (p57A2460D.dip0.t-ipconnect.de [87.162.70.13])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s319TNDi008448
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Tue, 1 Apr 2014 05:29:24 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.3.0
+In-Reply-To: <5339EE33.7050708@alum.mit.edu>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrNKsWRmVeSWpSXmKPExsUixO6iqPutzSrYYPFZDYud6yQsuq50M1k0
+	9F5htph3dxeTxY+WHmaLj50LmB3YPHbOusvucenldzaPj8+Ws3s8693D6HHxkrLH501yAWxR
+	3DZJiSVlwZnpefp2CdwZP3ZuZiz4xlWx6ukd1gbGOxxdjBwcEgImEqu+23YxcgKZYhIX7q1n
+	62Lk4hASuMwocXTaNUYI5yyTxM4T35lAGngFNCVuPMgDaWARUJVY8xSkgZODTUBXYlFPMxOI
+	LSoQJHF4wylWEJtXQFDi5MwnLCC2iICaxMS2QywgM5kFVjNKLJ0yA6xZWMBL4tv/GaxQyxgl
+	Gme9AOvgFNCR6NzXyQxxqbhET2MQSJgZKPyu7wEzhC0vsf3tHOYJjIKzkOybhaRsFpKyBYzM
+	qxjlEnNKc3VzEzNzilOTdYuTE/PyUot0TfRyM0v0UlNKNzFCooF/B2PXeplDjAIcjEo8vJbl
+	lsFCrIllxZW5hxglOZiURHmFG6yChfiS8lMqMxKLM+KLSnNSiw8xSnAwK4nwfm8GyvGmJFZW
+	pRblw6SkOViUxHnVl6j7CQmkJ5akZqemFqQWwWRlODiUJHiLgFEvJFiUmp5akZaZU4KQZuLg
+	BBnOJSVSnJqXklqUWFqSEQ+K4PhiYAyDpHiA9ma2guwtLkjMBYpCtJ5iNObYsG1NIxPHreUb
+	G5mEWPLy81KlxHnngWwSACnNKM2DWwRLg68YxYH+FuadAlLFA0yhcPNeAa1iAlp1MxFsVUki
+	QkqqgZE3zTvnr+m6psSlO67O5LmwyPKahv2Vzzm7vSwU33I9NXhdFLa478Haa2nC 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245576>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245578>
 
-On Mon, Mar 31, 2014 at 02:48:45PM -0700, Siddharth Agarwal wrote:
-
-> On 03/28/2014 03:00 AM, Jeff King wrote:
-> >From: Vicent Marti <tanoku@gmail.com>
-> >
-> >When pack-objects is computing the reachability bitmap to serve a
-> >fetch request, it can erroneously die() if some of the UNINTERESTING
-> >objects are not present. Upload-pack throws away HAVE lines from the
-> >client for objects we do not have, but we may have a tip object
-> >without all of its ancestors (e.g., if the tip is no longer reachable
-> >and was new enough to survive a `git prune`, but some of its
-> >reachable objects did get pruned).
+On 04/01/2014 12:37 AM, Michael Haggerty wrote:
+> On 03/31/2014 11:51 PM, Junio C Hamano wrote:
+>> Michael Haggerty <mhagger@alum.mit.edu> writes:
+>>
+>>> Make (most of) the error messages for invalid input have the same
+>>> format [1]:
+>>>
+>>>     $COMMAND [SP $REFNAME]: $MESSAGE
+>>>
+>>> Update the tests accordingly.
+>>>
+>>> [1] A few error messages are left with their old form, because
+>>>     $COMMAND and $REFNAME aren't passed all the way down the call
+>>>     stack.  Maybe those sites should be changed some day, too.
+>>>
+>>> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+>>> ---
+>>
+>> Up to this point, modulo nits that have been pointed out separately,
+>> the series looked reasonably well done.
 > 
-> Thanks for this patch. It looks pretty sensible.
-> 
-> Unfortunately, I can't provide feedback on running it in production
-> because we've decided to set aside experimenting with bitmaps for a
-> bit. I hope to get back to it in a couple of months.
+> Thanks for the feedback!  Would you like me to expand the commit
+> messages to answer the questions that you asked about the previous
+> patches?  And if so, do you want a v3 sent to the list already or should
+> I wait for you to review patches 19-27 first?
 
-Bummer. Thanks for taking a look at it.
+Junio, I incorporated your feedback (which so far has only affected
+commit messages).  I also rebased the patch series to the current
+master.  I pushed the result to GitHub [1].  I'll refrain from spamming
+the list with v3 yet.
 
-I do think this patch is definitely fixing a bug, and needs to be
-pursued.  We've been running with bitmaps in production on GitHub since
-last summer, but have never run into this situation. However, I think it
-is largely caused by our pruning parameters:
+Michael
 
-  1. We tend not to prune very often, and instead keep unreachable
-     objects around as a safety mechanism.
+[1] Branch "ref-transactions" at https://github.com/mhagger/git
 
-  2. When we do prune, we use a very tight cutoff, rather than the
-     default 2-week period. So the window of opportunity is much smaller
-     for a repo to prune an object but not its descendant (typically
-     either we keep both, or they both get pruned).
-
-So if you do come back to it later, the fix should have filtered through
-to "master" by then. :)
-
--Peff
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
