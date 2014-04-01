@@ -1,8 +1,7 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v9 05/11] trailer: parse trailers from stdin
-Date: Tue, 01 Apr 2014 21:20:16 +0200
-Message-ID: <20140401192023.353.81287.chriscool@tuxfamily.org>
-References: <20140401191831.353.99271.chriscool@tuxfamily.org>
+Subject: [PATCH v9 00/11] Add interpret-trailers builtin
+Date: Tue, 01 Apr 2014 21:20:11 +0200
+Message-ID: <20140401191831.353.99271.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Josh Triplett <josh@joshtriplett.org>,
 	Thomas Rast <tr@thomasrast.ch>,
@@ -12,131 +11,142 @@ Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 01 21:26:14 2014
+X-From: git-owner@vger.kernel.org Tue Apr 01 21:26:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WV4K4-0005Uv-GT
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Apr 2014 21:26:12 +0200
+	id 1WV4K8-00060j-3T
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Apr 2014 21:26:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751817AbaDAT0D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Apr 2014 15:26:03 -0400
-Received: from mail-2y.bbox.fr ([194.158.98.15]:59068 "EHLO mail-2y.bbox.fr"
+	id S1751435AbaDATZI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Apr 2014 15:25:08 -0400
+Received: from mail-2y.bbox.fr ([194.158.98.15]:59019 "EHLO mail-2y.bbox.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751214AbaDATZJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Apr 2014 15:25:09 -0400
+	id S1751214AbaDATZG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Apr 2014 15:25:06 -0400
 Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-2y.bbox.fr (Postfix) with ESMTP id 0095B43;
-	Tue,  1 Apr 2014 21:25:07 +0200 (CEST)
-X-git-sha1: 99277656960646ae95df995f1996692e4d158d6e 
+	by mail-2y.bbox.fr (Postfix) with ESMTP id 2BDD45F;
+	Tue,  1 Apr 2014 21:25:03 +0200 (CEST)
 X-Mailer: git-mail-commits v0.5.2
-In-Reply-To: <20140401191831.353.99271.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245633>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245634>
 
-Read trailers from stdin, parse them and put the result into a doubly linked
-list.
+This patch series implements a new command:
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- trailer.c | 76 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 76 insertions(+)
+        git interpret-trailers
 
-diff --git a/trailer.c b/trailer.c
-index 743ff23..953ae51 100644
---- a/trailer.c
-+++ b/trailer.c
-@@ -50,6 +50,14 @@ static size_t alnum_len(const char *buf, size_t len)
- 	return len;
- }
- 
-+static inline int contains_only_spaces(const char *str)
-+{
-+	const char *s = str;
-+	while (*s && isspace(*s))
-+		s++;
-+	return !*s;
-+}
-+
- static void free_trailer_item(struct trailer_item *item)
- {
- 	free(item->conf.name);
-@@ -494,3 +502,71 @@ static struct trailer_item *process_command_line_args(int argc, const char **arg
- 
- 	return arg_tok_first;
- }
-+
-+static struct strbuf **read_stdin(void)
-+{
-+	struct strbuf **lines;
-+	struct strbuf sb = STRBUF_INIT;
-+
-+	if (strbuf_read(&sb, fileno(stdin), 0) < 0)
-+		die_errno(_("could not read from stdin"));
-+
-+	lines = strbuf_split(&sb, '\n');
-+
-+	strbuf_release(&sb);
-+
-+	return lines;
-+}
-+
-+/*
-+ * Return the the (0 based) index of the first trailer line
-+ * or the line count if there are no trailers.
-+ */
-+static int find_trailer_start(struct strbuf **lines)
-+{
-+	int start, empty = 1, count = 0;
-+
-+	/* Get the line count */
-+	while (lines[count])
-+		count++;
-+
-+	/*
-+	 * Get the start of the trailers by looking starting from the end
-+	 * for a line with only spaces before lines with one ':'.
-+	 */
-+	for (start = count - 1; start >= 0; start--) {
-+		if (contains_only_spaces(lines[start]->buf)) {
-+			if (empty)
-+				continue;
-+			return start + 1;
-+		}
-+		if (strchr(lines[start]->buf, ':')) {
-+			if (empty)
-+				empty = 0;
-+			continue;
-+		}
-+		return count;
-+	}
-+
-+	return empty ? count : start + 1;
-+}
-+
-+static void process_stdin(struct trailer_item **in_tok_first,
-+			  struct trailer_item **in_tok_last)
-+{
-+	struct strbuf **lines = read_stdin();
-+	int start = find_trailer_start(lines);
-+	int i;
-+
-+	/* Print non trailer lines as is */
-+	for (i = 0; lines[i] && i < start; i++)
-+		printf("%s", lines[i]->buf);
-+
-+	/* Parse trailer lines */
-+	for (i = start; lines[i]; i++) {
-+		struct trailer_item *new = create_trailer_item(lines[i]->buf);
-+		add_trailer_item(in_tok_first, in_tok_last, new);
-+	}
-+
-+	strbuf_list_free(lines);
-+}
+and an infrastructure to process trailers that can be reused,
+for example in "commit.c".
+
+1) Rationale:
+
+This command should help with RFC 822 style headers, called
+"trailers", that are found at the end of commit messages.
+
+(Note that these headers do not follow and are not intended to
+follow many rules that are in RFC 822. For example they do not
+follow the line breaking rules, the encoding rules and probably
+many other rules.)
+
+For a long time, these trailers have become a de facto standard
+way to add helpful information into commit messages.
+
+Until now git commit has only supported the well known
+"Signed-off-by: " trailer, that is used by many projects like
+the Linux kernel and Git.
+
+It is better to keep builtin/commit.c uncontaminated by any more
+hard-wired logic, like what we have for the signed-off-by line.  Any
+new things can and should be doable in hooks, and this filter would
+help writing these hooks.
+
+And that is why the design goal of the filter is to make it at least
+as powerful as the built-in logic we have for signed-off-by lines;
+that would allow us to later eject the hard-wired logic for
+signed-off-by line from the main codepath, if/when we wanted to.
+
+Alternatively, we could build a library-ish API around this filter
+code and replace the hard-wired logic for signed-off-by line with a
+call into that API, if/when we wanted to, but that requires (in
+addition to the "at least as powerful as the built-in logic") that
+the implementation of this stand-alone filter can be cleanly made
+into a reusable library, so that is a bit higher bar to cross than
+"everything can be doable with hooks" alternative.
+
+2) Current state:
+
+Currently the usage string of this command is:
+
+git interpret-trailers [--trim-empty] [(<token>[(=|:)<value>])...]
+
+The following features are implemented:
+
+        - the result is printed on stdout
+        - the [<token>[=<value>]>] arguments are interpreted
+        - a commit message read from stdin is interpreted
+        - the "trailer.<token>.key" options in the config are interpreted
+        - the "trailer.<token>.where" options are interpreted
+        - the "trailer.<token>.ifExist" options are interpreted
+        - the "trailer.<token>.ifMissing" options are interpreted
+        - the "trailer.<token>.command" config works
+        - $ARG can be used in commands
+        - there are some tests
+        - there is some documentation
+
+The following features are planned but not yet implemented:
+        - add more tests related to commands
+        - add examples in documentation
+        - integration with "git commit"
+
+Possible improvements:
+        - support GIT_COMMIT_PROTO env variable in commands
+
+3) Changes since version 8, thanks to Junio:
+
+* improve the rationale section above
+* improve commit message in patch 1/11
+* remove patch (3/12) that moved some lowercase
+  functions to wrapper.c
+* use strcmp() instead of strcasecmp() to compare
+  some values from the config file matching a fixed set
+
+This means code changes only in patch 3/11 and commit
+message changes only in patch 1/11.
+
+
+Christian Couder (11):
+  trailer: add data structures and basic functions
+  trailer: process trailers from stdin and arguments
+  trailer: read and process config information
+  trailer: process command line trailer arguments
+  trailer: parse trailers from stdin
+  trailer: put all the processing together and print
+  trailer: add interpret-trailers command
+  trailer: add tests for "git interpret-trailers"
+  trailer: execute command from 'trailer.<name>.command'
+  trailer: add tests for commands in config file
+  Documentation: add documentation for 'git interpret-trailers'
+
+ .gitignore                               |   1 +
+ Documentation/git-interpret-trailers.txt | 123 ++++++
+ Makefile                                 |   2 +
+ builtin.h                                |   1 +
+ builtin/interpret-trailers.c             |  33 ++
+ git.c                                    |   1 +
+ t/t7513-interpret-trailers.sh            | 407 ++++++++++++++++++
+ trailer.c                                | 684 +++++++++++++++++++++++++++++++
+ trailer.h                                |   6 +
+ 9 files changed, 1258 insertions(+)
+ create mode 100644 Documentation/git-interpret-trailers.txt
+ create mode 100644 builtin/interpret-trailers.c
+ create mode 100755 t/t7513-interpret-trailers.sh
+ create mode 100644 trailer.c
+ create mode 100644 trailer.h
+
 -- 
 1.9.0.164.g3aa33cd.dirty
