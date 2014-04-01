@@ -1,106 +1,67 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH] update-ref: fail create operation over stdin if ref already exists
-Date: Wed,  2 Apr 2014 10:09:54 +0200
-Message-ID: <1396426194-3292-1-git-send-email-mhagger@alum.mit.edu>
-Cc: git@vger.kernel.org, Aman Gupta <aman@tmm1.net>,
-	Brad King <brad.king@kitware.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: What's cooking in git.git (Mar 2014, #08; Mon, 31)
+Date: Wed, 2 Apr 2014 06:40:59 +0700
+Message-ID: <CACsJy8BVXk248VDBi-pAMDY4QpDSbFuAf5qxRxCCq71yGNzpqA@mail.gmail.com>
+References: <xmqqppl128q8.fsf@gitster.dls.corp.google.com> <CACsJy8A9b2eccm_BJMjW5RwWLux90xs7HfUQEn0_jrzhHWeajQ@mail.gmail.com>
+ <xmqq38hw272q.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 03 12:00:57 2014
+X-From: git-owner@vger.kernel.org Thu Apr 03 12:08:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WVeKA-0000xS-JG
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Apr 2014 11:52:42 +0200
+	id 1WVdtX-00026v-CS
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Apr 2014 11:25:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758083AbaDBIKS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Apr 2014 04:10:18 -0400
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:58317 "EHLO
-	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758005AbaDBIKN (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 2 Apr 2014 04:10:13 -0400
-X-AuditID: 12074412-f79d46d000002e58-c9-533bc5e47f16
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 6B.44.11864.4E5CB335; Wed,  2 Apr 2014 04:10:12 -0400 (EDT)
-Received: from michael.fritz.box (p57A25BD8.dip0.t-ipconnect.de [87.162.91.216])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s328A9h6002248
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Wed, 2 Apr 2014 04:10:11 -0400
-X-Mailer: git-send-email 1.9.0
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrCIsWRmVeSWpSXmKPExsUixO6iqPvkqHWwQe86XYtrby6yWexcJ2HR
-	daWbyaKh9wqzxe0V85kdWD3+vv/A5PHx2XJ2j4uXlD365zUye3zeJBfAGsVtk5RYUhacmZ6n
-	b5fAnbHg/V32gmaBionb3zA1MPbwdjFyckgImEjs+HiIHcIWk7hwbz1bFyMXh5DAZUaJs4ef
-	sYEkhASOM0n8/mUJYrMJ6Eos6mlmArFFBNQkJrYdYgFpYBaYyChxddZURpCEsECwxNOORywg
-	NouAqsTmK2vBGngFnCUOfZrCCLFNTmLK7wXsExi5FzAyrGKUS8wpzdXNTczMKU5N1i1OTszL
-	Sy3SNdPLzSzRS00p3cQICRGhHYzrT8odYhTgYFTi4T1w3ipYiDWxrLgy9xCjJAeTkigvwzbr
-	YCG+pPyUyozE4oz4otKc1OJDjBIczEoivFwHgXK8KYmVValF+TApaQ4WJXHen4vV/YQE0hNL
-	UrNTUwtSi2CyMhwcShK8V48ANQoWpaanVqRl5pQgpJk4OEGGc0mJFKfmpaQWJZaWZMSDQj2+
-	GBjsICkeoL1nQNp5iwsSc4GiEK2nGBWlxHllQRICIImM0jy4sbDIf8UoDvSlMO8KkCoeYNKA
-	634FNJgJaDD3OiuQwSWJCCmpBkb7kJgaK0Ve8QnBLYzyyTYWJowHpzuK6uw//khJ6C+/z5VH
-	lzeo+bTdWJlvOkfmkNBCJ8a8wH4Lxb+FmplP3iWsKOxt8w1ZLz47qzC88WWY15Jl+pJVTY6C
-	10/tlDub2Jy8clLfE0ORza9Omf2cc930mudqziLdkrpl96YFObwyf9pQcymGV4ml 
+	id S1754287AbaDAXla (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Apr 2014 19:41:30 -0400
+Received: from mail-qg0-f46.google.com ([209.85.192.46]:60177 "EHLO
+	mail-qg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753441AbaDAXla (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Apr 2014 19:41:30 -0400
+Received: by mail-qg0-f46.google.com with SMTP id 63so6199308qgz.19
+        for <git@vger.kernel.org>; Tue, 01 Apr 2014 16:41:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=CXIQIQ36miMDxxNGuLWxcdOhyMlF6sLWwsI66CL98VA=;
+        b=RaZyOneF3A0/gpAFRHU8h5mcVQn835dIU4mI8gnbusMWqHT1ORSFFBv+DTApURVjRJ
+         RMJ9IelTMEx9//okitAFLN517L/LGUmi6p7PK1lXqxi3kov7wQ3ExxBHwsojKP9ByD7O
+         X4+dQBZrFj5ul1OCayh6MtazhnGvPphT1IsiQ/0NnHkgFNdN8AvzQAJItHRxqyPvVlNe
+         kTXvuUXLBvt53jjaBvZtnakwUZKWYhVFBEHNdlxMNs64YTpZEUR26bzdjDMeQyqnIsjS
+         +sH4W8Eby3ANgy5A8x6m9xGMm9m9imkvXjM4GEN/8ddYFDNkvOse5b6xYdi+uIFFPtdW
+         4m8Q==
+X-Received: by 10.140.87.5 with SMTP id q5mr16584397qgd.31.1396395689171; Tue,
+ 01 Apr 2014 16:41:29 -0700 (PDT)
+Received: by 10.96.103.166 with HTTP; Tue, 1 Apr 2014 16:40:59 -0700 (PDT)
+In-Reply-To: <xmqq38hw272q.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245674>
 
-From: Aman Gupta <aman@tmm1.net>
+On Wed, Apr 2, 2014 at 2:17 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Unfortunately, this multiple checkout thing conflicts with how I
+>> use emacs (--daemon) so I'm not one of its heavy users either. I
+>> only occastionally make new, short-lived checkouts to test things.
+>
+> FWIW, I do keep a permanent multi-checkout and I sometimes make
+> edits, but it is mostly for building other branches while I work on
+> something else.  When I edit working-tree files there, I do let
+> emacsclient talk to the emacs I have files open in the primary
+> working tree, though, so I am not sure what your issues are with
+> emacs (--daemon).
 
-Signed-off-by: Aman Gupta <aman@tmm1.net>
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
-My colleague Aman ran across this bug and wrote the fix.  I didn't
-notice this bug, but I just verified that it is also fixed by my
-mh/ref-transaction patch series (albeit without a test case).
-
-Because the bug could cause somebody to overwrite a reference
-unintentionally, I propose that we apply this unintrusive fix to
-maint.  When mh/ref-transaction makes it to a release, the bug will
-continue to be fixed, but in a different way.
-
- builtin/update-ref.c  |  1 +
- t/t1400-update-ref.sh | 11 +++++++++++
- 2 files changed, 12 insertions(+)
-
-diff --git a/builtin/update-ref.c b/builtin/update-ref.c
-index 1292cfe..5c208bb 100644
---- a/builtin/update-ref.c
-+++ b/builtin/update-ref.c
-@@ -147,6 +147,7 @@ static void parse_cmd_create(const char *next)
- 	struct ref_update *update;
- 
- 	update = update_alloc();
-+	update->have_old = 1;
- 
- 	if ((next = parse_first_arg(next, &ref)) != NULL && ref.buf[0])
- 		update_store_ref_name(update, ref.buf);
-diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
-index 6ffd82f..e130c52 100755
---- a/t/t1400-update-ref.sh
-+++ b/t/t1400-update-ref.sh
-@@ -820,7 +820,18 @@ test_expect_success 'stdin -z update ref fails with bad old value' '
- 	test_must_fail git rev-parse --verify -q $c
- '
- 
-+test_expect_success 'stdin -z create ref fails when ref exists' '
-+	git update-ref $c $m &&
-+	git rev-parse "$c" >expect &&
-+	printf $F "create $c" "$m~1" >stdin &&
-+	test_must_fail git update-ref -z --stdin <stdin 2>err &&
-+	grep "fatal: Cannot lock the ref '"'"'$c'"'"'" err &&
-+	git rev-parse "$c" >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'stdin -z create ref fails with bad new value' '
-+	git update-ref -d "$c" &&
- 	printf $F "create $c" "does-not-exist" >stdin &&
- 	test_must_fail git update-ref -z --stdin <stdin 2>err &&
- 	grep "fatal: invalid new value for ref $c: does-not-exist" err &&
+The --daemon part is probably not worth mentioning because I always
+have one emacs window open. The problem is switch-buffer based on file
+name can be confusing ("git.c" and "git.c<2>", which belongs to which
+checkout?). I ended up modifying files in the wrong checkout all the
+time.
 -- 
-1.9.0
+Duy
