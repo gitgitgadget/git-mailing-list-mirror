@@ -1,95 +1,60 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: What's cooking in git.git (Mar 2014, #08; Mon, 31)
-Date: Tue, 1 Apr 2014 07:53:37 +0700
-Message-ID: <CACsJy8A9b2eccm_BJMjW5RwWLux90xs7HfUQEn0_jrzhHWeajQ@mail.gmail.com>
-References: <xmqqppl128q8.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] t4212: handle systems with post-apocalyptic gmtime
+Date: Tue, 1 Apr 2014 03:38:48 -0400
+Message-ID: <20140401073848.GA22023@sigill.intra.peff.net>
+References: <20140326193359.GA14105@sigill.intra.peff.net>
+ <20140326212227.GC6991@hashpling.org>
+ <20140326215741.GA17716@sigill.intra.peff.net>
+ <20140326224616.GA9454@hashpling.org>
+ <20140327224837.GB32434@sigill.intra.peff.net>
+ <xmqqd2h6cm26.fsf@gitster.dls.corp.google.com>
+ <20140328184710.GA29987@sigill.intra.peff.net>
+ <xmqqppl69meh.fsf@gitster.dls.corp.google.com>
+ <20140328190548.GB30739@sigill.intra.peff.net>
+ <xmqq8uru9l51.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Cc: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+	Charles Bailey <cbailey32@bloomberg.net>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 01 02:54:18 2014
+X-From: git-owner@vger.kernel.org Tue Apr 01 09:39:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WUmxy-0001hZ-Ew
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Apr 2014 02:54:14 +0200
+	id 1WUtHd-0006SD-6e
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Apr 2014 09:38:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751186AbaDAAyJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Mar 2014 20:54:09 -0400
-Received: from mail-qc0-f181.google.com ([209.85.216.181]:45568 "EHLO
-	mail-qc0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751095AbaDAAyI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Mar 2014 20:54:08 -0400
-Received: by mail-qc0-f181.google.com with SMTP id e9so9962002qcy.12
-        for <git@vger.kernel.org>; Mon, 31 Mar 2014 17:54:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=jRRTNMeGTrotkTOqdzL4MCM/u6AP3TmYV/KelKKt1V8=;
-        b=gAoeuPTquyOGdhXeQ0BMNE9kXTNycxR4s1wJMVhA8YG1OabuMbbFKNSA9BEXPr/XTD
-         s/Tdisc/UQfB/F30hzIN2Gz50bYSwG6/RvaNVkbMCJP9ptn1aS+t+WwJ64tzXoWupi4F
-         7bn6UhSoW4H6jsN1N0Wsf5s11Qumejy6xDstd9NLvh1qmuX0Eim2wRZpT+sEDyypDkes
-         nsJ1DmWi/w8XwxtFzTLTioz70CBdeCIAralzz3Lew+VYeYaBJkU0pKzpqs7rNbPGY7aw
-         m29oVQeGmpkvM1J2Hoj7Bxb4hHJQ9Fp+AStB51kqMsx1eVPnU319fAs/sNdNshmDI4NR
-         S7UQ==
-X-Received: by 10.224.112.6 with SMTP id u6mr11263719qap.78.1396313647366;
- Mon, 31 Mar 2014 17:54:07 -0700 (PDT)
-Received: by 10.96.103.166 with HTTP; Mon, 31 Mar 2014 17:53:37 -0700 (PDT)
-In-Reply-To: <xmqqppl128q8.fsf@gitster.dls.corp.google.com>
+	id S1751289AbaDAHiv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Apr 2014 03:38:51 -0400
+Received: from cloud.peff.net ([50.56.180.127]:51537 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751000AbaDAHiu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Apr 2014 03:38:50 -0400
+Received: (qmail 10805 invoked by uid 102); 1 Apr 2014 07:38:51 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 01 Apr 2014 02:38:51 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 01 Apr 2014 03:38:48 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqq8uru9l51.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245572>
 
-On Tue, Apr 1, 2014 at 7:29 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> * nd/multiple-work-trees (2014-03-25) 28 commits
->  - count-objects: report unused files in $GIT_DIR/repos/...
->  - gc: support prune --repos
->  - gc: style change -- no SP before closing bracket
->  - prune: strategies for linked checkouts
->  - checkout: detach if the branch is already checked out elsewhere
->  - checkout: clean up half-prepared directories in --to mode
->  - checkout: support checking out into a new working directory
->  - use new wrapper write_file() for simple file writing
->  - wrapper.c: wrapper to open a file, fprintf then close
->  - setup.c: support multi-checkout repo setup
->  - setup.c: detect $GIT_COMMON_DIR check_repository_format_gently()
->  - setup.c: convert check_repository_format_gently to use strbuf
->  - setup.c: detect $GIT_COMMON_DIR in is_git_directory()
->  - setup.c: convert is_git_directory() to use strbuf
->  - git-stash: avoid hardcoding $GIT_DIR/logs/....
->  - *.sh: avoid hardcoding $GIT_DIR/hooks/...
->  - git-sh-setup.sh: use rev-parse --git-path to get $GIT_DIR/objects
->  - $GIT_COMMON_DIR: a new environment variable
->  - commit: use SEQ_DIR instead of hardcoding "sequencer"
->  - fast-import: use git_path() for accessing .git dir instead of get_git_dir()
->  - reflog: avoid constructing .lock path with git_path
->  - *.sh: respect $GIT_INDEX_FILE
->  - git_path(): be aware of file relocation in $GIT_DIR
->  - path.c: group git_path(), git_pathdup() and strbuf_git_path() together
->  - path.c: rename vsnpath() to do_git_path()
->  - git_snpath(): retire and replace with strbuf_git_path()
->  - path.c: make get_pathname() call sites return const char *
->  - path.c: make get_pathname() return strbuf instead of static buffer
->
->  A replacement for contrib/workdir/git-new-workdir that does not
->  rely on symbolic links and make sharing of objects and refs safer
->  by making the borrowee and borrowers aware of each other.
->
->  What is the doneness of this thing?  I remember reading it through
->  once and sent review comments on earlier parts, but have there been
->  a lot of discussions on this topic?
+On Fri, Mar 28, 2014 at 12:30:02PM -0700, Junio C Hamano wrote:
 
-The basic support is there. Some bells and whistles (e.g. listing
-checkouts) are not, but we can add them when we see the needs. Eric
-and Torsten helped review but no, there hasn't much discussion about
-it, which may be because it's already perfect, or people are not
-interested. Unfortunately, this multiple checkout thing conflicts with
-how I use emacs (--daemon) so I'm not one of its heavy users either. I
-only occastionally make new, short-lived checkouts to test things.
--- 
-Duy
+> Let's just deal with a simple known cases (like FreeBSD) in the real
+> code that everybody exercises at runtime, and have the new test only
+> check we do not segfault on a value we used to segfault upon seeing.
+
+OK. Here it is, with the other option as an "alt" patch for reference.
+
+  [1/2]: date: recognize bogus FreeBSD gmtime output
+  [2/2]: t4212: loosen far-in-future test for AIX
+  [2alt/2]: work around unreliable gmtime errors on AIX
+
+-Peff
