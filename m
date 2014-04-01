@@ -1,109 +1,91 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 09/22] api-lockfile: expand the documentation
-Date: Tue,  1 Apr 2014 17:58:17 +0200
-Message-ID: <1396367910-7299-10-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH 17/22] lock_file(): exit early if lockfile cannot be opened
+Date: Tue,  1 Apr 2014 17:58:25 +0200
+Message-ID: <1396367910-7299-18-git-send-email-mhagger@alum.mit.edu>
 References: <1396367910-7299-1-git-send-email-mhagger@alum.mit.edu>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 01 17:59:40 2014
+X-From: git-owner@vger.kernel.org Tue Apr 01 17:59:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WV16B-0008Th-QU
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Apr 2014 17:59:40 +0200
+	id 1WV16C-0008Th-Oh
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Apr 2014 17:59:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751934AbaDAP7D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Apr 2014 11:59:03 -0400
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:56969 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751822AbaDAP6u (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Apr 2014 11:58:50 -0400
-X-AuditID: 1207440d-f79d86d0000043db-bb-533ae2395342
+	id S1751969AbaDAP7b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Apr 2014 11:59:31 -0400
+Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:60167 "EHLO
+	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751870AbaDAP7D (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Apr 2014 11:59:03 -0400
+X-AuditID: 12074414-f79d96d000002d2b-19-533ae2465041
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 4D.07.17371.932EA335; Tue,  1 Apr 2014 11:58:49 -0400 (EDT)
+	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 85.2D.11563.642EA335; Tue,  1 Apr 2014 11:59:02 -0400 (EDT)
 Received: from michael.fritz.box (p57A2460D.dip0.t-ipconnect.de [87.162.70.13])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s31FwWbD027325
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s31FwWbL027325
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Tue, 1 Apr 2014 11:58:48 -0400
+	Tue, 1 Apr 2014 11:59:01 -0400
 X-Mailer: git-send-email 1.9.0
 In-Reply-To: <1396367910-7299-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrNIsWRmVeSWpSXmKPExsUixO6iqGv5yCrYYM0/U4uuK91MFg29V5gt
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrDIsWRmVeSWpSXmKPExsUixO6iqOv2yCrY4OI2QYuuK91MFg29V5gt
 	bq+Yz2zx6/ATdosfLT3MDqwef99/YPLYOesuu8ez3j2MHhcvKXt83iQXwBrFbZOUWFIWnJme
-	p2+XwJ1xbc911oI2gYot5+8xNjDO4e1i5OCQEDCRuPUtu4uRE8gUk7hwbz1bFyMXh5DAZUaJ
-	dUtfsUM4x5gkFj56wQhSxSagK7Gop5kJxBYRUJOY2HaIBcRmFkiRePV3F5gtLGArcW/lQmYQ
-	m0VAVeL7y1tsIMt4BVwkbs5ngVgmJzHl9wJ2EJsTKHzpwR5WEFtIwFni9JvFzBMYeRcwMqxi
-	lEvMKc3VzU3MzClOTdYtTk7My0st0jXSy80s0UtNKd3ECAko3h2M/9fJHGIU4GBU4uE9eN4q
-	WIg1say4MvcQoyQHk5Io74+7QCG+pPyUyozE4oz4otKc1OJDjBIczEoivLNuAuV4UxIrq1KL
-	8mFS0hwsSuK8akvU/YQE0hNLUrNTUwtSi2CyMhwcShK81x4ANQoWpaanVqRl5pQgpJk4OEGG
-	c0mJFKfmpaQWJZaWZMSD4iK+GBgZICkeoL0rQdp5iwsSc4GiEK2nGBWlxHlDHgIlBEASGaV5
-	cGNhaeIVozjQl8K8m0DaeYApBq77FdBgJqDB3OvABpckIqSkGhhV3HKjEv3Ul79o3Hei3sbt
-	3DIfHpv5Eqyx/b9r78gFtYf+SjlQEn9KN/n7n5vpavu0TY3iswInZBR4zz4qc7xfk2/XypUf
-	JesFvGU2y4r3x0zVvpmqYb0uVf/qPdte5QcfOPUUOV+Uzp2w2ycl69iNPer8XZ8y 
+	p2+XwJ1x8OZFtoLDHBWH1n1gbmB8x9bFyMkhIWAi8fxTDzOELSZx4d56oDgXh5DAZUaJFZ3/
+	mSCcY0wSP2bPZgKpYhPQlVjU0wxmiwioSUxsO8QCYjMLpEi8+rsLyObgEBbwlrj5URIkzCKg
+	KtF28BDYAl4BF4kNp99DLZOTmPJ7ATuIzQkUv/RgDyuILSTgLHH6zWLmCYy8CxgZVjHKJeaU
+	5urmJmbmFKcm6xYnJ+blpRbpWujlZpbopaaUbmKEhJTIDsYjJ+UOMQpwMCrx8B48bxUsxJpY
+	VlyZe4hRkoNJSZT3x12gEF9SfkplRmJxRnxRaU5q8SFGCQ5mJRHeWTeBcrwpiZVVqUX5MClp
+	DhYlcd5vi9X9hATSE0tSs1NTC1KLYLIyHBxKErzXHgA1ChalpqdWpGXmlCCkmTg4QYZzSYkU
+	p+alpBYllpZkxIMiI74YGBsgKR6gvY9A2nmLCxJzgaIQracYFaXEeVlAEgIgiYzSPLixsETx
+	ilEc6Eth3vcgVTzAJAPX/QpoMBPQYO51YINLEhFSUg2MvLM+vzzw7G7+1atvs7wPvmOZ+WGj
+	bkp72gyXhnxp5yM7PnU/l9nr0ze196bXxcnfshK6vynXbtXZv2r39+fr/gYWCkTa375o9eXj
+	q5Ie4/SFxU3bXB5HnFBxWHdTTyA1bKXd3g3f77U3GffHyzVpL/5+cdbh1+sfJ7Fs 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245602>
 
-Document a couple more functions and the flags argument as used by
-hold_lock_file_for_update() and hold_lock_file_for_append().
+This is a bit easier to read than the old version, which nested part
+of the non-error code in an "if" block.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- Documentation/technical/api-lockfile.txt | 36 +++++++++++++++++++++++++++++---
- 1 file changed, 33 insertions(+), 3 deletions(-)
+ lockfile.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/Documentation/technical/api-lockfile.txt b/Documentation/technical/api-lockfile.txt
-index dd89404..95ed03b 100644
---- a/Documentation/technical/api-lockfile.txt
-+++ b/Documentation/technical/api-lockfile.txt
-@@ -28,9 +28,39 @@ hold_lock_file_for_update::
- 	the final destination (e.g. `$GIT_DIR/index`) and a flag
- 	`die_on_error`.  Attempt to create a lockfile for the
- 	destination and return the file descriptor for writing
--	to the file.  If `die_on_error` flag is true, it dies if
--	a lock is already taken for the file; otherwise it
--	returns a negative integer to the caller on failure.
-+	to the file.  The flags parameter is a combination of
-++
-+--
-+LOCK_NODEREF::
-+
-+	Usually symbolic links in path are resolved in path and the
-+	lockfile is created by adding ".lock" to the resolved path;
-+	however, if `LOCK_NODEREF` is set, then the lockfile is
-+	created by adding ".lock" to the path argument itself.
-+
-+LOCK_DIE_ON_ERROR::
-+
-+	If a lock is already taken for the file, `die()` with an error
-+	message.  If this option is not specified, return a negative
-+	integer to the caller on failure.
-+--
-+
-+hold_lock_file_for_append::
-+
-+	Like `hold_lock_file_for_update()`, except that additionally
-+	the existing contents of the file (if any) are copied to the
-+	lockfile and its write pointer is positioned at the end of the
-+	file before returning.
-+
-+unable_to_lock_error::
-+
-+	Emit an error describing that there was an error locking the
-+	specified path.  The err parameter should be the errno of the
-+	problem that caused the failure.
-+
-+unable_to_lock_index_die::
-+
-+	Like `unable_to_lock_error()`, but also `die()`.
+diff --git a/lockfile.c b/lockfile.c
+index c1ca5b1..87b40c4 100644
+--- a/lockfile.c
++++ b/lockfile.c
+@@ -182,15 +182,16 @@ static int lock_file(struct lock_file *lk, const char *path, int flags)
+ 	strbuf_addstr(&lk->lock_filename, ".lock");
  
- commit_lock_file::
+ 	lk->fd = open(lk->lock_filename.buf, O_RDWR | O_CREAT | O_EXCL, 0666);
+-	if (0 <= lk->fd) {
+-		if (adjust_shared_perm(lk->lock_filename.buf)) {
+-			error("cannot fix permission bits on %s", lk->lock_filename.buf);
+-			rollback_lock_file(lk);
+-			return -1;
+-		}
+-	}
+-	else
++	if (lk->fd < 0) {
+ 		strbuf_setlen(&lk->lock_filename, 0);
++		return -1;
++	}
++	if (adjust_shared_perm(lk->lock_filename.buf)) {
++		error("cannot fix permission bits on %s", lk->lock_filename.buf);
++		rollback_lock_file(lk);
++		return -1;
++	}
++
+ 	return lk->fd;
+ }
  
 -- 
 1.9.0
