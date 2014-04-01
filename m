@@ -1,84 +1,82 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: fast-import deltas
-Date: Tue, 1 Apr 2014 10:38:56 -0700
-Message-ID: <20140401173856.GC6851@google.com>
-References: <20140401102554.GA32231@glandium.org>
- <20140401114502.GA15549@sigill.intra.peff.net>
- <20140401130703.GA1479@glandium.org>
- <20140401131512.GA19321@sigill.intra.peff.net>
- <20140401141856.GA2497@glandium.org>
- <xmqqk3b90y79.fsf@gitster.dls.corp.google.com>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
+Subject: Re: [PATCH 1/2] date: recognize bogus FreeBSD gmtime output
+Date: Tue, 01 Apr 2014 19:42:30 +0200
+Message-ID: <533AFA86.2090905@web.de>
+References: <20140401073848.GA22023@sigill.intra.peff.net> <20140401074251.GA22550@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Mike Hommey <mh@glandium.org>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 01 19:39:09 2014
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Charles Bailey <cbailey32@bloomberg.net>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 01 19:43:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WV2eR-0005FP-BY
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Apr 2014 19:39:07 +0200
+	id 1WV2iQ-0000vu-Su
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Apr 2014 19:43:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751451AbaDARjB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Apr 2014 13:39:01 -0400
-Received: from mail-pd0-f172.google.com ([209.85.192.172]:57622 "EHLO
-	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751316AbaDARjA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Apr 2014 13:39:00 -0400
-Received: by mail-pd0-f172.google.com with SMTP id p10so9866805pdj.31
-        for <git@vger.kernel.org>; Tue, 01 Apr 2014 10:38:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=Ka3AB1SPj+r7DnqVnJZ03Qa4DbuYdDi2q1cuhU+/BJ4=;
-        b=F8NFIS4jqpkxhNiwfoXCnp6ZzRjPW1AjPpp7S+LSiGwWEBNpkbQnlBwjc5Rg3/+fIk
-         PctkJyHW/l/wtymFMQ66zZ6aQufNFCf4TSh55GoKAeYuVOwdEHEKYQU9LOlNfTGU2ENr
-         rDBZ6k0Ah3RtSPBXfWMnECuStEGLr8duMqatTZZUCkGVVyF11Wlb2HCg/qrptFMp7mYm
-         duvkCvSR6CtgXvBOMHkDBFeBa+NZGvji8tNrR2IBntH7WPwL3Fe/xXIqTfoWuu56+qVN
-         cyYJCCoQSmmP0rFHfVB09GATTlgs904bAtl25I9j9mKnkXchdFRKRNsyaF3GMM0syNRw
-         TR9A==
-X-Received: by 10.66.193.161 with SMTP id hp1mr32623436pac.20.1396373939659;
-        Tue, 01 Apr 2014 10:38:59 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id vo1sm58912212pab.32.2014.04.01.10.38.58
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 01 Apr 2014 10:38:58 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <xmqqk3b90y79.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751858AbaDARnJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Apr 2014 13:43:09 -0400
+Received: from mout.web.de ([212.227.17.11]:49318 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751498AbaDARnG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Apr 2014 13:43:06 -0400
+Received: from [192.168.178.27] ([79.253.130.66]) by smtp.web.de (mrweb002)
+ with ESMTPSA (Nemesis) id 0MZliY-1Wkutp1oZK-00LSpR; Tue, 01 Apr 2014 19:42:51
+ +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
+In-Reply-To: <20140401074251.GA22550@sigill.intra.peff.net>
+X-Provags-ID: V03:K0:Afh7n1CH8M2DkpMBNIVCsir+GczkWjO4fJV6iwNOgOIbeDbSUTk
+ S2dvSRX9NRqaoTFG6tnJ3fgBPzH/BNrQpyA21Wnl2f3RWRPCFI3k/5mBwYUue4U59JF/HWo
+ xOzgR4u9thtJvMOSI0gH/XK2rXXfNYXBiNX6anWrYPgTjyiPgUvw0TBqpwDCVQX8aRviGaT
+ qr3HEyXgqfRrjWAwrgPMA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245617>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245618>
 
-Junio C Hamano wrote:
+Am 01.04.2014 09:42, schrieb Jeff King:
+> diff --git a/compat/gmtime.c b/compat/gmtime.c
+> new file mode 100644
+> index 0000000..ffcabf4
+> --- /dev/null
+> +++ b/compat/gmtime.c
+> @@ -0,0 +1,26 @@
+> +#include "../git-compat-util.h"
+> +#undef gmtime
+> +#undef gmtime_r
+> +
+> +struct tm *git_gmtime(const time_t *timep)
+> +{
+> +	static struct tm result;
+> +	return git_gmtime_r(timep, &result);
+> +}
+> +
+> +struct tm *git_gmtime_r(const time_t *timep, struct tm *result)
+> +{
+> +	struct tm *ret;
+> +
+> +	ret =3D gmtime_r(timep, result);
+> +
+> +	/*
+> +	 * Rather than NULL, FreeBSD gmtime will return a "struct tm" with =
+all
+> +	 * fields zeroed. Since "mday" cannot otherwise be zero, we can tes=
+t
+> +	 * this very quickly.
+> +	 */
+> +	if (ret && !ret->tm_mday)
+> +		ret =3D NULL;
+> +
+> +	return ret;
+> +}
 
-> Assuming that you do have and are willing to read the original file,
-> you have three possible (and one impractical) approaches:
-[...]
->  - Apply the foreign changes to the original file yourself, and feed
->    the resulting content to fast-import in full, letting fast-import
->    convert into the format Git understands.
+http://pubs.opengroup.org/onlinepubs/009695399/functions/gmtime.html=20
+says that errno shall be set on error and only mentions EOVERFLOW as a=20
+possible error code.
 
-This (when importing from Subversion) was the motivation for
-introducing fast-import's cat-blob command, for what it's worth.
-
-[...]
-> In short, the most practical solution would be to reconstitute a
-> full object and feed that to fast-import, unless you already have
-> xdelta or you can turn your foreign change into xdelta without ever
-> looking at the original.
-
-If your delta format happens to be similar enough to xdelta, then
-streaming in deltas in xdelta format does sound like a neat trick.
-
-Maybe it would be useful to provide a micro-library that creates and
-validates xdelta opcodes for fast-import frontends to use.
-
-Jonathan
+Ren=C3=A9
