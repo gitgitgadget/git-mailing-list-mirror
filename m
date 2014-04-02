@@ -1,68 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 14/22] lockfile: use strbufs when handling (most) paths
-Date: Wed, 02 Apr 2014 10:16:12 -0700
-Message-ID: <xmqqbnwjwt2b.fsf@gitster.dls.corp.google.com>
-References: <1396367910-7299-1-git-send-email-mhagger@alum.mit.edu>
-	<1396367910-7299-15-git-send-email-mhagger@alum.mit.edu>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] pack-objects: do not reuse packfiles without
+ --delta-base-offset
+Date: Wed, 2 Apr 2014 02:39:17 -0400
+Message-ID: <20140402063916.GA1437@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Apr 03 13:55:04 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 03 13:56:04 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WVeSt-0000xS-Iy
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Apr 2014 12:01:43 +0200
+	id 1WVeIy-0006sp-6n
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Apr 2014 11:51:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932461AbaDBRQR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Apr 2014 13:16:17 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51407 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932320AbaDBRQQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Apr 2014 13:16:16 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5D7A6780C7;
-	Wed,  2 Apr 2014 13:16:15 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xDAYetoj7+oyd966SqnnC2dFihk=; b=G5mrvK
-	OOnWVlm6LkZVlYNyb401oU29MixSzA/JyAHzV622ZF2KsovIDw7La0IUXyIcFDUu
-	5IJ5tGssWyVnjbacihBaafPN359F3hB7/+ULwfc3n20LQ1gWGvjViOEL5i+ZXK0r
-	p12KhNjh+aC4QUvF4DARldG9s7BYKsrZFNVpw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=x0gTwdlZvl9yCIwF7rsqoWbf2bd63aOV
-	LeqZICakWKxFC9xiQ/mPLR3GPaDDI+8Gv05I5ucfDZJHl1J+c1BusKKj/tcVlFZl
-	hOkGadasDPNwBxJNf+I0EIUXNwchgC8LeRXQnI3zc7NmBTf/taXliLXd1Ns0TjFw
-	nvqf1kJOyVU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 446A7780C6;
-	Wed,  2 Apr 2014 13:16:15 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6ABB6780C4;
-	Wed,  2 Apr 2014 13:16:14 -0400 (EDT)
-In-Reply-To: <1396367910-7299-15-git-send-email-mhagger@alum.mit.edu> (Michael
-	Haggerty's message of "Tue, 1 Apr 2014 17:58:22 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 7EA89B54-BA8A-11E3-BEF5-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757941AbaDBGjT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Apr 2014 02:39:19 -0400
+Received: from cloud.peff.net ([50.56.180.127]:52356 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756658AbaDBGjT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Apr 2014 02:39:19 -0400
+Received: (qmail 21069 invoked by uid 102); 2 Apr 2014 06:39:19 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 02 Apr 2014 01:39:19 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 02 Apr 2014 02:39:17 -0400
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245728>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+When we are sending a packfile to a remote, we currently try
+to reuse a whole chunk of packfile without bothering to look
+at the individual objects. This can make things like initial
+clones much lighter on the server, as we can just dump the
+packfile bytes.
 
-> Change struct lock_file's filename field from a fixed-length buffer
-> into a strbuf.
+However, it's possible that the other side cannot read our
+packfile verbatim. For example, we may have objects stored
+as OFS_DELTA, but the client is an antique version of git
+that only understands REF_DELTA. We negotiate this
+capability over the fetch protocol. A normal pack-objects
+run will convert OFS_DELTA into REF_DELTA on the fly, but
+the "reuse pack" code path never even looks at the objects.
 
-Good.
+This patch disables packfile reuse if the other side is
+missing any capabilities that we might have used in the
+on-disk pack. Right now the only one is OFS_DELTA, but we
+may need to expand in the future (e.g., if packv4 introduces
+new object types).
 
-As I allued to in a review on an unrelated patch, I do not think it
-is a good idea to name the lock filename field "lock_filename" in a
-structure that is about a lockfile, though.
+We could be more thorough and only disable reuse in this
+case when we actually have an OFS_DELTA to send, but:
+
+  1. We almost always will have one, since we prefer
+     OFS_DELTA to REF_DELTA when possible. So this case
+     would almost never come up.
+
+  2. Looking through the objects defeats the purpose of the
+     optimization, which is to do as little work as possible
+     to get the bytes to the remote.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I happened to be fooling around with git v1.4.0 today, and noticed a
+problem fetching from GitHub. Pre-OFS_DELTA git versions are ancient by
+today's standard, but it's quite easy to remain compatible here, so I
+don't see why not. And in theory, alternate implementations might not
+understand OFS_DELTA, though in practice I would consider such an
+implementation to be pretty crappy.
+
+ builtin/pack-objects.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
+
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 7950c43..1503632 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -2439,12 +2439,23 @@ static void loosen_unused_packed_objects(struct rev_info *revs)
+ 	}
+ }
+ 
++/*
++ * This tracks any options which a reader of the pack might
++ * not understand, and which would therefore prevent blind reuse
++ * of what we have on disk.
++ */
++static int pack_options_allow_reuse(void)
++{
++	return allow_ofs_delta;
++}
++
+ static int get_object_list_from_bitmap(struct rev_info *revs)
+ {
+ 	if (prepare_bitmap_walk(revs) < 0)
+ 		return -1;
+ 
+-	if (!reuse_partial_packfile_from_bitmap(
++	if (pack_options_allow_reuse() &&
++	    !reuse_partial_packfile_from_bitmap(
+ 			&reuse_packfile,
+ 			&reuse_packfile_objects,
+ 			&reuse_packfile_offset)) {
+-- 
+1.9.1.656.ge8a0637
