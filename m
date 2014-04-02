@@ -1,97 +1,80 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 2/3] patch-id: document new behaviour
-Date: Wed, 02 Apr 2014 11:18:26 -0700
-Message-ID: <xmqqy4zntx1p.fsf@gitster.dls.corp.google.com>
-References: <1396202583-2572-1-git-send-email-mst@redhat.com>
-	<1396202583-2572-2-git-send-email-mst@redhat.com>
-	<xmqqmwg65gp7.fsf@gitster.dls.corp.google.com>
-	<20140331192604.GF12208@redhat.com>
-	<xmqq7g7a5ek9.fsf@gitster.dls.corp.google.com>
-	<20140331204205.GB12403@redhat.com>
+Subject: Re: [PATCH 04/22] rollback_lock_file(): set fd to -1
+Date: Wed, 02 Apr 2014 09:58:15 -0700
+Message-ID: <xmqqtxabwtw8.fsf@gitster.dls.corp.google.com>
+References: <1396367910-7299-1-git-send-email-mhagger@alum.mit.edu>
+	<1396367910-7299-5-git-send-email-mhagger@alum.mit.edu>
+	<20140401195930.GC21715@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, sunshine@sunshineco.com, jrnieder@gmail.com,
-	peff@peff.net
-To: "Michael S. Tsirkin" <mst@redhat.com>
-X-From: git-owner@vger.kernel.org Thu Apr 03 13:18:38 2014
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Apr 03 13:20:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WVeU5-000348-2V
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Apr 2014 12:02:57 +0200
+	id 1WVeSU-0000xS-7N
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Apr 2014 12:01:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932822AbaDBSSa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Apr 2014 14:18:30 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57754 "EHLO
+	id S932502AbaDBQ6T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Apr 2014 12:58:19 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55953 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932633AbaDBSS3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Apr 2014 14:18:29 -0400
+	id S932442AbaDBQ6S (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Apr 2014 12:58:18 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 980897796C;
-	Wed,  2 Apr 2014 14:18:28 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 38B4977AD2;
+	Wed,  2 Apr 2014 12:58:18 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+1Ur5qvQrZ0wI3YQejKWL6U6Lz4=; b=pd5K8o
-	7/fltEvNfimhGbq7dY+w7DDih3mIfP/ii49sNaYQH7F4sAKb4tfy+kwMxSnUAvEs
-	/ye7kWJKIaSGbY0ZbbPl0dqY/82//0chSfQBMbE45xL0UmlXQ6c3vFFkdTc89oZ+
-	ssp2i21to1U08MZy1pYGicLJwQulmABULqWLw=
+	:content-type; s=sasl; bh=oEnGDrJC6TEkCDyLY63Q9YcLIIM=; b=TO4qsB
+	+ByiZHY2Eh4wqOswHlBJP6N/sdQtCzv+tGhL5FGmd5wQLVUg4dvJpAsplRGweED7
+	LnvkAoN3MJ/ee68HY9idBiWGVpJOpR1ZTTxJFke9wp1QBfCpGFBGCj+16MYMgL6z
+	5Y0YT7AKsmr2Rr4cxTLdF6Bx3JC5EmG0f5MEk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=v1i3ieIE/TFGnllBE9DwxZQbyiUwMpxE
-	XvS6fK0E7IuabyVAkZlv+FfuL5HxIRHcXshC/IREQn/ZIIcWSJSenia9krXVmCme
-	cU2f+4CO2WR4TLeAoR9l+GMFBID6MYxObOUEPEpSSKwnhQhrst+5vaJqog3OqhvM
-	FpCVAOePCEI=
+	:content-type; q=dns; s=sasl; b=P/Im1UcJg0wXQFlK4/DJVAPmZeoTO1lK
+	XLujvYrRiA8LhAv5NeKE6BGIcIE5SAD/XoTsSCj2M7rZ00uXWfnwuFxVeXWQBDCS
+	Iq+b6O0DCtFdGwEyjxo378WYStmOfv/pyJ1HNucbw3aI2oRNQzfBuOhCMVPalJq7
+	6IpsKdlWnrY=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8219C7796A;
-	Wed,  2 Apr 2014 14:18:28 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2982577AD0;
+	Wed,  2 Apr 2014 12:58:18 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B67D377969;
-	Wed,  2 Apr 2014 14:18:27 -0400 (EDT)
-In-Reply-To: <20140331204205.GB12403@redhat.com> (Michael S. Tsirkin's message
-	of "Mon, 31 Mar 2014 23:42:05 +0300")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 71B7877ACC;
+	Wed,  2 Apr 2014 12:58:17 -0400 (EDT)
+In-Reply-To: <20140401195930.GC21715@sigill.intra.peff.net> (Jeff King's
+	message of "Tue, 1 Apr 2014 15:59:30 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 2FECFCD6-BA93-11E3-B176-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: FCBBE0C6-BA87-11E3-B0F6-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245712>
 
-"Michael S. Tsirkin" <mst@redhat.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> On Mon, Mar 31, 2014 at 12:54:46PM -0700, Junio C Hamano wrote:
->> "Michael S. Tsirkin" <mst@redhat.com> writes:
->> 
->> > The hash used is mostly an internal implementation detail, isn't it?
->> 
->> Yes, but that does not mean we can break people who keep an external
->> database indexed with the patch-id by changing the default under
->> them, and "they can give --unstable option to work it around" is a
->> workaround, not a fix.  Without this change, they did not have to do
->> anything.
->> 
->> I would imagine that most of these people will be using the plain
->> vanilla "git show" output without any ordering or hunk splitting
->> when coming up with such a key.  A possible way forward to allow the
->> configuration that corresponds to "-O<orderfile>" while not breaking
->> the existing users could be to make the "patch-id --stable" kick in
->> automatically (of course, do this only when the user did not give
->> the "--unstable" command line option to override) when we see the
->> orderfile configuration in the repository, or when we see that the
->> incoming patch looks like reordered (e.g. has multiple "diff --git"
->> header lines that refer to the same path,
+> On Tue, Apr 01, 2014 at 05:58:12PM +0200, Michael Haggerty wrote:
 >
-> This would require us to track affected files in memory.
-> Issue?
+>> When rolling back the lockfile, call close_lock_file() so that the
+>> lock_file's fd field gets set back to -1.  This could help prevent
+>> confusion in the face of hypothetical future programming errors.
+>
+> This also solves a race. We could be in the middle of rollback_lock_file
+> when we get a signal, and double-close. It's probably not a big deal,
+> though, since nobody could have opened a new descriptor in the interim
+> that got the same number (so the second close will just fail silently).
+>
+> Still, this seems like a definite improvement.
 
-Don't we already do that in order to handle a patch that touches the
-same path more than once anyway?  I think a possibly larger issue
-might be that you would still want to do the hashing in a single
-pass so you may need to always keep two accumulated hashes, before
-you can decide if the patch is or is not a straight-forward one and
-use one of the two, but that hopefully should not require a rocket
-scientist.
+This is probably related to my comments on 2/22, but is "fd" the
+only thing that has a non-zero safe value?  Perhaps lock_file_init()
+that clears the structure fields to 0/NULL and fd to -1, and a
+convenience function lock_file_alloc() that does xmalloc() and then
+calls lock_file_init() may help us a bit when the lockfile structure
+is reused?
