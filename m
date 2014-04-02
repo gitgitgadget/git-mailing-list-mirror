@@ -1,155 +1,83 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v9 11/11] Documentation: add documentation for 'git interpret-trailers'
-Date: Wed, 2 Apr 2014 08:01:00 +0200
-Message-ID: <CAP8UFD1hrXDdwKokLH_j=vwWoViC9sSJHf0gTFubh-oFQao4MA@mail.gmail.com>
-References: <20140401191831.353.99271.chriscool@tuxfamily.org>
-	<20140401192023.353.34477.chriscool@tuxfamily.org>
-	<20140402003938.GE6851@google.com>
+From: Thiago Farina <tfransosi@gmail.com>
+Subject: Re: socket_perror() "bug"?
+Date: Wed, 2 Apr 2014 20:05:01 -0300
+Message-ID: <CACnwZYf30KLVLkaB4mNrW12DHwrf=RT7H-DBNvQYs0y6RqVGLw@mail.gmail.com>
+References: <CACnwZYc2py4dxehg2=gnnPLxwJaRqXYTLQvC1O7YuoqAWsZ0Tg@mail.gmail.com>
+	<xmqqy4zq3xek.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Christian Couder <chriscool@tuxfamily.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	git <git@vger.kernel.org>, Josh Triplett <josh@joshtriplett.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 03 12:47:37 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 03 12:49:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WVeIo-0006sp-3O
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Apr 2014 11:51:18 +0200
+	id 1WVecl-000348-3g
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Apr 2014 12:11:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757341AbaDBGBD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Apr 2014 02:01:03 -0400
-Received: from mail-we0-f179.google.com ([74.125.82.179]:42715 "EHLO
-	mail-we0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755978AbaDBGBB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Apr 2014 02:01:01 -0400
-Received: by mail-we0-f179.google.com with SMTP id x48so7397888wes.10
-        for <git@vger.kernel.org>; Tue, 01 Apr 2014 23:01:00 -0700 (PDT)
+	id S933514AbaDBXFE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Apr 2014 19:05:04 -0400
+Received: from mail-qa0-f46.google.com ([209.85.216.46]:36060 "EHLO
+	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933486AbaDBXFD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Apr 2014 19:05:03 -0400
+Received: by mail-qa0-f46.google.com with SMTP id i13so850617qae.5
+        for <git@vger.kernel.org>; Wed, 02 Apr 2014 16:05:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=3zs52OC234qK6GVjgViPpc/xk5HUXl7uCZYHz/8q470=;
-        b=IQ0ypCL+xN6UEGJjVkxjwdaZeq7YNT4q6Txa+6oIONvFtHFfTAhqcwh71l2IJq5aAp
-         9HG/luwIfAqfr3a7gcUoO3261RIPSO6uk2Wj8BglDkMYqFd/UFwfgYY54sft767FAI9r
-         JbHnRBqwdEogd0x/qg38tb0PrYMes91BWcM5YPOAWPCSHdmKGRhYw7lPd10F0N5EIIwZ
-         QP9Y4dsZUQ55nKIkANmR5h9ou0bQGLttSRrqzEsYPbnK73ccvfA+NTPcnJVlpQakKcoj
-         U7zemHAPYz8OHQH7zqdAfaAsQ1sDznKoxrP1jAiP5vtuevBCf0cPEvozDAPWUQMrXkjy
-         JHpw==
-X-Received: by 10.180.188.229 with SMTP id gd5mr25575665wic.54.1396418460649;
- Tue, 01 Apr 2014 23:01:00 -0700 (PDT)
-Received: by 10.216.174.68 with HTTP; Tue, 1 Apr 2014 23:01:00 -0700 (PDT)
-In-Reply-To: <20140402003938.GE6851@google.com>
+        bh=zMcK+0O1hj3ljAKe/CK3UDqJUfBTs0iQ2w3j+jN3dR0=;
+        b=RX/MMwQpxY5stpQieE1WvzEtUo8fvP1ydUqRM/9qx68a8rVLqtfsSn+LF5SOjuLSka
+         FbeYcxQ1QcXNQV059HN4ciPj9O4TqUWpd1VgQZsC0Wwbb4OjTZ0Lah5FV26DIa0V4cTU
+         jIIhEQ/VnT9JgFlOtJZADKd/gaj+PabqcYZkdZTanoaUpXCXZMzPtqzrixCSPZGnYpF3
+         ewj8P8ZZGe6urv5JtDwf16JnwK0U3dWj1Iz6wHVosphKLuVCAxayelsS6nA+TMcTNttg
+         XmlmPRYsjkPQihE1GfGiaZTi2UHvT5VHEjOg01d+YbaboR5uY/ukAKqnxGspGn71HwQc
+         jd9g==
+X-Received: by 10.140.39.240 with SMTP id v103mr3449176qgv.77.1396479901526;
+ Wed, 02 Apr 2014 16:05:01 -0700 (PDT)
+Received: by 10.224.195.138 with HTTP; Wed, 2 Apr 2014 16:05:01 -0700 (PDT)
+In-Reply-To: <xmqqy4zq3xek.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245695>
 
-Hi,
-
-On Wed, Apr 2, 2014 at 2:39 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> (culling cc list)
-> Hi,
+On Mon, Mar 31, 2014 at 5:50 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Thiago Farina <tfransosi@gmail.com> writes:
 >
-> Christian Couder wrote:
->
->> [Subject: Documentation: add documentation for 'git interpret-trailers']
+>> In imap-send.c:socket_perror() we pass |func| as a parameter, which I
+>> think it is the name of the function that "called" socket_perror, or
+>> the name of the function which generated an error.
 >>
->> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+>> But at line 184 and 187 it always assume it was SSL_connect.
+>>
+>> Should we instead call perror() and ssl_socket_error() with func?
 >
-> This should be squashed into the patch that introduces the
-> interpret-trailers command, IMHO (or if it should be reviewed
-> separately, it can be an earlier patch).  That way, someone looking at
-> when the command was introduced and wanting to understand what it was
-> originally meant to do has the information close by.
+> Looks that way to me, at least from a cursory look.
+Would you accept such a patch?
 
-Well, the series is not very long, so this patch is quite close to the
-beginning anyway.
+diff --git a/imap-send.c b/imap-send.c
+index 0bc6f7f..bb04768 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -181,10 +181,10 @@ static void socket_perror(const char *func,
+struct imap_socket *sock, int ret)
+                case SSL_ERROR_NONE:
+                        break;
+                case SSL_ERROR_SYSCALL:
+-                       perror("SSL_connect");
++                       perror(func);
+                        break;
+                default:
+-                       ssl_socket_perror("SSL_connect");
++                       ssl_socket_perror(func);
+                        break;
+                }
+        } else
 
-> Thanks for picking up the 'git commit --fixes' topic and your steady
-> work improving the series.
->
-> [...]
->> --- /dev/null
->> +++ b/Documentation/git-interpret-trailers.txt
->> @@ -0,0 +1,123 @@
->> +git-interpret-trailers(1)
->> +=========================
->> +
->> +NAME
->> +----
->> +git-interpret-trailers - help add stuctured information into commit messages
->> +
->> +SYNOPSIS
->> +--------
->> +[verse]
->> +'git interpret-trailers' [--trim-empty] [(<token>[(=|:)<value>])...]
->> +
->> +DESCRIPTION
->> +-----------
->> +Help add RFC 822-like headers, called 'trailers', at the end of the
->> +otherwise free-form part of a commit message.
->> +
->> +This command is a filter. It reads the standard input for a commit
->> +message and applies the `token` arguments, if any, to this
->> +message. The resulting message is emited on the standard output.
->
-> Do you have an example?  Does it work like this?
->
->         $ git interpret-trailers 'signoff=Jonathan Nieder <jrnieder@gmail.com>' <<EOF
->         > foo bar baz qux
->         > EOF
->         foo bar baz qux
->
->         Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
->         $
-
-Yeah, that's the idea. But you need to run something like:
-
-$ git config trailer.signoff.key "Signed-off-by:"
-
-to configure it properly first.
-
-By the way trying your example, I found that it is not currently
-adding an empty line before the s-o-b.
-I will have a look.
-
-> A short EXAMPLES section could help.
-
-Yeah, it is planned, but not yet implemented, as written in patch 0/11:
-
-"The following features are planned but not yet implemented:
-        - add more tests related to commands
-        - add examples in documentation
-        - integration with "git commit""
-
-> If I am understanding it correctly, would a name like 'git add-trailers'
-> work?
-
-It could work but it can modify, not just add trailers.
-
-> How do I read back the trailers later?
-
-Why do you want to read them back?
-Right now it should be used in hooks to modify commit messages.
-
-> [...]
->> +By default, a 'token=value' or 'token:value' argument will be added
->> +only if
->
-> Why support both '=' and ':'?  Using just one would make it easier to
-> grep through scripts to see who is adding signoffs.
-
-That was already discussed previously.
-The reason is that people are used to "token=value" for command line
-arguments, but trailers appears in the result as "token: value", so it
-is better for the user if we support both.
-
-Thanks,
-Christian.
+--
+Thiago Farina
