@@ -1,79 +1,137 @@
-From: Brad King <brad.king@kitware.com>
-Subject: Re: [PATCH] update-ref: fail create operation over stdin if ref already
- exists
-Date: Wed, 02 Apr 2014 08:57:15 -0400
-Message-ID: <533C092B.1050801@kitware.com>
-References: <1396426194-3292-1-git-send-email-mhagger@alum.mit.edu>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 21/22] lockfile: extract a function reset_lock_file()
+Date: Wed, 2 Apr 2014 03:06:54 -0400
+Message-ID: <CAPig+cTEC6kgmgCcpcjaRNMf3gQVQGzBQx5i5A+EuDppH9VQxg@mail.gmail.com>
+References: <1396367910-7299-1-git-send-email-mhagger@alum.mit.edu>
+	<1396367910-7299-22-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Aman Gupta <aman@tmm1.net>
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>
 To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Apr 03 13:34:38 2014
+X-From: git-owner@vger.kernel.org Thu Apr 03 13:37:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WVeO6-0000xS-QD
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Apr 2014 11:56:47 +0200
+	id 1WVeJG-0006sp-5P
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Apr 2014 11:51:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758709AbaDBM4i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Apr 2014 08:56:38 -0400
-Received: from na3sys009aog132.obsmtp.com ([74.125.149.250]:59928 "HELO
-	na3sys009aog132.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1758622AbaDBM4h (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 2 Apr 2014 08:56:37 -0400
-Received: from mail-oa0-f47.google.com ([209.85.219.47]) (using TLSv1) by na3sys009aob132.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKUzwI+7DpOEq6y5dYioylFzFHfGBYc0Xt@postini.com; Wed, 02 Apr 2014 05:56:37 PDT
-Received: by mail-oa0-f47.google.com with SMTP id i11so164147oag.20
-        for <git@vger.kernel.org>; Wed, 02 Apr 2014 05:56:26 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=l3NBBF4vYplEkfeNCqnIUTwvEw0dRfe5twDsh+eEEGo=;
-        b=fVOnuMw4BPMU6meG0XzQo+J/ZVId5vxZCjMeuzjBYKNWlk19IFpLeEnCToJZxeLrh3
-         ZFoxVBpTWGJZrDJL46QZe8D3uTBWPgwALeXysloK0WxgSKJyDu5Vo6QvYykFNYgzHRfr
-         pZFy0mll6CLK7dhENzexy9jO0XfgDBhjyvaGTBWC45ID9CZXGriMQhV/e2VezV26MnKf
-         QZZhCJWok3GhLngNNAQB2qo6B0oSedM9NF8v9NbXdY7tYuSo6hFFOwQtTn1aRwO+Gm9M
-         jGzhge1SI6qP17Sb9dIQuHNtGhddTOHlhIrvzPan20XT9K8P3UxDlW50qAaE14XtjGNc
-         i4zA==
-X-Gm-Message-State: ALoCoQmwbgGvaQcfuaGFzVMMu96gdAxg8cgU1A5FSZ87KlcYpF5N0All28tT7LdUvVUB5KuYuOCXg/jdoEOrqIMvHC4SBP83dpSsAKAHhQ+fpuVl8Ynp3ZwiL0ee6uLgvMFBSTjnXT+UFNjDE25DazGXrfBrjSh3og==
-X-Received: by 10.182.129.134 with SMTP id nw6mr386781obb.34.1396443386888;
-        Wed, 02 Apr 2014 05:56:26 -0700 (PDT)
-X-Received: by 10.182.129.134 with SMTP id nw6mr386768obb.34.1396443386703;
-        Wed, 02 Apr 2014 05:56:26 -0700 (PDT)
-Received: from [192.168.1.225] (tripoint.kitware.com. [66.194.253.20])
-        by mx.google.com with ESMTPSA id cn1sm8155337oeb.11.2014.04.02.05.56.25
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 02 Apr 2014 05:56:25 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
-In-Reply-To: <1396426194-3292-1-git-send-email-mhagger@alum.mit.edu>
-X-Enigmail-Version: 1.6
+	id S1758014AbaDBHGz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Apr 2014 03:06:55 -0400
+Received: from mail-yh0-f43.google.com ([209.85.213.43]:64324 "EHLO
+	mail-yh0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757330AbaDBHGz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Apr 2014 03:06:55 -0400
+Received: by mail-yh0-f43.google.com with SMTP id b6so10079102yha.16
+        for <git@vger.kernel.org>; Wed, 02 Apr 2014 00:06:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=PX0ki8HSsOOfPw7QFCw9dCUIpOS7w4LkxhhROAfnK64=;
+        b=i9k4HOyLDugOFH0XspmOAcQOvEvzEOXYCOPrQgppBqZUx9JD6GTzCArTte2UYsOUBu
+         3vqjmynHCLMs3HkSmLzfT5747vyBGkYQNhBmWIuDDPwGj+idFGc2G2jOKgLEvSgE5MIE
+         rKR2Xz5VepWx28kBKb88N6g6fum06FVhyh6+d/PfPaVQJQXgnez3un2uYpRmV0D3kLPA
+         vD8arw1YPST0HCeXrY9REjBwmUOC8w/U+pSHn9gGSSIWsddYc+BZ0yGHx0XaSFfk33+A
+         UxC6h3M4HgW8jYMEDNMM5zLdqhPVahlt1IxcLJSf/qHEU33Es9T+OJGb3tjqRd6Y38lX
+         DdZA==
+X-Received: by 10.236.119.169 with SMTP id n29mr50768276yhh.62.1396422414628;
+ Wed, 02 Apr 2014 00:06:54 -0700 (PDT)
+Received: by 10.170.180.134 with HTTP; Wed, 2 Apr 2014 00:06:54 -0700 (PDT)
+In-Reply-To: <1396367910-7299-22-git-send-email-mhagger@alum.mit.edu>
+X-Google-Sender-Auth: 58ejeAPfwTckMW_UcvNzOGd9_08
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245720>
 
-On 04/02/2014 04:09 AM, Michael Haggerty wrote:
-> From: Aman Gupta <aman@tmm1.net>
-[snip]
-> @@ -147,6 +147,7 @@ static void parse_cmd_create(const char *next)
->  	struct ref_update *update;
->  
->  	update = update_alloc();
-> +	update->have_old = 1;
+On Tue, Apr 1, 2014 at 11:58 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+> ---
+>  lockfile.c | 31 ++++++++++++++++---------------
+>  1 file changed, 16 insertions(+), 15 deletions(-)
+>
+> diff --git a/lockfile.c b/lockfile.c
+> index 852d717..c06e134 100644
+> --- a/lockfile.c
+> +++ b/lockfile.c
+> @@ -85,6 +85,14 @@ static void remove_lock_file_on_signal(int signo)
+>         raise(signo);
+>  }
+>
+> +static void reset_lock_file(struct lock_file *lk)
+> +{
+> +       lk->fd = -1;
+> +       strbuf_setlen(&lk->filename, 0);
+> +       strbuf_setlen(&lk->staging_filename, 0);
 
-Looks good.
+strbuf_reset() perhaps?
 
-> +test_expect_success 'stdin -z create ref fails when ref exists' '
-
-Strictly speaking we should have a non-z mode test too.
-
-Thanks,
--Brad
+> +       lk->flags = LOCK_FLAGS_ON_LIST;
+> +}
+> +
+>  /*
+>   * path = absolute or relative path name
+>   *
+> @@ -185,8 +193,7 @@ static int lock_file(struct lock_file *lk, const char *path, int flags)
+>
+>         lk->fd = open(lk->staging_filename.buf, O_RDWR | O_CREAT | O_EXCL, 0666);
+>         if (lk->fd < 0) {
+> -               strbuf_setlen(&lk->filename, 0);
+> -               strbuf_setlen(&lk->staging_filename, 0);
+> +               reset_lock_file(lk);
+>                 return -1;
+>         }
+>         if (adjust_shared_perm(lk->staging_filename.buf)) {
+> @@ -273,17 +280,12 @@ int close_lock_file(struct lock_file *lk)
+>
+>  int commit_lock_file(struct lock_file *lk)
+>  {
+> -       int err = 0;
+> -
+>         if (lk->fd >= 0 && close_lock_file(lk))
+>                 return -1;
+> -       if (rename(lk->staging_filename.buf, lk->filename.buf)) {
+> -               err = -1;
+> -       } else {
+> -               strbuf_setlen(&lk->filename, 0);
+> -               strbuf_setlen(&lk->staging_filename, 0);
+> -       }
+> -       return err;
+> +       if (rename(lk->staging_filename.buf, lk->filename.buf))
+> +               return -1;
+> +       reset_lock_file(lk);
+> +       return 0;
+>  }
+>
+>  int hold_locked_index(struct lock_file *lk, int die_on_error)
+> @@ -306,8 +308,8 @@ int commit_locked_index(struct lock_file *lk)
+>                         return -1;
+>                 if (rename(lk->staging_filename.buf, alternate_index_output))
+>                         return -1;
+> -               strbuf_setlen(&lk->filename, 0);
+> -               strbuf_setlen(&lk->staging_filename, 0);
+> +
+> +               reset_lock_file(lk);
+>                 return 0;
+>         } else {
+>                 return commit_lock_file(lk);
+> @@ -320,7 +322,6 @@ void rollback_lock_file(struct lock_file *lk)
+>                 if (lk->fd >= 0)
+>                         close_lock_file(lk);
+>                 unlink_or_warn(lk->staging_filename.buf);
+> -               strbuf_setlen(&lk->filename, 0);
+> -               strbuf_setlen(&lk->staging_filename, 0);
+> +               reset_lock_file(lk);
+>         }
+>  }
+> --
+> 1.9.0
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
