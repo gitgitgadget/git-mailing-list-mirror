@@ -1,57 +1,125 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: fast-import deltas
-Date: Wed, 2 Apr 2014 08:12:35 +0900
-Message-ID: <20140401231235.GA8422@glandium.org>
-References: <20140401102554.GA32231@glandium.org>
- <20140401114502.GA15549@sigill.intra.peff.net>
- <20140401130703.GA1479@glandium.org>
- <20140401131512.GA19321@sigill.intra.peff.net>
- <20140401141856.GA2497@glandium.org>
- <xmqqk3b90y79.fsf@gitster.dls.corp.google.com>
- <20140401221003.GA5923@glandium.org>
- <xmqqlhvoy92m.fsf@gitster.dls.corp.google.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v9 11/11] Documentation: add documentation for 'git
+ interpret-trailers'
+Date: Tue, 1 Apr 2014 17:39:38 -0700
+Message-ID: <20140402003938.GE6851@google.com>
+References: <20140401191831.353.99271.chriscool@tuxfamily.org>
+ <20140401192023.353.34477.chriscool@tuxfamily.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 03 11:35:17 2014
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Josh Triplett <josh@joshtriplett.org>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Thu Apr 03 12:00:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WVdkj-0004JW-Nw
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Apr 2014 11:16:06 +0200
+	id 1WVeD9-0006sp-2V
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Apr 2014 11:45:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752447AbaDAXM5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Apr 2014 19:12:57 -0400
-Received: from ks3293202.kimsufi.com ([5.135.186.141]:49276 "EHLO
-	zenigata.glandium.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754396AbaDAXMt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Apr 2014 19:12:49 -0400
-Received: from glandium by zenigata.glandium.org with local (Exim 4.82)
-	(envelope-from <glandium@glandium.org>)
-	id 1WV7r9-0002Dv-NI; Wed, 02 Apr 2014 08:12:35 +0900
+	id S1757396AbaDBAjp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Apr 2014 20:39:45 -0400
+Received: from mail-pd0-f173.google.com ([209.85.192.173]:58508 "EHLO
+	mail-pd0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757324AbaDBAjm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Apr 2014 20:39:42 -0400
+Received: by mail-pd0-f173.google.com with SMTP id z10so10297589pdj.4
+        for <git@vger.kernel.org>; Tue, 01 Apr 2014 17:39:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=l6VqXRWWPT9589NKabzxgLigcfFZjidS5jB3tN5paic=;
+        b=mmOlljf8nN1Zf6553u5dghpieWdC9b4Iiw+SLFhg0TowgGz6hh+0guVoGqznQFznKe
+         0zwr7lRfyOf2BPtPboJaWTPwPNyOKgv1Wupq9qqMprFt8K6GOM4y6TY2Skv3QgwPzsLa
+         LVtB+MW+E+BN5AO+4DskncKVr2cLwDvsJJysqrmv55QhCNRIjvdLlanBluj9d9GsALYJ
+         NK9iLl46Ni2+ifUND+DwWWtsECoqPrMNNsYltiYnxwVmrMJ/+Bdz8SKm+hHLoCzMuhfN
+         qQOQoIS3ITrdnoPGru6w6oK/PW2tomvCgjha4DJdKBYo4StZwV8KHo6ZDGTUGufAv+wo
+         HNnA==
+X-Received: by 10.66.190.4 with SMTP id gm4mr16439133pac.116.1396399182058;
+        Tue, 01 Apr 2014 17:39:42 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id ix6sm395525pbd.66.2014.04.01.17.39.40
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 01 Apr 2014 17:39:41 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <xmqqlhvoy92m.fsf@gitster.dls.corp.google.com>
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-User-Agent: Mutt/1.5.23 (2014-03-12)
+In-Reply-To: <20140401192023.353.34477.chriscool@tuxfamily.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245671>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245672>
 
-On Tue, Apr 01, 2014 at 03:32:49PM -0700, Junio C Hamano wrote:
-> [Footnote]
-> 
-> *1* I am still not sure how useful the feature would be outside
-> slurping from Hg and Git---for obvious reasons, though.  As long as
-> the change is to a cleanly isolated codepath, it would be OK, I
-> guess.
+(culling cc list)
+Hi,
 
-That's why I started the thread by asking if there would be some
-interest for this feature. I'm not even sure it would be entirely
-beneficial to my usecase, just a hunch.
+Christian Couder wrote:
 
-Mike
+> [Subject: Documentation: add documentation for 'git interpret-trailers']
+>
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+
+This should be squashed into the patch that introduces the
+interpret-trailers command, IMHO (or if it should be reviewed
+separately, it can be an earlier patch).  That way, someone looking at
+when the command was introduced and wanting to understand what it was
+originally meant to do has the information close by.
+
+Thanks for picking up the 'git commit --fixes' topic and your steady
+work improving the series.
+
+[...]
+> --- /dev/null
+> +++ b/Documentation/git-interpret-trailers.txt
+> @@ -0,0 +1,123 @@
+> +git-interpret-trailers(1)
+> +=========================
+> +
+> +NAME
+> +----
+> +git-interpret-trailers - help add stuctured information into commit messages
+> +
+> +SYNOPSIS
+> +--------
+> +[verse]
+> +'git interpret-trailers' [--trim-empty] [(<token>[(=|:)<value>])...]
+> +
+> +DESCRIPTION
+> +-----------
+> +Help add RFC 822-like headers, called 'trailers', at the end of the
+> +otherwise free-form part of a commit message.
+> +
+> +This command is a filter. It reads the standard input for a commit
+> +message and applies the `token` arguments, if any, to this
+> +message. The resulting message is emited on the standard output.
+
+Do you have an example?  Does it work like this?
+
+	$ git interpret-trailers 'signoff=Jonathan Nieder <jrnieder@gmail.com>' <<EOF
+	> foo bar baz qux
+	> EOF
+	foo bar baz qux
+
+	Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+	$
+
+A short EXAMPLES section could help.
+
+If I am understanding it correctly, would a name like 'git add-trailers'
+work?  How do I read back the trailers later?
+
+[...]
+> +By default, a 'token=value' or 'token:value' argument will be added
+> +only if
+
+Why support both '=' and ':'?  Using just one would make it easier to
+grep through scripts to see who is adding signoffs.
+
+Hope that helps,
+Jonathan
