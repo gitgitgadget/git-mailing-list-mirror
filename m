@@ -1,62 +1,83 @@
-From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH 05/22] lockfile: unlock file if lockfile permissions cannot
- be adjusted
-Date: Wed, 02 Apr 2014 08:47:39 +0200
-Message-ID: <533BB28B.10906@web.de>
-References: <1396367910-7299-1-git-send-email-mhagger@alum.mit.edu> <1396367910-7299-6-git-send-email-mhagger@alum.mit.edu>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v9 08/11] trailer: add tests for "git interpret-trailers"
+Date: Wed, 2 Apr 2014 08:02:35 +0200
+Message-ID: <CAP8UFD3dr=p-=zf5Dt4YZA0DEGaqMtFd3GuAzJnC1fPyvUn2Kw@mail.gmail.com>
+References: <20140401191831.353.99271.chriscool@tuxfamily.org>
+	<20140401192023.353.56221.chriscool@tuxfamily.org>
+	<xmqqa9c4y823.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Apr 03 13:14:10 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+	git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 03 13:15:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WVeJ0-0006sp-Gf
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Apr 2014 11:51:30 +0200
+	id 1WVeIp-0006sp-8O
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Apr 2014 11:51:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756758AbaDBGsN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Apr 2014 02:48:13 -0400
-Received: from mout.web.de ([212.227.17.11]:59048 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756565AbaDBGsN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Apr 2014 02:48:13 -0400
-Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb004)
- with ESMTPSA (Nemesis) id 0MDjw6-1WGLnH2hRO-00H6Ap; Wed, 02 Apr 2014 08:47:57
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20131104 Icedove/17.0.10
-In-Reply-To: <1396367910-7299-6-git-send-email-mhagger@alum.mit.edu>
-X-Provags-ID: V03:K0:e2kJI9XeXLQ9EH3JjTSKl0Xy3xHJkytF6xLr3RNliFHFCXqpmxr
- xu5gJnlvevmWfSY56Q0rK7s8lSgKxQDDtssjULYfKvCV1giOfr5SthUCD8z7iwUtLZW5PHX
- x/WXN5GPYtug8MJLpVwaSii8Y4/J8kwzNYuWuiJgv7dJFBFTbtf6WNDNI9coJL8IO79X0ml
- Aeqsjx7KJGOdo7SWXsIlA==
+	id S1757387AbaDBGCi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Apr 2014 02:02:38 -0400
+Received: from mail-wg0-f44.google.com ([74.125.82.44]:38075 "EHLO
+	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755978AbaDBGCh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Apr 2014 02:02:37 -0400
+Received: by mail-wg0-f44.google.com with SMTP id m15so8322876wgh.3
+        for <git@vger.kernel.org>; Tue, 01 Apr 2014 23:02:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=H3oZKC3Iq49Qc5No+VD1gc0ZUwXevIrOiFkxCRTrVSQ=;
+        b=0qsEm5E2SHTpEz27HDjU0z+7SKHJU5NdhFYZ4qCAbyxNgN7qpWc/ZBjVrOMomhUYfH
+         ANfVQ4hvJiEIKIgVVpkyQtwCKgo73aAhsRQDc0FPeGhDcLoxHSqwQAS5Rx9b1IXRFf9k
+         Uh0+TvP6D5RcucK+bUYeWusl+A3B7tsegoOLpH8a4rfXc/sD67Sy3NVh6NSsv9JtuSRy
+         oayzsDfZd5wY3DaYptsrVo2lcVIFO22uEoWsNLFw7V2dSiTbIj1LdV/6wUFQF/dQ6Ed2
+         fPjT6+CEY0Kx3KBAeJfVDaeb555yWnh7ZHSD5BmQE5V0LQ8wwEq8nFV33cvY/p1meiU3
+         JDGA==
+X-Received: by 10.180.100.169 with SMTP id ez9mr25737674wib.15.1396418556024;
+ Tue, 01 Apr 2014 23:02:36 -0700 (PDT)
+Received: by 10.216.174.68 with HTTP; Tue, 1 Apr 2014 23:02:35 -0700 (PDT)
+In-Reply-To: <xmqqa9c4y823.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245710>
 
-[]
+On Wed, Apr 2, 2014 at 12:54 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+>> +test_expect_success '--trim-empty without config' '
+>> +     cat >expected <<-\EOF &&
+>> +             ack: Peff
+>> +             Acked-by: Johan
+>> +     EOF
+>> +     git interpret-trailers --trim-empty "ack = Peff" "Reviewed-by" "Acked-by: Johan" "sob:" >actual &&
+>> +     test_cmp expected actual
+>> +'
+>
+> Let's avoid these overlong and unreadable lines by doing something
+> like this (just one hunk shown for illustration):
+>
+>                 ack: Peff
+>                 Acked-by: Johan
+>         EOF
+> -       git interpret-trailers --trim-empty "ack = Peff" "Reviewed-by" "Acked-by: Johan" "sob:" >actual &&
+> +       git interpret-trailers --trim-empty "ack = Peff" \
+> +               "Reviewed-by" "Acked-by: Johan" "sob:" >actual &&
+>         test_cmp expected actual
+>  '
 
-diff --git a/lockfile.c b/lockfile.c
-index c1af65b..1928e5e 100644
---- a/lockfile.c
-+++ b/lockfile.c
-@@ -148,9 +148,11 @@ static int lock_file(struct lock_file *lk, const char *path, int flags)
-  			lock_file_list = lk;
-  			lk->on_list = 1;
-  		}
--		if (adjust_shared_perm(lk->filename))
--			return error("cannot fix permission bits on %s",
--				     lk->filename);
-+		if (adjust_shared_perm(lk->filename)) {
-+			error("cannot fix permission bits on %s", lk->filename);
-+			rollback_lock_file(lk);
-+			return -1;
+Ok.
 
-Would it make sense to change the order of rollback() and error()?
-Make the rollback first (and as early as possible) and whine then?
+> I've queued the series on 'pu' with the 'chop-overlong-lines' and
+> another minor fix squashed in; hopefully we can merge to 'next'
+> soonish.
+
+Great!
+
+Thanks,
+Christian.
