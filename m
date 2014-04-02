@@ -1,80 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 04/22] rollback_lock_file(): set fd to -1
-Date: Wed, 02 Apr 2014 09:58:15 -0700
-Message-ID: <xmqqtxabwtw8.fsf@gitster.dls.corp.google.com>
-References: <1396367910-7299-1-git-send-email-mhagger@alum.mit.edu>
-	<1396367910-7299-5-git-send-email-mhagger@alum.mit.edu>
-	<20140401195930.GC21715@sigill.intra.peff.net>
+From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH 13/22] config: change write_error() to take a (struct
+ lock_file *) argument
+Date: Wed, 02 Apr 2014 08:58:33 +0200
+Message-ID: <533BB519.8030307@web.de>
+References: <1396367910-7299-1-git-send-email-mhagger@alum.mit.edu> <1396367910-7299-14-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Apr 03 13:20:11 2014
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Thu Apr 03 13:21:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WVeSU-0000xS-7N
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Apr 2014 12:01:18 +0200
+	id 1WVeJ5-0006sp-Kj
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Apr 2014 11:51:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932502AbaDBQ6T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Apr 2014 12:58:19 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55953 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932442AbaDBQ6S (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Apr 2014 12:58:18 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 38B4977AD2;
-	Wed,  2 Apr 2014 12:58:18 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=oEnGDrJC6TEkCDyLY63Q9YcLIIM=; b=TO4qsB
-	+ByiZHY2Eh4wqOswHlBJP6N/sdQtCzv+tGhL5FGmd5wQLVUg4dvJpAsplRGweED7
-	LnvkAoN3MJ/ee68HY9idBiWGVpJOpR1ZTTxJFke9wp1QBfCpGFBGCj+16MYMgL6z
-	5Y0YT7AKsmr2Rr4cxTLdF6Bx3JC5EmG0f5MEk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=P/Im1UcJg0wXQFlK4/DJVAPmZeoTO1lK
-	XLujvYrRiA8LhAv5NeKE6BGIcIE5SAD/XoTsSCj2M7rZ00uXWfnwuFxVeXWQBDCS
-	Iq+b6O0DCtFdGwEyjxo378WYStmOfv/pyJ1HNucbw3aI2oRNQzfBuOhCMVPalJq7
-	6IpsKdlWnrY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2982577AD0;
-	Wed,  2 Apr 2014 12:58:18 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 71B7877ACC;
-	Wed,  2 Apr 2014 12:58:17 -0400 (EDT)
-In-Reply-To: <20140401195930.GC21715@sigill.intra.peff.net> (Jeff King's
-	message of "Tue, 1 Apr 2014 15:59:30 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: FCBBE0C6-BA87-11E3-B0F6-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757430AbaDBG64 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Apr 2014 02:58:56 -0400
+Received: from mout.web.de ([212.227.15.4]:63950 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757330AbaDBG6z (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Apr 2014 02:58:55 -0400
+Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb004)
+ with ESMTPSA (Nemesis) id 0Lvw4L-1X7Lia3B3l-017pDC; Wed, 02 Apr 2014 08:58:45
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20131104 Icedove/17.0.10
+In-Reply-To: <1396367910-7299-14-git-send-email-mhagger@alum.mit.edu>
+X-Provags-ID: V03:K0:foh1aerZlw9Wd5dJN0tJqxCNjqSxV5/heqFwwIM+IPZoFrGqQjA
+ H98iA3r/8xjSjEFPRbMR5jy2M/P0fKVPJxib1y+G86OV9BzH/dqOVD7WZXgzCX7yR93ZJPk
+ 3hIT5IpQWgSccTcxZL9TiEZKJzi+3kM44lIJk43lK0KoovFhGlXMB/UWQWuGapgOFb9ucEo
+ uu9E4gCby7pOCh/mm1D7w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245713>
 
-Jeff King <peff@peff.net> writes:
-
-> On Tue, Apr 01, 2014 at 05:58:12PM +0200, Michael Haggerty wrote:
+On 04/01/2014 05:58 PM, Michael Haggerty wrote:
+> Reduce the amount of code that has to know about the lock_file's
+> filename field.
 >
->> When rolling back the lockfile, call close_lock_file() so that the
->> lock_file's fd field gets set back to -1.  This could help prevent
->> confusion in the face of hypothetical future programming errors.
+> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+> ---
+>   config.c | 10 +++++-----
+>   1 file changed, 5 insertions(+), 5 deletions(-)
 >
-> This also solves a race. We could be in the middle of rollback_lock_file
-> when we get a signal, and double-close. It's probably not a big deal,
-> though, since nobody could have opened a new descriptor in the interim
-> that got the same number (so the second close will just fail silently).
->
-> Still, this seems like a definite improvement.
-
-This is probably related to my comments on 2/22, but is "fd" the
-only thing that has a non-zero safe value?  Perhaps lock_file_init()
-that clears the structure fields to 0/NULL and fd to -1, and a
-convenience function lock_file_alloc() that does xmalloc() and then
-calls lock_file_init() may help us a bit when the lockfile structure
-is reused?
+> diff --git a/config.c b/config.c
+> index 6821cef..1ea3f39 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -1303,9 +1303,9 @@ static int store_aux(const char *key, const char *value, void *cb)
+>   	return 0;
+>   }
+>   
+> -static int write_error(const char *filename)
+> +static int write_error(struct lock_file *lk)
+Does the write_error() really need to know about  struct lock_file ?
+(The name of the function does not indicate that it is doing something 
+with lk)
+And if, would it make sense to rename it into 
+write_error_and_do_something() ?
+>   {
+> -	error("failed to write new configuration file %s", filename);
+> +	error("failed to write new configuration file %s", lk->filename);
+>   
+>   	/* Same error code as "failed to rename". */
+>   	return 4;
+> @@ -1706,7 +1706,7 @@ out_free:
+>   	return ret;
+>   
+>   write_err_out:
+> -	ret = write_error(lock->filename);
+> +	ret = write_error(lock);
+>   	goto out_free;
+>   
+>   }
+> @@ -1821,7 +1821,7 @@ int git_config_rename_section_in_file(const char *config_filename,
+>   				}
+>   				store.baselen = strlen(new_name);
+>   				if (!store_write_section(out_fd, new_name)) {
+> -					ret = write_error(lock->filename);
+> +					ret = write_error(lock);
+>   					goto out;
+>   				}
+>   				/*
+> @@ -1847,7 +1847,7 @@ int git_config_rename_section_in_file(const char *config_filename,
+>   			continue;
+>   		length = strlen(output);
+>   		if (write_in_full(out_fd, output, length) != length) {
+> -			ret = write_error(lock->filename);
+> +			ret = write_error(lock);
+>   			goto out;
+>   		}
+>   	}
