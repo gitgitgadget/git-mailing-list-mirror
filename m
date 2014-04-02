@@ -1,99 +1,75 @@
-From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH 13/22] config: change write_error() to take a (struct
- lock_file *) argument
-Date: Wed, 02 Apr 2014 08:58:33 +0200
-Message-ID: <533BB519.8030307@web.de>
-References: <1396367910-7299-1-git-send-email-mhagger@alum.mit.edu> <1396367910-7299-14-git-send-email-mhagger@alum.mit.edu>
+From: "rocketscienc01100101 ." <rocketscienc01100101@gmail.com>
+Subject: Re: Bug in git-diff output
+Date: Wed, 2 Apr 2014 13:05:36 +0200
+Message-ID: <CALgQ2n9VXVpqXe1NQO4+b-Ngmbhxnza52GJqr81t_ubLfjY75g@mail.gmail.com>
+References: <CALgQ2n-vPK6_0LnWA_AAD2GLvepjLN4A3UZFCAWzEp9r_=XOVg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Apr 03 13:21:37 2014
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 03 13:28:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WVeJ5-0006sp-Kj
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Apr 2014 11:51:36 +0200
+	id 1WVeMw-0000xS-W1
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Apr 2014 11:55:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757430AbaDBG64 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Apr 2014 02:58:56 -0400
-Received: from mout.web.de ([212.227.15.4]:63950 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757330AbaDBG6z (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Apr 2014 02:58:55 -0400
-Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb004)
- with ESMTPSA (Nemesis) id 0Lvw4L-1X7Lia3B3l-017pDC; Wed, 02 Apr 2014 08:58:45
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20131104 Icedove/17.0.10
-In-Reply-To: <1396367910-7299-14-git-send-email-mhagger@alum.mit.edu>
-X-Provags-ID: V03:K0:foh1aerZlw9Wd5dJN0tJqxCNjqSxV5/heqFwwIM+IPZoFrGqQjA
- H98iA3r/8xjSjEFPRbMR5jy2M/P0fKVPJxib1y+G86OV9BzH/dqOVD7WZXgzCX7yR93ZJPk
- 3hIT5IpQWgSccTcxZL9TiEZKJzi+3kM44lIJk43lK0KoovFhGlXMB/UWQWuGapgOFb9ucEo
- uu9E4gCby7pOCh/mm1D7w==
+	id S1758590AbaDBLUB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Apr 2014 07:20:01 -0400
+Received: from mail-ie0-f194.google.com ([209.85.223.194]:62869 "EHLO
+	mail-ie0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758584AbaDBLUA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Apr 2014 07:20:00 -0400
+Received: by mail-ie0-f194.google.com with SMTP id to1so8245ieb.5
+        for <git@vger.kernel.org>; Wed, 02 Apr 2014 04:20:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        bh=zOZ8X8JpJmFBNyO5JJU0o4ObKPzcRw4LLBMvZnXwr+k=;
+        b=zwHi2NL+GnN6TrXHCwZFxUWnVyGBXJ5S6p2YTCDtJ2vswZsural/iQynYjRxhVos/s
+         HAsim6RvDLaRPOfAn4MdCBx5WUHyZT8DuR+u6+SfMCziqYGncEX6AkgdapVgik25lHhC
+         sRU+/eyS1o6P7EDsIj4cmEQcVFVEX7zVvydmiNQtBk5KJFf5m40IPOpUVGJDiaqxyTHB
+         9g3IGGCo36HcX0WxzVTf/AfB+2bxG2yA+etOWubNt3bqusDH9VYokWRlJsgXgyo3yfvo
+         HrevOvJj/C2BltEFfuehqY+vpvnE54lnr7OKJzxV1acOEfp3li+Y/HOxu9PHzr+iMOSo
+         rh+Q==
+X-Received: by 10.50.22.210 with SMTP id g18mr8082420igf.19.1396436736964;
+ Wed, 02 Apr 2014 04:05:36 -0700 (PDT)
+Received: by 10.50.25.165 with HTTP; Wed, 2 Apr 2014 04:05:36 -0700 (PDT)
+In-Reply-To: <CALgQ2n-vPK6_0LnWA_AAD2GLvepjLN4A3UZFCAWzEp9r_=XOVg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245714>
 
-On 04/01/2014 05:58 PM, Michael Haggerty wrote:
-> Reduce the amount of code that has to know about the lock_file's
-> filename field.
+http://i.imgur.com/BoJSjm9.png
+
+Here's a screenshot that shows the problem. There's always a misplaced
+line in the output (most of the time a[href^=tel] { }), no matter
+where in the file the changes are.
+Sometimes it's even in the wrong position, above the @@ numbers.
+
+I'd naturally expect the a[href^=tel] part to not show up at all
+unless I make changes there.
+
+On Tue, Apr 1, 2014 at 12:49 PM, rocketscienc01100101 .
+<rocketscienc01100101@gmail.com> wrote:
+> I tried to get a diff between HEAD and the current version of my
+> project, so I did "git diff".
 >
-> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
-> ---
->   config.c | 10 +++++-----
->   1 file changed, 5 insertions(+), 5 deletions(-)
+> It's a web project with a CSS file that contains the following CSS rule:
 >
-> diff --git a/config.c b/config.c
-> index 6821cef..1ea3f39 100644
-> --- a/config.c
-> +++ b/config.c
-> @@ -1303,9 +1303,9 @@ static int store_aux(const char *key, const char *value, void *cb)
->   	return 0;
->   }
->   
-> -static int write_error(const char *filename)
-> +static int write_error(struct lock_file *lk)
-Does the write_error() really need to know about  struct lock_file ?
-(The name of the function does not indicate that it is doing something 
-with lk)
-And if, would it make sense to rename it into 
-write_error_and_do_something() ?
->   {
-> -	error("failed to write new configuration file %s", filename);
-> +	error("failed to write new configuration file %s", lk->filename);
->   
->   	/* Same error code as "failed to rename". */
->   	return 4;
-> @@ -1706,7 +1706,7 @@ out_free:
->   	return ret;
->   
->   write_err_out:
-> -	ret = write_error(lock->filename);
-> +	ret = write_error(lock);
->   	goto out_free;
->   
->   }
-> @@ -1821,7 +1821,7 @@ int git_config_rename_section_in_file(const char *config_filename,
->   				}
->   				store.baselen = strlen(new_name);
->   				if (!store_write_section(out_fd, new_name)) {
-> -					ret = write_error(lock->filename);
-> +					ret = write_error(lock);
->   					goto out;
->   				}
->   				/*
-> @@ -1847,7 +1847,7 @@ int git_config_rename_section_in_file(const char *config_filename,
->   			continue;
->   		length = strlen(output);
->   		if (write_in_full(out_fd, output, length) != length) {
-> -			ret = write_error(lock->filename);
-> +			ret = write_error(lock);
->   			goto out;
->   		}
->   	}
+> a[href^=tel] {
+>     color:inherit;
+>     text-decoration:none;
+> }
+>
+> Now, whenever I do "git diff", it will always show the a[href^=tel]
+> part and mess up the output, even when I didn't change anything near
+> that line. The problem is easily reproducable in a newly created
+> repository.
+>
+> git --version
+> git version 1.9.1
