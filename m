@@ -1,96 +1,79 @@
-From: "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH v3 2/3] patch-id: document new behaviour
-Date: Wed, 2 Apr 2014 22:02:43 +0300
-Message-ID: <20140402190243.GA13425@redhat.com>
-References: <1396202583-2572-1-git-send-email-mst@redhat.com>
- <1396202583-2572-2-git-send-email-mst@redhat.com>
- <xmqqmwg65gp7.fsf@gitster.dls.corp.google.com>
- <20140331192604.GF12208@redhat.com>
- <xmqq7g7a5ek9.fsf@gitster.dls.corp.google.com>
- <20140331204205.GB12403@redhat.com>
- <xmqqy4zntx1p.fsf@gitster.dls.corp.google.com>
+From: Brad King <brad.king@kitware.com>
+Subject: Re: [PATCH] update-ref: fail create operation over stdin if ref already
+ exists
+Date: Wed, 02 Apr 2014 08:57:15 -0400
+Message-ID: <533C092B.1050801@kitware.com>
+References: <1396426194-3292-1-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, sunshine@sunshineco.com, jrnieder@gmail.com,
-	peff@peff.net
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 03 13:33:01 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Aman Gupta <aman@tmm1.net>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Thu Apr 03 13:34:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WVeUb-000348-7e
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Apr 2014 12:03:29 +0200
+	id 1WVeO6-0000xS-QD
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Apr 2014 11:56:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933011AbaDBTCU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Apr 2014 15:02:20 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:12113 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933008AbaDBTCT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Apr 2014 15:02:19 -0400
-Received: from int-mx12.intmail.prod.int.phx2.redhat.com (int-mx12.intmail.prod.int.phx2.redhat.com [10.5.11.25])
-	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id s32J25ht001174
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Wed, 2 Apr 2014 15:02:06 -0400
-Received: from redhat.com (vpn1-4-40.ams2.redhat.com [10.36.4.40])
-	by int-mx12.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id s32J23kJ009117;
-	Wed, 2 Apr 2014 15:02:03 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqqy4zntx1p.fsf@gitster.dls.corp.google.com>
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.25
+	id S1758709AbaDBM4i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Apr 2014 08:56:38 -0400
+Received: from na3sys009aog132.obsmtp.com ([74.125.149.250]:59928 "HELO
+	na3sys009aog132.obsmtp.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1758622AbaDBM4h (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 2 Apr 2014 08:56:37 -0400
+Received: from mail-oa0-f47.google.com ([209.85.219.47]) (using TLSv1) by na3sys009aob132.postini.com ([74.125.148.12]) with SMTP
+	ID DSNKUzwI+7DpOEq6y5dYioylFzFHfGBYc0Xt@postini.com; Wed, 02 Apr 2014 05:56:37 PDT
+Received: by mail-oa0-f47.google.com with SMTP id i11so164147oag.20
+        for <git@vger.kernel.org>; Wed, 02 Apr 2014 05:56:26 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
+         :cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=l3NBBF4vYplEkfeNCqnIUTwvEw0dRfe5twDsh+eEEGo=;
+        b=fVOnuMw4BPMU6meG0XzQo+J/ZVId5vxZCjMeuzjBYKNWlk19IFpLeEnCToJZxeLrh3
+         ZFoxVBpTWGJZrDJL46QZe8D3uTBWPgwALeXysloK0WxgSKJyDu5Vo6QvYykFNYgzHRfr
+         pZFy0mll6CLK7dhENzexy9jO0XfgDBhjyvaGTBWC45ID9CZXGriMQhV/e2VezV26MnKf
+         QZZhCJWok3GhLngNNAQB2qo6B0oSedM9NF8v9NbXdY7tYuSo6hFFOwQtTn1aRwO+Gm9M
+         jGzhge1SI6qP17Sb9dIQuHNtGhddTOHlhIrvzPan20XT9K8P3UxDlW50qAaE14XtjGNc
+         i4zA==
+X-Gm-Message-State: ALoCoQmwbgGvaQcfuaGFzVMMu96gdAxg8cgU1A5FSZ87KlcYpF5N0All28tT7LdUvVUB5KuYuOCXg/jdoEOrqIMvHC4SBP83dpSsAKAHhQ+fpuVl8Ynp3ZwiL0ee6uLgvMFBSTjnXT+UFNjDE25DazGXrfBrjSh3og==
+X-Received: by 10.182.129.134 with SMTP id nw6mr386781obb.34.1396443386888;
+        Wed, 02 Apr 2014 05:56:26 -0700 (PDT)
+X-Received: by 10.182.129.134 with SMTP id nw6mr386768obb.34.1396443386703;
+        Wed, 02 Apr 2014 05:56:26 -0700 (PDT)
+Received: from [192.168.1.225] (tripoint.kitware.com. [66.194.253.20])
+        by mx.google.com with ESMTPSA id cn1sm8155337oeb.11.2014.04.02.05.56.25
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 02 Apr 2014 05:56:25 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
+In-Reply-To: <1396426194-3292-1-git-send-email-mhagger@alum.mit.edu>
+X-Enigmail-Version: 1.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245718>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245719>
 
-On Wed, Apr 02, 2014 at 11:18:26AM -0700, Junio C Hamano wrote:
-> "Michael S. Tsirkin" <mst@redhat.com> writes:
-> 
-> > On Mon, Mar 31, 2014 at 12:54:46PM -0700, Junio C Hamano wrote:
-> >> "Michael S. Tsirkin" <mst@redhat.com> writes:
-> >> 
-> >> > The hash used is mostly an internal implementation detail, isn't it?
-> >> 
-> >> Yes, but that does not mean we can break people who keep an external
-> >> database indexed with the patch-id by changing the default under
-> >> them, and "they can give --unstable option to work it around" is a
-> >> workaround, not a fix.  Without this change, they did not have to do
-> >> anything.
-> >> 
-> >> I would imagine that most of these people will be using the plain
-> >> vanilla "git show" output without any ordering or hunk splitting
-> >> when coming up with such a key.  A possible way forward to allow the
-> >> configuration that corresponds to "-O<orderfile>" while not breaking
-> >> the existing users could be to make the "patch-id --stable" kick in
-> >> automatically (of course, do this only when the user did not give
-> >> the "--unstable" command line option to override) when we see the
-> >> orderfile configuration in the repository, or when we see that the
-> >> incoming patch looks like reordered (e.g. has multiple "diff --git"
-> >> header lines that refer to the same path,
-> >
-> > This would require us to track affected files in memory.
-> > Issue?
-> 
-> Don't we already do that in order to handle a patch that touches the
-> same path more than once anyway?
+On 04/02/2014 04:09 AM, Michael Haggerty wrote:
+> From: Aman Gupta <aman@tmm1.net>
+[snip]
+> @@ -147,6 +147,7 @@ static void parse_cmd_create(const char *next)
+>  	struct ref_update *update;
+>  
+>  	update = update_alloc();
+> +	update->have_old = 1;
 
-At least I don't see it in builtin/patch-id.c
+Looks good.
 
-> I think a possibly larger issue
-> might be that you would still want to do the hashing in a single
-> pass so you may need to always keep two accumulated hashes, before
-> you can decide if the patch is or is not a straight-forward one and
-> use one of the two, but that hopefully should not require a rocket
-> scientist.
+> +test_expect_success 'stdin -z create ref fails when ref exists' '
 
-But the issue is that equivalent patches would get a different hash.
-This is what I tried to fix, after all.
+Strictly speaking we should have a non-z mode test too.
 
-So I think I prefer using an option and not a heuristic if you
-are fine with that.
-At some point in the future we might flip the default.
-
--- 
-MST
+Thanks,
+-Brad
