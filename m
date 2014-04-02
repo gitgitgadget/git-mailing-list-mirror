@@ -1,109 +1,110 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Mar 2014, #08; Mon, 31)
-Date: Wed, 02 Apr 2014 12:41:46 -0700
-Message-ID: <xmqqlhvntt6t.fsf@gitster.dls.corp.google.com>
-References: <xmqqppl128q8.fsf@gitster.dls.corp.google.com>
-	<xmqqppl0yaf9.fsf@gitster.dls.corp.google.com>
-	<87ha6cian0.fsf@fencepost.gnu.org>
+Subject: Re: [PATCH v2 18/27] update-ref --stdin: Harmonize error messages
+Date: Wed, 02 Apr 2014 09:38:01 -0700
+Message-ID: <xmqq61mry9ee.fsf@gitster.dls.corp.google.com>
+References: <1395683820-17304-1-git-send-email-mhagger@alum.mit.edu>
+	<1395683820-17304-19-git-send-email-mhagger@alum.mit.edu>
+	<xmqqy4zq2g0b.fsf@gitster.dls.corp.google.com>
+	<5339EE33.7050708@alum.mit.edu> <533A86F2.90508@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Thu Apr 03 12:52:21 2014
+Cc: Brad King <brad.king@kitware.com>,
+	Johan Herland <johan@herland.net>, Jeff King <peff@peff.net>,
+	Vicent Marti <tanoku@gmail.com>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Thu Apr 03 12:54:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WVeVH-000348-6X
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Apr 2014 12:04:11 +0200
+	id 1WVeS6-0000xS-Az
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Apr 2014 12:00:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933000AbaDBTlu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Apr 2014 15:41:50 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51814 "EHLO
+	id S932507AbaDBQiL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Apr 2014 12:38:11 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61863 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932626AbaDBTlt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Apr 2014 15:41:49 -0400
+	id S932456AbaDBQiI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Apr 2014 12:38:08 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B6DDC78003;
-	Wed,  2 Apr 2014 15:41:48 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EC385773DB;
+	Wed,  2 Apr 2014 12:38:07 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=IOuRMZmnji2OX6PODp6ioW3uyz4=; b=azS3Ys
-	R49NZNO1q48MgfOl6OocQr8TRkE31qrTd26dRJ4SFCNAEHkuR4xS52wDd3DtbElr
-	MroTmigLMFT4NvZHJtPw/jBrmSPtW1A6b8RMeQFR7K7jDa5JsHrKbnwXNUHYRF37
-	JECy5CUeJu+j2xqTvj2SyZNub6D6EHmX4AHw4=
+	:content-type; s=sasl; bh=FV2vIGkRDWVqya5tD/0ktFx2Fl4=; b=XzN5CN
+	KvOyMqbQPqkdkXVyvSsAt7/5zjnBUvZy9d75fwhtdsWLgktLJiuwPxxAPKsurlWf
+	/eQf0PF1RNDK6Ys5A2Pfy4t4TYWEU7Q4taU+vv/btyeceH1K7ezuwJSqWcKjwcEX
+	w3yCszBF/n7jTvESRhpNCPaPcNE+vTSdSbNkE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Iu6luj/+HFZue9K7FlmC3tJYu5lvwMFx
-	hChU5n/jgWO2Mu5LcuTAdmUtBxCwyw1mlCHV4SeRRIXCUqBv6wiKfdQPgmQvmsBg
-	xsr8mOxaNsYVjeo1jFOKilkAoSIpC0IGzeOwlaZ8R4uNk/sf+9rMRH0r3ecGpx7e
-	vhujszPVBbs=
+	:content-type; q=dns; s=sasl; b=AwHmQ+kqPksOmcunDWLMwXETBE7f0AQg
+	yRBieafRjiA/Euf+bGD2JPckwNQQCT68S3Swy12DDg4TSthqmdlfmuqMjRvDSxYR
+	cxeEXJ6YhMZiwYdnVxAzYqYTS5ndI8VH5PqKTRPfqCnQO2LPD6FgTNUVAKi6eZB+
+	5/bfEbAmnVY=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9EF6C77FFE;
-	Wed,  2 Apr 2014 15:41:48 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D9E6C773DA;
+	Wed,  2 Apr 2014 12:38:07 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A098A77FFB;
-	Wed,  2 Apr 2014 15:41:47 -0400 (EDT)
-In-Reply-To: <87ha6cian0.fsf@fencepost.gnu.org> (David Kastrup's message of
-	"Wed, 02 Apr 2014 07:05:39 +0200")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F2A08773D8;
+	Wed,  2 Apr 2014 12:38:05 -0400 (EDT)
+In-Reply-To: <533A86F2.90508@alum.mit.edu> (Michael Haggerty's message of
+	"Tue, 01 Apr 2014 11:29:22 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: D410807A-BA9E-11E3-89A1-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 2B3C33EA-BA85-11E3-8D69-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245699>
 
-David Kastrup <dak@gnu.org> writes:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->>> I haven't reverted the merge of that "submodule update" topic yet; I
->>> should do that soonish.
->>> ...
->>
->> Sigh...  This is giving me a lot of headache.
->>
->> As 23d25e48 (submodule: explicit local branch creation in
->> module_clone, 2014-01-26) has been in 'master' since fairly early
->> during this cycle, a lot of topics that are not planned to be on the
->> 'maint' branch has forked from the tip of 'master' and are now
->> contaminated by that commit.
->>
->> I think I have a preparatory patch to correctly revert 00d4ff1a
->> (Merge branch 'wt/doc-submodule-name-path-confusion-2', 2014-03-31)
->> and 06c27689 (Merge branch 'wk/submodule-on-branch', 2014-02-27),
->> and also a part of 384364b (Start preparing for Git 2.0,
->> 2014-03-07), but I am not sure what to do with them ;-<))
->
-> Why not just revert on master?  When merging with the topic branches,
-> the revert should then override the contamination.
+> Junio, I incorporated your feedback (which so far has only affected
+> commit messages).  I also rebased the patch series to the current
+> master.  I pushed the result to GitHub [1].  I'll refrain from spamming
+> the list with v3 yet.
 
-That was actually not the cumbersome part.  I wanted to be very sure
-that the revert was correctly done, and one way I know to get an
-independent verification is to rebuild the master branch starting
-all the way back from the point before the problematic topic was
-merged to it.  Some of the topics merged to 'master' after that
-point, however, were forked after that original problematic merge
-was made, so they needed to be rebuilt before I could do so.
+Thanks; let us know when you are ready ;-) I finished reading the
+remainder of the v2, and I think I sent out what I found worth
+commenting on (either positive or negative).
 
-It is worth noting that this verification can also be done in a
-different way.  You can start at 06c27689^1, and "cherry-pick -m1"
-(or "cherry-pick" for non-merge commits that update the release
-notes) the commits in "git rev-list --reverse --first-parent
-06c27689..master" on top of it.  That should result in the same tree
-object as a correct revert on top of 'master' would have.
+I think the next thing to convert to the transaction API would be
+the "ok we know the set of updates from the pusher; let's update all
+of them" in receive-pack?  In a sense that is of a lot more
+real-world impact than the update-ref plumbing.  
 
-Because "cherry-pick -m1" loses the other parents, the resulting
-history does not reflect the reality, but I am not doing this in
-order to replace the history of the 'master' with the result but
-only to make sure that the final tree matches what would have
-happened if the topic were not merged to 'master', so it is
-sufficient for the purpose of this exercise.
+           Side note: honestly speaking, I was dissapointed to see
+           that the ref updates by the receive-pack process was not
+           included in the series when I saw the cover letter that
+           said this was a series about transactional updates to
+           refs.  Anyway...
 
-Hope it clarifies.
+There are a few things that need to be thought through.
+
+Making the update in receive-pack all-or-none is a behaviour change,
+even though it may be a good one.  We may want to allow the user a
+way to ask for the traditional "reject only the ones that cannot be
+updated".  It probably goes like this:
+
+ - On the wire, a new "ref-update-aon" capability is
+   advertised from receive-pack to send-pack and can be requested in
+   the opposite direction.
+
+ - On the "git push" side, a new "--all-or-none" option, and
+   optionally a new "push.allOrNone" configuration, is used to
+   request the "ref-update-aon" capability over the wire.
+
+ - On the receive-pack side, a new "receive.allOrNone" configuration 
+   can be used to always update refs in all-or-none fashion, no
+   matter what the pusher says.
+
+ - The receive-pack uses the ref transaction to update the refs in
+   all-or-none fashion if it has receive.allOrNone, or both sides
+   agree to use ref-update-aon in the capability exchange.  If not,
+   it updates the refs in some-may-succeed-some-may-fail fashion,
+   one by one.
+
+Or something like that.
