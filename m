@@ -1,123 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 13/22] config: change write_error() to take a (struct lock_file *) argument
-Date: Wed, 02 Apr 2014 10:29:41 -0700
-Message-ID: <xmqqob0jvdve.fsf@gitster.dls.corp.google.com>
-References: <1396367910-7299-1-git-send-email-mhagger@alum.mit.edu>
-	<1396367910-7299-14-git-send-email-mhagger@alum.mit.edu>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: What's cooking in git.git (Mar 2014, #08; Mon, 31)
+Date: Wed, 02 Apr 2014 07:05:39 +0200
+Message-ID: <87ha6cian0.fsf@fencepost.gnu.org>
+References: <xmqqppl128q8.fsf@gitster.dls.corp.google.com>
+	<xmqqppl0yaf9.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Apr 03 13:09:33 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 03 13:11:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WVeT6-0000xS-QW
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Apr 2014 12:01:57 +0200
+	id 1WVeIM-0006sp-RN
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Apr 2014 11:50:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932627AbaDBR3q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Apr 2014 13:29:46 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45635 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932501AbaDBR3p (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Apr 2014 13:29:45 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C01E578606;
-	Wed,  2 Apr 2014 13:29:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=lpynnypK1UUyqu0loVt0heFtaK0=; b=HfwTDW2kM1qQ/PiYctey
-	678f1fshIPLMGETgMbF/U9MpfgaNE0ol7/Z6Lqd0m3mZT1nk0F5aFIugNqThFRyW
-	aFGS04Bf/9D/RgFrveHq+hBSpHdwa+k6uTCm3Wi63Yq363UjW2Rrfn3+nOHpO3SN
-	Q/8NZyPvTSWjwmfHqeNodFw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=sFNoEXyTDqsK2PidCkzL0viCXT0qTMAA2NxOWqa+j51ZDL
-	p3HFUuDp+xBNv2Q291b5jMneZKMwCH/CKh/tyGx9325BlDaYZph4jVrNlxTt9gKb
-	hNs++4VreZZxQ9PVQYRRyE+0sGzmZGQ3b8zyvE99OpafgJWvSityD92EnxwZ0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AB7A678604;
-	Wed,  2 Apr 2014 13:29:44 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 06CBA78601;
-	Wed,  2 Apr 2014 13:29:42 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 609DD316-BA8C-11E3-A99D-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755118AbaDBFF4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Apr 2014 01:05:56 -0400
+Received: from fencepost.gnu.org ([208.118.235.10]:53761 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751677AbaDBFFz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Apr 2014 01:05:55 -0400
+Received: from localhost ([127.0.0.1]:52803 helo=lola)
+	by fencepost.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <dak@gnu.org>)
+	id 1WVDN4-0007Qi-Fv; Wed, 02 Apr 2014 01:05:54 -0400
+Received: by lola (Postfix, from userid 1000)
+	id B77DCE04FD; Wed,  2 Apr 2014 07:05:39 +0200 (CEST)
+In-Reply-To: <xmqqppl0yaf9.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Tue, 01 Apr 2014 15:03:38 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245707>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Reduce the amount of code that has to know about the lock_file's
-> filename field.
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
-> ---
->  config.c | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
+>> I haven't reverted the merge of that "submodule update" topic yet; I
+>> should do that soonish.
+>> ...
 >
-> diff --git a/config.c b/config.c
-> index 6821cef..1ea3f39 100644
-> --- a/config.c
-> +++ b/config.c
-> @@ -1303,9 +1303,9 @@ static int store_aux(const char *key, const char *value, void *cb)
->  	return 0;
->  }
->  
-> -static int write_error(const char *filename)
-> +static int write_error(struct lock_file *lk)
->  {
+> Sigh...  This is giving me a lot of headache.
+>
+> As 23d25e48 (submodule: explicit local branch creation in
+> module_clone, 2014-01-26) has been in 'master' since fairly early
+> during this cycle, a lot of topics that are not planned to be on the
+> 'maint' branch has forked from the tip of 'master' and are now
+> contaminated by that commit.
+>
+> I think I have a preparatory patch to correctly revert 00d4ff1a
+> (Merge branch 'wt/doc-submodule-name-path-confusion-2', 2014-03-31)
+> and 06c27689 (Merge branch 'wk/submodule-on-branch', 2014-02-27),
+> and also a part of 384364b (Start preparing for Git 2.0,
+> 2014-03-07), but I am not sure what to do with them ;-<))
 
-The earlier one would have been usable for reporting an error while
-writing any file, but the caller must hold a lock file on it with a
-new one.  Would this change warrant a renaming of the function, I
-wonder.
+Why not just revert on master?  When merging with the topic branches,
+the revert should then override the contamination.
 
-It is a file-scope static, so all callers know about how they are
-supposed to call it, hence the keeping the original name would be
-OK, I would think.
+It makes some sense then to rewrite the "submodule update" topic branch
+so that when it gets reintroduced, its commits are not negated by the
+branch revert on master.
 
-This hunk triggered my smello-meter, primarily because "write-error"
-would not be the name I would pick for this function if I were
-writing everything in this file from scratch (before or after this
-particular patch).
+Sounds like a stock case out of the "using Git with topic branches"
+book, so what am I missing?
 
-> -	error("failed to write new configuration file %s", filename);
-> +	error("failed to write new configuration file %s", lk->filename);
->  
->  	/* Same error code as "failed to rename". */
->  	return 4;
-> @@ -1706,7 +1706,7 @@ out_free:
->  	return ret;
->  
->  write_err_out:
-> -	ret = write_error(lock->filename);
-> +	ret = write_error(lock);
->  	goto out_free;
->  
->  }
-> @@ -1821,7 +1821,7 @@ int git_config_rename_section_in_file(const char *config_filename,
->  				}
->  				store.baselen = strlen(new_name);
->  				if (!store_write_section(out_fd, new_name)) {
-> -					ret = write_error(lock->filename);
-> +					ret = write_error(lock);
->  					goto out;
->  				}
->  				/*
-> @@ -1847,7 +1847,7 @@ int git_config_rename_section_in_file(const char *config_filename,
->  			continue;
->  		length = strlen(output);
->  		if (write_in_full(out_fd, output, length) != length) {
-> -			ret = write_error(lock->filename);
-> +			ret = write_error(lock);
->  			goto out;
->  		}
->  	}
+-- 
+David Kastrup
