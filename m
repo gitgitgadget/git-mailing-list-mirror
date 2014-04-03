@@ -1,148 +1,74 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 1/2] git-send-email: two new options: to-cover, cc-cover
-Date: Thu, 3 Apr 2014 17:24:23 -0400
-Message-ID: <CAPig+cQB4iTH8W-4HFrRk5KQe5OrBaz0WN24iYWqRrHCq5u4rA@mail.gmail.com>
-References: <1396548814-27278-1-git-send-email-mst@redhat.com>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <l.s.r@web.de>
+Subject: Re: [PATCH 06/10] log: --function-name pickaxe
+Date: Thu, 03 Apr 2014 23:25:05 +0200
+Message-ID: <533DD1B1.3000107@web.de>
+References: <1395946256-67124-1-git-send-email-dad-bgl@mit.edu> <62ab0f9c34eabe020ae99c7c1f69d580d9bb36d8.1395942768.git.davidad@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-X-From: git-owner@vger.kernel.org Thu Apr 03 23:24:36 2014
+Content-Type: text/plain; charset=ISO-8859-15;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: peff@peff.net, "David Dalrymple (on zayin)" <davidad@alum.mit.edu>
+To: "David A. Dalrymple (and Bhushan G. Lodha)" <dad-bgl@mit.edu>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 03 23:26:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WVp7h-0006fP-Ju
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Apr 2014 23:24:34 +0200
+	id 1WVp9I-0007vp-Vx
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Apr 2014 23:26:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753582AbaDCVY0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Apr 2014 17:24:26 -0400
-Received: from mail-yk0-f173.google.com ([209.85.160.173]:61182 "EHLO
-	mail-yk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752686AbaDCVYY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Apr 2014 17:24:24 -0400
-Received: by mail-yk0-f173.google.com with SMTP id 10so2143392ykt.18
-        for <git@vger.kernel.org>; Thu, 03 Apr 2014 14:24:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=0cll6roG1MZigCx3ObPSNCmi/xQo7coYIW225QAJPaE=;
-        b=fXwPluykBV8v+rcIOYk/yMPs0Y674eH0ZSkNvS3mtSn2hvbpkWI8O/sXBXJNtmqRfd
-         oSNABE5OmLS/Ig2U1TTMpJqIrIQzE9wwJIE/G5zDMK/PWJ+OaVAgAHcj3dioF8AKz89H
-         FVrNhci2ea1xaewj1XwJa9cpX5sIgqlb6UGLS16VY3tS8Xfw2ZumuPtayShBtuNIWvet
-         mThpimYDwo3q/NoW39vqE01Wxh67k/dcf0N+78gjcITDJwosCdii6p5eitqRXdDorAfO
-         5XBHuDP6hY+w1z7ZYj+7ImbEaXNO9M1cBgLhia6O1un0ZHovCkspRjskR3RRZupdO6++
-         VBow==
-X-Received: by 10.236.88.193 with SMTP id a41mr11677983yhf.22.1396560263910;
- Thu, 03 Apr 2014 14:24:23 -0700 (PDT)
-Received: by 10.170.180.134 with HTTP; Thu, 3 Apr 2014 14:24:23 -0700 (PDT)
-In-Reply-To: <1396548814-27278-1-git-send-email-mst@redhat.com>
-X-Google-Sender-Auth: 5jCVKUfWckK46ya9OmCBEHsRVRA
+	id S1752814AbaDCV0J convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Apr 2014 17:26:09 -0400
+Received: from mout.web.de ([212.227.15.3]:60799 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752550AbaDCV0G (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Apr 2014 17:26:06 -0400
+Received: from [192.168.178.27] ([79.253.164.132]) by smtp.web.de (mrweb004)
+ with ESMTPSA (Nemesis) id 0LxqwW-1X88UF2RZU-015Fln; Thu, 03 Apr 2014 23:25:43
+ +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
+In-Reply-To: <62ab0f9c34eabe020ae99c7c1f69d580d9bb36d8.1395942768.git.davidad@alum.mit.edu>
+X-Provags-ID: V03:K0:ZRLLmI8UcSqn37gfXLmuP0BC3qMrZVuOVdWNf0APPArmw50tHgB
+ FpQ6UiXZDpZxlT0+uXuzpP2g9pZzuBxqcMWJ3AsoAIHyfK4PNJ1Ryaf4YD0zctfs1jvo1GN
+ CwBbisUPUn23r5YZqnUAQfxuJWnafEv0bsJCxGLSbTXZkIrP7iW62gOHnGOvFaxLAex0KJL
+ 2i50RMqmK5zk4J0Bb5Scg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245753>
 
-On Thu, Apr 3, 2014 at 2:14 PM, Michael S. Tsirkin <mst@redhat.com> wrote:
-> Allow extracting To/Cc addresses from cover letter.
+Am 27.03.2014 19:50, schrieb David A. Dalrymple (and Bhushan G. Lodha):
+> From: "Bhushan G. Lodha & David A. Dalrymple" <dad-bgl@mit.edu>
 >
-> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-> ---
->  Documentation/git-send-email.txt | 12 ++++++++++++
->  git-send-email.perl              | 16 ++++++++++++++++
->  2 files changed, 28 insertions(+)
->
-> diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-> index f0e57a5..1733664 100644
-> --- a/Documentation/git-send-email.txt
-> +++ b/Documentation/git-send-email.txt
-> @@ -248,6 +248,18 @@ Automating
->         cc list. Default is the value of 'sendemail.signedoffbycc' configuration
->         value; if that is unspecified, default to --signed-off-by-cc.
->
-> +--[no-]cc-cover::
-> +       If this is set, emails found in Cc: headers in the cover letter are
-> +       added to the cc list for each email set. Default is the value of
+> This is similar to the pickaxe grep option (-G), but applies the
+> provided regex only to diff hunk headers, thereby showing only those
+> commits which affect a "function" with a definition line matching the
+> pattern. These are "functions" in the same sense as with
+> --function-context, i.e., they may be classes, structs, etc. dependin=
+g
+> on the programming-language-specific pattern specified by the "diff"
+> attribute in .gitattributes.
 
-s/email set/email sent/
+With that approach you depend on the hunk header and apparently need to=
+=20
+add XDL_EMIT_MOREFUNCNAMES and XDL_EMIT_MOREHUNKHEADS to improve the=20
+results.  This approach feels fragile.
 
-> +       'sendemail.cccover' configuration value; if that is unspecified,
-> +       default to --no-cc-cover.
-> +
-> +--[no-]to-cover::
-> +       If this is set, emails found in To: headers in the cover letter are
-> +       added to the to list for each email set. Default is the value of
+Would it perhaps be more robust to not base the implementation on diff=20
+and instead to scan the raw file contents?  You'd search both files for=
+=20
+a matching function signature, then search for a non-matching one from=20
+there.  The parts in between are function bodies and can be compared.=20
+If they match, you'd search for matching function starts again etc.
 
-Ditto.
+Or would it make sense to make use of the diff option FUNCCONTEXT (git=20
+diff -W) and look for the function signature in the diff body instead o=
+f=20
+in the hunk header?  Such a diff contains whole functions, but a single=
+=20
+hunk could contain multiple ones.
 
-> +       'sendemail.tocover' configuration value; if that is unspecified,
-> +       default to --no-to-cover.
-> +
->  --suppress-cc=<category>::
->         Specify an additional category of recipients to suppress the
->         auto-cc of:
-> diff --git a/git-send-email.perl b/git-send-email.perl
-> index 8bbfb84..11d9a46 100755
-> --- a/git-send-email.perl
-> +++ b/git-send-email.perl
-> @@ -80,6 +80,8 @@ git send-email [options] <file | directory | rev-list options >
->      --to-cmd                <str>  * Email To: via `<str> \$patch_path`
->      --cc-cmd                <str>  * Email Cc: via `<str> \$patch_path`
->      --suppress-cc           <str>  * author, self, sob, cc, cccmd, body, bodycc, all.
-> +    --[no-]cc-cover                * Email Cc: addresses in the cover letter.
-> +    --[no-]to-cover                * Email To: addresses in the cover letter.
->      --[no-]signed-off-by-cc        * Send to Signed-off-by: addresses. Default on.
->      --[no-]suppress-from           * Send to self. Default off.
->      --[no-]chain-reply-to          * Chain In-Reply-To: fields. Default off.
-> @@ -195,6 +197,7 @@ sub do_edit {
->
->  # Variables with corresponding config settings
->  my ($thread, $chain_reply_to, $suppress_from, $signed_off_by_cc);
-> +my ($cover_cc, $cover_to);
->  my ($to_cmd, $cc_cmd);
->  my ($smtp_server, $smtp_server_port, @smtp_server_options);
->  my ($smtp_authuser, $smtp_encryption, $smtp_ssl_cert_path);
-> @@ -211,6 +214,8 @@ my %config_bool_settings = (
->      "chainreplyto" => [\$chain_reply_to, 0],
->      "suppressfrom" => [\$suppress_from, undef],
->      "signedoffbycc" => [\$signed_off_by_cc, undef],
-> +    "cccover" => [\$cover_cc, undef],
-> +    "tocover" => [\$cover_to, undef],
->      "signedoffcc" => [\$signed_off_by_cc, undef],      # Deprecated
->      "validate" => [\$validate, 1],
->      "multiedit" => [\$multiedit, undef],
-> @@ -302,6 +307,8 @@ my $rc = GetOptions("h" => \$help,
->                     "suppress-from!" => \$suppress_from,
->                     "suppress-cc=s" => \@suppress_cc,
->                     "signed-off-cc|signed-off-by-cc!" => \$signed_off_by_cc,
-> +                   "cc-cover|cc-cover!" => \$cover_cc,
-> +                   "to-cover|to-cover!" => \$cover_to,
->                     "confirm=s" => \$confirm,
->                     "dry-run" => \$dry_run,
->                     "envelope-sender=s" => \$envelope_sender,
-> @@ -1468,6 +1475,15 @@ foreach my $t (@files) {
->         @to = (@initial_to, @to);
->         @cc = (@initial_cc, @cc);
->
-> +       if ($message_num == 1) {
-> +               if (defined $cover_cc and $cover_cc) {
-> +                       @initial_cc = @cc;
-> +               }
-> +               if (defined $cover_to and $cover_to) {
-> +                       @initial_to = @to;
-> +               }
-> +       }
-> +
->         my $message_was_sent = send_message();
->
->         # set up for the next message
-> --
-> MST
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Ren=E9
