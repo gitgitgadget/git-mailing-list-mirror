@@ -1,73 +1,77 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 2/3] patch-id: document new behaviour
-Date: Thu, 03 Apr 2014 08:42:46 -0700
-Message-ID: <xmqqa9c2s9l5.fsf@gitster.dls.corp.google.com>
-References: <1396202583-2572-1-git-send-email-mst@redhat.com>
-	<1396202583-2572-2-git-send-email-mst@redhat.com>
-	<xmqqmwg65gp7.fsf@gitster.dls.corp.google.com>
-	<20140331192604.GF12208@redhat.com>
-	<xmqq7g7a5ek9.fsf@gitster.dls.corp.google.com>
-	<20140331204205.GB12403@redhat.com>
-	<xmqqy4zntx1p.fsf@gitster.dls.corp.google.com>
-	<20140402190243.GA13425@redhat.com>
+Subject: Re: [PATCH v2 20/27] update-ref --stdin: Reimplement using reference transactions
+Date: Thu, 03 Apr 2014 08:57:30 -0700
+Message-ID: <xmqq61mqs8wl.fsf@gitster.dls.corp.google.com>
+References: <1395683820-17304-1-git-send-email-mhagger@alum.mit.edu>
+	<1395683820-17304-21-git-send-email-mhagger@alum.mit.edu>
+	<xmqqppl0zvcs.fsf@gitster.dls.corp.google.com>
+	<533B9A26.8050303@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, sunshine@sunshineco.com, jrnieder@gmail.com,
-	peff@peff.net
-To: "Michael S. Tsirkin" <mst@redhat.com>
-X-From: git-owner@vger.kernel.org Thu Apr 03 17:42:57 2014
+Cc: Brad King <brad.king@kitware.com>,
+	Johan Herland <johan@herland.net>, Jeff King <peff@peff.net>,
+	Vicent Marti <tanoku@gmail.com>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Thu Apr 03 17:57:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WVjn5-0001Jw-0k
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Apr 2014 17:42:55 +0200
+	id 1WVk1Q-0003Uu-8V
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Apr 2014 17:57:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752536AbaDCPmv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Apr 2014 11:42:51 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50887 "EHLO
+	id S1752788AbaDCP5j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Apr 2014 11:57:39 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37639 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752456AbaDCPmu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Apr 2014 11:42:50 -0400
+	id S1752566AbaDCP5d (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Apr 2014 11:57:33 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5D74A76DFF;
-	Thu,  3 Apr 2014 11:42:49 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C6D60794E6;
+	Thu,  3 Apr 2014 11:57:32 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Oy576jyTasejwzzBlBVAQ7lje2E=; b=vZVHcC
-	pqO0K6o8thZfbX6agDxX2efK4cG5pxpviUj7rSyshi+dGBgv9flYyM1FPSLhEOSC
-	fttvqS3AcXKqb/Wv02wScW8I6wedFABSvD9Khy+o3EDIhEGi1vfQWughCI+zhJNB
-	NXWYYN0vwDEJkdAN2AQTk3aj8RG9+Uzh0gfzw=
+	:content-type; s=sasl; bh=WAzqKWg1THRszbZUsNd5bZQTo84=; b=m0xbDj
+	uFStBgwDCdFSM14XpNOduKYM7boqRAbIBd5HNh6i6Egrkyj7hrQJ+/WGxzANN1XB
+	LvSLjByPJBfkMbOhQF3+gttdH5aqc6cOogiIGQM3soOE35YNPV3IetiOuOVMMW3/
+	Mfi2h+RgGaWTlHb9cD0pBFuE/l8CnnnvvhG78=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xEnpkT+wTCKYgDsLoUF2X0imelA8o2xS
-	lCIb8zRINIQ6/LEDsWcrefmlyNcipoeSunOyiorD3kArP/GS/O4QaR2o6iNLjZem
-	kQz3epNY8bfvdJxaFpUqi8pApiefWe6eY21yH/OLTjJFE3p5RFQUMurH6FT57nrE
-	1531IpuitM8=
+	:content-type; q=dns; s=sasl; b=UjplJQFYoHqcK9rvywqgktaVNzismM14
+	6KR+8Uq9B/896xe0u43EYuLSySE3FuVXuIXGaJSBehYl5vrbgEVwAP3npFR/JE1l
+	W3+tRzNqS/GAiLqULo151NkMO6b+qnS8AC79jzNEGWmgjuI0NzwKbeh0RSxaPZeV
+	v47W+wrCxcY=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4D2FA76DFD;
-	Thu,  3 Apr 2014 11:42:49 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B4E43794E5;
+	Thu,  3 Apr 2014 11:57:32 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 92FFE76DFC;
-	Thu,  3 Apr 2014 11:42:48 -0400 (EDT)
-In-Reply-To: <20140402190243.GA13425@redhat.com> (Michael S. Tsirkin's message
-	of "Wed, 2 Apr 2014 22:02:43 +0300")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CC4B5794E2;
+	Thu,  3 Apr 2014 11:57:31 -0400 (EDT)
+In-Reply-To: <533B9A26.8050303@alum.mit.edu> (Michael Haggerty's message of
+	"Wed, 02 Apr 2014 07:03:34 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 9BBBE3C4-BB46-11E3-B273-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: AA2E7D70-BB48-11E3-8CDC-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245740>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245741>
 
-"Michael S. Tsirkin" <mst@redhat.com> writes:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-> So I think I prefer using an option and not a heuristic if you
-> are fine with that.
+> I assumed that rolling back a non-consummated transaction in the case of
+> early program death should be the responsibility of the library, not of
+> the caller.  If I'm correct, the caller(s) won't have to be modified
+> when the atexit facility is added, so I don't see a reason to add it
+> before it is needed by a concrete backend.
+>
+> But you suggest that the caller should be involved.
 
-Sure. Changing behaviour only by explicit user request (command line
-or configuration) is much safer than heuristics that does not work
-reliably.
+I didn't say "should".  If the library can automatically rollback
+without being called upon die() anywhere in the system, that is
+better.  The suggestion was because I didn't think you were shooting
+for such a completeness in the library part, and a possible way out
+is for the caller to help.
