@@ -1,92 +1,77 @@
-From: "Ulrich Windl" <Ulrich.Windl@rz.uni-regensburg.de>
-Subject: Antw: Re: Q: ".git/HEAD" and ".git/refs/heads"
-Date: Thu, 03 Apr 2014 10:04:48 +0200
-Message-ID: <533D3240020000A1000151F5@gwsmtp1.uni-regensburg.de>
-References: <533C404F020000A1000151CE@gwsmtp1.uni-regensburg.de><533C404F020000A1000151CE@gwsmtp1.uni-regensburg.de>
- (Ulrich Windl's message of "Wed, 02 Apr 2014 16:52:31 +0200")
- <vpqob0jwrbb.fsf@anie.imag.fr>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 00/22] Lockfile refactoring and pre-activation
+Date: Thu, 03 Apr 2014 13:42:35 +0200
+Message-ID: <533D492B.9090505@alum.mit.edu>
+References: <1396367910-7299-1-git-send-email-mhagger@alum.mit.edu> <20140401204447.GJ21715@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 8BIT
-Cc: <git@vger.kernel.org>
-To: "Matthieu Moy" <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Apr 03 14:36:49 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Apr 03 14:58:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WVf2F-00026s-K3
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Apr 2014 12:38:16 +0200
+	id 1WVg2e-0002Qc-MW
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Apr 2014 13:42:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1162496AbaDCIEz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Apr 2014 04:04:55 -0400
-Received: from rrzmta1.uni-regensburg.de ([194.94.155.51]:46461 "EHLO
-	rrzmta1.uni-regensburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1162464AbaDCIEw convert rfc822-to-8bit (ORCPT
-	<rfc822;groupwise-git@vger.kernel.org:2:1>);
-	Thu, 3 Apr 2014 04:04:52 -0400
-Received: from rrzmta1.uni-regensburg.de (localhost [127.0.0.1])
-	by localhost (Postfix) with SMTP id B5D40377C7
-	for <git@vger.kernel.org>; Thu,  3 Apr 2014 10:04:50 +0200 (CEST)
-Received: from gwsmtp1.uni-regensburg.de (gwsmtp1.uni-regensburg.de [132.199.5.51])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "gwsmtp.uni-regensburg.de", Issuer "Uni Regensburg CA - G01" (not verified))
-	by rrzmta1.uni-regensburg.de (Postfix) with ESMTPS id 85669377C6
-	for <git@vger.kernel.org>; Thu,  3 Apr 2014 10:04:50 +0200 (CEST)
-Received: from uni-regensburg-smtp1-MTA by gwsmtp1.uni-regensburg.de
-	with Novell_GroupWise; Thu, 03 Apr 2014 10:00:08 +0200
-X-Mailer: Novell GroupWise Internet Agent 12.0.2 
-In-Reply-To: <vpqob0jwrbb.fsf@anie.imag.fr>
-Content-Disposition: inline
+	id S1751839AbaDCLmk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Apr 2014 07:42:40 -0400
+Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:45833 "EHLO
+	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751832AbaDCLmj (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 Apr 2014 07:42:39 -0400
+X-AuditID: 1207440d-f79d86d0000043db-aa-533d492e9d1b
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id BB.51.17371.E294D335; Thu,  3 Apr 2014 07:42:38 -0400 (EDT)
+Received: from [192.168.69.148] (p5B1562A0.dip0.t-ipconnect.de [91.21.98.160])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s33BgaaW007532
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Thu, 3 Apr 2014 07:42:37 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.3.0
+In-Reply-To: <20140401204447.GJ21715@sigill.intra.peff.net>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrGKsWRmVeSWpSXmKPExsUixO6iqKvnaRtssG6ijkXXlW4mi4beK8wW
+	P1p6mB2YPZ717mH0uHhJ2ePzJrkA5ihum6TEkrLgzPQ8fbsE7oxXk46wFyxkrbj49hV7A+Mk
+	li5GTg4JAROJCe/uMkPYYhIX7q1n62Lk4hASuMwocWrBO2YI5yyTxKupPUwgVbwC2hJLN3eB
+	dbAIqEpcPTSPHcRmE9CVWNTTDFYjKhAkcXjDKVaIekGJkzOfgG0TEZCV+H54IyOIzSxgLbHi
+	9WGwemEBJ4mtrdvA4kICRRIPbrSBxTmBak5sOgN0EQfQdeISPY1BICazgLrE+nlCEFPkJba/
+	ncM8gVFwFpJlsxCqZiGpWsDIvIpRLjGnNFc3NzEzpzg1Wbc4OTEvL7VI10gvN7NELzWldBMj
+	JJx5dzD+XydziFGAg1GJh9dCyiZYiDWxrLgy9xCjJAeTkigvk7ttsBBfUn5KZUZicUZ8UWlO
+	avEhRgkOZiUR3nVWQDnelMTKqtSifJiUNAeLkjiv2hJ1PyGB9MSS1OzU1ILUIpisDAeHkgTv
+	GZChgkWp6akVaZk5JQhpJg5OkOFcUiLFqXkpqUWJpSUZ8aDojS8Gxi9IigdoLy9IO29xQWIu
+	UBSi9RSjLseGbWsamYRY8vLzUqXEeS+AFAmAFGWU5sGtgCWvV4ziQB8L894CqeIBJj64Sa+A
+	ljABLeFeZwWypCQRISXVwOg4S0fGaB2LmkHqk+cNfW++RkZ5Zqy45K+9NfKWW2Jap6XH/58C
+	BeomZXzZlqeETBts5y+/9ou/p3jnRfP9c1KW3lmVnb3lSVbYfabZDz4+mtAwsfHR 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245732>
 
->>> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> schrieb am 02.04.2014 um 19:54 in
-Nachricht <vpqob0jwrbb.fsf@anie.imag.fr>:
-> "Ulrich Windl" <Ulrich.Windl@rz.uni-regensburg.de> writes:
-> 
->> Hi!
->>
->> I have a small question: After a "git gc" with last commit being "[shared 
-> 2679648]" I found this:
->>> cat .git/HEAD
->> ref: refs/heads/shared
->>> cat .git/refs/heads/shared
->> cat: .git/refs/heads/shared: No such file or directory
->>
->> Is this intentional?
-> 
-> Yes.
-> 
->> commit in these files: .git/logs/HEAD .git/logs/refs/heads/shared
->> .git/info/refs .git/packed-refs
-> 
-> Yes, they are where the refs are stored. If you have many refs in your
-> repository, having one file per ref is inefficient. It's more efficient
-> for Git to have one big read-only file. When one ref is modified, the
-> .git/refs/heads/$branch file is re-created, and the packed entry is
-> ignored.
-> 
->>             if [ -d .git ]; then
->>                 GIT_HEAD="$(<.git/HEAD)"
->>                 GIT_BRANCH="${GIT_HEAD##*/}"
->>                 GIT_HEAD="Git:$GIT_BRANCH-$(cut -c1-7 .git/${GIT_HEAD##*: })"
->>             fi
-> 
-> Don't access the filesystem. Ask Git.
-> 
-> GIT_FULL_BRANCH=$(git rev-parse --symbolic-full-name HEAD)
-> GIT_BRANCH="${GIT_FULL_BRANCH##*/}"
-> GIT_HEAD="Git:$GIT_BRANCH-$(git rev-parse --short HEAD)"
-> 
-> (Perhaps there's a simpler way without $GIT_FULL_BRANCH)
+On 04/01/2014 10:44 PM, Jeff King wrote:
+> [...]
+> I think all of the patches look good. I'd prefer to hold back the final
+> one (and probably 19/22, which has no purpose except to prepare for
+> 22/22) until seeing its application in practice.
 
-Matthieu,
+OK, I shuffled 19/22 to the end of the patch series, just before 22/22.
+ That way both can be taken or left (probably left for now).
 
-thanks for this (it not so abvious how to use "git --rev-parse")!
+> Thanks for a very pleasant read.
 
-Ulrich
+Thanks for being a very pleasant (and thorough) reader :-)
+
+I'm still working on the backlog of comments and then I'll get back to
+the list with v2.
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
