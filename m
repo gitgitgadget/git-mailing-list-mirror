@@ -1,94 +1,127 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Bug in git-diff output
-Date: Thu, 03 Apr 2014 11:10:19 -0700
-Message-ID: <xmqqeh1eqo6s.fsf@gitster.dls.corp.google.com>
-References: <CALgQ2n-vPK6_0LnWA_AAD2GLvepjLN4A3UZFCAWzEp9r_=XOVg@mail.gmail.com>
-	<CALgQ2n9VXVpqXe1NQO4+b-Ngmbhxnza52GJqr81t_ubLfjY75g@mail.gmail.com>
-	<vpqmwg4c4q8.fsf@anie.imag.fr>
+From: "Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH v2 1/2] git-send-email: two new options: to-cover, cc-cover
+Date: Thu, 3 Apr 2014 21:14:08 +0300
+Message-ID: <1396548814-27278-1-git-send-email-mst@redhat.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "rocketscienc01100101 ." <rocketscienc01100101@gmail.com>,
-	git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Apr 03 20:10:31 2014
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 03 20:13:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WVm5u-0001U7-SE
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Apr 2014 20:10:31 +0200
+	id 1WVm8w-0003ro-DL
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Apr 2014 20:13:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753199AbaDCSKZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Apr 2014 14:10:25 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51590 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753166AbaDCSKX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Apr 2014 14:10:23 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AF92C7A50C;
-	Thu,  3 Apr 2014 14:10:22 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+X8gLvJ8sImjD4ORwg9DwO+J6zQ=; b=ftlblI
-	jfsquNWaDr+hwJ5In1fV1ltLVXyVI24nzcrlE9QulYR2/6Vr/lcLa99OV3v9hhMm
-	Lh4c+AnGGO4TifNh8x6hT7MId1YMzJ6iHdpHzTyG8wlRJKVqjaOTJqUwBqVFGBWJ
-	dIexVX9wvmkWGThiQSnIRAOKbtVB1PTCqlG20=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KMq39ojIx8zA5YJ5qjn+Uh6usMPE0XNY
-	lIxC2bpnjbZJiCq9i3OC1FLZ2rZLoN0mVz5SjUUfRQQy3r3PZ0ROjDf+pjyxqNd5
-	Woq3+EJXBEyDrLLWfEyIVXMCF3jb0E91riT3Wh7ajo4Rzn8j+Yc7rUmaZrROdtgZ
-	+v2/0AHoGNU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9F0807A50B;
-	Thu,  3 Apr 2014 14:10:22 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C22817A509;
-	Thu,  3 Apr 2014 14:10:21 -0400 (EDT)
-In-Reply-To: <vpqmwg4c4q8.fsf@anie.imag.fr> (Matthieu Moy's message of "Wed,
-	02 Apr 2014 14:09:51 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 38A56F48-BB5B-11E3-B9BC-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753186AbaDCSNd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Apr 2014 14:13:33 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:39160 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753166AbaDCSNc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Apr 2014 14:13:32 -0400
+Received: from int-mx14.intmail.prod.int.phx2.redhat.com (int-mx14.intmail.prod.int.phx2.redhat.com [10.5.11.27])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id s33IDUXO022960
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Thu, 3 Apr 2014 14:13:30 -0400
+Received: from redhat.com (vpn1-4-68.ams2.redhat.com [10.36.4.68])
+	by int-mx14.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id s33IDSVq021802;
+	Thu, 3 Apr 2014 14:13:29 -0400
+Content-Disposition: inline
+X-Mutt-Fcc: =sent
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245745>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Allow extracting To/Cc addresses from cover letter.
 
-> "rocketscienc01100101 ." <rocketscienc01100101@gmail.com> writes:
->
->> http://i.imgur.com/BoJSjm9.png
->>
->> Here's a screenshot that shows the problem.
->
-> (better cut-and-paste the text than sending a PNG image)
->
->> There's always a misplaced line in the output (most of the time
->> a[href^=tel] { }), no matter where in the file the changes are.
->
-> The part after the @@ are ignored by patch tools. They are here just for
-> convenience. They are a guess of what the patch hunk belongs to. For
-> C/Java/Ada/... programs, it's the function name. Git does not know about
-> CSS syntax, so it guesses wrong (last line starting with a letter I
-> guess, not sure exactly what happens when Git doesn't know the syntax).
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+---
+ Documentation/git-send-email.txt | 12 ++++++++++++
+ git-send-email.perl              | 16 ++++++++++++++++
+ 2 files changed, 28 insertions(+)
 
-Ask "git grep -A14 'long def_ff' xdiff/" for details ;-)
-
-This was an attempt to be compatible with stock behaviour of GNU
-diff: a line that begins with an alpha, _ or $.
-
->> Sometimes it's even in the wrong position, above the @@ numbers.
->
-> That is strange. Do you have a way to reproduce this?
-
-That indeed is unusual.  If the payload that was identified by the
-find_func function has a funny escape sequence or something, you may
-get funkiness like that in the output on the terminal, which we may
-want to take notice and sanitize in xdl_emit_hunk_hdr(), instead of
-straight memcpy() there, but I do not see how that would be an issue
-in a css source.
+diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+index f0e57a5..1733664 100644
+--- a/Documentation/git-send-email.txt
++++ b/Documentation/git-send-email.txt
+@@ -248,6 +248,18 @@ Automating
+ 	cc list. Default is the value of 'sendemail.signedoffbycc' configuration
+ 	value; if that is unspecified, default to --signed-off-by-cc.
+ 
++--[no-]cc-cover::
++	If this is set, emails found in Cc: headers in the cover letter are
++	added to the cc list for each email set. Default is the value of
++	'sendemail.cccover' configuration value; if that is unspecified,
++	default to --no-cc-cover.
++
++--[no-]to-cover::
++	If this is set, emails found in To: headers in the cover letter are
++	added to the to list for each email set. Default is the value of
++	'sendemail.tocover' configuration value; if that is unspecified,
++	default to --no-to-cover.
++
+ --suppress-cc=<category>::
+ 	Specify an additional category of recipients to suppress the
+ 	auto-cc of:
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 8bbfb84..11d9a46 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -80,6 +80,8 @@ git send-email [options] <file | directory | rev-list options >
+     --to-cmd                <str>  * Email To: via `<str> \$patch_path`
+     --cc-cmd                <str>  * Email Cc: via `<str> \$patch_path`
+     --suppress-cc           <str>  * author, self, sob, cc, cccmd, body, bodycc, all.
++    --[no-]cc-cover                * Email Cc: addresses in the cover letter.
++    --[no-]to-cover                * Email To: addresses in the cover letter.
+     --[no-]signed-off-by-cc        * Send to Signed-off-by: addresses. Default on.
+     --[no-]suppress-from           * Send to self. Default off.
+     --[no-]chain-reply-to          * Chain In-Reply-To: fields. Default off.
+@@ -195,6 +197,7 @@ sub do_edit {
+ 
+ # Variables with corresponding config settings
+ my ($thread, $chain_reply_to, $suppress_from, $signed_off_by_cc);
++my ($cover_cc, $cover_to);
+ my ($to_cmd, $cc_cmd);
+ my ($smtp_server, $smtp_server_port, @smtp_server_options);
+ my ($smtp_authuser, $smtp_encryption, $smtp_ssl_cert_path);
+@@ -211,6 +214,8 @@ my %config_bool_settings = (
+     "chainreplyto" => [\$chain_reply_to, 0],
+     "suppressfrom" => [\$suppress_from, undef],
+     "signedoffbycc" => [\$signed_off_by_cc, undef],
++    "cccover" => [\$cover_cc, undef],
++    "tocover" => [\$cover_to, undef],
+     "signedoffcc" => [\$signed_off_by_cc, undef],      # Deprecated
+     "validate" => [\$validate, 1],
+     "multiedit" => [\$multiedit, undef],
+@@ -302,6 +307,8 @@ my $rc = GetOptions("h" => \$help,
+ 		    "suppress-from!" => \$suppress_from,
+ 		    "suppress-cc=s" => \@suppress_cc,
+ 		    "signed-off-cc|signed-off-by-cc!" => \$signed_off_by_cc,
++		    "cc-cover|cc-cover!" => \$cover_cc,
++		    "to-cover|to-cover!" => \$cover_to,
+ 		    "confirm=s" => \$confirm,
+ 		    "dry-run" => \$dry_run,
+ 		    "envelope-sender=s" => \$envelope_sender,
+@@ -1468,6 +1475,15 @@ foreach my $t (@files) {
+ 	@to = (@initial_to, @to);
+ 	@cc = (@initial_cc, @cc);
+ 
++	if ($message_num == 1) {
++		if (defined $cover_cc and $cover_cc) {
++			@initial_cc = @cc;
++		}
++		if (defined $cover_to and $cover_to) {
++			@initial_to = @to;
++		}
++	}
++
+ 	my $message_was_sent = send_message();
+ 
+ 	# set up for the next message
+-- 
+MST
