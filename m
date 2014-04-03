@@ -1,120 +1,104 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/2] git-send-email: two new options: to-cover, cc-cover
-Date: Thu, 03 Apr 2014 11:31:51 -0700
-Message-ID: <xmqqa9c2qn6w.fsf@gitster.dls.corp.google.com>
-References: <1396548814-27278-1-git-send-email-mst@redhat.com>
+From: "Jonas Bang" <email@jonasbang.dk>
+Subject: RE: Git feature request: Option to force Git to abort a checkout if working directory is dirty (i.e. disregarding the check for conflicts)
+Date: Thu, 3 Apr 2014 20:42:45 +0200
+Message-ID: <000601cf4f6c$81b72740$852575c0$@jonasbang.dk>
+References: <004d01cf49d7$c8b9cd90$5a2d68b0$@jonasbang.dk>	<xmqqk3bfedqi.fsf@gitster.dls.corp.google.com>	<002001cf4b44$fe3550c0$fa9ff240$@jonasbang.dk>	<xmqqha6e8f67.fsf@gitster.dls.corp.google.com>	<002a01cf4dd3$d88c8640$89a592c0$@jonasbang.dk> <xmqq7g77vcnk.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Michael S. Tsirkin" <mst@redhat.com>
-X-From: git-owner@vger.kernel.org Thu Apr 03 20:32:01 2014
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: "'Junio C Hamano'" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 03 20:42:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WVmQi-0002Cx-HE
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Apr 2014 20:32:00 +0200
+	id 1WVmbG-0002dq-TS
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Apr 2014 20:42:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753286AbaDCSb5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Apr 2014 14:31:57 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35087 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753186AbaDCSbz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Apr 2014 14:31:55 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8A7497AAE9;
-	Thu,  3 Apr 2014 14:31:54 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=M4UM7qdY1/K4RP7dHwmYaq80R+s=; b=pdcZlP
-	JIgWLC/liwnP/rkgHN2Av29TDAw30kJ2FdvbWaWvCkc7tkRGifhPNr40FObCa+yy
-	XuJeGfCM66csSGOKKa00rw0G3/to6fn92a4OFl0RrGlHPqF6GTlXWgCoPGTH8/5y
-	QF4ucIorzTR+NCVbawTsHmDEpbw/i+7Qn9FQI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CnEc19JQGlWjJWm1tRQzAztmhZ4jjUsz
-	7Y1/zUacHMIFg6SPT0qlQcXbwbgrpYqtPmIcNeuqc6/LVjgFTeh2AD8o9yH9t+tS
-	1klMhSqlCZeDZCwmTfdFJyMzf2t9fP6juuw9woCd3IRuyW9RlVdglGryvIzBsaxs
-	eWrv2O8Boe4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 75E487AAE8;
-	Thu,  3 Apr 2014 14:31:54 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6B6217AAE0;
-	Thu,  3 Apr 2014 14:31:53 -0400 (EDT)
-In-Reply-To: <1396548814-27278-1-git-send-email-mst@redhat.com> (Michael
-	S. Tsirkin's message of "Thu, 3 Apr 2014 21:14:08 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 3A86EB0E-BB5E-11E3-B902-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753313AbaDCSmu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Apr 2014 14:42:50 -0400
+Received: from mail5.surf-town.net ([212.97.132.45]:37072 "EHLO
+	mailgw11.surf-town.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753100AbaDCSmt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Apr 2014 14:42:49 -0400
+Received: by mailgw11.surf-town.net (Postfix, from userid 65534)
+	id AF849A3B02; Thu,  3 Apr 2014 20:42:47 +0200 (CEST)
+Received: from localhost (unknown [127.0.0.1])
+	by mailgw11.surf-town.net (Postfix) with ESMTP id 8703DA3B0C;
+	Thu,  3 Apr 2014 20:42:47 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at mailgw11.surf-town.net
+X-Spam-Flag: NO
+X-Spam-Score: -1.44
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.44 tagged_above=-999 required=7
+	tests=[ALL_TRUSTED=-1.44] autolearn=disabled
+Received: from mailgw11.surf-town.net ([127.0.0.1])
+	by localhost (mailgw11.surf-town.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 668AWLbwuQ6V; Thu,  3 Apr 2014 20:42:45 +0200 (CEST)
+Received: from Mainframe (unknown [5.103.38.58])
+	(Authenticated sender: email@jonasbang.dk)
+	by mailgw11.surf-town.net (Postfix) with ESMTPA id 2D0CEA3B02;
+	Thu,  3 Apr 2014 20:42:43 +0200 (CEST)
+In-Reply-To: <xmqq7g77vcnk.fsf@gitster.dls.corp.google.com>
+X-Mailer: Microsoft Outlook 14.0
+Thread-Index: AQNHwG5eq+VqsEUk7jNiAAPbKL6k0gDp71pIAwWu0U4C0+NR5gGAbXqkAZ2CHreXwEuEIA==
+Content-Language: da
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245747>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245748>
 
-"Michael S. Tsirkin" <mst@redhat.com> writes:
+> "Jonas Bang" <email@jonasbang.dk> writes:
+> 
+> >> >> ...  The default behaviour would cover their use case so your
+> >> >> proposal would not hurt them, but I wonder if there are things you
+> >> >> could do to help them as well, perhaps by allowing this new
+> >> >> configuration to express something like "local changes in these
+> >> >> paths are excempt from this new check".
+> >> >
+> >> > Yes, those people would probably use the default 'false' behavior
+> >> > as it is already. If they however would like to use e.g. the 'true'
+> >> > or 'include-untracked' setting as a configuration variable, then
+> >> > they can use the command line option 'false' if they wish to do a
+> >> > 'git checkout' even with modified files in the working tree.
+> >>
+> >> So in short, you are saying that "The added code necessary to
+> >> implement this feature will not help them in any way, it is just that
+> >> we will make sure it does not hurt them".
+> >
+> > I didn't realize they needed help.
+> 
+> If so, then you could have just stated that way, instead of saying they
+have
+> an escape hatch ;-)
+> 
+> It is perfectly fine to answer to "I wonder if there are things you could
+do?"
+> with "No, I am not going to help them with this series; I only make sure I
+do
+> not hurt them."  and that is perfectly fine, as long as:
+> 
+>  - you do not directly hurt them with your series; and
+> 
+>  - you do not make it harder for those who are interested in helping
+>    them to build on top of your work in the future.
+> 
+> > How and who to decide if this is a reasonable feature request to accept?
+> 
+> As this project primarily works on "scratch your own itch" basis, somebody
+> who (1) thinks that the proposed feature is worth having in our system and
+> (2) is interested in working on it will pick it up.
+> 
+> If nobody is interested, then usually nothing happens.
 
-> Allow extracting To/Cc addresses from cover letter.
+Thanks for your replies and your time.
 
-Please say what you are doing with what you extract, which is the
-more important part of the objective.  Extracting is merely a step
-to achieve that.
+I'll cross my fingers for someone other than me and my identified group of
+users seeing the benefit of this feature request.
 
-s/.$/, to be used as To/Cc addresses of the remainder of the series./
-
-or something.
-
-
-I think this will be a very handy feature.
-
-If you have a series *and* you bothered to add To/Cc to the cover
-letter, it is likely that you want all the messages read by these
-people [*1*].
-
-> @@ -1468,6 +1475,15 @@ foreach my $t (@files) {
->  	@to = (@initial_to, @to);
->  	@cc = (@initial_cc, @cc);
->  
-> +	if ($message_num == 1) {
-> +		if (defined $cover_cc and $cover_cc) {
-> +			@initial_cc = @cc;
-> +		}
-> +		if (defined $cover_to and $cover_to) {
-> +			@initial_to = @to;
-> +		}
-> +	}
-> +
-
-What is stored away with this code to @initial_cc/to includes:
-
- - what was given to @initial_cc/to before ll.1468-1469
- - what was in @cc/to before ll.1468-1469
-
-when we see the first message [*2*].  The former come from the
-command line --to/--cc, and the latter comes from the header lines
-of the first message.  Am I reading the code correctly?
-
-If that is the case, I think the updated code makes sense.
-
-Thanks.
-
-
-[Footnote]
-
-*1* Allowing this to be disabled is also a good thing this patch
-    does.  A 100 patch series that does a tree-wide clean-up may
-    have different set of people on To/Cc of individual patches, and
-    you may want the union of them on To/Cc on the cover letter, so
-    that a person may get the cover letter and a single patch that
-    relates to his area of expertise without having to see the
-    remainder.
-
-*2* The first message may not necessarily be the cover letter.  Is
-    there a reliable way to detect that?  The user may want to send
-    out a series with only a few patches without any cover, and
-    taking To/Cc from the [PATCH 1/3] and propagating them to the
-    rest does not match what the documentation and the option name
-    claim to do.
+Br,
+Jonas
