@@ -1,100 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: socket_perror() "bug"?
-Date: Thu, 03 Apr 2014 12:01:32 -0700
-Message-ID: <xmqq1txeqltf.fsf@gitster.dls.corp.google.com>
-References: <CACnwZYc2py4dxehg2=gnnPLxwJaRqXYTLQvC1O7YuoqAWsZ0Tg@mail.gmail.com>
-	<xmqqy4zq3xek.fsf@gitster.dls.corp.google.com>
-	<CACnwZYf30KLVLkaB4mNrW12DHwrf=RT7H-DBNvQYs0y6RqVGLw@mail.gmail.com>
+From: git-patch@agt-the-walker.net
+Subject: [PATCH] gitweb.conf.txt: fix typo
+Date: Thu,  3 Apr 2014 22:49:47 +0200
+Message-ID: <1396558187-5674-1-git-send-email-git-patch@agt-the-walker.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Thiago Farina <tfransosi@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 03 21:01:49 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: gitster@pobox.com,
+	=?UTF-8?q?J=C3=A9r=C3=B4me=20Zago?= <git-patch@agt-the-walker.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 03 22:50:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WVmtW-0000tz-H4
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Apr 2014 21:01:46 +0200
+	id 1WVoar-0004wI-09
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Apr 2014 22:50:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753376AbaDCTBl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Apr 2014 15:01:41 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48560 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753258AbaDCTBf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Apr 2014 15:01:35 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3F5E179465;
-	Thu,  3 Apr 2014 15:01:35 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=HgBJd5x3ZLtHR65mzHlrgicjw1E=; b=cNO5Xj
-	+fmoXC0q+ZU5I00fr1ZPrZsLkQpEBdktOADNOu8qV4AIsi7ppubCd2XrQxZJp/8o
-	sch7BGpJyACjECnO9jOYTTxkn+FbvNoUk0cOi/tjGMDS5PJj3aJaoyEH160rXApE
-	v/VR0Sfi2BjFJTSFqLGfQ3U0idiKCB4oK0JOs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=pIRq/jzi+tIg9no5PVOMAIz/Z8pMNHWA
-	g6P5USJoJ/eyEEtEVLsmvkpezkHQFWgBJAac+zqFQoDSIgcl1ErDyUWZM9UeTqJb
-	zF29d9hX/enxAKXw1/v4J+nRp2QE0ue3aowlDEZxbVn1JtZZVEMpd4GUY2xiqD/U
-	tpYLGp5TbPk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2E87379464;
-	Thu,  3 Apr 2014 15:01:35 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5802D79460;
-	Thu,  3 Apr 2014 15:01:34 -0400 (EDT)
-In-Reply-To: <CACnwZYf30KLVLkaB4mNrW12DHwrf=RT7H-DBNvQYs0y6RqVGLw@mail.gmail.com>
-	(Thiago Farina's message of "Wed, 2 Apr 2014 20:05:01 -0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 6009F336-BB62-11E3-8D30-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753581AbaDCUuc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Apr 2014 16:50:32 -0400
+Received: from mail-we0-f171.google.com ([74.125.82.171]:58836 "EHLO
+	mail-we0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751866AbaDCUub (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Apr 2014 16:50:31 -0400
+Received: by mail-we0-f171.google.com with SMTP id t61so2476370wes.16
+        for <git@vger.kernel.org>; Thu, 03 Apr 2014 13:50:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=vhYOuO4jZE4ytmSqp0uKsJ+HdAr1eeiBufWHykSeOAU=;
+        b=pSJJNOtNKAEqWBq2V9LviVJxuswXncnve37uUIF2OZSiYdorlbBAe0VpSBrbCt1Dfo
+         Ugnps8W7LP3JRf9mdMVMMk/djeVh9nGXc9LHN+9az93/uBRbLl0SaHlY1CNYvEwjeMBo
+         0IivZ70sYwxA/utoHvLc94HSFqybMAf/7EHaW3tymqBVWBw1A84GX4nSpTEa4BJa9kDM
+         2gwJSwkBYyGqh4PQzGjrOJf/FGBMYcswcR4TpTlRf1xogC7TnMzoao4eviKJYfpzzjps
+         fwkVBL5WbgwOY158FzmFOth2dlW0SYkgzGM/0WVcoX+1PA1FGBPnErAqygBVaBETp6rl
+         imgA==
+X-Received: by 10.194.57.38 with SMTP id f6mr13520805wjq.59.1396558230659;
+        Thu, 03 Apr 2014 13:50:30 -0700 (PDT)
+Received: from localhost.localdomain (adsl-89-217-15-16.adslplus.ch. [89.217.15.16])
+        by mx.google.com with ESMTPSA id 48sm14557970eei.24.2014.04.03.13.50.29
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 03 Apr 2014 13:50:29 -0700 (PDT)
+X-Mailer: git-send-email 1.9.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245750>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245751>
 
-Thiago Farina <tfransosi@gmail.com> writes:
+=46rom: J=C3=A9r=C3=B4me Zago <git-patch@agt-the-walker.net>
 
-> On Mon, Mar 31, 2014 at 5:50 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Thiago Farina <tfransosi@gmail.com> writes:
->>
->>> In imap-send.c:socket_perror() we pass |func| as a parameter, which I
->>> think it is the name of the function that "called" socket_perror, or
->>> the name of the function which generated an error.
->>>
->>> But at line 184 and 187 it always assume it was SSL_connect.
->>>
->>> Should we instead call perror() and ssl_socket_error() with func?
->>
->> Looks that way to me, at least from a cursory look.
-> Would you accept such a patch?
+"build-time" is used everywhere else.
 
-This back-and-forth makes me wonder what is going on.  Why not send
-a full patch with a proper proposed commit log message to the list
-and see what happens?
+Signed-off-by: J=C3=A9r=C3=B4me Zago <git-patch@agt-the-walker.net>
+---
+ Documentation/gitweb.conf.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> diff --git a/imap-send.c b/imap-send.c
-> index 0bc6f7f..bb04768 100644
-> --- a/imap-send.c
-> +++ b/imap-send.c
-> @@ -181,10 +181,10 @@ static void socket_perror(const char *func,
-> struct imap_socket *sock, int ret)
->                 case SSL_ERROR_NONE:
->                         break;
->                 case SSL_ERROR_SYSCALL:
-> -                       perror("SSL_connect");
-> +                       perror(func);
->                         break;
->                 default:
-> -                       ssl_socket_perror("SSL_connect");
-> +                       ssl_socket_perror(func);
->                         break;
->                 }
->         } else
->
-> --
-> Thiago Farina
+diff --git a/Documentation/gitweb.conf.txt b/Documentation/gitweb.conf.=
+txt
+index 952f503..8b25a2f 100644
+--- a/Documentation/gitweb.conf.txt
++++ b/Documentation/gitweb.conf.txt
+@@ -482,7 +482,7 @@ project config.  Per-repository configuration takes=
+ precedence over value
+ composed from `@git_base_url_list` elements and project name.
+ +
+ You can setup one single value (single entry/item in this list) at bui=
+ld
+-time by setting the `GITWEB_BASE_URL` built-time configuration variabl=
+e.
++time by setting the `GITWEB_BASE_URL` build-time configuration variabl=
+e.
+ By default it is set to (), i.e. an empty list.  This means that gitwe=
+b
+ would not try to create project URL (to fetch) from project name.
+=20
+--=20
+1.9.1
