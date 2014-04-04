@@ -1,106 +1,383 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Patch Series v3 for "use the $( ... ) construct for command
- substitution"
-Date: Fri, 4 Apr 2014 11:12:15 -0700
-Message-ID: <20140404181215.GJ6851@google.com>
-References: <CA+EOSBkF+hLOab0oJH7HuUb_KKn+1sgV_Lshwupgj-_yAAfmFw@mail.gmail.com>
- <20140404172946.GI6851@google.com>
- <vpqk3b56lik.fsf@anie.imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 18/19] tree-diff: rework diff_tree() to generate diffs for multiparent cases as well
+Date: Fri, 04 Apr 2014 11:42:39 -0700
+Message-ID: <xmqqppkxos0w.fsf@gitster.dls.corp.google.com>
+References: <cover.1393257006.git.kirr@mns.spb.ru>
+	<7b307610fe214f47643a46b3e815487558db244e.1393257006.git.kirr@mns.spb.ru>
+	<20140327142354.GD17333@mini.zxlink>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Elia Pinto <gitter.spiros@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Apr 04 20:12:26 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: kirr@mns.spb.ru, git@vger.kernel.org
+To: Kirill Smelkov <kirr@navytux.spb.ru>
+X-From: git-owner@vger.kernel.org Fri Apr 04 20:42:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WW8bJ-0004yl-0Y
-	for gcvg-git-2@plane.gmane.org; Fri, 04 Apr 2014 20:12:25 +0200
+	id 1WW94j-0006pe-3y
+	for gcvg-git-2@plane.gmane.org; Fri, 04 Apr 2014 20:42:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753729AbaDDSMT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Apr 2014 14:12:19 -0400
-Received: from mail-pb0-f53.google.com ([209.85.160.53]:49926 "EHLO
-	mail-pb0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752709AbaDDSMS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Apr 2014 14:12:18 -0400
-Received: by mail-pb0-f53.google.com with SMTP id rp16so3789505pbb.40
-        for <git@vger.kernel.org>; Fri, 04 Apr 2014 11:12:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=y6gOxR8NE5LTlqEXfmk6Ab0W5ZMCAuN1RGml+1qcfFY=;
-        b=bgmaJk2CtRPJvCTgq1O6QxJhmhGCJ2VFQqwIj1tEcHth2Ah+FAwbUkc4kwotoQ/a5Q
-         3Um2ReWBNmwP9uUYvFxeUejfdAtXoEUk57M5lpL4mHWh+4Iu/h1WoTpbSs72CA6BPd9R
-         BT6ZlZ3r0+gEeJXO162Y0DW7mmpT8u34SVvIicUrQIjCz+dMBFhmtZYOG6Cdv+QObRba
-         BzcGvmEm2uHRlwprknws92siXrX0MZy99fFj09Si1pq5lE181e3FA3S+1Y/A0uLf2R1k
-         9wRdxtfrdSK26t6QujfF2ouI/xm+BGsW4fWK8h2udMxFhkl3B0H6MeAQgt9g1nkTT3dR
-         k6RQ==
-X-Received: by 10.67.14.98 with SMTP id ff2mr16345643pad.101.1396635138324;
-        Fri, 04 Apr 2014 11:12:18 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id sv10sm11921528pbc.74.2014.04.04.11.12.17
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 04 Apr 2014 11:12:17 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <vpqk3b56lik.fsf@anie.imag.fr>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753909AbaDDSmp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Apr 2014 14:42:45 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50778 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753839AbaDDSmn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 4 Apr 2014 14:42:43 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 668C07921C;
+	Fri,  4 Apr 2014 14:42:42 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=bSopT0pPEM6l
+	1pjdmK/nWWUEvlY=; b=gvSmzAc3m8+KesLnZ7lBFQW9aexaeZc4IHVcOmgnC9a5
+	PT7RXJN8HlVplPrFEieGeEtlGzWny0MK7xlkWg/qZeNr7B5a20eO4PkA9WBjknDo
+	S7IU01dMjOvcrqcf6q5RONT6upvyqy/AAEyDkVC2DKg9Fq6UrIxmFzABF26CEK0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=WKeUZx
+	Us70qCohrZfr6imFdDOsxtFODEAy/Iw4oBZKSoFeZJx1zPsB3YZZVH6ion70MSo3
+	fPBBBjQaehJYXbJSRqXHcZ0g3FmwleyVpkNg0eR5r4TAc3tDVHYQgsNpIpfZpaGO
+	wCMUtnmdTddhrRK86ds/0/M9p2/wEulndUH7w=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 53CCD7921B;
+	Fri,  4 Apr 2014 14:42:42 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 474B879218;
+	Fri,  4 Apr 2014 14:42:41 -0400 (EDT)
+In-Reply-To: <20140327142354.GD17333@mini.zxlink> (Kirill Smelkov's message of
+	"Thu, 27 Mar 2014 18:23:54 +0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: E717D21E-BC28-11E3-9015-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245767>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245768>
 
-Matthieu Moy wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+Kirill Smelkov <kirr@navytux.spb.ru> writes:
 
->> If the script is "obviously correct" enough then there is no need
->> to manually go through 140 files after that point.
->
-> The script cannot be "obviously correct", as there are a lot of
-> potential corner-cases (nested `, nesting ` within ", comments, ...).
+> +extern
+> +struct combine_diff_path *diff_tree_paths(
 
-To be a devil's advocate for a moment:
+These two on the same line, please.
 
- * Comments are easy to detect.  Remember, we are not trying to handle
-   some adversary sending arbitrary well-formed shell scripts but just
-   the git source code which already follows a consistent style.  When
-   I search for /#.*/ in .sh files, every match except for
+> +	struct combine_diff_path *p, const unsigned char *sha1,
+> +	const unsigned char **parent_sha1, int nparent,
+> +	struct strbuf *base, struct diff_options *opt);
+>  extern int diff_tree_sha1(const unsigned char *old, const unsigned c=
+har *new,
+>  			  const char *base, struct diff_options *opt);
+> ...
+> +/*
+> + * convert path -> opt->diff_*() callbacks
+> + *
+> + * emits diff to first parent only, and tells diff tree-walker that =
+we are done
+> + * with p and it can be freed.
+> + */
+> +static int emit_diff_first_parent_only(struct diff_options *opt, str=
+uct combine_diff_path *p)
+>  {
 
-	t/test-lib-functions.sh:output=`echo; echo "# Stderr is:"; cat "$stderr"`
+Very straight-forward; good.
 
-   (which contains a backtick before the # mark) is a comment.
+> +static struct combine_diff_path *path_appendnew(struct combine_diff_=
+path *last,
+> +	int nparent, const struct strbuf *base, const char *path, int pathl=
+en,
+> +	unsigned mode, const unsigned char *sha1)
+> +{
+> +	struct combine_diff_path *p;
+> +	int len =3D base->len + pathlen;
+> +	int alloclen =3D combine_diff_path_size(nparent, len);
+> +
+> +	/* if last->next is !NULL - it is a pre-allocated memory, we can re=
+use */
+> +	p =3D last->next;
+> +	if (p && (alloclen > (intptr_t)p->next)) {
+> +		free(p);
+> +		p =3D NULL;
+> +	}
+> +
+> +	if (!p) {
+> +		p =3D xmalloc(alloclen);
+> +
+> +		/*
+> +		 * until we go to it next round, .next holds how many bytes we
+> +		 * allocated (for faster realloc - we don't need copying old data)=
+=2E
+> +		 */
+> +		p->next =3D (struct combine_diff_path *)(intptr_t)alloclen;
 
- * Nested ` is evil.  A search for the string \' quickly finds them all,
-   and they are very very rare.
+This reuse of the .next field is somewhat yucky, but it is very
+localized inside a function that has a single callsite to this
+function, so let's let it pass.
 
-   The only exception I see is git-svn tests, which independently of
-   everything else is an obvious thing to fix first.
+> +static struct combine_diff_path *emit_path(struct combine_diff_path =
+*p,
+> +	struct strbuf *base, struct diff_options *opt, int nparent,
+> +	struct tree_desc *t, struct tree_desc *tp,
+> +	int imin)
+>  {
 
- * Nesting `` within double-quotes has the same semantics as $()
-   within quotes.  I don't think that poses a problem.
+Again, fairly straight-forward and good.
 
-[...]
->> If the only way to get this done is to actually manually review those
->> 140 files, I just don't think it's worth it.
->
-> Honnestly, I went through the series once and it wasn't that painful.
+> +/*
+> + * generate paths for combined diff D(sha1,parents_sha1[])
+> + ...
+> +static struct combine_diff_path *ll_diff_tree_paths(
+> +	struct combine_diff_path *p, const unsigned char *sha1,
+> +	const unsigned char **parents_sha1, int nparent,
+> +	struct strbuf *base, struct diff_options *opt)
+> +{
+> +	struct tree_desc t, *tp;
+> +	void *ttree, **tptree;
+> +	int i;
+> +
+> +	tp     =3D xalloca(nparent * sizeof(tp[0]));
+> +	tptree =3D xalloca(nparent * sizeof(tptree[0]));
+> +
+> +	/*
+> +	 * load parents first, as they are probably already cached.
+> +	 *
+> +	 * ( log_tree_diff() parses commit->parent before calling here via
+> +	 *   diff_tree_sha1(parent, commit) )
+> +	 */
+> +	for (i =3D 0; i < nparent; ++i)
+> +		tptree[i] =3D fill_tree_descriptor(&tp[i], parents_sha1[i]);
+> +	ttree =3D fill_tree_descriptor(&t, sha1);
+> =20
+>  	/* Enable recursion indefinitely */
+>  	opt->pathspec.recursive =3D DIFF_OPT_TST(opt, RECURSIVE);
+> =20
+>  	for (;;) {
+> -		int cmp;
+> +		int imin, cmp;
+> =20
+>  		if (diff_can_quit_early(opt))
+>  			break;
+> +
+>  		if (opt->pathspec.nr) {
+> -			skip_uninteresting(&t1, base, opt);
+> -			skip_uninteresting(&t2, base, opt);
+> +			skip_uninteresting(&t, base, opt);
+> +			for (i =3D 0; i < nparent; i++)
+> +				skip_uninteresting(&tp[i], base, opt);
+>  		}
+> -		if (!t1.size && !t2.size)
+> -			break;
+> =20
+> -		cmp =3D tree_entry_pathcmp(&t1, &t2);
+> +		/* comparing is finished when all trees are done */
+> +		if (!t.size) {
+> +			int done =3D 1;
+> +			for (i =3D 0; i < nparent; ++i)
+> +				if (tp[i].size) {
+> +					done =3D 0;
+> +					break;
+> +				}
+> +			if (done)
+> +				break;
+> +		}
+> +
+> +		/*
+> +		 * lookup imin =3D argmin(x1...xn),
+> +		 * mark entries whether they =3Dtp[imin] along the way
+> +		 */
+> +		imin =3D 0;
+> +		tp[0].entry.mode &=3D ~S_IFXMIN_NEQ;
+> +
+> +		for (i =3D 1; i < nparent; ++i) {
+> +			cmp =3D tree_entry_pathcmp(&tp[i], &tp[imin]);
+> +			if (cmp < 0) {
+> +				imin =3D i;
+> +				tp[i].entry.mode &=3D ~S_IFXMIN_NEQ;
+> +			}
+> +			else if (cmp =3D=3D 0) {
+> +				tp[i].entry.mode &=3D ~S_IFXMIN_NEQ;
+> +			}
+> +			else {
+> +				tp[i].entry.mode |=3D S_IFXMIN_NEQ;
+> +			}
+> +		}
+> +
+> +		/* fixup markings for entries before imin */
+> +		for (i =3D 0; i < imin; ++i)
+> +			tp[i].entry.mode |=3D S_IFXMIN_NEQ;	/* x[i] > x[imin] */
+> +
 
-It is not just the people on the list reviewing now but others in the
-future wanting to understand whether it is safe to upgrade to a new
-version or where a bug they have run into came from.  The simpler we
-can make the task of convincing oneself that the patch behaves as
-described, the better.
+These two loop made my reading hiccup for a while.  With these you
+are scanning the tp[] array 1.5 times (and doing the bitwise
+assignment to entry.mode 1.5 * nparent times), but I suspect it may
+have been a lot easier to read if the first loop only identified the
+imin, and the second loop only did the entry.mode for _all_ nparents.
 
-140 patches worth of churn once every couple of years is not terrible,
-but I really don't want to see this becoming a pattern. :/  And I
-don't see how the upside in this example warrants it.
+> +		/* compare a vs x[imin] */
+> +		cmp =3D tree_entry_pathcmp(&t, &tp[imin]);
+> +
+> +		/* a =3D xi */
+> +		if (cmp =3D=3D 0) {
+> +			/* are either xk > xi or diff(a,xk) !=3D =C3=B8 ? */
+> +			if (!DIFF_OPT_TST(opt, FIND_COPIES_HARDER)) {
+> +				for (i =3D 0; i < nparent; ++i) {
+> +					/* x[i] > x[imin] */
+> +					if (tp[i].entry.mode & S_IFXMIN_NEQ)
+> +						continue;
+> +
+> +					/* diff(a,xk) !=3D =C3=B8 */
+> +					if (hashcmp(t.entry.sha1, tp[i].entry.sha1) ||
+> +					    (t.entry.mode !=3D tp[i].entry.mode))
+> +						continue;
+> +
+> +					goto skip_emit_t_tp;
+> +				}
+> +			}
 
-Hoping that clarifies,
-Jonathan
+Please bear with me.  The notation scares me as I am not good at math.
+
+In short, the above loop is about:
+
+    We are looking at path in 't' and some parents have the same
+    path.  If any of these parents have that path with the contents
+    identical to 't', then do not emit this path.
+
+which makes sense to me, but these notation also made my reading
+hiccup, especially because it is hard to guess what "xk" refers to
+(e.g. "any k where 0 <=3D k < nparent && i !=3D k"? "all such k"?).  I
+still haven't figured out what you meant to say with "xk", but I
+think I got what the code wants to do.
+
+How does the "the (virtual) path from a tree that has ran out of
+entries sorts later than anything else" comparison rule influence
+the picture?  A parent that has ran out would have _NEQ bit set and
+would not count as having the same contents as the path from 't'.
+If 't' has ran out, the only way t and tp[imin] could compare equal
+is when tp[imin] has also ran out, but that can happen only when all
+the parents are done with, so we would have broken out of the loop
+even before we try to figure out imin.  So there is no funnies
+there, which is good.
+
+> +			/* D +=3D {=CE=B4(a,xk) if xk=3Dxi;  "+a" if xk > xi} */
+> +			p =3D emit_path(p, base, opt, nparent,
+> +					&t, tp, imin);
+> +
+> +		skip_emit_t_tp:
+> +			/* a=E2=86=93,  =E2=88=80 xk=3Dximin  xk=E2=86=93 */
+> +			update_tree_entry(&t);
+> +			update_tp_entries(tp, nparent);
+>  		}
+> =20
+> -		/* t1 < t2 */
+> +		/* a < xi */
+>  		else if (cmp < 0) {
+> -			show_path(base, opt, &t1, /*t2=3D*/NULL);
+> -			update_tree_entry(&t1);
+> +			/* D +=3D "+a" */
+> +			p =3D emit_path(p, base, opt, nparent,
+> +					&t, /*tp=3D*/NULL, -1);
+> +
+> +			/* a=E2=86=93 */
+> +			update_tree_entry(&t);
+
+This is straight-forward.  No parent has path 't' has, so only the
+entry from 't' is given, and we deal with the next entry in 't'
+without touching any of the parents in the next iteration.  Good.
+
+>  		}
+> =20
+> -		/* t1 > t2 */
+> +		/* a > xi */
+>  		else {
+> -			show_path(base, opt, /*t1=3D*/NULL, &t2);
+> -			update_tree_entry(&t2);
+> +			/* =E2=88=80j xj=3Dximin -> D +=3D "-xi" */
+
+Did you mean "-xj"?
+
+> +			if (!DIFF_OPT_TST(opt, FIND_COPIES_HARDER)) {
+> +				for (i =3D 0; i < nparent; ++i)
+> +					if (tp[i].entry.mode & S_IFXMIN_NEQ)
+> +						goto skip_emit_tp;
+> +			}
+> +
+> +			p =3D emit_path(p, base, opt, nparent,
+> +					/*t=3D*/NULL, tp, imin);
+> +
+> +		skip_emit_tp:
+> +			/* =E2=88=80 xk=3Dximin  xk=E2=86=93 */
+> +			update_tp_entries(tp, nparent);
+
+There are parents whose path sort earlier than what is in 't'
+(i.e. they were lost in the result---we would want to show
+removal).  What makes us jump to the skip label?
+
+    We are looking at path in 't', and some parents have paths that
+    sort earlier than that path.  We will not go to skip label if
+    any one of the parent's entry sorts after some other parent (or
+    the parent in question has ran out its entries), which means we
+    show the entry from the parents only when all the parents have
+    that same path, which is missing from 't'.
+
+I am not sure if I am reading this correctly, though.
+
+=46or the two-way diff, the above degenerates to "show all parent
+entries that come before the first entry in 't'", which is correct.
+=46or the combined diff, the current intersect_paths() makes sure that
+each path appears in all the pair-wise diff between t and tp[],
+which again means that the above logic match the current behaviour.
+
+
+> +struct combine_diff_path *diff_tree_paths(
+> +	struct combine_diff_path *p, const unsigned char *sha1,
+> +	const unsigned char **parents_sha1, int nparent,
+> +	struct strbuf *base, struct diff_options *opt)
+> +{
+> +	p =3D ll_diff_tree_paths(p, sha1, parents_sha1, nparent, base, opt)=
+;
+> +
+> +	/*
+> +	 * free pre-allocated last element, if any
+> +	 * (see path_appendnew() for details about why)
+> +	 */
+> +	if (p->next) {
+> +		free(p->next);
+> +		p->next =3D NULL;
+> +	}
+> +
+> +	return p;
+>  }
+> =20
+>  /*
+> @@ -308,6 +664,27 @@ static void try_to_follow_renames(const unsigned=
+ char *old, const unsigned char
+>  	q->nr =3D 1;
+>  }
+> =20
+> +static int ll_diff_tree_sha1(const unsigned char *old, const unsigne=
+d char *new,
+> +			     struct strbuf *base, struct diff_options *opt)
+> +{
+> +	struct combine_diff_path phead, *p;
+> +	const unsigned char *parents_sha1[1] =3D {old};
+> +	pathchange_fn_t pathchange_old =3D opt->pathchange;
+> +
+> +	phead.next =3D NULL;
+> +	opt->pathchange =3D emit_diff_first_parent_only;
+> +	diff_tree_paths(&phead, new, parents_sha1, 1, base, opt);
+
+Hmph.  I would have expected
+
+	const unsigned char **parents_sha1 =3D &old;
+
+or even
+
+	diff_tree_paths(&phead, new, &old, 1, base, opt);
+
+here.
+
+
+Thanks.
