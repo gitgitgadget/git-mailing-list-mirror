@@ -1,98 +1,96 @@
-From: Jonathan Nieder <jrn@google.com>
-Subject: Re: [PATCH V2 0/7] fix hunk editing with 'commit -p -m'
-Date: Thu, 3 Apr 2014 15:11:15 -0700
-Message-ID: <20140403221115.GA23467@google.com>
-References: <1394477377-10994-1-git-send-email-benoit.pierre@gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v2 20/27] update-ref --stdin: Reimplement using reference
+ transactions
+Date: Fri, 04 Apr 2014 07:02:48 +0200
+Message-ID: <533E3CF8.5080506@alum.mit.edu>
+References: <1395683820-17304-1-git-send-email-mhagger@alum.mit.edu>	<1395683820-17304-21-git-send-email-mhagger@alum.mit.edu>	<xmqqppl0zvcs.fsf@gitster.dls.corp.google.com>	<533B9A26.8050303@alum.mit.edu> <xmqq61mqs8wl.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To: Benoit Pierre <benoit.pierre@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 04 00:11:25 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Brad King <brad.king@kitware.com>,
+	Johan Herland <johan@herland.net>, Jeff King <peff@peff.net>,
+	Vicent Marti <tanoku@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 04 07:02:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WVpr1-0008Tr-BG
-	for gcvg-git-2@plane.gmane.org; Fri, 04 Apr 2014 00:11:23 +0200
+	id 1WVwHK-0008Qb-Mu
+	for gcvg-git-2@plane.gmane.org; Fri, 04 Apr 2014 07:02:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753382AbaDCWLS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Apr 2014 18:11:18 -0400
-Received: from mail-pa0-f73.google.com ([209.85.220.73]:48489 "EHLO
-	mail-pa0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751577AbaDCWLR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Apr 2014 18:11:17 -0400
-Received: by mail-pa0-f73.google.com with SMTP id kq14so425764pab.2
-        for <git@vger.kernel.org>; Thu, 03 Apr 2014 15:11:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=zq7RuTHR0GWd3KQNm49+1Za4vafuiH/iZNRIRn6fR7k=;
-        b=lRoXmoqDRwxMRVbA9PQVESOcc0+QnnZa/ggfC49ECbL46VcOeK4a+dKgAiqZaFXrnM
-         jsbaQSU0sTBlENmgMSmUZ3XfeAyP2yVGN7+rondjrV/5pmbM7jmb+zK4bZGB2g8bav27
-         kZlU88zk/+qFqeqZ5RU8Vj4oXAOYw4AHMPOhdz/oTVnCyMRSc246dH/6aKGi879V2f4A
-         QHqY/Qlo4LDvrDk9eD1gWUO3YZE7FVphi9IvFkKwWnsF8/+qS0AqIXdiS27ZF6wRYwzz
-         lw/7Xh9Kf5NA1rGpU7s/uisPDPX45O3GO1R1Oi0Izo/BIdr7iSiVNl5YT8xMG/HTV83T
-         ltaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=zq7RuTHR0GWd3KQNm49+1Za4vafuiH/iZNRIRn6fR7k=;
-        b=MgAbQBwhWSOpF3/sYCPJwshonCAZYnsFHnyO3X41qzY8fbXK1jxoTJAd+TpOmEIXII
-         HOhOwiwbOOnzScvSNDTeW0mY5lFyYfQ4uc7S7ABnqCEXyBGWh4DB2mJUZKH7lHWhne/m
-         VYwfdz6MHwYlyZa43ub7jhnrmU0zMFglNZPUFVHsOyTUAI/ihXyriVMqhL+Cx1vzJizY
-         LLv1xIYal16MvEd3J4NpE88dpYAf0oZNjtCX8lDPQiXrCf1c179NQwnKFSPVyynnbfTw
-         dIOJ4DR8CGZzRRQFa+PivvPRhagu/0JMsH1OKNikTkRaCDMfnp/feavJVNAIxuXEqEsY
-         L0uw==
-X-Gm-Message-State: ALoCoQmSLLisnbYHn+wAzgM5+LXTUO195pJ824j4hJzHv1u3tf7nfTyPI/E8hh3SJDPVASPksdxYjyA0dS17KWolCYQA4t/ZYc1j04309ohEdVm7BNDr1QmwzsP74wKyc3ixksQniBh1HwgjIjihS4fE+s+yxayC/MsNgbPhsaiEPGEeDV7QGJ2T4GPWnqUa83UeySrxyYlo
-X-Received: by 10.66.190.202 with SMTP id gs10mr5517155pac.0.1396563076317;
-        Thu, 03 Apr 2014 15:11:16 -0700 (PDT)
-Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id s65si1239230yhc.2.2014.04.03.15.11.16
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 03 Apr 2014 15:11:16 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com (aiede.mtv.corp.google.com [172.27.69.120])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 11FB231C121;
-	Thu,  3 Apr 2014 15:11:16 -0700 (PDT)
-Received: by aiede.mtv.corp.google.com (Postfix, from userid 183862)
-	id 9CB931A15EE; Thu,  3 Apr 2014 15:11:15 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1394477377-10994-1-git-send-email-benoit.pierre@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751965AbaDDFCy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Apr 2014 01:02:54 -0400
+Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:51006 "EHLO
+	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750897AbaDDFCx (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 4 Apr 2014 01:02:53 -0400
+X-AuditID: 1207440d-f79d86d0000043db-a4-533e3cfc8087
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id A9.EE.17371.CFC3E335; Fri,  4 Apr 2014 01:02:52 -0400 (EDT)
+Received: from [192.168.69.148] (p5B156274.dip0.t-ipconnect.de [91.21.98.116])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s3452mTN021010
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Fri, 4 Apr 2014 01:02:50 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.3.0
+In-Reply-To: <xmqq61mqs8wl.fsf@gitster.dls.corp.google.com>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrKKsWRmVeSWpSXmKPExsUixO6iqPvHxi7Y4PEMJYud6yQsuq50M1k0
+	9F5htph3dxeTxY+WHmaLj50LmB3YPHbOusvucenldzaPj8+Ws3s8693D6HHxkrLH501yAWxR
+	3DZJiSVlwZnpefp2CdwZZ78dZC/Ywltx9MYzxgbGh1xdjJwcEgImEjPbf7NC2GISF+6tZwOx
+	hQQuM0o8X+fdxcgFZJ9lknh79AgLSIJXQFvi17xzTCA2i4CqxNqFv8Ea2AR0JRb1NIPFRQWC
+	JA5vOMUKUS8ocXLmE7BeEQE1iYlth1hAhjILrGaUWDplBlizsECMxJUjOxghNv9hlDh2xR3E
+	5hSwljh28xdzFyMH0HXiEj2NQSBhZgEdiXd9D5ghbHmJ7W/nME9gFJyFZN0sJGWzkJQtYGRe
+	xSiXmFOaq5ubmJlTnJqsW5ycmJeXWqRrpJebWaKXmlK6iRESDbw7GP+vkznEKMDBqMTDy5Fu
+	GyzEmlhWXJl7iFGSg0lJlDfY0C5YiC8pP6UyI7E4I76oNCe1+BCjBAezkggvpxVQjjclsbIq
+	tSgfJiXNwaIkzqu2RN1PSCA9sSQ1OzW1ILUIJivDwaEkwWsJjHohwaLU9NSKtMycEoQ0Ewcn
+	yHAuKZHi1LyU1KLE0pKMeFAExxcDYxgkxQO0F6ydt7ggMRcoCtF6ilGXY8O2NY1MQix5+Xmp
+	UuK8M62BigRAijJK8+BWwFLfK0ZxoI+FeZ1BRvEA0ybcpFdAS5iAlnCvswJZUpKIkJJqYDT0
+	mbOz6XhhBavrA7uiVJvL9XIZj5bzLgi8cXlN+h5F/eCr0lfmaZhs5CxSeSzlJhMa 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245755>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245757>
 
-Hi,
+On 04/03/2014 05:57 PM, Junio C Hamano wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+> 
+>> I assumed that rolling back a non-consummated transaction in the case of
+>> early program death should be the responsibility of the library, not of
+>> the caller.  If I'm correct, the caller(s) won't have to be modified
+>> when the atexit facility is added, so I don't see a reason to add it
+>> before it is needed by a concrete backend.
+>>
+>> But you suggest that the caller should be involved.
+> 
+> I didn't say "should".  If the library can automatically rollback
+> without being called upon die() anywhere in the system, that is
+> better.  The suggestion was because I didn't think you were shooting
+> for such a completeness in the library part, and a possible way out
+> is for the caller to help.
 
-A quick note for the future:
+I was assuming that any ref backends that required rollback-on-fail
+would register an atexit handler and a signal handler, similar to how
+lock_file rollbacks are done.
 
-Benoit Pierre wrote:
+I admit that I haven't thought through all the details; for example, are
+there restrictions on the things that a signal handler is allowed to do
+that would preclude its being able to rollback the types of transactions
+that back ends might want to implement?  (Though if so, what hope do we
+have that the caller can do better?)
 
-> This patch fixes the fact that hunk editing with 'commit -p -m' does not work:
-> GIT_EDITOR is set to ':' to indicate to hooks that no editor will be launched,
-> which result in the 'hunk edit' option not launching the editor (and selecting
-> the whole hunk).
+So, if somebody can think of a reason that we would need to involve the
+caller in cleanup, please speak up.  Otherwise I think it would be less
+error-prone to leave this responsibility with the individual back ends.
+ (And if something unexpected comes up, we can make this change later.)
 
-This information should have gone in the relevant patch's commit
-message itself.  That way, people don't have to hunt down the relevant
-mailing list thread to understand the patch.
+Michael
 
-Generally a cover letter should say as little as possible (mostly
-"here is what patch you might want to look at first, and here is an
-overview of why the patches are in this particular order").
-
-Thanks for a nice fix.  Perhaps we'll see more in the future, hence
-this note. :)  And if you have ideas for where an explanation of this
-could go in the documentation (somewhere in
-Documentation/SubmittingPatches?), that would be welcome too.
-
-Thanks,
-Jonathan
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
