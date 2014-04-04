@@ -1,97 +1,77 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Patch Series v3 for "use the $( ... ) construct for command
- substitution"
-Date: Fri, 4 Apr 2014 10:29:46 -0700
-Message-ID: <20140404172946.GI6851@google.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Patch Series v3 for "use the $( ... ) construct for command substitution"
+Date: Fri, 04 Apr 2014 19:40:35 +0200
+Message-ID: <vpqk3b56lik.fsf@anie.imag.fr>
 References: <CA+EOSBkF+hLOab0oJH7HuUb_KKn+1sgV_Lshwupgj-_yAAfmFw@mail.gmail.com>
+	<20140404172946.GI6851@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
+Content-Type: text/plain
+Cc: Elia Pinto <gitter.spiros@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Junio C Hamano <gitster@pobox.com>
-To: Elia Pinto <gitter.spiros@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 04 19:31:06 2014
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 04 19:40:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WW7xC-0001Me-KR
-	for gcvg-git-2@plane.gmane.org; Fri, 04 Apr 2014 19:30:58 +0200
+	id 1WW86m-0001nn-41
+	for gcvg-git-2@plane.gmane.org; Fri, 04 Apr 2014 19:40:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754095AbaDDR3v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Apr 2014 13:29:51 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:65363 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754044AbaDDR3u (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Apr 2014 13:29:50 -0400
-Received: by mail-pa0-f42.google.com with SMTP id fb1so3781475pad.29
-        for <git@vger.kernel.org>; Fri, 04 Apr 2014 10:29:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=L+4ALcGKtAtrC+d/YjT08q74GAzB1xfgchKBb/mW8TQ=;
-        b=ixZfYnYgjSRyL0lbKMxUuWTRrsF3kiaVAL4RadQ6FZW3/+Lnf2VR+DHdtkndEVQ65z
-         c4EZVKrQRkF1t0VPRGdi6S7QTfE9k9KLGPHxcS7ZAlCH09YRa2Y9XwtIBx33sM5JO05K
-         cl2hBrvQVsWYJwt6OUeJ4AxiYYYCbgHarlAjEIyva7XHZYrwq7LXLNTAzgAp2O+YvRLT
-         amBBQHgJwt6gn/bwoKu19ZLHy1xSep/mF56HYBGtpaUUPkGolxVb+MyS/LVJXaBg+gAC
-         loVBcT33IRbFK3Q8M3KJ7SOWCZs6togseKnm8J+LDMWOM00fddefx5ddh3jbmMZ0xlNI
-         gPXg==
-X-Received: by 10.66.147.130 with SMTP id tk2mr16276448pab.125.1396632589641;
-        Fri, 04 Apr 2014 10:29:49 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id y9sm43466674pas.10.2014.04.04.10.29.48
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 04 Apr 2014 10:29:48 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CA+EOSBkF+hLOab0oJH7HuUb_KKn+1sgV_Lshwupgj-_yAAfmFw@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754108AbaDDRkr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Apr 2014 13:40:47 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:43480 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754008AbaDDRkp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Apr 2014 13:40:45 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s34HeX7w027129
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 4 Apr 2014 19:40:33 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s34HeZPC013568;
+	Fri, 4 Apr 2014 19:40:35 +0200
+In-Reply-To: <20140404172946.GI6851@google.com> (Jonathan Nieder's message of
+	"Fri, 4 Apr 2014 10:29:46 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 04 Apr 2014 19:40:33 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s34HeX7w027129
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1397238036.26654@WJNVCb9u4/0YZn7Lynf2Gw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245766>
 
-Hi,
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Elia Pinto wrote:
+> If the script is "obviously correct" enough then there is no need
+> to manually go through 140 files after that point.
 
-> This patch series contain the
->
->  use the $( ... ) construct for command substitution
->
-> patches not already merged in ep/shell-command-substitution
-> in the mantainer repository.
+The script cannot be "obviously correct", as there are a lot of
+potential corner-cases (nested `, nesting ` within ", comments, ...).
 
-Thanks for working on this.  The $() form is less error-prone
-than ``, so in that sense it can be worthwhile.
+> If the only way to get this done is to actually manually review those
+> 140 files, I just don't think it's worth it.
 
-[...]
-> Elia Pinto (140):
+Honnestly, I went through the series once and it wasn't that painful. I
+need to do a more carefull review, but using "git diff --color-words=."
+it can be really fast.
 
-I admit I'm not excited to review these at all.
+Junio suggested splitting the series into batches of around 10 patches,
+sending one per week, but that would make too many patches IMHO (14
+weeks ...).
 
-I wonder if it's possible to make the series easier to review.  For
-example:
+I'd suggest doing a first batch with only scripts that are not tests and
+pushing this to git.git. Then the remaining series will be a bit less
+scary.
 
- * patch 0 makes preparatory changes to line wrapping or to avoid
-   using `` some places to make an automatic transformation easier
- * patch 1 introduces a script to transform `` expressions to $()
-   expressions
- * patch 2 just runs that script
-
-If the script is "obviously correct" enough then there is no need
-to manually go through 140 files after that point.
-
-If the only way to get this done is to actually manually review those
-140 files, I just don't think it's worth it.  The `` construct is not
-*that* bad.  Another possible direction could be to add a tool to make
-sure git doesn't get any new uses of ``, to let the changes flow in at
-a manageable rate without too many cases of "one step forward, one
-step back".
-
-Hope that helps,
-Jonathan
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
