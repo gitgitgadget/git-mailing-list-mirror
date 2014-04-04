@@ -1,78 +1,78 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] pack-objects: do not reuse packfiles without
- --delta-base-offset
-Date: Fri, 4 Apr 2014 17:48:49 -0400
-Message-ID: <20140404214848.GA23666@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] pack-objects: do not reuse packfiles without --delta-base-offset
+Date: Fri, 04 Apr 2014 15:28:48 -0700
+Message-ID: <xmqqsipsohjz.fsf@gitster.dls.corp.google.com>
 References: <20140402063916.GA1437@sigill.intra.peff.net>
- <xmqqfvlvvdfi.fsf@gitster.dls.corp.google.com>
+	<xmqqfvlvvdfi.fsf@gitster.dls.corp.google.com>
+	<20140404214848.GA23666@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 04 23:49:21 2014
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Apr 05 00:29:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WWBzE-0002nW-VW
-	for gcvg-git-2@plane.gmane.org; Fri, 04 Apr 2014 23:49:21 +0200
+	id 1WWCc9-000307-Tg
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Apr 2014 00:29:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752330AbaDDVsv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Apr 2014 17:48:51 -0400
-Received: from cloud.peff.net ([50.56.180.127]:54006 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752194AbaDDVsu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Apr 2014 17:48:50 -0400
-Received: (qmail 9077 invoked by uid 102); 4 Apr 2014 21:48:50 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 04 Apr 2014 16:48:50 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 04 Apr 2014 17:48:49 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqqfvlvvdfi.fsf@gitster.dls.corp.google.com>
+	id S1752427AbaDDW2x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Apr 2014 18:28:53 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51028 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752064AbaDDW2w (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Apr 2014 18:28:52 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 49C3E7AFCC;
+	Fri,  4 Apr 2014 18:28:51 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=3TKA5BZyVO2feMwItE9181ccMek=; b=TMMoB6
+	TNPFjO3Q+P5+uVU8LwjM7xcw7IEMYqiO7dtznw2qYm5ux4Gwh4YV3lxv0c4aoIoc
+	yBWYl7/GmoQOQvBjmPSYEbDbTogRjp5hnezzWj0Y41g23JhSoK7C9aDVZTtuw22F
+	A/arp4ffHy9tEtLU//45bioSRY8f+K9iO6uMc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=W+/VYa4uGTzEB1g+Bnq4eFaUTHSgn0Sd
+	fodrQh9KINXUf2q04+feIoD8cFOrIkU7Awr/YbVQMq6tu8cjMjqeCRFxyH3VRMel
+	D8yFSe6dZxb8j6E+BI7oPCiF33Kedc06w9fm69bxqpYzn1dIsDzeyZCDvqa2gJuu
+	u5EWG7WlC4M=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 39A7B7AFCB;
+	Fri,  4 Apr 2014 18:28:51 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4690A7AFCA;
+	Fri,  4 Apr 2014 18:28:50 -0400 (EDT)
+In-Reply-To: <20140404214848.GA23666@sigill.intra.peff.net> (Jeff King's
+	message of "Fri, 4 Apr 2014 17:48:49 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 7ED7D7F6-BC48-11E3-A25E-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245774>
 
-On Wed, Apr 02, 2014 at 10:39:13AM -0700, Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
 
-> > However, it's possible that the other side cannot read our
-> > packfile verbatim. For example, we may have objects stored
-> > as OFS_DELTA, but the client is an antique version of git
-> > that only understands REF_DELTA. We negotiate this
-> > capability over the fetch protocol. A normal pack-objects
-> > run will convert OFS_DELTA into REF_DELTA on the fly, but
-> > the "reuse pack" code path never even looks at the objects.
-> 
-> The above makes it sound like "reuse pack" codepath is broken.
+> We could convert OFS_DELTA to REF_DELTA on the fly. That _may_ have a
+> performance impact. Right now, we are basically doing the equivalent of
+> sendfile(), and conversion would involve iterating through each object
+> and examining the header.  I think that's probably not too bad, though.
+> The most expensive part of that, stepping to the next object, requires
+> scanning through the zlib packets, but we should be able to use the
+> revidx to avoid that.
+>
+> I'm not sure it's even worth the code complexity, though. The non-reuse
+> codepath is not that much slower, and it should be extremely rare for a
+> client not to support OFS_DELTA these days.
 
-It is broken (without this patch), though in practice only for ancient
-(pre-1.4.x) clients.
+OK, together with the fact that only ancient versions of fetcher
+would trigger this "do not reuse" codepath, I agree that we should
+go the simplest route this patch takes.
 
-> Is it too much hassle to peek at the initial bytes of each object to
-> see how they are encoded? Would it be possible to convert OFS_DELTA to
-> REF_DELTA on the fly on that codepath as well, instead of disabling
-> the reuse altogether?
-
-It's a mistake to peek ahead of time. Part of the point of the
-pack-reuse optimization is to start sending out bytes as soon as
-possible, since the network is quite often the bottleneck. So we would
-not want to look through all of the to-be-sent data before sending out
-the first byte.
-
-We could convert OFS_DELTA to REF_DELTA on the fly. That _may_ have a
-performance impact. Right now, we are basically doing the equivalent of
-sendfile(), and conversion would involve iterating through each object
-and examining the header.  I think that's probably not too bad, though.
-The most expensive part of that, stepping to the next object, requires
-scanning through the zlib packets, but we should be able to use the
-revidx to avoid that.
-
-I'm not sure it's even worth the code complexity, though. The non-reuse
-codepath is not that much slower, and it should be extremely rare for a
-client not to support OFS_DELTA these days.
-
--Peff
+Thanks.
