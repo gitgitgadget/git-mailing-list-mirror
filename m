@@ -1,89 +1,94 @@
 From: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
-Subject: Re: [PATCH 03/10] diffcore-pickaxe.c: Refactor pickaxe_fn signature
-Date: Fri, 04 Apr 2014 13:09:05 +0200
-Message-ID: <533E92D1.9020406@gmail.com>
-References: <1395946256-67124-1-git-send-email-dad-bgl@mit.edu> <6822f9d947ffb589df25537e2c1e7c4ead7656b0.1395942768.git.davidad@alum.mit.edu>
+Subject: Re: [PATCH 06/10] log: --function-name pickaxe
+Date: Fri, 04 Apr 2014 13:15:49 +0200
+Message-ID: <533E9465.8070609@gmail.com>
+References: <1395946256-67124-1-git-send-email-dad-bgl@mit.edu>	<62ab0f9c34eabe020ae99c7c1f69d580d9bb36d8.1395942768.git.davidad@alum.mit.edu>	<533DD1B1.3000107@web.de> <xmqqwqf6ozp3.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, l.s.r@web.de,
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "David A. Dalrymple (and Bhushan G. Lodha)" <dad-bgl@mit.edu>,
+	git@vger.kernel.org, peff@peff.net,
 	"David Dalrymple (on zayin)" <davidad@alum.mit.edu>
-To: "David A. Dalrymple (and Bhushan G. Lodha)" <dad-bgl@mit.edu>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 04 13:09:26 2014
+To: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
+X-From: git-owner@vger.kernel.org Fri Apr 04 13:16:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WW1zw-0004Zt-01
-	for gcvg-git-2@plane.gmane.org; Fri, 04 Apr 2014 13:09:24 +0200
+	id 1WW26K-0001RO-82
+	for gcvg-git-2@plane.gmane.org; Fri, 04 Apr 2014 13:16:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752713AbaDDLJP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Apr 2014 07:09:15 -0400
-Received: from mail-we0-f172.google.com ([74.125.82.172]:58618 "EHLO
-	mail-we0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752706AbaDDLJM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Apr 2014 07:09:12 -0400
-Received: by mail-we0-f172.google.com with SMTP id t61so3275597wes.17
-        for <git@vger.kernel.org>; Fri, 04 Apr 2014 04:09:11 -0700 (PDT)
+	id S1752522AbaDDLP4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Apr 2014 07:15:56 -0400
+Received: from mail-wi0-f180.google.com ([209.85.212.180]:43577 "EHLO
+	mail-wi0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752336AbaDDLPz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Apr 2014 07:15:55 -0400
+Received: by mail-wi0-f180.google.com with SMTP id q5so1017832wiv.13
+        for <git@vger.kernel.org>; Fri, 04 Apr 2014 04:15:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
          :subject:references:in-reply-to:content-type
          :content-transfer-encoding;
-        bh=ZYofjYe/A5cDro81SrY/6E1/m59AflzKZH/eznH4klI=;
-        b=VIxIl/7FM1bV1ZEX0/VR1+AM7v1WRsQtxuLdmLtS7dgvzOemJ1YLfKC5tGYQvq4YOJ
-         R4xO4xVrAhknpEBHPzj1rrn8W1gvuRCsadjZiZYPlwe3k4zZxj7STAtaL7zpAHMnhPpk
-         oSnH1zweTdArbZJ1s0XReY8NFN8r9H90oQRmtLxhh5oPvEpBniCRQKNVhSa5M8Fu9U3Q
-         KrdJ2SpwFH04QSYfKIoOd8xZGa5PzPatuWL7Kha7h5Whp71wZKEtnrbsrRXasuvFK4wA
-         h/dqPem61cgDFgOBJyCR0bXHLFf4z7YQPLq+BIov7AOwiXR188B5YEz4TGbblrVUWrd5
-         7++w==
-X-Received: by 10.194.48.80 with SMTP id j16mr18976206wjn.44.1396609751291;
-        Fri, 04 Apr 2014 04:09:11 -0700 (PDT)
+        bh=Xmw5OSiewaSBazIBWYKymBPDrTcLUWDw3scrm/+u7xk=;
+        b=akxPM4RMiVGWZt/RtGbY9/iO3phGdWkG/tV0Vct4C+s3CLikvHEWO9fihLUyS944DS
+         xHV6r/wfPGp3s3ko/VNAKwvO5CordqkP7I2RUiOKPN7TJQVK9rGnqBSdVZsDrwZgtxyl
+         nDhPvtilM6SFEI7oSmGgOdyLGQoYdizkGbkHNEF1TLXcIX4pzW8B916Bhp3Ne5uEr3yE
+         hhbGYYPfzSz2sdDSvrnGOil1X6g5QPNhabWA/V5ZR65CHXqiJOMlp08sxNIeT2gTQ5qx
+         gwMcDWyuyG++n/auNbB2zqooO3y0racaXnpovGXeIaHD2FK8VhL5f2zcudFvqDNKEGu8
+         5C3A==
+X-Received: by 10.181.13.112 with SMTP id ex16mr3595038wid.23.1396610154564;
+        Fri, 04 Apr 2014 04:15:54 -0700 (PDT)
 Received: from [192.168.130.241] ([158.75.2.130])
-        by mx.google.com with ESMTPSA id z48sm18816240eel.27.2014.04.04.04.09.09
+        by mx.google.com with ESMTPSA id e42sm18846711eev.32.2014.04.04.04.15.52
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 04 Apr 2014 04:09:10 -0700 (PDT)
+        Fri, 04 Apr 2014 04:15:53 -0700 (PDT)
 User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
 Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <6822f9d947ffb589df25537e2c1e7c4ead7656b0.1395942768.git.davidad@alum.mit.edu>
+In-Reply-To: <xmqqwqf6ozp3.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245759>
 
-W dniu 2014-03-27 19:50, David A. Dalrymple (and Bhushan G. Lodha) pisze:
-> From: "Bhushan G. Lodha & David A. Dalrymple" <dad-bgl@mit.edu>
+W dniu 2014-04-03 23:44, Junio C Hamano pisze:
+> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 >
-> This function type previously accepted separate regex_t and kwset_t
-> parameters, which conceptually go together. Here we create a struct to
-> encapsulate them, in anticipation of adding a third field that
-> pickaxe_fn's may require.
+>> With that approach you depend on the hunk header and apparently need
+>> to add XDL_EMIT_MOREFUNCNAMES and XDL_EMIT_MOREHUNKHEADS to improve
+>> the results.  This approach feels fragile.
+>>
+>> Would it perhaps be more robust to not base the implementation on di=
+ff
+>> and instead to scan the raw file contents?
 >
-> This parallels the existing diffgrep_cb structure for passing possibly
-> relevant values through to the callbacks invoked by xdi_diff_outf.
+> That is an interesting idea.
+>
+> Perhaps this can be implemented as a new stage in the transformation
+> pipeline, I wonder?  There is currently no transformation that
+> modifies the blob contents being compared, but I do not think there
+> is anything fundamental that prevents one from being written.  The
+> new "limit to this function body" transformation would perhaps sit
+> before the diffcore-rename and would transform all the blobs to
+> empty, except for the part that is the body of the function the user
+> is interested in.
 
-If it parallels existing diffgrep_cb structure, why not name this
-equivalent in simular way, i.e. pickaxe_cb or pickaxe_options or
-pickaxe_cb_opts instead of generic name fn_options?
+Well, there is 'texconv', e.g.
 
-> Signed-off-by: David Dalrymple (on zayin) <davidad@alum.mit.edu>
-> ---
->   diffcore-pickaxe.c | 50 ++++++++++++++++++++++++++++++--------------------
->   1 file changed, 30 insertions(+), 20 deletions(-)
->
-> diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
-> index 0d36a3c..7e65095 100644
-> --- a/diffcore-pickaxe.c
-> +++ b/diffcore-pickaxe.c
-> @@ -8,17 +8,22 @@
->   #include "xdiff-interface.h"
->   #include "kwset.h"
->
-> +struct fn_options {
-> +	regex_t *regex;
-> +	kwset_t kws;
-> +};
+   .gitattributes
+   *.jpg diff=3Djpg
+
+   .git/config
+   [diff "jpg"]
+          textconv =3D exif
+
+Doesn't it fit in said place in the transformation pipeline?
+
+--=20
+Jakub Nar=C4=99bski
