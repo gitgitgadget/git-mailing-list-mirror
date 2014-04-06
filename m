@@ -1,91 +1,127 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 11/25] delete_ref_loose(): don't muck around in the lock_file's filename
-Date: Mon,  7 Apr 2014 01:33:53 +0200
-Message-ID: <1396827247-28465-12-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v2 09/25] lockfile.c: document the various states of lock_file objects
+Date: Mon,  7 Apr 2014 01:33:51 +0200
+Message-ID: <1396827247-28465-10-git-send-email-mhagger@alum.mit.edu>
 References: <1396827247-28465-1-git-send-email-mhagger@alum.mit.edu>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	=?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 07 01:35:54 2014
+X-From: git-owner@vger.kernel.org Mon Apr 07 01:35:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WWwbQ-000602-VO
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Apr 2014 01:35:53 +0200
+	id 1WWwbP-000602-Rl
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Apr 2014 01:35:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754701AbaDFXfr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Apr 2014 19:35:47 -0400
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:64144 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754636AbaDFXfD (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 6 Apr 2014 19:35:03 -0400
-X-AuditID: 12074413-f79076d000002d17-ef-5341e4a7ddb0
+	id S1754695AbaDFXfn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Apr 2014 19:35:43 -0400
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:54077 "EHLO
+	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754613AbaDFXfA (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 6 Apr 2014 19:35:00 -0400
+X-AuditID: 12074411-f79ab6d000002f0e-b5-5341e4a33ef1
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 91.08.11543.7A4E1435; Sun,  6 Apr 2014 19:35:03 -0400 (EDT)
+	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id D5.2F.12046.3A4E1435; Sun,  6 Apr 2014 19:34:59 -0400 (EDT)
 Received: from michael.fritz.box (p4FDD47DB.dip0.t-ipconnect.de [79.221.71.219])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s36NYbWw011578
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s36NYbWu011578
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Sun, 6 Apr 2014 19:35:01 -0400
+	Sun, 6 Apr 2014 19:34:57 -0400
 X-Mailer: git-send-email 1.9.1
 In-Reply-To: <1396827247-28465-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrAIsWRmVeSWpSXmKPExsUixO6iqLv8iWOwweN7nBZdV7qZLBp6rzBb
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrLIsWRmVeSWpSXmKPExsUixO6iqLv4iWOwwcp9ohZdV7qZLBp6rzBb
 	3F4xn9ni1+En7BY/WnqYLc68aWS06Oz4yujA7vH3/Qcmj52z7rJ7POvdw+hx8ZKyx+IHXh6f
-	N8l53H62jSWAPYrbJimxpCw4Mz1P3y6BO+PQ8dtsBQ85Kk4ePczUwPidrYuRk0NCwESid80z
-	RghbTOLCvfVAcS4OIYHLjBKTJv5gBkkICRxnkljRlwJiswnoSizqaWYCsUUE1CQmth1iAWlg
-	FrjBKPFu32EWkISwQLTE9oPzwJpZBFQlNi5vBdvGK+AqcX3iNahtchInj01mBbE5geLrJs9l
-	gVjmAjTnHtsERt4FjAyrGOUSc0pzdXMTM3OKU5N1i5MT8/JSi3TN9XIzS/RSU0o3MUJCT3gH
-	466TcocYBTgYlXh4Vx5yDBZiTSwrrsw9xCjJwaQkyvvgMVCILyk/pTIjsTgjvqg0J7X4EKME
-	B7OSCO+BG0A53pTEyqrUonyYlDQHi5I4r9oSdT8hgfTEktTs1NSC1CKYrAwHh5IE71+QoYJF
-	qempFWmZOSUIaSYOTpDhXFIixal5KalFiaUlGfGg2IgvBkYHSIoHaK/bE5C9xQWJuUBRiNZT
-	jIpS4rzsIAkBkERGaR7cWFhCecUoDvSlMK8iSBUPMBnBdb8CGswENLghzA5kcEkiQkqqgTH1
-	ttOVk39N73zV+L5K61TC/fquh/eKeTIZfyxc1Xed1T504XQnGbHV2bcPbfmybsaWB/pdtg8L
-	ponl35kZEcMQLHD9acpDx2TZBZHyP++ackvoJt2YombXJOwl4ZPo7lqjc/ZwiNEt 
+	N8l53H62jSWAPYrbJimxpCw4Mz1P3y6BO2PFjS1MBT/EKlpmnGBtYHwp2MXIySEhYCJx4MEB
+	RghbTOLCvfVsXYxcHEIClxklpi9vZoFwjjNJTGqewgZSxSagK7Gop5kJxBYRUJOY2HYIrIhZ
+	4AajxLt9h1lAEsICYRJzPraBFbEIqEpM3jgHLM4r4Cqx4EwXG8Q6OYmTxyazgticQPF1k+eC
+	1QgJuADNucc2gZF3ASPDKka5xJzSXN3cxMyc4tRk3eLkxLy81CJdU73czBK91JTSTYyQ4BPc
+	wTjjpNwhRgEORiUe3hWHHIOFWBPLiitzDzFKcjApifJa3gMK8SXlp1RmJBZnxBeV5qQWH2KU
+	4GBWEuE9cAMox5uSWFmVWpQPk5LmYFES5+Vbou4nJJCeWJKanZpakFoEk5Xh4FCS4O17DNQo
+	WJSanlqRlplTgpBm4uAEGc4lJVKcmpeSWpRYWpIRD4qO+GJgfICkeID2Tgdp5y0uSMwFikK0
+	nmLU5bi1fGMjkxBLXn5eqpQ478xHQEUCIEUZpXlwK2Cp5hWjONDHwrzLQEbxANMU3KRXQEuY
+	gJY0hNmBLClJREhJNTDmX14g5vJs052Dp5UWrP18t2LHLsOqasNX6j98Vt7NPrTEqf1Y4IvO
+	jZvtwhh8D6hrrGH79aro5Je1dzuEj0VU+M1TrYu9tjH/0m4TQTnf7blhD5N+bGiT 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245807>
 
-It's bad manners.  Especially since, if unlink_or_warn() failed, the
-memory wasn't restored to its original contents.
-
-So make our own copy to work with.
+Document the valid states of lock_file objects, how they get into each
+state, and how the state is encoded in the object's fields.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ lockfile.c | 52 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 52 insertions(+)
 
-diff --git a/refs.c b/refs.c
-index 67fe8b7..64ea2f0 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2485,12 +2485,14 @@ static int repack_without_ref(const char *refname)
- static int delete_ref_loose(struct ref_lock *lock, int flag)
- {
- 	if (!(flag & REF_ISPACKED) || flag & REF_ISSYMREF) {
--		/* loose */
--		int err, i = strlen(lock->lk->filename) - 5; /* .lock */
--
--		lock->lk->filename[i] = 0;
--		err = unlink_or_warn(lock->lk->filename);
--		lock->lk->filename[i] = '.';
-+		/*
-+		 * loose.  The loose file name is the same as the
-+		 * lockfile name, minus ".lock":
-+		 */
-+		char *loose_filename = xmemdupz(lock->lk->filename,
-+						strlen(lock->lk->filename) - 5);
-+		int err = unlink_or_warn(loose_filename);
-+		free(loose_filename);
- 		if (err && errno != ENOENT)
- 			return 1;
- 	}
+diff --git a/lockfile.c b/lockfile.c
+index 0486c58..2438430 100644
+--- a/lockfile.c
++++ b/lockfile.c
+@@ -4,6 +4,58 @@
+ #include "cache.h"
+ #include "sigchain.h"
+ 
++/*
++ * File write-locks as used by Git.
++ *
++ * When a file at $FILENAME needs to be written, it is done as
++ * follows:
++ *
++ * 1. Obtain a lock on the file by creating a lockfile at path
++ *    $FILENAME.lock.  The file is opened for read/write using O_CREAT
++ *    and O_EXCL mode to ensure that it doesn't already exist.  Such a
++ *    lock file is respected by writers *but not by readers*.
++ *
++ *    Usually, if $FILENAME is a symlink, then it is resolved, and the
++ *    file ultimately pointed to is the one that is locked and later
++ *    replaced.  However, if LOCK_NODEREF is used, then $FILENAME
++ *    itself is locked and later replaced, even if it is a symlink.
++ *
++ * 2. Write the new file contents to the lockfile.
++ *
++ * 3. Move the lockfile to its final destination using rename(2).
++ *
++ * Instead of (3), the change can be rolled back by deleting lockfile.
++ *
++ * This module keeps track of all locked files in lock_file_list.
++ * When the first file is locked, it registers an atexit(3) handler;
++ * when the program exits, the handler rolls back any files that have
++ * been locked but were never committed or rolled back.
++ *
++ * A lock_file object can be in several states:
++ *
++ * - Uninitialized.  In this state the object's flags field must be
++ *   zero but the rest of its contents need not be initialized.  As
++ *   soon as the object is used in any way, it is irrevocably
++ *   registered in the lock_file_list, and flags & LOCK_FLAGS_ON_LIST
++ *   is set.
++ *
++ * - Locked, lockfile open (after hold_lock_file_for_update() or
++ *   hold_lock_file_for_append()).  In this state, the lockfile
++ *   exists, filename holds the filename of the lockfile, fd holds a
++ *   file descriptor open for writing to the lockfile, and owner holds
++ *   the PID of the process that locked the file.
++ *
++ * - Locked, lockfile closed (after close_lock_file()).  Same as the
++ *   previous state, except that the lockfile is closed and fd is -1.
++ *
++ * - Unlocked (after commit_lock_file(), rollback_lock_file(), or a
++ *   failed attempt to lock).  In this state, filename[0] == '\0' and
++ *   fd is -1.  The object is left registered in the lock_file_list,
++ *   and flags & LOCK_FLAGS_ON_LIST is set.
++ *
++ * See Documentation/api-lockfile.txt for more information.
++ */
++
+ /* Values for lock_file::flags: */
+ 
+ /* This lock_file instance is in the lock_file_list */
 -- 
 1.9.1
