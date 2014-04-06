@@ -1,7 +1,7 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v10 04/12] trailer: process command line trailer arguments
-Date: Sun, 06 Apr 2014 19:01:55 +0200
-Message-ID: <20140406170204.15116.3903.chriscool@tuxfamily.org>
+Subject: [PATCH v10 07/12] trailer: add interpret-trailers command
+Date: Sun, 06 Apr 2014 19:01:58 +0200
+Message-ID: <20140406170204.15116.73833.chriscool@tuxfamily.org>
 References: <20140406163214.15116.91484.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Josh Triplett <josh@joshtriplett.org>,
@@ -13,166 +13,134 @@ Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
 	Jonathan Nieder <jrnieder@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 07 20:44:53 2014
+X-From: git-owner@vger.kernel.org Mon Apr 07 20:44:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WXEXM-0003uc-MH
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Apr 2014 20:44:53 +0200
+	id 1WXEXS-0003za-5O
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Apr 2014 20:44:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756025AbaDGSoq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1755944AbaDGSoq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Mon, 7 Apr 2014 14:44:46 -0400
-Received: from mail-3y.bbox.fr ([194.158.98.45]:50940 "EHLO mail-3y.bbox.fr"
+Received: from mail-2y.bbox.fr ([194.158.98.15]:56279 "EHLO mail-2y.bbox.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755987AbaDGSoB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Apr 2014 14:44:01 -0400
+	id S1756009AbaDGSoE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Apr 2014 14:44:04 -0400
 Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-3y.bbox.fr (Postfix) with ESMTP id C955463;
-	Mon,  7 Apr 2014 20:43:59 +0200 (CEST)
-X-git-sha1: 33cf41fd854b309acd6fd1a56bfa2a8357e03646 
+	by mail-2y.bbox.fr (Postfix) with ESMTP id E4FD54B;
+	Mon,  7 Apr 2014 20:44:01 +0200 (CEST)
+X-git-sha1: 6cafa7fdf178c326626589113bd94c0045be8013 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20140406163214.15116.91484.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245883>
 
-Parse the trailer command line arguments and put
-the result into an arg_tok doubly linked list.
+This patch adds the "git interpret-trailers" command.
+This command uses the previously added process_trailers()
+function in trailer.c.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- trailer.c | 117 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 117 insertions(+)
+ .gitignore                   |  1 +
+ Makefile                     |  1 +
+ builtin.h                    |  1 +
+ builtin/interpret-trailers.c | 33 +++++++++++++++++++++++++++++++++
+ git.c                        |  1 +
+ 5 files changed, 37 insertions(+)
+ create mode 100644 builtin/interpret-trailers.c
 
-diff --git a/trailer.c b/trailer.c
-index c7c0f54..89ebff1 100644
---- a/trailer.c
-+++ b/trailer.c
-@@ -391,3 +391,120 @@ static int git_trailer_config(const char *conf_key, const char *value, void *cb)
- 	}
- 	return 0;
- }
+diff --git a/.gitignore b/.gitignore
+index dc600f9..c2a0b19 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -74,6 +74,7 @@
+ /git-index-pack
+ /git-init
+ /git-init-db
++/git-interpret-trailers
+ /git-instaweb
+ /git-log
+ /git-ls-files
+diff --git a/Makefile b/Makefile
+index 179be0a..499ca30 100644
+--- a/Makefile
++++ b/Makefile
+@@ -944,6 +944,7 @@ BUILTIN_OBJS += builtin/hash-object.o
+ BUILTIN_OBJS += builtin/help.o
+ BUILTIN_OBJS += builtin/index-pack.o
+ BUILTIN_OBJS += builtin/init-db.o
++BUILTIN_OBJS += builtin/interpret-trailers.o
+ BUILTIN_OBJS += builtin/log.o
+ BUILTIN_OBJS += builtin/ls-files.o
+ BUILTIN_OBJS += builtin/ls-remote.o
+diff --git a/builtin.h b/builtin.h
+index c47c110..8ca0065 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -73,6 +73,7 @@ extern int cmd_hash_object(int argc, const char **argv, const char *prefix);
+ extern int cmd_help(int argc, const char **argv, const char *prefix);
+ extern int cmd_index_pack(int argc, const char **argv, const char *prefix);
+ extern int cmd_init_db(int argc, const char **argv, const char *prefix);
++extern int cmd_interpret_trailers(int argc, const char **argv, const char *prefix);
+ extern int cmd_log(int argc, const char **argv, const char *prefix);
+ extern int cmd_log_reflog(int argc, const char **argv, const char *prefix);
+ extern int cmd_ls_files(int argc, const char **argv, const char *prefix);
+diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
+new file mode 100644
+index 0000000..0c8ca72
+--- /dev/null
++++ b/builtin/interpret-trailers.c
+@@ -0,0 +1,33 @@
++/*
++ * Builtin "git interpret-trailers"
++ *
++ * Copyright (c) 2013, 2014 Christian Couder <chriscool@tuxfamily.org>
++ *
++ */
 +
-+static int parse_trailer(struct strbuf *tok, struct strbuf *val, const char *trailer)
++#include "cache.h"
++#include "builtin.h"
++#include "parse-options.h"
++#include "trailer.h"
++
++static const char * const git_interpret_trailers_usage[] = {
++	N_("git interpret-trailers [--trim-empty] [(<token>[(=|:)<value>])...]"),
++	NULL
++};
++
++int cmd_interpret_trailers(int argc, const char **argv, const char *prefix)
 +{
-+	size_t len = strcspn(trailer, "=:");
-+	if (len == 0)
-+		return error(_("empty trailer token in trailer '%s'"), trailer);
-+	if (len < strlen(trailer)) {
-+		strbuf_add(tok, trailer, len);
-+		strbuf_trim(tok);
-+		strbuf_addstr(val, trailer + len + 1);
-+		strbuf_trim(val);
-+	} else {
-+		strbuf_addstr(tok, trailer);
-+		strbuf_trim(tok);
-+	}
++	int trim_empty = 0;
++
++	struct option options[] = {
++		OPT_BOOL(0, "trim-empty", &trim_empty, N_("trim empty trailers")),
++		OPT_END()
++	};
++
++	argc = parse_options(argc, argv, prefix, options,
++			     git_interpret_trailers_usage, 0);
++
++	process_trailers(trim_empty, argc, argv);
++
 +	return 0;
 +}
-+
-+
-+static void duplicate_conf(struct conf_info *dst, struct conf_info *src)
-+{
-+	*dst = *src;
-+	if (src->name)
-+		dst->name = xstrdup(src->name);
-+	if (src->key)
-+		dst->key = xstrdup(src->key);
-+	if (src->command)
-+		dst->command = xstrdup(src->command);
-+}
-+
-+static const char *token_from_item(struct trailer_item *item)
-+{
-+	if (item->conf.key)
-+		return item->conf.key;
-+
-+	return item->conf.name;
-+}
-+
-+static struct trailer_item *new_trailer_item(struct trailer_item *conf_item,
-+					     char *tok, char *val)
-+{
-+	struct trailer_item *new = xcalloc(sizeof(*new), 1);
-+	new->value = val;
-+
-+	if (conf_item) {
-+		duplicate_conf(&new->conf, &conf_item->conf);
-+		new->token = xstrdup(token_from_item(conf_item));
-+		free(tok);
-+	} else
-+		new->token = tok;
-+
-+	return new;
-+}
-+
-+static int token_matches_item(const char *tok, struct trailer_item *item, int alnum_len)
-+{
-+	if (!strncasecmp(tok, item->conf.name, alnum_len))
-+		return 1;
-+	return item->conf.key ? !strncasecmp(tok, item->conf.key, alnum_len) : 0;
-+}
-+
-+static struct trailer_item *create_trailer_item(const char *string)
-+{
-+	struct strbuf tok = STRBUF_INIT;
-+	struct strbuf val = STRBUF_INIT;
-+	struct trailer_item *item;
-+	int tok_alnum_len;
-+
-+	if (parse_trailer(&tok, &val, string))
-+		return NULL;
-+
-+	tok_alnum_len = alnum_len(tok.buf, tok.len);
-+
-+	/* Lookup if the token matches something in the config */
-+	for (item = first_conf_item; item; item = item->next) {
-+		if (token_matches_item(tok.buf, item, tok_alnum_len)) {
-+			strbuf_release(&tok);
-+			return new_trailer_item(item,
-+						NULL,
-+						strbuf_detach(&val, NULL));
-+		}
-+	}
-+
-+	return new_trailer_item(NULL,
-+				strbuf_detach(&tok, NULL),
-+				strbuf_detach(&val, NULL));
-+}
-+
-+static void add_trailer_item(struct trailer_item **first,
-+			     struct trailer_item **last,
-+			     struct trailer_item *new)
-+{
-+	if (!new)
-+		return;
-+	if (!*last) {
-+		*first = new;
-+		*last = new;
-+	} else {
-+		(*last)->next = new;
-+		new->previous = *last;
-+		*last = new;
-+	}
-+}
-+
-+static struct trailer_item *process_command_line_args(int argc, const char **argv)
-+{
-+	int i;
-+	struct trailer_item *arg_tok_first = NULL;
-+	struct trailer_item *arg_tok_last = NULL;
-+
-+	for (i = 0; i < argc; i++) {
-+		struct trailer_item *new = create_trailer_item(argv[i]);
-+		add_trailer_item(&arg_tok_first, &arg_tok_last, new);
-+	}
-+
-+	return arg_tok_first;
-+}
+diff --git a/git.c b/git.c
+index 9efd1a3..d432f11 100644
+--- a/git.c
++++ b/git.c
+@@ -380,6 +380,7 @@ static struct cmd_struct commands[] = {
+ 	{ "index-pack", cmd_index_pack, RUN_SETUP_GENTLY },
+ 	{ "init", cmd_init_db },
+ 	{ "init-db", cmd_init_db },
++	{ "interpret-trailers", cmd_interpret_trailers, RUN_SETUP },
+ 	{ "log", cmd_log, RUN_SETUP },
+ 	{ "ls-files", cmd_ls_files, RUN_SETUP },
+ 	{ "ls-remote", cmd_ls_remote, RUN_SETUP_GENTLY },
 -- 
 1.9.0.163.g8ca203c
