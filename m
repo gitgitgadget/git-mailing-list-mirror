@@ -1,71 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 17/25] commit_lock_file(): make committing an unlocked
- lockfile a NOP
-Date: Mon, 7 Apr 2014 15:31:31 -0400
-Message-ID: <20140407193131.GC19342@sigill.intra.peff.net>
-References: <1396827247-28465-1-git-send-email-mhagger@alum.mit.edu>
- <1396827247-28465-18-git-send-email-mhagger@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v9 11/11] Documentation: add documentation for 'git interpret-trailers'
+Date: Mon, 07 Apr 2014 12:34:52 -0700
+Message-ID: <xmqq4n25lyqr.fsf@gitster.dls.corp.google.com>
+References: <xmqqk3b4ogwu.fsf@gitster.dls.corp.google.com>
+	<CAP8UFD38TE=5zxvkDvLRsDTpC6zDo6EN5q_HJMQPbUBcfJVsSg@mail.gmail.com>
+	<xmqq4n25nkt0.fsf@gitster.dls.corp.google.com>
+	<20140407.205800.839733420387302333.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Apr 07 21:31:41 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: christian.couder@gmail.com, jrnieder@gmail.com,
+	git@vger.kernel.org, josh@joshtriplett.org,
+	sunshine@sunshineco.com, ramsay@ramsay1.demon.co.uk
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Mon Apr 07 21:35:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WXFGd-0004Gj-ME
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Apr 2014 21:31:40 +0200
+	id 1WXFJt-0006Sg-8w
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Apr 2014 21:35:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755766AbaDGTbf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Apr 2014 15:31:35 -0400
-Received: from cloud.peff.net ([50.56.180.127]:55640 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755566AbaDGTbd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Apr 2014 15:31:33 -0400
-Received: (qmail 15235 invoked by uid 102); 7 Apr 2014 19:31:33 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 07 Apr 2014 14:31:33 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 07 Apr 2014 15:31:31 -0400
-Content-Disposition: inline
-In-Reply-To: <1396827247-28465-18-git-send-email-mhagger@alum.mit.edu>
+	id S1755615AbaDGTe5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Apr 2014 15:34:57 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59850 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753765AbaDGTe4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Apr 2014 15:34:56 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9B36F7B4F5;
+	Mon,  7 Apr 2014 15:34:55 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=daGcG3j+xCLMLxRVKBq6wL954/E=; b=qpjgvM
+	Q+phYbhYNQGSipBgCqhzwnE22bUbj/GV2OI4xLM/xMfgnvI2jWT8F26pptlgzY3c
+	wG4dEa/yvzyIFV+oBQxy/S7BOwaGj2pzLfaLv2NUhAjHXx66dN9GueZRKsnaZyyT
+	ELrvmAk9AnheV1dRv5Jr9JbbI8SFHTzWKzHWY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Fh4qsNZ7bAdFYXuJrIwgLxNTPs71wJfH
+	nJsIBiKBK+vXsX2jahdzJOBZ+YRCWD+g0EaPp+9CUIFMRFkkNZOmWuw2tcY7stPN
+	fDijQ6aXXGxhdSuWqkVb6mkSp4XYfDEysBYxQJDfqzZ2bq5CKL8rYFjcRyLEz3+K
+	7XX65MTAjP0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 87D117B4F3;
+	Mon,  7 Apr 2014 15:34:55 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5CAAE7B4E7;
+	Mon,  7 Apr 2014 15:34:54 -0400 (EDT)
+In-Reply-To: <20140407.205800.839733420387302333.chriscool@tuxfamily.org>
+	(Christian Couder's message of "Mon, 07 Apr 2014 20:58:00 +0200
+	(CEST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: B1D6ABD8-BE8B-11E3-9124-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245894>
 
-On Mon, Apr 07, 2014 at 01:33:59AM +0200, Michael Haggerty wrote:
+Christian Couder <chriscool@tuxfamily.org> writes:
 
-> It was previously a bug to call commit_lock_file() with a lock_file
-> object that was not active (an illegal access would happen within the
-> function).  It was presumably never done, but this would be an easy
-> programming error to overlook.  So guard the file-renaming code with
-> an if statement to change committing an unlocked file into a NOP.
-> 
-> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
-> ---
-> Alternatively, we could make it a fatal error (e.g., an assert() or
-> if...die()) to call commit_lock_file() on an unlocked file, or omit a
-> warning in this case.  But since it is so hard to test code related to
-> locking failures, I have the feeling that such an error is most likely
-> to occur in some error-handling path, maybe when some other lockfile
-> acquisition has failed, and it would be better to let the code
-> continue its attempted cleanup instead of dying.  But it would be easy
-> to persuade me to change my opinion.
+>> I do not see these two as valid arguments to make the command line
+>> more complex to the end users
+>
+> I don't think that it makes the command more complex to the end users.
+>
+>> ---who now need to know that only this
+>> command treats its command line in a funny way, accepting a colon in
+>> place of an equal sign.
 
-Yeah, I would have expected a die("BUG") here.
-
-I think it is worth making it a fatal mistake and catching it. Rolling
-back an uninitialized lockfile is probably OK; we are canceling an
-operation that never started. But committing a lockfile that we didn't
-actually fill out could be a sign of a serious error, and we may be
-propagating a bogus success code. E.g., imagine that receive-pack claims
-to have written your ref, but actually commit_lock_file was a silent
-NOP. I'd much rather have it die loudly so we can track down the case.
-
--Peff
+I meant that it makes learning the "command line syntax of Git" more
+complex to new users.  If one is too narrowly focused on this single
+command, it may not seem that "the command" is not made more
+complex, but I am more interested in making sure that the entire Git
+command line experience does not get unnecessarily harder to learn.
