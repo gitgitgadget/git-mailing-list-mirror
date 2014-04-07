@@ -1,126 +1,80 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2 18/25] lockfile: avoid transitory invalid states
-Date: Mon, 07 Apr 2014 15:12:49 +0200
-Message-ID: <5342A451.5020905@alum.mit.edu>
-References: <1396827247-28465-1-git-send-email-mhagger@alum.mit.edu> <1396827247-28465-19-git-send-email-mhagger@alum.mit.edu> <534242AC.7030908@viscovery.net> <53428846.7060104@alum.mit.edu> <5342962A.8020608@viscovery.net>
+From: Vlad Dogaru <vdogaru@ixiacom.com>
+Subject: [PATCH] git-p4: explicitly specify that HEAD is a revision
+Date: Mon, 7 Apr 2014 16:19:11 +0300
+Message-ID: <20140407131911.GB17654@ixro-vdogaru.ixiacom.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>,
-	=?ISO-8859-15?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Apr 07 15:13:00 2014
+Content-Type: text/plain; charset="us-ascii"
+Cc: <pw@padd.com>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Apr 07 15:34:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WX9MB-0000sL-50
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Apr 2014 15:12:59 +0200
+	id 1WX9gY-0008TU-3C
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Apr 2014 15:34:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755278AbaDGNMz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Apr 2014 09:12:55 -0400
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:43955 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755217AbaDGNMy (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Apr 2014 09:12:54 -0400
-X-AuditID: 12074413-f79076d000002d17-5d-5342a45554b3
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 6E.27.11543.554A2435; Mon,  7 Apr 2014 09:12:53 -0400 (EDT)
-Received: from [192.168.69.148] (p5B156B1D.dip0.t-ipconnect.de [91.21.107.29])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s37DCobP020520
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Mon, 7 Apr 2014 09:12:51 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.4.0
-In-Reply-To: <5342962A.8020608@viscovery.net>
-X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrMKsWRmVeSWpSXmKPExsUixO6iqBu6xCnYYN9ERYuuK91MFg29V5gt
-	Vv6ssfjR0sNsceZNI6NFZ8dXRgc2j2e9exg9Ll5S9lj8wMvj8yY5j7v/dzJ53H62jSWALYrb
-	JimxpCw4Mz1P3y6BO+PFvZWMBTPEKlo3HWJrYDwn2MXIwSEhYCKxcZdkFyMnkCkmceHeerYu
-	Ri4OIYHLjBIrNhxihHDOMkkcPfObBaSKV0Bb4t+Os4wgNouAqsSbRQtZQWw2AV2JRT3NTCBD
-	RQWCJP6cVYQoF5Q4OfMJWKuIgIbE7tO97CAzmQWuMEpsnPqdGaReWMBdYvt2qMUPGCWmbb4B
-	1sAJNPPKkplMEIeKS/Q0BoGEmYHCP5pWskHY8hLb385hnsAoOAvJullIymYhKVvAyLyKUS4x
-	pzRXNzcxM6c4NVm3ODkxLy+1SNdcLzezRC81pXQTIyQShHcw7jopd4hRgINRiYd35SHHYCHW
-	xLLiytxDjJIcTEqivFJznIKF+JLyUyozEosz4otKc1KLDzFKcDArifAadgHleFMSK6tSi/Jh
-	UtIcLErivGpL1P2EBNITS1KzU1MLUotgsjIcHEoSvP8WATUKFqWmp1akZeaUIKSZODhBhnNJ
-	iRSn5qWkFiWWlmTEg+I3vhgYwSApHqC9GotB9hYXJOYCRSFaTzHqcmzYtqaRSYglLz8vVUqc
-	9zvIDgGQoozSPLgVsLT3ilEc6GNhXkaQUTzAlAk36RXQEiaQ51zBlpQkIqSkGhjrln64rPvk
-	60RNruWMc9656X+VPfz2eLql1cL71zjtefLk+6ae/2JfMDFzk5fkte0Jl2xfGlTm 
+	id S1754821AbaDGNdj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Apr 2014 09:33:39 -0400
+Received: from mail-bn1lp0140.outbound.protection.outlook.com ([207.46.163.140]:53582
+	"EHLO na01-bn1-obe.outbound.protection.outlook.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1754274AbaDGNdi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Apr 2014 09:33:38 -0400
+X-Greylist: delayed 845 seconds by postgrey-1.27 at vger.kernel.org; Mon, 07 Apr 2014 09:33:38 EDT
+Received: from CH1PRD0610HT003.namprd06.prod.outlook.com (10.255.151.38) by
+ BLUPR06MB371.namprd06.prod.outlook.com (10.141.25.149) with Microsoft SMTP
+ Server (TLS) id 15.0.913.9; Mon, 7 Apr 2014 13:19:30 +0000
+Received: from localhost (205.168.23.154) by pod51011.outlook.com
+ (10.255.151.38) with Microsoft SMTP Server (TLS) id 14.16.435.0; Mon, 7 Apr
+ 2014 13:19:29 +0000
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Originating-IP: [205.168.23.154]
+X-MS-Exchange-CrossPremises-AuthSource: CH1PRD0610HT003.namprd06.prod.outlook.com
+X-MS-Exchange-CrossPremises-AuthAs: Internal
+X-MS-Exchange-CrossPremises-AuthMechanism: 06
+X-MS-Exchange-CrossPremises-Processed-By-Journaling: Journal Agent
+X-OrganizationHeadersPreserved: CH1PRD0610HT003.namprd06.prod.outlook.com
+X-Forefront-PRVS: 0174BD4BDA
+X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10019001)(6009001)(428001)(199002)(189002)(69226001)(54316002)(74706001)(94946001)(54356001)(81686001)(81816001)(53806001)(94316002)(46102001)(95666003)(19580395003)(56776001)(19580405001)(86362001)(83322001)(74876001)(85306002)(76482001)(50466002)(83072002)(23726002)(81342001)(74366001)(33656001)(47446002)(99396002)(56816005)(74662001)(93136001)(90146001)(74502001)(98676001)(97186001)(65816001)(63696002)(66066001)(92726001)(76506004)(76176001)(80022001)(46406003)(83506001)(79102001)(97336001)(87936001)(31966008)(87266001)(95416001)(85852003)(80976001)(93516002)(92566001)(47736001)(59766001)(76796001)(57986002)(47776003)(76786001)(20776003)(81542001)(77096001)(47976001)(77982001)(4396001)(97756001)(49866001)(50986001);DIR:OUT;SFP:1102;SCL:1;SRVR:B
+ LUPR06MB371;H:CH1PRD0610HT003.namprd06.prod.outlook.com;FPR:E613F96A.2C96C309.FAD79887.56DA3871.20 
+Received-SPF: None (: ixiacom.com does not designate permitted sender hosts)
+X-OriginatorOrg: ixiacom.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245834>
 
-On 04/07/2014 02:12 PM, Johannes Sixt wrote:
-> Am 4/7/2014 13:13, schrieb Michael Haggerty:
->> On 04/07/2014 08:16 AM, Johannes Sixt wrote:
->>> Am 4/7/2014 1:34, schrieb Michael Haggerty:
->>>> So, instead of encoding part of the lock_file state in the filename
->>>> field, add a new bit "LOCK_FLAGS_LOCKFILE_ACTIVE" to flags, and use
->>>> this bit to distinguish between a lock_file object that is active
->>>> vs. one that is inactive.  Be careful to set this bit only when
->>>> filename really contains the name of a file that should be deleted on
->>>> cleanup.
->>>
->>> Since this flag is primarily for communication between the main code and a
->>> signal handler, the only safe way is to define the flag as volatile
->>> sig_atomic_t, not to make it a bit of a larger type!
->>
->> Thanks for the feedback.  You are obviously right, and I will fix it.
->>
->> But I have a feeling that this line of thought is going to lead to the
->> signal handler's not being able to do anything.  How far can we afford
->> to pursue strict correctness?  ...
->>
->> The signal handler currently reads
->>
->>     lock_file_list
->>     lock_file::next
->>     lock_file::fd
->>     lock_file::owner
->>     lock_file::filename
->>     *lock_file::filename
->>
->> and writes lock_file_list.  Among other things it calls close(),
->> unlink(), vsnprintf(), and fprintf() (the last two via warning()).
->>
->> But most of these actions are undefined under the C99 standard:
-> 
-> Good point. But not all is lost because some of the functions are
-> well-defined under POSIX, particularly close() and unlink(). (*printf are
-> not, though.)
-> 
->> I don't have time to rewrite *all* of Git right now, so how can we get
->> reasonable safety and portability within a feasible amount of work?
-> 
-> It shouldn't be *that* bad. We can make all members volatile, except
-> filename (because we wouldn't be able to strcpy(lk->filename, ...) without
-> a type cast).
-> 
-> How far *do* you want to go? I'm certainly not opposed to field-test your
-> current changeset (plus and adjustment to use sig_atomic_t) -- overall it
-> is an improvement. And then we will see how it works.
+'git p4 rebase' fails with the following message if there is a file
+named HEAD in the current directory:
 
-For now I think I'd just like to get the biggest problems fixed without
-making anything worse.  Given that there might be a GSoC student working
-in this neighborhood, he/she might be able to take up the baton.
+	fatal: ambiguous argument 'HEAD': both revision and filename
+	Use '--' to separate paths from revisions, like this:
+	'git <command> [<revision>...] -- [<file>...]'
 
-I changed the patch series to use a new "volatile sig_atomic_t active"
-field rather than a bit in a "flags" field.  I'll wait a short time to
-see if there is more feedback before pushing it to the list; meanwhile
-you can find it here if you have time to look at it and/or test it:
+Take the suggestion above and explicitly state that HEAD should be
+treated as a revision.
 
-    http://github.com/mhagger/git, branch "lock-correctness"
+Signed-off-by: Vlad Dogaru <vdogaru@ixiacom.com>
+---
+ git-p4.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Michael
-
-
+diff --git a/git-p4.py b/git-p4.py
+index cdfa2df..8d11b25 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -3086,7 +3086,7 @@ class P4Rebase(Command):
+         print "Rebasing the current branch onto %s" % upstream
+         oldHead = read_pipe("git rev-parse HEAD").strip()
+         system("git rebase %s" % upstream)
+-        system("git diff-tree --stat --summary -M %s HEAD" % oldHead)
++        system("git diff-tree --stat --summary -M %s HEAD --" % oldHead)
+         return True
+ 
+ class P4Clone(P4Sync):
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+1.8.5.2
