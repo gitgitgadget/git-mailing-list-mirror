@@ -1,122 +1,110 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: Re: notes.rewriteRef doesn't apply to rebases that skip the commit
-Date: Mon, 7 Apr 2014 14:54:29 -0700
-Message-ID: <047C96E4-80B6-431C-906C-D9DFFDBFE9FF@sb.org>
-References: <99F95780-059D-4F62-A851-C43729BB9893@sb.org> <xmqqzjjwlt9p.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0 (Mac OS X Mail 7.2 \(1874\))
-Content-Type: text/plain; charset=iso-2022-jp
-Content-Transfer-Encoding: 8BIT
-Cc: gitList list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 07 23:54:38 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v9 11/11] Documentation: add documentation for 'git interpret-trailers'
+Date: Mon, 07 Apr 2014 15:00:11 -0700
+Message-ID: <xmqqr458ls0k.fsf@gitster.dls.corp.google.com>
+References: <xmqqk3b4ogwu.fsf@gitster.dls.corp.google.com>
+	<CAP8UFD38TE=5zxvkDvLRsDTpC6zDo6EN5q_HJMQPbUBcfJVsSg@mail.gmail.com>
+	<xmqq4n25nkt0.fsf@gitster.dls.corp.google.com>
+	<20140407.205800.839733420387302333.chriscool@tuxfamily.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: christian.couder@gmail.com, jrnieder@gmail.com,
+	git@vger.kernel.org, josh@joshtriplett.org,
+	sunshine@sunshineco.com, ramsay@ramsay1.demon.co.uk
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Tue Apr 08 00:00:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WXHUz-0006ue-Mq
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Apr 2014 23:54:38 +0200
+	id 1WXHaZ-0002Zb-QO
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Apr 2014 00:00:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755959AbaDGVyd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Apr 2014 17:54:33 -0400
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:54348 "EHLO
-	out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755956AbaDGVyc convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 7 Apr 2014 17:54:32 -0400
-Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 558A621052
-	for <git@vger.kernel.org>; Mon,  7 Apr 2014 17:54:31 -0400 (EDT)
-Received: from frontend1 ([10.202.2.160])
-  by compute4.internal (MEProxy); Mon, 07 Apr 2014 17:54:31 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-type:mime-version:subject:from
-	:in-reply-to:date:cc:content-transfer-encoding:message-id
-	:references:to; s=smtpout; bh=fh4mBrVVTltSSynny6Uhg4O/7ic=; b=NE
-	bjl3y65xm9r/nZUQCGei6fws3iPH00a+vS4DRZByukjXE76/eBZNasMkfwdW7/ZU
-	DHIuBUIvx/DQg+njSAuZx5oBf1Z5NqT7bF2kTIomquNE8hDxijSLQkTOxNnzJ1k7
-	PPFJgvJtosZibw9udMMjL2asRKKBr8NY3Puyugqe0=
-X-Sasl-enc: Am7XLBi3CzJTYy/b2LklxqN8CBDkwNo0PGA61BnsmmHw 1396907671
-Received: from [10.1.30.11] (unknown [199.27.109.101])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 9069EC007AA;
-	Mon,  7 Apr 2014 17:54:30 -0400 (EDT)
-In-Reply-To: <xmqqzjjwlt9p.fsf@gitster.dls.corp.google.com>
-X-Mailer: Apple Mail (2.1874)
+	id S1754687AbaDGWAQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Apr 2014 18:00:16 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40040 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753119AbaDGWAO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Apr 2014 18:00:14 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2D5167BFB4;
+	Mon,  7 Apr 2014 18:00:14 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=XltICT5Soh7t8Ybaknq9s8ZFxUQ=; b=CIp7dM
+	HfU19oFlbZkCdYVd/XRkmykmBjN0uCAV4xn1Qs4Zk+A3jdvS0SWgx4aikeS6qwow
+	FWAflUl3zgAzh/L9QcL4kVtzEs2MpVKY82A+C5DVREgPPb0/25QEmzbg9VZPR1M/
+	q4bdtId6V5QmVCQdkikb4Y92fNoG4jPot5e5g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=oMms28Ze7uALMlOu8f69Oa1pK9XMpzne
+	LSK7ZOXHqN+y/ZMHMTxAiQg/7xR0co4fz5ddAzI2RVam8V3MZ/sJv8IugmGX2WBl
+	fMhz7XA6B7/2JA5m1bb2fifZrM9ndXPcEiSQq0mJehewMwlD5+YZvHbqvCCuo45E
+	EIud6EUk02I=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 168497BFB3;
+	Mon,  7 Apr 2014 18:00:14 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C7E737BF94;
+	Mon,  7 Apr 2014 18:00:12 -0400 (EDT)
+In-Reply-To: <20140407.205800.839733420387302333.chriscool@tuxfamily.org>
+	(Christian Couder's message of "Mon, 07 Apr 2014 20:58:00 +0200
+	(CEST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: FE6E32FE-BE9F-11E3-80CE-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245909>
 
-On Apr 7, 2014, at 2:33 PM, Junio C Hamano <gitster@pobox.com> wrote:
+Christian Couder <chriscool@tuxfamily.org> writes:
 
-> Kevin Ballard <kevin@sb.org> writes:
-> 
->> I’ve started using notes recently, and I have notes.rewriteRef set so that
->> when I rebase, my notes will be kept. Unfortunately, it turns out that if a
->> rebase deletes my local commit because it already exists in upstream, it
->> doesn’t copy the note to the upstream commit. It seems perfectly reasonable to
->> me to expect the note to be copied to the upstream commit, as it represents
->> the same change.
-> 
-> That would cut both ways, depending on the use case.  I suspect that
-> those who use notes as remainder of what are still to be sent out
-> would appreciate the current behavior.
+> From: Junio C Hamano <gitster@pobox.com>
+>>
+>> A different way to sell a colon, e.g.
+>> 
+>>     Consider the instruction sed takes on its command line.
+>>     (e.g. "sed 's/frotz/nitfol/' <xyzzy").  In the most general
+>>     form, you would always give it as the value of an '-e' option
+>>     (e.g. "sed -e 's/frotz/nitfol' <xyzzy"), but you are allowed to
+>>     be loose in limited occassions.  "Key:value" is like that, and
+>>     in the most general form, it actually needs to be spelled as
+>>     "-e 'Key:value'".
+>> 
+>> is possible, but I do not think it is a particularly good analogy,
+>> because what you have as the alternative is "Key=value", and not
+>> "-e 'Key:value'", or "--Key=value" (the last would probably be the 
+>> most natural way to express this).
+>
+> The analogy that I would use is rather that Perl lets people use
+> 's:foo:bar:' as well as 's=foo=bar=' instead of 's/foo/bar/' if they
+> prefer.
 
-It depends on how things are sent out. I know Git operates by sending all
-patches to the ML, which are then reapplied, so they end up with a different
-commit hash. But in most of the projects I've worked in, the main workflow
-ends up with commits getting merged into master without getting rewritten. The
-reason why I'm requesting this behavior is that committing without rewriting
-isn't necessarily a strict rule.
+I could *almost* buy that, but that does not hold as you are not
+allowing (and I do not think you need to in this case) the user to
+pick any termination character like "s|foo|bar|".  The only thing
+you are doing is forbidding both ":" and "=" from the set of allowed
+characters for labels.
 
-For example, in the project that I'm using notes for, every commit needs to go
-through Gerrit for code review. Normally it gets reviewed and merged into
-origin/master without a rewrite, and my note is preserved. But sometimes
-someone else will sneak a commit in first and I'll need to rebase. If I rebase
-locally, that works, but Gerrit also offers to rebase my commit for me. And if
-I let Gerrit do it, I still want my note to be preserved. In the end, there
-should be no practical difference between me rebasing and Gerrit rebasing.
+However.
 
-In general, Git doesn't know what the user is using notes for. If the user has
-requested that notes persist through rewrite operations, it seems reasonable
-that Git should recognize rewrites that happened remotely too, not just
-locally.
+I think we could buy the syntax if the "Key:value" form were the
+*only* form, *without* accepting "Key=value".
 
-As for your particular example of tracking what still needs to be sent out,
-I'm not sure I understand that example. If I `git push` or use format-patch
-and send an email, isn't that sending it out? Therefore I need to
-update/delete my note explicitly. And if I want to track what hasn't made it
-into origin/master yet, well, the origin/master ref already does that for me.
+The latter is a poor attempt to pretend as if it is a normal command
+line option, but because that form does not even take double-dashes
+at the beginning, it even fails to mimic as a command line option.
 
->> Another potential issues is if the commit exists upstream, but the surrounding
->> context has changed enough that it contains a different patch-id. In this
->> case, I would want Git to take the extra effort to correlate the upstream
->> commit with my local one (it has the same message, modulo any Signed-Off-By
->> lines, the same authorship info, and all the - and + lines in the diff are
->> identical).
-> 
-> That would be an orthogonal improvement, I would think.  Such a
-> smarter "patch-id may mistake it, but it is a moral equivalent"
-> detection would not only be useful for copying notes, but also for
-> skipping the commit from getting replayed in the first place, no?
-
-Perhaps, but replaying an empty commit already does nothing. Although I
-suppose `git rebase` does have the `--keep-empty` flag, so it might be useful
-there.
-
->> On a semi-related note, I don't see why Git should be warning about
->> notes.displayRef evaluating to a reference that doesn't exist. It doesn't
->> exist because I haven't created any notes for that ref in this repository yet.
->> But that doesn't mean I won't be creating them eventually, and when I do I
->> want them to be displayed.
-> 
-> That also cuts both ways. I think a warning is primarily to let
-> those who mistyped the refname take notice.
-
-I get that, but I don't think that's particularly important. There's no
-practical difference between typoing the ref in notes.displayRef and forgtting
-to set up notes.displayRef in the first place. Git certainly can't warn about
-the latter. And the warning about the former is quite annoying if I did not
-in fact typo, but rather just haven’t created any notes in that ref yet.
-
--Kevin Ballard
+It would be one way to reduce the unnecessary cognitive load from
+the users when learning the Git command line argument convention to
+reject the "key=value" form and only stick to "key: value" form.
+After all, because of the shape of the footer we add to the log
+message (i.e. a keyword label followed by a colon followed by a SP
+followed by the value), it is clear that we can use ":" as the
+separator without inconveniencing the users who want to use some
+unusual characters in the label part, but there is no strong reason
+to reject an equal sign in the label.
