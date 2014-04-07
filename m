@@ -1,106 +1,97 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v3 23/27] struct ref_update: store refname as a FLEX_ARRAY
-Date: Mon,  7 Apr 2014 15:48:14 +0200
-Message-ID: <1396878498-19887-24-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v3 27/27] ref_transaction_commit(): work with transaction->updates in place
+Date: Mon,  7 Apr 2014 15:48:18 +0200
+Message-ID: <1396878498-19887-28-git-send-email-mhagger@alum.mit.edu>
 References: <1396878498-19887-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Brad King <brad.king@kitware.com>,
 	Johan Herland <johan@herland.net>, Jeff King <peff@peff.net>,
 	Vicent Marti <tanoku@gmail.com>, git@vger.kernel.org,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 07 15:49:37 2014
+X-From: git-owner@vger.kernel.org Mon Apr 07 15:49:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WX9vd-0003AS-8K
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Apr 2014 15:49:37 +0200
+	id 1WX9vd-0003AS-Pw
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Apr 2014 15:49:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755405AbaDGNta (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Apr 2014 09:49:30 -0400
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:44178 "EHLO
+	id S1755408AbaDGNtc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Apr 2014 09:49:32 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:44184 "EHLO
 	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755392AbaDGNtK (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Apr 2014 09:49:10 -0400
-X-AuditID: 12074413-f79076d000002d17-b3-5342acd491b3
+	by vger.kernel.org with ESMTP id S1755322AbaDGNtR (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Apr 2014 09:49:17 -0400
+X-AuditID: 12074413-f79076d000002d17-dc-5342acdc6054
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 12.88.11543.4DCA2435; Mon,  7 Apr 2014 09:49:08 -0400 (EDT)
+	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 63.88.11543.CDCA2435; Mon,  7 Apr 2014 09:49:16 -0400 (EDT)
 Received: from michael.fritz.box (p5B156B1D.dip0.t-ipconnect.de [91.21.107.29])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s37DmJaU026029
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s37DmJaY026029
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Mon, 7 Apr 2014 09:49:07 -0400
+	Mon, 7 Apr 2014 09:49:14 -0400
 X-Mailer: git-send-email 1.9.1
 In-Reply-To: <1396878498-19887-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrHIsWRmVeSWpSXmKPExsUixO6iqHtljVOwwZE+G4ud6yQsuq50M1k0
-	9F5htph3dxeTxe0V85ktfrT0MFt87FzA7MDu8ff9ByaPnbPusntcevmdzePjs+XsHs969zB6
-	XLyk7PF5k1wAexS3TVJiSVlwZnqevl0Cd8bcNwkFbbwV01fWNjBe5Opi5OSQEDCR+DV5ETOE
-	LSZx4d56ti5GLg4hgcuMEqduPWCFcI4xSUx495INpIpNQFdiUU8zE4gtIqAmMbHtEAtIEbPA
-	FUaJKx+3s4AkhAW8JP7c+AhWxCKgKnF1+T+gZg4OXgFXic3P/CG2yUmcPDaZFcTmBArPOHSL
-	EcQWEnCRuL/mGMsERt4FjAyrGOUSc0pzdXMTM3OKU5N1i5MT8/JSi3TN9XIzS/RSU0o3MULC
-	TngH466TcocYBTgYlXh4Vx5yDBZiTSwrrsw9xCjJwaQkyvt8mVOwEF9SfkplRmJxRnxRaU5q
-	8SFGCQ5mJRFertVAOd6UxMqq1KJ8mJQ0B4uSOK/aEnU/IYH0xJLU7NTUgtQimKwMB4eSBO96
-	kEbBotT01Iq0zJwShDQTByfIcC4pkeLUvJTUosTSkox4UFzEFwMjAyTFA7R3Ltje4oLEXKAo
-	ROspRkUpcd4SkIQASCKjNA9uLCyZvGIUB/pSmPc5SBUPMBHBdb8CGswENNjQFWxwSSJCSqqB
-	0Ttk/tXqyo+6pxQ5lva6rY5S8bD8dOuRXOWq0o2loVYWYuu9tRhnPOfTFudmuHFo9xzW6ase
-	CrjH+h+dFdLSyyfJOO1vqeCK22mLHe8oPFixSqznVJip2v9eyxUMwfGyS5bft+lK 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrPIsWRmVeSWpSXmKPExsUixO6iqHtnjVOwwZTFihY710lYdF3pZrJo
+	6L3CbDHv7i4mi9sr5jNb/GjpYbb42LmA2YHd4+/7D0weO2fdZfe49PI7m8fHZ8vZPZ717mH0
+	uHhJ2ePzJrkA9ihum6TEkrLgzPQ8fbsE7oxlz26xFXRyVfw4/5y1gbGZo4uRg0NCwETi9ZvI
+	LkZOIFNM4sK99WxdjFwcQgKXGSV+d/1nhHCOMUlMf9HCAlLFJqArsainmQnEFhFQk5jYdogF
+	pIhZ4AqjxJWP28GKhAWiJb6/O8gIsoFFQFXi4AJ2kDCvgKvEvxv32SC2yUmcPDaZFcTmBIrP
+	OHSLEcQWEnCRuL/mGMsERt4FjAyrGOUSc0pzdXMTM3OKU5N1i5MT8/JSi3TN9XIzS/RSU0o3
+	MUICT3gH466TcocYBTgYlXh4Vx5yDBZiTSwrrsw9xCjJwaQkyvt8mVOwEF9SfkplRmJxRnxR
+	aU5q8SFGCQ5mJRFertVAOd6UxMqq1KJ8mJQ0B4uSOK/aEnU/IYH0xJLU7NTUgtQimKwMB4eS
+	BO96kEbBotT01Iq0zJwShDQTByfIcC4pkeLUvJTUosTSkox4UGTEFwNjAyTFA7R3Ltje4oLE
+	XKAoROspRkUpcd4SkIQASCKjNA9uLCydvGIUB/pSmPc5SBUPMBXBdb8CGswENNjQFWxwSSJC
+	SqqBUbfo7WT+E3OOrQ5jMVv75JdMiyff6644zpjdTzjdw36a3XoZZGolzi7W3uoo/+1yUHTd
+	46qY07Iryualvl8QWTtpx+FmJvcI9soo/VMLE9UdJp2wnH3j6Ia/iy2MV20pvL5/ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245851>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245852>
+
+Now that we free the transaction when we are done, there is no need to
+make a copy of transaction->updates before working with it.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs.c | 15 ++++++---------
- 1 file changed, 6 insertions(+), 9 deletions(-)
+ refs.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index b6778aa..2ff195f 100644
+index c058f30..728a761 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -3274,11 +3274,11 @@ static int update_ref_write(const char *action, const char *refname,
-  * value or to zero to ensure the ref does not exist before update.
-  */
- struct ref_update {
--	const char *refname;
- 	unsigned char new_sha1[20];
- 	unsigned char old_sha1[20];
- 	int flags; /* REF_NODEREF? */
- 	int have_old; /* 1 if old_sha1 is valid, 0 otherwise */
-+	const char refname[FLEX_ARRAY];
- };
- 
- /*
-@@ -3301,12 +3301,8 @@ static void ref_transaction_free(struct ref_transaction *transaction)
+@@ -3413,19 +3413,17 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 			   const char *msg, enum action_on_err onerr)
  {
- 	int i;
+ 	int ret = 0, delnum = 0, i;
+-	struct ref_update **updates;
+ 	const char **delnames;
+ 	int n = transaction->nr;
++	struct ref_update **updates = transaction->updates;
  
--	for (i = 0; i < transaction->nr; i++) {
--		struct ref_update *update = transaction->updates[i];
--
--		free((char *)update->refname);
--		free(update);
--	}
-+	for (i = 0; i < transaction->nr; i++)
-+		free(transaction->updates[i]);
+ 	if (!n)
+ 		return 0;
  
- 	free(transaction->updates);
- 	free(transaction);
-@@ -3320,9 +3316,10 @@ void ref_transaction_rollback(struct ref_transaction *transaction)
- static struct ref_update *add_update(struct ref_transaction *transaction,
- 				     const char *refname)
- {
--	struct ref_update *update = xcalloc(1, sizeof(*update));
-+	size_t len = strlen(refname);
-+	struct ref_update *update = xcalloc(1, sizeof(*update) + len + 1);
+ 	/* Allocate work space */
+-	updates = xmalloc(sizeof(*updates) * n);
+ 	delnames = xmalloc(sizeof(*delnames) * n);
  
--	update->refname = xstrdup(refname);
-+	strcpy((char *)update->refname, refname);
- 	ALLOC_GROW(transaction->updates, transaction->nr + 1, transaction->alloc);
- 	transaction->updates[transaction->nr++] = update;
- 	return update;
+ 	/* Copy, sort, and reject duplicate refs */
+-	memcpy(updates, transaction->updates, sizeof(*updates) * n);
+ 	qsort(updates, n, sizeof(*updates), ref_update_compare);
+ 	ret = ref_update_reject_duplicates(updates, n, onerr);
+ 	if (ret)
+@@ -3480,7 +3478,6 @@ cleanup:
+ 	for (i = 0; i < n; i++)
+ 		if (updates[i]->lock)
+ 			unlock_ref(updates[i]->lock);
+-	free(updates);
+ 	free(delnames);
+ 	ref_transaction_free(transaction);
+ 	return ret;
 -- 
 1.9.1
