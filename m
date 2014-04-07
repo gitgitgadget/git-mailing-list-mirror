@@ -1,96 +1,65 @@
-From: Torsten =?utf-8?q?B=C3=B6gershausen?= <tboegi@web.de>
-Subject: [PATCH] Unicode: update of combining code points
-Date: Mon, 7 Apr 2014 21:38:33 +0200
-Message-ID: <201404072138.34379.tboegi@web.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 00/25] Lockfile correctness and refactoring
+Date: Mon, 7 Apr 2014 15:40:44 -0400
+Message-ID: <20140407194043.GE19342@sigill.intra.peff.net>
+References: <1396827247-28465-1-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: tboegi@web.de
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 07 21:40:46 2014
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Mon Apr 07 21:40:51 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WXFPR-0001vS-Tt
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Apr 2014 21:40:46 +0200
+	id 1WXFPX-0001zg-BV
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Apr 2014 21:40:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755316AbaDGTkm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Apr 2014 15:40:42 -0400
-Received: from mout.web.de ([212.227.17.11]:54032 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755201AbaDGTkl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Apr 2014 15:40:41 -0400
-Received: from appes.localnet ([78.72.74.102]) by smtp.web.de (mrweb001) with
- ESMTPSA (Nemesis) id 0M6mgu-1Wu7RT3f1A-00wYnW; Mon, 07 Apr 2014 21:40:40
- +0200
-X-Provags-ID: V03:K0:hKqpdH+5dbr+TlVgE6pPh1TQeHUj+tbqwf/fbQMDrkQc9d14ZHC
- P8HYri90laH5IqYqku5t9YUhwVl49eHT4HvCseKU62pUyKSdOtbmfIWH1t3YXgJSg1NVA9L
- 1VCKiMDgbr+htiKO16P6rQsRueTr9f6DX+QZjkKiy9JaysYXN4QQJRAWbg1A7iqibqjGXnj
- UACcdrMALC87+v7Vj841w==
+	id S1755384AbaDGTkq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Apr 2014 15:40:46 -0400
+Received: from cloud.peff.net ([50.56.180.127]:55659 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754687AbaDGTkq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Apr 2014 15:40:46 -0400
+Received: (qmail 15687 invoked by uid 102); 7 Apr 2014 19:40:45 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 07 Apr 2014 14:40:45 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 07 Apr 2014 15:40:44 -0400
+Content-Disposition: inline
+In-Reply-To: <1396827247-28465-1-git-send-email-mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245899>
 
-Unicode 6.3 defines the following code as combining or accents,
-git_wcwidth() should return 0.
+On Mon, Apr 07, 2014 at 01:33:42AM +0200, Michael Haggerty wrote:
 
-Earlier unicode standards had defined these code point as "reserved":
+> This is a second attempt at renovating the lock file code.  Thanks to
+> Peff, Junio, Torsten, and Eric for their helpful reviews of v1.
+> 
+> v1 of this patch series [1] did some refactoring and then added a new
+> feature to the lock_file API: the ability to activate a new version of
+> a locked file while retaining the lock.
+> 
+> But the review of v1 turned up even more correctness issues in the
+> existing implementation of lock files.  So this v2 dials back the
+> scope of the changes (it omits the new feature) but does more work to
+> fix problems with the current lock file implementation.
+> 
+> The main theme of this patch series is to better define the state
+> diagram for lock_file objects and to fix code that left them in
+> incorrect, indeterminate, or unexpected states.  There are also a few
+> patches that convert several functions to use strbufs instead of
+> limiting pathnames to a maximum length.
 
-358 COMBINING DOT ABOVE RIGHT
-359 COMBINING ASTERISK BELOW
-35A COMBINING DOUBLE RING BELOW
-35B COMBINING ZIGZAG ABOVE
-35C COMBINING DOUBLE BREVE BELOW
-487 COMBINING CYRILLIC POKRYTIE
-5A2 HEBREW ACCENT ATNAH HAFUKH,
-5BA HEBREW POINT HOLAM HASER FOR VAV
-5C5 HEBREW MARK LOWER DOT
-5C7 HEBREW POINT QAMATS QATAN
-604 ARABIC SIGN SAMVAT
-616 ARABIC SMALL HIGH LIGATURE ALEF WITH LAM WITH YEH
-617 ARABIC SMALL HIGH ZAIN
-618 ARABIC SMALL FATHA
-619 ARABIC SMALL DAMMA
-61A ARABIC SMALL KASRA
-659 ARABIC ZWARAKAY
-65A ARABIC VOWEL SIGN SMALL V ABOVE
-65B ARABIC VOWEL SIGN INVERTED SMALL V ABOVE
-65C ARABIC VOWEL SIGN DOT BELOW
-65D ARABIC REVERSED DAMMA
-65E ARABIC FATHA WITH TWO DOTS
-65F ARABIC WAVY HAMZA BELOW
+Looks OK to me, modulo the few comments I sent.
 
-This commit touches only the range 300-6FF, there may be more to be upd=
-ated.
+I still think resolve_symref should probably not be "best-effort", but
+that can come later on top.
 
-Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
----
- utf8.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
-
-diff --git a/utf8.c b/utf8.c
-index a831d50..77c28d4 100644
---- a/utf8.c
-+++ b/utf8.c
-@@ -84,11 +84,10 @@ static int git_wcwidth(ucs_char_t ch)
- 	 *   "uniset +cat=3DMe +cat=3DMn +cat=3DCf -00AD +1160-11FF +200B c".
- 	 */
- 	static const struct interval combining[] =3D {
--		{ 0x0300, 0x0357 }, { 0x035D, 0x036F }, { 0x0483, 0x0486 },
--		{ 0x0488, 0x0489 }, { 0x0591, 0x05A1 }, { 0x05A3, 0x05B9 },
--		{ 0x05BB, 0x05BD }, { 0x05BF, 0x05BF }, { 0x05C1, 0x05C2 },
--		{ 0x05C4, 0x05C4 }, { 0x0600, 0x0603 }, { 0x0610, 0x0615 },
--		{ 0x064B, 0x0658 }, { 0x0670, 0x0670 }, { 0x06D6, 0x06E4 },
-+		{ 0x0300, 0x036F }, { 0x0483, 0x0489 }, { 0x0591, 0x05BD },
-+		{ 0x05BF, 0x05BF }, { 0x05C1, 0x05C2 }, { 0x05C4, 0x05C5 },
-+		{ 0x05C7, 0x05C7 }, { 0x0600, 0x0604 }, { 0x0610, 0x061A },
-+		{ 0x064B, 0x065F }, { 0x0670, 0x0670 }, { 0x06D6, 0x06E4 },
- 		{ 0x06E7, 0x06E8 }, { 0x06EA, 0x06ED }, { 0x070F, 0x070F },
- 		{ 0x0711, 0x0711 }, { 0x0730, 0x074A }, { 0x07A6, 0x07B0 },
- 		{ 0x0901, 0x0902 }, { 0x093C, 0x093C }, { 0x0941, 0x0948 },
---=20
-1.9.0
+-Peff
