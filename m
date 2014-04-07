@@ -1,94 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-multimail: update to version 1.0.0
-Date: Mon, 07 Apr 2014 11:56:42 -0700
-Message-ID: <xmqqd2gtm0id.fsf@gitster.dls.corp.google.com>
-References: <1396884040-26014-1-git-send-email-mhagger@alum.mit.edu>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v9 11/11] Documentation: add documentation for 'git
+ interpret-trailers'
+Date: Mon, 07 Apr 2014 20:58:00 +0200 (CEST)
+Message-ID: <20140407.205800.839733420387302333.chriscool@tuxfamily.org>
+References: <xmqqk3b4ogwu.fsf@gitster.dls.corp.google.com>
+	<CAP8UFD38TE=5zxvkDvLRsDTpC6zDo6EN5q_HJMQPbUBcfJVsSg@mail.gmail.com>
+	<xmqq4n25nkt0.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Apr 07 20:57:12 2014
+Content-Type: Text/Plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: christian.couder@gmail.com, jrnieder@gmail.com,
+	git@vger.kernel.org, josh@joshtriplett.org,
+	sunshine@sunshineco.com, ramsay@ramsay1.demon.co.uk
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Apr 07 20:58:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WXEjH-0004Ty-Fn
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Apr 2014 20:57:11 +0200
+	id 1WXEkG-0005HM-AM
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Apr 2014 20:58:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756067AbaDGS4t convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Apr 2014 14:56:49 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60256 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755577AbaDGS4p convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Apr 2014 14:56:45 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D941C7A2CC;
-	Mon,  7 Apr 2014 14:56:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=peknWFmjpIMZ
-	5Q2b9g0NnQ7wzpo=; b=lxmPFD4cJ5HyP/9gHq0ljd8gitNWwbvSRN+7vauqcipn
-	B41BIqThWp11rI3JB6wXjUWW/ki0f/fTWUVA3JYYy7+qEvQbCechGfAIi+HsBrUq
-	bBB7Nw6gJyWx4fNc8ugfgJVtwoYTaK6ne4mT+y8Ni87vjn3vi4hNgcDeBSS4EhY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=XHCJvQ
-	fCtXpyR5cGDJZ/PkuU2qG7rO5hQUupWXx+lCLC0ylW5VQLRIHNbz0PZrzJB4iVLi
-	McyygGM7n0BTe9HMQPVpLVfoxwwVbVnCWvYtjYRFG4C9X/MnBgQ3ywWu9ltX2VCT
-	jmTOJQ0xSwOOM6qmmvbYHBvsPfIYfmOt8vK+U=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C32F37A2CB;
-	Mon,  7 Apr 2014 14:56:44 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C10BC7A2CA;
-	Mon,  7 Apr 2014 14:56:43 -0400 (EDT)
-In-Reply-To: <1396884040-26014-1-git-send-email-mhagger@alum.mit.edu> (Michael
-	Haggerty's message of "Mon, 7 Apr 2014 17:20:40 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 5C7FA93C-BE86-11E3-A1B8-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755883AbaDGS6F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Apr 2014 14:58:05 -0400
+Received: from mail-3y.bbox.fr ([194.158.98.45]:54824 "EHLO mail-3y.bbox.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756105AbaDGS6D (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Apr 2014 14:58:03 -0400
+Received: from localhost (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
+	by mail-3y.bbox.fr (Postfix) with ESMTP id A6FB36C;
+	Mon,  7 Apr 2014 20:58:00 +0200 (CEST)
+In-Reply-To: <xmqq4n25nkt0.fsf@gitster.dls.corp.google.com>
+X-Mailer: Mew version 6.3 on Emacs 23.3 / Mule 6.0 (HANACHIRUSATO)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245890>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+From: Junio C Hamano <gitster@pobox.com>
+>
+> Christian Couder <christian.couder@gmail.com> writes:
+> 
+>> First accepting both ':' and '=' means one can see the "git
+>> interpret-trailers" as acting on trailers only. Not just on trailers
+>> from the intput message and option parameters from the command line.
+> 
+> Sorry, you lost me.  What does "acting on trailers only" really
+> mean?
 
-> ...
-> Contributions-by: Rapha=C3=ABl Hertzog <hertzog@debian.org>
-> Contributions-by: Eric Berberich <eric.berberich@gmail.com>
-> Contributions-by: Michiel Holtkamp <git@elfstone.nl>
-> Contributions-by: Malte Swart <mswart@devtation.de>
-> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
-> ---
-> Junio, how would you like other people's contributions to be recorded
-> within the Git project?  I have listed them above as
-> "Contributions-by".  All of these people have signed off on their
-> contributions (recorded in my GitHub repo).  So should I also/instead
-> add "Signed-off-by" for those people?
+It means that the command can seen as processing only trailers, (from
+stdin and from its arguments), sorry if I used the wrong verb.
 
-Either is fine, as long as somewhere in that directory:
+> Do you mean the command should/can be run without any command
+> line options, pick up the existing "Signed-off-by:" and friends in
+> its input and emit its output, somehow taking these existing ones as
+> its instruction regarding how to transform the input to its output?
+>
+>> And second there is also a practical advantage, as the user can
+>> copy-paste trailers directly from other messages into the command line
+>> to pass them as arguments to "git interpret-trailers" without the need
+>> to replace the ':' with '='. Even if this command is not often used
+>> directly by users, it might simplify scripts using it.
+>>
+>> Third there is a technical advantage which is that the code that
+>> parses arguments from the command line can be the same as the code
+>> that parses trailers from the input message.
+> 
+> I do not see these two as valid arguments to make the command line
+> more complex to the end users
 
- - we make it clear that the copy we have in contrib/ is merely for
-   "batteries included" convenience;
+I don't think that it makes the command more complex to the end users.
 
- - we refer to the canonical source that is your repository;
+> ---who now need to know that only this
+> command treats its command line in a funny way, accepting a colon in
+> place of an equal sign.
 
- - we tell readers to go there to get the authoritative and up to
-   date copy, as what we have in contrib/ is possibly stale.
+It accepts both. So if they think that it is like a regular command,
+which uses '=' for (key, value) pairs, it will work, and if they think
+it works on trailers, which use ':' for (key, value) pairs, it will
+also work.
 
-In the longer term, I have a feeling that we may be better off to
-make the "git core" tree not be the "batteris included" convenience
-tree, though.  In the early days, Linus's rationale for including
-"gitk" held true: having tools that are not quite core is a good way
-to get people (especially those without C background) involved in
-the still-small project in its infancy to help nurture the developer
-community.  The same reasoning stood behind the merging of "gitweb".
+> A different way to sell a colon, e.g.
+> 
+>     Consider the instruction sed takes on its command line.
+>     (e.g. "sed 's/frotz/nitfol/' <xyzzy").  In the most general
+>     form, you would always give it as the value of an '-e' option
+>     (e.g. "sed -e 's/frotz/nitfol' <xyzzy"), but you are allowed to
+>     be loose in limited occassions.  "Key:value" is like that, and
+>     in the most general form, it actually needs to be spelled as
+>     "-e 'Key:value'".
+> 
+> is possible, but I do not think it is a particularly good analogy,
+> because what you have as the alternative is "Key=value", and not
+> "-e 'Key:value'", or "--Key=value" (the last would probably be the 
+> most natural way to express this).
 
-We already are beyond that stage, and good tools like iMerge and
-multimail that can stand on its own may be better off flourishing
-outside "git core" tree, still within the same developer community.
+The analogy that I would use is rather that Perl lets people use
+'s:foo:bar:' as well as 's=foo=bar=' instead of 's/foo/bar/' if they
+prefer.
