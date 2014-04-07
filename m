@@ -1,117 +1,126 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v9 11/11] Documentation: add documentation for 'git interpret-trailers'
-Date: Mon, 7 Apr 2014 11:39:01 +0200
-Message-ID: <CAP8UFD38TE=5zxvkDvLRsDTpC6zDo6EN5q_HJMQPbUBcfJVsSg@mail.gmail.com>
-References: <20140401191831.353.99271.chriscool@tuxfamily.org>
-	<20140401192023.353.34477.chriscool@tuxfamily.org>
-	<20140402003938.GE6851@google.com>
-	<CAP8UFD1hrXDdwKokLH_j=vwWoViC9sSJHf0gTFubh-oFQao4MA@mail.gmail.com>
-	<xmqqob0gohc2.fsf@gitster.dls.corp.google.com>
-	<xmqqk3b4ogwu.fsf@gitster.dls.corp.google.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v2 18/25] lockfile: avoid transitory invalid states
+Date: Mon, 07 Apr 2014 13:13:10 +0200
+Message-ID: <53428846.7060104@alum.mit.edu>
+References: <1396827247-28465-1-git-send-email-mhagger@alum.mit.edu> <1396827247-28465-19-git-send-email-mhagger@alum.mit.edu> <534242AC.7030908@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	git <git@vger.kernel.org>, Josh Triplett <josh@joshtriplett.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 07 11:39:12 2014
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>,
+	=?ISO-8859-15?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Mon Apr 07 13:13:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WX61F-0008RB-QI
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Apr 2014 11:39:10 +0200
+	id 1WX7UO-0001it-Pn
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Apr 2014 13:13:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755137AbaDGJjE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Apr 2014 05:39:04 -0400
-Received: from mail-we0-f172.google.com ([74.125.82.172]:41806 "EHLO
-	mail-we0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755149AbaDGJjD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Apr 2014 05:39:03 -0400
-Received: by mail-we0-f172.google.com with SMTP id t61so6535874wes.31
-        for <git@vger.kernel.org>; Mon, 07 Apr 2014 02:39:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=jhvXKXl7w1myWuKAiEMtEIW8HNICo4tYkXmsAvX1Ybg=;
-        b=JBLarU0QmEpVcCIiVPs2tfY7rvsrFyoVSTnnDjVnrsSgQxmQ+c4zR7A18W1cwxDDAC
-         Q9U+/14UeFbNiNOKAFiCgm4Kk5Wa6SJuz4VgH4qgSCbg1zhEtiUViBrxTzpVSX9+6dgD
-         ff/VS49aC6wvvRh3pyz5OY/+CsHAKRMNaSAJdgwaJb3cXVnV8J8FMIZtOKqQiKuCgzdf
-         sJPEO0lQM+4lYr767m+WJHmdkLyGqy5GE+5Gtv8U6jLLaYIF0WTbm6JwPrpwIAU9ycSS
-         8TVHMQFXA9oy0Vp5W1lqk4tbX5GwJKbjzOZw2I3avq01PqSJK93Wqvd0xFNnCqNvkhdq
-         0I5A==
-X-Received: by 10.180.7.133 with SMTP id j5mr24044537wia.55.1396863541550;
- Mon, 07 Apr 2014 02:39:01 -0700 (PDT)
-Received: by 10.216.174.68 with HTTP; Mon, 7 Apr 2014 02:39:01 -0700 (PDT)
-In-Reply-To: <xmqqk3b4ogwu.fsf@gitster.dls.corp.google.com>
+	id S1754874AbaDGLNR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Apr 2014 07:13:17 -0400
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:56783 "EHLO
+	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753510AbaDGLNP (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Apr 2014 07:13:15 -0400
+X-AuditID: 12074411-f79ab6d000002f0e-25-5342884acb14
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 49.EA.12046.A4882435; Mon,  7 Apr 2014 07:13:14 -0400 (EDT)
+Received: from [192.168.69.148] (p5B156B1D.dip0.t-ipconnect.de [91.21.107.29])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s37BDAj4011906
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Mon, 7 Apr 2014 07:13:12 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.4.0
+In-Reply-To: <534242AC.7030908@viscovery.net>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrCKsWRmVeSWpSXmKPExsUixO6iqOvV4RRs0PNdzKLrSjeTRUPvFWaL
+	lT9rLH609DBbnHnTyGjR2fGV0YHN41nvHkaPi5eUPRY/8PL4vEnO4+7/nUwet59tYwlgi+K2
+	SUosKQvOTM/Tt0vgzjiwej9TwTeRim8/JjM1MJ4X6GLk5JAQMJGYfuQaI4QtJnHh3nq2LkYu
+	DiGBy4wSP9/9ZYdwzjJJPJq/nxWkildAW2LBu+UsIDaLgKrEzV87mEBsNgFdiUU9zUA2B4eo
+	QJDEn7OKEOWCEidnPgErFxHQkNh9uhdsJrPAFUaJjVO/M4PUCwu4S2zfDrV4PqPEpGfzwHZx
+	As1c/2w9C0iNhIC4RE9jEEiYGSj8o2klG4QtL7H97RzmCYyCs5Csm4WkbBaSsgWMzKsY5RJz
+	SnN1cxMzc4pTk3WLkxPz8lKLdE31cjNL9FJTSjcxQmJBcAfjjJNyhxgFOBiVeHhXHHIMFmJN
+	LCuuzD3EKMnBpCTKG9DqFCzEl5SfUpmRWJwRX1Sak1p8iFGCg1lJhHc3O1CONyWxsiq1KB8m
+	Jc3BoiTOy7dE3U9IID2xJDU7NbUgtQgmK8PBoSTBa9sO1ChYlJqeWpGWmVOCkGbi4AQZziUl
+	Upyal5JalFhakhEPiuD4YmAMg6R4gPYeagPZW1yQmAsUhWg9xajLsWHbmkYmIZa8/LxUKXHe
+	GyBFAiBFGaV5cCtgie8VozjQx8K8PiCX8ACTJtykV0BLmICWGLqCLSlJREhJNTDqrV563P3W
+	Cp1DihIhOXrW+fbv/T9uDvg1+b/BVOWYgx+nzeL/vetzzAM3hjiBaVWLXLX3NM+3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245829>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245830>
 
-On Sat, Apr 5, 2014 at 12:42 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Christian Couder <christian.couder@gmail.com> writes:
->> "The following features are planned but not yet implemented:
->>         - add more tests related to commands
->>         - add examples in documentation
->>         - integration with "git commit""
->
-> I was planning to merge the series to 'next', but perhaps we should
-> wait at least for the first two items (I do not think the third one
-> is necessary to block the series).
+On 04/07/2014 08:16 AM, Johannes Sixt wrote:
+> Am 4/7/2014 1:34, schrieb Michael Haggerty:
+>> Because remove_lock_file() can be called any time by the signal
+>> handler, it is important that any lock_file objects that are in the
+>> lock_file_list are always in a valid state.  And since lock_file
+>> objects are often reused (but are never removed from lock_file_list),
+>> that means we have to be careful whenever mutating a lock_file object
+>> to always keep it in a well-defined state.
+>> ...
+>> So, instead of encoding part of the lock_file state in the filename
+>> field, add a new bit "LOCK_FLAGS_LOCKFILE_ACTIVE" to flags, and use
+>> this bit to distinguish between a lock_file object that is active
+>> vs. one that is inactive.  Be careful to set this bit only when
+>> filename really contains the name of a file that should be deleted on
+>> cleanup.
+> 
+> Since this flag is primarily for communication between the main code and a
+> signal handler, the only safe way is to define the flag as volatile
+> sig_atomic_t, not to make it a bit of a larger type!
 
-I will send soon a new version of the series with more tests and fixes.
-It will also contains a patch that adds an empty line before the
-trailers in the output if there is not already one.
-After that I plan to work on adding examples to the documentation.
+Thanks for the feedback.  You are obviously right, and I will fix it.
 
->>> Why support both '=' and ':'?  Using just one would make it easier to
->>> grep through scripts to see who is adding signoffs.
->>
->> That was already discussed previously.
->
-> I do recall it was discussed previously, but given that a new reader
-> posed the same question, I am not sure if the end result in this
-> patch under discussion sufficiently answers the question in a
-> satisfactory way.
->
->> The reason is that people are used to "token=value" for command line
->> arguments, but trailers appears in the result as "token: value", so it
->> is better for the user if we support both.
->
-> While I do understand the part before ", so" on the second line, I
-> do not see why that leads to the conclusion at all.
->
-> Yes, because it is a well-established convention to separate option
-> name with its parameter with '=', accepting "--option=parameter"
-> makes sense.  That may result in a string "Option: parameter" added
-> to the output from the command.  I am not sure why that output has
-> anything to do with how the command line should be specified.
+But I have a feeling that this line of thought is going to lead to the
+signal handler's not being able to do anything.  How far can we afford
+to pursue strict correctness?  We have
 
-First accepting both ':' and '=' means one can see the "git
-interpret-trailers" as acting on trailers only. Not just on trailers
-from the intput message and option parameters from the command line.
-But from trailers both from the input message and being passed as
-arguments.
-In my opinion it is good if it can be seen this way, as it may
-simplifies the user's mental model of how the command works.
+	struct lock_file {
+		struct lock_file *next;
+		int fd;
+		pid_t owner;
+		char on_list;
+		char filename[PATH_MAX];
+	};
 
-And second there is also a practical advantage, as the user can
-copy-paste trailers directly from other messages into the command line
-to pass them as arguments to "git interpret-trailers" without the need
-to replace the ':' with '='. Even if this command is not often used
-directly by users, it might simplify scripts using it.
+	static struct lock_file *lock_file_list;
 
-Third there is a technical advantage which is that the code that
-parses arguments from the command line can be the same as the code
-that parses trailers from the input message.
+The signal handler currently reads
 
-Thanks,
-Christian.
+    lock_file_list
+    lock_file::next
+    lock_file::fd
+    lock_file::owner
+    lock_file::filename
+    *lock_file::filename
+
+and writes lock_file_list.  Among other things it calls close(),
+unlink(), vsnprintf(), and fprintf() (the last two via warning()).
+
+But most of these actions are undefined under the C99 standard:
+
+> If the signal occurs other than as the result of calling the abort
+> or raise function, the behavior is undefined if the signal handler
+> refers to any object with static storage duration other than by
+> assigning a value to an object declared as volatile sig_atomic_t, or
+> the signal handler calls any function in the standard library other
+> than the abort function, the _Exit function, or the signal function
+> with the first argument equal to the signal number corresponding to
+> the signal that caused the invocation of the handler.
+
+I don't have time to rewrite *all* of Git right now, so how can we get
+reasonable safety and portability within a feasible amount of work?
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
