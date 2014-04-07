@@ -1,131 +1,95 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v9 11/11] Documentation: add documentation for 'git interpret-trailers'
-Date: Mon, 07 Apr 2014 09:52:59 -0700
-Message-ID: <xmqq4n25nkt0.fsf@gitster.dls.corp.google.com>
-References: <20140401191831.353.99271.chriscool@tuxfamily.org>
-	<20140401192023.353.34477.chriscool@tuxfamily.org>
-	<20140402003938.GE6851@google.com>
-	<CAP8UFD1hrXDdwKokLH_j=vwWoViC9sSJHf0gTFubh-oFQao4MA@mail.gmail.com>
-	<xmqqob0gohc2.fsf@gitster.dls.corp.google.com>
-	<xmqqk3b4ogwu.fsf@gitster.dls.corp.google.com>
-	<CAP8UFD38TE=5zxvkDvLRsDTpC6zDo6EN5q_HJMQPbUBcfJVsSg@mail.gmail.com>
+Subject: Re: [PATCH] ls-files: do not trust stat info if lstat() fails
+Date: Mon, 07 Apr 2014 10:13:31 -0700
+Message-ID: <xmqqzjjxm5ac.fsf@gitster.dls.corp.google.com>
+References: <CAPig+cRurqCHyFtpCFOisc=1u06JSpmE9rHQa0ioLxrQMuJ4Dw@mail.gmail.com>
+	<1396012689-22480-1-git-send-email-pclouds@gmail.com>
+	<xmqq38hvvbr7.fsf@gitster.dls.corp.google.com>
+	<CACsJy8DBixHTeqitcAcQRAqY3b4prkwQGgJGuw7hbT7BQAZt9w@mail.gmail.com>
+	<xmqqvbuqqstn.fsf@gitster.dls.corp.google.com>
+	<CACsJy8CTv5jZKjqq6fAJeVj-sqJHAF761V6TofVWs-V5GPnbcA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	git <git@vger.kernel.org>, Josh Triplett <josh@joshtriplett.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 07 18:53:44 2014
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 07 19:13:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WXCnl-0008Dq-Pt
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Apr 2014 18:53:42 +0200
+	id 1WXD76-0006Au-FK
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Apr 2014 19:13:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753641AbaDGQxF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Apr 2014 12:53:05 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43996 "EHLO
+	id S1755495AbaDGRNg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Apr 2014 13:13:36 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62431 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753197AbaDGQxC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Apr 2014 12:53:02 -0400
+	id S1753777AbaDGRNf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Apr 2014 13:13:35 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 70C6E7A596;
-	Mon,  7 Apr 2014 12:53:02 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5BE537AE28;
+	Mon,  7 Apr 2014 13:13:34 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=goBbPIppEU6fkmcOJ6zepnuB3lo=; b=fB0H6z
-	GvapbAShO9luS2Pzws8dO0v1Hv7CUntMq70GJYfuRxYn/hFLWEOkb97Lv1At66Q1
-	o3yn+kFu3uwuVSCyBt6NijlPZPz1AXEyKdhgMJm67sFbojdbf0RrlNbNn3+MgzUK
-	08is2/1Nmi+cMFpkXalBS7ruWdowtNEj43IRg=
+	:content-type; s=sasl; bh=szP+vhoKR30knjTBAxxksi+gA1o=; b=P0t04P
+	WKxjDrP8CTkG+vHMep8NWq694yGJtcMFkcXR6DULyO9PH90hELH/KQhuQYryCCQc
+	pOW7iwIRcqdMkjB+bcMGlqOKptknK6DxIH3xdfEMSUTTV8lBwyI93iEU3sr9PIIy
+	hVpO6zPdlsXHLSEBayBIVJfNblW+IwaK1iiD8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=oT+F+uWF8iDhzLRM9Pi0xpcHWZRaKvGR
-	0ieQKamxiidmJFv9H1g/1ZM6du0aOOo4QziWHoj26mBrLtxv9IcjPkmJXXjH8YhT
-	irSDkS/BEY6grIGW1zeXSsYWOtqv7nTVtGChFrXOxIOjibYDTOrTE6Mp+bqJpW0/
-	FdIhELi8zM4=
+	:content-type; q=dns; s=sasl; b=KvQHmYN4p65h+kESNG20oN9ByZOuGOTo
+	p/zkF2RD19jqs8sOfAevfKNqnIU4LkaDqyNWXdz9miTeMQXVJtFSDLqYTlPU3Hze
+	OYREpH1ab5F91wTFdKpgu1cIQMCBgzxeYarjbezXG1G722JyxwrKV9kl3Zv3PzpK
+	LjL8f3MD+RQ=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5E31F7A595;
-	Mon,  7 Apr 2014 12:53:02 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 48FFA7AE26;
+	Mon,  7 Apr 2014 13:13:34 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 55F237A589;
-	Mon,  7 Apr 2014 12:53:01 -0400 (EDT)
-In-Reply-To: <CAP8UFD38TE=5zxvkDvLRsDTpC6zDo6EN5q_HJMQPbUBcfJVsSg@mail.gmail.com>
-	(Christian Couder's message of "Mon, 7 Apr 2014 11:39:01 +0200")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 305027AE24;
+	Mon,  7 Apr 2014 13:13:33 -0400 (EDT)
+In-Reply-To: <CACsJy8CTv5jZKjqq6fAJeVj-sqJHAF761V6TofVWs-V5GPnbcA@mail.gmail.com>
+	(Duy Nguyen's message of "Sat, 5 Apr 2014 15:03:31 +0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 146B5378-BE75-11E3-8F1A-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: F29E4E82-BE77-11E3-A6AB-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245866>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245867>
 
-Christian Couder <christian.couder@gmail.com> writes:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-> On Sat, Apr 5, 2014 at 12:42 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Junio C Hamano <gitster@pobox.com> writes:
+>>> Or even better to show an error message when the error code is
+>>> unexpected? The unkown tag '!' says "there are problems" but if it
+>>> shows up sort of permanently, '!' won't help much, I think.
 >>
->>> Christian Couder <christian.couder@gmail.com> writes:
->>> "The following features are planned but not yet implemented:
->>>         - add more tests related to commands
->>>         - add examples in documentation
->>>         - integration with "git commit""
->>
->> I was planning to merge the series to 'next', but perhaps we should
->> wait at least for the first two items (I do not think the third one
->> is necessary to block the series).
+>> I am OK with that approach, but then one question remains: should we
+>> say it is deleted, modified, both, or neither?
 >
-> I will send soon a new version of the series with more tests and fixes.
-> It will also contains a patch that adds an empty line before the
-> trailers in the output if there is not already one.
+> The question is moot if the user does not ignore stderr because they
+> should just ignore those error-reported entries. If they do
+> 2>/dev/null, I think we should err on the safe side and say modified.
+> We only say deleted if lstat() returns ENOENT or ENOTDIR like in your
+> patch.
 
-Ah, yes, that one was mentioned in the reviews, I remember.
+Doesn't the same reasoning behind "when we do not know for sure that
+a path is not modified, it would be safe if we said the path may be
+modified" also tell us that it is safer to say a path may be lost if
+we cannot tell?
 
-> After that I plan to work on adding examples to the documentation.
+One likely case where we cannot tell if it is modified would be when
+we cannot read the path (perhaps the parent directory accidentally
+lost its x-bit).  Saying "it may be modified" would be one way to
+have the user take notice, for an interactive user.  A script that
+runs ls-files may be using the paths to drive "git add", "tar cf -",
+etc. and emitting such an unreadable path is one way to make these
+downstream commands signal that something fishy is going on by
+erroring out.
 
-OK, thanks.
-
-> First accepting both ':' and '=' means one can see the "git
-> interpret-trailers" as acting on trailers only. Not just on trailers
-> from the intput message and option parameters from the command line.
-
-Sorry, you lost me.  What does "acting on trailers only" really
-mean?  Do you mean the command should/can be run without any command
-line options, pick up the existing "Signed-off-by:" and friends in
-its input and emit its output, somehow taking these existing ones as
-its instruction regarding how to transform the input to its output?
-
-> And second there is also a practical advantage, as the user can
-> copy-paste trailers directly from other messages into the command line
-> to pass them as arguments to "git interpret-trailers" without the need
-> to replace the ':' with '='. Even if this command is not often used
-> directly by users, it might simplify scripts using it.
->
-> Third there is a technical advantage which is that the code that
-> parses arguments from the command line can be the same as the code
-> that parses trailers from the input message.
-
-I do not see these two as valid arguments to make the command line
-more complex to the end users---who now need to know that only this
-command treats its command line in a funny way, accepting a colon in
-place of an equal sign.
-
-A different way to sell a colon, e.g.
-
-    Consider the instruction sed takes on its command line.
-    (e.g. "sed 's/frotz/nitfol/' <xyzzy").  In the most general
-    form, you would always give it as the value of an '-e' option
-    (e.g. "sed -e 's/frotz/nitfol' <xyzzy"), but you are allowed to
-    be loose in limited occassions.  "Key:value" is like that, and
-    in the most general form, it actually needs to be spelled as
-    "-e 'Key:value'".
-
-is possible, but I do not think it is a particularly good analogy,
-because what you have as the alternative is "Key=value", and not
-"-e 'Key:value'", or "--Key=value" (the last would probably be the 
-most natural way to express this).
+So, I am not sure if we should be silent on an unexpected error when
+we are asked to report deletes when we would be vocal when we are
+asked to report modifications.
