@@ -1,39 +1,39 @@
 From: Torsten =?utf-8?q?B=C3=B6gershausen?= <tboegi@web.de>
 Subject: [PATCH] Unicode: update of combining code points
-Date: Mon, 7 Apr 2014 21:34:54 +0200
-Message-ID: <201404072134.55333.tboegi@web.de>
+Date: Mon, 7 Apr 2014 21:38:33 +0200
+Message-ID: <201404072138.34379.tboegi@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: tboegi@web.de
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 07 21:40:40 2014
+X-From: git-owner@vger.kernel.org Mon Apr 07 21:40:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WXFPI-0001pR-Dp
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Apr 2014 21:40:36 +0200
+	id 1WXFPR-0001vS-Tt
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Apr 2014 21:40:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755187AbaDGTkb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Apr 2014 15:40:31 -0400
-Received: from mout.web.de ([212.227.15.3]:65188 "EHLO mout.web.de"
+	id S1755316AbaDGTkm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Apr 2014 15:40:42 -0400
+Received: from mout.web.de ([212.227.17.11]:54032 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755161AbaDGTka convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Apr 2014 15:40:30 -0400
+	id S1755201AbaDGTkl convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Apr 2014 15:40:41 -0400
 Received: from appes.localnet ([78.72.74.102]) by smtp.web.de (mrweb001) with
- ESMTPSA (Nemesis) id 0Md4V8-1WF1nb0PFy-00IFd2; Mon, 07 Apr 2014 21:40:29
+ ESMTPSA (Nemesis) id 0M6mgu-1Wu7RT3f1A-00wYnW; Mon, 07 Apr 2014 21:40:40
  +0200
-X-Provags-ID: V03:K0:X34RdBV6E9gZwBumrTFDSyeGF7LDCIu81RmSyjazdhQPdlEfqFX
- lbMV8Ix09QFUnFo5vcjYznBPRYCdIfkHeWc3EAjSrwtdi+YcD5pE/SNoHfjG7evFwpEpDm+
- 1vYlAl1sn/fIPl2i5cFKmPAcwcSMZBEJx1gj9Qhe+oAhM0ZwjBdz+7HwPSIV4E2sOKKPDDj
- GLnc0fwmtdK2iJdvAVQ6g==
+X-Provags-ID: V03:K0:hKqpdH+5dbr+TlVgE6pPh1TQeHUj+tbqwf/fbQMDrkQc9d14ZHC
+ P8HYri90laH5IqYqku5t9YUhwVl49eHT4HvCseKU62pUyKSdOtbmfIWH1t3YXgJSg1NVA9L
+ 1VCKiMDgbr+htiKO16P6rQsRueTr9f6DX+QZjkKiy9JaysYXN4QQJRAWbg1A7iqibqjGXnj
+ UACcdrMALC87+v7Vj841w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245897>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245898>
 
 Unicode 6.3 defines the following code as combining or accents,
 git_wcwidth() should return 0.
