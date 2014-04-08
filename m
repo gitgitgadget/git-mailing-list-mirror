@@ -1,97 +1,117 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH] Remove the close_ref function.
-Date: Tue, 8 Apr 2014 15:23:47 -0700
-Message-ID: <CAL=YDWk3CkLG5P18GFhUKKQ9bEqOeJayNxKCiTMRtg-d4K_smw@mail.gmail.com>
-References: <1396991830-20938-1-git-send-email-sahlberg@google.com>
-	<1396991830-20938-2-git-send-email-sahlberg@google.com>
-	<xmqqeh173301.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Unicode: update of combining code points
+Date: Tue, 08 Apr 2014 15:37:15 -0700
+Message-ID: <xmqq61mj30tg.fsf@gitster.dls.corp.google.com>
+References: <201404072139.42519.tboegi@web.de>
+	<20140407195458.GA3912@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 09 00:23:57 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 09 00:37:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WXeQv-0006zG-19
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Apr 2014 00:23:57 +0200
+	id 1WXedz-0006Ui-GD
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Apr 2014 00:37:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757929AbaDHWXx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Apr 2014 18:23:53 -0400
-Received: from mail-ve0-f174.google.com ([209.85.128.174]:43203 "EHLO
-	mail-ve0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756246AbaDHWXs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Apr 2014 18:23:48 -0400
-Received: by mail-ve0-f174.google.com with SMTP id oz11so1359386veb.5
-        for <git@vger.kernel.org>; Tue, 08 Apr 2014 15:23:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=AKGid808ZDCbXCDkfkSjzTzlHR/cFRXI7OG6i0P738E=;
-        b=c7dqziXbTP+jUibkF1NTJ1lkW8Mmeyj7kQ87lkSZAZfI/ZNHD9H26Nbvr5o469VGvQ
-         bUtP9E+ooYiplNUb8vKEIHpSSUKaNTD8JnArpBBLuOIkUh5ky2RiuFy29Pzt8VWobT0c
-         D5ODgb5aW8cf9tFFD9ktFILSkg5zl158eg/9aOJXBqKW63DoYt4H5U17Zxj5SpjllG+h
-         gmZbfxy5rUaOMWvSpyxj0oIzMjbmue5oNYWmvgMYwiAPlLpBnQuPsnyyWLCGUwY9/oWD
-         TP0Z0hh0T9litX9rkNdJm4GIzyW9RytSeVKWoZjsno4b5FQoGQPGUoQI79YEP+iWzdMh
-         KfsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=AKGid808ZDCbXCDkfkSjzTzlHR/cFRXI7OG6i0P738E=;
-        b=eaHF9DWbUCknXK9MqGwRtcRutNKkoT/oVNXGLsksRNLdwUDF2hWCOPbkWlYCzKqEI1
-         YTEi+4A9g7AdNBNaiXNKmrMvQEAB0voNIDSfOuArQVZD1iE/cjHSAFy726Vc+p8JoleB
-         dBItYx1upcd94h5B3e8Bv2PoZM2vffKcAqpMkCds36gVWcDfquej7jgRl1S2qWWtkV2R
-         ffGzEl0Ix7BrLtJHw2xPbWckpqTb6hz8PAYRhZI7bUOk+YphdZxo+3B3x8V2RzkQte9+
-         mrGFWzUxkNbH3nDVXgohqIjKaY9IR1PCgnkeqri33BnDJvMKgsHIyTRowaCSm7TazKxM
-         UzZw==
-X-Gm-Message-State: ALoCoQnxqtRbi+nXMRzFf5/zLH4QV8VDvB1AIGD0pnbsLl/99/Oyp1L21k2bhjeTj7+A8c68ZESKntAlo05z3jTzLfxKOtw+sSygiFimvr25T0Djjevsc2De9rrMWW9PBN4wxi4ihUpWJgkApPpjJIeNwFL3rOyTSXftTeJcPHozdovCuNN2nBlqCS/50lThIO/BZdK4tAef
-X-Received: by 10.58.107.65 with SMTP id ha1mr5422268veb.1.1396995827623; Tue,
- 08 Apr 2014 15:23:47 -0700 (PDT)
-Received: by 10.52.141.13 with HTTP; Tue, 8 Apr 2014 15:23:47 -0700 (PDT)
-In-Reply-To: <xmqqeh173301.fsf@gitster.dls.corp.google.com>
+	id S1757572AbaDHWhU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Apr 2014 18:37:20 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40994 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756410AbaDHWhT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Apr 2014 18:37:19 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4FC9A7BC63;
+	Tue,  8 Apr 2014 18:37:18 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=PVaOEDhyipZO
+	R2J6g5m+5NPBM/Q=; b=F5SpUgKt9IYvdlPYWfdUFmoxOvVWW2accuFSIeI5gjHP
+	m0mKosqIWKqP+qFhvYZ05/W3WoStI3yRinRDg2HAeD+fMGqhCPyrESc4VPWbOWc0
+	0DuYTtgWlKBoletnK49Dp8mgRHhIzRIkLBEVecuwERZUvsUao/jfTwSibP1K4cQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=uaiMKk
+	Hq5NbijD/b4GLE3JN6cKcWL9DGH5eTkslPjggj9+ddbTWcn5FsdYbrec4ewFdEcn
+	cBlARVW1B5/6UM3nZfKSL64bU6V/uhkECigQ1fa6K8kGpW2fHydLx8wRn+5xV7P1
+	9EXzRlQlxp/MUraf2pHExVZLKYehre+T1hbKw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2CC087BC61;
+	Tue,  8 Apr 2014 18:37:18 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1486C7BC5E;
+	Tue,  8 Apr 2014 18:37:17 -0400 (EDT)
+In-Reply-To: <20140407195458.GA3912@google.com> (Jonathan Nieder's message of
+	"Mon, 7 Apr 2014 12:54:58 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 569157A8-BF6E-11E3-99EB-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245963>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245964>
 
-On Tue, Apr 8, 2014 at 2:50 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Ronnie Sahlberg <sahlberg@google.com> writes:
->
->> @@ -2824,8 +2816,7 @@ int write_ref_sha1(struct ref_lock *lock,
->>               return -1;
->>       }
->>       if (write_in_full(lock->lock_fd, sha1_to_hex(sha1), 40) != 40 ||
->> -         write_in_full(lock->lock_fd, &term, 1) != 1
->> -             || close_ref(lock) < 0) {
->> +         write_in_full(lock->lock_fd, &term, 1) != 1) {
->
-> In the original code, we try to write the new object name and the
-> line terminator, and also try to make sure that the file descriptor
-> is successfully closed here.  Only when all of that is done
-> successfully we go update the reflog and then after that, we commit
-> the lockfile by renaming.
->
-> With the updated code, these two write(2)s may succeed, but we would
-> not know if the close(2) would succeed, until commit_lock_file() is
-> called much later in this codepath.
->
-> We would end up updating the reflog even when the close(2) of the
-> ref fails.
->
-> To be really paranoid, we should probably be doing an fsync(2)
-> to make sure that the bytes written hit the disk platter, not just
-> close(2), and such a change may be a good step in the direction to
-> make the code more robust; in that light, the patch goes in the
-> opposite direction "what it does is not robust enough anyway, so
-> let's loosen it further".
->
-> Hmm...
->
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Good point. Thanks.
-Please consider this patch abandoned.
+> Torsten B=C3=B6gershausen wrote:
+>
+>> Unicode 6.3 defines the following code as combining or accents,
+>> git_wcwidth() should return 0.
+>>
+>> Earlier unicode standards had defined these code point as "reserved"=
+:
+>
+> Thanks for the update.  Could the commit message also explain how thi=
+s
+> was noticed and what the user-visible effect is?
+>
+> For example:
+>
+>  "Unicode just announced that <...>.  That means we should mark the
+>   relevant code points as combining characters so git knows they are
+>   zero-width and doesn't screw up the alignment when presenting branc=
+h
+>   names in columns with 'git branch --column'"
+>
+> or something like that.
+
+Perhaps (the original read clearly enough for me, though).
+
+> [...]
+>> 358 COMBINING DOT ABOVE RIGHT
+>> 359 COMBINING ASTERISK BELOW
+>
+> I'm not sure this list is needed --- the code + the reference to the
+> Unicode 6.3 standard seems like enough (but if you think otherwise,
+> I don't really mind).
+
+I can go either way.
+
+>> This commit touches only the range 300-6FF, there may be more to be =
+updated.
+>
+> The "there may be more" here sounds ominous.
+
+Indeed it does ;-)
+
+> Does that mean Unicode
+> 6.3 also added some zero-width characters in other ranges that should
+> be dealt with in the future?  How many such ranges?  How do we know
+> when we're done?
+>
+> Just biting off the most important characters first and putting off
+> the rest for later sounds fine to me --- my complaint is that the
+> above comment doesn't make clear what the to-do list is for finishing
+> the update later.
+
+I'll queue this at the tip of 'pu', not to forget about it while
+waiting for a clarification.
+
+Thanks.
