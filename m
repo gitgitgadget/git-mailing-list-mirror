@@ -1,141 +1,59 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v10 11/12] Documentation: add documentation for 'git interpret-trailers'
-Date: Tue, 08 Apr 2014 09:52:49 -0700
-Message-ID: <xmqq7g6zlq5a.fsf@gitster.dls.corp.google.com>
-References: <20140406163214.15116.91484.chriscool@tuxfamily.org>
-	<20140406170204.15116.15559.chriscool@tuxfamily.org>
-	<5343A589.10503@alum.mit.edu>
-Mime-Version: 1.0
+From: Andrew Keller <andrew@kellerfarm.com>
+Subject: Re: Handling empty directories in Git
+Date: Tue, 8 Apr 2014 13:02:51 -0400
+Message-ID: <3FBDE5D3-1DC6-420C-866B-036D0CB17BA2@kellerfarm.com>
+References: <1396968442.95061.YahooMailNeo@web120806.mail.ne1.yahoo.com>
+Mime-Version: 1.0 (Mac OS X Mail 6.6 \(1510\))
 Content-Type: text/plain; charset=us-ascii
-Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org,
-	Johan Herland <johan@herland.net>,
-	Josh Triplett <josh@joshtriplett.org>,
-	Thomas Rast <tr@thomasrast.ch>,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Apr 08 18:53:09 2014
+Content-Transfer-Encoding: 8BIT
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Olivier LE ROY <olivier_le_roy@yahoo.com>
+X-From: git-owner@vger.kernel.org Tue Apr 08 19:02:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WXZGm-0001IM-KB
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Apr 2014 18:53:08 +0200
+	id 1WXZQI-0007wc-6R
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Apr 2014 19:02:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757295AbaDHQw7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Apr 2014 12:52:59 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46725 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756659AbaDHQw5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Apr 2014 12:52:57 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 470F37AF3B;
-	Tue,  8 Apr 2014 12:52:52 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Ah4V63KGg0OSxg/gHIPGxzmmwzc=; b=m/O4P+
-	tdSbeNyAl5U1hAusNtKhpCEFyWWFUoRMOl+3NlKqystI5c3EJe/QMkuVyqBM9OsE
-	A/W0yCKm+VUS3kSaxJ4cEN8QYw+E8vJIorLgawrxi9Ut93K48DsZriRzKUa1rBhV
-	dJHQgMFm5Ijm9htQNs9ycek/zSIssJWstBFz0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=PjViC1QdX6BhPCT5JaLTrD0i/OSiX5Ez
-	uTQ7dausLmyz4uDWSRfqbV/ieGshw0xNN8y6JTUCnP4XLgEOzjJEfodmnPQ4ex4e
-	cC0hlUDOx9CtdXGoyBq+sQutU7/9upeVorUy7ewr5UTxzta/q6YvwggaUC31VrXL
-	85Cg8COrFRk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2F5427AF3A;
-	Tue,  8 Apr 2014 12:52:52 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0E0A37AF38;
-	Tue,  8 Apr 2014 12:52:51 -0400 (EDT)
-In-Reply-To: <5343A589.10503@alum.mit.edu> (Michael Haggerty's message of
-	"Tue, 08 Apr 2014 09:30:17 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 38B35B44-BF3E-11E3-9A59-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756839AbaDHRCx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Apr 2014 13:02:53 -0400
+Received: from atl4mhob10.myregisteredsite.com ([209.17.115.48]:36044 "EHLO
+	atl4mhob10.myregisteredsite.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750868AbaDHRCx convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 8 Apr 2014 13:02:53 -0400
+Received: from mailpod.hostingplatform.com ([10.30.71.208])
+	by atl4mhob10.myregisteredsite.com (8.14.4/8.14.4) with ESMTP id s38H2o8Z031439
+	for <git@vger.kernel.org>; Tue, 8 Apr 2014 13:02:50 -0400
+Received: (qmail 9026 invoked by uid 0); 8 Apr 2014 17:02:50 -0000
+X-TCPREMOTEIP: 69.41.14.217
+X-Authenticated-UID: andrew@kellerfarm.com
+Received: from unknown (HELO devnet.ces.cvnt.net) (andrew@kellerfarm.com@69.41.14.217)
+  by 0 with ESMTPA; 8 Apr 2014 17:02:50 -0000
+In-Reply-To: <1396968442.95061.YahooMailNeo@web120806.mail.ne1.yahoo.com>
+X-Mailer: Apple Mail (2.1510)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245932>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+On Apr 8, 2014, at 10:47 AM, Olivier LE ROY <olivier_le_roy@yahoo.com> wrote:
 
-> Sorry for reappearing in this thread after such a long absence.  I
-> wanted to see what is coming up (I think this interpret-trailers command
-> will be handy!) so I read this documentation patch carefully, and added
-> some questions and suggestions below.
+> Hello, 
+> 
+> I have a project under SVN with contains empty directories.
+> 
+> I would like to move this project on a Git server, still handling empty directories.
+> 
+> The solution: put a .gitignore file in each empty directory to have them recognized by the Git database cannot work, because some scripts in my projects test the actual emptiness of the directories.
+> 
+> Is there any expert able to tell me: this cannot be done in Git, or this can be done by the following trick, or why there is no valuable reason to maintain empty directories under version control?
 
-Thanks for reading the patch carefully.  It helps to have fresh set
-of eyes that are not contaminated by the preconception formed by
-previous discussions, especially when reviewing the documentation
-whose primary target audiences are those who do not care about these
-previous back-and-forth.
+Git is designed to track files.  The existence of folders is secondary to the notion that files have a relative path inside the repository, which is perceived by the user as folders.
 
->> +trailer.<token>.where::
->> +	This can be either `after`, which is the default, or
->> +	`before`. If it is `before`, then a trailer with the specified
->> +	token, will appear before, instead of after, other trailers
->> +	with the same token, or otherwise at the beginning, instead of
->> +	at the end, of all the trailers.
->
-> Brainstorming: some other options that might make sense here someday:
-> ...
->> +trailer.<token>.ifexist::
->> +	This option makes it possible to choose what action will be
->> +	performed when there is already at least one trailer with the
->> +	same token in the message.
->> ++
->> +The valid values for this option are: `addIfDifferent` (this is the
->> +default), `addIfDifferentNeighbor`, `add`, `overwrite` or `doNothing`.
->
-> Are these option values case sensitive?
+Why can't your scripts create the folders on demand?  Or, could your scripts interpret a missing folder as an empty folder?
 
-It is interesting and somewhat sad that it all has to come back
-together inter-twined.  From the very beginning, I was opposed to
-having logical complexity that requires multi-words in both variable
-names (e.g. "if-exist") and values (e.g. "add-if-different"), and
-after $gmane/241929 where I let the devil's advocate "how about
-making the variable simpler without logical operation and put all
-the conditional on the value side?" suggestion shot down, I somehow
-was hoping that the value part got a lot simpler not to require
-multi-words, which would have meant that we would not have to worry
-about "Is it addIfDifferent? add-if-different? or Add_If_Different?"
-at all.  Sadly that is not what we have ended up with.
-
-So, with that realization...
-
-> If so, it might be a little bit
-> confusing because the same camel-case is often used in documentation for
-> configuration *keys*, which are not case sensitive [1], and users might
-> have gotten used to thinking of strings that look like this to be
-> non-case-sensitive.
-
-... very true.  Having to have these enum values as so complex to
-require multi-words is probably the root cause of the confusion, and
-we might probably be better off if we did not have to, but it would
-be helpful to allow various different spellings (i.e. make them case
-insensitive to allow random camel spellings, and also accept things
-like "add-if-different" as well) if we absolutely have to have these
-complex values.
-
-But you had a lot of good questions and suggestions for possible
-future enhancements that we would need to take into account while
-designing the overall scheme to later allow them to fit into.  Maybe
-a value that is a single-token that consists of just a few words
-(e.g. "addIfDifferent") may not be the best way to go after all.
-
-I dunno.
-
-> What if there are multiple existing trailers with the same token?  Are
-> they all overwritten?
-> ...
-> What if the key appears multiple times in existing trailers?
-
-All good questions, I would think.
+Thanks,
+Andrew Keller
