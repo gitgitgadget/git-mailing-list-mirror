@@ -1,137 +1,76 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH] Remove the close_ref function.
-Date: Tue,  8 Apr 2014 14:17:10 -0700
-Message-ID: <1396991830-20938-2-git-send-email-sahlberg@google.com>
-References: <1396991830-20938-1-git-send-email-sahlberg@google.com>
-Cc: Ronnie Sahlberg <sahlberg@google.com>
+Subject: [PATCH] Remove redundant close_ref function
+Date: Tue,  8 Apr 2014 14:17:09 -0700
+Message-ID: <1396991830-20938-1-git-send-email-sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 08 23:17:41 2014
+X-From: git-owner@vger.kernel.org Tue Apr 08 23:22:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WXdOm-0001nS-PR
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Apr 2014 23:17:41 +0200
+	id 1WXdTb-0004sa-IT
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Apr 2014 23:22:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757200AbaDHVRe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Apr 2014 17:17:34 -0400
-Received: from mail-oa0-f73.google.com ([209.85.219.73]:49453 "EHLO
-	mail-oa0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757171AbaDHVRT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Apr 2014 17:17:19 -0400
-Received: by mail-oa0-f73.google.com with SMTP id n16so328136oag.4
-        for <git@vger.kernel.org>; Tue, 08 Apr 2014 14:17:18 -0700 (PDT)
+	id S1757385AbaDHVWe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Apr 2014 17:22:34 -0400
+Received: from mail-pb0-f73.google.com ([209.85.160.73]:53799 "EHLO
+	mail-pb0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756639AbaDHVWd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Apr 2014 17:22:33 -0400
+Received: by mail-pb0-f73.google.com with SMTP id rp16so207111pbb.0
+        for <git@vger.kernel.org>; Tue, 08 Apr 2014 14:22:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=K3QMWv0EDx7WMhjYMDMhC0/wg9IItxSMRWGStoBKDo0=;
-        b=RiAHbMo5cxuQ0dKeTecK4zFMJStnm82ldL2g06JuoKdWUO6vxoPuZSvUdn6JeZOFes
-         Xg/txcnp8DIpDR90/OP7o+lymXndcQQbvO2U7Z4JZd6Z5uLO+1dMj7Hvx+yQQUoMgqnr
-         P/YTTGGPUKqhWUYqA00OXlmGDNfgQ4M+qu/qNX7vzeFwHq0BcPURyslE+Bwggi9dpCQd
-         43cqkd9wNzQ63qnIfYmsoJdEDfCY9Nkto+/fm477xopIfikAO1grHzbhqHXlscFhEtbC
-         yDW3MfqzUwI22YJqwH3H5hFTabrN3kKbztG1+U1DS7GOK/5MKIHeItMux3QIJdmAJsTJ
-         Ggyg==
+        h=from:to:subject:date:message-id;
+        bh=+feHQeoYhq0YXKmQqorbolNgZwpU+V8vea3EPVkBx5g=;
+        b=E+wQMoBxqK4A1sf/BnWoa3/GUtTWQ7qsykU1/6MxAKRc3FGG+N/n2vB6PzlTmfLemS
+         qBhp5ye5mKFBipRqS6ABIVSXdPlqAJsCyQzx5/BmYpy6Gdu8YM8glFxjo5dX+zKg1sqF
+         +VId+og6ZvvmoDHYdFdGlRWkA6DFzh4YCyJdQhAXToQR+Nrfiw3JNibShVpGZIGcd7Q6
+         +DXuQBAnt61bxRyIbbXrmLK0WF7KeEexBzIjdjemcOnjLObPJlyYk1L0u75uF9pDL0UI
+         HYaE9TunwLzua8y04Zl2gpmnC5T1NEsZLEm4LEFsgpm7Xp3U7gkTwEwGtiwqQ0AD4Pc0
+         6yaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=K3QMWv0EDx7WMhjYMDMhC0/wg9IItxSMRWGStoBKDo0=;
-        b=MrI5QSRmPG8ovtQ3PBDx4q93DNfOATstu/q4Wgp7yltxwg5Zw5T8Akc08zdRuiuRvQ
-         TKcr5dbU2YoPf33vVVn2fHlDfamM6GeDPZmWolUOvIObH6K2lomL+/5J4fNMXV41EPKY
-         w1WQi4R+UFe915VBhqIEu+A43kVUretamWYDVU8q+YRtSAIK1y/a9N8dfzFkuH1+cBkL
-         bcwAJ6yNkMByTW1/qV2VVHivTgH70L6/WvRXc5yH1tW4mrrhYH8DxS9aBPfp1yKlOUSV
-         Jvc4xDhGQaokeWt56NKnzaKO0mpWPj7529Gvfd4/Y2yKmt90tnaFYVKHKaodEoqcLewW
-         3p1A==
-X-Gm-Message-State: ALoCoQm8OUdV2WCgVr0Gnylv83n47UBiPa2wOYAm2Y83nsuyRDtbI+5hbT6pyeKGwes66bAzHfhVB9FYtxJ9fQd8GPPJZ9GzE9Wme6eOby7ZnjlvRGMrhtN8RBxAicWx/eHlbUm7HjzQTR8ZwMjBFt52aEzNGNWFDwy1T+lm1zQHIJV2VNkoUygdqNkaoH830iHfZYpiyU9P
-X-Received: by 10.182.22.133 with SMTP id d5mr3000879obf.27.1396991838778;
-        Tue, 08 Apr 2014 14:17:18 -0700 (PDT)
-Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
-        by gmr-mx.google.com with ESMTPS id a44si636126yhb.6.2014.04.08.14.17.18
-        for <multiple recipients>
+        h=x-gm-message-state:from:to:subject:date:message-id;
+        bh=+feHQeoYhq0YXKmQqorbolNgZwpU+V8vea3EPVkBx5g=;
+        b=j3MCED74xQnY/a5uYmntCVqWr2vgqyZ4JfN/XPByBxW8j//c142Id7eCEwvmN4ysZv
+         nxBLypEIil6y3LkAP9Mhp+nxZMVOryUS5f+H8ExxqbUwiHmD6ST2l/IeYfdIR9Y2tHrw
+         2iEYswrtqgqd0D6gnpny7HKnfBPevMiuRkLei5ZUWsGa/noclHkLw4kpCxv93JAYYqG8
+         SLbROgRju4qOev1ACj/8h8/s7MOVxB/JSOcijVxzLhMcgtLwLOhds4hjHKkLnM9HLdKy
+         rCm0jcAEhL741tFHiIuX1rv3PQsCLCnb4jHRJ/LCVSlMjrf3nn6F8c6kR8jplxWgmAHL
+         iuTQ==
+X-Gm-Message-State: ALoCoQmRLdcLEyjwuTOff4iumsHXUmrvqGiFXzpEDR6PnXpUnL7WPPam98VSxR0vH4+izyrk+vBCnKzr9iGJeNdw4AKtdkswjsruZWACqU6vfCCmnRB3G2Jjq7aSwIKVneEnzfK4D48cWDK8AC0ClKUGxhrgMChwpu5cGORjfP9sukDTOVbn3QI/++MNRU4xp2aHoxdBjo31/QkbBMvdcyPKm+6ma0FtI2z8n6wUCAxf+griIGKg5aI=
+X-Received: by 10.68.201.134 with SMTP id ka6mr2974678pbc.4.1396991834470;
+        Tue, 08 Apr 2014 14:17:14 -0700 (PDT)
+Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
+        by gmr-mx.google.com with ESMTPS id a44si636093yhb.6.2014.04.08.14.17.14
+        for <git@vger.kernel.org>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 08 Apr 2014 14:17:18 -0700 (PDT)
+        Tue, 08 Apr 2014 14:17:14 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 912705A4223;
-	Tue,  8 Apr 2014 14:17:18 -0700 (PDT)
+	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 43AE331C259
+	for <git@vger.kernel.org>; Tue,  8 Apr 2014 14:17:14 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 53554E07A7; Tue,  8 Apr 2014 14:17:18 -0700 (PDT)
+	id DD2F6E07A7; Tue,  8 Apr 2014 14:17:13 -0700 (PDT)
 X-Mailer: git-send-email 1.9.1.475.ge4eef26.dirty
-In-Reply-To: <1396991830-20938-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245959>
 
-close_ref() is only called from two codepaths semi-immediately before unlock_ref() is called.
-Since unlock_ref() will also close the file if it is still open, we can delete close_ref() and
-let the file become closed during unlock_ref().
-This simplifies the refs.c api by removing a redundant function.
 
-Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
----
- builtin/reflog.c |  3 +--
- refs.c           | 11 +----------
- refs.h           |  3 ---
- 3 files changed, 2 insertions(+), 15 deletions(-)
+List,
 
-diff --git a/builtin/reflog.c b/builtin/reflog.c
-index c12a9784..b67fbe6 100644
---- a/builtin/reflog.c
-+++ b/builtin/reflog.c
-@@ -428,8 +428,7 @@ static int expire_reflog(const char *ref, const unsigned char *sha1, int unused,
- 		} else if (cmd->updateref &&
- 			(write_in_full(lock->lock_fd,
- 				sha1_to_hex(cb.last_kept_sha1), 40) != 40 ||
--			 write_str_in_full(lock->lock_fd, "\n") != 1 ||
--			 close_ref(lock) < 0)) {
-+			 write_str_in_full(lock->lock_fd, "\n") != 1)) {
- 			status |= error("Couldn't write %s",
- 				lock->lk->filename);
- 			unlink(newlog_path);
-diff --git a/refs.c b/refs.c
-index 28d5eca..094b047 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2665,14 +2665,6 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
- 	return 1;
- }
- 
--int close_ref(struct ref_lock *lock)
--{
--	if (close_lock_file(lock->lk))
--		return -1;
--	lock->lock_fd = -1;
--	return 0;
--}
--
- int commit_ref(struct ref_lock *lock)
- {
- 	if (commit_lock_file(lock->lk))
-@@ -2824,8 +2816,7 @@ int write_ref_sha1(struct ref_lock *lock,
- 		return -1;
- 	}
- 	if (write_in_full(lock->lock_fd, sha1_to_hex(sha1), 40) != 40 ||
--	    write_in_full(lock->lock_fd, &term, 1) != 1
--		|| close_ref(lock) < 0) {
-+	    write_in_full(lock->lock_fd, &term, 1) != 1) {
- 		error("Couldn't write %s", lock->lk->filename);
- 		unlock_ref(lock);
- 		return -1;
-diff --git a/refs.h b/refs.h
-index 87a1a79..d8732a5 100644
---- a/refs.h
-+++ b/refs.h
-@@ -153,9 +153,6 @@ extern struct ref_lock *lock_any_ref_for_update(const char *refname,
- 						const unsigned char *old_sha1,
- 						int flags, int *type_p);
- 
--/** Close the file descriptor owned by a lock and return the status */
--extern int close_ref(struct ref_lock *lock);
--
- /** Close and commit the ref locked by the lock */
- extern int commit_ref(struct ref_lock *lock);
- 
--- 
-1.9.1.423.g4596e3a
+This is a trivial patch that removes the function close_ref() from refs.c.
+This function was only called from two codepaths and can be removed since both codepaths shortly afterwards
+both call unlock_ref() which implicitely closes the file anyway.
+
+By removing this function we simplify the api to refs slightly.
+This also means that the lifetime of the filedescriptor becomes the same as the lifetime for the 'struct ref_lock' object.
+The filedescriptor is opened at the same time ref_lock is allocated and the descriptor is closed when ref_lock is released.
+
+
+regards
+ronnie sahlberg
