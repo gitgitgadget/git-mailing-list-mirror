@@ -1,75 +1,82 @@
-From: Ronald Weiss <weiss.ronald@gmail.com>
-Subject: Re: [PATCH v3 2/2] commit: add --ignore-submodules[=<when>] parameter
-Date: Tue, 08 Apr 2014 22:19:12 +0200
-Message-ID: <534459C0.4090705@gmail.com>
-References: <CABxC_L92v=cV=+e_DNa0L6f21LB0BRP5duai2h_heGJN_PRoUQ@mail.gmail.com>	<5335A78C.60401@web.de>	<CABxC_L-4=qcZiix05dL8GrDJXv=19fw4yB0qFzRRfw=G=_Gxbg@mail.gmail.com>	<53374E49.9000702@gmail.com>	<533874F9.3090802@web.de>	<5338AC36.6000109@gmail.com>	<5338B1B0.3050703@gmail.com>	<5339BAE4.8020306@web.de> <CABxC_L8_tQrANXji_Z0LfigxsAuzSDj3K9ndTGOTHh2ctHvc6A@mail.gmail.com> <5339F122.60801@gmail.com> <5339FBB4.1010101@gmail.com> <533B2036.3050506@web.de> <533B36AA.3090600@gmail.com> <533C5CBD.4050601@web.de> <533C6B57.3080901@gmail.com> <534180BC.308@web.de> <53431CB8.2050600@gmail.com> <53432EA5.5060102@gmail.com> <53444368.9050607@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: What's cooking for today
+Date: Tue, 08 Apr 2014 14:10:38 -0700
+Message-ID: <xmqqr45734tt.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Heiko Voigt <hvoigt@hvoigt.net>, Junio C Hamano <gitster@pobox.com>
-To: Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 08 22:19:26 2014
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 08 23:10:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WXcUP-0006xL-NZ
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Apr 2014 22:19:26 +0200
+	id 1WXdI7-0005xu-4E
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Apr 2014 23:10:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932170AbaDHUTT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Apr 2014 16:19:19 -0400
-Received: from mail-ee0-f47.google.com ([74.125.83.47]:57996 "EHLO
-	mail-ee0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932118AbaDHUTQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Apr 2014 16:19:16 -0400
-Received: by mail-ee0-f47.google.com with SMTP id b15so1098742eek.20
-        for <git@vger.kernel.org>; Tue, 08 Apr 2014 13:19:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=+p6ARgZx/1RcZgDIX3ZaWdcS6p557EOiU2IfRIGc1/g=;
-        b=lfAchzm2qhRfw9kcMiiTv8Gt4lxSVCJ3SYXQu9ZqJ9z4RyXb5jTMob8TOUkB0EC0W8
-         krT5kxDTBsFwj9MtFWiERJGqwhSkOlNpBmiWY5FyougrIL1h88Lm4CHRAoTDRuXwDnSk
-         nCFPXgOjj7dZjmC7SN/w0H7CRqwdxjVhltHjiYQKOnzXuQkdMFtPiecMJx8iA3srbRH4
-         SPQyIBJdPn505uBFwzmh7wuUZ+4+qRZlO2vj2F/XGtNSYp3XNnnMOCvZGdW3qwugF7P0
-         ENzYGKBZ6xo+zqa+1SeEVJocU0paIA4KMlEaxf6bgXWXyT+T1h/9rxiHD441LnKSp9qT
-         UmLg==
-X-Received: by 10.15.53.69 with SMTP id q45mr6674407eew.22.1396988355128;
-        Tue, 08 Apr 2014 13:19:15 -0700 (PDT)
-Received: from [10.0.1.226] (chello089173067059.chello.sk. [89.173.67.59])
-        by mx.google.com with ESMTPSA id 44sm6729117eek.30.2014.04.08.13.19.13
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 08 Apr 2014 13:19:14 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
-In-Reply-To: <53444368.9050607@web.de>
+	id S1757677AbaDHVKn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Apr 2014 17:10:43 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65151 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757276AbaDHVKm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Apr 2014 17:10:42 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3E1FF7BDA6;
+	Tue,  8 Apr 2014 17:10:41 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=r
+	CIDv17olDaFQWYKGLWbzKWEeuU=; b=funlBWZxeG1EQwP0tcgNcy3bQfx0DB/Bi
+	etEOvWfduYq7I9rr1JUnsvZmPUQitwlSIW1b/jTlhYzq5QNZlk9RveZJoaJGncMX
+	NbMmj1GD4XEv9iv8BAvNU+ro+R3zSAlYOcXKCDjU2Y/YL7/7OsF6U5+uFWeXTWYT
+	P+12zV4o7Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=UH3
+	Y5ZEKFtQtZXrofpFcQMT+wjk/Zlxy4zqXXFwQruSXD2/uPZVqf/S3b2OmcqQve82
+	VGIfaBCG6kJ1uRGjXvRCIoNRX5Pn4LENi7MEQ8+4ekShguZXF1gR3hIbrOcAGFXj
+	LtZHrpcGbugtwJ8gc3j0GxkdElR8ve/9GMKC1Tpw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 296687BDA5;
+	Tue,  8 Apr 2014 17:10:41 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1BFC07BDA3;
+	Tue,  8 Apr 2014 17:10:40 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 3CEF42EE-BF62-11E3-9D37-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245957>
 
-On 8. 4. 2014 20:43, Jens Lehmann wrote:
-> Am 08.04.2014 01:03, schrieb Ronald Weiss:
->> Git commit honors the 'ignore' setting from .gitmodules or .git/config,
->> but didn't allow to override it from command line, like other commands do.
->>
->> Useful <when> values for commit are 'all' (default) or 'none'. The others
->> ('dirty' and 'untracked') have same effect as 'none', as commit is only
->> interested in whether the submodule's HEAD differs from what is commited
->> in the superproject.
-> 
-> Unless it outputs a status message, then 'dirty' and 'untracked' do
-> influence what is shown there. Apart from that (and maybe tests for
-> these two cases ;-) this is looking good to me.
+As I do not want to send the full "what's cooking" report back to
+back, here is just a highlight of updates.
 
-Hm, You mean the status message, which is pre-inserted as comment into
-the commit message, when opening an editor to write the commit message?
+A handful of topics are now in 'master', including:
 
-OK, that really makes a difference, although really small and actually
-affecting nothing. I'll take it into account. But are You sure the tests
-for this would be actually useful? If only effect of them would be
-increasing time needed to run the full test suite, then it's better to
-not have them :-). But I can do that, if You still think it's useful.
+ - Fix for mis-used "nor", by Justin Lebar.
+
+ - MSVC port fixes, by Marat Radchenko.
+
+ - Portability fixes for gmtime sanity checking, by Peff.
+
+Also a few topics are now in 'next', expected to be kept there for
+the rest of this cycle, including:
+
+ - Compute the patch-id in a way that is stable with use of "git
+   diff -O<order>", which is unfortunately backward incompatible, by
+   Michael S. Tsirkin.
+
+ - Update the internal of "diff-tree" so that it can be used to
+   compare N trees (not just 2), and use it to optimize "diff
+   -c/--cc", by Kirill Smelkov.
+
+I am also hoping that a few other topics can join 'next' to be
+cooked for the rest of this cycle, including:
+
+ - "Ref-transaction" series by Michael.
+
+ - "Interpret-Trailers" series by Christian.
+
+Thanks.
