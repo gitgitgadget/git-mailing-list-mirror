@@ -1,75 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Apr 2014, #02; Mon, 7)
-Date: Tue, 08 Apr 2014 11:46:02 -0700
-Message-ID: <xmqq38hn4q39.fsf@gitster.dls.corp.google.com>
-References: <xmqqmwfwlr4f.fsf@gitster.dls.corp.google.com>
-	<53444156.8020800@web.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] describe: rewrite name_rev() iteratively
+Date: Tue, 8 Apr 2014 14:50:47 -0400
+Message-ID: <20140408185047.GA7073@sigill.intra.peff.net>
+References: <1396824434-31672-1-git-send-email-dragos.foianu@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Tue Apr 08 20:46:17 2014
+To: Dragos Foianu <dragos.foianu@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 08 20:50:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WXb2G-00054w-9k
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Apr 2014 20:46:16 +0200
+	id 1WXb6j-00085i-Qf
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Apr 2014 20:50:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757461AbaDHSqI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Apr 2014 14:46:08 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62327 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756960AbaDHSqF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Apr 2014 14:46:05 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DDB8A7965B;
-	Tue,  8 Apr 2014 14:46:04 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=MR2O22X8BXAOcCypsZWYBuHQqg4=; b=nIJt6j
-	mHETAfaBN143gVRQv7SmCUtn2QDK1uOp/pQbaQG/t3PEQ+JuAlYYuxitTNzy7435
-	AQmAK3vJWAqDZaZQD/OMNTcEJTVZ0Nn4A6PH0z1C13TqdGvd7DvmhKI2ml0ksObV
-	wMFl0hj3BQSb5ZstMm8rKRDYwobOs8KDNJ9PQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xCQwGNg8u+6rSx/J9KBL6wpoE/bvm+tX
-	Vw/yT1CmQAx3CvPCjzJRyngQpIm9rvrHLBiyKt6wZ3HQI172aRkmfNM5cMc1VSB9
-	GKAHz0FAzyNHVJj86ZhGwYeDCocI26SmWu3GkXHWltBHDyP8KtHIFVxlb+tjLK4x
-	zPQ3Il/JwlY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C86BD7965A;
-	Tue,  8 Apr 2014 14:46:04 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AF67679659;
-	Tue,  8 Apr 2014 14:46:03 -0400 (EDT)
-In-Reply-To: <53444156.8020800@web.de> (Jens Lehmann's message of "Tue, 08 Apr
-	2014 20:35:02 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 096629CE-BF4E-11E3-ADB3-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757285AbaDHSuu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Apr 2014 14:50:50 -0400
+Received: from cloud.peff.net ([50.56.180.127]:56259 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756164AbaDHSut (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Apr 2014 14:50:49 -0400
+Received: (qmail 17374 invoked by uid 102); 8 Apr 2014 18:50:49 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 08 Apr 2014 13:50:49 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 08 Apr 2014 14:50:47 -0400
+Content-Disposition: inline
+In-Reply-To: <1396824434-31672-1-git-send-email-dragos.foianu@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245948>
 
-Jens Lehmann <Jens.Lehmann@web.de> writes:
+On Mon, Apr 07, 2014 at 01:47:14AM +0300, Dragos Foianu wrote:
 
-> Am 08.04.2014 00:19, schrieb Junio C Hamano:
->> * jl/status-added-submodule-is-never-ignored (2014-04-07) 2 commits
->>  - commit -m: commit staged submodules regardless of ignore config
->>  - status/commit: show staged submodules regardless of ignore config
->
-> I have two more patches for gitk and git-gui doing the same there,
-> me thinks it would make a lot of sense all four make it into the
-> same version. Should I wait until this topic hits next (or master)
-> or does it make sense to send them to Pat and Paul right away?
+> The "git describe --contains" command uses the name_rev() function which
+> is currently a recursive function. This causes a Stack Overflow when the
+> history is large enough.
+> 
+> Rewrite name_rev iteratively using a stack on the heap. This slightly
+> reduces performance due to the extra operations on the heap, but the
+> function no longer overflows the stack.
 
-Either would be fine, but I suspect they would appreciate it sooner
-rather than later, if only as an advance notice.
+You can avoid the heap overhead by using an array for your stack, and
+only resizing it when necessary. Like this:
 
-How do these two relate to and/or interact with what Ronald and you
-have been discussing, by the way?
+    struct rev_stack {
+            int nr, alloc;
+            struct rev_data *data;
+    };
+
+    static struct rev_data *rev_stack_push(struct rev_stack *stack)
+    {
+            ALLOC_GROW(stack->data, stack->nr + 1, stack->alloc);
+            return &stack->data[stack->nr++];
+    }
+
+    static void rev_stack_pop(struct rev_stack *stack)
+    {
+            stack->nr--;
+    }
+
+    static void rev_stack_init(struct rev_stack *stack)
+    {
+            stack->nr = stack->alloc = 0;
+            stack->data = NULL;
+    }
+
+    static void rev_stack_release(struct rev_stack *stack)
+    {
+            free(stack->data);
+            rev_stack_init(stack);
+    }
+
+Usage would be something like:
+
+    struct rev_data *data = rev_stack_push(&stack);
+    data->commit = commit;
+    data->tip_name = tip_name;
+    ...
+
+IOW, you push first to allocate the space, and then do your
+make_rev_data, rather than the other way around.
+
+The downside is that your allocation is always as big as the deepest
+recursion so far, so you hold on to the memory a little longer than
+necessary. I think that's a good tradeoff versus an extra malloc() for
+every commit.
+
+-Peff
