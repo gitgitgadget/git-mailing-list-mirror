@@ -1,61 +1,78 @@
-From: Andrew Keller <andrew@kellerfarm.com>
+From: David Kastrup <dak@gnu.org>
 Subject: Re: Handling empty directories in Git
-Date: Tue, 8 Apr 2014 13:20:02 -0400
-Message-ID: <AE92C2A5-4EFE-454C-8D61-804AEE72D955@kellerfarm.com>
-References: <1396968442.95061.YahooMailNeo@web120806.mail.ne1.yahoo.com> <3FBDE5D3-1DC6-420C-866B-036D0CB17BA2@kellerfarm.com>
-Mime-Version: 1.0 (Mac OS X Mail 6.6 \(1510\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Olivier LE ROY <olivier_le_roy@yahoo.com>
-X-From: git-owner@vger.kernel.org Tue Apr 08 19:20:30 2014
+Date: Tue, 08 Apr 2014 19:36:18 +0200
+Message-ID: <87zjjvg1v1.fsf@fencepost.gnu.org>
+References: <1396968442.95061.YahooMailNeo@web120806.mail.ne1.yahoo.com>
+	<vpqob0blpna.fsf@anie.imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Olivier LE ROY <olivier_le_roy@yahoo.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Apr 08 19:36:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WXZhE-0003Bt-Px
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Apr 2014 19:20:29 +0200
+	id 1WXZwi-0005bA-7y
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Apr 2014 19:36:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757441AbaDHRUO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Apr 2014 13:20:14 -0400
-Received: from atl4mhob13.myregisteredsite.com ([209.17.115.51]:45299 "EHLO
-	atl4mhob13.myregisteredsite.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757434AbaDHRUG convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 8 Apr 2014 13:20:06 -0400
-Received: from mailpod.hostingplatform.com ([10.30.71.206])
-	by atl4mhob13.myregisteredsite.com (8.14.4/8.14.4) with ESMTP id s38HK04T020071
-	for <git@vger.kernel.org>; Tue, 8 Apr 2014 13:20:00 -0400
-Received: (qmail 23198 invoked by uid 0); 8 Apr 2014 17:20:00 -0000
-X-TCPREMOTEIP: 69.41.14.217
-X-Authenticated-UID: andrew@kellerfarm.com
-Received: from unknown (HELO devnet.ces.cvnt.net) (andrew@kellerfarm.com@69.41.14.217)
-  by 0 with ESMTPA; 8 Apr 2014 17:20:00 -0000
-In-Reply-To: <3FBDE5D3-1DC6-420C-866B-036D0CB17BA2@kellerfarm.com>
-X-Mailer: Apple Mail (2.1510)
+	id S932078AbaDHRgV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Apr 2014 13:36:21 -0400
+Received: from fencepost.gnu.org ([208.118.235.10]:56386 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757465AbaDHRgU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Apr 2014 13:36:20 -0400
+Received: from localhost ([127.0.0.1]:55428 helo=lola)
+	by fencepost.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <dak@gnu.org>)
+	id 1WXZwY-0007P1-Q0; Tue, 08 Apr 2014 13:36:18 -0400
+Received: by lola (Postfix, from userid 1000)
+	id 5DA5FE053F; Tue,  8 Apr 2014 19:36:18 +0200 (CEST)
+In-Reply-To: <vpqob0blpna.fsf@anie.imag.fr> (Matthieu Moy's message of "Tue,
+	08 Apr 2014 19:03:37 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245937>
 
-On Apr 8, 2014, at 1:02 PM, Andrew Keller <andrew@kellerfarm.com> wrote:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> On Apr 8, 2014, at 10:47 AM, Olivier LE ROY <olivier_le_roy@yahoo.com> wrote:
-> 
->> Hello, 
->> 
->> I have a project under SVN with contains empty directories.
->> 
->> I would like to move this project on a Git server, still handling empty directories.
->> 
->> The solution: put a .gitignore file in each empty directory to have them recognized by the Git database cannot work, because some scripts in my projects test the actual emptiness of the directories.
->> 
->> Is there any expert able to tell me: this cannot be done in Git, or this can be done by the following trick, or why there is no valuable reason to maintain empty directories under version control?
-> 
-> Git is designed to track files.  The existence of folders is secondary to the notion that files have a relative path inside the repository, which is perceived by the user as folders.
+> The reason would be closer to "there is a valuable reason, but not
+> valuable enough to change Git to do it". It's actually not so easy to
+> track directories properly. Storing them in the Git repository is
+> actually possible (actually, an empty tree is a special case of this,
+> and is obviously supported), but defining and implementing a decent
+> behavior for each Git command wrt this is not trivial.
+>
+> David Kastrup gave it a try a few years ago. I don't remember exactly
+> what made him give up, but it was never completed and merged.
 
-To clarify: That's Git's "personality" from the point of view of the front end, and is not the same as how data is actually stored.
+Oh, most likely what afflicts most of my unfinished projects.  I=A0lost
+focus at some point of time.  I don't remember any fundamentally
+unsolvable problems, but then I don't remember much at all.  There were
+some annoyances with sorting order (either regarding the sorting of xxx=
+/
+or . or ./ or whatever) and some other stuff.
 
-Thanks,
-Andrew Keller
+If anybody wants to take a look at the direction of unfinished stuff,
+I=A0can see whether there are some old backups with git repos in my
+possession.  But I really have no idea how much of the design might hav=
+e
+ended up in actual comments or code, and how much on some scraps of
+paper or half-committed memory, and how much of that might have been
+invalidated by other scraps of paper and half-committed memory.
+
+So there is not likely to be more than food for thought recoverable.
+
+I'm amused that you remember me being involved with that.  I=A0think
+I=A0myself had forgotten all about it until recently.  I=A0don't even
+recollect what made me remember again: looking at some old repo/commit
+or searching in some old mailing list archive.
+
+--=20
+David Kastrup
