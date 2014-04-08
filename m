@@ -1,118 +1,173 @@
-From: Olivier LE ROY <olivier_le_roy@yahoo.com>
-Subject: Re: Handling empty directories in Git
-Date: Tue, 8 Apr 2014 11:39:25 -0700 (PDT)
-Message-ID: <1396982365.73812.YahooMailNeo@web120805.mail.ne1.yahoo.com>
-References: <1396968442.95061.YahooMailNeo@web120806.mail.ne1.yahoo.com>	<vpqob0blpna.fsf@anie.imag.fr> <87zjjvg1v1.fsf@fencepost.gnu.org>
-Reply-To: Olivier LE ROY <olivier_le_roy@yahoo.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH v3 2/2] commit: add --ignore-submodules[=<when>] parameter
+Date: Tue, 08 Apr 2014 20:43:52 +0200
+Message-ID: <53444368.9050607@web.de>
+References: <CABxC_L92v=cV=+e_DNa0L6f21LB0BRP5duai2h_heGJN_PRoUQ@mail.gmail.com>	<5335A78C.60401@web.de>	<CABxC_L-4=qcZiix05dL8GrDJXv=19fw4yB0qFzRRfw=G=_Gxbg@mail.gmail.com>	<53374E49.9000702@gmail.com>	<533874F9.3090802@web.de>	<5338AC36.6000109@gmail.com>	<5338B1B0.3050703@gmail.com>	<5339BAE4.8020306@web.de> <CABxC_L8_tQrANXji_Z0LfigxsAuzSDj3K9ndTGOTHh2ctHvc6A@mail.gmail.com> <5339F122.60801@gmail.com> <5339FBB4.1010101@gmail.com> <533B2036.3050506@web.de> <533B36AA.3090600@gmail.com> <533C5CBD.4050601@web.de> <533C6B57.3080901@gmail.com> <534180BC.308@web.de> <53431CB8.2050600@gmail.com> <53432EA5.5060102@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: David Kastrup <dak@gnu.org>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Apr 08 20:39:36 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Heiko Voigt <hvoigt@hvoigt.net>, Junio C Hamano <gitster@pobox.com>
+To: Ronald Weiss <weiss.ronald@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 08 20:44:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WXavk-0000Sj-Kr
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Apr 2014 20:39:32 +0200
+	id 1WXb0B-0003cf-1u
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Apr 2014 20:44:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757466AbaDHSj2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Apr 2014 14:39:28 -0400
-Received: from nm5-vm4.bullet.mail.ne1.yahoo.com ([98.138.91.165]:35564 "EHLO
-	nm5-vm4.bullet.mail.ne1.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756359AbaDHSj1 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 8 Apr 2014 14:39:27 -0400
-Received: from [98.138.100.111] by nm5.bullet.mail.ne1.yahoo.com with NNFMP; 08 Apr 2014 18:39:26 -0000
-Received: from [98.138.89.244] by tm100.bullet.mail.ne1.yahoo.com with NNFMP; 08 Apr 2014 18:39:26 -0000
-Received: from [127.0.0.1] by omp1058.mail.ne1.yahoo.com with NNFMP; 08 Apr 2014 18:39:26 -0000
-X-Yahoo-Newman-Property: ymail-3
-X-Yahoo-Newman-Id: 125400.66295.bm@omp1058.mail.ne1.yahoo.com
-Received: (qmail 17623 invoked by uid 60001); 8 Apr 2014 18:39:26 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1396982365; bh=iVCQdp3xP5nhw9+zWm5fuIeE75EROUmoABxGZ7fT/Jg=; h=X-YMail-OSG:Received:X-Rocket-MIMEInfo:X-Mailer:References:Message-ID:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding; b=NE4fNw430aOFzf/tn44sD2joQBGMTJZKxU9jtHepX61HSLZNzNwACwYy9ON2kHMFdh0L+ix9D6VEMiXJJziGQnIuidYNisXqMfiQFLm8thEWZ4CjdO1ACk9P9zWepzsNq/JdDlOPTi3V1yMOb9VbmXCAXAssp+rAggmK0HvNd6Q=
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:X-Rocket-MIMEInfo:X-Mailer:References:Message-ID:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=ZDcC+GOkWtQlXYAJ4O0nqhLGNEbLQq+sbDj+d8BOqEgGOkhOpiBIOvTSznE9F5GZSRZf6Ay4Oc6V6EYiedXMnI0t83is80wD/oGMjVyf0Hp7Vd1oyscJJqVav++cSnp4zCqw6088PEl/kSnx4VAiForEcJTK409jmTyyJZBB+Bo=;
-X-YMail-OSG: sqpI7TYVM1myvqnNT6scTPQQRnvcuEpAA0PXryqgplYHrKW
- j3beREwX0BCjoxHVK42OTqB.gupQ0C9iHJMW_30s27AEJQULgKEJ16IH0_lO
- OZ83QkiE5qnwLGh255gK6e7vJJpxMQdU8Rre8darQ6dUQd5BoW1Z32nKYgx9
- ROzCn0enRcpdKjpg5i.2NgwoaZSXUlHyaglM8g1.6FATndBMwZajz3jKe4RX
- XV4gjonhrOPq1RpR8YmKmndSia_bLBlyYshr78bsvm1CoZ4JHHSBxwnDdjYk
- qUwjWKbshOiq9TagbtJU0k4YlJXt2p5Vk.FNL6asZWqPdd1sRsOYjvCGSzvd
- SBWnCWSKe82tod8Qu3MEIbE04_mkR.hkyPrdHRxrVRPLjbwPg7jkAYIJRqQ0
- t78ywZvsTWYolwzcxT1bfCfMX2ZFaeiwGVbFlr3oMocISZEQR2WV103e5QiP
- ehi.WQL3kNbU1ffk2YjQnkagVrlaHa3BHK9xLFy4ElJ5S2Qb.wRqTsClgSV2
- Bm8dLh1s7LRfRMAzJgMY3BfU8R22gNgZXUGK2nD1StN7TOgKUmJ1XHhEacQ-
- -
-Received: from [92.163.125.246] by web120805.mail.ne1.yahoo.com via HTTP; Tue, 08 Apr 2014 11:39:25 PDT
-X-Rocket-MIMEInfo: 002.001,SGkgRGF2aWQsCgp0aGFua3MgZm9yIHRoZSB3aG9sZSBzdG9yeS4gV2UgdW5kZXJzdGFuZCB3aHkgdGhlIGVtcHR5IGRpcmVjdG9yaWVzIGhhbmRsaW5nIHdhcyBuZXZlciBjb21wbGV0ZWQsIGFuZCBob3cgaXQgY291bGQgYmUsIGlmIG9uZSBkZXZlbG9wZXIgc3VibWl0ZWQgcGF0Y2hlcyBmb3IgdGhhdC4KClJlZ2FyZHMsCgpPbGl2aWVyIExFIFJPWQoKCgotLS0tLSBNYWlsIG9yaWdpbmFsIC0tLS0tCkRlwqA6IERhdmlkIEthc3RydXAgPGRha0BnbnUub3JnPgrDgMKgOiBNYXR0aGlldSBNb3kgPE1hdHRoaWUBMAEBAQE-
-X-Mailer: YahooMailWebService/0.8.182.648
-In-Reply-To: <87zjjvg1v1.fsf@fencepost.gnu.org>
+	id S1757436AbaDHSoA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Apr 2014 14:44:00 -0400
+Received: from mout.web.de ([212.227.17.11]:63433 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756314AbaDHSn7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Apr 2014 14:43:59 -0400
+Received: from [192.168.178.41] ([79.193.64.34]) by smtp.web.de (mrweb001)
+ with ESMTPSA (Nemesis) id 0LZeou-1XGsUv2h4O-00lRtq; Tue, 08 Apr 2014 20:43:53
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
+In-Reply-To: <53432EA5.5060102@gmail.com>
+X-Enigmail-Version: 1.6
+X-Provags-ID: V03:K0:rJc6TItk5LDg1WDwLsBIa+ooacckrtvUTScWmpTcQoP7z24vrf7
+ LUBo/dNKkPCs84feOl89tvSBCxBArUaW/3DT3BgsLX2zMxbm+72aZbCIKyzPZc2+EewHn3j
+ 0mIUx9I+YVMGXOTGzyMM8rQd3oQjUZKxMavPOpdCbn3MMhObu5A7ZJWqhg0NG0QqnWGzAHt
+ pTFx7C3+2cXz7LR7UCmsw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245944>
 
-Hi David,
+Am 08.04.2014 01:03, schrieb Ronald Weiss:
+> Git commit honors the 'ignore' setting from .gitmodules or .git/config,
+> but didn't allow to override it from command line, like other commands do.
+> 
+> Useful <when> values for commit are 'all' (default) or 'none'. The others
+> ('dirty' and 'untracked') have same effect as 'none', as commit is only
+> interested in whether the submodule's HEAD differs from what is commited
+> in the superproject.
 
-thanks for the whole story. We understand why the empty directories han=
-dling was never completed, and how it could be, if one developer submit=
-ed patches for that.
+Unless it outputs a status message, then 'dirty' and 'untracked' do
+influence what is shown there. Apart from that (and maybe tests for
+these two cases ;-) this is looking good to me.
 
-Regards,
-
-Olivier LE ROY
-
-
-
------ Mail original -----
-De=A0: David Kastrup <dak@gnu.org>
-=C0=A0: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Cc=A0: Olivier LE ROY <olivier_le_roy@yahoo.com>; "git@vger.kernel.org"=
- <git@vger.kernel.org>
-Envoy=E9 le : Mardi 8 avril 2014 17h36
-Objet=A0: Re: Handling empty directories in Git
-
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
-
-> The reason would be closer to "there is a valuable reason, but not
-> valuable enough to change Git to do it". It's actually not so easy to
-> track directories properly. Storing them in the Git repository is
-> actually possible (actually, an empty tree is a special case of this,
-> and is obviously supported), but defining and implementing a decent
-> behavior for each Git command wrt this is not trivial.
->
-> David Kastrup gave it a try a few years ago. I don't remember exactly
-> what made him give up, but it was never completed and merged.
-
-Oh, most likely what afflicts most of my unfinished projects.=A0 I=A0lo=
-st
-focus at some point of time.=A0 I don't remember any fundamentally
-unsolvable problems, but then I don't remember much at all.=A0 There we=
-re
-some annoyances with sorting order (either regarding the sorting of xxx=
-/
-or . or ./ or whatever) and some other stuff.
-
-If anybody wants to take a look at the direction of unfinished stuff,
-I=A0can see whether there are some old backups with git repos in my
-possession.=A0 But I really have no idea how much of the design might h=
-ave
-ended up in actual comments or code, and how much on some scraps of
-paper or half-committed memory, and how much of that might have been
-invalidated by other scraps of paper and half-committed memory.
-
-So there is not likely to be more than food for thought recoverable.
-
-I'm amused that you remember me being involved with that.=A0 I=A0think
-I=A0myself had forgotten all about it until recently.=A0 I=A0don't even
-recollect what made me remember again: looking at some old repo/commit
-or searching in some old mailing list archive.
-
-
---=20
-David Kastrup
+> This patch depends on Jens Lehmann's patch "commit -m: commit staged
+> submodules regardless of ignore config". Without it,
+> "commit -m --ignore-submodules" would not work and tests introduced
+> here would fail.
+> 
+> Signed-off-by: Ronald Weiss <weiss.ronald@gmail.com>
+> ---
+>  Documentation/git-commit.txt        |  6 ++++++
+>  builtin/commit.c                    |  8 ++++++-
+>  t/t7513-commit-ignore-submodules.sh | 42 +++++++++++++++++++++++++++++++++++++
+>  3 files changed, 55 insertions(+), 1 deletion(-)
+>  create mode 100644 t/t7513-commit-ignore-submodules.sh
+> 
+> diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+> index 1a7616c..8d3b2db 100644
+> --- a/Documentation/git-commit.txt
+> +++ b/Documentation/git-commit.txt
+> @@ -13,6 +13,7 @@ SYNOPSIS
+>  	   [-F <file> | -m <msg>] [--reset-author] [--allow-empty]
+>  	   [--allow-empty-message] [--no-verify] [-e] [--author=<author>]
+>  	   [--date=<date>] [--cleanup=<mode>] [--[no-]status]
+> +	   [--ignore-submodules[=<when>]]
+>  	   [-i | -o] [-S[<keyid>]] [--] [<file>...]
+>  
+>  DESCRIPTION
+> @@ -271,6 +272,11 @@ The possible options are:
+>  The default can be changed using the status.showUntrackedFiles
+>  configuration variable documented in linkgit:git-config[1].
+>  
+> +--ignore-submodules[=<when>]::
+> +	Can be used to override any settings of the 'submodule.*.ignore'
+> +	option in linkgit:git-config[1] or linkgit:gitmodules[5].
+> +	<when> can be either "none" or "all", which is the default.
+> +
+>  -v::
+>  --verbose::
+>  	Show unified diff between the HEAD commit and what
+> diff --git a/builtin/commit.c b/builtin/commit.c
+> index 0db215b..121c185 100644
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -360,7 +360,7 @@ static char *prepare_index(int argc, const char **argv, const char *prefix,
+>  	 */
+>  	if (all || (also && pathspec.nr)) {
+>  		fd = hold_locked_index(&index_lock, 1);
+> -		add_files_to_cache(also ? prefix : NULL, &pathspec, 0, NULL);
+> +		add_files_to_cache(also ? prefix : NULL, &pathspec, 0, ignore_submodule_arg);
+>  		refresh_cache_or_die(refresh_flags);
+>  		update_main_cache_tree(WRITE_TREE_SILENT);
+>  		if (write_cache(fd, active_cache, active_nr) ||
+> @@ -1492,6 +1492,9 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+>  		OPT_BOOL(0, "amend", &amend, N_("amend previous commit")),
+>  		OPT_BOOL(0, "no-post-rewrite", &no_post_rewrite, N_("bypass post-rewrite hook")),
+>  		{ OPTION_STRING, 'u', "untracked-files", &untracked_files_arg, N_("mode"), N_("show untracked files, optional modes: all, normal, no. (Default: all)"), PARSE_OPT_OPTARG, NULL, (intptr_t)"all" },
+> +		{ OPTION_STRING, 0, "ignore-submodules", &ignore_submodule_arg, N_("when"),
+> +		  N_("ignore changes to submodules, optional when: all, none. (Default: all)"),
+> +		  PARSE_OPT_OPTARG, NULL, (intptr_t)"all" },
+>  		/* end commit contents options */
+>  
+>  		OPT_HIDDEN_BOOL(0, "allow-empty", &allow_empty,
+> @@ -1531,6 +1534,9 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+>  	argc = parse_and_validate_options(argc, argv, builtin_commit_options,
+>  					  builtin_commit_usage,
+>  					  prefix, current_head, &s);
+> +
+> +	s.ignore_submodule_arg = ignore_submodule_arg;
+> +
+>  	if (dry_run)
+>  		return dry_run_commit(argc, argv, prefix, current_head, &s);
+>  	index_file = prepare_index(argc, argv, prefix, current_head, 0);
+> diff --git a/t/t7513-commit-ignore-submodules.sh b/t/t7513-commit-ignore-submodules.sh
+> new file mode 100644
+> index 0000000..83ce04c
+> --- /dev/null
+> +++ b/t/t7513-commit-ignore-submodules.sh
+> @@ -0,0 +1,42 @@
+> +#!/bin/sh
+> +#
+> +# Copyright (c) 2014 Ronald Weiss
+> +#
+> +
+> +test_description='Test of git commit --ignore-submodules'
+> +
+> +. ./test-lib.sh
+> +
+> +test_expect_success 'create submodule' '
+> +	test_create_repo sm && (
+> +		cd sm &&
+> +		>foo &&
+> +		git add foo &&
+> +		git commit -m "Add foo"
+> +	) &&
+> +	git submodule add ./sm &&
+> +	git commit -m "Add sm"
+> +'
+> +
+> +update_sm () {
+> +	(cd sm &&
+> +		echo bar >> foo &&
+> +		git add foo &&
+> +		git commit -m "Updated foo"
+> +	)
+> +}
+> +
+> +test_expect_success 'commit -a --ignore-submodules=all ignores dirty submodule' '
+> +	update_sm &&
+> +	test_must_fail git commit -a --ignore-submodules=all -m "Update sm"
+> +'
+> +
+> +test_expect_success 'commit -a --ignore-submodules=none overrides ignore=all setting' '
+> +	update_sm &&
+> +	git config submodule.sm.ignore all &&
+> +	git commit -a --ignore-submodules=none -m "Update sm" &&
+> +	git diff --exit-code --ignore-submodules=none &&
+> +	git diff --cached --exit-code --ignore-submodules=none
+> +'
+> +
+> +test_done
+> 
