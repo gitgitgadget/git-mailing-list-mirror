@@ -1,85 +1,58 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: What's cooking in git.git (Apr 2014, #01; Fri, 4)
-Date: Tue, 08 Apr 2014 11:03:50 +0200
-Message-ID: <5343BB76.2000806@web.de>
-References: <xmqq4n28q0ad.fsf@gitster.dls.corp.google.com> <533FCA92.8060006@kdbg.org> <5342EFD4.6020007@kdbg.org> <5342FFB4.3000200@ramsay1.demon.co.uk>
+From: "krahulkumar.1986@gmail.com" <krahulkumar.1986@gmail.com>
+Subject: Installing GIT on Solaris 10
+Date: Tue, 08 Apr 2014 09:46:35 +0000
+Message-ID: <5343c57c.454be00a.6d19.5b78@mx.google.com>
+Reply-To: "krahulkumar.1986@gmail.com" <krahulkumar.1986@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <j6t@kdbg.org>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>, Stefan Zager <szager@chromium.org>,
-	=?UTF-8?B?VG9ycw==?= =?UTF-8?B?dGVuIELDtmdlcnNoYXVzZW4=?= 
-	<tboegi@web.de>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Tue Apr 08 11:04:25 2014
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 08 11:46:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WXRx9-00012N-OO
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Apr 2014 11:04:24 +0200
+	id 1WXSc6-0002F1-5E
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Apr 2014 11:46:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756207AbaDHJET (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Apr 2014 05:04:19 -0400
-Received: from mout.web.de ([212.227.17.12]:65144 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750800AbaDHJER (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Apr 2014 05:04:17 -0400
-Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb003)
- with ESMTPSA (Nemesis) id 0MN4K8-1We1Wn1O7E-006dyr; Tue, 08 Apr 2014 11:04:13
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20131104 Icedove/17.0.10
-In-Reply-To: <5342FFB4.3000200@ramsay1.demon.co.uk>
-X-Provags-ID: V03:K0:g0GK2UBXGfQrKkZnEjW3OBvkb5C7kHhZ774yDton3dKt/woYlPa
- hrpaIac/sWHQz4igeOOjqWqm5B+q7SxHI/fUWUF5X8IOlQIBxl0rhdyPSs2/f4uCLlKaLgD
- LZvj/wDTANFdHc+eHsB9HSQb5LpfWaEaosJfqVZKwDPZYdWWxhdPbclXWFhXhuNfVejHdhr
- lbaRnQGAkZkvJ8gBnvSnQ==
+	id S1756216AbaDHJqi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Apr 2014 05:46:38 -0400
+Received: from mail-qc0-f173.google.com ([209.85.216.173]:49645 "EHLO
+	mail-qc0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751014AbaDHJqh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Apr 2014 05:46:37 -0400
+Received: by mail-qc0-f173.google.com with SMTP id r5so655205qcx.18
+        for <git@vger.kernel.org>; Tue, 08 Apr 2014 02:46:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:mime-version:date:subject:from:reply-to:to:content-type
+         :content-transfer-encoding;
+        bh=eCEBh1279ODW+Lb/iqsc5q+wIJZwgsjNKBOPWDF6v+E=;
+        b=Jw8xLn38D88LI5cvI722qa/0+exjveWMmfQ+XbwlrBawzKEHEsQTnagNm9aS1u/PS9
+         WrlDJjEUBLlmVkuph1XK6pqbEsJ2XInnHTZjbcW/+QTsm6FlM6k0fmXkTYik+izCPVl0
+         zHfRZsZ4mpytxTjfMSgPGlckBvFocsZC7x1IrtW2LPjTfjpm6CkHDVz4AX2/irwQHts6
+         EX+7cMZqE0vYv5hzvJ7hzlRc3T5j6hHObnehGSOK+v6c7RBY3JexfT/wsxQoheHs1ce8
+         IA/tbHAxRWiUkuaZUQVNR1uZMsHIOM6AP0+d8mEAVBSRWGuUUwbbwqCIpiIcVrxTPLpo
+         ElbA==
+X-Received: by 10.140.36.179 with SMTP id p48mr2851696qgp.54.1396950396571;
+        Tue, 08 Apr 2014 02:46:36 -0700 (PDT)
+Received: from nokia.com ([66.54.67.69])
+        by mx.google.com with ESMTPSA id x5sm3129710qaj.9.2014.04.08.02.46.35
+        for <git@vger.kernel.org>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Tue, 08 Apr 2014 02:46:36 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245921>
 
-On 04/07/2014 09:42 PM, Ramsay Jones wrote:
-> On 07/04/14 19:35, Johannes Sixt wrote:
->> Am 05.04.2014 11:19, schrieb Johannes Sixt:
->>> Am 04.04.2014 22:58, schrieb Junio C Hamano:
->>>> * sz/mingw-index-pack-threaded (2014-03-19) 1 commit
->>>>   - Enable index-pack threading in msysgit.
->>>>
->>>>   What is the status of this topic?  A failure report exists
->>>>   ($gmane/245170), and I am aware of Duy's $gmane/245034 but that was
->>>>   where the discussion stalled.  Is everybody waiting for everybody
->>>>   else to get the discussion unstuck?
->>> I still have to cross-check Duy's patch. I'll hopefully get to it in the
->>> next days and report back.
->> The test suite passes with Duy's patch ($gmane/245034), but t5302 fails
->> with this patch with a MinGW build. The patches touch the Cygwin
->> configuration, but I cannot test a Cygwin build.
-> I haven't tested these on cygwin yet. However, only the old version of
-> cygwin is affected (newer cygwin has a thread-safe pread) and, since I
-> no longer have an old installation, I _can't_ test it anyway. :(
-> (I updated cygwin earlier today and received a brand new cygwin dll
-> with today's date!).
->
->> I have, however, lost track of what the objective of these patches is.
->> Is the threaded version significantly faster, and these patches are
->> worth it?
-> Indeed. I haven't seen any numbers.
->
-> ATB,
-> Ramsay Jones
->
-CYGWIN:
-I managed to test under cygwin 1.7, commit 
-03d9d2990b718ef6d859405af399f549c186b4d:
-Test was OK.
 
-MINWW: t5302 failed (same what Johannas reported)
-  After reverting 9d66f2d97a97e08ae8d7c86 t5302 passed under MINGW
+Hi,
 
-HTH
-/Torsten
+I want to install git on my remote Sun sparc Solaris 10 server. Please help me with download package and installation instructions. Also help me with the dependencies. Thanks alot.
+
+Regards,
+Rahul Kumar
+Sent from my Nokia phone
