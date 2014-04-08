@@ -1,96 +1,104 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Our official home page and logo for the Git project
-Date: Tue, 08 Apr 2014 11:44:12 -0700
-Message-ID: <xmqq7g6z4q6b.fsf@gitster.dls.corp.google.com>
+From: Yiannis Marangos <yiannis.marangos@gmail.com>
+Subject: Race condition with git-status and git-rebase
+Date: Tue, 8 Apr 2014 21:44:21 +0300
+Message-ID: <20140408184421.GD5208@abyss.hitronhub.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 08 20:44:27 2014
+X-From: git-owner@vger.kernel.org Tue Apr 08 20:44:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WXb0T-0003p4-QF
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Apr 2014 20:44:26 +0200
+	id 1WXb0j-0003z4-NP
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Apr 2014 20:44:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757643AbaDHSoT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Apr 2014 14:44:19 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41980 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756839AbaDHSoQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Apr 2014 14:44:16 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1D30D79576;
-	Tue,  8 Apr 2014 14:44:15 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=U
-	npdSOFBK5ae7fEEkVOXBgUwbhI=; b=ns3NRyg+Hazp6T5c1Bde8wXGx2Xq6m8Mj
-	j0JxurMPu1QcyeYNznWBnAsMdS7BtTALW15Cx7cx0jkLJGI1yBcvxfSoH9iC5SeT
-	98ZqeJgGZxKEmODKCC+QwAI90w/cIXXW03thxaJrm/eNbPIm7mOrEMvQk3oZLzDV
-	n+9Ox/QCQ8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=t+b
-	QVmdVaWY3adKLgsC/TbhTDJgcuLINcpco6HcaCSParZwpHpNeLm6lAngj4de73If
-	3KGPSEdG/1gyCtXDn5OZLINPYWW6Kw3cpevONtKa76EiCtx7qaZNIlaJAyzn6vEJ
-	NoP5ID3jICDVmuify9ZCBh1b7EZDj2z7RUmg+b1Y=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0A8B679571;
-	Tue,  8 Apr 2014 14:44:15 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0BF0E7956F;
-	Tue,  8 Apr 2014 14:44:13 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: C80830A8-BF4D-11E3-97C1-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757662AbaDHSob (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Apr 2014 14:44:31 -0400
+Received: from mail-ee0-f44.google.com ([74.125.83.44]:34965 "EHLO
+	mail-ee0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757654AbaDHSo2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Apr 2014 14:44:28 -0400
+Received: by mail-ee0-f44.google.com with SMTP id e49so1017284eek.17
+        for <git@vger.kernel.org>; Tue, 08 Apr 2014 11:44:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        bh=+cUVlsPWOXpmWkPjRdXM+eXHZZ2I9dJZJx34s2RK56s=;
+        b=pdjzpyZ/Fpwk4hIgmD7OdRR1lxvXyylUkP/RsKdgpmwMnfw8wbtpf+l23ZUAIAXiK4
+         GiP9PyZEBUQ4sOZnCsONmc8qxdEFNG0EFbF2DqqlHBTP7Gn9heqw6FXFWND+hI1MZ3QP
+         9JztFGaA7vR2gfNLd/x4eAaG6SZI+C1x8s+u1OPitpX89XlycB3jk2Bl7FwyAPDjgjPV
+         DLfcBDXqZ7twzMxT5v9wepFfQ/BIYfakHDkJGiK7HzOtWSY0nkJbqLCSuL16LTTiTE9Y
+         P03Tbs4myT3T8OP8VvmFByPkiwf5zps0JdX6TbRERpiFKg/b/FafJKUUsL14RBd9KXt5
+         fhkw==
+X-Received: by 10.14.115.195 with SMTP id e43mr4150341eeh.76.1396982666782;
+        Tue, 08 Apr 2014 11:44:26 -0700 (PDT)
+Received: from abyss.hitronhub.home ([46.251.117.183])
+        by mx.google.com with ESMTPSA id x45sm6269865eef.15.2014.04.08.11.44.24
+        for <git@vger.kernel.org>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 08 Apr 2014 11:44:26 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.22 (2013-10-16)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245945>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245946>
 
-Recently, somebody approached Software Freedom Conservancy,
-wishing to obtain our blessing for using the Git logo on some
-trinket they are planning to make.  We joined Conservancy
-earlier, primarily so that we have a legal entity that can
-receive and pool the GSoC mentor stipend, and because we are now
-one of Conservancy's projects, it was understandable that they
-were approached for this request.
+Hi,
 
-However, while we've been using the logo created by Jason Long
-as our de facto logo (and git-scm.com as the de facto Git home
-page), we've yet to formally adopt Jason's logo (or any logo) as
-an "official" Git logo [*1*].
+Since I don't know how to fix it, this is my bug report:
 
-So, to clarify things -- and to make it easier to respond to
-requests re: our logo in the future, we (myself, Peff and Shawn,
-the troika who represent the Git community to Conservancy)
-propose the following to the community members:
+git-status reads the index file then holds the `index.lock', it writes
+the updated index in `index.lock' and renames the `index.lock' to
+`index', but if it used with git-rebase then there is a (rare) race
+condition.
 
- - To officially adopt "git-scm.com <http://git-scm.com>" (and
-   "git-scm.org <http://git-scm.org>") as our "project home
-   page"; and
+I reproduce this at my work under the following conditions:
+1) The repository is very big
+2) I can reproduce it only in Windows. I can not reproduce it in Linux
+   (my Linux machine has faster CPU and SSD drive.)
 
- - To officially adopt the logo that appears on the "project
-   home page" as our "project logo".
+I saw this race condition at my coworkers when they use two instances
+(in the same repository) of Git-Extensions GUI, and when they use one
+instance of Git-Extensions and at the same time they rebase from
+terminal. This race condition happens because Git-Extensions monitors
+the directory of the repository and when a file is accessed it calls
+git-status.
 
-We hope that neither is controversial, as these have long been
-used to represent our project without any formal declaration of
-them being official, and this proposal is to ask the community
-members to acknowledge the status quo ex post facto [*2*].
+Since I can not share the repository, I decided to trace down the
+problem. I came up with the following:
 
-Seconds?
+process A calls git-rebase
+process A applies the 1st commit
+process B calls git-status
+process B calls read_cache() (status_init_config() -> gitmodules_config() -> read_cache())
+process A applies the 2nd commit
+process B holds the index.lock
+process B writes back the old index (the one that was read from read_cache())
+process A applies the 3rd commit (now the 3rd commit contains also a revert of the 2nd)
 
-[Footnotes]
+The content of the files of the working directory is correct (i.e. as
+it should be if the race condition didn't happen). But git-status
+shows that the files of the 2nd commit are modified, the git-diff show
+the exact patch of the 2nd commit.
 
-*1* We already got an OK from Jason for use of the logo as an
-official project logo.
+So, in this case process B must avoid calling write_index(). Maybe
+something is missing from update_index_if_able()? Maybe git should
+check the state before proceeding to write_index() (for example that
+we are in rebase)?
 
-*2* This doesn't imply any change in how things are run
-day-to-day.  The source changes are discussed on this list, and
-updated codebase will be pushed to the usual repositories
-including git://git.kernel.org/pub/scm/git/git.git/.  Scott
-Chacon will continue to maintain the git-scm.com site, as he
-always has done, and if you have suggestions or fixes for the
-site, you can send pull requests.
+Something else that I noticed is that when the race condition happens
+the istate->cache_changed is 0 and has_racy_timestamp(istate) is 1, so
+the if statement in update_index_if_able() continues to write_index().
+
+I didn't check if there are other similar race conditions.
+
+Regards,
+Yiannis.
+
+PS: I tried to move hold_locked_index() above status_init_config() but
+this cause other problems.
