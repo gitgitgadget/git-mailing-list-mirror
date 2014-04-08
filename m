@@ -1,68 +1,94 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: What's cooking in git.git (Apr 2014, #02; Mon, 7)
-Date: Tue, 08 Apr 2014 21:20:59 +0200
-Message-ID: <53444C1B.2070603@web.de>
-References: <xmqqmwfwlr4f.fsf@gitster.dls.corp.google.com>	<53444156.8020800@web.de> <xmqq38hn4q39.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git log for only certain branches
+Date: Tue, 08 Apr 2014 12:26:05 -0700
+Message-ID: <xmqqvbuj39o2.fsf@gitster.dls.corp.google.com>
+References: <CAHd499BSgxZ8EC1qKYRsF0hac6rQAegw9qTOoDjaiuh_UUVEng@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Ronald Weiss <weiss.ronald@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 08 21:21:33 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Git <git@vger.kernel.org>
+To: Robert Dailey <rcdailey.lists@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 08 21:26:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WXbaJ-0003FN-Tq
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Apr 2014 21:21:28 +0200
+	id 1WXbfL-0006XV-61
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Apr 2014 21:26:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757473AbaDHTVX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Apr 2014 15:21:23 -0400
-Received: from mout.web.de ([212.227.15.4]:58029 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756222AbaDHTVW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Apr 2014 15:21:22 -0400
-Received: from [192.168.178.41] ([79.193.64.34]) by smtp.web.de (mrweb001)
- with ESMTPSA (Nemesis) id 0LlnMG-1X6wOZ30Iy-00ZN7f; Tue, 08 Apr 2014 21:20:59
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
-In-Reply-To: <xmqq38hn4q39.fsf@gitster.dls.corp.google.com>
-X-Enigmail-Version: 1.6
-X-Provags-ID: V03:K0:ndF0kI8JvrImZv2O/Vw+40/E6KvwjACD3bXhLC+uYU8YTEa7Evh
- ZQP4V/ynLalUFYK2gdWqP8ICExODMdyCPJa+jBkYXwu7YtVvXsYrRD4u1aiL8jbU/YDDzdZ
- nuJk8+MDboytTvy2ymXWnJlWDyb7WGLZdK2yXohYbrcTse2AEM7CC+lpT2i5E9UPJgHrQ1a
- HLbZBNQqKTZepyY75eG3A==
+	id S1757579AbaDHT0d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Apr 2014 15:26:33 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51734 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756894AbaDHT0J (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Apr 2014 15:26:09 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C0AB97B636;
+	Tue,  8 Apr 2014 15:26:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=YpcFvTMdWQh/CG0DfsdON9wE1oA=; b=e6rlPf
+	7h8nr5FAcp/KAnaHG0YcQ8xN/JcbRrQF9llMR7+KOOHqU1upviyhFeDkoSup+aFV
+	mZUO3I29PrwpujbREWYN5cMf1zqHY6ZQMZiFz0OsVypQPX2la0XalwQ5HQc8vaBK
+	8Avo/3XgMFAv8x9azuqcwbKPgDn8mkFRHr9xM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=RBvitOWfZ+glO7b3OJqsNfXN/yb4oOFt
+	0fJZGruv2TQuwFJ2wM2TxYWlYTLiFGibhqTEh6tUPIHKMB5EqkWIMj9YPGAfRNBl
+	f+FrUZ28CXn2a/vjVzXVbbU6mQ/yW6cfTFVXBP7UyDygaPgRU0jY5bL0wsDbqA25
+	EhRRaeGkWuY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A91187B631;
+	Tue,  8 Apr 2014 15:26:08 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 45F267B630;
+	Tue,  8 Apr 2014 15:26:07 -0400 (EDT)
+In-Reply-To: <CAHd499BSgxZ8EC1qKYRsF0hac6rQAegw9qTOoDjaiuh_UUVEng@mail.gmail.com>
+	(Robert Dailey's message of "Tue, 8 Apr 2014 08:43:45 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: A2098FD6-BF53-11E3-B60B-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245951>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245952>
 
-Am 08.04.2014 20:46, schrieb Junio C Hamano:
-> Jens Lehmann <Jens.Lehmann@web.de> writes:
-> 
->> Am 08.04.2014 00:19, schrieb Junio C Hamano:
->>> * jl/status-added-submodule-is-never-ignored (2014-04-07) 2 commits
->>>  - commit -m: commit staged submodules regardless of ignore config
->>>  - status/commit: show staged submodules regardless of ignore config
->>
->> I have two more patches for gitk and git-gui doing the same there,
->> me thinks it would make a lot of sense all four make it into the
->> same version. Should I wait until this topic hits next (or master)
->> or does it make sense to send them to Pat and Paul right away?
-> 
-> Either would be fine, but I suspect they would appreciate it sooner
-> rather than later, if only as an advance notice.
+Robert Dailey <rcdailey.lists@gmail.com> writes:
 
-Thanks, will do.
+> I have more details about my inquiry on StackOverflow:
+> http://stackoverflow.com/questions/22823768/view-git-log-with-merges-for-only-certain-branches
+>
+> Basically I'd like to know if it is possible to show the graph for
+> ONLY branches that I list. The key here is that the graph should also
+> show relationships between only those branches that I list. In other
+> words, any ancestors that I do not explicitly specify should not be
+> rendered in the graph.
+>
+> I have an insanely huge number of branches in my git repo (we
+> transitioned from SVN so we haven't had a chance to clean them up
+> yet). As a result, the git log graph I see has literally 10-20
+> vertical lines and I have to scroll 20+ pages to follow a line to a
+> particular parent branch.
 
-> How do these two relate to and/or interact with what Ronald and you
-> have been discussing, by the way?
+I do not quite get this part (note that it is impolite to ask people
+to go to stackoverflow or any external site to answer questions
+asked here, but I am making an exception today):
 
-Only as a prerequisite, as the latter is about making the handling
-and overriding of the submodule ignore options consistent for add
-and commit. The goal there is to enable users to stage and commit
-ignored submodules pretty much like they can do that with ignored
-files. And the prerequisite for that is that you'll be able to see
-what you staged afterwards.
+  $ git log --oneline --graph origin/master origin/topic1
+
+  It will show all branches anyway, even though I've specified I only
+  want to see two of them.
+
+These should show commits reachable from these two branches,
+origin/master and origin/topic1, and nothing else.
+
+  $ git log --oneline --graph \
+    origin/master origin/topic1 \
+    --not $(git merge-base --all origin/master origin/topic1)
+
+would stop where the histories of these two branches meet (assuming
+that you consider that the common ancestors of these two not
+interesting when you say "all branches anyway", but these common
+ancestors are still part of these two branches ;-).
