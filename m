@@ -1,173 +1,96 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH v3 2/2] commit: add --ignore-submodules[=<when>] parameter
-Date: Tue, 08 Apr 2014 20:43:52 +0200
-Message-ID: <53444368.9050607@web.de>
-References: <CABxC_L92v=cV=+e_DNa0L6f21LB0BRP5duai2h_heGJN_PRoUQ@mail.gmail.com>	<5335A78C.60401@web.de>	<CABxC_L-4=qcZiix05dL8GrDJXv=19fw4yB0qFzRRfw=G=_Gxbg@mail.gmail.com>	<53374E49.9000702@gmail.com>	<533874F9.3090802@web.de>	<5338AC36.6000109@gmail.com>	<5338B1B0.3050703@gmail.com>	<5339BAE4.8020306@web.de> <CABxC_L8_tQrANXji_Z0LfigxsAuzSDj3K9ndTGOTHh2ctHvc6A@mail.gmail.com> <5339F122.60801@gmail.com> <5339FBB4.1010101@gmail.com> <533B2036.3050506@web.de> <533B36AA.3090600@gmail.com> <533C5CBD.4050601@web.de> <533C6B57.3080901@gmail.com> <534180BC.308@web.de> <53431CB8.2050600@gmail.com> <53432EA5.5060102@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Our official home page and logo for the Git project
+Date: Tue, 08 Apr 2014 11:44:12 -0700
+Message-ID: <xmqq7g6z4q6b.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Heiko Voigt <hvoigt@hvoigt.net>, Junio C Hamano <gitster@pobox.com>
-To: Ronald Weiss <weiss.ronald@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 08 20:44:12 2014
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 08 20:44:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WXb0B-0003cf-1u
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Apr 2014 20:44:07 +0200
+	id 1WXb0T-0003p4-QF
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Apr 2014 20:44:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757436AbaDHSoA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Apr 2014 14:44:00 -0400
-Received: from mout.web.de ([212.227.17.11]:63433 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756314AbaDHSn7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Apr 2014 14:43:59 -0400
-Received: from [192.168.178.41] ([79.193.64.34]) by smtp.web.de (mrweb001)
- with ESMTPSA (Nemesis) id 0LZeou-1XGsUv2h4O-00lRtq; Tue, 08 Apr 2014 20:43:53
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
-In-Reply-To: <53432EA5.5060102@gmail.com>
-X-Enigmail-Version: 1.6
-X-Provags-ID: V03:K0:rJc6TItk5LDg1WDwLsBIa+ooacckrtvUTScWmpTcQoP7z24vrf7
- LUBo/dNKkPCs84feOl89tvSBCxBArUaW/3DT3BgsLX2zMxbm+72aZbCIKyzPZc2+EewHn3j
- 0mIUx9I+YVMGXOTGzyMM8rQd3oQjUZKxMavPOpdCbn3MMhObu5A7ZJWqhg0NG0QqnWGzAHt
- pTFx7C3+2cXz7LR7UCmsw==
+	id S1757643AbaDHSoT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Apr 2014 14:44:19 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41980 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756839AbaDHSoQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Apr 2014 14:44:16 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1D30D79576;
+	Tue,  8 Apr 2014 14:44:15 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=U
+	npdSOFBK5ae7fEEkVOXBgUwbhI=; b=ns3NRyg+Hazp6T5c1Bde8wXGx2Xq6m8Mj
+	j0JxurMPu1QcyeYNznWBnAsMdS7BtTALW15Cx7cx0jkLJGI1yBcvxfSoH9iC5SeT
+	98ZqeJgGZxKEmODKCC+QwAI90w/cIXXW03thxaJrm/eNbPIm7mOrEMvQk3oZLzDV
+	n+9Ox/QCQ8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=t+b
+	QVmdVaWY3adKLgsC/TbhTDJgcuLINcpco6HcaCSParZwpHpNeLm6lAngj4de73If
+	3KGPSEdG/1gyCtXDn5OZLINPYWW6Kw3cpevONtKa76EiCtx7qaZNIlaJAyzn6vEJ
+	NoP5ID3jICDVmuify9ZCBh1b7EZDj2z7RUmg+b1Y=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0A8B679571;
+	Tue,  8 Apr 2014 14:44:15 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0BF0E7956F;
+	Tue,  8 Apr 2014 14:44:13 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: C80830A8-BF4D-11E3-97C1-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245945>
 
-Am 08.04.2014 01:03, schrieb Ronald Weiss:
-> Git commit honors the 'ignore' setting from .gitmodules or .git/config,
-> but didn't allow to override it from command line, like other commands do.
-> 
-> Useful <when> values for commit are 'all' (default) or 'none'. The others
-> ('dirty' and 'untracked') have same effect as 'none', as commit is only
-> interested in whether the submodule's HEAD differs from what is commited
-> in the superproject.
+Recently, somebody approached Software Freedom Conservancy,
+wishing to obtain our blessing for using the Git logo on some
+trinket they are planning to make.  We joined Conservancy
+earlier, primarily so that we have a legal entity that can
+receive and pool the GSoC mentor stipend, and because we are now
+one of Conservancy's projects, it was understandable that they
+were approached for this request.
 
-Unless it outputs a status message, then 'dirty' and 'untracked' do
-influence what is shown there. Apart from that (and maybe tests for
-these two cases ;-) this is looking good to me.
+However, while we've been using the logo created by Jason Long
+as our de facto logo (and git-scm.com as the de facto Git home
+page), we've yet to formally adopt Jason's logo (or any logo) as
+an "official" Git logo [*1*].
 
-> This patch depends on Jens Lehmann's patch "commit -m: commit staged
-> submodules regardless of ignore config". Without it,
-> "commit -m --ignore-submodules" would not work and tests introduced
-> here would fail.
-> 
-> Signed-off-by: Ronald Weiss <weiss.ronald@gmail.com>
-> ---
->  Documentation/git-commit.txt        |  6 ++++++
->  builtin/commit.c                    |  8 ++++++-
->  t/t7513-commit-ignore-submodules.sh | 42 +++++++++++++++++++++++++++++++++++++
->  3 files changed, 55 insertions(+), 1 deletion(-)
->  create mode 100644 t/t7513-commit-ignore-submodules.sh
-> 
-> diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-> index 1a7616c..8d3b2db 100644
-> --- a/Documentation/git-commit.txt
-> +++ b/Documentation/git-commit.txt
-> @@ -13,6 +13,7 @@ SYNOPSIS
->  	   [-F <file> | -m <msg>] [--reset-author] [--allow-empty]
->  	   [--allow-empty-message] [--no-verify] [-e] [--author=<author>]
->  	   [--date=<date>] [--cleanup=<mode>] [--[no-]status]
-> +	   [--ignore-submodules[=<when>]]
->  	   [-i | -o] [-S[<keyid>]] [--] [<file>...]
->  
->  DESCRIPTION
-> @@ -271,6 +272,11 @@ The possible options are:
->  The default can be changed using the status.showUntrackedFiles
->  configuration variable documented in linkgit:git-config[1].
->  
-> +--ignore-submodules[=<when>]::
-> +	Can be used to override any settings of the 'submodule.*.ignore'
-> +	option in linkgit:git-config[1] or linkgit:gitmodules[5].
-> +	<when> can be either "none" or "all", which is the default.
-> +
->  -v::
->  --verbose::
->  	Show unified diff between the HEAD commit and what
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index 0db215b..121c185 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -360,7 +360,7 @@ static char *prepare_index(int argc, const char **argv, const char *prefix,
->  	 */
->  	if (all || (also && pathspec.nr)) {
->  		fd = hold_locked_index(&index_lock, 1);
-> -		add_files_to_cache(also ? prefix : NULL, &pathspec, 0, NULL);
-> +		add_files_to_cache(also ? prefix : NULL, &pathspec, 0, ignore_submodule_arg);
->  		refresh_cache_or_die(refresh_flags);
->  		update_main_cache_tree(WRITE_TREE_SILENT);
->  		if (write_cache(fd, active_cache, active_nr) ||
-> @@ -1492,6 +1492,9 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
->  		OPT_BOOL(0, "amend", &amend, N_("amend previous commit")),
->  		OPT_BOOL(0, "no-post-rewrite", &no_post_rewrite, N_("bypass post-rewrite hook")),
->  		{ OPTION_STRING, 'u', "untracked-files", &untracked_files_arg, N_("mode"), N_("show untracked files, optional modes: all, normal, no. (Default: all)"), PARSE_OPT_OPTARG, NULL, (intptr_t)"all" },
-> +		{ OPTION_STRING, 0, "ignore-submodules", &ignore_submodule_arg, N_("when"),
-> +		  N_("ignore changes to submodules, optional when: all, none. (Default: all)"),
-> +		  PARSE_OPT_OPTARG, NULL, (intptr_t)"all" },
->  		/* end commit contents options */
->  
->  		OPT_HIDDEN_BOOL(0, "allow-empty", &allow_empty,
-> @@ -1531,6 +1534,9 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
->  	argc = parse_and_validate_options(argc, argv, builtin_commit_options,
->  					  builtin_commit_usage,
->  					  prefix, current_head, &s);
-> +
-> +	s.ignore_submodule_arg = ignore_submodule_arg;
-> +
->  	if (dry_run)
->  		return dry_run_commit(argc, argv, prefix, current_head, &s);
->  	index_file = prepare_index(argc, argv, prefix, current_head, 0);
-> diff --git a/t/t7513-commit-ignore-submodules.sh b/t/t7513-commit-ignore-submodules.sh
-> new file mode 100644
-> index 0000000..83ce04c
-> --- /dev/null
-> +++ b/t/t7513-commit-ignore-submodules.sh
-> @@ -0,0 +1,42 @@
-> +#!/bin/sh
-> +#
-> +# Copyright (c) 2014 Ronald Weiss
-> +#
-> +
-> +test_description='Test of git commit --ignore-submodules'
-> +
-> +. ./test-lib.sh
-> +
-> +test_expect_success 'create submodule' '
-> +	test_create_repo sm && (
-> +		cd sm &&
-> +		>foo &&
-> +		git add foo &&
-> +		git commit -m "Add foo"
-> +	) &&
-> +	git submodule add ./sm &&
-> +	git commit -m "Add sm"
-> +'
-> +
-> +update_sm () {
-> +	(cd sm &&
-> +		echo bar >> foo &&
-> +		git add foo &&
-> +		git commit -m "Updated foo"
-> +	)
-> +}
-> +
-> +test_expect_success 'commit -a --ignore-submodules=all ignores dirty submodule' '
-> +	update_sm &&
-> +	test_must_fail git commit -a --ignore-submodules=all -m "Update sm"
-> +'
-> +
-> +test_expect_success 'commit -a --ignore-submodules=none overrides ignore=all setting' '
-> +	update_sm &&
-> +	git config submodule.sm.ignore all &&
-> +	git commit -a --ignore-submodules=none -m "Update sm" &&
-> +	git diff --exit-code --ignore-submodules=none &&
-> +	git diff --cached --exit-code --ignore-submodules=none
-> +'
-> +
-> +test_done
-> 
+So, to clarify things -- and to make it easier to respond to
+requests re: our logo in the future, we (myself, Peff and Shawn,
+the troika who represent the Git community to Conservancy)
+propose the following to the community members:
+
+ - To officially adopt "git-scm.com <http://git-scm.com>" (and
+   "git-scm.org <http://git-scm.org>") as our "project home
+   page"; and
+
+ - To officially adopt the logo that appears on the "project
+   home page" as our "project logo".
+
+We hope that neither is controversial, as these have long been
+used to represent our project without any formal declaration of
+them being official, and this proposal is to ask the community
+members to acknowledge the status quo ex post facto [*2*].
+
+Seconds?
+
+[Footnotes]
+
+*1* We already got an OK from Jason for use of the logo as an
+official project logo.
+
+*2* This doesn't imply any change in how things are run
+day-to-day.  The source changes are discussed on this list, and
+updated codebase will be pushed to the usual repositories
+including git://git.kernel.org/pub/scm/git/git.git/.  Scott
+Chacon will continue to maintain the git-scm.com site, as he
+always has done, and if you have suggestions or fixes for the
+site, you can send pull requests.
