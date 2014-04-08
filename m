@@ -1,319 +1,170 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] describe: rewrite name_rev() iteratively
-Date: Tue, 8 Apr 2014 03:41:17 -0400
-Message-ID: <CAPig+cR+gVSU+kthiZc3pwEjBDfeu_Do0NTD3Cw=xPtMUDY8Kw@mail.gmail.com>
-References: <1396824434-31672-1-git-send-email-dragos.foianu@gmail.com>
+From: David Cowden <dcow90@gmail.com>
+Subject: Re: [PATCH v3] Clarify pre-push hook documentation
+Date: Tue, 8 Apr 2014 01:43:49 -0700
+Message-ID: <CAC1XvcMyo4VaJv4bzP+isMoUwoW28yz39=kvJz4EmKxF95Gk-w@mail.gmail.com>
+References: <1395704609-81957-1-git-send-email-dcow90@gmail.com>
+	<1395705088-82216-1-git-send-email-dcow90@gmail.com>
+	<xmqqmwgemceq.fsf@gitster.dls.corp.google.com>
+	<3CA35D0B7B7C411292360D1516EF409B@PhilipOakley>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>,
-	Sylvestre Ledru <sylvestre@mozilla.com>
-To: Dragos Foianu <dragos.foianu@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 08 09:44:04 2014
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Tue Apr 08 10:43:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WXQhM-0002HP-R9
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Apr 2014 09:44:01 +0200
+	id 1WXRdO-0005Da-M9
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Apr 2014 10:43:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756382AbaDHHnz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Apr 2014 03:43:55 -0400
-Received: from mail-yk0-f173.google.com ([209.85.160.173]:36519 "EHLO
-	mail-yk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751037AbaDHHnw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Apr 2014 03:43:52 -0400
-Received: by mail-yk0-f173.google.com with SMTP id 10so478477ykt.18
-        for <git@vger.kernel.org>; Tue, 08 Apr 2014 00:43:51 -0700 (PDT)
+	id S1751014AbaDHInx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Apr 2014 04:43:53 -0400
+Received: from mail-qa0-f49.google.com ([209.85.216.49]:34226 "EHLO
+	mail-qa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750800AbaDHInu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Apr 2014 04:43:50 -0400
+Received: by mail-qa0-f49.google.com with SMTP id j7so553628qaq.36
+        for <git@vger.kernel.org>; Tue, 08 Apr 2014 01:43:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=41eCLXponNbkt2V9oK0Z/cPgw3w826uqCeH8GQTRYrc=;
-        b=uWcGHLKNed5eEZBU9hVkulYNfcfyIz4gtjIWejaCUrjCXnF0qsnZJs3TcsojfwY8H9
-         EohiO6SQDM+z7EMroxEI62GmS28yzRxJRc0/SLCdVHJ1URI355hA2HWspoMOq81nfQvX
-         Ja0BTP6JewPxZi3cyJ4RFwyYyVBJdwZHlE8sHHLjkc99vR9IiN3WI+oP89gpOVH64v3B
-         Um3tQpcWTEqc1LQEbDoQxgegG4VNl4WpQQzRr0RYi2ZRKEBhTIjzHKtTOz1n/Ur0XHG0
-         DZ6GRGZR74UiL3YODN6wNUd9BrpDMDnWOwk4EdrjOPRBCg8yXXaQA6AcBAHa84tJvEkM
-         tBYA==
-X-Received: by 10.236.86.226 with SMTP id w62mr3266026yhe.94.1396942877672;
- Tue, 08 Apr 2014 00:41:17 -0700 (PDT)
-Received: by 10.170.180.134 with HTTP; Tue, 8 Apr 2014 00:41:17 -0700 (PDT)
-In-Reply-To: <1396824434-31672-1-git-send-email-dragos.foianu@gmail.com>
-X-Google-Sender-Auth: gFFBGXVRd4WHxlxkaOek_FCNxqg
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=X7Hf7EyAcloGhs4dYf98g9MIWOCrpoandk0sisyyXKU=;
+        b=vJ0ZZNdJT95i+bfK4KmSfM5mBqAv9GmhCT2/uwAbSXSy/W+vl30ZqLixGmKnQR6B8g
+         ohmqvhC25dkANbpoNXuK+B3pPNjueT0Sx1SbZRVeIv83mT1Goxxz4aOiN55cAgZkjNp9
+         /4PYq+38w/e+e1ni+1OrYwQzDfAKoK59n4FAiRRDgx8OksaypBWGcF8rRax82m+jRqPP
+         xglIV/DwTtE/eAWdxFYqkd9M6jFXO/bwSMwHSEURO66yxlcYNYTcPqi8iUdhSH3yAaG5
+         1WFqeSgp3HAPe2rQ4kk4eJ/LR5f/LBjngyJ7eCERKpXVDLyyXdP0eh1dFFdt8B+UriAd
+         JlJA==
+X-Received: by 10.224.45.67 with SMTP id d3mr2623424qaf.33.1396946629122; Tue,
+ 08 Apr 2014 01:43:49 -0700 (PDT)
+Received: by 10.140.91.14 with HTTP; Tue, 8 Apr 2014 01:43:49 -0700 (PDT)
+In-Reply-To: <3CA35D0B7B7C411292360D1516EF409B@PhilipOakley>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245918>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245919>
 
-[cc: Sylvestre Ledru <sylvestre@mozilla.com>]
+Hey guys, I was on vacation for a little over a week, I'll be back on
+this this coming week (haven't forgotten).
 
-On Sun, Apr 6, 2014 at 6:47 PM, Dragos Foianu <dragos.foianu@gmail.com> wrote:
-> The "git describe --contains" command uses the name_rev() function which
-> is currently a recursive function. This causes a Stack Overflow when the
-> history is large enough.
+David
 
-No need to capitalize "stack overflow".
-
-It might be helpful if you provide a link to the original problem
-report by Sylvestre [1] for context.
-
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/244430
-
-> Rewrite name_rev iteratively using a stack on the heap. This slightly
-> reduces performance due to the extra operations on the heap, but the
-> function no longer overflows the stack.
+On Wed, Mar 26, 2014 at 4:21 PM, Philip Oakley <philipoakley@iee.org> wrote:
+> From: "Junio C Hamano" <gitster@pobox.com>
+>>
+>> David Cowden <dcow90@gmail.com> writes:
+>>
+>>
+>>> The documentation as-is does not mention that the pre-push hook is
+>>> executed even when there is nothing to push.  This can lead a new
+>>> reader to believe there will always be lines fed to the script's
+>>> standard input and cause minor confusion as to what is happening
+>>> when there are no lines provided to the pre-push script.
+>>>
+>>> Signed-off-by: David Cowden <dcow90@gmail.com>
+>>> ---
+>>>
+>>> Notes:
+>>>     I'm not sure if I've covered every case here.  If there are more
+>>> cases to
+>>>     consider, please let me know and I can update to include them.
+>>
+>>
+>> I do not think of any offhand, but a more important point that I was
+>> trying to get at was that we should not give an incorrect impression
+>> to the readers that the scenario that is described is the only case
+>> they need to be worried about by pretending to be exhaustive.
+>>
+>> The "may" in your wording "This may happen when" may be good enough
+>> to hint that these may not be the only cases.
+>>
+>>>     c.f.
+>>>
+>>> http://stackoverflow.com/questions/22585091/git-hooks-pre-push-script-does-not-receive-input-via-stdin
+>>>
+>>>  Documentation/githooks.txt | 9 +++++++++
+>>>  1 file changed, 9 insertions(+)
+>>>
+>>> diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+>>> index d954bf6..1fd6da9 100644
+>>> --- a/Documentation/githooks.txt
+>>> +++ b/Documentation/githooks.txt
+>>> @@ -203,6 +203,15 @@ SHA-1>` will be 40 `0`.  If the local commit was
+>>> specified by something other
+>>>  than a name which could be expanded (such as `HEAD~`, or a SHA-1) it
+>>> will be
+>>>  supplied as it was originally given.
+>>>
+>>> +The hook is executed regardless of whether changes will actually be
+>>> pushed or
+>>> +not.  This may happen when 'git push' is called and:
+>>> +
+>>> + - the remote ref is already up to date, or
+>>> + - pushing to the remote ref cannot be handled by a simple
+>>> fast-forward
+>>> +
+>>> +In other words, the script is called for every push.  In the event
+>>> that nothing
+>>> +is to be pushed, no data will be provided on the script's standard
+>>> input.
 >
-> Reported-by: Sylvestre Ledru <sylvestre@mozilla.com>
-
-It's a good idea to cc: the original reporter of the problem so that
-he can test the fix. (And, generally speaking, it's good etiquette to
-cc: people who commented on the issue.)
-
-> Signed-off-by: Dragos Foianu <dragos.foianu@gmail.com>
-> ---
->  builtin/name-rev.c |  176 ++++++++++++++++++++++++++++++++++++++--------------
->  1 file changed, 128 insertions(+), 48 deletions(-)
 >
-> diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-> index c824d4e..5848d81 100644
-> --- a/builtin/name-rev.c
-> +++ b/builtin/name-rev.c
-> @@ -19,66 +19,146 @@ static long cutoff = LONG_MAX;
->  /* How many generations are maximally preferred over _one_ merge traversal? */
->  #define MERGE_TRAVERSAL_WEIGHT 65535
+> Doesn't an 'in other words' indicate it could be further tightened?
+> Maybe
+>    "If there is nothing to push, the hook will still run, but the input
+>    line will be empty.
 >
-> +typedef struct rev_data {
-
-On this project, "typedef struct" is almost universally avoided. Just
-say "struct rev_data" when needed.
-
-> +       struct commit *commit;
-> +       const char *tip_name;
-> +       int generation;
-> +       int distance;
-> +       int deref;
-
-'deref' may be true only for the initial call to name_rev(); all
-recursive invocations unconditionally pass false, so including it in
-the structure is superfluous and potentially confusing for readers.
-
-More below.
-
-> +} *rev_data;
-> +
-> +typedef struct rev_stack {
-> +       struct rev_data *rev;
-> +       struct rev_stack *next;
-> +} *rev_stack;
-> +
-> +static void stack_push(rev_stack *stack, rev_data data) {
-> +       rev_stack new_node = xmalloc(sizeof(*new_node));
-> +
-> +       new_node->rev = data;
-> +       new_node->next = *stack;
-> +       *stack = new_node;
-> +}
-> +
-> +static void stack_push_end(rev_stack *stack, rev_data data) {
-> +       rev_stack new_node = xmalloc(sizeof(*new_node));
-> +
-> +       while (*stack != NULL)
-> +               stack = &(*stack)->next;
-> +       new_node->rev = data;
-> +       new_node->next = *stack;
-> +       *stack = new_node;
-> +}
-> +
-> +static rev_data stack_pop(rev_stack *stack) {
-> +       rev_stack next = (*stack)->next;
-> +       rev_data rev = (*stack)->rev;
-> +       free(*stack);
-> +
-> +       *stack = next;
-> +       return rev;
-> +}
-> +
-> +static rev_data make_rev_data(struct commit *commit,
-> +               const char* tip_name, int generation, int distance,
-> +               int deref)
-> +{
-> +       rev_data data = xmalloc(sizeof(*data));
-> +
-> +       data->commit = commit;
-> +       data->tip_name = tip_name;
-> +       data->generation = generation;
-> +       data->distance = distance;
-> +       data->deref = deref;
-> +
-> +       return data;
-> +}
-> +
->  static void name_rev(struct commit *commit,
->                 const char *tip_name, int generation, int distance,
->                 int deref)
->  {
-> -       struct rev_name *name = (struct rev_name *)commit->util;
-> -       struct commit_list *parents;
-> -       int parent_number = 1;
-> +       rev_stack stack = NULL;
-> +       rev_data data, next_rev;
+>    Likewise the hook will still run for other cases such as:
 >
-> -       parse_commit(commit);
-> +       data = make_rev_data(commit, tip_name, generation, distance, deref);
-> +       stack_push(&stack, data);
+>    - the remote ref is already up to date,
+>    - pushing to the remote ref cannot be handled by a simple
+>      fast-forward,
+>    - etc."
 >
-> -       if (commit->date < cutoff)
-> -               return;
-> +       while (stack != NULL) {
-> +               rev_data rev = stack_pop(&stack);
 >
-> -       if (deref) {
-> -               char *new_name = xmalloc(strlen(tip_name)+3);
-> -               strcpy(new_name, tip_name);
-> -               strcat(new_name, "^0");
-> -               tip_name = new_name;
-> +               struct rev_name *name = (struct rev_name *) rev->commit->util;
-> +               struct commit_list *parents;
-> +               int parent_number = 1;
+>>
+>> When two things are to be pushed, the script will see the two
+>> things.  When one thing is to be pushed, the script will see the one
+>> thing.  When no thing is to be pushed, the script will see no thing
+>> on its standard input.
+>>
+>> But isn't that obvious?  I still wonder if we really need to single
+>> out that "nothing" case.  The more important thing is that it is
+>> invoked even in the "0-thing pushed" case, and "the list of things
+>> pushed that is given to the hook happens to be empty" is an obvious
+>> natural fallout.
 >
-> -               if (generation)
-> -                       die("generation: %d, but deref?", generation);
-> -       }
-> +               parse_commit(rev->commit);
-> +
-> +               if (rev->commit->date < cutoff)
-> +                       continue;
-> +
-> +               if (rev->deref) {
-> +                       char *new_name = xmalloc(strlen(rev->tip_name) + 3);
-> +                       strcpy(new_name, rev->tip_name);
-> +                       strcat(new_name, "^0");
-> +                       rev->tip_name = new_name;
-
-As mentioned above, 'deref' may be true only upon the first call;
-recursive invocations always set it to false, so the entire 'if
-(deref)' conditional can be promoted out of your 'while (stack !=
-NULL)' loop.
-
-(In fact, this deref processing could be promoted out of this function
-altogether since its only ever done for the first commit visited, but
-such a change is likely fodder for a separate cleanup patch.)
-
-More below.
-
-> -       if (name == NULL) {
-> -               name = xmalloc(sizeof(rev_name));
-> -               commit->util = name;
-> -               goto copy_data;
-> -       } else if (name->distance > distance) {
-> +                       if (rev->generation)
-> +                               die("generation: %d, but deref?",
-> +                                       rev->generation);
-> +               }
-> +
-> +               if (name == NULL) {
-> +                       name = xmalloc(sizeof(rev_name));
-> +                       rev->commit->util = name;
-> +                       goto copy_data;
-> +               } else if (name->distance > rev->distance) {
->  copy_data:
-> -               name->tip_name = tip_name;
-> -               name->generation = generation;
-> -               name->distance = distance;
-> -       } else
-> -               return;
-> -
-> -       for (parents = commit->parents;
-> -                       parents;
-> -                       parents = parents->next, parent_number++) {
-> -               if (parent_number > 1) {
-> -                       int len = strlen(tip_name);
-> -                       char *new_name = xmalloc(len +
-> -                               1 + decimal_length(generation) +  /* ~<n> */
-> -                               1 + 2 +                           /* ^NN */
-> -                               1);
-> -
-> -                       if (len > 2 && !strcmp(tip_name + len - 2, "^0"))
-> -                               len -= 2;
-> -                       if (generation > 0)
-> -                               sprintf(new_name, "%.*s~%d^%d", len, tip_name,
-> -                                               generation, parent_number);
-> -                       else
-> -                               sprintf(new_name, "%.*s^%d", len, tip_name,
-> -                                               parent_number);
-> +                       name->tip_name = rev->tip_name;
-> +                       name->generation = rev->generation;
-> +                       name->distance = rev->distance;
-> +               } else
-> +                       continue;
 >
-> -                       name_rev(parents->item, new_name, 0,
-> -                               distance + MERGE_TRAVERSAL_WEIGHT, 0);
-> -               } else {
-> -                       name_rev(parents->item, tip_name, generation + 1,
-> -                               distance + 1, 0);
-> +               for (parents = rev->commit->parents;
-> +                               parents;
-> +                               parents = parents->next, parent_number++) {
-> +                       if (parent_number > 1) {
-> +                               int len = strlen(rev->tip_name);
-> +                               char *new_name = xmalloc(len +
-> +                                       /* ~<n> */
-> +                                       1 + decimal_length(rev->generation) +
-> +                                       /* ^NN */
-> +                                       1 + 2 +
-> +                                       1);
-> +
-> +                               if (len > 2 &&
-> +                                       !strcmp(rev->tip_name + len - 2, "^0"))
-> +                                       len -= 2;
-> +
-> +                               if (rev->generation > 0)
-> +                                       sprintf(new_name, "%.*s~%d^%d", len,
-> +                                               rev->tip_name, rev->generation,
-> +                                               parent_number);
-> +                               else
-> +                                       sprintf(new_name, "%.*s^%d", len,
-> +                                               rev->tip_name, parent_number);
-> +
-> +                               next_rev = make_rev_data(parents->item,
-> +                                       new_name, 0,
-> +                                       rev->distance + MERGE_TRAVERSAL_WEIGHT,
-> +                                       0);
-> +
-> +                               stack_push_end(&stack, next_rev);
-> +                       } else {
-> +                               next_rev = make_rev_data(parents->item,
-> +                                       rev->tip_name, rev->generation + 1,
-> +                                       rev->distance + 1, 0);
-> +
-> +                               stack_push(&stack, next_rev);
-> +                       }
-
-This logic changes the order in which the commits are visited. Given a
-history, such as:
-
-    --D--B---A
-    --E-/   /
-    --F--C-/
-    --G-/
-
-where A's parents are (B,C), B's parents are (D,E), and C's parents
-are (F,G), the original code traverses commits in this order:
-
-    A B D E C F G
-
-but, with your patch, they are traversed in this order:
-
-    A B D C F E G
-
->                 }
-> +
-> +               free(rev);
->         }
->  }
+> Personally I think it should be mentioned in that paragraph, which is
+> covering all the various special cases. The 'nothing' case often causes
+> confusion when it's not specified in documentation.
+>>
+>>
+>>>  If this hook exits with a non-zero status, 'git push' will abort
+>>> without
+>>>  pushing anything.  Information about why the push is rejected may be
+>>> sent
+>>>  to the user by writing to standard error.
+>>
+>> --
 >
+>
+> It may be that the documentation should include the caveat
+>
+>    "Hooks, when enabled, are executed unconditionally by their calling
+>    functions.
+>     Script writers should ensure they handle all conditions."
+>
+> somewhere near the top of the page to cover all hooks, which IIRC
+> started David's journey. That would allow my second paragraph
+> "Likewise.." to be dropped.
+>
+> Philip
 > --
-> 1.7.10.4
+> [apologies for any whitespace damage]
+>
