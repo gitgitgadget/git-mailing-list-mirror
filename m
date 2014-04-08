@@ -1,104 +1,75 @@
-From: Yiannis Marangos <yiannis.marangos@gmail.com>
-Subject: Race condition with git-status and git-rebase
-Date: Tue, 8 Apr 2014 21:44:21 +0300
-Message-ID: <20140408184421.GD5208@abyss.hitronhub.home>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Apr 2014, #02; Mon, 7)
+Date: Tue, 08 Apr 2014 11:46:02 -0700
+Message-ID: <xmqq38hn4q39.fsf@gitster.dls.corp.google.com>
+References: <xmqqmwfwlr4f.fsf@gitster.dls.corp.google.com>
+	<53444156.8020800@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 08 20:44:42 2014
+Cc: git@vger.kernel.org
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Tue Apr 08 20:46:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WXb0j-0003z4-NP
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Apr 2014 20:44:42 +0200
+	id 1WXb2G-00054w-9k
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Apr 2014 20:46:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757662AbaDHSob (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Apr 2014 14:44:31 -0400
-Received: from mail-ee0-f44.google.com ([74.125.83.44]:34965 "EHLO
-	mail-ee0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757654AbaDHSo2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Apr 2014 14:44:28 -0400
-Received: by mail-ee0-f44.google.com with SMTP id e49so1017284eek.17
-        for <git@vger.kernel.org>; Tue, 08 Apr 2014 11:44:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        bh=+cUVlsPWOXpmWkPjRdXM+eXHZZ2I9dJZJx34s2RK56s=;
-        b=pdjzpyZ/Fpwk4hIgmD7OdRR1lxvXyylUkP/RsKdgpmwMnfw8wbtpf+l23ZUAIAXiK4
-         GiP9PyZEBUQ4sOZnCsONmc8qxdEFNG0EFbF2DqqlHBTP7Gn9heqw6FXFWND+hI1MZ3QP
-         9JztFGaA7vR2gfNLd/x4eAaG6SZI+C1x8s+u1OPitpX89XlycB3jk2Bl7FwyAPDjgjPV
-         DLfcBDXqZ7twzMxT5v9wepFfQ/BIYfakHDkJGiK7HzOtWSY0nkJbqLCSuL16LTTiTE9Y
-         P03Tbs4myT3T8OP8VvmFByPkiwf5zps0JdX6TbRERpiFKg/b/FafJKUUsL14RBd9KXt5
-         fhkw==
-X-Received: by 10.14.115.195 with SMTP id e43mr4150341eeh.76.1396982666782;
-        Tue, 08 Apr 2014 11:44:26 -0700 (PDT)
-Received: from abyss.hitronhub.home ([46.251.117.183])
-        by mx.google.com with ESMTPSA id x45sm6269865eef.15.2014.04.08.11.44.24
-        for <git@vger.kernel.org>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 08 Apr 2014 11:44:26 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.22 (2013-10-16)
+	id S1757461AbaDHSqI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Apr 2014 14:46:08 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62327 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756960AbaDHSqF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Apr 2014 14:46:05 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DDB8A7965B;
+	Tue,  8 Apr 2014 14:46:04 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=MR2O22X8BXAOcCypsZWYBuHQqg4=; b=nIJt6j
+	mHETAfaBN143gVRQv7SmCUtn2QDK1uOp/pQbaQG/t3PEQ+JuAlYYuxitTNzy7435
+	AQmAK3vJWAqDZaZQD/OMNTcEJTVZ0Nn4A6PH0z1C13TqdGvd7DvmhKI2ml0ksObV
+	wMFl0hj3BQSb5ZstMm8rKRDYwobOs8KDNJ9PQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=xCQwGNg8u+6rSx/J9KBL6wpoE/bvm+tX
+	Vw/yT1CmQAx3CvPCjzJRyngQpIm9rvrHLBiyKt6wZ3HQI172aRkmfNM5cMc1VSB9
+	GKAHz0FAzyNHVJj86ZhGwYeDCocI26SmWu3GkXHWltBHDyP8KtHIFVxlb+tjLK4x
+	zPQ3Il/JwlY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C86BD7965A;
+	Tue,  8 Apr 2014 14:46:04 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AF67679659;
+	Tue,  8 Apr 2014 14:46:03 -0400 (EDT)
+In-Reply-To: <53444156.8020800@web.de> (Jens Lehmann's message of "Tue, 08 Apr
+	2014 20:35:02 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 096629CE-BF4E-11E3-ADB3-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245947>
 
-Hi,
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-Since I don't know how to fix it, this is my bug report:
+> Am 08.04.2014 00:19, schrieb Junio C Hamano:
+>> * jl/status-added-submodule-is-never-ignored (2014-04-07) 2 commits
+>>  - commit -m: commit staged submodules regardless of ignore config
+>>  - status/commit: show staged submodules regardless of ignore config
+>
+> I have two more patches for gitk and git-gui doing the same there,
+> me thinks it would make a lot of sense all four make it into the
+> same version. Should I wait until this topic hits next (or master)
+> or does it make sense to send them to Pat and Paul right away?
 
-git-status reads the index file then holds the `index.lock', it writes
-the updated index in `index.lock' and renames the `index.lock' to
-`index', but if it used with git-rebase then there is a (rare) race
-condition.
+Either would be fine, but I suspect they would appreciate it sooner
+rather than later, if only as an advance notice.
 
-I reproduce this at my work under the following conditions:
-1) The repository is very big
-2) I can reproduce it only in Windows. I can not reproduce it in Linux
-   (my Linux machine has faster CPU and SSD drive.)
-
-I saw this race condition at my coworkers when they use two instances
-(in the same repository) of Git-Extensions GUI, and when they use one
-instance of Git-Extensions and at the same time they rebase from
-terminal. This race condition happens because Git-Extensions monitors
-the directory of the repository and when a file is accessed it calls
-git-status.
-
-Since I can not share the repository, I decided to trace down the
-problem. I came up with the following:
-
-process A calls git-rebase
-process A applies the 1st commit
-process B calls git-status
-process B calls read_cache() (status_init_config() -> gitmodules_config() -> read_cache())
-process A applies the 2nd commit
-process B holds the index.lock
-process B writes back the old index (the one that was read from read_cache())
-process A applies the 3rd commit (now the 3rd commit contains also a revert of the 2nd)
-
-The content of the files of the working directory is correct (i.e. as
-it should be if the race condition didn't happen). But git-status
-shows that the files of the 2nd commit are modified, the git-diff show
-the exact patch of the 2nd commit.
-
-So, in this case process B must avoid calling write_index(). Maybe
-something is missing from update_index_if_able()? Maybe git should
-check the state before proceeding to write_index() (for example that
-we are in rebase)?
-
-Something else that I noticed is that when the race condition happens
-the istate->cache_changed is 0 and has_racy_timestamp(istate) is 1, so
-the if statement in update_index_if_able() continues to write_index().
-
-I didn't check if there are other similar race conditions.
-
-Regards,
-Yiannis.
-
-PS: I tried to move hold_locked_index() above status_init_config() but
-this cause other problems.
+How do these two relate to and/or interact with what Ronald and you
+have been discussing, by the way?
