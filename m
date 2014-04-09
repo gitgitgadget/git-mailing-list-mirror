@@ -1,80 +1,196 @@
-From: Bjarni Ingi Gislason <bjarniig@rhi.hi.is>
-Subject: Re: Makefile: Another "make" command is used when going into
- SUBDIR perl
-Date: Tue, 8 Apr 2014 23:34:49 +0000
-Message-ID: <20140408233449.GA21148@rhi.hi.is>
-References: <20140405231039.GA26578@rhi.hi.is>
- <534165AD.3040606@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: The fetch command should "always" honor remote.<name>.fetch
+Date: Tue, 08 Apr 2014 18:45:13 -0700
+Message-ID: <7v61mjnumu.fsf@alter.siamese.dyndns.org>
+References: <5340871D.8070503@lewisdiamond.com>
+	<xmqqioqlm21y.fsf@gitster.dls.corp.google.com>
+	<CAHwd=G=zV97H7eEK5dJ0XrfbF0bpZD6-YOvk0O8nVuqMGSz=jw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
-X-From: git-owner@vger.kernel.org Wed Apr 09 01:47:48 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Lewis Diamond <git@lewisdiamond.com>, git@vger.kernel.org
+To: Lewis Diamond <me@lewisdiamond.com>
+X-From: git-owner@vger.kernel.org Wed Apr 09 03:43:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WXfk1-0004Oa-TB
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Apr 2014 01:47:46 +0200
+	id 1WXhYQ-0006Fb-MP
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Apr 2014 03:43:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756353AbaDHXrl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Apr 2014 19:47:41 -0400
-Received: from fenja.rhi.hi.is ([130.208.165.103]:36353 "EHLO fenja.rhi.hi.is"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756224AbaDHXrk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Apr 2014 19:47:40 -0400
-Received: from smtp.hi.is (smtp.hi.is [130.208.165.149])
-	by fenja.rhi.hi.is (8.13.8/8.13.8) with ESMTP id s38Nlc6G012649
-	for <git@vger.kernel.org>; Tue, 8 Apr 2014 23:47:38 GMT
-Received: from katla.rhi.hi.is (katla.rhi.hi.is [130.208.165.1])
-	by smtp.hi.is (8.14.4/8.14.4) with ESMTP id s38NlbVl002565
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Tue, 8 Apr 2014 23:47:38 GMT
-Received: from katla.rhi.hi.is (localhost [127.0.0.1])
-	by katla.rhi.hi.is (8.14.4+Sun/8.14.4) with ESMTP id s38NYo0J021235;
-	Tue, 8 Apr 2014 23:34:50 GMT
-Received: (from bjarniig@localhost)
-	by katla.rhi.hi.is (8.14.4+Sun/8.14.4/Submit) id s38NYnuv021234;
-	Tue, 8 Apr 2014 23:34:49 GMT
-Content-Disposition: inline
-In-Reply-To: <534165AD.3040606@web.de>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1757388AbaDIBnq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Apr 2014 21:43:46 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57592 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756639AbaDIBnp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Apr 2014 21:43:45 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3BCFB7BC12;
+	Tue,  8 Apr 2014 21:43:44 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+V3fXlxwkqTBybnbXZVH4xQhjRA=; b=nY45tn
+	bzb3ePbC5oTtVXmKilQBqJN3EgHofb4QDGJy0aDKMDneHbTnsnPnL5/n2oCiSAyG
+	VvQXzo8vkdZqZHglQtj63o1Mg1tIovXb0ocmxS700dcQrOruZ+IV8g/eetOlB+uL
+	VB5kkFaCKL3lw7Zd/Sy1pH19uIAa4VOUh1Omc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=sl701hCmf8otrie2WuFANdyDw2zVepsM
+	TW16WVramYkkrrs/HQbZR1dGeRdKdCxqwwp88DH7R6ML5s3/dzQnz+ORJwvf5lV7
+	jk3ATOUnCsibfw34x4DSt4DszT5JzWaqLPHxqk//+teiKYr8q2j14NyX21C0zZL1
+	v53SW3QGM2s=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 278A67BC11;
+	Tue,  8 Apr 2014 21:43:44 -0400 (EDT)
+Received: from pobox.com (unknown [198.0.213.178])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CB6507BC0D;
+	Tue,  8 Apr 2014 21:43:42 -0400 (EDT)
+In-Reply-To: <CAHwd=G=zV97H7eEK5dJ0XrfbF0bpZD6-YOvk0O8nVuqMGSz=jw@mail.gmail.com>
+	(Lewis Diamond's message of "Mon, 7 Apr 2014 14:46:04 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.4 (gnu/linux)
+X-Pobox-Relay-ID: 61CBA4F6-BF88-11E3-9DEE-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245970>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245971>
 
-On Sun, Apr 06, 2014 at 04:33:17PM +0200, Ren=E9 Scharfe wrote:
-> Am 06.04.2014 01:10, schrieb Bjarni Ingi Gislason:
-> >Package: git-1.9.0
-> >
-> >   Another make command is used in the Makefile when it enters subdi=
-r
-> >PERL.
-> >
-> >   The used "make" command is a link in my home directory to
-> >"/usr/sfw/bin/gmake".  Other make commands are "/usr/ccs/bin/make" a=
-nd
-> >"/usr/xpg4/bin/make".
-> >
-> >My PATH variable has these directories in this order
-> >
-> >$HOME, /usr/sfw/bin, /usr/xpg4/bin and /usr/ccs/bin
-> >
-> >   The used variables for make are
-> >
-> >CPPFLAGS=3D-I/usr/local/ssl/include
-> >NO_GETTEXT=3DYesPlease
-> >NO_TCLTK=3DYesPlease
->=20
-> Try adding "MAKE =3D /usr/sfw/bin/gmake".
->=20
-  I used "gmake" instead of "make" in my script.  I later compiled
-"make-4.0" and this bug did not show itself there.  "gmake" was version
-3.81.
+Lewis Diamond <me@lewisdiamond.com> writes:
 
---=20
-Bjarni I. Gislason
+>>> 'git fetch foo master' would result in (FETCH_HEAD omitted):
+>>> [new ref] refs/heads/master -> foo/master //OK, but missing another
+>>> ref! (case 2)
+>>> //It should also fetch refs/users/bob/heads/master -> foo/bob/master
+>>
+>> This is an incorrect expectation.
+>
+> Indeed this is the "correct" behaviour since it works as designed.
+> However, this behaviour is inconsistent with the push command. An
+> expectation is never "incorrect" as we are talking about intuitive vs
+> non-intuitive.
+>
+>>
+>> The user who gave the command line said only "master", and did not
+>> want to grab "users/bob/heads/master".  If the user wanted to get it
+>> as well, the command line would have said so, e.g.
+>>
+>>         git fetch there master users/bob/heads/master
+>>
+>
+> Actually, the user specifically configured the remote to fetch
+> refs/users/bob/heads/*, meaning "those are the branches I'm interested
+> in".
+>
+>>> If you remove this configuration line: fetch =
+>>> +refs/heads/*:refs/remotes/foo/*
+>>> Then you run 'git fetch foo master', this would result in:
+>>>  * branch master -> FETCH_HEAD //Debatable whether this is OK or not,
+>>> but it's definitely missing bob's master! (case 3)
+>>
+>> Likewise.
+>>
+>> The 'master' short-hand is designed not to match refs/users/any/thing.
+>
+> Sure, this shorthand is designed to match refs listed in the rev parse
+> rules list. However, a quick survey showed me that most people would
+> expect their configuration to be honoured when using the shorthand for
+> fetching (like it is for push). This thread is about improving the
+> fetch command so that the short-hand works in such cases (and make it
+> consistent with what push does).
+
+Now, I am puzzled, as I do not think push behaves in such an insane
+way.  You got me worried enough that I had to make sure (see below).
+
+Perhaps there is some misunderstanding.
+
+With two repositories src and dst, I prepared these in src:
+
+    $ git ls-remote ../src
+    cae2fe07f0954772ec9d871391313cb91a030cba	HEAD
+    cae2fe07f0954772ec9d871391313cb91a030cba	refs/heads/master
+    cae2fe07f0954772ec9d871391313cb91a030cba	refs/users/bob/master
+
+and then this config in dst/.git/config:
+
+    [remote "origin"]
+            url = ../src
+            fetch = +refs/heads/*:refs/remotes/origin/*
+            fetch = +refs/users/bob/*:refs/remotes/bob/*
+            push = refs/heads/*:refs/users/alice/*
+
+Now, from such an empty dst repository:
+
+    $ cd dst
+    $ git fetch -v origin
+    From ../src
+     * [new branch]      master     -> origin/master
+     * [new ref]         refs/users/bob/master -> bob/master
+    $ git reset --hard origin/master
+    $ git ls-remote .
+    cae2fe07f0954772ec9d871391313cb91a030cba	HEAD
+    cae2fe07f0954772ec9d871391313cb91a030cba	refs/heads/master
+    cae2fe07f0954772ec9d871391313cb91a030cba	refs/remotes/bob/master
+    cae2fe07f0954772ec9d871391313cb91a030cba	refs/remotes/origin/master
+
+    $ git commit --allow-empty -m another
+    $ git push -v origin master
+    Pushing to ../src
+    Counting objects: 1, done.
+    Writing objects: 100% (1/1), 185 bytes | 0 bytes/s, done.
+    Total 1 (delta 0), reused 0 (delta 0)
+    To ../src
+       cae2fe0..faae8fb  master -> refs/users/alice/master
+
+Redoing the same experiment with this config with an extra item in
+dst/.git/config:
+
+    [remote "origin"]
+            url = ../src
+            fetch = +refs/heads/*:refs/remotes/origin/*
+            fetch = +refs/users/bob/*:refs/remotes/bob/*
+            push = refs/heads/*:refs/users/alice/*
+	    push = refs/remotes/bob/*:refs/users/bob/*
+
+gives the same.
+
+    ... the same procedure to prepare 'master' that is one commit
+    ... ahead with "allow-empty"
+    $ git update-ref refs/remotes/bob/master HEAD
+    $ git push -v origin master
+    Pushing to ../src
+    Counting objects: 1, done.
+    Writing objects: 100% (1/1), 185 bytes | 0 bytes/s, done.
+    Total 1 (delta 0), reused 0 (delta 0)
+    To ../src
+       cae2fe0..faae8fb  master -> refs/users/alice/master
+
+We do not look at remotes/bob/master we have, and we do not touch
+users/bob/master at the remote site, either.
+
+When you explicitly say what you want to push on the command line,
+that is what you are telling Git to push.  'master' which is an
+abbreviation of refs/heads/master.  Where it goes may be determined
+by using remote.origin.push as a mapping, but the left hand side of
+the mapping is still what you gave from the commad line (after
+dwimming the abbreviated refname exactly the same way other commands
+like "git log master" interpret them).
+
+This is very much deliberately so and unlikely to change.  And that
+goes the same for fetching as well.
+
+The command line interface is optimized for the two most common use
+cases.  Either you want to fetch everything you are interested in
+(in which case you do not say what you want to fetch on the command
+line and let the configured refspecs kick in), or you want to
+explicitly want to state what you want.  Allowing random set of refs
+that happens to match left hand side of wildcard patterns of refspec
+will break the expectation big time, when somebody asks "git push
+origin master" meaning "I want to push my 'master' branch out" (or
+"git pull origin master" meaning "I want to merge the master branch
+from the origin") and you instead push out "remotes/bob/master" (or
+even worse, create an octopus merge with origin's master and bob's
+master).
+
+Hope this clarifies the confusion.
