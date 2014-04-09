@@ -1,51 +1,51 @@
 From: Yiannis Marangos <yiannis.marangos@gmail.com>
-Subject: [PATCH] Verify index file before we opportunistically update it
-Date: Thu, 10 Apr 2014 01:06:37 +0300
-Message-ID: <1397081197-14803-2-git-send-email-yiannis.marangos@gmail.com>
+Subject: [PATCH v2] Verify index file before we opportunistically update it
+Date: Thu, 10 Apr 2014 01:34:29 +0300
+Message-ID: <1397082869-24873-1-git-send-email-yiannis.marangos@gmail.com>
 References: <1397081197-14803-1-git-send-email-yiannis.marangos@gmail.com>
 Cc: Yiannis Marangos <yiannis.marangos@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 10 00:07:55 2014
+X-From: git-owner@vger.kernel.org Thu Apr 10 00:35:04 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WY0ew-0001VL-SN
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Apr 2014 00:07:55 +0200
+	id 1WY15D-000220-Ip
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Apr 2014 00:35:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965047AbaDIWHm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Apr 2014 18:07:42 -0400
-Received: from mail-ee0-f43.google.com ([74.125.83.43]:34948 "EHLO
-	mail-ee0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965044AbaDIWHh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Apr 2014 18:07:37 -0400
-Received: by mail-ee0-f43.google.com with SMTP id e53so2362570eek.2
-        for <git@vger.kernel.org>; Wed, 09 Apr 2014 15:07:36 -0700 (PDT)
+	id S932948AbaDIWem (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Apr 2014 18:34:42 -0400
+Received: from mail-ee0-f44.google.com ([74.125.83.44]:36721 "EHLO
+	mail-ee0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932719AbaDIWel (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Apr 2014 18:34:41 -0400
+Received: by mail-ee0-f44.google.com with SMTP id e49so2406960eek.3
+        for <git@vger.kernel.org>; Wed, 09 Apr 2014 15:34:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=W/VMzyx8Kf9P15+LsWZ1dXtfaVUesGn4SfT23e9I5YA=;
-        b=owECjExP31YlsBECgJgmd4KdCT7jDir4QHrfvq1+yJpT2UsKbCuBbm1E5yohaNPpLW
-         xbDD74t0fYCUIs3yLe5GBQcUDAZ9pYc39aArh1bwgOd7XnF5JD+4Iy80kiXb36kEsNd+
-         l3WAFoCSOXVQ1P/fwH7GJTj2Bp67HogSgFy8KgC5tKXZClM9nMUuAqTlqm2W5uUXF5p6
-         Y+ueAaiq3SmaEYGELEZBpuA4JktLUHAtJZZRtAq7XKyPYxmEmCat2J74HsCiMNIOKt49
-         WjW6ZrOXtgkvnjzapGwcJHox+vmJRLB9aPvjMkuFMfRElrSCWYI5NKJ5oGnkRRs8yhfn
-         Tgfw==
-X-Received: by 10.14.246.196 with SMTP id q44mr15313380eer.45.1397081255888;
-        Wed, 09 Apr 2014 15:07:35 -0700 (PDT)
+        bh=3xNp1xN+ccHZZwaf2uKs3yatmxx+q8lgHmKQ2o3R550=;
+        b=fkQnkhvj/lEM9yRbs7zPTnqD7gy1lrsd87L3hSqkzTvbG2Ry6pac9xAGx+GnRxF73J
+         oPKD5QCJEjQGNKBwrWTfvWtlfQVSEGAzOHkw6dfaf7GqPf2ksP17Wtmsysp20ZoPWTE5
+         cPtdfJIkEEiwN7pt1GzauZBgWBvmviMcw54o2WihrHvaT/A1T81722OsG6eAaqt8WLEF
+         AK6HzVwvgEyKjLJsGatF8jFI2lRxwPjCssRvcNVIJf6mynQ01DwthHCW1iE/PptVDcgB
+         rKL60B7DQ5iElYBSO3f72zKYd6DcMIbvx51/3AXhu6qVM/p4T4owmP3qecPOUv8kzk88
+         r5Cw==
+X-Received: by 10.14.224.6 with SMTP id w6mr5926986eep.60.1397082880326;
+        Wed, 09 Apr 2014 15:34:40 -0700 (PDT)
 Received: from abyss.hitronhub.home ([46.251.117.183])
-        by mx.google.com with ESMTPSA id n41sm5217466eeg.4.2014.04.09.15.07.34
+        by mx.google.com with ESMTPSA id x46sm4732282een.17.2014.04.09.15.34.38
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 09 Apr 2014 15:07:35 -0700 (PDT)
+        Wed, 09 Apr 2014 15:34:39 -0700 (PDT)
 X-Mailer: git-send-email 1.9.1
 In-Reply-To: <1397081197-14803-1-git-send-email-yiannis.marangos@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246002>
 
 Before we proceed to "opportunistic update" we must verify that the
 current index file is the same as the one that we read before. There
@@ -70,8 +70,8 @@ As an end result the 3rd commit will have a revert of the 2nd commit.
 Signed-off-by: Yiannis Marangos <yiannis.marangos@gmail.com>
 ---
  cache.h      |  3 +++
- read-cache.c | 79 +++++++++++++++++++++++++++++++++++++++++++++++++++---------
- 2 files changed, 71 insertions(+), 11 deletions(-)
+ read-cache.c | 77 +++++++++++++++++++++++++++++++++++++++++++++++++++---------
+ 2 files changed, 69 insertions(+), 11 deletions(-)
 
 diff --git a/cache.h b/cache.h
 index 107ac61..b0eedad 100644
@@ -95,7 +95,7 @@ index 107ac61..b0eedad 100644
  extern int read_index_preload(struct index_state *, const struct pathspec *pathspec);
  extern int read_index_from(struct index_state *, const char *path);
 diff --git a/read-cache.c b/read-cache.c
-index ba13353..fac8655 100644
+index ba13353..a49a441 100644
 --- a/read-cache.c
 +++ b/read-cache.c
 @@ -14,6 +14,7 @@
@@ -231,12 +231,9 @@ index ba13353..fac8655 100644
  	die("index file corrupt");
  }
  
-@@ -1778,8 +1833,10 @@ static int has_racy_timestamp(struct index_state *istate)
-  */
+@@ -1779,7 +1834,7 @@ static int has_racy_timestamp(struct index_state *istate)
  void update_index_if_able(struct index_state *istate, struct lock_file *lockfile)
  {
-+	printf("cache_changed: %d  has_racy_timestamp: %d\n",
-+	       istate->cache_changed, has_racy_timestamp(istate));
  	if ((istate->cache_changed || has_racy_timestamp(istate)) &&
 -	    !write_index(istate, lockfile->fd))
 +	    verify_index(istate) && !write_index(istate, lockfile->fd))
