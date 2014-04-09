@@ -1,111 +1,91 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 4/5] remote-bzr: include authors field in pushed commits
-Date: Wed,  9 Apr 2014 13:50:03 -0500
-Message-ID: <1397069404-7451-5-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH 5/5] completion: fix completion of certain aliases
+Date: Wed,  9 Apr 2014 13:50:04 -0500
+Message-ID: <1397069404-7451-6-git-send-email-felipe.contreras@gmail.com>
 References: <1397069404-7451-1-git-send-email-felipe.contreras@gmail.com>
-Cc: dequis <dx@dxzone.com.ar>,
-	Felipe Contreras <felipe.contreras@gmail.com>
+Cc: Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 09 21:00:46 2014
+X-From: git-owner@vger.kernel.org Wed Apr 09 21:00:51 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WXxjp-0006Zq-0c
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Apr 2014 21:00:45 +0200
+	id 1WXxju-0006cA-BQ
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Apr 2014 21:00:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934177AbaDITAd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Apr 2014 15:00:33 -0400
-Received: from mail-ob0-f173.google.com ([209.85.214.173]:46704 "EHLO
-	mail-ob0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933354AbaDITA2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Apr 2014 15:00:28 -0400
-Received: by mail-ob0-f173.google.com with SMTP id gq1so3223483obb.32
-        for <git@vger.kernel.org>; Wed, 09 Apr 2014 12:00:28 -0700 (PDT)
+	id S934190AbaDITAi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Apr 2014 15:00:38 -0400
+Received: from mail-oa0-f50.google.com ([209.85.219.50]:34158 "EHLO
+	mail-oa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933354AbaDITAf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Apr 2014 15:00:35 -0400
+Received: by mail-oa0-f50.google.com with SMTP id i7so3219773oag.23
+        for <git@vger.kernel.org>; Wed, 09 Apr 2014 12:00:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=issndbHh3dNzGRClKMZqWk39Ld/H2mDjfGdHFKfQOL4=;
-        b=JdJxrBbaL09RYJkJ55yaOrNsbF4w6vlEE+YCjw/aH+eknW6tYx+6ZLcTLMK8vkhdGA
-         c/AxMqFseKvQ/eLKTnpdyMsfOIafreV87cb0roIN8YimsMM/04e/Etvb59mKMY6qh2Rl
-         s6fEIhZqtfAXAZNXBcd5AlPHqwOzMElIv3LSczf3vb3aXa+n6ud2GeAmA90QqgxZyhGT
-         8kkrz7eT1dOJ2cy5RWQDlo2BUe6gLF3oKji4VqgPWuP1e7L6wfGFiSPbdv5TSt6A6GVY
-         DpS+A5Fyo/X8zfg5/Adw/xQgAD68skJfSO9oXvbxxTKN3/O+oBfmmMkGVXKfN4fissnW
-         pQ5w==
-X-Received: by 10.182.241.9 with SMTP id we9mr1696320obc.81.1397070028320;
-        Wed, 09 Apr 2014 12:00:28 -0700 (PDT)
+        bh=dGqUgrQhTgBPOotLw0PCd6TsI1gL3haCDI4tZElnRxY=;
+        b=xvs8vY1CxWtmL9C5vSb1/tfqHe4OWWHCImmFFNDnW+4xxVj4vPyZU07SlnEnHtiVlw
+         WPbuVEkcx+h4g3pjh2ZdsUlsFFgTydvG7eYAqJXz4ZbJP49v4zfPVhp1Xf3rHREFbP4+
+         ln/ske91rTklYQ29O60pMAS1tp9K7k1tJsCkj/TMcPF4wRE5DM1ZwRvzriGfuHrpdZXQ
+         XX/YyP6GzOjOp9uF6ZKabD5ECeO8Ma6V4vsqhssalHmAi5k0AwHmdLVgGxr9GqpNwqP7
+         LiXPg/gDFsnHibF/EewEuXIfLcMf23MZbCoXQpXxxtiCju4u+DmutC35oZ2a1f0nWhPt
+         aeDw==
+X-Received: by 10.182.225.137 with SMTP id rk9mr3453484obc.51.1397070034845;
+        Wed, 09 Apr 2014 12:00:34 -0700 (PDT)
 Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id qh7sm2865591obc.13.2014.04.09.12.00.23
+        by mx.google.com with ESMTPSA id cg5sm2872521obc.9.2014.04.09.12.00.29
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 09 Apr 2014 12:00:25 -0700 (PDT)
+        Wed, 09 Apr 2014 12:00:31 -0700 (PDT)
 X-Mailer: git-send-email 1.9.1+fc1
 In-Reply-To: <1397069404-7451-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245992>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245993>
 
-From: dequis <dx@dxzone.com.ar>
+Some commands need the first word to determine the actual action that is
+being executed, however, the command is wrong when we use an alias, for
+example 'alias.p=push', if we try to complete 'git p origin ', the
+result would be wrong because __git_complete_remote_or_refspec() doesn't
+know where it come from.
 
-Tests-by: Felipe Contreras <felipe.contreras@gmail.com>
+So let's override words[1], so the alias 'p' is override by the actual
+command, 'push'.
+
+Reported-by: Aymeric Beaumet <aymeric.beaumet@gmail.com>
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/remote-helpers/git-remote-bzr |  2 ++
- contrib/remote-helpers/test-bzr.sh    | 24 ++++++++++++++++++++++++
- 2 files changed, 26 insertions(+)
+ contrib/completion/git-completion.bash | 1 +
+ contrib/completion/git-completion.zsh  | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/contrib/remote-helpers/git-remote-bzr b/contrib/remote-helpers/git-remote-bzr
-index 7f354c8..6ca1e97 100755
---- a/contrib/remote-helpers/git-remote-bzr
-+++ b/contrib/remote-helpers/git-remote-bzr
-@@ -618,10 +618,12 @@ def parse_commit(parser):
-         files[path] = f
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 9525343..893ae5d 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -2547,6 +2547,7 @@ __git_main ()
  
-     committer, date, tz = committer
-+    author, _, _ = author
-     parents = [mark_to_rev(p) for p in parents]
-     revid = bzrlib.generate_ids.gen_revision_id(committer, date)
-     props = {}
-     props['branch-nick'] = branch.nick
-+    props['authors'] = author
+ 	local expansion=$(__git_aliased_command "$command")
+ 	if [ -n "$expansion" ]; then
++		words[1]=$expansion
+ 		completion_func="_git_${expansion//-/_}"
+ 		declare -f $completion_func >/dev/null && $completion_func
+ 	fi
+diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
+index 6b77968..9f6f0fa 100644
+--- a/contrib/completion/git-completion.zsh
++++ b/contrib/completion/git-completion.zsh
+@@ -104,6 +104,7 @@ __git_zsh_bash_func ()
  
-     mtree = CustomTree(branch, revid, parents, files)
-     changes = mtree.iter_changes()
-diff --git a/contrib/remote-helpers/test-bzr.sh b/contrib/remote-helpers/test-bzr.sh
-index 1e53ff9..431de3b 100755
---- a/contrib/remote-helpers/test-bzr.sh
-+++ b/contrib/remote-helpers/test-bzr.sh
-@@ -391,4 +391,28 @@ test_expect_success 'export utf-8 authors' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'push different author' '
-+	test_when_finished "rm -rf bzrrepo gitrepo" &&
-+
-+	bzr init bzrrepo &&
-+
-+	(
-+	git init gitrepo &&
-+	cd gitrepo &&
-+	echo john >> content &&
-+	git add content &&
-+	git commit -m john --author "John Doe <jdoe@example.com>" &&
-+	git remote add bzr "bzr::../bzrrepo" &&
-+	git push bzr master
-+	) &&
-+
-+	(
-+	cd bzrrepo &&
-+	bzr log | grep "^author: " > ../actual
-+	) &&
-+
-+	echo "author: John Doe <jdoe@example.com>" > expected &&
-+	test_cmp expected actual
-+'
-+
- test_done
+ 	local expansion=$(__git_aliased_command "$command")
+ 	if [ -n "$expansion" ]; then
++		words[1]=$expansion
+ 		completion_func="_git_${expansion//-/_}"
+ 		declare -f $completion_func >/dev/null && $completion_func
+ 	fi
 -- 
 1.9.1+fc1
