@@ -1,73 +1,141 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-multimail: update to version 1.0.0
-Date: Wed, 09 Apr 2014 09:35:40 -0700
-Message-ID: <xmqqwqey1mw3.fsf@gitster.dls.corp.google.com>
-References: <1396884040-26014-1-git-send-email-mhagger@alum.mit.edu>
-	<xmqqd2gtm0id.fsf@gitster.dls.corp.google.com>
-	<53456EC8.7090109@alum.mit.edu>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH] Unicode: update of combining code points
+Date: Wed, 09 Apr 2014 18:48:29 +0200
+Message-ID: <534579DD.1060607@web.de>
+References: <201404072139.42519.tboegi@web.de> <20140407195458.GA3912@google.com> <xmqq61mj30tg.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Apr 09 18:35:50 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 09 18:50:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WXvTa-0002T0-8l
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Apr 2014 18:35:50 +0200
+	id 1WXvhJ-0002Ow-3u
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Apr 2014 18:50:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933751AbaDIQfq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Apr 2014 12:35:46 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52845 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933100AbaDIQfp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Apr 2014 12:35:45 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F109079303;
-	Wed,  9 Apr 2014 12:35:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SU3n/MHfnSflCQpjIa5SvEtv5B8=; b=sGuo3Y
-	HYJ9RQMoYxZPbmIj1E/HiXJjTKP/ACRnxlUNaID4Xy9RrZi89hyksVkp75Ci089D
-	KRB8+ppjVZ5yZejNtsj5EC650dFL9k0YqU5AlUxWb7cLgCdnW5PFYWAoHnL9XyNK
-	vSMzqq9TrjkYlRfEo4lq3NKwWEc1WS6d5ZUfA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KsL/31Dq1QiQj4Lh7RfQJqwGfYtdk1Ne
-	mWX4uWAi0Qqzpy8jryMe4yJmcJZNxfgngoBZYhlw58gm/o+05+mYdkgopMPqCbv8
-	zOjK9Ar9qt17E5OoM95Cd1gfBSEIdk2m58QdmmlTnOWTTOplhWdPdg7R5PxvF/3F
-	ysRXvfk9Elk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E079079302;
-	Wed,  9 Apr 2014 12:35:44 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8AF5979301;
-	Wed,  9 Apr 2014 12:35:43 -0400 (EDT)
-In-Reply-To: <53456EC8.7090109@alum.mit.edu> (Michael Haggerty's message of
-	"Wed, 09 Apr 2014 18:01:12 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: FEA400DA-C004-11E3-89C3-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S933344AbaDIQt4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Apr 2014 12:49:56 -0400
+Received: from mout.web.de ([212.227.15.3]:63824 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932898AbaDIQtz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Apr 2014 12:49:55 -0400
+Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb002)
+ with ESMTPSA (Nemesis) id 0LmcN9-1X7XXa3FI3-00aCgx; Wed, 09 Apr 2014 18:48:29
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
+In-Reply-To: <xmqq61mj30tg.fsf@gitster.dls.corp.google.com>
+X-Provags-ID: V03:K0:ZGQqOvDJQ+seJ/tDb8FmPwpt8gnAQoH9gIRdYCFoAVw2zLlMTih
+ 1Jh5eaoOsw7tjxhmDjM2hMV3Pzj11OFdRhCsoHGkn8AOdAkJZVStJQZFEqlpi2VHAaRvwvs
+ XThd8tWW+i1U3r7wcmEfQWA5zG4nqYA3SP9F6o7Abgjy98zjvHovywXBOxetVbsd8EvouIo
+ Dx8m0/CUC8ehz5PCpigAQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245979>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+On 04/09/2014 12:37 AM, Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
+>
+>> Torsten B=C3=B6gershausen wrote:
+>>
+>>> Unicode 6.3 defines the following code as combining or accents,
+>>> git_wcwidth() should return 0.
+>>>
+>>> Earlier unicode standards had defined these code point as "reserved=
+":
+>> Thanks for the update.  Could the commit message also explain how th=
+is
+>> was noticed and what the user-visible effect is?
+>>
+>> For example:
+>>
+>>  "Unicode just announced that <...>.  That means we should mark the
+>>   relevant code points as combining characters so git knows they are
+>>   zero-width and doesn't screw up the alignment when presenting bran=
+ch
+>>   names in columns with 'git branch --column'"
+>>
+>> or something like that.
+> Perhaps (the original read clearly enough for me, though).
+>
+>> [...]
+>>> 358 COMBINING DOT ABOVE RIGHT
+>>> 359 COMBINING ASTERISK BELOW
+>> I'm not sure this list is needed --- the code + the reference to the
+>> Unicode 6.3 standard seems like enough (but if you think otherwise,
+>> I don't really mind).
+> I can go either way.
+>
+>>> This commit touches only the range 300-6FF, there may be more to be=
+ updated.
+>> The "there may be more" here sounds ominous.
+> Indeed it does ;-)
+>
+>> Does that mean Unicode
+>> 6.3 also added some zero-width characters in other ranges that shoul=
+d
+>> be dealt with in the future?  How many such ranges?  How do we know
+>> when we're done?
+>>
+>> Just biting off the most important characters first and putting off
+>> the rest for later sounds fine to me --- my complaint is that the
+>> above comment doesn't make clear what the to-do list is for finishin=
+g
+>> the update later.
+> I'll queue this at the tip of 'pu', not to forget about it while
+> waiting for a clarification.
+>
+> Thanks.
+Thanks for comments, here comes the long version of the strory:
+I recently fooled myself by running
+"git config --global user.name" with a decomposed "=C3=B6" on a new Mac=
+ OS X machine.
 
->> In the longer term, I have a feeling that we may be better off to
->> make the "git core" tree not be the "batteris included" convenience
->> tree, though....
-> ...
-> Tell me if/when you want to transition to omitting git-multimail (and
-> presumably post-receive-email and maybe others) from the Git source
-> tree.  I suppose in that case we would replace the scripts with pointers
-> to where they can be obtained.
+While there was little problems on Mac OS, all Windows and Linux machin=
+es stumbled
+over the decomposed =C3=B6, to be more exact over 0x308, COMBINING DIAR=
+ESIS, (the 2 dots),
+giving all kind of weired output in "git log".
 
-Yes, that would be a longer-term thing, not related to this "one
-round of periodical updates" patch.  I do not have any specific
-timeframe in mind at this moment.
+Looking into commit.c and utf8.c, how to improve the situation, I made =
+this observations:
+- Some code from commit.c can possibly be moved into utf8.c, so that we=
+ only
+  have 1 utf8 code parser.
+- A solution would be to run precompose_string() under Mac OS (which is=
+ a nop otherwise).
+  This could have saved my day. Probably I will make a patch some day.
+- Some of the combining code points exist in Unicode 6.3, but not in ut=
+f8.c
+  (which seams to be based on Unicode >2.0 <6.3)
+  I found some in the 0x300 area, and looked at the neighbors, and had =
+enough time to
+  read all code pages up to 0x7FF.=20
+
+ So if somebody knows how to find out which code points that are combin=
+ed, accents,,, or in other words should return 0 in git_wcwidth(), plea=
+se let me know.
+
+How about this as a commit message:
+
+Unicode: partially update to version 6.3
+
+Unicode 6.3 defines the following code points as combining or accents,
+git_wcwidth() should return 0.
+
+Earlier unicode standards had defined these code point as "reserved":
+358--35C
+487
+5A2, 5BA, 5C5, 5C7
+604, 616--61A, 659--65F
+
+Note: for this commit only the range 0..7FF has been checked,
+more updates may be needed.
+
+Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
