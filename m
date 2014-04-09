@@ -1,218 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] Git v1.9.2
-Date: Wed, 09 Apr 2014 14:59:12 -0700
-Message-ID: <xmqqd2gqyxjj.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Linux Kernel <linux-kernel@vger.kernel.org>
+From: Yiannis Marangos <yiannis.marangos@gmail.com>
+Subject: [PATCH] Verify index file before we opportunistically update it
+Date: Thu, 10 Apr 2014 01:06:36 +0300
+Message-ID: <1397081197-14803-1-git-send-email-yiannis.marangos@gmail.com>
+Cc: Yiannis Marangos <yiannis.marangos@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 10 00:01:01 2014
+X-From: git-owner@vger.kernel.org Thu Apr 10 00:07:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WY0YF-0005L6-Hm
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Apr 2014 00:01:00 +0200
+	id 1WY0ek-0001Nk-Oa
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Apr 2014 00:07:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964869AbaDIV7p convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Apr 2014 17:59:45 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35257 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934367AbaDIV7n convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 Apr 2014 17:59:43 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C9E9E7BECD;
-	Wed,  9 Apr 2014 17:59:42 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=fu168aAI9bw1+AvWC5kVj5IlW
-	u4=; b=YBU+V720XV6liL87WDNor7arJKiLccjAsQ2sFLTprnvxkbxtKf7ph3UKh
-	SQUGs2gadeWBJ0EdX5LxKxxlHqbaCq+PTI2vbG1FUryQdbSshxFxKEuqw6elOdC2
-	uPFNs6+YQVdun0nBV3KTttWau30HUBrBIWTJ6zyBHUMFZP8LAY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=lF6qCAksB1Css0H9bWG
-	OTQ98xB3W5ghoy/Gyas6cJN/6PvWm289pCkaRf1RZqKivTh2biSdodHjuJJsXQOb
-	Xz9I+8i5oEJ9HPAsHVWO8qxN5sPpLQeFDqlmwzzztUXoIdpj7lXRhyLQeC9EP0LK
-	VbGh5ZfrDIAtSF3tpFm3gVQA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B41617BECC;
-	Wed,  9 Apr 2014 17:59:42 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E7E117BE90;
-	Wed,  9 Apr 2014 17:59:13 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 3020A820-C032-11E3-84CA-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S965043AbaDIWHY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Apr 2014 18:07:24 -0400
+Received: from mail-ee0-f54.google.com ([74.125.83.54]:54389 "EHLO
+	mail-ee0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933776AbaDIWHU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Apr 2014 18:07:20 -0400
+Received: by mail-ee0-f54.google.com with SMTP id d49so2411809eek.27
+        for <git@vger.kernel.org>; Wed, 09 Apr 2014 15:07:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=tbehtgcnDb8dHxKMX4Rvgpw0W173MvyUdDvNdO54rYI=;
+        b=QY73m5RvA+bnv1tURsiJP6e700leYzPnfveq39JIwMNyDLq6FfA0FkG5n4RLJxc8I+
+         fSzKw8xgVS7W1Jhm/ZcLG40sVx+r2Bkd1475TGmpjT+xsmZcxPoVQfW0cKeVxLZNoXi+
+         iMEJ7+j35y/Y5Z/Rv763k1ZFltvslQeud17VS4gBsdH9O65KptlQAasTAhuDoD0Fu+IQ
+         fwqNHjaUgb62jtCQGkmnB+rnPP/qPLfJj7wZKaUKjw3r+Kc5GKCGOSRCah/tqCyEB1mQ
+         H1R7eqTZ9WS3UHSTZ7l231+mWLF9pTWZlmGU6809BppQ9YZIVlTtZZndPdbfBIHzXVJU
+         ///A==
+X-Received: by 10.14.115.1 with SMTP id d1mr15204853eeh.30.1397081238821;
+        Wed, 09 Apr 2014 15:07:18 -0700 (PDT)
+Received: from abyss.hitronhub.home ([46.251.117.183])
+        by mx.google.com with ESMTPSA id n41sm5217466eeg.4.2014.04.09.15.07.17
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 09 Apr 2014 15:07:18 -0700 (PDT)
+X-Mailer: git-send-email 1.9.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246000>
 
-The latest maintenance release Git v1.9.2 is now available at
-the usual places.
+This is a fix for the following bug:
+http://thread.gmane.org/gmane.comp.version-control.git/245946/focus=245965
 
-The release tarballs are found at:
+I added 2 functions: verify_index_from and verify_index. They return 1
+if the sha1 is correct, otherwise 0. I choose to not die if any errors
+are occurred because we just want to not proceed to "opportunistic
+update".
 
-    http://www.kernel.org/pub/software/scm/git/
+Some questions:
+1) Is it better to have these functions as static?
+2) If the answer of (1) is no, should I define verify_cache*() also?
+3) If something goes wrong in verify_hdr(), it will print an error
+   message, should I make a "quietly" version of it?
 
-The following public repositories all have a copy of the v1.9.2
-tag and the maint branch that the tag points at:
+Yiannis Marangos (1):
+  Verify index file before we opportunistically update it
 
-  url =3D https://kernel.googlesource.com/pub/scm/git/git
-  url =3D git://repo.or.cz/alt-git.git
-  url =3D https://code.google.com/p/git-core/
-  url =3D git://git.sourceforge.jp/gitroot/git-core/git.git
-  url =3D git://git-core.git.sourceforge.net/gitroot/git-core/git-core
-  url =3D https://github.com/gitster/git
+ cache.h      |  3 +++
+ read-cache.c | 79 +++++++++++++++++++++++++++++++++++++++++++++++++++---------
+ 2 files changed, 71 insertions(+), 11 deletions(-)
 
-The http://code.google.com/p/git-core/downloads/ site no longer
-accepts new tarballs for download; while the older release tarballs
-are still there, this one (and future ones) will not be.
-
-
-Git v1.9.2 Release Notes
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-=46ixes since v1.9.1
-------------------
-
- * Documentation and in-code comments had many instances of mistaken
-   use of "nor", which have been corrected.
-
- * "git fetch --prune", when the right-hand-side of multiple fetch
-   refspecs overlap (e.g. storing "refs/heads/*" to
-   "refs/remotes/origin/*", while storing "refs/frotz/*" to
-   "refs/remotes/origin/fr/*"), aggressively thought that lack of
-   "refs/heads/fr/otz" on the origin site meant we should remove
-   "refs/remotes/origin/fr/otz" from us, without checking their
-   "refs/frotz/otz" first.
-
-   Note that such a configuration is inherently unsafe (think what
-   should happen when "refs/heads/fr/otz" does appear on the origin
-   site), but that is not a reason not to be extra careful.
-
- * "git update-ref --stdin" did not fail a request to create a ref
-   when the ref already existed.
-
- * "git diff --no-index -Mq a b" fell into an infinite loop.
-
- * When it is not necessary to edit a commit log message (e.g. "git
-   commit -m" is given a message without specifying "-e"), we used to
-   disable the spawning of the editor by overriding GIT_EDITOR, but
-   this means all the uses of the editor, other than to edit the
-   commit log message, are also affected.
-
- * "git status --porcelain --branch" showed its output with labels
-   "ahead/behind/gone" translated to the user's locale.
-
- * "git mv" that moves a submodule forgot to adjust the array that
-   uses to keep track of which submodules were to be moved to update
-   its configuration.
-
- * Length limit for the pathname used when removing a path in a deep
-   subdirectory has been removed to avoid buffer overflows.
-
- * The test helper lib-terminal always run an actual test_expect_*
-   when included, which screwed up with the use of skil-all that may
-   have to be done later.
-
- * "git index-pack" used a wrong variable to name the keep-file in an
-   error message when the file cannot be written or closed.
-
- * "rebase -i" produced a broken insn sheet when the title of a commit
-   happened to contain '\n' (or ended with '\c') due to a careless use
-   of 'echo'.
-
- * There were a few instances of 'git-foo' remaining in the
-   documentation that should have been spelled 'git foo'.
-
- * Serving objects from a shallow repository needs to write a
-   new file to hold the temporary shallow boundaries but it was not
-   cleaned when we exit due to die() or a signal.
-
- * When "git stash pop" stops after failing to apply the stash
-   (e.g. due to conflicting changes), the stash is not dropped. State
-   that explicitly in the output to let the users know.
-
- * The labels in "git status" output that describe the nature of
-   conflicts (e.g. "both deleted") were limited to 20 bytes, which was
-   too short for some l10n (e.g. fr).
-
-----------------------------------------------------------------
-
-Changes since v1.9.1 are as follows:
-
-Aman Gupta (1):
-      update-ref: fail create operation over stdin if ref already exist=
-s
-
-Benoit Pierre (7):
-      merge hook tests: fix missing '&&' in test
-      merge hook tests: use 'test_must_fail' instead of '!'
-      test patch hunk editing with "commit -p -m"
-      commit: fix patch hunk editing with "commit -p -m"
-      merge: fix GIT_EDITOR override for commit hook
-      merge hook tests: fix and update tests
-      run-command: mark run_hook_with_custom_index as deprecated
-
-Carlos Mart=C3=ADn Nieto (2):
-      fetch: add a failing test for prunning with overlapping refspecs
-      fetch: handle overlaping refspecs on --prune
-
-Jeff King (6):
-      shallow: use stat_validity to check for up-to-date file
-      shallow: automatically clean up shallow tempfiles
-      t/lib-terminal: make TTY a lazy prerequisite
-      shallow: verify shallow file after taking lock
-      date: recognize bogus FreeBSD gmtime output
-      t4212: loosen far-in-future test for AIX
-
-John Keeping (1):
-      builtin/mv: fix out of bounds write
-
-Jonathan Nieder (2):
-      wt-status: extract the code to compute width for labels
-      wt-status: i18n of section labels
-
-Junio C Hamano (8):
-      stash pop: mention we did not drop the stash upon failing to appl=
-y
-      wt-status: make full label string to be subject to l10n
-      wt-status: lift the artificual "at least 20 columns" floor
-      index-pack: report error using the correct variable
-      diff-no-index: correctly diagnose error return from diff_opt_pars=
-e()
-      Start preparing for 1.9.1
-      Update draft release notes to 1.9.2
-      Git 1.9.2
-
-Justin Lebar (4):
-      Documentation: fix misuses of "nor"
-      contrib: fix misuses of "nor"
-      comments: fix misuses of "nor"
-      code and test: fix misuses of "nor"
-
-Matthieu Moy (1):
-      status: disable translation when --porcelain is used
-
-Michael Haggerty (2):
-      checkout_entry(): use the strbuf throughout the function
-      entry.c: fix possible buffer overflow in remove_subtree()
-
-Ramkumar Ramachandra (1):
-      Documentation/merge-strategies: avoid hyphenated commands
-
-Thomas Ackermann (1):
-      doc/http-backend: missing accent grave in literal mark-up
-
-Uwe Storbeck (2):
-      rebase -i: do not "echo" random user-supplied strings
-      test-lib.sh: do not "echo" caller-supplied strings
-
-brian m. carlson (1):
-      mv: prevent mismatched data when ignoring errors.
+-- 
+1.9.1
