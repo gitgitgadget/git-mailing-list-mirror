@@ -1,89 +1,95 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 5/5] completion: fix completion of certain aliases
-Date: Wed, 09 Apr 2014 15:36:38 -0500
-Message-ID: <5345af56dec8c_537810af310b9@nysa.notmuch>
-References: <1397069404-7451-1-git-send-email-felipe.contreras@gmail.com>
- <1397069404-7451-6-git-send-email-felipe.contreras@gmail.com>
- <xmqqa9bu1enk.fsf@gitster.dls.corp.google.com>
+From: Mahmoud Asshole <a1209145@drdrb.net>
+Subject: Silly time stamps
+Date: Wed, 9 Apr 2014 20:50:57 +0000 (UTC)
+Message-ID: <loom.20140409T210150-369@post.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	=?UTF-8?B?U1pFREVSIEfDoWJvcg==?= <szeder@ira.uka.de>
-To: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 09 22:51:27 2014
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 09 22:55:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WXzSx-0004nL-1u
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Apr 2014 22:51:27 +0200
+	id 1WXzWe-00070a-5c
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Apr 2014 22:55:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934323AbaDIUvW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Apr 2014 16:51:22 -0400
-Received: from mail-ob0-f176.google.com ([209.85.214.176]:50188 "EHLO
-	mail-ob0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933590AbaDIUvV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Apr 2014 16:51:21 -0400
-Received: by mail-ob0-f176.google.com with SMTP id wp18so3346234obc.35
-        for <git@vger.kernel.org>; Wed, 09 Apr 2014 13:51:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type;
-        bh=4HgmPqU6cl897vgebnNAmYggb5+EKWjh24hqMIMdijs=;
-        b=zQCJEhwviPhskfNQP6E9qLtRKRs/6JnQb1Cbag7/8IyIhMLqhSGQ9w83BEQUjvbpIa
-         h9W2D9SgZ+T8+MckiRY2zVJpGqc2TEFyvs6PhpFxp38/SfL4TEM64kiP9TV9IEuvUGFH
-         McP7kJfwO4EKEpQ7jMKY40lE/0IYo0Wb3+8Ea+vKWVXlq0eLM8RoaMhVu/SNceuqUIVU
-         6M+HePMSCv/E+ZDLRQer0bu/64omIBs2Uowgbim2tPK60iBQEopXzYGcfA7NLBs4eabr
-         o4WJHmJlngsQbG/sipdBgAmJO8ymG2/GB/0fFDWjH69SDPlP6ckpembTy0yfZckO08Gf
-         jGsg==
-X-Received: by 10.182.43.132 with SMTP id w4mr10478777obl.41.1397076681463;
-        Wed, 09 Apr 2014 13:51:21 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id ci10sm8479272oec.0.2014.04.09.13.51.19
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 09 Apr 2014 13:51:20 -0700 (PDT)
-In-Reply-To: <xmqqa9bu1enk.fsf@gitster.dls.corp.google.com>
+	id S965072AbaDIUzI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Apr 2014 16:55:08 -0400
+Received: from plane.gmane.org ([80.91.229.3]:47712 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965020AbaDIUzH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Apr 2014 16:55:07 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1WXzWR-0006rs-EU
+	for git@vger.kernel.org; Wed, 09 Apr 2014 22:55:05 +0200
+Received: from tor.nohats.ca ([193.110.157.151])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 09 Apr 2014 22:55:03 +0200
+Received: from a1209145 by tor.nohats.ca with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 09 Apr 2014 22:55:03 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 193.110.157.151 (Mozilla/5.0 (X11; Linux x86_64; rv:28.0) Gecko/20100101 Firefox/28.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245997>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245998>
 
-Junio C Hamano wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
-> 
-> > Some commands need the first word to determine the actual action that is
-> > being executed, however, the command is wrong when we use an alias, for
-> > example 'alias.p=push', if we try to complete 'git p origin ', the
-> > result would be wrong because __git_complete_remote_or_refspec() doesn't
-> > know where it come from.
-> >
-> > So let's override words[1], so the alias 'p' is override by the actual
-> > command, 'push'.
-> >
-> > Reported-by: Aymeric Beaumet <aymeric.beaumet@gmail.com>
-> > Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> > ---
-> 
-> Does "some commands" above refer to anything that uses
-> __git_complete_remote_or_refspec, or is the set of commands larger than that?
+Hi,
 
-For this particular issue, yes, the former.
+This is an example of timestamps are in git:
+    tree c67dc912a777ef6198a5c76890ebf11cd8ccc625
+    parent 6e527d8e07a80058bf8ac46180e25a9d4cb745eb
+    author my name <m@test.org> 1397073956 +0400
+    committer my name <m@test.org> 1397073956 +0400
 
-> But perhaps we muck with the contents of words[] in a similar way in many
-> different places in the existing completion code often enough that such an
-> attempt not to touch the words[] array does not buy us much safety anyway.  I
-> didn't check (and that is why I am asking with "I am wondering...").
+    testing again
 
-The 'words' array is already messed up and not used correctly, so I wouldn't
-worry too much about this patch messing it more (I don't see how that can be).
+As you can see, it presents the timestamp in UNIX format (I suppose it's UTC)
+plus an additional information which is an offset that describes my time zone.
 
-For example:
-  % git --git-dir=$PWD/.git fetch or<tab>
+Now, the way UTC works is that every client is supposed to apply his own offset
+on it (based on locale stuff) so that the user-interface (let it be CLI or GUI)
+can print an pretty time format based on his location. 
 
--- 
-Felipe Contreras
+The offset that is used is local to each client. E.g. if it's UTC 10:00, it
+will look 14:00 (cause +04:00) in my part of the world, while looking as 12:00
+in another part of the world (+02:00 time-zone). This time-zone offset is local
+to the computer based on locale stuff. The only thing that we need is the UTF
+time stamp (and then anyone can make it look pretty based on where he is
+living).
+
+Now, the problem is that git shares the UTC time (totally OK) AND my fucking
+time-zone! Why would anyone give a damn rat's ass about my time-zone? What
+difference could it make if you know that the clock looked like "14:00" on my
+part of the world?
+
+This was raised previously[1], but none of the responses are convincing.
+
+One guy was saying here[2] some nonesense like "I'd prefer not to lose the
+information. If someone has committed a change at 2am, I like to know that it
+was 2am for _them_. It helps me decide where to look first for the cause of
+problems. :)"
+
+How about we also modify the time data to augment it with my mood? E.g.
+"1397073956 +0400 totally_pissed_off".
+
+The same asshole in [2] gave another retarded example that is just less visible
+to non-humans: "It also helps disambiguate certain comments, especially those
+involving words or phrases such as 'yesterday' or 'this afternoon'.".
+
+This is equal to say: instead of curing the root cause of the problem (by
+educating assholes to not use ambiguous time information like "yesterday"),
+let's fuck the software instead (by encoding useless information here and
+there).
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/52
+[2] http://article.gmane.org/gmane.comp.version-control.git/114
