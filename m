@@ -1,68 +1,117 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: RE: Our official home page and logo for the Git project
-Date: Wed, 09 Apr 2014 11:43:30 -0500
-Message-ID: <534578b2e22e2_af197d3081@nysa.notmuch>
-References: <xmqq7g6z4q6b.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Unicode: update of combining code points
+Date: Wed, 09 Apr 2014 10:30:05 -0700
+Message-ID: <xmqqr4561kde.fsf@gitster.dls.corp.google.com>
+References: <201404072139.42519.tboegi@web.de>
+	<20140407195458.GA3912@google.com>
+	<xmqq61mj30tg.fsf@gitster.dls.corp.google.com>
+	<534579DD.1060607@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 09 18:57:22 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Wed Apr 09 19:30:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WXvoO-0007Dc-Nl
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Apr 2014 18:57:21 +0200
+	id 1WXwKK-0002Rn-TJ
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Apr 2014 19:30:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933898AbaDIQ5O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Apr 2014 12:57:14 -0400
-Received: from mail-oa0-f45.google.com ([209.85.219.45]:40546 "EHLO
-	mail-oa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933424AbaDIQ5M (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Apr 2014 12:57:12 -0400
-Received: by mail-oa0-f45.google.com with SMTP id eb12so3031445oac.4
-        for <git@vger.kernel.org>; Wed, 09 Apr 2014 09:57:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:message-id:in-reply-to:references:subject:mime-version
-         :content-type:content-transfer-encoding;
-        bh=+c5ff9iaJ15E9kbBt7Y9L8rOnDk2UnyODgNcHduKvqs=;
-        b=P2Blikak44p7hnu4zwhXLgeh79TPonE3NRIQWYA87qvLFoXHm5zB/4xpw00IapIO67
-         s0O8kkq37DVvhkiqqaf1gs1GiCByMQ6HjgTm4+CXLHGdK/6+p72Eu+1g9mKFVCar3b8a
-         U43RxLrDkSudz3r0Rj4s1+NUwRc4juOHiTcW7r8EQ6vHGixnmh+cTm+1Qe3Dp4tRA1vb
-         ngexZbj6TygXWSwTnbtc19eVMLH/YNR06Vswe3YZWhfpE0TRHa27LLgbuW4zr5ucYWhD
-         BVdqNG2VwvzHdYJI2W9Ivawg7JizPhZA2IiEBGXB5aDewo3HbQBfRpls4n0gOveMtOY4
-         0Xdg==
-X-Received: by 10.60.115.68 with SMTP id jm4mr2724408oeb.57.1397062632234;
-        Wed, 09 Apr 2014 09:57:12 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id d9sm6089123oex.6.2014.04.09.09.57.10
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 09 Apr 2014 09:57:11 -0700 (PDT)
-In-Reply-To: <xmqq7g6z4q6b.fsf@gitster.dls.corp.google.com>
+	id S933979AbaDIRaO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Apr 2014 13:30:14 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50284 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933965AbaDIRaM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 Apr 2014 13:30:12 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 894E7780A9;
+	Wed,  9 Apr 2014 13:30:11 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=+iwEkuQgKUiI
+	9lJiUSJAwdBX1as=; b=l/v8c29Uepiysr1OcNNqxR+V46sS/OBZMjomjNvDX06/
+	L0bGjXYQCys8bk1eZ33wJQmuuCwMhkn4WDq0ScfgJKSUKShSAEzjKA9YwETDoOXV
+	bMR/ZuWM9B+ciYPIiYs+8qQPDDAB2okiJF3IkFQDklRtf72/d6a6WnnVmXu47kE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=ItTtum
+	1P1oCqji/Z83dZcztrKa9vitGxAdRd/vEmnsAjbcG53hw29VSjkz4n9cjABjFoxi
+	48j+p/P8QH0+fvSIP0iwm9260CEW1n13WoanFhowgToxC20dog5+4BVQFhX+bJam
+	ogNjlUBBGJOki4g3Pjkf/xmAsVJaWGDqPwH8k=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 70C42780A3;
+	Wed,  9 Apr 2014 13:30:10 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E10337809B;
+	Wed,  9 Apr 2014 13:30:07 -0400 (EDT)
+In-Reply-To: <534579DD.1060607@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
+ =?utf-8?Q?en=22's?= message of
+	"Wed, 09 Apr 2014 18:48:29 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 9858B8CC-C00C-11E3-AAD9-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/245981>
 
-Junio C Hamano wrote:
->  - To officially adopt the logo that appears on the "project
->    home page" as our "project logo".
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-I have made my objections to that logo before, but here it goes again: bright
-red is a horrible color for a logo, as it only looks good in limited
-situations. I propose you use the logo I chose for git-fc[1] which has a better
-color, and instead of showing commits going down, they go up.
+> How about this as a commit message:
+>
+> Unicode: partially update to version 6.3
+>
+> Unicode 6.3 defines the following code points as combining or accents=
+,
+> git_wcwidth() should return 0.
+>
+> Earlier unicode standards had defined these code point as "reserved":
+> 358--35C
+> 487
+> 5A2, 5BA, 5C5, 5C7
+> 604, 616--61A, 659--65F
+>
+> Note: for this commit only the range 0..7FF has been checked,
+> more updates may be needed.
+>
+> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
 
-Here[2] you can see how horrible contrast this brigth red makes.
+Thanks.
 
-[1] http://felipec.files.wordpress.com/2013/10/git-fc2.png
-[2] http://felipec.org/contrast.png
+I do not think you meant to say that the listed codepoints above are
+the only ones that were "reserved".  Rather, the codepoints listed
+are what are affected by this hange, and these were all reserved.
 
--- 
-Felipe Contreras
+Also it may help end-user visible effect like Jonathan asked in his
+earlier message.  How about extending it like this?
+
+-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+utf8.c: partially update to version 6.3
+
+Unicode 6.3 defines more code points as combining or accents.  For
+example, the character "=C3=B6" could be expressed as an "o" followed b=
+y
+U+0308 COMBINING DIARESIS (aka umlaut, double-dot-above).  We should
+consider that such a sequence of two codepoints occupies one display
+column for the alignment purposes, and for that, git_wcwidth()
+should return 0 for them.  Affected codepoints are:
+
+    U+0358..U+035C
+    U+0487
+    U+05A2, U+05BA, U+05C5, U+05C7
+    U+0604, U+0616..U+061A, U+0659..U+065F
+
+Earlier unicode standards had defined these as "reserved".
+
+Only the range 0..U+07FF has been checked to see which codepoints
+need to be marked as 0-width while preparing for this commit; more
+updates may be needed.
+
+Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
