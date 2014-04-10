@@ -1,137 +1,122 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v7 1/2] Add xpread() and xpwrite()
-Date: Thu, 10 Apr 2014 11:35:42 -0700
-Message-ID: <xmqq7g6xxcap.fsf@gitster.dls.corp.google.com>
-References: <1397081197-14803-1-git-send-email-yiannis.marangos@gmail.com>
-	<1397154681-31803-1-git-send-email-yiannis.marangos@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Yiannis Marangos <yiannis.marangos@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 10 20:35:55 2014
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: [PATCH 0/4] Make update_refs more atomic V2
+Date: Thu, 10 Apr 2014 11:30:21 -0700
+Message-ID: <1397154625-11884-1-git-send-email-sahlberg@google.com>
+Cc: Ronnie Sahlberg <sahlberg@google.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 10 20:37:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WYJpK-0005pd-Ur
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Apr 2014 20:35:55 +0200
+	id 1WYJqO-0006pO-G9
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Apr 2014 20:37:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030346AbaDJSfu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Apr 2014 14:35:50 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62512 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758999AbaDJSfr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Apr 2014 14:35:47 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EF0C57B792;
-	Thu, 10 Apr 2014 14:35:45 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=J/wJJIZDf5ASJ/iBcumN7y7xXnQ=; b=IaqJzw
-	B2ZlO2ZUxzLuNQ1NrLUytl9XlQcDyA/OF0pBuyp447txGkayNb+AZKYjWbJsx3oY
-	GhB9zAhd99x4s4Qb6a+6Z6SDQ7V5fHZP6AYvTCzUKaZPt4c/bxfrLNMZ/JEbUMLE
-	yDvs0lZkjB13vbwkZrHxNzJPitetFshdZlNKE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=W8xQZ8/gMd5qmc6KCR8rd2iNjfzIY6mL
-	wfkjgPknn5Cg3N59tfOMvvrAUsmWU+lhtBmKY/75MepSgx4nUmDSWm12Euj9m7P0
-	CdbIJytbH15RsYjVDuyPNcmunoRyW2XJcgnDU+tUC2yteFh2NJtIv3IDiXr2b5nZ
-	OgVT1yseKwM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DC6437B791;
-	Thu, 10 Apr 2014 14:35:45 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 921327B790;
-	Thu, 10 Apr 2014 14:35:44 -0400 (EDT)
-In-Reply-To: <1397154681-31803-1-git-send-email-yiannis.marangos@gmail.com>
-	(Yiannis Marangos's message of "Thu, 10 Apr 2014 21:31:20 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: ED336900-C0DE-11E3-8716-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1030397AbaDJSgy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Apr 2014 14:36:54 -0400
+Received: from mail-vc0-f201.google.com ([209.85.220.201]:34423 "EHLO
+	mail-vc0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758938AbaDJSgx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Apr 2014 14:36:53 -0400
+Received: by mail-vc0-f201.google.com with SMTP id ik5so625176vcb.2
+        for <git@vger.kernel.org>; Thu, 10 Apr 2014 11:36:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=/OIAeCT0/8H+w1zzba+QTBCdwXE+dd6Kjy+8lLvOU7c=;
+        b=DXGL4vzXMHKB65JkZOdkHUGiN/Ivcl2BphzN1Fo1D8vPlYhG0udZu5SL7H0ohwM9CL
+         McG0Dn61mZW8DOiTPE9ii76uMdTrqWZyiX84MTuL7b4YMN68PNEZBL1iLQTbKqoYoYGO
+         7pGL+4P6qNhIVRQuxgVyXQwnEfZGVECxHddBJYgd+/iXIycyzbMq/ulxrQ9GoHmz+5yb
+         Va9nA14NuikNvefUM8GWwia437UDBUhJDU+oAiRurt4gcc7zufk7oMlCpzq93+CPX4mb
+         n2qhHROlPhkM8HfbI1Mqo32kunCrEFd6P7ic9bsLNqLXUfx/2lm1OvkWeL8sHYIjDCH4
+         VGWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=/OIAeCT0/8H+w1zzba+QTBCdwXE+dd6Kjy+8lLvOU7c=;
+        b=kNFFTWVZoG9ktJ2czvEDp73gqojc4iRFrhrI4i/W60yLqdYXJdk+7oP89uur+GOSzY
+         yK1V8eQ5Sq+2L+DoY7P+MtHDszQlerNoZDA3Q9BJi5t8dv8loMUTnQdJKIoCCmvzq/kK
+         XWf2hjQFfg3iY9BOQK44b1hJiv3kpZxBcl9vZCEOVgzVBjjHLjT2wUKmoy9te7xD9NDX
+         j4sIzLzc76ocAhrMZPaEK6rX0TAlHEmF9gsQkPvpboF0C288Wwg/lqjfYaS8skhd9z6x
+         QDUVyaSeQPuRROQrUDKgf12SDYuSE2iQh+Klipt94nGypObcn7ls1WxnOJslPX4aG0HL
+         SNng==
+X-Gm-Message-State: ALoCoQns2wXeFhHVbKozvtx/1+zJ9RdbINF0J5BMqw8es82vRSV+g3HmwlQL09rvs1aTILM4scrofdzqtS2vIE23WaubhNnjKKb1e/tZGpHTVLFR28I4v0clOvNwm//KoDcCH3GeTwv88TdZmeVDYxXovbuTI8i1nLDMAPrDntyLVPz1grW3Ay9Xy8S4ILDL/ZAP8cPSBosm
+X-Received: by 10.224.13.12 with SMTP id z12mr8824528qaz.7.1397154628630;
+        Thu, 10 Apr 2014 11:30:28 -0700 (PDT)
+Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
+        by gmr-mx.google.com with ESMTPS id a44si797169yhb.6.2014.04.10.11.30.28
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 10 Apr 2014 11:30:28 -0700 (PDT)
+Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 79D825A41AE;
+	Thu, 10 Apr 2014 11:30:28 -0700 (PDT)
+Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
+	id 1B939E0591; Thu, 10 Apr 2014 11:30:27 -0700 (PDT)
+X-Mailer: git-send-email 1.9.1.478.ga5a8238.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246029>
 
-Yiannis Marangos <yiannis.marangos@gmail.com> writes:
+refs.c:update_refs() intermingles doing updates and checks with actually
+applying changes to the refs in loops that abort on error.
+This is done one ref at a time and means that if an error is detected that
+will fail the operation after only some of the ref operations have been
+been updated on the disk.
 
-> xpread() and xpwrite() pay attention to EAGAIN/EINTR, so they will resume
-> automatically on interrupted call.
+These patches change the update and delete functions to use a three
+call pattern of
 
-We do not even use pwrite(); please don't add anything unnecessary
-and unexercised, like xpwrite(), as potential bugs in it will go
-unnoticed long after its introduction until it first gets used.
+1, lock
+2, update, or flag for deletion
+3, apply on disk
 
-> diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-> index b9f6e12..1bac0f5 100644
-> --- a/builtin/index-pack.c
-> +++ b/builtin/index-pack.c
-> @@ -542,7 +542,7 @@ static void *unpack_data(struct object_entry *obj,
->  
->  	do {
->  		ssize_t n = (len < 64*1024) ? len : 64*1024;
-> -		n = pread(pack_fd, inbuf, n, from);
-> +		n = xpread(pack_fd, inbuf, n, from);
->  		if (n < 0)
->  			die_errno(_("cannot pread pack file"));
->  		if (!n)
+In the final patch I change update_refs to perform these actions in three
+separate loops where the final loop to 'apply on disk' all the changes will
+only be performed if there were no error conditions detected during any of
+previous loops.
 
-OK.
+This should make the changes of refs in update_refs slightly more atomic.
 
-> diff --git a/compat/mmap.c b/compat/mmap.c
-> index c9d46d1..7f662fe 100644
-> --- a/compat/mmap.c
-> +++ b/compat/mmap.c
-> @@ -14,7 +14,7 @@ void *git_mmap(void *start, size_t length, int prot, int flags, int fd, off_t of
->  	}
->  
->  	while (n < length) {
-> -		ssize_t count = pread(fd, (char *)start + n, length - n, offset + n);
-> +		ssize_t count = xpread(fd, (char *)start + n, length - n, offset + n);
->  
->  		if (count == 0) {
->  			memset((char *)start+n, 0, length-n);
-> @@ -22,8 +22,6 @@ void *git_mmap(void *start, size_t length, int prot, int flags, int fd, off_t of
->  		}
->  
->  		if (count < 0) {
-> -			if (errno == EAGAIN || errno == EINTR)
-> -				continue;
->  			free(start);
->  			errno = EACCES;
->  			return MAP_FAILED;
 
-OK.
+This may overlap with other current patch series for making refs updates
+more atomic which may mean these patches become obsolete, but I would still
+like some review and feedback on these changes.
 
-> diff --git a/wrapper.c b/wrapper.c
-> index 0cc5636..25b7419 100644
-> --- a/wrapper.c
-> +++ b/wrapper.c
-> @@ -174,6 +174,42 @@ ssize_t xwrite(int fd, const void *buf, size_t len)
->  	}
->  }
->  
-> +/*
-> + * xpread() is the same as pread(), but it automatically restarts pread()
-> + * operations with a recoverable error (EAGAIN and EINTR). xpread() DOES
-> + * NOT GUARANTEE that "len" bytes is read even if the data is available.
-> + */
-> +ssize_t xpread(int fd, void *buf, size_t len, off_t offset)
-> +{
-> +	ssize_t nr;
-> +	if (len > MAX_IO_SIZE)
-> +	    len = MAX_IO_SIZE;
-> +	while (1) {
-> +		nr = pread(fd, buf, len, offset);
-> +		if ((nr < 0) && (errno == EAGAIN || errno == EINTR))
-> +			continue;
-> +		return nr;
-> +	}
-> +}
+Version 2:
+Updates and fixes based on Junio's feedback.
+* Fix the subject line for patches so they comply with the project standard.
+* Redo the update/delete loops so that we maintain the correct order of
+  operations. Perform all updates first, then perform the deletes.
+* Add an additional patch that allows us to do the update/delete in the correct
+  order from within a single loop by first sorting the refs so that deletes
+  are after all non-deletes.
 
-OK.
 
-Thanks.
+Ronnie Sahlberg (4):
+  refs.c: split writing and commiting a ref into two separate functions
+  refs.c: split delete_ref_loose() into a separate flag-for-deletion and
+    commit phase
+  refs.c: change update_refs to run the commit loops once all work is
+    finished
+  refs.c: sort the refs by new_sha1 and merge the two update/delete
+    loops into one
+
+ branch.c               |  10 ++++-
+ builtin/commit.c       |   5 +++
+ builtin/fetch.c        |   7 +++-
+ builtin/receive-pack.c |   4 ++
+ builtin/replace.c      |   6 ++-
+ builtin/tag.c          |   6 ++-
+ fast-import.c          |   7 +++-
+ refs.c                 | 102 +++++++++++++++++++++++++++++++++----------------
+ refs.h                 |   6 +++
+ sequencer.c            |   4 ++
+ walker.c               |   4 ++
+ 11 files changed, 123 insertions(+), 38 deletions(-)
+
+-- 
+1.9.1.478.ga5a8238.dirty
