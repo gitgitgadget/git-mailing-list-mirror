@@ -1,10 +1,10 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v2 9/9] sha1_name: add support for @{publish} marks
-Date: Thu, 10 Apr 2014 17:25:25 -0500
-Message-ID: <53471a55767f1_d696b12f01c@nysa.notmuch>
+Subject: Re: [PATCH v2 8/9] sha1_name: simplify track finding
+Date: Thu, 10 Apr 2014 17:27:07 -0500
+Message-ID: <53471abb6fa76_d696b12f0b0@nysa.notmuch>
 References: <1397156686-31349-1-git-send-email-felipe.contreras@gmail.com>
- <1397156686-31349-10-git-send-email-felipe.contreras@gmail.com>
- <CALkWK0nC7Ai_LbJNpy-oK-qfWZELx6NVWTNS-5iWzhn8t9JoTw@mail.gmail.com>
+ <1397156686-31349-9-git-send-email-felipe.contreras@gmail.com>
+ <CALkWK0kRAYpZxDkZ6nVPcfo4pqJuTLNFekpQ+tLPPRFJZKUMuw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
@@ -14,88 +14,57 @@ Cc: Git List <git@vger.kernel.org>,
 	John Szakmeister <john@szakmeister.net>
 To: Ramkumar Ramachandra <artagnon@gmail.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 11 00:36:02 2014
+X-From: git-owner@vger.kernel.org Fri Apr 11 00:37:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WYNZe-0005Gl-IU
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Apr 2014 00:35:58 +0200
+	id 1WYNb5-0006Uj-SF
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Apr 2014 00:37:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753878AbaDJWf0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Apr 2014 18:35:26 -0400
-Received: from mail-oa0-f53.google.com ([209.85.219.53]:53509 "EHLO
-	mail-oa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753865AbaDJWfZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Apr 2014 18:35:25 -0400
-Received: by mail-oa0-f53.google.com with SMTP id j17so5135266oag.26
-        for <git@vger.kernel.org>; Thu, 10 Apr 2014 15:35:25 -0700 (PDT)
+	id S1161187AbaDJWhS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Apr 2014 18:37:18 -0400
+Received: from mail-ob0-f182.google.com ([209.85.214.182]:60148 "EHLO
+	mail-ob0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759193AbaDJWhK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Apr 2014 18:37:10 -0400
+Received: by mail-ob0-f182.google.com with SMTP id uz6so5211556obc.13
+        for <git@vger.kernel.org>; Thu, 10 Apr 2014 15:37:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-type:content-transfer-encoding;
-        bh=8AuodG/uh9POUipyYv1yZOW8UjphJzF2SIPVoLvKfDU=;
-        b=IxEVnbqlwSRShcp9Bb0nY+oiifudZx7zhs8BTnI2Kw97KLM7cLisZAo4DMrtcnA5ci
-         sZR2e39u+A8btQEjs+3CYMTtZ/MMagP7sf0f0juNF2Lf6cIDjRGxIc3AlhYVo1Y0J1oF
-         Ep3ksBKfT/Oce2zlZqTAQafpzog/+f0rQvoyr2Y+uu2MKyVX/pHyyYGth1GmxfZAOc0K
-         C+khuXCNq/hNQUVJjX+gcEwdH3ZJ6Lvkq7YJ/Fwfez/c/yTOgMdd502P/4eAJU7QgXjm
-         tIkt8Cq2g4vzQVopkauD8nsEnTXRAcrrhKARDuoMUrl8HgsQ00s9YBUnqdD/+Yj01S8S
-         EyqA==
-X-Received: by 10.60.155.72 with SMTP id vu8mr3990670oeb.60.1397169325429;
-        Thu, 10 Apr 2014 15:35:25 -0700 (PDT)
+        bh=URYiWhKZ8Nfx+Zs20eU2UTWrzLi/40AwR3ZA/5851+M=;
+        b=n4Wv/WezWlDOEdYCK2WwXtkUKBCqDPLOJ4ohfJ0Wr+mKqsF2sMCM+/8qKkLgVZfr2b
+         Pbe5nC2JqO0B8rK0GRfHXa5kakyOb9X+R/lYdN+wdT04qEHaw29N5xZkbsNfggMvvpYW
+         t22u6KyaczogN4CPSYkyIah7lBRMDzmsAcvge/AHdEv2qelpUHp5yAZRbZLh8Pbf7M8t
+         1Wp6DDuT1NaCHrazLe/JAHixaT3IIlBbKeuFuaj4Y+vs8p6i3uEOX69c0mAMcN6sZbqH
+         KRq+2rzlRVyWV55ztAkin/ikeQ2U2RTp27CfbeAwtLkzvpTIFRGXoJAM2Yejct3TdUcq
+         lXDg==
+X-Received: by 10.60.45.35 with SMTP id j3mr3406252oem.68.1397169430214;
+        Thu, 10 Apr 2014 15:37:10 -0700 (PDT)
 Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id te6sm23276130oec.2.2014.04.10.15.35.22
+        by mx.google.com with ESMTPSA id bj8sm9217346obb.7.2014.04.10.15.37.04
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 10 Apr 2014 15:35:24 -0700 (PDT)
-In-Reply-To: <CALkWK0nC7Ai_LbJNpy-oK-qfWZELx6NVWTNS-5iWzhn8t9JoTw@mail.gmail.com>
+        Thu, 10 Apr 2014 15:37:07 -0700 (PDT)
+In-Reply-To: <CALkWK0kRAYpZxDkZ6nVPcfo4pqJuTLNFekpQ+tLPPRFJZKUMuw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246061>
 
 Ramkumar Ramachandra wrote:
 > Felipe Contreras wrote:
-> > @@ -1068,23 +1069,35 @@ static const char *get_upstream_branch(const char *name_buf, int len)
-> >          */
-> >         if (!branch)
-> >                 die(_("HEAD does not point to a branch"));
-> > -       if (!branch->merge || !branch->merge[0]->dst) {
-> > -               if (!ref_exists(branch->refname))
-> > -                       die(_("No such branch: '%s'"), name);
-> > -               if (!branch->merge) {
-> > -                       die(_("No upstream configured for branch '%s'"),
-> > -                               branch->name);
-> > +       switch (type) {
-> > +       case 'u':
-> > +               if (!branch->merge || !branch->merge[0]->dst) {
-> > +                       if (!ref_exists(branch->refname))
-> > +                               die(_("No such branch: '%s'"), name);
-> > +                       if (!branch->merge) {
-> > +                               die(_("No upstream configured for branch '%s'"),
-> > +                                       branch->name);
-> > +                       }
-> > +                       die(
-> > +                               _("Upstream branch '%s' not stored as a remote-tracking branch"),
-> > +                               branch->merge[0]->src);
-> > +               }
-> > +               tracking = branch->merge[0]->dst;
-> > +               break;
-> > +       case 'p':
-> > +               if (!branch->push.dst) {
-> > +                       die(_("No publish configured for branch '%s'"),
-> > +                                       branch->name);
+> > It's more efficient to check for the braces first.
 > 
-> This assumes a push.default value of 'current' or 'matching'. What
-> happens if push.default is set to 'nothing' or 'upstream', for
-> instance?
+> Why is it more efficient? So you can error out quickly in the case of
+> a malformed string?
 
-Why would that matter? @{upstream} doesn't depend on this, neither does
-@{publish}; @{upstream} is .remote+.merge, @{publish} is .pushremote+.push.
-
-If the user hasn't configured a publish branch, @{publish} fails.
+That's one reason. The other is that get_sha1_basic() calls upstream_mark()
+when we _already_ know there's a @{foo}.
 
 -- 
 Felipe Contreras
