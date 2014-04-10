@@ -1,220 +1,180 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 9/9] sha1_name: add support for @{publish} marks
-Date: Thu, 10 Apr 2014 14:04:46 -0500
-Message-ID: <1397156686-31349-10-git-send-email-felipe.contreras@gmail.com>
-References: <1397156686-31349-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Matthieu Moy <matthieu.moy@imag.fr>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Jeff King <peff@peff.net>,
-	John Szakmeister <john@szakmeister.net>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 10 21:15:57 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v8 1/2] Add xpread()
+Date: Thu, 10 Apr 2014 12:20:59 -0700
+Message-ID: <xmqqtxa1vvms.fsf@gitster.dls.corp.google.com>
+References: <1397081197-14803-1-git-send-email-yiannis.marangos@gmail.com>
+	<1397156052-1247-1-git-send-email-yiannis.marangos@gmail.com>
+	<5346ED16.3050607@kdbg.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Yiannis Marangos <yiannis.marangos@gmail.com>, git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Thu Apr 10 21:21:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WYKS3-0006ua-Od
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Apr 2014 21:15:56 +0200
+	id 1WYKX8-0002wW-DU
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Apr 2014 21:21:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758594AbaDJTPo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Apr 2014 15:15:44 -0400
-Received: from mail-ob0-f176.google.com ([209.85.214.176]:39878 "EHLO
-	mail-ob0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161210AbaDJTPj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Apr 2014 15:15:39 -0400
-Received: by mail-ob0-f176.google.com with SMTP id wp18so4835068obc.7
-        for <git@vger.kernel.org>; Thu, 10 Apr 2014 12:15:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=nrmkJsGXEA8WXhgDsXHvCMGtZfXEiKqnMiBAs/ZZoqk=;
-        b=stuoVxmGvEfURAQO+56JTXkSKrBmm5i4cQuRlWquNga4/WtQPovnvgfHIb03P5KKbW
-         Bcemxy1EqDEMaRUipXHcZuzq8+rVxq0VgP0ozHOk6lA7+BvjMtMm9LPisdLXk2O2Y4/P
-         XZjy0+LvOTsyayu38mcbJPdg8jNROf2kvPnJhXOorJ66X6rFtgGoZ3Xu4gFn/nANI2s9
-         jUeFxe+bwo/79wvEHS9x8B8rUWDx6JivTNdj0ZfVvX6Gn3APPQsoRh1wCK6YJRC2laLU
-         XCQgLz2pgSDqF9djV32Gny8ChB8ZIaf3l8bx7DaD/Ph8DJfAHEHN1/aSFtgTkKjbP46Q
-         85Ew==
-X-Received: by 10.182.246.35 with SMTP id xt3mr15542083obc.39.1397157338654;
-        Thu, 10 Apr 2014 12:15:38 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id ii8sm8370274obb.11.2014.04.10.12.15.33
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 10 Apr 2014 12:15:35 -0700 (PDT)
-X-Mailer: git-send-email 1.9.1+fc1
-In-Reply-To: <1397156686-31349-1-git-send-email-felipe.contreras@gmail.com>
+	id S1758673AbaDJTVE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Apr 2014 15:21:04 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40136 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753421AbaDJTVC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Apr 2014 15:21:02 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0BC2B7A518;
+	Thu, 10 Apr 2014 15:21:02 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=gr6KKKvpOQEBviKjggNzTCm65TA=; b=flLNIO
+	bPnDWic1hpYL0VIIzDDXNXj25xfTEZLbZjxniu0VQU3xXhpOnY8QtLs0ahzDqf6h
+	HSBzQ8KGzjMMGxqyjH4bmdrDov2w0MUL/M2O+XJGGlSfuqjcnThoO5wwyzVDQxKz
+	aiaRIoKIO7Cj1kAwM8df9YSNr/98tt3nUpO3U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=B5XcZ4/GrBCTIpKnMLVcBPlvsDqG8XYa
+	zKZUZd9ai0jc20aIMKnZ8oOtR6sWU4RaYoqP1yDUtE6aZwJSq2QIE18TXcWV1Mw5
+	GYtV53PyjC5XDk4QfbAWqHDxym5dLAcQyNDFk8oiuB7jP0QiDuI7Ew+XLa0i7y9g
+	PHyFkHx1M0g=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E66DF7A517;
+	Thu, 10 Apr 2014 15:21:01 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C2EAB7A514;
+	Thu, 10 Apr 2014 15:21:00 -0400 (EDT)
+In-Reply-To: <5346ED16.3050607@kdbg.org> (Johannes Sixt's message of "Thu, 10
+	Apr 2014 21:12:22 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 402E7A4A-C0E5-11E3-9F80-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246048>
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+Johannes Sixt <j6t@kdbg.org> writes:
+
+> Am 10.04.2014 20:54, schrieb Yiannis Marangos:
+>> +ssize_t xpread(int fd, void *buf, size_t len, off_t offset)
+>> +{
+>> +	ssize_t nr;
+>> +	if (len > MAX_IO_SIZE)
+>> +	    len = MAX_IO_SIZE;
+>
+> Odd indentation here.
+>
+> -- Hannes
+
+Good eyes, even though this is copy&pasting an existing error from
+surrounding code ;-)
+
+I'll queue this instead (rebased on top of maint-1.8.5 even though I
+doubt we would be issuing 1.8.5.6).
+
+-- >8 --
+From: Yiannis Marangos <yiannis.marangos@gmail.com>
+Date: Thu, 10 Apr 2014 21:54:12 +0300
+Subject: [PATCH] wrapper.c: add xpread() similar to xread()
+
+It is a common mistake to call read(2)/pread(2) and forget to
+anticipate that they may return error with EAGAIN/EINTR when the
+system call is interrupted.
+
+We have xread() helper to relieve callers of read(2) from having to
+worry about it; add xpread() helper to do the same for pread(2).
+
+Update the caller in the builtin/index-pack.c and the mmap emulation
+in compat/.
+
+Signed-off-by: Yiannis Marangos <yiannis.marangos@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/revisions.txt |  4 ++++
- sha1_name.c                 | 49 ++++++++++++++++++++++++++++-----------------
- t/t1508-at-combinations.sh  |  5 +++++
- 3 files changed, 40 insertions(+), 18 deletions(-)
+ builtin/index-pack.c |  2 +-
+ compat/mmap.c        |  4 +---
+ git-compat-util.h    |  1 +
+ wrapper.c            | 18 ++++++++++++++++++
+ 4 files changed, 21 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
-index 5a286d0..fd01cb4 100644
---- a/Documentation/revisions.txt
-+++ b/Documentation/revisions.txt
-@@ -96,6 +96,10 @@ some output processing may assume ref names in UTF-8.
-   refers to the branch that the branch specified by branchname is set to build on
-   top of.  A missing branchname defaults to the current one.
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 9e9eb4b..e7a6b53 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -542,7 +542,7 @@ static void *unpack_data(struct object_entry *obj,
  
-+'<branchname>@\{publish\}', e.g. 'master@\{publish\}', '@\{p\}'::
-+  The suffix '@\{publish\}' to a branchname refers to the remote branch to
-+  push to. A missing branchname defaults to the current one.
-+
- '<rev>{caret}', e.g. 'HEAD{caret}, v1.5.1{caret}0'::
-   A suffix '{caret}' to a revision parameter means the first parent of
-   that commit object.  '{caret}<n>' means the <n>th parent (i.e.
-diff --git a/sha1_name.c b/sha1_name.c
-index aa3f3e0..a36852d 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -415,9 +415,9 @@ static int ambiguous_path(const char *path, int len)
- 	return slash;
- }
+ 	do {
+ 		ssize_t n = (len < 64*1024) ? len : 64*1024;
+-		n = pread(pack_fd, inbuf, n, from);
++		n = xpread(pack_fd, inbuf, n, from);
+ 		if (n < 0)
+ 			die_errno(_("cannot pread pack file"));
+ 		if (!n)
+diff --git a/compat/mmap.c b/compat/mmap.c
+index c9d46d1..7f662fe 100644
+--- a/compat/mmap.c
++++ b/compat/mmap.c
+@@ -14,7 +14,7 @@ void *git_mmap(void *start, size_t length, int prot, int flags, int fd, off_t of
+ 	}
  
--static inline int upstream_mark(const char *string, int len)
-+static inline int tracking_mark(const char *string, int len)
- {
--	const char *suffix[] = { "upstream", "u" };
-+	const char *suffix[] = { "upstream", "u", "publish", "p" };
- 	int i;
+ 	while (n < length) {
+-		ssize_t count = pread(fd, (char *)start + n, length - n, offset + n);
++		ssize_t count = xpread(fd, (char *)start + n, length - n, offset + n);
  
- 	for (i = 0; i < ARRAY_SIZE(suffix); i++) {
-@@ -475,7 +475,7 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
- 					nth_prior = 1;
- 					continue;
- 				}
--				if (!upstream_mark(str + at + 2, len - at - 3)) {
-+				if (!tracking_mark(str + at + 2, len - at - 3)) {
- 					reflog_len = (len-1) - (at+2);
- 					len = at;
- 				}
-@@ -1057,10 +1057,11 @@ static void set_shortened_ref(struct strbuf *buf, const char *ref)
- 	free(s);
- }
- 
--static const char *get_upstream_branch(const char *name_buf, int len)
-+static const char *get_tracking_branch(const char *name_buf, int len, char type)
- {
- 	char *name = xstrndup(name_buf, len);
- 	struct branch *branch = branch_get(*name ? name : NULL);
-+	char *tracking = NULL;
- 
- 	/*
- 	 * Upstream can be NULL only if branch refers to HEAD and HEAD
-@@ -1068,23 +1069,35 @@ static const char *get_upstream_branch(const char *name_buf, int len)
- 	 */
- 	if (!branch)
- 		die(_("HEAD does not point to a branch"));
--	if (!branch->merge || !branch->merge[0]->dst) {
--		if (!ref_exists(branch->refname))
--			die(_("No such branch: '%s'"), name);
--		if (!branch->merge) {
--			die(_("No upstream configured for branch '%s'"),
--				branch->name);
-+	switch (type) {
-+	case 'u':
-+		if (!branch->merge || !branch->merge[0]->dst) {
-+			if (!ref_exists(branch->refname))
-+				die(_("No such branch: '%s'"), name);
-+			if (!branch->merge) {
-+				die(_("No upstream configured for branch '%s'"),
-+					branch->name);
-+			}
-+			die(
-+				_("Upstream branch '%s' not stored as a remote-tracking branch"),
-+				branch->merge[0]->src);
-+		}
-+		tracking = branch->merge[0]->dst;
-+		break;
-+	case 'p':
-+		if (!branch->push.dst) {
-+			die(_("No publish configured for branch '%s'"),
-+					branch->name);
+ 		if (count == 0) {
+ 			memset((char *)start+n, 0, length-n);
+@@ -22,8 +22,6 @@ void *git_mmap(void *start, size_t length, int prot, int flags, int fd, off_t of
  		}
--		die(
--			_("Upstream branch '%s' not stored as a remote-tracking branch"),
--			branch->merge[0]->src);
-+		tracking = branch->push.dst;
-+		break;
- 	}
- 	free(name);
  
--	return branch->merge[0]->dst;
-+	return tracking;
+ 		if (count < 0) {
+-			if (errno == EAGAIN || errno == EINTR)
+-				continue;
+ 			free(start);
+ 			errno = EACCES;
+ 			return MAP_FAILED;
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 7776f12..9eec5fb 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -534,6 +534,7 @@ extern void *xcalloc(size_t nmemb, size_t size);
+ extern void *xmmap(void *start, size_t length, int prot, int flags, int fd, off_t offset);
+ extern ssize_t xread(int fd, void *buf, size_t len);
+ extern ssize_t xwrite(int fd, const void *buf, size_t len);
++extern ssize_t xpread(int fd, void *buf, size_t len, off_t offset);
+ extern int xdup(int fd);
+ extern FILE *xfdopen(int fd, const char *mode);
+ extern int xmkstemp(char *template);
+diff --git a/wrapper.c b/wrapper.c
+index 0cc5636..5b3c7fc 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -174,6 +174,24 @@ ssize_t xwrite(int fd, const void *buf, size_t len)
+ 	}
  }
  
--static int interpret_upstream_mark(const char *name, int namelen,
-+static int interpret_tracking_mark(const char *name, int namelen,
- 				   int at, struct strbuf *buf)
++/*
++ * xpread() is the same as pread(), but it automatically restarts pread()
++ * operations with a recoverable error (EAGAIN and EINTR). xpread() DOES
++ * NOT GUARANTEE that "len" bytes is read even if the data is available.
++ */
++ssize_t xpread(int fd, void *buf, size_t len, off_t offset)
++{
++	ssize_t nr;
++	if (len > MAX_IO_SIZE)
++		len = MAX_IO_SIZE;
++	while (1) {
++		nr = pread(fd, buf, len, offset);
++		if ((nr < 0) && (errno == EAGAIN || errno == EINTR))
++			continue;
++		return nr;
++	}
++}
++
+ ssize_t read_in_full(int fd, void *buf, size_t count)
  {
- 	int len;
-@@ -1092,14 +1105,14 @@ static int interpret_upstream_mark(const char *name, int namelen,
- 	if (name[at + 1] != '{' || name[namelen - 1] != '}')
- 		return -1;
- 
--	len = upstream_mark(name + at + 2, namelen - at - 3);
-+	len = tracking_mark(name + at + 2, namelen - at - 3);
- 	if (!len)
- 		return -1;
- 
- 	if (memchr(name, ':', at))
- 		return -1;
- 
--	set_shortened_ref(buf, get_upstream_branch(name, at));
-+	set_shortened_ref(buf, get_tracking_branch(name, at, name[at + 2]));
- 	return len + at + 3;
- }
- 
-@@ -1150,7 +1163,7 @@ int interpret_branch_name(const char *name, int namelen, struct strbuf *buf)
- 		if (len > 0)
- 			return reinterpret(name, namelen, len, buf);
- 
--		len = interpret_upstream_mark(name, namelen, at - name, buf);
-+		len = interpret_tracking_mark(name, namelen, at - name, buf);
- 		if (len > 0)
- 			return len;
- 	}
-diff --git a/t/t1508-at-combinations.sh b/t/t1508-at-combinations.sh
-index 078e119..f67aab3 100755
---- a/t/t1508-at-combinations.sh
-+++ b/t/t1508-at-combinations.sh
-@@ -32,6 +32,7 @@ fail() {
- test_expect_success 'setup' '
- 	test_commit master-one &&
- 	test_commit master-two &&
-+	git checkout -b publish-branch &&
- 	git checkout -b upstream-branch &&
- 	test_commit upstream-one &&
- 	test_commit upstream-two &&
-@@ -46,6 +47,7 @@ test_expect_success 'setup' '
- 	test_commit new-two &&
- 	git branch -u master old-branch &&
- 	git branch -u upstream-branch new-branch
-+	git branch -p publish-branch new-branch
- '
- 
- check HEAD ref refs/heads/new-branch
-@@ -61,8 +63,11 @@ check "HEAD@{u}" ref refs/heads/upstream-branch
- check "@{u}@{1}" commit upstream-one
- check "@{-1}@{u}" ref refs/heads/master
- check "@{-1}@{u}@{1}" commit master-one
-+check "@{p}" ref refs/heads/publish-branch
-+check "HEAD@{p}" ref refs/heads/publish-branch
- check "@" commit new-two
- check "@@{u}" ref refs/heads/upstream-branch
-+check "@@{p}" ref refs/heads/publish-branch
- check "@@/at-test" ref refs/heads/@@/at-test
- check "@/at-test" ref refs/heads/@/at-test
- check "@at-test" ref refs/heads/@at-test
+ 	char *p = buf;
 -- 
-1.9.1+fc1
+1.9.2-590-g468068b
