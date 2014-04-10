@@ -1,57 +1,101 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH v2 6/9] branch: display publish branch
-Date: Thu, 10 Apr 2014 18:03:37 -0400
-Message-ID: <CALkWK0mSfsUrSMPMmZ+PNtZ2WBUqN4Swk_e6S1fMGuUoocJSEg@mail.gmail.com>
-References: <1397156686-31349-1-git-send-email-felipe.contreras@gmail.com> <1397156686-31349-7-git-send-email-felipe.contreras@gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v2 9/9] sha1_name: add support for @{publish} marks
+Date: Thu, 10 Apr 2014 17:25:25 -0500
+Message-ID: <53471a55767f1_d696b12f01c@nysa.notmuch>
+References: <1397156686-31349-1-git-send-email-felipe.contreras@gmail.com>
+ <1397156686-31349-10-git-send-email-felipe.contreras@gmail.com>
+ <CALkWK0nC7Ai_LbJNpy-oK-qfWZELx6NVWTNS-5iWzhn8t9JoTw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Cc: Git List <git@vger.kernel.org>,
 	Matthieu Moy <matthieu.moy@imag.fr>, Jeff King <peff@peff.net>,
 	John Szakmeister <john@szakmeister.net>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 11 00:04:25 2014
+To: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 11 00:36:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WYN56-0004ri-3Q
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Apr 2014 00:04:24 +0200
+	id 1WYNZe-0005Gl-IU
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Apr 2014 00:35:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759123AbaDJWET (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Apr 2014 18:04:19 -0400
-Received: from mail-ie0-f175.google.com ([209.85.223.175]:63564 "EHLO
-	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753867AbaDJWES (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Apr 2014 18:04:18 -0400
-Received: by mail-ie0-f175.google.com with SMTP id to1so4577178ieb.20
-        for <git@vger.kernel.org>; Thu, 10 Apr 2014 15:04:17 -0700 (PDT)
+	id S1753878AbaDJWf0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Apr 2014 18:35:26 -0400
+Received: from mail-oa0-f53.google.com ([209.85.219.53]:53509 "EHLO
+	mail-oa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753865AbaDJWfZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Apr 2014 18:35:25 -0400
+Received: by mail-oa0-f53.google.com with SMTP id j17so5135266oag.26
+        for <git@vger.kernel.org>; Thu, 10 Apr 2014 15:35:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=mKSbq29KP3+e7NdnxKe6z/tIWA7/ys9mrw+R2CPdHlQ=;
-        b=jj5A9SvlSnPsQhzMPWPsbOecgJcjTY5UOFovKdgcp7z6VmC5Lfk7A9pWr6YY3b5ZNy
-         ykKopmK8Kr2hH48bU/Mw7RBwNgjR6dq89qsnLSfK7hVt6Z8wCJYsYEIBxhZL3ymYHgad
-         Cd1FXtIstcPPcsG91iyIeX2STJ99WmGkB7GQsoEljNY4i2AxF/Xoqdhd2ZnTzSpVPSI2
-         twexad9N6qODzf9g6OL0DBvQUQA1j8kMqouVxmmI+mQJXc/otYnF5MI7gJAOgLdqt+1t
-         vcdauV05YBW0ErDNLPK0VXtF6/6rUIwlVB7r5U8fDwS6b+Fmv9wulMhC2ORWuJrfGk4H
-         t4yw==
-X-Received: by 10.50.79.138 with SMTP id j10mr11221513igx.47.1397167457290;
- Thu, 10 Apr 2014 15:04:17 -0700 (PDT)
-Received: by 10.64.10.42 with HTTP; Thu, 10 Apr 2014 15:03:37 -0700 (PDT)
-In-Reply-To: <1397156686-31349-7-git-send-email-felipe.contreras@gmail.com>
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=8AuodG/uh9POUipyYv1yZOW8UjphJzF2SIPVoLvKfDU=;
+        b=IxEVnbqlwSRShcp9Bb0nY+oiifudZx7zhs8BTnI2Kw97KLM7cLisZAo4DMrtcnA5ci
+         sZR2e39u+A8btQEjs+3CYMTtZ/MMagP7sf0f0juNF2Lf6cIDjRGxIc3AlhYVo1Y0J1oF
+         Ep3ksBKfT/Oce2zlZqTAQafpzog/+f0rQvoyr2Y+uu2MKyVX/pHyyYGth1GmxfZAOc0K
+         C+khuXCNq/hNQUVJjX+gcEwdH3ZJ6Lvkq7YJ/Fwfez/c/yTOgMdd502P/4eAJU7QgXjm
+         tIkt8Cq2g4vzQVopkauD8nsEnTXRAcrrhKARDuoMUrl8HgsQ00s9YBUnqdD/+Yj01S8S
+         EyqA==
+X-Received: by 10.60.155.72 with SMTP id vu8mr3990670oeb.60.1397169325429;
+        Thu, 10 Apr 2014 15:35:25 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id te6sm23276130oec.2.2014.04.10.15.35.22
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 10 Apr 2014 15:35:24 -0700 (PDT)
+In-Reply-To: <CALkWK0nC7Ai_LbJNpy-oK-qfWZELx6NVWTNS-5iWzhn8t9JoTw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246059>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246060>
 
-Felipe Contreras wrote:
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+Ramkumar Ramachandra wrote:
+> Felipe Contreras wrote:
+> > @@ -1068,23 +1069,35 @@ static const char *get_upstream_branch(const char *name_buf, int len)
+> >          */
+> >         if (!branch)
+> >                 die(_("HEAD does not point to a branch"));
+> > -       if (!branch->merge || !branch->merge[0]->dst) {
+> > -               if (!ref_exists(branch->refname))
+> > -                       die(_("No such branch: '%s'"), name);
+> > -               if (!branch->merge) {
+> > -                       die(_("No upstream configured for branch '%s'"),
+> > -                               branch->name);
+> > +       switch (type) {
+> > +       case 'u':
+> > +               if (!branch->merge || !branch->merge[0]->dst) {
+> > +                       if (!ref_exists(branch->refname))
+> > +                               die(_("No such branch: '%s'"), name);
+> > +                       if (!branch->merge) {
+> > +                               die(_("No upstream configured for branch '%s'"),
+> > +                                       branch->name);
+> > +                       }
+> > +                       die(
+> > +                               _("Upstream branch '%s' not stored as a remote-tracking branch"),
+> > +                               branch->merge[0]->src);
+> > +               }
+> > +               tracking = branch->merge[0]->dst;
+> > +               break;
+> > +       case 'p':
+> > +               if (!branch->push.dst) {
+> > +                       die(_("No publish configured for branch '%s'"),
+> > +                                       branch->name);
+> 
+> This assumes a push.default value of 'current' or 'matching'. What
+> happens if push.default is set to 'nothing' or 'upstream', for
+> instance?
 
-Please write a commit message, preferably showing the new git-branch output.
+Why would that matter? @{upstream} doesn't depend on this, neither does
+@{publish}; @{upstream} is .remote+.merge, @{publish} is .pushremote+.push.
 
-I noticed that this only picks up a publish-branch if
-branch.*.pushremote is configured. What happened to the case when
-remote.pushdefault is configured?
+If the user hasn't configured a publish branch, @{publish} fails.
+
+-- 
+Felipe Contreras
