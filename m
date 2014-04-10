@@ -1,76 +1,112 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] Add support for commit attributes
-Date: Thu, 10 Apr 2014 15:05:06 +0700
-Message-ID: <CACsJy8Ddg99Foi89ntNQ7NB=J9qCH4hcXZ0maM7vxigfO8QVTQ@mail.gmail.com>
-References: <1397072295-7670-1-git-send-email-diego.lago.gonzalez@gmail.com>
- <CACsJy8BJw3+=vSHzfBYigoK6ejt-DNHJPTcOWS3Nv=zxpF1f7g@mail.gmail.com> <CAFozjshu92OZbqWzcDZKN4v26Fb-7K=uJRYs4L41csrxfnSTUw@mail.gmail.com>
+Subject: Re: [PATCH v5] Verify index file before we opportunistically update it
+Date: Thu, 10 Apr 2014 17:40:55 +0700
+Message-ID: <CACsJy8D9dsxOA6xVmhxa7N20OxEQ1a63rQm6QCtwq9ThG6E3RA@mail.gmail.com>
+References: <1397081197-14803-1-git-send-email-yiannis.marangos@gmail.com> <1397108075-30891-1-git-send-email-yiannis.marangos@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?Q?Diego_Lago_Gonz=C3=A1lez?= 
-	<diego.lago.gonzalez@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 10 10:05:58 2014
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Yiannis Marangos <yiannis.marangos@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 10 12:41:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WY9zh-0000ft-RJ
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Apr 2014 10:05:58 +0200
+	id 1WYCQF-0007WS-WD
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Apr 2014 12:41:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965505AbaDJIFr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Apr 2014 04:05:47 -0400
-Received: from mail-qa0-f51.google.com ([209.85.216.51]:42867 "EHLO
-	mail-qa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965448AbaDJIFh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Apr 2014 04:05:37 -0400
-Received: by mail-qa0-f51.google.com with SMTP id j7so3511515qaq.24
-        for <git@vger.kernel.org>; Thu, 10 Apr 2014 01:05:36 -0700 (PDT)
+	id S935066AbaDJKl1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Apr 2014 06:41:27 -0400
+Received: from mail-qc0-f170.google.com ([209.85.216.170]:38431 "EHLO
+	mail-qc0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934795AbaDJKl0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Apr 2014 06:41:26 -0400
+Received: by mail-qc0-f170.google.com with SMTP id x13so4171035qcv.15
+        for <git@vger.kernel.org>; Thu, 10 Apr 2014 03:41:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=K2P1Q7fBA39UfLbgigRrTVr2rQfM1qV8BS9dK66XWTE=;
-        b=c9rOfDXHlTvoa9t4vOMEP8v7Tg6b3gCPxk1h46WDXt0BfK4SbE5PkK14xd7XVCoBYG
-         c9MgMqh42RfK5BbQZ+NOfuwbqqG8ZDpX431YGNofutm4yXI4zOICzkEDWvDwpYJNR7HC
-         A+Qcoq1+bQ1e5Db69dZCpWOhEHQPxuuGgd67pwrRzdXgR2k7i96Mp4JBivwhtsKF4Zsm
-         C0x6qFUc7qJOFoe35OwmtaQ/ym82iboFnT7VbLk8PSQ1inFtSlIt4JuIpzz+5JIzBNqG
-         wp86SgDLd8niOkY2kzjj7LiGA1sZ0d4JM8fqVYZpiJAyJBoPWpUK7GCJ1n9jflCOsXuZ
-         PwkA==
-X-Received: by 10.140.107.229 with SMTP id h92mr17560034qgf.30.1397117136540;
- Thu, 10 Apr 2014 01:05:36 -0700 (PDT)
-Received: by 10.96.103.166 with HTTP; Thu, 10 Apr 2014 01:05:06 -0700 (PDT)
-In-Reply-To: <CAFozjshu92OZbqWzcDZKN4v26Fb-7K=uJRYs4L41csrxfnSTUw@mail.gmail.com>
+         :cc:content-type;
+        bh=2Z3GxBVWX18hznCcu6I4PF1C/6CILAWROR0/HOVkFNU=;
+        b=odjDAJaVOd+6VtzVoo+OwrMjhefQTOqTgVwrP8km4lpdwbYBYapaJ2UcVVZn8hYkOh
+         AnTnxX37os7pYFoQ9uIPYtAK2exxV0BvV/Noh26AnJKVMT0y1OE7zPqm8SqoYwTfWfWr
+         K0kTQ6b72RrvQwg5k2YWrOVY5QfVDk52hulTsweEj/RH5/guy56ITxy2jtTyzR7XdWJl
+         J9QyXFlXyjysURKzKvRD6p8RyolHPEw9esv9FtTefI5QBT1492ucOKDbh2Iw5Z9kuFy1
+         Lcw3gv5FL7BdjCPZoskFGmWwIVdZk0lYY7+BXjWaVTXhjIM3EITz2uYochB1tRGM0Vsn
+         ifqg==
+X-Received: by 10.224.36.129 with SMTP id t1mr19042197qad.88.1397126485599;
+ Thu, 10 Apr 2014 03:41:25 -0700 (PDT)
+Received: by 10.96.103.166 with HTTP; Thu, 10 Apr 2014 03:40:55 -0700 (PDT)
+In-Reply-To: <1397108075-30891-1-git-send-email-yiannis.marangos@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246014>
 
-On Thu, Apr 10, 2014 at 1:27 PM, Diego Lago Gonz=C3=A1lez
-<diego.lago.gonzalez@gmail.com> wrote:
-> Writing this data into the message, the user is forced to write it in=
- the
-> correct format (I think is better to write key=3Dvalue pairs as an op=
-tion
-> instead of writing as message lines with spaces in key, between key a=
-nd
-> equal sign and value, and other mistakes). And is simpler to parse th=
-ese
-> attributes than the message itself.
+On Thu, Apr 10, 2014 at 12:34 PM, Yiannis Marangos
+<yiannis.marangos@gmail.com> wrote:
+> +/*
+> + * This function verifies if index_state has the correct sha1 of an index file.
+> + * Don't die if we have any other failure, just return 0.
+> + */
+> +static int verify_index_from(const struct index_state *istate, const char *path)
+> +{
+> +       int fd;
+> +       struct stat st;
+> +       struct cache_header *hdr;
+> +       void *mmap_addr;
+> +       size_t mmap_size;
+> +
+> +       if (!istate->initialized)
+> +               return 0;
+> +
+> +       fd = open(path, O_RDONLY);
+> +       if (fd < 0)
+> +               return 0;
+> +
+> +       if (fstat(fd, &st))
+> +               return 0;
+> +
+> +       /* file is too big */
+> +       if (st.st_size > (size_t)st.st_size)
+> +               return 0;
+> +
+> +       mmap_size = (size_t)st.st_size;
+> +       if (mmap_size < sizeof(struct cache_header) + 20)
+> +               return 0;
+> +
+> +       mmap_addr = mmap(NULL, mmap_size, PROT_READ, MAP_PRIVATE, fd, 0);
+> +       close(fd);
+> +       if (mmap_addr == MAP_FAILED)
+> +               return 0;
+> +
+> +       hdr = mmap_addr;
+> +       if (verify_hdr(hdr, mmap_size) < 0)
+> +               goto unmap;
 
-the interpret-trailers series Christian Couder is cooking in 'pu'
-should handle this.
+verify_hdr() is a bit expensive because you need to digest the whole
+index file (could big as big as 14MB on webkit). Could we get away
+without it? I mean, is it enough that we pick the last 20 bytes and
+compare it with istate->sha1? If we only need 20 bytes, pread() may be
+better than mmap().
 
-> And, what if the log message is seen from the command line instead of=
- our CI
-> front-end? Why the CLI user (for example) should see information that=
- does
-> not need or does not want to see?
+The chance of SHA-1 collision is small enough for us to ignore, I
+think. And if a client updates the index without updating the trailing
+sha-1, the index is broken and we don't have to worry about
+overwriting it.
 
-which is why git-log (and all other porcelain commands) should learn
-to hide the value part (but not the key part).
---=20
+> +
+> +       if (hashcmp(istate->sha1, (unsigned char *)hdr + mmap_size - 20))
+> +               goto unmap;
+> +
+> +       munmap(mmap_addr, mmap_size);
+> +       return 1;
+> +
+> +unmap:
+> +       munmap(mmap_addr, mmap_size);
+> +       return 0;
+> +}
+-- 
 Duy
