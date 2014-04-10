@@ -1,126 +1,146 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/4] Make update_refs more atomic V2
-Date: Thu, 10 Apr 2014 11:53:28 -0700
-Message-ID: <xmqq38hlxbh3.fsf@gitster.dls.corp.google.com>
-References: <1397154625-11884-1-git-send-email-sahlberg@google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Ronnie Sahlberg <sahlberg@google.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Apr 10 20:53:44 2014
+From: Yiannis Marangos <yiannis.marangos@gmail.com>
+Subject: [PATCH v8 1/2] Add xpread()
+Date: Thu, 10 Apr 2014 21:54:12 +0300
+Message-ID: <1397156052-1247-1-git-send-email-yiannis.marangos@gmail.com>
+References: <1397081197-14803-1-git-send-email-yiannis.marangos@gmail.com>
+Cc: Yiannis Marangos <yiannis.marangos@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 10 20:54:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WYK6W-0004UP-Sz
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Apr 2014 20:53:41 +0200
+	id 1WYK7O-0005Ew-M2
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Apr 2014 20:54:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161106AbaDJSxh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Apr 2014 14:53:37 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35831 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934889AbaDJSxc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Apr 2014 14:53:32 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ED5BA7BCC8;
-	Thu, 10 Apr 2014 14:53:31 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4gPnSrXAt6mwbObsZRXo5b6jP2Y=; b=Y7MaiV
-	GpYq3GB8FWEjbVizFDkD1r4u9L7CLqLtuo8VduCQqBXhsEFejzsNFsTJF4A3cM+7
-	Z9JL8xglwFO2xhiZJSSvlHFtcGPXTP+XBU9r0l8hwmE7mkXczIw8k3OEbSjkdRMh
-	6izeUd3+elbi3XUxAOhCFTNBvue9pR/DjBSFg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Wqx2RDAMrxdFAlV2aacb+rlb/7CbSqiu
-	IEJeI3Nzl4ykwR1dMgSMIm3af7iKF+OBZEvWh1DCpSxbnht1JjkAQ9Cau+qiYn4+
-	IkGdBYPBLOZO3pM+prnG3ILI4oVkQi2ifJtWnj3qnKvAXXlbWrgfW7UzSLOQcjth
-	Az4HqAL+Ois=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D73ED7BCC7;
-	Thu, 10 Apr 2014 14:53:31 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7E33B7BCC6;
-	Thu, 10 Apr 2014 14:53:30 -0400 (EDT)
-In-Reply-To: <1397154625-11884-1-git-send-email-sahlberg@google.com> (Ronnie
-	Sahlberg's message of "Thu, 10 Apr 2014 11:30:21 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 6889C322-C0E1-11E3-850B-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753375AbaDJSy2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Apr 2014 14:54:28 -0400
+Received: from mail-ee0-f49.google.com ([74.125.83.49]:56469 "EHLO
+	mail-ee0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964944AbaDJSyZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Apr 2014 14:54:25 -0400
+Received: by mail-ee0-f49.google.com with SMTP id c41so3329125eek.8
+        for <git@vger.kernel.org>; Thu, 10 Apr 2014 11:54:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=DCjxdDjSa904Iy8FcthHDea1t8I8XkWJSl9VmaaENzg=;
+        b=Baqa4kYInnnhFrt31WLgNVxK6bB9C/0gYUV5xgE1xrq7c+LptDAosa8vBPuO/yXvH1
+         PuDxzWKpX/x1hiFplRtBiKIfps2lYQtPjRbWUkw2LP2tROQiytiWcgL/niGyLokmNj7T
+         0bE6sJsKu78HW7vmConVZVML2AZHbEmhlaCx6+EVcGlxovx7MzuFRs4Fht7rRG0PkYw5
+         rabHu/Zrelie0jQ/REK3McWmvO5dUTE2E3VXhMjtl6YGXlY8vheYt3gosmyAuBsc2UaX
+         YZJ6EcOodylgCEIhqVd5P8YJtuw103iSPp3ObBG29jckisnjOP5F1c+R2ifuVMBq1jne
+         8LQQ==
+X-Received: by 10.15.53.69 with SMTP id q45mr22796495eew.22.1397156064102;
+        Thu, 10 Apr 2014 11:54:24 -0700 (PDT)
+Received: from abyss.hitronhub.home ([46.251.117.183])
+        by mx.google.com with ESMTPSA id t50sm11857171eev.28.2014.04.10.11.54.21
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 10 Apr 2014 11:54:23 -0700 (PDT)
+X-Mailer: git-send-email 1.9.1
+In-Reply-To: <1397081197-14803-1-git-send-email-yiannis.marangos@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246034>
 
-CC'ing Michael who has been active in this area as an area expert.
+xpread() pay attention to EAGAIN/EINTR, so it will resume
+automatically on interrupted call.
 
-Ronnie, please make it a habit to run something like
+Signed-off-by: Yiannis Marangos <yiannis.marangos@gmail.com>
+---
 
-    $ git shortlog --no-merges --since=18.months <affected paths>...
+This is actually the 2nd version of this commit but before I emailed
+it as version 7 because it's a dependency of [PATCH v7 2/2]. Is this
+the correct way to introduce a new descendant commit? Sorry, It's my
+first time that I use mailing lists for contribution.
 
-to help you decide who your series may want to be reviewed by,
-before sending them.
+Version 8 removes xpwrite()
 
-Thanks.
+ builtin/index-pack.c |  2 +-
+ compat/mmap.c        |  4 +---
+ git-compat-util.h    |  1 +
+ wrapper.c            | 18 ++++++++++++++++++
+ 4 files changed, 21 insertions(+), 4 deletions(-)
 
-Ronnie Sahlberg <sahlberg@google.com> writes:
-
-> refs.c:update_refs() intermingles doing updates and checks with actually
-> applying changes to the refs in loops that abort on error.
-> This is done one ref at a time and means that if an error is detected that
-> will fail the operation after only some of the ref operations have been
-> been updated on the disk.
->
-> These patches change the update and delete functions to use a three
-> call pattern of
->
-> 1, lock
-> 2, update, or flag for deletion
-> 3, apply on disk
->
-> In the final patch I change update_refs to perform these actions in three
-> separate loops where the final loop to 'apply on disk' all the changes will
-> only be performed if there were no error conditions detected during any of
-> previous loops.
->
-> This should make the changes of refs in update_refs slightly more atomic.
->
->
-> This may overlap with other current patch series for making refs updates
-> more atomic which may mean these patches become obsolete, but I would still
-> like some review and feedback on these changes.
->
-> Version 2:
-> Updates and fixes based on Junio's feedback.
-> * Fix the subject line for patches so they comply with the project standard.
-> * Redo the update/delete loops so that we maintain the correct order of
->   operations. Perform all updates first, then perform the deletes.
-> * Add an additional patch that allows us to do the update/delete in the correct
->   order from within a single loop by first sorting the refs so that deletes
->   are after all non-deletes.
->
->
-> Ronnie Sahlberg (4):
->   refs.c: split writing and commiting a ref into two separate functions
->   refs.c: split delete_ref_loose() into a separate flag-for-deletion and
->     commit phase
->   refs.c: change update_refs to run the commit loops once all work is
->     finished
->   refs.c: sort the refs by new_sha1 and merge the two update/delete
->     loops into one
->
->  branch.c               |  10 ++++-
->  builtin/commit.c       |   5 +++
->  builtin/fetch.c        |   7 +++-
->  builtin/receive-pack.c |   4 ++
->  builtin/replace.c      |   6 ++-
->  builtin/tag.c          |   6 ++-
->  fast-import.c          |   7 +++-
->  refs.c                 | 102 +++++++++++++++++++++++++++++++++----------------
->  refs.h                 |   6 +++
->  sequencer.c            |   4 ++
->  walker.c               |   4 ++
->  11 files changed, 123 insertions(+), 38 deletions(-)
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index b9f6e12..1bac0f5 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -542,7 +542,7 @@ static void *unpack_data(struct object_entry *obj,
+ 
+ 	do {
+ 		ssize_t n = (len < 64*1024) ? len : 64*1024;
+-		n = pread(pack_fd, inbuf, n, from);
++		n = xpread(pack_fd, inbuf, n, from);
+ 		if (n < 0)
+ 			die_errno(_("cannot pread pack file"));
+ 		if (!n)
+diff --git a/compat/mmap.c b/compat/mmap.c
+index c9d46d1..7f662fe 100644
+--- a/compat/mmap.c
++++ b/compat/mmap.c
+@@ -14,7 +14,7 @@ void *git_mmap(void *start, size_t length, int prot, int flags, int fd, off_t of
+ 	}
+ 
+ 	while (n < length) {
+-		ssize_t count = pread(fd, (char *)start + n, length - n, offset + n);
++		ssize_t count = xpread(fd, (char *)start + n, length - n, offset + n);
+ 
+ 		if (count == 0) {
+ 			memset((char *)start+n, 0, length-n);
+@@ -22,8 +22,6 @@ void *git_mmap(void *start, size_t length, int prot, int flags, int fd, off_t of
+ 		}
+ 
+ 		if (count < 0) {
+-			if (errno == EAGAIN || errno == EINTR)
+-				continue;
+ 			free(start);
+ 			errno = EACCES;
+ 			return MAP_FAILED;
+diff --git a/git-compat-util.h b/git-compat-util.h
+index f6d3a46..e6a4159 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -531,6 +531,7 @@ extern void *xcalloc(size_t nmemb, size_t size);
+ extern void *xmmap(void *start, size_t length, int prot, int flags, int fd, off_t offset);
+ extern ssize_t xread(int fd, void *buf, size_t len);
+ extern ssize_t xwrite(int fd, const void *buf, size_t len);
++extern ssize_t xpread(int fd, void *buf, size_t len, off_t offset);
+ extern int xdup(int fd);
+ extern FILE *xfdopen(int fd, const char *mode);
+ extern int xmkstemp(char *template);
+diff --git a/wrapper.c b/wrapper.c
+index 0cc5636..cf71817 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -174,6 +174,24 @@ ssize_t xwrite(int fd, const void *buf, size_t len)
+ 	}
+ }
+ 
++/*
++ * xpread() is the same as pread(), but it automatically restarts pread()
++ * operations with a recoverable error (EAGAIN and EINTR). xpread() DOES
++ * NOT GUARANTEE that "len" bytes is read even if the data is available.
++ */
++ssize_t xpread(int fd, void *buf, size_t len, off_t offset)
++{
++	ssize_t nr;
++	if (len > MAX_IO_SIZE)
++	    len = MAX_IO_SIZE;
++	while (1) {
++		nr = pread(fd, buf, len, offset);
++		if ((nr < 0) && (errno == EAGAIN || errno == EINTR))
++			continue;
++		return nr;
++	}
++}
++
+ ssize_t read_in_full(int fd, void *buf, size_t count)
+ {
+ 	char *p = buf;
+-- 
+1.9.1
