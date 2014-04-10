@@ -1,103 +1,75 @@
-From: =?UTF-8?Q?Diego_Lago_Gonz=C3=A1lez?= 
-	<diego.lago.gonzalez@gmail.com>
-Subject: Re: [PATCH] Add support for commit attributes
-Date: Thu, 10 Apr 2014 08:32:42 +0200
-Message-ID: <CAFozjsg_sta+c4=Cbrj=cfS=geOnnWic4wU_hd6=1Gaf4PAUcg@mail.gmail.com>
-References: <1397072295-7670-1-git-send-email-diego.lago.gonzalez@gmail.com> <CACsJy8BJw3+=vSHzfBYigoK6ejt-DNHJPTcOWS3Nv=zxpF1f7g@mail.gmail.com>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: Our official home page and logo for the Git project
+Date: Thu, 10 Apr 2014 09:32:00 +0200
+Message-ID: <878urdej2n.fsf@fencepost.gnu.org>
+References: <xmqq7g6z4q6b.fsf@gitster.dls.corp.google.com>
+	<534578b2e22e2_af197d3081@nysa.notmuch>
+	<CAH5451kNoXobbh3-WBkewvKvNeFkV0P14Z55=qDN+Ak2WGkHSA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 10 08:33:36 2014
+Content-Type: text/plain
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Andrew Ardill <andrew.ardill@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 10 09:42:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WY8YJ-0001gB-Eq
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Apr 2014 08:33:35 +0200
+	id 1WY9dB-0002Fc-Bc
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Apr 2014 09:42:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933537AbaDJGdV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Apr 2014 02:33:21 -0400
-Received: from mail-wg0-f48.google.com ([74.125.82.48]:52949 "EHLO
-	mail-wg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934647AbaDJGdE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Apr 2014 02:33:04 -0400
-Received: by mail-wg0-f48.google.com with SMTP id l18so3515791wgh.19
-        for <git@vger.kernel.org>; Wed, 09 Apr 2014 23:33:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=zxR23xw8ES8/fErWBaiz5xl9WSiEEMl/AMbQDuaFbyA=;
-        b=DsKULallV8dJDi/s8hlS4axixCxcyHZtkEiVaVC5aA/CGBxTZNpHhr1VFabBdLDpF4
-         9xUdtkNuXiRwU/tkBosx6HqmB2Pypcl6ipVFGE0sJ7chlW4knHrhyi4yE2uy/w+TUXrr
-         cU5m5w+PwTkerHQ5Mn1ZjFmr/+2ryZxVgoCdjkdQfsqF9KIfs3UJzp1bPBvdxhl3N5lk
-         McNCW7P+149dE/RmCoP6UuPl5k1jayEuTDx96FNVPRtwnrqy6DL4sIC0i/mXGNHIMa4F
-         x/CafEA5wPB6xEt9Kx/+zq3m97urwmAwykI6DGJ+lSt69vvR+ofdwTrc0bIS/Ga/WFcv
-         DsIA==
-X-Received: by 10.180.96.66 with SMTP id dq2mr13523866wib.54.1397111582325;
- Wed, 09 Apr 2014 23:33:02 -0700 (PDT)
-Received: by 10.194.235.6 with HTTP; Wed, 9 Apr 2014 23:32:42 -0700 (PDT)
-In-Reply-To: <CACsJy8BJw3+=vSHzfBYigoK6ejt-DNHJPTcOWS3Nv=zxpF1f7g@mail.gmail.com>
+	id S934581AbaDJHmh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Apr 2014 03:42:37 -0400
+Received: from fencepost.gnu.org ([208.118.235.10]:40398 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750763AbaDJHmg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Apr 2014 03:42:36 -0400
+Received: from localhost ([127.0.0.1]:39438 helo=lola)
+	by fencepost.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <dak@gnu.org>)
+	id 1WY9d4-0000It-Iu; Thu, 10 Apr 2014 03:42:34 -0400
+Received: by lola (Postfix, from userid 1000)
+	id ED6FDE04ED; Thu, 10 Apr 2014 09:32:00 +0200 (CEST)
+In-Reply-To: <CAH5451kNoXobbh3-WBkewvKvNeFkV0P14Z55=qDN+Ak2WGkHSA@mail.gmail.com>
+	(Andrew Ardill's message of "Thu, 10 Apr 2014 10:24:24 +1000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246011>
 
-2014-04-10 6:25 GMT+02:00 Duy Nguyen <pclouds@gmail.com>:
-> On Thu, Apr 10, 2014 at 2:38 AM, Diego Lago
-> <diego.lago.gonzalez@gmail.com> wrote:
->> Commit attributes are custom commit extra headers the user can
->> add to the commit object.
->>
->> The motivation for this patch is that in my company we have a custom
->> continuous integration software that uses a custom formatted commit
->> message (currently in YALM format) to show several information into
->> our CI server front-end.
->>
->> But this YALM-based commit message pollutes the commit object not be=
-ing
->> human readable, so a good form of achieve the YALM's behaviour (with=
-out
->> using YALM nor any other structured language) is to add custom attri=
-butes
->> to the commit object itself.
->>
->> For example, in our CI server we show the risk of the change (that c=
-an
->> be low, medium or high); we, as said before, add this information by=
- putting
->> YALM code inside the commit message, but the problem is that this me=
-ssage
->> is not human readable.
->
-> If the problem is polluting human eyes, wouldn't it be better to make
-> git-log to filter it out? For example, we could tell git that all
-> fields (in the message body) that start with X- are "rubbish", so
-> instead of showing "X-something: base64 stuff...", it shows
-> "X-something: <filtered out>" instead? At least people will see that
-> this commit carries human-unreadable stuff.
-> --
-> Duy
+Andrew Ardill <andrew.ardill@gmail.com> writes:
 
-Writing this data into the message, the user is forced to write it in
-the correct format (I think is better to write key=3Dvalue pairs as an
-option instead of writing as message lines with spaces in key, between
-key and equal sign and value, and other mistakes). And is simpler to
-parse these attributes than the message itself.
+> I think it is fair to say that the red version is the one people
+> recognise as 'git' and so should be kept as the official version.
 
-And, what if the log message is seen from the command line instead of
-our CI front-end? Why the CLI user (for example) should see
-information that does not need or does not want to see?
+Who is "people"?  I never associated anything with it.  I had to look at
+the actual web page to see what people are talking about.  It's far too
+arbitrary and could be anything.  If somebody actually took the pain and
+oriented the branching symbol on a suitable background shape in a manner
+where it formed a stylized letter "G" or even something obscure like a
+Game of Life Flier or anything, one would be closer to have something to
+talk about.
 
-Commit attributes are extra information, not the main information,
-hence this patch.
+But as it is, it is just an arbitrary dump of lines and circles with no
+rhyme or reason without an offset border and consequently with an edge
+in a saturated color bleeding unfavorably into basically every
+background.  If that is supposed to allude to being on the bleeding
+edge: too smart for its own good.
 
-PD: Sorry for the previous message not in plain text.
+I mean, people discuss whether it would not be better upside down.
+That's nothing you would even consider if that thing had enough sensibly
+or recognizably arranged elements to function as an actual logo.
 
---=20
-Diego Lago Gonz=C3=A1lez
+I mean, _Emacs_ has a nice logo.  And even back in the eighties, the
+crude "kitchen sink" logo it employed then was at least a good joke.
+
+I think that more effort should go into that or any other logo in order
+to create something identifiable and cohesive.  With regard to logos, my
+all-time favorite still is "Sun".  Too bad it's history.
+
+-- 
+David Kastrup
