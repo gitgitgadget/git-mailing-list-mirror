@@ -1,61 +1,88 @@
-From: Yiannis Marangos <yiannis.marangos@gmail.com>
-Subject: Re: [PATCH v7 1/2] Add xpread() and xpwrite()
-Date: Thu, 10 Apr 2014 21:44:04 +0300
-Message-ID: <20140410184404.GA11264@abyss.hitronhub.home>
-References: <1397081197-14803-1-git-send-email-yiannis.marangos@gmail.com>
- <1397154681-31803-1-git-send-email-yiannis.marangos@gmail.com>
- <xmqq7g6xxcap.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 10 20:44:33 2014
+From: Max Horn <max@quendi.de>
+Subject: Re: [PATCH] Add support for commit attributes
+Date: Thu, 10 Apr 2014 20:47:26 +0200
+Message-ID: <934D49AB-0E6B-4DF8-A67C-CE311561378E@quendi.de>
+References: <1397072295-7670-1-git-send-email-diego.lago.gonzalez@gmail.com> <5346d4adf4f_69dfeb32f0b9@nysa.notmuch>
+Mime-Version: 1.0 (Mac OS X Mail 6.6 \(1510\))
+Content-Type: multipart/signed; boundary="Apple-Mail=_14F7758C-A3B7-46D9-B530-6CD90704CCF3"; protocol="application/pgp-signature"; micalg=pgp-sha256
+Cc: Diego Lago <diego.lago.gonzalez@gmail.com>, git@vger.kernel.org,
+	gitster@pobox.com
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 10 20:48:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WYJxh-0004zK-5t
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Apr 2014 20:44:33 +0200
+	id 1WYK1h-000077-VF
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Apr 2014 20:48:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935697AbaDJSo1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Apr 2014 14:44:27 -0400
-Received: from mail-ee0-f49.google.com ([74.125.83.49]:39809 "EHLO
-	mail-ee0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758938AbaDJSoY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Apr 2014 14:44:24 -0400
-Received: by mail-ee0-f49.google.com with SMTP id c41so3309681eek.22
-        for <git@vger.kernel.org>; Thu, 10 Apr 2014 11:44:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=DmIUfQ2kYEvoU4o4k/JDyKKFYRNy6mMj0ZSatYTMeHI=;
-        b=vcTtiM1LQ2oVJ0ZssR9r3TTVUM+i96YYpk1pC+us4v4WF2B9V0rnjmgClfWlJTzVUo
-         Cb7PrKeS7KrBx+/uh+jMcNS3sQAXu+pOC4FVIK19MkhGOQKm+CpOd27BfKnWnDl9EkPo
-         uB4Eri26awOJOHtaoLCZ8de1D1HQ5q8lVVM/Pbb0d6s4qaFQR1rJfsRVmzl/3EVhTYjU
-         TtKlN1m08DtQt2B5z0AifmsfKK6LZfY2XTYhSOhAEFkFWCEownx4WKf0iWcb6mMJOHlg
-         SXnbA8v0aZDwKtntS4NZH40+0NAl5R1CkMsfIQC1Sa1/nIQxVRWKZLPmmVphAbmD2etc
-         lPMg==
-X-Received: by 10.15.81.135 with SMTP id x7mr5376969eey.61.1397155463142;
-        Thu, 10 Apr 2014 11:44:23 -0700 (PDT)
-Received: from abyss.hitronhub.home ([46.251.117.183])
-        by mx.google.com with ESMTPSA id t4sm11797398eeb.29.2014.04.10.11.44.20
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 10 Apr 2014 11:44:22 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <xmqq7g6xxcap.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.22 (2013-10-16)
+	id S1758913AbaDJSrX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Apr 2014 14:47:23 -0400
+Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:58124 "EHLO
+	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752918AbaDJSrV (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Apr 2014 14:47:21 -0400
+Received: from fb07-alg-gast1.math.uni-giessen.de ([134.176.24.161]); authenticated
+	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
+	id 1WYK0M-0007YF-OP; Thu, 10 Apr 2014 20:47:18 +0200
+In-Reply-To: <5346d4adf4f_69dfeb32f0b9@nysa.notmuch>
+X-Mailer: Apple Mail (2.1510)
+X-bounce-key: webpack.hosteurope.de;max@quendi.de;1397155641;ca02ec2b;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246032>
 
-On Thu, Apr 10, 2014 at 11:35:42AM -0700, Junio C Hamano wrote:
-> We do not even use pwrite(); please don't add anything unnecessary
-> and unexercised, like xpwrite(), as potential bugs in it will go
-> unnoticed long after its introduction until it first gets used.
 
-Correct, my mistake.
+--Apple-Mail=_14F7758C-A3B7-46D9-B530-6CD90704CCF3
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=us-ascii
+
+
+On 10.04.2014, at 19:28, Felipe Contreras <felipe.contreras@gmail.com> =
+wrote:
+
+> Diego Lago wrote:
+>> Commit attributes are custom commit extra headers the user can
+>> add to the commit object.
+>>=20
+>> The motivation for this patch is that in my company we have a custom
+>> continuous integration software that uses a custom formatted commit
+>> message (currently in YALM format) to show several information into
+>> our CI server front-end.
+>=20
+> These attributes can be used for remote-helpers as well; to store =
+extra
+> information that cannot be stored otherwise in Git's data structures.
+
++1 to that. This is reminds me of what Kiln Harmony does as part of =
+their effort to enable full round-robin transfer between Git and =
+Mercurial (a goal from which all other tools I know of still are far =
+away). See =
+<http://blog.fogcreek.com/kiln-harmony-internals-the-basics/>.
+
+
+
+Cheers,
+Max
+
+--Apple-Mail=_14F7758C-A3B7-46D9-B530-6CD90704CCF3
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP using GPGMail
+
+-----BEGIN PGP SIGNATURE-----
+Comment: GPGTools - http://gpgtools.org
+
+iF4EAREIAAYFAlNG50IACgkQIpJVslrhe1lmOQEApHFukKqjrG1IdnHXIc32LoKh
+64vE+5A4WpURApxwtyoA/jlXv57L5Gg2otUGmi/7/YwqwRL+M6DjOmLuLJPKn21T
+=WxlL
+-----END PGP SIGNATURE-----
+
+--Apple-Mail=_14F7758C-A3B7-46D9-B530-6CD90704CCF3--
