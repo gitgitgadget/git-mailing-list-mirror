@@ -1,122 +1,120 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH 0/4] Make update_refs more atomic V2
-Date: Thu, 10 Apr 2014 11:30:21 -0700
-Message-ID: <1397154625-11884-1-git-send-email-sahlberg@google.com>
+Subject: [PATCH 4/4] refs.c: sort the refs by new_sha1 and merge the two update/delete loops into one
+Date: Thu, 10 Apr 2014 11:30:25 -0700
+Message-ID: <1397154625-11884-5-git-send-email-sahlberg@google.com>
+References: <1397154625-11884-1-git-send-email-sahlberg@google.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 10 20:37:03 2014
+X-From: git-owner@vger.kernel.org Thu Apr 10 20:37:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WYJqO-0006pO-G9
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Apr 2014 20:37:00 +0200
+	id 1WYJr5-0007RC-OT
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Apr 2014 20:37:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030397AbaDJSgy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Apr 2014 14:36:54 -0400
-Received: from mail-vc0-f201.google.com ([209.85.220.201]:34423 "EHLO
-	mail-vc0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758938AbaDJSgx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Apr 2014 14:36:53 -0400
-Received: by mail-vc0-f201.google.com with SMTP id ik5so625176vcb.2
-        for <git@vger.kernel.org>; Thu, 10 Apr 2014 11:36:52 -0700 (PDT)
+	id S965147AbaDJShj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Apr 2014 14:37:39 -0400
+Received: from mail-ie0-f201.google.com ([209.85.223.201]:50651 "EHLO
+	mail-ie0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933478AbaDJShi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Apr 2014 14:37:38 -0400
+Received: by mail-ie0-f201.google.com with SMTP id rd18so896383iec.2
+        for <git@vger.kernel.org>; Thu, 10 Apr 2014 11:37:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=/OIAeCT0/8H+w1zzba+QTBCdwXE+dd6Kjy+8lLvOU7c=;
-        b=DXGL4vzXMHKB65JkZOdkHUGiN/Ivcl2BphzN1Fo1D8vPlYhG0udZu5SL7H0ohwM9CL
-         McG0Dn61mZW8DOiTPE9ii76uMdTrqWZyiX84MTuL7b4YMN68PNEZBL1iLQTbKqoYoYGO
-         7pGL+4P6qNhIVRQuxgVyXQwnEfZGVECxHddBJYgd+/iXIycyzbMq/ulxrQ9GoHmz+5yb
-         Va9nA14NuikNvefUM8GWwia437UDBUhJDU+oAiRurt4gcc7zufk7oMlCpzq93+CPX4mb
-         n2qhHROlPhkM8HfbI1Mqo32kunCrEFd6P7ic9bsLNqLXUfx/2lm1OvkWeL8sHYIjDCH4
-         VGWQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=hg5oAOK14HM2de1zKEceSlRlpdU/ocNsH4e5WkAtQko=;
+        b=AT70Yc9c+rYiigmJ78cUmeSxydHrnq/80iz8QgoFdvMgPq+1XbgDsodsha3khLE4DK
+         2ZoXUgKX2wk2k4oC1jdnHw1dt8f2KLqlwdjPq0R7yGssi9pEc0ka7uYGfmejOV1SN7jV
+         v4cwBK1ZbCo6rYe7rCLF0rTHh4J9MDkersgRZDGKF4onQ9MKXDOCBnUCncGQckoFAFM9
+         Da/ouuPY6xdpy7d430O92ztswswnRjcjfI/UGXiQUHyiNh9tg0nENrOAEVTVjntIopaA
+         NWpob3fzMKWOfHFMUIl5BjquvrEdKBW7Guw7qt9RSBd8ZKwFkL7BEpIkAjvtk+NryIDR
+         eu6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=/OIAeCT0/8H+w1zzba+QTBCdwXE+dd6Kjy+8lLvOU7c=;
-        b=kNFFTWVZoG9ktJ2czvEDp73gqojc4iRFrhrI4i/W60yLqdYXJdk+7oP89uur+GOSzY
-         yK1V8eQ5Sq+2L+DoY7P+MtHDszQlerNoZDA3Q9BJi5t8dv8loMUTnQdJKIoCCmvzq/kK
-         XWf2hjQFfg3iY9BOQK44b1hJiv3kpZxBcl9vZCEOVgzVBjjHLjT2wUKmoy9te7xD9NDX
-         j4sIzLzc76ocAhrMZPaEK6rX0TAlHEmF9gsQkPvpboF0C288Wwg/lqjfYaS8skhd9z6x
-         QDUVyaSeQPuRROQrUDKgf12SDYuSE2iQh+Klipt94nGypObcn7ls1WxnOJslPX4aG0HL
-         SNng==
-X-Gm-Message-State: ALoCoQns2wXeFhHVbKozvtx/1+zJ9RdbINF0J5BMqw8es82vRSV+g3HmwlQL09rvs1aTILM4scrofdzqtS2vIE23WaubhNnjKKb1e/tZGpHTVLFR28I4v0clOvNwm//KoDcCH3GeTwv88TdZmeVDYxXovbuTI8i1nLDMAPrDntyLVPz1grW3Ay9Xy8S4ILDL/ZAP8cPSBosm
-X-Received: by 10.224.13.12 with SMTP id z12mr8824528qaz.7.1397154628630;
-        Thu, 10 Apr 2014 11:30:28 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=hg5oAOK14HM2de1zKEceSlRlpdU/ocNsH4e5WkAtQko=;
+        b=eODAFhYsY9o2YiVbLMgvlC9dZSkAxtdlIcNFqSHbf/nKk8CvRlbp71ul1ZrCkxRdAU
+         zHeExefG9n7tm5W/1WpwlaYsIF4Vh2jMAFs16ekgxkYs34cFilVG6yOi6UnEltwdEltz
+         0LqgwcMcUQds6y+0iMQt+UkKzsEn6kObXU1Yy3oqESkb58uBC4mxONgaSsfHE9YQL1Ym
+         3IjHbLIpZFNAFJzKtu4LR5hfTyaKC4FTSKcaqiSjiSALYDojravE4Jcqc0dGtnLoMGmW
+         k4teOL9AVS0iS29xBUMxGTuB8T2ixNVB8JskQ5OgrlImGlpoewNEeNzYVOba9LzOFt4N
+         DhPg==
+X-Gm-Message-State: ALoCoQlWmhZWY8WIvV0wbmE46qorRdwH40OYoCEgqsjzxQqOGXqRDZSovG+CQOj+fFJlbpTD63ggcU3O1Cv1pkLyFlCU2oD2Ih+6Ade8h2WYgSQHW6iNo3D3y+FWMScEw2PBMm6kAO9u0gF2y7+QrPP5ZqucdMsGL/IbIaXzLF5Q+HmWF6kaj2kofUnpFcc66zs8lNuYBNI8
+X-Received: by 10.43.117.71 with SMTP id fl7mr2572960icc.24.1397154632074;
+        Thu, 10 Apr 2014 11:30:32 -0700 (PDT)
 Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
-        by gmr-mx.google.com with ESMTPS id a44si797169yhb.6.2014.04.10.11.30.28
+        by gmr-mx.google.com with ESMTPS id x22si797740yhd.5.2014.04.10.11.30.32
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 10 Apr 2014 11:30:28 -0700 (PDT)
+        Thu, 10 Apr 2014 11:30:32 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 79D825A41AE;
-	Thu, 10 Apr 2014 11:30:28 -0700 (PDT)
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id E4C565A41AE;
+	Thu, 10 Apr 2014 11:30:31 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 1B939E0591; Thu, 10 Apr 2014 11:30:27 -0700 (PDT)
+	id AA6D5E0591; Thu, 10 Apr 2014 11:30:31 -0700 (PDT)
 X-Mailer: git-send-email 1.9.1.478.ga5a8238.dirty
+In-Reply-To: <1397154625-11884-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246030>
 
-refs.c:update_refs() intermingles doing updates and checks with actually
-applying changes to the refs in loops that abort on error.
-This is done one ref at a time and means that if an error is detected that
-will fail the operation after only some of the ref operations have been
-been updated on the disk.
+We want to make sure that we update all refs before we delete any refs
+so that there is no point in time where the tips may not be reachable
+from any ref in the system.
+We currently acheive this by first looping over all updates and applying
+them before we run a second loop and perform all the deletes.
 
-These patches change the update and delete functions to use a three
-call pattern of
+If we sort the new sha1 for all the refs so that a deleted ref,
+with sha1 0{40} comes at the end of the array, then we can just run
+a single loop and still guarantee that all updates happen before
+any deletes.
 
-1, lock
-2, update, or flag for deletion
-3, apply on disk
+Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+---
+ refs.c | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
-In the final patch I change update_refs to perform these actions in three
-separate loops where the final loop to 'apply on disk' all the changes will
-only be performed if there were no error conditions detected during any of
-previous loops.
-
-This should make the changes of refs in update_refs slightly more atomic.
-
-
-This may overlap with other current patch series for making refs updates
-more atomic which may mean these patches become obsolete, but I would still
-like some review and feedback on these changes.
-
-Version 2:
-Updates and fixes based on Junio's feedback.
-* Fix the subject line for patches so they comply with the project standard.
-* Redo the update/delete loops so that we maintain the correct order of
-  operations. Perform all updates first, then perform the deletes.
-* Add an additional patch that allows us to do the update/delete in the correct
-  order from within a single loop by first sorting the refs so that deletes
-  are after all non-deletes.
-
-
-Ronnie Sahlberg (4):
-  refs.c: split writing and commiting a ref into two separate functions
-  refs.c: split delete_ref_loose() into a separate flag-for-deletion and
-    commit phase
-  refs.c: change update_refs to run the commit loops once all work is
-    finished
-  refs.c: sort the refs by new_sha1 and merge the two update/delete
-    loops into one
-
- branch.c               |  10 ++++-
- builtin/commit.c       |   5 +++
- builtin/fetch.c        |   7 +++-
- builtin/receive-pack.c |   4 ++
- builtin/replace.c      |   6 ++-
- builtin/tag.c          |   6 ++-
- fast-import.c          |   7 +++-
- refs.c                 | 102 +++++++++++++++++++++++++++++++++----------------
- refs.h                 |   6 +++
- sequencer.c            |   4 ++
- walker.c               |   4 ++
- 11 files changed, 123 insertions(+), 38 deletions(-)
-
+diff --git a/refs.c b/refs.c
+index 1678e12..453318e 100644
+--- a/refs.c
++++ b/refs.c
+@@ -3309,6 +3309,15 @@ static int ref_update_compare(const void *r1, const void *r2)
+ 	return strcmp((*u1)->ref_name, (*u2)->ref_name);
+ }
+ 
++static int ref_delete_compare(const void *r1, const void *r2)
++{
++	const struct ref_update * const *u1 = r1;
++	const struct ref_update * const *u2 = r2;
++
++	/* -strcmp so that 0{40} sorts to the end */
++	return -strcmp((*u1)->new_sha1, (*u2)->new_sha1);
++}
++
+ static int ref_update_reject_duplicates(struct ref_update **updates, int n,
+ 					enum action_on_err onerr)
+ {
+@@ -3388,13 +3397,8 @@ int update_refs(const char *action, const struct ref_update **updates_orig,
+ 		unlink_or_warn(git_path("logs/%s", delnames[i]));
+ 	clear_loose_ref_cache(&ref_cache);
+ 
+-	/* Perform updates first so live commits remain referenced */
+-	for (i = 0; i < n; i++)
+-		if (locks[i] && !locks[i]->delete_ref) {
+-			ret |= commit_ref_lock(locks[i]);
+-			locks[i] = NULL;
+-		}
+-	/* And finally perform all deletes */
++	/* Sort the array so that we perform all updates before any deletes */
++	qsort(updates, n, sizeof(*updates), ref_delete_compare);
+ 	for (i = 0; i < n; i++)
+ 		if (locks[i]) {
+ 			ret |= commit_ref_lock(locks[i]);
 -- 
 1.9.1.478.ga5a8238.dirty
