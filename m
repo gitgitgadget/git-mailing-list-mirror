@@ -1,108 +1,120 @@
-From: Scott Sandler <scott.m.sandler@gmail.com>
-Subject: Re: Git push race condition?
-Date: Thu, 10 Apr 2014 15:14:10 -0400
-Message-ID: <CAAyEjTO3JTNDxDWpX+k_Z-O9=8-Vu5uyT_1eK-A8nFXWVcyD6w@mail.gmail.com>
-References: <CAAyEjTN53+5B9Od9wW698wODNL3hR6Upot8-ZLwEksn3ir_zjA@mail.gmail.com>
-	<20140324225434.GB17080@sigill.intra.peff.net>
-	<557DE2F7-1024-42A5-8192-ACE910CE6C81@codeaurora.org>
-	<CAAyEjTPtaKExJJSc3yrxVNzx0DmOyeUFH-Uxz3dn0iezqc5VKA@mail.gmail.com>
-	<20140325145700.GA10132@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Nasser Grainawi <nasser@codeaurora.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Apr 10 21:14:21 2014
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH v2 0/9] Introduce publish tracking branch
+Date: Thu, 10 Apr 2014 14:04:37 -0500
+Message-ID: <1397156686-31349-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Matthieu Moy <matthieu.moy@imag.fr>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Jeff King <peff@peff.net>,
+	John Szakmeister <john@szakmeister.net>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 10 21:14:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WYKQV-0005SK-MV
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Apr 2014 21:14:20 +0200
+	id 1WYKR3-00060A-4g
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Apr 2014 21:14:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030331AbaDJTOO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Apr 2014 15:14:14 -0400
-Received: from mail-la0-f41.google.com ([209.85.215.41]:65347 "EHLO
-	mail-la0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030242AbaDJTOM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Apr 2014 15:14:12 -0400
-Received: by mail-la0-f41.google.com with SMTP id gl10so2735967lab.0
-        for <git@vger.kernel.org>; Thu, 10 Apr 2014 12:14:10 -0700 (PDT)
+	id S1161035AbaDJTOt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Apr 2014 15:14:49 -0400
+Received: from mail-ob0-f173.google.com ([209.85.214.173]:48819 "EHLO
+	mail-ob0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030242AbaDJTOq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Apr 2014 15:14:46 -0400
+Received: by mail-ob0-f173.google.com with SMTP id gq1so4910536obb.18
+        for <git@vger.kernel.org>; Thu, 10 Apr 2014 12:14:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=M/N777339CU7tE8+Gmxja0RtXV12DC/D9o0Jvoqb1uA=;
-        b=n6T4LjzrMIrnmeU2ObaxRZpD9lJEzfVKcRHleQeXEYF5fftjHV4AXH3Q5wsv+Zcc/p
-         Q4EtGYQpXokdB0G058Yxw4bjHKUoMt8rDAVkjKmbx58y24PhhuWjRh8veWkatQVMQ4IN
-         xtdPBDsgc8dGr6UsRS2qwp6fA7XD/w4paj2rUw1ToikYDyaHDyvx9Sz9vv6vI7GMWP6y
-         WniZVh9hBY9YH7DAJUqdaXR8ZpQI44yvq82fnnLhKuVK6nHYzv1+aQzGimyBjU0HCc5C
-         cMS9sIMuY+1zV0zu2CZZSW2xmfNxADNT2iXu22iYNz27bydObv6Sz4fQCU/EUG47Bz57
-         5Y6A==
-X-Received: by 10.112.53.170 with SMTP id c10mr2178lbp.70.1397157250517; Thu,
- 10 Apr 2014 12:14:10 -0700 (PDT)
-Received: by 10.114.64.103 with HTTP; Thu, 10 Apr 2014 12:14:10 -0700 (PDT)
-In-Reply-To: <20140325145700.GA10132@sigill.intra.peff.net>
+        h=from:to:cc:subject:date:message-id;
+        bh=lwPtqg+Gi/eJNeCTuREX/Re32fizZOcE+zj+pxcKL3o=;
+        b=zaJJqV3lU2fWchaO2w2TN99eosj96o5EF7IkXa5XOQzFoWYXeCsnE0ZCTA7Kg1cLaq
+         y2G+EUi9Lkza+bsRmQge5LzdHyg6y0gg9wVrXZleeYlH4jxX5NEk4MJmWQhsDZcFwZ+h
+         2Inp1Ph8rpBM6sFOv4LwJfYS7mtJPrYcVryac2fWhU/HPs89sg/sZy4AtXuN3G72zOcX
+         u6fn2q4Z+bdvFyFT0poOoSEFijHt2YJNI2GhIZE2/1OALpAZJpAOfwfjCZfvc3d3PT/N
+         hk5LG3fZIL7FLuatB98GCtBlNvpraAVlu1qQNHJjjrD6qQyGf1hfycR8cjFcsZf3Ch08
+         TEvQ==
+X-Received: by 10.60.92.132 with SMTP id cm4mr8870438oeb.49.1397157285855;
+        Thu, 10 Apr 2014 12:14:45 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id cq1sm21280830oeb.4.2014.04.10.12.14.42
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 10 Apr 2014 12:14:43 -0700 (PDT)
+X-Mailer: git-send-email 1.9.1+fc1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246038>
 
-On Tue, Mar 25, 2014 at 10:57 AM, Jeff King <peff@peff.net> wrote:
-> On Tue, Mar 25, 2014 at 09:45:20AM -0400, Scott Sandler wrote:
->
->> Version of git on the server? git version 1.8.3-rc0
->
-> There was significant work done between v1.8.3 and v1.8.4 on handling
-> races in the ref code. As I said before, I don't think the symptoms you
-> are describing are anything we have seen, or that could be triggered by
-> the races we found (which were mostly to do with ref enumeration, not
-> ref writing). But I would suggest upgrading to a newer version of git as
-> a precaution.
->
-> You mentioned elsewhere turning on the reflog, which I think is a good
-> idea. If there is a race of this sort, you will see a "hole" in the
-> reflog, where a ref goes from A->B, then again from A->B' (whereas with
-> normal writes, it would be B->B').
->
-> -Peff
+As it has been discussed before, our support for triangular workflows is
+lacking, and the following patch series aims to improve that situation.
 
-This finally happened again. Here's what the reflog looks like:
+We have the concept of upstream branch (e.g. 'origin/master') which is to where
+our topic branches eventually should be merged to, so it makes sense that
+'git rebase' uses that as the destination, but most people would not push to
+such upstream branch, they would push to a publish branch
+(e.g. 'github/feature-a'). We could set our upstream to the place we push, and
+'git push' would be able to use that as default, and 'git branch --vv' would
+show how ahead/behind we are in comparisson to that branch, but then
+'git rebase' (or 'git merge') would be using the wrong branch.
 
-2805f68 master@{0}: push
-96eebc0 master@{1}: push
-75bd4a6 master@{2}: push
-abc30da master@{3}: push
-eba874f master@{4}: push
-10981e7 master@{5}: push
-76b3957 master@{6}: push
-2e3ea06 master@{7}: push
-9d4e778 master@{8}: push
-dbd70ae master@{9}: push
-508ab4f master@{10}: push
-36a0ce4 master@{11}: push
-ddc258e master@{12}: push
-cf025de master@{13}: push
-dbd70ae master@{14}: push
-95d33eb master@{15}: push
-75b8e9a master@{16}: push
+This patch series adds:
 
-The commit that was lost does not show in the reflog at all, its short
-hash was e0de949aa. The commit that "won the race" against it is
-9d4e778 (I'm inferring this based on timing since it was pushed at
-about the same time as the lost commit).
+ 1) git push --set-publish
+ 2) git branch --set-publish
+ 3) git branch -vv # uses and shows the publish branch when configured
+ 4) @{publish} and @{p} marks
+ 5) branch.$name.{push,pushremote} configurations
 
-One interesting thing to note is that dbd70ae shows up at two separate
-points in the reflog though, one being directly before the 9d4e778
-commit that won the race. According to Gitlab's event log that commit
-was just pushed once, right after 95d33eb and before cf025de as it
-shows in master@{14} there. The fact that the same commit shows up
-again in master@{9} is interesting.
+After this, it becomes much easier to track branches in a triangular workflow.
 
-Now that it has happened again and I've got this data, I'm going to
-upgrade git but let me know if this provides any insight in the mean
-time.
+The publish branch is used instead of the upstream branch for tracking
+information in 'git branch --vv' and 'git status' if present, otherwise there
+are no changes (upstream is used).
 
--Scott
+  master          e230c56 [origin/master, gh/master] Git 1.8.4
+* fc/publish      0a105fd [master, gh/fc/publish: ahead 1] branch: display publish branch
+  fc/branch/fast  177dcad [master, gh/fc/branch/fast] branch: reorganize verbose options
+  fc/trivial      f289b9a [master: ahead 7] branch: trivial style fix
+  fc/leaks        d101af4 [master: ahead 2] read-cache: plug a possible leak
+  stable          e230c56 Git 1.8.4
+
+Changes since v1:
+
+ * Added @{publish} and @{p} marks
+
+Felipe Contreras (9):
+  push: trivial reorganization
+  Add concept of 'publish' branch
+  branch: allow configuring the publish branch
+  t: branch add publish branch tests
+  push: add --set-publish option
+  branch: display publish branch
+  sha1_name: cleanup interpret_branch_name()
+  sha1_name: simplify track finding
+  sha1_name: add support for @{publish} marks
+
+ Documentation/git-branch.txt | 11 +++++++
+ Documentation/git-push.txt   |  9 +++++-
+ Documentation/revisions.txt  |  4 +++
+ branch.c                     | 43 +++++++++++++++++++++++++
+ branch.h                     |  2 ++
+ builtin/branch.c             | 74 ++++++++++++++++++++++++++++++++++++++----
+ builtin/push.c               | 52 +++++++++++++++++++-----------
+ remote.c                     | 34 ++++++++++++++++----
+ remote.h                     |  4 +++
+ sha1_name.c                  | 62 ++++++++++++++++++++++--------------
+ t/t1508-at-combinations.sh   |  5 +++
+ t/t3200-branch.sh            | 76 ++++++++++++++++++++++++++++++++++++++++++++
+ t/t5529-push-publish.sh      | 70 ++++++++++++++++++++++++++++++++++++++++
+ t/t6040-tracking-info.sh     |  5 +--
+ transport.c                  | 28 ++++++++++------
+ transport.h                  |  1 +
+ 16 files changed, 415 insertions(+), 65 deletions(-)
+ create mode 100755 t/t5529-push-publish.sh
+
+-- 
+1.9.1+fc1
