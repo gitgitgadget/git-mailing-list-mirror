@@ -1,81 +1,130 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: Our official home page and logo for the Git project
-Date: Fri, 11 Apr 2014 08:29:35 -0500
-Message-ID: <20140411132935.GA5871@nysa.casa.local>
-References: <xmqq7g6z4q6b.fsf@gitster.dls.corp.google.com>
- <534578b2e22e2_af197d3081@nysa.notmuch>
- <CAH5451kNoXobbh3-WBkewvKvNeFkV0P14Z55=qDN+Ak2WGkHSA@mail.gmail.com>
- <20140411114017.GC28858@sigill.intra.peff.net>
- <9D09EA38-1956-467F-88CF-9EA6F12F1CA0@quendi.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Andrew Ardill <andrew.ardill@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Max Horn <max@quendi.de>
-X-From: git-owner@vger.kernel.org Fri Apr 11 15:39:46 2014
+From: "Kyle J. McKay" <mackyle@gmail.com>
+Subject: Re: [PATCH] test: fix t7001 cp to use POSIX options
+Date: Fri, 11 Apr 2014 06:44:07 -0700
+Message-ID: <4def160d638b09b02e04f45688c41a8@74d39fa044aa309eaea14b9f57fe79c>
+References: <1c3e86191de8c91545ac3ddc18fd31e@74d39fa044aa309eaea14b9f57fe79c> <20140411114338.GD28858@sigill.intra.peff.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Apr 11 15:44:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WYbgD-0005Bz-Gv
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Apr 2014 15:39:41 +0200
+	id 1WYbkt-0001Qs-43
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Apr 2014 15:44:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757191AbaDKNjg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Apr 2014 09:39:36 -0400
-Received: from mail-ob0-f176.google.com ([209.85.214.176]:34497 "EHLO
-	mail-ob0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756205AbaDKNjf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Apr 2014 09:39:35 -0400
-Received: by mail-ob0-f176.google.com with SMTP id wp18so5955688obc.7
-        for <git@vger.kernel.org>; Fri, 11 Apr 2014 06:39:35 -0700 (PDT)
+	id S1755411AbaDKNoY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Apr 2014 09:44:24 -0400
+Received: from mail-pd0-f182.google.com ([209.85.192.182]:41999 "EHLO
+	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754211AbaDKNoX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Apr 2014 09:44:23 -0400
+Received: by mail-pd0-f182.google.com with SMTP id y10so5280692pdj.41
+        for <git@vger.kernel.org>; Fri, 11 Apr 2014 06:44:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=HB0aKDJB7+n81Yzk5u1VsRTiPYhh6Jgu2xNZ8omw5Pc=;
-        b=mjP2BesFuPhDQjhAJgagpeIcXtqShn0dwYkj5tzTAIzvZLYQ2oFFoWCGJVhWFZbgg2
-         Zm827qiDgpFJH3mSAz0FisrkEBvnub7vrGLgh3PSgmX1ox69yXMwFn74WdPIkgKUlMxA
-         Py4uHg5YvhCh+lrTzDiKhLlF55E0vWRvetySEFan7vN3UVvQ/4ZgOWc5aI8eibNkX8Ec
-         MUKoDYipZK9cMs4C5UW2EeIZ1+TDs5ChepmKEd9Yu/Jdq3gBQZw0WMfHdXF5Of1jJVyR
-         g8UpMDfPYdG2YKreNjLJBpw0HKVmDqLez83A9ZhZyBJyVnmHqquqM3nyuhIdNc1JS8vC
-         rKNg==
-X-Received: by 10.182.28.98 with SMTP id a2mr1463201obh.63.1397223575285;
-        Fri, 11 Apr 2014 06:39:35 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id nr7sm12357539obc.22.2014.04.11.06.39.33
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=m2yeam8H6Gy74IkEBsL/p1h3ULHT2sBg+Lva9nXzJrI=;
+        b=LwuxK4h4fmS2lBlbK5JRT0YsTawOaFU0/uEvkMuBabA8S+4BR9/8pOl/CGNbaju7T4
+         KNrlyQ80L2tGmya/YJqjKa6U/vofcT1f9dJMSPWIUdDlevAURmND273kLCDTA7SzSXCp
+         5gaA18ZaCJuWJSzdZxTzbV5GISivUaUsgEq9FFgZOCCvsEmut0Ly0AeJxJpdDJfSMduR
+         JUGkeH2FNwtemulQq7BvNBOABqnp2h8/pNOznjucnBGxzFWPe9uAwyWAdIYcmt0IBOr4
+         xO+dqT7zCB8VqMcWDIqetCOGfrvRiT2Y1QjCdaqBnl7XaHNPA3d+Pp0Iz0HUtlURXgt0
+         Vz6Q==
+X-Received: by 10.66.252.135 with SMTP id zs7mr27411977pac.13.1397223863005;
+        Fri, 11 Apr 2014 06:44:23 -0700 (PDT)
+Received: from localhost.localdomain (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
+        by mx.google.com with ESMTPSA id ov4sm11269154pbc.46.2014.04.11.06.44.21
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 11 Apr 2014 06:39:34 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <9D09EA38-1956-467F-88CF-9EA6F12F1CA0@quendi.de>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+        Fri, 11 Apr 2014 06:44:22 -0700 (PDT)
+In-Reply-To: <20140411114338.GD28858@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246090>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246091>
 
-Max Horn wrote:
-> As for the logo, I think it's nice and simple,
+On Apr 11, 2014, at 04:43, Jeff King wrote:
+> On Fri, Apr 11, 2014 at 01:24:02AM -0700, Kyle J. McKay wrote:
+>
+>> Since 11502468 and 04c1ee57 (both first appearing in v1.8.5), the
+>> t7001-mv test has used "cp -a" to perform a copy in several of the
+>> tests.
+>>
+>> However, the "-a" option is not required for a POSIX cp utility and
+>> some platforms' cp utilities do not support it.
+>>
+>> The POSIX equivalent of -a is -R -P -p.
+>>
+>> Change "cp -a" to "cp -R -P -p" so that the t7001-mv test works
+>> on systems with a cp utility that only implements the POSIX
+>> required set of options and not the "-a" option.
+>
+> I wonder if the "-R" is the part that we actually care about here.
+> Including the others does not hurt in that case, but using only "-R"
+> would perhaps make it more obvious to a later reader of the code  
+> exactly
+> what we are trying to do.
 
-You don't think red represent an oldness in Git? Whereas green
-represents progress?
+I was wondering the same thing myself, but Jens is on the Cc: list and  
+added both of those, so I'm hoping he'll pipe in here about that.  I  
+did notice that the other test scripts seem to only use -R, so that  
+would definitely be a more consistent change to match the rest of the  
+tests.
 
-> and based on experience I think that for every logo you'll find people
-> who object to it.
+In any case v2 of the patch with just -R is attached below.  It seems
+to pass the tests so it's probably fine.
 
-So we should just accept any logo without thinking about it?
+--Kyle
 
-> E.g. the red color of the log on git-scm.com looks great to me, while
-> I dislike e.g. the color variation Felipe is using.
+---- 8< ----
 
-If you don't like my variation that doesn't mean we should accept the
-red one; there are many shades of green to begin with.
+Subject: [PATCH v2] test: fix t7001 cp to use POSIX options
 
-Also, there's more than the color to think about; look at the order of
-the pictured commits; they don't make any sense.
+Since 11502468 and 04c1ee57 (both first appearing in v1.8.5), the
+t7001-mv test has used "cp -a" to perform a copy in several of the
+tests.
 
+However, the "-a" option is not required for a POSIX cp utility and
+some platforms' cp utilities do not support it.
+
+The POSIX equivalent of -a is -R -P -p, but the only option we
+actually care about for the test is -R.
+
+Change "cp -a" to "cp -R" so that the t7001-mv test works
+on systems with a cp utility that only implements the POSIX
+required set of options and not the "-a" option.
+
+Signed-off-by: Kyle J. McKay <mackyle@gmail.com>
+
+---
+ t/t7001-mv.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/t/t7001-mv.sh b/t/t7001-mv.sh
+index 215d43d6..675ca5bd 100755
+--- a/t/t7001-mv.sh
++++ b/t/t7001-mv.sh
+@@ -308,7 +308,7 @@ test_expect_success 'git mv moves a submodule with a .git directory and no .gitm
+ 	(
+ 		cd sub &&
+ 		rm -f .git &&
+-		cp -a ../.git/modules/sub .git &&
++		cp -R ../.git/modules/sub .git &&
+ 		GIT_WORK_TREE=. git config --unset core.worktree
+ 	) &&
+ 	mkdir mod &&
+@@ -331,7 +331,7 @@ test_expect_success 'git mv moves a submodule with a .git directory and .gitmodu
+ 	(
+ 		cd sub &&
+ 		rm -f .git &&
+-		cp -a ../.git/modules/sub .git &&
++		cp -R ../.git/modules/sub .git &&
+ 		GIT_WORK_TREE=. git config --unset core.worktree
+ 	) &&
+ 	mkdir mod &&
 -- 
-Felipe Contreras
+tg: (0bc85abb..) t/t7001-posix-cp (depends on: maint)
