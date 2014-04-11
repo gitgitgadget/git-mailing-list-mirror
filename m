@@ -1,88 +1,76 @@
-From: Yiannis Marangos <yiannis.marangos@gmail.com>
-Subject: Re: [PATCH v7 2/2] Verify index file before we opportunistically
- update it
-Date: Fri, 11 Apr 2014 18:58:57 +0300
-Message-ID: <20140411155857.GA12742@abyss.hitronhub.home>
-References: <1397081197-14803-1-git-send-email-yiannis.marangos@gmail.com>
- <1397154681-31803-1-git-send-email-yiannis.marangos@gmail.com>
- <1397154681-31803-2-git-send-email-yiannis.marangos@gmail.com>
- <xmqqppkpvv9m.fsf@gitster.dls.corp.google.com>
- <53479DFD.4020702@web.de>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Our official home page and logo for the Git project
+Date: Fri, 11 Apr 2014 18:24:34 +0200
+Message-ID: <53481742.4090304@alum.mit.edu>
+References: <xmqq7g6z4q6b.fsf@gitster.dls.corp.google.com> <534578b2e22e2_af197d3081@nysa.notmuch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Fri Apr 11 17:59:23 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: Felipe Contreras <felipe.contreras@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 11 18:24:51 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WYdrP-0006Bs-CH
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Apr 2014 17:59:23 +0200
+	id 1WYeFz-0004qO-7h
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Apr 2014 18:24:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754464AbaDKP7N convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Apr 2014 11:59:13 -0400
-Received: from mail-ee0-f48.google.com ([74.125.83.48]:52517 "EHLO
-	mail-ee0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759279AbaDKP7H (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Apr 2014 11:59:07 -0400
-Received: by mail-ee0-f48.google.com with SMTP id b57so4254609eek.7
-        for <git@vger.kernel.org>; Fri, 11 Apr 2014 08:59:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=kqSuBQJpp4O3NDxX9CFUH+VSYgZp+DWAXoaf+xSfzao=;
-        b=c8a1WKKqxzCnhl60aTytr2o0cd/J4PqsaD/UooJhL/aR2ND4BlGti1mxg9ezBThEHq
-         nFfBRzGJTsJ54HmYwz0VgSXGBTBQHH/SlTrrtkXVp/TDCe6VS8lBntr35tPWQHcag/mv
-         eYgLPpzUplGM+TaAXxY7LuUOTmfUaII80+AsFy3E8Kao525ffeRw9611CiVQ9yAZ/ou3
-         wQjBSgXzQOfXhxwrH0Tcn2smDrlVXTonZMPaPjzuoKgbyqparJ589NGtgnrWPU0xWmYI
-         bjm7MY8vV4F6xR8AqRFt3bQRH/w7vr0vSm21Sbf7u2xFjN8dteDrk29n2AjVzCtGc2yt
-         iErw==
-X-Received: by 10.14.198.197 with SMTP id v45mr30107347een.9.1397231946594;
-        Fri, 11 Apr 2014 08:59:06 -0700 (PDT)
-Received: from abyss.hitronhub.home ([46.251.117.183])
-        by mx.google.com with ESMTPSA id q41sm18567597eez.7.2014.04.11.08.59.05
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 11 Apr 2014 08:59:05 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <53479DFD.4020702@web.de>
-User-Agent: Mutt/1.5.22 (2013-10-16)
+	id S1423063AbaDKQYl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Apr 2014 12:24:41 -0400
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:56654 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1422976AbaDKQYi (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 11 Apr 2014 12:24:38 -0400
+X-AuditID: 1207440c-f79656d000003eba-2d-5348174592c9
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id EC.F1.16058.54718435; Fri, 11 Apr 2014 12:24:37 -0400 (EDT)
+Received: from [192.168.69.130] (p5DDB1150.dip0.t-ipconnect.de [93.219.17.80])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s3BGOZew002766
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Fri, 11 Apr 2014 12:24:36 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.4.0
+In-Reply-To: <534578b2e22e2_af197d3081@nysa.notmuch>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprBKsWRmVeSWpSXmKPExsUixO6iqOsq7hFsMKtFzuLg4zyLrivdTBYN
+	vVeYHZg9ds66y+5x8ZKyx+dNcgHMUdw2SYklZcGZ6Xn6dgncGTc6X7IW9LNVTLjTx9LA+JKl
+	i5GTQ0LARGLPja3MELaYxIV769m6GLk4hAQuM0p8btrJCOGcY5J4/fc1I0gVr4C2xPUDG5lA
+	bBYBVYn3T36ygdhsAroSi3qageIcHKICQRJ/zipClAtKnJz5BGyZiECxxNoNDWCtwgIOEmfm
+	bWEFsYUEkiR23d8PdgQn0EHr9zSzgYyREBCX6GkMAjGZBdQl1s8TAqlgFpCX2P52DvMERoFZ
+	SBbMQqiahaRqASPzKka5xJzSXN3cxMyc4tRk3eLkxLy81CJdQ73czBK91JTSTYyQkOXZwfht
+	ncwhRgEORiUe3gOX3IKFWBPLiitzDzFKcjApifIqinoEC/El5adUZiQWZ8QXleakFh9ilOBg
+	VhLh3XTVPViINyWxsiq1KB8mJc3BoiTOq7pE3U9IID2xJDU7NbUgtQgmK8PBoSTBayUGNFSw
+	KDU9tSItM6cEIc3EwQkynEtKpDg1LyW1KLG0JCMeFKPxxcAoBUnxAO0NB2nnLS5IzAWKQrSe
+	YtTl2LBtTSOTEEtefl6qlDjvUZDDBUCKMkrz4FbAEtQrRnGgj4V5M0FG8QCTG9ykV0BLmICW
+	XJoM8lxxSSJCSqqBUf/6o+TSievXb/F7b3+vKvKPRLT9xrdSntF2bjZWoZclZ7EmmQVeMNGs
+	EozSyJWz/OFxl/9YfqbCq36JVzMvTbDhMazexmi4wKRyl3TF1zlPfHxZZfSKts+v 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246105>
 
-On Fri, Apr 11, 2014 at 09:47:09AM +0200, Torsten B=F6gershausen wrote:
->   6. process A applies a commit:
->       - read the index into memory
->       - take the lock
->       - update the index file on disc
->       - release the lock
+On 04/09/2014 06:43 PM, Felipe Contreras wrote:
+> Junio C Hamano wrote:
+>>  - To officially adopt the logo that appears on the "project
+>>    home page" as our "project logo".
+> 
+> I have made my objections to that logo before, but here it goes again: bright
+> red is a horrible color for a logo, as it only looks good in limited
+> situations. I propose you use the logo I chose for git-fc[1] which has a better
+> color, and instead of showing commits going down, they go up.
 
-So here we can have race condition. Maybe we should implement Duy's
-idea of verifying the sha1 in write_index()?
+That's funny; I think that commits *already* go up in the red logo,
+because what is represented is a merge, not a branch.
 
+Robust and easy merging, after all, was one of Git's early claims to fame.
 
-> The new code works like this:
->
->   8. process B applies a commit:
->       - take the lock
->       - verifies tha the index file on disc has the same sha as the o=
-ne read before
->       # And if not: What do we do? die() or retry() ?
->       - update the index file on disc
->       - release the lock
+Michael
 
-IMO, we must never die() if we want to do opportunistic update and we
-should never retry because it's a bit expensive if we do opportunistic =
-update.
-
-
---
-Yiannis
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
