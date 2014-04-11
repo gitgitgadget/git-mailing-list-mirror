@@ -1,172 +1,70 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v7 2/2] Verify index file before we opportunistically
- update it
-Date: Fri, 11 Apr 2014 17:36:58 +0700
-Message-ID: <CACsJy8DGq8Q8i8pgYivcMhnk99gYhnKvSWUsetFL=+3L8YLPew@mail.gmail.com>
-References: <1397081197-14803-1-git-send-email-yiannis.marangos@gmail.com>
- <1397154681-31803-1-git-send-email-yiannis.marangos@gmail.com>
- <1397154681-31803-2-git-send-email-yiannis.marangos@gmail.com> <xmqqppkpvv9m.fsf@gitster.dls.corp.google.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Silly time stamps
+Date: Fri, 11 Apr 2014 13:08:18 +0200
+Message-ID: <5347CD22.9010003@alum.mit.edu>
+References: <loom.20140409T210150-369@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Yiannis Marangos <yiannis.marangos@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 11 12:37:41 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: Mahmoud Asshole <a1209145@drdrb.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 11 13:08:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WYYq2-00017W-V3
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Apr 2014 12:37:39 +0200
+	id 1WYZJs-00049e-Jy
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Apr 2014 13:08:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755860AbaDKKhd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Apr 2014 06:37:33 -0400
-Received: from mail-qa0-f51.google.com ([209.85.216.51]:42169 "EHLO
-	mail-qa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755122AbaDKKh3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Apr 2014 06:37:29 -0400
-Received: by mail-qa0-f51.google.com with SMTP id j7so5055347qaq.24
-        for <git@vger.kernel.org>; Fri, 11 Apr 2014 03:37:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=S/N8WFXQuZvKbWytS3gjbbo2uAgJVnRAQXtUtlPwUCU=;
-        b=wnAY7iOXm6gsnsaF9iUdVTodrdlVV7uX0Snk0Rh4xMFkK0FSdsFqIaIhu2YadkjbiS
-         1ouN7rP3NMnis1cHq9758ObDbbPyLAbMu2ZtkRwAqkHIvJ+C1mMj+T0n397iAsg7HcYf
-         dpvNF5a+G21b99aWT2/bwaUtzL/d1vM9JD1seB7P+Qd/IqIfkusQOwf2BVnA9b3yPztH
-         5WlDncwhDX0ta6k4Surn4n2PqDSvvMUgmCh46Ml1IM5zvMTuToHqfqHH/ijXq+OIeMdL
-         1fbCeSBdZBcrkQbnD61l7x+UAO2TgWjCbyZnkpucgXOOLs9lXqxrmDqIyk/Jma1SSY97
-         hFsQ==
-X-Received: by 10.140.23.8 with SMTP id 8mr26199438qgo.0.1397212648728; Fri,
- 11 Apr 2014 03:37:28 -0700 (PDT)
-Received: by 10.96.103.166 with HTTP; Fri, 11 Apr 2014 03:36:58 -0700 (PDT)
-In-Reply-To: <xmqqppkpvv9m.fsf@gitster.dls.corp.google.com>
+	id S1754722AbaDKLIY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Apr 2014 07:08:24 -0400
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:55047 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754681AbaDKLIX (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 11 Apr 2014 07:08:23 -0400
+X-AuditID: 1207440c-f79656d000003eba-3f-5347cd26a4c1
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 61.06.16058.62DC7435; Fri, 11 Apr 2014 07:08:22 -0400 (EDT)
+Received: from [192.168.1.150] ([89.204.137.86])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s3BB8JAS021065
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Fri, 11 Apr 2014 07:08:21 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.4.0
+In-Reply-To: <loom.20140409T210150-369@post.gmane.org>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpkleLIzCtJLcpLzFFi42IRYndR1FU76x5ssHGVssW7A5NYLbqudDM5
+	MHnMfbaR2ePzJrkApihum6TEkrLgzPQ8fbsE7ozJe7tYCr4yV1za283UwNjD3MXIySEhYCLx
+	6cljKFtM4sK99WxdjFwcQgKXGSXWT1kGlhAS2MAksfZxBYjNK6Atcfb6d8YuRg4OFgFVib7F
+	1iBhNgFdiUU9zUwgYVGBIIk/ZxUhqgUlTs58wgISFhGwlbj03AHEFBaQk2i4JQUx21Ti9ZmJ
+	YBWcAmYS23+6gpgSAuISPY1BIBXMAjoS7/oeMEPY8hLb385hnsAoMAvJ+FlIymYhKVvAyLyK
+	US4xpzRXNzcxM6c4NVm3ODkxLy+1SNdQLzezRC81pXQTIyQ4eXYwflsnc4hRgINRiYf3wCW3
+	YCHWxLLiytxDjJIcTEqivA9OugcL8SXlp1RmJBZnxBeV5qQWH2KU4GBWEuE13wuU401JrKxK
+	LcqHSUlzsCiJ86ouUfcTEkhPLEnNTk0tSC2CycpwcChJ8HqeAWoULEpNT61Iy8wpQUgzcXCC
+	DOeSEilOzUtJLUosLcmIB0VnfDEwPkFSPEB7r58G2VtckJgLFIVoPcWoKCXOywOSEABJZJTm
+	wY2FpZxXjOJAXwrzSoJs5wGmK7juV0CDmYAGX5oMNrgkESEl1cCYymow9fhFPjuWizsSrh+2
+	j1YxzLU/sb3TSOmB9feWZ51qk5gep2wtajkq8mF9XLzSnuXJlhHyJ8V+PDRNDft1VK9jhqnA
+	YcG7LBc4L036WsRdtGnti4vOrakPfqtu/WlmmmT251pTYOKvMLVvy59HPiu7MfW5 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246077>
 
-On Fri, Apr 11, 2014 at 2:28 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> +static int verify_index_from(const struct index_state *istate, const char *path)
-> +{
-> +       int fd;
-> +       ssize_t n;
-> +       struct stat st;
-> +       unsigned char sha1[20];
-> +
-> +       if (!istate->initialized)
-> +               return 0;
-> +
-> +       fd = open(path, O_RDONLY);
-> +       if (fd < 0)
-> +               return 0;
+On 04/09/2014 10:50 PM, Mahmoud Asshole wrote:
+> [...]
 
-Suppose another process "git rm --cached :/" is racing with us and
-this imaginary git is so smart that it figures if nothing valueable is
-left in the index, there's no need to write the index down at all. So
-it removes $GIT_DIR/index, then $GIT_DIR/index.lock. When we come
-here, we see ENOENT, but we should return 1 instead because the file
-removal in this case is a form of change.
+Please conduct your discussions here in a civil tone.  It is both more
+pleasant for all involved and also more likely to elicit a response.  I
+hardly think that the "waste" of 12 bytes in every commit is an act of
+stupidity so inexcusable that it would deserve your bile, even *if* one
+were to agree that this information is useless (which I personally don't
+think).
 
-That opens a question about writing a new index. I think we could use
-all-zero sha-1 as the indicator that this is a fresh new index. If
-istate->sha1[] is all-zero and no index file exists, then we do not
-need to verify (i.e. return 0). However if istate->sha1[] is all-zero,
-but $GIT_DIR/index exists, then return 1.
-
-I'm still not sure if elsewhere in the code base we read
-$GIT_DIR/index to active_index, create a new index_state, copy entries
-over (but not active_index.sha1[]), then write the _new_ index_state
-down. That would hit the "however" statement above and incorrectly
-return 1.
-
-I suppose that all other errors except ENOENT could be safely ignored
-(i.e. return 0 regardless of istate->sha1[]).
-
-> +
-> +       if (fstat(fd, &st))
-> +               goto out;
-> +
-> +       if (st.st_size < sizeof(struct cache_header) + 20)
-> +               goto out;
-> +
-> +       n = pread_in_full(fd, sha1, 20, st.st_size - 20);
-> +       if (n != 20)
-> +               goto out;
-> +
-> +       if (hashcmp(istate->sha1, sha1))
-> +               goto out;
-> +
-> +       close(fd);
-> +       return 1;
-> +
-> +out:
-> +       close(fd);
-> +       return 0;
-> +}
-> +
-> +static int verify_index(const struct index_state *istate)
-> +{
-> +       return verify_index_from(istate, get_index_file());
-> +}
-> +
->  static int has_racy_timestamp(struct index_state *istate)
->  {
->         int entries = istate->cache_nr;
-> @@ -1766,7 +1811,7 @@ static int has_racy_timestamp(struct index_state *istate)
->  void update_index_if_able(struct index_state *istate, struct lock_file *lockfile)
->  {
->         if ((istate->cache_changed || has_racy_timestamp(istate)) &&
-> -           !write_index(istate, lockfile->fd))
-> +           verify_index(istate) && !write_index(istate, lockfile->fd))
->                 commit_locked_index(lockfile);
->         else
->                 rollback_lock_file(lockfile);
-> diff --git a/wrapper.c b/wrapper.c
-> index 5b3c7fc..bc1bfb8 100644
-> --- a/wrapper.c
-> +++ b/wrapper.c
-> @@ -232,6 +232,26 @@ ssize_t write_in_full(int fd, const void *buf, size_t count)
->         return total;
->  }
->
-> +ssize_t pread_in_full(int fd, void *buf, size_t count, off_t offset)
-> +{
-> +       char *p = buf;
-> +       ssize_t total = 0;
-> +
-> +       while (count > 0) {
-> +               ssize_t loaded = xpread(fd, p, count, offset);
-> +               if (loaded < 0)
-> +                       return -1;
-> +               if (loaded == 0)
-> +                       return total;
-> +               count -= loaded;
-> +               p += loaded;
-> +               total += loaded;
-> +               offset += loaded;
-> +       }
-> +
-> +       return total;
-> +}
-> +
->  int xdup(int fd)
->  {
->         int ret = dup(fd);
-> --
-> 1.9.2-590-g468068b
->
->
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-
-
+Thanks,
+Michael
 
 -- 
-Duy
+Michael Haggerty
+mhagger@alum.mit.edu
