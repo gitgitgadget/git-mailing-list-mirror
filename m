@@ -1,84 +1,90 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v2 0/9] Introduce publish tracking branch
-Date: Fri, 11 Apr 2014 19:25:02 +0200
-Message-ID: <vpqd2gng4nl.fsf@anie.imag.fr>
-References: <1397156686-31349-1-git-send-email-felipe.contreras@gmail.com>
-	<vpqtxa0jkfo.fsf@anie.imag.fr>
-	<20140411142504.GA25376@nysa.casa.local>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: Our official home page and logo for the Git project
+Date: Fri, 11 Apr 2014 12:21:54 -0500
+Message-ID: <20140411172154.GA24988@nysa.casa.local>
+References: <xmqq7g6z4q6b.fsf@gitster.dls.corp.google.com>
+ <534578b2e22e2_af197d3081@nysa.notmuch>
+ <CAH5451kNoXobbh3-WBkewvKvNeFkV0P14Z55=qDN+Ak2WGkHSA@mail.gmail.com>
+ <20140411114017.GC28858@sigill.intra.peff.net>
+ <9D09EA38-1956-467F-88CF-9EA6F12F1CA0@quendi.de>
+ <20140411132935.GA5871@nysa.casa.local>
+ <D372C563-C59D-47A6-91A3-D2C6BB2164B1@quendi.de>
+ <CAGK7Mr7Pap0q85NR7aoM_3W-V7z5WMdmnoU+PC52_WTABdC1cg@mail.gmail.com>
+ <53481DBF.6090307@ira.uka.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	Jeff King <peff@peff.net>,
-	John Szakmeister <john@szakmeister.net>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 11 19:29:29 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Philippe Vaucher <philippe.vaucher@gmail.com>,
+	Max Horn <max@quendi.de>, Jeff King <peff@peff.net>,
+	Andrew Ardill <andrew.ardill@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Holger Hellmuth <hellmuth@ira.uka.de>
+X-From: git-owner@vger.kernel.org Fri Apr 11 19:32:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WYfGa-0005wB-SC
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Apr 2014 19:29:29 +0200
+	id 1WYfJ4-0008BP-8k
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Apr 2014 19:32:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750799AbaDKR26 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Apr 2014 13:28:58 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:35380 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750735AbaDKR2p (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Apr 2014 13:28:45 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s3BHP0fJ003004
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 11 Apr 2014 19:25:00 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s3BHP2nk006105;
-	Fri, 11 Apr 2014 19:25:02 +0200
-In-Reply-To: <20140411142504.GA25376@nysa.casa.local> (Felipe Contreras's
-	message of "Fri, 11 Apr 2014 09:25:04 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 11 Apr 2014 19:25:00 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s3BHP0fJ003004
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1397841903.43053@pXq7sVrgGRLlOnbeuTktrQ
+	id S1752858AbaDKRb5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Apr 2014 13:31:57 -0400
+Received: from mail-oa0-f42.google.com ([209.85.219.42]:57284 "EHLO
+	mail-oa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752379AbaDKRbz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Apr 2014 13:31:55 -0400
+Received: by mail-oa0-f42.google.com with SMTP id i4so6563054oah.29
+        for <git@vger.kernel.org>; Fri, 11 Apr 2014 10:31:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=WhLHZeU5PBwB7u+PEGOK0u2xo4JXBL0I47tNwqW0ulA=;
+        b=y/qO1zPMUEpb3MC+i0DTSOZ/RB90X6DqPcGzP5oYTasgjsmRTfqOf/Kmrtkfm1wHBq
+         Z7RR9BaDFa5qxf7MfqUC+/x83L3IpuvXWbl+ud01UosHarHbTkYNpEwItlh/ww8va9tt
+         PO5nq0u0um/JsGqlWi/Hz8LxeeLE8TeP4Ky6V7prYviDZSlAjetiKOyIS9Ms/vHR4wDX
+         a+kSMRqvbuJi7zd0cX27oxKXtRi6aiQMv8ZiixhSvbskmG3tXnA/+iesKorRxxit0Fbu
+         QKv0nyprv5u7xFLMDNW2WFhMlgkzlXyVpXf2VLG6vTWqNI7N2inPrK7Z8YCVB9QhR6K6
+         z5AQ==
+X-Received: by 10.182.205.226 with SMTP id lj2mr1192027obc.84.1397237514399;
+        Fri, 11 Apr 2014 10:31:54 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id ko3sm33890573oeb.1.2014.04.11.10.31.52
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 11 Apr 2014 10:31:53 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <53481DBF.6090307@ira.uka.de>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246112>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Holger Hellmuth wrote:
+> Am 11.04.2014 17:39, schrieb Philippe Vaucher:
+> >FWIW, I think if you made a poll and asked which color is the most
+> >"positive" between green and red, the vast majority of people would
+> >say "green". Examples could be traffic green lights vs red lights, or
+> 
+> Coca-Cola uses red. So red is refreshing and hip (if you believe the
+> commercials).
 
-> My patch series only affects push.default=simple, perhaps you have a
-> different configuration.
+Coca-Cola chose red long time ago, if branding and artist experts told
+them another colour would be better it wouldn't matter; their color is
+red and they can't change it now.
 
-Good catch. I have push.default=upstream (essentially for compatibility
-with old Git versions, I'd prefer simple actually).
+Moreover we are not in the business of refreshing beverages, we are in
+the business of revision control, and in revision control red is old,
+green is new. Period.
 
-> Maybe we want the publish branch to override any push.default, so:
+> Which is to say, git's wellfare will surely not depend on the color of
+> its logo. Otherwise the Coca-Cola company would have used a different
+> color.
 
-Not sure actually. If a user says "push.default=upstream", it seems
-weird to push to something other than upstream indeed. What's clear to
-me is that your patch in its current form clearly makes "simple" a much
-better default than "upstream" (good news, it it the default!).
-
-That said, the advice given by "git status" is clearly wrong:
-
-> >   $ git status
-> >   On branch master
-> >   Your branch is ahead of 'origin/new' by 4 commits.
-> >     (use "git push" to publish your local commits)
-
-It should say (use "git push origin new" to publish your local commits)
-with push.default=upstream and the current behavior of the patch.
-
-Perhaps argumentless "git push" could warn when push.default=upstream
-and branch.<name>.publish is configured, I'm not sure.
-
-Sorry, more questions and "I'm not sure" than actual suggestion :-(.
+It doesn't. But green is still better.
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Felipe Contreras
