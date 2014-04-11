@@ -1,80 +1,107 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v3 0/8] Introduce publish tracking branch
-Date: Fri, 11 Apr 2014 20:49:39 +0200
-Message-ID: <vpqeh13aegs.fsf@anie.imag.fr>
-References: <1397239151-2391-1-git-send-email-felipe.contreras@gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: Our official home page and logo for the Git project
+Date: Fri, 11 Apr 2014 13:56:00 -0500
+Message-ID: <53483ac0be5d5_937adb308e2@nysa.notmuch>
+References: <xmqq7g6z4q6b.fsf@gitster.dls.corp.google.com>
+ <534578b2e22e2_af197d3081@nysa.notmuch>
+ <CAH5451kNoXobbh3-WBkewvKvNeFkV0P14Z55=qDN+Ak2WGkHSA@mail.gmail.com>
+ <20140411114017.GC28858@sigill.intra.peff.net>
+ <9D09EA38-1956-467F-88CF-9EA6F12F1CA0@quendi.de>
+ <20140411132935.GA5871@nysa.casa.local>
+ <D372C563-C59D-47A6-91A3-D2C6BB2164B1@quendi.de>
+ <20140411152147.GA12161@nysa.casa.local>
+ <40FDE1FF-780F-46E1-A5AA-57D53D6D1C87@quendi.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	Jeff King <peff@peff.net>,
-	John Szakmeister <john@szakmeister.net>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 11 20:53:31 2014
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Andrew Ardill <andrew.ardill@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Max Horn <max@quendi.de>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 11 21:06:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WYgZu-0003XS-6g
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Apr 2014 20:53:30 +0200
+	id 1WYgm9-0006F1-M5
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Apr 2014 21:06:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754889AbaDKSxZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Apr 2014 14:53:25 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:36947 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754630AbaDKSxZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Apr 2014 14:53:25 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s3BInbui024339
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 11 Apr 2014 20:49:37 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s3BIndHE006890;
-	Fri, 11 Apr 2014 20:49:39 +0200
-In-Reply-To: <1397239151-2391-1-git-send-email-felipe.contreras@gmail.com>
-	(Felipe Contreras's message of "Fri, 11 Apr 2014 12:59:03 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 11 Apr 2014 20:49:38 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s3BInbui024339
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1397846981.10732@jiBhpXudPjN+NCT3n/lHLA
+	id S1754885AbaDKTGB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Apr 2014 15:06:01 -0400
+Received: from mail-ob0-f175.google.com ([209.85.214.175]:50320 "EHLO
+	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754411AbaDKTGA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Apr 2014 15:06:00 -0400
+Received: by mail-ob0-f175.google.com with SMTP id vb8so108148obc.6
+        for <git@vger.kernel.org>; Fri, 11 Apr 2014 12:06:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=pAarH+mjb7BlU+XIA4DutshsqCp95lpw0nBToL21jhk=;
+        b=CA0zy0J/JOrfwJ1OciDOwknA1qqhbZlNOyuPmHFEgLQ+DSwF1VTYmEokutbQ+X5CwQ
+         I7JwHYHO2+4LehJVp7SRGSqHISbNtUnDHFZyGR4Fzsgemy+ANakFXOjSs5DXjLTHqWEQ
+         wGZNxqwPxtGwLb3fgm1aO0ava4pFOF/O7P2fAThdCgc0jbQz7lofhblcyb0D1tHVkYQA
+         JC7V1bjvmXzzkZRPFlPGmpyBMzOh3Z4vIcSPmQUlr7RX/++6gGpj2pO/iIqn3AlBbWUB
+         4eo/Nw4mz1i7Af+jtq2TU0iDDAefyHne3AJ1SBVa1/bnpZWGqmdNP68dAmkfug5rS0Wm
+         vLEQ==
+X-Received: by 10.182.2.72 with SMTP id 8mr21002882obs.21.1397243160506;
+        Fri, 11 Apr 2014 12:06:00 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id y10sm13702627obk.4.2014.04.11.12.05.58
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 11 Apr 2014 12:05:59 -0700 (PDT)
+In-Reply-To: <40FDE1FF-780F-46E1-A5AA-57D53D6D1C87@quendi.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246128>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246129>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Max Horn wrote:
+> On 11.04.2014, at 17:21, Felipe Contreras <felipe.contreras@gmail.com> wrote:
+> > Max Horn wrote:
+> >> On 11.04.2014, at 15:29, Felipe Contreras <felipe.contreras@gmail.com> wrote:
+> >>> Max Horn wrote:
+> >>> 
+> >>> You don't think red represent an oldness in Git? Whereas green
+> >>> represents progress?
+> >> 
+> >> No, I don't think that.
+> > 
+> > Then you belong to the minority of Git users. Those of us that see
+> > patches day and night, red is old, green is new.
+> 
+> Hasty generalization.
 
-> * Override other configurations (such as push.default)
+You don't know what a hasty generalization is. If you want me to explain it to
+you, send me a personal e-mail, you are polluting the discussion enough as it
+is.
 
-I think I convinced myself that this is the right way to go since my
-last message. After all, "push.default" is, by definition, just a
-default.
+> Come back when you have facts, as opposed to the illusion that you are the
+> spokesperson of the (apparently silent) majority of Git users.
 
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -764,6 +764,13 @@ branch.<name>.mergeoptions::
->  	option values containing whitespace characters are currently not
->  	supported.
->  
-> +branch.<name>.push::
-> +	Defines, together with branch.<name>.pushremote, the publish branch for
-> +	the given branch. It tells 'git push' which branch to push to, and
-> +	overrides any other configurations, such as push.default. It also tells
-> +	commands such as 'git status' and 'git branch' which remote branch to
-> +	use for tracking information (commits ahead and behind).
-> +
+Facts:
 
-Good.
+1) A hunk that removed (-) is represented in red [1]
+2) A hunk that added (+) is represented in green [1]
+3) A file that is removed is represented in red [2]
+4) A file that is added or modified is represented in green [2]
+5) A test that fails is represented in red [3]
+6) A test that succeeds is represented in green [3]
+7) The current Git logo (accordo to some people) has "-" in red, "+" in green [4]
 
-I think this text should mention the @{publish} shorthand too. Stg like
-"This branch can be refered to as @{publish} when specifying revision
-(see linkgit:gitrevisions[7])."
+Given these facts, it's reasonable to assume that to the majority of Git users
+red is old and bad, green is new and good.
+
+[1] http://ubuntuone.com/0lxzuxY2b59OEdDK5EOvfi
+[2] http://media.smashingmagazine.com/wp-content/uploads/2011/06/git1_4_git-status.gif
+[3] http://felipec.org/git-tests.png
+[4] https://plus.google.com/112500102483798323902/posts
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Felipe Contreras
