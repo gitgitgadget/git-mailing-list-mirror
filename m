@@ -1,59 +1,77 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] test: fix t7001 cp to use POSIX options
-Date: Fri, 11 Apr 2014 07:43:38 -0400
-Message-ID: <20140411114338.GD28858@sigill.intra.peff.net>
-References: <1c3e86191de8c91545ac3ddc18fd31e@74d39fa044aa309eaea14b9f57fe79c>
+From: =?UTF-8?B?w5h5dmluZCBBLiBIb2xt?= <sunny@sunbase.org>
+Subject: Re: Handling empty directories in Git
+Date: Fri, 11 Apr 2014 14:34:10 +0200
+Message-ID: <CAA787rmfWqjkBe0cT4-aXD0uPi-pWhjK0K0g2Vm8V0bJ7TLoMg@mail.gmail.com>
+References: <1396968442.95061.YahooMailNeo@web120806.mail.ne1.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: "Kyle J. McKay" <mackyle@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 11 13:43:48 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Olivier LE ROY <olivier_le_roy@yahoo.com>
+X-From: git-owner@vger.kernel.org Fri Apr 11 14:34:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WYZs3-0003V2-RT
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Apr 2014 13:43:48 +0200
+	id 1WYaex-0000by-Vq
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Apr 2014 14:34:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755122AbaDKLnm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Apr 2014 07:43:42 -0400
-Received: from cloud.peff.net ([50.56.180.127]:57876 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754673AbaDKLnk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Apr 2014 07:43:40 -0400
-Received: (qmail 21985 invoked by uid 102); 11 Apr 2014 11:43:40 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 11 Apr 2014 06:43:40 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 11 Apr 2014 07:43:38 -0400
-Content-Disposition: inline
-In-Reply-To: <1c3e86191de8c91545ac3ddc18fd31e@74d39fa044aa309eaea14b9f57fe79c>
+	id S1755134AbaDKMeN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Apr 2014 08:34:13 -0400
+Received: from mail-lb0-f180.google.com ([209.85.217.180]:59859 "EHLO
+	mail-lb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754378AbaDKMeM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 11 Apr 2014 08:34:12 -0400
+Received: by mail-lb0-f180.google.com with SMTP id 10so3465060lbg.11
+        for <git@vger.kernel.org>; Fri, 11 Apr 2014 05:34:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=BSM5mwNjqNDkW93WRFnCK3SVOcbli06hdFjw2fhuojM=;
+        b=S1pWe91fJqH+wQ4mXtUoRfV/A24O4xpO95i9BUnBYOivcDcdz3l4lDY5tikPvonq5+
+         w8pzIY42bkIfoYxPwNGoqGVgjTkjN/pS7B/FjrFU7s0nOzfKyaErhcTeOTg4CfnDW24x
+         fHZHvMZLrzH8VXERi2C0ZdpI2Q5PROG7BJSrRcJmUBoJ7azGbxrr6cCMoSZlTHY44bWE
+         8k/xCmMdsM+0rostq30gQhlv9WlErkHmbFiLHZ85U1M71qoun1dq06whpC6fiiSmOXkB
+         yDnBbTyk9FY83bCmAuM2uTQ1ERiHXfN7n2G1hS0YvvpsQFjlDwhev+zL78RnmX5XcpJA
+         IMCA==
+X-Received: by 10.152.42.164 with SMTP id p4mr16535171lal.5.1397219650436;
+ Fri, 11 Apr 2014 05:34:10 -0700 (PDT)
+Received: by 10.112.13.102 with HTTP; Fri, 11 Apr 2014 05:34:10 -0700 (PDT)
+In-Reply-To: <1396968442.95061.YahooMailNeo@web120806.mail.ne1.yahoo.com>
+X-Google-Sender-Auth: vM6QBD3dlxmLl49V0vggv9rV3Dw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246082>
 
-On Fri, Apr 11, 2014 at 01:24:02AM -0700, Kyle J. McKay wrote:
+On 8 April 2014 16:47, Olivier LE ROY <olivier_le_roy@yahoo.com> wrote:
+> Hello,
+>
+> I have a project under SVN with contains empty directories.
+>
+> I would like to move this project on a Git server, still handling emp=
+ty directories.
+>
+> The solution: put a .gitignore file in each empty directory to have t=
+hem recognized by the Git database cannot work, because some scripts in=
+ my projects test the actual emptiness of the directories.
+>
+> Is there any expert able to tell me: this cannot be done in Git, or t=
+his can be done by the following trick, or why there is no valuable rea=
+son to maintain empty directories under version control?
 
-> Since 11502468 and 04c1ee57 (both first appearing in v1.8.5), the
-> t7001-mv test has used "cp -a" to perform a copy in several of the
-> tests.
-> 
-> However, the "-a" option is not required for a POSIX cp utility and
-> some platforms' cp utilities do not support it.
-> 
-> The POSIX equivalent of -a is -R -P -p.
-> 
-> Change "cp -a" to "cp -R -P -p" so that the t7001-mv test works
-> on systems with a cp utility that only implements the POSIX
-> required set of options and not the "-a" option.
+Git doesn't support storage of empty directories, but there are ways
+around it. As you say, you could place empty files in every directory,
+but I've never liked this concept. Instead, I use a couple of scripts
+to store/restore empty directories:
 
-I wonder if the "-R" is the part that we actually care about here.
-Including the others does not hurt in that case, but using only "-R"
-would perhaps make it more obvious to a later reader of the code exactly
-what we are trying to do.
+https://gist.github.com/sunny256/419015
 
--Peff
+This creates a file called ".emptydirs" at the top of the repo, and it
+can easily be implemented into scripts and build processes.
+
+Greetings,
+=C3=98yvind
