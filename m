@@ -1,150 +1,82 @@
-From: Brandon McCaig <bamccaig@gmail.com>
-Subject: Re: Our official home page and logo for the Git project
-Date: Fri, 11 Apr 2014 17:25:08 -0400
-Message-ID: <CANUGeEbZ=uO1-cQ+iFkg7TTVdR8h9_sZBzTXQ3ZpsqGprdpVrA@mail.gmail.com>
-References: <xmqq7g6z4q6b.fsf@gitster.dls.corp.google.com> <534578b2e22e2_af197d3081@nysa.notmuch>
- <CAH5451kNoXobbh3-WBkewvKvNeFkV0P14Z55=qDN+Ak2WGkHSA@mail.gmail.com>
- <20140411114017.GC28858@sigill.intra.peff.net> <xmqqr453sm76.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 2/3] refs.c: split delete_ref_loose() into a separate flag-for-deletion and commit phase
+Date: Fri, 11 Apr 2014 14:51:33 -0700
+Message-ID: <xmqqa9brr0uy.fsf@gitster.dls.corp.google.com>
+References: <1397248790-10403-1-git-send-email-sahlberg@google.com>
+	<1397248790-10403-3-git-send-email-sahlberg@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Andrew Ardill <andrew.ardill@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 11 23:25:41 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Ronnie Sahlberg <sahlberg@google.com>
+X-From: git-owner@vger.kernel.org Fri Apr 11 23:51:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WYixA-0000WO-UG
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Apr 2014 23:25:41 +0200
+	id 1WYjMY-0005pq-Kl
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Apr 2014 23:51:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754338AbaDKVZc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Apr 2014 17:25:32 -0400
-Received: from mail-wi0-f181.google.com ([209.85.212.181]:61693 "EHLO
-	mail-wi0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751504AbaDKVZb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Apr 2014 17:25:31 -0400
-Received: by mail-wi0-f181.google.com with SMTP id hm4so1679158wib.14
-        for <git@vger.kernel.org>; Fri, 11 Apr 2014 14:25:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=X0cx7FaoJLcfGg8Kouhu77X6DTQlACJIxwgav5tGtz0=;
-        b=pkh6hcV+4xsI0HPDtnKRI1emSrcvk7QKcPhSFtX5B2CFSCWtWnKqEZ6vPxclcLL3QO
-         mFV0u0GVGM4HV2jhEpyH+Y/KWuyYN8Cm7PDfZy7jW++P6c4elSPfB+5NDCNPRiraDQlA
-         RoZSwGtkj1qW2qBBOeWp8VvrCTFf3upoYO0Z7m+geZgox331UWUEdcu0RQMg+0K16+YB
-         Xm4m2ChjIXWHbsre5ZedqyUr7orrOv0XClmCzfBczcSZ63q3oUA9C7I9POYo3qgDvdeW
-         UVe+GFqueTU+CCjAb4tflji8jluPEWEeLEh8bxfKpiI+ux9qJKEcpjQdlSDAuPvyqJm1
-         //Wg==
-X-Received: by 10.194.84.144 with SMTP id z16mr22693385wjy.23.1397251529352;
- Fri, 11 Apr 2014 14:25:29 -0700 (PDT)
-Received: by 10.217.120.8 with HTTP; Fri, 11 Apr 2014 14:25:08 -0700 (PDT)
-In-Reply-To: <xmqqr453sm76.fsf@gitster.dls.corp.google.com>
+	id S1755554AbaDKVvi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Apr 2014 17:51:38 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51370 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755133AbaDKVvh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Apr 2014 17:51:37 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7B6987C5CA;
+	Fri, 11 Apr 2014 17:51:36 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=5Ebl6wl1znMD8zSeOBVmeiEZOpg=; b=kvCnnC
+	OcJcOEbx5mD6oJX8MRzPH5DuDR1eOV3pCWZOL2K/VIB6zi5/HcdeaW6WQ/XQ1vsB
+	7HnWPGKqc6tTnC5F2wiRYKE8CxUEch3qUrx8OM0i/ZfyjM7fdbKm6XW+2rrTFU9k
+	2r2MfQuZTwe8XIA3KKCrRganFovrQB9u2+FDI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=GMoh7Vu/gwdF2VzxYBv+YBjf3cG6VPcD
+	EscgIXyIlK4Wb9B2vZyqRdatfb87GHcXP1CIXlC5q1RGTWdZuU4ii6G/ie5LUrkf
+	JGY917ztnmOZeEu20JEK9NEERF4//Qz7IH0RAMKM8JmU4OYGUgbYzPx81hXtblDD
+	q/CQGI7tyQ0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6456E7C5C8;
+	Fri, 11 Apr 2014 17:51:36 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D96327C5C5;
+	Fri, 11 Apr 2014 17:51:34 -0400 (EDT)
+In-Reply-To: <1397248790-10403-3-git-send-email-sahlberg@google.com> (Ronnie
+	Sahlberg's message of "Fri, 11 Apr 2014 13:39:49 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 73566DEA-C1C3-11E3-968E-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246150>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246151>
 
-Junio:
+Ronnie Sahlberg <sahlberg@google.com> writes:
 
-On Fri, Apr 11, 2014 at 3:25 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> The pages at https://git.wiki.kernel.org/index.php/Main_Page are
-> done primarily by developers, and between the two logos on that
-> page, the one that appears inside the page under "Main Page" header
-> has long been the logo that Git people immediately recognised as the
-> Git logo.  That logo originally appeared on gitweb, I think, and is
-> in my tree (on the other hand, the logo in question on the motion
-> does even appear anywhere in my tree).  We didn't feel a need to
-> declare it was the official logo.  That was from back when Git
-> community did not have strong needs for "branding".
->
-> The one on the left-top corner was one of the alternatives that
-> received favorable reactions from multiple people (I am not sure if
-> there was a clear "majority" though) submitted when we briefly had a
-> poll to come up with an updated logo.
+>  int commit_ref_lock(struct ref_lock *lock)
+>  {
+> +	if (lock->delete_ref) {
+> +		int flag = lock->delete_flag;
+> +
+> +		if (!(flag & REF_ISPACKED) || flag & REF_ISSYMREF) {
+> +			/* loose */
+> +			int err, i = strlen(lock->lk->filename) - 5; /* .lock */
+> +
+> +			lock->lk->filename[i] = 0;
+> +			err = unlink_or_warn(lock->lk->filename);
+> +			lock->lk->filename[i] = '.';
+> +			if (err && errno != ENOENT)
+> +				return 1;
+> +		}
+> +	} else
+>          if (!lock->skipped_write && commit_ref(lock)) {
 
-*snip*
+	} else if (...) {
 
-> In any case, this motion is not about "let's declare the logo we see
-> on git-scm.com today as _the_ official one".  It is not about "that
-> logo on git-scm.com sucks; let's come up with a better one".  People
-> are welcome to do that discussion elsewhere, and I do not mind a
-> repository of contestants created somewhere, but personally I think
-> the project is too mature for that and it is too late, even though
-> the "bleeding-red fork" logo may not be my favorite.
->
-> The motion is about this:
->
->     Outside people, like the party who approached us about putting
->     our logo on their trinket, seem to associate that logo we see on
->     git-scm.com today with our project, but we never officially said
->     it was our logo (we did not endorse that git-scm.com is our
->     official home page, either, for that matter).
->
->     It is silly for us to have to say "Ehh, that is a logo that was
->     randomly done and slapped on git-scm.com which is not even our
->     official home page, and the logo is licensed CC-BY by somebody
->     else.  Go talk to them.", every time such a request comes.
->
->     Please help us by letting us answer "Yup, that is a logo (among
->     others) that represents our project, and we are OK with you
->     using it to help promote our project" instead.
->
-> That is what I meant by "our official logo" in the first message.
->
-> So,... seconds?
-
-I guess it's not exactly clear to me what the difference is between
-the "official logo" debate and what you're asking.
-
-I think that the problem with this entire thread is that there is no
-such logo that is understood to be Git (i.e., that you could ask
-people out of context what the Git logo looks like and they'd be able
-to remember without being tainted). If you want proof of that take
-that logo from git-scm.com, remove the word "git", and show it to a
-random sampling of people in the tech. community and ask them if they
-recognize it. I know that I wouldn't (like many others I had to
-request http://git-scm.com/ to check what it even was), despite being
-a long time Git user and relatively active community member (mostly in
-IRC). I suspect that most Git users wouldn't be able to identify it.
-
-I don't particularly like it the logo on git-scm.com[1], and I think
-that several good points have been raised here about its weaknesses
-and lack of any real strengths. I'm not sure that my say is worth
-much, but I'd be in favor of using the one that spells out git (the
-one in the top left of the wiki[2]) over the one with the nonsensical
-commit nodes[1]. :) Or even take the idea from the wiki and tidy it up
-a bit. I think it's a clever idea that works well with the name and we
-shouldn't throw it away. Or even take the other and resolve the
-problems raised above (the color is secondary, but the logical
-structure of the repository is pretty universally backwards).
-
-I wouldn't really be in favor of us encouraging the use of [1], but if
-we do it's not the end of the world either. I don't think it's
-particularly good so the question is do we and should we care if the
-project becomes known by an ambiguous, flawed (apologies to the
-designer) logo?
-
-I'm not even sure that I'd agree that Git needs "marketing" at all.
-That sounds like a gimmick to maximize "market share" instead of solve
-a problem well and I think it belongs more in the rivals' camps. ;) I
-think this project should continue to focus on being better instead of
-being presented better.
-
-[1] http://git-scm.com/images/logo@2x.png
-[2] https://git.wiki.kernel.org/skins/common/images-git/wiki.png
-
-Regards,
-
-
--- 
-Brandon McCaig <bamccaig@gmail.com> <bamccaig@castopulence.org>
-Castopulence Software <https://www.castopulence.org/>
-Blog <http://www.bamccaig.com/>
-perl -E '$_=q{V zrna gur orfg jvgu jung V fnl. }.
-q{Vg qbrfa'\''g nyjnlf fbhaq gung jnl.};
-tr/A-Ma-mN-Zn-z/N-Zn-zA-Ma-m/;say'
+Also the previous patch indents the above "if" line in the context
+with spaces; please use a tab.
