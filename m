@@ -1,77 +1,73 @@
-From: =?UTF-8?B?w5h5dmluZCBBLiBIb2xt?= <sunny@sunbase.org>
-Subject: Re: Handling empty directories in Git
-Date: Fri, 11 Apr 2014 14:34:10 +0200
-Message-ID: <CAA787rmfWqjkBe0cT4-aXD0uPi-pWhjK0K0g2Vm8V0bJ7TLoMg@mail.gmail.com>
-References: <1396968442.95061.YahooMailNeo@web120806.mail.ne1.yahoo.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Olivier LE ROY <olivier_le_roy@yahoo.com>
-X-From: git-owner@vger.kernel.org Fri Apr 11 14:34:20 2014
+From: Max Horn <max@quendi.de>
+Subject: Re: Our official home page and logo for the Git project
+Date: Fri, 11 Apr 2014 14:39:51 +0200
+Message-ID: <9D09EA38-1956-467F-88CF-9EA6F12F1CA0@quendi.de>
+References: <xmqq7g6z4q6b.fsf@gitster.dls.corp.google.com> <534578b2e22e2_af197d3081@nysa.notmuch> <CAH5451kNoXobbh3-WBkewvKvNeFkV0P14Z55=qDN+Ak2WGkHSA@mail.gmail.com> <20140411114017.GC28858@sigill.intra.peff.net>
+Mime-Version: 1.0 (Mac OS X Mail 6.6 \(1510\))
+Content-Type: multipart/signed; boundary="Apple-Mail=_72555FB7-6F9A-47C7-A6F1-F0D59EEC9077"; protocol="application/pgp-signature"; micalg=pgp-sha256
+Cc: Andrew Ardill <andrew.ardill@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Apr 11 14:39:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WYaex-0000by-Vq
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Apr 2014 14:34:20 +0200
+	id 1WYakK-0005lh-O4
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Apr 2014 14:39:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755134AbaDKMeN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Apr 2014 08:34:13 -0400
-Received: from mail-lb0-f180.google.com ([209.85.217.180]:59859 "EHLO
-	mail-lb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754378AbaDKMeM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 11 Apr 2014 08:34:12 -0400
-Received: by mail-lb0-f180.google.com with SMTP id 10so3465060lbg.11
-        for <git@vger.kernel.org>; Fri, 11 Apr 2014 05:34:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=BSM5mwNjqNDkW93WRFnCK3SVOcbli06hdFjw2fhuojM=;
-        b=S1pWe91fJqH+wQ4mXtUoRfV/A24O4xpO95i9BUnBYOivcDcdz3l4lDY5tikPvonq5+
-         w8pzIY42bkIfoYxPwNGoqGVgjTkjN/pS7B/FjrFU7s0nOzfKyaErhcTeOTg4CfnDW24x
-         fHZHvMZLrzH8VXERi2C0ZdpI2Q5PROG7BJSrRcJmUBoJ7azGbxrr6cCMoSZlTHY44bWE
-         8k/xCmMdsM+0rostq30gQhlv9WlErkHmbFiLHZ85U1M71qoun1dq06whpC6fiiSmOXkB
-         yDnBbTyk9FY83bCmAuM2uTQ1ERiHXfN7n2G1hS0YvvpsQFjlDwhev+zL78RnmX5XcpJA
-         IMCA==
-X-Received: by 10.152.42.164 with SMTP id p4mr16535171lal.5.1397219650436;
- Fri, 11 Apr 2014 05:34:10 -0700 (PDT)
-Received: by 10.112.13.102 with HTTP; Fri, 11 Apr 2014 05:34:10 -0700 (PDT)
-In-Reply-To: <1396968442.95061.YahooMailNeo@web120806.mail.ne1.yahoo.com>
-X-Google-Sender-Auth: vM6QBD3dlxmLl49V0vggv9rV3Dw
+	id S1756438AbaDKMjs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Apr 2014 08:39:48 -0400
+Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:54038 "EHLO
+	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756256AbaDKMjr (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 11 Apr 2014 08:39:47 -0400
+Received: from fb07-alg-gast1.math.uni-giessen.de ([134.176.24.161]); authenticated
+	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
+	id 1WYakC-0001ap-LS; Fri, 11 Apr 2014 14:39:44 +0200
+In-Reply-To: <20140411114017.GC28858@sigill.intra.peff.net>
+X-Mailer: Apple Mail (2.1510)
+X-bounce-key: webpack.hosteurope.de;max@quendi.de;1397219987;6e3c1ff7;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246083>
 
-On 8 April 2014 16:47, Olivier LE ROY <olivier_le_roy@yahoo.com> wrote:
-> Hello,
->
-> I have a project under SVN with contains empty directories.
->
-> I would like to move this project on a Git server, still handling emp=
-ty directories.
->
-> The solution: put a .gitignore file in each empty directory to have t=
-hem recognized by the Git database cannot work, because some scripts in=
- my projects test the actual emptiness of the directories.
->
-> Is there any expert able to tell me: this cannot be done in Git, or t=
-his can be done by the following trick, or why there is no valuable rea=
-son to maintain empty directories under version control?
 
-Git doesn't support storage of empty directories, but there are ways
-around it. As you say, you could place empty files in every directory,
-but I've never liked this concept. Instead, I use a couple of scripts
-to store/restore empty directories:
+--Apple-Mail=_72555FB7-6F9A-47C7-A6F1-F0D59EEC9077
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=us-ascii
 
-https://gist.github.com/sunny256/419015
+My two cents: I like git-scm.com quite a bit. As for the logo, I think =
+it's nice and simple, and based on experience I think that for every =
+logo you'll find people who object to it. E.g. the red color of the log =
+on git-scm.com looks great to me, while I dislike e.g. the color =
+variation Felipe is using.
 
-This creates a file called ".emptydirs" at the top of the repo, and it
-can easily be implemented into scripts and build processes.
+While we are at it, can I please get that bike-shed in turquoise with a =
+hint of ocean blue mixed in?
 
-Greetings,
-=C3=98yvind
+Max
+
+--Apple-Mail=_72555FB7-6F9A-47C7-A6F1-F0D59EEC9077
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP using GPGMail
+
+-----BEGIN PGP SIGNATURE-----
+Comment: GPGTools - http://gpgtools.org
+
+iF4EAREIAAYFAlNH4psACgkQIpJVslrhe1l0KwEAgpae0PVDuP+dAcbppRIKI+Fj
+n4lt77No1ayVsMIVXTcA/RXjUf7SH12mCbG80PyH220HbQMR2xKZfPk5as9cDIt2
+=l3lz
+-----END PGP SIGNATURE-----
+
+--Apple-Mail=_72555FB7-6F9A-47C7-A6F1-F0D59EEC9077--
