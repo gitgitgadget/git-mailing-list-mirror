@@ -1,7 +1,7 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v3 4/8] push: add --set-publish option
-Date: Fri, 11 Apr 2014 12:59:07 -0500
-Message-ID: <1397239151-2391-5-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v3 5/8] branch: display publish branch
+Date: Fri, 11 Apr 2014 12:59:08 -0500
+Message-ID: <1397239151-2391-6-git-send-email-felipe.contreras@gmail.com>
 References: <1397239151-2391-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Matthieu Moy <matthieu.moy@imag.fr>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
@@ -9,247 +9,130 @@ Cc: Matthieu Moy <matthieu.moy@imag.fr>,
 	John Szakmeister <john@szakmeister.net>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 11 20:09:41 2014
+X-From: git-owner@vger.kernel.org Fri Apr 11 20:09:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WYftR-00071z-VY
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Apr 2014 20:09:38 +0200
+	id 1WYfta-0007BA-Pn
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Apr 2014 20:09:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754814AbaDKSJ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1754825AbaDKSJc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Apr 2014 14:09:32 -0400
+Received: from mail-ob0-f178.google.com ([209.85.214.178]:43712 "EHLO
+	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754810AbaDKSJ0 (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 11 Apr 2014 14:09:26 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:44585 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754795AbaDKSJX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Apr 2014 14:09:23 -0400
-Received: by mail-ob0-f174.google.com with SMTP id wo20so6419702obc.19
-        for <git@vger.kernel.org>; Fri, 11 Apr 2014 11:09:23 -0700 (PDT)
+Received: by mail-ob0-f178.google.com with SMTP id wp18so6414063obc.37
+        for <git@vger.kernel.org>; Fri, 11 Apr 2014 11:09:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=hk8AUbYK0OulmpPnptxCvZGYC8UK+y9S0JDONIin/P8=;
-        b=XqjDAJlBC2nK1WUbbneP1GgJEqwWpF+B2njICsnG+OpxRvjIUbxmr4d/aM83kX3OA7
-         TvAIsbRrMnNth9FHt5AMejtAVdxT70pNU3L2VpjhkGWOxMX5HUeqsVGCC5RvQPziIkm+
-         dR4L4nTq9Jh0sXDvxGiutQX71n7wq9Km5yCDVYAs6v138QYkV3Zq8kJGfo8OHqtP0KKZ
-         AVcnt2YMTWJgk0aU8yVfDd0njTHNgDZvJdakUk7mC08hLOe3BOk0EvuHs6ooA74uE77B
-         JmsgkH+zcFgPIMWQ+0O0RjWSra4N3hUNCaiPgAl0RJGz2QQqaLebcMiXe5qTxPQAi+Jh
-         pQPA==
-X-Received: by 10.182.28.134 with SMTP id b6mr20768124obh.27.1397239763026;
-        Fri, 11 Apr 2014 11:09:23 -0700 (PDT)
+        bh=csD/nWUFH44Lt2sm86WT2IC+VUTNUuP49iZ07bMkJVA=;
+        b=EX1gAojmwSPc4kiFEjYR1Ft/uDvQIZan6Dl1nVXo87hSgnDWFgg6sUtrWP6//dRQ2M
+         IkC+i7Z6GAVtE4wiKZkT1G2A2Q9aEBRc69XefGUdZlwGH/LJsALrvfHYKvsxVno4ATui
+         NJCRD93ehiacw4J23wP5ZYML8yA8FiA4TxdIlyne1Wp1lkJntj7IFWesdmlsDjgB86GY
+         exjPCis4m7ZsSP0MaBxJzZLG8lR5kJBHQ/Ulk0LA6Qqh/MbpCxU6xZ5M63G9ezhyRgMj
+         Eyv0HUiZCcziQXigex7gh29g6NmSCuNygmDUvjPntKddUa8zRnqDEHnhg8X4G74z/464
+         0Mgw==
+X-Received: by 10.182.85.193 with SMTP id j1mr8752204obz.52.1397239765867;
+        Fri, 11 Apr 2014 11:09:25 -0700 (PDT)
 Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id l5sm13450481obh.15.2014.04.11.11.09.21
+        by mx.google.com with ESMTPSA id d9sm34242361oen.3.2014.04.11.11.09.23
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 11 Apr 2014 11:09:22 -0700 (PDT)
+        Fri, 11 Apr 2014 11:09:24 -0700 (PDT)
 X-Mailer: git-send-email 1.9.1+fc1
 In-Reply-To: <1397239151-2391-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246119>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246120>
 
-To setup publish tracking branch, like 'git branch --set-publish'.
+It does it along the upstream branch, if any.
+
+* publish ... [master, gh/publish: ahead 1] ...
+  master  ... [master, gh/master] ...
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- Documentation/git-push.txt |  9 +++++-
- builtin/push.c             |  2 ++
- t/t5534-push-publish.sh    | 70 ++++++++++++++++++++++++++++++++++++++++++++++
- transport.c                | 28 +++++++++++++------
- transport.h                |  1 +
- 5 files changed, 100 insertions(+), 10 deletions(-)
- create mode 100755 t/t5534-push-publish.sh
+ builtin/branch.c         | 17 ++++++++++++++++-
+ t/t6040-tracking-info.sh |  5 +++--
+ 2 files changed, 19 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index 2b7f4f9..bf6ff9c 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -10,7 +10,8 @@ SYNOPSIS
- --------
- [verse]
- 'git push' [--all | --mirror | --tags] [--follow-tags] [-n | --dry-run] [--receive-pack=<git-receive-pack>]
--	   [--repo=<repository>] [-f | --force] [--prune] [-v | --verbose] [-u | --set-upstream]
-+	   [--repo=<repository>] [-f | --force] [--prune] [-v | --verbose]
-+	   [-u | --set-upstream] [-p | --set-publish]
- 	   [--force-with-lease[=<refname>[:<expect>]]]
- 	   [--no-verify] [<repository> [<refspec>...]]
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 17773d7..e0a8d0a 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -42,6 +42,7 @@ static char branch_colors[][COLOR_MAXLEN] = {
+ 	GIT_COLOR_NORMAL,	/* LOCAL */
+ 	GIT_COLOR_GREEN,	/* CURRENT */
+ 	GIT_COLOR_BLUE,		/* UPSTREAM */
++	GIT_COLOR_YELLOW,	/* PUBLISH */
+ };
+ enum color_branch {
+ 	BRANCH_COLOR_RESET = 0,
+@@ -49,7 +50,8 @@ enum color_branch {
+ 	BRANCH_COLOR_REMOTE = 2,
+ 	BRANCH_COLOR_LOCAL = 3,
+ 	BRANCH_COLOR_CURRENT = 4,
+-	BRANCH_COLOR_UPSTREAM = 5
++	BRANCH_COLOR_UPSTREAM = 5,
++	BRANCH_COLOR_PUBLISH = 6
+ };
  
-@@ -231,6 +232,12 @@ useful if you write an alias or script around 'git push'.
- 	linkgit:git-pull[1] and other commands. For more information,
- 	see 'branch.<name>.merge' in linkgit:git-config[1].
- 
-+-p::
-+--set-publish::
-+	For every branch that is up to date or successfully pushed, add
-+	publish branch tracking reference, used by argument-less
-+	linkgit:git-pull[1] and other commands.
-+
- --[no-]thin::
- 	These options are passed to linkgit:git-send-pack[1]. A thin transfer
- 	significantly reduces the amount of sent data when the sender and
-diff --git a/builtin/push.c b/builtin/push.c
-index 2a78c2b..172e843 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -525,6 +525,8 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 		OPT_STRING( 0 , "exec", &receivepack, "receive-pack", N_("receive pack program")),
- 		OPT_BIT('u', "set-upstream", &flags, N_("set upstream for git pull/status"),
- 			TRANSPORT_PUSH_SET_UPSTREAM),
-+		OPT_BIT('p', "set-publish", &flags, N_("set publish for git pull/status"),
-+			TRANSPORT_PUSH_SET_PUBLISH),
- 		OPT_BOOL(0, "progress", &progress, N_("force progress reporting")),
- 		OPT_BIT(0, "prune", &flags, N_("prune locally removed refs"),
- 			TRANSPORT_PUSH_PRUNE),
-diff --git a/t/t5534-push-publish.sh b/t/t5534-push-publish.sh
-new file mode 100755
-index 0000000..2037026
---- /dev/null
-+++ b/t/t5534-push-publish.sh
-@@ -0,0 +1,70 @@
-+#!/bin/sh
-+
-+test_description='push with --set-publish'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup bare parent' '
-+	git init --bare parent &&
-+	git remote add publish parent
-+'
-+
-+test_expect_success 'setup local commit' '
-+	echo content >file &&
-+	git add file &&
-+	git commit -m one
-+'
-+
-+check_config() {
-+	(echo $2; echo $3) >expect.$1
-+	(git config branch.$1.pushremote
-+	 git config branch.$1.push) >actual.$1
-+	test_cmp expect.$1 actual.$1
-+}
-+
-+test_expect_success 'push -p master:master' '
-+	git push -p publish master:master &&
-+	check_config master publish refs/heads/master
-+'
-+
-+test_expect_success 'push -u master:other' '
-+	git push -p publish master:other &&
-+	check_config master publish refs/heads/other
-+'
-+
-+test_expect_success 'push -p --dry-run master:otherX' '
-+	git push -p --dry-run publish master:otherX &&
-+	check_config master publish refs/heads/other
-+'
-+
-+test_expect_success 'push -p master2:master2' '
-+	git branch master2 &&
-+	git push -p publish master2:master2 &&
-+	check_config master2 publish refs/heads/master2
-+'
-+
-+test_expect_success 'push -p master2:other2' '
-+	git push -p publish master2:other2 &&
-+	check_config master2 publish refs/heads/other2
-+'
-+
-+test_expect_success 'push -p :master2' '
-+	git push -p publish :master2 &&
-+	check_config master2 publish refs/heads/other2
-+'
-+
-+test_expect_success 'push -u --all' '
-+	git branch all1 &&
-+	git branch all2 &&
-+	git push -p --all &&
-+	check_config all1 publish refs/heads/all1 &&
-+	check_config all2 publish refs/heads/all2
-+'
-+
-+test_expect_success 'push -p HEAD' '
-+	git checkout -b headbranch &&
-+	git push -p publish HEAD &&
-+	check_config headbranch publish refs/heads/headbranch
-+'
-+
-+test_done
-diff --git a/transport.c b/transport.c
-index ca7bb44..dfcddfe 100644
---- a/transport.c
-+++ b/transport.c
-@@ -143,8 +143,8 @@ static void insert_packed_refs(const char *packed_refs, struct ref **list)
- 	}
+ static enum merge_filter {
+@@ -76,6 +78,8 @@ static int parse_branch_color_slot(const char *var, int ofs)
+ 		return BRANCH_COLOR_CURRENT;
+ 	if (!strcasecmp(var+ofs, "upstream"))
+ 		return BRANCH_COLOR_UPSTREAM;
++	if (!strcasecmp(var+ofs, "publish"))
++		return BRANCH_COLOR_PUBLISH;
+ 	return -1;
  }
  
--static void set_upstreams(struct transport *transport, struct ref *refs,
--	int pretend)
-+static void set_tracking(struct transport *transport, struct ref *refs,
-+	int pretend, int publish)
- {
- 	struct ref *ref;
- 	for (ref = refs; ref; ref = ref->next) {
-@@ -179,12 +179,18 @@ static void set_upstreams(struct transport *transport, struct ref *refs,
- 		if (!remotename || !starts_with(remotename, "refs/heads/"))
- 			continue;
- 
--		if (!pretend)
--			install_branch_config(BRANCH_CONFIG_VERBOSE,
--				localname + 11, transport->remote->name,
--				remotename);
--		else
--			printf("Would set upstream of '%s' to '%s' of '%s'\n",
-+		if (!pretend) {
-+			if (publish)
-+				install_branch_publish(localname + 11,
-+						transport->remote->name,
-+						remotename);
-+			else
-+				install_branch_config(BRANCH_CONFIG_VERBOSE,
-+						localname + 11, transport->remote->name,
-+						remotename);
-+		} else
-+			printf("Would set %s of '%s' to '%s' of '%s'\n",
-+				publish ? "publish" : "upstream",
- 				localname + 11, remotename + 11,
- 				transport->remote->name);
+@@ -448,6 +452,17 @@ static void fill_tracking_info(struct strbuf *stat, const char *branch_name,
+ 		else
+ 			strbuf_addstr(&fancy, ref);
  	}
-@@ -1129,6 +1135,8 @@ int transport_push(struct transport *transport,
- 		/* Maybe FIXME. But no important transport uses this case. */
- 		if (flags & TRANSPORT_PUSH_SET_UPSTREAM)
- 			die("This transport does not support using --set-upstream");
-+		if (flags & TRANSPORT_PUSH_SET_PUBLISH)
-+			die("This transport does not support using --set-publish");
++	if (branch->push.dst) {
++		ref = shorten_unambiguous_ref(branch->push.dst, 0);
++		if (fancy.len)
++			strbuf_addstr(&fancy, ", ");
++		if (want_color(branch_use_color))
++			strbuf_addf(&fancy, "%s%s%s",
++					branch_get_color(BRANCH_COLOR_PUBLISH),
++					ref, branch_get_color(BRANCH_COLOR_RESET));
++		else
++			strbuf_addstr(&fancy, ref);
++	}
  
- 		return transport->push(transport, refspec_nr, refspec, flags);
- 	} else if (transport->push_refs) {
-@@ -1203,7 +1211,9 @@ int transport_push(struct transport *transport,
- 					reject_reasons);
+ 	if (upstream_is_gone) {
+ 		if (show_upstream_ref)
+diff --git a/t/t6040-tracking-info.sh b/t/t6040-tracking-info.sh
+index 7ac8fd0..8b9ef63 100755
+--- a/t/t6040-tracking-info.sh
++++ b/t/t6040-tracking-info.sh
+@@ -33,7 +33,8 @@ test_expect_success setup '
+ 		git checkout -b b5 --track brokenbase &&
+ 		advance g &&
+ 		git branch -d brokenbase &&
+-		git checkout -b b6 origin
++		git checkout -b b6 origin &&
++		git branch --set-publish origin/master b6
+ 	) &&
+ 	git checkout -b follower --track master &&
+ 	advance h
+@@ -64,7 +65,7 @@ b2 [origin/master: ahead 1, behind 1] d
+ b3 [origin/master: behind 1] b
+ b4 [origin/master: ahead 2] f
+ b5 [brokenbase: gone] g
+-b6 [origin/master] c
++b6 [origin/master, origin/master] c
+ EOF
  
- 		if (flags & TRANSPORT_PUSH_SET_UPSTREAM)
--			set_upstreams(transport, remote_refs, pretend);
-+			set_tracking(transport, remote_refs, pretend, 0);
-+		if (flags & TRANSPORT_PUSH_SET_PUBLISH)
-+			set_tracking(transport, remote_refs, pretend, 1);
- 
- 		if (!(flags & TRANSPORT_PUSH_DRY_RUN)) {
- 			struct ref *ref;
-diff --git a/transport.h b/transport.h
-index 02ea248..324997c 100644
---- a/transport.h
-+++ b/transport.h
-@@ -123,6 +123,7 @@ struct transport {
- #define TRANSPORT_RECURSE_SUBMODULES_ON_DEMAND 256
- #define TRANSPORT_PUSH_NO_HOOK 512
- #define TRANSPORT_PUSH_FOLLOW_TAGS 1024
-+#define TRANSPORT_PUSH_SET_PUBLISH 2048
- 
- #define TRANSPORT_SUMMARY_WIDTH (2 * DEFAULT_ABBREV + 3)
- #define TRANSPORT_SUMMARY(x) (int)(TRANSPORT_SUMMARY_WIDTH + strlen(x) - gettext_width(x)), (x)
+ test_expect_success 'branch -vv' '
 -- 
 1.9.1+fc1
