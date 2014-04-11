@@ -1,98 +1,64 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 6/9] branch: display publish branch
-Date: Fri, 11 Apr 2014 07:17:51 -0400
-Message-ID: <20140411111750.GA28858@sigill.intra.peff.net>
-References: <1397156686-31349-1-git-send-email-felipe.contreras@gmail.com>
- <1397156686-31349-7-git-send-email-felipe.contreras@gmail.com>
- <CALkWK0mSfsUrSMPMmZ+PNtZ2WBUqN4Swk_e6S1fMGuUoocJSEg@mail.gmail.com>
- <53471d0b4c8dc_d696b12f08c@nysa.notmuch>
+From: Javier Domingo Cansino <javierdo1@gmail.com>
+Subject: Re: Our official home page and logo for the Git project
+Date: Fri, 11 Apr 2014 13:32:57 +0200
+Message-ID: <CALZVapkWzkvmKE8HRGGiXE+kSxkspn=JvcVieYS0sUjxeMgZVQ@mail.gmail.com>
+References: <xmqq7g6z4q6b.fsf@gitster.dls.corp.google.com> <534578b2e22e2_af197d3081@nysa.notmuch>
+ <CAH5451kNoXobbh3-WBkewvKvNeFkV0P14Z55=qDN+Ak2WGkHSA@mail.gmail.com> <878urdej2n.fsf@fencepost.gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Matthieu Moy <matthieu.moy@imag.fr>,
-	John Szakmeister <john@szakmeister.net>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 11 13:18:36 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Andrew Ardill <andrew.ardill@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Fri Apr 11 13:33:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WYZTd-000541-M9
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Apr 2014 13:18:34 +0200
+	id 1WYZiB-0002Ku-1M
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Apr 2014 13:33:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754290AbaDKLRy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Apr 2014 07:17:54 -0400
-Received: from cloud.peff.net ([50.56.180.127]:57850 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754076AbaDKLRx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Apr 2014 07:17:53 -0400
-Received: (qmail 20628 invoked by uid 102); 11 Apr 2014 11:17:53 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 11 Apr 2014 06:17:53 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 11 Apr 2014 07:17:51 -0400
-Content-Disposition: inline
-In-Reply-To: <53471d0b4c8dc_d696b12f08c@nysa.notmuch>
+	id S1755329AbaDKLd2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Apr 2014 07:33:28 -0400
+Received: from mail-vc0-f181.google.com ([209.85.220.181]:64956 "EHLO
+	mail-vc0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754485AbaDKLdS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Apr 2014 07:33:18 -0400
+Received: by mail-vc0-f181.google.com with SMTP id id10so4539513vcb.26
+        for <git@vger.kernel.org>; Fri, 11 Apr 2014 04:33:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=5S9wf9zHObAQl72gPw1RPaORSOjaHQ0K/N1NCI8p5vc=;
+        b=yW+FzBSgCI46WdUJ2rgVlrCxV5FxYT4gTYBCaGUvghRtGnI4VZNHbPWU7B6/06+jnv
+         db0ZIc9Eyl3ExnJ/8cx3VBw/N11TFdG87rCGIOMC+y0dMjNgSdg9a+aSDlYkc9SutUMU
+         eJhS+S2/YqZnUCHHvFzdUPU9N0eBZJJ4Tmef2gPUe/bulLEZKhkQFWVbzhyJ8ZDuZHhv
+         s0oo9fiLfL/VCULV62KERtgHW3JmyVVLOYY4iDyCNKYPSW1v4q4WZQizuZV+gPj4j7MF
+         29V5fjxV9Soqnr0o7aPVn+6WBFPYjuw7jwQjPbJG0ooiD/L9MF4Pv2I7mthNRMsLZSHt
+         HchA==
+X-Received: by 10.52.253.75 with SMTP id zy11mr4708310vdc.10.1397215997103;
+ Fri, 11 Apr 2014 04:33:17 -0700 (PDT)
+Received: by 10.220.251.199 with HTTP; Fri, 11 Apr 2014 04:32:57 -0700 (PDT)
+In-Reply-To: <878urdej2n.fsf@fencepost.gnu.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246078>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246079>
 
-On Thu, Apr 10, 2014 at 05:36:59PM -0500, Felipe Contreras wrote:
+I have never thought on that logo as the Git logo (the red one), and
+thought it was [1]. Mainly because the logo itself has git inside.
 
-> > I noticed that this only picks up a publish-branch if
-> > branch.*.pushremote is configured. What happened to the case when
-> > remote.pushdefault is configured?
-> 
-> What happens when branch.*.remote is not configured for @{upstream}? The same
-> thing.
+I have to agree with David Kastrup on that I see no connection to git
+only by the image (red one). Maybe is because I am accustomed to the
+older one[1] I started with.
 
-I don't know if that is a good comparison.
+BTW, I don't know if the old logo I am accustomed to has ever been
+used by the project officially, but I always thought it was that one.
 
-In other threads, the discussed meaning of @{publish} was something like
-"the tracking branch of the ref you would push to if you ran 'git push'
-without arguments".
+Javier Domingo Cansino
 
-That is consistent with @{upstream} being "the tracking branch of the
-ref you would pull from with 'git pull'". But "git pull" without a
-branch.*.remote will do nothing, so "what pull would do" is the same as
-"what you have configured in your branch.*.remote".
-
-Whereas "git push" does not depend on having branch.*.pushremote
-configured. Its behavior is based on push.default and push refspecs, so
-"what push would do" must take that into account.
-
-> It might be useful to visualize what would be the name of the branch when
-> pushing it (without a refspec) even if the publish branch hasn't been
-> configured, but I think the code would be much more coplicated, and it would
-> break symetry with @{upstream}, besides, the user can just do 'git push -p
-> branch', and from that moment on it will be visible.
-
-It is more complicated (see the patches that Junio had at
-jk/branch-at-publish), but I think it is more likely to do what the user
-expects.
-
-For instance, it looks like your @{publish} requires config like:
-
-  [branch "master"]
-  pushremote = foo
-  push = refs/heads/bar
-
-to operate. Setting "pushremote" affects what "git push" does; it will
-go to the "foo" remote. But the branch.master.push setting does not do
-anything to "git push". Only a push refspec (or push.default setting)
-will change that. So the "branch.*.push" must be kept in sync manually
-(perhaps by running "git push -p").
-
-Whereas if @{publish} means "where you would push to", then
-"branch.*.push" does not need to exist at all. The values can be taken
-automatically from the other push settings.
-
--Peff
-
-PS I first tried just setting "branch.master.pushremote" without setting
-   "branch.master.push". This results in a segfault, as branch_get()
-   assumes that push_name is always set and tries to xstrdup() it.
+[1] Git logo: http://git-osx-installer.googlecode.com/files/GitLogo.jpg
