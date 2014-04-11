@@ -1,76 +1,109 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: Our official home page and logo for the Git project
-Date: Fri, 11 Apr 2014 12:45:15 -0700
-Message-ID: <CAL=YDW=LkvPq8-9Jv76MkN=7CzTmdXRF2-W66w+y-gprD7rpXQ@mail.gmail.com>
-References: <xmqq7g6z4q6b.fsf@gitster.dls.corp.google.com>
-	<534578b2e22e2_af197d3081@nysa.notmuch>
-	<CAH5451kNoXobbh3-WBkewvKvNeFkV0P14Z55=qDN+Ak2WGkHSA@mail.gmail.com>
-	<20140411114017.GC28858@sigill.intra.peff.net>
-	<xmqqr453sm76.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 2/8] Add concept of 'publish' branch
+Date: Fri, 11 Apr 2014 12:48:39 -0700
+Message-ID: <xmqqr453r6js.fsf@gitster.dls.corp.google.com>
+References: <1397239151-2391-1-git-send-email-felipe.contreras@gmail.com>
+	<1397239151-2391-3-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Andrew Ardill <andrew.ardill@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 11 21:45:26 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Matthieu Moy <matthieu.moy@imag.fr>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Jeff King <peff@peff.net>,
+	John Szakmeister <john@szakmeister.net>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 11 21:48:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WYhO9-0007PF-Jx
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Apr 2014 21:45:25 +0200
+	id 1WYhRS-0001yw-PO
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Apr 2014 21:48:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754382AbaDKTpS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Apr 2014 15:45:18 -0400
-Received: from mail-vc0-f178.google.com ([209.85.220.178]:43146 "EHLO
-	mail-vc0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751020AbaDKTpR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Apr 2014 15:45:17 -0400
-Received: by mail-vc0-f178.google.com with SMTP id im17so5123498vcb.23
-        for <git@vger.kernel.org>; Fri, 11 Apr 2014 12:45:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=JIT7822b6ZinEAv/9CkTAWgVypLoXJMrftH2aaVyU3Y=;
-        b=JkGYJ7FgwVGV9ZPd8O7yMYrZhD6ts28O0aqDGPP4QntuinBhCo8kP20Fev3sJkvEO0
-         BMQwXhENVVWu54BI4kJSwUUjGKykhP0WJu/+3rGqskuuLKQHBPacjt4ASnbzIbA5Qq2s
-         39cKjnjJHGhT6PEqYo9FH2GpgGtZzJS/zPsERSZd7vq+jfDw/J39kK+tbXJ/xWVUq/fw
-         6cl0uXWSvRMVb2DLMLH6Qs83OJGhwelu0HBR6icKQc1/COhRGk5r+ZVDFHO3Y+A0z6QK
-         dKRAhXO6F0+9Y45ZgTRKgAIWRmJleyhW1e9+pvsCPQgwHPsYeo2mN3pyvfwt7mWqXDEQ
-         rc+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=JIT7822b6ZinEAv/9CkTAWgVypLoXJMrftH2aaVyU3Y=;
-        b=FlGDd2hp9FVIj7rge49MscrPTMGwH1Mkat3z/33HuCxpdog+UhLqHx+t32f4egkqx+
-         RFfNA5r6BWWcmW+IfkStIL/EBKShnif/imeWn5XkcU89J4KPseXC5BCup9eygiGYwyA4
-         rasEuNlytw0URPPuwKmDz7tuWQdWXx29obn2o3IL//t8EtrWrQxuKb20oGH/etxJ9zfR
-         bqDZBtgty7wy50u8ie0bUIJ4mMBXxZUUFllq5B53k61MAAztPghLOYtJLJdvrs1HTJy4
-         IL6xpghz9q1kb+DSdFh8TwjITkdhcWuNxr1L7goMXMm701itIGO+9TPl9ETlYC0ryO7c
-         Ns+g==
-X-Gm-Message-State: ALoCoQmklim1MMSUp80ZmA9Iy2q/WBl43DWGaiV2/0a+2hunG7et7wftJqQbg7Uglb59AWmzwtmNcBpq4ASHOKIm760v+Cen/wYvU/uhlgQmdabRkIQQGfLr1z9FUisHjJ8547SmQeD1jUzqAjjxXcpqvyOlmTjayCUqQ5eW8rVmZEIk6Gh0I6ir/uW/u4aI1ySTj4Ff7c29
-X-Received: by 10.58.107.65 with SMTP id ha1mr21583581veb.1.1397245516091;
- Fri, 11 Apr 2014 12:45:16 -0700 (PDT)
-Received: by 10.52.141.13 with HTTP; Fri, 11 Apr 2014 12:45:15 -0700 (PDT)
-In-Reply-To: <xmqqr453sm76.fsf@gitster.dls.corp.google.com>
+	id S1754527AbaDKTso (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Apr 2014 15:48:44 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47055 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754239AbaDKTsn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Apr 2014 15:48:43 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 729DD7AAEA;
+	Fri, 11 Apr 2014 15:48:42 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=FFwXtviXRvViFiWWkcrc1QXT5Oc=; b=wRM1Q/
+	QatOaohiuD3t9l2lBJkck7YTUKWIQF06FCg/TJYWMaLKGZG1fVYFCiTWoWl7chGY
+	gF0X2G2oTwMy8/GJme1xxLeBtPoCG/lkWkUkatw5kUPI8R6pGs0PzZTrJSiG5Mia
+	ANR9rxisIWmKJE7ycCAIBjkuMNoofmDYymxAk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CMOUbb4tvEIifBEsREDjdnBjxW1n4Yyf
+	bS3JgBIac+xM9Q2eS84nrAZ0X0Ji0i2e6M75RKIV1szvjG+jB/UFDkCwEO6pMUM7
+	cbOEyh6nMJZrTIKgyGAhDlcvXj2ha1htYbIXV0bo8QNbxtIKDcAi2mLaiLtngKTd
+	f5anP2p6kKU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4F44F7AAE9;
+	Fri, 11 Apr 2014 15:48:42 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DA73A7AAE8;
+	Fri, 11 Apr 2014 15:48:40 -0400 (EDT)
+In-Reply-To: <1397239151-2391-3-git-send-email-felipe.contreras@gmail.com>
+	(Felipe Contreras's message of "Fri, 11 Apr 2014 12:59:05 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 481F2C54-C1B2-11E3-BFC6-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246137>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246138>
 
-On Fri, Apr 11, 2014 at 12:25 PM, Junio C Hamano <gitster@pobox.com> wrote:
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
->     Please help us by letting us answer "Yup, that is a logo (among
->     others) that represents our project, and we are OK with you
->     using it to help promote our project" instead.
+> The publish branch is the branch the user wants to push to, akin to the
+> upstream branch, which is the branch the user wants to use as a
+> baseline. It overrides other configurations, such as push.default, and
+> remote.<name>.push.
 >
-> That is what I meant by "our official logo" in the first message.
+> The upstream branch is:
 >
-> So,... seconds?
+>   branch.$name.remote
+>   branch.$name.merge
 
-+1
+These two configuration variables are *NOT* the "upstream branch";
+it is more like "the upstream branch of $name is _defined_ with
+these two variables".
+
+For example, with:
+
+	[remote "foo"]
+        	fetch = refs/heads/*:refs/remotes/foo/*
+	[branch "bar"]
+        	remote = foo
+                merge = baz
+
+The upstream branch of 'bar' is refs/remotes/foo/baz, and that is
+determined by consulting these two variables, branch.bar.remote and
+branch.bar.merge to learn that we look at refs/heads/baz from foo
+and also refs/remotes/foo/baz is where we keep a copy of that.
+
+> The publish branch is:
+>
+>   branch.$name.pushremote
+>   branch.$name.push
+
+Can you give a description for "the publish branch for $name" here
+in a way similar to "the upstream" I gave an example above, so that
+anybody reading this log message can answer questions like...
+
+When the end users say master@{publish}, what conceptually are they
+naming?  Can they use master@{publish} in a way similar to:
+
+ $ git log master@{upstream}..master
+
+that gives us what we did since we forked, because master@{upstream}
+names the remote-tracking branch we locally have for the branch our
+'master' integrates with?
+
+Thanks.
