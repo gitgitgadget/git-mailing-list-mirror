@@ -1,151 +1,128 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH v3 00/27] Clean up update-refs --stdin and implement ref_transaction
-Date: Fri, 11 Apr 2014 12:57:42 -0700
-Message-ID: <CAL=YDWkjNm-pt2dUsg3Dbtbb1Xi2v3XAP8231g1bxsWF6LHRhQ@mail.gmail.com>
-References: <1396878498-19887-1-git-send-email-mhagger@alum.mit.edu>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v2 6/9] branch: display publish branch
+Date: Fri, 11 Apr 2014 14:50:38 -0500
+Message-ID: <5348478e1bc46_2c1f6e72ecbb@nysa.notmuch>
+References: <1397156686-31349-1-git-send-email-felipe.contreras@gmail.com>
+ <1397156686-31349-7-git-send-email-felipe.contreras@gmail.com>
+ <CALkWK0mSfsUrSMPMmZ+PNtZ2WBUqN4Swk_e6S1fMGuUoocJSEg@mail.gmail.com>
+ <53471d0b4c8dc_d696b12f08c@nysa.notmuch>
+ <20140411111750.GA28858@sigill.intra.peff.net>
+ <xmqqsipjsm8c.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Brad King <brad.king@kitware.com>,
-	Johan Herland <johan@herland.net>, Jeff King <peff@peff.net>,
-	Vicent Marti <tanoku@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Apr 11 21:57:53 2014
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Matthieu Moy <matthieu.moy@imag.fr>,
+	John Szakmeister <john@szakmeister.net>
+To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Apr 11 22:00:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WYhaC-0001Oc-8j
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Apr 2014 21:57:52 +0200
+	id 1WYhcy-0003vQ-QC
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Apr 2014 22:00:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754391AbaDKT5o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Apr 2014 15:57:44 -0400
-Received: from mail-vc0-f174.google.com ([209.85.220.174]:43956 "EHLO
-	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750881AbaDKT5n (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Apr 2014 15:57:43 -0400
-Received: by mail-vc0-f174.google.com with SMTP id ld13so5130593vcb.5
-        for <git@vger.kernel.org>; Fri, 11 Apr 2014 12:57:43 -0700 (PDT)
+	id S1754583AbaDKUAj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Apr 2014 16:00:39 -0400
+Received: from mail-ob0-f182.google.com ([209.85.214.182]:46558 "EHLO
+	mail-ob0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751937AbaDKUAi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Apr 2014 16:00:38 -0400
+Received: by mail-ob0-f182.google.com with SMTP id uz6so6574700obc.41
+        for <git@vger.kernel.org>; Fri, 11 Apr 2014 13:00:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=vdbvrUn/yC55t7yingrI+m+vFJuJ94YiNftjPfmYqWo=;
-        b=ejmdxS2mArlGL0Wr2Dt5EJdYhctA6d81jxHcvZrdq3QKNZfGcZ3iLE5CGRDRiCUhHT
-         IQ77SnEAngbg1Rb/GbPiRlLjJFN+MIo2szYYgoDm4t0ZAGT5+AzGnH4Z/PFvOcjrsTtO
-         zdmsmFMMsz9njOWPNRr12t9grUqjyEtCxBBnQ7mzrl/bOBWnnjf9SZt45Kpb9dqsblb5
-         nXXNMIYXb3kl2Srbgi21iYlzDQqcCvv3xx+z7gGNrVisl7tjsmx/c+5HTNCvlDhS2azF
-         0QBuSWbp0/Ch7x7zJQlbjPh2aI2NupLZ5gPJpA6+jMCY4Rd9aRBI3Oigq2lJsM/xcz5o
-         Lu4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=vdbvrUn/yC55t7yingrI+m+vFJuJ94YiNftjPfmYqWo=;
-        b=G7sNe0w/ouUWVaP2FICD4J/GHvVi3HliDDvoCjuZOB0hUHzOhoxqteko13sz8mD6u8
-         dgBTjbzoDVLySoAtfc786ZBZ5wfV8928XPlnUmd1lc0VkHYQScF9ye0W2VoBj17YV5Ts
-         eVyyVg0nF7dPjJCN3IHh9nAOn8kxjh3MzgTObZSeeoWoLMERYRg4MM0Q3rCK0I9yGfW5
-         wCnqJfpAZ393dfB2pjqfDsfBNSlqdhE1iuR7FxA5y7UqAvMe1xt6wP1Hfrt+IOV59NHE
-         6gMOFqVDTuP1iMjIOD1KER/W/XVy28BwBGhKcGZLgFYKGzOB093BOpNJ2c/bOOzZPJYM
-         gTKg==
-X-Gm-Message-State: ALoCoQnr8u2MlNh9zPF5/+eQiZs55MTl6jFEIQumfUwAHsXsP82s8IL/u733Ao/Pg5ifvBmN7MhS0kj8RP35FiUIWhG87QYkDudWnCpE9ciGHhwYiSe/XGwp6psbrvgqILoqksbVB98A+/Yf/CzZtkGn1z2oiNzPBUMM1o9dxIjsYYIyrsDviGlL+3b1CeEXmOybxt9PI0Gu
-X-Received: by 10.220.190.197 with SMTP id dj5mr10315294vcb.19.1397246263025;
- Fri, 11 Apr 2014 12:57:43 -0700 (PDT)
-Received: by 10.52.141.13 with HTTP; Fri, 11 Apr 2014 12:57:42 -0700 (PDT)
-In-Reply-To: <1396878498-19887-1-git-send-email-mhagger@alum.mit.edu>
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=5ZVhWnizxC06L4LIp2aj8KdcUplPxbEr01y8AO1Rvu4=;
+        b=chmL6QtvJf1bRX1houZjF+rtjiQfsLVPkpwLzjMzYMWWiDX24wiY/mH8oVqc48UX6g
+         mvhMalPLdY9o8EbtMQ8BMxU5sgzRt6xoy0QQw5MCWv3AnF5X2IJ6BPn978J8oJ5sLtAC
+         YLBhC4lis0h+Cf2jsl014xqb4Ohdd3AmjdUEZgmKvd8MJrazG+Pw7ciBwlETtq4+Dadh
+         +ygj50+94xNnlLKx8257QZk6ox6UpLa3dQbfOV4GtRQRP76FGMx0YpzKunTN2L2rj5AH
+         soNfuft++msruSRIH4SirfZ++AP+URDV1KOvgYG7nvXQ66meFutiWP6314/pRghRgaB8
+         Ratg==
+X-Received: by 10.60.125.195 with SMTP id ms3mr21044343oeb.3.1397246438184;
+        Fri, 11 Apr 2014 13:00:38 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id ii8sm13917819obb.11.2014.04.11.13.00.36
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 11 Apr 2014 13:00:37 -0700 (PDT)
+In-Reply-To: <xmqqsipjsm8c.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246139>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246140>
 
-Nice.
+Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+> > For instance, it looks like your @{publish} requires config like:
+> >
+> >   [branch "master"]
+> >   pushremote = foo
+> >   push = refs/heads/bar
+> >
+> > to operate. Setting "pushremote" affects what "git push" does; it will
+> > go to the "foo" remote.
+> 
+> OK, and the same thing would happen if branch.*.pushremote is not
+> set for any branch, but remote.pushdefault is set to 'foo', right?
+> 
+> > But the branch.master.push setting does not do
+> > anything to "git push".
+> 
+> I am not sure I understand this.  I thought that the desire behind
+> the branch.*.push is to allow something like:
+> 
+> 	... other things in the config ...
+> 	[remote]
+>         	pushdefault = foo
+> 	[remote "foo"]
+> 		url = ...
+>         	push = +refs/heads/*:refs/remotes/satellite/*
+>                 fetch = +refs/heads/*:refs/remotes/foo/*
+> 	[branch "master"]
+> 		; pushremote = foo
+>         	push = refs/heads/bar
+> 
+> so that "git push" on 'master' will override the more generic "all
+> local branches here will go to their remote-tracking hierarchy for
+> this satellite" refspec.  And in that sense branch.master.push would
+> do something to "git push".
 
-Once this is in I can add transactional support to receive-pack.
+In my patches the above doesn't work; branch.master.push doesn't do anything if
+.pushremote isn't there.
 
-On Mon, Apr 7, 2014 at 6:47 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> Here is v3.  It is also available on GitHub [1].
->
-> Thanks to Junio and Brad for their comments about v2.  I think I have
-> addressed all of your comments (except for Junio's regrets that the
-> series didn't include a transactional receive-pack).
->
-> See the mailing list threads about v1 [2] and v2 [3] and the
-> longer-term goals of this campaign [4].
->
-> Changes since v2:
->
-> * Rebased to current master (there were no conflicts)
->
-> * Don't allow ref_transation_create() with new_sha1 set to zeros.
->
-> * Don't allow ref_transation_delete() with old_sha1 set to zeros.
->
-> * Fixed subject lines to use lower-case after the colon.
->
-> * Expanded a few commit messages, fixed a comment, and removed some
->   "squash" detritus in a commit message.
->
-> Cheers,
-> Michael
->
-> [1] https://github.com/mhagger/git, branch ref-transactions
-> [2] http://thread.gmane.org/gmane.comp.version-control.git/243731
-> [3] http://thread.gmane.org/gmane.comp.version-control.git/244857
-> [4] http://article.gmane.org/gmane.comp.version-control.git/243726
->
-> Michael Haggerty (27):
->   t1400: fix name and expected result of one test
->   t1400: provide more usual input to the command
->   parse_arg(): really test that argument is properly terminated
->   t1400: add some more tests involving quoted arguments
->   refs.h: rename the action_on_err constants
->   update_refs(): fix constness
->   update-ref --stdin: read the whole input at once
->   parse_cmd_verify(): copy old_sha1 instead of evaluating <oldvalue>
->     twice
->   update-ref.c: extract a new function, parse_refname()
->   update-ref --stdin: improve error messages for invalid values
->   update-ref --stdin: make error messages more consistent
->   update-ref --stdin: simplify error messages for missing oldvalues
->   t1400: test that stdin -z update treats empty <newvalue> as zeros
->   update-ref.c: extract a new function, parse_next_sha1()
->   update-ref --stdin -z: deprecate interpreting the empty string as
->     zeros
->   t1400: test one mistake at a time
->   update-ref --stdin: improve the error message for unexpected EOF
->   update-ref --stdin: harmonize error messages
->   refs: add a concept of a reference transaction
->   update-ref --stdin: reimplement using reference transactions
->   refs: remove API function update_refs()
->   struct ref_update: rename field "ref_name" to "refname"
->   struct ref_update: store refname as a FLEX_ARRAY
->   ref_transaction_commit(): simplify code using temporary variables
->   struct ref_update: add a lock field
->   struct ref_update: add a type field
->   ref_transaction_commit(): work with transaction->updates in place
->
->  Documentation/git-update-ref.txt       |  18 +-
->  builtin/checkout.c                     |   2 +-
->  builtin/clone.c                        |   9 +-
->  builtin/merge.c                        |   6 +-
->  builtin/notes.c                        |   6 +-
->  builtin/reset.c                        |   6 +-
->  builtin/update-ref.c                   | 425 ++++++++++++++++++++-------------
->  contrib/examples/builtin-fetch--tool.c |   3 +-
->  notes-cache.c                          |   2 +-
->  notes-utils.c                          |   3 +-
->  refs.c                                 | 195 +++++++++++----
->  refs.h                                 |  94 ++++++--
->  t/t1400-update-ref.sh                  | 100 +++++---
->  13 files changed, 585 insertions(+), 284 deletions(-)
->
-> --
-> 1.9.1
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+I'm always thinking from the common user's point of view, and the common user
+doesn't know what branch.master.push is, but he knows he did
+`git branch -p foo/bar master` (or something like that), and
+`git branch -v` would corroborate that.
+
+So you would have something like this:
+
+	[remote "foo"]
+		url = ...
+		push = +refs/heads/*:refs/remotes/satellite/*
+		fetch = +refs/heads/*:refs/remotes/foo/*
+	[branch "master"]
+		pushremote = foo
+		push = refs/heads/bar
+
+> I personally think that kind of override adds any more values than
+> it causes confusion, so I think it is OK not to support such uses of
+> branch.*.push at all.  A configuration without branch.master.push
+> may cause "git push" on 'master' to update refs/heads/master at the
+> remote,
+
+How? If branch.master.push is not configured, then "git push" would push
+'master' to refs/remotes/satellite/master on the remote.
+
+-- 
+Felipe Contreras
