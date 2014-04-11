@@ -1,104 +1,137 @@
 From: Kumar Appaiah <a.kumar@alumni.iitm.ac.in>
-Subject: [tig] [PATCH 1/3] diff: Move diff stat addition to a common function
-Date: Fri, 11 Apr 2014 08:20:03 -0400
-Message-ID: <1397218805-2560-2-git-send-email-a.kumar@alumni.iitm.ac.in>
+Subject: [tig] [PATCH 3/3] log: Colour the diff stat
+Date: Fri, 11 Apr 2014 08:20:05 -0400
+Message-ID: <1397218805-2560-4-git-send-email-a.kumar@alumni.iitm.ac.in>
 References: <1397218805-2560-1-git-send-email-a.kumar@alumni.iitm.ac.in>
 Content-Transfer-Encoding: 7BIT
 Cc: Kumar Appaiah <a.kumar@alumni.iitm.ac.in>
 To: Jonas Fonseca <jonas.fonseca@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 11 14:50:59 2014
+X-From: git-owner@vger.kernel.org Fri Apr 11 14:51:06 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WYav3-0008BR-DJ
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Apr 2014 14:50:57 +0200
+	id 1WYavA-0008LZ-TB
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Apr 2014 14:51:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757238AbaDKMuv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Apr 2014 08:50:51 -0400
-Received: from mta4.srv.hcvlny.cv.net ([167.206.4.199]:61196 "EHLO
-	mta4.srv.hcvlny.cv.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756256AbaDKMuX (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1756073AbaDKMuu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Apr 2014 08:50:50 -0400
+Received: from mta5.srv.hcvlny.cv.net ([167.206.4.200]:60504 "EHLO
+	mta5.srv.hcvlny.cv.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756612AbaDKMuX (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 11 Apr 2014 08:50:23 -0400
 Received: from odessa (ool-44c07830.dyn.optonline.net [68.192.120.48])
- by mta4.srv.hcvlny.cv.net
+ by mta5.srv.hcvlny.cv.net
  (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
- with ESMTPA id <0N3V00KX38XU3JN0@mta4.srv.hcvlny.cv.net> for
+ with ESMTPA id <0N3V00EWH8XU9HF0@mta5.srv.hcvlny.cv.net> for
  git@vger.kernel.org; Fri, 11 Apr 2014 08:20:19 -0400 (EDT)
 Received: from kumar by odessa with local (Exim 4.82)
-	(envelope-from <kumar.a@utexas.edu>)	id 1WYaRN-0000jc-Sq; Fri,
- 11 Apr 2014 08:20:17 -0400
+	(envelope-from <kumar.a@utexas.edu>)	id 1WYaRO-0000jl-5P; Fri,
+ 11 Apr 2014 08:20:18 -0400
 In-reply-to: <1397218805-2560-1-git-send-email-a.kumar@alumni.iitm.ac.in>
 X-Mailer: git-send-email 1.9.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246086>
 
-Signed-off-by: Kumar Appaiah <a.kumar@alumni.iitm.ac.in>
+This commit adds custom log_read and log_draw functions that utilize
+the diff stat drawing functions from the diff module. The absence of
+the triple hyphen separator prevents direct usage of the diff drawing
+functions directly.
+
+Signed-Off-By: Kumar Appaiah <a.kumar@alumni.iitm.ac.in>
 ---
- include/tig/diff.h |  1 +
- src/diff.c         | 27 ++++++++++++++++++---------
- 2 files changed, 19 insertions(+), 9 deletions(-)
+ src/log.c | 62 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 60 insertions(+), 2 deletions(-)
 
-diff --git a/include/tig/diff.h b/include/tig/diff.h
-index be325c4..ba40386 100644
---- a/include/tig/diff.h
-+++ b/include/tig/diff.h
-@@ -27,6 +27,7 @@ enum request diff_common_edit(struct view *view, enum request request, struct li
- bool diff_common_read(struct view *view, const char *data, struct diff_state *state);
- bool diff_common_draw(struct view *view, struct line *line, unsigned int lineno);
- enum request diff_common_enter(struct view *view, enum request request, struct line *line);
-+bool diff_common_add_diff_stat(struct view *view, const char *data);
+diff --git a/src/log.c b/src/log.c
+index eef61dc..e6f2a82 100644
+--- a/src/log.c
++++ b/src/log.c
+@@ -23,6 +23,9 @@ struct log_state {
+ 	 * up/down in the log view. */
+ 	int last_lineno;
+ 	enum line_type last_type;
++	bool commit_title_read;
++	bool after_commit_header;
++	bool reading_diff_stat;
+ };
  
- unsigned int diff_get_lineno(struct view *view, struct line *line);
- const char *diff_get_pathname(struct view *view, struct line *line);
-diff --git a/src/diff.c b/src/diff.c
-index 4b30068..1daf8fa 100644
---- a/src/diff.c
-+++ b/src/diff.c
-@@ -38,6 +38,21 @@ diff_open(struct view *view, enum open_flags flags)
+ static void
+@@ -76,14 +79,69 @@ log_request(struct view *view, enum request request, struct line *line)
+ 	}
  }
  
- bool
-+diff_common_add_diff_stat(struct view *view, const char *data)
++static bool
++log_read(struct view *view, char *data)
 +{
-+	size_t len = strlen(data);
-+	char *pipe = strchr(data, '|');
-+	bool has_histogram = data[len - 1] == '-' || data[len - 1] == '+';
-+	bool has_bin_diff = pipe && strstr(pipe, "Bin") && strstr(pipe, "->");
-+	bool has_rename = data[len - 1] == '0' && (strstr(data, "=>") || !strncmp(data, " ...", 4));
-+	bool has_no_change = pipe && strstr(pipe, " 0");
++	enum line_type type;
++	struct log_state *state = view->private;
++	size_t len;
 +
-+	if (pipe && (has_histogram || has_bin_diff || has_rename || has_no_change))
-+		return add_line_text(view, data, LINE_DIFF_STAT) != NULL;
-+	return FALSE;
-+}
++	if (!data)
++		return TRUE;
 +
-+bool
- diff_common_read(struct view *view, const char *data, struct diff_state *state)
- {
- 	enum line_type type = get_line_type(data);
-@@ -49,15 +64,9 @@ diff_common_read(struct view *view, const char *data, struct diff_state *state)
- 		state->reading_diff_stat = TRUE;
- 
- 	if (state->reading_diff_stat) {
--		size_t len = strlen(data);
--		char *pipe = strchr(data, '|');
--		bool has_histogram = data[len - 1] == '-' || data[len - 1] == '+';
--		bool has_bin_diff = pipe && strstr(pipe, "Bin") && strstr(pipe, "->");
--		bool has_rename = data[len - 1] == '0' && (strstr(data, "=>") || !strncmp(data, " ...", 4));
--		bool has_no_change = pipe && strstr(pipe, " 0");
--
--		if (pipe && (has_histogram || has_bin_diff || has_rename || has_no_change)) {
--			return add_line_text(view, data, LINE_DIFF_STAT) != NULL;
++	type = get_line_type(data);
++
++	len = strlen(data);
++
++	if (type == LINE_COMMIT)
++		state->commit_title_read = TRUE;
++	else if (state->commit_title_read && len < 1) {
++		state->commit_title_read = FALSE;
++		state->after_commit_header = TRUE;
++	} else if (state->after_commit_header && len < 1) {
++		state->after_commit_header = FALSE;
++		state->reading_diff_stat = TRUE;
++	} else if (state->reading_diff_stat) {
 +		bool ret = diff_common_add_diff_stat(view, data);
 +		if (ret) {
 +			return TRUE;
- 		} else {
- 			state->reading_diff_stat = FALSE;
- 		}
++		} else {
++			state->reading_diff_stat = FALSE;
++		}
++	}
++
++	return pager_common_read(view, data, type);
++}
++
++static bool
++log_draw(struct view *view, struct line *line, unsigned int lineno)
++{
++	char *text = line->data;
++	enum line_type type = line->type;
++
++	if (draw_lineno(view, lineno))
++		return TRUE;
++
++	if (line->wrapped && draw_text(view, LINE_DELIMITER, "+"))
++		return TRUE;
++
++	if (type == LINE_DIFF_STAT) {
++		diff_common_draw_diff_stat(view, &type, &text);
++		draw_text(view, type, text);
++		return TRUE;
++	}
++
++	return pager_draw(view, line, lineno);
++}
++
+ static struct view_ops log_ops = {
+ 	"line",
+ 	argv_env.head,
+ 	VIEW_ADD_PAGER_REFS | VIEW_OPEN_DIFF | VIEW_SEND_CHILD_ENTER | VIEW_LOG_LIKE | VIEW_REFRESH,
+ 	sizeof(struct log_state),
+ 	log_open,
+-	pager_read,
+-	pager_draw,
++	log_read,
++	log_draw,
+ 	log_request,
+ 	pager_grep,
+ 	log_select,
 -- 
 1.9.1
