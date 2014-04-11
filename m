@@ -1,82 +1,124 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 2/3] refs.c: split delete_ref_loose() into a separate flag-for-deletion and commit phase
-Date: Fri, 11 Apr 2014 14:51:33 -0700
-Message-ID: <xmqqa9brr0uy.fsf@gitster.dls.corp.google.com>
-References: <1397248790-10403-1-git-send-email-sahlberg@google.com>
-	<1397248790-10403-3-git-send-email-sahlberg@google.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Git for Windows 1.9.2
+Date: Sat, 12 Apr 2014 00:13:09 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.1404120007020.14982@s15462909.onlinehome-server.info>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
 Cc: git@vger.kernel.org
-To: Ronnie Sahlberg <sahlberg@google.com>
-X-From: git-owner@vger.kernel.org Fri Apr 11 23:51:55 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+To: msysgit@googlegroups.com
+X-From: msysgit+bncBCZPH74Q5YNRB5WRUGNAKGQEHVAZOOQ@googlegroups.com Sat Apr 12 00:13:12 2014
+Return-path: <msysgit+bncBCZPH74Q5YNRB5WRUGNAKGQEHVAZOOQ@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-bk0-f59.google.com ([209.85.214.59])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WYjMY-0005pq-Kl
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Apr 2014 23:51:55 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755554AbaDKVvi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Apr 2014 17:51:38 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51370 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755133AbaDKVvh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Apr 2014 17:51:37 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7B6987C5CA;
-	Fri, 11 Apr 2014 17:51:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5Ebl6wl1znMD8zSeOBVmeiEZOpg=; b=kvCnnC
-	OcJcOEbx5mD6oJX8MRzPH5DuDR1eOV3pCWZOL2K/VIB6zi5/HcdeaW6WQ/XQ1vsB
-	7HnWPGKqc6tTnC5F2wiRYKE8CxUEch3qUrx8OM0i/ZfyjM7fdbKm6XW+2rrTFU9k
-	2r2MfQuZTwe8XIA3KKCrRganFovrQB9u2+FDI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GMoh7Vu/gwdF2VzxYBv+YBjf3cG6VPcD
-	EscgIXyIlK4Wb9B2vZyqRdatfb87GHcXP1CIXlC5q1RGTWdZuU4ii6G/ie5LUrkf
-	JGY917ztnmOZeEu20JEK9NEERF4//Qz7IH0RAMKM8JmU4OYGUgbYzPx81hXtblDD
-	q/CQGI7tyQ0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6456E7C5C8;
-	Fri, 11 Apr 2014 17:51:36 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D96327C5C5;
-	Fri, 11 Apr 2014 17:51:34 -0400 (EDT)
-In-Reply-To: <1397248790-10403-3-git-send-email-sahlberg@google.com> (Ronnie
-	Sahlberg's message of "Fri, 11 Apr 2014 13:39:49 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 73566DEA-C1C3-11E3-968E-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246151>
+	(envelope-from <msysgit+bncBCZPH74Q5YNRB5WRUGNAKGQEHVAZOOQ@googlegroups.com>)
+	id 1WYjh9-0006m6-Hj
+	for gcvm-msysgit@m.gmane.org; Sat, 12 Apr 2014 00:13:11 +0200
+Received: by mail-bk0-f59.google.com with SMTP id my13sf454387bkb.4
+        for <gcvm-msysgit@m.gmane.org>; Fri, 11 Apr 2014 15:13:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:subject:message-id:user-agent:mime-version
+         :x-original-sender:x-original-authentication-results:precedence
+         :mailing-list:list-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=3pWzrOkiGr9lGxCR8JVLjU2JCraZQEIxJ55Hna87DL8=;
+        b=CynGCL+92drfb3J9m9k2Akftss6jmpNx4JR5ZTHZ2ySRH9D3vcB9Sd1CFJWcB3zDIN
+         7ZqVkFFkkc9lJg+UQ5poSbMyF9F4s0O8e8z74fvivCnmJtfZ4GLDwtq8s1y/lb1X2C0M
+         ceEgYN4phpZw+DPuoqE5PzEC2WAAg0MizMvY98YZLW3DmInVfbE9nqJt0pgm3GIJknTN
+         eOa3c6dGqJ3msooCPKmcXROGH6IrOtwA5JfQukoFbtvl//vF4hi9ri/JvQ6hIac6Z+AX
+         1Uf1CVFIbnckwbHx8o8MdxI9F9tc4V6iF2hrGnR13b+vlMIQlrijEwO4ma7MVBBxV2zf
+         YceQ==
+X-Received: by 10.152.27.129 with SMTP id t1mr292264lag.0.1397254391139;
+        Fri, 11 Apr 2014 15:13:11 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.3.136 with SMTP id c8ls245283lac.67.gmail; Fri, 11 Apr
+ 2014 15:13:10 -0700 (PDT)
+X-Received: by 10.152.115.171 with SMTP id jp11mr2606538lab.3.1397254390152;
+        Fri, 11 Apr 2014 15:13:10 -0700 (PDT)
+Received: from mout.gmx.net (mout.gmx.net. [212.227.15.15])
+        by gmr-mx.google.com with ESMTPS id u49si2096589eeo.1.2014.04.11.15.13.10
+        for <msysgit@googlegroups.com>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA bits=256/256);
+        Fri, 11 Apr 2014 15:13:10 -0700 (PDT)
+Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.15.15 as permitted sender) client-ip=212.227.15.15;
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx103) with ESMTPSA (Nemesis) id 0Lx8ZJ-1X1eV21VQv-016dFd;
+ Sat, 12 Apr 2014 00:13:09 +0200
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:FyuSWAzedh+uTx169iEDnRMoa17eJG2qm3ZQxFRlkMd206wi+vd
+ gcINNq12IAwDhHgu861M6nCtyFJhG1+90htY2x+P2pHxJIxQxKVuFpKbfl13u7SVPS4vyYV
+ jVylFR1nD5XdNBV2kLn/MiLph2n7ZoJ3pu7uqVBcY2so4gHqTtwC3N23/WqLKV67ZhbgUPi
+ 7h7B2aJ6IJsmQFVz2BzIg==
+X-Original-Sender: johannes.schindelin@gmx.de
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.15.15 as
+ permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246152>
 
-Ronnie Sahlberg <sahlberg@google.com> writes:
+Hi,
 
->  int commit_ref_lock(struct ref_lock *lock)
->  {
-> +	if (lock->delete_ref) {
-> +		int flag = lock->delete_flag;
-> +
-> +		if (!(flag & REF_ISPACKED) || flag & REF_ISSYMREF) {
-> +			/* loose */
-> +			int err, i = strlen(lock->lk->filename) - 5; /* .lock */
-> +
-> +			lock->lk->filename[i] = 0;
-> +			err = unlink_or_warn(lock->lk->filename);
-> +			lock->lk->filename[i] = '.';
-> +			if (err && errno != ENOENT)
-> +				return 1;
-> +		}
-> +	} else
->          if (!lock->skipped_write && commit_ref(lock)) {
+the Git for Windows team just released version 1.9.2 of the
+Windows-specific installers.
 
-	} else if (...) {
+New Features
+* Comes with Git 1.9.2 plus Windows-specific patches.
+* Custom installer settings can be saved and loaded, for unsupervised
+  installation on batches of machines (msysGit PR #168).
+* Comes with VIM 7.4 (msysGit PR #170).
+* Comes with ZLib 1.2.8.
+* Comes with xargs 4.4.2.
 
-Also the previous patch indents the above "if" line in the context
-with spaces; please use a tab.
+Bugfixes
+* Work around stack limitations when listing an insane number of tags (PR
+  #154).
+* Assorted test fixes (PRs #156, #158).
+* Compile warning fix in config.c (PR #159).
+* Ships with actual dos2unix and unix2dos.
+* The installer no longer recommends mixing with Cygwin.
+* Fixes a regression in Git-Cheetah which froze the Explorer upon calling
+  Git Bash from the context menu (Git-Cheetah PRs #14 and #15).
+
+It can be downloaded here:
+
+	https://github.com/msysgit/msysgit/releases/download/Git-1.9.2-preview20140411/Git-1.9.2-preview20140411.exe
+
+This release also marks a change relevant only for developers wanting to
+help with the development of Git for Windows: only the net installer (i.e.
+a rudimentary Git environment that simply clones everything necessary to
+build Git for Windows) is available for download; the "full" installers
+were not useful for Git for Windows contributors.
+
+Ciao,
+Johannes
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
