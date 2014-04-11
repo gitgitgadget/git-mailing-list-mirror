@@ -1,185 +1,90 @@
-From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH v7 2/2] Verify index file before we opportunistically
- update it
-Date: Fri, 11 Apr 2014 09:47:09 +0200
-Message-ID: <53479DFD.4020702@web.de>
-References: <1397081197-14803-1-git-send-email-yiannis.marangos@gmail.com>	<1397154681-31803-1-git-send-email-yiannis.marangos@gmail.com>	<1397154681-31803-2-git-send-email-yiannis.marangos@gmail.com> <xmqqppkpvv9m.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	=?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-To: Junio C Hamano <gitster@pobox.com>,
-	Yiannis Marangos <yiannis.marangos@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 11 09:47:31 2014
+From: "Kyle J. McKay" <mackyle@gmail.com>
+Subject: [PATCH] test: fix t7001 cp to use POSIX options
+Date: Fri, 11 Apr 2014 01:24:02 -0700
+Message-ID: <1c3e86191de8c91545ac3ddc18fd31e@74d39fa044aa309eaea14b9f57fe79c>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 11 10:24:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WYWBN-0008JA-Qc
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Apr 2014 09:47:30 +0200
+	id 1WYWl3-0007p7-Mt
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Apr 2014 10:24:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754917AbaDKHr0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Apr 2014 03:47:26 -0400
-Received: from mout.web.de ([212.227.17.11]:57962 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750805AbaDKHrZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Apr 2014 03:47:25 -0400
-Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb001)
- with ESMTPSA (Nemesis) id 0Lh6fv-1XIrhN2jTD-00oZoj; Fri, 11 Apr 2014 09:47:14
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
-In-Reply-To: <xmqqppkpvv9m.fsf@gitster.dls.corp.google.com>
-X-Provags-ID: V03:K0:ep1EhUJtqH0e09JbuMhNN5kZC7mSbWIVGnZ5bJIYVUDgb8iadjd
- u535BfieduboIWV5HqWl2Dp85g8UQx9eCy9P53UkjEIEPIXCnPDbhsgSjnF95EwEH1efzku
- Sgm3mjcyiSP1GuiqDQEFxqakC8a4xbxrB8oSBJMyGUMr/7naYZe7AC/ppYntfsMPE2H8ZEf
- /dG3/+Kiw7gumaNOJkMVA==
+	id S1751176AbaDKIYO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Apr 2014 04:24:14 -0400
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:62595 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750817AbaDKIYM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Apr 2014 04:24:12 -0400
+Received: by mail-pa0-f50.google.com with SMTP id kq14so5093457pab.23
+        for <git@vger.kernel.org>; Fri, 11 Apr 2014 01:24:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=8CG0WAxWzLolJiAoMbTv97M+CS1ud6JWxhmIxHCvTvc=;
+        b=LSijB2o1QxqfTNiCKnFxdebHc9UqMNi5k465jL7cORSS1TersM7De8V0t8eduKCdwX
+         ezO9aYaPzmM1z282JNrTzBNZ9lv1Ac83/Khfsbn/lcTyI52MUFjqbLNaGAOMxWsntFl8
+         7r8n+Hbh9EsqZQ1RE+DxWWEgT5GYKT+TlbJcQ6grvWVoey1Rioj/bUuuGG1VTbM7NC+S
+         FQ73wnWBSWlDzAuNjqQrktpp4+teL4jN62KLjK5aRlJ0HYWurcAAxQFQ9ZTa4Ki523lN
+         JCSvwqalVd5YTWBKxeQK8fv+Mc15/AWzfmkoQJ98ElLUtRzWmnZIxYaq4JxCm5V4gl+C
+         RMpA==
+X-Received: by 10.66.192.73 with SMTP id he9mr25631908pac.88.1397204651745;
+        Fri, 11 Apr 2014 01:24:11 -0700 (PDT)
+Received: from localhost.localdomain (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
+        by mx.google.com with ESMTPSA id ei4sm14003695pbb.42.2014.04.11.01.24.10
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 11 Apr 2014 01:24:11 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246068>
 
-On 2014-04-10 21.28, Junio C Hamano wrote:
-> Yiannis Marangos <yiannis.marangos@gmail.com> writes:
-> 
->> +	n = xpread(fd, sha1, 20, st.st_size - 20);
->> +	if (n != 20)
->> +		goto out;
-> 
-> I think it is possible for pread(2) to give you a short-read.
-> 
-> The existing callers of emulated mmap and index-pack are prepared to
-> handle a short-read correctly, but I do not think this code does.
-> 
-> I'll queue this instead in the meantime.
-> 
-> -- >8 --
-> From: Yiannis Marangos <yiannis.marangos@gmail.com>
-> Date: Thu, 10 Apr 2014 21:31:21 +0300
-> Subject: [PATCH] read-cache.c: verify index file before we opportunistically update it
-> 
-> Before we proceed to opportunistically update the index (often done
-> by an otherwise read-only operation like "git status" and "git diff"
-> that internally refreshes the index), we must verify that the
-> current index file is the same as the one that we read earlier
-> before we took the lock on it, in order to avoid a possible race.
-> 
-> In the example below git-status does "opportunistic update" and
-> git-rebase updates the index, but the race can happen in general.
-I'm not sure if we need the second or third commit of process A at all.
-My understanding is that the simplified version will have problems as well:
+Since 11502468 and 04c1ee57 (both first appearing in v1.8.5), the
+t7001-mv test has used "cp -a" to perform a copy in several of the
+tests.
 
-  1. process A calls git-rebase (or does anything that updates the index)
-  2. process change
-  3. process B calls git-status (or does anything that updates the index)
-  4. process B reads the index file into memory
-  5. process change
-  6. process A applies a commit:
-      - read the index into memory
-      - take the lock
-      - update the index file on disc
-      - release the lock
-  7. process change
-  8. process B applies a commit:
-      - take the lock
-      - update the index in memory and write the index file to disc
-      - release the lock
+However, the "-a" option is not required for a POSIX cp utility and
+some platforms' cp utilities do not support it.
 
-   Now process B has overwritten the commit from process A, which is wrong.
+The POSIX equivalent of -a is -R -P -p.
 
-The new code works like this:
+Change "cp -a" to "cp -R -P -p" so that the t7001-mv test works
+on systems with a cp utility that only implements the POSIX
+required set of options and not the "-a" option.
 
-  8. process B applies a commit:
-      - take the lock
-      - verifies tha the index file on disc has the same sha as the one read before
-      # And if not: What do we do? die() or retry() ?
-      - update the index file on disc
-      - release the lock
-[]
-> 
-> +static int verify_index_from(const struct index_state *istate, const char *path)
-> +{
-> +	int fd;
-> +	ssize_t n;
-> +	struct stat st;
-> +	unsigned char sha1[20];
-> +
-> +	if (!istate->initialized)
-> +		return 0;
-> +
-> +	fd = open(path, O_RDONLY);
-> +	if (fd < 0)
-> +		return 0;
-> +
-> +	if (fstat(fd, &st))
-> +		goto out;
-> +
-> +	if (st.st_size < sizeof(struct cache_header) + 20)
-> +		goto out;
-> +
-> +	n = pread_in_full(fd, sha1, 20, st.st_size - 20);
-Minor :
-What is the advantage of pread() against a lseek()/read_in_full() combo?
-fd is opened and used only in one thread.
-Introducing pread()/ pread_in_full() could be done in an other commit,
-or do I miss something ?
-> +	if (n != 20)
-> +		goto out;
+Signed-off-by: Kyle J. McKay <mackyle@gmail.com>
 
-> +static int verify_index(const struct index_state *istate)
-> +{
-> +	return verify_index_from(istate, get_index_file());
-> +}
-> +
-Minor:
-Do we really need the wrapper function verify_index_from()?
-It seems as if the whole code from verify_index_from() could go into
-verify_index(), which will call get_index_file()
-  
- 
->  static int has_racy_timestamp(struct index_state *istate)
->  {
->  	int entries = istate->cache_nr;
-> @@ -1766,7 +1811,7 @@ static int has_racy_timestamp(struct index_state *istate)
->  void update_index_if_able(struct index_state *istate, struct lock_file *lockfile)
->  {
->  	if ((istate->cache_changed || has_racy_timestamp(istate)) &&
-> -	    !write_index(istate, lockfile->fd))
-> +	    verify_index(istate) && !write_index(istate, lockfile->fd))
->  		commit_locked_index(lockfile);
->  	else
->  		rollback_lock_file(lockfile);
-> diff --git a/wrapper.c b/wrapper.c
-> index 5b3c7fc..bc1bfb8 100644
-> --- a/wrapper.c
-> +++ b/wrapper.c
-> @@ -232,6 +232,26 @@ ssize_t write_in_full(int fd, const void *buf, size_t count)
->  	return total;
->  }
->  
-> +ssize_t pread_in_full(int fd, void *buf, size_t count, off_t offset)
-> +{
-> +	char *p = buf;
-> +	ssize_t total = 0;
-> +
-> +	while (count > 0) {
-> +		ssize_t loaded = xpread(fd, p, count, offset);
-> +		if (loaded < 0)
-> +			return -1;
-> +		if (loaded == 0)
-> +			return total;
-> +		count -= loaded;
-> +		p += loaded;
-> +		total += loaded;
-> +		offset += loaded;
-> +	}
-> +
-> +	return total;
-> +}
-> +
->  int xdup(int fd)
->  {
->  	int ret = dup(fd);
-> 
+---
+ t/t7001-mv.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/t/t7001-mv.sh b/t/t7001-mv.sh
+index 215d43d6..c8ff9115 100755
+--- a/t/t7001-mv.sh
++++ b/t/t7001-mv.sh
+@@ -308,7 +308,7 @@ test_expect_success 'git mv moves a submodule with a .git directory and no .gitm
+ 	(
+ 		cd sub &&
+ 		rm -f .git &&
+-		cp -a ../.git/modules/sub .git &&
++		cp -R -P -p ../.git/modules/sub .git &&
+ 		GIT_WORK_TREE=. git config --unset core.worktree
+ 	) &&
+ 	mkdir mod &&
+@@ -331,7 +331,7 @@ test_expect_success 'git mv moves a submodule with a .git directory and .gitmodu
+ 	(
+ 		cd sub &&
+ 		rm -f .git &&
+-		cp -a ../.git/modules/sub .git &&
++		cp -R -P -p ../.git/modules/sub .git &&
+ 		GIT_WORK_TREE=. git config --unset core.worktree
+ 	) &&
+ 	mkdir mod &&
+-- 
+tg: (0bc85abb..) t/t7001-posix-cp (depends on: maint)
