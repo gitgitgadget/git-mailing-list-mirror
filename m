@@ -1,121 +1,101 @@
 From: "Kyle J. McKay" <mackyle@gmail.com>
-Subject: [PATCH 3/3] test: fix t5560 on FreeBSD
-Date: Fri, 11 Apr 2014 01:28:19 -0700
-Message-ID: <0101ef71fafab90325bb799cb8ad80e@74d39fa044aa309eaea14b9f57fe79c>
+Subject: [PATCH 2/3] Revert "rebase: fix run_specific_rebase's use of "return" on FreeBSD"
+Date: Fri, 11 Apr 2014 01:28:18 -0700
+Message-ID: <1cc6896f60ac6495f949d9921e659f2@74d39fa044aa309eaea14b9f57fe79c>
 References: <438458da797bcab97449bfa931a9d1d@74d39fa044aa309eaea14b9f57fe79c>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Matthieu Moy <Matthieu.Moy@imag.fr>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 11 10:28:40 2014
+X-From: git-owner@vger.kernel.org Fri Apr 11 10:28:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WYWpE-0003Dh-00
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Apr 2014 10:28:40 +0200
+	id 1WYWpJ-0003Iw-QT
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Apr 2014 10:28:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755517AbaDKI2e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Apr 2014 04:28:34 -0400
-Received: from mail-pd0-f170.google.com ([209.85.192.170]:37930 "EHLO
-	mail-pd0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753559AbaDKI2a (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Apr 2014 04:28:30 -0400
-Received: by mail-pd0-f170.google.com with SMTP id v10so5024948pde.29
-        for <git@vger.kernel.org>; Fri, 11 Apr 2014 01:28:30 -0700 (PDT)
+	id S1755512AbaDKI2d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Apr 2014 04:28:33 -0400
+Received: from mail-pb0-f43.google.com ([209.85.160.43]:49703 "EHLO
+	mail-pb0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752344AbaDKI23 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Apr 2014 04:28:29 -0400
+Received: by mail-pb0-f43.google.com with SMTP id um1so5099969pbc.16
+        for <git@vger.kernel.org>; Fri, 11 Apr 2014 01:28:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=OOwq4LsXHqbWcUcxqfEy0TRmySJ0/hGy64AujjAXB4E=;
-        b=YQne1nE220mx/e9qEd7Hs9fYNdZX33JSy2uBx1eSf3fF6+DoJekDdZQh81bsX6ljZ2
-         TtxHCSq1mk8JUochHSKRhDRh1kxyzpD1P7ImlNEM/jCKGKYv6nsnKPArZJcU2dKj2ieU
-         qy7HlqlXm1cUlMRtT3izQ0sI+TongRt+Dj3Y8yF2uxDG3DOkTJGBNZZJFgVEjfb4EkKK
-         hOBPbQD7278PNiZoq+W0SzFr3DZBdBBdeb0Jg1zWsaHRfmdOw/kuLavI5LqLdQMNCGlE
-         x8a+ycF9Yo56YGZRiroxikU5o8PogTJn4HXTkfflyqzaWttCwrgFFhae2XXq47AolgV4
-         ycSQ==
-X-Received: by 10.68.163.100 with SMTP id yh4mr25811944pbb.122.1397204910290;
-        Fri, 11 Apr 2014 01:28:30 -0700 (PDT)
+        bh=NtL3xq0nUUlwU21hCG9TW7a7B01HO+L/9DAmb1qFnpA=;
+        b=hm6SeSc7wdqmDDQlxjFOaXPKDSgdVTQtYX32MHtfwcu5MSN1+8YzCeiIjHf/UVxvOt
+         4Qjr0AUixM6LvOOGmOUsrtNWI9HGmdp7z4v1iEXXWiFUR4wz72hfXlEU9GCs1tQYazIS
+         CQrHfMxDRsu80fakg0+ZjRz86o466sTCLTCv50IHL5otIPzzjeopcSxxw/Fzwut9S9OY
+         CLqivHD8vYK7QLro+Hn/v4vT0X4/DrHhVh25JTcm4pBhkEopVXy4cpG9ANXvVtqTySj/
+         ORrLpu1XnCJHnI3y8NUa28GCm+mVgBRAgAQOMy6bV02mEDoBp1C3FXm14FPWRrvlLWnD
+         LBhA==
+X-Received: by 10.68.202.230 with SMTP id kl6mr25755933pbc.55.1397204908859;
+        Fri, 11 Apr 2014 01:28:28 -0700 (PDT)
 Received: from localhost.localdomain (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
-        by mx.google.com with ESMTPSA id ky8sm14002027pbc.64.2014.04.11.01.28.28
+        by mx.google.com with ESMTPSA id ky8sm14002027pbc.64.2014.04.11.01.28.27
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 11 Apr 2014 01:28:29 -0700 (PDT)
+        Fri, 11 Apr 2014 01:28:28 -0700 (PDT)
 In-Reply-To: <438458da797bcab97449bfa931a9d1d@74d39fa044aa309eaea14b9f57fe79c>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246072>
 
-Since fd0a8c2e (first appearing in v1.7.0), the
-t/t5560-http-backend-noserver.sh test has used a backslash escape
-inside a ${} expansion in order to specify a literal '?' character.
+This reverts commit 99855ddf4bd319cd06a0524e755ab1c1b7d39f3b.
 
-Unfortunately the FreeBSD /bin/sh does not interpret this correctly.
+The workaround 99855ddf introduced to deal with problematic
+"return" statements in scripts run by "dot" commands located
+inside functions only handles one part of the problem.  The
+issue has now been addressed by not using "return" statements
+in this way in the git-rebase--*.sh scripts.
 
-In a POSIX compliant shell, the following:
+This workaround is therefore no longer necessary, so clean
+up the code by reverting it.
 
-x='one?two?three'
-echo "${x#*\?}"
-
-Would be expected to produce this:
-
-two?three
-
-When using the FreeBSD /bin/sh instead you get this:
-
-one?two?three
-
-In fact the FreeBSD /bin/sh treats the backslash as a literal
-character to match so that this:
-
-y='one\two\three'
-echo "${y#*\?}"
-
-Produces this unexpected value:
-
-wo\three
-
-In this case the backslash is not only treated literally, it also
-fails to defeat the special meaning of the '?' character.
-
-Instead, we can use the [...] construct to defeat the special meaning
-of the '?' character and match it exactly in a way that works for the
-FreeBSD /bin/sh as well as other POSIX /bin/sh implementations.
-
-Changing the example like so:
-
-x='one?two?three'
-echo "${x#*[?]}"
-
-Produces the expected output using the FreeBSD /bin/sh.
-
-Therefore, change the use of \? to [?] in order to be compatible with
-the FreeBSD /bin/sh which allows t/t5560-http-backend-noserver.sh to
-pass on FreeBSD again.
+Conflicts:
+        git-rebase.sh
 
 Signed-off-by: Kyle J. McKay <mackyle@gmail.com>
 
 ---
- t/t5560-http-backend-noserver.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ git-rebase.sh | 11 +----------
+ 1 file changed, 1 insertion(+), 10 deletions(-)
 
-diff --git a/t/t5560-http-backend-noserver.sh b/t/t5560-http-backend-noserver.sh
-index 9be9ae34..5abd11a5 100755
---- a/t/t5560-http-backend-noserver.sh
-+++ b/t/t5560-http-backend-noserver.sh
-@@ -9,8 +9,8 @@ test_have_prereq GREP_STRIPS_CR && export GREP_OPTIONS=-U
- 
- run_backend() {
- 	echo "$2" |
--	QUERY_STRING="${1#*\?}" \
--	PATH_TRANSLATED="$HTTPD_DOCUMENT_ROOT_PATH/${1%%\?*}" \
-+	QUERY_STRING="${1#*[?]}" \
-+	PATH_TRANSLATED="$HTTPD_DOCUMENT_ROOT_PATH/${1%%[?]*}" \
- 	git http-backend >act.out 2>act.err
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 8a3efa29..07e2bd48 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -169,22 +169,13 @@ You can run "git stash pop" or "git stash drop" at any time.
+ 	rm -rf "$state_dir"
  }
  
+-run_specific_rebase_internal () {
++run_specific_rebase () {
+ 	if [ "$interactive_rebase" = implied ]; then
+ 		GIT_EDITOR=:
+ 		export GIT_EDITOR
+ 		autosquash=
+ 	fi
+-	# On FreeBSD, the shell's "return" returns from the current
+-	# function, not from the current file inclusion.
+-	# run_specific_rebase_internal has the file inclusion as a
+-	# last statement, so POSIX and FreeBSD's return will do the
+-	# same thing.
+ 	. git-rebase--$type
+-}
+-
+-run_specific_rebase () {
+-	run_specific_rebase_internal
+ 	ret=$?
+ 	if test $ret -eq 0
+ 	then
 -- 
-tg: (532c2992..) t/freebsd-t5560 (depends on: t/revert-99855ddf)
+tg: (1bb252a9..) t/revert-99855ddf (depends on: t/freebsd-sh-return)
