@@ -1,69 +1,92 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH] remote-bzr: trivial test fix
-Date: Fri, 11 Apr 2014 18:24:05 -0500
-Message-ID: <1397258645-15336-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 12 01:34:12 2014
+Subject: RE: What's cooking in git.git (Apr 2014, #03; Fri, 11)
+Date: Fri, 11 Apr 2014 18:27:53 -0500
+Message-ID: <53487a78f38bf_3b596b93106e@nysa.notmuch>
+References: <xmqq1tx3qzel.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 12 01:37:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WYkxY-00067f-0b
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Apr 2014 01:34:12 +0200
+	id 1WYl1B-0000kK-2e
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Apr 2014 01:37:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754300AbaDKXeH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Apr 2014 19:34:07 -0400
-Received: from mail-ob0-f171.google.com ([209.85.214.171]:44851 "EHLO
-	mail-ob0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750842AbaDKXeG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Apr 2014 19:34:06 -0400
-Received: by mail-ob0-f171.google.com with SMTP id wn1so6840569obc.16
-        for <git@vger.kernel.org>; Fri, 11 Apr 2014 16:34:05 -0700 (PDT)
+	id S1754631AbaDKXhx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Apr 2014 19:37:53 -0400
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:37052 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754520AbaDKXhw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Apr 2014 19:37:52 -0400
+Received: by mail-oa0-f46.google.com with SMTP id i7so6859402oag.5
+        for <git@vger.kernel.org>; Fri, 11 Apr 2014 16:37:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=H7kjb9MPeFqnAxTkQc+1ETKQDeOsufj6K+Um/88eFiQ=;
-        b=NFTzZdrfJeB3p6588hijHF95Q9pllfA/PT9Y7zKma2kPbZwA2q4gEoew0b/vHXB23x
-         xBym0LC6gjJ7q5SEC2h0ASJplyUJM1iAI3u/IwoL+3+AodTzG1jFz1eJYgoQHEytI9GI
-         4OJk1QLCls189ZlDJpMH15ADu8Tba6DCSPT2EFnBWEDlkRmQnatyFS2XqoCW/QBgzVSW
-         IbGVux1GvMndhaTaM5Z+24sWBS2P5zouWLpXquds72EHX1L6i1PKt9UMDCUbqz9F+1Sp
-         4VPSy3tWQ4cr8Zt3tht9ET+s8AKjNOH3CRAffArnivaOdBIvHC/kNq3nuE0b/tfSiT9E
-         8lNA==
-X-Received: by 10.60.125.72 with SMTP id mo8mr21943657oeb.36.1397259245064;
-        Fri, 11 Apr 2014 16:34:05 -0700 (PDT)
+        h=date:from:to:message-id:in-reply-to:references:subject:mime-version
+         :content-type:content-transfer-encoding;
+        bh=dZuhtMYVQecX6fPtTF3BFh7E8Cv+kAZN6qUiCt2d1XA=;
+        b=k3QZPl61X4gAWTd5xmg9VfDnV6SLVT3ckfVAkMkSgJscsjNxYbNLW3x0os7fdsDlrr
+         Eunafz1nq05rbPzwHhEVibV+ddSLbXAV5BvzDxw7K2VfSlJvmFTd9fon9Kj+wLnIhGLJ
+         HoOs7QbS4IENE2kJavvkxjhLTAg6gjfOVllm0GqlPqembNc4n2vp5j6vfPjzKQi5YxlF
+         Wnrnpug6BP9Hylm2Fu8G7dnXFdQsNcTETFwS6jWAzCatbw82UtuhMPvwOQaBlDT4iAf4
+         BfIApjbsPZ0S87qRf8lYb0xeB07gw+nMQd2RDhwusZUfXFmvcMZTdVQeUF6QP2IMY32d
+         WucQ==
+X-Received: by 10.60.98.139 with SMTP id ei11mr21462858oeb.43.1397259472547;
+        Fri, 11 Apr 2014 16:37:52 -0700 (PDT)
 Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id pv6sm14810584obb.1.2014.04.11.16.34.03
+        by mx.google.com with ESMTPSA id cn1sm37417428oeb.11.2014.04.11.16.37.50
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 11 Apr 2014 16:34:03 -0700 (PDT)
-X-Mailer: git-send-email 1.9.1+fc3.9.gc73078e
+        Fri, 11 Apr 2014 16:37:51 -0700 (PDT)
+In-Reply-To: <xmqq1tx3qzel.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246157>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246158>
 
-So that the committer is reset properly.
+Junio C Hamano wrote:
+> * fc/complete-aliased-push (2014-04-09) 1 commit
+>  - completion: fix completing args of aliased "push", "fetch", etc.
+> 
+>  Will merge to 'next'.
+> 
+> 
+> * fc/remote-helper-fixes (2014-04-09) 4 commits
+>  - remote-bzr: include authors field in pushed commits
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- contrib/remote-helpers/test-bzr.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Before you do, you might want to pick the unrelated fix I just sent[1],
+otherwise this test might fail on some machines.
 
-diff --git a/contrib/remote-helpers/test-bzr.sh b/contrib/remote-helpers/test-bzr.sh
-index 1e53ff9..f5c90a4 100755
---- a/contrib/remote-helpers/test-bzr.sh
-+++ b/contrib/remote-helpers/test-bzr.sh
-@@ -362,7 +362,7 @@ test_expect_success 'strip' '
- '
- 
- test_expect_success 'export utf-8 authors' '
--	test_when_finished "rm -rf bzrrepo gitrepo && LC_ALL=C && unset GIT_COMMITTER_NAME" &&
-+	test_when_finished "rm -rf bzrrepo gitrepo && LC_ALL=C && GIT_COMMITTER_NAME=\"C O Mitter\""
- 
- 	LC_ALL=en_US.UTF-8
- 	export LC_ALL
+>  - remote-bzr: add support for older versions
+>  - remote-hg: always normalize paths
+>  - remote-helpers: allow all tests running from any dir
+> 
+>  Will merge to 'next'.
+
+> * fc/publish-vs-upstream (2014-04-11) 8 commits
+>  - sha1_name: add support for @{publish} marks
+>  - sha1_name: simplify track finding
+>  - sha1_name: cleanup interpret_branch_name()
+>  - branch: display publish branch
+>  - push: add --set-publish option
+>  - branch: add --set-publish-to option
+>  - Add concept of 'publish' branch
+>  - t5516 (fetch-push): fix test restoration
+> 
+>  Add branch@{publish}; this round v3 hasn't yet seen much reviews
+>  yet.
+> 
+>  Seems to have some interactions to break tests when merged to 'pu'.
+
+That was v2, wasn't it?
+
+[1] http://article.gmane.org/gmane.comp.version-control.git/246157
+
 -- 
-1.9.1+fc3.9.gc73078e
+Felipe Contreras
