@@ -1,7 +1,7 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v3 6/8] sha1_name: cleanup interpret_branch_name()
-Date: Fri, 11 Apr 2014 12:59:09 -0500
-Message-ID: <1397239151-2391-7-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v3 3/8] branch: add --set-publish-to option
+Date: Fri, 11 Apr 2014 12:59:06 -0500
+Message-ID: <1397239151-2391-4-git-send-email-felipe.contreras@gmail.com>
 References: <1397239151-2391-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Matthieu Moy <matthieu.moy@imag.fr>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
@@ -9,103 +9,333 @@ Cc: Matthieu Moy <matthieu.moy@imag.fr>,
 	John Szakmeister <john@szakmeister.net>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 11 20:09:56 2014
+X-From: git-owner@vger.kernel.org Fri Apr 11 20:10:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WYftj-0007GN-Sg
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Apr 2014 20:09:56 +0200
+	id 1WYfts-0007OM-M3
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Apr 2014 20:10:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754833AbaDKSJq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Apr 2014 14:09:46 -0400
-Received: from mail-ob0-f179.google.com ([209.85.214.179]:50646 "EHLO
-	mail-ob0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754815AbaDKSJ3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Apr 2014 14:09:29 -0400
-Received: by mail-ob0-f179.google.com with SMTP id va2so6439272obc.38
-        for <git@vger.kernel.org>; Fri, 11 Apr 2014 11:09:29 -0700 (PDT)
+	id S1754839AbaDKSJ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Apr 2014 14:09:56 -0400
+Received: from mail-oa0-f43.google.com ([209.85.219.43]:46158 "EHLO
+	mail-oa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754471AbaDKSJV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Apr 2014 14:09:21 -0400
+Received: by mail-oa0-f43.google.com with SMTP id eb12so6557392oac.2
+        for <git@vger.kernel.org>; Fri, 11 Apr 2014 11:09:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=p5Oszb8ppusKOTVpB19OgZ4OzyQTokLThAF8H5RNMMU=;
-        b=abSAunIeaUJulQdb+dl9ob99tdiHYyzekn0xCyOZjFfX0jAmTjgnkh60YzF1zaMDYw
-         MsMAzWjjFUoIC68iskzCaTHXeXp8OwnIeSNSgEMPpws8PwZIqg2Kh73LOrilzEVE5j1/
-         PNuG2VvTNdkkQ6HbCmNm0KEaMSDGJ/4LvDtYH3vfDJG2Kxqi1QYX0RQpOiKJ/hI3GsVe
-         90dkYMvohk0zBH2u+OyiBnPJxRHqrxMw4Jqe3/0na5DpGKC5cWS90iry6MIPF7XRByxy
-         15usdV5k8yJNE9Rxu7k0DIfFVvwLgcmHTX/5Oy8PbSa43Tc0BYYo+kSQvDRT3rnjNcNF
-         5iRA==
-X-Received: by 10.60.103.210 with SMTP id fy18mr1473175oeb.75.1397239768973;
-        Fri, 11 Apr 2014 11:09:28 -0700 (PDT)
+        bh=SMI4RS+nccOpgI3QSUDHG1SkEo4/WQ24W3PJ9aunxgo=;
+        b=X91lfhypZw4mStgaDIQUJdUspCft7cYJArYcrY2V/gbLFk2ZDyYhv9f2X1NOYJ+klP
+         cKKH1ferIKnq+sdSiPtgGF9QAH5s0y/NkcFNI4Mr2Lv2T/XYQQbrN9wmNsbvBM1MCkg9
+         Wov+eheXo62ePkr2oacnvZV7a92SadOaOwIfg9ph9cQJGNVojAd4nbtrOMfRGiQc0/Fz
+         2vw+njb0o48CwPkx/L8Zr9IVHMthzoMPjdBvtUJ5CLiuchWLlPDjw6ywIY7fuPV7+Qeu
+         UWhz4pzwA1eR0f2Sh0LlY2s8sHl9blL65YMd0NzD7RzFNAE16qYV+QbrLUisd1B9ejYO
+         A8Ow==
+X-Received: by 10.182.66.202 with SMTP id h10mr20829337obt.38.1397239760330;
+        Fri, 11 Apr 2014 11:09:20 -0700 (PDT)
 Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id la3sm13445804obb.19.2014.04.11.11.09.27
+        by mx.google.com with ESMTPSA id oz15sm34167112oeb.13.2014.04.11.11.09.18
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 11 Apr 2014 11:09:27 -0700 (PDT)
+        Fri, 11 Apr 2014 11:09:19 -0700 (PDT)
 X-Mailer: git-send-email 1.9.1+fc1
 In-Reply-To: <1397239151-2391-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246123>
-
-The 'upstream' variable doesn't hold an "upstream", but a branch, so
-make it clearer.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246124>
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- sha1_name.c | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ Documentation/git-branch.txt | 11 +++++++
+ branch.c                     | 44 +++++++++++++++++++++++++
+ branch.h                     |  2 ++
+ builtin/branch.c             | 57 ++++++++++++++++++++++++++++++---
+ t/t3200-branch.sh            | 76 ++++++++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 185 insertions(+), 5 deletions(-)
 
-diff --git a/sha1_name.c b/sha1_name.c
-index 6fca869..906f09d 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -1057,31 +1057,31 @@ static void set_shortened_ref(struct strbuf *buf, const char *ref)
- 	free(s);
+diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+index 311b336..914fd62 100644
+--- a/Documentation/git-branch.txt
++++ b/Documentation/git-branch.txt
+@@ -14,7 +14,9 @@ SYNOPSIS
+ 	[(--merged | --no-merged | --contains) [<commit>]] [<pattern>...]
+ 'git branch' [--set-upstream | --track | --no-track] [-l] [-f] <branchname> [<start-point>]
+ 'git branch' (--set-upstream-to=<upstream> | -u <upstream>) [<branchname>]
++'git branch' (--set-publish-to=<publish> | -p <publish>) [<branchname>]
+ 'git branch' --unset-upstream [<branchname>]
++'git branch' --unset-publish [<branchname>]
+ 'git branch' (-m | -M) [<oldbranch>] <newbranch>
+ 'git branch' (-d | -D) [-r] <branchname>...
+ 'git branch' --edit-description [<branchname>]
+@@ -191,6 +193,15 @@ start-point is either a local or remote-tracking branch.
+ 	Remove the upstream information for <branchname>. If no branch
+ 	is specified it defaults to the current branch.
+ 
++-p <publish>::
++--set-publish-to=<publish>::
++	Set up <branchname>'s publish tracking information. If no
++	<branchname> is specified, then it defaults to the current branch.
++
++--unset-publish::
++	Remove the publish information for <branchname>. If no branch
++	is specified it defaults to the current branch.
++
+ --edit-description::
+ 	Open an editor and edit the text to explain what the branch is
+ 	for, to be used by various other commands (e.g. `request-pull`).
+diff --git a/branch.c b/branch.c
+index 723a36b..090b3d1 100644
+--- a/branch.c
++++ b/branch.c
+@@ -144,6 +144,50 @@ static int setup_tracking(const char *new_ref, const char *orig_ref,
+ 	return 0;
  }
  
--static const char *get_upstream_branch(const char *branch_buf, int len)
-+static const char *get_upstream_branch(const char *name_buf, int len)
- {
--	char *branch = xstrndup(branch_buf, len);
--	struct branch *upstream = branch_get(*branch ? branch : NULL);
-+	char *name = xstrndup(name_buf, len);
-+	struct branch *branch = branch_get(*name ? name : NULL);
++void install_branch_publish(const char *name, const char *remote, const char *remote_ref)
++{
++	struct strbuf key = STRBUF_INIT;
++
++	if (!remote && !strcmp(name, remote_ref + 11) &&
++			starts_with(remote_ref, "refs/heads")) {
++		warning(_("Not setting branch %s as its own publish branch."), name);
++		return;
++	}
++
++	strbuf_addf(&key, "branch.%s.pushremote", name);
++	git_config_set(key.buf, remote ? remote : ".");
++
++	strbuf_reset(&key);
++	strbuf_addf(&key, "branch.%s.push", name);
++	git_config_set(key.buf, remote_ref);
++
++	strbuf_release(&key);
++}
++
++int setup_publish(const char *name, const char *ref)
++{
++	struct tracking tracking;
++	const char *remote, *remote_ref;
++
++	memset(&tracking, 0, sizeof(tracking));
++	tracking.spec.dst = (char *)ref;
++	if (for_each_remote(find_tracked_branch, &tracking))
++		return 1;
++
++	if (tracking.matches > 1)
++		return error(_("Not tracking: ambiguous information for ref %s"),
++				ref);
++
++	remote = tracking.remote;
++	remote_ref = tracking.src ? tracking.src : ref;
++
++	install_branch_publish(name, remote, remote_ref);
++
++	free(tracking.src);
++
++	return 0;
++}
++
+ struct branch_desc_cb {
+ 	const char *config_name;
+ 	const char *value;
+diff --git a/branch.h b/branch.h
+index 64173ab..c9b6aa9 100644
+--- a/branch.h
++++ b/branch.h
+@@ -51,5 +51,7 @@ extern void install_branch_config(int flag, const char *local, const char *origi
+  * Read branch description
+  */
+ extern int read_branch_desc(struct strbuf *, const char *branch_name);
++extern int setup_publish(const char *name, const char *ref);
++extern void install_branch_publish(const char *name, const char *remote, const char *remote_ref);
  
- 	/*
- 	 * Upstream can be NULL only if branch refers to HEAD and HEAD
- 	 * points to something different than a branch.
- 	 */
--	if (!upstream)
-+	if (!branch)
- 		die(_("HEAD does not point to a branch"));
--	if (!upstream->merge || !upstream->merge[0]->dst) {
--		if (!ref_exists(upstream->refname))
--			die(_("No such branch: '%s'"), branch);
--		if (!upstream->merge) {
-+	if (!branch->merge || !branch->merge[0]->dst) {
+ #endif
+diff --git a/builtin/branch.c b/builtin/branch.c
+index b4d7716..17773d7 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -793,8 +793,8 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 	int delete = 0, rename = 0, force_create = 0, list = 0;
+ 	int verbose = 0, abbrev = -1, detached = 0;
+ 	int reflog = 0, edit_description = 0;
+-	int quiet = 0, unset_upstream = 0;
+-	const char *new_upstream = NULL;
++	int quiet = 0, unset_upstream = 0, unset_publish = 0;
++	const char *new_upstream = NULL, *publish = NULL;
+ 	enum branch_track track;
+ 	int kinds = REF_LOCAL_BRANCH;
+ 	struct commit_list *with_commit = NULL;
+@@ -809,7 +809,9 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		OPT_SET_INT( 0, "set-upstream",  &track, N_("change upstream info"),
+ 			BRANCH_TRACK_OVERRIDE),
+ 		OPT_STRING('u', "set-upstream-to", &new_upstream, "upstream", "change the upstream info"),
++		OPT_STRING('p', "set-publish-to", &publish, "publish", "change the publish info"),
+ 		OPT_BOOL(0, "unset-upstream", &unset_upstream, "Unset the upstream info"),
++		OPT_BOOL(0, "unset-publish", &unset_publish, "Unset the publish info"),
+ 		OPT__COLOR(&branch_use_color, N_("use colored output")),
+ 		OPT_SET_INT('r', "remotes",     &kinds, N_("act on remote-tracking branches"),
+ 			REF_REMOTE_BRANCH),
+@@ -878,14 +880,15 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 	argc = parse_options(argc, argv, prefix, options, builtin_branch_usage,
+ 			     0);
+ 
+-	if (!delete && !rename && !edit_description && !new_upstream && !unset_upstream && argc == 0)
++	if (!delete && !rename && !edit_description && !new_upstream && !publish &&
++	    !unset_upstream && !unset_publish && argc == 0)
+ 		list = 1;
+ 
+ 	if (with_commit || merge_filter != NO_FILTER)
+ 		list = 1;
+ 
+-	if (!!delete + !!rename + !!force_create + !!new_upstream +
+-	    list + unset_upstream > 1)
++	if (!!delete + !!rename + !!force_create + !!new_upstream + !!publish +
++	    list + unset_upstream + unset_publish > 1)
+ 		usage_with_options(builtin_branch_usage, options);
+ 
+ 	if (abbrev == -1)
+@@ -990,6 +993,50 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		strbuf_addf(&buf, "branch.%s.merge", branch->name);
+ 		git_config_set_multivar(buf.buf, NULL, NULL, 1);
+ 		strbuf_release(&buf);
++	} else if (publish) {
++		struct branch *branch = branch_get(argv[0]);
++		char *real_ref = NULL;
++		unsigned char sha1[20];
++
++		if (argc > 1)
++			die(_("too many branches to set new publish branch"));
++
++		if (!branch) {
++			if (!argc || !strcmp(argv[0], "HEAD"))
++				die(_("could not set publish branch of HEAD when "
++				      "it does not point to any branch."));
++			die(_("no such branch '%s'"), argv[0]);
++		}
++
 +		if (!ref_exists(branch->refname))
-+			die(_("No such branch: '%s'"), name);
-+		if (!branch->merge) {
- 			die(_("No upstream configured for branch '%s'"),
--				upstream->name);
-+				branch->name);
- 		}
- 		die(
- 			_("Upstream branch '%s' not stored as a remote-tracking branch"),
--			upstream->merge[0]->src);
-+			branch->merge[0]->src);
- 	}
--	free(branch);
-+	free(name);
++			die(_("branch '%s' does not exist"), branch->name);
++
++		if (dwim_ref(publish, strlen(publish), sha1, &real_ref) != 1 ||
++				setup_publish(branch->name, real_ref))
++			die(_("Cannot setup publish branch to '%s'."), publish);
++	} else if (unset_publish) {
++		struct branch *branch = branch_get(argv[0]);
++		struct strbuf buf = STRBUF_INIT;
++
++		if (argc > 1)
++			die(_("too many branches to unset publish branch"));
++
++		if (!branch) {
++			if (!argc || !strcmp(argv[0], "HEAD"))
++				die(_("could not unset publish branch of HEAD when "
++				      "it does not point to any branch."));
++			die(_("no such branch '%s'"), argv[0]);
++		}
++
++		if (!branch->push_name)
++			die(_("Branch '%s' has no publish information"), branch->name);
++
++		strbuf_addf(&buf, "branch.%s.pushremote", branch->name);
++		git_config_set_multivar(buf.buf, NULL, NULL, 1);
++		strbuf_reset(&buf);
++		strbuf_addf(&buf, "branch.%s.push", branch->name);
++		git_config_set_multivar(buf.buf, NULL, NULL, 1);
++		strbuf_release(&buf);
+ 	} else if (argc > 0 && argc <= 2) {
+ 		struct branch *branch = branch_get(argv[0]);
+ 		int branch_existed = 0, remote_tracking = 0;
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index fcdb867..8cd21d1 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -907,4 +907,80 @@ test_expect_success 'tracking with unexpected .fetch refspec' '
+ 	)
+ '
  
--	return upstream->merge[0]->dst;
-+	return branch->merge[0]->dst;
- }
- 
- static int interpret_upstream_mark(const char *name, int namelen,
++test_expect_success '--set-publish-to fails on multiple branches' '
++	test_must_fail git branch --set-publish-to master a b c
++'
++
++test_expect_success '--set-publish-to fails on detached HEAD' '
++	test_when_finished "git checkout master" &&
++	git checkout master^{} &&
++	test_must_fail git branch --set-publish-to master
++'
++
++test_expect_success '--set-publish-to fails on a missing dst branch' '
++	test_must_fail git branch --set-publish-to master does-not-exist
++'
++
++test_expect_success '--set-publish-to fails on a missing src branch' '
++	test_must_fail git branch --set-publish-to does-not-exist master
++'
++
++test_expect_success '--set-publish-to fails on a non-ref' '
++	test_must_fail git branch --set-publish-to HEAD^{}
++'
++
++test_expect_success 'use --set-publish-to modify HEAD' '
++	git checkout master &&
++	test_config branch.master.pushremote foo &&
++	test_config branch.master.push foo &&
++	git branch -f test &&
++	git branch --set-publish-to test &&
++	test "$(git config branch.master.pushremote)" = "." &&
++	test "$(git config branch.master.push)" = "refs/heads/test"
++'
++
++test_expect_success 'use --set-publish-to modify a particular branch' '
++	git branch -f test &&
++	git branch -f test2 &&
++	git branch --set-publish-to test2 test &&
++	test "$(git config branch.test.pushremote)" = "." &&
++	test "$(git config branch.test.push)" = "refs/heads/test2"
++'
++
++test_expect_success '--unset-publish should fail if given a non-existent branch' '
++	test_must_fail git branch --unset-publish i-dont-exist
++'
++
++test_expect_success 'test --unset-publish on HEAD' '
++	git checkout master &&
++	git branch -f test &&
++	test_config branch.master.pushremote foo &&
++	test_config branch.master.push foo &&
++	git branch --set-publish-to test &&
++	git branch --unset-publish &&
++	test_must_fail git config branch.master.pushremote &&
++	test_must_fail git config branch.master.push &&
++	# fail for a branch without publish set
++	test_must_fail git branch --unset-publish
++'
++
++test_expect_success '--unset-publish should fail on multiple branches' '
++	test_must_fail git branch --unset-publish a b c
++'
++
++test_expect_success '--unset-publish should fail on detached HEAD' '
++	test_when_finished "git checkout -" &&
++	git checkout HEAD^{} &&
++	test_must_fail git branch --unset-publish
++'
++
++test_expect_success 'test --unset-publish on a particular branch' '
++	git branch -f test &&
++	git branch -f test2 &&
++	git branch --set-publish-to test2 test &&
++	git branch --unset-publish test &&
++	test_must_fail git config branch.test2.pushremote &&
++	test_must_fail git config branch.test2.push
++'
++
+ test_done
 -- 
 1.9.1+fc1
