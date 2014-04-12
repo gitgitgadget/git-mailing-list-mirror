@@ -1,92 +1,103 @@
-From: Frank Ammeter <git@ammeter.ch>
-Subject: Re: wrong handling of text git attribute leading to files incorrectly reported as modified
-Date: Sat, 12 Apr 2014 13:29:35 +0200
-Message-ID: <D552B854-59FB-406A-8CDE-3A1269CD0F6E@ammeter.ch>
-References: <E8A9F28E-FF68-4899-B02C-DB7A2C66F38A@ammeter.ch> <534852D4.5070608@web.de>
-Mime-Version: 1.0 (Mac OS X Mail 7.2 \(1874\))
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sat Apr 12 13:30:22 2014
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 6/9] branch: display publish branch
+Date: Sat, 12 Apr 2014 07:42:12 -0400
+Message-ID: <20140412114212.GB14820@sigill.intra.peff.net>
+References: <1397156686-31349-1-git-send-email-felipe.contreras@gmail.com>
+ <1397156686-31349-7-git-send-email-felipe.contreras@gmail.com>
+ <CALkWK0mSfsUrSMPMmZ+PNtZ2WBUqN4Swk_e6S1fMGuUoocJSEg@mail.gmail.com>
+ <53471d0b4c8dc_d696b12f08c@nysa.notmuch>
+ <20140411111750.GA28858@sigill.intra.peff.net>
+ <xmqqsipjsm8c.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Matthieu Moy <matthieu.moy@imag.fr>,
+	John Szakmeister <john@szakmeister.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Apr 12 13:42:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WYw8c-0006td-Cb
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Apr 2014 13:30:22 +0200
+	id 1WYwKD-0001ax-0O
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Apr 2014 13:42:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755861AbaDLL3k convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Apr 2014 07:29:40 -0400
-Received: from mxout012.mail.hostpoint.ch ([217.26.49.172]:31240 "EHLO
-	mxout012.mail.hostpoint.ch" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754319AbaDLL3i convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Apr 2014 07:29:38 -0400
-Received: from [10.0.2.46] (helo=asmtp013.mail.hostpoint.ch)
-	by mxout012.mail.hostpoint.ch with esmtp (Exim 4.82 (FreeBSD))
-	(envelope-from <git@ammeter.ch>)
-	id 1WYw7t-000FLA-Cc; Sat, 12 Apr 2014 13:29:37 +0200
-Received: from [91.190.10.159] (helo=[192.168.0.105])
-	by asmtp013.mail.hostpoint.ch with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.82 (FreeBSD))
-	(envelope-from <git@ammeter.ch>)
-	id 1WYw7t-000B1g-AR; Sat, 12 Apr 2014 13:29:37 +0200
-X-Authenticated-Sender-Id: git@ammeter.ch
-In-Reply-To: <534852D4.5070608@web.de>
-X-Mailer: Apple Mail (2.1874)
+	id S1756154AbaDLLmQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Apr 2014 07:42:16 -0400
+Received: from cloud.peff.net ([50.56.180.127]:58509 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755312AbaDLLmP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Apr 2014 07:42:15 -0400
+Received: (qmail 26830 invoked by uid 102); 12 Apr 2014 11:42:14 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 12 Apr 2014 06:42:14 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 12 Apr 2014 07:42:12 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqsipjsm8c.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246168>
 
+On Fri, Apr 11, 2014 at 12:24:35PM -0700, Junio C Hamano wrote:
 
-Am 11.04.2014 um 22:38 schrieb Torsten B=F6gershausen <tboegi@web.de>:
+> > But the branch.master.push setting does not do
+> > anything to "git push".
+> 
+> I am not sure I understand this.  I thought that the desire behind
+> the branch.*.push is to allow something like:
+> 
+> 	... other things in the config ...
+> 	[remote]
+>         	pushdefault = foo
+> 	[remote "foo"]
+> 		url = ...
+>         	push = +refs/heads/*:refs/remotes/satellite/*
+>                 fetch = +refs/heads/*:refs/remotes/foo/*
+> 	[branch "master"]
+> 		; pushremote = foo
+>         	push = refs/heads/bar
+> 
+> so that "git push" on 'master' will override the more generic "all
+> local branches here will go to their remote-tracking hierarchy for
+> this satellite" refspec.  And in that sense branch.master.push would
+> do something to "git push".
 
-> On 2014-04-11 22.20, Frank Ammeter wrote:
->> I=92m not a git expert and this might be the wrong place to ask this=
- question,
->> so please send me somewhere else if I=92m in the wrong place.
->>=20
->> I asked the same question on stack overflow, but didn=92t get any re=
-sponse:
->> http://stackoverflow.com/questions/22823004/files-incorrectly-report=
-ed-modified-git-attributes-buggy-leading-to-inconsist
->>=20
->> If a file is committed with crlf line endings with the text attribut=
-e unset in the working tree, but the text attribute is set in the repo,=
- the file will be incorrectly shown as modified - for all users checkin=
-g out the file.
->> Resetting or manually modifying the file will not help - The only re=
-medy is to commit the .gitattributes with the text attribute set for th=
-e file.
->>=20
->> Wouldn=92t it be better to only consider the checked-in gitattribute=
-s instead of the attributes in the working tree?
-> No.
-> If you change stuff in your working tree (and .gitattributes is a par=
-t of the working tree)
-> how should Git know what you want?
-I don=92t see that argument.
-I don=92t know why at the time of a commit git should read unstaged fil=
-es from my working tree - that affect my commit.
+Ah, I see. If I set "push.default" to "upstream", then the config I
+showed before _does_ affect "git push". But I do not usually do that. I
+have push.default set to "current", and sometimes override it using push
+refspecs on certain repositories.
 
-> The primary assumption is that you know what you are doing in the wor=
-king tree.
->> Is this a bug in git handling gitattributes or is this wrong usage?=20
-> I thinkk No, yes.
->=20
-> If it is wrong usage, is it documented anywhere?
-> Please have a look here:
-> https://www.kernel.org/pub/software/scm/git/docs/gitattributes.html
-I=92ve read this, can=92t see anything about my problem in this documen=
-t.
-No offense, but because I don=92t understand the reasoning behind this,=
- I can=92t really help improve the documentation.
-I don=92t think it makes much sense if I as a non-git-developer add som=
-ething like =20
-=84please apologize the git developers didn=92t really think far enough=
- when they invented git attributes, because they don't care if your rep=
-o gets inconsistent=85"=20
+And that is why I find branch.*.push and Felipe's @{publish} useless for
+my workflow. Pushes already go where I want them to, and I just want a
+way to ask git to perform that config resolution for me. Whereas
+Felipe's workflow is (I think) something like:
+
+  # make a new branch...
+  git checkout -b topic origin/master
+
+  # now publish our branch, and remember our publishing point
+  git push -p my-repo topic
+
+  # and now further pushes automatically go to my-repo/topic
+  git push
+
+I can see there is some value in that override if you do things like:
+
+  git push -p my-repo topic:some-other-name
+
+because the "-p" means "remember this other name I gave".
+
+I would think in such a workflow that most of your branches would end up
+with publish config, though. And therefore @{publish} would become
+equivalent to "where you would push". But Felipe indicated that he would
+not want "branch -vv" to match where all branches would be pushed, but
+rather only those that were specifically configured. So maybe I do not
+understand his workflow after all.
+
+-Peff
