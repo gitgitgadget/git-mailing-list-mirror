@@ -1,175 +1,113 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v2 6/9] branch: display publish branch
-Date: Sat, 12 Apr 2014 10:05:15 -0500
-Message-ID: <5349562bb7ae4_c9914c7308f9@nysa.notmuch>
-References: <1397156686-31349-1-git-send-email-felipe.contreras@gmail.com>
- <1397156686-31349-7-git-send-email-felipe.contreras@gmail.com>
- <CALkWK0mSfsUrSMPMmZ+PNtZ2WBUqN4Swk_e6S1fMGuUoocJSEg@mail.gmail.com>
- <53471d0b4c8dc_d696b12f08c@nysa.notmuch>
- <20140411111750.GA28858@sigill.intra.peff.net>
- <xmqqsipjsm8c.fsf@gitster.dls.corp.google.com>
- <20140412114212.GB14820@sigill.intra.peff.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 1/3] rebase: avoid non-function use of "return" on FreeBSD
+Date: Sat, 12 Apr 2014 19:07:28 +0200
+Message-ID: <vpq38hi8oj3.fsf@anie.imag.fr>
+References: <438458da797bcab97449bfa931a9d1d@74d39fa044aa309eaea14b9f57fe79c>
+	<0779303f7d2257a618b5bed00260a8a@74d39fa044aa309eaea14b9f57fe79c>
+	<vpqsipkmeum.fsf@anie.imag.fr>
+	<D2BF8546-87B4-431A-B86D-6EFAF205279C@gmail.com>
+	<vpq4n1zg4f9.fsf@anie.imag.fr>
+	<D3916156-0F84-4DD2-833F-64DF675325D3@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Matthieu Moy <matthieu.moy@imag.fr>,
-	John Szakmeister <john@szakmeister.net>
-To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 12 17:15:35 2014
+	Eric Sunshine <sunshine@sunshineco.com>
+To: "Kyle J. McKay" <mackyle@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 12 19:10:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WYzeT-0008J9-Qw
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Apr 2014 17:15:30 +0200
+	id 1WZ1SB-00082v-Kr
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Apr 2014 19:10:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754586AbaDLPPT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Apr 2014 11:15:19 -0400
-Received: from mail-ob0-f182.google.com ([209.85.214.182]:55805 "EHLO
-	mail-ob0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753905AbaDLPPS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Apr 2014 11:15:18 -0400
-Received: by mail-ob0-f182.google.com with SMTP id uz6so7420718obc.13
-        for <git@vger.kernel.org>; Sat, 12 Apr 2014 08:15:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=WkwefKM0eIClBVqtJw9gNGCdX8U4gL7hb8qcUJpk5xk=;
-        b=TrXNRizLFsiWZshYi7ZzACXQhr1sw3rtwXGqQMEfpRDPdvkljd8eZuph1DoYPdeUgu
-         eNlxbI05bD8Jv8gmXtskO6Xx1prxdMHY7kQGTAoqSKf7cZg8DLPtgc7oPVicFcSDjvz8
-         oLYCg/+JRNB24xhr0mwEgFHwrq7fcILGVrPD8LQG3X9nomEa3k4P2Ubna3+2MeovUMN3
-         dDotyxAgrF1C8e8hTClpVciSn1YwsD8nhhAhy+7oEavaI1Xe4sgpQpY6xfSzqjWS20zC
-         EJQqOUvO2y88LOd07LovK4DuAkPReQUL8t7xNo3k4S3m9GXTAvihPkKxcyf7i28a9HOW
-         iiVg==
-X-Received: by 10.182.79.227 with SMTP id m3mr31216obx.74.1397315717712;
-        Sat, 12 Apr 2014 08:15:17 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id f1sm46061677oej.5.2014.04.12.08.15.15
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 12 Apr 2014 08:15:16 -0700 (PDT)
-In-Reply-To: <20140412114212.GB14820@sigill.intra.peff.net>
+	id S1754628AbaDLRKu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Apr 2014 13:10:50 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:59111 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752176AbaDLRKt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Apr 2014 13:10:49 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s3CH7R8V002173
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 12 Apr 2014 19:07:27 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s3CH7SMx016768;
+	Sat, 12 Apr 2014 19:07:28 +0200
+In-Reply-To: <D3916156-0F84-4DD2-833F-64DF675325D3@gmail.com> (Kyle J. McKay's
+	message of "Fri, 11 Apr 2014 16:08:53 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sat, 12 Apr 2014 19:07:28 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s3CH7R8V002173
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1397927250.94166@+yv7IlzdcLi9mF2zuHvvUg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246175>
 
-Jeff King wrote:
-> On Fri, Apr 11, 2014 at 12:24:35PM -0700, Junio C Hamano wrote:
-> 
-> > > But the branch.master.push setting does not do
-> > > anything to "git push".
-> > 
-> > I am not sure I understand this.  I thought that the desire behind
-> > the branch.*.push is to allow something like:
-> > 
-> > 	... other things in the config ...
-> > 	[remote]
-> >         	pushdefault = foo
-> > 	[remote "foo"]
-> > 		url = ...
-> >         	push = +refs/heads/*:refs/remotes/satellite/*
-> >                 fetch = +refs/heads/*:refs/remotes/foo/*
-> > 	[branch "master"]
-> > 		; pushremote = foo
-> >         	push = refs/heads/bar
-> > 
-> > so that "git push" on 'master' will override the more generic "all
-> > local branches here will go to their remote-tracking hierarchy for
-> > this satellite" refspec.  And in that sense branch.master.push would
-> > do something to "git push".
-> 
-> Ah, I see. If I set "push.default" to "upstream", then the config I
-> showed before _does_ affect "git push". But I do not usually do that. I
-> have push.default set to "current", and sometimes override it using push
-> refspecs on certain repositories.
-> 
-> And that is why I find branch.*.push and Felipe's @{publish} useless for
-> my workflow. Pushes already go where I want them to, and I just want a
-> way to ask git to perform that config resolution for me. Whereas
-> Felipe's workflow is (I think) something like:
-> 
->   # make a new branch...
->   git checkout -b topic origin/master
-> 
->   # now publish our branch, and remember our publishing point
->   git push -p my-repo topic
-> 
->   # and now further pushes automatically go to my-repo/topic
->   git push
-> 
-> I can see there is some value in that override if you do things like:
-> 
->   git push -p my-repo topic:some-other-name
-> 
-> because the "-p" means "remember this other name I gave".
-> 
-> I would think in such a workflow that most of your branches would end up with
-> publish config, though. And therefore @{publish} would become equivalent to
-> "where you would push".
+"Kyle J. McKay" <mackyle@gmail.com> writes:
 
-> But Felipe indicated that he would not want "branch -vv" to match where all
-> branches would be pushed, but rather only those that were specifically
-> configured. So maybe I do not understand his workflow after all.
+> On Apr 11, 2014, at 10:30, Matthieu Moy wrote:
+>> "Kyle J. McKay" <mackyle@gmail.com> writes:
+>>
+>>> There are already nested functions with file inclusion between both
+>>> levels of nesting in git-rebase--interactive.sh and git-rebase--
+>>> merge.sh now, so it's not introducing anything new.
+>>
+>> OK, so it's less serious than I thought. But still, we're
+>> introducing a
+>> function with 3 levels of nesting, split accross files, in an area
+>> where
+>> we know that at least one shell is buggy ...
+>
+> Currently in maint:
+>
+> The current code in maint does this:
+>
+> git-rebase.sh: top-level
+>   git-rebase.sh: run_specific_rebase()
+>     git-rebase.sh: run_specific_rebase_internal() -- contains "dot"
+>       git-rebase--interactive.sh: top-level (using --continue or -- 
+> skip)
+>         git-rebase--interactive.sh: do_rest
+>           git-rebase--interactive.sh: do_next
 
-It's a pretty typical triangular workflow, with a touch of fork maintainership.
+You're confusing function calls and function nesting. do_rest calls
+do_next, but the definition of do_next is not nested within do_rest.
 
-Here are some types of branches I have:
+When I talk about nested function, I mean
 
-* master [origin/master, gh/master] Git 1.9.1
+f() {
+	g() {
+		...
+	}
+}
 
-My main master branch, I use it as a base point for many other branches. I
-don't use origin/master because that's a moving target.
+Obviously, having functions call each other is not an issue. That's what
+functions are meant to be.
 
-* dev/remote/hg-extra [master] remote-hg: store extra hg information in notes
+Now, having run_specific_rebase_internal include a file which defines
+functions which contain nested functions _is_ something I find weird. It
+both stresses the shell in a buggy area and makes the code harder to
+understand.
 
-A development branch. I don't publish those, therefore no @{publish}.
+> The problem with these changes, particularly the git-rebase-- 
+> interactive.sh one is that a bunch of code is still run when the file
+> is "dot" included.
 
-* fc/publish [fc/branch/nice-verbose, gh/fc/publish] sha1_name: add support for @{publish} marks
+Function definitions, and variables assignments. Is it so much of an
+issue?
 
-A branch that is all good. I publish those, and use them for git-fc (my fork).
-I think they should be in Git's core, but haven't been merged for some reason
-or another.
-
-Notice that the upstream branch is another local branch, not master. Strictly
-speaking it's not an "upstream" branch, but I want 'git rebase' to use that as
-the base point. Another @{base} concept might be more appropriate, but those
-patches are a different story.
-
-* up/publish [master] sha1_name: add support for @{publish} marks
-
-A branch that should be sent upstream. I don't publish those.
-
-Notice up/publish is different from fc/publish because the later depends on
-another fc/* branch, which wasn't accepted upstream.
-
-* fc/master [gh/fc/master] prompt: fix missing file errors in zsh
-
-My main branch, used for git-fc. I merge Git's master, and cherry-pick various
-fixes, so it has always the latest and greatest stuff.
-
-Notice that 'gh/fc/master' is the publish branch, there is no upstream.
-
-* pu [] Merge branch 'travis-ci' into pu
-
-Similar to Junio's pu, I use `git reintegrate` to generate this branch using
-'master' as the baseline, and merging all the fc/* branches. The result should
-be identical to fc/master, if not, we are missing something from upstream, or
-there's something missing in the fc/* branches.
-
-It's not published, and has no upstream.
-
-
-As you can see; some branches are published, others are not. The ones that are
-not published don't have a @{publish}, and `git branch -v` doesn't show them.
-Why is that hard to understand?
+What's the difference between a function definition or variable
+assignment within git-rebase--*.sh and within git-rebase.sh?
 
 -- 
-Felipe Contreras
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
