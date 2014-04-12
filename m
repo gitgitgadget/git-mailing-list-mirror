@@ -1,87 +1,106 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: RE: git-remote-bzr: fatal: mark :399654 not declared
-Date: Sat, 12 Apr 2014 16:20:41 -0500
-Message-ID: <5349ae29eb97b_285f9032ec23@nysa.notmuch>
-References: <8513837.uWFUjXk7Vu@descartes>
+Subject: Re: Cannot push anything via export transport helper after push
+ fails.
+Date: Sat, 12 Apr 2014 16:22:10 -0500
+Message-ID: <5349ae827ef03_285f9032ecd1@nysa.notmuch>
+References: <20130511162936.0354e5d7@opensuse.site>
+ <CAMP44s1YhQR0o-0CLc2PG-EJTZdN4tha-4BVEUy-K_Av81D=GQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Felipe Contreras <felipe.contreras@gmail.com>
-To: =?UTF-8?B?UsO8ZGlnZXIgU29uZGVyZmVsZA==?= <ruediger@c-plusplus.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 12 23:30:56 2014
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>,
+	Andrey Borzenkov <arvidjaar@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 12 23:32:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WZ5Vn-0004Pm-A2
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Apr 2014 23:30:55 +0200
+	id 1WZ5X8-0005t5-NK
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Apr 2014 23:32:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757166AbaDLVaq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Apr 2014 17:30:46 -0400
-Received: from mail-oa0-f43.google.com ([209.85.219.43]:58129 "EHLO
-	mail-oa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756878AbaDLVao convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 12 Apr 2014 17:30:44 -0400
-Received: by mail-oa0-f43.google.com with SMTP id eb12so7760603oac.30
-        for <git@vger.kernel.org>; Sat, 12 Apr 2014 14:30:44 -0700 (PDT)
+	id S1756334AbaDLVcN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Apr 2014 17:32:13 -0400
+Received: from mail-ob0-f170.google.com ([209.85.214.170]:54699 "EHLO
+	mail-ob0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755715AbaDLVcM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Apr 2014 17:32:12 -0400
+Received: by mail-ob0-f170.google.com with SMTP id uz6so7647359obc.1
+        for <git@vger.kernel.org>; Sat, 12 Apr 2014 14:32:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-type:content-transfer-encoding;
-        bh=nxfyqAGZn5F/bW+ZPjLRG1/dF/j6He/yr3XgbaHiuYA=;
-        b=UU+5+1N1rgoRh9VghkM1HBZaNHvdCI5y9TTFwHCeSMSjYhg7jImKfNMsCtZMzPqSnq
-         NZOQng7bLi43LC864vXyuXLoO4Uid5Il713k0SU/poRpfM2D352E13nv+N00Gw+KRxM0
-         u4kfbwdAFA6NUqOz4//XBR/mTKKIzvUTgPK7IJJCMy0rg900GZL/CDJLkz/yTE5tG7PD
-         tVAbUgtxb1W50U9ZB4lPwZK82UD+3GflZ6dxsenz1fwaN/ooLtqDfvUgxoWm30hemmv8
-         XB18uTOky3kuj5MkoTPC/jorpUvXMc0HOV1gzTp4W0lqBq3p/HzgEs14tJ1GEQM0Tk90
-         nw0g==
-X-Received: by 10.182.92.196 with SMTP id co4mr3612249obb.50.1397338244171;
-        Sat, 12 Apr 2014 14:30:44 -0700 (PDT)
+        bh=zWbTo9ZnY2yshsOvX0JzBUQ0ez2S5Bfl35N91vZpIyQ=;
+        b=ZI9tQAyPJjONsGLIpFz2rTQGuxPXlUJECpL7QCnX3BW5el71C2BfNnRtvsCnWg5ZjR
+         +b/N2fk+f2v8xe+n6UI1LJY0Zm/ccmVCtxZG4qUEl21kI9awil5tH7MlhHIfn8SR2x0C
+         lukzYEYQ6/3WzehXpslzXFVYWDrgXaeqWZbEY3QuT2VNXiyvaEDM3g4Z6kuYRPK8YeJG
+         uo5fdiQfQQ7eK2lNpRVCexFVvkNwudFkkAIfWSiAxAVEsgnikhqb8WyO6Ixuwcn//Vth
+         SuMqWtTBs5u4S0T5irdqcen+VRt9t2wajHhmHG4CEgc4HsH1bQxDCZdyj06y3EF/ix+1
+         Xtpw==
+X-Received: by 10.182.230.135 with SMTP id sy7mr26633927obc.24.1397338331872;
+        Sat, 12 Apr 2014 14:32:11 -0700 (PDT)
 Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id c7sm49538558oek.12.2014.04.12.14.30.41
+        by mx.google.com with ESMTPSA id ko3sm49635664oeb.1.2014.04.12.14.32.10
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 12 Apr 2014 14:30:42 -0700 (PDT)
-In-Reply-To: <8513837.uWFUjXk7Vu@descartes>
+        Sat, 12 Apr 2014 14:32:10 -0700 (PDT)
+In-Reply-To: <CAMP44s1YhQR0o-0CLc2PG-EJTZdN4tha-4BVEUy-K_Av81D=GQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246193>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246194>
 
-R=C3=BCdiger Sonderfeld wrote:
-> I'm using git-remote-bzr to access the GNU Emacs Bazaar repo.  I foll=
-owed the=20
-> guideline described here:=20
-> https://lists.gnu.org/archive/html/emacs-devel/2013-05/msg00008.html
->=20
-> Pulling and pushing worked flawless for several month.  But recently =
-git=20
-> bzr stopped working with the following error message:
+Felipe Contreras wrote:
+> On Sat, May 11, 2013 at 7:29 AM, Andrey Borzenkov <arvidjaar@gmail.com> wrote:
+> > I noticed that using git-remote-bzr, but as far as I can tell this is
+> > generic for all transport helpers using fast-export.
+> >
+> >
+> >
+> > What happened was "git push" failed due to merge conflict. So far so
+> > good - but from now on git assumes everything is up to date.
+> >
+> > bor@opensuse:/tmp/test/git> git push origin master
+> > To bzr::bzr+ssh://bor@localhost/tmp/test/bzr
+> >  ! [rejected]        master -> master (non-fast-forward)
+> > error: failed to push some refs to 'bzr::bzr+ssh://bor@localhost/tmp/test/bzr'
+> > hint: Updates were rejected because the tip of your current branch is behind
+> > hint: its remote counterpart. Merge the remote changes (e.g. 'git pull')
+> > hint: before pushing again.
+> > hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+> > bor@opensuse:/tmp/test/git> git push origin master
+> > Everything up-to-date
+> > bor@opensuse:/tmp/test/git>
+> >
+> > The problem seems to be that git fast-export updates marks
+> > unconditionally, whether export actually applied or not. So next time
+> > it assumes everything is already exported and does nothing.
+> >
+> > Is it expected behavior?
+> 
+> Indeed, this is the way it currently works, and it's not easy to fix.
+> We would need some way to make fast-export wait until we know the exit
+> status of the remote helper, and then tell it when it failed, so the
+> marks are not updated.
+> 
+> However, the way remote-bzr/hg work is that the commits are still
+> there anyway. So if you merge the next time you push those commits are
+> already converted, so it's not a problem if fast-export is not
+> exporting them again.
+> 
+> So even though it's not ideal, it should work.
+> 
+> The problem is when the remote-helper crashes and the marks of
+> fast-export and the remote-helper are out of sync, and then the user
+> is really screwed.
 
-Sorry for the late reply.
+I sent patches that should fix this problem:
 
-So basically your repository is screwed up. I just sent patches to the =
-Git's
-core so it doesn't happen again.
+http://article.gmane.org/gmane.comp.version-control.git/246187
 
-To recover the easiest is to remove these files: .git/bzr/origin/marks-=
-*, in
-your repository, and then run `git fetch`. However, when you do that ba=
-sically
-you have to fetch everything again.
-
-You could also try this script I wrote[1]. If you run `git marks-check =
--mbzr -v
--f origin` it will find all the issues in the mark files and fix them. =
-Then run
-`git fetch` again.
-
-Cheers.
-
-[1] https://gist.github.com/felipec/10551806
-
---=20
-=46elipe Contreras
+-- 
+Felipe Contreras
