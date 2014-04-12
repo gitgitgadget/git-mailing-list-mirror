@@ -1,123 +1,94 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: On "interpret-trailers" standalone tool
-Date: Sat, 12 Apr 2014 21:30:03 +0200 (CEST)
-Message-ID: <20140412.213003.73509455950485398.chriscool@tuxfamily.org>
-References: <xmqq61mi1djt.fsf@gitster.dls.corp.google.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: RE: [PATCH] git-remote-hg : Enable use of,
+ $GIT_DIR/hg/origin/clone/.hg/hgrc
+Date: Sat, 12 Apr 2014 15:01:52 -0500
+Message-ID: <53499bb02c140_285f9032ec58@nysa.notmuch>
+References: <53076DFC.1000602@gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=us-ascii
+Content-Type: text/plain;
+ charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Apr 12 21:30:56 2014
+Cc: felipe.contreras@gmail.com
+To: Daniel Liew <delcypher@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 12 22:12:08 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WZ3dg-0002Oc-6z
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Apr 2014 21:30:56 +0200
+	id 1WZ4HX-0003MG-A7
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Apr 2014 22:12:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754783AbaDLTaI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Apr 2014 15:30:08 -0400
-Received: from mail-3y.bbox.fr ([194.158.98.45]:35456 "EHLO mail-3y.bbox.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754472AbaDLTaH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Apr 2014 15:30:07 -0400
-Received: from localhost (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-3y.bbox.fr (Postfix) with ESMTP id DB5BA49;
-	Sat, 12 Apr 2014 21:30:03 +0200 (CEST)
-In-Reply-To: <xmqq61mi1djt.fsf@gitster.dls.corp.google.com>
-X-Mailer: Mew version 6.3 on Emacs 23.3 / Mule 6.0 (HANACHIRUSATO)
+	id S1756234AbaDLUL7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Apr 2014 16:11:59 -0400
+Received: from mail-oa0-f41.google.com ([209.85.219.41]:32961 "EHLO
+	mail-oa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756223AbaDLULy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Apr 2014 16:11:54 -0400
+Received: by mail-oa0-f41.google.com with SMTP id j17so7726972oag.28
+        for <git@vger.kernel.org>; Sat, 12 Apr 2014 13:11:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=Hv3JcPir5fndNIzF5bbf59EcXM2yb0C3okOwwQBBYWs=;
+        b=PKe3vj6eg5uqIovGgBhTWomoL4g+GPMhUKSjDrFi9zefMc/64dA6xVYtvaGZTLCQnD
+         2YEnw2BuNTArm5AaiH7ilGlo0J3+uibpLHYVKhrEGUZIeALHHXRs0XKpEoYlQbH+hrtW
+         jXoG3QWXjclN+jSXMHgn59/txE6xC3knyuI4O35BtSBgBNP0n9+VnjA+shXvN6hwcg4/
+         +QS+EzimX23ZJicuxPVPGQAvZnZaIEKNfKSGIltbTAZJyZaew7yjordf7Rz+5tPwOtis
+         pBppxizpxFe5TWIX/8tk2+AMulGQNJhYEh9SphbU7jwMQdHUrivBQxAzdOat8KLhUPli
+         Dnfw==
+X-Received: by 10.182.75.161 with SMTP id d1mr5960104obw.7.1397333514388;
+        Sat, 12 Apr 2014 13:11:54 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id cn1sm48808426oeb.11.2014.04.12.13.11.51
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 12 Apr 2014 13:11:52 -0700 (PDT)
+In-Reply-To: <53076DFC.1000602@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246178>
 
-From: Junio C Hamano <gitster@pobox.com>
->
-> So far I've mostly been ignoring how the command line would look
-> like,
-
-I don't really feel this way ;-)
-
-> because the intermediate goal to my mind was to have it as a
-> hook that are added by people better versed with Git than an average
-> end-user, and if the command line interface had to change then they
-> are capable of updating it, so it is more acceptable than the usual
-> end-user tools to break compatibility between an early prototype and
-> later versions, and because the final goal would be to libify the
-> internal logic and integrate it into places we would invoke hooks,
-> making the standalone command irrelevant.
+Daniel Liew wrote:
+> git-remote-hg : Enable use of, $GIT_DIR/hg/origin/clone/.hg/hgrc
 > 
-> However, I started to care ;-)  For example, wouldn't it be nice if
-> you can do
+> Use the hgrc configuration file in the internal mercurial repository in
+> addition to the other system wide hgrc files. This is done by using the
+> 'ui' object from the 'repository' object which will have loaded the
+> repository hgrc file if it exists.
+
+What is the problem you are trying to solve? Is there a way to test that this
+code is working correctly?
+
+> Prior to this patch the mercurial repository's hgrc file was ignored
+> which I consider to be a bug.
+
+It might be, although the internal repository is not supposed to be used by the
+user.
+
+> Signed-off-by: Dan Liew <delcypher@gmail.com>
+> ---
+>  contrib/remote-helpers/git-remote-hg | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
->     $ git format-patch -5 --cover-letter -o +my-series/ my-topic
->     $ git interpret-trailers "some args" ./+my-series/0*.patch
+> diff --git a/contrib/remote-helpers/git-remote-hg
+> b/contrib/remote-helpers/git-remote-hg
+> index eb89ef6..451842a 100755
+> --- a/contrib/remote-helpers/git-remote-hg
+> +++ b/contrib/remote-helpers/git-remote-hg
+> @@ -421,7 +421,7 @@ def get_repo(url, alias):
 > 
-> to fix-up the "trailers" portion of the proposed log message in the
-> formatted patches?  There may be other possible uses that having a
-> standalone tool would be helpful, even after we removed the need for
-> such a tool from commit, rebase, etc. by integrating the internal
-> logic to the implementation of these commands.
-> 
-> However, I am wondering if the current "everything on the command
-> line is instruction to the command" is too limiting to allow the use
-> of the tool both as a filter and as a tool that can work on one or
-> more files named on the command line.  If we start from there, the
-> only way to later add "these arguments are names of the files to be
-> operated on" is to add "--file <file1> --file <file2>..." options,
-> which feels quite backwards as a UNIX tool.
+>          repo = hg.repository(myui, local_path)
+>          try:
+> -            peer = hg.peer(myui, {}, url)
+> +            peer = hg.peer(repo._unfilteredrepo.ui, {}, url)
 
-Yeah, except that we could add for example a '-o' option that would
-take a directory as argument and that would mean that the command
-should operate on all the files in this directory. It would be like
-the -o option of the format-patch command.
+Why not repo.unfiltered.ui? Or just repo.ui.
 
-> It would be easier to explain and understand if the command line
-> option set is modeled after things like "cat" or "sed", where
-> non-option arguments are filenames, instructions are given in the
-> form of "--option <arg>" (e.g. "-e 's/foo/bar/'" given to sed), and
-> having no non-option arguments on the command line signals that the
-> tool is working as a filter.
+Cheers.
 
-Yeah, that's an interesting idea. I am not against making yet another
-number of changes to "git interpret-trailers" to make something like
-the above possible. But I think there are a few things that should be
-discussed first.
-
-First, if you think that the command might often be used along with
-format-patch, then it might be interesting for the user to have the
-command behave like format-patch instead of like cat or sed. This
-means that we could add the -o option I suggest above. And we don't
-need to do it now. We could add this option later instead of having to
-make the command work on many files now.
-
-Second, if the command should accept a patch as input instead of just
-a commit message, or both, this means that the command should have a
-way to tell if it is passed a patch, and then locate the commit
-message part in the patch. This means yet other changes to the
-command. Maybe these changes could be made later, in another series,
-or when the need arises to use it on full patches.
-
-Third, if trailers arguments are passed to the command using an option
-like "-z token=value" or "-z token:value", it would be nice to the
-user for consistency if the same option could be used when passing the
-same arguments to "git commit" and perhaps other commands like "git
-rebase", "git cherry-pick" and so on. This means that we now have to
-choose carefully the name of this option. Perhaps we can just give it
-a long name now like --trailer and care later about a short name, but
-I think it would not be very nice to the user to only have a long name
-for this option as it will very often be used.
-
-Fourth, some users might want the command to be passed some files as
-input, but they might not want the command to modify these input
-files. They might prefer the command to write its ouput into another
-set of output files. Maybe a syntax like cat or sed is not very well
-suited for this kind of use, while having a -o option for the output
-directory and a -i option for the input directory (if different from
-the output dir) would be nicer.
-
-Thanks,
-Christian.
+-- 
+Felipe Contreras
