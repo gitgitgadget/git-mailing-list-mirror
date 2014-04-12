@@ -1,116 +1,87 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 3/5] transport-helper: propagate recvline() error pushing
-Date: Sat, 12 Apr 2014 15:33:30 -0500
-Message-ID: <1397334812-12215-4-git-send-email-felipe.contreras@gmail.com>
-References: <1397334812-12215-1-git-send-email-felipe.contreras@gmail.com>
+Subject: RE: git-remote-bzr: fatal: mark :399654 not declared
+Date: Sat, 12 Apr 2014 16:20:41 -0500
+Message-ID: <5349ae29eb97b_285f9032ec23@nysa.notmuch>
+References: <8513837.uWFUjXk7Vu@descartes>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 12 22:44:27 2014
+To: =?UTF-8?B?UsO8ZGlnZXIgU29uZGVyZmVsZA==?= <ruediger@c-plusplus.de>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 12 23:30:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WZ4mn-0004kX-04
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Apr 2014 22:44:25 +0200
+	id 1WZ5Vn-0004Pm-A2
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Apr 2014 23:30:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751065AbaDLUoF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Apr 2014 16:44:05 -0400
-Received: from mail-ob0-f182.google.com ([209.85.214.182]:60375 "EHLO
-	mail-ob0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756249AbaDLUnm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Apr 2014 16:43:42 -0400
-Received: by mail-ob0-f182.google.com with SMTP id uz6so7648860obc.27
-        for <git@vger.kernel.org>; Sat, 12 Apr 2014 13:43:41 -0700 (PDT)
+	id S1757166AbaDLVaq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Apr 2014 17:30:46 -0400
+Received: from mail-oa0-f43.google.com ([209.85.219.43]:58129 "EHLO
+	mail-oa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756878AbaDLVao convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 12 Apr 2014 17:30:44 -0400
+Received: by mail-oa0-f43.google.com with SMTP id eb12so7760603oac.30
+        for <git@vger.kernel.org>; Sat, 12 Apr 2014 14:30:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=NILl5vKk/3A5KxGqK4VXQswfFHO/y6bKtUiaX0bxl5g=;
-        b=RKlbLaP0abD2a94i9a/A+5WPPVZ0rKp1NnyLtoUbjLJysOa3ppRT/MU+1Bo5gjiVYG
-         /WZr1DExrCYCT2bdlksUs148MdmewP8yxY/UYl8u8sp+OrTpbSu0LXSbvViaCJUkxSQJ
-         u5XJbn/+J6PXzdTFjL4M0wgqECgMgnJgITZgJlkix5AsqSEB1dkPoXla9sYOmRavO5CH
-         oeDvhvZIbR7xpuTZ18NxwUnQPsOW/VRQWMY+Gu21WiSbKMqEHZJvT/dZe++o5X7GXpP7
-         Tt77FdhUlcl8XuhruYQOWPvtWqQtg05eFnLMNILPOyuLcJ88SBaXm/6poKoa45hJlD2n
-         gK/A==
-X-Received: by 10.60.160.173 with SMTP id xl13mr26449644oeb.19.1397335421727;
-        Sat, 12 Apr 2014 13:43:41 -0700 (PDT)
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=nxfyqAGZn5F/bW+ZPjLRG1/dF/j6He/yr3XgbaHiuYA=;
+        b=UU+5+1N1rgoRh9VghkM1HBZaNHvdCI5y9TTFwHCeSMSjYhg7jImKfNMsCtZMzPqSnq
+         NZOQng7bLi43LC864vXyuXLoO4Uid5Il713k0SU/poRpfM2D352E13nv+N00Gw+KRxM0
+         u4kfbwdAFA6NUqOz4//XBR/mTKKIzvUTgPK7IJJCMy0rg900GZL/CDJLkz/yTE5tG7PD
+         tVAbUgtxb1W50U9ZB4lPwZK82UD+3GflZ6dxsenz1fwaN/ooLtqDfvUgxoWm30hemmv8
+         XB18uTOky3kuj5MkoTPC/jorpUvXMc0HOV1gzTp4W0lqBq3p/HzgEs14tJ1GEQM0Tk90
+         nw0g==
+X-Received: by 10.182.92.196 with SMTP id co4mr3612249obb.50.1397338244171;
+        Sat, 12 Apr 2014 14:30:44 -0700 (PDT)
 Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id ci10sm49183307oec.0.2014.04.12.13.43.39
+        by mx.google.com with ESMTPSA id c7sm49538558oek.12.2014.04.12.14.30.41
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 12 Apr 2014 13:43:40 -0700 (PDT)
-X-Mailer: git-send-email 1.9.1+fc3.9.gc73078e
-In-Reply-To: <1397334812-12215-1-git-send-email-felipe.contreras@gmail.com>
+        Sat, 12 Apr 2014 14:30:42 -0700 (PDT)
+In-Reply-To: <8513837.uWFUjXk7Vu@descartes>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246193>
 
-It's cleaner, and will allow us to do something sensible on errors
-later.
+R=C3=BCdiger Sonderfeld wrote:
+> I'm using git-remote-bzr to access the GNU Emacs Bazaar repo.  I foll=
+owed the=20
+> guideline described here:=20
+> https://lists.gnu.org/archive/html/emacs-devel/2013-05/msg00008.html
+>=20
+> Pulling and pushing worked flawless for several month.  But recently =
+git=20
+> bzr stopped working with the following error message:
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- transport-helper.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+Sorry for the late reply.
 
-diff --git a/transport-helper.c b/transport-helper.c
-index 1432a6d..b068ea5 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -733,16 +733,21 @@ static int push_update_ref_status(struct strbuf *buf,
- 	return !(status == REF_STATUS_OK);
- }
- 
--static void push_update_refs_status(struct helper_data *data,
-+static int push_update_refs_status(struct helper_data *data,
- 				    struct ref *remote_refs)
- {
- 	struct strbuf buf = STRBUF_INIT;
- 	struct ref *ref = remote_refs;
-+	int ret = 0;
-+
- 	for (;;) {
- 		char *private;
- 
--		if (recvline(data, &buf))
--			exit(128);
-+		if (recvline(data, &buf)) {
-+			ret = 1;
-+			break;
-+		}
-+
- 		if (!buf.len)
- 			break;
- 
-@@ -760,6 +765,7 @@ static void push_update_refs_status(struct helper_data *data,
- 		free(private);
- 	}
- 	strbuf_release(&buf);
-+	return ret;
- }
- 
- static int push_refs_with_push(struct transport *transport,
-@@ -840,8 +846,7 @@ static int push_refs_with_push(struct transport *transport,
- 	sendline(data, &buf);
- 	strbuf_release(&buf);
- 
--	push_update_refs_status(data, remote_refs);
--	return 0;
-+	return push_update_refs_status(data, remote_refs);
- }
- 
- static int push_refs_with_export(struct transport *transport,
-@@ -897,8 +902,7 @@ static int push_refs_with_export(struct transport *transport,
- 
- 	if (finish_command(&exporter))
- 		die("Error while running fast-export");
--	push_update_refs_status(data, remote_refs);
--	return 0;
-+	return push_update_refs_status(data, remote_refs);
- }
- 
- static int push_refs(struct transport *transport,
--- 
-1.9.1+fc3.9.gc73078e
+So basically your repository is screwed up. I just sent patches to the =
+Git's
+core so it doesn't happen again.
+
+To recover the easiest is to remove these files: .git/bzr/origin/marks-=
+*, in
+your repository, and then run `git fetch`. However, when you do that ba=
+sically
+you have to fetch everything again.
+
+You could also try this script I wrote[1]. If you run `git marks-check =
+-mbzr -v
+-f origin` it will find all the issues in the mark files and fix them. =
+Then run
+`git fetch` again.
+
+Cheers.
+
+[1] https://gist.github.com/felipec/10551806
+
+--=20
+=46elipe Contreras
