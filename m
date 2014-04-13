@@ -1,117 +1,56 @@
-From: =?ISO-8859-1?Q?G=E1bor_Szeder?= <szeder@ira.uka.de>
-Subject: Re: [PATCH 5/5] completion: fix completion of certain aliases
-Date: Sun, 13 Apr 2014 11:38:23 +0430
-Message-ID: <E1WZEWT-0002R7-1d@iramx2.ira.uni-karlsruhe.de>
+From: Javier Domingo Cansino <javierdo1@gmail.com>
+Subject: Re: Our official home page and logo for the Git project
+Date: Sun, 13 Apr 2014 10:53:07 +0200
+Message-ID: <CALZVapneysw+1RkYKN=v7oMgrGO7hRdzCnES7OGybV4g9Vqnxw@mail.gmail.com>
+References: <xmqq7g6z4q6b.fsf@gitster.dls.corp.google.com> <534578b2e22e2_af197d3081@nysa.notmuch>
+ <CAH5451kNoXobbh3-WBkewvKvNeFkV0P14Z55=qDN+Ak2WGkHSA@mail.gmail.com>
+ <20140411114017.GC28858@sigill.intra.peff.net> <20140411132448.GA5845@nysa.casa.local>
+ <20140412123419.GD14820@sigill.intra.peff.net> <53494780bc447_c9914c730841@nysa.notmuch>
+ <CALZVapkdr5R8h3XWwmo3LHEXnMrOQhzVCw2LwP5oRbJ=MVnbUg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: base64
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: Andrew Ardill <andrew.ardill@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Apr 13 09:25:33 2014
+X-From: git-owner@vger.kernel.org Sun Apr 13 10:53:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WZEnE-0002od-9a
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Apr 2014 09:25:32 +0200
+	id 1WZGAT-0005js-81
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Apr 2014 10:53:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751335AbaDMHZZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Apr 2014 03:25:25 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:47480 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751137AbaDMHZY (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 13 Apr 2014 03:25:24 -0400
-X-Greylist: delayed 1001 seconds by postgrey-1.27 at vger.kernel.org; Sun, 13 Apr 2014 03:25:24 EDT
-Received: from [2.178.96.17] (helo=[192.168.1.10])
-	by iramx2.ira.uni-karlsruhe.de with esmtpsa port 587 
-	iface 141.3.10.81 id 1WZEWT-0002R7-1d; Sun, 13 Apr 2014 09:08:25 +0200
-X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1397372905.
-X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de  esmtpsa 1397373905.
+	id S1753438AbaDMIx3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Apr 2014 04:53:29 -0400
+Received: from mail-ve0-f181.google.com ([209.85.128.181]:49880 "EHLO
+	mail-ve0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752451AbaDMIx2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Apr 2014 04:53:28 -0400
+Received: by mail-ve0-f181.google.com with SMTP id oy12so6183663veb.26
+        for <git@vger.kernel.org>; Sun, 13 Apr 2014 01:53:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=BbpY8jm+2ez7Uz+dZDEFnhp/AMymASuzLqThE8w9K8c=;
+        b=U1bkSpq7kuhPSZ3T1EFZ8L7PESyH34X04l7qtmMQrNgnko6sugwXubAJ5yIu5cgog0
+         g6ZGAw6Xt5P52zq1hhOMzKYblnU6paAfA/MKEI6Y1qgVE7bBWgUZ8pV26ZCXCXO6kjL6
+         /EefM0jQtlvjUNTLdqL7Rp7K0T00vfCAvTLncDslukvo87p4mqMoHSGKMAEuwivOSDpD
+         tG4anQECRNEglWIbcOtI/FL7LzxCM/fkOUpKYMawhvWvXPSdbCp/Epvx9EFCGw9rZA9T
+         71O3Mcf3yUoOPq/J/jP4ST2T4RlMspVDWeaGSFAxE48kDIfRWm5S7gYd8U0s/vl+DMio
+         tCQw==
+X-Received: by 10.58.96.36 with SMTP id dp4mr1513835veb.21.1397379207286; Sun,
+ 13 Apr 2014 01:53:27 -0700 (PDT)
+Received: by 10.220.251.199 with HTTP; Sun, 13 Apr 2014 01:53:07 -0700 (PDT)
+In-Reply-To: <CALZVapkdr5R8h3XWwmo3LHEXnMrOQhzVCw2LwP5oRbJ=MVnbUg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246206>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246207>
 
-CkhpLAoKW0knbSB0cmF2ZWxsaW5nLCBzbyBJIGRvbid0IGhhdmUgdGhlIG1lYW5zIHRvIGFjdHVh
-bGx5IHRyeSBvdXQgdGhpcyBwYXRjaCwgYW5kIGl0IG1pZ2h0IHRha2UgYSB3aGlsZSBhIHRvIHJl
-cGx5IHRvIGFueSBmb2xsb3cgdXBzLl0KCk9uIEFwciAxMCwgMjAxNCAxMjowMyBBTSwgSnVuaW8g
-QyBIYW1hbm8gPGdpdHN0ZXJAcG9ib3guY29tPiB3cm90ZToKPgo+IEZlbGlwZSBDb250cmVyYXMg
-PGZlbGlwZS5jb250cmVyYXNAZ21haWwuY29tPiB3cml0ZXM6IAo+Cj4gPiBTb21lIGNvbW1hbmRz
-IG5lZWQgdGhlIGZpcnN0IHdvcmQgdG8gZGV0ZXJtaW5lIHRoZSBhY3R1YWwgYWN0aW9uIHRoYXQg
-aXMgCj4gPiBiZWluZyBleGVjdXRlZCwgaG93ZXZlciwgdGhlIGNvbW1hbmQgaXMgd3Jvbmcgd2hl
-biB3ZSB1c2UgYW4gYWxpYXMsIGZvciAKPiA+IGV4YW1wbGUgJ2FsaWFzLnA9cHVzaCcsIGlmIHdl
-IHRyeSB0byBjb21wbGV0ZSAnZ2l0IHAgb3JpZ2luICcsIHRoZSAKPiA+IHJlc3VsdCB3b3VsZCBi
-ZSB3cm9uZyBiZWNhdXNlIF9fZ2l0X2NvbXBsZXRlX3JlbW90ZV9vcl9yZWZzcGVjKCkgZG9lc24n
-dCAKPiA+IGtub3cgd2hlcmUgaXQgY29tZSBmcm9tLiAKPiA+IAo+ID4gU28gbGV0J3Mgb3ZlcnJp
-ZGUgd29yZHNbMV0sIHNvIHRoZSBhbGlhcyAncCcgaXMgb3ZlcnJpZGUgYnkgdGhlIGFjdHVhbCAK
-PiA+IGNvbW1hbmQsICdwdXNoJy4gCj4gPiAKPiA+IFJlcG9ydGVkLWJ5OiBBeW1lcmljIEJlYXVt
-ZXQgPGF5bWVyaWMuYmVhdW1ldEBnbWFpbC5jb20+IAo+ID4gU2lnbmVkLW9mZi1ieTogRmVsaXBl
-IENvbnRyZXJhcyA8ZmVsaXBlLmNvbnRyZXJhc0BnbWFpbC5jb20+IAo+ID4gLS0tIAo+Cj4gRG9l
-cyAic29tZSBjb21tYW5kcyIgYWJvdmUgcmVmZXIgdG8gYW55dGhpbmcgdGhhdCB1c2VzIAo+IF9f
-Z2l0X2NvbXBsZXRlX3JlbW90ZV9vcl9yZWZzcGVjLCBvciBpcyB0aGUgc2V0IG9mIGNvbW1hbmRz
-IGxhcmdlciAKPiB0aGFuIHRoYXQ/IAo+Cj4gSSBhbSB3b25kZXJpbmcgaWYgaXQgaXMgc2FmZXIg
-dG8gaW50cm9kdWNlIGEgbmV3ICJsb2NhbCIgdmFyaWFibGUgCj4gdGhhdCBpcyBzZXQgYnkgdGhl
-IGNhbGxlciBvZiBfX2dpdF9jb21wbGV0ZV9yZW1vdGVfb3JfcmVmc3BlYyBhbmQgCj4gaW5zcGVj
-dGVkIGJ5IF9fZ2l0X2NvbXBsZXRlX3JlbW90ZV9vcl9yZWZzcGVjIChpbnN0ZWFkIG9mIHdvcmRz
-WzFdKSAKPiB0byBjb21tdW5pYXRlIHRoZSByZWFsIG5hbWUgb2YgdGhlIGdpdCBzdWJjb21tYW5k
-IGJlaW5nIGNvbXBsZXRlZCwgCj4gd2l0aG91dCB0b3VjaGluZyB3b3Jkc1tdIGluIHBsYWNlLiAK
-Pgo+IFRoYXQgd2F5LCB3ZSB3b3VsZG4ndCBoYXZlIHRvIHdvcnJ5IGFib3V0IGFsbCB0aGUgb3Ro
-ZXIgcmVmZXJlbmNlcyAKPiBvZiB3b3Jkc1tjXSwgd29yZHNbaV0sIHdvcmRzW0NVUlJFTlRdIGV0
-Yy4gaW4gdGhlIHNjcmlwdCBzZWVpbmcgdGhlIAo+IHdvcmQgdGhhdCB0aGUgZW5kLXVzZXIgZGlk
-IG5vdCB0eXBlIGFuZCBkaWQgbm90IGFjdHVhbGx5IGFwcGVhciBvbiAKPiB0aGUgY29tbWFuZCBs
-aW5lLiAKPgo+IEJ1dCBwZXJoYXBzIHdlIG11Y2sgd2l0aCB0aGUgY29udGVudHMgb2Ygd29yZHNb
-XSBpbiBhIHNpbWlsYXIgd2F5IGluIAo+IG1hbnkgZGlmZmVyZW50IHBsYWNlcyBpbiB0aGUgZXhp
-c3RpbmcgY29tcGxldGlvbiBjb2RlIG9mdGVuIGVub3VnaCAKPiB0aGF0IHN1Y2ggYW4gYXR0ZW1w
-dCBub3QgdG8gdG91Y2ggdGhlIHdvcmRzW10gYXJyYXkgZG9lcyBub3QgYnV5IHVzIAo+IG11Y2gg
-c2FmZXR5IGFueXdheS7CoCBJIGRpZG4ndCBjaGVjayAoYW5kIHRoYXQgaXMgd2h5IEkgYW0gYXNr
-aW5nIAo+IHdpdGggIkkgYW0gd29uZGVyaW5nLi4uIikuCgp3b3Jkc1tdIGlzIGp1c3QgZmluZSwg
-d2UgbmV2ZXIgbW9kaWZ5IGl0IGFmdGVyIGl0IGlzIGZpbGxlZCBieSBfZ2V0X2NvbXBfd29yZHNf
-YnlfcmVmKCkgYXQgdGhlIHZlcnkgYmVnaW5uaW5nLgoKVGhlIHJvb3Qgb2YgdGhlIHByb2JsZW0g
-aXMgdGhhdCB0aGUgZXhwZWN0ZWQgcG9zaXRpb24gb2YgdGhlIG5hbWUgb2YgdGhlIGdpdCBjb21t
-YW5kIGluIF9fZ2l0X2NvbXBsZXRlX3JlbW90ZV9vcl9yZWZzcGVjKCkgaXMgaGFyZGNvZGVkIGFz
-IHdvcmRzWzFdLCBidXQgdGhhdCBpcyBub3QgdGhlIGNhc2Ugd2hlbjoKCsKgIDEpIGl0J3MgYW4g
-YWxpYXMsIGFzIGluIEZlbGlwZSdzIGV4YW1wbGU6IGdpdCBwIG9yaTxUQUI+LCBiZWNhdXNlIHdo
-aWxlIHRoZSBpbmRleCBpcyBvaywgdGhlIGNvbnRlbnQgaXMgbm90LgoKwqAgMikgaW4gcHJlc2Vu
-Y2Ugb2Ygb3B0aW9ucyBvZiB0aGUgbWFpbiBnaXQgY29tbWFuZDogZ2l0IC1jIGZvbz1iYXIgcHVz
-aCBvcmk8VEFCPiwgYmVjYXVzZSB0aGUgaW5kZXggaXMgb2ZmLgoKwqAgMykgdGhlIGNvbW1hbmQg
-aXMgYSBzaGVsbCBhbGlhcyBmb3Igd2hpY2ggdGhlIHVzZXIgZXhwbGljaXRseSBzZXQgdGhlIGNv
-bXBsZXRpb24gZnVuY3Rpb24gd2l0aCBfX2dpdF9jb21wbGV0ZSgpIChhdCBoaXMgb3duIHJpc2sp
-OiBhbGlhcyBncD0iZ2l0IHB1c2giOyBfX2dpdF9jb21wbGV0ZSBncCBfZ2l0X3B1c2g7IGdwIG9y
-aTxUQUI+IE5laXRoZXIgdGhlIGluZGV4IG5vciB0aGUgY29udGVudCBhcmUgb2suCgpGaXhpbmcg
-dGhlIGhhcmQtY29kZWQgaW5kZXhpbmcgd291bGQgb25seSBzb2x2ZSAyKSBidXQgbm90IDEpIGFu
-ZCAzKSwgYXMgaXQgb2J2aW91c2x5IGNvdWxkbid0IHR1cm4gdGhlIGdpdCBvciBzaGVsbCBhbGlh
-cyBpbnRvIGEgZ2l0IGNvbW1hbmQgb24gaXRzIG93bi4KCkZlbGlwZSdzIHBhdGNoIG9ubHkgZGVh
-bHMgd2l0aCAxKSwgYXMgaXQgb25seSBraWNrcyBpbiBpbiBjYXNlIG9mIGEgZ2l0IGFsaWFzLgoK
-Q29tbXVuaWNhdGluZyB0aGUgbmFtZSBvZiB0aGUgZ2l0IGNvbW1hbmQgdG8gX19naXRfY29tcGxl
-dGVfcmVtb3RlX29yX3JlZnNwZWMoKSBieSBpdHMgY2FsbGVycyB2aWEgYSBuZXcgdmFyaWFibGUg
-YXMgc3VnZ2VzdGVkIGJ5IEp1bmlvLCBvciBwZXJoYXBzIGJ5IGFuIGFkZGl0aW9uYWwgcGFyYW1l
-dGVyIHRvIHRoZSBmdW5jdGlvbiBpcyBJTUhPIHRoZSByaWdodCB0aGluZyB0byBkbywgYmVjYXVz
-ZSwgdW5sZXNzIEknbSBtaXNzaW5nIHNvbWV0aGluZywgaXQgd291bGQgbWFrZSBhbGwgdGhyZWUg
-Y2FzZXMgd29yay4KCkJlc3QsCkfDoWJvcgoKPiBUaGFua3MsIHdpbGwgcXVldWUuIAo+Cj4gW1Jh
-bSBhbmQgU3plZGVyIENDJ2VkIGFzIHRoZXkgYXBwZWFyIGluIHNob3J0bG9nIGZvciB0aGUgcGFz
-dCAxMiAKPiBtb250aHNdLiAKPgo+ID7CoCBjb250cmliL2NvbXBsZXRpb24vZ2l0LWNvbXBsZXRp
-b24uYmFzaCB8IDEgKyAKPiA+wqAgY29udHJpYi9jb21wbGV0aW9uL2dpdC1jb21wbGV0aW9uLnpz
-aMKgIHwgMSArIAo+ID7CoCAyIGZpbGVzIGNoYW5nZWQsIDIgaW5zZXJ0aW9ucygrKSAKPiA+IAo+
-ID4gZGlmZiAtLWdpdCBhL2NvbnRyaWIvY29tcGxldGlvbi9naXQtY29tcGxldGlvbi5iYXNoIGIv
-Y29udHJpYi9jb21wbGV0aW9uL2dpdC1jb21wbGV0aW9uLmJhc2ggCj4gPiBpbmRleCA5NTI1MzQz
-Li44OTNhZTVkIDEwMDY0NCAKPiA+IC0tLSBhL2NvbnRyaWIvY29tcGxldGlvbi9naXQtY29tcGxl
-dGlvbi5iYXNoIAo+ID4gKysrIGIvY29udHJpYi9jb21wbGV0aW9uL2dpdC1jb21wbGV0aW9uLmJh
-c2ggCj4gPiBAQCAtMjU0Nyw2ICsyNTQ3LDcgQEAgX19naXRfbWFpbiAoKSAKPiA+wqAgCj4gPsKg
-IGxvY2FsIGV4cGFuc2lvbj0kKF9fZ2l0X2FsaWFzZWRfY29tbWFuZCAiJGNvbW1hbmQiKSAKPiA+
-wqAgaWYgWyAtbiAiJGV4cGFuc2lvbiIgXTsgdGhlbiAKPiA+ICsgd29yZHNbMV09JGV4cGFuc2lv
-biAKPiA+wqAgY29tcGxldGlvbl9mdW5jPSJfZ2l0XyR7ZXhwYW5zaW9uLy8tL199IiAKPiA+wqAg
-ZGVjbGFyZSAtZiAkY29tcGxldGlvbl9mdW5jID4vZGV2L251bGwgJiYgJGNvbXBsZXRpb25fZnVu
-YyAKPiA+wqAgZmkgCj4gPiBkaWZmIC0tZ2l0IGEvY29udHJpYi9jb21wbGV0aW9uL2dpdC1jb21w
-bGV0aW9uLnpzaCBiL2NvbnRyaWIvY29tcGxldGlvbi9naXQtY29tcGxldGlvbi56c2ggCj4gPiBp
-bmRleCA2Yjc3OTY4Li45ZjZmMGZhIDEwMDY0NCAKPiA+IC0tLSBhL2NvbnRyaWIvY29tcGxldGlv
-bi9naXQtY29tcGxldGlvbi56c2ggCj4gPiArKysgYi9jb250cmliL2NvbXBsZXRpb24vZ2l0LWNv
-bXBsZXRpb24uenNoIAo+ID4gQEAgLTEwNCw2ICsxMDQsNyBAQCBfX2dpdF96c2hfYmFzaF9mdW5j
-ICgpIAo+ID7CoCAKPiA+wqAgbG9jYWwgZXhwYW5zaW9uPSQoX19naXRfYWxpYXNlZF9jb21tYW5k
-ICIkY29tbWFuZCIpIAo+ID7CoCBpZiBbIC1uICIkZXhwYW5zaW9uIiBdOyB0aGVuIAo+ID4gKyB3
-b3Jkc1sxXT0kZXhwYW5zaW9uIAo+ID7CoCBjb21wbGV0aW9uX2Z1bmM9Il9naXRfJHtleHBhbnNp
-b24vLy0vX30iIAo+ID7CoCBkZWNsYXJlIC1mICRjb21wbGV0aW9uX2Z1bmMgPi9kZXYvbnVsbCAm
-JiAkY29tcGxldGlvbl9mdW5jIAo+ID7CoCBmaSAK
+I think it is a suitable logo. It might not be the one I would think
+of, but I see with good eyes using it as one of the project logos.
+
+Javier Domingo Cansino
