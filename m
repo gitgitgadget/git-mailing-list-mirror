@@ -1,108 +1,100 @@
-From: Brian Gesiak <modocache@gmail.com>
-Subject: [PATCH] git-rebase: Print name of rev when using shorthand
-Date: Mon, 14 Apr 2014 05:04:34 +0900
-Message-ID: <1397419474-31999-1-git-send-email-modocache@gmail.com>
-Cc: Brian Gesiak <modocache@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 13 22:04:53 2014
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: What's cooking in git.git (Apr 2014, #03; Fri, 11)
+Date: Sun, 13 Apr 2014 22:18:32 +0200
+Message-ID: <534AF118.5040501@alum.mit.edu>
+References: <xmqq1tx3qzel.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 13 22:18:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WZQe3-0000Bf-J1
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Apr 2014 22:04:51 +0200
+	id 1WZQrT-0003tY-RU
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Apr 2014 22:18:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755432AbaDMUEq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Apr 2014 16:04:46 -0400
-Received: from mail-pb0-f41.google.com ([209.85.160.41]:53971 "EHLO
-	mail-pb0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755130AbaDMUEp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Apr 2014 16:04:45 -0400
-Received: by mail-pb0-f41.google.com with SMTP id jt11so7413430pbb.14
-        for <git@vger.kernel.org>; Sun, 13 Apr 2014 13:04:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=H0aGpIMLB+ZQSlZKLyN+82Q+4o7SxoqSAvBIHsiANJM=;
-        b=yrYZWMOghGrW+Zai7BGKjrS7mNMP3kuY92bG1kt+oYbGlGv3tXIzzkK+agkDyY82Ch
-         Fn/bvqdVPBp2AP6QW8tXTGH/zLq66XOKRzKY8SL3T97qIyfGJJ9AixPLA4x1Ti0VUrry
-         R7eZIu06lnQYg0UOddpGQ2XjzBUumX8rbcOPZOFbhTGqd3wBZjNrwqZlxbDD2a9WpXFn
-         +AiFJ02eJO9gEyauessX3KefwqWj0U0eih9stf3Oeq6XkJ7Bweem7fLggMc/FLumg8We
-         fQrTmd4Lc9fra4nUqvUI3jdMs0AZOcurJc+2SfNfYyzDvx+q0xhKkIi7ZEkVcko/ZwjC
-         iEmg==
-X-Received: by 10.68.213.97 with SMTP id nr1mr39946742pbc.52.1397419485209;
-        Sun, 13 Apr 2014 13:04:45 -0700 (PDT)
-Received: from localhost.localdomain (p1157-ipbf5204marunouchi.tokyo.ocn.ne.jp. [118.8.132.157])
-        by mx.google.com with ESMTPSA id ss2sm69669489pab.8.2014.04.13.13.04.44
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sun, 13 Apr 2014 13:04:44 -0700 (PDT)
-X-Mailer: git-send-email 1.9.0.259.gc5d75e8.dirty
+	id S1755240AbaDMUSh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Apr 2014 16:18:37 -0400
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:44749 "EHLO
+	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755174AbaDMUSf (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 13 Apr 2014 16:18:35 -0400
+X-AuditID: 1207440e-f79c76d000003e2c-03-534af11abbb9
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id E5.90.15916.A11FA435; Sun, 13 Apr 2014 16:18:34 -0400 (EDT)
+Received: from [192.168.69.130] (p4FC961C4.dip0.t-ipconnect.de [79.201.97.196])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s3DKIWfb027194
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Sun, 13 Apr 2014 16:18:33 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.4.0
+In-Reply-To: <xmqq1tx3qzel.fsf@gitster.dls.corp.google.com>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprOKsWRmVeSWpSXmKPExsUixO6iqCv10SvYYMt1douuK91MFg29V5gd
+	mDwuXlL2+LxJLoApitsmKbGkLDgzPU/fLoE7Y9b/9WwFnwQqVh0+wNLAeIO3i5GTQ0LAROJu
+	9zp2CFtM4sK99WxdjFwcQgKXGSXOTfzBCOGcZ5JYdGomC0gVr4C2xK+Xs8E6WARUJT62XGUC
+	sdkEdCUW9TQD2RwcogJBEn/OKkKUC0qcnPkErFVEwFri98/vYOXCAvYS009cZgWxhQSsJJ4e
+	ecEIYnMC1fR9PQo2RkJAXKKnMQgkzCygI/Gu7wEzhC0vsf3tHOYJjAKzkGyYhaRsFpKyBYzM
+	qxjlEnNKc3VzEzNzilOTdYuTE/PyUot0jfVyM0v0UlNKNzFCgpRvB2P7eplDjAIcjEo8vInb
+	PYOFWBPLiitzDzFKcjApifKKvvUKFuJLyk+pzEgszogvKs1JLT7EKMHBrCTCuy0DKMebklhZ
+	lVqUD5OS5mBREudVW6LuJySQnliSmp2aWpBaBJOV4eBQkuDN+wDUKFiUmp5akZaZU4KQZuLg
+	BBnOJSVSnJqXklqUWFqSEQ+K0/hiYKSCpHiA9m55D7K3uCAxFygK0XqK0Zjj1oY1jUwcG7YB
+	SSGWvPy8VClxXg+QTQIgpRmleXCLYOnpFaM40N/CvJYgVTzA1AY37xXQKiagVZcmu4OsKklE
+	SEk1MDbOSXea8rGWk2nFxUendiV4bqll26SyRVCyiv9XwebEF12fTqxeIZy5cipHx5OtJszb
+	5uo4qyQv0M6P+furZEfbsSKFlQqBb//md2bZ351y2eLCjySZXW6fnrzwqt1x4lL2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246212>
 
-The output from a successful invocation of the shorthand command
-"git rebase -" is something like "Fast-forwarded HEAD to @{-1}",
-which includes a relative reference to a revision. Other commands
-that use the shorthand "-", such as "git checkout -", typically
-display the symbolic name of the revision.
+On 04/12/2014 12:22 AM, Junio C Hamano wrote:
+> [...]
+> * mh/ref-transaction (2014-04-07) 27 commits
+>  - ref_transaction_commit(): work with transaction->updates in place
+>  - struct ref_update: add a type field
+>  - struct ref_update: add a lock field
+>  - ref_transaction_commit(): simplify code using temporary variables
+>  - struct ref_update: store refname as a FLEX_ARRAY
+>  - struct ref_update: rename field "ref_name" to "refname"
+>  - refs: remove API function update_refs()
+>  - update-ref --stdin: reimplement using reference transactions
+>  - refs: add a concept of a reference transaction
+>  - update-ref --stdin: harmonize error messages
+>  - update-ref --stdin: improve the error message for unexpected EOF
+>  - t1400: test one mistake at a time
+>  - update-ref --stdin -z: deprecate interpreting the empty string as zeros
+>  - update-ref.c: extract a new function, parse_next_sha1()
+>  - t1400: test that stdin -z update treats empty <newvalue> as zeros
+>  - update-ref --stdin: simplify error messages for missing oldvalues
+>  - update-ref --stdin: make error messages more consistent
+>  - update-ref --stdin: improve error messages for invalid values
+>  - update-ref.c: extract a new function, parse_refname()
+>  - parse_cmd_verify(): copy old_sha1 instead of evaluating <oldvalue> twice
+>  - update-ref --stdin: read the whole input at once
+>  - update_refs(): fix constness
+>  - refs.h: rename the action_on_err constants
+>  - t1400: add some more tests involving quoted arguments
+>  - parse_arg(): really test that argument is properly terminated
+>  - t1400: provide more usual input to the command
+>  - t1400: fix name and expected result of one test
+>  (this branch is used by rs/ref-closer-to-atomic.)
+> 
+>  Update "update-ref --stdin [-z]" and then introduce a transactional
+>  support for (multi-)reference updates.
+> 
+>  Is this ready to be merged to 'next' for wider exposure?
 
-Change rebase to output the symbolic name of the revision when using
-the shorthand. For the example above, the new output is
-"Fast-forwarded HEAD to master", assuming "@{-1}" is a reference to
-"master".
+Yes, as far as I know there are no outstanding objections to this
+version (v3) of this series and it is ready for 'next'.
 
-- Use "git name-rev" to retreive the name of the rev.
-- Update the tests in light of this new behavior.
+Michael
 
-Requested-by: John Keeping <john@keeping.me.uk>
-Signed-off-by: Brian Gesiak <modocache@gmail.com>
----
-Previous discussion on this issue:
-http://article.gmane.org/gmane.comp.version-control.git/244340
-
- git-rebase.sh     | 2 +-
- t/t3400-rebase.sh | 4 +---
- 2 files changed, 2 insertions(+), 4 deletions(-)
-
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 2c75e9f..ab0e081 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -455,7 +455,7 @@ then
- 	*)	upstream_name="$1"
- 		if test "$upstream_name" = "-"
- 		then
--			upstream_name="@{-1}"
-+			upstream_name=`git name-rev --name-only @{-1}`
- 		fi
- 		shift
- 		;;
-diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-index 80e0a95..2b99940 100755
---- a/t/t3400-rebase.sh
-+++ b/t/t3400-rebase.sh
-@@ -91,7 +91,7 @@ test_expect_success 'rebase from ambiguous branch name' '
- test_expect_success 'rebase off of the previous branch using "-"' '
- 	git checkout master &&
- 	git checkout HEAD^ &&
--	git rebase @{-1} >expect.messages &&
-+	git rebase master >expect.messages &&
- 	git merge-base master HEAD >expect.forkpoint &&
- 
- 	git checkout master &&
-@@ -100,8 +100,6 @@ test_expect_success 'rebase off of the previous branch using "-"' '
- 	git merge-base master HEAD >actual.forkpoint &&
- 
- 	test_cmp expect.forkpoint actual.forkpoint &&
--	# the next one is dubious---we may want to say "-",
--	# instead of @{-1}, in the message
- 	test_i18ncmp expect.messages actual.messages
- '
- 
 -- 
-1.9.0.259.gc5d75e8.dirty
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
