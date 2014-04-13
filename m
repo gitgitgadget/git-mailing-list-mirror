@@ -1,100 +1,105 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: What's cooking in git.git (Apr 2014, #03; Fri, 11)
-Date: Sun, 13 Apr 2014 22:18:32 +0200
-Message-ID: <534AF118.5040501@alum.mit.edu>
-References: <xmqq1tx3qzel.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 13 22:18:45 2014
+From: Kumar Appaiah <a.kumar@alumni.iitm.ac.in>
+Subject: [tig] [PATCHv2 1/3] diff: Move diff stat addition to a common function
+Date: Sun, 13 Apr 2014 17:54:26 -0400
+Message-ID: <1397426068-17439-2-git-send-email-a.kumar@alumni.iitm.ac.in>
+References: <1397218805-2560-1-git-send-email-a.kumar@alumni.iitm.ac.in>
+ <1397426068-17439-1-git-send-email-a.kumar@alumni.iitm.ac.in>
+Content-Transfer-Encoding: 7BIT
+Cc: Kumar Appaiah <a.kumar@alumni.iitm.ac.in>
+To: Jonas Fonseca <jonas.fonseca@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 13 23:58:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WZQrT-0003tY-RU
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Apr 2014 22:18:44 +0200
+	id 1WZSPo-0002eC-Dt
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Apr 2014 23:58:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755240AbaDMUSh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Apr 2014 16:18:37 -0400
-Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:44749 "EHLO
-	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755174AbaDMUSf (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 13 Apr 2014 16:18:35 -0400
-X-AuditID: 1207440e-f79c76d000003e2c-03-534af11abbb9
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id E5.90.15916.A11FA435; Sun, 13 Apr 2014 16:18:34 -0400 (EDT)
-Received: from [192.168.69.130] (p4FC961C4.dip0.t-ipconnect.de [79.201.97.196])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s3DKIWfb027194
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Sun, 13 Apr 2014 16:18:33 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.4.0
-In-Reply-To: <xmqq1tx3qzel.fsf@gitster.dls.corp.google.com>
-X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprOKsWRmVeSWpSXmKPExsUixO6iqCv10SvYYMt1douuK91MFg29V5gd
-	mDwuXlL2+LxJLoApitsmKbGkLDgzPU/fLoE7Y9b/9WwFnwQqVh0+wNLAeIO3i5GTQ0LAROJu
-	9zp2CFtM4sK99WxdjFwcQgKXGSXOTfzBCOGcZ5JYdGomC0gVr4C2xK+Xs8E6WARUJT62XGUC
-	sdkEdCUW9TQD2RwcogJBEn/OKkKUC0qcnPkErFVEwFri98/vYOXCAvYS009cZgWxhQSsJJ4e
-	ecEIYnMC1fR9PQo2RkJAXKKnMQgkzCygI/Gu7wEzhC0vsf3tHOYJjAKzkGyYhaRsFpKyBYzM
-	qxjlEnNKc3VzEzNzilOTdYuTE/PyUot0jfVyM0v0UlNKNzFCgpRvB2P7eplDjAIcjEo8vInb
-	PYOFWBPLiitzDzFKcjApifKKvvUKFuJLyk+pzEgszogvKs1JLT7EKMHBrCTCuy0DKMebklhZ
-	lVqUD5OS5mBREudVW6LuJySQnliSmp2aWpBaBJOV4eBQkuDN+wDUKFiUmp5akZaZU4KQZuLg
-	BBnOJSVSnJqXklqUWFqSEQ+K0/hiYKSCpHiA9m55D7K3uCAxFygK0XqK0Zjj1oY1jUwcG7YB
-	SSGWvPy8VClxXg+QTQIgpRmleXCLYOnpFaM40N/CvJYgVTzA1AY37xXQKiagVZcmu4OsKklE
-	SEk1MDbOSXea8rGWk2nFxUendiV4bqll26SyRVCyiv9XwebEF12fTqxeIZy5cipHx5OtJszb
-	5uo4qyQv0M6P+furZEfbsSKFlQqBb//md2bZ351y2eLCjySZXW6fnrzwqt1x4lL2 
+	id S1751686AbaDMV6K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Apr 2014 17:58:10 -0400
+Received: from mta4.srv.hcvlny.cv.net ([167.206.4.199]:39101 "EHLO
+	mta4.srv.hcvlny.cv.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751282AbaDMV6H (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Apr 2014 17:58:07 -0400
+Received: from odessa (ool-44c07830.dyn.optonline.net [68.192.120.48])
+ by mta4.srv.hcvlny.cv.net
+ (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
+ with ESMTPA id <0N3Z00LCCP0SCYW0@mta4.srv.hcvlny.cv.net> for
+ git@vger.kernel.org; Sun, 13 Apr 2014 17:58:05 -0400 (EDT)
+Received: from kumar by odessa with local (Exim 4.82)
+	(envelope-from <kumar.a@utexas.edu>)	id 1WZSPb-0004cP-Nu; Sun,
+ 13 Apr 2014 17:58:03 -0400
+In-reply-to: <1397426068-17439-1-git-send-email-a.kumar@alumni.iitm.ac.in>
+X-Mailer: git-send-email 1.9.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246212>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246213>
 
-On 04/12/2014 12:22 AM, Junio C Hamano wrote:
-> [...]
-> * mh/ref-transaction (2014-04-07) 27 commits
->  - ref_transaction_commit(): work with transaction->updates in place
->  - struct ref_update: add a type field
->  - struct ref_update: add a lock field
->  - ref_transaction_commit(): simplify code using temporary variables
->  - struct ref_update: store refname as a FLEX_ARRAY
->  - struct ref_update: rename field "ref_name" to "refname"
->  - refs: remove API function update_refs()
->  - update-ref --stdin: reimplement using reference transactions
->  - refs: add a concept of a reference transaction
->  - update-ref --stdin: harmonize error messages
->  - update-ref --stdin: improve the error message for unexpected EOF
->  - t1400: test one mistake at a time
->  - update-ref --stdin -z: deprecate interpreting the empty string as zeros
->  - update-ref.c: extract a new function, parse_next_sha1()
->  - t1400: test that stdin -z update treats empty <newvalue> as zeros
->  - update-ref --stdin: simplify error messages for missing oldvalues
->  - update-ref --stdin: make error messages more consistent
->  - update-ref --stdin: improve error messages for invalid values
->  - update-ref.c: extract a new function, parse_refname()
->  - parse_cmd_verify(): copy old_sha1 instead of evaluating <oldvalue> twice
->  - update-ref --stdin: read the whole input at once
->  - update_refs(): fix constness
->  - refs.h: rename the action_on_err constants
->  - t1400: add some more tests involving quoted arguments
->  - parse_arg(): really test that argument is properly terminated
->  - t1400: provide more usual input to the command
->  - t1400: fix name and expected result of one test
->  (this branch is used by rs/ref-closer-to-atomic.)
-> 
->  Update "update-ref --stdin [-z]" and then introduce a transactional
->  support for (multi-)reference updates.
-> 
->  Is this ready to be merged to 'next' for wider exposure?
+Signed-off-by: Kumar Appaiah <a.kumar@alumni.iitm.ac.in>
+---
+ include/tig/diff.h |  1 +
+ src/diff.c         | 27 ++++++++++++++++++---------
+ 2 files changed, 19 insertions(+), 9 deletions(-)
 
-Yes, as far as I know there are no outstanding objections to this
-version (v3) of this series and it is ready for 'next'.
-
-Michael
-
+diff --git a/include/tig/diff.h b/include/tig/diff.h
+index be325c4..ba40386 100644
+--- a/include/tig/diff.h
++++ b/include/tig/diff.h
+@@ -27,6 +27,7 @@ enum request diff_common_edit(struct view *view, enum request request, struct li
+ bool diff_common_read(struct view *view, const char *data, struct diff_state *state);
+ bool diff_common_draw(struct view *view, struct line *line, unsigned int lineno);
+ enum request diff_common_enter(struct view *view, enum request request, struct line *line);
++bool diff_common_add_diff_stat(struct view *view, const char *data);
+ 
+ unsigned int diff_get_lineno(struct view *view, struct line *line);
+ const char *diff_get_pathname(struct view *view, struct line *line);
+diff --git a/src/diff.c b/src/diff.c
+index 4b30068..1daf8fa 100644
+--- a/src/diff.c
++++ b/src/diff.c
+@@ -38,6 +38,21 @@ diff_open(struct view *view, enum open_flags flags)
+ }
+ 
+ bool
++diff_common_add_diff_stat(struct view *view, const char *data)
++{
++	size_t len = strlen(data);
++	char *pipe = strchr(data, '|');
++	bool has_histogram = data[len - 1] == '-' || data[len - 1] == '+';
++	bool has_bin_diff = pipe && strstr(pipe, "Bin") && strstr(pipe, "->");
++	bool has_rename = data[len - 1] == '0' && (strstr(data, "=>") || !strncmp(data, " ...", 4));
++	bool has_no_change = pipe && strstr(pipe, " 0");
++
++	if (pipe && (has_histogram || has_bin_diff || has_rename || has_no_change))
++		return add_line_text(view, data, LINE_DIFF_STAT) != NULL;
++	return FALSE;
++}
++
++bool
+ diff_common_read(struct view *view, const char *data, struct diff_state *state)
+ {
+ 	enum line_type type = get_line_type(data);
+@@ -49,15 +64,9 @@ diff_common_read(struct view *view, const char *data, struct diff_state *state)
+ 		state->reading_diff_stat = TRUE;
+ 
+ 	if (state->reading_diff_stat) {
+-		size_t len = strlen(data);
+-		char *pipe = strchr(data, '|');
+-		bool has_histogram = data[len - 1] == '-' || data[len - 1] == '+';
+-		bool has_bin_diff = pipe && strstr(pipe, "Bin") && strstr(pipe, "->");
+-		bool has_rename = data[len - 1] == '0' && (strstr(data, "=>") || !strncmp(data, " ...", 4));
+-		bool has_no_change = pipe && strstr(pipe, " 0");
+-
+-		if (pipe && (has_histogram || has_bin_diff || has_rename || has_no_change)) {
+-			return add_line_text(view, data, LINE_DIFF_STAT) != NULL;
++		bool ret = diff_common_add_diff_stat(view, data);
++		if (ret) {
++			return TRUE;
+ 		} else {
+ 			state->reading_diff_stat = FALSE;
+ 		}
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+1.9.1
