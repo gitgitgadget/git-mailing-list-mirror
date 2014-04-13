@@ -1,153 +1,379 @@
-From: Ronald Weiss <weiss.ronald@gmail.com>
-Subject: Re: [PATCH v2.1] commit: add --ignore-submodules[=<when>] parameter
-Date: Sun, 13 Apr 2014 01:41:50 +0200
-Message-ID: <5349CF3E.7010606@gmail.com>
-References: <CABxC_L92v=cV=+e_DNa0L6f21LB0BRP5duai2h_heGJN_PRoUQ@mail.gmail.com>	<5335A78C.60401@web.de>	<CABxC_L-4=qcZiix05dL8GrDJXv=19fw4yB0qFzRRfw=G=_Gxbg@mail.gmail.com>	<53374E49.9000702@gmail.com>	<533874F9.3090802@web.de>	<5338AC36.6000109@gmail.com>	<5338B1B0.3050703@gmail.com>	<5339BAE4.8020306@web.de> <CABxC_L8_tQrANXji_Z0LfigxsAuzSDj3K9ndTGOTHh2ctHvc6A@mail.gmail.com> <5339F122.60801@gmail.com> <5339FBB4.1010101@gmail.com> <533B2036.3050506@web.de> <533B36AA.3090600@gmail.com> <533C5CBD.4050601@web.de> <533C6B57.3080901@gmail.com> <534180BC.308@web.de> <53431CB8.2050600@gmail.com> <53443F5C.7050400@web.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Heiko Voigt <hvoigt@hvoigt.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Sun Apr 13 01:42:01 2014
+From: "Kyle J. McKay" <mackyle@gmail.com>
+Subject: Re: [PATCH 1/3] rebase: avoid non-function use of "return" on FreeBSD
+Date: Sat, 12 Apr 2014 19:45:12 -0700
+Message-ID: <32c0335e91b9658a9cca007f6851280@74d39fa044aa309eaea14b9f57fe79c>
+References: <438458da797bcab97449bfa931a9d1d@74d39fa044aa309eaea14b9f57fe79c> <0779303f7d2257a618b5bed00260a8a@74d39fa044aa309eaea14b9f57fe79c> <vpqsipkmeum.fsf@anie.imag.fr> <D2BF8546-87B4-431A-B86D-6EFAF205279C@gmail.com> <vpq4n1zg4f9.fsf@anie.imag.fr> <D3916156-0F84-4DD2-833F-64DF675325D3@gmail.com> <vpq38hi8oj3.fsf@anie.imag.fr>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Sun Apr 13 04:46:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WZ7Ye-0001Bh-6m
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Apr 2014 01:42:00 +0200
+	id 1WZAQj-0003CF-Mh
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Apr 2014 04:46:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756631AbaDLXlz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Apr 2014 19:41:55 -0400
-Received: from mail-ee0-f53.google.com ([74.125.83.53]:47141 "EHLO
-	mail-ee0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756223AbaDLXly (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Apr 2014 19:41:54 -0400
-Received: by mail-ee0-f53.google.com with SMTP id b57so5300010eek.12
-        for <git@vger.kernel.org>; Sat, 12 Apr 2014 16:41:53 -0700 (PDT)
+	id S1751158AbaDMCpY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Apr 2014 22:45:24 -0400
+Received: from mail-pb0-f49.google.com ([209.85.160.49]:32909 "EHLO
+	mail-pb0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750965AbaDMCpW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Apr 2014 22:45:22 -0400
+Received: by mail-pb0-f49.google.com with SMTP id jt11so6838485pbb.8
+        for <git@vger.kernel.org>; Sat, 12 Apr 2014 19:45:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=xqxtK9qWzVIe3ahoZcRu5BQMCy79nZE9eGgZb4fljGo=;
-        b=o2zFDFUilZe4vqVDWHVpTv0kU4tR3RQtvu5yPI/HBp/NPgciEbLklRhURI7wQ54VMy
-         j4ozN+QdiJ+1uHtJ9uXKw0MlGVYSmL8n9f9hwj830PGLsVVztNxY3cKRps9hejXoCmOS
-         iBYT1BhTfADdJOZR8SZP5DnVlRatAyD+rAnoy87CXOAPHRYm3I2upI0bd0qjRXTpQ6x5
-         Ic2FJDzu3ByO6s7vA9tx/9cnUciGKi7fBjBoTyaHm7hp8YnJya4NvzXogyPNkRhxIRYi
-         MBaoljDpnHm/EkYs2LO3+fvXpLcMES8SOE95BNc1aqbjzmVDoIA1U98TNjXxH3maIpD3
-         AFTw==
-X-Received: by 10.14.37.8 with SMTP id x8mr39569359eea.32.1397346113433;
-        Sat, 12 Apr 2014 16:41:53 -0700 (PDT)
-Received: from [10.0.1.226] (chello089173067059.chello.sk. [89.173.67.59])
-        by mx.google.com with ESMTPSA id 4sm28794141eeq.33.2014.04.12.16.41.51
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=T6/XpXw9bGs1mToSxdunMimJ7zIpJgtiqsBDAJznR6E=;
+        b=L/YxS0kQdF0FUCppAaKtVNYY4/6SrFSv9XPqx9xAM7ghD26H+XnzzGxI8eUEarcchX
+         H5+nv+CsN7VJjhMe519HkfxlDVwXVxKELjHGdy9IlufbV235tLjtT9a+QULn/9MbO8kM
+         WkvDgJaWIRSXpZeBBcUpPLCxpbhD/H/jwBRCP40o0FXVYzW0YNWYX2PvTPXrflklBmK8
+         ie6Z/hamErROL4V3CzW05P0jhUL1+znKM5Bez9uvg/3Ys7RoAsx4H0dzzfOFoYiJ7tCO
+         5VewapniGTWWmHSrGY3yhpF1o62JzS/W+uxvdSmLHwFqJO6a7buhPFRIMZt+NVpaY07G
+         L2MQ==
+X-Received: by 10.68.204.162 with SMTP id kz2mr36511811pbc.13.1397357122218;
+        Sat, 12 Apr 2014 19:45:22 -0700 (PDT)
+Received: from localhost.localdomain (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
+        by mx.google.com with ESMTPSA id vf7sm24943860pbc.5.2014.04.12.19.45.20
         for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 12 Apr 2014 16:41:52 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
-In-Reply-To: <53443F5C.7050400@web.de>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 12 Apr 2014 19:45:21 -0700 (PDT)
+In-Reply-To: <vpq38hi8oj3.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246204>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246205>
 
-On 8. 4. 2014 20:26, Jens Lehmann wrote:
-> Am 07.04.2014 23:46, schrieb Ronald Weiss:
->> Then, on top of that, I'll prepare patches for add to honor ignore
->> from .gitmodules, and -f implying --ignore-submodules. That might need
->> more discussion, let's see.
-> 
-> Makes sense.
+On Apr 12, 2014, at 10:07, Matthieu Moy wrote:
+> "Kyle J. McKay" <mackyle@gmail.com> writes:
+>
+>> On Apr 11, 2014, at 10:30, Matthieu Moy wrote:
+>>> "Kyle J. McKay" <mackyle@gmail.com> writes:
+>>>
+>>>> There are already nested functions with file inclusion between both
+>>>> levels of nesting in git-rebase--interactive.sh and git-rebase--
+>>>> merge.sh now, so it's not introducing anything new.
+>>>
+>>> OK, so it's less serious than I thought. But still, we're
+>>> introducing a
+>>> function with 3 levels of nesting, split accross files, in an area
+>>> where
+>>> we know that at least one shell is buggy ...
+>>
+>> Currently in maint:
+>>
+>> The current code in maint does this:
+>>
+>> git-rebase.sh: top-level
+>>  git-rebase.sh: run_specific_rebase()
+>>    git-rebase.sh: run_specific_rebase_internal() -- contains "dot"
+>>      git-rebase--interactive.sh: top-level (using --continue or --
+>> skip)
+>>        git-rebase--interactive.sh: do_rest
+>>          git-rebase--interactive.sh: do_next
+>
+> You're confusing function calls and function nesting. do_rest calls
+> do_next, but the definition of do_next is not nested within do_rest.
+>
+> When I talk about nested function, I mean
+>
+> f() {
+> 	g() {
+> 		...
+> 	}
+> }
+>
+> Obviously, having functions call each other is not an issue. That's  
+> what
+> functions are meant to be.
+>
+> Now, having run_specific_rebase_internal include a file which defines
+> functions which contain nested functions _is_ something I find  
+> weird. It
+> both stresses the shell in a buggy area and makes the code harder to
+> understand.
 
-I thought more about that, and also played with the code a bit.
+I meant: "nested functions" = "nested function calls"
+You meant: "nested functions" = "nested function definitions"
 
-First, I was confused when I wrote that git add doesn't honor
-submodules' ignore setting only from .gitmodules, but it does from
-.git/config. It doesn't, from neither. Sorry for the confusion. However,
-that doesn't change anything on the fact that it would be nice if add
-would honor the ignore setting, from both places.
+Okay.  But nested function definitions is not something new to the
+rebase code.
 
-Second, there are some differences between adding standard ignored
-files, and ignored submodules:
+>> The problem with these changes, particularly the git-rebase--
+>> interactive.sh one is that a bunch of code is still run when the file
+>> is "dot" included.
+>
+> Function definitions, and variables assignments. Is it so much of an
+> issue?
+>
+> What's the difference between a function definition or variable
+> assignment within git-rebase--*.sh and within git-rebase.sh?
 
-1) Already tracked files are never ignored, regardless of .gitignore.
- However, tracked submodules should be ignored by "add -u", if told so
- by their ignore setting.
+As I said, this is the issue:
 
-2) So .gitignore seems to only do something when adding new files to
- the repo. However, when adding new submodules, they are probably never
- ignored (setting the ignore setting for non existent submodule seems
- like non-sense, although possible).
+On Apr 11, 2014, at 16:08, Kyle J. McKay wrote:
 
-3) Ignored files can be ignored less explicitely (in global gitignore,
- or using a wildcard, or by ignoring parent folder). So it makes sense
- to warn the user if he tries to explicitely add an ignored file, as he
- might not be aware that the file is ignored. Submodules, however, can
- only be ignored explicitely. And when user explicitely specifies the
- submodule in an add command, he most probably really wants to add it,
- so I don't see the point in warning him and requiring the -f option.
+> The problem with these changes, particularly the git-rebase-- 
+> interactive.sh one is that a bunch of code is still run when the  
+> file is "dot" included.  With the changes to git-rebase.sh, that  
+> code will now run regardless of the action and it will run before it  
+> would have now.  So if any of the variables it sets affect the  
+> functions like read_basic_state or finish_rebase (they don't  
+> currently appear to), then there's a potential for new bugs.  That  
+> initial code would not previously have run in the --abort case at all.
 
-So, I think that the use cases are completely different, for submodules
-and ignored files. So trying to make add behave the same for both, might
-not be that good idea.
+Let me rephrase.
 
-I would propose - let's make add honor the ignore setting by just
-parsing if from config like the other commands do, and pass it to
-underlying diff invocations. And at the same the, let's override it for
-submodules explicitely specified on the command line, to never ignore
-such submodules, without requiring the -f option. That seems to be
-pretty easy, see below.
+Patch 1/3 does not change the order in which individual statements are  
+executed in the rebase code.  Nor does it change the logic.  It simply  
+introduces one additional function callstack level, but the same  
+individual statements are executed in the same order for all control  
+flows.  No additional statements other than the introduced callstack  
+level.  Nothing's executed in a different order.  No control paths  
+execute additional statements they did not before.
+
+The changes you propose introduce exactly the same additional function  
+callstack level.  Then they proceed to alter the order in which  
+statements are executed.  Statements that did not execute in some  
+control paths before are now executed in those control paths.  Other  
+statements are moved around to execute earlier/later than they did  
+before.
+
+My point is not that this is wrong.  It's nice, really, to move the  
+"dot" include to the top level.  The point is that's not necessary to  
+fix the problem and moving statements around and adding statements to  
+some control paths increases the risk of introducing an uncaught bug  
+when it's not necessary to fix the problem.
+
+I would like to get a fix in so that rebase works out-of-the-box when  
+Git version 1.8.4 or later is built on FreeBSD.
+
+So I'm not going to belabor the point anymore.
+
+There's a follow-up patch 4/3 attached to the end of this message that  
+makes the changes you have proposed in your earlier email on top of  
+patches 1/3 and 2/3.  The log message and all changes are taken from  
+your emails and so this patch is assigned to you and has a
+'Needs-Signed-off-by:' line.
+
+On Apr 11, 2014, at 10:30, Matthieu Moy wrote:
+> The real patch is a bit more tricky though, because we need to run the
+> ". git-rebase--$type" after computing type properly. A patch passing  
+> the
+> tests but requiring cleanup is given below.
+
+Unfortunately, after applying the below patch, some of the rebase  
+tests (3403, 3407, 3418, 3420, 3421) start failing for me on systems  
+where they did not fail previously.  Even though some of the previously  
+failing tests on FreeBSD now pass with the patch, 3421 now fails on  
+FreeBSD where it did not before.
+
+Here's a test summary of the t34xx*.sh tests:
+
+NOTE: at the time of these tests, maint and v1.9.2 were at the same  
+commit.
+
+______________SYSTEM____t34xx*.sh_results________________
+
+maint         FreeBSD   FAIL: 3403,3404,3407,3409,3410,3412,3418,3419,3420
+maint         Darwin    PASS
+maint         Linux     PASS
+
+maint+1-3/3   FreeBSD   PASS
+maint+1-3/3   Darwin    PASS
+maint+1-3/3   Linux     PASS
+
+maint+1-4/3   FreeBSD   FAIL[*]: 3403,3407,3418,3420,3421
+maint+1-4/3   Darwin    FAIL[*]: 3403,3407,3418,3420,3421
+maint+1-4/3   Linux     FAIL[*]: 3403,3407,3418,3420,3421
+
+[*]: The failing test reports for all three systems are identical for  
+the "maint+1-4/3" run (except for the wallclock secs part):
+
+Test Summary Report
+-------------------
+t3403-rebase-skip.sh                   (Wstat: 256 Tests: 10 Failed: 3)
+   Failed tests:  8-10
+   Non-zero exit status: 1
+t3407-rebase-abort.sh                  (Wstat: 256 Tests: 11 Failed: 3)
+   Failed tests:  7-9
+   Non-zero exit status: 1
+t3418-rebase-continue.sh               (Wstat: 256 Tests: 6 Failed: 2)
+   Failed tests:  5-6
+   Non-zero exit status: 1
+t3420-rebase-autostash.sh              (Wstat: 256 Tests: 24 Failed: 11)
+   Failed tests:  14-24
+   Non-zero exit status: 1
+t3421-rebase-topology-linear.sh        (Wstat: 256 Tests: 76 Failed: 16)
+   Failed tests:  51-53, 55, 57, 59-63, 65, 67, 73-76
+   Non-zero exit status: 1
+Files=22, Tests=374, 354 wallclock secs ( 0.31 usr  0.13 sys + 79.57 cusr 233.99 csys = 314.00 CPU)
+Result: FAIL
+make: *** [prove] Error 1
 
 
-diff --git a/builtin/add.c b/builtin/add.c
-index 85f2110..f19e6c8 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -284,6 +284,10 @@ static int add_config(const char *var, const char *value, void *cb)
- 		ignore_add_errors = git_config_bool(var, value);
- 		return 0;
- 	}
-+
-+	if (starts_with(var, "submodule."))
-+		return parse_submodule_config_option(var, value);
-+
- 	return git_default_config(var, value, cb);
+So I suggest that in the interest of fixing rebase on FreeBSD in an  
+expeditious fashion, patches 1/3 and 2/3 get picked up (see note  
+below) now and that the follow-on patch below, after being enhanced to  
+pass all tests, be submitted separately at some future point.
+
+--Kyle
+
+P.S.  Note to JCH: the below patch requires the previous 1/3 and 2/3  
+be applied first.  As per SubmittingPatches for bug fixes those are  
+based on maint.  Because of the whitespace change 1/3 introduces it  
+does not apply cleanly to master, next or pu.  :(  Please let me know  
+if you would like me to resend the initial series (1 & 2 -- 3 has  
+already been picked up) based on a different branch instead of maint.
+
+---- 8< ----
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: [PATCH 4/3] rebase: stop using . within function
+
+Move the whole run_specific_rebase_internal function to
+git-rebase--$type.
+
+The .-ed script defines the complete function, and then the
+function is used from the toplevel script.
+
+The goal is to avoid using tricky features that may trigger
+bugs on some shells.
+
+The result is simpler, just using the basic pattern:
+
+    1. use '. file' to import a set of functions
+    2. then use these functions
+
+Needs-Signed-off-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+---
+ git-rebase--am.sh          |  3 +--
+ git-rebase--interactive.sh |  3 +--
+ git-rebase--merge.sh       |  3 +--
+ git-rebase.sh              | 40 +++++++++++++++++++++-------------------
+ 4 files changed, 24 insertions(+), 25 deletions(-)
+
+diff --git a/git-rebase--am.sh b/git-rebase--am.sh
+index 2d3f6d55..b48b3e90 100644
+--- a/git-rebase--am.sh
++++ b/git-rebase--am.sh
+@@ -4,7 +4,7 @@
+ # Copyright (c) 2010 Junio C Hamano.
+ #
+ 
+-git_rebase__am() {
++run_specific_rebase_infile() {
+ 	case "$action" in
+ 	continue)
+ 		git am --resolved --resolvemsg="$resolvemsg" &&
+@@ -75,4 +75,3 @@ git_rebase__am() {
+ 
+ 	move_to_original_branch
+ }
+-git_rebase__am
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 42164f11..a7670eb0 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -810,7 +810,7 @@ add_exec_commands () {
+ 	mv "$1.new" "$1"
  }
  
-@@ -320,6 +324,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 	char *seen = NULL;
+-git_rebase__interactive() {
++run_specific_rebase_infile() {
+ 	case "$action" in
+ 	continue)
+ 		# do we have anything to commit?
+@@ -1044,4 +1044,3 @@ EOF
+ 	git update-ref ORIG_HEAD $orig_head
+ 	do_rest
+ }
+-git_rebase__interactive
+diff --git a/git-rebase--merge.sh b/git-rebase--merge.sh
+index b5f05bf5..9550e656 100644
+--- a/git-rebase--merge.sh
++++ b/git-rebase--merge.sh
+@@ -101,7 +101,7 @@ finish_rb_merge () {
+ 	say All done.
+ }
  
- 	git_config(add_config, NULL);
-+	gitmodules_config();
+-git_rebase__merge() {
++run_specific_rebase_infile() {
+ 	case "$action" in
+ 	continue)
+ 		read_state
+@@ -153,4 +153,3 @@ git_rebase__merge() {
  
- 	argc = parse_options(argc, argv, prefix, builtin_add_options,
- 			  builtin_add_usage, PARSE_OPT_KEEP_ARGV0);
-@@ -425,6 +430,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 			       PATHSPEC_EXCLUDE);
+ 	finish_rb_merge
+ }
+-git_rebase__merge
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 07e2bd48..9e105626 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -175,7 +175,7 @@ run_specific_rebase () {
+ 		export GIT_EDITOR
+ 		autosquash=
+ 	fi
+-	. git-rebase--$type
++	run_specific_rebase_infile
+ 	ret=$?
+ 	if test $ret -eq 0
+ 	then
+@@ -353,6 +353,26 @@ then
+ 	die "$(gettext "The --edit-todo action can only be used during interactive rebase.")"
+ fi
  
- 		for (i = 0; i < pathspec.nr; i++) {
-+			int cachepos;
- 			const char *path = pathspec.items[i].match;
- 			if (pathspec.items[i].magic & PATHSPEC_EXCLUDE)
- 				continue;
-@@ -440,6 +446,18 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 					die(_("pathspec '%s' did not match any files"),
- 					    pathspec.items[i].original);
- 			}
++if test -n "$rebase_root" && test -z "$onto"
++then
++	test -z "$interactive_rebase" && interactive_rebase=implied
++fi
 +
-+			/* disable ignore setting for any submodules specified explicitly in the pathspec */
-+			if (path[0] &&
-+				(cachepos = cache_name_pos(path, pathspec.items[i].len)) >= 0 &&
-+				S_ISGITLINK(active_cache[cachepos]->ce_mode)) {
-+				char *optname;
-+				int optnamelen = pathspec.items[i].len + 17;
-+				optname = xcalloc(optnamelen + 1, 1);
-+				snprintf(optname, optnamelen + 1, "submodule.%s.ignore", path);
-+				parse_submodule_config_option(optname, "none");
-+				free(optname);
-+			}
- 		}
- 		free(seen);
- 	}
---  
++if test -n "$interactive_rebase"
++then
++	type=interactive
++	state_dir="$merge_dir"
++elif test -n "$do_merge"
++then
++	type=merge
++	state_dir="$merge_dir"
++else
++	type=am
++	state_dir="$apply_dir"
++fi
++
++. git-rebase--$type
++
+ case "$action" in
+ continue)
+ 	# Sanity check
+@@ -407,24 +427,6 @@ and run me again.  I am stopping in case you still have something
+ valuable there.')"
+ fi
+ 
+-if test -n "$rebase_root" && test -z "$onto"
+-then
+-	test -z "$interactive_rebase" && interactive_rebase=implied
+-fi
+-
+-if test -n "$interactive_rebase"
+-then
+-	type=interactive
+-	state_dir="$merge_dir"
+-elif test -n "$do_merge"
+-then
+-	type=merge
+-	state_dir="$merge_dir"
+-else
+-	type=am
+-	state_dir="$apply_dir"
+-fi
+-
+ if test -z "$rebase_root"
+ then
+ 	case "$#" in
+-- 
+1.8.5
