@@ -1,99 +1,164 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: GitMinutes about Git for Windows
-Date: Mon, 14 Apr 2014 20:15:21 +0200
-Message-ID: <CABPQNSYRXrdqp3EDqWBwT=yf95XMjjmm83OZefSLWcBuc_K0UA@mail.gmail.com>
-References: <alpine.DEB.1.00.1404141713020.14982@s15462909.onlinehome-server.info>
-Reply-To: kusmabite@gmail.com
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: msysGit <msysgit@googlegroups.com>, GIT Mailing-list <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: msysgit+bncBDR53PPJ7YHRBYWLWCNAKGQERSXPHDY@googlegroups.com Mon Apr 14 20:16:04 2014
-Return-path: <msysgit+bncBDR53PPJ7YHRBYWLWCNAKGQERSXPHDY@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-pa0-f61.google.com ([209.85.220.61])
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: [PATCH v4 2/3] refs.c: split delete_ref_loose() into a separate flag-for-deletion and commit phase
+Date: Mon, 14 Apr 2014 11:29:22 -0700
+Message-ID: <1397500163-7617-3-git-send-email-sahlberg@google.com>
+References: <1397500163-7617-1-git-send-email-sahlberg@google.com>
+Cc: Ronnie Sahlberg <sahlberg@google.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 14 20:29:45 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDR53PPJ7YHRBYWLWCNAKGQERSXPHDY@googlegroups.com>)
-	id 1WZlQJ-0003AX-N6
-	for gcvm-msysgit@m.gmane.org; Mon, 14 Apr 2014 20:16:03 +0200
-Received: by mail-pa0-f61.google.com with SMTP id fb1sf1919468pad.6
-        for <gcvm-msysgit@m.gmane.org>; Mon, 14 Apr 2014 11:16:02 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1WZldY-00065D-LP
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Apr 2014 20:29:45 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1754910AbaDNS3j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Apr 2014 14:29:39 -0400
+Received: from mail-qc0-f201.google.com ([209.85.216.201]:42593 "EHLO
+	mail-qc0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754860AbaDNS3i (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Apr 2014 14:29:38 -0400
+Received: by mail-qc0-f201.google.com with SMTP id c9so1236690qcz.0
+        for <git@vger.kernel.org>; Mon, 14 Apr 2014 11:29:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:list-post:list-help:list-archive
-         :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=RMCjPIWgLRfQQMSX4JabMv4oNbKjJwERpssSKSLzCAg=;
-        b=qqN/LDXZB01f9ugei2hVSS1qNbK2cZvuAjQKc+1lD4U2ZpxZedXIZc7J8aAmJLUVlL
-         d5SJ2+s+uws1Ap//m8dTcufO3XhQJziA/BBSWw0qxJJGDTpftxidhlh3edkYQ/Ac1diB
-         qUqy4r+86kkTNAeyf2Y6d8j2i5BFCAuXCVHx5k+WV+VmLNIFHgjw+ucSeQsNjxx37vei
-         ItDL3bwOCKAeOpOTnhla4IlqLUSdBPJz8XPMIkKIz7Y8WtGWTF0Qqf72ykTL/XWk0/oW
-         L+/d99ku+TCQW/TC5nCQzU+de7cuSSXlZZ6ihVstqVdWo/Yqq9nC4euOo98vp+3in6tE
-         iNgg==
-X-Received: by 10.140.94.169 with SMTP id g38mr82937qge.13.1397499362639;
-        Mon, 14 Apr 2014 11:16:02 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.140.47.45 with SMTP id l42ls2806100qga.50.gmail; Mon, 14 Apr
- 2014 11:16:02 -0700 (PDT)
-X-Received: by 10.52.143.35 with SMTP id sb3mr11908148vdb.7.1397499362205;
-        Mon, 14 Apr 2014 11:16:02 -0700 (PDT)
-Received: from mail-ig0-x235.google.com (mail-ig0-x235.google.com [2607:f8b0:4001:c05::235])
-        by gmr-mx.google.com with ESMTPS id jf10si3341588igb.0.2014.04.14.11.16.02
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 14 Apr 2014 11:16:02 -0700 (PDT)
-Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 2607:f8b0:4001:c05::235 as permitted sender) client-ip=2607:f8b0:4001:c05::235;
-Received: by mail-ig0-f181.google.com with SMTP id h18so3720297igc.14
-        for <msysgit@googlegroups.com>; Mon, 14 Apr 2014 11:16:02 -0700 (PDT)
-X-Received: by 10.42.20.193 with SMTP id h1mr3594472icb.70.1397499362068; Mon,
- 14 Apr 2014 11:16:02 -0700 (PDT)
-Received: by 10.64.166.135 with HTTP; Mon, 14 Apr 2014 11:15:21 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.1404141713020.14982@s15462909.onlinehome-server.info>
-X-Original-Sender: kusmabite@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of kusmabite@gmail.com designates 2607:f8b0:4001:c05::235
- as permitted sender) smtp.mail=kusmabite@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246251>
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=BuLQ5B0p7CBH+SV4DUfR12tTiWEeAndPACz5a27xFGk=;
+        b=n96kNGz6WeLmFc2n2/b5G22fokooLRnCb9AzQW1JN3W+ffgaZnay2wgQQvoaY/HpR6
+         L+LmTHnDDXWcTsiiW8v3u78Q2Qint2bIrwTbfr0u65vKaoIVPKQ4rTzWnvc2SxXnHYfC
+         nUzVxaYxWEZUf8XEYs4TcKX8SH7U/14LSHztSZycyvWZMlCJhlhZ9XiX5YKzKGUSXw/9
+         xx66RVYKsbaycseA3ECMt8wascNbgwqkrNelN3YdLUDNbP+tNWZG0cFBuQQ6EdMHviyL
+         Uje0mw4gJs7SMl4ZmDXUZVAyWJsM5Pw/pL2uddgXw93AM+j+KvST7ffkesu2HzwTdBy0
+         XG/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=BuLQ5B0p7CBH+SV4DUfR12tTiWEeAndPACz5a27xFGk=;
+        b=INKWknchYusznaU8mFh0UZXkWHzW35UkT9sClep63VaOV/VD7BK2Kl0FBGrQI9BmIu
+         hGBi10r89qmXMZRP9oG7mhAXLwVOEuoXwvlom1CMGP4yLLxdC8GX+iSPB1elK/VX0qzO
+         V4gUsT5J20eqbuIq92xvmbCrc862J9WPjspSCRubAtPrbDx/Ieq+4jb9fMKpLo/U7scz
+         EQNGYoIg8yRFxVkUGsCeTLof4KrQjxgQdyRC3el3LlsDpxS+FQL4wmvN5hkMvik6+ZM/
+         /Jx6QTPOihc0dyZZuewIQT5L9Iu01VfD6fZnGN3GYqLK2ea/ZhFfkEVAKsh0FDGtLqP+
+         SiMg==
+X-Gm-Message-State: ALoCoQnQP2stA0HmTFOfIaMsrSGL+vHFk/69O8qO3bGNRjxpxtlIsgeELGKSI3PS7dAlgXYEBcJ/yWPz3Gl8rdbmrVNa6AdfYs8IZXVwDhjDg/9lgzDek09UpwvjsygAQzK2YnyDuZcOolw0N19xl5SR0XFJWtA4wEZCZVACSYZjMNf6X1hxvKedhnlPIBkNm01lR7ZyD+SM
+X-Received: by 10.58.30.78 with SMTP id q14mr19983659veh.10.1397500177397;
+        Mon, 14 Apr 2014 11:29:37 -0700 (PDT)
+Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
+        by gmr-mx.google.com with ESMTPS id g21si2363681yhe.3.2014.04.14.11.29.37
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 14 Apr 2014 11:29:37 -0700 (PDT)
+Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
+	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 31D8D31C1E3;
+	Mon, 14 Apr 2014 11:29:37 -0700 (PDT)
+Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
+	id E6FAEE08C1; Mon, 14 Apr 2014 11:29:36 -0700 (PDT)
+X-Mailer: git-send-email 1.9.1.505.gd05696d
+In-Reply-To: <1397500163-7617-1-git-send-email-sahlberg@google.com>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246252>
 
-On Mon, Apr 14, 2014 at 5:14 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Dear friends of Git for Windows,
->
-> it was very delightful to be on the show, hosted by Thomas Ferris
-> Nicolaisen:
->
-> http://episodes.gitminutes.com/2014/04/gitminutes-28-johannes-schindelin-on.html
+Change delete_ref_loose()) to just flag that a ref is to be deleted but do
+not actually unlink the files.
+Change commit_ref_lock() so that it will unlink refs that are flagged for
+deletion.
+Change all callers of delete_ref_loose() to explicitely call commit_ref_lock()
+to commit the deletion.
 
-Really enjoyable, thanks!
+The new pattern for deleting loose refs thus become:
 
+lock = lock_ref_sha1_basic() (or varient of)
+delete_ref_loose(lock)
+unlock_ref(lock) | commit_ref_lock(lock)
+
+Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+---
+ refs.c | 32 ++++++++++++++++++++------------
+ refs.h |  2 ++
+ 2 files changed, 22 insertions(+), 12 deletions(-)
+
+diff --git a/refs.c b/refs.c
+index 646afd7..a14addb 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2484,16 +2484,9 @@ static int repack_without_ref(const char *refname)
+ 
+ static int delete_ref_loose(struct ref_lock *lock, int flag)
+ {
+-	if (!(flag & REF_ISPACKED) || flag & REF_ISSYMREF) {
+-		/* loose */
+-		int err, i = strlen(lock->lk->filename) - 5; /* .lock */
+-
+-		lock->lk->filename[i] = 0;
+-		err = unlink_or_warn(lock->lk->filename);
+-		lock->lk->filename[i] = '.';
+-		if (err && errno != ENOENT)
+-			return 1;
+-	}
++	lock->delete_ref = 1;
++	lock->delete_flag = flag;
++
+ 	return 0;
+ }
+ 
+@@ -2515,7 +2508,7 @@ int delete_ref(const char *refname, const unsigned char *sha1, int delopt)
+ 
+ 	unlink_or_warn(git_path("logs/%s", lock->ref_name));
+ 	clear_loose_ref_cache(&ref_cache);
+-	unlock_ref(lock);
++	ret |= commit_ref_lock(lock);
+ 	return ret;
+ }
+ 
+@@ -2868,7 +2861,20 @@ int write_ref_sha1(struct ref_lock *lock,
+ 
+ int commit_ref_lock(struct ref_lock *lock)
+ {
+-	if (!lock->skipped_write && commit_ref(lock)) {
++	if (lock->delete_ref) {
++		int flag = lock->delete_flag;
++
++		if (!(flag & REF_ISPACKED) || flag & REF_ISSYMREF) {
++			/* loose */
++			int err, i = strlen(lock->lk->filename) - 5; /* .lock */
++
++			lock->lk->filename[i] = 0;
++			err = unlink_or_warn(lock->lk->filename);
++			lock->lk->filename[i] = '.';
++			if (err && errno != ENOENT)
++				return 1;
++		}
++	} else if (!lock->skipped_write && commit_ref(lock)) {
+ 		error("Couldn't set %s", lock->ref_name);
+ 		unlock_ref(lock);
+ 		return -1;
+@@ -3487,6 +3493,8 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 		if (update->lock) {
+ 			delnames[delnum++] = update->refname;
+ 			ret |= delete_ref_loose(update->lock, update->type);
++			ret |= commit_ref_lock(update->lock);
++			update->lock = NULL;
+ 		}
+ 	}
+ 
+diff --git a/refs.h b/refs.h
+index f14a417..223be30 100644
+--- a/refs.h
++++ b/refs.h
+@@ -9,6 +9,8 @@ struct ref_lock {
+ 	int lock_fd;
+ 	int force_write;
+ 	int skipped_write;
++	int delete_ref;
++	int delete_flag;
+ };
+ 
+ struct ref_transaction;
 -- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+1.9.1.505.gd05696d
