@@ -1,7 +1,7 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v3 18/25] struct lock_file: declare some fields volatile
-Date: Mon, 14 Apr 2014 15:54:48 +0200
-Message-ID: <1397483695-10888-19-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v3 23/25] resolve_symlink(): use a strbuf for internal scratch space
+Date: Mon, 14 Apr 2014 15:54:53 +0200
+Message-ID: <1397483695-10888-24-git-send-email-mhagger@alum.mit.edu>
 References: <1397483695-10888-1-git-send-email-mhagger@alum.mit.edu>
 Cc: git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>,
 	Jeff King <peff@peff.net>,
@@ -9,121 +9,118 @@ Cc: git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 14 15:55:54 2014
+X-From: git-owner@vger.kernel.org Mon Apr 14 15:55:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WZhMU-0000ez-2h
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Apr 2014 15:55:50 +0200
+	id 1WZhMa-0000nr-HQ
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Apr 2014 15:55:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755244AbaDNNzn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Apr 2014 09:55:43 -0400
-Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:55519 "EHLO
-	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755213AbaDNNzi (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Apr 2014 09:55:38 -0400
-X-AuditID: 1207440f-f79326d000003c9f-61-534be8d9656b
+	id S1755262AbaDNNzt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Apr 2014 09:55:49 -0400
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:48570 "EHLO
+	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755235AbaDNNzr (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Apr 2014 09:55:47 -0400
+X-AuditID: 1207440e-f79c76d000003e2c-02-534be8e252bb
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 0F.65.15519.9D8EB435; Mon, 14 Apr 2014 09:55:37 -0400 (EDT)
+	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id D9.7E.15916.2E8EB435; Mon, 14 Apr 2014 09:55:46 -0400 (EDT)
 Received: from michael.fritz.box (p4FC96FF6.dip0.t-ipconnect.de [79.201.111.246])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s3EDt09I010903
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s3EDt09N010903
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Mon, 14 Apr 2014 09:55:35 -0400
+	Mon, 14 Apr 2014 09:55:44 -0400
 X-Mailer: git-send-email 1.9.1
 In-Reply-To: <1397483695-10888-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrOIsWRmVeSWpSXmKPExsUixO6iqHvzhXewwbdtChZdV7qZLBp6rzBb
-	rPxZY3F7xXxmi1+Hn7Bb/GjpYbY486aR0aKz4yujA4fH3/cfmDx2zrrL7vGsdw+jx8VLyh6L
-	H3h5fN4k53H3/04mj9vPtrEEcERx2yQllpQFZ6bn6dslcGe82nCZtWCrUEX/vmfsDYyt/F2M
-	nBwSAiYS//ccYIKwxSQu3FvP1sXIxSEkcJlRYnfDUkaQhJDASSaJx1crQWw2AV2JRT3NYA0i
-	AmoSE9sOsYA0MAu0M0kc2tELlhAW8JCY03qJGcRmEVCVaH61HWgqBwevgKvEmR3SEMvkJE4e
-	m8wKEuYECi/8kAWxykXi7pcprBMYeRcwMqxilEvMKc3VzU3MzClOTdYtTk7My0st0jXRy80s
-	0UtNKd3ECAlE/h2MXetlDjEKcDAq8fB2zPEOFmJNLCuuzD3EKMnBpCTKm3EDKMSXlJ9SmZFY
-	nBFfVJqTWnyIUYKDWUmE13UrUI43JbGyKrUoHyYlzcGiJM6rvkTdT0ggPbEkNTs1tSC1CCYr
-	w8GhJMFrDIw4IcGi1PTUirTMnBKENBMHJ8hwLimR4tS8lNSixNKSjHhQXMQXAyMDJMUDtDfp
-	Ocje4oLEXKAoROspRkUpcd4SkIQASCKjNA9uLCy9vGIUB/pSmFcCZDsPMDXBdb8CGswENJil
-	HWxwSSJCSqqBka9b0PGCrOnuwBPxnsrMb9om/2NpyNQ50xs0Lyj5/e/HKcK6TycseBq3u4B1
-	g5NW9bETPif4p1XxXbiqvXTiUZmuU+Ibf/DvbPikwSTO2yNvrniXseiPfEbMIYUp 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrJIsWRmVeSWpSXmKPExsUixO6iqPvohXewQf99WYuuK91MFg29V5gt
+	Vv6ssbi9Yj6zxa/DT9gtfrT0MFucedPIaNHZ8ZXRgcPj7/sPTB47Z91l93jWu4fR4+IlZY/F
+	D7w8Pm+S87j7fyeTx+1n21gCOKK4bZISS8qCM9Pz9O0SuDMeXbzAXtDAV/H+dxdbA+M8ri5G
+	Tg4JAROJGdPmMULYYhIX7q1n62Lk4hASuMwo8ejvRXYI5ySTxLvvZ9lBqtgEdCUW9TQzgdgi
+	AmoSE9sOsYAUMQu0M0kc2tELlhAWCJFYfOIuC4jNIqAqsfZDB5jNK+Aq8e/nPGaIdXISJ49N
+	Zu1i5ODgBIov/JAFEhYScJG4+2UK6wRG3gWMDKsY5RJzSnN1cxMzc4pTk3WLkxPz8lKLdI31
+	cjNL9FJTSjcxQoKRbwdj+3qZQ4wCHIxKPLwdc7yDhVgTy4orcw8xSnIwKYnyZtwACvEl5adU
+	ZiQWZ8QXleakFh9ilOBgVhLhdd0KlONNSaysSi3Kh0lJc7AoifOqLVH3ExJITyxJzU5NLUgt
+	gsnKcHAoSfDaPwdqFCxKTU+tSMvMKUFIM3FwggznkhIpTs1LSS1KLC3JiAfFRnwxMDpAUjxA
+	e5NA2nmLCxJzgaIQracYFaXEeUtAEgIgiYzSPLixsBTzilEc6Eth3jSQKh5geoLrfgU0mAlo
+	MEs72OCSRISUVANjggW3f2cL13FJy0vuaTGS3hOPl00VXBaWx25x7sW+eVwHz/HtfOen6hxp
+	3ejXeeHOv8BfZ2239p0NsUl/Jc1dkF83d6GN5t7om1qsakXPDqUteX/PZrGcmdPh 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246231>
 
-The function remove_lock_file_on_signal() is used as a signal handler.
-It is not realistic to make the signal handler conform strictly to the
-C standard, which is very restrictive about what a signal handler is
-allowed to do.  But let's increase the likelihood that it will work:
+Aside from shortening and simplifying the code, this removes another
+place where the path name length is arbitrarily limited.
 
-The lock_file_list global variable and several fields from struct
-lock_file are used by the signal handler.  Declare those values
-"volatile" to increase the chance that the signal handler will see a
-valid object state.
-
-Suggested-by: Johannes Sixt <j.sixt@viscovery.net>
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- cache.h    | 6 +++---
- lockfile.c | 2 +-
- refs.c     | 5 +++--
- 3 files changed, 7 insertions(+), 6 deletions(-)
+ lockfile.c | 33 ++++++++++++---------------------
+ 1 file changed, 12 insertions(+), 21 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index b7af173..9019c7d 100644
---- a/cache.h
-+++ b/cache.h
-@@ -538,10 +538,10 @@ extern int refresh_index(struct index_state *, unsigned int flags, const struct
- #define LOCK_SUFFIX_LEN 5
- 
- struct lock_file {
--	struct lock_file *next;
-+	struct lock_file *volatile next;
- 	volatile sig_atomic_t active;
--	int fd;
--	pid_t owner;
-+	volatile int fd;
-+	volatile pid_t owner;
- 	char on_list;
- 	char filename[PATH_MAX];
- };
 diff --git a/lockfile.c b/lockfile.c
-index 50a0541..fce53f1 100644
+index f552e33..59ed758 100644
 --- a/lockfile.c
 +++ b/lockfile.c
-@@ -69,7 +69,7 @@
-  * See Documentation/api-lockfile.txt for more information.
-  */
+@@ -141,44 +141,35 @@ static char *last_path_elm(char *p)
+ static char *resolve_symlink(char *p, size_t s)
+ {
+ 	int depth = MAXDEPTH;
++	static struct strbuf link = STRBUF_INIT;
  
--static struct lock_file *lock_file_list;
-+static struct lock_file *volatile lock_file_list;
- static const char *alternate_index_output;
+ 	while (depth--) {
+-		char link[PATH_MAX];
+-		int link_len = readlink(p, link, sizeof(link));
+-		if (link_len < 0) {
+-			/* not a symlink anymore */
+-			return p;
+-		}
+-		else if (link_len < sizeof(link))
+-			/* readlink() never null-terminates */
+-			link[link_len] = '\0';
+-		else {
+-			warning("%s: symlink too long", p);
+-			return p;
+-		}
++		if (strbuf_readlink(&link, p, strlen(p)) < 0)
++			break;
  
- static void remove_lock_file(void)
-diff --git a/refs.c b/refs.c
-index cb2f825..db8057c 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2213,15 +2213,16 @@ int commit_packed_refs(void)
- 	struct packed_ref_cache *packed_ref_cache =
- 		get_packed_ref_cache(&ref_cache);
- 	int error = 0;
-+	int fd;
+-		if (is_absolute_path(link)) {
++		if (is_absolute_path(link.buf)) {
+ 			/* absolute path simply replaces p */
+-			if (link_len < s)
+-				strcpy(p, link);
++			if (link.len < s)
++				strcpy(p, link.buf);
+ 			else {
+ 				warning("%s: symlink too long", p);
+-				return p;
++				break;
+ 			}
+ 		} else {
+ 			/*
+-			 * link is a relative path, so I must replace the
++			 * link is a relative path, so replace the
+ 			 * last element of p with it.
+ 			 */
+ 			char *r = (char *)last_path_elm(p);
+-			if (r - p + link_len < s)
+-				strcpy(r, link);
++			if (r - p + link.len < s)
++				strcpy(r, link.buf);
+ 			else {
+ 				warning("%s: symlink too long", p);
+-				return p;
++				break;
+ 			}
+ 		}
+ 	}
++	strbuf_reset(&link);
+ 	return p;
+ }
  
- 	if (!packed_ref_cache->lock)
- 		die("internal error: packed-refs not locked");
- 	write_or_die(packed_ref_cache->lock->fd,
- 		     PACKED_REFS_HEADER, strlen(PACKED_REFS_HEADER));
- 
-+	fd = packed_ref_cache->lock->fd;
- 	do_for_each_entry_in_dir(get_packed_ref_dir(packed_ref_cache),
--				 0, write_packed_entry_fn,
--				 &packed_ref_cache->lock->fd);
-+				 0, write_packed_entry_fn, &fd);
- 	if (commit_lock_file(packed_ref_cache->lock))
- 		error = -1;
- 	packed_ref_cache->lock = NULL;
 -- 
 1.9.1
