@@ -1,164 +1,97 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v4 2/3] refs.c: split delete_ref_loose() into a separate flag-for-deletion and commit phase
-Date: Mon, 14 Apr 2014 11:29:22 -0700
-Message-ID: <1397500163-7617-3-git-send-email-sahlberg@google.com>
-References: <1397500163-7617-1-git-send-email-sahlberg@google.com>
-Cc: Ronnie Sahlberg <sahlberg@google.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 14 20:29:45 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 2/2] commit: add --ignore-submodules[=<when>] parameter
+Date: Mon, 14 Apr 2014 11:30:09 -0700
+Message-ID: <xmqqd2gjpxvy.fsf@gitster.dls.corp.google.com>
+References: <CABxC_L92v=cV=+e_DNa0L6f21LB0BRP5duai2h_heGJN_PRoUQ@mail.gmail.com>
+	<5335A78C.60401@web.de>
+	<CABxC_L-4=qcZiix05dL8GrDJXv=19fw4yB0qFzRRfw=G=_Gxbg@mail.gmail.com>
+	<53374E49.9000702@gmail.com> <533874F9.3090802@web.de>
+	<5338AC36.6000109@gmail.com> <5338B1B0.3050703@gmail.com>
+	<5339BAE4.8020306@web.de>
+	<CABxC_L8_tQrANXji_Z0LfigxsAuzSDj3K9ndTGOTHh2ctHvc6A@mail.gmail.com>
+	<5339F122.60801@gmail.com> <5339FBB4.1010101@gmail.com>
+	<533B2036.3050506@web.de> <533B36AA.3090600@gmail.com>
+	<533C5CBD.4050601@web.de> <533C6B57.3080901@gmail.com>
+	<534180BC.308@web.de> <53431CB8.2050600@gmail.com>
+	<53432EA5.5060102@gmail.com> <53444368.9050607@web.de>
+	<5349BC2C.9030509@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: Ronald Weiss <weiss.ronald@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 14 20:30:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WZldY-00065D-LP
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Apr 2014 20:29:45 +0200
+	id 1WZleD-0006zn-R1
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Apr 2014 20:30:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754910AbaDNS3j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Apr 2014 14:29:39 -0400
-Received: from mail-qc0-f201.google.com ([209.85.216.201]:42593 "EHLO
-	mail-qc0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754860AbaDNS3i (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Apr 2014 14:29:38 -0400
-Received: by mail-qc0-f201.google.com with SMTP id c9so1236690qcz.0
-        for <git@vger.kernel.org>; Mon, 14 Apr 2014 11:29:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=BuLQ5B0p7CBH+SV4DUfR12tTiWEeAndPACz5a27xFGk=;
-        b=n96kNGz6WeLmFc2n2/b5G22fokooLRnCb9AzQW1JN3W+ffgaZnay2wgQQvoaY/HpR6
-         L+LmTHnDDXWcTsiiW8v3u78Q2Qint2bIrwTbfr0u65vKaoIVPKQ4rTzWnvc2SxXnHYfC
-         nUzVxaYxWEZUf8XEYs4TcKX8SH7U/14LSHztSZycyvWZMlCJhlhZ9XiX5YKzKGUSXw/9
-         xx66RVYKsbaycseA3ECMt8wascNbgwqkrNelN3YdLUDNbP+tNWZG0cFBuQQ6EdMHviyL
-         Uje0mw4gJs7SMl4ZmDXUZVAyWJsM5Pw/pL2uddgXw93AM+j+KvST7ffkesu2HzwTdBy0
-         XG/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=BuLQ5B0p7CBH+SV4DUfR12tTiWEeAndPACz5a27xFGk=;
-        b=INKWknchYusznaU8mFh0UZXkWHzW35UkT9sClep63VaOV/VD7BK2Kl0FBGrQI9BmIu
-         hGBi10r89qmXMZRP9oG7mhAXLwVOEuoXwvlom1CMGP4yLLxdC8GX+iSPB1elK/VX0qzO
-         V4gUsT5J20eqbuIq92xvmbCrc862J9WPjspSCRubAtPrbDx/Ieq+4jb9fMKpLo/U7scz
-         EQNGYoIg8yRFxVkUGsCeTLof4KrQjxgQdyRC3el3LlsDpxS+FQL4wmvN5hkMvik6+ZM/
-         /Jx6QTPOihc0dyZZuewIQT5L9Iu01VfD6fZnGN3GYqLK2ea/ZhFfkEVAKsh0FDGtLqP+
-         SiMg==
-X-Gm-Message-State: ALoCoQnQP2stA0HmTFOfIaMsrSGL+vHFk/69O8qO3bGNRjxpxtlIsgeELGKSI3PS7dAlgXYEBcJ/yWPz3Gl8rdbmrVNa6AdfYs8IZXVwDhjDg/9lgzDek09UpwvjsygAQzK2YnyDuZcOolw0N19xl5SR0XFJWtA4wEZCZVACSYZjMNf6X1hxvKedhnlPIBkNm01lR7ZyD+SM
-X-Received: by 10.58.30.78 with SMTP id q14mr19983659veh.10.1397500177397;
-        Mon, 14 Apr 2014 11:29:37 -0700 (PDT)
-Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id g21si2363681yhe.3.2014.04.14.11.29.37
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 14 Apr 2014 11:29:37 -0700 (PDT)
-Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 31D8D31C1E3;
-	Mon, 14 Apr 2014 11:29:37 -0700 (PDT)
-Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id E6FAEE08C1; Mon, 14 Apr 2014 11:29:36 -0700 (PDT)
-X-Mailer: git-send-email 1.9.1.505.gd05696d
-In-Reply-To: <1397500163-7617-1-git-send-email-sahlberg@google.com>
+	id S1754936AbaDNSaQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Apr 2014 14:30:16 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62909 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751462AbaDNSaN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Apr 2014 14:30:13 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DA7607C675;
+	Mon, 14 Apr 2014 14:30:12 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=HFo8CnIWfqznVXDRwc0fen4uEDs=; b=xrxQu6
+	fI7cHxtUgaGulEzqr+fkClECbiU1b4vSa68zQ5VqVkiwhowxKvfbRH0ud2rpRhvN
+	mf0veIx60Oh9mq8AKCp2XIdGWz5IIwx+knuwxwdOY/3C/dipC/OhecqNk2VOa3Zc
+	8Uat58d0pa1c0CrdCUgyhq/6UNw24ILmog9X4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mti+YJB8cPIKtxe7IW7+/c667XEEJbWq
+	Z05AsemLGVdhj5n9LRjH9TV6em3w2cF5ebmU1KkvXk58UnCAxqC2XwcEd/4HdDk8
+	kl8qBCLGAnBKbS6OCFu+DX1sQwnOF8oq2uUCfTANhMW8FICbswKeT88SG8ItK1KM
+	3U7caPgSOjw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BA6517C674;
+	Mon, 14 Apr 2014 14:30:12 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5CC657C671;
+	Mon, 14 Apr 2014 14:30:11 -0400 (EDT)
+In-Reply-To: <5349BC2C.9030509@gmail.com> (Ronald Weiss's message of "Sun, 13
+	Apr 2014 00:20:28 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: D03FB82C-C402-11E3-8A1C-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246253>
 
-Change delete_ref_loose()) to just flag that a ref is to be deleted but do
-not actually unlink the files.
-Change commit_ref_lock() so that it will unlink refs that are flagged for
-deletion.
-Change all callers of delete_ref_loose() to explicitely call commit_ref_lock()
-to commit the deletion.
+Ronald Weiss <weiss.ronald@gmail.com> writes:
 
-The new pattern for deleting loose refs thus become:
+> On 8. 4. 2014 20:43, Jens Lehmann wrote:
+>>> Useful <when> values for commit are 'all' (default) or 'none'. The others
+>>> ('dirty' and 'untracked') have same effect as 'none', as commit is only
+>>> interested in whether the submodule's HEAD differs from what is commited
+>>> in the superproject.
+>>
+>> Unless it outputs a status message, then 'dirty' and 'untracked' do
+>> influence what is shown there. Apart from that (and maybe tests for
+>> these two cases ;-) this is looking good to me.
+>
+> OK, I updated the patch for commit to take that into account. Also, I
+> rebased both patches onto current master. Sending them in a moment.
+>
+> If you don't have any more complaints, can I add "Acked-by: <you>" and
+> resend the patches to Junio?
 
-lock = lock_ref_sha1_basic() (or varient of)
-delete_ref_loose(lock)
-unlock_ref(lock) | commit_ref_lock(lock)
+It is not "When I see no more complaints, I'll resend with your
+Ack".  An Ack is a positive thing, not lack of discovery of further
+issues.
 
-Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
----
- refs.c | 32 ++++++++++++++++++++------------
- refs.h |  2 ++
- 2 files changed, 22 insertions(+), 12 deletions(-)
+Rather, it is more like "I'll wait for your Acks and then I'll
+resend with your Ack", or "If they look good, reply with Ack and let
+the maintainer pick them up".
 
-diff --git a/refs.c b/refs.c
-index 646afd7..a14addb 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2484,16 +2484,9 @@ static int repack_without_ref(const char *refname)
- 
- static int delete_ref_loose(struct ref_lock *lock, int flag)
- {
--	if (!(flag & REF_ISPACKED) || flag & REF_ISSYMREF) {
--		/* loose */
--		int err, i = strlen(lock->lk->filename) - 5; /* .lock */
--
--		lock->lk->filename[i] = 0;
--		err = unlink_or_warn(lock->lk->filename);
--		lock->lk->filename[i] = '.';
--		if (err && errno != ENOENT)
--			return 1;
--	}
-+	lock->delete_ref = 1;
-+	lock->delete_flag = flag;
-+
- 	return 0;
- }
- 
-@@ -2515,7 +2508,7 @@ int delete_ref(const char *refname, const unsigned char *sha1, int delopt)
- 
- 	unlink_or_warn(git_path("logs/%s", lock->ref_name));
- 	clear_loose_ref_cache(&ref_cache);
--	unlock_ref(lock);
-+	ret |= commit_ref_lock(lock);
- 	return ret;
- }
- 
-@@ -2868,7 +2861,20 @@ int write_ref_sha1(struct ref_lock *lock,
- 
- int commit_ref_lock(struct ref_lock *lock)
- {
--	if (!lock->skipped_write && commit_ref(lock)) {
-+	if (lock->delete_ref) {
-+		int flag = lock->delete_flag;
-+
-+		if (!(flag & REF_ISPACKED) || flag & REF_ISSYMREF) {
-+			/* loose */
-+			int err, i = strlen(lock->lk->filename) - 5; /* .lock */
-+
-+			lock->lk->filename[i] = 0;
-+			err = unlink_or_warn(lock->lk->filename);
-+			lock->lk->filename[i] = '.';
-+			if (err && errno != ENOENT)
-+				return 1;
-+		}
-+	} else if (!lock->skipped_write && commit_ref(lock)) {
- 		error("Couldn't set %s", lock->ref_name);
- 		unlock_ref(lock);
- 		return -1;
-@@ -3487,6 +3493,8 @@ int ref_transaction_commit(struct ref_transaction *transaction,
- 		if (update->lock) {
- 			delnames[delnum++] = update->refname;
- 			ret |= delete_ref_loose(update->lock, update->type);
-+			ret |= commit_ref_lock(update->lock);
-+			update->lock = NULL;
- 		}
- 	}
- 
-diff --git a/refs.h b/refs.h
-index f14a417..223be30 100644
---- a/refs.h
-+++ b/refs.h
-@@ -9,6 +9,8 @@ struct ref_lock {
- 	int lock_fd;
- 	int force_write;
- 	int skipped_write;
-+	int delete_ref;
-+	int delete_flag;
- };
- 
- struct ref_transaction;
--- 
-1.9.1.505.gd05696d
+Thanks.
