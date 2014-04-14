@@ -1,97 +1,160 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 2/2] commit: add --ignore-submodules[=<when>] parameter
-Date: Mon, 14 Apr 2014 11:30:09 -0700
-Message-ID: <xmqqd2gjpxvy.fsf@gitster.dls.corp.google.com>
-References: <CABxC_L92v=cV=+e_DNa0L6f21LB0BRP5duai2h_heGJN_PRoUQ@mail.gmail.com>
-	<5335A78C.60401@web.de>
-	<CABxC_L-4=qcZiix05dL8GrDJXv=19fw4yB0qFzRRfw=G=_Gxbg@mail.gmail.com>
-	<53374E49.9000702@gmail.com> <533874F9.3090802@web.de>
-	<5338AC36.6000109@gmail.com> <5338B1B0.3050703@gmail.com>
-	<5339BAE4.8020306@web.de>
-	<CABxC_L8_tQrANXji_Z0LfigxsAuzSDj3K9ndTGOTHh2ctHvc6A@mail.gmail.com>
-	<5339F122.60801@gmail.com> <5339FBB4.1010101@gmail.com>
-	<533B2036.3050506@web.de> <533B36AA.3090600@gmail.com>
-	<533C5CBD.4050601@web.de> <533C6B57.3080901@gmail.com>
-	<534180BC.308@web.de> <53431CB8.2050600@gmail.com>
-	<53432EA5.5060102@gmail.com> <53444368.9050607@web.de>
-	<5349BC2C.9030509@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: Ronald Weiss <weiss.ronald@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 14 20:30:26 2014
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: [PATCH v4 3/3] refs.c: change ref_transaction_commit to run the commit loops once all work is finished
+Date: Mon, 14 Apr 2014 11:29:23 -0700
+Message-ID: <1397500163-7617-4-git-send-email-sahlberg@google.com>
+References: <1397500163-7617-1-git-send-email-sahlberg@google.com>
+Cc: Ronnie Sahlberg <sahlberg@google.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 14 20:36:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WZleD-0006zn-R1
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Apr 2014 20:30:26 +0200
+	id 1WZlkQ-0007oh-Uk
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Apr 2014 20:36:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754936AbaDNSaQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Apr 2014 14:30:16 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62909 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751462AbaDNSaN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Apr 2014 14:30:13 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DA7607C675;
-	Mon, 14 Apr 2014 14:30:12 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=HFo8CnIWfqznVXDRwc0fen4uEDs=; b=xrxQu6
-	fI7cHxtUgaGulEzqr+fkClECbiU1b4vSa68zQ5VqVkiwhowxKvfbRH0ud2rpRhvN
-	mf0veIx60Oh9mq8AKCp2XIdGWz5IIwx+knuwxwdOY/3C/dipC/OhecqNk2VOa3Zc
-	8Uat58d0pa1c0CrdCUgyhq/6UNw24ILmog9X4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mti+YJB8cPIKtxe7IW7+/c667XEEJbWq
-	Z05AsemLGVdhj5n9LRjH9TV6em3w2cF5ebmU1KkvXk58UnCAxqC2XwcEd/4HdDk8
-	kl8qBCLGAnBKbS6OCFu+DX1sQwnOF8oq2uUCfTANhMW8FICbswKeT88SG8ItK1KM
-	3U7caPgSOjw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BA6517C674;
-	Mon, 14 Apr 2014 14:30:12 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5CC657C671;
-	Mon, 14 Apr 2014 14:30:11 -0400 (EDT)
-In-Reply-To: <5349BC2C.9030509@gmail.com> (Ronald Weiss's message of "Sun, 13
-	Apr 2014 00:20:28 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: D03FB82C-C402-11E3-8A1C-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753931AbaDNSgq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Apr 2014 14:36:46 -0400
+Received: from mail-pd0-f202.google.com ([209.85.192.202]:41767 "EHLO
+	mail-pd0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751053AbaDNSgp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Apr 2014 14:36:45 -0400
+X-Greylist: delayed 425 seconds by postgrey-1.27 at vger.kernel.org; Mon, 14 Apr 2014 14:36:45 EDT
+Received: by mail-pd0-f202.google.com with SMTP id fp1so1086953pdb.5
+        for <git@vger.kernel.org>; Mon, 14 Apr 2014 11:36:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=UsH1bnxhJO5coW8+/lRWcm/NDeqldpBBgD78Bpe1fFc=;
+        b=HrVBxhysKcc2Mfsp6VnSzLDws6f2XmbsKSfabQBMvmF5GAjxCnx/oPaJq4Z4hzOTy7
+         ThNuE82Hr0a2jlNZ3LIEKNvG6Ge/Yx/EgdXNt9maYhQQKDLUtdejfeaIaCf3bhD1sLY5
+         qj+poRbcsV70mpzuACdOH6ywXTp1ppwknUKASsuXTfe3s8pJ40uSRZ/jjcBPS865B5dc
+         PunwSp7lPjKspLth28nFxWB63ftAiyuiUpy/16j4LYxpcUTtgYo+gRZsfJaZGzbNxl6V
+         cozbwjMiUcb+d26WAHiO9JKRaGefDYWY38Mg290cNTmBDsDRKq4GFJ7UwcBy6f3Dn6TP
+         w2DQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=UsH1bnxhJO5coW8+/lRWcm/NDeqldpBBgD78Bpe1fFc=;
+        b=iQejTW8bEE1v7OAmulm5dA9tE1rfgJl3qLhWF1jqeZueqUbOqeISCz+gxt7H8wklYL
+         KpVG63MCSauI/7iYuFt+lxi2urI18vEmqjUGa9oOs2HyUviootszieMuc+br1WbqnQzn
+         EHxKRt0M0zzQ0+RMLxggBaEEF7MqZpoDMBUH+FCE5oNFsTe+a9mJsjD6lp50UvfLX8Za
+         7PpbrTmTfyTVevRVj8nJton8fbl8059SaU5vkJee6GkeGf0DGMUObhWENkq5q9Pl5lbo
+         qfwuk7UVkE+iEbseUvUuwN50WsH4EZaSXeJZocSElkmJ7/rf7tvCCd02qT8VP1hCpH/S
+         UtdQ==
+X-Gm-Message-State: ALoCoQlcgWfYkPNnKUHRSFPokv/CQRU/9jDum9GqS3tm6GDl/d4L3M4V4g10FQzhzImocX9R1tPvRJtUsHpcpGn3evF45F8wC4gMNiTmZLOf4xHYnYTW0JnQGBLz8Cz28AE8fgYTN3vJE6uGY1rZZo1oOfN4/B98KULkXu4Q7YNCkiCvG7rDPfvqAyJ3g03YYN6ZUsaXPrOA
+X-Received: by 10.66.66.109 with SMTP id e13mr20704187pat.1.1397500178745;
+        Mon, 14 Apr 2014 11:29:38 -0700 (PDT)
+Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
+        by gmr-mx.google.com with ESMTPS id u45si2362929yhl.4.2014.04.14.11.29.38
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 14 Apr 2014 11:29:38 -0700 (PDT)
+Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
+	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 8DCD631C230;
+	Mon, 14 Apr 2014 11:29:38 -0700 (PDT)
+Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
+	id 50EA9E08C1; Mon, 14 Apr 2014 11:29:38 -0700 (PDT)
+X-Mailer: git-send-email 1.9.1.505.gd05696d
+In-Reply-To: <1397500163-7617-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246254>
 
-Ronald Weiss <weiss.ronald@gmail.com> writes:
+During a transaction commit we will both update and delete refs.
+Since both update and delete now use the same pattern
 
-> On 8. 4. 2014 20:43, Jens Lehmann wrote:
->>> Useful <when> values for commit are 'all' (default) or 'none'. The others
->>> ('dirty' and 'untracked') have same effect as 'none', as commit is only
->>> interested in whether the submodule's HEAD differs from what is commited
->>> in the superproject.
->>
->> Unless it outputs a status message, then 'dirty' and 'untracked' do
->> influence what is shown there. Apart from that (and maybe tests for
->> these two cases ;-) this is looking good to me.
->
-> OK, I updated the patch for commit to take that into account. Also, I
-> rebased both patches onto current master. Sending them in a moment.
->
-> If you don't have any more complaints, can I add "Acked-by: <you>" and
-> resend the patches to Junio?
+    lock = lock_ref_sha1_basic() (or varient of)
+    write_ref_sha1(lock)/delete_ref_loose(lock)
+    unlock_ref(lock) | commit_ref_lock(lock)
 
-It is not "When I see no more complaints, I'll resend with your
-Ack".  An Ack is a positive thing, not lack of discovery of further
-issues.
+we can now simplify ref_transaction_commit to have one loop that locks all
+involved refs.
+A second loop that writes or flags for deletion, but does not commit, all
+the refs.
+And a final third loop that commits all the refs once all the work and
+preparations are complete.
 
-Rather, it is more like "I'll wait for your Acks and then I'll
-resend with your Ack", or "If they look good, reply with Ack and let
-the maintainer pick them up".
+This makes updating/deleting multiple refs more atomic since we will not start
+the commit phase until all the preparations have completed successfully.
 
-Thanks.
+Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+---
+ refs.c | 39 ++++++++++++++++++++++-----------------
+ 1 file changed, 22 insertions(+), 17 deletions(-)
+
+diff --git a/refs.c b/refs.c
+index a14addb..87193c7 100644
+--- a/refs.c
++++ b/refs.c
+@@ -3467,42 +3467,47 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 		}
+ 	}
+ 
+-	/* Perform updates first so live commits remain referenced */
++	/* Prepare all the updates/deletes */
+ 	for (i = 0; i < n; i++) {
+ 		struct ref_update *update = updates[i];
+ 
+-		if (!is_null_sha1(update->new_sha1)) {
++		if (!is_null_sha1(update->new_sha1))
+ 			ret = update_ref_write(msg,
+ 					       update->refname,
+ 					       update->new_sha1,
+ 					       update->lock, onerr);
+-			if (ret)
+-				unlock_ref(update->lock);
+-			else
+-				commit_ref_lock(update->lock);
+-			update->lock = NULL;
+-			if (ret)
+-				goto cleanup;
++		else {
++			delnames[delnum++] = update->refname;
++			ret = delete_ref_loose(update->lock, update->type);
+ 		}
++		if (ret)
++			goto cleanup;
+ 	}
+ 
+-	/* Perform deletes now that updates are safely completed */
++	ret |= repack_without_refs(delnames, delnum);
++	for (i = 0; i < delnum; i++)
++		unlink_or_warn(git_path("logs/%s", delnames[i]));
++	clear_loose_ref_cache(&ref_cache);
++
++	/* Perform updates first so live commits remain referenced */
++	for (i = 0; i < n; i++) {
++		struct ref_update *update = updates[i];
++
++		if (update->lock && !update->lock->delete_ref) {
++			ret |= commit_ref_lock(update->lock);
++			update->lock = NULL;
++		}
++	}
++	/* And finally perform all deletes */
+ 	for (i = 0; i < n; i++) {
+ 		struct ref_update *update = updates[i];
+ 
+ 		if (update->lock) {
+-			delnames[delnum++] = update->refname;
+-			ret |= delete_ref_loose(update->lock, update->type);
+ 			ret |= commit_ref_lock(update->lock);
+ 			update->lock = NULL;
+ 		}
+ 	}
+ 
+-	ret |= repack_without_refs(delnames, delnum);
+-	for (i = 0; i < delnum; i++)
+-		unlink_or_warn(git_path("logs/%s", delnames[i]));
+-	clear_loose_ref_cache(&ref_cache);
+-
+ cleanup:
+ 	for (i = 0; i < n; i++)
+ 		if (updates[i]->lock)
+-- 
+1.9.1.505.gd05696d
