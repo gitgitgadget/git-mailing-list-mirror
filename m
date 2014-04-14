@@ -1,85 +1,124 @@
-From: Ronald Weiss <weiss.ronald@gmail.com>
-Subject: Re: [PATCH v3 2/2] commit: add --ignore-submodules[=<when>] parameter
-Date: Mon, 14 Apr 2014 22:18:34 +0200
-Message-ID: <534C429A.6080508@gmail.com>
-References: <CABxC_L92v=cV=+e_DNa0L6f21LB0BRP5duai2h_heGJN_PRoUQ@mail.gmail.com>	<5335A78C.60401@web.de>	<CABxC_L-4=qcZiix05dL8GrDJXv=19fw4yB0qFzRRfw=G=_Gxbg@mail.gmail.com>	<53374E49.9000702@gmail.com> <533874F9.3090802@web.de>	<5338AC36.6000109@gmail.com> <5338B1B0.3050703@gmail.com>	<5339BAE4.8020306@web.de>	<CABxC_L8_tQrANXji_Z0LfigxsAuzSDj3K9ndTGOTHh2ctHvc6A@mail.gmail.com>	<5339F122.60801@gmail.com> <5339FBB4.1010101@gmail.com>	<533B2036.3050506@web.de> <533B36AA.3090600@gmail.com>	<533C5CBD.4050601@web.de> <533C6B57.3080901@gmail.com>	<534180BC.308@web.de> <53431CB8.2050600@gmail.com>	<53432EA5.5060102@gmail.com> <53444368.9050607@web.de>	<5349BC2C.9030509@gmail.com> <xmqqd2gjpxvy.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/5] completion: fix completion of certain aliases
+Date: Mon, 14 Apr 2014 13:20:29 -0700
+Message-ID: <xmqqmwfnoe7m.fsf@gitster.dls.corp.google.com>
+References: <E1WZEWT-0002R7-1d@iramx2.ira.uni-karlsruhe.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 14 22:18:50 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: =?utf-8?Q?G=C3=A1bor?= Szeder <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Mon Apr 14 22:20:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WZnL6-00051D-Ib
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Apr 2014 22:18:48 +0200
+	id 1WZnMt-0007xY-1V
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Apr 2014 22:20:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755461AbaDNUSj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Apr 2014 16:18:39 -0400
-Received: from mail-ee0-f43.google.com ([74.125.83.43]:49616 "EHLO
-	mail-ee0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753554AbaDNUSh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Apr 2014 16:18:37 -0400
-Received: by mail-ee0-f43.google.com with SMTP id e53so6997065eek.2
-        for <git@vger.kernel.org>; Mon, 14 Apr 2014 13:18:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=Ac+6n4UFY4v/erYAtncLP1zs89Su/jE8yeFGNFj+aYk=;
-        b=Sb6t30cRbsdHoRjMdKGv6tpw2ciEA08MigG1QZ43e/WqSJ3APiY8/WnoTPjoQATyab
-         COzgcMjEj7BsIRcdbjS/enC08lyECcQqBsgfDpDud5QmwKfL9KDbA9zoI7vljl8V4Fr1
-         hpMsA89sTdhQe6upoOtRJiyr4jVgqqnluLE1I1cmQOknDNl+tPmnChHrTb6XtsqaeJuN
-         uhHRYygY1Nat7aZ1MItcO9Ti8BIdsqI107hFYQPqllz3OaWoVLsk7PZLu9C9MoYakZi7
-         9DiPfeqA4Mks9EoYJgDJypUAQ846puaXnubW97JvvdCnkMsnp+B9hxFJwiehJ4JWQBxJ
-         oBDw==
-X-Received: by 10.15.43.77 with SMTP id w53mr54044929eev.10.1397506716270;
-        Mon, 14 Apr 2014 13:18:36 -0700 (PDT)
-Received: from [10.0.1.226] (chello089173067059.chello.sk. [89.173.67.59])
-        by mx.google.com with ESMTPSA id w12sm43621411eez.36.2014.04.14.13.18.34
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 14 Apr 2014 13:18:35 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
-In-Reply-To: <xmqqd2gjpxvy.fsf@gitster.dls.corp.google.com>
+	id S1752300AbaDNUUe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Apr 2014 16:20:34 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36611 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750958AbaDNUUd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Apr 2014 16:20:33 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E4FCD7D5AA;
+	Mon, 14 Apr 2014 16:20:32 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=/iqX3qFlRt5u
+	qiay7H1gR/iE6qQ=; b=SuXSYhhvRRVqMrNNdrbIOZxiCbxBl+YZ6V7jr+fVGLSh
+	2v6fpXmbL6oEPdFsu17VPsf63WwbMI97Hv03J8uquZGL6a9cMf0YaQYttt0Vby33
+	3CoVgpYbCBgEx+WRU5YlKCnkXpJhzunFptT36TkoxEqK4wK2Do9GtHU2OnJ/RtA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=yV7uuO
+	ousBlqxW8fN5LidO9aPztk18C8LGU4b09+x9Sj96c1T5OOtQU3ZAHbf2jyf8Flib
+	gfOpv8uhFW3EnV3Zd3FAA2Tl/9VNOW40WhnCG6y58VbBFl2AxJbgjERomqMg4ByZ
+	KVdf87dWfWcZLBD4EHAdprDK73jspRF+rpahQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C3FB07D5A9;
+	Mon, 14 Apr 2014 16:20:32 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DAC967D5A3;
+	Mon, 14 Apr 2014 16:20:30 -0400 (EDT)
+In-Reply-To: <E1WZEWT-0002R7-1d@iramx2.ira.uni-karlsruhe.de>
+ (=?utf-8?Q?=22G=C3=A1bor?= Szeder"'s
+	message of "Sun, 13 Apr 2014 11:38:23 +0430")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 39C9C3E6-C412-11E3-96AD-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246260>
 
-On 14. 4. 2014 20:30, Junio C Hamano wrote:
-> Ronald Weiss <weiss.ronald@gmail.com> writes:
-> 
->> On 8. 4. 2014 20:43, Jens Lehmann wrote:
->>>> Useful <when> values for commit are 'all' (default) or 'none'. The others
->>>> ('dirty' and 'untracked') have same effect as 'none', as commit is only
->>>> interested in whether the submodule's HEAD differs from what is commited
->>>> in the superproject.
->>>
->>> Unless it outputs a status message, then 'dirty' and 'untracked' do
->>> influence what is shown there. Apart from that (and maybe tests for
->>> these two cases ;-) this is looking good to me.
->>
->> OK, I updated the patch for commit to take that into account. Also, I
->> rebased both patches onto current master. Sending them in a moment.
->>
->> If you don't have any more complaints, can I add "Acked-by: <you>" and
->> resend the patches to Junio?
-> 
-> It is not "When I see no more complaints, I'll resend with your
-> Ack".  An Ack is a positive thing, not lack of discovery of further
-> issues.
+G=C3=A1bor Szeder <szeder@ira.uka.de> writes:
 
-I'm really sorry if the tone of my message sounded harsh to you, it
-wasn't meant like that at all.
+> words[] is just fine, we never modify it after it is filled by
+> _get_comp_words_by_ref() at the very beginning.
 
-> Rather, it is more like "I'll wait for your Acks and then I'll
-> resend with your Ack", or "If they look good, reply with Ack and let
-> the maintainer pick them up".
+Hmph.  I would have understood if the latter were "we never look at
+it (to decide what to do)".  "we never modify it" does not sound
+like an enough justification behind "words[] is just fine"---maybe I
+am not reading you correctly.
 
-OK.
+> The root of the problem is that the expected position of the name
+> of the git command in __git_complete_remote_or_refspec() is
+> hardcoded as words[1], but that is not the case when:
+>
+>   1) it's an alias, as in Felipe's example: git p ori<TAB>,
+>   because while the index is ok, the content is not.
+>
+>   2) in presence of options of the main git command: git -c
+>   foo=3Dbar push ori<TAB>, because the index is off.
+>
+>   3) the command is a shell alias for which the user explicitly
+>   set the completion function with __git_complete() (at his own
+>   risk): alias gp=3D"git push"; __git_complete gp _git_push; gp
+>   ori<TAB> Neither the index nor the content are ok.
+>
+> Fixing the hard-coded indexing would only solve 2) but not 1) and
+> 3), as it obviously couldn't turn the git or shell alias into a
+> git command on its own.
+>
+> Felipe's patch only deals with 1), as it only kicks in in case of
+> a git alias.
+
+Yeah, do completions for commands (not just for the ones that use
+remote-or-refspec Felipe's patch addresses) have trouble with the
+latter two in general?  If that is the case,...
+
+> Communicating the name of the git command to
+> __git_complete_remote_or_refspec() by its callers via a new
+> variable as suggested by Junio, or perhaps by an additional
+> parameter to the function is IMHO the right thing to do, because,
+> unless I'm missing something, it would make all three cases work.
+
+=2E.. while the above analysis may be correct, taking Felipe's patch
+to address only (1) and leaving a solution to the more general
+words[1] problem for other patches on top might not be too bad an
+approach.
+
+Unless
+
+ (A) remote-or-refspec thing is the primary offender, and other
+     commands do not suffer from the words[1] problem, in which case
+     I tend to agree that an additional parameter would be the way
+     to go (there are only a few callers of the function); or
+
+ (B) even if words[1] problem is more widespread, such a more
+     general solution to all three issues can be coded cleanly and
+     quickly, without having to have Felipe's patch as a stop-gap
+     measure.
+
+that is.
+
+I'll keep Felipe's patch in the meantime to 'pu'.
+
+Thanks.
