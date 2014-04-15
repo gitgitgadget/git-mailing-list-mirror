@@ -1,233 +1,184 @@
-From: =?UTF-8?B?U3V2b3JvdiBJdmFu?= <sv_91@inbox.ru>
-Subject: =?UTF-8?B?W1BBVENIXSBob29rIGZvciBnaXQgc3RhdHVz?=
-Date: Tue, 15 Apr 2014 19:24:33 +0400
-Message-ID: <1397575473.625837277@f361.i.mail.ru>
-Reply-To: =?UTF-8?B?U3V2b3JvdiBJdmFu?= <sv_91@inbox.ru>
+From: Delcypher <delcypher@gmail.com>
+Subject: Re: [PATCH] git-remote-hg : Enable use of, $GIT_DIR/hg/origin/clone/.hg/hgrc
+Date: Tue, 15 Apr 2014 16:37:23 +0100
+Message-ID: <CANNJ_zjVaymTUmSSFHfSpmcH7H2v62nsHaUoxRfi098zqLi_Ow@mail.gmail.com>
+References: <53076DFC.1000602@gmail.com>
+	<53499bb02c140_285f9032ec58@nysa.notmuch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: base64
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 15 17:25:01 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 15 17:37:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wa5EJ-0004op-Tb
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Apr 2014 17:25:00 +0200
+	id 1Wa5QS-0002D3-0L
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Apr 2014 17:37:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751040AbaDOPYz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Apr 2014 11:24:55 -0400
-Received: from fallback3.mail.ru ([94.100.176.58]:45479 "EHLO
-	fallback3.mail.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750866AbaDOPYy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Apr 2014 11:24:54 -0400
-Received: from f361.i.mail.ru (f361.i.mail.ru [217.69.141.3])
-	by fallback3.mail.ru (mPOP.Fallback_MX) with ESMTP id 6F569112CAEC7
-	for <git@vger.kernel.org>; Tue, 15 Apr 2014 19:24:51 +0400 (MSK)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=inbox.ru; s=mail;
-	h=Content-Transfer-Encoding:Content-Type:Message-ID:Reply-To:Date:Mime-Version:Subject:To:From; bh=OfXzV17UUVYqJuzC63oSxL8JIFnVY9qgQ0KIG47uOWE=;
-	b=Zdu7xyAyr5/18RH+7fR/s3jvuBQpSB0HOKVtAhkFkQfpXvt+nNpFKpu7DZG2uZOMjIgrQ6fs680mrxOgwx5E57DEdwlPkAWsScMBb4WBfNJx+mD3eE8g3h345Ezo3OkztNd3qSdeBHQn/6bzlB+pQt1rUQdMg+Zv4u4XWh9g1RQ=;
-Received: from mail by f361.i.mail.ru with local (envelope-from <sv_91@inbox.ru>)
-	id 1Wa5Dt-0006KE-RQ
-	for git@vger.kernel.org; Tue, 15 Apr 2014 19:24:34 +0400
-Received: from [213.176.224.75] by e.mail.ru with HTTP;
-	Tue, 15 Apr 2014 19:24:33 +0400
-X-Mailer: Mail.Ru Mailer 1.0
-X-Originating-IP: [213.176.224.75]
-X-Priority: 3 (Normal)
-X-Mras: Ok
-X-Spam: undefined
+	id S1751256AbaDOPh0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Apr 2014 11:37:26 -0400
+Received: from mail-vc0-f170.google.com ([209.85.220.170]:49927 "EHLO
+	mail-vc0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751148AbaDOPhZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Apr 2014 11:37:25 -0400
+Received: by mail-vc0-f170.google.com with SMTP id hu19so9439935vcb.15
+        for <git@vger.kernel.org>; Tue, 15 Apr 2014 08:37:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=H1V+6FeXLWdREsMAqSyOyQE7BjsViD9u4eeWZF7+5Ug=;
+        b=nNizupiTH5I68WACsBHgLl7jeCwMxqeKV2e21zfe0uozCk1nEKFeiPV3JSMlYz3tQw
+         geIX4BlGsvkl9nBereK264DdADrduik8rw5hcjSRRsXrZ7nxyH5N8vFC+NoINXEwboqN
+         HYSh5+Ut0a/SlM2sCjoKCe6u2c7WZPjP4gIgPxu2kVHha1UNVfXLn3nIZ4jEl6ZTJkOT
+         isteSOQHdgUG00RVs4XGSv7XY8sp02ChOD8THFQOW20H2h2Ht4MJkkj8tADAW6YDC0zb
+         TqUhtm4Ym68qpLAHvPQvKU5RzDi7r4vBTYe5MsHqsO6gyzZ8vZU1sxtErulP6KcrshAq
+         O8Ww==
+X-Received: by 10.52.237.228 with SMTP id vf4mr420525vdc.47.1397576244167;
+ Tue, 15 Apr 2014 08:37:24 -0700 (PDT)
+Received: by 10.220.88.70 with HTTP; Tue, 15 Apr 2014 08:37:23 -0700 (PDT)
+In-Reply-To: <53499bb02c140_285f9032ec58@nysa.notmuch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246286>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246287>
 
-RnJvbSAwZjQzNWZlZWU4N2RjOTZiMmU0ODkwYTVhNWRlN2IxZDBjMGJlZmUxIE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBtYWdpc3RlclJhYiA8c3ZfOTFAaW5ib3gucnU+CkRhdGU6IFR1
-ZSwgMSBBcHIgMjAxNCAxNzowMjoxMCArMDQwMApTdWJqZWN0OiBbUEFUQ0hdIGhvb2sgZm9yIGdp
-dCBzdGF0dXMKClNpZ25lZC1vZmYtYnk6IEl2YW4gU3V2b3JvdiA8c3ZfOTFAaW5ib3gucnU+Ci0t
-LQpob29rIGZvciBnaXQgc3RhdHVzIGFsbG93cyB5b3UgdG8gZGlzcGxheSBhZGRpdGlvbmFsIGZp
-ZWxkcyB3aGVuIHlvdSBydW4gZ2l0IHN0YXR1cy4KRm9yIGV4YW1wbGUsIGZvciBhIGhvb2sgd2l0
-aCBhIGNvbnRlbnQgb2YKClNUQVRVU19GSUxFPSQxCk5FV19TQ09QRT0kMgoKY2F0ID4gIiRTVEFU
-VVNfRklMRSIgPDxFT0YKQmluYXJ5IGZpbGVzCmFkZCAtLWJpbmFyeQpsaWIubGliCmxpYi5hCmxp
-Yi5vCiRORVdfU0NPUEUKT3RoZXIgZmlsZXMKYWRkIC0tb3RoZXIKZGxsLmxpYgpkbGwuYQpkbGwu
-bwpFT0YKCmhlcmUncyBob3cgaXQgd2lsbCBsb29rIGNvbmNsdXNpb24KCkJpbmFyeSBmaWxlczoK
-ICh1c2UgImdpdCBhZGQgLS1iaW5hcnkgPGZpbGU+Li4uIiB0byBpbmNsdWRlIGluIHdoYXQgd2ls
-bCBiZSBjb21taXR0ZWQpCgogbGliLmEKIGxpYi5saWIKIGxpYi5vCgpPdGhlciBmaWxlczoKICh1
-c2UgImdpdCBhZGQgLS1vdGhlciA8ZmlsZT4uLi4iIHRvIGluY2x1ZGUgaW4gd2hhdCB3aWxsIGJl
-IGNvbW1pdHRlZCkKCiBkbGwuYQogZGxsLmxpYgogZGxsLm8KCiBEb2N1bWVudGF0aW9uL2dpdC1z
-dGF0dXMudHh0IHwgMTAgKysrCiBEb2N1bWVudGF0aW9uL2dpdGhvb2tzLnR4dCB8IDkgKysrCiBi
-dWlsdGluL2NvbW1pdC5jIHwgNyArKysKIHQvdDc1MTMtc3RhdHVzLWhvb2suc2ggfCAxMzcgKysr
-KysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysKIHRlbXBsYXRlcy9ob29rcy0t
-c3RhdHVzLnNhbXBsZSB8IDM2ICsrKysrKysrKysrCiB3dC1zdGF0dXMuYyB8IDg4ICsrKysrKysr
-KysrKysrKysrKysrKysrKysrCiB3dC1zdGF0dXMuaCB8IDEgKwogNyBmaWxlcyBjaGFuZ2VkLCAy
-ODggaW5zZXJ0aW9ucygrKQogY3JlYXRlIG1vZGUgMTAwNjQ0IHQvdDc1MTMtc3RhdHVzLWhvb2su
-c2gKIGNyZWF0ZSBtb2RlIDEwMDc1NSB0ZW1wbGF0ZXMvaG9va3MtLXN0YXR1cy5zYW1wbGUKCmRp
-ZmYgLS1naXQgYS9Eb2N1bWVudGF0aW9uL2dpdC1zdGF0dXMudHh0IGIvRG9jdW1lbnRhdGlvbi9n
-aXQtc3RhdHVzLnR4dAppbmRleCBkZWY2MzVmLi42YzgxMzIzIDEwMDY0NAotLS0gYS9Eb2N1bWVu
-dGF0aW9uL2dpdC1zdGF0dXMudHh0CisrKyBiL0RvY3VtZW50YXRpb24vZ2l0LXN0YXR1cy50eHQK
-QEAgLTk0LDYgKzk0LDEwIEBAIGNvbmZpZ3VyYXRpb24gdmFyaWFibGUgZG9jdW1lbnRlZCBpbiBs
-aW5rZ2l0OmdpdC1jb25maWdbMV0uCiByZXNwZWN0aXZlbHkuCgoKKy0tbm8tcnVuLWhvb2s6Ogor
-IFRoaXMgb3B0aW9uIGJ5cGFzc2VzIHRoZSBzdGF0dXMgaG9va3MuCisgU2VlIGFsc28gbGlua2dp
-dDpnaXRob29rc1s1XS4KKyAKIE9VVFBVVAogLS0tLS0tCiBUaGUgb3V0cHV0IGZyb20gdGhpcyBj
-b21tYW5kIGlzIGRlc2lnbmVkIHRvIGJlIHVzZWQgYXMgYSBjb21taXQKQEAgLTIxOCw5ICsyMjIs
-MTUgQEAgaWdub3JlZCBzdWJtb2R1bGVzIHlvdSBjYW4gZWl0aGVyIHVzZSB0aGUgLS1pZ25vcmUt
-c3VibW9kdWxlcz1kaXJ0eSBjb21tYW5kCiBsaW5lIG9wdGlvbiBvciB0aGUgJ2dpdCBzdWJtb2R1
-bGUgc3VtbWFyeScgY29tbWFuZCwgd2hpY2ggc2hvd3MgYSBzaW1pbGFyCiBvdXRwdXQgYnV0IGRv
-ZXMgbm90IGhvbm9yIHRoZXNlIHNldHRpbmdzLgoKK0hPT0tTCistLS0tLQorVGhpcyBjb21tYW5k
-IGNhbiBydW4gYHN0YXR1c2AgaG9va3MuIFNlZSBsaW5rZ2l0OmdpdGhvb2tzWzVdIGZvciBtb3Jl
-CitpbmZvcm1hdGlvbi4KKwogU0VFIEFMU08KIC0tLS0tLS0tCiBsaW5rZ2l0OmdpdGlnbm9yZVs1
-XQorbGlua2dpdDpnaXRob29rc1s1XQoKIEdJVAogLS0tCmRpZmYgLS1naXQgYS9Eb2N1bWVudGF0
-aW9uL2dpdGhvb2tzLnR4dCBiL0RvY3VtZW50YXRpb24vZ2l0aG9va3MudHh0CmluZGV4IGQ5NTRi
-ZjYuLmUzZTMyMDYgMTAwNjQ0Ci0tLSBhL0RvY3VtZW50YXRpb24vZ2l0aG9va3MudHh0CisrKyBi
-L0RvY3VtZW50YXRpb24vZ2l0aG9va3MudHh0CkBAIC0zODEsNiArMzgxLDE1IEBAIHJlYmFzZTo6
-CiBUaGUgY29tbWl0cyBhcmUgZ3VhcmFudGVlZCB0byBiZSBsaXN0ZWQgaW4gdGhlIG9yZGVyIHRo
-YXQgdGhleSB3ZXJlCiBwcm9jZXNzZWQgYnkgcmViYXNlLgoKK3N0YXR1cworfn5+fn5+fn5+fn4K
-KworVGhpcyBob29rIGlzIGludm9rZWQgYnkgJ2dpdCBzdGF0dXMnLCBhbmQgY2FuIGJlIGJ5cGFz
-c2VkCit3aXRoIGAtLW5vLXJ1bi1ob29rYCBvcHRpb24uIEV4aXRpbmcgd2l0aCBub24temVybyBz
-dGF0dXMgZnJvbSB0aGlzIHNjcmlwdAorY2F1c2VzIHRoZSAnZ2l0IHN0YXR1cycgdG8gYWJvcnQu
-CisKK1RoZSBkZWZhdWx0ICdzdGF0dXMnIGhvb2ssIHdoZW4gZW5hYmxlZCwgYWRkcyB0byB0aGUg
-b3V0cHV0IAorb2YgdGhlIGNvbW1hbmQgJ2dpdCBzdGF0dXMnIHNldmVyYWwgZmlsZXMgbmFtZXMu
-CgogR0lUCiAtLS0KZGlmZiAtLWdpdCBhL2J1aWx0aW4vY29tbWl0LmMgYi9idWlsdGluL2NvbW1p
-dC5jCmluZGV4IDljZmVmNmMuLjE2YzQzMGYgMTAwNjQ0Ci0tLSBhL2J1aWx0aW4vY29tbWl0LmMK
-KysrIGIvYnVpbHRpbi9jb21taXQuYwpAQCAtMTIyLDYgKzEyMiw3IEBAIHN0YXRpYyBlbnVtIGNv
-bW1pdF93aGVuY2Ugd2hlbmNlOwogc3RhdGljIGludCBzZXF1ZW5jZXJfaW5fdXNlOwogc3RhdGlj
-IGludCB1c2VfZWRpdG9yID0gMSwgaW5jbHVkZV9zdGF0dXMgPSAxOwogc3RhdGljIGludCBzaG93
-X2lnbm9yZWRfaW5fc3RhdHVzLCBoYXZlX29wdGlvbl9tOworc3RhdGljIGludCBub19ydW5faG9v
-ayA9IDA7CiBzdGF0aWMgY29uc3QgY2hhciAqb25seV9pbmNsdWRlX2Fzc3VtZWQ7CiBzdGF0aWMg
-c3RydWN0IHN0cmJ1ZiBtZXNzYWdlID0gU1RSQlVGX0lOSVQ7CgpAQCAtMTI3Niw2ICsxMjc3LDgg
-QEAgaW50IGNtZF9zdGF0dXMoaW50IGFyZ2MsIGNvbnN0IGNoYXIgKiphcmd2LCBjb25zdCBjaGFy
-ICpwcmVmaXgpCiBOXygiaWdub3JlIGNoYW5nZXMgdG8gc3VibW9kdWxlcywgb3B0aW9uYWwgd2hl
-bjogYWxsLCBkaXJ0eSwgdW50cmFja2VkLiAoRGVmYXVsdDogYWxsKSIpLAogUEFSU0VfT1BUX09Q
-VEFSRywgTlVMTCwgKGludHB0cl90KSJhbGwiIH0sCiBPUFRfQ09MVU1OKDAsICJjb2x1bW4iLCAm
-cy5jb2xvcHRzLCBOXygibGlzdCB1bnRyYWNrZWQgZmlsZXMgaW4gY29sdW1ucyIpKSwKKyBPUFRf
-Qk9PTCgwLCAibm8tcnVuLWhvb2siLCAmbm9fcnVuX2hvb2ssCisgTl8oImJ5cGFzcyBzdGF0dXMg
-aG9vayIpKSwKIE9QVF9FTkQoKSwKIH07CgpAQCAtMTI5Niw2ICsxMjk5LDEwIEBAIGludCBjbWRf
-c3RhdHVzKGludCBhcmdjLCBjb25zdCBjaGFyICoqYXJndiwgY29uc3QgY2hhciAqcHJlZml4KQog
-UEFUSFNQRUNfUFJFRkVSX0ZVTEwsCiBwcmVmaXgsIGFyZ3YpOwoKKyBpZiAobm9fcnVuX2hvb2sp
-Cisgcy5ydW5faG9vayA9IDA7CisgZWxzZQorIHMucnVuX2hvb2sgPSAxOwogcmVhZF9jYWNoZV9w
-cmVsb2FkKCZzLnBhdGhzcGVjKTsKIHJlZnJlc2hfaW5kZXgoJnRoZV9pbmRleCwgUkVGUkVTSF9R
-VUlFVHxSRUZSRVNIX1VOTUVSR0VELCAmcy5wYXRoc3BlYywgTlVMTCwgTlVMTCk7CgpkaWZmIC0t
-Z2l0IGEvdC90NzUxMy1zdGF0dXMtaG9vay5zaCBiL3QvdDc1MTMtc3RhdHVzLWhvb2suc2gKbmV3
-IGZpbGUgbW9kZSAxMDA2NDQKaW5kZXggMDAwMDAwMC4uNTg0MTM3ZQotLS0gL2Rldi9udWxsCisr
-KyBiL3QvdDc1MTMtc3RhdHVzLWhvb2suc2gKQEAgLTAsMCArMSwxMzcgQEAKKyMhL2Jpbi9zaAor
-Cit0ZXN0X2Rlc2NyaXB0aW9uPSdzdGF0dXMgaG9vaycKKworLiAuL3Rlc3QtbGliLnNoCisKK3Rl
-c3RfZXhwZWN0X3N1Y2Nlc3MgJ3dpdGggbm8gaG9vaycgJworCisgZWNobyAiZm9vIiA+IGZpbGUg
-JiYKKyBnaXQgc3RhdHVzCisKKycKKwordGVzdF9leHBlY3Rfc3VjY2VzcyAnLS1uby1ydW4taG9v
-ayB3aXRoIG5vIGhvb2snICcKKworIGVjaG8gImJhciIgPiBmaWxlICYmCisgZ2l0IHN0YXR1cyAt
-LW5vLXJ1bi1ob29rCisKKycKKwordGVzdF9leHBlY3Rfc3VjY2VzcyAnd2l0aCBubyBob29rIHNo
-b3J0JyAnCisKKyBlY2hvICJmb28iID4gZmlsZSAmJgorIGdpdCBzdGF0dXMgLXMKKworJworCit0
-ZXN0X2V4cGVjdF9zdWNjZXNzICctLW5vLXJ1bi1ob29rIHdpdGggbm8gaG9vayBzaG9ydCcgJwor
-CisgZWNobyAiYmFyIiA+IGZpbGUgJiYKKyBnaXQgc3RhdHVzIC0tbm8tcnVuLWhvb2sgLXMKKwor
-JworCisjIG5vdyBpbnN0YWxsIGhvb2sgdGhhdCBhbHdheXMgc3VjY2VlZHMKK0hPT0tESVI9IiQo
-Z2l0IHJldi1wYXJzZSAtLWdpdC1kaXIpL2hvb2tzIgorSE9PSz0iJEhPT0tESVIvc3RhdHVzIgor
-bWtkaXIgLXAgIiRIT09LRElSIgorY2F0ID4gIiRIT09LIiA8PEVPRgorIyEvYmluL3NoCitleGl0
-IDAKK0VPRgorY2htb2QgK3ggIiRIT09LIgorCit0ZXN0X2V4cGVjdF9zdWNjZXNzICd3aXRoIHN1
-Y2NlZWRpbmcgaG9vaycgJworCisgZWNobyAibW9yZSIgPj4gZmlsZSAmJgorIGdpdCBzdGF0dXMK
-KworJworCit0ZXN0X2V4cGVjdF9zdWNjZXNzICctLW5vLXJ1bi1ob29rIHdpdGggc3VjY2VlZGlu
-ZyBob29rJyAnCisKKyBlY2hvICJldmVuIG1vcmUiID4+IGZpbGUgJiYKKyBnaXQgc3RhdHVzIC0t
-bm8tcnVuLWhvb2sKKworJworCit0ZXN0X2V4cGVjdF9zdWNjZXNzICd3aXRoIHN1Y2NlZWRpbmcg
-aG9vayBzaG9ydCcgJworCisgZWNobyAibW9yZSIgPj4gZmlsZSAmJgorIGdpdCBzdGF0dXMgLXMK
-KworJworCit0ZXN0X2V4cGVjdF9zdWNjZXNzICctLW5vLXJ1bi1ob29rIHdpdGggc3VjY2VlZGlu
-ZyBob29rIHNob3J0JyAnCisKKyBlY2hvICJldmVuIG1vcmUiID4+IGZpbGUgJiYKKyBnaXQgc3Rh
-dHVzIC0tbm8tcnVuLWhvb2sgLXMKKworJworCisjIG5vdyBhIGhvb2sgdGhhdCBmYWlscworY2F0
-ID4gIiRIT09LIiA8PEVPRgorIyEvYmluL3NoCitleGl0IDEKK0VPRgorCit0ZXN0X2V4cGVjdF9z
-dWNjZXNzICd3aXRoIGZhaWxpbmcgaG9vaycgJworCisgZWNobyAiYW5vdGhlciIgPj4gZmlsZSAm
-JgorIHRlc3RfbXVzdF9mYWlsIGdpdCBzdGF0dXMKKworJworCit0ZXN0X2V4cGVjdF9zdWNjZXNz
-ICctLW5vLXJ1bi1ob29rIHdpdGggZmFpbGluZyBob29rJyAnCisKKyBlY2hvICJzdHVmZiIgPj4g
-ZmlsZSAmJgorIGdpdCBzdGF0dXMgLS1uby1ydW4taG9vaworCisnCisKK3Rlc3RfZXhwZWN0X3N1
-Y2Nlc3MgJ3dpdGggZmFpbGluZyBob29rIHNob3J0JyAnCisKKyBlY2hvICJhbm90aGVyIiA+PiBm
-aWxlICYmCisgdGVzdF9tdXN0X2ZhaWwgZ2l0IHN0YXR1cyAtcworCisnCisKK3Rlc3RfZXhwZWN0
-X3N1Y2Nlc3MgJy0tbm8tcnVuLWhvb2sgd2l0aCBmYWlsaW5nIGhvb2sgc2hvcnQnICcKKworIGVj
-aG8gInN0dWZmIiA+PiBmaWxlICYmCisgZ2l0IHN0YXR1cyAtLW5vLXJ1bi1ob29rIC1zCisKKycK
-KworY2htb2QgLXggIiRIT09LIgordGVzdF9leHBlY3Rfc3VjY2VzcyBQT1NJWFBFUk0gJ3dpdGgg
-bm9uLWV4ZWN1dGFibGUgaG9vaycgJworCisgZWNobyAiY29udGVudCIgPj4gZmlsZSAmJgorIGdp
-dCBzdGF0dXMKKworJworCit0ZXN0X2V4cGVjdF9zdWNjZXNzIFBPU0lYUEVSTSAnLS1uby1ydW4t
-aG9vayB3aXRoIG5vbi1leGVjdXRhYmxlIGhvb2snICcKKworIGVjaG8gIm1vcmUgY29udGVudCIg
-Pj4gZmlsZSAmJgorIGdpdCBzdGF0dXMgLS1uby1ydW4taG9vaworCisnCisKK3Rlc3RfZXhwZWN0
-X3N1Y2Nlc3MgUE9TSVhQRVJNICd3aXRoIG5vbi1leGVjdXRhYmxlIGhvb2sgc2hvcnQnICcKKwor
-IGVjaG8gImNvbnRlbnQiID4+IGZpbGUgJiYKKyBnaXQgc3RhdHVzIC1zCisKKycKKwordGVzdF9l
-eHBlY3Rfc3VjY2VzcyBQT1NJWFBFUk0gJy0tbm8tcnVuLWhvb2sgd2l0aCBub24tZXhlY3V0YWJs
-ZSBob29rIHNob3J0JyAnCisKKyBlY2hvICJtb3JlIGNvbnRlbnQiID4+IGZpbGUgJiYKKyBnaXQg
-c3RhdHVzIC0tbm8tcnVuLWhvb2sgLXMKKworJworY2htb2QgK3ggIiRIT09LIgorCit0ZXN0X2Rv
-bmUKZGlmZiAtLWdpdCBhL3RlbXBsYXRlcy9ob29rcy0tc3RhdHVzLnNhbXBsZSBiL3RlbXBsYXRl
-cy9ob29rcy0tc3RhdHVzLnNhbXBsZQpuZXcgZmlsZSBtb2RlIDEwMDc1NQppbmRleCAwMDAwMDAw
-Li44NzM5YjQ0Ci0tLSAvZGV2L251bGwKKysrIGIvdGVtcGxhdGVzL2hvb2tzLS1zdGF0dXMuc2Ft
-cGxlCkBAIC0wLDAgKzEsMzYgQEAKKyMhL2Jpbi9zaAorIworIyBBbiBleGFtcGxlIGhvb2sgc2Ny
-aXB0IHRvIHZlcmlmeSB3aGF0IGlzIGFib3V0IHRvIGJlIHN0YXR1cy4KKyMgQ2FsbGVkIGJ5ICJn
-aXQgc3RhdHVzIiB3aXRoIG5vIGFyZ3VtZW50cy4gVGhlIGhvb2sgc2hvdWxkCisjIGV4aXQgd2l0
-aCBub24temVybyBzdGF0dXMgYWZ0ZXIgaXNzdWluZyBhbiBhcHByb3ByaWF0ZSBtZXNzYWdlIGlm
-CisjIGl0IHdhbnRzIHRvIHN0b3AgdGhlIHN0YXR1cy4KKyMKKyMgVG8gZW5hYmxlIHRoaXMgaG9v
-aywgcmVuYW1lIHRoaXMgZmlsZSB0byAic3RhdHVzIi4KKyMKKyMgVGhpcyBob29rIGlzIGNhbGxl
-ZCB3aXRoIHRoZSBmb2xsb3dpbmcgcGFyYW1ldGVyczoKKyMKKyMgJDEgLS0gTmFtZSBhbmQgcGF0
-aCBvZiB0aGUgZmlsZSwgZnJvbSB3aGljaCBpdCB3aWxsIHRha2UgYWRkaXRpb25hbCBpbmZvcm1h
-dGlvbiBmb3IgaG9vayBzdGF0dXMKKyMgJDIgLS0gbGluZSBzZXBhcmF0aW5nIHRoZSBibG9ja3Mg
-b2YgaW5mb3JtYXRpb24KKyMKKyMgSW5mb3JtYXRpb24gaW4gdGhlIGZpbGUgbXVzdCBiZSBjb250
-YWluZWQgaW4gdGhlIGJsb2NrcywgdGhlIGJsb2NrcworIyBtdXN0IGJlIHNlcGFyYXRlZCBieSBh
-IGxpbmUgc2VwYXJhdGluZy4gVGhlIGZpcnN0IGxpbmUgb2YgdGhlIGJsb2NrCisjIG11c3QgY29u
-dGFpbiB0aGUgdHlwZSBvZiBmaWxlcyBpbiB0aGUgYmxvY2ssIHRoZSBzZWNvbmQgbGluZSBzaG91
-bGQKKyMgY29udGFpbiBhIGNvbW1hbmQgdG8gaW5jbHVkZSBpbiB3aGF0IHdpbGwgYmUgY29tbWl0
-dGVkLCBjb250aW51ZQorIyB1bnRpbCB0aGUgZW5kIG9mIHRoZSBibG9jayBvciBmaWxlIGZpbGVz
-IG5hbWVzLCBvbmUgZmlsZSBuYW1lIHBlciBsaW5lLgorCitTVEFUVVNfRklMRT0kMQorTkVXX1ND
-T1BFPSQyCisKK2NhdCA+ICIkU1RBVFVTX0ZJTEUiIDw8RU9GCitCaW5hcnkgZmlsZXMKK2FkZCAt
-LWJpbmFyeQorbGliLmxpYgorbGliLmEKK2xpYi5vCiskTkVXX1NDT1BFCitPdGhlciBmaWxlcwor
-YWRkIC0tb3RoZXIKK2RsbC5saWIKK2RsbC5hCitkbGwubworRU9GCmRpZmYgLS1naXQgYS93dC1z
-dGF0dXMuYyBiL3d0LXN0YXR1cy5jCmluZGV4IGVjNzM0NGUuLmY1ZDVmNzIgMTAwNjQ0Ci0tLSBh
-L3d0LXN0YXR1cy5jCisrKyBiL3d0LXN0YXR1cy5jCkBAIC0xNDA2LDYgKzE0MDYsNjAgQEAgdm9p
-ZCB3dF9zdGF0dXNfcHJpbnQoc3RydWN0IHd0X3N0YXR1cyAqcykKIH0gZWxzZQogcHJpbnRmKF8o
-Im5vdGhpbmcgdG8gY29tbWl0LCB3b3JraW5nIGRpcmVjdG9yeSBjbGVhblxuIikpOwogfQorCisg
-aWYgKHMtPnJ1bl9ob29rKSB7CisgY29uc3QgY2hhciAqTkVXX1NDT1BFID0gIj09PT09PT09PT09
-PT09PT09PT0iOworCisgY29uc3QgY2hhciAqcGF0aF90b19zdGF0dXNfZmlsZSA9IGdpdF9wYXRo
-KCJTVEFUVVMtTVNHIik7CisgZmNsb3NlKGZvcGVuKHBhdGhfdG9fc3RhdHVzX2ZpbGUsICJ3Iikp
-OworCisgaWYgKHJ1bl9ob29rX2xlKE5VTEwsICJzdGF0dXMiLCBwYXRoX3RvX3N0YXR1c19maWxl
-LCBORVdfU0NPUEUsIE5VTEwpICE9IDApCisgZGllKF8oImhvb2sgc3RhdHVzIGhhcyBlcnJvciIp
-KTsKKworIEZJTEUgKmYgPSBmb3BlbihwYXRoX3RvX3N0YXR1c19maWxlLCAicnQiKTsKKyBzdHJ1
-Y3Qgc3RyYnVmIGJ1ZjsKKyBzdHJidWZfaW5pdCgmYnVmLCAwKTsKKworIHN0cnVjdCBzdHJpbmdf
-bGlzdCBvdGhlcl9maWxlczsKKyBzdHJ1Y3Qgc3RyYnVmIGRlc2NyaXB0aW9uX2ZpbGVzOworIHN0
-cmJ1Zl9pbml0KCZkZXNjcmlwdGlvbl9maWxlcywgMCk7Cisgc3RydWN0IHN0cmJ1ZiBvcGVyYXRp
-b25fZmlsZXM7Cisgc3RyYnVmX2luaXQoJm9wZXJhdGlvbl9maWxlcywgMCk7CisgaW50IHNjb3Bl
-X2xpbmVfbnVtYmVyID0gMDsKKworIHdoaWxlIChzdHJidWZfZ2V0bGluZSgmYnVmLCBmLCAnXG4n
-KSAhPSBFT0YpIHsKKyBpZiAoc3RyY21wKGJ1Zi5idWYsIE5FV19TQ09QRSkgPT0gMCkgeworIHNj
-b3BlX2xpbmVfbnVtYmVyID0gMDsKKyB3dF9zdGF0dXNfcHJpbnRfb3RoZXIocywgJm90aGVyX2Zp
-bGVzLAorIF8oZGVzY3JpcHRpb25fZmlsZXMuYnVmKSwgb3BlcmF0aW9uX2ZpbGVzLmJ1Zik7CisK
-KyBzdHJidWZfcmVsZWFzZSgmZGVzY3JpcHRpb25fZmlsZXMpOworIHN0cmJ1Zl9yZWxlYXNlKCZv
-cGVyYXRpb25fZmlsZXMpOworIHN0cmluZ19saXN0X2NsZWFyKCZvdGhlcl9maWxlcywgMSk7Cisg
-fSBlbHNlIHsKKyBpZiAoc2NvcGVfbGluZV9udW1iZXIgPT0gMCkgeworIHN0cmJ1Zl9pbml0KCZk
-ZXNjcmlwdGlvbl9maWxlcywgMCk7Cisgc3RyYnVmX2FkZGJ1ZigmZGVzY3JpcHRpb25fZmlsZXMs
-ICZidWYpOworIH0gZWxzZSBpZiAoc2NvcGVfbGluZV9udW1iZXIgPT0gMSkgeworIHN0cmJ1Zl9p
-bml0KCZvcGVyYXRpb25fZmlsZXMsIDApOworIHN0cmJ1Zl9hZGRidWYoJm9wZXJhdGlvbl9maWxl
-cywgJmJ1Zik7CisgfSBlbHNlIHsKKyBzaXplX3Qgc2l6ZV9idWY7CisgY29uc3QgY2hhciAqbGlu
-ZSA9IHN0cmJ1Zl9kZXRhY2goJmJ1ZiwgJnNpemVfYnVmKTsKKyBzdHJpbmdfbGlzdF9pbnNlcnQo
-Jm90aGVyX2ZpbGVzLCBsaW5lKTsKKyB9Cisgc2NvcGVfbGluZV9udW1iZXIrKzsKKyB9CisgfQor
-IHd0X3N0YXR1c19wcmludF9vdGhlcihzLCAmb3RoZXJfZmlsZXMsCisgXyhkZXNjcmlwdGlvbl9m
-aWxlcy5idWYpLCBvcGVyYXRpb25fZmlsZXMuYnVmKTsKKyBzdHJidWZfcmVsZWFzZSgmYnVmKTsK
-KyBzdHJidWZfcmVsZWFzZSgmZGVzY3JpcHRpb25fZmlsZXMpOworIHN0cmJ1Zl9yZWxlYXNlKCZv
-cGVyYXRpb25fZmlsZXMpOworIHN0cmluZ19saXN0X2NsZWFyKCZvdGhlcl9maWxlcywgMSk7CisK
-KyBmY2xvc2UoZik7CisgfQogfQoKIHN0YXRpYyB2b2lkIHd0X3Nob3J0c3RhdHVzX3VubWVyZ2Vk
-KHN0cnVjdCBzdHJpbmdfbGlzdF9pdGVtICppdCwKQEAgLTE1OTksNiArMTY1Myw0MCBAQCB2b2lk
-IHd0X3Nob3J0c3RhdHVzX3ByaW50KHN0cnVjdCB3dF9zdGF0dXMgKnMpCiBpdCA9ICYocy0+aWdu
-b3JlZC5pdGVtc1tpXSk7CiB3dF9zaG9ydHN0YXR1c19vdGhlcihpdCwgcywgIiEhIik7CiB9CisK
-KyBpZiAocy0+cnVuX2hvb2spIHsKKyBjb25zdCBjaGFyICpORVdfU0NPUEUgPSAiPT09PT09PT09
-PT09PT09PT09PSI7CisKKyBjb25zdCBjaGFyICpwYXRoX3RvX3N0YXR1c19maWxlID0gZ2l0X3Bh
-dGgoIlNUQVRVUy1NU0ciKTsKKyBmY2xvc2UoZm9wZW4ocGF0aF90b19zdGF0dXNfZmlsZSwgInci
-KSk7CisKKyBpZiAocnVuX2hvb2tfbGUoTlVMTCwgInN0YXR1cyIsIHBhdGhfdG9fc3RhdHVzX2Zp
-bGUsIE5FV19TQ09QRSwgTlVMTCkgIT0gMCkKKyBkaWUoXygiaG9vayBzdGF0dXMgaGFzIGVycm9y
-IikpOworCisgRklMRSAqZiA9IGZvcGVuKHBhdGhfdG9fc3RhdHVzX2ZpbGUsICJydCIpOworIHN0
-cnVjdCBzdHJidWYgYnVmOworIHN0cmJ1Zl9pbml0KCZidWYsIDApOworCisgaW50IHNjb3BlX2xp
-bmVfbnVtYmVyID0gMDsKKworIHdoaWxlIChzdHJidWZfZ2V0bGluZSgmYnVmLCBmLCAnXG4nKSAh
-PSBFT0YpIHsKKyBpZiAoc3RyY21wKGJ1Zi5idWYsIE5FV19TQ09QRSkgPT0gMCkgeworIHNjb3Bl
-X2xpbmVfbnVtYmVyID0gMDsKKyB9IGVsc2UgeworIGlmIChzY29wZV9saW5lX251bWJlciA9PSAw
-KSB7CisgfSBlbHNlIGlmIChzY29wZV9saW5lX251bWJlciA9PSAxKSB7CisgfSBlbHNlIHsKKyBz
-dHJ1Y3Qgc3RyaW5nX2xpc3RfaXRlbSBpdDsKKyBpdC5zdHJpbmcgPSBidWYuYnVmOworIHd0X3No
-b3J0c3RhdHVzX290aGVyKCZpdCwgcywgIjo6Iik7CisgfQorIHNjb3BlX2xpbmVfbnVtYmVyKys7
-CisgfQorIH0KKyBzdHJidWZfcmVsZWFzZSgmYnVmKTsKKworIGZjbG9zZShmKTsKKyB9CiB9Cgog
-dm9pZCB3dF9wb3JjZWxhaW5fcHJpbnQoc3RydWN0IHd0X3N0YXR1cyAqcykKZGlmZiAtLWdpdCBh
-L3d0LXN0YXR1cy5oIGIvd3Qtc3RhdHVzLmgKaW5kZXggMjgzYTlmZS4uZmY5NGIyMiAxMDA2NDQK
-LS0tIGEvd3Qtc3RhdHVzLmgKKysrIGIvd3Qtc3RhdHVzLmgKQEAgLTU1LDYgKzU1LDcgQEAgc3Ry
-dWN0IHd0X3N0YXR1cyB7CiBpbnQgcmVsYXRpdmVfcGF0aHM7CiBpbnQgc3VibW9kdWxlX3N1bW1h
-cnk7CiBpbnQgc2hvd19pZ25vcmVkX2ZpbGVzOworIGludCBydW5faG9vazsKIGVudW0gdW50cmFj
-a2VkX3N0YXR1c190eXBlIHNob3dfdW50cmFja2VkX2ZpbGVzOwogY29uc3QgY2hhciAqaWdub3Jl
-X3N1Ym1vZHVsZV9hcmc7CiBjaGFyIGNvbG9yX3BhbGV0dGVbV1RfU1RBVFVTX01BWFNMT1RdW0NP
-TE9SX01BWExFTl07Ci0tIAoxLjguNS4yLm1zeXNnaXQuMA==
+> What is the problem you are trying to solve?
+The problem I was trying to solve is I wanted my authentication
+details to be in a hgrc local to the repository.
+
+The problem is git-remote-hg will parse
+``.git/hg/origin/clone/.hg/hgrc`` but will ignore any settings in it
+(this seems a little silly).
+You can see that git-remote-hg parses this by placing invalid syntax
+in the file.
+
+> Is there a way to test that this
+> code is working correctly?
+
+The effects are much more obvious if you use a mercurial repository
+that uses https and then you try to push to it with authentication
+details in ``.git/hg/origin/clone/.hg/hgrc``. For example
+
+[auth]
+cc.prefix = hg.codeplex.com
+cc.username = USERNAME
+cc.password = PASSWORD
+cc.schemes = https
+
+pushing will fail because the authorisation details get completely
+ignored and you will get an exception raised with a stack trace like
+this...
+
+Traceback (most recent call last):
+  File "/home/dsl11/dev/git-remote-hg/git-remote-hg", line 1254, in <module>
+    sys.exit(main(sys.argv))
+  File "/home/dsl11/dev/git-remote-hg/git-remote-hg", line 1238, in main
+    do_export(parser)
+  File "/home/dsl11/dev/git-remote-hg/git-remote-hg", line 1119, in do_export
+    if not push(parser.repo, peer, parsed_refs, p_revs):
+  File "/home/dsl11/dev/git-remote-hg/git-remote-hg", line 1007, in push
+    ret = push_unsafe(repo, remote, parsed_refs, p_revs)
+  File "/home/dsl11/dev/git-remote-hg/git-remote-hg", line 990, in push_unsafe
+    return remote.unbundle(cg, remoteheads, 'push')
+  File "/usr/lib/python2.7/site-packages/mercurial/wireproto.py", line
+308, in unbundle
+    ret, output = self._callpush("unbundle", cg, heads=heads)
+  File "/usr/lib/python2.7/site-packages/mercurial/httppeer.py", line
+201, in _callpush
+    r = self._call(cmd, data=fp, headers=headers, **args)
+  File "/usr/lib/python2.7/site-packages/mercurial/httppeer.py", line
+171, in _call
+    fp = self._callstream(cmd, **args)
+  File "/usr/lib/python2.7/site-packages/mercurial/httppeer.py", line
+118, in _callstream
+    resp = self.urlopener.open(req)
+  File "/usr/lib/python2.7/urllib2.py", line 410, in open
+    response = meth(req, response)
+  File "/usr/lib/python2.7/urllib2.py", line 523, in http_response
+    'http', request, response, code, msg, hdrs)
+  File "/usr/lib/python2.7/urllib2.py", line 442, in error
+    result = self._call_chain(*args)
+  File "/usr/lib/python2.7/urllib2.py", line 382, in _call_chain
+    result = func(*args)
+  File "/usr/lib/python2.7/urllib2.py", line 897, in http_error_401
+    url, req, headers)
+  File "/usr/lib/python2.7/site-packages/mercurial/url.py", line 436,
+in http_error_auth_reqed
+    self, auth_header, host, req, headers)
+  File "/usr/lib/python2.7/urllib2.py", line 872, in http_error_auth_reqed
+    response = self.retry_http_basic_auth(host, req, realm)
+  File "/usr/lib/python2.7/urllib2.py", line 878, in retry_http_basic_auth
+    user, pw = self.passwd.find_user_password(realm, host)
+  File "/usr/lib/python2.7/site-packages/mercurial/url.py", line 36,
+in find_user_password
+    raise util.Abort(_('http authorization required'))
+mercurial.error.Abort: http authorization required
+
+
+However, if you don't have a repository to hand you could also do the
+following to observe the settings in the repository's hgrc being
+respected
+
+1. Clone a repository
+$ git clone hg::https://hg.codeplex.com/boogie
+
+2. Add setting to ``.git/hg/origin/clone/.hg/hgrc``
+
+[ui]
+quiet = True
+
+3. With the current of git-remote-hg, when you do a pull you see
+
+$ git pull
+searching for changes
+no changes found
+Already up-to-date.
+
+You can see that "quiet" is **not** being respected. If use my patch
+to git-remote-hg and run again you see
+
+
+$ git pull
+Already up-to-date.
+
+which shows "quiet" being respected.
+
+>> Prior to this patch the mercurial repository's hgrc file was ignored
+>> which I consider to be a bug.
+>
+> It might be, although the internal repository is not supposed to be used by the
+> user.
+>
+>> Signed-off-by: Dan Liew <delcypher@gmail.com>
+>> ---
+>>  contrib/remote-helpers/git-remote-hg | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/contrib/remote-helpers/git-remote-hg
+>> b/contrib/remote-helpers/git-remote-hg
+>> index eb89ef6..451842a 100755
+>> --- a/contrib/remote-helpers/git-remote-hg
+>> +++ b/contrib/remote-helpers/git-remote-hg
+>> @@ -421,7 +421,7 @@ def get_repo(url, alias):
+>>
+>>          repo = hg.repository(myui, local_path)
+>>          try:
+>> -            peer = hg.peer(myui, {}, url)
+>> +            peer = hg.peer(repo._unfilteredrepo.ui, {}, url)
+>
+> Why not repo.unfiltered.ui? Or just repo.ui.
+
+using repo.unfiltered.ui makes git-remote-hg return "ERROR: Repository error"
+
+Using "repo.ui" works correctly. I simply did not know that was there
+because I was debugging using PyDev in Eclipse and I could only find a
+ui object in repo.unfiltered.ui. PyDev does not show "repo.ui" but it
+clearly works so using repo.ui is probably better than
+repo._unfilteredrepo.ui
+
+Thanks,
+Dan Liew.
