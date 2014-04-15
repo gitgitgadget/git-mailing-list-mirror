@@ -1,148 +1,85 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH v3 18/25] struct lock_file: declare some fields volatile
-Date: Tue, 15 Apr 2014 08:55:14 +0200
-Message-ID: <534CD7D2.4060005@viscovery.net>
-References: <1397483695-10888-1-git-send-email-mhagger@alum.mit.edu> <1397483695-10888-19-git-send-email-mhagger@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 19/27] refs: add a concept of a reference transaction
+Date: Tue, 15 Apr 2014 00:40:56 -0700
+Message-ID: <xmqqk3arkpkn.fsf@gitster.dls.corp.google.com>
+References: <1396878498-19887-1-git-send-email-mhagger@alum.mit.edu>
+	<1396878498-19887-20-git-send-email-mhagger@alum.mit.edu>
+	<xmqq8urhlzr1.fsf@gitster.dls.corp.google.com>
+	<534BBE67.3040100@alum.mit.edu>
+	<xmqqa9bnmwnk.fsf@gitster.dls.corp.google.com>
+	<534CC69C.1020503@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	=?ISO-8859-15?Q?Torst?= =?ISO-8859-15?Q?en_B=F6gershausen?= 
-	<tboegi@web.de>, Eric Sunshine <sunshine@sunshineco.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 15 08:55:29 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Brad King <brad.king@kitware.com>,
+	Johan Herland <johan@herland.net>, Jeff King <peff@peff.net>,
+	Vicent Marti <tanoku@gmail.com>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Apr 15 09:41:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WZxHC-0000Gf-J3
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Apr 2014 08:55:26 +0200
+	id 1WZxzU-0004uE-76
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Apr 2014 09:41:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750918AbaDOGzS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Apr 2014 02:55:18 -0400
-Received: from so.liwest.at ([212.33.55.14]:44679 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750790AbaDOGzQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Apr 2014 02:55:16 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.80.1)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1WZxH1-00013Y-7c; Tue, 15 Apr 2014 08:55:15 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id ECBBF16613;
-	Tue, 15 Apr 2014 08:55:14 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
-In-Reply-To: <1397483695-10888-19-git-send-email-mhagger@alum.mit.edu>
-X-Enigmail-Version: 1.6
-X-Spam-Score: -1.0 (-)
+	id S1751159AbaDOHlD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Apr 2014 03:41:03 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58562 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751152AbaDOHlA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Apr 2014 03:41:00 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4426778E78;
+	Tue, 15 Apr 2014 03:40:59 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=w4/+D8BtNRUZ7Z9YZHC8/BAvUFg=; b=bG9KqI
+	/rX7hYVkvAACAvAZ6UyibFXApIwd6KLwvtMRlWIXvxBOxDu9ohhUMse7m48NNRVA
+	YyJsQ3ooZt3t4MxSdU3Asqh4bwtbVNACYXQhO08WySNFSVyMOYQfEkFkfYm/8khV
+	WB41GQs0S7Bz1By2vUd0UgBDhWrqY3vhVAGD8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gpGc0fTxP/23nv0BY/wMc/G8xkCcezRX
+	G5H/YzmHjkFRHP9upv3wlA3JWHj5lfPeeE9aPfWnLOpDvTk0EPF6bI7u4mxPsWeN
+	BL8s/Tg2R3IKX+gAagTpB7MouozjJaDSS8y/Q09BLoKTIzFd6t4RW5v3m7kzwYnb
+	zJi4MZ70+bg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2875078E77;
+	Tue, 15 Apr 2014 03:40:59 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B543578E74;
+	Tue, 15 Apr 2014 03:40:57 -0400 (EDT)
+In-Reply-To: <534CC69C.1020503@alum.mit.edu> (Michael Haggerty's message of
+	"Tue, 15 Apr 2014 07:41:48 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 487EBCC0-C471-11E3-BB48-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246277>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246278>
 
-Am 4/14/2014 15:54, schrieb Michael Haggerty:
-> The function remove_lock_file_on_signal() is used as a signal handler.
-> It is not realistic to make the signal handler conform strictly to the
-> C standard, which is very restrictive about what a signal handler is
-> allowed to do.  But let's increase the likelihood that it will work:
-> 
-> The lock_file_list global variable and several fields from struct
-> lock_file are used by the signal handler.  Declare those values
-> "volatile" to increase the chance that the signal handler will see a
-> valid object state.
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-Yes, it's important that the signal handler sees a valid object state, and
-"volatile" can help here. But I think the reason why it helps is not
-obvious, and it should be mentioned in the commit message:
+> In retrospect, you might have been objecting more to the misleading
+> docstring than to the behavior as implemented at the time.  
 
-It is not so much that "volatile" forces the compiler to lay down each
-access of the variable coded in C in the assembly code, but more
-importantly, that "volatile" disallows any re-ordering of these accesses.
-Then:
+Yeah, I was reacting to the comment that said create can delete ;-)
 
-- 'lock->active = 1' must be the last assignment during setup
+> The
+> docstring implied that create could actually be used to delete a
+> reference, but that was not true: it always checked that the reference
+> didn't exist beforehand.  So at worst it could leave a non-existent
+> reference un-created.
 
-- 'lock->active = 0' must be the first assignment during tear-down.
+OK, all is clear then.  
 
-- Ideally, all members of struct lock_file should be "volatile".
+>>  (2) keep the assert(), reject such user input at the callers, and
+>>      document that these are invalid inputs;
+>
+> The current status in v3 is that (2) is implemented.
 
-The last point is important because the compiler is allowed to re-order
-accesses to non-"volatile" variables across "volatile" accesses. I say
-"ideally" because if filename were defined "volatile filename[PATH_MAX]",
-strcpy() could not be used anymore. OTOH, it is unlikely that a compiler
-re-orders a strcpy() call across other expressions, and we can get away
-without "volatile" in the "filename" case in practice.
-
-> Suggested-by: Johannes Sixt <j.sixt@viscovery.net>
-
-Not a big deal, but just in case you re-roll again and you do not forget:
-
-  Johannes Sixt <j6t@kdbg.org>
-
-is preferred.
-
-> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
-> ---
->  cache.h    | 6 +++---
->  lockfile.c | 2 +-
->  refs.c     | 5 +++--
->  3 files changed, 7 insertions(+), 6 deletions(-)
-> 
-> diff --git a/cache.h b/cache.h
-> index b7af173..9019c7d 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -538,10 +538,10 @@ extern int refresh_index(struct index_state *, unsigned int flags, const struct
->  #define LOCK_SUFFIX_LEN 5
->  
->  struct lock_file {
-> -	struct lock_file *next;
-> +	struct lock_file *volatile next;
->  	volatile sig_atomic_t active;
-> -	int fd;
-> -	pid_t owner;
-> +	volatile int fd;
-> +	volatile pid_t owner;
->  	char on_list;
->  	char filename[PATH_MAX];
->  };
-> diff --git a/lockfile.c b/lockfile.c
-> index 50a0541..fce53f1 100644
-> --- a/lockfile.c
-> +++ b/lockfile.c
-> @@ -69,7 +69,7 @@
->   * See Documentation/api-lockfile.txt for more information.
->   */
->  
-> -static struct lock_file *lock_file_list;
-> +static struct lock_file *volatile lock_file_list;
->  static const char *alternate_index_output;
->  
->  static void remove_lock_file(void)
-> diff --git a/refs.c b/refs.c
-> index cb2f825..db8057c 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -2213,15 +2213,16 @@ int commit_packed_refs(void)
->  	struct packed_ref_cache *packed_ref_cache =
->  		get_packed_ref_cache(&ref_cache);
->  	int error = 0;
-> +	int fd;
->  
->  	if (!packed_ref_cache->lock)
->  		die("internal error: packed-refs not locked");
->  	write_or_die(packed_ref_cache->lock->fd,
->  		     PACKED_REFS_HEADER, strlen(PACKED_REFS_HEADER));
->  
-> +	fd = packed_ref_cache->lock->fd;
->  	do_for_each_entry_in_dir(get_packed_ref_dir(packed_ref_cache),
-> -				 0, write_packed_entry_fn,
-> -				 &packed_ref_cache->lock->fd);
-> +				 0, write_packed_entry_fn, &fd);
->  	if (commit_lock_file(packed_ref_cache->lock))
->  		error = -1;
->  	packed_ref_cache->lock = NULL;
-> 
+Good.  Thanks.
