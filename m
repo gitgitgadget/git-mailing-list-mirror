@@ -1,483 +1,233 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v4 1/3] refs.c: split writing and commiting a ref into
- two separate functions
-Date: Tue, 15 Apr 2014 13:17:00 +0200
-Message-ID: <534D152C.7090607@alum.mit.edu>
-References: <1397500163-7617-1-git-send-email-sahlberg@google.com> <1397500163-7617-2-git-send-email-sahlberg@google.com>
+From: =?UTF-8?B?U3V2b3JvdiBJdmFu?= <sv_91@inbox.ru>
+Subject: =?UTF-8?B?W1BBVENIXSBob29rIGZvciBnaXQgc3RhdHVz?=
+Date: Tue, 15 Apr 2014 19:24:33 +0400
+Message-ID: <1397575473.625837277@f361.i.mail.ru>
+Reply-To: =?UTF-8?B?U3V2b3JvdiBJdmFu?= <sv_91@inbox.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: Ronnie Sahlberg <sahlberg@google.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 15 13:17:14 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: base64
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 15 17:25:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wa1MX-0006p1-0Z
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Apr 2014 13:17:13 +0200
+	id 1Wa5EJ-0004op-Tb
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Apr 2014 17:25:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752540AbaDOLRG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Apr 2014 07:17:06 -0400
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:62166 "EHLO
-	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750866AbaDOLRE (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Apr 2014 07:17:04 -0400
-X-AuditID: 12074412-f79d46d000002e58-5e-534d152e4c0f
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id E4.49.11864.E251D435; Tue, 15 Apr 2014 07:17:02 -0400 (EDT)
-Received: from [192.168.69.130] (p4FC97931.dip0.t-ipconnect.de [79.201.121.49])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s3FBH0f7005335
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Tue, 15 Apr 2014 07:17:01 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.4.0
-In-Reply-To: <1397500163-7617-2-git-send-email-sahlberg@google.com>
-X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupjleLIzCtJLcpLzFFi42IRYndR1NUT9Q026J4mbtF1pZvJ4t+EGgcm
-	jwWbSj0+b5ILYIritklKLCkLzkzP07dL4M5YtWgnW8HHooqH89ezNDDej+xi5OSQEDCRuNxw
-	lgnCFpO4cG89G4gtJHCZUeLj3/AuRi4g+zyTxITOmewgCV4BbYmtG7cAFXFwsAioSpzeWgsS
-	ZhPQlVjU08wEEhYVCJL4c1YRolpQ4uTMJywgtoiAncT6WwuZQWxhgWSJ00tuMUOsqpTYd/0Z
-	mM0p4Czx/d5KsDESAuISPY1BIGFmAR2Jd30PmCFseYntb+cwT2AUmIVkwywkZbOQlC1gZF7F
-	KJeYU5qrm5uYmVOcmqxbnJyYl5dapGuml5tZopeaUrqJERKeQjsY15+UO8QowMGoxMNr8cY7
-	WIg1say4MvcQoyQHk5Io7w4R32AhvqT8lMqMxOKM+KLSnNTiQ4wSHMxKIrwfuYFyvCmJlVWp
-	RfkwKWkOFiVx3p+L1f2EBNITS1KzU1MLUotgsjIcHEoSvEtAhgoWpaanVqRl5pQgpJk4OEGG
-	c0mJFKfmpaQWJZaWZMSDYjS+GBilICkeoL1rQdp5iwsSc4GiEK2nGHU5Nmxb08gkxJKXn5cq
-	Jc57RBioSACkKKM0D24FLBm9YhQH+liYdzPIKB5gIoOb9ApoCRPQEpZ2b5AlJYkIKakGxsnz
-	3pyLzfmmoOGvfuRyTb/Y7IDjD9bGP560ZEH+60pnsYmbpi1dt+TKdLc5H0v/ehWU625f+sbK
-	sDRjUc93UdHdMavnH5xvZFb+MKljY9LUnbIq329NO/Lj3+rPx3o+ttdZ3+W6/ueu 
+	id S1751040AbaDOPYz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Apr 2014 11:24:55 -0400
+Received: from fallback3.mail.ru ([94.100.176.58]:45479 "EHLO
+	fallback3.mail.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750866AbaDOPYy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Apr 2014 11:24:54 -0400
+Received: from f361.i.mail.ru (f361.i.mail.ru [217.69.141.3])
+	by fallback3.mail.ru (mPOP.Fallback_MX) with ESMTP id 6F569112CAEC7
+	for <git@vger.kernel.org>; Tue, 15 Apr 2014 19:24:51 +0400 (MSK)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=inbox.ru; s=mail;
+	h=Content-Transfer-Encoding:Content-Type:Message-ID:Reply-To:Date:Mime-Version:Subject:To:From; bh=OfXzV17UUVYqJuzC63oSxL8JIFnVY9qgQ0KIG47uOWE=;
+	b=Zdu7xyAyr5/18RH+7fR/s3jvuBQpSB0HOKVtAhkFkQfpXvt+nNpFKpu7DZG2uZOMjIgrQ6fs680mrxOgwx5E57DEdwlPkAWsScMBb4WBfNJx+mD3eE8g3h345Ezo3OkztNd3qSdeBHQn/6bzlB+pQt1rUQdMg+Zv4u4XWh9g1RQ=;
+Received: from mail by f361.i.mail.ru with local (envelope-from <sv_91@inbox.ru>)
+	id 1Wa5Dt-0006KE-RQ
+	for git@vger.kernel.org; Tue, 15 Apr 2014 19:24:34 +0400
+Received: from [213.176.224.75] by e.mail.ru with HTTP;
+	Tue, 15 Apr 2014 19:24:33 +0400
+X-Mailer: Mail.Ru Mailer 1.0
+X-Originating-IP: [213.176.224.75]
+X-Priority: 3 (Normal)
+X-Mras: Ok
+X-Spam: undefined
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246286>
 
-See my comment to your cover letter where I suggest using ref
-transactions instead of making callers deal with even more of the
-details of updating references.  But I will comment on these patches
-anyway, in case you'd rather leave them closer to the current form.
-
-On 04/14/2014 08:29 PM, Ronnie Sahlberg wrote:
-> Change the function write_ref_sha1() to just write the ref but not
-> commit the ref or the lockfile.
-> Add a new function commit_ref_lock() that will commit the change done by
-> a previous write_ref_sha1().
-> Update all callers of write_ref_sha1() to call commit_ref_lock().
-> 
-> The new pattern for updating a ref is now :
-> 
-> lock = lock_ref_sha1_basic() (or varient of)
-
-s/varient/variant/
-
-> write_ref_sha1(lock)
-> unlock_ref(lock) | commit_ref_lock(lock)
-> 
-> Once write_ref_sha1() returns, the new ref has been written and the lock
-> file has been closed.
-> At that stage we can then either call unlock_ref() which will abort the
-> update and delete the lock file withouth applying it, or call
-
-You need a comma after "unlock_ref()".
-
-s/withouth/without/
-
-> commit_ref_lock() which will rename the lock file onto the ref file.
-
-
-The commit message would be easier to read with better formatting; maybe
-
----8<---8<---8<---8<---8<---8<---8<---8<---8<---8<---8<---8<---8<---8<---
-refs.c: split writing and commiting a ref into two separate functions
-
-* Change the function write_ref_sha1() to just write the ref but not
-  commit the ref or the lockfile.
-
-* Add a new function commit_ref_lock() that will commit the change done by
-  a previous write_ref_sha1().
-
-* Update all callers of write_ref_sha1() to call commit_ref_lock().
-
-The new pattern for updating a ref is now :
-
-    lock = lock_ref_sha1_basic() (or variant of)
-    write_ref_sha1(lock)
-    unlock_ref(lock) | commit_ref_lock(lock)
-
-Once write_ref_sha1() returns, the new ref has been written and the lock
-file has been closed. At that stage we can then either call unlock_ref(),
-which will abort the update and delete the lock file without applying it,
-or call commit_ref_lock() which will rename the lock file onto the ref
-file.
-
-Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
----8<---8<---8<---8<---8<---8<---8<---8<---8<---8<---8<---8<---8<---8<---
-
-
-> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
-> ---
->  branch.c               | 10 ++++++++--
->  builtin/commit.c       |  5 +++++
->  builtin/fetch.c        |  7 ++++++-
->  builtin/receive-pack.c |  4 ++++
->  builtin/replace.c      |  6 +++++-
->  builtin/tag.c          |  6 +++++-
->  fast-import.c          | 18 ++++++++++++++++--
->  refs.c                 | 41 +++++++++++++++++++++++++++++++----------
->  refs.h                 |  4 ++++
->  sequencer.c            |  4 ++++
->  walker.c               |  4 ++++
->  11 files changed, 92 insertions(+), 17 deletions(-)
-> 
-> diff --git a/branch.c b/branch.c
-> index 660097b..903ea75 100644
-> --- a/branch.c
-> +++ b/branch.c
-> @@ -304,9 +304,15 @@ void create_branch(const char *head,
->  	if (real_ref && track)
->  		setup_tracking(ref.buf + 11, real_ref, track, quiet);
->  
-> -	if (!dont_change_ref)
-> -		if (write_ref_sha1(lock, sha1, msg) < 0)
-> +	if (!dont_change_ref) {
-> +		if (write_ref_sha1(lock, sha1, msg) < 0) {
-> +			unlock_ref(lock);
->  			die_errno(_("Failed to write ref"));
-> +		}
-> +		if (commit_ref_lock(lock) < 0) {
-> +			die_errno(_("Failed to commit ref"));
-> +		}
-> +	}
->  
->  	strbuf_release(&ref);
->  	free(real_ref);
-
-There are a lot of changes like this with similar duplicated error
-handling.  Why not define a helper function like
-write_ref_sha1_and_commit() that does what the old write_ref_sha1() used
-to do (for the callers who don't care about updating multiple references
-at once)?
-
-In fact, I would recommend renaming the function in a preparatory
-commit, to reduce the amount of code churn in the second commit where
-you extract the two new separate functions.
-
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index d9550c5..3d8a3a8 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -1686,9 +1686,14 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
->  		die(_("cannot lock HEAD ref"));
->  	}
->  	if (write_ref_sha1(ref_lock, sha1, sb.buf) < 0) {
-> +		unlock_ref(ref_lock);
->  		rollback_index_files();
->  		die(_("cannot update HEAD ref"));
->  	}
-> +	if (commit_ref_lock(ref_lock) < 0) {
-> +		rollback_index_files();
-> +		die(_("cannot commit HEAD ref"));
-> +	}
->  
->  	unlink(git_path("CHERRY_PICK_HEAD"));
->  	unlink(git_path("REVERT_HEAD"));
-> diff --git a/builtin/fetch.c b/builtin/fetch.c
-> index 55f457c..ebfb854 100644
-> --- a/builtin/fetch.c
-> +++ b/builtin/fetch.c
-> @@ -388,7 +388,12 @@ static int s_update_ref(const char *action,
->  	if (!lock)
->  		return errno == ENOTDIR ? STORE_REF_ERROR_DF_CONFLICT :
->  					  STORE_REF_ERROR_OTHER;
-> -	if (write_ref_sha1(lock, ref->new_sha1, msg) < 0)
-> +	if (write_ref_sha1(lock, ref->new_sha1, msg) < 0) {
-> +		unlock_ref(lock);
-> +		return errno == ENOTDIR ? STORE_REF_ERROR_DF_CONFLICT :
-> +					  STORE_REF_ERROR_OTHER;
-> +	}
-> +	if (commit_ref_lock(lock) < 0)
->  		return errno == ENOTDIR ? STORE_REF_ERROR_DF_CONFLICT :
->  					  STORE_REF_ERROR_OTHER;
->  	return 0;
-> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-> index c323081..4760274 100644
-> --- a/builtin/receive-pack.c
-> +++ b/builtin/receive-pack.c
-> @@ -587,8 +587,12 @@ static const char *update(struct command *cmd, struct shallow_info *si)
->  			return "failed to lock";
->  		}
->  		if (write_ref_sha1(lock, new_sha1, "push")) {
-> +			unlock_ref(lock);
->  			return "failed to write"; /* error() already called */
->  		}
-> +		if (commit_ref_lock(lock))
-> +			return "failed to commit"; /* error() already called */
-> +
->  		return NULL; /* good */
->  	}
->  }
-> diff --git a/builtin/replace.c b/builtin/replace.c
-> index b62420a..c09ff49 100644
-> --- a/builtin/replace.c
-> +++ b/builtin/replace.c
-> @@ -160,8 +160,12 @@ static int replace_object(const char *object_ref, const char *replace_ref,
->  	lock = lock_any_ref_for_update(ref, prev, 0, NULL);
->  	if (!lock)
->  		die("%s: cannot lock the ref", ref);
-> -	if (write_ref_sha1(lock, repl, NULL) < 0)
-> +	if (write_ref_sha1(lock, repl, NULL) < 0) {
-> +		unlock_ref(lock);
->  		die("%s: cannot update the ref", ref);
-> +	}
-> +	if (commit_ref_lock(lock) < 0)
-> +		die("%s: cannot commit the ref", ref);
->  
->  	return 0;
->  }
-> diff --git a/builtin/tag.c b/builtin/tag.c
-> index 40356e3..8653a64 100644
-> --- a/builtin/tag.c
-> +++ b/builtin/tag.c
-> @@ -644,8 +644,12 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
->  	lock = lock_any_ref_for_update(ref.buf, prev, 0, NULL);
->  	if (!lock)
->  		die(_("%s: cannot lock the ref"), ref.buf);
-> -	if (write_ref_sha1(lock, object, NULL) < 0)
-> +	if (write_ref_sha1(lock, object, NULL) < 0) {
-> +		unlock_ref(lock);
->  		die(_("%s: cannot update the ref"), ref.buf);
-> +	}
-> +	if (commit_ref_lock(lock) < 0)
-> +		die(_("%s: cannot commit the ref"), ref.buf);
->  	if (force && !is_null_sha1(prev) && hashcmp(prev, object))
->  		printf(_("Updated tag '%s' (was %s)\n"), tag, find_unique_abbrev(prev, DEFAULT_ABBREV));
->  
-> diff --git a/fast-import.c b/fast-import.c
-> index fb4738d..f732bfb 100644
-> --- a/fast-import.c
-> +++ b/fast-import.c
-> @@ -1706,8 +1706,13 @@ static int update_branch(struct branch *b)
->  			return -1;
->  		}
->  	}
-> -	if (write_ref_sha1(lock, b->sha1, msg) < 0)
-> +	if (write_ref_sha1(lock, b->sha1, msg) < 0) {
-> +		unlock_ref(lock);
->  		return error("Unable to update %s", b->name);
-> +	}
-> +	if (commit_ref_lock(lock) < 0) {
-> +		return error("Unable to commit %s", b->name);
-> +	}
->  	return 0;
->  }
->  
-> @@ -1732,8 +1737,17 @@ static void dump_tags(void)
->  	for (t = first_tag; t; t = t->next_tag) {
->  		sprintf(ref_name, "tags/%s", t->name);
->  		lock = lock_ref_sha1(ref_name, NULL);
-> -		if (!lock || write_ref_sha1(lock, t->sha1, msg) < 0)
-> +		if (!lock) {
-> +			failure |= error("Unable to lock %s", ref_name);
-> +			continue;
-> +		}
-> +		if (write_ref_sha1(lock, t->sha1, msg) < 0) {
->  			failure |= error("Unable to update %s", ref_name);
-> +			unlock_ref(lock);
-> +			continue;
-> +		}
-> +		if (commit_ref_lock(lock) < 0)
-> +			failure |= error("Unable to commit %s", ref_name);
->  	}
->  }
->  
-> diff --git a/refs.c b/refs.c
-> index 728a761..646afd7 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -2633,9 +2633,14 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
->  	lock->force_write = 1;
->  	hashcpy(lock->old_sha1, orig_sha1);
->  	if (write_ref_sha1(lock, orig_sha1, logmsg)) {
-> +		unlock_ref(lock);
->  		error("unable to write current sha1 into %s", newrefname);
->  		goto rollback;
->  	}
-> +	if (commit_ref_lock(lock)) {
-> +		error("unable to commit current sha1 into %s", newrefname);
-> +		goto rollback;
-> +	}
->  
->  	return 0;
->  
-> @@ -2649,8 +2654,12 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
->  	lock->force_write = 1;
->  	flag = log_all_ref_updates;
->  	log_all_ref_updates = 0;
-> -	if (write_ref_sha1(lock, orig_sha1, NULL))
-> +	if (write_ref_sha1(lock, orig_sha1, NULL)) {
-> +		unlock_ref(lock);
->  		error("unable to write current sha1 into %s", oldrefname);
-> +	}
-> +	if (commit_ref_lock(lock))
-> +		error("unable to commit current sha1 into %s", oldrefname);
->  	log_all_ref_updates = flag;
->  
->   rollbacklog:
-> @@ -2807,34 +2816,30 @@ int write_ref_sha1(struct ref_lock *lock,
->  	if (!lock)
->  		return -1;
->  	if (!lock->force_write && !hashcmp(lock->old_sha1, sha1)) {
-> -		unlock_ref(lock);
-> +		lock->skipped_write = 1;
->  		return 0;
->  	}
->  	o = parse_object(sha1);
->  	if (!o) {
->  		error("Trying to write ref %s with nonexistent object %s",
->  			lock->ref_name, sha1_to_hex(sha1));
-> -		unlock_ref(lock);
->  		return -1;
->  	}
->  	if (o->type != OBJ_COMMIT && is_branch(lock->ref_name)) {
->  		error("Trying to write non-commit object %s to branch %s",
->  			sha1_to_hex(sha1), lock->ref_name);
-> -		unlock_ref(lock);
->  		return -1;
->  	}
->  	if (write_in_full(lock->lock_fd, sha1_to_hex(sha1), 40) != 40 ||
->  	    write_in_full(lock->lock_fd, &term, 1) != 1
->  		|| close_ref(lock) < 0) {
->  		error("Couldn't write %s", lock->lk->filename);
-> -		unlock_ref(lock);
->  		return -1;
->  	}
->  	clear_loose_ref_cache(&ref_cache);
->  	if (log_ref_write(lock->ref_name, lock->old_sha1, sha1, logmsg) < 0 ||
->  	    (strcmp(lock->ref_name, lock->orig_ref_name) &&
->  	     log_ref_write(lock->orig_ref_name, lock->old_sha1, sha1, logmsg) < 0)) {
-> -		unlock_ref(lock);
->  		return -1;
->  	}
->  	if (strcmp(lock->orig_ref_name, "HEAD") != 0) {
-> @@ -2858,7 +2863,12 @@ int write_ref_sha1(struct ref_lock *lock,
->  		    !strcmp(head_ref, lock->ref_name))
->  			log_ref_write("HEAD", lock->old_sha1, sha1, logmsg);
->  	}
-> -	if (commit_ref(lock)) {
-> +	return 0;
-> +}
-> +
-> +int commit_ref_lock(struct ref_lock *lock)
-> +{
-> +	if (!lock->skipped_write && commit_ref(lock)) {
->  		error("Couldn't set %s", lock->ref_name);
->  		unlock_ref(lock);
->  		return -1;
-> @@ -3375,10 +3385,17 @@ int update_ref(const char *action, const char *refname,
->  	       int flags, enum action_on_err onerr)
->  {
->  	struct ref_lock *lock;
-> +	int ret;
-> +
->  	lock = update_ref_lock(refname, oldval, flags, NULL, onerr);
->  	if (!lock)
->  		return 1;
-> -	return update_ref_write(action, refname, sha1, lock, onerr);
-> +	ret = update_ref_write(action, refname, sha1, lock, onerr);
-> +	if (ret)
-> +		unlock_ref(lock);
-> +	else
-> +		ret = commit_ref_lock(lock);
-> +	return ret;
->  }
->  
->  static int ref_update_compare(const void *r1, const void *r2)
-> @@ -3453,7 +3470,11 @@ int ref_transaction_commit(struct ref_transaction *transaction,
->  					       update->refname,
->  					       update->new_sha1,
->  					       update->lock, onerr);
-> -			update->lock = NULL; /* freed by update_ref_write */
-> +			if (ret)
-> +				unlock_ref(update->lock);
-> +			else
-> +				commit_ref_lock(update->lock);
-> +			update->lock = NULL;
->  			if (ret)
->  				goto cleanup;
->  		}
-> @@ -3464,7 +3485,7 @@ int ref_transaction_commit(struct ref_transaction *transaction,
->  		struct ref_update *update = updates[i];
->  
->  		if (update->lock) {
-> -			delnames[delnum++] = update->lock->ref_name;
-> +			delnames[delnum++] = update->refname;
-
-Isn't this hunk orthogonal to the main point of this commit?  If so,
-please split it into a separate commit.
-
->  			ret |= delete_ref_loose(update->lock, update->type);
->  		}
->  	}
-> diff --git a/refs.h b/refs.h
-> index 0f08def..f14a417 100644
-> --- a/refs.h
-> +++ b/refs.h
-> @@ -8,6 +8,7 @@ struct ref_lock {
->  	unsigned char old_sha1[20];
->  	int lock_fd;
->  	int force_write;
-> +	int skipped_write;
->  };
->  
->  struct ref_transaction;
-> @@ -153,6 +154,9 @@ extern void unlock_ref(struct ref_lock *lock);
->  /** Writes sha1 into the ref specified by the lock. **/
->  extern int write_ref_sha1(struct ref_lock *lock, const unsigned char *sha1, const char *msg);
->  
-> +/** Commit any changes done to the ref specified by the lock. **/
-> +extern int commit_ref_lock(struct ref_lock *lock);
-> +
->  /** Setup reflog before using. **/
->  int log_ref_setup(const char *refname, char *logfile, int bufsize);
->  
-> diff --git a/sequencer.c b/sequencer.c
-> index bde5f04..ffadf82 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -283,6 +283,10 @@ static int fast_forward_to(const unsigned char *to, const unsigned char *from,
->  					   0, NULL);
->  	strbuf_addf(&sb, "%s: fast-forward", action_name(opts));
->  	ret = write_ref_sha1(ref_lock, to, sb.buf);
-> +	if (ret)
-> +		unlock_ref(ref_lock);
-> +	else
-> +		ret |= commit_ref_lock(ref_lock);
-
-"|=" could be changed to "=" here and in the next hunk.
-
->  	strbuf_release(&sb);
->  	return ret;
->  }
-> diff --git a/walker.c b/walker.c
-> index 1dd86b8..5ce5a1d 100644
-> --- a/walker.c
-> +++ b/walker.c
-> @@ -295,6 +295,10 @@ int walker_fetch(struct walker *walker, int targets, char **target,
->  		if (!write_ref || !write_ref[i])
->  			continue;
->  		ret = write_ref_sha1(lock[i], &sha1[20 * i], msg ? msg : "fetch (unknown)");
-> +		if (ret)
-> +			unlock_ref(lock[i]);
-> +		else
-> +			ret |= commit_ref_lock(lock[i]);
->  		lock[i] = NULL;
->  		if (ret)
->  			goto unlock_and_fail;
-> 
-
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+RnJvbSAwZjQzNWZlZWU4N2RjOTZiMmU0ODkwYTVhNWRlN2IxZDBjMGJlZmUxIE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBtYWdpc3RlclJhYiA8c3ZfOTFAaW5ib3gucnU+CkRhdGU6IFR1
+ZSwgMSBBcHIgMjAxNCAxNzowMjoxMCArMDQwMApTdWJqZWN0OiBbUEFUQ0hdIGhvb2sgZm9yIGdp
+dCBzdGF0dXMKClNpZ25lZC1vZmYtYnk6IEl2YW4gU3V2b3JvdiA8c3ZfOTFAaW5ib3gucnU+Ci0t
+LQpob29rIGZvciBnaXQgc3RhdHVzIGFsbG93cyB5b3UgdG8gZGlzcGxheSBhZGRpdGlvbmFsIGZp
+ZWxkcyB3aGVuIHlvdSBydW4gZ2l0IHN0YXR1cy4KRm9yIGV4YW1wbGUsIGZvciBhIGhvb2sgd2l0
+aCBhIGNvbnRlbnQgb2YKClNUQVRVU19GSUxFPSQxCk5FV19TQ09QRT0kMgoKY2F0ID4gIiRTVEFU
+VVNfRklMRSIgPDxFT0YKQmluYXJ5IGZpbGVzCmFkZCAtLWJpbmFyeQpsaWIubGliCmxpYi5hCmxp
+Yi5vCiRORVdfU0NPUEUKT3RoZXIgZmlsZXMKYWRkIC0tb3RoZXIKZGxsLmxpYgpkbGwuYQpkbGwu
+bwpFT0YKCmhlcmUncyBob3cgaXQgd2lsbCBsb29rIGNvbmNsdXNpb24KCkJpbmFyeSBmaWxlczoK
+ICh1c2UgImdpdCBhZGQgLS1iaW5hcnkgPGZpbGU+Li4uIiB0byBpbmNsdWRlIGluIHdoYXQgd2ls
+bCBiZSBjb21taXR0ZWQpCgogbGliLmEKIGxpYi5saWIKIGxpYi5vCgpPdGhlciBmaWxlczoKICh1
+c2UgImdpdCBhZGQgLS1vdGhlciA8ZmlsZT4uLi4iIHRvIGluY2x1ZGUgaW4gd2hhdCB3aWxsIGJl
+IGNvbW1pdHRlZCkKCiBkbGwuYQogZGxsLmxpYgogZGxsLm8KCiBEb2N1bWVudGF0aW9uL2dpdC1z
+dGF0dXMudHh0IHwgMTAgKysrCiBEb2N1bWVudGF0aW9uL2dpdGhvb2tzLnR4dCB8IDkgKysrCiBi
+dWlsdGluL2NvbW1pdC5jIHwgNyArKysKIHQvdDc1MTMtc3RhdHVzLWhvb2suc2ggfCAxMzcgKysr
+KysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysKIHRlbXBsYXRlcy9ob29rcy0t
+c3RhdHVzLnNhbXBsZSB8IDM2ICsrKysrKysrKysrCiB3dC1zdGF0dXMuYyB8IDg4ICsrKysrKysr
+KysrKysrKysrKysrKysrKysrCiB3dC1zdGF0dXMuaCB8IDEgKwogNyBmaWxlcyBjaGFuZ2VkLCAy
+ODggaW5zZXJ0aW9ucygrKQogY3JlYXRlIG1vZGUgMTAwNjQ0IHQvdDc1MTMtc3RhdHVzLWhvb2su
+c2gKIGNyZWF0ZSBtb2RlIDEwMDc1NSB0ZW1wbGF0ZXMvaG9va3MtLXN0YXR1cy5zYW1wbGUKCmRp
+ZmYgLS1naXQgYS9Eb2N1bWVudGF0aW9uL2dpdC1zdGF0dXMudHh0IGIvRG9jdW1lbnRhdGlvbi9n
+aXQtc3RhdHVzLnR4dAppbmRleCBkZWY2MzVmLi42YzgxMzIzIDEwMDY0NAotLS0gYS9Eb2N1bWVu
+dGF0aW9uL2dpdC1zdGF0dXMudHh0CisrKyBiL0RvY3VtZW50YXRpb24vZ2l0LXN0YXR1cy50eHQK
+QEAgLTk0LDYgKzk0LDEwIEBAIGNvbmZpZ3VyYXRpb24gdmFyaWFibGUgZG9jdW1lbnRlZCBpbiBs
+aW5rZ2l0OmdpdC1jb25maWdbMV0uCiByZXNwZWN0aXZlbHkuCgoKKy0tbm8tcnVuLWhvb2s6Ogor
+IFRoaXMgb3B0aW9uIGJ5cGFzc2VzIHRoZSBzdGF0dXMgaG9va3MuCisgU2VlIGFsc28gbGlua2dp
+dDpnaXRob29rc1s1XS4KKyAKIE9VVFBVVAogLS0tLS0tCiBUaGUgb3V0cHV0IGZyb20gdGhpcyBj
+b21tYW5kIGlzIGRlc2lnbmVkIHRvIGJlIHVzZWQgYXMgYSBjb21taXQKQEAgLTIxOCw5ICsyMjIs
+MTUgQEAgaWdub3JlZCBzdWJtb2R1bGVzIHlvdSBjYW4gZWl0aGVyIHVzZSB0aGUgLS1pZ25vcmUt
+c3VibW9kdWxlcz1kaXJ0eSBjb21tYW5kCiBsaW5lIG9wdGlvbiBvciB0aGUgJ2dpdCBzdWJtb2R1
+bGUgc3VtbWFyeScgY29tbWFuZCwgd2hpY2ggc2hvd3MgYSBzaW1pbGFyCiBvdXRwdXQgYnV0IGRv
+ZXMgbm90IGhvbm9yIHRoZXNlIHNldHRpbmdzLgoKK0hPT0tTCistLS0tLQorVGhpcyBjb21tYW5k
+IGNhbiBydW4gYHN0YXR1c2AgaG9va3MuIFNlZSBsaW5rZ2l0OmdpdGhvb2tzWzVdIGZvciBtb3Jl
+CitpbmZvcm1hdGlvbi4KKwogU0VFIEFMU08KIC0tLS0tLS0tCiBsaW5rZ2l0OmdpdGlnbm9yZVs1
+XQorbGlua2dpdDpnaXRob29rc1s1XQoKIEdJVAogLS0tCmRpZmYgLS1naXQgYS9Eb2N1bWVudGF0
+aW9uL2dpdGhvb2tzLnR4dCBiL0RvY3VtZW50YXRpb24vZ2l0aG9va3MudHh0CmluZGV4IGQ5NTRi
+ZjYuLmUzZTMyMDYgMTAwNjQ0Ci0tLSBhL0RvY3VtZW50YXRpb24vZ2l0aG9va3MudHh0CisrKyBi
+L0RvY3VtZW50YXRpb24vZ2l0aG9va3MudHh0CkBAIC0zODEsNiArMzgxLDE1IEBAIHJlYmFzZTo6
+CiBUaGUgY29tbWl0cyBhcmUgZ3VhcmFudGVlZCB0byBiZSBsaXN0ZWQgaW4gdGhlIG9yZGVyIHRo
+YXQgdGhleSB3ZXJlCiBwcm9jZXNzZWQgYnkgcmViYXNlLgoKK3N0YXR1cworfn5+fn5+fn5+fn4K
+KworVGhpcyBob29rIGlzIGludm9rZWQgYnkgJ2dpdCBzdGF0dXMnLCBhbmQgY2FuIGJlIGJ5cGFz
+c2VkCit3aXRoIGAtLW5vLXJ1bi1ob29rYCBvcHRpb24uIEV4aXRpbmcgd2l0aCBub24temVybyBz
+dGF0dXMgZnJvbSB0aGlzIHNjcmlwdAorY2F1c2VzIHRoZSAnZ2l0IHN0YXR1cycgdG8gYWJvcnQu
+CisKK1RoZSBkZWZhdWx0ICdzdGF0dXMnIGhvb2ssIHdoZW4gZW5hYmxlZCwgYWRkcyB0byB0aGUg
+b3V0cHV0IAorb2YgdGhlIGNvbW1hbmQgJ2dpdCBzdGF0dXMnIHNldmVyYWwgZmlsZXMgbmFtZXMu
+CgogR0lUCiAtLS0KZGlmZiAtLWdpdCBhL2J1aWx0aW4vY29tbWl0LmMgYi9idWlsdGluL2NvbW1p
+dC5jCmluZGV4IDljZmVmNmMuLjE2YzQzMGYgMTAwNjQ0Ci0tLSBhL2J1aWx0aW4vY29tbWl0LmMK
+KysrIGIvYnVpbHRpbi9jb21taXQuYwpAQCAtMTIyLDYgKzEyMiw3IEBAIHN0YXRpYyBlbnVtIGNv
+bW1pdF93aGVuY2Ugd2hlbmNlOwogc3RhdGljIGludCBzZXF1ZW5jZXJfaW5fdXNlOwogc3RhdGlj
+IGludCB1c2VfZWRpdG9yID0gMSwgaW5jbHVkZV9zdGF0dXMgPSAxOwogc3RhdGljIGludCBzaG93
+X2lnbm9yZWRfaW5fc3RhdHVzLCBoYXZlX29wdGlvbl9tOworc3RhdGljIGludCBub19ydW5faG9v
+ayA9IDA7CiBzdGF0aWMgY29uc3QgY2hhciAqb25seV9pbmNsdWRlX2Fzc3VtZWQ7CiBzdGF0aWMg
+c3RydWN0IHN0cmJ1ZiBtZXNzYWdlID0gU1RSQlVGX0lOSVQ7CgpAQCAtMTI3Niw2ICsxMjc3LDgg
+QEAgaW50IGNtZF9zdGF0dXMoaW50IGFyZ2MsIGNvbnN0IGNoYXIgKiphcmd2LCBjb25zdCBjaGFy
+ICpwcmVmaXgpCiBOXygiaWdub3JlIGNoYW5nZXMgdG8gc3VibW9kdWxlcywgb3B0aW9uYWwgd2hl
+bjogYWxsLCBkaXJ0eSwgdW50cmFja2VkLiAoRGVmYXVsdDogYWxsKSIpLAogUEFSU0VfT1BUX09Q
+VEFSRywgTlVMTCwgKGludHB0cl90KSJhbGwiIH0sCiBPUFRfQ09MVU1OKDAsICJjb2x1bW4iLCAm
+cy5jb2xvcHRzLCBOXygibGlzdCB1bnRyYWNrZWQgZmlsZXMgaW4gY29sdW1ucyIpKSwKKyBPUFRf
+Qk9PTCgwLCAibm8tcnVuLWhvb2siLCAmbm9fcnVuX2hvb2ssCisgTl8oImJ5cGFzcyBzdGF0dXMg
+aG9vayIpKSwKIE9QVF9FTkQoKSwKIH07CgpAQCAtMTI5Niw2ICsxMjk5LDEwIEBAIGludCBjbWRf
+c3RhdHVzKGludCBhcmdjLCBjb25zdCBjaGFyICoqYXJndiwgY29uc3QgY2hhciAqcHJlZml4KQog
+UEFUSFNQRUNfUFJFRkVSX0ZVTEwsCiBwcmVmaXgsIGFyZ3YpOwoKKyBpZiAobm9fcnVuX2hvb2sp
+Cisgcy5ydW5faG9vayA9IDA7CisgZWxzZQorIHMucnVuX2hvb2sgPSAxOwogcmVhZF9jYWNoZV9w
+cmVsb2FkKCZzLnBhdGhzcGVjKTsKIHJlZnJlc2hfaW5kZXgoJnRoZV9pbmRleCwgUkVGUkVTSF9R
+VUlFVHxSRUZSRVNIX1VOTUVSR0VELCAmcy5wYXRoc3BlYywgTlVMTCwgTlVMTCk7CgpkaWZmIC0t
+Z2l0IGEvdC90NzUxMy1zdGF0dXMtaG9vay5zaCBiL3QvdDc1MTMtc3RhdHVzLWhvb2suc2gKbmV3
+IGZpbGUgbW9kZSAxMDA2NDQKaW5kZXggMDAwMDAwMC4uNTg0MTM3ZQotLS0gL2Rldi9udWxsCisr
+KyBiL3QvdDc1MTMtc3RhdHVzLWhvb2suc2gKQEAgLTAsMCArMSwxMzcgQEAKKyMhL2Jpbi9zaAor
+Cit0ZXN0X2Rlc2NyaXB0aW9uPSdzdGF0dXMgaG9vaycKKworLiAuL3Rlc3QtbGliLnNoCisKK3Rl
+c3RfZXhwZWN0X3N1Y2Nlc3MgJ3dpdGggbm8gaG9vaycgJworCisgZWNobyAiZm9vIiA+IGZpbGUg
+JiYKKyBnaXQgc3RhdHVzCisKKycKKwordGVzdF9leHBlY3Rfc3VjY2VzcyAnLS1uby1ydW4taG9v
+ayB3aXRoIG5vIGhvb2snICcKKworIGVjaG8gImJhciIgPiBmaWxlICYmCisgZ2l0IHN0YXR1cyAt
+LW5vLXJ1bi1ob29rCisKKycKKwordGVzdF9leHBlY3Rfc3VjY2VzcyAnd2l0aCBubyBob29rIHNo
+b3J0JyAnCisKKyBlY2hvICJmb28iID4gZmlsZSAmJgorIGdpdCBzdGF0dXMgLXMKKworJworCit0
+ZXN0X2V4cGVjdF9zdWNjZXNzICctLW5vLXJ1bi1ob29rIHdpdGggbm8gaG9vayBzaG9ydCcgJwor
+CisgZWNobyAiYmFyIiA+IGZpbGUgJiYKKyBnaXQgc3RhdHVzIC0tbm8tcnVuLWhvb2sgLXMKKwor
+JworCisjIG5vdyBpbnN0YWxsIGhvb2sgdGhhdCBhbHdheXMgc3VjY2VlZHMKK0hPT0tESVI9IiQo
+Z2l0IHJldi1wYXJzZSAtLWdpdC1kaXIpL2hvb2tzIgorSE9PSz0iJEhPT0tESVIvc3RhdHVzIgor
+bWtkaXIgLXAgIiRIT09LRElSIgorY2F0ID4gIiRIT09LIiA8PEVPRgorIyEvYmluL3NoCitleGl0
+IDAKK0VPRgorY2htb2QgK3ggIiRIT09LIgorCit0ZXN0X2V4cGVjdF9zdWNjZXNzICd3aXRoIHN1
+Y2NlZWRpbmcgaG9vaycgJworCisgZWNobyAibW9yZSIgPj4gZmlsZSAmJgorIGdpdCBzdGF0dXMK
+KworJworCit0ZXN0X2V4cGVjdF9zdWNjZXNzICctLW5vLXJ1bi1ob29rIHdpdGggc3VjY2VlZGlu
+ZyBob29rJyAnCisKKyBlY2hvICJldmVuIG1vcmUiID4+IGZpbGUgJiYKKyBnaXQgc3RhdHVzIC0t
+bm8tcnVuLWhvb2sKKworJworCit0ZXN0X2V4cGVjdF9zdWNjZXNzICd3aXRoIHN1Y2NlZWRpbmcg
+aG9vayBzaG9ydCcgJworCisgZWNobyAibW9yZSIgPj4gZmlsZSAmJgorIGdpdCBzdGF0dXMgLXMK
+KworJworCit0ZXN0X2V4cGVjdF9zdWNjZXNzICctLW5vLXJ1bi1ob29rIHdpdGggc3VjY2VlZGlu
+ZyBob29rIHNob3J0JyAnCisKKyBlY2hvICJldmVuIG1vcmUiID4+IGZpbGUgJiYKKyBnaXQgc3Rh
+dHVzIC0tbm8tcnVuLWhvb2sgLXMKKworJworCisjIG5vdyBhIGhvb2sgdGhhdCBmYWlscworY2F0
+ID4gIiRIT09LIiA8PEVPRgorIyEvYmluL3NoCitleGl0IDEKK0VPRgorCit0ZXN0X2V4cGVjdF9z
+dWNjZXNzICd3aXRoIGZhaWxpbmcgaG9vaycgJworCisgZWNobyAiYW5vdGhlciIgPj4gZmlsZSAm
+JgorIHRlc3RfbXVzdF9mYWlsIGdpdCBzdGF0dXMKKworJworCit0ZXN0X2V4cGVjdF9zdWNjZXNz
+ICctLW5vLXJ1bi1ob29rIHdpdGggZmFpbGluZyBob29rJyAnCisKKyBlY2hvICJzdHVmZiIgPj4g
+ZmlsZSAmJgorIGdpdCBzdGF0dXMgLS1uby1ydW4taG9vaworCisnCisKK3Rlc3RfZXhwZWN0X3N1
+Y2Nlc3MgJ3dpdGggZmFpbGluZyBob29rIHNob3J0JyAnCisKKyBlY2hvICJhbm90aGVyIiA+PiBm
+aWxlICYmCisgdGVzdF9tdXN0X2ZhaWwgZ2l0IHN0YXR1cyAtcworCisnCisKK3Rlc3RfZXhwZWN0
+X3N1Y2Nlc3MgJy0tbm8tcnVuLWhvb2sgd2l0aCBmYWlsaW5nIGhvb2sgc2hvcnQnICcKKworIGVj
+aG8gInN0dWZmIiA+PiBmaWxlICYmCisgZ2l0IHN0YXR1cyAtLW5vLXJ1bi1ob29rIC1zCisKKycK
+KworY2htb2QgLXggIiRIT09LIgordGVzdF9leHBlY3Rfc3VjY2VzcyBQT1NJWFBFUk0gJ3dpdGgg
+bm9uLWV4ZWN1dGFibGUgaG9vaycgJworCisgZWNobyAiY29udGVudCIgPj4gZmlsZSAmJgorIGdp
+dCBzdGF0dXMKKworJworCit0ZXN0X2V4cGVjdF9zdWNjZXNzIFBPU0lYUEVSTSAnLS1uby1ydW4t
+aG9vayB3aXRoIG5vbi1leGVjdXRhYmxlIGhvb2snICcKKworIGVjaG8gIm1vcmUgY29udGVudCIg
+Pj4gZmlsZSAmJgorIGdpdCBzdGF0dXMgLS1uby1ydW4taG9vaworCisnCisKK3Rlc3RfZXhwZWN0
+X3N1Y2Nlc3MgUE9TSVhQRVJNICd3aXRoIG5vbi1leGVjdXRhYmxlIGhvb2sgc2hvcnQnICcKKwor
+IGVjaG8gImNvbnRlbnQiID4+IGZpbGUgJiYKKyBnaXQgc3RhdHVzIC1zCisKKycKKwordGVzdF9l
+eHBlY3Rfc3VjY2VzcyBQT1NJWFBFUk0gJy0tbm8tcnVuLWhvb2sgd2l0aCBub24tZXhlY3V0YWJs
+ZSBob29rIHNob3J0JyAnCisKKyBlY2hvICJtb3JlIGNvbnRlbnQiID4+IGZpbGUgJiYKKyBnaXQg
+c3RhdHVzIC0tbm8tcnVuLWhvb2sgLXMKKworJworY2htb2QgK3ggIiRIT09LIgorCit0ZXN0X2Rv
+bmUKZGlmZiAtLWdpdCBhL3RlbXBsYXRlcy9ob29rcy0tc3RhdHVzLnNhbXBsZSBiL3RlbXBsYXRl
+cy9ob29rcy0tc3RhdHVzLnNhbXBsZQpuZXcgZmlsZSBtb2RlIDEwMDc1NQppbmRleCAwMDAwMDAw
+Li44NzM5YjQ0Ci0tLSAvZGV2L251bGwKKysrIGIvdGVtcGxhdGVzL2hvb2tzLS1zdGF0dXMuc2Ft
+cGxlCkBAIC0wLDAgKzEsMzYgQEAKKyMhL2Jpbi9zaAorIworIyBBbiBleGFtcGxlIGhvb2sgc2Ny
+aXB0IHRvIHZlcmlmeSB3aGF0IGlzIGFib3V0IHRvIGJlIHN0YXR1cy4KKyMgQ2FsbGVkIGJ5ICJn
+aXQgc3RhdHVzIiB3aXRoIG5vIGFyZ3VtZW50cy4gVGhlIGhvb2sgc2hvdWxkCisjIGV4aXQgd2l0
+aCBub24temVybyBzdGF0dXMgYWZ0ZXIgaXNzdWluZyBhbiBhcHByb3ByaWF0ZSBtZXNzYWdlIGlm
+CisjIGl0IHdhbnRzIHRvIHN0b3AgdGhlIHN0YXR1cy4KKyMKKyMgVG8gZW5hYmxlIHRoaXMgaG9v
+aywgcmVuYW1lIHRoaXMgZmlsZSB0byAic3RhdHVzIi4KKyMKKyMgVGhpcyBob29rIGlzIGNhbGxl
+ZCB3aXRoIHRoZSBmb2xsb3dpbmcgcGFyYW1ldGVyczoKKyMKKyMgJDEgLS0gTmFtZSBhbmQgcGF0
+aCBvZiB0aGUgZmlsZSwgZnJvbSB3aGljaCBpdCB3aWxsIHRha2UgYWRkaXRpb25hbCBpbmZvcm1h
+dGlvbiBmb3IgaG9vayBzdGF0dXMKKyMgJDIgLS0gbGluZSBzZXBhcmF0aW5nIHRoZSBibG9ja3Mg
+b2YgaW5mb3JtYXRpb24KKyMKKyMgSW5mb3JtYXRpb24gaW4gdGhlIGZpbGUgbXVzdCBiZSBjb250
+YWluZWQgaW4gdGhlIGJsb2NrcywgdGhlIGJsb2NrcworIyBtdXN0IGJlIHNlcGFyYXRlZCBieSBh
+IGxpbmUgc2VwYXJhdGluZy4gVGhlIGZpcnN0IGxpbmUgb2YgdGhlIGJsb2NrCisjIG11c3QgY29u
+dGFpbiB0aGUgdHlwZSBvZiBmaWxlcyBpbiB0aGUgYmxvY2ssIHRoZSBzZWNvbmQgbGluZSBzaG91
+bGQKKyMgY29udGFpbiBhIGNvbW1hbmQgdG8gaW5jbHVkZSBpbiB3aGF0IHdpbGwgYmUgY29tbWl0
+dGVkLCBjb250aW51ZQorIyB1bnRpbCB0aGUgZW5kIG9mIHRoZSBibG9jayBvciBmaWxlIGZpbGVz
+IG5hbWVzLCBvbmUgZmlsZSBuYW1lIHBlciBsaW5lLgorCitTVEFUVVNfRklMRT0kMQorTkVXX1ND
+T1BFPSQyCisKK2NhdCA+ICIkU1RBVFVTX0ZJTEUiIDw8RU9GCitCaW5hcnkgZmlsZXMKK2FkZCAt
+LWJpbmFyeQorbGliLmxpYgorbGliLmEKK2xpYi5vCiskTkVXX1NDT1BFCitPdGhlciBmaWxlcwor
+YWRkIC0tb3RoZXIKK2RsbC5saWIKK2RsbC5hCitkbGwubworRU9GCmRpZmYgLS1naXQgYS93dC1z
+dGF0dXMuYyBiL3d0LXN0YXR1cy5jCmluZGV4IGVjNzM0NGUuLmY1ZDVmNzIgMTAwNjQ0Ci0tLSBh
+L3d0LXN0YXR1cy5jCisrKyBiL3d0LXN0YXR1cy5jCkBAIC0xNDA2LDYgKzE0MDYsNjAgQEAgdm9p
+ZCB3dF9zdGF0dXNfcHJpbnQoc3RydWN0IHd0X3N0YXR1cyAqcykKIH0gZWxzZQogcHJpbnRmKF8o
+Im5vdGhpbmcgdG8gY29tbWl0LCB3b3JraW5nIGRpcmVjdG9yeSBjbGVhblxuIikpOwogfQorCisg
+aWYgKHMtPnJ1bl9ob29rKSB7CisgY29uc3QgY2hhciAqTkVXX1NDT1BFID0gIj09PT09PT09PT09
+PT09PT09PT0iOworCisgY29uc3QgY2hhciAqcGF0aF90b19zdGF0dXNfZmlsZSA9IGdpdF9wYXRo
+KCJTVEFUVVMtTVNHIik7CisgZmNsb3NlKGZvcGVuKHBhdGhfdG9fc3RhdHVzX2ZpbGUsICJ3Iikp
+OworCisgaWYgKHJ1bl9ob29rX2xlKE5VTEwsICJzdGF0dXMiLCBwYXRoX3RvX3N0YXR1c19maWxl
+LCBORVdfU0NPUEUsIE5VTEwpICE9IDApCisgZGllKF8oImhvb2sgc3RhdHVzIGhhcyBlcnJvciIp
+KTsKKworIEZJTEUgKmYgPSBmb3BlbihwYXRoX3RvX3N0YXR1c19maWxlLCAicnQiKTsKKyBzdHJ1
+Y3Qgc3RyYnVmIGJ1ZjsKKyBzdHJidWZfaW5pdCgmYnVmLCAwKTsKKworIHN0cnVjdCBzdHJpbmdf
+bGlzdCBvdGhlcl9maWxlczsKKyBzdHJ1Y3Qgc3RyYnVmIGRlc2NyaXB0aW9uX2ZpbGVzOworIHN0
+cmJ1Zl9pbml0KCZkZXNjcmlwdGlvbl9maWxlcywgMCk7Cisgc3RydWN0IHN0cmJ1ZiBvcGVyYXRp
+b25fZmlsZXM7Cisgc3RyYnVmX2luaXQoJm9wZXJhdGlvbl9maWxlcywgMCk7CisgaW50IHNjb3Bl
+X2xpbmVfbnVtYmVyID0gMDsKKworIHdoaWxlIChzdHJidWZfZ2V0bGluZSgmYnVmLCBmLCAnXG4n
+KSAhPSBFT0YpIHsKKyBpZiAoc3RyY21wKGJ1Zi5idWYsIE5FV19TQ09QRSkgPT0gMCkgeworIHNj
+b3BlX2xpbmVfbnVtYmVyID0gMDsKKyB3dF9zdGF0dXNfcHJpbnRfb3RoZXIocywgJm90aGVyX2Zp
+bGVzLAorIF8oZGVzY3JpcHRpb25fZmlsZXMuYnVmKSwgb3BlcmF0aW9uX2ZpbGVzLmJ1Zik7CisK
+KyBzdHJidWZfcmVsZWFzZSgmZGVzY3JpcHRpb25fZmlsZXMpOworIHN0cmJ1Zl9yZWxlYXNlKCZv
+cGVyYXRpb25fZmlsZXMpOworIHN0cmluZ19saXN0X2NsZWFyKCZvdGhlcl9maWxlcywgMSk7Cisg
+fSBlbHNlIHsKKyBpZiAoc2NvcGVfbGluZV9udW1iZXIgPT0gMCkgeworIHN0cmJ1Zl9pbml0KCZk
+ZXNjcmlwdGlvbl9maWxlcywgMCk7Cisgc3RyYnVmX2FkZGJ1ZigmZGVzY3JpcHRpb25fZmlsZXMs
+ICZidWYpOworIH0gZWxzZSBpZiAoc2NvcGVfbGluZV9udW1iZXIgPT0gMSkgeworIHN0cmJ1Zl9p
+bml0KCZvcGVyYXRpb25fZmlsZXMsIDApOworIHN0cmJ1Zl9hZGRidWYoJm9wZXJhdGlvbl9maWxl
+cywgJmJ1Zik7CisgfSBlbHNlIHsKKyBzaXplX3Qgc2l6ZV9idWY7CisgY29uc3QgY2hhciAqbGlu
+ZSA9IHN0cmJ1Zl9kZXRhY2goJmJ1ZiwgJnNpemVfYnVmKTsKKyBzdHJpbmdfbGlzdF9pbnNlcnQo
+Jm90aGVyX2ZpbGVzLCBsaW5lKTsKKyB9Cisgc2NvcGVfbGluZV9udW1iZXIrKzsKKyB9CisgfQor
+IHd0X3N0YXR1c19wcmludF9vdGhlcihzLCAmb3RoZXJfZmlsZXMsCisgXyhkZXNjcmlwdGlvbl9m
+aWxlcy5idWYpLCBvcGVyYXRpb25fZmlsZXMuYnVmKTsKKyBzdHJidWZfcmVsZWFzZSgmYnVmKTsK
+KyBzdHJidWZfcmVsZWFzZSgmZGVzY3JpcHRpb25fZmlsZXMpOworIHN0cmJ1Zl9yZWxlYXNlKCZv
+cGVyYXRpb25fZmlsZXMpOworIHN0cmluZ19saXN0X2NsZWFyKCZvdGhlcl9maWxlcywgMSk7CisK
+KyBmY2xvc2UoZik7CisgfQogfQoKIHN0YXRpYyB2b2lkIHd0X3Nob3J0c3RhdHVzX3VubWVyZ2Vk
+KHN0cnVjdCBzdHJpbmdfbGlzdF9pdGVtICppdCwKQEAgLTE1OTksNiArMTY1Myw0MCBAQCB2b2lk
+IHd0X3Nob3J0c3RhdHVzX3ByaW50KHN0cnVjdCB3dF9zdGF0dXMgKnMpCiBpdCA9ICYocy0+aWdu
+b3JlZC5pdGVtc1tpXSk7CiB3dF9zaG9ydHN0YXR1c19vdGhlcihpdCwgcywgIiEhIik7CiB9CisK
+KyBpZiAocy0+cnVuX2hvb2spIHsKKyBjb25zdCBjaGFyICpORVdfU0NPUEUgPSAiPT09PT09PT09
+PT09PT09PT09PSI7CisKKyBjb25zdCBjaGFyICpwYXRoX3RvX3N0YXR1c19maWxlID0gZ2l0X3Bh
+dGgoIlNUQVRVUy1NU0ciKTsKKyBmY2xvc2UoZm9wZW4ocGF0aF90b19zdGF0dXNfZmlsZSwgInci
+KSk7CisKKyBpZiAocnVuX2hvb2tfbGUoTlVMTCwgInN0YXR1cyIsIHBhdGhfdG9fc3RhdHVzX2Zp
+bGUsIE5FV19TQ09QRSwgTlVMTCkgIT0gMCkKKyBkaWUoXygiaG9vayBzdGF0dXMgaGFzIGVycm9y
+IikpOworCisgRklMRSAqZiA9IGZvcGVuKHBhdGhfdG9fc3RhdHVzX2ZpbGUsICJydCIpOworIHN0
+cnVjdCBzdHJidWYgYnVmOworIHN0cmJ1Zl9pbml0KCZidWYsIDApOworCisgaW50IHNjb3BlX2xp
+bmVfbnVtYmVyID0gMDsKKworIHdoaWxlIChzdHJidWZfZ2V0bGluZSgmYnVmLCBmLCAnXG4nKSAh
+PSBFT0YpIHsKKyBpZiAoc3RyY21wKGJ1Zi5idWYsIE5FV19TQ09QRSkgPT0gMCkgeworIHNjb3Bl
+X2xpbmVfbnVtYmVyID0gMDsKKyB9IGVsc2UgeworIGlmIChzY29wZV9saW5lX251bWJlciA9PSAw
+KSB7CisgfSBlbHNlIGlmIChzY29wZV9saW5lX251bWJlciA9PSAxKSB7CisgfSBlbHNlIHsKKyBz
+dHJ1Y3Qgc3RyaW5nX2xpc3RfaXRlbSBpdDsKKyBpdC5zdHJpbmcgPSBidWYuYnVmOworIHd0X3No
+b3J0c3RhdHVzX290aGVyKCZpdCwgcywgIjo6Iik7CisgfQorIHNjb3BlX2xpbmVfbnVtYmVyKys7
+CisgfQorIH0KKyBzdHJidWZfcmVsZWFzZSgmYnVmKTsKKworIGZjbG9zZShmKTsKKyB9CiB9Cgog
+dm9pZCB3dF9wb3JjZWxhaW5fcHJpbnQoc3RydWN0IHd0X3N0YXR1cyAqcykKZGlmZiAtLWdpdCBh
+L3d0LXN0YXR1cy5oIGIvd3Qtc3RhdHVzLmgKaW5kZXggMjgzYTlmZS4uZmY5NGIyMiAxMDA2NDQK
+LS0tIGEvd3Qtc3RhdHVzLmgKKysrIGIvd3Qtc3RhdHVzLmgKQEAgLTU1LDYgKzU1LDcgQEAgc3Ry
+dWN0IHd0X3N0YXR1cyB7CiBpbnQgcmVsYXRpdmVfcGF0aHM7CiBpbnQgc3VibW9kdWxlX3N1bW1h
+cnk7CiBpbnQgc2hvd19pZ25vcmVkX2ZpbGVzOworIGludCBydW5faG9vazsKIGVudW0gdW50cmFj
+a2VkX3N0YXR1c190eXBlIHNob3dfdW50cmFja2VkX2ZpbGVzOwogY29uc3QgY2hhciAqaWdub3Jl
+X3N1Ym1vZHVsZV9hcmc7CiBjaGFyIGNvbG9yX3BhbGV0dGVbV1RfU1RBVFVTX01BWFNMT1RdW0NP
+TE9SX01BWExFTl07Ci0tIAoxLjguNS4yLm1zeXNnaXQuMA==
