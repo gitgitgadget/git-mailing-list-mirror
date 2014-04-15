@@ -1,68 +1,68 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-gui: show staged submodules regardless of ignore config
-Date: Tue, 15 Apr 2014 15:32:41 -0700
-Message-ID: <xmqq1twyjkae.fsf@gitster.dls.corp.google.com>
-References: <53444E6B.7000107@web.de>
+Subject: Re: [PATCH] gitk: show staged submodules regardless of ignore config
+Date: Tue, 15 Apr 2014 15:34:25 -0700
+Message-ID: <xmqqwqeqi5n2.fsf@gitster.dls.corp.google.com>
+References: <53444FA8.7020504@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Jens Lehmann <Jens.Lehmann@web.de>,
 	Git Mailing List <git@vger.kernel.org>
-To: Pat Thoyts <patthoyts@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Wed Apr 16 00:33:23 2014
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Wed Apr 16 00:34:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WaBuq-0004TY-30
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Apr 2014 00:33:20 +0200
+	id 1WaBw2-0006yD-D8
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Apr 2014 00:34:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750953AbaDOWdG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Apr 2014 18:33:06 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34426 "EHLO
+	id S1751601AbaDOWe3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Apr 2014 18:34:29 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46291 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751460AbaDOWcq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Apr 2014 18:32:46 -0400
+	id S1751027AbaDOWe2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Apr 2014 18:34:28 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2D4957DE0A;
-	Tue, 15 Apr 2014 18:32:45 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3C4E57DE9D;
+	Tue, 15 Apr 2014 18:34:28 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=TyCN/qAt7QnlrfjY0WtLZ8vlQT4=; b=idD54K
-	yWFshFyJBGIE85+sT6N0g0VHbqlEhHjNW+x7mKYGlhXSlZ/jXaW5vI1i6Cv0/uwC
-	Ua2dRhv74ZQZB9F0QuwZxnXI2af5ANNL/5JZLDO+MMmS0JP+lfJtFGJb9nVRjxkR
-	BJjHntHHnZMYG7+S2f6fQ0RJHT5Ft/xo/1K14=
+	:content-type; s=sasl; bh=hUpd89NdA5Lz2BjPyYOKVpHyXdM=; b=IhX5XG
+	yQYCFHj1wnsjL4y2U6DYSvm613oTXfv2QBs1uP3QU5STZGJchuZTSy+3ePSRmSD+
+	h3Fb3d2vP6X8UDJLpwZ98R16MPQ9HzXFDnUlPZNrxEAbTSsHWfaOHCGTqym4q9wP
+	d1P4Yt3vot8s5Rc8CiwTN63Sshy2NN+K5jc5c=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CziqLKN/rhx3yexIQcjmF5mGrwjZ9Jgu
-	IQzcY8pztMKTrZDevSG3CzKNkI/7rcWao+3sMhL6G6YO0X7mho3+/b+O1biRVbmQ
-	tYG8l9wZwfObKAi0KeMeS0mnFvTeEKay6BCASUBOsmPZKHm28wGOsKrnRmvVipVc
-	cxJix8VQ6Hs=
+	:content-type; q=dns; s=sasl; b=n2jCQW4Zh4L0JcpuKjtP9s/tKRV1xyIx
+	EJ15GtZWfcUDS5CnS1CcXjHaMCeEHO17s0L8RsUl65taLyhnpKLSdSUF0HeYMetk
+	70QLtH/MvIvUs+S2SBUeQjrziCnE2zyXDCz5WuLPqR5sqD5KqvGf8AUd1e0dGVnC
+	BIoYzBIniTI=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 14E067DE09;
-	Tue, 15 Apr 2014 18:32:45 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 21CC37DE9C;
+	Tue, 15 Apr 2014 18:34:28 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7BCA27DE07;
-	Tue, 15 Apr 2014 18:32:43 -0400 (EDT)
-In-Reply-To: <53444E6B.7000107@web.de> (Jens Lehmann's message of "Tue, 08 Apr
-	2014 21:30:51 +0200")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7D3307DE9B;
+	Tue, 15 Apr 2014 18:34:26 -0400 (EDT)
+In-Reply-To: <53444FA8.7020504@web.de> (Jens Lehmann's message of "Tue, 08 Apr
+	2014 21:36:08 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: DC672B08-C4ED-11E3-A016-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 19CE2B04-C4EE-11E3-8BB4-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246307>
 
 Jens Lehmann <Jens.Lehmann@web.de> writes:
 
 > Currently setting submodule.<name>.ignore and/or diff.ignoreSubmodules to
-> "all" suppresses all output of submodule changes for git-gui. This is
-> really confusing, as even when the user chooses to record a new commit for
-> an ignored submodule by adding it manually this change won't show up under
-> "Staged Changes (Will Commit)".
+> "all" suppresses all output of submodule changes for gitk. This is really
+> confusing, as even when the user chooses to record a new commit for an
+> ignored submodule by adding it manually this change won't show up under
+> "Local changes checked in to index but not committed".
 >
 > Fix that by using the '--ignore-submodules=dirty' option for both callers
 > of "git diff-index --cached" when the underlying git version supports that
@@ -71,48 +71,58 @@ Jens Lehmann <Jens.Lehmann@web.de> writes:
 > Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
 > ---
 
-I'll tentatively queue this on jl/git-gui-show-added-submodule-changes
-and park it on 'pu'.
+I'll tentatively queue this on jl/gitk-show-added-submodule-changes
+and park it on 'pu', but I'd prefer it to come to me through your
+tree.
 
 I'll be tagging 2.0.0-rc0 later this week; if you have some
-accumulated changes (I saw that your public repository is at
-gitgui-0.19.0 which I already have), please plan to get them
-in by the end of next week.
+accumulated changes (I saw that your public repository has an
+initial vietnamese translation patch that I still do not have),
+please plan to get them in by the end of next week.
 
 Thanks.
 
->  git-gui.sh   | 6 +++++-
->  lib/diff.tcl | 3 +++
->  2 files changed, 8 insertions(+), 1 deletion(-)
+>  gitk | 13 ++++++++++---
+>  1 file changed, 10 insertions(+), 3 deletions(-)
 >
-> diff --git a/git-gui.sh b/git-gui.sh
-> index cf2209b..c69bfb3 100755
-> --- a/git-gui.sh
-> +++ b/git-gui.sh
-> @@ -1558,7 +1558,11 @@ proc rescan_stage2 {fd after} {
+> diff --git a/gitk b/gitk
+> index 90764e8..f6efaa6 100755
+> --- a/gitk
+> +++ b/gitk
+> @@ -5205,11 +5205,15 @@ proc dohidelocalchanges {} {
+>  # spawn off a process to do git diff-index --cached HEAD
+>  proc dodiffindex {} {
+>      global lserial showlocalchanges vfilelimit curview
+> -    global hasworktree
+> +    global hasworktree git_version
 >
->  	set rescan_active 2
->  	ui_status [mc "Scanning for modified files ..."]
-> -	set fd_di [git_read diff-index --cached -z [PARENT]]
-> +	if {[git-version >= "1.7.2"]} {
-> +		set fd_di [git_read diff-index --cached --ignore-submodules=dirty -z [PARENT]]
-> +	} else {
-> +		set fd_di [git_read diff-index --cached -z [PARENT]]
+>      if {!$showlocalchanges || !$hasworktree} return
+>      incr lserial
+> -    set cmd "|git diff-index --cached HEAD"
+> +    if {[package vcompare $git_version "1.7.2"] >= 0} {
+> +	set cmd "|git diff-index --cached --ignore-submodules=dirty HEAD"
+> +    } else {
+> +	set cmd "|git diff-index --cached HEAD"
+> +    }
+>      if {$vfilelimit($curview) ne {}} {
+>  	set cmd [concat $cmd -- $vfilelimit($curview)]
+>      }
+> @@ -7705,7 +7709,7 @@ proc addtocflist {ids} {
+>  }
+>
+>  proc diffcmd {ids flags} {
+> -    global log_showroot nullid nullid2
+> +    global log_showroot nullid nullid2 git_version
+>
+>      set i [lsearch -exact $ids $nullid]
+>      set j [lsearch -exact $ids $nullid2]
+> @@ -7726,6 +7730,9 @@ proc diffcmd {ids flags} {
+>  	    }
+>  	}
+>      } elseif {$j >= 0} {
+> +	if {[package vcompare $git_version "1.7.2"] >= 0} {
+> +	    set flags "$flags --ignore-submodules=dirty"
 > +	}
->  	set fd_df [git_read diff-files -z]
->
->  	fconfigure $fd_di -blocking 0 -translation binary -encoding binary
-> diff --git a/lib/diff.tcl b/lib/diff.tcl
-> index 30d9a79..b0a5180 100644
-> --- a/lib/diff.tcl
-> +++ b/lib/diff.tcl
-> @@ -287,6 +287,9 @@ proc start_show_diff {cont_info {add_opts {}}} {
->  	if {$w eq $ui_index} {
->  		lappend cmd diff-index
->  		lappend cmd --cached
-> +		if {[git-version >= "1.7.2"]} {
-> +			lappend cmd --ignore-submodules=dirty
-> +		}
->  	} elseif {$w eq $ui_workdir} {
->  		if {[string first {U} $m] >= 0} {
->  			lappend cmd diff
+>  	set cmd [concat | git diff-index --cached $flags]
+>  	if {[llength $ids] > 1} {
+>  	    # comparing index with specific revision
