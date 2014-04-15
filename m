@@ -1,85 +1,150 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 19/27] refs: add a concept of a reference transaction
-Date: Tue, 15 Apr 2014 00:40:56 -0700
-Message-ID: <xmqqk3arkpkn.fsf@gitster.dls.corp.google.com>
-References: <1396878498-19887-1-git-send-email-mhagger@alum.mit.edu>
-	<1396878498-19887-20-git-send-email-mhagger@alum.mit.edu>
-	<xmqq8urhlzr1.fsf@gitster.dls.corp.google.com>
-	<534BBE67.3040100@alum.mit.edu>
-	<xmqqa9bnmwnk.fsf@gitster.dls.corp.google.com>
-	<534CC69C.1020503@alum.mit.edu>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: [PATCH] send-email: recognize absolute path on Windows
+Date: Tue, 15 Apr 2014 10:44:25 +0200
+Message-ID: <1397551465-10968-1-git-send-email-kusmabite@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Brad King <brad.king@kitware.com>,
-	Johan Herland <johan@herland.net>, Jeff King <peff@peff.net>,
-	Vicent Marti <tanoku@gmail.com>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Apr 15 09:41:13 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: msysgit@googlegroups.com,
+	johannes.schindelin@gmx.de
+To: git@vger.kernel.org
+X-From: msysgit+bncBDR53PPJ7YHRBZHCWONAKGQEMTJ2MNY@googlegroups.com Tue Apr 15 10:44:26 2014
+Return-path: <msysgit+bncBDR53PPJ7YHRBZHCWONAKGQEMTJ2MNY@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-fa0-f61.google.com ([209.85.161.61])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WZxzU-0004uE-76
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Apr 2014 09:41:12 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751159AbaDOHlD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Apr 2014 03:41:03 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58562 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751152AbaDOHlA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Apr 2014 03:41:00 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4426778E78;
-	Tue, 15 Apr 2014 03:40:59 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=w4/+D8BtNRUZ7Z9YZHC8/BAvUFg=; b=bG9KqI
-	/rX7hYVkvAACAvAZ6UyibFXApIwd6KLwvtMRlWIXvxBOxDu9ohhUMse7m48NNRVA
-	YyJsQ3ooZt3t4MxSdU3Asqh4bwtbVNACYXQhO08WySNFSVyMOYQfEkFkfYm/8khV
-	WB41GQs0S7Bz1By2vUd0UgBDhWrqY3vhVAGD8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gpGc0fTxP/23nv0BY/wMc/G8xkCcezRX
-	G5H/YzmHjkFRHP9upv3wlA3JWHj5lfPeeE9aPfWnLOpDvTk0EPF6bI7u4mxPsWeN
-	BL8s/Tg2R3IKX+gAagTpB7MouozjJaDSS8y/Q09BLoKTIzFd6t4RW5v3m7kzwYnb
-	zJi4MZ70+bg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2875078E77;
-	Tue, 15 Apr 2014 03:40:59 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B543578E74;
-	Tue, 15 Apr 2014 03:40:57 -0400 (EDT)
-In-Reply-To: <534CC69C.1020503@alum.mit.edu> (Michael Haggerty's message of
-	"Tue, 15 Apr 2014 07:41:48 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 487EBCC0-C471-11E3-BB48-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246278>
+	(envelope-from <msysgit+bncBDR53PPJ7YHRBZHCWONAKGQEMTJ2MNY@googlegroups.com>)
+	id 1WZyyb-0004F2-Lu
+	for gcvm-msysgit@m.gmane.org; Tue, 15 Apr 2014 10:44:21 +0200
+Received: by mail-fa0-f61.google.com with SMTP id v1sf665492fav.26
+        for <gcvm-msysgit@m.gmane.org>; Tue, 15 Apr 2014 01:44:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=mime-version:from:to:cc:subject:date:message-id:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=eFqOr2xL3qKac/mf+wPl7SHQW6RB/viyNwGLfe217fE=;
+        b=uFrub6NagZbm/Bjga+/GeY6Ds77v43aydgi5WqfDSBb1tWwi6hyZ9LyvdmBAhuNan1
+         sQpM1oUvbjk42L+0GsshKJGYLKwcj4YYfYKaae+l0Prhx8PntxuQDOvvwzmpiAudIcFo
+         XHyHu0DFX/WuHympitDGV4/RXe+4RGukUYrOQpvYa+0y2IPMT2KDTwq5v+J4NWTkcIpZ
+         cI3y0XgSU8P4PAUK79pXq0yGTGGifn8TNPcgi74FlFchul/wo2iPpiqRjTY46SBr1OGk
+         g4MN0Qe9OBkenfAD9pm4GD0K5lmK2PvQu4D6HWJ2mAiGKlJsMWESFwRhb20vfue6XGNS
+         ZmFw==
+X-Received: by 10.152.27.72 with SMTP id r8mr3248lag.23.1397551461331;
+        Tue, 15 Apr 2014 01:44:21 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.6.6 with SMTP id w6ls28597law.2.gmail; Tue, 15 Apr 2014
+ 01:44:20 -0700 (PDT)
+X-Received: by 10.112.64.68 with SMTP id m4mr75089lbs.10.1397551460348;
+        Tue, 15 Apr 2014 01:44:20 -0700 (PDT)
+Received: from mail-ee0-x22f.google.com (mail-ee0-x22f.google.com [2a00:1450:4013:c00::22f])
+        by gmr-mx.google.com with ESMTPS id u49si582774eeo.1.2014.04.15.01.44.20
+        for <msysgit@googlegroups.com>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 15 Apr 2014 01:44:20 -0700 (PDT)
+Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 2a00:1450:4013:c00::22f as permitted sender) client-ip=2a00:1450:4013:c00::22f;
+Received: by mail-ee0-f47.google.com with SMTP id b15so7374880eek.6
+        for <msysgit@googlegroups.com>; Tue, 15 Apr 2014 01:44:20 -0700 (PDT)
+X-Received: by 10.15.43.77 with SMTP id w53mr933111eev.10.1397551460250;
+        Tue, 15 Apr 2014 01:44:20 -0700 (PDT)
+Received: from localhost ([77.40.159.131])
+        by mx.google.com with ESMTPSA id p8sm47457249eef.26.2014.04.15.01.44.18
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Tue, 15 Apr 2014 01:44:19 -0700 (PDT)
+X-Mailer: git-send-email 1.9.0.msysgit.0
+X-Original-Sender: kusmabite@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of kusmabite@gmail.com designates 2a00:1450:4013:c00::22f
+ as permitted sender) smtp.mail=kusmabite@gmail.com;       dkim=pass
+ header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246279>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+From: Erik Faye-Lund <kusmabite@googlemail.com>
 
-> In retrospect, you might have been objecting more to the misleading
-> docstring than to the behavior as implemented at the time.  
+On Windows, absolute paths might start with a DOS drive prefix,
+which this check fails to recognize.
 
-Yeah, I was reacting to the comment that said create can delete ;-)
+Unfortunately, we cannot simply use the file_name_is_absolute
+helper in File::Spec::Functions, because Git for Windows has an
+MSYS-based Perl, where this helper doesn't grok DOS
+drive-prefixes.
 
-> The
-> docstring implied that create could actually be used to delete a
-> reference, but that was not true: it always checked that the reference
-> didn't exist beforehand.  So at worst it could leave a non-existent
-> reference un-created.
+So let's manually check for these in that case, and fall back to
+the File::Spec-helper on other platforms (e.g Win32 with native
+Perl)
 
-OK, all is clear then.  
+Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
+---
 
->>  (2) keep the assert(), reject such user input at the callers, and
->>      document that these are invalid inputs;
->
-> The current status in v3 is that (2) is implemented.
+Here's a patch that we've been running with a variation of in
+Git for Windows for a while. That version wasn't quite palatable,
+as it recognized DOS drive-prefixes on all platforms.
 
-Good.  Thanks.
+ git-send-email.perl | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index fdb0029..c4d85a7 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -1113,6 +1113,18 @@ sub ssl_verify_params {
+ 	}
+ }
+ 
++sub file_name_is_absolute {
++	my ($path) = @_;
++
++	# msys does not grok DOS drive-prefixes
++	if ($^O eq 'msys') {
++		return ($path =~ m#^/# || $path =~ m#[a-zA-Z]\:#)
++	}
++
++	require File::Spec::Functions;
++	return File::Spec::Functions::file_name_is_absolute($path);
++}
++
+ # Returns 1 if the message was sent, and 0 otherwise.
+ # In actuality, the whole program dies when there
+ # is an error sending a message.
+@@ -1197,7 +1209,7 @@ X-Mailer: git-send-email $gitversion
+ 
+ 	if ($dry_run) {
+ 		# We don't want to send the email.
+-	} elsif ($smtp_server =~ m#^/#) {
++	} elsif (file_name_is_absolute($smtp_server)) {
+ 		my $pid = open my $sm, '|-';
+ 		defined $pid or die $!;
+ 		if (!$pid) {
+-- 
+1.9.0.msysgit.0
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
