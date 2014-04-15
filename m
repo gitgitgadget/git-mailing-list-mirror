@@ -1,162 +1,148 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] send-email: recognize absolute path on Windows
-Date: Tue, 15 Apr 2014 12:32:59 +0200
-Message-ID: <534D0ADB.7070702@viscovery.net>
-References: <1397551465-10968-1-git-send-email-kusmabite@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, msysgit@googlegroups.com, 
- johannes.schindelin@gmx.de
-To: Erik Faye-Lund <kusmabite@gmail.com>
-X-From: msysgit+bncBCJYV6HBKQIN5FNUTICRUBG5E4IQ4@googlegroups.com Tue Apr 15 12:33:04 2014
-Return-path: <msysgit+bncBCJYV6HBKQIN5FNUTICRUBG5E4IQ4@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-ee0-f57.google.com ([74.125.83.57])
+From: Dave Borowitz <dborowitz@google.com>
+Subject: [PATCH v2 1/2] Makefile: use curl-config to determine curl flags
+Date: Tue, 15 Apr 2014 03:40:30 -0700
+Message-ID: <1397558431-22417-1-git-send-email-dborowitz@google.com>
+Cc: gitster@pobox.com, Dave Borowitz <dborowitz@google.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 15 12:41:22 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCJYV6HBKQIN5FNUTICRUBG5E4IQ4@googlegroups.com>)
-	id 1Wa0fm-0008HJ-Rq
-	for gcvm-msysgit@m.gmane.org; Tue, 15 Apr 2014 12:33:02 +0200
-Received: by mail-ee0-f57.google.com with SMTP id e49sf709418eek.22
-        for <gcvm-msysgit@m.gmane.org>; Tue, 15 Apr 2014 03:33:02 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Wa0np-0005wp-KH
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Apr 2014 12:41:21 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1754203AbaDOKlO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Apr 2014 06:41:14 -0400
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:41035 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753946AbaDOKlL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Apr 2014 06:41:11 -0400
+Received: by mail-pa0-f46.google.com with SMTP id kx10so9376456pab.5
+        for <git@vger.kernel.org>; Tue, 15 Apr 2014 03:41:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=z7pVr2vVInhE0Yh7eoRHUfzRatQA3tj4tjDMUhuKzvA=;
-        b=ATn0gguUowFGczsJ7l5NulDdxIYfMWar63wSfW6VMoJLHrSg038nwdzxTUHNbGxtlh
-         5g1ialNttQuXibvYm+7GQECitmLAj9mfdl0k4/6BZ1ZU8NSrR8WJz+W9lgmXvr86swFk
-         hlNYY/er/5YIp8QGm5/b7+c544ANeQOohHaYIBOop+mwl+sTmByn0kLiJo6B+/1h+zdg
-         Mp38wqpPRTHPg9405WdUtgTKqB66Nwl4QXQYDm+ut25bX62dHmagcQNIc9/VIpd8TF+g
-         7syUmwwbpVlUtKPDe11oGNCCqXS/gTCiWYMEirBatBudq9nU4QjRM1u/xXEvJ/Sv790e
-         4bAA==
-X-Received: by 10.180.98.135 with SMTP id ei7mr94529wib.15.1397557982515;
-        Tue, 15 Apr 2014 03:33:02 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.105.201 with SMTP id go9ls77515wib.14.gmail; Tue, 15 Apr
- 2014 03:33:01 -0700 (PDT)
-X-Received: by 10.180.10.129 with SMTP id i1mr239348wib.5.1397557981653;
-        Tue, 15 Apr 2014 03:33:01 -0700 (PDT)
-Received: from so.liwest.at (so.liwest.at. [212.33.55.14])
-        by gmr-mx.google.com with ESMTPS id u49si56780eeo.1.2014.04.15.03.33.01
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Tue, 15 Apr 2014 03:33:01 -0700 (PDT)
-Received-SPF: neutral (google.com: 212.33.55.14 is neither permitted nor denied by best guess record for domain of j.sixt@viscovery.net) client-ip=212.33.55.14;
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.80.1)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Wa0fk-00086R-3P; Tue, 15 Apr 2014 12:33:00 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id CC85E16613;
-	Tue, 15 Apr 2014 12:32:59 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
-In-Reply-To: <1397551465-10968-1-git-send-email-kusmabite@gmail.com>
-X-Spam-Score: -1.0 (-)
-X-Original-Sender: j.sixt@viscovery.net
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
- (google.com: 212.33.55.14 is neither permitted nor denied by best guess
- record for domain of j.sixt@viscovery.net) smtp.mail=j.sixt@viscovery.net
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246281>
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=ADz51Qu6iL+HtP1nh76NXHZUneX/FSqdKB36LLptvFg=;
+        b=d0cD0IPJh8wbvj/j/3n6uK1Dj2BLmI3NkjLWmtfOa3D3o/X6yYz3e1gqHklahTECZo
+         sMrjCnUKWvl2CTLmF9FZm6P/BGi798nQIaxryajL4wnAfjwWj66g2YS7VCQthTiUGm39
+         KZ0mWi0k16s944JU+fbAWdYR7iSjnPBuFh8b319briDTiUJBM3T592jHXNXbZEyHb1jg
+         oYPbr5Kv6zxtfZYQpBjqaLFLgZKInhTubh2hahGM6hoX02J0F+M3354q78GCCQZxkV7W
+         nt54qegb9pnlGR64h1SmjQaU9nj4uJcPVor8MNTGEUk7yLD3P0zyxgNzxGlBwj7h4B2p
+         gnGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=ADz51Qu6iL+HtP1nh76NXHZUneX/FSqdKB36LLptvFg=;
+        b=H2hPmaqSgdd/x1W6m+Q1YbcQxy2GgJOhHrmVAbTot+kK0oaxI2pt6YaKN66f0A4bwi
+         4BXhmFsNId+/5WpNN1k3wUMASbyYOGP2BV7RDZrOil7ccVd6uEmtS5kYvKvmzsdbDHmV
+         sXjcygnIvHqVunjK5vdz7gVE1wisZ/8rIkHrHzak+ydLjnOyJAE7jAaehl0kSnhJyE1+
+         9ZgNoIVltB0iMuBQlCsMNfQr7sZp5k3kvcxsrrcsj5dEpCoE4S0exOgThvd1sLdfxuMf
+         jD2k0VoFhLc4Qm2M/zB7EvwH9KZhfw54by1bVb5A8l28UwmBWJotL+XTrITJdwOCsSm6
+         h7Zw==
+X-Gm-Message-State: ALoCoQn9i9sQm3KCCPVmdOxUhoI59OG16sXGIfAm3bc9U6hNBd/3BLrT3zENSdKxvgBTmFUEmg5yLpJ4+65FkaMBXZwCKngquR6vLOQv4BvSaHeSTX4w0cN6AArNEm0zc3UHqWejPt2qNqowy8l0l8DQ7s3zgJdAUmx35np5EvrKMRlcvzg1FOo5Nq/Fuut+KKryPW1jLqfyvaip/D8515kfZRBo8JihFsup67/QxRv5pz/mBNtdK7Q=
+X-Received: by 10.68.184.66 with SMTP id es2mr1053251pbc.19.1397558470750;
+        Tue, 15 Apr 2014 03:41:10 -0700 (PDT)
+Received: from serval.mtv.corp.google.com (serval.mtv.corp.google.com [172.27.69.27])
+        by mx.google.com with ESMTPSA id 10sm16416353pbo.51.2014.04.15.03.41.08
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 15 Apr 2014 03:41:09 -0700 (PDT)
+X-Mailer: git-send-email 1.9.1.423.g4596e3a
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246282>
 
-Am 4/15/2014 10:44, schrieb Erik Faye-Lund:
-> From: Erik Faye-Lund <kusmabite@googlemail.com>
-> 
-> On Windows, absolute paths might start with a DOS drive prefix,
-> which this check fails to recognize.
-> 
-> Unfortunately, we cannot simply use the file_name_is_absolute
-> helper in File::Spec::Functions, because Git for Windows has an
-> MSYS-based Perl, where this helper doesn't grok DOS
-> drive-prefixes.
-> 
-> So let's manually check for these in that case, and fall back to
-> the File::Spec-helper on other platforms (e.g Win32 with native
-> Perl)
-> 
-> Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
-> ---
-> 
-> Here's a patch that we've been running with a variation of in
-> Git for Windows for a while. That version wasn't quite palatable,
-> as it recognized DOS drive-prefixes on all platforms.
+curl-config should always be installed alongside a curl distribution,
+and its purpose is to provide flags for building against libcurl, so
+use it instead of guessing flags and dependent libraries.
 
-Did you consider patching msysgit's lib/perl5/5.8.8/File/Spec.pm by
-inserting a line "msys => 'Win32'," near the top of the file; it is the
-hash table that decides which path "style" is selected depending on $^O.
-Then File::Spec->file_name_is_absolute($path) could be used without a wrapper.
+Allow overriding CURL_CONFIG to a custom path to curl-config, to
+compile against a curl installation other than the first in PATH.
 
-> 
->  git-send-email.perl | 14 +++++++++++++-
->  1 file changed, 13 insertions(+), 1 deletion(-)
-> 
-> diff --git a/git-send-email.perl b/git-send-email.perl
-> index fdb0029..c4d85a7 100755
-> --- a/git-send-email.perl
-> +++ b/git-send-email.perl
-> @@ -1113,6 +1113,18 @@ sub ssl_verify_params {
->  	}
->  }
->  
-> +sub file_name_is_absolute {
-> +	my ($path) = @_;
-> +
-> +	# msys does not grok DOS drive-prefixes
-> +	if ($^O eq 'msys') {
-> +		return ($path =~ m#^/# || $path =~ m#[a-zA-Z]\:#)
-> +	}
-> +
-> +	require File::Spec::Functions;
-> +	return File::Spec::Functions::file_name_is_absolute($path);
-> +}
-> +
->  # Returns 1 if the message was sent, and 0 otherwise.
->  # In actuality, the whole program dies when there
->  # is an error sending a message.
-> @@ -1197,7 +1209,7 @@ X-Mailer: git-send-email $gitversion
->  
->  	if ($dry_run) {
->  		# We don't want to send the email.
-> -	} elsif ($smtp_server =~ m#^/#) {
-> +	} elsif (file_name_is_absolute($smtp_server)) {
->  		my $pid = open my $sm, '|-';
->  		defined $pid or die $!;
->  		if (!$pid) {
-> 
+Depending on the set of features curl is compiled with, there may be
+more libraries required than the previous two options of -lssl and
+-lidn. For example, with a vanilla build of libcurl-7.36.0 on Mac OS X
+10.9:
 
-There's another instance in the non-$quiet code path around line 1275 that
-needs the same treatment.
+$ ~/d/curl-out-7.36.0/lib/curl-config --libs
+-L/Users/dborowitz/d/curl-out-7.36.0/lib -lcurl -lgssapi_krb5 -lresolv -lldap -lz
 
--- Hannes
+Use this only when CURLDIR is not explicitly specified, to continue
+supporting older builds.
 
+Signed-off-by: Dave Borowitz <dborowitz@google.com>
+---
+ Makefile | 35 +++++++++++++++++++++++------------
+ 1 file changed, 23 insertions(+), 12 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 2128ce3..d6330bc 100644
+--- a/Makefile
++++ b/Makefile
+@@ -34,8 +34,12 @@ all::
+ # git-http-push are not built, and you cannot use http:// and https://
+ # transports (neither smart nor dumb).
+ #
++# Define CURL_CONFIG to the path to a curl-config binary other than the
++# default 'curl-config'.
++#
+ # Define CURLDIR=/foo/bar if your curl header and library files are in
+-# /foo/bar/include and /foo/bar/lib directories.
++# /foo/bar/include and /foo/bar/lib directories.  This overrides CURL_CONFIG,
++# but is less robust.
+ #
+ # Define NO_EXPAT if you do not have expat installed.  git-http-push is
+ # not built, and you cannot push using http:// and https:// transports (dumb).
+@@ -143,9 +147,11 @@ all::
+ #
+ # Define NEEDS_SSL_WITH_CRYPTO if you need -lssl when using -lcrypto (Darwin).
+ #
+-# Define NEEDS_SSL_WITH_CURL if you need -lssl with -lcurl (Minix).
++# Define NEEDS_SSL_WITH_CURL if you need -lssl with -lcurl (Minix).  Only used
++# if CURLDIR is set.
+ #
+-# Define NEEDS_IDN_WITH_CURL if you need -lidn when using -lcurl (Minix).
++# Define NEEDS_IDN_WITH_CURL if you need -lidn when using -lcurl (Minix).  Only
++# used if CURLDIR is set.
+ #
+ # Define NEEDS_LIBICONV if linking with libc is not enough (Darwin).
+ #
+@@ -1121,18 +1127,23 @@ else
+ 		# Try "-Wl,-rpath=$(CURLDIR)/$(lib)" in such a case.
+ 		BASIC_CFLAGS += -I$(CURLDIR)/include
+ 		CURL_LIBCURL = -L$(CURLDIR)/$(lib) $(CC_LD_DYNPATH)$(CURLDIR)/$(lib) -lcurl
++		ifdef NEEDS_SSL_WITH_CURL
++			CURL_LIBCURL += -lssl
++			ifdef NEEDS_CRYPTO_WITH_SSL
++				CURL_LIBCURL += -lcrypto
++			endif
++		endif
++		ifdef NEEDS_IDN_WITH_CURL
++			CURL_LIBCURL += -lidn
++		endif
+ 	else
+-		CURL_LIBCURL = -lcurl
+-	endif
+-	ifdef NEEDS_SSL_WITH_CURL
+-		CURL_LIBCURL += -lssl
+-		ifdef NEEDS_CRYPTO_WITH_SSL
+-			CURL_LIBCURL += -lcrypto
++		CURL_CONFIG ?= curl-config
++		BASIC_CFLAGS += $(shell $(CURL_CONFIG) --cflags)
++		CURL_LIBCURL = $(shell $(CURL_CONFIG) --libs)
++		ifeq "$(CURL_LIBCURL)" ""
++			$(error curl not detected; try setting CURLDIR)
+ 		endif
+ 	endif
+-	ifdef NEEDS_IDN_WITH_CURL
+-		CURL_LIBCURL += -lidn
+-	endif
+ 
+ 	REMOTE_CURL_PRIMARY = git-remote-http$X
+ 	REMOTE_CURL_ALIASES = git-remote-https$X git-remote-ftp$X git-remote-ftps$X
 -- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+1.9.1.423.g4596e3a
