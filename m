@@ -1,110 +1,84 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: On "interpret-trailers" standalone tool
-Date: Wed, 16 Apr 2014 10:43:52 -0700
-Message-ID: <xmqq38hdi2zr.fsf@gitster.dls.corp.google.com>
-References: <xmqq61mi1djt.fsf@gitster.dls.corp.google.com>
-	<20140412.213003.73509455950485398.chriscool@tuxfamily.org>
-	<xmqqy4z7lhc4.fsf@gitster.dls.corp.google.com>
-	<CAP8UFD0w9xUwuk9UZ_mu=qvjtYN1r5skidweruM8t1KbfQpQyA@mail.gmail.com>
+Subject: Re: gitignore vs. exclude vs assume-unchanged?
+Date: Wed, 16 Apr 2014 10:51:53 -0700
+Message-ID: <xmqqy4z5go1y.fsf@gitster.dls.corp.google.com>
+References: <b3f480af1c362c615ad9ce85296e2be2@bellandwhistle.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Christian Couder <chriscool@tuxfamily.org>,
-	git <git@vger.kernel.org>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 16 19:44:05 2014
+Cc: git@vger.kernel.org
+To: alex@bellandwhistle.net
+X-From: git-owner@vger.kernel.org Wed Apr 16 19:52:04 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WaTsQ-0006o5-CG
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Apr 2014 19:44:02 +0200
+	id 1WaU0B-0005zF-Cg
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Apr 2014 19:52:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753801AbaDPRn5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Apr 2014 13:43:57 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40661 "EHLO
+	id S1753350AbaDPRv6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Apr 2014 13:51:58 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44392 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750928AbaDPRn4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Apr 2014 13:43:56 -0400
+	id S1752120AbaDPRv5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Apr 2014 13:51:57 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3395D7CE32;
-	Wed, 16 Apr 2014 13:43:56 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AA8AD7B03F;
+	Wed, 16 Apr 2014 13:51:56 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1kY7bFcdlaBwqRM5bHCtq7JEN3Q=; b=DblMKg
-	AS2a3La+Sm86aNozdiFP9TTLzMOtyTyXjpkSIKqKKWUzcIk3oBuBYW8wftbF12Z+
-	wCWrHJHMQIIV3fBB013ihizdxikoP3mMspyExeMvCEhSEYf7RAQc2WNec3IixOKR
-	w2A7nlTWtOGqGTAlndoyktw+Zp2Ygj3g7sP4M=
+	:content-type; s=sasl; bh=DRAaRBewQWThfpkpa4tt9G4rQxs=; b=KvINxm
+	YKkLB4SDC/Yss28LmdzgWQ0+GCn4YYIEGSQGYBVgdT7XuLc8BVw3BZhkqifv0RKb
+	CZYej/iMb3Q6h6/bkXXhfBcKlJeQJLdHZR0PTCdsAomJIhCzFhBt4xC/B8sljxGN
+	Jc3A0esqjz4syRAZBYdDNISJCEATMskEpVDfc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ImHiJPiAUaPJPlluy+PsJMHFpOf1x11Z
-	ZDuSSgPX8xSsp1HBSBRSPNkmGIWYaciFhyR4E3EFWE1poAONkVLg1fhP92Hwt/qq
-	RKaatYP3hHo5cPnylmUdMwGwv0RBli1fUsXGLZwjxO7CUc3QIyffQ4EBRi569Dk/
-	ANLkkTZx+n8=
+	:content-type; q=dns; s=sasl; b=QEP47ww5WkXaYDAD9IEfJLZJ5jfZQB1p
+	NBi8MtAY0gjjMlTRuAfIY6NP5kLMg1x5hFm/D4FUZSkY+Ew3KK5qsKeMww+MUSlN
+	fUt41L3t7gsVvyniVQmzbtbbfdkTN5mXB92E3tsoZmFSFX5+j7aa99R8LPS1+YBh
+	NrDL7KiUyAA=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1B07A7CE31;
-	Wed, 16 Apr 2014 13:43:56 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8A9D57B03E;
+	Wed, 16 Apr 2014 13:51:56 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 74D137CE30;
-	Wed, 16 Apr 2014 13:43:54 -0400 (EDT)
-In-Reply-To: <CAP8UFD0w9xUwuk9UZ_mu=qvjtYN1r5skidweruM8t1KbfQpQyA@mail.gmail.com>
-	(Christian Couder's message of "Wed, 16 Apr 2014 14:27:03 +0200")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 213B67B03C;
+	Wed, 16 Apr 2014 13:51:55 -0400 (EDT)
+In-Reply-To: <b3f480af1c362c615ad9ce85296e2be2@bellandwhistle.net>
+	(alex@bellandwhistle.net's message of "Wed, 16 Apr 2014 09:33:33
+	-0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: ADEA130C-C58E-11E3-A60D-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: CC68DC7C-C58F-11E3-A1DD-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246368>
 
-Christian Couder <christian.couder@gmail.com> writes:
+alex@bellandwhistle.net writes:
 
-> If the input comes from stdin, then I agree that the command should be
-> a filter, so its output should be on stdout. But if the input comes
-> from files given as arguments, then I would say that the command
-> should behave as an editor and by default it should edit its input
-> file inplace.
-
-I do not see where that "should" comes from.  I am looking at this
-more from the angle of obtaining a useful building block, while you
-seem to be thinking of this as a specialized tool for a narrow set
-of specifkc tasks.
-
-Thinking of examples in "sort" and "sed", I would say "read multiple
-files, futz with the contents and spit out a single output stream"
-is the way people expect a command to operate without being told to
-operate in some other way.  Overwriting existing files should never
-be the default for safety---otherwise you would require people who
-want safety to do something like:
-
-    cp realfile tmp
-    futz tmp
-    verify tmp
-    mv tmp realfile
-
-On the other hand, a usual "sort/sed/cat"-like command, even without
-the "in-place edit" option, can be used as in-place with
-
-    mv realfile tmp
-    futz tmp >realfile
-
-easily, and is more flexible as a building block.  Of course, that
-does not rule out an option to work in-place (e.g. in a similar way
-to "sort -o file file", or "perl -i -e 'y/a-z/A-Z/' frotz nitfol").
-
-> Its input and output files should be different only if
-> it is given one or more special option,
+> Any clarification on the differences much appreciated:
 >
-> Otherwise the example you gave:
->
->     $ git format-patch -5 --cover-letter -o +my-series/ my-topic
->     $ git interpret-trailers "some args" ./+my-series/0*.patch
->
-> would result in having on stdout all the patches edited by "git
-> interpret-trailers".
+> http://stackoverflow.com/questions/23097368/git-ignore-vs-exclude-vs-assume-unchanged/23097509
 
-Didn't I mention that I do not mind "-i" already if in-place edit is
-desired?  Add "-i" to the command line arguments among "some args",
-and your complaints will disappear, no?
+Please don't force people to refer to external site.
+
+The .gitignore and .git/info/exclude are the two UIs to invoke the
+same mechanism.  In-tree .gitignore are to be shared among project
+members (i.e. everybody working on the project should consider the
+paths that match the ignore pattern in there as cruft).  On the
+other hand, .git/info/exclude is meant for personal ignore patterns
+(i.e. you, while working on the project, consider them as cruft).
+
+Assume-unchanged should not be abused for an ignore mechanism.  It
+is "I know my filesystem operations are slow.  I'll promise Git that
+I won't change these paths by making them with that bit---that way,
+Git does not have to check if I changed things in there every time I
+ask for 'git status' output".  It does not mean anything other than
+that.  Especially, it is *not* a promise by Git that Git will always
+consider these paths are unmodified---if Git can determine a path
+that is marked as assume-unchanged has changed without incurring
+extra lstat(2) cost, it reserves the right to report that the path
+*has been* modified (as a result, "git commit -a" is free to commit
+that change).
