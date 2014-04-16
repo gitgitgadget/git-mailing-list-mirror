@@ -1,95 +1,112 @@
 From: Brian Gesiak <modocache@gmail.com>
-Subject: Re: [PATCH] git-rebase: Print name of rev when using shorthand
-Date: Wed, 16 Apr 2014 17:19:41 +0900
-Message-ID: <CAN7MxmUikP6pVAj3cpDiSbFxawScTh5zKusPUe8SpkNbH=e6Aw@mail.gmail.com>
-References: <1397419474-31999-1-git-send-email-modocache@gmail.com>
-	<xmqqwqerogvr.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 16 10:19:50 2014
+Subject: [PATCH v2] git-rebase: Print name of rev when using shorthand
+Date: Wed, 16 Apr 2014 17:31:48 +0900
+Message-ID: <1397637108-51129-1-git-send-email-modocache@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Brian Gesiak <modocache@gmail.com>
+To: GIT Mailing-list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Apr 16 10:32:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WaL4O-0000Ql-Q0
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Apr 2014 10:19:49 +0200
+	id 1WaLGN-0006sf-O3
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Apr 2014 10:32:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751208AbaDPITo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Apr 2014 04:19:44 -0400
-Received: from mail-ig0-f173.google.com ([209.85.213.173]:65115 "EHLO
-	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751194AbaDPITm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Apr 2014 04:19:42 -0400
-Received: by mail-ig0-f173.google.com with SMTP id hl10so755266igb.12
-        for <git@vger.kernel.org>; Wed, 16 Apr 2014 01:19:41 -0700 (PDT)
+	id S1752197AbaDPIcD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Apr 2014 04:32:03 -0400
+Received: from mail-pd0-f176.google.com ([209.85.192.176]:48936 "EHLO
+	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752115AbaDPIb7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Apr 2014 04:31:59 -0400
+Received: by mail-pd0-f176.google.com with SMTP id r10so10509910pdi.35
+        for <git@vger.kernel.org>; Wed, 16 Apr 2014 01:31:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=gpPg+z1rbvRPc1nM0cWX/EgPI7KqvJvqXIOVeSNKya4=;
-        b=VNyADz8Z6xCaPgdGFVelYhdsI0HNbuEY9h1R8f2jUwHfm8ne5mfCoNQ2dpTgddqCad
-         lK9xVova2bU2bgJ/nSvHRF2Ho9/lus99qiXnrFLKutVjuIyY/k/C8192Lt7VYiOjB859
-         0ew9txlvZ9AcOTBl3a0a/t3hDB0c9qUWszg0IwE+cxHm9ve0eunnds23f3DcHb396g+A
-         OAPYSXe2kS4RiB7h6u0uQf/NGUjdIUvAb3DlC/vKrRqFNTpnyi/KIGefVASvKQ7avPPk
-         /nJgr7NRIfdKTtb7HbcXRMtlBLaPJ6K/dpelgmKHSjknv2vsEWbGLwL9/JjDJGGnwi6B
-         GbBg==
-X-Received: by 10.42.67.130 with SMTP id t2mr2691536ici.17.1397636381593; Wed,
- 16 Apr 2014 01:19:41 -0700 (PDT)
-Received: by 10.64.55.161 with HTTP; Wed, 16 Apr 2014 01:19:41 -0700 (PDT)
-In-Reply-To: <xmqqwqerogvr.fsf@gitster.dls.corp.google.com>
+        h=from:to:cc:subject:date:message-id;
+        bh=VsIjqqiunhbnDVddZHMBBLbBSE0bywYIxY01sEjbCM0=;
+        b=G6c5BVHAyk8iLIqHG9CupW1CDkoB9V3ue7lVyF0vPizsxPdg/HbTlzxg+gfnVKq9k9
+         1+Yadg9QnPc4JdNHTMHprp48lan9LXVKs8/L5yy64LW2BDiwzLPbLd6S8qXbN+ta9WRo
+         zzf2iDHs4bzRNgHujTxXBanJ3ovN7JOzZoUZIKrrGMPpVhGScmDcjlX7VFiwaURLQUjB
+         swRnx0VoP+MbnVnGGdEhTXiQADzOo59pgEJvJZEp9gsfl8BzFpRpXcQ87KWGR+DXO8dC
+         FTZzYf6/exR9h/lhWgRuT0vpoF2jzIPXbRxGk8WWIKqGurt2iPiEO9dzkxUkGmOTZL48
+         7OoA==
+X-Received: by 10.69.21.106 with SMTP id hj10mr7022827pbd.87.1397637119227;
+        Wed, 16 Apr 2014 01:31:59 -0700 (PDT)
+Received: from localhost.localdomain (p1157-ipbf5204marunouchi.tokyo.ocn.ne.jp. [118.8.132.157])
+        by mx.google.com with ESMTPSA id dy7sm107830474pad.9.2014.04.16.01.31.57
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Wed, 16 Apr 2014 01:31:58 -0700 (PDT)
+X-Mailer: git-send-email 1.9.0.259.gc5d75e8.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246318>
 
-Thank you for the feedback!
+The output from a successful invocation of the shorthand command
+"git rebase -" is something like "Fast-forwarded HEAD to @{-1}",
+which includes a relative reference to a revision. Other commands
+that use the shorthand "-", such as "git checkout -", typically
+display the symbolic name of the revision.
 
-> Imagine the case where there are more than one branches
-> whose tip points at the commit you came from.
-> name-rev will not be able to pick correctly which one to report.
+Change rebase to output the symbolic name of the revision when using
+the shorthand. For the example above, the new output is
+"Fast-forwarded HEAD to master", assuming "@{-1}" is a reference to
+"master".
 
-I see. Yes, you're exactly right; the following demonstrates
-the problem:
+- Use "git rev-parse" to retreive the name of the rev.
+- Update the tests in light of this new behavior.
 
-$ git checkout -b xylophone master
-$ git checkout -b aardvark master
-$ git name-rev --name-only @{-1} # I'd want "xylophone", but this
-outputs "aardvark"
+Requested-by: John Keeping <john@keeping.me.uk>
+Signed-off-by: Brian Gesiak <modocache@gmail.com>
+---
+ git-rebase.sh     | 8 +++++++-
+ t/t3400-rebase.sh | 4 +---
+ 2 files changed, 8 insertions(+), 4 deletions(-)
 
-So it appears name-rev is not up to the task here.
-
-> I think you would want to use something like:
->
->         upstream_name=$(git rev-parse --symbolic-full-name @{-1})
->         if test -n "$upstream"
->         then
->                 upstream_name=${upstream_name#refs/heads/}
->         else
->                 upstream_name="@{-1}"
->         fi
->
-> if the change is to be made at that point in the code.
-
-I agree, I will re-roll the patch to use this approach.
-
-> I also wonder if "git rebase @{-1}" deserve a similar translation
-> like you are giving "git rebase -".
-
-Personally, I've been using the "-" shorthand with "git checkout"
-for a year or so, but only learned about "@{-1}" a few months ago.
-I think those who use "@{-1}" are familiar enough with the concept
-that they don't need to have the reference translated to a symbolic
-full name. Users familiar with "-" might not be aware of "@{-1}",
-however, so I'd prefer not to output it as we are currently.
-
-Furthermore, were we to translate "@{-1}", does that mean we
-should also translate "@{-2}" or prior? I don't think that's the case,
-but then only translating "@{-1}" would seem inconsistent.
-From that point of view I'd prefer to simply translate "-",
-not "@{-1}".
-
-- Brian Gesiak
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 2c75e9f..42d34a6 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -455,7 +455,13 @@ then
+ 	*)	upstream_name="$1"
+ 		if test "$upstream_name" = "-"
+ 		then
+-			upstream_name="@{-1}"
++			upstream_name=`git rev-parse --symbolic-full-name @{-1}`
++			if test -n "$upstream_name"
++			then
++				upstream_name=${upstream_name#refs/heads/}
++			else
++				upstream_name="@{-1}"
++			fi
+ 		fi
+ 		shift
+ 		;;
+diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
+index 80e0a95..2b99940 100755
+--- a/t/t3400-rebase.sh
++++ b/t/t3400-rebase.sh
+@@ -91,7 +91,7 @@ test_expect_success 'rebase from ambiguous branch name' '
+ test_expect_success 'rebase off of the previous branch using "-"' '
+ 	git checkout master &&
+ 	git checkout HEAD^ &&
+-	git rebase @{-1} >expect.messages &&
++	git rebase master >expect.messages &&
+ 	git merge-base master HEAD >expect.forkpoint &&
+ 
+ 	git checkout master &&
+@@ -100,8 +100,6 @@ test_expect_success 'rebase off of the previous branch using "-"' '
+ 	git merge-base master HEAD >actual.forkpoint &&
+ 
+ 	test_cmp expect.forkpoint actual.forkpoint &&
+-	# the next one is dubious---we may want to say "-",
+-	# instead of @{-1}, in the message
+ 	test_i18ncmp expect.messages actual.messages
+ '
+ 
+-- 
+1.9.0.259.gc5d75e8.dirty
