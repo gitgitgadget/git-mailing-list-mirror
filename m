@@ -1,65 +1,88 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/6] compat/regex/regcomp.c: reduce scope of variables
-Date: Wed, 16 Apr 2014 09:49:30 -0700
-Message-ID: <20140416164930.GP3912@google.com>
-References: <1397640811-17719-1-git-send-email-gitter.spiros@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: wrong handling of text git attribute leading to files incorrectly reported as modified
+Date: Wed, 16 Apr 2014 09:50:19 -0700
+Message-ID: <xmqqob01i5h0.fsf@gitster.dls.corp.google.com>
+References: <E8A9F28E-FF68-4899-B02C-DB7A2C66F38A@ammeter.ch>
+	<534852D4.5070608@web.de>
+	<D552B854-59FB-406A-8CDE-3A1269CD0F6E@ammeter.ch>
+	<CANUGeEYoS+t57jfpEoZE-2u_cD1uOD5pdp=yF--Rhpb9z91qxQ@mail.gmail.com>
+	<xmqqob02jnhk.fsf@gitster.dls.corp.google.com>
+	<B3DF4E4A-F740-4588-AFD5-74D99E5299F5@ammeter.ch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Elia Pinto <gitter.spiros@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 16 18:49:51 2014
+Cc: Brandon McCaig <bamccaig@gmail.com>,
+	Torsten =?utf-8?Q?B=C3=B6gershau?= =?utf-8?Q?sen?= 
+	<tboegi@web.de>, git@vger.kernel.org
+To: Frank Ammeter <git@ammeter.ch>
+X-From: git-owner@vger.kernel.org Wed Apr 16 18:50:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WaT1t-0005L8-46
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Apr 2014 18:49:45 +0200
+	id 1WaT2i-00077u-Tf
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Apr 2014 18:50:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751725AbaDPQti (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Apr 2014 12:49:38 -0400
-Received: from mail-pb0-f43.google.com ([209.85.160.43]:50498 "EHLO
-	mail-pb0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751104AbaDPQtd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Apr 2014 12:49:33 -0400
-Received: by mail-pb0-f43.google.com with SMTP id um1so11107089pbc.30
-        for <git@vger.kernel.org>; Wed, 16 Apr 2014 09:49:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=pmDgt+KGiqpgz3RAypKeQTAO/Kap5gVL82IC8yTEYzA=;
-        b=VPep2nXIN1rHMMEpMPhqmmr92zy+ImeyqfdefC6lxekBeDWAtyXTwLUFll3BqcX8wd
-         NP9MTecZnw7rgkY28Qi5CQ8u1QXsaPaXybkfrgVfGk39JKju/tMozfQAlh5xEkelO4z5
-         95XIP6mDKvLI65K0IRz+7DrKVWaZ4ULdqBHeoltux9RSRh04yOabaR2azc/SFif4wbjc
-         QrZ9xLgT0wZSBS4DeXjzdoqinRYGUFsNGbt0q/i10fcy/QextL+nGCqaBa50+i3E+gqF
-         VJhiBx3WsOSdNEorljDOY0BBG2f0fpweJio0lh9hLk8kZeC7pNV4W/a7pFKUtxma3HB6
-         Qo9A==
-X-Received: by 10.68.220.137 with SMTP id pw9mr9771712pbc.24.1397666973135;
-        Wed, 16 Apr 2014 09:49:33 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id it4sm48044048pbd.48.2014.04.16.09.49.32
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 16 Apr 2014 09:49:32 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1397640811-17719-1-git-send-email-gitter.spiros@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754400AbaDPQu2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Apr 2014 12:50:28 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34618 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754391AbaDPQuX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Apr 2014 12:50:23 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EBA687BF45;
+	Wed, 16 Apr 2014 12:50:22 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=77zOQcWhIkaryO+o/WAxMFGr20w=; b=Vc24Qv
+	iXdaY5D6caQqGFtxD+OGlL7DtadVq6tZ0leQ4dHTFShw3RxwCRKwmR8B11XgC6pi
+	QGcEZ8jS/xbM1RBOxS2S8Lqgq72CJ2qasbP8M7bk/bLzOk0Lz6u2szwqZshMj4Hk
+	MomPKEcQRUSfriEtvfu9NCrhE2sx3PJV67ZnM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=eoQm6APdbSDoLiwHKb7NRrjnkJOixz9m
+	VF5N/dih7xPydb6CX/HrtBC/ROPPO3tQHmX3pAo4hlcW5Dhcd6s+2zV68EOH45rH
+	NMyARuq3ZMcummzAeDKo4u6b75mIBKWbcBGTS4tZmjVNWwTkePLETIOJgQEeKmjX
+	Laho/mdLJ1Q=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D3EF87BF44;
+	Wed, 16 Apr 2014 12:50:22 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2A52C7BF43;
+	Wed, 16 Apr 2014 12:50:21 -0400 (EDT)
+In-Reply-To: <B3DF4E4A-F740-4588-AFD5-74D99E5299F5@ammeter.ch> (Frank
+	Ammeter's message of "Wed, 16 Apr 2014 13:49:02 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 32A21746-C587-11E3-B970-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246343>
 
-Hi,
+Frank Ammeter <git@ammeter.ch> writes:
 
-Elia Pinto wrote:
+> Am 15.04.2014 um 23:23 schrieb Junio C Hamano <gitster@pobox.com>:
+>
+>> Brandon McCaig <bamccaig@gmail.com> writes:
+>> 
+>>> That is for your benefit, and for easily sharing that configuration
+>>> with collaborators. Git only cares that the file exists in your
+>>> working tree at run-time.
+>> 
+>> It is a lot more than "for sharing".  If you made .gitignore only
+>> effective after it gets committed, you cannot test your updated
+>> version of .gitignore is correct before committing the change.
+>
+> Ok, I can follow that logic for .gitignore, but I was talking about .gitattributes...
 
-> [Subject: compat/regex/regcomp.c: reduce scope of variables]
+They are conceptually the same thing, so if you can follow the logic
+for .gitignore, you already can follow the logic for .gitattributes.
 
-gnulib regex is still maintained upstream and available under the
-LGPL 2.1+.  Shouldn't we make the change there and reimport to
-make it easier to pull in later changes?
-
-Thanks,
-Jonathan
+The only two readons we have a separate .gitignore are because other
+SCMs had a similar mechanism, and because it came before attributes.
+If we didn't have these two constraints, it would have made a lot
+more sense to express "this path is to be ignored" by setting
+"ignored" attribute.
