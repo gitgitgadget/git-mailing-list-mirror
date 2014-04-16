@@ -1,51 +1,55 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 010/14] git-resolve.sh: use the $( ... ) construct for command substitution
-Date: Wed, 16 Apr 2014 10:29:54 -0700
-Message-ID: <1397669398-25410-10-git-send-email-gitter.spiros@gmail.com>
+Subject: =?UTF-8?q?=5BPATCH=20014/14=5D=20t9362-mw-to-git-utf8=2Esh=3A=20use=20the=20=24=28=20=2E=2E=2E=20=29=20construct=20for=20command=20substitution?=
+Date: Wed, 16 Apr 2014 10:29:58 -0700
+Message-ID: <1397669398-25410-14-git-send-email-gitter.spiros@gmail.com>
 References: <1397669398-25410-1-git-send-email-gitter.spiros@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 16 19:31:27 2014
+X-From: git-owner@vger.kernel.org Wed Apr 16 19:31:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WaTgD-0006lh-SU
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Apr 2014 19:31:26 +0200
+	id 1WaTgN-00079G-QY
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Apr 2014 19:31:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755325AbaDPRaW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1754752AbaDPRbU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Apr 2014 13:31:20 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:42437 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755331AbaDPRaW (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 16 Apr 2014 13:30:22 -0400
-Received: from mail-pb0-f44.google.com ([209.85.160.44]:40885 "EHLO
-	mail-pb0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755085AbaDPRaS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Apr 2014 13:30:18 -0400
-Received: by mail-pb0-f44.google.com with SMTP id rp16so11114149pbb.17
-        for <git@vger.kernel.org>; Wed, 16 Apr 2014 10:30:17 -0700 (PDT)
+Received: by mail-pa0-f42.google.com with SMTP id fb1so11260872pad.1
+        for <git@vger.kernel.org>; Wed, 16 Apr 2014 10:30:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Y1vr/Zr6HAhDGtXukyL4FO4oA7rws0H1MlHU/3Cry7U=;
-        b=T/lHO8hCy7NS9BeRcUlxic7DrEIDNfI4MP+kRCRMfBGAS22hX3wyaoDkGDPZHfwsM7
-         AmHS1rnUuHSI/CPUDJArua0iQqzU3edivBlR0PhxU+2+McZUs2l02BXpiG9eQTgP7p2A
-         0g7yIZp9tqLiqJqDwHmdAs573DwYB7WLmfDJ8lnQ1F9q+3JvVldFiY71U52heo/48TZw
-         I0qNd8OVdIxCBeXcl/7ZCIB10T/vA+qnv0yE6frxYvMwAB1tROrmXL3aBFDzSpBbS0Bh
-         HDnhh078v8u3YaMk2BDKC+jjm/5tOqV83G/++KThkIteUwSRErbV1oUHm0f9gBZ/K36G
-         pjIQ==
-X-Received: by 10.66.240.4 with SMTP id vw4mr9967571pac.26.1397669417622;
-        Wed, 16 Apr 2014 10:30:17 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=tm+4BVPnLK6LE7PenpxxkbeX+peZwDdmjWYjmYGO2Uw=;
+        b=w+FSK0guS1vywrHiEoSBtPI6D2sdGgpp4IqhVF/dq4rwbM3yPc/TOG/foLmuY2oUpM
+         fKm3ngTX4XyOoQUAcdD4W6s7CP9A98nRLu0M0DcI9H1EBJf+kstQk6DdyD+1k0zrue5j
+         eUgiWfRisWNcoKQNtORdu2Hq0eVdYFHwONZGgTdhdo8vIxSZnHifKTdQ6dyIWm1G43Qo
+         AflRo2GOgob6etvYpVINHUbYOuBQo4EAt2vfgDr25vZ524FNO7Xw5ufcElPVuP7sRWmX
+         sxClzij/0n/GrO5mKGSu6u1+yvhpkZA3Ck5017OWzqwb6kxASANVEFPwDQDsXmiO3ss7
+         Wkdg==
+X-Received: by 10.66.189.226 with SMTP id gl2mr9901964pac.65.1397669421939;
+        Wed, 16 Apr 2014 10:30:21 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id z3sm113974244pas.15.2014.04.16.10.30.16
+        by mx.google.com with ESMTPSA id z3sm113974244pas.15.2014.04.16.10.30.21
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 16 Apr 2014 10:30:16 -0700 (PDT)
+        Wed, 16 Apr 2014 10:30:21 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1397669398-25410-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246358>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246359>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -67,21 +71,25 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- contrib/examples/git-resolve.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ contrib/mw-to-git/t/t9362-mw-to-git-utf8.sh |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/contrib/examples/git-resolve.sh b/contrib/examples/git-resolve.sh
-index 8f98142..48d0fc9 100755
---- a/contrib/examples/git-resolve.sh
-+++ b/contrib/examples/git-resolve.sh
-@@ -75,7 +75,7 @@ case "$common" in
- 		GIT_INDEX_FILE=$G git read-tree -m $c $head $merge \
- 			2>/dev/null || continue
- 		# Count the paths that are unmerged.
--		cnt=`GIT_INDEX_FILE=$G git ls-files --unmerged | wc -l`
-+		cnt=$(GIT_INDEX_FILE=$G git ls-files --unmerged | wc -l)
- 		if test $best_cnt -le 0 -o $cnt -le $best_cnt
- 		then
- 			best=$c
--- 
+diff --git a/contrib/mw-to-git/t/t9362-mw-to-git-utf8.sh b/contrib/mw-t=
+o-git/t/t9362-mw-to-git-utf8.sh
+index 37021e2..6b0dbda 100755
+--- a/contrib/mw-to-git/t/t9362-mw-to-git-utf8.sh
++++ b/contrib/mw-to-git/t/t9362-mw-to-git-utf8.sh
+@@ -70,8 +70,8 @@ test_expect_success 'The shallow option works with ac=
+cents' '
+ 	test_path_is_file mw_dir_4/Main_Page.mw &&
+ 	(
+ 		cd mw_dir_4 &&
+-		test `git log --oneline N=C3=A9o=C3=A0.mw | wc -l` -eq 1 &&
+-		test `git log --oneline Main_Page.mw | wc -l ` -eq 1
++		test $(git log --oneline N=C3=A9o=C3=A0.mw | wc -l) -eq 1 &&
++		test $(git log --oneline Main_Page.mw | wc -l ) -eq 1
+ 	) &&
+ 	wiki_check_content mw_dir_4/N=C3=A9o=C3=A0.mw N=C3=A9o=C3=A0 &&
+ 	wiki_check_content mw_dir_4/Main_Page.mw Main_Page
+--=20
 1.7.10.4
