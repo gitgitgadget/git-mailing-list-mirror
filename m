@@ -1,67 +1,91 @@
-From: Brian Gesiak <modocache@gmail.com>
-Subject: [l10n] date: Note for translators not included in .po files
-Date: Thu, 17 Apr 2014 07:51:57 +0900
-Message-ID: <CAN7MxmV5tzvGTTG+aOL73fLhbXc7YeOWvYwLkMyad0=mvffMHQ@mail.gmail.com>
+From: alex@bellandwhistle.net
+Subject: Re: gitignore vs. exclude vs =?UTF-8?Q?assume-unchanged=3F?=
+Date: Wed, 16 Apr 2014 16:07:57 -0700
+Message-ID: <dee7ee673c8c4d81fb5aaecea25e9709@bellandwhistle.net>
+References: <b3f480af1c362c615ad9ce85296e2be2@bellandwhistle.net>
+ <xmqqy4z5go1y.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: GIT Mailing-list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 17 00:52:07 2014
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 17 01:08:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WaYgU-0001Cn-Hx
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Apr 2014 00:52:02 +0200
+	id 1WaYwA-0000Eh-Ao
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Apr 2014 01:08:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756931AbaDPWv6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Apr 2014 18:51:58 -0400
-Received: from mail-ie0-f181.google.com ([209.85.223.181]:60214 "EHLO
-	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751748AbaDPWv5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Apr 2014 18:51:57 -0400
-Received: by mail-ie0-f181.google.com with SMTP id tp5so10570861ieb.26
-        for <git@vger.kernel.org>; Wed, 16 Apr 2014 15:51:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=jwR8RlS4mDeGSAdZ7XMaXyt+mdOXejru9aya+x2mlA8=;
-        b=oNIAyqQbt5B5bTlImKfXxG/UnwmxzC1XBoOXATfTMwcKT1lKCJ3o2vZvEhzIlbSbY0
-         Bongj+mtegnABKvTLy4BU5MB6ofFNm0fU/d7JpITU5PhMb+kgtjCIXVMVZjIY0X5RGwx
-         j/2BeBb2DSbC0zf663z8WhIGyC8Ci8YkVUPOQMOCfCrvo1UnRim1ppjFL0gR6NFRudpD
-         x7aqLm8WFud4aIJuGEQaT3J7/0G89b6weRRVtt7dde/Tmy581YRNPDQvweQQUxbrN15a
-         eQT1CXyMuzLMjaW904i2CW0sJhHbcRnbncDotKe+9mv+J4rgZ1IcNGwLEUy2Fd/r/FF4
-         IDVw==
-X-Received: by 10.50.138.132 with SMTP id qq4mr13057469igb.8.1397688717313;
- Wed, 16 Apr 2014 15:51:57 -0700 (PDT)
-Received: by 10.64.55.161 with HTTP; Wed, 16 Apr 2014 15:51:57 -0700 (PDT)
+	id S1161401AbaDPXIJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Apr 2014 19:08:09 -0400
+Received: from selene.fortifiedserver.net ([98.158.151.224]:37954 "EHLO
+	selene.fortifiedserver.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1161134AbaDPXIB (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Apr 2014 19:08:01 -0400
+Received: from localhost.uu.net ([127.0.0.1]:55607 helo=selene.fortifiedserver.net)
+	by selene.fortifiedserver.net with esmtpa (Exim 4.82)
+	(envelope-from <alex@bellandwhistle.net>)
+	id 1WaYvt-0005BC-9U; Wed, 16 Apr 2014 16:07:57 -0700
+In-Reply-To: <xmqqy4z5go1y.fsf@gitster.dls.corp.google.com>
+X-Sender: alex@bellandwhistle.net
+User-Agent: Roundcube Webmail/0.9.5
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - selene.fortifiedserver.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - bellandwhistle.net
+X-Get-Message-Sender-Via: selene.fortifiedserver.net: authenticated_id: alex@bellandwhistle.net
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246391>
 
-A note for translators in date.c is not included in git.pot.
-Namely, the following note from date.c:147 is not included
-(https://github.com/git/git/blob/v1.9.2/date.c#L147):
+On 2014-04-16 10:51, Junio C Hamano wrote:
+> alex@bellandwhistle.net writes:
+> 
+>> Any clarification on the differences much appreciated:
+>> 
+>> http://stackoverflow.com/questions/23097368/git-ignore-vs-exclude-vs-assume-unchanged/23097509
+> 
+> Please don't force people to refer to external site.
+> 
+> The .gitignore and .git/info/exclude are the two UIs to invoke the
+> same mechanism.  In-tree .gitignore are to be shared among project
+> members (i.e. everybody working on the project should consider the
+> paths that match the ignore pattern in there as cruft).  On the
+> other hand, .git/info/exclude is meant for personal ignore patterns
+> (i.e. you, while working on the project, consider them as cruft).
+> 
+> Assume-unchanged should not be abused for an ignore mechanism.  It
+> is "I know my filesystem operations are slow.  I'll promise Git that
+> I won't change these paths by making them with that bit---that way,
+> Git does not have to check if I changed things in there every time I
+> ask for 'git status' output".  It does not mean anything other than
+> that.  Especially, it is *not* a promise by Git that Git will always
+> consider these paths are unmodified---if Git can determine a path
+> that is marked as assume-unchanged has changed without incurring
+> extra lstat(2) cost, it reserves the right to report that the path
+> *has been* modified (as a result, "git commit -a" is free to commit
+> that change).
 
-/* TRANSLATORS: "%s" is "<n> years" */
+Thanks June. Great to hear this authoritatively.
 
-This is a very useful note for translators (in fact, I think
-the zh_CN translation for date.c:149 might be a little off
-because this note was not included. My Mandarin is rusty,
-but I believe "<n> years, <m> months ago" should be expressed
-without a comma).
+IMHO your very helpful explanation about typical use cases, the purpose 
+of 'exclude, and assume-unchanged not being a "promise" is missing from 
+the docs, or at least not obviously present:
 
-According to po/README, the l10n coordinator is responsible
-for updating the git.pot file. Would it be possible to update it based
-on v1.9.2 and include the above comment?
+http://git-scm.com/docs
 
-By the way, I am trying to organize contributors to produce a Japanese
-localization for Core Git. Currently we have plenty of interest but
-only two contributors. If you or anyone you know would like to contribute
-please visit the repository here: https://github.com/modocache/git-po-ja
+In particular, 'exclude' is spottily documented. I realize the docs are 
+structured strictly as an API reference, but it would be great to see a 
+comparison of ignore techniques spelled out. FWIW I asked several people 
+I think of as experts and none of them felt sure of their answer. :)
 
-Thanks!
-
-- Brian Gesiak
+thanks again.
