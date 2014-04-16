@@ -1,94 +1,133 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Update SVN.pm
-Date: Wed, 16 Apr 2014 12:13:21 -0700
-Message-ID: <xmqq61m9gka6.fsf@gitster.dls.corp.google.com>
-References: <20140416141605.GA9692@camelia.ucw.cz>
+Subject: Re: [PATCH v4 0/3] Make update refs more atomic
+Date: Wed, 16 Apr 2014 12:31:13 -0700
+Message-ID: <xmqq1twxgjge.fsf@gitster.dls.corp.google.com>
+References: <1397500163-7617-1-git-send-email-sahlberg@google.com>
+	<534CD376.7080108@alum.mit.edu>
+	<CAL=YDWmm1pDtNuibs5CrPTDkaxT9PUvZscXFicoNsNpXVXJv1A@mail.gmail.com>
+	<534D9741.3010404@alum.mit.edu>
+	<CAL=YDW=g=jkm4yhBvnZXSvLLm-6ZGhJORKv_evg66v0U=E71FA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Stepan Kasal <kasal@ucw.cz>
-X-From: git-owner@vger.kernel.org Wed Apr 16 21:13:32 2014
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Ronnie Sahlberg <sahlberg@google.com>
+X-From: git-owner@vger.kernel.org Wed Apr 16 21:31:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WaVH1-0000vx-S7
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Apr 2014 21:13:32 +0200
+	id 1WaVYJ-0003nr-DO
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Apr 2014 21:31:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755921AbaDPTN0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Apr 2014 15:13:26 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58534 "EHLO
+	id S1751373AbaDPTbS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Apr 2014 15:31:18 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57606 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751307AbaDPTNZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Apr 2014 15:13:25 -0400
+	id S1751194AbaDPTbR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Apr 2014 15:31:17 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 76D767D5CA;
-	Wed, 16 Apr 2014 15:13:25 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 149837DA84;
+	Wed, 16 Apr 2014 15:31:17 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=HfcLWH1/nu+dbAQDtlRDQQWRz9I=; b=oS1YgK
-	FCXRKTOimjJDWORnyrYn73rcVVK0abkD/bNrChbymkTY7M4xeMZ33Ycs9TvVtd9D
-	9e+AHbQuqEhUGV+SdsxfIlrozG3vlqQDR4bON/kojASOHB3Krj8yXvpQbE0yMNCA
-	uPZmPJlHN0Vtw4yC17CTKK3PExcAPm49mM9vs=
+	:content-type; s=sasl; bh=rCSR4CRxfYNpZe0MkbGqeGKoJ6Y=; b=bSu0cA
+	Y+DJO5OSIeqtSzVZk65YE9hb5trnbEOD4J/t41VdqqqwQI1Y1Lq/NjAUzShd05OT
+	4NfEA1lBu/3zbjMqS5XfrloXJ1T5Ms9vM02rttKzJASoRl1+UFpwn/cUSMixaOWQ
+	ipOjsope8nyyJkrwJypruibOYXbcTBZAwrgO4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uP+s45dPiOxzj1om4NhFERVXs212jvni
-	Vn8DKC6oyvtuE3dW6O9Oikw2BoaZX4X0wpbBf151D+yxCgznciXliWy+fdPkdkLk
-	ei9aI9qPXg9mmyvXoym/chDZMl5vizAzW4LxC8abnNk1DIQEyIOv4vIdON+C0YB9
-	84KTtyIZNn0=
+	:content-type; q=dns; s=sasl; b=q7+jn3EhEGgo0rDnAtCT8wORQR3d+7vR
+	H2lEThg7B2VsQGFur82eT1W9HUBr30VSvLWyRTWICrG9+0xpvM9scaRxoKqAC3RH
+	53U60p/vohOMVDkrqph2s+IT7We9p3KZ5jC56zvcDQuVMirVO89AikIEz8rC/nl6
+	UnaP/uEz5LA=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 60D2C7D5C9;
-	Wed, 16 Apr 2014 15:13:25 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F2D297DA83;
+	Wed, 16 Apr 2014 15:31:16 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F36917D5C8;
-	Wed, 16 Apr 2014 15:13:22 -0400 (EDT)
-In-Reply-To: <20140416141605.GA9692@camelia.ucw.cz> (Stepan Kasal's message of
-	"Wed, 16 Apr 2014 16:16:05 +0200")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 711897DA80;
+	Wed, 16 Apr 2014 15:31:15 -0400 (EDT)
+In-Reply-To: <CAL=YDW=g=jkm4yhBvnZXSvLLm-6ZGhJORKv_evg66v0U=E71FA@mail.gmail.com>
+	(Ronnie Sahlberg's message of "Wed, 16 Apr 2014 10:11:21 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 2E66EC74-C59B-11E3-ACAF-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: AD0C1CBE-C59D-11E3-8B31-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246378>
 
-Stepan Kasal <kasal@ucw.cz> writes:
+Ronnie Sahlberg <sahlberg@google.com> writes:
 
-> From: RomanBelinsky <belinsky.roman@gmail.com>
-> Date: Tue, 11 Feb 2014 18:23:02 +0200
+> Currently any locking of refs in a transaction only happens during the commit
+> phase. I think it would be useful to have a mechanism where you could
+> optionally take out locks for the involved refs early during the transaction.
+> So that simple callers could continue using
+> ref_transaction_begin()
+> ref_transaction_create|update|delete()*
+> ref_transaction_commit()
 >
-> fix parsing error for dates like:
-> 2014-01-07T5:58:36.048176Z
-> previous regex can parse only:
-> 2014-01-07T05:58:36.048176Z
-> reproduced in my svn repository during conversion.
-
-Interesting.  What other strange forms can they record in their
-repositories, I have to wonder.  Can they do
-
-    2014-01-07T5:8:6.048176Z
-
-for example?  I am wondering if it is simpler and less error prone
-to turn all these "we only accept two digits" into "\d+" not only
-for the hour part but also minute and second parts.
-
-> Signed-off-by: Stepan Kasal <kasal@ucw.cz>
-> ---
->  perl/Git/SVN.pm | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> but, if a caller such as walker_fetch() could opt to do
+> ref_transaction_begin()
+> ref_transaction_lock_ref()*
+> ...do stuff...
+> ref_transaction_create|update|delete()*
+> ref_transaction_commit()
 >
-> diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
-> index a59564f..09cff13 100644
-> --- a/perl/Git/SVN.pm
-> +++ b/perl/Git/SVN.pm
-> @@ -1321,7 +1321,7 @@ sub get_untracked {
->  sub parse_svn_date {
->  	my $date = shift || return '+0000 1970-01-01 00:00:00';
->  	my ($Y,$m,$d,$H,$M,$S) = ($date =~ /^(\d{4})\-(\d\d)\-(\d\d)T
-> -	                                    (\d\d)\:(\d\d)\:(\d\d)\.\d*Z$/x) or
-> +	                                    (\d\d?)\:(\d\d)\:(\d\d)\.\d*Z$/x) or
->  	                                 croak "Unable to parse date: $date\n";
->  	my $parsed_date;    # Set next.
+> In this second case ref_transaction_commit() would only take out any locks that
+> are missing during the 'lock the refs" loop.
+>
+> Suggestion 1: Add a ref_transaction_lock_ref() to allow locking a ref
+> early during
+> a transaction.
+
+Hmph.
+
+I am not sure if that is the right way to go, or instead change all
+create/update/delete to take locks without adding a new primitive.
+
+> A second idea is to change the signatures for
+> ref_transaction_create|update|delete()
+> slightly and allow them to return errors early.
+> We can check for things like add_update() failing, check that the
+> ref-name looks sane,
+> check some of the flags, like if has_old==true then old sha1 should
+> not be NULL or 0{40}, etc.
+>
+> Additionally for robustness, if any of these functions detect an error
+> we can flag this in the
+> transaction structure and take action during ref_transaction_commit().
+> I.e. if a ref_transaction_update had a hard failure, do not allow
+> ref_transaction_commit()
+> to succeed.
+>
+> Suggestion 2: Change ref_transaction_create|delete|update() to return an int.
+> All callers that use these functions should check the function for error.
+
+I think that is a very sensible thing to do.
+
+The details of determining "this cannot possibly succeed" may change
+(for example, if we have them take locks at the point of
+create/delete/update, a failure to lock may count as an early
+error).
+
+Is there any reason why this should be conditional (i.e. you said
+"allow them to", implying that the early failure is optional)?
+
+> Suggestion 3: remove the qsort and check for duplicates in
+> ref_transaction_commit()
+> Since we are already taking out a lock for each ref we are updating
+> during the transaction
+> any duplicate refs will fail the second attempt to lock the same ref which will
+> implicitly make sure that a transaction will not change the same ref twice.
+
+I do not know if I care about the implementation detail of "do we
+have a unique set of update requests?".  While I do not see a strong
+need for one transaction to touch the same ref twice (e.g. create to
+point at commit A and update it to point at commit B), I do not see
+why we should forbid such a use in the future.
+
+Just some of my knee-jerk reactions.
