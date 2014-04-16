@@ -1,109 +1,95 @@
-From: Kevin Bracey <kevin@bracey.fi>
-Subject: Re: [PATCH] Unicode: update of combining code points
-Date: Wed, 16 Apr 2014 13:51:43 +0300
-Message-ID: <534E60BF.5020602@bracey.fi>
-References: <201404072130.15686.tboegi@web.de> <alpine.DEB.2.00.1404152009020.29301@ds9.cixit.se> <534E0B84.6070602@web.de>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: What's cooking in git.git (Apr 2014, #03; Fri, 11)
+Date: Wed, 16 Apr 2014 12:31:55 +0100
+Message-ID: <534E6A2B.5060903@ramsay1.demon.co.uk>
+References: <xmqq1tx3qzel.fsf@gitster.dls.corp.google.com> <534985F3.6060501@ramsay1.demon.co.uk> <xmqqeh0ylext.fsf@gitster.dls.corp.google.com> <CACsJy8C_WU_-73+VF0KV1X1BLDSWH_C35jPjMcrjR2OW3s9z-Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Peter Krefting <peter@softwolves.pp.se>, git@vger.kernel.org
-To: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Wed Apr 16 13:08:36 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 16 13:32:09 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WaNhi-0008PF-Ol
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Apr 2014 13:08:35 +0200
+	id 1WaO4W-0005aR-JH
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Apr 2014 13:32:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755636AbaDPLI3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Apr 2014 07:08:29 -0400
-Received: from 1.mo68.mail-out.ovh.net ([46.105.41.146]:52203 "EHLO
-	mo68.mail-out.ovh.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755625AbaDPLI2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Apr 2014 07:08:28 -0400
-X-Greylist: delayed 600 seconds by postgrey-1.27 at vger.kernel.org; Wed, 16 Apr 2014 07:08:28 EDT
-Received: from mail432.ha.ovh.net (b6.ovh.net [213.186.33.56])
-	by mo68.mail-out.ovh.net (Postfix) with SMTP id 40D93FFC872
-	for <git@vger.kernel.org>; Wed, 16 Apr 2014 12:51:47 +0200 (CEST)
-Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
-	by b0.ovh.net with SMTP; 16 Apr 2014 12:51:49 +0200
-Received: from 62-183-157-30.bb.dnainternet.fi (HELO ?192.168.1.10?) (kevin@bracey.fi@62.183.157.30)
-  by ns0.ovh.net with SMTP; 16 Apr 2014 12:51:48 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.0; WOW64; rv:17.0) Gecko/20130215 Thunderbird/17.0.3
-In-Reply-To: <534E0B84.6070602@web.de>
-X-Ovh-Tracer-Id: 6972416648795099280
-X-Ovh-Remote: 62.183.157.30 (62-183-157-30.bb.dnainternet.fi)
-X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
-X-OVH-SPAMSTATE: OK
-X-OVH-SPAMSCORE: -100
-X-OVH-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeejvddrtdduucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-X-Spam-Check: DONE|U 0.5/N
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeejvddrtdduucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+	id S1755920AbaDPLcB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Apr 2014 07:32:01 -0400
+Received: from mdfmta010.mxout.tch.inty.net ([91.221.169.51]:52989 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755575AbaDPLcA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Apr 2014 07:32:00 -0400
+Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta010.tch.inty.net (Postfix) with ESMTP id 7F517400EB6;
+	Wed, 16 Apr 2014 12:31:57 +0100 (BST)
+Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta010.tch.inty.net (Postfix) with ESMTP id 2B57A400E8A;
+	Wed, 16 Apr 2014 12:31:57 +0100 (BST)
+Received: from [192.168.254.7] (unknown [80.176.147.220])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mdfmta010.tch.inty.net (Postfix) with ESMTP;
+	Wed, 16 Apr 2014 12:31:56 +0100 (BST)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
+In-Reply-To: <CACsJy8C_WU_-73+VF0KV1X1BLDSWH_C35jPjMcrjR2OW3s9z-Q@mail.gmail.com>
+X-MDF-HostID: 19
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246329>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246330>
 
-On 16/04/2014 07:48, Torsten B=C3=B6gershausen wrote:
-> On 15.04.14 21:10, Peter Krefting wrote:
->> Torsten B=C3=B6gershausen:
+On 16/04/14 00:18, Duy Nguyen wrote:
+> On Tue, Apr 15, 2014 at 11:45 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
 >>
->>> diff --git a/utf8.c b/utf8.c
->>> index a831d50..77c28d4 100644
->>> --- a/utf8.c
->>> +++ b/utf8.c
->> Is there a script that generates this code from the Unicode database=
- files, or did you hand-update it?
+>>> On 11/04/14 23:22, Junio C Hamano wrote:
+>>> [...]
+>>>> [New Topics]
+>>>>
+>>>> * nd/index-pack-one-fd-per-thread (2014-04-09) 1 commit
+>>>>  - index-pack: work around thread-unsafe pread()
+>>>>
+>>>>  Enable threaded index-pack on platforms without thread-unsafe
+>>>>  pread() emulation.
+>>>>
+>>>>  Will merge to 'next' and keep it there for the remainder of the cycle.
+>>>
+>>> The commit message for commit 512ebe5d ("index-pack: work around
+>>> thread-unsafe pread()", 25-03-2014) is a little misleading.
 >>
-> Some of the code points which have "0 length on the display" are call=
-ed
-> "combining", others are called "vowels" or "accents".
-> E.g. 5BF is not marked any of them, but if you look at the glyph, it =
-should
-> be combining (please correct me if that is wrong).
+>> OK.  Can we have a concrete alternative?
+>>
+>>     Multi-threaing of index-pack was disabled with c0f8654
+>>     (index-pack: Disable threading on cygwin - 2012-06-26), because
+>>     pread() implementations for Cygwin and MSYS were not thread
+>>     safe.  Recent Cygwin does offer usable pread() and we enabled
+>>     multi-threading with 103d530f (Cygwin 1.7 has thread-safe pread,
+>>     2013-07-19).
+>>
+>>     Work around this problem on platforms with a thread-unsafe
+>>     pread() emulation by opening one file handle per thread; it
+>>     would prevent parallel pread() on different file handles from
+>>     stepping on each other.
+>>
+>>     Also remove NO_THREAD_SAFE_PREAD that was introduced in c0f8654
+>>     because it's no longer used anywhere.
+>>
+>>     This workaround is unconditional, even for platforms with
+>>     thread-safe pread() because the overhead is small (a couple file
+>>     handles more) and not worth fragmenting the code.
+>>
+> 
+> OK to me.
 
-Indeed it is combining (more specifically it has General Category=20
-"Nonspacing_Mark" =3D "Mn").
 
->
-> If I could have found a file which indicates for each code point, wha=
-t it
-> is, I could write a script.
->
+Yep, this looks good to me too.
 
-The most complete and machine-readable data are in these files:
+Thanks!
 
-http://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt
-http://www.unicode.org/Public/UCD/latest/ucd/EastAsianWidth.txt
-
-The general categories can also be seen more legibly in:
-
-http://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedGeneralCa=
-tegory.txt
-
-=46or docs, see:
-
-http://www.unicode.org/reports/tr44/
-http://www.unicode.org/reports/tr11/
-http://www.unicode.org/ucd/
-
-The existing utf8.c comments describe the attributes being selected fro=
-m=20
-the tables (general categories "Cf","Mn","Me", East Asian Width "W",=20
-"F"). And they suggest that the combining character table was originall=
-y=20
-auto-generated from UnicodeData.txt with a "uniset" tool. Presumably th=
-is?
-
-https://github.com/depp/uniset
-
-The fullwidth-checking code looks like it was done by hand, although=20
-apparently uniset can process EastAsianWidth.txt.
-
-Kevin
+ATB,
+Ramsay Jones
