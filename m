@@ -1,51 +1,51 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 009/14] git-repack.sh: use the $( ... ) construct for command substitution
-Date: Wed, 16 Apr 2014 10:29:53 -0700
-Message-ID: <1397669398-25410-9-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 013/14] t9360-mw-to-git-clone.sh: use the $( ... ) construct for command substitution
+Date: Wed, 16 Apr 2014 10:29:57 -0700
+Message-ID: <1397669398-25410-13-git-send-email-gitter.spiros@gmail.com>
 References: <1397669398-25410-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 16 19:31:17 2014
+X-From: git-owner@vger.kernel.org Wed Apr 16 19:31:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WaTg4-0006Pq-9Q
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Apr 2014 19:31:16 +0200
+	id 1WaTgE-0006lh-Ch
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Apr 2014 19:31:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754329AbaDPRaY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Apr 2014 13:30:24 -0400
-Received: from mail-pd0-f178.google.com ([209.85.192.178]:62900 "EHLO
-	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754701AbaDPRaQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Apr 2014 13:30:16 -0400
-Received: by mail-pd0-f178.google.com with SMTP id x10so11018452pdj.9
-        for <git@vger.kernel.org>; Wed, 16 Apr 2014 10:30:16 -0700 (PDT)
+	id S1754807AbaDPRbV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Apr 2014 13:31:21 -0400
+Received: from mail-pb0-f41.google.com ([209.85.160.41]:42135 "EHLO
+	mail-pb0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755321AbaDPRaV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Apr 2014 13:30:21 -0400
+Received: by mail-pb0-f41.google.com with SMTP id jt11so11193002pbb.0
+        for <git@vger.kernel.org>; Wed, 16 Apr 2014 10:30:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=U8MC8atbgrr9XTh6GsWDNzmF7JP13Nxko35CpEBMpZc=;
-        b=oyuOZzoc+P/X6s/X4I92Lk7m1diQUmFBb+zJGhynTRm/gYRwqg+r++FrHeKVxXytzK
-         BD75thNqC+MXGbbEPwCPaILXN9SvC//kZTI6ADD5FExiRVcgLngchTC5g9dqGI+zojAV
-         Ver5vYOI5nJqJXdY2ihLFgZf65YG2H0NwPB90fmejy1tJ1nT08r6+Fy6M2eCis9kWlPt
-         qCHRfI+j4eyRPrOkFZtZ/HwkZIIBg67hw3a2BcFRFzCg+uT+oRM+Mc6uXbiR0HzFOXOK
-         bhIzGRljtvmRj6WVVEsgsHNd02WWIinMxCQfU5DmRfeg0G1ZhtdJ8ziiwPLigSxOfZf6
-         9zSQ==
-X-Received: by 10.66.141.12 with SMTP id rk12mr9827947pab.152.1397669416356;
-        Wed, 16 Apr 2014 10:30:16 -0700 (PDT)
+        bh=+/8rILIXz41lgV1JD+JmYwdvasyxnSpo5dWPjVHa7iE=;
+        b=aiT/hjlcIMV2LOI5Vs3q7gzhPCYdv9142J39gYmyH20TaJij3gMtGqHpKoYwDxy2XH
+         BNm6aUu28sByHcf0WdtqqXdyyA8Yqu+SuwXv36xh56gZcfUyG98sGCWNwfiOUdL7DzTb
+         rHE6PtQ5KfEsy7odWqV90FBkjNAjaFHIhBOSBY/hyzYmWNreO4Kxd+YEp6KmU8yg6iNd
+         GVFR5gaXlbxITByHn0U1CZhqJBWUOidxgv3IHUHV49D/7GYaSCHEaOSa5aYVoBdMkFNV
+         s9b3XWBrZ2FIIrob5H/MRZdGacUtFt5yh4JhyC3ga/xTKq1r+0F/a73BzbhHWNWKHzrN
+         Dqvw==
+X-Received: by 10.66.148.70 with SMTP id tq6mr10037462pab.56.1397669421027;
+        Wed, 16 Apr 2014 10:30:21 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id z3sm113974244pas.15.2014.04.16.10.30.15
+        by mx.google.com with ESMTPSA id z3sm113974244pas.15.2014.04.16.10.30.20
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 16 Apr 2014 10:30:15 -0700 (PDT)
+        Wed, 16 Apr 2014 10:30:20 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1397669398-25410-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246357>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -67,21 +67,40 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- contrib/examples/git-repack.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ contrib/mw-to-git/t/t9360-mw-to-git-clone.sh |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/contrib/examples/git-repack.sh b/contrib/examples/git-repack.sh
-index 7579331..f312405 100755
---- a/contrib/examples/git-repack.sh
-+++ b/contrib/examples/git-repack.sh
-@@ -49,7 +49,7 @@ do
- 	shift
- done
- 
--case "`git config --bool repack.usedeltabaseoffset || echo true`" in
-+case "$(git config --bool repack.usedeltabaseoffset || echo true)" in
- true)
- 	extra="$extra --delta-base-offset" ;;
- esac
+diff --git a/contrib/mw-to-git/t/t9360-mw-to-git-clone.sh b/contrib/mw-to-git/t/t9360-mw-to-git-clone.sh
+index 811a90c..22f069d 100755
+--- a/contrib/mw-to-git/t/t9360-mw-to-git-clone.sh
++++ b/contrib/mw-to-git/t/t9360-mw-to-git-clone.sh
+@@ -191,10 +191,10 @@ test_expect_success 'Git clone works with the shallow option' '
+ 	test_path_is_file mw_dir_11/Main_Page.mw &&
+ 	(
+ 		cd mw_dir_11 &&
+-		test `git log --oneline Nyan.mw | wc -l` -eq 1 &&
+-		test `git log --oneline Foo.mw | wc -l` -eq 1 &&
+-		test `git log --oneline Bar.mw | wc -l` -eq 1 &&
+-		test `git log --oneline Main_Page.mw | wc -l ` -eq 1
++		test $(git log --oneline Nyan.mw | wc -l) -eq 1 &&
++		test $(git log --oneline Foo.mw | wc -l) -eq 1 &&
++		test $(git log --oneline Bar.mw | wc -l) -eq 1 &&
++		test $(git log --oneline Main_Page.mw | wc -l ) -eq 1
+ 	) &&
+ 	wiki_check_content mw_dir_11/Nyan.mw Nyan &&
+ 	wiki_check_content mw_dir_11/Foo.mw Foo &&
+@@ -218,9 +218,9 @@ test_expect_success 'Git clone works with the shallow option with a delete page'
+ 	test_path_is_file mw_dir_12/Main_Page.mw &&
+ 	(
+ 		cd mw_dir_12 &&
+-		test `git log --oneline Nyan.mw | wc -l` -eq 1 &&
+-		test `git log --oneline Bar.mw | wc -l` -eq 1 &&
+-		test `git log --oneline Main_Page.mw | wc -l ` -eq 1
++		test $(git log --oneline Nyan.mw | wc -l) -eq 1 &&
++		test $(git log --oneline Bar.mw | wc -l) -eq 1 &&
++		test $(git log --oneline Main_Page.mw | wc -l ) -eq 1
+ 	) &&
+ 	wiki_check_content mw_dir_12/Nyan.mw Nyan &&
+ 	wiki_check_content mw_dir_12/Bar.mw Bar &&
 -- 
 1.7.10.4
