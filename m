@@ -1,96 +1,124 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] tag: add -i and --introduced modifier for --contains
-Date: Wed, 16 Apr 2014 15:02:20 -0700
-Message-ID: <xmqqppkhexw3.fsf@gitster.dls.corp.google.com>
-References: <1397681938-18594-1-git-send-email-mcgrof@do-not-panic.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v2 1/2] sequencer.c: check for lock failure and bail early
+ in fast_forward_to
+Date: Thu, 17 Apr 2014 00:03:03 +0200
+Message-ID: <534EFE17.7060105@alum.mit.edu>
+References: <1397674613-4922-1-git-send-email-sahlberg@google.com> <1397674613-4922-2-git-send-email-sahlberg@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Luis R. Rodriguez" <mcgrof@suse.com>,
-	Jiri Slaby <jslaby@suse.cz>, Andreas Schwab <schwab@suse.de>,
-	Jan Kara <jack@suse.cz>
-To: "Luis R. Rodriguez" <mcgrof@do-not-panic.com>
-X-From: git-owner@vger.kernel.org Thu Apr 17 00:02:31 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: Ronnie Sahlberg <sahlberg@google.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 17 00:03:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WaXuX-0005Bg-LO
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Apr 2014 00:02:29 +0200
+	id 1WaXvF-0006X9-MA
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Apr 2014 00:03:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161329AbaDPWC0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Apr 2014 18:02:26 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62029 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756724AbaDPWCY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Apr 2014 18:02:24 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 369F87D131;
-	Wed, 16 Apr 2014 18:02:24 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ZnDQ0N4iyse/nSyJhpxlxCWcDUU=; b=N8Tb1l
-	D6TeuVsCsOFp/PwYWLENd1e1rHNzkhWYcycMBDOwxAD1SLds8DcInN+HINPB5dGM
-	6ZeHHpOPWVjjT+5wjBKRY34zwTqdKQW7KLx8m8uYz30ysmr24hXbjNKRDjVN3oMK
-	8p4kpjdYcQCB0Qryx+0sOhUvYMMWDSirhZg+A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=t6/r9CSdzAMAbTrcJOw9XwH6OpaHCBcf
-	kB7fOR7UxRkI0GaJAPiR+DwyxZxQhbQy/oIIO6P6sOmf9lYoGw6Ji/nz1XQXSe/G
-	alvDG9xXfh0ueeHamBKfsaqYPR1RbwEblZMBMkSel0hm4XeydXmBVQuxhwYUNJw0
-	0pfNoQk7PBY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1A42C7D12F;
-	Wed, 16 Apr 2014 18:02:24 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 95A727D12D;
-	Wed, 16 Apr 2014 18:02:22 -0400 (EDT)
-In-Reply-To: <1397681938-18594-1-git-send-email-mcgrof@do-not-panic.com> (Luis
-	R. Rodriguez's message of "Wed, 16 Apr 2014 13:58:58 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: C982A9F2-C5B2-11E3-BCA2-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756780AbaDPWDI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Apr 2014 18:03:08 -0400
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:55490 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756724AbaDPWDH (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Apr 2014 18:03:07 -0400
+X-AuditID: 1207440f-f79326d000003c9f-e2-534efe192890
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 10.AF.15519.91EFE435; Wed, 16 Apr 2014 18:03:05 -0400 (EDT)
+Received: from [192.168.69.130] (p4FC9722C.dip0.t-ipconnect.de [79.201.114.44])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s3GM33aJ004201
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Wed, 16 Apr 2014 18:03:04 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.4.0
+In-Reply-To: <1397674613-4922-2-git-send-email-sahlberg@google.com>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupnleLIzCtJLcpLzFFi42IRYndR1JX85xdssOmXgkXXlW4mi38TahyY
+	PBZsKvX4vEkugCmK2yYpsaQsODM9T98ugTvj5NbTjAUvhCpWHHnL2MDYwt/FyMkhIWAi8etP
+	GyuELSZx4d56NhBbSOAyo8TM3aZdjFxA9nkmiSXXXjGBJHgFtCUmPpvBCGKzCKhKzDs5GyzO
+	JqArsainGcjm4BAVCJL4c1YRolxQ4uTMJywgtoiAncT6WwuZQWxhgWSJxt0HWCB2VUocnHSF
+	HcTmFHCW2P6ymR1kjISAuERPYxBImFlAR+Jd3wNmCFteYvvbOcwTGAVmIdkwC0nZLCRlCxiZ
+	VzHKJeaU5urmJmbmFKcm6xYnJ+blpRbpmujlZpbopaaUbmKEBCj/Dsau9TKHGAU4GJV4eDl/
+	+wULsSaWFVfmHmKU5GBSEuXt+AkU4kvKT6nMSCzOiC8qzUktPsQowcGsJMKbeRYox5uSWFmV
+	WpQPk5LmYFES51Vfou4nJJCeWJKanZpakFoEk5Xh4FCS4M3/C9QoWJSanlqRlplTgpBm4uAE
+	Gc4lJVKcmpeSWpRYWpIRD4rS+GJgnIKkeID2hoO08xYXJOYCRSFaTzHqclxoWNHCJMSSl5+X
+	KiXOm/0HqEgApCijNA9uBSwdvWIUB/pYmDcTZBQPMJXBTXoFtIQJaMmhcF+QJSWJCCmpBsa4
+	9QvWt7ra+++ykHZbuN6yctPskgLO72xGO1M5Zlwr0y576rEtrOagxgfukxfucHxbcSn9wbP9
+	a33rNizbGZnZ4yv9oIWl1LT/7WGWclXznpIn72uK1ttUm6l6GK+dM+XcGla/Cayv 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246387>
 
-"Luis R. Rodriguez" <mcgrof@do-not-panic.com> writes:
+On 04/16/2014 08:56 PM, Ronnie Sahlberg wrote:
+> Change fast_forward_to() to check if locking the ref failed, print a nice
+> error message and bail out early.
+> The old code did not check if ref_lock was NULL and relied on the fact
+> that the write_ref_sha1() would safely detect this condition and set the
 
-> From: "Luis R. Rodriguez" <mcgrof@suse.com>
->
-> Upstream Linux kernel commit c5905afb was introduced on v3.4 but
-> git describe --contains yields v3.5
+s/the write_ref_sha1()/write_ref_sha1()/
 
-Actually, "describe --contains" should yield v3.5-rc1~120^3~76^2,
-not v3.5.
+> return variable ret to indicate an error.
+> While that is safe, it makes the code harder to read for two reasons:
+> * Inconsistency.  Almost all other places we do check the lock for NULL
+>   explicitely, so the naive reader is confused "why don't we check here".
 
-And you are right that the commit is contained in v3.4, so we also
-should be able to describe it as v3.4~479^2~9^2 as well.
+s/explicitely/explicitly/
+s/here"/here?"/
 
-And between v3.4 and v3.5-rc1, the latter is a closer anchor point
-for that commit (v3.5-rc1 only needs about 200 hops to reach the
-commit, while from v3.4 you would need close to 500 hops), hence we
-end up picking the latter as "a better answer".
+> * And relying on write_ref_sha1() to detect and return an error for when
+>   a previous lock_any_ref_for_update() feels obfuscated.
 
-Now, with the explanation of how/why this happens behind us, I see
-two possible issues with this patch:
+s/feels/failed feels/ maybe?
 
- - The reason a human-user rejects v3.5-rc1~120^3~76^2 as the
-   solution and favor v3.4~479^2~9^2 could be because of the -rc1
-   part in the answer.  Perhaps we would want an option that affects
-   which tags are to be used (and which tags are to be excluded) as
-   anchoring points?
+> 
+> This change should not change any functionality or logic
+> aside from adding an extra error message when this condition is triggered.
+> (write_ref_sha1() returns an error silently for this condition)
 
- - If we are truly interested in finding out the "earliest tag that
-   contains the given commit", shouldn't we be ignoring the tagname
-   and go with the tag with the oldest timestamp?  After all, there
-   may be a fix merged to v7.0 first on April 1st, and then on a
-   later date the same fix may be merged to the maintenance track to
-   be tagged as v6.9.1 on May 5th, and in such a case, wouldn't you
-   want to say that the fix first appeared on v7.0 on April 1st,
-   instead of on May 5th?
+You need a period inside the parentheses.
 
-Thanks.
+> 
+> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+> ---
+>  sequencer.c | 4 ++++
+>  1 file changed, 4 insertions(+)
+> 
+> diff --git a/sequencer.c b/sequencer.c
+> index bde5f04..0a80c58 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -281,8 +281,12 @@ static int fast_forward_to(const unsigned char *to, const unsigned char *from,
+>  		exit(1); /* the callee should have complained already */
+>  	ref_lock = lock_any_ref_for_update("HEAD", unborn ? null_sha1 : from,
+>  					   0, NULL);
+> +	if (!ref_lock)
+> +		return error(_("Failed to lock HEAD during fast_forward_to"));
+
+This error message can be emitted to the user in the normal course of
+things (i.e., it is not a bug).  So the message should make sense to the
+user.  Is "fast_forward_to" a user-facing term that the user will
+understand?  I suspect that you took it from the name of the function,
+which is *not* meaningful to a user.
+
+But unfortunately I'm not familiar enough with the sequencer to be able
+to suggest a better error message.
+
+> +
+>  	strbuf_addf(&sb, "%s: fast-forward", action_name(opts));
+>  	ret = write_ref_sha1(ref_lock, to, sb.buf);
+> +
+>  	strbuf_release(&sb);
+>  	return ret;
+>  }
+> 
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
