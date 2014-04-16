@@ -1,108 +1,113 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] config.c: mark die_bad_number as NORETURN
-Date: Wed, 16 Apr 2014 10:21:58 -0700
-Message-ID: <xmqq7g6pi409.fsf@gitster.dls.corp.google.com>
-References: <20140416141353.GA9676@camelia.ucw.cz>
-	<20140416152920.GA4691@sigill.intra.peff.net>
-	<534EB1FB.5040405@web.de>
-	<20140416165146.GA16695@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org, kasal@ucw.cz
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Apr 16 19:22:25 2014
+From: Elia Pinto <gitter.spiros@gmail.com>
+Subject: [PATCH 001/14] howto-index.sh: use the $( ... ) construct for command substitution
+Date: Wed, 16 Apr 2014 10:29:45 -0700
+Message-ID: <1397669398-25410-1-git-send-email-gitter.spiros@gmail.com>
+Cc: Elia Pinto <gitter.spiros@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 16 19:30:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WaTXV-0005uE-5Y
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Apr 2014 19:22:25 +0200
+	id 1WaTfA-0004Wb-V8
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Apr 2014 19:30:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754832AbaDPRWO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Apr 2014 13:22:14 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37520 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754319AbaDPRWG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Apr 2014 13:22:06 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D4AB57C887;
-	Wed, 16 Apr 2014 13:22:05 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=7mqimRh7kko8
-	rrLxfyKANY3L2Cs=; b=O4DCDWq0zYdR/4GXA96CVvYWVDxlF8oRw8LhtTxkPMo3
-	qtIPtNBNQ5738OFydF5ijgawSfHI8LZl/4/ksx/t2+5SkDQvbWtf3gJPGnXR6rlq
-	roLztKQCYXnOBPfZYoopmrhSQeSDIvaWOHcryvXIRKUjwWe9PMN2XjzOTqL+JYs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=IHzyT7
-	hcw9UdOGhp7UbBLNrRhhkVgneXt7TaRiZxYOY/9K9kY5ztWuvheqlZoN53s2wtha
-	TI85Q8YqMGu5ilBwqUquscpGTs8COSL49NfBV+PBAIMjmC/+cSUI5G2c9gg2UkKN
-	DznFBO5dZCvQjA3E+u2tkJFEy8pqu054ipLYY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9FA447C886;
-	Wed, 16 Apr 2014 13:22:05 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5B62C7C87F;
-	Wed, 16 Apr 2014 13:22:00 -0400 (EDT)
-In-Reply-To: <20140416165146.GA16695@sigill.intra.peff.net> (Jeff King's
-	message of "Wed, 16 Apr 2014 12:51:47 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 9EAB5C1E-C58B-11E3-AE20-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754974AbaDPRaN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Apr 2014 13:30:13 -0400
+Received: from mail-pd0-f178.google.com ([209.85.192.178]:65336 "EHLO
+	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752444AbaDPRaG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Apr 2014 13:30:06 -0400
+Received: by mail-pd0-f178.google.com with SMTP id x10so10945241pdj.23
+        for <git@vger.kernel.org>; Wed, 16 Apr 2014 10:30:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=kEi0dT4h7EUJp4jgChfBiZn9T1xrt3qVcrOlPuf/2ys=;
+        b=A90KUdNDs8k5x5K5r0Ql+dtWrYbC8vOl95ACbbuKS56odes51w+oRuE1JaanNbk0fv
+         H3SVgOpFcZhVHoof0J+VQFqmOyPgcov6aT+Weig7DkICtLWG9IymW83WSId+ig2RF0JX
+         rJ2bYS4GAvvv1u1oTw7jOqrwbzfnokhgcW3YWjBm19hkOYkEW928Al2Pwo9oLB24uzCS
+         QvXGHhd5Ju/0CjN+qvgXBPGZiECC8pt4MV41m6BXjF9lC2ctU7K/AC/O8IOjR6FuNJPM
+         ZLSBVWjcfN6AlQVLXtKqhstHMJnrdxzVPB30jP2NX4lPN/k2wv3ySBDoRTrWFo50SGYH
+         Tf4A==
+X-Received: by 10.68.189.33 with SMTP id gf1mr9762426pbc.111.1397669405229;
+        Wed, 16 Apr 2014 10:30:05 -0700 (PDT)
+Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
+        by mx.google.com with ESMTPSA id z3sm113974244pas.15.2014.04.16.10.30.03
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 16 Apr 2014 10:30:03 -0700 (PDT)
+X-Mailer: git-send-email 1.7.10.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246353>
 
-Jeff King <peff@peff.net> writes:
+The Git CodingGuidelines prefer the $(...) construct for command
+substitution instead of using the backquotes `...`.
 
-> On Wed, Apr 16, 2014 at 06:38:19PM +0200, Torsten B=C3=B6gershausen w=
-rote:
->
->> > Does that also silence the warning?
->> >=20
->> This works under gcc 4.2.1 Mac OS: the warning is away.
->
-> Thanks. I couldn't test myself, as I could not get gcc to generate th=
-e
-> warning in the first place, but I do not have anything as old as 4.2 =
-on
-> hand.
->
-> Here it is with a commit message.
->
-> -- >8 --
-> Subject: config.c: mark die_bad_number as NORETURN
->
-> This can help avoid -Wuninitialized false positives in
-> git_config_int and git_config_ulong, as the compiler now
-> knows that we do not return "ret" if we hit the error
-> codepath.
+The backquoted form is the traditional method for command
+substitution, and is supported by POSIX.  However, all but the
+simplest uses become complicated quickly.  In particular, embedded
+command substitutions and/or the use of double quotes require
+careful escaping with the backslash character.
 
-Thanks for clearly solving the issue and describing the solution.
-Will queue.
+The patch was generated by:
 
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  config.c | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/config.c b/config.c
-> index 6821cef..a30cb5c 100644
-> --- a/config.c
-> +++ b/config.c
-> @@ -557,6 +557,7 @@ int git_parse_ulong(const char *value, unsigned l=
-ong *ret)
->  	return 1;
->  }
-> =20
-> +NORETURN
->  static void die_bad_number(const char *name, const char *value)
->  {
->  	const char *reason =3D errno =3D=3D ERANGE ?
+for _f in $(find . -name "*.sh")
+do
+   sed -i 's@`\(.*\)`@$(\1)@g' ${_f}
+done
+
+and then carefully proof-read.
+
+Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+---
+ Documentation/howto-index.sh |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/Documentation/howto-index.sh b/Documentation/howto-index.sh
+index a234086..167b363 100755
+--- a/Documentation/howto-index.sh
++++ b/Documentation/howto-index.sh
+@@ -11,8 +11,8 @@ EOF
+ 
+ for txt
+ do
+-	title=`expr "$txt" : '.*/\(.*\)\.txt$'`
+-	from=`sed -ne '
++	title=$(expr "$txt" : '.*/\(.*\)\.txt$')
++	from=$(sed -ne '
+ 	/^$/q
+ 	/^From:[ 	]/{
+ 		s///
+@@ -21,9 +21,9 @@ do
+ 		s/^/by /
+ 		p
+ 	}
+-	' "$txt"`
++	' "$txt")
+ 
+-	abstract=`sed -ne '
++	abstract=$(sed -ne '
+ 	/^Abstract:[ 	]/{
+ 		s/^[^ 	]*//
+ 		x
+@@ -39,11 +39,11 @@ do
+ 		x
+ 		p
+ 		q
+-	}' "$txt"`
++	}' "$txt")
+ 
+ 	if grep 'Content-type: text/asciidoc' >/dev/null $txt
+ 	then
+-		file=`expr "$txt" : '\(.*\)\.txt$'`.html
++		file=$(expr "$txt" : '\(.*\)\.txt$').html
+ 	else
+ 		file="$txt"
+ 	fi
+-- 
+1.7.10.4
