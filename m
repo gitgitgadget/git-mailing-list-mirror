@@ -1,51 +1,51 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 006/14] git-fetch.sh: use the $( ... ) construct for command substitution
-Date: Wed, 16 Apr 2014 10:29:50 -0700
-Message-ID: <1397669398-25410-6-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 005/14] git-commit.sh: use the $( ... ) construct for command substitution
+Date: Wed, 16 Apr 2014 10:29:49 -0700
+Message-ID: <1397669398-25410-5-git-send-email-gitter.spiros@gmail.com>
 References: <1397669398-25410-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 16 19:31:55 2014
+X-From: git-owner@vger.kernel.org Wed Apr 16 19:32:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WaTgg-0007gc-38
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Apr 2014 19:31:54 +0200
+	id 1WaTgo-00083m-Ql
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Apr 2014 19:32:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754831AbaDPRbl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Apr 2014 13:31:41 -0400
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:36567 "EHLO
-	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752680AbaDPRaN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Apr 2014 13:30:13 -0400
-Received: by mail-pa0-f51.google.com with SMTP id kq14so11091245pab.24
-        for <git@vger.kernel.org>; Wed, 16 Apr 2014 10:30:12 -0700 (PDT)
+	id S1753727AbaDPRb6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Apr 2014 13:31:58 -0400
+Received: from mail-pd0-f176.google.com ([209.85.192.176]:36420 "EHLO
+	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754421AbaDPRaM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Apr 2014 13:30:12 -0400
+Received: by mail-pd0-f176.google.com with SMTP id r10so10947360pdi.21
+        for <git@vger.kernel.org>; Wed, 16 Apr 2014 10:30:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=M5V2FE8Q05n++zu4HejLVu3vJuer0DNSC6YM4znLYPE=;
-        b=RzcGurgLxhgqWc0hYY6Psn+KCWU9Dqg8bNQ1HrAEwWrWAVp7DVLB1f3HSkOzcS0ine
-         gx9xOT3ZVJR6CFKLLtgDI2z3+iUkdTm6mMEJWFBbwfoFKeK+YlVe0WeHJNbEn/LNJedq
-         /+SJeZfkCtBKA42dzW3rRY5l2s1AsAWuKgV9gPBZ96jYsmq9RWn8njY1GpEAuSoUABgX
-         y4dftOfD6LMN3dHtoBbH4PM8ofpHlFssKRp6rdRUQZXIoH3ZNFLMBq/Zvfhpor/QPwU8
-         VJsYTimQb2QMtMrCnwLH5TFCSSbbIQa3GJcFsB0F6me+7LXvYpp6CuJ4SdMAkgeVexaM
-         +qaw==
-X-Received: by 10.66.191.39 with SMTP id gv7mr9854047pac.150.1397669412818;
-        Wed, 16 Apr 2014 10:30:12 -0700 (PDT)
+        bh=b4PK1BxDQnKX4suwWbnC2kGTzj5CPgs9RprXV5d4HEg=;
+        b=OV9oH50iAQpMDxC2AndmEwsQ5vM/1ilnV8SyXCaBFEROkYHs1zDkkhttc2L8AFSxxm
+         qRUAHMWDUZGz27P8OcKF/rPTP6uD2tySXu2ZGshRY42BNE+cvBmNlaVKxc31lkq1FaDG
+         BRo8Eg2KwLdToP+My1XFqEmNeFIMysUFaBt6BRdMkqLSw9L+ZqCNY8mi2sX/ubHs+71a
+         69+NHL/eKwg/H6rJEj6RgBUMeO84aKzjIYGGvFDvlW++LH/2AcVC/3i7cnBPoNCDffpa
+         QbMf2rpY6lj89tDAKRFDEqlDrxoDVFlC4HtS+RFGLTuVK3SwMj7J3jpcgPcYv1BlS+Jj
+         TgNA==
+X-Received: by 10.68.134.101 with SMTP id pj5mr10041031pbb.62.1397669411579;
+        Wed, 16 Apr 2014 10:30:11 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id z3sm113974244pas.15.2014.04.16.10.30.11
+        by mx.google.com with ESMTPSA id z3sm113974244pas.15.2014.04.16.10.30.10
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 16 Apr 2014 10:30:12 -0700 (PDT)
+        Wed, 16 Apr 2014 10:30:10 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1397669398-25410-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246364>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -67,36 +67,50 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- contrib/examples/git-fetch.sh |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ contrib/examples/git-commit.sh |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/contrib/examples/git-fetch.sh b/contrib/examples/git-fetch.sh
-index a314273..5540709 100755
---- a/contrib/examples/git-fetch.sh
-+++ b/contrib/examples/git-fetch.sh
-@@ -67,7 +67,7 @@ do
- 		keep='-k -k'
- 		;;
- 	--depth=*)
--		shallow_depth="--depth=`expr "z$1" : 'z-[^=]*=\(.*\)'`"
-+		shallow_depth="--depth=$(expr "z$1" : 'z-[^=]*=\(.*\)')"
- 		;;
- 	--depth)
- 		shift
-@@ -262,12 +262,12 @@ fetch_per_ref () {
-       http://* | https://* | ftp://*)
- 	  test -n "$shallow_depth" &&
- 		die "shallow clone with http not supported"
--	  proto=`expr "$remote" : '\([^:]*\):'`
-+	  proto=$(expr "$remote" : '\([^:]*\):')
- 	  if [ -n "$GIT_SSL_NO_VERIFY" ]; then
- 	      curl_extra_args="-k"
- 	  fi
- 	  if [ -n "$GIT_CURL_FTP_NO_EPSV" -o \
--		"`git config --bool http.noEPSV`" = true ]; then
-+		"$(git config --bool http.noEPSV)" = true ]; then
- 	      noepsv_opt="--disable-epsv"
- 	  fi
+diff --git a/contrib/examples/git-commit.sh b/contrib/examples/git-commit.sh
+index 4aab1a6..5cafe2e 100755
+--- a/contrib/examples/git-commit.sh
++++ b/contrib/examples/git-commit.sh
+@@ -91,7 +91,7 @@ signoff=
+ force_author=
+ only_include_assumed=
+ untracked_files=
+-templatefile="`git config commit.template`"
++templatefile="$(git config commit.template)"
+ while test $# != 0
+ do
+ 	case "$1" in
+@@ -350,7 +350,7 @@ t,)
+ 		TMP_INDEX="$GIT_DIR/tmp-index$$"
+ 		W=
+ 		test -z "$initial_commit" && W=--with-tree=HEAD
+-		commit_only=`git ls-files --error-unmatch $W -- "$@"` || exit
++		commit_only=$(git ls-files --error-unmatch $W -- "$@") || exit
  
+ 		# Build a temporary index and update the real index
+ 		# the same way.
+@@ -475,8 +475,8 @@ then
+ fi
+ if test '' != "$force_author"
+ then
+-	GIT_AUTHOR_NAME=`expr "z$force_author" : 'z\(.*[^ ]\) *<.*'` &&
+-	GIT_AUTHOR_EMAIL=`expr "z$force_author" : '.*\(<.*\)'` &&
++	GIT_AUTHOR_NAME=$(expr "z$force_author" : 'z\(.*[^ ]\) *<.*') &&
++	GIT_AUTHOR_EMAIL=$(expr "z$force_author" : '.*\(<.*\)') &&
+ 	test '' != "$GIT_AUTHOR_NAME" &&
+ 	test '' != "$GIT_AUTHOR_EMAIL" ||
+ 	die "malformed --author parameter"
+@@ -489,7 +489,7 @@ then
+ 	rloga='commit'
+ 	if [ -f "$GIT_DIR/MERGE_HEAD" ]; then
+ 		rloga='commit (merge)'
+-		PARENTS="-p HEAD "`sed -e 's/^/-p /' "$GIT_DIR/MERGE_HEAD"`
++		PARENTS="-p HEAD "$(sed -e 's/^/-p /' "$GIT_DIR/MERGE_HEAD")
+ 	elif test -n "$amend"; then
+ 		rloga='commit (amend)'
+ 		PARENTS=$(git cat-file commit HEAD |
 -- 
 1.7.10.4
