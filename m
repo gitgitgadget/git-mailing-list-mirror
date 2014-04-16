@@ -1,160 +1,110 @@
-From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 004/14] git-clone.sh: use the $( ... ) construct for command substitution
-Date: Wed, 16 Apr 2014 10:29:48 -0700
-Message-ID: <1397669398-25410-4-git-send-email-gitter.spiros@gmail.com>
-References: <1397669398-25410-1-git-send-email-gitter.spiros@gmail.com>
-Cc: Elia Pinto <gitter.spiros@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 16 19:32:20 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: On "interpret-trailers" standalone tool
+Date: Wed, 16 Apr 2014 10:43:52 -0700
+Message-ID: <xmqq38hdi2zr.fsf@gitster.dls.corp.google.com>
+References: <xmqq61mi1djt.fsf@gitster.dls.corp.google.com>
+	<20140412.213003.73509455950485398.chriscool@tuxfamily.org>
+	<xmqqy4z7lhc4.fsf@gitster.dls.corp.google.com>
+	<CAP8UFD0w9xUwuk9UZ_mu=qvjtYN1r5skidweruM8t1KbfQpQyA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+	git <git@vger.kernel.org>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 16 19:44:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WaTh4-0008Us-2V
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Apr 2014 19:32:18 +0200
+	id 1WaTsQ-0006o5-CG
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Apr 2014 19:44:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754366AbaDPRcK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Apr 2014 13:32:10 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:59695 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754645AbaDPRaK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Apr 2014 13:30:10 -0400
-Received: by mail-pa0-f53.google.com with SMTP id ld10so11135040pab.12
-        for <git@vger.kernel.org>; Wed, 16 Apr 2014 10:30:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ZYEtfdcb51uHom6AZFIzv9k8W93fFtb5rDzAHxXE/lg=;
-        b=JN93/QGFdK0iBrXWdNSPtM42gedAJGMLIcCGsQy9jxe43AH0iuR8lbf98JFTRUEoTE
-         DUf/j0vyhQUipUrVIfrijAMNpCiQFr8ZhorjR2xChwwAI1Wec/a84OOL+nAMzR8k+a8D
-         89JLq3RbdWBHNvDclP5JW5oNSlNcuNojsxJqailLDpcqSy96NiUuHEmhYut+SfxNVq4F
-         02ZcTEUqqm7ELKLA+lSoqyE7GQkB9ZJZty+YUp2ws/uXSxhBA3aN1S+p6cyVbTd0uPRg
-         9S/ew07vJeWXWzcyl2LbV+u96sVo4pnYlfmMfymChLcKfsjYJOk9PKnFarCTLrGZiC6e
-         NXew==
-X-Received: by 10.66.124.137 with SMTP id mi9mr9831960pab.111.1397669410268;
-        Wed, 16 Apr 2014 10:30:10 -0700 (PDT)
-Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id z3sm113974244pas.15.2014.04.16.10.30.08
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 16 Apr 2014 10:30:09 -0700 (PDT)
-X-Mailer: git-send-email 1.7.10.4
-In-Reply-To: <1397669398-25410-1-git-send-email-gitter.spiros@gmail.com>
+	id S1753801AbaDPRn5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Apr 2014 13:43:57 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40661 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750928AbaDPRn4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Apr 2014 13:43:56 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3395D7CE32;
+	Wed, 16 Apr 2014 13:43:56 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=1kY7bFcdlaBwqRM5bHCtq7JEN3Q=; b=DblMKg
+	AS2a3La+Sm86aNozdiFP9TTLzMOtyTyXjpkSIKqKKWUzcIk3oBuBYW8wftbF12Z+
+	wCWrHJHMQIIV3fBB013ihizdxikoP3mMspyExeMvCEhSEYf7RAQc2WNec3IixOKR
+	w2A7nlTWtOGqGTAlndoyktw+Zp2Ygj3g7sP4M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ImHiJPiAUaPJPlluy+PsJMHFpOf1x11Z
+	ZDuSSgPX8xSsp1HBSBRSPNkmGIWYaciFhyR4E3EFWE1poAONkVLg1fhP92Hwt/qq
+	RKaatYP3hHo5cPnylmUdMwGwv0RBli1fUsXGLZwjxO7CUc3QIyffQ4EBRi569Dk/
+	ANLkkTZx+n8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1B07A7CE31;
+	Wed, 16 Apr 2014 13:43:56 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 74D137CE30;
+	Wed, 16 Apr 2014 13:43:54 -0400 (EDT)
+In-Reply-To: <CAP8UFD0w9xUwuk9UZ_mu=qvjtYN1r5skidweruM8t1KbfQpQyA@mail.gmail.com>
+	(Christian Couder's message of "Wed, 16 Apr 2014 14:27:03 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: ADEA130C-C58E-11E3-A60D-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246366>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246367>
 
-The Git CodingGuidelines prefer the $(...) construct for command
-substitution instead of using the backquotes `...`.
+Christian Couder <christian.couder@gmail.com> writes:
 
-The backquoted form is the traditional method for command
-substitution, and is supported by POSIX.  However, all but the
-simplest uses become complicated quickly.  In particular, embedded
-command substitutions and/or the use of double quotes require
-careful escaping with the backslash character.
+> If the input comes from stdin, then I agree that the command should be
+> a filter, so its output should be on stdout. But if the input comes
+> from files given as arguments, then I would say that the command
+> should behave as an editor and by default it should edit its input
+> file inplace.
 
-The patch was generated by:
+I do not see where that "should" comes from.  I am looking at this
+more from the angle of obtaining a useful building block, while you
+seem to be thinking of this as a specialized tool for a narrow set
+of specifkc tasks.
 
-for _f in $(find . -name "*.sh")
-do
-   sed -i 's@`\(.*\)`@$(\1)@g' ${_f}
-done
+Thinking of examples in "sort" and "sed", I would say "read multiple
+files, futz with the contents and spit out a single output stream"
+is the way people expect a command to operate without being told to
+operate in some other way.  Overwriting existing files should never
+be the default for safety---otherwise you would require people who
+want safety to do something like:
 
-and then carefully proof-read.
+    cp realfile tmp
+    futz tmp
+    verify tmp
+    mv tmp realfile
 
-Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
----
- contrib/examples/git-clone.sh |   20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+On the other hand, a usual "sort/sed/cat"-like command, even without
+the "in-place edit" option, can be used as in-place with
 
-diff --git a/contrib/examples/git-clone.sh b/contrib/examples/git-clone.sh
-index 547228e..b4c9376 100755
---- a/contrib/examples/git-clone.sh
-+++ b/contrib/examples/git-clone.sh
-@@ -40,7 +40,7 @@ eval "$(echo "$OPTIONS_SPEC" | git rev-parse --parseopt -- "$@" || echo exit $?)
- 
- get_repo_base() {
- 	(
--		cd "`/bin/pwd`" &&
-+		cd "$(/bin/pwd)" &&
- 		cd "$1" || cd "$1.git" &&
- 		{
- 			cd .git
-@@ -50,7 +50,7 @@ get_repo_base() {
- }
- 
- if [ -n "$GIT_SSL_NO_VERIFY" -o \
--	"`git config --bool http.sslVerify`" = false ]; then
-+	"$(git config --bool http.sslVerify)" = false ]; then
-     curl_extra_args="-k"
- fi
- 
-@@ -70,7 +70,7 @@ clone_dumb_http () {
- 	clone_tmp="$GIT_DIR/clone-tmp" &&
- 	mkdir -p "$clone_tmp" || exit 1
- 	if [ -n "$GIT_CURL_FTP_NO_EPSV" -o \
--		"`git config --bool http.noEPSV`" = true ]; then
-+		"$(git config --bool http.noEPSV)" = true ]; then
- 		curl_extra_args="${curl_extra_args} --disable-epsv"
- 	fi
- 	http_fetch "$1/info/refs" "$clone_tmp/refs" ||
-@@ -79,7 +79,7 @@ Perhaps git-update-server-info needs to be run there?"
- 	test "z$quiet" = z && v=-v || v=
- 	while read sha1 refname
- 	do
--		name=`expr "z$refname" : 'zrefs/\(.*\)'` &&
-+		name=$(expr "z$refname" : 'zrefs/\(.*\)') &&
- 		case "$name" in
- 		*^*)	continue;;
- 		esac
-@@ -88,7 +88,7 @@ Perhaps git-update-server-info needs to be run there?"
- 		*)	continue ;;
- 		esac
- 		if test -n "$use_separate_remote" &&
--		   branch_name=`expr "z$name" : 'zheads/\(.*\)'`
-+		   branch_name=$(expr "z$name" : 'zheads/\(.*\)')
- 		then
- 			tname="remotes/$origin/$branch_name"
- 		else
-@@ -100,7 +100,7 @@ Perhaps git-update-server-info needs to be run there?"
- 	http_fetch "$1/HEAD" "$GIT_DIR/REMOTE_HEAD" ||
- 	rm -f "$GIT_DIR/REMOTE_HEAD"
- 	if test -f "$GIT_DIR/REMOTE_HEAD"; then
--		head_sha1=`cat "$GIT_DIR/REMOTE_HEAD"`
-+		head_sha1=$(cat "$GIT_DIR/REMOTE_HEAD")
- 		case "$head_sha1" in
- 		'ref: refs/'*)
- 			;;
-@@ -444,15 +444,15 @@ then
- 	# a non-bare repository is always in separate-remote layout
- 	remote_top="refs/remotes/$origin"
- 	head_sha1=
--	test ! -r "$GIT_DIR/REMOTE_HEAD" || head_sha1=`cat "$GIT_DIR/REMOTE_HEAD"`
-+	test ! -r "$GIT_DIR/REMOTE_HEAD" || head_sha1=$(cat "$GIT_DIR/REMOTE_HEAD")
- 	case "$head_sha1" in
- 	'ref: refs/'*)
- 		# Uh-oh, the remote told us (http transport done against
- 		# new style repository with a symref HEAD).
- 		# Ideally we should skip the guesswork but for now
- 		# opt for minimum change.
--		head_sha1=`expr "z$head_sha1" : 'zref: refs/heads/\(.*\)'`
--		head_sha1=`cat "$GIT_DIR/$remote_top/$head_sha1"`
-+		head_sha1=$(expr "z$head_sha1" : 'zref: refs/heads/\(.*\)')
-+		head_sha1=$(cat "$GIT_DIR/$remote_top/$head_sha1")
- 		;;
- 	esac
- 
-@@ -467,7 +467,7 @@ then
- 		while read name
- 		do
- 			test t = $done && continue
--			branch_tip=`cat "$GIT_DIR/$remote_top/$name"`
-+			branch_tip=$(cat "$GIT_DIR/$remote_top/$name")
- 			if test "$head_sha1" = "$branch_tip"
- 			then
- 				echo "$name"
--- 
-1.7.10.4
+    mv realfile tmp
+    futz tmp >realfile
+
+easily, and is more flexible as a building block.  Of course, that
+does not rule out an option to work in-place (e.g. in a similar way
+to "sort -o file file", or "perl -i -e 'y/a-z/A-Z/' frotz nitfol").
+
+> Its input and output files should be different only if
+> it is given one or more special option,
+>
+> Otherwise the example you gave:
+>
+>     $ git format-patch -5 --cover-letter -o +my-series/ my-topic
+>     $ git interpret-trailers "some args" ./+my-series/0*.patch
+>
+> would result in having on stdout all the patches edited by "git
+> interpret-trailers".
+
+Didn't I mention that I do not mind "-i" already if in-place edit is
+desired?  Add "-i" to the command line arguments among "some args",
+and your complaints will disappear, no?
