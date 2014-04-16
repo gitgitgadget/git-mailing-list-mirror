@@ -1,51 +1,51 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 002/14] install-webdoc.sh: use the $( ... ) construct for command substitution
-Date: Wed, 16 Apr 2014 10:29:46 -0700
-Message-ID: <1397669398-25410-2-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 011/14] git-revert.sh: use the $( ... ) construct for command substitution
+Date: Wed, 16 Apr 2014 10:29:55 -0700
+Message-ID: <1397669398-25410-11-git-send-email-gitter.spiros@gmail.com>
 References: <1397669398-25410-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 16 19:31:43 2014
+X-From: git-owner@vger.kernel.org Wed Apr 16 19:31:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WaTgV-0007ID-08
+	id 1WaTgV-0007ID-Gl
 	for gcvg-git-2@plane.gmane.org; Wed, 16 Apr 2014 19:31:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754774AbaDPRaM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Apr 2014 13:30:12 -0400
-Received: from mail-pb0-f49.google.com ([209.85.160.49]:53820 "EHLO
-	mail-pb0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752680AbaDPRaI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Apr 2014 13:30:08 -0400
-Received: by mail-pb0-f49.google.com with SMTP id jt11so11093766pbb.36
-        for <git@vger.kernel.org>; Wed, 16 Apr 2014 10:30:07 -0700 (PDT)
+	id S1754238AbaDPRbh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Apr 2014 13:31:37 -0400
+Received: from mail-pb0-f47.google.com ([209.85.160.47]:34701 "EHLO
+	mail-pb0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755261AbaDPRaT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Apr 2014 13:30:19 -0400
+Received: by mail-pb0-f47.google.com with SMTP id up15so11121296pbc.20
+        for <git@vger.kernel.org>; Wed, 16 Apr 2014 10:30:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=KSVfH5KRZMQqmyo8aOE5E3dsC5zYiquKpyAOzEJmCPs=;
-        b=YelHXs8RRJ11b/Ibh7J/dqFSYJHX0ULEkvBjX32oX287/kn3ITf71c1mNC3V+chonp
-         Ft/p93cbC/8kyPZg32bwmA/unRLHEqNZGAE1KMC7+4RT/+0KkC7AUnamxOWez+xqLDVC
-         gORQJu62bpuDRPeTh9e92RAf06ZleLx/0J2iJ3bFGlT/pfepqQTwN1ePfl7QUfPH79Q2
-         sRpryAz5510DQ2XTNYHAKJb7ezAKGJ0GoqFYfL598AoZl3OSOfcD9U19xa0gadzOEroN
-         KC6sUfwZCpfghpooBg9fSKXZEbpSPjfUfZsTvcrJQESxEtTWbRcCtfk5WveCDf+o6lF8
-         +lSQ==
-X-Received: by 10.68.201.10 with SMTP id jw10mr9891521pbc.25.1397669407680;
-        Wed, 16 Apr 2014 10:30:07 -0700 (PDT)
+        bh=K72hRkAjk90gjIKgkiC/Iy0jQYqK1WqES5cWl6X7QN0=;
+        b=RMbCdfDmmp26EMvatwKEfV2Fh8lgSq52hKerFHJGpsPyFOt+COANC+QzsOpQBqHmKj
+         XD3tM1qhxg3TrWUYLm40Qu87MpApqfpP4310e2HOFjew54fGDvZ8st95bPhUmZysGFWE
+         3kE8NeD5nsXYD6D6Q3uTbGpXTpdVTPanWLdE1hj8RTHsISULSrQBQjysKjymOxM98Gcn
+         FDLFxJdQPPItLyqgEfGHHBaWLjNPGh4IwSaD/xU2QEVBfu9kFkm7DyRAqtZbtZAFnR4T
+         VvvIVXytsv9ubQsXhFxCM7nk2x+oHVbNzSLX2Caqpu+SQrG9xIIPfYvVDKWbmqCFG39Q
+         JKRQ==
+X-Received: by 10.66.122.1 with SMTP id lo1mr10020570pab.118.1397669418583;
+        Wed, 16 Apr 2014 10:30:18 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id z3sm113974244pas.15.2014.04.16.10.30.05
+        by mx.google.com with ESMTPSA id z3sm113974244pas.15.2014.04.16.10.30.17
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 16 Apr 2014 10:30:06 -0700 (PDT)
+        Wed, 16 Apr 2014 10:30:18 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1397669398-25410-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246361>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -67,33 +67,21 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- Documentation/install-webdoc.sh |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ contrib/examples/git-revert.sh |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/install-webdoc.sh b/Documentation/install-webdoc.sh
-index 76d69a9..ed8b4ff 100755
---- a/Documentation/install-webdoc.sh
-+++ b/Documentation/install-webdoc.sh
-@@ -18,17 +18,17 @@ do
- 	else
- 		echo >&2 "# install $h $T/$h"
- 		rm -f "$T/$h"
--		mkdir -p `dirname "$T/$h"`
-+		mkdir -p $(dirname "$T/$h")
- 		cp "$h" "$T/$h"
- 	fi
- done
--strip_leading=`echo "$T/" | sed -e 's|.|.|g'`
-+strip_leading=$(echo "$T/" | sed -e 's|.|.|g')
- for th in \
- 	"$T"/*.html "$T"/*.txt \
- 	"$T"/howto/*.txt "$T"/howto/*.html \
- 	"$T"/technical/*.txt "$T"/technical/*.html
- do
--	h=`expr "$th" : "$strip_leading"'\(.*\)'`
-+	h=$(expr "$th" : "$strip_leading"'\(.*\)')
- 	case "$h" in
- 	RelNotes-*.txt | index.html) continue ;;
- 	esac
+diff --git a/contrib/examples/git-revert.sh b/contrib/examples/git-revert.sh
+index 6bf155c..7e2aad5 100755
+--- a/contrib/examples/git-revert.sh
++++ b/contrib/examples/git-revert.sh
+@@ -137,7 +137,7 @@ cherry-pick)
+ 		q
+ 	}'
+ 
+-	logmsg=`git show -s --pretty=raw --encoding="$encoding" "$commit"`
++	logmsg=$(git show -s --pretty=raw --encoding="$encoding" "$commit")
+ 	set_author_env=`echo "$logmsg" |
+ 	LANG=C LC_ALL=C sed -ne "$pick_author_script"`
+ 	eval "$set_author_env"
 -- 
 1.7.10.4
