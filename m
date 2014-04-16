@@ -1,67 +1,137 @@
-From: Frank Ammeter <git@ammeter.ch>
-Subject: Re: wrong handling of text git attribute leading to files incorrectly reported as modified
-Date: Wed, 16 Apr 2014 13:49:02 +0200
-Message-ID: <B3DF4E4A-F740-4588-AFD5-74D99E5299F5@ammeter.ch>
-References: <E8A9F28E-FF68-4899-B02C-DB7A2C66F38A@ammeter.ch> <534852D4.5070608@web.de> <D552B854-59FB-406A-8CDE-3A1269CD0F6E@ammeter.ch> <CANUGeEYoS+t57jfpEoZE-2u_cD1uOD5pdp=yF--Rhpb9z91qxQ@mail.gmail.com> <xmqqob02jnhk.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0 (Mac OS X Mail 7.2 \(1874\))
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Brandon McCaig <bamccaig@gmail.com>,
-	=?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: On "interpret-trailers" standalone tool
+Date: Wed, 16 Apr 2014 14:27:03 +0200
+Message-ID: <CAP8UFD0w9xUwuk9UZ_mu=qvjtYN1r5skidweruM8t1KbfQpQyA@mail.gmail.com>
+References: <xmqq61mi1djt.fsf@gitster.dls.corp.google.com>
+	<20140412.213003.73509455950485398.chriscool@tuxfamily.org>
+	<xmqqy4z7lhc4.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+	git <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 16 13:49:16 2014
+X-From: git-owner@vger.kernel.org Wed Apr 16 14:27:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WaOL6-0004NN-7T
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Apr 2014 13:49:16 +0200
+	id 1WaOwA-0006yN-VQ
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Apr 2014 14:27:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755257AbaDPLtK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Apr 2014 07:49:10 -0400
-Received: from mxout013.mail.hostpoint.ch ([217.26.49.173]:44216 "EHLO
-	mxout013.mail.hostpoint.ch" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755202AbaDPLtI convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Apr 2014 07:49:08 -0400
-Received: from [10.0.2.46] (helo=asmtp013.mail.hostpoint.ch)
-	by mxout013.mail.hostpoint.ch with esmtp (Exim 4.82 (FreeBSD))
-	(envelope-from <git@ammeter.ch>)
-	id 1WaOKv-0006vR-76; Wed, 16 Apr 2014 13:49:05 +0200
-Received: from [91.190.10.159] (helo=[192.168.0.105])
-	by asmtp013.mail.hostpoint.ch with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.82 (FreeBSD))
-	(envelope-from <git@ammeter.ch>)
-	id 1WaOKv-0003Yq-4e; Wed, 16 Apr 2014 13:49:05 +0200
-X-Authenticated-Sender-Id: git@ammeter.ch
-In-Reply-To: <xmqqob02jnhk.fsf@gitster.dls.corp.google.com>
-X-Mailer: Apple Mail (2.1874)
+	id S1755369AbaDPM1Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Apr 2014 08:27:24 -0400
+Received: from mail-vc0-f180.google.com ([209.85.220.180]:38208 "EHLO
+	mail-vc0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754870AbaDPM1E (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Apr 2014 08:27:04 -0400
+Received: by mail-vc0-f180.google.com with SMTP id lf12so10453011vcb.39
+        for <git@vger.kernel.org>; Wed, 16 Apr 2014 05:27:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=8fon8mS3axoirjhbdEml90cdGAGgFMK7KVE5KGZ2Tug=;
+        b=zN3ifjrHI6RfkGvICas2OS/oRIsAnqM19nlsdWGrn5qf9bUtDfzQOoI90i1ODu4tBR
+         3Cg3INL6olE5/KVLZwKao6oxDLExBRO5Vn5nI0AjlQWmjlpZ1ZYjwOzcUqencpjb+QNN
+         4mcCIrjiZoXiVw32qfX9RvBukOFdXt/4HMoTeG4hFXN1YnES9bCs1k5xWKFQqdEzeVVQ
+         UNUe+lhGLKKCj+ZULB44YM9iBmyNSDe5aC5WzpFXG3BmqoFMmbOqC8/InTrAb+QICOdh
+         Yq1guCdCJutYJf9hThKxrqtP+ta9w11CjfCcfBO6ttWMvFq0SjWrOOjQB3Xv+SKbb34W
+         GHhw==
+X-Received: by 10.220.92.135 with SMTP id r7mr2814051vcm.11.1397651223130;
+ Wed, 16 Apr 2014 05:27:03 -0700 (PDT)
+Received: by 10.58.137.166 with HTTP; Wed, 16 Apr 2014 05:27:03 -0700 (PDT)
+In-Reply-To: <xmqqy4z7lhc4.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246332>
 
-Am 15.04.2014 um 23:23 schrieb Junio C Hamano <gitster@pobox.com>:
+On Mon, Apr 14, 2014 at 11:41 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Christian Couder <chriscool@tuxfamily.org> writes:
+>
+>> Yeah, except that we could add for example a '-o' option that would
+>> take a directory as argument and that would mean that the command
+>> should operate on all the files in this directory. It would be like
+>> the -o option of the format-patch command.
+>
+> For output for which users do not know offhand what files are to be
+> produced, giving a single directory with -o makes tons of sense, but
+> for input, naming each individual file (and with help with shell
+> globs *) is a lot more natural UNIX tool way, I would think.
 
-> Brandon McCaig <bamccaig@gmail.com> writes:
->=20
->> That is for your benefit, and for easily sharing that configuration
->> with collaborators. Git only cares that the file exists in your
->> working tree at run-time.
->=20
-> It is a lot more than "for sharing".  If you made .gitignore only
-> effective after it gets committed, you cannot test your updated
-> version of .gitignore is correct before committing the change.
+Yeah, but the "git interpret-trailers" command is a special, because,
+if it takes files as arguments, then it is logical that its output
+would be also files and not stdout. (See also at the end of this
+message.)
 
-Ok, I can follow that logic for .gitignore, but I was talking about .gi=
-tattributes and I always thought that .gitattributes as belonging to th=
-e repository, since it affects a) how files are checked out and b) how =
-they are stored inside the repository.
-If committing .gitattributes were only for sharing convenience, git cou=
-ldn=92t decide whether to convert line endings when checking out a file=
-=2E The same behavior doesn=92t apply to .gitignore, because git will c=
-heckout a file that was added even though it matches an ignore pattern =
-in .gitignore.
+> "Take
+> everything from this directory" cannot be substitute for that, even
+> though the reverse (i.e. by naming the input files with "dir/*") is
+> true.  It is not a viable replacement.
+>
+>> First, if you think that the command might often be used along with
+>> format-patch,
+>
+> ... I am not singling out format-patch output.  Any text file/stream
+> that has the commit log message may benefit from the "trailers" filter,
+> and format-patch output is merely one very obvious example.  As to
+> the detection of the end of commit log message, the current "EOF is
+> where the log message ends (but we would remote trailing blank line)"
+> can easily be updated to "EOF or the first three-dash line".
+
+Ok, I think that it's an interesting feature anyway, so I can add it
+now instead of later.
+
+>> Third, if trailers arguments are passed to the command using an
+>> option like "-z token=value" or "-z token:value", it would be nice
+>> to the user for consistency if the same option could be used when
+>> passing the same arguments to "git commit" and perhaps other
+>> commands like "git rebase", "git cherry-pick" and so on. This
+>> means that we now have to choose carefully the name of this
+>> option. Perhaps we can just give it a long name now like --trailer
+>> and care later about a short name,...
+>
+> Absolutely.  That is a very sensible way to go.
+
+Ok, I will use "--trailer" then. As I said in my previous message,
+this unfortunately means that the command will not be very user
+friendly until we integrate it with other commands like "git commit"
+and find a short option name that hopefully work for all the commands.
+
+>> Fourth, some users might want the command to be passed some files as
+>> input, but they might not want the command to modify these input
+>> files. They might prefer the command to write its ouput into another
+>> set of output files. Maybe a syntax like cat or sed is not very well
+>> suited for this kind of use, while having a -o option for the output
+>> directory and a -i option for the input directory (if different from
+>> the output dir) would be nicer.
+>
+> Sure.  I would expect we would require something like Perl's '-i'
+> (in-place rewrite) option for this sequence to really work:
+>
+>         git format-patch -o there -5
+>         git that-command --options -i there/*
+>
+> and without, I would expect the output to come to its standard
+> output.
+
+If the input comes from stdin, then I agree that the command should be
+a filter, so its output should be on stdout. But if the input comes
+from files given as arguments, then I would say that the command
+should behave as an editor and by default it should edit its input
+file inplace. Its input and output files should be different only if
+it is given one or more special option,
+
+Otherwise the example you gave:
+
+    $ git format-patch -5 --cover-letter -o +my-series/ my-topic
+    $ git interpret-trailers "some args" ./+my-series/0*.patch
+
+would result in having on stdout all the patches edited by "git
+interpret-trailers".
+How would people could then easily send these edited patches?
+
+Thanks,
+Christian.
