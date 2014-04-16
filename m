@@ -1,55 +1,51 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: =?UTF-8?q?=5BPATCH=20014/14=5D=20t9362-mw-to-git-utf8=2Esh=3A=20use=20the=20=24=28=20=2E=2E=2E=20=29=20construct=20for=20command=20substitution?=
-Date: Wed, 16 Apr 2014 10:29:58 -0700
-Message-ID: <1397669398-25410-14-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 002/14] install-webdoc.sh: use the $( ... ) construct for command substitution
+Date: Wed, 16 Apr 2014 10:29:46 -0700
+Message-ID: <1397669398-25410-2-git-send-email-gitter.spiros@gmail.com>
 References: <1397669398-25410-1-git-send-email-gitter.spiros@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 16 19:31:36 2014
+X-From: git-owner@vger.kernel.org Wed Apr 16 19:31:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WaTgN-00079G-QY
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Apr 2014 19:31:36 +0200
+	id 1WaTgV-0007ID-08
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Apr 2014 19:31:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754752AbaDPRbU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Apr 2014 13:31:20 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:42437 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755331AbaDPRaW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Apr 2014 13:30:22 -0400
-Received: by mail-pa0-f42.google.com with SMTP id fb1so11260872pad.1
-        for <git@vger.kernel.org>; Wed, 16 Apr 2014 10:30:21 -0700 (PDT)
+	id S1754774AbaDPRaM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Apr 2014 13:30:12 -0400
+Received: from mail-pb0-f49.google.com ([209.85.160.49]:53820 "EHLO
+	mail-pb0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752680AbaDPRaI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Apr 2014 13:30:08 -0400
+Received: by mail-pb0-f49.google.com with SMTP id jt11so11093766pbb.36
+        for <git@vger.kernel.org>; Wed, 16 Apr 2014 10:30:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=tm+4BVPnLK6LE7PenpxxkbeX+peZwDdmjWYjmYGO2Uw=;
-        b=w+FSK0guS1vywrHiEoSBtPI6D2sdGgpp4IqhVF/dq4rwbM3yPc/TOG/foLmuY2oUpM
-         fKm3ngTX4XyOoQUAcdD4W6s7CP9A98nRLu0M0DcI9H1EBJf+kstQk6DdyD+1k0zrue5j
-         eUgiWfRisWNcoKQNtORdu2Hq0eVdYFHwONZGgTdhdo8vIxSZnHifKTdQ6dyIWm1G43Qo
-         AflRo2GOgob6etvYpVINHUbYOuBQo4EAt2vfgDr25vZ524FNO7Xw5ufcElPVuP7sRWmX
-         sxClzij/0n/GrO5mKGSu6u1+yvhpkZA3Ck5017OWzqwb6kxASANVEFPwDQDsXmiO3ss7
-         Wkdg==
-X-Received: by 10.66.189.226 with SMTP id gl2mr9901964pac.65.1397669421939;
-        Wed, 16 Apr 2014 10:30:21 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=KSVfH5KRZMQqmyo8aOE5E3dsC5zYiquKpyAOzEJmCPs=;
+        b=YelHXs8RRJ11b/Ibh7J/dqFSYJHX0ULEkvBjX32oX287/kn3ITf71c1mNC3V+chonp
+         Ft/p93cbC/8kyPZg32bwmA/unRLHEqNZGAE1KMC7+4RT/+0KkC7AUnamxOWez+xqLDVC
+         gORQJu62bpuDRPeTh9e92RAf06ZleLx/0J2iJ3bFGlT/pfepqQTwN1ePfl7QUfPH79Q2
+         sRpryAz5510DQ2XTNYHAKJb7ezAKGJ0GoqFYfL598AoZl3OSOfcD9U19xa0gadzOEroN
+         KC6sUfwZCpfghpooBg9fSKXZEbpSPjfUfZsTvcrJQESxEtTWbRcCtfk5WveCDf+o6lF8
+         +lSQ==
+X-Received: by 10.68.201.10 with SMTP id jw10mr9891521pbc.25.1397669407680;
+        Wed, 16 Apr 2014 10:30:07 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id z3sm113974244pas.15.2014.04.16.10.30.21
+        by mx.google.com with ESMTPSA id z3sm113974244pas.15.2014.04.16.10.30.05
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 16 Apr 2014 10:30:21 -0700 (PDT)
+        Wed, 16 Apr 2014 10:30:06 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1397669398-25410-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246359>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246360>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -71,25 +67,33 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- contrib/mw-to-git/t/t9362-mw-to-git-utf8.sh |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ Documentation/install-webdoc.sh |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/contrib/mw-to-git/t/t9362-mw-to-git-utf8.sh b/contrib/mw-t=
-o-git/t/t9362-mw-to-git-utf8.sh
-index 37021e2..6b0dbda 100755
---- a/contrib/mw-to-git/t/t9362-mw-to-git-utf8.sh
-+++ b/contrib/mw-to-git/t/t9362-mw-to-git-utf8.sh
-@@ -70,8 +70,8 @@ test_expect_success 'The shallow option works with ac=
-cents' '
- 	test_path_is_file mw_dir_4/Main_Page.mw &&
- 	(
- 		cd mw_dir_4 &&
--		test `git log --oneline N=C3=A9o=C3=A0.mw | wc -l` -eq 1 &&
--		test `git log --oneline Main_Page.mw | wc -l ` -eq 1
-+		test $(git log --oneline N=C3=A9o=C3=A0.mw | wc -l) -eq 1 &&
-+		test $(git log --oneline Main_Page.mw | wc -l ) -eq 1
- 	) &&
- 	wiki_check_content mw_dir_4/N=C3=A9o=C3=A0.mw N=C3=A9o=C3=A0 &&
- 	wiki_check_content mw_dir_4/Main_Page.mw Main_Page
---=20
+diff --git a/Documentation/install-webdoc.sh b/Documentation/install-webdoc.sh
+index 76d69a9..ed8b4ff 100755
+--- a/Documentation/install-webdoc.sh
++++ b/Documentation/install-webdoc.sh
+@@ -18,17 +18,17 @@ do
+ 	else
+ 		echo >&2 "# install $h $T/$h"
+ 		rm -f "$T/$h"
+-		mkdir -p `dirname "$T/$h"`
++		mkdir -p $(dirname "$T/$h")
+ 		cp "$h" "$T/$h"
+ 	fi
+ done
+-strip_leading=`echo "$T/" | sed -e 's|.|.|g'`
++strip_leading=$(echo "$T/" | sed -e 's|.|.|g')
+ for th in \
+ 	"$T"/*.html "$T"/*.txt \
+ 	"$T"/howto/*.txt "$T"/howto/*.html \
+ 	"$T"/technical/*.txt "$T"/technical/*.html
+ do
+-	h=`expr "$th" : "$strip_leading"'\(.*\)'`
++	h=$(expr "$th" : "$strip_leading"'\(.*\)')
+ 	case "$h" in
+ 	RelNotes-*.txt | index.html) continue ;;
+ 	esac
+-- 
 1.7.10.4
