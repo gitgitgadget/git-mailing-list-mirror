@@ -1,51 +1,51 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 003/14] git-checkout.sh: use the $( ... ) construct for command substitution
-Date: Wed, 16 Apr 2014 10:29:47 -0700
-Message-ID: <1397669398-25410-3-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 004/14] git-clone.sh: use the $( ... ) construct for command substitution
+Date: Wed, 16 Apr 2014 10:29:48 -0700
+Message-ID: <1397669398-25410-4-git-send-email-gitter.spiros@gmail.com>
 References: <1397669398-25410-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 16 19:32:10 2014
+X-From: git-owner@vger.kernel.org Wed Apr 16 19:32:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WaTgo-00083m-9Q
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Apr 2014 19:32:02 +0200
+	id 1WaTh4-0008Us-2V
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Apr 2014 19:32:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754742AbaDPRaL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Apr 2014 13:30:11 -0400
-Received: from mail-pd0-f182.google.com ([209.85.192.182]:52395 "EHLO
-	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754421AbaDPRaJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Apr 2014 13:30:09 -0400
-Received: by mail-pd0-f182.google.com with SMTP id y10so10926450pdj.41
-        for <git@vger.kernel.org>; Wed, 16 Apr 2014 10:30:08 -0700 (PDT)
+	id S1754366AbaDPRcK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Apr 2014 13:32:10 -0400
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:59695 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754645AbaDPRaK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Apr 2014 13:30:10 -0400
+Received: by mail-pa0-f53.google.com with SMTP id ld10so11135040pab.12
+        for <git@vger.kernel.org>; Wed, 16 Apr 2014 10:30:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=yMOn4Yt4h9+1gegefHrVxtg9pKSoxZvSQ6nz27whxz0=;
-        b=L4SRhxCDv9M9N+95e6L3baLg+Q6ZsRA4DtlSmOcXGfiHbaodSD6m9UwgQp/ItKjnds
-         KHp54RooaZd2b1kuo1MpYAPYmk4ievGOSbtDT9KTun0ZCN5foHjbEExNXGmQFmaws0uR
-         K6kzntR3933Yr6RUh/BlgZRWuYQmvmR0bamrxYv+yWi31sx1Xbeo0Dml4++H19YYHWBP
-         IjTyZiBbhL+VgCwu7xTXHnqjn/B0jKIudoMN1q/RLzhX+xQFCcoTXXGo1SmEhPdjM2Nn
-         r32gUqt2vAY3m4Wfp+cbMH4a68SNsBFb3RaQek5dEz7INCLURi4XAVgo3J48ezJGbe97
-         l4lQ==
-X-Received: by 10.68.201.97 with SMTP id jz1mr9962240pbc.26.1397669408789;
-        Wed, 16 Apr 2014 10:30:08 -0700 (PDT)
+        bh=ZYEtfdcb51uHom6AZFIzv9k8W93fFtb5rDzAHxXE/lg=;
+        b=JN93/QGFdK0iBrXWdNSPtM42gedAJGMLIcCGsQy9jxe43AH0iuR8lbf98JFTRUEoTE
+         DUf/j0vyhQUipUrVIfrijAMNpCiQFr8ZhorjR2xChwwAI1Wec/a84OOL+nAMzR8k+a8D
+         89JLq3RbdWBHNvDclP5JW5oNSlNcuNojsxJqailLDpcqSy96NiUuHEmhYut+SfxNVq4F
+         02ZcTEUqqm7ELKLA+lSoqyE7GQkB9ZJZty+YUp2ws/uXSxhBA3aN1S+p6cyVbTd0uPRg
+         9S/ew07vJeWXWzcyl2LbV+u96sVo4pnYlfmMfymChLcKfsjYJOk9PKnFarCTLrGZiC6e
+         NXew==
+X-Received: by 10.66.124.137 with SMTP id mi9mr9831960pab.111.1397669410268;
+        Wed, 16 Apr 2014 10:30:10 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id z3sm113974244pas.15.2014.04.16.10.30.07
+        by mx.google.com with ESMTPSA id z3sm113974244pas.15.2014.04.16.10.30.08
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 16 Apr 2014 10:30:08 -0700 (PDT)
+        Wed, 16 Apr 2014 10:30:09 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1397669398-25410-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246365>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246366>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -67,48 +67,94 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- contrib/examples/git-checkout.sh |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ contrib/examples/git-clone.sh |   20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/contrib/examples/git-checkout.sh b/contrib/examples/git-checkout.sh
-index d2c1f98..683cae7 100755
---- a/contrib/examples/git-checkout.sh
-+++ b/contrib/examples/git-checkout.sh
-@@ -222,7 +222,7 @@ else
+diff --git a/contrib/examples/git-clone.sh b/contrib/examples/git-clone.sh
+index 547228e..b4c9376 100755
+--- a/contrib/examples/git-clone.sh
++++ b/contrib/examples/git-clone.sh
+@@ -40,7 +40,7 @@ eval "$(echo "$OPTIONS_SPEC" | git rev-parse --parseopt -- "$@" || echo exit $?)
  
- 	# Match the index to the working tree, and do a three-way.
- 	git diff-files --name-only | git update-index --remove --stdin &&
--	work=`git write-tree` &&
-+	work=$(git write-tree) &&
- 	git read-tree $v --reset -u $new || exit
+ get_repo_base() {
+ 	(
+-		cd "`/bin/pwd`" &&
++		cd "$(/bin/pwd)" &&
+ 		cd "$1" || cd "$1.git" &&
+ 		{
+ 			cd .git
+@@ -50,7 +50,7 @@ get_repo_base() {
+ }
  
- 	eval GITHEAD_$new='${new_name:-${branch:-$new}}' &&
-@@ -233,7 +233,7 @@ else
- 	# Do not register the cleanly merged paths in the index yet.
- 	# this is not a real merge before committing, but just carrying
- 	# the working tree changes along.
--	unmerged=`git ls-files -u`
-+	unmerged=$(git ls-files -u)
- 	git read-tree $v --reset $new
- 	case "$unmerged" in
- 	'')	;;
-@@ -269,7 +269,7 @@ if [ "$?" -eq 0 ]; then
+ if [ -n "$GIT_SSL_NO_VERIFY" -o \
+-	"`git config --bool http.sslVerify`" = false ]; then
++	"$(git config --bool http.sslVerify)" = false ]; then
+     curl_extra_args="-k"
+ fi
+ 
+@@ -70,7 +70,7 @@ clone_dumb_http () {
+ 	clone_tmp="$GIT_DIR/clone-tmp" &&
+ 	mkdir -p "$clone_tmp" || exit 1
+ 	if [ -n "$GIT_CURL_FTP_NO_EPSV" -o \
+-		"`git config --bool http.noEPSV`" = true ]; then
++		"$(git config --bool http.noEPSV)" = true ]; then
+ 		curl_extra_args="${curl_extra_args} --disable-epsv"
  	fi
- 	if test -n "$branch"
- 	then
--		old_branch_name=`expr "z$oldbranch" : 'zrefs/heads/\(.*\)'`
-+		old_branch_name=$(expr "z$oldbranch" : 'zrefs/heads/\(.*\)')
- 		GIT_DIR="$GIT_DIR" git symbolic-ref -m "checkout: moving from ${old_branch_name:-$old} to $branch" HEAD "refs/heads/$branch"
- 		if test -n "$quiet"
+ 	http_fetch "$1/info/refs" "$clone_tmp/refs" ||
+@@ -79,7 +79,7 @@ Perhaps git-update-server-info needs to be run there?"
+ 	test "z$quiet" = z && v=-v || v=
+ 	while read sha1 refname
+ 	do
+-		name=`expr "z$refname" : 'zrefs/\(.*\)'` &&
++		name=$(expr "z$refname" : 'zrefs/\(.*\)') &&
+ 		case "$name" in
+ 		*^*)	continue;;
+ 		esac
+@@ -88,7 +88,7 @@ Perhaps git-update-server-info needs to be run there?"
+ 		*)	continue ;;
+ 		esac
+ 		if test -n "$use_separate_remote" &&
+-		   branch_name=`expr "z$name" : 'zheads/\(.*\)'`
++		   branch_name=$(expr "z$name" : 'zheads/\(.*\)')
  		then
-@@ -282,7 +282,7 @@ if [ "$?" -eq 0 ]; then
- 		fi
- 	elif test -n "$detached"
- 	then
--		old_branch_name=`expr "z$oldbranch" : 'zrefs/heads/\(.*\)'`
-+		old_branch_name=$(expr "z$oldbranch" : 'zrefs/heads/\(.*\)')
- 		git update-ref --no-deref -m "checkout: moving from ${old_branch_name:-$old} to $arg" HEAD "$detached" ||
- 			die "Cannot detach HEAD"
- 		if test -n "$detach_warn"
+ 			tname="remotes/$origin/$branch_name"
+ 		else
+@@ -100,7 +100,7 @@ Perhaps git-update-server-info needs to be run there?"
+ 	http_fetch "$1/HEAD" "$GIT_DIR/REMOTE_HEAD" ||
+ 	rm -f "$GIT_DIR/REMOTE_HEAD"
+ 	if test -f "$GIT_DIR/REMOTE_HEAD"; then
+-		head_sha1=`cat "$GIT_DIR/REMOTE_HEAD"`
++		head_sha1=$(cat "$GIT_DIR/REMOTE_HEAD")
+ 		case "$head_sha1" in
+ 		'ref: refs/'*)
+ 			;;
+@@ -444,15 +444,15 @@ then
+ 	# a non-bare repository is always in separate-remote layout
+ 	remote_top="refs/remotes/$origin"
+ 	head_sha1=
+-	test ! -r "$GIT_DIR/REMOTE_HEAD" || head_sha1=`cat "$GIT_DIR/REMOTE_HEAD"`
++	test ! -r "$GIT_DIR/REMOTE_HEAD" || head_sha1=$(cat "$GIT_DIR/REMOTE_HEAD")
+ 	case "$head_sha1" in
+ 	'ref: refs/'*)
+ 		# Uh-oh, the remote told us (http transport done against
+ 		# new style repository with a symref HEAD).
+ 		# Ideally we should skip the guesswork but for now
+ 		# opt for minimum change.
+-		head_sha1=`expr "z$head_sha1" : 'zref: refs/heads/\(.*\)'`
+-		head_sha1=`cat "$GIT_DIR/$remote_top/$head_sha1"`
++		head_sha1=$(expr "z$head_sha1" : 'zref: refs/heads/\(.*\)')
++		head_sha1=$(cat "$GIT_DIR/$remote_top/$head_sha1")
+ 		;;
+ 	esac
+ 
+@@ -467,7 +467,7 @@ then
+ 		while read name
+ 		do
+ 			test t = $done && continue
+-			branch_tip=`cat "$GIT_DIR/$remote_top/$name"`
++			branch_tip=$(cat "$GIT_DIR/$remote_top/$name")
+ 			if test "$head_sha1" = "$branch_tip"
+ 			then
+ 				echo "$name"
 -- 
 1.7.10.4
