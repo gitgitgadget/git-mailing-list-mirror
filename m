@@ -1,51 +1,51 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 012/14] git-tag.sh: use the $( ... ) construct for command substitution
-Date: Wed, 16 Apr 2014 10:29:56 -0700
-Message-ID: <1397669398-25410-12-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 006/14] git-fetch.sh: use the $( ... ) construct for command substitution
+Date: Wed, 16 Apr 2014 10:29:50 -0700
+Message-ID: <1397669398-25410-6-git-send-email-gitter.spiros@gmail.com>
 References: <1397669398-25410-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 16 19:31:54 2014
+X-From: git-owner@vger.kernel.org Wed Apr 16 19:31:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WaTgf-0007gc-I0
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Apr 2014 19:31:53 +0200
+	id 1WaTgg-0007gc-38
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Apr 2014 19:31:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753322AbaDPRbg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Apr 2014 13:31:36 -0400
-Received: from mail-pd0-f172.google.com ([209.85.192.172]:52425 "EHLO
-	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755304AbaDPRaU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Apr 2014 13:30:20 -0400
-Received: by mail-pd0-f172.google.com with SMTP id p10so11033966pdj.3
-        for <git@vger.kernel.org>; Wed, 16 Apr 2014 10:30:20 -0700 (PDT)
+	id S1754831AbaDPRbl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Apr 2014 13:31:41 -0400
+Received: from mail-pa0-f51.google.com ([209.85.220.51]:36567 "EHLO
+	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752680AbaDPRaN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Apr 2014 13:30:13 -0400
+Received: by mail-pa0-f51.google.com with SMTP id kq14so11091245pab.24
+        for <git@vger.kernel.org>; Wed, 16 Apr 2014 10:30:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=1JDkMIG7YLhsiisJmd538yXtM581NobhvY4NitZjjzE=;
-        b=fymdZTGhNzf3y4+0xHoRfaW0KKMJhYyIBdVlze8F0wLfqgkWytHOruRJtHdPIhkbxA
-         731vC5AZYj7xM8Rvs49aKraX6UBOva7ShikzS1F3UjrCLPldGmldNhZqBy+by28NNoDD
-         P7Vo/bfHed88Vtu4TCMiwLXrnFARr0iLgJCZKLNV1vUD1nrVxZ+pzV+zmQQ98Xku8hTC
-         J37IQQbe1pKv6rygcbkpG9wLv0hcO/etzypt4QJKxW+EuNn3jNa0V2GBZ1N00DzveNyn
-         BsHlASU3hkkNWdyGzWQyNzdPD+e6mpoZb6yS150/hUB708nwNLeWzK1KFmM+sKgAB1Gf
-         6WXA==
-X-Received: by 10.66.233.9 with SMTP id ts9mr9908203pac.37.1397669419778;
-        Wed, 16 Apr 2014 10:30:19 -0700 (PDT)
+        bh=M5V2FE8Q05n++zu4HejLVu3vJuer0DNSC6YM4znLYPE=;
+        b=RzcGurgLxhgqWc0hYY6Psn+KCWU9Dqg8bNQ1HrAEwWrWAVp7DVLB1f3HSkOzcS0ine
+         gx9xOT3ZVJR6CFKLLtgDI2z3+iUkdTm6mMEJWFBbwfoFKeK+YlVe0WeHJNbEn/LNJedq
+         /+SJeZfkCtBKA42dzW3rRY5l2s1AsAWuKgV9gPBZ96jYsmq9RWn8njY1GpEAuSoUABgX
+         y4dftOfD6LMN3dHtoBbH4PM8ofpHlFssKRp6rdRUQZXIoH3ZNFLMBq/Zvfhpor/QPwU8
+         VJsYTimQb2QMtMrCnwLH5TFCSSbbIQa3GJcFsB0F6me+7LXvYpp6CuJ4SdMAkgeVexaM
+         +qaw==
+X-Received: by 10.66.191.39 with SMTP id gv7mr9854047pac.150.1397669412818;
+        Wed, 16 Apr 2014 10:30:12 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id z3sm113974244pas.15.2014.04.16.10.30.18
+        by mx.google.com with ESMTPSA id z3sm113974244pas.15.2014.04.16.10.30.11
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 16 Apr 2014 10:30:19 -0700 (PDT)
+        Wed, 16 Apr 2014 10:30:12 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1397669398-25410-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246363>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -67,21 +67,36 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- contrib/examples/git-tag.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ contrib/examples/git-fetch.sh |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/contrib/examples/git-tag.sh b/contrib/examples/git-tag.sh
-index 2c15bc9..1bd8f3c 100755
---- a/contrib/examples/git-tag.sh
-+++ b/contrib/examples/git-tag.sh
-@@ -156,7 +156,7 @@ prev=0000000000000000000000000000000000000000
- if git show-ref --verify --quiet -- "refs/tags/$name"
- then
-     test -n "$force" || die "tag '$name' already exists"
--    prev=`git rev-parse "refs/tags/$name"`
-+    prev=$(git rev-parse "refs/tags/$name")
- fi
- shift
- git check-ref-format "tags/$name" ||
+diff --git a/contrib/examples/git-fetch.sh b/contrib/examples/git-fetch.sh
+index a314273..5540709 100755
+--- a/contrib/examples/git-fetch.sh
++++ b/contrib/examples/git-fetch.sh
+@@ -67,7 +67,7 @@ do
+ 		keep='-k -k'
+ 		;;
+ 	--depth=*)
+-		shallow_depth="--depth=`expr "z$1" : 'z-[^=]*=\(.*\)'`"
++		shallow_depth="--depth=$(expr "z$1" : 'z-[^=]*=\(.*\)')"
+ 		;;
+ 	--depth)
+ 		shift
+@@ -262,12 +262,12 @@ fetch_per_ref () {
+       http://* | https://* | ftp://*)
+ 	  test -n "$shallow_depth" &&
+ 		die "shallow clone with http not supported"
+-	  proto=`expr "$remote" : '\([^:]*\):'`
++	  proto=$(expr "$remote" : '\([^:]*\):')
+ 	  if [ -n "$GIT_SSL_NO_VERIFY" ]; then
+ 	      curl_extra_args="-k"
+ 	  fi
+ 	  if [ -n "$GIT_CURL_FTP_NO_EPSV" -o \
+-		"`git config --bool http.noEPSV`" = true ]; then
++		"$(git config --bool http.noEPSV)" = true ]; then
+ 	      noepsv_opt="--disable-epsv"
+ 	  fi
+ 
 -- 
 1.7.10.4
