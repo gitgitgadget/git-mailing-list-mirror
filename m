@@ -1,49 +1,51 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 001/14] howto-index.sh: use the $( ... ) construct for command substitution
-Date: Wed, 16 Apr 2014 10:29:45 -0700
-Message-ID: <1397669398-25410-1-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 008/14] git-merge.sh: use the $( ... ) construct for command substitution
+Date: Wed, 16 Apr 2014 10:29:52 -0700
+Message-ID: <1397669398-25410-8-git-send-email-gitter.spiros@gmail.com>
+References: <1397669398-25410-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 16 19:30:22 2014
+X-From: git-owner@vger.kernel.org Wed Apr 16 19:30:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WaTfA-0004Wb-V8
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Apr 2014 19:30:21 +0200
+	id 1WaTfP-00056l-FT
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Apr 2014 19:30:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754974AbaDPRaN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Apr 2014 13:30:13 -0400
-Received: from mail-pd0-f178.google.com ([209.85.192.178]:65336 "EHLO
-	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752444AbaDPRaG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Apr 2014 13:30:06 -0400
-Received: by mail-pd0-f178.google.com with SMTP id x10so10945241pdj.23
-        for <git@vger.kernel.org>; Wed, 16 Apr 2014 10:30:05 -0700 (PDT)
+	id S1755309AbaDPRa1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Apr 2014 13:30:27 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:40658 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755022AbaDPRaP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Apr 2014 13:30:15 -0400
+Received: by mail-pa0-f42.google.com with SMTP id fb1so11260730pad.1
+        for <git@vger.kernel.org>; Wed, 16 Apr 2014 10:30:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=kEi0dT4h7EUJp4jgChfBiZn9T1xrt3qVcrOlPuf/2ys=;
-        b=A90KUdNDs8k5x5K5r0Ql+dtWrYbC8vOl95ACbbuKS56odes51w+oRuE1JaanNbk0fv
-         H3SVgOpFcZhVHoof0J+VQFqmOyPgcov6aT+Weig7DkICtLWG9IymW83WSId+ig2RF0JX
-         rJ2bYS4GAvvv1u1oTw7jOqrwbzfnokhgcW3YWjBm19hkOYkEW928Al2Pwo9oLB24uzCS
-         QvXGHhd5Ju/0CjN+qvgXBPGZiECC8pt4MV41m6BXjF9lC2ctU7K/AC/O8IOjR6FuNJPM
-         ZLSBVWjcfN6AlQVLXtKqhstHMJnrdxzVPB30jP2NX4lPN/k2wv3ySBDoRTrWFo50SGYH
-         Tf4A==
-X-Received: by 10.68.189.33 with SMTP id gf1mr9762426pbc.111.1397669405229;
-        Wed, 16 Apr 2014 10:30:05 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=ss/U1BuUXiKynDPYR3+/5eoMmCJXwLsyzUeciUPtfzI=;
+        b=CktakA30AP3aF0HvPLypE/reZykzktegJ9aD00rnEv6p7B44XfjUsaQ3vgn+U0DE2z
+         Jnp0K1FTg4j49lw3p3y+nKqdN4xTXmhDk71tdIEOG4EYphGHlzgIcMsyt+PQzNJ+ll6N
+         6DFld0Gi+78frG8J01TvFwbjRbF+8xa300goeiwzbvHJqboFBhT29kVm6eLvbBE6baaM
+         AzpbO0wh7SlyXeQzDbl6MZRZRc+qynDQ6N0sXgIifDCJLcNQeyT9c4HbdcY6+q+M6n7R
+         t/Y6ktrFJrz9Il8mIKj/1R1JgBJk4ayuVJl/ndP5D84vU1XUG2kRHkamq5gKasRnNE6n
+         AQ2Q==
+X-Received: by 10.66.149.231 with SMTP id ud7mr10070762pab.8.1397669415319;
+        Wed, 16 Apr 2014 10:30:15 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id z3sm113974244pas.15.2014.04.16.10.30.03
+        by mx.google.com with ESMTPSA id z3sm113974244pas.15.2014.04.16.10.30.14
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 16 Apr 2014 10:30:03 -0700 (PDT)
+        Wed, 16 Apr 2014 10:30:14 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
+In-Reply-To: <1397669398-25410-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246354>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -65,49 +67,30 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- Documentation/howto-index.sh |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ contrib/examples/git-merge.sh |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/howto-index.sh b/Documentation/howto-index.sh
-index a234086..167b363 100755
---- a/Documentation/howto-index.sh
-+++ b/Documentation/howto-index.sh
-@@ -11,8 +11,8 @@ EOF
- 
- for txt
- do
--	title=`expr "$txt" : '.*/\(.*\)\.txt$'`
--	from=`sed -ne '
-+	title=$(expr "$txt" : '.*/\(.*\)\.txt$')
-+	from=$(sed -ne '
- 	/^$/q
- 	/^From:[ 	]/{
- 		s///
-@@ -21,9 +21,9 @@ do
- 		s/^/by /
- 		p
- 	}
--	' "$txt"`
-+	' "$txt")
- 
--	abstract=`sed -ne '
-+	abstract=$(sed -ne '
- 	/^Abstract:[ 	]/{
- 		s/^[^ 	]*//
- 		x
-@@ -39,11 +39,11 @@ do
- 		x
- 		p
- 		q
--	}' "$txt"`
-+	}' "$txt")
- 
- 	if grep 'Content-type: text/asciidoc' >/dev/null $txt
- 	then
--		file=`expr "$txt" : '\(.*\)\.txt$'`.html
-+		file=$(expr "$txt" : '\(.*\)\.txt$').html
- 	else
- 		file="$txt"
- 	fi
+diff --git a/contrib/examples/git-merge.sh b/contrib/examples/git-merge.sh
+index a5e42a9..7e40f40 100755
+--- a/contrib/examples/git-merge.sh
++++ b/contrib/examples/git-merge.sh
+@@ -341,7 +341,7 @@ case "$use_strategies" in
+ '')
+ 	case "$#" in
+ 	1)
+-		var="`git config --get pull.twohead`"
++		var="$(git config --get pull.twohead)"
+ 		if test -n "$var"
+ 		then
+ 			use_strategies="$var"
+@@ -349,7 +349,7 @@ case "$use_strategies" in
+ 			use_strategies="$default_twohead_strategies"
+ 		fi ;;
+ 	*)
+-		var="`git config --get pull.octopus`"
++		var="$(git config --get pull.octopus)"
+ 		if test -n "$var"
+ 		then
+ 			use_strategies="$var"
 -- 
 1.7.10.4
