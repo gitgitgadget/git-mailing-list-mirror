@@ -1,51 +1,51 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 008/14] git-merge.sh: use the $( ... ) construct for command substitution
-Date: Wed, 16 Apr 2014 10:29:52 -0700
-Message-ID: <1397669398-25410-8-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 007/14] git-ls-remote.sh: use the $( ... ) construct for command substitution
+Date: Wed, 16 Apr 2014 10:29:51 -0700
+Message-ID: <1397669398-25410-7-git-send-email-gitter.spiros@gmail.com>
 References: <1397669398-25410-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 16 19:30:38 2014
+X-From: git-owner@vger.kernel.org Wed Apr 16 19:30:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WaTfP-00056l-FT
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Apr 2014 19:30:35 +0200
+	id 1WaTfX-0005MS-18
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Apr 2014 19:30:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755309AbaDPRa1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Apr 2014 13:30:27 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:40658 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755022AbaDPRaP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Apr 2014 13:30:15 -0400
-Received: by mail-pa0-f42.google.com with SMTP id fb1so11260730pad.1
-        for <git@vger.kernel.org>; Wed, 16 Apr 2014 10:30:15 -0700 (PDT)
+	id S1755356AbaDPRa0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Apr 2014 13:30:26 -0400
+Received: from mail-pd0-f173.google.com ([209.85.192.173]:36987 "EHLO
+	mail-pd0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754996AbaDPRaO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Apr 2014 13:30:14 -0400
+Received: by mail-pd0-f173.google.com with SMTP id z10so10973219pdj.18
+        for <git@vger.kernel.org>; Wed, 16 Apr 2014 10:30:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ss/U1BuUXiKynDPYR3+/5eoMmCJXwLsyzUeciUPtfzI=;
-        b=CktakA30AP3aF0HvPLypE/reZykzktegJ9aD00rnEv6p7B44XfjUsaQ3vgn+U0DE2z
-         Jnp0K1FTg4j49lw3p3y+nKqdN4xTXmhDk71tdIEOG4EYphGHlzgIcMsyt+PQzNJ+ll6N
-         6DFld0Gi+78frG8J01TvFwbjRbF+8xa300goeiwzbvHJqboFBhT29kVm6eLvbBE6baaM
-         AzpbO0wh7SlyXeQzDbl6MZRZRc+qynDQ6N0sXgIifDCJLcNQeyT9c4HbdcY6+q+M6n7R
-         t/Y6ktrFJrz9Il8mIKj/1R1JgBJk4ayuVJl/ndP5D84vU1XUG2kRHkamq5gKasRnNE6n
-         AQ2Q==
-X-Received: by 10.66.149.231 with SMTP id ud7mr10070762pab.8.1397669415319;
-        Wed, 16 Apr 2014 10:30:15 -0700 (PDT)
+        bh=b7FHArlI9WGgh/HC6xXFOH1ql5m+1MrGJtk+t3AedbU=;
+        b=JzpyUIEJyz6auu+k0TUHt3xs3lmAPacw5uttJk+G6SjUoo4O0aygrWRLFlsvTE6Kpe
+         yAbz4SDE78BvjNr0Gk2FXEtAx8ANyeRWrtCDSplrwSCihi3iko9Vg9nt1dcj3GJYyvNL
+         wHJTVwungvwpeK+YlSuLBWbELR4yK2XDoeiir90RdOztSQNhH7p03H3l5VwZozkp2F9/
+         BiSkjtxFLF4H98jlCt2doAHhRU7dlbtWCXpbt5qt9L2X/1BfiYmBTn18I62DU/x7l0f1
+         puF1nhp5W8mgCx/m2BlMu1ip+2dWDO2ZLlZHBPr0E8qVbsVQeARkVHDb0Yai4Gb6sb7Y
+         3CgA==
+X-Received: by 10.69.31.171 with SMTP id kn11mr9974038pbd.47.1397669414157;
+        Wed, 16 Apr 2014 10:30:14 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id z3sm113974244pas.15.2014.04.16.10.30.14
+        by mx.google.com with ESMTPSA id z3sm113974244pas.15.2014.04.16.10.30.12
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 16 Apr 2014 10:30:14 -0700 (PDT)
+        Wed, 16 Apr 2014 10:30:13 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1397669398-25410-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246355>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -67,30 +67,26 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- contrib/examples/git-merge.sh |    4 ++--
+ contrib/examples/git-ls-remote.sh |    4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/contrib/examples/git-merge.sh b/contrib/examples/git-merge.sh
-index a5e42a9..7e40f40 100755
---- a/contrib/examples/git-merge.sh
-+++ b/contrib/examples/git-merge.sh
-@@ -341,7 +341,7 @@ case "$use_strategies" in
- '')
- 	case "$#" in
- 	1)
--		var="`git config --get pull.twohead`"
-+		var="$(git config --get pull.twohead)"
- 		if test -n "$var"
- 		then
- 			use_strategies="$var"
-@@ -349,7 +349,7 @@ case "$use_strategies" in
- 			use_strategies="$default_twohead_strategies"
- 		fi ;;
- 	*)
--		var="`git config --get pull.octopus`"
-+		var="$(git config --get pull.octopus)"
- 		if test -n "$var"
- 		then
- 			use_strategies="$var"
+diff --git a/contrib/examples/git-ls-remote.sh b/contrib/examples/git-ls-remote.sh
+index fec70bb..2aa89a7 100755
+--- a/contrib/examples/git-ls-remote.sh
++++ b/contrib/examples/git-ls-remote.sh
+@@ -55,11 +55,11 @@ tmpdir=$tmp-d
+ case "$peek_repo" in
+ http://* | https://* | ftp://* )
+ 	if [ -n "$GIT_SSL_NO_VERIFY" -o \
+-		"`git config --bool http.sslVerify`" = false ]; then
++		"$(git config --bool http.sslVerify)" = false ]; then
+ 		curl_extra_args="-k"
+ 	fi
+ 	if [ -n "$GIT_CURL_FTP_NO_EPSV" -o \
+-		"`git config --bool http.noEPSV`" = true ]; then
++		"$(git config --bool http.noEPSV)" = true ]; then
+ 		curl_extra_args="${curl_extra_args} --disable-epsv"
+ 	fi
+ 	curl -nsf $curl_extra_args --header "Pragma: no-cache" "$peek_repo/info/refs" ||
 -- 
 1.7.10.4
