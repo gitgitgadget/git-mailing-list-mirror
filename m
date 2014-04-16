@@ -1,93 +1,147 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-rebase: Print name of rev when using shorthand
-Date: Wed, 16 Apr 2014 10:01:09 -0700
-Message-ID: <xmqqk3api4yy.fsf@gitster.dls.corp.google.com>
-References: <1397419474-31999-1-git-send-email-modocache@gmail.com>
-	<xmqqwqerogvr.fsf@gitster.dls.corp.google.com>
-	<CAN7MxmUikP6pVAj3cpDiSbFxawScTh5zKusPUe8SpkNbH=e6Aw@mail.gmail.com>
+Subject: Re: [PATCH v3] send-email: recognize absolute path on Windows
+Date: Wed, 16 Apr 2014 10:03:53 -0700
+Message-ID: <xmqqfvldi4ue.fsf@gitster.dls.corp.google.com>
+References: <1397635698-6252-1-git-send-email-kusmabite@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Brian Gesiak <modocache@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 16 19:02:15 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org,  msysgit@googlegroups.com,  johannes.schindelin@gmx.de,  j.sixt@viscovery.net
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: msysgit+bncBCG77UMM3EJRB7PPXKNAKGQEPSHNXEQ@googlegroups.com Wed Apr 16 19:03:59 2014
+Return-path: <msysgit+bncBCG77UMM3EJRB7PPXKNAKGQEPSHNXEQ@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-wg0-f61.google.com ([74.125.82.61])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WaTDy-0006DK-9R
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Apr 2014 19:02:14 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751197AbaDPRCJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Apr 2014 13:02:09 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39062 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750970AbaDPRCH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Apr 2014 13:02:07 -0400
+	(envelope-from <msysgit+bncBCG77UMM3EJRB7PPXKNAKGQEPSHNXEQ@googlegroups.com>)
+	id 1WaTFe-0001WY-Ko
+	for gcvm-msysgit@m.gmane.org; Wed, 16 Apr 2014 19:03:58 +0200
+Received: by mail-wg0-f61.google.com with SMTP id l18sf882478wgh.6
+        for <gcvm-msysgit@m.gmane.org>; Wed, 16 Apr 2014 10:03:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=9nfOW/4VEPz7AEZoBozRWO+I/aeshxesbwQt1urIhXg=;
+        b=H1cBfCkgYnmebJYGMpuGwp6xZ413oCVyEwK4yLkBfT22sXBTmhBdwiQKQI74YeWOnM
+         GCZ1dwvSA2bagPNeBZe0lOmPn+zJ1g1JIWwryDEUZTovhph9bpntmsBlcaAFrP+jH0M3
+         lFXvvC7Fu32faJAk3IwCKa7sWefHs34gLDKd5qKbx2tB+Ohl2YPHHr87bHndTLrqi8Uh
+         lWpi0Hp1LGHeWeBzQd6FJO2aYCrU4LTA6OeWUrj1zxY5CMRCVlFwCR/P1AdB/a2gQ3bF
+         /SsZ7WSir1DJJvumZxyInwUGpO7ILkMw1oDeVu8WlR69qHN2ryivAUgExqAUGULU2ITh
+         w2zQ==
+X-Received: by 10.152.115.231 with SMTP id jr7mr17970lab.34.1397667838357;
+        Wed, 16 Apr 2014 10:03:58 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.20.42 with SMTP id k10ls119248lae.58.gmail; Wed, 16 Apr
+ 2014 10:03:57 -0700 (PDT)
+X-Received: by 10.152.205.65 with SMTP id le1mr389884lac.7.1397667837121;
+        Wed, 16 Apr 2014 10:03:57 -0700 (PDT)
+Received: from smtp.pobox.com (b-pb-sasl-quonix.pobox.com. [208.72.237.35])
+        by gmr-mx.google.com with ESMTP id ga1si424814qcb.0.2014.04.16.10.03.57
+        for <msysgit@googlegroups.com>;
+        Wed, 16 Apr 2014 10:03:57 -0700 (PDT)
+Received-SPF: pass (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1CBE07C2AA;
-	Wed, 16 Apr 2014 13:02:07 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=cCj/VdG322pKewjVPv9zx/pnrWM=; b=XdurRM
-	Hb+u2VxVv3AM61KKV5Lnpwr3RuAaeXkKYc51aj5iXQukmJ/GBeua7oKtCQjGyJTn
-	IMyO/CMytoRxvA019MizV7Z0oFAX5IDMPEUtdEw69ogLAjlZCilnPnJkTCRWvFNb
-	28tq6B0fHGrcuyncax69Sb6jrjvQi2257P0Qg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ww5WuKCSuSu2s8/cph4o6gMXTxdk6PbH
-	x5RjNGgXA7UECp2VE/WjyWYnsBmjjshVlawX2rfHr+DyiCdYt2CICvsWzF4+r31N
-	UPQSC5qYqyr4z9aRasKhgANum6zddakzRuTsLROdh60+kkLi+ghDv5nOGTuH6eDX
-	HVXZOuKLvwE=
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CF2D37C352;
+	Wed, 16 Apr 2014 13:03:56 -0400 (EDT)
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F37737C2A9;
-	Wed, 16 Apr 2014 13:02:06 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B05137C351;
+	Wed, 16 Apr 2014 13:03:56 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 02D677C276;
-	Wed, 16 Apr 2014 13:01:10 -0400 (EDT)
-In-Reply-To: <CAN7MxmUikP6pVAj3cpDiSbFxawScTh5zKusPUe8SpkNbH=e6Aw@mail.gmail.com>
-	(Brian Gesiak's message of "Wed, 16 Apr 2014 17:19:41 +0900")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4CDD97C350;
+	Wed, 16 Apr 2014 13:03:55 -0400 (EDT)
+In-Reply-To: <1397635698-6252-1-git-send-email-kusmabite@gmail.com> (Erik
+	Faye-Lund's message of "Wed, 16 Apr 2014 10:08:18 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: B5F9002C-C588-11E3-A31B-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246346>
+X-Pobox-Relay-ID: 17E89BEE-C589-11E3-8CFA-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Original-Sender: gitster@pobox.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted
+ sender) smtp.mail=junio@pobox.com;       dkim=pass header.i=@pobox.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246347>
 
-Brian Gesiak <modocache@gmail.com> writes:
+Erik Faye-Lund <kusmabite@gmail.com> writes:
 
-> Personally, I've been using the "-" shorthand with "git checkout"
-> for a year or so, but only learned about "@{-1}" a few months ago.
-> I think those who use "@{-1}" are familiar enough with the concept
-> that they don't need to have the reference translated to a
-> symbolic full name. Users familiar with "-" might not be aware of
-> "@{-1}", however, so I'd prefer not to output it as we are
-> currently.
+> So let's manually check for these in that case, and fall back to
+> the File::Spec-helper on other platforms (e.g Win32 with native
+> Perl)
+> ...
+> +sub file_name_is_absolute {
+> +	my ($path) = @_;
+> +
+> +	# msys does not grok DOS drive-prefixes
+> +	if ($^O eq 'msys') {
+> +		return ($path =~ m#^/# || $path =~ m#[a-zA-Z]\:#)
 
-I do not understand that reasoning.
+Shouldn't the latter also be anchored at the beginning of the string
+with a leading "^"?
 
-The concept of "n-th prior checkout" (aka @{-n}) and "immediately
-previous checkout" (aka "-") are equivalent, even though the former
-may be more generic.
+> +	}
+> +
+> +	require File::Spec::Functions;
+> +	return File::Spec::Functions::file_name_is_absolute($path);
 
-You seem to be saying that those who understand the former are with
-superiour mental capacity in general than those who only know the
-latter, and they can always remember where they came from.  It
-sounds similar to an absurd claim (pulled out of thin-air only for
-illustration purposes) that French-speaking people are of superiour
-mind and do not need as much help with math as English speakers.
+We already "use File::Spec qw(something else)" at the beginning, no?
+Why not throw file_name_is_absolute into that qw() instead?
 
-> Furthermore, were we to translate "@{-1}", does that mean we
-> should also translate "@{-2}" or prior?
+> +}
+> +
+>  # Returns 1 if the message was sent, and 0 otherwise.
+>  # In actuality, the whole program dies when there
+>  # is an error sending a message.
+> @@ -1197,7 +1209,7 @@ X-Mailer: git-send-email $gitversion
+>  
+>  	if ($dry_run) {
+>  		# We don't want to send the email.
+> -	} elsif ($smtp_server =~ m#^/#) {
+> +	} elsif (file_name_is_absolute($smtp_server)) {
+>  		my $pid = open my $sm, '|-';
+>  		defined $pid or die $!;
+>  		if (!$pid) {
+> @@ -1271,7 +1283,7 @@ X-Mailer: git-send-email $gitversion
+>  		printf (($dry_run ? "Dry-" : "")."Sent %s\n", $subject);
+>  	} else {
+>  		print (($dry_run ? "Dry-" : "")."OK. Log says:\n");
+> -		if ($smtp_server !~ m#^/#) {
+> +		if (!file_name_is_absolute($smtp_server)) {
+>  			print "Server: $smtp_server\n";
+>  			print "MAIL FROM:<$raw_from>\n";
+>  			foreach my $entry (@recipients) {
+> -- 
+> 1.9.0.msysgit.0
+>
+> -- 
 
-Surely, why not.  If a user is so forgetful to need help remembering
-where s/he was immediately before, wouldn't it be more helpful to
-give "here is where you were" reminder for older ones to allow them
-to double check they specified the right thing and spot possible
-mistakes?
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
-I can buy "that would be a lot more work, and I do not want to do it
-(or I do not think I can solve it in a more general way)", though.
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
