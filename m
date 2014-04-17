@@ -1,500 +1,213 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [RFC] t7410: 210 tests for various 'git submodule update' scenarios
-Date: Thu, 17 Apr 2014 13:42:42 +0200
-Message-ID: <CALKQrgfF2Kkk4itvtm_yU9qm9GrJf-DWQQG8y+CAwisOUqY=eg@mail.gmail.com>
-References: <1397609688-25634-1-git-send-email-johan@herland.net>
-	<20140416172153.GW21805@odin.tremily.us>
+From: Torsten =?utf-8?q?B=C3=B6gershausen?= <tboegi@web.de>
+Subject: [PATCH v2] utf8.c: partially update to version 6.3
+Date: Thu, 17 Apr 2014 13:47:47 +0200
+Message-ID: <201404171347.47528.tboegi@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git mailing list <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: "W. Trevor King" <wking@tremily.us>
-X-From: git-owner@vger.kernel.org Thu Apr 17 13:42:59 2014
+Cc: tboegi@web.de, Kevin Bracey <kevin@bracey.fi>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 17 13:48:04 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WakiX-0006yy-DX
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Apr 2014 13:42:58 +0200
+	id 1WaknS-00086j-PB
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Apr 2014 13:48:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756082AbaDQLmw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Apr 2014 07:42:52 -0400
-Received: from mail12.copyleft.no ([188.94.218.224]:41641 "EHLO
-	mail12.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754656AbaDQLmt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 17 Apr 2014 07:42:49 -0400
-Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
-	by mail12.copyleft.no with esmtp (Exim 4.76)
-	(envelope-from <johan@herland.net>)
-	id 1WakiN-0006Tv-9S
-	for git@vger.kernel.org; Thu, 17 Apr 2014 13:42:47 +0200
-Received: from mail-pb0-f44.google.com ([209.85.160.44])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1WakiM-000OdA-Ro
-	for git@vger.kernel.org; Thu, 17 Apr 2014 13:42:47 +0200
-Received: by mail-pb0-f44.google.com with SMTP id rp16so292889pbb.3
-        for <git@vger.kernel.org>; Thu, 17 Apr 2014 04:42:42 -0700 (PDT)
-X-Received: by 10.68.110.4 with SMTP id hw4mr14966692pbb.147.1397734962584;
- Thu, 17 Apr 2014 04:42:42 -0700 (PDT)
-Received: by 10.70.48.232 with HTTP; Thu, 17 Apr 2014 04:42:42 -0700 (PDT)
-In-Reply-To: <20140416172153.GW21805@odin.tremily.us>
+	id S1751718AbaDQLr6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Apr 2014 07:47:58 -0400
+Received: from mout.web.de ([212.227.15.14]:62925 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751331AbaDQLr5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 Apr 2014 07:47:57 -0400
+Received: from appes.localnet ([78.72.74.102]) by smtp.web.de (mrweb002) with
+ ESMTPSA (Nemesis) id 0MEmOw-1Wl8mf1H46-00FyKU; Thu, 17 Apr 2014 13:47:55
+ +0200
+X-Provags-ID: V03:K0:b8CSSDU4W4ZXS0v1wPASzOL7hnag6laeBZOsy95nVRcLglpaJPF
+ zDbKgesHVXWVVLqiDzIFSZ7BGg0CUNYdKatXmQqbxnMrCtL1Q628nBTdW4dFI329pevAhvV
+ G6eIZLV5UI6VqQ+SzX8a/WkTPSQT1TZYOdWIMCxcBZwAZh0M4faW3wlPgrOmTouArMmPDC2
+ VcorTdqh3kcvFx/q3+qEA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246415>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246416>
 
-TL;DR: I believe the update-related submodule.<name>.* options
-(.branch, .update, .url, and even the --remote option) are
-slowly growing into a separate DSL for specfying how to update
-submodules. This adds a confusing and opaque layer in front of
-what is essentially git commands run by "git submodule update"
-within the submodule. Instead of adding more submodule.<name>.*
-options to handle even more use cases, we should scale back on
-the config options, and allow the user to specify what should
-happen on "git submodule update" in the existing language of
-git commands.
-
-On Wed, Apr 16, 2014 at 7:21 PM, W. Trevor King <wking@tremily.us> wrot=
-e:
-> On Wed, Apr 16, 2014 at 02:54:48AM +0200, Johan Herland wrote:
->> This is a work-in-progress to flesh out (and promote discussion abou=
-t)
->> the expected behaviors for all possible scenarios in which
->> 'git submodule update' might be run.
->
-> This is lovely :).
-
-Thanks!
-
-Having been active in git-submodule development a few years ago,
-I thought I had a fairly firm grasp of most details regarding
-submodules, but when I recently tried to explain to someone how
-"git submodule update" was supposed to work, I quickly found that
-I had forgotten a lot, and that git-submodule had also changed.
-After (albeit casually) reading the docs, I still didn't feel much
-wiser, and this humongous testcase is sort of my ultimate attempt
-to regain some understanding.
-
-So far, my impression is that there are too many details/variables
-and too much state to be able to sanely comprehend what is the intended
-behavior in all cases, much less document in a way that is approachable
-to regular users...
-
->> +#  - current state of submodule:
->> +#     ?.?.?.1 - not yet cloned
->> +#     ?.?.?.2 - cloned, detached, HEAD =3D=3D gitlink
->> +#     ?.?.?.3 - cloned, detached, HEAD !=3D gitlink
->> +#     ?.?.?.4 - cloned, on branch foo (exists upstream), HEAD =3D=3D=
- gitlink
->> +#     ?.?.?.5 - cloned, on branch foo (exists upstream), HEAD !=3D =
-gitlink
->> +#     ?.?.?.6 - cloned, on branch bar (MISSING upstream), HEAD =3D=3D=
- gitlink
->> +#     ?.?.?.7 - cloned, on branch bar (MISSING upstream), HEAD !=3D=
- gitlink
->
-> The remote branches should only matter for the initial clone and
-> --remote updates.  Also, only the configured submodule.<name>.branch
-> (your first axis) should be checked; the locally checked-out submodul=
-e
-> branch shouldn't matter.
-
-Yes, I realized that while working out the various cases, but it was
-not at all obvious from the start, given that the config option is
-called submodule.<name>.branch and not submodule.<name>.upstream or
-similar (which might prevent a casual user from misinterpreting the
-option as having something to do with the current local branch in the
-submodule). See D6 for more discussion about the naming of .branch.
-
-In general, I experimented with a few different ways of organizing the
-axes to get a "flow" of testcases that more naturally "revealed" the
-behavior of "git submodule update", but I haven't found a good
-organization, yet. I suspect there is none...
-
->> +# T2: Test with submodule.<name>.url !=3D submodule's remote.origin=
-=2Eurl. Does
->> +#     "submodule update --remote" sync with submodule.<name>.url, o=
-r with the
->> +#     submodule's origin? (or with the submodule's current branch's=
- upstream)?
->
-> All fetches should currently use the submodule's remote.origin.url.
-> submodule.<name>.url is only used for the initial clone (*.*.*.1), an=
-d
-> never referenced again.  This would change using my tightly-bound
-> submodule proposal [1], where a difference between
-> submodule.<name>.url and the submodule's @{upstream} URL would be
-> trigger a dirty-tree condition (for folks with tight-bind syncing
-> enabled) from which you couldn't update before resolving the
-> difference.
-
-Ok. As stated above, I am worried about the amount of duplicated
-state between the superproject's submodule config (which itself is
-split between .gitmodules and .git/config) and the submodule's own
-config. And from the above paragraph, I suspect two more dimensions
-need to be added to the test matrix:
-
- - submodule's remote.origin.url =3D=3D/!=3D submodule.<name>.url
-
- - "tightly-bound submodule" is enabled/disabled
-
-Even if we might successfully deal with the duplicate state (and the
-exploding test matrix), it will certainly not be easy to
-describe/document the intended behavior in a way that's simple to
-grasp and straightforward to use.
-
-We should instead seek ways to minimize the duplication of state.
-If it is indeed the case that several submodule.<name>.* values in the
-superproject are only consulted _once_ (when cloning the submodule),
-we should make it obvious that they will not be used after the clone
-is done. Similarly, we should make it obvious that the update-related
-options only apply exactly when "git submodule update" is run.
-
-What about something like this:
-
- - submodule.<name>.create: The command that will be used by
-   "git submodule update" to initially populate the contents of
-   the submodule. The command is run from within the submodule
-   directory, and the following environment variables are available:
-
-    - $SUPER_URL: The URL of the superproject's current upstream
-      remote.
-
-    - $SUPER_HEAD: The current value of the superproject's HEAD.
-      Typically a refname, but may be commit id (if detached).
-
-    - $GITLINK: The current value of the superproject's gitlink
-      for this submodule.
-
-   Example values for submodule.<name>.create:
-
-    - 'git clone -n $SUPER_URL/../sub.git . && git reset --hard $GITLIN=
-K'
-      This clones from a relative submodule URL (by using $SUPER_URL),
-      and then does a detached checkout of $GITLINK. This would be
-      equivalent to the current "checkout-mode".
-
-    - 'git clone -n git://url.to/sub.git . && git checkout dev-branch'
-      This clones from an absolute submodule URL, and then (assuming
-      "dev-branch" exists upstream, which triggers a checkout's DWIM
-      behavior) creates a local "dev-branch" with origin/dev-branch
-      as its upstream. This would be a suitable start point for
-      developing on "dev-branch" in the submodule.
-
-    - 'git clone -n -c branch.autosetuprebase=3Dremote git://url.to/sub=
-=2Egit . \
-       && git checkout dev-branch'
-      Same as above, but prepares for a rebase-style workflow instead.
-
- - submodule.<name>.update: The command that will be run within the
-   already-existing submodule by "git submodule update". The same
-   enviroment variables as above are available. Example values for
-   submodule.<name>.update:
-
-    - 'git reset --hard $GITLINK'
-      Equivalent to checkout-mode (without --remote).
-
-    - 'git fetch && git reset --hard origin/HEAD'
-      Equivalent to checkout-mode with --remote.
-
-    - 'git merge $GITLINK'
-      Equivalent to merge-mode (without --remote).
-
-    - 'git pull origin next'
-      Equivalent to merge-mode with --remote and .branch =3D=3D next.
-
-    - 'git rebase $GITLINK'
-      Equivalent to rebase-mode (without --remote)
-
-    - 'git pull --rebase origin pu'
-      Equivalent to rebase-mode with --remote and .branch =3D=3D pu.
-
-    - 'git pull'
-      Defer completely to the submodule's own config.
-
-Pros/Cons:
-
- Pro: It is obvious to everybody exactly what will happen when
-      "git submodule update" is run.
-
- Pro: We no longer duplicate state with the submodule's config.
-      Instead, it is obvious when and how these options modify
-      the submodule, and whether or not they operate independently
-      of the submodule's own config.
-
- Pro: We reuse the current "language" (of git commands and
-      command-line options) for describing how to perform updates,
-      instead of having to invent a duplicate (but terser) language
-      in the form of submodule.<name>.* options.
-
- Pro: With just a couple of options, we can obsolete most of the
-      existing submodule.<name>.* options:
-
-       - .branch =3D=3D $foo is replaced by "git pull origin $foo" in
-         the new .update command.
-
-       - .update =3D=3D none/checkout/merge/rebase is replaced by an
-         appropriate git command in the new .update command.
-
-       - .url becomes a 'clone' argument in the .create command.
-
-       - The --remote option is replaced by updating against remote
-         .branch instead of $GITLINK
-
- Pro: Allows for ultimate flexibility in handling submodule updates
-      without increasing the pressure to keep adding
-      submodule.<name>.* options.
-
- Con: Wildly backwards-incompatible with existing submodule.* configs.
-
- Con: Probably missing proper error handling and/or other handling of
-      corner cases in the above example commands.
-
- Con: A user who has copied/modified these options into his
-      superproject's .git/config will manually have to reconcile that
-      with any future updates to .gitmodules.
-
- Con: Too much information in each config option? Maybe consider using
-      hooks instead of config options?
-
->> +# D1: When submodule is already at right commit, checkout-mode curr=
-ently does
->> +#     nothing. Should it instead detach, even when no update is nee=
-ded?
->> +#     Affects: 1.2.1.4, 1.2.1.6, 2.2.1.4, 2.2.1.6, 3.2.1.4, 3.2.1.6
->
-> =E2=80=9CCheckout updates always leave a detached HEAD=E2=80=9D seems=
- easier to
-> explain, so I'm leaning that way.
-
-Yes, although I suspect different people using different workflows will
-have different (but valid) opinions on how this should be handled.
-Which is why I'm approaching the conclusion outlined in the TL;DR; i.e.
-that adding more submodule.<name>.* options (which often interacts
-with other options in complex ways) is probably NOT the way to go.
-
-Instead, we should recognize that people may want to have their
-submodules updated in so many different ways, that trying to encode it
-in a collection of submodule.<name>.* options is pointless. We can then
-provide something more flexible that reuses existing syntax, like the
-"free-form" options suggested above, or maybe a "submodule-update" hook
-that allows even more customization.
-
-Obviously, we should still have good defaults to deal with the most
-common cases, but the current set of options is growing too large to be
-understandable by most users.
-
->> +# D2: Should all/some of 1.3.*/1.4.* abort/error because we don't k=
-now what to
->> +#     merge/rebase with (because .branch is unset)? Or is the curre=
-nt default
->> +#     to origin/HEAD OK?
->> +#     Affects: 1.3.*, 1.4.*
->
-> Maybe you mean 1.3.*, 1.4.*, and 1.5.* (merge, rebase, and !command)?
-> In all of these cases, we're integrating the current HEAD with the
-> gitlinked (*.*.1.*) or remote-tracking branch (*.*.2.*).  Since
-> submodule.<name>.branch defaults to master (and may be changed to HEA=
-D
-> after a long transition period? [2,3]), I don't think we should
-> abort/error in those cases.
-
-Yes, it seems we're settling on origin/HEAD as an acceptable default.
-
->> +# D3: When submodule is already at right commit, merge/rebase-mode =
-currently
->> +#     does nothing. Should it do something else (e.g. not leave sub=
-module
->> +#     detached, or checked out on the "wrong" branch (i.e. !=3D .br=
-anch))?
->> +#     (This discussion point is related to D1, D5 and D6)
->
-> =E2=80=9CNon-checkout updates always leave you on a branch=E2=80=9D s=
-eems easier to
-> explain, but I think we'd want to distinguish between the local branc=
-h
-> and the remote submodule.<name>.branch [1].  Lacking that distinction=
-,
-> I'd prefer to leave the checked-out branch unchanged.
-
-Yes, although again I feel that we are making policy decision based on
-what we _believe_ would be ok in our use cases. Adding a .local-branch
-config option to specify what happens to the local branch would maybe
-fix things for other use cases, but it would also compound the overall
-complexity of "submodule update". See above arguments for replacing
-config options with explicit git commands, to make "submodule update"
-more transparent.
-
->> +# D4: When 'submodule update' performs a clone to populate a submod=
-ule, it
->> +#     currently also creates a default branch (named after origin/H=
-EAD) in
->> +#     that submodule, EVEN WHEN THAT BRANCH WILL NEVER BE USED (e.g=
-=2E because
->> +#     we're in checkout-mode and submodule will always be detached)=
-=2E Is this
->> +#     good, or should the clone performed by 'submodule update' ski=
-p the
->> +#     automatic local branch creation?
->> +#     Affects: 1.2.*.1, 1.3.*.1, 1.4.*.1, 1.5.*.1,
->> +#              2.2.*.1, 2.3.*.1, 2.4.*.1, 2.5.*.1,
->> +#              3.2.1.1, 3.3.1.1, 3.4.1.1, 3.5.1.1
->
-> =E2=80=9CCheckout updates always leave a detached HEAD=E2=80=9D seems=
- easier to
-> explain, so I'm leaning that way.
-
-This is not about detached HEAD. This is about the "extra" local branch
-automatically created by "git clone". This branch is unused and
-unnecessary in checkout-mode, and only coincidentally useful in other
-modes (when .branch =3D=3D origin/HEAD).
-
-However, this is probably a git-clone problem, and not a git-submodule
-problem: I am surprised that "git clone --no-checkout" produces the
-same local branch (without checking it out). I would instead have
-expected the clone to only have the refs/remote/origin/* refs (and
-HEAD pointing to an unborn branch - like "git init" does).
-
->> +# D5: When in merge/rebase-mode, and 'submodule update' actually en=
-ds up doing
->> +#     a merge/rebase, that will happen on the current branch (or de=
-tached HEAD)
->> +#     and NOT on the configured (or default) .branch. Is this OK? S=
-hould we
->> +#     abort (or at least warn) instead? (In general, .branch seems =
-only to
->> +#     affect the submodule's HEAD when the submodule is first clone=
-d.)
->> +#     (This discussion point is related to D3 and D6)
->> +#     Affects: 1.3.1.3, 1.3.1.5, 1.3.1.7, 1.3.2.>=3D2,
->> +#              1.4.1.3, 1.4.1.5, 1.4.1.7, 1.4.2.>=3D2,
->> +#              2.3.1.3, 2.3.1.5, 2.3.1.7, 2.3.2.2, 2.3.2.4, 2.3.2.6=
-,
->> +#              2.4.1.3, 2.4.1.5, 2.4.1.7, 2.4.2.2, 2.4.2.4, 2.4.2.6
->> +#              3.3.1.3, 3.3.1.5, 3.3.1.7
->> +#              3.4.1.3, 3.4.1.5, 3.4.1.7
->
-> With the --remote option that added submodule.<name>.branch (which
-> eventually landed with v8 of that series [4]), I initially imagined i=
-t
-> as the name of the local branch [5], but transitioned to imagining it
-> as the name of the remote-tracking branch in v5 of that series [6].
-> There were no major logical changes between v5 and v8.  With the v8
-> version that landed in Git v1.8.2, submodule.<name>.branch was clearl=
+Unicode 6.3 defines more code points as combining or accents.  For
+example, the character "=C3=B6" could be expressed as an "o" followed b=
 y
-> the name of the remote-tracking branch, and we gave no way to
-> separately configure the local branch.
+U+0308 COMBINING DIARESIS (aka umlaut, double-dot-above).  We should
+consider that such a sequence of two codepoints occupies one display
+column for the alignment purposes, and for that, git_wcwidth()
+should return 0 for them.
 
-=46irst of all, shame on me for not following the discussion at the tim=
-e.
-I still think that when the meaning changed from local to remote-
-tracking branch, the actual option name should have changed as well.
-Documenting that it specifies a remote branch is good, but not as good
-as choosing a better name for it in the first place.
+The following script has been used to generate the combining table
+in git_wcwidth():
 
-> Recently, we decided that local branches might be important after all
-> [7], which lead to the partially landed v5 of my local-branch-creatio=
-n
-> series [8], now partially reverted with d851ffb (Revert "submodule:
-> explicit local branch creation in module_clone", 2014-04-02).  Like v=
-4
-> of that series [9], I considered the landed-and-now-reverted v5 to be
-> a stop-gap until we got better local-branch handling.
->
-> Anyhow, that's why submodule.<name>.branch is only important when we
-> interact with the remote repository (during clones and --remote
-> updates).  We've never landed a patch that explicitly addresses what
-> the local branch should be.
+#!/bin/sh
+URLBASE=3Dhttp://www.unicode.org/Public/UCD/latest/ucd
 
-Thanks for the recap. I now realize that my above arguments against
-increased complexity in submodule.<name>.* options arrive way too
-late, and is probably more like trolling than like constructive input.
-I am sorry for having been absent during most of this discussion.
-Still, I'm afraid that the current set of options are so complex that
-they will only ever be fully understood by the very small set of people
-involved with their development.
+if ! test -f UnicodeData.txt; then
+	wget $URLBASE/UnicodeData.txt
+fi &&
+if ! test -f EastAsianWidth.txt; then
+	wget $URLBASE/EastAsianWidth.txt
+fi &&
+if ! test -d uniset; then
+	mkdir uniset
+fi &&
+if ! test -e Blocks.txt; then
+	ln -s uniset/Blocks.txt
+fi &&
+(
+	cd uniset &&
+	if ! test -f uniset.tar.gz; then
+		wget http://www.cl.cam.ac.uk/~mgk25/download/uniset.tar.gz
+	fi &&
+	if ! test -f uniset; then
+		tar xzf	uniset.tar.gz
+	fi
+) &&
+=2E/uniset/uniset +cat=3DMe +cat=3DMn +cat=3DCf -00AD +1160-11FF +200B =
+c
 
->> +# D6: The meaning of submodule.<name>.branch is initially confusing=
-, as it does
->> +#     not really concern the submodule's local branch (except as a =
-naming hint
->> +#     when the submodule is first cloned). Instead, submodule.<name=
->.branch is
->> +#     really about which branch in the _upstream_ submodule
->
-> Which is how gitmodules(5) explains it:
->
->   submodule.<name>.branch
->     A remote branch name for tracking updates=E2=80=A6
+Helped-by: Kevin Bracey <kevin@bracey.fi>
+Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+---
+ utf8.c | 116 ++++++++++++++++++++++++++++++++++++++++++---------------=
+--------
+ 1 file changed, 76 insertions(+), 40 deletions(-)
 
-Good, but I fear gitmodules(5) is too hidden for the regular user.
-It'd be better to mention this in git-submodule(1), as I expect
-gitmodules(5) is largely read by .gitmodules _authors_, and not
-regular users. Obviously, the real fix would be a better name...
-
->> +#     submodule.<name>.url, or by the submodule's remote.origin.url=
-?)
->> +#     want to integrate with.
->
-> The submodule's remote.origin.url for everything except the initial
-> clone (*.*.*.1).  See my response to T2.
-
-As mentioned above, submodule.<name>.url is then an unnecessary state
-duplication. We should make it more obvious that it is only ever used
-on the initial clone (see my above argument for moving .url into an
-explicit git-clone command)
-
->> =E2=80=A6                               This is probably the more us=
-eful setting, and it
->> +#     becomes obviously correct after (re-)reading gitmodules(5) an=
-d
->> +#     git-config(1). However, from just reading the "update" sectio=
-n in
->> +#     git-submodule(1) (or not even that), things are not so clear-=
-cut. Would
->> +#     submodule.<name>.upstream (or .remote-branch, or similar) be =
-a better
->> +#     name for this?
->
-> Are the docs from 23d25e4 (submodule: explicit local branch creation
-> in module_clone, 2014-01-26; now reverted with d851ffb, Revert
-> "submodule: explicit local branch creation in module_clone",
-> 2014-04-02) clearer?  Maybe we can salvage some of those docs even
-> though we've reverted the actual code changes?
-
-As I said above, better docs is good, but no replacement for a better
-named option.
-
->> +# D7: What to do when .branch refers to a branch that is missing fr=
-om upstream?
->> +#     Currently, when trying to clone, the clone fails (which cause=
-s 'git
->> +#     submodule update --remote' to fail), but leaves the submodule=
- in an
->> +#     uninitialized state (there is a .git, but the work tree is mi=
-ssing).
->> +#     This is probably not the behavior we want...
->> +#     Affects: pre, 3.2.2.1, 3.3.2.1, 3.4.2.1, 3.5.2.1
->
-> I think we should remove the submodule's .git file after the failed c=
-lone.
-
-Agreed, but does that extend to the superproject's .git/modules/<name> =
-too?
-
-
-Again, sorry for the length and lateness of this discussion. I still
-hope it may be of some use, though.
-
-=2E..Johan
-
---
-Johan Herland, <johan@herland.net>
-www.herland.net
+diff --git a/utf8.c b/utf8.c
+index 0d20e0a..3a8c282 100644
+--- a/utf8.c
++++ b/utf8.c
+@@ -84,48 +84,84 @@ static int git_wcwidth(ucs_char_t ch)
+ 	 *   "uniset +cat=3DMe +cat=3DMn +cat=3DCf -00AD +1160-11FF +200B c".
+ 	 */
+ 	static const struct interval combining[] =3D {
+-		{ 0x0300, 0x0357 }, { 0x035D, 0x036F }, { 0x0483, 0x0486 },
+-		{ 0x0488, 0x0489 }, { 0x0591, 0x05A1 }, { 0x05A3, 0x05B9 },
+-		{ 0x05BB, 0x05BD }, { 0x05BF, 0x05BF }, { 0x05C1, 0x05C2 },
+-		{ 0x05C4, 0x05C4 }, { 0x0600, 0x0603 }, { 0x0610, 0x0615 },
+-		{ 0x064B, 0x0658 }, { 0x0670, 0x0670 }, { 0x06D6, 0x06E4 },
+-		{ 0x06E7, 0x06E8 }, { 0x06EA, 0x06ED }, { 0x070F, 0x070F },
+-		{ 0x0711, 0x0711 }, { 0x0730, 0x074A }, { 0x07A6, 0x07B0 },
+-		{ 0x0901, 0x0902 }, { 0x093C, 0x093C }, { 0x0941, 0x0948 },
+-		{ 0x094D, 0x094D }, { 0x0951, 0x0954 }, { 0x0962, 0x0963 },
+-		{ 0x0981, 0x0981 }, { 0x09BC, 0x09BC }, { 0x09C1, 0x09C4 },
+-		{ 0x09CD, 0x09CD }, { 0x09E2, 0x09E3 }, { 0x0A01, 0x0A02 },
+-		{ 0x0A3C, 0x0A3C }, { 0x0A41, 0x0A42 }, { 0x0A47, 0x0A48 },
+-		{ 0x0A4B, 0x0A4D }, { 0x0A70, 0x0A71 }, { 0x0A81, 0x0A82 },
++		{ 0x0300, 0x036F }, { 0x0483, 0x0489 }, { 0x0591, 0x05BD },
++		{ 0x05BF, 0x05BF }, { 0x05C1, 0x05C2 }, { 0x05C4, 0x05C5 },
++		{ 0x05C7, 0x05C7 }, { 0x0600, 0x0604 }, { 0x0610, 0x061A },
++		{ 0x061C, 0x061C }, { 0x064B, 0x065F }, { 0x0670, 0x0670 },
++		{ 0x06D6, 0x06DD }, { 0x06DF, 0x06E4 }, { 0x06E7, 0x06E8 },
++		{ 0x06EA, 0x06ED }, { 0x070F, 0x070F }, { 0x0711, 0x0711 },
++		{ 0x0730, 0x074A }, { 0x07A6, 0x07B0 }, { 0x07EB, 0x07F3 },
++		{ 0x0816, 0x0819 }, { 0x081B, 0x0823 }, { 0x0825, 0x0827 },
++		{ 0x0829, 0x082D }, { 0x0859, 0x085B }, { 0x08E4, 0x08FE },
++		{ 0x0900, 0x0902 }, { 0x093A, 0x093A }, { 0x093C, 0x093C },
++		{ 0x0941, 0x0948 }, { 0x094D, 0x094D }, { 0x0951, 0x0957 },
++		{ 0x0962, 0x0963 }, { 0x0981, 0x0981 }, { 0x09BC, 0x09BC },
++		{ 0x09C1, 0x09C4 }, { 0x09CD, 0x09CD }, { 0x09E2, 0x09E3 },
++		{ 0x0A01, 0x0A02 }, { 0x0A3C, 0x0A3C }, { 0x0A41, 0x0A42 },
++		{ 0x0A47, 0x0A48 }, { 0x0A4B, 0x0A4D }, { 0x0A51, 0x0A51 },
++		{ 0x0A70, 0x0A71 }, { 0x0A75, 0x0A75 }, { 0x0A81, 0x0A82 },
+ 		{ 0x0ABC, 0x0ABC }, { 0x0AC1, 0x0AC5 }, { 0x0AC7, 0x0AC8 },
+ 		{ 0x0ACD, 0x0ACD }, { 0x0AE2, 0x0AE3 }, { 0x0B01, 0x0B01 },
+-		{ 0x0B3C, 0x0B3C }, { 0x0B3F, 0x0B3F }, { 0x0B41, 0x0B43 },
+-		{ 0x0B4D, 0x0B4D }, { 0x0B56, 0x0B56 }, { 0x0B82, 0x0B82 },
+-		{ 0x0BC0, 0x0BC0 }, { 0x0BCD, 0x0BCD }, { 0x0C3E, 0x0C40 },
+-		{ 0x0C46, 0x0C48 }, { 0x0C4A, 0x0C4D }, { 0x0C55, 0x0C56 },
+-		{ 0x0CBC, 0x0CBC }, { 0x0CBF, 0x0CBF }, { 0x0CC6, 0x0CC6 },
+-		{ 0x0CCC, 0x0CCD }, { 0x0D41, 0x0D43 }, { 0x0D4D, 0x0D4D },
+-		{ 0x0DCA, 0x0DCA }, { 0x0DD2, 0x0DD4 }, { 0x0DD6, 0x0DD6 },
+-		{ 0x0E31, 0x0E31 }, { 0x0E34, 0x0E3A }, { 0x0E47, 0x0E4E },
+-		{ 0x0EB1, 0x0EB1 }, { 0x0EB4, 0x0EB9 }, { 0x0EBB, 0x0EBC },
+-		{ 0x0EC8, 0x0ECD }, { 0x0F18, 0x0F19 }, { 0x0F35, 0x0F35 },
+-		{ 0x0F37, 0x0F37 }, { 0x0F39, 0x0F39 }, { 0x0F71, 0x0F7E },
+-		{ 0x0F80, 0x0F84 }, { 0x0F86, 0x0F87 }, { 0x0F90, 0x0F97 },
+-		{ 0x0F99, 0x0FBC }, { 0x0FC6, 0x0FC6 }, { 0x102D, 0x1030 },
+-		{ 0x1032, 0x1032 }, { 0x1036, 0x1037 }, { 0x1039, 0x1039 },
+-		{ 0x1058, 0x1059 }, { 0x1160, 0x11FF }, { 0x1712, 0x1714 },
+-		{ 0x1732, 0x1734 }, { 0x1752, 0x1753 }, { 0x1772, 0x1773 },
+-		{ 0x17B4, 0x17B5 }, { 0x17B7, 0x17BD }, { 0x17C6, 0x17C6 },
+-		{ 0x17C9, 0x17D3 }, { 0x17DD, 0x17DD }, { 0x180B, 0x180D },
+-		{ 0x18A9, 0x18A9 }, { 0x1920, 0x1922 }, { 0x1927, 0x1928 },
+-		{ 0x1932, 0x1932 }, { 0x1939, 0x193B }, { 0x200B, 0x200F },
+-		{ 0x202A, 0x202E }, { 0x2060, 0x2063 }, { 0x206A, 0x206F },
+-		{ 0x20D0, 0x20EA }, { 0x302A, 0x302F }, { 0x3099, 0x309A },
+-		{ 0xFB1E, 0xFB1E }, { 0xFE00, 0xFE0F }, { 0xFE20, 0xFE23 },
+-		{ 0xFEFF, 0xFEFF }, { 0xFFF9, 0xFFFB }, { 0x1D167, 0x1D169 },
+-		{ 0x1D173, 0x1D182 }, { 0x1D185, 0x1D18B },
+-		{ 0x1D1AA, 0x1D1AD }, { 0xE0001, 0xE0001 },
+-		{ 0xE0020, 0xE007F }, { 0xE0100, 0xE01EF }
++		{ 0x0B3C, 0x0B3C }, { 0x0B3F, 0x0B3F }, { 0x0B41, 0x0B44 },
++		{ 0x0B4D, 0x0B4D }, { 0x0B56, 0x0B56 }, { 0x0B62, 0x0B63 },
++		{ 0x0B82, 0x0B82 }, { 0x0BC0, 0x0BC0 }, { 0x0BCD, 0x0BCD },
++		{ 0x0C3E, 0x0C40 }, { 0x0C46, 0x0C48 }, { 0x0C4A, 0x0C4D },
++		{ 0x0C55, 0x0C56 }, { 0x0C62, 0x0C63 }, { 0x0CBC, 0x0CBC },
++		{ 0x0CBF, 0x0CBF }, { 0x0CC6, 0x0CC6 }, { 0x0CCC, 0x0CCD },
++		{ 0x0CE2, 0x0CE3 }, { 0x0D41, 0x0D44 }, { 0x0D4D, 0x0D4D },
++		{ 0x0D62, 0x0D63 }, { 0x0DCA, 0x0DCA }, { 0x0DD2, 0x0DD4 },
++		{ 0x0DD6, 0x0DD6 }, { 0x0E31, 0x0E31 }, { 0x0E34, 0x0E3A },
++		{ 0x0E47, 0x0E4E }, { 0x0EB1, 0x0EB1 }, { 0x0EB4, 0x0EB9 },
++		{ 0x0EBB, 0x0EBC }, { 0x0EC8, 0x0ECD }, { 0x0F18, 0x0F19 },
++		{ 0x0F35, 0x0F35 }, { 0x0F37, 0x0F37 }, { 0x0F39, 0x0F39 },
++		{ 0x0F71, 0x0F7E }, { 0x0F80, 0x0F84 }, { 0x0F86, 0x0F87 },
++		{ 0x0F8D, 0x0F97 }, { 0x0F99, 0x0FBC }, { 0x0FC6, 0x0FC6 },
++		{ 0x102D, 0x1030 }, { 0x1032, 0x1037 }, { 0x1039, 0x103A },
++		{ 0x103D, 0x103E }, { 0x1058, 0x1059 }, { 0x105E, 0x1060 },
++		{ 0x1071, 0x1074 }, { 0x1082, 0x1082 }, { 0x1085, 0x1086 },
++		{ 0x108D, 0x108D }, { 0x109D, 0x109D }, { 0x1160, 0x11FF },
++		{ 0x135D, 0x135F }, { 0x1712, 0x1714 }, { 0x1732, 0x1734 },
++		{ 0x1752, 0x1753 }, { 0x1772, 0x1773 }, { 0x17B4, 0x17B5 },
++		{ 0x17B7, 0x17BD }, { 0x17C6, 0x17C6 }, { 0x17C9, 0x17D3 },
++		{ 0x17DD, 0x17DD }, { 0x180B, 0x180E }, { 0x18A9, 0x18A9 },
++		{ 0x1920, 0x1922 }, { 0x1927, 0x1928 }, { 0x1932, 0x1932 },
++		{ 0x1939, 0x193B }, { 0x1A17, 0x1A18 }, { 0x1A1B, 0x1A1B },
++		{ 0x1A56, 0x1A56 }, { 0x1A58, 0x1A5E }, { 0x1A60, 0x1A60 },
++		{ 0x1A62, 0x1A62 }, { 0x1A65, 0x1A6C }, { 0x1A73, 0x1A7C },
++		{ 0x1A7F, 0x1A7F }, { 0x1B00, 0x1B03 }, { 0x1B34, 0x1B34 },
++		{ 0x1B36, 0x1B3A }, { 0x1B3C, 0x1B3C }, { 0x1B42, 0x1B42 },
++		{ 0x1B6B, 0x1B73 }, { 0x1B80, 0x1B81 }, { 0x1BA2, 0x1BA5 },
++		{ 0x1BA8, 0x1BA9 }, { 0x1BAB, 0x1BAB }, { 0x1BE6, 0x1BE6 },
++		{ 0x1BE8, 0x1BE9 }, { 0x1BED, 0x1BED }, { 0x1BEF, 0x1BF1 },
++		{ 0x1C2C, 0x1C33 }, { 0x1C36, 0x1C37 }, { 0x1CD0, 0x1CD2 },
++		{ 0x1CD4, 0x1CE0 }, { 0x1CE2, 0x1CE8 }, { 0x1CED, 0x1CED },
++		{ 0x1CF4, 0x1CF4 }, { 0x1DC0, 0x1DE6 }, { 0x1DFC, 0x1DFF },
++		{ 0x200B, 0x200F }, { 0x202A, 0x202E }, { 0x2060, 0x2064 },
++		{ 0x2066, 0x206F }, { 0x20D0, 0x20F0 }, { 0x2CEF, 0x2CF1 },
++		{ 0x2D7F, 0x2D7F }, { 0x2DE0, 0x2DFF }, { 0x302A, 0x302D },
++		{ 0x3099, 0x309A }, { 0xA66F, 0xA672 }, { 0xA674, 0xA67D },
++		{ 0xA69F, 0xA69F }, { 0xA6F0, 0xA6F1 }, { 0xA802, 0xA802 },
++		{ 0xA806, 0xA806 }, { 0xA80B, 0xA80B }, { 0xA825, 0xA826 },
++		{ 0xA8C4, 0xA8C4 }, { 0xA8E0, 0xA8F1 }, { 0xA926, 0xA92D },
++		{ 0xA947, 0xA951 }, { 0xA980, 0xA982 }, { 0xA9B3, 0xA9B3 },
++		{ 0xA9B6, 0xA9B9 }, { 0xA9BC, 0xA9BC }, { 0xAA29, 0xAA2E },
++		{ 0xAA31, 0xAA32 }, { 0xAA35, 0xAA36 }, { 0xAA43, 0xAA43 },
++		{ 0xAA4C, 0xAA4C }, { 0xAAB0, 0xAAB0 }, { 0xAAB2, 0xAAB4 },
++		{ 0xAAB7, 0xAAB8 }, { 0xAABE, 0xAABF }, { 0xAAC1, 0xAAC1 },
++		{ 0xAAEC, 0xAAED }, { 0xAAF6, 0xAAF6 }, { 0xABE5, 0xABE5 },
++		{ 0xABE8, 0xABE8 }, { 0xABED, 0xABED }, { 0xFB1E, 0xFB1E },
++		{ 0xFE00, 0xFE0F }, { 0xFE20, 0xFE26 }, { 0xFEFF, 0xFEFF },
++		{ 0xFFF9, 0xFFFB }, { 0x101FD, 0x101FD }, { 0x10A01, 0x10A03 },
++		{ 0x10A05, 0x10A06 }, { 0x10A0C, 0x10A0F }, { 0x10A38, 0x10A3A },
++		{ 0x10A3F, 0x10A3F }, { 0x11001, 0x11001 }, { 0x11038, 0x11046 },
++		{ 0x11080, 0x11081 }, { 0x110B3, 0x110B6 }, { 0x110B9, 0x110BA },
++		{ 0x110BD, 0x110BD }, { 0x11100, 0x11102 }, { 0x11127, 0x1112B },
++		{ 0x1112D, 0x11134 }, { 0x11180, 0x11181 }, { 0x111B6, 0x111BE },
++		{ 0x116AB, 0x116AB }, { 0x116AD, 0x116AD }, { 0x116B0, 0x116B5 },
++		{ 0x116B7, 0x116B7 }, { 0x16F8F, 0x16F92 }, { 0x1D167, 0x1D169 },
++		{ 0x1D173, 0x1D182 }, { 0x1D185, 0x1D18B }, { 0x1D1AA, 0x1D1AD },
++		{ 0x1D242, 0x1D244 }, { 0xE0001, 0xE0001 }, { 0xE0020, 0xE007F },
++		{ 0xE0100, 0xE01EF }
+ 	};
+=20
+ 	/* test for 8-bit control characters */
+--=20
+1.9.2.691.g8d8dc6d
