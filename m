@@ -1,94 +1,109 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: Re: [l10n] date: Note for translators not included in .po files
-Date: Thu, 17 Apr 2014 14:27:28 +0800
-Message-ID: <CANYiYbGqKOj6HRipQQWD5ZFUDHBNUFwj4hh-HoqsDbfStPy-oQ@mail.gmail.com>
-References: <CAN7MxmV5tzvGTTG+aOL73fLhbXc7YeOWvYwLkMyad0=mvffMHQ@mail.gmail.com>
+From: Kevin Bracey <kevin@bracey.fi>
+Subject: Re: [PATCH] Unicode: update of combining code points
+Date: Thu, 17 Apr 2014 09:32:34 +0300
+Message-ID: <534F7582.9090303@bracey.fi>
+References: <201404072130.15686.tboegi@web.de> <alpine.DEB.2.00.1404152009020.29301@ds9.cixit.se> <534E0B84.6070602@web.de> <534E60BF.5020602@bracey.fi> <534EE0E7.2030608@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: GIT Mailing-list <git@vger.kernel.org>
-To: Brian Gesiak <modocache@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 17 08:27:36 2014
+Cc: Peter Krefting <peter@softwolves.pp.se>, git@vger.kernel.org
+To: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Thu Apr 17 08:48:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WafnL-0000Dq-Ek
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Apr 2014 08:27:35 +0200
+	id 1Wag7g-0002AU-Qh
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Apr 2014 08:48:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161054AbaDQG1a convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Apr 2014 02:27:30 -0400
-Received: from mail-wi0-f170.google.com ([209.85.212.170]:55014 "EHLO
-	mail-wi0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757183AbaDQG1a convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 17 Apr 2014 02:27:30 -0400
-Received: by mail-wi0-f170.google.com with SMTP id bs8so2289958wib.1
-        for <git@vger.kernel.org>; Wed, 16 Apr 2014 23:27:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=bW8FWEMZqf718LAws/1Q3VJz0S3W/WhZXkUYa8gFbAc=;
-        b=diKcpC++/PHie9dHajCOUJiZ/4nWNS1gGz1Th+XbzextKeXvPpyQqiujo+MRe9xu7a
-         26Rd8lm6qkj5AXKLigh2wJi/LmuDeYe2DQxqfxY6PEaPpXW1W0Jcbm1TAOCbVy2qzVvy
-         mqVCVpHwzgH6Uk0fr+2CMnKINBdvXMfwDQ0N1ldAzXWJ4KbeSgA4TNjEQopmx5Ku3UVb
-         vy6IjEWilMV/P80vlybwTI7qyu8L0Vmo9fJMhHOfIOmzR2yM0eeRUtVwV4sPXzDlicqO
-         LVASsZTJ8Fc/mXIAkQHE0cRbz4E25AKfHy4iIQO9yxqWClNA1GVtyvG3s5skCyivnmWZ
-         OUJQ==
-X-Received: by 10.194.63.236 with SMTP id j12mr10498491wjs.5.1397716048745;
- Wed, 16 Apr 2014 23:27:28 -0700 (PDT)
-Received: by 10.217.58.65 with HTTP; Wed, 16 Apr 2014 23:27:28 -0700 (PDT)
-In-Reply-To: <CAN7MxmV5tzvGTTG+aOL73fLhbXc7YeOWvYwLkMyad0=mvffMHQ@mail.gmail.com>
+	id S1751200AbaDQGsd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Apr 2014 02:48:33 -0400
+Received: from 6.mo2.mail-out.ovh.net ([87.98.165.38]:39181 "EHLO
+	mo2.mail-out.ovh.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750986AbaDQGsc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Apr 2014 02:48:32 -0400
+Received: from mail605.ha.ovh.net (gw6.ovh.net [213.251.189.206])
+	by mo2.mail-out.ovh.net (Postfix) with SMTP id A5CD01001021
+	for <git@vger.kernel.org>; Thu, 17 Apr 2014 08:32:37 +0200 (CEST)
+Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
+	by b0.ovh.net with SMTP; 17 Apr 2014 08:37:53 +0200
+Received: from 62-183-157-30.bb.dnainternet.fi (HELO ?192.168.1.10?) (kevin@bracey.fi@62.183.157.30)
+  by ns0.ovh.net with SMTP; 17 Apr 2014 08:37:52 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.0; WOW64; rv:17.0) Gecko/20130215 Thunderbird/17.0.3
+In-Reply-To: <534EE0E7.2030608@web.de>
+X-Ovh-Tracer-Id: 8556557818072567952
+X-Ovh-Remote: 62.183.157.30 (62-183-157-30.bb.dnainternet.fi)
+X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
+X-OVH-SPAMSTATE: OK
+X-OVH-SPAMSCORE: -100
+X-OVH-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeejvddrtddvucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+X-Spam-Check: DONE|U 0.500142/N
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeejvddrtddvucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246408>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246409>
 
-2014-04-17 6:51 GMT+08:00 Brian Gesiak <modocache@gmail.com>:
-> According to po/README, the l10n coordinator is responsible
-> for updating the git.pot file. Would it be possible to update it base=
-d
-> on v1.9.2 and include the above comment?
+On 16/04/2014 22:58, Torsten B=C3=B6gershausen wrote:
+> Excellent, thanks for the pointers.
+> Running the script below shows that
+> "0X00AD SOFT HYPHEN" should have zero length (and some others too).
+> I wonder if that is really the case, and which one of the last 2 line=
+s
+> in the script is the right one.
 >
-
-I have pushed a polished "git.pot" to the maint branch of git-l10n/git-=
-po.
-It's based on Git v1.9.2, and you can get it from:
-
-    https://github.com/git-l10n/git-po/blob/maint/po/git.pot
-
-But if you want to translate for the upcoming Git v2.0.0, you can use
-"git.pot" in the "pu" branch as a template. See:
-
-    https://github.com/git-l10n/git-po/blob/pu/po/git.pot
-
-> By the way, I am trying to organize contributors to produce a Japanes=
-e
-> localization for Core Git. Currently we have plenty of interest but
-> only two contributors. If you or anyone you know would like to contri=
-bute
-> please visit the repository here: https://github.com/modocache/git-po=
--ja
+> What does this mean for us:
+> "Cf 	Format 	a format control character"
 >
-> Thanks!
->
-> - Brian Gesiak
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Maybe dig back through the Git logs to check the original logic, but th=
+e=20
+comments suggest that "Cf" characters have been viewed as zero-width.=20
+That makes sense - they're usually markers indicating things like=20
+bidirectional text flow, so won't be taking space. (Although they may b=
+e=20
+causing even more extreme layout effects...)
 
+Soft-hyphen is noted as an explicit exception to the rule in the utf8.c=
+=20
+comments. As of Unicode 4.0, it's supposed to be a character indicating=
+=20
+a point where a hyphen could be placed if a line-wrap occurs, and if=20
+that wrap happens, then it can actually take up 1 space, otherwise not.=
+=20
+So its width could be either 0 or 1, depending. Or, quite likely, the=20
+terminal doesn't treat it specially, and it always just looks like a=20
+hyphen... Thus we err on the safe side and give it width 1.
 
+See http://en.wikipedia.org/wiki/Soft_hyphen for background.
 
---=20
-=E8=92=8B=E9=91=AB
+The comments suggest adding "-00AD +1160-11FF" to the uniset command=20
+line for that tweak and for composing Hangul. (The +200B tweak isn't=20
+necessary any more - Zero-Width Space U+200B became Cf officially in=20
+Unicode 4.0.1:
 
-=E5=8C=97=E4=BA=AC=E7=BE=A4=E8=8B=B1=E6=B1=87=E4=BF=A1=E6=81=AF=E6=8A=80=
-=E6=9C=AF=E6=9C=89=E9=99=90=E5=85=AC=E5=8F=B8
-=E9=82=AE=E4=BB=B6: worldhello.net@gmail.com
-=E7=BD=91=E5=9D=80: http://www.ossxp.com/
-=E5=8D=9A=E5=AE=A2: http://www.worldhello.net/
-=E5=BE=AE=E5=8D=9A: http://weibo.com/gotgit/
-=E7=94=B5=E8=AF=9D: 18601196889
+http://en.wikipedia.org/wiki/Zero-width_space
+http://www.unicode.org/review/resolved-pri.html#pri21
+)
+
+All of this is only really an approximation - a best-effort attempt to=20
+figure out the width of a string without any actual communication with=20
+the display device. So it'll never be perfect. The choice between doubl=
+e=20
+and single width in particular will often be unpredictable, unless you=20
+had deeper locale knowledge.
+
+Actually, while doing this, I've realised that this was originally=20
+Markus Kuhn's implementation, and that is acknowledged at the top of th=
+e=20
+file:
+
+http://www.cl.cam.ac.uk/~mgk25/ucs/wcwidth.c
+
+Good, because he knows what he's doing.
+
+Kevin
