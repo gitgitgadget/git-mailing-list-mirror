@@ -1,116 +1,162 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH 10/11] branch.c: use ref transaction for all ref updates
-Date: Thu, 17 Apr 2014 12:46:26 -0700
-Message-ID: <1397763987-4453-11-git-send-email-sahlberg@google.com>
+Subject: [PATCH 11/11] walker.c: use ref transaction for ref updates
+Date: Thu, 17 Apr 2014 12:46:27 -0700
+Message-ID: <1397763987-4453-12-git-send-email-sahlberg@google.com>
 References: <1397763987-4453-1-git-send-email-sahlberg@google.com>
 Cc: mhagger@alum.mit.edu, Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 17 21:47:52 2014
+X-From: git-owner@vger.kernel.org Thu Apr 17 21:52:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WasHm-0005E4-T0
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Apr 2014 21:47:51 +0200
+	id 1WasLr-0004dh-S2
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Apr 2014 21:52:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751725AbaDQTre (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Apr 2014 15:47:34 -0400
-Received: from mail-ig0-f202.google.com ([209.85.213.202]:36612 "EHLO
-	mail-ig0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751733AbaDQTqn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Apr 2014 15:46:43 -0400
-Received: by mail-ig0-f202.google.com with SMTP id uq10so85359igb.1
-        for <git@vger.kernel.org>; Thu, 17 Apr 2014 12:46:42 -0700 (PDT)
+	id S1751208AbaDQTwA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Apr 2014 15:52:00 -0400
+Received: from mail-qg0-f74.google.com ([209.85.192.74]:56802 "EHLO
+	mail-qg0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751102AbaDQTv6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Apr 2014 15:51:58 -0400
+Received: by mail-qg0-f74.google.com with SMTP id i50so42597qgf.3
+        for <git@vger.kernel.org>; Thu, 17 Apr 2014 12:51:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=vyN2WqFJhSBM4W+lGQGUoB+mkRvmy2TkimT4SA+KiC0=;
-        b=kAiqhPUhY4gc8g0OHyeK4frh1Qq/NSV+b6D8b5sIo3JghU5miwIbBPAGzzzJPaiES1
-         5svVreEY3TwwYQ6FyG0PjEljs7evBDNKAnJ3qKvOHGuMwKP4yEcg3VrWpHkWetnhadVX
-         hbu40y1U9lYuQF7fuR4GSjZEnMScHKSJv/oT+jnkFqjTM0VBwXOCK80Z9nrAt5RVwRLg
-         vI0Pd0HVt6RwejXZYx5hhrh0tz/HLvMuO6WJEFMJN01E+zy+j5OLTI6051xp8fhK2Ncc
-         0a7/ZUOd4CUxQmLRfkm/lTporpOUHLIoqlpZuR36yFndc1TvCZuQy4s1V1RYHUz2UWMa
-         PvNw==
+        bh=KVDQ/tfEsPF3C09lYXB0+s/MJaHuZ0pvh69iRmH1wjw=;
+        b=dJ2wx85ILlRV112JF3sIKHXdsgVFXdAj0pW4M/HrCxNhi5F3RS2wRRZCbWN1+GwCz6
+         bEMbTkyBBKeoK4sR5v9BEZRJiLIx6aBi41x1t/S2KMsZrdiX2Am1aQzdiDq86naIAS+U
+         gXqGDxSZ3xyyV4v9QaL21122VEjhHIBmvt2KCXmhjsJ4NnNrQnu4HoNzD7p6FvkLa09h
+         JJQxWvLADJbdfhyxRMWNBI+Sw0odtmhC5LBN7zTFVHGBZZVOIpXv6WPPe/D6x/6q+hSE
+         bQLgIXnuKVsJVq5EPwJhGl7ENq2Z9PFJuZXHrXEN1GCqHyd7nKUw2hJWkOnz0LnfCo/0
+         L3yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=vyN2WqFJhSBM4W+lGQGUoB+mkRvmy2TkimT4SA+KiC0=;
-        b=hsIQKbsaaYkvYZGCnpKun1zP+CEHTtrWzLJhIv6RBI8Ib6oXx6DaPKW8ZM80b87TxT
-         ImKO0lE6GcLAGvGX3p6+6CuJrAiUXNrCgp0zd1BQZ1bU0653IYIiTyhN5BJ0rJ6YIuYl
-         LOd1E7Ny37OWS4lAeS9hOAT9F1rpqKpy8obknYldT93XEub8EmqJNCNTBUjOBBzRXTyl
-         xIFFZON6ygGQdnSSxD5cP31NaVPmD4501X1bnbPhuE6gniL97UQ+fdtJhvMM/8luQaIb
-         kdkGWd7TajLUryhwpNn6auVadkkH2o+OYICTHy13kIErdYcCW2hUzZwDR33lEdYi6XyP
-         8UOw==
-X-Gm-Message-State: ALoCoQkO7zLC32LNgWkvsjU8lKQnbAao8FzLF79AXJLf3j3nSomIPfSkjTR/wZz3k89DNK72T0Se6eXIfWzuwoIvbKTSgqn2LV6/II1KmIkdFZze455GTibjJ20oXBB15zvZZvxXXbQ4Z/CHfvUqDUH9gqFBrUxCbQy0JvLPHo07R5B0/SlHiULfk+R563G3psYDqJt0ySKi
-X-Received: by 10.43.75.198 with SMTP id zb6mr5626192icb.22.1397764002660;
-        Thu, 17 Apr 2014 12:46:42 -0700 (PDT)
-Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id s65si3654804yhc.2.2014.04.17.12.46.42
+        bh=KVDQ/tfEsPF3C09lYXB0+s/MJaHuZ0pvh69iRmH1wjw=;
+        b=JTgandTcLf7dOuT2f6Oh2varf/jcW0mWUvAvw3f6SUA8LvJTrVAz0U5Kiz0k7iupFF
+         FrpOnrHyNF/GmO1FG8Mq24fHz43BF6D426rSQ7Qn8NzHPPkJY/QdIwz0Wqus2LFXm3hD
+         iXNn2ODF3EbJDMgv2zX5/jUzILALqlB/HPRNVJFM6gRhnkkogBd2GwiubPc8OjWnpvRR
+         PZvTqfgx5VEWfcbzSdaFfWVLcPvCuQIbG7ClpjePnc2bMdj0R3vcdMDJIuUycKg+7YxV
+         zrC21e/dVPjQDuv7SO17S9L7iH3YcK6/Liwn+mqVKxUsxgasZzPTOpPbZCoR7mmvK+8t
+         PtPQ==
+X-Gm-Message-State: ALoCoQkneM7A6AL6wFC/xPIoc0/WdLAmvL7+2nAXJg9IjTDVBWlHvj0SMFk+dKFKa9GYHU8UoVeDo33Qn7e2wT7/nI5G2bFACtmJ5Nu5sib3IqkuDuWG/qehXKmkzjeX7s3eVBNKw20iPyKHwFcrLrVs/E+4gwZQpZSQZlwz/jEhJtNsBnl/Ls+t5sxGW1BoUgaYXxqmCsp/
+X-Received: by 10.236.94.238 with SMTP id n74mr6743504yhf.27.1397764008749;
+        Thu, 17 Apr 2014 12:46:48 -0700 (PDT)
+Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
+        by gmr-mx.google.com with ESMTPS id f65si3652302yhg.7.2014.04.17.12.46.48
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 17 Apr 2014 12:46:42 -0700 (PDT)
+        Thu, 17 Apr 2014 12:46:48 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 7D19331C20C;
-	Thu, 17 Apr 2014 12:46:42 -0700 (PDT)
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 983455A4252;
+	Thu, 17 Apr 2014 12:46:48 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 41D5DE0967; Thu, 17 Apr 2014 12:46:42 -0700 (PDT)
+	id 5C7C9E0967; Thu, 17 Apr 2014 12:46:48 -0700 (PDT)
 X-Mailer: git-send-email 1.9.1.513.gd486896
 In-Reply-To: <1397763987-4453-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246447>
 
-Change branch.c to use ref transactions when doing updates.
+Switch to using ref transactions in walker_fetch(). As part of the refactoring
+to use ref transactions we also fix a potential memory leak where in the
+original code if write_ref_sha1() would fail we would end up returning from
+the function without free()ing the msg string.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- branch.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ walker.c | 45 ++++++++++++++++++++-------------------------
+ 1 file changed, 20 insertions(+), 25 deletions(-)
 
-diff --git a/branch.c b/branch.c
-index 660097b..45c7766 100644
---- a/branch.c
-+++ b/branch.c
-@@ -226,7 +226,7 @@ void create_branch(const char *head,
- 		   int force, int reflog, int clobber_head,
- 		   int quiet, enum branch_track track)
+diff --git a/walker.c b/walker.c
+index 1dd86b8..fa02d09 100644
+--- a/walker.c
++++ b/walker.c
+@@ -251,24 +251,16 @@ void walker_targets_free(int targets, char **target, const char **write_ref)
+ int walker_fetch(struct walker *walker, int targets, char **target,
+ 		 const char **write_ref, const char *write_ref_log_details)
  {
--	struct ref_lock *lock = NULL;
+-	struct ref_lock **lock = xcalloc(targets, sizeof(struct ref_lock *));
 +	struct ref_transaction *transaction;
- 	struct commit *commit;
- 	unsigned char sha1[20];
- 	char *real_ref, msg[PATH_MAX + 20];
-@@ -286,9 +286,12 @@ void create_branch(const char *head,
- 	hashcpy(sha1, commit->object.sha1);
+ 	unsigned char *sha1 = xmalloc(targets * 20);
+-	char *msg;
+-	int ret;
++	char *msg = NULL;
+ 	int i;
  
- 	if (!dont_change_ref) {
--		lock = lock_any_ref_for_update(ref.buf, NULL, 0, NULL);
--		if (!lock)
--			die_errno(_("Failed to lock ref for update"));
-+		transaction = ref_transaction_begin();
-+		if (!transaction)
-+			die_errno(_("Failed to begin transaction"));
-+		if (ref_transaction_update(transaction, ref.buf, sha1, NULL,
-+				   0, 0))
-+			die_errno(_("Failed to update transaction"));
+ 	save_commit_buffer = 0;
+ 
+-	for (i = 0; i < targets; i++) {
+-		if (!write_ref || !write_ref[i])
+-			continue;
+-
+-		lock[i] = lock_ref_sha1(write_ref[i], NULL);
+-		if (!lock[i]) {
+-			error("Can't lock ref %s", write_ref[i]);
+-			goto unlock_and_fail;
+-		}
+-	}
++	transaction = ref_transaction_begin();
++	if (!transaction)
++		return -1;
+ 
+ 	if (!walker->get_recover)
+ 		for_each_ref(mark_complete, NULL);
+@@ -276,14 +268,14 @@ int walker_fetch(struct walker *walker, int targets, char **target,
+ 	for (i = 0; i < targets; i++) {
+ 		if (interpret_target(walker, target[i], &sha1[20 * i])) {
+ 			error("Could not interpret response from server '%s' as something to pull", target[i]);
+-			goto unlock_and_fail;
++			goto rollback_and_fail;
+ 		}
+ 		if (process(walker, lookup_unknown_object(&sha1[20 * i])))
+-			goto unlock_and_fail;
++			goto rollback_and_fail;
  	}
  
- 	if (reflog)
-@@ -305,8 +308,9 @@ void create_branch(const char *head,
- 		setup_tracking(ref.buf + 11, real_ref, track, quiet);
+ 	if (loop(walker))
+-		goto unlock_and_fail;
++		goto rollback_and_fail;
  
- 	if (!dont_change_ref)
--		if (write_ref_sha1(lock, sha1, msg) < 0)
--			die_errno(_("Failed to write ref"));
-+		if (ref_transaction_commit(transaction, msg,
-+				     UPDATE_REFS_DIE_ON_ERR))
-+			die_errno(_("Failed to commit transaction"));
+ 	if (write_ref_log_details) {
+ 		msg = xmalloc(strlen(write_ref_log_details) + 12);
+@@ -294,19 +286,22 @@ int walker_fetch(struct walker *walker, int targets, char **target,
+ 	for (i = 0; i < targets; i++) {
+ 		if (!write_ref || !write_ref[i])
+ 			continue;
+-		ret = write_ref_sha1(lock[i], &sha1[20 * i], msg ? msg : "fetch (unknown)");
+-		lock[i] = NULL;
+-		if (ret)
+-			goto unlock_and_fail;
++		if (ref_transaction_update(transaction, write_ref[i],
++					   &sha1[20 * i], NULL,
++					   0, 0))
++			goto rollback_and_fail;
+ 	}
+-	free(msg);
  
- 	strbuf_release(&ref);
- 	free(real_ref);
++	if (ref_transaction_commit(transaction, msg ? msg : "fetch (unknown)",
++				   UPDATE_REFS_QUIET_ON_ERR))
++		goto rollback_and_fail;
++
++	free(msg);
+ 	return 0;
+ 
+-unlock_and_fail:
+-	for (i = 0; i < targets; i++)
+-		if (lock[i])
+-			unlock_ref(lock[i]);
++rollback_and_fail:
++	free(msg);
++	ref_transaction_rollback(transaction);
+ 
+ 	return -1;
+ }
 -- 
 1.9.1.513.gd486896
