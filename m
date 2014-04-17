@@ -1,106 +1,74 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [RFC/PATCH 2/4] Submodules: Add the lib-submodule-update.sh
- test library
-Date: Thu, 17 Apr 2014 23:08:06 +0200
-Message-ID: <535042B6.7040800@web.de>
-References: <5331B6F6.60501@web.de> <5331B741.6000606@web.de> <20140417164138.GP21805@odin.tremily.us>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/2] commit.c: check for lock error and return early
+Date: Thu, 17 Apr 2014 14:09:04 -0700
+Message-ID: <xmqqppkfd5ov.fsf@gitster.dls.corp.google.com>
+References: <1397674613-4922-1-git-send-email-sahlberg@google.com>
+	<1397674613-4922-3-git-send-email-sahlberg@google.com>
+	<534EFEE0.9000806@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder p <jrnieder@gmail.com>,
-	Jeff King <peff@peff.net>, Heiko Voigt <hvoigt@hvoigt.net>
-To: "W. Trevor King" <wking@tremily.us>
-X-From: git-owner@vger.kernel.org Thu Apr 17 23:08:26 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Ronnie Sahlberg <sahlberg@google.com>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Thu Apr 17 23:09:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WatXm-0000aV-AU
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Apr 2014 23:08:26 +0200
+	id 1WatYZ-0002Aq-4u
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Apr 2014 23:09:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751082AbaDQVIV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Apr 2014 17:08:21 -0400
-Received: from mout.web.de ([212.227.15.4]:51771 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750919AbaDQVIT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Apr 2014 17:08:19 -0400
-Received: from [192.168.178.41] ([79.193.68.183]) by smtp.web.de (mrweb004)
- with ESMTPSA (Nemesis) id 0LkEaw-1XCzB62riU-00cCWI; Thu, 17 Apr 2014 23:08:14
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
-In-Reply-To: <20140417164138.GP21805@odin.tremily.us>
-X-Enigmail-Version: 1.6
-X-Provags-ID: V03:K0:JKtXXeAe6ONM9sPyRi1G+4Z77hzVzb+kF5z/NfnIaSAlGEQV407
- S0/efCbD2UocOT1yAhFos7/Ta8Ut+aN5zNcKOrKv+XukrfjE46ffqgxMy4V7zngyKqWYw0A
- qrlFrIRyXvaz4Pr8qOg+JbaCjiU9AvRT5jvnJG6Hmqzv9BwQ5GUDSEY0gKDXaKyfDTXTaOF
- yebtbDndWda1xSY5tccLw==
+	id S1751124AbaDQVJL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Apr 2014 17:09:11 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34808 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750919AbaDQVJJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Apr 2014 17:09:09 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D26FE7D8E1;
+	Thu, 17 Apr 2014 17:09:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=XcFX2YgILzLhUfgClC5YXZP4NY0=; b=xSCSwz
+	Ss+ZjnTrrBvTCcjiHJgtvFPeIPp52wcb+yas3jgAZGAHdIMMy5XSqPpsMKaVre5u
+	brh5pybHgZqes+Na1zaJ0EBDfKFnxIxcoq8IaD0lnNqcqqRkWqJVNVmzmCC+RkzV
+	FoMfKIyESbabjlr07yfU8t7sgxf6qWrZ2J/8Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=rOWCoRt9RqUoR3JZ+rKFGqHBcLLhkYmR
+	y3EKeYRhai4s5VOLAQPqQm0WGkmGSg6dLJgCox3ONraSY0MNtvrZ/yQzlVUNsAIV
+	/RYHxscSz/Po39LY9QXtYDwlIBlWKjS3Fy3MKinTLNI8NqvpDd6rmTJsVXUQQrKP
+	u6yAzvbjuSk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BAB207D8E0;
+	Thu, 17 Apr 2014 17:09:08 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7B7A67D8DE;
+	Thu, 17 Apr 2014 17:09:06 -0400 (EDT)
+In-Reply-To: <534EFEE0.9000806@alum.mit.edu> (Michael Haggerty's message of
+	"Thu, 17 Apr 2014 00:06:24 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 82DCD6F4-C674-11E3-9BDE-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246452>
 
-Am 17.04.2014 18:41, schrieb W. Trevor King:
-> On Tue, Mar 25, 2014 at 06:05:05PM +0100, Jens Lehmann wrote:
->> *) When a submodule is replaced with a tracked file of the same name
->>    the submodule work tree including any local modifications (and
->>    even the whole history if it uses a .git directory instead of a
->>    gitfile!) is simply removed.
->> =E2=80=A6
->> I think the first bug really needs to be fixed, as that behavior is
->> extremely nasty. We should always protect work tree modifications
->> (unless forced) and *never* remove a .git directory (even when
->> forced).
->=20
-> I think this should be covered by the usual =E2=80=9Cdon't allow chec=
-kouts
-> from dirty workdirs unless the dirty-ing changes are easily applied t=
-o
-> the target tree=E2=80=9D.
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-Nope, the target tree will be removed completely and everything in
-it is silently nuked. It should be allowed with '-f', but only if
-the submodule contains a gitfile, and never if it contains a .git
-directory (which is just what we do for rm too).
+> On 04/16/2014 08:56 PM, Ronnie Sahlberg wrote:
+>> Move the check for the lock failure to happen immediately after
+>> lock_any_ref_for_update().
+>> Previously the lock and the check-if-lock-failed was separated by a handful
+>> of string manipulation statements.
+>
+> Please flow sentences together into paragraphs for easier reading,
+> rather than having an extremely ragged right-hand margin.
+>
+> The rest looks good.
 
-> Are we waiting to land this series (or a successor) before starting o=
-n
-> a fix for this issue?
-
-I think so, as this bug is there for a long time (so I see no urge
-to fix it very soon) and my test harness is intended to document
-this current bug (and then soon its fix).
-
->> *) Forced work tree updates happily manipulate files in the
->>    directory of a submodule that has just been removed in the
->>    superproject (but is of course still present in the work tree due
->>    to the way submodules are currently handled). This becomes
->>    dangerous when files in the submodule directory are overwritten
->>    by files from the new superproject commit, as any modifications
->>    to the submodule files will be lost) and is expected to also
->>    destroy history in the - admittedly unlikely case - the new
->>    commit adds a file named ".git" to the submodule directory.
->> =E2=80=A6
->> I'm not so sure about the second one. Even though I believe the
->> current behavior is not correct (switching commits should never mess
->> around in a submodule directory)
->=20
-> This should also be covered by the usual =E2=80=9Cdon't allow checkou=
-ts from
-> dirty workdirs unless the dirty-ing changes are easily applied to the
-> target tree=E2=80=9D.  We don't implement this yet, but I'd like to f=
-orce
-> users to move any about-to-be-clobbered state from their submodule
-> into .git/modules/<name>/ (via commits or stashes) before allowing
-> them to begin the checkout.  Once we've ensured that the state is
-> preserved out-of-tree, then clobber away ;).
-
-I'm intending to fix this in the recursive checkout series, as I'm
-a) not sure if any users currently depend on that for a submodule
-to directory transition and b) recursive checkout is the place to
-consistently care about submodule modifications (the submodule
-script doesn't do that and it is impossible to change that without
-causing trouble to a lot of users.
+Thanks, both.  I tentatively queued with the suggested log message
+tweaks, and I think result reads better.
