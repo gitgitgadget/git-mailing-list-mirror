@@ -1,115 +1,131 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH 05/11] tag.c: use ref transactions when doing updates
-Date: Thu, 17 Apr 2014 12:46:21 -0700
-Message-ID: <1397763987-4453-6-git-send-email-sahlberg@google.com>
+Subject: [PATCH 07/11] commit.c: use ref transactions for updates
+Date: Thu, 17 Apr 2014 12:46:23 -0700
+Message-ID: <1397763987-4453-8-git-send-email-sahlberg@google.com>
 References: <1397763987-4453-1-git-send-email-sahlberg@google.com>
 Cc: mhagger@alum.mit.edu, Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 17 21:47:07 2014
+X-From: git-owner@vger.kernel.org Thu Apr 17 21:47:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WasH5-0003nA-2r
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Apr 2014 21:47:07 +0200
+	id 1WasH9-000402-H3
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Apr 2014 21:47:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752457AbaDQTq5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Apr 2014 15:46:57 -0400
-Received: from mail-ve0-f201.google.com ([209.85.128.201]:63838 "EHLO
-	mail-ve0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751110AbaDQTqi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Apr 2014 15:46:38 -0400
-Received: by mail-ve0-f201.google.com with SMTP id jy13so125031veb.4
-        for <git@vger.kernel.org>; Thu, 17 Apr 2014 12:46:36 -0700 (PDT)
+	id S1753325AbaDQTrF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Apr 2014 15:47:05 -0400
+Received: from mail-ie0-f202.google.com ([209.85.223.202]:37264 "EHLO
+	mail-ie0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751454AbaDQTqj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Apr 2014 15:46:39 -0400
+Received: by mail-ie0-f202.google.com with SMTP id lx4so175574iec.5
+        for <git@vger.kernel.org>; Thu, 17 Apr 2014 12:46:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Q09KFIcmhG7UEuVBQ3UbWQXv+YySygJOwkNykJ+TGm8=;
-        b=ZT4IHC/eM+L06rvWsx6NzlTuDerlJatlx0ygDSMS0INNNLMI3wdShWjS4bAlpl65/9
-         Goe6tY3PCU4tAGePjGsHfcQeTFHLLmaZRsRTnmuTBOcNJt3BFWVMleivDoBeodXeTCKX
-         qXW8gXkjqQDHyFoON/1ldOTSPpAFkw7MpRptYA/88fQPhnlos9sHQjoydTo3yPXgW4XH
-         A2J9XCEfStCsqE7a6+AER5ErMHj0LcSAqaEhby74ixGcvy3GrevKYZeebmD2Y9dBTkv3
-         aMn5VR1sue10s1p6aVr4NvhgJDIIgmuN+FLpGt1kjOWHUkfa6+/DYnOno0fVsiZimGXf
-         HOOA==
+        bh=Qs0AeiVEdhZnZhorl2thmb0Jy0MR4tlju4DVoWsRq1U=;
+        b=ULD9eVZ2GKKCnI0ox6LN37xBjX1wtzGmQrcZ8+X7tcN1C+ZyvtKEyehKjVGLDBfii3
+         vWrG3lOaR6tOR1hA8HONfVBEgNmg80v07doDDPAhyl6r2e2okgtJqG7Pe9W7P/TnYG/B
+         rZa7yiu7ab3gmCYqxSbul5J4Hm2G/BiiGw4hYE97qonPYOfXbJdRe/b9WLOz9Ye/b6Bq
+         O8vK8wxjBn6Zoi6rz+axoAfP8FmcZHX0POtyxU14QCU5pGf4MVZaRX85a6btkXxv770i
+         iKmPFFAhtkP5gNjRpos3fwxr/2k9tV79TvzOuukFhMf086rbTOtKa/mGICSj93vdlN5l
+         QHCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Q09KFIcmhG7UEuVBQ3UbWQXv+YySygJOwkNykJ+TGm8=;
-        b=D/IaoYtE5w4HhDY5wHumaNDGkBNw4vjk2b9/l21vsYKj6myi77q3ZZW11uBaZpmZ4q
-         colzbYcNrVL69w1+ZJ/I6qicaWNhYGj6UcJMwR2AqyMh6dSfQQb/Pqn9yV5TthAk9JIi
-         1tX3hsda0oE3ossBFKkORchKqE+whGER1Nq3qRDpSvpdqbjrHm+UfPV2Axkn3KuHC3y7
-         DoGHILZDCUExKOmK9NtMIN7gumogJGWVmK/JgGwiAqGaztsNWPVJsAQ4nADPv7e1uovk
-         nRZIklq4ibT2DnehqhwY+wc6xwTiZ9K0awNuiBTbacTjWiIGBGbw4ak1l52MS1UBuSCX
-         Bnow==
-X-Gm-Message-State: ALoCoQmhOymfZhWgrG6WlaiSOhkeQb7Iv6js731bO+aLrhxZlZQZXQvt6Zb+/oZI+QcCdD4JGMbZ9JGb2hOkwkd60r06XgVtWXdUzjCfEkpP6geGsgDhaq66aRtjN4gK9LFJyGN8UJRlxwZzGLNh/GGSRMWpM04e9e3PP9cClxK0vBj+CwkWsyWTUfafeoYAcxS7U3p7lJ2v
-X-Received: by 10.224.6.198 with SMTP id a6mr6482146qaa.6.1397763996903;
-        Thu, 17 Apr 2014 12:46:36 -0700 (PDT)
+        bh=Qs0AeiVEdhZnZhorl2thmb0Jy0MR4tlju4DVoWsRq1U=;
+        b=PBg8XDbd5YLX2xBneo39mzh5MYVVbHtLdPZzmMwIuatfXw7zwXT9iA3CHDU7+hSz3o
+         Thu5uohKcy68zrjIgw1uHpktXMNX1xbNWalxn5SSBN2sVQrw39nIKGRk9ak2yv+GlvfT
+         AKm2ox1PVh0aA+xzbWyT1BFysQFLkg6Aqzt0xfNtwcSWg3Sb2BU0rrfF1SHIEcDfUDLB
+         cfDfPCcj7XSGRGE79UwbWPL7EibvhJMFCcFJX/K8O9of30NDUTr5pmf8HiTd5kibSTla
+         IGcwWRGrbzhOEq1WO3etN23UV6GkuM6hOaeCzhYNmlErCXS+2N7GjpA74C4efEdA1hXj
+         D0Xw==
+X-Gm-Message-State: ALoCoQkXw8jn34FbBf3LKFBLWtbwo1oBlWXh/qDbi6H9v6YUq8rTB/uOXd2WXw/pe1QQEKpnrNMyJ76Vwmqth2xC7N0s7o2EaJWAyEvP5ug2HGNsP4arxB6fsOgeEkjsyETWkMFLlLFM0WzGtottJNthA9GZt/Ppm7WcqqGuqfMhezJcm898aV5wgl7SFYx8lDwYGwpm3Y0U
+X-Received: by 10.182.5.42 with SMTP id p10mr8297348obp.37.1397763998744;
+        Thu, 17 Apr 2014 12:46:38 -0700 (PDT)
 Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id s65si3654759yhc.2.2014.04.17.12.46.36
+        by gmr-mx.google.com with ESMTPS id s65si3654771yhc.2.2014.04.17.12.46.38
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 17 Apr 2014 12:46:36 -0700 (PDT)
+        Thu, 17 Apr 2014 12:46:38 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id B9C2A31C20C;
-	Thu, 17 Apr 2014 12:46:36 -0700 (PDT)
+	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 8EEEE31C20C;
+	Thu, 17 Apr 2014 12:46:38 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 7DE1AE0967; Thu, 17 Apr 2014 12:46:36 -0700 (PDT)
+	id 5393AE06A3; Thu, 17 Apr 2014 12:46:38 -0700 (PDT)
 X-Mailer: git-send-email 1.9.1.513.gd486896
 In-Reply-To: <1397763987-4453-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246443>
 
-Change tag.c to use ref transactions for all ref updates.
+Change commit.c to use ref transactions for all ref updates.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- builtin/tag.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ builtin/commit.c | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 40356e3..dbeacc5 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -488,7 +488,6 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	struct strbuf ref = STRBUF_INIT;
- 	unsigned char object[20], prev[20];
- 	const char *object_ref, *tag;
--	struct ref_lock *lock;
- 	struct create_tag_options opt;
- 	char *cleanup_arg = NULL;
- 	int annotate = 0, force = 0, lines = -1;
-@@ -496,6 +495,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	const char *msgfile = NULL, *keyid = NULL;
- 	struct msg_arg msg = { 0, STRBUF_INIT };
- 	struct commit_list *with_commit = NULL;
+diff --git a/builtin/commit.c b/builtin/commit.c
+index d9550c5..b8e4389 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1541,11 +1541,11 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 	const char *index_file, *reflog_msg;
+ 	char *nl;
+ 	unsigned char sha1[20];
+-	struct ref_lock *ref_lock;
+ 	struct commit_list *parents = NULL, **pptr = &parents;
+ 	struct stat statbuf;
+ 	struct commit *current_head = NULL;
+ 	struct commit_extra_header *extra = NULL;
 +	struct ref_transaction *transaction;
- 	struct option options[] = {
- 		OPT_CMDMODE('l', "list", &cmdmode, N_("list tag names"), 'l'),
- 		{ OPTION_INTEGER, 'n', NULL, &lines, N_("n"),
-@@ -641,11 +641,14 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	if (annotate)
- 		create_tag(object, tag, &buf, &opt, prev, object);
  
--	lock = lock_any_ref_for_update(ref.buf, prev, 0, NULL);
--	if (!lock)
--		die(_("%s: cannot lock the ref"), ref.buf);
--	if (write_ref_sha1(lock, object, NULL) < 0)
--		die(_("%s: cannot update the ref"), ref.buf);
+ 	if (argc == 2 && !strcmp(argv[1], "-h"))
+ 		usage_with_options(builtin_commit_usage, builtin_commit_options);
+@@ -1667,12 +1667,6 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 	strbuf_release(&author_ident);
+ 	free_commit_extra_headers(extra);
+ 
+-	ref_lock = lock_any_ref_for_update("HEAD",
+-					   !current_head
+-					   ? NULL
+-					   : current_head->object.sha1,
+-					   0, NULL);
+-
+ 	nl = strchr(sb.buf, '\n');
+ 	if (nl)
+ 		strbuf_setlen(&sb, nl + 1 - sb.buf);
+@@ -1681,14 +1675,22 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 	strbuf_insert(&sb, 0, reflog_msg, strlen(reflog_msg));
+ 	strbuf_insert(&sb, strlen(reflog_msg), ": ", 2);
+ 
+-	if (!ref_lock) {
 +	transaction = ref_transaction_begin();
-+	if (!transaction)
-+		die(_("%s: cannot start transaction"), ref.buf);
-+	if (ref_transaction_update(transaction, ref.buf, object, prev,
-+				   0, !is_null_sha1(prev)))
-+		die(_("%s: cannot update transaction"), ref.buf);
-+	if (ref_transaction_commit(transaction, NULL, UPDATE_REFS_DIE_ON_ERR))
-+		die(_("%s: cannot commit transaction"), ref.buf);
- 	if (force && !is_null_sha1(prev) && hashcmp(prev, object))
- 		printf(_("Updated tag '%s' (was %s)\n"), tag, find_unique_abbrev(prev, DEFAULT_ABBREV));
++	if (!transaction) {
+ 		rollback_index_files();
+-		die(_("cannot lock HEAD ref"));
++		die(_("HEAD: cannot start transaction"));
+ 	}
+-	if (write_ref_sha1(ref_lock, sha1, sb.buf) < 0) {
++	if (ref_transaction_update(transaction, "HEAD", sha1,
++				   current_head->object.sha1,
++				   0, !!current_head)) {
+ 		rollback_index_files();
+ 		die(_("cannot update HEAD ref"));
+ 	}
++	if (ref_transaction_commit(transaction, sb.buf,
++				   UPDATE_REFS_QUIET_ON_ERR)) {
++		rollback_index_files();
++		die(_("cannot commit HEAD ref"));
++	}
  
+ 	unlink(git_path("CHERRY_PICK_HEAD"));
+ 	unlink(git_path("REVERT_HEAD"));
 -- 
 1.9.1.513.gd486896
