@@ -1,91 +1,114 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Apr 2014, #03; Fri, 11)
-Date: Thu, 17 Apr 2014 10:52:45 -0700
-Message-ID: <xmqqsipbetci.fsf@gitster.dls.corp.google.com>
-References: <xmqq1tx3qzel.fsf@gitster.dls.corp.google.com>
-	<20140417165247.GQ21805@odin.tremily.us>
+Subject: Re: [PATCH] Update SVN.pm
+Date: Thu, 17 Apr 2014 11:01:09 -0700
+Message-ID: <xmqqoazzesyi.fsf@gitster.dls.corp.google.com>
+References: <20140416141605.GA9692@camelia.ucw.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "W. Trevor King" <wking@tremily.us>
-X-From: git-owner@vger.kernel.org Thu Apr 17 19:52:59 2014
+To: Stepan Kasal <kasal@ucw.cz>
+X-From: git-owner@vger.kernel.org Thu Apr 17 20:02:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WaqUY-00073c-Cc
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Apr 2014 19:52:54 +0200
+	id 1Waqe0-00074U-L1
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Apr 2014 20:02:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751462AbaDQRwu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Apr 2014 13:52:50 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39917 "EHLO
+	id S1751357AbaDQSBT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Apr 2014 14:01:19 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50047 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751001AbaDQRws (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Apr 2014 13:52:48 -0400
+	id S1752691AbaDQSBN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Apr 2014 14:01:13 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 590697A47B;
-	Thu, 17 Apr 2014 13:52:48 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3B89F7A772;
+	Thu, 17 Apr 2014 14:01:13 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=me3Y21uYRk2iU5TWJVH4jq46t7U=; b=N2Nhp4
-	rN9G11Bi0bL4cAa6TijHuzVo3jhRzDad9Y1B02R4KNawNdhNx95o8sbF6d36mXpc
-	XKWAyKJoheattkwdwUNq4v3gptYcODMx05naPrLazCOETnBhn54xURNcb6/lN1/z
-	sdUK3zoc9kbrWURg54PGnYVC1skFZwdTSIbnk=
+	:content-type; s=sasl; bh=HQQyQZc6BMWeVthdRV6EBMTOd/M=; b=TZhAhM
+	/L9eNnbxK8+wR4MJaqgM278ep7yu/bbEESqI35sjucR650srDxBGZwekA63WCCJ7
+	P9oizZoPyRyLWyaXMyr2yZSfGLgV27QuLRG3axTjfuAuWt8iLg4ucqhKTsUjcS/m
+	z5t0k8POUXzPaLLyszcTJtGmzfZyRNg6PGExw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=iRyRU+HIPO3BcVOxoaDgENTueK2FdOkM
-	yZdQh/uCNiN4arajMxvZ5u4jsaGVSP/gdP9CO1tKxsbGDVsx/V+d/oV4XiN0eM1i
-	1HguJb5WC2aN8YtwqHRPK4YZb8en74sm328NBEwTF2fIzcUZoVkdsMgYG5ENop6v
-	rXBPC07edv8=
+	:content-type; q=dns; s=sasl; b=isrgIiGmDEVoIZQ/iXjAaRiZYIVd2ap2
+	IfsVh1Uhg9TIP+BEWfVSLeKRSVm1S9eSVlsVmkXWVKjfAJpFmcEbgHNzTcHebHrO
+	ZMdp8GlH/E6vzVuENVfas3itY1mo0ANd1c1+5lg7hJ2EiGXA4pItPgBUS5fRDKTw
+	c5/62OfVeNo=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 42C517A47A;
-	Thu, 17 Apr 2014 13:52:48 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 23AF17A771;
+	Thu, 17 Apr 2014 14:01:13 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BB1357A477;
-	Thu, 17 Apr 2014 13:52:46 -0400 (EDT)
-In-Reply-To: <20140417165247.GQ21805@odin.tremily.us> (W. Trevor King's
-	message of "Thu, 17 Apr 2014 09:52:47 -0700")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3270F7A76C;
+	Thu, 17 Apr 2014 14:01:11 -0400 (EDT)
+In-Reply-To: <20140416141605.GA9692@camelia.ucw.cz> (Stepan Kasal's message of
+	"Wed, 16 Apr 2014 16:16:05 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 1596DFC4-C659-11E3-B9CF-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 42455630-C65A-11E3-9BBB-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246429>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246430>
 
-"W. Trevor King" <wking@tremily.us> writes:
+Stepan Kasal <kasal@ucw.cz> writes:
 
-> On Fri, Apr 11, 2014 at 03:22:58PM -0700, Junio C Hamano wrote:
->> * jl/submodule-recursive-checkout (2013-12-26) 5 commits
->>  - Teach checkout to recursively checkout submodules
->>  - submodule: teach unpack_trees() to update submodules
->>  - submodule: teach unpack_trees() to repopulate submodules
->>  - submodule: teach unpack_trees() to remove submodule contents
->>  - submodule: prepare for recursive checkout of submodules
->> 
->>  Expecting a reroll.
+> From: RomanBelinsky <belinsky.roman@gmail.com>
+> Date: Tue, 11 Feb 2014 18:23:02 +0200
 >
-> I think this was rerolled with Jens' v2 [1]:
+> fix parsing error for dates like:
+> 2014-01-07T5:58:36.048176Z
+> previous regex can parse only:
+> 2014-01-07T05:58:36.048176Z
+> reproduced in my svn repository during conversion.
 >
->   * jl/submodule-recursive-checkout (2014-02-03) 9 commits
->   - submodule: prepare for recursive checkout of submodules
->   - Teach reset the --[no-]recurse-submodules option
->   - Teach checkout the --[no-]recurse-submodules option
->   - Teach merge the --[no-]recurse-submodules option
->   - Teach bisect--helper the --[no-]recurse-submodules option
->   - Teach bisect the --[no-]recurse-submodules option
->   - submodule: teach unpack_trees() to remove submodule contents
->   - submodule: teach unpack_trees() to repopulate submodules
->   - submodule: teach unpack_trees() to update submodules
->
-> Cheers,
-> Trevor
->
-> [1]: http://thread.gmane.org/gmane.comp.version-control.git/241455
+> Signed-off-by: Stepan Kasal <kasal@ucw.cz>
+> ---
 
-Thanks, I'll add a reference to the RFC v2, but it also had
-significant discussion threads on it, so it would still be in
-"Expecting a reroll" state anyway.
+Two niggles.
+
+ - The "Subject" line is not descriptive enough to let readers of "git
+   shortlog" know what this change is about.
+
+ - Can we have the patch signed-off by the author?
+
+
+For the first point, I'd suggest rewriting the proposed commit
+message like this (this is what I came up with after reading that
+msysgit discussion page you referred to in the other message):
+
+------------------------------------------------------
+SVN.pm::parse_svn_date: allow timestamps with a single-digit hour
+
+Some broken subversion server gives timestamps with only one digit
+in the hour part, like this:
+
+    2014-01-07T5:58:36.048176Z
+
+Loosen the regexp that expected to see two-digit hour, minute and
+second parts to accept a single-digit hour (but not minute or
+second).
+
+Signed-off-by: Stepan Kasal <kasal@ucw.cz>
+------------------------------------------------------
+
+
+>  perl/Git/SVN.pm | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
+> index a59564f..09cff13 100644
+> --- a/perl/Git/SVN.pm
+> +++ b/perl/Git/SVN.pm
+> @@ -1321,7 +1321,7 @@ sub get_untracked {
+>  sub parse_svn_date {
+>  	my $date = shift || return '+0000 1970-01-01 00:00:00';
+>  	my ($Y,$m,$d,$H,$M,$S) = ($date =~ /^(\d{4})\-(\d\d)\-(\d\d)T
+> -	                                    (\d\d)\:(\d\d)\:(\d\d)\.\d*Z$/x) or
+> +	                                    (\d\d?)\:(\d\d)\:(\d\d)\.\d*Z$/x) or
+>  	                                 croak "Unable to parse date: $date\n";
+>  	my $parsed_date;    # Set next.
