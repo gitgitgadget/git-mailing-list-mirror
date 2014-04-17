@@ -1,109 +1,233 @@
-From: Kevin Bracey <kevin@bracey.fi>
-Subject: Re: [PATCH] Unicode: update of combining code points
-Date: Thu, 17 Apr 2014 09:32:34 +0300
-Message-ID: <534F7582.9090303@bracey.fi>
-References: <201404072130.15686.tboegi@web.de> <alpine.DEB.2.00.1404152009020.29301@ds9.cixit.se> <534E0B84.6070602@web.de> <534E60BF.5020602@bracey.fi> <534EE0E7.2030608@web.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Peter Krefting <peter@softwolves.pp.se>, git@vger.kernel.org
-To: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Thu Apr 17 08:48:38 2014
+From: Jakob Stoklund Olesen <stoklund@2pi.dk>
+Subject: [PATCH 1/2] git-svn: only look at the new parts of svn:mergeinfo
+Date: Wed, 16 Apr 2014 23:54:05 -0700
+Message-ID: <1397717646-54248-1-git-send-email-stoklund@2pi.dk>
+Cc: Eric Wong <normalperson@yhbt.net>, Sam Vilain <sam@vilain.net>,
+	Steven Walter <stevenrwalter@gmail.com>,
+	Peter Baumann <waste.manager@gmx.de>,
+	Andrew Myrick <amyrick@apple.com>,
+	Jakob Stoklund Olesen <stoklund@2pi.dk>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 17 08:55:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wag7g-0002AU-Qh
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Apr 2014 08:48:37 +0200
+	id 1WagE8-0007qE-PZ
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Apr 2014 08:55:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751200AbaDQGsd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Apr 2014 02:48:33 -0400
-Received: from 6.mo2.mail-out.ovh.net ([87.98.165.38]:39181 "EHLO
-	mo2.mail-out.ovh.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750986AbaDQGsc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Apr 2014 02:48:32 -0400
-Received: from mail605.ha.ovh.net (gw6.ovh.net [213.251.189.206])
-	by mo2.mail-out.ovh.net (Postfix) with SMTP id A5CD01001021
-	for <git@vger.kernel.org>; Thu, 17 Apr 2014 08:32:37 +0200 (CEST)
-Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
-	by b0.ovh.net with SMTP; 17 Apr 2014 08:37:53 +0200
-Received: from 62-183-157-30.bb.dnainternet.fi (HELO ?192.168.1.10?) (kevin@bracey.fi@62.183.157.30)
-  by ns0.ovh.net with SMTP; 17 Apr 2014 08:37:52 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.0; WOW64; rv:17.0) Gecko/20130215 Thunderbird/17.0.3
-In-Reply-To: <534EE0E7.2030608@web.de>
-X-Ovh-Tracer-Id: 8556557818072567952
-X-Ovh-Remote: 62.183.157.30 (62-183-157-30.bb.dnainternet.fi)
-X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
-X-OVH-SPAMSTATE: OK
-X-OVH-SPAMSCORE: -100
-X-OVH-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeejvddrtddvucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-X-Spam-Check: DONE|U 0.500142/N
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeejvddrtddvucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+	id S1751686AbaDQGzJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Apr 2014 02:55:09 -0400
+Received: from hapkido.dreamhost.com ([66.33.216.122]:42476 "EHLO
+	hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751046AbaDQGzI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Apr 2014 02:55:08 -0400
+Received: from homiemail-a115.g.dreamhost.com (sub5.mail.dreamhost.com [208.113.200.129])
+	by hapkido.dreamhost.com (Postfix) with ESMTP id 0D76492E03
+	for <git@vger.kernel.org>; Wed, 16 Apr 2014 23:55:08 -0700 (PDT)
+Received: from homiemail-a115.g.dreamhost.com (localhost [127.0.0.1])
+	by homiemail-a115.g.dreamhost.com (Postfix) with ESMTP id 6F817440E;
+	Wed, 16 Apr 2014 23:54:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=2pi.dk; h=from:to:cc
+	:subject:date:message-id; s=2pi.dk; bh=Uk27Idtn79I2S59pUdEHwWwC6
+	tQ=; b=lpsnoBA9BcfunvdStIRA1SIA5Tpl4jHte44A8kgx6n6jQaGvlunH3NKwV
+	sdBqbLDuizOI/hpYjPst+bXdyfiheevhlQm48GfU58gulg+opQV6qpEwpsqy3LF/
+	gXB3LVhxQFPgDNGVJP9z92cM1eNYd25IJhQTug6xZSqzbOkdQU=
+Received: from localhost.localdomain (173-228-90-133.dsl.dynamic.sonic.net [173.228.90.133])
+	(using TLSv1 with cipher ADH-SEED-SHA (128/128 bits))
+	(No client certificate requested)
+	(Authenticated sender: stoklund@2pi.dk)
+	by homiemail-a115.g.dreamhost.com (Postfix) with ESMTPSA id ED8C55629;
+	Wed, 16 Apr 2014 23:54:56 -0700 (PDT)
+X-Mailer: git-send-email 1.8.5.2 (Apple Git-48)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246409>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246410>
 
-On 16/04/2014 22:58, Torsten B=C3=B6gershausen wrote:
-> Excellent, thanks for the pointers.
-> Running the script below shows that
-> "0X00AD SOFT HYPHEN" should have zero length (and some others too).
-> I wonder if that is really the case, and which one of the last 2 line=
-s
-> in the script is the right one.
->
-> What does this mean for us:
-> "Cf 	Format 	a format control character"
->
-Maybe dig back through the Git logs to check the original logic, but th=
-e=20
-comments suggest that "Cf" characters have been viewed as zero-width.=20
-That makes sense - they're usually markers indicating things like=20
-bidirectional text flow, so won't be taking space. (Although they may b=
-e=20
-causing even more extreme layout effects...)
+In a Subversion repository where many feature branches are merged into a
+trunk, the svn:mergeinfo property can grow very large. This severely
+slows down git-svn's make_log_entry() because it is checking all
+mergeinfo entries every time the property changes.
 
-Soft-hyphen is noted as an explicit exception to the rule in the utf8.c=
-=20
-comments. As of Unicode 4.0, it's supposed to be a character indicating=
-=20
-a point where a hyphen could be placed if a line-wrap occurs, and if=20
-that wrap happens, then it can actually take up 1 space, otherwise not.=
-=20
-So its width could be either 0 or 1, depending. Or, quite likely, the=20
-terminal doesn't treat it specially, and it always just looks like a=20
-hyphen... Thus we err on the safe side and give it width 1.
+In most cases, the additions to svn:mergeinfo since the last commit are
+pretty small, and there is nothing to gain by checking merges that were
+already checked for the last commit in the branch.
 
-See http://en.wikipedia.org/wiki/Soft_hyphen for background.
+Add a mergeinfo_changes() function which computes the set of interesting
+changes to svn:mergeinfo since the last commit. Filter out merged
+branches whose ranges haven't changed, and remove a common prefix of
+ranges from other merged branches.
 
-The comments suggest adding "-00AD +1160-11FF" to the uniset command=20
-line for that tweak and for composing Hangul. (The +200B tweak isn't=20
-necessary any more - Zero-Width Space U+200B became Cf officially in=20
-Unicode 4.0.1:
+This speeds up "git svn fetch" by several orders of magnitude on a large
+repository where thousands of feature branches have been merged.
 
-http://en.wikipedia.org/wiki/Zero-width_space
-http://www.unicode.org/review/resolved-pri.html#pri21
-)
+Signed-off-by: Jakob Stoklund Olesen <stoklund@2pi.dk>
+---
+ perl/Git/SVN.pm | 84 ++++++++++++++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 72 insertions(+), 12 deletions(-)
 
-All of this is only really an approximation - a best-effort attempt to=20
-figure out the width of a string without any actual communication with=20
-the display device. So it'll never be perfect. The choice between doubl=
-e=20
-and single width in particular will often be unpredictable, unless you=20
-had deeper locale knowledge.
-
-Actually, while doing this, I've realised that this was originally=20
-Markus Kuhn's implementation, and that is acknowledged at the top of th=
-e=20
-file:
-
-http://www.cl.cam.ac.uk/~mgk25/ucs/wcwidth.c
-
-Good, because he knows what he's doing.
-
-Kevin
+diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
+index a59564f..d3785ab 100644
+--- a/perl/Git/SVN.pm
++++ b/perl/Git/SVN.pm
+@@ -1178,7 +1178,7 @@ sub find_parent_branch {
+ 			  or die "SVN connection failed somewhere...\n";
+ 		}
+ 		print STDERR "Successfully followed parent\n" unless $::_q > 1;
+-		return $self->make_log_entry($rev, [$parent], $ed);
++		return $self->make_log_entry($rev, [$parent], $ed, $r0, $branch_from);
+ 	}
+ 	return undef;
+ }
+@@ -1210,7 +1210,7 @@ sub do_fetch {
+ 	unless ($self->ra->gs_do_update($last_rev, $rev, $self, $ed)) {
+ 		die "SVN connection failed somewhere...\n";
+ 	}
+-	$self->make_log_entry($rev, \@parents, $ed);
++	$self->make_log_entry($rev, \@parents, $ed, $last_rev);
+ }
+ 
+ sub mkemptydirs {
+@@ -1478,9 +1478,9 @@ sub find_extra_svk_parents {
+ sub lookup_svn_merge {
+ 	my $uuid = shift;
+ 	my $url = shift;
+-	my $merge = shift;
++	my $source = shift;
++	my $revs = shift;
+ 
+-	my ($source, $revs) = split ":", $merge;
+ 	my $path = $source;
+ 	$path =~ s{^/}{};
+ 	my $gs = Git::SVN->find_by_url($url.$source, $url, $path);
+@@ -1702,6 +1702,62 @@ sub parents_exclude {
+ 	return @excluded;
+ }
+ 
++# Compute what's new in svn:mergeinfo.
++sub mergeinfo_changes {
++	my ($self, $old_path, $old_rev, $path, $rev, $mergeinfo_prop) = @_;
++	my %minfo = map {split ":", $_ } split "\n", $mergeinfo_prop;
++	my $old_minfo = {};
++
++	# Initialize cache on the first call.
++	unless (defined $self->{cached_mergeinfo_rev}) {
++		$self->{cached_mergeinfo_rev} = {};
++		$self->{cached_mergeinfo} = {};
++	}
++
++	my $cached_rev = $self->{cached_mergeinfo_rev}{$old_path};
++	if (defined $cached_rev && $cached_rev == $old_rev) {
++		$old_minfo = $self->{cached_mergeinfo}{$old_path};
++	} else {
++		my $ra = $self->ra;
++		# Give up if $old_path isn't in the repo.
++		# This is probably a merge on a subtree.
++		if ($ra->check_path($old_path, $old_rev) != $SVN::Node::dir) {
++			warn "W: ignoring svn:mergeinfo on $old_path, ",
++				"directory didn't exist in r$old_rev\n";
++			return {};
++		}
++		my (undef, undef, $props) =
++			$self->ra->get_dir($old_path, $old_rev);
++		if (defined $props->{"svn:mergeinfo"}) {
++			my %omi = map {split ":", $_ } split "\n",
++				$props->{"svn:mergeinfo"};
++			$old_minfo = \%omi;
++		}
++		$self->{cached_mergeinfo}{$old_path} = $old_minfo;
++		$self->{cached_mergeinfo_rev}{$old_path} = $old_rev;
++	}
++
++	# Cache the new mergeinfo.
++	$self->{cached_mergeinfo}{$path} = \%minfo;
++	$self->{cached_mergeinfo_rev}{$path} = $rev;
++
++	my %changes = ();
++	foreach my $p (keys %minfo) {
++		my $a = $old_minfo->{$p} || "";
++		my $b = $minfo{$p};
++		# Omit merged branches whose ranges lists are unchanged.
++		next if $a eq $b;
++		# Remove any common range list prefix.
++		($a ^ $b) =~ /^[\0]*/;
++		my $common_prefix = rindex $b, ",", $+[0] - 1;
++		$changes{$p} = substr $b, $common_prefix + 1;
++	}
++	print STDERR "Checking svn:mergeinfo changes since r$old_rev: ",
++		scalar(keys %minfo), " sources, ",
++		scalar(keys %changes), " changed\n";
++
++	return \%changes;
++}
+ 
+ # note: this function should only be called if the various dirprops
+ # have actually changed
+@@ -1715,14 +1771,15 @@ sub find_extra_svn_parents {
+ 	# history.  Then, we figure out which git revisions are in
+ 	# that tip, but not this revision.  If all of those revisions
+ 	# are now marked as merge, we can add the tip as a parent.
+-	my @merges = split "\n", $mergeinfo;
++	my @merges = sort keys %$mergeinfo;
+ 	my @merge_tips;
+ 	my $url = $self->url;
+ 	my $uuid = $self->ra_uuid;
+ 	my @all_ranges;
+ 	for my $merge ( @merges ) {
+ 		my ($tip_commit, @ranges) =
+-			lookup_svn_merge( $uuid, $url, $merge );
++			lookup_svn_merge( $uuid, $url,
++					  $merge, $mergeinfo->{$merge} );
+ 		unless (!$tip_commit or
+ 				grep { $_ eq $tip_commit } @$parents ) {
+ 			push @merge_tips, $tip_commit;
+@@ -1738,8 +1795,9 @@ sub find_extra_svn_parents {
+ 	# check merge tips for new parents
+ 	my @new_parents;
+ 	for my $merge_tip ( @merge_tips ) {
+-		my $spec = shift @merges;
++		my $merge = shift @merges;
+ 		next unless $merge_tip and $excluded{$merge_tip};
++		my $spec = "$merge:$mergeinfo->{$merge}";
+ 
+ 		# check out 'new' tips
+ 		my $merge_base;
+@@ -1770,7 +1828,7 @@ sub find_extra_svn_parents {
+ 				.@incomplete." commit(s) (eg $incomplete[0])\n";
+ 		} else {
+ 			warn
+-				"Found merge parent (svn:mergeinfo prop): ",
++				"Found merge parent ($spec): ",
+ 					$merge_tip, "\n";
+ 			push @new_parents, $merge_tip;
+ 		}
+@@ -1797,7 +1855,7 @@ sub find_extra_svn_parents {
+ }
+ 
+ sub make_log_entry {
+-	my ($self, $rev, $parents, $ed) = @_;
++	my ($self, $rev, $parents, $ed, $parent_rev, $parent_path) = @_;
+ 	my $untracked = $self->get_untracked($ed);
+ 
+ 	my @parents = @$parents;
+@@ -1809,10 +1867,12 @@ sub make_log_entry {
+ 				($ed, $props->{"svk:merge"}, \@parents);
+ 		}
+ 		if ( $props->{"svn:mergeinfo"} ) {
++			my $mi_changes = $self->mergeinfo_changes
++				($parent_path || $path, $parent_rev,
++				 $path, $rev,
++				 $props->{"svn:mergeinfo"});
+ 			$self->find_extra_svn_parents
+-				($ed,
+-				 $props->{"svn:mergeinfo"},
+-				 \@parents);
++				($ed, $mi_changes, \@parents);
+ 		}
+ 	}
+ 
+-- 
+1.8.5.2 (Apple Git-48)
