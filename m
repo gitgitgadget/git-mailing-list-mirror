@@ -1,74 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/2] commit.c: check for lock error and return early
-Date: Thu, 17 Apr 2014 14:09:04 -0700
-Message-ID: <xmqqppkfd5ov.fsf@gitster.dls.corp.google.com>
-References: <1397674613-4922-1-git-send-email-sahlberg@google.com>
-	<1397674613-4922-3-git-send-email-sahlberg@google.com>
-	<534EFEE0.9000806@alum.mit.edu>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [RFC/PATCH 2/4] Submodules: Add the lib-submodule-update.sh test
+ library
+Date: Thu, 17 Apr 2014 23:30:04 +0200
+Message-ID: <535047DC.2000809@web.de>
+References: <5331B6F6.60501@web.de> <5331B741.6000606@web.de>	<20140417164138.GP21805@odin.tremily.us> <xmqq38hbep5v.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ronnie Sahlberg <sahlberg@google.com>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Apr 17 23:09:19 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Johan Herland <johan@herland.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jonathan Nieder p <jrnieder@gmail.com>,
+	Jeff King <peff@peff.net>, Heiko Voigt <hvoigt@hvoigt.net>,
+	Ronald Weiss <weiss.ronald@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	"W. Trevor King" <wking@tremily.us>
+X-From: git-owner@vger.kernel.org Thu Apr 17 23:30:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WatYZ-0002Aq-4u
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Apr 2014 23:09:15 +0200
+	id 1WattF-0000rS-P9
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Apr 2014 23:30:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751124AbaDQVJL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Apr 2014 17:09:11 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34808 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750919AbaDQVJJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Apr 2014 17:09:09 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D26FE7D8E1;
-	Thu, 17 Apr 2014 17:09:08 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=XcFX2YgILzLhUfgClC5YXZP4NY0=; b=xSCSwz
-	Ss+ZjnTrrBvTCcjiHJgtvFPeIPp52wcb+yas3jgAZGAHdIMMy5XSqPpsMKaVre5u
-	brh5pybHgZqes+Na1zaJ0EBDfKFnxIxcoq8IaD0lnNqcqqRkWqJVNVmzmCC+RkzV
-	FoMfKIyESbabjlr07yfU8t7sgxf6qWrZ2J/8Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rOWCoRt9RqUoR3JZ+rKFGqHBcLLhkYmR
-	y3EKeYRhai4s5VOLAQPqQm0WGkmGSg6dLJgCox3ONraSY0MNtvrZ/yQzlVUNsAIV
-	/RYHxscSz/Po39LY9QXtYDwlIBlWKjS3Fy3MKinTLNI8NqvpDd6rmTJsVXUQQrKP
-	u6yAzvbjuSk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BAB207D8E0;
-	Thu, 17 Apr 2014 17:09:08 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7B7A67D8DE;
-	Thu, 17 Apr 2014 17:09:06 -0400 (EDT)
-In-Reply-To: <534EFEE0.9000806@alum.mit.edu> (Michael Haggerty's message of
-	"Thu, 17 Apr 2014 00:06:24 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 82DCD6F4-C674-11E3-9BDE-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751897AbaDQVa1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Apr 2014 17:30:27 -0400
+Received: from mout.web.de ([212.227.15.3]:50905 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751883AbaDQVaW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Apr 2014 17:30:22 -0400
+Received: from [192.168.178.41] ([79.193.68.183]) by smtp.web.de (mrweb002)
+ with ESMTPSA (Nemesis) id 0MD8VY-1WieiP43x6-00GW80; Thu, 17 Apr 2014 23:30:06
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
+In-Reply-To: <xmqq38hbep5v.fsf@gitster.dls.corp.google.com>
+X-Enigmail-Version: 1.6
+X-Provags-ID: V03:K0:AGnnd9fCUJKuypoZyBm6sT1txLGg5IIzXHlpT9b5A4KcnSZtJ64
+ gBbJQRMK2rZdJwfGRuhOkI0XBaWDfTbeRgffIw8TeRlJ0z9o1bgXde89oB1NC+qm8Bp/OC/
+ z+w3d3KJeB0OWRXkp1xf20EcvZRDNSof810ZAXZJqtCkePY7xZ8joWUFlcq8bLg/rJHdECS
+ iRq5e9XCER2I8t0aUaXJA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246453>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+Am 17.04.2014 21:23, schrieb Junio C Hamano:
+> "W. Trevor King" <wking@tremily.us> writes:
+> 
+>> There have been a number of submodule series in
+>> flight recently, and I'm having trouble keeping track of them all ;).
+> 
+> Unfortunately I share that same feeling X-<.
+> 
+> Could you guys collectively summarize what issues each of these
+> in-flight topics try to address and how, how close it is to achieve
+> concensus, and how it interact with other proposed topics?
 
-> On 04/16/2014 08:56 PM, Ronnie Sahlberg wrote:
->> Move the check for the lock failure to happen immediately after
->> lock_any_ref_for_update().
->> Previously the lock and the check-if-lock-failed was separated by a handful
->> of string manipulation statements.
->
-> Please flow sentences together into paragraphs for easier reading,
-> rather than having an extremely ragged right-hand margin.
->
-> The rest looks good.
+I'm aware of these topics:
 
-Thanks, both.  I tentatively queued with the suggested log message
-tweaks, and I think result reads better.
+- My 4 "Never ignore staged but ignored submodules" patches
+
+  I recall that everyone agreed that this is a good change.
+
+- Johan's "Test various 'git submodule update' scenarios"
+
+  Intended to document current behavior of the submodule.<name>.branch
+  setting (and others) as a starting point for a discussion of how
+  that could (and should) evolve. Needs some cooking.
+
+- My "submodule test harness" RFC series (currently 14 patches)
+
+  Similar to Johan's patch I try to document the current behavior
+  of Git, but with the focus on all work tree manipulating commands
+  (not only 'submodule update' handling all submodule changes. Will
+  send to the list again when I resolved the last outstanding issues,
+  current state can be seen in the submodule-test-harness branch of
+  my GitHub repo. My next to-be-finished topic.
+
+- Ronald's two "Teach add and commit the --ignore-submodules option"
+  options
+
+  Will review v4 soonish, looking good from the first cursory look.
+
+- My "recursive submodule checkout" series
+
+  Needs to be rerolled, I intend to extend my "submodule test harness"
+  to cover all relevant scenarios for this series.
+
+- Heiko's "config cache for submodules" patch
+
+  Needed for my recursive checkout series to populate new submodules.
+
+And then a not yet surfaced "do not replace submodules with a file"
+fix I intend to send between the "submodule test harness" and the
+"recursive submodule checkout" series.
+
+Hope that makes it clearer ;-)
