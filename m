@@ -1,47 +1,47 @@
 From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [PATCH 1/3] i18n: Fixes uncatchable comments for translators
-Date: Thu, 17 Apr 2014 13:37:17 +0800
-Message-ID: <3f527f9939d093c7e063337f47fea41a740899c3.1397712142.git.worldhello.net@gmail.com>
+Subject: [PATCH 2/3] i18n: Only extract comments marked by special tag
+Date: Thu, 17 Apr 2014 13:37:18 +0800
+Message-ID: <2ce9ec406501d112e032c8208417f8100bed04c6.1397712142.git.worldhello.net@gmail.com>
 References: <cover.1397712142.git.worldhello.net@gmail.com>
 Cc: Git List <git@vger.kernel.org>,
 	Jiang Xin <worldhello.net@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>,
 	Brian Gesiak <modocache@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 17 07:37:59 2014
+X-From: git-owner@vger.kernel.org Thu Apr 17 07:38:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Waf1K-0000Ve-Iw
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Apr 2014 07:37:58 +0200
+	id 1Waf1v-0001q0-Sh
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Apr 2014 07:38:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755193AbaDQFhy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Apr 2014 01:37:54 -0400
-Received: from mail-pd0-f177.google.com ([209.85.192.177]:58734 "EHLO
-	mail-pd0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755060AbaDQFht (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Apr 2014 01:37:49 -0400
-Received: by mail-pd0-f177.google.com with SMTP id y10so11527315pdj.22
-        for <git@vger.kernel.org>; Wed, 16 Apr 2014 22:37:47 -0700 (PDT)
+	id S1755060AbaDQFiB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Apr 2014 01:38:01 -0400
+Received: from mail-pd0-f169.google.com ([209.85.192.169]:48725 "EHLO
+	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755135AbaDQFhv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Apr 2014 01:37:51 -0400
+Received: by mail-pd0-f169.google.com with SMTP id fp1so11560275pdb.14
+        for <git@vger.kernel.org>; Wed, 16 Apr 2014 22:37:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references;
-        bh=RU5FTX6W60AIsiRasmwawx7cSvOQg1nsrqhir1ex5v0=;
-        b=bovgCRqQL2QPZENcjGKdlTaL0/oX/asuD5Yt959F+//xDbar0ECJWE5lAFRLSjiMZ4
-         89WclzrmH8y765x8yhREfB8SFYudtuJ7Ij0fYHt/VVNGKNELCsS3ORFalyKlyD/wBulj
-         F1IQb5F7JaQF2a0quCFvXHY8UWSbkVdEorDF/e/oBFrPgDlwhG9GhKbT642xWise93yE
-         ytsAXFEcSCHaUqvNfpzq5xS+6H3ZlSqtB9F1DVwmNHrGax2LudnFhzc3AOAJOglwj1zg
-         ltz53z7vyOZg8NkLAe4ddsHTvLYx8HPwzfwftn5NaxDWe2imVfoLJjG9w4Gm81EMJJC/
-         q+1g==
-X-Received: by 10.66.192.41 with SMTP id hd9mr13213153pac.87.1397713067499;
-        Wed, 16 Apr 2014 22:37:47 -0700 (PDT)
+        bh=vdSyMHstTa0wdvntoeF+XG4UeOTnY/b93NlrvxwvFoQ=;
+        b=aoTUyF/c7I+k2d0X77H+YMp2p/wDWBsesiJnSD3S2ndahWUiHIoOPrC4gxW1kOS/4Q
+         Bhj6TbFZUjOgPLFy7K2uTrSeef7jgLrmtjqZ1vCd9eoviIVl457BbhDmpiqGDF/VD+Uh
+         F4KmM0ZlBiGFLAo14WUqVBU/IGI0wPMBTcTCi1F4O+pFycL23onmzyJ+oUlTDvX8vJU6
+         i3U9cFSWISRSuWRN9mB4Hta4bx7bm+4sHODb0IA3ZhLeALARxznXRhiyRiCBs9cMZI+X
+         2m/8PiaTi65nP9h8Fx5QLBRZOeN/EGi+EEVA45wChxRlPiMtHnLRwP3GI/s9uvVwRePc
+         4aEw==
+X-Received: by 10.68.215.68 with SMTP id og4mr13155411pbc.112.1397713071108;
+        Wed, 16 Apr 2014 22:37:51 -0700 (PDT)
 Received: from localhost.localdomain ([124.207.10.6])
-        by mx.google.com with ESMTPSA id n6sm50901640pbj.22.2014.04.16.22.37.44
+        by mx.google.com with ESMTPSA id n6sm50901640pbj.22.2014.04.16.22.37.47
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 16 Apr 2014 22:37:46 -0700 (PDT)
+        Wed, 16 Apr 2014 22:37:50 -0700 (PDT)
 X-Mailer: git-send-email 1.9.2.461.g942803f
 In-Reply-To: <cover.1397712142.git.worldhello.net@gmail.com>
 In-Reply-To: <cover.1397712142.git.worldhello.net@gmail.com>
@@ -50,31 +50,66 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246404>
 
-Comment for l10n translators can not be extracted by xgettext if it is
-not right above the l10n tag.  Moving the comment right before the l10n
-tag will fix this issue.
+When extract l10n messages, we use "--add-comments" option to keep
+comments right above the l10n messages for references.  But sometimes
+irrelevant comments are also extracted.  For example in the following
+code block, the comment in line 2 will be extracted as comment for the
+l10n message in line 3, but obviously it's wrong.
 
-Reported-by: Brian Gesiak <modocache@gmail.com>
+        { OPTION_CALLBACK, 0, "ignore-removal", &addremove_explicit,
+          NULL /* takes no arguments */,
+          N_("ignore paths removed in the working tree (same as
+          --no-all)"),
+          PARSE_OPT_NOARG, ignore_removal_cb },
+
+Since almost all comments for l10n translators are marked with the same
+prefix (tag): "TRANSLATORS:", it's safe to only extract comments with
+this special tag.  I.E. it's better to call xgettext as:
+
+        xgettext --add-comments=TRANSLATORS: ...
+
+Also tweaks the multi-line comment in "init-db.c", to make it start with
+the proper tag, not "* TRANSLATORS:" (which has a star before the tag).
+
 Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
 ---
- date.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Makefile          | 2 +-
+ builtin/init-db.c | 8 +++-----
+ 2 files changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/date.c b/date.c
-index e1a2cee..782de95 100644
---- a/date.c
-+++ b/date.c
-@@ -144,8 +144,8 @@ void show_date_relative(unsigned long time, int tz,
- 		if (months) {
- 			struct strbuf sb = STRBUF_INIT;
- 			strbuf_addf(&sb, Q_("%lu year", "%lu years", years), years);
--			/* TRANSLATORS: "%s" is "<n> years" */
- 			strbuf_addf(timebuf,
-+				 /* TRANSLATORS: "%s" is "<n> years" */
- 				 Q_("%s, %lu month ago", "%s, %lu months ago", months),
- 				 sb.buf, months);
- 			strbuf_release(&sb);
+diff --git a/Makefile b/Makefile
+index 2128ce3..a53f3a8 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2102,7 +2102,7 @@ pdf:
+ 
+ XGETTEXT_FLAGS = \
+ 	--force-po \
+-	--add-comments \
++	--add-comments=TRANSLATORS: \
+ 	--msgid-bugs-address="Git Mailing List <git@vger.kernel.org>" \
+ 	--from-code=UTF-8
+ XGETTEXT_FLAGS_C = $(XGETTEXT_FLAGS) --language=C \
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index c7c76bb..56f85e2 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -412,11 +412,9 @@ int init_db(const char *template_dir, unsigned int flags)
+ 	if (!(flags & INIT_DB_QUIET)) {
+ 		int len = strlen(git_dir);
+ 
+-		/*
+-		 * TRANSLATORS: The first '%s' is either "Reinitialized
+-		 * existing" or "Initialized empty", the second " shared" or
+-		 * "", and the last '%s%s' is the verbatim directory name.
+-		 */
++		/* TRANSLATORS: The first '%s' is either "Reinitialized
++		   existing" or "Initialized empty", the second " shared" or
++		   "", and the last '%s%s' is the verbatim directory name. */
+ 		printf(_("%s%s Git repository in %s%s\n"),
+ 		       reinit ? _("Reinitialized existing") : _("Initialized empty"),
+ 		       shared_repository ? _(" shared") : "",
 -- 
 1.9.2.461.g942803f
