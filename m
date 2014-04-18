@@ -1,89 +1,88 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Project idea: strbuf allocation modes
-Date: Fri, 18 Apr 2014 10:21:35 -0700
-Message-ID: <xmqq8ur2d04g.fsf@gitster.dls.corp.google.com>
-References: <vpqr457omgs.fsf@anie.imag.fr> <53512DB6.1070600@alum.mit.edu>
+Subject: Re: Store refreshed stat info in a separate file?
+Date: Fri, 18 Apr 2014 10:43:50 -0700
+Message-ID: <xmqq4n1qcz3d.fsf@gitster.dls.corp.google.com>
+References: <CACsJy8CzZ7H4pffNccBBpvpn5oT5tud-Tx=Nu1c=q2SB7Zi8eg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	git <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Apr 18 19:21:50 2014
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 18 19:44:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WbCTz-0007AI-AJ
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Apr 2014 19:21:47 +0200
+	id 1WbCpU-0003yF-Ke
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Apr 2014 19:44:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751205AbaDRRVn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Apr 2014 13:21:43 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57099 "EHLO
+	id S1754307AbaDRRnz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Apr 2014 13:43:55 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54672 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753878AbaDRRVl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Apr 2014 13:21:41 -0400
+	id S1753922AbaDRRny (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Apr 2014 13:43:54 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A056D796F4;
-	Fri, 18 Apr 2014 13:21:40 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AC7B879BC4;
+	Fri, 18 Apr 2014 13:43:53 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=y1BT1rh6CUD6BywaDN411bGxHFw=; b=dZMSZZ
-	PlBe+PwQfVgoP38LHZsPNnp/cArFD9plu7ATqBl1W5WyZ9k8OhctZVXF6A/fgny5
-	qZVL+W2ShDZyA0PXzh3E5dcRWBnsrO/6wcIjAl7taWIn5ToPcj+bXm/EvUMQJfy9
-	QhBwlwqq3IlWSzQNGYdolTVIpMFvUzzVvpPUU=
+	:content-type; s=sasl; bh=DfepaKgV/Wv32YPPSsflAql6RZI=; b=QGHzqo
+	bK+0hM6kckuCEBZcZPSVgLuR1zzYuDvrjxp8i4QjzW+sbj9Muf9DTkrWRxDSaDpJ
+	Jspu/+jRESknHXo+2frYAvjSFMpD6VDnk2jmlRyLtyM446v5piYf6XHYz6K/HmZm
+	xhwHhNP4WhwfkfHnCihI6vwoCUQY2AbpB66Qg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gn/mRCj/2RlcFbFJX6QL7rH4ECOSkJH7
-	dZ9Fo0unxhBqKh3yi1cuOE1xeNl4XGp2l5OnP0BO2ZBaub9NNNcXMmWvQQRvLwnH
-	FGlUR4FmyTm3VjdWc4wuu7n0aGWdaNgQ9J87syyxSXIrFWtBkp2CmrYaftO2cE9L
-	drSa6SxXjZ4=
+	:content-type; q=dns; s=sasl; b=d/970oOIpjgDrKvcyMGgqDvUuTxetl4k
+	FQLzeiP4r/AjQ7uU5/fyu4+SBVVhPQ1O7FKXG2BrnR8j+OQN9JG9BvD6WLln/oIs
+	5aqiw7rZeR8hXN7lkF/twibHBvZ7Vc9EBGygw16C8GuPFhG6jFVwsOYmgL4NeP/E
+	PHYVEAFoaLc=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7EB9B796F3;
-	Fri, 18 Apr 2014 13:21:40 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 92A2379BC1;
+	Fri, 18 Apr 2014 13:43:53 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C61D1796F2;
-	Fri, 18 Apr 2014 13:21:37 -0400 (EDT)
-In-Reply-To: <53512DB6.1070600@alum.mit.edu> (Michael Haggerty's message of
-	"Fri, 18 Apr 2014 15:50:46 +0200")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1791A79BBE;
+	Fri, 18 Apr 2014 13:43:52 -0400 (EDT)
+In-Reply-To: <CACsJy8CzZ7H4pffNccBBpvpn5oT5tud-Tx=Nu1c=q2SB7Zi8eg@mail.gmail.com>
+	(Duy Nguyen's message of "Fri, 18 Apr 2014 21:20:31 +0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: E6066E94-C71D-11E3-AAE9-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 01514716-C721-11E3-B4AB-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246477>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-> The Idea
-> ========
->
-> I would like to see strbuf enhanced to allow it to use memory that it
-> doesn't own (for example, stack-allocated memory), while (optionally)
-> allowing it to switch over to using allocated memory if the string grows
-> past the size of the pre-allocated buffer.
+> The major cost of writing an index is the SHA-1 hashing. The bigger
+> the written part is, the higher cost we pay. So what if we write
+> stat-only data to a separate file? Think of it as an index extension,
+> only it stays outside the index. On webkit with 182k files, the stat
+> data size would be about 6MB (its index v4 is 15M for comparison). But
+> with stat-only we could employ some cheap but efficient compressing,
+> sd_dev, sd_uid and sd_gid are likely the same for every entry. And we
+> could store the stat data of updated entries only. So I'm hoping to
+> get that 6MB down to a few hundred KBs. That makes hashing lightning
+> fast.
 
-I'd like to see these characteristics, but I would want to see that
-this is done entirely internally inside the strbuf implementation
-without any API impact, other than the initialisation.  I do not
-think the current API contract is too rigid to allow us doing so.
+It is perfectly OK to store your verbose stat data after deflating
+it in the index as an index extension, so "storing 6MB that can be
+compressed efficiently without compressing is dumb" applies whether
+the result is stored in the index or in a separate file, I would
+think.
 
- - The API users may peek strbuf.buf in-place until they perform an
-   operation that makes it longer (at which point the .buf pointer
-   may point at a new piece of memory).
+Having said that, I do not think there is a fundamental reason why
+the stat data has to live inside the same index file.  A separate
+file is just fine, as long as you can reliably detect that they went
+out of sync for whatever reason (e.g. "the index proper updated, a
+stale stat file left beind"), and storing the trailer checksum from
+the corresponding index in this new file is an obvious and good
+solution.
 
- - The API users may strbuf_detach() to obtain a piece of memory
-   that belongs to them (at which point the strbuf becomes empty),
-   hence needs to be freed by the callers.
-
-As long as the above two promises are kept intact, it is all
-internal to the strbuf implementation, current iteration of which
-does not have any initial (possibly static) allocation other than
-the fixed "terminating NUL", but your updated one may take a caller
-supplied piece of memory that is designed to outlive the strbuf
-itself as its initial allocation and the memory ownership can be
-left as an internal implementation detail to the strbuf without
-bothering the callers.
+I am not sure if that should be called index.stat, though.  It is
+more about untracked files.  The stat data for cached paths are in
+the index proper, so what you are adding is not what we would call
+"stat info" when we talk about the index.
