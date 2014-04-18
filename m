@@ -1,100 +1,128 @@
-From: Stepan Kasal <kasal@ucw.cz>
-Subject: Re: [PATCH] Update SVN.pm
-Date: Fri, 18 Apr 2014 08:48:17 +0200
-Organization: <)><
-Message-ID: <20140418064817.GB19647@camelia.ucw.cz>
-References: <20140416141605.GA9692@camelia.ucw.cz> <xmqq61m9gka6.fsf@gitster.dls.corp.google.com> <20140417052438.GA13907@camelia.ucw.cz> <xmqqwqenety2.fsf@gitster.dls.corp.google.com>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: [PATCH] blame: add correct paddings in time_buf for align
+Date: Fri, 18 Apr 2014 16:44:25 +0800
+Message-ID: <43a3735a164c923acc8e6e2681dfbd727cda63de.1397810231.git.worldhello.net@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Roman Belinsky <belinsky.roman@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 18 08:48:26 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Brian Gesiak <modocache@gmail.com>, Git List <git@vger.kernel.org>,
+	Jiang Xin <worldhello.net@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 18 10:44:54 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wb2b3-0006y4-HP
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Apr 2014 08:48:25 +0200
+	id 1Wb4Pj-0006hN-7B
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Apr 2014 10:44:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751161AbaDRGsV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Apr 2014 02:48:21 -0400
-Received: from jabberwock.ucw.cz ([46.255.230.98]:51292 "EHLO
-	jabberwock.ucw.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750976AbaDRGsT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Apr 2014 02:48:19 -0400
-Received: from 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (84.64.broadband3.iol.cz [85.70.64.84])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	(Authenticated sender: kasal)
-	by jabberwock.ucw.cz (Postfix) with ESMTPSA id 3FAC51C00A2;
-	Fri, 18 Apr 2014 08:48:18 +0200 (CEST)
-Received: from camelia.ucw.cz (camelia.ucw.cz [127.0.0.1])
-	by 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (8.14.3/8.14.3) with ESMTP id s3I6mHaW019724;
-	Fri, 18 Apr 2014 08:48:17 +0200
-Received: (from kasal@localhost)
-	by camelia.ucw.cz (8.14.3/8.14.3/Submit) id s3I6mHd8019723;
-	Fri, 18 Apr 2014 08:48:17 +0200
-Mail-Followup-To: git@vger.kernel.org,
-	Roman Belinsky <belinsky.roman@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <xmqqwqenety2.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1751992AbaDRIop convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Apr 2014 04:44:45 -0400
+Received: from mail-pb0-f41.google.com ([209.85.160.41]:35891 "EHLO
+	mail-pb0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751932AbaDRIom (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Apr 2014 04:44:42 -0400
+Received: by mail-pb0-f41.google.com with SMTP id jt11so1276419pbb.14
+        for <git@vger.kernel.org>; Fri, 18 Apr 2014 01:44:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=mzKv+mlQh64w+yMeJvVLxCTT6vK9G1M8F9S7QNZRV10=;
+        b=0M8/LVb+HvxawowxU+pDJFT2dg1/ywjBedyQ+J/UJOlZVipkLZlmt77IryR9r2gUNV
+         GxqTLtZr6U47X3gmgzthhhMJDFshBZKrYKGcKyfzXs8o+qtcQnOgNAIVb0HmyitdRw2y
+         bXOG4w6ri2kR1qZ+oIWJ0RIvvqHMH7SZbbDkpQKETv9WV488C8zRtKNownD/JRWENb/V
+         CUyoDct+wO96G9MIsYH33ENllbpfSudsIAq/yyuHM5blW59+4chJ+ouC4RI40BiFGHFA
+         AysLA3RwhKu6anVUgvbCKTjb/0zoN/DBg9NgNT7W9PEo8BTEshSdL+5AefrBE7DTRM+D
+         Eptw==
+X-Received: by 10.68.221.42 with SMTP id qb10mr20815895pbc.65.1397810681661;
+        Fri, 18 Apr 2014 01:44:41 -0700 (PDT)
+Received: from localhost.localdomain ([61.233.23.226])
+        by mx.google.com with ESMTPSA id te2sm138538105pac.25.2014.04.18.01.44.38
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 18 Apr 2014 01:44:40 -0700 (PDT)
+X-Mailer: git-send-email 1.9.2.474.g17b2a16
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246464>
 
-Hello,
+When show blame information with relative time, the UTF-8 characters in
+`time_str` will break the alignment of columns after the date field.
+This is because the `time_buf` padding with spaces should have a
+constant display width, not a fixed strlen size.  So we should call
+utf8_strwidth() instead of strlen() for calibration.
 
-cc'ing Roman, the original author.  (I should have done that
-in the first post, sorry.  I have also forwarded him another
-mail from this thread, asking him for author's sign off.)
+Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+---
 
-On Thu, Apr 17, 2014 at 10:39:49AM -0700, Junio C Hamano wrote:
-> Stepan Kasal <kasal@ucw.cz> writes:
-> 
-> > On Wed, Apr 16, 2014 at 12:13:21PM -0700, Junio C Hamano wrote:
-> >> Interesting.  What other strange forms can they record in their
-> >> repositories, I have to wonder.  Can they do
-> >>     2014-01-07T5:8:6.048176Z
-> >> for example?
-> >
-> > Roman Belinsky, the author of this fix, witnessed after large scale
-> > conversion that the problem happens with the hour part only.
-> 
-> Is this "large scale conversion" done from a SVN repository that is
-> created by bog standard SVN, or something else?
+Before applying this patch:
 
-I don't know.  Roman?
+        5817da01 builtin-blame.c   (Pierre Habouzit             6 =E5=B9=
+=B4=E5=89=8D                         21) #include "parse-options.h"
+        ffaf9cc0 builtin-blame.c   (Geoffrey Thomas             5 =E5=B9=
+=B4=E5=89=8D                         22) #include "utf8.h"
+        3b8a12e8 builtin/blame.c   (Axel Bonnet                 3 =E5=B9=
+=B4 10 =E4=B8=AA=E6=9C=88=E4=B9=8B=E5=89=8D            23) #include "us=
+erdiff.h"
+        25ed3412 builtin/blame.c   (Bo Yang                     1 =E5=B9=
+=B4 1 =E4=B8=AA=E6=9C=88=E4=B9=8B=E5=89=8D             24) #include "li=
+ne-range.h"
+        58dbfa2e builtin/blame.c   (Eric Sunshine               9 =E4=B8=
+=AA=E6=9C=88=E4=B9=8B=E5=89=8D                   25) #include "line-log=
+=2Eh"
+        cee7f245 builtin-pickaxe.c (Junio C Hamano              8 =E5=B9=
+=B4=E5=89=8D                         26)=20
 
-> How certain are we that this "hour part is broken" is the only kind
-> of breakage in timestamps we would encouter?
+After applying this patch:
 
-I would say we can be certain, as Roman said that the same PC
-that inserts the timestamp with one-digit hours does not misformat
-minutes.  (Still cited from the same discussion
-https://github.com/msysgit/git/pull/126#discussion_r9661916 )
+        5817da01 builtin-blame.c   (Pierre Habouzit             6 =E5=B9=
+=B4=E5=89=8D                           21) #include "parse-options.h"
+        ffaf9cc0 builtin-blame.c   (Geoffrey Thomas             5 =E5=B9=
+=B4=E5=89=8D                           22) #include "utf8.h"
+        3b8a12e8 builtin/blame.c   (Axel Bonnet                 3 =E5=B9=
+=B4 10 =E4=B8=AA=E6=9C=88=E4=B9=8B=E5=89=8D                 23) #includ=
+e "userdiff.h"
+        25ed3412 builtin/blame.c   (Bo Yang                     1 =E5=B9=
+=B4 1 =E4=B8=AA=E6=9C=88=E4=B9=8B=E5=89=8D                  24) #includ=
+e "line-range.h"
+        58dbfa2e builtin/blame.c   (Eric Sunshine               9 =E4=B8=
+=AA=E6=9C=88=E4=B9=8B=E5=89=8D                       25) #include "line=
+-log.h"
+        cee7f245 builtin-pickaxe.c (Junio C Hamano              8 =E5=B9=
+=B4=E5=89=8D                           26)=20
 
-We do not have code review for that bug, as far as I know, but this
-is a natural bug:  a reasonably looking time "5:08:09.048176" is
-used in format "%sT%s"
+ builtin/blame.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-> [...] and by being slightly more lenient than necessary to cover
-> one observed case that triggered the patch, we can cover SVN
-> repositories broken in a similar but slightly different way.
-
-I second that, in general.
-But my guess is that this particular "similar but slightly
-different" breakage will never appear, so the self-documenting
-original fix wins for me.
-
-> Especially given that this regexp matching is not used for finding a
-> timestamp from random places [...]
-
-I agree that the broader regexp is not dangerous in this context.  So
-it seems to be no big issue either way.
-
-Thanks for taking this so carefully,
-	Stepan
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 88cb799..c8f6647 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -1564,12 +1564,19 @@ static const char *format_time(unsigned long ti=
+me, const char *tz_str,
+ 	else {
+ 		const char *time_str;
+ 		int time_len;
++		int time_col;
+ 		int tz;
+ 		tz =3D atoi(tz_str);
+ 		time_str =3D show_date(time, tz, blame_date_mode);
+ 		time_len =3D strlen(time_str);
+ 		memcpy(time_buf, time_str, time_len);
+-		memset(time_buf + time_len, ' ', blame_date_width - time_len);
++		/*
++		 * Add space paddings to time_buf to display a fixed width
++		 * string, and use time_col for display width calibration.
++		 */
++		time_col =3D utf8_strwidth(time_str);
++		memset(time_buf + time_len, ' ', blame_date_width - time_col);
++		*(time_buf + time_len + blame_date_width - time_col) =3D 0;
+ 	}
+ 	return time_buf;
+ }
+--=20
+1.9.2.474.g17b2a16
