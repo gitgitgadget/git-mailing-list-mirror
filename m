@@ -1,162 +1,112 @@
-From: "Luis R. Rodriguez" <mcgrof@do-not-panic.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] tag: add -i and --introduced modifier for --contains
-Date: Fri, 18 Apr 2014 16:17:38 -0700
-Message-ID: <CAB=NE6Vt8etieyR256Hxb=q6zMo7UAO2Zkm5900NrE+4=-3eXA@mail.gmail.com>
+Date: Fri, 18 Apr 2014 16:36:20 -0700
+Message-ID: <xmqq7g6mb47f.fsf@gitster.dls.corp.google.com>
 References: <1397681938-18594-1-git-send-email-mcgrof@do-not-panic.com>
- <xmqqppkhexw3.fsf@gitster.dls.corp.google.com> <CAB=NE6VvDrMQ4ybF10MpXM-2672OdUTC_Rp2mdO3a5fuo1-H1Q@mail.gmail.com>
- <xmqqfvlbga4r.fsf@gitster.dls.corp.google.com>
+	<xmqqppkhexw3.fsf@gitster.dls.corp.google.com>
+	<CAB=NE6VvDrMQ4ybF10MpXM-2672OdUTC_Rp2mdO3a5fuo1-H1Q@mail.gmail.com>
+	<xmqqfvlbga4r.fsf@gitster.dls.corp.google.com>
+	<CAB=NE6Vt8etieyR256Hxb=q6zMo7UAO2Zkm5900NrE+4=-3eXA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Jiri Slaby <jslaby@suse.cz>,
 	Andreas Schwab <schwab@suse.de>, Jan Kara <jack@suse.cz>,
 	Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 19 01:18:07 2014
+To: "Luis R. Rodriguez" <mcgrof@do-not-panic.com>
+X-From: git-owner@vger.kernel.org Sat Apr 19 01:36:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WbI2n-0004ns-UE
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Apr 2014 01:18:06 +0200
+	id 1WbIKw-0002uz-FS
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Apr 2014 01:36:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753495AbaDRXSB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Apr 2014 19:18:01 -0400
-Received: from mail-lb0-f180.google.com ([209.85.217.180]:49809 "EHLO
-	mail-lb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751691AbaDRXSA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Apr 2014 19:18:00 -0400
-Received: by mail-lb0-f180.google.com with SMTP id 10so1753263lbg.11
-        for <git@vger.kernel.org>; Fri, 18 Apr 2014 16:17:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=BrLcyelWazV+vcRLTy+jx2V+/w9McgEhgUX7cNJx8WM=;
-        b=E9cojUG6j8x+lwgXhsIlnqILjuEpWBaDYZ4vo9mjqY97/vfg+usQszQbxVaLy4ZEMK
-         vgqutw9bVNKWdiTznwZMqemR52xtsqYzj9iH8iywKU3QZ0qYHhLwkfCi18zrHCm4i+rW
-         qC7n0glStVD9gkYWPjgQ0TwbodK7Pn2qfAGCPjsqaahaQmLAQSmLDp/vvJRwSkZA5qQc
-         m+55XlOV+ITslzME2OSK5jcqnqMPkGKL/lPMutJcjHTCSohBlRm/cCjalTFDwNaPHtiJ
-         Dw2SM9dej8L9DVD9YVl1l/7BCAH0ybgmJFWazPPyAPdppWOdN05fBi5qH4H+p10+UXP5
-         3arg==
-X-Received: by 10.112.85.6 with SMTP id d6mr12340282lbz.8.1397863078428; Fri,
- 18 Apr 2014 16:17:58 -0700 (PDT)
-Received: by 10.112.215.74 with HTTP; Fri, 18 Apr 2014 16:17:38 -0700 (PDT)
-In-Reply-To: <xmqqfvlbga4r.fsf@gitster.dls.corp.google.com>
-X-Google-Sender-Auth: eH-kQutvrveuA2Ejs-X_P5YFnu8
+	id S1752982AbaDRXg0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Apr 2014 19:36:26 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37814 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751691AbaDRXgY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Apr 2014 19:36:24 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CB4417CC3B;
+	Fri, 18 Apr 2014 19:36:23 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=2XtKlqmYX/gUmx8GKIxSTLYxEUY=; b=JjeCNr
+	qdcxEKrvD/Z+Xbv0/X/AvKDBNaJu/RAtMhdw/KAjrKVO8dyU6NdiuX5TV6rmtkCJ
+	EGDxD0fqeYFgX2SOE/HUPUTm6FQh6QGzD+2w9vIlTvf4A8PmSGJGX46IdnUqZXuz
+	hYj643xO/ncG1j5aKP75TpgU01a0YsfvWaysk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=JVnl92J7PeBUUC9OH87WpWRWQRBHX8Nl
+	XlXMSOpHt2rhBCmwZAR93xA2Atc9GJdygoPZaorsBs/IunWpmUeeO52ZhfIDcVbv
+	tp25ibVlHrxCoGvs9C1eSiEO4bDnzA7kmSOLcy3n1t+H6ZskKoRb7qxVH2xW2Ucw
+	RNk7+RqapBU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A84957CC3A;
+	Fri, 18 Apr 2014 19:36:23 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D16207CC39;
+	Fri, 18 Apr 2014 19:36:21 -0400 (EDT)
+In-Reply-To: <CAB=NE6Vt8etieyR256Hxb=q6zMo7UAO2Zkm5900NrE+4=-3eXA@mail.gmail.com>
+	(Luis R. Rodriguez's message of "Fri, 18 Apr 2014 16:17:38 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 3F90A7DE-C752-11E3-AF52-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246488>
 
-On Thu, Apr 17, 2014 at 10:04 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> "Luis R. Rodriguez" <mcgrof@do-not-panic.com> writes:
+"Luis R. Rodriguez" <mcgrof@do-not-panic.com> writes:
+
+> I think ultimately this reveals that given that tags *can* be
+> arbitrary and subjective,...
+
+Yes; see the part at the bottom.
+
+>> Commit A can be described in terms of both v3.4 and v9.0,
 >
->>> And between v3.4 and v3.5-rc1, the latter is a closer anchor point
->>> for that commit (v3.5-rc1 only needs about 200 hops to reach the
->>> commit, while from v3.4 you would need close to 500 hops),
+> And in the real example case, why *would* c5905afb' be be described in
+> terms of v3.5 instead of v3.4 ?
+
+I am not interested in graphing that particular history between v3.4
+and v3.5 myself.  If you are interested, I already gave you enough
+information on how to figure that out.
+
+>>     - find candidate tags that can be used to "describe --contains"
+>>       the commit A, yielding v3.4, v3.5 (not shown), and v9.0;
+>
+>>     - among the candidate tags, cull the ones that contain another
+>>       candidate tag, rejecting v3.5 (not shown) and v9.0;
+>
+>>     - among the surviving tags, pick the closest.
 >>
->> Ah! Thanks for explaining this mysterious puzzle to me. I'm a bit
->> perplexed why still. Can I trouble you for a little elaboration here?
-
-< Junio gives a great huge example>
-
-Phew! Thanks for the elaborate explanation, this makes perfect sense now!
-
-> Now, as to what *SHOULD* happen, I think the above exercise shows us
-> a way to define what the desired semantics is, without resorting to
-> heuristics (e.g. "which tag has older timestamp?" or "which tag's
-> name sorts older under Linux version naming convention?").
-
-I think ultimately this reveals that given that tags *can* be
-arbitrary and subjective, and given that clocks can also pretty much
-arbitrary 'git describe --contains' can and probably only should do
-best effort (TM) and perhaps one thing to help is documenting this
-issue well and provide a set of best practices that are supported for
-tagging schemes. I can't describe how many libraries I've reviewed
-about software versioning schemes and most of them support a huge
-array of things, and funny enough the Linux versioning scheme, was not
-supported well, for something so simple as versioning sort. This is
-ultimately why I had to implement my own sort solution on rel-html. If
-we agree on this we could just for example take on the Linux
-versioning scheme as an emum and document that well both on code and a
-wiki. More on this below.
-
-With regards to timestamps: care must be taken given that we'd be
-assuming that clocks are synchronized, this can likely yield incorrect
-results on a distributed development environment with different time
-zones, and it can also be easily cheated, which is why I was concerned
-over using timestamps. Its still certainly something that can be
-considered, but I've heard enough rants of a few maintainers about
-crazy dates on patches which makes me believe this could actually be
-an issue, specially if we speed up development and need higher degree
-of resolution.
-
-I know the above example but its perhaps worth mentioning how Linux
-does not follow the above development model for merging stable fixes
-or changes though, but it does not prevent folks from branching off of
-older tags to do development which Linux will then pull. In Ingo's
-case the issue then points then I think to another mild issue -- the
-commit was developed on a v3.3 based tag, which is why 'git describe
---first-parent c5905afb' yields v3.3-rc1-41-gc5905af and not v3.4,
-which *can also* be a bit perplexing if one does not understand the
-above example you provided can be used for a development work flow for
-code sent out to Linus. That said then, since we don't follow the
-model you laid out it still reveals another issue, and I am not yet
-sure I still understand why --contains yields a v3.5 tag in that case
-since we ensured commits on v3.5 were already piled up on older
-releases, or were being introduced newly on its own release. It smells
-to me that the commit's first parent (which can be anything) is used
-somehow here as a shortcut ?
-
-This doesn't mean we can't use the work flow above for merging changes
-from say a v3.4.x onto a v3.5 -- but we don't -- and perhaps as part
-of the documentation about a scheme for Linux, we should advise
-against such practices. In any case the closest thing I see we can use
-upstream on Linux is 'git cherry-pick -x <commit-id>' but Greg doesn't
-seem to use this and instead appends the commit with the respective
-commit ID of the upstream gitsum. Both strategies yield different
-commit IDs anyway, so neither practice should interrupt the 'git
-describe --contains' practice. In the stable branches to find out when
-a commit was introduced one would not rely on the commit ID on the
-stable branch but instead of the commit ID of the 'upstream
-reference'.
-
-> Commit A can be described in terms of both v3.4 and v9.0,
-
-And in the real example case, why *would* c5905afb' be be described in
-terms of v3.5 instead of v3.4 ?
-
-> and it may
-> be closer to v9.0 than v3.4, and under that definition "we pick the
-> closest tag", the current "describe --contains" behaviour may be
-> correct, but from the human point of view, it is *WRONG*.
-
-Yeap, if a development work flow does not follow a strict pattern
-(maybe a .git/config variable?) perhaps 'git describe --contains'
-should spit out a the few tags it does have?
-
-> It is wrong because v9.0 can reach v3.4.  So perhaps the rule should
-> be updated to do something like:
+>> Hmm?
 >
->     - find candidate tags that can be used to "describe --contains"
->       the commit A, yielding v3.4, v3.5 (not shown), and v9.0;
+> Sounds good to me!
 
-Sure.
+Not so fast ;-)
 
->
->     - among the candidate tags, cull the ones that contain another
->       candidate tag, rejecting v3.5 (not shown) and v9.0;
+My other message to Peff in response to his another example has an
+updated position on this.  "Reject candidates that can reach other
+candidates" is universally correct, but after that point, there are
+at least three but probably more options that suit preference of
+different people and project to break ties:
 
-Sounds good to me but that seems to stick the output to a scheme, ie,
-would it support schemes without a v prefix for tags? In other words,
-perhaps do this only for Linux scheme?
+ - Your case that started this thread may want to favor v3.4 if only
+   because that v3.4 _sounds_ smaller than v4.0 (in Peff's example),
+   even when v3.4 and v4.0 do not have ancestry relationship.
 
->     - among the surviving tags, pick the closest.
->
-> Hmm?
+ - The "closest" we have had is a heuristic to produce a result that
+   is textually shorter.
 
-Sounds good to me!
+ - And as I alluded to, "which one has the earliest timestamp?", is
+   another valid question to ask.
 
-  Luis
+And there may be more to appear.  A new command line option (and
+possibly a new configuration) to choose from these three (and more
+heuristics that will be added later) would be necessary.
