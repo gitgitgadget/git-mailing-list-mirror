@@ -1,75 +1,93 @@
-From: "Kyle J. McKay" <mackyle@gmail.com>
-Subject: Re: [PATCH 1/3] rebase: avoid non-function use of "return" on FreeBSD
-Date: Thu, 17 Apr 2014 17:26:00 -0700
-Message-ID: <03D68D70-7E30-428C-A13A-79BF477F0CBF@gmail.com>
-References: <438458da797bcab97449bfa931a9d1d@74d39fa044aa309eaea14b9f57fe79c> <0779303f7d2257a618b5bed00260a8a@74d39fa044aa309eaea14b9f57fe79c> <xmqqob03le3v.fsf@gitster.dls.corp.google.com> <FAD02895-24B2-46C3-ABEF-E9CE17926FF9@gmail.com> <xmqqsipdi5lw.fsf@gitster.dls.corp.google.com> <xmqqtx9tgn5l.fsf@gitster.dls.corp.google.com> <F88F585D-B146-4CD2-A7E9-D3CB2C5B25A4@gmail.com> <xmqq4n1rg9nc.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: alex@bellandwhistle.net
+Subject: Re: gitignore vs. exclude vs =?UTF-8?Q?assume-unchanged=3F?=
+Date: Thu, 17 Apr 2014 17:36:56 -0700
+Message-ID: <4dd8389939fbf3dc77b58adcca7b17c1@bellandwhistle.net>
+References: <b3f480af1c362c615ad9ce85296e2be2@bellandwhistle.net>
+ <xmqqy4z5go1y.fsf@gitster.dls.corp.google.com>
+ <dee7ee673c8c4d81fb5aaecea25e9709@bellandwhistle.net>
+ <20140416234555.GA4309@google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 18 02:26:26 2014
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 18 02:37:08 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WawdN-00059J-IR
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Apr 2014 02:26:25 +0200
+	id 1Wawnk-0006ux-60
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Apr 2014 02:37:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752087AbaDRA0H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Apr 2014 20:26:07 -0400
-Received: from mail-pd0-f176.google.com ([209.85.192.176]:47641 "EHLO
-	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750944AbaDRA0E (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Apr 2014 20:26:04 -0400
-Received: by mail-pd0-f176.google.com with SMTP id r10so893274pdi.21
-        for <git@vger.kernel.org>; Thu, 17 Apr 2014 17:26:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:in-reply-to:subject:references:message-id:content-type
-         :content-transfer-encoding:mime-version:date:cc;
-        bh=dOmYE2Ke9SmBGtebrKVSMDAJHJac58UZlCVp3P2bsKM=;
-        b=rwvtqY6CCQGmXlLrNZqPRh2H42krYlLVhZ6u7zGtru2ULWRdMLlYmEMbtAvy4A8fU+
-         +ZyjzPMZbu8YRLAbgvjpcKb0DrgqmpLp0l1FhQJf7xCnsMjmFT7uOIs/dQW8iQwGdZq0
-         mzAoWzxzfHZcdnyfKwUpSm0kmbt1ll5po72CnKqHtmdmzj7vnaUMAYZTWsg8oW/876aj
-         98IlyHhGI0ZWTAduTqfZhMUwGEUIR3VKeKdbfCxGxbFuqDBKKKhKwtD0EAeSLaoXpVJF
-         yAVgGElwUT/X+m27fN4TFlNEqTQt0Hq+fqqq+ThrN/mfjxTtiT3f8lO6QqA+8Kj0VLOG
-         gR9Q==
-X-Received: by 10.66.180.200 with SMTP id dq8mr18919287pac.104.1397780762964;
-        Thu, 17 Apr 2014 17:26:02 -0700 (PDT)
-Received: from [172.16.16.105] (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
-        by mx.google.com with ESMTPSA id yv7sm133115701pac.33.2014.04.17.17.26.01
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Thu, 17 Apr 2014 17:26:02 -0700 (PDT)
-In-Reply-To: <xmqq4n1rg9nc.fsf@gitster.dls.corp.google.com>
-X-Mauler: Craptastic (2.936)
+	id S1751200AbaDRAhE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Apr 2014 20:37:04 -0400
+Received: from selene.fortifiedserver.net ([98.158.151.224]:56798 "EHLO
+	selene.fortifiedserver.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750893AbaDRAhC (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 Apr 2014 20:37:02 -0400
+Received: from localhost.uu.net ([127.0.0.1]:46216 helo=selene.fortifiedserver.net)
+	by selene.fortifiedserver.net with esmtpa (Exim 4.82)
+	(envelope-from <alex@bellandwhistle.net>)
+	id 1WawnZ-0000Ye-2B; Thu, 17 Apr 2014 17:36:57 -0700
+In-Reply-To: <20140416234555.GA4309@google.com>
+X-Sender: alex@bellandwhistle.net
+User-Agent: Roundcube Webmail/0.9.5
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - selene.fortifiedserver.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - bellandwhistle.net
+X-Get-Message-Sender-Via: selene.fortifiedserver.net: authenticated_id: alex@bellandwhistle.net
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246461>
 
-On Apr 17, 2014, at 10:15, Junio C Hamano wrote:
+On 2014-04-16 16:45, Jonathan Nieder wrote:
+> Hi,
+> 
+> alex@bellandwhistle.net wrote:
+> 
+>> In particular, 'exclude' is spottily documented.
+> 
+> Where did you expect to read about it?  I see some mention of
+> .git/info/exclude in the gitignore(5) page, but I wouldn't be
+> surprised if there's room for improvement there (improvements
+> welcome).
 
->> I think just the s/from/to/ would fix it so it does not give me the
->> wrong impression, but that doesn't mean that would not confuse
->> everyone else.  ;)
->
-> Yeah, let's do that.  Thanks for carefully reading them.
+I suppose I might consider amending the opening sentence at:
 
-> I'd think it makes it clearer to say that we take "return stopping
-> the dot-sourced file" as a given and FreeBSD does not behave that
-> way.
->
-> -- > 8 --
-> From: "Kyle J. McKay" <mackyle@gmail.com>
-> Date: Fri, 11 Apr 2014 01:28:17 -0700
-> Subject: [PATCH] rebase: avoid non-function use of "return" on FreeBSD
-[...]
+http://git-scm.com/docs/gitignore
 
-The new version of the patch looks great, let's use that.  Thanks for  
-adjusting it.
+from:
+
+"A gitignore file specifies intentionally untracked files that Git 
+should ignore."
+
+to something that makes the point earlier about the similarity:
+
+"Both gitignore and $GIT_DIR/info/exclude files specify intentionally 
+untracked files that Git should ignore."
+
+or:
+
+"Like the $GIT_DIR/info/exclude file, gitignore files specify 
+intentionally untracked files that Git should ignore. The difference is 
+that files matched by a pattern in a gitignore file will be untracked 
+for all users of the repository."
+
+or somesuch.
+
+The other thing is that there is no warning in the docs that 
+assume-unchanged is not an absolute promise to ignore. This is news to 
+me. I don't see this anywhere. I understand now that the use case is 
+performance, but that could be clearer.
+
+thanks again
+Alex
