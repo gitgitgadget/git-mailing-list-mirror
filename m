@@ -1,112 +1,136 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] tag: add -i and --introduced modifier for --contains
-Date: Fri, 18 Apr 2014 16:36:20 -0700
-Message-ID: <xmqq7g6mb47f.fsf@gitster.dls.corp.google.com>
-References: <1397681938-18594-1-git-send-email-mcgrof@do-not-panic.com>
-	<xmqqppkhexw3.fsf@gitster.dls.corp.google.com>
-	<CAB=NE6VvDrMQ4ybF10MpXM-2672OdUTC_Rp2mdO3a5fuo1-H1Q@mail.gmail.com>
-	<xmqqfvlbga4r.fsf@gitster.dls.corp.google.com>
-	<CAB=NE6Vt8etieyR256Hxb=q6zMo7UAO2Zkm5900NrE+4=-3eXA@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v2 6/9] branch: display publish branch
+Date: Fri, 18 Apr 2014 18:29:53 -0500
+Message-ID: <5351b571421e4_3497cdf30c78@nysa.notmuch>
+References: <1397156686-31349-1-git-send-email-felipe.contreras@gmail.com>
+ <1397156686-31349-7-git-send-email-felipe.contreras@gmail.com>
+ <CALkWK0mSfsUrSMPMmZ+PNtZ2WBUqN4Swk_e6S1fMGuUoocJSEg@mail.gmail.com>
+ <53471d0b4c8dc_d696b12f08c@nysa.notmuch>
+ <20140411111750.GA28858@sigill.intra.peff.net>
+ <xmqqsipjsm8c.fsf@gitster.dls.corp.google.com>
+ <20140412114212.GB14820@sigill.intra.peff.net>
+ <5349562bb7ae4_c9914c7308f9@nysa.notmuch>
+ <20140415054356.GA4772@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jiri Slaby <jslaby@suse.cz>,
-	Andreas Schwab <schwab@suse.de>, Jan Kara <jack@suse.cz>,
-	Jeff King <peff@peff.net>
-To: "Luis R. Rodriguez" <mcgrof@do-not-panic.com>
-X-From: git-owner@vger.kernel.org Sat Apr 19 01:36:52 2014
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Matthieu Moy <matthieu.moy@imag.fr>,
+	John Szakmeister <john@szakmeister.net>
+To: Jeff King <peff@peff.net>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 19 01:40:21 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WbIKw-0002uz-FS
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Apr 2014 01:36:50 +0200
+	id 1WbIOJ-0000Lq-Lr
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Apr 2014 01:40:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752982AbaDRXg0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Apr 2014 19:36:26 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37814 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751691AbaDRXgY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Apr 2014 19:36:24 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CB4417CC3B;
-	Fri, 18 Apr 2014 19:36:23 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=2XtKlqmYX/gUmx8GKIxSTLYxEUY=; b=JjeCNr
-	qdcxEKrvD/Z+Xbv0/X/AvKDBNaJu/RAtMhdw/KAjrKVO8dyU6NdiuX5TV6rmtkCJ
-	EGDxD0fqeYFgX2SOE/HUPUTm6FQh6QGzD+2w9vIlTvf4A8PmSGJGX46IdnUqZXuz
-	hYj643xO/ncG1j5aKP75TpgU01a0YsfvWaysk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=JVnl92J7PeBUUC9OH87WpWRWQRBHX8Nl
-	XlXMSOpHt2rhBCmwZAR93xA2Atc9GJdygoPZaorsBs/IunWpmUeeO52ZhfIDcVbv
-	tp25ibVlHrxCoGvs9C1eSiEO4bDnzA7kmSOLcy3n1t+H6ZskKoRb7qxVH2xW2Ucw
-	RNk7+RqapBU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A84957CC3A;
-	Fri, 18 Apr 2014 19:36:23 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D16207CC39;
-	Fri, 18 Apr 2014 19:36:21 -0400 (EDT)
-In-Reply-To: <CAB=NE6Vt8etieyR256Hxb=q6zMo7UAO2Zkm5900NrE+4=-3eXA@mail.gmail.com>
-	(Luis R. Rodriguez's message of "Fri, 18 Apr 2014 16:17:38 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 3F90A7DE-C752-11E3-AF52-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753332AbaDRXkQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Apr 2014 19:40:16 -0400
+Received: from mail-ob0-f180.google.com ([209.85.214.180]:43097 "EHLO
+	mail-ob0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751691AbaDRXkM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Apr 2014 19:40:12 -0400
+Received: by mail-ob0-f180.google.com with SMTP id wm4so2345142obc.11
+        for <git@vger.kernel.org>; Fri, 18 Apr 2014 16:40:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=/g/BSJnHLN3KWcrfTFd/60OHsq5YELUq0eoYSS3E6Ww=;
+        b=fYgX4Lk/bsCEayUzR2TG3MbitO1dVNSuP2cXdaB8JhjsBO2rCYBXkCESZIOp32lAzQ
+         2D6Wdj4CpU0vqIVQTIu+S6XH7uywzRCf8pcBhXEOMVVN2uVmESpSvetX7e4zC8gryMaj
+         q4/l/WUh/GkCVhfj/4cpjMIQHB9aqNMu/gGXpcLx6FzJKbn8t9wL7OsbrIRsI1V39VFG
+         cLNTlYbtq+SNACfGhU3PaGn2AtxwOdKXkouNB4nfwr1vT7Rx7fQW6x6eesDEJ5iJHOw9
+         +KZpx+kcyb6ndaGKdcVsi0jkZ7X4lTk55Ge6lkheAtl0/zZ4gma+3r64XJqgo8fEprPM
+         r+Fg==
+X-Received: by 10.60.134.137 with SMTP id pk9mr14469209oeb.40.1397864412177;
+        Fri, 18 Apr 2014 16:40:12 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id zm8sm55409272obc.16.2014.04.18.16.40.09
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 18 Apr 2014 16:40:10 -0700 (PDT)
+In-Reply-To: <20140415054356.GA4772@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246488>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246489>
 
-"Luis R. Rodriguez" <mcgrof@do-not-panic.com> writes:
+Jeff King wrote:
+> On Sat, Apr 12, 2014 at 10:05:15AM -0500, Felipe Contreras wrote:
+> 
+> > As you can see; some branches are published, others are not. The ones that are
+> > not published don't have a @{publish}, and `git branch -v` doesn't show them.
+> > Why is that hard to understand?
+> 
+> Do you ever push the unpublished branches anywhere at all? If not, then
+> you would not have a tracking branch. E.g., git _would_ push to remote
+> "gh", branch "refs/heads/topic", but there is no remote tracking branch
+> "refs/remotes/gh/topic", because you have never actually pushed there.
+> So there is no @{publish} branch.
+> 
+> Or do you have some branches in a state where they are "pushed, but not
+> published"? It wasn't clear to me from your example if your "pu" or
+> "dev/remote/hg-extra" ever get pushed.
 
-> I think ultimately this reveals that given that tags *can* be
-> arbitrary and subjective,...
+Sometimes I do push these branches, but I don't understand what you mean by
+"pushed state". When you push something no states are changed. Say I do:
 
-Yes; see the part at the bottom.
+ % git push tmp wip-feature
+ % git push backup wip-feature
 
->> Commit A can be described in terms of both v3.4 and v9.0,
->
-> And in the real example case, why *would* c5905afb' be be described in
-> terms of v3.5 instead of v3.4 ?
+So I pushed a branch to two different repositories, the former one might not
+even exist any more. Who cares? No states have changed. The fact that this
+branch was pushed doesn't change anything about the nature of the branch.
 
-I am not interested in graphing that particular history between v3.4
-and v3.5 myself.  If you are interested, I already gave you enough
-information on how to figure that out.
+> I do not use "git branch -v" myself,
 
->>     - find candidate tags that can be used to "describe --contains"
->>       the commit A, yielding v3.4, v3.5 (not shown), and v9.0;
->
->>     - among the candidate tags, cull the ones that contain another
->>       candidate tag, rejecting v3.5 (not shown) and v9.0;
->
->>     - among the surviving tags, pick the closest.
->>
->> Hmm?
->
-> Sounds good to me!
+Me neither (at least not the upstream version).
 
-Not so fast ;-)
+> so I don't personally care that much how it behaves. But I do use a separate
+> script that does the same thing, and I would want it to show the ahead/behind
+> relationship between each branch and where it would be pushed to (and as I
+> said, I define mine with refspecs). Right now it uses nasty hackery to guess
+> at where things will be pushed, but ideally it would ask git via @{push} or
+> some similar mechanism.
 
-My other message to Peff in response to his another example has an
-updated position on this.  "Reject candidates that can reach other
-candidates" is universally correct, but after that point, there are
-at least three but probably more options that suit preference of
-different people and project to break ties:
+Yes, but you can push a branch to many locations, to which one should the
+script show the tracking information? IMO it should be the one location you
+explicitly configured, and in the case of "wip-feature" is "no location".
 
- - Your case that started this thread may want to favor v3.4 if only
-   because that v3.4 _sounds_ smaller than v4.0 (in Peff's example),
-   even when v3.4 and v4.0 do not have ancestry relationship.
+> If the former (you do not actually push them), then I think the semantics I
+> am looking for and the ones you want would coincide. If not, then I think we
+> are really talking about two different things.
 
- - The "closest" we have had is a heuristic to produce a result that
-   is textually shorter.
+I ask again what is so difficult about the notion that there are two kinds of branches?
 
- - And as I alluded to, "which one has the earliest timestamp?", is
-   another valid question to ask.
+A)
 
-And there may be more to appear.  A new command line option (and
-possibly a new configuration) to choose from these three (and more
-heuristics that will be added later) would be necessary.
+% git checkout ready-feature
+% git push tmp ready-feature
+% git push -p github ready-feature
+% git push backup ready-feature
+
+B)
+
+% git checkout wip-feature
+% git push tmp wip-feature
+% git push backup wip-feature
+
+In a haste these branches might not look very different, but conceptually they
+are. One has a location where it is publicly visible, and where you wish to
+push regularly, the other one doesn't.
+
+Whether you push a branch or not is not really important, it's whether or not
+the branch has a *special* place where you push to.
+
+-- 
+Felipe Contreras
