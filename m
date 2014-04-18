@@ -1,85 +1,154 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Store refreshed stat info in a separate file?
-Date: Fri, 18 Apr 2014 21:20:31 +0700
-Message-ID: <CACsJy8CzZ7H4pffNccBBpvpn5oT5tud-Tx=Nu1c=q2SB7Zi8eg@mail.gmail.com>
+Subject: Re: [PATCH] blame: add correct paddings in time_buf for align
+Date: Fri, 18 Apr 2014 21:42:22 +0700
+Message-ID: <CACsJy8BTBwqFZUU3i3cuv40B6AHw5SRY9DZN2PoKL4XzgEL2eA@mail.gmail.com>
+References: <43a3735a164c923acc8e6e2681dfbd727cda63de.1397810231.git.worldhello.net@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Apr 18 16:21:11 2014
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Brian Gesiak <modocache@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Jiang Xin <worldhello.net@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 18 16:43:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wb9fC-0003JO-30
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Apr 2014 16:21:10 +0200
+	id 1WbA0L-000693-FB
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Apr 2014 16:43:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752271AbaDROVF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Apr 2014 10:21:05 -0400
-Received: from mail-qc0-f177.google.com ([209.85.216.177]:34001 "EHLO
-	mail-qc0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751580AbaDROVD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Apr 2014 10:21:03 -0400
-Received: by mail-qc0-f177.google.com with SMTP id w7so1712213qcr.36
-        for <git@vger.kernel.org>; Fri, 18 Apr 2014 07:21:01 -0700 (PDT)
+	id S1753331AbaDROmy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Apr 2014 10:42:54 -0400
+Received: from mail-qa0-f48.google.com ([209.85.216.48]:34711 "EHLO
+	mail-qa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753019AbaDROmx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Apr 2014 10:42:53 -0400
+Received: by mail-qa0-f48.google.com with SMTP id s7so1605679qap.21
+        for <git@vger.kernel.org>; Fri, 18 Apr 2014 07:42:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=TZcguBm26QcSzhX3e+SGFnBpiuRHuOSTMlDzNCt7IyQ=;
-        b=qdt+5uuUspBGyzjfK5CGD/PXBiPNz+dqQhBzGUg0nsvN5uyvI7bfx2ER4zoLh3SsK6
-         RuvZ/gm2LZZRkWWF+dy7d5lK/bNgRiuD5pUBzFxkkkcsrdsfKDhZw6WmoqfPjbsjkucT
-         t+NInhCU8iY4mWL06VpPL/aw47PpPW0hRBxb271DEpt78Myj8uLSFTQ9ZDRXLZKcS1Oh
-         /3aJdxECjUggIzHNyPlnNX6Jv/FBkxBzLItc3dkGlF5jW9ghU2c3NmwDVx0t+1rqNh5y
-         +/k/SAbYvh/e7SY2ionINFUcSNCTgdBLH8ymup3kU8tlo/hPdEZ6FsG9aunPBJ/u18X8
-         qU5w==
-X-Received: by 10.229.216.72 with SMTP id hh8mr18980414qcb.9.1397830861616;
- Fri, 18 Apr 2014 07:21:01 -0700 (PDT)
-Received: by 10.96.138.9 with HTTP; Fri, 18 Apr 2014 07:20:31 -0700 (PDT)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=SEeh6sd9Reqm1dqjxSvMk2RGG8vG6/sLVD+B5Z9R+2c=;
+        b=tKkNSTA3/BlH7P11GVRdHsvmRlundqgK3bzgaQOLxMBK0zetu3eUWK6L6AvidOQ1xq
+         UUTLp7UgPsziVR+aGz1zXFrkIJ5jn+SYLuhB4uOG3V/76QZUujFSBjgud2FdbuzU4rjG
+         edkc34LEd8dlALorw7DquRQRd01zY1/ha4VlRffIJqWBEJtv9qMP3n11AfSeJGVQqMNC
+         GTe2Dg5HT96ZOV1S5kBAXi4N13T75XjTAP8PtHpHz3FxIXeU0g8eohPwbLSqQIxxvUXy
+         AaB7FGeSiH23tCrz1vH4CF4r2/xJ54+lvoNk2W/qVkC8JpqgrNQ8RbrNS9TJDUlbZFZl
+         gB1g==
+X-Received: by 10.140.107.229 with SMTP id h92mr24700670qgf.30.1397832172501;
+ Fri, 18 Apr 2014 07:42:52 -0700 (PDT)
+Received: by 10.96.138.9 with HTTP; Fri, 18 Apr 2014 07:42:22 -0700 (PDT)
+In-Reply-To: <43a3735a164c923acc8e6e2681dfbd727cda63de.1397810231.git.worldhello.net@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246471>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246472>
 
-With git status, writing refreshed index takes 252ms per total 1s,
-361s/1.4s, 86ms/360ms on gentoo-x86, webkit and linux-2.6 respectively
-(*). It's takes a significant amount of time from "git status". And
-this happens whenever you touch a single tracked file, then do "git
-status". We tried to solve this with index v5, but it's been years(?)
-since its start as a GSoC project. So I'm thinking of another way
-around..
+On Fri, Apr 18, 2014 at 3:44 PM, Jiang Xin <worldhello.net@gmail.com> w=
+rote:
+> When show blame information with relative time, the UTF-8 characters =
+in
+> `time_str` will break the alignment of columns after the date field.
+> This is because the `time_buf` padding with spaces should have a
+> constant display width, not a fixed strlen size.  So we should call
+> utf8_strwidth() instead of strlen() for calibration.
+>
+> Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+> ---
+>
+> Before applying this patch:
+>
+>         5817da01 builtin-blame.c   (Pierre Habouzit             6 =E5=
+=B9=B4=E5=89=8D                         21) #include "parse-options.h"
+>         ffaf9cc0 builtin-blame.c   (Geoffrey Thomas             5 =E5=
+=B9=B4=E5=89=8D                         22) #include "utf8.h"
+>         3b8a12e8 builtin/blame.c   (Axel Bonnet                 3 =E5=
+=B9=B4 10 =E4=B8=AA=E6=9C=88=E4=B9=8B=E5=89=8D            23) #include =
+"userdiff.h"
+>         25ed3412 builtin/blame.c   (Bo Yang                     1 =E5=
+=B9=B4 1 =E4=B8=AA=E6=9C=88=E4=B9=8B=E5=89=8D             24) #include =
+"line-range.h"
+>         58dbfa2e builtin/blame.c   (Eric Sunshine               9 =E4=
+=B8=AA=E6=9C=88=E4=B9=8B=E5=89=8D                   25) #include "line-=
+log.h"
+>         cee7f245 builtin-pickaxe.c (Junio C Hamano              8 =E5=
+=B9=B4=E5=89=8D                         26)
+>
+> After applying this patch:
+>
+>         5817da01 builtin-blame.c   (Pierre Habouzit             6 =E5=
+=B9=B4=E5=89=8D                           21) #include "parse-options.h=
+"
+>         ffaf9cc0 builtin-blame.c   (Geoffrey Thomas             5 =E5=
+=B9=B4=E5=89=8D                           22) #include "utf8.h"
+>         3b8a12e8 builtin/blame.c   (Axel Bonnet                 3 =E5=
+=B9=B4 10 =E4=B8=AA=E6=9C=88=E4=B9=8B=E5=89=8D                 23) #inc=
+lude "userdiff.h"
+>         25ed3412 builtin/blame.c   (Bo Yang                     1 =E5=
+=B9=B4 1 =E4=B8=AA=E6=9C=88=E4=B9=8B=E5=89=8D                  24) #inc=
+lude "line-range.h"
+>         58dbfa2e builtin/blame.c   (Eric Sunshine               9 =E4=
+=B8=AA=E6=9C=88=E4=B9=8B=E5=89=8D                       25) #include "l=
+ine-log.h"
+>         cee7f245 builtin-pickaxe.c (Junio C Hamano              8 =E5=
+=B9=B4=E5=89=8D                           26)
 
-The major cost of writing an index is the SHA-1 hashing. The bigger
-the written part is, the higher cost we pay. So what if we write
-stat-only data to a separate file? Think of it as an index extension,
-only it stays outside the index. On webkit with 182k files, the stat
-data size would be about 6MB (its index v4 is 15M for comparison). But
-with stat-only we could employ some cheap but efficient compressing,
-sd_dev, sd_uid and sd_gid are likely the same for every entry. And we
-could store the stat data of updated entries only. So I'm hoping to
-get that 6MB down to a few hundred KBs. That makes hashing lightning
-fast.
 
-So the idea is, when we do refresh, we note what entry has stat
-updated. Then we write $GIT_DIR/index.stat (and leave $GIT_DIR/index
-alone), which is a valid index except that it has zero entries and a
-only one (new) extension storing (maybe compressed) stat data of
-updated entries. The extension also contains the trailing SHA-1 of
-$GIT_DIR/index for verification later. When we read $GIT_DIR/index, we
-check for the existence of index.stat. If it does and its attached
-SHA-1 matches, we overwrite some stat data with the info from
-index.stat.
+The numbers 21..26 still do not look aligned, both in gmail raw
+message view and gmane.
 
-Back to the original question, I'm hoping to reduce some significant
-numbers above to less than 10ms with this. So I see all good points
-but no bad ones. Time to ask git@vger to give some. I'm actually
-trying this idea in my untracked cache because I can't afford to lose
-50% of the gain from untracked cache, just because I have to save some
-bits in the giant $GIT_DIR/index and take the cost of rehashing.
+>
+>  builtin/blame.c | 9 ++++++++-
+>  1 file changed, 8 insertions(+), 1 deletion(-)
+>
+> diff --git a/builtin/blame.c b/builtin/blame.c
+> index 88cb799..c8f6647 100644
+> --- a/builtin/blame.c
+> +++ b/builtin/blame.c
+> @@ -1564,12 +1564,19 @@ static const char *format_time(unsigned long =
+time, const char *tz_str,
+>         else {
+>                 const char *time_str;
+>                 int time_len;
+> +               int time_col;
+>                 int tz;
+>                 tz =3D atoi(tz_str);
+>                 time_str =3D show_date(time, tz, blame_date_mode);
+>                 time_len =3D strlen(time_str);
+>                 memcpy(time_buf, time_str, time_len);
+> -               memset(time_buf + time_len, ' ', blame_date_width - t=
+ime_len);
+> +               /*
+> +                * Add space paddings to time_buf to display a fixed =
+width
+> +                * string, and use time_col for display width calibra=
+tion.
+> +                */
+> +               time_col =3D utf8_strwidth(time_str);
+> +               memset(time_buf + time_len, ' ', blame_date_width - t=
+ime_col);
+> +               *(time_buf + time_len + blame_date_width - time_col) =
+=3D 0;
 
-(*) this is with the "untracked cache" enabled and total time is about
-40% less than upstream "git status". The numbers against upstream "git
-status" are actually less signficant. But I have to think positive
-that one day untracked cache may be merged :)
--- 
+And you may want to turn time_buf[128] to strbuf as well while you're a=
+t it.
+
+>         }
+>         return time_buf;
+>  }
+> --
+> 1.9.2.474.g17b2a16
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+
+
+--=20
 Duy
