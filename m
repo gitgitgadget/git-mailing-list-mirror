@@ -1,100 +1,64 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: Project idea: strbuf allocation modes
-Date: Fri, 18 Apr 2014 22:04:30 +0200
-Message-ID: <5351854E.1080602@alum.mit.edu>
-References: <vpqr457omgs.fsf@anie.imag.fr> <53512DB6.1070600@alum.mit.edu> <xmqq8ur2d04g.fsf@gitster.dls.corp.google.com>
+From: "Thomas Schittli" <schittli@gmx.ch>
+Subject: user.signingkey without gpg? (using s/mime or ssh?)
+Date: Fri, 18 Apr 2014 22:04:50 +0200
+Message-ID: <trinity-c71c6cb0-0c4f-4283-bca9-ae4aa0f3419c-1397851490695@3capp-gmx-bs08>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 18 22:04:39 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 18 22:04:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WbF1a-00054Y-RL
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Apr 2014 22:04:39 +0200
+	id 1WbF1s-0005bR-T8
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Apr 2014 22:04:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754239AbaDRUEf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Apr 2014 16:04:35 -0400
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:47029 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753068AbaDRUEd (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Apr 2014 16:04:33 -0400
-X-AuditID: 1207440d-f79d86d0000043db-4a-535185503b98
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 18.80.17371.05581535; Fri, 18 Apr 2014 16:04:32 -0400 (EDT)
-Received: from [192.168.69.130] (p4FC9714E.dip0.t-ipconnect.de [79.201.113.78])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s3IK4UdL027495
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Fri, 18 Apr 2014 16:04:31 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.4.0
-In-Reply-To: <xmqq8ur2d04g.fsf@gitster.dls.corp.google.com>
-X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrKKsWRmVeSWpSXmKPExsUixO6iqBvQGhhssP6kmUXXlW4mi4beK8wW
-	lz6vZ3Vg9pj45Tirx8VLyh6fN8kFMEdx2yQllpQFZ6bn6dslcGcsadrJXDCHv2L+/MtsDYz9
-	PF2MnBwSAiYSW88dZoawxSQu3FvPBmILCVxmlGhbYtTFyAVkn2eSmNM/kxEkwSugLXFucicL
-	iM0ioCpxqGk2mM0moCuxqKeZqYuRg0NUIEjiz1lFiHJBiZMzn4CViAioSUxsOwRmMwt4SXRM
-	7GEHKRcWMJKYe9IPYm2lRPfBZrBzOAWsJdZvAGnlADpNXKKnMQiiU0fiXd8DZghbXmL72znM
-	ExgFZyFZNgtJ2SwkZQsYmVcxyiXmlObq5iZm5hSnJusWJyfm5aUW6Rrp5WaW6KWmlG5ihAQz
-	7w7G/+tkDjEKcDAq8fBuCAgMFmJNLCuuzD3EKMnBpCTK+6cJKMSXlJ9SmZFYnBFfVJqTWnyI
-	UYKDWUmEd74vUI43JbGyKrUoHyYlzcGiJM6rtkTdT0ggPbEkNTs1tSC1CCYrw8GhJMHL0wLU
-	KFiUmp5akZaZU4KQZuLgBBnOJSVSnJqXklqUWFqSEQ+K3fhiYPSCpHiA9nKAtPMWFyTmAkUh
-	Wk8x6nJcaFjRwiTEkpeflyolzvunGahIAKQoozQPbgUsdb1iFAf6WJiXF2QUDzDtwU16BbSE
-	CWjJ3zMBIEtKEhFSUg2Mql+e22eYp77nOpwzMeeUIdNpFQMBwRwJxg33tyR7/Kr8revN/vHz
-	yZpj4Z7P5/zQvyPkp5N96N2p5RMXJc253X/2aGYXf5L056Arr5OqGLpvnC9Ql337 
+	id S1754415AbaDRUEx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Apr 2014 16:04:53 -0400
+Received: from mout.gmx.net ([212.227.15.15]:62442 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754314AbaDRUEw convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Apr 2014 16:04:52 -0400
+Received: from [46.126.169.144] by 3capp-gmx-bs08 with HTTP; Fri, 18 Apr
+ 2014 22:04:50 +0200
+Importance: normal
+Sensitivity: Normal
+X-Priority: 3
+X-Provags-ID: V03:K0:FQxrxnwCPQLXqKa7aWkaa9q2BWaJ//dzmTTCT0Taua0
+ vX7HzX7LQx8cNE+Gkkc1X+BolzNA6H6zO3B97zXzyBXtFS3Nt0
+ uTBx67fniPnzPQgOvuV+uEK5NBmYhcUqJD+2nY0Om7h3wtjtq7
+ GYC+yfy5+L2SEeLLIJqXA/Y3sFhyv707MdCCp02bs5DQQ78Y6G
+ X30Xgqv1h2LQxbxsee1ePNBVqJJlkNIVYsvaZv01/tP8NaVmWt
+ NhOwiOJdYq00O8mD0qxzfC6hroiLqS3Oy0rcfvjPu3m9u/yeIP BJjdt0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246483>
 
-On 04/18/2014 07:21 PM, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
-> 
->> The Idea
->> ========
->>
->> I would like to see strbuf enhanced to allow it to use memory that it
->> doesn't own (for example, stack-allocated memory), while (optionally)
->> allowing it to switch over to using allocated memory if the string grows
->> past the size of the pre-allocated buffer.
-> 
-> I'd like to see these characteristics, but I would want to see that
-> this is done entirely internally inside the strbuf implementation
-> without any API impact, other than the initialisation.  I do not
-> think the current API contract is too rigid to allow us doing so.
-> 
->  - The API users may peek strbuf.buf in-place until they perform an
->    operation that makes it longer (at which point the .buf pointer
->    may point at a new piece of memory).
-> 
->  - The API users may strbuf_detach() to obtain a piece of memory
->    that belongs to them (at which point the strbuf becomes empty),
->    hence needs to be freed by the callers.
-> 
-> As long as the above two promises are kept intact, it is all
-> internal to the strbuf implementation, current iteration of which
-> does not have any initial (possibly static) allocation other than
-> the fixed "terminating NUL", but your updated one may take a caller
-> supplied piece of memory that is designed to outlive the strbuf
-> itself as its initial allocation and the memory ownership can be
-> left as an internal implementation detail to the strbuf without
-> bothering the callers.
 
-I think that's exactly what I described.  The only thing that would have
-to change in the strbuf behavior (aside from initialization) is that a
-buffer-growing operation might die if the string would grow outside of
-the bounds of the existing buffer when STRBUF_FIXED_MEMORY is set.
-
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+Dear Git Community
+=C2=A0
+I've spent almost a day to find an answer to this question:
+=C2=A0
+We already have trusted Certificates from a CA. Can we use them instead=
+ of an additional PGP key?
+We already have:
+- s/mime certificate
+- web server ssl/tls certificate
+- XMPP Jabber ssl/tls certificate
+- Object Code Signing certificate
+=C2=A0
+Or if we have to use a new pgp key: can we sign it using any of our cer=
+tificates?
+=C2=A0
+Thanks a lot for any hint in advance!,
+kind regards,
+Thomas
+=C2=A0
+=C2=A0
+=C2=A0
+=C2=A0
+=C2=A0
