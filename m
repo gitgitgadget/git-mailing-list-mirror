@@ -1,133 +1,115 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] i18n: Only extract comments marked by special tag
-Date: Fri, 18 Apr 2014 09:52:06 -0700
-Message-ID: <xmqqha5qd1hl.fsf@gitster.dls.corp.google.com>
-References: <cover.1397712142.git.worldhello.net@gmail.com>
-	<2ce9ec406501d112e032c8208417f8100bed04c6.1397712142.git.worldhello.net@gmail.com>
-	<xmqqk3anesml.fsf@gitster.dls.corp.google.com>
-	<CANYiYbGkjpdrzE25iRS33sm1=AodiREqWmJVkKVEok4mb4G5mQ@mail.gmail.com>
+Subject: Re: [PATCH] blame: add correct paddings in time_buf for align
+Date: Fri, 18 Apr 2014 10:08:23 -0700
+Message-ID: <xmqqd2ged0qg.fsf@gitster.dls.corp.google.com>
+References: <43a3735a164c923acc8e6e2681dfbd727cda63de.1397810231.git.worldhello.net@gmail.com>
+	<CACsJy8BTBwqFZUU3i3cuv40B6AHw5SRY9DZN2PoKL4XzgEL2eA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Brian Gesiak <modocache@gmail.com>, Git List <git@vger.kernel.org>
-To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 18 18:52:18 2014
+Content-Type: text/plain; charset=iso-2022-jp
+Cc: Jiang Xin <worldhello.net@gmail.com>,
+	Brian Gesiak <modocache@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 18 19:09:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WbC1R-0006Bk-Q9
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Apr 2014 18:52:18 +0200
+	id 1WbCHv-0001vA-Ix
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Apr 2014 19:09:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751782AbaDRQwN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Apr 2014 12:52:13 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41348 "EHLO
+	id S1754392AbaDRRJP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Apr 2014 13:09:15 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64797 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751159AbaDRQwL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Apr 2014 12:52:11 -0400
+	id S1753425AbaDRRI2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Apr 2014 13:08:28 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B2A88790AD;
-	Fri, 18 Apr 2014 12:52:10 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 570F37940B;
+	Fri, 18 Apr 2014 13:08:27 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8JXAM4NZXABFT6kaBOxXecuALNY=; b=ER12Gy
-	kVTP/EQCLV49El/XPZ8CU4RCN/0cRGJWJStY8Tr6R3aKnzYpgKd6qvrYVSL5E1ZN
-	iJqoM6+EMd1V1XRdNixNLnHK6mw0JNH6GSJA81ODbUtcQqpsl1nUiR27RCzmEPEX
-	eWRkNYj+KQqBZMAsk2HBlKLzQyeWGgq0sCtVU=
+	:content-type; s=sasl; bh=W6iXCh95iJNb22aFne3PraAvdOk=; b=EREu6M
+	k7AB9JIds5tn4nBT6Mp95gcI2BHXxuChjubixSEjizaPbYOIxOYTYOqm0ohr1a3j
+	hFJ2ElRAVKTj7VZIrc5S49v2wM7nUm8ziizP8Zj3ayYa06sholgC1t1Q2UOCd3uT
+	i96pxGn4EVpE488NlL2tW0Aimp+Rwr+1Mj1eI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WLlEYYF9OG2DGM1at4tU31ToAcrawobn
-	CDdYUzEqZTk0tl5uD08a1SHgYyCv3GlrOB1TDeipPh8zEf7OOi50FvEPeR6+qxM0
-	rvqcw2zvvfQEVTI/vtBW7VzrKHlRVVlT0FwF9/9I6TYWhaQnsYf9MevfAcE7gLqr
-	XLe9E3Cfqvk=
+	:content-type; q=dns; s=sasl; b=wwrMD6sh3DEood0JTShjQ+QWG1E8IGs6
+	iczUJcDOngw+sdmyaTnZ0ZtueIDl8NiwrlxTBBAlb8fJdk8TZp9Uej+wmeAGiZzY
+	sHonDBTqteGbRUWCGjakdlJqLyOM2EzBDk26j9uSnw+Mbpt6h932TuRr2e7ppzWF
+	hNsw9QoDL50=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 974D2790AC;
-	Fri, 18 Apr 2014 12:52:10 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3C37B7940A;
+	Fri, 18 Apr 2014 13:08:27 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D4A83790AA;
-	Fri, 18 Apr 2014 12:52:08 -0400 (EDT)
-In-Reply-To: <CANYiYbGkjpdrzE25iRS33sm1=AodiREqWmJVkKVEok4mb4G5mQ@mail.gmail.com>
-	(Jiang Xin's message of "Fri, 18 Apr 2014 14:03:06 +0800")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B4E4679408;
+	Fri, 18 Apr 2014 13:08:25 -0400 (EDT)
+In-Reply-To: <CACsJy8BTBwqFZUU3i3cuv40B6AHw5SRY9DZN2PoKL4XzgEL2eA@mail.gmail.com>
+	(Duy Nguyen's message of "Fri, 18 Apr 2014 21:42:22 +0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: C7AA744E-C719-11E3-8480-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 0DEAA65C-C71C-11E3-8F0E-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246475>
 
-Jiang Xin <worldhello.net@gmail.com> writes:
+Duy Nguyen <pclouds@gmail.com> writes:
 
->> I am not very happy with this change, as it would force us to
->> special case "Translators" comment to follow a non-standard
->> multi-line comment formatting convention.  Is there a way to tell
->> xgettext to accept both of these forms?
+> On Fri, Apr 18, 2014 at 3:44 PM, Jiang Xin <worldhello.net@gmail.com> wrote:
+>> When show blame information with relative time, the UTF-8 characters in
+>> `time_str` will break the alignment of columns after the date field.
+>> This is because the `time_buf` padding with spaces should have a
+>> constant display width, not a fixed strlen size.  So we should call
+>> utf8_strwidth() instead of strlen() for calibration.
 >>
->>         /* TRANSLATORS: this is a short comment to help you */
->>         _("foo bar");
+>> Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+>> ---
 >>
->>         /*
->>          * TRANSLATORS: this comment is to help you, but it is
->>          * a lot longer to fit on just a single line.
->>          */
->>         _("bar baz");
+>> Before applying this patch:
 >>
+>>         5817da01 builtin-blame.c   (Pierre Habouzit             6 年前                         21) #include "parse-options.h"
+>>         ffaf9cc0 builtin-blame.c   (Geoffrey Thomas             5 年前                         22) #include "utf8.h"
+>>         3b8a12e8 builtin/blame.c   (Axel Bonnet                 3 年 10 个月之前            23) #include "userdiff.h"
+>>         25ed3412 builtin/blame.c   (Bo Yang                     1 年 1 个月之前             24) #include "line-range.h"
+>>         58dbfa2e builtin/blame.c   (Eric Sunshine               9 个月之前                   25) #include "line-log.h"
+>>         cee7f245 builtin-pickaxe.c (Junio C Hamano              8 年前                         26)
+>>
+>> After applying this patch:
+>>
+>>         5817da01 builtin-blame.c   (Pierre Habouzit             6 年前                           21) #include "parse-options.h"
+>>         ffaf9cc0 builtin-blame.c   (Geoffrey Thomas             5 年前                           22) #include "utf8.h"
+>>         3b8a12e8 builtin/blame.c   (Axel Bonnet                 3 年 10 个月之前                 23) #include "userdiff.h"
+>>         25ed3412 builtin/blame.c   (Bo Yang                     1 年 1 个月之前                  24) #include "line-range.h"
+>>         58dbfa2e builtin/blame.c   (Eric Sunshine               9 个月之前                       25) #include "line-log.h"
+>>         cee7f245 builtin-pickaxe.c (Junio C Hamano              8 年前                           26)
 >
-> We can not provide multiple `--add-comments=TAG` options to xgettext,
-> because xgettext holds the tag in one string, not in a list:
 >
->         /* Tag used in comment of prevailing domain.  */
->         static char *comment_tag;
+> The numbers 21..26 still do not look aligned, both in gmail raw
+> message view and gmane.
+
+Interesting.  In my GNUS/Emacs on a fixed-column terminal where an
+CJK occupies two display columns, they do look aligned, but in my
+Chrome showing news.gmane.org/gmane.comp.version-control.git/, they
+do look jagged.  When these lines shown in the browser get copied
+and pasted to gedit, they still look jagged, but after saving it to
+a file and catting it to the same fixed-column terminal, they are
+perfectly aligned.
+
+Font issues, I guess?
+
+>> +               /*
+>> +                * Add space paddings to time_buf to display a fixed width
+>> +                * string, and use time_col for display width calibration.
+>> +                */
+>> +               time_col = utf8_strwidth(time_str);
+>> +               memset(time_buf + time_len, ' ', blame_date_width - time_col);
+>> +               *(time_buf + time_len + blame_date_width - time_col) = 0;
 >
-> So if we won't change our multi-line comments for translators, must
-> hack gettext in some ways.
->
-> There maybe 3 ways to hack gettext:
-> ...
-> I CC this mail to the gettext mailing list. Full thread see:
->
->  * http://thread.gmane.org/gmane.comp.version-control.git/246390/focus=246431
+> And you may want to turn time_buf[128] to strbuf as well while you're at it.
 
-This is one of these times when I find myself very fortunate for
-being surrounded by competent contributors with good tastes, which I
-may not deserve ;-)
-
-Thanks for being thorough.
-
-Having said that, it is only just a single comment, and it is too
-much hassle to even think about what to do in the meantime while we
-wait until such a change happens and an updated version of gettext
-reaches everybody.  Let's take 2/3 as-is.
-
-Documentation/CodingGuidelines may want to have a sentence of two to
-explain this, though.
-
- Documentation/CodingGuidelines | 9 +++++++++
- 1 file changed, 9 insertions(+)
-
-diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-index dab5c61..b367a85 100644
---- a/Documentation/CodingGuidelines
-+++ b/Documentation/CodingGuidelines
-@@ -159,10 +159,19 @@ For C programs:
-  - Multi-line comments include their delimiters on separate lines from
-    the text.  E.g.
- 
- 	/*
- 	 * A very long
- 	 * multi-line comment.
- 	 */
- 
-+   Note however that a multi-line comment that explains a translatable
-+   string to translators uses a different convention of starting with a
-+   magic token "TRANSLATORS: " immediately after the opening delimiter,
-+   and without an asterisk at the beginning of each line.  E.g.
-+
-+	/* TRANSLATORS: here is a comment that explains the string
-+	   to be translated, that follows immediately after it */
-+	_("Here is a translatable string explained by the above.");
-+
-  - Double negation is often harder to understand than no negation
-    at all.
+Good eyes.
