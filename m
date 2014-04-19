@@ -1,76 +1,63 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [L10N] Startup of Git 2.0.0 l10n round 1
-Date: Sat, 19 Apr 2014 16:13:34 +0800
-Message-ID: <CANYiYbEeJ=WLm9CptdQwX7Xzj9r1kSDUeOkZpSm5H+X3k1h6Dw@mail.gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [RFC/PATCHv3 3/3] Git 2.0: git svn: Set default
+ --prefix='origin/' if --prefix is not given
+Date: Sat, 19 Apr 2014 08:32:10 +0000
+Message-ID: <20140419083210.GA28771@dcvr.yhbt.net>
+References: <1381015833-696-1-git-send-email-johan@herland.net>
+ <1381496227-28700-1-git-send-email-johan@herland.net>
+ <1381496227-28700-4-git-send-email-johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: Ralf Thielow <ralf.thielow@googlemail.com>,
-	=?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	Marco Paolone <marcopaolone@gmail.com>,
-	Marco Sousa <marcomsousa@gmail.com>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	=?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
-	Brian Gesiak <modocache@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 19 10:13:47 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, tfnico@gmail.com,
+	Junio C Hamano <gitster@pobox.com>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Sat Apr 19 10:32:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WbQPC-0002m3-OA
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Apr 2014 10:13:47 +0200
+	id 1WbQh8-0006S7-Ba
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Apr 2014 10:32:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751318AbaDSINm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Apr 2014 04:13:42 -0400
-Received: from mail-we0-f181.google.com ([74.125.82.181]:53037 "EHLO
-	mail-we0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751089AbaDSINg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 19 Apr 2014 04:13:36 -0400
-Received: by mail-we0-f181.google.com with SMTP id q58so2251262wes.12
-        for <git@vger.kernel.org>; Sat, 19 Apr 2014 01:13:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=WjOlH7CLl6DlzD0GRsy898txib5XO2iAOn4mci7RaCw=;
-        b=RSw/S/QL0CWiOSrV/a+T8Yle5a3UBMDZ807PKQbJl1ugxFCZiqpUdjcv2+oy+lMGSZ
-         FEON03ZMbyzZ6P4YD8IssQK++wFwPFEz0L6HJr+tljhlSaYhsPEk/ozTd40bEf4qYuKn
-         ziWHeOPuzSlqvc7RGvhfM6Tl9XqW/ibQZlyBgwHJV29Rawg9nV1f5Q3w6zxecMYibDxq
-         PBLqOFiDai+GUHYbCeTDjtep79DRL4p/G7zBc9tXAYgnJIkNJAx8e/YBz//3TZYY7BNE
-         /+fH8H88qmrSEyqEa2E3Dzh1PazMhdgNIE6CNPsimyYWzH/XxPBtxddPLI93u1tHajQY
-         JM6g==
-X-Received: by 10.194.92.177 with SMTP id cn17mr19905655wjb.18.1397895214590;
- Sat, 19 Apr 2014 01:13:34 -0700 (PDT)
-Received: by 10.217.58.65 with HTTP; Sat, 19 Apr 2014 01:13:34 -0700 (PDT)
+	id S1751091AbaDSIcO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Apr 2014 04:32:14 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:45219 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751049AbaDSIcL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Apr 2014 04:32:11 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id D95B320E52;
+	Sat, 19 Apr 2014 08:32:10 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <1381496227-28700-4-git-send-email-johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246509>
 
-Hi,
+Johan Herland <johan@herland.net> wrote:
+> --- a/Documentation/git-svn.txt
+> +++ b/Documentation/git-svn.txt
+> @@ -86,14 +86,7 @@ COMMANDS
+>  	(refs/remotes/$remote/*). Setting a prefix is also useful
+>  	if you wish to track multiple projects that share a common
+>  	repository.
+> -+
+> -NOTE: In Git v2.0, the default prefix will CHANGE from "" (no prefix)
+> -to "origin/". This is done to put SVN-tracking refs at
+> -"refs/remotes/origin/*" instead of "refs/remotes/*", and make them
+> -more compatible with how Git's own remote-tracking refs are organized
+> -(i.e. refs/remotes/$remote/*). You can enjoy the same benefits today,
+> -by using the --prefix option.
+> -
+> +	By default, the prefix is set to 'origin/'.
 
-Since Git v2.0.0-rc0 had already been released, it's time to start new =
-round
-of git l10n. This time there are 45 new messages need to be translated =
-since
-last update for v1.9.0:
+We should maintain a description of <=1.9 behavior in the manpage.
+Users on long-term-support systems are likely to continue using ancient
+git installations for some time (5-10 years, even?), but may come across
+the current documentation online.
 
-    l10n: git.pot: v2.0.0 round 1 (45 new, 28 removed)
-
-    Generate po/git.pot from v2.0.0-rc0 for git v2.0.0 l10n round 1.
-
-    Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
-
-You can get it from the usual place:
-
-    https://github.com/git-l10n/git-po/
-
-As how to update your XX.po and help to translate Git, please see
-"Updating a XX.po file" and other sections in =E2=80=9Cpo/README" file.
-
---
-Jiang Xin
+Otherwise the patch looks fine and I can push it up for Junio for
+2.0-rc1.
