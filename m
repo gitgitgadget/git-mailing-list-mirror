@@ -1,151 +1,127 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 5/5] completion: fix completion of certain aliases
-Date: Fri, 18 Apr 2014 20:26:58 -0500
-Message-ID: <5351d0e2951ca_364af2f2ec6f@nysa.notmuch>
-References: <E1WZEWT-0002R7-1d@iramx2.ira.uni-karlsruhe.de>
- <xmqqmwfnoe7m.fsf@gitster.dls.corp.google.com>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: [ANNOUNCE] WinGit - native x86/x64 Git for Windows
+Date: Sat, 19 Apr 2014 08:31:34 +0200
+Message-ID: <20140419063133.GA3617@book-mint>
+References: <20140403131850.GA24449@seldon>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?R8OhYm9yIFN6ZWRlcg==?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Sat Apr 19 03:37:24 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, msysGit Mailinglist <msysgit@googlegroups.com>
+To: marat@slonopotamus.org
+X-From: msysgit+bncBDVPBNNXUMFBBS5QZCNAKGQEE6Q62SY@googlegroups.com Sat Apr 19 08:31:42 2014
+Return-path: <msysgit+bncBDVPBNNXUMFBBS5QZCNAKGQEE6Q62SY@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-fa0-f61.google.com ([209.85.161.61])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WbKDb-0001kC-P4
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Apr 2014 03:37:24 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754187AbaDSBhT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Apr 2014 21:37:19 -0400
-Received: from mail-oa0-f44.google.com ([209.85.219.44]:59752 "EHLO
-	mail-oa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751429AbaDSBhR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Apr 2014 21:37:17 -0400
-Received: by mail-oa0-f44.google.com with SMTP id n16so2359931oag.17
-        for <git@vger.kernel.org>; Fri, 18 Apr 2014 18:37:17 -0700 (PDT)
+	(envelope-from <msysgit+bncBDVPBNNXUMFBBS5QZCNAKGQEE6Q62SY@googlegroups.com>)
+	id 1WbOoO-00027n-Ot
+	for gcvm-msysgit@m.gmane.org; Sat, 19 Apr 2014 08:31:40 +0200
+Received: by mail-fa0-f61.google.com with SMTP id v1sf196668fav.6
+        for <gcvm-msysgit@m.gmane.org>; Fri, 18 Apr 2014 23:31:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=zuUUvz0224rC97I8u29TSNGQIkCerI7YCUuevgqy4P8=;
-        b=Wvpd1Iu1Ak9+HFpg1BKmVxi9C0pjmwwA5I7UU2TOT2b9vt3Y/3HBaJS8pqqzo96g+9
-         Zwqm7X1RbJ+KDTMHZN1x0TqZW62UXWNDYzLu/Hp9you0DjMb6VBW451asFG5BSRPRnXA
-         AC5pnnBGC1YDxfo4QFBmY8dnIYUGR0ogMFFYb7b37yhwegRQvBV7GhB6kPZWHHWm04RV
-         BpxU+hJ/lgxcqo4lLfS4Gu2HdtBYhuURifytrNviPHT4y5Vp5qOVqJER2OGksvHjkvh8
-         OGr0aQ7zljfZA8Mm742bvKd/Qzko95BVc24Qz639FPp1sJrh0svZLFgxDdiv8CqHxebL
-         SrhA==
-X-Received: by 10.182.117.162 with SMTP id kf2mr3362747obb.7.1397871437205;
-        Fri, 18 Apr 2014 18:37:17 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id f1sm133453300oej.5.2014.04.18.18.37.15
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 18 Apr 2014 18:37:16 -0700 (PDT)
-In-Reply-To: <xmqqmwfnoe7m.fsf@gitster.dls.corp.google.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246499>
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :in-reply-to:user-agent:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type:content-disposition;
+        bh=BFS/pSjAD581C+pR/zZpP7fBbzlUmEzDl3c1QL2FfVs=;
+        b=LqBYP6hQhvGK3nL27UwcJxAotAKxeMR8kgORt9YWzY6XakEjXkdIldAIgeFNbuodHd
+         VcUj+yPWracHienCDczj1EeysPCXDtaf4LKT5ZWaFkUIMRSfiySQ9l9NCkP/K8Dgkr2Y
+         XkhQbDwBRS4SK7RvzGuPo1e5CtHdj8GNnM3POaCgE/IRa3gK8MQucA6AKjC2hxavpMys
+         QhZICQ61vCtgs9W++3KwFKnv4UVjgnNzkLQIIe+zrsS2lfqF9P457lz3wHcnDEspOm95
+         KakNZFlDpeGyR35Qu01Z6fE+08foPP4fD9WWRo5AzVEzSHnx4oPF6UbLTdsisifbEaQt
+         I3Mg==
+X-Received: by 10.152.23.198 with SMTP id o6mr1133laf.15.1397889100178;
+        Fri, 18 Apr 2014 23:31:40 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.204.5 with SMTP id ku5ls285024lac.28.gmail; Fri, 18 Apr
+ 2014 23:31:39 -0700 (PDT)
+X-Received: by 10.112.59.67 with SMTP id x3mr1851908lbq.5.1397889099416;
+        Fri, 18 Apr 2014 23:31:39 -0700 (PDT)
+Received: from smtprelay02.ispgateway.de (smtprelay02.ispgateway.de. [80.67.31.36])
+        by gmr-mx.google.com with ESMTPS id m49si2222411eeu.0.2014.04.18.23.31.39
+        for <msysgit@googlegroups.com>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Fri, 18 Apr 2014 23:31:39 -0700 (PDT)
+Received-SPF: neutral (google.com: 80.67.31.36 is neither permitted nor denied by best guess record for domain of hvoigt@hvoigt.net) client-ip=80.67.31.36;
+Received: from [91.97.110.135] (helo=book-mint)
+	by smtprelay02.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1WbOoM-0003L7-BG; Sat, 19 Apr 2014 08:31:38 +0200
+In-Reply-To: <20140403131850.GA24449@seldon>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+X-Original-Sender: hvoigt@hvoigt.net
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
+ (google.com: 80.67.31.36 is neither permitted nor denied by best guess record
+ for domain of hvoigt@hvoigt.net) smtp.mail=hvoigt@hvoigt.net
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Content-Disposition: inline
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246500>
 
-Junio C Hamano wrote:
-> G=C3=A1bor Szeder <szeder@ira.uka.de> writes:
->=20
-> > words[] is just fine, we never modify it after it is filled by
-> > _get_comp_words_by_ref() at the very beginning.
->=20
-> Hmph.  I would have understood if the latter were "we never look at
-> it (to decide what to do)".  "we never modify it" does not sound
-> like an enough justification behind "words[] is just fine"---maybe I
-> am not reading you correctly.
->=20
-> > The root of the problem is that the expected position of the name
-> > of the git command in __git_complete_remote_or_refspec() is
-> > hardcoded as words[1], but that is not the case when:
-> >
-> >   1) it's an alias, as in Felipe's example: git p ori<TAB>,
-> >   because while the index is ok, the content is not.
-> >
-> >   2) in presence of options of the main git command: git -c
-> >   foo=3Dbar push ori<TAB>, because the index is off.
-> >
-> >   3) the command is a shell alias for which the user explicitly
-> >   set the completion function with __git_complete() (at his own
-> >   risk): alias gp=3D"git push"; __git_complete gp _git_push; gp
-> >   ori<TAB> Neither the index nor the content are ok.
-> >
-> > Fixing the hard-coded indexing would only solve 2) but not 1) and
-> > 3), as it obviously couldn't turn the git or shell alias into a
-> > git command on its own.
-> >
-> > Felipe's patch only deals with 1), as it only kicks in in case of
-> > a git alias.
+Hi Marat,
 
-Which is the far more common use-case, and the problem I've seen people=
- report
-multiple times in multiple media.
+On Thu, Apr 03, 2014 at 05:18:50PM +0400, marat@slonopotamus.org wrote:
+> I'm proud to announce WinGit:
+> an attempt to bring Git powers to 64-bit Windows.
 
-> Yeah, do completions for commands (not just for the ones that use
-> remote-or-refspec Felipe's patch addresses) have trouble with the
-> latter two in general?  If that is the case,...
->=20
-> > Communicating the name of the git command to
-> > __git_complete_remote_or_refspec() by its callers via a new
-> > variable as suggested by Junio, or perhaps by an additional
-> > parameter to the function is IMHO the right thing to do, because,
-> > unless I'm missing something, it would make all three cases work.
->=20
-> ... while the above analysis may be correct, taking Felipe's patch
-> to address only (1) and leaving a solution to the more general
-> words[1] problem for other patches on top might not be too bad an
-> approach.
->=20
-> Unless
->=20
->  (A) remote-or-refspec thing is the primary offender, and other
->      commands do not suffer from the words[1] problem, in which case
->      I tend to agree that an additional parameter would be the way
->      to go (there are only a few callers of the function); or
+So the reason for this new package is that you need 64bit binaries?
 
-Since I already fixed the problem (all 3) years ago[1], you can take a =
-look at
-the patch and see which commands which use a hard-coded index value mig=
-ht have
-real issues. My guess is that it's more than just remote-or-refspec, bu=
-t I
-don't have the incentive to look deeper into this (the issue is solved =
-for me).
+> Relationship with msysgit
+> =========================
+> 
+> Unlike msysgit, WinGit is a pure-Windows binary build with MSVC.
+> 
+> Like msysgit, WinGit also uses msys environment (sh/perl/etc) both during
+> build-time and runtime.
 
->  (B) even if words[1] problem is more widespread, such a more
->      general solution to all three issues can be coded cleanly and
->      quickly, without having to have Felipe's patch as a stop-gap
->      measure.
+I can see the need for a pure Windows solution (no msys tools at least for
+runtime). But this sounds to me that the only thing you changed is the
+compiler and 64bit? The git binaries in msysgit are already pure Windows
+binaries with no need of msys.dll. The only reason why so many other
+tools are shipped with msysgit is to run scripted commands (e.g. like
+gitk or rebase).
 
-I already sent two patches, one that solves all the problems, and one t=
-hat
-solves the most important one.
+What is the reason of using a closed source compiler? Why not use the
+64bit mingw that is already used to build the 64bit explorer extension
+to package 64bit binaries along with the 32bit ones in the installer?
 
-I would gladly revisit my old patch and see which of those changes are =
-really
-necessary and solve a real issue, *if* I knew the resulting patch would=
-n't get
-the same road-blockers as the old one did; namely being held to higher
-standards than the current code.
+Sorry if I am a little bit skeptic, but I am wondering whether it does
+make sense for you to join forces with msysgit instead of creating a
+fork? I think the main reason why there are no 64 bit binaries shipped
+with msysgit is that nobody needed them and the need to ship both (at
+least for some time).
 
-I say it's more important to fix the real issues real people have than =
-hold on
-to arbitrary standards which might force the bug to remain present for =
-years
-just because some variable was not documented in the original patch (ju=
-st like
-all other variables in the script)... But that's just me.
+That would also make the maintenance burden easier for you.
 
-[1] http://thread.gmane.org/gmane.comp.version-control.git/197226
+Cheers Heiko
 
---=20
-=46elipe Contreras
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
