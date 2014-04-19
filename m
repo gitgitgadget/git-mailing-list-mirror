@@ -1,80 +1,73 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] git-svn.txt: Retain a description og pre-v2.0 default
- prefix
-Date: Sat, 19 Apr 2014 11:43:18 +0000
-Message-ID: <20140419114318.GA18939@dcvr.yhbt.net>
-References: <20140419083210.GA28771@dcvr.yhbt.net>
- <1397898631-1585-1-git-send-email-johan@herland.net>
+From: Marat Radchenko <marat@slonopotamus.org>
+Subject: Re: [ANNOUNCE] WinGit - native x86/x64 Git for Windows
+Date: Sat, 19 Apr 2014 17:35:07 +0400
+Message-ID: <rfujmbew27f1gaa6dbk706li.1397911737867@email.android.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, tfnico@gmail.com,
-	Johan Herland <johan@herland.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 19 13:43:24 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: base64
+Cc: git@vger.kernel.org, msysGit Mailinglist <msysgit@googlegroups.com>
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Sat Apr 19 15:36:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WbTg3-0007qT-UE
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Apr 2014 13:43:24 +0200
+	id 1WbVR2-0003RZ-Pz
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Apr 2014 15:36:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751885AbaDSLnU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Apr 2014 07:43:20 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:45883 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751495AbaDSLnT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Apr 2014 07:43:19 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DFF6F1FD6E;
-	Sat, 19 Apr 2014 11:43:18 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <1397898631-1585-1-git-send-email-johan@herland.net>
+	id S1751452AbaDSNfP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Apr 2014 09:35:15 -0400
+Received: from seldon.slonopotamus.org ([94.242.204.247]:47344 "EHLO
+	slonopotamus.org" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
+	with ESMTP id S1751328AbaDSNfO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Apr 2014 09:35:14 -0400
+Received: from [185.19.23.26] (helo=[192.168.0.162])
+	by slonopotamus.org with esmtpsa (TLSv1:RC4-MD5:128)
+	(Exim 4.80.1)
+	(envelope-from <marat@slonopotamus.org>)
+	id 1WbVQC-0005un-SZ; Sat, 19 Apr 2014 17:35:10 +0400
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246514>
 
-Johan Herland <johan@herland.net> wrote:
-> Feel free to add/squash this on top.
-
-Thanks!  Squashed and pushed.
-
-The following changes since commit cc291953df19aa4a97bee3590e708dc1fc557500:
-
-  Git 2.0-rc0 (2014-04-18 11:21:43 -0700)
-
-are available in the git repository at:
-
-  git://bogomips.org/git-svn.git master
-
-for you to fetch changes up to fe191fcaa58cb785c804465a0da9bcba9fd9e822:
-
-  Git 2.0: git svn: Set default --prefix='origin/' if --prefix is not given (2014-04-19 11:30:13 +0000)
-
-----------------------------------------------------------------
-Johan Herland (1):
-      Git 2.0: git svn: Set default --prefix='origin/' if --prefix is not given
-
- Documentation/git-svn.txt                        | 20 ++-------
- git-svn.perl                                     | 12 +-----
- t/t9107-git-svn-migrate.sh                       | 54 ++++++++++++------------
- t/t9114-git-svn-dcommit-merge.sh                 |  4 +-
- t/t9116-git-svn-log.sh                           | 46 ++++++++++----------
- t/t9117-git-svn-init-clone.sh                    | 16 +++----
- t/t9118-git-svn-funky-branch-names.sh            | 20 ++++-----
- t/t9120-git-svn-clone-with-percent-escapes.sh    | 14 +++---
- t/t9125-git-svn-multi-glob-branch-names.sh       |  6 +--
- t/t9128-git-svn-cmd-branch.sh                    | 18 ++++----
- t/t9135-git-svn-moved-branch-empty-file.sh       |  2 +-
- t/t9141-git-svn-multiple-branches.sh             | 28 ++++++------
- t/t9145-git-svn-master-branch.sh                 |  2 +-
- t/t9155-git-svn-fetch-deleted-tag.sh             |  4 +-
- t/t9156-git-svn-fetch-deleted-tag-2.sh           |  6 +--
- t/t9161-git-svn-mergeinfo-push.sh                | 22 +++++-----
- t/t9163-git-svn-reset-clears-caches.sh           |  4 +-
- t/t9165-git-svn-fetch-merge-branch-of-branch.sh  |  2 +-
- t/t9166-git-svn-fetch-merge-branch-of-branch2.sh |  2 +-
- t/t9167-git-svn-cmd-branch-subproject.sh         |  2 +-
- 20 files changed, 131 insertions(+), 153 deletions(-)
+PiBTbyB0aGUgcmVhc29uIGZvciB0aGlzIG5ldyBwYWNrYWdlIGlzIHRoYXQgeW91IG5lZWQgNjRi
+aXQgYmluYXJpZXM/CgpUaGF0J3MgdGhlIG1vc3QgaW1wb3J0YW50IGJpdC4gUGx1cywgd2VpcmQg
+c3NoIHRyYW5zZmVyIHNwZWVkcyBbMV0gY2F1c2VkIGJ5IGFuc2llbnQgb3BlbnNzaCBidW5kbGVk
+IGluIG1zeXNnaXQuCgo+IEkgY2FuIHNlZSB0aGUgbmVlZCBmb3IgYSBwdXJlIFdpbmRvd3Mgc29s
+dXRpb24gKG5vIG1zeXMgdG9vbHMgYXQgbGVhc3QgZm9yIHJ1bnRpbWUpLgoKU2V2ZXJhbCBHaXQg
+c2NyaXB0cyBhcmUgd3JpdHRlbiBpbiBwZXJsLCBtYW55IGluIHNoZWxsIGFuZCBhIGNvdXBsZSBl
+dmVuIGluIHRjbC90ayAob2gsIG15KS4gVW50aWwgdGhpcyBpcyB0cnVlLCBHaXQgcmVxdWlyZXMg
+dW5peC1saWtlIHVzZXJsYW5kIGVudmlyb25tZW50OiBhbGwgdGhvc2Ugc2gsIGF3aywgY29yZXV0
+aWxzLCBmaW5kdXRpbHMgYW5kIG90aGVycy4KCj4gQnV0IHRoaXMgc291bmRzIHRvIG1lIHRoYXQg
+dGhlIG9ubHkgdGhpbmcgeW91IGNoYW5nZWQgaXMgdGhlIGNvbXBpbGVyIGFuZCA2NGJpdD8KVGhh
+dCB3b3VsZCBiZSB0cnVlICppZiogbXN5c2dpdCB3YXMgcmVhbGx5IG1zeXMgKyBtaW5ndy1idWls
+dC1naXQuIAoKQnV0IGluIHByYWN0aWNlLCBtc3lzZ2l0IGlzOgogMSkgb3V0ZGF0ZWQgbXN5cyB0
+aGF0IHdhcyBwYXRjaGVkIGluIG11bHRpcGxlIHdheXMgd2l0aG91dAogIHNlbmRpbmcgcGF0Y2hl
+cyB1cHN0cmVhbQogMikgaGVhdmlseSBwYXRjaGVkIGdpdCwgYWdhaW4gbm90IHVwc3RyZWFtZWQK
+ClRvIGJlIGhvbmVzdCwgbXN5cyBpc24ndCBhIGdyZWF0IHRvb2wuIEFmdGVyIGFsbCwgaXQncyBq
+dXN0IG91dGRhdGVkCmFuZCBoZWF2aWx5IHBhdGNoZWQgY3lnd2luLiBUaGVyZSBleGlzdHMgbXN5
+czIgcHJvamVjdCAobXVjaCBsZXNzIG91dGRhdGVkIGFuZCBtdWNoIGxlc3MgcGF0Y2hlZCBjeWd3
+aW4pLgoKU28sIG1zeXNnaXQgaXMgYW4gKG91dGRhdGVkIHBhdGNoZWQpKjIgY3lnd2luICsgcGF0
+Y2hlZCBnaXQuCgo+IFdoYXQgaXMgdGhlIHJlYXNvbiBvZiB1c2luZyBhIGNsb3NlZCBzb3VyY2Ug
+Y29tcGlsZXI/CgpJdCBoYXBwZW5lZCB0byBiZSBhbHJlYWR5IGluc3RhbGxlZCBvbiBteSBib3gu
+IFN3aXRjaGluZyB0byBhbm90aGVyIG9uZSB3aWxsIHJlcXVpcmUganVzdCBtaW5vciB0d2Vha3Mg
+dG8gbXkgYnVpbGQgc2NyaXB0LiBJIGRvbid0IGhhdmUgYW55IHN0cm9uZyByZWFzb25zIGZvciB1
+c2luZyBNU1ZDLgoKPiBTb3JyeSBpZiBJIGFtIGEgbGl0dGxlIGJpdCBza2VwdGljLCBidXQgSSBh
+bSB3b25kZXJpbmcgd2hldGhlciBpdCBkb2VzIG1ha2Ugc2Vuc2UgZm9yIHlvdSB0byBqb2luIGZv
+cmNlcyB3aXRoIG1zeXNnaXQgaW5zdGVhZCBvZiBjcmVhdGluZyBhIGZvcms/CgoxKSBJdCBtYWtl
+cyBzZW5zZSB0byBwdXJnZSBtc3lzZ2l0IGFuZCBzdGFydCBvdmVyLiBTZWUgbWluZ3dHaXREZXZF
+bnYgWzJdIChieSBtc3lzZ2l0IGRldmVsb3BlcikuCjIpICBJIG9ubHkgdXNlZCBtc3lzIGR1ZSB0
+byBteSB1bmF3YXJlbmVzcyBvZiBtc3lzMiBhdCB0aGUgdGltZSBvZiAgaW5pdGlhbCBXaW5HaXQg
+aGFja2luZy4gRHVlIHRvIG1hc3NpdmUgVW5pY29kZS1yZWxhdGVkIG1zeXMgdHJvdWJsZXMsIGFu
+c2llbnQgcGVybCBhbmQgc3ZuLCBJIHBsYW4gdG8gc3dpdGNoIHRvIG1zeXMyIHNvb24uCgo+IHRo
+ZXJlIGFyZSBubyA2NCBiaXQgYmluYXJpZXMgc2hpcHBlZCB3aXRoIG1zeXNnaXQgaXMgdGhhdCBu
+b2JvZHkgbmVlZGVkIHRoZW0KClRoYXQncyB3cm9uZy4gR29vZ2xlIGZvciAnd2luZG93cyB4NjQg
+Z2l0JyBvciAnbXN5c2dpdCB4NjQnLiBQZW9wbGUgbmVlZCBpdC4gVGhlcmUncyBldmVuIGFuIGlz
+c3VlIFszXSAoc3RhbGxlZCBzZXZlcmFsIHllYXJzIGFnbykgaW4gbXN5c2dpdCB0cmFja2VyLgpB
+ZnRlciBhbGwsIEkgbmVlZGVkIGl0LgoKWzFdIGh0dHBzOi8vZ2l0aHViLmNvbS9tc3lzZ2l0L21z
+eXNnaXQvaXNzdWVzLzMxClsyXTogaHR0cHM6Ly9naXRodWIuY29tL3NzY2h1YmVydGgvbWluZ3dH
+aXREZXZFbnYKWzNdOiBodHRwOi8vY29kZS5nb29nbGUuY29tL3AvbXN5c2dpdC9pc3N1ZXMvZGV0
+YWlsP2lkPTM5Ngo=
