@@ -1,95 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [ANNOUNCE] Git v2.0.0-rc0
-Date: Sat, 19 Apr 2014 00:20:34 -0700
-Message-ID: <7vwqellr99.fsf@alter.siamese.dyndns.org>
-References: <xmqqk3ambf9k.fsf@gitster.dls.corp.google.com>
-	<CALKQrgdv3xN78dvFNzR7K7dWMP-brG7r-OoHHMAus4pskmizmw@mail.gmail.com>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: [L10N] Startup of Git 2.0.0 l10n round 1
+Date: Sat, 19 Apr 2014 16:13:34 +0800
+Message-ID: <CANYiYbEeJ=WLm9CptdQwX7Xzj9r1kSDUeOkZpSm5H+X3k1h6Dw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git mailing list <git@vger.kernel.org>,
-	Eric Wong <normalperson@yhbt.net>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Sat Apr 19 09:19:21 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>
+To: Ralf Thielow <ralf.thielow@googlemail.com>,
+	=?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	Marco Paolone <marcopaolone@gmail.com>,
+	Marco Sousa <marcomsousa@gmail.com>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	=?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+	Brian Gesiak <modocache@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 19 10:13:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WbPYX-0007Dq-0r
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Apr 2014 09:19:21 +0200
+	id 1WbQPC-0002m3-OA
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Apr 2014 10:13:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751049AbaDSHS6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Apr 2014 03:18:58 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39790 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750905AbaDSHS5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Apr 2014 03:18:57 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A1B476E872;
-	Sat, 19 Apr 2014 03:18:56 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=y7Wa6OWYS+GjjuCygQVx9J2qncI=; b=xS5NbT
-	LNoR8dNPFxTaNzTPGpjUXBSGi73sS8djvWYnxfFVY161RnE3771At5mEZ3a6I+Z9
-	8evIOexQnZ1DCpNz3hiY9LDBNl+H5YxqtL84xHagEdbINJj0i6SIL0/nlt30Akt2
-	jX6ysyqoG2Yws9aVZ7rAGTdehb9jbunHRD12E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=diqUPD25yEjGp4DRXEiEldZu7zcE9hcB
-	f14G85cxSyV/Q82cxqT0YB1/qQLOVuEIBPqGAp4s67gu2kzhuB4lBzuCRqllIfx+
-	4vE8cpgkQvk4pJUeBqp673bUeK7vnTi6PnUBR3rEeOMioj0bxp1I3zqcgW+5DBT6
-	oifnrwTZ1s4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 85EF56E870;
-	Sat, 19 Apr 2014 03:18:56 -0400 (EDT)
-Received: from pobox.com (unknown [198.0.213.178])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C8E756E86F;
-	Sat, 19 Apr 2014 03:18:54 -0400 (EDT)
-In-Reply-To: <CALKQrgdv3xN78dvFNzR7K7dWMP-brG7r-OoHHMAus4pskmizmw@mail.gmail.com>
-	(Johan Herland's message of "Sat, 19 Apr 2014 03:13:18 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.4 (gnu/linux)
-X-Pobox-Relay-ID: DD9D63E6-C792-11E3-918D-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751318AbaDSINm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Apr 2014 04:13:42 -0400
+Received: from mail-we0-f181.google.com ([74.125.82.181]:53037 "EHLO
+	mail-we0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751089AbaDSINg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 19 Apr 2014 04:13:36 -0400
+Received: by mail-we0-f181.google.com with SMTP id q58so2251262wes.12
+        for <git@vger.kernel.org>; Sat, 19 Apr 2014 01:13:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=WjOlH7CLl6DlzD0GRsy898txib5XO2iAOn4mci7RaCw=;
+        b=RSw/S/QL0CWiOSrV/a+T8Yle5a3UBMDZ807PKQbJl1ugxFCZiqpUdjcv2+oy+lMGSZ
+         FEON03ZMbyzZ6P4YD8IssQK++wFwPFEz0L6HJr+tljhlSaYhsPEk/ozTd40bEf4qYuKn
+         ziWHeOPuzSlqvc7RGvhfM6Tl9XqW/ibQZlyBgwHJV29Rawg9nV1f5Q3w6zxecMYibDxq
+         PBLqOFiDai+GUHYbCeTDjtep79DRL4p/G7zBc9tXAYgnJIkNJAx8e/YBz//3TZYY7BNE
+         /+fH8H88qmrSEyqEa2E3Dzh1PazMhdgNIE6CNPsimyYWzH/XxPBtxddPLI93u1tHajQY
+         JM6g==
+X-Received: by 10.194.92.177 with SMTP id cn17mr19905655wjb.18.1397895214590;
+ Sat, 19 Apr 2014 01:13:34 -0700 (PDT)
+Received: by 10.217.58.65 with HTTP; Sat, 19 Apr 2014 01:13:34 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246508>
 
-Johan Herland <johan@herland.net> writes:
+Hi,
 
-> On Fri, Apr 18, 2014 at 9:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> An early preview release Git v2.0.0-rc0 is now available for
->> testing at the usual places.
->
-> This is supposed to have _all_ the v2.0 topics, correct?
->
-> I'm unable to find the commit that actually _changes_ the default
-> prefix for "git svn" (as announced in Documentation/git-svn.txt and
-> the release notes for v1.8.5 and v1.9.0).
+Since Git v2.0.0-rc0 had already been released, it's time to start new =
+round
+of git l10n. This time there are 45 new messages need to be translated =
+since
+last update for v1.9.0:
 
-Yes, I noticed that the topic has been in the release notes for a
-few cycles but the changes never came to my tree (perhaps review of
-the patch series never concluded?) at the beginning of this cycle,
-so dropped it from the release notes.
+    l10n: git.pot: v2.0.0 round 1 (45 new, 28 removed)
 
-> For reference, it was posted as patch 3/3 back in October:
-> http://thread.gmane.org/gmane.comp.version-control.git/232761/focus=235900
->
-> Very sorry for not discovering this earlier.
+    Generate po/git.pot from v2.0.0-rc0 for git v2.0.0 l10n round 1.
 
-Well, things happen X-<.
+    Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
 
-I see the other two contained in the merge from Eric at 1668b7d78f81
-(Merge git://git.bogomips.org/git-svn, 2013-10-16).  Is the last one
-still viable?  From my point of view, it would be best if Eric can
-take another look on it and throw me a pull request (and I have to
-remember to resurrect the entry in the release notes).
+You can get it from the usual place:
 
-Alternatively I could revert the "Warn about changing the default"
-for now and defer the topic to v2.1.
+    https://github.com/git-l10n/git-po/
 
-Eric, what do you think?  My preference is not to revert but at the
-same time I am hesitant to take a patch that was posted as RFC this
-late in the cycle without input from the area expert, so...
+As how to update your XX.po and help to translate Git, please see
+"Updating a XX.po file" and other sections in =E2=80=9Cpo/README" file.
+
+--
+Jiang Xin
