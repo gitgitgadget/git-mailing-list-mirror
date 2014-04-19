@@ -1,125 +1,161 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Re: [ANNOUNCE] WinGit - native x86/x64 Git for Windows
-Date: Sat, 19 Apr 2014 20:42:10 +0200
-Message-ID: <20140419184210.GB3617@book-mint>
-References: <rfujmbew27f1gaa6dbk706li.1397911737867@email.android.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 02/11] refs.c: change ref_transaction_update() to do error
+ checking and return status
+Date: Sat, 19 Apr 2014 20:55:18 +0200
+Message-ID: <5352C696.9010601@alum.mit.edu>
+References: <1397763987-4453-1-git-send-email-sahlberg@google.com> <1397763987-4453-3-git-send-email-sahlberg@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, msysGit Mailinglist <msysgit@googlegroups.com>,
-	Sebastian Schuberth <sschuberth@gmail.com>
-To: Marat Radchenko <marat@slonopotamus.org>
-X-From: msysgit+bncBDVPBNNXUMFBBBMHZONAKGQE3C4ZACI@googlegroups.com Sat Apr 19 20:42:15 2014
-Return-path: <msysgit+bncBDVPBNNXUMFBBBMHZONAKGQE3C4ZACI@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-la0-f62.google.com ([209.85.215.62])
+Content-Transfer-Encoding: 7bit
+To: Ronnie Sahlberg <sahlberg@google.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 19 20:55:40 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDVPBNNXUMFBBBMHZONAKGQE3C4ZACI@googlegroups.com>)
-	id 1WbaDO-0005zR-Pl
-	for gcvm-msysgit@m.gmane.org; Sat, 19 Apr 2014 20:42:14 +0200
-Received: by mail-la0-f62.google.com with SMTP id ec20sf235496lab.27
-        for <gcvm-msysgit@m.gmane.org>; Sat, 19 Apr 2014 11:42:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :in-reply-to:user-agent:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type:content-disposition;
-        bh=/eD8mGa2D0T21EEsGywfrBEDL1r2oedNStffuz0Frhs=;
-        b=i1rEw82m4O3Sez8/nCjm31o34/nU0LWSdZd/sTJ3nKZlt0rKv2qgWRBA0K71eLiU8z
-         2QJbEx0Z9dWW5uV4WBBXOjkikYk1XzRtSbnA75m6SBDOvWIDZ5TSXH04FQKQmMNonHA4
-         lXzAJFXhMkFGN59S4ikunxfMCkrxZLc9pnnFmIH+/ozCslXhV5k8nsgz5RMXbXasbifv
-         jVb9YQY6i7gYID5cSG80kFuCH8UljAGr0BjycN7srqlTZyUlrAKUySjDu8RdOln1YLbx
-         2rhBtgE340mRcYvnRaYzHvHaoHGm8kZH+h/YquzSSQNTVzx1XlwhFYPIHKXcCIMN1LHg
-         EkqA==
-X-Received: by 10.152.202.231 with SMTP id kl7mr322969lac.3.1397932934587;
-        Sat, 19 Apr 2014 11:42:14 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.198.236 with SMTP id jf12ls308824lac.97.gmail; Sat, 19 Apr
- 2014 11:42:13 -0700 (PDT)
-X-Received: by 10.152.3.38 with SMTP id 6mr2396198laz.0.1397932933623;
-        Sat, 19 Apr 2014 11:42:13 -0700 (PDT)
-Received: from smtprelay01.ispgateway.de (smtprelay01.ispgateway.de. [80.67.31.39])
-        by gmr-mx.google.com with ESMTPS id u49si7360eeo.1.2014.04.19.11.42.13
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sat, 19 Apr 2014 11:42:13 -0700 (PDT)
-Received-SPF: neutral (google.com: 80.67.31.39 is neither permitted nor denied by best guess record for domain of hvoigt@hvoigt.net) client-ip=80.67.31.39;
-Received: from [80.228.206.6] (helo=book-mint)
-	by smtprelay01.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.68)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1WbaDM-0002GY-EM; Sat, 19 Apr 2014 20:42:12 +0200
-In-Reply-To: <rfujmbew27f1gaa6dbk706li.1397911737867@email.android.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
-X-Original-Sender: hvoigt@hvoigt.net
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
- (google.com: 80.67.31.39 is neither permitted nor denied by best guess record
- for domain of hvoigt@hvoigt.net) smtp.mail=hvoigt@hvoigt.net
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Content-Disposition: inline
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246523>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1WbaQM-0005cs-ET
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Apr 2014 20:55:38 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1755171AbaDSSzZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Apr 2014 14:55:25 -0400
+Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:55298 "EHLO
+	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754851AbaDSSzV (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 19 Apr 2014 14:55:21 -0400
+X-AuditID: 12074412-f79d46d000002e58-98-5352c698704a
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 8C.A4.11864.896C2535; Sat, 19 Apr 2014 14:55:20 -0400 (EDT)
+Received: from [192.168.69.130] (p5DDB2858.dip0.t-ipconnect.de [93.219.40.88])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s3JItIE4018049
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Sat, 19 Apr 2014 14:55:19 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.4.0
+In-Reply-To: <1397763987-4453-3-git-send-email-sahlberg@google.com>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprDKsWRmVeSWpSXmKPExsUixO6iqDvjWFCwwZnPahZdV7qZLP5NqHFg
+	8liwqdTj8ya5AKYobpukxJKy4Mz0PH27BO6M2zdOsRd0yVU0NfQzNTBeEO9i5OSQEDCROL16
+	ISuELSZx4d56ti5GLg4hgcuMEi87etghnHNMEg9nTWAEqeIV0Jb4cambHcRmEVCVeLW6Gcxm
+	E9CVWNTTzNTFyMEhKhAk8eesIkS5oMTJmU9YQGwRATuJ9bcWMoPYwgLZEvtvLQJrFRKolPix
+	rQeshlPAWeLXn15GkDESAuISPY1BIGFmAR2Jd30PmCFseYntb+cwT2AUmIVkwywkZbOQlC1g
+	ZF7FKJeYU5qrm5uYmVOcmqxbnJyYl5dapGuml5tZopeaUrqJERKiQjsY15+UO8QowMGoxMO7
+	ISAwWIg1say4MvcQoyQHk5Io79/1QcFCfEn5KZUZicUZ8UWlOanFhxglOJiVRHhn7AHK8aYk
+	VlalFuXDpKQ5WJTEeX8uVvcTEkhPLEnNTk0tSC2CyWpwcAhcOXhkNqMUS15+XqqSBO+ro0BD
+	BItS01Mr0jJzShBKmTg4QRZxSYkUp+alpBYllpZkxIPiN74YGMEgKR6gG3pA2nmLCxJzgaIQ
+	racYdTkuNKxoYRIC2yElzjsDpEgApCijNA9uBSxRvWIUB/pemPc4SBUPMMnBTXoFtIQJaMnf
+	MwEgS0oSEVJSDYwzLHZZPahZ6ii+XW/nXL+uf0dmpuZyW9+YeW3y0v6HCUb7u8IvvMuYJj0n
+	SU+7WG3BFFWueaV9vpN2y+76d2u7eYhy3Oz18e3yxbXXYhh52qe93JpncHQy823e 
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246524>
 
-On Sat, Apr 19, 2014 at 05:35:07PM +0400, Marat Radchenko wrote:
-> > there are no 64 bit binaries shipped with msysgit is that nobody
-> > needed them
+On 04/17/2014 09:46 PM, Ronnie Sahlberg wrote:
+> Update ref_transaction_update() do some basic error checking and return
+> true on error. Update all callers to check ref_transaction_update() for error.
 > 
-> That's wrong. Google for 'windows x64 git' or 'msysgit x64'. People
-> need it. There's even an issue [3] (stalled several years ago) in
-> msysgit tracker.  After all, I needed it.
+> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+> ---
+>  builtin/update-ref.c | 11 +++++++----
+>  refs.c               |  9 +++++++--
+>  refs.h               | 10 +++++-----
+>  3 files changed, 19 insertions(+), 11 deletions(-)
+> 
+> diff --git a/builtin/update-ref.c b/builtin/update-ref.c
+> index 405267f..12bfacc 100644
+> --- a/builtin/update-ref.c
+> +++ b/builtin/update-ref.c
+> @@ -197,8 +197,10 @@ static const char *parse_cmd_update(struct strbuf *input, const char *next)
+>  	if (*next != line_termination)
+>  		die("update %s: extra input: %s", refname, next);
+>  
+> -	ref_transaction_update(transaction, refname, new_sha1, old_sha1,
+> -			       update_flags, have_old);
+> +	if (ref_transaction_update(transaction, refname, new_sha1, old_sha1,
+> +				   update_flags, have_old))
+> +		die("failed transaction update for %s", refname);
+> +
+>  
+>  	update_flags = 0;
+>  	free(refname);
+> @@ -286,8 +288,9 @@ static const char *parse_cmd_verify(struct strbuf *input, const char *next)
+>  	if (*next != line_termination)
+>  		die("verify %s: extra input: %s", refname, next);
+>  
+> -	ref_transaction_update(transaction, refname, new_sha1, old_sha1,
+> -			       update_flags, have_old);
+> +	if (ref_transaction_update(transaction, refname, new_sha1, old_sha1,
+> +			       update_flags, have_old))
+> +		die("failed transaction update for %s", refname);
+>  
+>  	update_flags = 0;
+>  	free(refname);
+> diff --git a/refs.c b/refs.c
+> index 138ab70..da1761d 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -3327,19 +3327,24 @@ static struct ref_update *add_update(struct ref_transaction *transaction,
+>  	return update;
+>  }
+>  
+> -void ref_transaction_update(struct ref_transaction *transaction,
+> +int ref_transaction_update(struct ref_transaction *transaction,
+>  			    const char *refname,
+>  			    const unsigned char *new_sha1,
+>  			    const unsigned char *old_sha1,
+>  			    int flags, int have_old)
+>  {
+> -	struct ref_update *update = add_update(transaction, refname);
+> +	struct ref_update *update;
+> +
+> +	if (have_old && !old_sha1)
+> +		return error("have_old is true but old_sha1 is NULL");
 
-Do not get me wrong. I was saying until now nobody "needed" it in a way
-that he/she would do something about it. Of course there are many people
-requesting it, but I just do not count those people anymore. You are
-clearly doing something about it and thats great, I like it.
+The function documentation doesn't seem to allow old_sha1 == NULL.  That
+means that calling it that way is a bug, not an error.  Therefore, I
+think this should result in
 
-What I am trying to achieve here is that you join the msysgit community.
-There already is just a very small amount of developers on the windows
-side (compared to upstream). We should try to all work together. I think
-it will greatly add to confusion if we have another installer of Git for
-Windows. I think the msysgit community is quite open for changes like
-the ones you are trying to achieve.
+    die("BUG: have_old is true but old_sha1 is NULL");
 
-Regarding mingwGitDevEnv[2]: That is a project started by Sebastian who
-also contributes to msysgit (and Git for Windows). It eventually can
-(and probably should) be a successor of the current situation where we
-always manually patch, build and commit our binaries into a git
-repository. A proper package management system would greatly help here.
-But AFAIK its not ready for production use yet. I guess Sebastian would
-not mind contributions.
+>  
+> +	update = add_update(transaction, refname);
+>  	hashcpy(update->new_sha1, new_sha1);
+>  	update->flags = flags;
+>  	update->have_old = have_old;
+>  	if (have_old)
+>  		hashcpy(update->old_sha1, old_sha1);
+> +	return 0;
+>  }
+>  
+>  void ref_transaction_create(struct ref_transaction *transaction,
+> diff --git a/refs.h b/refs.h
+> index 892c5b6..00e4f7b 100644
+> --- a/refs.h
+> +++ b/refs.h
+> @@ -237,11 +237,11 @@ void ref_transaction_rollback(struct ref_transaction *transaction);
+>   * that the reference should have had before the update, or zeros if
+>   * it must not have existed beforehand.
+>   */
+> -void ref_transaction_update(struct ref_transaction *transaction,
+> -			    const char *refname,
+> -			    const unsigned char *new_sha1,
+> -			    const unsigned char *old_sha1,
+> -			    int flags, int have_old);
+> +int ref_transaction_update(struct ref_transaction *transaction,
+> +			   const char *refname,
+> +			   const unsigned char *new_sha1,
+> +			   const unsigned char *old_sha1,
+> +			   int flags, int have_old);
+>  
+>  /*
+>   * Add a reference creation to transaction.  new_sha1 is the value
+> 
 
-Cheers Heiko
-
-> [1] https://github.com/msysgit/msysgit/issues/31
-> [2]: https://github.com/sschuberth/mingwGitDevEnv
-> [3]: http://code.google.com/p/msysgit/issues/detail?id=396
 
 -- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
