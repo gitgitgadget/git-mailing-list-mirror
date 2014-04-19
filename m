@@ -1,64 +1,89 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Refactoring hardcoded SHA-1 constants
-Date: Sat, 19 Apr 2014 07:48:21 +0700
-Message-ID: <CACsJy8BMuj8jcsODGLPYxakh2pMV83AqsiMb7XFNkNwdGc7NLg@mail.gmail.com>
-References: <20140418221841.GC57656@vauxhall.crustytoothpaste.net>
- <20140418224049.GA15516@google.com> <5351BE03.2070604@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Project idea: strbuf allocation modes
+Date: Fri, 18 Apr 2014 17:55:19 -0700
+Message-ID: <xmqq38hab0js.fsf@gitster.dls.corp.google.com>
+References: <vpqr457omgs.fsf@anie.imag.fr> <53512DB6.1070600@alum.mit.edu>
+	<xmqq8ur2d04g.fsf@gitster.dls.corp.google.com>
+	<5351854E.1080602@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	git <git@vger.kernel.org>
 To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Sat Apr 19 02:49:31 2014
+X-From: git-owner@vger.kernel.org Sat Apr 19 02:55:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WbJTG-0007dW-Cw
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Apr 2014 02:49:30 +0200
+	id 1WbJZR-00011Z-AM
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Apr 2014 02:55:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754232AbaDSAsx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Apr 2014 20:48:53 -0400
-Received: from mail-qa0-f42.google.com ([209.85.216.42]:61959 "EHLO
-	mail-qa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752982AbaDSAsv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Apr 2014 20:48:51 -0400
-Received: by mail-qa0-f42.google.com with SMTP id k15so2118572qaq.1
-        for <git@vger.kernel.org>; Fri, 18 Apr 2014 17:48:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=CbCucQCjo3I+ZeU+fxoXm6yYtFozSXLRBdnZB6EC5+E=;
-        b=YdPXy5Mk3OrnAACM93OyveC5RtMd4Hx8fC32dPrL9yw0zpWFv/7GoAarrsw82bVPvG
-         tZ8NhDa+E7f8CcoFd4yTcJEH90866Nxt4ai2vF06WR+MamrTQV2eUJ0Ojo6UN39SPZLD
-         ELiHc117aSHtqO4B5QzwY980Me+OKrnUkXGjD/V1YFkn+FcbIs8/kZbmPf612sjzQZ4z
-         tNQJHMWohZ9p3udXGB5bXE2cq5rzYpziZgsOt07CrIyKgDZ1axG0TRdQLKPCWgl+QHd+
-         Fxhx/GjOu3atMIyloVnPFGWvchowS9vTuJ7KP6szlLAX/LT0xQHQnow6Q+4Dxhr5SnB2
-         1ZNA==
-X-Received: by 10.229.176.72 with SMTP id bd8mr22422914qcb.12.1397868531200;
- Fri, 18 Apr 2014 17:48:51 -0700 (PDT)
-Received: by 10.96.138.9 with HTTP; Fri, 18 Apr 2014 17:48:21 -0700 (PDT)
-In-Reply-To: <5351BE03.2070604@alum.mit.edu>
+	id S1754661AbaDSAzY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Apr 2014 20:55:24 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46322 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753922AbaDSAzX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Apr 2014 20:55:23 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BB1097D748;
+	Fri, 18 Apr 2014 20:55:22 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=yUhojPrYgVsr/hoNGD9BVAL/0EY=; b=a3ALkp
+	Bi7gHcnkQyJaChF0qOURfseC9a+gzPH0onI7rmt1rrsCvncVB5x119/vyGlfRCbv
+	7GWa8+WlNqfkDVRdMkPN+XdSQaL2dLepyMMI1MdXeVO13a1fD+E6Bn3rBBqwnHl6
+	bHjJjfZddH40QeJTcR94p1+i5uV6LJJh8++rE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=P4vqmQrr7PReFvD9UcelLZx0TkQsZYyW
+	1eKmiDBm/FGRhHugzoY10bIvnTb3Dt8ZbsM45DLjmODl0eWaOQpDiO5rgibrvWS2
+	XFrWuHX3IUoXEoDSR0kX4FgR3YA2u4O48Dhtgkl0Rma5yhxBH+zU8w7uINElIIEr
+	cGgQLv8swAk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9FD787D747;
+	Fri, 18 Apr 2014 20:55:22 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 18C397D746;
+	Fri, 18 Apr 2014 20:55:21 -0400 (EDT)
+In-Reply-To: <5351854E.1080602@alum.mit.edu> (Michael Haggerty's message of
+	"Fri, 18 Apr 2014 22:04:30 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 4860EEE0-C75D-11E3-ADCC-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246493>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246494>
 
-On Sat, Apr 19, 2014 at 7:06 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> Let the brainstorming (and bikeshedding) begin!
->
-> 1. GIT_OID_RAWSZ / GIT_OID_HEXSZ
->
-> 2. OID_RAWSZ / OID_HEXSZ
->
-> 3. OID_BINARY_LEN / OID_ASCII_LEN
->
-> 4. BINARY_OID_LEN / ASCII_OID_LEN
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-5. sizeof(oid) / ASCII_OID_LEN
--- 
-Duy
+> On 04/18/2014 07:21 PM, Junio C Hamano wrote:
+>> Michael Haggerty <mhagger@alum.mit.edu> writes:
+>> 
+>>> The Idea
+>>> ========
+>>>
+>>> I would like to see strbuf enhanced to allow it to use memory that it
+>>> doesn't own (for example, stack-allocated memory), while (optionally)
+>>> allowing it to switch over to using allocated memory if the string grows
+>>> past the size of the pre-allocated buffer.
+>> 
+>> I'd like to see these characteristics, but I would want to see that
+>> this is done entirely internally inside the strbuf implementation
+>> without any API impact, other than the initialisation.  I do not
+>> ...
+>
+> I think that's exactly what I described.  The only thing that would have
+> to change in the strbuf behavior (aside from initialization) is that a
+> buffer-growing operation might die if the string would grow outside of
+> the bounds of the existing buffer when STRBUF_FIXED_MEMORY is set.
+
+Yup, we are in agreement ;-)
+
+More seriously, sorry for sounding as if I was objecting. I should
+have edited s/but/and/ before sending my response out.
+
+Thanks.
