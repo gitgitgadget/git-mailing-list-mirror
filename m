@@ -1,144 +1,148 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 07/11] commit.c: use ref transactions for updates
-Date: Sat, 19 Apr 2014 21:23:00 +0200
-Message-ID: <5352CD14.4060808@alum.mit.edu>
-References: <1397763987-4453-1-git-send-email-sahlberg@google.com> <1397763987-4453-8-git-send-email-sahlberg@google.com>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: Re: Re: [ANNOUNCE] WinGit - native x86/x64 Git for Windows
+Date: Sat, 19 Apr 2014 21:24:09 +0200
+Message-ID: <20140419192409.GA8140@book-mint>
+References: <20140403131850.GA24449@seldon>
+ <20140419063133.GA3617@book-mint>
+ <alpine.DEB.1.00.1404191719280.14982@s15462909.onlinehome-server.info>
+ <20140419165832.GA23227@seldon>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: Ronnie Sahlberg <sahlberg@google.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 19 21:23:10 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>, git@vger.kernel.org,
+	msysGit Mailinglist <msysgit@googlegroups.com>
+To: Marat Radchenko <marat@slonopotamus.org>
+X-From: msysgit+bncBDVPBNNXUMFBBX42ZONAKGQEC7UICBY@googlegroups.com Sat Apr 19 21:24:16 2014
+Return-path: <msysgit+bncBDVPBNNXUMFBBX42ZONAKGQEC7UICBY@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-fa0-f60.google.com ([209.85.161.60])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wbaqz-0006XQ-Uw
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Apr 2014 21:23:10 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751190AbaDSTXG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Apr 2014 15:23:06 -0400
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:52331 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751095AbaDSTXD (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 19 Apr 2014 15:23:03 -0400
-X-AuditID: 1207440d-f79d86d0000043db-d9-5352cd1687f5
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id BB.D1.17371.61DC2535; Sat, 19 Apr 2014 15:23:02 -0400 (EDT)
-Received: from [192.168.69.130] (p5DDB2858.dip0.t-ipconnect.de [93.219.40.88])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s3JJN0no019253
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Sat, 19 Apr 2014 15:23:01 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.4.0
-In-Reply-To: <1397763987-4453-8-git-send-email-sahlberg@google.com>
-X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupnleLIzCtJLcpLzFFi42IRYndR1BU7GxRssHkrl0XXlW4mi38TahyY
-	PBZsKvX4vEkugCmK2yYpsaQsODM9T98ugTvj09uZzAVrxCvmnGhhbWA8JtTFyMkhIWAicerC
-	BCYIW0ziwr31bF2MXBxCApcZJfqOr2aCcM4xSWxefZoFpIpXQFvi15dfzCA2i4CqxNYrV8Bs
-	NgFdiUU9zUANHByiAkESf84qQpQLSpyc+QSsVUTATmL9rYVg5cICrhKX1nQxgthCApUSzxav
-	Ygdp5RRwllj70wjElBAQl+hpDAKpYBbQkXjX94AZwpaX2P52DvMERoFZSBbMQlI2C0nZAkbm
-	VYxyiTmlubq5iZk5xanJusXJiXl5qUW6Rnq5mSV6qSmlmxghAcq7g/H/OplDjAIcjEo8vBsC
-	AoOFWBPLiitzDzFKcjApifL+XR8ULMSXlJ9SmZFYnBFfVJqTWnyIUYKDWUmEd/0poBxvSmJl
-	VWpRPkxKmoNFSZxXbYm6n5BAemJJanZqakFqEUxWhoNDSYI38AxQo2BRanpqRVpmTglCmomD
-	E2Q4l5RIcWpeSmpRYmlJRjwoSuOLgXEKkuIB2qsI0s5bXJCYCxSFaD3FqMtxoWFFC5MQS15+
-	XqqUOK/uaaAiAZCijNI8uBWwdPSKURzoY2HeWJBRPMBUBjfpFdASJqAlf88EgCwpSURISTUw
-	uhgxf2oI7nvmEcT46P4T7pvXnsl19mX/e5h7yyXi0jmeQy8XcFuXZbifzzY/kMC/6c+eN3FT
-	HZ46nxQM2nNw2s/Zr649/XJkurtcSWernfQJs60LpI1YJuzY9brWfekclTJXf98X 
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246537>
+	(envelope-from <msysgit+bncBDVPBNNXUMFBBX42ZONAKGQEC7UICBY@googlegroups.com>)
+	id 1Wbas4-00080j-2y
+	for gcvm-msysgit@m.gmane.org; Sat, 19 Apr 2014 21:24:16 +0200
+Received: by mail-fa0-f60.google.com with SMTP id a11sf223787fad.15
+        for <gcvm-msysgit@m.gmane.org>; Sat, 19 Apr 2014 12:24:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :in-reply-to:user-agent:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type:content-disposition;
+        bh=ekTPJgVX1IQNyuOF0Jw9+DJFkTP3cdxAAkE9yVQwzJc=;
+        b=ckoCXXo+GH3m9Pxa3j0JlhiKceDWq1GkkW5VqfB+yruKUGI2e37icAJHxaPUkwot3S
+         vN5dZpHwm6JMrvAh12gHIf9l2EMf621Ptfd99EJUVTfRTxUiZPPKSjIC4KrBR/RRRPGi
+         UKrs6EERREkVcI+QghHhsscAAc81NTuxxq/eZ2v84sDy33RjciRSMvwjSJuNaIOy3s3M
+         Vp6Kf1cCD7++NE6s544d03eNLMHVqRU8QpbVA2WKf+lvKp2tmE7cWp2y6x6JbQm1Vvgd
+         UdJHu7tBTHBaaeZA3lrf12EovuJQXNO3LedDGYohxWiayTAZtjPM7KZPX57SSAN3yAcy
+         m8Mg==
+X-Received: by 10.180.100.38 with SMTP id ev6mr47479wib.20.1397935455594;
+        Sat, 19 Apr 2014 12:24:15 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.180.94.198 with SMTP id de6ls210265wib.21.canary; Sat, 19 Apr
+ 2014 12:24:14 -0700 (PDT)
+X-Received: by 10.180.37.203 with SMTP id a11mr674407wik.0.1397935454859;
+        Sat, 19 Apr 2014 12:24:14 -0700 (PDT)
+Received: from smtprelay01.ispgateway.de (smtprelay01.ispgateway.de. [80.67.31.39])
+        by gmr-mx.google.com with ESMTPS id m49si2989513eeu.0.2014.04.19.12.24.14
+        for <msysgit@googlegroups.com>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Sat, 19 Apr 2014 12:24:14 -0700 (PDT)
+Received-SPF: neutral (google.com: 80.67.31.39 is neither permitted nor denied by best guess record for domain of hvoigt@hvoigt.net) client-ip=80.67.31.39;
+Received: from [80.228.206.6] (helo=book-mint)
+	by smtprelay01.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1Wbas2-0007N5-25; Sat, 19 Apr 2014 21:24:14 +0200
+In-Reply-To: <20140419165832.GA23227@seldon>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+X-Original-Sender: hvoigt@hvoigt.net
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
+ (google.com: 80.67.31.39 is neither permitted nor denied by best guess record
+ for domain of hvoigt@hvoigt.net) smtp.mail=hvoigt@hvoigt.net
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Content-Disposition: inline
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246538>
 
-On 04/17/2014 09:46 PM, Ronnie Sahlberg wrote:
-> Change commit.c to use ref transactions for all ref updates.
+On Sat, Apr 19, 2014 at 08:58:32PM +0400, Marat Radchenko wrote:
+> On Sat, Apr 19, 2014 at 05:24:33PM +0200, Johannes Schindelin wrote:
+> > Marat, please do not add to the confusion. "msysGit" is the name of the
+> > *development environment* for developing Git for Windows.
 > 
-> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
-> ---
->  builtin/commit.c | 22 ++++++++++++----------
->  1 file changed, 12 insertions(+), 10 deletions(-)
+> This confusion comes from the fact that major part of msysGit is packaged
+> with Git for Windows to be used at runtime.
+
+Only the tools that are needed to run git (and some that the
+contributors like) are packaged in Git for Windows. For example there is
+no compiler or similar packaged.
+
+> If you insist on msysGit-is-a-development-environment, you have to admit
+> that msysGit is technically a fork of msys.
+
+Well it is a git repository that conveniently packages all the needed
+tools you need to build "Git for Windows" together. It is a little bit
+quick and dirty but it works. We have nothing against improving this
+situation.
+
+> My approach undoes this fork step and uses upstream runtime environment
+> as-is, be it msys, msys2, Cygwin or even SUA [1]. I could even make it a
+> noop and say "dear user, I don't care how, but please put sh/awk/find/etc
+> on PATH to make Git work, like things normally happen in *nix world".
 > 
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index d9550c5..b8e4389 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -1541,11 +1541,11 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
->  	const char *index_file, *reflog_msg;
->  	char *nl;
->  	unsigned char sha1[20];
-> -	struct ref_lock *ref_lock;
->  	struct commit_list *parents = NULL, **pptr = &parents;
->  	struct stat statbuf;
->  	struct commit *current_head = NULL;
->  	struct commit_extra_header *extra = NULL;
-> +	struct ref_transaction *transaction;
->  
->  	if (argc == 2 && !strcmp(argv[1], "-h"))
->  		usage_with_options(builtin_commit_usage, builtin_commit_options);
-> @@ -1667,12 +1667,6 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
->  	strbuf_release(&author_ident);
->  	free_commit_extra_headers(extra);
->  
-> -	ref_lock = lock_any_ref_for_update("HEAD",
-> -					   !current_head
-> -					   ? NULL
-> -					   : current_head->object.sha1,
-> -					   0, NULL);
-
-The old version, above, contemplates that current_head might be NULL...
-
-> -
->  	nl = strchr(sb.buf, '\n');
->  	if (nl)
->  		strbuf_setlen(&sb, nl + 1 - sb.buf);
-> @@ -1681,14 +1675,22 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
->  	strbuf_insert(&sb, 0, reflog_msg, strlen(reflog_msg));
->  	strbuf_insert(&sb, strlen(reflog_msg), ": ", 2);
->  
-> -	if (!ref_lock) {
-> +	transaction = ref_transaction_begin();
-> +	if (!transaction) {
->  		rollback_index_files();
-> -		die(_("cannot lock HEAD ref"));
-> +		die(_("HEAD: cannot start transaction"));
->  	}
-> -	if (write_ref_sha1(ref_lock, sha1, sb.buf) < 0) {
-> +	if (ref_transaction_update(transaction, "HEAD", sha1,
-> +				   current_head->object.sha1,
-> +				   0, !!current_head)) {
-
-...but here you dereference current_head without checking it first.
-
-It upsets me that the test suite didn't catch this NULL pointer
-dereference.  Either
-
-1. current_head cannot in fact be NULL, in which case the commit message
-should explain that fact and the code should be simplified
-
-or
-
-2. the test suite is incomplete.  If so, it would be great if you would
-add a test that exercises this branch of the code (and catches your
-error), and then fix the error.
-
->  		rollback_index_files();
->  		die(_("cannot update HEAD ref"));
->  	}
-> +	if (ref_transaction_commit(transaction, sb.buf,
-> +				   UPDATE_REFS_QUIET_ON_ERR)) {
-> +		rollback_index_files();
-> +		die(_("cannot commit HEAD ref"));
-> +	}
->  
->  	unlink(git_path("CHERRY_PICK_HEAD"));
->  	unlink(git_path("REVERT_HEAD"));
+> Actually, even if Git was pure C, things like `git filter-branch` would
+> be almost useless without coreutils & friends.
 > 
+> > After all, there is no reason for yet another fork.
+> 
+> If there wasn't, mingwGitDevEnv would not be started.
 
-Michael
+I would not consider mingwGitDevEnv a fork. It is more msysgit next
+generation. But it needs more work to fully replace msysgit.
+
+> I'd say I am doing a 'rebase' instead of 'fork' by using codebase of
+> Git for Windows (upstream Git sources with Windows-specific patches)
+> but replacing msysGit-provided runtime environment with another one.
+
+The downside of doing this approach is that you regularly have to update
+your 'rebase' and fix problems. If you integrate your changes into
+msysgit itself you do not have to do that anymore.
+Well, if it is one of your changes that breaks something, it still would
+be nice if you do so ;-)
+
+> [1]: http://en.wikipedia.org/wiki/Windows_Services_for_UNIX
+
+Cheers Heiko
+
+P.S.: BTW, just in case: Being criticized in open-source is good. Even
+though it might not feel like that. It means people care about the stuff
+you do and think it is important enough it deserves a reply. They just
+want to help you improve it.
 
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
