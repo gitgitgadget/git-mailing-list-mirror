@@ -1,73 +1,50 @@
-From: Marat Radchenko <marat@slonopotamus.org>
-Subject: Re: [ANNOUNCE] WinGit - native x86/x64 Git for Windows
-Date: Sat, 19 Apr 2014 17:35:07 +0400
-Message-ID: <rfujmbew27f1gaa6dbk706li.1397911737867@email.android.com>
+From: "Siegel, Suzan" <SiegelS@gjps.org>
+Subject: (unknown)
+Date: Sat, 19 Apr 2014 14:27:09 +0000
+Message-ID: <35E2F5336321AB4DA17125A0BD4AEF6B1315C9C6@GJEXCHANGE.gj.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: base64
-Cc: git@vger.kernel.org, msysGit Mailinglist <msysgit@googlegroups.com>
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Sat Apr 19 15:36:02 2014
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Sat Apr 19 16:42:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WbVR2-0003RZ-Pz
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Apr 2014 15:36:01 +0200
+	id 1WbWTr-0004QP-C1
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Apr 2014 16:42:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751452AbaDSNfP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Apr 2014 09:35:15 -0400
-Received: from seldon.slonopotamus.org ([94.242.204.247]:47344 "EHLO
-	slonopotamus.org" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
-	with ESMTP id S1751328AbaDSNfO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Apr 2014 09:35:14 -0400
-Received: from [185.19.23.26] (helo=[192.168.0.162])
-	by slonopotamus.org with esmtpsa (TLSv1:RC4-MD5:128)
-	(Exim 4.80.1)
-	(envelope-from <marat@slonopotamus.org>)
-	id 1WbVQC-0005un-SZ; Sat, 19 Apr 2014 17:35:10 +0400
+	id S1751239AbaDSOmz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Apr 2014 10:42:55 -0400
+Received: from mx1.gjps.org ([64.113.185.70]:57404 "EHLO swesa1.gjps.org"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1750983AbaDSOmy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 19 Apr 2014 10:42:54 -0400
+X-Greylist: delayed 942 seconds by postgrey-1.27 at vger.kernel.org; Sat, 19 Apr 2014 10:42:54 EDT
+Received: from swesa1.gjps.org (127.0.0.1) id haa5ms0171s5 for <git@vger.kernel.org>; Sat, 19 Apr 2014 10:27:10 -0400 (envelope-from <prvs=118670d9e7=SiegelS@gjps.org>)
+Received: from email.gjps.org ([10.100.100.31])
+	by swesa1.gjps.org (SonicWALL 7.4.5.1395)
+	with ESMTP id 201404191427100063261; Sat, 19 Apr 2014 10:27:10 -0400
+Received: from GJEXCHANGE.gj.local ([10.91.50.195]) by
+ GJPRODEXCH10VM.svr.gj.local ([10.100.100.31]) with mapi id 14.02.0342.003;
+ Sat, 19 Apr 2014 10:27:10 -0400
+Subject: 
+Thread-Index: Ac9b23J1RAQTGltLTyOC8WebWunqtQ==
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [41.71.186.35]
+X-Mlf-Version: 7.4.5.1395
+X-Mlf-UniqueId: o201404191427100063261
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246514>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246515>
 
-PiBTbyB0aGUgcmVhc29uIGZvciB0aGlzIG5ldyBwYWNrYWdlIGlzIHRoYXQgeW91IG5lZWQgNjRi
-aXQgYmluYXJpZXM/CgpUaGF0J3MgdGhlIG1vc3QgaW1wb3J0YW50IGJpdC4gUGx1cywgd2VpcmQg
-c3NoIHRyYW5zZmVyIHNwZWVkcyBbMV0gY2F1c2VkIGJ5IGFuc2llbnQgb3BlbnNzaCBidW5kbGVk
-IGluIG1zeXNnaXQuCgo+IEkgY2FuIHNlZSB0aGUgbmVlZCBmb3IgYSBwdXJlIFdpbmRvd3Mgc29s
-dXRpb24gKG5vIG1zeXMgdG9vbHMgYXQgbGVhc3QgZm9yIHJ1bnRpbWUpLgoKU2V2ZXJhbCBHaXQg
-c2NyaXB0cyBhcmUgd3JpdHRlbiBpbiBwZXJsLCBtYW55IGluIHNoZWxsIGFuZCBhIGNvdXBsZSBl
-dmVuIGluIHRjbC90ayAob2gsIG15KS4gVW50aWwgdGhpcyBpcyB0cnVlLCBHaXQgcmVxdWlyZXMg
-dW5peC1saWtlIHVzZXJsYW5kIGVudmlyb25tZW50OiBhbGwgdGhvc2Ugc2gsIGF3aywgY29yZXV0
-aWxzLCBmaW5kdXRpbHMgYW5kIG90aGVycy4KCj4gQnV0IHRoaXMgc291bmRzIHRvIG1lIHRoYXQg
-dGhlIG9ubHkgdGhpbmcgeW91IGNoYW5nZWQgaXMgdGhlIGNvbXBpbGVyIGFuZCA2NGJpdD8KVGhh
-dCB3b3VsZCBiZSB0cnVlICppZiogbXN5c2dpdCB3YXMgcmVhbGx5IG1zeXMgKyBtaW5ndy1idWls
-dC1naXQuIAoKQnV0IGluIHByYWN0aWNlLCBtc3lzZ2l0IGlzOgogMSkgb3V0ZGF0ZWQgbXN5cyB0
-aGF0IHdhcyBwYXRjaGVkIGluIG11bHRpcGxlIHdheXMgd2l0aG91dAogIHNlbmRpbmcgcGF0Y2hl
-cyB1cHN0cmVhbQogMikgaGVhdmlseSBwYXRjaGVkIGdpdCwgYWdhaW4gbm90IHVwc3RyZWFtZWQK
-ClRvIGJlIGhvbmVzdCwgbXN5cyBpc24ndCBhIGdyZWF0IHRvb2wuIEFmdGVyIGFsbCwgaXQncyBq
-dXN0IG91dGRhdGVkCmFuZCBoZWF2aWx5IHBhdGNoZWQgY3lnd2luLiBUaGVyZSBleGlzdHMgbXN5
-czIgcHJvamVjdCAobXVjaCBsZXNzIG91dGRhdGVkIGFuZCBtdWNoIGxlc3MgcGF0Y2hlZCBjeWd3
-aW4pLgoKU28sIG1zeXNnaXQgaXMgYW4gKG91dGRhdGVkIHBhdGNoZWQpKjIgY3lnd2luICsgcGF0
-Y2hlZCBnaXQuCgo+IFdoYXQgaXMgdGhlIHJlYXNvbiBvZiB1c2luZyBhIGNsb3NlZCBzb3VyY2Ug
-Y29tcGlsZXI/CgpJdCBoYXBwZW5lZCB0byBiZSBhbHJlYWR5IGluc3RhbGxlZCBvbiBteSBib3gu
-IFN3aXRjaGluZyB0byBhbm90aGVyIG9uZSB3aWxsIHJlcXVpcmUganVzdCBtaW5vciB0d2Vha3Mg
-dG8gbXkgYnVpbGQgc2NyaXB0LiBJIGRvbid0IGhhdmUgYW55IHN0cm9uZyByZWFzb25zIGZvciB1
-c2luZyBNU1ZDLgoKPiBTb3JyeSBpZiBJIGFtIGEgbGl0dGxlIGJpdCBza2VwdGljLCBidXQgSSBh
-bSB3b25kZXJpbmcgd2hldGhlciBpdCBkb2VzIG1ha2Ugc2Vuc2UgZm9yIHlvdSB0byBqb2luIGZv
-cmNlcyB3aXRoIG1zeXNnaXQgaW5zdGVhZCBvZiBjcmVhdGluZyBhIGZvcms/CgoxKSBJdCBtYWtl
-cyBzZW5zZSB0byBwdXJnZSBtc3lzZ2l0IGFuZCBzdGFydCBvdmVyLiBTZWUgbWluZ3dHaXREZXZF
-bnYgWzJdIChieSBtc3lzZ2l0IGRldmVsb3BlcikuCjIpICBJIG9ubHkgdXNlZCBtc3lzIGR1ZSB0
-byBteSB1bmF3YXJlbmVzcyBvZiBtc3lzMiBhdCB0aGUgdGltZSBvZiAgaW5pdGlhbCBXaW5HaXQg
-aGFja2luZy4gRHVlIHRvIG1hc3NpdmUgVW5pY29kZS1yZWxhdGVkIG1zeXMgdHJvdWJsZXMsIGFu
-c2llbnQgcGVybCBhbmQgc3ZuLCBJIHBsYW4gdG8gc3dpdGNoIHRvIG1zeXMyIHNvb24uCgo+IHRo
-ZXJlIGFyZSBubyA2NCBiaXQgYmluYXJpZXMgc2hpcHBlZCB3aXRoIG1zeXNnaXQgaXMgdGhhdCBu
-b2JvZHkgbmVlZGVkIHRoZW0KClRoYXQncyB3cm9uZy4gR29vZ2xlIGZvciAnd2luZG93cyB4NjQg
-Z2l0JyBvciAnbXN5c2dpdCB4NjQnLiBQZW9wbGUgbmVlZCBpdC4gVGhlcmUncyBldmVuIGFuIGlz
-c3VlIFszXSAoc3RhbGxlZCBzZXZlcmFsIHllYXJzIGFnbykgaW4gbXN5c2dpdCB0cmFja2VyLgpB
-ZnRlciBhbGwsIEkgbmVlZGVkIGl0LgoKWzFdIGh0dHBzOi8vZ2l0aHViLmNvbS9tc3lzZ2l0L21z
-eXNnaXQvaXNzdWVzLzMxClsyXTogaHR0cHM6Ly9naXRodWIuY29tL3NzY2h1YmVydGgvbWluZ3dH
-aXREZXZFbnYKWzNdOiBodHRwOi8vY29kZS5nb29nbGUuY29tL3AvbXN5c2dpdC9pc3N1ZXMvZGV0
-YWlsP2lkPTM5Ngo=
+
+
+
+T0 get your entitlement, write me via; siedmond@outlook.com
