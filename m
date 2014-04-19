@@ -1,146 +1,95 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 5/5] transport-helper: fix sync issue on crashes
-Date: Sat, 19 Apr 2014 00:00:43 -0700
-Message-ID: <1397890843-27035-6-git-send-email-gitster@pobox.com>
-References: <1397334812-12215-1-git-send-email-felipe.contreras@gmail.com>
- <1397890843-27035-1-git-send-email-gitster@pobox.com>
-Cc: Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 19 08:59:36 2014
+Subject: Re: [ANNOUNCE] Git v2.0.0-rc0
+Date: Sat, 19 Apr 2014 00:20:34 -0700
+Message-ID: <7vwqellr99.fsf@alter.siamese.dyndns.org>
+References: <xmqqk3ambf9k.fsf@gitster.dls.corp.google.com>
+	<CALKQrgdv3xN78dvFNzR7K7dWMP-brG7r-OoHHMAus4pskmizmw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Git mailing list <git@vger.kernel.org>,
+	Eric Wong <normalperson@yhbt.net>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Sat Apr 19 09:19:21 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WbPFO-0007Nz-NF
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Apr 2014 08:59:35 +0200
+	id 1WbPYX-0007Dq-0r
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Apr 2014 09:19:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751284AbaDSG73 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Apr 2014 02:59:29 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46667 "EHLO
+	id S1751049AbaDSHS6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Apr 2014 03:18:58 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39790 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751191AbaDSG7X (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Apr 2014 02:59:23 -0400
+	id S1750905AbaDSHS5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Apr 2014 03:18:57 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 26F6D6E617;
-	Sat, 19 Apr 2014 02:59:23 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A1B476E872;
+	Sat, 19 Apr 2014 03:18:56 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=QDm9
-	YWJtKweAoarHyx6toFV9srk=; b=c4nTnlytW4+hG43liNVZzxrenatHdsFbKnAt
-	nu9eDMnn/UI79qJWeN+CfuHFeB14GRIm8NNP5vd6dmE45TTbpnLW8QLGtchuXfA+
-	/4i76KPf9NySTw7aFjShLRHFq++Anw9/EytRt9dEYBZXhlg2FykaXvURGt5IQ8qy
-	WtS3dxo=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=y7Wa6OWYS+GjjuCygQVx9J2qncI=; b=xS5NbT
+	LNoR8dNPFxTaNzTPGpjUXBSGi73sS8djvWYnxfFVY161RnE3771At5mEZ3a6I+Z9
+	8evIOexQnZ1DCpNz3hiY9LDBNl+H5YxqtL84xHagEdbINJj0i6SIL0/nlt30Akt2
+	jX6ysyqoG2Yws9aVZ7rAGTdehb9jbunHRD12E=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
-	O3P/AoZWIjtx8IP4E5j9padl36S1Y5OT79U6JuvPPLBdJsyt/tjYbB60Uec3hX3y
-	WpoSIrNyzyAUfYN9d+Ld5/D0U9+D3UMfblgtPVqkFbG6poZ6vGAdu46qzFWx+ixz
-	2/M1F1kGCkAZVWoz0ZR6wNKpGL/pvlOaomBWGGKuvnY=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=diqUPD25yEjGp4DRXEiEldZu7zcE9hcB
+	f14G85cxSyV/Q82cxqT0YB1/qQLOVuEIBPqGAp4s67gu2kzhuB4lBzuCRqllIfx+
+	4vE8cpgkQvk4pJUeBqp673bUeK7vnTi6PnUBR3rEeOMioj0bxp1I3zqcgW+5DBT6
+	oifnrwTZ1s4=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0D45F6E616;
-	Sat, 19 Apr 2014 02:59:23 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 85EF56E870;
+	Sat, 19 Apr 2014 03:18:56 -0400 (EDT)
 Received: from pobox.com (unknown [198.0.213.178])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0EE5B6E615;
-	Sat, 19 Apr 2014 02:59:20 -0400 (EDT)
-X-Mailer: git-send-email 1.9.2-459-g68773ac
-In-Reply-To: <1397890843-27035-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 21FFF6D2-C790-11E3-88D8-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C8E756E86F;
+	Sat, 19 Apr 2014 03:18:54 -0400 (EDT)
+In-Reply-To: <CALKQrgdv3xN78dvFNzR7K7dWMP-brG7r-OoHHMAus4pskmizmw@mail.gmail.com>
+	(Johan Herland's message of "Sat, 19 Apr 2014 03:13:18 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.4 (gnu/linux)
+X-Pobox-Relay-ID: DD9D63E6-C792-11E3-918D-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246507>
 
-From: Felipe Contreras <felipe.contreras@gmail.com>
+Johan Herland <johan@herland.net> writes:
 
-When a remote helper crashes while pushing we should revert back to the
-state before the push, however, it's possible that `git fast-export`
-already finished its job, and therefore has exported the marks already.
+> On Fri, Apr 18, 2014 at 9:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> An early preview release Git v2.0.0-rc0 is now available for
+>> testing at the usual places.
+>
+> This is supposed to have _all_ the v2.0 topics, correct?
+>
+> I'm unable to find the commit that actually _changes_ the default
+> prefix for "git svn" (as announced in Documentation/git-svn.txt and
+> the release notes for v1.8.5 and v1.9.0).
 
-This creates a synchronization problem because from that moment on
-`git fast-{import,export}` will have marks that the remote helper is not
-aware of and all further commands fail (if those marks are referenced).
+Yes, I noticed that the topic has been in the release notes for a
+few cycles but the changes never came to my tree (perhaps review of
+the patch series never concluded?) at the beginning of this cycle,
+so dropped it from the release notes.
 
-The fix is to tell `git fast-export` to export to a temporary file, and
-only after the remote helper has finishes successfully, move to the
-final destination.
+> For reference, it was posted as patch 3/3 back in October:
+> http://thread.gmane.org/gmane.comp.version-control.git/232761/focus=235900
+>
+> Very sorry for not discovering this earlier.
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/t5801-remote-helpers.sh | 20 +++++++++++++++++++-
- transport-helper.c        | 13 +++++++++++--
- 2 files changed, 30 insertions(+), 3 deletions(-)
+Well, things happen X-<.
 
-diff --git a/t/t5801-remote-helpers.sh b/t/t5801-remote-helpers.sh
-index 25fd2e7..aa3e223 100755
---- a/t/t5801-remote-helpers.sh
-+++ b/t/t5801-remote-helpers.sh
-@@ -220,6 +220,20 @@ test_expect_success 'push update refs failure' '
- 	)
- '
- 
-+clean_mark () {
-+	cut -f 2 -d ' ' "$1" |
-+	git cat-file --batch-check |
-+	grep commit |
-+	sort >$(basename "$1")
-+}
-+
-+cmp_marks () {
-+	test_when_finished "rm -rf git.marks testgit.marks" &&
-+	clean_mark ".git/testgit/$1/git.marks" &&
-+	clean_mark ".git/testgit/$1/testgit.marks" &&
-+	test_cmp git.marks testgit.marks
-+}
-+
- test_expect_success 'proper failure checks for fetching' '
- 	(GIT_REMOTE_TESTGIT_FAILURE=1 &&
- 	export GIT_REMOTE_TESTGIT_FAILURE &&
-@@ -232,7 +246,11 @@ test_expect_success 'proper failure checks for fetching' '
- 
- test_expect_success 'proper failure checks for pushing' '
- 	(cd local &&
--	test_must_fail env GIT_REMOTE_TESTGIT_FAILURE=1 git push --all
-+	git checkout -b crash master &&
-+	echo crash >>file &&
-+	git commit -a -m crash &&
-+	test_must_fail env GIT_REMOTE_TESTGIT_FAILURE=1 git push --all &&
-+	cmp_marks origin
- 	)
- '
- 
-diff --git a/transport-helper.c b/transport-helper.c
-index c890db6..b468e4f 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -435,7 +435,7 @@ static int get_exporter(struct transport *transport,
- 	fastexport->argv[argc++] = data->signed_tags ?
- 		"--signed-tags=verbatim" : "--signed-tags=warn-strip";
- 	if (data->export_marks) {
--		strbuf_addf(&tmp, "--export-marks=%s", data->export_marks);
-+		strbuf_addf(&tmp, "--export-marks=%s.tmp", data->export_marks);
- 		fastexport->argv[argc++] = strbuf_detach(&tmp, NULL);
- 	}
- 	if (data->import_marks) {
-@@ -911,7 +911,16 @@ static int push_refs_with_export(struct transport *transport,
- 
- 	if (finish_command(&exporter))
- 		die("Error while running fast-export");
--	return push_update_refs_status(data, remote_refs, flags);
-+	if (push_update_refs_status(data, remote_refs, flags))
-+		return 1;
-+
-+	if (data->export_marks) {
-+		strbuf_addf(&buf, "%s.tmp", data->export_marks);
-+		rename(buf.buf, data->export_marks);
-+		strbuf_release(&buf);
-+	}
-+
-+	return 0;
- }
- 
- static int push_refs(struct transport *transport,
--- 
-1.9.2-459-g68773ac
+I see the other two contained in the merge from Eric at 1668b7d78f81
+(Merge git://git.bogomips.org/git-svn, 2013-10-16).  Is the last one
+still viable?  From my point of view, it would be best if Eric can
+take another look on it and throw me a pull request (and I have to
+remember to resurrect the entry in the release notes).
+
+Alternatively I could revert the "Warn about changing the default"
+for now and defer the topic to v2.1.
+
+Eric, what do you think?  My preference is not to revert but at the
+same time I am hesitant to take a patch that was posted as RFC this
+late in the cycle without input from the area expert, so...
