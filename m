@@ -1,83 +1,97 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v9 0/6] transport-helper: fixes
-Date: Fri, 18 Apr 2014 18:32:49 -0500
-Message-ID: <5351b6219fce_3497cdf30c6e@nysa.notmuch>
-References: <1397333575-11614-1-git-send-email-felipe.contreras@gmail.com>
- <xmqq61mbod8y.fsf@gitster.dls.corp.google.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Refactoring hardcoded SHA-1 constants
+Date: Sat, 19 Apr 2014 02:06:27 +0200
+Message-ID: <5351BE03.2070604@alum.mit.edu>
+References: <20140418221841.GC57656@vauxhall.crustytoothpaste.net> <20140418224049.GA15516@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Richard Hansen <rhansen@bbn.com>,
-	Max Horn <max@quendi.de>
-To: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 19 01:43:16 2014
+Cc: git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>
+X-From: git-owner@vger.kernel.org Sat Apr 19 02:07:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WbIR7-0005FN-ME
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Apr 2014 01:43:14 +0200
+	id 1WbIoI-0003wg-EV
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Apr 2014 02:07:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754187AbaDRXnJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Apr 2014 19:43:09 -0400
-Received: from mail-ob0-f173.google.com ([209.85.214.173]:37694 "EHLO
-	mail-ob0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753922AbaDRXnI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Apr 2014 19:43:08 -0400
-Received: by mail-ob0-f173.google.com with SMTP id wn1so2316939obc.4
-        for <git@vger.kernel.org>; Fri, 18 Apr 2014 16:43:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=1FYG1N+8b1usX5dVGQ40pnP+27OhgVtw8S8K5H9WKc0=;
-        b=IQgSHhKsOTtPF6B5o4P8st+BzAhcXBADHxKe4ahL5hcPl+EJIq2fMU1tWDoj4fR1mB
-         V+wYpNCXVKjayP9CfHFuvgI6dDd9g+oAUMBKmfyJH+W8kcvXE1gRbDlETg+WoLlzPFQ6
-         JRDfzNCzaFZHle1ZgpzB7IswMkCYrAw9e51LMI5CXiHULGKfRMHKSCyTxYTYQY5wIqTk
-         I9Bi/nAerH+ZgZjanB+vmuQTho8C14Fd3Z63GcouyTxN1gZcE0aeQ5tZDvDgZRMqQTBP
-         kR5R646zhI4xT+Kd2FDtuD+xFwxqkee6AezlUj1jyOH3DQuUvZUB9xL3EA6gBRfRMG+V
-         dykw==
-X-Received: by 10.60.102.241 with SMTP id fr17mr98765oeb.64.1397864587613;
-        Fri, 18 Apr 2014 16:43:07 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id l5sm55429380obh.15.2014.04.18.16.43.05
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 18 Apr 2014 16:43:06 -0700 (PDT)
-In-Reply-To: <xmqq61mbod8y.fsf@gitster.dls.corp.google.com>
+	id S1753922AbaDSAGc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Apr 2014 20:06:32 -0400
+Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:51436 "EHLO
+	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752779AbaDSAGa (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Apr 2014 20:06:30 -0400
+X-AuditID: 12074412-f79d46d000002e58-a1-5351be05b5ec
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 32.F7.11864.50EB1535; Fri, 18 Apr 2014 20:06:29 -0400 (EDT)
+Received: from [192.168.69.130] (p4FC9714E.dip0.t-ipconnect.de [79.201.113.78])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s3J06Rrh005533
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Fri, 18 Apr 2014 20:06:28 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.4.0
+In-Reply-To: <20140418224049.GA15516@google.com>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrGKsWRmVeSWpSXmKPExsUixO6iqMu6LzDY4NkKI4uuK91MFm9vLmG0
+	aJv5g8mB2WP5zb9MHjtn3WX3+LxJLoA5itsmKbGkLDgzPU/fLoE7o2XBV6aCKVwVN58cY2lg
+	7OHoYuTkkBAwkbj/aRIThC0mceHeerYuRi4OIYHLjBIzf3cyQzjnmSR+zPzBAlLFK6AtcXve
+	B7AOFgFVie5HtxhBbDYBXYlFPc1AcQ4OUYEgiT9nFSHKBSVOznwC1ioikCLxct5pZpASZgFx
+	if5/LCCmsICRxPwjoiAVQgJpEusX3WEFsTkFDCSu7r4EViIBVN3TGAQSZhbQkXjX94AZwpaX
+	2P52DvMERsFZSHbNQlI2C0nZAkbmVYxyiTmlubq5iZk5xanJusXJiXl5qUW6Znq5mSV6qSml
+	mxgh4Sy0g3H9SblDjAIcjEo8vBsCAoOFWBPLiitzDzFKcjApifIeWgsU4kvKT6nMSCzOiC8q
+	zUktPsQowcGsJMJbtAEox5uSWFmVWpQPk5LmYFES5/25WN1PSCA9sSQ1OzW1ILUIJivDwaEk
+	wZu1B6hRsCg1PbUiLTOnBCHNxMEJMpxLSqQ4NS8ltSixtCQjHhS78cXA6AVJ8QDtnQvSzltc
+	kJgLFIVoPcWoy3GhYUULkxBLXn5eqpQ4LzNIkQBIUUZpHtwKWPJ6xSgO9LEwbwVIFQ8w8cFN
+	egW0hAloyd8zASBLShIRUlINjHs+H2yc7SlpI9S1f5+LrLVI3G79/aszq2ZOYnHdbLvIOHSS
+	W3B71Zzl+3RKF1S8+hpUEG65IT0k+ebSyrzXnnwpdr0zStOaVh/TdNX/8SK+qjLv 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246490>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246491>
 
-Junio C Hamano wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
-> 
-> > These patches add support for remote helpers --force, --dry-run, and reporting
-> > forced update.
-> >
-> > Changes since v8:
-> >
-> > --- a/transport-helper.c
-> > +++ b/transport-helper.c
-> > @@ -734,7 +734,7 @@ static int push_update_ref_status(struct strbuf *buf,
-> >         }
-> >  
-> >         (*ref)->status = status;
-> > -       (*ref)->forced_update = forced;
-> > +       (*ref)->forced_update |= forced;
-> >         (*ref)->remote_status = msg;
-> >         return !(status == REF_STATUS_OK);
-> >  }
-> 
-> Hmph, isn't v8 already in 'master' as of 90e6255a (Merge branch
-> 'fc/transport-helper-fixes', 2014-03-18)?
+> brian m. carlson wrote:
+>> I'd like to introduce a set of preprocessor constants that we'd use
+>> instead of hard-coded 20s and 40s everywhere.
 
-I think I saw gitk report "Branches: remotes/origin/pu", but OK.
+I agree that it would help code clarity to have symbolic constants for
+these numbers.
+
+On 04/19/2014 12:40 AM, Jonathan Nieder wrote:
+> Lukewarm on that.  It's hard to do consistently and unless they're
+> named well it can be harder to know what something like
+> BINARY_OBJECT_NAME_LENGTH means than plain '20' when first reading.
+
+OK, so let's see if we can name them well.  (Though I think if the names
+come into wide use then we'll get familiar with them quickly.)
+
+libgit2 seems to use the name "oid" (for "object ID") where we tend to
+use "sha1" or "name".  That might be a good convention for us to move
+towards.
+
+Their constants are called GIT_OID_RAWSZ (== 20) and GIT_OID_HEXSZ (==
+40).  They don't exactly roll off the tongue, I'll admit.
+
+We wouldn't need a "GIT_" prefix, I think, since our code is not meant
+to be used as a library.
+
+Let the brainstorming (and bikeshedding) begin!
+
+1. GIT_OID_RAWSZ / GIT_OID_HEXSZ
+
+2. OID_RAWSZ / OID_HEXSZ
+
+3. OID_BINARY_LEN / OID_ASCII_LEN
+
+4. BINARY_OID_LEN / ASCII_OID_LEN
+
+Michael
 
 -- 
-Felipe Contreras
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
