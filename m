@@ -1,57 +1,79 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Project idea: github-like diff view
-Date: Sun, 20 Apr 2014 16:58:28 +0700
-Message-ID: <CACsJy8CQxPrqs31nBvr_oPRD3EJ6Hu-Lq=++7nWpxx5BQZYi8Q@mail.gmail.com>
+From: Kevin <ikke@ikke.info>
+Subject: Re: the ".git" folder
+Date: Sun, 20 Apr 2014 14:58:57 +0200
+Message-ID: <CAO54GHCQBDehPsneMW4Q8CTm+OJUhVpq_higzKDows4TgpJFOw@mail.gmail.com>
+References: <7F780F951A13B047BB0CE5F6EA9069C121871366@hou150w8xmbx06.hou150.chevrontexaco.net>
+ <CACsJy8CXADh_wrHeqf47FuBUiF8pq_xboUPnts6mP8iVj0F-Pg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Apr 20 11:59:05 2014
+Content-Transfer-Encoding: 8BIT
+Cc: "Miller, Hugh" <HughMiller@chevron.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 20 14:59:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WboWe-0000A4-F2
-	for gcvg-git-2@plane.gmane.org; Sun, 20 Apr 2014 11:59:04 +0200
+	id 1WbrL8-0003QN-SN
+	for gcvg-git-2@plane.gmane.org; Sun, 20 Apr 2014 14:59:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755196AbaDTJ7A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Apr 2014 05:59:00 -0400
-Received: from mail-qc0-f182.google.com ([209.85.216.182]:56105 "EHLO
-	mail-qc0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755172AbaDTJ67 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Apr 2014 05:58:59 -0400
-Received: by mail-qc0-f182.google.com with SMTP id e16so3060135qcx.41
-        for <git@vger.kernel.org>; Sun, 20 Apr 2014 02:58:58 -0700 (PDT)
+	id S1755383AbaDTM7T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Apr 2014 08:59:19 -0400
+Received: from mail-yk0-f169.google.com ([209.85.160.169]:59692 "EHLO
+	mail-yk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755196AbaDTM7R convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 20 Apr 2014 08:59:17 -0400
+Received: by mail-yk0-f169.google.com with SMTP id 142so2714584ykq.0
+        for <git@vger.kernel.org>; Sun, 20 Apr 2014 05:59:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=g5HKTsaEsfYqXvWJjTEIBjf6wnmA/dEbbHLIVloaHJ8=;
-        b=mnHuOl/Xdw9lHr1qEaoQrZN1K7+tAoB9bNOfXP0GIx/KWVwPVWephVpWiJF79QWWXo
-         +Q1E1DyyBVuJtKoENbHWJrbhQejQBbmBMAxXMf8pS/YOrf392+wie6MbMYWPc6kbvYsV
-         5Y2bLuCAaAgeid2spyy0oBC091k7IaO4PJMdTmGQdYfq7IkUp1S39viZw1R226xDuwhm
-         kB3CM6Ru7XFyWvJsukyM1aVGr/t+UcqNgt/nZR4wCLg1MbLSmQYTBvgfE1VnlH+WKaqM
-         vdjWdMvR+W5yL6nojOFJowXoL3vMYUQP/AhNNjxqI3fUE+D2pzQm4GOaC25cL4L5wFKq
-         TFoQ==
-X-Received: by 10.224.87.132 with SMTP id w4mr2630249qal.89.1397987938443;
- Sun, 20 Apr 2014 02:58:58 -0700 (PDT)
-Received: by 10.96.138.9 with HTTP; Sun, 20 Apr 2014 02:58:28 -0700 (PDT)
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=3Feutq3AWX8jIQ+Sp0boy/XLRfbZ9+EHgiEenpL2Rpc=;
+        b=XJ/O1FdHPFO793kigngOrpiQEyJ9X/BVyl/E5M3s94GdTzNekt3JEQONGy+OhArGOW
+         iWwcngNLbs48kzuqucKKdUiVIrKqz1Lt61ZU9UGw6G4gN3wh03Yp7cOr2ZXisNB3NmNV
+         Z0q6Rj+WjyyQypxttjCZRkBn0j2gNLZnpL6V0sJzZKLr//N2/RREZYeZcp6eigD3B78h
+         d8MaDRBUMw9wi+yq2XC6L3piTloWXFsfspT9U4gBke7KiTetdcn9oOuxheSuA5Ku//3K
+         TH5OODooTbIVH04yVBAZE+tTQOxSjqhqBsNEVjAv3R8Q0lwMbKnEm4L62RXSvufQAulz
+         L7Lw==
+X-Received: by 10.236.197.68 with SMTP id s44mr312513yhn.109.1397998757303;
+ Sun, 20 Apr 2014 05:59:17 -0700 (PDT)
+Received: by 10.170.170.133 with HTTP; Sun, 20 Apr 2014 05:58:57 -0700 (PDT)
+In-Reply-To: <CACsJy8CXADh_wrHeqf47FuBUiF8pq_xboUPnts6mP8iVj0F-Pg@mail.gmail.com>
+X-Google-Sender-Auth: YxYBtBmZ2VUQ2tS7FG-oG_nQHC0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246549>
 
-When you view a commit from github, it shows extra info besides
-standard unified diff format:
+Another way, which wouldn't require environment variables or extra
+parameters for each command is moving the .git directory, and replace
+it with a file called .git, which has the path to the actual .git
+directory.
 
-- the column number of each line (useful for jumping directly to that
-line without manual counting from @@ line)
-- --color-words within unified diff format, using background color to
-show what part of the line has changed. This is only enabled for
-1-line changes.
+Git submodules use this feature too.
 
-These can be implemented and seem useful, especially the --color-words
-item. Once you get familiar with diff.c I suppose you could implement
-both in a week (the first probably takes just a day).
--- 
-Duy
+On Sun, Apr 20, 2014 at 11:49 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Sun, Apr 20, 2014 at 4:13 PM, Miller, Hugh <HughMiller@chevron.com> wrote:
+>> Dear Community,
+>>
+>> Is there any way to use .git (e.g., a different set of "client" commands) that allows the .git folder to be placed in a location away from the actual files being versioned ? For example, can one set environment variables that let the software know where the .git folder is ?
+>
+> Try
+>
+> git --git-dir=<new .git location> --work-tree=<top work tree location>
+> <some command>
+>
+> The reason of two arguments instead of one is because .git is also
+> used to mark top work tree location, which is now lost after you move
+> .git elsewhere. You could also set environment variables GIT_DIR and
+> GIT_WORK_TREE, which have the same effect. "man git" for details.
+> --
+> Duy
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
