@@ -1,64 +1,57 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: the ".git" folder
-Date: Sun, 20 Apr 2014 16:49:44 +0700
-Message-ID: <CACsJy8CXADh_wrHeqf47FuBUiF8pq_xboUPnts6mP8iVj0F-Pg@mail.gmail.com>
-References: <7F780F951A13B047BB0CE5F6EA9069C121871366@hou150w8xmbx06.hou150.chevrontexaco.net>
+Subject: Project idea: github-like diff view
+Date: Sun, 20 Apr 2014 16:58:28 +0700
+Message-ID: <CACsJy8CQxPrqs31nBvr_oPRD3EJ6Hu-Lq=++7nWpxx5BQZYi8Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: "Miller, Hugh" <HughMiller@chevron.com>
-X-From: git-owner@vger.kernel.org Sun Apr 20 11:50:23 2014
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Apr 20 11:59:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WboOE-00073E-As
-	for gcvg-git-2@plane.gmane.org; Sun, 20 Apr 2014 11:50:22 +0200
+	id 1WboWe-0000A4-F2
+	for gcvg-git-2@plane.gmane.org; Sun, 20 Apr 2014 11:59:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755193AbaDTJuR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Apr 2014 05:50:17 -0400
-Received: from mail-qa0-f42.google.com ([209.85.216.42]:56540 "EHLO
-	mail-qa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754793AbaDTJuP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 20 Apr 2014 05:50:15 -0400
-Received: by mail-qa0-f42.google.com with SMTP id k15so2960296qaq.15
-        for <git@vger.kernel.org>; Sun, 20 Apr 2014 02:50:14 -0700 (PDT)
+	id S1755196AbaDTJ7A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Apr 2014 05:59:00 -0400
+Received: from mail-qc0-f182.google.com ([209.85.216.182]:56105 "EHLO
+	mail-qc0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755172AbaDTJ67 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Apr 2014 05:58:59 -0400
+Received: by mail-qc0-f182.google.com with SMTP id e16so3060135qcx.41
+        for <git@vger.kernel.org>; Sun, 20 Apr 2014 02:58:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=4EqCte5Fuemxf+Ep4cNaZA2RuAFvieLjBbulJuqhkCY=;
-        b=IvrpKm9LFw+e6uGl2yF2UhP88DwiiUyxqiyqHyPcMEEke5Y8DMTxZetfSdLHm2BDT3
-         oLU4u96cpoXbmQV0BydpSut7aa2e7pN4J+80Z7QcxiD6ko4JX7FcuYjR6XGaCndr0e+M
-         cHCJzroB7hizsgc9AuEJJdPvoEutUMyJllY9775xZI8YGynoIbrPboaTWvH4AoyUV6ou
-         AwQvWg5oKDkvWxlWuSXZLtpoUlsqS6Unr+gMmbMvwIooBenxlQXV4Ofm4fXr9P2l2NzX
-         YJ6Oq27PRFaJxoZdi1JQl0EH24oLO3BnVhvb0dPL2ZBdtlQWAPKrKlBWwnnqVblRUPXs
-         DbYg==
-X-Received: by 10.140.107.229 with SMTP id h92mr35976909qgf.30.1397987414477;
- Sun, 20 Apr 2014 02:50:14 -0700 (PDT)
-Received: by 10.96.138.9 with HTTP; Sun, 20 Apr 2014 02:49:44 -0700 (PDT)
-In-Reply-To: <7F780F951A13B047BB0CE5F6EA9069C121871366@hou150w8xmbx06.hou150.chevrontexaco.net>
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=g5HKTsaEsfYqXvWJjTEIBjf6wnmA/dEbbHLIVloaHJ8=;
+        b=mnHuOl/Xdw9lHr1qEaoQrZN1K7+tAoB9bNOfXP0GIx/KWVwPVWephVpWiJF79QWWXo
+         +Q1E1DyyBVuJtKoENbHWJrbhQejQBbmBMAxXMf8pS/YOrf392+wie6MbMYWPc6kbvYsV
+         5Y2bLuCAaAgeid2spyy0oBC091k7IaO4PJMdTmGQdYfq7IkUp1S39viZw1R226xDuwhm
+         kB3CM6Ru7XFyWvJsukyM1aVGr/t+UcqNgt/nZR4wCLg1MbLSmQYTBvgfE1VnlH+WKaqM
+         vdjWdMvR+W5yL6nojOFJowXoL3vMYUQP/AhNNjxqI3fUE+D2pzQm4GOaC25cL4L5wFKq
+         TFoQ==
+X-Received: by 10.224.87.132 with SMTP id w4mr2630249qal.89.1397987938443;
+ Sun, 20 Apr 2014 02:58:58 -0700 (PDT)
+Received: by 10.96.138.9 with HTTP; Sun, 20 Apr 2014 02:58:28 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246547>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246548>
 
-On Sun, Apr 20, 2014 at 4:13 PM, Miller, Hugh <HughMiller@chevron.com> wrote:
-> Dear Community,
->
-> Is there any way to use .git (e.g., a different set of "client" commands) that allows the .git folder to be placed in a location away from the actual files being versioned ? For example, can one set environment variables that let the software know where the .git folder is ?
+When you view a commit from github, it shows extra info besides
+standard unified diff format:
 
-Try
+- the column number of each line (useful for jumping directly to that
+line without manual counting from @@ line)
+- --color-words within unified diff format, using background color to
+show what part of the line has changed. This is only enabled for
+1-line changes.
 
-git --git-dir=<new .git location> --work-tree=<top work tree location>
-<some command>
-
-The reason of two arguments instead of one is because .git is also
-used to mark top work tree location, which is now lost after you move
-.git elsewhere. You could also set environment variables GIT_DIR and
-GIT_WORK_TREE, which have the same effect. "man git" for details.
+These can be implemented and seem useful, especially the --color-words
+item. Once you get familiar with diff.c I suppose you could implement
+both in a week (the first probably takes just a day).
 -- 
 Duy
