@@ -1,142 +1,87 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 1/2] bugfix: fix broken time_buf paddings for git-blame
-Date: Sun, 20 Apr 2014 16:28:12 -0400
-Message-ID: <CAPig+cSf8RcUBdeACSLTTNcF7hqCXX-jjxx7RDZt52u3BKJxDA@mail.gmail.com>
-References: <CACsJy8BTBwqFZUU3i3cuv40B6AHw5SRY9DZN2PoKL4XzgEL2eA@mail.gmail.com>
-	<cover.1398010052.git.worldhello.net@gmail.com>
-	<2742234ee9199b26e646f30b6ae20a1c9bfe48f7.1398010052.git.worldhello.net@gmail.com>
+From: Delcypher <delcypher@gmail.com>
+Subject: Re: [PATCH] git-remote-hg : Enable use of, $GIT_DIR/hg/origin/clone/.hg/hgrc
+Date: Sun, 20 Apr 2014 21:36:19 +0100
+Message-ID: <CANNJ_zi=qrhmWjd0_QR5-LLjuf2yM8g88xhiwmwdqansvaYy3A@mail.gmail.com>
+References: <53076DFC.1000602@gmail.com>
+	<53499bb02c140_285f9032ec58@nysa.notmuch>
+	<CANNJ_zjVaymTUmSSFHfSpmcH7H2v62nsHaUoxRfi098zqLi_Ow@mail.gmail.com>
+	<53540df5ad0fb_18fb153d2ec8b@nysa.notmuch>
+	<CANNJ_zhpoRRTL1j8XKahrsqEgKfvFck-+aJ20X1OyAg73gGiqQ@mail.gmail.com>
+	<535425d891e41_6b186d130cc5@nysa.notmuch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
-	Brian Gesiak <modocache@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 20 22:28:18 2014
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 20 22:36:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WbyLa-0008Op-2I
-	for gcvg-git-2@plane.gmane.org; Sun, 20 Apr 2014 22:28:18 +0200
+	id 1WbyTQ-0000cn-FD
+	for gcvg-git-2@plane.gmane.org; Sun, 20 Apr 2014 22:36:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755529AbaDTU2O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Apr 2014 16:28:14 -0400
-Received: from mail-yk0-f175.google.com ([209.85.160.175]:60543 "EHLO
-	mail-yk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755407AbaDTU2N (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Apr 2014 16:28:13 -0400
-Received: by mail-yk0-f175.google.com with SMTP id 131so2821480ykp.20
-        for <git@vger.kernel.org>; Sun, 20 Apr 2014 13:28:12 -0700 (PDT)
+	id S1751126AbaDTUgV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Apr 2014 16:36:21 -0400
+Received: from mail-ve0-f170.google.com ([209.85.128.170]:54524 "EHLO
+	mail-ve0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751084AbaDTUgU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Apr 2014 16:36:20 -0400
+Received: by mail-ve0-f170.google.com with SMTP id pa12so6582976veb.15
+        for <git@vger.kernel.org>; Sun, 20 Apr 2014 13:36:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=ng0F03v+23yb97lfypgF7xz5YLDef7qnVmnX2dtMJxk=;
-        b=oX+qjhlKzFfdVrCPWrlhHK2DbhGSpNU8tXi56tHUkjWawDBBqRxeeh6CwzUmWl38az
-         QSTOLug33KQMGA+IPWMguHk+bbu9KoF61EjBwqjCq6KxyuP08DOZL04mZS0FNASH7csG
-         w97ARel/o26z4fR7WuwRG/q9J0sgUWgOTB9QpKMg/tHkH5XUhXRLzdcky7pbXaYLMVyL
-         URjQSq5xhlo5JTdStITOP6zvLPvqxqo6TfAl6RmrEefZBHdrd6E7pGCMozN6ZJm2wsbw
-         mviIHkstPCASYrqBOxu/mCdOueGjzdjqYKB/JKt2I0vcxzywQZqDK7BvnkNAWcdWwbbH
-         UWDQ==
-X-Received: by 10.236.216.73 with SMTP id f69mr46455442yhp.37.1398025692416;
- Sun, 20 Apr 2014 13:28:12 -0700 (PDT)
-Received: by 10.170.163.66 with HTTP; Sun, 20 Apr 2014 13:28:12 -0700 (PDT)
-In-Reply-To: <2742234ee9199b26e646f30b6ae20a1c9bfe48f7.1398010052.git.worldhello.net@gmail.com>
-X-Google-Sender-Auth: 6PJkaVIeh4IbDB6I3NZY0YL79pI
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=SxDPLSES87lVnbvBWfnOUocdtG9mQQt7CWFZLiVnL5A=;
+        b=g6tr+xHwpTdHFIIOPapFhnvlrX7oc9d9Ihz0y/5w6EY/tw5EIcNZZdp4XyJhE5uw6E
+         49opL+KeEFRsmoZ7xfEZQeUGhx4nobNbZpzoLoSg1nz2FFr0OehGPs8bOm646KMml8F4
+         BOHHZWzL3k1akQC6RYzsRG82SBnag7WfvRgGKAP1uuMax4cEnoDimO1PBhXhqMdEj2GB
+         Qsj3DklIvLWINTykR8A9o1hn/AAh7lvo6emG8ouZibjubsQx1LDck/8DZCZazTij3Wy/
+         DjNs+28F0K/TuNEngUPettR3OXwB+romEuQTjGaTtkeB6eunbyie4lUQ0acWYQGvjDiu
+         ks9w==
+X-Received: by 10.58.38.166 with SMTP id h6mr171449vek.22.1398026179143; Sun,
+ 20 Apr 2014 13:36:19 -0700 (PDT)
+Received: by 10.220.88.70 with HTTP; Sun, 20 Apr 2014 13:36:19 -0700 (PDT)
+In-Reply-To: <535425d891e41_6b186d130cc5@nysa.notmuch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246579>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246580>
 
-On Sun, Apr 20, 2014 at 12:13 PM, Jiang Xin <worldhello.net@gmail.com> wrote:
-> When `git blame` shows date field in a fixed width (as long as
+> Same as me. And which version of git-remote-hg are you using?
 
-s/fixed width/fixed-width/
+I'm using the version that ships with git 1.9.2
 
-s/long/wide/ would read a bit better.
+I've taken a look and it seems I made a mistake, sorry. It seems that
 
-> blame_date_width characters), if time_str shorter than that, add spaces
+[ui]
+quiet = True
 
-s/shorter/is shorter/
-s/add/it adds/
+is being respected when placed in ``.git/hg/origin/clone/.hg/hgrc``
 
-> for padding.  But there are two bugs in the following codes:
->
->         memcpy(time_buf, time_str, time_len);
->         memset(time_buf + time_len, ' ', blame_date_width - time_len);
->
-> 1. The type of blame_date_width is size_t (unsigned int).  If time_len
+with the un patched version of git-remote-hg.
 
-s/(unsigned int)/, which is unsigned/
+But it is still the case that authentication details are being ignored
+when present in  ``.git/hg/origin/clone/.hg/hgrc``
 
->    is greater than blame_ate_width, "blame_date_width - time_len" will
+i.e. something like the following is ignored.
 
-s/_ate/_date/
+[auth]
+cc.prefix = hg.codeplex.com
+cc.username = USERNAME
+# Eurgh fixme this shouldn't live here.
+cc.password = PWD
+cc.schemes = https
 
->    never be a negative number, but a really big positive number, and
->    will cause memory overwrite.
->
->    This bug can be triggered if either l10n message for function
->    show_date_relative() in date.c is longer then 30 charcters, then
+and pushing fails. An easy way of duplicating this is forking a
+project on codeplex (e.g. [1]), cloning that respository, making a
+trivial commit and then trying to push that commit to your fork.
 
-s/then 30/than 30/
-s/charcters/characters/
+When I try this pushing fails because the authentication details are
+being ignored in  ``.git/hg/origin/clone/.hg/hgrc``. Applying my patch
+(or your improved version using repo.ui instead of
+repo._unfilteredrepo.ui) fixes this for me.
 
->    `git blame --date relative` may fail.
->
-> 2. When show blame information with relative time, the UTF-8 characters
->    in time_str will break the alignment of columns after the date field.
->    This is because the time_buf padding with spaces should have a
->    constant display width, not a fixed strlen size.  So we should call
->    utf8_strwidth() instead of strlen() for calibration.
->
-> Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
-> ---
->  builtin/blame.c | 19 ++++++++++++++-----
->  1 file changed, 14 insertions(+), 5 deletions(-)
->
-> diff --git a/builtin/blame.c b/builtin/blame.c
-> index 88cb799..0a0a858 100644
-> --- a/builtin/blame.c
-> +++ b/builtin/blame.c
-> @@ -1556,22 +1556,31 @@ static void assign_blame(struct scoreboard *sb, int opt)
->  static const char *format_time(unsigned long time, const char *tz_str,
->                                int show_raw_time)
->  {
-> -       static char time_buf[128];
-> +       static struct strbuf time_buf = STRBUF_INIT;
->
-> +       strbuf_reset(&time_buf);
->         if (show_raw_time) {
-> -               snprintf(time_buf, sizeof(time_buf), "%lu %s", time, tz_str);
-> +               strbuf_addf(&time_buf, "%lu %s", time, tz_str);
->         }
->         else {
->                 const char *time_str;
-> +               size_t time_width;
->                 int time_len;
->                 int tz;
->                 tz = atoi(tz_str);
->                 time_str = show_date(time, tz, blame_date_mode);
->                 time_len = strlen(time_str);
-> -               memcpy(time_buf, time_str, time_len);
-> -               memset(time_buf + time_len, ' ', blame_date_width - time_len);
-> +               strbuf_add(&time_buf, time_str, time_len);
-> +               /*
-> +                * Add space paddings to time_buf to display a fixed width
-> +                * string, and use time_width for display width calibration.
-> +                */
-> +               for (time_width = utf8_strwidth(time_str);
-> +                    time_width < blame_date_width;
-> +                    time_width++)
-> +                       strbuf_addch(&time_buf, ' ');
->         }
-> -       return time_buf;
-> +       return time_buf.buf;
->  }
->
->  #define OUTPUT_ANNOTATE_COMPAT 001
-> --
-> 2.0.0.rc0.3.g444188f.dirty
+[1] https://boogie.codeplex.com/SourceControl/latest
