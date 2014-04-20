@@ -1,106 +1,97 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: RE: [PATCH 0/5] fc/transport-helper-sync-error-fix rebased
-Date: Sun, 20 Apr 2014 13:36:59 -0500
-Message-ID: <535413cbc7eaa_1f08dd12eca5@nysa.notmuch>
-References: <1397334812-12215-1-git-send-email-felipe.contreras@gmail.com>
- <1397890843-27035-1-git-send-email-gitster@pobox.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 20 20:47:47 2014
+Subject: [PATCH] t5801 (remote-helpers): cleanup environment sets
+Date: Sun, 20 Apr 2014 13:43:37 -0500
+Message-ID: <1398019417-8520-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 20 20:54:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WbwmH-0005M5-Dk
-	for gcvg-git-2@plane.gmane.org; Sun, 20 Apr 2014 20:47:45 +0200
+	id 1WbwsO-00044j-U0
+	for gcvg-git-2@plane.gmane.org; Sun, 20 Apr 2014 20:54:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751903AbaDTSrW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Apr 2014 14:47:22 -0400
-Received: from mail-yh0-f47.google.com ([209.85.213.47]:35574 "EHLO
-	mail-yh0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751236AbaDTSrU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Apr 2014 14:47:20 -0400
-Received: by mail-yh0-f47.google.com with SMTP id 29so2948271yhl.34
-        for <git@vger.kernel.org>; Sun, 20 Apr 2014 11:47:20 -0700 (PDT)
+	id S1755276AbaDTSyA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Apr 2014 14:54:00 -0400
+Received: from mail-yh0-f45.google.com ([209.85.213.45]:41956 "EHLO
+	mail-yh0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751907AbaDTSx7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Apr 2014 14:53:59 -0400
+Received: by mail-yh0-f45.google.com with SMTP id a41so2926043yho.18
+        for <git@vger.kernel.org>; Sun, 20 Apr 2014 11:53:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:message-id:in-reply-to:references:subject:mime-version
-         :content-type:content-transfer-encoding;
-        bh=D9+k0CIMPbCKqYxlfXDLLcluPGR2TYfqs3C6+xa09p8=;
-        b=LKJwQs2qmOuqqSsMutVa8Fyk+zBUayrnY6q+4G7ga1sqLskz8kz/lxt1zGDlpSB/tu
-         lRs+pWlc4KFWebKc9FnsrmpZDdwsou2rXQ9qcHM7+/YWHO4G5cnc0Z8kaDl9nL/rvZgo
-         u+qalKemTOSn0rMbJ6INamLTpGeoJ6e3wOLDqL+xN6cEMFumtWGbdyD1k3UBtPlKjuLo
-         45nYOxkYlhMEm/Z73SdWbF3/aPp/UcVjw8b5GVrgWgfTKBG1Ml9RsAj3hf8hYaY8VIfo
-         lHW0I8E87Vpgd6sQ0Iczz6l7FNU6qtiGF5N/R9Q4zP+ndldzx9Yj+KpbvtOTODiXiZtf
-         nYVg==
-X-Received: by 10.236.119.99 with SMTP id m63mr18763958yhh.65.1398019640017;
-        Sun, 20 Apr 2014 11:47:20 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id;
+        bh=EwS+lY/3IHh65HDIp0+6QMQ7h/m2aAfwmzoaaHgS4Mw=;
+        b=g6hO7CTy26ck0xz7OQXYjab0z08hDI7mkN/mdOvwCTXmnRKv4SwdAmpRAReZXZ2ysd
+         nEhhMsffckfoYgkYrUq4eV3S8x7iUIpzpDVIZvwSDdV2vFcdzSSuSQ4S7ipaJGIn0Mhr
+         2Jo39pu67qZcv5RKX5DYkuf+E5kLriKZfi0DSYDt7YeuA6AVA6uN7Jiivi11UPEY9VRj
+         bNJ6DzMCW+x35OtEE3YODfvLu82OL/QpSyVjUXdBZtainmoCdPu5452YpUReqwZfGKJA
+         nygpB/WB43kc6GJMqiOh8E4Q/nk0ifrpXVJJIRJLa7KD9iSvgMMLgLg6JwEj3jC2Apir
+         rXsw==
+X-Received: by 10.236.123.130 with SMTP id v2mr3838346yhh.85.1398020038314;
+        Sun, 20 Apr 2014 11:53:58 -0700 (PDT)
 Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id m23sm65327591yho.15.2014.04.20.11.47.18
+        by mx.google.com with ESMTPSA id o62sm65341403yha.27.2014.04.20.11.53.56
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 20 Apr 2014 11:47:18 -0700 (PDT)
-In-Reply-To: <1397890843-27035-1-git-send-email-gitster@pobox.com>
+        Sun, 20 Apr 2014 11:53:57 -0700 (PDT)
+X-Mailer: git-send-email 1.9.1+fc3.9.gc73078e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246557>
 
-Junio C Hamano wrote:
-> As I have said in the recent What's cooking reports, the original
-> posted here were based on older codebase and needed to be rebased,
-> but it had some conflicts and I wanted to see the result double
-> checked by the original author before we can merge it to 'next',
-> cooked there and hopefully merged to 'master' before tagging -rc1.
-> 
-> So here is the series that has been queued in 'pu' for the past
-> several days.
-> 
-> Felipe, can you double check it?
+Commit 512477b (tests: use "env" to run commands with temporary env-var
+settings) missed some variables in the remote-helpers test. Also
+standardize these.
 
-These patches don't help much, I did and interdiff with my own fixes and this
-is the result:
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ t/t5801-remote-helpers.sh | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
 diff --git a/t/t5801-remote-helpers.sh b/t/t5801-remote-helpers.sh
-index 284bf3f..aa3e223 100755
+index 25fd2e7..42d1c66 100755
 --- a/t/t5801-remote-helpers.sh
 +++ b/t/t5801-remote-helpers.sh
-@@ -221,13 +221,16 @@ test_expect_success 'push update refs failure' '
+@@ -212,19 +212,17 @@ test_expect_success 'push update refs failure' '
+ 	echo "update fail" >>file &&
+ 	git commit -a -m "update fail" &&
+ 	git rev-parse --verify testgit/origin/heads/update >expect &&
+-	GIT_REMOTE_TESTGIT_PUSH_ERROR="non-fast forward" &&
+-	export GIT_REMOTE_TESTGIT_PUSH_ERROR &&
+-	test_expect_code 1 git push origin update &&
++	test_expect_code 1 env GIT_REMOTE_TESTGIT_FAILURE="non-fast forward" \
++	git push origin update &&
+ 	git rev-parse --verify testgit/origin/heads/update >actual &&
+ 	test_cmp expect actual
+ 	)
  '
  
- clean_mark () {
--       cut -f 2 -d ' ' $1 | git cat-file --batch-check | grep commit | sort > $(basename $1)
-+       cut -f 2 -d ' ' "$1" |
-+       git cat-file --batch-check |
-+       grep commit |
-+       sort >$(basename "$1")
- }
+ test_expect_success 'proper failure checks for fetching' '
+-	(GIT_REMOTE_TESTGIT_FAILURE=1 &&
+-	export GIT_REMOTE_TESTGIT_FAILURE &&
+-	cd local &&
+-	test_must_fail git fetch 2> error &&
++	(cd local &&
++	test_must_fail env GIT_REMOTE_TESTGIT_FAILURE=1 \
++	git fetch 2> error &&
+ 	cat error &&
+ 	grep -q "Error while running fast-import" error
+ 	)
+@@ -232,7 +230,8 @@ test_expect_success 'proper failure checks for fetching' '
  
- cmp_marks () {
-        test_when_finished "rm -rf git.marks testgit.marks" &&
--       clean_mark .git/testgit/$1/git.marks &&
--       clean_mark .git/testgit/$1/testgit.marks &&
-+       clean_mark ".git/testgit/$1/git.marks" &&
-+       clean_mark ".git/testgit/$1/testgit.marks" &&
-        test_cmp git.marks testgit.marks
- }
- 
-@@ -244,7 +247,7 @@ test_expect_success 'proper failure checks for fetching' '
  test_expect_success 'proper failure checks for pushing' '
-        (cd local &&
-        git checkout -b crash master &&
--       echo crash >> file &&
-+       echo crash >>file &&
-        git commit -a -m crash &&
-        test_must_fail env GIT_REMOTE_TESTGIT_FAILURE=1 git push --all &&
-        cmp_marks origin
-
-I don't like it, but it's OK.
-
+ 	(cd local &&
+-	test_must_fail env GIT_REMOTE_TESTGIT_FAILURE=1 git push --all
++	test_must_fail env GIT_REMOTE_TESTGIT_FAILURE=1 \
++	git push --all
+ 	)
+ '
+ 
 -- 
-Felipe Contreras
+1.9.1+fc3.9.gc73078e
