@@ -1,211 +1,98 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH try3] branch: reorganize verbose options
-Date: Sun, 20 Apr 2014 15:58:34 -0500
-Message-ID: <1398027514-19399-1-git-send-email-felipe.contreras@gmail.com>
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>, Jeff King <peff@peff.net>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 20 23:09:02 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/5] fc/transport-helper-sync-error-fix rebased
+Date: Sun, 20 Apr 2014 14:10:55 -0700
+Message-ID: <7voazvlna8.fsf@alter.siamese.dyndns.org>
+References: <1397334812-12215-1-git-send-email-felipe.contreras@gmail.com>
+	<1397890843-27035-1-git-send-email-gitster@pobox.com>
+	<535413cbc7eaa_1f08dd12eca5@nysa.notmuch>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 20 23:09:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wbyyy-0003Tp-3S
-	for gcvg-git-2@plane.gmane.org; Sun, 20 Apr 2014 23:09:00 +0200
+	id 1WbyzP-0003rm-Al
+	for gcvg-git-2@plane.gmane.org; Sun, 20 Apr 2014 23:09:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751123AbaDTVI4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Apr 2014 17:08:56 -0400
-Received: from mail-yh0-f42.google.com ([209.85.213.42]:37663 "EHLO
-	mail-yh0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751082AbaDTVIz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Apr 2014 17:08:55 -0400
-Received: by mail-yh0-f42.google.com with SMTP id v1so1150637yhn.1
-        for <git@vger.kernel.org>; Sun, 20 Apr 2014 14:08:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=jAo5KxT4JWXVSCbpEFyKUYF4B3M3aoRzSbyf5ii10xU=;
-        b=Q4JQOXttrjt3eItTwdWckaBIBykHY6oNuk/5buuWrvJP630pB7hQnWQN3+5lMZF7gl
-         osQOhL6s+sgi+pQYToGcOgifzj+PKNn6cNSh67iaWcqrGlGYDzzPYHGnNJTj8oyVth9F
-         J19l3naj8gdokWtkv9uYHtK8Nz2uTqy8vxyZbNPUxqPC0nPcNZFHtU7yZa8knF4V5/QK
-         0KxcIMGpPGa19n1IuhMBi1Wm7fioIRwjq2boN5hW5I8+S0CWSJKcYD2EXMYia0hhlYRE
-         eiVrDJXWa07HnTW5ZvmGRSyWs7GTC1RX9hJvj0un1RdbVqmVhswjx/rT/qRPWNl0PCfJ
-         ItJA==
-X-Received: by 10.236.177.100 with SMTP id c64mr48239935yhm.30.1398028134550;
-        Sun, 20 Apr 2014 14:08:54 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id c66sm65856104yhk.23.2014.04.20.14.08.52
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 20 Apr 2014 14:08:53 -0700 (PDT)
-X-Mailer: git-send-email 1.9.1+fc3.9.gc73078e
+	id S1751156AbaDTVJY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Apr 2014 17:09:24 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51771 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751082AbaDTVJW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Apr 2014 17:09:22 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0FB657EF74;
+	Sun, 20 Apr 2014 17:09:17 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=u6RzF2ubv4leLIOSEsMbT5NSlqE=; b=H+pnX0
+	7nkFVmIQFscKTRvrumzJpjdpCyP2/+bFCWkO0UCJZ7+EO+W7AOKtLSKwt6KxbOqM
+	l6n8+xQhtHmRWzOOgDMIbPnRN6khKaE5XO1aHafdebJt7+hGbYnKjoNMQVhOCqaY
+	7Bxh6tlwg5s343+gOZuipBrkfn1olp1qmNREk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=cgzruoXMJxv3RUApQUHcwgoHCgT6OYIf
+	1dNwaodl8abWIy5cN5dMfmpOMpYybvZNVhcaYPt6+iGuyuzUyMN4mgfyi79ER4GS
+	rFONAw5fwOGR5HaT+kZd1iGJVRMab/610/+BmIk/nVIAPflSpY2/cBYeZTeytR91
+	GDm9nRzJt9k=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E8D147EF73;
+	Sun, 20 Apr 2014 17:09:16 -0400 (EDT)
+Received: from pobox.com (unknown [198.0.213.178])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D82E17EF71;
+	Sun, 20 Apr 2014 17:09:14 -0400 (EDT)
+In-Reply-To: <535413cbc7eaa_1f08dd12eca5@nysa.notmuch> (Felipe Contreras's
+	message of "Sun, 20 Apr 2014 13:36:59 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.4 (gnu/linux)
+X-Pobox-Relay-ID: 0719228A-C8D0-11E3-AAB7-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246583>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246584>
 
-`git branch -v` before:
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-  fc/branch/nice-verbose 4761939 [master] branch: reorganize verbose options
+> Junio C Hamano wrote:
+>> As I have said in the recent What's cooking reports, the original
+>> posted here were based on older codebase and needed to be rebased,
+>> but it had some conflicts and I wanted to see the result double
+>> checked by the original author before we can merge it to 'next',
+>> cooked there and hopefully merged to 'master' before tagging -rc1.
+>> 
+>> So here is the series that has been queued in 'pu' for the past
+>> several days.
+>> 
+>> Felipe, can you double check it?
+>
+> These patches don't help much,...
 
-`git branch -v` after:
+What do you mean by that, exactly?  As long as your "don't help
+much" is "would not hurt and will help some even for a small subset
+of audience", that would be OK, but I am puzzled.
 
-  fc/branch/nice-verbose 4761939 [ahead 1] branch: reorganize verbose options
+My reading of your responses to bug reports and the cover letter of
+the series has been that these were real fixes to a real problem
+without downsides, and that you consider that they are good changes
+to have in the upcoming release.
 
-Showing the upstream tracking branch is more important than how many commits
-are ahead/behind, after all you need to know ahead/behind compared to _what_.
-So now `git branch -v` shows the upstream, but not the tracking info, and
-`git branch -vv` shows all information (unchanged).
+I am hoping that you did not mean that we shouldn't merge it to the
+'next' and 'master' branches, but if that is what you meant, can we
+hear what the downsides of the series are?
+Are they more churn than they are worth without solving the real
+issue?  Do they regress for some repositories/workflows while
+improving for others?  I didn't get such an impression.
 
-An additional benefit is that `git branch -v` is now much faster:
 
-Before:
+> ..., I did and interdiff with my own fixes and this is the result:
+> ...  I don't like it, but it's OK.
 
- git branch -v  0.01s user 0.01s system 90% cpu 0.014 total
-
-After:
-
- git branch -v  1.67s user 0.03s system 99% cpu 1.698 total
-
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- builtin/branch.c         | 76 +++++++++++++++++++++---------------------------
- t/t6040-tracking-info.sh | 12 ++++----
- 2 files changed, 39 insertions(+), 49 deletions(-)
-
-diff --git a/builtin/branch.c b/builtin/branch.c
-index b4d7716..8013540 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -417,29 +417,35 @@ static int ref_cmp(const void *r1, const void *r2)
- }
- 
- static void fill_tracking_info(struct strbuf *stat, const char *branch_name,
--		int show_upstream_ref)
-+		int show_tracking)
- {
- 	int ours, theirs;
- 	char *ref = NULL;
- 	struct branch *branch = branch_get(branch_name);
- 	struct strbuf fancy = STRBUF_INIT;
- 	int upstream_is_gone = 0;
--	int added_decoration = 1;
- 
--	switch (stat_tracking_info(branch, &ours, &theirs)) {
--	case 0:
--		/* no base */
-+	if (!branch)
- 		return;
--	case -1:
--		/* with "gone" base */
--		upstream_is_gone = 1;
--		break;
--	default:
--		/* with base */
--		break;
-+
-+	if (show_tracking) {
-+		switch (stat_tracking_info(branch, &ours, &theirs)) {
-+		case 0:
-+			/* no base */
-+			return;
-+		case -1:
-+			/* with "gone" base */
-+			upstream_is_gone = 1;
-+			break;
-+		default:
-+			/* with base */
-+			break;
-+		}
-+	} else {
-+		ours = theirs = 0;
- 	}
- 
--	if (show_upstream_ref) {
-+	if (branch->merge && branch->merge[0] && branch->merge[0]->dst) {
- 		ref = shorten_unambiguous_ref(branch->merge[0]->dst, 0);
- 		if (want_color(branch_use_color))
- 			strbuf_addf(&fancy, "%s%s%s",
-@@ -448,39 +454,23 @@ static void fill_tracking_info(struct strbuf *stat, const char *branch_name,
- 		else
- 			strbuf_addstr(&fancy, ref);
- 	}
-+	if (!fancy.len)
-+		return;
- 
--	if (upstream_is_gone) {
--		if (show_upstream_ref)
--			strbuf_addf(stat, _("[%s: gone]"), fancy.buf);
--		else
--			added_decoration = 0;
--	} else if (!ours && !theirs) {
--		if (show_upstream_ref)
--			strbuf_addf(stat, _("[%s]"), fancy.buf);
--		else
--			added_decoration = 0;
--	} else if (!ours) {
--		if (show_upstream_ref)
--			strbuf_addf(stat, _("[%s: behind %d]"), fancy.buf, theirs);
--		else
--			strbuf_addf(stat, _("[behind %d]"), theirs);
-+	if (upstream_is_gone)
-+		strbuf_addf(stat, _("[%s: gone]"), fancy.buf);
-+	else if (!ours && !theirs)
-+		strbuf_addf(stat, _("[%s]"), fancy.buf);
-+	else if (!ours)
-+		strbuf_addf(stat, _("[%s: behind %d]"), fancy.buf, theirs);
-+	else if (!theirs)
-+		strbuf_addf(stat, _("[%s: ahead %d]"), fancy.buf, ours);
-+	else
-+		strbuf_addf(stat, _("[%s: ahead %d, behind %d]"),
-+			    fancy.buf, ours, theirs);
- 
--	} else if (!theirs) {
--		if (show_upstream_ref)
--			strbuf_addf(stat, _("[%s: ahead %d]"), fancy.buf, ours);
--		else
--			strbuf_addf(stat, _("[ahead %d]"), ours);
--	} else {
--		if (show_upstream_ref)
--			strbuf_addf(stat, _("[%s: ahead %d, behind %d]"),
--				    fancy.buf, ours, theirs);
--		else
--			strbuf_addf(stat, _("[ahead %d, behind %d]"),
--				    ours, theirs);
--	}
- 	strbuf_release(&fancy);
--	if (added_decoration)
--		strbuf_addch(stat, ' ');
-+	strbuf_addch(stat, ' ');
- 	free(ref);
- }
- 
-diff --git a/t/t6040-tracking-info.sh b/t/t6040-tracking-info.sh
-index 7ac8fd0..af26db5 100755
---- a/t/t6040-tracking-info.sh
-+++ b/t/t6040-tracking-info.sh
-@@ -41,12 +41,12 @@ test_expect_success setup '
- 
- script='s/^..\(b.\) *[0-9a-f]* \(.*\)$/\1 \2/p'
- cat >expect <<\EOF
--b1 [ahead 1, behind 1] d
--b2 [ahead 1, behind 1] d
--b3 [behind 1] b
--b4 [ahead 2] f
--b5 g
--b6 c
-+b1 [origin/master] d
-+b2 [origin/master] d
-+b3 [origin/master] b
-+b4 [origin/master] f
-+b5 [brokenbase] g
-+b6 [origin/master] c
- EOF
- 
- test_expect_success 'branch -v' '
--- 
-1.9.1+fc3.9.gc73078e
+Correct.  Following the coding style of the project is not the
+matter for your liking or not liking.  It is part of being on the
+same codebase with other participant of this project.
