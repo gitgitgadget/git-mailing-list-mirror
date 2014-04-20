@@ -1,7 +1,7 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v4 6/8] sha1_name: cleanup interpret_branch_name()
-Date: Sun, 20 Apr 2014 14:45:04 -0500
-Message-ID: <1398023106-25958-7-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v4 8/8] sha1_name: add support for @{publish} marks
+Date: Sun, 20 Apr 2014 14:45:06 -0500
+Message-ID: <1398023106-25958-9-git-send-email-felipe.contreras@gmail.com>
 References: <1398023106-25958-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Matthieu Moy <matthieu.moy@imag.fr>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
@@ -9,103 +9,213 @@ Cc: Matthieu Moy <matthieu.moy@imag.fr>,
 	John Szakmeister <john@szakmeister.net>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 20 21:56:21 2014
+X-From: git-owner@vger.kernel.org Sun Apr 20 21:56:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wbxqe-0006hB-NG
-	for gcvg-git-2@plane.gmane.org; Sun, 20 Apr 2014 21:56:21 +0200
+	id 1Wbxqf-0006hB-PZ
+	for gcvg-git-2@plane.gmane.org; Sun, 20 Apr 2014 21:56:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755545AbaDTT4G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Apr 2014 15:56:06 -0400
-Received: from mail-yh0-f54.google.com ([209.85.213.54]:55156 "EHLO
-	mail-yh0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755512AbaDTTzo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Apr 2014 15:55:44 -0400
-Received: by mail-yh0-f54.google.com with SMTP id f73so2957797yha.13
-        for <git@vger.kernel.org>; Sun, 20 Apr 2014 12:55:44 -0700 (PDT)
+	id S1755553AbaDTT4I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Apr 2014 15:56:08 -0400
+Received: from mail-yk0-f180.google.com ([209.85.160.180]:63680 "EHLO
+	mail-yk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755533AbaDTTzu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Apr 2014 15:55:50 -0400
+X-Greylist: delayed 5604 seconds by postgrey-1.27 at vger.kernel.org; Sun, 20 Apr 2014 15:55:50 EDT
+Received: by mail-yk0-f180.google.com with SMTP id 19so2852328ykq.11
+        for <git@vger.kernel.org>; Sun, 20 Apr 2014 12:55:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=PY8lMq35kx0zXfCpffFlh+Aq6Kg5yK2e/Zkidgo3BPo=;
-        b=JkyWwpJGC46LmjiUsua5OBfVVC1qcZ/ML9ufJyWbkGy0BeZOuihJKXufAy5A7rt9sC
-         G/BcsjZ2MIBxscaZOzibfhtQMpT0nBMu3euEw3QmxDalEEiVK5/zbAZSYx1YRIKq5XCE
-         6c1qhaRKyeoVaWljt3XNGuxj2uzmtLdlPaBj2+DFCepLgW/q3TD0naUZV28QGTzHqKrp
-         li58zp7+x3XKxMAFk3O0MCpWwJdGezuHxKR6K7ButzQY4/CLKxl3tt9i9diQz1ht9OjV
-         GOWvOVEX4WH75CHb0Wz7HRhuZ5dqRU4chY1M6CfFC82c//SjrEKUItdDmb+cOz692O//
-         lTzw==
-X-Received: by 10.236.63.103 with SMTP id z67mr47301506yhc.2.1398023744285;
-        Sun, 20 Apr 2014 12:55:44 -0700 (PDT)
+        bh=XFHh7l71k656EZLDWi/xyIaEZpwTNM31s/bfiC70vis=;
+        b=W7zEW011i89L6gN5H0VLFwq8z9Ok4zngsxXvruW08oc2ycenvPu43CMEGvLGOASWYh
+         TnxLn0egwfQBzzT68j/eWdCJa95v6XWSpvQ3sOcI/9UPobEuT1Rup9cm/PYOZR3JVWd4
+         bAMTShiULlbNDVyyV/CwOyJL/3jTdtUzk2j6xUgx4b5VKEiKYwBGkJ6bRtislu6c1hZS
+         eTIKENCy0zDMMbyKzACPre8gMXVVE71z3jyw9AW106bV+f70g5Nwb7h+r9ItiDRee3nS
+         Le4S/Bikc0zNYVJB6rpOFL1OAipGimXCzIHbXFYF1Kw7cwPZMh+zGWFvEvAFK6sE3l8L
+         KdaQ==
+X-Received: by 10.236.128.180 with SMTP id f40mr12832216yhi.71.1398023750240;
+        Sun, 20 Apr 2014 12:55:50 -0700 (PDT)
 Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id e70sm65588210yhk.9.2014.04.20.12.55.42
+        by mx.google.com with ESMTPSA id g65sm65576985yhm.28.2014.04.20.12.55.48
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 20 Apr 2014 12:55:43 -0700 (PDT)
+        Sun, 20 Apr 2014 12:55:49 -0700 (PDT)
 X-Mailer: git-send-email 1.9.1+fc3.9.gc73078e
 In-Reply-To: <1398023106-25958-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246573>
-
-The 'upstream' variable doesn't hold an "upstream", but a branch, so
-make it clearer.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246574>
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- sha1_name.c | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ Documentation/revisions.txt |  4 ++++
+ sha1_name.c                 | 49 ++++++++++++++++++++++++++++-----------------
+ t/t1508-at-combinations.sh  |  5 +++++
+ 3 files changed, 40 insertions(+), 18 deletions(-)
 
+diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
+index 5a286d0..fd01cb4 100644
+--- a/Documentation/revisions.txt
++++ b/Documentation/revisions.txt
+@@ -96,6 +96,10 @@ some output processing may assume ref names in UTF-8.
+   refers to the branch that the branch specified by branchname is set to build on
+   top of.  A missing branchname defaults to the current one.
+ 
++'<branchname>@\{publish\}', e.g. 'master@\{publish\}', '@\{p\}'::
++  The suffix '@\{publish\}' to a branchname refers to the remote branch to
++  push to. A missing branchname defaults to the current one.
++
+ '<rev>{caret}', e.g. 'HEAD{caret}, v1.5.1{caret}0'::
+   A suffix '{caret}' to a revision parameter means the first parent of
+   that commit object.  '{caret}<n>' means the <n>th parent (i.e.
 diff --git a/sha1_name.c b/sha1_name.c
-index 6fca869..906f09d 100644
+index aa3f3e0..a36852d 100644
 --- a/sha1_name.c
 +++ b/sha1_name.c
-@@ -1057,31 +1057,31 @@ static void set_shortened_ref(struct strbuf *buf, const char *ref)
+@@ -415,9 +415,9 @@ static int ambiguous_path(const char *path, int len)
+ 	return slash;
+ }
+ 
+-static inline int upstream_mark(const char *string, int len)
++static inline int tracking_mark(const char *string, int len)
+ {
+-	const char *suffix[] = { "upstream", "u" };
++	const char *suffix[] = { "upstream", "u", "publish", "p" };
+ 	int i;
+ 
+ 	for (i = 0; i < ARRAY_SIZE(suffix); i++) {
+@@ -475,7 +475,7 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
+ 					nth_prior = 1;
+ 					continue;
+ 				}
+-				if (!upstream_mark(str + at + 2, len - at - 3)) {
++				if (!tracking_mark(str + at + 2, len - at - 3)) {
+ 					reflog_len = (len-1) - (at+2);
+ 					len = at;
+ 				}
+@@ -1057,10 +1057,11 @@ static void set_shortened_ref(struct strbuf *buf, const char *ref)
  	free(s);
  }
  
--static const char *get_upstream_branch(const char *branch_buf, int len)
-+static const char *get_upstream_branch(const char *name_buf, int len)
+-static const char *get_upstream_branch(const char *name_buf, int len)
++static const char *get_tracking_branch(const char *name_buf, int len, char type)
  {
--	char *branch = xstrndup(branch_buf, len);
--	struct branch *upstream = branch_get(*branch ? branch : NULL);
-+	char *name = xstrndup(name_buf, len);
-+	struct branch *branch = branch_get(*name ? name : NULL);
+ 	char *name = xstrndup(name_buf, len);
+ 	struct branch *branch = branch_get(*name ? name : NULL);
++	char *tracking = NULL;
  
  	/*
  	 * Upstream can be NULL only if branch refers to HEAD and HEAD
- 	 * points to something different than a branch.
+@@ -1068,23 +1069,35 @@ static const char *get_upstream_branch(const char *name_buf, int len)
  	 */
--	if (!upstream)
-+	if (!branch)
+ 	if (!branch)
  		die(_("HEAD does not point to a branch"));
--	if (!upstream->merge || !upstream->merge[0]->dst) {
--		if (!ref_exists(upstream->refname))
--			die(_("No such branch: '%s'"), branch);
--		if (!upstream->merge) {
-+	if (!branch->merge || !branch->merge[0]->dst) {
-+		if (!ref_exists(branch->refname))
-+			die(_("No such branch: '%s'"), name);
-+		if (!branch->merge) {
- 			die(_("No upstream configured for branch '%s'"),
--				upstream->name);
-+				branch->name);
+-	if (!branch->merge || !branch->merge[0]->dst) {
+-		if (!ref_exists(branch->refname))
+-			die(_("No such branch: '%s'"), name);
+-		if (!branch->merge) {
+-			die(_("No upstream configured for branch '%s'"),
+-				branch->name);
++	switch (type) {
++	case 'u':
++		if (!branch->merge || !branch->merge[0]->dst) {
++			if (!ref_exists(branch->refname))
++				die(_("No such branch: '%s'"), name);
++			if (!branch->merge) {
++				die(_("No upstream configured for branch '%s'"),
++					branch->name);
++			}
++			die(
++				_("Upstream branch '%s' not stored as a remote-tracking branch"),
++				branch->merge[0]->src);
++		}
++		tracking = branch->merge[0]->dst;
++		break;
++	case 'p':
++		if (!branch->push.dst) {
++			die(_("No publish configured for branch '%s'"),
++					branch->name);
  		}
- 		die(
- 			_("Upstream branch '%s' not stored as a remote-tracking branch"),
--			upstream->merge[0]->src);
-+			branch->merge[0]->src);
+-		die(
+-			_("Upstream branch '%s' not stored as a remote-tracking branch"),
+-			branch->merge[0]->src);
++		tracking = branch->push.dst;
++		break;
  	}
--	free(branch);
-+	free(name);
+ 	free(name);
  
--	return upstream->merge[0]->dst;
-+	return branch->merge[0]->dst;
+-	return branch->merge[0]->dst;
++	return tracking;
  }
  
- static int interpret_upstream_mark(const char *name, int namelen,
+-static int interpret_upstream_mark(const char *name, int namelen,
++static int interpret_tracking_mark(const char *name, int namelen,
+ 				   int at, struct strbuf *buf)
+ {
+ 	int len;
+@@ -1092,14 +1105,14 @@ static int interpret_upstream_mark(const char *name, int namelen,
+ 	if (name[at + 1] != '{' || name[namelen - 1] != '}')
+ 		return -1;
+ 
+-	len = upstream_mark(name + at + 2, namelen - at - 3);
++	len = tracking_mark(name + at + 2, namelen - at - 3);
+ 	if (!len)
+ 		return -1;
+ 
+ 	if (memchr(name, ':', at))
+ 		return -1;
+ 
+-	set_shortened_ref(buf, get_upstream_branch(name, at));
++	set_shortened_ref(buf, get_tracking_branch(name, at, name[at + 2]));
+ 	return len + at + 3;
+ }
+ 
+@@ -1150,7 +1163,7 @@ int interpret_branch_name(const char *name, int namelen, struct strbuf *buf)
+ 		if (len > 0)
+ 			return reinterpret(name, namelen, len, buf);
+ 
+-		len = interpret_upstream_mark(name, namelen, at - name, buf);
++		len = interpret_tracking_mark(name, namelen, at - name, buf);
+ 		if (len > 0)
+ 			return len;
+ 	}
+diff --git a/t/t1508-at-combinations.sh b/t/t1508-at-combinations.sh
+index 078e119..f67aab3 100755
+--- a/t/t1508-at-combinations.sh
++++ b/t/t1508-at-combinations.sh
+@@ -32,6 +32,7 @@ fail() {
+ test_expect_success 'setup' '
+ 	test_commit master-one &&
+ 	test_commit master-two &&
++	git checkout -b publish-branch &&
+ 	git checkout -b upstream-branch &&
+ 	test_commit upstream-one &&
+ 	test_commit upstream-two &&
+@@ -46,6 +47,7 @@ test_expect_success 'setup' '
+ 	test_commit new-two &&
+ 	git branch -u master old-branch &&
+ 	git branch -u upstream-branch new-branch
++	git branch -p publish-branch new-branch
+ '
+ 
+ check HEAD ref refs/heads/new-branch
+@@ -61,8 +63,11 @@ check "HEAD@{u}" ref refs/heads/upstream-branch
+ check "@{u}@{1}" commit upstream-one
+ check "@{-1}@{u}" ref refs/heads/master
+ check "@{-1}@{u}@{1}" commit master-one
++check "@{p}" ref refs/heads/publish-branch
++check "HEAD@{p}" ref refs/heads/publish-branch
+ check "@" commit new-two
+ check "@@{u}" ref refs/heads/upstream-branch
++check "@@{p}" ref refs/heads/publish-branch
+ check "@@/at-test" ref refs/heads/@@/at-test
+ check "@/at-test" ref refs/heads/@/at-test
+ check "@at-test" ref refs/heads/@at-test
 -- 
 1.9.1+fc3.9.gc73078e
