@@ -1,75 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 11/11] walker.c: use ref transaction for ref updates
-Date: Mon, 21 Apr 2014 14:26:24 -0700
-Message-ID: <xmqqioq28jcv.fsf@gitster.dls.corp.google.com>
-References: <1397763987-4453-1-git-send-email-sahlberg@google.com>
-	<1397763987-4453-12-git-send-email-sahlberg@google.com>
-	<5352D31A.6000107@alum.mit.edu>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [RTC/PATCH] Add 'update-branch' hook
+Date: Mon, 21 Apr 2014 16:17:26 -0500
+Message-ID: <53558ae6f1282_604be1f30cf3@nysa.notmuch>
+References: <1398047016-21643-1-git-send-email-felipe.contreras@gmail.com>
+ <5355793A.5020000@gmail.com>
+ <53558476703cb_5c94d452ec4e@nysa.notmuch>
+ <53558A54.4060801@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ronnie Sahlberg <sahlberg@google.com>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Apr 21 23:26:43 2014
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+To: Ilya Bobyr <ilya.bobyr@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 21 23:28:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WcLjf-0003WR-2X
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Apr 2014 23:26:43 +0200
+	id 1WcLkw-0004og-By
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Apr 2014 23:28:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754609AbaDUV0e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Apr 2014 17:26:34 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58352 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754434AbaDUV03 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Apr 2014 17:26:29 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BC7FC7F3A6;
-	Mon, 21 Apr 2014 17:26:28 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1byjp9k5QdCScXIthYPgjBDEcXU=; b=hWBB2d
-	052pKrlweyujbDmh2JFAzQ40Cd86Dl/ezEfw7qWo1vs6hL3vQ+mGUlEoX9Sbv5LT
-	5spS2/TGvDJDCFbjG/0fS7KRmBuF3tpJJl/hDNhY+S7EttQdRQCQwCwig3TC6SVK
-	gjUmDjuoDvJ+NceDsUGOXnAvg/zOLrk9N23ik=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=l311RqZbicx07jWZ71ABjrDf/cZ9ea+v
-	hpmAsmuw8YTAsoE82nV6Og3mW3AlGXGXfh/9XzBC5nASsVfHQ2Zfeshylxtle2jz
-	e0VRtSKf0i6UNPfb5ak2O3K5hwJhQn8qYw3ueS3auXWGbONGCej4O4y4jJtkSIJi
-	AndW563yqN4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A52F37F3A5;
-	Mon, 21 Apr 2014 17:26:28 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 010147F3A2;
-	Mon, 21 Apr 2014 17:26:25 -0400 (EDT)
-In-Reply-To: <5352D31A.6000107@alum.mit.edu> (Michael Haggerty's message of
-	"Sat, 19 Apr 2014 21:48:42 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 981F477A-C99B-11E3-82F2-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754820AbaDUV1w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Apr 2014 17:27:52 -0400
+Received: from mail-yk0-f171.google.com ([209.85.160.171]:47756 "EHLO
+	mail-yk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754814AbaDUV1t (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Apr 2014 17:27:49 -0400
+Received: by mail-yk0-f171.google.com with SMTP id q9so3891137ykb.30
+        for <git@vger.kernel.org>; Mon, 21 Apr 2014 14:27:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:message-id:in-reply-to:references:subject:mime-version
+         :content-type:content-transfer-encoding;
+        bh=SSeLNQeLMAJ+pVyBfaeAqE+GU1CUDbBqoOY9eqDRwoA=;
+        b=IMDkLQ8QNb6IrBJq7azF8crDWSIQ+uHPS4sbWwadwo6fbDRjYHo9dCy41Xh+dE6aHQ
+         hnDHka1dnEQqOuYwJn1Tsgx2p3D6cSiMrH00XV+wYeqOyRX/HM19FiGzKEp0M9rXHNBK
+         DN1mut4tRjzpxdML9NAz/wrxG6F+q0Af1xCBKx6bCrOvCD68LuRLlCJU62LJQL4WPrmo
+         jC6j+6AUeYZeJdjAmC8UXC7c+QOMqcQmpR92NR11m39huSwtLjLtf7KPtc1MmUgeY6M0
+         nugS1ocfCNZsEQ/IpYuAonv5P+fhQ5MdGXle1hCh7dMpkl5T48zr+c9PliIyNoth00gG
+         3eDA==
+X-Received: by 10.236.100.177 with SMTP id z37mr5079270yhf.123.1398115668853;
+        Mon, 21 Apr 2014 14:27:48 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id j46sm73702549yhc.14.2014.04.21.14.27.47
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 21 Apr 2014 14:27:47 -0700 (PDT)
+In-Reply-To: <53558A54.4060801@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246646>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246647>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+Ilya Bobyr wrote:
 
-> On 04/17/2014 09:46 PM, Ronnie Sahlberg wrote:
->> Switch to using ref transactions in walker_fetch(). As part of the refactoring
->> to use ref transactions we also fix a potential memory leak where in the
->> original code if write_ref_sha1() would fail we would end up returning from
->> the function without free()ing the msg string.
-> ...
-> Aside from my other comments, patches 01-10 in the series looked fine.
-> Thanks!
+> Also, most have names that start with either "pre-" or "post-".
+> It seems reasonable for both "pre-update-branch" and
+> "post-update-branch" to exist.
 
-Thanks, both.
+I don't see what would be the point in that.
 
-When this is queued on 'pu', it appears that t5550 breaks.  I had to
-futz with conflicts with the lockfile topic, so a botched conflict
-resolution might be a cause for the breakage, though.
+> This one would be "pre-update-branch", I guess.
+> 
+> I was also wondering about "git reset".  It could also change the branch
+> position, right?
+
+That's right, maybe that command should call the hook as well.
+
+-- 
+Felipe Contreras
