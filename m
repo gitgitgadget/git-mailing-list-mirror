@@ -1,156 +1,119 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH 07/11] commit.c: use ref transactions for updates
-Date: Mon, 21 Apr 2014 11:45:06 -0700
-Message-ID: <CAL=YDW=5Xf4rq11uxA67zbrK0gGPFhs24SL0NCnny3UObtZAfw@mail.gmail.com>
-References: <1397763987-4453-1-git-send-email-sahlberg@google.com>
-	<1397763987-4453-8-git-send-email-sahlberg@google.com>
-	<5352CD14.4060808@alum.mit.edu>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Re: Re: [ANNOUNCE] WinGit - native x86/x64 Git for Windows
+Date: Mon, 21 Apr 2014 20:56:10 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.1404212053420.14982@s15462909.onlinehome-server.info>
+References: <rfujmbew27f1gaa6dbk706li.1397911737867@email.android.com> <20140419184210.GB3617@book-mint> <alpine.DEB.1.00.1404210003540.14982@s15462909.onlinehome-server.info> <53556579.3050709@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Apr 21 20:45:15 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Cc: Heiko Voigt <hvoigt@hvoigt.net>, Marat Radchenko <marat@slonopotamus.org>, 
+    git@vger.kernel.org, msysGit Mailinglist <msysgit@googlegroups.com>
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: msysgit+bncBCZPH74Q5YNRBTWT2WNAKGQE7SEKP2I@googlegroups.com Mon Apr 21 20:56:15 2014
+Return-path: <msysgit+bncBCZPH74Q5YNRBTWT2WNAKGQE7SEKP2I@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-bk0-f56.google.com ([209.85.214.56])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WcJDO-0002aw-1r
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Apr 2014 20:45:14 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753471AbaDUSpJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Apr 2014 14:45:09 -0400
-Received: from mail-vc0-f175.google.com ([209.85.220.175]:54000 "EHLO
-	mail-vc0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753327AbaDUSpH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Apr 2014 14:45:07 -0400
-Received: by mail-vc0-f175.google.com with SMTP id lh14so1381578vcb.20
-        for <git@vger.kernel.org>; Mon, 21 Apr 2014 11:45:06 -0700 (PDT)
+	(envelope-from <msysgit+bncBCZPH74Q5YNRBTWT2WNAKGQE7SEKP2I@googlegroups.com>)
+	id 1WcJO3-0005lo-4j
+	for gcvm-msysgit@m.gmane.org; Mon, 21 Apr 2014 20:56:15 +0200
+Received: by mail-bk0-f56.google.com with SMTP id mx12sf358834bkb.1
+        for <gcvm-msysgit@m.gmane.org>; Mon, 21 Apr 2014 11:56:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=72ObvUEhoGoWb4HtN5IGBaeC7yBxYSydKQGhYovj+w4=;
-        b=nXNlkDF1JCOnGpsx2/wwt/4G+25DPQQfLe42UK1Rkt+RbMwM2kpnPxAzdcr2u4SD56
-         SRRoF5+wODG7uZSlDPatEuYaEEOKXp/3WavuoZXskt9r//F4p10EWMHpev+UttnBfHvw
-         yRtAtJoE5Bq9Qyv3+A4NLeuDPuJXniQ5BD+RyxWkr2ZkTcTVDg++7P2dlkQTIKV4RHiF
-         qQIXctTAeaQDpDYgIkt3IrylvjQ0ApUJXh7tKdSEkUU0BfBiv87yQmDFGDUgLHHo8hZZ
-         V+2j3UsvpX4jg17GPTCKo/PT9rxUD1Rj5RSHfOPnH/drLB4kgEE9tasSNLRAg8nux0QY
-         uwfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=72ObvUEhoGoWb4HtN5IGBaeC7yBxYSydKQGhYovj+w4=;
-        b=KzOhQOKDFX+bEy37mtom6p41nEU1j5Mc2XjHiFHBLPfNCQn/EqE7NyMa87hW5uT0H7
-         9dKCQnl4m+LDL+B7oW93jDVX7Rc+Pfry3oHryrziWaT/RK6dkPye6raep/c0RH0IoGvR
-         FLP/NyBlb9vGsd9gljOBvYp4c/MEju3SKOK+b4IE40WYZrhyco1rFNaIx7qk1nHoBZse
-         ojT0krGYWzh/VdaS2XITs9+7MiI/jSF0wRdJtP42vVkCsi21seYnY3E03bKWfW4yhnz+
-         f6W524jY/kidGr1gpKanAy3wFssP2r+OhjocnbQrzaeXdlsM4kyrYgbXN1AHsG+jKuqt
-         3PJg==
-X-Gm-Message-State: ALoCoQkGxGSVook2DGITTF0NeZJc8j+3X/P5e6bf5Kc8J3CD9CcMNUvJrYuTvGnTjPxI/zlUxAPVNAft8HterhVkUCsICdZpAXDxEgFu/9aXIYFN6QLXaMI3NAjONQPTdSJHFvZRQUVW0jP2OCXOY7QeYppFnktNEOpcSeztwIV5mviwsm7mC7EMrikSv95yS2G5T54Bk95X
-X-Received: by 10.52.116.101 with SMTP id jv5mr12692322vdb.11.1398105906201;
- Mon, 21 Apr 2014 11:45:06 -0700 (PDT)
-Received: by 10.52.141.13 with HTTP; Mon, 21 Apr 2014 11:45:06 -0700 (PDT)
-In-Reply-To: <5352CD14.4060808@alum.mit.edu>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246618>
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:subject:in-reply-to:message-id:references
+         :user-agent:mime-version:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=BPsJHB9xWLnULa0PHtOx2Wcr0sHaoCrHJ70qFdkibfk=;
+        b=mjPtKceMdf637ml/GG3MMh5YHRE+Wz9niexVOMZjX1tClYtqq1LkHEL4e8DqhbSz4t
+         YrRXOCtE34I+qMEka407QtNVoP49BHOVADTQ6c4sWnsc8KF5K47p6M1IooSJatHVVwNl
+         tKvgAMpQw/jEHS7Bo7/iaqJz9lg1vXK0Gk9i3G0hSebJmOHxL4S4VSsSKqDNKQrswyVL
+         CydG/WTmWd2i0w6cEdTzhRtS1lRNEcHW6Ne6yDXy/P9y+ALknkAuU30qZlTcZgXq+UEE
+         OsjvT3MvMff8tZccCPjANyNotk0J0+Z2aQHfa4sdLOVEa7i9gVHeZ/l5q3T9M/4eOQ8Q
+         rHPw==
+X-Received: by 10.152.42.164 with SMTP id p4mr468537lal.1.1398106574852;
+        Mon, 21 Apr 2014 11:56:14 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.36.163 with SMTP id r3ls453436laj.10.gmail; Mon, 21 Apr
+ 2014 11:56:14 -0700 (PDT)
+X-Received: by 10.112.20.194 with SMTP id p2mr131994lbe.21.1398106574159;
+        Mon, 21 Apr 2014 11:56:14 -0700 (PDT)
+Received: from mout.gmx.net (mout.gmx.net. [212.227.17.21])
+        by gmr-mx.google.com with ESMTPS id m49si136977eeu.0.2014.04.21.11.56.14
+        for <msysgit@googlegroups.com>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA bits=256/256);
+        Mon, 21 Apr 2014 11:56:14 -0700 (PDT)
+Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.17.21 as permitted sender) client-ip=212.227.17.21;
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx003) with ESMTPSA (Nemesis) id 0Lugbo-1X2kAd1Rxo-00zphV;
+ Mon, 21 Apr 2014 20:56:11 +0200
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <53556579.3050709@gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:uh27mlvZ2KgoE7WCwe53zlR56mQL4nZaiyLZs7Ba+9IiW2BGNnL
+ HlBHUKYS+GjnhM6CBVEBs+0hYL/YLerU1iAtMgXruUWI6N+LNoQYrKypL/Rj+SA4/C5WZ7Q
+ diDh4cWDH5oD756mZZIs48LbuzxaKaSIuoboKEWGs5ohely2v2ciEr/2Kvt+nbt+eRTU4qk
+ l+H0o1yPE/oQGl5pbPaKw==
+X-Original-Sender: johannes.schindelin@gmx.de
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.17.21 as
+ permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246619>
 
-On Sat, Apr 19, 2014 at 12:23 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> On 04/17/2014 09:46 PM, Ronnie Sahlberg wrote:
->> Change commit.c to use ref transactions for all ref updates.
->>
->> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
->> ---
->>  builtin/commit.c | 22 ++++++++++++----------
->>  1 file changed, 12 insertions(+), 10 deletions(-)
->>
->> diff --git a/builtin/commit.c b/builtin/commit.c
->> index d9550c5..b8e4389 100644
->> --- a/builtin/commit.c
->> +++ b/builtin/commit.c
->> @@ -1541,11 +1541,11 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
->>       const char *index_file, *reflog_msg;
->>       char *nl;
->>       unsigned char sha1[20];
->> -     struct ref_lock *ref_lock;
->>       struct commit_list *parents = NULL, **pptr = &parents;
->>       struct stat statbuf;
->>       struct commit *current_head = NULL;
->>       struct commit_extra_header *extra = NULL;
->> +     struct ref_transaction *transaction;
->>
->>       if (argc == 2 && !strcmp(argv[1], "-h"))
->>               usage_with_options(builtin_commit_usage, builtin_commit_options);
->> @@ -1667,12 +1667,6 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
->>       strbuf_release(&author_ident);
->>       free_commit_extra_headers(extra);
->>
->> -     ref_lock = lock_any_ref_for_update("HEAD",
->> -                                        !current_head
->> -                                        ? NULL
->> -                                        : current_head->object.sha1,
->> -                                        0, NULL);
->
-> The old version, above, contemplates that current_head might be NULL...
->
->> -
->>       nl = strchr(sb.buf, '\n');
->>       if (nl)
->>               strbuf_setlen(&sb, nl + 1 - sb.buf);
->> @@ -1681,14 +1675,22 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
->>       strbuf_insert(&sb, 0, reflog_msg, strlen(reflog_msg));
->>       strbuf_insert(&sb, strlen(reflog_msg), ": ", 2);
->>
->> -     if (!ref_lock) {
->> +     transaction = ref_transaction_begin();
->> +     if (!transaction) {
->>               rollback_index_files();
->> -             die(_("cannot lock HEAD ref"));
->> +             die(_("HEAD: cannot start transaction"));
->>       }
->> -     if (write_ref_sha1(ref_lock, sha1, sb.buf) < 0) {
->> +     if (ref_transaction_update(transaction, "HEAD", sha1,
->> +                                current_head->object.sha1,
->> +                                0, !!current_head)) {
->
-> ...but here you dereference current_head without checking it first.
->
-> It upsets me that the test suite didn't catch this NULL pointer
-> dereference.  Either
->
-> 1. current_head cannot in fact be NULL, in which case the commit message
-> should explain that fact and the code should be simplified
->
-> or
->
-> 2. the test suite is incomplete.  If so, it would be great if you would
-> add a test that exercises this branch of the code (and catches your
-> error), and then fix the error.
+Hi Sebastian,
 
+On Mon, 21 Apr 2014, Sebastian Schuberth wrote:
 
+> On 21.04.2014 00:10, Johannes Schindelin wrote:
+> 
+> > tests do not pass yet. (I also would like to look into getting the
+> > performance improvement Hannes Sixt achieved by his patch [*1*] into
+> > mingwGitDevEnv's Git installation, too.)
+> >
+> > Whoops. Footnote *1*: https://github.com/msysgit/msysgit/commit/a0f5d4f
+> 
+> Dscho, this patch of Hannes is already in, see [1].
 
-Current_head can in fact be NULL here but we never actually
-dereference any pointer in this case since !!current_head is 0.
+Ah, I missed that. That's very good news!
 
+Marat, you see that the patches *are* sent upstream.
 
-current_head->object.sha1 just computes current_head +
-offsetof(commit, object) + offsetof(object, sha1)
-so we compute and pass a non-NULL garbage pointer into ref_transaction_update()
+Now, clearly you have all the motivation that is needed to get 64-bit
+builds of Git for Windows going, and all the motivation required to make
+sure that the MSVC support of the msysGit project works.
 
-But since !!current_head is 0 this mean we never actually dereference
-this pointer.
-Way to subtle for its own good.
+How about joining forces?
 
+Ciao,
+Johannes
 
-I will change ref_transaction_update and friends to use an additional
-test to detect some subset of this kind of bug :
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
-if (!have_old && old_sha1)
-   die("have_old is false but old_sha1 is not NULL");
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
 
-regards
-ronnie sahlberg
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
