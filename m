@@ -1,90 +1,97 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH 11/11] walker.c: use ref transaction for ref updates
-Date: Mon, 21 Apr 2014 15:29:22 -0700
-Message-ID: <CAL=YDW=A_L3J6bD+ZXMGoZ0piuQbdGmS1nmTpuCD0yZEnj2BOw@mail.gmail.com>
-References: <1397763987-4453-1-git-send-email-sahlberg@google.com>
-	<1397763987-4453-12-git-send-email-sahlberg@google.com>
-	<5352D31A.6000107@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [SECURITY PATCH] git-prompt.sh: don't put unsanitized branch names in $PS1
+Date: Mon, 21 Apr 2014 15:33:30 -0700
+Message-ID: <xmqq1twq8g91.fsf@gitster.dls.corp.google.com>
+References: <1398107248-32140-1-git-send-email-rhansen@bbn.com>
+	<xmqq61m28gqj.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Apr 22 00:30:11 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, sitaramc@gmail.com,
+	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
+	Simon Oosthoek <s.oosthoek@xs4all.nl>
+To: Richard Hansen <rhansen@bbn.com>
+X-From: git-owner@vger.kernel.org Tue Apr 22 00:33:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WcMj4-00032R-U7
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 00:30:11 +0200
+	id 1WcMmQ-0006BA-P8
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 00:33:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754502AbaDUW3Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Apr 2014 18:29:24 -0400
-Received: from mail-ve0-f179.google.com ([209.85.128.179]:51003 "EHLO
-	mail-ve0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754027AbaDUW3X (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Apr 2014 18:29:23 -0400
-Received: by mail-ve0-f179.google.com with SMTP id db12so8510981veb.38
-        for <git@vger.kernel.org>; Mon, 21 Apr 2014 15:29:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=RUqMJ6zuRBY3UHfxNfUKcTivSeroQqmKP/S19i/Ax7w=;
-        b=NWOlTpfTjawaV40ZEH3U6H4lmDvJGKSkGR41ZbhKsMU2bblOUP+ECSbYYev0njdzf5
-         ifqDbrlUrSq704OyBH7SgzQub1kZQkeE8Nu9z3f9fGol5zgzlimk1zMooSXeqC7IYvTO
-         qnXtSbD5PkbGZVGQx+BbswkY9MTqUEQGuU4CcSqVK92Exc2iGCxpEs/Ne24a7tvvXaCH
-         q14KVWKqA6pDN48FM1U4YvfBGiVzvKh+PK9sLaFfs2P2MpB6Y2uccuZmbUUjnPPZTqtP
-         AhXSMoIRxaFIz/DxCeAn7cSXtK8UG66/tQuawRJ2uJ7eESUnXae0H1sqaEW47AIJ7lwk
-         E/5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=RUqMJ6zuRBY3UHfxNfUKcTivSeroQqmKP/S19i/Ax7w=;
-        b=msvHRFtmFWKPXVqDGGhZq4FwUOoIO3bhgbVBSvcvbMIbS0fsMR6ZewKJF60s5DVyM/
-         JqVfGo3RWfdEVIwR5p30DfhRRib8fp9wCRJFYmeM6yzo0mDcofcLD/NFkyOqnwsK+4+r
-         Ka5TVbkezv/U1Z0hNU7kKQh4WF8pSdnqWSW8nwrzzuz2AFqZoMcuyRyS8MJf8VzJ1fg5
-         RFJBdo8+KEsbH7pL7obZ5vKKckwStsftoqotyv057uNObd3aMbTY6WL7eF8FvoCpDnKJ
-         CkVq+gcGs1AdutmJAikawoCnBnzvAIdFbadPtWBqSKqZNonwhwEPu/got8Y76UGbY2bG
-         hkTw==
-X-Gm-Message-State: ALoCoQlUNFmMGXCjAgZNd+q6wcs0aYwkyC6BWtD4qHqd3lzLZ9+hDbHWevLN+uYNGwM4o4yenlxOTB4JEshxcf1j48l+dpUrhH136FWqcBuBB2Sfyseu5ewFiDSQEcUXBNkGEcgUUoCmCVaBIb6uek0Kw5p/9DC7RA1C+bOodmOfmoq9C2vBEHAwXsTcNDFX60tCn7JKhSps
-X-Received: by 10.52.164.237 with SMTP id yt13mr27881747vdb.18.1398119362604;
- Mon, 21 Apr 2014 15:29:22 -0700 (PDT)
-Received: by 10.52.141.13 with HTTP; Mon, 21 Apr 2014 15:29:22 -0700 (PDT)
-In-Reply-To: <5352D31A.6000107@alum.mit.edu>
+	id S1754617AbaDUWdf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Apr 2014 18:33:35 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34411 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754027AbaDUWdd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Apr 2014 18:33:33 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 85B837F607;
+	Mon, 21 Apr 2014 18:33:33 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=1ELPXO6V/m2Cl3hiN+t3A1trhsQ=; b=HXJ44t
+	LEpmN2CbwoPsnLdo1MD5ZdHAOTvRoKYT7rLZ1IuHuOVnfVS85Mf9AewqK45FZZHE
+	MVdYbz2HwzfyPRoQJnz8d17AknF4lSbUlynjDeGQ79ZmHzRQnHATMGb8c8P+6YjJ
+	mGsJsIPk9UPX+6egZkENYA8LB4t4iDhfTVt94=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=aqK42jpSpe6s9GJvhPxGrIPekApiHQ5e
+	x9Bvi3uWELPxY1GGflQ3e5qsGrHwsKXt3aGiCClupUXkpOlNwCjRAZsEP0+SVRcd
+	K9Zv/5U8fWnwKt/CGtjD+d3TXim/qmJFyELYrAIVueetXK+bqPNr8gx//7bN4kIB
+	Xt4P88p8Q3g=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7189E7F606;
+	Mon, 21 Apr 2014 18:33:33 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C5B4D7F601;
+	Mon, 21 Apr 2014 18:33:31 -0400 (EDT)
+In-Reply-To: <xmqq61m28gqj.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Mon, 21 Apr 2014 15:23:00 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: F7AFFFD2-C9A4-11E3-B7C6-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246658>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246659>
 
-I have updated the commit message with some text why I do not think
-this change is critical for this case.
-I will resend v2 of the patch series in a little while.
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Sat, Apr 19, 2014 at 12:48 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> On 04/17/2014 09:46 PM, Ronnie Sahlberg wrote:
->> Switch to using ref transactions in walker_fetch(). As part of the refactoring
->> to use ref transactions we also fix a potential memory leak where in the
->> original code if write_ref_sha1() would fail we would end up returning from
->> the function without free()ing the msg string.
+> Richard Hansen <rhansen@bbn.com> writes:
 >
-> I don't have time to review this last patch this evening, but one thing
-> struck me.  It seems like the old code went to extra effort to lock all
-> the write_ref references early in the function, whereas your modified
-> version doesn't lock them until later.  Have you verified that you are
-> not opening a possible race condition?  If so, your commit message
-> should justify that it isn't a problem.  In other words, what does the
-> code do between the old time of locking and the new time of locking and
-> why doesn't it care whether the references are locked?
+>> Both bash and zsh subject the value of PS1 to parameter expansion,
+>> command substitution, and arithmetic expansion.  Rather than include
+>> the raw, unescaped branch name in PS1 when running in two- or
+>> three-argument mode, construct PS1 to reference a variable that holds
+>> the branch name.  Because the shells do not recursively expand, this
+>> avoids arbitrary code execution by specially-crafted branch names such
+>> as '$(IFS=_;cmd=sudo_rm_-rf_/;$cmd)'.
+>>
+>> Signed-off-by: Richard Hansen <rhansen@bbn.com>
 >
-> Aside from my other comments, patches 01-10 in the series looked fine.
-> Thanks!
+> I'd like to see this patch eyeballed by those who have been involved
+> in the script (shortlog and blame tells me they are SZEDER and
+> Simon, CC'ed), so that we can hopefully merge it by the time -rc1 is
+> tagged.
 >
-> Michael
+> Will queue so that I won't lose it in the meantime.
 >
-> --
-> Michael Haggerty
-> mhagger@alum.mit.edu
-> http://softwareswirl.blogspot.com/
+> Thanks.
+
+Sadly, this does not seem to pass t9903.41 for me.
+
+    $ bash t9903-*.sh -i -v
+
+ends with this: 
+
+    --- expected    2014-04-21 22:31:46.000000000 +0000
+    +++ .../t/trash directory.t9903-bash-prompt/actual  ...
+    @@ -1 +1 @@
+    -BEFORE: (master):AFTER
+    \ No newline at end of file
+    +BEFORE: (${__git_ps1_branch_name}):AFTER
+    \ No newline at end of file
+    not ok 41 - prompt - pc mode
