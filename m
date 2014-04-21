@@ -1,62 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [SECURITY PATCH] git-prompt.sh: don't put unsanitized branch
- names in $PS1
-Date: Mon, 21 Apr 2014 16:24:54 -0400
-Message-ID: <20140421202454.GA6062@sigill.intra.peff.net>
-References: <1398107248-32140-1-git-send-email-rhansen@bbn.com>
+From: Theodore Ts'o <tytso@mit.edu>
+Subject: Re: What is missing from Git v2.0
+Date: Mon, 21 Apr 2014 16:45:06 -0400
+Message-ID: <20140421204506.GD5105@thunk.org>
+References: <CAMP44s17h4Tjg+VaMF0atLep8t-0HVp4UDr1WE2wYnEuZ07eaQ@mail.gmail.com>
+ <53557071.5040500@gmail.com>
+ <535572b73183b_414c80b30863@nysa.notmuch>
+ <CAHGBnuM3TVMbow7Zbb9QnEeJOR9aZY1dwj2CWqs-Ti_HDppE1w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, sitaramc@gmail.com
-To: Richard Hansen <rhansen@bbn.com>
-X-From: git-owner@vger.kernel.org Mon Apr 21 22:25:03 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 21 22:45:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WcKly-0004h3-Ed
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Apr 2014 22:25:02 +0200
+	id 1WcL5W-0006sT-Qq
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Apr 2014 22:45:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754257AbaDUUY6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Apr 2014 16:24:58 -0400
-Received: from cloud.peff.net ([50.56.180.127]:35565 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750891AbaDUUY4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Apr 2014 16:24:56 -0400
-Received: (qmail 8364 invoked by uid 102); 21 Apr 2014 20:24:56 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 21 Apr 2014 15:24:56 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 21 Apr 2014 16:24:54 -0400
+	id S1754482AbaDUUpK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Apr 2014 16:45:10 -0400
+Received: from imap.thunk.org ([74.207.234.97]:52338 "EHLO imap.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754456AbaDUUpI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Apr 2014 16:45:08 -0400
+Received: from root (helo=closure.thunk.org)
+	by imap.thunk.org with local-esmtp (Exim 4.80)
+	(envelope-from <tytso@thunk.org>)
+	id 1WcL5P-0002V4-8E; Mon, 21 Apr 2014 20:45:07 +0000
+Received: by closure.thunk.org (Postfix, from userid 15806)
+	id 828365804E2; Mon, 21 Apr 2014 16:45:06 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=thunk.org; s=ef5046eb;
+	t=1398113106; bh=Tfb9nO6GCjbqz3a5g64OTDilVX9PGOSjY+9J+KmXJMY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=gGvso97F8NZsNSfwIEPgNbnJMGDOUs71TFoKa+Wa6luPZ6PgMGgRIhdh3ArYYdrGw
+	 MiA5LQjxOoQAgwnU890YSWx4vDa3krIxc2b7CRGoJRXabJvjc64o6H1qMiyenAk+Lo
+	 vzRom2vm278V+8jwuU5ko7/hmjjEZoR2S0GnxpiA=
 Content-Disposition: inline
-In-Reply-To: <1398107248-32140-1-git-send-email-rhansen@bbn.com>
+In-Reply-To: <CAHGBnuM3TVMbow7Zbb9QnEeJOR9aZY1dwj2CWqs-Ti_HDppE1w@mail.gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246632>
 
-On Mon, Apr 21, 2014 at 03:07:28PM -0400, Richard Hansen wrote:
+On Mon, Apr 21, 2014 at 09:47:57PM +0200, Sebastian Schuberth wrote:
+> On Mon, Apr 21, 2014 at 9:34 PM, Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
+> 
+> > I have these aliases as well, except br => b, and cp => pi. 'br' is probably
+> > better, but not sure as 'cp' which can be confusing.
+> 
+> If by confusing you refer to "cp" to copy files, that's actually what
+> I like about it: cherry-pick is somewhat like copying commits, thus
+> "cp" makes much sense to me.
 
-> Both bash and zsh subject the value of PS1 to parameter expansion,
-> command substitution, and arithmetic expansion.  Rather than include
-> the raw, unescaped branch name in PS1 when running in two- or
-> three-argument mode, construct PS1 to reference a variable that holds
-> the branch name.  Because the shells do not recursively expand, this
-> avoids arbitrary code execution by specially-crafted branch names such
-> as '$(IFS=_;cmd=sudo_rm_-rf_/;$cmd)'.
+The problem is that between "git rm" and "git mv", if we default "git
+cp" to mean "cherry-pick" there could easily be user confusion.
 
-Cute. We already disallow quite a few characters in refnames (including
-space, as you probably discovered), and generally enforce that during
-ref transfer. I wonder if we should tighten that more as a precuation.
-It would be backwards-incompatible, but I wonder if things like "$" and
-";" in refnames are actually useful to people.
+I'm not sure that cherry-pick is used that often it really needs a two
+character shortcut.  Maybe just "git pick"?
 
-Did you look into similar exploits with completion? That's probably
-slightly less dire (this one hits you as soon as you "cd" into a
-malicious clone, whereas completion problems require you to actually hit
-<tab>). I'm fairly sure that we miss some quoting on pathnames, for
-example. That can lead to bogus completion, but I'm not sure offhand if
-it can lead to execution.
+Personally, "git branch" and "git checkout" are finger macros that I
+type very quickly, so creating two character alias probably wouldn't
+save me that much time.  But I do appreicate that there are folks for
+which such aliases might be useful.
 
--Peff
+						- Ted
