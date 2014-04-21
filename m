@@ -1,98 +1,111 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v2 2/3] remote-helpers: move out of contrib
-Date: Mon, 21 Apr 2014 16:24:15 -0500
-Message-ID: <53558c7fbd4d4_604be1f30c30@nysa.notmuch>
-References: <1398112633-23604-1-git-send-email-felipe.contreras@gmail.com>
- <1398112633-23604-3-git-send-email-felipe.contreras@gmail.com>
- <xmqqppka8jiw.fsf@gitster.dls.corp.google.com>
+From: Ilya Bobyr <ilya.bobyr@gmail.com>
+Subject: Re: [RTC/PATCH] Add 'update-branch' hook
+Date: Mon, 21 Apr 2014 14:36:47 -0700
+Message-ID: <53558F6F.7080306@gmail.com>
+References: <1398047016-21643-1-git-send-email-felipe.contreras@gmail.com> <53558AD0.3010602@gmail.com> <53558a663ea74_604be1f30c2c@nysa.notmuch>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 21 23:34:44 2014
+To: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 21 23:37:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WcLrP-0002nl-IN
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Apr 2014 23:34:43 +0200
+	id 1WcLtc-00050V-CU
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Apr 2014 23:37:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754489AbaDUVek (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Apr 2014 17:34:40 -0400
-Received: from mail-yh0-f54.google.com ([209.85.213.54]:50155 "EHLO
-	mail-yh0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754434AbaDUVei (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Apr 2014 17:34:38 -0400
-Received: by mail-yh0-f54.google.com with SMTP id f73so4082132yha.27
-        for <git@vger.kernel.org>; Mon, 21 Apr 2014 14:34:38 -0700 (PDT)
+	id S1754532AbaDUVg4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Apr 2014 17:36:56 -0400
+Received: from mail-pb0-f45.google.com ([209.85.160.45]:47417 "EHLO
+	mail-pb0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754493AbaDUVgz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Apr 2014 17:36:55 -0400
+Received: by mail-pb0-f45.google.com with SMTP id uo5so4150103pbc.18
+        for <git@vger.kernel.org>; Mon, 21 Apr 2014 14:36:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=KDiEsR85T41780sts/3boAf0oqtBgmi6LoQAnSl3b/E=;
-        b=GRk8W0CrSP+O511zNHWWUnxYg/UKrHixdgDwvKd7lPr+DrIWn93wpMFsxBLx+dSCSa
-         LVSMm8zKagMVGwLNSNxDiK7rV6iFVGTRtLrfoGpuMWJgGbLMKulsNrcuNPqNRlsUQRdF
-         gNVWembLY3K2M46alacJ8/lHpHsGKrZHMezwHHn+1InC4mnk9ffEcKIB/1kywVUecPfG
-         9wpQDECJmkoSKNB1I8hPIpzsGQuKZxj2kKKJ9RxufLa0s1h+YSDX43ZAXphtZTsPKr2G
-         QVVTnaxgRNC223ZU2n4ZccseXFAfRf8oOpCo0sY/PzWARdWI62rWXLguRpspts9Zl/TI
-         a75A==
-X-Received: by 10.236.156.65 with SMTP id l41mr55242398yhk.9.1398116077983;
-        Mon, 21 Apr 2014 14:34:37 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id j76sm73828335yhi.33.2014.04.21.14.34.36
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=TVLxb88kZ3FXUGmAmTduU9/SUQ7DsjnOadV4IRFcPgI=;
+        b=l3rdwT4URUjn4ctTkg/Lg5MzzL3scx1AMaM5tPxPaE7N7/k/oF9gtNe/ZeJGvfPy9G
+         P0GmvnvjDWFhMNcWWU+Iihmy3lsYKSKOMoQNRVFnb/huLCg98DDlMYrLZE26v34dzSSj
+         IoXPkpYLoj3yVgN9nLH/SOp/ONXs4i3N6W1KNwH/HVWJeSNyUmUfUu21/YBWKmWL4g4q
+         CJpvw3PwjRt+FmY+6mEj4eLT9YqNEw4GfmvKkd/5GlDl4eZAGnxE2wlFhckEdCJl1sCl
+         mUZYOzCYmGeL/KnEVvkIukU6XBjlXBev/Hn/sUpGJQAOAq2ay+JWxl3x8ydwA4unc+nm
+         uIog==
+X-Received: by 10.68.240.68 with SMTP id vy4mr5583097pbc.127.1398116215229;
+        Mon, 21 Apr 2014 14:36:55 -0700 (PDT)
+Received: from [192.168.1.2] (c-50-136-172-14.hsd1.ca.comcast.net. [50.136.172.14])
+        by mx.google.com with ESMTPSA id id10sm80198149pbc.35.2014.04.21.14.36.54
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 21 Apr 2014 14:34:36 -0700 (PDT)
-In-Reply-To: <xmqqppka8jiw.fsf@gitster.dls.corp.google.com>
+        Mon, 21 Apr 2014 14:36:54 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:28.0) Gecko/20100101 Thunderbird/28.0
+In-Reply-To: <53558a663ea74_604be1f30c2c@nysa.notmuch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246648>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246649>
 
-Junio C Hamano wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
-> 
-> >  contrib/remote-helpers/test-bzr.sh                         | 2 +-
-> >  contrib/remote-helpers/test-hg-bidi.sh                     | 2 +-
-> >  contrib/remote-helpers/test-hg-hg-git.sh                   | 4 ++--
-> >  contrib/remote-helpers/test-hg.sh                          | 2 +-
-> >  contrib/remote-helpers/git-remote-bzr => git-remote-bzr.py | 0
-> >  contrib/remote-helpers/git-remote-hg => git-remote-hg.py   | 0
-> >  8 files changed, 9 insertions(+), 5 deletions(-)
-> >  rename contrib/remote-helpers/git-remote-bzr => git-remote-bzr.py (100%)
-> >  rename contrib/remote-helpers/git-remote-hg => git-remote-hg.py (100%)
-> > ...
-> > diff --git a/contrib/remote-helpers/test-hg-bidi.sh b/contrib/remote-helpers/test-hg-bidi.sh
-> > index 2b5aa9d..d44ec92 100755
-> > --- a/contrib/remote-helpers/test-hg-bidi.sh
-> > +++ b/contrib/remote-helpers/test-hg-bidi.sh
-> > @@ -17,7 +17,7 @@ then
-> >  	test_done
-> >  fi
-> >  
-> > -if ! python -c 'import mercurial' > /dev/null 2>&1
-> > +if ! "$PYTHON_PATH" -c 'import mercurial' > /dev/null 2>&1
-> 
-> Does this change relate to the moving of main scripts, and if so
-> how?
+On 4/21/2014 2:15 PM, Felipe Contreras wrote:
+> Ilya Bobyr wrote:
+>> On 4/20/2014 7:23 PM, Felipe Contreras wrote:
+>>> [...]
+>>>
+>>> diff --git a/t/t5408-update-branch-hook.sh b/t/t5408-update-branch-hook.sh
+>>> new file mode 100755
+>>> index 0000000..d921c0e
+>>> --- /dev/null
+>>> +++ b/t/t5408-update-branch-hook.sh
+>>> @@ -0,0 +1,39 @@
+>>> +#!/bin/sh
+>>> +
+>>> +test_description='Test the update-branch hook'
+>>> +
+>>> +. ./test-lib.sh
+>>> +
+>>> +setup () {
+>>> +	mkdir -p .git/hooks &&
+>>> +	cat > .git/hooks/update-branch <<-'EOF' &&
+>>> +	#!/bin/sh
+>>> +	echo $@ > .git/update-branch.args
+>>> +	EOF
+>>> +	chmod +x .git/hooks/update-branch &&
+>>> +	echo one > content &&
+>>> +	git add content &&
+>>> +	git commit -a -m one
+>>> +}
+>>> +
+>>> +setup
+>> According to t/README `setup` should be inside an assertion just as any
+>> other test:
+> I have a bunch of 'setup' calls outside such assertions already in other test
+> scripts. If you know how to put single quotes inside of single quotes in a
+> shell script, please share that knowledge, otherwise the setup must be outside.
+>
+> Of course we could do the extremely reduntant:
+>
+> test_expect_success 'setup' '
+>   setup
+> '
 
-Yes.
+Setup does not look any different from the other tests.
+If you need single quotes you could use double quotes outside.  Though,
+you would have to quote other things as well.
+t0000-basic.sh has a lot of tests that do that.
+Like this, for example:
 
-Before the scripts were not generated, the shebang was '/usr/bin/env python',
-that means if the user doesn't have 'python' but 'python2' git-remote-hg would
-fail, even if the user did PYTHON_PATH=python2, therefore the test scripts
-should fail too, and that's the reason 'python' is used in the test scripts.
-
-Now that the scripts are generated the build system would replace the shebang,
-and PYTHON_PATH will be used correctly, and we should use that in the tests.
-
-I actually implemented this script generation inside contrib/remote-helpers,
-indepedently of the move, but you didn't apply those patches.
-
--- 
-Felipe Contreras
+test_expect_success 'setup' "
+	mkdir -p .git/hooks &&
+	cat > .git/hooks/update-branch <<-\\EOF &&
+	#!/bin/sh
+	echo \$@ > .git/update-branch.args
+	EOF
+	chmod +x .git/hooks/update-branch &&
+	echo one > content &&
+	git add content &&
+	git commit -a -m one
+"
