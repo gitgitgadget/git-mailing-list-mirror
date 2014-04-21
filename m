@@ -1,51 +1,47 @@
 From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [PATCH v3 1/2] bugfix: fix broken time_buf paddings for git-blame
-Date: Mon, 21 Apr 2014 14:02:03 +0800
-Message-ID: <e8340b76f5c2b676a9594018b3385ead451412fa.1398059411.git.worldhello.net@gmail.com>
+Subject: [PATCH v3 2/2] blame: use a helper to get suitable blame_date_width
+Date: Mon, 21 Apr 2014 14:02:04 +0800
+Message-ID: <17454bdfbd4e0e1516a64f75deabddb427792e99.1398059411.git.worldhello.net@gmail.com>
 References: <cover.1398059411.git.worldhello.net@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Brian Gesiak <modocache@gmail.com>, Git List <git@vger.kernel.org>,
 	Jiang Xin <worldhello.net@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Apr 21 08:02:44 2014
+X-From: git-owner@vger.kernel.org Mon Apr 21 08:02:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wc7JS-0006YW-S3
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Apr 2014 08:02:43 +0200
+	id 1Wc7JZ-0006dC-EC
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Apr 2014 08:02:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751257AbaDUGCh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Apr 2014 02:02:37 -0400
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:49256 "EHLO
-	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750887AbaDUGCg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Apr 2014 02:02:36 -0400
-Received: by mail-pa0-f51.google.com with SMTP id kq14so3408010pab.10
-        for <git@vger.kernel.org>; Sun, 20 Apr 2014 23:02:36 -0700 (PDT)
+	id S1751278AbaDUGCp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Apr 2014 02:02:45 -0400
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:34665 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750887AbaDUGCo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Apr 2014 02:02:44 -0400
+Received: by mail-pa0-f54.google.com with SMTP id lf10so3416894pab.27
+        for <git@vger.kernel.org>; Sun, 20 Apr 2014 23:02:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :in-reply-to:references:mime-version:content-type
-         :content-transfer-encoding;
-        bh=bVIHJDPs3Hdh4CMM/91xGo7xieTGZkKugF8HTH3XlXw=;
-        b=f0mtAdWDrnjJLkdsOFpdjeNQkqwB2zN5O3iOgz7r2rLS29lBCzZMN61AEM7O/nrA3p
-         VF83BXPKNwDnG8Ik/uKMCZ6M+m3sVpH6PM8VY/yxvJEMPrjr3Bk4Bytn5Dh73tffgYVf
-         wF+FShZ31yTV+zTxebgmz4U+1Yl9su2+8kP2NY4hTSeyvuOx7DsL0R//CIBkx2fbeVSK
-         fKLj4G7OTvY4zswncAUAiTbFasX7gF34Ln69VLyuUlPzs840RdQK1IcjpqfapggYV2zt
-         e+QJSf2Y8oFrQsS6R4gqcRlDopvalso0AJSxh1lJaIpo0HKVQASMIcRrrqoD8CP4sIXa
-         qzcw==
-X-Received: by 10.66.163.164 with SMTP id yj4mr36539584pab.91.1398060156102;
-        Sun, 20 Apr 2014 23:02:36 -0700 (PDT)
+         :in-reply-to:references;
+        bh=XYnUOdGu9syw/B1qgqtiChxK5WtgqRrMU2LwJSzmo7s=;
+        b=YutViluVru4DvtEVeTERX7yb5uQiwK8xa8wdBgnFK2XLtmdy5PD/GXVC2XLRPVQpFJ
+         AP8Rd2KdLj9ArXcomG+fVyNhuCyB/JjMtFtaV8NX4l7uxwigSfSNFiyAigpSMlo8F1kt
+         +HNNKruarRH9hEkraoly0tABSpDKmM7OHDJymTdHc4oWotExXJrhEzrg+PBH9ly6bmrf
+         +wdF5XZQs5W9VR7nyP73RpgqEQ5hXB4ZyUKKWlX83nUBlFZcH81I0E88y/oM+jGbkDAS
+         NalNe2FzzQqmnmhBEi/Eg5I7iUpvHq+DUZWwwIqbxm/Vtz1T67eTuHUTmkeafPOGJOXF
+         h0Yw==
+X-Received: by 10.66.161.69 with SMTP id xq5mr35945138pab.62.1398060163939;
+        Sun, 20 Apr 2014 23:02:43 -0700 (PDT)
 Received: from localhost.localdomain ([124.207.10.6])
-        by mx.google.com with ESMTPSA id vx10sm181140376pac.17.2014.04.20.23.02.28
+        by mx.google.com with ESMTPSA id vx10sm181140376pac.17.2014.04.20.23.02.36
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 20 Apr 2014 23:02:35 -0700 (PDT)
+        Sun, 20 Apr 2014 23:02:42 -0700 (PDT)
 X-Mailer: git-send-email 1.9.2.476.ga74def0
 In-Reply-To: <cover.1398059411.git.worldhello.net@gmail.com>
 In-Reply-To: <cover.1398059411.git.worldhello.net@gmail.com>
@@ -54,82 +50,106 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246608>
 
-Command `git blame --date relative` aligns the date field with a
-fixed-width (defined by blame_date_width), and if time_str is shorter
-than that, it adds spaces for padding.  But there are two bugs in the
-following codes:
+When show date in relative date format for git-blame, the max display
+width of datetime is set as the length of the string "Thu Oct 19
+16:00:04 2006 -0700" (30 characters long).  But actually the max width
+for C locale is only 22 (the length of string "x years, xx months ago").
+And for other locale, it maybe smaller.  E.g. For Chinese locale, only
+needs a half (16-character width).
 
-        time_len =3D strlen(time_str);
-        ...
-        memset(time_buf + time_len, ' ', blame_date_width - time_len);
+Add a helper function date_relative_maxwidth() to date.c, which returns
+the suitable display width for the relative date field in different
+locale.
 
-1. The type of blame_date_width is size_t, which is unsigned.  If
-   time_len is greater than blame_date_width, the result of
-   "blame_date_width - time_len" will never be a negative number, but a
-   really big positive number, and will cause memory overwrite.
-
-   This bug can be triggered if either l10n message for function
-   show_date_relative() in date.c is longer than 30 characters, then
-   `git blame --date relative` may exit abnormally.
-
-2. When show blame information with relative time, the UTF-8 characters
-   in time_str will break the alignment of columns after the date field=
-=2E
-   This is because the time_buf padding with spaces should have a
-   constant display width, not a fixed strlen size.  So we should call
-   utf8_strwidth() instead of strlen() for width calibration.
-
-Helped-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com=
->
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Suggested-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
 ---
- builtin/blame.c | 21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ builtin/blame.c | 64 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 63 insertions(+), 1 deletion(-)
 
 diff --git a/builtin/blame.c b/builtin/blame.c
-index 88cb799..35e95db 100644
+index 35e95db..478f739 100644
 --- a/builtin/blame.c
 +++ b/builtin/blame.c
-@@ -1556,22 +1556,29 @@ static void assign_blame(struct scoreboard *sb,=
- int opt)
- static const char *format_time(unsigned long time, const char *tz_str,
- 			       int show_raw_time)
- {
--	static char time_buf[128];
-+	static struct strbuf time_buf =3D STRBUF_INIT;
-=20
-+	strbuf_reset(&time_buf);
- 	if (show_raw_time) {
--		snprintf(time_buf, sizeof(time_buf), "%lu %s", time, tz_str);
-+		strbuf_addf(&time_buf, "%lu %s", time, tz_str);
- 	}
- 	else {
- 		const char *time_str;
--		int time_len;
-+		size_t time_width;
- 		int tz;
- 		tz =3D atoi(tz_str);
- 		time_str =3D show_date(time, tz, blame_date_mode);
--		time_len =3D strlen(time_str);
--		memcpy(time_buf, time_str, time_len);
--		memset(time_buf + time_len, ' ', blame_date_width - time_len);
-+		strbuf_addstr(&time_buf, time_str);
-+		/*
-+		 * Add space paddings to time_buf to display a fixed width
-+		 * string, and use time_width for display width calibration.
-+		 */
-+		for (time_width =3D utf8_strwidth(time_str);
-+		     time_width < blame_date_width;
-+		     time_width++)
-+			strbuf_addch(&time_buf, ' ');
- 	}
--	return time_buf;
-+	return time_buf.buf;
+@@ -2229,6 +2229,67 @@ static int blame_move_callback(const struct option *option, const char *arg, int
+ 	return 0;
  }
-=20
- #define OUTPUT_ANNOTATE_COMPAT	001
---=20
+ 
++static int date_relative_maxwidth(void)
++{
++	struct strbuf buf = STRBUF_INIT, years_sb = STRBUF_INIT;
++	static int maxwidth = 0;
++	int width;
++
++	if (maxwidth)
++		return maxwidth;
++
++	strbuf_addf(&buf, _("in the future"));
++	maxwidth = utf8_strwidth(buf.buf);
++
++	strbuf_reset(&buf);
++	strbuf_addf(&buf, Q_("%lu second ago", "%lu seconds ago", 89L), 89L);
++	width = utf8_strwidth(buf.buf);
++	maxwidth = (maxwidth < width) ? width : maxwidth;
++
++	strbuf_reset(&buf);
++	strbuf_addf(&buf, Q_("%lu minute ago", "%lu minutes ago", 89L), 89L);
++	width = utf8_strwidth(buf.buf);
++	maxwidth = (maxwidth < width) ? width : maxwidth;
++
++	strbuf_reset(&buf);
++	strbuf_addf(&buf, Q_("%lu hour ago", "%lu hours ago", 35L), 35L);
++	width = utf8_strwidth(buf.buf);
++	maxwidth = (maxwidth < width) ? width : maxwidth;
++
++	strbuf_reset(&buf);
++	strbuf_addf(&buf, Q_("%lu day ago", "%lu days ago", 13L), 13L);
++	width = utf8_strwidth(buf.buf);
++	maxwidth = (maxwidth < width) ? width : maxwidth;
++
++	strbuf_reset(&buf);
++	strbuf_addf(&buf, Q_("%lu week ago", "%lu weeks ago", 10L), 10L);
++	width = utf8_strwidth(buf.buf);
++	maxwidth = (maxwidth < width) ? width : maxwidth;
++
++	strbuf_reset(&buf);
++	strbuf_addf(&buf, Q_("%lu month ago", "%lu months ago", 12L), 12L);
++	width = utf8_strwidth(buf.buf);
++	maxwidth = (maxwidth < width) ? width : maxwidth;
++
++	strbuf_addf(&years_sb, Q_("%lu year", "%lu years", 4L), 4L);
++	strbuf_reset(&buf);
++	strbuf_addf(&buf,
++		Q_("%s, %lu month ago", "%s, %lu months ago", 11L),
++		years_sb.buf, 11L);
++	width = utf8_strwidth(buf.buf);
++	maxwidth = (maxwidth < width) ? width : maxwidth;
++
++	strbuf_reset(&buf);
++	strbuf_addf(&buf, Q_("%lu year ago", "%lu years ago", 9999L), 9999L);
++	width = utf8_strwidth(buf.buf);
++	maxwidth = (maxwidth < width) ? width : maxwidth;
++
++	strbuf_release(&years_sb);
++	strbuf_release(&buf);
++
++	return maxwidth;
++}
++
+ int cmd_blame(int argc, const char **argv, const char *prefix)
+ {
+ 	struct rev_info revs;
+@@ -2338,7 +2399,8 @@ parse_done:
+ 		blame_date_width = sizeof("2006-10-19");
+ 		break;
+ 	case DATE_RELATIVE:
+-		/* "normal" is used as the fallback for "relative" */
++		blame_date_width = date_relative_maxwidth() + 1; /* add the null */
++		break;
+ 	case DATE_LOCAL:
+ 	case DATE_NORMAL:
+ 		blame_date_width = sizeof("Thu Oct 19 16:00:04 2006 -0700");
+-- 
 1.9.2.476.ga74def0
