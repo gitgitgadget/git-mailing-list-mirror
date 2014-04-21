@@ -1,83 +1,76 @@
-From: Richard Hansen <rhansen@bbn.com>
-Subject: Re: [SECURITY PATCH] git-prompt.sh: don't put unsanitized branch
- names in $PS1
-Date: Mon, 21 Apr 2014 17:07:18 -0400
-Message-ID: <53558886.5080102@bbn.com>
-References: <1398107248-32140-1-git-send-email-rhansen@bbn.com> <20140421202454.GA6062@sigill.intra.peff.net>
+From: Ilya Bobyr <ilya.bobyr@gmail.com>
+Subject: Re: [RTC/PATCH] Add 'update-branch' hook
+Date: Mon, 21 Apr 2014 14:15:00 -0700
+Message-ID: <53558A54.4060801@gmail.com>
+References: <1398047016-21643-1-git-send-email-felipe.contreras@gmail.com> <5355793A.5020000@gmail.com> <53558476703cb_5c94d452ec4e@nysa.notmuch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, sitaramc@gmail.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Apr 21 23:07:58 2014
+To: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 21 23:15:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WcLRT-0002x4-VB
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Apr 2014 23:07:56 +0200
+	id 1WcLYY-0001LE-6X
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Apr 2014 23:15:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754527AbaDUVHw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Apr 2014 17:07:52 -0400
-Received: from [128.33.0.80] ([128.33.0.80]:52798 "EHLO smtp.bbn.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1754467AbaDUVHu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Apr 2014 17:07:50 -0400
-Received: from socket.bbn.com ([192.1.120.102]:40967)
-	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
-	(Exim 4.77 (FreeBSD))
-	(envelope-from <rhansen@bbn.com>)
-	id 1WcLQs-000D2h-Od; Mon, 21 Apr 2014 17:07:18 -0400
-X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id 92DBB3FFDD
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
-In-Reply-To: <20140421202454.GA6062@sigill.intra.peff.net>
-X-Enigmail-Version: 1.6
+	id S1754151AbaDUVPK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Apr 2014 17:15:10 -0400
+Received: from mail-pb0-f51.google.com ([209.85.160.51]:38571 "EHLO
+	mail-pb0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752896AbaDUVPI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Apr 2014 17:15:08 -0400
+Received: by mail-pb0-f51.google.com with SMTP id uo5so4155773pbc.10
+        for <git@vger.kernel.org>; Mon, 21 Apr 2014 14:15:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=xE3LBTvfBvd/UZxo55cNxXGxHoLadgFfo0WuoQ3hqWg=;
+        b=Stvoo2NEkdcIi3yT71t7ulLcfl+vUKV4bd/ITpSmaRab/K17kQ6HYQA3Tvdzak08Ie
+         +jlg/v79yUWAQyV7JJ018IFST7IdDRbOgmeHFaKBt9aKEdRnemN6J6GnD0ZCzZOAmAzC
+         9xTYSkgUCWf5w/HGJNIHVHGPCKx4J/Ks2vska9tOSCFr9jWyH8v2++k4YsAa1V+0WeqB
+         wNae1x8SC6z4wxr4fTMn1GukzNJdfJ1IIsJHqy0ht0P7ZGkQRv1rJ9ubUZQ/0ggesB9y
+         4Dee1LXq+pipLiq0E7il8N5umI6CLiEv83y8Di+19PRNyJdhd1P3Uvv4/m/BxRAwNBtH
+         k1gw==
+X-Received: by 10.66.142.170 with SMTP id rx10mr5943181pab.117.1398114908272;
+        Mon, 21 Apr 2014 14:15:08 -0700 (PDT)
+Received: from [192.168.1.2] (c-50-136-172-14.hsd1.ca.comcast.net. [50.136.172.14])
+        by mx.google.com with ESMTPSA id xz7sm191431110pac.3.2014.04.21.14.15.07
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 21 Apr 2014 14:15:07 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:28.0) Gecko/20100101 Thunderbird/28.0
+In-Reply-To: <53558476703cb_5c94d452ec4e@nysa.notmuch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246639>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246640>
 
-On 2014-04-21 16:24, Jeff King wrote:
-> On Mon, Apr 21, 2014 at 03:07:28PM -0400, Richard Hansen wrote:
-> 
->> Both bash and zsh subject the value of PS1 to parameter expansion,
->> command substitution, and arithmetic expansion.  Rather than include
->> the raw, unescaped branch name in PS1 when running in two- or
->> three-argument mode, construct PS1 to reference a variable that holds
->> the branch name.  Because the shells do not recursively expand, this
->> avoids arbitrary code execution by specially-crafted branch names such
->> as '$(IFS=_;cmd=sudo_rm_-rf_/;$cmd)'.
-> 
-> Cute. We already disallow quite a few characters in refnames (including
-> space, as you probably discovered), and generally enforce that during
-> ref transfer. I wonder if we should tighten that more as a precuation.
-> It would be backwards-incompatible, but I wonder if things like "$" and
-> ";" in refnames are actually useful to people.
+On 4/21/2014 1:49 PM, Felipe Contreras wrote:
+> Ilya Bobyr wrote:
+>> On 4/20/2014 7:23 PM, Felipe Contreras wrote:
+>>> This hook is invoked whenever a branch is updated, either when a branch
+>>> is created or updated with 'git branch', or when it's rebased with 'git
+>>> rebase'. It receives two parameters; the name of the branch, and the
+>>> SHA-1 of the latest commit, additionally, if there was a base commit the
+>>> branch was rebased onto, a third parameter contains it.
+>> And the old branch SHA could be found from in the reflog, correct?
+> Actually the old branch SHA-1 is actually the current one, since the branch
+> hasn't been updated at that point. Personally I don't see much value in adding
+> something the script can easily find out.
 
-That's a tough call.  I imagine those that legitimately use '$', ';', or
-'`' would be annoyed but generally accepting given the security benefit.
+I did not understand that from the description.  That was my next
+comment that I did not send just yet.
+All the other hooks describe in detail if they are run before or after
+the operation, and if it is possible to cancel the operation.
+Also, most have names that start with either "pre-" or "post-".
+It seems reasonable for both "pre-update-branch" and
+"post-update-branch" to exist.
+This one would be "pre-update-branch", I guess.
 
-I wonder how many repos at sites like GitHub use unusual punctuation in
-ref names.
-
-Perhaps the additional character restrictions could be controlled via a
-config option.  It would default to the more secure mode but
-developers/repo admins could relax it where required.
-
-If imposing additional character restrictions is unpalatable, hooks
-could be used to reject funny branch names in shared repos.  But this
-would require administrator action -- it's not as secure by default.
-
-> 
-> Did you look into similar exploits with completion? That's probably
-> slightly less dire (this one hits you as soon as you "cd" into a
-> malicious clone, whereas completion problems require you to actually hit
-> <tab>). I'm fairly sure that we miss some quoting on pathnames, for
-> example. That can lead to bogus completion, but I'm not sure offhand if
-> it can lead to execution.
-
-I have not looked at the completion code.
-
--Richard
+I was also wondering about "git reset".  It could also change the branch
+position, right?
