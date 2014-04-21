@@ -1,272 +1,145 @@
-From: Richard Hansen <rhansen@bbn.com>
-Subject: [SECURITY PATCH v2] git-prompt.sh: don't put unsanitized branch names in $PS1
-Date: Mon, 21 Apr 2014 19:53:09 -0400
-Message-ID: <1398124389-16627-1-git-send-email-rhansen@bbn.com>
-References: <5355A280.6020409@bbn.com>
-Cc: sitaramc@gmail.com, szeder@ira.uka.de, s.oosthoek@xs4all.nl,
-	rhansen@bbn.com
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Apr 22 01:53:37 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: RE: [NOT_A_PATCH] A naive attempt to cross-build
+ Linux->mingw64 Git
+Date: Mon, 21 Apr 2014 18:59:10 -0500
+Message-ID: <5355b0ce562b8_6c39e772f0cb@nysa.notmuch>
+References: <535569e92cbcc_32c48493101f@nysa.notmuch>
+ <1398118479-7731-1-git-send-email-marat@slonopotamus.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Marat Radchenko <marat@slonopotamus.org>, 
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+ Sebastian Schuberth <sschuberth@gmail.com>, 
+ Heiko Voigt <hvoigt@hvoigt.net>, 
+ git@vger.kernel.org, 
+ msysGit Mailinglist <msysgit@googlegroups.com>
+To: Marat Radchenko <marat@slonopotamus.org>, 
+ Felipe Contreras <felipe.contreras@gmail.com>
+X-From: msysgit+bncBDBJVMGGZYNBBPPG22NAKGQE4MJWNEQ@googlegroups.com Tue Apr 22 02:09:37 2014
+Return-path: <msysgit+bncBDBJVMGGZYNBBPPG22NAKGQE4MJWNEQ@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-ie0-f183.google.com ([209.85.223.183])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WcO1o-0001Nk-LN
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 01:53:37 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754502AbaDUXxc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Apr 2014 19:53:32 -0400
-Received: from smtp.bbn.com ([128.33.0.80]:47472 "EHLO smtp.bbn.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753252AbaDUXxb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Apr 2014 19:53:31 -0400
-Received: from socket.bbn.com ([192.1.120.102]:40975)
-	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
-	(Exim 4.77 (FreeBSD))
-	(envelope-from <rhansen@bbn.com>)
-	id 1WcO1c-000Etg-On; Mon, 21 Apr 2014 19:53:24 -0400
-X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id 821EF3FFDD
-X-Mailer: git-send-email 1.9.2
-In-Reply-To: <5355A280.6020409@bbn.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246678>
+	(envelope-from <msysgit+bncBDBJVMGGZYNBBPPG22NAKGQE4MJWNEQ@googlegroups.com>)
+	id 1WcOHH-0006pF-1J
+	for gcvm-msysgit@m.gmane.org; Tue, 22 Apr 2014 02:09:35 +0200
+Received: by mail-ie0-f183.google.com with SMTP id as1sf1283632iec.20
+        for <gcvm-msysgit@m.gmane.org>; Mon, 21 Apr 2014 17:09:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:x-original-sender:x-original-authentication-results
+         :precedence:mailing-list:list-id:list-post:list-help:list-archive
+         :sender:list-subscribe:list-unsubscribe:content-type;
+        bh=R1aK0Hd8SKE8ZHdCIzzdhoEF4t9mOfSLn6Op97mtA9E=;
+        b=mhK3RhO9T8WZm8qxmWUN+VGxDBNsWbykBWG4tQysxkAGazDslD34MsvwfFnMK0aWlP
+         59Ai8KrPs4HS/lE54Pi4MW+s5kXZ4xB1P8lYJGhGmrR/B6H4ZArASVEd6Nn4Ad6w01VJ
+         J1ohaoIZW6ua5Vfot/QG/wVXIMWlQWDZq2/RiwR+8KXa6teN1E3pPepNOL2+D9IYe186
+         xbbEfCReG/cTAN/Jhp5Tst3I/v3n1KiScNv1NPqA6JZonztXfbJ2flcuFOoF3vmpc1Cn
+         XaeZk1w2an5k5Z+AM8XLi52cj26WFZQxAoe1pT/nltg+oDRZCgzJBMsmRLjTiXjMDbaC
+         jHxQ==
+X-Received: by 10.140.108.132 with SMTP id j4mr356064qgf.1.1398125374020;
+        Mon, 21 Apr 2014 17:09:34 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.140.89.136 with SMTP id v8ls2658439qgd.13.gmail; Mon, 21 Apr
+ 2014 17:09:33 -0700 (PDT)
+X-Received: by 10.58.210.2 with SMTP id mq2mr19553461vec.3.1398125373407;
+        Mon, 21 Apr 2014 17:09:33 -0700 (PDT)
+Received: from mail-ob0-x22f.google.com (mail-ob0-x22f.google.com [2607:f8b0:4003:c01::22f])
+        by gmr-mx.google.com with ESMTPS id u5si2583333ige.1.2014.04.21.17.09.33
+        for <msysgit@googlegroups.com>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 21 Apr 2014 17:09:33 -0700 (PDT)
+Received-SPF: pass (google.com: domain of felipe.contreras@gmail.com designates 2607:f8b0:4003:c01::22f as permitted sender) client-ip=2607:f8b0:4003:c01::22f;
+Received: by mail-ob0-x22f.google.com with SMTP id wp4so4943108obc.20
+        for <msysgit@googlegroups.com>; Mon, 21 Apr 2014 17:09:33 -0700 (PDT)
+X-Received: by 10.182.120.5 with SMTP id ky5mr29223518obb.11.1398125373052;
+        Mon, 21 Apr 2014 17:09:33 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id ii8sm73290507obb.11.2014.04.21.17.09.30
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 21 Apr 2014 17:09:32 -0700 (PDT)
+In-Reply-To: <1398118479-7731-1-git-send-email-marat@slonopotamus.org>
+X-Original-Sender: felipe.contreras@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of felipe.contreras@gmail.com designates
+ 2607:f8b0:4003:c01::22f as permitted sender) smtp.mail=felipe.contreras@gmail.com;
+       dkim=pass header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246679>
 
-Both bash and zsh subject the value of PS1 to parameter expansion,
-command substitution, and arithmetic expansion.  Rather than include
-the raw, unescaped branch name in PS1 when running in two- or
-three-argument mode, construct PS1 to reference a variable that holds
-the branch name.  Because the shells do not recursively expand, this
-avoids arbitrary code execution by specially-crafted branch names such
-as '$(IFS=_;cmd=sudo_rm_-rf_/;$cmd)'.
+Marat Radchenko wrote:
+> config.mak.uname: provide a way to explicitely request MinGW build.
+> This is required to perform Linux->MinGW crosscompilation.
+> ---
+> 
+> > Personally I don't see why ideally I shouldn't be able to build upstream Git
+> > for Windows with mingw without leaving my Linux system.
+> 
+> One day you might be able, but as of today...
+> 
+> 1. Obtain x86_64-w64-mingw32 compiler for your *nix distro
+>  * [Gentoo] emerge crossdev && crossdev -t x86_64-w64-mingw32
+>  * [Debian/Ubuntu] apt-get install mingw-w64
 
-Signed-off-by: Richard Hansen <rhansen@bbn.com>
----
-Changes since v1:  update t/t9903-bash-prompt.sh
+Note that I didn't say 64-bit. Baby steps, first the tried-and-true 32-bit compiler.
 
- contrib/completion/git-prompt.sh | 34 +++++++++++++++++++++++++++++--
- t/t9903-bash-prompt.sh           | 44 ++++++++++++++++++++--------------------
- 2 files changed, 54 insertions(+), 24 deletions(-)
+> 2. Apply patch from this email to Git sources (git/git or msysgit/git - doesn't matter)
 
-diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-index 7b732d2..bd7ff29 100644
---- a/contrib/completion/git-prompt.sh
-+++ b/contrib/completion/git-prompt.sh
-@@ -207,7 +207,18 @@ __git_ps1_show_upstream ()
- 			p=" u+${count#*	}-${count%	*}" ;;
- 		esac
- 		if [[ -n "$count" && -n "$name" ]]; then
--			p="$p $(git rev-parse --abbrev-ref "$upstream" 2>/dev/null)"
-+			__git_ps1_upstream_name=$(git rev-parse \
-+				--abbrev-ref "$upstream" 2>/dev/null)
-+			if [ $pcmode = yes ]; then
-+				# see the comments around the
-+				# __git_ps1_branch_name variable below
-+				p="$p \${__git_ps1_upstream_name}"
-+			else
-+				p="$p ${__git_ps1_upstream_name}"
-+				# not needed anymore; keep user's
-+				# environment clean
-+				unset __git_ps1_upstream_name
-+			fi
- 		fi
- 	fi
- 
-@@ -438,8 +449,27 @@ __git_ps1 ()
- 		__git_ps1_colorize_gitstring
- 	fi
- 
-+	b=${b##refs/heads/}
-+	if [ $pcmode = yes ]; then
-+		# In pcmode (and only pcmode) the contents of
-+		# $gitstring are subject to expansion by the shell.
-+		# Avoid putting the raw ref name in the prompt to
-+		# protect the user from arbitrary code execution via
-+		# specially crafted ref names (e.g., a ref named
-+		# '$(IFS=_;cmd=sudo_rm_-rf_/;$cmd)' would execute
-+		# 'sudo rm -rf /' when the prompt is drawn).  Instead,
-+		# put the ref name in a new global variable (in the
-+		# __git_ps1_* namespace to avoid colliding with the
-+		# user's environment) and reference that variable from
-+		# PS1.
-+		__git_ps1_branch_name=$b
-+		# note that the $ is escaped -- the variable will be
-+		# expanded later (when it's time to draw the prompt)
-+		b="\${__git_ps1_branch_name}"
-+	fi
-+
- 	local f="$w$i$s$u"
--	local gitstring="$c${b##refs/heads/}${f:+$z$f}$r$p"
-+	local gitstring="$c$b${f:+$z$f}$r$p"
- 
- 	if [ $pcmode = yes ]; then
- 		if [ "${__git_printf_supports_v-}" != yes ]; then
-diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
-index 59f875e..6efd0d9 100755
---- a/t/t9903-bash-prompt.sh
-+++ b/t/t9903-bash-prompt.sh
-@@ -452,53 +452,53 @@ test_expect_success 'prompt - format string starting with dash' '
- '
- 
- test_expect_success 'prompt - pc mode' '
--	printf "BEFORE: (master):AFTER" >expected &&
-+	printf "BEFORE: (\${__git_ps1_branch_name}):AFTER\\nmaster" >expected &&
- 	printf "" >expected_output &&
- 	(
- 		__git_ps1 "BEFORE:" ":AFTER" >"$actual" &&
- 		test_cmp expected_output "$actual" &&
--		printf "%s" "$PS1" >"$actual"
-+		printf "%s\\n%s" "$PS1" "${__git_ps1_branch_name}" >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
- 
- test_expect_success 'prompt - bash color pc mode - branch name' '
--	printf "BEFORE: (${c_green}master${c_clear}):AFTER" >expected &&
-+	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear}):AFTER\\nmaster" >expected &&
- 	(
- 		GIT_PS1_SHOWCOLORHINTS=y &&
- 		__git_ps1 "BEFORE:" ":AFTER" >"$actual"
--		printf "%s" "$PS1" >"$actual"
-+		printf "%s\\n%s" "$PS1" "${__git_ps1_branch_name}" >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
- 
- test_expect_success 'prompt - bash color pc mode - detached head' '
--	printf "BEFORE: (${c_red}(%s...)${c_clear}):AFTER" $(git log -1 --format="%h" b1^) >expected &&
-+	printf "BEFORE: (${c_red}\${__git_ps1_branch_name}${c_clear}):AFTER\\n(%s...)" $(git log -1 --format="%h" b1^) >expected &&
- 	git checkout b1^ &&
- 	test_when_finished "git checkout master" &&
- 	(
- 		GIT_PS1_SHOWCOLORHINTS=y &&
- 		__git_ps1 "BEFORE:" ":AFTER" &&
--		printf "%s" "$PS1" >"$actual"
-+		printf "%s\\n%s" "$PS1" "${__git_ps1_branch_name}" >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
- 
- test_expect_success 'prompt - bash color pc mode - dirty status indicator - dirty worktree' '
--	printf "BEFORE: (${c_green}master${c_clear} ${c_red}*${c_clear}):AFTER" >expected &&
-+	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_red}*${c_clear}):AFTER\\nmaster" >expected &&
- 	echo "dirty" >file &&
- 	test_when_finished "git reset --hard" &&
- 	(
- 		GIT_PS1_SHOWDIRTYSTATE=y &&
- 		GIT_PS1_SHOWCOLORHINTS=y &&
- 		__git_ps1 "BEFORE:" ":AFTER" &&
--		printf "%s" "$PS1" >"$actual"
-+		printf "%s\\n%s" "$PS1" "${__git_ps1_branch_name}" >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
- 
- test_expect_success 'prompt - bash color pc mode - dirty status indicator - dirty index' '
--	printf "BEFORE: (${c_green}master${c_clear} ${c_green}+${c_clear}):AFTER" >expected &&
-+	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_green}+${c_clear}):AFTER\\nmaster" >expected &&
- 	echo "dirty" >file &&
- 	test_when_finished "git reset --hard" &&
- 	git add -u &&
-@@ -506,13 +506,13 @@ test_expect_success 'prompt - bash color pc mode - dirty status indicator - dirt
- 		GIT_PS1_SHOWDIRTYSTATE=y &&
- 		GIT_PS1_SHOWCOLORHINTS=y &&
- 		__git_ps1 "BEFORE:" ":AFTER" &&
--		printf "%s" "$PS1" >"$actual"
-+		printf "%s\\n%s" "$PS1" "${__git_ps1_branch_name}" >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
- 
- test_expect_success 'prompt - bash color pc mode - dirty status indicator - dirty index and worktree' '
--	printf "BEFORE: (${c_green}master${c_clear} ${c_red}*${c_green}+${c_clear}):AFTER" >expected &&
-+	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_red}*${c_green}+${c_clear}):AFTER\\nmaster" >expected &&
- 	echo "dirty index" >file &&
- 	test_when_finished "git reset --hard" &&
- 	git add -u &&
-@@ -521,25 +521,25 @@ test_expect_success 'prompt - bash color pc mode - dirty status indicator - dirt
- 		GIT_PS1_SHOWCOLORHINTS=y &&
- 		GIT_PS1_SHOWDIRTYSTATE=y &&
- 		__git_ps1 "BEFORE:" ":AFTER" &&
--		printf "%s" "$PS1" >"$actual"
-+		printf "%s\\n%s" "$PS1" "${__git_ps1_branch_name}" >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
- 
- test_expect_success 'prompt - bash color pc mode - dirty status indicator - before root commit' '
--	printf "BEFORE: (${c_green}master${c_clear} ${c_green}#${c_clear}):AFTER" >expected &&
-+	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_green}#${c_clear}):AFTER\\nmaster" >expected &&
- 	(
- 		GIT_PS1_SHOWDIRTYSTATE=y &&
- 		GIT_PS1_SHOWCOLORHINTS=y &&
- 		cd otherrepo &&
- 		__git_ps1 "BEFORE:" ":AFTER" &&
--		printf "%s" "$PS1" >"$actual"
-+		printf "%s\\n%s" "$PS1" "${__git_ps1_branch_name}" >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
- 
- test_expect_success 'prompt - bash color pc mode - inside .git directory' '
--	printf "BEFORE: (${c_green}GIT_DIR!${c_clear}):AFTER" >expected &&
-+	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear}):AFTER\\nGIT_DIR!" >expected &&
- 	echo "dirty" >file &&
- 	test_when_finished "git reset --hard" &&
- 	(
-@@ -547,13 +547,13 @@ test_expect_success 'prompt - bash color pc mode - inside .git directory' '
- 		GIT_PS1_SHOWCOLORHINTS=y &&
- 		cd .git &&
- 		__git_ps1 "BEFORE:" ":AFTER" &&
--		printf "%s" "$PS1" >"$actual"
-+		printf "%s\\n%s" "$PS1" "${__git_ps1_branch_name}" >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
- 
- test_expect_success 'prompt - bash color pc mode - stash status indicator' '
--	printf "BEFORE: (${c_green}master${c_clear} ${c_lblue}\$${c_clear}):AFTER" >expected &&
-+	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_lblue}\$${c_clear}):AFTER\\nmaster" >expected &&
- 	echo 2 >file &&
- 	git stash &&
- 	test_when_finished "git stash drop" &&
-@@ -561,29 +561,29 @@ test_expect_success 'prompt - bash color pc mode - stash status indicator' '
- 		GIT_PS1_SHOWSTASHSTATE=y &&
- 		GIT_PS1_SHOWCOLORHINTS=y &&
- 		__git_ps1 "BEFORE:" ":AFTER" &&
--		printf "%s" "$PS1" >"$actual"
-+		printf "%s\\n%s" "$PS1" "${__git_ps1_branch_name}" >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
- 
- test_expect_success 'prompt - bash color pc mode - untracked files status indicator' '
--	printf "BEFORE: (${c_green}master${c_clear} ${c_red}%%${c_clear}):AFTER" >expected &&
-+	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_red}%%${c_clear}):AFTER\\nmaster" >expected &&
- 	(
- 		GIT_PS1_SHOWUNTRACKEDFILES=y &&
- 		GIT_PS1_SHOWCOLORHINTS=y &&
- 		__git_ps1 "BEFORE:" ":AFTER" &&
--		printf "%s" "$PS1" >"$actual"
-+		printf "%s\\n%s" "$PS1" "${__git_ps1_branch_name}" >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
- 
- test_expect_success 'prompt - zsh color pc mode' '
--	printf "BEFORE: (%%F{green}master%%f):AFTER" >expected &&
-+	printf "BEFORE: (%%F{green}\${__git_ps1_branch_name}%%f):AFTER\\nmaster" >expected &&
- 	(
- 		ZSH_VERSION=5.0.0 &&
- 		GIT_PS1_SHOWCOLORHINTS=y &&
- 		__git_ps1 "BEFORE:" ":AFTER" >"$actual"
--		printf "%s" "$PS1" >"$actual"
-+		printf "%s\\n%s" "$PS1" "${__git_ps1_branch_name}" >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
+Funny I came with almost exactly the same patch.
+
+> 3. `make CC=x86_64-w64-mingw32-gcc MINGW=1`
+
+I did:
+
+% make CC=i486-mingw32-gcc NO_OPENSSL=1 NO_GETTEXT=1
+
+But ideally it should be:
+
+% make CROSS_COMPILE=i486-mingw32-
+
+(or whatever the name of the suite)
+
+> 4. Observe errors [1]
+
+I see those errors with a 64-bit compiler, but not with the old 32-bit one.
+
+> I would be happy to find out I'm doing something wrong -- Johannes says building
+> mingw64 Git is dirt-easy.
+
+I get the same error. I've been cross-compiling since basically all my
+professional life, so I don't think you are doing something wrong, it just
+doesn't work.
+
 -- 
-1.9.2
+Felipe Contreras
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
