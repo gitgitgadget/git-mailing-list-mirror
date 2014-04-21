@@ -1,158 +1,120 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v2 03/13] refs.c: change ref_transaction_update() to do error checking and return status
-Date: Mon, 21 Apr 2014 15:53:21 -0700
-Message-ID: <1398120811-20284-4-git-send-email-sahlberg@google.com>
+Subject: [PATCH v2 02/13] refs.c: use a single exit path from transaction commit and handle onerr
+Date: Mon, 21 Apr 2014 15:53:20 -0700
+Message-ID: <1398120811-20284-3-git-send-email-sahlberg@google.com>
 References: <1398120811-20284-1-git-send-email-sahlberg@google.com>
 Cc: mhagger@alum.mit.edu, Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 22 00:54:18 2014
+X-From: git-owner@vger.kernel.org Tue Apr 22 00:54:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WcN6O-000864-3Q
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 00:54:16 +0200
+	id 1WcN6V-0008Bp-Fd
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 00:54:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754892AbaDUWyI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Apr 2014 18:54:08 -0400
-Received: from mail-pd0-f201.google.com ([209.85.192.201]:48288 "EHLO
-	mail-pd0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754734AbaDUWxk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Apr 2014 18:53:40 -0400
-Received: by mail-pd0-f201.google.com with SMTP id x10so613464pdj.4
-        for <git@vger.kernel.org>; Mon, 21 Apr 2014 15:53:39 -0700 (PDT)
+	id S1754933AbaDUWyS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Apr 2014 18:54:18 -0400
+Received: from mail-ob0-f202.google.com ([209.85.214.202]:45456 "EHLO
+	mail-ob0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754713AbaDUWxj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Apr 2014 18:53:39 -0400
+Received: by mail-ob0-f202.google.com with SMTP id gq1so1011906obb.3
+        for <git@vger.kernel.org>; Mon, 21 Apr 2014 15:53:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=tOWwfCNvW4/2lmIKSDxpYwkB4zb5PkisGiqWmP3vCwo=;
-        b=EKjx1HKICKn3jN/93TMwjY/FDVbo4A+Eigzj90Annp9cEd1Zi4HcpMaw4V5msF/Scp
-         lL1vom0XNOpam55+MCdrCNX7NMMEA/oYQPwV8QDo8Vonymdq/PnZOdq9893lA5hvBM+d
-         z7obToNP5iEgfSkEe55tHbCVB3X/7irQa2uPiMUB3huhkyVW8UWt3C6WGQ9Kwf760dph
-         xhw94uCADOUtunYddhvwUjQXJEpuvfRRcWkSqdRymi5gMxlgZWHoSlSXo3jk94gwu4yD
-         heXTZPMx0XcLQ+j8RhLbtBqwWtBputKPVCk+YHn08DBOwmm0oCkQNu2u4gvWUmQRAmR5
-         +KXg==
+        bh=zYGaBcEUXE3FdLFKM9KOYXJNmPR7Q2WjaCzveD55Mms=;
+        b=ovRpD6qQWEfVq3lf+lbzMLXJ/M80HaN/gZWEQZgIvmj3qVNE8NA5HY163lpVa9+AGi
+         A4H1012YQ/WiJsn7gH8+ZcXElpFBe9TkMn7/X7MlhZUHafdvyTJr7K98sn609TYieZtQ
+         7++D9/8NC5qX7EkcBkFsziPe3f+LjRASOaSBr7hHypc9sgoLqJe3RxILRjGfG4fUTQW5
+         mbe3PZcujbd155lqUYkDTJN4MV0KTS5jmVoTnCk/4YmRIcyLDP/d2WXdxsiLSQfIY/LK
+         Gi2PzY2iyqIuvDExfYijSCWXwlON7Jc6iXIpHArRWmaAkbMxEFbkX3TEFyY77z37f7BZ
+         okDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=tOWwfCNvW4/2lmIKSDxpYwkB4zb5PkisGiqWmP3vCwo=;
-        b=aCq6SggXAPy1i0WHXJe9XRwyIjXIBNNGlM8fL8AUUMyhc92sWNS5Ut75JW+ILwXVsK
-         0bf39GNz6ZiRBMLShIij9P+wpjg9Lotv8igCFoEmGm1sKymzD2t70pU5TsW5W68B5Gwx
-         v5afKIckFR+NnkPER1mm3PghCAT2ySOysqJicE+Sd952ss4lt7w4KEiLNYsUavemo8uw
-         lJUn3YbOHFqZP7aGCc+x6AiW2DPFF6G0C7t4N58xkgBrosg0tJSv0nWtlcSMiZ9gyyy9
-         88aQdUX/u/Om7z++hlLeNSNHnR0ByFi+F5OUpOs+2RYhczLQTSOEJNEnwDH7TwhAfTMq
-         Py8Q==
-X-Gm-Message-State: ALoCoQmiEQh3qRbs6w3ZJQhSdYPeDTOQF+nDGcb+bHE+dPAMa7kSadYzzmApQFpXdpuB4YqvezOdOdfviOob3eCcCYDSllGpPlNtTa6kS48qsDPTUZ0drEKwrakBQsO4GDpKKi98A98se9m+5+XHW//bbUi5kvVCL/YXGOaWHk2wNCOgjfSNrK69OTK7BCBlFoCTFYERTdSp
-X-Received: by 10.66.232.38 with SMTP id tl6mr21231829pac.33.1398120819449;
-        Mon, 21 Apr 2014 15:53:39 -0700 (PDT)
-Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
-        by gmr-mx.google.com with ESMTPS id x22si5367141yhd.5.2014.04.21.15.53.39
+        bh=zYGaBcEUXE3FdLFKM9KOYXJNmPR7Q2WjaCzveD55Mms=;
+        b=JuP5p2f+OMyoLJuKZo0RV0elIwuDF881usVPogWNzRAinZcTGB7jrDLpUhcy2PpBLR
+         W8hYXKPtHIwDY0xvL6NgKfdqlwWBetXlc/0s5rz9SMuT0d34eLLQPSBF/sK4tHtXUSmb
+         J99yIlSg0Lejg9J9NjZU4INyCy6xu631ahzfrYUdYDVVME8/BF0jf1a73+PiXaf33v2E
+         5Ifdjyt7+e58SqUj+QttenhtO+eK0d7Q+PDT6RpmPBI8LhnT9PbvQQA1Y1qj98tt2Nox
+         I3zrEYtSSUSgFVNGhQ7VqJmdgFs3IsKAGPnavKI+YMM6U8CJZdWLH8H3bXCVTXMCpvU4
+         ZbLw==
+X-Gm-Message-State: ALoCoQmT62WAeDAuhupE7R7h0hwNcezmTwwrAJePRmZSzOPUgRmFHzCb5WdNiDTGtTsIyQonisgaT9h+bEOH/gO2IDjrivptqpdSmtIPh81szbm1TbbZd5j6wAfcVOKXYAEAUdEZeRyjotH9wrjqoK9RkN5IqK6kx1U4tg9m8DFXmxqT/L7NEcuilflA54VlgTdKcVPaW9EQ
+X-Received: by 10.43.78.135 with SMTP id zm7mr17493562icb.27.1398120818563;
+        Mon, 21 Apr 2014 15:53:38 -0700 (PDT)
+Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
+        by gmr-mx.google.com with ESMTPS id e40si5369739yhf.0.2014.04.21.15.53.38
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 21 Apr 2014 15:53:39 -0700 (PDT)
+        Mon, 21 Apr 2014 15:53:38 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 3DBB55A4207;
-	Mon, 21 Apr 2014 15:53:39 -0700 (PDT)
+	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 65D8131C11A;
+	Mon, 21 Apr 2014 15:53:38 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id F245EE06AA; Mon, 21 Apr 2014 15:53:38 -0700 (PDT)
+	id 28B6FE06AA; Mon, 21 Apr 2014 15:53:38 -0700 (PDT)
 X-Mailer: git-send-email 1.9.1.515.g3b87021
 In-Reply-To: <1398120811-20284-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246666>
 
-Update ref_transaction_update() do some basic error checking and return
-true on error. Update all callers to check ref_transaction_update() for error.
+Update ref_transaction_commit to have a single exit path and process onerr
+if an error occured during hte commit. This does mean that in case of an error
+occuring for UPDATE_REFS_MSG_ON_ERR during the calls to update_ref_lock or
+update_ref_write we will log errors from both those functions as well as a
+generic message from ref_transaction_commit.
+
+I thought a while to make the MSG_ON_ERR message in ref_transaction_commit
+conditional to only trigger if the error was not triggered by the two functions
+we call that also take onerr, and which would already have logger an error
+already for this case, but the code would just look too awful. I think it
+is acceptable to log two error messages for those two cases than to badify
+the commit code.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- builtin/update-ref.c | 10 ++++++----
- refs.c               |  9 +++++++--
- refs.h               | 10 +++++-----
- 3 files changed, 18 insertions(+), 11 deletions(-)
+ refs.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/update-ref.c b/builtin/update-ref.c
-index 405267f..811e0b0 100644
---- a/builtin/update-ref.c
-+++ b/builtin/update-ref.c
-@@ -197,8 +197,9 @@ static const char *parse_cmd_update(struct strbuf *input, const char *next)
- 	if (*next != line_termination)
- 		die("update %s: extra input: %s", refname, next);
- 
--	ref_transaction_update(transaction, refname, new_sha1, old_sha1,
--			       update_flags, have_old);
-+	if (ref_transaction_update(transaction, refname, new_sha1, old_sha1,
-+				   update_flags, have_old))
-+		die("failed transaction update for %s", refname);
- 
- 	update_flags = 0;
- 	free(refname);
-@@ -286,8 +287,9 @@ static const char *parse_cmd_verify(struct strbuf *input, const char *next)
- 	if (*next != line_termination)
- 		die("verify %s: extra input: %s", refname, next);
- 
--	ref_transaction_update(transaction, refname, new_sha1, old_sha1,
--			       update_flags, have_old);
-+	if (ref_transaction_update(transaction, refname, new_sha1, old_sha1,
-+				   update_flags, have_old))
-+		die("failed transaction update for %s", refname);
- 
- 	update_flags = 0;
- 	free(refname);
 diff --git a/refs.c b/refs.c
-index 9daf89e..8c02779 100644
+index 138ab70..9daf89e 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -3327,19 +3327,24 @@ static struct ref_update *add_update(struct ref_transaction *transaction,
- 	return update;
- }
- 
--void ref_transaction_update(struct ref_transaction *transaction,
-+int ref_transaction_update(struct ref_transaction *transaction,
- 			    const char *refname,
- 			    const unsigned char *new_sha1,
- 			    const unsigned char *old_sha1,
- 			    int flags, int have_old)
+@@ -3414,12 +3414,12 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 			   const char *msg, enum action_on_err onerr)
  {
--	struct ref_update *update = add_update(transaction, refname);
-+	struct ref_update *update;
-+
-+	if (have_old && !old_sha1)
-+		die("have_old is true but old_sha1 is NULL");
+ 	int ret = 0, delnum = 0, i;
+-	const char **delnames;
++	const char **delnames = NULL;
+ 	int n = transaction->nr;
+ 	struct ref_update **updates = transaction->updates;
  
-+	update = add_update(transaction, refname);
- 	hashcpy(update->new_sha1, new_sha1);
- 	update->flags = flags;
- 	update->have_old = have_old;
- 	if (have_old)
- 		hashcpy(update->old_sha1, old_sha1);
-+	return 0;
+ 	if (!n)
+-		return 0;
++		goto cleanup;
+ 
+ 	/* Allocate work space */
+ 	delnames = xmalloc(sizeof(*delnames) * n);
+@@ -3481,6 +3481,14 @@ cleanup:
+ 			unlock_ref(updates[i]->lock);
+ 	free(delnames);
+ 	ref_transaction_free(transaction);
++	if (ret) {
++		const char *str = "Cannot commit transaction.";
++		switch (onerr) {
++		case UPDATE_REFS_MSG_ON_ERR: error(str); break;
++		case UPDATE_REFS_DIE_ON_ERR: die(str); break;
++		case UPDATE_REFS_QUIET_ON_ERR: break;
++		}
++	}
+ 	return ret;
  }
  
- void ref_transaction_create(struct ref_transaction *transaction,
-diff --git a/refs.h b/refs.h
-index 892c5b6..00e4f7b 100644
---- a/refs.h
-+++ b/refs.h
-@@ -237,11 +237,11 @@ void ref_transaction_rollback(struct ref_transaction *transaction);
-  * that the reference should have had before the update, or zeros if
-  * it must not have existed beforehand.
-  */
--void ref_transaction_update(struct ref_transaction *transaction,
--			    const char *refname,
--			    const unsigned char *new_sha1,
--			    const unsigned char *old_sha1,
--			    int flags, int have_old);
-+int ref_transaction_update(struct ref_transaction *transaction,
-+			   const char *refname,
-+			   const unsigned char *new_sha1,
-+			   const unsigned char *old_sha1,
-+			   int flags, int have_old);
- 
- /*
-  * Add a reference creation to transaction.  new_sha1 is the value
 -- 
 1.9.1.515.g3b87021
