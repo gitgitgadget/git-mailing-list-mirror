@@ -1,89 +1,85 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 2/2] remote-helpers: move tests out of contrib
-Date: Mon, 21 Apr 2014 14:23:14 -0500
-Message-ID: <53557021ed75d_414c80b30836@nysa.notmuch>
-References: <1398029971-1396-1-git-send-email-felipe.contreras@gmail.com>
- <1398029971-1396-3-git-send-email-felipe.contreras@gmail.com>
- <xmqq7g6ia5rr.fsf@gitster.dls.corp.google.com>
- <5355690fbe8ad_32c4849310d1@nysa.notmuch>
- <xmqqy4yy8p0l.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What is missing from Git v2.0
+Date: Mon, 21 Apr 2014 12:39:04 -0700
+Message-ID: <xmqqtx9m8obr.fsf@gitster.dls.corp.google.com>
+References: <CAMP44s17h4Tjg+VaMF0atLep8t-0HVp4UDr1WE2wYnEuZ07eaQ@mail.gmail.com>
+	<53557071.5040500@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 21 21:33:47 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 21 21:39:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WcJyI-0002t3-3C
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Apr 2014 21:33:42 +0200
+	id 1WcK3g-0000Ej-MR
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Apr 2014 21:39:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754113AbaDUTdi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Apr 2014 15:33:38 -0400
-Received: from mail-yh0-f54.google.com ([209.85.213.54]:55558 "EHLO
-	mail-yh0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752779AbaDUTdg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Apr 2014 15:33:36 -0400
-Received: by mail-yh0-f54.google.com with SMTP id f73so3931106yha.27
-        for <git@vger.kernel.org>; Mon, 21 Apr 2014 12:33:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=QaCWxObXkoL9GwJ8dmWX/zV4L2tS1xp/JuWTSl53mLc=;
-        b=u58w19htEi1Nsimo2NyegGZqCwXkZYggIZ4koE+CzBKVXrh2C2AljcCBNcl0h2DYZu
-         XSD736TiAWY3XC7P/JQhPEhAraD4m0o4XWNRmkJh8+O/sl1fQMobU3PjX15C1VOw0d/U
-         r2+l5lxNrmqeLcncuQvtWk/oqC1oFY1Ky8186fimwAfTEedPb9Rr6BrlvwxSc4IeziTo
-         oMm0/6rZl8AUvxmCX5Ieu+0pWJpV9OJZuGR8HrcICq3lUuFwluKGGKbl5OQQEwspWO7J
-         VhZfvY61cnQi3TphAuXlnGUpfM2xhXW4y5cI5b2iQcp7dX6mo6SpxBbTEbBH3Qh5QdTg
-         tcaQ==
-X-Received: by 10.236.197.68 with SMTP id s44mr5150567yhn.109.1398108816231;
-        Mon, 21 Apr 2014 12:33:36 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id f62sm71539805yhq.6.2014.04.21.12.33.34
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 21 Apr 2014 12:33:35 -0700 (PDT)
-In-Reply-To: <xmqqy4yy8p0l.fsf@gitster.dls.corp.google.com>
+	id S1753770AbaDUTjN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Apr 2014 15:39:13 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64491 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750973AbaDUTjM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Apr 2014 15:39:12 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 449787F9CB;
+	Mon, 21 Apr 2014 15:39:11 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=qGTdOrx7TzaJ/hSmugEbeVoHPew=; b=gxK2Om
+	NGscDnBRAYb8CVVC9MZSXykfE1KACYVhiGnM5bK+k6CwJdrEy8yvY9EfCavuHAeu
+	bo5oteGtTDC4lFAg3snjDcrbn+hpAMrQuWwInr9ax6/N2ogqwJBS59EK5Zoz2QOx
+	oj036255yGPz+b2QqPCr++c4ttTC8jQFM6gBs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YlT9nof2UE4cYjL/2fxJYFJYMuchmgWz
+	mRUhXJ4sH7t+z4HoO+AaXkJXH+rQ56iiUh+bzSjwLOUz/BlO2xcfKkCHa/p6CQUd
+	esM1+4MQaCRM5S7Zu6jadJn5BvXB123WD0SM56hw/+cLXE6TvjQbYNLyKTizQR7a
+	5tZwKIYqcj4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2F3997F9CA;
+	Mon, 21 Apr 2014 15:39:11 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4EC737F9BD;
+	Mon, 21 Apr 2014 15:39:06 -0400 (EDT)
+In-Reply-To: <53557071.5040500@gmail.com> (Sebastian Schuberth's message of
+	"Mon, 21 Apr 2014 21:24:33 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 99C17DBE-C98C-11E3-B0A4-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246625>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246626>
 
-Junio C Hamano wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
-> 
-> >> This step needs a bit more work, I am afraid, to at least have these
-> >> three test scripts follow the same numbering scheme.  Especially given
-> >> that there were recent discussions on allowing a range of tests to
-> >> be run (or omitted) via notations like "5000,5020,9800-9812", not
-> >> doing so now will make it harder to implement such an enhancement.
-> >
-> > I don't see how such an enhancement would be beneficial to these remote
-> > helpers.
-> 
-> Why are remote helpers more special than other parts of the system?
+Sebastian Schuberth <sschuberth@gmail.com> writes:
 
-They aren't.
+>> Every argument against default aliases was basically refuted, yet my
+>> patches went nowhere. And the users still expect these aliases.
+>
+> +1 about having default aliases in general, and I'd also add these:
 
-> Do they _have to_ be different and special?
+I think it might be OK to implement them as the lowest priority
+fallback alias, so that '[alias] co = "user's definition"' anywhere
+in the various configuration locations will override it.  I am a bit
+hesitant about adding start-up overhead, though.  Also I am not sure
+if people can agree with (1) a broadly wide selection of aliases and
+(2) the actual definitions for them (I am OK with "co === checkout"
+myself, but I'd rather not to even think about my Git wasting cycles
+parsing extra configuration items to support "br === branch" at all,
+for example).
 
-No.
- 
-> > For starters there aren't any number rages left for them,...
-> 
-> Wouldn't "5 - the pull and exporting" be an obvious space for them,
-> especiall somewhere after 5800?
+If we squat on "co" and other short-and-sweet friends by adding them
+as built-in aliases (i.e by adding them to git.c:commands[]), the
+only effect would be to annoy people who have them defined somewhat
+slightly differently, so that won't fly well.
 
-Not _that_ obvious. If you are OK with having the hg-hg-git test (a test which
-requires hg-git, a tool that is completely independent from git-remote-hg)
-there, then fine.
+> If we don't standardize this now people will come up with their own
+> definitions [1] [2] (and many others if you just search GitHub) which
+> are again likely to differ (slightly), hindering interoperability.
 
--- 
-Felipe Contreras
+I am afraid that that ship has sailed long time ago, though.
