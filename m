@@ -1,97 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/2] remote-helpers: graduate
-Date: Mon, 21 Apr 2014 11:06:39 -0700
-Message-ID: <xmqqbnvua768.fsf@gitster.dls.corp.google.com>
-References: <1398029971-1396-1-git-send-email-felipe.contreras@gmail.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: security vulnerability disclosure procedure?
+Date: Mon, 21 Apr 2014 11:07:17 -0700
+Message-ID: <CAJo=hJsU7hLMwkvPMqM7J7Tj0svQzQwp8xXHRKr=Gp8W6j55dA@mail.gmail.com>
+References: <53543121.3000808@bbn.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 21 20:06:49 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Richard Hansen <rhansen@bbn.com>
+X-From: git-owner@vger.kernel.org Mon Apr 21 20:07:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WcIcC-0004yt-Sj
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Apr 2014 20:06:49 +0200
+	id 1WcId5-0005tF-W0
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Apr 2014 20:07:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753121AbaDUSGp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Apr 2014 14:06:45 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63409 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752755AbaDUSGn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Apr 2014 14:06:43 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 98DA07DC27;
-	Mon, 21 Apr 2014 14:06:42 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=URAD3vU8KYuRy7jqL2SCTDLsywY=; b=JBWg3+
-	7aLy6yMROPmWHe5N6VmQf1iY/F9QEoGAdB4uIy2TVa0DtnOzfBgQ2DGHEzJEYNyu
-	r4wcLfi+nqibaoaEilxiTbclM3CY81rAtiZpz6mekQwAcjUZVbhd0T0ZzbcUtvq8
-	QWZbikVRzwRqQRGNYI5wYcoqV8YeqZs0DDgc0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jE9Q7b6y/snNHtzmzsi0Z0/LriFSyOeu
-	aMDFbfRfinXi8iVMKcOfqjQdJ52P+fJICqpfD4rA06HudE4WXPUvJuQVnNSqPFkn
-	7+WmdsOgWojF7XcsOQF1Rm3ZuGNlIgir3VBgfiSiQOgdAFgK25g3g2xf2IS/LgBi
-	6/VWbiTpfEk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 814B67DC26;
-	Mon, 21 Apr 2014 14:06:42 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DB9327DC21;
-	Mon, 21 Apr 2014 14:06:40 -0400 (EDT)
-In-Reply-To: <1398029971-1396-1-git-send-email-felipe.contreras@gmail.com>
-	(Felipe Contreras's message of "Sun, 20 Apr 2014 16:39:29 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: B06E6B42-C97F-11E3-A860-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753374AbaDUSHk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Apr 2014 14:07:40 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:56449 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752755AbaDUSHj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Apr 2014 14:07:39 -0400
+Received: by mail-we0-f174.google.com with SMTP id t60so3915568wes.5
+        for <git@vger.kernel.org>; Mon, 21 Apr 2014 11:07:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spearce.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=6aaIx+tLHC4/nOZy5bXVzf/LUm/jAGZrjc1jgG4vKto=;
+        b=Hb+2V9wc7czkw8cWLo/5E2GzEmF03KH2EGWVIshSJ3H/B20hYUkblX9CQjMQvjo2ME
+         Mn8WbaChRwJAyxEZzc8YQ0GMTpWCZWefYKQ+fBV56x92f0bLdJerY1h49lsRdoobHHh0
+         XbYxp7a4APjD0wnt9x+dQEXPigfcQlTVLXcGA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=6aaIx+tLHC4/nOZy5bXVzf/LUm/jAGZrjc1jgG4vKto=;
+        b=Wc7OCht/JnTyCZXeNWjgJbmxJfT1s1mYeNajBjwsCoN2M7PU5k3KdDLPxv4XZ0wSYy
+         /ZRphexqt6dnzfOnU929KSBC0rC4etBU54EbIlrj9Hp6nqN91EsvBIaB1RsmKMSj3LGp
+         8+TCZKax71IYWZPAfnChiWjEBx7UkGmM2ex4K7m2tKMnK0JyCtpzVLRl4zxEFzPpx8Ls
+         ptq0JQxKr5HAF1x3InQzMiXO0yX9y7p44jkkd0fElcHgYaAeghH0/BuL9X5hx4K8be3Y
+         udlHXj0nDhhYfdL6P+ctfPtUBjh3Q/RwbmJcoE7nNPsEKr7kS9tEJZGVE3cKQLgGlwAU
+         5cmQ==
+X-Gm-Message-State: ALoCoQlLqo1zv6LkRHngZC2IvFMjXJUybK5dBQ41f2iM5D1yn3fJEXX/P1Ll7QiV12pootrGAnbg
+X-Received: by 10.180.8.136 with SMTP id r8mr14891678wia.60.1398103657399;
+ Mon, 21 Apr 2014 11:07:37 -0700 (PDT)
+Received: by 10.227.7.131 with HTTP; Mon, 21 Apr 2014 11:07:17 -0700 (PDT)
+In-Reply-To: <53543121.3000808@bbn.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246614>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246615>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
-
-> There doesn't seem to be any reason to keep these remote-helpers in the contrib
-> area.
-
-Yay.
-
-I wouldn't phrase it "doesn't seem to be any reason", though.  The
-decision to include is not done due to lack of negatives, but
-because adding them would be useful.
-
-And I think for these two, it holds true---people seem to have been
-experimenting with them and getting good results with occasional bug
-reports that are addressed in a reasonable promptness.
-
-Will queue.
-
-
-> Felipe Contreras (2):
->   remote-helpers: move out of contrib
->   remote-helpers: move tests out of contrib
+On Sun, Apr 20, 2014 at 1:42 PM, Richard Hansen <rhansen@bbn.com> wrote:
+> I have discovered a minor security vulnerability.  I could send the
+> patch to the mailing list, but I wanted someone else to take a look
+> first just to make sure it's minor enough that folks will think it's OK
+> to publicly announce.
 >
->  .gitignore                                                 |  2 ++
->  Makefile                                                   |  2 ++
->  contrib/remote-helpers/Makefile                            | 14 --------------
->  contrib/remote-helpers/git-remote-bzr => git-remote-bzr.py |  0
->  contrib/remote-helpers/git-remote-hg => git-remote-hg.py   |  0
->  t/Makefile                                                 |  8 +++++++-
->  .../remote-helpers/test-bzr.sh => t/remote-helpers/bzr.t   |  4 ++--
->  .../test-hg-bidi.sh => t/remote-helpers/hg-bidi.t          |  4 ++--
->  .../test-hg-hg-git.sh => t/remote-helpers/hg-hg-git.t      |  6 +++---
->  contrib/remote-helpers/test-hg.sh => t/remote-helpers/hg.t |  4 ++--
->  10 files changed, 20 insertions(+), 24 deletions(-)
->  delete mode 100644 contrib/remote-helpers/Makefile
->  rename contrib/remote-helpers/git-remote-bzr => git-remote-bzr.py (100%)
->  rename contrib/remote-helpers/git-remote-hg => git-remote-hg.py (100%)
->  rename contrib/remote-helpers/test-bzr.sh => t/remote-helpers/bzr.t (98%)
->  rename contrib/remote-helpers/test-hg-bidi.sh => t/remote-helpers/hg-bidi.t (97%)
->  rename contrib/remote-helpers/test-hg-hg-git.sh => t/remote-helpers/hg-hg-git.t (98%)
->  rename contrib/remote-helpers/test-hg.sh => t/remote-helpers/hg.t (99%)
+> Who should I send the patch to?
+
+Previous issues were routed through the maintainer, Junio directly (CC'd).
