@@ -1,112 +1,98 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: Re: Re: [ANNOUNCE] WinGit - native x86/x64 Git for Windows
-Date: Mon, 21 Apr 2014 13:56:41 -0500
-Message-ID: <535569e92cbcc_32c48493101f@nysa.notmuch>
-References: <rfujmbew27f1gaa6dbk706li.1397911737867@email.android.com>
- <20140419184210.GB3617@book-mint>
- <alpine.DEB.1.00.1404210003540.14982@s15462909.onlinehome-server.info>
- <53556579.3050709@gmail.com>
- <alpine.DEB.1.00.1404212053420.14982@s15462909.onlinehome-server.info>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 2/2] blame: use a helper to get suitable blame_date_width
+Date: Mon, 21 Apr 2014 12:19:39 -0700
+Message-ID: <xmqq38h6a3sk.fsf@gitster.dls.corp.google.com>
+References: <cover.1398059411.git.worldhello.net@gmail.com>
+	<17454bdfbd4e0e1516a64f75deabddb427792e99.1398059411.git.worldhello.net@gmail.com>
+	<xmqqfvl6a9ar.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Heiko Voigt <hvoigt@hvoigt.net>, 
- Marat Radchenko <marat@slonopotamus.org>, 
- git@vger.kernel.org, 
- msysGit Mailinglist <msysgit@googlegroups.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
- Sebastian Schuberth <sschuberth@gmail.com>
-X-From: msysgit+bncBDBJVMGGZYNBBWGY2WNAKGQEP3TFENY@googlegroups.com Mon Apr 21 21:07:06 2014
-Return-path: <msysgit+bncBDBJVMGGZYNBBWGY2WNAKGQEP3TFENY@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-yh0-f55.google.com ([209.85.213.55])
+Content-Type: text/plain; charset=us-ascii
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Brian Gesiak <modocache@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Jiang Xin <worldhello.net@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 21 21:19:53 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDBJVMGGZYNBBWGY2WNAKGQEP3TFENY@googlegroups.com>)
-	id 1WcJYX-0000BE-W7
-	for gcvm-msysgit@m.gmane.org; Mon, 21 Apr 2014 21:07:06 +0200
-Received: by mail-yh0-f55.google.com with SMTP id f10sf1260272yha.0
-        for <gcvm-msysgit@m.gmane.org>; Mon, 21 Apr 2014 12:07:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:list-post:list-help:list-archive
-         :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=A/6YrBz5X4DHtJpHiGJKGyqtfa8a4S7BB68bmPMBipo=;
-        b=GeKuzu5qd/xBGbt1dcIH63zfZxGkWplCW1JArMrERWrxrd15j46tHk2XTnqDceOBii
-         rQGzRplM64N5pbxiHBKAhb/pGQrq+XeVM8HtuizcSCVxemNlLUNXR8nuetcakfv9YKdo
-         fPjHb9i5syTThUgWe6zFxDoOR7kp4mjehdWKMcmQoPblqRgLDBbzZqs6/gF++wFzzijc
-         3I09VQwQhYckM4W9nrh95DAWJ6VWxd7bQXzi5AEpGyYMiSvsRTtsIH9z0I7/5gd+sGeA
-         +nki6sEQsInnVOfUvJXcSt8O28HoVUxNoSEalUWGxgWh5U+BBPQzlkxUNC+gdR+J+Jp3
-         cxlg==
-X-Received: by 10.140.36.6 with SMTP id o6mr41163qgo.26.1398107224788;
-        Mon, 21 Apr 2014 12:07:04 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.140.19.115 with SMTP id 106ls2519248qgg.75.gmail; Mon, 21 Apr
- 2014 12:07:04 -0700 (PDT)
-X-Received: by 10.236.141.11 with SMTP id f11mr19488755yhj.54.1398107224381;
-        Mon, 21 Apr 2014 12:07:04 -0700 (PDT)
-Received: from mail-yk0-x231.google.com (mail-yk0-x231.google.com [2607:f8b0:4002:c07::231])
-        by gmr-mx.google.com with ESMTPS id y50si1814845yhk.4.2014.04.21.12.07.04
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 21 Apr 2014 12:07:04 -0700 (PDT)
-Received-SPF: pass (google.com: domain of felipe.contreras@gmail.com designates 2607:f8b0:4002:c07::231 as permitted sender) client-ip=2607:f8b0:4002:c07::231;
-Received: by mail-yk0-f177.google.com with SMTP id q200so3719136ykb.36
-        for <msysgit@googlegroups.com>; Mon, 21 Apr 2014 12:07:04 -0700 (PDT)
-X-Received: by 10.236.142.204 with SMTP id i52mr54417000yhj.6.1398107224283;
-        Mon, 21 Apr 2014 12:07:04 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id m26sm42537641yha.5.2014.04.21.12.07.01
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 21 Apr 2014 12:07:03 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.1404212053420.14982@s15462909.onlinehome-server.info>
-X-Original-Sender: felipe.contreras@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of felipe.contreras@gmail.com designates
- 2607:f8b0:4002:c07::231 as permitted sender) smtp.mail=felipe.contreras@gmail.com;
-       dkim=pass header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246621>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1WcJkq-000506-Lk
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Apr 2014 21:19:49 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753943AbaDUTTp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Apr 2014 15:19:45 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43739 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750891AbaDUTTn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Apr 2014 15:19:43 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0BF417F2E6;
+	Mon, 21 Apr 2014 15:19:43 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=YX+YGk5IIS3DpFLLojd95cR7ITA=; b=kblyxi
+	WL3MEWRkFETdasmseATvR5Fcz8JTcuKlz0MxVgSTXFDZHDkt45KsV2FSRL5aBgim
+	OY+Ny8nd2WfiFZhWR5mquJAY8+KXrqRBUglUvxbTp4pOy8Tybi+EywmxeiTUc4Un
+	U07o5krXMwxU5Weq3Rr0OFu5+LMT5m51Zdk3c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YM1JTlLg9BU93nTx6TByo33e9vHKVyru
+	Xnj5coAcOTpRHP4OKCskp0txTtpyj9jvsfyx7x1PtfmAL2o6bFHYsaq3S8uKQ0+d
+	dwgB1CtJrsyjuRRExiJSm8lCAzjTKiAV6Ak7krC5n8iHwo6pYqk5oO5UXqz1KfDj
+	eH6kcHOfJMA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D74037F2E5;
+	Mon, 21 Apr 2014 15:19:42 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4EB457F2E3;
+	Mon, 21 Apr 2014 15:19:41 -0400 (EDT)
+In-Reply-To: <xmqqfvl6a9ar.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Mon, 21 Apr 2014 10:20:44 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: E35E25E2-C989-11E3-A6FC-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246622>
 
-Johannes Schindelin wrote:
-> Now, clearly you have all the motivation that is needed to get 64-bit
-> builds of Git for Windows going, and all the motivation required to make
-> sure that the MSVC support of the msysGit project works.
+Junio C Hamano <gitster@pobox.com> writes:
 
-s/msysGit/Git/
+> What I am wondering is if we can do something
+> like this:
+> ...
 
-Personally I don't see why ideally I shouldn't be able to build upstream Git
-for Windows with mingw without leaving my Linux system.
+Nah, that is a lot more stupid than just doing
 
--- 
-Felipe Contreras
+>     In code:
+>
+>         blame_date_width = strtoul(_("4 years, 11 months ago"), NULL, 10) + 1;
+>
+>     In git.pot:
+>
+>         #. This string is used to tell us the maximum display width for a
+>         #. relative timestamp in "git blame" output.  For C locale, "4 years,
+>         #. 11 months ago", which takes 22 places, is the longest among various
+>         #. forms of relative timestamps, but your language may need more or
+>         #. fewer display columns.
+>         msgid "4 years, 11 months ago"
+>         msgstr ""
+>
+>     In de.po:
+>         #. This string is used to tell us the maximum display width for a
+>         #. relative timestamp in "git blame" output.  For C locale, "4 years,
+>         #. 11 months ago", which takes 22 places, is the longest among various
+>         #. forms of relative timestamps, but your language may need more or
+>         #. fewer display columns.
+>         msgid "4 years, 11 months ago"
+>         msgstr ""vor 4 Jahren, und 11 Monaten"
 
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+which is essentially how your very original looked like (modulo the
+comments).  So let's not try to be clever or cute, and just have a
+good instruction in the TRANSLATORS comments.
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+Sorry for flipping and flopping on this one.
