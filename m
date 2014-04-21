@@ -1,85 +1,272 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RTC/PATCH] Add 'update-branch' hook
-Date: Mon, 21 Apr 2014 16:00:34 -0700
-Message-ID: <xmqqtx9m70fh.fsf@gitster.dls.corp.google.com>
-References: <1398047016-21643-1-git-send-email-felipe.contreras@gmail.com>
-	<5355793A.5020000@gmail.com> <53558476703cb_5c94d452ec4e@nysa.notmuch>
-	<53558A54.4060801@gmail.com> <53558ae6f1282_604be1f30cf3@nysa.notmuch>
-	<53559020.1050407@gmail.com>
-	<xmqqa9be8i4o.fsf@gitster.dls.corp.google.com>
-	<53559b0cc066_6c39e772f09d@nysa.notmuch>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ilya Bobyr <ilya.bobyr@gmail.com>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 22 01:01:11 2014
+From: Richard Hansen <rhansen@bbn.com>
+Subject: [SECURITY PATCH v2] git-prompt.sh: don't put unsanitized branch names in $PS1
+Date: Mon, 21 Apr 2014 19:53:09 -0400
+Message-ID: <1398124389-16627-1-git-send-email-rhansen@bbn.com>
+References: <5355A280.6020409@bbn.com>
+Cc: sitaramc@gmail.com, szeder@ira.uka.de, s.oosthoek@xs4all.nl,
+	rhansen@bbn.com
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Apr 22 01:53:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WcND4-0005fW-CX
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 01:01:10 +0200
+	id 1WcO1o-0001Nk-LN
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 01:53:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755079AbaDUXAy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Apr 2014 19:00:54 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56803 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754982AbaDUXAl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Apr 2014 19:00:41 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 53DC07FB4A;
-	Mon, 21 Apr 2014 19:00:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=34T+virdF44X1xuMhGiWeu70hIU=; b=mTNX5c
-	t+7ddeZx43jfuuL+epYnV+nKV0DU+UxFZ9bIKAL8P92u3vrTdqVMLyKMRaEl21P9
-	3vRnYtFirjGoncnipO4KXsr5I5tGNCpGkd+jwL9kM7e97RCgMCDifLM5XwCvCd+r
-	cqu27SqCoJpvZ0lzwnwd0MzpQ4omcl2iJNiLk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZxEu9GztxMY2RySTqHlLbdEmwoio4X9i
-	yn3GscNJmNSmEq3WLH5vPene6d74bK0lWHvQYpPeh3OLJMxS68qYHTw/Ke7RoTez
-	0lf1tQwXBtPiMBNotVK9O2VDC6wEMGwcXNtChWA3cCFERno52WHZQAhvjtt0MBqp
-	Rtb7rIfTvfQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 38F357FB49;
-	Mon, 21 Apr 2014 19:00:38 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1AEF27FB48;
-	Mon, 21 Apr 2014 19:00:36 -0400 (EDT)
-In-Reply-To: <53559b0cc066_6c39e772f09d@nysa.notmuch> (Felipe Contreras's
-	message of "Mon, 21 Apr 2014 17:26:20 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: BFD4744A-C9A8-11E3-A958-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754502AbaDUXxc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Apr 2014 19:53:32 -0400
+Received: from smtp.bbn.com ([128.33.0.80]:47472 "EHLO smtp.bbn.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753252AbaDUXxb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Apr 2014 19:53:31 -0400
+Received: from socket.bbn.com ([192.1.120.102]:40975)
+	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
+	(Exim 4.77 (FreeBSD))
+	(envelope-from <rhansen@bbn.com>)
+	id 1WcO1c-000Etg-On; Mon, 21 Apr 2014 19:53:24 -0400
+X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id 821EF3FFDD
+X-Mailer: git-send-email 1.9.2
+In-Reply-To: <5355A280.6020409@bbn.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246678>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Both bash and zsh subject the value of PS1 to parameter expansion,
+command substitution, and arithmetic expansion.  Rather than include
+the raw, unescaped branch name in PS1 when running in two- or
+three-argument mode, construct PS1 to reference a variable that holds
+the branch name.  Because the shells do not recursively expand, this
+avoids arbitrary code execution by specially-crafted branch names such
+as '$(IFS=_;cmd=sudo_rm_-rf_/;$cmd)'.
 
-> ... there are _already_ hooks without pre/post.
+Signed-off-by: Richard Hansen <rhansen@bbn.com>
+---
+Changes since v1:  update t/t9903-bash-prompt.sh
 
-Like commit-msg?  Yes, it would have been nicer if it were named
-verify-commit-message or something.
+ contrib/completion/git-prompt.sh | 34 +++++++++++++++++++++++++++++--
+ t/t9903-bash-prompt.sh           | 44 ++++++++++++++++++++--------------------
+ 2 files changed, 54 insertions(+), 24 deletions(-)
 
-Old mistakes are harder to change because of inertia.  It is not a
-good excuse to knowingly make a new mistake to add new exceptions
-that the users need to check documentations for, is it?
-
-> And it's not confusing,
-
-A simple fact that Ilya asked the question tells us otherwise ;-)
-
-I personally do not see an immediate need for post-update-branch,
-but if the new hook is about intervening an operation, it would be a
-good idea to name the hook with "pre-" like other "before doing
-something, validate the operation and forbid" hooks.  Otherwise it
-would be impossible to later add "post-update-branch" for whatever
-reason without inviting "why does pre-update-branch hook is misnamed
-as just update-branch, when other validation and post-action pair
-are named pre-something and post-something?".
+diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+index 7b732d2..bd7ff29 100644
+--- a/contrib/completion/git-prompt.sh
++++ b/contrib/completion/git-prompt.sh
+@@ -207,7 +207,18 @@ __git_ps1_show_upstream ()
+ 			p=" u+${count#*	}-${count%	*}" ;;
+ 		esac
+ 		if [[ -n "$count" && -n "$name" ]]; then
+-			p="$p $(git rev-parse --abbrev-ref "$upstream" 2>/dev/null)"
++			__git_ps1_upstream_name=$(git rev-parse \
++				--abbrev-ref "$upstream" 2>/dev/null)
++			if [ $pcmode = yes ]; then
++				# see the comments around the
++				# __git_ps1_branch_name variable below
++				p="$p \${__git_ps1_upstream_name}"
++			else
++				p="$p ${__git_ps1_upstream_name}"
++				# not needed anymore; keep user's
++				# environment clean
++				unset __git_ps1_upstream_name
++			fi
+ 		fi
+ 	fi
+ 
+@@ -438,8 +449,27 @@ __git_ps1 ()
+ 		__git_ps1_colorize_gitstring
+ 	fi
+ 
++	b=${b##refs/heads/}
++	if [ $pcmode = yes ]; then
++		# In pcmode (and only pcmode) the contents of
++		# $gitstring are subject to expansion by the shell.
++		# Avoid putting the raw ref name in the prompt to
++		# protect the user from arbitrary code execution via
++		# specially crafted ref names (e.g., a ref named
++		# '$(IFS=_;cmd=sudo_rm_-rf_/;$cmd)' would execute
++		# 'sudo rm -rf /' when the prompt is drawn).  Instead,
++		# put the ref name in a new global variable (in the
++		# __git_ps1_* namespace to avoid colliding with the
++		# user's environment) and reference that variable from
++		# PS1.
++		__git_ps1_branch_name=$b
++		# note that the $ is escaped -- the variable will be
++		# expanded later (when it's time to draw the prompt)
++		b="\${__git_ps1_branch_name}"
++	fi
++
+ 	local f="$w$i$s$u"
+-	local gitstring="$c${b##refs/heads/}${f:+$z$f}$r$p"
++	local gitstring="$c$b${f:+$z$f}$r$p"
+ 
+ 	if [ $pcmode = yes ]; then
+ 		if [ "${__git_printf_supports_v-}" != yes ]; then
+diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
+index 59f875e..6efd0d9 100755
+--- a/t/t9903-bash-prompt.sh
++++ b/t/t9903-bash-prompt.sh
+@@ -452,53 +452,53 @@ test_expect_success 'prompt - format string starting with dash' '
+ '
+ 
+ test_expect_success 'prompt - pc mode' '
+-	printf "BEFORE: (master):AFTER" >expected &&
++	printf "BEFORE: (\${__git_ps1_branch_name}):AFTER\\nmaster" >expected &&
+ 	printf "" >expected_output &&
+ 	(
+ 		__git_ps1 "BEFORE:" ":AFTER" >"$actual" &&
+ 		test_cmp expected_output "$actual" &&
+-		printf "%s" "$PS1" >"$actual"
++		printf "%s\\n%s" "$PS1" "${__git_ps1_branch_name}" >"$actual"
+ 	) &&
+ 	test_cmp expected "$actual"
+ '
+ 
+ test_expect_success 'prompt - bash color pc mode - branch name' '
+-	printf "BEFORE: (${c_green}master${c_clear}):AFTER" >expected &&
++	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear}):AFTER\\nmaster" >expected &&
+ 	(
+ 		GIT_PS1_SHOWCOLORHINTS=y &&
+ 		__git_ps1 "BEFORE:" ":AFTER" >"$actual"
+-		printf "%s" "$PS1" >"$actual"
++		printf "%s\\n%s" "$PS1" "${__git_ps1_branch_name}" >"$actual"
+ 	) &&
+ 	test_cmp expected "$actual"
+ '
+ 
+ test_expect_success 'prompt - bash color pc mode - detached head' '
+-	printf "BEFORE: (${c_red}(%s...)${c_clear}):AFTER" $(git log -1 --format="%h" b1^) >expected &&
++	printf "BEFORE: (${c_red}\${__git_ps1_branch_name}${c_clear}):AFTER\\n(%s...)" $(git log -1 --format="%h" b1^) >expected &&
+ 	git checkout b1^ &&
+ 	test_when_finished "git checkout master" &&
+ 	(
+ 		GIT_PS1_SHOWCOLORHINTS=y &&
+ 		__git_ps1 "BEFORE:" ":AFTER" &&
+-		printf "%s" "$PS1" >"$actual"
++		printf "%s\\n%s" "$PS1" "${__git_ps1_branch_name}" >"$actual"
+ 	) &&
+ 	test_cmp expected "$actual"
+ '
+ 
+ test_expect_success 'prompt - bash color pc mode - dirty status indicator - dirty worktree' '
+-	printf "BEFORE: (${c_green}master${c_clear} ${c_red}*${c_clear}):AFTER" >expected &&
++	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_red}*${c_clear}):AFTER\\nmaster" >expected &&
+ 	echo "dirty" >file &&
+ 	test_when_finished "git reset --hard" &&
+ 	(
+ 		GIT_PS1_SHOWDIRTYSTATE=y &&
+ 		GIT_PS1_SHOWCOLORHINTS=y &&
+ 		__git_ps1 "BEFORE:" ":AFTER" &&
+-		printf "%s" "$PS1" >"$actual"
++		printf "%s\\n%s" "$PS1" "${__git_ps1_branch_name}" >"$actual"
+ 	) &&
+ 	test_cmp expected "$actual"
+ '
+ 
+ test_expect_success 'prompt - bash color pc mode - dirty status indicator - dirty index' '
+-	printf "BEFORE: (${c_green}master${c_clear} ${c_green}+${c_clear}):AFTER" >expected &&
++	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_green}+${c_clear}):AFTER\\nmaster" >expected &&
+ 	echo "dirty" >file &&
+ 	test_when_finished "git reset --hard" &&
+ 	git add -u &&
+@@ -506,13 +506,13 @@ test_expect_success 'prompt - bash color pc mode - dirty status indicator - dirt
+ 		GIT_PS1_SHOWDIRTYSTATE=y &&
+ 		GIT_PS1_SHOWCOLORHINTS=y &&
+ 		__git_ps1 "BEFORE:" ":AFTER" &&
+-		printf "%s" "$PS1" >"$actual"
++		printf "%s\\n%s" "$PS1" "${__git_ps1_branch_name}" >"$actual"
+ 	) &&
+ 	test_cmp expected "$actual"
+ '
+ 
+ test_expect_success 'prompt - bash color pc mode - dirty status indicator - dirty index and worktree' '
+-	printf "BEFORE: (${c_green}master${c_clear} ${c_red}*${c_green}+${c_clear}):AFTER" >expected &&
++	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_red}*${c_green}+${c_clear}):AFTER\\nmaster" >expected &&
+ 	echo "dirty index" >file &&
+ 	test_when_finished "git reset --hard" &&
+ 	git add -u &&
+@@ -521,25 +521,25 @@ test_expect_success 'prompt - bash color pc mode - dirty status indicator - dirt
+ 		GIT_PS1_SHOWCOLORHINTS=y &&
+ 		GIT_PS1_SHOWDIRTYSTATE=y &&
+ 		__git_ps1 "BEFORE:" ":AFTER" &&
+-		printf "%s" "$PS1" >"$actual"
++		printf "%s\\n%s" "$PS1" "${__git_ps1_branch_name}" >"$actual"
+ 	) &&
+ 	test_cmp expected "$actual"
+ '
+ 
+ test_expect_success 'prompt - bash color pc mode - dirty status indicator - before root commit' '
+-	printf "BEFORE: (${c_green}master${c_clear} ${c_green}#${c_clear}):AFTER" >expected &&
++	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_green}#${c_clear}):AFTER\\nmaster" >expected &&
+ 	(
+ 		GIT_PS1_SHOWDIRTYSTATE=y &&
+ 		GIT_PS1_SHOWCOLORHINTS=y &&
+ 		cd otherrepo &&
+ 		__git_ps1 "BEFORE:" ":AFTER" &&
+-		printf "%s" "$PS1" >"$actual"
++		printf "%s\\n%s" "$PS1" "${__git_ps1_branch_name}" >"$actual"
+ 	) &&
+ 	test_cmp expected "$actual"
+ '
+ 
+ test_expect_success 'prompt - bash color pc mode - inside .git directory' '
+-	printf "BEFORE: (${c_green}GIT_DIR!${c_clear}):AFTER" >expected &&
++	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear}):AFTER\\nGIT_DIR!" >expected &&
+ 	echo "dirty" >file &&
+ 	test_when_finished "git reset --hard" &&
+ 	(
+@@ -547,13 +547,13 @@ test_expect_success 'prompt - bash color pc mode - inside .git directory' '
+ 		GIT_PS1_SHOWCOLORHINTS=y &&
+ 		cd .git &&
+ 		__git_ps1 "BEFORE:" ":AFTER" &&
+-		printf "%s" "$PS1" >"$actual"
++		printf "%s\\n%s" "$PS1" "${__git_ps1_branch_name}" >"$actual"
+ 	) &&
+ 	test_cmp expected "$actual"
+ '
+ 
+ test_expect_success 'prompt - bash color pc mode - stash status indicator' '
+-	printf "BEFORE: (${c_green}master${c_clear} ${c_lblue}\$${c_clear}):AFTER" >expected &&
++	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_lblue}\$${c_clear}):AFTER\\nmaster" >expected &&
+ 	echo 2 >file &&
+ 	git stash &&
+ 	test_when_finished "git stash drop" &&
+@@ -561,29 +561,29 @@ test_expect_success 'prompt - bash color pc mode - stash status indicator' '
+ 		GIT_PS1_SHOWSTASHSTATE=y &&
+ 		GIT_PS1_SHOWCOLORHINTS=y &&
+ 		__git_ps1 "BEFORE:" ":AFTER" &&
+-		printf "%s" "$PS1" >"$actual"
++		printf "%s\\n%s" "$PS1" "${__git_ps1_branch_name}" >"$actual"
+ 	) &&
+ 	test_cmp expected "$actual"
+ '
+ 
+ test_expect_success 'prompt - bash color pc mode - untracked files status indicator' '
+-	printf "BEFORE: (${c_green}master${c_clear} ${c_red}%%${c_clear}):AFTER" >expected &&
++	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_red}%%${c_clear}):AFTER\\nmaster" >expected &&
+ 	(
+ 		GIT_PS1_SHOWUNTRACKEDFILES=y &&
+ 		GIT_PS1_SHOWCOLORHINTS=y &&
+ 		__git_ps1 "BEFORE:" ":AFTER" &&
+-		printf "%s" "$PS1" >"$actual"
++		printf "%s\\n%s" "$PS1" "${__git_ps1_branch_name}" >"$actual"
+ 	) &&
+ 	test_cmp expected "$actual"
+ '
+ 
+ test_expect_success 'prompt - zsh color pc mode' '
+-	printf "BEFORE: (%%F{green}master%%f):AFTER" >expected &&
++	printf "BEFORE: (%%F{green}\${__git_ps1_branch_name}%%f):AFTER\\nmaster" >expected &&
+ 	(
+ 		ZSH_VERSION=5.0.0 &&
+ 		GIT_PS1_SHOWCOLORHINTS=y &&
+ 		__git_ps1 "BEFORE:" ":AFTER" >"$actual"
+-		printf "%s" "$PS1" >"$actual"
++		printf "%s\\n%s" "$PS1" "${__git_ps1_branch_name}" >"$actual"
+ 	) &&
+ 	test_cmp expected "$actual"
+ '
+-- 
+1.9.2
