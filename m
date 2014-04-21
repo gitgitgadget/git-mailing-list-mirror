@@ -1,145 +1,121 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] remote-helpers: move tests out of contrib
-Date: Mon, 21 Apr 2014 11:36:56 -0700
-Message-ID: <xmqq7g6ia5rr.fsf@gitster.dls.corp.google.com>
-References: <1398029971-1396-1-git-send-email-felipe.contreras@gmail.com>
-	<1398029971-1396-3-git-send-email-felipe.contreras@gmail.com>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: Re: Re: [ANNOUNCE] WinGit - native x86/x64 Git for Windows
+Date: Mon, 21 Apr 2014 20:37:45 +0200
+Message-ID: <53556579.3050709@gmail.com>
+References: <rfujmbew27f1gaa6dbk706li.1397911737867@email.android.com> <20140419184210.GB3617@book-mint> <alpine.DEB.1.00.1404210003540.14982@s15462909.onlinehome-server.info>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 21 20:37:27 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Cc: Marat Radchenko <marat@slonopotamus.org>, git@vger.kernel.org, 
+ msysGit Mailinglist <msysgit@googlegroups.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+ Heiko Voigt <hvoigt@hvoigt.net>
+X-From: msysgit+bncBDZMLEGXWQLBBAOL2WNAKGQEGQO2JTA@googlegroups.com Mon Apr 21 20:37:57 2014
+Return-path: <msysgit+bncBDZMLEGXWQLBBAOL2WNAKGQEGQO2JTA@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-la0-f62.google.com ([209.85.215.62])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WcJ5q-0002nQ-Tf
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Apr 2014 20:37:27 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753489AbaDUShV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Apr 2014 14:37:21 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38772 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753121AbaDUShT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Apr 2014 14:37:19 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B13327E530;
-	Mon, 21 Apr 2014 14:37:18 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=be7Ls3BkaWXIZeh5QucjeZVhB2A=; b=DpJ8kZ
-	ZOTMueTFYa6q+oDQywcYVMzdns1csZ2SniNkwEoCjl02VZr/b/I8siFpBH327hbb
-	57xkAmvvOFmJyiI5ykI2XvwxwuTh3vn39d8B2vH7TeLj5AEGqYyuq+3213b7lUXA
-	eoCyJAHodHenlKcLIIWk82aAF8NzB1xicjYvw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vBQqiVaZgDwCCwR0W5P0akWLLapn5R9Y
-	QgNdZ6RcsU7ntN/Bi2OGv/OAZmOGF3kS4CvyPIFSEXdu/0w/9FmWh+ImSwraKtto
-	qvBBlgJirzaDz+Xg6kjh7Dfq5K8vi7qohTPZbTYDEpjIjucqe/tIaGIRsUjmOvO4
-	U6R+2aXN0Yk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 938DA7E52E;
-	Mon, 21 Apr 2014 14:37:18 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A8B557E4FF;
-	Mon, 21 Apr 2014 14:36:58 -0400 (EDT)
-In-Reply-To: <1398029971-1396-3-git-send-email-felipe.contreras@gmail.com>
-	(Felipe Contreras's message of "Sun, 20 Apr 2014 16:39:31 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: EBEC6A08-C983-11E3-8C4B-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246616>
+	(envelope-from <msysgit+bncBDZMLEGXWQLBBAOL2WNAKGQEGQO2JTA@googlegroups.com>)
+	id 1WcJ6I-0003JH-0z
+	for gcvm-msysgit@m.gmane.org; Mon, 21 Apr 2014 20:37:54 +0200
+Received: by mail-la0-f62.google.com with SMTP id el20sf6578lab.17
+        for <gcvm-msysgit@m.gmane.org>; Mon, 21 Apr 2014 11:37:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
+         :subject:references:in-reply-to:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=qu81uzbjMVUOx9YqUnfCMCNfl4jwOApEGa9WcpsFe/Q=;
+        b=uHD1vO7d9l5C/Z55ZmV7NP+RRttgvNb6FQPPb466vn0QAZFKwxVxjSfIoEzo2myKk8
+         ao0nY5FxJNeQMUTjP6zw3S5yUTKy+pa6DnhnlYem1S9AQWwuWmtAIE9D2P/gzbVdv93w
+         6kpSiixqZ0/apo+UbMnOhswPuPPH6XYtheUqP0BsBEbFV5Oho/oXzoOoAhh5IZjkfFC8
+         2QaBr/T0zFFQYFEuPKOPrNUFPG+j3Ej5DUASWIZ0VjSVJhSX21D8jdzv5u0A1ue0hkQt
+         2Y+ESr5lqZ7qYoH63cUpX+ZNDoaF3lMwM3Ptv3jydR+i6PX27g+IKALEIhvR0v3lCsCW
+         BreA==
+X-Received: by 10.152.29.1 with SMTP id f1mr28546lah.24.1398105473822;
+        Mon, 21 Apr 2014 11:37:53 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.42.172 with SMTP id p12ls455491lal.1.gmail; Mon, 21 Apr
+ 2014 11:37:53 -0700 (PDT)
+X-Received: by 10.112.209.102 with SMTP id ml6mr2658502lbc.1.1398105473123;
+        Mon, 21 Apr 2014 11:37:53 -0700 (PDT)
+Received: from mail-ee0-x233.google.com (mail-ee0-x233.google.com [2a00:1450:4013:c00::233])
+        by gmr-mx.google.com with ESMTPS id u49si2356288eeo.1.2014.04.21.11.37.53
+        for <msysgit@googlegroups.com>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 21 Apr 2014 11:37:53 -0700 (PDT)
+Received-SPF: pass (google.com: domain of sschuberth@gmail.com designates 2a00:1450:4013:c00::233 as permitted sender) client-ip=2a00:1450:4013:c00::233;
+Received: by mail-ee0-f51.google.com with SMTP id c13so3839327eek.38
+        for <msysgit@googlegroups.com>; Mon, 21 Apr 2014 11:37:53 -0700 (PDT)
+X-Received: by 10.15.36.136 with SMTP id i8mr2702391eev.113.1398105473010;
+        Mon, 21 Apr 2014 11:37:53 -0700 (PDT)
+Received: from [192.168.188.20] (p57A25734.dip0.t-ipconnect.de. [87.162.87.52])
+        by mx.google.com with ESMTPSA id h47sm105782175eey.13.2014.04.21.11.37.51
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 21 Apr 2014 11:37:51 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
+Newsgroups: gmane.comp.version-control.git,gmane.comp.version-control.msysgit
+In-Reply-To: <alpine.DEB.1.00.1404210003540.14982@s15462909.onlinehome-server.info>
+X-Original-Sender: sschuberth@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of sschuberth@gmail.com designates 2a00:1450:4013:c00::233
+ as permitted sender) smtp.mail=sschuberth@gmail.com;       dkim=pass
+ header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246617>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+On 21.04.2014 00:10, Johannes Schindelin wrote:
 
-> They should be tested by default.
+> tests do not pass yet. (I also would like to look into getting the
+> performance improvement Hannes Sixt achieved by his patch [*1*] into
+> mingwGitDevEnv's Git installation, too.)
 >
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> ---
->  contrib/remote-helpers/Makefile                            | 14 --------------
->  t/Makefile                                                 |  8 +++++++-
->  .../remote-helpers/test-bzr.sh => t/remote-helpers/bzr.t   |  2 +-
->  .../test-hg-bidi.sh => t/remote-helpers/hg-bidi.t          |  2 +-
->  .../test-hg-hg-git.sh => t/remote-helpers/hg-hg-git.t      |  2 +-
->  contrib/remote-helpers/test-hg.sh => t/remote-helpers/hg.t |  2 +-
->  6 files changed, 11 insertions(+), 19 deletions(-)
->  delete mode 100644 contrib/remote-helpers/Makefile
->  rename contrib/remote-helpers/test-bzr.sh => t/remote-helpers/bzr.t (99%)
->  rename contrib/remote-helpers/test-hg-bidi.sh => t/remote-helpers/hg-bidi.t (98%)
->  rename contrib/remote-helpers/test-hg-hg-git.sh => t/remote-helpers/hg-hg-git.t (99%)
->  rename contrib/remote-helpers/test-hg.sh => t/remote-helpers/hg.t (99%)
->
-> diff --git a/contrib/remote-helpers/Makefile b/contrib/remote-helpers/Makefile
-> deleted file mode 100644
-> index 239161d..0000000
-> --- a/contrib/remote-helpers/Makefile
-> +++ /dev/null
-> @@ -1,14 +0,0 @@
-> -TESTS := $(wildcard test*.sh)
-> -
-> -export T := $(addprefix $(CURDIR)/,$(TESTS))
-> -export MAKE := $(MAKE) -e
-> -export PATH := $(CURDIR):$(PATH)
-> -export TEST_LINT := test-lint-executable test-lint-shell-syntax
-> -
-> -test:
-> -	$(MAKE) -C ../../t $@
-> -
-> -$(TESTS):
-> -	$(MAKE) -C ../../t $(CURDIR)/$@
-> -
-> -.PHONY: $(TESTS)
-> diff --git a/t/Makefile b/t/Makefile
-> index 8fd1a72..818f4ed 100644
-> --- a/t/Makefile
-> +++ b/t/Makefile
-> @@ -14,6 +14,7 @@ RM ?= rm -f
->  PROVE ?= prove
->  DEFAULT_TEST_TARGET ?= test
->  TEST_LINT ?= test-lint-duplicates test-lint-executable
-> +export TEST_DIRECTORY = $(CURDIR)
->  
->  ifdef TEST_OUTPUT_DIRECTORY
->  TEST_RESULTS_DIRECTORY = $(TEST_OUTPUT_DIRECTORY)/test-results
-> @@ -29,6 +30,9 @@ TEST_RESULTS_DIRECTORY_SQ = $(subst ','\'',$(TEST_RESULTS_DIRECTORY))
->  T = $(sort $(wildcard t[0-9][0-9][0-9][0-9]-*.sh))
->  TSVN = $(sort $(wildcard t91[0-9][0-9]-*.sh))
->  TGITWEB = $(sort $(wildcard t95[0-9][0-9]-*.sh))
-> +TREMOTE = $(wildcard remote-helpers/*.t)
+> Whoops. Footnote *1*: https://github.com/msysgit/msysgit/commit/a0f5d4f
 
-This step needs a bit more work, I am afraid, to at least have these
-three test scripts follow the same numbering scheme.  Especially given
-that there were recent discussions on allowing a range of tests to
-be run (or omitted) via notations like "5000,5020,9800-9812", not
-doing so now will make it harder to implement such an enhancement.
+Dscho, this patch of Hannes is already in, see [1]. Also see the other 
+files in that directory for the other MSYS patches being applied. In 
+fact, mingwGitDevEnv has all MSYS patches that msysgit has except [2], 
+[3] and [4] (because they mess up Bash for me and break many tests).
 
-Also, I noticed that, unlike say t9801 that shows this:
+[1] 
+https://github.com/sschuberth/mingwGitDevEnv-packages/blob/master/msys-core/0008-Do-not-start-the-fstab-observer-thread.patch
+[2] 
+https://github.com/msysgit/msysgit/blob/msys/src/rt/patches/0014-msys.dll-support-Unicode-console-input.patch
+[3] 
+https://github.com/msysgit/msysgit/blob/msys/src/rt/patches/0015-msys.dll-support-ALT-NUMPAD-console-input.patch
+[4] 
+https://github.com/msysgit/msysgit/blob/msys/src/rt/patches/0016-msys.dll-backport-multibyte-support-functions-from-n.patch
 
-    $ cd t && make T=t9801-*sh prove
-    rm -f -r 'test-results'
-    *** prove ***
-    t9801-git-p4-branch.sh .. skipped: skipping git p4 tests; no p4 or p4d
-    Files=1, Tests=0,  0 wallclock secs ( 0.03 usr  0.00 sys +  0.00 ...
-    Result: NOTESTS
+-- 
+Sebastian Schuberth
 
-these are unnecessarily noisy when refusing to run:
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
-    $ cd t && make T=remote-helpers/bzr.t prove
-    *** prove ***
-    remote-helpers/bzr.t .. Traceback (most recent call last):
-      File "<string>", line 1, in <module>
-      File "/usr/local/buildtools/current/sitecustomize/sitecu...
-        return real_import(name, globals, locals, fromlist, level)
-    ImportError: No module named bzrlib
-    remote-helpers/bzr.t .. skipped: skipping remote-bzr tests; bzr not available
-    Files=1, Tests=0,  0 wallclock secs ( 0.03 usr  0.00 sys +  0.02 ...
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
 
-Can we squelch these expected import error messages?
-
-Thanks.
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
