@@ -1,88 +1,157 @@
-From: Ronald Weiss <weiss.ronald@gmail.com>
-Subject: Re: [PATCH v4 2/2] commit: add --ignore-submodules[=<when>] parameter
-Date: Tue, 22 Apr 2014 00:08:17 +0200
-Message-ID: <535596D1.6070709@gmail.com>
-References: <CABxC_L92v=cV=+e_DNa0L6f21LB0BRP5duai2h_heGJN_PRoUQ@mail.gmail.com>	<5335A78C.60401@web.de>	<CABxC_L-4=qcZiix05dL8GrDJXv=19fw4yB0qFzRRfw=G=_Gxbg@mail.gmail.com>	<53374E49.9000702@gmail.com>	<533874F9.3090802@web.de>	<5338AC36.6000109@gmail.com>	<5338B1B0.3050703@gmail.com>	<5339BAE4.8020306@web.de> <CABxC_L8_tQrANXji_Z0LfigxsAuzSDj3K9ndTGOTHh2ctHvc6A@mail.gmail.com> <5339F122.60801@gmail.com> <5339FBB4.1010101@gmail.com> <533B2036.3050506@web.de> <533B36AA.3090600@gmail.com> <533C5CBD.4050601@web.de> <533C6B57.3080901@gmail.com> <534180BC.308@web.de> <53431CB8.2050600@gmail.com> <53432EA5.5060102@gmail.com> <53444368.9050607@web.de> <5349BC2C.9030509@gmail.com> <5349C314.50500@gmail.com> <53511617.80506@web.de>
+From: Marat Radchenko <marat@slonopotamus.org>
+Subject: [NOT_A_PATCH] A naive attempt to cross-build Linux->mingw64 Git
+Date: Tue, 22 Apr 2014 02:14:39 +0400
+Message-ID: <1398118479-7731-1-git-send-email-marat@slonopotamus.org>
+References: <535569e92cbcc_32c48493101f@nysa.notmuch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Heiko Voigt <hvoigt@hvoigt.net>, Junio C Hamano <gitster@pobox.com>
-To: Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 22 00:08:18 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Cc: Marat Radchenko <marat@slonopotamus.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Sebastian Schuberth <sschuberth@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	git@vger.kernel.org,
+	msysGit Mailinglist <msysgit@googlegroups.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: msysgit+bncBCE7TAPITACRBV5Q22NAKGQE3Q77C3I@googlegroups.com Tue Apr 22 00:14:51 2014
+Return-path: <msysgit+bncBCE7TAPITACRBV5Q22NAKGQE3Q77C3I@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-ee0-f58.google.com ([74.125.83.58])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WcMNt-0000PA-DM
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 00:08:17 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754711AbaDUWIN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Apr 2014 18:08:13 -0400
-Received: from mail-ee0-f52.google.com ([74.125.83.52]:47925 "EHLO
-	mail-ee0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752896AbaDUWIL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Apr 2014 18:08:11 -0400
-Received: by mail-ee0-f52.google.com with SMTP id e49so3972871eek.11
-        for <git@vger.kernel.org>; Mon, 21 Apr 2014 15:08:10 -0700 (PDT)
+	(envelope-from <msysgit+bncBCE7TAPITACRBV5Q22NAKGQE3Q77C3I@googlegroups.com>)
+	id 1WcMUB-000670-Rw
+	for gcvm-msysgit@m.gmane.org; Tue, 22 Apr 2014 00:14:47 +0200
+Received: by mail-ee0-f58.google.com with SMTP id b15sf393352eek.13
+        for <gcvm-msysgit@m.gmane.org>; Mon, 21 Apr 2014 15:14:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=e/OPQ7yyKa0v+BsDBuru3Z+u18nhFIeAdMfLLgl8Nsc=;
-        b=oj+GxUNh963gVJvkuVDq5YrKRWf2hQxr660vSVioEr7LQ8wFVOy0odDTUrbjt832xN
-         8hK3gY8Vs7Du2/IArx3nJjjrRPjFf9Thh8dZv4c03RufRPVfkcTjbjSm/bdhMJKHGeJZ
-         6fQnfTLFk5n8t9LFBbQNt7pGa3GYB7LRaAfFI8fOCiE4DqO9gzIw0iiZXfam9hEd/Qow
-         rjFtr4JVWBuPYknRE+/Il+guXpMBdeSkA3R80yx+CjXqa64GBphToqXaMDje698tQtsY
-         QrGWtSHUSSxKerx533oVxwgNpDHtIM4tZ1m2JhfxlkJKh2NajrLkYqRl0p/JPtom4eS5
-         CgfQ==
-X-Received: by 10.14.180.2 with SMTP id i2mr50893958eem.53.1398118090356;
-        Mon, 21 Apr 2014 15:08:10 -0700 (PDT)
-Received: from [10.0.1.226] ([212.144.56.68])
-        by mx.google.com with ESMTPSA id t44sm107169032eeo.6.2014.04.21.15.08.08
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 21 Apr 2014 15:08:09 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
-In-Reply-To: <53511617.80506@web.de>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246655>
+        d=googlegroups.com; s=20120806;
+        h=mime-version:from:to:cc:subject:date:message-id:in-reply-to
+         :references:x-original-sender:x-original-authentication-results
+         :precedence:mailing-list:list-id:list-post:list-help:list-archive
+         :sender:list-subscribe:list-unsubscribe:content-type;
+        bh=tbZ4OcceVL4WmpNgqy2CJ5Gag3jReM8SdAwGNUc2pgg=;
+        b=L5Y15tL+jSjzFIagJTjx7HKeWOUNoFdEn4CAfXK0P5VuMK0xSu2NU83YDtuJTTxRRH
+         g5zwbPZzFPIj8CU/YBA5Q/0fui5A8Evf1jWM4l6wM5NwnaK5XMHTKJKZi7rkQtXRpHpP
+         m00OVT3iTiDCynFp7GOlpDIS7vku3zq7yHwKKfjJipgS0NTiOTPikE4wSR2JKSKVcspl
+         ib0/efgvXmndAXwMEvvWF48M6jJ92jV+WyyFywmztihfusHCaHMDceDBglVvAq5uhJXr
+         cKB6u79Hx5OPxAeWTVbR+quTHoEqAPP60sxITZ34kUoK8M96ZUVAGikgWMbPbsFOkqm0
+         m5yg==
+X-Received: by 10.180.108.100 with SMTP id hj4mr93572wib.21.1398118487571;
+        Mon, 21 Apr 2014 15:14:47 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.180.90.20 with SMTP id bs20ls167062wib.2.gmail; Mon, 21 Apr
+ 2014 15:14:46 -0700 (PDT)
+X-Received: by 10.180.37.203 with SMTP id a11mr1381509wik.0.1398118486719;
+        Mon, 21 Apr 2014 15:14:46 -0700 (PDT)
+Received: from slonopotamus.org ([94.242.204.247])
+        by gmr-mx.google.com with ESMTPS id ck4si349233wib.1.2014.04.21.15.14.46
+        for <msysgit@googlegroups.com>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 21 Apr 2014 15:14:46 -0700 (PDT)
+Received-SPF: none (google.com: marat@slonopotamus.org does not designate permitted sender hosts) client-ip=94.242.204.247;
+Received: from [176.57.72.72] (helo=noblesse.home.ru)
+	by slonopotamus.org with esmtpsa (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256)
+	(Exim 4.80.1)
+	(envelope-from <marat@slonopotamus.org>)
+	id 1WcMU5-0000VI-Lw; Tue, 22 Apr 2014 02:14:42 +0400
+X-Mailer: git-send-email 1.9.2
+In-Reply-To: <535569e92cbcc_32c48493101f@nysa.notmuch>
+X-Original-Sender: marat@slonopotamus.org
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
+ (google.com: marat@slonopotamus.org does not designate permitted sender
+ hosts) smtp.mail=marat@slonopotamus.org
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246656>
 
-On 18. 4. 2014 14:09, Jens Lehmann wrote:
-> Am 13.04.2014 00:49, schrieb Ronald Weiss:
->> Allow ignoring submodules (or not) by command line switch, like diff
->> and status do.
->>
->> Git commit honors the 'ignore' setting from .gitmodules or .git/config,
->> but didn't allow to override it from command line.
->>
->> This patch depends on Jens Lehmann's patch "commit -m: commit staged
->> submodules regardless of ignore config". Without it,
->> "commit -m --ignore-submodules" would not work and tests introduced
->> here would fail.
-> 
-> Apart from the flags of the test (see below) I get three failures when
-> running t7513. And I'm wondering why you are using "test_might_fail"
-> there, shouldn't we know exactly if a commit should succeed or not
-> and test exactly for that?
+config.mak.uname: provide a way to explicitely request MinGW build.
+This is required to perform Linux->MinGW crosscompilation.
+---
 
-I used "test_might_fail" instead of "test_must_fail" to denote that this
-test doesn't care whether "git commit" fails or not due to empty commit
-message. I found it more appropriate. However, if you disagree, I can
-change it to "test_must_fail", no problem for me.
+> Personally I don't see why ideally I shouldn't be able to build upstream Git
+> for Windows with mingw without leaving my Linux system.
 
-Unfortunately I don't know why the test fails for you, they pass for me.
-Did you apply it on top of your own patch for "commit -m", which is
-a prerequisite?
+One day you might be able, but as of today...
 
-I tried it again, on top of current master (cc29195 [tag: v2.0.0-rc0]).
-First, I have applied your patch from here:
+1. Obtain x86_64-w64-mingw32 compiler for your *nix distro
+ * [Gentoo] emerge crossdev && crossdev -t x86_64-w64-mingw32
+ * [Debian/Ubuntu] apt-get install mingw-w64
+2. Apply patch from this email to Git sources (git/git or msysgit/git - doesn't matter)
+3. `make CC=x86_64-w64-mingw32-gcc MINGW=1`
+4. Observe errors [1]
 
-http://article.gmane.org/gmane.comp.version-control.git/245783
+I would be happy to find out I'm doing something wrong -- Johannes says building
+mingw64 Git is dirt-easy.
 
-On top of that, I applied my two patches, and the tests pass fine here.
-Until now I was testing on Windows, but now I tested on a Linux box,
-and that makes no difference.
+[1]:
+In file included from /usr/x86_64-w64-mingw32/usr/include/windows.h:9:0,
+                 from /usr/x86_64-w64-mingw32/usr/include/winsock2.h:23,
+                 from git-compat-util.h:93,
+                 from cache.h:4,
+                 from credential-store.c:1:
+/usr/x86_64-w64-mingw32/usr/include/_mingw.h:456:2: error: #error You cannot use 32-bit time_t (_USE_32BIT_TIME_T) with _WIN64
+ #error You cannot use 32-bit time_t (_USE_32BIT_TIME_T) with _WIN64
+  ^
+In file included from git-compat-util.h:134:0,
+                 from cache.h:4,
+                 from credential-store.c:1:
+compat/mingw.h:8:13: error: conflicting types for 'pid_t'
+ typedef int pid_t;
+             ^
+In file included from /usr/x86_64-w64-mingw32/usr/include/process.h:12:0,
+                 from /usr/x86_64-w64-mingw32/usr/include/unistd.h:11,
+                 from git-compat-util.h:98,
+                 from cache.h:4,
+                 from credential-store.c:1:
+/usr/x86_64-w64-mingw32/usr/include/sys/types.h:68:16: note: previous declaration of 'pid_t' was here
+ typedef _pid_t pid_t;
+                ^
+
+ config.mak.uname | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/config.mak.uname b/config.mak.uname
+index 82b8dff..4f4d84f 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -13,6 +13,11 @@ ifdef MSVC
+ 	uname_O := Windows
+ endif
+ 
++ifdef MINGW
++	uname_S := MINGW
++	uname_O := MINGW
++endif
++
+ # We choose to avoid "if .. else if .. else .. endif endif"
+ # because maintaining the nesting to match is a pain.  If
+ # we had "elif" things would have been much nicer...
+-- 
+1.8.3.2
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
