@@ -1,87 +1,111 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH v4 2/2] commit: add --ignore-submodules[=<when>] parameter
-Date: Tue, 22 Apr 2014 21:14:04 +0200
-Message-ID: <5356BF7C.1010200@web.de>
-References: <CABxC_L92v=cV=+e_DNa0L6f21LB0BRP5duai2h_heGJN_PRoUQ@mail.gmail.com>	<5335A78C.60401@web.de>	<CABxC_L-4=qcZiix05dL8GrDJXv=19fw4yB0qFzRRfw=G=_Gxbg@mail.gmail.com>	<53374E49.9000702@gmail.com>	<533874F9.3090802@web.de>	<5338AC36.6000109@gmail.com>	<5338B1B0.3050703@gmail.com>	<5339BAE4.8020306@web.de> <CABxC_L8_tQrANXji_Z0LfigxsAuzSDj3K9ndTGOTHh2ctHvc6A@mail.gmail.com> <5339F122.60801@gmail.com> <5339FBB4.1010101@gmail.com> <533B2036.3050506@web.de> <533B36AA.3090600@gmail.com> <533C5CBD.4050601@web.de> <533C6B57.3080901@gmail.com> <534180BC.308@web.de> <53431CB8.2050600@gmail.com> <53432EA5.5060102@gmail.com> <53444368.9050607@web.de> <5349BC2C.9030509@gmail.com> <5349C314.50500@gmail.com> <53511617.80506@web.de> <535596D1.6070709@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 02/13] refs.c: use a single exit path from transaction commit and handle onerr
+Date: Tue, 22 Apr 2014 12:14:53 -0700
+Message-ID: <xmqq7g6h5g7m.fsf@gitster.dls.corp.google.com>
+References: <1398120811-20284-1-git-send-email-sahlberg@google.com>
+	<1398120811-20284-3-git-send-email-sahlberg@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Heiko Voigt <hvoigt@hvoigt.net>, Junio C Hamano <gitster@pobox.com>
-To: Ronald Weiss <weiss.ronald@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 22 21:14:30 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu
+To: Ronnie Sahlberg <sahlberg@google.com>
+X-From: git-owner@vger.kernel.org Tue Apr 22 21:15:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wcg9E-000158-4B
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 21:14:28 +0200
+	id 1Wcg9m-0001c2-Af
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 21:15:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754210AbaDVTOU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Apr 2014 15:14:20 -0400
-Received: from mout.web.de ([212.227.15.3]:57369 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752285AbaDVTOP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Apr 2014 15:14:15 -0400
-Received: from [192.168.178.41] ([79.193.67.121]) by smtp.web.de (mrweb001)
- with ESMTPSA (Nemesis) id 0M6Df8-1WrQmR3C38-00y5Il; Tue, 22 Apr 2014 21:14:09
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
-In-Reply-To: <535596D1.6070709@gmail.com>
-X-Enigmail-Version: 1.6
-X-Provags-ID: V03:K0:PRUIsP9IvfKBtKY98x9H0JyUSCyHRLH1AQUI8oNuLwaSABQavin
- tc9XY5Cz6xxE5y875p50/t5z8t7AXwGqbXoGpeB+K7RX0gDR6OyoCSLry1esLsPlj0aHjqO
- nP0q/hECU1l7/6h/fZwPJFM51pWz93Cj0trzb+qnr9FXOeoaiLYM2Em2t6lPrTdcaGNCmxk
- /TZk9RX63FuU9mkAlQrGg==
+	id S1754357AbaDVTO6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Apr 2014 15:14:58 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63739 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754251AbaDVTO5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Apr 2014 15:14:57 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 021287F044;
+	Tue, 22 Apr 2014 15:14:57 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=SbS97PFeu6NbdLX1dXCI6LfPOfg=; b=g70Tu1
+	Puk9AB6xsBKIAFSDQb+rZ6juNFaxO1rl80UVBuHHtQbsRQetmL+Cd6tNcZMFtRW7
+	cWeXL3XMxSIWoSUTuMYOLd18uJTel40GbShZ9Lgi6TM8MiCUHUUzvB0xGPHJetkw
+	KizI1+XGHNSwttAISZOumGK5Hrrhx0hCKaTC4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=AQmNfkW4ByUtEnepGRsRHo3sHpquOgbO
+	Nib/mPQfJPoIO0VMxOH34IWzc3GxSRs79HFxZgSiWxMBTA5DOP8FU54tsrSONTpc
+	aP9I0apFl0P3eL23F3+hcK7m6H0Dv0TeHjFkRZaakvFXEaZ4qjCTiqZr2rW7Lweq
+	BuMnYHv45/M=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D9C097F042;
+	Tue, 22 Apr 2014 15:14:56 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3BDD17F03E;
+	Tue, 22 Apr 2014 15:14:55 -0400 (EDT)
+In-Reply-To: <1398120811-20284-3-git-send-email-sahlberg@google.com> (Ronnie
+	Sahlberg's message of "Mon, 21 Apr 2014 15:53:20 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 63466EE0-CA52-11E3-B8D4-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246773>
 
-Am 22.04.2014 00:08, schrieb Ronald Weiss:
-> On 18. 4. 2014 14:09, Jens Lehmann wrote:
->> Am 13.04.2014 00:49, schrieb Ronald Weiss:
->>> Allow ignoring submodules (or not) by command line switch, like diff
->>> and status do.
->>>
->>> Git commit honors the 'ignore' setting from .gitmodules or .git/config,
->>> but didn't allow to override it from command line.
->>>
->>> This patch depends on Jens Lehmann's patch "commit -m: commit staged
->>> submodules regardless of ignore config". Without it,
->>> "commit -m --ignore-submodules" would not work and tests introduced
->>> here would fail.
->>
->> Apart from the flags of the test (see below) I get three failures when
->> running t7513. And I'm wondering why you are using "test_might_fail"
->> there, shouldn't we know exactly if a commit should succeed or not
->> and test exactly for that?
-> 
-> I used "test_might_fail" instead of "test_must_fail" to denote that this
-> test doesn't care whether "git commit" fails or not due to empty commit
-> message. I found it more appropriate. However, if you disagree, I can
-> change it to "test_must_fail", no problem for me.
+Ronnie Sahlberg <sahlberg@google.com> writes:
 
-I'd rather have them fail because nothing is to be committed (and not
-because the commit message is empty) and document we expect that to
-happen by using test_must_fail (and that for example will catch a later
-change which accidentally makes commit create empty commits here).
+> @@ -3481,6 +3481,14 @@ cleanup:
+>  			unlock_ref(updates[i]->lock);
+>  	free(delnames);
+>  	ref_transaction_free(transaction);
+> +	if (ret) {
+> +		const char *str = "Cannot commit transaction.";
+> +		switch (onerr) {
+> +		case UPDATE_REFS_MSG_ON_ERR: error(str); break;
+> +		case UPDATE_REFS_DIE_ON_ERR: die(str); break;
+> +		case UPDATE_REFS_QUIET_ON_ERR: break;
+> +		}
+> +	}
+>  	return ret;
+>  }
 
-> Unfortunately I don't know why the test fails for you, they pass for me.
-> Did you apply it on top of your own patch for "commit -m", which is
-> a prerequisite?
+Also on top of this part:
 
-Silly me, I forgot to do that (even though you explicitly mention
-this dependency in the commit message). Sorry for the noise, all
-tests run fine after rebasing your changes on top of mine.
+ - avoid complier warning for printf-like functions getting a non
+   literal format string as their format argument;
 
-> I tried it again, on top of current master (cc29195 [tag: v2.0.0-rc0]).
-> First, I have applied your patch from here:
-> 
-> http://article.gmane.org/gmane.comp.version-control.git/245783
-> 
-> On top of that, I applied my two patches, and the tests pass fine here.
-> Until now I was testing on Windows, but now I tested on a Linux box,
-> and that makes no difference.
-> 
+ - style: case label and each statement on its own line.
+
+ - Allow localizing the error message.
+
+diff --git a/refs.c b/refs.c
+index e52b6bf..35ce61a 100644
+--- a/refs.c
++++ b/refs.c
+@@ -3515,11 +3515,16 @@ cleanup:
+ 	free(delnames);
+ 	ref_transaction_free(transaction);
+ 	if (ret) {
+-		const char *str = "Cannot commit transaction.";
++		const char *str = _("Cannot commit transaction.");
+ 		switch (onerr) {
+-		case UPDATE_REFS_MSG_ON_ERR: error(str); break;
+-		case UPDATE_REFS_DIE_ON_ERR: die(str); break;
+-		case UPDATE_REFS_QUIET_ON_ERR: break;
++		case UPDATE_REFS_MSG_ON_ERR:
++			error("%s", str);
++			break;
++		case UPDATE_REFS_DIE_ON_ERR:
++			die("%s", str);
++			break;
++		case UPDATE_REFS_QUIET_ON_ERR:
++			break;
+ 		}
+ 	}
+ 	return ret;
+-- 
+2.0.0-rc0-187-g5842ffa
