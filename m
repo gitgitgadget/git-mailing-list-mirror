@@ -1,265 +1,165 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: RE: [NOT_A_PATCH] A naive attempt to cross-build
- Linux->mingw64 Git
-Date: Mon, 21 Apr 2014 19:06:24 -0500
-Message-ID: <5355b2807a10c_1d5ab792ecfd@nysa.notmuch>
-References: <535569e92cbcc_32c48493101f@nysa.notmuch>
- <1398118479-7731-1-git-send-email-marat@slonopotamus.org>
- <5355b0ce562b8_6c39e772f0cb@nysa.notmuch>
+From: "Luis R. Rodriguez" <mcgrof@do-not-panic.com>
+Subject: Re: [PATCH] tag: add -i and --introduced modifier for --contains
+Date: Mon, 21 Apr 2014 17:38:34 -0700
+Message-ID: <CAB=NE6U7zYurAXNvjkHmk12Qsp9rerr=JyMjrVHrab98h9_+gQ@mail.gmail.com>
+References: <1397681938-18594-1-git-send-email-mcgrof@do-not-panic.com>
+ <xmqqppkhexw3.fsf@gitster.dls.corp.google.com> <CAB=NE6VvDrMQ4ybF10MpXM-2672OdUTC_Rp2mdO3a5fuo1-H1Q@mail.gmail.com>
+ <xmqqfvlbga4r.fsf@gitster.dls.corp.google.com> <CAB=NE6Vt8etieyR256Hxb=q6zMo7UAO2Zkm5900NrE+4=-3eXA@mail.gmail.com>
+ <xmqq7g6mb47f.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Marat Radchenko <marat@slonopotamus.org>, 
- Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
- Sebastian Schuberth <sschuberth@gmail.com>, 
- Heiko Voigt <hvoigt@hvoigt.net>, 
- git@vger.kernel.org, 
- msysGit Mailinglist <msysgit@googlegroups.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>, 
- Marat Radchenko <marat@slonopotamus.org>, 
- Felipe Contreras <felipe.contreras@gmail.com>
-X-From: msysgit+bncBDBJVMGGZYNBB37J22NAKGQEKXJ4JQQ@googlegroups.com Tue Apr 22 02:16:50 2014
-Return-path: <msysgit+bncBDBJVMGGZYNBB37J22NAKGQEKXJ4JQQ@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-pd0-f185.google.com ([209.85.192.185])
+Cc: git@vger.kernel.org, Jiri Slaby <jslaby@suse.cz>,
+	Andreas Schwab <schwab@suse.de>, Jan Kara <jack@suse.cz>,
+	Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 22 02:39:03 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDBJVMGGZYNBB37J22NAKGQEKXJ4JQQ@googlegroups.com>)
-	id 1WcOOG-0004hF-RY
-	for gcvm-msysgit@m.gmane.org; Tue, 22 Apr 2014 02:16:49 +0200
-Received: by mail-pd0-f185.google.com with SMTP id y13sf1289607pdi.12
-        for <gcvm-msysgit@m.gmane.org>; Mon, 21 Apr 2014 17:16:47 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1WcOjl-00081l-K9
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 02:39:02 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1754684AbaDVAi6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Apr 2014 20:38:58 -0400
+Received: from mail-lb0-f170.google.com ([209.85.217.170]:35388 "EHLO
+	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753249AbaDVAi4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Apr 2014 20:38:56 -0400
+Received: by mail-lb0-f170.google.com with SMTP id s7so3776581lbd.1
+        for <git@vger.kernel.org>; Mon, 21 Apr 2014 17:38:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:list-post:list-help:list-archive
-         :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=yar94VLWJTjd513Lb4tDJ/ubWLOj/kEbj15rnkWzi3g=;
-        b=LVKAq7UwYFZNhG0q535PXOGczxrWH+INvOAzK4gQirzosLJml9atiT75FUfMypGFoB
-         QkFsvpfPhD1x3LZcC3lZoJCV/mfXJZUGjeAiNz2wSY+jtpIPUaKU59DWog3QhxpjQr6/
-         SbdK+RuIMvexc1iyAYzh7+oWYPTFSKPL18bHzXwLFfJ3FwJwriwExJn7NkbfodWlvwOO
-         Ne4+ZnJgIDn3NEq+GkOp+bDLQG/sGNqzigE9Ni5r1t8rTnnbPo9UAEmkNP6KSs31YleX
-         TtZeLOEQqGqdjL2td68AJll1htbvWqjsUQR+bzTFVywiUrStImhrAk9/olZpckgDQxNV
-         73GA==
-X-Received: by 10.140.44.75 with SMTP id f69mr101163qga.11.1398125807763;
-        Mon, 21 Apr 2014 17:16:47 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.140.88.72 with SMTP id s66ls2723875qgd.11.gmail; Mon, 21 Apr
- 2014 17:16:47 -0700 (PDT)
-X-Received: by 10.236.144.136 with SMTP id n8mr18706701yhj.22.1398125807281;
-        Mon, 21 Apr 2014 17:16:47 -0700 (PDT)
-Received: from mail-oa0-x22f.google.com (mail-oa0-x22f.google.com [2607:f8b0:4003:c02::22f])
-        by gmr-mx.google.com with ESMTPS id rg8si441521igc.0.2014.04.21.17.16.47
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 21 Apr 2014 17:16:47 -0700 (PDT)
-Received-SPF: pass (google.com: domain of felipe.contreras@gmail.com designates 2607:f8b0:4003:c02::22f as permitted sender) client-ip=2607:f8b0:4003:c02::22f;
-Received: by mail-oa0-x22f.google.com with SMTP id i11so4910846oag.20
-        for <msysgit@googlegroups.com>; Mon, 21 Apr 2014 17:16:47 -0700 (PDT)
-X-Received: by 10.182.205.135 with SMTP id lg7mr30008807obc.32.1398125807032;
-        Mon, 21 Apr 2014 17:16:47 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id h1sm3412763obr.15.2014.04.21.17.16.45
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 21 Apr 2014 17:16:46 -0700 (PDT)
-In-Reply-To: <5355b0ce562b8_6c39e772f0cb@nysa.notmuch>
-X-Original-Sender: felipe.contreras@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of felipe.contreras@gmail.com designates
- 2607:f8b0:4003:c02::22f as permitted sender) smtp.mail=felipe.contreras@gmail.com;
-       dkim=pass header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246680>
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=cuRgbDiaYy0dlFWKBYhx36vVU8Szpyknx/VWtkF/vjw=;
+        b=yun1u2X6LrTKUhBW2TKZabxwQQBRk4Vwu/bD1zZKqlcWIi69zY5EDjtXBlge9VafRE
+         hcpFJHPKrZ9uXm0O8jkHKKsvud7liyE2nXN+tniqin5wxvEqkqYEtFoBU70JXHnBjmqN
+         qCsbggRRErnTVzokkQTH7+f5Fhpfb2UAeVCpUdZhEFC+64Lu58DQ2UnZHPysoNqNSF8W
+         KUTXYg0VSLif0pLgsSvNmpucXyaU1UR6k7dRipLfcrZIy4/4nBas4xw4E7pv18eomy+Y
+         bIGHTebKkAqxuGFqKYI8geABKp5F4nf4ZtHR4665nIJfxOUgQ5xriJJ+aMMs3BiKwzLl
+         PcxQ==
+X-Received: by 10.112.47.3 with SMTP id z3mr4275307lbm.34.1398127134833; Mon,
+ 21 Apr 2014 17:38:54 -0700 (PDT)
+Received: by 10.112.215.74 with HTTP; Mon, 21 Apr 2014 17:38:34 -0700 (PDT)
+In-Reply-To: <xmqq7g6mb47f.fsf@gitster.dls.corp.google.com>
+X-Google-Sender-Auth: pRxjdpY7fDKbgbTPXZq3iS5eTUM
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246681>
 
-Felipe Contreras wrote:
-> Marat Radchenko wrote:
-> > 4. Observe errors [1]
-> 
-> I see those errors with a 64-bit compiler, but not with the old 32-bit one.
-> 
-> > I would be happy to find out I'm doing something wrong -- Johannes says building
-> > mingw64 Git is dirt-easy.
-> 
-> I get the same error. I've been cross-compiling since basically all my
-> professional life, so I don't think you are doing something wrong, it just
-> doesn't work.
+On Fri, Apr 18, 2014 at 4:36 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> "Luis R. Rodriguez" <mcgrof@do-not-panic.com> writes:
+>
+>> I think ultimately this reveals that given that tags *can* be
+>> arbitrary and subjective,...
+>
+> Yes; see the part at the bottom.
+>
+>>> Commit A can be described in terms of both v3.4 and v9.0,
+>>
+>> And in the real example case, why *would* c5905afb' be be described in
+>> terms of v3.5 instead of v3.4 ?
+>
+> I am not interested in graphing that particular history between v3.4
+> and v3.5 myself.  If you are interested, I already gave you enough
+> information on how to figure that out.
 
-I managed to fix all the errors, some apply to newer mingw, regardless of 32 or
-64, others are specific to 64-bit. It's all hacky and I haven't checked if it
-runs, but at least it compiles (mostly).
+I was alluding to another possible issue here, my concern was that the
+commit's parent (which is not really the point at which it was merged,
+but rather where the topic got forked off to be worked on) could be
+used for as reference points but clearly its not given the nature of
+how name-rev was implemented. I still do see some possible issues with
+it's parent on other commands (but I haven't studied the other's
+implementation) that reveals some of my original concerns, but its
+unclear if they are related. I also found that if we didn't want to
+rely on dates or start defining naming convention we may want to
+reconsider the name_rev() recursive implementation. I'll illustrate a
+few results that might help to show my concerns for both other
+commands perhaps using the parent erroneously, and a possible
+alternative implementation for name_rev() or at the very least
+contains.
 
-diff --git a/compat/bswap.h b/compat/bswap.h
-index 5061214..285d89c 100644
---- a/compat/bswap.h
-+++ b/compat/bswap.h
-@@ -5,6 +5,8 @@
-  * operation.
-  */
- 
-+#include <stdint.h>
-+
- /*
-  * Default version that the compiler ought to optimize properly with
-  * constant values.
-diff --git a/compat/mingw.h b/compat/mingw.h
-index e033e72..9274b64 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -5,7 +5,6 @@
-  * things that are not available in header files
-  */
- 
--typedef int pid_t;
- typedef int uid_t;
- typedef int socklen_t;
- #define hstrerror strerror
-@@ -90,8 +89,6 @@ static inline int symlink(const char *oldpath, const char *newpath)
- { errno = ENOSYS; return -1; }
- static inline int fchmod(int fildes, mode_t mode)
- { errno = ENOSYS; return -1; }
--static inline pid_t fork(void)
--{ errno = ENOSYS; return -1; }
- static inline unsigned int alarm(unsigned int seconds)
- { return 0; }
- static inline int fsync(int fd)
-@@ -261,12 +258,6 @@ static inline int getrlimit(int resource, struct rlimit *rlp)
- 	return 0;
- }
- 
--/*
-- * Use mingw specific stat()/lstat()/fstat() implementations on Windows.
-- */
--#define off_t off64_t
--#define lseek _lseeki64
--
- /* use struct stat with 64 bit st_size */
- #ifdef stat
- #undef stat
-diff --git a/compat/nedmalloc/malloc.c.h b/compat/nedmalloc/malloc.c.h
-index f216a2a..3e4affd 100644
---- a/compat/nedmalloc/malloc.c.h
-+++ b/compat/nedmalloc/malloc.c.h
-@@ -720,6 +720,7 @@ struct mallinfo {
-   inlining are defined as macros, so these aren't used for them.
- */
- 
-+#undef FORCEINLINE
- #ifndef FORCEINLINE
-   #if defined(__GNUC__)
- #define FORCEINLINE __inline __attribute__ ((always_inline))
-@@ -1352,58 +1353,6 @@ LONG __cdecl _InterlockedExchange(LONG volatile *Target, LONG Value);
- #ifndef __MINGW32__
- #pragma intrinsic (_InterlockedCompareExchange)
- #pragma intrinsic (_InterlockedExchange)
--#else
--  /* --[ start GCC compatibility ]----------------------------------------------
--   * Compatibility <intrin_x86.h> header for GCC -- GCC equivalents of intrinsic
--   * Microsoft Visual C++ functions. Originally developed for the ReactOS
--   * (<http://www.reactos.org/>) and TinyKrnl (<http://www.tinykrnl.org/>)
--   * projects.
--   *
--   * Copyright (c) 2006 KJK::Hyperion <hackbunny@reactos.com>
--   *
--   * Permission is hereby granted, free of charge, to any person obtaining a
--   * copy of this software and associated documentation files (the "Software"),
--   * to deal in the Software without restriction, including without limitation
--   * the rights to use, copy, modify, merge, publish, distribute, sublicense,
--   * and/or sell copies of the Software, and to permit persons to whom the
--   * Software is furnished to do so, subject to the following conditions:
--   *
--   * The above copyright notice and this permission notice shall be included in
--   * all copies or substantial portions of the Software.
--   *
--   * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
--   * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
--   * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
--   * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
--   * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
--   * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
--   * DEALINGS IN THE SOFTWARE.
--   */
--
--  /*** Atomic operations ***/
--  #if (__GNUC__ * 10000 + __GNUC_MINOR__ * 100 + __GNUC_PATCHLEVEL__) > 40100
--    #define _ReadWriteBarrier() __sync_synchronize()
--  #else
--    static __inline__ __attribute__((always_inline)) long __sync_lock_test_and_set(volatile long * const Target, const long Value)
--    {
--      long res;
--      __asm__ __volatile__("xchg%z0 %2, %0" : "=g" (*(Target)), "=r" (res) : "1" (Value));
--      return res;
--    }
--    static void __inline__ __attribute__((always_inline)) _MemoryBarrier(void)
--    {
--      __asm__ __volatile__("" : : : "memory");
--    }
--    #define _ReadWriteBarrier() _MemoryBarrier()
--  #endif
--  /* BUGBUG: GCC only supports full barriers */
--  static __inline__ __attribute__((always_inline)) long _InterlockedExchange(volatile long * const Target, const long Value)
--  {
--    /* NOTE: __sync_lock_test_and_set would be an acquire barrier, so we force a full barrier */
--    _ReadWriteBarrier();
--    return __sync_lock_test_and_set(Target, Value);
--  }
--  /* --[ end GCC compatibility ]---------------------------------------------- */
- #endif
- #define interlockedcompareexchange _InterlockedCompareExchange
- #define interlockedexchange _InterlockedExchange
-diff --git a/config.mak.uname b/config.mak.uname
-index efaed94..01acd54 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -13,6 +13,11 @@ ifdef MSVC
- 	uname_O := Windows
- endif
- 
-+ifdef MINGW
-+	uname_S := MINGW
-+	uname_O := MINGW
-+endif
-+
- # We choose to avoid "if .. else if .. else .. endif endif"
- # because maintaining the nesting to match is a pain.  If
- # we had "elif" things would have been much nicer...
-@@ -508,7 +513,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
- 	NO_INET_NTOP = YesPlease
- 	NO_POSIX_GOODIES = UnfortunatelyYes
- 	DEFAULT_HELP_FORMAT = html
--	COMPAT_CFLAGS += -D__USE_MINGW_ACCESS -D_USE_32BIT_TIME_T -DNOGDI -Icompat -Icompat/win32
-+	COMPAT_CFLAGS += -D__USE_MINGW_ACCESS -Icompat -Icompat/win32
- 	COMPAT_CFLAGS += -DSTRIP_EXTENSION=\".exe\"
- 	COMPAT_OBJS += compat/mingw.o compat/winansi.o \
- 		compat/win32/pthread.o compat/win32/syslog.o \
+[0] mcgrof@ergon ~/linux (git::master)$ git log c5905afb..v3.5| grep
+^commit | wc -l
+24878
+[1] mcgrof@ergon ~/linux (git::master)$ git log c5905afb..v3.4| grep
+^commit | wc -l
+13106
+[2] mcgrof@ergon ~/linux (git::master)$ git log c5905afb..v3.3| grep
+^commit | wc -l
+1360
 
--- 
-Felipe Contreras
+Now that I revised name_rev.c I see the recursive nature of name_rev()
+works top down from each tag down to each v* tag object and for each
+actual commit pegs a name on it. How we rule out each tag under this
+implementation is not that obvious to me, specially when results like
+[0] and [1] reveal v3.4 should be 'shorter' in light of number of
+commits. I see now how we don't update a commit's name if other
+crucial information such as the ones discussed on this thread might be
+important for the user, and I can see how this can help but an
+alternative approach, which is what I expected to see implemented at
+least for 'git describe --contains', would have been to see how many
+commits are present from the commit's *merged* upstream parent (not
+the actual parent as in c5905afb's commit case its v3.3 which is not
+where it got merged). Getting the smallest number of commits under
+this logic and stopping when we don't find any commits should yield us
+the base tag under which the commit was merged, without any heuristics
+on dates. This however applies to Linux though given that we don't
+merge commits on stable branches but rather create new commits and
+reference the upstream sha1sum, a practice which also solves the
+problem Jeff pointed out.
 
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+The results for command [2] above however a bit surprising, I'd take a
+look but I should go back to look at other stuff, figured I'd at least
+bring it up now as it seems relevant.
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+>>>     - find candidate tags that can be used to "describe --contains"
+>>>       the commit A, yielding v3.4, v3.5 (not shown), and v9.0;
+>>
+>>>     - among the candidate tags, cull the ones that contain another
+>>>       candidate tag, rejecting v3.5 (not shown) and v9.0;
+>>
+>>>     - among the surviving tags, pick the closest.
+>>>
+>>> Hmm?
+>>
+>> Sounds good to me!
+>
+> Not so fast ;-)
+>
+> My other message to Peff in response to his another example has an
+> updated position on this.  "Reject candidates that can reach other
+> candidates" is universally correct, but after that point, there are
+> at least three but probably more options that suit preference of
+> different people and project to break ties:
+>
+>  - Your case that started this thread may want to favor v3.4 if only
+>    because that v3.4 _sounds_ smaller than v4.0 (in Peff's example),
+>    even when v3.4 and v4.0 do not have ancestry relationship.
+>
+>  - The "closest" we have had is a heuristic to produce a result that
+>    is textually shorter.
+>
+>  - And as I alluded to, "which one has the earliest timestamp?", is
+>    another valid question to ask.
 
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+The first one above can be subjective if and only if the Linux
+upstream model of dealing with stable branches is not followed. In
+other words I think its a non issue if you create new commits on the
+stable branches instead of merge stuff onto them. This however is
+technical practice and I guess not everyone follows.
+
+> And there may be more to appear.  A new command line option (and
+> possibly a new configuration) to choose from these three (and more
+> heuristics that will be added later) would be necessary.
+
+Yeah this is rather complex, the resolutions to the issue in the ways
+you've described seem reasonable to me but do wonder if this can be
+simplified by reevaluating how the candidates are considered. You'd
+know better :)
+
+ Luis
