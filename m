@@ -1,196 +1,152 @@
-From: Marat Radchenko <marat@slonopotamus.org>
-Subject: Re: [NOT_A_PATCH] A naive attempt to cross-build
- Linux->mingw64 Git
-Date: Tue, 22 Apr 2014 17:36:18 +0400
-Message-ID: <20140422133616.GA5079@seldon>
-References: <535569e92cbcc_32c48493101f@nysa.notmuch>
- <1398118479-7731-1-git-send-email-marat@slonopotamus.org>
- <5355b0ce562b8_6c39e772f0cb@nysa.notmuch>
- <5355b2807a10c_1d5ab792ecfd@nysa.notmuch>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [ANNOUNCE] WinGit - native x86/x64 Git for Windows
+Date: Tue, 22 Apr 2014 16:17:12 +0200
+Message-ID: <87r44pe9ef.fsf@fencepost.gnu.org>
+References: <rfujmbew27f1gaa6dbk706li.1397911737867@email.android.com>
+	<20140419184210.GB3617@book-mint>
+	<alpine.DEB.1.00.1404210003540.14982@s15462909.onlinehome-server.info>
+	<53556579.3050709@gmail.com>
+	<alpine.DEB.1.00.1404212053420.14982@s15462909.onlinehome-server.info>
+	<535569e92cbcc_32c48493101f@nysa.notmuch>
+	<alpine.DEB.1.00.1404221512130.14982@s15462909.onlinehome-server.info>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
 	Sebastian Schuberth <sschuberth@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>, git@vger.kernel.org,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Marat Radchenko <marat@slonopotamus.org>, git@vger.kernel.org,
 	msysGit Mailinglist <msysgit@googlegroups.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: msysgit+bncBCE7TAPITACRB5XA3GNAKGQE263VT7Y@googlegroups.com Tue Apr 22 15:36:56 2014
-Return-path: <msysgit+bncBCE7TAPITACRB5XA3GNAKGQE263VT7Y@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-vc0-f185.google.com ([209.85.220.185])
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Apr 22 16:17:23 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCE7TAPITACRB5XA3GNAKGQE263VT7Y@googlegroups.com>)
-	id 1WcasZ-0005LM-Oc
-	for gcvm-msysgit@m.gmane.org; Tue, 22 Apr 2014 15:36:56 +0200
-Received: by mail-vc0-f185.google.com with SMTP id lg15sf488241vcb.2
-        for <gcvm-msysgit@m.gmane.org>; Tue, 22 Apr 2014 06:36:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :in-reply-to:user-agent:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type:content-disposition;
-        bh=CesRYKC2hx71EcHFcsjFugculIH2x1Kjy/dE2I+sJjU=;
-        b=dgI8PaxOZeqZfEpXEXEUT4ttd7cRivGEkKn1KpmSBH8J2XZJpFRyHpL+UuIxLNzOe/
-         Ke/EoiheKrWuhbf9hZ5BP31QCRr9qNf8Rz+kcfo/KpQB2QtFJtFtEIRhXwigoKxV000j
-         PMDi4QAm9i22uWbJ1OT8ToU3TyFB2XiZNPP1vTmzHDUssf04MREmYK6WpqBhwsHQ6wWT
-         MPqdNkxzsuyhtEBdZiaQ0fK/MUS/vC+qBYAgEcHihGYmtlNKsAmHZEHBis6cMRo3jZpR
-         tFnebF3iKNZd/z2m1byYYFAkqU8KONumN4vXe8GnucamMcKk7Fe8hzxIoCBVhhZ2owj9
-         ketg==
-X-Received: by 10.50.29.110 with SMTP id j14mr712151igh.5.1398173814966;
-        Tue, 22 Apr 2014 06:36:54 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.50.66.148 with SMTP id f20ls2175257igt.32.canary; Tue, 22 Apr
- 2014 06:36:54 -0700 (PDT)
-X-Received: by 10.66.66.109 with SMTP id e13mr21734219pat.1.1398173814307;
-        Tue, 22 Apr 2014 06:36:54 -0700 (PDT)
-Received: from slonopotamus.org ([94.242.204.247])
-        by gmr-mx.google.com with ESMTPS id vc6si1571289pab.2.2014.04.22.06.36.52
-        for <msysgit@googlegroups.com>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 22 Apr 2014 06:36:52 -0700 (PDT)
-Received-SPF: neutral (google.com: 94.242.204.247 is neither permitted nor denied by best guess record for domain of marat@slonopotamus.org) client-ip=94.242.204.247;
-Received: from marat by slonopotamus.org with local (Exim 4.80.1)
-	(envelope-from <marat@slonopotamus.org>)
-	id 1Wcary-0001Kw-3g; Tue, 22 Apr 2014 17:36:18 +0400
-In-Reply-To: <5355b2807a10c_1d5ab792ecfd@nysa.notmuch>
-User-Agent: Mutt/1.5.22 (2013-10-16)
-X-Original-Sender: marat@slonopotamus.org
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
- (google.com: 94.242.204.247 is neither permitted nor denied by best guess
- record for domain of marat@slonopotamus.org) smtp.mail=marat@slonopotamus.org
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Content-Disposition: inline
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246737>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1WcbVh-0005K0-LA
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 16:17:21 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1756419AbaDVORR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Apr 2014 10:17:17 -0400
+Received: from fencepost.gnu.org ([208.118.235.10]:38261 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755956AbaDVORP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 Apr 2014 10:17:15 -0400
+Received: from localhost ([127.0.0.1]:37293 helo=lola)
+	by fencepost.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <dak@gnu.org>)
+	id 1WcbVY-00059t-W5; Tue, 22 Apr 2014 10:17:13 -0400
+Received: by lola (Postfix, from userid 1000)
+	id 9BA7AE0524; Tue, 22 Apr 2014 16:17:12 +0200 (CEST)
+In-Reply-To: <alpine.DEB.1.00.1404221512130.14982@s15462909.onlinehome-server.info>
+	(Johannes Schindelin's message of "Tue, 22 Apr 2014 15:14:23 +0200
+	(CEST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246738>
 
-On Mon, Apr 21, 2014 at 07:06:24PM -0500, Felipe Contreras wrote:
-> I managed to fix all the errors, some apply to newer mingw, regardless of 32 or
-> 64, others are specific to 64-bit. It's all hacky and I haven't checked if it
-> runs, but at least it compiles (mostly).
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Do you plan to evolve it into something mergeable?
+> On Mon, 21 Apr 2014, Felipe Contreras wrote:
+>
+>> Johannes Schindelin wrote:
+>> > Now, clearly you have all the motivation that is needed to get 64-=
+bit
+>> > builds of Git for Windows going, and all the motivation required t=
+o make
+>> > sure that the MSVC support of the msysGit project works.
+>>=20
+>> s/msysGit/Git/
+>
+> No. I meant the msysGit project; the project that maintains the curre=
+nt
+> development environment for Git for Windows. Please do not try to
+> reinterpret what I am saying.
+>
+>> Personally I don't see why ideally I shouldn't be able to build upst=
+ream
+>> Git for Windows with mingw without leaving my Linux system.
+>
+> Maybe because you could not even test it properly, let alone run the =
+test
+> suite? And maybe because according to the famous "scratch your own it=
+ch"
+> credo, it is actually the duty of Windows users -- i.e. users who do =
+not
+> even have your Linux system -- to fix the bugs that would never be
+> encountered anywhere but Windows?
 
-> diff --git a/compat/nedmalloc/malloc.c.h b/compat/nedmalloc/malloc.c.h
-> index f216a2a..3e4affd 100644
-> --- a/compat/nedmalloc/malloc.c.h
-> +++ b/compat/nedmalloc/malloc.c.h
-> @@ -720,6 +720,7 @@ struct mallinfo {
->    inlining are defined as macros, so these aren't used for them.
->  */
->  
-> +#undef FORCEINLINE
->  #ifndef FORCEINLINE
->    #if defined(__GNUC__)
->  #define FORCEINLINE __inline __attribute__ ((always_inline))
-> @@ -1352,58 +1353,6 @@ LONG __cdecl _InterlockedExchange(LONG volatile *Target, LONG Value);
->  #ifndef __MINGW32__
->  #pragma intrinsic (_InterlockedCompareExchange)
->  #pragma intrinsic (_InterlockedExchange)
-> -#else
-> -  /* --[ start GCC compatibility ]----------------------------------------------
-> -   * Compatibility <intrin_x86.h> header for GCC -- GCC equivalents of intrinsic
-> -   * Microsoft Visual C++ functions. Originally developed for the ReactOS
-> -   * (<http://www.reactos.org/>) and TinyKrnl (<http://www.tinykrnl.org/>)
-> -   * projects.
-> -   *
-> -   * Copyright (c) 2006 KJK::Hyperion <hackbunny@reactos.com>
-> -   *
-> -   * Permission is hereby granted, free of charge, to any person obtaining a
-> -   * copy of this software and associated documentation files (the "Software"),
-> -   * to deal in the Software without restriction, including without limitation
-> -   * the rights to use, copy, modify, merge, publish, distribute, sublicense,
-> -   * and/or sell copies of the Software, and to permit persons to whom the
-> -   * Software is furnished to do so, subject to the following conditions:
-> -   *
-> -   * The above copyright notice and this permission notice shall be included in
-> -   * all copies or substantial portions of the Software.
-> -   *
-> -   * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-> -   * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-> -   * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-> -   * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-> -   * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-> -   * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-> -   * DEALINGS IN THE SOFTWARE.
-> -   */
-> -
-> -  /*** Atomic operations ***/
-> -  #if (__GNUC__ * 10000 + __GNUC_MINOR__ * 100 + __GNUC_PATCHLEVEL__) > 40100
-> -    #define _ReadWriteBarrier() __sync_synchronize()
-> -  #else
-> -    static __inline__ __attribute__((always_inline)) long __sync_lock_test_and_set(volatile long * const Target, const long Value)
-> -    {
-> -      long res;
-> -      __asm__ __volatile__("xchg%z0 %2, %0" : "=g" (*(Target)), "=r" (res) : "1" (Value));
-> -      return res;
-> -    }
-> -    static void __inline__ __attribute__((always_inline)) _MemoryBarrier(void)
-> -    {
-> -      __asm__ __volatile__("" : : : "memory");
-> -    }
-> -    #define _ReadWriteBarrier() _MemoryBarrier()
-> -  #endif
-> -  /* BUGBUG: GCC only supports full barriers */
-> -  static __inline__ __attribute__((always_inline)) long _InterlockedExchange(volatile long * const Target, const long Value)
-> -  {
-> -    /* NOTE: __sync_lock_test_and_set would be an acquire barrier, so we force a full barrier */
-> -    _ReadWriteBarrier();
-> -    return __sync_lock_test_and_set(Target, Value);
-> -  }
-> -  /* --[ end GCC compatibility ]---------------------------------------------- */
->  #endif
->  #define interlockedcompareexchange _InterlockedCompareExchange
->  #define interlockedexchange _InterlockedExchange
+<URL:http://www.lilypond.org/gub>
 
-Git doesn't link without this for me, fails to find _InterlockedExchange.
+The LilyPond project uses this to do automated builds for Windows,
+MacOSX, FreeBSD, GNU/Linux on several CPUs.  The installation includes =
+a
+Python interpreter, GUILE, bash, and some other run-time necessary stuf=
+f
+for executing scripts of various kinds.
 
-> diff --git a/config.mak.uname b/config.mak.uname
-> index efaed94..01acd54 100644
-> --- a/config.mak.uname
-> +++ b/config.mak.uname
-> -	COMPAT_CFLAGS += -D__USE_MINGW_ACCESS -D_USE_32BIT_TIME_T -DNOGDI -Icompat -Icompat/win32
-> +	COMPAT_CFLAGS += -D__USE_MINGW_ACCESS -Icompat -Icompat/win32
+LilyPond contains quite a few dependencies: efforts to do this natively
+under the "everything that should be necessary is available somewhere"
+assumptions led to bugs and time lags not dissimilar to what plagues
+msysGit.
 
-builtin/fast-export.c still failed for me with:
+"duty of Windows users" sounds like a theory expounded by non-Windows
+users.  Maintaining ports requires highly skilled programmers, and
+highly skilled programmers tend to scratch a _lot_ of itches by not
+using Windows in the first place.
 
-builtin/fast-export.c: At top level:
-builtin/fast-export.c:28:15: error: expected identifier before numeric constant
- static enum { ERROR, DROP, REWRITE } tag_of_filtered_mode = ERROR;
-               ^
+It's been a long time since I had a grasp of the Windows/Git situation,
+but my impression was that much of the msysGit stuff was done by you
+yourself to scratch your personal itch of stopping people to say "Git i=
+s
+not useful for large projects since it does not run under Windows" whil=
+e
+not actually being a Windows user yourself.
 
-ERROR is defined in <mingw>/usr/include/wingdi.h and you dropped -DNOGDI what lead to wingdi.h inclusion,
-perhaps you shouldn't.
+So if my memory does not do me a disfavor, you have kicked the "duty of
+Windows users" theory in the curb yourself.
 
-For the reference: mingw64-runtime-3.1.0, x86_64-w64-mingw32-gcc 4.8.2
+The developer demographic of LilyPond is similar: we actually have a
+predominance of Windows users on the user mailing list.  But power user=
+s
+and compile farm providers (all the cross-compiling is taking a serious
+toll, even though most is in compiling the embedded example images in
+the various manuals and their translations) use GNU/Linux, and where
+their native system is Windows, in the form of a Ubuntu VM ("LilyDev")
+put together for that purpose.
 
-P.S. besides CC/LD, I also had to define AR and fix `windres` executable name in `config.mak.uname`.
+As a consequence, the bug tracker contains comparatively few and often
+minor operating system specific bug reports (cf
+<URL:http://code.google.com/p/lilypond/issues/list?can=3D1&q=3DOpSys%3D=
+Windows>).
+Many of them are catered for by programmers not even having a system
+available for testing.  Stuff that is really only reproducible on
+Windows tends to take longer to fix.  That involves things like
+=46ont=A0handling, PDF=A0handling, filename issues, memory allocation h=
+andling
+and others, often in the form of performance regressions that also
+happen on GNU/Linux but are much less noticeable because the respective
+facilities are much more efficient and thus mask unnecessarily repeated
+operations much better.
 
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+While the user demographic of Git is likely leaning less towards Window=
+s
+than that of LilyPond, I=A0expect some similar tendencies.  As a result=
+ of
+the GUB crosscompiling environment, LilyPond offers a high quality
+up-to-date Windows distribution with a somewhat typical installer
+(though with acceptability problems that would not be dissimilar for
+Git, cf
+<URL:http://download.cnet.com/LilyPond/9241-2141_4-10995890.html?messag=
+eID=3D10589553&tag=3Duo;uo>).
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+In a way, using such a cross-building environment is a copout regarding
+the defensible "duty of end users" line of thought.  But it's not like
+the msysGit history supports that theory all that convincingly anyway.
 
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+--=20
+David Kastrup
