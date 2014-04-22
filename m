@@ -1,96 +1,91 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [ANNOUNCE] Git v2.0.0-rc0
-Date: Tue, 22 Apr 2014 14:00:02 -0700
-Message-ID: <20140422210002.GC15516@google.com>
-References: <xmqqk3ambf9k.fsf@gitster.dls.corp.google.com>
- <475e137b5095e45c92a87a9969f58f0@74d39fa044aa309eaea14b9f57fe79c>
- <20140422185829.GB15516@google.com>
- <xmqq4n1l3yyf.fsf@gitster.dls.corp.google.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: What is missing from Git v2.0
+Date: Tue, 22 Apr 2014 16:01:05 -0500
+Message-ID: <5356d8918948a_6cbadd72f0d@nysa.notmuch>
+References: <CAMP44s17h4Tjg+VaMF0atLep8t-0HVp4UDr1WE2wYnEuZ07eaQ@mail.gmail.com>
+ <53557071.5040500@gmail.com>
+ <xmqqtx9m8obr.fsf@gitster.dls.corp.google.com>
+ <CAHGBnuMty-86jfUto=L3muhgEVwVE70FQQY2FJ1bn7AUjfEtLQ@mail.gmail.com>
+ <xmqqk3ah5i55.fsf@gitster.dls.corp.google.com>
+ <5356c1a61f6d8_463e11ef310a5@nysa.notmuch>
+ <vpqlhux3yhr.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Kyle J. McKay" <mackyle@gmail.com>,
-	Johan Herland <johan@herland.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 22 23:00:18 2014
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Sebastian Schuberth <sschuberth@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 22 23:11:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wchnd-0003eu-P8
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 23:00:18 +0200
+	id 1Wchyc-0005b5-8k
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 23:11:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758371AbaDVVAJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Apr 2014 17:00:09 -0400
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:55083 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758174AbaDVVAG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Apr 2014 17:00:06 -0400
-Received: by mail-pa0-f47.google.com with SMTP id lj1so20416pab.34
-        for <git@vger.kernel.org>; Tue, 22 Apr 2014 14:00:05 -0700 (PDT)
+	id S1756158AbaDVVLb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Apr 2014 17:11:31 -0400
+Received: from mail-ob0-f170.google.com ([209.85.214.170]:47602 "EHLO
+	mail-ob0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753361AbaDVVL3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Apr 2014 17:11:29 -0400
+Received: by mail-ob0-f170.google.com with SMTP id vb8so56167obc.15
+        for <git@vger.kernel.org>; Tue, 22 Apr 2014 14:11:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=PgAliG96zqP9WS9paLte4SvJZhN8x4qUi536JEYwLvA=;
-        b=vInfyxPo+NV6wznYlZxuas+QPUsNlFKtwIPzyfeV5NkPHSW3chp2zxGM6OhCe2aqRv
-         5wtVSGAxa9k7G7CFx2JwAFPUHSkwB9o1Jh+/lpg8VSw8NUIHYV6tafguF4C9Ugm3q5aw
-         o5R9oR34OY9f765SzRoiqGLOS20jq6wnOBC7Bo1w5mYe4OYHEo6lP9WcIXpJZ4P/jxur
-         ZdPMafmEBvImTSbMo0B9f0mg4EfJWorQVD/obhz7GnxMsIIhDQ607pRLiSWkeAkRmQTO
-         vH8urSaArAcP4XYl9IA7EziDL06h4iqF+5vwHeA0lS/0STCTjOjGxotbiWBjRjKc+xaK
-         Dfzw==
-X-Received: by 10.68.229.68 with SMTP id so4mr46950281pbc.110.1398200405354;
-        Tue, 22 Apr 2014 14:00:05 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id it4sm86896310pbd.48.2014.04.22.14.00.04
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=+rLPb5gdj7YT29DB3D1SXUE6rTjR/vgFXHpvEoCpiIQ=;
+        b=yz31pofJybImlnv4rGkod087ZIQbu7Yg1jludBxhXOffg5gwPNddHPIAlMafzY4zOO
+         +ptFNWgWxSCBuYz8Ws0DtJCQZxozam7RPtOyQJ6ZxNdK7PtK9LBNSF6dVoUmUxGlOpZL
+         sQzYecwh60Bd7BeXAU4z8MAQp54zjQ/Y/3HZtIDgNZIORffFnOa1Ks0IoWLQqj0x5ksq
+         gK5qg+UXNMY4E88/ni6xFG5dNIqtQHo1mTxr3m4XuYHJUN/Kf+CnSCdh6Nmp8l33PuLG
+         HPdhNSryChT6fw+c0ZxwnQpevrlouDu6EM8XNIW1yJ9eTr2H3XdcxgxA8mLJcWTHModk
+         yjng==
+X-Received: by 10.60.125.72 with SMTP id mo8mr34807366oeb.36.1398201088606;
+        Tue, 22 Apr 2014 14:11:28 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id 10sm78851075obq.18.2014.04.22.14.11.26
         for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 22 Apr 2014 14:00:04 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <xmqq4n1l3yyf.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 22 Apr 2014 14:11:27 -0700 (PDT)
+In-Reply-To: <vpqlhux3yhr.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246785>
 
-Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+Matthieu Moy wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> 
+> > Why is not material for v2.0? Because you say so? Are you going to wait another
+> > ten years to introduce this to v3.0?
+> 
+> There's no need to wait for a 3.0 to introduce this. If these would
+> be low-priority compared to user-defined aliases, there's no backward
+> compatibility issue, it can very well be a 2.1, or whatever number comes
+> after 2.0.
 
->> Hm, perhaps we should introduce a 'no-prefix' option to work around
->> this.
-[...]
->> That way, normal usage of --prefix would still be consistent with
->> other git commands that prefer the form with argument attached
->> (--prefix=foo, not --prefix foo; see gitcli(7)).
->>
->> Thoughts?
->
-> I do not think that it is a good idea to use "--no-anything" for
-> something that is not a boolean.
+Can it? I would like Junio to say so.
 
-Do you mean it is a bad idea to support or a bad idea to make use of
-such support?
+Still, v2.0 is a better time for this.
 
-I suggested --no- for consistency with current git commands that use
-parseopt.  But on second thought, I agree that it be confusing for
+> > This is actually the perfect time to do it.
+> 
+> Junio has just tagged a -rc for 2.0, so it's clearly too late to start
+> discussing new features for this particular release.
 
-	--prefix=foo --no-prefix
+And whose fault is that? I never saw any warning about the -rc tag, and I never
+saw any discussion about possible features missing in v2.0.
 
-to mean something different from no --prefix parameter at all.
+Given that the next backward-incompatible release might be in a decade, I would
+have expected people to have put more thought into v2.0, but I guess the Git
+project is not really interested in progressive features.
 
-The documentation says
-
-	--prefix=<prefix>
-
-		...
-
-		Before Git 2.0, the default prefix was "" (no prefix).
-		This meant that ...
-
-which suggests that I can use --prefix="" to mean no prefix.  Perhaps
-it needs a note to suggest using '--prefix ""' instead?
-
-Thanks,
-Jonathan
+-- 
+Felipe Contreras
