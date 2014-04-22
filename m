@@ -1,101 +1,114 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [SECURITY PATCH] git-prompt.sh: don't put unsanitized branch names in $PS1
-Date: Tue, 22 Apr 2014 12:47:57 -0700
-Message-ID: <xmqqr44p4042.fsf@gitster.dls.corp.google.com>
-References: <1398107248-32140-1-git-send-email-rhansen@bbn.com>
-	<20140421202454.GA6062@sigill.intra.peff.net>
-	<53562A96.6000002@alum.mit.edu>
-	<xmqqy4yx5knw.fsf@gitster.dls.corp.google.com>
-	<5356B71A.6070500@bbn.com>
+Subject: Re: [PATCH 1/2] merge: enable defaulttoupstream by default
+Date: Tue, 22 Apr 2014 12:53:50 -0700
+Message-ID: <xmqqmwfd3zu9.fsf@gitster.dls.corp.google.com>
+References: <1398039454-31193-1-git-send-email-felipe.contreras@gmail.com>
+	<1398039454-31193-2-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Michael Haggerty <mhagger@alum.mit.edu>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org, sitaramc@gmail.com
-To: Richard Hansen <rhansen@bbn.com>
-X-From: git-owner@vger.kernel.org Tue Apr 22 21:48:11 2014
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 22 21:54:07 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wcgfq-0005vu-LY
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 21:48:11 +0200
+	id 1WcglU-0002SM-OV
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 21:54:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752285AbaDVTsF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Apr 2014 15:48:05 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48788 "EHLO
+	id S1756757AbaDVTx4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Apr 2014 15:53:56 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42066 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751275AbaDVTsC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Apr 2014 15:48:02 -0400
+	id S1756731AbaDVTxz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Apr 2014 15:53:55 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 01FDC7F07C;
-	Tue, 22 Apr 2014 15:48:02 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A11C77F356;
+	Tue, 22 Apr 2014 15:53:54 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=kUZN0gRXaT8+Mou5AeGoPu2uNdY=; b=o/8tGe
-	zpwOHZfM4NuwERANtPjFCy/WlugkUQ1j85tCJjM2t4glRMiF77kKSN12KV8NinWu
-	Q5oBJFUTIi2lyzRAMkNHKg21CjcnPADdzUsaPRiNMbY7td6YRR4sY6dqpPJzF6sj
-	DlhiVyfhQboYr/q1Y8AH7g7EuIWcVa162tMvI=
+	:content-type; s=sasl; bh=ujPk0y2RF1X9jgYeYDTdwFzfgLM=; b=ZwPqnV
+	Ovvrliqbppjt+JfP03a6x2vhDWqDozljgAKxyndeksT3Qin+NPMqigJQoevRSp7A
+	lAu7O7T46l0DrIzunNjvRxqOATseslLEJtgkkSInbBzv3IrWqcmNZnVITWJXWEXo
+	q3u5iqeuzk1ZYZBSFN1swG728En38GMfTni1o=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=G9iOd5qokcsrl7fJnCjN7LFO9eA026MT
-	StECpN5FKSMJhnkG8C9n4VnMQPt+Aa2iSHdwXmFweI1IYP5hTUrrm9yvjJB8SveU
-	flENW7raXgsxNWeTt5/eGGgUUCxglNZXlLEA0DpwsdiAC7sK+BbmYD4+g3xicr36
-	6D634XrwMhQ=
+	:content-type; q=dns; s=sasl; b=oh/pXhixA80DLJ8K5QFvtS3kNzkHvnen
+	yKqtdtQFpvVcxOtM7zB1GW1DD8Ygcog4O3vJT+cgjwrh09sRzzJN39c/QccdswFO
+	UoD3+RLtSpwM6BB8pMek7GWQJvesVRYY0CaGeyXlP1q4KMuZZpS2D2n+vQ391qDV
+	EM0k9BH1SgY=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CE1FC7F07B;
-	Tue, 22 Apr 2014 15:48:01 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 892FF7F353;
+	Tue, 22 Apr 2014 15:53:54 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5D6967F074;
-	Tue, 22 Apr 2014 15:47:59 -0400 (EDT)
-In-Reply-To: <5356B71A.6070500@bbn.com> (Richard Hansen's message of "Tue, 22
-	Apr 2014 14:38:18 -0400")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DDAFF7F34C;
+	Tue, 22 Apr 2014 15:53:51 -0400 (EDT)
+In-Reply-To: <1398039454-31193-2-git-send-email-felipe.contreras@gmail.com>
+	(Felipe Contreras's message of "Sun, 20 Apr 2014 19:17:33 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 01E77DB0-CA57-11E3-98EA-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: D4046A9C-CA57-11E3-9619-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246778>
 
-Richard Hansen <rhansen@bbn.com> writes:
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
->> and plan for transition to forbid them
->> everywhere in a next big version bump (it is too late for 2.0).
+> There's no point in this:
 >
-> Would it be acceptable to have a config option to forbid these in a
-> non-major version bump?  
-
-Of course ;-) Because we try very hard to avoid a "flag day" change,
-any "plan for transition" inevitably has to include what we need to
-do _before_ the big version bump.
-
-> If it's OK to have a config option, then here's one possible transition
-> path (probably flawed, but my intent is to bootstrap discussion):
+> % git merge
+> fatal: No commit specified and merge.defaultToUpstream not set.
 >
->   1. Add an option to forbid dangerous characters.  The option defaults
->      to disabled for compatibility.  If the option is unset, print a
->      warning upon encountering a ref name that would be forbidden.
->   2. Later, flip the default to enabled.
->   3. Later, in the weeks/months leading up to the next major version
->      release, print the warning even if the config option is set to
->      disabled.
+> We know the most likely scenario is that the user wants to merge the
+> upstream, and if not, he can set merge.defaultToUpstream to false.
 
-Sounds fairly conservative and nice.  We may want to treat creating
-a new such ref and using an existing such ref differently, though,
-and that might give us a better/smoother transition (as you are, I
-am just thinking aloud).
+And a new possible failure case is when there is no upstream defined
+for the current branch, which gets perfectly good new error message:
 
-For example, it might be sufficient to do these two things:
+    $ git merge
+    fatal: No remote for the current branch.
 
- (1) upon an attempt to use an existing such ref, warn and encourage
-     renaming of the ref.
+So I think this is good.  We want to protect this with a new test,
+no?
 
- (2) upon an attempt to create a new one, error it out.
+Will queue as-is for now.
 
-in the first step, and in either case, tell the user about the
-loosening variable.
-
-Going that route may shorten the time until the initial safety.
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> ---
+>  Documentation/git-merge.txt | 5 ++---
+>  builtin/merge.c             | 2 +-
+>  2 files changed, 3 insertions(+), 4 deletions(-)
+>
+> diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+> index a3c1fa3..cf2c374 100644
+> --- a/Documentation/git-merge.txt
+> +++ b/Documentation/git-merge.txt
+> @@ -101,9 +101,8 @@ commit or stash your changes before running 'git merge'.
+>  	Specifying more than one commit will create a merge with
+>  	more than two parents (affectionately called an Octopus merge).
+>  +
+> -If no commit is given from the command line, and if `merge.defaultToUpstream`
+> -configuration variable is set, merge the remote-tracking branches
+> -that the current branch is configured to use as its upstream.
+> +If no commit is given from the command line, merge the remote-tracking
+> +branches that the current branch is configured to use as its upstream.
+>  See also the configuration section of this manual page.
+>  
+>  
+> diff --git a/builtin/merge.c b/builtin/merge.c
+> index 66d8843..1fc9319 100644
+> --- a/builtin/merge.c
+> +++ b/builtin/merge.c
+> @@ -63,7 +63,7 @@ static int verbosity;
+>  static int allow_rerere_auto;
+>  static int abort_current_merge;
+>  static int show_progress = -1;
+> -static int default_to_upstream;
+> +static int default_to_upstream = 1;
+>  static const char *sign_commit;
+>  
+>  static struct strategy all_strategy[] = {
