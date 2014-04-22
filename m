@@ -1,82 +1,116 @@
-From: Charles Bailey <charles@hashpling.org>
-Subject: Re: [PATCH 2/2] mergetool: run prompt only if guessed tool
-Date: Tue, 22 Apr 2014 07:01:20 +0100
-Message-ID: <20140422060120.GA10198@hashpling.org>
-References: <1398039454-31193-1-git-send-email-felipe.contreras@gmail.com>
- <1398039454-31193-3-git-send-email-felipe.contreras@gmail.com>
- <20140422045951.GA60610@gmail.com>
+From: Ilya Bobyr <ilya.bobyr@gmail.com>
+Subject: Re: [RTC/PATCH] Add 'update-branch' hook
+Date: Mon, 21 Apr 2014 23:05:23 -0700
+Message-ID: <535606A3.8040704@gmail.com>
+References: <1398047016-21643-1-git-send-email-felipe.contreras@gmail.com> <53558AD0.3010602@gmail.com> <53558a663ea74_604be1f30c2c@nysa.notmuch> <53558F6F.7080306@gmail.com> <53558f285f379_640076f2f094@nysa.notmuch> <CADcHDF+XcWEkvyP3tL4ibicnaMVJpixUZu1Ces0BXWkzPGsodw@mail.gmail.com> <53559a8333aaa_6c39e772f07f@nysa.notmuch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 22 08:01:36 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 22 08:05:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WcTlu-0005qf-7f
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 08:01:34 +0200
+	id 1WcTpo-0000sd-Ms
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 08:05:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751919AbaDVGB0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Apr 2014 02:01:26 -0400
-Received: from avasout06.plus.net ([212.159.14.18]:38043 "EHLO
-	avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751899AbaDVGBX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Apr 2014 02:01:23 -0400
-Received: from turing.int.hashpling.org ([212.159.69.125])
-	by avasout06 with smtp
-	id su1K1n0012iA9hg01u1LpG; Tue, 22 Apr 2014 07:01:21 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.1 cv=Rp1LLUWK c=1 sm=1 tr=0
- a=wpJ/2au8Z6V/NgdivHIBow==:117 a=wpJ/2au8Z6V/NgdivHIBow==:17 a=Ew9TdX-QAAAA:8
- a=0Bzu9jTXAAAA:8 a=J0QyKEt1u0cA:10 a=FaVzYAwi6lUA:10 a=mSBy96HJJ2wA:10
- a=BHUvooL90DcA:10 a=kj9zAlcOel0A:10 a=-qyZMjV_sPhJg8cTldoA:9 a=CjuIK1q_8ugA:10
-Received: from charles by turing.int.hashpling.org with local (Exim 4.82)
-	(envelope-from <charles@hashpling.org>)
-	id 1WcTlg-0002iC-IQ; Tue, 22 Apr 2014 07:01:20 +0100
-Content-Disposition: inline
-In-Reply-To: <20140422045951.GA60610@gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1752125AbaDVGFc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Apr 2014 02:05:32 -0400
+Received: from mail-pb0-f42.google.com ([209.85.160.42]:59341 "EHLO
+	mail-pb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751998AbaDVGFb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Apr 2014 02:05:31 -0400
+Received: by mail-pb0-f42.google.com with SMTP id un15so593989pbc.1
+        for <git@vger.kernel.org>; Mon, 21 Apr 2014 23:05:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=5ilshYULBn9TcIZJ4xObVsOIPAJY9tFL5N6j9oz9Cog=;
+        b=JU5/2XpNaQz0S3TlNuph7NrtdSYrLxLXJYNhJXT4MzuxmNjj44JpGOIDgawitKSYgS
+         r3d4zQZvygB3O4LYppFuLCz2JAcX0O2gghXIIpKTkyFiMHEuHFBF6E5uF7w0r92tv5bP
+         xNnutmHhj15+DVUEiCrpLxQSWKYYsYUzRi1WeEtUmEGCHr3ENAV6ncWc3LcK0C1mAN9Y
+         RIzm4K2yFvm54Ku08Ick8j3tvQc5SGVS49Yb+CeT1fXlQIS1JcefthdTU36JwC/3Rhwm
+         1HTqS3l8EXjTofhVePeW5brXbk6vEwjj54ugUeaXjLK8dwYgNMhqOTkyp3Ca5zPXdpRN
+         0Qaw==
+X-Received: by 10.68.196.202 with SMTP id io10mr7123664pbc.149.1398146731405;
+        Mon, 21 Apr 2014 23:05:31 -0700 (PDT)
+Received: from [192.168.1.2] (c-50-136-172-14.hsd1.ca.comcast.net. [50.136.172.14])
+        by mx.google.com with ESMTPSA id my6sm82238604pbc.36.2014.04.21.23.05.30
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 21 Apr 2014 23:05:30 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:28.0) Gecko/20100101 Thunderbird/28.0
+In-Reply-To: <53559a8333aaa_6c39e772f07f@nysa.notmuch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246698>
 
-On Mon, Apr 21, 2014 at 09:59:52PM -0700, David Aguilar wrote:
-> [Cc:ing Charles in case he has an opinion, this behavior dates back to the original MT]
-> 
-> On Sun, Apr 20, 2014 at 07:17:34PM -0500, Felipe Contreras wrote:
-> > It's annoying to see the prompt:
-> > 
-> >   Hit return to start merge resolution tool (foo):
-> > 
-> > Every time the user does 'git mergetool' even if the user already
-> > configured 'foo' as the wanted tool.
-> > 
-> > Display this prompt only when the user hasn't explicitly configured a
-> > tool.
-> 
-> I agree this is probably helpful.
-> Most users I've met end up configuring mergetool.prompt=false.
+On 4/21/2014 3:24 PM, Felipe Contreras wrote:
+> Ilya Bobyr wrote:
+>> On Mon, Apr 21, 2014 at 2:35 PM, Felipe Contreras <
+>> felipe.contreras@gmail.com> wrote:
+>>> Ilya Bobyr wrote:
+>>>> test_expect_success 'setup' "
+>>>>       mkdir -p .git/hooks &&
+>>>>       cat > .git/hooks/update-branch <<-\\EOF &&
+>>>>       #!/bin/sh
+>>>>       echo \$@ > .git/update-branch.args
+>>>>       EOF
+>>>>       chmod +x .git/hooks/update-branch &&
+>>>>       echo one > content &&
+>>>>       git add content &&
+>>>>       git commit -a -m one
+>>>> "
+>>> That is not maintainable at all.
+>> Maybe you could explain how is this less maintainable, compared to a separate
+>> function?
+> Do I really have to explain that manually escaping a shell script is not
+> maintainable?
 
->From my memory, the reason that we choose to prompt by default is to
-help new users or users who have just changed their choice of mergetool.
+This is rude.
 
-Because we never use the exit code of the tool to determine whether a
-tool "worked", if we don't prompt and the tool fails (bad custom
-command, requires X when no X available, etc.) then we'll repeatedly run
-the command for all paths requiring resolution leading to, potentially,
-a lot of trace with whatever error the tool might happen to report.
+Here is how you can do it without escaping:
 
-We prompt by default to give users a chance to abort the mergetool
-session at the first opportunity that they see that the configured tool
-is not working.
+test_expect_success 'setup' '
+	mkdir -p .git/hooks &&
+	cat > .git/hooks/update-branch <<-\EOF &&
+	#!/bin/sh
+	echo $@ > .git/update-branch.args
+	EOF
+	chmod +x .git/hooks/update-branch &&
+	echo one > content &&
+	git add content &&
+	git commit -a -m one
+'
 
-Personally, I leave mergetool.prompt unset (default true) because one
-extra click in a complex merge resolution is relatively low overhead and
-to catch myself when I forget that I'm in a no-X environment.
+It is not different from most of the tests, I think.
 
-I glanced at the patch and it seems to subvert this intent for users
-who have  configured a merge tool. Is my understanding correct?
+>> This is how it is suggested by t/README and how it is done in the other
+>> test suites.
+>> I can not see how your case is different, but I might be missing something.
+> Let's take a cursoy look at `git grep -l "'EOF'" t`.
+>
+> [...]
+
+So the point is that some existing tests violate best practices?
+I do not think this is a good justification to do the same for new tests.
+
+> In fact my version is actually cleaner than these, because the code that is run
+> outside the cage is clearly delimited by a function.
+
+It depends on the perspective.
+If it fails, the failure would be missed regardless of if it is in a
+function or not.
+Most examples that you quoted only create files outside test_expect_success.
+Even that is not necessary.
+
+I am not telling you how you should write it.
+I am just saying that you are breaking one of the recommendations on how
+to write tests.
+There are different options that adhere to the suggestions in t/README.
