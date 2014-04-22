@@ -1,86 +1,138 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: Re: [PATCH v2 2/2] blame: use different blame_date_width for
- different locale
-Date: Tue, 22 Apr 2014 20:16:02 +0800
-Message-ID: <CANYiYbE5zdOq6F4YwSUojOyp9eexuM8=dY_T4hyd4W+Dea+XUg@mail.gmail.com>
-References: <cover.1398010052.git.worldhello.net@gmail.com>
-	<07e4dcdc98b5eb9c78b9ed53bf2adc3b33139b67.1398010052.git.worldhello.net@gmail.com>
-	<7vbnvvllx4.fsf@alter.siamese.dyndns.org>
-	<87vbu1ptsx.fsf@fencepost.gnu.org>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH v3] send-email: recognize absolute path on Windows
+Date: Tue, 22 Apr 2014 14:15:59 +0200
+Message-ID: <CABPQNSbcWjg3nLPD9U114zSk5rBNupOGLr901u4ptCkdiiKvCA@mail.gmail.com>
+References: <1397635698-6252-1-git-send-email-kusmabite@gmail.com>
+ <xmqqfvldi4ue.fsf@gitster.dls.corp.google.com> <xmqqbnw1i43p.fsf@gitster.dls.corp.google.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
-	Brian Gesiak <modocache@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Tue Apr 22 14:16:10 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Cc: GIT Mailing-list <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>, 
+	Johannes Schindelin <johannes.schindelin@gmx.de>, Johannes Sixt <j.sixt@viscovery.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: msysgit+bncBDR53PPJ7YHRBKF33GNAKGQEIJPDIUY@googlegroups.com Tue Apr 22 14:16:43 2014
+Return-path: <msysgit+bncBDR53PPJ7YHRBKF33GNAKGQEIJPDIUY@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-qg0-f55.google.com ([209.85.192.55])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WcZcQ-00012j-Gq
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 14:16:10 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932571AbaDVMQG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Apr 2014 08:16:06 -0400
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:33826 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932152AbaDVMQD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Apr 2014 08:16:03 -0400
-Received: by mail-wi0-f172.google.com with SMTP id hi2so3142191wib.5
-        for <git@vger.kernel.org>; Tue, 22 Apr 2014 05:16:02 -0700 (PDT)
+	(envelope-from <msysgit+bncBDR53PPJ7YHRBKF33GNAKGQEIJPDIUY@googlegroups.com>)
+	id 1WcZcw-0001S6-0H
+	for gcvm-msysgit@m.gmane.org; Tue, 22 Apr 2014 14:16:42 +0200
+Received: by mail-qg0-f55.google.com with SMTP id j5sf431609qga.0
+        for <gcvm-msysgit@m.gmane.org>; Tue, 22 Apr 2014 05:16:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=t4rZo5351SntD5m9unq6fFhmc0TrEL7qjEq1XIm8coU=;
-        b=macDUVjHwIQs8maFsMos1QojEJ8x1MzjecSr/pJ2JU8hFc29mew0q3ydyXMM+9Hfwt
-         x5BDbbFNDkNHeeTE1Etx1ySD12CiAbK7zof8z5x1DTtBH7jzPvC4EhriAseH1unnZfPQ
-         aS4uB83v95L59EtDMMrnN0sxd273nnLjlVIlFRtEmuvxm0pvVEoN10G7af3d2u5vHy8V
-         XEmYWNADKLGuJSRDak5kSSXYMcOXtss+JCbnpc6Y/kfOchu2hPTEtE3vHk7rCD1JodpK
-         HWMCskUFZBs3BG3WCmTBT/teKmb1Tc4ElQstZcoYFevaJPsqzBJpY9gxuNUi8XBl9o05
-         ubsQ==
-X-Received: by 10.194.220.42 with SMTP id pt10mr2579665wjc.60.1398168962039;
- Tue, 22 Apr 2014 05:16:02 -0700 (PDT)
-Received: by 10.217.58.65 with HTTP; Tue, 22 Apr 2014 05:16:02 -0700 (PDT)
-In-Reply-To: <87vbu1ptsx.fsf@fencepost.gnu.org>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246732>
+        d=googlegroups.com; s=20120806;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:x-original-sender:x-original-authentication-results
+         :precedence:mailing-list:list-id:list-post:list-help:list-archive
+         :sender:list-subscribe:list-unsubscribe:content-type;
+        bh=/3mv77p0i0OvGN8tZauBc5vtTBEapmWNiD8K9adqixo=;
+        b=UK83D5EpaaoNgj4UklMRojNuClSlLozhQH7h/+sBwV3m7FhKygxUB3GNKH+25I9ZFK
+         YMD81IEhCWvOptE97ObiPEHIgRPVMDSGCxFYHE4pdsu01p9X+OuTvj0feDPa88GZ46Tu
+         VAEapZb7flefIGoQHEXFB8rFS9uDM500VeqdlAqNDzbyzeGZNoRIP+7wYmoayDmk+Fli
+         QyPBnf66TutiTKD+Ao4nOzdJDeAqmGiADw90NQnc8fks/O1Bk7tHcuDV6D4k8c9zv2gk
+         z+4PsDkMxHy99lLDuuD2jw+5r4P4L/KGhhnSnbv3uPOjp01ain4Bwn3QHS4P9DQKaUeg
+         i5Kg==
+X-Received: by 10.140.102.150 with SMTP id w22mr43832qge.9.1398169001014;
+        Tue, 22 Apr 2014 05:16:41 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.140.24.146 with SMTP id 18ls84084qgr.58.gmail; Tue, 22 Apr
+ 2014 05:16:40 -0700 (PDT)
+X-Received: by 10.236.86.67 with SMTP id v43mr19975601yhe.41.1398169000524;
+        Tue, 22 Apr 2014 05:16:40 -0700 (PDT)
+Received: from mail-ie0-x231.google.com (mail-ie0-x231.google.com [2607:f8b0:4001:c03::231])
+        by gmr-mx.google.com with ESMTPS id rg8si859569igc.0.2014.04.22.05.16.40
+        for <msysgit@googlegroups.com>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 22 Apr 2014 05:16:40 -0700 (PDT)
+Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 2607:f8b0:4001:c03::231 as permitted sender) client-ip=2607:f8b0:4001:c03::231;
+Received: by mail-ie0-f177.google.com with SMTP id rl12so5126626iec.36
+        for <msysgit@googlegroups.com>; Tue, 22 Apr 2014 05:16:40 -0700 (PDT)
+X-Received: by 10.50.4.74 with SMTP id i10mr28872960igi.43.1398169000013; Tue,
+ 22 Apr 2014 05:16:40 -0700 (PDT)
+Received: by 10.64.166.135 with HTTP; Tue, 22 Apr 2014 05:15:59 -0700 (PDT)
+In-Reply-To: <xmqqbnw1i43p.fsf@gitster.dls.corp.google.com>
+X-Original-Sender: kusmabite@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of kusmabite@gmail.com designates 2607:f8b0:4001:c03::231
+ as permitted sender) smtp.mail=kusmabite@gmail.com;       dkim=pass
+ header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246733>
 
-2014-04-22 18:01 GMT+08:00 David Kastrup <dak@gnu.org>:
+On Wed, Apr 16, 2014 at 7:19 PM, Junio C Hamano <gitster@pobox.com> wrote:
 > Junio C Hamano <gitster@pobox.com> writes:
 >
->> This is not wrong per-se, but I am not sure if translators would
->> understand that "years and months ago" may not be the longuest
->> variant for their language and they are asked to use "89 seconds
->> ago" if the translation of that is longer than the translation for
->> "4 years, 11 months ago" in their language, with the given
->> explanation.
+>> Erik Faye-Lund <kusmabite@gmail.com> writes:
+>>
+>>> So let's manually check for these in that case, and fall back to
+>>> the File::Spec-helper on other platforms (e.g Win32 with native
+>>> Perl)
+>>> ...
+>>> +sub file_name_is_absolute {
+>>> +    my ($path) = @_;
+>>> +
+>>> +    # msys does not grok DOS drive-prefixes
+>>> +    if ($^O eq 'msys') {
+>>> +            return ($path =~ m#^/# || $path =~ m#[a-zA-Z]\:#)
+>>
+>> Shouldn't the latter also be anchored at the beginning of the string
+>> with a leading "^"?
+>>
+>>> +    }
+>>> +
+>>> +    require File::Spec::Functions;
+>>> +    return File::Spec::Functions::file_name_is_absolute($path);
+>>
+>> We already "use File::Spec qw(something else)" at the beginning, no?
+>> Why not throw file_name_is_absolute into that qw() instead?
 >
-> What's with the 89?  And the other semi-magic numbers?
+> Ahh, OK, if you did so, you won't have any place to hook the "only
+> on msys do this" trick into.
+>
+> It somehow feels somewhat confusing that we define a sub with the
+> same name as the system one, while not overriding it entirely but
+> delegate back to the system one.  I am debating myself if it is more
+> obvious if it is done this way:
+>
+>         use File::Spec::Functions qw(file_name_is_absolute);
+>         if ($^O eq 'msys') {
+>                 sub file_name_is_absolute {
+>                         return $_[0] =~ /^\// || $_[0] =~ /^[A-Z]:/i;
+>                 }
+>         }
+>
 
-Not something magic, just what show_date_relative() in date.c is implemented:
-
-    98          diff = now->tv_sec - time;
-    99          if (diff < 90) {
-    100                 strbuf_addf(timebuf,
-    101                          Q_("%lu second ago", "%lu seconds
-ago", diff), diff);
-    102                 return;
-    103         }
-    104         /* Turn it into minutes */
-    105         diff = (diff + 30) / 60;
-    106         if (diff < 90) {
-    107                 strbuf_addf(timebuf,
-    108                          Q_("%lu minute ago", "%lu minutes
-ago", diff), diff);
-    109                 return;
-    110         }
-
+In this case, we end up requiring that module even when we end up
+using it, no? Not that I have very strong objections for doing just
+that, after all, it appears to be built-in. (As you might understand
+from this message, my perl-fu is really lacking :-P)
 
 -- 
-Jiang Xin
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
