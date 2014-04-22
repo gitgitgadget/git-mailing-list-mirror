@@ -1,160 +1,200 @@
-From: Dan Porter <dpreid@gmail.com>
-Subject: Re: Fwd: git p4: feature request - branch check filtering
-Date: Tue, 22 Apr 2014 10:29:19 +0100
-Message-ID: <CADtnS+w9q0dmnGsZoDr12GZ-RSZzcfPs6rfii-4eK7Hhn2byag@mail.gmail.com>
-References: <CADtnS+zWzPY6ftwxWUE+Gb-OKq_Kzf9y+fFfgJ-demWyX3azCg@mail.gmail.com>
-	<CADtnS+weco6Lvk3hHuM7BcaRsvMkeDCmqH26s19TrgWvBYXAvA@mail.gmail.com>
-	<20140223151247.GA1272@padd.com>
+From: Karsten Blees <karsten.blees@gmail.com>
+Subject: Re: [RFC] Speed up "git status" by caching untracked file info
+Date: Tue, 22 Apr 2014 11:56:02 +0200
+Message-ID: <53563CB2.5030603@gmail.com>
+References: <1397713918-22829-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Tue Apr 22 11:32:45 2014
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 22 11:56:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WcX17-0002R0-15
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 11:29:29 +0200
+	id 1WcXR2-0003tQ-Tt
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 11:56:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755776AbaDVJ3Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Apr 2014 05:29:24 -0400
-Received: from mail-ie0-f178.google.com ([209.85.223.178]:45209 "EHLO
-	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755769AbaDVJ3U (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Apr 2014 05:29:20 -0400
-Received: by mail-ie0-f178.google.com with SMTP id lx4so4963111iec.37
-        for <git@vger.kernel.org>; Tue, 22 Apr 2014 02:29:20 -0700 (PDT)
+	id S1755510AbaDVJ4M convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Apr 2014 05:56:12 -0400
+Received: from mail-we0-f182.google.com ([74.125.82.182]:51510 "EHLO
+	mail-we0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755233AbaDVJ4G (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Apr 2014 05:56:06 -0400
+Received: by mail-we0-f182.google.com with SMTP id q59so1611948wes.27
+        for <git@vger.kernel.org>; Tue, 22 Apr 2014 02:56:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=sYmQo6KX3OtbOh1C8IUs3IYGfCGsZaswQtCzb2j+FpA=;
-        b=vS+LJ5psBb6pn123UbG7UkTFhz7MqV9KXHlABnkDUcMOyhm6WO4G3Uj8sk9aoVUKoe
-         E4VY/CwPYUMjEHwlm4enpH8Pp6+OoqaLjVJ3Z+6GtiF1Y2TCcPDE/9WFBNTOuwz4mTVA
-         8T+96qlb0ToSvv+IHpG2Yoj2vg+ri2BOtZJZPAY8lCEOi7Eyuob5BpqQcOW90uU/ymIk
-         7EdMdySBwIYYO6fLbvb2lfcs1wMQ6MsgQmOHQA5UJu/09dNoqCe97Ewm6XqyuEA2Qa0s
-         AVo4JtRTmVAUiDO2P/zV9kmvhu8Uldr05/JHIbZfL2+wUsT/l+wnViB9fJjWCKvxmjyu
-         HAKQ==
-X-Received: by 10.50.28.84 with SMTP id z20mr28199090igg.0.1398158960044; Tue,
- 22 Apr 2014 02:29:20 -0700 (PDT)
-Received: by 10.64.28.233 with HTTP; Tue, 22 Apr 2014 02:29:19 -0700 (PDT)
-In-Reply-To: <20140223151247.GA1272@padd.com>
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=vg6nCmDT+wkzIh12eD7fyeaK8JaUoHGEJLjA7nRLJkc=;
+        b=G861jFnjLQEdCNvVk2nT1LPZP7XChYqmVrbA+6cOa5h5JjczSDKt4SklnlYHL3HsQg
+         MZ9Cau79SWJ18OPpo+m5jFU3WBprC/XE2e3pv0X6hEn8WejLRppMgq/ubFEFtRvLiw+v
+         XkEe02QZfKUjWaUXE+1oUo1Kc+6gCxYSE4XSSajF4BrfsSq4YCeOW9oUuwAtiXhOY2/6
+         r6UWMATaStrXm4N9kwsvHIdsfy6tX6tP/1Y6qP5z0oZcUoKqvLPvP5p3MbCdQlhK6NrF
+         P8svxQIGSo7KIy0rVH9HkNFU2t2B7pXkqjf4YyQhhbfZWVsOh4H8RYLp1UrLtl5HSzic
+         T7Qw==
+X-Received: by 10.194.60.114 with SMTP id g18mr1851950wjr.61.1398160564726;
+        Tue, 22 Apr 2014 02:56:04 -0700 (PDT)
+Received: from [10.1.116.60] (ns.dcon.de. [77.244.111.149])
+        by mx.google.com with ESMTPSA id f7sm40682009wjy.24.2014.04.22.02.56.03
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 22 Apr 2014 02:56:03 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
+In-Reply-To: <1397713918-22829-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246722>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246723>
 
-Hi Pete,
+Am 17.04.2014 07:51, schrieb Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy:
+> This patch serves as a heads up about a feature I'm working on. I hop=
+e
+> that by posting it early, people could double check if I have made
+> some fundamental mistakes that completely ruin the idea. It's about
+> speeding up "git status" by caching untracked file info in the index
+> _if_ your file system supports it (more below).
+>=20
+> The whole WIP series is at
+>=20
+> https://github.com/pclouds/git/commits/untracked-cache
+>=20
+> I only post the real meat here. I'm aware of a few incomplete details
+> in this patch, but nothing fundamentally wrong. So far the numbers ar=
+e
+> promising.  ls-files is updated to run fill_directory() twice in a
+> row and "ls-files -o --directory --no-empty-directory --exclude-stand=
+ard"
+> (with gcc -O0) gives me:
+>=20
+>            first run  second (cached) run
+> gentoo-x86    500 ms             71.6  ms
+> wine          140 ms              9.72 ms
+> webkit        125 ms              6.88 ms
 
-I should have updated on this earlier, but I wished to refine my work
-on this feature before submitting.  With 2.0 looming I'll submit
-what's there so far.
+IIRC name_hash.c::lazy_init_name_hash took ~100ms on my system, so hope=
+fully you did a dummy 'cache_name_exists("anything")' before starting t=
+he measurement of the first run?
 
-There is a patch viewable at this link:
-https://github.com/Stealthii/git/commit/f7a2e611262fd977ac99e066872d3d0743b7df3c
+> linux-2.6     106 ms             16.2  ms
+>=20
+> Basically untracked time is cut to one tenth in the best case
+> scenario. The final numbers would be a bit higher because I haven't
+> stored or read the cache from index yet. Real commit message follows.=
+=2E
+>=20
+>=20
+> read_directory() plays a bit part in the slowness of "git status"
+> because it has to read every directory and check for excluded entries=
+,
+> which is really expensive. This patch adds an option to cache the
+> results so that after the first slow read_directory(), the following
+> calls should be cheap and fast.
+>=20
+> The following inputs are sufficient to determine what files in a
+> directory are excluded:
+>=20
+>  - The list of files and directories of the direction in question
+>  - The $GIT_DIR/index
+>  - The content of $GIT_DIR/info/exclude
+>  - The content of core.excludesfile
+>  - The content (or the lack) of .gitignore of all parent directories
+>    from $GIT_WORK_TREE
+>=20
 
-For the use case this works perfectly - if I define branch mappings
-with git config, followed by setting 'git-p4.skipBranchScan' to true,
-git-p4 will skip scanning of all remote branches and limit to what's
-defined in the map.  An example config:
+The dir_struct.flags also play a big role in evaluation of read_directo=
+ry.
 
-[git-p4]
-        skipBranchScan = true
-        branchList = release_1.0.0:release_1.1.0
-        branchList = release_1.1.0:release_1.2.0
+E.g. it seems untracked files are not properly recorded if the cache is=
+ filled with '--ignored' option:
 
-If there is any more information I need to provide let me know. I have
-been using this patch for over two months, testing both use cases with
-and without git-p4.skipBranchScan and I have noticed no issues.  Logic
-of git-p4 is not changed from default behaviour, unless the user
-explicitly sets the boolean flag to skip scanning.
+> @@ -1360,15 +1603,18 @@ static enum path_treatment read_directory_rec=
+ursive(struct dir_struct *dir,
+>  			break;
+> =20
+>  		case path_untracked:
+> -			if (!(dir->flags & DIR_SHOW_IGNORED))
+> -				dir_add_name(dir, path.buf, path.len);
+> +			if (dir->flags & DIR_SHOW_IGNORED)
+> +				break;
+> +			dir_add_name(dir, path.buf, path.len);
+> +			if (cdir.fdir)
+> +				add_untracked(untracked, path.buf + baselen);
+>  			break;
 
-Dan
+Similarly, the '--directory' option controls early returns from the dir=
+ectory scan (via read_directory_recursive's check_only argument), so yo=
+u won't be able to get a full untracked files listing if the cache was =
+recorded with '--directory'. Additionally, '--directory' aggregates the=
+ state at the topmost untracked directory, so that directory's cached s=
+tate depends on all sub-directories as well...
 
+I wonder if it makes sense to separate cache recording logic from read_=
+directory_recursive and friends, which are mainly concerned with flags =
+processing.
 
-This email and any files transmitted with it are confidential and
-intended solely for the use of the individual or entity to whom they
-are addressed. If you have received this email in error please notify
-the system manager. This message contains confidential information and
-is intended only for the individual named. If you are not the named
-addressee you should not disseminate, distribute or copy this e-mail.
-Please notify the sender immediately by e-mail if you have received
-this e-mail by mistake and delete this e-mail from your system. If you
-are not the intended recipient you are notified that disclosing,
-copying, distributing or taking any action in reliance on the contents
-of this information is strictly prohibited.
+> If we can cheaply validate all those inputs for a certain directory,
+> we are sure that the current code will always produce the same
+> results, so we can cache and reuse those results.
+>=20
+> This is not a silver bullet approach. When you compile a C file, for
+> example, the old .o file is removed and a new one with the same name
+> created, effectively invalidating the containing directory's
+> cache. But at least with a large enough work tree, there could be man=
+y
+> directories you never touch. The cache could help there.
+>=20
+> The first input can be checked using directory mtime. In many
+> filesystems, directory mtime is updated when direct files/dirs are
+> added or removed (*). If you do not use such a file system, this
+> feature is not for you.
+>=20
+> The second one can be hooked from read-cache.c. Whenever a file (or a
+> submodule) is added or removed from a directory, we invalidate that
+> directory. This will be done in a later patch.
+>=20
+> The remaining inputs are easy, their SHA-1 could be used to verify
+> their contents. We do need to read .gitignore files and digest
+> them. But they are usually few and small, so the overhead should not
+> be much.
+>=20
+> At the implementation level, the whole directory structure is saved,
+> each directory corresponds to one struct untracked_dir.
 
+With the usual options (e.g. standard 'git status'), untracked director=
+ies are mostly skipped, so the cache would mostly store tracked directo=
+ries. Naming it 'struct untracked_dir' is a bit confusing, IMO.
 
-On 23 February 2014 15:12, Pete Wyckoff <pw@padd.com> wrote:
-> dpreid@gmail.com wrote on Tue, 18 Feb 2014 12:42 +0000:
->> I work at a company that has recently moved all CVS, SVN, and git
->> repositories to Perforce.  Depots have not been setup correctly in
->> every case, and there is one depot that contains literally hundreds of
->> projects under commercial development (and hundreds of branches as a
->> result)
->
-> My condolences.
->
->> My project may be in //stupid_depot/commercial/teamporter/rok.  This
->> is the path I clone with git-p4.  The only branches in this depot that
->> contain files at this path are titled as
->> 'rok_porter_branch/release_1.x' or similar.
->>
->> When using '--detect-branches' git-p4 checks each key of branches to
->> see if any of them have files in the path I've cloned.  Whilst this is
->> good in practice there is unfortunately 6,809 branches, git-p4
->> processes about 2 a second and just under an hour to perform any
->> git-p4 rebase, submit, or similar operation.
->
-> This is in getBranchMapping() presumably.  Where it loops
-> over each branch doing "p4 branch -o".  Yuk.
->
-> You could always avoid the --detect-branches if you don't really
-> need it, instead doing, say, multiple "git p4 sync" for the
-> different areas of the repo that interest you, each with its own
-> destination branch in git ("p4/depot-part1", "p4/depot-part3",
-> ...).  Or --use-client-spec to cobble together an exact mapping
-> of where p4 files should land in git, all in a single git branch
-> then.
->
->> I propose the addition of a branch list filtering option
->> (--filter-branches) that takes either a regular expression or list of
->> branches it should check.  This may be useful in sane situations where
->> you don't want to scan every branch in a Perforce repository, or
->> blacklist branches that have undesirable content (for example, one of
->> the branches is called 'svn-backup'.  It contains a single, multi-GB
->> tarball.)
->
-> There is the existing git-p4.branchList option that explicitly
-> adds (or overrides) branch information, beyond the ones auto-discovered.
->
-> You might be able to use that option, but change its behavior
-> to avoid the scan.  So that if that option is set in the config,
-> p4 is not asked anything about its branches.  Not sure if this
-> would break anyone's setup though.
->
-> Another approach would be to add a config option
-> git-p4.branchScan that defaults to True.  You could turn it off
-> and use branchList.
->
->> It would be ideal to have this information (after initial clone or
->> sync) stored somewhere in the git config where is appropriate so that
->> future submit/rebase operations adhere to this list.
->>
->> Has something like this been worked on, or has been considered in the
->> past?  If not I will consider implementing this after reading up on
->> the Git code guidelines.
->>
->> Thanks for keeping the Git workflow accessible in painful areas.
->
-> It would be great if you could get something like this to work.
-> Start in getBranchMapping() and don't forget to write up your
-> work in Documentation/git-p4.txt.  Also, this is sort of a messy
-> area of the code, unfortunately.  t/t9801 tries to make sure some
-> of it keeps working.
->
->                 -- Pete
->
+> Each directory
+> holds SHA-1 of the .gitignore underneath (or null if it does not
+> exist) and the list of untracked "files" and subdirs that need to
+> recurse into if all is well. Untracked subdirectories are saved in th=
+e
+> file queue and are the reason of quoting "files" in the previous
+> sentence.
+>=20
+> On the first run, no untracked_dir is valid, the default code path is
+> run. prep_exclude() is updated to record SHA-1 of .gitignore along th=
+e
+> way. read_directory_recursive() is updated to record untracked files.
+>=20
+> On subsequent runs, read_directory_recursive() reads stat info of the
+> directory in question and verifies if files/dirs have been added or
+> removed. With the help of prep_exclude() to verify .gitignore chain,
+> it may decide "all is well" and enable the fast path in
+> treat_path(). read_directory_recursive() is still called for
+> subdirectories even in fast path, because a directory mtime does not
+> cover all subdirs recursively.
+>=20
+> So if all is really well, read_directory() becomes a series of
+> open(".gitignore"), read(".gitignore"), close(), hash_sha1_file() and
+> stat(<dir>) _without_ heavyweight exclude filtering. There should be
+> no overhead if this feature is disabled.
+>=20
+
+Wouldn't mtime of .gitignore files suffice here (so you don't need to o=
+pen and parse them every time)?
