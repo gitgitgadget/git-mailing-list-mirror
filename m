@@ -1,106 +1,101 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: What is missing from Git v2.0
-Date: Tue, 22 Apr 2014 02:12:56 +0000
-Message-ID: <20140422021256.GC86681@vauxhall.crustytoothpaste.net>
-References: <CAMP44s17h4Tjg+VaMF0atLep8t-0HVp4UDr1WE2wYnEuZ07eaQ@mail.gmail.com>
- <53557071.5040500@gmail.com>
+From: Brian Gesiak <modocache@gmail.com>
+Subject: Re: Git in GSoC 2014
+Date: Tue, 22 Apr 2014 11:18:46 +0900
+Message-ID: <CAN7MxmX4GqWFH5WnZbS2ZdHP1QpQAUmpadRp5euHT+wU2we7BA@mail.gmail.com>
+References: <20140225154158.GA9038@sigill.intra.peff.net>
+	<530CCFB0.5050406@alum.mit.edu>
+	<20140226102350.GB25711@sigill.intra.peff.net>
+	<530DC4D1.4060301@alum.mit.edu>
+	<xmqq8usx4pvh.fsf@gitster.dls.corp.google.com>
+	<530EEAA2.3030306@alum.mit.edu>
+	<xmqqlhwwz7m7.fsf@gitster.dls.corp.google.com>
+	<530F9F59.4030307@alum.mit.edu>
+	<xmqqfvn4xpnh.fsf@gitster.dls.corp.google.com>
+	<CAH5451mXb2z0oWv0jQuBCwE-x=0Bx0VPXJHSns7T1FsBTUQKOw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="hOcCNbCCxyk/YU74"
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
-To: Sebastian Schuberth <sschuberth@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 22 04:13:10 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Andrew Ardill <andrew.ardill@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 22 04:19:54 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WcQCr-0005yp-Hn
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 04:13:09 +0200
+	id 1WcQJN-0002tc-RY
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 04:19:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751354AbaDVCND (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Apr 2014 22:13:03 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:47237 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751217AbaDVCNC (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Apr 2014 22:13:02 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:39ef:2a55:6e19:355e])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id E343C28087;
-	Tue, 22 Apr 2014 02:12:59 +0000 (UTC)
-Mail-Followup-To: Sebastian Schuberth <sschuberth@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <53557071.5040500@gmail.com>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.14-rc7-amd64)
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Spam-Score: -0.272 () BAYES_00,RDNS_NONE
+	id S1752997AbaDVCTf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Apr 2014 22:19:35 -0400
+Received: from mail-ie0-f170.google.com ([209.85.223.170]:43423 "EHLO
+	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751376AbaDVCSr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Apr 2014 22:18:47 -0400
+Received: by mail-ie0-f170.google.com with SMTP id rd18so4702279iec.29
+        for <git@vger.kernel.org>; Mon, 21 Apr 2014 19:18:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=EIFJiUxIYYs7DGw2nK8ZH4OuHW0K7HaDxYmkwaH82aE=;
+        b=xPt99bFfdvCsDWRFUTiar9w8qTrlyGL0kS1ruF0N7UvZs0ZswnHwX32+vop4IpAwqs
+         zp2OizsWLI9sOGucg91dhctCpcLGv07eWGjcOhnJDVpsM4onir+imTfXM82+trFYSQav
+         bz4YQQ6VR+cFM14iOqf+vQI+16ykKNQo/aN5VZGbRQYY3QtT09sWaKGIyDkWAiQjoTr9
+         OlfILvBCx/RMLzvLMkpI2bd860Z1UP930w9gcs5HjRMCY7ilSNFyBxWSGHsG47zjOUtE
+         RU2tIlnMZHQG57HP8qH65jLHNEkOH+f2UlGKt2fLmY/cSROfYDVjAXEsJLIWtb6wJXvV
+         kIMw==
+X-Received: by 10.50.134.164 with SMTP id pl4mr26127254igb.21.1398133126233;
+ Mon, 21 Apr 2014 19:18:46 -0700 (PDT)
+Received: by 10.64.55.165 with HTTP; Mon, 21 Apr 2014 19:18:46 -0700 (PDT)
+In-Reply-To: <CAH5451mXb2z0oWv0jQuBCwE-x=0Bx0VPXJHSns7T1FsBTUQKOw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246686>
 
+Thank you!
 
---hOcCNbCCxyk/YU74
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I'm very excited to be participating in this year's GSoC. Google
+recommends that students use the next few weeks to get to know their
+mentors, read documentation, and get up to speed to begin working on
+their projects. Students have also received instructions on submitting
+tax forms and other paperwork.
 
-On Mon, Apr 21, 2014 at 09:24:33PM +0200, Sebastian Schuberth wrote:
-> BTW, in my experience people tend to stick to predefined aliases instead =
-of
-> redefining them to something (completely) different. This means that havi=
-ng
-> default aliases will very likely enable one to use the same short commands
-> on one's colleague's PC (instead of you running into issues because the s=
-ame
-> alias was defined to a different command).
->=20
-> If we don't standardize this now people will come up with their own
-> definitions [1] [2] (and many others if you just search GitHub) which are
-> again likely to differ (slightly), hindering interoperability.
+Aside from filing all the requisite paperwork, I plan on reading
+through the extensive set of patches on lock files Michael Haggerty
+submitted after my initial proposal. I also plan on consulting with my
+mentor, Jeff King, on some good first steps.
 
-Unfortunately, that's already happened.  Some people alias ci to commit,
-and some people alias it to commit -a.  There is literally no choice you
-can make there that will make everyone happy.
+By the way, my name is Brian Gesiak. I'm a research student at the
+University of Tokyo, specializing in parallel and distributed
+computing. If you have any questions regarding my project, "Unify and
+Refactor Temporary File Handling", please feel free to contact me via
+this mailing list, or privately via email. I'm also on GitHub[1] and
+Twitter[2].
 
-If you provide default aliases, people will expect them to work
-everywhere, and then be confused when they don't.  It's much better to
-let people alias what they want on their own.  I understand the
-frustration of having to work on others' machines when they don't have
-your aliases, because every time I type "git pff"[0] and it fails, it
-drives me crazy, but there's just no sane defaults.
+[1] https://github.com/modocache
+[2] https://twitter.com/modocache
 
-[0] Aliased to git pull --ff-only.  I probably run this at least twenty
-times a day.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+- Brian Gesiak
 
---hOcCNbCCxyk/YU74
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCgAGBQJTVdAoAAoJEL9TXYEfUvaLKwAP/0mluE5FnfG9/uhv5j9xvfe1
-GeGpzSip8vCJUxwck7Ql42bhyBz9ozoZdtuLSbUUIv+P2WgzxBldIM3bH7+j6MAe
-X+W7/ag0zwH1PrmzokbPZS4syXTHk3NEyO8Lm1yoLOsVxgrB5A6K3L8KkcD2BKK7
-7N/CLzgrXOouuzoXeYARvs+sAXPnc0ILk5WbMkCiM6PewRMb7KE5nGenJmB0C6on
-b8B3xmBp4j3mk7xMjpy2oWkvR9MGL3nVil1SXCKEaloSq5OT6h02OQgwuE7YMG4M
-s7jbpBB7jjELA4JbSFpEUZ7FLNVHPCxCenNa4Z7D3VYn565fTeTukgybWpiaF4RF
-KamznRfgk1ZvLBZzw83zM5/EbFnJoQw9QKoAlfoBtQeUMZAya9tOei9eG+WiaHAH
-LOiTKOYSzfOJvldjWMfx0kz3EF3xOTtx+gJzPmjX7RtlPH3BRCBSaPtrwW+4Zraw
-9d65N2DOpXVlHXJRxBZE/b/TbxhzJepaoTYokcfUfVjeerZoNhf1ikeQuwmwBhRi
-6AwIZh30gHrazdpA1LRfGW6WwnXwKawEWWZ4RENq1UDTn4JnQ0cnsTQTNCBKy0Zc
-y9Ty2wK3AwolraDhdDgTMARjWYdao1gUJvMKZ10s7DG5csI6DmPV18Mj4PlAorQ1
-Bl5hXeVh3LwLYu86zvv7
-=AitW
------END PGP SIGNATURE-----
-
---hOcCNbCCxyk/YU74--
+On Tue, Apr 22, 2014 at 10:06 AM, Andrew Ardill <andrew.ardill@gmail.com> wrote:
+> Congrats everyone who was successful in being picked for this year's GSoC.
+>
+> Fabian with "Line options for git rebase --interactive" [0]
+> Brian Gesiak with "Unify and Refactor Temporary File Handling" [1]
+> Tanay Abhra with "Git configuration API improvements" [2]
+>
+> I look forward to seeing how you go!
+>
+> [0] https://www.google-melange.com/gsoc/project/details/google/gsoc2014/bafain/5750085036015616
+> [1] https://www.google-melange.com/gsoc/project/details/google/gsoc2014/modocache/5639274879778816
+> [2] https://www.google-melange.com/gsoc/project/details/google/gsoc2014/tanayabh/5766466041282560
+>
+> Regards,
+>
+> Andrew Ardill
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
