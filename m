@@ -1,101 +1,96 @@
-From: Brian Gesiak <modocache@gmail.com>
-Subject: Re: Git in GSoC 2014
-Date: Tue, 22 Apr 2014 11:18:46 +0900
-Message-ID: <CAN7MxmX4GqWFH5WnZbS2ZdHP1QpQAUmpadRp5euHT+wU2we7BA@mail.gmail.com>
-References: <20140225154158.GA9038@sigill.intra.peff.net>
-	<530CCFB0.5050406@alum.mit.edu>
-	<20140226102350.GB25711@sigill.intra.peff.net>
-	<530DC4D1.4060301@alum.mit.edu>
-	<xmqq8usx4pvh.fsf@gitster.dls.corp.google.com>
-	<530EEAA2.3030306@alum.mit.edu>
-	<xmqqlhwwz7m7.fsf@gitster.dls.corp.google.com>
-	<530F9F59.4030307@alum.mit.edu>
-	<xmqqfvn4xpnh.fsf@gitster.dls.corp.google.com>
-	<CAH5451mXb2z0oWv0jQuBCwE-x=0Bx0VPXJHSns7T1FsBTUQKOw@mail.gmail.com>
+From: Marius Storm-Olsen <Marius.Storm-Olsen@student.bi.no>
+Subject: Open Source Organizational Culture
+Date: Tue, 22 Apr 2014 02:45:18 +0000
+Message-ID: <28011f05471c4cc786ae55fcf96f876e@DBXPR07MB110.eurprd07.prod.outlook.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Andrew Ardill <andrew.ardill@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 22 04:19:54 2014
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 22 04:45:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WcQJN-0002tc-RY
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 04:19:54 +0200
+	id 1WcQi7-0006TU-KU
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 04:45:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752997AbaDVCTf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Apr 2014 22:19:35 -0400
-Received: from mail-ie0-f170.google.com ([209.85.223.170]:43423 "EHLO
-	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751376AbaDVCSr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Apr 2014 22:18:47 -0400
-Received: by mail-ie0-f170.google.com with SMTP id rd18so4702279iec.29
-        for <git@vger.kernel.org>; Mon, 21 Apr 2014 19:18:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=EIFJiUxIYYs7DGw2nK8ZH4OuHW0K7HaDxYmkwaH82aE=;
-        b=xPt99bFfdvCsDWRFUTiar9w8qTrlyGL0kS1ruF0N7UvZs0ZswnHwX32+vop4IpAwqs
-         zp2OizsWLI9sOGucg91dhctCpcLGv07eWGjcOhnJDVpsM4onir+imTfXM82+trFYSQav
-         bz4YQQ6VR+cFM14iOqf+vQI+16ykKNQo/aN5VZGbRQYY3QtT09sWaKGIyDkWAiQjoTr9
-         OlfILvBCx/RMLzvLMkpI2bd860Z1UP930w9gcs5HjRMCY7ilSNFyBxWSGHsG47zjOUtE
-         RU2tIlnMZHQG57HP8qH65jLHNEkOH+f2UlGKt2fLmY/cSROfYDVjAXEsJLIWtb6wJXvV
-         kIMw==
-X-Received: by 10.50.134.164 with SMTP id pl4mr26127254igb.21.1398133126233;
- Mon, 21 Apr 2014 19:18:46 -0700 (PDT)
-Received: by 10.64.55.165 with HTTP; Mon, 21 Apr 2014 19:18:46 -0700 (PDT)
-In-Reply-To: <CAH5451mXb2z0oWv0jQuBCwE-x=0Bx0VPXJHSns7T1FsBTUQKOw@mail.gmail.com>
+	id S1753554AbaDVCpY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Apr 2014 22:45:24 -0400
+Received: from mail-db3lp0082.outbound.protection.outlook.com ([213.199.154.82]:7100
+	"EHLO emea01-db3-obe.outbound.protection.outlook.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751376AbaDVCpV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Apr 2014 22:45:21 -0400
+X-Greylist: delayed 850 seconds by postgrey-1.27 at vger.kernel.org; Mon, 21 Apr 2014 22:45:21 EDT
+Received: from DBXPR07MB110.eurprd07.prod.outlook.com (10.242.138.148) by
+ DBXPR07MB112.eurprd07.prod.outlook.com (10.242.138.150) with Microsoft SMTP
+ Server (TLS) id 15.0.921.12; Tue, 22 Apr 2014 02:45:19 +0000
+Received: from DBXPR07MB110.eurprd07.prod.outlook.com ([169.254.6.230]) by
+ DBXPR07MB110.eurprd07.prod.outlook.com ([169.254.6.230]) with mapi id
+ 15.00.0921.000; Tue, 22 Apr 2014 02:45:18 +0000
+Thread-Topic: Open Source Organizational Culture
+Thread-Index: AQHPXdTldGo1X/6Yr0SxPYKF840wOA==
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [2601:e:a80:455:b9ca:5aff:35a5:e193]
+x-forefront-prvs: 01894AD3B8
+x-forefront-antispam-report: SFV:NSPM;SFS:(10009001)(6009001)(428001)(51744003)(52044002)(199002)(189002)(87936001)(2656002)(86362001)(74502001)(74662001)(33646001)(74482001)(4396001)(46102001)(85852003)(15395725003)(83072002)(92566001)(77982001)(50986999)(54356999)(20776003)(80022001)(15974865002)(15202345003)(79102001)(15975445006)(80976001)(81542001)(76576001)(81342001)(83322001)(19580395003)(15198665003)(74316001)(31966008)(76482001)(555904002)(99396002)(24736002)(3826001)(493534005);DIR:OUT;SFP:1101;SCL:1;SRVR:DBXPR07MB112;H:DBXPR07MB110.eurprd07.prod.outlook.com;FPR:DAD7F26D.3E3BAF01.31D7A766.47F4FB78.20369;MLV:sfv;PTR:InfoNoRecords;A:1;MX:1;LANG:en;
+received-spf: None (: student.bi.no does not designate permitted sender
+ hosts)
+X-OriginatorOrg: student.bi.no
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246687>
 
-Thank you!
+Hi,
 
-I'm very excited to be participating in this year's GSoC. Google
-recommends that students use the next few weeks to get to know their
-mentors, read documentation, and get up to speed to begin working on
-their projects. Students have also received instructions on submitting
-tax forms and other paperwork.
+I would like to request your participation in a survey on
+    Open Source Organizational Culture, 
+which will provide valuable insight into how Open Source projects are run, how their participants act, how they might change going forward, and how particular Open Source projects compare with one another and with traditional business cultures. The survey will take 10-15 minutes to complete.
 
-Aside from filing all the requisite paperwork, I plan on reading
-through the extensive set of patches on lock files Michael Haggerty
-submitted after my initial proposal. I also plan on consulting with my
-mentor, Jeff King, on some good first steps.
+    http://bit.ly/osocas2014
 
-By the way, my name is Brian Gesiak. I'm a research student at the
-University of Tokyo, specializing in parallel and distributed
-computing. If you have any questions regarding my project, "Unify and
-Refactor Temporary File Handling", please feel free to contact me via
-this mailing list, or privately via email. I'm also on GitHub[1] and
-Twitter[2].
 
-[1] https://github.com/modocache
-[2] https://twitter.com/modocache
+Why?
+----
+The survey will be used as part of my thesis on Open Source Organizational Culture at BI Norwegian Business School (www.bi.no/en, or www.bi.edu), but in true Open Source spirit the raw - but anonymized - results will be open for all. So, your Open Source project will be able to massage and dissect the results any way you wish, and see how you compare with other projects out there.
 
-- Brian Gesiak
+Up until now, most research in Open Source culture has been based on mining mailing lists to find out how people act, who they interact with, and how projects organize themselves.
 
-On Tue, Apr 22, 2014 at 10:06 AM, Andrew Ardill <andrew.ardill@gmail.com> wrote:
-> Congrats everyone who was successful in being picked for this year's GSoC.
->
-> Fabian with "Line options for git rebase --interactive" [0]
-> Brian Gesiak with "Unify and Refactor Temporary File Handling" [1]
-> Tanay Abhra with "Git configuration API improvements" [2]
->
-> I look forward to seeing how you go!
->
-> [0] https://www.google-melange.com/gsoc/project/details/google/gsoc2014/bafain/5750085036015616
-> [1] https://www.google-melange.com/gsoc/project/details/google/gsoc2014/modocache/5639274879778816
-> [2] https://www.google-melange.com/gsoc/project/details/google/gsoc2014/tanayabh/5766466041282560
->
-> Regards,
->
-> Andrew Ardill
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+In this research we would rather ask the participants directly about how a project is managed and what should change for the project to be spectacularly successful.
+
+When?
+-----
+
+The survey is open now through May 1st.
+
+Where?
+------
+
+The bit.ly address brings you to the following survey
+
+     https://osocas.2014.sgizmo.com/s3/
+
+Remember that you can save your progress at any time and come back to the survey at a later point when you have time to finish it.
+
+Who are you?
+------------
+My name is Marius Storm-Olsen, and I am currently working on a thesis on Open Source Organizational Culture. I've been an active part of Open Source for years, most notably on the Qt and Git projects. Although I have my own experiences to draw on in the thesis, they do not qualify for the Open Source community at large, hence the survey.
+
+How to help?
+------------
+If you want to help, feel free to forward this email to any Open Source project you would want to participate the survey. Once you have send the invitation, please either send me an email with the name of the project, or update the table shown on
+
+    https://github.com/mstormo/OSOCAS/wiki
+
+
+I do hope you can participate, and thank you for your consideration!
+
+
+Best regards,
+Marius Storm-Olsen
