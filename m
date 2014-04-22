@@ -1,90 +1,71 @@
-From: Theodore Ts'o <tytso@mit.edu>
-Subject: Re: What is missing from Git v2.0
-Date: Tue, 22 Apr 2014 17:30:39 -0400
-Message-ID: <20140422213039.GB21043@thunk.org>
-References: <CAMP44s17h4Tjg+VaMF0atLep8t-0HVp4UDr1WE2wYnEuZ07eaQ@mail.gmail.com>
- <53557071.5040500@gmail.com>
- <xmqqtx9m8obr.fsf@gitster.dls.corp.google.com>
- <CAHGBnuMty-86jfUto=L3muhgEVwVE70FQQY2FJ1bn7AUjfEtLQ@mail.gmail.com>
- <xmqqk3ah5i55.fsf@gitster.dls.corp.google.com>
- <5356c1a61f6d8_463e11ef310a5@nysa.notmuch>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: How to trim the fat on my log graphs
+Date: Tue, 22 Apr 2014 14:37:42 -0700
+Message-ID: <xmqqtx9l2ggp.fsf@gitster.dls.corp.google.com>
+References: <CAHd499Bq07mPTR=h-5Gj=NuEQ9WLnK2wL5nxTNMe=LFnKHmvzA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Sebastian Schuberth <sschuberth@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 22 23:30:54 2014
+Cc: Git <git@vger.kernel.org>
+To: Robert Dailey <rcdailey.lists@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 22 23:38:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WciHG-0005aO-2r
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 23:30:54 +0200
+	id 1WciOC-0003X9-UP
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 23:38:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932253AbaDVVar (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Apr 2014 17:30:47 -0400
-Received: from imap.thunk.org ([74.207.234.97]:54925 "EHLO imap.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758452AbaDVVan (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Apr 2014 17:30:43 -0400
-Received: from root (helo=closure.thunk.org)
-	by imap.thunk.org with local-esmtp (Exim 4.80)
-	(envelope-from <tytso@thunk.org>)
-	id 1WciH2-0005KE-KP; Tue, 22 Apr 2014 21:30:40 +0000
-Received: by closure.thunk.org (Postfix, from userid 15806)
-	id D5E9E580922; Tue, 22 Apr 2014 17:30:39 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=thunk.org; s=ef5046eb;
-	t=1398202239; bh=GHjbkvYBetlCXmWyhu8ZB5sFS9wbORm7VFFK2EWii04=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=I06SmxqsN2ADuaLOcMbW09BjzAvC6Nq+noJRcWAwpxo5HLjoOOAgYB1HmqE+YeY9/
-	 yZ19TaPGxRnuxxWUiq2jc5OjsajwDG/3/ZmhYD5E7ZNgPMi68caAnzKK85Wlaegjc1
-	 goLnbWLuTQyWiaPyVwS5Lukv/PygQiftwgmf1QII=
-Content-Disposition: inline
-In-Reply-To: <5356c1a61f6d8_463e11ef310a5@nysa.notmuch>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
+	id S1757401AbaDVVh6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Apr 2014 17:37:58 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52842 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756812AbaDVVhp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Apr 2014 17:37:45 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 521337F7AE;
+	Tue, 22 Apr 2014 17:37:45 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=LBrYHlTm7C0fLOUZ5QYYHkOuZ34=; b=wSTk5j
+	XilIjfJ41SAX9fRG+yO0ms0XeUrzrXam3z5mFzLTyiLWjewQOujtHn7rCMUCbfmC
+	FY9NaZ6fTgYfRWjjfVegiiCdwWrk7RSW/LTpuw2sTMjbgqemD3hnMriMNC7DrfND
+	hmGjSryAYS4oYE7lDwPeqpx5yizsAPLaufJGs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=rHrIJPIWyrfvOJpDL34aiJi2FN3DLptX
+	bLpwYvyOsmvlIacdt0IZB/P5wrsb3X8+NnCUKskamxA7IoyVk3tkyDeIQNF1YYZe
+	/2Bidq/5SCaCQQ7JilP/E9X7JHWsw0vRP8fYULTH2aFLGM7l/EhJMiOuHrrxtSJ7
+	XTmCf9ZoHY0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3DA2F7F7AD;
+	Tue, 22 Apr 2014 17:37:45 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 990F57F7A9;
+	Tue, 22 Apr 2014 17:37:43 -0400 (EDT)
+In-Reply-To: <CAHd499Bq07mPTR=h-5Gj=NuEQ9WLnK2wL5nxTNMe=LFnKHmvzA@mail.gmail.com>
+	(Robert Dailey's message of "Tue, 22 Apr 2014 15:50:37 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 56693BEE-CA66-11E3-AB15-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246789>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246790>
 
-On Tue, Apr 22, 2014 at 02:23:18PM -0500, Felipe Contreras wrote:
-> > I am not fundamentally opposed.  I just do not think it would add
-> > much value to new people at this point, and it will actively hurt
-> > if we shoved barely cooked one in 2.0.
-> 
-> You are probably biased in that you've used Git far much more than
-> the average user has (or future new users).
+Robert Dailey <rcdailey.lists@gmail.com> writes:
 
-I think Junio has a really strong point.  If the goal is to make life
-easier for new users, allowing them to save a few keystrokes is
-probably not the most significant thing we can do.  And we have to
-balance this with the additional cognitive load in remembering how a
-particular two character alias maps to the "real" command.  This is
-especially true for commands which might not be used as often -- e.g.,
-"rebase", and for commands where the meaning of "git commit" without
-any argument is qualitatively different from what "ci" (for checkin)
-means in most other source management systems.
+> git log log --graph --abbrev-commit --decorate --date=relative
+> --format=format:'%C(bold blue)%h%C(reset)%x09%C(bold
+> green)(%ar)%C(reset)%C(bold yellow)%d%C(reset) %C(dim
+> white)%an%C(reset) - %C(white)%s%C(reset)' --branches --remotes
+> ...
+> The goal is to weed out the really distant and irrelevant commits. I
+> really just want to see the commits that are closely related to my
+> current branch. Thanks in advance.
 
-So I do think it's worth thinking about this very carefully.  For
-certain, I would **not** recommend using shortcuts in example command
-sequences.  If the user reads "git rebase" or "git cherry-pick" it
-means a lot more than if they see a series of apparent chicken
-scratches filled with things like "git rb", "git pi", "git st", etc.
-
-In fact, to be fair, you may be getting biased because you're used to
-using the two character shortcuts, so for you, of *course* "rb" and
-"pi" and "ci" make a lot of sense.  But for someone who is starting
-from scratch, I really question how much it helps, and how much it
-might hurt, to see the two character shortcuts or even to have to
-remember the two character shortcuts.  And for a command like "rebase"
-where the user can very easily shoot themselves in the foot to begin
-with, I'd actually suggest that it's a _good_ thing that they have to
-type it out in full.
-
-						- Ted
+For a starter, how about dropping "--branches --remotes" from that
+command line?  A merge from elsewhere will show as "Merge branch foo"
+which should be sufficient without the decoration.
