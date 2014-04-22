@@ -1,72 +1,79 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: What is missing from Git v2.0
-Date: Tue, 22 Apr 2014 22:22:56 +0200
-Message-ID: <vpqlhux3yhr.fsf@anie.imag.fr>
-References: <CAMP44s17h4Tjg+VaMF0atLep8t-0HVp4UDr1WE2wYnEuZ07eaQ@mail.gmail.com>
-	<53557071.5040500@gmail.com>
-	<xmqqtx9m8obr.fsf@gitster.dls.corp.google.com>
-	<CAHGBnuMty-86jfUto=L3muhgEVwVE70FQQY2FJ1bn7AUjfEtLQ@mail.gmail.com>
-	<xmqqk3ah5i55.fsf@gitster.dls.corp.google.com>
-	<5356c1a61f6d8_463e11ef310a5@nysa.notmuch>
+From: Robert Dailey <rcdailey.lists@gmail.com>
+Subject: How to trim the fat on my log graphs
+Date: Tue, 22 Apr 2014 15:50:37 -0500
+Message-ID: <CAHd499Bq07mPTR=h-5Gj=NuEQ9WLnK2wL5nxTNMe=LFnKHmvzA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Sebastian Schuberth <sschuberth@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 22 22:23:59 2014
+Content-Type: text/plain; charset=UTF-8
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 22 22:50:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WchEU-0004cM-SE
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 22:23:59 +0200
+	id 1WcheT-0003VE-6W
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 22:50:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757987AbaDVUXS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Apr 2014 16:23:18 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:50693 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757982AbaDVUXI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Apr 2014 16:23:08 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s3MKMuoa022507
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 22 Apr 2014 22:22:56 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s3MKMvd4013766;
-	Tue, 22 Apr 2014 22:22:57 +0200
-In-Reply-To: <5356c1a61f6d8_463e11ef310a5@nysa.notmuch> (Felipe Contreras's
-	message of "Tue, 22 Apr 2014 14:23:18 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 22 Apr 2014 22:22:56 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s3MKMuoa022507
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1398802980.09126@TjOMQZcZJfMkpBwi0ML1Ig
+	id S1757996AbaDVUul (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Apr 2014 16:50:41 -0400
+Received: from mail-ve0-f169.google.com ([209.85.128.169]:61739 "EHLO
+	mail-ve0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757715AbaDVUui (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Apr 2014 16:50:38 -0400
+Received: by mail-ve0-f169.google.com with SMTP id pa12so31459veb.14
+        for <git@vger.kernel.org>; Tue, 22 Apr 2014 13:50:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:date:message-id:subject:from:to:content-type;
+        bh=szkrbLgmGId4pKoL/cz5zfli5l4BrcRT2OvszrYUrzQ=;
+        b=fnAXU4hFYW8923HZUHW+0ixwWUqY0Lxp7bqUpH8mKERFVsR381qnQ/vcsMTot6mL4c
+         aYEyrB2Vdm8kx49/404442nj6JvCQ6ohorMtNf17wOX5UdeFY0De3E+VvAsMfOlIPFkX
+         ulte6xgKil2t16QJYnVJnmR99WosmxVTDrF6hVIsZ4Iq0znm8J++OATcDEhY4IckXAzz
+         fMo9PUXxpnmXe8oHw9HvyCqLnMYeDExd4Sas8A3JVVB23GNgvuv5TbOw8ielio7pj8DC
+         jBlO3v3hRCYaD1EyovEnPCKLHMAZS6k9lLjrjLxfCWt7zVob1qB2e8ruQMs+6yaPF4/S
+         GL/g==
+X-Received: by 10.58.49.10 with SMTP id q10mr41027852ven.5.1398199838021; Tue,
+ 22 Apr 2014 13:50:38 -0700 (PDT)
+X-Google-Sender-Delegation: rcdailey@gmail.com
+Received: by 10.221.2.79 with HTTP; Tue, 22 Apr 2014 13:50:37 -0700 (PDT)
+X-Google-Sender-Auth: wBAWMQG1bjFzDp0cC5wQ41AyPFw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246782>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246783>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+My log graphs are pretty insane sometimes because we converted our
+repo from SVN and haven't had a chance to delete all of the remote
+branches. We still have quite a few (maybe 20).
 
-> Why is not material for v2.0? Because you say so? Are you going to wait another
-> ten years to introduce this to v3.0?
+When I do `git log`, I am shown about 10-15 vertical lines and the
+branch I currently have checked out isn't even at the top of the
+graph, it's burried somewhere one or two pages down. I think this is
+really confusing and makes my log virtually useless. Here is my log
+command:
 
-There's no need to wait for a 3.0 to introduce this. If these would
-be low-priority compared to user-defined aliases, there's no backward
-compatibility issue, it can very well be a 2.1, or whatever number comes
-after 2.0.
+git log log --graph --abbrev-commit --decorate --date=relative
+--format=format:'%C(bold blue)%h%C(reset)%x09%C(bold
+green)(%ar)%C(reset)%C(bold yellow)%d%C(reset) %C(dim
+white)%an%C(reset) - %C(white)%s%C(reset)' --branches --remotes
 
-> This is actually the perfect time to do it.
+I realize the `git log` documentation has a whole section on trimming
+history so it is more useful, but after reading that section I am left
+completely confused and I have no idea which additional options I can
+add to trim the fat on my logs.
 
-Junio has just tagged a -rc for 2.0, so it's clearly too late to start
-discussing new features for this particular release.
+Ideally what I want, for starters:
+- The branch I'm on should be at the top of the graph (first commit in
+the log graph should be the tip of my checked out branch).
+- Commits in other branches that are not ancestors of the current
+branch should not be shown.
+- Merges *into* my branch from other branches should show the graph
+line for that branch but allow me to specify a "depth", meaning for
+example that ancestors that are 3 "parents" away
+(great-grandchildren?) will not be rendered (the 3 is an example, I
+could specify any number)
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+The goal is to weed out the really distant and irrelevant commits. I
+really just want to see the commits that are closely related to my
+current branch. Thanks in advance.
