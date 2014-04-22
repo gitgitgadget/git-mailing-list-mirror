@@ -1,85 +1,101 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git.c: treat RUN_SETUP_GENTLY and RUN_SETUP as mutually exclusive
-Date: Tue, 22 Apr 2014 12:37:30 -0700
-Message-ID: <xmqqvbu140lh.fsf@gitster.dls.corp.google.com>
-References: <1398127676-12311-1-git-send-email-mcgrof@do-not-panic.com>
+Subject: Re: [SECURITY PATCH] git-prompt.sh: don't put unsanitized branch names in $PS1
+Date: Tue, 22 Apr 2014 12:47:57 -0700
+Message-ID: <xmqqr44p4042.fsf@gitster.dls.corp.google.com>
+References: <1398107248-32140-1-git-send-email-rhansen@bbn.com>
+	<20140421202454.GA6062@sigill.intra.peff.net>
+	<53562A96.6000002@alum.mit.edu>
+	<xmqqy4yx5knw.fsf@gitster.dls.corp.google.com>
+	<5356B71A.6070500@bbn.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Luis R. Rodriguez" <mcgrof@suse.com>
-To: "Luis R. Rodriguez" <mcgrof@do-not-panic.com>
-X-From: git-owner@vger.kernel.org Tue Apr 22 21:37:41 2014
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org, sitaramc@gmail.com
+To: Richard Hansen <rhansen@bbn.com>
+X-From: git-owner@vger.kernel.org Tue Apr 22 21:48:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WcgVf-0005SR-KR
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 21:37:39 +0200
+	id 1Wcgfq-0005vu-LY
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 21:48:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751856AbaDVThg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Apr 2014 15:37:36 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60810 "EHLO
+	id S1752285AbaDVTsF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Apr 2014 15:48:05 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48788 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750888AbaDVThe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Apr 2014 15:37:34 -0400
+	id S1751275AbaDVTsC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Apr 2014 15:48:02 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 54B357FB2B;
-	Tue, 22 Apr 2014 15:37:34 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 01FDC7F07C;
+	Tue, 22 Apr 2014 15:48:02 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=zJfeCBfT9KO5NPe0aPQyF5Cp14M=; b=r8fyFC
-	lxolBHx7BUahdedwjWN6YwR095Md7w3yD76/6jakYS3HpfiSvViQEbl8eM/R9hzu
-	Avzco56VsTX5vMN01VAYAVlSm5LOLZiVIUSJn0ROHvNpYslmyc9W2z2EhxAZYn7t
-	OPvfC+tNRI0RzL33Zpsgnm3iC4a4CIXkz7e3g=
+	:content-type; s=sasl; bh=kUZN0gRXaT8+Mou5AeGoPu2uNdY=; b=o/8tGe
+	zpwOHZfM4NuwERANtPjFCy/WlugkUQ1j85tCJjM2t4glRMiF77kKSN12KV8NinWu
+	Q5oBJFUTIi2lyzRAMkNHKg21CjcnPADdzUsaPRiNMbY7td6YRR4sY6dqpPJzF6sj
+	DlhiVyfhQboYr/q1Y8AH7g7EuIWcVa162tMvI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NqT2zdUWiVY7oqVp6HthvTsa3QoDWbfS
-	3WQq+B286rRG/3KUZh+bAmlLu2Dm+Ab7p7F/O5fvdW1LAP0xSystW7SpcBTunpn3
-	MjE5faIF+TwDHc5ZT5b6JHt8uaDiy6p+1REoEDFT3f+VReFlY6zAjHtTLWmTV83x
-	eOwBymuODKc=
+	:content-type; q=dns; s=sasl; b=G9iOd5qokcsrl7fJnCjN7LFO9eA026MT
+	StECpN5FKSMJhnkG8C9n4VnMQPt+Aa2iSHdwXmFweI1IYP5hTUrrm9yvjJB8SveU
+	flENW7raXgsxNWeTt5/eGGgUUCxglNZXlLEA0DpwsdiAC7sK+BbmYD4+g3xicr36
+	6D634XrwMhQ=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 395E97FB29;
-	Tue, 22 Apr 2014 15:37:34 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CE1FC7F07B;
+	Tue, 22 Apr 2014 15:48:01 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5ED3D7FB24;
-	Tue, 22 Apr 2014 15:37:32 -0400 (EDT)
-In-Reply-To: <1398127676-12311-1-git-send-email-mcgrof@do-not-panic.com> (Luis
-	R. Rodriguez's message of "Mon, 21 Apr 2014 17:47:56 -0700")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5D6967F074;
+	Tue, 22 Apr 2014 15:47:59 -0400 (EDT)
+In-Reply-To: <5356B71A.6070500@bbn.com> (Richard Hansen's message of "Tue, 22
+	Apr 2014 14:38:18 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 8C30CAB4-CA55-11E3-B56B-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 01E77DB0-CA57-11E3-98EA-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246777>
 
-"Luis R. Rodriguez" <mcgrof@do-not-panic.com> writes:
+Richard Hansen <rhansen@bbn.com> writes:
 
-> From: "Luis R. Rodriguez" <mcgrof@suse.com>
+>> and plan for transition to forbid them
+>> everywhere in a next big version bump (it is too late for 2.0).
 >
-> This saves us a few branches when RUN_SETUP is set up.
->
-> Signed-off-by: Luis R. Rodriguez <mcgrof@suse.com>
-> ---
+> Would it be acceptable to have a config option to forbid these in a
+> non-major version bump?  
 
-Makes sense, especially because there is no sane reason to set both
-bits on.
+Of course ;-) Because we try very hard to avoid a "flag day" change,
+any "plan for transition" inevitably has to include what we need to
+do _before_ the big version bump.
 
->  git.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> If it's OK to have a config option, then here's one possible transition
+> path (probably flawed, but my intent is to bootstrap discussion):
 >
-> diff --git a/git.c b/git.c
-> index 9efd1a3..7780572 100644
-> --- a/git.c
-> +++ b/git.c
-> @@ -290,7 +290,7 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv)
->  	if (!help) {
->  		if (p->option & RUN_SETUP)
->  			prefix = setup_git_directory();
-> -		if (p->option & RUN_SETUP_GENTLY) {
-> +		else if (p->option & RUN_SETUP_GENTLY) {
->  			int nongit_ok;
->  			prefix = setup_git_directory_gently(&nongit_ok);
->  		}
+>   1. Add an option to forbid dangerous characters.  The option defaults
+>      to disabled for compatibility.  If the option is unset, print a
+>      warning upon encountering a ref name that would be forbidden.
+>   2. Later, flip the default to enabled.
+>   3. Later, in the weeks/months leading up to the next major version
+>      release, print the warning even if the config option is set to
+>      disabled.
+
+Sounds fairly conservative and nice.  We may want to treat creating
+a new such ref and using an existing such ref differently, though,
+and that might give us a better/smoother transition (as you are, I
+am just thinking aloud).
+
+For example, it might be sufficient to do these two things:
+
+ (1) upon an attempt to use an existing such ref, warn and encourage
+     renaming of the ref.
+
+ (2) upon an attempt to create a new one, error it out.
+
+in the first step, and in either case, tell the user about the
+loosening variable.
+
+Going that route may shorten the time until the initial safety.
