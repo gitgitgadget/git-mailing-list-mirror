@@ -1,93 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 02/13] refs.c: use a single exit path from transaction commit and handle onerr
-Date: Tue, 22 Apr 2014 12:11:01 -0700
-Message-ID: <xmqqbnvt5ge2.fsf@gitster.dls.corp.google.com>
-References: <1398120811-20284-1-git-send-email-sahlberg@google.com>
-	<1398120811-20284-3-git-send-email-sahlberg@google.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH v4 2/2] commit: add --ignore-submodules[=<when>] parameter
+Date: Tue, 22 Apr 2014 21:14:04 +0200
+Message-ID: <5356BF7C.1010200@web.de>
+References: <CABxC_L92v=cV=+e_DNa0L6f21LB0BRP5duai2h_heGJN_PRoUQ@mail.gmail.com>	<5335A78C.60401@web.de>	<CABxC_L-4=qcZiix05dL8GrDJXv=19fw4yB0qFzRRfw=G=_Gxbg@mail.gmail.com>	<53374E49.9000702@gmail.com>	<533874F9.3090802@web.de>	<5338AC36.6000109@gmail.com>	<5338B1B0.3050703@gmail.com>	<5339BAE4.8020306@web.de> <CABxC_L8_tQrANXji_Z0LfigxsAuzSDj3K9ndTGOTHh2ctHvc6A@mail.gmail.com> <5339F122.60801@gmail.com> <5339FBB4.1010101@gmail.com> <533B2036.3050506@web.de> <533B36AA.3090600@gmail.com> <533C5CBD.4050601@web.de> <533C6B57.3080901@gmail.com> <534180BC.308@web.de> <53431CB8.2050600@gmail.com> <53432EA5.5060102@gmail.com> <53444368.9050607@web.de> <5349BC2C.9030509@gmail.com> <5349C314.50500@gmail.com> <53511617.80506@web.de> <535596D1.6070709@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu
-To: Ronnie Sahlberg <sahlberg@google.com>
-X-From: git-owner@vger.kernel.org Tue Apr 22 21:11:17 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Heiko Voigt <hvoigt@hvoigt.net>, Junio C Hamano <gitster@pobox.com>
+To: Ronald Weiss <weiss.ronald@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 22 21:14:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wcg68-0006fc-1E
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 21:11:16 +0200
+	id 1Wcg9E-000158-4B
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 21:14:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751310AbaDVTLK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Apr 2014 15:11:10 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43368 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750897AbaDVTLI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Apr 2014 15:11:08 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 968617FE83;
-	Tue, 22 Apr 2014 15:11:07 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9QDKTIpYu/0VWWNfFWXZxq3n7kc=; b=QpPPg6
-	USm0u6BNtoMJ+2YOXYVS/nycJig6KAUSSYdZrx7HRFghwRc0007CdNyNGhOdSziZ
-	0ljbaqkIQw48+cJ4GHmuWdL2deqiifm+mrteKFzniVIIo297Z2gn3gYfO/UiOfwO
-	GT6AQG3Z5gETp+MyzCZ/cF42sb61CQLHatQjA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=IKtgB1Hylh1PCblCBvJTs8qQ+WvTnI+C
-	Nhno1QBJkbvajI6tLxoZrCjsPBiW48OD0+lwQN0OaB7PWcpwpPY9BOg001VAtJ2a
-	xk8K9nTHnvdRUdBn05ozZvZEbW/He1fOtTkfa0qZyUNmGVoML1sNZzu5y67unMTE
-	6WiYELzpCWc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7EF567FE81;
-	Tue, 22 Apr 2014 15:11:07 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 38F367FE75;
-	Tue, 22 Apr 2014 15:11:03 -0400 (EDT)
-In-Reply-To: <1398120811-20284-3-git-send-email-sahlberg@google.com> (Ronnie
-	Sahlberg's message of "Mon, 21 Apr 2014 15:53:20 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: D8FBC19A-CA51-11E3-A73C-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754210AbaDVTOU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Apr 2014 15:14:20 -0400
+Received: from mout.web.de ([212.227.15.3]:57369 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752285AbaDVTOP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Apr 2014 15:14:15 -0400
+Received: from [192.168.178.41] ([79.193.67.121]) by smtp.web.de (mrweb001)
+ with ESMTPSA (Nemesis) id 0M6Df8-1WrQmR3C38-00y5Il; Tue, 22 Apr 2014 21:14:09
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
+In-Reply-To: <535596D1.6070709@gmail.com>
+X-Enigmail-Version: 1.6
+X-Provags-ID: V03:K0:PRUIsP9IvfKBtKY98x9H0JyUSCyHRLH1AQUI8oNuLwaSABQavin
+ tc9XY5Cz6xxE5y875p50/t5z8t7AXwGqbXoGpeB+K7RX0gDR6OyoCSLry1esLsPlj0aHjqO
+ nP0q/hECU1l7/6h/fZwPJFM51pWz93Cj0trzb+qnr9FXOeoaiLYM2Em2t6lPrTdcaGNCmxk
+ /TZk9RX63FuU9mkAlQrGg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246771>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246772>
 
-Ronnie Sahlberg <sahlberg@google.com> writes:
+Am 22.04.2014 00:08, schrieb Ronald Weiss:
+> On 18. 4. 2014 14:09, Jens Lehmann wrote:
+>> Am 13.04.2014 00:49, schrieb Ronald Weiss:
+>>> Allow ignoring submodules (or not) by command line switch, like diff
+>>> and status do.
+>>>
+>>> Git commit honors the 'ignore' setting from .gitmodules or .git/config,
+>>> but didn't allow to override it from command line.
+>>>
+>>> This patch depends on Jens Lehmann's patch "commit -m: commit staged
+>>> submodules regardless of ignore config". Without it,
+>>> "commit -m --ignore-submodules" would not work and tests introduced
+>>> here would fail.
+>>
+>> Apart from the flags of the test (see below) I get three failures when
+>> running t7513. And I'm wondering why you are using "test_might_fail"
+>> there, shouldn't we know exactly if a commit should succeed or not
+>> and test exactly for that?
+> 
+> I used "test_might_fail" instead of "test_must_fail" to denote that this
+> test doesn't care whether "git commit" fails or not due to empty commit
+> message. I found it more appropriate. However, if you disagree, I can
+> change it to "test_must_fail", no problem for me.
 
-> diff --git a/refs.c b/refs.c
-> index 138ab70..9daf89e 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -3414,12 +3414,12 @@ int ref_transaction_commit(struct ref_transaction *transaction,
->  			   const char *msg, enum action_on_err onerr)
-> ...
-> +	if (ret) {
-> +		const char *str = "Cannot commit transaction.";
-> +		switch (onerr) {
-> +		case UPDATE_REFS_MSG_ON_ERR: error(str); break;
-> +		case UPDATE_REFS_DIE_ON_ERR: die(str); break;
-> +		case UPDATE_REFS_QUIET_ON_ERR: break;
-> +		}
-> +	}
->  	return ret;
->  }
+I'd rather have them fail because nothing is to be committed (and not
+because the commit message is empty) and document we expect that to
+happen by using test_must_fail (and that for example will catch a later
+change which accidentally makes commit create empty commits here).
 
-I think this is a response to Michael's earlier review "do different
-callers want to give different error messages more suitable for the
-situation?".  I suspect that the ideal endgame may end up all
-callers passing QUIET_ON_ERR and doing the error message themselves,
-e.g. branch.c::craete_branch() may end something like this:
+> Unfortunately I don't know why the test fails for you, they pass for me.
+> Did you apply it on top of your own patch for "commit -m", which is
+> a prerequisite?
 
-    ...
-    if (!dont_change_ref)
-        if (ref_transaction_commit(..., UPDATE_REFS_QUIET_ON_ERR))
-                die_errno(_("Failed to write branch '%s'"),
-                          skip_prefix(ref.buf, "refs/heads/));
+Silly me, I forgot to do that (even though you explicitly mention
+this dependency in the commit message). Sorry for the noise, all
+tests run fine after rebasing your changes on top of mine.
 
-And in the meantime until the callers are converted, we may end up
-showing the fallback "Cannot commit transaction." but that would be
-OK during the development and polishing of this series.
+> I tried it again, on top of current master (cc29195 [tag: v2.0.0-rc0]).
+> First, I have applied your patch from here:
+> 
+> http://article.gmane.org/gmane.comp.version-control.git/245783
+> 
+> On top of that, I applied my two patches, and the tests pass fine here.
+> Until now I was testing on Windows, but now I tested on a Linux box,
+> and that makes no difference.
+> 
