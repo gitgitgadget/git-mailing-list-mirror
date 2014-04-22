@@ -1,84 +1,83 @@
-From: Richard Hansen <rhansen@bbn.com>
-Subject: Re: [SECURITY PATCH] git-prompt.sh: don't put unsanitized branch
- names in $PS1
-Date: Tue, 22 Apr 2014 14:38:18 -0400
-Message-ID: <5356B71A.6070500@bbn.com>
-References: <1398107248-32140-1-git-send-email-rhansen@bbn.com>	<20140421202454.GA6062@sigill.intra.peff.net>	<53562A96.6000002@alum.mit.edu> <xmqqy4yx5knw.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org, sitaramc@gmail.com
-To: Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Apr 22 20:38:32 2014
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: [PATCH 0/3] Use ref transactions for fetch
+Date: Tue, 22 Apr 2014 11:45:24 -0700
+Message-ID: <1398192327-21302-1-git-send-email-sahlberg@google.com>
+Cc: mhagger@alum.mit.edu, Ronnie Sahlberg <sahlberg@google.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 22 20:45:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WcfaQ-00022P-EY
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 20:38:30 +0200
+	id 1WcfhM-0000CI-Rk
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 20:45:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753574AbaDVSiZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Apr 2014 14:38:25 -0400
-Received: from smtp.bbn.com ([128.33.1.81]:58957 "EHLO smtp.bbn.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751088AbaDVSiY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Apr 2014 14:38:24 -0400
-Received: from socket.bbn.com ([192.1.120.102]:42595)
-	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
-	(Exim 4.77 (FreeBSD))
-	(envelope-from <rhansen@bbn.com>)
-	id 1WcfaP-000C1j-3X; Tue, 22 Apr 2014 14:38:29 -0400
-X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id 570434029C
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
-In-Reply-To: <xmqqy4yx5knw.fsf@gitster.dls.corp.google.com>
-X-Enigmail-Version: 1.6
+	id S1755309AbaDVSpg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Apr 2014 14:45:36 -0400
+Received: from mail-yh0-f74.google.com ([209.85.213.74]:61224 "EHLO
+	mail-yh0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751275AbaDVSpc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Apr 2014 14:45:32 -0400
+Received: by mail-yh0-f74.google.com with SMTP id f10so994587yha.3
+        for <git@vger.kernel.org>; Tue, 22 Apr 2014 11:45:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=aNUYRRqEca1W1728eWceMFQf1MR/+buD97r8f+FF2YA=;
+        b=YhA9/CGe46s5VcfoNPLWk7wxUv/N9n3chCXVve1gZ+zQ6dunpbG6iqF3ThivmTUKl3
+         JSvD/y213Nw8Or7F2a9KKKqU1FLb4RokJ1db6HOEP6afMOsgMghHvBX3qKxz1vJoOC9F
+         1yNd9Yccb59C+AlzhQwhbckcX/ew6sq3WBkuXdTi9KkHbv8IiFCJH5y+E6x3ZExKrs9D
+         juYiJDOcCFjSEXRmaQzaW11SdAkc2zcdrm7h7lEE4wpuo/YVgF8UIxXg2Gu/OZ/GgudC
+         HcLLFq9geRIaZ3s5POOQbo1HPbR9rrk07GzAwaPMaUJaLH6nbGnnFcyWfI4TdHsDA2aI
+         kldg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=aNUYRRqEca1W1728eWceMFQf1MR/+buD97r8f+FF2YA=;
+        b=dqABY98dA7i2Vc4F8iW4LhjtqZSujJ3ZAiH8rZhJygjZ7ElgSkkqiFVP6aTWuaHvb0
+         5QrbJ2sOypr5j0f8XxVIboWK69T99pj7eNrE1Gh7HVuDFa27a3+VH8xTIqH2ukWzfs0D
+         EbfJjFLhgWkxMRGtY2YAgnrbiD39FQwwYFCIoOT0yc8Xe+IHVbYL/oDM3gzFPYl3dX9E
+         oFP7e2rozV/6vuQF4TmTG/o8+AIveDvlVZH51lOfyD9+6LV5do4mHnhRM/tfydKempR1
+         hitWHzP5qb+f/YSgN8ymmNQM3Uq0D1KVpigBcDUvlMPKKIn0ItO6mWARJbe3FNtVYcuZ
+         Wr9w==
+X-Gm-Message-State: ALoCoQlMV15fgSNcCw056ruarEC1+R9fcSD7DOexSoUjzbAL/hhfhycMvzgspysydCIWaiS6SKGLHC3+HmkaDWx8M/kJ4u0yuT4iAnUQdxgVrNDoL4LU31d3/64dg7o1G14LMylUHpshozzDqEhlIdznPd/kXRAdf9DvmGRKBaJOpZ4GwP6ZbnsuA+9b61AcjiiBmNy7hByp
+X-Received: by 10.58.111.202 with SMTP id ik10mr22223460veb.4.1398192331628;
+        Tue, 22 Apr 2014 11:45:31 -0700 (PDT)
+Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
+        by gmr-mx.google.com with ESMTPS id a44si5705804yhb.6.2014.04.22.11.45.31
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 22 Apr 2014 11:45:31 -0700 (PDT)
+Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
+	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 6EE3D31C15E;
+	Tue, 22 Apr 2014 11:45:31 -0700 (PDT)
+Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
+	id E4D0BE0BD6; Tue, 22 Apr 2014 11:45:30 -0700 (PDT)
+X-Mailer: git-send-email 1.9.1.518.g16976cb.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246762>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246763>
 
-On 2014-04-22 13:38, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
-> 
->> While we're at it, I think it would be prudent to ban '-' at the
->> beginning of reference name segments.  For example, reference names like
->>
->>     refs/heads/--cmd=/sbin/halt
->>     refs/tags/--exec=forkbomb(){forkbomb|forkbomb&};forkbomb
->>
->> are currently both legal, but I think they shouldn't be.
-> 
-> I think we forbid these at the Porcelain level ("git branch", "git
-> checkout -b" and "git tag" should not let you create "-aBranch"),
-> while leaving the plumbing lax to allow people experimenting with
-> their repositories.
-> 
-> It may be sensible to discuss and agree on what exactly should be
-> forbidden (we saw "leading dash", "semicolon and dollar anywhere"
-> so far in the discussion)
+This change is based on the previous ref transaction patches.
+This is sent as a separate patch series since it implements a lot more
+non-trivial changes to the behaviour than the previous patches and thus can
+use more detailed review.
 
-Also backquote anywhere.
+Update fetch.c to use ref transactions when performing updates. Use a single
+ref transaction for all updates and only commit the transaction if all other
+checks and oeprations have been successful. This makes the ref updates during
+a fetch (mostly) atomic.
 
-> and plan for transition to forbid them
-> everywhere in a next big version bump (it is too late for 2.0).
+Ronnie Sahlberg (3):
+  fetch.c: clear errno before calling functions that might set it
+  fetch.c: change s_update_ref to use a ref transaction
+  fetch.c: use a single ref transaction for all ref updates
 
-Would it be acceptable to have a config option to forbid these in a
-non-major version bump?  Does parsing config files add too much overhead
-for this to be feasible?
+ builtin/fetch.c | 39 ++++++++++++++++++++++-----------------
+ 1 file changed, 22 insertions(+), 17 deletions(-)
 
-If it's OK to have a config option, then here's one possible transition
-path (probably flawed, but my intent is to bootstrap discussion):
-
-  1. Add an option to forbid dangerous characters.  The option defaults
-     to disabled for compatibility.  If the option is unset, print a
-     warning upon encountering a ref name that would be forbidden.
-  2. Later, flip the default to enabled.
-  3. Later, in the weeks/months leading up to the next major version
-     release, print the warning even if the config option is set to
-     disabled.
-
-Thanks,
-Richard
+-- 
+1.9.1.518.g16976cb.dirty
