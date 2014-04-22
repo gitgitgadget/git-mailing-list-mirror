@@ -1,62 +1,67 @@
-From: Stephen Leake <stephen_leake@stephe-leake.org>
-Subject: Re: [RTC/PATCH] Add 'update-branch' hook
-Date: Tue, 22 Apr 2014 09:43:10 -0500
-Message-ID: <857g6h5ssh.fsf@stephe-leake.org>
-References: <1398047016-21643-1-git-send-email-felipe.contreras@gmail.com>
-	<5355793A.5020000@gmail.com> <53558476703cb_5c94d452ec4e@nysa.notmuch>
-	<53558A54.4060801@gmail.com> <53558ae6f1282_604be1f30cf3@nysa.notmuch>
-	<53559020.1050407@gmail.com> <53558f6269f91_640076f2f08f@nysa.notmuch>
+From: Jeff King <peff@peff.net>
+Subject: Re: Project idea: github-like diff view
+Date: Tue, 22 Apr 2014 11:59:01 -0400
+Message-ID: <20140422155901.GA13663@sigill.intra.peff.net>
+References: <CACsJy8CQxPrqs31nBvr_oPRD3EJ6Hu-Lq=++7nWpxx5BQZYi8Q@mail.gmail.com>
+ <20140420144620.GA16596@sigill.intra.peff.net>
+ <CACsJy8DnJeZ-43Ydg_j00CO6=6NOA1wdzQ+EwCX6idrUOLn8gA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 22 16:43:24 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 22 17:59:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wcbuo-0002jl-Kk
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 16:43:18 +0200
+	id 1Wcd6M-0002fu-2a
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 17:59:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755962AbaDVOnP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Apr 2014 10:43:15 -0400
-Received: from cdptpa-outbound-snat.email.rr.com ([107.14.166.225]:52569 "EHLO
-	cdptpa-oedge-vip.email.rr.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751346AbaDVOnN (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Apr 2014 10:43:13 -0400
-Received: from [75.87.81.6] ([75.87.81.6:50178] helo=TAKVER)
-	by cdptpa-oedge02 (envelope-from <stephen_leake@stephe-leake.org>)
-	(ecelerity 3.5.0.35861 r(Momo-dev:tip)) with ESMTP
-	id 6F/48-30401-00086535; Tue, 22 Apr 2014 14:43:12 +0000
-In-Reply-To: <53558f6269f91_640076f2f08f@nysa.notmuch> (Felipe Contreras's
-	message of "Mon, 21 Apr 2014 16:36:34 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (windows-nt)
-X-RR-Connecting-IP: 107.14.168.130:25
-X-Cloudmark-Score: 0
+	id S1757153AbaDVP7F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Apr 2014 11:59:05 -0400
+Received: from cloud.peff.net ([50.56.180.127]:36147 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757257AbaDVP7D (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Apr 2014 11:59:03 -0400
+Received: (qmail 2563 invoked by uid 102); 22 Apr 2014 15:59:03 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 22 Apr 2014 10:59:03 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 22 Apr 2014 11:59:01 -0400
+Content-Disposition: inline
+In-Reply-To: <CACsJy8DnJeZ-43Ydg_j00CO6=6NOA1wdzQ+EwCX6idrUOLn8gA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246743>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+On Tue, Apr 22, 2014 at 04:59:17PM +0700, Duy Nguyen wrote:
 
-> Ilya Bobyr wrote:
->> On 4/21/2014 2:17 PM, Felipe Contreras wrote:
->> > Ilya Bobyr wrote:
->> >
->> >> Also, most have names that start with either "pre-" or "post-".
->> >> It seems reasonable for both "pre-update-branch" and
->> >> "post-update-branch" to exist.
->> > I don't see what would be the point in that.
->> 
->> Do you see the point in the other hooks doing that?
->
-> Yes, there a reason for the existance of those hooks. Now tell me why would
-> anybody use post-update-branch instead of pre-update-branch?
+> On Sun, Apr 20, 2014 at 9:46 PM, Jeff King <peff@peff.net> wrote:
+> > On Sun, Apr 20, 2014 at 04:58:28PM +0700, Duy Nguyen wrote:
+> >
+> >> - --color-words within unified diff format, using background color to
+> >> show what part of the line has changed. This is only enabled for
+> >> 1-line changes.
+> >
+> > See contrib/diff-highlight.
+> 
+> Thanks. I'd rather have it built in core git still. I'll try to see if
+> I can rewrite it in C. Else, any objection to promote it to a core
+> helper and setup pager automatically? We can have a config key to turn
+> it off, but if git diff is colored, then it could be on by default.
 
-I have a branch which should always be recompiled on update;
-post-update-branch would be a good place for that.
+If you are going to write it as part of git, it would be interesting to
+try using a real word-diff to find the inter-line changes, instead of
+the "front and back match" heuristic that the script uses. I know there
+are some cases that would look better, like:
 
--- 
--- Stephe
+  -foo(buf, len);
+  +foo(obj->buf, obj->len);
+
+but I suspect some cases would also look worse. It would be interesting
+to experiment with, though.
+
+-Peff
