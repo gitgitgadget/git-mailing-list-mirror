@@ -1,66 +1,73 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Re: Re: [ANNOUNCE] WinGit - native x86/x64 Git for Windows
-Date: Tue, 22 Apr 2014 18:14:44 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.1404221813320.14982@s15462909.onlinehome-server.info>
-References: <rfujmbew27f1gaa6dbk706li.1397911737867@email.android.com> <20140419184210.GB3617@book-mint> <alpine.DEB.1.00.1404210003540.14982@s15462909.onlinehome-server.info> <53556579.3050709@gmail.com> <alpine.DEB.1.00.1404212053420.14982@s15462909.onlinehome-server.info>
- <535569e92cbcc_32c48493101f@nysa.notmuch> <alpine.DEB.1.00.1404221512130.14982@s15462909.onlinehome-server.info> <53569207a2683_3e5aed73082b@nysa.notmuch>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [NOT_A_PATCH] A naive attempt to cross-build
+ Linux->mingw64 Git
+Date: Tue, 22 Apr 2014 11:08:45 -0500
+Message-ID: <5356940d5ef3a_3e5aed73088d@nysa.notmuch>
+References: <535569e92cbcc_32c48493101f@nysa.notmuch>
+ <1398118479-7731-1-git-send-email-marat@slonopotamus.org>
+ <5355b0ce562b8_6c39e772f0cb@nysa.notmuch>
+ <5355b2807a10c_1d5ab792ecfd@nysa.notmuch>
+ <20140422133616.GA5079@seldon>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Cc: Sebastian Schuberth <sschuberth@gmail.com>, 
-    Heiko Voigt <hvoigt@hvoigt.net>, Marat Radchenko <marat@slonopotamus.org>, 
-    git@vger.kernel.org, msysGit Mailinglist <msysgit@googlegroups.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: msysgit+bncBCZPH74Q5YNRBDVL3KNAKGQEU5P4YCI@googlegroups.com Tue Apr 22 18:15:12 2014
-Return-path: <msysgit+bncBCZPH74Q5YNRBDVL3KNAKGQEU5P4YCI@googlegroups.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+ Sebastian Schuberth <sschuberth@gmail.com>, 
+ Heiko Voigt <hvoigt@hvoigt.net>, 
+ git@vger.kernel.org, 
+ msysGit Mailinglist <msysgit@googlegroups.com>
+To: Marat Radchenko <marat@slonopotamus.org>, 
+ Felipe Contreras <felipe.contreras@gmail.com>
+X-From: msysgit+bncBDBJVMGGZYNBB7FM3KNAKGQEVAUIV7A@googlegroups.com Tue Apr 22 18:19:10 2014
+Return-path: <msysgit+bncBDBJVMGGZYNBB7FM3KNAKGQEVAUIV7A@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wi0-f184.google.com ([209.85.212.184])
+Received: from mail-qa0-f56.google.com ([209.85.216.56])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCZPH74Q5YNRBDVL3KNAKGQEU5P4YCI@googlegroups.com>)
-	id 1WcdLj-0008GV-Ro
-	for gcvm-msysgit@m.gmane.org; Tue, 22 Apr 2014 18:15:11 +0200
-Received: by mail-wi0-f184.google.com with SMTP id cc10sf282204wib.11
-        for <gcvm-msysgit@m.gmane.org>; Tue, 22 Apr 2014 09:15:11 -0700 (PDT)
+	(envelope-from <msysgit+bncBDBJVMGGZYNBB7FM3KNAKGQEVAUIV7A@googlegroups.com>)
+	id 1WcdPZ-00039v-S7
+	for gcvm-msysgit@m.gmane.org; Tue, 22 Apr 2014 18:19:10 +0200
+Received: by mail-qa0-f56.google.com with SMTP id j7sf1545223qaq.11
+        for <gcvm-msysgit@m.gmane.org>; Tue, 22 Apr 2014 09:19:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
-        h=date:from:to:cc:subject:in-reply-to:message-id:references
-         :user-agent:mime-version:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=TeARYmEpCZ9lCzSsQIump/xTQuCnbH559gWggQD+VmA=;
-        b=is/nAJmkwgsbSO5mFWJVzJCq0WLuDOy5uoqGesiHquWob/d4WndMnmrl+gQPC0khyd
-         EbTkV60PjD5wPjp7N/KpqM6tS45/GytUoqm+6ll4PCZGWwIUtOksNETXismSzYROuX2Q
-         uWjyqKO2pmyAFWCyxZK3JDh6vluovG7LRpBNXS+uCDDM1umWobn2a+yt0pwFO09oc82i
-         N2efFcjumuAjCWTjMTc00RGdI7xquvO020JEKq8rUkHcbCJeXuIi11/EIi6Q+tn7ev0K
-         pPTEaHYXFUNoi+YVGkuiXXI82J1EGZzz9h5cdx1MK8mqusxminlEv/9dHzB/LvdoxuAb
-         wC3g==
-X-Received: by 10.180.107.36 with SMTP id gz4mr117172wib.0.1398183311293;
-        Tue, 22 Apr 2014 09:15:11 -0700 (PDT)
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:x-original-sender:x-original-authentication-results
+         :precedence:mailing-list:list-id:list-post:list-help:list-archive
+         :sender:list-subscribe:list-unsubscribe:content-type;
+        bh=EJnIEDejcLrbgY5buYJfiZAU01FzmcunAh+Y6w+90F0=;
+        b=cOiMDHoDEdal1Y0dxORnrMTdgjJlbLTKxII9kGCABtlP5nvsgYyrLXsOMAH5DptdVf
+         7yg6N0eol39gE4QrrsudnXrR7mkX5d0muXOYe445RoYeC0TQPC+FhVaeFauhEB42IBB6
+         M6PCQt7utF9YzCjpIKtVaIkd78W6N8S/9x2JhAOLaXOj8XIJgxnS9+rZB7j+esxi7FlC
+         wOJdaTxwNemmZhgVPspDUsGCo8aqe/HkNQpExynFMwI4aO386KkMFycxXL/yKxYDcycI
+         Q18kR0cRqRkfQNdokSTYRxGR5thfx4+r6/jLUAzW8d5GwoPYrpkQZIB426OUy8lzdNX+
+         WdlQ==
+X-Received: by 10.182.44.233 with SMTP id h9mr189obm.41.1398183548844;
+        Tue, 22 Apr 2014 09:19:08 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.106.195 with SMTP id gw3ls535975wib.27.canary; Tue, 22 Apr
- 2014 09:15:10 -0700 (PDT)
-X-Received: by 10.180.149.210 with SMTP id uc18mr1852145wib.5.1398183310082;
-        Tue, 22 Apr 2014 09:15:10 -0700 (PDT)
-Received: from mout.gmx.net (mout.gmx.net. [212.227.17.20])
-        by gmr-mx.google.com with ESMTPS id u49si515660eeo.1.2014.04.22.09.15.10
+Received: by 10.182.74.227 with SMTP id x3ls55989obv.75.gmail; Tue, 22 Apr
+ 2014 09:19:08 -0700 (PDT)
+X-Received: by 10.183.11.102 with SMTP id eh6mr3992459obd.37.1398183548276;
+        Tue, 22 Apr 2014 09:19:08 -0700 (PDT)
+Received: from mail-oa0-x230.google.com (mail-oa0-x230.google.com [2607:f8b0:4003:c02::230])
+        by gmr-mx.google.com with ESMTPS id h6si3199292iga.0.2014.04.22.09.19.08
         for <msysgit@googlegroups.com>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 22 Apr 2014 09:19:08 -0700 (PDT)
+Received-SPF: pass (google.com: domain of felipe.contreras@gmail.com designates 2607:f8b0:4003:c02::230 as permitted sender) client-ip=2607:f8b0:4003:c02::230;
+Received: by mail-oa0-x230.google.com with SMTP id m1so5894335oag.35
+        for <msysgit@googlegroups.com>; Tue, 22 Apr 2014 09:19:08 -0700 (PDT)
+X-Received: by 10.60.132.75 with SMTP id os11mr1991408oeb.70.1398183548114;
+        Tue, 22 Apr 2014 09:19:08 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id jr2sm10610537obb.8.2014.04.22.09.19.06
+        for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 22 Apr 2014 09:15:10 -0700 (PDT)
-Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.17.20 as permitted sender) client-ip=212.227.17.20;
-Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx003) with ESMTPSA (Nemesis) id 0MWk7n-1WRSEp2t2p-00XtlH;
- Tue, 22 Apr 2014 18:14:44 +0200
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <53569207a2683_3e5aed73082b@nysa.notmuch>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:P7ttKAIvKEShVQvmYOsNY/j9QXz/JptmFpVsiXCejdH09DkVAx/
- lPdNoa9Nh7kuo5WYC+E8SIQIzGNRiTwT8LO6KKzbO5exQBEk83LkBi86VKjpkFAX+ij2KjD
- JbQT6UGPi82puuWqZzq47F98LgSV1jCsCo1DZO6cdwQscGp4rOIH9hpZrckdv4z1/IltKSF
- OVaBD4gYIgfGLNYdMEplw==
-X-Original-Sender: johannes.schindelin@gmx.de
+        Tue, 22 Apr 2014 09:19:07 -0700 (PDT)
+In-Reply-To: <20140422133616.GA5079@seldon>
+X-Original-Sender: felipe.contreras@gmail.com
 X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.17.20 as
- permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
+ (google.com: domain of felipe.contreras@gmail.com designates
+ 2607:f8b0:4003:c02::230 as permitted sender) smtp.mail=felipe.contreras@gmail.com;
+       dkim=pass header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
 Precedence: list
 Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
 List-ID: <msysgit.googlegroups.com>
@@ -71,35 +78,43 @@ List-Archive: <http://groups.google.com/group/msysgit>
 Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246746>
 
-Hi Felipe,
-
-On Tue, 22 Apr 2014, Felipe Contreras wrote:
-
-> Johannes Schindelin wrote:
-> > On Mon, 21 Apr 2014, Felipe Contreras wrote:
-> > > Johannes Schindelin wrote:
-> > > > Now, clearly you have all the motivation that is needed to get 64-bit
-> > > > builds of Git for Windows going, and all the motivation required to make
-> > > > sure that the MSVC support of the msysGit project works.
-> > > 
-> > > s/msysGit/Git/
-> > 
-> > No. I meant the msysGit project; the project that maintains the current
-> > development environment for Git for Windows. Please do not try to
-> > reinterpret what I am saying.
+Marat Radchenko wrote:
+> On Mon, Apr 21, 2014 at 07:06:24PM -0500, Felipe Contreras wrote:
+> > I managed to fix all the errors, some apply to newer mingw, regardless of 32 or
+> > 64, others are specific to 64-bit. It's all hacky and I haven't checked if it
+> > runs, but at least it compiles (mostly).
 > 
-> I don't care what you are saying,
+> Do you plan to evolve it into something mergeable?
 
-That is quite obvious and did not need clarifying.
+I might, but that would requiere a lot of effort to investigate the changes in
+mingw, and I'm not sure if there's enough interest on this.
 
-Nevertheless, by stating that "substitute" command, you corrected me.
-Except that you did not, I intended to say something different, and your
-correction was quite misplaced.
+After fixing all the issues so that we can cross-compile, I would like to see a
+real effort to move away from shell and perl scripts, so that we not only could
+run the important commands, but properly test Git without bash, otherwise I
+feel Windows will always be a second class citizen.
 
-Ciao,
-Johannes
+> P.S. besides CC/LD, I also had to define AR and fix `windres` executable name in `config.mak.uname`.
+
+That's why we should have a CROSS_COMPILE variable which is standard in other projects.
+
+This is what the Linux kernel has:
+
+  AS		= $(CROSS_COMPILE)as
+  LD		= $(CROSS_COMPILE)ld
+  CC		= $(CROSS_COMPILE)gcc
+  AR		= $(CROSS_COMPILE)ar
+  NM		= $(CROSS_COMPILE)nm
+  STRIP		= $(CROSS_COMPILE)strip
+  OBJCOPY	= $(CROSS_COMPILE)objcopy
+  OBJDUMP	= $(CROSS_COMPILE)objdump
+
+I had patches for this, but I gave them up =/
+
+-- 
+Felipe Contreras
 
 -- 
 -- 
