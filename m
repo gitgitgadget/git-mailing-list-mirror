@@ -1,220 +1,107 @@
-From: Ronald Weiss <weiss.ronald@gmail.com>
-Subject: [PATCH v5 2/2] commit: add --ignore-submodules[=<when>] parameter
-Date: Tue, 22 Apr 2014 23:13:26 +0200
-Message-ID: <5356DB76.50602@gmail.com>
-References: <CABxC_L92v=cV=+e_DNa0L6f21LB0BRP5duai2h_heGJN_PRoUQ@mail.gmail.com>	<5335A78C.60401@web.de>	<CABxC_L-4=qcZiix05dL8GrDJXv=19fw4yB0qFzRRfw=G=_Gxbg@mail.gmail.com>	<53374E49.9000702@gmail.com>	<533874F9.3090802@web.de>	<5338AC36.6000109@gmail.com>	<5338B1B0.3050703@gmail.com>	<5339BAE4.8020306@web.de> <CABxC_L8_tQrANXji_Z0LfigxsAuzSDj3K9ndTGOTHh2ctHvc6A@mail.gmail.com> <5339F122.60801@gmail.com> <5339FBB4.1010101@gmail.com> <533B2036.3050506@web.de> <533B36AA.3090600@gmail.com> <533C5CBD.4050601@web.de> <533C6B57.3080901@gmail.com> <534180BC.308@web.de> <53431CB8.2050600@gmail.com> <53432EA5.5060102@gmail.com> <53444368.9050607@web.de> <5349BC2C.9030509@gmail.com> <5349C314.50500@gmail.com> <53511617.80506@web.de> <535596D1.6070709@gmail.com> <5356BF7C.1010200@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [ANNOUNCE] Git v2.0.0-rc0
+Date: Tue, 22 Apr 2014 14:26:34 -0700
+Message-ID: <xmqqy4yx2gz9.fsf@gitster.dls.corp.google.com>
+References: <xmqqk3ambf9k.fsf@gitster.dls.corp.google.com>
+	<475e137b5095e45c92a87a9969f58f0@74d39fa044aa309eaea14b9f57fe79c>
+	<20140422185829.GB15516@google.com>
+	<xmqq4n1l3yyf.fsf@gitster.dls.corp.google.com>
+	<20140422210002.GC15516@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Heiko Voigt <hvoigt@hvoigt.net>, Junio C Hamano <gitster@pobox.com>
-To: Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 22 23:14:00 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: "Kyle J. McKay" <mackyle@gmail.com>,
+	Johan Herland <johan@herland.net>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 22 23:27:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wci0t-0007fi-J3
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 23:14:00 +0200
+	id 1WciDR-0002E8-Nx
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 23:26:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757764AbaDVVNz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Apr 2014 17:13:55 -0400
-Received: from mail-ee0-f51.google.com ([74.125.83.51]:47454 "EHLO
-	mail-ee0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758327AbaDVVNS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Apr 2014 17:13:18 -0400
-Received: by mail-ee0-f51.google.com with SMTP id c13so124589eek.38
-        for <git@vger.kernel.org>; Tue, 22 Apr 2014 14:13:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=9aeUhBVb9S0ZTkXpIZKGgAekbJ85XuQvyk+1sklHXCQ=;
-        b=FaR8VtTlKceSiRwazELrLceG8Y6AES6xWqclnAdTJOeohyPPs5vdcH3Iv/ZL5Kvnqf
-         G77a3zV9TAYKfpN9RmRroglnLTnX3UqrogWGX+3Zc/t7BJwKseumVzII0NTYww+h8BwX
-         ckErpFQ0qDtSwj2snR1M+qUpeLxJ1QtonuUojXnKUISqDizKHUzRysj/wYx7Cphbbet/
-         fFwWMin1ZOtQm0wDJupNo46MU0e7GcHwq+hrj4R8VLGdFtKN13h9gLmyt/62NsyqXI2y
-         9orwBXAlYcYHpW7GTtqzs+2OVbU+xz4/Klt8eTzJpZp3Nwz9WYXQa0e7OaCR5OW90jv8
-         a7xw==
-X-Received: by 10.15.51.1 with SMTP id m1mr59120042eew.25.1398201196829;
-        Tue, 22 Apr 2014 14:13:16 -0700 (PDT)
-Received: from [10.0.1.226] (chello089173067059.chello.sk. [89.173.67.59])
-        by mx.google.com with ESMTPSA id q41sm106106eez.7.2014.04.22.14.13.15
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 22 Apr 2014 14:13:16 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
-In-Reply-To: <5356BF7C.1010200@web.de>
+	id S1758420AbaDVV0u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Apr 2014 17:26:50 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58597 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756950AbaDVV0i (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Apr 2014 17:26:38 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0067A7F223;
+	Tue, 22 Apr 2014 17:26:38 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=QSUjB5LcnXKX7Ai0RE1caCGLp9Y=; b=JNxCfi
+	5xsyNZYttXOw/KtaG90z3e+I86GLO5JhNTopA9Dd7FX5+IYWgY7dQafQDJc5ldWz
+	VqH51SIG06hAM/0prYP2cDiT8+EAr3ICE5aXNRtC8yOyAKDGwEl8kg2TkLJGOeuX
+	d7KiBAeumbO5SGFszC0qe2S0LN3gt56km/XgA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PCFmxcrTSNp12OJw1sHCgaRaZ/UGW+2A
+	nyj+XLhfED7jaVrJXLlsVAX2OP+EEVo74ey6AaeTIVv9FvYT0JOPo/N1rXo8RLOv
+	hTBKw7uzmWmd0XcAKWa3KDzTZpNZEl6Zexiw1ic/WqhHziQIPnvj61zuqaa3ULjd
+	WAd4N4mMbGg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D1FE67F221;
+	Tue, 22 Apr 2014 17:26:37 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 116A57F21D;
+	Tue, 22 Apr 2014 17:26:35 -0400 (EDT)
+In-Reply-To: <20140422210002.GC15516@google.com> (Jonathan Nieder's message of
+	"Tue, 22 Apr 2014 14:00:02 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: C888476C-CA64-11E3-80B4-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246788>
 
-Allow ignoring submodules (or not) by command line switch, like diff
-and status do.
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Git commit honors the 'ignore' setting from .gitmodules or .git/config,
-but didn't allow to override it from command line.
+> Junio C Hamano wrote:
+>> Jonathan Nieder <jrnieder@gmail.com> writes:
+>
+>>> Hm, perhaps we should introduce a 'no-prefix' option to work around
+>>> this.
+> [...]
+>>> That way, normal usage of --prefix would still be consistent with
+>>> other git commands that prefer the form with argument attached
+>>> (--prefix=foo, not --prefix foo; see gitcli(7)).
+>>>
+>>> Thoughts?
+>>
+>> I do not think that it is a good idea to use "--no-anything" for
+>> something that is not a boolean.
+>
+> Do you mean it is a bad idea to support or a bad idea to make use of
+> such support?
+>
+> I suggested --no- for consistency with current git commands that use
+> parseopt.  But on second thought, I agree that it be confusing for
+>
+> 	--prefix=foo --no-prefix
+>
+> to mean something different from no --prefix parameter at all.
+>
+> The documentation says
+>
+> 	--prefix=<prefix>
+>
+> 		...
+>
+> 		Before Git 2.0, the default prefix was "" (no prefix).
+> 		This meant that ...
+>
+> which suggests that I can use --prefix="" to mean no prefix.  Perhaps
+> it needs a note to suggest using '--prefix ""' instead?
 
-This patch depends on Jens Lehmann's patch "commit -m: commit staged
-submodules regardless of ignore config". Without it,
-"commit -m --ignore-submodules" would not work and tests introduced
-here would fail.
-
-Signed-off-by: Ronald Weiss <weiss.ronald@gmail.com>
----
-Changes against v4 of this patch:
-* fixed file mode of added test script (644 -> 755)
-* replaced test_might_fail with test_must_fail in test script
-
- Documentation/git-commit.txt        |  7 ++++
- builtin/commit.c                    |  8 +++-
- t/t7513-commit-ignore-submodules.sh | 78 +++++++++++++++++++++++++++++++++++++
- 3 files changed, 92 insertions(+), 1 deletion(-)
- create mode 100755 t/t7513-commit-ignore-submodules.sh
-
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index 0bbc8f5..de0e8fe 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -13,6 +13,7 @@ SYNOPSIS
- 	   [-F <file> | -m <msg>] [--reset-author] [--allow-empty]
- 	   [--allow-empty-message] [--no-verify] [-e] [--author=<author>]
- 	   [--date=<date>] [--cleanup=<mode>] [--[no-]status]
-+	   [--ignore-submodules[=<when>]]
- 	   [-i | -o] [-S[<key-id>]] [--] [<file>...]
- 
- DESCRIPTION
-@@ -277,6 +278,12 @@ The possible options are:
- The default can be changed using the status.showUntrackedFiles
- configuration variable documented in linkgit:git-config[1].
- 
-+--ignore-submodules[=<when>]::
-+	Can be used to override any settings of the 'submodule.*.ignore'
-+	option in linkgit:git-config[1] or linkgit:gitmodules[5].
-+	<when> can be either "none", "dirty, "untracked" or "all", which
-+	is the default.
-+
- -v::
- --verbose::
- 	Show unified diff between the HEAD commit and what
-diff --git a/builtin/commit.c b/builtin/commit.c
-index a148e28..8c4d05e 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -361,7 +361,7 @@ static char *prepare_index(int argc, const char **argv, const char *prefix,
- 	 */
- 	if (all || (also && pathspec.nr)) {
- 		fd = hold_locked_index(&index_lock, 1);
--		add_files_to_cache(also ? prefix : NULL, &pathspec, 0, NULL);
-+		add_files_to_cache(also ? prefix : NULL, &pathspec, 0, ignore_submodule_arg);
- 		refresh_cache_or_die(refresh_flags);
- 		update_main_cache_tree(WRITE_TREE_SILENT);
- 		if (write_cache(fd, active_cache, active_nr) ||
-@@ -1526,6 +1526,9 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL(0, "amend", &amend, N_("amend previous commit")),
- 		OPT_BOOL(0, "no-post-rewrite", &no_post_rewrite, N_("bypass post-rewrite hook")),
- 		{ OPTION_STRING, 'u', "untracked-files", &untracked_files_arg, N_("mode"), N_("show untracked files, optional modes: all, normal, no. (Default: all)"), PARSE_OPT_OPTARG, NULL, (intptr_t)"all" },
-+		{ OPTION_STRING, 0, "ignore-submodules", &ignore_submodule_arg, N_("when"),
-+		  N_("ignore changes to submodules, optional when: all, none. (Default: all)"),
-+		  PARSE_OPT_OPTARG, NULL, (intptr_t)"all" },
- 		/* end commit contents options */
- 
- 		OPT_HIDDEN_BOOL(0, "allow-empty", &allow_empty,
-@@ -1564,6 +1567,9 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 	argc = parse_and_validate_options(argc, argv, builtin_commit_options,
- 					  builtin_commit_usage,
- 					  prefix, current_head, &s);
-+
-+	s.ignore_submodule_arg = ignore_submodule_arg;
-+
- 	if (dry_run)
- 		return dry_run_commit(argc, argv, prefix, current_head, &s);
- 	index_file = prepare_index(argc, argv, prefix, current_head, 0);
-diff --git a/t/t7513-commit-ignore-submodules.sh b/t/t7513-commit-ignore-submodules.sh
-new file mode 100755
-index 0000000..52ab37d
---- /dev/null
-+++ b/t/t7513-commit-ignore-submodules.sh
-@@ -0,0 +1,78 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2014 Ronald Weiss
-+#
-+
-+test_description='Test of git commit --ignore-submodules'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'create submodule' '
-+	test_create_repo sm && (
-+		cd sm &&
-+		>foo &&
-+		git add foo &&
-+		git commit -m "Add foo"
-+	) &&
-+	git submodule add ./sm &&
-+	git commit -m "Add sm"
-+'
-+
-+update_sm () {
-+	(cd sm &&
-+		echo bar >> foo &&
-+		git add foo &&
-+		git commit -m "Updated foo"
-+	)
-+}
-+
-+test_expect_success 'commit -a --ignore-submodules=all ignores dirty submodule' '
-+	update_sm &&
-+	test_must_fail git commit -a --ignore-submodules=all -m "Update sm"
-+'
-+
-+test_expect_success 'commit -a --ignore-submodules=none overrides ignore=all setting' '
-+	update_sm &&
-+	git config submodule.sm.ignore all &&
-+	git commit -a --ignore-submodules=none -m "Update sm" &&
-+	git diff --exit-code --ignore-submodules=none &&
-+	git diff --cached --exit-code --ignore-submodules=none
-+'
-+
-+test_expect_success 'commit --ignore-submodules status of submodule with untracked content' '
-+	GIT_EDITOR=cat &&
-+	export GIT_EDITOR &&
-+	echo untracked > sm/untracked &&
-+
-+	test_must_fail git commit --ignore-submodules=none > output &&
-+	test_i18ngrep modified output &&
-+
-+	test_must_fail git commit --ignore-submodules=untracked > output &&
-+	test_must_fail test_i18ngrep modified output &&
-+
-+	test_must_fail git commit --ignore-submodules=dirty > output &&
-+	test_must_fail test_i18ngrep modified output &&
-+
-+	test_must_fail git commit --ignore-submodules=all > output &&
-+	test_must_fail test_i18ngrep modified output
-+'
-+
-+test_expect_success 'commit --ignore-submodules status of dirty submodule' '
-+	GIT_EDITOR=cat &&
-+	export GIT_EDITOR &&
-+	echo dirty >> sm/foo &&
-+
-+	test_must_fail git commit --ignore-submodules=none > output &&
-+	test_i18ngrep modified output &&
-+
-+	test_must_fail git commit --ignore-submodules=untracked > output &&
-+	test_i18ngrep modified output &&
-+
-+	test_must_fail git commit --ignore-submodules=dirty > output &&
-+	test_must_fail test_i18ngrep modified output &&
-+
-+	test_must_fail git commit --ignore-submodules=all > output &&
-+	test_must_fail test_i18ngrep modified output
-+'
-+
-+test_done
--- 
-1.9.1.3.g7790cde.dirty 
+Is there another --option that takes an arbitrary user string that
+could be an empty string (or will there be one in the future)?  If
+that is the case, a better alternative might be to add an comment to
+say that those with older Getopt::Long may have to use --option ""
+instead of the --option="" form for any option whose value happens
+to be an empty string to work around the command parser bug.
