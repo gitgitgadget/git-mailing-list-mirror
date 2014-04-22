@@ -1,132 +1,133 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
 Subject: Re: What is missing from Git v2.0
-Date: Tue, 22 Apr 2014 15:03:14 -0700
-Message-ID: <xmqqmwfd2fa5.fsf@gitster.dls.corp.google.com>
+Date: Tue, 22 Apr 2014 16:59:11 -0500
+Message-ID: <5356e62feb9f3_6cbadd72f0f1@nysa.notmuch>
 References: <CAMP44s17h4Tjg+VaMF0atLep8t-0HVp4UDr1WE2wYnEuZ07eaQ@mail.gmail.com>
-	<53557071.5040500@gmail.com>
-	<xmqqtx9m8obr.fsf@gitster.dls.corp.google.com>
-	<CAHGBnuMty-86jfUto=L3muhgEVwVE70FQQY2FJ1bn7AUjfEtLQ@mail.gmail.com>
-	<xmqqk3ah5i55.fsf@gitster.dls.corp.google.com>
+ <53557071.5040500@gmail.com>
+ <xmqqtx9m8obr.fsf@gitster.dls.corp.google.com>
+ <CAHGBnuMty-86jfUto=L3muhgEVwVE70FQQY2FJ1bn7AUjfEtLQ@mail.gmail.com>
+ <xmqqk3ah5i55.fsf@gitster.dls.corp.google.com>
+ <5356c1a61f6d8_463e11ef310a5@nysa.notmuch>
+ <20140422213039.GB21043@thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Theodore Ts'o <tytso@mit.edu>
-To: Sebastian Schuberth <sschuberth@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 23 00:03:35 2014
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Sebastian Schuberth <sschuberth@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Theodore Ts'o <tytso@mit.edu>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 23 00:09:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wcimr-0000yO-Uk
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 00:03:34 +0200
+	id 1Wcisn-0006O9-Dr
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 00:09:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756944AbaDVWDW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Apr 2014 18:03:22 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63044 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754245AbaDVWDT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Apr 2014 18:03:19 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4F5647F2E9;
-	Tue, 22 Apr 2014 18:03:18 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=M31ufwTOjcfcvPxjUQPk6+NYaaU=; b=ZpTpvh
-	rjD9EaicSH/EbXc2uL5zeLAeBVeTLnKmwGTXk74gTQ2PcIMYkINLzQ5NN7PDgd6e
-	jFuYi92valXJy3gDAFvVU9NXgU+xLLg3nvN9To6AfnbM0SH92M8HUnARzx7crgTO
-	nR+8Xme/b3M8C3gjaovcXbF6AkLaNOr8au/k8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=dV8V0wqE2cgK0crQvAXL0JuxnfrWybW3
-	U8h/7u1Qs/PtZ7yKKLoghUhjkdlNgxL6J36x5agNzXmkHT6CbvfoUoUkb6JCn6z1
-	5EDNkg3pQkjY5RVC0kx93uI/KxOKjKUUxK4XWEBrEvsGdXgQLbJConvtzoiyKV4k
-	tNzlCzjJbdU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 379EF7F2E8;
-	Tue, 22 Apr 2014 18:03:18 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 813937F2E4;
-	Tue, 22 Apr 2014 18:03:15 -0400 (EDT)
-In-Reply-To: <xmqqk3ah5i55.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Tue, 22 Apr 2014 11:33:10 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: E78404BC-CA69-11E3-97A0-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754033AbaDVWJg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Apr 2014 18:09:36 -0400
+Received: from mail-ob0-f175.google.com ([209.85.214.175]:62375 "EHLO
+	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751323AbaDVWJf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Apr 2014 18:09:35 -0400
+Received: by mail-ob0-f175.google.com with SMTP id wp4so123361obc.34
+        for <git@vger.kernel.org>; Tue, 22 Apr 2014 15:09:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=JH05PW/SNPExL8ul1F+374KRf3KT5vo4cyG3jBwxE1M=;
+        b=TjYIozabToydAG8aObuOsgWvv+yob+37kAPlzbgFXjOzoWuGoHozecMfStMmUfwHQg
+         fZwFkfLIqMmXXyayBSiOYo/m+HgjwyZ3ComFOB0Jd709lZTFyrlrspJCjmatj6Lmdguw
+         Ot8SWpvfdyWnjtJ/+XtjNnCtkeWcV/RxOUMALc72e1QQqtFOVGp1m1IKZDEKtt1S3vzp
+         xpD3I/Rx39DoUufXNKWDRjv/VKn076ITvMPFlUnIQeNfYyMLmQUMIepoXnpmvRImP9e6
+         t7d/DnzQz1sbWnYynoVutwCw7NKmlqI4jhu9iSzNS2IPO+icsyQp64oZmWTr9XdG4x9I
+         bNsg==
+X-Received: by 10.182.129.134 with SMTP id nw6mr34229798obb.34.1398204575331;
+        Tue, 22 Apr 2014 15:09:35 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id cq1sm182922455oeb.4.2014.04.22.15.09.33
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 22 Apr 2014 15:09:34 -0700 (PDT)
+In-Reply-To: <20140422213039.GB21043@thunk.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246791>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246792>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Theodore Ts'o wrote:
+> On Tue, Apr 22, 2014 at 02:23:18PM -0500, Felipe Contreras wrote:
+> > > I am not fundamentally opposed.  I just do not think it would add
+> > > much value to new people at this point, and it will actively hurt
+> > > if we shoved barely cooked one in 2.0.
+> > 
+> > You are probably biased in that you've used Git far much more than
+> > the average user has (or future new users).
+> 
+> I think Junio has a really strong point.
 
-> I am not fundamentally opposed.  I just do not think it would add
-> much value to new people at this point, and it will actively hurt
-> if we shoved barely cooked one in 2.0.
->
-> A few thinking points that are necessary to be worked out, even
-> before we start imagining a plan to introduce them, off the top of
-> my head, are these:
->
->  * Should we add many random aliases, or should we limit ourselves
->    only to a narrow set that everybody can agree on?
->
->  * What is the additional cognitive load do we feel comfortable
->    burdening with the new users?
->
->  * What is the exact mechanism to give these built-in aliases?
->
-> Imagine that somebody says "[alias] ci = commit" and a handful of
-> vocal people on this list agree that it is a good idea.  Many random
-> websites start mentioning "git ci -a" in their beginner examples.
->
-> Users are led to think "ci" is a command just like "commit" and does
-> the same thing.... and need to learn that only the
-> first kind and not the second kind cannot be used to define their
-> own alias (and the users need to learn "commit" at that time as
-> well).
+What is that point?
 
-A bit further on this point, looking into the future.
+> If the goal is to make life easier for new users, allowing them to save a few
+> keystrokes is probably not the most significant thing we can do.
 
-It might help if we added some "introduction" phase to the first
-invocation of "git init", "git clone", etc. that is interactively
-run on a machine where there is no $HOME/.gitconfig detected, and
-help the user populate it with a few selected and uncontroversial
-ones.  Such a session might go like this:
+No, but it's *one* thing we can definetly do, and since we are not doing
+anything else, we might as well do this one thing.
 
-	$ git init
-        ... We do not see $HOME/.gitconfig; using Git for the first time?
-        ... Let us ask a few questions to make your Git life more pleasant.
-        >> What name do you want to appear on your commits?
-        Sebastian Schuberth
-        >> What email address do you want to appear on your commits?
-	sschuberth@gmail.com
-        >> You record your commits as
-        ... "Sebastian Schuberth   <sschuberth@gmail.com>".
-        >> OK?
-        Y
-        >> Do you want us to add a few sample aliases to your configuration file?
-        Y
-        ... Done.  You can further tweak $HOME/.gitconfig to suit
-        ... Git to your taste.
+> And we have to balance this with the additional cognitive load in remembering
+> how a particular two character alias maps to the "real" command.
 
-And it would end up with something like this:
+What cognitive load? You don't *need* to remember the default aliases; you
+don't need to use them at all.
 
-	$ cat $HOME/.gitconfig
-        [user]
-		name = <<interactively ask and record the result>>
-                email = <<ditto>>
-	[alias]
-        	co = checkout
-		lg = log --oneline
+> This is especially true for commands which might not be used as often --
+> e.g., "rebase", and for commands where the meaning of "git commit" without
+> any argument is qualitatively different from what "ci" (for checkin) means in
+> most other source management systems.
 
-which can serve as an example the user can then tweak, without
-giving any false impression that "co" is any more special than
-whatever the user adds as a custom alias.
+ci means commit in Mercurial.
 
-But the need to make the set minimum and the need to carefully think
-things through are still there (Ted made a very good point about "rb",
-which I agree with).
+> So I do think it's worth thinking about this very carefully.  For
+> certain, I would **not** recommend using shortcuts in example command
+> sequences.  If the user reads "git rebase" or "git cherry-pick" it
+> means a lot more than if they see a series of apparent chicken
+> scratches filled with things like "git rb", "git pi", "git st", etc.
+
+Certainly, but that is orthogonal.
+
+> In fact, to be fair, you may be getting biased because you're used to
+> using the two character shortcuts, so for you, of *course* "rb" and
+> "pi" and "ci" make a lot of sense.
+
+I can't be biased to those because I don't use them, mine are one character
+shortcuts.
+
+And if that hypothesis was correct, why does Mercurial, Bazaar, Subversion,
+CVS, and pretty much everything uses aliases? And why does pretty much every
+.gitconfig has similar aliases? That would imply that the whole world is
+biased.
+
+> But for someone who is starting from scratch, I really question how much it
+> helps, and how much it might hurt, to see the two character shortcuts or even
+> to have to remember the two character shortcuts.
+
+Here you are talking from your own bias.
+
+It would help when the user starts to think "Geez, I seem to be typing
+`git checkout` an awful lot, I wonder if there's a shortcut", which if the
+.gitconfigs out there are any indication, it happens all the time.
+
+> And for a command like "rebase" where the user can very easily shoot
+> themselves in the foot to begin with, I'd actually suggest that it's a _good_
+> thing that they have to type it out in full.
+
+And now you contradict yourself; you actually want to make life harder for new
+users, on purpose.
+
+-- 
+Felipe Contreras
