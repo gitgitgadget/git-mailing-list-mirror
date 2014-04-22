@@ -1,25 +1,26 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Re: Re: [ANNOUNCE] WinGit - native x86/x64 Git for Windows
-Date: Tue, 22 Apr 2014 15:14:23 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.1404221512130.14982@s15462909.onlinehome-server.info>
-References: <rfujmbew27f1gaa6dbk706li.1397911737867@email.android.com> <20140419184210.GB3617@book-mint> <alpine.DEB.1.00.1404210003540.14982@s15462909.onlinehome-server.info> <53556579.3050709@gmail.com> <alpine.DEB.1.00.1404212053420.14982@s15462909.onlinehome-server.info>
- <535569e92cbcc_32c48493101f@nysa.notmuch>
+Subject: Re: [NOT_A_PATCH] A naive attempt to cross-build
+ Linux->mingw64 Git
+Date: Tue, 22 Apr 2014 15:36:05 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.1404221530020.14982@s15462909.onlinehome-server.info>
+References: <535569e92cbcc_32c48493101f@nysa.notmuch> <1398118479-7731-1-git-send-email-marat@slonopotamus.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Cc: Sebastian Schuberth <sschuberth@gmail.com>, 
-    Heiko Voigt <hvoigt@hvoigt.net>, Marat Radchenko <marat@slonopotamus.org>, 
-    git@vger.kernel.org, msysGit Mailinglist <msysgit@googlegroups.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: msysgit+bncBCZPH74Q5YNRBMOW3GNAKGQEHKGCF7Y@googlegroups.com Tue Apr 22 15:14:31 2014
-Return-path: <msysgit+bncBCZPH74Q5YNRBMOW3GNAKGQEHKGCF7Y@googlegroups.com>
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, 
+    Sebastian Schuberth <sschuberth@gmail.com>, 
+    Heiko Voigt <hvoigt@hvoigt.net>, git@vger.kernel.org, 
+    msysGit Mailinglist <msysgit@googlegroups.com>
+To: Marat Radchenko <marat@slonopotamus.org>
+X-From: msysgit+bncBCZPH74Q5YNRBUHA3GNAKGQEQ6TKYCQ@googlegroups.com Tue Apr 22 15:36:17 2014
+Return-path: <msysgit+bncBCZPH74Q5YNRBUHA3GNAKGQEQ6TKYCQ@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-fa0-f63.google.com ([209.85.161.63])
+Received: from mail-we0-f187.google.com ([74.125.82.187])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCZPH74Q5YNRBMOW3GNAKGQEHKGCF7Y@googlegroups.com>)
-	id 1WcaWo-0004DW-BD
-	for gcvm-msysgit@m.gmane.org; Tue, 22 Apr 2014 15:14:26 +0200
-Received: by mail-fa0-f63.google.com with SMTP id p1sf423108fad.18
-        for <gcvm-msysgit@m.gmane.org>; Tue, 22 Apr 2014 06:14:26 -0700 (PDT)
+	(envelope-from <msysgit+bncBCZPH74Q5YNRBUHA3GNAKGQEQ6TKYCQ@googlegroups.com>)
+	id 1Wcarw-0004m8-Sm
+	for gcvm-msysgit@m.gmane.org; Tue, 22 Apr 2014 15:36:16 +0200
+Received: by mail-we0-f187.google.com with SMTP id x48sf431001wes.4
+        for <gcvm-msysgit@m.gmane.org>; Tue, 22 Apr 2014 06:36:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
         h=date:from:to:cc:subject:in-reply-to:message-id:references
@@ -27,39 +28,39 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
          :x-original-authentication-results:precedence:mailing-list:list-id
          :list-post:list-help:list-archive:sender:list-subscribe
          :list-unsubscribe:content-type;
-        bh=hLn+Lg+sfDUdbOY5n9Mltq45qg31dARXWmcy9XAxQFs=;
-        b=kjwbmlGbUqZupiQMAFsJIkUQbEwPfSS39e33dQBgDNwcx9IEe0T/60+ypFKSUuhMLP
-         P1JACPrFCuXaYLxW0GmvyO1loK4F07cyTjIzoXm5Vu01la2InZxlajXrcQ3xW3/5LvFC
-         qp7VDnCWObX/q0XSj7rJFV5tumh2nWn6Wl4HpKYa1m5FUfhSpbeapU7Iv6ZFXWwl5byv
-         YKbokVX5iBYL7Q7hQNn/JE7iqb9MAATVkRUdhm2Xf3DtaYSZsnSITUeN3q3oCfbjoLKO
-         6PEVeO1kkR/fBigXEm1eRIxoyLEbL8rXVklpxBg5uEkbkQhZwgE/y6fwpjar8DQCAuZA
-         bDuw==
-X-Received: by 10.180.189.133 with SMTP id gi5mr108795wic.5.1398172466005;
-        Tue, 22 Apr 2014 06:14:26 -0700 (PDT)
+        bh=VbDjTPqn8Uk44K+N/43EGlPhbWz6cEg8kmjp8wW3fQU=;
+        b=je3HY1lvzQPYuOCZHpIcqET/ruAWScuS8/18okTsrZ3F0klnrxsGhOikTVwxGX+bDB
+         rRYQvnYwPXpNxyOi+xYdySjz1nlyG3JvsnefQYwPUvwk+VmAkW52pZ0aGLiNiv27LW4J
+         vruh0Sa9I/zomF6C/Ex1jpPGaZqagyeZPt/idy7G3iEDCsFON8SZTLbBwfT+Zmz/4o1x
+         uw0+rXqwoy2D8JDjjKkquj/gtaefJbT2sGlQ6+I0oMyV95kHfYrG4KS+YBXRDkTE6HXZ
+         QRWZs/DEahsOmWgk5veZTmwYTqczBhNTapByJIz1Z4REYNr7i4adpyqS5RR4jqOSlGSB
+         Sfyw==
+X-Received: by 10.180.36.143 with SMTP id q15mr62556wij.2.1398173776445;
+        Tue, 22 Apr 2014 06:36:16 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.92.98 with SMTP id cl2ls518211wib.53.canary; Tue, 22 Apr
- 2014 06:14:25 -0700 (PDT)
-X-Received: by 10.180.160.231 with SMTP id xn7mr1727222wib.1.1398172465115;
-        Tue, 22 Apr 2014 06:14:25 -0700 (PDT)
-Received: from mout.gmx.net (mout.gmx.net. [212.227.17.22])
-        by gmr-mx.google.com with ESMTPS id u49si325820eeo.1.2014.04.22.06.14.25
+Received: by 10.180.207.83 with SMTP id lu19ls67797wic.13.gmail; Tue, 22 Apr
+ 2014 06:36:15 -0700 (PDT)
+X-Received: by 10.14.219.194 with SMTP id m42mr30980eep.7.1398173775725;
+        Tue, 22 Apr 2014 06:36:15 -0700 (PDT)
+Received: from mout.gmx.net (mout.gmx.net. [212.227.15.18])
+        by gmr-mx.google.com with ESMTPS id m49si350436eeu.0.2014.04.22.06.36.15
         for <msysgit@googlegroups.com>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA bits=256/256);
-        Tue, 22 Apr 2014 06:14:25 -0700 (PDT)
-Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.17.22 as permitted sender) client-ip=212.227.17.22;
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 22 Apr 2014 06:36:15 -0700 (PDT)
+Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.15.18 as permitted sender) client-ip=212.227.15.18;
 Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx001) with ESMTPSA (Nemesis) id 0LyEJp-1WxojF0aE1-015YIq;
- Tue, 22 Apr 2014 15:14:24 +0200
+ mail.gmx.com (mrgmx101) with ESMTPSA (Nemesis) id 0MH4Os-1WgOV23khe-00Dl5p;
+ Tue, 22 Apr 2014 15:36:06 +0200
 X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <535569e92cbcc_32c48493101f@nysa.notmuch>
+In-Reply-To: <1398118479-7731-1-git-send-email-marat@slonopotamus.org>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:tZz+bK1bOXrr7HK0MfpA71laqkweKUehrVhsmejZmS3+hYX2lYm
- +oKbNi+dbtLnQ0swkRqYxOevNqsk4amLB7Hoi9e8u+b8JeBZTLiSE3xuprwNh+NOBZDQxhU
- Fh5V+Ee/yThdtVYlDXPiHabMJyKudSJO5N9qanzc0VzQXStJEmITxVeXAJSwJXLkvCOU/ZD
- jbiLlTDQ7Ha7tQMqAwezQ==
+X-Provags-ID: V03:K0:L7ZzFcNzOkSfbXta035KGBTb+S2zR7a2FTfPAPVK88Zj0iciU8i
+ ipfk4SKoLYTXwV1qKPffWfy4wwv9v/if+PJlhtsztR+zTiy+YfIud3k/sUaQumAXrcplE9W
+ 1ESEKvMhj1wpOHP0PdGRzemYvI5KdNu7HJrYY+GAziHXKtQJXg212Xr/pn+It3p2l7UL2UY
+ FJ0FocQ4zXdmdC3Oqt/GQ==
 X-Original-Sender: johannes.schindelin@gmx.de
 X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.17.22 as
+ (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.15.18 as
  permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
 Precedence: list
 Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
@@ -71,33 +72,31 @@ List-Archive: <http://groups.google.com/group/msysgit>
 Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246736>
 
-Hi,
+Hi Marat,
 
-On Mon, 21 Apr 2014, Felipe Contreras wrote:
+On Tue, 22 Apr 2014, Marat Radchenko wrote:
 
-> Johannes Schindelin wrote:
-> > Now, clearly you have all the motivation that is needed to get 64-bit
-> > builds of Git for Windows going, and all the motivation required to make
-> > sure that the MSVC support of the msysGit project works.
-> 
-> s/msysGit/Git/
+> Johannes says building mingw64 Git is dirt-easy.
 
-No. I meant the msysGit project; the project that maintains the current
-development environment for Git for Windows. Please do not try to
-reinterpret what I am saying.
+Marat, please let's stop misquoting me, okay?
 
-> Personally I don't see why ideally I shouldn't be able to build upstream
-> Git for Windows with mingw without leaving my Linux system.
+What I said was more along the lines that there had been some start of a
+work on getting things to compile for 64-bit Windows, but that the test
+suite did not pass.
 
-Maybe because you could not even test it properly, let alone run the test
-suite? And maybe because according to the famous "scratch your own itch"
-credo, it is actually the duty of Windows users -- i.e. users who do not
-even have your Linux system -- to fix the bugs that would never be
-encountered anywhere but Windows?
+Even cutting out the part about the test suite from quoting me leaves out
+the main point of what I said.
 
-Hth,
+And for the record: I just had a look; the beginnings of W64 support are
+in https://github.com/msysgit/git/compare/7f37564...work/w64.
+
+And again for the record: at least from my side, there is more than just
+willingness to cooperate. We'd just need to start a conversation in the
+second person (as opposed to the third person).
+
+Ciao,
 Johannes
 
 -- 
