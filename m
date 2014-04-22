@@ -1,103 +1,101 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: What is missing from Git v2.0
-Date: Wed, 23 Apr 2014 00:24:32 +0200
-Message-ID: <87y4yxc89r.fsf@fencepost.gnu.org>
-References: <CAMP44s17h4Tjg+VaMF0atLep8t-0HVp4UDr1WE2wYnEuZ07eaQ@mail.gmail.com>
-	<53557071.5040500@gmail.com>
-	<xmqqtx9m8obr.fsf@gitster.dls.corp.google.com>
-	<CAHGBnuMty-86jfUto=L3muhgEVwVE70FQQY2FJ1bn7AUjfEtLQ@mail.gmail.com>
-	<xmqqk3ah5i55.fsf@gitster.dls.corp.google.com>
-	<5356c1a61f6d8_463e11ef310a5@nysa.notmuch>
-	<20140422213039.GB21043@thunk.org>
-	<5356e62feb9f3_6cbadd72f0f1@nysa.notmuch>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [ANNOUNCE] Git v2.0.0-rc0
+Date: Tue, 22 Apr 2014 22:25:19 +0000
+Message-ID: <20140422222519.GC144079@vauxhall.crustytoothpaste.net>
+References: <xmqqk3ambf9k.fsf@gitster.dls.corp.google.com>
+ <475e137b5095e45c92a87a9969f58f0@74d39fa044aa309eaea14b9f57fe79c>
+ <20140422185829.GB15516@google.com>
+ <xmqq4n1l3yyf.fsf@gitster.dls.corp.google.com>
+ <20140422210002.GC15516@google.com>
+ <xmqqy4yx2gz9.fsf@gitster.dls.corp.google.com>
+ <20140422221148.GD15516@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Theodore Ts'o <tytso@mit.edu>, Junio C Hamano <gitster@pobox.com>,
-	Sebastian Schuberth <sschuberth@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 23 00:25:07 2014
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="UPT3ojh+0CqEDtpF"
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"Kyle J. McKay" <mackyle@gmail.com>,
+	Johan Herland <johan@herland.net>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 23 00:25:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wcj7i-0001vO-Be
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 00:25:06 +0200
+	id 1Wcj87-0002HE-Pm
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 00:25:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757215AbaDVWY7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Apr 2014 18:24:59 -0400
-Received: from fencepost.gnu.org ([208.118.235.10]:51588 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751402AbaDVWY6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Apr 2014 18:24:58 -0400
-Received: from localhost ([127.0.0.1]:50627 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1Wcj7Z-0004Ai-Da; Tue, 22 Apr 2014 18:24:57 -0400
-Received: by lola (Postfix, from userid 1000)
-	id A4535E0524; Wed, 23 Apr 2014 00:24:32 +0200 (CEST)
-In-Reply-To: <5356e62feb9f3_6cbadd72f0f1@nysa.notmuch> (Felipe Contreras's
-	message of "Tue, 22 Apr 2014 16:59:11 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
+	id S1756484AbaDVWZ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Apr 2014 18:25:26 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:47254 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752435AbaDVWZY (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 Apr 2014 18:25:24 -0400
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:39ef:2a55:6e19:355e])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id DBDD428087;
+	Tue, 22 Apr 2014 22:25:23 +0000 (UTC)
+Mail-Followup-To: Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"Kyle J. McKay" <mackyle@gmail.com>,
+	Johan Herland <johan@herland.net>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20140422221148.GD15516@google.com>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.14-rc7-amd64)
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Spam-Score: -0.272 () BAYES_00,RDNS_NONE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246797>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-> Theodore Ts'o wrote:
->
->> This is especially true for commands which might not be used as often
->> -- e.g., "rebase", and for commands where the meaning of "git commit"
->> without any argument is qualitatively different from what "ci" (for
->> checkin) means in most other source management systems.
->
-> ci means commit in Mercurial.
+--UPT3ojh+0CqEDtpF
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Does it mean "commit the staging area"?
+On Tue, Apr 22, 2014 at 03:11:48PM -0700, Jonathan Nieder wrote:
+> Another possibility would be to require Perl 5.8.9 or newer.  It was
+> released in 2008.
 
->> In fact, to be fair, you may be getting biased because you're used to
->> using the two character shortcuts, so for you, of *course* "rb" and
->> "pi" and "ci" make a lot of sense.
->
-> I can't be biased to those because I don't use them, mine are one
-> character shortcuts.
+RHEL 5 and CentOS 5 are still shipping with 5.8.8.  They are still
+security-supported until 2017, and believe it or not people still
+develop on them.  I am personally fine with this change, though.
 
-Which you created yourself, on your own responsibility.
+What we could do instead is simply require a newer version of
+Getopt::Long, which would let people continue using their ancient OSes
+and install a newer version from CPAN if necessary.  It's also the
+proper way to specify the dependency.
 
-> And if that hypothesis was correct, why does Mercurial, Bazaar,
-> Subversion, CVS, and pretty much everything uses aliases? And why does
-> pretty much every .gitconfig has similar aliases? That would imply
-> that the whole world is biased.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
 
-Most .profile files define aliases as well.  Doing this on the user's
-initiative is harmless since it will not have its usage leak into
-scripts intended for use by others.
+--UPT3ojh+0CqEDtpF
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
-> It would help when the user starts to think "Geez, I seem to be typing
-> `git checkout` an awful lot, I wonder if there's a shortcut", which if
-> the .gitconfigs out there are any indication, it happens all the time.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Actually, it happens very rarely if you are talking about _real_
-gitconfigs deployed by projects as compared to _sample_ gitconfigs
-demonstrating Git features for _personal_ rather than project-wide use.
+iQIcBAEBCgAGBQJTVuxPAAoJEL9TXYEfUvaL6AwP/3dw4CoqEUPvNRyBXseykTsG
+Bo1NWxDan/DAUl4yMXD1Sr5V7Kylgt6yMXIFuOhTZY8vhLYMwkqegDgdjwY9QFAH
+r9TYRZBygkJqVd/ff/lL3OqmmJwpEXYZUhcEAymGpUt2Yr2rbBQK0d32Q1IHOfxS
+734qKZxEMyEn5uUSxdA6ZHzfWKmU8+GlaX+S8hEZDoDjPRsf8TQU4ncwT+VS4qKf
+bP0/alRjlwFT2vAVL0IMUhJqvrbu9l4/xaOH/mcYjJqozbEAW8k3GGUSY0GoRv3d
+H+koHkqKxvIjfasDUMj/2D5Ji/K3JdpaQeuTebGj2bKmF4zaRI2HYKB1R6bcARhh
+/sVcPr/HjCVq/dakVj72dMogDklG1S9lsf9UBztiPWi2E1vfWa2XSlRknrppxVmq
+sDwMNJZzzTf8ERKds7mCPMvHvNx9uEOVZb2LYoj/E4VAF2BGQBFd4NFeeE3ZNLya
+n7nHzQ4u840IPYS0hna78O75sgTIYXPU+RziqPHNWJeVKg5eL1hMUnCMnDoaeGhL
+EuxxM84Yt7UoOFuTSZjrYfEjoJogOtXYZzAiTLu0WQtu9z2tUYa/9yrR6Lbxn2JD
+JOVY5MmnnLvFsUPfOpEHfz5id3IG9fp96LpboqTqYjZKfzkelXIMBg+Q1206CW82
+hSGoM8WWy6mUXxpO6nYn
+=0tNB
+-----END PGP SIGNATURE-----
 
->> And for a command like "rebase" where the user can very easily shoot
->> themselves in the foot to begin with, I'd actually suggest that it's
->> a _good_ thing that they have to type it out in full.
->
-> And now you contradict yourself; you actually want to make life harder
-> for new users, on purpose.
-
-Life's hardness is not proportional to the number of typed characters or
-APL would be the easiest programming language narrowly followed by Perl.
-Life does not become easier by lowering input redundancy until it
-becomes hard to tell apart from line noise.  Keyboards are highly
-efficient input devices, or we would not be conversing in whole
-sentences in technical mailing lists but rather in telegraphy style.
-
--- 
-David Kastrup
+--UPT3ojh+0CqEDtpF--
