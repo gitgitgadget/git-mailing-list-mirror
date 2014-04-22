@@ -1,7 +1,7 @@
 From: Ilya Bobyr <ilya.bobyr@gmail.com>
-Subject: [PATCH 2/3] test-lib: tests skipped by GIT_SKIP_TESTS say so
-Date: Tue, 22 Apr 2014 01:19:26 -0700
-Message-ID: <1398154767-1276-3-git-send-email-ilya.bobyr@gmail.com>
+Subject: [PATCH 1/3] test-lib: Document short options in t/README
+Date: Tue, 22 Apr 2014 01:19:25 -0700
+Message-ID: <1398154767-1276-2-git-send-email-ilya.bobyr@gmail.com>
 References: <1398154767-1276-1-git-send-email-ilya.bobyr@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Thomas Rast <trast@inf.ethz.ch>,
@@ -15,164 +15,88 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WcVwH-00024U-4Z
+	id 1WcVwH-00024U-Kw
 	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 10:20:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754988AbaDVIUR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Apr 2014 04:20:17 -0400
-Received: from mail-pa0-f44.google.com ([209.85.220.44]:47690 "EHLO
-	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753996AbaDVIUL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Apr 2014 04:20:11 -0400
-Received: by mail-pa0-f44.google.com with SMTP id bj1so4688404pad.31
-        for <git@vger.kernel.org>; Tue, 22 Apr 2014 01:20:10 -0700 (PDT)
+	id S1754997AbaDVIUU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Apr 2014 04:20:20 -0400
+Received: from mail-pb0-f47.google.com ([209.85.160.47]:34392 "EHLO
+	mail-pb0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754902AbaDVIUH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Apr 2014 04:20:07 -0400
+Received: by mail-pb0-f47.google.com with SMTP id up15so4687330pbc.34
+        for <git@vger.kernel.org>; Tue, 22 Apr 2014 01:20:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=RU2Tb5DiKKCZKWhYlJJlxrgyRi/oQKRT0SZZ9IwCabY=;
-        b=YAjwYG61p072IYmmDX20uZ3wyL0J/0RB+3IgblF1LBeS7TBpMxaAV68MB0Oavnh68K
-         tJODPZyEkwo+khEfsAMevVJT1Ve1h+l0oMMmKASXSBNPuebaFIHt06Oj6PuFepsfO9Pm
-         vpdrN0o367EOwhSACxyaMCRzYtp+5OxKeH2KzLdySnBaBzxU1Zc8dB8Srez1tpgzhohc
-         9mlDVRHVQRTwVHCuiQG1czlRcwW1kkXgL2iFIMuWSiROFEr76N+WJlPxB7uBzbuTX4is
-         tnnepj5ly5fI4h4gJ+Aseb/1zLcHdVv8dgnci/bw8y0oqNqTeaiUIUIVlroLADbx5VjY
-         Le0Q==
-X-Received: by 10.66.164.70 with SMTP id yo6mr42844865pab.85.1398154810817;
-        Tue, 22 Apr 2014 01:20:10 -0700 (PDT)
+        bh=86UztVn8ooIQBBnKJnpoWdlJBvDGmqIJok2gAY3R8kM=;
+        b=BO7WdpX1SVgQWlx8jAIyUPOVe27FL1MGdeZcbxg4TsrUwnldclV0swhttqW8XxwCsH
+         mPXsH6g/2ozDTWnvUI7uQpMYMS2zR5hwhjxI60NeNPvkehe7kA02vHIdQJakpc4VExNb
+         m2zEVYbCYd/RvHuhfXk7+Foe0GFNDBRQh+6fB2boQY3ki0IWTyhVRRqDle7DBZiHSf5u
+         JWer0nxxHua5dljBbI1LQL3NOlo7i6lYHgZZxxegnsObg+mpWk6mS1+wuTLCnyjBnDkq
+         7O3hTHXMuxsky6vor8lX1WGODqrlj3zOWxZ5Kv+QSmo6k52rWlPSDLtvqKx0sKs6wdS2
+         eg3Q==
+X-Received: by 10.69.0.198 with SMTP id ba6mr43286056pbd.16.1398154807346;
+        Tue, 22 Apr 2014 01:20:07 -0700 (PDT)
 Received: from localhost.localdomain (c-50-136-172-14.hsd1.ca.comcast.net. [50.136.172.14])
-        by mx.google.com with ESMTPSA id om6sm83107950pbc.43.2014.04.22.01.20.09
+        by mx.google.com with ESMTPSA id om6sm83107950pbc.43.2014.04.22.01.20.06
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 22 Apr 2014 01:20:10 -0700 (PDT)
+        Tue, 22 Apr 2014 01:20:06 -0700 (PDT)
 X-Mailer: git-send-email 1.7.9
 In-Reply-To: <1398154767-1276-1-git-send-email-ilya.bobyr@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246715>
 
-We used to show "(missing )" next to tests skipped because they are
-specified in GIT_SKIP_TESTS.  Use "(GIT_SKIP_TESTS)" instead.
-
-Plus tests that check basic GIT_SKIP_TESTS functions.
+Most arguments that could be provided to a test have short forms.
+Unless documented, the only way to learn them is to read the code.
 
 Signed-off-by: Ilya Bobyr <ilya.bobyr@gmail.com>
 ---
- t/t0000-basic.sh |   63 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
- t/test-lib.sh    |   13 ++++++----
- 2 files changed, 71 insertions(+), 5 deletions(-)
+ t/README |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-index a2bb63c..ae8874e 100755
---- a/t/t0000-basic.sh
-+++ b/t/t0000-basic.sh
-@@ -270,6 +270,69 @@ test_expect_success 'test --verbose-only' '
- 	EOF
- '
+diff --git a/t/README b/t/README
+index caeeb9d..6b93aca 100644
+--- a/t/README
++++ b/t/README
+@@ -71,7 +71,7 @@ You can pass --verbose (or -v), --debug (or -d), and --immediate
+ (or -i) command line argument to the test, or by setting GIT_TEST_OPTS
+ appropriately before running "make".
  
-+test_expect_success 'GIT_SKIP_TESTS' "
-+	GIT_SKIP_TESTS='git.2' \
-+		run_sub_test_lib_test git-skip-tests-basic \
-+		'GIT_SKIP_TESTS' <<-\\EOF &&
-+	for i in 1 2 3
-+	do
-+		test_expect_success \"passing test #\$i\" 'true'
-+	done
-+	test_done
-+	EOF
-+	check_sub_test_lib_test git-skip-tests-basic <<-\\EOF
-+	> ok 1 - passing test #1
-+	> ok 2 # skip passing test #2 (GIT_SKIP_TESTS)
-+	> ok 3 - passing test #3
-+	> # passed all 3 test(s)
-+	> 1..3
-+	EOF
-+"
-+
-+test_expect_success 'GIT_SKIP_TESTS several tests' "
-+	GIT_SKIP_TESTS='git.2 git.5' \
-+		run_sub_test_lib_test git-skip-tests-several \
-+		'GIT_SKIP_TESTS several tests' <<-\\EOF &&
-+	for i in 1 2 3 4 5 6
-+	do
-+		test_expect_success \"passing test #\$i\" 'true'
-+	done
-+	test_done
-+	EOF
-+	check_sub_test_lib_test git-skip-tests-several <<-\\EOF
-+	> ok 1 - passing test #1
-+	> ok 2 # skip passing test #2 (GIT_SKIP_TESTS)
-+	> ok 3 - passing test #3
-+	> ok 4 - passing test #4
-+	> ok 5 # skip passing test #5 (GIT_SKIP_TESTS)
-+	> ok 6 - passing test #6
-+	> # passed all 6 test(s)
-+	> 1..6
-+	EOF
-+"
-+
-+test_expect_success 'GIT_SKIP_TESTS sh pattern' "
-+	GIT_SKIP_TESTS='git.[2-5]' \
-+		run_sub_test_lib_test git-skip-tests-sh-pattern \
-+		'GIT_SKIP_TESTS sh pattern' <<-\\EOF &&
-+	for i in 1 2 3 4 5 6
-+	do
-+		test_expect_success \"passing test #\$i\" 'true'
-+	done
-+	test_done
-+	EOF
-+	check_sub_test_lib_test git-skip-tests-sh-pattern <<-\\EOF
-+	> ok 1 - passing test #1
-+	> ok 2 # skip passing test #2 (GIT_SKIP_TESTS)
-+	> ok 3 # skip passing test #3 (GIT_SKIP_TESTS)
-+	> ok 4 # skip passing test #4 (GIT_SKIP_TESTS)
-+	> ok 5 # skip passing test #5 (GIT_SKIP_TESTS)
-+	> ok 6 - passing test #6
-+	> # passed all 6 test(s)
-+	> 1..6
-+	EOF
-+"
-+
- test_set_prereq HAVEIT
- haveit=no
- test_expect_success HAVEIT 'test runs if prerequisite is satisfied' '
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index c081668..e7d9c51 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -452,25 +452,28 @@ test_finish_ () {
+---verbose::
++-v,--verbose::
+ 	This makes the test more verbose.  Specifically, the
+ 	command being run and their output if any are also
+ 	output.
+@@ -81,7 +81,7 @@ appropriately before running "make".
+ 	numbers matching <pattern>.  The number matched against is
+ 	simply the running count of the test within the file.
  
- test_skip () {
- 	to_skip=
-+	skipped_reason=
- 	if match_pattern_list $this_test.$test_count $GIT_SKIP_TESTS
- 	then
- 		to_skip=t
-+		skipped_reason="GIT_SKIP_TESTS"
- 	fi
- 	if test -z "$to_skip" && test -n "$test_prereq" &&
- 	   ! test_have_prereq "$test_prereq"
- 	then
- 		to_skip=t
--	fi
--	case "$to_skip" in
--	t)
-+
- 		of_prereq=
- 		if test "$missing_prereq" != "$test_prereq"
- 		then
- 			of_prereq=" of $test_prereq"
- 		fi
--
-+		skipped_reason="missing $missing_prereq${of_prereq}"
-+	fi
-+	case "$to_skip" in
-+	t)
- 		say_color skip >&3 "skipping test: $@"
--		say_color skip "ok $test_count # skip $1 (missing $missing_prereq${of_prereq})"
-+		say_color skip "ok $test_count # skip $1 ($skipped_reason)"
- 		: true
- 		;;
- 	*)
+---debug::
++-d,--debug::
+ 	This may help the person who is developing a new test.
+ 	It causes the command defined with test_debug to run.
+ 	The "trash" directory (used to store all temporary data
+@@ -89,14 +89,14 @@ appropriately before running "make".
+ 	failed tests so that you can inspect its contents after
+ 	the test finished.
+ 
+---immediate::
++-i,--immediate::
+ 	This causes the test to immediately exit upon the first
+ 	failed test. Cleanup commands requested with
+ 	test_when_finished are not executed if the test failed,
+ 	in order to keep the state for inspection by the tester
+ 	to diagnose the bug.
+ 
+---long-tests::
++-l,--long-tests::
+ 	This causes additional long-running tests to be run (where
+ 	available), for more exhaustive testing.
+ 
 -- 
 1.7.9
