@@ -1,67 +1,65 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Marat Radchenko <marat@slonopotamus.org>
 Subject: Re: [NOT_A_PATCH] A naive attempt to cross-build
  Linux->mingw64 Git
-Date: Tue, 22 Apr 2014 15:36:05 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.1404221530020.14982@s15462909.onlinehome-server.info>
-References: <535569e92cbcc_32c48493101f@nysa.notmuch> <1398118479-7731-1-git-send-email-marat@slonopotamus.org>
+Date: Tue, 22 Apr 2014 17:36:18 +0400
+Message-ID: <20140422133616.GA5079@seldon>
+References: <535569e92cbcc_32c48493101f@nysa.notmuch>
+ <1398118479-7731-1-git-send-email-marat@slonopotamus.org>
+ <5355b0ce562b8_6c39e772f0cb@nysa.notmuch>
+ <5355b2807a10c_1d5ab792ecfd@nysa.notmuch>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, 
-    Sebastian Schuberth <sschuberth@gmail.com>, 
-    Heiko Voigt <hvoigt@hvoigt.net>, git@vger.kernel.org, 
-    msysGit Mailinglist <msysgit@googlegroups.com>
-To: Marat Radchenko <marat@slonopotamus.org>
-X-From: msysgit+bncBCZPH74Q5YNRBUHA3GNAKGQEQ6TKYCQ@googlegroups.com Tue Apr 22 15:36:17 2014
-Return-path: <msysgit+bncBCZPH74Q5YNRBUHA3GNAKGQEQ6TKYCQ@googlegroups.com>
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Sebastian Schuberth <sschuberth@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>, git@vger.kernel.org,
+	msysGit Mailinglist <msysgit@googlegroups.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: msysgit+bncBCE7TAPITACRB5XA3GNAKGQE263VT7Y@googlegroups.com Tue Apr 22 15:36:56 2014
+Return-path: <msysgit+bncBCE7TAPITACRB5XA3GNAKGQE263VT7Y@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-we0-f187.google.com ([74.125.82.187])
+Received: from mail-vc0-f185.google.com ([209.85.220.185])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCZPH74Q5YNRBUHA3GNAKGQEQ6TKYCQ@googlegroups.com>)
-	id 1Wcarw-0004m8-Sm
-	for gcvm-msysgit@m.gmane.org; Tue, 22 Apr 2014 15:36:16 +0200
-Received: by mail-we0-f187.google.com with SMTP id x48sf431001wes.4
-        for <gcvm-msysgit@m.gmane.org>; Tue, 22 Apr 2014 06:36:16 -0700 (PDT)
+	(envelope-from <msysgit+bncBCE7TAPITACRB5XA3GNAKGQE263VT7Y@googlegroups.com>)
+	id 1WcasZ-0005LM-Oc
+	for gcvm-msysgit@m.gmane.org; Tue, 22 Apr 2014 15:36:56 +0200
+Received: by mail-vc0-f185.google.com with SMTP id lg15sf488241vcb.2
+        for <gcvm-msysgit@m.gmane.org>; Tue, 22 Apr 2014 06:36:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
-        h=date:from:to:cc:subject:in-reply-to:message-id:references
-         :user-agent:mime-version:x-original-sender
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :in-reply-to:user-agent:x-original-sender
          :x-original-authentication-results:precedence:mailing-list:list-id
          :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=VbDjTPqn8Uk44K+N/43EGlPhbWz6cEg8kmjp8wW3fQU=;
-        b=je3HY1lvzQPYuOCZHpIcqET/ruAWScuS8/18okTsrZ3F0klnrxsGhOikTVwxGX+bDB
-         rRYQvnYwPXpNxyOi+xYdySjz1nlyG3JvsnefQYwPUvwk+VmAkW52pZ0aGLiNiv27LW4J
-         vruh0Sa9I/zomF6C/Ex1jpPGaZqagyeZPt/idy7G3iEDCsFON8SZTLbBwfT+Zmz/4o1x
-         uw0+rXqwoy2D8JDjjKkquj/gtaefJbT2sGlQ6+I0oMyV95kHfYrG4KS+YBXRDkTE6HXZ
-         QRWZs/DEahsOmWgk5veZTmwYTqczBhNTapByJIz1Z4REYNr7i4adpyqS5RR4jqOSlGSB
-         Sfyw==
-X-Received: by 10.180.36.143 with SMTP id q15mr62556wij.2.1398173776445;
-        Tue, 22 Apr 2014 06:36:16 -0700 (PDT)
+         :list-unsubscribe:content-type:content-disposition;
+        bh=CesRYKC2hx71EcHFcsjFugculIH2x1Kjy/dE2I+sJjU=;
+        b=dgI8PaxOZeqZfEpXEXEUT4ttd7cRivGEkKn1KpmSBH8J2XZJpFRyHpL+UuIxLNzOe/
+         Ke/EoiheKrWuhbf9hZ5BP31QCRr9qNf8Rz+kcfo/KpQB2QtFJtFtEIRhXwigoKxV000j
+         PMDi4QAm9i22uWbJ1OT8ToU3TyFB2XiZNPP1vTmzHDUssf04MREmYK6WpqBhwsHQ6wWT
+         MPqdNkxzsuyhtEBdZiaQ0fK/MUS/vC+qBYAgEcHihGYmtlNKsAmHZEHBis6cMRo3jZpR
+         tFnebF3iKNZd/z2m1byYYFAkqU8KONumN4vXe8GnucamMcKk7Fe8hzxIoCBVhhZ2owj9
+         ketg==
+X-Received: by 10.50.29.110 with SMTP id j14mr712151igh.5.1398173814966;
+        Tue, 22 Apr 2014 06:36:54 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.207.83 with SMTP id lu19ls67797wic.13.gmail; Tue, 22 Apr
- 2014 06:36:15 -0700 (PDT)
-X-Received: by 10.14.219.194 with SMTP id m42mr30980eep.7.1398173775725;
-        Tue, 22 Apr 2014 06:36:15 -0700 (PDT)
-Received: from mout.gmx.net (mout.gmx.net. [212.227.15.18])
-        by gmr-mx.google.com with ESMTPS id m49si350436eeu.0.2014.04.22.06.36.15
+Received: by 10.50.66.148 with SMTP id f20ls2175257igt.32.canary; Tue, 22 Apr
+ 2014 06:36:54 -0700 (PDT)
+X-Received: by 10.66.66.109 with SMTP id e13mr21734219pat.1.1398173814307;
+        Tue, 22 Apr 2014 06:36:54 -0700 (PDT)
+Received: from slonopotamus.org ([94.242.204.247])
+        by gmr-mx.google.com with ESMTPS id vc6si1571289pab.2.2014.04.22.06.36.52
         for <msysgit@googlegroups.com>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 22 Apr 2014 06:36:15 -0700 (PDT)
-Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.15.18 as permitted sender) client-ip=212.227.15.18;
-Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx101) with ESMTPSA (Nemesis) id 0MH4Os-1WgOV23khe-00Dl5p;
- Tue, 22 Apr 2014 15:36:06 +0200
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <1398118479-7731-1-git-send-email-marat@slonopotamus.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:L7ZzFcNzOkSfbXta035KGBTb+S2zR7a2FTfPAPVK88Zj0iciU8i
- ipfk4SKoLYTXwV1qKPffWfy4wwv9v/if+PJlhtsztR+zTiy+YfIud3k/sUaQumAXrcplE9W
- 1ESEKvMhj1wpOHP0PdGRzemYvI5KdNu7HJrYY+GAziHXKtQJXg212Xr/pn+It3p2l7UL2UY
- FJ0FocQ4zXdmdC3Oqt/GQ==
-X-Original-Sender: johannes.schindelin@gmx.de
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.15.18 as
- permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
+        Tue, 22 Apr 2014 06:36:52 -0700 (PDT)
+Received-SPF: neutral (google.com: 94.242.204.247 is neither permitted nor denied by best guess record for domain of marat@slonopotamus.org) client-ip=94.242.204.247;
+Received: from marat by slonopotamus.org with local (Exim 4.80.1)
+	(envelope-from <marat@slonopotamus.org>)
+	id 1Wcary-0001Kw-3g; Tue, 22 Apr 2014 17:36:18 +0400
+In-Reply-To: <5355b2807a10c_1d5ab792ecfd@nysa.notmuch>
+User-Agent: Mutt/1.5.22 (2013-10-16)
+X-Original-Sender: marat@slonopotamus.org
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
+ (google.com: 94.242.204.247 is neither permitted nor denied by best guess
+ record for domain of marat@slonopotamus.org) smtp.mail=marat@slonopotamus.org
 Precedence: list
 Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
 List-ID: <msysgit.googlegroups.com>
@@ -72,32 +70,110 @@ List-Archive: <http://groups.google.com/group/msysgit>
 Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246736>
+Content-Disposition: inline
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246737>
 
-Hi Marat,
+On Mon, Apr 21, 2014 at 07:06:24PM -0500, Felipe Contreras wrote:
+> I managed to fix all the errors, some apply to newer mingw, regardless of 32 or
+> 64, others are specific to 64-bit. It's all hacky and I haven't checked if it
+> runs, but at least it compiles (mostly).
 
-On Tue, 22 Apr 2014, Marat Radchenko wrote:
+Do you plan to evolve it into something mergeable?
 
-> Johannes says building mingw64 Git is dirt-easy.
+> diff --git a/compat/nedmalloc/malloc.c.h b/compat/nedmalloc/malloc.c.h
+> index f216a2a..3e4affd 100644
+> --- a/compat/nedmalloc/malloc.c.h
+> +++ b/compat/nedmalloc/malloc.c.h
+> @@ -720,6 +720,7 @@ struct mallinfo {
+>    inlining are defined as macros, so these aren't used for them.
+>  */
+>  
+> +#undef FORCEINLINE
+>  #ifndef FORCEINLINE
+>    #if defined(__GNUC__)
+>  #define FORCEINLINE __inline __attribute__ ((always_inline))
+> @@ -1352,58 +1353,6 @@ LONG __cdecl _InterlockedExchange(LONG volatile *Target, LONG Value);
+>  #ifndef __MINGW32__
+>  #pragma intrinsic (_InterlockedCompareExchange)
+>  #pragma intrinsic (_InterlockedExchange)
+> -#else
+> -  /* --[ start GCC compatibility ]----------------------------------------------
+> -   * Compatibility <intrin_x86.h> header for GCC -- GCC equivalents of intrinsic
+> -   * Microsoft Visual C++ functions. Originally developed for the ReactOS
+> -   * (<http://www.reactos.org/>) and TinyKrnl (<http://www.tinykrnl.org/>)
+> -   * projects.
+> -   *
+> -   * Copyright (c) 2006 KJK::Hyperion <hackbunny@reactos.com>
+> -   *
+> -   * Permission is hereby granted, free of charge, to any person obtaining a
+> -   * copy of this software and associated documentation files (the "Software"),
+> -   * to deal in the Software without restriction, including without limitation
+> -   * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+> -   * and/or sell copies of the Software, and to permit persons to whom the
+> -   * Software is furnished to do so, subject to the following conditions:
+> -   *
+> -   * The above copyright notice and this permission notice shall be included in
+> -   * all copies or substantial portions of the Software.
+> -   *
+> -   * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+> -   * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+> -   * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+> -   * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+> -   * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+> -   * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+> -   * DEALINGS IN THE SOFTWARE.
+> -   */
+> -
+> -  /*** Atomic operations ***/
+> -  #if (__GNUC__ * 10000 + __GNUC_MINOR__ * 100 + __GNUC_PATCHLEVEL__) > 40100
+> -    #define _ReadWriteBarrier() __sync_synchronize()
+> -  #else
+> -    static __inline__ __attribute__((always_inline)) long __sync_lock_test_and_set(volatile long * const Target, const long Value)
+> -    {
+> -      long res;
+> -      __asm__ __volatile__("xchg%z0 %2, %0" : "=g" (*(Target)), "=r" (res) : "1" (Value));
+> -      return res;
+> -    }
+> -    static void __inline__ __attribute__((always_inline)) _MemoryBarrier(void)
+> -    {
+> -      __asm__ __volatile__("" : : : "memory");
+> -    }
+> -    #define _ReadWriteBarrier() _MemoryBarrier()
+> -  #endif
+> -  /* BUGBUG: GCC only supports full barriers */
+> -  static __inline__ __attribute__((always_inline)) long _InterlockedExchange(volatile long * const Target, const long Value)
+> -  {
+> -    /* NOTE: __sync_lock_test_and_set would be an acquire barrier, so we force a full barrier */
+> -    _ReadWriteBarrier();
+> -    return __sync_lock_test_and_set(Target, Value);
+> -  }
+> -  /* --[ end GCC compatibility ]---------------------------------------------- */
+>  #endif
+>  #define interlockedcompareexchange _InterlockedCompareExchange
+>  #define interlockedexchange _InterlockedExchange
 
-Marat, please let's stop misquoting me, okay?
+Git doesn't link without this for me, fails to find _InterlockedExchange.
 
-What I said was more along the lines that there had been some start of a
-work on getting things to compile for 64-bit Windows, but that the test
-suite did not pass.
+> diff --git a/config.mak.uname b/config.mak.uname
+> index efaed94..01acd54 100644
+> --- a/config.mak.uname
+> +++ b/config.mak.uname
+> -	COMPAT_CFLAGS += -D__USE_MINGW_ACCESS -D_USE_32BIT_TIME_T -DNOGDI -Icompat -Icompat/win32
+> +	COMPAT_CFLAGS += -D__USE_MINGW_ACCESS -Icompat -Icompat/win32
 
-Even cutting out the part about the test suite from quoting me leaves out
-the main point of what I said.
+builtin/fast-export.c still failed for me with:
 
-And for the record: I just had a look; the beginnings of W64 support are
-in https://github.com/msysgit/git/compare/7f37564...work/w64.
+builtin/fast-export.c: At top level:
+builtin/fast-export.c:28:15: error: expected identifier before numeric constant
+ static enum { ERROR, DROP, REWRITE } tag_of_filtered_mode = ERROR;
+               ^
 
-And again for the record: at least from my side, there is more than just
-willingness to cooperate. We'd just need to start a conversation in the
-second person (as opposed to the third person).
+ERROR is defined in <mingw>/usr/include/wingdi.h and you dropped -DNOGDI what lead to wingdi.h inclusion,
+perhaps you shouldn't.
 
-Ciao,
-Johannes
+For the reference: mingw64-runtime-3.1.0, x86_64-w64-mingw32-gcc 4.8.2
+
+P.S. besides CC/LD, I also had to define AR and fix `windres` executable name in `config.mak.uname`.
 
 -- 
 -- 
