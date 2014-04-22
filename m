@@ -1,84 +1,140 @@
-From: Ilya Bobyr <ilya.bobyr@gmail.com>
-Subject: Re: [RTC/PATCH] Add 'update-branch' hook
-Date: Tue, 22 Apr 2014 10:09:49 -0700
-Message-ID: <5356A25D.1050001@gmail.com>
-References: <1398047016-21643-1-git-send-email-felipe.contreras@gmail.com> <5355793A.5020000@gmail.com> <53558476703cb_5c94d452ec4e@nysa.notmuch> <53558A54.4060801@gmail.com> <53558ae6f1282_604be1f30cf3@nysa.notmuch> <53559020.1050407@gmail.com> <53558f6269f91_640076f2f08f@nysa.notmuch> <857g6h5ssh.fsf@stephe-leake.org> <5356996d12ede_3e5aed7308e5@nysa.notmuch>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] mergetool: run prompt only if guessed tool
+Date: Tue, 22 Apr 2014 10:19:51 -0700
+Message-ID: <xmqqbnvt703s.fsf@gitster.dls.corp.google.com>
+References: <1398039454-31193-1-git-send-email-felipe.contreras@gmail.com>
+	<1398039454-31193-3-git-send-email-felipe.contreras@gmail.com>
+	<20140422045951.GA60610@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: Felipe Contreras <felipe.contreras@gmail.com>,
-	Stephen Leake <stephen_leake@stephe-leake.org>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 22 19:10:08 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+	Charles Bailey <charles@hashpling.org>
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 22 19:20:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WceCt-00062l-5c
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 19:10:07 +0200
+	id 1WceMg-00074F-Ji
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 19:20:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933009AbaDVRKA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Apr 2014 13:10:00 -0400
-Received: from mail-pa0-f45.google.com ([209.85.220.45]:54007 "EHLO
-	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932504AbaDVRJ7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Apr 2014 13:09:59 -0400
-Received: by mail-pa0-f45.google.com with SMTP id kl14so5170289pab.4
-        for <git@vger.kernel.org>; Tue, 22 Apr 2014 10:09:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=ePUOBJzIYhclTcKpKsvPrA5cP5OShIJBzthVg0vsrJw=;
-        b=zRjjDbcuDJIxv+gEsF+2P5DlKzdmwTvd/r5IxFZuwFbnFxBWjM23DGySLoPcOeOHgl
-         Te+gLUnwv6WcGL+IcFX9C8RrWROpIyqEqkVQldSJ+0MdO/kOGRdwpdjLdcPY/KyX+O49
-         e5CQ1edccegSkVnMr+NMIjhSZdxMM5rLwtN1y+FAUgflKNgj2+atzc1xeZghHwmwa6mW
-         vcWTySmQ0SmHflooZ/iwXJwRfozpI1tUf/3rWz0J3xC6LV0+fjCRw+s9P7xAznGFU5Jd
-         qQfCbO8/+KzVIB5saJRVfiozw5glhUa3w9MVFrXS3i6IWD2nhN4rsmInV6IklmOBTvq2
-         OGyg==
-X-Received: by 10.68.194.134 with SMTP id hw6mr45573968pbc.49.1398186598787;
-        Tue, 22 Apr 2014 10:09:58 -0700 (PDT)
-Received: from [192.168.1.2] (c-50-136-172-14.hsd1.ca.comcast.net. [50.136.172.14])
-        by mx.google.com with ESMTPSA id ry10sm151454565pab.38.2014.04.22.10.09.57
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 22 Apr 2014 10:09:58 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:28.0) Gecko/20100101 Thunderbird/28.0
-In-Reply-To: <5356996d12ede_3e5aed7308e5@nysa.notmuch>
+	id S933417AbaDVRUC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Apr 2014 13:20:02 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53629 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932199AbaDVRT4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Apr 2014 13:19:56 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 713FB7FFE8;
+	Tue, 22 Apr 2014 13:19:55 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=RILdlHlCo26XboxopIComZ35l1k=; b=kTPc5j
+	L/vtI9tntm42nTxYGdLvb/Y0JbQ8Or6X941s9rqW7PvFt43DXbRU1KzZbsu7yi3D
+	CpSjKENYvR0iEFOlkbEcH7C5bMvk9cjeAJWqgOnJ88muPUCkFv66T5MD3ouegncJ
+	AhtzLRv2dnINFl54+WU479iUNgtAROudchyA0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=k/4TUOrvPu6dd50TtmDfUcf8xNAxU+Ja
+	zs6/A6RJaQdrd4Ub2X43HzvyDF1/iBhlqWbHEB9h2sxqowuaZWWAg9NlbPJhg512
+	MY855OeqKH0m7CBX5aZxQZE9ka1w6y/WqrO3ijfORTfQGLoKk6mP0c4TMj2KNsRO
+	ZtIHF1hSXMM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 59A3E7FFE7;
+	Tue, 22 Apr 2014 13:19:55 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 532217FFE3;
+	Tue, 22 Apr 2014 13:19:53 -0400 (EDT)
+In-Reply-To: <20140422045951.GA60610@gmail.com> (David Aguilar's message of
+	"Mon, 21 Apr 2014 21:59:52 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 516C1C3E-CA42-11E3-B686-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246754>
 
-On 4/22/2014 9:31 AM, Felipe Contreras wrote:
-> Stephen Leake wrote:
->> Felipe Contreras <felipe.contreras@gmail.com> writes:
->>
->>> Ilya Bobyr wrote:
->>>> On 4/21/2014 2:17 PM, Felipe Contreras wrote:
->>>>> Ilya Bobyr wrote:
->>>>>
->>>>>> Also, most have names that start with either "pre-" or "post-".
->>>>>> It seems reasonable for both "pre-update-branch" and
->>>>>> "post-update-branch" to exist.
->>>>> I don't see what would be the point in that.
->>>> Do you see the point in the other hooks doing that?
->>> Yes, there a reason for the existance of those hooks. Now tell me why would
->>> anybody use post-update-branch instead of pre-update-branch?
->> I have a branch which should always be recompiled on update;
->> post-update-branch would be a good place for that.
-> And why would pre-update-branch not serve that purpose?
+David Aguilar <davvid@gmail.com> writes:
 
-"pre-" hook could be used, but if the hooks is not supposed to prevent
-the operation, it seems reasonable to put it in the "post-" hook should
-one be available.
-For example, for clone and branch that would mean that that the branch
-sections are already created in .git/config, but for "pre-" hooks,
-should be find the right spot, configuration could probably be absent
-just yet.
+> [Cc:ing Charles in case he has an opinion, this behavior dates back to the original MT]
+>
+> On Sun, Apr 20, 2014 at 07:17:34PM -0500, Felipe Contreras wrote:
+>> It's annoying to see the prompt:
+>> 
+>>   Hit return to start merge resolution tool (foo):
+>> 
+>> Every time the user does 'git mergetool' even if the user already
+>> configured 'foo' as the wanted tool.
+>> 
+>> Display this prompt only when the user hasn't explicitly configured a
+>> tool.
+>
+> I agree this is probably helpful.
+> Most users I've met end up configuring mergetool.prompt=false.
+>
+> Thanks
 
-I do not think that someone is objecting adding just the "pre-" hook first.
-But it seems unlikely that one can envision all the possible use cases
-to say that "post-" hook would never be useful.
+OK, is it an Ack?
+
+Thanks for CC'ing Charles, by the way.  I think his point about
+mentioning the change of default somewhere in the documentation
+has some merits, and it can be done in a follow-up patch on top.
+
+
+
+
+>> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+>> ---
+>>  git-mergetool.sh | 14 +++++++++++---
+>>  1 file changed, 11 insertions(+), 3 deletions(-)
+>> 
+>> diff --git a/git-mergetool.sh b/git-mergetool.sh
+>> index 332528f..d08dc92 100755
+>> --- a/git-mergetool.sh
+>> +++ b/git-mergetool.sh
+>> @@ -277,7 +277,7 @@ merge_file () {
+>>  	echo "Normal merge conflict for '$MERGED':"
+>>  	describe_file "$local_mode" "local" "$LOCAL"
+>>  	describe_file "$remote_mode" "remote" "$REMOTE"
+>> -	if "$prompt" = true
+>> +	if test "$guessed_merge_tool" = true || test "$prompt" = true
+>>  	then
+>>  		printf "Hit return to start merge resolution tool (%s): " "$merge_tool"
+>>  		read ans || return 1
+>> @@ -315,7 +315,8 @@ merge_file () {
+>>  	return 0
+>>  }
+>>  
+>> -prompt=$(git config --bool mergetool.prompt || echo true)
+>> +prompt=$(git config --bool mergetool.prompt)
+>> +guessed_merge_tool=false
+>>  
+>>  while test $# != 0
+>>  do
+>> @@ -373,7 +374,14 @@ prompt_after_failed_merge () {
+>>  
+>>  if test -z "$merge_tool"
+>>  then
+>> -	merge_tool=$(get_merge_tool "$merge_tool") || exit
+>> +	# Check if a merge tool has been configured
+>> +	merge_tool=$(get_configured_merge_tool)
+>> +	# Try to guess an appropriate merge tool if no tool has been set.
+>> +	if test -z "$merge_tool"
+>> +	then
+>> +		merge_tool=$(guess_merge_tool) || exit
+>> +		guessed_merge_tool=true
+>> +	fi
+>>  fi
+>>  merge_keep_backup="$(git config --bool mergetool.keepBackup || echo true)"
+>>  merge_keep_temporaries="$(git config --bool mergetool.keepTemporaries || echo false)"
+>> -- 
+>> 1.9.2+fc1.1.g5c924db
+>> 
+>> --
+>> To unsubscribe from this list: send the line "unsubscribe git" in
+>> the body of a message to majordomo@vger.kernel.org
+>> More majordomo info at  http://vger.kernel.org/majordomo-info.html
