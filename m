@@ -1,135 +1,124 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 2/2] mergetool: run prompt only if guessed tool
-Date: Tue, 22 Apr 2014 02:56:22 -0500
-Message-ID: <535620a6e8274_3d2216372ec9d@nysa.notmuch>
-References: <1398039454-31193-1-git-send-email-felipe.contreras@gmail.com>
- <1398039454-31193-3-git-send-email-felipe.contreras@gmail.com>
- <20140422045951.GA60610@gmail.com>
- <20140422060120.GA10198@hashpling.org>
- <53560b09bbe96_2400128531085@nysa.notmuch>
- <20140422065549.GA11224@hashpling.org>
- <535611fac1b7b_268bd0b308f5@nysa.notmuch>
- <20140422073008.GA11584@hashpling.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: David Aguilar <davvid@gmail.com>, git@vger.kernel.org
-To: Charles Bailey <charles@hashpling.org>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 22 10:06:55 2014
+From: Ilya Bobyr <ilya.bobyr@gmail.com>
+Subject: [RFC/PATCH v3] Better control of the tests run by a test suite
+Date: Tue, 22 Apr 2014 01:19:24 -0700
+Message-ID: <1398154767-1276-1-git-send-email-ilya.bobyr@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@inf.ethz.ch>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 22 10:20:04 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WcVjC-0006Yp-BO
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 10:06:54 +0200
+	id 1WcVvv-0001h1-JT
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 10:20:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753043AbaDVIGu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Apr 2014 04:06:50 -0400
-Received: from mail-ob0-f175.google.com ([209.85.214.175]:36599 "EHLO
-	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752542AbaDVIGq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Apr 2014 04:06:46 -0400
-Received: by mail-ob0-f175.google.com with SMTP id wp4so5285243obc.6
-        for <git@vger.kernel.org>; Tue, 22 Apr 2014 01:06:46 -0700 (PDT)
+	id S1753270AbaDVIT7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Apr 2014 04:19:59 -0400
+Received: from mail-pb0-f50.google.com ([209.85.160.50]:39617 "EHLO
+	mail-pb0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751562AbaDVIT4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Apr 2014 04:19:56 -0400
+Received: by mail-pb0-f50.google.com with SMTP id md12so4672639pbc.23
+        for <git@vger.kernel.org>; Tue, 22 Apr 2014 01:19:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=40Wkz9zmFF2KXQYn6mj4UDB5jdMlxyamgrH9sgi8QcQ=;
-        b=K6r6GL2nGE0s5wbXwiPcxhz/KlP+jdr9EJxNyBqvu8XFH4DscNQ27vecXyuOKC8t4v
-         Kikfz7JIcbvZb1WpF1wn7gQDY51a4XNWWvJgzHYlhngtP2ZkI+OqZNyHteUGmZcKj22J
-         961K0kQJIQCLUEPqKXIufm/7qQ47W0RUkSzv4A85bAHTMrZNhi/NtrSweGJkKO26UegU
-         HzjgZXRPljLyzufCoE/fNhoINYC0eT8f6zBEDUIHZsJiC6LBsNBYU3Iu1GIPxSR8Lsz8
-         Bwyu6qju8N7NL9XM/+Ya5FO7AJLTcFHPkmdl1MSn6jWovmYX/hpXfsBkGz8E1GekiQlQ
-         FIEQ==
-X-Received: by 10.60.62.34 with SMTP id v2mr31357635oer.37.1398154006014;
-        Tue, 22 Apr 2014 01:06:46 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id e8sm174978936oed.7.2014.04.22.01.06.44
+        h=from:to:cc:subject:date:message-id;
+        bh=fO7l1GYG8f0x73AKNmOuaBwMmumYyMiIVaYqF8FTmsA=;
+        b=E5cW99jgYpQlf4u8E/cMsDYvYMOQIdjzlk0EdnGcRFfn2nC1aD7IOAZ8WgONJfh/vY
+         PNsz8REzpttxR1c4+v7NGFv8bUqCXC3oqpKbzWKJuE92P9oyOJ2/rloLEy00uPIgQ9IC
+         ONQ4uIoPPAcCwxmozwOipMsxypmsHDPRg32jOb6sPGZXsU04pPQEE/t24ZHJiQKXEVMC
+         jhRqQ9fhjEPVsE5ozx2+ajnrA6YDq/K4tWs+UzIzw5Vbp4frglDPWNihG6bZtGGzWwdx
+         9GN19SyQuHKiQtdF5JR5bkGzrIOVI4xIax3I/JD16m+n9wB1QQLv+eWQJQlBGg5ZEO/M
+         kZ5Q==
+X-Received: by 10.66.146.170 with SMTP id td10mr43070473pab.105.1398154795574;
+        Tue, 22 Apr 2014 01:19:55 -0700 (PDT)
+Received: from localhost.localdomain (c-50-136-172-14.hsd1.ca.comcast.net. [50.136.172.14])
+        by mx.google.com with ESMTPSA id om6sm83107950pbc.43.2014.04.22.01.19.54
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 22 Apr 2014 01:06:45 -0700 (PDT)
-In-Reply-To: <20140422073008.GA11584@hashpling.org>
+        Tue, 22 Apr 2014 01:19:54 -0700 (PDT)
+X-Mailer: git-send-email 1.7.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246713>
 
-Charles Bailey wrote:
-> On Tue, Apr 22, 2014 at 01:53:46AM -0500, Felipe Contreras wrote:
-> > Charles Bailey wrote:
-> > > On Tue, Apr 22, 2014 at 01:24:09AM -0500, Felipe Contreras wrote:
-> > > > 
-> > > > This is what I get when a tool is not working:
-> > > > 
-> > > >   Documentation/config.txt seems unchanged.
-> > > >   Was the merge successful? [y/n]
-> > > 
-> > > Does this happen now even with merge tools for which we do trust the
-> > > exit code? If so, my original concern is addressed.
-> > 
-> > Which tools are those?
-> 
-> I didn't remember off hand, but checking the mergetools directory
-> suggests that kdiff3 is one (there's no call to check_unchanged). I
-> stopped checking after I found one.
+This patches add `--run` option to the test suites to allow one to run
+individual tests out of the test suite.  Like this:
 
-So:
+    ./t0000-basic.sh --run='-4,7,9-12,15-'
 
-	% cat > ~/bin/kdiff3 <<-\EOF
-	#!/bin/sh
-	false
-	EOF
-	% chmod +x ~/bin/kdiff3
-  % git -c merge.tool=kdiff3 mergetool
-  merge of Documentation/config.txt failed
-  Continue merging other unresolved paths (y/n) ?
+Both spaces and commas are accepted as separators for the ranges (In
+previous versions only spaces were accepted).
 
-> > You don't see anything wrong with asking the user *every single time* he runs
-> > `git mergetool`, even though he *already told us* which tool to use?
-> >  
-> > If so, I'm pretty sure everybody else disagrees with you.
-> 
-> I think that you may have misunderstood me. As I said, I've no
-> particular objections to changing the default (subject a few concerns
-> that may or may not still apply).
-> 
-> Having said that, the fact that the user has configured the merge tool
-> doesn't mean that he necessarily doesn't want to see the prompt.
+Two previous versions are here:
 
-Not necessarily, but in 99% of the cases it does. And for the remaining there's
-always mergetool.prompt = true.
+    [RFC/PATCH] Better control of the tests run by a test suite
+    http://www.mail-archive.com/git@vger.kernel.org/msg46419.html
 
-> In a part of my reply which you snipped, I said that it's sometimes the
-> particular file that's due to be resolved that might prompt a user to want to
-> skip launching the tool.
+    [RFC/PATCH v2] Better control of the tests run by a test suite
+    http://www.mail-archive.com/git@vger.kernel.org/msg46877.html
 
-That's a possibility, however, in almost all the situations I've wanted to stop
-a merge, it's *after* I've seen the actual conflicts in the file.
+In this version I have removed mathematical operators and used ranges as
+suggested by Junio[1] and Eric Sunshine[2].
 
-Anyway, I've revisited the code, and it's only now that I've realized that this:
+[1] http://www.mail-archive.com/git@vger.kernel.org/msg47098.html
+[2] http://www.mail-archive.com/git@vger.kernel.org/msg46960.html
 
-  Hit return to start merge resolution tool (kdiff3):
+This version also includes changes according to the comments from Eric
+Sunshine in the documentation.  But as this version has slightly different
+documentation, it would be nice if someone would read it once again :)
 
-Is not actually asking me for the tool I want to use; the value in parenthesis
-is not the default, and I can't type in another tool.
+Shell patterns are not allowed any more.  I think they are not that useful
+and ranges cover almost the same functionality.  Also with patterns like
+'[8-9]', it is harder to produce good error messages for invalid range
+ends.
 
-So the purpose of the prompt is very different from what I was thinking, yet I
-still think the value of such prompt is marginal at best.
+This conversion is a bit unfinished:
 
-> Either way, I think we shouldn't unconditionally override an explicitly
-> set mergetool.prompt and if we are (effectively) changing the default we
-> should probably update the documentation to say so as well. 
+On 3/31/2014 10:09 AM, Junio C Hamano wrote:
+> I would have to say that there is already an established pattern to
+> pick ranges that normal people understand well and it would be silly
+> to invent another more verbose way to express the same thing.  You
+> tell your Print Dialog which page to print with e.g. "-4,7,9-12,15-",
+> not ">=4 7 ...".  
+>
+> Would the same notation be insufficient for our purpose?  You do not
+> even have to worry about negation that way.
 
-An explicitly set mergetool.prompt = true would override the default. See the
-patch.
+    http://www.mail-archive.com/git@vger.kernel.org/msg47098.html
 
-I looked, the documentation doesn't mention any default. We could add it, but I
-don't think it's necesarily part of this patch.
+Negation was not necessary for my use cases even in the first version.
+I've added it more because it seemed to be very close to the functionality
+I was adding and not that complicated.
 
--- 
-Felipe Contreras
+So, I've left the negation in the new version as well.
+
+
+I am actually thinking now that --verbose-only= and --valgrind= could be
+switched to use the same syntax as in --run.
+
+I also noticed that I am doing the following quite often:
+
+    ./t0000-basic.sh --run=1-4,27 --verbose-only=27
+
+Maybe it would be better to support 'v' suffix as a flag to indicate what
+a test needs to be run in verbose mode:
+
+    ./t0000-basic.sh --run=1-4,27v
+
+
+Ilya Bobyr (3):
+  test-lib: Document short options in t/README
+  test-lib: tests skipped by GIT_SKIP_TESTS say so
+  test-lib: '--run' to run only specific tests
+
+ t/README         |   81 ++++++++++-
+ t/t0000-basic.sh |  419 +++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ t/test-lib.sh    |  120 +++++++++++++++-
+ 3 files changed, 604 insertions(+), 16 deletions(-)
