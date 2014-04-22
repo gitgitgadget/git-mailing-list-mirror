@@ -1,165 +1,113 @@
-From: "Luis R. Rodriguez" <mcgrof@do-not-panic.com>
-Subject: Re: [PATCH] tag: add -i and --introduced modifier for --contains
-Date: Mon, 21 Apr 2014 17:38:34 -0700
-Message-ID: <CAB=NE6U7zYurAXNvjkHmk12Qsp9rerr=JyMjrVHrab98h9_+gQ@mail.gmail.com>
-References: <1397681938-18594-1-git-send-email-mcgrof@do-not-panic.com>
- <xmqqppkhexw3.fsf@gitster.dls.corp.google.com> <CAB=NE6VvDrMQ4ybF10MpXM-2672OdUTC_Rp2mdO3a5fuo1-H1Q@mail.gmail.com>
- <xmqqfvlbga4r.fsf@gitster.dls.corp.google.com> <CAB=NE6Vt8etieyR256Hxb=q6zMo7UAO2Zkm5900NrE+4=-3eXA@mail.gmail.com>
- <xmqq7g6mb47f.fsf@gitster.dls.corp.google.com>
+From: Andrew Ardill <andrew.ardill@gmail.com>
+Subject: Re: gitignore vs. exclude vs assume-unchanged?
+Date: Tue, 22 Apr 2014 10:40:43 +1000
+Message-ID: <CAH5451k+GGGdHXkwne2O-h2m2AyWg7K+5reNRG64+eF891pVUA@mail.gmail.com>
+References: <b3f480af1c362c615ad9ce85296e2be2@bellandwhistle.net>
+ <xmqqy4z5go1y.fsf@gitster.dls.corp.google.com> <dee7ee673c8c4d81fb5aaecea25e9709@bellandwhistle.net>
+ <20140416234555.GA4309@google.com> <4dd8389939fbf3dc77b58adcca7b17c1@bellandwhistle.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Jiri Slaby <jslaby@suse.cz>,
-	Andreas Schwab <schwab@suse.de>, Jan Kara <jack@suse.cz>,
-	Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 22 02:39:03 2014
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: alex@bellandwhistle.net
+X-From: git-owner@vger.kernel.org Tue Apr 22 02:41:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WcOjl-00081l-K9
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 02:39:02 +0200
+	id 1WcOm9-0001sC-S0
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Apr 2014 02:41:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754684AbaDVAi6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Apr 2014 20:38:58 -0400
-Received: from mail-lb0-f170.google.com ([209.85.217.170]:35388 "EHLO
-	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753249AbaDVAi4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Apr 2014 20:38:56 -0400
-Received: by mail-lb0-f170.google.com with SMTP id s7so3776581lbd.1
-        for <git@vger.kernel.org>; Mon, 21 Apr 2014 17:38:54 -0700 (PDT)
+	id S1754088AbaDVAl0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Apr 2014 20:41:26 -0400
+Received: from mail-vc0-f178.google.com ([209.85.220.178]:39963 "EHLO
+	mail-vc0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751561AbaDVAlY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Apr 2014 20:41:24 -0400
+Received: by mail-vc0-f178.google.com with SMTP id im17so1760084vcb.37
+        for <git@vger.kernel.org>; Mon, 21 Apr 2014 17:41:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=cuRgbDiaYy0dlFWKBYhx36vVU8Szpyknx/VWtkF/vjw=;
-        b=yun1u2X6LrTKUhBW2TKZabxwQQBRk4Vwu/bD1zZKqlcWIi69zY5EDjtXBlge9VafRE
-         hcpFJHPKrZ9uXm0O8jkHKKsvud7liyE2nXN+tniqin5wxvEqkqYEtFoBU70JXHnBjmqN
-         qCsbggRRErnTVzokkQTH7+f5Fhpfb2UAeVCpUdZhEFC+64Lu58DQ2UnZHPysoNqNSF8W
-         KUTXYg0VSLif0pLgsSvNmpucXyaU1UR6k7dRipLfcrZIy4/4nBas4xw4E7pv18eomy+Y
-         bIGHTebKkAqxuGFqKYI8geABKp5F4nf4ZtHR4665nIJfxOUgQ5xriJJ+aMMs3BiKwzLl
-         PcxQ==
-X-Received: by 10.112.47.3 with SMTP id z3mr4275307lbm.34.1398127134833; Mon,
- 21 Apr 2014 17:38:54 -0700 (PDT)
-Received: by 10.112.215.74 with HTTP; Mon, 21 Apr 2014 17:38:34 -0700 (PDT)
-In-Reply-To: <xmqq7g6mb47f.fsf@gitster.dls.corp.google.com>
-X-Google-Sender-Auth: pRxjdpY7fDKbgbTPXZq3iS5eTUM
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=ycXOtEtD3sRDpYMAGAsLMYHOa+mvhd0RjbjmuGw6bsk=;
+        b=Jrr5FgQctAMV/lRbLbCBZtaqY3N5YQoo9EJWywAAT19/fMC7IntItg7WdL7LooXwzc
+         WPqi3dJzv7cTMnWCm1Ul1mWjDMQ6ENsR7eahnFzUgiB2bVez0fiU6VN9bjT11K6rymJA
+         wKUf0u2mkQoOAApnwN4gL0+Sm4XSQJmobErgkumA80bHXX5aALWdNS4jVy47um1mc0+W
+         sJnx4Yd/t41HoAJPzoGL5wVPLd8Aw3QgFOudmcqnjaGApay3Gz1E/Q5/FrGcEL6/Zlu8
+         RyXlKHVaREAO7rh+xnn0wwsTmXjxtezJWEHHMXYWRwzDU3uYtQG5+r/7S+7p4KEjbha7
+         vW7w==
+X-Received: by 10.52.0.193 with SMTP id 1mr13048639vdg.0.1398127284134; Mon,
+ 21 Apr 2014 17:41:24 -0700 (PDT)
+Received: by 10.221.8.133 with HTTP; Mon, 21 Apr 2014 17:40:43 -0700 (PDT)
+In-Reply-To: <4dd8389939fbf3dc77b58adcca7b17c1@bellandwhistle.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246682>
 
-On Fri, Apr 18, 2014 at 4:36 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> "Luis R. Rodriguez" <mcgrof@do-not-panic.com> writes:
->
->> I think ultimately this reveals that given that tags *can* be
->> arbitrary and subjective,...
->
-> Yes; see the part at the bottom.
->
->>> Commit A can be described in terms of both v3.4 and v9.0,
->>
->> And in the real example case, why *would* c5905afb' be be described in
->> terms of v3.5 instead of v3.4 ?
->
-> I am not interested in graphing that particular history between v3.4
-> and v3.5 myself.  If you are interested, I already gave you enough
-> information on how to figure that out.
+On 18 April 2014 10:36,  <alex@bellandwhistle.net> wrote:
+> "Like the $GIT_DIR/info/exclude file, gitignore files specify intentionally
+> untracked files that Git should ignore. The difference is that files matched
+> by a pattern in a gitignore file will be untracked for all users of the
+> repository."
 
-I was alluding to another possible issue here, my concern was that the
-commit's parent (which is not really the point at which it was merged,
-but rather where the topic got forked off to be worked on) could be
-used for as reference points but clearly its not given the nature of
-how name-rev was implemented. I still do see some possible issues with
-it's parent on other commands (but I haven't studied the other's
-implementation) that reveals some of my original concerns, but its
-unclear if they are related. I also found that if we didn't want to
-rely on dates or start defining naming convention we may want to
-reconsider the name_rev() recursive implementation. I'll illustrate a
-few results that might help to show my concerns for both other
-commands perhaps using the parent erroneously, and a possible
-alternative implementation for name_rev() or at the very least
-contains.
+As a data point, I have seen people add ".gitignore" to their
+.gitignore file, as they don't want to share the file.
 
-[0] mcgrof@ergon ~/linux (git::master)$ git log c5905afb..v3.5| grep
-^commit | wc -l
-24878
-[1] mcgrof@ergon ~/linux (git::master)$ git log c5905afb..v3.4| grep
-^commit | wc -l
-13106
-[2] mcgrof@ergon ~/linux (git::master)$ git log c5905afb..v3.3| grep
-^commit | wc -l
-1360
+This seems like a misuse of the functionality, as
+$GIT_DIR/info/exclude is a better choice for the same use case, but
+I'm not sure why the misuse is there.
 
-Now that I revised name_rev.c I see the recursive nature of name_rev()
-works top down from each tag down to each v* tag object and for each
-actual commit pegs a name on it. How we rule out each tag under this
-implementation is not that obvious to me, specially when results like
-[0] and [1] reveal v3.4 should be 'shorter' in light of number of
-commits. I see now how we don't update a commit's name if other
-crucial information such as the ones discussed on this thread might be
-important for the user, and I can see how this can help but an
-alternative approach, which is what I expected to see implemented at
-least for 'git describe --contains', would have been to see how many
-commits are present from the commit's *merged* upstream parent (not
-the actual parent as in c5905afb's commit case its v3.3 which is not
-where it got merged). Getting the smallest number of commits under
-this logic and stopping when we don't find any commits should yield us
-the base tag under which the commit was merged, without any heuristics
-on dates. This however applies to Linux though given that we don't
-merge commits on stable branches but rather create new commits and
-reference the upstream sha1sum, a practice which also solves the
-problem Jeff pointed out.
+My guess is that users aren't aware of excludes, whilst gitignore is
+placed front of mind living at the root of many repositories.
+Education will help here, but is there any way to make the 'correct'
+way more intuitive?
 
-The results for command [2] above however a bit surprising, I'd take a
-look but I should go back to look at other stuff, figured I'd at least
-bring it up now as it seems relevant.
+It would be possible to check for this antipattern during normal use
+and provide a hint to the user, but that is probably too heavy handed
+and might annoy people with a legitimate use case. For that matter, if
+the gitignore file is easier to use for the 'private ignore' use case
+we have a bigger problem and shouldn't dictate to users what to use.
 
->>>     - find candidate tags that can be used to "describe --contains"
->>>       the commit A, yielding v3.4, v3.5 (not shown), and v9.0;
->>
->>>     - among the candidate tags, cull the ones that contain another
->>>       candidate tag, rejecting v3.5 (not shown) and v9.0;
->>
->>>     - among the surviving tags, pick the closest.
->>>
->>> Hmm?
->>
->> Sounds good to me!
->
-> Not so fast ;-)
->
-> My other message to Peff in response to his another example has an
-> updated position on this.  "Reject candidates that can reach other
-> candidates" is universally correct, but after that point, there are
-> at least three but probably more options that suit preference of
-> different people and project to break ties:
->
->  - Your case that started this thread may want to favor v3.4 if only
->    because that v3.4 _sounds_ smaller than v4.0 (in Peff's example),
->    even when v3.4 and v4.0 do not have ancestry relationship.
->
->  - The "closest" we have had is a heuristic to produce a result that
->    is textually shorter.
->
->  - And as I alluded to, "which one has the earliest timestamp?", is
->    another valid question to ask.
+As to the documentation, it is already quite comprehensive. All
+exclusion methods are listed, and the reasons for why to use them are
+well laid out. The introduction does specifically mention 'gitignore'
+files, but that seems to be due to all the ignore files
+($HOME/.config/git/ignore, $GIT_DIR/info/exclude, .gitignore) being
+classified as 'gitignore' files.
 
-The first one above can be subjective if and only if the Linux
-upstream model of dealing with stable branches is not followed. In
-other words I think its a non issue if you create new commits on the
-stable branches instead of merge stuff onto them. This however is
-technical practice and I guess not everyone follows.
+So some possible improvements. We could replace 'gitignore' with 'git
+ignore' in instances where we are referencing all forms of the ignore
+file, not just the .gitignore file.
 
-> And there may be more to appear.  A new command line option (and
-> possibly a new configuration) to choose from these three (and more
-> heuristics that will be added later) would be necessary.
+"Git ignore files specify intentionally untracked files that Git should ignore."
 
-Yeah this is rather complex, the resolutions to the issue in the ways
-you've described seem reasonable to me but do wonder if this can be
-simplified by reevaluating how the candidates are considered. You'd
-know better :)
+We could reference the multiple ignore locations earlier, for people
+who don't read past the first paragraph of to documentation.
 
- Luis
+"Git ignore files specify intentionally untracked files that Git
+should ignore. A git ignore file can be specified for all local
+repositories, a specific local repository, or shared with other users
+of a repository. Files already tracked by Git are not affected; see
+the NOTES below for details."
+
+Finally, it's a little confusing that one of the files is called 'exclude'.
+
+It would be great to rename it to 'ignore'; $GIT_DIR/info/exclude ->
+$GIT_DIR/info/ignore. Is there any reason this shouldn't be done?
+I haven't checked how extensive a change this would need be, but it
+would make the usage much more consistent. The only reference I have
+found to this file is at http://markmail.org/message/l7shxticxo3kzdpn
+from Junio in a discussion around an RFD for ignore rules.
+
+I think these three changes together would make the intended usage
+more obvious to both new and old users, though each change could stand
+on its own as well.
+
+Regards,
+
+Andrew Ardill
