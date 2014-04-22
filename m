@@ -1,133 +1,106 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: What is missing from Git v2.0
-Date: Tue, 22 Apr 2014 16:59:11 -0500
-Message-ID: <5356e62feb9f3_6cbadd72f0f1@nysa.notmuch>
-References: <CAMP44s17h4Tjg+VaMF0atLep8t-0HVp4UDr1WE2wYnEuZ07eaQ@mail.gmail.com>
- <53557071.5040500@gmail.com>
- <xmqqtx9m8obr.fsf@gitster.dls.corp.google.com>
- <CAHGBnuMty-86jfUto=L3muhgEVwVE70FQQY2FJ1bn7AUjfEtLQ@mail.gmail.com>
- <xmqqk3ah5i55.fsf@gitster.dls.corp.google.com>
- <5356c1a61f6d8_463e11ef310a5@nysa.notmuch>
- <20140422213039.GB21043@thunk.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [ANNOUNCE] Git v2.0.0-rc0
+Date: Tue, 22 Apr 2014 15:11:48 -0700
+Message-ID: <20140422221148.GD15516@google.com>
+References: <xmqqk3ambf9k.fsf@gitster.dls.corp.google.com>
+ <475e137b5095e45c92a87a9969f58f0@74d39fa044aa309eaea14b9f57fe79c>
+ <20140422185829.GB15516@google.com>
+ <xmqq4n1l3yyf.fsf@gitster.dls.corp.google.com>
+ <20140422210002.GC15516@google.com>
+ <xmqqy4yx2gz9.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Sebastian Schuberth <sschuberth@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Theodore Ts'o <tytso@mit.edu>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 23 00:09:44 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: "Kyle J. McKay" <mackyle@gmail.com>,
+	Johan Herland <johan@herland.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 23 00:12:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wcisn-0006O9-Dr
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 00:09:41 +0200
+	id 1Wciuy-0008Eh-7o
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 00:11:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754033AbaDVWJg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Apr 2014 18:09:36 -0400
-Received: from mail-ob0-f175.google.com ([209.85.214.175]:62375 "EHLO
-	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751323AbaDVWJf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Apr 2014 18:09:35 -0400
-Received: by mail-ob0-f175.google.com with SMTP id wp4so123361obc.34
-        for <git@vger.kernel.org>; Tue, 22 Apr 2014 15:09:35 -0700 (PDT)
+	id S1753101AbaDVWLw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Apr 2014 18:11:52 -0400
+Received: from mail-pb0-f44.google.com ([209.85.160.44]:41042 "EHLO
+	mail-pb0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751998AbaDVWLv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Apr 2014 18:11:51 -0400
+Received: by mail-pb0-f44.google.com with SMTP id rp16so73223pbb.31
+        for <git@vger.kernel.org>; Tue, 22 Apr 2014 15:11:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=JH05PW/SNPExL8ul1F+374KRf3KT5vo4cyG3jBwxE1M=;
-        b=TjYIozabToydAG8aObuOsgWvv+yob+37kAPlzbgFXjOzoWuGoHozecMfStMmUfwHQg
-         fZwFkfLIqMmXXyayBSiOYo/m+HgjwyZ3ComFOB0Jd709lZTFyrlrspJCjmatj6Lmdguw
-         Ot8SWpvfdyWnjtJ/+XtjNnCtkeWcV/RxOUMALc72e1QQqtFOVGp1m1IKZDEKtt1S3vzp
-         xpD3I/Rx39DoUufXNKWDRjv/VKn076ITvMPFlUnIQeNfYyMLmQUMIepoXnpmvRImP9e6
-         t7d/DnzQz1sbWnYynoVutwCw7NKmlqI4jhu9iSzNS2IPO+icsyQp64oZmWTr9XdG4x9I
-         bNsg==
-X-Received: by 10.182.129.134 with SMTP id nw6mr34229798obb.34.1398204575331;
-        Tue, 22 Apr 2014 15:09:35 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id cq1sm182922455oeb.4.2014.04.22.15.09.33
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=8VY0no9tRRZ4n16wUuSAT7U/Ksor0lbIrKEKI/pkrk4=;
+        b=qVGg1ghB/iOCsJhh0Si7lCg0FIm+7ATct0t2K2X637HDfcuVYUDX8HM1tG24Wn2uWv
+         /emYCBMqnUmwgCTl+NX3PkwpXDRzPg3MlMQZlU0Vrnc48zmU4hjGTFu3jUUE5E3o6qvd
+         fTsWn7YPtddB1IsEZ8cX478JKIjo3cYVUzVWSq+g8v5tJrBwagKbAmXwMihF3AN1uWZ5
+         CgWYFZn7xVHfq3GiWUoY3uSdq8vvR2ba4GfpsLDG6JbKXi/akQmdOLKAbz/eE1awyA1t
+         IOSptm1M32AYUfhdsPmLPDDhmy0goRGhe60xd3b700+778B0QXpCzPlK0zbBaUX9OJpf
+         afpA==
+X-Received: by 10.68.249.195 with SMTP id yw3mr12716107pbc.134.1398204711196;
+        Tue, 22 Apr 2014 15:11:51 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id vb7sm87152951pbc.13.2014.04.22.15.11.50
         for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 22 Apr 2014 15:09:34 -0700 (PDT)
-In-Reply-To: <20140422213039.GB21043@thunk.org>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 22 Apr 2014 15:11:50 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <xmqqy4yx2gz9.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246793>
 
-Theodore Ts'o wrote:
-> On Tue, Apr 22, 2014 at 02:23:18PM -0500, Felipe Contreras wrote:
-> > > I am not fundamentally opposed.  I just do not think it would add
-> > > much value to new people at this point, and it will actively hurt
-> > > if we shoved barely cooked one in 2.0.
-> > 
-> > You are probably biased in that you've used Git far much more than
-> > the average user has (or future new users).
-> 
-> I think Junio has a really strong point.
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
-What is that point?
+>> The documentation says
+>>
+>> 	--prefix=<prefix>
+>>
+>> 		...
+>>
+>> 		Before Git 2.0, the default prefix was "" (no prefix).
+>> 		This meant that ...
+>>
+>> which suggests that I can use --prefix="" to mean no prefix.  Perhaps
+>> it needs a note to suggest using '--prefix ""' instead?
+>
+> Is there another --option that takes an arbitrary user string that
+> could be an empty string (or will there be one in the future)?
 
-> If the goal is to make life easier for new users, allowing them to save a few
-> keystrokes is probably not the most significant thing we can do.
+In git in general, yes --- for example, 'git diff --src-prefix=""
+HEAD^' tells "git diff" to leave off the usual c/ prefix in the
+src filename it prints.
 
-No, but it's *one* thing we can definetly do, and since we are not doing
-anything else, we might as well do this one thing.
+In git-svn, --trunk="" or --message="" might be meaningful, but not
+nearly as much as --prefix="".
 
-> And we have to balance this with the additional cognitive load in remembering
-> how a particular two character alias maps to the "real" command.
+>                                                                 If
+> that is the case, a better alternative might be to add an comment to
+> say that those with older Getopt::Long may have to use --option ""
+> instead of the --option="" form for any option whose value happens
+> to be an empty string to work around the command parser bug.
 
-What cognitive load? You don't *need* to remember the default aliases; you
-don't need to use them at all.
+Another possibility would be to require Perl 5.8.9 or newer.  It was
+released in 2008.
 
-> This is especially true for commands which might not be used as often --
-> e.g., "rebase", and for commands where the meaning of "git commit" without
-> any argument is qualitatively different from what "ci" (for checkin) means in
-> most other source management systems.
-
-ci means commit in Mercurial.
-
-> So I do think it's worth thinking about this very carefully.  For
-> certain, I would **not** recommend using shortcuts in example command
-> sequences.  If the user reads "git rebase" or "git cherry-pick" it
-> means a lot more than if they see a series of apparent chicken
-> scratches filled with things like "git rb", "git pi", "git st", etc.
-
-Certainly, but that is orthogonal.
-
-> In fact, to be fair, you may be getting biased because you're used to
-> using the two character shortcuts, so for you, of *course* "rb" and
-> "pi" and "ci" make a lot of sense.
-
-I can't be biased to those because I don't use them, mine are one character
-shortcuts.
-
-And if that hypothesis was correct, why does Mercurial, Bazaar, Subversion,
-CVS, and pretty much everything uses aliases? And why does pretty much every
-.gitconfig has similar aliases? That would imply that the whole world is
-biased.
-
-> But for someone who is starting from scratch, I really question how much it
-> helps, and how much it might hurt, to see the two character shortcuts or even
-> to have to remember the two character shortcuts.
-
-Here you are talking from your own bias.
-
-It would help when the user starts to think "Geez, I seem to be typing
-`git checkout` an awful lot, I wonder if there's a shortcut", which if the
-.gitconfigs out there are any indication, it happens all the time.
-
-> And for a command like "rebase" where the user can very easily shoot
-> themselves in the foot to begin with, I'd actually suggest that it's a _good_
-> thing that they have to type it out in full.
-
-And now you contradict yourself; you actually want to make life harder for new
-users, on purpose.
-
--- 
-Felipe Contreras
+diff --git i/git-svn.perl w/git-svn.perl
+index 0a32372..ec7910d 100755
+--- i/git-svn.perl
++++ w/git-svn.perl
+@@ -1,7 +1,7 @@
+ #!/usr/bin/perl
+ # Copyright (C) 2006, Eric Wong <normalperson@yhbt.net>
+ # License: GPL v2 or later
+-use 5.008;
++use 5.008_009;
+ use warnings;
+ use strict;
+ use vars qw/	$AUTHOR $VERSION
