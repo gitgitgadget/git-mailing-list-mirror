@@ -1,126 +1,60 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 2/2] git-remote-mediawiki: fix encoding issue for UTF-8 media files
-Date: Wed, 23 Apr 2014 16:34:29 +0200
-Message-ID: <1398263669-16594-2-git-send-email-Matthieu.Moy@imag.fr>
-References: <1398263669-16594-1-git-send-email-Matthieu.Moy@imag.fr>
+From: Stepan Kasal <kasal@ucw.cz>
+Subject: Re: [PATCH v2] git tag --contains : avoid stack overflow
+Date: Wed, 23 Apr 2014 17:45:28 +0200
+Organization: <)><
+Message-ID: <20140423154528.GB2291@camelia.ucw.cz>
+References: <20140416141519.GA9684@camelia.ucw.cz> <20140416154653.GB4691@sigill.intra.peff.net> <alpine.DEB.1.00.1404171902010.14982@s15462909.onlinehome-server.info> <20140417213238.GA14792@sigill.intra.peff.net> <alpine.DEB.1.00.1404172347440.14982@s15462909.onlinehome-server.info> <20140417215817.GA822@sigill.intra.peff.net> <20140423075325.GA7268@camelia.ucw.cz> <alpine.DEB.1.00.1404231627590.14982@s15462909.onlinehome-server.info>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Apr 23 17:08:17 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Jean-Jacques Lafay <jeanjacques.lafay@gmail.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Apr 23 17:45:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WcymS-0006ns-8k
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 17:08:12 +0200
+	id 1WczMg-0002sh-Db
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 17:45:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932505AbaDWPIA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Apr 2014 11:08:00 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:58023 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757181AbaDWPH4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Apr 2014 11:07:56 -0400
-X-Greylist: delayed 1987 seconds by postgrey-1.27 at vger.kernel.org; Wed, 23 Apr 2014 11:07:55 EDT
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s3NEYg5g016443
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 23 Apr 2014 16:34:42 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s3NEYium029112;
-	Wed, 23 Apr 2014 16:34:44 +0200
-Received: from moy by anie.imag.fr with local (Exim 4.80)
-	(envelope-from <moy@imag.fr>)
-	id 1WcyG4-0004KR-AZ; Wed, 23 Apr 2014 16:34:44 +0200
-X-Mailer: git-send-email 1.9.2.667.ge5b74e1
-In-Reply-To: <1398263669-16594-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 23 Apr 2014 16:34:42 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s3NEYg5g016443
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1398868483.07565@SPUnEwuTH9IN/jj9AYjchQ
+	id S1754865AbaDWPpb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Apr 2014 11:45:31 -0400
+Received: from jabberwock.ucw.cz ([46.255.230.98]:55214 "EHLO
+	jabberwock.ucw.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753155AbaDWPpb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Apr 2014 11:45:31 -0400
+Received: from 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (84.64.broadband3.iol.cz [85.70.64.84])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	(Authenticated sender: kasal)
+	by jabberwock.ucw.cz (Postfix) with ESMTPSA id B45E91C00D6;
+	Wed, 23 Apr 2014 17:45:29 +0200 (CEST)
+Received: from camelia.ucw.cz (camelia.ucw.cz [127.0.0.1])
+	by 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (8.14.3/8.14.3) with ESMTP id s3NFjTpA002313;
+	Wed, 23 Apr 2014 17:45:29 +0200
+Received: (from kasal@localhost)
+	by camelia.ucw.cz (8.14.3/8.14.3/Submit) id s3NFjSRr002312;
+	Wed, 23 Apr 2014 17:45:28 +0200
+Mail-Followup-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Jean-Jacques Lafay <jeanjacques.lafay@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.1404231627590.14982@s15462909.onlinehome-server.info>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246847>
 
-When a media file contains valid UTF-8, git-remote-mediawiki tried to b=
-e
-too clever about the encoding, and the call to utf8::downgrade() on the
-downloaded content was failing with
+Hello,
 
-  Wide character in subroutine entry at git-remote-mediawiki line 583.
+On Wed, Apr 23, 2014 at 04:28:39PM +0200, Johannes Schindelin wrote:
+> The interdiff can be seen here:
+> 	https://github.com/msysgit/git/commit/c68e27d5
 
-Instead, use $response->decode() to apply decoding linked to the
-Content-Encoding: header, and return the content without attempting any
-charset decoding.
+not exatly, is also changes the number of commits in the "deep repo"
+from 1000 to 4000, as peff proposed.
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
- contrib/mw-to-git/git-remote-mediawiki.perl          |  7 ++++++-
- contrib/mw-to-git/t/t9363-mw-to-git-export-import.sh | 19 ++++++++++++=
-+++++++
- 2 files changed, 25 insertions(+), 1 deletion(-)
-
-diff --git a/contrib/mw-to-git/git-remote-mediawiki.perl b/contrib/mw-t=
-o-git/git-remote-mediawiki.perl
-index 3f8d993..8dd74a9 100755
---- a/contrib/mw-to-git/git-remote-mediawiki.perl
-+++ b/contrib/mw-to-git/git-remote-mediawiki.perl
-@@ -461,7 +461,12 @@ sub download_mw_mediafile {
-=20
- 	my $response =3D $mediawiki->{ua}->get($download_url);
- 	if ($response->code =3D=3D HTTP_CODE_OK) {
--		return $response->decoded_content;
-+		# It is tempting to return
-+		# $response->decoded_content({charset =3D> "none"}), but
-+		# when doing so, utf8::downgrade($content) fails with
-+		# "Wide character in subroutine entry".
-+		$response->decode();
-+		return $response->content();
- 	} else {
- 		print {*STDERR} "Error downloading mediafile from :\n";
- 		print {*STDERR} "URL: ${download_url}\n";
-diff --git a/contrib/mw-to-git/t/t9363-mw-to-git-export-import.sh b/con=
-trib/mw-to-git/t/t9363-mw-to-git-export-import.sh
-index 5a03739..3ff3a09 100755
---- a/contrib/mw-to-git/t/t9363-mw-to-git-export-import.sh
-+++ b/contrib/mw-to-git/t/t9363-mw-to-git-export-import.sh
-@@ -58,6 +58,25 @@ test_expect_success 'git clone works on previously c=
-reated wiki with media files
- 	test_cmp mw_dir_clone/Foo.txt mw_dir/Foo.txt
- '
-=20
-+test_expect_success 'git push can upload media (File:) files containin=
-g valid UTF-8' '
-+	wiki_reset &&
-+	git clone mediawiki::'"$WIKI_URL"' mw_dir &&
-+	(
-+		cd mw_dir &&
-+		"$PERL_PATH" -e "print STDOUT \"UTF-8 content: =C3=A9=C3=A8=C3=A0=C3=
-=A9=C3=AA=E2=82=AC.\";" >Bar.txt &&
-+		git add Bar.txt &&
-+		git commit -m "add a text file with UTF-8 content" &&
-+		git push
-+	)
-+'
-+
-+test_expect_success 'git clone works on previously created wiki with m=
-edia files containing valid UTF-8' '
-+	test_when_finished "rm -rf mw_dir mw_dir_clone" &&
-+	git clone -c remote.origin.mediaimport=3Dtrue \
-+		mediawiki::'"$WIKI_URL"' mw_dir_clone &&
-+	test_cmp mw_dir_clone/Bar.txt mw_dir/Bar.txt
-+'
-+
- test_expect_success 'git push & pull work with locally renamed media f=
-iles' '
- 	wiki_reset &&
- 	git clone mediawiki::'"$WIKI_URL"' mw_dir &&
---=20
-1.9.2.667.ge5b74e1
+Stepan
