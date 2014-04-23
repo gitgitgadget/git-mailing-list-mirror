@@ -1,89 +1,99 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH 2/2] mergetool: run prompt only if guessed tool
-Date: Wed, 23 Apr 2014 00:58:51 -0700
-Message-ID: <CAJDDKr5P7crudFiAa7Lu4CYmDWgZ-drdkiOfusFHioTF9co2Nw@mail.gmail.com>
-References: <1398039454-31193-1-git-send-email-felipe.contreras@gmail.com>
-	<1398039454-31193-3-git-send-email-felipe.contreras@gmail.com>
-	<20140422045951.GA60610@gmail.com>
-	<xmqqbnvt703s.fsf@gitster.dls.corp.google.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [RTC/PATCH] Add 'update-branch' hook
+Date: Wed, 23 Apr 2014 04:07:37 -0500
+Message-ID: <535782d95bbed_24448772ec7a@nysa.notmuch>
+References: <1398047016-21643-1-git-send-email-felipe.contreras@gmail.com>
+ <5355793A.5020000@gmail.com>
+ <53558476703cb_5c94d452ec4e@nysa.notmuch>
+ <53558A54.4060801@gmail.com>
+ <53558ae6f1282_604be1f30cf3@nysa.notmuch>
+ <53559020.1050407@gmail.com>
+ <53558f6269f91_640076f2f08f@nysa.notmuch>
+ <857g6h5ssh.fsf@stephe-leake.org>
+ <5356996d12ede_3e5aed7308e5@nysa.notmuch>
+ <85mwfc4hab.fsf@stephe-leake.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Charles Bailey <charles@hashpling.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 23 09:59:00 2014
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+To: Stephen Leake <stephen_leake@stephe-leake.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 23 11:18:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wcs53-00054o-0g
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 09:58:57 +0200
+	id 1WctJl-0007lP-HM
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 11:18:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754161AbaDWH6x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Apr 2014 03:58:53 -0400
-Received: from mail-qg0-f44.google.com ([209.85.192.44]:39537 "EHLO
-	mail-qg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752435AbaDWH6w (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Apr 2014 03:58:52 -0400
-Received: by mail-qg0-f44.google.com with SMTP id q108so569935qgd.31
-        for <git@vger.kernel.org>; Wed, 23 Apr 2014 00:58:51 -0700 (PDT)
+	id S1752836AbaDWJSF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Apr 2014 05:18:05 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:55909 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751339AbaDWJSD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Apr 2014 05:18:03 -0400
+Received: by mail-ob0-f174.google.com with SMTP id gq1so718532obb.19
+        for <git@vger.kernel.org>; Wed, 23 Apr 2014 02:18:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=60XikvDSv5/f+1GnyV1jChjJuZdyHUbb01k60OfuPhc=;
-        b=zM24j4w6Ypvt/mYQTf1kUi6kG97ffN5YxwZBLl/kT1GacUJtgYEFAdmYdrN/ZFM4nT
-         v8+16gDLpGIvN3pKKJ/sS5wpmlJQcwDOH6JgU4UGMW0e0z5xPJ9J1zV8duOcydULOgAv
-         mjXM1oUhKxFonyPML2MrIOQJe4Hd1EJsOEfEF3Qu8m+8ntA9EYNogE0SytxebBI17W/S
-         9p/R1bH+v3LBy7fC+B5Pb0OpX9MGlyWwGKHmJUKGLznZI3HfG1PnL5OuVtYch74VukT9
-         kFGUcT9EHXH+KhGHgSyEHEo3rTiqeP9lJkXLHnmKKPLzMNmeQwYmugW2IcoeDKdiQMXu
-         DNXg==
-X-Received: by 10.224.21.197 with SMTP id k5mr55602043qab.3.1398239931510;
- Wed, 23 Apr 2014 00:58:51 -0700 (PDT)
-Received: by 10.229.250.133 with HTTP; Wed, 23 Apr 2014 00:58:51 -0700 (PDT)
-In-Reply-To: <xmqqbnvt703s.fsf@gitster.dls.corp.google.com>
+        h=date:from:to:message-id:in-reply-to:references:subject:mime-version
+         :content-type:content-transfer-encoding;
+        bh=zs8YpuEm/GRz9fmG4CAs9Nczs0YaJ5ozSER3S3AB20U=;
+        b=itPCAiRru1id2Ih8D30PPaAae6OzS/zf7pwdr/kJYniLR+fmapmSaXxT0SE7uSYJEF
+         Dn3DqNJKSG4hbI9kfin0rjJ/iLcAAMHx/Nx+twEIL0Z0BF0OG/trovZhTm04ako7zD+K
+         s80f4/Ne6hXILOqNyNPElBQBC2HOY1PNPyIwnnap62hAkyQPGJZSAq70XRbSSS9JYQUi
+         VPVUt9vHQsv9P4cdD/79eGJ3ZB2luO3dWP0x/PR34QRigao1B4SUWSnK3plissuHDmmt
+         AD2y9T87IyFwzS5Xx5wl+Tv6nGvT5627cstCmvivfsRdccticPGhCb0z1i6mGeoA1vMt
+         2R7w==
+X-Received: by 10.182.29.33 with SMTP id g1mr6681578obh.53.1398244682038;
+        Wed, 23 Apr 2014 02:18:02 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id dg2sm675834obb.17.2014.04.23.02.18.00
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 23 Apr 2014 02:18:00 -0700 (PDT)
+In-Reply-To: <85mwfc4hab.fsf@stephe-leake.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246817>
 
-On Tue, Apr 22, 2014 at 10:19 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> David Aguilar <davvid@gmail.com> writes:
->
->> [Cc:ing Charles in case he has an opinion, this behavior dates back to the original MT]
->>
->> On Sun, Apr 20, 2014 at 07:17:34PM -0500, Felipe Contreras wrote:
->>> It's annoying to see the prompt:
->>>
->>>   Hit return to start merge resolution tool (foo):
->>>
->>> Every time the user does 'git mergetool' even if the user already
->>> configured 'foo' as the wanted tool.
->>>
->>> Display this prompt only when the user hasn't explicitly configured a
->>> tool.
->>
->> I agree this is probably helpful.
->> Most users I've met end up configuring mergetool.prompt=false.
->>
->> Thanks
->
-> OK, is it an Ack?
+Stephen Leake wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> 
+> > Stephen Leake wrote:
+> >> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> >> 
+> >> > Ilya Bobyr wrote:
+> >> >> On 4/21/2014 2:17 PM, Felipe Contreras wrote:
+> >> >> > Ilya Bobyr wrote:
+> >> >> >
+> >> >> >> Also, most have names that start with either "pre-" or "post-".
+> >> >> >> It seems reasonable for both "pre-update-branch" and
+> >> >> >> "post-update-branch" to exist.
+> >> >> > I don't see what would be the point in that.
+> >> >> 
+> >> >> Do you see the point in the other hooks doing that?
+> >> >
+> >> > Yes, there a reason for the existance of those hooks. Now tell me why would
+> >> > anybody use post-update-branch instead of pre-update-branch?
+> >> 
+> >> I have a branch which should always be recompiled on update;
+> >> post-update-branch would be a good place for that.
+> >
+> > And why would pre-update-branch not serve that purpose?
+> 
+> Because the code that needs to be compiled is not yet in the workspace
 
-Sure thing.
+And it won't be in 'post-update-branch' either.
 
-Acked-by: David Aguilar <davvid@gmail.com>
+ % git checkout master
+ % git branch feature-a stable
+ <- update-branch hook will be called here
 
-> Thanks for CC'ing Charles, by the way.  I think his point about
-> mentioning the change of default somewhere in the documentation
-> has some merits, and it can be done in a follow-up patch on top.
+The hook will get 'feature-a' as the first argument, but the code in the
+workspace would correspond to 'master'; the checked out branch (pre or post).
 
-Another thing that crossed my mind is that we have -y for --no-prompt
-because --prompt was the original default. Maybe a -i (?) shortcut for
-the interactive --prompt can be added to make the "need to skip some
-when resolving" use case easier to activate.
 -- 
-David
+Felipe Contreras
