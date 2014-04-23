@@ -1,89 +1,85 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [ANNOUNCE] Git v2.0.0-rc0
-Date: Wed, 23 Apr 2014 09:40:35 -0700
-Message-ID: <xmqqtx9k0zjw.fsf@gitster.dls.corp.google.com>
-References: <xmqqk3ambf9k.fsf@gitster.dls.corp.google.com>
-	<475e137b5095e45c92a87a9969f58f0@74d39fa044aa309eaea14b9f57fe79c>
-	<20140422185829.GB15516@google.com>
-	<xmqq4n1l3yyf.fsf@gitster.dls.corp.google.com>
-	<20140422210002.GC15516@google.com>
-	<xmqqy4yx2gz9.fsf@gitster.dls.corp.google.com>
-	<20140422221148.GD15516@google.com>
-	<20140422222519.GC144079@vauxhall.crustytoothpaste.net>
-	<xmqqbnvt2d7v.fsf@gitster.dls.corp.google.com>
-	<CALKQrgd0Psp0nWUsmW16aR4io4xu_gumJmRdLGU+MOSzJvBobQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] mergetool: run prompt only if guessed tool
+Date: Wed, 23 Apr 2014 09:52:09 -0700
+Message-ID: <xmqqppk80z0m.fsf@gitster.dls.corp.google.com>
+References: <1398039454-31193-1-git-send-email-felipe.contreras@gmail.com>
+	<1398039454-31193-3-git-send-email-felipe.contreras@gmail.com>
+	<20140422045951.GA60610@gmail.com>
+	<xmqqbnvt703s.fsf@gitster.dls.corp.google.com>
+	<CAJDDKr5P7crudFiAa7Lu4CYmDWgZ-drdkiOfusFHioTF9co2Nw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	"Kyle J. McKay" <mackyle@gmail.com>,
-	Git mailing list <git@vger.kernel.org>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Wed Apr 23 18:40:51 2014
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Charles Bailey <charles@hashpling.org>
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 23 18:53:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wd0E7-0007Ke-AP
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 18:40:51 +0200
+	id 1Wd0QQ-0003BD-0I
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 18:53:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756047AbaDWQkp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Apr 2014 12:40:45 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51265 "EHLO
+	id S932314AbaDWQx1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Apr 2014 12:53:27 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48468 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755959AbaDWQkk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Apr 2014 12:40:40 -0400
+	id S932310AbaDWQx0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Apr 2014 12:53:26 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6DB0A7DB9D;
-	Wed, 23 Apr 2014 12:40:39 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 89EC47DFD8;
+	Wed, 23 Apr 2014 12:53:25 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=k4Ii301MI9YnSexAe0Fd88hI3lg=; b=dN4d0h
-	uOCtUQ0GeFGlGWUmxqJu+26DlTugTRQerR+pZQu2XE+wJhZ0/S1ktLT4lGTEPexC
-	EoVK+9qwy9B6hw04H4Rhz2bkmIZ1kc7geWjTvuDZ0zg2kufFEUzcZ3JFElnbxNLN
-	gPwaKZ4chtpcjzdENN9TXFAWoGmcPZBdSf5Ms=
+	:content-type; s=sasl; bh=fq3Gs9TMxuo+YYR0PwOC55/Cyss=; b=a6a403
+	IJoE/m1uzoeEn0DoYSFwS0lbTRuysA2eelxVQ4v4C54X6oejt9pQDXRcmP5cfyLp
+	6cfH7SBu2RKnammaC5ebbe1DczGGxpk4Ldo1//R+eP9hQsXxDvtG2HhnBJyy1WFQ
+	XKn6PDD4YlRusMZziAB6IlF8e3lfEmSZfcImk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=tLzWqF1u9B9Mzr5z52yflnro73Oq53zs
-	uoo1zWoM80jgZpmAK41aNGXDgGFjUJJ4QbFQwQDTvZE4IIByefq35E77yzSN8fiB
-	nYVATB6gyv3sr4rK6JnfwbwFHdJwTNzbMAULdUQZ4NMjM4g/2Dt+wgJVal+Xj/ug
-	6MlazkxBssA=
+	:content-type; q=dns; s=sasl; b=LEJ1MqLkTzdD9DMDljSztLFvRdv+pv54
+	RJmJkUWQIwYUSOcQqa0K9SNM5Ps+WXHjm4RpwaSjZO1GycTyaOfSH8BXujsQX5e+
+	2Pa6GF+GrjPX3RWnruN3NQW0TVDPO9zEIah6sdM46RH/mEY2kkOHym2jujkVudWk
+	xFe+U4wMZHk=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 46F957DB9C;
-	Wed, 23 Apr 2014 12:40:39 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6E2537DFD7;
+	Wed, 23 Apr 2014 12:53:25 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4953A7DB98;
-	Wed, 23 Apr 2014 12:40:37 -0400 (EDT)
-In-Reply-To: <CALKQrgd0Psp0nWUsmW16aR4io4xu_gumJmRdLGU+MOSzJvBobQ@mail.gmail.com>
-	(Johan Herland's message of "Wed, 23 Apr 2014 09:33:40 +0200")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3165E7DF60;
+	Wed, 23 Apr 2014 12:52:11 -0400 (EDT)
+In-Reply-To: <CAJDDKr5P7crudFiAa7Lu4CYmDWgZ-drdkiOfusFHioTF9co2Nw@mail.gmail.com>
+	(David Aguilar's message of "Wed, 23 Apr 2014 00:58:51 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: FF85038A-CB05-11E3-95D4-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 9D1D6DFC-CB07-11E3-AA91-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246850>
 
-Johan Herland <johan@herland.net> writes:
+David Aguilar <davvid@gmail.com> writes:
 
-> I.e. use Kyle's patch to t9117, plus something like this:
+> On Tue, Apr 22, 2014 at 10:19 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> ...
+>> Thanks for CC'ing Charles, by the way.  I think his point about
+>> mentioning the change of default somewhere in the documentation
+>> has some merits, and it can be done in a follow-up patch on top.
 >
-> diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-> index 5b3c38d..9f579e0 100644
-> --- a/Documentation/git-svn.txt
-> +++ b/Documentation/git-svn.txt
-> @@ -91,6 +91,9 @@ COMMANDS
->  NOTE: Before Git v2.0, the default prefix was "" (no prefix). This
->  meant that SVN-tracking refs were put at "refs/remotes/*", which is
->  incompatible with how Git's own remote-tracking refs are organized.
-> +If you still want the old default, you can get it by passing
-> +'--prefix ""' on the command line ('--prefix=""' may not work if
-> +your Perl's Getopt::Long is < v2.37).
->
->  --ignore-paths=<regex>;;
->         When passed to 'init' or 'clone' this regular expression will
+> Another thing that crossed my mind is that we have -y for --no-prompt
+> because --prompt was the original default. Maybe a -i (?) shortcut for
+> the interactive --prompt can be added to make the "need to skip some
+> when resolving" use case easier to activate.
 
-Thanks, will squash in.
+Hmm, perhaps, but is "do we prompt to give a chance to the user to
+say 'no, I am not interested in running the tool to that path'" the
+only interactivity in the overall end-user experience in using the
+mergetool?  To end-users, both interaction with the mergetool
+front-end and interaction with individual back-end taken together
+would comprise the whole end-user experience, so "--interactive"
+option that is implied by "-i" short-cut may make them expect a
+behaviour from the backend that is more interactive than without,
+which would not be the case, so....
