@@ -1,51 +1,51 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 07/14] git-rebase--merge.sh: use the $( ... ) construct for command substitution
-Date: Wed, 23 Apr 2014 06:43:59 -0700
-Message-ID: <1398260646-2660-7-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 04/14] appp.sh: use the $( ... ) construct for command substitution
+Date: Wed, 23 Apr 2014 06:43:56 -0700
+Message-ID: <1398260646-2660-4-git-send-email-gitter.spiros@gmail.com>
 References: <1398260646-2660-1-git-send-email-gitter.spiros@gmail.com>
 Cc: matthieu.moy@grenoble-inp.fr, Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 23 15:49:45 2014
+X-From: git-owner@vger.kernel.org Wed Apr 23 15:49:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WcxYW-0005CP-8s
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 15:49:44 +0200
+	id 1WcxYW-0005CP-QA
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 15:49:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756118AbaDWNt3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Apr 2014 09:49:29 -0400
-Received: from mail-pd0-f177.google.com ([209.85.192.177]:39347 "EHLO
-	mail-pd0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752536AbaDWNoV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Apr 2014 09:44:21 -0400
-Received: by mail-pd0-f177.google.com with SMTP id y10so775773pdj.8
-        for <git@vger.kernel.org>; Wed, 23 Apr 2014 06:44:20 -0700 (PDT)
+	id S1756417AbaDWNta (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Apr 2014 09:49:30 -0400
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:60001 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753328AbaDWNoR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Apr 2014 09:44:17 -0400
+Received: by mail-pa0-f49.google.com with SMTP id lj1so779233pab.22
+        for <git@vger.kernel.org>; Wed, 23 Apr 2014 06:44:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=xhIdLnABgKeUTcwlYfIP9dUhugHoYqlRl8hfEfhkvRM=;
-        b=TXBjH4diqAOkHs/+gK/wxoTxRLBC74YClhFrUzjQHzUY5fworOBG01IwPNdPYYeZoW
-         TFQ2zyrICSYDPaWq/rGCQQjG/icZhb2MZBSh3f6xzulgLKA14vBgCS5IkwYOjIpc5XMV
-         cKut65fbLrIpnJMlYFNhUYR8UOrJb8zEA1JusapAMiaNXSZp/HvFDktKNZYXSnf5suAW
-         9Cvj//KRJTa99pDnYi0xE+gDdNvSDNpe4e+WCX9f9Df0EMVPcWlSnUsfj47akZNYXQ8o
-         ynCb0jneWiraZe7BysfMsiLQQ8UUkgRizlQcN8TGrfylIDdu3b70YfAgdC/sWQ1JrQ2c
-         WLsA==
-X-Received: by 10.68.231.229 with SMTP id tj5mr18193162pbc.101.1398260660812;
-        Wed, 23 Apr 2014 06:44:20 -0700 (PDT)
+        bh=qRjTlKldVDUvktKADsEhgtkmscEAKu2OHs/eZ2AcFNQ=;
+        b=OuqmBkri7XtGIAxN4B1KtBSlSdenzbhvUD/kLmL/PisBYCV9FZ2Vls5LWU0bX3+4FB
+         E1V5EXPnvDrjVSeP+Pd66QEcrHeXexIIZRp2Xq33JHngwEobAeZKjHhPLQpui+9tRqVc
+         lggpMiKFvLH3nNuakv+XCa3I2EQfAnek6sfVq0EqqLGc+GIgsy/JesV5hIl7BmGMSeVh
+         qUCHk5F7FKaQFZkXVQBWp1TmVgvC0P6s6P91Thv3Jqmss9wz9ZLqpRt7icjS0ql/wE6s
+         RDK21tvVhB66ePJMGz5fGRSoRCUo2+QRFJxVaCoTkyzXWB1Alt3Fna7mf2/wUmlSflRF
+         1s5w==
+X-Received: by 10.68.94.164 with SMTP id dd4mr9824013pbb.161.1398260656728;
+        Wed, 23 Apr 2014 06:44:16 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id kt8sm5314475pab.7.2014.04.23.06.44.19
+        by mx.google.com with ESMTPSA id kt8sm5314475pab.7.2014.04.23.06.44.15
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 23 Apr 2014 06:44:20 -0700 (PDT)
+        Wed, 23 Apr 2014 06:44:15 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1398260646-2660-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246840>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -67,30 +67,47 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- git-rebase--merge.sh |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ contrib/thunderbird-patch-inline/appp.sh |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/git-rebase--merge.sh b/git-rebase--merge.sh
-index 71429fd..6d77b3c 100644
---- a/git-rebase--merge.sh
-+++ b/git-rebase--merge.sh
-@@ -24,7 +24,7 @@ continue_merge () {
- 		die "$resolvemsg"
- 	fi
+diff --git a/contrib/thunderbird-patch-inline/appp.sh b/contrib/thunderbird-patch-inline/appp.sh
+index 5eb4a51..8dc73ec 100755
+--- a/contrib/thunderbird-patch-inline/appp.sh
++++ b/contrib/thunderbird-patch-inline/appp.sh
+@@ -10,7 +10,7 @@ CONFFILE=~/.appprc
  
--	cmt=`cat "$state_dir/current"`
-+	cmt=$(cat "$state_dir/current")
- 	if ! git diff-index --quiet --ignore-submodules HEAD --
- 	then
- 		if ! git commit ${gpg_sign_opt:+"$gpg_sign_opt"} --no-verify -C "$cmt"
-@@ -143,7 +143,7 @@ echo "$onto_name" > "$state_dir/onto_name"
- write_basic_state
+ SEP="-=-=-=-=-=-=-=-=-=# Don't remove this line #=-=-=-=-=-=-=-=-=-"
+ if [ -e "$CONFFILE" ] ; then
+-	LAST_DIR=`grep -m 1 "^LAST_DIR=" "${CONFFILE}"|sed -e 's/^LAST_DIR=//'`
++	LAST_DIR=$(grep -m 1 "^LAST_DIR=" "${CONFFILE}"|sed -e 's/^LAST_DIR=//')
+ 	cd "${LAST_DIR}"
+ else
+ 	cd > /dev/null
+@@ -25,11 +25,11 @@ fi
  
- msgnum=0
--for cmt in `git rev-list --reverse --no-merges "$revisions"`
-+for cmt in $(git rev-list --reverse --no-merges "$revisions")
- do
- 	msgnum=$(($msgnum + 1))
- 	echo "$cmt" > "$state_dir/cmt.$msgnum"
+ cd - > /dev/null
+ 
+-SUBJECT=`sed -n -e '/^Subject: /p' "${PATCH}"`
+-HEADERS=`sed -e '/^'"${SEP}"'$/,$d' $1`
+-BODY=`sed -e "1,/${SEP}/d" $1`
+-CMT_MSG=`sed -e '1,/^$/d' -e '/^---$/,$d' "${PATCH}"`
+-DIFF=`sed -e '1,/^---$/d' "${PATCH}"`
++SUBJECT=$(sed -n -e '/^Subject: /p' "${PATCH}")
++HEADERS=$(sed -e '/^'"${SEP}"'$/,$d' $1)
++BODY=$(sed -e "1,/${SEP}/d" $1)
++CMT_MSG=$(sed -e '1,/^$/d' -e '/^---$/,$d' "${PATCH}")
++DIFF=$(sed -e '1,/^---$/d' "${PATCH}")
+ 
+ CCS=`echo -e "$CMT_MSG\n$HEADERS" | sed -n -e 's/^Cc: \(.*\)$/\1,/gp' \
+ 	-e 's/^Signed-off-by: \(.*\)/\1,/gp'`
+@@ -48,7 +48,7 @@ if [ "x${BODY}x" != "xx" ] ; then
+ fi
+ echo "$DIFF" >> $1
+ 
+-LAST_DIR=`dirname "${PATCH}"`
++LAST_DIR=$(dirname "${PATCH}")
+ 
+ grep -v "^LAST_DIR=" "${CONFFILE}" > "${CONFFILE}_"
+ echo "LAST_DIR=${LAST_DIR}" >> "${CONFFILE}_"
 -- 
 1.7.10.4
