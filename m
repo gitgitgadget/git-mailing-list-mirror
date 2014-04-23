@@ -1,70 +1,89 @@
-From: Robert Dailey <rcdailey.lists@gmail.com>
-Subject: Re: How to trim the fat on my log graphs
-Date: Wed, 23 Apr 2014 11:32:26 -0500
-Message-ID: <CAHd499AovROt2fVAvh-ST9Vb7Hq8LpUS68i4eXWZaNszuKeUfg@mail.gmail.com>
-References: <CAHd499Bq07mPTR=h-5Gj=NuEQ9WLnK2wL5nxTNMe=LFnKHmvzA@mail.gmail.com>
-	<xmqqtx9l2ggp.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [ANNOUNCE] Git v2.0.0-rc0
+Date: Wed, 23 Apr 2014 09:40:35 -0700
+Message-ID: <xmqqtx9k0zjw.fsf@gitster.dls.corp.google.com>
+References: <xmqqk3ambf9k.fsf@gitster.dls.corp.google.com>
+	<475e137b5095e45c92a87a9969f58f0@74d39fa044aa309eaea14b9f57fe79c>
+	<20140422185829.GB15516@google.com>
+	<xmqq4n1l3yyf.fsf@gitster.dls.corp.google.com>
+	<20140422210002.GC15516@google.com>
+	<xmqqy4yx2gz9.fsf@gitster.dls.corp.google.com>
+	<20140422221148.GD15516@google.com>
+	<20140422222519.GC144079@vauxhall.crustytoothpaste.net>
+	<xmqqbnvt2d7v.fsf@gitster.dls.corp.google.com>
+	<CALKQrgd0Psp0nWUsmW16aR4io4xu_gumJmRdLGU+MOSzJvBobQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 23 18:33:29 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	"Kyle J. McKay" <mackyle@gmail.com>,
+	Git mailing list <git@vger.kernel.org>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Wed Apr 23 18:40:51 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wd06y-0008PU-ES
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 18:33:28 +0200
+	id 1Wd0E7-0007Ke-AP
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 18:40:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755463AbaDWQc5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Apr 2014 12:32:57 -0400
-Received: from mail-vc0-f177.google.com ([209.85.220.177]:37528 "EHLO
-	mail-vc0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754710AbaDWQc1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Apr 2014 12:32:27 -0400
-Received: by mail-vc0-f177.google.com with SMTP id if17so1444342vcb.8
-        for <git@vger.kernel.org>; Wed, 23 Apr 2014 09:32:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=o7xfsqhOJ8YKCqUaJsBkH/iXwGSHzGZA47mBPIEpCjQ=;
-        b=wnLISODfy/9Ha3e9xpKG0pt3ZLkPlajWJlg5DUzrh0vTFeFuuBnD9n1c6m90WdLfwK
-         N758BU8SBDuYnYBbfR+RGbri7DByQrU7D5dXUH2/eGEDC0fCsM7Jsoh2hI1g+AvFsFnW
-         B9jQK3xkI9qvYUB+9fBAYG9L9t3BfmoMZpFBQYcrr3wcLh2ZNsvXRf9T3cd+nfKcYpjp
-         bAInqM8/zG44Myysk16vZxqGazMVTovenwWsjWoYGq4fWt8JSJIx5iRFFGWt1QnzQdlK
-         87iy8ZNH3g1Cfk5WoAHsQgBCF6YrwgXEnkSXZNHmbgub+Z9t6+PuT5TntiupdMPkXwS1
-         n1wA==
-X-Received: by 10.220.106.7 with SMTP id v7mr658373vco.46.1398270746523; Wed,
- 23 Apr 2014 09:32:26 -0700 (PDT)
-X-Google-Sender-Delegation: rcdailey@gmail.com
-Received: by 10.221.2.79 with HTTP; Wed, 23 Apr 2014 09:32:26 -0700 (PDT)
-In-Reply-To: <xmqqtx9l2ggp.fsf@gitster.dls.corp.google.com>
-X-Google-Sender-Auth: Oj7RjjjlrsXroyU-yRvk_11eCMU
+	id S1756047AbaDWQkp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Apr 2014 12:40:45 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51265 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755959AbaDWQkk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Apr 2014 12:40:40 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6DB0A7DB9D;
+	Wed, 23 Apr 2014 12:40:39 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=k4Ii301MI9YnSexAe0Fd88hI3lg=; b=dN4d0h
+	uOCtUQ0GeFGlGWUmxqJu+26DlTugTRQerR+pZQu2XE+wJhZ0/S1ktLT4lGTEPexC
+	EoVK+9qwy9B6hw04H4Rhz2bkmIZ1kc7geWjTvuDZ0zg2kufFEUzcZ3JFElnbxNLN
+	gPwaKZ4chtpcjzdENN9TXFAWoGmcPZBdSf5Ms=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=tLzWqF1u9B9Mzr5z52yflnro73Oq53zs
+	uoo1zWoM80jgZpmAK41aNGXDgGFjUJJ4QbFQwQDTvZE4IIByefq35E77yzSN8fiB
+	nYVATB6gyv3sr4rK6JnfwbwFHdJwTNzbMAULdUQZ4NMjM4g/2Dt+wgJVal+Xj/ug
+	6MlazkxBssA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 46F957DB9C;
+	Wed, 23 Apr 2014 12:40:39 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4953A7DB98;
+	Wed, 23 Apr 2014 12:40:37 -0400 (EDT)
+In-Reply-To: <CALKQrgd0Psp0nWUsmW16aR4io4xu_gumJmRdLGU+MOSzJvBobQ@mail.gmail.com>
+	(Johan Herland's message of "Wed, 23 Apr 2014 09:33:40 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: FF85038A-CB05-11E3-95D4-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246848>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246849>
 
-Thanks, removing those two options did help quite a bit already.
-However, the history can still get pretty crazy. Is there a way to
-hide all tags from the log graph? Really I just want the LABELS to be
-hidden.
+Johan Herland <johan@herland.net> writes:
 
-On Tue, Apr 22, 2014 at 4:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Robert Dailey <rcdailey.lists@gmail.com> writes:
+> I.e. use Kyle's patch to t9117, plus something like this:
 >
->> git log log --graph --abbrev-commit --decorate --date=relative
->> --format=format:'%C(bold blue)%h%C(reset)%x09%C(bold
->> green)(%ar)%C(reset)%C(bold yellow)%d%C(reset) %C(dim
->> white)%an%C(reset) - %C(white)%s%C(reset)' --branches --remotes
->> ...
->> The goal is to weed out the really distant and irrelevant commits. I
->> really just want to see the commits that are closely related to my
->> current branch. Thanks in advance.
+> diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+> index 5b3c38d..9f579e0 100644
+> --- a/Documentation/git-svn.txt
+> +++ b/Documentation/git-svn.txt
+> @@ -91,6 +91,9 @@ COMMANDS
+>  NOTE: Before Git v2.0, the default prefix was "" (no prefix). This
+>  meant that SVN-tracking refs were put at "refs/remotes/*", which is
+>  incompatible with how Git's own remote-tracking refs are organized.
+> +If you still want the old default, you can get it by passing
+> +'--prefix ""' on the command line ('--prefix=""' may not work if
+> +your Perl's Getopt::Long is < v2.37).
 >
-> For a starter, how about dropping "--branches --remotes" from that
-> command line?  A merge from elsewhere will show as "Merge branch foo"
-> which should be sufficient without the decoration.
+>  --ignore-paths=<regex>;;
+>         When passed to 'init' or 'clone' this regular expression will
+
+Thanks, will squash in.
