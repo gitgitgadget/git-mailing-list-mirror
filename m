@@ -1,100 +1,55 @@
-From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 02/14] test-gitmw-lib.sh: use the $( ... ) construct for command substitution
-Date: Wed, 23 Apr 2014 06:43:54 -0700
-Message-ID: <1398260646-2660-2-git-send-email-gitter.spiros@gmail.com>
-References: <1398260646-2660-1-git-send-email-gitter.spiros@gmail.com>
-Cc: matthieu.moy@grenoble-inp.fr, Elia Pinto <gitter.spiros@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 23 15:50:17 2014
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2] git tag --contains : avoid stack overflow
+Date: Wed, 23 Apr 2014 16:28:39 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.1404231627590.14982@s15462909.onlinehome-server.info>
+References: <20140416141519.GA9684@camelia.ucw.cz> <20140416154653.GB4691@sigill.intra.peff.net> <alpine.DEB.1.00.1404171902010.14982@s15462909.onlinehome-server.info> <20140417213238.GA14792@sigill.intra.peff.net> <alpine.DEB.1.00.1404172347440.14982@s15462909.onlinehome-server.info>
+ <20140417215817.GA822@sigill.intra.peff.net> <20140423075325.GA7268@camelia.ucw.cz>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Jean-Jacques Lafay <jeanjacques.lafay@gmail.com>
+To: Stepan Kasal <kasal@ucw.cz>
+X-From: git-owner@vger.kernel.org Wed Apr 23 16:28:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WcxZ2-0005lm-1t
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 15:50:16 +0200
+	id 1WcyAK-0001DM-Ha
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 16:28:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752609AbaDWNuI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Apr 2014 09:50:08 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:49169 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757050AbaDWNoO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Apr 2014 09:44:14 -0400
-Received: by mail-pb0-f46.google.com with SMTP id rq2so798501pbb.19
-        for <git@vger.kernel.org>; Wed, 23 Apr 2014 06:44:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=oxN9CoO9+rsUYycxZYvO9zyXaPWBHGt3UIi2oxc5FNc=;
-        b=vC8NsVugYxKvCNd/xRXX+c75QHqOt1u+aPTl+Tn4lT7acDEZPPqX5KB9qof4x9xO1e
-         60xjJLWBr3g0lw3mdT7x5RH97Ey4VpT4pSQp2CrR6qn+i+schzBjxX7IpEYRfy+DLCj4
-         CcCSKv78umG6o+iHPHMeuU9wZajmHJUNDIi4OV7q+yuWnWFTNfFavwDNkdW2Z8h1S1RI
-         3c4kVKmQUh/wPuwW7yOawtCaezbbiF1JK+aQzmySFbKYwyD8cv+XtEFLybg9jpdxi3tE
-         P466mPogrnBH2nTSWLYeIOpmnmfTsoPVOfjugWwWupTaAL0NTxhJqUou8vY7uanjoGGP
-         hATA==
-X-Received: by 10.68.133.229 with SMTP id pf5mr25638795pbb.115.1398260653801;
-        Wed, 23 Apr 2014 06:44:13 -0700 (PDT)
-Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id kt8sm5314475pab.7.2014.04.23.06.44.12
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 23 Apr 2014 06:44:13 -0700 (PDT)
-X-Mailer: git-send-email 1.7.10.4
-In-Reply-To: <1398260646-2660-1-git-send-email-gitter.spiros@gmail.com>
+	id S1756266AbaDWO2n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Apr 2014 10:28:43 -0400
+Received: from mout.gmx.net ([212.227.17.20]:63515 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752902AbaDWO2m (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Apr 2014 10:28:42 -0400
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx103) with ESMTPSA (Nemesis) id 0MC3zg-1Wlnrr3IjA-008sm8;
+ Wed, 23 Apr 2014 16:28:39 +0200
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <20140423075325.GA7268@camelia.ucw.cz>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:mU532aW5PPBT/QGmSqY6Mc6eJirus06Hx8YFQzNAeAFoo5FHEWV
+ uTfm1GZ1vHlYjvUQXK2T9GuU4bsEQcK8aqmSeVSdMN84frbG5lne/Czm2PVmL9OvH5Elekx
+ Lu5lNFUiudIVID4Yb/4/NJWyv5j4mKdBOG6ZY2JiPspytZNtZCQeP+7vUa6d7Kvkrj0nIQP
+ hVq9fVdmfyAH067HYn8wQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246842>
 
-The Git CodingGuidelines prefer the $(...) construct for command
-substitution instead of using the backquotes `...`.
+Hi,
 
-The backquoted form is the traditional method for command
-substitution, and is supported by POSIX.  However, all but the
-simplest uses become complicated quickly.  In particular, embedded
-command substitutions and/or the use of double quotes require
-careful escaping with the backslash character.
+On Wed, 23 Apr 2014, Stepan Kasal wrote:
 
-The patch was generated by:
+> I have found out that "ulimit -s" does not work on Windows.
+> Adding this as a prerequisite, we will skip the test there.
 
-for _f in $(find . -name "*.sh")
-do
-   sed -i 's@`\(.*\)`@$(\1)@g' ${_f}
-done
+The interdiff can be seen here:
 
-and then carefully proof-read.
+	https://github.com/msysgit/git/commit/c68e27d5
 
-Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
----
- contrib/mw-to-git/t/test-gitmw-lib.sh |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/contrib/mw-to-git/t/test-gitmw-lib.sh b/contrib/mw-to-git/t/test-gitmw-lib.sh
-index 3372b2a..c783752 100755
---- a/contrib/mw-to-git/t/test-gitmw-lib.sh
-+++ b/contrib/mw-to-git/t/test-gitmw-lib.sh
-@@ -90,7 +90,7 @@ test_diff_directories () {
- #
- # Check that <dir> contains exactly <N> files
- test_contains_N_files () {
--	if test `ls -- "$1" | wc -l` -ne "$2"; then
-+	if test $(ls -- "$1" | wc -l) -ne "$2"; then
- 		echo "directory $1 should contain $2 files"
- 		echo "it contains these files:"
- 		ls "$1"
-@@ -341,10 +341,10 @@ wiki_install () {
- 			"http://download.wikimedia.org/mediawiki/$MW_VERSION_MAJOR/"\
- 			"$MW_FILENAME. "\
- 			"Please fix your connection and launch the script again."
--		echo "$MW_FILENAME downloaded in `pwd`. "\
-+		echo "$MW_FILENAME downloaded in $(pwd). "\
- 			"You can delete it later if you want."
- 	else
--		echo "Reusing existing $MW_FILENAME downloaded in `pwd`."
-+		echo "Reusing existing $MW_FILENAME downloaded in $(pwd)."
- 	fi
- 	archive_abs_path=$(pwd)/$MW_FILENAME
- 	cd "$WIKI_DIR_INST/$WIKI_DIR_NAME/" ||
--- 
-1.7.10.4
+Ciao,
+Johannes
