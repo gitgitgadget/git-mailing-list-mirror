@@ -1,82 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: How to trim the fat on my log graphs
-Date: Wed, 23 Apr 2014 13:15:18 -0700
-Message-ID: <xmqq1twnztt4.fsf@gitster.dls.corp.google.com>
-References: <CAHd499Bq07mPTR=h-5Gj=NuEQ9WLnK2wL5nxTNMe=LFnKHmvzA@mail.gmail.com>
-	<xmqqtx9l2ggp.fsf@gitster.dls.corp.google.com>
-	<CAHd499AovROt2fVAvh-ST9Vb7Hq8LpUS68i4eXWZaNszuKeUfg@mail.gmail.com>
-	<xmqqha5k0x8c.fsf@gitster.dls.corp.google.com>
-	<CAHd499Cw8=FMctRA49MUi+vP2gvMyXH9WgcfCKK_MrKDEOfvjw@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 3/3] fetch.c: use a single ref transaction for all ref updates
+Date: Wed, 23 Apr 2014 16:17:54 -0400
+Message-ID: <CAPig+cTxT3gZn+pOwCOyKVVzYrFO7CMeLP_TuCrRsUOQRFYz5w@mail.gmail.com>
+References: <1398192327-21302-1-git-send-email-sahlberg@google.com>
+	<1398192327-21302-4-git-send-email-sahlberg@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git <git@vger.kernel.org>
-To: Robert Dailey <rcdailey.lists@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 23 22:15:34 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Ronnie Sahlberg <sahlberg@google.com>
+X-From: git-owner@vger.kernel.org Wed Apr 23 22:18:04 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wd3Zt-0001ps-Kt
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 22:15:34 +0200
+	id 1Wd3cJ-00047P-0F
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 22:18:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758043AbaDWUPY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Apr 2014 16:15:24 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54032 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757513AbaDWUPW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Apr 2014 16:15:22 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 54F6A7E4C1;
-	Wed, 23 Apr 2014 16:15:22 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ayesvC71MlodVKb3P4SkdzNhLqA=; b=PmK6ss
-	SlcWAxhKACMlfetVXern5QB4Dh4GYBRsDm97bOPFzK0ievp2tZNS1flux0wINSPD
-	5poS6gMbonmJObGvYopKaxECo6dBHNHldSMbmxc+SDHKxzwTyfXxSAdhqKW7iaXk
-	oEUaXqQxuuup7E4MtRgRVHA6D3KywWxAAaYX4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=kSdyyKZPL0QitTepiPGCml/jEK4HKjHY
-	nN+Sa0gGbj6wDKHEX/uizQ4pko8kJPi7PMXFcBnBB9HOVGQEKK/fsK7AJVdXEWiL
-	cZF5P6Hp5AHAuReaP8/eO5EckZQAVHft9b/KbchSqOj5xEKWFyWj85VjDzzZcQnn
-	1x3Io6eO8Bk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 401467E4C0;
-	Wed, 23 Apr 2014 16:15:22 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 92A7D7E4BE;
-	Wed, 23 Apr 2014 16:15:20 -0400 (EDT)
-In-Reply-To: <CAHd499Cw8=FMctRA49MUi+vP2gvMyXH9WgcfCKK_MrKDEOfvjw@mail.gmail.com>
-	(Robert Dailey's message of "Wed, 23 Apr 2014 14:59:26 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: FE8CCF08-CB23-11E3-822B-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S932599AbaDWUR4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Apr 2014 16:17:56 -0400
+Received: from mail-yk0-f182.google.com ([209.85.160.182]:43546 "EHLO
+	mail-yk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932248AbaDWURz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Apr 2014 16:17:55 -0400
+Received: by mail-yk0-f182.google.com with SMTP id 142so1273398ykq.27
+        for <git@vger.kernel.org>; Wed, 23 Apr 2014 13:17:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=ll58ADAjVAlGXVYzJUSXSl2UWMrBhJ403caVd8IDu5g=;
+        b=gtXJyFFcSuAGeAfcFZgBrAcDhDOPMngtq0S4uF9MTpblKRurSMdqcA8KvY78qHPZlh
+         fOxlHKv91TmHi6ObYb5fFcgjV2K9oGtI5uep2yyJnawrhCTLpeFN3yYBZe5eVLExhg0k
+         O3VAQiQnugTKMN01GTJ31xO1he8zqNirehZfUa2ypdvqC1ZKZMDncb5QqEcgK6yWz8GS
+         VwiZZJHTG7BzLvpNhVFdai7foVE9vd5LE3926jlFsTR7QD3PBcygUsBSJN2WTaHX8vkS
+         u3GD1VJ9WqrmWm2i8fjij9Ye0KeOcB5zsF4tzWi2gIEnbdOAHDtf0DstT0HFl7vs/xj7
+         UqRQ==
+X-Received: by 10.236.51.42 with SMTP id a30mr72388476yhc.19.1398284274453;
+ Wed, 23 Apr 2014 13:17:54 -0700 (PDT)
+Received: by 10.170.163.66 with HTTP; Wed, 23 Apr 2014 13:17:54 -0700 (PDT)
+In-Reply-To: <1398192327-21302-4-git-send-email-sahlberg@google.com>
+X-Google-Sender-Auth: 74NnI_-pgkygVaMMgb_KtFSovYY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246886>
 
-Robert Dailey <rcdailey.lists@gmail.com> writes:
+On Tue, Apr 22, 2014 at 2:45 PM, Ronnie Sahlberg <sahlberg@google.com> wrote:
+> Change store_updated_refs to use a single ref transaction for all refs that
+> are updated during the fetch. This makes the fetch more atomic when update
+> failures occur.
+>
+> Since ref update failures will now no longer occur in the code path for
+> updating a single ref in s_update_ref, we no longer have as detailed error
+> message logging the exact reference and the ref log action as in the old code.
+> Instead since we fail the entire transaction we log a much more generic
+> message. But since we commit the transaction using MSG_ON_ERR we will log
+> an error containing the ref name if either locking of writing the ref would
+> so the regression in the log message is minor.
+>
+> This will also change the order in which errors are checked for and logged
+> which may alter which error will be logged if there are multiple errors
+> occuring during a fetch.
+>
+> For example, assuming we have a fetch for two refs that both would fail.
 
-> On Wed, Apr 23, 2014 at 12:30 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Robert Dailey <rcdailey.lists@gmail.com> writes:
->>
->> [Administrivia: because people read from top to bottom / why is it
->> bad to top-post? / please do not top-post.]
->>
->>> On Tue, Apr 22, 2014 at 4:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>>> Robert Dailey <rcdailey.lists@gmail.com> writes:
->>>>
->>>>> git log log --graph --abbrev-commit --decorate --date=relative
->>>>> --format=format:'%C(bold blue)%h%C(reset)%x09%C(bold
->>>>> green)(%ar)%C(reset)%C(bold yellow)%d%C(reset) %C(dim
->>>>> white)%an%C(reset) - %C(white)%s%C(reset)' --branches --remotes
->>>>> ...
-> ... I also tried removing it to test
-> but i saw no difference; tag names are still visible.
+s/assuming/assume/ perhaps?
 
-I do not use these eye-candies myself (they are too distracting for
-me), but doesn't "%d" in the format string mean "decorate"?
+> Where the first ref would fail with ENOTDIR due to a directory in the ref
+> path not existing, and the second ref in the fetch would fail due to
+> the check in update_logical_ref():
+>         if (current_branch &&
+>             !strcmp(ref->name, current_branch->name) &&
+>             !(update_head_ok || is_bare_repository()) &&
+>             !is_null_sha1(ref->old_sha1)) {
+>                 /*
+>                  * If this is the head, and it's not okay to update
+>                  * the head, and the old value of the head isn't empty...
+>                  */
+>
+> In the old code sicne we would update the refs one ref at a time we would
+
+s/sicne/since/
+
+> first fail the ENOTDIR and then fail the second update of HEAD as well.
+> But since the first ref failed with ENOTDIR we would eventually fail the whole
+> fetch with STORE_REF_ERROR_DF_CONFLICT
+>
+> In the new code, since we defer committing the transaction until all refs
+> has been processed, we would now detect that the second ref was bad and
+
+s/has/have/
+
+> rollback the transaction before we would even try start writing the update to
+> disk and thus we would not return STORE_REF_ERROR_DF_CONFLICT for this case.
+>
+> I think this new behaviour is more correct, since if there was a problem
+> we would not even try to commit the transaction but need to highlight this
+> change in how/what errors are reported.
+> This change in what error is returned only occurs if there are multiple
+> refs that fail to update and only some, but not all, of them fail due to
+> ENOTDIR.
+>
+> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
