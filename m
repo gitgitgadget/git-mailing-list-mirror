@@ -1,98 +1,71 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [ANNOUNCE] Git v2.0.0-rc0
-Date: Wed, 23 Apr 2014 09:33:40 +0200
-Message-ID: <CALKQrgd0Psp0nWUsmW16aR4io4xu_gumJmRdLGU+MOSzJvBobQ@mail.gmail.com>
-References: <xmqqk3ambf9k.fsf@gitster.dls.corp.google.com>
-	<475e137b5095e45c92a87a9969f58f0@74d39fa044aa309eaea14b9f57fe79c>
-	<20140422185829.GB15516@google.com>
-	<xmqq4n1l3yyf.fsf@gitster.dls.corp.google.com>
-	<20140422210002.GC15516@google.com>
-	<xmqqy4yx2gz9.fsf@gitster.dls.corp.google.com>
-	<20140422221148.GD15516@google.com>
-	<20140422222519.GC144079@vauxhall.crustytoothpaste.net>
-	<xmqqbnvt2d7v.fsf@gitster.dls.corp.google.com>
+From: Stephen Leake <stephen_leake@stephe-leake.org>
+Subject: Re: [RTC/PATCH] Add 'update-branch' hook
+Date: Wed, 23 Apr 2014 02:49:16 -0500
+Message-ID: <85mwfc4hab.fsf@stephe-leake.org>
+References: <1398047016-21643-1-git-send-email-felipe.contreras@gmail.com>
+	<5355793A.5020000@gmail.com> <53558476703cb_5c94d452ec4e@nysa.notmuch>
+	<53558A54.4060801@gmail.com> <53558ae6f1282_604be1f30cf3@nysa.notmuch>
+	<53559020.1050407@gmail.com> <53558f6269f91_640076f2f08f@nysa.notmuch>
+	<857g6h5ssh.fsf@stephe-leake.org>
+	<5356996d12ede_3e5aed7308e5@nysa.notmuch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	"Kyle J. McKay" <mackyle@gmail.com>,
-	Git mailing list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 23 09:33:57 2014
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 23 09:49:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wcrgp-0005Sx-4m
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 09:33:55 +0200
+	id 1Wcrvq-00043d-3l
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 09:49:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757251AbaDWHdu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Apr 2014 03:33:50 -0400
-Received: from locusts.copyleft.no ([188.94.218.116]:51423 "EHLO
-	mail.mailgateway.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757236AbaDWHdr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Apr 2014 03:33:47 -0400
-Received: from mail-pb0-f47.google.com ([209.85.160.47])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1Wcrge-000BKh-HW
-	for git@vger.kernel.org; Wed, 23 Apr 2014 09:33:44 +0200
-Received: by mail-pb0-f47.google.com with SMTP id up15so503465pbc.6
-        for <git@vger.kernel.org>; Wed, 23 Apr 2014 00:33:40 -0700 (PDT)
-X-Received: by 10.69.15.2 with SMTP id fk2mr17390163pbd.123.1398238420502;
- Wed, 23 Apr 2014 00:33:40 -0700 (PDT)
-Received: by 10.70.48.232 with HTTP; Wed, 23 Apr 2014 00:33:40 -0700 (PDT)
-In-Reply-To: <xmqqbnvt2d7v.fsf@gitster.dls.corp.google.com>
+	id S932211AbaDWHtT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Apr 2014 03:49:19 -0400
+Received: from cdptpa-outbound-snat.email.rr.com ([107.14.166.231]:22177 "EHLO
+	cdptpa-oedge-vip.email.rr.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S932156AbaDWHtT (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Apr 2014 03:49:19 -0400
+Received: from [75.87.81.6] ([75.87.81.6:52220] helo=TAKVER)
+	by cdptpa-oedge02 (envelope-from <stephen_leake@stephe-leake.org>)
+	(ecelerity 3.5.0.35861 r(Momo-dev:tip)) with ESMTP
+	id 6F/38-30401-D7077535; Wed, 23 Apr 2014 07:49:17 +0000
+In-Reply-To: <5356996d12ede_3e5aed7308e5@nysa.notmuch> (Felipe Contreras's
+	message of "Tue, 22 Apr 2014 11:31:41 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (windows-nt)
+X-RR-Connecting-IP: 107.14.168.130:25
+X-Cloudmark-Score: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246812>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246813>
 
-On Wed, Apr 23, 2014 at 12:47 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->> What we could do instead is simply require a newer version of
->> Getopt::Long, which would let people continue using their ancient OSes
->> and install a newer version from CPAN if necessary.  It's also the
->> proper way to specify the dependency.
+Felipe Contreras <felipe.contreras@gmail.com> writes:
+
+> Stephen Leake wrote:
+>> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>> 
+>> > Ilya Bobyr wrote:
+>> >> On 4/21/2014 2:17 PM, Felipe Contreras wrote:
+>> >> > Ilya Bobyr wrote:
+>> >> >
+>> >> >> Also, most have names that start with either "pre-" or "post-".
+>> >> >> It seems reasonable for both "pre-update-branch" and
+>> >> >> "post-update-branch" to exist.
+>> >> > I don't see what would be the point in that.
+>> >> 
+>> >> Do you see the point in the other hooks doing that?
+>> >
+>> > Yes, there a reason for the existance of those hooks. Now tell me why would
+>> > anybody use post-update-branch instead of pre-update-branch?
+>> 
+>> I have a branch which should always be recompiled on update;
+>> post-update-branch would be a good place for that.
 >
-> Yes, but if its inability to properly grok --option="" is the only
-> reason we want to add a dependency, wouldn't it suffice to simply
-> state in the documentation (1) how to recognise the symptom to see
-> if the version the user has is too old, e.g. "if you see this error
-> message", "run 'perl -v' to see if your perl is older than X",
-> etc. and (2) how to work it around, i.e. "instead of giving an empty
-> value with --option='', say --option ''"?
+> And why would pre-update-branch not serve that purpose?
 
-FWIW, the least intrusive approach is what I find most agreeable:
-
- - Fix the tests to use --prefix "" instead of --prefix=""
- - Update the documentation like Junio suggests above.
- - Reformat an example using --prefix ""
-
-I.e. use Kyle's patch to t9117, plus something like this:
-
-diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index 5b3c38d..9f579e0 100644
---- a/Documentation/git-svn.txt
-+++ b/Documentation/git-svn.txt
-@@ -91,6 +91,9 @@ COMMANDS
- NOTE: Before Git v2.0, the default prefix was "" (no prefix). This
- meant that SVN-tracking refs were put at "refs/remotes/*", which is
- incompatible with how Git's own remote-tracking refs are organized.
-+If you still want the old default, you can get it by passing
-+'--prefix ""' on the command line ('--prefix=""' may not work if
-+your Perl's Getopt::Long is < v2.37).
-
- --ignore-paths=<regex>;;
-        When passed to 'init' or 'clone' this regular expression will
-
-
-
-...Johan
+Because the code that needs to be compiled is not yet in the workspace
 
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+-- Stephe
