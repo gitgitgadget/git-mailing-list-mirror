@@ -1,75 +1,94 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH] git-rebase: fix probable reflog typo
-Date: Tue, 22 Apr 2014 19:14:44 -0500
-Message-ID: <1398212084-16304-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 23 02:25:19 2014
+From: "Kyle J. McKay" <mackyle@gmail.com>
+Subject: Re: [PATCH] pack-bitmap: do not core dump
+Date: Tue, 22 Apr 2014 17:40:23 -0700
+Message-ID: <CC07C833-D42A-488D-8523-46445F8C1C20@gmail.com>
+References: <781073ea08e86301f62e708bc0b80fd@74d39fa044aa309eaea14b9f57fe79c> <20140422231748.GA20353@sigill.intra.peff.net>
+Mime-Version: 1.0 (Apple Message framework v936)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Apr 23 02:40:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wcl02-0002N8-IJ
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 02:25:18 +0200
+	id 1WclEm-0006ZD-Fb
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 02:40:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751303AbaDWAZJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Apr 2014 20:25:09 -0400
-Received: from mail-oa0-f50.google.com ([209.85.219.50]:61264 "EHLO
-	mail-oa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750927AbaDWAZI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Apr 2014 20:25:08 -0400
-Received: by mail-oa0-f50.google.com with SMTP id i11so254191oag.9
-        for <git@vger.kernel.org>; Tue, 22 Apr 2014 17:25:08 -0700 (PDT)
+	id S1753097AbaDWAk2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Apr 2014 20:40:28 -0400
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:55077 "EHLO
+	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753058AbaDWAk1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Apr 2014 20:40:27 -0400
+Received: by mail-pa0-f52.google.com with SMTP id kx10so177179pab.39
+        for <git@vger.kernel.org>; Tue, 22 Apr 2014 17:40:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=XRdlXh/PJ9kXnrAmKSEcYqW//je0NdygTav/UoDPFJU=;
-        b=VN4q9MyiZAqFzNUk9oKe9Oeei1Ai2v49uyKEBGdoEniohjLP1ly1Hd+F33El2hjvDQ
-         mGgHKvOISCJmBDNDUnRJ5UlrBd4+H8HWSUhZ6UoF2wn7vp00O6Xph7jRWGQoyp8WOpad
-         itL2bG9+IZ4WEn9Ys1uBsMPk9QItlJkP6UYoRITdSDSu/SVl1QWXlQ9OIFBKA8RD4XNk
-         zd3Cu/QHD32XHAfdBvkXz3qn77aoZq5c8aOoT4DiORToqJbZG4/43pedchBbqhWIirKT
-         VW/6NU3iHGsqwllapAx6sCRSQNPqwEQG4fzOYP5mUafvfWLzBoem0wiO+lf3XiKFNOjR
-         4BLw==
-X-Received: by 10.182.144.194 with SMTP id so2mr34805259obb.31.1398212708052;
-        Tue, 22 Apr 2014 17:25:08 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id dh8sm184193603oeb.10.2014.04.22.17.25.06
+        h=from:to:in-reply-to:subject:references:message-id:content-type
+         :content-transfer-encoding:mime-version:date:cc;
+        bh=cON2HWqtnNGtLnFxGBIFNrmAcoW6a/aRj+B6SzjEFOg=;
+        b=si3nwftLyAdOBZ480vG7duqpcTTdpyMTEq8xpIlftns/Aeg9BxBDj5gcKBvLjJnDip
+         acdaomjcTg0rEWpZ4sLlQ3gfbOfZFZZatnS7+y+0bqUNSMtGKBty+pcd7eGTOCCoVGCn
+         XgFZxlWd7yKkeenjXPWWxR5gxQOmpPLdLPPQiB9aXaQOPO/50nEeNnOLOSbcqRN7405T
+         c47prEE8yGL89qCMJL9AgY22tVFD2/yQ2UKAKoS2GyTYCUPoG8cHidRat5RO1xO6u+Hc
+         +LIgzSRgH3gpQyJEipQo39GLiBjsSecQSj/nndDjq1kIYhYvXi1BEGgxG5FvBfRUZnTI
+         pkdg==
+X-Received: by 10.68.202.194 with SMTP id kk2mr7721036pbc.156.1398213626522;
+        Tue, 22 Apr 2014 17:40:26 -0700 (PDT)
+Received: from [172.16.16.105] (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
+        by mx.google.com with ESMTPSA id vm3sm58835563pbc.45.2014.04.22.17.40.25
         for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 22 Apr 2014 17:25:06 -0700 (PDT)
-X-Mailer: git-send-email 1.9.2+fc1.1.g5c924db
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Tue, 22 Apr 2014 17:40:25 -0700 (PDT)
+In-Reply-To: <20140422231748.GA20353@sigill.intra.peff.net>
+X-Mauler: Craptastic (2.936)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246807>
 
-Commit 26cd160 (rebase -i: use a better reflog message) tried to produce
-a better reflog message, however, it seems a statement was introduced by
-mistake.
+On Apr 22, 2014, at 16:17, Jeff King wrote:
+> but I do not think that is necessarily any more readable, especially
+> because we probably need to cast it like:
+>
+>  self->rlw = (eword_t *)((uint8_t *)self->buffer + rlw_offset);
 
-'comment_for_reflog start' basically overides the GIT_REFLOG_ACTION we
-just set.
+I suspect that will produce a warning about a cast increasing pointer  
+alignment in some cases.
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- git-rebase--interactive.sh | 2 --
- 1 file changed, 2 deletions(-)
+> So why do any uint8_t math in the first place?
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 43631b4..5f1d8c9 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -893,8 +893,6 @@ then
- 	GIT_REFLOG_ACTION="$GIT_REFLOG_ACTION: checkout $switch_to"
- 	output git checkout "$switch_to" -- ||
- 	die "Could not checkout $switch_to"
--
--	comment_for_reflog start
- fi
- 
- orig_head=$(git rev-parse --verify HEAD) || die "No HEAD?"
--- 
-1.9.2+fc1.1.g5c924db
+Just guessing it started out as uint8_t math throughout then the  
+warning about increasing alignment showed up so that part got changed  
+but the save pointer offset part did not.
+
+> I think we could write it as:
+>
+> 	eword_t *old = self->buffer;
+> 	... realloc ...
+> 	self->rlw = self->buffer + (self->rlw - old);
+
+Yeah that seems good too.
+
+> I'm fine with your patch, though.
+
+
+thanks.
+
+I tend to gravitate towards the most minimal change that fixes the  
+issue when touching someone else's code especially if I'm not familiar  
+with it.  There's also the minor issue of optimizing out the pointer  
+arithmetic implicit divide by sizeof(eword_t) for the subtract and the  
+implicit multiply by sizeof(eword_t) for the add -- I didn't check to  
+see if one of the alternatives is best -- the one you mention above  
+with the cast (keeping the uint8_t math) is probably guaranteed not to  
+have any implicit multiply, but there's that pesky warning to get rid  
+of.  Of course those multiplies and divides should just end up being  
+shifts so not a big deal if they didn't get optimized out (the realloc  
+time should dwarf them into irrelevancy anyway).
+
+--Kyle
