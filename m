@@ -1,78 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/3] remote-helpers: move out of contrib
-Date: Wed, 23 Apr 2014 12:20:47 -0700
-Message-ID: <xmqqa9bbzwc0.fsf@gitster.dls.corp.google.com>
-References: <1398112633-23604-1-git-send-email-felipe.contreras@gmail.com>
-	<1398112633-23604-3-git-send-email-felipe.contreras@gmail.com>
-	<38F8C9C6-E186-4C42-B3F0-931AE73400FA@quendi.de>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: Fwd: git p4: feature request - branch check filtering
+Date: Wed, 23 Apr 2014 15:46:35 -0400
+Message-ID: <20140423194635.GA19597@padd.com>
+References: <CADtnS+zWzPY6ftwxWUE+Gb-OKq_Kzf9y+fFfgJ-demWyX3azCg@mail.gmail.com>
+ <CADtnS+weco6Lvk3hHuM7BcaRsvMkeDCmqH26s19TrgWvBYXAvA@mail.gmail.com>
+ <20140223151247.GA1272@padd.com>
+ <CADtnS+w9q0dmnGsZoDr12GZ-RSZzcfPs6rfii-4eK7Hhn2byag@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
-To: Max Horn <max@quendi.de>
-X-From: git-owner@vger.kernel.org Wed Apr 23 21:20:58 2014
+Cc: git@vger.kernel.org
+To: Dan Porter <dpreid@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 23 21:46:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wd2j4-0003Bw-Dt
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 21:20:58 +0200
+	id 1Wd381-0001KV-CU
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 21:46:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757324AbaDWTUw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Apr 2014 15:20:52 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37712 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757251AbaDWTUv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Apr 2014 15:20:51 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B39B97D1FA;
-	Wed, 23 Apr 2014 15:20:50 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=RYnvLrEQWl2w4h9/S7I4fVWK8bQ=; b=WEe0yu
-	5cQpMrzO9Va54z1Bcr098OWk6jYJpLISDff+N7pPFYcc+OSvyQv2+yIiHprH20g4
-	0ec9uAcDUgffEVaH+hD0YZHcy6lnGmN4BEFnCNGMIIjE+QilGNz0uwtaxZGgftuT
-	+LcXpiDJ2/sPDeAD3Ia3ngthD+Cj04IiexP4c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ixyFMwGN8eX/E5djdsgkGWNb0J07lNA3
-	qiODJHt3kGfQj5QJzyEp9kq5NJO1j+STKRSmaG1HY2TTx7i4pWjIlKn1kt+AyDPg
-	yghXX+wrHsZpaXdiX3P0KLPBekwrbLoSQbPE2PCy26+2RjBX5JyM4dol07g/2yQY
-	g0xNoTjjswU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 927E37D1F9;
-	Wed, 23 Apr 2014 15:20:50 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D412C7D1F8;
-	Wed, 23 Apr 2014 15:20:48 -0400 (EDT)
-In-Reply-To: <38F8C9C6-E186-4C42-B3F0-931AE73400FA@quendi.de> (Max Horn's
-	message of "Wed, 23 Apr 2014 15:10:05 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 60739538-CB1C-11E3-B4AB-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757038AbaDWTqk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Apr 2014 15:46:40 -0400
+Received: from honk.padd.com ([74.3.171.149]:58596 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751182AbaDWTqj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Apr 2014 15:46:39 -0400
+Received: from arf.padd.com (unknown [50.105.4.164])
+	by honk.padd.com (Postfix) with ESMTPSA id A94B32C1B;
+	Wed, 23 Apr 2014 12:46:37 -0700 (PDT)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id 27495212DA; Wed, 23 Apr 2014 15:46:35 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <CADtnS+w9q0dmnGsZoDr12GZ-RSZzcfPs6rfii-4eK7Hhn2byag@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246872>
 
-Max Horn <max@quendi.de> writes:
+dpreid@gmail.com wrote on Tue, 22 Apr 2014 10:29 +0100:
+> There is a patch viewable at this link:
+> https://github.com/Stealthii/git/commit/f7a2e611262fd977ac99e066872d3d0743b7df3c
+> 
+> For the use case this works perfectly - if I define branch mappings
+> with git config, followed by setting 'git-p4.skipBranchScan' to true,
+> git-p4 will skip scanning of all remote branches and limit to what's
+> defined in the map.  An example config:
+> 
+> [git-p4]
+>         skipBranchScan = true
+>         branchList = release_1.0.0:release_1.1.0
+>         branchList = release_1.1.0:release_1.2.0
+> 
+> If there is any more information I need to provide let me know. I have
+> been using this patch for over two months, testing both use cases with
+> and without git-p4.skipBranchScan and I have noticed no issues.  Logic
+> of git-p4 is not changed from default behaviour, unless the user
+> explicitly sets the boolean flag to skip scanning.
 
-> That said, I don't know what the criteria are for moving something out
-> of contrib.
+Thanks, Dan.  This looks good and is a fine compromise
+considering the various choices we discussed earlier.
 
-Because we accept stuff to contrib/, with an assumption that it is
-to stay there without contaminating the main part of the system, the
-quality of stuff in contrib/ can be sub-par and it is very possible
-that a lot of clean-ups and fixes are necessary before moving them
-out.
+Junio's comments about 2.0 non-withstanding, I think this change
+should go into the next convenient release.  So 2.1 or 2.0.1;
+however the numbers end up working post-2.0.
 
-> Perhaps it is OK to move an undocumented remote-helper
-> with known bugs out of contrib.
+If you could take a look at Documentation/SubmittingPatches,
+and do a few things:
 
-We should strive to apply the same criteria as new submission to the
-main part of the system.  And inputs from people like you who have
-more experiences than others on the list in dealing with hg-to-git
-bridging are very much welcomed to identify and document what kind
-of breakages there are, and to come up with the solution to them.
+    1.  Write a nice commit message, say:
+
+	git p4: add skipBranchScan to avoid p4 branch scan
+
+	Some more useful text.
+
+    2.  Include at the bottom of that message:
+
+	Acked-by: Pete Wyckoff <pw@padd.com>
+
+    3.  Inline the text of your patch, not just a link to github.
+
+    4.  Consider adding a t98xx test.  This isn't required for
+	a fairly minor change like yours, but if you think TDD
+	is fun, have at it.  Might protect your feature against
+	future hackers who would try to break it.  :)
+
+Then send it to vger, cc junio (and me), and he will be kind
+enough to queue it up appropriately.
+
+Thanks!
+
+		-- Pete
