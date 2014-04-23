@@ -1,80 +1,61 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v2 2/3] remote-helpers: move out of contrib
-Date: Wed, 23 Apr 2014 16:00:13 -0500
-Message-ID: <535829dd861b1_24448772ece1@nysa.notmuch>
-References: <1398112633-23604-1-git-send-email-felipe.contreras@gmail.com>
- <1398112633-23604-3-git-send-email-felipe.contreras@gmail.com>
- <38F8C9C6-E186-4C42-B3F0-931AE73400FA@quendi.de>
- <xmqqa9bbzwc0.fsf@gitster.dls.corp.google.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2] git tag --contains : avoid stack overflow
+Date: Wed, 23 Apr 2014 23:14:42 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.1404232313370.14982@s15462909.onlinehome-server.info>
+References: <20140416141519.GA9684@camelia.ucw.cz> <20140416154653.GB4691@sigill.intra.peff.net> <alpine.DEB.1.00.1404171902010.14982@s15462909.onlinehome-server.info> <20140417213238.GA14792@sigill.intra.peff.net> <alpine.DEB.1.00.1404172347440.14982@s15462909.onlinehome-server.info>
+ <20140417215817.GA822@sigill.intra.peff.net> <20140423075325.GA7268@camelia.ucw.cz> <20140423191749.GB20596@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>, Max Horn <max@quendi.de>
-X-From: git-owner@vger.kernel.org Wed Apr 23 23:10:51 2014
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org,
+	Jean-Jacques Lafay <jeanjacques.lafay@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Apr 23 23:14:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wd4RL-0003Yi-AY
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 23:10:47 +0200
+	id 1Wd4VF-0007SG-Uz
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 23:14:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756078AbaDWVKm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Apr 2014 17:10:42 -0400
-Received: from mail-oa0-f47.google.com ([209.85.219.47]:51405 "EHLO
-	mail-oa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752767AbaDWVKl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Apr 2014 17:10:41 -0400
-Received: by mail-oa0-f47.google.com with SMTP id i11so1672132oag.34
-        for <git@vger.kernel.org>; Wed, 23 Apr 2014 14:10:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=5FQWEKf8ZSpKET7PXa4DIyKpPV+kNLu2NVKVQYk3Sik=;
-        b=N4R6Vt9GEbCPMtHEdcov53iWVsslf81AHTnahqkpEmXj6BsIs8iAGED1+X7rgT9Szn
-         U4uBRSY2mz1C6sPTpMdMUakd9ivVMmAcIt0EQiONjBdHX9NiFWKy0N+Zk7SC1VFkQP54
-         /uwBkUMpKw6JsP/ibfCBDN41CbCHz0nVUm+JzpN7lmf42dlGXOFayEMYdQjXo0fDQEoM
-         II99qxiY+W4O5OcvfKKKUORfXGXalaOabbk1Ja+eJeoCSG3bRgKyMDoq7ma2iFUoC7f5
-         WZdjSRxukmJB7gw4qZcwkywUI0EKuScB96S+lMz1YOPu1ajwWHPVnRjEfTDKMVSYI+64
-         7Lmw==
-X-Received: by 10.182.55.3 with SMTP id n3mr9591702obp.55.1398287440956;
-        Wed, 23 Apr 2014 14:10:40 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id 10sm4063383obq.18.2014.04.23.14.10.36
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 23 Apr 2014 14:10:37 -0700 (PDT)
-In-Reply-To: <xmqqa9bbzwc0.fsf@gitster.dls.corp.google.com>
+	id S1757605AbaDWVOp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Apr 2014 17:14:45 -0400
+Received: from mout.gmx.net ([212.227.17.21]:54352 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757585AbaDWVOp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Apr 2014 17:14:45 -0400
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx002) with ESMTPSA (Nemesis) id 0M1msU-1WtDk91OpO-00tnwj;
+ Wed, 23 Apr 2014 23:14:43 +0200
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <20140423191749.GB20596@sigill.intra.peff.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:EvbXzo1n7VTkevpTl4tToyLcpwGKwqdX/VsARqi5vLBMc6ndI8Y
+ /YeF1VNS/3b4aKcYmbD26G2q/XLfz1Lh1FrBXut/1InoTt6NX2D3E+gXU8WS9qcGZyc/LR6
+ Bc6cp1Hwb5qWpqWqjssz79YzVGpq1ffhcH/S4ItYAufTPzBteVFMIfsj3OcoWSjr10X38t+
+ e9R5KsI0L0+ffclUFzMBw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246897>
 
-Junio C Hamano wrote:
-> Max Horn <max@quendi.de> writes:
+Hi Peff,
+
+On Wed, 23 Apr 2014, Jeff King wrote:
+
+> On Wed, Apr 23, 2014 at 09:53:25AM +0200, Stepan Kasal wrote:
 > 
-> > Perhaps it is OK to move an undocumented remote-helper
-> > with known bugs out of contrib.
+> > I have found out that "ulimit -s" does not work on Windows.  Adding
+> > this as a prerequisite, we will skip the test there.
 > 
-> We should strive to apply the same criteria as new submission to the
-> main part of the system.  And inputs from people like you who have
-> more experiences than others on the list in dealing with hg-to-git
-> bridging are very much welcomed to identify and document what kind
-> of breakages there are, and to come up with the solution to them.
+> I found this bit weird, as the test originated on Windows. Did it never
+> actually cause a failure there (i.e., the "ulimit -s" doesn't do
+> anything)? Or does "ulimit" fail?
 
-FTR. There are no "known brakages", at least to me. Max Horn tends to hoard
-these issues and never report them (unless an opportunity to criticize
-git-remote-hg comes, apparently).
+I must have forgotten to test on Windows. For performance reasons (you
+know that I only have a Git time budget of about 15min/day), I developed
+the test and the patch on Linux.
 
-The very unlikely issue that nobody has reported about hg multiple heads and gc
-I just fixed, and the issue he just reported about 'foo' and 'foo/bar' is newly
-reported, and there's no easy way to fix this. My proposal would be to have
-some sort of branch mapping mechanism in fast-import, but hardly something that
-should prevent the move out of contrib.
-
--- 
-Felipe Contreras
+Ciao,
+Johannes
