@@ -1,49 +1,51 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 01/14] t9365-continuing-queries.sh: use the $( ... ) construct for command substitution
-Date: Wed, 23 Apr 2014 06:43:53 -0700
-Message-ID: <1398260646-2660-1-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 05/14] txt-to-pot.sh: use the $( ... ) construct for command substitution
+Date: Wed, 23 Apr 2014 06:43:57 -0700
+Message-ID: <1398260646-2660-5-git-send-email-gitter.spiros@gmail.com>
+References: <1398260646-2660-1-git-send-email-gitter.spiros@gmail.com>
 Cc: matthieu.moy@grenoble-inp.fr, Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 23 15:44:29 2014
+X-From: git-owner@vger.kernel.org Wed Apr 23 15:44:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WcxTN-0008N0-Vt
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 15:44:26 +0200
+	id 1WcxTU-0008US-9r
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 15:44:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757053AbaDWNoS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Apr 2014 09:44:18 -0400
-Received: from mail-pb0-f48.google.com ([209.85.160.48]:35738 "EHLO
-	mail-pb0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756189AbaDWNoN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Apr 2014 09:44:13 -0400
-Received: by mail-pb0-f48.google.com with SMTP id md12so798198pbc.35
-        for <git@vger.kernel.org>; Wed, 23 Apr 2014 06:44:12 -0700 (PDT)
+	id S1757069AbaDWNoX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Apr 2014 09:44:23 -0400
+Received: from mail-pa0-f48.google.com ([209.85.220.48]:56826 "EHLO
+	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756189AbaDWNoT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Apr 2014 09:44:19 -0400
+Received: by mail-pa0-f48.google.com with SMTP id hz1so777921pad.35
+        for <git@vger.kernel.org>; Wed, 23 Apr 2014 06:44:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=Ftlwq3fI0fcu6XMdLO98+UY6wdeNZlkFahmq7+eEe8o=;
-        b=DmCLcPX6YOpsOTkP3rgp7Ud12zJW6uUivMpH6hlUMblBdU0z0MaE+7zK/NuYAs3D2W
-         ds3rb7tVlVZSdEyUfiMF6/iTy0JIULGPKJdnWrtaR0t8qM7L44BnZ6MilZSha/wO52fX
-         lcYE+zVyot3URHmX3Bi2psT2pF2aRYkq78gOLdDBl+nmCw5kEjrRgnAyw29SgtN+thWb
-         ZXFa3xYDZGFLccDsxKk1dBC/8lZnyPACzley/NKVlVYzh850rqZDy9jz+NelbEMG5N0F
-         KO+JZjR879I9Sv/fwVecOM7cE54faYOfc2d/pRcXACnVLrwwG4w30GOtnfaLKGhSHKQn
-         qlRQ==
-X-Received: by 10.68.237.133 with SMTP id vc5mr55564273pbc.92.1398260652690;
-        Wed, 23 Apr 2014 06:44:12 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=M6I0rspgOgINzZL8IxX+QEzTDGwpztOn/m2273oNZAw=;
+        b=mADDYijnCFduHZ0jpJ1XGLV3aD1nPnbXUwKspRxdCRLMCMybTusCXOQo0FBnwzJEDC
+         fDtO6/Mj2MS0lAiJ07zichNcq+dYyMTPLJXn9ZnJ0XvpvgjaEsxfg/3SSX4oupKxBV3i
+         +RLi4S/JywumG7TD50VSkrgs5ZPi6cuPzCnvftOs4gb3PuwOrzNiz4O6Pk2aCGVtfi11
+         SoiEau5glpuN9NDDdL198Q/PKa6wR2iJcPenax9S6jbl0doVt4VofyF5Zs6T/B3ff/1o
+         m4edDHTnVOtC2y3pru71/lMv0p3XB3W8ZSOfSa+4smdLfnhNIR+aJQarJcLeA0I2NPna
+         xEQA==
+X-Received: by 10.68.103.165 with SMTP id fx5mr25055365pbb.118.1398260658953;
+        Wed, 23 Apr 2014 06:44:18 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id kt8sm5314475pab.7.2014.04.23.06.44.11
+        by mx.google.com with ESMTPSA id kt8sm5314475pab.7.2014.04.23.06.44.16
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 23 Apr 2014 06:44:12 -0700 (PDT)
+        Wed, 23 Apr 2014 06:44:18 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
+In-Reply-To: <1398260646-2660-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246829>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -65,21 +67,30 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- contrib/mw-to-git/t/t9365-continuing-queries.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ git-gui/po/glossary/txt-to-pot.sh |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/contrib/mw-to-git/t/t9365-continuing-queries.sh b/contrib/mw-to-git/t/t9365-continuing-queries.sh
-index 27e267f..0164547 100755
---- a/contrib/mw-to-git/t/t9365-continuing-queries.sh
-+++ b/contrib/mw-to-git/t/t9365-continuing-queries.sh
-@@ -9,7 +9,7 @@ test_check_precond
- 
- test_expect_success 'creating page w/ >500 revisions' '
- 	wiki_reset &&
--	for i in `test_seq 501`
-+	for i in $(test_seq 501)
- 	do
- 		echo "creating revision $i" &&
- 		wiki_editpage foo "revision $i<br/>" true
+diff --git a/git-gui/po/glossary/txt-to-pot.sh b/git-gui/po/glossary/txt-to-pot.sh
+index 49bf7c5..8249915 100755
+--- a/git-gui/po/glossary/txt-to-pot.sh
++++ b/git-gui/po/glossary/txt-to-pot.sh
+@@ -11,7 +11,7 @@
+ if [ $# -eq 0 ]
+ then
+ 	cat <<!
+-Usage: `basename $0` git-gui-glossary.txt > git-gui-glossary.pot
++Usage: $(basename $0) git-gui-glossary.txt > git-gui-glossary.pot
+ !
+ 	exit 1;
+ fi
+@@ -33,7 +33,7 @@ cat <<!
+ msgid ""
+ msgstr ""
+ "Project-Id-Version: PACKAGE VERSION\n"
+-"POT-Creation-Date: `date +'%Y-%m-%d %H:%M%z'`\n"
++"POT-Creation-Date: $(date +'%Y-%m-%d %H:%M%z')\n"
+ "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+ "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+ "Language-Team: LANGUAGE <LL@li.org>\n"
 -- 
 1.7.10.4
