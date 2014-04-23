@@ -1,71 +1,77 @@
-From: "Storm-Olsen, Marius" <Marius.Storm-Olsen@student.bi.no>
-Subject: Re: Trying to setup Visual Studio 2013 with a CentOS 6.5 x64 git
- server
-Date: Wed, 23 Apr 2014 19:51:54 +0000
-Message-ID: <535819AA.2030406@student.bi.no>
-References: <CAOWfAePSjpOaN0pgaVqjHxvdMPp2WnEhHj2-Wea1dV7WyjtMiw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: Charles Buege <charles.buege@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 23 21:52:04 2014
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [RFC/PATCH v2 0/3] New 'update-branch' hook
+Date: Wed, 23 Apr 2014 14:42:37 -0500
+Message-ID: <1398282160-26151-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Ilya Bobyr <ilya.bobyr@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 23 21:53:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wd3D9-0005ay-Sb
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 21:52:04 +0200
+	id 1Wd3EI-0006XM-KP
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 21:53:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757448AbaDWTv7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Apr 2014 15:51:59 -0400
-Received: from mail-db3lp0081.outbound.protection.outlook.com ([213.199.154.81]:22136
-	"EHLO emea01-db3-obe.outbound.protection.outlook.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1757143AbaDWTv5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Apr 2014 15:51:57 -0400
-Received: from DBXPR07MB110.eurprd07.prod.outlook.com (10.242.138.148) by
- DBXPR07MB112.eurprd07.prod.outlook.com (10.242.138.150) with Microsoft SMTP
- Server (TLS) id 15.0.921.12; Wed, 23 Apr 2014 19:51:55 +0000
-Received: from DBXPR07MB110.eurprd07.prod.outlook.com ([169.254.6.230]) by
- DBXPR07MB110.eurprd07.prod.outlook.com ([169.254.6.230]) with mapi id
- 15.00.0921.000; Wed, 23 Apr 2014 19:51:55 +0000
-Thread-Topic: Trying to setup Visual Studio 2013 with a CentOS 6.5 x64 git
- server
-Thread-Index: AQHPXybWzuYC5YZ9x0eFZDOy+p1AIpsfSJsA
-In-Reply-To: <CAOWfAePSjpOaN0pgaVqjHxvdMPp2WnEhHj2-Wea1dV7WyjtMiw@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-imapappendstamp: DBXPR07MB110.eurprd07.prod.outlook.com
- (15.00.0921.000)
-x-originating-ip: [199.227.34.94]
-x-forefront-prvs: 01901B3451
-x-forefront-antispam-report: SFV:NSPM;SFS:(10009001)(6009001)(428001)(24454002)(479174003)(377454003)(189002)(199002)(74502001)(74662001)(4396001)(59896001)(15202345003)(74482001)(77982001)(15395725003)(92726001)(86362001)(87936001)(92566001)(2656002)(76176999)(65816999)(50986999)(87266999)(36756003)(20776003)(80022001)(66066001)(79102001)(54356999)(15975445006)(83072002)(85852003)(46102001)(81542001)(81342001)(19580395003)(83322001)(99136001)(80976001)(33656001)(31966008)(76482001)(99396002);DIR:OUT;SFP:1101;SCL:1;SRVR:DBXPR07MB112;H:DBXPR07MB110.eurprd07.prod.outlook.com;FPR:F6DA2408.A4DA8FC5.7F539DA7.B388CCF1.20124;MLV:sfv;PTR:InfoNoRecords;MX:1;A:1;LANG:en;
-received-spf: None (: student.bi.no does not designate permitted sender
- hosts)
-Content-ID: <0661D075C409B6489BCFB704EC6A3733@nbsstd.onmicrosoft.com>
-X-OriginatorOrg: student.bi.no
+	id S1757617AbaDWTxI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Apr 2014 15:53:08 -0400
+Received: from mail-ob0-f175.google.com ([209.85.214.175]:46998 "EHLO
+	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756920AbaDWTxH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Apr 2014 15:53:07 -0400
+Received: by mail-ob0-f175.google.com with SMTP id wp4so1584186obc.6
+        for <git@vger.kernel.org>; Wed, 23 Apr 2014 12:53:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=t1XaptyCpdZy19SFz4LqtdG2H9AOpvDt9VjiLTWlT7c=;
+        b=Sh15tegsRsUIJPQa7DKYsMGLiIHJHr7U9d2NYE7z/Hjqd7tQGGBRDvIoIIiG/YSkor
+         eAuz7JfPog4vBzeJSrrr4Ht0zttSXwNynAK3cLmymZh4h+qdwJ1hO6HJ7wfn8uLXqUxX
+         LnQQyQsjLPueWULNNcW44psiSfXeuZA+3TrfEWySRqEQcZYvGZPt9gLldiFC0czTQ/1j
+         Hnc5pVG3Y3nGjaHUHkqgfT4PbrKMj+V6yj1DQj7NrBh65xDFxjP33ftxaKSyzwN6AZhG
+         FIkcKJyTlpOc7iNVJWBnFysi3wvY393GYnt30Cpp2zbmFj5wb5AB/z0o5MP6H0CUTCOK
+         ribw==
+X-Received: by 10.60.42.194 with SMTP id q2mr3078043oel.66.1398282785837;
+        Wed, 23 Apr 2014 12:53:05 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id zc8sm3701509obc.1.2014.04.23.12.53.03
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 23 Apr 2014 12:53:04 -0700 (PDT)
+X-Mailer: git-send-email 1.9.2+fc1.1.g5c924db
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246875>
 
-On 4/23/2014 2:04 PM, Charles Buege wrote:
-> If, in actuality, I can use a CentOS git server with Visual Studio
-> 2013, can anyone point me in the direction of an FAQ/directions/
-> YouTube video/book/anything for how to setup something like this?
+Currently it's not possible to keep track of changes that happen to a branch,
+specifically; when a branch is created and rebased. This patch series aims to fix that.
 
-http://lmgtfy.com/?q=%22visual+studio+2013%22+clone+git+site%3Ayoutube.com&l=1
+The last patch is the important one, but in the process of testing this I found
+out that the GIT_DIR environment variable is not always set, so the hooks (all
+of them) get confused.
 
-will take you to a thorough review of VS2013 with Git local/remote, 
-command-line tooling, and some standard Q&A. Description contains link 
-to slides and notes.
+Too many changes since v1 to list them all.
 
-Good luck!
+
+Felipe Contreras (3):
+  sh-setup: export GIT_DIR
+  run-command: make sure hooks have always GIT_DIR
+  Add 'update-branch' hook
+
+ Documentation/githooks.txt    | 15 +++++++++
+ branch.c                      | 12 ++++++-
+ builtin/clone.c               |  8 +++--
+ builtin/reset.c               |  5 +++
+ git-rebase--interactive.sh    |  4 +++
+ git-rebase.sh                 |  4 +++
+ git-sh-setup.sh               |  1 +
+ run-command.c                 | 24 ++++++++++++--
+ t/t5408-update-branch-hook.sh | 76 +++++++++++++++++++++++++++++++++++++++++++
+ 9 files changed, 144 insertions(+), 5 deletions(-)
+ create mode 100755 t/t5408-update-branch-hook.sh
 
 -- 
-.marius
+1.9.2+fc1.1.g5c924db
