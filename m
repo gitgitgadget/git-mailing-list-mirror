@@ -1,99 +1,82 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 2/3] fetch.c: change s_update_ref to use a ref transaction
-Date: Wed, 23 Apr 2014 16:12:54 -0400
-Message-ID: <CAPig+cQUAVK7O7yRJGjvRmuPg06C1ZEi876gMsihFpGLgVa=Mg@mail.gmail.com>
-References: <1398192327-21302-1-git-send-email-sahlberg@google.com>
-	<1398192327-21302-3-git-send-email-sahlberg@google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: How to trim the fat on my log graphs
+Date: Wed, 23 Apr 2014 13:15:18 -0700
+Message-ID: <xmqq1twnztt4.fsf@gitster.dls.corp.google.com>
+References: <CAHd499Bq07mPTR=h-5Gj=NuEQ9WLnK2wL5nxTNMe=LFnKHmvzA@mail.gmail.com>
+	<xmqqtx9l2ggp.fsf@gitster.dls.corp.google.com>
+	<CAHd499AovROt2fVAvh-ST9Vb7Hq8LpUS68i4eXWZaNszuKeUfg@mail.gmail.com>
+	<xmqqha5k0x8c.fsf@gitster.dls.corp.google.com>
+	<CAHd499Cw8=FMctRA49MUi+vP2gvMyXH9WgcfCKK_MrKDEOfvjw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Ronnie Sahlberg <sahlberg@google.com>
-X-From: git-owner@vger.kernel.org Wed Apr 23 22:13:05 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Git <git@vger.kernel.org>
+To: Robert Dailey <rcdailey.lists@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 23 22:15:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wd3XS-0007ua-VW
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 22:13:03 +0200
+	id 1Wd3Zt-0001ps-Kt
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 22:15:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757989AbaDWUM5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Apr 2014 16:12:57 -0400
-Received: from mail-yk0-f177.google.com ([209.85.160.177]:63963 "EHLO
-	mail-yk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757962AbaDWUMz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Apr 2014 16:12:55 -0400
-Received: by mail-yk0-f177.google.com with SMTP id q200so1257487ykb.36
-        for <git@vger.kernel.org>; Wed, 23 Apr 2014 13:12:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=FL52qcGLyG9Mr08rmxJ84yTYDBrfjURbNp9uFsC2DBc=;
-        b=aO7gn8XL78bmnY8MC34Dyhitd30mcUVqUNPmAsM3YJA8px4sMUYt0eCE0eO+mTPETW
-         3w3drHCJquHVjWpu5WOAbCe/ggXN0t06fEJV7bCqbkpu1tFo6u1s8bLDPaOGG37SbEot
-         0awhr3uxOobyifc0p0RAsHeDP/Z59YfN19qYHgZpubKBmwPXu9ZflJ1Mxip691y34XrG
-         l0bRB2eqnlc+yYLYiojuSf5IwWXubdRLws7SMkGbM+PlALsS7MeL1QPBbr1iwBUnbAyg
-         AhXyYBil+30sdn5/llWK0mD9gWfjI75qivpYhwlt9YVPTXrxyKmgyVB89keKUj+CW8sx
-         pUWA==
-X-Received: by 10.236.194.169 with SMTP id m29mr14840326yhn.121.1398283974837;
- Wed, 23 Apr 2014 13:12:54 -0700 (PDT)
-Received: by 10.170.163.66 with HTTP; Wed, 23 Apr 2014 13:12:54 -0700 (PDT)
-In-Reply-To: <1398192327-21302-3-git-send-email-sahlberg@google.com>
-X-Google-Sender-Auth: KLZjyirjohsmfvLeKWuOQExhrSs
+	id S1758043AbaDWUPY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Apr 2014 16:15:24 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54032 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757513AbaDWUPW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Apr 2014 16:15:22 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 54F6A7E4C1;
+	Wed, 23 Apr 2014 16:15:22 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ayesvC71MlodVKb3P4SkdzNhLqA=; b=PmK6ss
+	SlcWAxhKACMlfetVXern5QB4Dh4GYBRsDm97bOPFzK0ievp2tZNS1flux0wINSPD
+	5poS6gMbonmJObGvYopKaxECo6dBHNHldSMbmxc+SDHKxzwTyfXxSAdhqKW7iaXk
+	oEUaXqQxuuup7E4MtRgRVHA6D3KywWxAAaYX4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=kSdyyKZPL0QitTepiPGCml/jEK4HKjHY
+	nN+Sa0gGbj6wDKHEX/uizQ4pko8kJPi7PMXFcBnBB9HOVGQEKK/fsK7AJVdXEWiL
+	cZF5P6Hp5AHAuReaP8/eO5EckZQAVHft9b/KbchSqOj5xEKWFyWj85VjDzzZcQnn
+	1x3Io6eO8Bk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 401467E4C0;
+	Wed, 23 Apr 2014 16:15:22 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 92A7D7E4BE;
+	Wed, 23 Apr 2014 16:15:20 -0400 (EDT)
+In-Reply-To: <CAHd499Cw8=FMctRA49MUi+vP2gvMyXH9WgcfCKK_MrKDEOfvjw@mail.gmail.com>
+	(Robert Dailey's message of "Wed, 23 Apr 2014 14:59:26 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: FE8CCF08-CB23-11E3-822B-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246884>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246885>
 
-On Tue, Apr 22, 2014 at 2:45 PM, Ronnie Sahlberg <sahlberg@google.com> wrote:
-> Change s_update_ref to use a ref transaction for the ref update.
-> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
->
-> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+Robert Dailey <rcdailey.lists@gmail.com> writes:
 
-Doubled sign-off.
+> On Wed, Apr 23, 2014 at 12:30 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Robert Dailey <rcdailey.lists@gmail.com> writes:
+>>
+>> [Administrivia: because people read from top to bottom / why is it
+>> bad to top-post? / please do not top-post.]
+>>
+>>> On Tue, Apr 22, 2014 at 4:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>>> Robert Dailey <rcdailey.lists@gmail.com> writes:
+>>>>
+>>>>> git log log --graph --abbrev-commit --decorate --date=relative
+>>>>> --format=format:'%C(bold blue)%h%C(reset)%x09%C(bold
+>>>>> green)(%ar)%C(reset)%C(bold yellow)%d%C(reset) %C(dim
+>>>>> white)%an%C(reset) - %C(white)%s%C(reset)' --branches --remotes
+>>>>> ...
+> ... I also tried removing it to test
+> but i saw no difference; tag names are still visible.
 
-> ---
->  builtin/fetch.c | 15 +++++++--------
->  1 file changed, 7 insertions(+), 8 deletions(-)
->
-> diff --git a/builtin/fetch.c b/builtin/fetch.c
-> index a93c893..5c15584 100644
-> --- a/builtin/fetch.c
-> +++ b/builtin/fetch.c
-> @@ -375,7 +375,7 @@ static int s_update_ref(const char *action,
->  {
->         char msg[1024];
->         char *rla = getenv("GIT_REFLOG_ACTION");
-> -       static struct ref_lock *lock;
-> +       struct ref_transaction *transaction;
->
->         if (dry_run)
->                 return 0;
-> @@ -384,15 +384,14 @@ static int s_update_ref(const char *action,
->         snprintf(msg, sizeof(msg), "%s: %s", rla, action);
->
->         errno = 0;
-> -       lock = lock_any_ref_for_update(ref->name,
-> -                                      check_old ? ref->old_sha1 : NULL,
-> -                                      0, NULL);
-> -       if (!lock)
-> -               return errno == ENOTDIR ? STORE_REF_ERROR_DF_CONFLICT :
-> -                                         STORE_REF_ERROR_OTHER;
-> -       if (write_ref_sha1(lock, ref->new_sha1, msg) < 0)
-> +       transaction = ref_transaction_begin();
-> +       if (!transaction ||
-> +           ref_transaction_update(transaction, ref->name, ref->new_sha1,
-> +                                  ref->old_sha1, 0, check_old) ||
-> +           ref_transaction_commit(transaction, msg, UPDATE_REFS_QUIET_ON_ERR))
->                 return errno == ENOTDIR ? STORE_REF_ERROR_DF_CONFLICT :
->                                           STORE_REF_ERROR_OTHER;
-> +
->         return 0;
->  }
->
-> --
-> 1.9.1.518.g16976cb.dirty
+I do not use these eye-candies myself (they are too distracting for
+me), but doesn't "%d" in the format string mean "decorate"?
