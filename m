@@ -1,55 +1,104 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2] git tag --contains : avoid stack overflow
-Date: Wed, 23 Apr 2014 16:28:39 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.1404231627590.14982@s15462909.onlinehome-server.info>
-References: <20140416141519.GA9684@camelia.ucw.cz> <20140416154653.GB4691@sigill.intra.peff.net> <alpine.DEB.1.00.1404171902010.14982@s15462909.onlinehome-server.info> <20140417213238.GA14792@sigill.intra.peff.net> <alpine.DEB.1.00.1404172347440.14982@s15462909.onlinehome-server.info>
- <20140417215817.GA822@sigill.intra.peff.net> <20140423075325.GA7268@camelia.ucw.cz>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Jean-Jacques Lafay <jeanjacques.lafay@gmail.com>
-To: Stepan Kasal <kasal@ucw.cz>
-X-From: git-owner@vger.kernel.org Wed Apr 23 16:28:49 2014
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH 1/2] git-remote-mediawiki: allow stop/start-ing the test server
+Date: Wed, 23 Apr 2014 16:34:28 +0200
+Message-ID: <1398263669-16594-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Apr 23 16:35:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WcyAK-0001DM-Ha
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 16:28:48 +0200
+	id 1WcyGF-0007XZ-EQ
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 16:34:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756266AbaDWO2n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Apr 2014 10:28:43 -0400
-Received: from mout.gmx.net ([212.227.17.20]:63515 "EHLO mout.gmx.net"
+	id S1756556AbaDWOet (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Apr 2014 10:34:49 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:43513 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752902AbaDWO2m (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Apr 2014 10:28:42 -0400
-Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx103) with ESMTPSA (Nemesis) id 0MC3zg-1Wlnrr3IjA-008sm8;
- Wed, 23 Apr 2014 16:28:39 +0200
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <20140423075325.GA7268@camelia.ucw.cz>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:mU532aW5PPBT/QGmSqY6Mc6eJirus06Hx8YFQzNAeAFoo5FHEWV
- uTfm1GZ1vHlYjvUQXK2T9GuU4bsEQcK8aqmSeVSdMN84frbG5lne/Czm2PVmL9OvH5Elekx
- Lu5lNFUiudIVID4Yb/4/NJWyv5j4mKdBOG6ZY2JiPspytZNtZCQeP+7vUa6d7Kvkrj0nIQP
- hVq9fVdmfyAH067HYn8wQ==
+	id S1753179AbaDWOep (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Apr 2014 10:34:45 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s3NEYbCN007994
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 23 Apr 2014 16:34:37 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s3NEYdJa029108;
+	Wed, 23 Apr 2014 16:34:39 +0200
+Received: from moy by anie.imag.fr with local (Exim 4.80)
+	(envelope-from <moy@imag.fr>)
+	id 1WcyFz-0004KM-8U; Wed, 23 Apr 2014 16:34:39 +0200
+X-Mailer: git-send-email 1.9.2.667.ge5b74e1
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 23 Apr 2014 16:34:37 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s3NEYbCN007994
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1398868479.94592@iXZjqn8GiLa7sdkQ4bdbCw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246842>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246843>
 
-Hi,
+Previously, the user had to launch a complete re-install after a lighttpd
+stop (e.g. a reboot).
 
-On Wed, 23 Apr 2014, Stepan Kasal wrote:
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ contrib/mw-to-git/t/install-wiki.sh   | 10 ++++++++++
+ contrib/mw-to-git/t/test-gitmw-lib.sh |  2 +-
+ 2 files changed, 11 insertions(+), 1 deletion(-)
 
-> I have found out that "ulimit -s" does not work on Windows.
-> Adding this as a prerequisite, we will skip the test there.
-
-The interdiff can be seen here:
-
-	https://github.com/msysgit/git/commit/c68e27d5
-
-Ciao,
-Johannes
+diff --git a/contrib/mw-to-git/t/install-wiki.sh b/contrib/mw-to-git/t/install-wiki.sh
+index 70a53f6..c215213 100755
+--- a/contrib/mw-to-git/t/install-wiki.sh
++++ b/contrib/mw-to-git/t/install-wiki.sh
+@@ -20,6 +20,8 @@ usage () {
+ 	echo "		install | -i :	Install a wiki on your computer."
+ 	echo "		delete | -d : Delete the wiki and all its pages and "
+ 	echo "			content."
++	echo "		start  | -s : Start the previously configured lighttpd daemon"
++	echo "		stop        : Stop lighttpd daemon."
+ }
+ 
+ 
+@@ -33,6 +35,14 @@ case "$1" in
+ 		wiki_delete
+ 		exit 0
+ 		;;
++	"start" | "-s")
++		start_lighttpd
++		exit
++		;;
++	"stop")
++		stop_lighttpd
++		exit
++		;;
+ 	"--help" | "-h")
+ 		usage
+ 		exit 0
+diff --git a/contrib/mw-to-git/t/test-gitmw-lib.sh b/contrib/mw-to-git/t/test-gitmw-lib.sh
+index 3372b2a..d9a1149 100755
+--- a/contrib/mw-to-git/t/test-gitmw-lib.sh
++++ b/contrib/mw-to-git/t/test-gitmw-lib.sh
+@@ -289,7 +289,6 @@ start_lighttpd () {
+ # Kill daemon lighttpd and removes files and folders associated.
+ stop_lighttpd () {
+ 	test -f "$WEB_TMP/pid" && kill $(cat "$WEB_TMP/pid")
+-	rm -rf "$WEB"
+ }
+ 
+ # Create the SQLite database of the MediaWiki. If the database file already
+@@ -415,6 +414,7 @@ wiki_reset () {
+ wiki_delete () {
+ 	if test $LIGHTTPD = "true"; then
+ 		stop_lighttpd
++		rm -fr "$WEB"
+ 	else
+ 		# Delete the wiki's directory.
+ 		rm -rf "$WIKI_DIR_INST/$WIKI_DIR_NAME" ||
+-- 
+1.9.2.667.ge5b74e1
