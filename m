@@ -1,116 +1,94 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 4/6] patch-id: make it stable against hunk reordering
-Date: Wed, 23 Apr 2014 15:05:42 -0700
-Message-ID: <xmqqzjjbwvk9.fsf@gitster.dls.corp.google.com>
-References: <1398255277-26303-1-git-send-email-mst@redhat.com>
-	<1398255277-26303-4-git-send-email-mst@redhat.com>
-	<xmqq4n1k0wtw.fsf@gitster.dls.corp.google.com>
-	<20140423175717.GB28308@redhat.com>
+Subject: Re: [RTC/PATCH] Add 'update-branch' hook
+Date: Wed, 23 Apr 2014 15:15:06 -0700
+Message-ID: <xmqqvbtzwv4l.fsf@gitster.dls.corp.google.com>
+References: <1398047016-21643-1-git-send-email-felipe.contreras@gmail.com>
+	<5355793A.5020000@gmail.com> <53558476703cb_5c94d452ec4e@nysa.notmuch>
+	<53558A54.4060801@gmail.com> <53558ae6f1282_604be1f30cf3@nysa.notmuch>
+	<53559020.1050407@gmail.com>
+	<xmqqa9be8i4o.fsf@gitster.dls.corp.google.com>
+	<53559b0cc066_6c39e772f09d@nysa.notmuch>
+	<xmqqtx9m70fh.fsf@gitster.dls.corp.google.com>
+	<53583111dd8ad_24448772ec17@nysa.notmuch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Michael S. Tsirkin" <mst@redhat.com>
-X-From: git-owner@vger.kernel.org Thu Apr 24 00:05:59 2014
+Cc: Ilya Bobyr <ilya.bobyr@gmail.com>, git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 24 00:15:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wd5Ik-0005m0-Ue
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Apr 2014 00:05:59 +0200
+	id 1Wd5Ro-00068V-8P
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Apr 2014 00:15:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751465AbaDWWFv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Apr 2014 18:05:51 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51947 "EHLO
+	id S1751349AbaDWWPO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Apr 2014 18:15:14 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48302 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751186AbaDWWFr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Apr 2014 18:05:47 -0400
+	id S1751186AbaDWWPM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Apr 2014 18:15:12 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5C36C7F550;
-	Wed, 23 Apr 2014 18:05:46 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6D1C67F966;
+	Wed, 23 Apr 2014 18:15:11 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=nbzTaMqvDR5RaKqxJ1OuY6p5nls=; b=B6JgeO
-	JibAcyhvsjtIIlfBhQ/5qJ5r6/keM805GKT2f9tUzN0KKEnjgaXS945nJv3fuM50
-	AW8H7dagT1sdLiGD6vRAZTV9gnt4aTzqGqIBJeaQjg1LoLuF/zIu8lNfXft3332L
-	IfJzAI6OAeVPODg0sdKyRV1gRfSTBXRDPDepI=
+	:content-type; s=sasl; bh=mjO8/2UHUlN+qDCZ3loSAiCHqV0=; b=DLg6Zw
+	6IpENKIXBYgDu5Ma16W5mU2lpiRJivRvhx9H3djnwUrnSWwv52d5N1LIzGypM4ff
+	BuztF/3IAC3f695Fz5qT92oENESpVXtTKvweKHH3S7uejwdD4NEMp5IEsnAX/GrJ
+	i7K2xXtAIcEN8elj89r23HqSqpViWwph1nvfU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YA3wVmg0JKqWfG3FL447Gl5ygWEuAb/C
-	FmA4LNZpNtvrNGNf8iIAaCNV/Tmv9eVoTzZbgPnwrR50hdqprXMsf5+tlSZm7JSd
-	vQvbRqvTMT7/uFG/fdWL8j+G9+SqqcDl2kTOrjOWsezuuaibt5txdrt1P1a6tisx
-	G8SPvgv2kfk=
+	:content-type; q=dns; s=sasl; b=Ifq5u5VIWEk6NOnU9elriMJEOqYxdkiH
+	ab4HPGa+EPqNTvwWuy3ZyFHhbd9mvcgFzEpJ8P2A8fQgvZU+hZg/iBMMKNi4YPqJ
+	JQ+sT0vvGsxA4zurUIIoZBCbQVyf6sXy5TKWu9mhpuiP6Lse1QWyigYvCixFn/Ys
+	FBvKvHZfPFc=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 420E17F54F;
-	Wed, 23 Apr 2014 18:05:46 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 52CDD7F965;
+	Wed, 23 Apr 2014 18:15:11 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 474977F54D;
-	Wed, 23 Apr 2014 18:05:44 -0400 (EDT)
-In-Reply-To: <20140423175717.GB28308@redhat.com> (Michael S. Tsirkin's message
-	of "Wed, 23 Apr 2014 20:57:17 +0300")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 579977F962;
+	Wed, 23 Apr 2014 18:15:09 -0400 (EDT)
+In-Reply-To: <53583111dd8ad_24448772ec17@nysa.notmuch> (Felipe Contreras's
+	message of "Wed, 23 Apr 2014 16:30:57 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 6A957E70-CB33-11E3-8989-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: BB62B682-CB34-11E3-BA31-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246907>
 
-"Michael S. Tsirkin" <mst@redhat.com> writes:
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-> On Wed, Apr 23, 2014 at 10:39:23AM -0700, Junio C Hamano wrote:
->> Are these three patches the same as what has been queued on
->> mt/patch-id-stable topic and cooking in 'next' for a few weeks?
+> Junio C Hamano wrote:
+>> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>> 
+>> > ... there are _already_ hooks without pre/post.
+>> 
+>> Like commit-msg?  Yes, it would have been nicer if it were named
+>> verify-commit-message or something.
 >
-> Not exactly - at your request I implemented git config
-> options to control patch id behaviour.
-> Documentation and tests updated to match.
+> No it wouldn't. I can use the commit-msg hook to change the commit message and
+> to absolutely no verification, so verify-commit-message would be misleading.
 
-After comparing the patches 4-6 and the one that has been in 'next'
-for a few weeks, I tried to like the new one, but I couldn't.
+You are confused (and please do not spread the confusion).  If you
+read the first paragraph of the documentation on the hook and think
+for 5 seconds why "--no-verify" countermands it, you would realize
+that the hook is primarily meant for verification.  We also allow
+the hook to edit the message, but that is not even "a useful feature
+added as an afterthought"; the documentation mentions it because the
+implementation did not bother to make sure the hook did not touch
+the message file.
 
-The new one, if I am reading the patch correctly, makes the stable
-variant the default if
+It was a mistake not to call it with a clear name that tells
+verification happens there.
 
- - the configuration explicitly asks to use it; or
+>> Old mistakes are harder to change because of inertia.  It is not a
+>> good excuse to knowingly make a new mistake to add new exceptions
+>> that the users need to check documentations for, is it?
 
- - diff.orderfile, which is a new configuration that did not exist,
-   is used.
-
-At the first glance, the latter makes it look as if that will not
-hurt any existing users/repositories, but the thing is, the producer
-of the patches is different from the consumer of the patches.  There
-needs to be a way for a consumer to say "I need stable variant" on
-the patches when computing "patch-id" on a patch that arrived.  As
-long as two different producers use two different orders, the
-consumer of the patches from these two sources is forced to use the
-stable variant if some sort of cache is kept keyed with the
-patch-ids.
-
-But "diff.orderfile" configuration is all and only about the
-producer, and does not help the case at all.
-
-Compared to it, the previous version forced people who do not have a
-particular reason to choose between the variants to use the new
-"stable" variant, which was a lot simpler solution.
-
-The reason why I merged the previous one to 'next' was because I
-wanted to see if the behaviour change is as grave as I thought, or I
-was just being unnecessary cautious.  If there is no third-party
-script that precomputes something and stores them under these hashes
-that breaks with this change, I do not see any reason not to make
-the new "stable" one the default.
-
-I however suspect that the ideal "stable" implementation may be
-different from what you implemented.  What if we compute a patch-id
-on a reordered patch as if the files came in the "usual" order?
-That would be another way to achieve the stable-ness for sane cases
-(i.e. no funny "you could split one patch with two hunks into two
-patches with one hunk each twice mentioning the same path" which is
-totally an uninteresting use case---diff.orderfile would not even
-produce such a patch) and a huge difference would be that it would
-produce the same patch-id as existing versions of Git, if the patch
-is not reordered.  Is that asking for a moon (I admit that I haven't
-looked at the code involved too deeply)?
+I see no reason to waste more time on this point.
