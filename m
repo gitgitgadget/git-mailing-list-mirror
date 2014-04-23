@@ -1,7 +1,7 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 14/14] p5302-pack-index.sh: use the $( ... ) construct for command substitution
-Date: Wed, 23 Apr 2014 06:44:06 -0700
-Message-ID: <1398260646-2660-14-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 10/14] git-web--browse.sh: use the $( ... ) construct for command substitution
+Date: Wed, 23 Apr 2014 06:44:02 -0700
+Message-ID: <1398260646-2660-10-git-send-email-gitter.spiros@gmail.com>
 References: <1398260646-2660-1-git-send-email-gitter.spiros@gmail.com>
 Cc: matthieu.moy@grenoble-inp.fr, Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
@@ -11,41 +11,41 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WcxTZ-00007a-6Y
+	id 1WcxTY-00007a-7G
 	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 15:44:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757087AbaDWNoc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Apr 2014 09:44:32 -0400
-Received: from mail-pd0-f169.google.com ([209.85.192.169]:64953 "EHLO
-	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757080AbaDWNo2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Apr 2014 09:44:28 -0400
-Received: by mail-pd0-f169.google.com with SMTP id fp1so787700pdb.14
-        for <git@vger.kernel.org>; Wed, 23 Apr 2014 06:44:28 -0700 (PDT)
+	id S1757077AbaDWNo0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Apr 2014 09:44:26 -0400
+Received: from mail-pd0-f174.google.com ([209.85.192.174]:58030 "EHLO
+	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756189AbaDWNoY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Apr 2014 09:44:24 -0400
+Received: by mail-pd0-f174.google.com with SMTP id y13so790348pdi.19
+        for <git@vger.kernel.org>; Wed, 23 Apr 2014 06:44:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=jBf+sigiV4yjgjZjbAtK4kC/JxdbkfcJ3xZcjKjvYMw=;
-        b=IeX2cAH0hNGPH9jjlwLmvsVnS0QeqZXKxPm9bpZp16muD35FLQJKRbQwbkL3rUPRzp
-         PQsPqUn0gLmyGxVdI0r0PjFRz/sGoYT/P6ohr54UoUXj0IFLS3HrPOIiHIs3es/yTNOi
-         eJ9bU6Px50hGMekxD+fpjhbrj9Nw2SQR4rNxmKEheXX7wFXJdp6BjyaHn2Xtoxt6GE8h
-         hAfn20nDGHhVfmgKc4tEXiMZrwdG3EIaPZDP/2gXRVlw6jqj0XliRLNNnAf17j8qf0mu
-         I2mXp1kK6auQ3G74ji6IVBu2Jvdi7M43tj0CIZh05LGWfkPl9h1GYTraSphMhj38/7fU
-         ZPsA==
-X-Received: by 10.68.237.133 with SMTP id vc5mr55566741pbc.92.1398260667938;
-        Wed, 23 Apr 2014 06:44:27 -0700 (PDT)
+        bh=x4y05lkRKXjjq9wnrXWaXjVhFqJTzESxVDKFJoiWQ2g=;
+        b=EYnyR13tjov+k/h231dpZSIPQSSXQwt4OOEqVbVbYcTCsAUi+fT5n1HIFRrqad1HUM
+         Z0I/YUP8PSz5PW6Ky3kfoF1SSYpyJaYdtv3VuuLEkyBPJL+lSd+It31VyWuiL4qLrKtS
+         N9WD4BhZ4GjcyEy1jlDruv8qLcRar63y2Jn/JeZRrRydJZFjj2pml76UYjYOpkozLuxG
+         sg3bam3PR7F9+zXKX10K8vt0fK5O789tixDJZg8uh9fj0hI/FTy9C5K87OMhCtM4b6NX
+         8kVErV/dazXm10tJSURKxwaND0LQQVjfWuTFn3Lc9bu+j+sjkYxN3rAws5nbwf5cULVD
+         fnMg==
+X-Received: by 10.68.94.164 with SMTP id dd4mr9825145pbb.161.1398260663762;
+        Wed, 23 Apr 2014 06:44:23 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id kt8sm5314475pab.7.2014.04.23.06.44.26
+        by mx.google.com with ESMTPSA id kt8sm5314475pab.7.2014.04.23.06.44.22
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 23 Apr 2014 06:44:27 -0700 (PDT)
+        Wed, 23 Apr 2014 06:44:23 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1398260646-2660-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246831>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -67,21 +67,39 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/perf/p5302-pack-index.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ git-web--browse.sh |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/t/perf/p5302-pack-index.sh b/t/perf/p5302-pack-index.sh
-index 6cb5b0d..5ee9211 100755
---- a/t/perf/p5302-pack-index.sh
-+++ b/t/perf/p5302-pack-index.sh
-@@ -8,7 +8,7 @@ test_perf_large_repo
- 
- test_expect_success 'repack' '
- 	git repack -ad &&
--	PACK=`ls .git/objects/pack/*.pack | head -n1` &&
-+	PACK=$(ls .git/objects/pack/*.pack | head -n1) &&
- 	test -f "$PACK" &&
- 	export PACK
- '
+diff --git a/git-web--browse.sh b/git-web--browse.sh
+index ebdfba6..ae15253 100755
+--- a/git-web--browse.sh
++++ b/git-web--browse.sh
+@@ -59,7 +59,7 @@ do
+ 	-b|--browser*|-t|--tool*)
+ 		case "$#,$1" in
+ 		*,*=*)
+-			browser=`expr "z$1" : 'z-[^=]*=\(.*\)'`
++			browser=$(expr "z$1" : 'z-[^=]*=\(.*\)')
+ 			;;
+ 		1,*)
+ 			usage ;;
+@@ -71,7 +71,7 @@ do
+ 	-c|--config*)
+ 		case "$#,$1" in
+ 		*,*=*)
+-			conf=`expr "z$1" : 'z-[^=]*=\(.*\)'`
++			conf=$(expr "z$1" : 'z-[^=]*=\(.*\)')
+ 			;;
+ 		1,*)
+ 			usage ;;
+@@ -100,7 +100,7 @@ then
+ 	for opt in "$conf" "web.browser"
+ 	do
+ 		test -z "$opt" && continue
+-		browser="`git config $opt`"
++		browser="$(git config $opt)"
+ 		test -z "$browser" || break
+ 	done
+ 	if test -n "$browser" && ! valid_tool "$browser"; then
 -- 
 1.7.10.4
