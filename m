@@ -1,76 +1,78 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Trying to setup Visual Studio 2013 with a CentOS 6.5 x64 git
- server
-Date: Wed, 23 Apr 2014 12:20:37 -0700
-Message-ID: <20140423192037.GF15516@google.com>
-References: <CAOWfAePSjpOaN0pgaVqjHxvdMPp2WnEhHj2-Wea1dV7WyjtMiw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/3] remote-helpers: move out of contrib
+Date: Wed, 23 Apr 2014 12:20:47 -0700
+Message-ID: <xmqqa9bbzwc0.fsf@gitster.dls.corp.google.com>
+References: <1398112633-23604-1-git-send-email-felipe.contreras@gmail.com>
+	<1398112633-23604-3-git-send-email-felipe.contreras@gmail.com>
+	<38F8C9C6-E186-4C42-B3F0-931AE73400FA@quendi.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Charles Buege <charles.buege@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 23 21:20:54 2014
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
+To: Max Horn <max@quendi.de>
+X-From: git-owner@vger.kernel.org Wed Apr 23 21:20:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wd2is-00032P-Dl
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 21:20:46 +0200
+	id 1Wd2j4-0003Bw-Dt
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 21:20:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757249AbaDWTUl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Apr 2014 15:20:41 -0400
-Received: from mail-pd0-f182.google.com ([209.85.192.182]:59690 "EHLO
-	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753943AbaDWTUk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Apr 2014 15:20:40 -0400
-Received: by mail-pd0-f182.google.com with SMTP id y10so1066084pdj.41
-        for <git@vger.kernel.org>; Wed, 23 Apr 2014 12:20:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=TL/P/oo/Wx8fUpv8EUZ3HEImuxRtKxV91AIzK3TG7bw=;
-        b=f+5j0tHMEJ48RSIiWtnAvxMvQc5sKAFiuoGR3BWMTout5b3OnZojbrLwslAokARNsZ
-         TGZ30oi6RsGs5KeHDFmKlkBex6ELfxz0ZSk1cUVTpkOMEIbHSW5NOzNV7yLj5kzMY1au
-         kRYKFmQ60rwX4w/1ha8dcESbky/mL9BPBwhGfbV2IykqUzNE1Br2xVvzVu5FE7+co/mG
-         6kVZenfGCimVA1ICGxr3uOORqeufENgSbbUrJDRiSOTD5vnCL6z+s1mBOXJyZvgJ9org
-         jjgM0UeZ3mnWoHmtzaWztOoA4yzSCi4+XTZhxiCwRxOVReR546RNQSn4OkB4dc1ByB+/
-         xzWQ==
-X-Received: by 10.68.201.97 with SMTP id jz1mr58306589pbc.26.1398280840190;
-        Wed, 23 Apr 2014 12:20:40 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id gu11sm4163784pbd.38.2014.04.23.12.20.39
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 23 Apr 2014 12:20:39 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CAOWfAePSjpOaN0pgaVqjHxvdMPp2WnEhHj2-Wea1dV7WyjtMiw@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1757324AbaDWTUw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Apr 2014 15:20:52 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37712 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757251AbaDWTUv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Apr 2014 15:20:51 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B39B97D1FA;
+	Wed, 23 Apr 2014 15:20:50 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=RYnvLrEQWl2w4h9/S7I4fVWK8bQ=; b=WEe0yu
+	5cQpMrzO9Va54z1Bcr098OWk6jYJpLISDff+N7pPFYcc+OSvyQv2+yIiHprH20g4
+	0ec9uAcDUgffEVaH+hD0YZHcy6lnGmN4BEFnCNGMIIjE+QilGNz0uwtaxZGgftuT
+	+LcXpiDJ2/sPDeAD3Ia3ngthD+Cj04IiexP4c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ixyFMwGN8eX/E5djdsgkGWNb0J07lNA3
+	qiODJHt3kGfQj5QJzyEp9kq5NJO1j+STKRSmaG1HY2TTx7i4pWjIlKn1kt+AyDPg
+	yghXX+wrHsZpaXdiX3P0KLPBekwrbLoSQbPE2PCy26+2RjBX5JyM4dol07g/2yQY
+	g0xNoTjjswU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 927E37D1F9;
+	Wed, 23 Apr 2014 15:20:50 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D412C7D1F8;
+	Wed, 23 Apr 2014 15:20:48 -0400 (EDT)
+In-Reply-To: <38F8C9C6-E186-4C42-B3F0-931AE73400FA@quendi.de> (Max Horn's
+	message of "Wed, 23 Apr 2014 15:10:05 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 60739538-CB1C-11E3-B4AB-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246871>
 
-Hi,
+Max Horn <max@quendi.de> writes:
 
-Charles Buege wrote:
+> That said, I don't know what the criteria are for moving something out
+> of contrib.
 
-> If, in actuality, I can use a CentOS git server with Visual Studio
-> 2013, can anyone point me in the direction of an
-> FAQ/directions/YouTube video/book/anything for how to setup something
-> like this?
+Because we accept stuff to contrib/, with an assumption that it is
+to stay there without contaminating the main part of the system, the
+quality of stuff in contrib/ can be sub-par and it is very possible
+that a lot of clean-ups and fixes are necessary before moving them
+out.
 
-I suspect
-http://msdn.microsoft.com/en-us/library/hh850445.aspx#remote_3rd_party_connect_clone
-should get you started.
+> Perhaps it is OK to move an undocumented remote-helper
+> with known bugs out of contrib.
 
-As far as I can tell from #git, every once in a while people seem to
-want to escape from GUIs to have control over what they're doing (for
-example when cleaning up existing commits, or when performing a
-complex merge).  You can find a usable commandline version of Git for
-Windows at http://msysgit.github.io/ (and the same project has a
-TortoiseSVN-like explorer plugin called GitCheetah if you need that).
-
-Hope that helps,
-Jonathan
+We should strive to apply the same criteria as new submission to the
+main part of the system.  And inputs from people like you who have
+more experiences than others on the list in dealing with hg-to-git
+bridging are very much welcomed to identify and document what kind
+of breakages there are, and to come up with the solution to them.
