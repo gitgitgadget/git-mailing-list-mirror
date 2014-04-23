@@ -1,67 +1,105 @@
-From: "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH v4 2/6] test: add test_write_lines helper
-Date: Wed, 23 Apr 2014 15:14:55 +0300
-Message-ID: <1398255277-26303-2-git-send-email-mst@redhat.com>
-References: <1398255277-26303-1-git-send-email-mst@redhat.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 23 14:14:51 2014
+From: Max Horn <max@quendi.de>
+Subject: Re: [PATCH v2 2/3] remote-helpers: move out of contrib
+Date: Wed, 23 Apr 2014 15:10:05 +0200
+Message-ID: <38F8C9C6-E186-4C42-B3F0-931AE73400FA@quendi.de>
+References: <1398112633-23604-1-git-send-email-felipe.contreras@gmail.com> <1398112633-23604-3-git-send-email-felipe.contreras@gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 6.6 \(1510\))
+Content-Type: multipart/signed; boundary="Apple-Mail=_4D55D240-5B78-4F95-A1EF-9338581E0636"; protocol="application/pgp-signature"; micalg=pgp-sha256
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 23 15:10:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wcw4e-0007kz-9h
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 14:14:48 +0200
+	id 1Wcwwg-0001ku-20
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 15:10:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753243AbaDWMOO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Apr 2014 08:14:14 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:18050 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751363AbaDWMOM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Apr 2014 08:14:12 -0400
-Received: from int-mx14.intmail.prod.int.phx2.redhat.com (int-mx14.intmail.prod.int.phx2.redhat.com [10.5.11.27])
-	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id s3NCEBFd003051
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
-	for <git@vger.kernel.org>; Wed, 23 Apr 2014 08:14:12 -0400
-Received: from redhat.com (ovpn-116-36.ams2.redhat.com [10.36.116.36])
-	by int-mx14.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id s3NCE9uA016689
-	for <git@vger.kernel.org>; Wed, 23 Apr 2014 08:14:10 -0400
-Content-Disposition: inline
-In-Reply-To: <1398255277-26303-1-git-send-email-mst@redhat.com>
-X-Mutt-Fcc: =sent
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
+	id S1754881AbaDWNK2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Apr 2014 09:10:28 -0400
+Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:48816 "EHLO
+	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753862AbaDWNKK (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Apr 2014 09:10:10 -0400
+Received: from fb07-alg-gast1.math.uni-giessen.de ([134.176.24.161]); authenticated
+	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
+	id 1WcwwC-0006rp-V8; Wed, 23 Apr 2014 15:10:08 +0200
+In-Reply-To: <1398112633-23604-3-git-send-email-felipe.contreras@gmail.com>
+X-Mailer: Apple Mail (2.1510)
+X-bounce-key: webpack.hosteurope.de;max@quendi.de;1398258610;498819f9;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246827>
 
-As suggested by Junio.
 
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
----
- t/test-lib-functions.sh | 7 +++++++
- 1 file changed, 7 insertions(+)
+--Apple-Mail=_4D55D240-5B78-4F95-A1EF-9338581E0636
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=us-ascii
 
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index aeae3ca..2fa6453 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -712,6 +712,13 @@ test_ln_s_add () {
- 	fi
- }
- 
-+# This function writes out its parameters, one per line
-+test_write_lines () {
-+	for line in "$@"; do
-+		echo "$line"
-+	done
-+}
-+
- perl () {
- 	command "$PERL_PATH" "$@"
- }
--- 
-MST
+
+On 21.04.2014, at 22:37, Felipe Contreras <felipe.contreras@gmail.com> =
+wrote:
+
+> The remote-helpers in contrib/remote-helpers have proved to work, be
+> reliable, and stable. It's time to move them out of contrib, and be
+> distributed by default.
+
+Really? While I agree that git-remote-hg by now works quite well for =
+basic usage in simple situation, there are still unresolved bugs and =
+fundamental issues with it.
+
+E.g. I recently showed you a reproducible use case involving =
+git-remote-hg that puts the helper into a broken state from which it is =
+difficult for a normal user to recover. Namely when a hg branch has =
+multiple heads, then git-remote-hg exports all of those to git, but only =
+adds a git ref for one of them; after pruning unreferenced commits, the =
+fast-import marks file references git commits that now are missing, =
+prompting git fast-import to crash and trash the marks file. Afterwards, =
+attempts to push or pull from the remote hg repository are answered with =
+an error.
+
+There are other ways to trigger variants of this, and these are not =
+artificial, they occur in real life (this is how I run into the issue). =
+There are more issues related to unresolved clashes between the git and =
+hg ways of naming things. E.g. I am collaborating on a hg repository =
+that has branches "foo" and "foo/bar" which git-remote-hg cannot handle =
+because it translates them to git branch names, and, well, git cannot =
+handle that.
+
+It may be hard to deal with some of them, and admittedly I wouldn't =
+necessarily expect that all of these are handled from the outset, i.e. =
+"in version 1.0". But I think at the very least, users should be warned =
+about these things.
+
+More broadly speaking, there is currently no documentation at all in =
+git.git for those remote helpers, which I find worrisome.
+
+That said, I don't know what the criteria are for moving something out =
+of contrib. Perhaps it is OK to move an undocumented remote-helper with =
+known bugs out of contrib.
+
+
+Cheers,
+Max
+
+--Apple-Mail=_4D55D240-5B78-4F95-A1EF-9338581E0636
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP using GPGMail
+
+-----BEGIN PGP SIGNATURE-----
+Comment: GPGTools - http://gpgtools.org
+
+iF4EAREIAAYFAlNXu7AACgkQIpJVslrhe1le9gEAwA3hGuYlqqXIqQ6wOO4TMBl8
+3zlM0/hhbNABMV3trXEBAKEntOUINsLM9FzHIlTPmVPfYwQwnaHVWMbgyDC73WMk
+=9D3k
+-----END PGP SIGNATURE-----
+
+--Apple-Mail=_4D55D240-5B78-4F95-A1EF-9338581E0636--
