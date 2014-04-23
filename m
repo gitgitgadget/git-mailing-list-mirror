@@ -1,51 +1,51 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 06/14] git-pull.sh: use the $( ... ) construct for command substitution
-Date: Wed, 23 Apr 2014 06:43:58 -0700
-Message-ID: <1398260646-2660-6-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 08/14] git-rebase.sh: use the $( ... ) construct for command substitution
+Date: Wed, 23 Apr 2014 06:44:00 -0700
+Message-ID: <1398260646-2660-8-git-send-email-gitter.spiros@gmail.com>
 References: <1398260646-2660-1-git-send-email-gitter.spiros@gmail.com>
 Cc: matthieu.moy@grenoble-inp.fr, Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 23 15:45:33 2014
+X-From: git-owner@vger.kernel.org Wed Apr 23 15:45:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WcxUT-000144-H1
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 15:45:33 +0200
+	id 1WcxUZ-0001AZ-R1
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 15:45:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757062AbaDWNoW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1757143AbaDWNpd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Apr 2014 09:45:33 -0400
+Received: from mail-pb0-f54.google.com ([209.85.160.54]:40313 "EHLO
+	mail-pb0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757061AbaDWNoW (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 23 Apr 2014 09:44:22 -0400
-Received: from mail-pd0-f175.google.com ([209.85.192.175]:41381 "EHLO
-	mail-pd0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757059AbaDWNoU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Apr 2014 09:44:20 -0400
-Received: by mail-pd0-f175.google.com with SMTP id x10so784717pdj.6
-        for <git@vger.kernel.org>; Wed, 23 Apr 2014 06:44:19 -0700 (PDT)
+Received: by mail-pb0-f54.google.com with SMTP id ma3so803861pbc.27
+        for <git@vger.kernel.org>; Wed, 23 Apr 2014 06:44:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=lqyKgqCx+uQE4jg9UTKKs2Acbg3HfjLmkAqF4R4580s=;
-        b=CXpN3bxCeoQHgNMgdR3Gdtd2wQkPwaOGcyGRhboeBpRhQmwBQMqHPMfTeClqGr6hg9
-         E/802l7rXbEC31H2H4Eg2mfSt25rPvgTqOBJxV01OvBES6yg0+cg2AT8HMdi7wgg4oee
-         PvrtVhBzLvB0kR8q9YCoiKzeQVFDAxOZqMqKxyCtD+ff/n249x8KC/RXMhmZiTdPOsG5
-         khLgvWP5F/W3XxnIgB/PbB5IecXYB7b1e9QRc/FnvTxNzjWkYgvsgVqZgYPPovMM+fDp
-         IjHVv2M/87VRLAAVZkDMhCRN6BcPDXM83oEwL0ZQJvqHbjJP+oMZO2TH8X1wSU2JMgrl
-         8Fhg==
-X-Received: by 10.68.220.103 with SMTP id pv7mr34868169pbc.17.1398260659864;
-        Wed, 23 Apr 2014 06:44:19 -0700 (PDT)
+        bh=m0Gigpif38eGbtvTIX+xCKfiBp0C7T8P4IY8+ihbGSo=;
+        b=rpLTMmYs1916jR0heVh4TRzjYyY62o/1gXSUrvjYDxdIaZAmrMIwO0qB15Ufrs0pFL
+         UlQAEzL5+cLPWIQEx6TV1HG+gaLreXsxOuEn8UwYTho3fJcEKArfqtZwM8g5h9bjIXGF
+         SZeSClv1FHZOPtTk81hnRFbFgtSc2KTR5sCCEgnYMe42419j/ZxoSXYSTRoBdzX04v36
+         YcWU7c5f/wkaI/eC7DoujTc5ZinTKRleXoTNZEb8Pdo0PJs2ddq7XGfikDKGt/6Cij2A
+         7XGiaaJRBnA45xhOpY7m9WvLc10K8/0TZEtT9DB0YCqP8CWo0Vn/xZRES3NZe7AteMjC
+         GGlg==
+X-Received: by 10.68.164.4 with SMTP id ym4mr55952783pbb.53.1398260661859;
+        Wed, 23 Apr 2014 06:44:21 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id kt8sm5314475pab.7.2014.04.23.06.44.18
+        by mx.google.com with ESMTPSA id kt8sm5314475pab.7.2014.04.23.06.44.20
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 23 Apr 2014 06:44:19 -0700 (PDT)
+        Wed, 23 Apr 2014 06:44:21 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1398260646-2660-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246834>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -67,21 +67,36 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- git-pull.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ git-rebase.sh |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/git-pull.sh b/git-pull.sh
-index 6cd8ebc..cfc589d 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -108,7 +108,7 @@ do
- 	-s|--s|--st|--str|--stra|--strat|--strate|--strateg|--strategy)
- 		case "$#,$1" in
- 		*,*=*)
--			strategy=`expr "z$1" : 'z-[^=]*=\(.*\)'` ;;
-+			strategy=$(expr "z$1" : 'z-[^=]*=\(.*\)') ;;
- 		1,*)
- 			usage ;;
- 		*)
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 4543815..5c7a0a1 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -457,8 +457,8 @@ then
+ else
+ 	if test -z "$onto"
+ 	then
+-		empty_tree=`git hash-object -t tree /dev/null`
+-		onto=`git commit-tree $empty_tree </dev/null`
++		empty_tree=$(git hash-object -t tree /dev/null)
++		onto=$(git commit-tree $empty_tree </dev/null)
+ 		squash_onto="$onto"
+ 	fi
+ 	unset upstream_name
+@@ -516,10 +516,10 @@ case "$#" in
+ 	;;
+ 0)
+ 	# Do not need to switch branches, we are already on it.
+-	if branch_name=`git symbolic-ref -q HEAD`
++	if branch_name=$(git symbolic-ref -q HEAD)
+ 	then
+ 		head_name=$branch_name
+-		branch_name=`expr "z$branch_name" : 'zrefs/heads/\(.*\)'`
++		branch_name=$(expr "z$branch_name" : 'zrefs/heads/\(.*\)')
+ 	else
+ 		head_name="detached HEAD"
+ 		branch_name=HEAD ;# detached
 -- 
 1.7.10.4
