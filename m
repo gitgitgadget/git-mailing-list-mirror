@@ -1,112 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RTC/PATCH] Add 'update-branch' hook
-Date: Wed, 23 Apr 2014 15:44:03 -0700
-Message-ID: <xmqqoazrwtsc.fsf@gitster.dls.corp.google.com>
-References: <1398047016-21643-1-git-send-email-felipe.contreras@gmail.com>
-	<5355793A.5020000@gmail.com> <53558476703cb_5c94d452ec4e@nysa.notmuch>
-	<53558A54.4060801@gmail.com> <53558ae6f1282_604be1f30cf3@nysa.notmuch>
-	<53559020.1050407@gmail.com> <53558f6269f91_640076f2f08f@nysa.notmuch>
-	<857g6h5ssh.fsf@stephe-leake.org>
-	<5356996d12ede_3e5aed7308e5@nysa.notmuch>
-	<85mwfc4hab.fsf@stephe-leake.org>
-	<535782d95bbed_24448772ec7a@nysa.notmuch>
+From: d9ba@mailtor.net
+Subject: Harmful LESS flags
+Date: Wed, 23 Apr 2014 23:46:02 -0000
+Message-ID: <4dc69237123e8962b2b2b901692ea78e.id@mailtor>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Stephen Leake <stephen_leake@stephe-leake.org>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 24 00:44:20 2014
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 24 01:54:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wd5tq-0007vC-Qc
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Apr 2014 00:44:19 +0200
+	id 1Wd6zX-0005SA-Fa
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Apr 2014 01:54:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751911AbaDWWoN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Apr 2014 18:44:13 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41481 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751289AbaDWWoL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Apr 2014 18:44:11 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EF629801C4;
-	Wed, 23 Apr 2014 18:44:08 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=cQKTuWBlxkV3PsvoU3LofUYR7sw=; b=obVLVt
-	ysRiz3VDBI55dERcc6sMPu4Ty/3gh/jFV79dxfAMhLSc4blQETnHj0L4WrOo72rN
-	qUxq9L6uONVZA4j5fW0T6Xvv0sonmVw0dke+PfqY0hMmCzGePjU7pHpIqgt8D3np
-	Ca6CIFW9LbdGbbWc/0rm3vdoZTIgkrz8P4vzU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=aO3kzXipWEkLQ5sNnCjvnEiS+WGOLaxf
-	YyvWHiPcongBJW2y6B5NtV1tcN45cCxGYwfZ4RU/OINdFdxRelvZIXs6c5ViGl/p
-	Zh+VyhVHgAlocu7Ay4UWYxMmJBbYWrAv4xEqWAhw5t886cmHmz1nKdyJ1uCMqRBN
-	mSVMoY/9CEE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D4E4D801C3;
-	Wed, 23 Apr 2014 18:44:08 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3AB66801BF;
-	Wed, 23 Apr 2014 18:44:06 -0400 (EDT)
-In-Reply-To: <535782d95bbed_24448772ec7a@nysa.notmuch> (Felipe Contreras's
-	message of "Wed, 23 Apr 2014 04:07:37 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: C6AAE074-CB38-11E3-A885-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752059AbaDWXyK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Apr 2014 19:54:10 -0400
+Received: from mailtor.net ([109.168.103.133]:59404 "EHLO mailtor.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751290AbaDWXyJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Apr 2014 19:54:09 -0400
+X-Greylist: delayed 429 seconds by postgrey-1.27 at vger.kernel.org; Wed, 23 Apr 2014 19:54:08 EDT
+Received: from mailtoralnhyol5v.onion (localhost [127.0.0.1])
+	by mailtor.net (Postfix) with ESMTP id 79BCB267648
+	for <git@vger.kernel.org>; Thu, 24 Apr 2014 01:46:02 +0200 (CEST)
+Received: from MAILTOR FREE ANONYMOUS MAIL PROVIDER. SUPPORT US WITH A
+ DONATION IN BITCOINS: 14vkMKcwaTVDmXVW7Y69W3p444q5D38oxc Create your free
+ @mailtor.net email box at mailtoralnhyol5v.onion (you need tor software
+ installed). FOR CONTACT US: admin@mailtor.net
+User-Agent: >_<
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246909>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246910>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+hello list,
 
->> >> I have a branch which should always be recompiled on update;
->> >> post-update-branch would be a good place for that.
->> >
->> > And why would pre-update-branch not serve that purpose?
->> 
->> Because the code that needs to be compiled is not yet in the workspace
->
-> And it won't be in 'post-update-branch' either.
->
->  % git checkout master
->  % git branch feature-a stable
->  <- update-branch hook will be called here
->
-> The hook will get 'feature-a' as the first argument, but the code in the
-> workspace would correspond to 'master'; the checked out branch (pre or post).
+as mentioned earlier on IRC, I'm a bit concerned about the default LESS flags
+used by git.
 
-The whole point of a pre- hook is to run _before_ the externally
-observable state changes due to the operation.
+The S option causes git to cut off everything to the right
 
-If Stephen has a separate build-tree that fetches from the branch
-every time the tip of the branch changes in this repository to
-produce build artifacts for the branch to be shared in his network,
-perhaps via NFS or something.  "git fetch" that will be run from
-that build-tree repository will *not* see the tip of the branch, and
-running such a hook will not be possible from a pre-update-branch
-hook.
+Consider this diff, printed by `git diff`
 
-We can certainly argue that such a hook could instead push to the
-build-tree repository using the commit object name, but I tend to
-think such an argument is merely sidestepping the real issue.  Some
-hooks do want to observe the state _after_ the operation [*1*],
-while some hooks can do without seeing exactly the state after the
-operation.
+	 #!/usr/bin/env python
+	-print('foo')
+	+print('bar')
 
-So while I am generally not very supportive towards post-anything
-hook, I would reject a claim that says "pre-anything can be used
-without inventing post-anything---do the same thing and allow the
-operation and you are done".  That is not simply true.
+Looks ok to merge and run.
 
+But, after disabling the pager:
 
-[Footnote]
+	 #!/usr/bin/env python
+	-print('foo')
+	+print('bar') [lots of tabs] ; import os; os.system('aptitude install
+subversion')
 
-*1* A trivial example: send out an e-mail that contains the output
-    from "git branch -l -v" or "git log --oneline --decorate --all"
-    to a logger and expect to see the branch tip pointing at the
-    commit _after_ the operation.
+Oh no!
+
+My workflow is to clone a project, read the whole source and review all diffs
+after fetching them. After that is done I merge origin into my local
+branch and
+run the code on my system.
+
+I've panic'd a bit after I've noticed the chopping.
+
+It would be nice if we could change the flags to either
+
+ a) avoid cutting off
+ b) indicate something has been cut off (<- I prefer this)
+
+I assume there are more people with a similar workflow who're still
+unaware of
+this feature.
+
+I would joke about how 3 letter agencies introduced this flag to backdoor
+open
+source projects, but, well..
+
+	Sincerely yours,
+	a git user
