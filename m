@@ -1,51 +1,51 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 04/14] appp.sh: use the $( ... ) construct for command substitution
-Date: Wed, 23 Apr 2014 06:43:56 -0700
-Message-ID: <1398260646-2660-4-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 02/14] test-gitmw-lib.sh: use the $( ... ) construct for command substitution
+Date: Wed, 23 Apr 2014 06:43:54 -0700
+Message-ID: <1398260646-2660-2-git-send-email-gitter.spiros@gmail.com>
 References: <1398260646-2660-1-git-send-email-gitter.spiros@gmail.com>
 Cc: matthieu.moy@grenoble-inp.fr, Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 23 15:49:46 2014
+X-From: git-owner@vger.kernel.org Wed Apr 23 15:50:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WcxYW-0005CP-QA
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 15:49:45 +0200
+	id 1WcxZ2-0005lm-1t
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Apr 2014 15:50:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756417AbaDWNta (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Apr 2014 09:49:30 -0400
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:60001 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753328AbaDWNoR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Apr 2014 09:44:17 -0400
-Received: by mail-pa0-f49.google.com with SMTP id lj1so779233pab.22
-        for <git@vger.kernel.org>; Wed, 23 Apr 2014 06:44:16 -0700 (PDT)
+	id S1752609AbaDWNuI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Apr 2014 09:50:08 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:49169 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757050AbaDWNoO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Apr 2014 09:44:14 -0400
+Received: by mail-pb0-f46.google.com with SMTP id rq2so798501pbb.19
+        for <git@vger.kernel.org>; Wed, 23 Apr 2014 06:44:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=qRjTlKldVDUvktKADsEhgtkmscEAKu2OHs/eZ2AcFNQ=;
-        b=OuqmBkri7XtGIAxN4B1KtBSlSdenzbhvUD/kLmL/PisBYCV9FZ2Vls5LWU0bX3+4FB
-         E1V5EXPnvDrjVSeP+Pd66QEcrHeXexIIZRp2Xq33JHngwEobAeZKjHhPLQpui+9tRqVc
-         lggpMiKFvLH3nNuakv+XCa3I2EQfAnek6sfVq0EqqLGc+GIgsy/JesV5hIl7BmGMSeVh
-         qUCHk5F7FKaQFZkXVQBWp1TmVgvC0P6s6P91Thv3Jqmss9wz9ZLqpRt7icjS0ql/wE6s
-         RDK21tvVhB66ePJMGz5fGRSoRCUo2+QRFJxVaCoTkyzXWB1Alt3Fna7mf2/wUmlSflRF
-         1s5w==
-X-Received: by 10.68.94.164 with SMTP id dd4mr9824013pbb.161.1398260656728;
-        Wed, 23 Apr 2014 06:44:16 -0700 (PDT)
+        bh=oxN9CoO9+rsUYycxZYvO9zyXaPWBHGt3UIi2oxc5FNc=;
+        b=vC8NsVugYxKvCNd/xRXX+c75QHqOt1u+aPTl+Tn4lT7acDEZPPqX5KB9qof4x9xO1e
+         60xjJLWBr3g0lw3mdT7x5RH97Ey4VpT4pSQp2CrR6qn+i+schzBjxX7IpEYRfy+DLCj4
+         CcCSKv78umG6o+iHPHMeuU9wZajmHJUNDIi4OV7q+yuWnWFTNfFavwDNkdW2Z8h1S1RI
+         3c4kVKmQUh/wPuwW7yOawtCaezbbiF1JK+aQzmySFbKYwyD8cv+XtEFLybg9jpdxi3tE
+         P466mPogrnBH2nTSWLYeIOpmnmfTsoPVOfjugWwWupTaAL0NTxhJqUou8vY7uanjoGGP
+         hATA==
+X-Received: by 10.68.133.229 with SMTP id pf5mr25638795pbb.115.1398260653801;
+        Wed, 23 Apr 2014 06:44:13 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id kt8sm5314475pab.7.2014.04.23.06.44.15
+        by mx.google.com with ESMTPSA id kt8sm5314475pab.7.2014.04.23.06.44.12
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 23 Apr 2014 06:44:15 -0700 (PDT)
+        Wed, 23 Apr 2014 06:44:13 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1398260646-2660-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246841>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -67,47 +67,34 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- contrib/thunderbird-patch-inline/appp.sh |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ contrib/mw-to-git/t/test-gitmw-lib.sh |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/contrib/thunderbird-patch-inline/appp.sh b/contrib/thunderbird-patch-inline/appp.sh
-index 5eb4a51..8dc73ec 100755
---- a/contrib/thunderbird-patch-inline/appp.sh
-+++ b/contrib/thunderbird-patch-inline/appp.sh
-@@ -10,7 +10,7 @@ CONFFILE=~/.appprc
- 
- SEP="-=-=-=-=-=-=-=-=-=# Don't remove this line #=-=-=-=-=-=-=-=-=-"
- if [ -e "$CONFFILE" ] ; then
--	LAST_DIR=`grep -m 1 "^LAST_DIR=" "${CONFFILE}"|sed -e 's/^LAST_DIR=//'`
-+	LAST_DIR=$(grep -m 1 "^LAST_DIR=" "${CONFFILE}"|sed -e 's/^LAST_DIR=//')
- 	cd "${LAST_DIR}"
- else
- 	cd > /dev/null
-@@ -25,11 +25,11 @@ fi
- 
- cd - > /dev/null
- 
--SUBJECT=`sed -n -e '/^Subject: /p' "${PATCH}"`
--HEADERS=`sed -e '/^'"${SEP}"'$/,$d' $1`
--BODY=`sed -e "1,/${SEP}/d" $1`
--CMT_MSG=`sed -e '1,/^$/d' -e '/^---$/,$d' "${PATCH}"`
--DIFF=`sed -e '1,/^---$/d' "${PATCH}"`
-+SUBJECT=$(sed -n -e '/^Subject: /p' "${PATCH}")
-+HEADERS=$(sed -e '/^'"${SEP}"'$/,$d' $1)
-+BODY=$(sed -e "1,/${SEP}/d" $1)
-+CMT_MSG=$(sed -e '1,/^$/d' -e '/^---$/,$d' "${PATCH}")
-+DIFF=$(sed -e '1,/^---$/d' "${PATCH}")
- 
- CCS=`echo -e "$CMT_MSG\n$HEADERS" | sed -n -e 's/^Cc: \(.*\)$/\1,/gp' \
- 	-e 's/^Signed-off-by: \(.*\)/\1,/gp'`
-@@ -48,7 +48,7 @@ if [ "x${BODY}x" != "xx" ] ; then
- fi
- echo "$DIFF" >> $1
- 
--LAST_DIR=`dirname "${PATCH}"`
-+LAST_DIR=$(dirname "${PATCH}")
- 
- grep -v "^LAST_DIR=" "${CONFFILE}" > "${CONFFILE}_"
- echo "LAST_DIR=${LAST_DIR}" >> "${CONFFILE}_"
+diff --git a/contrib/mw-to-git/t/test-gitmw-lib.sh b/contrib/mw-to-git/t/test-gitmw-lib.sh
+index 3372b2a..c783752 100755
+--- a/contrib/mw-to-git/t/test-gitmw-lib.sh
++++ b/contrib/mw-to-git/t/test-gitmw-lib.sh
+@@ -90,7 +90,7 @@ test_diff_directories () {
+ #
+ # Check that <dir> contains exactly <N> files
+ test_contains_N_files () {
+-	if test `ls -- "$1" | wc -l` -ne "$2"; then
++	if test $(ls -- "$1" | wc -l) -ne "$2"; then
+ 		echo "directory $1 should contain $2 files"
+ 		echo "it contains these files:"
+ 		ls "$1"
+@@ -341,10 +341,10 @@ wiki_install () {
+ 			"http://download.wikimedia.org/mediawiki/$MW_VERSION_MAJOR/"\
+ 			"$MW_FILENAME. "\
+ 			"Please fix your connection and launch the script again."
+-		echo "$MW_FILENAME downloaded in `pwd`. "\
++		echo "$MW_FILENAME downloaded in $(pwd). "\
+ 			"You can delete it later if you want."
+ 	else
+-		echo "Reusing existing $MW_FILENAME downloaded in `pwd`."
++		echo "Reusing existing $MW_FILENAME downloaded in $(pwd)."
+ 	fi
+ 	archive_abs_path=$(pwd)/$MW_FILENAME
+ 	cd "$WIKI_DIR_INST/$WIKI_DIR_NAME/" ||
 -- 
 1.7.10.4
