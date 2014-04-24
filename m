@@ -1,130 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] setup: Fix windows path buffer over-stepping
-Date: Thu, 24 Apr 2014 11:37:38 -0700
-Message-ID: <xmqqsip2vaj1.fsf@gitster.dls.corp.google.com>
-References: <1398344769-32564-1-git-send-email-martinerikwerner@gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: What is missing from Git v2.0
+Date: Thu, 24 Apr 2014 13:28:50 -0500
+Message-ID: <535957e225e7b_3241f112ecc3@nysa.notmuch>
+References: <CAMP44s17h4Tjg+VaMF0atLep8t-0HVp4UDr1WE2wYnEuZ07eaQ@mail.gmail.com>
+ <53557071.5040500@gmail.com>
+ <xmqqtx9m8obr.fsf@gitster.dls.corp.google.com>
+ <CAHGBnuMty-86jfUto=L3muhgEVwVE70FQQY2FJ1bn7AUjfEtLQ@mail.gmail.com>
+ <xmqqk3ah5i55.fsf@gitster.dls.corp.google.com>
+ <5356c1a61f6d8_463e11ef310a5@nysa.notmuch>
+ <20140422213039.GB21043@thunk.org>
+ <alpine.DEB.2.02.1404221523060.14881@nftneq.ynat.uz>
+ <53588713347b7_59ed83d308cf@nysa.notmuch>
+ <CAHYYfeHeJYZ67chSTQk2grsFGr07KXcVNR-T6kOPo0bVYDm59g@mail.gmail.com>
+ <53588f448d817_59ed83d3084e@nysa.notmuch>
+ <CAHYYfeFKW93GH+6-ssR5L_uoo3OL2-LFAsj-4+8uEmL0BhT3ow@mail.gmail.com>
+ <5358bae8ab550_1f7b143d31037@nysa.notmuch>
+ <877g6fb2h6.fsf@fencepost.gnu.org>
+ <5358ca1a55a69_1f7b143d3101c@nysa.notmuch>
+ <8738h3ayom.fsf@fencepost.gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Martin Erik Werner <martinerikwerner@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 24 20:38:00 2014
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: James Denholm <nod.helm@gmail.com>, David Lang <david@lang.hm>,
+	Theodore Ts'o <tytso@mit.edu>,
+	Junio C Hamano <gitster@pobox.com>,
+	Sebastian Schuberth <sschuberth@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: David Kastrup <dak@gnu.org>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 24 20:39:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WdOX0-0008ST-T3
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Apr 2014 20:37:59 +0200
+	id 1WdOYN-0001sd-CD
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Apr 2014 20:39:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758879AbaDXShs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Apr 2014 14:37:48 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59364 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758725AbaDXShm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Apr 2014 14:37:42 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3C4458051A;
-	Thu, 24 Apr 2014 14:37:42 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=MeaUYp4pC4+b5JIdTBxhrW+9MAc=; b=prH8Gg
-	oPO9x+d2V6YyRkLJ5eZW+g041d4OJQVCMqW7FLGXNCbOLbb/mrBQ2WMcpftkyDtZ
-	Li80Mz7nP2TLz2MsrwRe+fqMXgetSSmU3rEqJn7ELc2ALzIA848ZCXKt2geTnULw
-	4wwsMmkn5hgfN9QhiFIHwAyfqB7rzu2Oekz7s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=SYDVfya810ssMyzRtXVayRCSHHljyiOM
-	YujjlJkP3j210FXo4qtS2/oPArzssFWfxM2tZQcazXM8gKfVL+5HicDsTOL5QkwP
-	Cb6xMQpPMPX9gfx2yk0rKm1LBMCa1DsjjASZ9dA69FwY+T01zvQRlsw9gpzqsmTg
-	zjAF/p72p6o=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 21DEE80519;
-	Thu, 24 Apr 2014 14:37:42 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E2A3680517;
-	Thu, 24 Apr 2014 14:37:39 -0400 (EDT)
-In-Reply-To: <1398344769-32564-1-git-send-email-martinerikwerner@gmail.com>
-	(Martin Erik Werner's message of "Thu, 24 Apr 2014 15:06:09 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 83BCD8F6-CBDF-11E3-9E76-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758203AbaDXSjS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Apr 2014 14:39:18 -0400
+Received: from mail-ob0-f179.google.com ([209.85.214.179]:54786 "EHLO
+	mail-ob0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753427AbaDXSjR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Apr 2014 14:39:17 -0400
+Received: by mail-ob0-f179.google.com with SMTP id vb8so3096212obc.24
+        for <git@vger.kernel.org>; Thu, 24 Apr 2014 11:39:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=+q91YTeYssL1TytotnIyjaRm4dqNKHg58StYaMY2HcI=;
+        b=I3vyg6Msu8YBV+OHtI8uglofwqJ8d58F3Ix2MqU0jfsbXSxUCPj0hsVl3B8Q8QKSyu
+         q3+OhVD+Fa/3UUdip3Fomrd5b1OLPCSh9W6x1bouQan5gtJdioiI2jEPxPynGkVKdlmN
+         10qQvAGuNp2UbicERU/Gg4ZsmwhRX4hN523MDIhO3MdIMwM4YGtf/LMBzsy5P/SFyYoa
+         NV8BmS2XEondbD3YT0SZ/q5XfjjxY5NwIHAG0qA9OiqMIBeN/Iob/irU2QIhO54Yt2wg
+         7VoqOQpxJFVEpXO19i2qWyBkA5dzr6jqOxJ4z6iDUnPHBrsvRqSig0/zQ1QGzOn6QvyY
+         Ay+A==
+X-Received: by 10.60.40.39 with SMTP id u7mr2878930oek.56.1398364757021;
+        Thu, 24 Apr 2014 11:39:17 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id ci10sm20831289oec.0.2014.04.24.11.39.14
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 24 Apr 2014 11:39:15 -0700 (PDT)
+In-Reply-To: <8738h3ayom.fsf@fencepost.gnu.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246992>
 
-Martin Erik Werner <martinerikwerner@gmail.com> writes:
+David Kastrup wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> > David Kastrup wrote:
+> >> The people having to read and understand scripts written in the
+> >> expectation of default aliases.
+> >
+> > Which are imaginary.
+> 
+> And I prefer them to stay that way since then one does not need to worry
+> about them.
 
-> Fix a buffer over-stepping issue triggered by providing an absolute path
-> that is similar to the work tree path.
->
-> abspath_part_inside_repo() may currently increment the path pointer by
-> offset_1st_component() + wtlen, which is too much, since
-> offset_1st_component() is a subset of wtlen.
->
-> For the *nix-style prefix '/', this does (by luck) not cause any issues,
-> since offset_1st_component() is 1 and there will always be a '/' or '\0'
-> that can "absorb" this.
->
-> In the case of DOS-style prefixes though, the offset_1st_component() is
-> 3 and this can potentially over-step the string buffer. For example if
->
->     work_tree = "c:/r"
->     path      = "c:/rl"
->
-> Then wtlen is 4, and incrementing the path pointer by (3 + 4) would
-> end up 2 bytes outside a string buffer of length 6.
->
-> Similarly if
->
->     work_tree = "c:/r"
->     path      = "c:/rl/d/a"
->
-> Then (since the loop starts by also incrementing the pointer one step),
-> this would mean that the function would miss checking if "c:/rl/d" could
-> be the work_tree, arguably this is unlikely though, since it would only
-> be possible with symlinks on windows.
->
-> Fix this by simply avoiding to increment by offset_1st_component() and
-> wtlen at the same time.
->
-> Signed-off-by: Martin Erik Werner <martinerikwerner@gmail.com>
-> ---
->
-> This is a follow-up on 655ee9e mw/symlinks which is currently merged into
-> master, prospective for git v2.0.0, the issue only affects v2.0.0-rc0.
+If everybody was afraid of moving because of imaginary fears like you, nothing
+would get done in this world. Rational people distinguish the imaginary from
+the real.
 
-Thanks for a fix and from a cursory read of the surrounding code, I
-think the patch makes sense.
-
-I appreciate your doing so before the breakage hits a released
-version very much.
-
-
->  setup.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/setup.c b/setup.c
-> index 613e3b3..0a22f8b 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -29,7 +29,7 @@ static int abspath_part_inside_repo(char *path)
->  		return -1;
->  	wtlen = strlen(work_tree);
->  	len = strlen(path);
-> -	off = 0;
-> +	off = offset_1st_component(path);
->  
->  	/* check if work tree is already the prefix */
->  	if (wtlen <= len && !strncmp(path, work_tree, wtlen)) {
-> @@ -45,7 +45,7 @@ static int abspath_part_inside_repo(char *path)
->  		off = wtlen;
->  	}
->  	path0 = path;
-> -	path += offset_1st_component(path) + off;
-> +	path += off;
->  
->  	/* check each '/'-terminated level */
->  	while (*path) {
+-- 
+Felipe Contreras
