@@ -1,7 +1,7 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
 Subject: Re: What is missing from Git v2.0
-Date: Wed, 23 Apr 2014 22:35:55 -0500
-Message-ID: <5358869b2937_59ed83d308fe@nysa.notmuch>
+Date: Wed, 23 Apr 2014 22:37:55 -0500
+Message-ID: <53588713347b7_59ed83d308cf@nysa.notmuch>
 References: <CAMP44s17h4Tjg+VaMF0atLep8t-0HVp4UDr1WE2wYnEuZ07eaQ@mail.gmail.com>
  <53557071.5040500@gmail.com>
  <xmqqtx9m8obr.fsf@gitster.dls.corp.google.com>
@@ -9,106 +9,71 @@ References: <CAMP44s17h4Tjg+VaMF0atLep8t-0HVp4UDr1WE2wYnEuZ07eaQ@mail.gmail.com>
  <xmqqk3ah5i55.fsf@gitster.dls.corp.google.com>
  <5356c1a61f6d8_463e11ef310a5@nysa.notmuch>
  <20140422213039.GB21043@thunk.org>
- <5356e62feb9f3_6cbadd72f0f1@nysa.notmuch>
- <87y4yxc89r.fsf@fencepost.gnu.org>
+ <alpine.DEB.2.02.1404221523060.14881@nftneq.ynat.uz>
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: Theodore Ts'o <tytso@mit.edu>, Junio C Hamano <gitster@pobox.com>,
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
 	Sebastian Schuberth <sschuberth@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: David Kastrup <dak@gnu.org>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 24 05:46:27 2014
+To: David Lang <david@lang.hm>, Theodore Ts'o <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Thu Apr 24 05:48:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WdAcE-0005Il-L7
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Apr 2014 05:46:27 +0200
+	id 1WdAeB-00078X-6G
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Apr 2014 05:48:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751451AbaDXDqW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Apr 2014 23:46:22 -0400
-Received: from mail-oa0-f54.google.com ([209.85.219.54]:38928 "EHLO
-	mail-oa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751156AbaDXDqV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Apr 2014 23:46:21 -0400
-Received: by mail-oa0-f54.google.com with SMTP id i7so2031121oag.41
-        for <git@vger.kernel.org>; Wed, 23 Apr 2014 20:46:21 -0700 (PDT)
+	id S1751125AbaDXDsW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Apr 2014 23:48:22 -0400
+Received: from mail-oa0-f48.google.com ([209.85.219.48]:65239 "EHLO
+	mail-oa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750844AbaDXDsV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Apr 2014 23:48:21 -0400
+Received: by mail-oa0-f48.google.com with SMTP id m1so2020255oag.7
+        for <git@vger.kernel.org>; Wed, 23 Apr 2014 20:48:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-type:content-transfer-encoding;
-        bh=imB/md5Stu16AQfQqSElsgH31ByJnjS+Jwoa4iSsmwM=;
-        b=nX5OlXea6xRtouO0TJW1b0442zrLT77g0Ljvvh1+57pBdRUbHJkVWBSt7iomjuNluG
-         jprEzU7P6Vpy0PY4tYHhsOXgVdyUj9H4O+6zt3dUj9oTskfnQqruasGvE6CzH3Bp/nsk
-         LJI1HolQFL+fXejCdZLjrSraqYdQVH9t25oc0kpPeIZnfWsTn6eA/UNfb7xDs+J1JjeO
-         ZJisS2I6yBAWOTLIDJB3sbQrbzQfB17wtI+KBkjsXwH/RMTAs6nv39S1QBAgeei1vStZ
-         wkE7fvwyVExm/7HU1ZoOZabmg1oz6SIPcwJFJUPOk6schsT5IWdt5mL95lQZbLsnsL2A
-         P+fg==
-X-Received: by 10.182.104.71 with SMTP id gc7mr2192563obb.34.1398311181463;
-        Wed, 23 Apr 2014 20:46:21 -0700 (PDT)
+        bh=F1Cc7bLB6sV2QXWYwjuztvF3yxxpfEx8RpI5dM0/b3c=;
+        b=vvi21S88gM8zW4XMF2a92gcNqwCXu1Z5lwfn0WCklq6bb7mwaE689dhWsqWhDd0r0u
+         k/ooSMJDu0NRfI+dvji+aJFbaRDIEFdo4ttIy1yagAPvzLjfNboYTdBMsmNna3UHO7H3
+         zCiK8SdG5cPK6/6n6WU71EBqLP1pLVgEoMUyPTs0lMsawsrpXPxuQggZtEaHNBbkKFqI
+         VOSnLyMfQJ6mdIzYDOu8bF8McUpybeEyBJ6dWIh2Q6fbV23LMI+R7FV+Hbk+eqXv+Y/r
+         L3BvrYKLPG2fHt7lCvp+jXjUpP+Cibvw1sc5mJegz4ajSPSiQmstVkPnSze/cPvRhuoL
+         X3BA==
+X-Received: by 10.182.79.9 with SMTP id f9mr49697obx.64.1398311301272;
+        Wed, 23 Apr 2014 20:48:21 -0700 (PDT)
 Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id ii8sm5976272obb.11.2014.04.23.20.46.19
+        by mx.google.com with ESMTPSA id or12sm6003427obc.0.2014.04.23.20.48.18
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 23 Apr 2014 20:46:20 -0700 (PDT)
-In-Reply-To: <87y4yxc89r.fsf@fencepost.gnu.org>
+        Wed, 23 Apr 2014 20:48:20 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.02.1404221523060.14881@nftneq.ynat.uz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246931>
 
-David Kastrup wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
-> 
-> > Theodore Ts'o wrote:
-> >
-> >> This is especially true for commands which might not be used as often
-> >> -- e.g., "rebase", and for commands where the meaning of "git commit"
-> >> without any argument is qualitatively different from what "ci" (for
-> >> checkin) means in most other source management systems.
-> >
-> > ci means commit in Mercurial.
-> 
-> Does it mean "commit the staging area"?
+David Lang wrote:
+> agreed, of all the things that people complain about regarding learning git,
+> the fact that the commands are words instead of cryptic 2 letter
+> abberviations is not one of them.
 
-It means "hg commit".
+It is when they start to use Git seriously and type them a lot.
 
-> > It would help when the user starts to think "Geez, I seem to be typing
-> > `git checkout` an awful lot, I wonder if there's a shortcut", which if
-> > the .gitconfigs out there are any indication, it happens all the time.
-> 
-> Actually, it happens very rarely if you are talking about _real_
-> gitconfigs deployed by projects as compared to _sample_ gitconfigs
-> demonstrating Git features for _personal_ rather than project-wide use.
+> The complaints tend to be far more about how there are inconsistancies
+> between commands, or they don't understand what's happening.
 
-There's no such thing as gitconfigs deployed by projects, and if there were
-they would be irrelevant.
+Yes, but you don't see anybody trying to improve those, do you?
 
-We are talking about *people* using Git's command line interface, and people
-have *personal* configs, that's it.
-
-And it's only those configs we have access to, and the only sources of
-information we have to make a guess if users ask the question "Geez, I seem to
-be typing `git checkout` an awful lot, I wonder if there's a shortcut".
-
-> >> And for a command like "rebase" where the user can very easily shoot
-> >> themselves in the foot to begin with, I'd actually suggest that it's
-> >> a _good_ thing that they have to type it out in full.
-> >
-> > And now you contradict yourself; you actually want to make life harder
-> > for new users, on purpose.
-> 
-> Life's hardness is not proportional to the number of typed characters
-
-It is. Why do you think people set aliases? To make their life harder?
-
-Anyway, if you disagree change one of your frequently used passwords to a
-chapter of The Lord of the Rings for a day. Let's see if you still think that.
+This is low-hanging fruit we can actually change.
 
 -- 
 Felipe Contreras
