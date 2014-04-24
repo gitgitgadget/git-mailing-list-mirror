@@ -1,75 +1,79 @@
-From: tytso@mit.edu
-Subject: Re: What is missing from Git v2.0
-Date: Thu, 24 Apr 2014 15:47:18 +0000
-Message-ID: <20140424154717.GB7531@thunk.org>
-References: <alpine.DEB.2.02.1404221523060.14881@nftneq.ynat.uz>
- <53588713347b7_59ed83d308cf@nysa.notmuch>
- <CAHYYfeHeJYZ67chSTQk2grsFGr07KXcVNR-T6kOPo0bVYDm59g@mail.gmail.com>
- <53588f448d817_59ed83d3084e@nysa.notmuch>
- <CAHYYfeFKW93GH+6-ssR5L_uoo3OL2-LFAsj-4+8uEmL0BhT3ow@mail.gmail.com>
- <5358bae8ab550_1f7b143d31037@nysa.notmuch>
- <877g6fb2h6.fsf@fencepost.gnu.org>
- <5358ca1a55a69_1f7b143d3101c@nysa.notmuch>
- <20140424134106.GA27035@thunk.org>
- <CALbm-EbBj1hCF=rFfeBbzeVmffRHVEEE=HSbVZxw-=-=p2BvEQ@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v5 2/9] test: add test_write_lines helper
+Date: Thu, 24 Apr 2014 10:08:26 -0700
+Message-ID: <20140424170826.GH15516@google.com>
+References: <1398331809-11309-1-git-send-email-mst@redhat.com>
+ <1398331809-11309-2-git-send-email-mst@redhat.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	David Kastrup <dak@gnu.org>,
-	James Denholm <nod.helm@gmail.com>, David Lang <david@lang.hm>,
-	Junio C Hamano <gitster@pobox.com>,
-	Sebastian Schuberth <sschuberth@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Stefan Beller <stefanbeller@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 24 17:47:48 2014
+Cc: git@vger.kernel.org, sunshine@sunshineco.com, peff@peff.net,
+	gitster@pobox.com
+To: "Michael S. Tsirkin" <mst@redhat.com>
+X-From: git-owner@vger.kernel.org Thu Apr 24 19:08:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WdLsD-0008NE-Er
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Apr 2014 17:47:41 +0200
+	id 1WdN8Z-00066h-IT
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Apr 2014 19:08:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758346AbaDXPr2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Apr 2014 11:47:28 -0400
-Received: from imap.thunk.org ([74.207.234.97]:59009 "EHLO imap.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758159AbaDXPr0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Apr 2014 11:47:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=thunk.org; s=ef5046eb;
-	h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=Orl95836XAVAM5W8VnmxFKKDvyCaWY5CFFCQ6wkBO2M=;
-	b=eI56pmYcspDdFHmaQOrzrkAAqaRjrQJTcIEElDBQiE4areo0sc6JuwtI8jpjHxshrz43p6+mWiZiMZebwo2/syIHZB2PFwMHwu7zZKc7/92P+39Jzbn3PqjQl5MizZlh/2Yp40A+KvmR1CyU4kwqrqhLg3zAzD1kXWVc+0gp50Y=;
-Received: from tytso by imap.thunk.org with local (Exim 4.80)
-	(envelope-from <tytso@thunk.org>)
-	id 1WdLrq-00024T-1W; Thu, 24 Apr 2014 15:47:18 +0000
+	id S932387AbaDXRId (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Apr 2014 13:08:33 -0400
+Received: from mail-pb0-f42.google.com ([209.85.160.42]:45764 "EHLO
+	mail-pb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932348AbaDXRIa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Apr 2014 13:08:30 -0400
+Received: by mail-pb0-f42.google.com with SMTP id un15so2174506pbc.15
+        for <git@vger.kernel.org>; Thu, 24 Apr 2014 10:08:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=X6CO9356XrNXGLNFaA61eovug1oytrE+0LWpg0/0esg=;
+        b=RHIP+ay0v7A9GmDFJm3tMVsNxg2M26PL8qCthSfBIqypdPGWEawQzYPYToRWExgJCx
+         hAt4BWirnatCZlGMQOhiEYJpW39z26KsWPI/9tFmHm5d6PT9599YCvxDvY/YhCCUvYPh
+         RZHx54vM7HkeJgjYyipamaIquGqzwUOLKfExnEu8U7DY7nBNcdON5IvgJx1dzb8JegA8
+         GHnGtMPMb3wF4Vfe0NfY/ia9eIz7RNm414hzne6xea11xnsVkJ+a/KCMmxy0Nu+2piR9
+         iOw8oGxl2d2tveuNAaVD/JASPiZK7u/XNqJjXupLdKtd3SVyU4VeUl35Cs/TytbN9FKU
+         dm3w==
+X-Received: by 10.68.227.4 with SMTP id rw4mr4943311pbc.3.1398359310073;
+        Thu, 24 Apr 2014 10:08:30 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id xk1sm23269996pac.21.2014.04.24.10.08.28
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 24 Apr 2014 10:08:28 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <CALbm-EbBj1hCF=rFfeBbzeVmffRHVEEE=HSbVZxw-=-=p2BvEQ@mail.gmail.com>
+In-Reply-To: <1398331809-11309-2-git-send-email-mst@redhat.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246976>
 
-On Thu, Apr 24, 2014 at 05:00:13PM +0200, Stefan Beller wrote:
-> > I don't even think we need to query the user to fill out all of the
-> > fields.  We can prepopulate a lot of the fields (name, e-mail address,
-> > etc.) from OS specific defaults that are available on most systems ---
-> > specifically, the default values we would use the name and e-mail
-> > address are not specified in a config file.
-> 
-> Please don't. Or you end up again with Commiters like sb@localhost,
-> sbeller@(None) or alike. I mean it's just one question once you setup
-> a new computer, so I'd really like to see that question and then
-> answer myself (at university/employer I might put in another email
-> address than at home anyway, and I'm sure my boxes have no sane
-> defaults)
+Michael S. Tsirkin wrote:
 
-But that's no worse than what we have today.  What if we print what
-the defaults were, which might help encourage the user to actually run
-the "git config -e" command?
+> --- a/t/test-lib-functions.sh
+> +++ b/t/test-lib-functions.sh
+> @@ -712,6 +712,11 @@ test_ln_s_add () {
+>  	fi
+>  }
+>  
+> +# This function writes out its parameters, one per line
+> +test_write_lines () {
+> +	printf "%s\n" "$@";
+> +}
+> +
 
-					- Ted
+Thanks for fixing this.
+
+Nits:
+
+ * no need for the trailing semicolon
+ * it's probably worth documenting this in t/README as well so people
+   writing new test scripts know what it's about.
+
+Thanks,
+Jonathan
