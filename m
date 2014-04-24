@@ -1,120 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 5/9] patch-id: document new behaviour
-Date: Thu, 24 Apr 2014 15:12:14 -0700
-Message-ID: <xmqqzjjatm0x.fsf@gitster.dls.corp.google.com>
-References: <1398331809-11309-1-git-send-email-mst@redhat.com>
-	<1398331809-11309-5-git-send-email-mst@redhat.com>
-	<20140424173325.GK15516@google.com> <20140424212639.GA9129@redhat.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Harmful LESS flags
+Date: Thu, 24 Apr 2014 18:13:08 -0400
+Message-ID: <20140424221308.GA15061@sigill.intra.peff.net>
+References: <4dc69237123e8962b2b2b901692ea78e.id@mailtor>
+ <87lhuvb9kr.fsf@fencepost.gnu.org>
+ <xmqqha5iv9eb.fsf@gitster.dls.corp.google.com>
+ <87tx9ia5zq.fsf@fencepost.gnu.org>
+ <xmqq8uquv84u.fsf@gitster.dls.corp.google.com>
+ <20140424213529.GB7815@sigill.intra.peff.net>
+ <87lhuu9z69.fsf@fencepost.gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	sunshine@sunshineco.com, peff@peff.net
-To: "Michael S. Tsirkin" <mst@redhat.com>
-X-From: git-owner@vger.kernel.org Fri Apr 25 00:12:40 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, d9ba@mailtor.net,
+	git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Fri Apr 25 00:13:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WdRsk-00021G-CH
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Apr 2014 00:12:38 +0200
+	id 1WdRtT-000361-4b
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Apr 2014 00:13:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932351AbaDXWMX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Apr 2014 18:12:23 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63205 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758229AbaDXWMS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Apr 2014 18:12:18 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 38C6380754;
-	Thu, 24 Apr 2014 18:12:18 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=BS3jZ8n+Co09Mw7QSFA3/6msZOE=; b=yZ4Qrx
-	SEPJbpQmgGptS8/09AHEDU8/HIN+tQlx6TA8DR5S7R2J4QuqaPvZcrfTDdrH5Wu5
-	oe+kUC1Y3chdR8FvCtAx/A9tZAGAgNqseji/PAcm2ZZSn248CIr30H4rwzCCoh2/
-	jGOgpyY8Fn9v5A4KhHGoU7q2f9tvjUVboKqNM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Xo2BpFOYVKBboFjQJgiS0ZEiGP5GhoJj
-	7OI3k6VqMdlwhcfGRL1lR4OCjWbWgZlXGfbCqX3er+/xvEIuVibiwptuq3PdrJsS
-	YG4myIw+Nx3DbvypBNn2leta4ALTVFvxErYZ0KR+3JOq2tCjty9Ljd4aeDBPS6e+
-	LeuFvM2uLLc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1B53A80753;
-	Thu, 24 Apr 2014 18:12:18 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0319180750;
-	Thu, 24 Apr 2014 18:12:16 -0400 (EDT)
-In-Reply-To: <20140424212639.GA9129@redhat.com> (Michael S. Tsirkin's message
-	of "Fri, 25 Apr 2014 00:26:39 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 7E813C4C-CBFD-11E3-8F07-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755157AbaDXWNN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Apr 2014 18:13:13 -0400
+Received: from cloud.peff.net ([50.56.180.127]:37873 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753869AbaDXWNK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Apr 2014 18:13:10 -0400
+Received: (qmail 13235 invoked by uid 102); 24 Apr 2014 22:13:10 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 24 Apr 2014 17:13:10 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Apr 2014 18:13:08 -0400
+Content-Disposition: inline
+In-Reply-To: <87lhuu9z69.fsf@fencepost.gnu.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247015>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247016>
 
-"Michael S. Tsirkin" <mst@redhat.com> writes:
+On Thu, Apr 24, 2014 at 11:48:30PM +0200, David Kastrup wrote:
 
->> > +--unstable::
->> > +	Use a non-symmetrical sum of hashes, such that reordering
->> 
->> What is a non-symmetrical sum?
->
-> Non-symmetrical combination function is better?
+> > I really think the right solution here is to teach less to make it more
+> > obvious that there is something worth scrolling over to. Here's a very
+> > rough patch for less, if you want to see what I'm thinking of.
+> 
+> Still useless.  I'm not actually interested in a more prominent "I could
+> be useful" indicator.
 
-I do not think either is very good X-<.
+So don't set -S, then.
 
-The primary points to convey for "--stable" are:
+There are two questions here:
 
- - Two patches produced by comparing the same two trees with two
-   different settings for "-O<orderfile>" will result in the same
-   patchc signature, thereby allowing the computed result to be used
-   as a key to index some metainformation about the change between
-   the two trees;
+  1. Can less do a better job of indicating what's in the input when -S
+     is in effect?
 
- - It will produce a result different from the plain vanilla
-   patch-id has always produced even when used on a diff output
-   taken without any use of "-O<orderfile>", thereby making existing
-   databases keyed by patch-ids unusable.
+  2. What should get put into $LESS by default?
 
-The fact that we happened to use a patch-id that catches that
-somebody reordered the same patch into different file order and
-declares that they are two different changes is a more historical
-accident than a designed goal.
+I was specifically addressing (1). Your comment does not help at all
+there.
 
-I would even say that we would have used the "stable" version from
-the beginning if we thought that "-O<orderfile>" would be widely
-used when these two features both appeared.  Even though I was the
-guilty one who introduced it, I'd admit that "-O<orderfile>" has
-merely been a curiosity from its inception and has been a failed
-experiment, not in the sense that the feature does not work as
-adverertised (it does), but in the sense that it is not widely used
-(evidenced by the lack of complaints on missing diff.orderfile for a
-long time) at all.  With "-O<orderfile>" being a failed experiment,
-the "unstability" did not matter, so it has stuck.
+It could have an impact on (2), but you didn't say anything besides "I
+don't like it". That doesn't add anything to the conversation.
 
-The only two things worth mentioning about "--unstable", if our
-future direction is to see diff.orderfile and "--stable" a lot more
-widely used, are:
-
- (1) it keeps producing the same patch-id as existing versions of
-     Git, so users with existing databases (who do not deal with
-     reordered patches) may want to use it; and perhaps
-
- (2) it will not consider a patch taken with "-O<orderfile>" and
-     another without it from the same source the same patches.
-
-Mathmatically speaking, mentioning "non-symmetrial" might be one way
-of expressing the latter point (2), but stressing on that alone
-without mentioning (1) misses the point.  (2) is _not_ a designed
-feature, so it is not very interesting.  Unless you have an existing
-database, there is no reason to use "--unstable".
-
-On the other hand (1) is a very relevant thing to mention, as we are
-talking about a feature that, if unused, may break existing users'
-data.
+-Peff
