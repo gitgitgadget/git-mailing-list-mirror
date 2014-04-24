@@ -1,84 +1,87 @@
-From: d9ba@mailtor.net
-Subject: Harmful LESS flags
-Date: Wed, 23 Apr 2014 23:46:02 -0000
-Message-ID: <4dc69237123e8962b2b2b901692ea78e.id@mailtor>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Harmful LESS flags
+Date: Wed, 23 Apr 2014 17:11:26 -0700
+Message-ID: <20140424001126.GG15516@google.com>
+References: <4dc69237123e8962b2b2b901692ea78e.id@mailtor>
 Mime-Version: 1.0
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: 8bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 24 01:54:16 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Mark Nudelman <markn@greenwoodsoftware.com>
+To: d9ba@mailtor.net
+X-From: git-owner@vger.kernel.org Thu Apr 24 02:11:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wd6zX-0005SA-Fa
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Apr 2014 01:54:15 +0200
+	id 1Wd7GH-00054Q-Ua
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Apr 2014 02:11:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752059AbaDWXyK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Apr 2014 19:54:10 -0400
-Received: from mailtor.net ([109.168.103.133]:59404 "EHLO mailtor.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751290AbaDWXyJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Apr 2014 19:54:09 -0400
-X-Greylist: delayed 429 seconds by postgrey-1.27 at vger.kernel.org; Wed, 23 Apr 2014 19:54:08 EDT
-Received: from mailtoralnhyol5v.onion (localhost [127.0.0.1])
-	by mailtor.net (Postfix) with ESMTP id 79BCB267648
-	for <git@vger.kernel.org>; Thu, 24 Apr 2014 01:46:02 +0200 (CEST)
-Received: from MAILTOR FREE ANONYMOUS MAIL PROVIDER. SUPPORT US WITH A
- DONATION IN BITCOINS: 14vkMKcwaTVDmXVW7Y69W3p444q5D38oxc Create your free
- @mailtor.net email box at mailtoralnhyol5v.onion (you need tor software
- installed). FOR CONTACT US: admin@mailtor.net
-User-Agent: >_<
+	id S1751586AbaDXALa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Apr 2014 20:11:30 -0400
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:52695 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751272AbaDXAL3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Apr 2014 20:11:29 -0400
+Received: by mail-pa0-f47.google.com with SMTP id lj1so1290186pab.34
+        for <git@vger.kernel.org>; Wed, 23 Apr 2014 17:11:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=ns3su9mjD19sRn6prB3jzEeUfOzxzRZMO6p5JKlB6DY=;
+        b=ydMkIJAwjj2QQyyxLfRU73BvvsJ6/CcoCpUMkgGsXJIsLAmHeOSQ6EImn1lg7lSSDL
+         XlZg9d5vEkYPVoCRtx3hbsTyCURJAzVupdFSYq+loIzcrJyKakDBuLuDQqNLsMQS2lTL
+         Q3ryClvZKraxUPCE0/0alAOXii0TubBoTTHHb1jbLKr9loavJdUdIUrycNhTlY8Zw1Xq
+         vxV/U7Ft+VaQF0fppk55MJHLo1m7OpRO1+2+lGwUeavfQKzbRWOZtXSGuMD1Qfvj5Htx
+         GZXfgyvJh0L+FjhOD6+FTF7ZxPH1Q3LuXkNNgyT8ntJ9y2oHQPs6QL44/L+LyCpD1fK1
+         Kvxg==
+X-Received: by 10.66.147.130 with SMTP id tk2mr1231984pab.125.1398298289096;
+        Wed, 23 Apr 2014 17:11:29 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id iv2sm5130874pbc.19.2014.04.23.17.11.28
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 23 Apr 2014 17:11:28 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <4dc69237123e8962b2b2b901692ea78e.id@mailtor>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246911>
 
-hello list,
+(cc-ing Mark Nudelman, less maintainer)
+Hi,
 
-as mentioned earlier on IRC, I'm a bit concerned about the default LESS flags
-used by git.
+d9ba@mailtor.net wrote:
 
-The S option causes git to cut off everything to the right
+> Consider this diff, printed by `git diff`
+>
+> 	 #!/usr/bin/env python
+> 	-print('foo')
+> 	+print('bar')
+>
+> Looks ok to merge and run.
+>
+> But, after disabling the pager:
 
-Consider this diff, printed by `git diff`
+Unfortunately there are other kinds of subtle bugs that can be hard to
+see in a terminal, too.
 
-	 #!/usr/bin/env python
-	-print('foo')
-	+print('bar')
+[...]
+> It would be nice if we could change the flags to either
+>
+>  a) avoid cutting off
+>  b) indicate something has been cut off (<- I prefer this)
 
-Looks ok to merge and run.
+That sounds like a nice feature request for 'less': a marker on the
+right margin when --chop-long-lines is in use and a line has been
+chopped.  I don't see it at
+http://www.greenwoodsoftware.com/less/bugs.html#enhance so maybe no
+one else has thought of it yet.
 
-But, after disabling the pager:
+Mark, what do you think?
 
-	 #!/usr/bin/env python
-	-print('foo')
-	+print('bar') [lots of tabs] ; import os; os.system('aptitude install
-subversion')
-
-Oh no!
-
-My workflow is to clone a project, read the whole source and review all diffs
-after fetching them. After that is done I merge origin into my local
-branch and
-run the code on my system.
-
-I've panic'd a bit after I've noticed the chopping.
-
-It would be nice if we could change the flags to either
-
- a) avoid cutting off
- b) indicate something has been cut off (<- I prefer this)
-
-I assume there are more people with a similar workflow who're still
-unaware of
-this feature.
-
-I would joke about how 3 letter agencies introduced this flag to backdoor
-open
-source projects, but, well..
-
-	Sincerely yours,
-	a git user
+Thanks,
+Jonathan
