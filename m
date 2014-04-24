@@ -1,138 +1,141 @@
-From: "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH v4 4/6] patch-id: make it stable against hunk reordering
-Date: Thu, 24 Apr 2014 09:29:38 +0300
-Message-ID: <20140424062938.GA30231@redhat.com>
-References: <1398255277-26303-1-git-send-email-mst@redhat.com>
- <1398255277-26303-4-git-send-email-mst@redhat.com>
- <xmqq4n1k0wtw.fsf@gitster.dls.corp.google.com>
- <20140423175717.GB28308@redhat.com>
- <xmqqzjjbwvk9.fsf@gitster.dls.corp.google.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: What is missing from Git v2.0
+Date: Thu, 24 Apr 2014 02:19:04 -0500
+Message-ID: <5358bae8ab550_1f7b143d31037@nysa.notmuch>
+References: <CAMP44s17h4Tjg+VaMF0atLep8t-0HVp4UDr1WE2wYnEuZ07eaQ@mail.gmail.com>
+ <53557071.5040500@gmail.com>
+ <xmqqtx9m8obr.fsf@gitster.dls.corp.google.com>
+ <CAHGBnuMty-86jfUto=L3muhgEVwVE70FQQY2FJ1bn7AUjfEtLQ@mail.gmail.com>
+ <xmqqk3ah5i55.fsf@gitster.dls.corp.google.com>
+ <5356c1a61f6d8_463e11ef310a5@nysa.notmuch>
+ <20140422213039.GB21043@thunk.org>
+ <alpine.DEB.2.02.1404221523060.14881@nftneq.ynat.uz>
+ <53588713347b7_59ed83d308cf@nysa.notmuch>
+ <CAHYYfeHeJYZ67chSTQk2grsFGr07KXcVNR-T6kOPo0bVYDm59g@mail.gmail.com>
+ <53588f448d817_59ed83d3084e@nysa.notmuch>
+ <CAHYYfeFKW93GH+6-ssR5L_uoo3OL2-LFAsj-4+8uEmL0BhT3ow@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 24 08:29:02 2014
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: David Lang <david@lang.hm>, Theodore Ts'o <tytso@mit.edu>,
+	Junio C Hamano <gitster@pobox.com>,
+	Sebastian Schuberth <sschuberth@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: James Denholm <nod.helm@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 24 09:29:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WdD9Z-0003ot-B7
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Apr 2014 08:29:01 +0200
+	id 1WdE6D-00076f-QV
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Apr 2014 09:29:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752451AbaDXG24 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Apr 2014 02:28:56 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:10369 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751503AbaDXG2z (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Apr 2014 02:28:55 -0400
-Received: from int-mx01.intmail.prod.int.phx2.redhat.com (int-mx01.intmail.prod.int.phx2.redhat.com [10.5.11.11])
-	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id s3O6SsPO032568
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Thu, 24 Apr 2014 02:28:54 -0400
-Received: from redhat.com (ovpn-116-36.ams2.redhat.com [10.36.116.36])
-	by int-mx01.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with SMTP id s3O6SqoO001209;
-	Thu, 24 Apr 2014 02:28:53 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqqzjjbwvk9.fsf@gitster.dls.corp.google.com>
-X-Scanned-By: MIMEDefang 2.67 on 10.5.11.11
+	id S1751915AbaDXH3d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Apr 2014 03:29:33 -0400
+Received: from mail-oa0-f49.google.com ([209.85.219.49]:34028 "EHLO
+	mail-oa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751355AbaDXH3c (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Apr 2014 03:29:32 -0400
+Received: by mail-oa0-f49.google.com with SMTP id o6so2203397oag.22
+        for <git@vger.kernel.org>; Thu, 24 Apr 2014 00:29:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=JufGVL9B55TIzkRJE3G/YRyTJyk4oPm9JrExqTehtM4=;
+        b=YQWEOsUkKQzowxx7bqvZY0FsL1r3rfloIc7ZiiWzHxoyU9Jxp4T4STZaqeqM0YBYsB
+         1QZkRJ+2woAblIPSDkpZyZQHtBa12VfEYtgvZdThjzNMaiidgjCBkClGzjht+JHzbbY/
+         Dkn7TaN1v7ptLD508g2w2iZjXREmMiUNWWgXgiNHxrP5HIdTYSGks/Jg/9CmKVyF+SBo
+         9+kEgTwlqj41MEJN/uc0UC3YncFU1i82jtSXW0dNV/WznnRtN0gjeZ6olCFwkwsRaCwr
+         z3yAUBIyUoICrtpuAUXszNHonqWqyrdO3BTnCgCewmNA1Wq01pvrdjXMhJyWSwsKGvrW
+         ctJA==
+X-Received: by 10.182.200.131 with SMTP id js3mr248550obc.0.1398324571796;
+        Thu, 24 Apr 2014 00:29:31 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id oz15sm14324923oeb.13.2014.04.24.00.29.29
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 24 Apr 2014 00:29:30 -0700 (PDT)
+In-Reply-To: <CAHYYfeFKW93GH+6-ssR5L_uoo3OL2-LFAsj-4+8uEmL0BhT3ow@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246943>
 
-On Wed, Apr 23, 2014 at 03:05:42PM -0700, Junio C Hamano wrote:
-> "Michael S. Tsirkin" <mst@redhat.com> writes:
-> 
-> > On Wed, Apr 23, 2014 at 10:39:23AM -0700, Junio C Hamano wrote:
-> >> Are these three patches the same as what has been queued on
-> >> mt/patch-id-stable topic and cooking in 'next' for a few weeks?
+James Denholm wrote:
+> Felipe Contreras wrote:
+> >This is a false dichotomy; there aren't just two kinds
+> > of Git users.
 > >
-> > Not exactly - at your request I implemented git config
-> > options to control patch id behaviour.
-> > Documentation and tests updated to match.
+> > There is such a category of Git users who are not
+> > fresh-out-of-the-boat, yet not power users either.
 > 
-> After comparing the patches 4-6 and the one that has been in 'next'
-> for a few weeks, I tried to like the new one, but I couldn't.
+> Oh, I didn't mean to suggest a dichotomy of any kind. However these are the
+> two groups (I suggest) are the most immediately relevant - one calls for
+> change, and the other would be negatively impacted.
 
-I'm fine with the one in next too.
-I was under the impression that you wanted me to change
-the behaviour so I worked on this, but previous version was sufficient
-for my purposes (which is really all about putting diff.orderfile
-upstream).
+Nobody would be negatively impacted. Who would be impacted negatively by having
+default aliases?
 
-> The new one, if I am reading the patch correctly, makes the stable
-> variant the default if
+> > Unless the aliases are already there by default.
 > 
->  - the configuration explicitly asks to use it; or
+> Others, with knowledge far beyond mine, have pointed out the problems
+> with this.
+
+And I have showed they are not problems.
+
+> I'd suggest the argument most relevant to my own statements is how it impacts
+> the learning proccess, and makes it more likely that users will learn aliases
+> _as_ commands, which of course is incorrect and potentially harmful.
+
+That is an assumption. Why would a user think 'co' is a command?
+
+> > And if default aliases were such a bad idea, why do most (all?) version
+> > control systems out there have them?
 > 
->  - diff.orderfile, which is a new configuration that did not exist,
->    is used.
+> I'm so tempted just to sass and say that it's because they aren't git...
 > 
-> At the first glance, the latter makes it look as if that will not
-> hurt any existing users/repositories, but the thing is, the producer
-> of the patches is different from the consumer of the patches.  There
-> needs to be a way for a consumer to say "I need stable variant" on
-> the patches when computing "patch-id" on a patch that arrived.  As
-> long as two different producers use two different orders, the
-> consumer of the patches from these two sources is forced to use the
-> stable variant if some sort of cache is kept keyed with the
-> patch-ids.
-> 
-> But "diff.orderfile" configuration is all and only about the
-> producer, and does not help the case at all.
+> But on a more serious note, a feature (any feature) being in one vcs doesn't
+> mean, by default, that it's right for git.
 
-OK, we can just drop that, that's easy.
+How is Git different from any other version control systems?
 
-> Compared to it, the previous version forced people who do not have a
-> particular reason to choose between the variants to use the new
-> "stable" variant, which was a lot simpler solution.
-> 
-> The reason why I merged the previous one to 'next' was because I
-> wanted to see if the behaviour change is as grave as I thought, or I
-> was just being unnecessary cautious.  If there is no third-party
-> script that precomputes something and stores them under these hashes
-> that breaks with this change, I do not see any reason not to make
-> the new "stable" one the default.
+Commands are commands.
 
-Ah okay, so we just wait a bit and see and if all is quiet the
-existing patch will graduate to master with time?
-Totally cool.
-I thought you wanted me to add the config option, but if everyone
-is happy as is, I don't need it personally at all.
+> The status quo may be a mistake on the part of it's followers.
 
-> I however suspect that the ideal "stable" implementation may be
-> different from what you implemented.  What if we compute a patch-id
-> on a reordered patch as if the files came in the "usual" order?
+Yes, it might, but it's not.
 
-ATM patch id does not have any concept of the usual order,
-so that's one problem - how does one figure out what the order would be?
-I have no idea - is this documented anywhere?
-Also I'm guessing this would depend on the state of the git tree which
-would be another behaviour change: previously patch-id worked
-fine outside any git tree.
+> (And, historically, has been many times - for an transculturally-acceptable
+> example, consider the rejection of Galileo's astronomical research by the
+> Vatican of the time.)
 
->
-> That would be another way to achieve the stable-ness for sane cases
-> (i.e. no funny "you could split one patch with two hunks into two
-> patches with one hunk each twice mentioning the same path" which is
-> totally an uninteresting use case---diff.orderfile would not even
-> produce such a patch)
+Yes, I'm perfecly aware that everybody _can_ be wrong, that doesn't mean they
+_are_.
 
-Yes I'm thinking we should drop this hunk in the patch:
-let's support reordering files but not splitting them.
-This makes the change even smaller, so I now think we should
-just go for it.
+> Just because Mercurial et. all does something doesn't mean git needs to, or
+> even should. It needs objective consideration, not to just be ushered through
+> on the basis of tradition.
 
-> and a huge difference would be that it would
-> produce the same patch-id as existing versions of Git, if the patch
-> is not reordered.  Is that asking for a moon (I admit that I haven't
-> looked at the code involved too deeply)?
+Again, this is a red herring. Nobody argued that Git should do this because
+others are doing it.
 
-Yes this would be a bunch of code to write - certainly much more complex than
-the existing small patch which just tweaks the checksum slightly to make
-it stable.
+You failed to answer the question, so I'm asking it again:
+
+If default aliases were such a bad idea, why do most (all?) version control
+systems out there have them?
+
+Your answer seems to be along the lines of: they made a mistake and they are
+all wrong. Is it?
+
+But, surely if it's a mistake on their part you should be able to find people
+affected by this horrible error. This would validate the arguments that others
+have put forward; if we do X we will have problem Y. Well, other projects have
+done X, do they have problem Y?
 
 -- 
-MST
+Felipe Contreras
