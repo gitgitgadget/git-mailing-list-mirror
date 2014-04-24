@@ -1,86 +1,90 @@
-From: James Denholm <nod.helm@gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
 Subject: Re: What is missing from Git v2.0
-Date: Thu, 24 Apr 2014 14:16:29 +1000
-Message-ID: <CAHYYfeHeJYZ67chSTQk2grsFGr07KXcVNR-T6kOPo0bVYDm59g@mail.gmail.com>
+Date: Wed, 23 Apr 2014 23:12:52 -0500
+Message-ID: <53588f448d817_59ed83d3084e@nysa.notmuch>
 References: <CAMP44s17h4Tjg+VaMF0atLep8t-0HVp4UDr1WE2wYnEuZ07eaQ@mail.gmail.com>
-	<53557071.5040500@gmail.com>
-	<xmqqtx9m8obr.fsf@gitster.dls.corp.google.com>
-	<CAHGBnuMty-86jfUto=L3muhgEVwVE70FQQY2FJ1bn7AUjfEtLQ@mail.gmail.com>
-	<xmqqk3ah5i55.fsf@gitster.dls.corp.google.com>
-	<5356c1a61f6d8_463e11ef310a5@nysa.notmuch>
-	<20140422213039.GB21043@thunk.org>
-	<alpine.DEB.2.02.1404221523060.14881@nftneq.ynat.uz>
-	<53588713347b7_59ed83d308cf@nysa.notmuch>
+ <53557071.5040500@gmail.com>
+ <xmqqtx9m8obr.fsf@gitster.dls.corp.google.com>
+ <CAHGBnuMty-86jfUto=L3muhgEVwVE70FQQY2FJ1bn7AUjfEtLQ@mail.gmail.com>
+ <xmqqk3ah5i55.fsf@gitster.dls.corp.google.com>
+ <5356c1a61f6d8_463e11ef310a5@nysa.notmuch>
+ <20140422213039.GB21043@thunk.org>
+ <alpine.DEB.2.02.1404221523060.14881@nftneq.ynat.uz>
+ <53588713347b7_59ed83d308cf@nysa.notmuch>
+ <CAHYYfeHeJYZ67chSTQk2grsFGr07KXcVNR-T6kOPo0bVYDm59g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: David Lang <david@lang.hm>, "Theodore Ts'o" <tytso@mit.edu>,
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: David Lang <david@lang.hm>, Theodore Ts'o <tytso@mit.edu>,
 	Junio C Hamano <gitster@pobox.com>,
 	Sebastian Schuberth <sschuberth@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 24 06:16:36 2014
+To: James Denholm <nod.helm@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 24 06:24:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WdB5P-0000FW-Ie
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Apr 2014 06:16:35 +0200
+	id 1WdBCc-0007Ly-LE
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Apr 2014 06:24:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750989AbaDXEQb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Apr 2014 00:16:31 -0400
-Received: from mail-vc0-f178.google.com ([209.85.220.178]:61346 "EHLO
-	mail-vc0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750778AbaDXEQa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Apr 2014 00:16:30 -0400
-Received: by mail-vc0-f178.google.com with SMTP id hu19so2392595vcb.9
-        for <git@vger.kernel.org>; Wed, 23 Apr 2014 21:16:29 -0700 (PDT)
+	id S1750750AbaDXEXu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Apr 2014 00:23:50 -0400
+Received: from mail-oa0-f49.google.com ([209.85.219.49]:52788 "EHLO
+	mail-oa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751250AbaDXEXU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Apr 2014 00:23:20 -0400
+Received: by mail-oa0-f49.google.com with SMTP id o6so2061064oag.36
+        for <git@vger.kernel.org>; Wed, 23 Apr 2014 21:23:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=+BTZ+uR0zGTjGC3O8nTyYf67OAe3HUB7I7MzE8TAlu0=;
-        b=GcLd5RDkXhtDSc/OwOuWZP/0JioCaghv1zT7TdjgbLE2TJp7xNVJ98vuGXDfCgbYIu
-         t+4A7LsmliSwxrAXe0WWTp4fo8fN2o16QTOiAZnOjHgAcH0MfKQJgV8v7lZPYf+0sL3i
-         DGSRXYFdtBy6U2x3mBz5u+E+icswyOJankrp5bbSmkDjAkB0TXeKMkpKEUx9N7PP+qeL
-         ge6Wo0BNcK0gvljgj42B7gInMaISVAV1l4GgGfA7GPQpUWCAHEMdoX4mqpkWt7fGX4tl
-         SrK+n9NQcl9wd1jCCgrzuDPu9wQjCu4gbt9gLzMeYsFSw/3G8/YVQ4Ec2/tASDnORoEb
-         SuUA==
-X-Received: by 10.52.164.237 with SMTP id yt13mr38170542vdb.18.1398312989851;
- Wed, 23 Apr 2014 21:16:29 -0700 (PDT)
-Received: by 10.58.12.2 with HTTP; Wed, 23 Apr 2014 21:16:29 -0700 (PDT)
-In-Reply-To: <53588713347b7_59ed83d308cf@nysa.notmuch>
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=TjogpGMc9QBI9fcPksjAF8ZKzB0OYErPi/RULtsbI5E=;
+        b=zbZdCrBchO35WS+JjdGz79NIYHMNninfC46lXv5dhTZPyqj0+gSOgduN0pZ7/CK9qx
+         KDQH0C7v3VuATw/bmX85uX+1Mv87ZevLJO2bhwSvEtGyZ41/vLRN4O3KxSrSKvGVJjC9
+         PgJx5cn0/s26+VIWn5Zkm5BIGGqhCPS8/uqYL5nAIA0kzJghsCiAqC5eYkE8xi10rWuV
+         IsiW7oVRJgyT5JO/IN+ahAjhbd2XtE7PpFF+9Rx1ygoIphW62el7iP4PHllIHwfWaA4k
+         IxpuLLj/rp4cEzAsFPL/8gUut/N3jvXU38tYWJMqp8Qg1Lcnq3ly4+UKGm0CMYeyEMzO
+         KtMw==
+X-Received: by 10.60.159.36 with SMTP id wz4mr46593337oeb.30.1398313400163;
+        Wed, 23 Apr 2014 21:23:20 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id dh8sm12644877oeb.10.2014.04.23.21.23.17
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 23 Apr 2014 21:23:19 -0700 (PDT)
+In-Reply-To: <CAHYYfeHeJYZ67chSTQk2grsFGr07KXcVNR-T6kOPo0bVYDm59g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246937>
 
-Felipe Contreras wrote:
->>David Lang wrote:
->> agreed, of all the things that people complain
-about regarding learning git,
->> the fact that the commands are words instead of
-cryptic 2 letter
->> abberviations is not one of them.
->It is when they start to use Git seriously and type
-them a lot.
+James Denholm wrote:
+> Felipe Contreras wrote:
+> > It is when they start to use Git seriously and type them a lot.
+> 
+> Felipe, I think you refute your own point here, because people _learning_ git
+> aren't power-users. They might be one day, but not that day. If power-users
+> are complaining that "commit" is too long, but aren't setting their own
+> aliases,
 
-Felipe, I think you refute your own point here, because people _learning_
-git aren't power-users. They might be one day, but not that day.
+This is a false dichotomy; there aren't just two kinds of Git users.
 
-If power-users are complaining that "commit" is too long, but aren't
-setting their own aliases, it's quite possible they just don't know about
-aliases. Because if they _did_ know about aliases, they'd set one.
-Even a shell alias,
-not nessecarily a git alias.
+There is such a category of Git users who are not fresh-out-of-the-boat, yet
+not power users either.
 
-I submit to you (with the backing of all my prior experience contributing to
-git... Which is too say none) that the problem is not that git has a
-single, good,
-obvious and memorable commit command.
+> it's quite possible they just don't know about aliases.  Because if they
+> _did_ know about aliases, they'd set one.
 
-The problem is that those specific power-users don't know to use aliases.
+Unless the aliases are already there by default.
 
---
-James Denholm
+And if default aliases were such a bad idea, why do most (all?) version control
+systems out there have them?
+
+-- 
+Felipe Contreras
