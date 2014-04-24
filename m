@@ -1,124 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 4/6] patch-id: make it stable against hunk reordering
-Date: Thu, 24 Apr 2014 11:13:19 -0700
-Message-ID: <xmqq7g6ewq80.fsf@gitster.dls.corp.google.com>
-References: <1398255277-26303-1-git-send-email-mst@redhat.com>
-	<1398255277-26303-4-git-send-email-mst@redhat.com>
-	<xmqq4n1k0wtw.fsf@gitster.dls.corp.google.com>
-	<20140423175717.GB28308@redhat.com>
-	<xmqqzjjbwvk9.fsf@gitster.dls.corp.google.com>
-	<20140424062938.GA30231@redhat.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [RTC/PATCH] Add 'update-branch' hook
+Date: Thu, 24 Apr 2014 13:08:23 -0500
+Message-ID: <53595317c11b4_1f7b143d31089@nysa.notmuch>
+References: <1398047016-21643-1-git-send-email-felipe.contreras@gmail.com>
+ <5355793A.5020000@gmail.com>
+ <53558476703cb_5c94d452ec4e@nysa.notmuch>
+ <53558A54.4060801@gmail.com>
+ <53558ae6f1282_604be1f30cf3@nysa.notmuch>
+ <53559020.1050407@gmail.com>
+ <53558f6269f91_640076f2f08f@nysa.notmuch>
+ <857g6h5ssh.fsf@stephe-leake.org>
+ <5356996d12ede_3e5aed7308e5@nysa.notmuch>
+ <85mwfc4hab.fsf@stephe-leake.org>
+ <535782d95bbed_24448772ec7a@nysa.notmuch>
+ <8538h24xdg.fsf@stephe-leake.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Michael S. Tsirkin" <mst@redhat.com>
-X-From: git-owner@vger.kernel.org Thu Apr 24 20:13:43 2014
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+To: Stephen Leake <stephen_leake@stephe-leake.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 24 20:19:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WdO9W-0007cY-Jm
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Apr 2014 20:13:42 +0200
+	id 1WdOEf-0006Mb-Ju
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Apr 2014 20:19:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758620AbaDXSN3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Apr 2014 14:13:29 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56323 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754038AbaDXSN1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Apr 2014 14:13:27 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3C0F77FEB3;
-	Thu, 24 Apr 2014 14:13:27 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=EJ7RqF7ac4wTnQ5zmA3DGVn7+Tg=; b=UwhR2/
-	u1zn8fFrzrvJ4NaelByAIJuPRztzXsf1oGMJGX+Hi1RX/1Y3//P+Wbg/KndSGp21
-	fi/G9SpLfw3lv6EWa5ON/TmSbprvLHvD+0yGNCp/2R+LAoXYuPnAydw9ze3WTQbG
-	syzxOGrS25VV08umD5/cOdWACNX2WFUUtsnYk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=R3M+Z9shCOMNKuR4e59YppGmCWjB89gZ
-	+jbQPtpY0AxIHGLh1pkE7FO07dIm7Bb/OEMQZtPXFslDjlJhbxXCphALz2M5s3+2
-	uOdZYo/y7nZ5Xa2nCwq1ys5D6hhx5P7j/6cBjpxzGbryWYe3zmGa6rPuvknOg84L
-	M+iOg8E2LC4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 216B87FEB2;
-	Thu, 24 Apr 2014 14:13:27 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2BACD7FEAF;
-	Thu, 24 Apr 2014 14:13:21 -0400 (EDT)
-In-Reply-To: <20140424062938.GA30231@redhat.com> (Michael S. Tsirkin's message
-	of "Thu, 24 Apr 2014 09:29:38 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 1E40D08E-CBDC-11E3-A66E-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S932526AbaDXSSx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Apr 2014 14:18:53 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:61515 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932418AbaDXSSu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Apr 2014 14:18:50 -0400
+Received: by mail-ob0-f174.google.com with SMTP id gq1so3070551obb.19
+        for <git@vger.kernel.org>; Thu, 24 Apr 2014 11:18:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:message-id:in-reply-to:references:subject:mime-version
+         :content-type:content-transfer-encoding;
+        bh=8qzj4R5wBHAApdAamNl4VraIM0k6LLltLRW1eA22NNs=;
+        b=kYhtmQ2YUTsj4hCg4zxIMGkPXRaqT5TOR9n3TbmBENnUhoXhlzA0u0c8OxbU0uN5zR
+         i117GHMwZKLXiiEM5sw85U0p8b9C6IsyMxktYqtN4wMw8Ngcz5H33Q0weqms2NSpmmFZ
+         VAOOtK1NAfNvvCxNmg6DW96vTFBm1OjZou7VkJvAbRgJaN+4dD+W2mlQO9nlABPZQfpE
+         VlnS2zM9Vd0se3ZvOf6mndUK6bS2bhHFRLwf1OeHa8SP7np87vpqR9RmWbMBMzHuaXCZ
+         vkx61nCAP4cogm4iSZv3QeCP/ZhIxf3rlVWZzIWCNrpDlh8cFnVgiAhWW/boylOlV5E4
+         o8VA==
+X-Received: by 10.182.104.101 with SMTP id gd5mr2751468obb.54.1398363530344;
+        Thu, 24 Apr 2014 11:18:50 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id ii8sm10004126obb.11.2014.04.24.11.18.48
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 24 Apr 2014 11:18:49 -0700 (PDT)
+In-Reply-To: <8538h24xdg.fsf@stephe-leake.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246985>
 
-"Michael S. Tsirkin" <mst@redhat.com> writes:
+Stephen Leake wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> 
+> >> >> I have a branch which should always be recompiled on update;
+> >> >> post-update-branch would be a good place for that.
+> >> >
+> >> > And why would pre-update-branch not serve that purpose?
+> >> 
+> >> Because the code that needs to be compiled is not yet in the workspace
+> >
+> > And it won't be in 'post-update-branch' either.
+> 
+> Then you are using a very odd definition of "post update"
 
-> On Wed, Apr 23, 2014 at 03:05:42PM -0700, Junio C Hamano wrote:
->
->> After comparing the patches 4-6 and the one that has been in 'next'
->> for a few weeks, I tried to like the new one, but I couldn't.
->
-> I'm fine with the one in next too.
-> I was under the impression that you wanted me to change
-> the behaviour so I worked on this,...
+It's not. The branch was updated, not the workspace.
 
-What I wanted to see was to make sure this would not kick in unless
-the user explicitly asks.  "patchid.stable" configuration variable
-is very much welcome, and if it defaulted to false with or without
-"diff.orderfile", that would have been very much welcome.  Then
-nobody will be surprised.
+> >  % git checkout master
+> >  % git branch feature-a stable
+> >  <- update-branch hook will be called here
+> >
+> > The hook will get 'feature-a' as the first argument, but the code in the
+> > workspace would correspond to 'master'; the checked out branch (pre or post).
+> 
+> Then the hooks should be called 'pre-branch', 'post-branch'; there is no
+> "update" involved.
 
->> But "diff.orderfile" configuration is all and only about the
->> producer, and does not help the case at all.
->
-> OK, we can just drop that, that's easy.
->
->> Compared to it, the previous version forced people who do not have a
->> particular reason to choose between the variants to use the new
->> "stable" variant, which was a lot simpler solution.
->> 
->> The reason why I merged the previous one to 'next' was because I
->> wanted to see if the behaviour change is as grave as I thought, or I
->> was just being unnecessary cautious.  If there is no third-party
->> script that precomputes something and stores them under these hashes
->> that breaks with this change, I do not see any reason not to make
->> the new "stable" one the default.
->
-> Ah okay, so we just wait a bit and see and if all is quiet the
-> existing patch will graduate to master with time?
-> Totally cool.
-> I thought you wanted me to add the config option, but if everyone
-> is happy as is, I don't need it personally at all.
+Of course there is. A 'branch' hook would be triggered when you create a new
+branch (e.g. `git branch`), however, it should not be triggered when you update
+a branch (e.g. `git rebase`).
 
-... or if we see problems, then build a fix on top to introduce
-"patchid.stable" that defaults to false and not linking the feature
-with "diff.ordefile".
+> The hook I need is actually "post-merge", since "merge" is the command that
+> updates the workspace.
 
-Adding a new feature turned-off by default is the safer thing to do.
-When nothing changes, by defintion there won't be a new breakage.
-That is the default stance this project has taken for a long time,
-and what made us trusted by projects that manage their source files
-using our product.
+I'd say it's probably 'post-checkout'.
 
-It however is to favour stability and "no surprise" over progress,
-and it may not be an optimal thing to do if the new feature is
-compellingly good.  In some cases like this one, we may need to
-experiment to find out the need of the users, and introducing the
-feature with a configuration that is explicitly opt-in is one way to
-do so.  We may or may not see many people using that feature without
-disrupting existing users that way.
-
-Cooking in 'next' with the feature turned-on by default is another
-way that is riskier, but in this particular case, the population
-that is likely to be affected are power users, which would match the
-audience of 'next'---those who still want stability but want to be
-closer to the cutting edge.
+-- 
+Felipe Contreras
