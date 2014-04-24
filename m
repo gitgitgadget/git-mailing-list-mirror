@@ -1,78 +1,116 @@
-From: Ivo Bellin Salarin <ivo.bellinsalarin@gmail.com>
-Subject: GIT, libcurl and GSS-Negotiate
-Date: Thu, 24 Apr 2014 19:17:36 +0200
-Message-ID: <CAPc4eF__gWMy=E-8tdpMn_irA4m7mYF3=cwN6JeAqJsdPshNLw@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v5 4/9] patch-id: make it stable against hunk reordering
+Date: Thu, 24 Apr 2014 10:30:44 -0700
+Message-ID: <20140424173043.GJ15516@google.com>
+References: <1398331809-11309-1-git-send-email-mst@redhat.com>
+ <1398331809-11309-4-git-send-email-mst@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 24 19:17:42 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, sunshine@sunshineco.com, peff@peff.net,
+	gitster@pobox.com
+To: "Michael S. Tsirkin" <mst@redhat.com>
+X-From: git-owner@vger.kernel.org Thu Apr 24 19:30:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WdNHK-0001e7-GR
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Apr 2014 19:17:42 +0200
+	id 1WdNU5-0003oH-C1
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Apr 2014 19:30:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754057AbaDXRRi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Apr 2014 13:17:38 -0400
-Received: from mail-oa0-f43.google.com ([209.85.219.43]:46990 "EHLO
-	mail-oa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753581AbaDXRRh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Apr 2014 13:17:37 -0400
-Received: by mail-oa0-f43.google.com with SMTP id eb12so2983562oac.30
-        for <git@vger.kernel.org>; Thu, 24 Apr 2014 10:17:36 -0700 (PDT)
+	id S1757578AbaDXRat (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Apr 2014 13:30:49 -0400
+Received: from mail-pb0-f52.google.com ([209.85.160.52]:62407 "EHLO
+	mail-pb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757354AbaDXRas (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Apr 2014 13:30:48 -0400
+Received: by mail-pb0-f52.google.com with SMTP id rq2so2203877pbb.11
+        for <git@vger.kernel.org>; Thu, 24 Apr 2014 10:30:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=3VDuX7R7SwFWTi0oZkt+qPqLAijGYG1j1XOjzcglUYY=;
-        b=XpM4BeLMPkUbCUO26d6tlc/I6MBrSmKI0EHs1O7nKgPs1T6hLvqT4x2eUZCDzTXI6i
-         8EHL49oh2SvLZNqa6Xt18A/OG0tZVvob3+/3euQCvDGXFX+dFQZX3YIhjWvZZ/cSUgOR
-         zhYEx5Hr/bldJH6d0pdb/W/mp8X6f3P8rlbSgoRKU/D/jvq2THb2Jb/f0iGTbWM9d260
-         vsiSIUfd9uQchqFLEDlbZa1cy9Wnqv7miHDP6JMaJQIfGVuzYe8pYfd9i/a3G4Ux1Yss
-         QoRNkOxkgb/MBbLXcrMKbZkUUN7J+mqX9AVROdak5jQab2QuHzv3yyOOSBzuC+ioSWp5
-         riKQ==
-X-Received: by 10.60.155.72 with SMTP id vu8mr2511046oeb.60.1398359856368;
- Thu, 24 Apr 2014 10:17:36 -0700 (PDT)
-Received: by 10.76.0.200 with HTTP; Thu, 24 Apr 2014 10:17:36 -0700 (PDT)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=MaWaUG8B41g3KsgalK1vxiI2TD4OyRyOgxYcBIyEHMQ=;
+        b=IbrqUX46QlW5mUyrDa+UX6lAYiuvK6SFbVZT8oRO8Yp7haUBXpC4gA8j5UfUUxCoDn
+         tIL70CyANG0tNhQbcIcpWKqY2iF4S/yuiKd17Naz49ygOkfbHgVs21feUCDLbYiV4u6/
+         kyWx7U10ZGU0V3wqtHk7Fe5v1v0XBaDAff3zCiE0OU+F5jp9tqUq7y3WCkncbxY0w9TD
+         3xqrLO5wy1xhlUPYlyD4Os9DT7GMVKoYqaEA5tlRD2iK1aD1AJZS5o5VA8AqHVB5QyHr
+         /sUBqjhKS1nO+tIkQon9X56W3at4dm1vMap41s1yzwV3GbqU6EueT8YC16yroAd8AuE1
+         qQHw==
+X-Received: by 10.68.221.42 with SMTP id qb10mr1446862pbc.65.1398360647914;
+        Thu, 24 Apr 2014 10:30:47 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id xr9sm23603587pab.5.2014.04.24.10.30.46
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 24 Apr 2014 10:30:47 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1398331809-11309-4-git-send-email-mst@redhat.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246979>
 
-Hello,
+Hi,
 
-I'm having problems while trying to authenticate against a TFS hosted
-repository.
+Michael S. Tsirkin wrote:
 
-I experience the same problem in git for windows and in git for linux
-(both versions are 1.9.2).
+> Patch id changes if users
+> 1. reorder file diffs that make up a patch
+> or
+> 2. split a patch up to multiple diffs that touch the same path
+> (keeping hunks within a single diff ordered to make patch valid).
+>
+> As the result is functionally equivalent, a different patch id is
+> surprising to many users.
 
-The problem is described on a [github msysgit/git
-issue](https://github.com/msysgit/git/issues/171)
+Hm.
 
-To shortly resume it, the problem is that:
-* when the authentication method (WWW-Authenticate) is Negotiate AND
-* when the server proposes a NTLMSSP_CHALLENGE in response of the
-client's NTLMSSP_NEGOTIATE,
-=> libcurl yields an "Authentication problem. Ignoring this.\n"
-And the communication is closed.
+If the goal is that functionally equivalent patches are guaranteed to
+produce the same patch-id, I wonder if we should be doing something
+like the following:
 
-At this point, in a normal communication, the client should send a
-NTLMSSP_AUTH containing a Kerberos ticket.
+ 1. apply the patch in memory
+ 2. generate a new diff
+ 3. use that new diff to produce a patch-id
 
-Having seen the libcurl source code, I think we're passing through the
-lines  from 776 to 780 of
-[http.c](https://github.com/bagder/curl/blob/2e57c7e0fcfb9214b2a9dfa8b3da258ded013b8a/lib/http.c).
-Some guy, on the github issue page, has suggested that this could be
-related to an update of libcurl, when git was at its 1.8.2 version.
+Otherwise issues like --diff-algorithm=patience versus =myers will
+create trouble too.  I don't think that avoiding false negatives for
+patch comparison without doing something like that is really possible.
 
-I'm not debugging libcurl, and I can't reproduce this problem @home.
-So, has somebody already experienced the same problem? Is there a
-solution?
+On the other hand if someone reorders file diffs within a patch, that
+is a potentially very common thing to do and something worth fixing.
+In other words, while your (1) makes perfect sense to me, case (2)
+seems less convincing.
 
-Many thanks in advance,
-Ivo
--- 
-http://www.nilleb.com
+The downside of allowing reordering hunks is that it can potentially
+make different patches to be treated the same (for example if they
+were making similar changes to different functions) when the ordering
+previously caused them to be distinguished.  But that wasn't something
+people could count on anyway, so I don't mind.
+
+Should the internal patch-id computation used by commands like 'git
+cherry' (see diff.c::diff_get_patch_id) get the same change?  (Not a
+rhetorical question --- I don't know what the right choice would be
+there.)
+
+[...]
+> The new behaviour is enabled
+> - when patchid.stable is true
+> - when --stable flag is present
+>
+> Using a new flag --unstable or setting patchid.stable to false force
+> the historical behaviour.
+
+Which is the default?
+
+[...]
+>  builtin/patch-id.c | 89 ++++++++++++++++++++++++++++++++++++++++++++----------
+>  1 file changed, 73 insertions(+), 16 deletions(-)
+
+Documentation?  Tests?
+
+Thanks,
+Jonathan
