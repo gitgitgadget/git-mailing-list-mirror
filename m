@@ -1,90 +1,104 @@
-From: Jussi Peltonen <peltoju@gmail.com>
-Subject: Git clone gives zero file permissions
-Date: Thu, 24 Apr 2014 11:24:43 +0300
-Message-ID: <CACDOErWqjihSYi4r6r8cjfFcbWe+7H0Tihjmkn18Y-szn7cE2g@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: What is missing from Git v2.0
+Date: Thu, 24 Apr 2014 03:23:54 -0500
+Message-ID: <5358ca1a55a69_1f7b143d3101c@nysa.notmuch>
+References: <CAMP44s17h4Tjg+VaMF0atLep8t-0HVp4UDr1WE2wYnEuZ07eaQ@mail.gmail.com>
+ <53557071.5040500@gmail.com>
+ <xmqqtx9m8obr.fsf@gitster.dls.corp.google.com>
+ <CAHGBnuMty-86jfUto=L3muhgEVwVE70FQQY2FJ1bn7AUjfEtLQ@mail.gmail.com>
+ <xmqqk3ah5i55.fsf@gitster.dls.corp.google.com>
+ <5356c1a61f6d8_463e11ef310a5@nysa.notmuch>
+ <20140422213039.GB21043@thunk.org>
+ <alpine.DEB.2.02.1404221523060.14881@nftneq.ynat.uz>
+ <53588713347b7_59ed83d308cf@nysa.notmuch>
+ <CAHYYfeHeJYZ67chSTQk2grsFGr07KXcVNR-T6kOPo0bVYDm59g@mail.gmail.com>
+ <53588f448d817_59ed83d3084e@nysa.notmuch>
+ <CAHYYfeFKW93GH+6-ssR5L_uoo3OL2-LFAsj-4+8uEmL0BhT3ow@mail.gmail.com>
+ <5358bae8ab550_1f7b143d31037@nysa.notmuch>
+ <877g6fb2h6.fsf@fencepost.gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 24 10:24:53 2014
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: James Denholm <nod.helm@gmail.com>, David Lang <david@lang.hm>,
+	Theodore Ts'o <tytso@mit.edu>,
+	Junio C Hamano <gitster@pobox.com>,
+	Sebastian Schuberth <sschuberth@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: David Kastrup <dak@gnu.org>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 24 10:34:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WdExg-0004gW-Ml
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Apr 2014 10:24:53 +0200
+	id 1WdF79-0008Ud-0Y
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Apr 2014 10:34:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753080AbaDXIYs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Apr 2014 04:24:48 -0400
-Received: from mail-qc0-f180.google.com ([209.85.216.180]:55255 "EHLO
-	mail-qc0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753071AbaDXIYo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Apr 2014 04:24:44 -0400
-Received: by mail-qc0-f180.google.com with SMTP id w7so2129048qcr.25
-        for <git@vger.kernel.org>; Thu, 24 Apr 2014 01:24:43 -0700 (PDT)
+	id S1753021AbaDXIeb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Apr 2014 04:34:31 -0400
+Received: from mail-ob0-f181.google.com ([209.85.214.181]:43757 "EHLO
+	mail-ob0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752879AbaDXIeV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Apr 2014 04:34:21 -0400
+Received: by mail-ob0-f181.google.com with SMTP id gq1so2338835obb.12
+        for <git@vger.kernel.org>; Thu, 24 Apr 2014 01:34:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=+qya+gEenW2DOdiYqTdBpwSTHqjoF111N5wJrBHsMp4=;
-        b=pFxk7e1puAhP2x3/BFB9AkvBhNXPR8SHrTv6cxiKAQeTDVxcN1Bhe4HyyrZTofFcX9
-         JFhWcPBQKz7sq4qMuUyN4eAm9AM6klAlnWf80jH2OXB2NSplmdeuIhYXeuRSfm9Rzy09
-         /Ezfe3vxTgM3w9ZKaccCRgLUpi+sKGvswmXSklVElXROMvxGRacXQcP6UhGr7A3D6oaP
-         fTMl+oeLhX19uoRk4Et5+uJxOs5xFjwszfvz5lKt7olucB99IuyolN/suKmML4rteW0a
-         RAP6wRcz0HJ7Geq/+uak2cDpglMf2l8TihkqqiKFLsmoKVGa+V04X2AdcASo2kDZM1cH
-         91Bw==
-X-Received: by 10.224.134.194 with SMTP id k2mr534118qat.5.1398327883625; Thu,
- 24 Apr 2014 01:24:43 -0700 (PDT)
-Received: by 10.96.143.200 with HTTP; Thu, 24 Apr 2014 01:24:43 -0700 (PDT)
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=TBkYCkvj333zD53JeZtYDCamR4Oui2/F/2+t7OPQgEo=;
+        b=KQ9dmJV4fKEw7bFfs+kbKzvGAIO0M8MS8oeI0G/7DFD/SDeaQN13AFcLBPXDX0DAyc
+         BiPlGlltELoHJEg7uW3YWJmYD29EaetbHcpf5LsUdV1Yo90jgAfvP6rn54zuvEmJWSvK
+         9tSXlqz1mBLF4IMfPgNf7aA7QUWPWxKnHOfit6ULEN3sP6W+Z1RgvQWlU/i9yZqUgfK5
+         H55fEDESQI5qf0HknAZMGvzuSK8ylj48HH0am6bJn+GsC7Tzc40BIGQC6lC6n6zXQqvo
+         A7Mg2iS40y6EIqqg54AiAM/CpMBEFJ3SiSrS5Jbc92RCVUe7yWtJOIySl+Yfi2/SJ2+/
+         3QOQ==
+X-Received: by 10.182.29.33 with SMTP id g1mr334471obh.53.1398328460389;
+        Thu, 24 Apr 2014 01:34:20 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id a7sm1404580obf.19.2014.04.24.01.34.18
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 24 Apr 2014 01:34:19 -0700 (PDT)
+In-Reply-To: <877g6fb2h6.fsf@fencepost.gnu.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246948>
 
-Hello,
+David Kastrup wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> 
+> > James Denholm wrote:
+> >> Felipe Contreras wrote:
+> >> >This is a false dichotomy; there aren't just two kinds
+> >> > of Git users.
+> >> >
+> >> > There is such a category of Git users who are not
+> >> > fresh-out-of-the-boat, yet not power users either.
+> >> 
+> >> Oh, I didn't mean to suggest a dichotomy of any kind. However these are the
+> >> two groups (I suggest) are the most immediately relevant - one calls for
+> >> change, and the other would be negatively impacted.
+> >
+> > Nobody would be negatively impacted. Who would be impacted negatively
+> > by having default aliases?
+> 
+> The people having to read and understand scripts written in the
+> expectation of default aliases.
 
-I installed git to my Windows 7 workstation and cloned
-"http://git.ipxe.org/ipxe.git" by using the Git GUI.
+Which are imaginary.
 
-ipxe-23042014/src tree looks like this in Cygwin bash:
+> > And I have showed they are not problems.
+> 
+> You managed to convince yourself, so feel free to put aliases in every
+> Git you use and distribute.
 
-d---------+ 1 peltoju Domain Users     0 Apr 23 09:00 arch
-d---------+ 1 peltoju Domain Users     0 Apr 23 09:00 bin
-d---------+ 1 peltoju Domain Users     0 Apr 23 09:00 config
-d---------+ 1 peltoju Domain Users     0 Apr 23 09:00 core
-d---------+ 1 peltoju Domain Users     0 Apr 23 09:00 crypto
-d---------+ 1 peltoju Domain Users     0 Apr 23 09:00 doc
-----------+ 1 peltoju Domain Users 62631 Apr 23 09:00 doxygen.cfg
-d---------+ 1 peltoju Domain Users     0 Apr 23 09:00 drivers
-d---------+ 1 peltoju Domain Users     0 Apr 23 09:00 hci
-d---------+ 1 peltoju Domain Users     0 Apr 23 09:00 image
-d---------+ 1 peltoju Domain Users     0 Apr 23 09:00 include
-d---------+ 1 peltoju Domain Users     0 Apr 23 09:00 interface
-d---------+ 1 peltoju Domain Users     0 Apr 23 09:00 libgcc
-----------+ 1 peltoju Domain Users  6146 Apr 23 09:00 Makefile
-----------+ 1 peltoju Domain Users 38982 Apr 23 09:00 Makefile.housekeeping
-d---------+ 1 peltoju Domain Users     0 Apr 23 09:00 net
-d---------+ 1 peltoju Domain Users     0 Apr 23 09:00 tests
-d---------+ 1 peltoju Domain Users     0 Apr 23 09:00 usr
-d---------+ 1 peltoju Domain Users     0 Apr 23 09:00 util
+There is evidence for the claim that there won't be those problems. You have
+absolutely no evidence there there will.
 
-Files have no permissions, same goes with subfolders, e.g.
-
-$ ls -l config/
-total 47
-----------+ 1 peltoju Domain Users  699 Apr 23 09:00 colour.h
-----------+ 1 peltoju Domain Users 6961 Apr 23 09:00 config.c
-----------+ 1 peltoju Domain Users  518 Apr 23 09:00 config_ethernet.c
-----------+ 1 peltoju Domain Users  584 Apr 23 09:00 config_fc.c
-----------+ 1 peltoju Domain Users  474 Apr 23 09:00 config_infiniband.c
-----------+ 1 peltoju Domain Users  875 Apr 23 09:00 config_net80211.c
-----------+ 1 peltoju Domain Users  478 Apr 23 09:00 config_romprefix.c
-----------+ 1 peltoju Domain Users  555 Apr 23 09:00 config_route.c
-
-Any explanation available?
-
-
-git-gui version 0.19.GITGUI
-git version 1.9.0.msysgit.0
-
-- Jussi Peltonen
+-- 
+Felipe Contreras
