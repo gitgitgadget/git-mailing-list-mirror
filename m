@@ -1,179 +1,98 @@
-From: nod.helm@gmail.com
-Subject: [PATCH] subtree/Makefile: Standardize (esp. for packagers)
-Date: Thu, 24 Apr 2014 11:52:16 +1000
-Message-ID: <1398304336-1879-1-git-send-email-nod.helm@gmail.com>
-Cc: James Denholm <nod.helm@gmail.com>, greened@obbligato.org,
-	apenwarr@gmail.com, dpmcgee@gmail.com
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH v7 00/12] Improvements to cherry-pick
+Date: Wed, 23 Apr 2014 21:44:39 -0500
+Message-ID: <1398307491-21314-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Martin von Zweigbergk <martinvonz@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 24 03:52:30 2014
+X-From: git-owner@vger.kernel.org Thu Apr 24 04:55:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wd8px-0007Ja-67
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Apr 2014 03:52:29 +0200
+	id 1Wd9or-0007Ei-R5
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Apr 2014 04:55:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751511AbaDXBwZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Apr 2014 21:52:25 -0400
-Received: from mail-pd0-f169.google.com ([209.85.192.169]:44065 "EHLO
-	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751167AbaDXBwX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Apr 2014 21:52:23 -0400
-Received: by mail-pd0-f169.google.com with SMTP id y13so453624pdi.14
-        for <git@vger.kernel.org>; Wed, 23 Apr 2014 18:52:23 -0700 (PDT)
+	id S1751927AbaDXCzU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Apr 2014 22:55:20 -0400
+Received: from mail-ob0-f173.google.com ([209.85.214.173]:59194 "EHLO
+	mail-ob0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751544AbaDXCzS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Apr 2014 22:55:18 -0400
+Received: by mail-ob0-f173.google.com with SMTP id wn1so2003860obc.4
+        for <git@vger.kernel.org>; Wed, 23 Apr 2014 19:55:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id;
-        bh=/maFUa8vuTWSn5qbyLDuxPHs3Bh7VJJDos12HovYHKc=;
-        b=XZee9RsYH1wWn9yn/ptGffwVS+IXE1sw59SD6YuTrPCN5UMT0U3sKvbYxTtV6vZdMu
-         4KXxdHIIRqw2mhrQZ3yjWJD34APB99SQtJ57WZL8wFUV6miR/myYZoA9EuUSGy+aoUTr
-         4PiTWBkLwYtgHLAGpYTmqlBaI48esbymNS71yQvgqLWGuJJFtI8bdvqNGkQczsz6Hf+R
-         nmt1kd95pnGRDmugtWzo3JrQqQ0qCD1+wKPbT33ok0CTKZd8320o33nPTux2TOYui8dR
-         M1EEkuRE6RU/4SIGm684MFEzIee2aS6En2b0SFGvgqKnHlXWUjYuKObVHYRDZ7Hbp/qv
-         6WGQ==
-X-Received: by 10.66.119.136 with SMTP id ku8mr1705430pab.121.1398304343306;
-        Wed, 23 Apr 2014 18:52:23 -0700 (PDT)
-Received: from pvtjoker.unimelb.edu.au (e-nat-unistudent-0-71.uniaccess.unimelb.edu.au. [128.250.0.71])
-        by mx.google.com with ESMTPSA id di3sm5497141pbc.11.2014.04.23.18.52.20
+        bh=Ovq/NriG8TCJTeXdLFd3hJR8jjYwamH68wzPDy7mbOY=;
+        b=LJkLsreVlfg0k1lOTjTm5wSF8VQ1W5elqR0vfu6F9yDHk7WxwxYOKw+YHEg6VXTAsp
+         +5txw9drnRFrXQuDdr70S6NKfY4Lpp9yl/DEUNc0VBUEIxOIR7TPor+H6C1NGGEacaJM
+         zzEZeb0L2utnLvPWHbIri3WU2TZ04QKwahlQ6PEKAMKNyuIUnF3oDFP7rICLqPrdiodU
+         jH/gY0vo3mFMg+0D+lEi0hysev/iFeW1r6cgT+az/9PPLxk7tmWMpERK6AHPPWut4E/g
+         LnhbSoxVIlb7lbD2S407LKeqE8tEyurHvTsdye4uMhi5NSzXF3HDzwc3PBHbwzl4se/u
+         WaDQ==
+X-Received: by 10.182.165.3 with SMTP id yu3mr45129868obb.14.1398308118143;
+        Wed, 23 Apr 2014 19:55:18 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id cn1sm11808623oeb.11.2014.04.23.19.55.15
         for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 23 Apr 2014 18:52:22 -0700 (PDT)
-X-Mailer: git-send-email 1.9.2
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 23 Apr 2014 19:55:16 -0700 (PDT)
+X-Mailer: git-send-email 1.9.2+fc1.2.gfbaae8c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246915>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246916>
 
-From: James Denholm <nod.helm@gmail.com>
+Hi,
 
-contrib/subtree/Makefile is a shambles in regards to it's consistency
-with other makefiles, which makes subtree overly painful to include in
-build scripts.
+In the process of revamping 'git rebase' I found many areas of improvments in
+`git cherry-pick`, here are the patches to improve the situation.
 
-Two major issues are present:
+These were prettuch sent before already, but this time I dropped the second
+part of the series to improve 'git rebase'.
 
-Firstly, calls to git itself (for $(gitdir) and $(gitver)), making
-building difficult on systems that don't have git.
 
-Secondly, the Makefile uses the variable $(libexecdir) for defining the
-exec path.
+Felipe Contreras (12):
+  cherry-pick: don't barf when there's nothing to do
+  cherry-pick: add --skip-empty option
+  revert/cherry-pick: add --quiet option
+  revert/cherry-pick: add --skip option
+  cherry-pick: remember rerere-autoupdate
+  builtin: add rewrite helper
+  cherry-pick: store rewritten commits
+  cherry-pick: don't store skipped commit
+  builtin: move run_rewrite_hook() to rewrite.c
+  builtin: rewrite: add copy_rewrite_notes()
+  cherry-pick: add --action-name option
+  cherry-pick: copy notes and run hooks
 
-To fix:
+ Documentation/config.txt            |   9 ++-
+ Documentation/git-cherry-pick.txt   |  10 ++-
+ Documentation/git-revert.txt        |   7 ++-
+ Documentation/githooks.txt          |   8 +--
+ Documentation/sequencer.txt         |   3 +
+ Makefile                            |   2 +
+ builtin/commit.c                    |  46 ++------------
+ builtin/revert.c                    |  11 ++++
+ git-rebase--interactive.sh          |   4 +-
+ rewrite.c                           | 121 ++++++++++++++++++++++++++++++++++++
+ rewrite.h                           |  20 ++++++
+ sequencer.c                         | 105 ++++++++++++++++++++++++++++---
+ sequencer.h                         |   8 ++-
+ t/t3504-cherry-pick-rerere.sh       |  39 ++++++++++++
+ t/t3508-cherry-pick-many-commits.sh |  13 ++++
+ t/t3510-cherry-pick-sequence.sh     |  14 ++++-
+ t/t3512-revert-cherry-notes.sh      |  18 ++++++
+ t/t5407-post-rewrite-hook.sh        |  16 +++++
+ 18 files changed, 392 insertions(+), 62 deletions(-)
+ create mode 100644 rewrite.c
+ create mode 100644 rewrite.h
+ create mode 100755 t/t3512-revert-cherry-notes.sh
 
-1: Scrap unused $(gitdir) assignment
-    References were removed in 7ff8463dba0d74fc07a766bed457ae7afcc902b5,
-    but the assignment itself wasn't. Ergo, $(gitdir) hasn't actually
-    been using it since then.
-
-2: Use GIT-VERSION-FILE for version info, from $(gitver)
-    GVF is already being used in most/all other makefiles in the
-    project, and has been for _quite_ a while.
-
-3: :%s/libexecdir/gitexecdir/g
-    $(libexecdir) isn't used anywhere else in the project, while
-    $(gitexecdir) is the standard.
-
-On minor fixes, also fiddled with clean rule and a few calls/variables
-to improve congruency with other git makefiles.
-
-Signed-off-by: James Denholm <nod.helm@gmail.com>
-Based-on-patch-by: Dan McGee <dpmcgee@gmail.com>
----
-
-Obligatory "first patch ever, yay, hello" exclamation goes here,
-random misspelt words and/or life story optional.
-
-I've left `rm -f -r subproj mainline` in the clean rule for now, however
-I'd suggest those actually belong in contrib/subtree/t/Makefile:clean,
-given that they are only ever generated by `make test`. But given that
-there aren't any other comparable setups in contrib/, I'm somewhat
-apprehensive to move them without opinion.
-
-Anyway, hopefully this might make some distros more inclined to package
-git-subtree in their canonical git packages. A very special thanks to
-Dan, who proposed the initial patch back in 2012-or-so that this is
-largely based off of.
-
- contrib/subtree/Makefile | 41 +++++++++++++++++++++++++----------------
- 1 file changed, 25 insertions(+), 16 deletions(-)
-
-diff --git a/contrib/subtree/Makefile b/contrib/subtree/Makefile
-index 4030a16..e1956b8 100644
---- a/contrib/subtree/Makefile
-+++ b/contrib/subtree/Makefile
-@@ -3,17 +3,23 @@
- 
- prefix ?= /usr/local
- mandir ?= $(prefix)/share/man
--libexecdir ?= $(prefix)/libexec/git-core
--gitdir ?= $(shell git --exec-path)
-+gitexecdir ?= $(prefix)/libexec/git-core
- man1dir ?= $(mandir)/man1
- 
--gitver ?= $(word 3,$(shell git --version))
-+../../GIT-VERSION-FILE: FORCE
-+	$(MAKE) -C ../../ GIT-VERSION-FILE
- 
--# this should be set to a 'standard' bsd-type install program
--INSTALL ?= install
-+-include ../../GIT-VERSION-FILE
- 
--ASCIIDOC_CONF      = ../../Documentation/asciidoc.conf
--MANPAGE_NORMAL_XSL =  ../../Documentation/manpage-normal.xsl
-+# These should be set to 'standard' bsd-type programs
-+INSTALL  ?= install
-+RM       ?= rm -f
-+
-+ASCIIDOC ?= asciidoc
-+XMLTO    ?= xmlto
-+
-+ASCIIDOC_CONF = ../../Documentation/asciidoc.conf
-+MANPAGE_XSL   = ../../Documentation/manpage-normal.xsl
- 
- GIT_SUBTREE_SH := git-subtree.sh
- GIT_SUBTREE    := git-subtree
-@@ -31,8 +37,8 @@ $(GIT_SUBTREE): $(GIT_SUBTREE_SH)
- doc: $(GIT_SUBTREE_DOC) $(GIT_SUBTREE_HTML)
- 
- install: $(GIT_SUBTREE)
--	$(INSTALL) -d -m 755 $(DESTDIR)$(libexecdir)
--	$(INSTALL) -m 755 $(GIT_SUBTREE) $(DESTDIR)$(libexecdir)
-+	$(INSTALL) -d -m 755 $(DESTDIR)$(gitexecdir)
-+	$(INSTALL) -m 755 $(GIT_SUBTREE) $(DESTDIR)$(gitexecdir)
- 
- install-doc: install-man
- 
-@@ -41,19 +47,22 @@ install-man: $(GIT_SUBTREE_DOC)
- 	$(INSTALL) -m 644 $^ $(DESTDIR)$(man1dir)
- 
- $(GIT_SUBTREE_DOC): $(GIT_SUBTREE_XML)
--	xmlto -m $(MANPAGE_NORMAL_XSL)  man $^
-+	$(XMLTO) -m $(MANPAGE_XSL) man $^
- 
- $(GIT_SUBTREE_XML): $(GIT_SUBTREE_TXT)
--	asciidoc -b docbook -d manpage -f $(ASCIIDOC_CONF) \
--		-agit_version=$(gitver) $^
-+	$(ASCIIDOC) -b docbook -d manpage -f $(ASCIIDOC_CONF) \
-+		-agit_version=$(GIT_VERSION) $^
- 
- $(GIT_SUBTREE_HTML): $(GIT_SUBTREE_TXT)
--	asciidoc -b xhtml11 -d manpage -f $(ASCIIDOC_CONF) \
--		-agit_version=$(gitver) $^
-+	$(ASCIIDOC) -b xhtml11 -d manpage -f $(ASCIIDOC_CONF) \
-+		-agit_version=$(GIT_VERSION) $^
- 
- test:
- 	$(MAKE) -C t/ test
- 
- clean:
--	rm -f *~ *.xml *.html *.1
--	rm -rf subproj mainline
-+	$(RM) $(GIT_SUBTREE)
-+	$(RM) *.xml *.html *.1
-+	$(RM) -r subproj mainline
-+
-+.PHONY: FORCE
 -- 
-1.9.2
+1.9.2+fc1.2.gfbaae8c
