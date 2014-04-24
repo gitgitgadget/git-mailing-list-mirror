@@ -1,82 +1,112 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: What is missing from Git v2.0
-Date: Thu, 24 Apr 2014 09:39:33 +0200
-Message-ID: <877g6fb2h6.fsf@fencepost.gnu.org>
-References: <CAMP44s17h4Tjg+VaMF0atLep8t-0HVp4UDr1WE2wYnEuZ07eaQ@mail.gmail.com>
-	<53557071.5040500@gmail.com>
-	<xmqqtx9m8obr.fsf@gitster.dls.corp.google.com>
-	<CAHGBnuMty-86jfUto=L3muhgEVwVE70FQQY2FJ1bn7AUjfEtLQ@mail.gmail.com>
-	<xmqqk3ah5i55.fsf@gitster.dls.corp.google.com>
-	<5356c1a61f6d8_463e11ef310a5@nysa.notmuch>
-	<20140422213039.GB21043@thunk.org>
-	<alpine.DEB.2.02.1404221523060.14881@nftneq.ynat.uz>
-	<53588713347b7_59ed83d308cf@nysa.notmuch>
-	<CAHYYfeHeJYZ67chSTQk2grsFGr07KXcVNR-T6kOPo0bVYDm59g@mail.gmail.com>
-	<53588f448d817_59ed83d3084e@nysa.notmuch>
-	<CAHYYfeFKW93GH+6-ssR5L_uoo3OL2-LFAsj-4+8uEmL0BhT3ow@mail.gmail.com>
-	<5358bae8ab550_1f7b143d31037@nysa.notmuch>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v7 05/12] cherry-pick: remember rerere-autoupdate
+Date: Thu, 24 Apr 2014 04:21:32 -0400
+Message-ID: <CAPig+cSYsfsg8+2FruQqwVanDHmfQKgCi1NkXhpduJhVD1o6PQ@mail.gmail.com>
+References: <1398307491-21314-1-git-send-email-felipe.contreras@gmail.com>
+	<1398307491-21314-6-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: James Denholm <nod.helm@gmail.com>, David Lang <david@lang.hm>,
-	Theodore Ts'o <tytso@mit.edu>,
-	Junio C Hamano <gitster@pobox.com>,
-	Sebastian Schuberth <sschuberth@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Martin von Zweigbergk <martinvonz@gmail.com>
 To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 24 09:39:52 2014
+X-From: git-owner@vger.kernel.org Thu Apr 24 10:21:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WdEG6-0002aT-Tw
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Apr 2014 09:39:51 +0200
+	id 1WdEub-0001D3-UI
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Apr 2014 10:21:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752680AbaDXHjh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Apr 2014 03:39:37 -0400
-Received: from fencepost.gnu.org ([208.118.235.10]:41231 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751557AbaDXHjf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Apr 2014 03:39:35 -0400
-Received: from localhost ([127.0.0.1]:40270 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1WdEFq-0005TO-8J; Thu, 24 Apr 2014 03:39:34 -0400
-Received: by lola (Postfix, from userid 1000)
-	id C5064E0989; Thu, 24 Apr 2014 09:39:33 +0200 (CEST)
-In-Reply-To: <5358bae8ab550_1f7b143d31037@nysa.notmuch> (Felipe Contreras's
-	message of "Thu, 24 Apr 2014 02:19:04 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
+	id S1752534AbaDXIVg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Apr 2014 04:21:36 -0400
+Received: from mail-wg0-f45.google.com ([74.125.82.45]:37449 "EHLO
+	mail-wg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751928AbaDXIVe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Apr 2014 04:21:34 -0400
+Received: by mail-wg0-f45.google.com with SMTP id l18so1939091wgh.16
+        for <git@vger.kernel.org>; Thu, 24 Apr 2014 01:21:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=cI30s083A2EA9I+bDzVoQ2P1L7Oe845HnWR4TVIq7Kk=;
+        b=NBs77IcrP16NzD1b6+k+y+HvhlcKV+vwazGJJnXzh6oVtRFszkXUzKBGSbnR2PUbid
+         EIeW6ZK/0mYXI4YGpDn0b4E6Fm2Ska8OVrlTi8JTNx6wgzLbbI+iR+5YaBYBaWrgvpn8
+         CNRYdCI8biosDAUpjv5vW+x9f7wyaNXF+URL0qfSgWNiC3O1KP+uzociWXHpupyB2PHE
+         K+piAYz2LdOAX+lGhm5lpOsQHXPIbL2KjzwMd+GbAyjy4CpaKnPjtlnAhq6NMltAP0Bi
+         YSxD7do9dMjsdmZevwR/+A2R600D7kXRIXEsc82i3WyokmIjIxEjykLy/Pdru67+XuCR
+         fmTA==
+X-Received: by 10.180.7.133 with SMTP id j5mr1575306wia.55.1398327692827; Thu,
+ 24 Apr 2014 01:21:32 -0700 (PDT)
+Received: by 10.217.46.68 with HTTP; Thu, 24 Apr 2014 01:21:32 -0700 (PDT)
+In-Reply-To: <1398307491-21314-6-git-send-email-felipe.contreras@gmail.com>
+X-Google-Sender-Auth: qZ3MJ3AAwOZ_vGQOKXvkNHEMsYg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246945>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246946>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
-
-> James Denholm wrote:
->> Felipe Contreras wrote:
->> >This is a false dichotomy; there aren't just two kinds
->> > of Git users.
->> >
->> > There is such a category of Git users who are not
->> > fresh-out-of-the-boat, yet not power users either.
->> 
->> Oh, I didn't mean to suggest a dichotomy of any kind. However these are the
->> two groups (I suggest) are the most immediately relevant - one calls for
->> change, and the other would be negatively impacted.
+On Wed, Apr 23, 2014 at 10:44 PM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> ---
+> diff --git a/t/t3504-cherry-pick-rerere.sh b/t/t3504-cherry-pick-rerere.sh
+> index e6a6481..274b2cc 100755
+> --- a/t/t3504-cherry-pick-rerere.sh
+> +++ b/t/t3504-cherry-pick-rerere.sh
+> @@ -42,4 +42,43 @@ test_expect_success 'cherry-pick conflict without rerere' '
+>         test_must_fail test_cmp expect foo
+>  '
 >
-> Nobody would be negatively impacted. Who would be impacted negatively
-> by having default aliases?
+> +test_expect_success 'cherry-pick --rerere-autoupdate' '
+> +       test_when_finished "rm -rf rerere" &&
+> +       (
+> +       git init rerere &&
+> +       cd rerere &&
+> +       test_config rerere.enabled true &&
+> +       echo one > content-a && git add content-a &&
+> +       echo one > content-b && git add content-b &&
+> +       git commit -m one &&
+> +       git checkout -b conflict master &&
+> +       echo conflict-a > content-a &&
+> +       git commit -a -m conflict-a &&
+> +       echo conflict-b > content-b &&
+> +       git commit -a -m conflict-b &&
+> +       git checkout master &&
+> +       echo two > content-a &&
+> +       echo two > content-b &&
+> +       git commit -a -m two &&
+> +       git checkout -b test &&
+> +       test_must_fail git cherry-pick master..conflict &&
+> +       echo resolved-a > content-a &&
+> +       git add content-a &&
+> +       test_must_fail git cherry-pick --continue &&
+> +       echo resolved-b > content-b &&
+> +       git add content-b &&
+> +       git cherry-pick --continue &&
+> +       git reset --hard master
 
-The people having to read and understand scripts written in the
-expectation of default aliases.
+Broken &&-chain.
 
-> And I have showed they are not problems.
+> +       git log --oneline --all --decorate --graph &&
+> +       test_must_fail git cherry-pick --rerere-autoupdate master..conflict &&
+> +       git log --oneline --all --decorate --graph &&
+> +       echo resolved-a > expected &&
+> +       test_cmp expected content-a
 
-You managed to convince yourself, so feel free to put aliases in every
-Git you use and distribute.
+Ditto.
 
--- 
-David Kastrup
+> +       test_must_fail git cherry-pick --continue &&
+> +       echo resolved-b > expected &&
+> +       test_cmp expected content-b &&
+> +       git cherry-pick --continue
+> +       )
+> +'
+> +
+>  test_done
+> --
+> 1.9.2+fc1.2.gfbaae8c
