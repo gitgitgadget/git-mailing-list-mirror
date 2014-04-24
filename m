@@ -1,216 +1,148 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v7 04/12] revert/cherry-pick: add --skip option
-Date: Wed, 23 Apr 2014 21:44:43 -0500
-Message-ID: <1398307491-21314-5-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v7 02/12] cherry-pick: add --skip-empty option
+Date: Wed, 23 Apr 2014 21:44:41 -0500
+Message-ID: <1398307491-21314-3-git-send-email-felipe.contreras@gmail.com>
 References: <1398307491-21314-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Martin von Zweigbergk <martinvonz@gmail.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 24 04:55:43 2014
+X-From: git-owner@vger.kernel.org Thu Apr 24 04:55:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wd9p8-0007UD-Gr
+	id 1Wd9p7-0007UD-Ut
 	for gcvg-git-2@plane.gmane.org; Thu, 24 Apr 2014 04:55:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752141AbaDXCzg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Apr 2014 22:55:36 -0400
-Received: from mail-ob0-f180.google.com ([209.85.214.180]:51718 "EHLO
-	mail-ob0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751386AbaDXCzd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Apr 2014 22:55:33 -0400
-Received: by mail-ob0-f180.google.com with SMTP id wm4so2006053obc.39
-        for <git@vger.kernel.org>; Wed, 23 Apr 2014 19:55:32 -0700 (PDT)
+	id S1752124AbaDXCzb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Apr 2014 22:55:31 -0400
+Received: from mail-ob0-f169.google.com ([209.85.214.169]:51055 "EHLO
+	mail-ob0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752012AbaDXCz0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Apr 2014 22:55:26 -0400
+Received: by mail-ob0-f169.google.com with SMTP id uz6so2025213obc.14
+        for <git@vger.kernel.org>; Wed, 23 Apr 2014 19:55:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=aaYN5ZCscpVQEMWSDIbLe7QUNvIR5v+kKUl6LUAg5xs=;
-        b=Vs6+AcKVQmNqnVtfH8zn928zoFHnK6yk4D5n3wj7pcXzE9xxgwjyp9kbmwop0fVMdx
-         PqiLPyF8pduUGNVLXCK0eGM0cxGnc+6QAxwiCeBtHinl9ATYB3G39QpjeoqtauK7pJzp
-         bzYxTB+U3dHGIOjad3i1Tcn3cagHRM76WckbhC2EdMfcDzJPHm3dyAlc87cdUHLvBVNn
-         fLBH58bxrpdTPzyzOvhLKvgjOm5rppyhTRzoIxK8BX0vAELQ1PF3QGass04N8CE+/eD2
-         IT4kXnz/7C1OPT1KnxRw2gVi8ez4pEnTwC85/oibC/D7Qm1OuGI6KtGK88icCVTobKRd
-         oz7w==
-X-Received: by 10.60.132.12 with SMTP id oq12mr41074450oeb.42.1398308132363;
-        Wed, 23 Apr 2014 19:55:32 -0700 (PDT)
+        bh=gxPrzjgDQpE52al2Q7XyeAd1nS0AuXB4QzlRZ08RN44=;
+        b=h/8TrpgX5+gp6UcP7g/85O24s7Jt3R2PHCQIX1QmSJ8wv4+4LxIb4yDr9V3p0OGudM
+         Uxk39bL4zFWSTXEkWQYLU/GOuLTE7xY/cq8OrVxlRjgbrXEz8+pcHBh6yH7aOid27C16
+         N8KlqlZo35PRZET4k+JUZC3BTYk+quXzAHgrKc5snSsJJNkJjbBdx9Xa2dvUd51CA96E
+         gl/25iOAHLxRKTD5E6Wp+VTi8KukdhnjQosSVIZ4my1kRK4EXgaomXlt0tDO/lJGuiyL
+         4zrntblmL9bXk1gpgfCvvgBBCmsZpwRJVbTROrSsbm0dzKQgX64qukzz7fEx418pTqvI
+         Eh3Q==
+X-Received: by 10.60.95.230 with SMTP id dn6mr45743878oeb.25.1398308125488;
+        Wed, 23 Apr 2014 19:55:25 -0700 (PDT)
 Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id dh8sm11816947oeb.10.2014.04.23.19.55.29
+        by mx.google.com with ESMTPSA id cn1sm11809822oeb.11.2014.04.23.19.55.23
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 23 Apr 2014 19:55:30 -0700 (PDT)
+        Wed, 23 Apr 2014 19:55:24 -0700 (PDT)
 X-Mailer: git-send-email 1.9.2+fc1.2.gfbaae8c
 In-Reply-To: <1398307491-21314-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246918>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246919>
 
-Akin to 'am --skip' and 'rebase --skip'.
+Pretty much what it says on the tin.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- Documentation/git-cherry-pick.txt |  1 +
- Documentation/git-revert.txt      |  1 +
- Documentation/sequencer.txt       |  3 +++
- builtin/revert.c                  |  6 ++++++
- sequencer.c                       | 24 ++++++++++++++++++++++++
- sequencer.h                       |  3 ++-
- t/t3510-cherry-pick-sequence.sh   | 12 ++++++++++++
- 7 files changed, 49 insertions(+), 1 deletion(-)
+ Documentation/git-cherry-pick.txt   |  3 +++
+ builtin/revert.c                    |  2 ++
+ sequencer.c                         |  6 ++++++
+ sequencer.h                         |  1 +
+ t/t3508-cherry-pick-many-commits.sh | 13 +++++++++++++
+ 5 files changed, 25 insertions(+)
 
 diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
-index da0bd81..d95c63c 100644
+index c205d23..fccd936 100644
 --- a/Documentation/git-cherry-pick.txt
 +++ b/Documentation/git-cherry-pick.txt
-@@ -10,6 +10,7 @@ SYNOPSIS
- [verse]
- 'git cherry-pick' [-q] [--edit] [-n] [-m parent-number] [-s] [-x] [--ff] <commit>...
- 'git cherry-pick' --continue
-+'git cherry-pick' --skip
- 'git cherry-pick' --quit
- 'git cherry-pick' --abort
+@@ -129,6 +129,9 @@ effect to your index in a row.
+ 	redundant commits are ignored.  This option overrides that behavior and
+ 	creates an empty commit object.  Implies `--allow-empty`.
  
-diff --git a/Documentation/git-revert.txt b/Documentation/git-revert.txt
-index 2b51136..14bd299 100644
---- a/Documentation/git-revert.txt
-+++ b/Documentation/git-revert.txt
-@@ -10,6 +10,7 @@ SYNOPSIS
- [verse]
- 'git revert' [-q] [--[no-]edit] [-n] [-m parent-number] [-s] <commit>...
- 'git revert' --continue
-+'git revert' --skip
- 'git revert' --quit
- 'git revert' --abort
- 
-diff --git a/Documentation/sequencer.txt b/Documentation/sequencer.txt
-index 5747f44..df2d355 100644
---- a/Documentation/sequencer.txt
-+++ b/Documentation/sequencer.txt
-@@ -3,6 +3,9 @@
- 	'.git/sequencer'.  Can be used to continue after resolving
- 	conflicts in a failed cherry-pick or revert.
- 
-+--skip::
-+	Skip the current commit, and then continue.
++--skip-empty::
++	Instead of failing, skip commits that are or become empty.
 +
- --quit::
- 	Forget about the current operation in progress.  Can be used
- 	to clear the sequencer state after a failed cherry-pick or
+ --strategy=<strategy>::
+ 	Use the given merge strategy.  Should only be used once.
+ 	See the MERGE STRATEGIES section in linkgit:git-merge[1]
 diff --git a/builtin/revert.c b/builtin/revert.c
-index c8149ca..54fba63 100644
+index 87659c9..9946ecd 100644
 --- a/builtin/revert.c
 +++ b/builtin/revert.c
-@@ -76,11 +76,13 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
- 	const char * const * usage_str = revert_or_cherry_pick_usage(opts);
- 	const char *me = action_name(opts);
- 	int cmd = 0;
-+
- 	struct option options[] = {
- 		OPT__QUIET(&opts->quiet, N_("suppress progress reporting")),
- 		OPT_CMDMODE(0, "quit", &cmd, N_("end revert or cherry-pick sequence"), 'q'),
- 		OPT_CMDMODE(0, "continue", &cmd, N_("resume revert or cherry-pick sequence"), 'c'),
- 		OPT_CMDMODE(0, "abort", &cmd, N_("cancel revert or cherry-pick sequence"), 'a'),
-+		OPT_CMDMODE(0, "skip", &cmd, N_("skip current commit in the sequence"), 's'),
- 		OPT_BOOL('n', "no-commit", &opts->no_commit, N_("don't automatically commit")),
- 		OPT_BOOL('e', "edit", &opts->edit, N_("edit the commit message")),
- 		OPT_NOOP_NOARG('r', NULL),
-@@ -128,6 +130,8 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
- 		opts->subcommand = REPLAY_CONTINUE;
- 	else if (cmd == 'a')
- 		opts->subcommand = REPLAY_ROLLBACK;
-+	else if (cmd == 's')
-+		opts->subcommand = REPLAY_SKIP;
- 	else
- 		opts->subcommand = REPLAY_NONE;
+@@ -95,6 +95,7 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
+ 		OPT_END(),
+ 		OPT_END(),
+ 		OPT_END(),
++		OPT_END(),
+ 	};
  
-@@ -138,6 +142,8 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
- 			this_operation = "--quit";
- 		else if (opts->subcommand == REPLAY_CONTINUE)
- 			this_operation = "--continue";
-+		else if (opts->subcommand == REPLAY_SKIP)
-+			this_operation = "--skip";
- 		else {
- 			assert(opts->subcommand == REPLAY_ROLLBACK);
- 			this_operation = "--abort";
+ 	if (opts->action == REPLAY_PICK) {
+@@ -104,6 +105,7 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
+ 			OPT_BOOL(0, "allow-empty", &opts->allow_empty, N_("preserve initially empty commits")),
+ 			OPT_BOOL(0, "allow-empty-message", &opts->allow_empty_message, N_("allow commits with empty messages")),
+ 			OPT_BOOL(0, "keep-redundant-commits", &opts->keep_redundant_commits, N_("keep redundant, empty commits")),
++			OPT_BOOL(0, "skip-empty", &opts->skip_empty, N_("skip empty commits")),
+ 			OPT_END(),
+ 		};
+ 		if (parse_options_concat(options, ARRAY_SIZE(options), cp_extra))
 diff --git a/sequencer.c b/sequencer.c
-index e8239ac..c01ad08 100644
+index c94942a..951f51d 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -1057,6 +1057,28 @@ static int sequencer_continue(struct replay_opts *opts)
- 	return pick_commits(todo_list, opts);
- }
+@@ -634,6 +634,12 @@ static int do_pick_commit(struct commit *commit, struct replay_opts *opts)
+ 		goto leave;
+ 	}
  
-+static int sequencer_skip(struct replay_opts *opts)
-+{
-+	const char *argv[4]; /* reset --hard HEAD + NULL */
-+	struct string_list merge_rr = STRING_LIST_INIT_DUP;
-+	int ret;
-+
-+	if (setup_rerere(&merge_rr, 0) >= 0) {
-+		rerere_clear(&merge_rr);
-+		string_list_clear(&merge_rr, 1);
++	if (opts->skip_empty && is_index_unchanged() == 1) {
++		warning(_("skipping %s... %s"),
++			find_unique_abbrev(commit->object.sha1, DEFAULT_ABBREV),
++			msg.subject);
++		goto leave;
 +	}
-+
-+	argv[0] = "reset";
-+	argv[1] = "--hard";
-+	argv[2] = "HEAD";
-+	argv[3] = NULL;
-+	ret = run_command_v_opt(argv, RUN_GIT_CMD);
-+	if (ret)
-+		return ret;
-+
-+	return sequencer_continue(opts);
-+}
-+
- static int single_pick(struct commit *cmit, struct replay_opts *opts)
- {
- 	setenv(GIT_REFLOG_ACTION, action_name(opts), 0);
-@@ -1087,6 +1109,8 @@ int sequencer_pick_revisions(struct replay_opts *opts)
- 		return sequencer_rollback(opts);
- 	if (opts->subcommand == REPLAY_CONTINUE)
- 		return sequencer_continue(opts);
-+	if (opts->subcommand == REPLAY_SKIP)
-+		return sequencer_skip(opts);
- 
- 	for (i = 0; i < opts->revs->pending.nr; i++) {
- 		unsigned char sha1[20];
+ 	allow = allow_empty(opts, commit);
+ 	if (allow < 0) {
+ 		res = allow;
 diff --git a/sequencer.h b/sequencer.h
-index d37c003..74d592a 100644
+index 1fc22dc..3b04844 100644
 --- a/sequencer.h
 +++ b/sequencer.h
-@@ -17,7 +17,8 @@ enum replay_subcommand {
- 	REPLAY_NONE,
- 	REPLAY_REMOVE_STATE,
- 	REPLAY_CONTINUE,
--	REPLAY_ROLLBACK
-+	REPLAY_ROLLBACK,
-+	REPLAY_SKIP
- };
+@@ -34,6 +34,7 @@ struct replay_opts {
+ 	int allow_empty;
+ 	int allow_empty_message;
+ 	int keep_redundant_commits;
++	int skip_empty;
  
- struct replay_opts {
-diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
-index 33c5512..c43c327 100755
---- a/t/t3510-cherry-pick-sequence.sh
-+++ b/t/t3510-cherry-pick-sequence.sh
-@@ -511,4 +511,16 @@ test_expect_success 'commit descriptions in insn sheet are optional' '
- 	test_line_count = 4 commits
+ 	int mainline;
+ 
+diff --git a/t/t3508-cherry-pick-many-commits.sh b/t/t3508-cherry-pick-many-commits.sh
+index 19c99d7..0cdf07e 100755
+--- a/t/t3508-cherry-pick-many-commits.sh
++++ b/t/t3508-cherry-pick-many-commits.sh
+@@ -187,4 +187,17 @@ test_expect_success 'cherry-pick --stdin works' '
+ 	check_head_differs_from fourth
  '
  
-+test_expect_success 'skip' '
-+	pristine_detach conflicting &&
-+	test_must_fail git cherry-pick initial..picked &&
-+
-+	git checkout HEAD -- unrelated &&
-+	test_must_fail git cherry-pick --continue &&
-+	git cherry-pick --skip &&
-+
-+	git rev-list initial..HEAD >commits &&
-+	test_line_count = 3 commits
++test_expect_success 'cherry-pick skip empty' '
++	git clean -fxd &&
++	git checkout -b empty fourth &&
++	git commit --allow-empty -m empty &&
++	test_commit ontop &&
++	git checkout -f master &&
++	git reset --hard fourth &&
++	git cherry-pick --skip-empty fourth..empty &&
++	echo ontop > expected &&
++	git log --format=%s fourth..HEAD > actual &&
++	test_cmp expected actual
 +'
 +
  test_done
