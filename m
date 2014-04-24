@@ -1,113 +1,66 @@
-From: Jeff King <peff@peff.net>
+From: David Lang <david@lang.hm>
 Subject: Re: What is missing from Git v2.0
-Date: Thu, 24 Apr 2014 15:15:32 -0400
-Message-ID: <20140424191531.GA7815@sigill.intra.peff.net>
-References: <CAHYYfeFKW93GH+6-ssR5L_uoo3OL2-LFAsj-4+8uEmL0BhT3ow@mail.gmail.com>
- <5358bae8ab550_1f7b143d31037@nysa.notmuch>
- <877g6fb2h6.fsf@fencepost.gnu.org>
- <5358ca1a55a69_1f7b143d3101c@nysa.notmuch>
- <20140424134106.GA27035@thunk.org>
- <CALbm-EbBj1hCF=rFfeBbzeVmffRHVEEE=HSbVZxw-=-=p2BvEQ@mail.gmail.com>
- <20140424154717.GB7531@thunk.org>
- <CALbm-Ea4oAQ+JsYu6Zo06ONMbtp8AhgFqDC485BRKsM36EVQXw@mail.gmail.com>
- <20140424180204.GL15516@google.com>
- <53595759dce2a_3241f112ec9b@nysa.notmuch>
+Date: Thu, 24 Apr 2014 12:20:46 -0700 (PDT)
+Message-ID: <alpine.DEB.2.02.1404241219520.14881@nftneq.ynat.uz>
+References: <CAMP44s17h4Tjg+VaMF0atLep8t-0HVp4UDr1WE2wYnEuZ07eaQ@mail.gmail.com> <53557071.5040500@gmail.com> <xmqqtx9m8obr.fsf@gitster.dls.corp.google.com> <CAHGBnuMty-86jfUto=L3muhgEVwVE70FQQY2FJ1bn7AUjfEtLQ@mail.gmail.com> <xmqqk3ah5i55.fsf@gitster.dls.corp.google.com>
+ <5356c1a61f6d8_463e11ef310a5@nysa.notmuch> <20140422213039.GB21043@thunk.org> <alpine.DEB.2.02.1404221523060.14881@nftneq.ynat.uz> <53588713347b7_59ed83d308cf@nysa.notmuch> <CAHYYfeHeJYZ67chSTQk2grsFGr07KXcVNR-T6kOPo0bVYDm59g@mail.gmail.com>
+ <53588f448d817_59ed83d3084e@nysa.notmuch> <CAHYYfeFKW93GH+6-ssR5L_uoo3OL2-LFAsj-4+8uEmL0BhT3ow@mail.gmail.com> <5358bae8ab550_1f7b143d31037@nysa.notmuch> <877g6fb2h6.fsf@fencepost.gnu.org> <5358ca1a55a69_1f7b143d3101c@nysa.notmuch> <8738h3ayom.fsf@fencepost.gnu.org>
+ <535957e225e7b_3241f112ecc3@nysa.notmuch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Stefan Beller <stefanbeller@gmail.com>,
-	Theodore Ts'o <tytso@mit.edu>, David Kastrup <dak@gnu.org>,
-	James Denholm <nod.helm@gmail.com>, David Lang <david@lang.hm>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: David Kastrup <dak@gnu.org>, James Denholm <nod.helm@gmail.com>,
+	"Theodore Ts'o" <tytso@mit.edu>,
 	Junio C Hamano <gitster@pobox.com>,
 	Sebastian Schuberth <sschuberth@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>
 To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 24 21:15:45 2014
+X-From: git-owner@vger.kernel.org Thu Apr 24 21:21:06 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WdP7U-0003og-J4
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Apr 2014 21:15:40 +0200
+	id 1WdPCj-00036v-EF
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Apr 2014 21:21:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751486AbaDXTPf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Apr 2014 15:15:35 -0400
-Received: from cloud.peff.net ([50.56.180.127]:37741 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751083AbaDXTPe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Apr 2014 15:15:34 -0400
-Received: (qmail 2864 invoked by uid 102); 24 Apr 2014 19:15:34 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 24 Apr 2014 14:15:34 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Apr 2014 15:15:32 -0400
-Content-Disposition: inline
-In-Reply-To: <53595759dce2a_3241f112ec9b@nysa.notmuch>
+	id S1751400AbaDXTVA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Apr 2014 15:21:00 -0400
+Received: from mail.lang.hm ([64.81.33.126]:46392 "EHLO bifrost.lang.hm"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750955AbaDXTU7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Apr 2014 15:20:59 -0400
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id s3OJKkxi023628;
+	Thu, 24 Apr 2014 12:20:46 -0700
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <535957e225e7b_3241f112ecc3@nysa.notmuch>
+User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247000>
 
-On Thu, Apr 24, 2014 at 01:26:33PM -0500, Felipe Contreras wrote:
+On Thu, 24 Apr 2014, Felipe Contreras wrote:
 
-> Jonathan Nieder wrote:
-> > Stefan Beller wrote:
-> > 
-> > > I may have missunderstood.
-> > >
-> > > So today you cannot commit if you don't provide an email address
-> > > (usually the first time you try to commit, git asks to "git config
-> > > --global author.email=<you@mail.here>"), if I remember correctly, so
-> > > there is definitely a valid (i.e. user approved) email address.
-> > 
-> > Not true.  But you do get a big wall of text when you make your
-> > first commit without an EMAIL envvar or configured [user] section,
-> > including
-> 
-> Only if you don't have a fully qualified hostname.
+> David Kastrup wrote:
+>> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>>> David Kastrup wrote:
+>>>> The people having to read and understand scripts written in the
+>>>> expectation of default aliases.
+>>>
+>>> Which are imaginary.
+>>
+>> And I prefer them to stay that way since then one does not need to worry
+>> about them.
+>
+> If everybody was afraid of moving because of imaginary fears like you, nothing
+> would get done in this world. Rational people distinguish the imaginary from
+> the real.
 
-No, we alway warn if the values weren't explicitly provided:
+The exact same thing could be said for your position that typing rebase instead 
+of rb causes a major problem
 
-  $ git config --global --unset user.email
-  $ git commit --allow-empty -m foo
-  [master 1e987ba] foo
-   Committer: Jeff King <peff@sigill.intra.peff.net>
-  Your name and email address were configured automatically based
-  on your username and hostname. Please check that they are accurate.
-  You can suppress this message by setting them explicitly:
-  
-      git config --global user.name "Your Name"
-      git config --global user.email you@example.com
-  
-  After doing this, you may fix the identity used for this commit with:
-  
-      git commit --amend --reset-author
+Calm down and stop accusing everyone of sticking their heads in the ground
 
-but we will consider several sources explicit, like
-$GIT_COMMITTER_EMAIL, $EMAIL, and of course user.email:
-
-  $ EMAIL=whatever@example.com git commit --allow-empty -m foo
-  [master e75f17a] foo
-
-We die when the values are implicitly derived from the system _and_ they
-look bogus:
-
-  $ sudo rm /etc/mailname
-  $ sudo hostname bogus
-  $ git commit --allow-empty -m foo
-
-  *** Please tell me who you are.
-  
-  Run
-  
-    git config --global user.email "you@example.com"
-    git config --global user.name "Your Name"
-  
-  to set your account's default identity.
-  Omit --global to set the identity only in this repository.
-  
-  fatal: unable to auto-detect email address (got 'peff@bogus.(none)')
-
--Peff
+David Lang
