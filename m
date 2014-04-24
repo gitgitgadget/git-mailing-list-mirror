@@ -1,100 +1,121 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: What is missing from Git v2.0
-Date: Thu, 24 Apr 2014 13:38:08 -0500
-Message-ID: <53595a107cf1f_3241f112ec72@nysa.notmuch>
-References: <5356c1a61f6d8_463e11ef310a5@nysa.notmuch>
- <20140422213039.GB21043@thunk.org>
- <alpine.DEB.2.02.1404221523060.14881@nftneq.ynat.uz>
- <53588713347b7_59ed83d308cf@nysa.notmuch>
- <CAHYYfeHeJYZ67chSTQk2grsFGr07KXcVNR-T6kOPo0bVYDm59g@mail.gmail.com>
- <53588f448d817_59ed83d3084e@nysa.notmuch>
- <CAHYYfeFKW93GH+6-ssR5L_uoo3OL2-LFAsj-4+8uEmL0BhT3ow@mail.gmail.com>
- <5358bae8ab550_1f7b143d31037@nysa.notmuch>
- <877g6fb2h6.fsf@fencepost.gnu.org>
- <5358ca1a55a69_1f7b143d3101c@nysa.notmuch>
- <20140424134106.GA27035@thunk.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Harmful LESS flags
+Date: Thu, 24 Apr 2014 12:02:04 -0700
+Message-ID: <xmqqha5iv9eb.fsf@gitster.dls.corp.google.com>
+References: <4dc69237123e8962b2b2b901692ea78e.id@mailtor>
+	<87lhuvb9kr.fsf@fencepost.gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: David Kastrup <dak@gnu.org>, James Denholm <nod.helm@gmail.com>,
-	David Lang <david@lang.hm>, Junio C Hamano <gitster@pobox.com>,
-	Sebastian Schuberth <sschuberth@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Theodore Ts'o <tytso@mit.edu>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 24 20:48:55 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: d9ba@mailtor.net, git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Thu Apr 24 21:02:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WdOhZ-00078P-Jg
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Apr 2014 20:48:53 +0200
+	id 1WdOuW-0001EJ-1Q
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Apr 2014 21:02:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932385AbaDXSsn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Apr 2014 14:48:43 -0400
-Received: from mail-oa0-f44.google.com ([209.85.219.44]:35621 "EHLO
-	mail-oa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758784AbaDXSsg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Apr 2014 14:48:36 -0400
-Received: by mail-oa0-f44.google.com with SMTP id n16so3119717oag.3
-        for <git@vger.kernel.org>; Thu, 24 Apr 2014 11:48:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=Pl2VD2+x/uSxy3IlANlgDpF+pyrP3PUtbCmrZv7sqrM=;
-        b=VY98rUdE7AbWvvh4HW7nXrtXWJCeK2rJ8mi+KMZB963Y5qRbOXbjqIZLpAyRg+Rhjw
-         5hw4ec2mbSYBf6SCjHKiXWALicU+2dR/IvyusIcDGEWKI+ke9GrATAguJFLrVkfCacYX
-         sQcOJx16kbf/nz76h1P0xL5yfZHO39CD3RXzBhURnOZNGBVrj1KqaIRUofQdZXJGUI0x
-         AbQj7ybDx+sNCk2ksY8lN2+bpLozd6nnspmgg2IzDdEgMFtvNVT3RAX0YnF9wnEfLrXR
-         rnajQCyEY9pp9yF19imT+jon7eETiWQvTie6HUFKejS1hU75umYRZLLARp4JFMUQ0awS
-         6f3w==
-X-Received: by 10.182.27.133 with SMTP id t5mr2772429obg.65.1398365316341;
-        Thu, 24 Apr 2014 11:48:36 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id qh7sm10154643obc.13.2014.04.24.11.48.33
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 24 Apr 2014 11:48:34 -0700 (PDT)
-In-Reply-To: <20140424134106.GA27035@thunk.org>
+	id S1758298AbaDXTCK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Apr 2014 15:02:10 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46495 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753229AbaDXTCI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Apr 2014 15:02:08 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D340180CE8;
+	Thu, 24 Apr 2014 15:02:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=kH8ouhjX8Zv+fwPIkPctyGntN4o=; b=hdwOBkbZ6jqchcINYT2/
+	DgFsKd7U6ggXIRRyFquvFOfANNys0Tqxj/suY781viPTC2tml0UN0tkL85492tnl
+	daBCkhDyFVFKxJSANl9wE9cbJHusq0hFTdbYTMali5tTI2WFvifj+jlmSCp1g4Pp
+	0UEBUTAr8doHtJhTv2mIOn4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=Z8dLHqiN/6XFQW2wcsx7gEHbNMyBLsZMB1gVGb3pwPdpaJ
+	OcLdg1kZRLZcVabBl78ibVi7NvkO8258HdGxdQBZDLW9qWP++NLsUN4pQ9nX/07o
+	0iq6XpEId1HtGoYH2At4a94OLS+A0r9433HrGavY108Ba9TYXCsDbQ5QpjHwY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B8A7180CE6;
+	Thu, 24 Apr 2014 15:02:07 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AAC5A80CE2;
+	Thu, 24 Apr 2014 15:02:05 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: ED6BAE3C-CBE2-11E3-A467-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246996>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246997>
 
-Theodore Ts'o wrote:
-> On Thu, Apr 24, 2014 at 03:23:54AM -0500, Felipe Contreras wrote:
-> > 
-> > There is evidence for the claim that there won't be those problems. You have
-> > absolutely no evidence there there will.
-> 
-> It's clear that you've not been able to produce evidence that can
-> convince most of the people on this thread.
+David Kastrup <dak@gnu.org> writes:
 
-Which only proves you don't want to be convinced, no evidence could convince
-you.
+> d9ba@mailtor.net writes:
+>
+>> It would be nice if we could change the flags to either
+>>
+>>  a) avoid cutting off
+>>  b) indicate something has been cut off (<- I prefer this)
+>>
+>> I assume there are more people with a similar workflow who're still
+>> unaware of this feature.
+>>
+>> I would joke about how 3 letter agencies introduced this flag to
+>> backdoor open source projects, but, well..
+>
+> Most terminals are wider than three letters.
 
-> I don't even think we need to query the user to fill out all of the
-> fields.  We can prepopulate a lot of the fields (name, e-mail address,
-> etc.) from OS specific defaults that are available on most systems ---
-> specifically, the default values we would use the name and e-mail
-> address are not specified in a config file.
+I am having a hard time to decide if you genuinely misread what you
+are responding to, or if you are joking.  If the latter, I find the
+joke mildly funny in a twisted way ;-)
 
-Most systems don't have a configured $EMAIL, so those defautls would be wrong.
+But the tangent aside...
 
-It's so evident that no evide could convince you that you don't even bothere to
-answer my question:
+> Still, it is a total nuisance.  I am constantly doing
+>
+> -S RET
+>
+> on my git output.  This should be left alone as an entirely personal
+> preference quite unrelated to Git.  There is no point in having Git
+> configure a default different from what is used elsewhere.
 
-Why does Mercurial, Bazaar, Subversion, CVS, and pretty much everything uses
-aliases?
+I almost agree with the general principle of the last sentence, but
+with a bit of reservation.  The default value for LESS (i.e. when
+the user does not have any) we pass is FRSX, and the Porcelain
+output these days is colored by default.  If we don't set a default
+at all, the end-user experience for a newbie will be bad, especially
+without "R".
 
-Since you are conveniently not answering, I'll answer for you:
+Among the other three, F and X are to avoid a short output (e.g "git
+show" on a one-liner with a short explanation) from asking for
+confirmation to leave the pager and from clearing the screen upon
+leaving the pager, and are generally accepted as good things (or at
+least, we haven't seen much issue raised after we started passing
+the default LESS for those who do not have their own in their
+environment).
 
-Because such hypothetical problems wouldn't actually occur in reality with Git,
-just like they don't occur in other tools.
+Use of S is very subjective.  While I personally do appreciate that
+we have it by default, I can perfectly well understand why some
+people do not want to see it in the default.  The best we can do is
+to arrange so that people from one of the camps have their favorite
+out of the box and those from the other camp need to tell Git that
+they want to (or do not want to) fold long lines.
 
--- 
-Felipe Contreras
+Traditionally, because the tool grew in a context of being used in a
+project whose participants are at least not malicious, always having
+to be on the lookout for fear of middle-of-line tabs hiding bad
+contents near the right edges of lines has never been an issue.  If
+somebody brought up a potential issue of such mode of attack back
+then, Linus may have chosen the default differently.  I may have
+myself chosen not to have S, if I were the maintainer when the LESS
+default was originally introduced, and had I been made aware of this
+issue.
+
+I am not opposed to changing the default in the longer term, as long
+as we have a solid transition plan to ensure that it won't disrupt
+and/or upset existing users too much.
