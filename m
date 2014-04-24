@@ -1,101 +1,86 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: error: git-remote-https died of signal 13
-Date: Thu, 24 Apr 2014 00:15:04 -0400
-Message-ID: <20140424041504.GA17398@sigill.intra.peff.net>
-References: <CAEHyFQLmu4GWHcd+Xd6MOikf_LJgK0dGM7VXk6h6OLsud+-Wgw@mail.gmail.com>
- <20140423065938.GB20675@sigill.intra.peff.net>
- <CAEHyFQLPYh2b5CsmadazDJG3paHL7JDY4JhT=xf=wHXhLd=EkQ@mail.gmail.com>
+From: James Denholm <nod.helm@gmail.com>
+Subject: Re: What is missing from Git v2.0
+Date: Thu, 24 Apr 2014 14:16:29 +1000
+Message-ID: <CAHYYfeHeJYZ67chSTQk2grsFGr07KXcVNR-T6kOPo0bVYDm59g@mail.gmail.com>
+References: <CAMP44s17h4Tjg+VaMF0atLep8t-0HVp4UDr1WE2wYnEuZ07eaQ@mail.gmail.com>
+	<53557071.5040500@gmail.com>
+	<xmqqtx9m8obr.fsf@gitster.dls.corp.google.com>
+	<CAHGBnuMty-86jfUto=L3muhgEVwVE70FQQY2FJ1bn7AUjfEtLQ@mail.gmail.com>
+	<xmqqk3ah5i55.fsf@gitster.dls.corp.google.com>
+	<5356c1a61f6d8_463e11ef310a5@nysa.notmuch>
+	<20140422213039.GB21043@thunk.org>
+	<alpine.DEB.2.02.1404221523060.14881@nftneq.ynat.uz>
+	<53588713347b7_59ed83d308cf@nysa.notmuch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Daniel Stenberg <daniel@haxx.se>, git@vger.kernel.org
-To: Greg M <morenzg@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 24 06:15:15 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: David Lang <david@lang.hm>, "Theodore Ts'o" <tytso@mit.edu>,
+	Junio C Hamano <gitster@pobox.com>,
+	Sebastian Schuberth <sschuberth@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 24 06:16:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WdB47-0007Pi-DJ
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Apr 2014 06:15:15 +0200
+	id 1WdB5P-0000FW-Ie
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Apr 2014 06:16:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751199AbaDXEPI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Apr 2014 00:15:08 -0400
-Received: from cloud.peff.net ([50.56.180.127]:37280 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750703AbaDXEPH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Apr 2014 00:15:07 -0400
-Received: (qmail 22467 invoked by uid 102); 24 Apr 2014 04:15:06 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 23 Apr 2014 23:15:06 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Apr 2014 00:15:04 -0400
-Content-Disposition: inline
-In-Reply-To: <CAEHyFQLPYh2b5CsmadazDJG3paHL7JDY4JhT=xf=wHXhLd=EkQ@mail.gmail.com>
+	id S1750989AbaDXEQb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Apr 2014 00:16:31 -0400
+Received: from mail-vc0-f178.google.com ([209.85.220.178]:61346 "EHLO
+	mail-vc0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750778AbaDXEQa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Apr 2014 00:16:30 -0400
+Received: by mail-vc0-f178.google.com with SMTP id hu19so2392595vcb.9
+        for <git@vger.kernel.org>; Wed, 23 Apr 2014 21:16:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=+BTZ+uR0zGTjGC3O8nTyYf67OAe3HUB7I7MzE8TAlu0=;
+        b=GcLd5RDkXhtDSc/OwOuWZP/0JioCaghv1zT7TdjgbLE2TJp7xNVJ98vuGXDfCgbYIu
+         t+4A7LsmliSwxrAXe0WWTp4fo8fN2o16QTOiAZnOjHgAcH0MfKQJgV8v7lZPYf+0sL3i
+         DGSRXYFdtBy6U2x3mBz5u+E+icswyOJankrp5bbSmkDjAkB0TXeKMkpKEUx9N7PP+qeL
+         ge6Wo0BNcK0gvljgj42B7gInMaISVAV1l4GgGfA7GPQpUWCAHEMdoX4mqpkWt7fGX4tl
+         SrK+n9NQcl9wd1jCCgrzuDPu9wQjCu4gbt9gLzMeYsFSw/3G8/YVQ4Ec2/tASDnORoEb
+         SuUA==
+X-Received: by 10.52.164.237 with SMTP id yt13mr38170542vdb.18.1398312989851;
+ Wed, 23 Apr 2014 21:16:29 -0700 (PDT)
+Received: by 10.58.12.2 with HTTP; Wed, 23 Apr 2014 21:16:29 -0700 (PDT)
+In-Reply-To: <53588713347b7_59ed83d308cf@nysa.notmuch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246936>
 
-On Wed, Apr 23, 2014 at 07:49:09AM -0400, Greg M wrote:
+Felipe Contreras wrote:
+>>David Lang wrote:
+>> agreed, of all the things that people complain
+about regarding learning git,
+>> the fact that the commands are words instead of
+cryptic 2 letter
+>> abberviations is not one of them.
+>It is when they start to use Git seriously and type
+them a lot.
 
-> > The easiest way to find it is probably to attach a debugger to the
-> > running git-remote-https, and get a backtrace when it dies from SIGPIPE.
-> > You'll probably want to install your system's debug packages for curl,
-> > too.
-> >
-> 
-> The backtrace:
-> 
-> Program received signal SIGPIPE, Broken pipe.
-> 0x00007fdcfd511a2d in write () from /usr/lib/libpthread.so.0
-> (gdb) bt
-> #0  0x00007fdcfd511a2d in write () from /usr/lib/libpthread.so.0
-> #1  0x00007fdcfd81a0f6 in sock_write () from /usr/lib/libcrypto.so.1.0.0
-> #2  0x00007fdcfd817edb in BIO_write () from /usr/lib/libcrypto.so.1.0.0
-> #3  0x00007fdcfc662902 in ssl3_write_pending () from /usr/lib/libssl.so.1.0.0
-> #4  0x00007fdcfc664b77 in ssl3_dispatch_alert () from /usr/lib/libssl.so.1.0.0
-> #5  0x00007fdcfc660822 in ssl3_shutdown () from /usr/lib/libssl.so.1.0.0
-> #6  0x00007fdcfd2e944e in Curl_ossl_close () from /usr/lib/libcurl.so.4
-> #7  0x00007fdcfd2b6459 in Curl_disconnect () from /usr/lib/libcurl.so.4
-> #8  0x00007fdcfd2c8131 in curl_multi_cleanup () from /usr/lib/libcurl.so.4
-> #9  0x000000000040764b in ?? ()
-> #10 0x0000000000404e4d in ?? ()
-> #11 0x00007fdcfcf0fb05 in __libc_start_main () from /usr/lib/libc.so.6
-> #12 0x000000000040552e in ?? ()
+Felipe, I think you refute your own point here, because people _learning_
+git aren't power-users. They might be one day, but not that day.
 
-Thanks, that's very helpful. I wasn't able to reproduce your problem
-locally, but I suspect the curl patch below may fix it:
+If power-users are complaining that "commit" is too long, but aren't
+setting their own aliases, it's quite possible they just don't know about
+aliases. Because if they _did_ know about aliases, they'd set one.
+Even a shell alias,
+not nessecarily a git alias.
 
-diff --git a/lib/multi.c b/lib/multi.c
-index bc93264..72e4825 100644
---- a/lib/multi.c
-+++ b/lib/multi.c
-@@ -1804,10 +1804,13 @@ static void close_all_connections(struct Curl_multi *multi)
- 
-   conn = Curl_conncache_find_first_connection(multi->conn_cache);
-   while(conn) {
-+    SIGPIPE_VARIABLE(pipe_st);
-     conn->data = multi->closure_handle;
- 
-+    sigpipe_ignore(conn->data, &pipe_st);
-     /* This will remove the connection from the cache */
-     (void)Curl_disconnect(conn, FALSE);
-+    sigpipe_restore(&pipe_st);
- 
-     conn = Curl_conncache_find_first_connection(multi->conn_cache);
-   }
+I submit to you (with the backing of all my prior experience contributing to
+git... Which is too say none) that the problem is not that git has a
+single, good,
+obvious and memorable commit command.
 
-Let me know if you need any pointers on getting curl built or tested
-with git.
+The problem is that those specific power-users don't know to use aliases.
 
-Daniel, I think the similar fix to curl_multi_cleanup in commit a900d45
-missed this code path, and we need something like the above patch. I
-know you were trying to keep the SIGPIPE mess at the entrance-points to
-the library, and this works against that. But we need a SessionHandle to
-pass to sigpipe_ignore to look at its "no_signal" flag, and of course in
-the case of multi we may have several such handles. If there's a similar
-flag we can check on the multi handle, we could just cover all of
-curl_multi_cleanup with a single ignore/reset pair.
-
--Peff
+--
+James Denholm
