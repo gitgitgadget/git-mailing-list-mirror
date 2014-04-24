@@ -1,86 +1,82 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] git-rebase: fix probable reflog typo
-Date: Thu, 24 Apr 2014 02:22:06 -0500
-Message-ID: <5358bb9ea7d42_1f7b143d310c6@nysa.notmuch>
-References: <1398212084-16304-1-git-send-email-felipe.contreras@gmail.com>
- <vpqy4ywxoos.fsf@anie.imag.fr>
- <53582f33385bc_24448772ec57@nysa.notmuch>
- <vpqzjjb1c4m.fsf@anie.imag.fr>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: What is missing from Git v2.0
+Date: Thu, 24 Apr 2014 09:39:33 +0200
+Message-ID: <877g6fb2h6.fsf@fencepost.gnu.org>
+References: <CAMP44s17h4Tjg+VaMF0atLep8t-0HVp4UDr1WE2wYnEuZ07eaQ@mail.gmail.com>
+	<53557071.5040500@gmail.com>
+	<xmqqtx9m8obr.fsf@gitster.dls.corp.google.com>
+	<CAHGBnuMty-86jfUto=L3muhgEVwVE70FQQY2FJ1bn7AUjfEtLQ@mail.gmail.com>
+	<xmqqk3ah5i55.fsf@gitster.dls.corp.google.com>
+	<5356c1a61f6d8_463e11ef310a5@nysa.notmuch>
+	<20140422213039.GB21043@thunk.org>
+	<alpine.DEB.2.02.1404221523060.14881@nftneq.ynat.uz>
+	<53588713347b7_59ed83d308cf@nysa.notmuch>
+	<CAHYYfeHeJYZ67chSTQk2grsFGr07KXcVNR-T6kOPo0bVYDm59g@mail.gmail.com>
+	<53588f448d817_59ed83d3084e@nysa.notmuch>
+	<CAHYYfeFKW93GH+6-ssR5L_uoo3OL2-LFAsj-4+8uEmL0BhT3ow@mail.gmail.com>
+	<5358bae8ab550_1f7b143d31037@nysa.notmuch>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 24 09:32:40 2014
+Content-Type: text/plain
+Cc: James Denholm <nod.helm@gmail.com>, David Lang <david@lang.hm>,
+	Theodore Ts'o <tytso@mit.edu>,
+	Junio C Hamano <gitster@pobox.com>,
+	Sebastian Schuberth <sschuberth@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 24 09:39:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WdE99-0002BC-OS
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Apr 2014 09:32:40 +0200
+	id 1WdEG6-0002aT-Tw
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Apr 2014 09:39:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752677AbaDXHcf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Apr 2014 03:32:35 -0400
-Received: from mail-oa0-f44.google.com ([209.85.219.44]:44882 "EHLO
-	mail-oa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752469AbaDXHce (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Apr 2014 03:32:34 -0400
-Received: by mail-oa0-f44.google.com with SMTP id n16so2231542oag.17
-        for <git@vger.kernel.org>; Thu, 24 Apr 2014 00:32:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=xzqaeRvbqOC0GKeWt2t8afgbm0vUjReqcp5U3+4rG40=;
-        b=WkR0dYWAPywgBX214h8Y0jS6y6wBv6FtLbLM3UUXdWQts/0086W+v8lXvDwr3Tanz5
-         gB8chE5hJAeqenMAKGR0x3x2yTywwzXEaolFJ/EyyAw8/H3sY32veDIWNCDsAkCWJkwM
-         WtdyDmyZSmVsOaO8LoB1JcvyRnnIuX1cv0E2xayEHHJ7GUJh2+vL04gScg0WErtyVphW
-         8coInjhZ2CiojtostsMsU1ikl7E7dPT6QaHhjZ38Zh/LJV+mySZoynOfo9Yv03E+aY2A
-         AOojwAdXjq5OK48/XhQpJdZSHYS6h7b3nmF6pAtkkoOPDTnY5NQdbcJElwu0U+ShwRRj
-         taXg==
-X-Received: by 10.182.165.3 with SMTP id yu3mr238711obb.14.1398324753755;
-        Thu, 24 Apr 2014 00:32:33 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id b6sm14381195oez.8.2014.04.24.00.32.30
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 24 Apr 2014 00:32:32 -0700 (PDT)
-In-Reply-To: <vpqzjjb1c4m.fsf@anie.imag.fr>
+	id S1752680AbaDXHjh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Apr 2014 03:39:37 -0400
+Received: from fencepost.gnu.org ([208.118.235.10]:41231 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751557AbaDXHjf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Apr 2014 03:39:35 -0400
+Received: from localhost ([127.0.0.1]:40270 helo=lola)
+	by fencepost.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <dak@gnu.org>)
+	id 1WdEFq-0005TO-8J; Thu, 24 Apr 2014 03:39:34 -0400
+Received: by lola (Postfix, from userid 1000)
+	id C5064E0989; Thu, 24 Apr 2014 09:39:33 +0200 (CEST)
+In-Reply-To: <5358bae8ab550_1f7b143d31037@nysa.notmuch> (Felipe Contreras's
+	message of "Thu, 24 Apr 2014 02:19:04 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246945>
 
-Matthieu Moy wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
-> > Matthieu Moy wrote:
-> >> Felipe Contreras <felipe.contreras@gmail.com> writes:
-> >> 
-> >> > Commit 26cd160 (rebase -i: use a better reflog message) tried to produce
-> >> > a better reflog message, however, it seems a statement was introduced by
-> >> > mistake.
-> >> >
-> >> > 'comment_for_reflog start' basically overides the GIT_REFLOG_ACTION we
-> >> > just set.
-> >
-> >> So, one needs to reset $GIT_REFLOG_ACTION to what it used to be if is it
-> >> to be used later. However, it seems to me that the "comment_for_reflog
-> >> start" is used only for this checkout command. If so, there's no need
-> >> for the "comment_for_reflog start" before the if statement either.
-> >
-> > Exactly. But if this variable is only meant for this command, it should be
-> > `VAR=VAL command`, that would make it clear without the need of a comment.
-> 
-> I don't understand. Are you suggesting to replace the shell function
-> "output" with an external command? If not, which command would you want
-> to call here?
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-Recently some code was changed to do 'test_must_fail env VAR=VAL command', why
-can't we do the same?
+> James Denholm wrote:
+>> Felipe Contreras wrote:
+>> >This is a false dichotomy; there aren't just two kinds
+>> > of Git users.
+>> >
+>> > There is such a category of Git users who are not
+>> > fresh-out-of-the-boat, yet not power users either.
+>> 
+>> Oh, I didn't mean to suggest a dichotomy of any kind. However these are the
+>> two groups (I suggest) are the most immediately relevant - one calls for
+>> change, and the other would be negatively impacted.
+>
+> Nobody would be negatively impacted. Who would be impacted negatively
+> by having default aliases?
+
+The people having to read and understand scripts written in the
+expectation of default aliases.
+
+> And I have showed they are not problems.
+
+You managed to convince yourself, so feel free to put aliases in every
+Git you use and distribute.
 
 -- 
-Felipe Contreras
+David Kastrup
