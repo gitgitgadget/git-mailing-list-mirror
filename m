@@ -1,98 +1,76 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: What is missing from Git v2.0
-Date: Thu, 24 Apr 2014 11:01:29 +0200
-Message-ID: <8738h3ayom.fsf@fencepost.gnu.org>
-References: <CAMP44s17h4Tjg+VaMF0atLep8t-0HVp4UDr1WE2wYnEuZ07eaQ@mail.gmail.com>
-	<53557071.5040500@gmail.com>
-	<xmqqtx9m8obr.fsf@gitster.dls.corp.google.com>
-	<CAHGBnuMty-86jfUto=L3muhgEVwVE70FQQY2FJ1bn7AUjfEtLQ@mail.gmail.com>
-	<xmqqk3ah5i55.fsf@gitster.dls.corp.google.com>
-	<5356c1a61f6d8_463e11ef310a5@nysa.notmuch>
-	<20140422213039.GB21043@thunk.org>
-	<alpine.DEB.2.02.1404221523060.14881@nftneq.ynat.uz>
-	<53588713347b7_59ed83d308cf@nysa.notmuch>
-	<CAHYYfeHeJYZ67chSTQk2grsFGr07KXcVNR-T6kOPo0bVYDm59g@mail.gmail.com>
-	<53588f448d817_59ed83d3084e@nysa.notmuch>
-	<CAHYYfeFKW93GH+6-ssR5L_uoo3OL2-LFAsj-4+8uEmL0BhT3ow@mail.gmail.com>
-	<5358bae8ab550_1f7b143d31037@nysa.notmuch>
-	<877g6fb2h6.fsf@fencepost.gnu.org>
-	<5358ca1a55a69_1f7b143d3101c@nysa.notmuch>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: [PATCH] Unicode: update of combining code points
+Date: Thu, 24 Apr 2014 10:02:17 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.1404240949440.28469@ds9.cixit.se>
+References: <201404072130.15686.tboegi@web.de> <alpine.DEB.2.00.1404152009020.29301@ds9.cixit.se> <534E0B84.6070602@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: James Denholm <nod.helm@gmail.com>, David Lang <david@lang.hm>,
-	Theodore Ts'o <tytso@mit.edu>,
-	Junio C Hamano <gitster@pobox.com>,
-	Sebastian Schuberth <sschuberth@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 24 11:01:44 2014
+Content-Type: TEXT/PLAIN; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?ISO-8859-15?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Thu Apr 24 11:02:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WdFXL-0000QA-Qb
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Apr 2014 11:01:44 +0200
+	id 1WdFY7-0001UK-Oh
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Apr 2014 11:02:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753207AbaDXJBh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Apr 2014 05:01:37 -0400
-Received: from fencepost.gnu.org ([208.118.235.10]:42890 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752536AbaDXJBc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Apr 2014 05:01:32 -0400
-Received: from localhost ([127.0.0.1]:41929 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1WdFX8-0005wX-OL; Thu, 24 Apr 2014 05:01:31 -0400
-Received: by lola (Postfix, from userid 1000)
-	id 484A7E0996; Thu, 24 Apr 2014 11:01:29 +0200 (CEST)
-In-Reply-To: <5358ca1a55a69_1f7b143d3101c@nysa.notmuch> (Felipe Contreras's
-	message of "Thu, 24 Apr 2014 03:23:54 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
+	id S1753122AbaDXJCZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Apr 2014 05:02:25 -0400
+Received: from upper-gw.cixit.se ([92.43.32.133]:44871 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753121AbaDXJCV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Apr 2014 05:02:21 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-9.4) with ESMTP id s3O92Ie0000409
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 24 Apr 2014 11:02:18 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id s3O92HWn000405;
+	Thu, 24 Apr 2014 11:02:17 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <534E0B84.6070602@web.de>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.3.7 (mail.cixit.se [127.0.0.1]); Thu, 24 Apr 2014 11:02:18 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/246951>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Torsten B=C3=B6gershausen:
 
-> David Kastrup wrote:
->> Felipe Contreras <felipe.contreras@gmail.com> writes:
->> 
->> > James Denholm wrote:
->> >> Felipe Contreras wrote:
->> >> >This is a false dichotomy; there aren't just two kinds
->> >> > of Git users.
->> >> >
->> >> > There is such a category of Git users who are not
->> >> > fresh-out-of-the-boat, yet not power users either.
->> >> 
->> >> Oh, I didn't mean to suggest a dichotomy of any kind. However these are the
->> >> two groups (I suggest) are the most immediately relevant - one calls for
->> >> change, and the other would be negatively impacted.
->> >
->> > Nobody would be negatively impacted. Who would be impacted negatively
->> > by having default aliases?
->> 
->> The people having to read and understand scripts written in the
->> expectation of default aliases.
->
-> Which are imaginary.
+> Some of the code points which have "0 length on the display" are call=
+ed
+> "combining", others are called "vowels" or "accents".
+> E.g. 5BF is not marked any of them, but if you look at the glyph, it =
+should
+> be combining (please correct me if that is wrong).
 
-And I prefer them to stay that way since then one does not need to worry
-about them.
+All combining characters has a non-zero combining class in=20
+http://www.unicode.org/Public/UNIDATA/UnicodeData.txt (fourth field,=20
+called Canonical_Combining_Class in=20
+http://www.unicode.org/reports/tr44/ ). For instance, the aforementione=
+d=20
+U+05BF is defined as follows:
 
->> > And I have showed they are not problems.
->> 
->> You managed to convince yourself, so feel free to put aliases in
->> every Git you use and distribute.
->
-> There is evidence for the claim that there won't be those
-> problems. You have absolutely no evidence there there will.
+   05BF;HEBREW POINT RAFE;Mn;23;NSM;;;;;N;;;;;
 
-As I said: you managed to convince yourself and may milk that for all
-that it's worth.
+The combining class is 23, so this is a combining character.
 
--- 
-David Kastrup
+There is a difference between non-spacing combining marks ("Mn" in the=20
+third column (General_Category)) and others ("Mc" for spacing marks=20
+and "Me" for enclosing marks), so they might need specifial handling.=20
+Additionally, you have the "zero-width" characters, such as U+200B=20
+Zero Width Space. These have the "Cf" class, although it also contains=20
+visible characters IIRC.
+
+--=20
+\\// Peter - http://www.softwolves.pp.se/
