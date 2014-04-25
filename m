@@ -1,103 +1,82 @@
-From: =?utf-8?B?SsO2cm4=?= Engel <joern@logfs.org>
-Subject: Re: [PATCH] Revert "Stop starting pager recursively"
-Date: Fri, 25 Apr 2014 16:10:49 -0400
-Message-ID: <20140425201048.GB29904@logfs.org>
-References: <20140421204622.GA9532@logfs.org>
- <20140425182928.GA29904@logfs.org>
- <vpqoazpdz1r.fsf@anie.imag.fr>
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: [PATCH] l10n: de.po: improve hint for autocorrected command execution
+Date: Fri, 25 Apr 2014 22:30:22 +0200
+Message-ID: <1398457822-12477-1-git-send-email-ralf.thielow@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Apr 25 22:12:01 2014
+Cc: tr@thomasrast.ch, jk@jk.gs, stimming@tuhh.de,
+	Ralf Thielow <ralf.thielow@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 25 22:30:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WdmTW-0008Dz-Le
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Apr 2014 22:11:59 +0200
+	id 1WdmlX-0004bz-CN
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Apr 2014 22:30:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754655AbaDYULq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Apr 2014 16:11:46 -0400
-Received: from longford.logfs.org ([213.229.74.203]:43215 "EHLO
-	longford.logfs.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754651AbaDYULn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Apr 2014 16:11:43 -0400
-Received: from joern by longford.logfs.org with local (Exim 4.72)
-	(envelope-from <joern@logfs.org>)
-	id 1WdmSP-00084b-7j; Fri, 25 Apr 2014 16:10:49 -0400
-Content-Disposition: inline
-In-Reply-To: <vpqoazpdz1r.fsf@anie.imag.fr>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753338AbaDYUa3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Apr 2014 16:30:29 -0400
+Received: from mail-ee0-f45.google.com ([74.125.83.45]:35884 "EHLO
+	mail-ee0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753336AbaDYUa1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Apr 2014 16:30:27 -0400
+Received: by mail-ee0-f45.google.com with SMTP id d17so3067564eek.18
+        for <git@vger.kernel.org>; Fri, 25 Apr 2014 13:30:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=91Cd2WwP7E3Scwf/3Ybk76t5DsXD8qZhWH3hRQ9Envk=;
+        b=xCeo6croGjfXVEudF6o9xvNWuUGqPd9YqY/FVNDH6wepMTGijHdSWbW0slEwDRZAoH
+         ctqZtQKGxEKYXon34F0bguvepvfrhSDe+FpFjwtYvulAtNO86yfnqasK8msNwxUq01aw
+         zRq9otrLU1psxq5QYrjX6TfnhIjFF2jHLo+aZEFKPgbcsvbk+AknRx4eb7WvWAjqKIxG
+         B4Wwc4EOsr7hwHAhQ2kT/woxYtIG/XJTK9ZK7iWwh2WyqtoxuiWsEiZOtAmdYEoafXaw
+         EHzys7Qo5ISFl9RQK4rzRazaJGUhzqc+1IuyenvrghskS5sFVbfdIh6zUdw5Hsob/LCq
+         JUgw==
+X-Received: by 10.15.61.133 with SMTP id i5mr4354718eex.80.1398457825763;
+        Fri, 25 Apr 2014 13:30:25 -0700 (PDT)
+Received: from localhost (dslb-188-103-228-182.pools.arcor-ip.net. [188.103.228.182])
+        by mx.google.com with ESMTPSA id 44sm27533808eek.30.2014.04.25.13.30.24
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 25 Apr 2014 13:30:25 -0700 (PDT)
+X-Mailer: git-send-email 2.0.0.rc0.325.ge848631
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247112>
 
-On Fri, 25 April 2014 20:49:52 +0200, Matthieu Moy wrote:
-> J=C3=B6rn Engel <joern@logfs.org> writes:
-> > On Mon, 21 April 2014 16:46:22 -0400, J=C3=B6rn Engel wrote:
-> >>=20
-> >> This reverts commit 88e8f908f2b0c56f9ccf8134d8ff9f689af9cc84.
-> >>=20
-> >> Caused a usability regression for me and foul language for my cowo=
-rkers.
-> >
-> > Ping.
->=20
-> How do you solve the problem that the commit you revert was solving? =
-The
-> commit you propose to revert says in its message:
->=20
->     git-column can be used as a pager for other git commands, somethi=
-ng
->     like this:
->    =20
->         GIT_PAGER=3D"git -p column --mode=3D'dense color'" git -p bra=
-nch
->    =20
->     The problem with this is that "git -p column" also has $GIT_PAGER=
- set so
->     the pager runs itself again as another pager. The end result is a=
-n
->     infinite loop of forking.
->=20
-> There's probably a solution, but you can't ignore the problem (or
-> someone else will later try to solve the infinite loop and revert you=
-r
-> commit, and so on ...).
+Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+---
+I'll queue this as part of the German l10n changes for
+the next release.
 
-Disclaimer: I never looked at git internals before this regression
-forced me to and am likely talking out of my arse.
+ po/de.po | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-One approach is "don't do that then".  Someone explicitly changed the
-git pager to be git, which itself takes the git pager, etc.  That is
-asking for infinite recursion and the original problem was that git
-gave the user exactly what they asked for.
-
-A second option is to add a --pager (or rather --no-pager) option to
-the command line and allow the user to specify
-    GIT_PAGER=3D"git --no-pager -p column --mode=3D'dense color'" git -=
-p branch
-
-A third option is to try to be smart and give the user what he wants,
-not what he asked for.  If the pager happens to be git, unset
-$GIT_PAGER, $PAGER and somehow disable core.pager.  Yeah, that will
-turn nasty rather quickly.
-
-A fourth option is to set an environment variable for the pager
-process itself.  Disable paging similar to the original patch, but
-make it conditional on we_are_the_pager(), not pager_in_use().
-
-My preference is option four, but see disclaimer above.
-
-J=C3=B6rn
-
---
-I've never met a human being who would want to read 17,000 pages of
-documentation, and if there was, I'd kill him to get him out of the
-gene pool.
--- Joseph Costello
+diff --git a/po/de.po b/po/de.po
+index b777ef4..d143572 100644
+--- a/po/de.po
++++ b/po/de.po
+@@ -555,12 +555,12 @@ msgid ""
+ "Continuing under the assumption that you meant '%s'"
+ msgstr ""
+ "Warnung: Sie haben das nicht existierende Git-Kommando '%s' ausgef=C3=
+=BChrt.\n"
+-"Setze fort unter der Annahme, dass Sie '%s' gemeint haben"
++"Setze fort unter der Annahme, dass Sie '%s' gemeint haben."
+=20
+ #: help.c:374
+ #, c-format
+ msgid "in %0.1f seconds automatically..."
+-msgstr "automatisch in %0.1f Sekunden..."
++msgstr "Automatische Ausf=C3=BChrung in %0.1f Sekunden..."
+=20
+ #: help.c:381
+ #, c-format
+--=20
+2.0.0.rc0.325.ge848631
