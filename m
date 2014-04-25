@@ -1,90 +1,95 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: What's cooking in git.git (Apr 2014, #07; Tue, 22)
-Date: Fri, 25 Apr 2014 15:07:27 +0000
-Message-ID: <20140425150726.GA234593@vauxhall.crustytoothpaste.net>
-References: <xmqq38h52c2d.fsf@gitster.dls.corp.google.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Harmful LESS flags
+Date: Fri, 25 Apr 2014 08:11:24 -0700
+Message-ID: <20140425151124.GA11479@google.com>
+References: <4dc69237123e8962b2b2b901692ea78e.id@mailtor>
+ <87lhuvb9kr.fsf@fencepost.gnu.org>
+ <xmqqha5iv9eb.fsf@gitster.dls.corp.google.com>
+ <vpqfvl1rj7i.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="HlL+5n6rz5pIUxbD"
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 25 17:08:16 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, David Kastrup <dak@gnu.org>,
+	d9ba@mailtor.net, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Fri Apr 25 17:12:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WdhjZ-0006vF-S8
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Apr 2014 17:08:14 +0200
+	id 1WdhnW-0005Op-1n
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Apr 2014 17:12:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751460AbaDYPIF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Apr 2014 11:08:05 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:47319 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752081AbaDYPH7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 25 Apr 2014 11:07:59 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [198.22.24.100])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 2E37828087;
-	Fri, 25 Apr 2014 15:07:58 +0000 (UTC)
-Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+	id S1752158AbaDYPLg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Apr 2014 11:11:36 -0400
+Received: from mail-pb0-f49.google.com ([209.85.160.49]:55155 "EHLO
+	mail-pb0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752126AbaDYPLb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Apr 2014 11:11:31 -0400
+Received: by mail-pb0-f49.google.com with SMTP id rr13so3298537pbb.22
+        for <git@vger.kernel.org>; Fri, 25 Apr 2014 08:11:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=y97NDLXsUXPNidMqmBhKKf2ITvYM7EC2LCgi5Genbo4=;
+        b=nVXTz0T/315+P6yb6+tdAb7xXjT++1nlX07l8YhJVZPWrf4G3lYLnXsCNdEy5z+Jyu
+         yu0se8LTwHFLQJed0M+QRHN4gEfvHRmkfWmob+oRQ7epRpV33IBkLBNDv/P5a/LQPpa7
+         C99pgCrBWhmflW0VLcOIkLm+1Uuf15XseSkpLp2PRyI49avVdX5v8OgKwCQeaPoObUGy
+         DOD0l6iyX5c8BWw1ilW8bjBnMgibOhRf8kiFteXda9+oVLxqba/1aCXGGEekdx4QxDnA
+         JKTzDI0dHuFjBAcTJzGjtdI55MwbIWI/tu1fUpGUwsbN1ySp4x05/eS6IVdnkYJ/FLoH
+         n4fA==
+X-Received: by 10.68.189.68 with SMTP id gg4mr12136733pbc.42.1398438690689;
+        Fri, 25 Apr 2014 08:11:30 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id xx4sm16527993pbb.51.2014.04.25.08.11.29
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 25 Apr 2014 08:11:30 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <xmqq38h52c2d.fsf@gitster.dls.corp.google.com>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.14-rc7-amd64)
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Spam-Score: -0.272 () BAYES_00,RDNS_NONE
+In-Reply-To: <vpqfvl1rj7i.fsf@anie.imag.fr>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247044>
 
+Hi,
 
---HlL+5n6rz5pIUxbD
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Matthieu Moy wrote:
 
-On Tue, Apr 22, 2014 at 04:12:42PM -0700, Junio C Hamano wrote:
-> * bc/blame-crlf-test (2014-02-18) 1 commit
->  - blame: add a failing test for a CRLF issue.
->=20
->  I have a feeling that a fix for this should be fairly isolated and
->  trivial (it should be just the matter of paying attention to the
->  crlf settings when synthesizing the fake commit)---perhaps somebody
->  can squash in a fix to this?
+> I am personally in favor of changing the default to drop the S. Silently
+> hiding stuff from the user's eyes is really bad. With good coding
+> standard and reasonable terminal size, it actually doesn't matter.
 
-Last time I looked at this, I couldn't come up with an obvious fix for
-the problem, or I would have included one.  I'll try to have another go
-at it this weekend.
+Just for clarity: no, when we are talking about well formatted code,
+-S is actually a way better interface.
 
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+That's because indentation matters and makes it easy to take in code
+structure at a glance, long lines that get cut off by the margin stick
+out like a sore thumb already, and lines wrapped at an arbitrary
+character are even more distracting to the point of being useless.
 
---HlL+5n6rz5pIUxbD
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+In practice I believe the "Silently hiding stuff" concern is much
+harder to solve.  In the case of malicious code that opened this
+thread, I think a marker on the right margin would reveal the
+whitespace more clearly than wrapping that the reader may or may not
+notice.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Luckily, it is very easy to switch between the two views on the fly
+--- in an already-open "less" window, you just type '-' + 'S'.  In the
+spirit of not overriding tool defaults when there is not a strong
+reason to do so, I agree that if someone writes a patch to drop
+the 'S' I would probably like it.
 
-iQIcBAEBCgAGBQJTWnouAAoJEL9TXYEfUvaLCe0QAMi97Zkbj7QfTPLHaFy3gG2m
-I4JXLB3NzyFB5a+0ZyYRr0WTfcEk2ifobjQLAyBtZcRdkvd00qtYSalqSw6iFrjw
-ctPGj+W2FOGCs/qGEnHyDCFPBBGSr8mDfcGwhGhi/8TzKpstjNcvdBRsjBVyKLI2
-df9Rq3W0HAOI9Kiwrj++xKnEvB0j9PMrxBejF5EEcAEEINVY5xUinlJFWRfUA2Sb
-bLGEhGPV3N1StvvBOvKUDAWF7T0hGn/XJcBn0jaFwIcWBoxiWsGfU8ueIHPN06AG
-gSsFPCcFsDaaIUESjpDQRT5CWeyFMNCDPLut7KxOp0MI0wBe5UbDK4IEWStVp0yx
-3IcsH3NMwVvZv962UvraxmlWg0NwMbYQr5Y0+E/I1kbz4hDYVmU/JYQnnhDgwPpn
-zfQl0Yjb2T0SSW2Ouo1/PTBeWIDGFFihAFeB1potPK8BkT1LrnvcbvpbCrWeuUeg
-yhWZI5SBez2XCs8RHjMI87d4wjuf6I6ILo9fugiYPqa4lrFoRsA26JO6tnDj25ew
-UTJUn5t0oRwHCYWF0RoKphOaf2ykSPgBw5FtzgT7fxqDmfkv7NGhxSRFuBZrFYSd
-ksBjTTf7r2COGejAYa7tvPVx9bm4ASosT5SI8yL/GHzzc0XxMd+Fs7l7baE5JGX7
-fJFQ0LHtsC25akpOSvji
-=JnzM
------END PGP SIGNATURE-----
+[...]
+> I do not think we particularly need a transition plan here: it's purely
+> a user-interface thing, not something that may break any script or other
+> tool.
 
---HlL+5n6rz5pIUxbD--
+Agreed ---- a note in release notes and making sure the documentation
+reflects the new default should be enough.
+
+Thanks and hope that helps,
+Jonathan
