@@ -1,113 +1,117 @@
-From: Marius Ungureanu <marius.ungureanu@xamarin.com>
-Subject: [PATCH] Updated C# userdiff patterns.
-Date: Sat, 26 Apr 2014 02:25:28 +0300
-Message-ID: <29F78086-81B4-481F-9051-FF3EEBA9BB08@xamarin.com>
-Mime-Version: 1.0 (Mac OS X Mail 7.2 \(1874\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 26 01:25:27 2014
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v3 17/19] refs.c: change update_ref to use a transaction
+Date: Sat, 26 Apr 2014 01:28:47 +0200
+Message-ID: <535AEFAF.9000908@alum.mit.edu>
+References: <1398442494-23438-1-git-send-email-sahlberg@google.com> <1398442494-23438-18-git-send-email-sahlberg@google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: Ronnie Sahlberg <sahlberg@google.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 26 01:28:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WdpUk-000534-KO
-	for gcvg-git-2@plane.gmane.org; Sat, 26 Apr 2014 01:25:27 +0200
+	id 1WdpY7-0001uQ-V4
+	for gcvg-git-2@plane.gmane.org; Sat, 26 Apr 2014 01:28:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752024AbaDYXY5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Apr 2014 19:24:57 -0400
-Received: from mail-ee0-f48.google.com ([74.125.83.48]:44323 "EHLO
-	mail-ee0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751468AbaDYXY4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 25 Apr 2014 19:24:56 -0400
-Received: by mail-ee0-f48.google.com with SMTP id b57so3138744eek.35
-        for <git@vger.kernel.org>; Fri, 25 Apr 2014 16:24:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=xamarin.com; s=google;
-        h=from:content-type:content-transfer-encoding:subject:message-id:date
-         :to:mime-version;
-        bh=dbwE5owwIQTVAKlcav+1LITU3mszG8QL6WlP0ATpvB0=;
-        b=OPiIaRZlZ6T2uft0J7p+HE92u1DRkfKEKMjx1+fbzLr/JS8X+a0qKy0N7t7iZKJtNt
-         mKZpXA7DVnbL0pi6qcdeq/LRyqy+dRwAaV52eGuTUXGNd2UYNZKq0x/qwFYIYApM4IvD
-         1qFdLSWzCcjxfT6qhFycCjyLYf6CaYDGsusYM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:content-type:content-transfer-encoding
-         :subject:message-id:date:to:mime-version;
-        bh=dbwE5owwIQTVAKlcav+1LITU3mszG8QL6WlP0ATpvB0=;
-        b=Hv9XL+10dq6evqMasus9ixpygyYGa4fZHvYmZVuz6S0pFE6ygD/+trVVIUAndVW/BG
-         SNLJR+JnCzaUw+tZlI4CB0yk0f7auMi21U6sjMRI/HhKBgXXGcIpleh9eXJ84WJNMLtA
-         1hZqVVa6PwmFD1+ST/V50dEXxqzuRg27AZMagY0h5VwUfq8IfO6r1sP/TzjKIO5lCx+I
-         x2pPwCZEQ1j7OOtLYShGeUEMdUdf2fLIXBZIUsw2ZDoZvVpHg11ecW6khDf1r/wpQfab
-         eKSDR61HEkSgLAAbl0dmfxD+1k0z5hnEXZZGD0Fx0YcpZIefD/znPQm2Gu4BDXNd4zP3
-         G7iA==
-X-Gm-Message-State: ALoCoQnbpDX/YrcCezrbi6+WQEKipZ9vXGGOoIT8jib84klLTmxPAHpiBPZo8sH+OL+tKdCnB/yM
-X-Received: by 10.14.88.199 with SMTP id a47mr13358181eef.6.1398468294896;
-        Fri, 25 Apr 2014 16:24:54 -0700 (PDT)
-Received: from [192.168.1.101] ([188.26.30.123])
-        by mx.google.com with ESMTPSA id 48sm28510386eei.24.2014.04.25.16.24.53
-        for <git@vger.kernel.org>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 25 Apr 2014 16:24:54 -0700 (PDT)
-X-Mailer: Apple Mail (2.1874)
+	id S1751581AbaDYX2v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Apr 2014 19:28:51 -0400
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:53087 "EHLO
+	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751156AbaDYX2u (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 25 Apr 2014 19:28:50 -0400
+X-AuditID: 1207440e-f79c76d000003e2c-8d-535aefb1562d
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id EC.7E.15916.1BFEA535; Fri, 25 Apr 2014 19:28:49 -0400 (EDT)
+Received: from [192.168.69.130] (p5DDB3785.dip0.t-ipconnect.de [93.219.55.133])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s3PNSmOm011536
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Fri, 25 Apr 2014 19:28:49 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.4.0
+In-Reply-To: <1398442494-23438-18-git-send-email-sahlberg@google.com>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprAKsWRmVeSWpSXmKPExsUixO6iqLvxfVSwQVuruUXXlW4mi38TahyY
+	PBZsKvX4vEkugCmK2yYpsaQsODM9T98ugTvj+fSVjAXz+CvajpxkbGD8xt3FyMkhIWAiMf3O
+	S3YIW0ziwr31bF2MXBxCApcZJZofvmSCcM4zSSxYN4EFpIpXQFti3+V2RhCbRUBVYtnXk6wg
+	NpuArsSinmagBg4OUYEgiT9nFSHKBSVOznwC1ioiYCex/tZCZhBbWMBHYs/Nb2CtQgI1EhuW
+	nAQ7glPAVaKx4T8byBgJAXGJnsYgkDCzgI7Eu74HzBC2vMT2t3OYJzAKzEKyYRaSsllIyhYw
+	Mq9ilEvMKc3VzU3MzClOTdYtTk7My0st0jXWy80s0UtNKd3ECAlRvh2M7etlDjEKcDAq8fDu
+	yIkKFmJNLCuuzD3EKMnBpCTKK/saKMSXlJ9SmZFYnBFfVJqTWnyIUYKDWUmE9+gDoBxvSmJl
+	VWpRPkxKmoNFSZxXbYm6n5BAemJJanZqakFqEUxWhoNDSYK34R1Qo2BRanpqRVpmTglCmomD
+	E2Q4l5RIcWpeSmpRYmlJRjwoTuOLgZEKkuIB2hsE0s5bXJCYCxSFaD3FqMtxoWFFC5MQS15+
+	XqqUOG//W6AiAZCijNI8uBWwhPSKURzoY2HeUpBRPMBkBjfpFdASJqAlBRPCQZaUJCKkpBoY
+	q9h6b31dfzcpw3zvJMaY56KmGy/VWUzYU1by5taKxbd7J6m9t7gZUZPeFblCRn1j2RuNWYJy
+	TS7PZK+9FNxxov3M3wPzfPN+d81YNpl79R22oq1fT3DPC73vmr3XrORAjd/yM13b 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247134>
 
-New keywords: foreach, break, in, try, finally, as, is, typeof, var,
-default, fixed, checked, unchecked, this, lock, readonly, unsafe,
-ref, out, base, null, delegate, continue.
+On 04/25/2014 06:14 PM, Ronnie Sahlberg wrote:
+> Change the update_ref helper function to use a ref transaction internally.
+> 
+> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+> ---
+>  refs.c | 23 +++++++++++++++++++----
+>  1 file changed, 19 insertions(+), 4 deletions(-)
+> 
+> diff --git a/refs.c b/refs.c
+> index 1557c3c..95df4a9 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -3397,11 +3397,26 @@ int update_ref(const char *action, const char *refname,
+>  	       const unsigned char *sha1, const unsigned char *oldval,
+>  	       int flags, enum action_on_err onerr)
+>  {
+> -	struct ref_lock *lock;
+> -	lock = update_ref_lock(refname, oldval, flags, NULL, onerr);
+> -	if (!lock)
+> +	struct ref_transaction *t;
+> +	char *err = NULL;
+> +
+> +	t = ref_transaction_begin();
+> +	if ((!t ||
+> +	    ref_transaction_update(t, refname, sha1, oldval, flags,
+> +				   !!oldval)) ||
+> +	    (ref_transaction_commit(t, action, &err) && !(t = NULL))) {
 
-Removed keywords: instanceof. It's only in Java.
-Moved keywords to happen before modifier parsing, as matching a keyword
-will stop modifiers from being matched.
+You seem to have extra parentheses around the first || subexpression.
 
-Added method modifiers: extern, abstract.
+You also don't need the parentheses around the && expression because &&
+binds more tightly than ||.
 
-Added properties modifiers: abstract.
+But using "!(t = NULL)" in the middle of a conditional expression is
+pretty obscure.  I think you will change this in a later patch, so I
+will defer my comments.
 
-Added parsing of events and delegates, which are like properties, but
-take an extra keyword.
+> +	     const char *str = "update_ref failed for ref '%s': %s";
 
-The reasoning behind adding unsafe to keywords is being also a
-statement that can happen inline in code to mention blocks which are
-unsafe. Also, delegates are not necessarily declared in class bodies,
-but can also happen inline in other functions.
+Indentation error.
 
-Keywords are based on MSDN docs.
+> +
+> +		ref_transaction_rollback(t);
+> +		switch (onerr) {
+> +		case UPDATE_REFS_MSG_ON_ERR: error(str, refname, err); break;
+> +		case UPDATE_REFS_DIE_ON_ERR: die(str, refname, err); break;
+> +		case UPDATE_REFS_QUIET_ON_ERR: break;
+> +		free(err);
+> +		}
+>  		return 1;
+> -	return update_ref_write(action, refname, sha1, lock, NULL, onerr);
+> +	}
+> +	return 0;
+>  }
+>  
+>  static int ref_update_compare(const void *r1, const void *r2)
+> 
 
-Signed-off-by: Marius Ungureanu <marius.ungureanu@xamarin.com>
----
- userdiff.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/userdiff.c b/userdiff.c
-index fad52d6..7612c5d 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -133,14 +133,14 @@ PATTERNS("cpp",
- 	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lLuU]*"
- 	 "|[-+*/<>%&^|=!]=|--|\\+\\+|<<=?|>>=?|&&|\\|\\||::|->\\*?|\\.\\*"),
- PATTERNS("csharp",
--	 /* Keywords */
--	 "!^[ \t]*(do|while|for|if|else|instanceof|new|return|switch|case|throw|catch|using)\n"
- 	 /* Methods and constructors */
--	 "^[ \t]*(((static|public|internal|private|protected|new|virtual|sealed|override|unsafe)[ \t]+)*[][<>@.~_[:alnum:]]+[ \t]+[<>@._[:alnum:]]+[ \t]*\\(.*\\))[ \t]*$\n"
--	 /* Properties */
--	 "^[ \t]*(((static|public|internal|private|protected|new|virtual|sealed|override|unsafe)[ \t]+)*[][<>@.~_[:alnum:]]+[ \t]+[@._[:alnum:]]+)[ \t]*$\n"
-+	 "^[ \t]*(((abstract|extern|internal|new|override|private|protected|public|sealed|static|unsafe|virtual)[ \t]+)*[][<>@.~_[:alnum:]]+[ \t]+[<>@._[:alnum:]]+[ \t]*\\(.*\\))[ \t]*$\n"
-+	 /* Properties, events, delegates */
-+	 "^[ \t]*(((abstract|internal|new|override|private|protected|public|sealed|static|unsafe|virtual)[ \t]+)*((delegate|event)[ \t]+)*[][<>@.~_[:alnum:]]+[ \t]+[@._[:alnum:]]+)[ \t]*$\n"
- 	 /* Type definitions */
--	 "^[ \t]*(((static|public|internal|private|protected|new|unsafe|sealed|abstract|partial)[ \t]+)*(class|enum|interface|struct)[ \t]+.*)$\n"
-+	 "^[ \t]*(((abstract|internal|new|override|partial|private|protected|public|sealed|static|unsafe)[ \t]+)*(class|enum|interface|struct)[ \t]+.*)$\n"
-+	 /* Keywords */
-+	 "!^[ \t]*(as|base|break|case|catch|checked|continue|default|delegate|do|else|finally|fixed|for|foreach|if|in|is|lock|new|null|out|readonly|ref|return|switch|this|throw|try|typeof|unchecked|unsafe|using|var|while)\n"
- 	 /* Namespace */
- 	 "^[ \t]*(namespace[ \t]+.*)$",
- 	 /* -- */
 -- 
-1.8.4
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
