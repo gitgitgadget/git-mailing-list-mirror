@@ -1,7 +1,7 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 try2 10/14] apply: add --work, --no-work options
-Date: Fri, 25 Apr 2014 13:12:43 -0500
-Message-ID: <1398449567-16314-11-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v2 try2 13/14] reset: allow --keep with --stage
+Date: Fri, 25 Apr 2014 13:12:46 -0500
+Message-ID: <1398449567-16314-14-git-send-email-felipe.contreras@gmail.com>
 References: <1398449567-16314-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
 	Jay Soffian <jaysoffian@gmail.com>,
@@ -13,120 +13,105 @@ Cc: Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
 	Hilco Wijbenga <hilco.wijbenga@gmail.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 25 20:24:19 2014
+X-From: git-owner@vger.kernel.org Fri Apr 25 20:24:21 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WdknD-00079k-7V
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Apr 2014 20:24:11 +0200
+	id 1WdknN-0007Rv-1E
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Apr 2014 20:24:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753676AbaDYSX6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Apr 2014 14:23:58 -0400
-Received: from mail-oa0-f53.google.com ([209.85.219.53]:48756 "EHLO
-	mail-oa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753604AbaDYSX4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Apr 2014 14:23:56 -0400
-Received: by mail-oa0-f53.google.com with SMTP id j17so4507976oag.26
-        for <git@vger.kernel.org>; Fri, 25 Apr 2014 11:23:56 -0700 (PDT)
+	id S1753866AbaDYSYL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Apr 2014 14:24:11 -0400
+Received: from mail-oa0-f41.google.com ([209.85.219.41]:62233 "EHLO
+	mail-oa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753692AbaDYSYJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Apr 2014 14:24:09 -0400
+Received: by mail-oa0-f41.google.com with SMTP id j17so4614753oag.14
+        for <git@vger.kernel.org>; Fri, 25 Apr 2014 11:24:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=MIryLWnoUmPzvzyvCN1Zm6nrIF+r17lI1dykSX0U67E=;
-        b=0mwoEjF+etFYv2O3DXUh8YsOUQ1EDwWZ+dWXRcLnrAmNAojTgBhkzIBmTFy6PPKDqv
-         a58jaBZeAiDa7PVhXr1KSCszj09C1h5yVLf91+xUxAHUIjHpxwDJZKeuhKayEH47o3UC
-         8L1fwhnxhhxU7yySIyOKeZHWcwEnHadGn/380SA6GnAglGkPQOEGbkVDRwXODGFLZU/T
-         gTNJRSCySmohqB3fL7gvCZWdKcdjE7rtW5j5o3GJ+AAtBRdfPl+7ESzmHKLVbROSNdbU
-         HnX4lK9hhCK7ffLPezgCB71n16cWnbsXAeFkuBbcWYcc+5pMbUWylPzoae/O/48NSg6W
-         o75w==
-X-Received: by 10.182.171.7 with SMTP id aq7mr2673117obc.67.1398450236089;
-        Fri, 25 Apr 2014 11:23:56 -0700 (PDT)
+        bh=z73XCRX6MGbjVqPxLFTc/AkyfI+FeT5k1cenKV6kXLA=;
+        b=hevYFY/R1ADYjt92br2/UPnwdyCFwdMv6OjXUiS0to8MZ3DOHz13TZOCMwmNXULQgE
+         BbwHAT41SfuiFbVP1j11kE/nEBMBJJPW9y4fZjkZvzALDl3XJJqFJo8X6Rn5Aaatpwhm
+         Aq6k4d6zv8s3sx/1lz/rVC/M4QJDCo9Gfn6zuY0Ll1RX2fW6lyUxAotX5QKlyMF5n/bJ
+         V5gycWAibRRBLQGr9DBJksoo1Q6aRhwXVS8fcaDEYCo3F8jLD68huzI+Dg3P1I4toptG
+         AKpXC+Z/4RDXI2eOvq4HEVk8M5CIeyMwNGRyDfSdc+KEdevcFFN/lvUEgytZQ9FVJOaz
+         TtfA==
+X-Received: by 10.182.33.73 with SMTP id p9mr8060262obi.37.1398450249246;
+        Fri, 25 Apr 2014 11:24:09 -0700 (PDT)
 Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id h1sm17050459obr.15.2014.04.25.11.23.53
+        by mx.google.com with ESMTPSA id zm8sm17050847obc.16.2014.04.25.11.24.06
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 25 Apr 2014 11:23:54 -0700 (PDT)
+        Fri, 25 Apr 2014 11:24:08 -0700 (PDT)
 X-Mailer: git-send-email 1.9.2+fc1.2.gfbaae8c
 In-Reply-To: <1398449567-16314-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247084>
-
-'git apply', 'git apply --index', 'git apply --cached' do different
-things, but what they do is not precisely clear, specially since no
-other commands has similar distinctions.
-
-With --no-work (--work being the default), it's clear what the option
-would do; modify, or not, the working directory.
-
-So, --work (the default), doesn't cause any changes, and --no-work
-enables the current --cache if used with --index.
-
-Eventually --work might replace --cache, if these options are
-standarized in the whole git toolset.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247085>
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- Documentation/git-apply.txt | 6 +++++-
- builtin/apply.c             | 5 +++++
- 2 files changed, 10 insertions(+), 1 deletion(-)
+ Documentation/git-reset.txt |  2 +-
+ builtin/reset.c             | 13 ++++++++++---
+ 2 files changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
-index 8c047ef..95f5485 100644
---- a/Documentation/git-apply.txt
-+++ b/Documentation/git-apply.txt
-@@ -16,7 +16,7 @@ SYNOPSIS
- 	  [--ignore-space-change | --ignore-whitespace ]
- 	  [--whitespace=(nowarn|warn|fix|error|error-all)]
- 	  [--exclude=<path>] [--include=<path>] [--directory=<root>]
--	  [--verbose] [<patch>...]
-+	  [--verbose] [--no-work] [<patch>...]
+diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
+index 5cd75a8..a1419c9 100644
+--- a/Documentation/git-reset.txt
++++ b/Documentation/git-reset.txt
+@@ -11,7 +11,7 @@ SYNOPSIS
+ 'git reset' [-q] [<tree-ish>] [--] <paths>...
+ 'git reset' (--patch | -p) [<tree-ish>] [--] [<paths>...]
+ 'git reset' [--soft | --mixed | --hard | --merge | --keep] [-q] [<commit>]
+-'git reset' [--stage | --work] [-q] [<commit>]
++'git reset' [--stage | --work | --keep] [-q] [<commit>]
  
  DESCRIPTION
  -----------
-@@ -75,6 +75,10 @@ OPTIONS
- 	cached data, apply the patch, and store the result in the index
- 	without using the working tree. This implies `--index`.
+diff --git a/builtin/reset.c b/builtin/reset.c
+index c40987e..8d6d9a1 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -23,7 +23,7 @@
  
-+--[no-]work::
-+	Apply a patch with or without touching the working tree, essentially
-+	`--no-work` plus `--index` are the equivalent of `--cached`.
+ static const char * const git_reset_usage[] = {
+ 	N_("git reset [--mixed | --soft | --hard | --merge | --keep] [-q] [<commit>]"),
+-	N_("git reset [--stage | --work] [-q] [<commit>]"),
++	N_("git reset [--stage | --work | --keep] [-q] [<commit>]"),
+ 	N_("git reset [-q] <tree-ish> [--] <paths>..."),
+ 	N_("git reset --patch [<tree-ish>] [--] [<paths>...]"),
+ 	NULL
+@@ -306,8 +306,15 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	if (stage >= 0 || working_tree >= 0) {
+-		if (reset_type != NONE)
++		int keep = 0;
 +
- -3::
- --3way::
- 	When the patch does not apply cleanly, fall back on 3-way merge if
-diff --git a/builtin/apply.c b/builtin/apply.c
-index a97363c..68cdef1 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -4350,6 +4350,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
- 	int errs = 0;
- 	int is_not_gitdir = !startup_info->have_repository;
- 	int force_apply = 0;
-+	int work = 1;
++		if (reset_type == KEEP) {
++			if (working_tree == 1)
++				die(_("--keep is incompatible with --work"));
++			keep = 1;
++		} else if (reset_type != NONE) {
+ 			die(_("--{stage,work} are incompatible with --{hard,mixed,soft,merge}"));
++		}
  
- 	const char *whitespace_option = NULL;
- 
-@@ -4381,6 +4382,8 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
- 			N_("make sure the patch is applicable to the current index")),
- 		OPT_BOOL(0, "cached", &cached,
- 			N_("apply a patch without touching the working tree")),
-+		OPT_BOOL(0, "work", &work,
-+			N_("modify the working tree")),
- 		OPT_BOOL(0, "apply", &force_apply,
- 			N_("also apply the patch (use with --stat/--summary/--check)")),
- 		OPT_BOOL('3', "3way", &threeway,
-@@ -4433,6 +4436,8 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
- 	argc = parse_options(argc, argv, prefix, builtin_apply_options,
- 			apply_usage, 0);
- 
-+	if (check_index && !work)
-+		cached = 1;
- 	if (apply_with_reject && threeway)
- 		die("--reject and --3way cannot be used together.");
- 	if (cached && threeway)
+ 		if (working_tree == 1) {
+ 			if (stage == 0)
+@@ -315,7 +322,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 			reset_type = HARD;
+ 		} else {
+ 			if (stage == 1)
+-				reset_type = NONE;
++				reset_type = keep ? KEEP : NONE;
+ 			else
+ 				reset_type = SOFT;
+ 		}
 -- 
 1.9.2+fc1.2.gfbaae8c
