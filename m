@@ -1,127 +1,146 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v3 15/19] fast-import.c: change update_branch to use ref transactions
-Date: Fri, 25 Apr 2014 09:14:50 -0700
-Message-ID: <1398442494-23438-16-git-send-email-sahlberg@google.com>
+Subject: [PATCH v3 01/19] refs.c: constify the sha arguments for ref_transaction_create|delete|update
+Date: Fri, 25 Apr 2014 09:14:36 -0700
+Message-ID: <1398442494-23438-2-git-send-email-sahlberg@google.com>
 References: <1398442494-23438-1-git-send-email-sahlberg@google.com>
 Cc: mhagger@alum.mit.edu, Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 25 18:17:30 2014
+X-From: git-owner@vger.kernel.org Fri Apr 25 18:20:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WdioX-0001bF-LC
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Apr 2014 18:17:26 +0200
+	id 1Wdirk-0006tl-Ll
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Apr 2014 18:20:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752723AbaDYQQf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Apr 2014 12:16:35 -0400
-Received: from mail-qa0-f73.google.com ([209.85.216.73]:43998 "EHLO
-	mail-qa0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753766AbaDYQPH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Apr 2014 12:15:07 -0400
-Received: by mail-qa0-f73.google.com with SMTP id hw13so633201qab.0
-        for <git@vger.kernel.org>; Fri, 25 Apr 2014 09:15:07 -0700 (PDT)
+	id S1753691AbaDYQUi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Apr 2014 12:20:38 -0400
+Received: from mail-qc0-f202.google.com ([209.85.216.202]:57943 "EHLO
+	mail-qc0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753354AbaDYQUf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Apr 2014 12:20:35 -0400
+Received: by mail-qc0-f202.google.com with SMTP id x13so494459qcv.1
+        for <git@vger.kernel.org>; Fri, 25 Apr 2014 09:20:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=1CLPOPXv/GxBdhKsBfdKR9pw2FLqoukxjq4ZmB6jW1c=;
-        b=SU0LWFAx4LG1ihpu1mBPtSkC5zZ8/Db37o4OJvHUGu9Bmq31KrgSFjw9LOnrH4qqlw
-         1r0r0PTQ5WdqhxrBE/Ht/y+zIcfXWLH11IxhkLZwVjPjYNdMOw5ZaCkEUVEwEx559Xdr
-         ShCpd12jvKDAcO/uTTfz054xXjNNnl0xahicnsuAtU4Fva5nIC7f+b2jNnXMXyC1lI42
-         gxAhGZvVQtOdy0QVY4X29QcCWd+EnZAtuk3eO2TX5L7bpkV9bPK6btomVH9x6IlStxcl
-         BqOvqMeuAtE4ONYdqeQqCZj2Lm5NUfEgt8kQZbx2oKjjPt1xJCr/6zvXHj7JivkZQns9
-         cfSg==
+        bh=x1OOeKTGaNZPYVImDzZhfErcMJq0ZiAOkq8yr3cgCwY=;
+        b=hIJI32wgM/GSXZEcSgjUlHF6fpFtSHscWMuLO6w2O4LRl4GAtovfw2CYv9fbnkTM6G
+         wvPiAlKznRmzDx8C9iqZYx49idgJ5WoZMJNC1nNf/EvKsPaOAmFqXfL/s2ZPPt9YHseL
+         rFWpkvK5puzuEnbD94gh1+Bq/xfLKejEz8TZlF6tfu3WLMqB0+vBkskLNfudyppJMMYL
+         wdI7tEiXkAjTItiLbwfs5NXCZVTVrwTSW7LmBK23gj8njXbVC7L96gC6IcHGziK9Lu/7
+         rhPUrFEn13eY3uA+NFp5vphgXFZw+l1DIKgugKXJSBvGBP1/gMmLLz5+wr5eKytyqHiE
+         vwxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=1CLPOPXv/GxBdhKsBfdKR9pw2FLqoukxjq4ZmB6jW1c=;
-        b=TFIihnOGY1Oj5CZZNh0WguUEmmZi6ZibEzIM7PVsQ6Q85EGoup1ZG7k4AFIyx+JUS/
-         1vn3UySsCZbZIxgm/1LWaB+eQetoFpEijXVrrF/o4YoWCB5VBjt0ac6cE2gbX1KtmV11
-         Qd0ZDgWeJ1wgWBZNH9tpLY6Bl9FDjIscvXmyn8E3OjO28tflhc9LN9Sae8W+XpNGgZw2
-         fPYH6OXi3WA3uquQF6x1LGzmnQPheMq3OMmmVRjllocmCYUisK8neijvZRjs5T32rmtJ
-         DcituatHQy2Hjra3HSll9zj0kMmVIKmRfGkvfBHdgxsXovDt6G85gIl5rhpp0d8wql+0
-         H30Q==
-X-Gm-Message-State: ALoCoQl8jkC0/XHIaxjtnjU7QzzmyJXORQE4HRmP39HiE1IaZFR6AIfTsFM0K17zGk62B/epNa9DoUNQHC+WSyAyN2Gq6yxcgXWXvpUhMukFUO2jQX+pL7uguNMD2b7FggBgG1hZqasiYezNfxXpgSJOYXHJXqUbHytv26sGfe1sviBFwNV2vgvDfISpNMRqQAOv+w3hqcKi
-X-Received: by 10.58.41.39 with SMTP id c7mr5067852vel.25.1398442507184;
-        Fri, 25 Apr 2014 09:15:07 -0700 (PDT)
-Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
-        by gmr-mx.google.com with ESMTPS id r61si1051922yhf.1.2014.04.25.09.15.07
+        bh=x1OOeKTGaNZPYVImDzZhfErcMJq0ZiAOkq8yr3cgCwY=;
+        b=BZOFFhBCK0rhJCoTYZeTnUqTe2cTKorxeMZNOrc+Dc7o7Ze5U6aCPHlbTTLCmnVqHg
+         nnYRF0Su/MZrd5Itz3OwDfL8uw0iQXmUehBRWenD5sYlHoXYwNeqADJB7O5u2+ooSstp
+         Yqhiy/zK0zXT90TdmYVgXqwipxXh8gfkETfUrAuXGsBxDwB0DJG+fdnKX0K2UX3XsqZZ
+         YckX+WWtU5svHZdmMp68/0481tr5e6cknxyzLrTa4gE60LeZ86j2T5FBUsuMDg/HjgWU
+         EV+Fm3cRcpBjb3mB8xyu9n2Kj4i0Sj+dCYGmcGBtHlo1AykFGd07D2T66A+qi36//DI8
+         rEuQ==
+X-Gm-Message-State: ALoCoQnHInSs79IifDqGlJjn/Ic6xYrz0VqbEK0eKnKdxAQHfJIbK0lMojl9bpL+MyLXdj0wMTj3AqwqJrbi6KfkmckO1LjelDp8TL29j3f8M1CM66Z4CKMJJjmV/r13vnvX9qr913PZMzwulNeFOJLLH1k8VBmfaCFkrXPreg4XBR9KKoJleoHDjjSLvaaV2wQbFytXAHOZ
+X-Received: by 10.236.25.175 with SMTP id z35mr4294177yhz.32.1398442498290;
+        Fri, 25 Apr 2014 09:14:58 -0700 (PDT)
+Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
+        by gmr-mx.google.com with ESMTPS id g21si1051054yhe.3.2014.04.25.09.14.58
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 25 Apr 2014 09:15:07 -0700 (PDT)
+        Fri, 25 Apr 2014 09:14:58 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 0C3E15A4260;
-	Fri, 25 Apr 2014 09:15:07 -0700 (PDT)
+	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 2598131C028;
+	Fri, 25 Apr 2014 09:14:58 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id B2801E0855; Fri, 25 Apr 2014 09:15:06 -0700 (PDT)
+	id BDC7FE0855; Fri, 25 Apr 2014 09:14:57 -0700 (PDT)
 X-Mailer: git-send-email 1.9.1.521.g5dc89fa
 In-Reply-To: <1398442494-23438-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247069>
 
-Change update_branch() to use ref transactions for updates.
+ref_transaction_create|delete|update has no need to modify the sha1
+arguments passed to it so it should use const unsigned char* instead
+of unsigned char*.
+
+Some functions, such as fast_forward_to(), already have its old/new
+sha1 arguments as consts. This function will at some point need to
+use ref_transaction_update() in which case this change is required.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- fast-import.c | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ refs.c | 7 ++++---
+ refs.h | 7 ++++---
+ 2 files changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/fast-import.c b/fast-import.c
-index fb4738d..a2b05fa 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -1678,36 +1678,39 @@ found_entry:
- static int update_branch(struct branch *b)
+diff --git a/refs.c b/refs.c
+index 728a761..138ab70 100644
+--- a/refs.c
++++ b/refs.c
+@@ -3329,7 +3329,8 @@ static struct ref_update *add_update(struct ref_transaction *transaction,
+ 
+ void ref_transaction_update(struct ref_transaction *transaction,
+ 			    const char *refname,
+-			    unsigned char *new_sha1, unsigned char *old_sha1,
++			    const unsigned char *new_sha1,
++			    const unsigned char *old_sha1,
+ 			    int flags, int have_old)
  {
- 	static const char *msg = "fast-import";
--	struct ref_lock *lock;
-+	struct ref_transaction *transaction;
- 	unsigned char old_sha1[20];
-+	char *err = NULL;
+ 	struct ref_update *update = add_update(transaction, refname);
+@@ -3343,7 +3344,7 @@ void ref_transaction_update(struct ref_transaction *transaction,
  
- 	if (is_null_sha1(b->sha1))
- 		return 0;
- 	if (read_ref(b->name, old_sha1))
- 		hashclr(old_sha1);
--	lock = lock_any_ref_for_update(b->name, old_sha1, 0, NULL);
--	if (!lock)
--		return error("Unable to lock %s", b->name);
- 	if (!force_update && !is_null_sha1(old_sha1)) {
- 		struct commit *old_cmit, *new_cmit;
+ void ref_transaction_create(struct ref_transaction *transaction,
+ 			    const char *refname,
+-			    unsigned char *new_sha1,
++			    const unsigned char *new_sha1,
+ 			    int flags)
+ {
+ 	struct ref_update *update = add_update(transaction, refname);
+@@ -3357,7 +3358,7 @@ void ref_transaction_create(struct ref_transaction *transaction,
  
- 		old_cmit = lookup_commit_reference_gently(old_sha1, 0);
- 		new_cmit = lookup_commit_reference_gently(b->sha1, 0);
- 		if (!old_cmit || !new_cmit) {
--			unlock_ref(lock);
- 			return error("Branch %s is missing commits.", b->name);
- 		}
+ void ref_transaction_delete(struct ref_transaction *transaction,
+ 			    const char *refname,
+-			    unsigned char *old_sha1,
++			    const unsigned char *old_sha1,
+ 			    int flags, int have_old)
+ {
+ 	struct ref_update *update = add_update(transaction, refname);
+diff --git a/refs.h b/refs.h
+index 0f08def..892c5b6 100644
+--- a/refs.h
++++ b/refs.h
+@@ -239,7 +239,8 @@ void ref_transaction_rollback(struct ref_transaction *transaction);
+  */
+ void ref_transaction_update(struct ref_transaction *transaction,
+ 			    const char *refname,
+-			    unsigned char *new_sha1, unsigned char *old_sha1,
++			    const unsigned char *new_sha1,
++			    const unsigned char *old_sha1,
+ 			    int flags, int have_old);
  
- 		if (!in_merge_bases(old_cmit, new_cmit)) {
--			unlock_ref(lock);
- 			warning("Not updating %s"
- 				" (new tip %s does not contain %s)",
- 				b->name, sha1_to_hex(b->sha1), sha1_to_hex(old_sha1));
- 			return -1;
- 		}
- 	}
--	if (write_ref_sha1(lock, b->sha1, msg) < 0)
--		return error("Unable to update %s", b->name);
-+	transaction = ref_transaction_begin();
-+	if ((!transaction ||
-+	    ref_transaction_update(transaction, b->name, b->sha1, old_sha1,
-+				   0, 1)) ||
-+	    (ref_transaction_commit(transaction, msg, &err) &&
-+	     !(transaction = NULL))) {
-+		ref_transaction_rollback(transaction);
-+		return error("Unable to update branch %s: %s", b->name, err);
-+	}
- 	return 0;
- }
+ /*
+@@ -250,7 +251,7 @@ void ref_transaction_update(struct ref_transaction *transaction,
+  */
+ void ref_transaction_create(struct ref_transaction *transaction,
+ 			    const char *refname,
+-			    unsigned char *new_sha1,
++			    const unsigned char *new_sha1,
+ 			    int flags);
  
+ /*
+@@ -260,7 +261,7 @@ void ref_transaction_create(struct ref_transaction *transaction,
+  */
+ void ref_transaction_delete(struct ref_transaction *transaction,
+ 			    const char *refname,
+-			    unsigned char *old_sha1,
++			    const unsigned char *old_sha1,
+ 			    int flags, int have_old);
+ 
+ /*
 -- 
 1.9.1.521.g5dc89fa
