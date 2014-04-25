@@ -1,84 +1,103 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Harmful LESS flags
-Date: Fri, 25 Apr 2014 08:47:22 -0700
-Message-ID: <20140425154722.GC11479@google.com>
-References: <4dc69237123e8962b2b2b901692ea78e.id@mailtor>
- <87lhuvb9kr.fsf@fencepost.gnu.org>
- <xmqqha5iv9eb.fsf@gitster.dls.corp.google.com>
- <vpqfvl1rj7i.fsf@anie.imag.fr>
- <20140425151124.GA11479@google.com>
- <8761lxa0gs.fsf@fencepost.gnu.org>
+From: Philippe Vaucher <philippe.vaucher@gmail.com>
+Subject: Re: What is missing from Git v2.0
+Date: Fri, 25 Apr 2014 17:54:17 +0200
+Message-ID: <CAGK7Mr74TK4x7WYnmWyRUj_Aga0CHbyFNyZGZdu6eubtwahBXg@mail.gmail.com>
+References: <5358bae8ab550_1f7b143d31037@nysa.notmuch> <877g6fb2h6.fsf@fencepost.gnu.org>
+ <5358ca1a55a69_1f7b143d3101c@nysa.notmuch> <20140424134106.GA27035@thunk.org>
+ <20140424195559.GA1336@luc-arch> <CALZVapn0gEHc7t2fjk7YGd2o0yfpGLu0JCgUtdREvROC8_mqXg@mail.gmail.com>
+ <5359c9d612298_771c15f72f02a@nysa.notmuch> <CAGK7Mr6dss7BF-srQ3SqeZe2hAe9nS07fGe--ka1rvC5hXvbSA@mail.gmail.com>
+ <20140425133520.GC11124@thunk.org> <CAGK7Mr4g3j80R4P_wpfNip9vxvaDg4q_3Utq9KVvKtbdhVutfQ@mail.gmail.com>
+ <20140425144054.GA6230@thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>, d9ba@mailtor.net,
-	git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Fri Apr 25 17:47:32 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Javier Domingo Cansino <javierdo1@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: "Theodore Ts'o" <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Fri Apr 25 17:54:54 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WdiLb-0001vW-5T
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Apr 2014 17:47:31 +0200
+	id 1WdiSk-00064c-96
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Apr 2014 17:54:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751688AbaDYPr0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Apr 2014 11:47:26 -0400
-Received: from mail-pd0-f175.google.com ([209.85.192.175]:48311 "EHLO
-	mail-pd0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751500AbaDYPrZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Apr 2014 11:47:25 -0400
-Received: by mail-pd0-f175.google.com with SMTP id fp1so1121591pdb.20
-        for <git@vger.kernel.org>; Fri, 25 Apr 2014 08:47:25 -0700 (PDT)
+	id S1751580AbaDYPyt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Apr 2014 11:54:49 -0400
+Received: from mail-ob0-f169.google.com ([209.85.214.169]:56326 "EHLO
+	mail-ob0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751063AbaDYPys (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Apr 2014 11:54:48 -0400
+Received: by mail-ob0-f169.google.com with SMTP id uz6so4503403obc.0
+        for <git@vger.kernel.org>; Fri, 25 Apr 2014 08:54:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=psBi1BSmuOQEgZZ1wIRTSDZQDm1kh7Yo1JSZ9Lwa5j4=;
-        b=ircW+dtcd7Q3w2pbslxR5jDVvL37+Jz4FTGaIZg28/DY8WurDiKNMJDlvOmwsiLz9R
-         ZPl5njTQUvoT8Cz6OgYtV/pBFe/1qBre/UKvFVyIJLGKGku0Syv4P5d48VKu0Ycia7WO
-         ru2HJIX5Lv8LN2OCKm2XpR9v3Aj9h7l7ou/d9GwiDHYP020eDPjGqHlLdKUWT2Wh6Ykj
-         FBs8C9f/Nbei+cv+pVmHj4XBTo53gWWXyWDyQw6nGIiBZNYKk/qDetVwTtbcZQDwOhLq
-         YiSh7mVOKw/P0s/v7J/ZvAB7OTZYo7JJ2SF5o3ttywJz9RJaQbRspXLbpkOcVDVtqJuk
-         UN0A==
-X-Received: by 10.66.190.4 with SMTP id gm4mr8705764pac.116.1398440844957;
-        Fri, 25 Apr 2014 08:47:24 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id et3sm16703555pbc.52.2014.04.25.08.47.23
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 25 Apr 2014 08:47:24 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <8761lxa0gs.fsf@fencepost.gnu.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=rqAh9S+kO+px+8rJXeY51P5S/RKz4OXUtmpZfAQcgOo=;
+        b=AOo1odV0kGqJ3x81c4kbVzTFf3Ih8ywQsMPphcyHfz3MSVojWTThf8DuXCubQCYhbE
+         CqEE1vIOYmXfWRpSxz6zSnfxtUjTMJlX47grbtOjPeMKZpJ/nGdAVIBV8QzFuAq71aQL
+         J3OttDQ1lDxNScGgFWVG6lOwfIpdZktZqWVIip64rpJ1QWHuqM4N8z72ja7g5kd7gXQj
+         W8P82AynvPaih0wkQ5Tnkzck9FmQ3+nGv22f8UBdzCQeZ8A7t82Vyg6Ar1U5BYkdryf+
+         ZQHM94iUAJ98H/X1b0eY4I+EgK4TrIROW+Rzp97HRbtBVprAzdP3qbFd2kqroIutN25Q
+         6U7Q==
+X-Received: by 10.60.117.229 with SMTP id kh5mr3396070oeb.19.1398441287838;
+ Fri, 25 Apr 2014 08:54:47 -0700 (PDT)
+Received: by 10.76.85.229 with HTTP; Fri, 25 Apr 2014 08:54:17 -0700 (PDT)
+In-Reply-To: <20140425144054.GA6230@thunk.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247048>
 
-David Kastrup wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
-
->> Just for clarity: no, when we are talking about well formatted code,
->> -S is actually a way better interface.
+>> Yes, of course there should be a list of both positive and negative
+>> tradeoffs. But I think the "overloaded" argument can be easily solved
+>> by renaming one of the overloads.
 >
-> When we are talking about well-formatted code, -S does not matter either
-> which way.
+> And renaming one of a term also has costs, especially if it is one
+> that is in use in large amounts of documentation, both in the git man
+> pages, and in web pages across the web.
 
-Sorry for the lack of clarity.  I believe well-formatted code can
-contain long lines.  For example, sometimes a message + the printf to
-print it and indentation move past the right margin.
+It's just impossible to change terms and have previous documentation
+still be valid. Sure, you can list it in the "cons" section as an
+argument, but it's not very convincing in itself because it applies to
+pretty much any interface changes. I think the main idea is to
+_improve_ the interface, which means rename things so it is more
+consistent and so concepts are easier for new comers to grasp. We
+could still support old terms for a while and eventually deprecate
+them.
 
-If I wasn't talking about long lines, why would I have replied in the
-first place?
 
-[...]
-> Overriding less' defaults should only be done for unequivocal benefits,
+> www.google.com/trends/explore#q=git%20staging%20area%2C%20git%20index&cmpt=q
 
-We agree here.  So, does someone who actually wants this change want to
-propose a patch? :)
+I think this comparison is a bit bogus, searching for "git stage"
+yields more accurate results, we can see the searches are related:
 
-Hope that helps,
-Jonathan
+http://www.google.com/trends/explore#q=git%20staging%20area%2C%20git%20index%2C%20git%20stage&cmpt=q
+
+
+>> Unfortunately yes, I see many people being silly in order to win
+>> arguments, both in the pro-changes and against-changes side of the
+>> discussion. I'd be much simpler to simply gather arguments on some
+>> wiki and eventually do a vote when the list is complete about the
+>> proposed change.
+>
+> Voting is not a good way to do software development.  That way lies
+> people wanting to whip up clueless folks using rhetoric (exhibit one:
+> Fox News) to "vote" and so it's not necessarily the best way to make
+> thoughtful decisions.  Using hard data, including possibly formal UX
+> experiments, is a much better way to make such decisions.
+
+Interesting, but then who's to say which data is more important than
+anothers? For example, I consider improving the interface to be more
+important than having old documentation on blogs/tutorial for a while
+until people catch up, but maybe you consider old documentation to be
+more important... who decides what really counts? I guess it's a mix
+of general consensus and old timers credibility.
+
+Anyway, having some data as a list of pros/cons would greatly simplify
+the debate.
+
+Philippe
