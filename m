@@ -1,84 +1,210 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: What is missing from Git v2.0
-Date: Fri, 25 Apr 2014 14:24:59 -0400
-Message-ID: <20140425182459.GA29329@sigill.intra.peff.net>
-References: <5358bae8ab550_1f7b143d31037@nysa.notmuch>
- <877g6fb2h6.fsf@fencepost.gnu.org>
- <5358ca1a55a69_1f7b143d3101c@nysa.notmuch>
- <20140424134106.GA27035@thunk.org>
- <20140424195559.GA1336@luc-arch>
- <CALZVapn0gEHc7t2fjk7YGd2o0yfpGLu0JCgUtdREvROC8_mqXg@mail.gmail.com>
- <5359c9d612298_771c15f72f02a@nysa.notmuch>
- <CAGK7Mr6dss7BF-srQ3SqeZe2hAe9nS07fGe--ka1rvC5hXvbSA@mail.gmail.com>
- <20140425133520.GC11124@thunk.org>
- <535a9f375e196_3984aa530c46@nysa.notmuch>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Theodore Ts'o <tytso@mit.edu>,
-	Philippe Vaucher <philippe.vaucher@gmail.com>,
-	Javier Domingo Cansino <javierdo1@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 25 20:25:18 2014
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH v2 try2 02/14] stage: add edit command
+Date: Fri, 25 Apr 2014 13:12:35 -0500
+Message-ID: <1398449567-16314-3-git-send-email-felipe.contreras@gmail.com>
+References: <1398449567-16314-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
+	Jay Soffian <jaysoffian@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Philip Oakley <philipoakley@iee.org>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	William Swanson <swansontec@gmail.com>,
+	Ping Yin <pkufranky@gmail.com>,
+	Hilco Wijbenga <hilco.wijbenga@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 25 20:25:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WdkoH-0000ZV-1Z
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Apr 2014 20:25:17 +0200
+	id 1Wdkod-0001Gs-Nz
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Apr 2014 20:25:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754206AbaDYSZI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Apr 2014 14:25:08 -0400
-Received: from cloud.peff.net ([50.56.180.127]:38479 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753832AbaDYSZC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Apr 2014 14:25:02 -0400
-Received: (qmail 19908 invoked by uid 102); 25 Apr 2014 18:25:01 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 25 Apr 2014 13:25:01 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 25 Apr 2014 14:24:59 -0400
-Content-Disposition: inline
-In-Reply-To: <535a9f375e196_3984aa530c46@nysa.notmuch>
+	id S1754208AbaDYSZe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Apr 2014 14:25:34 -0400
+Received: from mail-oa0-f43.google.com ([209.85.219.43]:54554 "EHLO
+	mail-oa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752586AbaDYSXZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Apr 2014 14:23:25 -0400
+Received: by mail-oa0-f43.google.com with SMTP id eb12so4623913oac.30
+        for <git@vger.kernel.org>; Fri, 25 Apr 2014 11:23:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=l9mxF9lqVCYwkxHl5IAxG3v0sLBYrmgdNsnPXPtTPKQ=;
+        b=WLjhqeKNFbBckOSI2+xfRCSxzfOEo+RSDPG4EgVnKAoMvwP1yH59w+nxUZeWwFe/eU
+         8nAW9OTqbX9VAkuPITJ/f3L40WaQWR3EzdV9Tdk4ttb0UPCbK/YhHF+CPtfvr8n+VKjp
+         6El/FYp/kt7cM51SBcAv3WFmW9xO+LNlmXqtAk7Ez4km5IlaYJ1fHvhC2SEbWCnhL694
+         CoevBAsqJTB4gmirOZhvIldAX3qaHzMpQK8QEyoYzH45lZ70/9S+v3bOy9O/9qqSfamX
+         8bR6AYXGjcWmUBf8FsbPUKUly8WkrWXGQyw1jRdSOPYyZqNdYb7+/wS+NKdp48h+uaE4
+         Ep7A==
+X-Received: by 10.60.135.106 with SMTP id pr10mr8186743oeb.15.1398450204990;
+        Fri, 25 Apr 2014 11:23:24 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id c7sm34691804oek.12.2014.04.25.11.23.22
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 25 Apr 2014 11:23:24 -0700 (PDT)
+X-Mailer: git-send-email 1.9.2+fc1.2.gfbaae8c
+In-Reply-To: <1398449567-16314-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247089>
 
-On Fri, Apr 25, 2014 at 12:45:27PM -0500, Felipe Contreras wrote:
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ Documentation/git-stage.txt            |  5 +++
+ builtin/stage.c                        | 74 ++++++++++++++++++++++++++++++++++
+ contrib/completion/git-completion.bash |  4 +-
+ 3 files changed, 82 insertions(+), 1 deletion(-)
 
-> When I say literally everbody agreed to move away from the name "index" (except
-> Junio and another guy) I mean it. I even composed a list:
-> 
-> http://article.gmane.org/gmane.comp.version-control.git/233469
-> 
-> Jeff King, Jonathan Nieder, Matthieu Moy, they all agreed.
-
-With reference to my name, your email says:
-
-  Jeff King:
-  "staging area" makes perfect sense
-
-But here's that statement in context[1]:
-
-  So the term "staging area" makes perfect sense to me; it is where we
-  collect changes to make a commit. I am willing to accept that does not
-  to others (native English speakers or no), and that we may need to
-  come up with a better term. But I think just calling it "the stage" is
-  even worse; it loses the concept that it is a place for collecting and
-  organizing.
-
-In other words, I was saying that the term makes sense to me, and
-primarily comparing favorably to a worse proposal. I am not commenting
-at all on a plan to change names, which is what you are claiming above.
-
-I do think the term "staging area" is fine, but picking a term is only
-step one of a plan. The rest is deciding how to make the change, and
-whether it is worth it. I remain undecided on the latter bits. Please
-don't quote me out of context in a way that implies that I am decided.
-
--Peff
-
-[1] http://article.gmane.org/gmane.comp.version-control.git/168012
+diff --git a/Documentation/git-stage.txt b/Documentation/git-stage.txt
+index 5b42b29..13a01c8 100644
+--- a/Documentation/git-stage.txt
++++ b/Documentation/git-stage.txt
+@@ -15,6 +15,7 @@ SYNOPSIS
+ 'git stage diff' [options] [<commit>] [--] [<paths>...]
+ 'git stage rm' [options] [--] [<paths>...]
+ 'git stage apply' [options] [--] [<paths>...]
++'git stage edit'
+ 
+ DESCRIPTION
+ -----------
+@@ -46,6 +47,10 @@ Remove files from the staging area only. See linkgit:git-rm[1] --staged.
+ 
+ Apply a patch to the staging area. See linkgit:git-rm[1] --staged.
+ 
++'edit'::
++
++Manually edit the staging area (as a diff).
++
+ SEE ALSO
+ --------
+ linkgit:git-add[1]
+diff --git a/builtin/stage.c b/builtin/stage.c
+index 7c4d442..f537c1d 100644
+--- a/builtin/stage.c
++++ b/builtin/stage.c
+@@ -6,6 +6,9 @@
+ 
+ #include "builtin.h"
+ #include "parse-options.h"
++#include "diff.h"
++#include "diffcore.h"
++#include "revision.h"
+ 
+ static const char *const stage_usage[] = {
+ 	N_("git stage [options] [--] <paths>..."),
+@@ -17,6 +20,74 @@ static const char *const stage_usage[] = {
+ 	NULL
+ };
+ 
++static int do_reset(const char *prefix)
++{
++	const char *argv[] = { "reset", "--quiet", NULL };
++	return cmd_reset(2, argv, prefix);
++}
++
++static int do_apply(const char *file, const char *prefix)
++{
++	const char *argv[] = { "apply", "--recount", "--cached", file, NULL };
++	return cmd_apply(4, argv, prefix);
++}
++
++static int edit(int argc, const char **argv, const char *prefix)
++{
++	char *file = git_pathdup("STAGE_EDIT.patch");
++	int out;
++	struct rev_info rev;
++	int ret = 0;
++	struct stat st;
++
++	read_cache();
++
++	init_revisions(&rev, prefix);
++	rev.diffopt.context = 7;
++
++	argc = setup_revisions(argc, argv, &rev, NULL);
++	add_head_to_pending(&rev);
++	if (!rev.pending.nr) {
++		struct tree *tree;
++		tree = lookup_tree(EMPTY_TREE_SHA1_BIN);
++		add_pending_object(&rev, &tree->object, "HEAD");
++	}
++
++	rev.diffopt.output_format = DIFF_FORMAT_PATCH;
++	rev.diffopt.use_color = 0;
++	DIFF_OPT_SET(&rev.diffopt, IGNORE_DIRTY_SUBMODULES);
++
++	out = open(file, O_CREAT | O_WRONLY, 0666);
++	if (out < 0)
++		die(_("Could not open '%s' for writing."), file);
++	rev.diffopt.file = xfdopen(out, "w");
++	rev.diffopt.close_file = 1;
++
++	if (run_diff_index(&rev, 1))
++		die(_("Could not write patch"));
++	if (launch_editor(file, NULL, NULL))
++		exit(1);
++
++	if (stat(file, &st))
++		die_errno(_("Could not stat '%s'"), file);
++
++	ret = do_reset(prefix);
++	if (ret)
++		goto leave;
++
++	if (!st.st_size)
++		goto leave;
++
++	ret = do_apply(file, prefix);
++	if (ret)
++		goto leave;
++
++leave:
++	unlink(file);
++	free(file);
++	return ret;
++}
++
+ int cmd_stage(int argc, const char **argv, const char *prefix)
+ {
+ 	struct option options[] = { OPT_END() };
+@@ -47,6 +118,9 @@ int cmd_stage(int argc, const char **argv, const char *prefix)
+ 
+ 			return cmd_apply(argc, argv, prefix);
+ 		}
++		if (!strcmp(argv[1], "edit")) {
++			return edit(argc - 1, argv + 1, prefix);
++		}
+ 	}
+ 
+ 	return cmd_add(argc, argv, prefix);
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 0521d52..2ec7b1a 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1707,7 +1707,7 @@ _git_stage ()
+ {
+ 	__git_has_doubledash && return
+ 
+-	local subcommands="add reset diff rm apply"
++	local subcommands="add reset diff rm apply edit"
+ 	local subcommand="$(__git_find_on_cmdline "$subcommands")"
+ 	if [ -z "$subcommand" ]; then
+ 		__gitcomp "$subcommands"
+@@ -1725,6 +1725,8 @@ _git_stage ()
+ 		_git_rm;;
+ 	apply)
+ 		_git_apply;;
++	edit)
++		;;
+ 	*)
+ 		_git_add;
+ 	esac
+-- 
+1.9.2+fc1.2.gfbaae8c
