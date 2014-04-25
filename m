@@ -1,133 +1,115 @@
-From: David Kastrup <dak@gnu.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: What is missing from Git v2.0
-Date: Fri, 25 Apr 2014 17:59:26 +0200
-Message-ID: <871twl9z8h.fsf@fencepost.gnu.org>
-References: <CAHYYfeHeJYZ67chSTQk2grsFGr07KXcVNR-T6kOPo0bVYDm59g@mail.gmail.com>
-	<53588f448d817_59ed83d3084e@nysa.notmuch>
-	<CAHYYfeFKW93GH+6-ssR5L_uoo3OL2-LFAsj-4+8uEmL0BhT3ow@mail.gmail.com>
-	<5358bae8ab550_1f7b143d31037@nysa.notmuch>
-	<877g6fb2h6.fsf@fencepost.gnu.org>
-	<5358ca1a55a69_1f7b143d3101c@nysa.notmuch>
-	<20140424134106.GA27035@thunk.org> <20140424195559.GA1336@luc-arch>
-	<CALZVapn0gEHc7t2fjk7YGd2o0yfpGLu0JCgUtdREvROC8_mqXg@mail.gmail.com>
-	<87d2g69ekl.fsf@fencepost.gnu.org> <20140425154104.GB11479@google.com>
+Date: Fri, 25 Apr 2014 09:14:43 -0700
+Message-ID: <20140425161443.GE11479@google.com>
+References: <CAHYYfeFKW93GH+6-ssR5L_uoo3OL2-LFAsj-4+8uEmL0BhT3ow@mail.gmail.com>
+ <5358bae8ab550_1f7b143d31037@nysa.notmuch>
+ <877g6fb2h6.fsf@fencepost.gnu.org>
+ <5358ca1a55a69_1f7b143d3101c@nysa.notmuch>
+ <20140424134106.GA27035@thunk.org>
+ <20140424195559.GA1336@luc-arch>
+ <CALZVapn0gEHc7t2fjk7YGd2o0yfpGLu0JCgUtdREvROC8_mqXg@mail.gmail.com>
+ <87d2g69ekl.fsf@fencepost.gnu.org>
+ <20140425154104.GB11479@google.com>
+ <871twl9z8h.fsf@fencepost.gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
 Cc: Javier Domingo Cansino <javierdo1@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 25 17:59:52 2014
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Fri Apr 25 18:15:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WdiXX-0005yK-Bb
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Apr 2014 17:59:51 +0200
+	id 1WdimA-0005wz-VX
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Apr 2014 18:14:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752815AbaDYP7l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Apr 2014 11:59:41 -0400
-Received: from fencepost.gnu.org ([208.118.235.10]:36192 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751439AbaDYP7j (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Apr 2014 11:59:39 -0400
-Received: from localhost ([127.0.0.1]:35234 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1WdiXK-0002KR-Ri; Fri, 25 Apr 2014 11:59:39 -0400
-Received: by lola (Postfix, from userid 1000)
-	id 65AA5DF3E1; Fri, 25 Apr 2014 17:59:26 +0200 (CEST)
-In-Reply-To: <20140425154104.GB11479@google.com> (Jonathan Nieder's message of
-	"Fri, 25 Apr 2014 08:41:04 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
+	id S1753698AbaDYQOs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Apr 2014 12:14:48 -0400
+Received: from mail-pd0-f180.google.com ([209.85.192.180]:65018 "EHLO
+	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751278AbaDYQOq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Apr 2014 12:14:46 -0400
+Received: by mail-pd0-f180.google.com with SMTP id v10so3313511pde.39
+        for <git@vger.kernel.org>; Fri, 25 Apr 2014 09:14:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=mO+AiopxIVDtOou8oVZTom+H3eXVQHuYur043/gqjPg=;
+        b=uMNY9wfzf5G/ARdMqN404SMb2DskkXMHTDb2HKSkPF2P+1hJHY/W3S4vYlWq5rHyti
+         CjgQsPqgIdpCATuuPjyDdh218nGc1FB2AWdsGll2Fla7+9kcLLeDi/uXFcKUL4+gusqo
+         MA0wZfEBodcoONxtvp4EUo2/BJA9zmekwcCL1+syy1OmeXWOW/Yjrom2S3CVjbOBwx9w
+         aCXWkOfu8els6tQ+kb5un+csjR0PmGDkUxidbloYIiyQU2i3j6bydH76t2a6dFdc9Ovd
+         FZcAzkdx+6OifQ0Btp14AKnhMlCygDf2hx5VYuekVOJ3J+csvYS4mSkG1pXV/FzmMtA5
+         PqKw==
+X-Received: by 10.66.141.144 with SMTP id ro16mr8835126pab.131.1398442485972;
+        Fri, 25 Apr 2014 09:14:45 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id gz11sm16897713pbd.1.2014.04.25.09.14.44
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 25 Apr 2014 09:14:45 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <871twl9z8h.fsf@fencepost.gnu.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247050>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+David Kastrup wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> Hi,
+>> I probably missed a subtlety, but the above comment reminded me of
+>> some netiquette I think this list is starting to forget.  If I have
+>> misread it, please let me know and skip the rest of this message.
+[...]
+>> On the git list, the rule is simple.  Feel free to grumble, but make
+>> sure there is some contribution in the same message.
+[...]
+> Uh, Javier was commenting on a number of concrete proposals regarding
+> the subject line "What is missing from Git v2.0" and quoted Felipe
+> directly.  As you seem to have lost the context, let me requote the
+> respective portion:
+
+I hadn't lost the context, but thanks for a pointer.
+
+[...]
+>     = Reject non-fast-forward pulls by default =
+[...]
+>     The patches were sent, the issues were addressed, people agreed, and
+>     yet nothing happened.
 >
-> David Kastrup wrote:
->> Javier Domingo Cansino <javierdo1@gmail.com> writes:
+>     [3][4]
 >
->>> = Reject non-fast-forward pulls by default =
->>> Not having this introduced yet allows newbie people to use git with
->>> just 4 commands, without bothering around with fetch and merge and so.
->>
->> If you have a gun lying around your house, you should turn the safety
->> catch off or the children will not be able to use it without
->> instruction.
+>     [...]
 >
-> I probably missed a subtlety, but the above comment reminded me of
-> some netiquette I think this list is starting to forget.  If I have
-> misread it, please let me know and skip the rest of this message.
->
-> This is a comment about style, not substance.  Like coding style,
-> discussion style matters as a way of making life easier for
-> maintainers and new contributors, and different projects have subtly
-> different practices.
->
-> On the git list, the rule is simple.  Feel free to grumble, but make
-> sure there is some contribution in the same message.  For example,
-> after the confusing gun analogy you can say "How about this patch?"
-> and people reading can follow up by reviewing that patch and
-> potentially getting it applied.
+>     [3] http://thread.gmane.org/gmane.comp.version-control.git/240030
+>     [4] http://thread.gmane.org/gmane.comp.version-control.git/235981
 
-Uh, Javier was commenting on a number of concrete proposals regarding
-the subject line "What is missing from Git v2.0" and quoted Felipe
-directly.  As you seem to have lost the context, let me requote the
-respective portion:
+Unfortunately Felipe's summary is incomplete.
 
-    From: Felipe Contreras <felipe.contreras@gmail.com>
-    Subject: What is missing from Git v2.0
-    Newsgroups: gmane.comp.version-control.git
-    To: git@vger.kernel.org
-    Date: Sun, 20 Apr 2014 17:41:05 -0500 (4 days, 17 hours, 12 minutes ago)
+My message was meant as something that could be made into a reference
+for when similar questions of netiquette come up in the future (as for
+example they do all the time with Felipe).  That meant I didn't give
+as good advice for your particular case than I should have.
 
-    [...]
+For this particular case, my thoughts are:
 
-    = Reject non-fast-forward pulls by default =
+If you believe those patches should be applied, please re-send them
+with a summary of changes you've made (if any) and your opinion on
+any unaddressed comments from the review thread.
 
-    Many new-comers end up making merges by mistake when they pull
-    because they don't understand what is a non-fast-forward and what
-    they should actually be doing. Most people, even Linus Torvalds,
-    agreed that by default `git pull` should fail and guide the user,
-    instead of silently making a merge which might not be what the user
-    wants (even though he doesn't know it), and messing up the project's
-    history, which affects other people.
+If you believe those patches should not be applied, wouldn't it be
+better to reply to that thread to help in case someone wants to pick
+up the patches and fix them?
 
-    The patches were sent, the issues were addressed, people agreed, and
-    yet nothing happened.
+On the other hand if you just want to blow off steam, I guess that's
+fine too.  Just don't expect it to result in any patches being
+applied, code quality improving, etc.
 
-    [3][4]
-
-    [...]
-
-    [3] http://thread.gmane.org/gmane.comp.version-control.git/240030
-    [4] http://thread.gmane.org/gmane.comp.version-control.git/235981
-
-
-> "How do I get feedback on design of a new change without wasting a lot
-> of time coding something that might be a bad idea?"  Glad you asked.
-
-I didn't.
-
-> "What about reminders about known bugs?  There's this regression and
-> it would not be right to release without fixing it but I think it's
-> fallen through the cracks."  Yes, good contribution.
->
-> "What about jokes?"  Sure, making people laugh is productive.
->
-> "What about cryptic grumbling?"  Sorry, unless you are grumbling to
-> get input on how to improve git's documentation or code, it's not
-> enough to be worth sending an email to this list.
->
-> Hope that helps,
-
-No need to get condescending if you did not get the joke.
-
--- 
-David Kastrup
+Jonathan
