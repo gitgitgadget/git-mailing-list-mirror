@@ -1,130 +1,159 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] commit: do not complain of empty messages from -C
-Date: Fri, 25 Apr 2014 19:11:15 -0400
-Message-ID: <20140425231115.GA3855@sigill.intra.peff.net>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v3 16/19] branch.c: use ref transaction for all ref updates
+Date: Sat, 26 Apr 2014 01:16:21 +0200
+Message-ID: <535AECC5.3090100@alum.mit.edu>
+References: <1398442494-23438-1-git-send-email-sahlberg@google.com> <1398442494-23438-17-git-send-email-sahlberg@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 26 01:11:28 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: Ronnie Sahlberg <sahlberg@google.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 26 01:16:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WdpHC-0007uF-43
-	for gcvg-git-2@plane.gmane.org; Sat, 26 Apr 2014 01:11:26 +0200
+	id 1WdpM6-0007tm-3n
+	for gcvg-git-2@plane.gmane.org; Sat, 26 Apr 2014 01:16:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752792AbaDYXLT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Apr 2014 19:11:19 -0400
-Received: from cloud.peff.net ([50.56.180.127]:38709 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752702AbaDYXLR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Apr 2014 19:11:17 -0400
-Received: (qmail 5292 invoked by uid 102); 25 Apr 2014 23:11:17 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 25 Apr 2014 18:11:17 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 25 Apr 2014 19:11:15 -0400
-Content-Disposition: inline
+	id S1751916AbaDYXQ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Apr 2014 19:16:26 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:43761 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751468AbaDYXQY (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 25 Apr 2014 19:16:24 -0400
+X-AuditID: 12074413-f79076d000002d17-b8-535aecc79b6e
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 52.E2.11543.7CCEA535; Fri, 25 Apr 2014 19:16:23 -0400 (EDT)
+Received: from [192.168.69.130] (p5DDB3785.dip0.t-ipconnect.de [93.219.55.133])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s3PNGMeX010979
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Fri, 25 Apr 2014 19:16:23 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.4.0
+In-Reply-To: <1398442494-23438-17-git-send-email-sahlberg@google.com>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFuplleLIzCtJLcpLzFFi42IRYndR1D3+JirY4OYqI4uuK91MFv8m1Dgw
+	eSzYVOrxeZNcAFMUt01SYklZcGZ6nr5dAnfGjGUZBZ3SFV8/3GRrYPwh0sXIySEhYCJxZmET
+	O4QtJnHh3nq2LkYuDiGBy4wSE9d8ZYdwzjNJnHjYytzFyMHBK6AtcfOZKIjJIqAqMfWiAUgv
+	m4CuxKKeZiaQsKhAkMSfs4ogYV4BQYmTM5+wgNgiAnYS628tZAaxhQX8JdY+eMoGYgsJ1Ehc
+	XLGIEcTmFHCVOPxwL9gYCQFxiZ7GIJAws4COxLu+B8wQtrzE9rdzmCcwCsxCsmEWkrJZSMoW
+	MDKvYpRLzCnN1c1NzMwpTk3WLU5OzMtLLdI118vNLNFLTSndxAgJTuEdjLtOyh1iFOBgVOLh
+	3ZkTFSzEmlhWXJl7iFGSg0lJlFf2NVCILyk/pTIjsTgjvqg0J7X4EKMEB7OSCO/RB0A53pTE
+	yqrUonyYlDQHi5I4r9oSdT8hgfTEktTs1NSC1CKYrAwHh5IEbzbIUMGi1PTUirTMnBKENBMH
+	J8hwLimR4tS8lNSixNKSjHhQhMYXA2MUJMUDtLcWpJ23uCAxFygK0XqKUZfjQsOKFiYhlrz8
+	vFQpcd7Dr4CKBECKMkrz4FbAUtErRnGgj4UhLuEBpjG4Sa+AljABLSmYEA6ypCQRISXVwFh7
+	MvCuzZcJ535c9LK93lthzvF6/vuLX2Sf81SWLut9b20g7iXBIZLAbn1bcJniF4nVTAHZEf28
+	EpWaj2XcX1oeObPyc9tBIZsY1b/fnxv+sVT4rJrw7KDIz2UNpyO35F66wXBmze7s 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247130>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247131>
 
-When we pick another commit's message, we die() immediately
-if we find that it's empty and we are not going to run an
-editor (i.e., when running "-C" instead of "-c").  However,
-this check is redundant and harmful.
+On 04/25/2014 06:14 PM, Ronnie Sahlberg wrote:
+> Change create_branch to use a ref transaction when creating the new branch.
+> ref_transaction_create will check that the ref does not already exist and fail
+> otherwise meaning that we no longer need to keep a lock on the ref during the
+> setup_tracking. This simplifies the code since we can now do the transaction
+> in one single step.
+> 
+> If the forcing flag is false then use ref_transaction_create since this will
+> fail if the ref already exist. Otherwise use ref_transaction_update.
+> 
+> This also fixes a race condition in the old code where two concurrent
+> create_branch could race since the lock_any_ref_for_update/write_ref_sha1
+> did not protect against the ref already existsing. I.e. one thread could end up
+> overwriting a branch even if the forcing flag is false.
+> 
+> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+> ---
+>  branch.c | 39 +++++++++++++++++++++++++--------------
+>  1 file changed, 25 insertions(+), 14 deletions(-)
+> 
+> diff --git a/branch.c b/branch.c
+> index 660097b..23cde1e 100644
+> --- a/branch.c
+> +++ b/branch.c
+> @@ -226,7 +226,6 @@ void create_branch(const char *head,
+>  		   int force, int reflog, int clobber_head,
+>  		   int quiet, enum branch_track track)
+>  {
+> -	struct ref_lock *lock = NULL;
+>  	struct commit *commit;
+>  	unsigned char sha1[20];
+>  	char *real_ref, msg[PATH_MAX + 20];
+> @@ -285,15 +284,6 @@ void create_branch(const char *head,
+>  		die(_("Not a valid branch point: '%s'."), start_name);
+>  	hashcpy(sha1, commit->object.sha1);
+>  
+> -	if (!dont_change_ref) {
+> -		lock = lock_any_ref_for_update(ref.buf, NULL, 0, NULL);
+> -		if (!lock)
+> -			die_errno(_("Failed to lock ref for update"));
+> -	}
+> -
+> -	if (reflog)
+> -		log_all_ref_updates = 1;
+> -
+>  	if (forcing)
+>  		snprintf(msg, sizeof msg, "branch: Reset to %s",
+>  			 start_name);
+> @@ -301,13 +291,34 @@ void create_branch(const char *head,
+>  		snprintf(msg, sizeof msg, "branch: Created from %s",
+>  			 start_name);
+>  
+> +	if (reflog)
+> +		log_all_ref_updates = 1;
+> +
+> +	if (!dont_change_ref) {
+> +		struct ref_transaction *transaction;
+> +		char *err = NULL;
+> +
+> +		transaction = ref_transaction_begin();
+> +		if (forcing) {
+> +			if (!transaction ||
+> +			    ref_transaction_update(transaction, ref.buf, sha1,
+> +						   NULL, 0, 0) ||
+> +			    ref_transaction_commit(transaction, msg, &err))
+> +			  die_errno(_("%s: failed to write ref: %s"),
+> +				    ref.buf, err);
+> +		} else {
+> +			if (!transaction ||
+> +			    ref_transaction_create(transaction, ref.buf, sha1,
+> +						   0) ||
+> +			    ref_transaction_commit(transaction, msg, &err))
+> +			  die_errno(_("%s: failed to write ref: %s"),
+> +				    ref.buf, err);
+> +		}
 
-It's redundant because we will already notice the empty
-message later, after we would have run the editor, and die
-there (just as we would for a regular, not "-C" case, where
-the user provided an empty message in the editor).
+You've got some indentation problems above.
 
-It's harmful for a few reasons:
+But actually, there seems like a lot of duplicated code here.  Couldn't
+you instead do a single block with have_old set based on forcing:
 
-  1. It does not respect --allow-empty-message. As a result,
-     a "git rebase -i" cannot "pick" such a commit. So you
-     cannot even go back in time to fix it with a "reword"
-     or "edit" instruction.
+    ref_transaction_update(transaction, ref.buf, sha1,
+			   null_sha1, 0, !forcing)
 
-  2. It does not take into account other ways besides the
-     editor to modify the message. For example, "git commit
-     -C empty-commit -m foo" could take the author
-     information from empty-commit, but add a message to it.
-     There's more to do to make that work correctly (and
-     right now we explicitly forbid "-C with -m"), but this
-     removes one roadblock.
+?
 
-  3. The existing check is not enough to prevent segfaults.
-     We try to find the "\n\n" header/body boundary in the
-     commit. If it is at the end of the string (i.e., no
-     body), _or_ if we cannot find it at all (i.e., a
-     truncated commit object), we consider the message
-     empty. With "-C", that's OK; we die in either case. But
-     with "-c", we continue on, and in the case of a
-     truncated commit may end up dereferencing NULL+2.
+> +	}
+> +
+>  	if (real_ref && track)
+>  		setup_tracking(ref.buf + 11, real_ref, track, quiet);
+>  
+> -	if (!dont_change_ref)
+> -		if (write_ref_sha1(lock, sha1, msg) < 0)
+> -			die_errno(_("Failed to write ref"));
+> -
+>  	strbuf_release(&ref);
+>  	free(real_ref);
+>  }
+> 
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-I care most about the "rebase -i" thing, especially because it is the
-primary method for fixing old mistakes. The segfault fix is a nice
-bonus.
 
-The "git commit -C empty -m foo" thing might be nice, but I don't plan
-to work on it further. The semantics would need to be figured out (does
-it append or replace?), and you can always just use "-c" to fire up an
-actual editor and write the new content there.
-
- builtin/commit.c  |  5 ++---
- t/t7500-commit.sh | 11 ++++++++++-
- 2 files changed, 12 insertions(+), 4 deletions(-)
-
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 9cfef6c..65c069d 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -650,9 +650,8 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 	} else if (use_message) {
- 		char *buffer;
- 		buffer = strstr(use_message_buffer, "\n\n");
--		if (!use_editor && (!buffer || buffer[2] == '\0'))
--			die(_("commit has empty message"));
--		strbuf_add(&sb, buffer + 2, strlen(buffer + 2));
-+		if (buffer)
-+			strbuf_add(&sb, buffer + 2, strlen(buffer + 2));
- 		hook_arg1 = "commit";
- 		hook_arg2 = use_message;
- 	} else if (fixup_message) {
-diff --git a/t/t7500-commit.sh b/t/t7500-commit.sh
-index bdc1f29..116885a 100755
---- a/t/t7500-commit.sh
-+++ b/t/t7500-commit.sh
-@@ -223,7 +223,8 @@ test_expect_success 'Commit without message is allowed with --allow-empty-messag
- 	git add foo &&
- 	>empty &&
- 	git commit --allow-empty-message <empty &&
--	commit_msg_is ""
-+	commit_msg_is "" &&
-+	git tag empty-message-commit
- '
- 
- test_expect_success 'Commit without message is no-no without --allow-empty-message' '
-@@ -240,6 +241,14 @@ test_expect_success 'Commit a message with --allow-empty-message' '
- 	commit_msg_is "hello there"
- '
- 
-+test_expect_success 'commit -C empty respects --allow-empty-message' '
-+	echo more >>foo &&
-+	git add foo &&
-+	test_must_fail git commit -C empty-message-commit &&
-+	git commit -C empty-message-commit --allow-empty-message &&
-+	commit_msg_is ""
-+'
-+
- commit_for_rebase_autosquash_setup () {
- 	echo "first content line" >>foo &&
- 	git add foo &&
 -- 
-1.9.1.656.ge8a0637
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
