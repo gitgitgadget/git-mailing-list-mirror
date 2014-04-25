@@ -1,100 +1,168 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: What is missing from Git v2.0
-Date: Fri, 25 Apr 2014 14:27:15 -0500
-Message-ID: <535ab7137ac2_48b3d8330866@nysa.notmuch>
-References: <20140424195559.GA1336@luc-arch>
- <CALZVapn0gEHc7t2fjk7YGd2o0yfpGLu0JCgUtdREvROC8_mqXg@mail.gmail.com>
- <5359c9d612298_771c15f72f02a@nysa.notmuch>
- <CAGK7Mr6dss7BF-srQ3SqeZe2hAe9nS07fGe--ka1rvC5hXvbSA@mail.gmail.com>
- <20140425133520.GC11124@thunk.org>
- <535a9f375e196_3984aa530c46@nysa.notmuch>
- <20140425182459.GA29329@sigill.intra.peff.net>
- <535aa905cd59c_44cee6530ccb@nysa.notmuch>
- <20140425185731.GA31454@sigill.intra.peff.net>
- <535ab03711d81_471d7d930822@nysa.notmuch>
- <20140425191236.GA31637@sigill.intra.peff.net>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v10 11/12] Documentation: add documentation for 'git
+ interpret-trailers'
+Date: Fri, 25 Apr 2014 21:56:19 +0200 (CEST)
+Message-ID: <20140425.215619.2296838250398594645.chriscool@tuxfamily.org>
+References: <20140406163214.15116.91484.chriscool@tuxfamily.org>
+	<20140406170204.15116.15559.chriscool@tuxfamily.org>
+	<xmqqmwfv3433.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+Content-Type: Text/Plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: Theodore Ts'o <tytso@mit.edu>,
-	Philippe Vaucher <philippe.vaucher@gmail.com>,
-	Javier Domingo Cansino <javierdo1@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 25 21:37:52 2014
+Cc: git@vger.kernel.org, johan@herland.net, josh@joshtriplett.org,
+	tr@thomasrast.ch, mhagger@alum.mit.edu, dan.carpenter@oracle.com,
+	greg@kroah.com, peff@peff.net, sunshine@sunshineco.com,
+	ramsay@ramsay1.demon.co.uk, jrnieder@gmail.com
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Apr 25 21:56:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WdlwV-00022r-Pn
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Apr 2014 21:37:52 +0200
+	id 1WdmEW-0007hv-M5
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Apr 2014 21:56:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753608AbaDYThp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Apr 2014 15:37:45 -0400
-Received: from mail-ob0-f175.google.com ([209.85.214.175]:58107 "EHLO
-	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753148AbaDYTho (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Apr 2014 15:37:44 -0400
-Received: by mail-ob0-f175.google.com with SMTP id wp4so4733791obc.6
-        for <git@vger.kernel.org>; Fri, 25 Apr 2014 12:37:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=bQ+isM0hlMbWBsBQM2eFUXtg5vAIAod0NaYbTmbwGzI=;
-        b=B3OsgMaZku+VaY0+E4dUumJZymaspLtiF4zy2MB3jBb3DXpmWmPhnaB38Mvr2LE213
-         rLlOkrKkxKD7BW3Z9t/qwnMoYZ6NWQYksX/nIFGuJMHIZG0cMAi7DjVlBotUG0bGcYHb
-         VegYSBv0+1qyqap7Pg90UR4KcIbyHUcefLG7QDMQ012KeNibxB4UEqws2t5TkXz+Q0jY
-         HlJN5uMxJcJTVZXzwWoviFcA//ycrJxxp7otO2BKt+cWriDjifzmqKdzpuyDWcDS/L4A
-         tmmJWbOFPUBGMOzGyK621PN/S5kl4q7/OOPfaXAyUdfEkiWFQmzE/nz55DtlW+1LDn+C
-         WHyw==
-X-Received: by 10.60.140.201 with SMTP id ri9mr2327762oeb.74.1398454663883;
-        Fri, 25 Apr 2014 12:37:43 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id f9sm17449347obm.2.2014.04.25.12.37.41
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 25 Apr 2014 12:37:42 -0700 (PDT)
-In-Reply-To: <20140425191236.GA31637@sigill.intra.peff.net>
+	id S1752819AbaDYT4Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Apr 2014 15:56:24 -0400
+Received: from mail-3y.bbox.fr ([194.158.98.45]:60930 "EHLO mail-3y.bbox.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751911AbaDYT4W (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Apr 2014 15:56:22 -0400
+Received: from localhost (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
+	by mail-3y.bbox.fr (Postfix) with ESMTP id 680213A;
+	Fri, 25 Apr 2014 21:56:20 +0200 (CEST)
+In-Reply-To: <xmqqmwfv3433.fsf@gitster.dls.corp.google.com>
+X-Mailer: Mew version 6.3 on Emacs 23.3 / Mule 6.0 (HANACHIRUSATO)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247110>
 
-Jeff King wrote:
-> On Fri, Apr 25, 2014 at 01:57:59PM -0500, Felipe Contreras wrote:
+From: Junio C Hamano <gitster@pobox.com>
+>
+> Christian Couder <chriscool@tuxfamily.org> writes:
 > 
-> > > Maybe I was not clear in my response, so let me try again. I do _not_
-> > > necessarily agree that we need to move away from the name index.
-> > 
-> > So you agree that "the index" is a bad name, and you agree "staging area" is a
-> > better name, yet you don't agree we should move away from the term "index"?
+>> +Help add RFC 822-like headers, called 'trailers', at the end of the
+>> +otherwise free-form part of a commit message.
 > 
-> I don't agree that "the index" is a "bad" name, because that implies
-> some objective level of "bad".
+> I think it is somewhat misleading to use the word "headers" like
+> that.  'trailers' look similar to RFC-822-headers but they come at
+> the end.  The sentence however reads as if they are "headers" that
+> look like RFC 822.  Perhaps shuffling words like so:
 > 
-> I do think the name "staging area" is fine, and I think it may even be
-> better than "index", if we were picking a name out of the blue.
+> 	Help adding 'trailers' lines, that look similar to RFC 822
+> 	e-mail headers, at the end of the ...
+> 
+> would make it less confusing.
 
-> The way you have phrased it seems like you are trying to create a logical
-> contradiction: A is bad, B is good, therefore we should move from A to B.
+Ok, I made this change in v11.
 
-A _is_ bad, and B _is_ good. That's what I, and many people, have argued, and
-that's what the vast majority of people have agreed.
+>> +Some configuration variables control the way the `token` arguments are
+>> +applied to the message and the way any existing trailer in the message
+>> +is changed. They also make it possible to automatically add some
+>> +trailers.
+>> +
+>> +By default, a 'token=value' or 'token:value' argument will be added
+>> +only if no trailer with the same (token, value) pair is already in the
+>> +message. The 'token' and 'value' parts will be trimmed to remove
+>> +starting and trailing whitespace, and the resulting trimmed 'token'
+>> +and 'value' will appear in the message like this:
+>> +
+>> +------------------------------------------------
+>> +token: value
+>> +------------------------------------------------
+> 
+> Mental note: this does assume that the final output for the 'token'
+> is to have a line <label> that is followed by a colon ":", SP and
+> the value.
+> 
+> And the natural way to express that on the command line would be to
+> say "token: value", I would think, but let's just read on.
+> 
+>> +Note that 'trailers' do not follow and are not intended to follow many
+>> +rules that are in RFC 822. For example they do not follow the line
+>> +breaking rules, the encoding rules and probably many other rules.
+> 
+> s/that are in RFC 822/for RFC 822 headers/.
+> s/line breaking/line folding/. (see RFC 822, 3.1.1)
 
-> But that neglects the cost of moving.
+Ok, it's in v11 too.
 
-And you neglect the benefits of moving.
+>> +OPTIONS
+>> +-------
+>> +--trim-empty::
+>> +	If the 'value' part of any trailer contains only whitespace,
+>> +	the whole trailer will be removed from the resulting message.
+>> +
+>> +CONFIGURATION VARIABLES
+>> +-----------------------
+>> +
+>> +trailer.<token>.key::
+>> +	This 'key' will be used instead of 'token' in the
+> 
+> As `key` is something that is typed literally, it should be typeset
+> as `key` in the descriptive text.
 
-It is very clear that the costs of moving are negligible in comparison to the
-benefits.
+Ok, I used `key` in v11.
 
-But you *always* resist any change, so of course you wouldn't agree on change.
-And that's why nothing ever changes.
+> I think other manpages spell the
+> placeholder as `<token>` (or '<token>', I am not sure which...).
 
--- 
-Felipe Contreras
+I found mostly <token>, so I used that in v11.
+
+>> +	trailer. After some alphanumeric characters, it can contain
+>> +	some non alphanumeric characters like ':', '=' or '#' that will
+>> +	be used instead of ':' to separate the token from the value in
+>> +	the trailer, though the default ':' is more standard.
+> 
+> I assume that this is for things like
+> 
+> 	bug #538
+> 
+> and the configuration would say something like:
+> 
+> 	[trailer "bug"]
+>         	key = "bug #"
+> 
+> For completeness (of this example), the bog-standard s-o-b would
+> look like
+> 
+> 	Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> 
+> and the configuration for it that spell the redundant "key" would
+> be:
+> 
+> 	[trailer "Signed-off-by"]
+>         	key = "Signed-off-by: "
+
+Yeah, but you can use the following instead:
+
+ 	[trailer "s-o-b"]
+         	key = "Signed-off-by: "
+
+The <token> and the key can be different.
+
+> Am I reading the intention correctly?
+
+Yeah, I think so.
+
+> That is, when trailer.<token>.key is not defined, the value defaults
+> to "<token>: " (with one SP after the label and colon),
+
+Yes.
+
+> and when it
+> is defined, the value can come directly after it.
+
+The value can come directly after the key, only if the key ends with '#'.
+
+If it ends with something else, except spaces, one SP will be added
+between the key and the value.
+
+Yeah, I made '#' special in the hope that it would be more compatible
+with GitHub and other services that might also use '#'.
+
+Thanks,
+Christian.
