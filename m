@@ -1,108 +1,83 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: What is missing from Git v2.0
-Date: Fri, 25 Apr 2014 13:27:17 -0500
-Message-ID: <535aa905cd59c_44cee6530ccb@nysa.notmuch>
-References: <5358bae8ab550_1f7b143d31037@nysa.notmuch>
- <877g6fb2h6.fsf@fencepost.gnu.org>
- <5358ca1a55a69_1f7b143d3101c@nysa.notmuch>
- <20140424134106.GA27035@thunk.org>
- <20140424195559.GA1336@luc-arch>
- <CALZVapn0gEHc7t2fjk7YGd2o0yfpGLu0JCgUtdREvROC8_mqXg@mail.gmail.com>
- <5359c9d612298_771c15f72f02a@nysa.notmuch>
- <CAGK7Mr6dss7BF-srQ3SqeZe2hAe9nS07fGe--ka1rvC5hXvbSA@mail.gmail.com>
- <20140425133520.GC11124@thunk.org>
- <535a9f375e196_3984aa530c46@nysa.notmuch>
- <20140425182459.GA29329@sigill.intra.peff.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] Revert "Stop starting pager recursively"
+Date: Fri, 25 Apr 2014 20:49:52 +0200
+Message-ID: <vpqoazpdz1r.fsf@anie.imag.fr>
+References: <20140421204622.GA9532@logfs.org>
+	<20140425182928.GA29904@logfs.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Theodore Ts'o <tytso@mit.edu>,
-	Philippe Vaucher <philippe.vaucher@gmail.com>,
-	Javier Domingo Cansino <javierdo1@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 25 20:37:56 2014
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?iso-8859-1?Q?J=F6rn?= Engel <joern@logfs.org>
+X-From: git-owner@vger.kernel.org Fri Apr 25 20:50:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wdl0V-0004Qi-3P
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Apr 2014 20:37:55 +0200
+	id 1WdlCD-000740-Hj
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Apr 2014 20:50:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754093AbaDYShs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Apr 2014 14:37:48 -0400
-Received: from mail-oa0-f42.google.com ([209.85.219.42]:64866 "EHLO
-	mail-oa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753608AbaDYShp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Apr 2014 14:37:45 -0400
-Received: by mail-oa0-f42.google.com with SMTP id i4so4665323oah.1
-        for <git@vger.kernel.org>; Fri, 25 Apr 2014 11:37:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=sU8ZRpdPyyau/hcpDYXlz3fSAlfBI+o55hKNWZsR2is=;
-        b=adBTqaF6zhdzk5J0lz3sjfOb0P/nxkdymXjcCGxbYrX/axvXY+GYhH297oBSfsDuCf
-         SA1FkRPtbcoQn+bYUEIs4zHLNiij+4XKEdLjAnbVxoaZWzlTqsi0JdJc5QRGy9bR1qHY
-         epfFFnHB5jm/gK+hJy2yFmKtV8648ciOxsT9u0I+FpP9J0WWthokuZFsvquJHLdPqJNV
-         8Q/aGWMDOH4SIR1+2moTIUA+tEemojRgZpRhdcgoqxJTwcv1dZdoD894TQJnkNHk2fNc
-         UB4da7EIszX74Pw8RKHERnJ6y4grxaVdDMx7IwVs3J2y8i45pFgUI3OFQgpYlMzAqcD5
-         knuQ==
-X-Received: by 10.182.75.225 with SMTP id f1mr2723588obw.66.1398451065341;
-        Fri, 25 Apr 2014 11:37:45 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id zm8sm17120581obc.16.2014.04.25.11.37.43
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 25 Apr 2014 11:37:44 -0700 (PDT)
-In-Reply-To: <20140425182459.GA29329@sigill.intra.peff.net>
+	id S1753465AbaDYSt5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Apr 2014 14:49:57 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:35916 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751966AbaDYSt4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Apr 2014 14:49:56 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s3PInocb016326
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 25 Apr 2014 20:49:50 +0200
+Received: from anie.imag.fr (ensi-vpn-250.imag.fr [129.88.57.250])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s3PInqqK003735;
+	Fri, 25 Apr 2014 20:49:52 +0200
+In-Reply-To: <20140425182928.GA29904@logfs.org> (=?iso-8859-1?Q?=22J=F6rn?=
+ Engel"'s message of
+	"Fri, 25 Apr 2014 14:29:29 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 25 Apr 2014 20:49:50 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s3PInocb016326
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1399056591.51542@PTUXQNjnw30sRvGD1lYIfA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247093>
 
-Jeff King wrote:
-> On Fri, Apr 25, 2014 at 12:45:27PM -0500, Felipe Contreras wrote:
-> 
-> > When I say literally everbody agreed to move away from the name "index" (except
-> > Junio and another guy) I mean it. I even composed a list:
-> > 
-> > http://article.gmane.org/gmane.comp.version-control.git/233469
-> > 
-> > Jeff King, Jonathan Nieder, Matthieu Moy, they all agreed.
-> 
-> With reference to my name, your email says:
-> 
->   Jeff King:
->   "staging area" makes perfect sense
-> 
-> But here's that statement in context[1]:
-> 
->   So the term "staging area" makes perfect sense to me; it is where we
->   collect changes to make a commit. I am willing to accept that does not
->   to others (native English speakers or no), and that we may need to
->   come up with a better term. But I think just calling it "the stage" is
->   even worse; it loses the concept that it is a place for collecting and
->   organizing.
-> 
-> In other words, I was saying that the term makes sense to me, and
-> primarily comparing favorably to a worse proposal. I am not commenting
-> at all on a plan to change names, which is what you are claiming above.
-> 
-> I do think the term "staging area" is fine, but picking a term is only
-> step one of a plan. The rest is deciding how to make the change, and
-> whether it is worth it. I remain undecided on the latter bits. Please
-> don't quote me out of context in a way that implies that I am decided.
+J=F6rn Engel <joern@logfs.org> writes:
 
-I specifically said everybody agreed to "move away from the name 'index'", I
-didn't say everybody agreed on the "staged area" although the vast majority
-did, and I didn't say anybody agreed on my patches, although some did.
+> On Mon, 21 April 2014 16:46:22 -0400, J=F6rn Engel wrote:
+>>=20
+>> This reverts commit 88e8f908f2b0c56f9ccf8134d8ff9f689af9cc84.
+>>=20
+>> Caused a usability regression for me and foul language for my cowork=
+ers.
+>
+> Ping.
 
-I think I was clear.
+How do you solve the problem that the commit you revert was solving? Th=
+e
+commit you propose to revert says in its message:
 
--- 
-Felipe Contreras
+    git-column can be used as a pager for other git commands, something
+    like this:
+   =20
+        GIT_PAGER=3D"git -p column --mode=3D'dense color'" git -p branc=
+h
+   =20
+    The problem with this is that "git -p column" also has $GIT_PAGER s=
+et so
+    the pager runs itself again as another pager. The end result is an
+    infinite loop of forking.
+
+There's probably a solution, but you can't ignore the problem (or
+someone else will later try to solve the infinite loop and revert your
+commit, and so on ...).
+
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
