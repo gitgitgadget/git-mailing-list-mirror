@@ -1,78 +1,84 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 try2 14/14] completion: update 'git reset' new stage options
-Date: Fri, 25 Apr 2014 13:12:47 -0500
-Message-ID: <1398449567-16314-15-git-send-email-felipe.contreras@gmail.com>
-References: <1398449567-16314-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
-	Jay Soffian <jaysoffian@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Philip Oakley <philipoakley@iee.org>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	William Swanson <swansontec@gmail.com>,
-	Ping Yin <pkufranky@gmail.com>,
-	Hilco Wijbenga <hilco.wijbenga@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 25 20:24:27 2014
+From: Jeff King <peff@peff.net>
+Subject: Re: What is missing from Git v2.0
+Date: Fri, 25 Apr 2014 14:24:59 -0400
+Message-ID: <20140425182459.GA29329@sigill.intra.peff.net>
+References: <5358bae8ab550_1f7b143d31037@nysa.notmuch>
+ <877g6fb2h6.fsf@fencepost.gnu.org>
+ <5358ca1a55a69_1f7b143d3101c@nysa.notmuch>
+ <20140424134106.GA27035@thunk.org>
+ <20140424195559.GA1336@luc-arch>
+ <CALZVapn0gEHc7t2fjk7YGd2o0yfpGLu0JCgUtdREvROC8_mqXg@mail.gmail.com>
+ <5359c9d612298_771c15f72f02a@nysa.notmuch>
+ <CAGK7Mr6dss7BF-srQ3SqeZe2hAe9nS07fGe--ka1rvC5hXvbSA@mail.gmail.com>
+ <20140425133520.GC11124@thunk.org>
+ <535a9f375e196_3984aa530c46@nysa.notmuch>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Theodore Ts'o <tytso@mit.edu>,
+	Philippe Vaucher <philippe.vaucher@gmail.com>,
+	Javier Domingo Cansino <javierdo1@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 25 20:25:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WdknS-0007e8-NZ
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Apr 2014 20:24:27 +0200
+	id 1WdkoH-0000ZV-1Z
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Apr 2014 20:25:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753890AbaDYSYP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Apr 2014 14:24:15 -0400
-Received: from mail-oa0-f51.google.com ([209.85.219.51]:44955 "EHLO
-	mail-oa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753692AbaDYSYN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Apr 2014 14:24:13 -0400
-Received: by mail-oa0-f51.google.com with SMTP id i4so4606655oah.38
-        for <git@vger.kernel.org>; Fri, 25 Apr 2014 11:24:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=H7Nr61BeSjqU3QtKaRKLjd7cxhphW81tzLH9E235ocw=;
-        b=CoADb9RZXioPCB+Ue5T1l5EL24defOg51ibsRN1MmpOOhCup+fse4qXZRShw7KVg3I
-         9U+2sTar1tqXWsOk/EIXgwp0tFUqS7mYUAtiyN2LdCJCC8VjbYKC7zh0vbiS1xCYJv5r
-         TEOsxMaOrDR2+fdJQ2WJayu88gpeSILv8L5Vj7Jrazc4t4u10/AYhPPg84RXHRpXs1SP
-         hdJg0skoxg83l3r9UB4Hes7T/pjdDt7/jcqBP4CISl8Hj9xz6EEDz3iOA58+mnAK0j5o
-         xKfSDKmloG9sSJdDSndMvEl/7K8GiXW+XKhsVhC2MDVqU1kOlkJ1zP00cUJiogwoTJlY
-         SlQw==
-X-Received: by 10.182.135.228 with SMTP id pv4mr2825217obb.62.1398450252520;
-        Fri, 25 Apr 2014 11:24:12 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id te6sm34756748oec.2.2014.04.25.11.24.10
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 25 Apr 2014 11:24:11 -0700 (PDT)
-X-Mailer: git-send-email 1.9.2+fc1.2.gfbaae8c
-In-Reply-To: <1398449567-16314-1-git-send-email-felipe.contreras@gmail.com>
+	id S1754206AbaDYSZI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Apr 2014 14:25:08 -0400
+Received: from cloud.peff.net ([50.56.180.127]:38479 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753832AbaDYSZC (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Apr 2014 14:25:02 -0400
+Received: (qmail 19908 invoked by uid 102); 25 Apr 2014 18:25:01 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 25 Apr 2014 13:25:01 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 25 Apr 2014 14:24:59 -0400
+Content-Disposition: inline
+In-Reply-To: <535a9f375e196_3984aa530c46@nysa.notmuch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247088>
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- contrib/completion/git-completion.bash | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+On Fri, Apr 25, 2014 at 12:45:27PM -0500, Felipe Contreras wrote:
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 52d83f2..e9b793b 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2248,7 +2248,8 @@ _git_reset ()
- 
- 	case "$cur" in
- 	--*)
--		__gitcomp "--merge --mixed --hard --soft --patch"
-+		__gitcomp "--merge --mixed --hard --soft --patch --keep --merge
-+			--stage --no-stage --work --no-work"
- 		return
- 		;;
- 	esac
--- 
-1.9.2+fc1.2.gfbaae8c
+> When I say literally everbody agreed to move away from the name "index" (except
+> Junio and another guy) I mean it. I even composed a list:
+> 
+> http://article.gmane.org/gmane.comp.version-control.git/233469
+> 
+> Jeff King, Jonathan Nieder, Matthieu Moy, they all agreed.
+
+With reference to my name, your email says:
+
+  Jeff King:
+  "staging area" makes perfect sense
+
+But here's that statement in context[1]:
+
+  So the term "staging area" makes perfect sense to me; it is where we
+  collect changes to make a commit. I am willing to accept that does not
+  to others (native English speakers or no), and that we may need to
+  come up with a better term. But I think just calling it "the stage" is
+  even worse; it loses the concept that it is a place for collecting and
+  organizing.
+
+In other words, I was saying that the term makes sense to me, and
+primarily comparing favorably to a worse proposal. I am not commenting
+at all on a plan to change names, which is what you are claiming above.
+
+I do think the term "staging area" is fine, but picking a term is only
+step one of a plan. The rest is deciding how to make the change, and
+whether it is worth it. I remain undecided on the latter bits. Please
+don't quote me out of context in a way that implies that I am decided.
+
+-Peff
+
+[1] http://article.gmane.org/gmane.comp.version-control.git/168012
