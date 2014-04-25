@@ -1,76 +1,108 @@
-From: Richard Hansen <rhansen@bbn.com>
-Subject: Re: [SECURITY PATCH] git-prompt.sh: don't put unsanitized branch
- names in $PS1
-Date: Fri, 25 Apr 2014 12:39:47 -0400
-Message-ID: <535A8FD3.2070409@bbn.com>
-References: <E1WdOZY-0006ck-F9@iramx2.ira.uni-karlsruhe.de> <20140425073724.GA9384@xs4all.nl>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: What is missing from Git v2.0
+Date: Fri, 25 Apr 2014 12:45:27 -0500
+Message-ID: <535a9f375e196_3984aa530c46@nysa.notmuch>
+References: <53588f448d817_59ed83d3084e@nysa.notmuch>
+ <CAHYYfeFKW93GH+6-ssR5L_uoo3OL2-LFAsj-4+8uEmL0BhT3ow@mail.gmail.com>
+ <5358bae8ab550_1f7b143d31037@nysa.notmuch>
+ <877g6fb2h6.fsf@fencepost.gnu.org>
+ <5358ca1a55a69_1f7b143d3101c@nysa.notmuch>
+ <20140424134106.GA27035@thunk.org>
+ <20140424195559.GA1336@luc-arch>
+ <CALZVapn0gEHc7t2fjk7YGd2o0yfpGLu0JCgUtdREvROC8_mqXg@mail.gmail.com>
+ <5359c9d612298_771c15f72f02a@nysa.notmuch>
+ <CAGK7Mr6dss7BF-srQ3SqeZe2hAe9nS07fGe--ka1rvC5hXvbSA@mail.gmail.com>
+ <20140425133520.GC11124@thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+ charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, sitaramc@gmail.com,
-	git@vger.kernel.org
-To: Simon Oosthoek <s.oosthoek@xs4all.nl>,
-	G?bor Szeder <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Fri Apr 25 18:40:04 2014
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Javier Domingo Cansino <javierdo1@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Theodore Ts'o <tytso@mit.edu>,
+	Philippe Vaucher <philippe.vaucher@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 25 19:56:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WdjAQ-0005Hj-P6
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Apr 2014 18:40:03 +0200
+	id 1WdkM3-0002nM-R0
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Apr 2014 19:56:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752460AbaDYQj6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Apr 2014 12:39:58 -0400
-Received: from smtp.bbn.com ([128.33.0.80]:27174 "EHLO smtp.bbn.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751231AbaDYQj5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Apr 2014 12:39:57 -0400
-Received: from socket.bbn.com ([192.1.120.102]:41146)
-	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
-	(Exim 4.77 (FreeBSD))
-	(envelope-from <rhansen@bbn.com>)
-	id 1WdjAD-0003PF-Ks; Fri, 25 Apr 2014 12:39:49 -0400
-X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id E56CB3FFFC
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
-In-Reply-To: <20140425073724.GA9384@xs4all.nl>
-X-Enigmail-Version: 1.6
+	id S1753216AbaDYR4A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Apr 2014 13:56:00 -0400
+Received: from mail-ob0-f170.google.com ([209.85.214.170]:49107 "EHLO
+	mail-ob0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753166AbaDYRz7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Apr 2014 13:55:59 -0400
+Received: by mail-ob0-f170.google.com with SMTP id vb8so4609916obc.15
+        for <git@vger.kernel.org>; Fri, 25 Apr 2014 10:55:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=kEb2kToOiaMVzB3ot3bjcbhuOUfIOPW6J2hSUywvTFk=;
+        b=fPzMTl/lC7UZtelhbuXJIyicj+dHgJylqyIfHFEQO7s/1TKWtazCW6UkkNwh1Rqvbl
+         VQAgEvMgJwlxYUd3W/Qiunxr74aqlBAtGhvJdtwaoyKT5TIv1XXDgv2U+U/2yRH21YdI
+         8UPb69ouCvbLMSEgrDMzJCCTilU2e8DbExQsuikdjeJ1h3iY8/EVDbBjn7vtKj3fZ+6G
+         rBljhCKSy+XJ658VsL4erPUpjwQ9d49sjW7BAxT7CPAtINIGgrowiA8DgXH1o+cwrLjm
+         GR4jo3y4tL6rbRk4eARkTqk59I3EMsiRCewMHACrMv59LEJFMYeVTY2/grMuNTqQQKR6
+         J8LA==
+X-Received: by 10.183.3.102 with SMTP id bv6mr8187713obd.18.1398448558408;
+        Fri, 25 Apr 2014 10:55:58 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id d9sm34467769oen.3.2014.04.25.10.55.54
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 25 Apr 2014 10:55:56 -0700 (PDT)
+In-Reply-To: <20140425133520.GC11124@thunk.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247072>
 
-On 2014-04-25 03:37, Simon Oosthoek wrote:
-> (though tbh, I think you'd have to be in an automated situation
-> to check out a branch that is basically a command to hack your
-> system, a human would probably figure it too cumbersome, or too
-> fishy)
-
-You can get in trouble by cloning a malicious repository and cding to
-the resulting directory.  See:
-
-    https://github.com/richardhansen/clonepwn
-
-for a (benign) demonstration.  (Note the name of the default branch in
-that repository -- it's not master.)
-
+Theodore Ts'o wrote:
+> On Fri, Apr 25, 2014 at 09:48:53AM +0200, Philippe Vaucher wrote:
+> > 
+> > I agree. The "stage area" is a very important concept in git, why not
+> > talk git commands that refers to it? Then we could add flags like
+> > --new-files or --deleted-files for better granularity than the current
+> > --all flag.
 > 
->>>> + # not needed anymore; keep user's
->>>> + # environment clean
->>>> + unset __git_ps1_upstream_name
->> 
->> We already have a lot of stuff in the user's environment beginning
->> with __git, so I don't think the unset is necessary.
+> One caution: The term "stage/staged" is already a little overloaded.
+> We generally use the word "staged" to refer to changes that are in the
+> index, but the term "stage" as a noun generally refers to referencing
+> the different versions of a file during a merge operation (cf "git
+> ls-files --stage").
 > 
-> If people rely on the string being set in their scripts, it can be
-> bad to remove it. But if it's new in this patch,
+> > I think starting by documenting the issues is a good idea, maybe on a
+> > wiki, and start some draft of a proposed solution that would improve
+> > in an iterative process.
+> 
+> And it would be nice if the issues were discussed in a way that acknowledged
+> that all changes have tradeoffs, both positive and negative,
 
-The variable is new.
+They have been discussed at length:
 
-> I don't see the need to keep it. Cruft is bad IMO.
+http://thread.gmane.org/gmane.comp.version-control.git/197111
+http://thread.gmane.org/gmane.comp.version-control.git/166675
+http://thread.gmane.org/gmane.comp.version-control.git/115666
+http://thread.gmane.org/gmane.comp.version-control.git/236127
 
-Agreed, although I am willing to remove those three lines if that is the
-collective preference.
+When I say literally everbody agreed to move away from the name "index" (except
+Junio and another guy) I mean it. I even composed a list:
 
--Richard
+http://article.gmane.org/gmane.comp.version-control.git/233469
+
+Jeff King, Jonathan Nieder, Matthieu Moy, they all agreed.
+
+> or for people for whom English might not be the first language.
+
+People whom English is not their first language also agreed "index" is a
+terrible term.
+
+-- 
+Felipe Contreras
