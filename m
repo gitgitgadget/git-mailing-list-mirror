@@ -1,83 +1,175 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v7 12/12] cherry-pick: copy notes and run hooks
-Date: Thu, 24 Apr 2014 18:37:44 -0500
-Message-ID: <5359a048691f5_523614ed2ecd3@nysa.notmuch>
-References: <1398307491-21314-1-git-send-email-felipe.contreras@gmail.com>
- <1398307491-21314-13-git-send-email-felipe.contreras@gmail.com>
- <CALkWK0=AywuFd1xaO3iXudhmnN1Sx2RDvhzmxLBjdaYD4OUB8w@mail.gmail.com>
+From: Javier Domingo Cansino <javierdo1@gmail.com>
+Subject: Re: What is missing from Git v2.0
+Date: Fri, 25 Apr 2014 04:22:23 +0200
+Message-ID: <CALZVapn0gEHc7t2fjk7YGd2o0yfpGLu0JCgUtdREvROC8_mqXg@mail.gmail.com>
+References: <20140422213039.GB21043@thunk.org> <alpine.DEB.2.02.1404221523060.14881@nftneq.ynat.uz>
+ <53588713347b7_59ed83d308cf@nysa.notmuch> <CAHYYfeHeJYZ67chSTQk2grsFGr07KXcVNR-T6kOPo0bVYDm59g@mail.gmail.com>
+ <53588f448d817_59ed83d3084e@nysa.notmuch> <CAHYYfeFKW93GH+6-ssR5L_uoo3OL2-LFAsj-4+8uEmL0BhT3ow@mail.gmail.com>
+ <5358bae8ab550_1f7b143d31037@nysa.notmuch> <877g6fb2h6.fsf@fencepost.gnu.org>
+ <5358ca1a55a69_1f7b143d3101c@nysa.notmuch> <20140424134106.GA27035@thunk.org> <20140424195559.GA1336@luc-arch>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Martin von Zweigbergk <martinvonz@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 25 01:48:18 2014
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Apr 25 04:22:54 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WdTNJ-0003gC-NT
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Apr 2014 01:48:18 +0200
+	id 1WdVms-00042B-J5
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Apr 2014 04:22:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752927AbaDXXsN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Apr 2014 19:48:13 -0400
-Received: from mail-oa0-f51.google.com ([209.85.219.51]:50258 "EHLO
-	mail-oa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751061AbaDXXsM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Apr 2014 19:48:12 -0400
-Received: by mail-oa0-f51.google.com with SMTP id i4so3471319oah.10
-        for <git@vger.kernel.org>; Thu, 24 Apr 2014 16:48:11 -0700 (PDT)
+	id S1751603AbaDYCWp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Apr 2014 22:22:45 -0400
+Received: from mail-ve0-f176.google.com ([209.85.128.176]:39018 "EHLO
+	mail-ve0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751455AbaDYCWn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Apr 2014 22:22:43 -0400
+Received: by mail-ve0-f176.google.com with SMTP id db11so3885132veb.21
+        for <git@vger.kernel.org>; Thu, 24 Apr 2014 19:22:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=3ze0D3vNXeuqIw38MHa4sfKHDHZXMsFXGeOnhqU8M+g=;
-        b=lq5vYqCDriYRAnsiEXbagzdy1+ztpIwxfcJTRDnazxVPaEMX2zBJAus3OfCBLaBfMu
-         cVpDUirrHlDMn3al57OoI3x1tnQFyBqd4lEFG6CwPNGyxtpGit9/EpIpfmN/a6fNF2lN
-         i+XJTYZBMfStgOE7IJuHxUteU3NWn3WF3CE6uONKtUHzywPXgClQvWLFt43xQpKTk9BK
-         G3NRuIkpO4c2gBodjnykIfaBSmxyuRn0QuL32KhLjOQt61SWW1TT+Mzdk4P21f7dR6dF
-         2KomYB3yNmXUXsyXQvdyiNEl8ndRXDHcVM+f7EjP2mTA9Ei2XmpHGtYNNWRqsHBSTO4K
-         9RVA==
-X-Received: by 10.60.16.103 with SMTP id f7mr4009008oed.8.1398383291715;
-        Thu, 24 Apr 2014 16:48:11 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id 10sm11690055obq.18.2014.04.24.16.48.09
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 24 Apr 2014 16:48:10 -0700 (PDT)
-In-Reply-To: <CALkWK0=AywuFd1xaO3iXudhmnN1Sx2RDvhzmxLBjdaYD4OUB8w@mail.gmail.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        bh=QlkeXkVmSMyh6T1W/tlq0upvun02CEGychmn41/VWOM=;
+        b=nog9ONf8S/VMNOpsVtOYuhRgQyXhIJkj9HQmNh3nUa4CnLgT9uHAjmVSsXVgmiUkhN
+         UFjr3ansLkePH11sbZaMJWvf7HqVTCI+fIBy+oq1G+q208kHRj/xQ3+5dhJUECALHydM
+         6RgKDrDE38k/uhOwhewqGoVRQUslF4aSo3bYEqUloB8h9ox5xVqkGWTtMHFkheYelFr2
+         jpHz8lxClbQ6ibl2NmfxLSJSsdMqULKJnj7c4gAk0fjrK2hxmNjaTwhFEWo+J1iH4i4D
+         Xqh9PmgkJyGcqiTO1MDP7KDscJHZVIOh0w6yKok8R2nRb9Q9VBCcSRSNIlPcTBDbCfgN
+         DL/w==
+X-Received: by 10.220.190.197 with SMTP id dj5mr4098414vcb.19.1398392563066;
+ Thu, 24 Apr 2014 19:22:43 -0700 (PDT)
+Received: by 10.220.251.199 with HTTP; Thu, 24 Apr 2014 19:22:23 -0700 (PDT)
+In-Reply-To: <20140424195559.GA1336@luc-arch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247028>
 
-Ramkumar Ramachandra wrote:
-> Felipe Contreras wrote:
-> > diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-> > index 43631b4..fd085e1 100644
-> > --- a/git-rebase--interactive.sh
-> > +++ b/git-rebase--interactive.sh
-> > @@ -248,7 +248,7 @@ pick_one () {
-> >
-> >         test -d "$rewritten" &&
-> >                 pick_one_preserving_merges "$@" && return
-> > -       output eval git cherry-pick "$strategy_args" $empty_args $ff "$@"
-> > +       output eval git cherry-pick "--action-name ''" "$strategy_args" $empty_args $ff "$@"
-> 
-> Passing an empty action-name looks quite ugly. Is there a better way
-> to achieve this?
+Felipe's
+=======
 
-I want `git cherry-pick` to be able to do two things:
+= The publish tracking branch =
+I still have problems getting upstream branches correctly configured
+as to have this introduced, anyway, I suppose it's optional, so
+nothing to add on that.
 
-1) Omit the whole notes and hooks code
-2) Specify a name other than "cherry-pick" to use for those
+By the way, remote branch managing has improved a lot,  one of the
+best things I see for branching and remotes is the "git remote show"
+command, but I think further work should be done. Help messages FTW!
 
-The --action-name argument achieves both.
+= Reject non-fast-forward pulls by default =
+Not having this introduced yet allows newbie people to use git with
+just 4 commands, without bothering around with fetch and merge and so.
 
--- 
-Felipe Contreras
+= Use "stage" instead of "index" =
+Totally agree with this.
+
+= Default aliases =
+I hate aliases, make scripts more difficult to read and understand. I
+would instead try to improve knowledge on this feature. I have to
+agree with David Lang's first message, and
+
+The cherry-pick => pick thing would be the only thing I would see with
+good eyes, just because it's too long and has a dash.
+
+
+Juno's
+======
+The idea about ~/.gitconfig seems incredible simple and effective to
+me. I would however try to keep it simple, and minimize the form.
+
+
+Mine
+====
+I have taught (or tried to) a lot of people Git. And this is some of
+the stuff I have seen they have difficulties with:
+- Remembering the commands, for example, remembering add, commit push
+and pull, which I think we can all agree is the most core and simple
+combination of Git commands.
+- What command comes for what they need. If I want to share
+everything, what should I do?
+- Most of them, have real difficulties on remembering the flows. There
+are too many commands for the start.
+
+I wouldn't nevertheless suppress any of them, I would rather do a tuto
+on-the-go.
+
+Here are some ideas I have thought of:
+
+== Command Output==
+At the moment, there are several commands that don't output any help
+text, and many others, that although they have become more verbose
+with the years, they aren't too verbose yet.
+
+One of the things I most recommend to anyone is to run "git status"
+just before any command (push, commit, add, etc.) to get sure they are
+doing what they thing they will.
+
+For example, running git add won't tell you what you just added, nor
+what you could do now. I would put some output there, maybe the git
+status output or something similar that helps the user to know what
+just happened.
+
+Git status doesn't say much about remotes, and suggesting pushing if a
+remote is outdated, would be fantastic.
+
+Checkout command has decreased verbosity from a previous version,
+where it stated which branch it came from and to which branch it was
+switching to.
+
+As an extreme thing, I would consider adding a configuration parameter
+default, core.helptext=True that could switch off all this stuff.
+
+==Running git==
+This is a very basic idea, and I suppose it isn't too helpful or
+realistic, but might give someone an idea.
+
+I would first make that running git, just git, tell the user the
+possibilities he has. I don't know of any power user that uses git to
+remember the commands. At the moment, git[1] just tells many of the
+commands available, without any classification, maybe classifying them
+as "commiting" "branching" and "remote" could help a little.
+
+Regards,
+
+Javier Domingo Cansino
+
+[1] git output:
+----------------------------------------------------
+javier@frodo:~$ git
+usage: git [--version] [--help] [-C <path>] [-c name=value]
+           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+           [-p|--paginate|--no-pager] [--no-replace-objects] [--bare]
+           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
+           <command> [<args>]
+
+The most commonly used git commands are:
+   add        Add file contents to the index
+   bisect     Find by binary search the change that introduced a bug
+   branch     List, create, or delete branches
+   checkout   Checkout a branch or paths to the working tree
+   clone      Clone a repository into a new directory
+   commit     Record changes to the repository
+   diff       Show changes between commits, commit and working tree, etc
+   fetch      Download objects and refs from another repository
+   grep       Print lines matching a pattern
+   init       Create an empty Git repository or reinitialize an existing one
+   log        Show commit logs
+   merge      Join two or more development histories together
+   mv         Move or rename a file, a directory, or a symlink
+   pull       Fetch from and integrate with another repository or a local branch
+   push       Update remote refs along with associated objects
+   rebase     Forward-port local commits to the updated upstream head
+   reset      Reset current HEAD to the specified state
+   rm         Remove files from the working tree and from the index
+   show       Show various types of objects
+   status     Show the working tree status
+   tag        Create, list, delete or verify a tag object signed with GPG
+
+'git help -a' and 'git help -g' lists available subcommands and some
+concept guides. See 'git help <command>' or 'git help <concept>'
+to read about a specific subcommand or concept.
+----------------------------------------------------
