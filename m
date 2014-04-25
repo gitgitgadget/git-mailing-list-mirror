@@ -1,79 +1,85 @@
-From: Philippe Vaucher <philippe.vaucher@gmail.com>
-Subject: Re: What is missing from Git v2.0
-Date: Fri, 25 Apr 2014 09:35:53 +0200
-Message-ID: <CAGK7Mr5aR36X3x=jcsRWyuo9cS0qGud114gSJECPW0rOWqUFKw@mail.gmail.com>
-References: <5356c1a61f6d8_463e11ef310a5@nysa.notmuch> <20140422213039.GB21043@thunk.org>
- <alpine.DEB.2.02.1404221523060.14881@nftneq.ynat.uz> <53588713347b7_59ed83d308cf@nysa.notmuch>
- <CAHYYfeHeJYZ67chSTQk2grsFGr07KXcVNR-T6kOPo0bVYDm59g@mail.gmail.com>
- <53588f448d817_59ed83d3084e@nysa.notmuch> <CAHYYfeFKW93GH+6-ssR5L_uoo3OL2-LFAsj-4+8uEmL0BhT3ow@mail.gmail.com>
- <5358bae8ab550_1f7b143d31037@nysa.notmuch> <877g6fb2h6.fsf@fencepost.gnu.org>
- <5358ca1a55a69_1f7b143d3101c@nysa.notmuch> <20140424134106.GA27035@thunk.org> <CALbm-EbBj1hCF=rFfeBbzeVmffRHVEEE=HSbVZxw-=-=p2BvEQ@mail.gmail.com>
+From: Simon Oosthoek <s.oosthoek@xs4all.nl>
+Subject: Re: [SECURITY PATCH] git-prompt.sh: don't put unsanitized branch
+ names in $PS1
+Date: Fri, 25 Apr 2014 09:37:24 +0200
+Message-ID: <20140425073724.GA9384@xs4all.nl>
+References: <E1WdOZY-0006ck-F9@iramx2.ira.uni-karlsruhe.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "Theodore Ts'o" <tytso@mit.edu>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	David Kastrup <dak@gnu.org>,
-	James Denholm <nod.helm@gmail.com>, David Lang <david@lang.hm>,
-	Junio C Hamano <gitster@pobox.com>,
-	Sebastian Schuberth <sschuberth@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Stefan Beller <stefanbeller@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 25 09:36:33 2014
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, sitaramc@gmail.com,
+	Richard Hansen <rhansen@bbn.com>, git@vger.kernel.org
+To: G?bor Szeder <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Fri Apr 25 09:37:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WdagT-00044O-5Y
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Apr 2014 09:36:33 +0200
+	id 1Wdahe-00066Z-3R
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Apr 2014 09:37:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752122AbaDYHg2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Apr 2014 03:36:28 -0400
-Received: from mail-ob0-f171.google.com ([209.85.214.171]:50520 "EHLO
-	mail-ob0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751664AbaDYHgZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Apr 2014 03:36:25 -0400
-Received: by mail-ob0-f171.google.com with SMTP id uy5so3879548obc.30
-        for <git@vger.kernel.org>; Fri, 25 Apr 2014 00:36:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=wxFQQjYSaMV0pyRzq8TS/WO8s4wkDdRgaHkVcLgq+p0=;
-        b=lnYS/KLW0nNgRWK3nZ1JeMprOu34nYGsi39bepdl5WDS5AM6wfhgw6lHUNC9G4u5WU
-         TNMt4V163j0rwaltOhq2oxCHW2Bzay+9CyF3K3L1gEuS9C5GCbkhDTJI2LBs9ygmAxAx
-         PVSgcv2RZj+ks1D3hZDDB3NblmBxeu2/yIcso/mkGff1khsRUgclQ6Y0ta9rjOUKWK9w
-         d+xbT7iq17rBv3DQ9akR24Q42D8dK5uXiwJoZ38NQC8Wk6Y/TVl/c9FlEPrTrDRo8Djj
-         QEINrO3Znci3b601JrcZ0ZAzhJqM/xtGuJ+ETkyUC2lS8Kour65rCTmRVCvM4/Cvf3dZ
-         U7QQ==
-X-Received: by 10.182.142.229 with SMTP id rz5mr5750798obb.12.1398411384911;
- Fri, 25 Apr 2014 00:36:24 -0700 (PDT)
-Received: by 10.76.85.229 with HTTP; Fri, 25 Apr 2014 00:35:53 -0700 (PDT)
-In-Reply-To: <CALbm-EbBj1hCF=rFfeBbzeVmffRHVEEE=HSbVZxw-=-=p2BvEQ@mail.gmail.com>
+	id S1751858AbaDYHhl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Apr 2014 03:37:41 -0400
+Received: from smtp-vbr1.xs4all.nl ([194.109.24.21]:2306 "EHLO
+	smtp-vbr1.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751213AbaDYHhk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 25 Apr 2014 03:37:40 -0400
+Received: from xs8.xs4all.nl (xs8.xs4all.nl [194.109.21.8])
+	by smtp-vbr1.xs4all.nl (8.13.8/8.13.8) with ESMTP id s3P7bS6c028917
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 25 Apr 2014 09:37:28 +0200 (CEST)
+	(envelope-from osimon@xs4all.nl)
+Received: from xs8.xs4all.nl (IDENT:1251136@localhost [127.0.0.1])
+	by xs8.xs4all.nl (8.14.3/8.14.3/Debian-9.4) with ESMTP id s3P7bReo025039;
+	Fri, 25 Apr 2014 09:37:27 +0200
+Received: (from osimon@localhost)
+	by xs8.xs4all.nl (8.14.3/8.14.3/Submit) id s3P7bOAK018827;
+	Fri, 25 Apr 2014 09:37:24 +0200
+Content-Disposition: inline
+In-Reply-To: <E1WdOZY-0006ck-F9@iramx2.ira.uni-karlsruhe.de>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247037>
 
-> > I don't even think we need to query the user to fill out all of the
-> > fields.  We can prepopulate a lot of the fields (name, e-mail address,
-> > etc.) from OS specific defaults that are available on most systems ---
-> > specifically, the default values we would use the name and e-mail
-> > address are not specified in a config file.
->
-> Please don't. Or you end up again with Commiters like sb@localhost,
-> sbeller@(None) or alike. I mean it's just one question once you setup
-> a new computer, so I'd really like to see that question and then
-> answer myself (at university/employer I might put in another email
-> address than at home anyway, and I'm sure my boxes have no sane
-> defaults)
+* G?bor Szeder <szeder@ira.uka.de> [2014-04-24 23:10:10 +0430]:
 
-Yes, try to guess a good default but let the user change it if he
-wants to, and if he presses enter the default is used. It's not a big
-deal to have to press enter a few times the first time you use git.
+> > I'd like to see this patch eyeballed by those who have been involve=
+d=20
+> > in the script (shortlog and blame tells me they are SZEDER and=20
+> > Simon, CC'ed), so that we can hopefully merge it by the time -rc1 i=
+s=20
+> > tagged.
+>=20
+> I think this is a sensible thing to do.=A0 However, for now I can onl=
+y check the patch on my phone, hence I can't say any more (e.g. acked o=
+r reviewed by) than that, unfortunately.
 
-That or make a new "git setup" command which interactively sets up
-your .gitconfig.
+Ditto for me, though I've gone so far as to try it (it works for me). A=
+t the time I wrote the patch I honestly forgot to think about the secur=
+ity implications and from the description, this is closing a hole. Ther=
+e are situations where you're not in control of a branch name (though t=
+bh, I think you'd have to be in an automated situation to check out a b=
+ranch that is basically a command to hack your system, a human would pr=
+obably figure it too cumbersome, or too fishy)
 
-Philippe
+>=20
+> > > + # not needed anymore; keep user's=20
+> > > + # environment clean=20
+> > > + unset __git_ps1_upstream_name=20
+> > > + fi
+>=20
+> We already have a lot of stuff in the user's environment beginning wi=
+th __git, so I don't think the unset is necessary.
+
+If people rely on the string being set in their scripts, it can be bad =
+to remove it. But if it's new in this patch, I don't see the need to ke=
+ep it. Cruft is bad IMO.
+
+Cheers
+
+Simon
