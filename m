@@ -1,85 +1,79 @@
-From: Simon Oosthoek <s.oosthoek@xs4all.nl>
-Subject: Re: [SECURITY PATCH] git-prompt.sh: don't put unsanitized branch
- names in $PS1
-Date: Fri, 25 Apr 2014 09:37:24 +0200
-Message-ID: <20140425073724.GA9384@xs4all.nl>
-References: <E1WdOZY-0006ck-F9@iramx2.ira.uni-karlsruhe.de>
+From: Philippe Vaucher <philippe.vaucher@gmail.com>
+Subject: Re: What is missing from Git v2.0
+Date: Fri, 25 Apr 2014 09:48:53 +0200
+Message-ID: <CAGK7Mr6dss7BF-srQ3SqeZe2hAe9nS07fGe--ka1rvC5hXvbSA@mail.gmail.com>
+References: <20140422213039.GB21043@thunk.org> <alpine.DEB.2.02.1404221523060.14881@nftneq.ynat.uz>
+ <53588713347b7_59ed83d308cf@nysa.notmuch> <CAHYYfeHeJYZ67chSTQk2grsFGr07KXcVNR-T6kOPo0bVYDm59g@mail.gmail.com>
+ <53588f448d817_59ed83d3084e@nysa.notmuch> <CAHYYfeFKW93GH+6-ssR5L_uoo3OL2-LFAsj-4+8uEmL0BhT3ow@mail.gmail.com>
+ <5358bae8ab550_1f7b143d31037@nysa.notmuch> <877g6fb2h6.fsf@fencepost.gnu.org>
+ <5358ca1a55a69_1f7b143d3101c@nysa.notmuch> <20140424134106.GA27035@thunk.org>
+ <20140424195559.GA1336@luc-arch> <CALZVapn0gEHc7t2fjk7YGd2o0yfpGLu0JCgUtdREvROC8_mqXg@mail.gmail.com>
+ <5359c9d612298_771c15f72f02a@nysa.notmuch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, sitaramc@gmail.com,
-	Richard Hansen <rhansen@bbn.com>, git@vger.kernel.org
-To: G?bor Szeder <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Fri Apr 25 09:37:47 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Javier Domingo Cansino <javierdo1@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 25 09:49:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wdahe-00066Z-3R
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Apr 2014 09:37:46 +0200
+	id 1Wdasy-0000Ph-JZ
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Apr 2014 09:49:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751858AbaDYHhl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Apr 2014 03:37:41 -0400
-Received: from smtp-vbr1.xs4all.nl ([194.109.24.21]:2306 "EHLO
-	smtp-vbr1.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751213AbaDYHhk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 25 Apr 2014 03:37:40 -0400
-Received: from xs8.xs4all.nl (xs8.xs4all.nl [194.109.21.8])
-	by smtp-vbr1.xs4all.nl (8.13.8/8.13.8) with ESMTP id s3P7bS6c028917
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 25 Apr 2014 09:37:28 +0200 (CEST)
-	(envelope-from osimon@xs4all.nl)
-Received: from xs8.xs4all.nl (IDENT:1251136@localhost [127.0.0.1])
-	by xs8.xs4all.nl (8.14.3/8.14.3/Debian-9.4) with ESMTP id s3P7bReo025039;
-	Fri, 25 Apr 2014 09:37:27 +0200
-Received: (from osimon@localhost)
-	by xs8.xs4all.nl (8.14.3/8.14.3/Submit) id s3P7bOAK018827;
-	Fri, 25 Apr 2014 09:37:24 +0200
-Content-Disposition: inline
-In-Reply-To: <E1WdOZY-0006ck-F9@iramx2.ira.uni-karlsruhe.de>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Virus-Scanned: by XS4ALL Virus Scanner
+	id S1751434AbaDYHtY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Apr 2014 03:49:24 -0400
+Received: from mail-oa0-f51.google.com ([209.85.219.51]:58360 "EHLO
+	mail-oa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750844AbaDYHtX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Apr 2014 03:49:23 -0400
+Received: by mail-oa0-f51.google.com with SMTP id i4so3837525oah.38
+        for <git@vger.kernel.org>; Fri, 25 Apr 2014 00:49:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=NvPbmfdc7Z2y6I67NEk5vRW9JnFjqonz9ZJjICakSIg=;
+        b=xI+uQVOTijoOvTKrEcL5jfUfBBYUxITCGekDuKtueowTypiTLekCTT0baGBd/lfmG2
+         OW+lJtNrzZMnG+idqo5pAYh7LXBt9AdJ9zXw5tRm1C1TI27SVAFUVax24wisAywYd2b7
+         +bgbQxsdF/SSp57IRlbNbShUJhgzxVkQT08/KmWR+2ZjgDZo1Y4i9VX0OWy61Ciw1hOs
+         jcbGzEjOk6wep/WcnFNVP+Sy8dipKqwMnXE6scl90tSwrztOk8C6MdNcRFRNxIfL+5XZ
+         dtvITB21J3MOoAMv1Bedln23aA2VAS/Q178h6s+n22p9JLU4/Mb9c48oIgy2aWTrqo6R
+         Ka0g==
+X-Received: by 10.60.146.201 with SMTP id te9mr5635982oeb.38.1398412163151;
+ Fri, 25 Apr 2014 00:49:23 -0700 (PDT)
+Received: by 10.76.85.229 with HTTP; Fri, 25 Apr 2014 00:48:53 -0700 (PDT)
+In-Reply-To: <5359c9d612298_771c15f72f02a@nysa.notmuch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247038>
 
-* G?bor Szeder <szeder@ira.uka.de> [2014-04-24 23:10:10 +0430]:
+> I think you are on the right track but the solution is not to shrug shoulders.
+> We should acknowledge there are serious problems with the interface, list them,
+> and try to fix them. One example is `git add $tracked_file` being wrong, it
+> should be `git stage $tracked_file`.
 
-> > I'd like to see this patch eyeballed by those who have been involve=
-d=20
-> > in the script (shortlog and blame tells me they are SZEDER and=20
-> > Simon, CC'ed), so that we can hopefully merge it by the time -rc1 i=
-s=20
-> > tagged.
->=20
-> I think this is a sensible thing to do.=A0 However, for now I can onl=
-y check the patch on my phone, hence I can't say any more (e.g. acked o=
-r reviewed by) than that, unfortunately.
+I agree. The "stage area" is a very important concept in git, why not
+talk git commands that refers to it? Then we could add flags like
+--new-files or --deleted-files for better granularity than the current
+--all flag.
 
-Ditto for me, though I've gone so far as to try it (it works for me). A=
-t the time I wrote the patch I honestly forgot to think about the secur=
-ity implications and from the description, this is closing a hole. Ther=
-e are situations where you're not in control of a branch name (though t=
-bh, I think you'd have to be in an automated situation to check out a b=
-ranch that is basically a command to hack your system, a human would pr=
-obably figure it too cumbersome, or too fishy)
 
->=20
-> > > + # not needed anymore; keep user's=20
-> > > + # environment clean=20
-> > > + unset __git_ps1_upstream_name=20
-> > > + fi
->=20
-> We already have a lot of stuff in the user's environment beginning wi=
-th __git, so I don't think the unset is necessary.
+> The real problem is that the core developers of Git don't acknowledge these
+> user-interface issues, according the them the interface doesn't require any
+> major changes. Which goes contrary to what most of the world believes.
 
-If people rely on the string being set in their scripts, it can be bad =
-to remove it. But if it's new in this patch, I don't see the need to ke=
-ep it. Cruft is bad IMO.
+I think most people agree with these interfaces issues but it's a hard
+problem to solve, so  they are reluctant to talk about it because they
+fear the can of worm. If someone came with a good solution most people
+would be willing to consider it.
 
-Cheers
+I think starting by documenting the issues is a good idea, maybe on a
+wiki, and start some draft of a proposed solution that would improve
+in an iterative process.
 
-Simon
+Philippe
