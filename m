@@ -1,7 +1,8 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v11 08/11] trailer: add tests for "git interpret-trailers"
-Date: Fri, 25 Apr 2014 21:06:59 +0200
-Message-ID: <20140425190703.28550.1600.chriscool@tuxfamily.org>
+Subject: [PATCH v11 09/11] trailer: execute command from
+ 'trailer.<name>.command'
+Date: Fri, 25 Apr 2014 21:07:00 +0200
+Message-ID: <20140425190703.28550.47508.chriscool@tuxfamily.org>
 References: <20140425185719.28550.27059.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Josh Triplett <josh@joshtriplett.org>,
@@ -13,463 +14,169 @@ Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
 	Jonathan Nieder <jrnieder@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 25 21:12:14 2014
+X-From: git-owner@vger.kernel.org Fri Apr 25 21:12:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WdlXh-0001qr-DP
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Apr 2014 21:12:14 +0200
+	id 1WdlXm-0001yz-Kq
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Apr 2014 21:12:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754684AbaDYTMG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Apr 2014 15:12:06 -0400
-Received: from mail-1y.bbox.fr ([194.158.98.14]:56480 "EHLO mail-1y.bbox.fr"
+	id S1754676AbaDYTME (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Apr 2014 15:12:04 -0400
+Received: from mail-2y.bbox.fr ([194.158.98.15]:43448 "EHLO mail-2y.bbox.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754250AbaDYTHt (ORCPT <rfc822;git@vger.kernel.org>);
+	id S932101AbaDYTHt (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 25 Apr 2014 15:07:49 -0400
 Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-1y.bbox.fr (Postfix) with ESMTP id 885D14A;
-	Fri, 25 Apr 2014 21:07:47 +0200 (CEST)
-X-git-sha1: 7e177cb5610350cc2136f7959383f215ec8b4157 
+	by mail-2y.bbox.fr (Postfix) with ESMTP id 5B78951;
+	Fri, 25 Apr 2014 21:07:48 +0200 (CEST)
+X-git-sha1: fe5187480d69c4772b6907271c9a9582c48aa977 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20140425185719.28550.27059.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247103>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247104>
+
+Let the user specify a command that will give on its standard output
+the value to use for the specified trailer.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- t/t7513-interpret-trailers.sh | 418 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 418 insertions(+)
- create mode 100755 t/t7513-interpret-trailers.sh
+ trailer.c | 65 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 65 insertions(+)
 
-diff --git a/t/t7513-interpret-trailers.sh b/t/t7513-interpret-trailers.sh
-new file mode 100755
-index 0000000..4506e18
---- /dev/null
-+++ b/t/t7513-interpret-trailers.sh
-@@ -0,0 +1,418 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2013, 2014 Christian Couder
-+#
+diff --git a/trailer.c b/trailer.c
+index feadd3a..4d32b42 100644
+--- a/trailer.c
++++ b/trailer.c
+@@ -1,5 +1,7 @@
+ #include "cache.h"
+ #include "string-list.h"
++#include "run-command.h"
++#include "string-list.h"
+ #include "trailer.h"
+ /*
+  * Copyright (c) 2013, 2014 Christian Couder <chriscool@tuxfamily.org>
+@@ -14,11 +16,14 @@ struct conf_info {
+ 	char *name;
+ 	char *key;
+ 	char *command;
++	unsigned command_uses_arg : 1;
+ 	enum action_where where;
+ 	enum action_if_exists if_exists;
+ 	enum action_if_missing if_missing;
+ };
+ 
++#define TRAILER_ARG_STRING "$ARG"
 +
-+test_description='git interpret-trailers'
+ struct trailer_item {
+ 	struct trailer_item *previous;
+ 	struct trailer_item *next;
+@@ -60,6 +65,13 @@ static inline int contains_only_spaces(const char *str)
+ 	return !*s;
+ }
+ 
++static inline void strbuf_replace(struct strbuf *sb, const char *a, const char *b)
++{
++	const char *ptr = strstr(sb->buf, a);
++	if (ptr)
++		strbuf_splice(sb, ptr - sb->buf, strlen(a), b, strlen(b));
++}
 +
-+. ./test-lib.sh
+ static void free_trailer_item(struct trailer_item *item)
+ {
+ 	free(item->conf.name);
+@@ -403,6 +415,7 @@ static int git_trailer_config(const char *conf_key, const char *value, void *cb)
+ 		if (conf->command)
+ 			warning(_("more than one %s"), conf_key);
+ 		conf->command = xstrdup(value);
++		conf->command_uses_arg = !!strstr(conf->command, TRAILER_ARG_STRING);
+ 		break;
+ 	case TRAILER_WHERE:
+ 		if (set_where(conf, value))
+@@ -439,6 +452,45 @@ static int parse_trailer(struct strbuf *tok, struct strbuf *val, const char *tra
+ 	return 0;
+ }
+ 
++static int read_from_command(struct child_process *cp, struct strbuf *buf)
++{
++	if (run_command(cp))
++		return error("running trailer command '%s' failed", cp->argv[0]);
++	if (strbuf_read(buf, cp->out, 1024) < 1)
++		return error("reading from trailer command '%s' failed", cp->argv[0]);
++	strbuf_trim(buf);
++	return 0;
++}
 +
-+# When we want one trailing space at the end of each line, let's use sed
-+# to make sure that these spaces are not removed by any automatic tool.
++static const char *apply_command(const char *command, const char *arg)
++{
++	struct strbuf cmd = STRBUF_INIT;
++	struct strbuf buf = STRBUF_INIT;
++	struct child_process cp;
++	const char *argv[] = {NULL, NULL};
++	const char *result;
 +
-+test_expect_success 'setup' '
-+	cat >basic_message <<-\EOF &&
-+		subject
++	strbuf_addstr(&cmd, command);
++	if (arg)
++		strbuf_replace(&cmd, TRAILER_ARG_STRING, arg);
 +
-+		body
-+	EOF
-+	cat >complex_message_body <<-\EOF &&
-+		my subject
++	argv[0] = cmd.buf;
++	memset(&cp, 0, sizeof(cp));
++	cp.argv = argv;
++	cp.env = local_repo_env;
++	cp.no_stdin = 1;
++	cp.out = -1;
++	cp.use_shell = 1;
 +
-+		my body which is long
-+		and contains some special
-+		chars like : = ? !
++	if (read_from_command(&cp, &buf)) {
++		strbuf_release(&buf);
++		result = xstrdup("");
++	} else
++		result = strbuf_detach(&buf, NULL);
 +
-+	EOF
-+	sed -e "s/ Z\$/ /" >complex_message_trailers <<-\EOF &&
-+		Fixes: Z
-+		Acked-by: Z
-+		Reviewed-by: Z
-+		Signed-off-by: Z
-+	EOF
-+	cat >basic_patch <<-\EOF
-+		---
-+		 foo.txt | 2 +-
-+		 1 file changed, 1 insertion(+), 1 deletion(-)
++	strbuf_release(&cmd);
++	return result;
++}
+ 
+ static void duplicate_conf(struct conf_info *dst, struct conf_info *src)
+ {
+@@ -469,6 +521,10 @@ static struct trailer_item *new_trailer_item(struct trailer_item *conf_item,
+ 		duplicate_conf(&new->conf, &conf_item->conf);
+ 		new->token = xstrdup(token_from_item(conf_item));
+ 		free(tok);
++		if (conf_item->conf.command_uses_arg || !val) {
++			new->value = apply_command(conf_item->conf.command, val);
++			free(val);
++		}
+ 	} else
+ 		new->token = tok;
+ 
+@@ -530,12 +586,21 @@ static struct trailer_item *process_command_line_args(struct string_list *traile
+ 	struct trailer_item *arg_tok_first = NULL;
+ 	struct trailer_item *arg_tok_last = NULL;
+ 	struct string_list_item *tr;
++	struct trailer_item *item;
+ 
+ 	for_each_string_list_item(tr, trailers) {
+ 		struct trailer_item *new = create_trailer_item(tr->string);
+ 		add_trailer_item(&arg_tok_first, &arg_tok_last, new);
+ 	}
+ 
++	/* Add conf commands that don't use $ARG */
++	for (item = first_conf_item; item; item = item->next) {
++		if (item->conf.command && !item->conf.command_uses_arg) {
++			struct trailer_item *new = new_trailer_item(item, NULL, NULL);
++			add_trailer_item(&arg_tok_first, &arg_tok_last, new);
++		}
++	}
 +
-+		diff --git a/foo.txt b/foo.txt
-+		index 0353767..1d91aa1 100644
-+		--- a/foo.txt
-+		+++ b/foo.txt
-+		@@ -1,3 +1,3 @@
-+
-+		-bar
-+		+baz
-+
-+		--
-+		1.9.rc0.11.ga562ddc
-+
-+	EOF
-+'
-+
-+test_expect_success 'without config' '
-+	sed -e "s/ Z\$/ /" >expected <<-\EOF &&
-+
-+		ack: Peff
-+		Reviewed-by: Z
-+		Acked-by: Johan
-+	EOF
-+	git interpret-trailers --trailer "ack = Peff" --trailer "Reviewed-by" \
-+		--trailer "Acked-by: Johan" >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success '--trim-empty without config' '
-+	cat >expected <<-\EOF &&
-+
-+		ack: Peff
-+		Acked-by: Johan
-+	EOF
-+	git interpret-trailers --trim-empty --trailer "ack = Peff" \
-+		--trailer "Reviewed-by" --trailer "Acked-by: Johan" \
-+		--trailer "sob:" >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'with config setup' '
-+	git config trailer.ack.key "Acked-by: " &&
-+	cat >expected <<-\EOF &&
-+
-+		Acked-by: Peff
-+	EOF
-+	git interpret-trailers --trim-empty --trailer "ack = Peff" >actual &&
-+	test_cmp expected actual &&
-+	git interpret-trailers --trim-empty --trailer "Acked-by = Peff" >actual &&
-+	test_cmp expected actual &&
-+	git interpret-trailers --trim-empty --trailer "Acked-by :Peff" >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'with config setup and = sign' '
-+	git config trailer.ack.key "Acked-by= " &&
-+	cat >expected <<-\EOF &&
-+
-+		Acked-by= Peff
-+	EOF
-+	git interpret-trailers --trim-empty --trailer "ack = Peff" >actual &&
-+	test_cmp expected actual &&
-+	git interpret-trailers --trim-empty --trailer "Acked-by= Peff" >actual &&
-+	test_cmp expected actual &&
-+	git interpret-trailers --trim-empty --trailer "Acked-by : Peff" >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'with config setup and # sign' '
-+	git config trailer.bug.key "Bug #" &&
-+	cat >expected <<-\EOF &&
-+
-+		Bug #42
-+	EOF
-+	git interpret-trailers --trim-empty --trailer "bug = 42" >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'with commit basic message' '
-+	cat basic_message >expected &&
-+	echo >>expected &&
-+	git interpret-trailers <basic_message >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'with basic patch' '
-+	cat basic_message >input &&
-+	cat basic_patch >>input &&
-+	cat basic_message >expected &&
-+	echo >>expected &&
-+	cat basic_patch >>expected &&
-+	git interpret-trailers <input >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'with commit complex message as argument' '
-+	cat complex_message_body complex_message_trailers >complex_message &&
-+	cat complex_message_body >expected &&
-+	sed -e "s/ Z\$/ /" >>expected <<-\EOF &&
-+		Fixes: Z
-+		Acked-by= Z
-+		Reviewed-by: Z
-+		Signed-off-by: Z
-+	EOF
-+	git interpret-trailers complex_message >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'with 2 files arguments' '
-+	cat basic_message >>expected &&
-+	echo >>expected &&
-+	cat basic_patch >>expected &&
-+	git interpret-trailers complex_message input >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'with commit complex message and trailer args' '
-+	cat complex_message_body >expected &&
-+	sed -e "s/ Z\$/ /" >>expected <<-\EOF &&
-+		Fixes: Z
-+		Acked-by= Z
-+		Acked-by= Peff
-+		Reviewed-by: Z
-+		Signed-off-by: Z
-+		Bug #42
-+	EOF
-+	git interpret-trailers --trailer "ack: Peff" \
-+		--trailer "bug: 42" <complex_message >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'with complex patch, args and --trim-empty' '
-+	cat complex_message >complex_patch &&
-+	cat basic_patch >>complex_patch &&
-+	cat complex_message_body >expected &&
-+	cat >>expected <<-\EOF &&
-+		Acked-by= Peff
-+		Bug #42
-+	EOF
-+	cat basic_patch >>expected &&
-+	git interpret-trailers --trim-empty --trailer "ack: Peff" \
-+		--trailer "bug: 42" <complex_patch >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'using "where = before"' '
-+	git config trailer.bug.where "before" &&
-+	cat complex_message_body >expected &&
-+	sed -e "s/ Z\$/ /" >>expected <<-\EOF &&
-+		Bug #42
-+		Fixes: Z
-+		Acked-by= Z
-+		Acked-by= Peff
-+		Reviewed-by: Z
-+		Signed-off-by: Z
-+	EOF
-+	git interpret-trailers --trailer "ack: Peff" \
-+		--trailer "bug: 42" complex_message >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'using "where = before" for a token in the middle of the message' '
-+	git config trailer.review.key "Reviewed-by:" &&
-+	git config trailer.review.where "before" &&
-+	cat complex_message_body >expected &&
-+	sed -e "s/ Z\$/ /" >>expected <<-\EOF &&
-+		Bug #42
-+		Fixes: Z
-+		Acked-by= Z
-+		Acked-by= Peff
-+		Reviewed-by: Johan
-+		Reviewed-by: Z
-+		Signed-off-by: Z
-+	EOF
-+	git interpret-trailers --trailer "ack: Peff" --trailer "bug: 42" \
-+		--trailer "review: Johan" <complex_message >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'using "where = before" and --trim-empty' '
-+	cat complex_message_body >expected &&
-+	cat >>expected <<-\EOF &&
-+		Bug #46
-+		Bug #42
-+		Acked-by= Peff
-+		Reviewed-by: Johan
-+	EOF
-+	git interpret-trailers --trim-empty --trailer "ack: Peff" \
-+		--trailer "bug: 42" --trailer "review: Johan" \
-+		--trailer "Bug: 46" <complex_message >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'the default is "ifExists = addIfDifferent"' '
-+	cat complex_message_body >expected &&
-+	sed -e "s/ Z\$/ /" >>expected <<-\EOF &&
-+		Bug #42
-+		Fixes: Z
-+		Acked-by= Z
-+		Acked-by= Peff
-+		Reviewed-by: Z
-+		Signed-off-by: Z
-+	EOF
-+	git interpret-trailers --trailer "ack: Peff" --trailer "review:" \
-+		--trailer "bug: 42" --trailer "ack: Peff" \
-+		<complex_message >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'using "ifExists = addIfDifferent"' '
-+	git config trailer.review.ifExists "addIfDifferent" &&
-+	cat complex_message_body >expected &&
-+	sed -e "s/ Z\$/ /" >>expected <<-\EOF &&
-+		Bug #42
-+		Fixes: Z
-+		Acked-by= Z
-+		Acked-by= Peff
-+		Reviewed-by: Z
-+		Signed-off-by: Z
-+	EOF
-+	git interpret-trailers --trailer "ack: Peff" --trailer "review:" \
-+		--trailer "bug: 42" --trailer "ack: Peff" \
-+		<complex_message >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'using "ifExists = addIfDifferentNeighbor"' '
-+	git config trailer.ack.ifExists "addIfDifferentNeighbor" &&
-+	cat complex_message_body >expected &&
-+	sed -e "s/ Z\$/ /" >>expected <<-\EOF &&
-+		Bug #42
-+		Fixes: Z
-+		Acked-by= Z
-+		Acked-by= Peff
-+		Acked-by= Junio
-+		Acked-by= Peff
-+		Reviewed-by: Z
-+		Signed-off-by: Z
-+	EOF
-+	git interpret-trailers --trailer "ack: Peff" --trailer "review:" \
-+		--trailer "ack: Junio" --trailer "bug: 42" \
-+		--trailer "ack: Peff" <complex_message >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'using "ifExists = addIfDifferentNeighbor" and --trim-empty' '
-+	git config trailer.ack.ifExists "addIfDifferentNeighbor" &&
-+	cat complex_message_body >expected &&
-+	cat >>expected <<-\EOF &&
-+		Bug #42
-+		Acked-by= Peff
-+		Acked-by= Junio
-+		Acked-by= Peff
-+	EOF
-+	git interpret-trailers --trim-empty --trailer "ack: Peff" \
-+		--trailer "Acked-by= Peff" --trailer "review:" \
-+		--trailer "ack: Junio" --trailer "bug: 42" \
-+		--trailer "ack: Peff" <complex_message >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'using "ifExists = add"' '
-+	git config trailer.ack.ifExists "add" &&
-+	cat complex_message_body >expected &&
-+	sed -e "s/ Z\$/ /" >>expected <<-\EOF &&
-+		Bug #42
-+		Fixes: Z
-+		Acked-by= Z
-+		Acked-by= Peff
-+		Acked-by= Peff
-+		Acked-by= Junio
-+		Acked-by= Peff
-+		Reviewed-by: Z
-+		Signed-off-by: Z
-+	EOF
-+	git interpret-trailers --trailer "ack: Peff" \
-+		--trailer "Acked-by= Peff" --trailer "review:" \
-+		--trailer "ack: Junio" --trailer "bug: 42" \
-+		--trailer "ack: Peff" <complex_message >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'using "ifExists = overwrite"' '
-+	git config trailer.fix.key "Fixes:" &&
-+	git config trailer.fix.ifExists "overwrite" &&
-+	cat complex_message_body >expected &&
-+	sed -e "s/ Z\$/ /" >>expected <<-\EOF &&
-+		Bug #42
-+		Fixes: 22
-+		Acked-by= Z
-+		Acked-by= Junio
-+		Acked-by= Peff
-+		Reviewed-by: Z
-+		Signed-off-by: Z
-+	EOF
-+	git interpret-trailers --trailer "review:" \
-+		--trailer "fix=53" --trailer "ack: Junio" --trailer "fix=22" \
-+		--trailer "bug: 42" --trailer "ack: Peff" \
-+		<complex_message >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'using "ifExists = doNothing"' '
-+	git config trailer.fix.ifExists "doNothing" &&
-+	cat complex_message_body >expected &&
-+	sed -e "s/ Z\$/ /" >>expected <<-\EOF &&
-+		Bug #42
-+		Fixes: Z
-+		Acked-by= Z
-+		Acked-by= Junio
-+		Acked-by= Peff
-+		Reviewed-by: Z
-+		Signed-off-by: Z
-+	EOF
-+	git interpret-trailers --trailer "review:" --trailer "fix=53" \
-+		--trailer "ack: Junio" --trailer "fix=22" \
-+		--trailer "bug: 42" --trailer "ack: Peff" \
-+		<complex_message >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'the default is "ifMissing = add"' '
-+	git config trailer.cc.key "Cc: " &&
-+	git config trailer.cc.where "before" &&
-+	cat complex_message_body >expected &&
-+	sed -e "s/ Z\$/ /" >>expected <<-\EOF &&
-+		Bug #42
-+		Cc: Linus
-+		Fixes: Z
-+		Acked-by= Z
-+		Acked-by= Junio
-+		Acked-by= Peff
-+		Reviewed-by: Z
-+		Signed-off-by: Z
-+	EOF
-+	git interpret-trailers --trailer "review:" --trailer "fix=53" \
-+		--trailer "cc=Linus" --trailer "ack: Junio" \
-+		--trailer "fix=22" --trailer "bug: 42" --trailer "ack: Peff" \
-+		<complex_message >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'using "ifMissing = add"' '
-+	git config trailer.cc.ifMissing "add" &&
-+	cat complex_message_body >expected &&
-+	sed -e "s/ Z\$/ /" >>expected <<-\EOF &&
-+		Cc: Linus
-+		Bug #42
-+		Fixes: Z
-+		Acked-by= Z
-+		Acked-by= Junio
-+		Acked-by= Peff
-+		Reviewed-by: Z
-+		Signed-off-by: Z
-+	EOF
-+	git interpret-trailers --trailer "review:" --trailer "fix=53" \
-+		--trailer "ack: Junio" --trailer "fix=22" \
-+		--trailer "bug: 42" --trailer "cc=Linus" --trailer "ack: Peff" \
-+		<complex_message >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'using "ifMissing = doNothing"' '
-+	git config trailer.cc.ifMissing "doNothing" &&
-+	cat complex_message_body >expected &&
-+	sed -e "s/ Z\$/ /" >>expected <<-\EOF &&
-+		Bug #42
-+		Fixes: Z
-+		Acked-by= Z
-+		Acked-by= Junio
-+		Acked-by= Peff
-+		Reviewed-by: Z
-+		Signed-off-by: Z
-+	EOF
-+	git interpret-trailers --trailer "review:" --trailer "fix=53" \
-+		--trailer "cc=Linus" --trailer "ack: Junio" \
-+		--trailer "fix=22" --trailer "bug: 42" --trailer "ack: Peff" \
-+		<complex_message >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_done
+ 	return arg_tok_first;
+ }
+ 
 -- 
 1.9.1.636.g20d5f34
