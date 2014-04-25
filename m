@@ -1,101 +1,130 @@
-From: alex@bellandwhistle.net
-Subject: Re: gitignore vs. exclude vs =?UTF-8?Q?assume-unchanged=3F?=
-Date: Fri, 25 Apr 2014 16:09:47 -0700
-Message-ID: <35592507346991e5c286144fcbd04097@bellandwhistle.net>
-References: <b3f480af1c362c615ad9ce85296e2be2@bellandwhistle.net>
- <xmqqy4z5go1y.fsf@gitster.dls.corp.google.com>
- <dee7ee673c8c4d81fb5aaecea25e9709@bellandwhistle.net>
- <20140416234555.GA4309@google.com>
- <4dd8389939fbf3dc77b58adcca7b17c1@bellandwhistle.net>
- <CAH5451k+GGGdHXkwne2O-h2m2AyWg7K+5reNRG64+eF891pVUA@mail.gmail.com>
- <xmqqtx9l5jxn.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] commit: do not complain of empty messages from -C
+Date: Fri, 25 Apr 2014 19:11:15 -0400
+Message-ID: <20140425231115.GA3855@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Andrew Ardill <andrew.ardill@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 26 01:10:16 2014
+Content-Type: text/plain; charset=utf-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 26 01:11:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WdpG3-0005yp-W3
-	for gcvg-git-2@plane.gmane.org; Sat, 26 Apr 2014 01:10:16 +0200
+	id 1WdpHC-0007uF-43
+	for gcvg-git-2@plane.gmane.org; Sat, 26 Apr 2014 01:11:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753090AbaDYXKC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Apr 2014 19:10:02 -0400
-Received: from selene.fortifiedserver.net ([98.158.151.224]:51301 "EHLO
-	selene.fortifiedserver.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752486AbaDYXJ4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 25 Apr 2014 19:09:56 -0400
-Received: from localhost.uu.net ([127.0.0.1]:40714 helo=selene.fortifiedserver.net)
-	by selene.fortifiedserver.net with esmtpa (Exim 4.82)
-	(envelope-from <alex@bellandwhistle.net>)
-	id 1WdpFc-0000vv-AZ; Fri, 25 Apr 2014 16:09:48 -0700
-In-Reply-To: <xmqqtx9l5jxn.fsf@gitster.dls.corp.google.com>
-X-Sender: alex@bellandwhistle.net
-User-Agent: Roundcube Webmail/0.9.5
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - selene.fortifiedserver.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - bellandwhistle.net
-X-Get-Message-Sender-Via: selene.fortifiedserver.net: authenticated_id: alex@bellandwhistle.net
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1752792AbaDYXLT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Apr 2014 19:11:19 -0400
+Received: from cloud.peff.net ([50.56.180.127]:38709 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752702AbaDYXLR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Apr 2014 19:11:17 -0400
+Received: (qmail 5292 invoked by uid 102); 25 Apr 2014 23:11:17 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 25 Apr 2014 18:11:17 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 25 Apr 2014 19:11:15 -0400
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247129>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247130>
 
-> Andrew Ardill <andrew.ardill@gmail.com> writes:
-> 
-> As a data point, I have seen people add ".gitignore" to their
-> .gitignore file, as they don't want to share the file.
+When we pick another commit's message, we die() immediately
+if we find that it's empty and we are not going to run an
+editor (i.e., when running "-C" instead of "-c").  However,
+this check is redundant and harmful.
 
-Right, I've seen that too. It confused the heck out of me. It only lends 
-credence to my point about the docs. Those users want the functionality 
-of a pattern in '$GIT_DIR/info/exclude', but haven't been able to figure 
-it out easily enough. They've just heard about .gitignore, so they're 
-using that. Yes, it's all there in the docs if you read it several 
-times, and you already know what you're looking at, but not in a 
-terribly accessible, best practices, "advice from a smart friend who's 
-been through it all already" kind of way.
+It's redundant because we will already notice the empty
+message later, after we would have run the editor, and die
+there (just as we would for a regular, not "-C" case, where
+the user provided an empty message in the editor).
 
-> ... The introduction does specifically mention 'gitignore'
-> files, but that seems to be due to all the ignore files
-> ($HOME/.config/git/ignore, $GIT_DIR/info/exclude, .gitignore) being
-> classified as 'gitignore' files.
+It's harmful for a few reasons:
 
-Yes, the 'gitignore' versus '.gitignore' distinction is hopelessly 
-subtle. It is very easy for a newcomer to think these are exactly the 
-same thing. I certainly did.
+  1. It does not respect --allow-empty-message. As a result,
+     a "git rebase -i" cannot "pick" such a commit. So you
+     cannot even go back in time to fix it with a "reword"
+     or "edit" instruction.
 
-> Finally, it's a little confusing that one of the files is called 
-> 'exclude'.
-> 
-> It would be great to rename it to 'ignore'; $GIT_DIR/info/exclude ->
-> $GIT_DIR/info/ignore. Is there any reason this shouldn't be done?
+  2. It does not take into account other ways besides the
+     editor to modify the message. For example, "git commit
+     -C empty-commit -m foo" could take the author
+     information from empty-commit, but add a message to it.
+     There's more to do to make that work correctly (and
+     right now we explicitly forbid "-C with -m"), but this
+     removes one roadblock.
 
-Well, yes: semantics. Since they do slightly different things, they 
-should have different names. It makes reference and teaching much 
-easier. In fact, if a renaming were to occur, I would actually prefer 
-even better semantics:
+  3. The existing check is not enough to prevent segfaults.
+     We try to find the "\n\n" header/body boundary in the
+     commit. If it is at the end of the string (i.e., no
+     body), _or_ if we cannot find it at all (i.e., a
+     truncated commit object), we consider the message
+     empty. With "-C", that's OK; we die in either case. But
+     with "-c", we continue on, and in the case of a
+     truncated commit may end up dereferencing NULL+2.
 
-     .gitignore -> .shared-ignore
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I care most about the "rebase -i" thing, especially because it is the
+primary method for fixing old mistakes. The segfault fix is a nice
+bonus.
 
-     $GIT_DIR/info/exclude -> $GIT_DIR/info/local-ignore
+The "git commit -C empty -m foo" thing might be nice, but I don't plan
+to work on it further. The semantics would need to be figured out (does
+it append or replace?), and you can always just use "-c" to fire up an
+actual editor and write the new content there.
 
-These suggested names could perhaps be improved on. But if anything, the 
-names need to be more different, not less. Users should be able to 
-instantly know what a speaker is talking about without having to 
-doublecheck and ask if by "git-ignore", the speaker really meant "git 
-ignore" or "dot-gitignore".
+ builtin/commit.c  |  5 ++---
+ t/t7500-commit.sh | 11 ++++++++++-
+ 2 files changed, 12 insertions(+), 4 deletions(-)
 
-Thanks,
-Alex
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 9cfef6c..65c069d 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -650,9 +650,8 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 	} else if (use_message) {
+ 		char *buffer;
+ 		buffer = strstr(use_message_buffer, "\n\n");
+-		if (!use_editor && (!buffer || buffer[2] == '\0'))
+-			die(_("commit has empty message"));
+-		strbuf_add(&sb, buffer + 2, strlen(buffer + 2));
++		if (buffer)
++			strbuf_add(&sb, buffer + 2, strlen(buffer + 2));
+ 		hook_arg1 = "commit";
+ 		hook_arg2 = use_message;
+ 	} else if (fixup_message) {
+diff --git a/t/t7500-commit.sh b/t/t7500-commit.sh
+index bdc1f29..116885a 100755
+--- a/t/t7500-commit.sh
++++ b/t/t7500-commit.sh
+@@ -223,7 +223,8 @@ test_expect_success 'Commit without message is allowed with --allow-empty-messag
+ 	git add foo &&
+ 	>empty &&
+ 	git commit --allow-empty-message <empty &&
+-	commit_msg_is ""
++	commit_msg_is "" &&
++	git tag empty-message-commit
+ '
+ 
+ test_expect_success 'Commit without message is no-no without --allow-empty-message' '
+@@ -240,6 +241,14 @@ test_expect_success 'Commit a message with --allow-empty-message' '
+ 	commit_msg_is "hello there"
+ '
+ 
++test_expect_success 'commit -C empty respects --allow-empty-message' '
++	echo more >>foo &&
++	git add foo &&
++	test_must_fail git commit -C empty-message-commit &&
++	git commit -C empty-message-commit --allow-empty-message &&
++	commit_msg_is ""
++'
++
+ commit_for_rebase_autosquash_setup () {
+ 	echo "first content line" >>foo &&
+ 	git add foo &&
+-- 
+1.9.1.656.ge8a0637
