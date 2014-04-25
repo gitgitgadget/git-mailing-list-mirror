@@ -1,184 +1,84 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v11 04/11] trailer: process command line trailer arguments
-Date: Fri, 25 Apr 2014 21:06:55 +0200
-Message-ID: <20140425190703.28550.72683.chriscool@tuxfamily.org>
-References: <20140425185719.28550.27059.chriscool@tuxfamily.org>
-Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
-	Josh Triplett <josh@joshtriplett.org>,
-	Thomas Rast <tr@thomasrast.ch>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Apr 25 21:08:21 2014
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: What is missing from Git v2.0
+Date: Fri, 25 Apr 2014 13:57:59 -0500
+Message-ID: <535ab03711d81_471d7d930822@nysa.notmuch>
+References: <5358ca1a55a69_1f7b143d3101c@nysa.notmuch>
+ <20140424134106.GA27035@thunk.org>
+ <20140424195559.GA1336@luc-arch>
+ <CALZVapn0gEHc7t2fjk7YGd2o0yfpGLu0JCgUtdREvROC8_mqXg@mail.gmail.com>
+ <5359c9d612298_771c15f72f02a@nysa.notmuch>
+ <CAGK7Mr6dss7BF-srQ3SqeZe2hAe9nS07fGe--ka1rvC5hXvbSA@mail.gmail.com>
+ <20140425133520.GC11124@thunk.org>
+ <535a9f375e196_3984aa530c46@nysa.notmuch>
+ <20140425182459.GA29329@sigill.intra.peff.net>
+ <535aa905cd59c_44cee6530ccb@nysa.notmuch>
+ <20140425185731.GA31454@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Theodore Ts'o <tytso@mit.edu>,
+	Philippe Vaucher <philippe.vaucher@gmail.com>,
+	Javier Domingo Cansino <javierdo1@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 25 21:08:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WdlTs-0003tp-Qy
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Apr 2014 21:08:17 +0200
+	id 1WdlUB-0004Sy-Tw
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Apr 2014 21:08:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932112AbaDYTH4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Apr 2014 15:07:56 -0400
-Received: from mail-2y.bbox.fr ([194.158.98.15]:43433 "EHLO mail-2y.bbox.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754590AbaDYTHq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Apr 2014 15:07:46 -0400
-Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-2y.bbox.fr (Postfix) with ESMTP id BBBBA74;
-	Fri, 25 Apr 2014 21:07:44 +0200 (CEST)
-X-git-sha1: 383bc719f5d2ac34932ad815a5434ff3d775e9c0 
-X-Mailer: git-mail-commits v0.5.2
-In-Reply-To: <20140425185719.28550.27059.chriscool@tuxfamily.org>
+	id S932157AbaDYTIa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Apr 2014 15:08:30 -0400
+Received: from mail-oa0-f54.google.com ([209.85.219.54]:36801 "EHLO
+	mail-oa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932128AbaDYTI1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Apr 2014 15:08:27 -0400
+Received: by mail-oa0-f54.google.com with SMTP id i7so4686854oag.13
+        for <git@vger.kernel.org>; Fri, 25 Apr 2014 12:08:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=zGpj3p1KU/GQa/LSvzXT+UmLIB+IWy655Iyhrm5MNgE=;
+        b=xKoRSqEG/7jhdojEjL48suvqwc6BnLlA/G+WNlgLWTWyZxXsEMp8ienrDoJAPeYlhv
+         CuwfnDUe5OVlD/rT4WmmuStQQIECBFklNkzh1wLW1yfQlywGDDRScJO8YHLtCUrwVbZs
+         DFVTN+inrM3CMZpcFsnpARUxSJL8zYeOuyxqA1djqqrYIsKxGwiDadpzjGiCHAP6dZuL
+         bcsjoVTyTTy5pQZqdKOx1salyMGeYfeOJzQwgnEaqzclpHCi+OYq8+9GGfqI2N2mKzyr
+         ebpOao28+DWHESYv3cbw/ElBHmO4wXxXHFEBSYeYXudla+wwaocJf/f16pN4MvQhrIYO
+         bPxg==
+X-Received: by 10.60.37.199 with SMTP id a7mr8375010oek.41.1398452906796;
+        Fri, 25 Apr 2014 12:08:26 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id j9sm17266965obh.23.2014.04.25.12.08.24
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 25 Apr 2014 12:08:25 -0700 (PDT)
+In-Reply-To: <20140425185731.GA31454@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247098>
 
-Parse the trailer command line arguments and put
-the result into an arg_tok doubly linked list.
+Jeff King wrote:
+> On Fri, Apr 25, 2014 at 01:27:17PM -0500, Felipe Contreras wrote:
+> 
+> > I specifically said everybody agreed to "move away from the name 'index'", I
+> > didn't say everybody agreed on the "staged area" although the vast majority
+> > did, and I didn't say anybody agreed on my patches, although some did.
+> > 
+> > I think I was clear.
+> 
+> Maybe I was not clear in my response, so let me try again. I do _not_
+> necessarily agree that we need to move away from the name index.
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- trailer.c | 118 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 118 insertions(+)
+So you agree that "the index" is a bad name, and you agree "staging area" is a
+better name, yet you don't agree we should move away from the term "index"?
 
-diff --git a/trailer.c b/trailer.c
-index f376be5..f79a369 100644
---- a/trailer.c
-+++ b/trailer.c
-@@ -1,4 +1,5 @@
- #include "cache.h"
-+#include "string-list.h"
- /*
-  * Copyright (c) 2013, 2014 Christian Couder <chriscool@tuxfamily.org>
-  */
-@@ -391,3 +392,120 @@ static int git_trailer_config(const char *conf_key, const char *value, void *cb)
- 	}
- 	return 0;
- }
-+
-+static int parse_trailer(struct strbuf *tok, struct strbuf *val, const char *trailer)
-+{
-+	size_t len = strcspn(trailer, "=:");
-+	if (len == 0)
-+		return error(_("empty trailer token in trailer '%s'"), trailer);
-+	if (len < strlen(trailer)) {
-+		strbuf_add(tok, trailer, len);
-+		strbuf_trim(tok);
-+		strbuf_addstr(val, trailer + len + 1);
-+		strbuf_trim(val);
-+	} else {
-+		strbuf_addstr(tok, trailer);
-+		strbuf_trim(tok);
-+	}
-+	return 0;
-+}
-+
-+
-+static void duplicate_conf(struct conf_info *dst, struct conf_info *src)
-+{
-+	*dst = *src;
-+	if (src->name)
-+		dst->name = xstrdup(src->name);
-+	if (src->key)
-+		dst->key = xstrdup(src->key);
-+	if (src->command)
-+		dst->command = xstrdup(src->command);
-+}
-+
-+static const char *token_from_item(struct trailer_item *item)
-+{
-+	if (item->conf.key)
-+		return item->conf.key;
-+
-+	return item->conf.name;
-+}
-+
-+static struct trailer_item *new_trailer_item(struct trailer_item *conf_item,
-+					     char *tok, char *val)
-+{
-+	struct trailer_item *new = xcalloc(sizeof(*new), 1);
-+	new->value = val;
-+
-+	if (conf_item) {
-+		duplicate_conf(&new->conf, &conf_item->conf);
-+		new->token = xstrdup(token_from_item(conf_item));
-+		free(tok);
-+	} else
-+		new->token = tok;
-+
-+	return new;
-+}
-+
-+static int token_matches_item(const char *tok, struct trailer_item *item, int alnum_len)
-+{
-+	if (!strncasecmp(tok, item->conf.name, alnum_len))
-+		return 1;
-+	return item->conf.key ? !strncasecmp(tok, item->conf.key, alnum_len) : 0;
-+}
-+
-+static struct trailer_item *create_trailer_item(const char *string)
-+{
-+	struct strbuf tok = STRBUF_INIT;
-+	struct strbuf val = STRBUF_INIT;
-+	struct trailer_item *item;
-+	int tok_alnum_len;
-+
-+	if (parse_trailer(&tok, &val, string))
-+		return NULL;
-+
-+	tok_alnum_len = alnum_len(tok.buf, tok.len);
-+
-+	/* Lookup if the token matches something in the config */
-+	for (item = first_conf_item; item; item = item->next) {
-+		if (token_matches_item(tok.buf, item, tok_alnum_len)) {
-+			strbuf_release(&tok);
-+			return new_trailer_item(item,
-+						NULL,
-+						strbuf_detach(&val, NULL));
-+		}
-+	}
-+
-+	return new_trailer_item(NULL,
-+				strbuf_detach(&tok, NULL),
-+				strbuf_detach(&val, NULL));
-+}
-+
-+static void add_trailer_item(struct trailer_item **first,
-+			     struct trailer_item **last,
-+			     struct trailer_item *new)
-+{
-+	if (!new)
-+		return;
-+	if (!*last) {
-+		*first = new;
-+		*last = new;
-+	} else {
-+		(*last)->next = new;
-+		new->previous = *last;
-+		*last = new;
-+	}
-+}
-+
-+static struct trailer_item *process_command_line_args(struct string_list *trailers)
-+{
-+	struct trailer_item *arg_tok_first = NULL;
-+	struct trailer_item *arg_tok_last = NULL;
-+	struct string_list_item *tr;
-+
-+	for_each_string_list_item(tr, trailers) {
-+		struct trailer_item *new = create_trailer_item(tr->string);
-+		add_trailer_item(&arg_tok_first, &arg_tok_last, new);
-+	}
-+
-+	return arg_tok_first;
-+}
 -- 
-1.9.1.636.g20d5f34
+Felipe Contreras
