@@ -1,333 +1,147 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v10 11/12] Documentation: add documentation for 'git
- interpret-trailers'
-Date: Fri, 25 Apr 2014 23:07:10 +0200 (CEST)
-Message-ID: <20140425.230710.1024850359228182788.chriscool@tuxfamily.org>
-References: <5343A589.10503@alum.mit.edu>
-	<CAP8UFD0RftewWj-oivojUrXCDqXUq6xX7ndQdixA2i=1BzZEFg@mail.gmail.com>
-	<534414FB.6040604@alum.mit.edu>
+From: Thomas Rast <tr@thomasrast.ch>
+Subject: Re: [PATCH] l10n: de.po: translate 45 new messages
+Date: Fri, 25 Apr 2014 23:19:40 +0200
+Message-ID: <87lhutp0nn.fsf@thomasrast.ch>
+References: <1397931508-9752-1-git-send-email-ralf.thielow@gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: christian.couder@gmail.com, gitster@pobox.com, git@vger.kernel.org,
-	johan@herland.net, josh@joshtriplett.org, tr@thomasrast.ch,
-	dan.carpenter@oracle.com, greg@kroah.com, peff@peff.net,
-	sunshine@sunshineco.com, ramsay@ramsay1.demon.co.uk,
-	jrnieder@gmail.com
-To: mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Fri Apr 25 23:07:42 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, jk@jk.gs, stimming@tuhh.de
+To: Ralf Thielow <ralf.thielow@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 25 23:27:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WdnLP-0007BY-0J
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Apr 2014 23:07:39 +0200
+	id 1WdneK-00063j-I1
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Apr 2014 23:27:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751644AbaDYVHe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Apr 2014 17:07:34 -0400
-Received: from mail-1y.bbox.fr ([194.158.98.14]:38661 "EHLO mail-1y.bbox.fr"
-	rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751091AbaDYVHc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Apr 2014 17:07:32 -0400
-Received: from localhost (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-1y.bbox.fr (Postfix) with ESMTP id 6A6EC42;
-	Fri, 25 Apr 2014 23:07:10 +0200 (CEST)
-In-Reply-To: <534414FB.6040604@alum.mit.edu>
-X-Mailer: Mew version 6.3 on Emacs 23.3 / Mule 6.0 (HANACHIRUSATO)
+	id S1751317AbaDYV1G convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Apr 2014 17:27:06 -0400
+Received: from ip1.thgersdorf.net ([148.251.9.194]:42549 "EHLO mail.psioc.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751167AbaDYV1E convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 25 Apr 2014 17:27:04 -0400
+X-Greylist: delayed 430 seconds by postgrey-1.27 at vger.kernel.org; Fri, 25 Apr 2014 17:27:03 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.psioc.net (Postfix) with ESMTP id E96E04D64DE;
+	Fri, 25 Apr 2014 23:19:50 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at psioc.net
+Received: from mail.psioc.net ([127.0.0.1])
+	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 7AOxigF9C32u; Fri, 25 Apr 2014 23:19:40 +0200 (CEST)
+Received: from linux-1gf2.thomasrast.ch (unknown [95.151.233.132])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(Client did not present a certificate)
+	by mail.psioc.net (Postfix) with ESMTPSA id 1F7ED4D6581;
+	Fri, 25 Apr 2014 23:19:40 +0200 (CEST)
+In-Reply-To: <1397931508-9752-1-git-send-email-ralf.thielow@gmail.com> (Ralf
+	Thielow's message of "Sat, 19 Apr 2014 20:18:28 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247113>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247114>
 
-From: Michael Haggerty <mhagger@alum.mit.edu>
->
-> On 04/08/2014 01:35 PM, Christian Couder wrote:
->> 
->> The trailers are recognized in the input commit message using the
->> following rules:
->>  - only lines that contains a ':' are considered trailers,
->>  - the trailer lines must all be next to each other,
->>  - after them it's only possible to have some lines that contain only spaces,
->>  - before them there must be at least one line with only spaces
-> 
-> Thanks for all the explanation.  I think that most/all of this
-> information should be included in the documentation.
+Ralf Thielow <ralf.thielow@gmail.com> writes:
 
-Ok, I included the above rules in v11, but maybe not other pieces of
-information that you might have wanted.
+> Translate 45 new messages came from git.pot update in 5e078fc
+> (l10n: git.pot: v2.0.0 round 1 (45 new, 28 removed)).
 
->>>> +OPTIONS
->>>> +-------
->>>> +--trim-empty::
->>>> +     If the 'value' part of any trailer contains only whitespace,
->>>> +     the whole trailer will be removed from the resulting message.
->>>
->>> Does this apply to existing trailers, new trailers, or both?
->> 
->> Both.
->> 
->>> If it applies to existing trailers, then it seems a bit dangerous, in the
->>> sense that the command might end up changing trailers that are unrelated
->>> to the one that the command is trying to add.
->> 
->> The command is not just for adding trailers.
->> But there could be an option to just trim trailers that are added.
-> 
-> Maybe that should be the *only* behavior of this option.
-> 
-> Maybe there should be a trailer.<token>.trimEmpty config option.
+Thanks for sending this with extra context, it really helps reviewing!
 
-One possible usage of the "git interpret-trailers" command that was
-discussed in the early threads was the following:
+With the small changes below,
 
-1) You have a commit message template like the following:
+Acked-by: Thomas Rast <tr@thomasrast.ch>
 
------------------
-***SUBJECT***
+>  #: diffcore-rename.c:517
+>  msgid "Performing inexact rename detection"
+> -msgstr ""
+> +msgstr "F=C3=BChre Erkennung f=C3=BCr ungenaue Umbenennung aus"
 
-***MESSAGE***
+I don't have a better idea, but I wish we had a less unwieldy term for
+"inexact rename detection".
 
-Fixes: 
-Cc: 
-Cc: 
-Reviewed-by: 
-Reviewed-by: 
-Signed-off-by: 
------------------
+>  #: wt-status.c:266
+> -#, fuzzy, c-format
+> +#, c-format
+>  msgid "bug: unhandled unmerged status %x"
+> -msgstr "Fehler: unbehandelter Differenz-Status %c"
+> +msgstr "Fehler: unbehandelter Unmerged-Status %x"
 
-2) The user add some information when committing:
+s/Fehler/Bug/?
 
-$ git commit --trailer "Fixes:534" --trailer "Signed-off-by: Michael <mhagger@alum.mit.edu>"
+I interpret "Fehler" in such a message as a user-caused problem, wherea=
+s
+this message means the program doesn't handle a case that it really
+should.
 
-3) "git interpret-trailers" is used automatically by "git commit"
-without --trim-empty, and it is passed the --trailer arguments and the
-commit message template, so the user is shown the result which is for
-example the following:
+>  #: builtin/commit.c:1131
+> -#, fuzzy
+>  msgid "Explicit paths specified without -i or -o; assuming --only pa=
+ths..."
+>  msgstr ""
+>  "Explizite Pfade ohne -i oder -o angegeben; unter der Annahme von --=
+only "
+>  "Pfaden..."
 
------------------
-***SUBJECT***
+Not new, but "[I am] assuming --only paths" should really be translated
+as such, e.g.
 
-***MESSAGE***
+  nehme --only an
 
-Fixes: 534
-Cc: 
-Cc: 
-Reviewed-by: 
-Reviewed-by: 
-Signed-off-by: Michael <mhagger@alum.mit.edu>
------------------
+(Leaving off the "paths"; I think it reads better without it even in
+English.)
 
-4) The user adds some information and the resulting message is for
-example:
+>  #: builtin/gc.c:318
+> -#, fuzzy, c-format
+> +#, c-format
+>  msgid "Auto packing the repository in background for optimum perform=
+ance.\n"
+>  msgstr ""
+> -"Die Datenbank des Projektarchivs wird f=C3=BCr eine optimale Perfor=
+mance "
+> -"komprimiert.\n"
+> +"Die Datenbank des Repositories wird f=C3=BCr eine optimale Performa=
+nce automatisch\n"
+> +"im Hintergrund komprimiert.\n"
+> =20
+>  #: builtin/gc.c:320
+>  #, c-format
+>  msgid "Auto packing the repository for optimum performance.\n"
+>  msgstr ""
+>  "Die Datenbank des Projektarchivs wird f=C3=BCr eine optimale Perfor=
+mance "
+>  "komprimiert.\n"
 
------------------
-Doing foo and bar
+Nit: you added "automatisch" in the first one, but the second one
+doesn't have it even though the difference between them is only "in
+background".
 
-And also baz.
+>  #: builtin/gc.c:321
+>  #, c-format
+>  msgid "See \"git help gc\" for manual housekeeping.\n"
+> -msgstr ""
+> +msgstr "Siehe \"git help gc\" f=C3=BCr manuelle Einstellungen.\n"
 
-Fixes: 534
-Cc: 
-Cc: Peff <peff@peff.net>
-Reviewed-by: Junio <gitster@pobox.com>
-Reviewed-by: 
-Signed-off-by: Michael <mhagger@alum.mit.edu>
------------------
+f=C3=BCr manuelles Aufr=C3=A4umen?
 
-5) Then a post commit hook automatically uses "git interpret-trailers
---trim-empty" on the result, so the commit message is eventually the
-following:
+>  #: builtin/notes.c:276
+> -#, fuzzy, c-format
+> +#, c-format
+>  msgid "Cannot read note data from non-blob object '%s'."
+> -msgstr "Kann existierendes Objekt %s nicht lesen."
+> +msgstr "Kann Notiz-Daten von Nicht-Blob Objekt '%s' nicht lesen."
 
------------------
-Doing foo and bar
+This would read better as
 
-And also baz.
+  Kann Notiz-Daten nicht von Nicht-Blob Objekt '%s' lesen.
 
-Fixes: 534
-Cc: Peff <peff@peff.net>
-Reviewed-by: Junio <gitster@pobox.com>
-Signed-off-by: Michael <mhagger@alum.mit.edu>
------------------
+since the key point is that we refuse any non-blob object, not that we
+can't read it.
 
-So I think it could be very useful to have --trim-empty work on all
-the trailers, not just those passed as arguments.
-
->>> If a commit message containing trailer lines with separators other than
->>> ':' is input to the program, will it recognize them as trailer lines?
->> 
->> No, '=' and '#' are not supported in the input message, only in the output.
->> 
->>> Do such trailer lines have to have the same separator as the one listed
->>> in this configuration setting to be recognized?
->> 
->> No they need to have ':' as a separator.
->> 
->> The reason why only ':' is supported is because it is the cannonical
->> trailer separator and it could create problems with many input
->> messages if other separators where supported.
->> 
->> Maybe we could detect a special line like the following:
->> 
->> # TRAILERS START
->> 
->> in the input message and consider everyhting after that line as trailers.
->> In this case it would be ok to accept other separators.
-> 
-> It would be ugly to have to use such a line.  I think it would be
-> preferable to be more restrictive about trailer separators than to
-> require something like this.
-
-The code is already very restrictive about trailer separators.
-
-> From what you've said above, it sounds like your code might get confused
-> with the following input commit message:
-> 
->     This is the human-readable comment
-> 
->     Foo: bar
->     Fixes #123
->     Plugh: xyzzy
-> 
-> It seems to me that none of these lines would be accepted as trailers,
-> because they include a non-trailer "Fixes" line (non-trailer in the
-> sense that it doesn't use a colon separator).
-
-Yeah, they would not be accepted because the code is very restrictive.
-
-The following would be accepted:
-
-     Foo: bar
-     Fixes: 123
-     Plugh: xyzzy
-
->>> I suppose that there is some compelling reason to allow non-colon
->>> separators here.  If not, it seems like it adds a lot of complexity and
->>> should maybe be omitted, or limited to only a few specific separators.
->> 
->> Yeah, but in the early threads concerning this subject, someone said
->> that GitHub for example uses "bug #XXX".
->> I will have a look again.
-> 
-> Yes, that's true: GitHub recognizes strings like "fixes #33" but not if
-> there is an intervening colon like in "fixes: #33".  OTOH GitHub
-> recognizes such strings wherever they appear in the commit message (they
-> don't have to be in "trailer" lines).  So I'm not sure that the added
-> complication is worth it if GitHub is the only use case.  (And maybe we
-> could convince GitHub to recognize "Fixes: #33" if such syntax becomes
-> the de-facto Git standard for trailers.)
-
-I don't think there is a lot of complexity.
-But maybe I need to explain how it works better.
-Feel free to suggest me sentences I could add.
-
->>>> +With `addIfDifferent`, a new trailer will be added only if no trailer
->>>> +with the same (token, value) pair is already in the message.
->>>> ++
->>>> +With `addIfDifferentNeighbor`, a new trailer will be added only if no
->>>> +trailer with the same (token, value) pair is above or below the line
->>>> +where the new trailer will be added.
->>>> ++
->>>> +With `add`, a new trailer will be added, even if some trailers with
->>>> +the same (token, value) pair are already in the message.
->>>> ++
->>>> +With `overwrite`, the new trailer will overwrite an existing trailer
->>>> +with the same token.
->>>
->>> What if there are multiple existing trailers with the same token?  Are
->>> they all overwritten?
->> 
->> No, if where == after, only the last one is overwritten, and if where
->> == before, only the first one is overwritten.
->> 
->> I could add an "overwriteAll" option. It could be interesting to use
->> when a command using "$ARG" is configured, as this way the command
->> would apply to all the trailers with the given token instead of just
->> the last or first one.
-> 
-> It seems to me that the current behavior (rewriting exactly one existing
-> line) is not that useful.  Why not make "overwrite" overwrite *all*
-> existing matching lines?
-
-I was thinking that people could use the following template message:
-
----------------
-Signed-off-by: 
-Signed-off-by: YOU-WILL-BE-AUTOMATICALLY-ADDED-HERE
----------------
-
-and the following config:
-
----------------
-[trailer "s-o-b"]
-	 key = "Signed-off-by: "
-	 ifexist = overwrite
-	 command = echo \"$GIT_AUTHOR_NAME <$GIT_AUTHOR_EMAIL>\"
----------------
-
-This way the user can add other people's s-o-b before the last one
-which will always contain his own s-o-b.
-
->>>> +If the command contains the `$ARG` string, this string will be
->>>> +replaced with the 'value' part of an existing trailer with the same
->>>> +token, if any, before the command is launched.
->>>
->>> What if the key appears multiple times in existing trailers?
->> 
->> It will be done only once for the last or first trailer with the key
->> depending on "where".
-> 
-> It seems like the UI for "git interpret-trailers" is optimized for
-> trailers that appear only once.  That's a bit limiting.
-
-As I said, it is possible to add an overwriteAll option.
-I think that would fix the current limitations.
-
-> Maybe it would
-> be better to pipe the existing values to the command's standard input,
-> one per line?  For example, suppose we run
-> 
->     git interpret-trailers \
->         Signed-off-by='Christian Couder <christian.couder@gmail.com>'
-> 
-> with the following input:
-> 
->     Human-readable subject
-> 
->     Signed-off-by: Junio C Hamano <gitster@pobox.com>
->     Signed-off-by: Christian Couder <christian.couder@gmail.com>
-> 
-> Then the following three lines could be piped to the command (i.e., one
-> value per line, without the key):
-> 
->     Junio C Hamano <gitster@pobox.com>
->     Christian Couder <christian.couder@gmail.com>
->     Christian Couder <christian.couder@gmail.com>
-> 
-> Then, supposing the command were "sort --unique", the command's output
-> would be
-> 
->     Christian Couder <christian.couder@gmail.com>
->     Junio C Hamano <gitster@pobox.com>
-> 
-> which would be converted back into trailer lines by prepending
-> "Signed-off-by: ", resulting in the modified commit message
-> 
->     Human-readable subject
-> 
->     Signed-off-by: Christian Couder <christian.couder@gmail.com>
->     Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> 
-> (Not that we would want to do with "Signed-off-by" trailers, but you get
-> the idea.)
-
-Yeah, but I think the existing options like addIfDifferent and
-addIfDifferentNeighbor are simpler to do these kind of things.
-
-And it is also possible to add a "where = sorted" option.
-
-And if later we realize that people are still not happy, we can still
-add a special "trailer.<token>.filter" that could do what you suggest.
-
-Thanks,
-Christian.
+--=20
+Thomas Rast
+tr@thomasrast.ch
