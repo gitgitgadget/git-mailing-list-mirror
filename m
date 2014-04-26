@@ -1,117 +1,118 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH 1/2] blame: large-scale performance rewrite
-Date: Sat, 26 Apr 2014 09:48:14 +0200
-Message-ID: <87wqec8rb5.fsf@fencepost.gnu.org>
-References: <1398470210-28746-1-git-send-email-dak@gnu.org>
-	<CAJo=hJukmej1rJXuVoECwd7AxmSue8Wmv4rBmCHEYcWBWNarSw@mail.gmail.com>
+From: luc.linux@mailoo.org
+Subject: Re: gitignore vs. exclude vs assume-unchanged?
+Date: Sat, 26 Apr 2014 09:52:45 +0200
+Message-ID: <20140426075245.GA4123@luc-arch>
+References: <b3f480af1c362c615ad9ce85296e2be2@bellandwhistle.net>
+ <xmqqy4z5go1y.fsf@gitster.dls.corp.google.com>
+ <dee7ee673c8c4d81fb5aaecea25e9709@bellandwhistle.net>
+ <20140416234555.GA4309@google.com>
+ <4dd8389939fbf3dc77b58adcca7b17c1@bellandwhistle.net>
+ <CAH5451k+GGGdHXkwne2O-h2m2AyWg7K+5reNRG64+eF891pVUA@mail.gmail.com>
+ <xmqqtx9l5jxn.fsf@gitster.dls.corp.google.com>
+ <35592507346991e5c286144fcbd04097@bellandwhistle.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Apr 26 09:48:54 2014
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="7AUc2qLy4jB3hD7Z"
+To: alex@bellandwhistle.net, Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Apr 26 10:08:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WdxLt-0006Qn-O8
-	for gcvg-git-2@plane.gmane.org; Sat, 26 Apr 2014 09:48:50 +0200
+	id 1WdxeU-00050r-5R
+	for gcvg-git-2@plane.gmane.org; Sat, 26 Apr 2014 10:08:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751238AbaDZHs0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 26 Apr 2014 03:48:26 -0400
-Received: from fencepost.gnu.org ([208.118.235.10]:33073 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750989AbaDZHsZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 26 Apr 2014 03:48:25 -0400
-Received: from localhost ([127.0.0.1]:60348 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1WdxLU-0007oT-Cw; Sat, 26 Apr 2014 03:48:24 -0400
-Received: by lola (Postfix, from userid 1000)
-	id 3249CE064D; Sat, 26 Apr 2014 09:48:14 +0200 (CEST)
-In-Reply-To: <CAJo=hJukmej1rJXuVoECwd7AxmSue8Wmv4rBmCHEYcWBWNarSw@mail.gmail.com>
-	(Shawn Pearce's message of "Fri, 25 Apr 2014 17:53:31 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
+	id S1751028AbaDZIGv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Apr 2014 04:06:51 -0400
+Received: from arnold.mailoo.org ([212.83.147.198]:54806 "EHLO mailoo.org"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1750756AbaDZIGr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Apr 2014 04:06:47 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by arnold.mailoo.org (Postfix) with ESMTP id 0CE8A159;
+	Sat, 26 Apr 2014 10:06:45 +0200 (CEST)
+Received: from localhost (174.158.92.79.rev.sfr.net [79.92.158.174])
+	by arnold.mailoo.org (Postfix) with ESMTPSA id 6C108158;
+	Sat, 26 Apr 2014 10:06:44 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <35592507346991e5c286144fcbd04097@bellandwhistle.net>
+X-Info: Keep It Simple, Stupid.
+User-Agent: Mutt/1.5.22.1-rc1 (2013-10-16)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247149>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247150>
 
-Shawn Pearce <spearce@spearce.org> writes:
 
-> On Fri, Apr 25, 2014 at 4:56 PM, David Kastrup <dak@gnu.org> wrote:
->> The previous implementation used a single sorted linear list of blam=
-e
->> entries for organizing all partial or completed work.  Every subtask=
- had
->> to scan the whole list, with most entries not being relevant to the
->> task.  The resulting run-time was quadratic to the number of separat=
-e
->> chunks.
->>
->> This change gives every subtask its own data to work with.  Subtasks=
- are
->> organized into "struct origin" chains hanging off particular commits=
-=2E
->> Commits are organized into a priority queue, processing them in comm=
-it
->> date order in order to keep most of the work affecting a particular =
-blob
->> collated even in the presence of an extensive merge history.
->
-> Without reading the code, this sounds like how JGit runs blame.
->
->> For large files with a diversified history, a speedup by a factor of=
- 3
->> or more is not unusual.
->
-> And JGit was already usually slower than git-core. Now it will be eve=
-n
-> slower! :-)
+--7AUc2qLy4jB3hD7Z
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-If your statement about JGit is accurate, it should likely have beat Gi=
-t
-for large use cases (where the performance improvements are most
-important) as O(n) beats O(n^2) in the long run.
+On Fri, Apr 25, 2014 at 04:09:47PM -0700, alex@bellandwhistle.net wrote:
+> >Andrew Ardill <andrew.ardill@gmail.com> writes:
+> >
+> >As a data point, I have seen people add ".gitignore" to their
+> >.gitignore file, as they don't want to share the file.
+>=20
+> Right, I've seen that too.
+That something I am actually doing in my projects, because I didn't
+know they were other way to exclude files like .gitignore.
 
-At any rate, I see that I ended up posting this patch series at the end
-of the week again which makes for a somewhat lacklustre initial respons=
-e
-from those who code Git for a regular living.
+> It confused the heck out of me. It only lends
+> credence to my point about the docs. Those users want the functionality o=
+f a
+> pattern in '$GIT_DIR/info/exclude', but haven't been able to figure it out
+> easily enough. They've just heard about .gitignore, so they're using that.
+> Yes, it's all there in the docs if you read it several times, and you
+> already know what you're looking at, but not in a terribly accessible, be=
+st
+> practices, "advice from a smart friend who's been through it all already"
+> kind of way.
+ Well documentation can be useful when you know what you're looking for,
+ but I won't go read it just for discovering new features I didn't know.
 
-Apropos: shaking the bugs regarding -M and -C options out of the code
-had taken a large toll because -M can cause the same or overlapping lin=
-e
-regions to be responsible for different target regions and the original
-code implementing the "straightforward" blame blew up on the overlap.
-I=A0spent a _lot_ of time tracking down that problem.
+> Well, yes: semantics. Since they do slightly different things, they should
+> have different names. It makes reference and teaching much easier. In fac=
+t,
+> if a renaming were to occur, I would actually prefer even better semantic=
+s:
+>=20
+>     .gitignore -> .shared-ignore
+>=20
+>     $GIT_DIR/info/exclude -> $GIT_DIR/info/local-ignore
+>=20
+> These suggested names could perhaps be improved on. But if anything, the
+> names need to be more different, not less. Users should be able to instan=
+tly
+> know what a speaker is talking about without having to doublecheck and ask
+> if by "git-ignore", the speaker really meant "git ignore" or
+> "dot-gitignore".
+I agree with a new name for .gitignore. A name like shared-ignore would
+make explicite the fact it is shared, and then the user would look for
+another way to locally exclude files. This would be a good approach, but
+changing it won't be easy as most people already use .gitignore.
 
-As I am lousy focusing on more than one task, and as I don't get a
-regular paycheck anyway, this will have to remain my last contribution
-to Git if I am not going to recoup my losses.
+Would it be acceptable to have git display a warning when it detects
+that .gitignore is excluding itself, with eventually a link to the
+documentation or the path to $GIT_DIR/info/exclude ?
 
-Patch 2 of this series tries giving the community of Git a serious
-chance at picking that option (I mean, there are literally millions of
-Git users around with a sizable number profiting) while not being
-obnoxious about it.
 
-My personal guess is that it will fail regarding both objectives.  But
-then I've been surprised before by other free software communities when
-trying to make those particular two ends meet.
+--7AUc2qLy4jB3hD7Z
+Content-Type: application/pgp-signature
 
-At any rate, feedback about the performance of the patch from users
-disappointed by regular git blame would be welcome.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
 
-Apart from the objective measurement of "total time", the more
-subjective impression of interactive/incremental response (like in git
-gui blame) where the order of results will significantly differ (curren=
-t
-git-blame --incremental focuses on getting blames resolved in
-first-lines-first manner, the proposed git-blame rather works on a
-newest-commits-first basis which might better match typical use cases)
-might be worth reporting.
+iQEbBAEBAgAGBQJTW2XNAAoJEIcYFL//CHl9GJMH9iiaEuq14U7m2zotOzzvaPKi
+jd9EmnuUvZm/5OUV57XfbG2YNq2xuDs4Gxp+geiLMrlHJNVdeH7q1J4lPxYrGiLH
+HDQU21khF/1zwCI8yPXFxymCKeV+aL84t1Gc3PTsRoU79VBem2qI25TPzRItEDa8
+pzIRcbxxXCuw3TxVLU/CbUGlDqs+IgTUAv3IvQSnchS56Ruy+e1ML6q3YBhs1P8c
+QfEoSn3p6e0ZPnKzV4t7NNnLFVsdFfIYM53bgMa6/TDdpyIaSHc9yROnH431/MD9
+SO36k1TMS5FJEray/B1YXkoVdvrtZz7xVP4nRydlQpOAqkM5RIsYs8BAMX23ww==
+=QZfy
+-----END PGP SIGNATURE-----
 
---=20
-David Kastrup
+--7AUc2qLy4jB3hD7Z--
