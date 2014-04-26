@@ -1,136 +1,109 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RTC/PATCH] Add 'update-branch' hook
-Date: Sat, 26 Apr 2014 10:38:19 -0700
-Message-ID: <7vfvl0htys.fsf@alter.siamese.dyndns.org>
-References: <1398047016-21643-1-git-send-email-felipe.contreras@gmail.com>
-	<5355793A.5020000@gmail.com> <53558476703cb_5c94d452ec4e@nysa.notmuch>
-	<53558A54.4060801@gmail.com> <53558ae6f1282_604be1f30cf3@nysa.notmuch>
-	<53559020.1050407@gmail.com> <53558f6269f91_640076f2f08f@nysa.notmuch>
-	<857g6h5ssh.fsf@stephe-leake.org>
-	<5356996d12ede_3e5aed7308e5@nysa.notmuch>
-	<85mwfc4hab.fsf@stephe-leake.org>
-	<535782d95bbed_24448772ec7a@nysa.notmuch>
-	<xmqqoazrwtsc.fsf@gitster.dls.corp.google.com>
-	<535864bbc3a84_3c7abff3107b@nysa.notmuch>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: GIT, libcurl and GSS-Negotiate
+Date: Sat, 26 Apr 2014 17:47:18 +0000
+Message-ID: <20140426174718.GC238861@vauxhall.crustytoothpaste.net>
+References: <CAPc4eF__gWMy=E-8tdpMn_irA4m7mYF3=cwN6JeAqJsdPshNLw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Stephen Leake <stephen_leake@stephe-leake.org>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 26 19:36:43 2014
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ALfTUftag+2gvp1h"
+Cc: git@vger.kernel.org
+To: Ivo Bellin Salarin <ivo.bellinsalarin@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 26 19:47:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1We6Wo-00009H-Fb
-	for gcvg-git-2@plane.gmane.org; Sat, 26 Apr 2014 19:36:43 +0200
+	id 1We6hK-0007xA-1k
+	for gcvg-git-2@plane.gmane.org; Sat, 26 Apr 2014 19:47:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752201AbaDZRgh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Apr 2014 13:36:37 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64067 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751732AbaDZRgf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Apr 2014 13:36:35 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4F6C779E1D;
-	Sat, 26 Apr 2014 13:36:35 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=x5v34dyLDLMIYSfsbl6iA9ykzm8=; b=WHzoJzPI5oiCV7RKvt38
-	mPWjmt+kfTt3HVyUy3Spzw4CFkwVQ2Rnw89EZsh3OuOPO9rP74LNRW795hLRU19M
-	01jZInQKoIA8sl2k5UH5ChQzNw2ttgK3T8IGyA59qGshFuerBfP5IpJ6KEt6ZGyv
-	beMh9MsnsCFO2dHErJXmOk0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=D8NwWWzqqBAGZQ5B8XGeBv5KHF3f5JnXneB1NoBZYvEqXR
-	/EYdEkTQF4O44b5gZj60jPHl3p/P846U2WbQV0Tlmg1EFyrVZ4FRPUibL94mWqw/
-	Y1bCedjP2XDd7UBN6qvY5TxDBVoEyzC8FOfZFEpKWIAA8/uGQMUexoGhj5ME4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3069F79E1B;
-	Sat, 26 Apr 2014 13:36:35 -0400 (EDT)
-Received: from pobox.com (unknown [198.0.213.178])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S1751287AbaDZRr1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Apr 2014 13:47:27 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:47350 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750781AbaDZRr0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 26 Apr 2014 13:47:26 -0400
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:e557:515c:f5ce:8138])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 25F2D79E19;
-	Sat, 26 Apr 2014 13:36:33 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.4 (gnu/linux)
-X-Pobox-Relay-ID: 4F019C88-CD69-11E3-8E5A-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 541BF28087;
+	Sat, 26 Apr 2014 17:47:25 +0000 (UTC)
+Mail-Followup-To: Ivo Bellin Salarin <ivo.bellinsalarin@gmail.com>,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <CAPc4eF__gWMy=E-8tdpMn_irA4m7mYF3=cwN6JeAqJsdPshNLw@mail.gmail.com>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.14-rc7-amd64)
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Spam-Score: -0.272 () BAYES_00,RDNS_NONE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247169>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-> So you grant that there is no reason anybody can think of why we would ever
-> want a post-update-branch?
+--ALfTUftag+2gvp1h
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-No, it only shows that you (and I) are not imaginative enough
-(and/or we didn't bother spending enough brain cycles) to come up
-with an example.  Your lack of imagination and foresight does not
-give you any right to close the door to those who come after you who
-have real needs, or make it awkward to add it later for them.
+On Thu, Apr 24, 2014 at 07:17:36PM +0200, Ivo Bellin Salarin wrote:
+> To shortly resume it, the problem is that:
+> * when the authentication method (WWW-Authenticate) is Negotiate AND
+> * when the server proposes a NTLMSSP_CHALLENGE in response of the
+> client's NTLMSSP_NEGOTIATE,
+> =3D> libcurl yields an "Authentication problem. Ignoring this.\n"
+> And the communication is closed.
+>=20
+> At this point, in a normal communication, the client should send a
+> NTLMSSP_AUTH containing a Kerberos ticket.
+>=20
+> Having seen the libcurl source code, I think we're passing through the
+> lines  from 776 to 780 of
+> [http.c](https://github.com/bagder/curl/blob/2e57c7e0fcfb9214b2a9dfa8b3da=
+258ded013b8a/lib/http.c).
+> Some guy, on the github issue page, has suggested that this could be
+> related to an update of libcurl, when git was at its 1.8.2 version.
+>=20
+> I'm not debugging libcurl, and I can't reproduce this problem @home.
+> So, has somebody already experienced the same problem? Is there a
+> solution?
 
-> Let's make a bet, we go for 'pre-update-branch' and five years from now, if
-> there's no 'post-update-branch', you will publicly accept thta I was right.
->
-> Deal?
+I'm personally using Git with GSS-Negotiate (and MIT Kerberos 5) and it
+does seem to work correctly for me.  For large pushes, your server (and
+any intermediate proxies) will need to support 100 Continue properly, as
+there's simply no other way to make it work.
 
-Let me get this straight.  You spent a lot of effort to argue that
-naming it update-branch is the right thing, but now you want me to
-name it pre-update-branch, only so that you can prove you are right?
+What version of curl are you using (and what distro if you didn't
+compile it yourself)?  Also, can you post output of an attempt to push
+with GIT_CURL_VERBOSE=3D1?
 
-Playing a silly bet among friends may be fun from time to time.  But
-I do not like using Git as a plaything, I am not your friend, and I
-never felt it fun having to interact with you.  I am not interested
-in proving you right or wrong.  You are not that interesting.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
 
-What you said however shows clearly the reason why it is not fun to
-work with you, and I think that is a lot more important point.  Your
-priorities are screwed up.  For the rest of us, making Git better is
-the primary reason why we are here.  You seem to be saying that it
-is more important to you, however, to "win" your little argument,
-and you are willing to even sacrifice a better Git (in your mind,
-with the hook named as update-branch) in order to "win".
+--ALfTUftag+2gvp1h
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
-With a person with such screwed-up priorities, nobody whose first
-objective is to make Git better can have a sane conversation.  Ask
-those who said they do not want to work with you.  In the list
-archive, there are plenty of examples to choose from, and I think
-they will agree with me.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-It is a pity that in all of these long flamefest, you may have meant
-well to improve Git when you brought up something that needs to be
-solved in your first few messages.  The rest of us may even have
-agreed that it is good to address that issue on many of them.  But
-the time "something needs to be done" and "the way Felipe proposes
-to solve it is good" turns out to be different, i.e. when those who
-agree with the former do not agree with the latter, the discussions
-with you go downhill quick.  Each and every time.  See your "index
-is hard to learn for people---can we do something?" topic, if you
-want another example, where you try to twist words by Peff and
-others and caught in doing so.
+iQIcBAEBCgAGBQJTW/EmAAoJEL9TXYEfUvaL4BQP/2JJoasmMLvyb1Y7HOqHZzDQ
+5TgLD15lWFNEBMkie5p8svMrSDWouUAthvshOwhV9fQ7H3U7aHBDam2hVVQ1cmAI
+x0uZ/LtjM+fPhL9uHnPSrK1+AzznN7Byh6cHvDkYYwwP4YI6XGmfATbru0yF6nAr
+8GslAxfWXgw4IiASYEL/ssnW75qCn5JLzAFW0xJ/ML4DG/AkEbUJsCTZZGNyE27x
+vIID53Pm3j8C25SPPQc1XHH+m8AewWdiBz4sp05eNiixVGVVFcB5yTL6m5cRN1y4
+MJSBl7YA0KPakCpIvaWVEkc4uaYQuniVCSVNC3yWGajVWNbJyuvZNrDFkxJkfY48
+a3TTJNFdJQSUw/0430v/4uVaq/AiKdDNWHXTS61mDRk3E7qqFJ9b3ImoyBCkd6Vy
+HC+1UueBUUG0fhvm/DNxkLiOl35AKsa7ZiLSUfxBF/Md+tki57r+B6dexEQnF3+j
+gRmz4+zujem/iMdSpS8EgMM9RQtdFdl+j5QCvWpAzVXxiOkVK8pP0LAnJaM3coj8
+kvSOOeIKeUA28AuYbdo9QHhlZ7u2vRX1YwzMzQ0oxvkLl7+ukeJkxMEpaYZDRQGq
+X3OTlEuZujeQevCqCwuUrnL5uoJCCow83K7dcv0N5KcJfBeWQETxCB3RzAjWG67x
+lbB96PHpHrFQuH0A3iP4
+=UQul
+-----END PGP SIGNATURE-----
 
-Now, I know you are going to say "that is what *you* think, and even
-if they agree, that is only what *they* think. it is not true! my
-priorities are right and they are wrong!".
-
-I'd freely give you that they are only *impressions* we have on you,
-that we were forced to form by observing your past and present
-behaviours.  It may not be "true you".  You may be a loving an
-wonderful person in reality, and you are not showing your true self
-when you are on this list.  But you know something?  The project
-advances by humans working together, and without telepathy, these
-impression are the only thing we humans can go by.
-
-I also know that you are going to say "that is what *you* think".  I
-have nothing more to say to you at that point.
-
-It could be that your "bet" is a way for you to finally admitting
-that naming the hook with "pre-" prefix will result in a better Git
-than without, without you having to say "Yes, you are right, let's
-change it" (which I rarely if ever saw you doing).  But still that
-shows the same screwed-up priorities---winning your little argument
-(or not losing it) matters more to you than working well with
-others.  I do not think I want to work with such a person.
+--ALfTUftag+2gvp1h--
