@@ -1,79 +1,137 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: What's cooking in git.git (Apr 2014, #08; Fri, 25)
-Date: Sat, 26 Apr 2014 14:35:09 -0500
-Message-ID: <535c0a6ddd4d1_5310a773082@nysa.notmuch>
-References: <xmqqoazpt45p.fsf@gitster.dls.corp.google.com>
- <20140425231953.GB3855@sigill.intra.peff.net>
- <535b0db7e5e31_ba2148d310f4@nysa.notmuch>
- <BLU0-SMTP3741FBD4980A29338AC8BA8D1450@phx.gbl>
- <535b4c5a3c91c_3d63109d2f00@nysa.notmuch>
- <27645ABF2E944872BB3F944B17E9490B@PhilipOakley>
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: Philip Oakley <philipoakley@iee.org>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Alex Davidson <descenterace@hotmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 26 21:46:28 2014
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v1 2/4] replace: use OPT_CMDMODE to handle modes
+Date: Sat, 26 Apr 2014 22:00:55 +0200
+Message-ID: <20140426200058.21546.25686.chriscool@tuxfamily.org>
+References: <20140426194404.21546.82305.chriscool@tuxfamily.org>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Apr 26 22:02:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1We8YN-0008TQ-F0
-	for gcvg-git-2@plane.gmane.org; Sat, 26 Apr 2014 21:46:27 +0200
+	id 1We8o8-0008Th-Vg
+	for gcvg-git-2@plane.gmane.org; Sat, 26 Apr 2014 22:02:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751397AbaDZTpm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Apr 2014 15:45:42 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:56418 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751180AbaDZTpl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Apr 2014 15:45:41 -0400
-Received: by mail-ob0-f174.google.com with SMTP id gq1so5664293obb.19
-        for <git@vger.kernel.org>; Sat, 26 Apr 2014 12:45:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:message-id:in-reply-to:references:subject:mime-version
-         :content-type:content-transfer-encoding;
-        bh=GQDPidEgm21ecgrYufA3WNh0Kp9zYtCG5bRO7ZsBR9I=;
-        b=xihs80fYz7VSjSzNXFlrPSwPgMkpBaVp5moCzQ+BMJttyvDvKJRqT5dRfVUSCXsd1P
-         ViDgHE+r3p8wvLxbZhhz4dn1Mo98f2yMF0VVybfQYWNl/AKeujNtjElxBtYQ+qH6EHiz
-         rPPSqzcw+KtwF6UpUbMld6fTJ8QyM4kvHJWkuKJ3wvFqJNrjHNONnhod76OEY/rE+YXI
-         9P2ygmFlRYs97/6Nt+RRIn5z8rOYv9qtG4pGhSUrp7wTvKCXRWPu7CGs8qL7Zth7X74T
-         xNkL6uHuhg3zlQoc4z8nzCf+/DEq+PGQj1E2LH2IQXSEiRfm2lOv7euPoc0dX6Wp4DQM
-         dr+g==
-X-Received: by 10.60.115.68 with SMTP id jm4mr3095306oeb.57.1398541540751;
-        Sat, 26 Apr 2014 12:45:40 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id rt4sm24546911obb.12.2014.04.26.12.45.38
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 26 Apr 2014 12:45:39 -0700 (PDT)
-In-Reply-To: <27645ABF2E944872BB3F944B17E9490B@PhilipOakley>
+	id S1751287AbaDZUB6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Apr 2014 16:01:58 -0400
+Received: from [194.158.98.45] ([194.158.98.45]:56642 "EHLO mail-3y.bbox.fr"
+	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1750904AbaDZUB5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Apr 2014 16:01:57 -0400
+Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
+	by mail-3y.bbox.fr (Postfix) with ESMTP id 2921D65;
+	Sat, 26 Apr 2014 22:01:35 +0200 (CEST)
+X-git-sha1: 127898c998b32ee8bbee52df3cff26de477f79e0 
+X-Mailer: git-mail-commits v0.5.2
+In-Reply-To: <20140426194404.21546.82305.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247180>
 
-Philip Oakley wrote:
-> From: "Felipe Contreras" <felipe.contreras@gmail.com>
-> > are the bedstone of science.  You can make sensible decisions based on that
-> > alone, and in fact that's how most good decisions are made.
-> 
-> At the moment we are missing the repeatable measurements,
+From: Jeff King <peff@peff.net>
 
-Sure, that's part of science, but my point is that most decisions can be made
-without those, simply on logic and evidence. If you really want to be certain
-we can wait, but you know where my money is.
+By using OPT_CMDMODE, the mutual exclusion between modes is
+taken care of for us. It also makes it easy for us to
+maintain a single variable with the mode, which makes its
+intent more clear. We can use a single switch() to make sure
+we have covered all of the modes.
 
-> I suspect your solution may become the lead candidate for @{p}, but as they
-> say, "making predictions is hard, especially about the future".
+This ends up breaking even in code size, but the win will be
+much bigger when we start adding more modes.
 
-Making predictions is not hard, it's making predictions that turn out to be
-true :) And personally I don't find it that hard; you have to pick your battles
-though, and this is an easy one.
+Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ builtin/replace.c | 49 +++++++++++++++++++++++++------------------------
+ 1 file changed, 25 insertions(+), 24 deletions(-)
 
+diff --git a/builtin/replace.c b/builtin/replace.c
+index 28db96f..29cf699 100644
+--- a/builtin/replace.c
++++ b/builtin/replace.c
+@@ -168,11 +168,17 @@ static int replace_object(const char *object_ref, const char *replace_ref,
+ 
+ int cmd_replace(int argc, const char **argv, const char *prefix)
+ {
+-	int list = 0, delete = 0, force = 0;
++	int force = 0;
+ 	const char *format = NULL;
++	enum {
++		MODE_UNSPECIFIED = 0,
++		MODE_LIST,
++		MODE_DELETE,
++		MODE_REPLACE
++	} cmdmode = MODE_UNSPECIFIED;
+ 	struct option options[] = {
+-		OPT_BOOL('l', "list", &list, N_("list replace refs")),
+-		OPT_BOOL('d', "delete", &delete, N_("delete replace refs")),
++		OPT_CMDMODE('l', "list", &cmdmode, N_("list replace refs"), MODE_LIST),
++		OPT_CMDMODE('d', "delete", &cmdmode, N_("delete replace refs"), MODE_DELETE),
+ 		OPT_BOOL('f', "force", &force, N_("replace the ref if it exists")),
+ 		OPT_STRING(0, "format", &format, N_("format"), N_("use this format")),
+ 		OPT_END()
+@@ -182,42 +188,37 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
+ 
+ 	argc = parse_options(argc, argv, prefix, options, git_replace_usage, 0);
+ 
+-	if (!list && !delete)
+-		if (!argc)
+-			list = 1;
++	if (!cmdmode)
++		cmdmode = argc ? MODE_REPLACE : MODE_LIST;
+ 
+-	if (list && delete)
+-		usage_msg_opt("-l and -d cannot be used together",
+-			      git_replace_usage, options);
+-
+-	if (format && !list)
++	if (format && cmdmode != MODE_LIST)
+ 		usage_msg_opt("--format cannot be used when not listing",
+ 			      git_replace_usage, options);
+ 
+-	if (force && (list || delete))
+-		usage_msg_opt("-f cannot be used with -d or -l",
++	if (force && cmdmode != MODE_REPLACE)
++		usage_msg_opt("-f only makes sense when writing a replacement",
+ 			      git_replace_usage, options);
+ 
+-	/* Delete refs */
+-	if (delete) {
++	switch (cmdmode) {
++	case MODE_DELETE:
+ 		if (argc < 1)
+ 			usage_msg_opt("-d needs at least one argument",
+ 				      git_replace_usage, options);
+ 		return for_each_replace_name(argv, delete_replace_ref);
+-	}
+ 
+-	/* Replace object */
+-	if (!list && argc) {
++	case MODE_REPLACE:
+ 		if (argc != 2)
+ 			usage_msg_opt("bad number of arguments",
+ 				      git_replace_usage, options);
+ 		return replace_object(argv[0], argv[1], force);
+-	}
+ 
+-	/* List refs, even if "list" is not set */
+-	if (argc > 1)
+-		usage_msg_opt("only one pattern can be given with -l",
+-			      git_replace_usage, options);
++	case MODE_LIST:
++		if (argc > 1)
++			usage_msg_opt("only one pattern can be given with -l",
++				      git_replace_usage, options);
++		return list_replace_refs(argv[0], format);
+ 
+-	return list_replace_refs(argv[0], format);
++	default:
++		die("BUG: invalid cmdmode %d", (int)cmdmode);
++	}
+ }
 -- 
-Felipe Contreras
+1.9.1.636.g20d5f34
