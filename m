@@ -1,138 +1,90 @@
-From: Dan Albert <danalbert@google.com>
-Subject: [PATCH] Uses git-credential for git-imap-send
-Date: Sat, 26 Apr 2014 10:50:26 -0700
-Message-ID: <CAFVaGhudmcrh32_h3RPmR_E7e3Jo9xc6AEt5AtN2W5NVbEMg6w@mail.gmail.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH 1/2] blame: large-scale performance rewrite
+Date: Sat, 26 Apr 2014 10:56:22 -0700
+Message-ID: <CAJo=hJs-Nn=o=aGS_3bO9mnxb+urst6JTZf29_qAejBipz_ZHg@mail.gmail.com>
+References: <1398470210-28746-1-git-send-email-dak@gnu.org>
+ <CAJo=hJukmej1rJXuVoECwd7AxmSue8Wmv4rBmCHEYcWBWNarSw@mail.gmail.com>
+ <87wqec8rb5.fsf@fencepost.gnu.org> <CAJo=hJs=ap=Ct_PzOsO=vHmDVMvUF+nvbB7b67bgnmug+Yrohg@mail.gmail.com>
+ <87d2g481nb.fsf@fencepost.gnu.org> <874n1g80dd.fsf@fencepost.gnu.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 26 19:50:55 2014
+Cc: git <git@vger.kernel.org>
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Sat Apr 26 19:57:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1We6kY-0004j5-ED
-	for gcvg-git-2@plane.gmane.org; Sat, 26 Apr 2014 19:50:54 +0200
+	id 1We6r2-0006PS-Ml
+	for gcvg-git-2@plane.gmane.org; Sat, 26 Apr 2014 19:57:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751794AbaDZRuu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Apr 2014 13:50:50 -0400
-Received: from mail-la0-f47.google.com ([209.85.215.47]:46096 "EHLO
-	mail-la0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751278AbaDZRut (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Apr 2014 13:50:49 -0400
-Received: by mail-la0-f47.google.com with SMTP id pn19so3977848lab.34
-        for <git@vger.kernel.org>; Sat, 26 Apr 2014 10:50:47 -0700 (PDT)
+	id S1751290AbaDZR4p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Apr 2014 13:56:45 -0400
+Received: from mail-wg0-f47.google.com ([74.125.82.47]:45511 "EHLO
+	mail-wg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750781AbaDZR4n (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Apr 2014 13:56:43 -0400
+Received: by mail-wg0-f47.google.com with SMTP id n12so1624767wgh.30
+        for <git@vger.kernel.org>; Sat, 26 Apr 2014 10:56:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=+P7f4l5qgGSRS4L20I/i8ngvpOVj8T794xdjPA7nlpg=;
-        b=AFSvQMdJu3PRIQD/RgvNtx/Cp6bm3XN7X9zl5Ng5cc+zuqndft8XTaOcvGuwm4XbLa
-         hnvMtGz5i+jvc5dxidV6vJHJmet+93oehuaFhyINZDgM7RDbsO0DPaH4c5Oibxx1xLZt
-         2gw/rlxCwnGq516olJ5Z/8FbBuGIQZ+3NoaESIq/KmmwELxVVmokgpw7tQYvizc1xhU6
-         2YDl/NtilONt8dLgtJ01cgpbFVjBN54c9ULEgb1dTgHqIEd4ZoSnDELDvkbRaZ9cstdw
-         D/BZPoMlXazmv0yYuRAIQ7e+H0X/1k2MahBWQuVFQlyydbykAkmLwkk2nNNcv+qbwfoF
-         5ccA==
+        d=spearce.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=oY5XwVd+EBqFD5yHuMYt+Pca+ZNoZz1UwbRO+HKf7J8=;
+        b=EEJusKCJbwCWJdED6WkzeCib24tXYslYYUmjXK420FSz/3QLPqSb62o2Rqy1e1Fuje
+         N4VquIeKrV/k92f6lrMgAFK5eD28ytNP2SrtKKxHipNd5faYZAfobxWnFeOpEFq8oo7o
+         IO8TjVticfFf5zuIQv7NUUJwMe/wG3jDAETO0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-type;
-        bh=+P7f4l5qgGSRS4L20I/i8ngvpOVj8T794xdjPA7nlpg=;
-        b=FL02wGQjWQZXAnlEUqPxhcNASV8wNR/L8mGKzZrYV3tk0v5iU/o6B3W28SJKHznKWP
-         xrr6B1FFWBXmoAiV2dCfKnIychUdikI0/GbNIzp65gCiYdl48QTCWfGnw+yMvf4GIeGr
-         Sp5pJoHFMr44WqEniwG4Qdm+09BVKZ6VtNnOg/ba2us8bPFf+C+IvkJQRx8kWgaishXa
-         SzEa2woepu/4yiOm2wYpf6eVqu3LnaR/W7XF334sj5qqqmuFD1Eb/iOGIB1E3sE2mjNY
-         LCIPNIOuCTomnwF+zS0UkS4FyndbbY3IfQi+I6RRJkYDt2C92KjvPT9jiPBpLcWXj752
-         M9YA==
-X-Gm-Message-State: ALoCoQk35sKZYPF9+xUl1EllGbU01pgupHn8LEg1ayIZWGtNhFYYPia/A9PXaTz0InNeD/gw0RdXV5taU/RjoTbIFoU6C/40nLhMRTKu8DcfQFGlLa5aq0FV26BuHdBijMpi87InDFmv6mHY/IC8whXWDYVOMoW2sE5Ffy1UYdUrB/YFxunPqhsoy+McW87/vvKftpRew2eS
-X-Received: by 10.112.85.6 with SMTP id d6mr10354722lbz.8.1398534647001; Sat,
- 26 Apr 2014 10:50:47 -0700 (PDT)
-Received: by 10.112.168.166 with HTTP; Sat, 26 Apr 2014 10:50:26 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=oY5XwVd+EBqFD5yHuMYt+Pca+ZNoZz1UwbRO+HKf7J8=;
+        b=aLXriDrgcD0DxGXKCZMVWvv4hYIMEK6QTPx7T8gZnb/G+64oyvcUY1tppT3QzXzxdv
+         EfamS30n4WB0imnCmuC1RlavzKEEEEEgdj5Z1uRPiA156mYLz7xsFf62ghkDMl7BPn9t
+         IbwNFgtd8vW64mfQZvEHzq0Tfh3MHb4lwcx4YaoQ/k/KZSu+jNjXU4v8sKN7kZz00DKY
+         dmlyBcTU1PaxLG9mWn/BNDTrIWDcNgdROAzv29XmKXR4Mx21DhZIuptDDcjjumLYuAwO
+         v9+A1E4sbeEF5Jr5tb/0Bb8TfGL+x5436bosVL3cYOVKUPABtBhO/TSxYCjxgc4vKWHA
+         157A==
+X-Gm-Message-State: ALoCoQlEIj5BlYhckFVAS7pBAo+BMtSN9L6+AIJalFW9lpUHOfEa4l8Gp08jQr9d2tpNJorNtmb9
+X-Received: by 10.180.185.100 with SMTP id fb4mr8533734wic.11.1398535002336;
+ Sat, 26 Apr 2014 10:56:42 -0700 (PDT)
+Received: by 10.227.7.131 with HTTP; Sat, 26 Apr 2014 10:56:22 -0700 (PDT)
+In-Reply-To: <874n1g80dd.fsf@fencepost.gnu.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247173>
 
-git-imap-send was directly prompting for a password rather than using
-git-credential. git-send-email, on the other hand, supports git-credential.
+On Sat, Apr 26, 2014 at 10:30 AM, David Kastrup <dak@gnu.org> wrote:
+> David Kastrup <dak@gnu.org> writes:
+>
+>> http://repo.or.cz/r/wortliste.git
+>> git blame [-M / -C] wortliste
+>>
+>> The latter one is _really_ taking a severe hit from the O(n^2)
+>> algorithms.  If your benchmarks for that one still point mostly to the
+>> unpacking, your jgit blame should be fine regarding the stuff
+>> I reimplemented.
+>
+> Here's some example:
+>
+> dak@lola:/usr/local/tmp/wortliste$ time git blame -n -s wortliste >/tmp/wl1
+>
+> real    15m47.118s
+> user    14m39.928s
+> sys     1m1.872s
 
-This is a necessary improvement for users that use two factor authentication, as
-they should not be expected to remember all of their app specific passwords.
----
- imap-send.c | 29 +++++++++++++++--------------
- 1 file changed, 15 insertions(+), 14 deletions(-)
+Hah, this is quite the torture test. git before your patch is taking
+22m11s on my laptop to compute this. (This was with default options, I
+noticed you passed -s to suppress the author formatting.)
 
-diff --git a/imap-send.c b/imap-send.c
-index 0bc6f7f..262fb9a 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -23,9 +23,9 @@
-  */
+> dak@lola:/usr/local/tmp/wortliste$ time ../git/git blame -n -s wortliste >/tmp/wl2
+>
+> real    3m40.947s
+> user    2m40.296s
+> sys     0m59.440s
 
- #include "cache.h"
-+#include "credential.h"
- #include "exec_cmd.h"
- #include "run-command.h"
--#include "prompt.h"
- #ifdef NO_OPENSSL
- typedef void *SSL;
- #endif
-@@ -946,6 +946,7 @@ static int auth_cram_md5(struct imap_store *ctx,
-struct imap_cmd *cmd, const cha
-
- static struct imap_store *imap_open_store(struct imap_server_conf *srvc)
- {
-+ struct credential cred = CREDENTIAL_INIT;
-  struct imap_store *ctx;
-  struct imap *imap;
-  char *arg, *rsp;
-@@ -1101,19 +1102,11 @@ static struct imap_store
-*imap_open_store(struct imap_server_conf *srvc)
-  goto bail;
-  }
-  if (!srvc->pass) {
-- struct strbuf prompt = STRBUF_INIT;
-- strbuf_addf(&prompt, "Password (%s@%s): ", srvc->user, srvc->host);
-- arg = git_getpass(prompt.buf);
-- strbuf_release(&prompt);
-- if (!*arg) {
-- fprintf(stderr, "Skipping account %s@%s, no password\n", srvc->user,
-srvc->host);
-- goto bail;
-- }
-- /*
-- * getpass() returns a pointer to a static buffer.  make a copy
-- * for long term storage.
-- */
-- srvc->pass = xstrdup(arg);
-+ cred.username = xstrdup(srvc->user);
-+ cred.protocol = xstrdup("imap");
-+ cred.host = xstrdup(srvc->host);
-+ credential_fill(&cred);
-+ srvc->pass = xstrdup(cred.password);
-  }
-  if (CAP(NOLOGIN)) {
-  fprintf(stderr, "Skipping account %s@%s, server forbids LOGIN\n",
-srvc->user, srvc->host);
-@@ -1153,10 +1146,18 @@ static struct imap_store
-*imap_open_store(struct imap_server_conf *srvc)
-  }
-  } /* !preauth */
-
-+ if (cred.username)
-+ credential_approve(&cred);
-+ credential_clear(&cred);
-+
-  ctx->prefix = "";
-  return ctx;
-
- bail:
-+ if (cred.username)
-+ credential_reject(&cred);
-+ credential_clear(&cred);
-+
-  imap_close_store(ctx);
-  return NULL;
- }
--- 
-2.0.0.rc1.1.gce060f5
+Meanwhile JGit computed in 4m30s on the same hardware. So I guess we
+are "fine". Its still not as fast as I want it to be. :-)
