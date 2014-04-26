@@ -1,142 +1,151 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH 2/2] Mention "git blame" improvements in release notes
-Date: Sat, 26 Apr 2014 20:28:05 +0200
-Message-ID: <87zjj86j4a.fsf@fencepost.gnu.org>
-References: <1398470210-28746-1-git-send-email-dak@gnu.org>
-	<1398470210-28746-2-git-send-email-dak@gnu.org>
-	<7vmwf8huey.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
+From: Marius Ungureanu <marius.ungureanu@xamarin.com>
+Subject: Re: [PATCH] Updated C# userdiff patterns.
+Date: Sat, 26 Apr 2014 21:33:52 +0300
+Message-ID: <1EA6F663-54DC-4665-A88C-8627F38B356E@xamarin.com>
+References: <29F78086-81B4-481F-9051-FF3EEBA9BB08@xamarin.com> <535B5BFF.40002@kdbg.org> <97789B23-A375-46B1-99FD-A851A15C2D85@xamarin.com> <535BF1C0.7080204@kdbg.org>
+Mime-Version: 1.0 (Mac OS X Mail 7.2 \(1874\))
+Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 26 20:28:58 2014
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Sat Apr 26 20:33:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1We7LN-0001jU-Bo
-	for gcvg-git-2@plane.gmane.org; Sat, 26 Apr 2014 20:28:57 +0200
+	id 1We7PY-0008Hb-Ph
+	for gcvg-git-2@plane.gmane.org; Sat, 26 Apr 2014 20:33:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751661AbaDZS2J convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 26 Apr 2014 14:28:09 -0400
-Received: from fencepost.gnu.org ([208.118.235.10]:48007 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751287AbaDZS2H convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 26 Apr 2014 14:28:07 -0400
-Received: from localhost ([127.0.0.1]:47049 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1We7KX-0006mS-Mr; Sat, 26 Apr 2014 14:28:06 -0400
-Received: by lola (Postfix, from userid 1000)
-	id 52CF4E060B; Sat, 26 Apr 2014 20:28:05 +0200 (CEST)
-In-Reply-To: <7vmwf8huey.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Sat, 26 Apr 2014 10:28:37 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
+	id S1751677AbaDZSdK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 26 Apr 2014 14:33:10 -0400
+Received: from mail-ee0-f53.google.com ([74.125.83.53]:46996 "EHLO
+	mail-ee0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751322AbaDZSdI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 26 Apr 2014 14:33:08 -0400
+Received: by mail-ee0-f53.google.com with SMTP id b57so3597467eek.26
+        for <git@vger.kernel.org>; Sat, 26 Apr 2014 11:33:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=xamarin.com; s=google;
+        h=content-type:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=axpjQx9M1MVJk0PY3xnWvKz6e++JPEcQT/pwDJh0XHs=;
+        b=m0yLi7QG68xqwqao9MRBKODDWU8Y1inaPs32SWBrbghtaEsnxyBFNpVg2IwBwIwnjY
+         SRIppINGdreuxEVl3MfBtkkx+H9qKOah3Z91QItQ1yI/6UPo/w9fcHrqK7JGuqfnWwm7
+         7eyPA1whpIdfpCImqwuudR925g/bGFt0WR2o4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:content-type:mime-version:subject:from
+         :in-reply-to:date:cc:content-transfer-encoding:message-id:references
+         :to;
+        bh=axpjQx9M1MVJk0PY3xnWvKz6e++JPEcQT/pwDJh0XHs=;
+        b=X7prB+ITVrotaNs1oE1Aob4FlTMO2uWuFrO9lTFVGN0Y1SDS/FKzjF3j3wT7i4gJk9
+         3OK3+CEWsgdJH2Pe7SpGQBdpUqEzm33o3VLst5UD8DdcUKy+CKebikuZR7zxgh8aUS4h
+         AdFSe2ACoGOyS9fGZ4a97b5hhrbgo6JPfjVbHuoJwJydrPCTONLYvN9LyL+xsNoOcnQA
+         D3rh5PzSLGnbsY8zVCvlqWe3Wbkk4IeVgjdY9HCpHGsEHEaXabdcQxKN3unorWkwUIJP
+         q8aj1THCjYOUAMRZGkG3m27tm3N3FP3YXEygAKO8mVh2qY0SaV41fC4PZRgWIvUDOnOA
+         tX8A==
+X-Gm-Message-State: ALoCoQkDkxxUgKJXcA3bik3RQ3iqHo41KXqaxOjMYX0isRfMApis74sL0d+qMiIaY/FC9kmglBPQ
+X-Received: by 10.15.43.77 with SMTP id w53mr19719773eev.10.1398537186620;
+        Sat, 26 Apr 2014 11:33:06 -0700 (PDT)
+Received: from [192.168.1.101] ([188.26.30.123])
+        by mx.google.com with ESMTPSA id l42sm35269583eew.19.2014.04.26.11.33.04
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 26 Apr 2014 11:33:05 -0700 (PDT)
+In-Reply-To: <535BF1C0.7080204@kdbg.org>
+X-Mailer: Apple Mail (2.1874)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247176>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 26 Apr 2014, at 20:49, Johannes Sixt <j6t@kdbg.org> wrote:
+> Am 26.04.2014 11:55, schrieb Marius Ungureanu:
+>> On 26 Apr 2014, at 10:10, Johannes Sixt <j6t@kdbg.org> wrote:
+>>> Am 26.04.2014 01:25, schrieb Marius Ungureanu:
+>>>> diff --git a/userdiff.c b/userdiff.c
+>>>> index fad52d6..7612c5d 100644
+>>>> --- a/userdiff.c
+>>>> +++ b/userdiff.c
+>>>> @@ -133,14 +133,14 @@ PATTERNS("cpp",
+>>>> 	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lLuU]*"
+>>>> 	 "|[-+*/<>%&^|=3D!]=3D|--|\\+\\+|<<=3D?|>>=3D?|&&|\\|\\||::|->\\*=
+?|\\.\\*"),
+>>>> PATTERNS("csharp",
+>>>> -	 /* Keywords */
+>>>> -	 "!^[ \t]*(do|while|for|if|else|instanceof|new|return|switch|cas=
+e|throw|catch|using)\n"
+>>>> 	 /* Methods and constructors */
+>>>> -	 "^[ \t]*(((static|public|internal|private|protected|new|virtual=
+|sealed|override|unsafe)[ \t]+)*[][<>@.~_[:alnum:]]+[ \t]+[<>@._[:alnum=
+:]]+[ \t]*\\(.*\\))[ \t]*$\n"
+>>>> -	 /* Properties */
+>>>> -	 "^[ \t]*(((static|public|internal|private|protected|new|virtual=
+|sealed|override|unsafe)[ \t]+)*[][<>@.~_[:alnum:]]+[ \t]+[@._[:alnum:]=
+]+)[ \t]*$\n"
+>>>> +	 "^[ \t]*(((abstract|extern|internal|new|override|private|protec=
+ted|public|sealed|static|unsafe|virtual)[ \t]+)*[][<>@.~_[:alnum:]]+[ \=
+t]+[<>@._[:alnum:]]+[ \t]*\\(.*\\))[ \t]*$\n"
+>>>> +	 /* Properties, events, delegates */
+>>>> +	 "^[ \t]*(((abstract|internal|new|override|private|protected|pub=
+lic|sealed|static|unsafe|virtual)[ \t]+)*((delegate|event)[ \t]+)*[][<>=
+@.~_[:alnum:]]+[ \t]+[@._[:alnum:]]+)[ \t]*$\n"
+>>>> 	 /* Type definitions */
+>>>> -	 "^[ \t]*(((static|public|internal|private|protected|new|unsafe|=
+sealed|abstract|partial)[ \t]+)*(class|enum|interface|struct)[ \t]+.*)$=
+\n"
+>>>> +	 "^[ \t]*(((abstract|internal|new|override|partial|private|prote=
+cted|public|sealed|static|unsafe)[ \t]+)*(class|enum|interface|struct)[=
+ \t]+.*)$\n"
+>>>> +	 /* Keywords */
+>>>> +	 "!^[ \t]*(as|base|break|case|catch|checked|continue|default|del=
+egate|do|else|finally|fixed|for|foreach|if|in|is|lock|new|null|out|read=
+only|ref|return|switch|this|throw|try|typeof|unchecked|unsafe|using|var=
+|while)\n"
+>>>> 	 /* Namespace */
+>>>> 	 "^[ \t]*(namespace[ \t]+.*)$",
+>>>> 	 /* -- */
+>>=20
+>> ...
+>> Modifier parsing can contain keywords, so just to be sure, I moved t=
+he
+>> keywords after modifier parsing, so it uses the keywords as a fallba=
+ck.
+>> If this is not what should happen, please tell.
+>=20
+> For each line, patterns are are scanned in order, and the first match
+> determines the outcome: If it is a negative pattern (i.e., it begins
+> with an exclamation mark), the line is not a hunk header; if it is a
+> positive pattern, the line is a hunk header. If no pattern matches, t=
+he
+> line is not a hunk header, either; it is as if the list were terminat=
+ed
+> by a negative catch-all pattern.
+>=20
+> Due to these rules, negative patterns in the list are only necessary
+> when you want to make an exception to a positive pattern in the list,
+> and then the negative pattern must be listed before the positive patt=
+ern.
+>=20
+> In the csharp case, I do not see a pattern of which the keyword patte=
+rn
+> would make an exception (neither the old version nor your new version=
+).
+> Therefore, you could drop the keyword pattern entirely.
+>=20
+> -- Hannes
+>=20
 
-> David Kastrup <dak@gnu.org> writes:
->
->> Includes reasonably tasteful begging.
->
-> Thanks, but no thanks---I do not see it tasteful.
+Hey!
 
-Well, begging rarely is.  The point simply is that without commensurate
-recompensation, I cannot afford any more work of that kind on Git, and
-there is a reasonable likelihood that such work is worth more to some
-subset of Git users than what it would take to enable me doing it.
+I=92ll remove them and add as many unit tests I can. I=92ve been side t=
+racked
+today and I couldn=92t get to look at it. I=92ll start a new thread wit=
+h the new
+patch as soon as I=92m done with it.
 
-My experience with "tasteful" asking for contributions in the context o=
-f
-AUCTeX and preview-latex development is about =A4100 plus two cases of
-beer in 10 years.
+Thanks for all the tips until now. You=92ve been of great help.
 
-With GNU LilyPond, I've been way more blunt.  Its community certainly i=
-s
-dwarved by the Git community, and still they've been able to support my
-work with more than =A41000 per month for several years now.  I've been
-letting those people down for several months now because of the
-git-blame stuff, with a respective decline in support to show for that.
-Sure, partly because of misestimates of the involved work and the
-involved self-motivation to get it over with.
-
-If that's not worth anything to the Git community, I can just chalk it
-off as a somewhat expensive one-time experience and that's it.  I=A0can
-live with that.
-
-What I want to avoid, however, is the situation where this kind of work
-would actually _have_ been worth enough to enough people to enable it
-but they don't get to make a decision whether to support more of it
-and/or express their appreciation in the manner that actually counts,
-because of being blissfully unaware.
-
-Now of course, people having an independent and/or guaranteed can affor=
-d
-to be tasteful.  And there are probably enough of those around for
-running the show.
-
-But then "git blame" performance has been sub-par for a very long time
-already.
-
-> In any case, any large change that is not a regression fix (or a fix
-> to a code added since 1.9 series) is way too late for 2.0 at this
-> point,
-
-=46or what it's worth, the user interface is unchanged.  And results
-should be the same as previously apart from the runtime requirements.
-Naturally, this is "should", and problems, particularly regarding
-different output, may take a long time until somebody notices since few
-people will actually compare the old and new results.
-
-> but I do look forward to reading the patch over, queuing to my tree,
-> cooking in 'next' and eventually having this in 2.1 or later.
->
-> If you want help in a fundraising campaign, I can lend my name
-> (especially after this change settles and proves to be useful ;-),
-
-In my book, it is a large usability improvement but not necessarily a
-game changer.  Waiting for 1 minute rather than 3 minutes is still
-nothing one wants enabled in a web server, or that turns stuff into the
-"interactive response" ballpark.
-
-To get that, one will have to work on the remaining performance which i=
-s
-primarily the responsibility of the object store and associated caching=
-=2E
-The advantage is that its impact on the performance is now readily
-visible: previous to this patch it is strongly masked by the sub-par
-performance of the git-blame code itself.
-
-> but let's do that elsewhere.
-
-If you have a reasonable idea for that.  It would be pointless wherever
-it safely becomes "somebody else's problem" for pretty much everybody.
-I'm not overly happy with trying to recruit active developers/power
-users for that kind of thing when they are
-
-a) actively investing time and effort themselves
-b) outnumbered by profiting users 1000:1
-
-but I've not yet found a better approach myself with regard to LilyPond=
-=2E
-If you have a better idea for Git...
-
-> I do not want to do this in the release notes (e.g., an entry in
-> git-blame blog can mention it when it touches the blame improvements)=
-=2E
-
-Again: it's important to be visible to those people who might care abou=
-t
-putting money in, or it's pointless.
-
-At any rate, I'm glad that the work is closed for now.
-
---=20
-David Kastrup
+Marius
