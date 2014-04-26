@@ -1,106 +1,136 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: What's cooking in git.git (Apr 2014, #08; Fri, 25)
-Date: Sat, 26 Apr 2014 01:04:10 -0500
-Message-ID: <535b4c5a3c91c_3d63109d2f00@nysa.notmuch>
-References: <xmqqoazpt45p.fsf@gitster.dls.corp.google.com>
- <20140425231953.GB3855@sigill.intra.peff.net>
- <535b0db7e5e31_ba2148d310f4@nysa.notmuch>
- <BLU0-SMTP3741FBD4980A29338AC8BA8D1450@phx.gbl>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH] Updated C# userdiff patterns.
+Date: Sat, 26 Apr 2014 09:10:55 +0200
+Message-ID: <535B5BFF.40002@kdbg.org>
+References: <29F78086-81B4-481F-9051-FF3EEBA9BB08@xamarin.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: Alex Davidson <descenterace@hotmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 26 08:14:49 2014
+To: Marius Ungureanu <marius.ungureanu@xamarin.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 26 09:11:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wdvss-0005z3-UZ
-	for gcvg-git-2@plane.gmane.org; Sat, 26 Apr 2014 08:14:47 +0200
+	id 1Wdwm0-0002e4-UH
+	for gcvg-git-2@plane.gmane.org; Sat, 26 Apr 2014 09:11:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751168AbaDZGOm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Apr 2014 02:14:42 -0400
-Received: from mail-ob0-f173.google.com ([209.85.214.173]:53777 "EHLO
-	mail-ob0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750785AbaDZGOl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Apr 2014 02:14:41 -0400
-Received: by mail-ob0-f173.google.com with SMTP id wn1so5239576obc.18
-        for <git@vger.kernel.org>; Fri, 25 Apr 2014 23:14:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:message-id:in-reply-to:references:subject:mime-version
-         :content-type:content-transfer-encoding;
-        bh=dW97XG6gdAUoKGleyLtj2SwkgnAmOQ4ZThpLXGKQ8uc=;
-        b=E7afxQP/2tyLAXpEgQZEQEXmO2MvhFRBX9zIwKtWBnKzbkzQ4Mi/keijU0s5HRi9Wg
-         5lqL8P9kVzIVrC8E/EDdRGvrpwGLh7vIV2GsrLYVCBnjTUSJLGmblm7CHoUXb8NktZnJ
-         b1vIwrxwe1v2eSRf1zKTZ/lRsDsfDIkAJaUea6vw7vxnTq320+Ll2PzYUiKIiAxnVAqG
-         bChwNwMQkkCFESpju7tVN5r5z3jJza/ls5OFeqUSWeVENMLlDzCKLXVIojFmC+/iyqEM
-         sGJFJhVQksSk6yh3DtaskMv4eJ9AI/JoTJRd+wwFSp+msm8r3K+uKahbYF0c5F3XrFqk
-         bBJA==
-X-Received: by 10.60.125.72 with SMTP id mo8mr10848032oeb.36.1398492881172;
-        Fri, 25 Apr 2014 23:14:41 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id c7sm41686212oek.12.2014.04.25.23.14.37
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 25 Apr 2014 23:14:38 -0700 (PDT)
-In-Reply-To: <BLU0-SMTP3741FBD4980A29338AC8BA8D1450@phx.gbl>
+	id S1750812AbaDZHLA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Apr 2014 03:11:00 -0400
+Received: from bsmtp3.bon.at ([213.33.87.17]:38808 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1750715AbaDZHK7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Apr 2014 03:10:59 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id EC26FCDF84;
+	Sat, 26 Apr 2014 09:10:56 +0200 (CEST)
+Received: from dx.sixt.local (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 106D719F3FF;
+	Sat, 26 Apr 2014 09:10:56 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
+In-Reply-To: <29F78086-81B4-481F-9051-FF3EEBA9BB08@xamarin.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247146>
 
-Alex Davidson wrote:
-> On Fri, 2014-04-25 at 20:36 -0500, Felipe Contreras wrote:
-> > Jeff King wrote:
-> > > If you are waiting on me, I do not have much else to say on this topic.
-> > > @{publish} as specified by Felipe is not useful to me, and I would
-> > > continue to pursue @{push} separately as "the remote-tracking branch of
-> > > where you would push to". I think there is room for both concepts.
-> > > 
-> > > As for the patches themselves, I have not reviewed them carefully, and
-> > > would prefer not to. As I mentioned before, though, I would prefer the
-> > > short "@{p}" not be taken for @{publish} until it has proven itself.
-> > 
-> > Presumably you want to save it for @{push}. While I'm not against to having
-> > just @{publish} for now, I'm farily certain most people would be using
-> > @{publish} and not @{push}, as that's what `git branch -v` would show, and it
-> > would be closely similar to @{upstream}. Therefore it would make sense to use
-> > @{p} for @{publish}
+Am 26.04.2014 01:25, schrieb Marius Ungureanu:
+> New keywords: foreach, break, in, try, finally, as, is, typeof, var,
+> default, fixed, checked, unchecked, this, lock, readonly, unsafe,
+> ref, out, base, null, delegate, continue.
 > 
-> TL;DR: Presumably you want to grab it for @{publish} without evidence to
-> support a decision either way. 
-
-The reasons why @{publish} will be useful have been documented and explained
-already multiple times.
-
-> The thing with shortened forms and abbreviations is that they assume a
-> mode of thought. Human communication assumes a lot of shared context,
-> hence the disconnect between code (explicit) and intent (often dependent
-> on context of conversation). Abbreviation is a form of compression using
-> context as an implied key.
+> Removed keywords: instanceof. It's only in Java.
+> Moved keywords to happen before modifier parsing, as matching a keyword
+> will stop modifiers from being matched.
 > 
-> Users who do not share your context will not find your abbreviation
-> intuitive. If a consensus context cannot be identified, abbreviation may
-> be interpreted as an attempt to impose a context. In other words, 'of
-> the many valid workflows enabled by git we obviously prefer this one
-> because we have provided more shortcuts for it'.
+> Added method modifiers: extern, abstract.
 > 
-> Attempts to impose context are not unreasonably perceived as political.
+> Added properties modifiers: abstract.
 > 
-> Saying that you are 'fairly certain' that most people would be using A
-> over B 'and therefore' we should support A smacks of political
-> manoeuvring rather than scientific experimentation.
+> Added parsing of events and delegates, which are like properties, but
+> take an extra keyword.
+> 
+> The reasoning behind adding unsafe to keywords is being also a
+> statement that can happen inline in code to mention blocks which are
+> unsafe. Also, delegates are not necessarily declared in class bodies,
+> but can also happen inline in other functions.
+> 
+> Keywords are based on MSDN docs.
+> 
+> Signed-off-by: Marius Ungureanu <marius.ungureanu@xamarin.com>
 
-That is not political. Political would be if I gathered support from other
-developers and said "more of us prefer this". This is not what I'm doing.
+Thanks for your contribution.
 
-My conclusion is based on logic and reason, which are the bedstone of science.
-You can make sensible decisions based on that alone, and in fact that's how
-most good decisions are made.
+Please write the commit message in imperative mood, and use full
+sentences, not just fragments and avoid contractions ("it's"). Also,
+don't capitalize the subject line and drop the full-stop:
 
--- 
-Felipe Contreras
+   update C# userdiff patterns
+
+   Add new keywords: foreach, break, ...
+
+   Remove keyword instanceof because it is only in Java. ...
+
+BTW, it is now dead easy to add test cases for userdiff patterns. Just
+drop files with content like this into t/t4018:
+
+---- t/t4018/csharp-ignore-statement-keywords -----
+class Foo {
+	public int RIGHT()
+	{
+		if (x)
+		else
+		try
+		catch (y)
+		...
+
+		ChangeMe;
+	}
+}
+-----------------------------------------
+
+(This I just invented, I don't do C#.) See the README file in that
+directory.
+
+> ---
+>  userdiff.c | 12 ++++++------
+>  1 file changed, 6 insertions(+), 6 deletions(-)
+> 
+> diff --git a/userdiff.c b/userdiff.c
+> index fad52d6..7612c5d 100644
+> --- a/userdiff.c
+> +++ b/userdiff.c
+> @@ -133,14 +133,14 @@ PATTERNS("cpp",
+>  	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lLuU]*"
+>  	 "|[-+*/<>%&^|=!]=|--|\\+\\+|<<=?|>>=?|&&|\\|\\||::|->\\*?|\\.\\*"),
+>  PATTERNS("csharp",
+> -	 /* Keywords */
+> -	 "!^[ \t]*(do|while|for|if|else|instanceof|new|return|switch|case|throw|catch|using)\n"
+>  	 /* Methods and constructors */
+> -	 "^[ \t]*(((static|public|internal|private|protected|new|virtual|sealed|override|unsafe)[ \t]+)*[][<>@.~_[:alnum:]]+[ \t]+[<>@._[:alnum:]]+[ \t]*\\(.*\\))[ \t]*$\n"
+> -	 /* Properties */
+> -	 "^[ \t]*(((static|public|internal|private|protected|new|virtual|sealed|override|unsafe)[ \t]+)*[][<>@.~_[:alnum:]]+[ \t]+[@._[:alnum:]]+)[ \t]*$\n"
+> +	 "^[ \t]*(((abstract|extern|internal|new|override|private|protected|public|sealed|static|unsafe|virtual)[ \t]+)*[][<>@.~_[:alnum:]]+[ \t]+[<>@._[:alnum:]]+[ \t]*\\(.*\\))[ \t]*$\n"
+> +	 /* Properties, events, delegates */
+> +	 "^[ \t]*(((abstract|internal|new|override|private|protected|public|sealed|static|unsafe|virtual)[ \t]+)*((delegate|event)[ \t]+)*[][<>@.~_[:alnum:]]+[ \t]+[@._[:alnum:]]+)[ \t]*$\n"
+>  	 /* Type definitions */
+> -	 "^[ \t]*(((static|public|internal|private|protected|new|unsafe|sealed|abstract|partial)[ \t]+)*(class|enum|interface|struct)[ \t]+.*)$\n"
+> +	 "^[ \t]*(((abstract|internal|new|override|partial|private|protected|public|sealed|static|unsafe)[ \t]+)*(class|enum|interface|struct)[ \t]+.*)$\n"
+> +	 /* Keywords */
+> +	 "!^[ \t]*(as|base|break|case|catch|checked|continue|default|delegate|do|else|finally|fixed|for|foreach|if|in|is|lock|new|null|out|readonly|ref|return|switch|this|throw|try|typeof|unchecked|unsafe|using|var|while)\n"
+>  	 /* Namespace */
+>  	 "^[ \t]*(namespace[ \t]+.*)$",
+>  	 /* -- */
+
+Here, you are moving keywords down, but in the commit message you say
+that you "moved keywords to happen before modifier parsing". Aren't you
+moving keywords *after* something? (Where the "modifiers" are here is
+not obvious, but that can be attributed to that I don't do C#.)
+
+BTW, I appreciate that you re-arrange keywords alphabetically. Could you
+do that in the commit message, too?
+
+-- Hannes
