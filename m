@@ -1,68 +1,86 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Revert "Stop starting pager recursively"
-Date: Sat, 26 Apr 2014 03:13:58 -0400
-Message-ID: <20140426071358.GA7558@sigill.intra.peff.net>
-References: <20140421204622.GA9532@logfs.org>
- <20140425182928.GA29904@logfs.org>
- <vpqoazpdz1r.fsf@anie.imag.fr>
- <20140425201048.GB29904@logfs.org>
+Subject: Re: [PATCH] subtree/Makefile: Standardize (esp. for packagers)
+Date: Sat, 26 Apr 2014 03:25:20 -0400
+Message-ID: <20140426072520.GB7558@sigill.intra.peff.net>
+References: <1398304336-1879-1-git-send-email-nod.helm@gmail.com>
+ <CAHYYfeGNDLVxzP6zMyJnSi8GxpQaUKGAkqaLfXbZ=8B1k7vvyQ@mail.gmail.com>
+ <3cb4338e-de68-404d-86dc-70cac7e13606@email.android.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org
-To: =?utf-8?B?SsO2cm4=?= Engel <joern@logfs.org>
-X-From: git-owner@vger.kernel.org Sat Apr 26 09:14:13 2014
+Cc: git@vger.kernel.org
+To: nod.helm@gmail.com
+X-From: git-owner@vger.kernel.org Sat Apr 26 09:26:07 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WdwoM-0006it-83
-	for gcvg-git-2@plane.gmane.org; Sat, 26 Apr 2014 09:14:10 +0200
+	id 1Wdwzu-0002CO-5P
+	for gcvg-git-2@plane.gmane.org; Sat, 26 Apr 2014 09:26:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751436AbaDZHOB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 26 Apr 2014 03:14:01 -0400
-Received: from cloud.peff.net ([50.56.180.127]:38885 "HELO peff.net"
+	id S1750989AbaDZHZX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Apr 2014 03:25:23 -0400
+Received: from cloud.peff.net ([50.56.180.127]:38892 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751391AbaDZHOA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Apr 2014 03:14:00 -0400
-Received: (qmail 28303 invoked by uid 102); 26 Apr 2014 07:14:00 -0000
+	id S1750728AbaDZHZW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Apr 2014 03:25:22 -0400
+Received: (qmail 28932 invoked by uid 102); 26 Apr 2014 07:25:22 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 26 Apr 2014 02:14:00 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 26 Apr 2014 03:13:58 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 26 Apr 2014 02:25:22 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 26 Apr 2014 03:25:20 -0400
 Content-Disposition: inline
-In-Reply-To: <20140425201048.GB29904@logfs.org>
+In-Reply-To: <3cb4338e-de68-404d-86dc-70cac7e13606@email.android.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247147>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247148>
 
-[+cc Duy, whose patch this is]
+On Sat, Apr 26, 2014 at 02:56:15PM +1000, nod.helm@gmail.com wrote:
 
-On Fri, Apr 25, 2014 at 04:10:49PM -0400, J=C3=B6rn Engel wrote:
+> > contrib/subtree/Makefile is a shambles in regards to it's consistency
+> > with other makefiles, which makes subtree overly painful to include in
+> > build scripts.
+> >
+> > Two major issues are present:
+> >
+> > Firstly, calls to git itself (for $(gitdir) and $(gitver)), making
+> > building difficult on systems that don't have git.
+> >
+> > Secondly, the Makefile uses the variable $(libexecdir) for defining the
+> > exec path.
+> >
+> > (...)
+> 
+> I hate to be that guy, but could I get an opinion on the proposed patch?
 
-> A second option is to add a --pager (or rather --no-pager) option to
-> the command line and allow the user to specify
->     GIT_PAGER=3D"git --no-pager -p column --mode=3D'dense color'" git=
- -p branch
+It's OK to be that guy; prompting or reposting when a patch has been
+overlooked is normal here.
 
-I think we have "--no-pager" already. But the "-p" is turning _on_ the
-pager, so you could also just omit it. IOW, I really don't understand
-why the original command was not simply:
+> Is git interested in purely makefile patches, or should I find further
+> improvements to make in subtree and purpose this again with those?
 
-  GIT_PAGER=3D"git column --mode=3D'dense color'" git -p branch
+Makefile improvements are fine on their own. I think the problem is that
+contrib/subtree does not really have an active dedicated area
+maintainer.
 
-The whole infinite loop that the original commit solved is caused by
-specifying the "-p". So it sounds like the right solution is "don't do
-that". Am I missing something useful that the "-p" does?
+Your changes look fine to me from a cursory examination. It would
+probably be more readable as four patches (the 3 "fix" points from your
+list, plus the "minor fixes" mentioned at the end). Then each patch
+stands on its own, can say what problem it's fixing, and how.
 
-I wonder if perhaps the intent was that the user might have set
-"pager.column", in which case the use of the pager is implied. I still
-think that the right solution is to use "--no-pager" explicitly then. I=
-f
-the user is invoking git inside GIT_PAGER, it is up to them to save
-themselves from infinite recursion.
+> I've left `rm -f -r subproj mainline` in the clean rule for now,
+> however I'd suggest those actually belong in
+> contrib/subtree/t/Makefile:clean, given that they are only ever
+> generated by `make test`. But given that there aren't any other
+> comparable setups in contrib/, I'm somewhat apprehensive to move them
+> without opinion.
+
+Do we even make those directories anymore? It looks like they are part
+of the tests, but the whole test script runs inside its own trash
+directory. I wonder if they are vestiges from the time when subtree was
+its own repository outside of contrib/. If so, they can be dropped here
+(and from .gitignore).
 
 -Peff
