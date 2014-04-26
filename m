@@ -1,86 +1,117 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] subtree/Makefile: Standardize (esp. for packagers)
-Date: Sat, 26 Apr 2014 03:25:20 -0400
-Message-ID: <20140426072520.GB7558@sigill.intra.peff.net>
-References: <1398304336-1879-1-git-send-email-nod.helm@gmail.com>
- <CAHYYfeGNDLVxzP6zMyJnSi8GxpQaUKGAkqaLfXbZ=8B1k7vvyQ@mail.gmail.com>
- <3cb4338e-de68-404d-86dc-70cac7e13606@email.android.com>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH 1/2] blame: large-scale performance rewrite
+Date: Sat, 26 Apr 2014 09:48:14 +0200
+Message-ID: <87wqec8rb5.fsf@fencepost.gnu.org>
+References: <1398470210-28746-1-git-send-email-dak@gnu.org>
+	<CAJo=hJukmej1rJXuVoECwd7AxmSue8Wmv4rBmCHEYcWBWNarSw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: nod.helm@gmail.com
-X-From: git-owner@vger.kernel.org Sat Apr 26 09:26:07 2014
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sat Apr 26 09:48:54 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wdwzu-0002CO-5P
-	for gcvg-git-2@plane.gmane.org; Sat, 26 Apr 2014 09:26:06 +0200
+	id 1WdxLt-0006Qn-O8
+	for gcvg-git-2@plane.gmane.org; Sat, 26 Apr 2014 09:48:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750989AbaDZHZX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Apr 2014 03:25:23 -0400
-Received: from cloud.peff.net ([50.56.180.127]:38892 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750728AbaDZHZW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Apr 2014 03:25:22 -0400
-Received: (qmail 28932 invoked by uid 102); 26 Apr 2014 07:25:22 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 26 Apr 2014 02:25:22 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 26 Apr 2014 03:25:20 -0400
-Content-Disposition: inline
-In-Reply-To: <3cb4338e-de68-404d-86dc-70cac7e13606@email.android.com>
+	id S1751238AbaDZHs0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 26 Apr 2014 03:48:26 -0400
+Received: from fencepost.gnu.org ([208.118.235.10]:33073 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750989AbaDZHsZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 26 Apr 2014 03:48:25 -0400
+Received: from localhost ([127.0.0.1]:60348 helo=lola)
+	by fencepost.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <dak@gnu.org>)
+	id 1WdxLU-0007oT-Cw; Sat, 26 Apr 2014 03:48:24 -0400
+Received: by lola (Postfix, from userid 1000)
+	id 3249CE064D; Sat, 26 Apr 2014 09:48:14 +0200 (CEST)
+In-Reply-To: <CAJo=hJukmej1rJXuVoECwd7AxmSue8Wmv4rBmCHEYcWBWNarSw@mail.gmail.com>
+	(Shawn Pearce's message of "Fri, 25 Apr 2014 17:53:31 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247149>
 
-On Sat, Apr 26, 2014 at 02:56:15PM +1000, nod.helm@gmail.com wrote:
+Shawn Pearce <spearce@spearce.org> writes:
 
-> > contrib/subtree/Makefile is a shambles in regards to it's consistency
-> > with other makefiles, which makes subtree overly painful to include in
-> > build scripts.
-> >
-> > Two major issues are present:
-> >
-> > Firstly, calls to git itself (for $(gitdir) and $(gitver)), making
-> > building difficult on systems that don't have git.
-> >
-> > Secondly, the Makefile uses the variable $(libexecdir) for defining the
-> > exec path.
-> >
-> > (...)
-> 
-> I hate to be that guy, but could I get an opinion on the proposed patch?
+> On Fri, Apr 25, 2014 at 4:56 PM, David Kastrup <dak@gnu.org> wrote:
+>> The previous implementation used a single sorted linear list of blam=
+e
+>> entries for organizing all partial or completed work.  Every subtask=
+ had
+>> to scan the whole list, with most entries not being relevant to the
+>> task.  The resulting run-time was quadratic to the number of separat=
+e
+>> chunks.
+>>
+>> This change gives every subtask its own data to work with.  Subtasks=
+ are
+>> organized into "struct origin" chains hanging off particular commits=
+=2E
+>> Commits are organized into a priority queue, processing them in comm=
+it
+>> date order in order to keep most of the work affecting a particular =
+blob
+>> collated even in the presence of an extensive merge history.
+>
+> Without reading the code, this sounds like how JGit runs blame.
+>
+>> For large files with a diversified history, a speedup by a factor of=
+ 3
+>> or more is not unusual.
+>
+> And JGit was already usually slower than git-core. Now it will be eve=
+n
+> slower! :-)
 
-It's OK to be that guy; prompting or reposting when a patch has been
-overlooked is normal here.
+If your statement about JGit is accurate, it should likely have beat Gi=
+t
+for large use cases (where the performance improvements are most
+important) as O(n) beats O(n^2) in the long run.
 
-> Is git interested in purely makefile patches, or should I find further
-> improvements to make in subtree and purpose this again with those?
+At any rate, I see that I ended up posting this patch series at the end
+of the week again which makes for a somewhat lacklustre initial respons=
+e
+from those who code Git for a regular living.
 
-Makefile improvements are fine on their own. I think the problem is that
-contrib/subtree does not really have an active dedicated area
-maintainer.
+Apropos: shaking the bugs regarding -M and -C options out of the code
+had taken a large toll because -M can cause the same or overlapping lin=
+e
+regions to be responsible for different target regions and the original
+code implementing the "straightforward" blame blew up on the overlap.
+I=A0spent a _lot_ of time tracking down that problem.
 
-Your changes look fine to me from a cursory examination. It would
-probably be more readable as four patches (the 3 "fix" points from your
-list, plus the "minor fixes" mentioned at the end). Then each patch
-stands on its own, can say what problem it's fixing, and how.
+As I am lousy focusing on more than one task, and as I don't get a
+regular paycheck anyway, this will have to remain my last contribution
+to Git if I am not going to recoup my losses.
 
-> I've left `rm -f -r subproj mainline` in the clean rule for now,
-> however I'd suggest those actually belong in
-> contrib/subtree/t/Makefile:clean, given that they are only ever
-> generated by `make test`. But given that there aren't any other
-> comparable setups in contrib/, I'm somewhat apprehensive to move them
-> without opinion.
+Patch 2 of this series tries giving the community of Git a serious
+chance at picking that option (I mean, there are literally millions of
+Git users around with a sizable number profiting) while not being
+obnoxious about it.
 
-Do we even make those directories anymore? It looks like they are part
-of the tests, but the whole test script runs inside its own trash
-directory. I wonder if they are vestiges from the time when subtree was
-its own repository outside of contrib/. If so, they can be dropped here
-(and from .gitignore).
+My personal guess is that it will fail regarding both objectives.  But
+then I've been surprised before by other free software communities when
+trying to make those particular two ends meet.
 
--Peff
+At any rate, feedback about the performance of the patch from users
+disappointed by regular git blame would be welcome.
+
+Apart from the objective measurement of "total time", the more
+subjective impression of interactive/incremental response (like in git
+gui blame) where the order of results will significantly differ (curren=
+t
+git-blame --incremental focuses on getting blames resolved in
+first-lines-first manner, the proposed git-blame rather works on a
+newest-commits-first basis which might better match typical use cases)
+might be worth reporting.
+
+--=20
+David Kastrup
