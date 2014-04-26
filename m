@@ -1,54 +1,72 @@
-From: =?ISO-8859-1?Q?Z=E9?= <jose.passes@gmx.com>
-Subject: Re: gitignore vs. exclude vs assume-unchanged?
-Date: Sat, 26 Apr 2014 13:26:12 +0100
-Message-ID: <535BA5E4.5050609@gmx.com>
-References: <b3f480af1c362c615ad9ce85296e2be2@bellandwhistle.net>	<xmqqy4z5go1y.fsf@gitster.dls.corp.google.com>	<dee7ee673c8c4d81fb5aaecea25e9709@bellandwhistle.net>	<20140416234555.GA4309@google.com>	<4dd8389939fbf3dc77b58adcca7b17c1@bellandwhistle.net>	<CAH5451k+GGGdHXkwne2O-h2m2AyWg7K+5reNRG64+eF891pVUA@mail.gmail.com> <xmqqtx9l5jxn.fsf@gitster.dls.corp.google.com>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: git p4: bug - branch detection broken on empty branches
+Date: Sat, 26 Apr 2014 08:40:00 -0400
+Message-ID: <20140426124000.GA4767@padd.com>
+References: <CADtnS+zAnnpaU59-rAwMHF7Z4SNjcYWASqpKdEq+GVs8mVSb3w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Sat Apr 26 14:26:42 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Dan Porter <dpreid@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 26 14:40:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1We1gn-0004jh-Pd
-	for gcvg-git-2@plane.gmane.org; Sat, 26 Apr 2014 14:26:42 +0200
+	id 1We1uZ-0004Qk-UI
+	for gcvg-git-2@plane.gmane.org; Sat, 26 Apr 2014 14:40:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751546AbaDZM0P convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 26 Apr 2014 08:26:15 -0400
-Received: from mout.gmx.net ([212.227.15.15]:62316 "EHLO mout.gmx.net"
+	id S1751177AbaDZMkH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Apr 2014 08:40:07 -0400
+Received: from honk.padd.com ([74.3.171.149]:34499 "EHLO honk.padd.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750926AbaDZM0P (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Apr 2014 08:26:15 -0400
-Received: from [192.168.1.70] ([46.189.198.76]) by mail.gmx.com (mrgmx002)
- with ESMTPSA (Nemesis) id 0LaG7C-1XKCux0xW2-00m0Ju for <git@vger.kernel.org>;
- Sat, 26 Apr 2014 14:26:13 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
-In-Reply-To: <xmqqtx9l5jxn.fsf@gitster.dls.corp.google.com>
-X-Provags-ID: V03:K0:9u3y9TdOi6rNA17kkyX/mJxawFUrVzfiuvOhY+Z3wTWZrrLopzQ
- eeqD9iTa1Vx8MRwmGK7s0KkKyS8OcsT8EE5BI4V+K66XXqhkHsLmjvjsoAgdTevCZL4XVAf
- vgylZAjws6VL+nJxtitFM6NIXRLSTyTbEu4hI/M+reqo13hZ5dsRiaRTABr5k0+ZJFUZiyR
- +PkgHc2MPQVcZopUAXTLg==
+	id S1750923AbaDZMkG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Apr 2014 08:40:06 -0400
+Received: from arf.padd.com (unknown [50.105.4.164])
+	by honk.padd.com (Postfix) with ESMTPSA id 399565B16;
+	Sat, 26 Apr 2014 05:40:03 -0700 (PDT)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id 5FBD7201D1; Sat, 26 Apr 2014 08:40:00 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <CADtnS+zAnnpaU59-rAwMHF7Z4SNjcYWASqpKdEq+GVs8mVSb3w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247155>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247156>
 
-On 04/22/2014 06:54 PM, Junio C Hamano wrote:
-> Interesting.  It will break immediately when the project starts
-> wanting to distribute its "canonical" ignore list
+dpreid@gmail.com wrote on Tue, 22 Apr 2014 10:20 +0100:
+> As part of my work to help get git-p4 close to bug-free before Git
+> 2.0, I'm posting all bugs and patches to this mailing list. Please
+> direct me elsewhere if this is incorrect.
+> 
+> When trying to clone a particular directory from a depot, that
+> contains one or more branches that contain no commits for that
+> directory, branch detection is broken and results in a failed clone.
+> 
+> fatal: ambiguous argument
+> 'refs/remotes/p4/silly_project_branch/trunk': unknown revision or path
+> not in the working tree.
+[..]
+>   File "/home/dreid/bin/git-p4", line 2678, in importChanges
+>     blob = self.searchParent(parent, branch, tempBranch)
+>   File "/home/dreid/bin/git-p4", line 2600, in searchParent
+>     for blob in read_pipe_lines(["git", "rev-list", "--reverse",
+>   File "/home/dreid/bin/git-p4", line 155, in read_pipe_lines
+>     die('Command failed: %s' % str(c))
+>   File "/home/dreid/bin/git-p4", line 106, in die
+>     raise Exception(msg)
+> Exception: Command failed: ['git', 'rev-list', '--reverse',
+> '--no-merges', 'refs/remotes/p4/silly_project_branch/trunk']
+> 
+> Original command:
+> $ git-p4 clone //insane_depot/projects/Exchange/CompanyName/silly_project_branch@all
+> silly-project --detect-branches -v
 
-If that happens, that's a problem caused by the project wanting to=20
-misuse .gitignore.
+Yes, this is a good bug.  You could do "git rev-parse -q --verify"
+on parent before trying to read the rev-list.
 
-There are good practices and bad practices.  Forcing a common .gitignor=
-e=20
-upon everyone with access to the source code is not a good practice.
+But then what should happen?  I suspect git-p4 will just create
+that ref when it commits the change it is considering.
 
---=20
-Z=E9
+		-- Pete
