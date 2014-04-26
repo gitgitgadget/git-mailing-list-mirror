@@ -1,68 +1,78 @@
-From: =?UTF-8?B?U3V2b3JvdiBJdmFu?= <sv_91@inbox.ru>
-Subject: =?UTF-8?B?QWRkaW5nIGdpdCBob29rcw==?=
-Date: Sat, 26 Apr 2014 13:34:03 +0400
-Message-ID: <1398504843.79785833@f133.i.mail.ru>
-Reply-To: =?UTF-8?B?U3V2b3JvdiBJdmFu?= <sv_91@inbox.ru>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: What's cooking in git.git (Apr 2014, #08; Fri, 25)
+Date: Sat, 26 Apr 2014 10:39:02 +0100
+Organization: OPDS
+Message-ID: <27645ABF2E944872BB3F944B17E9490B@PhilipOakley>
+References: <xmqqoazpt45p.fsf@gitster.dls.corp.google.com> <20140425231953.GB3855@sigill.intra.peff.net> <535b0db7e5e31_ba2148d310f4@nysa.notmuch> <BLU0-SMTP3741FBD4980A29338AC8BA8D1450@phx.gbl> <535b4c5a3c91c_3d63109d2f00@nysa.notmuch>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: base64
-To: =?UTF-8?B?Z2l0?= <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Apr 26 11:35:19 2014
+Content-Type: text/plain;
+	format=flowed;
+	charset="UTF-8";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+To: "Felipe Contreras" <felipe.contreras@gmail.com>,
+	"Alex Davidson" <descenterace@hotmail.com>, <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Apr 26 11:39:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wdz0t-0007Wp-SF
-	for gcvg-git-2@plane.gmane.org; Sat, 26 Apr 2014 11:35:16 +0200
+	id 1Wdz4l-0005Y2-8N
+	for gcvg-git-2@plane.gmane.org; Sat, 26 Apr 2014 11:39:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751676AbaDZJfI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Apr 2014 05:35:08 -0400
-Received: from fallback3.mail.ru ([94.100.176.58]:39736 "EHLO
-	fallback3.mail.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751028AbaDZJfG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Apr 2014 05:35:06 -0400
-Received: from f133.i.mail.ru (f133.i.mail.ru [94.100.178.193])
-	by fallback3.mail.ru (mPOP.Fallback_MX) with ESMTP id C091F113DD86B
-	for <git@vger.kernel.org>; Sat, 26 Apr 2014 13:34:16 +0400 (MSK)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=inbox.ru; s=mail;
-	h=Content-Transfer-Encoding:Content-Type:Message-ID:Reply-To:Date:Mime-Version:Subject:To:From; bh=Aef6iwMIgGKTmTQCyW8mxzlFdggpzzmrnya3vBvCRWU=;
-	b=pj51UBurj6hxT31sGXITlG4F8wf7FfzD3i1G2kVLV+Iqz79rdrTzyY7TS87iJlELsvtEnhQNhsLiV5Ul22ewOVQCK+KTLNJpNW0YNV8IZasnLG8OPtq15WTLW1eG19J3IpP8vIWlOIxGtHXnoo7GwuyjkTD5Hi2Bmd2HwZ47bi4=;
-Received: from mail by f133.i.mail.ru with local (envelope-from <sv_91@inbox.ru>)
-	id 1Wdyzj-0003SB-4R
-	for git@vger.kernel.org; Sat, 26 Apr 2014 13:34:03 +0400
-Received: from [213.176.224.71] by e.mail.ru with HTTP;
-	Sat, 26 Apr 2014 13:34:03 +0400
-X-Mailer: Mail.Ru Mailer 1.0
-X-Originating-IP: [213.176.224.71]
-X-Priority: 3 (Normal)
-X-Mras: Ok
-X-Spam: undefined
+	id S1751886AbaDZJjH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Apr 2014 05:39:07 -0400
+Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:21592 "EHLO
+	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751028AbaDZJjE (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 26 Apr 2014 05:39:04 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AoBbANF9W1MCYJIz/2dsb2JhbABZgwZfA4MphT28LAUBAgEMgQMXdIIgBQEBBAEIAQEZFR4BASYGAgMFAgEDFQUCBSECAhQBBAgSBgcXBgESCAIBAgMBCAKIEgMJDKc8hVmWYQ2HD4EpixiCTYJBNYEVBI9mhzWOeIVUgzI8
+X-IPAS-Result: AoBbANF9W1MCYJIz/2dsb2JhbABZgwZfA4MphT28LAUBAgEMgQMXdIIgBQEBBAEIAQEZFR4BASYGAgMFAgEDFQUCBSECAhQBBAgSBgcXBgESCAIBAgMBCAKIEgMJDKc8hVmWYQ2HD4EpixiCTYJBNYEVBI9mhzWOeIVUgzI8
+X-IronPort-AV: E=Sophos;i="4.97,932,1389744000"; 
+   d="scan'208";a="444661396"
+Received: from host-2-96-146-51.as13285.net (HELO PhilipOakley) ([2.96.146.51])
+  by out1.ip04ir2.opaltelecom.net with SMTP; 26 Apr 2014 10:39:02 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247151>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247152>
 
-SGVsbG8uCkkgd2FudCB0byBleHRlbmQgdGhlIGZ1bmN0aW9uYWxpdHkgb2YgZ2l0IGR1ZSB0byB0
-aGUgcG9zc2liaWxpdHkgb2Ygc2VwYXJhdGlvbiBvZiB0aGUgdXNlciByZXBvc2l0b3J5IGludG8g
-MiBwYXJ0cyAtIG9uZSBwYXJ0IHdpbGwgYmUgc3RvcmVkIGFzIHVzdWFsLCB1bmRlciB2ZXJzaW9u
-IGNvbnRyb2wgZ2l0LCBhbmQgdGhlIHNlY29uZCBwYXJ0IHdpbGwgYmUgc3RvcmVkIGluIGFub3Ro
-ZXIgbG9jYXRpb24gc3VjaCBhcyBhbiBGVFAtc2VydmVyLgoKVGhpcyB3aWxsIGJlIGRvbmUgaW4g
-b3JkZXIgdG8gYmUgYWJsZSB0byBzZXBhcmF0ZSB0aGUgdXNlciByZXBvc2l0b3J5IGJpbmFyeSBk
-YXRhIGZyb20gdGhlIHNvdXJjZSBjb2RlIGFuZCBiaW5hcnkgZGF0YSBjYW4gc3RvcmVkIHNlcGFy
-YXRlbHkuCgpGb3IgZXhhbXBsZSwgbm93IG9uIGdpdGh1YiBwcm9oaWJpdGVkIHRvIHVwbG9hZCBm
-aWxlcyBsYXJnZXIgdGhhbiAxMDAgTUIsIGJ1dCBzb21lIGxhcmdlIGZpbGVzIHN0aWxsIHdvdWxk
-IGxpa2UgdG8ga2VlcCB1bmRlciB2ZXJzaW9uIGNvbnRyb2wuCgpBbmQgaXQgd2lsbCBiZSBwb3Nz
-aWJsZSB0byBtYWtlIGR1ZSB0byB0aGUgcHJvcG9zZWQgZGl2aXNpb24gb2YgdGhlIHJlcG9zaXRv
-cnkuIEl0IGlzIGFzc3VtZWQgdGhhdCB0aGlzIGZ1bmN0aW9uYWxpdHkgd2lsbCBiZSBkZXZlbG9w
-ZWQgZm9yIHRoZSBtb3N0IHBhcnQgc2VwYXJhdGVseSBmcm9tIHRoZSBwcm9ncmFtIGdpdCwgdXNp
-bmcgYSBtZWNoYW5pc20gZ2l0IGhvb2suIEJ1dCBpbiB0aGUgY3VycmVudCBwcm9ncmFtIGdpdCBu
-b3QgZW5vdWdoIGhvb2tzIHRvIGltcGxlbWVudCB0aGlzIGZ1bmN0aW9uYWxpdHkuIEZvciBleGFt
-cGxlLCBpdCB3b3VsZCBiZSBuaWNlIHRvIGhhdmUgZXhpc3RlZCBvbiB0aGUgaG9vayBjb21tYW5k
-IGdpdCBzdGF0dXMsIHNvIHRoYXQgdGhlIG91dHB1dCBvZiB0aGlzIGNvbW1hbmQgY2FuIGJlIHN1
-cHBsZW1lbnRlZCBieSBhIGxpc3Qgb2YgYmluYXJpZXMgdGhhdCBhcmUgbm90IHVuZGVyIHZlcnNp
-b24gY29udHJvbCBpbiBtYWluIHJlcG9zaXRvcnksIGJ1dCBhcmUgdW5kZXIgdmVyc2lvbiBjb250
-cm9sLCBmb3IgZXhhbXBsZSBpbiBGVFAgc2VydmVyLgoKQXMgYSBjb21tdW5pdHkgR2l0IGNvbnNp
-ZGVyIHRoZSBpZGVhIG9mIGEgZXh0ZW5kIG1lY2hhbmlzbSB0aGUgZnVuY3Rpb25hbGl0eSBnaXQg
-aG9vaz8=
+From: "Felipe Contreras" <felipe.contreras@gmail.com>
+>
+> My conclusion is based on logic and reason,
+
+you forget  "And repeatable measurement / evidence" ....
+
+>                                                                  which 
+> are the bedstone of science.
+> You can make sensible decisions based on that alone, and in fact 
+> that's how
+> most good decisions are made.
+>
+> -- 
+> Felipe Contreras
+> --
+
+At the moment we are missing the repeatable measurements, which can't 
+happened until the @{publish}, and others, have been released and used 
+for a while[1], otherwise we [prematurely] are back to one size fits all 
+solutions.
+
+I suspect your solution may become the lead candidate for @{p}, but as 
+they say, "making predictions is hard, especially about the future".
+
+regards
+
+Philip
+
+[1] we don't have a good measurement technique for existing usage 
+frequencies (as typed by real users in real life, weighted by user type, 
+...) either! 
