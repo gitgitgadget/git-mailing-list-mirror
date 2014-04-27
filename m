@@ -1,70 +1,91 @@
-From: Marius Ungureanu <marius.ungureanu@xamarin.com>
-Subject: Re: [PATCH 2/2] add csharp userdiff tests
-Date: Sun, 27 Apr 2014 20:11:30 +0300
-Message-ID: <33F87557-C685-4338-9BFA-2391442CD7A1@xamarin.com>
-References: <29F78086-81B4-481F-9051-FF3EEBA9BB08@xamarin.com> <535B5BFF.40002@kdbg.org> <97789B23-A375-46B1-99FD-A851A15C2D85@xamarin.com> <535BF1C0.7080204@kdbg.org> <1EA6F663-54DC-4665-A88C-8627F38B356E@xamarin.com> <535BFFEB.8040103@kdbg.org> <3A0D05C9-C222-463E-BCD4-CD38F216E352@xamarin.com> <535D2E0C.40101@kdbg.org>
-Mime-Version: 1.0 (Mac OS X Mail 7.2 \(1874\))
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 8BIT
+From: Jeremy Morton <admin@game-point.net>
+Subject: Re: Recording the current branch on each commit?
+Date: Sun, 27 Apr 2014 18:27:20 +0100
+Message-ID: <535D3DF8.4020904@game-point.net>
+References: <535C47BF.2070805@game-point.net> <1748955386.11457068.1398588660139.JavaMail.zimbra@dewire.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Sun Apr 27 19:10:38 2014
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Sun Apr 27 19:27:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WeSb7-0002ZL-5J
-	for gcvg-git-2@plane.gmane.org; Sun, 27 Apr 2014 19:10:37 +0200
+	id 1WeSrL-00070K-N7
+	for gcvg-git-2@plane.gmane.org; Sun, 27 Apr 2014 19:27:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932097AbaD0RKb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Apr 2014 13:10:31 -0400
-Received: from mail-ee0-f43.google.com ([74.125.83.43]:42114 "EHLO
-	mail-ee0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932093AbaD0RK3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 27 Apr 2014 13:10:29 -0400
-Received: by mail-ee0-f43.google.com with SMTP id e53so4166007eek.2
-        for <git@vger.kernel.org>; Sun, 27 Apr 2014 10:10:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=xamarin.com; s=google;
-        h=content-type:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=PiT2EDx4oD2WqXAYvgVKwxcQ1Q+w/DTsobARrlOenno=;
-        b=Y+GA422gBgOxFHZEz4hcD1qvtaol5+aM0vRT3EjwKPh8NE+OzppLF6v4FrioD7d+HB
-         YLjD6l7sZR5e5IAWuRITTYsDEfOFJ3SoJKR14dXqqEC3s/oR4RofCM2Ehx9EbKMvmmLY
-         TUUsuR4F6EPDkNjci1Q3eraN1/RZ4svGQ4oyM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:content-type:mime-version:subject:from
-         :in-reply-to:date:cc:content-transfer-encoding:message-id:references
-         :to;
-        bh=PiT2EDx4oD2WqXAYvgVKwxcQ1Q+w/DTsobARrlOenno=;
-        b=kHnEZ1Vd0Qeug66twllpMJ+sEBSbfYSjDsffntQOrLyTHt5voCVtHpRmCKCM1eCVsY
-         qCIRrUTYVuqbEcD993wQtDdH6hAxBQC2kFtkq+qzhLWAe8AECRb3HkIKkHM2/X+ap7SO
-         OF79XTnEzVa0eF77dADszFzW+zKuajw4LkaAMAKbufgIzJEZT4lTESXjK2DqprSfN0jB
-         GT1mx88Fyv38/GU2AP8Oh3Z2BCcO2Ti5Dqp46cYLVQ0KtTgntjo0YQ/3/ssIzbX96aIj
-         PNGBeNJdZrrRvrzSK2lIZeUieymrxLKwM9NBtImOi/BNnZ4k2k0zp49T4JhFpVsFSJNV
-         v3Tw==
-X-Gm-Message-State: ALoCoQnY5hRlleYnIuqEvGJiuIb0JdrD0GSqFfo/nfECWWhFGfltlmX2t7Sbim6VyXPOW/ouUn2k
-X-Received: by 10.15.64.75 with SMTP id n51mr27026948eex.33.1398618627945;
-        Sun, 27 Apr 2014 10:10:27 -0700 (PDT)
-Received: from [192.168.1.101] ([188.26.30.123])
-        by mx.google.com with ESMTPSA id q41sm43107706eez.7.2014.04.27.10.10.26
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 27 Apr 2014 10:10:27 -0700 (PDT)
-In-Reply-To: <535D2E0C.40101@kdbg.org>
-X-Mailer: Apple Mail (2.1874)
+	id S1753060AbaD0R1S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Apr 2014 13:27:18 -0400
+Received: from mail.gooeysoftware.com ([208.100.15.213]:36052 "EHLO
+	mail.gooeysoftware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752018AbaD0R1R (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Apr 2014 13:27:17 -0400
+Received: from [192.168.0.2] (82-69-83-224.dsl.in-addr.zen.co.uk [82.69.83.224])
+	by mail.gooeysoftware.com (Postfix) with ESMTPSA id 9E20F18A09AC;
+	Sun, 27 Apr 2014 12:35:06 -0500 (CDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.18) Gecko/20110616 Thunderbird/3.1.11
+In-Reply-To: <1748955386.11457068.1398588660139.JavaMail.zimbra@dewire.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247207>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247208>
 
+On 27/04/2014 09:51, Robin Rosenberg wrote:
+>> Currently, git records a checksum, author, commit date/time, and commit
+>> message with every commit (as get be seen from 'git log').  I think it
+>> would be useful if, along with the Author and Date, git recorded the
+>> name of the current branch on each commit.  The branch name can provide
+>> useful contextual information.  For instance, let's say I'm developing a
+>> suite of games.  If the commit message says "Added basic options
+>> dialog", it might be useful to see that the branch name is
+>> "pacman-minigame" indicating that the commit pertains to the options
+>> dialog in the Pacman minigame.  Basically, I'm saying that well-named
+>> branches can and do carry useful contextual information that oughtn't to
+>> be thrown away.  Currently, when you delete that branch, you lose the
+>> branch name altogether.
+>>
+>> So what do you think?  Would it be good to have a patch to add this feature?
+>
+> Branch names are usually poorly named, so often you don't lose much. One way
 
-> You can mark a userdiff test case that demonstrates a breakage by
-> including the work "broken" somewhere in the file. See
-> http://www.repo.or.cz/w/alt-git.git/commitdiff/9cc444f0570b196f1c51664ce2de1d8e1dee6046
-> -- Hannes
+Speak for yourself - I give my branches useful names.  :-)  I definitely 
+feel that I am often losing useful contextual information by throwing 
+away the branch name.
 
-Would you like me to add tests first, then fix them? Or just like this?
+> some people to is to always merge with --no-ff, that way you see the branch
+> name in the merge commit.
+
+But surely, it's recommended with Git that you try to avoid doing 
+--no-ff merges to avoid commit noise?  Also, it is a lot more hassle 
+(and no doubt, CPU cycles) to track down where a branch was merged to 
+try and figure out which branch name a commit pertained to, not to 
+mention the fact that the commit could've been moved since.  Nothing 
+short of tagging the commit with the branch name when the commit is made 
+will definitely record the branch name at the time of committing.
+
+> A very popular way of tracking context is to add some id, such as a bugzilla issue
+> number, to the header or footer of the commit message. Often a branch contains many
+> issues, but the branch itself isn't very interesting. Tools like gitblit, gitweb,
+> gerrit etc can easily be configured to link to the issue using a regular expression.
+
+Yes, and I have done this kind of thing in the past.  However you really 
+don't want to put the bug# on every single commit pertaining to that 
+bug; you have to go to the effort of looking the bug# up every time, 
+you'll sometimes forget, and besides it takes up space that could be 
+used for a commit message.  As short commit messages are valued in Git, 
+it's particularly bad to waste space this way.  Much better would be to 
+include the bug# as part of the branch name, and then if you record the 
+branch name upon checkin you always get a reference to the bug#.
+
+Also, you don't always have something you can link a commit to in an 
+issue tracker.  You may just be implementing a feature that has been 
+agreed upon, independently of any such tracker.  In that case, there's 
+no bug# to link to.
+
+-- 
+Best regards,
+Jeremy Morton (Jez)
