@@ -1,60 +1,174 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 2/2] add csharp userdiff tests
-Date: Sun, 27 Apr 2014 22:12:44 +0200
-Message-ID: <535D64BC.8060403@kdbg.org>
-References: <29F78086-81B4-481F-9051-FF3EEBA9BB08@xamarin.com> <535B5BFF.40002@kdbg.org> <97789B23-A375-46B1-99FD-A851A15C2D85@xamarin.com> <535BF1C0.7080204@kdbg.org> <1EA6F663-54DC-4665-A88C-8627F38B356E@xamarin.com> <535BFFEB.8040103@kdbg.org> <3A0D05C9-C222-463E-BCD4-CD38F216E352@xamarin.com> <535D2E0C.40101@kdbg.org> <CF7066B0-539D-4FAB-8845-8ED60DF1F17E@xamarin.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Marius Ungureanu <marius.ungureanu@xamarin.com>
-X-From: git-owner@vger.kernel.org Sun Apr 27 22:12:56 2014
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [RFC/PATCH 1/2] trailer: fix to ignore any line starting with '#'
+Date: Sun, 27 Apr 2014 22:12:36 +0200
+Message-ID: <20140427201238.16880.13774.chriscool@tuxfamily.org>
+References: <20140427200327.16880.53255.chriscool@tuxfamily.org>
+Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Thomas Rast <tr@thomasrast.ch>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Apr 27 22:13:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WeVRV-0005JQ-1q
-	for gcvg-git-2@plane.gmane.org; Sun, 27 Apr 2014 22:12:53 +0200
+	id 1WeVS3-0006Fp-NH
+	for gcvg-git-2@plane.gmane.org; Sun, 27 Apr 2014 22:13:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751671AbaD0UMs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 27 Apr 2014 16:12:48 -0400
-Received: from bsmtp3.bon.at ([213.33.87.17]:56407 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1750993AbaD0UMr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Apr 2014 16:12:47 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id A5E13130054;
-	Sun, 27 Apr 2014 22:12:45 +0200 (CEST)
-Received: from dx.sixt.local (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id B45B219F42F;
-	Sun, 27 Apr 2014 22:12:44 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
-In-Reply-To: <CF7066B0-539D-4FAB-8845-8ED60DF1F17E@xamarin.com>
+	id S1752849AbaD0UNY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Apr 2014 16:13:24 -0400
+Received: from mail-3y.bbox.fr ([194.158.98.45]:51593 "EHLO mail-3y.bbox.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752200AbaD0UNW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Apr 2014 16:13:22 -0400
+Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
+	by mail-3y.bbox.fr (Postfix) with ESMTP id 641A25A;
+	Sun, 27 Apr 2014 22:13:20 +0200 (CEST)
+X-git-sha1: ea59b3e6c05ab41ad6c1684b3f3b3ac0fd53ece5 
+X-Mailer: git-mail-commits v0.5.2
+In-Reply-To: <20140427200327.16880.53255.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247223>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247224>
 
-Am 27.04.2014 18:46, schrieb Marius Ungureanu:
-> Is it okay though if I add a few tests to show what is broken?
->=20
-> I think this can=92t be solved at a regex level.
+It looks like the commit-msg hook is passed a commit
+message that can contain lines starting with a '#'.
+Those comment lines will be removed from the commit
+message after the hook is run.
 
-It's OK to add tests that show breakages even if there is no immediate
-solution.
+If we want "git interpret-trailers" to be able to
+process commit messages correctly in the commit-msg
+hook we need to ignore those lines.
 
->> You can mark a userdiff test case that demonstrates a breakage by
->> including the work "broken" somewhere in the file. See
->> http://www.repo.or.cz/w/alt-git.git/commitdiff/9cc444f0570b196f1c516=
-64ce2de1d8e1dee6046
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ t/t7513-interpret-trailers.sh | 26 ++++++++++++++++++++++++++
+ trailer.c                     | 29 ++++++++++++++++++-----------
+ 2 files changed, 44 insertions(+), 11 deletions(-)
 
-You add tests including broken cases first, and then in the follow-up
-patch that fixes the broken ones, you also mark the tests as fixed, lik=
-e
-I did in the follow-up patch of the above example:
-http://www.repo.or.cz/w/alt-git.git/commitdiff/8a2e8da367f7175465118510=
-b474ad365161d6b1
-
--- Hannes
+diff --git a/t/t7513-interpret-trailers.sh b/t/t7513-interpret-trailers.sh
+index 9aae721..aa63b1b 100755
+--- a/t/t7513-interpret-trailers.sh
++++ b/t/t7513-interpret-trailers.sh
+@@ -150,6 +150,32 @@ test_expect_success 'with 2 files arguments' '
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'with message that has comments' '
++	cat basic_message >>message_with_comments &&
++	sed -e "s/ Z\$/ /" >>message_with_comments <<-\EOF &&
++		# comment
++
++		# other comment
++		Cc: Z
++		# yet another comment
++		Reviewed-by: Johan
++		Reviewed-by: Z
++		# last comment
++
++	EOF
++	cat basic_patch >>message_with_comments &&
++	cat basic_message >expected &&
++	cat >>expected <<-\EOF &&
++		# comment
++
++		Cc: Peff
++		Reviewed-by: Johan
++	EOF
++	cat basic_patch >>expected &&
++	git interpret-trailers --trim-empty --trailer "Cc: Peff" message_with_comments >actual &&
++	test_cmp expected actual
++'
++
+ test_expect_success 'with commit complex message and trailer args' '
+ 	cat complex_message_body >expected &&
+ 	sed -e "s/ Z\$/ /" >>expected <<-\EOF &&
+diff --git a/trailer.c b/trailer.c
+index 4d32b42..81b2c5c 100644
+--- a/trailer.c
++++ b/trailer.c
+@@ -644,10 +644,9 @@ static int find_patch_start(struct strbuf **lines, int count)
+ /*
+  * Return the (0 based) index of the first trailer line or count if
+  * there are no trailers. Trailers are searched only in the lines from
+- * index (count - 1) down to index 0. The has_blank_line parameter
+- * tells if there is a blank line before the trailers.
++ * index (count - 1) down to index 0.
+  */
+-static int find_trailer_start(struct strbuf **lines, int count, int *has_blank_line)
++static int find_trailer_start(struct strbuf **lines, int count)
+ {
+ 	int start, only_spaces = 1;
+ 
+@@ -656,10 +655,11 @@ static int find_trailer_start(struct strbuf **lines, int count, int *has_blank_l
+ 	 * for a line with only spaces before lines with one ':'.
+ 	 */
+ 	for (start = count - 1; start >= 0; start--) {
++		if (lines[start]->buf[0] == '#')
++			continue;
+ 		if (contains_only_spaces(lines[start]->buf)) {
+ 			if (only_spaces)
+ 				continue;
+-			*has_blank_line = 1;
+ 			return start + 1;
+ 		}
+ 		if (strchr(lines[start]->buf, ':')) {
+@@ -667,13 +667,20 @@ static int find_trailer_start(struct strbuf **lines, int count, int *has_blank_l
+ 				only_spaces = 0;
+ 			continue;
+ 		}
+-		*has_blank_line = start == count - 1 ?
+-		  0 : contains_only_spaces(lines[start + 1]->buf);
+ 		return count;
+ 	}
+ 
+-	*has_blank_line = only_spaces ? count > 0 : 0;
+-	return only_spaces ? count : start + 1;
++	return only_spaces ? count : 0;
++}
++
++static int has_blank_line_before(struct strbuf **lines, int start)
++{
++	for (;start >= 0; start--) {
++		if (lines[start]->buf[0] == '#')
++			continue;
++		return contains_only_spaces(lines[start]->buf);
++	}
++	return 0;
+ }
+ 
+ static void print_lines(struct strbuf **lines, int start, int end)
+@@ -688,19 +695,19 @@ static int process_input_file(struct strbuf **lines,
+ 			      struct trailer_item **in_tok_last)
+ {
+ 	int count = 0;
+-	int patch_start, trailer_start, has_blank_line, i;
++	int patch_start, trailer_start, i;
+ 
+ 	/* Get the line count */
+ 	while (lines[count])
+ 		count++;
+ 
+ 	patch_start = find_patch_start(lines, count);
+-	trailer_start = find_trailer_start(lines, patch_start, &has_blank_line);
++	trailer_start = find_trailer_start(lines, patch_start);
+ 
+ 	/* Print lines before the trailers as is */
+ 	print_lines(lines, 0, trailer_start);
+ 
+-	if (!has_blank_line)
++	if (!has_blank_line_before(lines, trailer_start - 1))
+ 		printf("\n");
+ 
+ 	/* Parse trailer lines */
+-- 
+1.9.rc0.17.g651113e
