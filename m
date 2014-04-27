@@ -1,168 +1,273 @@
-From: Dan Albert <danalbert@google.com>
-Subject: [PATCH] Uses git-credential for git-imap-send
-Date: Sun, 27 Apr 2014 10:58:51 -0700
-Message-ID: <907d1444a8e17a43c03ee0c2bb04038bdd3372b8.1398620231.git.danalbert@google.com>
-References: <20140426180835.GE21493@sigill.intra.peff.net>
-Cc: Dan Albert <danalbert@google.com>, peff@peff.net
+From: "Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH v6 1/5] patch-id: make it stable against hunk reordering
+Date: Sun, 27 Apr 2014 21:15:44 +0300
+Message-ID: <1398622524-26207-1-git-send-email-mst@redhat.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: sunshine@sunshineco.com, jrnieder@gmail.com, peff@peff.net,
+	gitster@pobox.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 27 19:59:53 2014
+X-From: git-owner@vger.kernel.org Sun Apr 27 20:16:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WeTMk-0005T7-Or
-	for gcvg-git-2@plane.gmane.org; Sun, 27 Apr 2014 19:59:51 +0200
+	id 1WeTcQ-0000HU-AL
+	for gcvg-git-2@plane.gmane.org; Sun, 27 Apr 2014 20:16:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751321AbaD0R7O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Apr 2014 13:59:14 -0400
-Received: from mail-pb0-f44.google.com ([209.85.160.44]:44112 "EHLO
-	mail-pb0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751265AbaD0R7N (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Apr 2014 13:59:13 -0400
-Received: by mail-pb0-f44.google.com with SMTP id jt11so3257745pbb.17
-        for <git@vger.kernel.org>; Sun, 27 Apr 2014 10:59:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=7QlJUF0v/jM4/0Q0dnTi2Gva+89DrLH9m7eHs6XlJHQ=;
-        b=MUKMjf3Se7Po9rU39NdXqhQjsVf3pAL7RAW0+NN02Cs5dQFRFZR0/VmI8LfdtiQiLd
-         oKQnqDZ24+AQQou7CiyUv6N0YZ44tZCVL4n41BhQE0mGO3BDN0pdWTDygJ172G9ffQ2D
-         6fOevHrNYFnlWKm6rOEF26qz7FumI4vyC3giztEDHqTO+5oLs+ankBeVOf0MPpd5RDdx
-         ZnUjAbF62jkimmSqb+QIZj1ECXCtZrkl9V5QX94VhkA/ZzRTYcG71Pxo+E84EBSA17zP
-         K9xTULOC4w9HsckQK4PnE0PnXsv7upA2/Q4yX15dElksZV+b6YWskCBlds6tE12OwhPK
-         LSeg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=7QlJUF0v/jM4/0Q0dnTi2Gva+89DrLH9m7eHs6XlJHQ=;
-        b=XFihA26JaZjdRn85l6IxffSrI4gmxGX2/guq6HN5/657tp6F86cDJhJ5OBcokWYlLW
-         JvuKFdk1FTgkqBSmWOJqElU/nfemWpDFi3GSKq+4OKI9oVpCVRpynbhhmhBdVlpUncZT
-         NmVWF07haG8cPvN9tNtYiAlqDLln2ssuzqXGn2SVMMgNSxss+5i6d911d6HhjpraWUBw
-         6uHQ4ZnNcBh/ggxnwA7wnioehb7eijO1bBMY+GQJ5jTRJ+WyZ3kzIRyySqOvqQfOTYJk
-         Qfjx1YuD/iy456SaqTcsTMHyDhjfzTiJSgFYSUnn7NwSV0eiUb+qRSsw9jK4Ecye+R3h
-         fzOg==
-X-Gm-Message-State: ALoCoQkAgkDcdwz3Y+8Xiwehdi5JkHAnZ+WXqiftNmh5cXnTX16m/ML+B8mz9zqItjHaerwk8qcgUY+mI1+Lw9ac/R2czit5IbTDCxzXAccBIs5nB+AcFesn/tslj4zIKOaVlAn1+qwTBbtAhFskVOX6WfIiT+exiVYL3js+ueAsQ2AmBkk9Kr8MG7ngbYKJLO0jbHFaGksKuwTtTowoP/aCA/W2ddADW0qCkeMJw0ga2BwMrLwPLX0=
-X-Received: by 10.68.100.1 with SMTP id eu1mr24344299pbb.36.1398621552759;
-        Sun, 27 Apr 2014 10:59:12 -0700 (PDT)
-Received: from localhost.localdomain ([50.185.89.111])
-        by mx.google.com with ESMTPSA id sy2sm29660991pbc.28.2014.04.27.10.59.10
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sun, 27 Apr 2014 10:59:11 -0700 (PDT)
-X-Mailer: git-send-email 2.0.0.rc1.1.gce060f5
-In-Reply-To: <20140426180835.GE21493@sigill.intra.peff.net>
+	id S1752215AbaD0SPJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Apr 2014 14:15:09 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:36067 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751865AbaD0SPH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Apr 2014 14:15:07 -0400
+Received: from int-mx13.intmail.prod.int.phx2.redhat.com (int-mx13.intmail.prod.int.phx2.redhat.com [10.5.11.26])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id s3RIEuwt025286
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Sun, 27 Apr 2014 14:14:57 -0400
+Received: from redhat.com (ovpn-116-40.ams2.redhat.com [10.36.116.40])
+	by int-mx13.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id s3RIEsc6017540;
+	Sun, 27 Apr 2014 14:14:54 -0400
+Content-Disposition: inline
+X-Mutt-Fcc: =sent
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247212>
 
-git-imap-send was directly prompting for a password rather than using
-git-credential. git-send-email, on the other hand, supports git-credential.
+Patch id changes if users reorder file diffs that make up a patch.
 
-This is a necessary improvement for users that use two factor authentication, as
-they should not be expected to remember all of their app specific passwords.
+As the result is functionally equivalent, a different patch id is
+surprising to many users.
+In particular, reordering files using diff -O is helpful to make patches
+more readable (e.g. API header diff before implementation diff).
 
-Signed-off-by: Dan Albert <danalbert@google.com>
+Add an option to change patch-id behaviour making it stable against
+these kinds of patch change:
+calculate SHA1 hash for each hunk separately and sum all hashes
+(using a symmetrical sum) to get patch id
+
+We use a 20byte sum and not xor - since xor would give 0 output
+for patches that have two identical diffs, which isn't all that
+unlikely (e.g. append the same line in two places).
+
+The new behaviour is enabled
+- when patchid.stable is true
+- when --stable flag is present
+
+Using a new flag --unstable or setting patchid.stable to false force
+the historical behaviour.
+
+In the documentation, clarify that patch ID can now be a sum of hashes,
+not a hash.
+Document how command line and config options affect the
+behaviour.
+
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
+ builtin/patch-id.c             | 74 +++++++++++++++++++++++++++++++++---------
+ Documentation/git-patch-id.txt | 37 ++++++++++++++++++---
+ 2 files changed, 91 insertions(+), 20 deletions(-)
 
->> About imap vs. imaps: I actually had your exact line in before, but decided
->> that as long as its for the same host the user probably wants to use the
->> same credentials for both imap and imaps (if they for some reason had both
->> configured). Hard coding "imap" allows them to use either protocol with
->> only one keychain entry. The use case is a stretch, but it doesn't do any
->> harm to implement it this way.
->
-> My concerns with conflating the two are:
-> 
->   1. The system helper might care about the distinction and prefer imaps
->      (e.g., it might already have the credential stored for your regular
->      mail client, which uses imaps). But osxkeychain is the only helper
->      that makes the distinction, and I don't really know how OS X's
->      keychain code handles the distinction.
-> 
->   2. With http and https, we are careful to make the distinction,
->      because we would not want to accidentally share a credential over http
->      that was stored via https. But it's pretty easy to use an http URL
->      rather than an https one. It's probably pretty rare to accidentally
->      turn off imap SSL.
-> 
-> So I'd be OK with leaving it as "imap" for now, and waiting for somebody
-> to actually come up with a real case where the distinction matters.
-
-These are good points. I've made the change.
-
- imap-send.c | 29 +++++++++++++++--------------
- 1 file changed, 15 insertions(+), 14 deletions(-)
-
-diff --git a/imap-send.c b/imap-send.c
-index 0bc6f7f..112fc83 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -23,9 +23,9 @@
-  */
+diff --git a/builtin/patch-id.c b/builtin/patch-id.c
+index 3cfe02d..77db873 100644
+--- a/builtin/patch-id.c
++++ b/builtin/patch-id.c
+@@ -1,17 +1,14 @@
+ #include "builtin.h"
  
- #include "cache.h"
-+#include "credential.h"
- #include "exec_cmd.h"
- #include "run-command.h"
--#include "prompt.h"
- #ifdef NO_OPENSSL
- typedef void *SSL;
- #endif
-@@ -946,6 +946,7 @@ static int auth_cram_md5(struct imap_store *ctx, struct imap_cmd *cmd, const cha
- 
- static struct imap_store *imap_open_store(struct imap_server_conf *srvc)
+-static void flush_current_id(int patchlen, unsigned char *id, git_SHA_CTX *c)
++static void flush_current_id(int patchlen, unsigned char *id, unsigned char *result)
  {
-+	struct credential cred = CREDENTIAL_INIT;
- 	struct imap_store *ctx;
- 	struct imap *imap;
- 	char *arg, *rsp;
-@@ -1101,19 +1102,11 @@ static struct imap_store *imap_open_store(struct imap_server_conf *srvc)
- 			goto bail;
- 		}
- 		if (!srvc->pass) {
--			struct strbuf prompt = STRBUF_INIT;
--			strbuf_addf(&prompt, "Password (%s@%s): ", srvc->user, srvc->host);
--			arg = git_getpass(prompt.buf);
--			strbuf_release(&prompt);
--			if (!*arg) {
--				fprintf(stderr, "Skipping account %s@%s, no password\n", srvc->user, srvc->host);
--				goto bail;
--			}
--			/*
--			 * getpass() returns a pointer to a static buffer.  make a copy
--			 * for long term storage.
--			 */
--			srvc->pass = xstrdup(arg);
-+			cred.username = xstrdup(srvc->user);
-+			cred.protocol = xstrdup(srvc->use_ssl ? "imaps" : "imap");
-+			cred.host = xstrdup(srvc->host);
-+			credential_fill(&cred);
-+			srvc->pass = xstrdup(cred.password);
- 		}
- 		if (CAP(NOLOGIN)) {
- 			fprintf(stderr, "Skipping account %s@%s, server forbids LOGIN\n", srvc->user, srvc->host);
-@@ -1153,10 +1146,18 @@ static struct imap_store *imap_open_store(struct imap_server_conf *srvc)
- 		}
- 	} /* !preauth */
+-	unsigned char result[20];
+ 	char name[50];
  
-+	if (cred.username)
-+		credential_approve(&cred);
-+	credential_clear(&cred);
-+
- 	ctx->prefix = "";
- 	return ctx;
+ 	if (!patchlen)
+ 		return;
  
- bail:
-+	if (cred.username)
-+		credential_reject(&cred);
-+	credential_clear(&cred);
-+
- 	imap_close_store(ctx);
- 	return NULL;
+-	git_SHA1_Final(result, c);
+ 	memcpy(name, sha1_to_hex(id), 41);
+ 	printf("%s %s\n", sha1_to_hex(result), name);
+-	git_SHA1_Init(c);
  }
+ 
+ static int remove_space(char *line)
+@@ -56,10 +53,31 @@ static int scan_hunk_header(const char *p, int *p_before, int *p_after)
+ 	return 1;
+ }
+ 
+-static int get_one_patchid(unsigned char *next_sha1, git_SHA_CTX *ctx, struct strbuf *line_buf)
++static void flush_one_hunk(unsigned char *result, git_SHA_CTX *ctx)
++{
++	unsigned char hash[20];
++	unsigned short carry = 0;
++	int i;
++
++	git_SHA1_Final(hash, ctx);
++	git_SHA1_Init(ctx);
++	/* 20-byte sum, with carry */
++	for (i = 0; i < 20; ++i) {
++		carry += result[i] + hash[i];
++		result[i] = carry;
++		carry >>= 8;
++	}
++}
++
++static int get_one_patchid(unsigned char *next_sha1, unsigned char *result,
++			   struct strbuf *line_buf, int stable)
+ {
+ 	int patchlen = 0, found_next = 0;
+ 	int before = -1, after = -1;
++	git_SHA_CTX ctx;
++
++	git_SHA1_Init(&ctx);
++	hashclr(result);
+ 
+ 	while (strbuf_getwholeline(line_buf, stdin, '\n') != EOF) {
+ 		char *line = line_buf->buf;
+@@ -107,6 +125,8 @@ static int get_one_patchid(unsigned char *next_sha1, git_SHA_CTX *ctx, struct st
+ 				break;
+ 
+ 			/* Else we're parsing another header.  */
++			if (stable)
++				flush_one_hunk(result, &ctx);
+ 			before = after = -1;
+ 		}
+ 
+@@ -119,39 +139,63 @@ static int get_one_patchid(unsigned char *next_sha1, git_SHA_CTX *ctx, struct st
+ 		/* Compute the sha without whitespace */
+ 		len = remove_space(line);
+ 		patchlen += len;
+-		git_SHA1_Update(ctx, line, len);
++		git_SHA1_Update(&ctx, line, len);
+ 	}
+ 
+ 	if (!found_next)
+ 		hashclr(next_sha1);
+ 
++	flush_one_hunk(result, &ctx);
++
+ 	return patchlen;
+ }
+ 
+-static void generate_id_list(void)
++static void generate_id_list(int stable)
+ {
+-	unsigned char sha1[20], n[20];
+-	git_SHA_CTX ctx;
++	unsigned char sha1[20], n[20], result[20];
+ 	int patchlen;
+ 	struct strbuf line_buf = STRBUF_INIT;
+ 
+-	git_SHA1_Init(&ctx);
+ 	hashclr(sha1);
+ 	while (!feof(stdin)) {
+-		patchlen = get_one_patchid(n, &ctx, &line_buf);
+-		flush_current_id(patchlen, sha1, &ctx);
++		patchlen = get_one_patchid(n, result, &line_buf, stable);
++		flush_current_id(patchlen, sha1, result);
+ 		hashcpy(sha1, n);
+ 	}
+ 	strbuf_release(&line_buf);
+ }
+ 
+-static const char patch_id_usage[] = "git patch-id < patch";
++static const char patch_id_usage[] = "git patch-id [--stable | --unstable] < patch";
++
++static int git_patch_id_config(const char *var, const char *value, void *cb)
++{
++	int *stable = cb;
++
++	if (!strcmp(var, "patchid.stable")) {
++		*stable = git_config_bool(var, value);
++		return 0;
++	}
++
++	return git_default_config(var, value, cb);
++}
+ 
+ int cmd_patch_id(int argc, const char **argv, const char *prefix)
+ {
+-	if (argc != 1)
++	int stable = -1;
++
++	git_config(git_patch_id_config, &stable);
++
++	/* If nothing is set, default to unstable. */
++	if (stable < 0)
++		stable = 0;
++
++	if (argc == 2 && !strcmp(argv[1], "--stable"))
++		stable = 1;
++	else if (argc == 2 && !strcmp(argv[1], "--unstable"))
++		stable = 0;
++	else if (argc != 1)
+ 		usage(patch_id_usage);
+ 
+-	generate_id_list();
++	generate_id_list(stable);
+ 	return 0;
+ }
+diff --git a/Documentation/git-patch-id.txt b/Documentation/git-patch-id.txt
+index 312c3b1..fa562d3 100644
+--- a/Documentation/git-patch-id.txt
++++ b/Documentation/git-patch-id.txt
+@@ -8,14 +8,14 @@ git-patch-id - Compute unique ID for a patch
+ SYNOPSIS
+ --------
+ [verse]
+-'git patch-id' < <patch>
++'git patch-id' [--stable | --unstable] < <patch>
+ 
+ DESCRIPTION
+ -----------
+-A "patch ID" is nothing but a SHA-1 of the diff associated with a patch, with
+-whitespace and line numbers ignored.  As such, it's "reasonably stable", but at
+-the same time also reasonably unique, i.e., two patches that have the same "patch
+-ID" are almost guaranteed to be the same thing.
++A "patch ID" is nothing but a sum of SHA-1 of the file diffs associated with a
++patch, with whitespace and line numbers ignored.  As such, it's "reasonably
++stable", but at the same time also reasonably unique, i.e., two patches that
++have the same "patch ID" are almost guaranteed to be the same thing.
+ 
+ IOW, you can use this thing to look for likely duplicate commits.
+ 
+@@ -27,6 +27,33 @@ This can be used to make a mapping from patch ID to commit ID.
+ 
+ OPTIONS
+ -------
++
++--stable::
++	Use a "stable" sum of hashes as the patch ID. With this option:
++	 - Reordering file diffs that make up a patch does not affect the ID.
++	   In particular, two patches produced by comparing the same two trees
++	   with two different settings for "-O<orderfile>" result in the same
++	   patch ID signature, thereby allowing the computed result to be used
++	   as a key to index some meta-information about the change between
++	   the two trees;
++	 
++	 - Result is different from the value produced by git 1.9 and older
++	   or produced when an "unstable" hash (see --unstable below) is
++	   configured - even when used on a diff output taken without any use
++	   of "-O<orderfile>", thereby making existing databases storing such
++	   "unstable" or historical patch-ids unusable.
++
++	This is the default if patchid.stable is set to true.
++
++--unstable::
++	Use an "unstable" hash as the patch ID. With this option,
++	the result produced is compatible with the patch-id value produced
++	by git 1.9 and older.  Users with pre-existing databases storing
++	patch-ids produced by git 1.9 and older (who do not deal with reordered
++	patches) may want to use this option.
++
++	This is the default.
++
+ <patch>::
+ 	The diff to create the ID of.
+ 
 -- 
-2.0.0.rc1.1.gce060f5
+MST
