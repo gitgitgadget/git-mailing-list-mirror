@@ -1,130 +1,116 @@
-From: "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH v2 1/2] git-send-email: two new options: to-cover,
- cc-cover
-Date: Sun, 27 Apr 2014 21:36:43 +0300
-Message-ID: <20140427183643.GB28551@redhat.com>
-References: <1396548814-27278-1-git-send-email-mst@redhat.com>
- <xmqqa9c2qn6w.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
+From: Jakob Stoklund Olesen <stoklund@2pi.dk>
+Subject: Re: [PATCH 2/2] git-svn: only look at the root path for svn:mergeinfo
+Date: Sun, 27 Apr 2014 12:00:02 -0700
+Message-ID: <7C3E8DB5-4E0D-48B4-B5B6-3EE268AE639F@2pi.dk>
+References: <1397717646-54248-1-git-send-email-stoklund@2pi.dk> <1397717646-54248-2-git-send-email-stoklund@2pi.dk> <20140422185459.GA17248@dcvr.yhbt.net>
+Mime-Version: 1.0 (Mac OS X Mail 7.2 \(1874\))
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Apr 27 20:36:02 2014
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org, Sam Vilain <sam@vilain.net>,
+	Steven Walter <stevenrwalter@gmail.com>,
+	Peter Baumann <waste.manager@gmx.de>,
+	Andrew Myrick <amyrick@apple.com>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sun Apr 27 21:00:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WeTvl-00029B-2E
-	for gcvg-git-2@plane.gmane.org; Sun, 27 Apr 2014 20:36:01 +0200
+	id 1WeUJL-0003mR-1I
+	for gcvg-git-2@plane.gmane.org; Sun, 27 Apr 2014 21:00:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752866AbaD0Sf5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Apr 2014 14:35:57 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:23368 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751249AbaD0Sf4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Apr 2014 14:35:56 -0400
-Received: from int-mx11.intmail.prod.int.phx2.redhat.com (int-mx11.intmail.prod.int.phx2.redhat.com [10.5.11.24])
-	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id s3RIZtEG005755
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Sun, 27 Apr 2014 14:35:55 -0400
-Received: from redhat.com (ovpn-116-40.ams2.redhat.com [10.36.116.40])
-	by int-mx11.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id s3RIZrvs030010;
-	Sun, 27 Apr 2014 14:35:54 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqqa9c2qn6w.fsf@gitster.dls.corp.google.com>
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
+	id S1751436AbaD0TAP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Apr 2014 15:00:15 -0400
+Received: from hapkido.dreamhost.com ([66.33.216.122]:33182 "EHLO
+	hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751249AbaD0TAO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 27 Apr 2014 15:00:14 -0400
+Received: from homiemail-a52.g.dreamhost.com (sub5.mail.dreamhost.com [208.113.200.129])
+	by hapkido.dreamhost.com (Postfix) with ESMTP id 948408B66F
+	for <git@vger.kernel.org>; Sun, 27 Apr 2014 12:00:13 -0700 (PDT)
+Received: from homiemail-a52.g.dreamhost.com (localhost [127.0.0.1])
+	by homiemail-a52.g.dreamhost.com (Postfix) with ESMTP id 258856B82F9;
+	Sun, 27 Apr 2014 12:00:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=2pi.dk; h=content-type
+	:mime-version:subject:from:in-reply-to:date:cc
+	:content-transfer-encoding:message-id:references:to; s=2pi.dk;
+	 bh=XNyPmbq4qOWg1bKmtJvfgpm34ps=; b=NX1Kyk97FkULeQ+3GgIGmL2yLJKN
+	81AGpt1vVuZ/c+5D19FZlWxozi7G1puyaJ0UyaH47WNGVG6H8Wk9SFHqnDVD5K7K
+	1fmqKwb3uD9udSlHtnh1V5vuDHgQVY3XB9HKT3NX86j3ZPPjxLKoujlHYd4iU3kE
+	FVCS7QuGwr0O3SQ=
+Received: from [10.0.1.4] (173-228-90-133.dsl.dynamic.sonic.net [173.228.90.133])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	(Authenticated sender: stoklund@2pi.dk)
+	by homiemail-a52.g.dreamhost.com (Postfix) with ESMTPSA id 4443C6B82F5;
+	Sun, 27 Apr 2014 12:00:03 -0700 (PDT)
+In-Reply-To: <20140422185459.GA17248@dcvr.yhbt.net>
+X-Mailer: Apple Mail (2.1874)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247220>
-
-On Thu, Apr 03, 2014 at 11:31:51AM -0700, Junio C Hamano wrote:
-> "Michael S. Tsirkin" <mst@redhat.com> writes:
-> 
-> > Allow extracting To/Cc addresses from cover letter.
-> 
-> Please say what you are doing with what you extract, which is the
-> more important part of the objective.  Extracting is merely a step
-> to achieve that.
-> 
-> s/.$/, to be used as To/Cc addresses of the remainder of the series./
-> 
-> or something.
-> 
-
-thanks, I did that in the new version.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247221>
 
 
-> I think this will be a very handy feature.
-> 
-> If you have a series *and* you bothered to add To/Cc to the cover
-> letter, it is likely that you want all the messages read by these
-> people [*1*].
-> 
-> > @@ -1468,6 +1475,15 @@ foreach my $t (@files) {
-> >  	@to = (@initial_to, @to);
-> >  	@cc = (@initial_cc, @cc);
-> >  
-> > +	if ($message_num == 1) {
-> > +		if (defined $cover_cc and $cover_cc) {
-> > +			@initial_cc = @cc;
-> > +		}
-> > +		if (defined $cover_to and $cover_to) {
-> > +			@initial_to = @to;
-> > +		}
-> > +	}
-> > +
-> 
-> What is stored away with this code to @initial_cc/to includes:
-> 
->  - what was given to @initial_cc/to before ll.1468-1469
->  - what was in @cc/to before ll.1468-1469
-> 
-> when we see the first message [*2*].  The former come from the
-> command line --to/--cc, and the latter comes from the header lines
-> of the first message.  Am I reading the code correctly?
+On Apr 22, 2014, at 11:54 AM, Eric Wong <normalperson@yhbt.net> wrote:
 
-Exactly.
-
-> If that is the case, I think the updated code makes sense.
+> Jakob Stoklund Olesen <stoklund@2pi.dk> wrote:
+>> Subversion can put mergeinfo on any sub-directory to track cherry-picks.
+>> Since cherry-picks are not represented explicitly in git, git-svn should
+>> just ignore it.
 > 
+> Hi, was git-svn trying to track cherry-picks as merge before?
+
+It would try and fail. I didn't explain that properly in the commit message.
+
+Suppose I have a standard svn layout with $url/trunk and $url/branches/topic1. My topic1 branch has a change in subdir1 that I want to cherry-pick into trunk:
+
+% svn switch $url/trunk
+% cd subdir1
+% svn merge $url/branches/topic1/subdir1
+% cd ..
+% svn commit
+
+This operation will set svn:mergeinfo on $url/trunk/subdir1 where a normal full merge would set it on $url/trunk:
+
+% svn pg svn:mergeinfo subdir1 
+/branches/topic1/subdir1:3-4
+
+When git-svn fetches these changes, it currently does examine the svn:mergeinfo change on the subdirectory as if it were a full merge. It then fails to find a revmap for /branches/topic1/subdir1:
+
+Couldn't find revmap for file:///tmp/sdb/branches/topic1/subdir1
+r5 = 5ce1f687c30495deca40730fb7be3baa0e145479 (refs/remotes/trunk)
+
+It is looking for refs/remotes/topic1/subdir1, but we only have the refs/remotes/topic1 branch in git.
+
+This patch makes git-svn stop trying to reconstruct those subdirectory merges that we know will fail anyway.
+
+> This changes behavior a bit, so two independent users of git-svn
+> may not have identical histories as a result, correct?
+
+For normal subdirectory cherry-picks as described above, the behavior doesn't change. This is just a performance optimization.
+
+For weirder cases where a whole branch has been merged onto a subdirectory of trunk, behavior does change. Currently, git-svn will mark that as a full merge in git. With this change it won't.
+
+> Can you add a test to ensure this behavior is preserved?
 > Thanks.
+
+I'll add a test for the subdirectory merge described above.
+
+> Sorry, I've never looked at mergeinfo myself, mainly relying on
+> Sam + tests for this.
 > 
-> 
-> [Footnote]
-> 
-> *1* Allowing this to be disabled is also a good thing this patch
->     does.  A 100 patch series that does a tree-wide clean-up may
->     have different set of people on To/Cc of individual patches, and
->     you may want the union of them on To/Cc on the cover letter, so
->     that a person may get the cover letter and a single patch that
->     relates to his area of expertise without having to see the
->     remainder.
-> 
-> *2* The first message may not necessarily be the cover letter.  Is
->     there a reliable way to detect that?
+> [1] - Historically, git-svn (using defaults) has always tried to
+>      preserve identical histories for independent users across
+>      different git-svn versions.  However, mergeinfo may be
+>      enough of a corner-case where we can make an exception.
 
 
->  The user may want to send
->     out a series with only a few patches without any cover, and
->     taking To/Cc from the [PATCH 1/3] and propagating them to the
->     rest does not match what the documentation and the option name
->     claim to do.
+I agree. It doesn't seem worthwhile to try to preserve git-svn's historical behavior in weird corner cases.
 
-Two things that come to mind:
-	- check that subject has 0000/
-		Needs some manual parsing, I don't like this much
-	- check that there's no patch
-		We could try running git mailinfo but it might give
-		false negatives if cover letter happens to have
-			---
-			diff a/foo b/bar
-		within it.
-		Worth worrying about?
+BTW, this performance optimization matters not because of sporadic manual cherry-picks, but because certain older svn releases would replicate svn:mergeinfo on every subdirectory in a standard merge. With hundreds of subdirectories and thousands of merged branches, git-svn gets completely stuck processing all those mergeinfo lines.
 
-For now I simply updated the documentation.
-
--- 
-MST
+Thanks,
+/jakob
