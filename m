@@ -1,86 +1,70 @@
-From: Marat Radchenko <marat@slonopotamus.org>
-Subject: Re: [PATCH 04/12] Makefile: introduce CROSS_COMPILE variable
-Date: Tue, 29 Apr 2014 00:40:49 +0400
-Message-ID: <20140428204048.GA21365@seldon>
-References: <1398693097-24651-1-git-send-email-marat@slonopotamus.org>
- <1398693097-24651-5-git-send-email-marat@slonopotamus.org>
- <20140428162536.GB13002@google.com>
+From: Vincenzo di Cicco <enzodicicco@gmail.com>
+Subject: Re: Reference to a commit inside a commit message
+Date: Mon, 28 Apr 2014 22:43:04 +0200
+Message-ID: <CAKOJyXd4eAt5120WnEj6VeRfOG_tz5uYiEDw5cqGpDaQd6bzow@mail.gmail.com>
+References: <20140428183552.GA9709@workstation.Belkin>
+	<20140428195544.GN9218@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: GIT Mailing-list <git@vger.kernel.org>,
-	Felipe Contreras <felipe.contreras@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 28 22:40:59 2014
+X-From: git-owner@vger.kernel.org Mon Apr 28 22:43:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WesME-0007IH-HG
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 22:40:58 +0200
+	id 1WesOL-0001bp-W1
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 22:43:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753125AbaD1Ukx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Apr 2014 16:40:53 -0400
-Received: from seldon.slonopotamus.org ([94.242.204.247]:44229 "EHLO
-	slonopotamus.org" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
-	with ESMTP id S1752766AbaD1Ukx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 16:40:53 -0400
-Received: from marat by slonopotamus.org with local (Exim 4.80.1)
-	(envelope-from <marat@slonopotamus.org>)
-	id 1WesM5-0005Zw-3e; Tue, 29 Apr 2014 00:40:49 +0400
-Content-Disposition: inline
-In-Reply-To: <20140428162536.GB13002@google.com>
-User-Agent: Mutt/1.5.22 (2013-10-16)
+	id S1753702AbaD1UnF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 16:43:05 -0400
+Received: from mail-vc0-f182.google.com ([209.85.220.182]:46415 "EHLO
+	mail-vc0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752338AbaD1UnE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2014 16:43:04 -0400
+Received: by mail-vc0-f182.google.com with SMTP id lf12so6787848vcb.27
+        for <git@vger.kernel.org>; Mon, 28 Apr 2014 13:43:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=Dm1rSZaP8R+YLz3aMn7fKs5hkPAYCdwo1Sv2dZjXTwE=;
+        b=f/saZC4SsMiXCkOhaoVuSKjUgThUsUpDrAQzO+MUbPsbAJSvs768VYd7J/c2wx+uVF
+         /Zci2PDVa0O9d0pk0wZaJV+1wSsf+qh7G4vxUaoi/8YJlrh5yZXQNZUKZT8p2OpF0wyX
+         riWqTQ530lik1VPJVzcKNz5zj7z9TKEcxS8lGVMLwa1PdmwU0n8BY773d6CxkZYOhokm
+         RyXvC3T0b48ts00Xkvo3c0dqB1ry8rP4ff4a5kIrxMH1nMGl/ZYShoeeEfTR4JFCvIML
+         aou6+AXefNGdUOCPeSWK36DHNkJxfGMsGnCoD/6LYv4jJXNspK3ve78NVGMt2dMkiajD
+         A1Wg==
+X-Received: by 10.52.124.66 with SMTP id mg2mr1721208vdb.50.1398717784298;
+ Mon, 28 Apr 2014 13:43:04 -0700 (PDT)
+Received: by 10.220.177.198 with HTTP; Mon, 28 Apr 2014 13:43:04 -0700 (PDT)
+In-Reply-To: <20140428195544.GN9218@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247441>
 
-On Mon, Apr 28, 2014 at 09:25:36AM -0700, Jonathan Nieder wrote:
-> > -STRIP ?=3D strip
-> > +STRIP =3D $(CROSS_COMPILE)strip
->=20
-> Before, STRIP from the environment took precedence over STRIP from th=
-e
-> makefile.  Switching to the more usual 'environment can't be trusted'
-> convention is a good change, but please mention it in the commit
-> message.
+Thank you very much
 
-Taken from [1]:
+> Why not?
 
-> Simply expanded variables are defined by lines using =E2=80=98:=3D=E2=
-=80=99 or =E2=80=98::=3D=E2=80=99 (see Setting Variables).
-> Both forms are equivalent in GNU make; however only the =E2=80=98::=3D=
-=E2=80=99 form is described by the POSIX
-> standard (support for =E2=80=98::=3D=E2=80=99 was added to the POSIX =
-standard in 2012, so older versions of make
-> won't accept this form either).
+the reason is to avoid mistakes with the hash. An automatic approach
+can verify the existence of the commit.
+
+> See the output of
 >
-> The value of a simply expanded variable is scanned once and for all, =
-expanding any references
-> to other variables and functions, when the variable is defined. The a=
-ctual value of the simply
-> expanded variable is the result of expanding the text that you write.=
- It does not contain any
-> references to other variables; it contains their values as of the tim=
-e this variable was defined.
-> Therefore,
+>         git log --grep='In commit '
 >
->    x :=3D foo
->    y :=3D $(x) bar
->    x :=3D later
-> is equivalent to
+> and
 >
->    y :=3D foo bar
->    x :=3D later
->
-> When a simply expanded variable is referenced, its value is substitut=
-ed verbatim.
+>         git log --grep='In v'
 
-I don't see how it relates to environment precedence. Could you please =
-provide me an example of
-a situation that changed due to my commit?
+I've just tried the commands and noticed that this can be a common practice.
+This increases my curiosity to know if there is a better way to handle
+this situation, if you know other thread where was discussed, please
+tell me the link.
 
-[1]: http://www.gnu.org/software/make/manual/make.html#Flavors
+Thanks,
+NaN
