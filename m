@@ -1,79 +1,70 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH v3 06/19] refs.c: make update_ref_write to return error
- string on failure
-Date: Mon, 28 Apr 2014 11:23:24 -0700
-Message-ID: <CAL=YDW=uavcAD==aES8zwzTstDo17paiRBhRYmYB0HkfMo8wRg@mail.gmail.com>
-References: <1398442494-23438-1-git-send-email-sahlberg@google.com>
-	<1398442494-23438-7-git-send-email-sahlberg@google.com>
-	<20140425224507.GE9218@google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Uses git-credential for git-imap-send
+Date: Mon, 28 Apr 2014 15:23:49 -0400
+Message-ID: <20140428192349.GC25993@sigill.intra.peff.net>
+References: <20140426180835.GE21493@sigill.intra.peff.net>
+ <907d1444a8e17a43c03ee0c2bb04038bdd3372b8.1398620231.git.danalbert@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 28 21:23:16 2014
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Dan Albert <danalbert@google.com>
+X-From: git-owner@vger.kernel.org Mon Apr 28 21:24:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wer91-0004nA-Eg
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 21:23:15 +0200
+	id 1Wer9f-0005dr-FB
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 21:23:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756473AbaD1TXK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2014 15:23:10 -0400
-Received: from mail-ve0-f182.google.com ([209.85.128.182]:54044 "EHLO
-	mail-ve0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756430AbaD1TXF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 15:23:05 -0400
-Received: by mail-ve0-f182.google.com with SMTP id jw12so8463381veb.41
-        for <git@vger.kernel.org>; Mon, 28 Apr 2014 12:23:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=6Evz6+YNgL1miS4H7Wes/CGNYVwq17XdTQfBOI0e7OE=;
-        b=HXeqfYdlX3SM7ajFBlu2FxDmgr3EI5FatBc5EXSEf6c4t/1mxb//uoZ8fNeACW6teB
-         bw9cv0JmJ/Z2Zun5M+tLz+6gPcWuvcZgmcfAbM0c7PL1Ouv98fZPMGP/yKVJHwHUmz0R
-         BPjYHBH7537vUkP3rmM8aCjCRITe7eQdA49UEx2woCgJSnZ+F2yjYIQ4mjMdADDH6Mog
-         GFBcEc6/ubn0JI72CH6JQ6YaUjDSoGm/YmpEHzZ8rZO1omakdlUYz5q7C8wSQzot+amn
-         jYWihYcYkBj8tu59mk6QZ/7+HgBre/vfPHarmtWt4NeUvgkawKnPrE9XHpIMmwkxEpmX
-         UKSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=6Evz6+YNgL1miS4H7Wes/CGNYVwq17XdTQfBOI0e7OE=;
-        b=GJz3un/tEVSFMeRW6f3PbN5w473DP0Mbq9hhqmHB+ZTX+j9GPMaYm9u4fWNCGdh4cm
-         ABYVbCuStpt3IpHQN+aQl9NEuv4vfQ78j+2C2EvHJyoPguTpfe5jYf7QMwQVK53OHs2J
-         mm4nH21fwDGWSY3WMMU6PCi2kEJuHEdyhOsBaX7mHO0FYbNptEXEytUKxaAswRQK01j+
-         Yg8VYfG6MhOqGgtO87BRpv/05udIXNNIjbjKN9wPFbO/VHCSARbTO2yaJA2pavbJ5BzQ
-         8Q4IcFocGPITa9cexeDTCewmnUr7DQSW7UmhagfBysA0m/0CsHOUzsMEhXweUChD72N6
-         AK2Q==
-X-Gm-Message-State: ALoCoQmzq7NyyZr0aUozP+f0Fcpxq8i/VVsLRSee+2xII8ItnoNdxppC76vB8eVSH1A5fDIw0wPm9pkd+rGjKZhTkHlsWAWQKJdfaRLVuFs/7vRT3xNDvvo+yC3kZjgl28HdZlF2r1X4TCRcgiVmA5qAykRsBigL09SrkzFSlLfodyfokin5L/dAKp+nBAlzEBEiAlx7TBcu
-X-Received: by 10.221.34.7 with SMTP id sq7mr24904342vcb.5.1398709404158; Mon,
- 28 Apr 2014 11:23:24 -0700 (PDT)
-Received: by 10.52.141.13 with HTTP; Mon, 28 Apr 2014 11:23:24 -0700 (PDT)
-In-Reply-To: <20140425224507.GE9218@google.com>
+	id S1754660AbaD1TXw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 15:23:52 -0400
+Received: from cloud.peff.net ([50.56.180.127]:40589 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754294AbaD1TXv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2014 15:23:51 -0400
+Received: (qmail 12555 invoked by uid 102); 28 Apr 2014 19:23:50 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 28 Apr 2014 14:23:50 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 28 Apr 2014 15:23:49 -0400
+Content-Disposition: inline
+In-Reply-To: <907d1444a8e17a43c03ee0c2bb04038bdd3372b8.1398620231.git.danalbert@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247401>
 
-Done, thanks
+On Sun, Apr 27, 2014 at 10:58:51AM -0700, Dan Albert wrote:
 
-On Fri, Apr 25, 2014 at 3:45 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Ronnie Sahlberg wrote:
->
->> Change update_ref_write to also return an error string on failure.
->> This makes the error avaialbel to ref_transaction_commit callers if the
->> transaction failed dur to update_ref_sha1/write_ref_sha1 failures.
->
-> Nits:
->
->  * available
->  * during
->
-> Probably should come right after or before patch 3.  Same nit as patch
-> 3 about using asprintf or passing in a pointer to strbuf.
+> git-imap-send was directly prompting for a password rather than using
+> git-credential. git-send-email, on the other hand, supports git-credential.
+> 
+> This is a necessary improvement for users that use two factor authentication, as
+> they should not be expected to remember all of their app specific passwords.
+> 
+> Signed-off-by: Dan Albert <danalbert@google.com>
+
+Thanks, this version looks good to me.
+
+I noticed that we are just filling in the password here, since we'll
+always fill cred.username from srvc->user. The lines directly above are:
+
+	if (!srvc->user) {
+		fprintf(stderr, "Skipping server %s, no user\n", srvc->host);
+		goto bail;
+	}
+
+That comes from the imap.user config variable. I wonder if we should
+just pass it off to credential_fill() in this case, too, which will fill
+in the username if necessary.
+
+It probably doesn't matter much, though, as nobody is complaining. And
+if we were designing from scratch, I would say that "imap.user" and
+"imap.pass" would not need to exist, as you can configure
+"credential.imaps://host/.*" for the same purpose. But since we would
+have to keep supporting them anyway for compatibility, it's not worth
+trying to transition.
+
+-Peff
