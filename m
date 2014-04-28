@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 23/32] split-index: do not invalidate cache-tree at read time
-Date: Mon, 28 Apr 2014 17:55:44 +0700
-Message-ID: <1398682553-11634-24-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 16/32] read-cache: save index SHA-1 after reading
+Date: Mon, 28 Apr 2014 17:55:37 +0700
+Message-ID: <1398682553-11634-17-git-send-email-pclouds@gmail.com>
 References: <1398682553-11634-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,105 +10,128 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 28 12:56:53 2014
+X-From: git-owner@vger.kernel.org Mon Apr 28 12:56:54 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WejEr-0003D6-Gh
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 12:56:45 +0200
+	id 1WejEy-0003LV-58
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 12:56:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755450AbaD1K4j convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Apr 2014 06:56:39 -0400
-Received: from mail-pb0-f48.google.com ([209.85.160.48]:42645 "EHLO
-	mail-pb0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755377AbaD1K4g (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 06:56:36 -0400
-Received: by mail-pb0-f48.google.com with SMTP id md12so5692351pbc.7
-        for <git@vger.kernel.org>; Mon, 28 Apr 2014 03:56:35 -0700 (PDT)
+	id S1755391AbaD1K4L convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Apr 2014 06:56:11 -0400
+Received: from mail-pb0-f53.google.com ([209.85.160.53]:44391 "EHLO
+	mail-pb0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755378AbaD1Kz7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2014 06:55:59 -0400
+Received: by mail-pb0-f53.google.com with SMTP id jt11so3971259pbb.40
+        for <git@vger.kernel.org>; Mon, 28 Apr 2014 03:55:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=wVFooQSYvZTAZ3hYVAPgD4gP+6j/0DSxo3mQXovsfKk=;
-        b=ikzb+pWmFlG1Flk/EHh2PLukO2WwMyDinZaZG5SxP+NM4w0YvrJboxaL08wT0A5Rgk
-         Ykpk4H4dzF8xRZr8d76ED13prFOnFqfMGk+wnhIBBxAYKpe1TMGEHB+7bkv2lDvh5u75
-         j/JZJMfh2aR3XyTLYvTVDYTdVKgaWETtQuuhMSQzyrCQwLJOWqT+ERXvtKe1MpR6AzKD
-         g/JQSYVmrNuzo4CNvQdpcQFMllUwxRBw6y/r3+nehi9X63dAYq1ZvaZo4QUAH0fqIKJ+
-         LOVYz8+ygb5ayBw30A3TPe5L/C3kboikjYkPECKYp9xoLZKytk6uofo556/rVEbGLBDV
-         amGQ==
-X-Received: by 10.69.17.230 with SMTP id gh6mr28370193pbd.0.1398682595778;
-        Mon, 28 Apr 2014 03:56:35 -0700 (PDT)
+        bh=srgv/9zNTFCb8TynvOCkHA/LXoTFfzKiubK20lW1By0=;
+        b=X41nzWUtNBElaMd2aCEd2hw2hV/fNkBnpS6siWkdjDFwQhEeDHPtpXo7gPOkA/1EE/
+         yL+kP88EKrgbo0B21vq49939BoFxXptQdzv3NKBtqB8D7fsgpHRf0lZJ/jY+KeaSBc4Y
+         iJDh2z26MKVhS+igKZvtG9/cEYwECkcNR3BTqzPxTBfodkFYEJr0BxUQLdy5fHnEmdGd
+         buRG+9jom8DXs5gbFT+y1kmWB42XbE4KdLdC+hNC/d3gvlblUGdjulsD67ONCuPupQYJ
+         dMPBoQneVKldJB5oFVESIgJXXBZJ6JpH9e/GVssttOAHPus2AFte3/WoN7Mo2zKM1YOu
+         lYAQ==
+X-Received: by 10.66.252.135 with SMTP id zs7mr24774274pac.13.1398682559005;
+        Mon, 28 Apr 2014 03:55:59 -0700 (PDT)
 Received: from lanh ([115.73.231.31])
-        by mx.google.com with ESMTPSA id kl1sm34169467pbd.73.2014.04.28.03.56.32
+        by mx.google.com with ESMTPSA id dy7sm89667708pad.9.2014.04.28.03.55.56
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 28 Apr 2014 03:56:35 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Mon, 28 Apr 2014 17:58:03 +0700
+        Mon, 28 Apr 2014 03:55:58 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Mon, 28 Apr 2014 17:57:26 +0700
 X-Mailer: git-send-email 1.9.1.346.ga2b5940
 In-Reply-To: <1398682553-11634-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247287>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247288>
 
-We are sure that after merge_base_index() is done. cache-tree can
-still be used with the final index. So don't destroy cache tree.
+Also update SHA-1 after writing. If we do not do that, the second
+read_index() will see "initialized" variable already set and not read
+=2Egit/index again, which is fine, except istate->sha1 now has a stale
+value.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- cache.h       | 1 +
- read-cache.c  | 3 ++-
- split-index.c | 1 +
- 3 files changed, 4 insertions(+), 1 deletion(-)
+ cache.h        | 1 +
+ read-cache.c   | 6 ++++--
+ unpack-trees.c | 1 +
+ 3 files changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/cache.h b/cache.h
-index 127804e..be95b84 100644
+index 9bbebab..0f6247c 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -488,6 +488,7 @@ extern int index_name_pos(const struct index_state =
-*, const char *name, int name
- #define ADD_CACHE_SKIP_DFCHECK 4	/* Ok to skip DF conflict checks */
- #define ADD_CACHE_JUST_APPEND 8		/* Append only; tree.c::read_tree() *=
-/
- #define ADD_CACHE_NEW_ONLY 16		/* Do not replace existing ones */
-+#define ADD_CACHE_KEEP_CACHE_TREE 32	/* Do not invalidate cache-tree *=
-/
- extern int add_index_entry(struct index_state *, struct cache_entry *c=
-e, int option);
- extern void rename_index_entry_at(struct index_state *, int pos, const=
- char *new_name);
- extern int remove_index_entry_at(struct index_state *, int pos);
+@@ -286,6 +286,7 @@ struct index_state {
+ 		 initialized : 1;
+ 	struct hashmap name_hash;
+ 	struct hashmap dir_hash;
++	unsigned char sha1[20];
+ };
+=20
+ extern struct index_state the_index;
 diff --git a/read-cache.c b/read-cache.c
-index a5517bf..43a61d3 100644
+index f1265d4..723d769 100644
 --- a/read-cache.c
 +++ b/read-cache.c
-@@ -950,7 +950,8 @@ static int add_index_entry_with_check(struct index_=
-state *istate, struct cache_e
- 	int skip_df_check =3D option & ADD_CACHE_SKIP_DFCHECK;
- 	int new_only =3D option & ADD_CACHE_NEW_ONLY;
+@@ -1481,6 +1481,7 @@ int read_index_from(struct index_state *istate, c=
+onst char *path)
+ 	if (verify_hdr(hdr, mmap_size) < 0)
+ 		goto unmap;
 =20
--	cache_tree_invalidate_path(istate, ce->name);
-+	if (!(option & ADD_CACHE_KEEP_CACHE_TREE))
-+		cache_tree_invalidate_path(istate, ce->name);
- 	pos =3D index_name_stage_pos(istate, ce->name, ce_namelen(ce), ce_sta=
-ge(ce));
++	hashcpy(istate->sha1, (const unsigned char *)hdr + mmap_size - 20);
+ 	istate->version =3D ntohl(hdr->hdr_version);
+ 	istate->cache_nr =3D ntohl(hdr->hdr_entries);
+ 	istate->cache_alloc =3D alloc_nr(istate->cache_nr);
+@@ -1616,7 +1617,7 @@ static int write_index_ext_header(git_SHA_CTX *co=
+ntext, int fd,
+ 		(ce_write(context, fd, &sz, 4) < 0)) ? -1 : 0;
+ }
 =20
- 	/* existing match? Just replace it. */
-diff --git a/split-index.c b/split-index.c
-index b03a250..33c0c4b 100644
---- a/split-index.c
-+++ b/split-index.c
-@@ -133,6 +133,7 @@ void merge_base_index(struct index_state *istate)
- 	for (i =3D si->nr_replacements; i < si->saved_cache_nr; i++) {
- 		add_index_entry(istate, si->saved_cache[i],
- 				ADD_CACHE_OK_TO_ADD |
-+				ADD_CACHE_KEEP_CACHE_TREE |
- 				/*
- 				 * we may have to replay what
- 				 * merge-recursive.c:update_stages()
+-static int ce_flush(git_SHA_CTX *context, int fd)
++static int ce_flush(git_SHA_CTX *context, int fd, unsigned char *sha1)
+ {
+ 	unsigned int left =3D write_buffer_len;
+=20
+@@ -1634,6 +1635,7 @@ static int ce_flush(git_SHA_CTX *context, int fd)
+=20
+ 	/* Append the SHA1 signature at the end */
+ 	git_SHA1_Final(write_buffer + left, context);
++	hashcpy(sha1, write_buffer + left);
+ 	left +=3D 20;
+ 	return (write_in_full(fd, write_buffer, left) !=3D left) ? -1 : 0;
+ }
+@@ -1872,7 +1874,7 @@ static int do_write_index(struct index_state *ist=
+ate, int newfd)
+ 			return -1;
+ 	}
+=20
+-	if (ce_flush(&c, newfd) || fstat(newfd, &st))
++	if (ce_flush(&c, newfd, istate->sha1) || fstat(newfd, &st))
+ 		return -1;
+ 	istate->timestamp.sec =3D (unsigned int)st.st_mtime;
+ 	istate->timestamp.nsec =3D ST_MTIME_NSEC(st);
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 26f65c7..f594932 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -1046,6 +1046,7 @@ int unpack_trees(unsigned len, struct tree_desc *=
+t, struct unpack_trees_options
+ 	o->result.timestamp.sec =3D o->src_index->timestamp.sec;
+ 	o->result.timestamp.nsec =3D o->src_index->timestamp.nsec;
+ 	o->result.version =3D o->src_index->version;
++	hashcpy(o->result.sha1, o->src_index->sha1);
+ 	o->merge_size =3D len;
+ 	mark_all_ce_unused(o->src_index);
+=20
 --=20
 1.9.1.346.ga2b5940
