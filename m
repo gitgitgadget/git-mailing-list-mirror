@@ -1,86 +1,82 @@
-From: Jeremy Morton <admin@game-point.net>
+From: Felipe Contreras <felipe.contreras@gmail.com>
 Subject: Re: Recording the current branch on each commit?
-Date: Mon, 28 Apr 2014 10:10:14 +0100
-Message-ID: <535E1AF6.8080609@game-point.net>
-References: <535C47BF.2070805@game-point.net>	<1748955386.11457068.1398588660139.JavaMail.zimbra@dewire.com>	<535D3DF8.4020904@game-point.net>	<535e12389eb8d_338911e930c9c@nysa.notmuch>	<535E1622.70608@game-point.net> <87r44h6d47.fsf@fencepost.gnu.org>
+Date: Mon, 28 Apr 2014 04:01:01 -0500
+Message-ID: <535e18cdc7bce_338911e930c72@nysa.notmuch>
+References: <535C47BF.2070805@game-point.net>
+ <CALKQrgfmBByMwMhxu3HkJqJGWy2Rwvij6Hi1_4npjfsxcSgpaQ@mail.gmail.com>
+ <535D4085.4040707@game-point.net>
+ <CALKQrgemFx=2JaC1BaRqCwEV+knC8QftxcZ7K0AsT9azzuyVdA@mail.gmail.com>
+ <535D6EB1.9080208@game-point.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+ charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Apr 28 11:10:22 2014
+Cc: Git mailing list <git@vger.kernel.org>
+To: Jeremy Morton <admin@game-point.net>,
+	Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Mon Apr 28 11:11:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WehZt-0006ZG-OV
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 11:10:22 +0200
+	id 1WehbC-0008RI-7b
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 11:11:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754535AbaD1JKN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2014 05:10:13 -0400
-Received: from mail.gooeysoftware.com ([208.100.15.213]:54968 "EHLO
-	mail.gooeysoftware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752895AbaD1JKL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 05:10:11 -0400
-Received: from [192.168.0.2] (82-69-83-224.dsl.in-addr.zen.co.uk [82.69.83.224])
-	by mail.gooeysoftware.com (Postfix) with ESMTPSA id 055F818A09AC;
-	Mon, 28 Apr 2014 04:17:58 -0500 (CDT)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.18) Gecko/20110616 Thunderbird/3.1.11
-In-Reply-To: <87r44h6d47.fsf@fencepost.gnu.org>
+	id S1754360AbaD1JLi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 05:11:38 -0400
+Received: from mail-oa0-f47.google.com ([209.85.219.47]:59880 "EHLO
+	mail-oa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754221AbaD1JLh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2014 05:11:37 -0400
+Received: by mail-oa0-f47.google.com with SMTP id i11so6887833oag.20
+        for <git@vger.kernel.org>; Mon, 28 Apr 2014 02:11:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=3/FHwfHhK1vli7wkkG5xM+JZrGhCiJvK9dYREtIg5qA=;
+        b=vdk5AkRAKlZbc+7SLoi+TJFt0w/UaDEtx1UFi1lkmO18e5ic2yhF2y7FUZWZrXpG3R
+         yRje/MxHsn9gtAriSgMLPMHAgkeL3eaTEiYLwTmies5HdvAfpujf6Uy5ov9LHgjJOXuz
+         AAVHxTNHsidvUMieWrWyedLtmvjcd/7HpN7qi8kcKdNjJoSYaPEXOIUFBE/bbtXHLLNw
+         azmcV8xfTBl8cOAUa6R8gkTbV3ittnBITAOs+ryDtwvJ4pXjyA/MuzGEmiDIRsHkE4SB
+         kAWkhw805yfDvQ4U/gKpwzfWjh2AeW1sbGfI9aQOzfYomVNcVzJ2NVbD/rvbQOab1vBW
+         FhKQ==
+X-Received: by 10.182.40.201 with SMTP id z9mr6194828obk.45.1398676296669;
+        Mon, 28 Apr 2014 02:11:36 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id oz15sm71107911oeb.13.2014.04.28.02.11.32
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 28 Apr 2014 02:11:35 -0700 (PDT)
+In-Reply-To: <535D6EB1.9080208@game-point.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247258>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247259>
 
-On 28/04/2014 10:02, David Kastrup wrote:
-> Jeremy Morton<admin@game-point.net>  writes:
->
->> On 28/04/2014 09:32, Felipe Contreras wrote:
->>>>> some people to is to always merge with --no-ff, that way you see the branch
->>>>> name in the merge commit.
->>>>
->>>> But surely, it's recommended with Git that you try to avoid doing
->>>> --no-ff merges to avoid commit noise?
->>>
->>> Nope. Different people have different needs, there's no recommendation. If
->>> anything, the recommendation is to do a ff merge, because that's the default.
->>
->> That's what I'm saying.  With an ff merge, you don't get the merge
->> commit message telling you the branch name.
->
-> And I don't _want_ that branch name to be recorded.  The whole point of
-> a distributed version control system is that it's nobody else's business
-> how I organize my work before submitting it.
+Jeremy Morton wrote:
+> On 27/04/2014 20:33, Johan Herland wrote:
+> > The problem is not really "less tidy commit trees" - by which I gather
+> > you mean history graphs that are non-linear. IMHO, the history graph
+> > should reflect parallel/branched development when that is useful.
+> > Blindly rebasing everything into a single line is IMHO just as bad as
+> > doing all your work directly on master and blindly running "git pull"
+> > between each of your own commits (which results in a lot of useless
+> > merges). The merge commits themselves are not the problem. Merge
+> > commits are a tool, and when used properly (to introduce topics to the
+> > master branch like described above) they are a good tool. When abused
+> > (like blindly running "git pull" and accepting useless "merge
+> > bubbles") they create more problems than they solve.
+> 
+> Sounds like the default behaviour of "git pull" might not be ideal if it 
+> easily causes these problems.
 
-Well it would be optional, so obviously you wouldn't be forced to share 
-the branch name.  It's not like we're trying to "pry in" to your private 
-development.  It's a way of choosing to share what you may consider to 
-be useful contextual information about the commit.
+It's not idea. Virtually everyone agrees with that, even Linus Torvalds, and we
+have the patches to fix it, but it's not going to change.
 
-> I don't want to have people tell me when submitting patches "but can't
-> you give this a better branch name?" and then have to use git
-> filter-branch or whatever else to get the branch name removed.
->
->> As I said before, I usually consider my branch names useful
->> information worth keeping around - I'm not sure why you don't.
->
-> It is _totally_ useless information in a distributed development model.
-> Why would or should anybody be concerned what private branches some
-> submitter has developed his patches in?
-
-Why should anybody be concerned about what commit message some submitter 
-has typed in for his commit?  They could just read the source code to 
-see what has changed, right?
-
-Because the commit message is a way for the submitter to try and make it 
-easier for the people looking at the commit to understand what the 
-commit is doing.  In the same way, a meaningful branch name may also 
-make it easier for people looking at the commit to understand what it is 
-doing, or what part of the application it is affecting, or what group of 
-commits it is a part of.
+The Git project doesn't welcome change.
 
 -- 
-Best regards,
-Jeremy Morton (Jez)
+Felipe Contreras
