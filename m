@@ -1,51 +1,51 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 10/14] t1002-read-tree-m-u-2way.sh: use the $( ... ) construct for command substitution
-Date: Mon, 28 Apr 2014 05:57:33 -0700
-Message-ID: <1398689857-17014-10-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 13/14] t1020-subdirectory.sh: use the $( ... ) construct for command substitution
+Date: Mon, 28 Apr 2014 05:57:36 -0700
+Message-ID: <1398689857-17014-13-git-send-email-gitter.spiros@gmail.com>
 References: <1398689857-17014-1-git-send-email-gitter.spiros@gmail.com>
 Cc: matthieu.moy@grenoble-inp.fr, Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 28 14:58:07 2014
+X-From: git-owner@vger.kernel.org Mon Apr 28 14:58:09 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wel8G-0003pg-E4
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 14:58:04 +0200
+	id 1Wel8J-0003qo-A8
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 14:58:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755796AbaD1M55 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2014 08:57:57 -0400
-Received: from mail-pb0-f42.google.com ([209.85.160.42]:60065 "EHLO
-	mail-pb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755764AbaD1M5w (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 08:57:52 -0400
-Received: by mail-pb0-f42.google.com with SMTP id un15so5827044pbc.15
-        for <git@vger.kernel.org>; Mon, 28 Apr 2014 05:57:52 -0700 (PDT)
+	id S1755850AbaD1M57 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 08:57:59 -0400
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:59176 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755828AbaD1M5z (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2014 08:57:55 -0400
+Received: by mail-pa0-f50.google.com with SMTP id rd3so5807375pab.9
+        for <git@vger.kernel.org>; Mon, 28 Apr 2014 05:57:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=phdvZ5ai0+xviRHYebb0rz85RfW59JXHNPP3Ool5cZ4=;
-        b=WbIoFViqXSKkrh6LaODfdKUHAKoP0zbf2QaEU0VaeD9K+Ta8TI7la4Lb9HE7m6Q08u
-         mpnbteIWRrbXmTcFyWgutfw90TvP02NhfR1wV+aX5WDtoLwXRXU+rYI9toFIXG05KZJg
-         OnoeHL26CZnbNNEja9zfwc6zwgXKGgJ6QMkkxS1s5jSX+6tqpv7kaZJAMMjtLh0+Vq1S
-         /tX3bq+uIpd035wpqbLXP+1KCQ4mlmL236eSFW3CkGMZQbExe73djtgavcsWga/CcAvd
-         o/SYqh0kNAAL6MBeictiZE6+uD86WB2AvGkN8VjKUxT94peyDei0DR6R/lwm5+cHHliz
-         vlAA==
-X-Received: by 10.68.129.34 with SMTP id nt2mr29049863pbb.18.1398689872139;
-        Mon, 28 Apr 2014 05:57:52 -0700 (PDT)
+        bh=vaDmdrQfjMtUrt+L8l7YaD8NbA4BRHYpBc+lKl2ugmk=;
+        b=fT2mY2MwCVeIFUkdUDKrUKgKbQNrOE44aAh22fovVSUy6Tk7A7a+1UH20ZjTmCupvz
+         dJibv/++VMsdIXkk5s5rZ+Ue5hbwWos2JDs5OOKUUXicfw3zxE7nt+ZSrgJ2v93y4Ce/
+         BnW7fAvMOG0GQLrrubGIPC7fhMUdd8jnDEHPygyy8QuWcmrPenattZemI1eQXH7l39ye
+         sCfiyV0WFztbh7Q0vKY2+zUUq70y16OmKfa5LxdG0ROzmXtZDPRCJL4QcPV34nJxsUmS
+         nlkOgRtBTutqUKSMJVAjft7uLfrLYL8W13X440CIgn05mUS75BbHN8ZLCOvPPYUgoeRD
+         nEsg==
+X-Received: by 10.68.163.100 with SMTP id yh4mr29088410pbb.122.1398689875354;
+        Mon, 28 Apr 2014 05:57:55 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id ky8sm34896290pbc.64.2014.04.28.05.57.51
+        by mx.google.com with ESMTPSA id ky8sm34896290pbc.64.2014.04.28.05.57.54
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 28 Apr 2014 05:57:51 -0700 (PDT)
+        Mon, 28 Apr 2014 05:57:54 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1398689857-17014-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247313>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -67,56 +67,90 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t1002-read-tree-m-u-2way.sh |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ t/t1020-subdirectory.sh |   22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/t/t1002-read-tree-m-u-2way.sh b/t/t1002-read-tree-m-u-2way.sh
-index a847709..fed877b 100755
---- a/t/t1002-read-tree-m-u-2way.sh
-+++ b/t/t1002-read-tree-m-u-2way.sh
-@@ -21,7 +21,7 @@ compare_change () {
- }
+diff --git a/t/t1020-subdirectory.sh b/t/t1020-subdirectory.sh
+index 6902320..62c0d25 100755
+--- a/t/t1020-subdirectory.sh
++++ b/t/t1020-subdirectory.sh
+@@ -20,27 +20,27 @@ test_expect_success setup '
  
- check_cache_at () {
--	clean_if_empty=`git diff-files -- "$1"`
-+	clean_if_empty=$(git diff-files -- "$1")
- 	case "$clean_if_empty" in
- 	'')  echo "$1: clean" ;;
- 	?*)  echo "$1: dirty" ;;
-@@ -41,14 +41,14 @@ test_expect_success \
-      echo bozbar >bozbar &&
-      echo rezrov >rezrov &&
-      git update-index --add nitfol bozbar rezrov &&
--     treeH=`git write-tree` &&
-+     treeH=$(git write-tree) &&
-      echo treeH $treeH &&
-      git ls-tree $treeH &&
+ test_expect_success 'update-index and ls-files' '
+ 	git update-index --add one &&
+-	case "`git ls-files`" in
++	case "$(git ls-files)" in
+ 	one) echo pass one ;;
+ 	*) echo bad one; exit 1 ;;
+ 	esac &&
+ 	(
+ 		cd dir &&
+ 		git update-index --add two &&
+-		case "`git ls-files`" in
++		case "$(git ls-files)" in
+ 		two) echo pass two ;;
+ 		*) echo bad two; exit 1 ;;
+ 		esac
+ 	) &&
+-	case "`git ls-files`" in
++	case "$(git ls-files)" in
+ 	dir/two"$LF"one) echo pass both ;;
+ 	*) echo bad; exit 1 ;;
+ 	esac
+ '
  
-      echo gnusto >bozbar &&
-      git update-index --add frotz bozbar --force-remove rezrov &&
-      git ls-files --stage >M.out &&
--     treeM=`git write-tree` &&
-+     treeM=$(git write-tree) &&
-      echo treeM $treeM &&
-      git ls-tree $treeM &&
-      sum bozbar frotz nitfol >M.sum &&
-@@ -318,7 +318,7 @@ test_expect_success \
-     'rm -f .git/index &&
-      echo DF >DF &&
-      git update-index --add DF &&
--     treeDF=`git write-tree` &&
-+     treeDF=$(git write-tree) &&
-      echo treeDF $treeDF &&
-      git ls-tree $treeDF &&
+ test_expect_success 'cat-file' '
+-	two=`git ls-files -s dir/two` &&
+-	two=`expr "$two" : "[0-7]* \\([0-9a-f]*\\)"` &&
++	two=$(git ls-files -s dir/two) &&
++	two=$(expr "$two" : "[0-7]* \\([0-9a-f]*\\)") &&
+ 	echo "$two" &&
+ 	git cat-file -p "$two" >actual &&
+ 	cmp dir/two actual &&
+@@ -55,18 +55,18 @@ rm -f actual dir/actual
+ test_expect_success 'diff-files' '
+ 	echo a >>one &&
+ 	echo d >>dir/two &&
+-	case "`git diff-files --name-only`" in
++	case "$(git diff-files --name-only)" in
+ 	dir/two"$LF"one) echo pass top ;;
+ 	*) echo bad top; exit 1 ;;
+ 	esac &&
+ 	# diff should not omit leading paths
+ 	(
+ 		cd dir &&
+-		case "`git diff-files --name-only`" in
++		case "$(git diff-files --name-only)" in
+ 		dir/two"$LF"one) echo pass subdir ;;
+ 		*) echo bad subdir; exit 1 ;;
+ 		esac &&
+-		case "`git diff-files --name-only .`" in
++		case "$(git diff-files --name-only .)" in
+ 		dir/two) echo pass subdir limited ;;
+ 		*) echo bad subdir limited; exit 1 ;;
+ 		esac
+@@ -74,11 +74,11 @@ test_expect_success 'diff-files' '
+ '
  
-@@ -326,7 +326,7 @@ test_expect_success \
-      mkdir DF &&
-      echo DF/DF >DF/DF &&
-      git update-index --add --remove DF DF/DF &&
--     treeDFDF=`git write-tree` &&
-+     treeDFDF=$(git write-tree) &&
-      echo treeDFDF $treeDFDF &&
-      git ls-tree $treeDFDF &&
-      git ls-files --stage >DFDF.out'
+ test_expect_success 'write-tree' '
+-	top=`git write-tree` &&
++	top=$(git write-tree) &&
+ 	echo $top &&
+ 	(
+ 		cd dir &&
+-		sub=`git write-tree` &&
++		sub=$(git write-tree) &&
+ 		echo $sub &&
+ 		test "z$top" = "z$sub"
+ 	)
+@@ -96,7 +96,7 @@ test_expect_success 'checkout-index' '
+ 
+ test_expect_success 'read-tree' '
+ 	rm -f one dir/two &&
+-	tree=`git write-tree` &&
++	tree=$(git write-tree) &&
+ 	read_tree_u_must_succeed --reset -u "$tree" &&
+ 	cmp one original.one &&
+ 	cmp dir/two original.two &&
 -- 
 1.7.10.4
