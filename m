@@ -1,49 +1,55 @@
-From: Stepan Kasal <kasal@ucw.cz>
-Subject: Re: [PATCH] Windows: Always normalize paths to Windows-style
-Date: Mon, 28 Apr 2014 17:26:10 +0200
-Organization: <)><
-Message-ID: <20140428152610.GA12357@camelia.ucw.cz>
-References: <20140428083931.GA10257@camelia.ucw.cz> <CABPQNSaC30p7TEOvc85u=+skjrFj17182vWWSL=QNVuvzVFE=w@mail.gmail.com> <20140428113815.GA10559@camelia.ucw.cz> <20140428114224.GA11186@camelia.ucw.cz> <CABPQNSbDkE+Vff=4MmPO9oMfjRay6Oin51zZRoZ8mOEhGoaD3Q@mail.gmail.com> <20140428142931.GA12056@camelia.ucw.cz>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH 08/12] MINGW: config.mak.uname allow using CURL for
+ non-msysGit builds
+Date: Mon, 28 Apr 2014 17:26:38 +0200
+Message-ID: <CABPQNSaywg_1pdixaEz0DALCO6pvhjdMhGW09aC+LALMzZAz1w@mail.gmail.com>
+References: <1398693097-24651-1-git-send-email-marat@slonopotamus.org> <1398693097-24651-9-git-send-email-marat@slonopotamus.org>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Heiko Voigt <hvoigt@hvoigt.net>, Johannes Sixt <j6t@kdbg.org>
-To: GIT Mailing-list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Apr 28 17:26:26 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: GIT Mailing-list <git@vger.kernel.org>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: Marat Radchenko <marat@slonopotamus.org>
+X-From: git-owner@vger.kernel.org Mon Apr 28 17:27:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WenRq-0006Q2-6z
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 17:26:26 +0200
+	id 1WenSq-0007dd-0t
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 17:27:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932715AbaD1P0W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2014 11:26:22 -0400
-Received: from jabberwock.ucw.cz ([46.255.230.98]:56237 "EHLO
-	jabberwock.ucw.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932333AbaD1P0M (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 11:26:12 -0400
-Received: from 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (84.64.broadband3.iol.cz [85.70.64.84])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	(Authenticated sender: kasal)
-	by jabberwock.ucw.cz (Postfix) with ESMTPSA id 784FA1C00AC;
-	Mon, 28 Apr 2014 17:26:11 +0200 (CEST)
-Received: from camelia.ucw.cz (camelia.ucw.cz [127.0.0.1])
-	by 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (8.14.3/8.14.3) with ESMTP id s3SFQBsS012389;
-	Mon, 28 Apr 2014 17:26:11 +0200
-Received: (from kasal@localhost)
-	by camelia.ucw.cz (8.14.3/8.14.3/Submit) id s3SFQBG2012388;
-	Mon, 28 Apr 2014 17:26:11 +0200
-Content-Disposition: inline
-In-Reply-To: <20140428142931.GA12056@camelia.ucw.cz>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S932729AbaD1P1V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 11:27:21 -0400
+Received: from mail-ie0-f180.google.com ([209.85.223.180]:51609 "EHLO
+	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932430AbaD1P1S (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2014 11:27:18 -0400
+Received: by mail-ie0-f180.google.com with SMTP id at1so3302828iec.39
+        for <git@vger.kernel.org>; Mon, 28 Apr 2014 08:27:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=zE4K1Q1imInwahmLUFn4E7zoxO/0g2FWSOW1tkflNsY=;
+        b=RUruBbsmY0bmEH5oHwuWAYKfd2t21tkMnQlqnf4I0OUbWfhHkdNlPcNl6uc7Yc5OuI
+         I+GIUtt1tzb/rv0pm87qO+LJuxrhXgcwWiXvimiCOpyvmPUQWbLm4wocjTCAFvh8OTl8
+         gKkMivtqz+f/jtQ+BiVuVv/G3Exe6OpYiY+BO7WSzSQp7xaP57AUGPO5G8HvcjCKXY/U
+         d4uh88CJ7SeRfjuWeMN5nYOaP/5cx8LVBgnXuKU8yhgYp6WL71MWNJJlE+P6mF8u+hKe
+         vZCTUoT5lcteKpOg4DVSevOCG3RjR1CRzW2vEfVCGWHGGv6AMq5YdNO/w9YPLyhyGVx+
+         U9eg==
+X-Received: by 10.42.204.197 with SMTP id fn5mr1388681icb.95.1398698838099;
+ Mon, 28 Apr 2014 08:27:18 -0700 (PDT)
+Received: by 10.64.166.135 with HTTP; Mon, 28 Apr 2014 08:26:38 -0700 (PDT)
+In-Reply-To: <1398693097-24651-9-git-send-email-marat@slonopotamus.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247364>
 
-The parent of this mail should have started a new thread.
-Sorry for the typo.
-Stepan
+On Mon, Apr 28, 2014 at 3:51 PM, Marat Radchenko <marat@slonopotamus.org> wrote:
+> Also, fix `warning: passing argument 2 of 'mingw_main' from
+> incompatible pointer type` in http-fetch.c and remote-curl.c.
+
+These seems completely unrelated, perhaps it should be split in two?
