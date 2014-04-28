@@ -1,67 +1,72 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: What's cooking in git.git (Apr 2014, #08; Fri, 25)
-Date: Mon, 28 Apr 2014 14:01:50 -0400
-Message-ID: <20140428180150.GA25993@sigill.intra.peff.net>
-References: <xmqqoazpt45p.fsf@gitster.dls.corp.google.com>
- <20140425231953.GB3855@sigill.intra.peff.net>
- <xmqqa9b5s5ui.fsf@gitster.dls.corp.google.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH 10/12] MINGW: config.mak.uname: drop USE_NED_ALLOCATOR
+Date: Mon, 28 Apr 2014 20:50:46 +0100
+Organization: OPDS
+Message-ID: <180E73BE75C845DFAE259E73AB6DC905@PhilipOakley>
+References: <1398693097-24651-1-git-send-email-marat@slonopotamus.org> <1398693097-24651-11-git-send-email-marat@slonopotamus.org> <535e923776b87_45651483310bf@nysa.notmuch>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 28 21:48:38 2014
+Content-Type: text/plain;
+	format=flowed;
+	charset="utf-8";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: <marat@slonopotamus.org>
+To: "Felipe Contreras" <felipe.contreras@gmail.com>,
+	"Marat Radchenko" <marat@slonopotamus.org>,
+	"GIT Mailing-list" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Apr 28 21:50:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WerXZ-0001h4-SX
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 21:48:38 +0200
+	id 1WerZm-0004WJ-MN
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 21:50:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756929AbaD1Tse (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2014 15:48:34 -0400
-Received: from cloud.peff.net ([50.56.180.127]:40632 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754374AbaD1Tsd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 15:48:33 -0400
-Received: (qmail 6339 invoked by uid 102); 28 Apr 2014 18:01:52 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 28 Apr 2014 13:01:52 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 28 Apr 2014 14:01:50 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqqa9b5s5ui.fsf@gitster.dls.corp.google.com>
+	id S1755359AbaD1Tuu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 15:50:50 -0400
+Received: from out1.ip05ir2.opaltelecom.net ([62.24.128.241]:7605 "EHLO
+	out1.ip05ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752561AbaD1Tut (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Apr 2014 15:50:49 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AkEXADWwXlNOl3Y1/2dsb2JhbABZgwaEC4U9vD4FAQIBAYEaF3SCIAUBAQUIAQEZFR4BASELAgMFAgEDFQMCAgUhAgIUAQQIEgYHFwYBEggCAQIDAYgcAxWkcoVZlyQNhngXgSmLGIIYgnY1gRUEj2eHNYxjghaFVYMyPA
+X-IPAS-Result: AkEXADWwXlNOl3Y1/2dsb2JhbABZgwaEC4U9vD4FAQIBAYEaF3SCIAUBAQUIAQEZFR4BASELAgMFAgEDFQMCAgUhAgIUAQQIEgYHFwYBEggCAQIDAYgcAxWkcoVZlyQNhngXgSmLGIIYgnY1gRUEj2eHNYxjghaFVYMyPA
+X-IronPort-AV: E=Sophos;i="4.97,945,1389744000"; 
+   d="scan'208";a="454153695"
+Received: from host-78-151-118-53.as13285.net (HELO PhilipOakley) ([78.151.118.53])
+  by out1.ip05ir2.opaltelecom.net with SMTP; 28 Apr 2014 20:50:44 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247423>
 
-On Mon, Apr 28, 2014 at 10:48:21AM -0700, Junio C Hamano wrote:
+From: "Felipe Contreras" <felipe.contreras@gmail.com>
+> Marat Radchenko wrote:
+>> nedalloc was initially added in f0ed82 to fix slowness of standard 
+>> WinXP
+>> memory allocator. Since WinXP is EOLed, this point is no longer 
+>> valid.
+>
+> The fact that WinXP is EOLed doesn't mean people are not using it any 
+> more =/
+>
+> I think it should be supported by Git at least for a while.
+>
+> -- 
+> Felipe Contreras
+> --
+My family and I have a number of XP machines [chooses frying pan vs 
+fire..]
 
-> > diff --git a/diff.c b/diff.c
-> > index 54d5308..a03744b 100644
-> > --- a/diff.c
-> > +++ b/diff.c
-> > @@ -2894,7 +2894,7 @@ static void run_external_diff(const char *pgm,
-> >  			      int complete_rewrite,
-> >  			      struct diff_options *o)
-> >  {
-> > -	const char *spawn_arg[10];
-> > +	const char *spawn_arg[11];
-> >  	int retval;
-> >  	const char **arg = &spawn_arg[0];
-> >  	struct diff_queue_struct *q = &diff_queued_diff;
-> >
-> > as a fix for maint/2.0.0 in the interim. I can write a commit message
-> > for that if you're interested.
-> 
-> I think we should merge the first one (and possibly the second one,
-> too) as-is for 2.0 instead.  No change can possibly be more
-> trivially correct than these two ;-)
+I'd expect a lot of basic users who are more difficult to support to 
+still be on XP for a while.
+At least until the next big zero day weakness openss up ;-)
 
-I'm fine with that. The second patch is pure clean-up and doesn't fix
-anything (because the "3" in the env array is actually correct), so it
-can happily wait for the next cycle.
-
--Peff
+Philip 
