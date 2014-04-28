@@ -1,54 +1,101 @@
-From: "Max Kirillov" <max@max630.net>
-Subject: RE: Recording the current branch on each =?UTF-8?Q?commit=3F?=
-Date: Sun, 27 Apr 2014 23:42:06 -0700
-Message-ID: <20140427234205.96eec638b311907e2368f42b42021fd8.e03a1e7076.wbe@email02.secureserver.net>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: Recording the current branch on each commit?
+Date: Mon, 28 Apr 2014 08:45:43 +0200 (CEST)
+Message-ID: <20140428.084543.1615507400056684596.chriscool@tuxfamily.org>
+References: <CALKQrgemFx=2JaC1BaRqCwEV+knC8QftxcZ7K0AsT9azzuyVdA@mail.gmail.com>
+	<535D6EB1.9080208@game-point.net>
+	<CALKQrgdFLc=k9i1+N2458amLMGQa99q55A=N785VfMRwfOH6Rg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-Cc: "Jeremy Morton" <admin@game-point.net>,
-	"Git mailing list" <git@vger.kernel.org>,
-	"Johan Herland" <johan@herland.net>
-To: "David Kastrup" <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Apr 28 08:42:14 2014
+Content-Type: Text/Plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: admin@game-point.net, git@vger.kernel.org
+To: johan@herland.net
+X-From: git-owner@vger.kernel.org Mon Apr 28 08:46:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WefGX-0004QR-Pf
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 08:42:14 +0200
+	id 1WefKM-0001pf-Uz
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 08:46:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752484AbaD1GmJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2014 02:42:09 -0400
-Received: from p3plsmtp02-01-2.prod.phx3.secureserver.net ([72.167.218.94]:34949
-	"EHLO p3plwbeout02-01.prod.phx3.secureserver.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751438AbaD1GmI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Apr 2014 02:42:08 -0400
-Received: from localhost ([72.167.218.116])
-	by p3plwbeout02-01.prod.phx3.secureserver.net with bizsmtp
-	id vJi71n0012XGKeo01Ji7Ql; Sun, 27 Apr 2014 23:42:07 -0700
-X-SID: vJi71n0012XGKeo01
-Received: (qmail 9338 invoked by uid 99); 28 Apr 2014 06:42:07 -0000
-X-Originating-IP: 193.64.145.29
-User-Agent: Workspace Webmail 5.6.47
+	id S1751850AbaD1GqG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 02:46:06 -0400
+Received: from [194.158.98.45] ([194.158.98.45]:51983 "EHLO mail-3y.bbox.fr"
+	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751502AbaD1GqF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2014 02:46:05 -0400
+Received: from localhost (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
+	by mail-3y.bbox.fr (Postfix) with ESMTP id E873B6C;
+	Mon, 28 Apr 2014 08:45:43 +0200 (CEST)
+In-Reply-To: <CALKQrgdFLc=k9i1+N2458amLMGQa99q55A=N785VfMRwfOH6Rg@mail.gmail.com>
+X-Mailer: Mew version 6.3 on Emacs 23.3 / Mule 6.0 (HANACHIRUSATO)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247240>
 
-> Personally, I am _strongly_ opposed.  How I name and juggle my private
-> branches is nobody else's business in a distributed version control
-> system.
+From: Johan Herland <johan@herland.net>
+Subject: Re: Recording the current branch on each commit?
+Date: Mon, 28 Apr 2014 01:39:26 +0200
+
+> On Sun, Apr 27, 2014 at 10:55 PM, Jeremy Morton <admin@game-point.net> wrote:
+>> On 27/04/2014 20:33, Johan Herland wrote:
+>>> On Sun, Apr 27, 2014 at 7:38 PM, Jeremy Morton<admin@game-point.net>
+>>> wrote:
+>>>> On 27/04/2014 10:09, Johan Herland wrote:
+>>>> As far as I can tell from that discussion, the general opposition to
+>>>> encoding the branch name as a structural part of the commit object is
+>>>> that,
+>>>> for some people's workflows, it would be unhelpful and/or misleading.
+>>>> Well
+>>>> fair enough then - why don't we make it a setting that is off by default,
+>>>> and can easily be switched on?  That way the people for whom tagging the
+>>>> branch name would be useful have a very easy way to switch it on.
+>>>
+>>> Therefore, the most pragmatic and constructive thing to do at this
+>>> point, is IMHO to work within the confines of the existing commit
+>>> object structure. I actually believe using commit message trailers
+>>> like "Made-on-branch: frotz" in addition to some helpful
+>>> infrastructure (hooks, templates, git-interpret-trailers, etc.) should
+>>> get you pretty much exactly what you want. And if this feature turns
+>>> out to be extremely useful for a lot of users, we can certainly
+>>> consider changing the commit object format in the future.
+>>
+>> OK, fair enough.  So I guess what I'd like to see, then, is good built-in
+>> functionality in Git for these commit message trailers, so that they are
+>> very easy to turn on.  I'd like to be able to tell co-developers to add a
+>> one-liner to their git config file rather than some post-commit script.
 > 
-> They are private.  My personal workflow.  Not part of a commit.
+> I think this is what the interpret-trailers effort is about.
+> Unfortunately I have not followed it closely enough to say if your use
+> case is already covered by Christian's (CCed) work. Christian: With
+> your current patch series, is it possible for Jeremy to configure
+> interpret-trailers to automatically append a "Made-on-branch:
+> <current_branch>" trailer whenever he creates a commit?
 
-Mercurial inherits the branch label from previous commit, unless
-it's specified by user, I think this could be quite reasonable behavior.
-(if make them at all, I don't think this specific branch label feature
-should be implemented in git core, but rather there should be a way
-to extend git so that it makes them)
+Yes, it's possible. Yesterday, I sent the following patch:
 
--- 
-Max
+[RFC/PATCH 2/2] trailer: add examples to the documentation
+
+and it shows a commit-msg hook to do something like that:
+
+$ cat >.git/hooks/commit-msg <<EOF
+#!/bin/sh
+git interpret-trailers --trim-empty --trailer "git-version: \$(git describe)" "\$1" > "\$1.new"
+mv "\$1.new" "\$1"
+EOF
+$ chmod +x .git/hooks/commit-msg
+
+I think you just need to use the following if you want the branch
+instead of the git version:
+
+git interpret-trailers --trim-empty --trailer "git-branch: \$(git name-rev --name-only HEAD)" "\$1" > "\$1.new"
+
+It could even be simpler if there was an option (which has already
+been discussed) that made it possible to modify the file in
+place. This way one would not need the 'mv "\$1.new" "\$1"' command.
+
+Best,
+Christian.
