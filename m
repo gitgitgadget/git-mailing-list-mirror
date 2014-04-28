@@ -1,74 +1,56 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH 2/2] Mention "git blame" improvements in release notes
-Date: Mon, 28 Apr 2014 21:57:19 +0200
-Message-ID: <87ha5d4480.fsf@fencepost.gnu.org>
-References: <1398470210-28746-1-git-send-email-dak@gnu.org>
-	<1398470210-28746-2-git-send-email-dak@gnu.org>
-	<7vmwf8huey.fsf@alter.siamese.dyndns.org>
-	<87zjj86j4a.fsf@fencepost.gnu.org>
-	<xmqqzjj5s8hs.fsf@gitster.dls.corp.google.com>
-	<87y4yp4ame.fsf@fencepost.gnu.org>
-	<xmqq38gxqmc9.fsf@gitster.dls.corp.google.com>
+From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH 03/12] MINGW: compat/mingw.h: do not attempt to redefine
+ lseek on mingw-w64
+Date: Mon, 28 Apr 2014 21:59:39 +0200
+Message-ID: <535EB32B.4050209@web.de>
+References: <1398693097-24651-1-git-send-email-marat@slonopotamus.org> <1398693097-24651-4-git-send-email-marat@slonopotamus.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 28 21:57:35 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Felipe Contreras <felipe.contreras@gmail.com>
+To: Marat Radchenko <marat@slonopotamus.org>,
+	GIT Mailing-list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Apr 28 21:59:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WergE-0004Xb-8J
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 21:57:34 +0200
+	id 1WeriN-0007I3-6O
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 21:59:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754554AbaD1T5Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2014 15:57:24 -0400
-Received: from fencepost.gnu.org ([208.118.235.10]:42177 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751408AbaD1T5U (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 15:57:20 -0400
-Received: from localhost ([127.0.0.1]:41219 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1Werg0-0008UY-3y; Mon, 28 Apr 2014 15:57:20 -0400
-Received: by lola (Postfix, from userid 1000)
-	id 96FE6E05FE; Mon, 28 Apr 2014 21:57:19 +0200 (CEST)
-In-Reply-To: <xmqq38gxqmc9.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 28 Apr 2014 12:35:02 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
+	id S1756609AbaD1T7n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 15:59:43 -0400
+Received: from mout.web.de ([212.227.15.4]:57951 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753974AbaD1T7n (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2014 15:59:43 -0400
+Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb002)
+ with ESMTPSA (Nemesis) id 0MUnuu-1WOOeX01IS-00YBTm; Mon, 28 Apr 2014 21:59:41
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
+In-Reply-To: <1398693097-24651-4-git-send-email-marat@slonopotamus.org>
+X-Provags-ID: V03:K0:gONp42oAt62HAZq5se5oovKw5U5u+nqZVskcn28/+hhnZHShjeo
+ e1JJ8WmQaPCmV3Pleul2L28CD4K0VuWtL23rCvUI2DM5VBc0jCy17bCGrJW1VVi3Mk53xYl
+ swOg66+NzOowmsohMkUsZMwiCJkYAlC0cpCKdYr8+KudW/IysYgGtc3aXslR1jvLbxApsdk
+ nx5PLvNLbKGGQwUqaLW/g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247430>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247431>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 2014-04-28 15.51, Marat Radchenko wrote:
+> mingw-w64 has lseek defined in io.h.
+[]
+>  #define off_t off64_t
+> +#ifndef lseek
+>  #define lseek _lseeki64
+> +#endif
+Is the commit message in line with the code?
 
-> I guess we probably can add "See $URL if you are interested in his
-> further plans" after that two-line item and let you write whatever
-> you want at that page pointed at by the URL, though.
+I would have expected something in this style:
 
-I most definitely am _not_ planning to invest any more time into Git
-since even designing such plans would be throwing good time after bad
-time.  And I don't have a web presence anyway.  As it does not appear
-that there is any realistic manner in which Git users could even be made
-aware of a connection between monetary requirements and work for a
-freelancer like myself, I'll be just writing this off as a one-time
-mistake on my part given my personal situation.  It's not the first, and
-it will certainly not be the last, but at least I can avoid doing the
-same mistake twice on the same project.
-
-There are some low-hanging fruit for further speeding up git-blame now
-that its internal thrashing has been addressed.  I will point out those
-low-hanging fruit so that anybody can follow up on it and do all the
-arguing and benchmarking required to go anywhere and get the credit for
-it.
-
-But that's as far as my willingness to "do the right thing" will carry.
-If nobody picks up either the tab or the rather simple followup tasks,
-then that's what the community and customer base of Git is capable of
-sustaining and I'm not in a position to change it.
-
--- 
-David Kastrup
+#if defined(__x86_64__) && ! defined(lseek))
+#include <io.h>
+#endif 
