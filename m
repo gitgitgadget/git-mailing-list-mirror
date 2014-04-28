@@ -1,96 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] Mention "git blame" improvements in release notes
-Date: Mon, 28 Apr 2014 12:35:02 -0700
-Message-ID: <xmqq38gxqmc9.fsf@gitster.dls.corp.google.com>
-References: <1398470210-28746-1-git-send-email-dak@gnu.org>
-	<1398470210-28746-2-git-send-email-dak@gnu.org>
-	<7vmwf8huey.fsf@alter.siamese.dyndns.org>
-	<87zjj86j4a.fsf@fencepost.gnu.org>
-	<xmqqzjj5s8hs.fsf@gitster.dls.corp.google.com>
-	<87y4yp4ame.fsf@fencepost.gnu.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Apr 28 21:35:23 2014
+From: Dave Borowitz <dborowitz@google.com>
+Subject: [PATCH v3 2/2] Makefile: allow static linking against libcurl
+Date: Mon, 28 Apr 2014 12:35:04 -0700
+Message-ID: <1398713704-15428-2-git-send-email-dborowitz@google.com>
+References: <1398713704-15428-1-git-send-email-dborowitz@google.com>
+Cc: kusmabite@gmail.com, gitster@pobox.com,
+	Dave Borowitz <dborowitz@google.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 28 21:35:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WerKh-0002IR-By
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 21:35:19 +0200
+	id 1WerL6-0002pR-Ef
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 21:35:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756136AbaD1TfL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2014 15:35:11 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65249 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755761AbaD1TfI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 15:35:08 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EDCD381DF3;
-	Mon, 28 Apr 2014 15:35:07 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=KEroGDS5n1vdc8AEnKDaSXF/MuQ=; b=JV+QiN
-	lvnBMghb/EUe00bZdBvPemtdUV45XwL8rKPE4aV0mFdAS3deCMOb81FyNvEH0kMj
-	6naDkTTZZvb15WCcUFAnt7Fmre+qbninb6nVE/WBOxSuhGWWGdhuzb2Rb+PWjAxZ
-	QLHcdQbQOUetwhQXK2Mo9OeXwxWV6f5wTmAcE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=MupNEUTF0Ey4OrxDv1RIxwQv/Ox2yNYL
-	ozIBysA4d9UHTpi22ykVa4gtw9gHZhqP+rQhpZCjZ4iXAh/z5gGzpTRpqawZzL7L
-	sfDiMLMuLImcHzWzTX8ByvNWY4y2zSI5Ys9PBxPaJ0oH8yQDdrMXMfGgtr+l7DUb
-	fmLjECS153s=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D37F381DF2;
-	Mon, 28 Apr 2014 15:35:07 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1987481DE8;
-	Mon, 28 Apr 2014 15:35:04 -0400 (EDT)
-In-Reply-To: <87y4yp4ame.fsf@fencepost.gnu.org> (David Kastrup's message of
-	"Mon, 28 Apr 2014 19:39:05 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 3245C106-CF0C-11E3-99F7-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756682AbaD1Tfg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 15:35:36 -0400
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:44045 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756562AbaD1Tfc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2014 15:35:32 -0400
+Received: by mail-pa0-f46.google.com with SMTP id kp14so6176672pab.33
+        for <git@vger.kernel.org>; Mon, 28 Apr 2014 12:35:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=zzwVCtQzTMzF1xVobrE1nAqVT+hySMKkdqY8KNE6IDs=;
+        b=oI5t+PQ6JFrI1ZNuGJkPgAHljUQURxcbTSvLW6DWvLMJO/CiZVae2lhI4DCKYTzMmz
+         YQnoLj0nY4IO/UzkVTqWDf7k8H2/YU51L0x/vjrQKaSroP6qh1KYza3w7E1Vg6pjoY9i
+         5sN9FBwiGsS0eyeEXEAlVLfmCNXY6svjX1QSuzcl8VW3t3yP6VWeBb1Tdq1DxCGJtfPs
+         CNSIsWzSps+AORTG8QeyKfSluUOihiDXle2/auPLiz5Q4wofTQUh2I72tv8RQtH51Hj8
+         dhdtmzFfVcgbsBNkiEEzgWtrQHD4HnOn4RrwUj1NA9n4gsfonmHa7VuGRDVZY8tsLw7d
+         U4nQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=zzwVCtQzTMzF1xVobrE1nAqVT+hySMKkdqY8KNE6IDs=;
+        b=LUKFCkvQGWchN7eEJtuySZ15hYYrfMguHATrLZcCPuvcnvgNHMxTrfTqilo1bWJKH9
+         YrgU0cmP7658zxr1Bwf5dPHCylUpeUrpiOVhCWWq9x/5UbUZOBOyo2/FsgXqAmfsULF8
+         G+nA0h6e3JlxI569WMt+JYMGFuBVBvgKD1LXKblo1aubpa7D3CTZv2QNo8gmJveWywFi
+         9+RproibX6TEZWfH6pBBU2j0c1JMZo6qU1fwFmqpT4UQJUp/0inGZUjWrsm2U7pCZH5c
+         YIfaA6cvhjRRRp8uzCLrZSuRaEBfx+wZcA47pluZzHVpsHn0iGWmq2ZbOlHgu8/FLfhy
+         IlgA==
+X-Gm-Message-State: ALoCoQmHIrUmTcOrrPB79XDYGr4wM4u0w5wkllx7OSW3lN0Y59kLqxe6LVwRULaqMpJ/rri4FYES9SrENtlOVo7lhBJRGR4LHsFx4byppF3sod0dwdtPOvEhDyJpNPA1KyIZXHcRGpHkJUmvBDUrcdr4T9GYP7wg2OOR+tRyWH+8/ibdteO2oZsgq2sM/Y/4YegL7OQHAx8+4MjEVaS6nj83q+Wnv8+sKJZzXJJEVdxrMvWUyl67KV0=
+X-Received: by 10.68.216.101 with SMTP id op5mr5506650pbc.148.1398713731636;
+        Mon, 28 Apr 2014 12:35:31 -0700 (PDT)
+Received: from serval.mtv.corp.google.com (serval.mtv.corp.google.com [172.27.69.27])
+        by mx.google.com with ESMTPSA id ss2sm96327791pab.8.2014.04.28.12.35.29
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 28 Apr 2014 12:35:29 -0700 (PDT)
+X-Mailer: git-send-email 1.9.1.423.g4596e3a
+In-Reply-To: <1398713704-15428-1-git-send-email-dborowitz@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247414>
 
-David Kastrup <dak@gnu.org> writes:
+This requires more flags than can be guessed with the old-style
+CURLDIR and related options, so is only supported when curl-config is
+present.
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> But still, I am not convinced that the release notes is a good place
->> to do this, and would be happier if you can think of a better venue.
->
-> "This change has been contributed by an independent developer on a
-> contingency base.  To make this approach work, please contact him if you
-> consider it worth recompensating."
+Signed-off-by: Dave Borowitz <dborowitz@google.com>
+---
+ Makefile | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-I write things under three personalities.  As just one of the people
-active in the Git development community, as the maintainer of the
-project, and saying things on behalf of "the Git project".
-
-The distinction between the latter two may be subtle, but it matters
-to me.  And in my mind, I write the Release Notes on behalf of the
-project.
-
- * The performance of "git blame" has been greatly improved.  Thanks
-   David Kastrup for his huge effort.
-
-is perhaps as far as I can go in that capacity, without singling out
-one contributor among 80+ contributors with changes between 1.9 and
-2.0 (among which a dozen or so have more than 10 patches---some are
-trivial and patch count alone does not do justice, though) with
-similar "pay them to show your appreciation" pleas.
-
-I however feel that I can certainly do that as an active (and highly
-visible) contributor, and even as the maintainer.
-
-I guess we probably can add "See $URL if you are interested in his
-further plans" after that two-line item and let you write whatever
-you want at that page pointed at by the URL, though.
+diff --git a/Makefile b/Makefile
+index cb4ee37..360d427 100644
+--- a/Makefile
++++ b/Makefile
+@@ -39,6 +39,9 @@ all::
+ # is not found, defaults to the CURLDIR behavior, or if CURLDIR is not set,
+ # uses -lcurl with no additional library detection.
+ #
++# Define CURL_STATIC to statically link libcurl.  Only applies if
++# CURL_CONFIG is used.
++#
+ # Define CURLDIR=/foo/bar if your curl header and library files are in
+ # /foo/bar/include and /foo/bar/lib directories.  This overrides CURL_CONFIG,
+ # but is less robust.
+@@ -1137,6 +1140,9 @@ else
+ 	endif
+ 
+ 	ifeq "$(CURL_LIBCURL)" ""
++		ifdef CURL_STATIC
++                        $(error "CURL_STATIC must be used with CURL_CONFIG")
++		endif
+ 		ifdef CURLDIR
+ 			# Try "-Wl,-rpath=$(CURLDIR)/$(lib)" in such a case.
+ 			BASIC_CFLAGS += -I$(CURLDIR)/include
+@@ -1155,6 +1161,12 @@ else
+ 		endif
+ 	else
+ 		BASIC_CFLAGS += $(shell $(CURL_CONFIG) --cflags)
++		ifdef CURL_STATIC
++			CURL_LIBCURL = $(shell $(CURL_CONFIG) --static-libs)
++			ifeq "$(CURL_LIBCURL)" ""
++                                $(error libcurl not detected or not compiled with static support)
++			endif
++		endif
+ 	endif
+ 
+ 	REMOTE_CURL_PRIMARY = git-remote-http$X
+-- 
+1.9.1.423.g4596e3a
