@@ -1,117 +1,118 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH 2/2] Mention "git blame" improvements in release notes
-Date: Mon, 28 Apr 2014 13:05:28 -0700
-Message-ID: <CAL=YDW=iTQz-S+ZByZnVhrpebPgZxq6p46MC2yqW-HF3eVw+2g@mail.gmail.com>
-References: <1398470210-28746-1-git-send-email-dak@gnu.org>
-	<1398470210-28746-2-git-send-email-dak@gnu.org>
-	<7vmwf8huey.fsf@alter.siamese.dyndns.org>
-	<87zjj86j4a.fsf@fencepost.gnu.org>
-	<xmqqzjj5s8hs.fsf@gitster.dls.corp.google.com>
-	<87y4yp4ame.fsf@fencepost.gnu.org>
-	<xmqq38gxqmc9.fsf@gitster.dls.corp.google.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] Makefile: default to -lcurl when no CURL_CONFIG or
+ CURLDIR
+Date: Mon, 28 Apr 2014 13:05:51 -0700
+Message-ID: <20140428200550.GO9218@google.com>
+References: <1398714653-1050-1-git-send-email-dborowitz@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: David Kastrup <dak@gnu.org>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 28 22:05:40 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, kusmabite@gmail.com, gitster@pobox.com
+To: Dave Borowitz <dborowitz@google.com>
+X-From: git-owner@vger.kernel.org Mon Apr 28 22:05:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wero2-000679-VV
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 22:05:39 +0200
+	id 1WeroM-0006Tp-OE
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 22:05:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932964AbaD1UFc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2014 16:05:32 -0400
-Received: from mail-vc0-f182.google.com ([209.85.220.182]:43405 "EHLO
-	mail-vc0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932284AbaD1UFa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 16:05:30 -0400
-Received: by mail-vc0-f182.google.com with SMTP id lf12so6435939vcb.41
-        for <git@vger.kernel.org>; Mon, 28 Apr 2014 13:05:29 -0700 (PDT)
+	id S932978AbaD1UFz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 16:05:55 -0400
+Received: from mail-pd0-f179.google.com ([209.85.192.179]:50092 "EHLO
+	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932284AbaD1UFy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2014 16:05:54 -0400
+Received: by mail-pd0-f179.google.com with SMTP id y10so1152767pdj.10
+        for <git@vger.kernel.org>; Mon, 28 Apr 2014 13:05:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=rHde7gLxn3y9Sj3SSNnhq0gIrns5bI/0FnaJ3kJsOu0=;
-        b=LXOZvlXOFj13D+hr4rSTK5cEhEG3bixmEKRGsZuloiX99MfdFvpSWa4qYIynYA6gl3
-         x03iWusYmHgPK2tI0eliUzqvk1S5fUTHfzG8+GS+Pa9BCtyKA0O1+p15xkTHolM0246A
-         8fXPV+BI0YyrCglBgFSyER2Qyf/qFzKu0Cl8zRltchuOCs16q69H/p4QCA03xCvmcpGa
-         G8KdwSul3fYJX07i0qMdd8168JIgdpENkHTAlC3nfdn/nD+QMOthih1CXjeQGmzqcS9T
-         6Mui5odkUkB5ivGfleGnEctbGZD06IsLog5ZtujDbjOcCraz5Z6mQgqBenCD/YIz7mfn
-         sakw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=rHde7gLxn3y9Sj3SSNnhq0gIrns5bI/0FnaJ3kJsOu0=;
-        b=g0KPwOhND6FwZQGZvcNhFL2P0Jjy7mvo31+hVMqlv3AFKmbA077u+Ngo7VilavsZdB
-         Oz+0rGrlQ7bxwgV9LxyMN7aoFUi6cFYdegZu9arog95mlkVg6XlqC2eEdBhU5QGlm61X
-         2IbqUP7zVsNfExGsFw5e/pX3tSR7dR+A5TGZaHL6lJMXnfo35n4I1Nm60IDtOJot7dm/
-         9AeVH13BJXLCINHqM1HY03thCbDDq/eNk5EuRFLtxWUCuz5QJ4x1EZSN6mHxrFRAOnBs
-         K+9nAZwIleHw5cHEqaHfapAwd7oRWpDBlO+hzIE3k4o8PtgjxW1Ae/KY2qQ5DzUuIQmr
-         boMw==
-X-Gm-Message-State: ALoCoQnnEiHOR/QJGzi1r0UMdnbyx0CnuR/LXiuSKmGlSHNDJdrCni0ftjs3IgCfWC9V0PupaB/U/cS8L0OlMV68MFouVUZphUUw0aNWaZ3zpzpMbJOvEMcyBP0EBRaUXIRqMl6bjV7hzLyc9R7sgZ/kylCUQhZ7nWRH41ixIEvF7AKFI6AT/sK3QyNb3/wx6+jBi5ArT2k+
-X-Received: by 10.58.202.133 with SMTP id ki5mr24596167vec.19.1398715528948;
- Mon, 28 Apr 2014 13:05:28 -0700 (PDT)
-Received: by 10.52.141.13 with HTTP; Mon, 28 Apr 2014 13:05:28 -0700 (PDT)
-In-Reply-To: <xmqq38gxqmc9.fsf@gitster.dls.corp.google.com>
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=zHbOfCkqUWO9+8Ip/faIVIAHJz4/dGDOQi+b0WW2lpE=;
+        b=Efe+vBeuTnaY4w2+8+MwdwurZMvt4m29YfeOQwqhHnN9Gb/zgzVeqiZ9eu9oNMBqbg
+         xFJ06//xZ74niGzdthmubHnqSZAflaZVyeE6xU0ipZtOd9ED66QoRuMTzrdb/stQllac
+         YDjBpoynxiN4ODT6PypAbknJ3YODBIMDfKU5mIwT3Mg6IexZxmNUGlOb7C9K9OwW8Z4D
+         ottNrI6oqmQCCcDlO13+hjPGDioK00vzftl1H7UeMoQR+Q3rxgS2Z1iID9P84Ck3ZvbO
+         D8PUoWgnTbjmFda079oXdU+ZXn/fs4DiMuvPGN2i3jKmpcSxGVdiwxBsvxL1zxgRzqMc
+         BXxA==
+X-Received: by 10.66.144.102 with SMTP id sl6mr27294506pab.96.1398715553893;
+        Mon, 28 Apr 2014 13:05:53 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id g6sm96688304pat.2.2014.04.28.13.05.52
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 28 Apr 2014 13:05:53 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1398714653-1050-1-git-send-email-dborowitz@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247435>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247436>
 
-On Mon, Apr 28, 2014 at 12:35 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> David Kastrup <dak@gnu.org> writes:
->
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->>> But still, I am not convinced that the release notes is a good place
->>> to do this, and would be happier if you can think of a better venue.
->>
->> "This change has been contributed by an independent developer on a
->> contingency base.  To make this approach work, please contact him if you
->> consider it worth recompensating."
->
-> I write things under three personalities.  As just one of the people
-> active in the Git development community, as the maintainer of the
-> project, and saying things on behalf of "the Git project".
->
-> The distinction between the latter two may be subtle, but it matters
-> to me.  And in my mind, I write the Release Notes on behalf of the
-> project.
->
->  * The performance of "git blame" has been greatly improved.  Thanks
->    David Kastrup for his huge effort.
->
-> is perhaps as far as I can go in that capacity, without singling out
-> one contributor among 80+ contributors with changes between 1.9 and
-> 2.0 (among which a dozen or so have more than 10 patches---some are
-> trivial and patch count alone does not do justice, though) with
-> similar "pay them to show your appreciation" pleas.
->
-> I however feel that I can certainly do that as an active (and highly
-> visible) contributor, and even as the maintainer.
->
-> I guess we probably can add "See $URL if you are interested in his
-> further plans" after that two-line item and let you write whatever
-> you want at that page pointed at by the URL, though.
->
+Dave Borowitz wrote:
 
-Some projects, for example samba, provide a dedicated page on the
-project web site
-where vendors, and I think individuals, that provide services can list
-their information :
+> Instead, if CURL_CONFIG is empty or returns an empty result (e.g. due
+> to curl-config being missing), use the old behavior of falling back to
+> -lcurl.
+> ---
+>  Makefile | 36 +++++++++++++++++++++++++-----------
+>  1 file changed, 25 insertions(+), 11 deletions(-)
 
-http://www.samba.org/samba/support/
+Sign-off?
 
-Would this perhaps be a better solution?
+[...]
+> +++ b/Makefile
+> @@ -35,7 +35,9 @@ all::
+>  # transports (neither smart nor dumb).
+>  #
+>  # Define CURL_CONFIG to the path to a curl-config binary other than the
+> -# default 'curl-config'.
+> +# default 'curl-config'. If CURL_CONFIG is unset or points to a binary that
+> +# is not found, defaults to the CURLDIR behavior, or if CURLDIR is not set,
+> +# uses -lcurl with no additional library detection.
 
+I'm having a little trouble parsing this but don't have any better
+suggestion.
 
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+[...]
+> @@ -1127,9 +1129,27 @@ ifdef NO_CURL
+>  	REMOTE_CURL_NAMES =
+>  else
+>  	ifdef CURLDIR
+> -		# Try "-Wl,-rpath=$(CURLDIR)/$(lib)" in such a case.
+> -		BASIC_CFLAGS += -I$(CURLDIR)/include
+> -		CURL_LIBCURL = -L$(CURLDIR)/$(lib) $(CC_LD_DYNPATH)$(CURLDIR)/$(lib) -lcurl
+> +		CURL_LIBCURL=
+
+Tiny nit: elsewhere the makefile seems to prefer having a space before
+the '='.
+
+If I explicitly set CURL_LIBCURL to the empty string and CURLDIR was
+set then my setting will still override the setting below and the
+behavior is unchanged from before this patch --- good.
+
+If I explicitly set CURL_LIBCURL to empty and CURLDIR was unset then
+that used to produce an error so it was an invalid configuration and
+couldn't regress.
+
+So this should be safe --- good.
+
+> +	else
+> +		CURL_CONFIG ?= curl-config
+
+Not about this patch, but the above '?=' should probably be plain '='
+for consistency with the rest of the makefile's behavior wrt envvars.
+
+[...]
+> -				$(error libcurl not detected; try setting CURLDIR)
+> +                                $(error libcurl not detected or not compiled with static support)
+
+Whitespace damage.
+
+Except for the whitespace issues,
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+
+Thanks.
