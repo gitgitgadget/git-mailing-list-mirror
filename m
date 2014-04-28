@@ -1,51 +1,51 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 14/14] t1050-large.sh: use the $( ... ) construct for command substitution
-Date: Mon, 28 Apr 2014 05:57:37 -0700
-Message-ID: <1398689857-17014-14-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 11/14] t1003-read-tree-prefix.sh: use the $( ... ) construct for command substitution
+Date: Mon, 28 Apr 2014 05:57:34 -0700
+Message-ID: <1398689857-17014-11-git-send-email-gitter.spiros@gmail.com>
 References: <1398689857-17014-1-git-send-email-gitter.spiros@gmail.com>
 Cc: matthieu.moy@grenoble-inp.fr, Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 28 14:58:12 2014
+X-From: git-owner@vger.kernel.org Mon Apr 28 14:58:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wel8N-0003vD-G7
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 14:58:11 +0200
+	id 1Wel8R-00042y-Tn
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 14:58:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755845AbaD1M57 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2014 08:57:59 -0400
-Received: from mail-pb0-f50.google.com ([209.85.160.50]:50020 "EHLO
-	mail-pb0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755844AbaD1M54 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 08:57:56 -0400
-Received: by mail-pb0-f50.google.com with SMTP id md12so5846604pbc.9
-        for <git@vger.kernel.org>; Mon, 28 Apr 2014 05:57:56 -0700 (PDT)
+	id S1755839AbaD1M5z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 08:57:55 -0400
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:51399 "EHLO
+	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755564AbaD1M5x (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2014 08:57:53 -0400
+Received: by mail-pa0-f44.google.com with SMTP id ey11so3924893pad.31
+        for <git@vger.kernel.org>; Mon, 28 Apr 2014 05:57:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=b9l7/O1VMkzX6WiRY3hLY5BvLRDp8mmMKEi31GeHbNM=;
-        b=ICrtnWhbWu+MnK+p4oeUUx58gIoZIXi+h9swhmXMnqi/4jhrEjw9z+wV8RMbA9xVEd
-         Qv2YKpVYtHvxcif/lABmG40IzFMNqp8NWd/Q0lqgjhktVaJdK910WqaF8FZUUp7TWKX+
-         ZzIduUrn8QxDMCBmcOyEDl5LJn0K86MD365ROgLfG3lWFNCcYsnIgOF3h5XztSz1l4/C
-         rokPvYjykmEUMl7RRg0jiLJJ8MZCT3yAq8U6oq1ewfsd3G2T7Z2gvSIPC7Ye8himCA10
-         mTEXDg3C1Iyb3sgG1urbh/C8RE94d7P/2G1G0hAbOC058uLX3+zVg+dxkKdQUwxN94mL
-         KgMQ==
-X-Received: by 10.68.162.1 with SMTP id xw1mr9050999pbb.128.1398689876307;
-        Mon, 28 Apr 2014 05:57:56 -0700 (PDT)
+        bh=n2FZ2xEbJ2hN3KCus7Uw8rKFkPbxwpiaf+6ms+uC2A0=;
+        b=s4aIZo/tFaWOEEcN94Tpemi/m/1sJ6pJj/xYb6m8nprrq6bfxnWQuJksZShzjY8Hnk
+         BohrRP5tDwDVfx/MlWSgE3e5T+gY7YtLa+ROLoMgXbM1QhDfwcbJYFFG5T8rbwXqEnhk
+         BF/NH6pnjn86H6iFPF9iDQi6I5sxn3Rin1mIF8Cu/UfRDQWh2wC7HKWeJVl6vFpCnSoz
+         959R41mDG8qldyx+OYVBQt1W/stoG1LpMoxiRNHJltACyWUHgnfb70YkcIpyj3HBR8l+
+         wYTxKOIZCgHTxAVYe+6A+DbLa8DwbuErSNyZjjE8+fKl/qf9pRoHuVzPRXJymaEINKDF
+         xWVQ==
+X-Received: by 10.67.5.7 with SMTP id ci7mr25060030pad.99.1398689873182;
+        Mon, 28 Apr 2014 05:57:53 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id ky8sm34896290pbc.64.2014.04.28.05.57.55
+        by mx.google.com with ESMTPSA id ky8sm34896290pbc.64.2014.04.28.05.57.52
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 28 Apr 2014 05:57:55 -0700 (PDT)
+        Mon, 28 Apr 2014 05:57:52 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1398689857-17014-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247315>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -67,30 +67,21 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t1050-large.sh |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t1003-read-tree-prefix.sh |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t1050-large.sh b/t/t1050-large.sh
-index fd10528..aea4936 100755
---- a/t/t1050-large.sh
-+++ b/t/t1050-large.sh
-@@ -131,7 +131,7 @@ test_expect_success 'git-show a large file' '
+diff --git a/t/t1003-read-tree-prefix.sh b/t/t1003-read-tree-prefix.sh
+index 8c6d67e..b6111cd 100755
+--- a/t/t1003-read-tree-prefix.sh
++++ b/t/t1003-read-tree-prefix.sh
+@@ -11,7 +11,7 @@ test_description='git read-tree --prefix test.
+ test_expect_success setup '
+ 	echo hello >one &&
+ 	git update-index --add one &&
+-	tree=`git write-tree` &&
++	tree=$(git write-tree) &&
+ 	echo tree is $tree
  '
  
- test_expect_success 'index-pack' '
--	git clone file://"`pwd`"/.git foo &&
-+	git clone file://"$(pwd)"/.git foo &&
- 	GIT_DIR=non-existent git index-pack --strict --verify foo/.git/objects/pack/*.pack
- '
- 
-@@ -140,7 +140,7 @@ test_expect_success 'repack' '
- '
- 
- test_expect_success 'pack-objects with large loose object' '
--	SHA1=`git hash-object huge` &&
-+	SHA1=$(git hash-object huge) &&
- 	test_create_repo loose &&
- 	echo $SHA1 | git pack-objects --stdout |
- 		GIT_ALLOC_LIMIT=0 GIT_DIR=loose/.git git unpack-objects &&
 -- 
 1.7.10.4
