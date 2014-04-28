@@ -1,111 +1,115 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Adding git hooks
-Date: Mon, 28 Apr 2014 09:43:10 -0700
-Message-ID: <xmqq4n1dtnfl.fsf@gitster.dls.corp.google.com>
-References: <1398504843.79785833@f133.i.mail.ru>
-	<7vy4yshul9.fsf@alter.siamese.dyndns.org>
-	<20140426175002.GC21493@sigill.intra.peff.net>
+Subject: Re: git version 1.9.0 missing git-http-push?
+Date: Mon, 28 Apr 2014 11:31:53 -0700
+Message-ID: <xmqqsioxqp9i.fsf@gitster.dls.corp.google.com>
+References: <DAB1109C3DA82E48A383F6960A32A9E567020669@EXCH2010.inferno.local>
+	<1398670610456-7608792.post@n2.nabble.com>
+	<CABPQNSY-bM2pv7mn2R+wsnn944BkKbW6Hz2EhwrruPuxUJpUEQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Suvorov Ivan <sv_91@inbox.ru>, git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Apr 28 18:43:42 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Marat Radchenko <marat@slonopotamus.org>,  msysGit <msysgit@googlegroups.com>,  Pat Thoyts <patthoyts@gmail.com>,  Nick Hengeveld <nickh@reactrix.com>,  GIT Mailing-list <git@vger.kernel.org>
+To: kusmabite@gmail.com, Dave Borowitz <dborowitz@google.com>
+X-From: msysgit+bncBCG77UMM3EJRBHN57KNAKGQEOY4LZ3Q@googlegroups.com Mon Apr 28 20:32:07 2014
+Return-path: <msysgit+bncBCG77UMM3EJRBHN57KNAKGQEOY4LZ3Q@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-qa0-f64.google.com ([209.85.216.64])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Weoeb-0006ke-Ij
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 18:43:41 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756897AbaD1Qn0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2014 12:43:26 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53155 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755802AbaD1QnP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 12:43:15 -0400
+	(envelope-from <msysgit+bncBCG77UMM3EJRBHN57KNAKGQEOY4LZ3Q@googlegroups.com>)
+	id 1WeqLP-0002jG-0p
+	for gcvm-msysgit@m.gmane.org; Mon, 28 Apr 2014 20:31:59 +0200
+Received: by mail-qa0-f64.google.com with SMTP id cm18sf1671482qab.19
+        for <gcvm-msysgit@m.gmane.org>; Mon, 28 Apr 2014 11:31:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=ZblUHXx2ArnKb+JeEEcfInZdnsu/MSw2szmr5EexPBc=;
+        b=X051xjzqmP8+Ou9IcpNyl1hgCPJNqhW/nHq/2fMOp7PQZ6i7hKgAgqQAvzE1ya08nZ
+         I+rSH17xo/eTW3kUS/RA6urwa5BCFzMdgAOEGCb384At4FTdlNmTrraD7K/vRKoW2fZl
+         aMiRC9ihY5TvGCtj+vpOAsi6ZsxJ/yY+LnyIZgT6qklWnE67npuQSWomcwMspYx9NAhl
+         Q0s2uVgGJiGI+SoFijoNu7lkHDN46yujOBocLBz9Z6Aw5Es5S0CtdnDNi+JfuFg50o+7
+         rG1EVCmOuVooiXHn+pmaBSffDNxfUHub+a1Hu1NJXoGALR3XLkqd4UWgir7eKWVjuAHu
+         VKgA==
+X-Received: by 10.140.94.169 with SMTP id g38mr75012qge.13.1398709918248;
+        Mon, 28 Apr 2014 11:31:58 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.140.31.52 with SMTP id e49ls2752092qge.19.gmail; Mon, 28 Apr
+ 2014 11:31:57 -0700 (PDT)
+X-Received: by 10.236.117.80 with SMTP id i56mr11162238yhh.48.1398709917617;
+        Mon, 28 Apr 2014 11:31:57 -0700 (PDT)
+Received: from smtp.pobox.com (b-pb-sasl-quonix.pobox.com. [208.72.237.35])
+        by gmr-mx.google.com with ESMTP id p5si6282697qcq.3.2014.04.28.11.31.57
+        for <msysgit@googlegroups.com>;
+        Mon, 28 Apr 2014 11:31:57 -0700 (PDT)
+Received-SPF: pass (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C6F3880C2C;
-	Mon, 28 Apr 2014 12:43:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ZLRxrg1MYfQjyb/oXG3GTGEAbWg=; b=u0FEOa
-	uZ4ghojKVpeMt/3Zs7+p08LkSqm1lEGjqABDHPtAv4amxTc+LhMz1ZgdGkDJ1ezA
-	jQL8y4XF1kPGdYPSy0TV16I29ROx90fL+TAzlk3D+XaEYHw7Xu+qKT6/zBm+gtwX
-	YjhqX89yOwvjgvqC8Te7WY3BJCe6eePxlzKNM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UKxtA8fr7PZ4GNOpT7aafV/UNCIcaH6d
-	MpbZB428cTjLAEdW+eBX28Ul9RL0DWlrwNXZKHW4N6qSoBD3n/0Q5vrxrDtnVN3j
-	4B0qOUquSZjUl5wyw/FW8Kfu/+yVD/scdBUcEtof5Pt1IBZ2CvWQOxJxUgHlwpsd
-	VpTRNIo/UKM=
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2DDED81953;
+	Mon, 28 Apr 2014 14:31:57 -0400 (EDT)
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AC80080C2B;
-	Mon, 28 Apr 2014 12:43:14 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0618C81950;
+	Mon, 28 Apr 2014 14:31:57 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CA7B380C25;
-	Mon, 28 Apr 2014 12:43:11 -0400 (EDT)
-In-Reply-To: <20140426175002.GC21493@sigill.intra.peff.net> (Jeff King's
-	message of "Sat, 26 Apr 2014 13:50:02 -0400")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C1F658194D;
+	Mon, 28 Apr 2014 14:31:54 -0400 (EDT)
+In-Reply-To: <CABPQNSY-bM2pv7mn2R+wsnn944BkKbW6Hz2EhwrruPuxUJpUEQ@mail.gmail.com>
+	(Erik Faye-Lund's message of "Mon, 28 Apr 2014 10:48:32 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 2FAFD8F4-CEF4-11E3-BF97-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247382>
+X-Pobox-Relay-ID: 5FB1466E-CF03-11E3-A25F-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Original-Sender: gitster@pobox.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted
+ sender) smtp.mail=junio@pobox.com;       dkim=pass header.i=@pobox.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247383>
 
-Jeff King <peff@peff.net> writes:
+Erik Faye-Lund <kusmabite@gmail.com> writes:
 
-> On Sat, Apr 26, 2014 at 10:24:50AM -0700, Junio C Hamano wrote:
->
->> Suvorov Ivan <sv_91@inbox.ru> writes:
->> 
->> > I want to extend the functionality of git due to the possibility of
->> > separation of the user repository into 2 parts - one part will be
->> > stored as usual, under version control git, and the second part will
->> > be stored in another location such as an FTP-server.
->> 
->> Sounds like you are looking for git-annex, perhaps?
->
-> I agree that is the right approach, but git-annex and git-media work
-> _above_ the object layer, and taint the history by storing symlinks in
-> git instead of the real sha1s. I'd love to see a solution that does the
-> same thing, but lives at the pack/loose object layer. Basically:
->
->   1. Teach sha1-file.c to look for missing objects by hitting an
->      external script, like:
->
->         git config odb.command "curl https://example.com/%s"
->
->      and place them in an alternates-like separate object database.
->
->   2. Teach the git protocol a new extension to say "don't bother sending
->      blobs over size X". You'd have to coordinate that X with the source
->      from your odb.command.
+> We're using Curl 7.30.0 in msysGit (and thus also Git for Windows), so
+> we should be able to include it. However, we do not have curl-config
+> installed.
 
-Yes, I'd love to see something along that line in the longer term,
-showing all the objects as just regular objects under the hood, with
-implementation details hidden in the object layer (just like there
-is no distinction between packed and loose objects from the point of
-view of read_sha1_file() users), as a real solution to address
-issues in larger trees.
+Hmmm, between 2.0-rc0 and 2.0-rc1 there is 61a64fff (Makefile: use
+curl-config to determine curl flags, 2014-04-15) merged already,
+which makes this assumption and a claim based on that assumption:
 
-Also see http://thread.gmane.org/gmane.comp.version-control.git/241940
-where Shawn had an interesting experiment.
+    curl-config should always be installed alongside a curl
+    distribution, and its purpose is to provide flags for building
+    against libcurl, so use it instead of guessing flags and
+    dependent libraries.
 
-> You'd probably want to wrap up the odb.command in a more fancy helper.
-> For example, for performance, we'd probably want to be able to query it
-> for "which objects do you have", as well as "fetch this object". And it
-> would be nice if it could auto-query the "X" for step 2, and manage
-> pruning local objects (e.g., when they become deep in history).
->
-> We'd probably also want to teach a few places in git to treat external
-> objects specially. For example, they should probably be auto-treated as
-> binary, so that a "log -p" does not try to fetch all of them. And
-> likewise, things like "log -S" should probably ignore them by default.
->
-> I have a messy sketch of step 1 that I did quite a while ago, but
-> haven't proceeded further on it.
+which may make things worse for you guys, unless you are explicitly
+setting CURLDIR and other Makefile variables.
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
