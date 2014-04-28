@@ -1,90 +1,109 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [RFC/PATCH v1] Towards MinGW(-W64) cross-compilation
-Date: Mon, 28 Apr 2014 17:34:03 +0200
-Message-ID: <CABPQNSZ3vxPg12HFXr4sP1b+4ifGj60fY1Z1N-x16hXgK-G0AA@mail.gmail.com>
-References: <1398693097-24651-1-git-send-email-marat@slonopotamus.org>
-Reply-To: kusmabite@gmail.com
+From: Stepan Kasal <kasal@ucw.cz>
+Subject: [PATCH v2] Sleep 1 millisecond in poll() to avoid busy wait
+Date: Mon, 28 Apr 2014 17:35:27 +0200
+Organization: <)><
+Message-ID: <20140428153527.GB12357@camelia.ucw.cz>
+References: <20140428083931.GA10257@camelia.ucw.cz> <CABPQNSaC30p7TEOvc85u=+skjrFj17182vWWSL=QNVuvzVFE=w@mail.gmail.com> <20140428113815.GA10559@camelia.ucw.cz> <20140428114224.GA11186@camelia.ucw.cz> <CABPQNSbDkE+Vff=4MmPO9oMfjRay6Oin51zZRoZ8mOEhGoaD3Q@mail.gmail.com> <535E6E4B.6070308@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: GIT Mailing-list <git@vger.kernel.org>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: Marat Radchenko <marat@slonopotamus.org>
-X-From: git-owner@vger.kernel.org Mon Apr 28 17:34:54 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: kusmabite@gmail.com, GIT Mailing-list <git@vger.kernel.org>,
+	Theodore Leblond <theodore.leblond@gmail.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Mon Apr 28 17:35:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wena0-00084h-QM
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 17:34:53 +0200
+	id 1Wenar-0000fc-My
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 17:35:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932148AbaD1Per (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2014 11:34:47 -0400
-Received: from mail-ig0-f175.google.com ([209.85.213.175]:41711 "EHLO
-	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932115AbaD1Peo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 11:34:44 -0400
-Received: by mail-ig0-f175.google.com with SMTP id h3so4908583igd.14
-        for <git@vger.kernel.org>; Mon, 28 Apr 2014 08:34:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=irIdLEaz0ZMAbhopyb14O/6+2fBKYP6QneWdMl5W8Yg=;
-        b=cL9sLYczpFz8sxZxw2L1CI7F8fHGjIj03ZqOLOc6CVDVpMzA8/zQVpwKHUmf8vKfeJ
-         nUG7Pb+P7lEueAwVCHlqRm82KRTE//Sr+XfnT0lezH3U/FSSC5GHuzIcYwstMmDHet+d
-         OCPDG9rRbD5K1NC8WGa34PoxnKpbnE6YfdSFf0FRlHYQ2tVqh47GW+YvEA1tla1Aj/di
-         /roTOm/tt3nGucnZZoMGKQz9SfZELbWV4iT3GNBHfm6EslZQdTHnvNZBIlTrl5m7dnYQ
-         WDu/xbPwRzEweLqfavrCXyy7BiHJnzVFIum8J+1psrD51X9LDE1LRs2PMV6eZs3hy1Yi
-         Ch1g==
-X-Received: by 10.50.30.6 with SMTP id o6mr24445690igh.43.1398699283758; Mon,
- 28 Apr 2014 08:34:43 -0700 (PDT)
-Received: by 10.64.166.135 with HTTP; Mon, 28 Apr 2014 08:34:03 -0700 (PDT)
-In-Reply-To: <1398693097-24651-1-git-send-email-marat@slonopotamus.org>
+	id S1756296AbaD1Pff (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 11:35:35 -0400
+Received: from jabberwock.ucw.cz ([46.255.230.98]:56416 "EHLO
+	jabberwock.ucw.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756480AbaD1Pf2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2014 11:35:28 -0400
+Received: from 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (84.64.broadband3.iol.cz [85.70.64.84])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	(Authenticated sender: kasal)
+	by jabberwock.ucw.cz (Postfix) with ESMTPSA id A5ABB1C0073;
+	Mon, 28 Apr 2014 17:35:27 +0200 (CEST)
+Received: from camelia.ucw.cz (camelia.ucw.cz [127.0.0.1])
+	by 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (8.14.3/8.14.3) with ESMTP id s3SFZRr9012441;
+	Mon, 28 Apr 2014 17:35:27 +0200
+Received: (from kasal@localhost)
+	by camelia.ucw.cz (8.14.3/8.14.3/Submit) id s3SFZRRX012440;
+	Mon, 28 Apr 2014 17:35:27 +0200
+Content-Disposition: inline
+In-Reply-To: <535E6E4B.6070308@viscovery.net>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247366>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247367>
 
-On Mon, Apr 28, 2014 at 3:51 PM, Marat Radchenko <marat@slonopotamus.org> wrote:
-> This patch series fixes building on modern MinGW and (32bit only yet) MinGW-W64.
->
-> *Compilation* tested on:
->  - MSVC (via WinGit environment)
->  - msysGit environment
->  - Linux cross-toolchain i686-pc-mingw32 (4.8.2) with mingw-runtime-3.20.2
->  - Linux cross-toolchain i686-w64-mingw32 (4.8.2) with mingw64-runtime-3.1.0
->
-> Stuff still required to make Git build with x86_64 MinGW-W64 toolchain:
->
-> 1. Drop -D_USE_32BIT_TIME_T that was added in fa93bb to config.mak.uname
-> because time_t cannot be 32bit on x86_64. I haven't yet figured out what
-> should break if this define is removed (pointers are welcome) and why it was
-> added in the first place.
->
-> 2. Stop passing --large-address-aware to linker. I wonder if it does anything
-> for 32bit MinGW builds.
->
-> 3. Fix several places with mismatched pointer size casts.
->
-> Building it from Gentoo Linux:
->
-> MinGW:
->
->   crossdev -t i686-pc-mingw32
->   ARCH=x86 emerge-i686-pc-mingw32 -u dev-libs/libiconv sys-libs/zlib net-misc/curl sys-devel/gettext expat
->   cd <git>
->   make CROSS_COMPILE=i686-pc-mingw32- CC=i686-pc-mingw32-gcc NO_OPENSSL=1 MINGW=1 CURLDIR=/usr/i686-pc-mingw32/usr
->
-> MinGW-W64 (32 bit):
->
->   crossdev -t i686-w64-mingw32
->   ARCH=x86 emerge-i686-w64-mingw32 -u dev-libs/libiconv sys-libs/zlib net-misc/curl sys-devel/gettext expat
->   cd <git>
->   make CROSS_COMPILE=i686-w64-mingw32- CC=i686-w64-mingw32-gcc NO_OPENSSL=1 MINGW=1 CURLDIR=/usr/i686-w64-mingw32/usr
->
-> Debian/Ubuntu build instructions are WIP (xdeb is non-trivial at all).
+From: theoleblond <theodore.leblond@gmail.com>
+Date: Wed, 16 May 2012 06:52:49 -0700
 
-Apart from some minor nits, this looks good to me. Thanks a lot for
-spending the time, and I look forward to a second iteration!
+SwitchToThread() only gives away the rest of the current time slice
+to another thread in the current process. So if the thread that feeds
+the file decscriptor we're polling is not in the current process, we
+get busy-waiting.
+
+I played around with this quite a bit. After trying some more complex
+schemes, I found that what worked best is to just sleep 1 millisecond
+between iterations. Though it's a very short time, it still completely
+eliminates the busy wait condition, without hurting perf.
+
+There code uses SleepEx(1, TRUE) to sleep. See this page for a good
+discussion of why that is better than calling SwitchToThread, which
+is what was used previously:
+http://stackoverflow.com/questions/1383943/switchtothread-vs-sleep1
+
+Note that calling SleepEx(0, TRUE) does *not* solve the busy wait.
+
+The most striking case was when testing on a UNC share with a large repo,
+on a single CPU machine. Without the fix, it took 4 minutes 15 seconds,
+and with the fix it took just 1:08! I think it's because git-upload-pack's
+busy wait was eating the CPU away from the git process that's doing the
+real work. With multi-proc, the timing is not much different, but tons of
+CPU time is still wasted, which can be a killer on a server that needs to
+do bunch of other things.
+
+I also tested the very fast local case, and didn't see any measurable
+difference. On a big repo with 4500 files, the upload-pack took about 2
+seconds with and without the fix.
+---
+
+On Mon, Apr 28, 2014 at 05:05:47PM +0200, Johannes Sixt wrote:
+> [...] but I very much prefer the commit message of the earlier post.
+
+... but Paolo had a nice short description of the issue there;
+I inserted that to the top of the earlier commit message.
+
+The latter diff (without the comment), gets us closer to gnulib's poll.c.
+
+Have a nice day,
+	Stepan
+
+ compat/poll/poll.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/compat/poll/poll.c b/compat/poll/poll.c
+index 31163f2..a9b41d8 100644
+--- a/compat/poll/poll.c
++++ b/compat/poll/poll.c
+@@ -605,7 +605,7 @@ restart:
+ 
+   if (!rc && timeout == INFTIM)
+     {
+-      SwitchToThread();
++      SleepEx (1, TRUE);
+       goto restart;
+     }
+ 
+-- 
+1.9.2.msysgit.0.158.g6070cee
