@@ -1,109 +1,71 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: Re: git version 1.9.0 missing git-http-push?
-Date: Mon, 28 Apr 2014 15:53:58 +0200
-Message-ID: <CABPQNSYuoTP6wyQQs5dm5y+3++4m7__c3QZtLTb76=zREWE4Bg@mail.gmail.com>
-References: <DAB1109C3DA82E48A383F6960A32A9E567020669@EXCH2010.inferno.local>
- <1398670610456-7608792.post@n2.nabble.com> <CABPQNSY-bM2pv7mn2R+wsnn944BkKbW6Hz2EhwrruPuxUJpUEQ@mail.gmail.com>
- <CABPQNSZh1GePGwm6_cC9Zf7N1LaeiavbnOxG4JoWMAab4GcfQQ@mail.gmail.com>
- <alpine.DEB.1.00.1404281519060.14982@s15462909.onlinehome-server.info> <20140428134742.GA18447@seldon>
-Reply-To: kusmabite@gmail.com
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>, msysGit <msysgit@googlegroups.com>, 
-	Pat Thoyts <patthoyts@gmail.com>, GIT Mailing-list <git@vger.kernel.org>
-To: Marat Radchenko <marat@slonopotamus.org>
-X-From: msysgit+bncBDR53PPJ7YHRBI537GNAKGQE2ARFEAI@googlegroups.com Mon Apr 28 15:54:46 2014
-Return-path: <msysgit+bncBDR53PPJ7YHRBI537GNAKGQE2ARFEAI@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-qc0-f190.google.com ([209.85.216.190])
+From: Marat Radchenko <marat@slonopotamus.org>
+Subject: [RFC/PATCH v1] Towards MinGW(-W64) cross-compilation
+Date: Mon, 28 Apr 2014 17:51:25 +0400
+Message-ID: <1398693097-24651-1-git-send-email-marat@slonopotamus.org>
+Cc: marat@slonopotamus.org,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: GIT Mailing-list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Apr 28 15:54:44 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDR53PPJ7YHRBI537GNAKGQE2ARFEAI@googlegroups.com>)
-	id 1Wem16-00071n-U4
-	for gcvm-msysgit@m.gmane.org; Mon, 28 Apr 2014 15:54:45 +0200
-Received: by mail-qc0-f190.google.com with SMTP id w7sf1582695qcr.27
-        for <gcvm-msysgit@m.gmane.org>; Mon, 28 Apr 2014 06:54:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:list-post:list-help:list-archive
-         :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=8DwnqJqh8LK9rLC2drGrqBXQSZGldNazxVxzME+zTsU=;
-        b=X7wfqW2SE6lDVCb3YddqaUCPnD5XqC638zYp/s+QoK4S3zDHpeJX/4m4nh6vMJnTBE
-         CjfDZxZa9j10iW5cm5Rb/o9VbHRXek9RpfEwkupRx08Pdkw5bSVVbi3zklTtm2dMVbrE
-         uKU5f108iwR/Ln2i6EDx8LuQkLYFppBd4IUwRXoWq7iDX0ZpwETnZAnBUEN303mZUxVC
-         frftIUXq0TMy5hasRWiThIJZ6Ud3RzIMQBDIEhqqFutHGizcl4RxsYZUIB9VSrMX1K9b
-         3Znai3PN5xndfSFg2ypds6XvpDHi/6Jgydyr3B+9zsryeJVu5lD71AiNLxEtCzWVR0Xk
-         pd3w==
-X-Received: by 10.140.86.50 with SMTP id o47mr5960qgd.40.1398693284178;
-        Mon, 28 Apr 2014 06:54:44 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.140.36.33 with SMTP id o30ls2571413qgo.23.gmail; Mon, 28 Apr
- 2014 06:54:38 -0700 (PDT)
-X-Received: by 10.236.128.112 with SMTP id e76mr11721492yhi.38.1398693278407;
-        Mon, 28 Apr 2014 06:54:38 -0700 (PDT)
-Received: from mail-ie0-x235.google.com (mail-ie0-x235.google.com [2607:f8b0:4001:c03::235])
-        by gmr-mx.google.com with ESMTPS id m3si2091713igk.2.2014.04.28.06.54.38
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 28 Apr 2014 06:54:38 -0700 (PDT)
-Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 2607:f8b0:4001:c03::235 as permitted sender) client-ip=2607:f8b0:4001:c03::235;
-Received: by mail-ie0-f181.google.com with SMTP id y20so4656458ier.40
-        for <msysgit@googlegroups.com>; Mon, 28 Apr 2014 06:54:38 -0700 (PDT)
-X-Received: by 10.50.36.66 with SMTP id o2mr23803649igj.24.1398693278276; Mon,
- 28 Apr 2014 06:54:38 -0700 (PDT)
-Received: by 10.64.166.135 with HTTP; Mon, 28 Apr 2014 06:53:58 -0700 (PDT)
-In-Reply-To: <20140428134742.GA18447@seldon>
-X-Original-Sender: kusmabite@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of kusmabite@gmail.com designates 2607:f8b0:4001:c03::235
- as permitted sender) smtp.mail=kusmabite@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247337>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Wem15-00071k-BX
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 15:54:43 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751522AbaD1Nvr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 09:51:47 -0400
+Received: from seldon.slonopotamus.org ([94.242.204.247]:56013 "EHLO
+	slonopotamus.org" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
+	with ESMTP id S1751286AbaD1Nvq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2014 09:51:46 -0400
+Received: from [185.6.245.138] (helo=radchenko-d-lnx.mail.msk)
+	by slonopotamus.org with esmtpsa (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256)
+	(Exim 4.80.1)
+	(envelope-from <marat@slonopotamus.org>)
+	id 1WelyA-0004qo-6g; Mon, 28 Apr 2014 17:51:42 +0400
+X-Mailer: git-send-email 1.9.1
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247338>
 
-On Mon, Apr 28, 2014 at 3:47 PM, Marat Radchenko <marat@slonopotamus.org> wrote:
-> On Mon, Apr 28, 2014 at 03:20:46PM +0200, Johannes Schindelin wrote:
->> That way, upstream Git does not have anything to change (and we avoid
->> discussing five versions of essentially the same patch :-P).
->
-> This bug isn't specific to msysGit but also affects all environments
-> where curl-config is not available or cannot be run for some reason,
-> for example during cross-compilation.
+This patch series fixes building on modern MinGW and (32bit only yet) MinGW-W64.
 
-True. I think the assumption simply was a bad one, and it has probably
-gone unnoticed for a while because pushing over WebDAV is not all that
-common.
+*Compilation* tested on:
+ - MSVC (via WinGit environment)
+ - msysGit environment
+ - Linux cross-toolchain i686-pc-mingw32 (4.8.2) with mingw-runtime-3.20.2
+ - Linux cross-toolchain i686-w64-mingw32 (4.8.2) with mingw64-runtime-3.1.0
 
-If anyone turns up a system with an old enough libcurl, they should
-probably consult curlver.h instead. And if so, they are probably on a
-system so crippled they need to run automake anyway.
+Stuff still required to make Git build with x86_64 MinGW-W64 toolchain:
 
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+1. Drop -D_USE_32BIT_TIME_T that was added in fa93bb to config.mak.uname
+because time_t cannot be 32bit on x86_64. I haven't yet figured out what
+should break if this define is removed (pointers are welcome) and why it was
+added in the first place.
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+2. Stop passing --large-address-aware to linker. I wonder if it does anything
+for 32bit MinGW builds.
 
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+3. Fix several places with mismatched pointer size casts.
+
+Building it from Gentoo Linux:
+
+MinGW:
+
+  crossdev -t i686-pc-mingw32
+  ARCH=x86 emerge-i686-pc-mingw32 -u dev-libs/libiconv sys-libs/zlib net-misc/curl sys-devel/gettext expat
+  cd <git>
+  make CROSS_COMPILE=i686-pc-mingw32- CC=i686-pc-mingw32-gcc NO_OPENSSL=1 MINGW=1 CURLDIR=/usr/i686-pc-mingw32/usr
+
+MinGW-W64 (32 bit):
+
+  crossdev -t i686-w64-mingw32
+  ARCH=x86 emerge-i686-w64-mingw32 -u dev-libs/libiconv sys-libs/zlib net-misc/curl sys-devel/gettext expat
+  cd <git>
+  make CROSS_COMPILE=i686-w64-mingw32- CC=i686-w64-mingw32-gcc NO_OPENSSL=1 MINGW=1 CURLDIR=/usr/i686-w64-mingw32/usr
+
+Debian/Ubuntu build instructions are WIP (xdeb is non-trivial at all).
