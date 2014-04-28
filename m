@@ -1,114 +1,74 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Recording the current branch on each commit?
-Date: Mon, 28 Apr 2014 11:23:24 +0200
-Message-ID: <87fvkx6c4z.fsf@fencepost.gnu.org>
-References: <535C47BF.2070805@game-point.net>
-	<1748955386.11457068.1398588660139.JavaMail.zimbra@dewire.com>
-	<535D3DF8.4020904@game-point.net>
-	<535e12389eb8d_338911e930c9c@nysa.notmuch>
-	<535E1622.70608@game-point.net> <87r44h6d47.fsf@fencepost.gnu.org>
-	<535E1AF6.8080609@game-point.net>
+From: =?ISO-8859-1?Q?Jean-No=EBl_Avila?= <avila.jn@gmail.com>
+Subject: Tagging  a branch as "not fitted for branching" ?
+Date: Mon, 28 Apr 2014 14:09:43 +0200
+Message-ID: <535E4507.2070805@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Jeremy Morton <admin@game-point.net>
-X-From: git-owner@vger.kernel.org Mon Apr 28 14:05:38 2014
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Apr 28 14:09:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WekJU-0005Om-8m
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 14:05:36 +0200
+	id 1WekNc-0002HY-Rr
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 14:09:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755567AbaD1MFO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2014 08:05:14 -0400
-Received: from fencepost.gnu.org ([208.118.235.10]:33258 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751993AbaD1MFN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 08:05:13 -0400
-Received: from localhost ([127.0.0.1]:60531 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1WekJ6-0001Nb-3D; Mon, 28 Apr 2014 08:05:12 -0400
-Received: by lola (Postfix, from userid 1000)
-	id 296F9E060B; Mon, 28 Apr 2014 11:23:24 +0200 (CEST)
-In-Reply-To: <535E1AF6.8080609@game-point.net> (Jeremy Morton's message of
-	"Mon, 28 Apr 2014 10:10:14 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
+	id S1755192AbaD1MJs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Apr 2014 08:09:48 -0400
+Received: from mail-wi0-f180.google.com ([209.85.212.180]:41709 "EHLO
+	mail-wi0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932076AbaD1MJr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2014 08:09:47 -0400
+Received: by mail-wi0-f180.google.com with SMTP id q5so5518787wiv.13
+        for <git@vger.kernel.org>; Mon, 28 Apr 2014 05:09:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        bh=Xu9AW+Ho4OnC2edoYNGWk9+UVt+Bte3rr6I+WpViRqU=;
+        b=SzMeR/Z3+0urnyPfe34e54bJeop6kXMreHf+Gfyucyb4QfAcJiBY4XgXDBjPrNtqmq
+         wapLGRr03iGMM7hdBjEdYnUNICr7StOY1W7J4DCmQc4Wor9VhKvlpYcbMdlYjR8uzQAb
+         yryrgezjBtyjkhUJZ6lbRicziyGnUaPGISQIML6BjL0PMhjqw6V36P41PxMlZ/52+D/H
+         r1qCiyIIX9RHooP2IJEfUaYbvsKj8nkK+6F8fa90A6vkZKwYtJetMavTUWFpdMT/pICS
+         LeiAohCua6VkgipJ8Vvt0J71uF8KAq0GcSjhrrQgjtIE/du65SMyjp3n86fcoiDeFPYE
+         cEgw==
+X-Received: by 10.194.120.101 with SMTP id lb5mr766331wjb.74.1398686985666;
+        Mon, 28 Apr 2014 05:09:45 -0700 (PDT)
+Received: from [192.168.1.95] (static-csq-cds-097114.business.bouyguestelecom.com. [164.177.97.114])
+        by mx.google.com with ESMTPSA id mw4sm17380261wib.12.2014.04.28.05.09.44
+        for <git@vger.kernel.org>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 28 Apr 2014 05:09:45 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247307>
 
-Jeremy Morton <admin@game-point.net> writes:
+Most manuals on git state that it is bad practice to push -f a branch=20
+after have meddled with its history, because this would risk to upset=20
+the repositories of the coworkers. On the other hand, some workflows us=
+e=20
+branches to propose modifications, and need some rewritting of the=20
+history after some review steps. In this case, the branch should only b=
+e=20
+seen as a mere pile of patches. Having this two-sided discourse is ofte=
+n=20
+misunderstood by casual git users.
 
-> On 28/04/2014 10:02, David Kastrup wrote:
->> Jeremy Morton<admin@game-point.net>  writes:
->>
->>> On 28/04/2014 09:32, Felipe Contreras wrote:
->>>>>> some people to is to always merge with --no-ff, that way you see the branch
->>>>>> name in the merge commit.
->>>>>
->>>>> But surely, it's recommended with Git that you try to avoid doing
->>>>> --no-ff merges to avoid commit noise?
->>>>
->>>> Nope. Different people have different needs, there's no recommendation. If
->>>> anything, the recommendation is to do a ff merge, because that's the default.
->>>
->>> That's what I'm saying.  With an ff merge, you don't get the merge
->>> commit message telling you the branch name.
->>
->> And I don't _want_ that branch name to be recorded.  The whole point of
->> a distributed version control system is that it's nobody else's business
->> how I organize my work before submitting it.
->
-> Well it would be optional, so obviously you wouldn't be forced to
-> share the branch name.  It's not like we're trying to "pry in" to your
-> private development.  It's a way of choosing to share what you may
-> consider to be useful contextual information about the commit.
+The proposed solution would be to be able to flag the branches with a=20
+special tag "not fitted for branching" that a collaborator could use=20
+when pushing it. This tag would be passed on to any pulled remote. When=
+=20
+another collaborator would then issue a "git checkout -b", the command=20
+would fail with a warning message, unless forced with '-f'.
 
-But it isn't useful contextual information about the commit because it
-is tied to a particular repository.
+Is this feature already present? If not, would it be of any interest?
 
->> It is _totally_ useless information in a distributed development
->> model.  Why would or should anybody be concerned what private
->> branches some submitter has developed his patches in?
->
-> Why should anybody be concerned about what commit message some
-> submitter has typed in for his commit?  They could just read the
-> source code to see what has changed, right?
+Best regards,
 
-The commit message is an integral part of a commit.  The contents of the
-commit message are not tied to a particular repository.  The branch
-name, however, is.
-
-> Because the commit message is a way for the submitter to try and make
-> it easier for the people looking at the commit to understand what the
-> commit is doing.
-
-The commit message is written for an audience and is independent of the
-repository.  The branch name isn't.
-
-> In the same way, a meaningful branch name may also make it easier for
-> people looking at the commit to understand what it is doing,
-
-It is nobody's business how I name my branches.  I can change the commit
-message using git commit --amend, but what should happen if I rename the
-branch a commit is on?
-
-And what nightmare should occur when doing git cherry-pick?  What _is_
-the originating branch of a cherry-pick?  What _is_ the originating
-branch of a merge commit?  Or even of a cherry-picked merge commit?
-
-> or what part of the application it is affecting, or what group of
-> commits it is a part of.
-
-If I have useful information to offer to the readers of a commit, it
-belongs in the commit message.  Not in some involuntarily created and
-leaked piece of metadata specific to my workflow and repository that
-will be awfully hard to change after the fact.
-
--- 
-David Kastrup
+Jean-No=EBl AVILA
