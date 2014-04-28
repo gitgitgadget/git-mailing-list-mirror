@@ -1,152 +1,99 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH] PAGER_ENV: remove 'S' from $LESS by default
-Date: Mon, 28 Apr 2014 10:34:22 +0200
-Message-ID: <1398674062-24288-1-git-send-email-Matthieu.Moy@imag.fr>
-References: <20140425154722.GC11479@google.com>
-Cc: David Kastrup <dak@gnu.org>, d9ba@mailtor.net, jrnieder@gmail.com,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Apr 28 10:36:14 2014
+From: Stepan Kasal <kasal@ucw.cz>
+Subject: [PATCH] Sleep 1 millisecond in poll() to avoid busy wait
+Date: Mon, 28 Apr 2014 10:39:31 +0200
+Organization: <)><
+Message-ID: <20140428083931.GA10257@camelia.ucw.cz>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: theoleblond <theodore.leblond@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 28 10:39:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Weh2q-0002Wb-DR
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 10:36:12 +0200
+	id 1Weh6F-0007Wq-FN
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 10:39:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753937AbaD1If6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2014 04:35:58 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:47796 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752500AbaD1Ie4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 04:34:56 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s3S8YOkT030319
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 28 Apr 2014 10:34:24 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s3S8YOo8001941;
-	Mon, 28 Apr 2014 10:34:24 +0200
-Received: from moy by anie.imag.fr with local (Exim 4.80)
-	(envelope-from <moy@imag.fr>)
-	id 1Weh16-0006Kk-KY; Mon, 28 Apr 2014 10:34:24 +0200
-X-Mailer: git-send-email 1.9.2.698.ge58c0c2.dirty
-In-Reply-To: <20140425154722.GC11479@google.com>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 28 Apr 2014 10:34:24 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s3S8YOkT030319
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1399278865.29297@jhKnuy5Z+bZs/m+BsxqwlA
+	id S1752895AbaD1Ijh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 04:39:37 -0400
+Received: from jabberwock.ucw.cz ([46.255.230.98]:48663 "EHLO
+	jabberwock.ucw.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751754AbaD1Ijd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2014 04:39:33 -0400
+Received: from 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (84.64.broadband3.iol.cz [85.70.64.84])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	(Authenticated sender: kasal)
+	by jabberwock.ucw.cz (Postfix) with ESMTPSA id BC9C41C00A0;
+	Mon, 28 Apr 2014 10:39:31 +0200 (CEST)
+Received: from camelia.ucw.cz (camelia.ucw.cz [127.0.0.1])
+	by 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (8.14.3/8.14.3) with ESMTP id s3S8dVWv010277;
+	Mon, 28 Apr 2014 10:39:31 +0200
+Received: (from kasal@localhost)
+	by camelia.ucw.cz (8.14.3/8.14.3/Submit) id s3S8dVfH010276;
+	Mon, 28 Apr 2014 10:39:31 +0200
+Content-Disposition: inline
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247244>
 
-By default, Git used to set $LESS to -FRSX if $LESS was not set by the
-user. The FRX flags actually make sense for Git (F and X because Git
-sometimes pipes short output to less, and R because Git pipes colored
-output). The S flag (chop long lines), on the other hand, is not related
-to Git and is a matter of user preference. Git should not decide for the
-user to change LESS's default.
+From: theoleblond <theodore.leblond@gmail.com>
+Date: Wed, 16 May 2012 06:52:49 -0700
 
-More specifically, the S flag harms users who review untrusted code
-within a pager, since a patch looking like:
+I played around with this quite a bit. After trying some more complex
+schemes, I found that what worked best is to just sleep 1 millisecond
+between iterations. Though it's a very short time, it still completely
+eliminates the busy wait condition, without hurting perf.
 
--old code;
-+new good code; [... lots of tabs ...] malicious code;
+There code uses SleepEx(1, TRUE) to sleep. See this page for a good
+discussion of why that is better than calling SwitchToThread, which
+is what was used previously:
+http://stackoverflow.com/questions/1383943/switchtothread-vs-sleep1
 
-would appear identical to:
+Note that calling SleepEx(0, TRUE) does *not* solve the busy wait.
 
--old code;
-+new good code;
+The most striking case was when testing on a UNC share with a large repo,
+on a single CPU machine. Without the fix, it took 4 minutes 15 seconds,
+and with the fix it took just 1:08! I think it's because git-upload-pack's
+busy wait was eating the CPU away from the git process that's doing the
+real work. With multi-proc, the timing is not much different, but tons of
+CPU time is still wasted, which can be a killer on a server that needs to
+do bunch of other things.
 
-Users who prefer the old behavior can still set the $LESS environment
-variable to -FRSX explicitly, or set core.pager to 'less -S'.
-
-The documentation in config.txt is made a bit longer to keep both an
-example setting the 'S' flag (needed to recover the old behavior) and an
-example showing how to unset a flag set by Git.
-
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+I also tested the very fast local case, and didn't see any measurable
+difference. On a big repo with 4500 files, the upload-pack took about 2
+seconds with and without the fix.
 ---
-> We agree here.  So, does someone who actually wants this change want to
-> propose a patch? :)
 
-Here you are.
+This is one of the patches that lives in msysGit, could it be
+accepted upstream?
+It modifies the Windows compat function only.
 
- Documentation/config.txt | 13 ++++++++-----
- Makefile                 |  6 +++---
- perl/Git/SVN/Log.pm      |  2 +-
- 3 files changed, 12 insertions(+), 9 deletions(-)
+Have a nice day,
+	Stepan
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index e30561d..b7f92ac 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -560,14 +560,17 @@ core.pager::
- 	configuration, then `$PAGER`, and then the default chosen at
- 	compile time (usually 'less').
- +
--When the `LESS` environment variable is unset, Git sets it to `FRSX`
-+When the `LESS` environment variable is unset, Git sets it to `FRX`
- (if `LESS` environment variable is set, Git does not change it at
- all).  If you want to selectively override Git's default setting
--for `LESS`, you can set `core.pager` to e.g. `less -+S`.  This will
-+for `LESS`, you can set `core.pager` to e.g. `less -S`.  This will
- be passed to the shell by Git, which will translate the final
--command to `LESS=FRSX less -+S`. The environment tells the command
--to set the `S` option to chop long lines but the command line
--resets it to the default to fold long lines.
-+command to `LESS=FRX less -S`. The environment does not set the
-+`S` option but the command line does, instructing less to truncate
-+long lines. Similarly, setting `core.pager` to `less -+F` will
-+deactivate the `F` option specified by the environment from the
-+command-line, deactivating the "quit if one screen" behavior of
-+`less`.
- +
- Likewise, when the `LV` environment variable is unset, Git sets it
- to `-c`.  You can override this setting by exporting `LV` with
-diff --git a/Makefile b/Makefile
-index a3b298e..cd3cdf6 100644
---- a/Makefile
-+++ b/Makefile
-@@ -344,9 +344,9 @@ all::
- # Define PAGER_ENV to a SP separated VAR=VAL pairs to define
- # default environment variables to be passed when a pager is spawned, e.g.
- #
--#    PAGER_ENV = LESS=-FRSX LV=-c
-+#    PAGER_ENV = LESS=-FRX LV=-c
- #
--# to say "export LESS=-FRSX (and LV=-c) if the environment variable
-+# to say "export LESS=-FRX (and LV=-c) if the environment variable
- # LESS (and LV) is not set, respectively".
+ compat/poll/poll.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/compat/poll/poll.c b/compat/poll/poll.c
+index 31163f2..c5a9a93 100644
+--- a/compat/poll/poll.c
++++ b/compat/poll/poll.c
+@@ -605,7 +605,9 @@ restart:
  
- GIT-VERSION-FILE: FORCE
-@@ -1518,7 +1518,7 @@ NO_PYTHON = NoThanks
- endif
+   if (!rc && timeout == INFTIM)
+     {
+-      SwitchToThread();
++      /* Sleep 1 millisecond to avoid busy wait */
++      SleepEx(1, TRUE);
++
+       goto restart;
+     }
  
- ifndef PAGER_ENV
--PAGER_ENV = LESS=-FRSX LV=-c
-+PAGER_ENV = LESS=-FRX LV=-c
- endif
- 
- QUIET_SUBDIR0  = +$(MAKE) -C # space to separate -C and subdir
-diff --git a/perl/Git/SVN/Log.pm b/perl/Git/SVN/Log.pm
-index 34f2869..6641053 100644
---- a/perl/Git/SVN/Log.pm
-+++ b/perl/Git/SVN/Log.pm
-@@ -116,7 +116,7 @@ sub run_pager {
- 		return;
- 	}
- 	open STDIN, '<&', $rfd or fatal "Can't redirect stdin: $!";
--	$ENV{LESS} ||= 'FRSX';
-+	$ENV{LESS} ||= 'FRX';
- 	$ENV{LV} ||= '-c';
- 	exec $pager or fatal "Can't run pager: $! ($pager)";
- }
 -- 
-1.9.2.698.ge58c0c2.dirty
+1.9.2.msysgit.0.158.g6070cee
