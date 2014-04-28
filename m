@@ -1,108 +1,102 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [PATCH] t3910: show failure of core.precomposeunicode with decomposed
- filenames
-Date: Mon, 28 Apr 2014 22:49:30 +0200
-Message-ID: <535EBEDA.5070207@web.de>
-References: <20140428161630.GA9435@sigill.intra.peff.net> <xmqqbnvlqn5j.fsf@gitster.dls.corp.google.com> <20140428193502.GD25993@sigill.intra.peff.net> <535EB167.4030804@web.de> <20140428200326.GA2961@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] Makefile: default to -lcurl when no CURL_CONFIG or
+ CURLDIR
+Date: Mon, 28 Apr 2014 13:50:58 -0700
+Message-ID: <20140428205058.GQ9218@google.com>
+References: <1398714653-1050-1-git-send-email-dborowitz@google.com>
+ <20140428200550.GO9218@google.com>
+ <CAD0k6qR766hrgUtyiGzZ9KM5woknfsyUm3Mf1-Pm3M-LrL2Zhg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Apr 28 22:50:28 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git <git@vger.kernel.org>, Erik Faye-Lund <kusmabite@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Dave Borowitz <dborowitz@google.com>
+X-From: git-owner@vger.kernel.org Mon Apr 28 22:51:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WesVO-0002A6-HT
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 22:50:26 +0200
+	id 1WesWA-00039t-Ez
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 22:51:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756724AbaD1UuO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Apr 2014 16:50:14 -0400
-Received: from mout.web.de ([212.227.15.4]:49863 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753229AbaD1Utm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 16:49:42 -0400
-Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb002)
- with ESMTPSA (Nemesis) id 0M3Bqx-1Wv1jQ0knn-00syPA; Mon, 28 Apr 2014 22:49:31
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
-In-Reply-To: <20140428200326.GA2961@sigill.intra.peff.net>
-X-Provags-ID: V03:K0:kdGAFfxDxTNhbyeBc+OBAW3c1L9K4fnqZVUpc0Qihbkoo9O3llP
- cxheS2sTjjlIYI+CzAqW4aMmBngCRfRmugV3HLcSbBCKI+sgtTomOqD78ldKitvojNDdnYe
- ZeQ2RcMBSZGTZRANAX8QtipvELNzuOL30GYFjA6XNDiJTHhg89jXh8wUOxRKB/vi2KR27n6
- KSzeuvclJ7VUTxE/NDmcA==
+	id S1756928AbaD1UvE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 16:51:04 -0400
+Received: from mail-pb0-f48.google.com ([209.85.160.48]:38304 "EHLO
+	mail-pb0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756788AbaD1UvC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2014 16:51:02 -0400
+Received: by mail-pb0-f48.google.com with SMTP id md12so6266673pbc.7
+        for <git@vger.kernel.org>; Mon, 28 Apr 2014 13:51:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=dsGSVPRmPzRVcNgUstjxpGQPfLs4rGIwGQdyTqryWQE=;
+        b=xDnbjWRSsixEc7Wj+sIkVmd5X2UIm0RUQkDxIayUs0tN1jEOCCBw7vFiSDRREMXmnz
+         b8v+pkkPPdzC4ehdIXMdYifVuCSXGIIGGdKAfNqO4sVjcsAwXuramfZZBFJewkDmJxKE
+         3Un5nevt3aa9HMH6SYoXAhlEMuaXQWqFP22GD8AeIulsi2snen57wxDAzC3xF6+6VqsO
+         bjHpmkWTixfhuogNna80u6mcjhFKvEknCQDzbzKLsF3ad+i6wB7/oIy2dZsd/vTcUIFd
+         5hmLToMqdqCdJUG9zTjdNxrdRXlejDT4am74K5fZs0WeafWJ0IiB1SQeujmDpceI3jwV
+         iKYw==
+X-Received: by 10.68.198.97 with SMTP id jb1mr31298759pbc.104.1398718261202;
+        Mon, 28 Apr 2014 13:51:01 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id xk1sm97118828pac.21.2014.04.28.13.51.00
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 28 Apr 2014 13:51:00 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CAD0k6qR766hrgUtyiGzZ9KM5woknfsyUm3Mf1-Pm3M-LrL2Zhg@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247447>
 
-On 2014-04-28 22.03, Jeff King wrote:
-> On Mon, Apr 28, 2014 at 09:52:07PM +0200, Torsten B=C3=B6gershausen w=
-rote:
+Dave Borowitz wrote:
+> On Mon, Apr 28, 2014 at 1:05 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+>> Dave Borowitz wrote:
+
+>>> +++ b/Makefile
+>>> @@ -35,7 +35,9 @@ all::
+>>>  # transports (neither smart nor dumb).
+>>>  #
+>>>  # Define CURL_CONFIG to the path to a curl-config binary other than the
+>>> -# default 'curl-config'.
+>>> +# default 'curl-config'. If CURL_CONFIG is unset or points to a binary that
+>>> +# is not found, defaults to the CURLDIR behavior, or if CURLDIR is not set,
+>>> +# uses -lcurl with no additional library detection.
+>>
+>> I'm having a little trouble parsing this but don't have any better
+>> suggestion.
 >
->> To my knowledge repos with decomposed unicode should be rare in
->> practice.  I only can speak for european (or latin based) or cyrilli=
-c
->> languages myself:
-> I've run across several cases in the past few months, but only just
-> figured out what was going on. Most were tickets to GitHub support, b=
-ut
-> we actually have such a case in our github/github repository. In most
-> cases, I think they were created on older versions of git on OS X,
-> either before core.precomposeunicode existed, or before it was turned=
- on
-> by default. The decomposed form got baked into the tree (whatever the
-> user originally typed, git probably found out about it via "git add .=
-").
+> How about:
+> "If CURL_CONFIG is unset or points to a binary that is not found,
+> defaults to the CURLDIR behavior. If CURLDIR is not set, this means
+> using -lcurl with no additional library detection (other than
+> NEEDS_*_WITH_CURL).
+
+Yep, that's clearer.
+
+> [...]
+>>> -                             $(error libcurl not detected; try setting CURLDIR)
+>>> +                                $(error libcurl not detected or not compiled with static support)
+>>
+>> Whitespace damage.
 >
-> I think reports are just coming in now because we didn't start turnin=
-g
-> on core.precomposeunicode by default until v1.8.5, shipped in Novembe=
-r.
-> And then, a person working on the repository would not notice anythin=
-g,
-> since we only set the flag during clone. So it took time for people t=
-o
-> upgrade _and_ to make fresh clones.
-OK, thanks for the description.
-In theory we can make Git "composition ignoring" by changing
-index_file_exists() in name-hash.c.
-(Both names must be precomposed first and compared then)
+> Yes, but intentional, because Makefile parsing is weird.
+>
+> $ echo -e 'ifndef FOO\n\t$(error bad things)\nendif\n\nfoo:\n\ttouch
+> foo' > mk1 && make -f mk1 foo
+> mk1:2: *** commands commence before first target.  Stop.
+> $ echo -e 'ifndef FOO\n  $(error bad things)\nendif\n\nfoo:\n\ttouch
+> foo' > mk2 && make -f mk2 foo
+> mk2:2: *** bad things.  Stop.
 
-I don't know how much people are using Git before 1.7.12 (the
-first version supporting precomposed unicode).
+Gah.  Maybe it should be left-justified to avoid accentally breaking
+it again.
 
-Could we simply ask them to upgrade ?
-The next problem is that people need to agree if the repo should store
-names in pre- or decomposed form.
-(My voice is for precomposed)
-Unfortunatly the core.precomposeunicode is repo-local, so everybody
-needs to "agree globally" and "configure locally".
-
-Side note:
-I which we had this config variable travelling with the repo, like .git=
-attributes does
-for text dealing with CRLF-LF.
-
-I don't know how many reports you have, reading all this it feels as if=
- the effected users
-could "normalize" their repos and run "git config core.precomposeunicod=
-e true", followed
-by "git config --global core.precomposeunicode true".
-Does that sound like a possible way forward ?
->> So for me the test case could sense, even if I think that nobody (TM=
-)
->> uses an old Git version under Mac OS X which is not able to handle
->> precomposed unicode.
-> Even when they do not, the decomposed values are baked into history f=
-rom
-> those old versions. So it is a matter of history created with older
-> versions not interacting well with newer versions.
-I'm not sure if I understood all the details here, but I would be happy=
- to help
-with suggestions/tests/reviews.
-
-> -Peff
+Thanks.
+Jonathan
