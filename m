@@ -1,44 +1,101 @@
-From: Silvola Tuomas <tuomas.silvola@knowit.fi>
-Subject: git version 1.9.0 missing git-http-push?
-Date: Mon, 28 Apr 2014 06:19:26 +0000
-Message-ID: <DAB1109C3DA82E48A383F6960A32A9E567020669@EXCH2010.inferno.local>
+From: Marat Radchenko <marat@slonopotamus.org>
+Subject: A failing attempt to use Git in a centralized environment
+Date: Mon, 28 Apr 2014 10:29:07 +0400
+Message-ID: <4ay6w9i74cygt6ii1b0db7wg.1398433713382@email.android.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Apr 28 08:19:50 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: base64
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 28 08:30:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Weeur-0005ck-Ba
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 08:19:49 +0200
+	id 1Wef4i-0003bg-9f
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 08:30:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753403AbaD1GTp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2014 02:19:45 -0400
-Received: from mx.endero.com ([89.250.62.122]:59237 "EHLO mx.knowit.fi"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753128AbaD1GTo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Apr 2014 02:19:44 -0400
-Thread-Topic: git version 1.9.0 missing git-http-push?
-Thread-Index: Ac9iqbSqq61hWFV8SiGHXDjF9wbcoA==
-Accept-Language: fi-FI, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
+	id S1751680AbaD1G3z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 02:29:55 -0400
+Received: from seldon.slonopotamus.org ([94.242.204.247]:39240 "EHLO
+	slonopotamus.org" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
+	with ESMTP id S1751157AbaD1G3y (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2014 02:29:54 -0400
+Received: from [83.149.8.61] (helo=[10.213.152.208])
+	by slonopotamus.org with esmtpsa (TLSv1:RC4-MD5:128)
+	(Exim 4.80.1)
+	(envelope-from <marat@slonopotamus.org>)
+	id 1Wef4U-0004Qy-D3
+	for git@vger.kernel.org; Mon, 28 Apr 2014 10:29:52 +0400
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247237>
 
-Hello,
-
-I installed git for windows 1.9.0 but any push operation I tried with it produced an error message saying "git: 'http-push' is not a git command". Other commands like pull, add, and commit worked just fine.
-At the end of this day I noticed that C:\Program Files (x86)\Git\libexec\git-core just didn't have the file git-http-push. There were git-http-backend, git-http-fetch and git-imap-send and such but no git-http-push.
-
-I resolved my issue by uninstalling 1.9.0, installing an older version instead (1.8.1.2; this is when push started working) and 1.9.0 right on top of the older version. Now git push command works as expected.
-
-Br,
-Tuomas Silvola
+U2V0dXA6CjIwIHBlb3BsZSAocHJvZ3JhbW1lcnMsIGFydGlzdHMsIGRlc2lnbmVycykgd2l0aCBw
+cmlvciBTVk4ga25vd2xlZGdlIGFuZCBhIGRlc2lyZSB0byB1c2UgR2l0IGZvciBhIG5ldyBwcm9q
+ZWN0IChtb3N0bHkgb24gcHJvZ3JhbW1lcnMgc2lkZSkuIE5vbi1wcm9ncmFtbWVycyB1c2VkIFRv
+cnRvaXNlU1ZOIGJlZm9yZSBzbyBjaG9vc2luZyBUb3J0b2lzZUdpdCBhcyBhIEdVSSB3YXMgYW4g
+b2J2aW9zIHN0ZXAuCgpXZSBtYWRlIGFuIGluLWhvdXNlIHByZXNlbnRhdGlvbiBpbnRyb2R1Y2lu
+ZyBiYXNpYyBHaXQgY29uY2VwdHMgYW5kIGhvdyBpdCBpcyBkaWZmZXJlbnQgZnJvbSBTVk4uIEFs
+c28sIGluZGl2aWR1YWwgdHJhaW5pbmcgd2FzIGRvbmUgZm9yIGVhY2ggcGVyc29uIHdobyBkaWRu
+J3QgaGF2ZSBHaXQgZXhwZXJpZW5jZS4gRHVyaW5nIHRoaXMgdHJhaW5pbmcsIHRoZXkgdHJpZWQg
+ZXZlcnlkYXkgdGFza3Mgb2YgdXBkYXRpbmcsIGNvbW1pdHRpbmcsIHB1c2hpbmcgY2hhbmdlcyBh
+bmQgdmlld2luZyBoaXN0b3J5IG9uIGEgdG95IHJlcG9zaXRvcnkuIAoKUHJvYmxlbSAjMTogVG9y
+dG9pc2VHaXQgR1VJIHdpbmRvd3MgZm9yIGNvbW1vbiB0YXNrcyBoYXZlIGEgaGVjayBsb3RzIG9m
+IGNvbnRyb2xzIHRoYXQgYSBjb21tb24gR2l0IHVzZXIgd2lsbCBuZXZlciBuZWVkLiBKdXN0IGxv
+b2sgYXQgYSBtb25zdHJvc2l0eSBvZiBpdHMgcHVzaCBkaWFsb2cgWzFdLiBUaGlzIHdhcyBraW5k
+YSBmaXhlZCBieSB0cmFpbmluZyB1c2VycyB0byB1c2UgR2l0IFN5bmMgZGlhbG9nIFsyXS4KCiJB
+dXRvbG9hZCBQdVRUWSBrZXkiPyBXaGF0IHRoZSBoZWxsIGlzIHRoaXM/IFdoeSBJIGNhbiBzd2l0
+Y2ggaXQgb24vb2ZmIGluIEdpdCBQdXNoIGJ1dCBpdCBpcyBkaXNhYmxlZCBpbiBHaXQgU3luYz8g
+V2hhdCBpcyBQdVRUWSBkb2luZyBoZXJlIGF0IGFsbCwgSSdtIHVzaW5nIE9wZW5TU0guCgpQcm9i
+bGVtICMyIG9jY3VyZWQgdGhlIGZpcnN0IGRheSB3ZSBzdGFydGVkIHVzaW5nIEdpdCBvbiByZWFs
+IHByb2plY3QuIEl0IGlzIGV4cGxhaW5lZCBpbiBkZXRhaWwgaW4gb2xkZXIgcG9zdCB0byBHaXQg
+TUwgWzNdLiBJIGNhbGwgaXQgInN3YXBwZWQvcmV2ZXJzZSBtZXJnZSBwcm9ibGVtIi4KCkluIHNo
+b3J0OgoxLiBIYWNrLCBoYWNrLCBoYWNrCjIuIENvbW1pdAozLiBQdXNoLCB3b29wcywgcmVqZWN0
+IChub24tZmYpCjQuIFB1bGwKNS4gUHVzaAoKVGhlIHJvb3Qgb2YgZXZpbCBpcyBzdGVwICM0IHRo
+YXQgY3JlYXRlcyBhIG1lcmdlIGNvbW1pdCB3aXRoICJzd2FwcGVkIiBwYXJlbnRzIC0gbG9jYWwg
+Y29tbWl0cyBiZWNvbWUgZmlyc3QgcGFyZW50LCByZW1vdGUgY29tbWl0cyBiZWNvbWUgc2Vjb25k
+LiBJZiBvbmUgd291bGQgd2FudCB0byBtYWtlIHByb3BlciBwYXJlbnQgb3JkZXIsIGhlIHdvdWxk
+IGhhdmUgdG86CjEuIGdpdCBmZXRjaAoyLiBnaXQgY2hlY2tvdXQgb3JpZ2luL21hc3RlciAtYiB0
+bXAKMy4gZ2l0IG1lcmdlIG1hc3Rlcgo0LiBnaXQgcHVzaAo1LiBnaXQgY2hlY2tvdXQgbWFzdGVy
+CjYuIGdpdCBtZXJnZSBvcmlnaW4vbWFzdGVyCjcuIGdpdCBicmFuY2ggLWQgdG1wCgpBbmQgYWxs
+IHRoaXMgYnJhbmNoIGRhbmNlIHByb2R1Y2VzIGV4YWN0bHkgdGhlIHNhbWUgY29tbWl0IChjb250
+ZW50LXdpc2UpIGFzIHNpbXBsZSAicHVsbCwgcHVzaCIgc2VxdWVuY2Ugd2l0aCB0aGUgb25seSBk
+aWZmZXJlbmNlIGluIHBhcmVudCBvcmRlci4gQW5kIHRoaW5ncyBiZWNvbWUgZXZlbiB3b3JzZSBp
+ZiBjb21lb25lIHB1c2hlcyBtb3JlIGNvbW1pdHMgdG8gcmVtb3RlIHJlcG8gd2hpbGUgeW91IHBl
+cmZvcm0gdGhpcyBkYW5jZS4KCldlIGNhbid0IGV4cGVjdCBhbGwgZGV2ZWxvcGVycyAoZXNwZWNp
+YWxseSwgZGVzaWduZXJzIGFuZCBhcnRpc3QpIHRvIGRvIGl0LiBUaGV5IGRvbid0IHdhbnQgdG8g
+dXNlIGJyYW5jaGVzIGFuZCBqdXN0IHdvcmsgb24gbWFpbmxpbmUuIFRoaXMgaXMgZXNwZWNpYWxs
+eSBpbXBvcnRhbnQgb24gZWFybHkgZGV2ZWxvcG1lbnQgc3RhZ2VzIHdoZW4gbmV3IGZlYXR1cmVz
+ICh0aGF0IGRlc2lnbmVycycgd29yayBkZXBlbmRzIHVwb24pIGFyZSBhZGRlZCBldmVyeSBkYXku
+CgpBZGRpdGlvbmFsbHksIG1hbnkgZ2l0LXJlbGF0ZWQgdG9vbHMgZGVwZW5kIG9uIGZpcnN0LXBh
+cmVudCBjb252ZW50aW9uIGFuZCBzaG93IHdyb25nIGdyYXBocy9kaWZmcy4KClByb2JsZW0gIzM6
+IG9uIGNvbmZsaWN0cywgdXNlciBlbmRzIHVwIHdpdGggYSB3b3JraW5nIGNvcHkgdGhhdCBtYXJr
+cyBhbGwgcmVtb3RlLWNoYW5nZWQgZmlsZXMgYXMgbW9kaWZpZWQuIEx1Y2tpbHksIG5vYm9keSBo
+YXMgcHJvYmxlbXMgd2l0aCBjb25mbGljdCByZXNvbHV0aW9uIHByb2Nlc3MsIGl0J3MganVzdCBj
+b25mdXNpbmcgdG8gc2VlIGNoYW5nZXMgb3RoZXIgd2F5IHJvdW5kLgoKT2theSwgdGhlbiwgbGV0
+J3MgdHJ5IHJlYmFzZSB3b3JrZmxvdy4gImdpdCBjb25maWcgcHVsbC5yZWJhc2UgdHJ1ZSIgYW5k
+IGdvLgoKUHJvYmxlbSAjNDogd2hlbiBjb25mbGljdCBoYXBwZW5zIGR1cmluZyByZWJhc2UsIG1l
+cmdldG9vbCBzaG93cyB1c2VyIG93biBjaGFuZ2VzIGFzICJ0aGVpcnMiIGFuZCByZW1vdGUgY2hh
+bmdlcyBhcyAibWluZSIuIEFuZCBiZWxpZXZlIG1lLCBleHBsYWluaW5nIHRoaXMgdG8gdXNlcnMg
+ZG9lc24ndCBpbmNyZWFzZSB0aGVpciB3aWxsaW5nbmVzcyB0byBhZG9wdCBHaXQuCgpQcm9ibGVt
+ICM1IChUb3J0b2lzZUdpdC1yZWxhdGVkKTogZm9yIHNvbWUgZHVtYiByZWFzb24sIFRvcnRvaXNl
+R2l0J3MgcmViYXNlIGlzIG5vdCBhIGdpdCByZWJhc2UhIFdvcnNlLCBUb3J0b2lzZUdpdCBkb2Vz
+bid0IGhhdmUgYW55IGJ1dHRvbiB0byBzYXkgJ2dpdCByZWJhc2UgLS1jb250aW51ZSIuIFNvIHdl
+IGhhZCB0byBjYW5jZWwgInB1bGwucmViYXNlPXRydWUiIGFwcHJvYWNoIGFuZCB0ZWFjaCB1c2Vy
+cyB0byB1c2UgIkZldGNoJlJlYmFzZSIgYnV0dG9uLiBJdCB3b3VsZCBiZSB1c2FibGUgaWYgb25s
+eSBUb3J0b2lzZUdpdCBkaWRuJ3Qgc2hvdyByZWJhc2UgZGlhbG9nIGV2ZW4gd2hlbiBldmVyeXRo
+aW5nIHdhcyBhbHJlYWR5IHVwLXRvLWRhdGUuIEFuZCBldmVuIGdpdC1hd2FyZSBkZXZlbG9wZXJz
+IGRvbid0IHVuZGVyc3RhbmQgdGhlIGlkZWEgYmVoaW5kICJGb3JjZSByZWJhc2UiIGNoZWNrYm94
+IGluIHJlYmFzZSBkaWFsb2cgYW5kIHdoeSBhbnlvbmUgd291bGQgZXZlciB3YW50IHRvIGhhdmUg
+aXQgZGlzYWJsZWQgKGFuZCBpdCBpcyBkaXNhYmxlZCBieSBkZWZhdWx0KS4KClByb2JsZW0gIzY6
+IHB1c2ggLSByZWplY3QgLSBwdWxsIC0gcHVzaCBzZXF1ZW5jZSBzb21ldGltZXMgdHJhbnNmb3Jt
+cyBpbnRvIGEgbG9vcCB3aXRoIHNldmVyYWwgaXRlcmF0aW9ucyBhbmQgZG9lc24ndCBhZGQgaGFw
+cGluZXNzLgoKU28uLi4gQW55IHN1Z2dlc3Rpb25zIGhvdyB0byBtYWtlIGxpZmUgZWFzaWVyIGFy
+ZSB3ZWxjb21lLgoKWzFdIGh0dHA6Ly90b3J0b2lzZWdpdC5nb29nbGVjb2RlLmNvbS9naXQvZG9j
+L2ltYWdlcy9lbi9HaXRQdXNoLnBuZwpbMl0gaHR0cDovL3RvcnRvaXNlZ2l0Lmdvb2dsZWNvZGUu
+Y29tL2dpdC9kb2MvaW1hZ2VzL2VuL0dpdFN5bmMucG5nClszXSBodHRwOi8vZ2l0LjY2MTM0Ni5u
+Mi5uYWJibGUuY29tL2ZpcnN0LXBhcmVudC1jb21taXQtZ3JhcGgtbGF5b3V0LWFuZC1wdWxsLW1l
+cmdlLWRpcmVjdGlvbi10ZDc1ODY2NzEuaHRtbA==
