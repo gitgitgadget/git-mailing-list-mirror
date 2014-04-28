@@ -1,95 +1,70 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Makefile: default to -lcurl when no CURL_CONFIG or CURLDIR
-Date: Mon, 28 Apr 2014 14:04:36 -0700
-Message-ID: <xmqqtx9dnp23.fsf@gitster.dls.corp.google.com>
-References: <1398714653-1050-1-git-send-email-dborowitz@google.com>
-	<20140428200550.GO9218@google.com>
-	<CAD0k6qR766hrgUtyiGzZ9KM5woknfsyUm3Mf1-Pm3M-LrL2Zhg@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] Makefile: use curl-config to determine curl flags
+Date: Mon, 28 Apr 2014 14:13:38 -0700
+Message-ID: <xmqqppk1non1.fsf@gitster.dls.corp.google.com>
+References: <1398713704-15428-1-git-send-email-dborowitz@google.com>
+	<xmqqtx9dp6rd.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git <git@vger.kernel.org>,
-	Erik Faye-Lund <kusmabite@gmail.com>
+Cc: git@vger.kernel.org, kusmabite@gmail.com
 To: Dave Borowitz <dborowitz@google.com>
-X-From: git-owner@vger.kernel.org Mon Apr 28 23:04:58 2014
+X-From: git-owner@vger.kernel.org Mon Apr 28 23:13:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WesjQ-0003hU-Np
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 23:04:57 +0200
+	id 1Wesrz-0005v2-9c
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 23:13:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757104AbaD1VEn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2014 17:04:43 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47968 "EHLO
+	id S1757243AbaD1VNn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 17:13:43 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38687 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757097AbaD1VEl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 17:04:41 -0400
+	id S1757237AbaD1VNm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2014 17:13:42 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9FA5D810CD;
-	Mon, 28 Apr 2014 17:04:40 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D7D1F813B5;
+	Mon, 28 Apr 2014 17:13:41 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=BY3c4WWkzBIYlaED4dXKDtxbvB8=; b=kJxt5Q
-	YveaSjYsKYn7N4dvWw6DCA5f2suu45vWwDwZleDT12jKmagLRADyueyKdZwpsROQ
-	1q/EIspc5s9avwuWmORLL44TMYaAfiBWYxK+E1nV91EeFPINrifMDpAkHHealIHN
-	PRM+/MpYYU/diJguaXH8DHXVD/txfeULgZsk8=
+	:content-type; s=sasl; bh=R26uPiYRelimxHJRh+Md44vK+0g=; b=jA/wqG
+	Els5ZOxEzqoSgElX+X4xwbBbOReiMH0XKUlnnrsCHwkHnW7soWys2S5SiP9IZJhw
+	/XnoiLuUsMH7bxrYTGSW1RWcnihHcIlnVYyTgR7/Gzrvy/ze9P113SBjkwF7Wt/L
+	2CDJIuezrCMBhxyYERgj5ss0sBW8rCht6UXmU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GS0zJEtsBgDtDZsKXsTjKxJk6lwHFj1h
-	ZDXGx0GOPHDLh5+oPVZHMGlvsPsvgYS/KDto4GI8U3sdw8RJwOlaZGnq/vfTuK+B
-	VQStJkk1cLyMCY2i5xC2mQsc85BwoFuXFtxtVuJiRo21VrfABiVLw4xW85mqf+Hf
-	IwMUPljn9Ag=
+	:content-type; q=dns; s=sasl; b=WRkPjwF53GVwVXjwW1++ksszc/S8oyEe
+	fxtk3a9ugH4P7Tzt+B6pDxcRNT4k3a/eTod4gIR3A4o+4Jv8MAW4NsbRo4WO7fzI
+	tZnLP0WyvVy0G2mMlMiLM5vv5cqDPNnb7zWx/nNUZT2zj2opv3ISj0esHtRFAQdv
+	ZdLgt2MkQqo=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 85D2E810CB;
-	Mon, 28 Apr 2014 17:04:40 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C21C1813B4;
+	Mon, 28 Apr 2014 17:13:41 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DFF2A810C3;
-	Mon, 28 Apr 2014 17:04:37 -0400 (EDT)
-In-Reply-To: <CAD0k6qR766hrgUtyiGzZ9KM5woknfsyUm3Mf1-Pm3M-LrL2Zhg@mail.gmail.com>
-	(Dave Borowitz's message of "Mon, 28 Apr 2014 13:46:58 -0700")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A9AB6813B2;
+	Mon, 28 Apr 2014 17:13:39 -0400 (EDT)
+In-Reply-To: <xmqqtx9dp6rd.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Mon, 28 Apr 2014 12:56:54 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: B5537780-CF18-11E3-BE46-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: F83F4B0E-CF19-11E3-90AA-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247453>
 
-Dave Borowitz <dborowitz@google.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Mon, Apr 28, 2014 at 1:05 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
->> Dave Borowitz wrote:
->>
->>> Instead, if CURL_CONFIG is empty or returns an empty result (e.g. due
->>> to curl-config being missing), use the old behavior of falling back to
->>> -lcurl.
->>> ---
->>>  Makefile | 36 +++++++++++++++++++++++++-----------
->>>  1 file changed, 25 insertions(+), 11 deletions(-)
->>
->> Sign-off?
->
-> Oops.
+> This "ifeq" is redundant and will never set CURL_LIBCURL to empty
+> without running the "else" part, I think.  In a Makefile, a variable
+> explicitly set to empty and a variable that is unset are treated the
+> same....
+> 	$ make -f Makefile CURL_CONFIG=""
+> 	Empty Undefined
 
-Will forge your sign-off while queuing ;-)
-
->
-> How about:
-> "If CURL_CONFIG is unset or points to a binary that is not found,
-> defaults to the CURLDIR behavior. If CURLDIR is not set, this means
-> using -lcurl with no additional library detection (other than
-> NEEDS_*_WITH_CURL).
-
-... with this rephrasing.
-
->>> -                             $(error libcurl not detected; try setting CURLDIR)
->>> +                                $(error libcurl not detected or not compiled with static support)
->>
->> Whitespace damage.
->
-> Yes, but intentional, because Makefile parsing is weird.
+Oh, I was blind.  Please ignore this noise.
 
 Thanks.
