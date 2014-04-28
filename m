@@ -1,91 +1,91 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: Recording the current branch on each commit?
-Date: Mon, 28 Apr 2014 18:50:55 -0500
-Message-ID: <535ee95fc17d5_5a07e812f018@nysa.notmuch>
-References: <535C47BF.2070805@game-point.net>
- <CALKQrgfmBByMwMhxu3HkJqJGWy2Rwvij6Hi1_4npjfsxcSgpaQ@mail.gmail.com>
- <535D4085.4040707@game-point.net>
- <CALKQrgemFx=2JaC1BaRqCwEV+knC8QftxcZ7K0AsT9azzuyVdA@mail.gmail.com>
- <535D6EB1.9080208@game-point.net>
- <535e18cdc7bce_338911e930c72@nysa.notmuch>
- <87bnvl6bdg.fsf@fencepost.gnu.org>
- <535e8e4253196_45651483310b3@nysa.notmuch>
- <152626b3-0642-4e26-9333-7d911d45c669@email.android.com>
- <535edfb9baa4a_4c5c11c92f0bc@nysa.notmuch>
- <xmqqk3a9m3ah.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH 04/12] Makefile: introduce CROSS_COMPILE variable
+Date: Mon, 28 Apr 2014 18:54:24 -0500
+Message-ID: <535eea307640d_5a07e812f050@nysa.notmuch>
+References: <1398693097-24651-1-git-send-email-marat@slonopotamus.org>
+ <1398693097-24651-5-git-send-email-marat@slonopotamus.org>
+ <535e91e6c69eb_4565148331047@nysa.notmuch>
+ <20140428181506.GA20059@seldon>
+ <20140428233806.GS9218@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: James Denholm <nod.helm@gmail.com>, David Kastrup <dak@gnu.org>,
-	Jeremy Morton <admin@game-point.net>,
-	Johan Herland <johan@herland.net>,
-	Git mailing list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 29 02:01:43 2014
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>,
+	Marat Radchenko <marat@slonopotamus.org>
+X-From: git-owner@vger.kernel.org Tue Apr 29 02:05:09 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WevUR-0003qc-GQ
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Apr 2014 02:01:39 +0200
+	id 1WevXo-00086R-SY
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Apr 2014 02:05:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757399AbaD2ABe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2014 20:01:34 -0400
-Received: from mail-ob0-f180.google.com ([209.85.214.180]:35471 "EHLO
-	mail-ob0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753851AbaD2AB3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 20:01:29 -0400
-Received: by mail-ob0-f180.google.com with SMTP id wm4so8020163obc.25
-        for <git@vger.kernel.org>; Mon, 28 Apr 2014 17:01:29 -0700 (PDT)
+	id S932827AbaD2AFA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 20:05:00 -0400
+Received: from mail-ob0-f169.google.com ([209.85.214.169]:63076 "EHLO
+	mail-ob0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932475AbaD2AE6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2014 20:04:58 -0400
+Received: by mail-ob0-f169.google.com with SMTP id uz6so8246186obc.0
+        for <git@vger.kernel.org>; Mon, 28 Apr 2014 17:04:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-type:content-transfer-encoding;
-        bh=LFpy1aBofRq5RUIV+8AsMEehZJZgEMYq8n5f8cYofig=;
-        b=SNBDr87lW8U38fPLkXJjVza2qzaHJbyOBA7fKWzJDbOMLuKgIBAG8zUgWyRj5aJf7U
-         tlbnI4VpGncr4KUNAr0iZyGLiQxOjtRCPp3Sk35mJZc5arrvZ/eHju2Imxf0/B7BdPjB
-         8FX4pjFEtA/FaRdEAplgwByq/7N+f/sQPdcNV1zbwdzEqWHaeXg7USxMo59AzjyOORUE
-         Orfz0U1sEZnUSstYmL3UmpZmYTePWLGxs4aQrzwCVleoYlWnlPA52HZBAqWC1I6T/hVy
-         jHBdgEaGOb6CNinU90TY8VYETBtZQCcI746LnJXt6MhQhF3Ig6ChzCZzcccO7HyMRC47
-         nGhw==
-X-Received: by 10.182.165.134 with SMTP id yy6mr24550720obb.5.1398729689202;
-        Mon, 28 Apr 2014 17:01:29 -0700 (PDT)
+        bh=lfiAMVQCoMWzU4Ff/HWc0SO4T/Q5ZPLC7NrVsk+HwQI=;
+        b=J4FSJPvTlFQEbPxhRJREQP1OFXaaMHhW+62VCtKtWMzNVOVzhNeQNqN2iwDPN0Luxm
+         NpTCSxpCBc1oSAB51Oz8kzwQzVgqWL85Z+H/KE6mQDCNuljrUFMlGCGCdE5yOJ89cEOI
+         Ud/SZE3FlF/VwaczCQ1lyqTrrorCbwtJZ4zk04F2gBYDKtAVfB49qFktRG1ItsSJckmI
+         tWZ2/0PzoKr5eeS5klm2o/UinBRTO+ar03x+k7J5RaYHlqMNlCnvqP+91fyT5MOs21Vu
+         j0V2+vPKHgl2sPg3zaf6VpmizwlhdEPftyfgn8vLw3G3erImeby17Z6Bgr80Xma0MvBe
+         mcQg==
+X-Received: by 10.182.22.33 with SMTP id a1mr4254556obf.60.1398729898175;
+        Mon, 28 Apr 2014 17:04:58 -0700 (PDT)
 Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id f9sm40097880obm.2.2014.04.28.17.01.27
+        by mx.google.com with ESMTPSA id qp6sm40095960obb.14.2014.04.28.17.04.56
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 28 Apr 2014 17:01:28 -0700 (PDT)
-In-Reply-To: <xmqqk3a9m3ah.fsf@gitster.dls.corp.google.com>
+        Mon, 28 Apr 2014 17:04:57 -0700 (PDT)
+In-Reply-To: <20140428233806.GS9218@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247500>
 
-Junio C Hamano wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+Jonathan Nieder wrote:
+> Marat Radchenko wrote:
+> > On Mon, Apr 28, 2014 at 12:37:42PM -0500, Felipe Contreras wrote:
 > 
-> > Except that in this case virtually everyone agreed the default was wrong. I
-> > already said that.
+> >>> +CC = $(CROSS_COMPILE)cc
+> >>
+> >> Nice.
 > >
-> > Clarly you didn't read the relevant discussions where everyone, including Linus
-> > Torvalds, agreed. Did you?
+> > Actually, not. You still have to override CC because it is
+> > $(CROSS_COMPILE)*g*cc. Any thoughts how to handle this?
 > 
-> My recollection is that everybody agreed that the default was
-> wrong.  I do not think I saw everybody agreed the patch you are
-> championing is the right solution to solve that problem.
+> One possibility would be something like
+> 
+> 	ifdef CROSS_COMPILE
+> 	CC = $(CROSS_COMPILE)gcc
+> 	else
+> 	CC = cc
+> 	endif
 
-I'm going to add the quote you removed:
+Or just:
 
-> > James Denholm wrote:
-> > > You neglect the possibility that your personal view of what git should be
-> > > differs from other people's.
+  CC = $(CROSS_COMPILE)gcc
 
-In this context James was talking about what Git should be. But the vast
-majority agree on this issue, so that's not what's preventing change.
+Which is what the Linux kernel does.
+
+> Or as Felipe says, you can try to lobby your distro to install the
+> symlink.
+
+He can add the symlink into his ~/bin, or any $PATH.
 
 -- 
 Felipe Contreras
