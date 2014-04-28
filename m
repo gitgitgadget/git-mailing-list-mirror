@@ -1,132 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v10 11/12] Documentation: add documentation for 'git interpret-trailers'
-Date: Mon, 28 Apr 2014 09:37:58 -0700
-Message-ID: <xmqq8uqptno9.fsf@gitster.dls.corp.google.com>
-References: <20140406163214.15116.91484.chriscool@tuxfamily.org>
-	<20140406170204.15116.15559.chriscool@tuxfamily.org>
-	<xmqqmwfv3433.fsf@gitster.dls.corp.google.com>
-	<20140425.215619.2296838250398594645.chriscool@tuxfamily.org>
+From: Johan Herland <johan@herland.net>
+Subject: Re: Recording the current branch on each commit?
+Date: Mon, 28 Apr 2014 18:38:35 +0200
+Message-ID: <CALKQrgeFJf5RZTR7df1CeAAta1vdjDccj2Y+zXTfzCS9Zy9SYQ@mail.gmail.com>
+References: <535C47BF.2070805@game-point.net>
+	<CALKQrgfmBByMwMhxu3HkJqJGWy2Rwvij6Hi1_4npjfsxcSgpaQ@mail.gmail.com>
+	<535D4085.4040707@game-point.net>
+	<CALKQrgemFx=2JaC1BaRqCwEV+knC8QftxcZ7K0AsT9azzuyVdA@mail.gmail.com>
+	<87zjj656my.fsf@fencepost.gnu.org>
+	<535E276E.8090306@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, johan@herland.net, josh@joshtriplett.org,
-	tr@thomasrast.ch, mhagger@alum.mit.edu, dan.carpenter@oracle.com,
-	greg@kroah.com, peff@peff.net, sunshine@sunshineco.com,
-	ramsay@ramsay1.demon.co.uk, jrnieder@gmail.com
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Mon Apr 28 18:38:44 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: David Kastrup <dak@gnu.org>, Jeremy Morton <admin@game-point.net>,
+	Git mailing list <git@vger.kernel.org>
+To: Sitaram Chamarty <sitaramc@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 28 18:39:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WeoZl-0000kZ-Nb
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 18:38:42 +0200
+	id 1Weoa2-00019G-VE
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 18:38:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756606AbaD1QiT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2014 12:38:19 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48468 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756580AbaD1QiM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 12:38:12 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D954E80AF7;
-	Mon, 28 Apr 2014 12:38:06 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5K3yhmi01dSqzkXufbOQdFJNSVs=; b=ohK/Me
-	9axCfFbummKrbKrH99+T2owBO/PCKwvzBCs9qaE8kjvtjLvhrIPjhXpek9VtEejc
-	L39VE1pIyELFfvxP0Kj84Qzl2IGnkUpqo/6Arps06VPzyYOgr8ut4Oo2sH0zZ4xq
-	Wr7wi1mfyQoWb2vNyo+kEX62KVhsH/pqqRx/k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hnNmXyHOYqJ8L3YFhdDXiqtuNQARaKRN
-	xQ+SWj6+FFZ2e5PXikcNIF6aLw6y0y9g9xOuHIjejZD9pijBmXHioBs3HF0Iza5p
-	DAeoA2cK9Tf+029YE3A8liI1P2qC7ux9aawp2BbLX9NrufVaQ/Ub88DfHpcNM3oV
-	io0uLxXwOUk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8E8BA80AF6;
-	Mon, 28 Apr 2014 12:38:06 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AD3B180AF1;
-	Mon, 28 Apr 2014 12:38:00 -0400 (EDT)
-In-Reply-To: <20140425.215619.2296838250398594645.chriscool@tuxfamily.org>
-	(Christian Couder's message of "Fri, 25 Apr 2014 21:56:19 +0200
-	(CEST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 7649FD36-CEF3-11E3-BC3B-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756672AbaD1Qir (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 12:38:47 -0400
+Received: from mail12.copyleft.no ([188.94.218.224]:39790 "EHLO
+	mail12.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756580AbaD1Qim (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2014 12:38:42 -0400
+Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
+	by mail12.copyleft.no with esmtp (Exim 4.76)
+	(envelope-from <johan@herland.net>)
+	id 1WeoZk-0001It-1T
+	for git@vger.kernel.org; Mon, 28 Apr 2014 18:38:40 +0200
+Received: from mail-pb0-f51.google.com ([209.85.160.51])
+	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.72 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1WeoZj-000Glx-5h
+	for git@vger.kernel.org; Mon, 28 Apr 2014 18:38:39 +0200
+Received: by mail-pb0-f51.google.com with SMTP id rq2so1114920pbb.10
+        for <git@vger.kernel.org>; Mon, 28 Apr 2014 09:38:35 -0700 (PDT)
+X-Received: by 10.69.15.2 with SMTP id fk2mr26469322pbd.123.1398703115274;
+ Mon, 28 Apr 2014 09:38:35 -0700 (PDT)
+Received: by 10.70.59.4 with HTTP; Mon, 28 Apr 2014 09:38:35 -0700 (PDT)
+In-Reply-To: <535E276E.8090306@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247379>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247380>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+On Mon, Apr 28, 2014 at 12:03 PM, Sitaram Chamarty <sitaramc@gmail.com> wrote:
+>> Johan Herland <johan@herland.net> writes:
+>>> Obviously, the feature would necessarily have to be optional, simply
+>>> because Git would have to keep understanding the old commit object
+>>> format for a LONG time (probably indefinitely), and there's nothing
+>>> you can do to prevent others from creating old-style commit objects.
+>
+> Johan: I seem to have missed your previous email (fat-fingered something
+> on my mail client I expect).
+>
+> Your **reasons** for making it optional are all wrong.  People like me
+> (and David) who are opposed to this run the risk that if the **format**
+> were to officially change in some way or for some reason (like, say, if
+> SHA1 is no longer in favour, or whatever), then this "feature" is
+> foisted on us willy-nilly.
+>
+> That's not good.
+>
+> So, while I appreciate your point that it should be optional, please
+> let's accept that in the end it should be optional because **not
+> everyone likes it**!
 
-> From: Junio C Hamano <gitster@pobox.com>
->>
->> Christian Couder <chriscool@tuxfamily.org> writes:
->> ...
->
->>> +	trailer. After some alphanumeric characters, it can contain
->>> +	some non alphanumeric characters like ':', '=' or '#' that will
->>> +	be used instead of ':' to separate the token from the value in
->>> +	the trailer, though the default ':' is more standard.
->> 
->> I assume that this is for things like
->> 
->> 	bug #538
->> 
->> and the configuration would say something like:
->> 
->> 	[trailer "bug"]
->>         	key = "bug #"
->> 
->> For completeness (of this example), the bog-standard s-o-b would
->> look like
->> 
->> 	Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
->> 
->> and the configuration for it that spell the redundant "key" would
->> be:
->> 
->> 	[trailer "Signed-off-by"]
->>         	key = "Signed-off-by: "
->
-> Yeah, but you can use the following instead:
->
->  	[trailer "s-o-b"]
->          	key = "Signed-off-by: "
+You may have missed more than just one previous email... I tried (but
+obviously failed) to make it clear from the start that I personally
+don't support this feature (although, as long as it's optional I'm
+mostly indifferent to it).
 
-Sure, but note that both of these have a SP at the end in the value
-part (which I think is a sensible thing to do).
+Trying to steer the discussion towards a constructive end, I then
+argued that even IF we were to agree that this was a good change (and
+this thread CLEARLY demonstrates that we DO NOT agree), it would STILL
+be better to first implement this change within the confines of the
+existing object model, without making any changes to Git itself.
 
-> The <token> and the key can be different.
->
->> Am I reading the intention correctly?
->
-> Yeah, I think so.
->
->> That is, when trailer.<token>.key is not defined, the value defaults
->> to "<token>: " (with one SP after the label and colon),
->
-> Yes.
->
->> and when it
->> is defined, the value can come directly after it.
->
-> The value can come directly after the key, only if the key ends with '#'.
->
-> If it ends with something else, except spaces, one SP will be added
-> between the key and the value.
+Having done an initial implementation "outside" of the git core (which
+should be fairly straightforward with hooks + git-interpret-trailers),
+Jeremy would have gotten the feature he wanted (or at least a close
+approximation), and we could then observe if this feature became
+popular/useful enough to consider integrating it into core Git.
 
-And I do not think we want (or even need) this "only when it ends
-with #" special casing in the code at all.  When the project's
-convention is to say "frotz# value-of-frotz", the users will specify
-that with 'key = "frotz# "' (with a trailing SP in the value part),
-and in a project that wants 'nitfol %value-of-nitfol', your parser
-will find 'key = "nitfol %"'.  The users will obtain the result they
-want for either case, and a hard-coded special casing in the code
-that only has incomplete knowledge on the project convention will
-actively harm them.  I'd suggest dropping that special case.
+So, the only constructive way forward (whether we like the feature or
+not) is for Jeremy (or someone else) to first implement it "outside"
+the Git core.
+
+THIS is my point, and I really, REALLY tried to explain it while
+AVOIDING the inevitable flamewar about what "belongs" in a commit
+object or not. It's not that I don't have an opinion on that subject;
+it's that everybody has their own opinion, and it's largely a
+philosophical discussion that boils down to peoples workflows,
+preferences, backgrounds, and whatnot. As such, it's perfect material
+for the flamewar we're currently observing...
+
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
