@@ -1,76 +1,103 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
+From: Johan Herland <johan@herland.net>
 Subject: Re: Recording the current branch on each commit?
-Date: Mon, 28 Apr 2014 03:57:45 -0500
-Message-ID: <535e1809bf54a_338911e930cb6@nysa.notmuch>
-References: <535C47BF.2070805@game-point.net>
- <CALKQrgfmBByMwMhxu3HkJqJGWy2Rwvij6Hi1_4npjfsxcSgpaQ@mail.gmail.com>
- <535D4085.4040707@game-point.net>
- <CALKQrgemFx=2JaC1BaRqCwEV+knC8QftxcZ7K0AsT9azzuyVdA@mail.gmail.com>
+Date: Mon, 28 Apr 2014 11:09:31 +0200
+Message-ID: <CALKQrgfN-bE7KpZFadtD806Xk29N_R2sYurPQSKHLSh0UwcZiw@mail.gmail.com>
+References: <CALKQrgemFx=2JaC1BaRqCwEV+knC8QftxcZ7K0AsT9azzuyVdA@mail.gmail.com>
+	<535D6EB1.9080208@game-point.net>
+	<CALKQrgdFLc=k9i1+N2458amLMGQa99q55A=N785VfMRwfOH6Rg@mail.gmail.com>
+	<20140428.084543.1615507400056684596.chriscool@tuxfamily.org>
+	<535E18E0.3010507@game-point.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Git mailing list <git@vger.kernel.org>
-To: Johan Herland <johan@herland.net>,
-	Jeremy Morton <admin@game-point.net>
-X-From: git-owner@vger.kernel.org Mon Apr 28 11:08:26 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+	Git mailing list <git@vger.kernel.org>
+To: Jeremy Morton <admin@game-point.net>
+X-From: git-owner@vger.kernel.org Mon Apr 28 11:09:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WehY1-0003yb-77
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 11:08:25 +0200
+	id 1WehZH-0005kI-6X
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 11:09:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753367AbaD1JIU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2014 05:08:20 -0400
-Received: from mail-oa0-f43.google.com ([209.85.219.43]:62372 "EHLO
-	mail-oa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754073AbaD1JIT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 05:08:19 -0400
-Received: by mail-oa0-f43.google.com with SMTP id eb12so6930461oac.30
-        for <git@vger.kernel.org>; Mon, 28 Apr 2014 02:08:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=FSta4buJM4YEimO0Zk922yI6pobik9n1vCnFFA4lq8I=;
-        b=f+pLGVknTh8UH576M2xoWxY7FmZ1sl/oL8adHEa4S3c6ULw+3SC2JX5kpf71KX034f
-         PsPFzTe4OMTNugZk1m9zbs5LkV/u3Z44bYDEv8/i2HVHhgU+yffXZF+DQLpt042A9nMF
-         0ANiu0ojaAcbetW6+v2jXB4qeDtYjFeLpVv6nCC+1JrNda9jV4xYO57lGBDt7TMO9s3l
-         rWARsaMAYd4TOyMkAyNAMf7qFUCbfKfRawpkMurFAyEaA37QYJMjUpHj5TJl5oifA2nl
-         vs9tSlBWZ+4ARvlc6eFm/SDJNtIoo3pXjpxb9MNgnR3t0eFSlloxGeVN9Sh+7YE8e2LH
-         iq5g==
-X-Received: by 10.60.155.72 with SMTP id vu8mr658554oeb.60.1398676099401;
-        Mon, 28 Apr 2014 02:08:19 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id pt8sm31700347obb.5.2014.04.28.02.08.17
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 28 Apr 2014 02:08:18 -0700 (PDT)
-In-Reply-To: <CALKQrgemFx=2JaC1BaRqCwEV+knC8QftxcZ7K0AsT9azzuyVdA@mail.gmail.com>
+	id S1754570AbaD1JJj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 05:09:39 -0400
+Received: from mail12.copyleft.no ([188.94.218.224]:37988 "EHLO
+	mail12.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754559AbaD1JJh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2014 05:09:37 -0400
+Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
+	by mail12.copyleft.no with esmtp (Exim 4.76)
+	(envelope-from <johan@herland.net>)
+	id 1WehZA-0004Qh-4r
+	for git@vger.kernel.org; Mon, 28 Apr 2014 11:09:36 +0200
+Received: from mail-pb0-f41.google.com ([209.85.160.41])
+	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.72 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1WehZ9-0003yp-Lz
+	for git@vger.kernel.org; Mon, 28 Apr 2014 11:09:35 +0200
+Received: by mail-pb0-f41.google.com with SMTP id rr13so5602475pbb.14
+        for <git@vger.kernel.org>; Mon, 28 Apr 2014 02:09:31 -0700 (PDT)
+X-Received: by 10.68.231.35 with SMTP id td3mr2535973pbc.137.1398676171757;
+ Mon, 28 Apr 2014 02:09:31 -0700 (PDT)
+Received: by 10.70.31.162 with HTTP; Mon, 28 Apr 2014 02:09:31 -0700 (PDT)
+In-Reply-To: <535E18E0.3010507@game-point.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247257>
 
-Johan Herland wrote:
-> On Sun, Apr 27, 2014 at 7:38 PM, Jeremy Morton <admin@game-point.net> wrote:
-> > Whatsmore, tracking down which branch a commit pertains to is still rather
-> > difficult using this approach.  You can go back through the history and
-> > find "Merge branch 'pacman-minigame'", but how do you know which commit was
-> > the *start* of that branch, if they are not tagged with the branch name?
-> 
-> Once you have found the merge commit (M), git log M^1..M^2 should list
-> all the commits that were made on that branch. The parent of the last
-> in that list can be considered the starting point for the branch.
+On Mon, Apr 28, 2014 at 11:01 AM, Jeremy Morton <admin@game-point.net> wrote:
+> On 28/04/2014 07:45, Christian Couder wrote:
+>> Yes, it's possible. Yesterday, I sent the following patch:
+>>
+>> [RFC/PATCH 2/2] trailer: add examples to the documentation
+>>
+>> and it shows a commit-msg hook to do something like that:
+>>
+>> $ cat>.git/hooks/commit-msg<<EOF
+>> #!/bin/sh
+>> git interpret-trailers --trim-empty --trailer "git-version: \$(git
+>> describe)" "\$1">  "\$1.new"
+>> mv "\$1.new" "\$1"
+>> EOF
+>> $ chmod +x .git/hooks/commit-msg
+>>
+>> I think you just need to use the following if you want the branch
+>> instead of the git version:
+>>
+>> git interpret-trailers --trim-empty --trailer "git-branch: \$(git name-rev
+>> --name-only HEAD)" "\$1">  "\$1.new"
+>>
+>> It could even be simpler if there was an option (which has already
+>> been discussed) that made it possible to modify the file in
+>> place. This way one would not need the 'mv "\$1.new" "\$1"' command.
+>
+> This is certainly going in the right direction, but it's still implemented
+> as a hook on a per-repo basis.  Do you foresee a point in the future where
+> these trailers could be added through simple one-liners in someone's global
+> .gitconfig file?  That's where I'd really like to get to.
 
-It's not that easy. There has been a lot of discussion in the mailing list and
-StackOverflow of ways to do this [1]. The conclusion, at least for me, is that
-there's no way to find that out, so it has to be recorded.
+It's a hack, but it works surprisingly well in practice (assuming that
+you and your co-workers all agree that this is an acceptable
+approach):
 
-[1] http://thread.gmane.org/gmane.comp.version-control.git/198587
+ 1. Write the hook script and add it to your project (in a git-hooks
+subdir or something)
+
+ 2. Add a post-checkout hook to install the first hook and the
+post-checkout hook itself into the user's .git/hooks/ dir.
+
+ 3. Tell your co-workers to run the post-checkout hook script manually
+the first time. After that, the script should take care of updating
+itself and any hooks that you add to the project.
+
+
+...Johan
 
 -- 
-Felipe Contreras
+Johan Herland, <johan@herland.net>
+www.herland.net
