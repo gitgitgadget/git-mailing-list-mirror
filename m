@@ -1,156 +1,93 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH v3 17/19] refs.c: change update_ref to use a transaction
-Date: Mon, 28 Apr 2014 11:33:52 -0700
-Message-ID: <CAL=YDWkk9aqDmAA4OAYd-eFNkdKoEdp8gS=n4VyMqAFpknU3Bg@mail.gmail.com>
-References: <1398442494-23438-1-git-send-email-sahlberg@google.com>
-	<1398442494-23438-18-git-send-email-sahlberg@google.com>
-	<535AEFAF.9000908@alum.mit.edu>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] t3910: show failure of core.precomposeunicode with
+ decomposed filenames
+Date: Mon, 28 Apr 2014 15:35:02 -0400
+Message-ID: <20140428193502.GD25993@sigill.intra.peff.net>
+References: <20140428161630.GA9435@sigill.intra.peff.net>
+ <xmqqbnvlqn5j.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Apr 28 21:34:29 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 28 21:35:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WerJt-0001EJ-3N
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 21:34:29 +0200
+	id 1WerKZ-00027m-EI
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 21:35:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933114AbaD1TeW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2014 15:34:22 -0400
-Received: from mail-vc0-f180.google.com ([209.85.220.180]:41583 "EHLO
-	mail-vc0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932453AbaD1TeU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 15:34:20 -0400
-Received: by mail-vc0-f180.google.com with SMTP id hq16so6350286vcb.11
-        for <git@vger.kernel.org>; Mon, 28 Apr 2014 12:34:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=2I09lPJhhv8lqRSQ0iOxk3EO05WIdQ78e6gseUfr6gA=;
-        b=FkJhZthRkZGJx/UMZmILbt7xmbXFC7kOG5JGJVcAsWuXDbAr8bQPQaqsXLGCVEWnuE
-         jl1FHWgO5m7tvzZc0hOQwfu18wa7mr+tOr/4EAgmIeThKT69Fkx7ThnfVLguAZEV4frv
-         J2DuDNsV2dArUf+L3zCakDrIKX6b98TQBRTEG+vcIWjWZudqOXbvEGE4bkJg0MeKE9c2
-         j1PHbz9kyunuNUvIY5dE15jhXBmvM4zA7NLSZy+i6wtVeGfSFggZZDIFqU0DCBDkMuBw
-         D8pkKmOLJr063SxU1NDkv5DeixzI5hy3xegc45w1jF2URbGkPZFNBJzRcS+iS9f+fR9Z
-         QqXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=2I09lPJhhv8lqRSQ0iOxk3EO05WIdQ78e6gseUfr6gA=;
-        b=kxoF0dxbXQ9g3K7Eem3/4UZpELa9Ac4gXaTyylZBHOkRTq3w3XKjifpPF0rATTC/IJ
-         jwd2RPYYq9t4RUc0NbxX2q9ZKoXxwf6XJO4KHMtVDlNtyLiDZJqOZ/hOrM15N01vlAgc
-         oUPcz0SMvFwFgmQrvrczZ8GXLjqP1zY1+rL9OtGJOytW1NNBXeHj2Iw0oVTgkx1rTuTK
-         HmQzOmzt620jcJPn1PGWHQQOqr9KU/WjpzE3X5EAgHrenJ6N9PLVgvpMA8ezVRoarI4E
-         Wl0SA5BGXyr88Gf4s1ImChCoxBldzhWj+rwgZLTmFCwcSnxXnW++Dk55J6S9FYBd2pVs
-         GQXA==
-X-Gm-Message-State: ALoCoQnYfOtD5e24SCdfGYewH1fJFOx0RCY6yUzXadsgd3BZM1JCA8u7nlAPu0NkZQ4FE/haNoZrErrrSY6eo9XnYRfW0FKL5dpd/TQ+GdlJC7esUpEUyzjHS8gALyL4WImj8Ws7aW15cV4rjYrRG66Wbou/ztJ/VSx9PDpxseTIJc8O+GLXP5M8pTwqvku1p+1JgofesTrH
-X-Received: by 10.52.65.165 with SMTP id y5mr1275634vds.51.1398710033012; Mon,
- 28 Apr 2014 11:33:53 -0700 (PDT)
-Received: by 10.52.141.13 with HTTP; Mon, 28 Apr 2014 11:33:52 -0700 (PDT)
-In-Reply-To: <535AEFAF.9000908@alum.mit.edu>
+	id S1755695AbaD1TfF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 15:35:05 -0400
+Received: from cloud.peff.net ([50.56.180.127]:40609 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754774AbaD1TfE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2014 15:35:04 -0400
+Received: (qmail 13225 invoked by uid 102); 28 Apr 2014 19:35:04 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 28 Apr 2014 14:35:04 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 28 Apr 2014 15:35:02 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqbnvlqn5j.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247412>
 
-Thanks.
+On Mon, Apr 28, 2014 at 12:17:28PM -0700, Junio C Hamano wrote:
 
-On Fri, Apr 25, 2014 at 4:28 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> On 04/25/2014 06:14 PM, Ronnie Sahlberg wrote:
->> Change the update_ref helper function to use a ref transaction internally.
->>
->> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
->> ---
->>  refs.c | 23 +++++++++++++++++++----
->>  1 file changed, 19 insertions(+), 4 deletions(-)
->>
->> diff --git a/refs.c b/refs.c
->> index 1557c3c..95df4a9 100644
->> --- a/refs.c
->> +++ b/refs.c
->> @@ -3397,11 +3397,26 @@ int update_ref(const char *action, const char *refname,
->>              const unsigned char *sha1, const unsigned char *oldval,
->>              int flags, enum action_on_err onerr)
->>  {
->> -     struct ref_lock *lock;
->> -     lock = update_ref_lock(refname, oldval, flags, NULL, onerr);
->> -     if (!lock)
->> +     struct ref_transaction *t;
->> +     char *err = NULL;
->> +
->> +     t = ref_transaction_begin();
->> +     if ((!t ||
->> +         ref_transaction_update(t, refname, sha1, oldval, flags,
->> +                                !!oldval)) ||
->> +         (ref_transaction_commit(t, action, &err) && !(t = NULL))) {
+> >   3. Convert index filenames to their precomposed form when
+> >      we read the index from disk. This would be efficient,
+> >      but we would have to be careful not to write the
+> >      precomposed forms back out to disk.
+> 
+> I think this may be the right approach, especially if you are going
+> to do this only when core.precomposeunicode is set.
+> 
+> the reasoning behind "we would have to be careful not to write"
+> part, is unclear to me, though.  Don't decomposing filesystems
+> perform the manglig from the precomposed form without even being
+> asked to do so, just like a case insensitive filesystem will
+> overwrite an existing "makefile" on a request to write to
+> "Makefile"?
 
-This is transient code to just show how ugly this pattern becomes when
-ref_transaction_commit()
-implicitly also frees the transaction.
+Sorry, I meant "do not write the precomposed forms back out to the
+on-disk index". And by extension, do not update cache-tree and write
+them out to git trees.
 
-Later patches toward the end of the series will replace this with
-something nicer.
-Currently in this patch series I pass a pointer to pointer for the
-transaction to _commit()
-but that is perhaps not optimal either.
-I will try and see how it would look if _commit would not free the
-transaction at all
-and the caller would always have to call ref_transaction_free() explicitely.
+IOW, it is not enough to just set cache_entry->name to the normalized
+form. You'd need to store both.
 
+Since such entries are in the minority, and because cache_entry is
+already a variable-length struct, I think you could get away with
+sticking it after the "name" field, and then comparing like:
 
-I am thinking of something like this :
+  const char *ce_normalized_name(struct cache_entry *ce, size_t *len)
+  {
+	const char *ret;
 
-   t = ref_transaction_begin();
-   if ((!t ||
-       ref_transaction_update(t, ...)) ||
-       ref_transaction_commit(t, ...)) {
-          ...something...
-   }
-   ref_transaction_free(t);
+	/* Normal, fast path */
+	if (!(ce->ce_flags & CE_NORMALIZED_NAME)) {
+		len = ce_namelen(ce);
+		return ce->name;
+	}
 
+	/* Slow path for normalized names */
+	ret = ce->name + ce->namelen + 1;
+	*len = strlen(name);
+	return ret;
+  }
 
->
-> You seem to have extra parentheses around the first || subexpression.
->
-> You also don't need the parentheses around the && expression because &&
-> binds more tightly than ||.
->
-> But using "!(t = NULL)" in the middle of a conditional expression is
-> pretty obscure.  I think you will change this in a later patch, so I
-> will defer my comments.
->
->> +          const char *str = "update_ref failed for ref '%s': %s";
->
-> Indentation error.
+The strlen is probably OK since such paths are presumably in the
+minority (even for UTF-8 paths, we can avoid storing the extra copy if
+they do not need any normalization). Or we could get fancy and encode
+the length in front, but I am not sure it is worth the complexity.
 
-Fixed.
+Anyway, the tricky part is then making sure that all cache_entry name
+comparisons use ce_normalized_name instead of ce->name.
 
->
->> +
->> +             ref_transaction_rollback(t);
->> +             switch (onerr) {
->> +             case UPDATE_REFS_MSG_ON_ERR: error(str, refname, err); break;
->> +             case UPDATE_REFS_DIE_ON_ERR: die(str, refname, err); break;
->> +             case UPDATE_REFS_QUIET_ON_ERR: break;
->> +             free(err);
->> +             }
->>               return 1;
->> -     return update_ref_write(action, refname, sha1, lock, NULL, onerr);
->> +     }
->> +     return 0;
->>  }
->>
->>  static int ref_update_compare(const void *r1, const void *r2)
->>
->
->
-> --
-> Michael Haggerty
-> mhagger@alum.mit.edu
-> http://softwareswirl.blogspot.com/
+-Peff
