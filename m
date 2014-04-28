@@ -1,93 +1,69 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] poll/select: prevent busy-waiting
-Date: Mon, 28 Apr 2014 17:05:47 +0200
-Message-ID: <535E6E4B.6070308@viscovery.net>
-References: <20140428083931.GA10257@camelia.ucw.cz> <CABPQNSaC30p7TEOvc85u=+skjrFj17182vWWSL=QNVuvzVFE=w@mail.gmail.com> <20140428113815.GA10559@camelia.ucw.cz> <20140428114224.GA11186@camelia.ucw.cz> <CABPQNSbDkE+Vff=4MmPO9oMfjRay6Oin51zZRoZ8mOEhGoaD3Q@mail.gmail.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH 05/12] MINGW: git-compat-util.h: use inttypes.h for printf macros.
+Date: Mon, 28 Apr 2014 17:07:34 +0200
+Message-ID: <CABPQNSawLpFQGuW-WV-e=v1U1OQ2BeZcatyBfbb4Xv6C3TvD_Q@mail.gmail.com>
+References: <1398693097-24651-1-git-send-email-marat@slonopotamus.org>
+ <1398693097-24651-6-git-send-email-marat@slonopotamus.org>
+ <CABPQNSaP=q5Y4oKOM3zAMvhATZx2BDj_8s6ZO1EBFPGrtSj1Tw@mail.gmail.com> <20140428150057.GA19002@seldon>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Stepan Kasal <kasal@ucw.cz>,
-	GIT Mailing-list <git@vger.kernel.org>,
-	Theodore Leblond <theodore.leblond@gmail.com>
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Mon Apr 28 17:06:13 2014
+Cc: GIT Mailing-list <git@vger.kernel.org>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: Marat Radchenko <marat@slonopotamus.org>
+X-From: git-owner@vger.kernel.org Mon Apr 28 17:08:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wen8F-0007Lz-3f
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 17:06:11 +0200
+	id 1WenAL-0001a0-5Z
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 17:08:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932472AbaD1PF6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2014 11:05:58 -0400
-Received: from so.liwest.at ([212.33.55.14]:45824 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756602AbaD1PFy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 11:05:54 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.80.1)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Wen7s-0003XQ-ES; Mon, 28 Apr 2014 17:05:49 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id E14CE16613;
-	Mon, 28 Apr 2014 17:05:47 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
-In-Reply-To: <CABPQNSbDkE+Vff=4MmPO9oMfjRay6Oin51zZRoZ8mOEhGoaD3Q@mail.gmail.com>
-X-Spam-Score: -1.0 (-)
+	id S932551AbaD1PIQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 11:08:16 -0400
+Received: from mail-ie0-f177.google.com ([209.85.223.177]:59849 "EHLO
+	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932518AbaD1PIO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2014 11:08:14 -0400
+Received: by mail-ie0-f177.google.com with SMTP id rp18so1343147iec.36
+        for <git@vger.kernel.org>; Mon, 28 Apr 2014 08:08:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=n39f03JcUsDZlXFOmH/SNqIsMVQ4BVMGOeScF5aCeM8=;
+        b=sBEO+9nDnDCu5INtKHXHnsxNDVzdSxSpQs9Z5OA4Z7UFVFw5AK5k5fFXu6kq5ifVaM
+         ZRgMzBw83Ii+b4hl/OjP2/IOfhhaXlaA5LDseSzzUeVcBzWtJaxbXLNVRjjuXRobc83Y
+         OlkHHdJxF6cUKHLnGqZNEpsap4xg/E9Yl2aBHtoqV0Y3Beb93jZhlDF+jGDK3/qyqDAc
+         tXjeiSPhe7eEACgGp1BlPTy4omNOR3ePDdASNxMINZFliV9X6BmIkGYfJ1pSMcdT8eOQ
+         F+LJMEMcW9qpfH/y55HosfchkPaKxClGHuV8sM1bTqvTDkJBRtNFSnD89NaWVTX2aThU
+         HTxg==
+X-Received: by 10.42.204.197 with SMTP id fn5mr1268699icb.95.1398697694295;
+ Mon, 28 Apr 2014 08:08:14 -0700 (PDT)
+Received: by 10.64.166.135 with HTTP; Mon, 28 Apr 2014 08:07:34 -0700 (PDT)
+In-Reply-To: <20140428150057.GA19002@seldon>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247354>
 
-Am 4/28/2014 13:44, schrieb Erik Faye-Lund:
-> On Mon, Apr 28, 2014 at 1:42 PM, Stepan Kasal <kasal@ucw.cz> wrote:
->> From: Paolo Bonzini <bonzini@gnu.org>
->> Date: Mon, 21 May 2012 09:52:42 +0200
->>
->> Backported from Gnulib.
->>
->> 2012-05-21  Paolo Bonzini  <bonzini@gnu.org>
->>
->>         poll/select: prevent busy-waiting.  SwitchToThread() only gives away
->>         the rest of the current time slice to another thread in the current
->>         process. So if the thread that feeds the file decscriptor we're
->>         polling is not in the current process, we get busy-waiting.
->>         * lib/poll.c: Use SleepEx(1, TRUE) instead of SwitchToThread().
->>         Patch from Theodore Leblond.
->>         * lib/select.c: Split polling out of the loop that sets the output
->>         fd_sets.  Check for zero result and loop if the wait timeout is
->>         infinite.
->>
->> Signed-off-by: Stepan Kasal <kasal@ucw.cz>
->> ---
->>  compat/poll/poll.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/compat/poll/poll.c b/compat/poll/poll.c
->> index 31163f2..a9b41d8 100644
->> --- a/compat/poll/poll.c
->> +++ b/compat/poll/poll.c
->> @@ -605,7 +605,7 @@ restart:
->>
->>    if (!rc && timeout == INFTIM)
->>      {
->> -      SwitchToThread();
->> +      SleepEx (1, TRUE);
->>        goto restart;
->>      }
->>
->> --
->> 1.9.2.msysgit.0.158.g6070cee
->>
-> 
-> Thanks for taking the effort!
-> 
-> Acked-by: Erik Faye-Lund <kusmabite@gmail.com>
+On Mon, Apr 28, 2014 at 5:00 PM, Marat Radchenko <marat@slonopotamus.org> wrote:
+> On Mon, Apr 28, 2014 at 04:53:52PM +0200, Erik Faye-Lund wrote:
+>> Just checking that I understand: Does this mean that we now require an
+>> MSVC-version that has stdint.h? If so, I'm not against such a case.
+>> IMO, the biggest benefit of using MSVC is not building on legacy
+>> systems, but being able to use it's debugger. And for that purpose
+>> it's probably OK to increase the required version.
+>
+> Ouch, that was not intentional. What minimal MSVC version is currently
+> supported and who decides if it is OK to increase required one?
 
-The patch text has my ACK, too (I've been using it since 2 years now), but
-I very much prefer the commit message of the earlier post. GNU standards
-w.r.t. commit messages are simply sub-par. ;-)
+I don't know what the oldest one anyone have ever used, but I don't
+think that matters. IMO, just noting it in the commit-message is good
+enough. Others might feel differently, though.
 
--- Hannes
+stdint.h is available in VS10 and onwards.
+contrib/buildsystems/Generators/Vcproj.pm generates project files for
+VS9.
