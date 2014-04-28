@@ -1,51 +1,51 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 08/14] t1000-read-tree-m-3way.sh: use the $( ... ) construct for command substitution
-Date: Mon, 28 Apr 2014 05:57:31 -0700
-Message-ID: <1398689857-17014-8-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 06/14] t0030-stripspace.sh: use the $( ... ) construct for command substitution
+Date: Mon, 28 Apr 2014 05:57:29 -0700
+Message-ID: <1398689857-17014-6-git-send-email-gitter.spiros@gmail.com>
 References: <1398689857-17014-1-git-send-email-gitter.spiros@gmail.com>
 Cc: matthieu.moy@grenoble-inp.fr, Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 28 14:58:47 2014
+X-From: git-owner@vger.kernel.org Mon Apr 28 14:58:54 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wel8w-0004f6-Hi
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 14:58:46 +0200
+	id 1Wel93-0004oW-GR
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 14:58:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932103AbaD1M6i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2014 08:58:38 -0400
-Received: from mail-pd0-f171.google.com ([209.85.192.171]:44121 "EHLO
-	mail-pd0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755610AbaD1M5u (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 08:57:50 -0400
-Received: by mail-pd0-f171.google.com with SMTP id g10so726596pdj.16
-        for <git@vger.kernel.org>; Mon, 28 Apr 2014 05:57:50 -0700 (PDT)
+	id S932149AbaD1M6u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 08:58:50 -0400
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:62074 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755641AbaD1M5s (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2014 08:57:48 -0400
+Received: by mail-pa0-f47.google.com with SMTP id lj1so5783338pab.20
+        for <git@vger.kernel.org>; Mon, 28 Apr 2014 05:57:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=3yd60bpXE1HKwY++fQU8+hk/dXDf/o8raVuAcBbRNa8=;
-        b=AZ5CAAEGJmK/BO6DNm5MuLmyL/awEMqjA9cpvq09HoYC0Z0mGmcmg5r5rclml9iGSl
-         YAJwf2PJpqoz7MDGwqLYx7XFqC8/vFOXyMuPsJyOhytW2hh1xhpYt98sZhtjo0KTLEMd
-         Hi0CJBJCq9vir5DNWlyf0DKFOt5KbDY/V7cd1vZGgB9kBOCGQeuNz2FalvhJ9qtOuRfA
-         HdDiBtMV8GoHbARC6R1n62mJzrUbRC+XA81wyk6vUzYGgKvVLgUrArQH6UFNxOZ6/S0G
-         BWG86dtshtUbyc6oXZ+9Ji4eBkMVwVCda/j05VImG8jzEuP05LrSGavCPR3Y6HpXAeEP
-         jZwA==
-X-Received: by 10.66.136.71 with SMTP id py7mr25554561pab.2.1398689870079;
-        Mon, 28 Apr 2014 05:57:50 -0700 (PDT)
+        bh=7kMRG1FKt7lcPpHrJToyq9u9PBi8YnOfj8xeYUr7a98=;
+        b=mc0FK8IItvivwvku5cfz8RHXe8QmJqCbwu2mDsqPAgi0UHgKLFgpKeGM0FaqziOXYh
+         gA67MbmGa/nxZrnPlrGqHPYLtK1EmX+H4eqlMnEqhWKTLQrb4n7fZWL4eWm8IaFEyWMG
+         ddgJy5lctsntoEM3zrd5+JBQTn62ljM7fya9imv7eCMrRW30pA7weiSDsxEwNVrclIuR
+         ohYiD9TaXrTeI6ThL2uHu6nkeT739LLhYe8tkm0F2tgka+bevJyVI8e6PAVTR1DpeKix
+         aA00Os+rci88Axrf+W8nPtZRo2wjD7iQeksZUtksFBNN/pCESmYDnN8HEjEOrLZbGOMe
+         trDA==
+X-Received: by 10.68.248.7 with SMTP id yi7mr25540655pbc.31.1398689867518;
+        Mon, 28 Apr 2014 05:57:47 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id ky8sm34896290pbc.64.2014.04.28.05.57.49
+        by mx.google.com with ESMTPSA id ky8sm34896290pbc.64.2014.04.28.05.57.46
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 28 Apr 2014 05:57:49 -0700 (PDT)
+        Mon, 28 Apr 2014 05:57:46 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1398689857-17014-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247320>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247321>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -67,25 +67,45 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t1000-read-tree-m-3way.sh |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t0030-stripspace.sh |   20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/t/t1000-read-tree-m-3way.sh b/t/t1000-read-tree-m-3way.sh
-index babcdd2..a0b79b4 100755
---- a/t/t1000-read-tree-m-3way.sh
-+++ b/t/t1000-read-tree-m-3way.sh
-@@ -519,10 +519,10 @@ test_expect_success \
-     'rm -f .git/index F16 &&
-     echo F16 >F16 &&
-     git update-index --add F16 &&
--    tree0=`git write-tree` &&
-+    tree0=$(git write-tree) &&
-     echo E16 >F16 &&
-     git update-index F16 &&
--    tree1=`git write-tree` &&
-+    tree1=$(git write-tree) &&
-     read_tree_must_succeed -m $tree0 $tree1 $tree1 $tree0 &&
-     git ls-files --stage'
+diff --git a/t/t0030-stripspace.sh b/t/t0030-stripspace.sh
+index a8e84d8..0333dd9 100755
+--- a/t/t0030-stripspace.sh
++++ b/t/t0030-stripspace.sh
+@@ -225,22 +225,22 @@ test_expect_success \
  
+ test_expect_success \
+     'text without newline at end should end with newline' '
+-    test `printf "$ttt" | git stripspace | wc -l` -gt 0 &&
+-    test `printf "$ttt$ttt" | git stripspace | wc -l` -gt 0 &&
+-    test `printf "$ttt$ttt$ttt" | git stripspace | wc -l` -gt 0 &&
+-    test `printf "$ttt$ttt$ttt$ttt" | git stripspace | wc -l` -gt 0
++    test $(printf "$ttt" | git stripspace | wc -l) -gt 0 &&
++    test $(printf "$ttt$ttt" | git stripspace | wc -l) -gt 0 &&
++    test $(printf "$ttt$ttt$ttt" | git stripspace | wc -l) -gt 0 &&
++    test $(printf "$ttt$ttt$ttt$ttt" | git stripspace | wc -l) -gt 0
+ '
+ 
+ # text plus spaces at the end:
+ 
+ test_expect_success \
+     'text plus spaces without newline at end should end with newline' '
+-    test `printf "$ttt$sss" | git stripspace | wc -l` -gt 0 &&
+-    test `printf "$ttt$ttt$sss" | git stripspace | wc -l` -gt 0 &&
+-    test `printf "$ttt$ttt$ttt$sss" | git stripspace | wc -l` -gt 0 &&
+-    test `printf "$ttt$sss$sss" | git stripspace | wc -l` -gt 0 &&
+-    test `printf "$ttt$ttt$sss$sss" | git stripspace | wc -l` -gt 0 &&
+-    test `printf "$ttt$sss$sss$sss" | git stripspace | wc -l` -gt 0
++    test $(printf "$ttt$sss" | git stripspace | wc -l) -gt 0 &&
++    test $(printf "$ttt$ttt$sss" | git stripspace | wc -l) -gt 0 &&
++    test $(printf "$ttt$ttt$ttt$sss" | git stripspace | wc -l) -gt 0 &&
++    test $(printf "$ttt$sss$sss" | git stripspace | wc -l) -gt 0 &&
++    test $(printf "$ttt$ttt$sss$sss" | git stripspace | wc -l) -gt 0 &&
++    test $(printf "$ttt$sss$sss$sss" | git stripspace | wc -l) -gt 0
+ '
+ 
+ test_expect_success \
 -- 
 1.7.10.4
