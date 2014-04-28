@@ -1,146 +1,79 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH 2/2] trailer: add examples to the documentation
-Date: Mon, 28 Apr 2014 15:12:51 -0700
-Message-ID: <xmqqbnvlnlwc.fsf@gitster.dls.corp.google.com>
-References: <20140427200327.16880.53255.chriscool@tuxfamily.org>
-	<20140427201238.16880.7144.chriscool@tuxfamily.org>
+Subject: Re: [PATCH 00/32] Split index mode for very large indexes
+Date: Mon, 28 Apr 2014 15:23:53 -0700
+Message-ID: <xmqq7g69nldy.fsf@gitster.dls.corp.google.com>
+References: <1398682553-11634-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
-	Josh Triplett <josh@joshtriplett.org>,
-	Thomas Rast <tr@thomasrast.ch>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Tue Apr 29 00:13:10 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 29 00:24:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WetnQ-0004fo-Rz
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Apr 2014 00:13:09 +0200
+	id 1Wetxx-0001UF-E0
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Apr 2014 00:24:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933387AbaD1WM7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2014 18:12:59 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65413 "EHLO
+	id S1754349AbaD1WX5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Apr 2014 18:23:57 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53054 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932661AbaD1WM4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 18:12:56 -0400
+	id S1754195AbaD1WX5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Apr 2014 18:23:57 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1267581673;
-	Mon, 28 Apr 2014 18:12:56 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A8A3681A88;
+	Mon, 28 Apr 2014 18:23:56 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=OAZiGMC1Gz30D5jNqtSOrnIz18M=; b=f0THWz
-	Q/Az7bN1obsR318G6ey2+q3SwP3sHZjMXCDlOsZNBjN+AXxzzqcLzdhSPLBKe/DL
-	vKkd9279Z8oMXWfzaCGwjEWe/1k2lau7JLfAdWINM7ka/PKJZ9D/USwZg1Z04+3T
-	V8n0FAtsrVPXuCXs52KJ7snJyjr7kXCK2sNd0=
+	:content-type:content-transfer-encoding; s=sasl; bh=atcMDuGQBuA0
+	Dzh/sYpX4nOqk/Y=; b=Tvxs0wVEcPoIruskHXMkK/De6TJHtXu4W6QW4T+xWHq1
+	Z2JHGqJbUXxMJTHeM67KzKDRldl24QxU5zfgw1LEHBdusQPyeNQdq5YedfAy6Kde
+	mTEAMMYhQyPwGgDFGcajFJWUrxQ9pnTv2VM0dvZWYz+EwSWRfR6OYalTHgRLka4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LRGalwtpseah5nnNUZwQoHFPEL3UK5wO
-	g4FG8ZiKkd72cUrHipEzzjDaMDjsNw05gUdVH2TX73I0U0vEBDqM4RKQwXlwbWwx
-	ttDFfhHsp4+cdAUximVgwDFBZhvOTzf5oDUzHMciRVkgAH6+nndZ1uRqHCzb2wY8
-	77KQHlgKihA=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=hmIrIB
+	n/dNXBFxVVhKYWVn6cLtY6x3SD/x6Yf4rV20sNwrGyHWZ/iChlRriSqPlk9FWla5
+	Yb1fw0qlnzAHR4ISxsRitzZzXXETQwmvf+cEFmS0VCfKyq0ktl9OkJV2refE9OM9
+	iIVbBxvso4eoYqYzYeTSrbqcusaRWrYhLgMn0=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D88CF81672;
-	Mon, 28 Apr 2014 18:12:55 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 90DCA81A87;
+	Mon, 28 Apr 2014 18:23:56 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4A2EE8166D;
-	Mon, 28 Apr 2014 18:12:53 -0400 (EDT)
-In-Reply-To: <20140427201238.16880.7144.chriscool@tuxfamily.org> (Christian
-	Couder's message of "Sun, 27 Apr 2014 22:12:37 +0200")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A3C6F81A80;
+	Mon, 28 Apr 2014 18:23:54 -0400 (EDT)
+In-Reply-To: <1398682553-11634-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Mon, 28
+ Apr 2014 17:55:21 +0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 3E680ED8-CF22-11E3-B208-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: C88FAACA-CF23-11E3-B548-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247460>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> ---
->  Documentation/git-interpret-trailers.txt | 98 +++++++++++++++++++++++++++++++-
->  1 file changed, 97 insertions(+), 1 deletion(-)
+> The read penalty is not addressed here, so I still pay 14MB hashing
+> cost.
 
-Very good to have these examples.  They seem to be clearly written.
+Hmm, yeah, the cost for verify_hdr() would still matter, and
+presumably you would be hashing the additional 200kB to validate the
+smaller "changes since the base" file to give users the same level
+of protection against corruption.
 
-Having said that, this part made me go "Huh" for a few reasons.
+> Doing this in other implementations should be easy (at least the
+> reading part) and with small code change. The whole index format is
+> retained. All you need is to read a new extension that contains two
+> ewah-bitmaps and apply the changes to create the final index.
 
-> +* Configure a 'fix' trailer with a command to show the subject of a
-> +  commit that is fixed, and show how it works:
-> ++
-> +------------
-> +$ git config trailer.fix.key "Fixes #"
-> +$ git config trailer.fix.ifExists "overwrite"
-> +$ git config trailer.fix.command "git log -1 --oneline --format=\"%h (%s)\" --abbrev-commit --abbrev=14 \$ARG"
-> +$ git interpret-trailers <<EOF
-> +> subject
-> +> 
-> +> message
-> +> 
-> +> fix: HEAD~2
-> +> EOF
-> +subject
-> +
-> +message
-> +
-> +Fixes #fe3187489d69c4 (subject of fixed commit)
-> +------------
+Why bitmaps, though?  Na=C3=AFvely I would have expected you to read fr=
+om
+two sorted streams and have the transaction log override the base.
 
- - It makes it appear that we have a convention to prefix "#" when
-   talking about a commit object name, but that is not what we
-   recommend to do.  Do some projects refer to commit object names
-   that way?
-
- - It has been my impression that "#123456", when people talk about
-   "Fixes #123456", refers to a bug ID in some tracking system, and
-   the scenario the example sets up "show the subject that is fixed"
-   would not help those who want to have such a linkage between bug
-   ID and fix.
-
-I however do not think of a good mechanised way to fill in the bug
-ID with script [*1*].  I suspect (but I am thinking aloud and am
-open to better alternatives) it would be better to change this
-example *not* to show use of trailer.*.command but have it just take
-the bug ID literally to make it a demonstration that the trailer
-does not have to end with "key: ".  We can of course have your
-example to turn a commit object name to human readable one-liner as
-a separate one to illustrate how to use trailer.*.command, but I do
-not think it is a good idea to call it "Fixes", as that may invite
-confusions with a bug ID people would expect to see.
-
-
-[Footnote]
-
-*1* A workable project convention may be to document an existing bug
-    in a test-suite and detect a commit that fixes the bug, e.g.
-
-    - Document an expected-to-fail bug like so:
-
-      test_expect_failure 'bug #123456' '
-	... demonstrate breakage ...
-      '
-
-      when it is noticed to keep track of it.
-
-
-    - A commit that fixes the bug will have a hunk:
-
-      -test_expect_failure 'bug #123456' '
-      +test_expect_success 'bug #123456' '
-
-      and the trailer.fix.command can examine "git show" output of
-      the proposed commit to detect that hunk and extract "bug #"
-      from there.
-
-    Of course that is not _the_ single best convention, and it would
-    be too big for an example in this documentation.
+Intrigued to find it out...
