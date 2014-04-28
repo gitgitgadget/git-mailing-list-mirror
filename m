@@ -1,82 +1,92 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
+From: Jeremy Morton <admin@game-point.net>
 Subject: Re: Recording the current branch on each commit?
-Date: Mon, 28 Apr 2014 04:01:01 -0500
-Message-ID: <535e18cdc7bce_338911e930c72@nysa.notmuch>
-References: <535C47BF.2070805@game-point.net>
- <CALKQrgfmBByMwMhxu3HkJqJGWy2Rwvij6Hi1_4npjfsxcSgpaQ@mail.gmail.com>
- <535D4085.4040707@game-point.net>
- <CALKQrgemFx=2JaC1BaRqCwEV+knC8QftxcZ7K0AsT9azzuyVdA@mail.gmail.com>
- <535D6EB1.9080208@game-point.net>
+Date: Mon, 28 Apr 2014 10:16:42 +0100
+Message-ID: <535E1C7A.3040504@game-point.net>
+References: <CALKQrgemFx=2JaC1BaRqCwEV+knC8QftxcZ7K0AsT9azzuyVdA@mail.gmail.com>	<535D6EB1.9080208@game-point.net>	<CALKQrgdFLc=k9i1+N2458amLMGQa99q55A=N785VfMRwfOH6Rg@mail.gmail.com>	<20140428.084543.1615507400056684596.chriscool@tuxfamily.org>	<535E18E0.3010507@game-point.net> <CALKQrgfN-bE7KpZFadtD806Xk29N_R2sYurPQSKHLSh0UwcZiw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Git mailing list <git@vger.kernel.org>
-To: Jeremy Morton <admin@game-point.net>,
-	Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Mon Apr 28 11:11:42 2014
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+	Git mailing list <git@vger.kernel.org>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Mon Apr 28 11:16:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WehbC-0008RI-7b
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 11:11:42 +0200
+	id 1Wehg7-0006uO-UC
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 11:16:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754360AbaD1JLi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2014 05:11:38 -0400
-Received: from mail-oa0-f47.google.com ([209.85.219.47]:59880 "EHLO
-	mail-oa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754221AbaD1JLh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 05:11:37 -0400
-Received: by mail-oa0-f47.google.com with SMTP id i11so6887833oag.20
-        for <git@vger.kernel.org>; Mon, 28 Apr 2014 02:11:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=3/FHwfHhK1vli7wkkG5xM+JZrGhCiJvK9dYREtIg5qA=;
-        b=vdk5AkRAKlZbc+7SLoi+TJFt0w/UaDEtx1UFi1lkmO18e5ic2yhF2y7FUZWZrXpG3R
-         yRje/MxHsn9gtAriSgMLPMHAgkeL3eaTEiYLwTmies5HdvAfpujf6Uy5ov9LHgjJOXuz
-         AAVHxTNHsidvUMieWrWyedLtmvjcd/7HpN7qi8kcKdNjJoSYaPEXOIUFBE/bbtXHLLNw
-         azmcV8xfTBl8cOAUa6R8gkTbV3ittnBITAOs+ryDtwvJ4pXjyA/MuzGEmiDIRsHkE4SB
-         kAWkhw805yfDvQ4U/gKpwzfWjh2AeW1sbGfI9aQOzfYomVNcVzJ2NVbD/rvbQOab1vBW
-         FhKQ==
-X-Received: by 10.182.40.201 with SMTP id z9mr6194828obk.45.1398676296669;
-        Mon, 28 Apr 2014 02:11:36 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id oz15sm71107911oeb.13.2014.04.28.02.11.32
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 28 Apr 2014 02:11:35 -0700 (PDT)
-In-Reply-To: <535D6EB1.9080208@game-point.net>
+	id S1754737AbaD1JQk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 05:16:40 -0400
+Received: from mail.gooeysoftware.com ([208.100.15.213]:55450 "EHLO
+	mail.gooeysoftware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754565AbaD1JQj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2014 05:16:39 -0400
+Received: from [192.168.0.2] (82-69-83-224.dsl.in-addr.zen.co.uk [82.69.83.224])
+	by mail.gooeysoftware.com (Postfix) with ESMTPSA id C811A18A09AC;
+	Mon, 28 Apr 2014 04:24:26 -0500 (CDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.18) Gecko/20110616 Thunderbird/3.1.11
+In-Reply-To: <CALKQrgfN-bE7KpZFadtD806Xk29N_R2sYurPQSKHLSh0UwcZiw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247260>
 
-Jeremy Morton wrote:
-> On 27/04/2014 20:33, Johan Herland wrote:
-> > The problem is not really "less tidy commit trees" - by which I gather
-> > you mean history graphs that are non-linear. IMHO, the history graph
-> > should reflect parallel/branched development when that is useful.
-> > Blindly rebasing everything into a single line is IMHO just as bad as
-> > doing all your work directly on master and blindly running "git pull"
-> > between each of your own commits (which results in a lot of useless
-> > merges). The merge commits themselves are not the problem. Merge
-> > commits are a tool, and when used properly (to introduce topics to the
-> > master branch like described above) they are a good tool. When abused
-> > (like blindly running "git pull" and accepting useless "merge
-> > bubbles") they create more problems than they solve.
-> 
-> Sounds like the default behaviour of "git pull" might not be ideal if it 
-> easily causes these problems.
+On 28/04/2014 10:09, Johan Herland wrote:
+> On Mon, Apr 28, 2014 at 11:01 AM, Jeremy Morton<admin@game-point.net>  wrote:
+>> On 28/04/2014 07:45, Christian Couder wrote:
+>>> Yes, it's possible. Yesterday, I sent the following patch:
+>>>
+>>> [RFC/PATCH 2/2] trailer: add examples to the documentation
+>>>
+>>> and it shows a commit-msg hook to do something like that:
+>>>
+>>> $ cat>.git/hooks/commit-msg<<EOF
+>>> #!/bin/sh
+>>> git interpret-trailers --trim-empty --trailer "git-version: \$(git
+>>> describe)" "\$1">   "\$1.new"
+>>> mv "\$1.new" "\$1"
+>>> EOF
+>>> $ chmod +x .git/hooks/commit-msg
+>>>
+>>> I think you just need to use the following if you want the branch
+>>> instead of the git version:
+>>>
+>>> git interpret-trailers --trim-empty --trailer "git-branch: \$(git name-rev
+>>> --name-only HEAD)" "\$1">   "\$1.new"
+>>>
+>>> It could even be simpler if there was an option (which has already
+>>> been discussed) that made it possible to modify the file in
+>>> place. This way one would not need the 'mv "\$1.new" "\$1"' command.
+>>
+>> This is certainly going in the right direction, but it's still implemented
+>> as a hook on a per-repo basis.  Do you foresee a point in the future where
+>> these trailers could be added through simple one-liners in someone's global
+>> .gitconfig file?  That's where I'd really like to get to.
+>
+> It's a hack, but it works surprisingly well in practice (assuming that
+> you and your co-workers all agree that this is an acceptable
+> approach):
+>
+>   1. Write the hook script and add it to your project (in a git-hooks
+> subdir or something)
+>
+>   2. Add a post-checkout hook to install the first hook and the
+> post-checkout hook itself into the user's .git/hooks/ dir.
+>
+>   3. Tell your co-workers to run the post-checkout hook script manually
+> the first time. After that, the script should take care of updating
+> itself and any hooks that you add to the project.
+>
+>
+> ...Johan
 
-It's not idea. Virtually everyone agrees with that, even Linus Torvalds, and we
-have the patches to fix it, but it's not going to change.
-
-The Git project doesn't welcome change.
+I don't understand why the co-workers need to run the post-checkout hook 
+script manually the first time?
 
 -- 
-Felipe Contreras
+Best regards,
+Jeremy Morton (Jez)
