@@ -1,51 +1,51 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 04/14] t0025-crlf-auto.sh: use the $( ... ) construct for command substitution
-Date: Mon, 28 Apr 2014 05:57:27 -0700
-Message-ID: <1398689857-17014-4-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 09/14] t1001-read-tree-m-2way.sh: use the $( ... ) construct for command substitution
+Date: Mon, 28 Apr 2014 05:57:32 -0700
+Message-ID: <1398689857-17014-9-git-send-email-gitter.spiros@gmail.com>
 References: <1398689857-17014-1-git-send-email-gitter.spiros@gmail.com>
 Cc: matthieu.moy@grenoble-inp.fr, Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 28 14:58:25 2014
+X-From: git-owner@vger.kernel.org Mon Apr 28 14:58:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wel8a-0004DO-Ks
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 14:58:24 +0200
+	id 1Wel8g-0004If-1G
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 14:58:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755761AbaD1M5v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S932076AbaD1M6V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 08:58:21 -0400
+Received: from mail-pa0-f51.google.com ([209.85.220.51]:33928 "EHLO
+	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755395AbaD1M5v (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 28 Apr 2014 08:57:51 -0400
-Received: from mail-pd0-f171.google.com ([209.85.192.171]:52645 "EHLO
-	mail-pd0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755395AbaD1M5q (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 08:57:46 -0400
-Received: by mail-pd0-f171.google.com with SMTP id g10so732050pdj.30
-        for <git@vger.kernel.org>; Mon, 28 Apr 2014 05:57:45 -0700 (PDT)
+Received: by mail-pa0-f51.google.com with SMTP id fb1so5145575pad.10
+        for <git@vger.kernel.org>; Mon, 28 Apr 2014 05:57:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Fb2Aoi6079uRXhp+QTEOnCZfJ0xa4ILUcANeY7PkKSs=;
-        b=D5+apsO9v9ZSFp5QM4dfUbeBu/ll9q8NEUtSK5Z4RaMRHRYOmCclrzhEG/fgFObE97
-         8O6NVSuBCl9PmM1AW3A+g2N4pggcIaR+xzfrbSAkzMepvtG5GCms3nW0Ske2J93Wyyr0
-         T7+IBLL4ygObNrGuLdTIqJ/P/aaFTwZRmjgndjH+oET/dfo/3gFNMda9v04C2YhhWmBF
-         5p+ayhRqbS6PB0oHxY7iYudrm/LtvJeGaGnPJE8N7ao5WYAjryp6q84ChyalAqwUTZCu
-         wPQQRDHhW8k/ltLrzkxNSusTEcs91KJQ369HLeJTTUuDAmCd7DqLrbYSK0GVkRaOhs52
-         eMeQ==
-X-Received: by 10.68.221.161 with SMTP id qf1mr29114662pbc.10.1398689865565;
-        Mon, 28 Apr 2014 05:57:45 -0700 (PDT)
+        bh=7ue4jg1+DckyIXWu+YbFck9mBsc4nen0DlpFIf/u+hI=;
+        b=tdfiU6S9gZA+deBYKLciYvDjxu2T65jxnOVkYB06Q+Z5Ap+djo5NV3BKW2W41vLqE4
+         Kj30TuyJVqlg/APvG7a+wVW944CIu5HErEQyry57/4tgGF9f/zkTg1+QPra4qxZr3O1p
+         KEW4huim2RVPBdyO29swM4OrJSeuEqaAEICv9kHH9KXnwJMiT+0oDZeWzpSxsNoN2CGs
+         W4fpRT0a6sYmFdmkeyRJXVKV7lnDKlKWiQnycIm92A/ig755F0ZFoi58kiCblnNfZvb3
+         YYJoJgoId4mA1sVoHqtWO3sjR8g9nqkGrPchKJ18ep09eogujtJ6z7J/F5u4u3fDaJiX
+         3++Q==
+X-Received: by 10.66.136.103 with SMTP id pz7mr3690026pab.140.1398689871158;
+        Mon, 28 Apr 2014 05:57:51 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id ky8sm34896290pbc.64.2014.04.28.05.57.44
+        by mx.google.com with ESMTPSA id ky8sm34896290pbc.64.2014.04.28.05.57.50
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 28 Apr 2014 05:57:44 -0700 (PDT)
+        Mon, 28 Apr 2014 05:57:50 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1398689857-17014-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247317>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -67,127 +67,92 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t0025-crlf-auto.sh |   38 +++++++++++++++++++-------------------
- 1 file changed, 19 insertions(+), 19 deletions(-)
+ t/t1001-read-tree-m-2way.sh |   18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/t/t0025-crlf-auto.sh b/t/t0025-crlf-auto.sh
-index f5f67a6..b0e5694 100755
---- a/t/t0025-crlf-auto.sh
-+++ b/t/t0025-crlf-auto.sh
-@@ -19,9 +19,9 @@ test_expect_success setup '
+diff --git a/t/t1001-read-tree-m-2way.sh b/t/t1001-read-tree-m-2way.sh
+index 3a24abf..db1b6f5 100755
+--- a/t/t1001-read-tree-m-2way.sh
++++ b/t/t1001-read-tree-m-2way.sh
+@@ -36,7 +36,7 @@ compare_change () {
+ }
  
- 	git commit -m initial &&
+ check_cache_at () {
+-	clean_if_empty=`git diff-files -- "$1"`
++	clean_if_empty=$(git diff-files -- "$1")
+ 	case "$clean_if_empty" in
+ 	'')  echo "$1: clean" ;;
+ 	?*)  echo "$1: dirty" ;;
+@@ -68,14 +68,14 @@ test_expect_success \
+      echo rezrov >rezrov &&
+      echo yomin >yomin &&
+      git update-index --add nitfol bozbar rezrov &&
+-     treeH=`git write-tree` &&
++     treeH=$(git write-tree) &&
+      echo treeH $treeH &&
+      git ls-tree $treeH &&
  
--	one=`git rev-parse HEAD:one` &&
--	two=`git rev-parse HEAD:two` &&
--	three=`git rev-parse HEAD:three` &&
-+	one=$(git rev-parse HEAD:one) &&
-+	two=$(git rev-parse HEAD:two) &&
-+	three=$(git rev-parse HEAD:three) &&
+      cat bozbar-new >bozbar &&
+      git update-index --add frotz bozbar --force-remove rezrov &&
+      git ls-files --stage >M.out &&
+-     treeM=`git write-tree` &&
++     treeM=$(git write-tree) &&
+      echo treeM $treeM &&
+      git ls-tree $treeM &&
+      git diff-tree $treeH $treeM'
+@@ -315,7 +315,7 @@ test_expect_success \
+     'rm -f .git/index &&
+      echo DF >DF &&
+      git update-index --add DF &&
+-     treeDF=`git write-tree` &&
++     treeDF=$(git write-tree) &&
+      echo treeDF $treeDF &&
+      git ls-tree $treeDF &&
  
- 	echo happy.
- '
-@@ -33,9 +33,9 @@ test_expect_success 'default settings cause no changes' '
+@@ -323,7 +323,7 @@ test_expect_success \
+      mkdir DF &&
+      echo DF/DF >DF/DF &&
+      git update-index --add --remove DF DF/DF &&
+-     treeDFDF=`git write-tree` &&
++     treeDFDF=$(git write-tree) &&
+      echo treeDFDF $treeDFDF &&
+      git ls-tree $treeDFDF &&
+      git ls-files --stage >DFDF.out'
+@@ -345,7 +345,7 @@ test_expect_success \
+     'rm -f .git/index &&
+      : >a &&
+      git update-index --add a &&
+-     treeM=`git write-tree` &&
++     treeM=$(git write-tree) &&
+      echo treeM $treeM &&
+      git ls-tree $treeM &&
+      git ls-files --stage >treeM.out &&
+@@ -354,7 +354,7 @@ test_expect_success \
+      git update-index --remove a &&
+      mkdir a &&
+      : >a/b &&
+-     treeH=`git write-tree` &&
++     treeH=$(git write-tree) &&
+      echo treeH $treeH &&
+      git ls-tree $treeH'
  
- 	! has_cr one &&
- 	has_cr two &&
--	onediff=`git diff one` &&
--	twodiff=`git diff two` &&
--	threediff=`git diff three` &&
-+	onediff=$(git diff one) &&
-+	twodiff=$(git diff two) &&
-+	threediff=$(git diff three) &&
- 	test -z "$onediff" -a -z "$twodiff" -a -z "$threediff"
- '
- 
-@@ -48,7 +48,7 @@ test_expect_success 'crlf=true causes a CRLF file to be normalized' '
- 
- 	# Note, "normalized" means that git will normalize it if added
- 	has_cr two &&
--	twodiff=`git diff two` &&
-+	twodiff=$(git diff two) &&
- 	test -n "$twodiff"
- '
- 
-@@ -60,7 +60,7 @@ test_expect_success 'text=true causes a CRLF file to be normalized' '
- 
- 	# Note, "normalized" means that git will normalize it if added
- 	has_cr two &&
--	twodiff=`git diff two` &&
-+	twodiff=$(git diff two) &&
- 	test -n "$twodiff"
- '
- 
-@@ -72,7 +72,7 @@ test_expect_success 'eol=crlf gives a normalized file CRLFs with autocrlf=false'
- 	git read-tree --reset -u HEAD &&
- 
- 	has_cr one &&
--	onediff=`git diff one` &&
-+	onediff=$(git diff one) &&
- 	test -z "$onediff"
- '
- 
-@@ -84,7 +84,7 @@ test_expect_success 'eol=crlf gives a normalized file CRLFs with autocrlf=input'
- 	git read-tree --reset -u HEAD &&
- 
- 	has_cr one &&
--	onediff=`git diff one` &&
-+	onediff=$(git diff one) &&
- 	test -z "$onediff"
- '
- 
-@@ -96,7 +96,7 @@ test_expect_success 'eol=lf gives a normalized file LFs with autocrlf=true' '
- 	git read-tree --reset -u HEAD &&
- 
- 	! has_cr one &&
--	onediff=`git diff one` &&
-+	onediff=$(git diff one) &&
- 	test -z "$onediff"
- '
- 
-@@ -108,9 +108,9 @@ test_expect_success 'autocrlf=true does not normalize CRLF files' '
- 
- 	has_cr one &&
- 	has_cr two &&
--	onediff=`git diff one` &&
--	twodiff=`git diff two` &&
--	threediff=`git diff three` &&
-+	onediff=$(git diff one) &&
-+	twodiff=$(git diff two) &&
-+	threediff=$(git diff three) &&
- 	test -z "$onediff" -a -z "$twodiff" -a -z "$threediff"
- '
- 
-@@ -123,9 +123,9 @@ test_expect_success 'text=auto, autocrlf=true _does_ normalize CRLF files' '
- 
- 	has_cr one &&
- 	has_cr two &&
--	onediff=`git diff one` &&
--	twodiff=`git diff two` &&
--	threediff=`git diff three` &&
-+	onediff=$(git diff one) &&
-+	twodiff=$(git diff two) &&
-+	threediff=$(git diff three) &&
- 	test -z "$onediff" -a -n "$twodiff" -a -z "$threediff"
- '
- 
-@@ -137,7 +137,7 @@ test_expect_success 'text=auto, autocrlf=true does not normalize binary files' '
- 	git read-tree --reset -u HEAD &&
- 
- 	! has_cr three &&
--	threediff=`git diff three` &&
-+	threediff=$(git diff three) &&
- 	test -z "$threediff"
- '
- 
-@@ -148,7 +148,7 @@ test_expect_success 'eol=crlf _does_ normalize binary files' '
- 	git read-tree --reset -u HEAD &&
- 
- 	has_cr three &&
--	threediff=`git diff three` &&
-+	threediff=$(git diff three) &&
- 	test -z "$threediff"
- '
+@@ -372,7 +372,7 @@ test_expect_success \
+      mkdir c &&
+      : >c/d &&
+      git update-index --add a c/d &&
+-     treeM=`git write-tree` &&
++     treeM=$(git write-tree) &&
+      echo treeM $treeM &&
+      git ls-tree $treeM &&
+      git ls-files --stage >treeM.out &&
+@@ -381,7 +381,7 @@ test_expect_success \
+      mkdir a &&
+      : >a/b &&
+      git update-index --add --remove a a/b &&
+-     treeH=`git write-tree` &&
++     treeH=$(git write-tree) &&
+      echo treeH $treeH &&
+      git ls-tree $treeH'
  
 -- 
 1.7.10.4
