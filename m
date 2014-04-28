@@ -1,78 +1,77 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH 2/2] Mention "git blame" improvements in release notes
-Date: Mon, 28 Apr 2014 19:39:05 +0200
-Message-ID: <87y4yp4ame.fsf@fencepost.gnu.org>
-References: <1398470210-28746-1-git-send-email-dak@gnu.org>
-	<1398470210-28746-2-git-send-email-dak@gnu.org>
-	<7vmwf8huey.fsf@alter.siamese.dyndns.org>
-	<87zjj86j4a.fsf@fencepost.gnu.org>
-	<xmqqzjj5s8hs.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Adding git hooks
+Date: Mon, 28 Apr 2014 15:11:48 -0400
+Message-ID: <20140428191148.GB25993@sigill.intra.peff.net>
+References: <1398504843.79785833@f133.i.mail.ru>
+ <7vy4yshul9.fsf@alter.siamese.dyndns.org>
+ <20140426175002.GC21493@sigill.intra.peff.net>
+ <xmqq4n1dtnfl.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Cc: Suvorov Ivan <sv_91@inbox.ru>, git <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 28 21:12:10 2014
+X-From: git-owner@vger.kernel.org Mon Apr 28 21:12:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WeqyE-00085L-3Y
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 21:12:06 +0200
+	id 1WeqyI-00085L-42
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 21:12:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753873AbaD1TLb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2014 15:11:31 -0400
-Received: from fencepost.gnu.org ([208.118.235.10]:41432 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753834AbaD1TL2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 15:11:28 -0400
-Received: from localhost ([127.0.0.1]:38946 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1WepWD-0000i7-UC; Mon, 28 Apr 2014 13:39:06 -0400
-Received: by lola (Postfix, from userid 1000)
-	id 7C097E05FE; Mon, 28 Apr 2014 19:39:05 +0200 (CEST)
-In-Reply-To: <xmqqzjj5s8hs.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 28 Apr 2014 09:51:11 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
+	id S1753851AbaD1TLy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 15:11:54 -0400
+Received: from cloud.peff.net ([50.56.180.127]:40565 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753857AbaD1TLu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2014 15:11:50 -0400
+Received: (qmail 11687 invoked by uid 102); 28 Apr 2014 19:11:50 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 28 Apr 2014 14:11:50 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 28 Apr 2014 15:11:48 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqq4n1dtnfl.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247390>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Mon, Apr 28, 2014 at 09:43:10AM -0700, Junio C Hamano wrote:
 
-> David Kastrup <dak@gnu.org> writes:
->
->>> Thanks, but no thanks---I do not see it tasteful.
->>
->> Well, begging rarely is....
->> ...
->> If that's not worth anything to the Git community,...
->
-> Concurred on the first point.  If you thought in any way I meant
-> to say that blame improvements do not matter, then I am sorry, I did
-> not mean that.
->
-> But still, I am not convinced that the release notes is a good place
-> to do this, and would be happier if you can think of a better venue.
+> Yes, I'd love to see something along that line in the longer term,
+> showing all the objects as just regular objects under the hood, with
+> implementation details hidden in the object layer (just like there
+> is no distinction between packed and loose objects from the point of
+> view of read_sha1_file() users), as a real solution to address
+> issues in larger trees.
+> 
+> Also see http://thread.gmane.org/gmane.comp.version-control.git/241940
+> where Shawn had an interesting experiment.
 
-"This change has been contributed by an independent developer on a
-contingency base.  To make this approach work, please contact him if you
-consider it worth recompensating."
+Yeah, I think it's pretty clear that a naive high-latency object store
+is unusably slow. You mentioned in that thread trying to do pre-fetching
+based on commits/trees, and I recall that Shawn's Cassandra experiments
+did that (and maybe the BigTable-backed Google Code does, too?).
 
-This sort of text can be placed in the commit message (where it will be
-mostly visible to actual other developers) and in the "What's cooking"
-reports while, well, it's cooking.  It won't reach the mass of "ordinary
-users", but while they are quite a large audience, they are also least
-likely to care enough about isolated performance changes.  And while it
-will be a limited run, "What's cooking" is also read by non-developers.
+There's also a question of deltas. You don't want to get trees or text
+blobs individually without deltas, because your total size ends up way
+bigger.
 
-Those are the two venues I can currently think of that would seem
-"scalable", at least with a text of that size.  Namely where it would
-not become quite a total nuisance (though naturally less effective) if
-everybody tried doing the same.
+But I think for large object support, we can side-step the issue. The
+objects will all be blobs (so they cannot refer to anything else), they
+will typically not delta well, and the connection setup and latency will
+be dwarfed by actual transfer time. My plan was to have all clones fetch
+all commits and trees (and small blobs, too), and then download and
+cache the large blobs as-needed.
 
--- 
-David Kastrup
+That doesn't help with repositories where the actual commit history or
+tree size is a problem. But we already have shallow clones to help with
+the former. And for the latter, I think we would want a narrow clone
+that behaves differently than what I described above. You'd probably
+want a specific "widen" operation that would fetch all of the objects
+for the newly-widened part of the tree in one go (including deltas), and
+you wouldn't want it to happen on an as-needed basis.
+
+-Peff
