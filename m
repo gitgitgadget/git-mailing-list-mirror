@@ -1,51 +1,51 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 06/14] t0030-stripspace.sh: use the $( ... ) construct for command substitution
-Date: Mon, 28 Apr 2014 05:57:29 -0700
-Message-ID: <1398689857-17014-6-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 07/14] t0300-credentials.sh: use the $( ... ) construct for command substitution
+Date: Mon, 28 Apr 2014 05:57:30 -0700
+Message-ID: <1398689857-17014-7-git-send-email-gitter.spiros@gmail.com>
 References: <1398689857-17014-1-git-send-email-gitter.spiros@gmail.com>
 Cc: matthieu.moy@grenoble-inp.fr, Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 28 14:58:54 2014
+X-From: git-owner@vger.kernel.org Mon Apr 28 14:58:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wel93-0004oW-GR
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 14:58:53 +0200
+	id 1Wel97-0004sQ-Iv
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 14:58:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932149AbaD1M6u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2014 08:58:50 -0400
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:62074 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755641AbaD1M5s (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 08:57:48 -0400
-Received: by mail-pa0-f47.google.com with SMTP id lj1so5783338pab.20
-        for <git@vger.kernel.org>; Mon, 28 Apr 2014 05:57:47 -0700 (PDT)
+	id S932116AbaD1M6t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 08:58:49 -0400
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:46461 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755667AbaD1M5t (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2014 08:57:49 -0400
+Received: by mail-pa0-f50.google.com with SMTP id rd3so5807241pab.9
+        for <git@vger.kernel.org>; Mon, 28 Apr 2014 05:57:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=7kMRG1FKt7lcPpHrJToyq9u9PBi8YnOfj8xeYUr7a98=;
-        b=mc0FK8IItvivwvku5cfz8RHXe8QmJqCbwu2mDsqPAgi0UHgKLFgpKeGM0FaqziOXYh
-         gA67MbmGa/nxZrnPlrGqHPYLtK1EmX+H4eqlMnEqhWKTLQrb4n7fZWL4eWm8IaFEyWMG
-         ddgJy5lctsntoEM3zrd5+JBQTn62ljM7fya9imv7eCMrRW30pA7weiSDsxEwNVrclIuR
-         ohYiD9TaXrTeI6ThL2uHu6nkeT739LLhYe8tkm0F2tgka+bevJyVI8e6PAVTR1DpeKix
-         aA00Os+rci88Axrf+W8nPtZRo2wjD7iQeksZUtksFBNN/pCESmYDnN8HEjEOrLZbGOMe
-         trDA==
-X-Received: by 10.68.248.7 with SMTP id yi7mr25540655pbc.31.1398689867518;
-        Mon, 28 Apr 2014 05:57:47 -0700 (PDT)
+        bh=dD4I58IpBUA9G5F/Pd7AuxisxkE/DCqWVy11XLdU0NQ=;
+        b=OwgcoDGtszh88FnXqIl1Uj+BcQB7xnP7bedvKpSAV82D+VNH3SjmXBizTdILSF62cJ
+         yfNmj/FUdkKYPvy/2NqzsFIZX8oap7UeOuiwK3EpM3hY0POGry9nHnYDI5TrQ+STk895
+         TpsSF4TgWFB0KwskHC79NdrXBVllKFfYjCAiVWc9RDty5+rEA7sYlk0i2ZKiFDC/5Q2U
+         4qF9qAxSf/cYeM58IN9nUoMv+2h6LoICQpXU7vAhVdv0LPA3Dzlyt4II+A4PPOvemi1Y
+         Dahiy69IH+VQNEA6XGvywrS9zniUt4fYpd43YjUbQypkagaa0f9fM+msH/CcMHcbBGJk
+         3kxg==
+X-Received: by 10.68.190.163 with SMTP id gr3mr25067213pbc.103.1398689869047;
+        Mon, 28 Apr 2014 05:57:49 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id ky8sm34896290pbc.64.2014.04.28.05.57.46
+        by mx.google.com with ESMTPSA id ky8sm34896290pbc.64.2014.04.28.05.57.47
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 28 Apr 2014 05:57:46 -0700 (PDT)
+        Mon, 28 Apr 2014 05:57:48 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1398689857-17014-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247321>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247322>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -67,45 +67,21 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t0030-stripspace.sh |   20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ t/t0300-credentials.sh |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t0030-stripspace.sh b/t/t0030-stripspace.sh
-index a8e84d8..0333dd9 100755
---- a/t/t0030-stripspace.sh
-+++ b/t/t0030-stripspace.sh
-@@ -225,22 +225,22 @@ test_expect_success \
+diff --git a/t/t0300-credentials.sh b/t/t0300-credentials.sh
+index 538ea5f..57ea5a1 100755
+--- a/t/t0300-credentials.sh
++++ b/t/t0300-credentials.sh
+@@ -6,7 +6,7 @@ test_description='basic credential helper tests'
  
- test_expect_success \
-     'text without newline at end should end with newline' '
--    test `printf "$ttt" | git stripspace | wc -l` -gt 0 &&
--    test `printf "$ttt$ttt" | git stripspace | wc -l` -gt 0 &&
--    test `printf "$ttt$ttt$ttt" | git stripspace | wc -l` -gt 0 &&
--    test `printf "$ttt$ttt$ttt$ttt" | git stripspace | wc -l` -gt 0
-+    test $(printf "$ttt" | git stripspace | wc -l) -gt 0 &&
-+    test $(printf "$ttt$ttt" | git stripspace | wc -l) -gt 0 &&
-+    test $(printf "$ttt$ttt$ttt" | git stripspace | wc -l) -gt 0 &&
-+    test $(printf "$ttt$ttt$ttt$ttt" | git stripspace | wc -l) -gt 0
- '
- 
- # text plus spaces at the end:
- 
- test_expect_success \
-     'text plus spaces without newline at end should end with newline' '
--    test `printf "$ttt$sss" | git stripspace | wc -l` -gt 0 &&
--    test `printf "$ttt$ttt$sss" | git stripspace | wc -l` -gt 0 &&
--    test `printf "$ttt$ttt$ttt$sss" | git stripspace | wc -l` -gt 0 &&
--    test `printf "$ttt$sss$sss" | git stripspace | wc -l` -gt 0 &&
--    test `printf "$ttt$ttt$sss$sss" | git stripspace | wc -l` -gt 0 &&
--    test `printf "$ttt$sss$sss$sss" | git stripspace | wc -l` -gt 0
-+    test $(printf "$ttt$sss" | git stripspace | wc -l) -gt 0 &&
-+    test $(printf "$ttt$ttt$sss" | git stripspace | wc -l) -gt 0 &&
-+    test $(printf "$ttt$ttt$ttt$sss" | git stripspace | wc -l) -gt 0 &&
-+    test $(printf "$ttt$sss$sss" | git stripspace | wc -l) -gt 0 &&
-+    test $(printf "$ttt$ttt$sss$sss" | git stripspace | wc -l) -gt 0 &&
-+    test $(printf "$ttt$sss$sss$sss" | git stripspace | wc -l) -gt 0
- '
- 
- test_expect_success \
+ test_expect_success 'setup helper scripts' '
+ 	cat >dump <<-\EOF &&
+-	whoami=`echo $0 | sed s/.*git-credential-//`
++	whoami=$(echo $0 | sed s/.*git-credential-//)
+ 	echo >&2 "$whoami: $*"
+ 	OIFS=$IFS
+ 	IFS==
 -- 
 1.7.10.4
