@@ -1,51 +1,51 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 12/14] t1004-read-tree-m-u-wf.sh: use the $( ... ) construct for command substitution
-Date: Mon, 28 Apr 2014 05:57:35 -0700
-Message-ID: <1398689857-17014-12-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 05/14] t0026-eol-config.sh: use the $( ... ) construct for command substitution
+Date: Mon, 28 Apr 2014 05:57:28 -0700
+Message-ID: <1398689857-17014-5-git-send-email-gitter.spiros@gmail.com>
 References: <1398689857-17014-1-git-send-email-gitter.spiros@gmail.com>
 Cc: matthieu.moy@grenoble-inp.fr, Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 28 14:58:34 2014
+X-From: git-owner@vger.kernel.org Mon Apr 28 14:58:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wel8k-0004PP-89
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 14:58:34 +0200
+	id 1Wel8s-0004Z1-EX
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 14:58:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755863AbaD1M6U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2014 08:58:20 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:35543 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755817AbaD1M5y (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 08:57:54 -0400
-Received: by mail-pa0-f53.google.com with SMTP id ld10so5769237pab.12
-        for <git@vger.kernel.org>; Mon, 28 Apr 2014 05:57:54 -0700 (PDT)
+	id S1755698AbaD1M5u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 08:57:50 -0400
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:49102 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755610AbaD1M5q (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2014 08:57:46 -0400
+Received: by mail-pa0-f43.google.com with SMTP id rd3so3927391pab.16
+        for <git@vger.kernel.org>; Mon, 28 Apr 2014 05:57:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=5r9Xc1LpU47eOvY6NRcREETyTZchkqqDHDg5wDffTC0=;
-        b=K93HQ+87Txrjq/6TYPjdiJ1eNP5TzhBH7Th+jDAyPOXleAfECZVJQvDnmkVs3aKr2l
-         AHL2cK8WW7ldmKJvReLyEX8sJuZ26u6+7/1NyY8OgCEA/xqcSDT9del4SJnpG7VdlTpW
-         3tipQRf6nrzjf16Loe/91d5iTu246JTWrMTONH001hMdb8yeikMEX+QuP6OI6cY/pB0n
-         WxbxXLWQc2BERbkIv88CsP0c6d/mAPGjEiVNTrw+9c6eeqwWAeiquf0R5CdkCY1G6HC8
-         lK3AblkcUSvMeMzxrwo/bxz0AHuku6T0GvVwGXkIukV736A4urVwCz/vof2jN1Am20V5
-         3hfA==
-X-Received: by 10.68.202.8 with SMTP id ke8mr28902940pbc.86.1398689874305;
-        Mon, 28 Apr 2014 05:57:54 -0700 (PDT)
+        bh=isAoxaKnIFcZmiQ3wL9ky5iMFqbpC5IgjNsjDe2XkJs=;
+        b=pAodjq9Tg3D+yXTmJfxgjSvpDnCibaM/RHLBnO1YgyKSvUnGzZOgYN3KdXnkdN1DI0
+         S3BZZW6W0kNFTIwZpwy/VTtA2iUXL8IH8tINq4UD5sd66MgG1TD6gHEs0EQFBCLWhhKn
+         SCFu+Gm8WQG2wVCOZw67V/4ZMys4kV9WvvrnZXnqHNcmNsKzNKVUvgQo+FhmohIbulfm
+         2Sw6M2zf+gI+uE1QQ8Af3vNrWyjV2JjIhvP24OdxBids6xUXmF0A+S/H+qWjCSmzX2zd
+         cDuS9YVc7gXQw70q8yHE7qt9zSFgvmELU1Sv6z6Ado9IcPi9EpmrM1h23GkOY+9NzhHg
+         FbNA==
+X-Received: by 10.68.254.103 with SMTP id ah7mr3125052pbd.159.1398689866550;
+        Mon, 28 Apr 2014 05:57:46 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id ky8sm34896290pbc.64.2014.04.28.05.57.53
+        by mx.google.com with ESMTPSA id ky8sm34896290pbc.64.2014.04.28.05.57.45
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 28 Apr 2014 05:57:53 -0700 (PDT)
+        Mon, 28 Apr 2014 05:57:46 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1398689857-17014-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247319>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -67,48 +67,67 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t1004-read-tree-m-u-wf.sh |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ t/t0026-eol-config.sh |   20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/t/t1004-read-tree-m-u-wf.sh b/t/t1004-read-tree-m-u-wf.sh
-index 3e72aff..c70cf42 100755
---- a/t/t1004-read-tree-m-u-wf.sh
-+++ b/t/t1004-read-tree-m-u-wf.sh
-@@ -30,7 +30,7 @@ test_expect_success 'two-way not clobbering' '
+diff --git a/t/t0026-eol-config.sh b/t/t0026-eol-config.sh
+index fe0164b..e1126aa 100755
+--- a/t/t0026-eol-config.sh
++++ b/t/t0026-eol-config.sh
+@@ -20,8 +20,8 @@ test_expect_success setup '
  
- 	echo >file2 master creates untracked file2 &&
- 	echo >subdir/file2 master creates untracked subdir/file2 &&
--	if err=`read_tree_u_must_succeed -m -u master side 2>&1`
-+	if err=$(read_tree_u_must_succeed -m -u master side 2>&1)
- 	then
- 		echo should have complained
- 		false
-@@ -43,7 +43,7 @@ echo file2 >.gitignore
+ 	git commit -m initial &&
  
- test_expect_success 'two-way with incorrect --exclude-per-directory (1)' '
+-	one=`git rev-parse HEAD:one` &&
+-	two=`git rev-parse HEAD:two` &&
++	one=$(git rev-parse HEAD:one) &&
++	two=$(git rev-parse HEAD:two) &&
  
--	if err=`read_tree_u_must_succeed -m --exclude-per-directory=.gitignore master side 2>&1`
-+	if err=$(read_tree_u_must_succeed -m --exclude-per-directory=.gitignore master side 2>&1)
- 	then
- 		echo should have complained
- 		false
-@@ -54,7 +54,7 @@ test_expect_success 'two-way with incorrect --exclude-per-directory (1)' '
+ 	echo happy.
+ '
+@@ -34,8 +34,8 @@ test_expect_success 'eol=lf puts LFs in normalized file' '
  
- test_expect_success 'two-way with incorrect --exclude-per-directory (2)' '
+ 	! has_cr one &&
+ 	! has_cr two &&
+-	onediff=`git diff one` &&
+-	twodiff=`git diff two` &&
++	onediff=$(git diff one) &&
++	twodiff=$(git diff two) &&
+ 	test -z "$onediff" -a -z "$twodiff"
+ '
  
--	if err=`read_tree_u_must_succeed -m -u --exclude-per-directory=foo --exclude-per-directory=.gitignore master side 2>&1`
-+	if err=$(read_tree_u_must_succeed -m -u --exclude-per-directory=foo --exclude-per-directory=.gitignore master side 2>&1)
- 	then
- 		echo should have complained
- 		false
-@@ -95,7 +95,7 @@ test_expect_success 'three-way not clobbering a working tree file' '
- 	git checkout master &&
- 	echo >file3 file three created in master, untracked &&
- 	echo >subdir/file3 file three created in master, untracked &&
--	if err=`read_tree_u_must_succeed -m -u branch-point master side 2>&1`
-+	if err=$(read_tree_u_must_succeed -m -u branch-point master side 2>&1)
- 	then
- 		echo should have complained
- 		false
+@@ -47,8 +47,8 @@ test_expect_success 'eol=crlf puts CRLFs in normalized file' '
+ 
+ 	has_cr one &&
+ 	! has_cr two &&
+-	onediff=`git diff one` &&
+-	twodiff=`git diff two` &&
++	onediff=$(git diff one) &&
++	twodiff=$(git diff two) &&
+ 	test -z "$onediff" -a -z "$twodiff"
+ '
+ 
+@@ -61,8 +61,8 @@ test_expect_success 'autocrlf=true overrides eol=lf' '
+ 
+ 	has_cr one &&
+ 	has_cr two &&
+-	onediff=`git diff one` &&
+-	twodiff=`git diff two` &&
++	onediff=$(git diff one) &&
++	twodiff=$(git diff two) &&
+ 	test -z "$onediff" -a -z "$twodiff"
+ '
+ 
+@@ -75,8 +75,8 @@ test_expect_success 'autocrlf=true overrides unset eol' '
+ 
+ 	has_cr one &&
+ 	has_cr two &&
+-	onediff=`git diff one` &&
+-	twodiff=`git diff two` &&
++	onediff=$(git diff one) &&
++	twodiff=$(git diff two) &&
+ 	test -z "$onediff" -a -z "$twodiff"
+ '
+ 
 -- 
 1.7.10.4
