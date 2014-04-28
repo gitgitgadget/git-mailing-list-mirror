@@ -1,81 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 1/2] Makefile: use curl-config to determine curl flags
-Date: Mon, 28 Apr 2014 13:00:09 -0700
-Message-ID: <xmqqppk1p6ly.fsf@gitster.dls.corp.google.com>
-References: <1398713704-15428-1-git-send-email-dborowitz@google.com>
-	<xmqqtx9dp6rd.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] t3910: show failure of core.precomposeunicode with
+ decomposed filenames
+Date: Mon, 28 Apr 2014 16:03:26 -0400
+Message-ID: <20140428200326.GA2961@sigill.intra.peff.net>
+References: <20140428161630.GA9435@sigill.intra.peff.net>
+ <xmqqbnvlqn5j.fsf@gitster.dls.corp.google.com>
+ <20140428193502.GD25993@sigill.intra.peff.net>
+ <535EB167.4030804@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, kusmabite@gmail.com
-To: Dave Borowitz <dborowitz@google.com>
-X-From: git-owner@vger.kernel.org Mon Apr 28 22:00:24 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Mon Apr 28 22:03:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Weriv-000871-Cv
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 22:00:21 +0200
+	id 1Werm2-0003eY-NA
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 22:03:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756275AbaD1UAQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2014 16:00:16 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37565 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753974AbaD1UAO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 16:00:14 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4F7ED8185B;
-	Mon, 28 Apr 2014 16:00:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=pRb3RgqEL7tdLMt6THnSWLv2o2s=; b=NKhFQR
-	AvdMIYS98JKqO1OgHr2WfEY21UgDtFHksgkVEn09cnCjFrU66itdfWGUDJkgNMy8
-	o0Qas6gm1HsdbJtWxIiguLgPzEkw0N/OVwn/AN1PLCiEtokAfxqBn8gG5I1cIHPf
-	F4olpxXVppAM6EWG/wBtY+4nOe9uXt/JLOShM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XPgnZu7SvctbuCGDSuRBChu/hMzAYXoG
-	Dbk+MEhvdns6yrbVm3CmDPE9urHV5++Z/5T00o3IteOSvLVBC+Kl4mutrhhKwZLq
-	4MsFxIVLvaNwp7hR6hfoSO+XeLmN32ap3y0syu5CAFMYMY9wk8/4P+AZa0JIPCEp
-	OlA29E9Xwms=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 37B878185A;
-	Mon, 28 Apr 2014 16:00:14 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 53C058183F;
-	Mon, 28 Apr 2014 16:00:11 -0400 (EDT)
-In-Reply-To: <xmqqtx9dp6rd.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 28 Apr 2014 12:56:54 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: B4A97CD4-CF0F-11E3-9844-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753997AbaD1UDa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Apr 2014 16:03:30 -0400
+Received: from cloud.peff.net ([50.56.180.127]:40654 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752632AbaD1UD3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2014 16:03:29 -0400
+Received: (qmail 15612 invoked by uid 102); 28 Apr 2014 20:03:28 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 28 Apr 2014 15:03:28 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 28 Apr 2014 16:03:26 -0400
+Content-Disposition: inline
+In-Reply-To: <535EB167.4030804@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247433>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Mon, Apr 28, 2014 at 09:52:07PM +0200, Torsten B=C3=B6gershausen wro=
+te:
 
-> That does not mean the patch will give us a broken behaviour,
-> though.  It just means the ifeq/else part will be redundant.
->
->>  	endif
->> +
->> +	ifeq "$(CURL_LIBCURL)" ""
->
-> This will catch the "$(shell $(CURL_CONFIG) --libs) assigned an
-> empty string to CURL_LIBCURL" case, so the result is good.
->
-> I haven't checked what it would look like if we turn this into an
-> incremental patch to be applied on top of 'master' (which would give
-> us a place to document better why we do not rely on the presense of
-> curl-config), but if we can do so, that would be more preferable
-> than having to revert the merge of the previous one and then
-> applying these two patches anew.
+> To my knowledge repos with decomposed unicode should be rare in
+> practice.  I only can speak for european (or latin based) or cyrillic
+> languages myself:
 
-And I just checked; it is not very pretty to call it "trivially
-correct", and I would feel safer to revert the merge for 2.0, and
-queue the new one for the next cycle, cooking it in 'pu' and then
-'next' in the meantime.
+I've run across several cases in the past few months, but only just
+figured out what was going on. Most were tickets to GitHub support, but
+we actually have such a case in our github/github repository. In most
+cases, I think they were created on older versions of git on OS X,
+either before core.precomposeunicode existed, or before it was turned o=
+n
+by default. The decomposed form got baked into the tree (whatever the
+user originally typed, git probably found out about it via "git add .")=
+=2E
+
+I think reports are just coming in now because we didn't start turning
+on core.precomposeunicode by default until v1.8.5, shipped in November.
+And then, a person working on the repository would not notice anything,
+since we only set the flag during clone. So it took time for people to
+upgrade _and_ to make fresh clones.
+
+> So for me the test case could sense, even if I think that nobody (TM)
+> uses an old Git version under Mac OS X which is not able to handle
+> precomposed unicode.
+
+Even when they do not, the decomposed values are baked into history fro=
+m
+those old versions. So it is a matter of history created with older
+versions not interacting well with newer versions.
+
+-Peff
