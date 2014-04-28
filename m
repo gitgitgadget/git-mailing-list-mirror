@@ -1,75 +1,152 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [RFC/PATCH 1/2] trailer: fix to ignore any line starting with '#'
-Date: Mon, 28 Apr 2014 10:16:14 +0200
-Message-ID: <CAP8UFD0R6g13k8GM6wQXw2qgnjeOb=z_SC6jG6EfXvo8ALdg6g@mail.gmail.com>
-References: <20140427200327.16880.53255.chriscool@tuxfamily.org>
-	<20140427201238.16880.13774.chriscool@tuxfamily.org>
-	<535DEE08.9090402@alum.mit.edu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Christian Couder <chriscool@tuxfamily.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	git <git@vger.kernel.org>, Johan Herland <johan@herland.net>,
-	Josh Triplett <josh@joshtriplett.org>,
-	Thomas Rast <tr@thomasrast.ch>,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Apr 28 10:16:24 2014
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH] PAGER_ENV: remove 'S' from $LESS by default
+Date: Mon, 28 Apr 2014 10:34:22 +0200
+Message-ID: <1398674062-24288-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <20140425154722.GC11479@google.com>
+Cc: David Kastrup <dak@gnu.org>, d9ba@mailtor.net, jrnieder@gmail.com,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Apr 28 10:36:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wegjg-0001HE-0s
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 10:16:24 +0200
+	id 1Weh2q-0002Wb-DR
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 10:36:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752239AbaD1IQT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2014 04:16:19 -0400
-Received: from mail-vc0-f174.google.com ([209.85.220.174]:37809 "EHLO
-	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752137AbaD1IQP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 04:16:15 -0400
-Received: by mail-vc0-f174.google.com with SMTP id ib6so1270170vcb.19
-        for <git@vger.kernel.org>; Mon, 28 Apr 2014 01:16:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=DHnC8BXA72Pa3SIEm1ZFxgHQymje8CImqN/mZNKRZdU=;
-        b=nZlTuKhvdwmx0ysM0wwntmcr9AgduyLVRTCPfaijJ2e+e5q/kh0f4yhSvKqDAeKK1k
-         3VhIQUky4KAKBcMasl8EBgFX4624KlILBlsz5ZUS3exmbzgYLQps8U3/Hxgks37nlBPz
-         MqwIc12lPfa4mlarKZHYX9I4lU2yA2ksNaIHVDNxnjWSptZP5nclUUoOeLq2qeehrCyS
-         GtsXbMlIpLNscen+49l94ONA5ixX7SN/kQRC5n8S9TfedMe4EPQHZBwFv2vHcONXD4DF
-         lDlLDEekRoTmysLdMnohTBU7zlNKs7Tqo+lqzLmwVj/+eD6r0FwrWC5kjuR8TcfzdbKu
-         CsyQ==
-X-Received: by 10.52.229.97 with SMTP id sp1mr19274950vdc.23.1398672974375;
- Mon, 28 Apr 2014 01:16:14 -0700 (PDT)
-Received: by 10.58.143.72 with HTTP; Mon, 28 Apr 2014 01:16:14 -0700 (PDT)
-In-Reply-To: <535DEE08.9090402@alum.mit.edu>
+	id S1753937AbaD1If6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 04:35:58 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:47796 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752500AbaD1Ie4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2014 04:34:56 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s3S8YOkT030319
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 28 Apr 2014 10:34:24 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s3S8YOo8001941;
+	Mon, 28 Apr 2014 10:34:24 +0200
+Received: from moy by anie.imag.fr with local (Exim 4.80)
+	(envelope-from <moy@imag.fr>)
+	id 1Weh16-0006Kk-KY; Mon, 28 Apr 2014 10:34:24 +0200
+X-Mailer: git-send-email 1.9.2.698.ge58c0c2.dirty
+In-Reply-To: <20140425154722.GC11479@google.com>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 28 Apr 2014 10:34:24 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s3S8YOkT030319
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1399278865.29297@jhKnuy5Z+bZs/m+BsxqwlA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247243>
 
-On Mon, Apr 28, 2014 at 7:58 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> On 04/27/2014 10:12 PM, Christian Couder wrote:
->> It looks like the commit-msg hook is passed a commit
->> message that can contain lines starting with a '#'.
->> Those comment lines will be removed from the commit
->> message after the hook is run.
->>
->> If we want "git interpret-trailers" to be able to
->> process commit messages correctly in the commit-msg
->> hook we need to ignore those lines.
->
-> Shouldn't this take into account the config setting core.commentchar?
+By default, Git used to set $LESS to -FRSX if $LESS was not set by the
+user. The FRX flags actually make sense for Git (F and X because Git
+sometimes pipes short output to less, and R because Git pipes colored
+output). The S flag (chop long lines), on the other hand, is not related
+to Git and is a matter of user preference. Git should not decide for the
+user to change LESS's default.
 
-Yes, I will have a look at that.
+More specifically, the S flag harms users who review untrusted code
+within a pager, since a patch looking like:
 
-Thanks,
-Christian.
+-old code;
++new good code; [... lots of tabs ...] malicious code;
+
+would appear identical to:
+
+-old code;
++new good code;
+
+Users who prefer the old behavior can still set the $LESS environment
+variable to -FRSX explicitly, or set core.pager to 'less -S'.
+
+The documentation in config.txt is made a bit longer to keep both an
+example setting the 'S' flag (needed to recover the old behavior) and an
+example showing how to unset a flag set by Git.
+
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+> We agree here.  So, does someone who actually wants this change want to
+> propose a patch? :)
+
+Here you are.
+
+ Documentation/config.txt | 13 ++++++++-----
+ Makefile                 |  6 +++---
+ perl/Git/SVN/Log.pm      |  2 +-
+ 3 files changed, 12 insertions(+), 9 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index e30561d..b7f92ac 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -560,14 +560,17 @@ core.pager::
+ 	configuration, then `$PAGER`, and then the default chosen at
+ 	compile time (usually 'less').
+ +
+-When the `LESS` environment variable is unset, Git sets it to `FRSX`
++When the `LESS` environment variable is unset, Git sets it to `FRX`
+ (if `LESS` environment variable is set, Git does not change it at
+ all).  If you want to selectively override Git's default setting
+-for `LESS`, you can set `core.pager` to e.g. `less -+S`.  This will
++for `LESS`, you can set `core.pager` to e.g. `less -S`.  This will
+ be passed to the shell by Git, which will translate the final
+-command to `LESS=FRSX less -+S`. The environment tells the command
+-to set the `S` option to chop long lines but the command line
+-resets it to the default to fold long lines.
++command to `LESS=FRX less -S`. The environment does not set the
++`S` option but the command line does, instructing less to truncate
++long lines. Similarly, setting `core.pager` to `less -+F` will
++deactivate the `F` option specified by the environment from the
++command-line, deactivating the "quit if one screen" behavior of
++`less`.
+ +
+ Likewise, when the `LV` environment variable is unset, Git sets it
+ to `-c`.  You can override this setting by exporting `LV` with
+diff --git a/Makefile b/Makefile
+index a3b298e..cd3cdf6 100644
+--- a/Makefile
++++ b/Makefile
+@@ -344,9 +344,9 @@ all::
+ # Define PAGER_ENV to a SP separated VAR=VAL pairs to define
+ # default environment variables to be passed when a pager is spawned, e.g.
+ #
+-#    PAGER_ENV = LESS=-FRSX LV=-c
++#    PAGER_ENV = LESS=-FRX LV=-c
+ #
+-# to say "export LESS=-FRSX (and LV=-c) if the environment variable
++# to say "export LESS=-FRX (and LV=-c) if the environment variable
+ # LESS (and LV) is not set, respectively".
+ 
+ GIT-VERSION-FILE: FORCE
+@@ -1518,7 +1518,7 @@ NO_PYTHON = NoThanks
+ endif
+ 
+ ifndef PAGER_ENV
+-PAGER_ENV = LESS=-FRSX LV=-c
++PAGER_ENV = LESS=-FRX LV=-c
+ endif
+ 
+ QUIET_SUBDIR0  = +$(MAKE) -C # space to separate -C and subdir
+diff --git a/perl/Git/SVN/Log.pm b/perl/Git/SVN/Log.pm
+index 34f2869..6641053 100644
+--- a/perl/Git/SVN/Log.pm
++++ b/perl/Git/SVN/Log.pm
+@@ -116,7 +116,7 @@ sub run_pager {
+ 		return;
+ 	}
+ 	open STDIN, '<&', $rfd or fatal "Can't redirect stdin: $!";
+-	$ENV{LESS} ||= 'FRSX';
++	$ENV{LESS} ||= 'FRX';
+ 	$ENV{LV} ||= '-c';
+ 	exec $pager or fatal "Can't run pager: $! ($pager)";
+ }
+-- 
+1.9.2.698.ge58c0c2.dirty
