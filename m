@@ -1,110 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: A failing attempt to use Git in a centralized environment
-Date: Mon, 28 Apr 2014 11:41:43 -0700
-Message-ID: <xmqqoazlqot4.fsf@gitster.dls.corp.google.com>
-References: <4ay6w9i74cygt6ii1b0db7wg.1398433713382@email.android.com>
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: Re: [PATCH v3 07/19] refs.c: remove the onerr argument to ref_transaction_commit
+Date: Mon, 28 Apr 2014 11:27:15 -0700
+Message-ID: <CAL=YDWkEWjeTZi6QOzosiaJ1ZA5p6zcD2asbJ4o8NW=4EHxhVQ@mail.gmail.com>
+References: <1398442494-23438-1-git-send-email-sahlberg@google.com>
+	<1398442494-23438-8-git-send-email-sahlberg@google.com>
+	<20140425224714.GF9218@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Marat Radchenko <marat@slonopotamus.org>
-X-From: git-owner@vger.kernel.org Mon Apr 28 21:29:22 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 28 21:31:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WerEg-0003DE-UW
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 21:29:07 +0200
+	id 1WerGn-0005gf-W0
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 21:31:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932614AbaD1TZX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2014 15:25:23 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40465 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932483AbaD1TZM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 15:25:12 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A76A281C83;
-	Mon, 28 Apr 2014 14:42:17 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=GfnpYQ3kPAdKa0SN9BfYjOE0la0=; b=mb+yBp
-	/ofbKljzqx4+yrOQ1kVkGeCtmc/bXsfKZv5K+3igwfSJ0LCKdI7otoRNzYf33GxC
-	0x4U2XWthBGnsu+vZ9sG3TZtPRYNz1rtSIqFDx8eyWDyYBJ6SjRFVU87GJfeCtyU
-	VLBGIdvxIbs5InVqVg9WUzmLzbNCxavxRGRMc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=f9JbUM3Clhzixq6JiXxVnl8IFBce7PmT
-	xB9JJTm5aeS01mJEJuesP8PcazBSYA3dDHjf6suuYoxK1p6tMhCyZeXzwBJpVhR7
-	pan9sh5IFQ3GqwULA30ncXatZBFEAfEkJNSGMdNchJvwGW3VePh1+EclEDVBx4z4
-	hG33a5TTnmI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8B29481C82;
-	Mon, 28 Apr 2014 14:42:17 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7734181C4D;
-	Mon, 28 Apr 2014 14:41:45 -0400 (EDT)
-In-Reply-To: <4ay6w9i74cygt6ii1b0db7wg.1398433713382@email.android.com> (Marat
-	Radchenko's message of "Mon, 28 Apr 2014 10:29:07 +0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: BFBFAAF4-CF04-11E3-B7A3-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S933000AbaD1TaT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 15:30:19 -0400
+Received: from mail-vc0-f176.google.com ([209.85.220.176]:51626 "EHLO
+	mail-vc0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753443AbaD1TaQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2014 15:30:16 -0400
+Received: by mail-vc0-f176.google.com with SMTP id lc6so8748007vcb.35
+        for <git@vger.kernel.org>; Mon, 28 Apr 2014 12:30:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=ANeEEq2FBo85kmrCFdq6ajROWY8xfW+DLSs8VnmzJEE=;
+        b=iZXTcmf226V2cXXqH3CQqX/vY9MB5JdtSZ3TcXEfNnqeqiIC8z6rZtWgatDseD4iVq
+         IlGaLcXBsUTNT1QlCkWMi9jQHm80qnVi9zzf8Q1T87PYs9uyMA/z7qg7G4Tw0sbwSe6k
+         2byMu0WJXMZxVUGhlkIppBJSJyEYCcTyr8ZjUrVzPNSwJw0Suyt+cVQmZNn6q4rCWcQY
+         DEqG+V9Dgl/wi6mP4FjXXhL19NF6P66fo3WCZwfhe+SIFvoA1X/NqZDiz47dHgqYVymS
+         tJk1hNLQKl7nzSuOqFn2gJQQRbeG4fSos1/1oAeXAPADNY59tycj7cLei1jEAer0k3un
+         mUag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=ANeEEq2FBo85kmrCFdq6ajROWY8xfW+DLSs8VnmzJEE=;
+        b=k0p1ww8s/TS8QRHv+yJhRZ/dcqSBwHaPJ44uuw9kiv0ZZznDgGThifXNLD5ku0Urw5
+         xR4CxbUtoPrWHw+0befE3h16kpkHiu+rk3Ry11c4DsUm/USv+vBctJWXrqALCjMIlmpR
+         2p37dps+xBCaD8ueB9do5PdzuwJ45MJwRvYkVwWzNQvs3tvDCniBXFcD5sC1Y6gQTyVy
+         dG5RlPO367EGoJLEW4azHJ/10Ji2isLXFvWMooAL/nlLaRhQhz5AxTtnTYeY33vWotR6
+         lsLkLwosmW3Vmi+z1JVv3tsgu6OYA+rizKjLMM2m5rK1d0CQQJ9LEdMYTCLs2YsEydma
+         Dcyw==
+X-Gm-Message-State: ALoCoQnlFvAuoogpT5n7T+Xhbvfgj14E15FNRjKZulRZyqw2SXN1dk8XZ8hsxy8EN6E9bxa8K3hyAaHjOwzCJhkInqCddK5zCmXyXUApvxFBp57UbsPcSQ+sWosFItanFECdQ5L6xAGQVoJi8QRCLzjtEihbta2+gHaH66fCLw9NkuivpehWprtB+lUbbRK/YTv4OaisPYfg
+X-Received: by 10.220.184.72 with SMTP id cj8mr9255950vcb.10.1398709635229;
+ Mon, 28 Apr 2014 11:27:15 -0700 (PDT)
+Received: by 10.52.141.13 with HTTP; Mon, 28 Apr 2014 11:27:15 -0700 (PDT)
+In-Reply-To: <20140425224714.GF9218@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247408>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247409>
 
-Marat Radchenko <marat@slonopotamus.org> writes:
+Thanks.
 
-> Problem #1: TortoiseGit GUI windows for common tasks have a heck
-> lots of controls that a common Git user will never need.
+Reworded it that we remove it since all callers now use QUIET_ON_ERR
 
-Do people around TortoiseGit lurk on this list?  Otherwise this may
-not be something we can help you with here.
-
-> Problem #2 occured the first day we started using Git on real
-> project. It is explained in detail in older post to Git ML [3]. I
-> call it "swapped/reverse merge problem".
+On Fri, Apr 25, 2014 at 3:47 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Ronnie Sahlberg wrote:
 >
-> In short:
-> 1. Hack, hack, hack
-> 2. Commit
-> 3. Push, woops, reject (non-ff)
-> 4. Pull
-> 5. Push
+>> Since we now pass meaningful error messages back from ref_transaction_commit
+>> on failures, we no longer need to provide a onerr argument.
 >
-> The root of evil is step #4 that creates a merge commit with
-> "swapped" parents.
-
-Yes, this is a real issue, and I do not mind seeing a patch to
-improve the situation (there may be different approaches, and one
-random approach somebody takes may not necessarily be a good way to
-improve the situation though).
-
- - Perhaps by allowing an option to tell the "pull" at the fourth
-   step to record swapped parents in the merge?
-
- - Perhaps in step #3, stop suggesting to "pull first" and instead
-   tell them to "fetch upstream, rebase your work on it and then
-   push"?
-
- - Extending on the second one, wrap a large part of the procedure
-   in a single handy wrapper "git update" or something, whose point
-   is to "update your work to be mergeable and pushable"?
-
-> Problem #3: on conflicts, user ends up with a working copy that
-> marks all remote-changed files as modified. Luckily, nobody has
-> problems with conflict resolution process, it's just confusing to
-> see changes other way round.
-
-If we flip the resolution process to "apply/merge your work to the
-updated upstream (i.e. the topic of your problem #2 above)", that
-"other way round" issue will disappear, no?
+> Yay!  More precisely, now that all callers use
+> UPDATE_REFS_QUIET_ON_ERR there's no need to support any other
+> behavior.
 >
-> Problem #4: when conflict happens during rebase, mergetool shows
-> user own changes as "theirs" and remote changes as "mine". And
-> believe me, explaining this to users doesn't increase their
-> willingness to adopt Git.
-
-Likewise.
+> Thanks for cleaning up the error handling here.
