@@ -1,74 +1,96 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] PAGER_ENV: remove 'S' from $LESS by default
-Date: Mon, 28 Apr 2014 14:22:21 +0200
-Message-ID: <vpq38gxlk3m.fsf@anie.imag.fr>
-References: <20140425154722.GC11479@google.com>
-	<1398674062-24288-1-git-send-email-Matthieu.Moy@imag.fr>
-	<87vbtt6dyq.fsf@fencepost.gnu.org> <vpqsioxn82l.fsf@anie.imag.fr>
-	<87k3a96cj9.fsf@fencepost.gnu.org>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, gitster@pobox.com, jrnieder@gmail.com,
-	Jeff King <peff@peff.net>
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Apr 28 14:22:45 2014
+From: Elia Pinto <gitter.spiros@gmail.com>
+Subject: [PATCH 02/14] t0010-racy-git.sh: use the $( ... ) construct for command substitution
+Date: Mon, 28 Apr 2014 05:57:25 -0700
+Message-ID: <1398689857-17014-2-git-send-email-gitter.spiros@gmail.com>
+References: <1398689857-17014-1-git-send-email-gitter.spiros@gmail.com>
+Cc: matthieu.moy@grenoble-inp.fr, Elia Pinto <gitter.spiros@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 28 14:57:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Weka4-0001hV-8l
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 14:22:44 +0200
+	id 1Wel81-0003V7-NV
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 14:57:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755335AbaD1MWk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2014 08:22:40 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:53783 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752830AbaD1MWj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 08:22:39 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s3SCMK5a031788
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 28 Apr 2014 14:22:20 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s3SCMLqp006749;
-	Mon, 28 Apr 2014 14:22:21 +0200
-In-Reply-To: <87k3a96cj9.fsf@fencepost.gnu.org> (David Kastrup's message of
-	"Mon, 28 Apr 2014 11:14:50 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 28 Apr 2014 14:22:21 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s3SCMK5a031788
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1399292544.40697@OI59S4BT56RA/UF2Ay8L+g
+	id S1755579AbaD1M5p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 08:57:45 -0400
+Received: from mail-pb0-f54.google.com ([209.85.160.54]:60145 "EHLO
+	mail-pb0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755395AbaD1M5n (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2014 08:57:43 -0400
+Received: by mail-pb0-f54.google.com with SMTP id rp16so2403760pbb.27
+        for <git@vger.kernel.org>; Mon, 28 Apr 2014 05:57:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=0F2Pog8wWErQyVq7X6yrp/qYtuqsIMtaPmNh7WQm4+s=;
+        b=ac4U5Zo7DASzf1UCPKrpSKY4jidanUmUUFLVG91A39Zawb5sVkOS1lYePbtPARamVU
+         aA3J0TLyrhn3k34KmpxCZ61yPLp3GMe5VYg/nFESSNZSXon2nJCIC+iPvAiQov9wd5Ng
+         1yEHapEUJ9I/xbuTczjTVjAc8LefqoRAFKk0XeelH+h6dGkfB2V1WAC3gH+ZBxR9ikhj
+         bUYQF3lMTun7vCfJKQCBeghBcjeRb/t9og61FVWS0gMB6s8roZdCVG/VavRdCk4ionvd
+         h+MCxFs46gKEvTnwTT+eNH6PNkyJ2kQT2Yn8yLX1SsLwmKSXLQLCGK5Z7YFEsegsFHAK
+         xnTA==
+X-Received: by 10.68.190.163 with SMTP id gr3mr25066724pbc.103.1398689863089;
+        Mon, 28 Apr 2014 05:57:43 -0700 (PDT)
+Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
+        by mx.google.com with ESMTPSA id ky8sm34896290pbc.64.2014.04.28.05.57.41
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 28 Apr 2014 05:57:42 -0700 (PDT)
+X-Mailer: git-send-email 1.7.10.4
+In-Reply-To: <1398689857-17014-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247309>
 
-David Kastrup <dak@gnu.org> writes:
+The Git CodingGuidelines prefer the $(...) construct for command
+substitution instead of using the backquotes `...`.
 
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
->
->> David Kastrup <dak@gnu.org> writes:
->>
->>> There seem to be a few more occurences (git-sh-setup.sh and pager.c):
->>
->> Not since f82c3ffd862c7 (Wed Feb 5 2014, move LESS/LV pager environment
->> to Makefile).
->
-> The only upstream branch containing this commit is pu.  So this patch
-> should likely not go anywhere else for now.
+The backquoted form is the traditional method for command
+substitution, and is supported by POSIX.  However, all but the
+simplest uses become complicated quickly.  In particular, embedded
+command substitutions and/or the use of double quotes require
+careful escaping with the backslash character.
 
-Oops, indeed, I made my patch on top of pu by mistake. Anyway, my patch
-can wait for the other series to be merged.
+The patch was generated by:
 
-Jeff, you're the author of f82c3ffd862c7, topic jk/makefile in git.git,
-marked "expecting a reroll" by Junio. Any news from the series?
+for _f in $(find . -name "*.sh")
+do
+   sed -i 's@`\(.*\)`@$(\1)@g' ${_f}
+done
 
+and then carefully proof-read.
+
+Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+---
+ t/t0010-racy-git.sh |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/t/t0010-racy-git.sh b/t/t0010-racy-git.sh
+index e45a9e4..5657c5a 100755
+--- a/t/t0010-racy-git.sh
++++ b/t/t0010-racy-git.sh
+@@ -14,7 +14,7 @@ do
+ 	git update-index --add infocom
+ 	echo xyzzy >infocom
+ 
+-	files=`git diff-files -p`
++	files=$(git diff-files -p)
+ 	test_expect_success \
+ 	"Racy GIT trial #$trial part A" \
+ 	'test "" != "$files"'
+@@ -23,7 +23,7 @@ do
+ 	echo xyzzy >cornerstone
+ 	git update-index --add cornerstone
+ 
+-	files=`git diff-files -p`
++	files=$(git diff-files -p)
+ 	test_expect_success \
+ 	"Racy GIT trial #$trial part B" \
+ 	'test "" != "$files"'
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+1.7.10.4
