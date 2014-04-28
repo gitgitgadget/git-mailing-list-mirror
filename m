@@ -1,169 +1,77 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: [PATCH/RFC] Makefile: do not depend on curl-config
-Date: Mon, 28 Apr 2014 18:29:05 +0200
-Message-ID: <1398702545-9860-1-git-send-email-kusmabite@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 10/12] MINGW: config.mak.uname: drop USE_NED_ALLOCATOR
+Date: Mon, 28 Apr 2014 09:30:09 -0700
+Message-ID: <20140428163009.GC13002@google.com>
+References: <1398693097-24651-1-git-send-email-marat@slonopotamus.org>
+ <1398693097-24651-11-git-send-email-marat@slonopotamus.org>
+ <CABPQNSZD5jz1A8=zQvU4dYvNb-5M+TV50Uj+oVbWJs3YWBytHw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: patthoyts@gmail.com,
-	marat@slonopotamus.org,
-	tuomas.silvola@knowit.fi,
-	msysgit@googlegroups.com,
-	johannes.schindelin@gmx.de,
-	Erik Faye-Lund <kusmabite@gmail.com>
-To: git@vger.kernel.org
-X-From: msysgit+bncBDR53PPJ7YHRBV4D7KNAKGQEI2X4THY@googlegroups.com Mon Apr 28 18:29:12 2014
-Return-path: <msysgit+bncBDR53PPJ7YHRBV4D7KNAKGQEI2X4THY@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-la0-f56.google.com ([209.85.215.56])
+Content-Type: text/plain; charset=us-ascii
+Cc: Marat Radchenko <marat@slonopotamus.org>,
+	GIT Mailing-list <git@vger.kernel.org>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 28 18:30:25 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDR53PPJ7YHRBV4D7KNAKGQEI2X4THY@googlegroups.com>)
-	id 1WeoQa-0006ZT-2e
-	for gcvm-msysgit@m.gmane.org; Mon, 28 Apr 2014 18:29:12 +0200
-Received: by mail-la0-f56.google.com with SMTP id pv20sf95082lab.1
-        for <gcvm-msysgit@m.gmane.org>; Mon, 28 Apr 2014 09:29:11 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1WeoRk-0007zW-AS
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 18:30:24 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S932755AbaD1QaO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 12:30:14 -0400
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:35390 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755903AbaD1QaM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2014 12:30:12 -0400
+Received: by mail-pa0-f47.google.com with SMTP id fa1so12468pad.20
+        for <git@vger.kernel.org>; Mon, 28 Apr 2014 09:30:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=mime-version:from:to:cc:subject:date:message-id:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=hWQY2/QUjaN5ItpD+SLjO2zHFptaofbrma+4qjbRSEY=;
-        b=QcimkuEFgpEsWR3Z0T00BPlsZxsKOekSG3bvBaT1mpkCXFLvWPWFV6WOEETjgiVCWb
-         Bc5o8lLl3xL6LDn3ahfUqZQMX/kCfPPgXB4XZlw5tb4M0KlFxxeGekO8G0JRReAoSGvu
-         tVyRiOLjh/1UMeVpoVMn5OUBnNTXd+780BqNPEEisKqpd4Eooz0lCL21+DWuB4Sl/8kT
-         XhNeYb89TbHTMxKTVtfFIlOlRJlbZzTKddH0cvjkPHmG3U7M0KJRXey71VqxyJqserTr
-         GLrR1KWjVisOreQsKyx1wZUONBAos7TxyDrTy9KmfMByos31FnV62Ece+U76J9zuINu0
-         ZeGw==
-X-Received: by 10.180.108.79 with SMTP id hi15mr85156wib.1.1398702551871;
-        Mon, 28 Apr 2014 09:29:11 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.109.170 with SMTP id ht10ls491801wib.35.canary; Mon, 28
- Apr 2014 09:29:10 -0700 (PDT)
-X-Received: by 10.15.26.9 with SMTP id m9mr443607eeu.3.1398702550679;
-        Mon, 28 Apr 2014 09:29:10 -0700 (PDT)
-Received: from mail-ee0-x22b.google.com (mail-ee0-x22b.google.com [2a00:1450:4013:c00::22b])
-        by gmr-mx.google.com with ESMTPS id u49si397447eeo.1.2014.04.28.09.29.10
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 28 Apr 2014 09:29:10 -0700 (PDT)
-Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 2a00:1450:4013:c00::22b as permitted sender) client-ip=2a00:1450:4013:c00::22b;
-Received: by mail-ee0-x22b.google.com with SMTP id e53so5013574eek.16
-        for <msysgit@googlegroups.com>; Mon, 28 Apr 2014 09:29:10 -0700 (PDT)
-X-Received: by 10.15.81.135 with SMTP id x7mr4612629eey.61.1398702550575;
-        Mon, 28 Apr 2014 09:29:10 -0700 (PDT)
-Received: from localhost ([77.40.159.131])
-        by mx.google.com with ESMTPSA id m8sm51627374eeg.11.2014.04.28.09.29.08
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=/6x3CSaqFB0Mv9k/zdCuAv11e/uxyybUifESOD7SJHc=;
+        b=Hhx9cOOBsPHQ1L8d5H/DMO+FfDZ1qEJT6yi+C/CbQGWdL46c3QkHlxezxECEGwM1RG
+         jsqLXipoYm4Dfhxcscen+fQUpQmVh/LkDlfvJ5WJqrZecz2YskVf+ClTL0PVsD8zJroD
+         SvekPyt5nGGsFffe7esMRCt/XgXYbcUPLiXRZ5+9STupdLzDEAtnPeORfwJuX40coRzt
+         97jbC1Un7tjKOt4Tq7fHP4fpHaX88qXfTrEAF+H7k20cLDrmmAcs7QcP/gxeNtTcQDNr
+         BCBcBY23r+nSKo7TzLNegOUhxi7WbqYnDyF0S3XrTvTnfi97y1Kzg0jUmsTiHPpPcem+
+         y1Gw==
+X-Received: by 10.68.202.74 with SMTP id kg10mr4049079pbc.163.1398702611886;
+        Mon, 28 Apr 2014 09:30:11 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id iq10sm36043417pbc.14.2014.04.28.09.30.11
         for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Mon, 28 Apr 2014 09:29:09 -0700 (PDT)
-X-Mailer: git-send-email 1.9.2.msysgit.2
-X-Original-Sender: kusmabite@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of kusmabite@gmail.com designates 2a00:1450:4013:c00::22b
- as permitted sender) smtp.mail=kusmabite@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247377>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 28 Apr 2014 09:30:11 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CABPQNSZD5jz1A8=zQvU4dYvNb-5M+TV50Uj+oVbWJs3YWBytHw@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247378>
 
-MinGW builds of cURL does not ship with curl-config unless built
-with the autoconf based build system, which is not the practice
-recommended by the documentation. MsysGit has had issues with
-binaries of that sort, so it has switched away from autoconf-based
-cURL-builds.
+Erik Faye-Lund wrote:
+> On Mon, Apr 28, 2014 at 3:51 PM, Marat Radchenko <marat@slonopotamus.org> wrote:
 
-Unfortunately, broke pushing over WebDAV on Windows, because
-http-push.c depends on cURL's multi-threaded API, which we could
-not determine the presence of any more.
+>> nedalloc was initially added in f0ed82 to fix slowness of standard WinXP
+>> memory allocator. Since WinXP is EOLed, this point is no longer valid.
+>>
+>> The actual reason behind this commit is incompatibility of malloc.c.h
+>> with MinGW-W64 headers. Alternative solution implies updating nedalloc
+>> to something newer.
+>
+> Did you measure that malloc on newer Windows-versions are actually
+> faster? AFAIK, malloc does a lot more inside the CRT than in the
+> kernel...
 
-Since troublesome curl-versions are ancient, and not even present
-in RedHat 5, let's just assume cURL is capable instead of doing a
-non-robust check.
+If it does turn out that nedalloc is not needed any more, please
+remove it from compat/, too. ;-)
 
-Instead, add a check for curl_multi_init to our configure-script,
-for those on ancient system. They probably already need to do the
-configure-dance anyway.
+Thanks for cleaning up.
 
-Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
----
-
-OK, here's a proper patch. I've even tested it! ;)
-
-
- Makefile     |  8 +++-----
- configure.ac | 11 +++++++++++
- 2 files changed, 14 insertions(+), 5 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index e90f57e..f6b5847 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1133,13 +1133,11 @@ else
- 	REMOTE_CURL_NAMES = $(REMOTE_CURL_PRIMARY) $(REMOTE_CURL_ALIASES)
- 	PROGRAM_OBJS += http-fetch.o
- 	PROGRAMS += $(REMOTE_CURL_NAMES)
--	curl_check := $(shell (echo 070908; curl-config --vernum) 2>/dev/null | sort -r | sed -ne 2p)
--	ifeq "$(curl_check)" "070908"
--		ifndef NO_EXPAT
-+	ifndef NO_EXPAT
-+		ifndef NO_CURL_MULTI
- 			PROGRAM_OBJS += http-push.o
- 		endif
--	endif
--	ifndef NO_EXPAT
-+
- 		ifdef EXPATDIR
- 			BASIC_CFLAGS += -I$(EXPATDIR)/include
- 			EXPAT_LIBEXPAT = -L$(EXPATDIR)/$(lib) $(CC_LD_DYNPATH)$(EXPATDIR)/$(lib) -lexpat
-diff --git a/configure.ac b/configure.ac
-index 2f43393..e7ef9f7 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -513,6 +513,17 @@ AC_CHECK_LIB([curl], [curl_global_init],
- [NO_CURL=],
- [NO_CURL=YesPlease])
- 
-+if test -z "$NO_CURL"; then
-+
-+AC_CHECK_DECLS([curl_multi_init],
-+[NO_CURL_MULTI=],
-+[NO_CURL_MULTI=UnfortunatelyYes],
-+[[#include <curl/curl.h>]])
-+
-+GIT_CONF_SUBST([NO_CURL_MULTI])
-+
-+fi
-+
- GIT_UNSTASH_FLAGS($CURLDIR)
- 
- GIT_CONF_SUBST([NO_CURL])
--- 
-1.9.2.msysgit.2
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+Jonathan
