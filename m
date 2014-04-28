@@ -1,79 +1,61 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 02/32] ewah: delete unused ewah_read_mmap_native declaration
-Date: Mon, 28 Apr 2014 17:55:23 +0700
-Message-ID: <1398682553-11634-3-git-send-email-pclouds@gmail.com>
-References: <1398682553-11634-1-git-send-email-pclouds@gmail.com>
+From: Stepan Kasal <kasal@ucw.cz>
+Subject: Re: [PATCH] Sleep 1 millisecond in poll() to avoid busy wait
+Date: Mon, 28 Apr 2014 13:38:15 +0200
+Organization: <)><
+Message-ID: <20140428113815.GA10559@camelia.ucw.cz>
+References: <20140428083931.GA10257@camelia.ucw.cz> <CABPQNSaC30p7TEOvc85u=+skjrFj17182vWWSL=QNVuvzVFE=w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 28 12:58:14 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: GIT Mailing-list <git@vger.kernel.org>,
+	theoleblond <theodore.leblond@gmail.com>
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 28 13:38:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WejGH-00053D-Bb
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 12:58:13 +0200
+	id 1Wejt8-00057U-Q8
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 13:38:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755244AbaD1Kys convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Apr 2014 06:54:48 -0400
-Received: from mail-pd0-f175.google.com ([209.85.192.175]:52298 "EHLO
-	mail-pd0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755127AbaD1Kyn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 06:54:43 -0400
-Received: by mail-pd0-f175.google.com with SMTP id fp1so3403663pdb.6
-        for <git@vger.kernel.org>; Mon, 28 Apr 2014 03:54:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=TSsdme6+pUUnSLZvYTr4dnsmHOeH48Fr/wavkqKmJiU=;
-        b=x5n/4lzShb1n+24yc1p7EdQJNMFB8eTdDLQ2hP+NpqLtA9vtyNkLUJfw46E5f0M2E/
-         oaTxv8xu4AFQnDZ8ojsxN0bmZd+aLr4GtYKXJXvfS3lxunG1HdgHarMruTRn5yMgtlMK
-         7NdJPrwJuPg6J94odOF2Ao2e78hh09gkw3Vr+fllGrixER8mBwwR1zZYCCLisgSMU2Pw
-         7jL0CPZK7TiX+ndPIdnTaNLOhuky5tDM7geLlqzivBeVt39KC+0JaJuBCrnPVwkvA1/U
-         /Vn+MDJI7Ms3cnf3FbI1MJKhXbbTE4qcgeYds66x2hGLOGeeFfV8DZuTK9jS/bLrdTnC
-         XcIA==
-X-Received: by 10.68.134.169 with SMTP id pl9mr7750428pbb.133.1398682483504;
-        Mon, 28 Apr 2014 03:54:43 -0700 (PDT)
-Received: from lanh ([115.73.231.31])
-        by mx.google.com with ESMTPSA id vf7sm34237963pbc.5.2014.04.28.03.54.40
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 28 Apr 2014 03:54:42 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Mon, 28 Apr 2014 17:56:11 +0700
-X-Mailer: git-send-email 1.9.1.346.ga2b5940
-In-Reply-To: <1398682553-11634-1-git-send-email-pclouds@gmail.com>
+	id S1754128AbaD1LiS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 07:38:18 -0400
+Received: from jabberwock.ucw.cz ([46.255.230.98]:51973 "EHLO
+	jabberwock.ucw.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754106AbaD1LiR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2014 07:38:17 -0400
+Received: from 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (84.64.broadband3.iol.cz [85.70.64.84])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	(Authenticated sender: kasal)
+	by jabberwock.ucw.cz (Postfix) with ESMTPSA id 07E621C0093;
+	Mon, 28 Apr 2014 13:38:16 +0200 (CEST)
+Received: from camelia.ucw.cz (camelia.ucw.cz [127.0.0.1])
+	by 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (8.14.3/8.14.3) with ESMTP id s3SBcFDG011172;
+	Mon, 28 Apr 2014 13:38:15 +0200
+Received: (from kasal@localhost)
+	by camelia.ucw.cz (8.14.3/8.14.3/Submit) id s3SBcFeU011171;
+	Mon, 28 Apr 2014 13:38:15 +0200
+Content-Disposition: inline
+In-Reply-To: <CABPQNSaC30p7TEOvc85u=+skjrFj17182vWWSL=QNVuvzVFE=w@mail.gmail.com>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247301>
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- ewah/ewok.h | 1 -
- 1 file changed, 1 deletion(-)
+Hello,
 
-diff --git a/ewah/ewok.h b/ewah/ewok.h
-index 0556ca5..f6ad190 100644
---- a/ewah/ewok.h
-+++ b/ewah/ewok.h
-@@ -100,7 +100,6 @@ int ewah_serialize_native(struct ewah_bitmap *self,=
- int fd);
-=20
- int ewah_deserialize(struct ewah_bitmap *self, int fd);
- int ewah_read_mmap(struct ewah_bitmap *self, const void *map, size_t l=
-en);
--int ewah_read_mmap_native(struct ewah_bitmap *self, void *map, size_t =
-len);
-=20
- uint32_t ewah_checksum(struct ewah_bitmap *self);
-=20
---=20
-1.9.1.346.ga2b5940
+On Mon, Apr 28, 2014 at 11:07:24AM +0200, Erik Faye-Lund wrote:
+> compat/poll/poll.c comes from Gnulib, so it would be better to submit
+> the patch there and update.
+
+well, the change is in gnulib since 2012-05-21.
+But the two versions has diverged a lot.
+Could you please just accept a backport of this one patch?
+I would be glad if msysgit could drop this patch.
+
+Updated patch follows.
+
+Stepan
