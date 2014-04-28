@@ -1,51 +1,51 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 05/14] t0026-eol-config.sh: use the $( ... ) construct for command substitution
-Date: Mon, 28 Apr 2014 05:57:28 -0700
-Message-ID: <1398689857-17014-5-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 08/14] t1000-read-tree-m-3way.sh: use the $( ... ) construct for command substitution
+Date: Mon, 28 Apr 2014 05:57:31 -0700
+Message-ID: <1398689857-17014-8-git-send-email-gitter.spiros@gmail.com>
 References: <1398689857-17014-1-git-send-email-gitter.spiros@gmail.com>
 Cc: matthieu.moy@grenoble-inp.fr, Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 28 14:58:43 2014
+X-From: git-owner@vger.kernel.org Mon Apr 28 14:58:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wel8s-0004Z1-EX
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 14:58:42 +0200
+	id 1Wel8w-0004f6-Hi
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 14:58:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755698AbaD1M5u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S932103AbaD1M6i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 08:58:38 -0400
+Received: from mail-pd0-f171.google.com ([209.85.192.171]:44121 "EHLO
+	mail-pd0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755610AbaD1M5u (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 28 Apr 2014 08:57:50 -0400
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:49102 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755610AbaD1M5q (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 08:57:46 -0400
-Received: by mail-pa0-f43.google.com with SMTP id rd3so3927391pab.16
-        for <git@vger.kernel.org>; Mon, 28 Apr 2014 05:57:46 -0700 (PDT)
+Received: by mail-pd0-f171.google.com with SMTP id g10so726596pdj.16
+        for <git@vger.kernel.org>; Mon, 28 Apr 2014 05:57:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=isAoxaKnIFcZmiQ3wL9ky5iMFqbpC5IgjNsjDe2XkJs=;
-        b=pAodjq9Tg3D+yXTmJfxgjSvpDnCibaM/RHLBnO1YgyKSvUnGzZOgYN3KdXnkdN1DI0
-         S3BZZW6W0kNFTIwZpwy/VTtA2iUXL8IH8tINq4UD5sd66MgG1TD6gHEs0EQFBCLWhhKn
-         SCFu+Gm8WQG2wVCOZw67V/4ZMys4kV9WvvrnZXnqHNcmNsKzNKVUvgQo+FhmohIbulfm
-         2Sw6M2zf+gI+uE1QQ8Af3vNrWyjV2JjIhvP24OdxBids6xUXmF0A+S/H+qWjCSmzX2zd
-         cDuS9YVc7gXQw70q8yHE7qt9zSFgvmELU1Sv6z6Ado9IcPi9EpmrM1h23GkOY+9NzhHg
-         FbNA==
-X-Received: by 10.68.254.103 with SMTP id ah7mr3125052pbd.159.1398689866550;
-        Mon, 28 Apr 2014 05:57:46 -0700 (PDT)
+        bh=3yd60bpXE1HKwY++fQU8+hk/dXDf/o8raVuAcBbRNa8=;
+        b=AZ5CAAEGJmK/BO6DNm5MuLmyL/awEMqjA9cpvq09HoYC0Z0mGmcmg5r5rclml9iGSl
+         YAJwf2PJpqoz7MDGwqLYx7XFqC8/vFOXyMuPsJyOhytW2hh1xhpYt98sZhtjo0KTLEMd
+         Hi0CJBJCq9vir5DNWlyf0DKFOt5KbDY/V7cd1vZGgB9kBOCGQeuNz2FalvhJ9qtOuRfA
+         HdDiBtMV8GoHbARC6R1n62mJzrUbRC+XA81wyk6vUzYGgKvVLgUrArQH6UFNxOZ6/S0G
+         BWG86dtshtUbyc6oXZ+9Ji4eBkMVwVCda/j05VImG8jzEuP05LrSGavCPR3Y6HpXAeEP
+         jZwA==
+X-Received: by 10.66.136.71 with SMTP id py7mr25554561pab.2.1398689870079;
+        Mon, 28 Apr 2014 05:57:50 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id ky8sm34896290pbc.64.2014.04.28.05.57.45
+        by mx.google.com with ESMTPSA id ky8sm34896290pbc.64.2014.04.28.05.57.49
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 28 Apr 2014 05:57:46 -0700 (PDT)
+        Mon, 28 Apr 2014 05:57:49 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1398689857-17014-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247319>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247320>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -67,67 +67,25 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t0026-eol-config.sh |   20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ t/t1000-read-tree-m-3way.sh |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/t0026-eol-config.sh b/t/t0026-eol-config.sh
-index fe0164b..e1126aa 100755
---- a/t/t0026-eol-config.sh
-+++ b/t/t0026-eol-config.sh
-@@ -20,8 +20,8 @@ test_expect_success setup '
- 
- 	git commit -m initial &&
- 
--	one=`git rev-parse HEAD:one` &&
--	two=`git rev-parse HEAD:two` &&
-+	one=$(git rev-parse HEAD:one) &&
-+	two=$(git rev-parse HEAD:two) &&
- 
- 	echo happy.
- '
-@@ -34,8 +34,8 @@ test_expect_success 'eol=lf puts LFs in normalized file' '
- 
- 	! has_cr one &&
- 	! has_cr two &&
--	onediff=`git diff one` &&
--	twodiff=`git diff two` &&
-+	onediff=$(git diff one) &&
-+	twodiff=$(git diff two) &&
- 	test -z "$onediff" -a -z "$twodiff"
- '
- 
-@@ -47,8 +47,8 @@ test_expect_success 'eol=crlf puts CRLFs in normalized file' '
- 
- 	has_cr one &&
- 	! has_cr two &&
--	onediff=`git diff one` &&
--	twodiff=`git diff two` &&
-+	onediff=$(git diff one) &&
-+	twodiff=$(git diff two) &&
- 	test -z "$onediff" -a -z "$twodiff"
- '
- 
-@@ -61,8 +61,8 @@ test_expect_success 'autocrlf=true overrides eol=lf' '
- 
- 	has_cr one &&
- 	has_cr two &&
--	onediff=`git diff one` &&
--	twodiff=`git diff two` &&
-+	onediff=$(git diff one) &&
-+	twodiff=$(git diff two) &&
- 	test -z "$onediff" -a -z "$twodiff"
- '
- 
-@@ -75,8 +75,8 @@ test_expect_success 'autocrlf=true overrides unset eol' '
- 
- 	has_cr one &&
- 	has_cr two &&
--	onediff=`git diff one` &&
--	twodiff=`git diff two` &&
-+	onediff=$(git diff one) &&
-+	twodiff=$(git diff two) &&
- 	test -z "$onediff" -a -z "$twodiff"
- '
+diff --git a/t/t1000-read-tree-m-3way.sh b/t/t1000-read-tree-m-3way.sh
+index babcdd2..a0b79b4 100755
+--- a/t/t1000-read-tree-m-3way.sh
++++ b/t/t1000-read-tree-m-3way.sh
+@@ -519,10 +519,10 @@ test_expect_success \
+     'rm -f .git/index F16 &&
+     echo F16 >F16 &&
+     git update-index --add F16 &&
+-    tree0=`git write-tree` &&
++    tree0=$(git write-tree) &&
+     echo E16 >F16 &&
+     git update-index F16 &&
+-    tree1=`git write-tree` &&
++    tree1=$(git write-tree) &&
+     read_tree_must_succeed -m $tree0 $tree1 $tree1 $tree0 &&
+     git ls-files --stage'
  
 -- 
 1.7.10.4
