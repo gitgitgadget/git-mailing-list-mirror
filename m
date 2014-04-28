@@ -1,96 +1,86 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH 2/2] Mention "git blame" improvements in release notes
-Date: Mon, 28 Apr 2014 22:26:45 +0200
-Message-ID: <87d2g142uy.fsf@fencepost.gnu.org>
-References: <1398470210-28746-1-git-send-email-dak@gnu.org>
-	<1398470210-28746-2-git-send-email-dak@gnu.org>
-	<7vmwf8huey.fsf@alter.siamese.dyndns.org>
-	<87zjj86j4a.fsf@fencepost.gnu.org>
-	<xmqqzjj5s8hs.fsf@gitster.dls.corp.google.com>
-	<87y4yp4ame.fsf@fencepost.gnu.org>
-	<xmqq38gxqmc9.fsf@gitster.dls.corp.google.com>
-	<CAL=YDW=iTQz-S+ZByZnVhrpebPgZxq6p46MC2yqW-HF3eVw+2g@mail.gmail.com>
+From: Marat Radchenko <marat@slonopotamus.org>
+Subject: Re: [PATCH 04/12] Makefile: introduce CROSS_COMPILE variable
+Date: Tue, 29 Apr 2014 00:40:49 +0400
+Message-ID: <20140428204048.GA21365@seldon>
+References: <1398693097-24651-1-git-send-email-marat@slonopotamus.org>
+ <1398693097-24651-5-git-send-email-marat@slonopotamus.org>
+ <20140428162536.GB13002@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Ronnie Sahlberg <sahlberg@google.com>
-X-From: git-owner@vger.kernel.org Mon Apr 28 22:26:53 2014
+Cc: GIT Mailing-list <git@vger.kernel.org>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 28 22:40:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wes8a-0006Ig-5P
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 22:26:52 +0200
+	id 1WesME-0007IH-HG
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 22:40:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756188AbaD1U0r convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Apr 2014 16:26:47 -0400
-Received: from fencepost.gnu.org ([208.118.235.10]:42778 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752338AbaD1U0r convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Apr 2014 16:26:47 -0400
-Received: from localhost ([127.0.0.1]:41819 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1Wes8U-0005TY-74; Mon, 28 Apr 2014 16:26:46 -0400
-Received: by lola (Postfix, from userid 1000)
-	id CB8D4E05FE; Mon, 28 Apr 2014 22:26:45 +0200 (CEST)
-In-Reply-To: <CAL=YDW=iTQz-S+ZByZnVhrpebPgZxq6p46MC2yqW-HF3eVw+2g@mail.gmail.com>
-	(Ronnie Sahlberg's message of "Mon, 28 Apr 2014 13:05:28 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
+	id S1753125AbaD1Ukx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Apr 2014 16:40:53 -0400
+Received: from seldon.slonopotamus.org ([94.242.204.247]:44229 "EHLO
+	slonopotamus.org" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
+	with ESMTP id S1752766AbaD1Ukx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2014 16:40:53 -0400
+Received: from marat by slonopotamus.org with local (Exim 4.80.1)
+	(envelope-from <marat@slonopotamus.org>)
+	id 1WesM5-0005Zw-3e; Tue, 29 Apr 2014 00:40:49 +0400
+Content-Disposition: inline
+In-Reply-To: <20140428162536.GB13002@google.com>
+User-Agent: Mutt/1.5.22 (2013-10-16)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247440>
 
-Ronnie Sahlberg <sahlberg@google.com> writes:
+On Mon, Apr 28, 2014 at 09:25:36AM -0700, Jonathan Nieder wrote:
+> > -STRIP ?=3D strip
+> > +STRIP =3D $(CROSS_COMPILE)strip
+>=20
+> Before, STRIP from the environment took precedence over STRIP from th=
+e
+> makefile.  Switching to the more usual 'environment can't be trusted'
+> convention is a good change, but please mention it in the commit
+> message.
 
-> Some projects, for example samba, provide a dedicated page on the
-> project web site
-> where vendors, and I think individuals, that provide services can lis=
-t
-> their information :
+Taken from [1]:
+
+> Simply expanded variables are defined by lines using =E2=80=98:=3D=E2=
+=80=99 or =E2=80=98::=3D=E2=80=99 (see Setting Variables).
+> Both forms are equivalent in GNU make; however only the =E2=80=98::=3D=
+=E2=80=99 form is described by the POSIX
+> standard (support for =E2=80=98::=3D=E2=80=99 was added to the POSIX =
+standard in 2012, so older versions of make
+> won't accept this form either).
 >
-> http://www.samba.org/samba/support/
+> The value of a simply expanded variable is scanned once and for all, =
+expanding any references
+> to other variables and functions, when the variable is defined. The a=
+ctual value of the simply
+> expanded variable is the result of expanding the text that you write.=
+ It does not contain any
+> references to other variables; it contains their values as of the tim=
+e this variable was defined.
+> Therefore,
 >
-> Would this perhaps be a better solution?
+>    x :=3D foo
+>    y :=3D $(x) bar
+>    x :=3D later
+> is equivalent to
+>
+>    y :=3D foo bar
+>    x :=3D later
+>
+> When a simply expanded variable is referenced, its value is substitut=
+ed verbatim.
 
-Actually, it does not work for my situation at all but then my situatio=
-n
-is likely not typical enough to be worth catering for specifically.
+I don't see how it relates to environment precedence. Could you please =
+provide me an example of
+a situation that changed due to my commit?
 
-The salient point with me is that my productivity drops by more than a
-factor of 100 (no, that's not an exaggeration) when having to do
-something I'm not interested in.
-
-Which is the reason my deal with GNU LilyPond where I'm (interrupted by
-the git-blame episode) basically lead programmer is that LilyPond users
-give me whatever money they consider my work to be worth to them, and i=
-n
-return I work on whatever I like on LilyPond.  Nobody gets to say _what=
-_
-I=A0do, and that's to the best of everyone's interest since only that w=
-ay
-a reasonable amount of work actually gets done.
-
-So I cannot actually provide "services for hire" but it's more like a
-"themed money sink" I=A0can offer.  And in the case of Git, since it do=
-es
-not even appear that there is a continuing base to make it work
-reasonably in the context of other contributors and their interests,
-it's more like "oops, I ended up wasting months on your project, but at
-least there was something to show for it from my side, how about
-yours?".  That's not something one can reasonably put on a "support"
-themed page.  It's actually bloody ridiculous but then that's the sort
-of handicap I=A0have to organize my life around.  Even while it's
-unpredictable what I=A0end up doing, once I do get something done it te=
-nds
-to be pretty good (there are a few old performance patches of mine in
-the Git code base where I did not start out from what happens to be
-pretty awful code and still got considerable return).
-
---=20
-David Kastrup
+[1]: http://www.gnu.org/software/make/manual/make.html#Flavors
