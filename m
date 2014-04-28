@@ -1,170 +1,110 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH v3 03/19] refs.c: make ref_transaction_commit return an
- error string
-Date: Mon, 28 Apr 2014 10:46:30 -0700
-Message-ID: <CAL=YDW=CBnWU3t05MwAYkGP+0cLPdVqypM-jjZhCzUiWEjCwsA@mail.gmail.com>
-References: <1398442494-23438-1-git-send-email-sahlberg@google.com>
-	<1398442494-23438-4-git-send-email-sahlberg@google.com>
-	<20140425221001.GB9218@google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: A failing attempt to use Git in a centralized environment
+Date: Mon, 28 Apr 2014 11:41:43 -0700
+Message-ID: <xmqqoazlqot4.fsf@gitster.dls.corp.google.com>
+References: <4ay6w9i74cygt6ii1b0db7wg.1398433713382@email.android.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 28 21:29:21 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Marat Radchenko <marat@slonopotamus.org>
+X-From: git-owner@vger.kernel.org Mon Apr 28 21:29:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WerEh-0003DE-Fm
+	id 1WerEg-0003DE-UW
 	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 21:29:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932900AbaD1T1o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2014 15:27:44 -0400
-Received: from mail-ve0-f174.google.com ([209.85.128.174]:50929 "EHLO
-	mail-ve0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932549AbaD1TZT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 15:25:19 -0400
-Received: by mail-ve0-f174.google.com with SMTP id oz11so8587215veb.33
-        for <git@vger.kernel.org>; Mon, 28 Apr 2014 12:25:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=IFvG6OLqig7Tyl6BH6rltLYH758jt7vExvGPDNF/Pm0=;
-        b=DNMzOyjy3pngm7TNNHf9knUkxXHtTYDGQASmp+qsEI3Wl4Qx6YnhB9T8P61kcZpFxC
-         +SW07lOByS0Xhz+MvJzFDG46NGgVlpiyYiYWql2M2Oq4hQUz3Iz3o762D0E9QkipMxKY
-         8FFMMgFG84GZ2zSzZw0xZaN2bSXe3426G5LzkIR3i5875h7CSZQl9BfFQbVh0pcLrc6J
-         Psdmq5ANVMM4Io3C2RURCS2DfbdJ3cA5AMpQYZEnlSZtEIfCeuVeUnY3QU1OjcI99DmI
-         lBRUjsy/bbWeDKKLOE1UP/DHeUf9Q4YbUuwO5fnK+zkfel2cc0LFu49wBMDzgKJ9gRgQ
-         rD9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=IFvG6OLqig7Tyl6BH6rltLYH758jt7vExvGPDNF/Pm0=;
-        b=RFqdvf3jCCAR0r37QJgJRbOaGb773iS+WpB2aopvYe/vx2iP3kESJLAG+P1Tp6c3cz
-         o+eTvgd6U4jcc2NDi7orgDWGvcY2KiChmuaMfCYsBdgEICBVDQ99sGLx2yTAKk0t5Nou
-         dzJOvIBuT4WFkiam11O0CZhVql3KBzVAAOMQrqykBK24hDy0AwOH+gUv8kjZULY92dlv
-         m48F2WUL9oRw+kGPDaKOqJATh1ipwF7aAfeuEbOdh3zTGPf6TEfTJ9cN5bYOOqIeewlX
-         ydWtIbhsMvcjUej1Y/+sRymD22isQmYxUw6bsqnvbeJuZe3nbAd2WEDBa1nkY3XKBive
-         3g4A==
-X-Gm-Message-State: ALoCoQlzj+leUjurzeVBIPayCCTY71zNRn6Vk7zb2QBgoStW75jCBNNbJwniL2HYZDX9Ra2c+MUPHdU0SViEmNvJklxF/5MYM9/FbtqhXDupJvcGdb6GvMD7h/b7O3kUo8VP47LbVSC+xMhCVse68CnoJoNHd2fcK4RCZkkWUvHWl0x20AAn4l1Tt3LB0W9CapaCTBB+1qaZ
-X-Received: by 10.58.49.10 with SMTP id q10mr24210892ven.5.1398707190797; Mon,
- 28 Apr 2014 10:46:30 -0700 (PDT)
-Received: by 10.52.141.13 with HTTP; Mon, 28 Apr 2014 10:46:30 -0700 (PDT)
-In-Reply-To: <20140425221001.GB9218@google.com>
+	id S932614AbaD1TZX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 15:25:23 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40465 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932483AbaD1TZM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2014 15:25:12 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A76A281C83;
+	Mon, 28 Apr 2014 14:42:17 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=GfnpYQ3kPAdKa0SN9BfYjOE0la0=; b=mb+yBp
+	/ofbKljzqx4+yrOQ1kVkGeCtmc/bXsfKZv5K+3igwfSJ0LCKdI7otoRNzYf33GxC
+	0x4U2XWthBGnsu+vZ9sG3TZtPRYNz1rtSIqFDx8eyWDyYBJ6SjRFVU87GJfeCtyU
+	VLBGIdvxIbs5InVqVg9WUzmLzbNCxavxRGRMc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=f9JbUM3Clhzixq6JiXxVnl8IFBce7PmT
+	xB9JJTm5aeS01mJEJuesP8PcazBSYA3dDHjf6suuYoxK1p6tMhCyZeXzwBJpVhR7
+	pan9sh5IFQ3GqwULA30ncXatZBFEAfEkJNSGMdNchJvwGW3VePh1+EclEDVBx4z4
+	hG33a5TTnmI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8B29481C82;
+	Mon, 28 Apr 2014 14:42:17 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7734181C4D;
+	Mon, 28 Apr 2014 14:41:45 -0400 (EDT)
+In-Reply-To: <4ay6w9i74cygt6ii1b0db7wg.1398433713382@email.android.com> (Marat
+	Radchenko's message of "Mon, 28 Apr 2014 10:29:07 +0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: BFBFAAF4-CF04-11E3-B7A3-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247408>
 
-Good points.
+Marat Radchenko <marat@slonopotamus.org> writes:
 
+> Problem #1: TortoiseGit GUI windows for common tasks have a heck
+> lots of controls that a common Git user will never need.
 
+Do people around TortoiseGit lurk on this list?  Otherwise this may
+not be something we can help you with here.
 
-On Fri, Apr 25, 2014 at 3:10 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Ronnie Sahlberg wrote:
+> Problem #2 occured the first day we started using Git on real
+> project. It is explained in detail in older post to Git ML [3]. I
+> call it "swapped/reverse merge problem".
 >
->> Let ref_transaction_commit return an optional error string that describes
->> the transaction failure.  Start by returning the same error as update_ref_lock
->> returns, modulo the initial error:/fatal: preamble.
+> In short:
+> 1. Hack, hack, hack
+> 2. Commit
+> 3. Push, woops, reject (non-ff)
+> 4. Pull
+> 5. Push
 >
-> s/returns/prints/?
+> The root of evil is step #4 that creates a merge commit with
+> "swapped" parents.
 
-Done, and then was deleted when I reworded the message.
+Yes, this is a real issue, and I do not mind seeing a patch to
+improve the situation (there may be different approaches, and one
+random approach somebody takes may not necessarily be a good way to
+improve the situation though).
 
->
->> This will make it easier for callers to craft better error messages when
->> a transaction call fails.
->
-> Interesting.  Can you give an example?  What kind of behavior are we
-> expecting in callers other than die()-ing or cleaning up and then
-> die()-ing?
+ - Perhaps by allowing an option to tell the "pull" at the fourth
+   step to record swapped parents in the merge?
 
-I was thinking a bit too far ahead. You could in theory keep logging multiple
-lock failures during the _commit() and then when the transaction fails
-and returns
-it will have appended a list of all refs that failed and not just the
-first ref that failed.
+ - Perhaps in step #3, stop suggesting to "pull first" and instead
+   tell them to "fetch upstream, rebase your work on it and then
+   push"?
 
+ - Extending on the second one, wrap a large part of the procedure
+   in a single handy wrapper "git update" or something, whose point
+   is to "update your work to be mergeable and pushable"?
 
->
-> I like this more than having the caller pass in a flag/callback/etc to
-> decide how noisy to be and whether to gracefully accept errors or exit.
-> So it seems like an improvement, but may always returning error()
-> would be better --- more context would help in clarifying this.
->
->> --- a/refs.h
->> +++ b/refs.h
->> @@ -268,9 +268,12 @@ void ref_transaction_delete(struct ref_transaction *transaction,
->>   * Commit all of the changes that have been queued in transaction, as
->>   * atomically as possible.  Return a nonzero value if there is a
->>   * problem.  The ref_transaction is freed by this function.
->> + * If error is non-NULL it will return an error string that describes
->> + * why a commit failed. This string must be free()ed by the caller.
->>   */
->>  int ref_transaction_commit(struct ref_transaction *transaction,
->> -                        const char *msg, enum action_on_err onerr);
->> +                        const char *msg, char **err,
->> +                        enum action_on_err onerr);
->
-> Is the idea that if I pass in a pointer &err then
-> ref_transaction_commit will take the action described by onerr *and*
-> write its error message to err?
+> Problem #3: on conflicts, user ends up with a working copy that
+> marks all remote-changed files as modified. Luckily, nobody has
+> problems with conflict resolution process, it's just confusing to
+> see changes other way round.
 
-Temporarily, yes.
-Shortly after this patch I remove the onerr argument completely.
-But I want to keep the "pass error back to caller" and "get rid of
-onerr" as two separate patches.
-I think it is easier to follow the flow of changes if they are done in
-two separate steps.
+If we flip the resolution process to "apply/merge your work to the
+updated upstream (i.e. the topic of your problem #2 above)", that
+"other way round" issue will disappear, no?
+>
+> Problem #4: when conflict happens during rebase, mergetool shows
+> user own changes as "theirs" and remote changes as "mine". And
+> believe me, explaining this to users doesn't increase their
+> willingness to adopt Git.
 
->
-> Probably squashing with patch 07 would make this easier to read (and
-> wouldn't require changing any messages at that point).
-
-See above.
-
->
-> [...]
->> --- a/refs.c
->> +++ b/refs.c
-> [...]
->> @@ -3443,6 +3447,12 @@ int ref_transaction_commit(struct ref_transaction *transaction,
->>                                              update->flags,
->>                                              &update->type, onerr);
->>               if (!update->lock) {
->> +                     if (err) {
->> +                             const char *str = "Cannot lock the ref '%s'.";
->> +                             *err = xmalloc(PATH_MAX + 24);
->> +                             snprintf(*err, PATH_MAX + 24, str,
->> +                                      update->refname);
->> +                     }
->
-> Might be clearer to use a helper similar to path.c::mkpathdup
->
->         char *aprintf(const char *fmt, ...)
->         {
->                 char *result;
->                 struct strbuf sb = STRBUF_INIT;
->                 va_list args;
->
->                 va_start(args, fmt);
->                 strbuf_vaddf(&sb, fmt, args);
->                 va_end(args);
->
->                 return strbuf_detach(&sb);
->         }
->
-> or to have the caller pass in a pointer to strbuf instead of char *.
-
-strbuf as argument is probably the right thing to do. I am doing that change.
-
->
-> The rest looks good to me.
->
-> Thanks,
-> Jonathan
+Likewise.
