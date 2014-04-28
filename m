@@ -1,70 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 1/2] Makefile: use curl-config to determine curl flags
-Date: Mon, 28 Apr 2014 14:13:38 -0700
-Message-ID: <xmqqppk1non1.fsf@gitster.dls.corp.google.com>
-References: <1398713704-15428-1-git-send-email-dborowitz@google.com>
-	<xmqqtx9dp6rd.fsf@gitster.dls.corp.google.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH 00/32] Split index mode for very large indexes
+Date: Mon, 28 Apr 2014 14:18:44 -0700
+Message-ID: <CAJo=hJtgijOOMPbFjvTUaENw=hr0YixYmy1UkdqEd=CpLZ5L2A@mail.gmail.com>
+References: <1398682553-11634-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, kusmabite@gmail.com
-To: Dave Borowitz <dborowitz@google.com>
-X-From: git-owner@vger.kernel.org Mon Apr 28 23:13:48 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 28 23:19:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wesrz-0005v2-9c
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 23:13:47 +0200
+	id 1WesxE-0004HW-QY
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 23:19:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757243AbaD1VNn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2014 17:13:43 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38687 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757237AbaD1VNm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 17:13:42 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D7D1F813B5;
-	Mon, 28 Apr 2014 17:13:41 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=R26uPiYRelimxHJRh+Md44vK+0g=; b=jA/wqG
-	Els5ZOxEzqoSgElX+X4xwbBbOReiMH0XKUlnnrsCHwkHnW7soWys2S5SiP9IZJhw
-	/XnoiLuUsMH7bxrYTGSW1RWcnihHcIlnVYyTgR7/Gzrvy/ze9P113SBjkwF7Wt/L
-	2CDJIuezrCMBhxyYERgj5ss0sBW8rCht6UXmU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WRkPjwF53GVwVXjwW1++ksszc/S8oyEe
-	fxtk3a9ugH4P7Tzt+B6pDxcRNT4k3a/eTod4gIR3A4o+4Jv8MAW4NsbRo4WO7fzI
-	tZnLP0WyvVy0G2mMlMiLM5vv5cqDPNnb7zWx/nNUZT2zj2opv3ISj0esHtRFAQdv
-	ZdLgt2MkQqo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C21C1813B4;
-	Mon, 28 Apr 2014 17:13:41 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A9AB6813B2;
-	Mon, 28 Apr 2014 17:13:39 -0400 (EDT)
-In-Reply-To: <xmqqtx9dp6rd.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 28 Apr 2014 12:56:54 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: F83F4B0E-CF19-11E3-90AA-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756084AbaD1VTH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Apr 2014 17:19:07 -0400
+Received: from mail-wi0-f175.google.com ([209.85.212.175]:53029 "EHLO
+	mail-wi0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755894AbaD1VTF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Apr 2014 17:19:05 -0400
+Received: by mail-wi0-f175.google.com with SMTP id cc10so6442374wib.14
+        for <git@vger.kernel.org>; Mon, 28 Apr 2014 14:19:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spearce.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=pzxW+44p0gLC0FZOqlXKkC9MkVUQ7ZGcOPhJQs3DonQ=;
+        b=HebwEjSzXJBClUzk9G3Eq8LbAfzASY9wXZH8dz6hq41mskufuYVuYVAVxh5AV4JwDr
+         VJ1kY0JgLtehYxrV2xueyn6H/DDXboJVt2HkdHFNxPUhdKh/SgWt8eAHhzLgDQNqh2CS
+         ON6+pajnWVjEvuQQbVm+EBjse2LvvEIDyo0AE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=pzxW+44p0gLC0FZOqlXKkC9MkVUQ7ZGcOPhJQs3DonQ=;
+        b=eVYpeymQDCL8A4z1nrPmMYOR1lmU6Zpyd9DLQFH9MUGfrxHfa/xMUgGH1uh3yWBCVn
+         544fIT9XJ+SjQAZK2Qb0yod7AAyZDDc+JnwIe+b/6e/GqbQfOUwWTN/Q7MC1Mmu7UZPQ
+         DQgl/yCq8tM1mnO7jOLZAxTJDshsnaBHfPlFJp/eNhdloysta697llSEwtu3YqXRiL2N
+         BEIW5oyprL2tdA9sLUe6lAZ5T+VVVZFVgXfP/3zpeM2nSkc6WAGKpp2HELaZok3vVmVQ
+         9hb7YPkwgMgFAPY8VP4t5Utxc7dtddL9LhbTGsD7bjWPAN8JQ2qZA/PrfEsJyh7xVFmC
+         s8ew==
+X-Gm-Message-State: ALoCoQngQmU7l6zUBPYKISuqqU4fGL93wswxMVEx1lhBLSsoHCk2cynRgKUmG253f/ykMdBP8uHc
+X-Received: by 10.195.18.8 with SMTP id gi8mr82659wjd.75.1398719944368; Mon,
+ 28 Apr 2014 14:19:04 -0700 (PDT)
+Received: by 10.227.7.131 with HTTP; Mon, 28 Apr 2014 14:18:44 -0700 (PDT)
+In-Reply-To: <1398682553-11634-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247454>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Mon, Apr 28, 2014 at 3:55 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
+Duy <pclouds@gmail.com> wrote:
+> I hinted about it earlier [1]. It now passes the test suite and with =
+a
+> design that I'm happy with (thanks to Junio for a suggestion about th=
+e
+> rename problem).
+>
+> From the user point of view, this reduces the writable size of index
+> down to the number of updated files. For example my webkit index v4 i=
+s
+> 14MB. With a fresh split, I only have to update an index of 200KB.
+> Every file I touch will add about 80 bytes to that. As long as I don'=
+t
+> touch every single tracked file in my worktree, I should not pay
+> penalty for writing 14MB index file on every operation.
 
-> This "ifeq" is redundant and will never set CURL_LIBCURL to empty
-> without running the "else" part, I think.  In a Makefile, a variable
-> explicitly set to empty and a variable that is unset are treated the
-> same....
-> 	$ make -f Makefile CURL_CONFIG=""
-> 	Empty Undefined
+This is a very welcome type of improvement.
 
-Oh, I was blind.  Please ignore this noise.
+I am however concerned about the complexity of the format employed.
+Why do we need two EWAH bitmaps in the new index? Why isn't this just
+a pair of sorted files that are merge-joined at read, with records in
+$GIT_DIR/index taking priority over same-named records in
+$GIT_DIR/sharedindex.$SHA1?  Deletes could be marked with a bit or an
+"all zero" metadata record.
 
-Thanks.
+> The read penalty is not addressed here, so I still pay 14MB hashing
+> cost. But that's an easy problem. We could cache the validated index
+> in a daemon. Whenever git needs to load an index, it pokes the daemon=
+=2E
+> The daemon verifies that the on-disk index still has the same
+> signature, then sends the in-mem index to git. When git updates the
+> index, it pokes the daemon again to update in-mem index. Next time gi=
+t
+> reads the index, it does not have to pay I/O cost any more (actually
+> it does but the cost is hidden away when you do not have to read it
+> yet).
+
+If we are going this far, maybe it is worthwhile building a mmap()
+region the daemon exports to the git client that holds the "in memory"
+format of the index. Clients would mmap this PROT_READ, MAP_PRIVATE
+and can then quickly access the base file information without doing
+further validation, or copying the large(ish) data over a pipe.
+
+
+Junio had some other great ideas for improving the index on really
+large trees. Maybe I should let him comment since they are really his
+ideas. Something about not even checking out most files, storing most
+subtrees as just a "tree" entry in the index. E.g. if you are a bad
+developer and never touch the "t/" subdirectory then that is stored as
+just "t" and the SHA-1 of the "t" tree, rather than the recursively
+exploded list of the test directory.
