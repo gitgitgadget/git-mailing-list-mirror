@@ -1,51 +1,49 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 02/14] t0010-racy-git.sh: use the $( ... ) construct for command substitution
-Date: Mon, 28 Apr 2014 05:57:25 -0700
-Message-ID: <1398689857-17014-2-git-send-email-gitter.spiros@gmail.com>
-References: <1398689857-17014-1-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 01/14] t0001-init.sh: use the $( ... ) construct for command substitution
+Date: Mon, 28 Apr 2014 05:57:24 -0700
+Message-ID: <1398689857-17014-1-git-send-email-gitter.spiros@gmail.com>
 Cc: matthieu.moy@grenoble-inp.fr, Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 28 14:57:50 2014
+X-From: git-owner@vger.kernel.org Mon Apr 28 14:57:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wel81-0003V7-NV
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 14:57:50 +0200
+	id 1Wel87-0003e5-OF
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 14:57:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755579AbaD1M5p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2014 08:57:45 -0400
-Received: from mail-pb0-f54.google.com ([209.85.160.54]:60145 "EHLO
-	mail-pb0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755395AbaD1M5n (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 08:57:43 -0400
-Received: by mail-pb0-f54.google.com with SMTP id rp16so2403760pbb.27
-        for <git@vger.kernel.org>; Mon, 28 Apr 2014 05:57:43 -0700 (PDT)
+	id S1755572AbaD1M5o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 08:57:44 -0400
+Received: from mail-pd0-f179.google.com ([209.85.192.179]:64090 "EHLO
+	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752197AbaD1M5m (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2014 08:57:42 -0400
+Received: by mail-pd0-f179.google.com with SMTP id y10so738313pdj.24
+        for <git@vger.kernel.org>; Mon, 28 Apr 2014 05:57:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=0F2Pog8wWErQyVq7X6yrp/qYtuqsIMtaPmNh7WQm4+s=;
-        b=ac4U5Zo7DASzf1UCPKrpSKY4jidanUmUUFLVG91A39Zawb5sVkOS1lYePbtPARamVU
-         aA3J0TLyrhn3k34KmpxCZ61yPLp3GMe5VYg/nFESSNZSXon2nJCIC+iPvAiQov9wd5Ng
-         1yEHapEUJ9I/xbuTczjTVjAc8LefqoRAFKk0XeelH+h6dGkfB2V1WAC3gH+ZBxR9ikhj
-         bUYQF3lMTun7vCfJKQCBeghBcjeRb/t9og61FVWS0gMB6s8roZdCVG/VavRdCk4ionvd
-         h+MCxFs46gKEvTnwTT+eNH6PNkyJ2kQT2Yn8yLX1SsLwmKSXLQLCGK5Z7YFEsegsFHAK
-         xnTA==
-X-Received: by 10.68.190.163 with SMTP id gr3mr25066724pbc.103.1398689863089;
-        Mon, 28 Apr 2014 05:57:43 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id;
+        bh=inlS7NbN2KdA+J4XkT1jRAkrH9iKB5iuvEzRskOCLag=;
+        b=TcW6BexUzwqwxSG5kRE6bGfyW+i7V4a4ygbKCazo1oaRCwlK7pjJlMaIfJnJWhn5d6
+         6/oefrTudA3L84qQcQ3puC2FWinkDID7aeR6JFL+dXqNaQWumCP4DJi/PMdH2sAju7Mp
+         ydH6kCdQ1/1QmmALJiXRHR6bgPkXogGUlxJcpbRFx+K91QjQiyEYbqq0SsOG7HqAg1Je
+         9HAGhIyj4AdjS3Jf9jEbi6JCKkDAmpz7+rWXz1ltxzJD1jbiWRblHHR685G/jwM4e6nb
+         Yepwc9wb7mnbdrrzcZC+8cDiGS3C00nBtjY/cRnAtsTNhvrg8CNHvED1rG1/Ci4Wo++t
+         U8Zw==
+X-Received: by 10.69.17.230 with SMTP id gh6mr29026922pbd.0.1398689861870;
+        Mon, 28 Apr 2014 05:57:41 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id ky8sm34896290pbc.64.2014.04.28.05.57.41
+        by mx.google.com with ESMTPSA id ky8sm34896290pbc.64.2014.04.28.05.57.40
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 28 Apr 2014 05:57:42 -0700 (PDT)
+        Mon, 28 Apr 2014 05:57:40 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
-In-Reply-To: <1398689857-17014-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247310>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -67,30 +65,65 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t0010-racy-git.sh |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t0001-init.sh |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/t/t0010-racy-git.sh b/t/t0010-racy-git.sh
-index e45a9e4..5657c5a 100755
---- a/t/t0010-racy-git.sh
-+++ b/t/t0010-racy-git.sh
-@@ -14,7 +14,7 @@ do
- 	git update-index --add infocom
- 	echo xyzzy >infocom
+diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+index bbc9cb6..2f30203 100755
+--- a/t/t0001-init.sh
++++ b/t/t0001-init.sh
+@@ -185,14 +185,14 @@ test_expect_success 'init --bare/--shared overrides system/global config' '
+ 	git init --bare --shared=0666 init-bare-shared-override &&
+ 	check_config init-bare-shared-override true unset &&
+ 	test x0666 = \
+-	x`git config -f init-bare-shared-override/config core.sharedRepository`
++	x$(git config -f init-bare-shared-override/config core.sharedRepository)
+ '
  
--	files=`git diff-files -p`
-+	files=$(git diff-files -p)
- 	test_expect_success \
- 	"Racy GIT trial #$trial part A" \
- 	'test "" != "$files"'
-@@ -23,7 +23,7 @@ do
- 	echo xyzzy >cornerstone
- 	git update-index --add cornerstone
+ test_expect_success 'init honors global core.sharedRepository' '
+ 	test_config_global core.sharedRepository 0666 &&
+ 	git init shared-honor-global &&
+ 	test x0666 = \
+-	x`git config -f shared-honor-global/.git/config core.sharedRepository`
++	x$(git config -f shared-honor-global/.git/config core.sharedRepository)
+ '
  
--	files=`git diff-files -p`
-+	files=$(git diff-files -p)
- 	test_expect_success \
- 	"Racy GIT trial #$trial part B" \
- 	'test "" != "$files"'
+ test_expect_success 'init rejects insanely long --template' '
+@@ -285,7 +285,7 @@ test_expect_success 'init prefers command line to GIT_DIR' '
+ test_expect_success 'init with separate gitdir' '
+ 	rm -rf newdir &&
+ 	git init --separate-git-dir realgitdir newdir &&
+-	echo "gitdir: `pwd`/realgitdir" >expected &&
++	echo "gitdir: $(pwd)/realgitdir" >expected &&
+ 	test_cmp expected newdir/.git &&
+ 	test_path_is_dir realgitdir/refs
+ '
+@@ -299,7 +299,7 @@ test_expect_success 're-init to update git link' '
+ 	cd newdir &&
+ 	git init --separate-git-dir ../surrealgitdir
+ 	) &&
+-	echo "gitdir: `pwd`/surrealgitdir" >expected &&
++	echo "gitdir: $(pwd)/surrealgitdir" >expected &&
+ 	test_cmp expected newdir/.git &&
+ 	test_path_is_dir surrealgitdir/refs &&
+ 	test_path_is_missing realgitdir/refs
+@@ -312,7 +312,7 @@ test_expect_success 're-init to move gitdir' '
+ 	cd newdir &&
+ 	git init --separate-git-dir ../realgitdir
+ 	) &&
+-	echo "gitdir: `pwd`/realgitdir" >expected &&
++	echo "gitdir: $(pwd)/realgitdir" >expected &&
+ 	test_cmp expected newdir/.git &&
+ 	test_path_is_dir realgitdir/refs
+ '
+@@ -326,7 +326,7 @@ test_expect_success SYMLINKS 're-init to move gitdir symlink' '
+ 	ln -s here .git &&
+ 	git init --separate-git-dir ../realgitdir
+ 	) &&
+-	echo "gitdir: `pwd`/realgitdir" >expected &&
++	echo "gitdir: $(pwd)/realgitdir" >expected &&
+ 	test_cmp expected newdir/.git &&
+ 	test_cmp expected newdir/here &&
+ 	test_path_is_dir realgitdir/refs
 -- 
 1.7.10.4
