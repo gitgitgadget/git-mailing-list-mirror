@@ -1,69 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: "'Dave Borowitz <dborowitz@google.com>' via msysGit" <msysgit@googlegroups.com>
 Subject: Re: git version 1.9.0 missing git-http-push?
-Date: Mon, 28 Apr 2014 11:31:53 -0700
-Message-ID: <xmqqsioxqp9i.fsf@gitster.dls.corp.google.com>
+Date: Mon, 28 Apr 2014 11:39:43 -0700
+Message-ID: <CAD0k6qSUYANxbjjbE4jTW4EeVwOYgBD=bXkSu=akiYC_CB7Ffw@mail.gmail.com>
 References: <DAB1109C3DA82E48A383F6960A32A9E567020669@EXCH2010.inferno.local>
-	<1398670610456-7608792.post@n2.nabble.com>
-	<CABPQNSY-bM2pv7mn2R+wsnn944BkKbW6Hz2EhwrruPuxUJpUEQ@mail.gmail.com>
+ <1398670610456-7608792.post@n2.nabble.com> <CABPQNSY-bM2pv7mn2R+wsnn944BkKbW6Hz2EhwrruPuxUJpUEQ@mail.gmail.com>
+ <xmqqsioxqp9i.fsf@gitster.dls.corp.google.com>
+Reply-To: Dave Borowitz <dborowitz@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Marat Radchenko <marat@slonopotamus.org>,  msysGit <msysgit@googlegroups.com>,  Pat Thoyts <patthoyts@gmail.com>,  Nick Hengeveld <nickh@reactrix.com>,  GIT Mailing-list <git@vger.kernel.org>
-To: kusmabite@gmail.com, Dave Borowitz <dborowitz@google.com>
-X-From: msysgit+bncBCG77UMM3EJRBHN57KNAKGQEOY4LZ3Q@googlegroups.com Mon Apr 28 20:32:07 2014
-Return-path: <msysgit+bncBCG77UMM3EJRBHN57KNAKGQEOY4LZ3Q@googlegroups.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: kusmabite@gmail.com, Marat Radchenko <marat@slonopotamus.org>, 
+	msysGit <msysgit@googlegroups.com>, Pat Thoyts <patthoyts@gmail.com>, 
+	Nick Hengeveld <nickh@reactrix.com>, GIT Mailing-list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: msysgit+bncBC64RC4WYIKBBMGK7KNAKGQEB73O56I@googlegroups.com Mon Apr 28 21:00:02 2014
+Return-path: <msysgit+bncBC64RC4WYIKBBMGK7KNAKGQEB73O56I@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-qa0-f64.google.com ([209.85.216.64])
+Received: from mail-wg0-f60.google.com ([74.125.82.60])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCG77UMM3EJRBHN57KNAKGQEOY4LZ3Q@googlegroups.com>)
-	id 1WeqLP-0002jG-0p
-	for gcvm-msysgit@m.gmane.org; Mon, 28 Apr 2014 20:31:59 +0200
-Received: by mail-qa0-f64.google.com with SMTP id cm18sf1671482qab.19
-        for <gcvm-msysgit@m.gmane.org>; Mon, 28 Apr 2014 11:31:58 -0700 (PDT)
+	(envelope-from <msysgit+bncBC64RC4WYIKBBMGK7KNAKGQEB73O56I@googlegroups.com>)
+	id 1WeqmX-0002Qx-NE
+	for gcvm-msysgit@m.gmane.org; Mon, 28 Apr 2014 21:00:01 +0200
+Received: by mail-wg0-f60.google.com with SMTP id x13sf155077wgg.15
+        for <gcvm-msysgit@m.gmane.org>; Mon, 28 Apr 2014 12:00:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:x-original-sender
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:x-original-sender:x-original-authentication-results:precedence
+         :mailing-list:list-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:reply-to:content-type;
+        bh=8raQ/0hX+28j1eabz6riDYWyT+v1taViPf9fKyEs/fg=;
+        b=FaiAUCIAWJ/DeAghEYDFwhacYp47hwnb25hsJp+/6vfNT23rRLVxi6bje4ughFdXUH
+         vnon6WWuDN8c3h+G8G2BulrmwdkuC+EsRpIoIc9TybnVXyTyluy4Fzk/OQAo5uiBUwR+
+         eIZePBlxFVbRrEQUMbPSkesB8FEnU2liyTGDU1lIygm5GFl6D5lwa43a6T4y2I+XAGTO
+         biTKb+Auci3lhBvkZNRnc9JYv2EnOjnCPAP2De8f7XDxZNb1YjJ06xMmWP+x2r0IlKzA
+         uRU6fnUe8nri7QAISE0cGWu8Fru0cqLutrcD0I8xrVcE6x9diW4gDpDolRlfOIMGi/FN
+         AJaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:x-original-sender
          :x-original-authentication-results:precedence:mailing-list:list-id
          :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=ZblUHXx2ArnKb+JeEEcfInZdnsu/MSw2szmr5EexPBc=;
-        b=X051xjzqmP8+Ou9IcpNyl1hgCPJNqhW/nHq/2fMOp7PQZ6i7hKgAgqQAvzE1ya08nZ
-         I+rSH17xo/eTW3kUS/RA6urwa5BCFzMdgAOEGCb384At4FTdlNmTrraD7K/vRKoW2fZl
-         aMiRC9ihY5TvGCtj+vpOAsi6ZsxJ/yY+LnyIZgT6qklWnE67npuQSWomcwMspYx9NAhl
-         Q0s2uVgGJiGI+SoFijoNu7lkHDN46yujOBocLBz9Z6Aw5Es5S0CtdnDNi+JfuFg50o+7
-         rG1EVCmOuVooiXHn+pmaBSffDNxfUHub+a1Hu1NJXoGALR3XLkqd4UWgir7eKWVjuAHu
-         VKgA==
-X-Received: by 10.140.94.169 with SMTP id g38mr75012qge.13.1398709918248;
-        Mon, 28 Apr 2014 11:31:58 -0700 (PDT)
+         :list-unsubscribe:reply-to:content-type;
+        bh=8raQ/0hX+28j1eabz6riDYWyT+v1taViPf9fKyEs/fg=;
+        b=ig+pRX7ci1TpWLJQr77XVfbozwyMoyeQgnYSKG/4A80Kr1IUQw9YokKngJZg6VmrYr
+         1h7+kbFLFFrV/Vft54gfmGU/kXx3zFhStWN0owfZFByO3gp+EVCGCjCwg3vEIVoCnIzO
+         75VbwXSMQoh0l04DUKYdni4mLt3F2Abg3eHTjL0ecZKdQ2fKJpRrrd5xQy3x+zicb1/4
+         FTMCLp3ZzL7qLRU1pJFIaOqhZ7HyLQzdSiWeQ/KamE3G7bkbv5HqX+SR2j7NMT4E9JFh
+         nOL3G/8qTOTTiKZSoDcIfzgnARZ/vikrHZwJ5F5r5RheUZ4ms7SnzTiPt6LHpL4Kmp9J
+         5CTw==
+X-Received: by 10.152.198.69 with SMTP id ja5mr33418lac.8.1398711601334;
+        Mon, 28 Apr 2014 12:00:01 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.140.31.52 with SMTP id e49ls2752092qge.19.gmail; Mon, 28 Apr
- 2014 11:31:57 -0700 (PDT)
-X-Received: by 10.236.117.80 with SMTP id i56mr11162238yhh.48.1398709917617;
-        Mon, 28 Apr 2014 11:31:57 -0700 (PDT)
-Received: from smtp.pobox.com (b-pb-sasl-quonix.pobox.com. [208.72.237.35])
-        by gmr-mx.google.com with ESMTP id p5si6282697qcq.3.2014.04.28.11.31.57
-        for <msysgit@googlegroups.com>;
-        Mon, 28 Apr 2014 11:31:57 -0700 (PDT)
-Received-SPF: pass (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2DDED81953;
-	Mon, 28 Apr 2014 14:31:57 -0400 (EDT)
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0618C81950;
-	Mon, 28 Apr 2014 14:31:57 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C1F658194D;
-	Mon, 28 Apr 2014 14:31:54 -0400 (EDT)
-In-Reply-To: <CABPQNSY-bM2pv7mn2R+wsnn944BkKbW6Hz2EhwrruPuxUJpUEQ@mail.gmail.com>
-	(Erik Faye-Lund's message of "Mon, 28 Apr 2014 10:48:32 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 5FB1466E-CF03-11E3-A25F-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
-X-Original-Sender: gitster@pobox.com
+Received: by 10.152.21.130 with SMTP id v2ls132806lae.74.gmail; Mon, 28 Apr
+ 2014 12:00:00 -0700 (PDT)
+X-Received: by 10.152.45.97 with SMTP id l1mr12433lam.9.1398711600304;
+        Mon, 28 Apr 2014 12:00:00 -0700 (PDT)
+Received: by 10.194.51.226 with SMTP id n2mswjo;
+        Mon, 28 Apr 2014 11:40:04 -0700 (PDT)
+X-Received: by 10.112.180.73 with SMTP id dm9mr2289277lbc.2.1398710404382;
+        Mon, 28 Apr 2014 11:40:04 -0700 (PDT)
+Received: from mail-la0-x22b.google.com (mail-la0-x22b.google.com [2a00:1450:4010:c03::22b])
+        by gmr-mx.google.com with ESMTPS id u49si555312eeo.1.2014.04.28.11.40.04
+        for <msysgit@googlegroups.com>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 28 Apr 2014 11:40:04 -0700 (PDT)
+Received-SPF: pass (google.com: domain of dborowitz@google.com designates 2a00:1450:4010:c03::22b as permitted sender) client-ip=2a00:1450:4010:c03::22b;
+Received: by mail-la0-f43.google.com with SMTP id c6so5446095lan.30
+        for <msysgit@googlegroups.com>; Mon, 28 Apr 2014 11:40:03 -0700 (PDT)
+X-Gm-Message-State: ALoCoQkSuSD7GuXx++KfkOQTVImtN0q1Yi6eg4XPmLBTLnKUJ1+NZ/bnepNxVTs5ap433ZWa9UdRYflMFW/sYsEVQIbDxAXt+/9SX53WbjsY/BVsg/D0jskOeIg8A4GDYpmB5hh6IpfpAAwMhPGukkwaR2z7Xb9UgM/t4yqrR1xbeVB0cQqoXdo1OhmdU9joJClY/NKNBzq+SmmwkllPERfvFh3m+Rhepg==
+X-Received: by 10.152.22.37 with SMTP id a5mr20486098laf.4.1398710403730; Mon,
+ 28 Apr 2014 11:40:03 -0700 (PDT)
+Received: by 10.112.184.227 with HTTP; Mon, 28 Apr 2014 11:39:43 -0700 (PDT)
+In-Reply-To: <xmqqsioxqp9i.fsf@gitster.dls.corp.google.com>
+X-Original-Sender: dborowitz@google.com
 X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted
- sender) smtp.mail=junio@pobox.com;       dkim=pass header.i=@pobox.com
+ (google.com: domain of dborowitz@google.com designates 2a00:1450:4010:c03::22b
+ as permitted sender) smtp.mail=dborowitz@google.com;       dkim=pass
+ header.i=@google.com;       dmarc=pass (p=REJECT dis=NONE) header.from=google.com
 Precedence: list
 Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
 List-ID: <msysgit.googlegroups.com>
@@ -74,25 +88,39 @@ List-Archive: <http://groups.google.com/group/msysgit>
 Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247383>
+X-Original-From: Dave Borowitz <dborowitz@google.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247384>
 
-Erik Faye-Lund <kusmabite@gmail.com> writes:
+On Mon, Apr 28, 2014 at 11:31 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Erik Faye-Lund <kusmabite@gmail.com> writes:
+>
+>> We're using Curl 7.30.0 in msysGit (and thus also Git for Windows), so
+>> we should be able to include it. However, we do not have curl-config
+>> installed.
+>
+> Hmmm, between 2.0-rc0 and 2.0-rc1 there is 61a64fff (Makefile: use
+> curl-config to determine curl flags, 2014-04-15) merged already,
+> which makes this assumption and a claim based on that assumption:
+>
+>     curl-config should always be installed alongside a curl
+>     distribution, and its purpose is to provide flags for building
+>     against libcurl, so use it instead of guessing flags and
+>     dependent libraries.
+>
+> which may make things worse for you guys, unless you are explicitly
+> setting CURLDIR and other Makefile variables.
 
-> We're using Curl 7.30.0 in msysGit (and thus also Git for Windows), so
-> we should be able to include it. However, we do not have curl-config
-> installed.
+Yes, I can see that assumption may not always hold. But I'm slightly
+surprised this worked in the first place; are you saying this is a
+system where:
+-curl-config is not installed
+-but -lcurl still works
+-without setting CURLDIR
+?
 
-Hmmm, between 2.0-rc0 and 2.0-rc1 there is 61a64fff (Makefile: use
-curl-config to determine curl flags, 2014-04-15) merged already,
-which makes this assumption and a claim based on that assumption:
-
-    curl-config should always be installed alongside a curl
-    distribution, and its purpose is to provide flags for building
-    against libcurl, so use it instead of guessing flags and
-    dependent libraries.
-
-which may make things worse for you guys, unless you are explicitly
-setting CURLDIR and other Makefile variables.
+I think I should probably re-roll the patch to default to the old
+behavior (blind -lcurl) if curl-config returns the empty string, which
+I believe is also the case when the binary is not found.
 
 -- 
 -- 
