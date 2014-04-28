@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 12/32] cache-tree: mark istate->cache_changed on cache tree invalidation
-Date: Mon, 28 Apr 2014 17:55:33 +0700
-Message-ID: <1398682553-11634-13-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 13/32] cache-tree: mark istate->cache_changed on cache tree update
+Date: Mon, 28 Apr 2014 17:55:34 +0700
+Message-ID: <1398682553-11634-14-git-send-email-pclouds@gmail.com>
 References: <1398682553-11634-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,224 +10,197 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 28 12:55:55 2014
+X-From: git-owner@vger.kernel.org Mon Apr 28 12:56:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WejE2-00027n-CE
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 12:55:54 +0200
+	id 1WejEG-0002RN-CH
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 12:56:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755346AbaD1Kzo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Apr 2014 06:55:44 -0400
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:36481 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755249AbaD1Kzi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 06:55:38 -0400
-Received: by mail-pa0-f43.google.com with SMTP id rd3so3828173pab.30
-        for <git@vger.kernel.org>; Mon, 28 Apr 2014 03:55:37 -0700 (PDT)
+	id S1755376AbaD1Kz5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Apr 2014 06:55:57 -0400
+Received: from mail-pb0-f48.google.com ([209.85.160.48]:47446 "EHLO
+	mail-pb0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755239AbaD1Kzn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2014 06:55:43 -0400
+Received: by mail-pb0-f48.google.com with SMTP id md12so5721453pbc.35
+        for <git@vger.kernel.org>; Mon, 28 Apr 2014 03:55:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=agQU3D5Fy/bb9aa+BDLwwHt5eV7W03gBoQhv2iLo3Rw=;
-        b=q3eP07DjQAJtAO9sdY1/LBXR/lga1QM3spPKHmp4eOwgoOdIVFmYt1N88FcstXPwRO
-         7weHWnbGj0oNz5ELHifBUbyn2HDgudP9D6ZP0MIrCJF+h3W4o84WrD51N3rsGVmLBIs7
-         NNWt7v0zTQfYXJ1Lk6jbpk6p8mAb9mUnIpWJF/aBJYRXFBdGm5sAiu/cxm5Uejz61wjB
-         ZCOpGspkEoTPdrXTUP/WxNkLG15gsRxCe6dRJ64sBQ2IpqDogl6tGWkk/x3sM3qwrZBa
-         v2JVQz0rjBJDuqz0CiNEyDUHL+p4nxRSgECfiGHszJikFkvxquxwly1QTWoCHYdtcYI4
-         pT9w==
-X-Received: by 10.66.121.164 with SMTP id ll4mr7684185pab.129.1398682537424;
-        Mon, 28 Apr 2014 03:55:37 -0700 (PDT)
+        bh=1sFeUN0vPCPGQDU1RfGl4rKKHMxDlApXicmNurndv0Y=;
+        b=svPncS9QUsA1S5wcqMz/n1m5GCKEsbZfkSbfRrRdMnI9dlQNGYuX3vJXIHNvOeEZLy
+         vd/bjFix64Oin+mcSjpPyRE0deZ/hppzTR3CTvk+Im/0QQ6eYIDnYWyr/AhqXIB3BgtF
+         XZ/8Hdq8toUKt/efFDRP0FlZ7WjGLZw+dCEYV+IxGU6PT+PMnn73r5ym8VVhclNFbdWb
+         4tuoDiuWIY5KvkfTkz9mTj1D7fxVmD3d9PIYH0IFLIG/TgPDX/U/gxsWU9r1qzoMJRBS
+         n0TRDpMqoOzrjMOUmkgCoz0T6ngkXDFQNVWo/lOgtmeY4kaGgtP7XrgOzbFsAWYHprYv
+         SMsQ==
+X-Received: by 10.66.120.201 with SMTP id le9mr24278419pab.98.1398682543091;
+        Mon, 28 Apr 2014 03:55:43 -0700 (PDT)
 Received: from lanh ([115.73.231.31])
-        by mx.google.com with ESMTPSA id kn10sm34176406pbd.60.2014.04.28.03.55.34
+        by mx.google.com with ESMTPSA id yj6sm89627649pab.19.2014.04.28.03.55.40
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 28 Apr 2014 03:55:36 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Mon, 28 Apr 2014 17:57:05 +0700
+        Mon, 28 Apr 2014 03:55:42 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Mon, 28 Apr 2014 17:57:10 +0700
 X-Mailer: git-send-email 1.9.1.346.ga2b5940
 In-Reply-To: <1398682553-11634-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247280>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/blame.c        |  2 +-
- builtin/update-index.c |  4 ++--
- cache-tree.c           | 15 +++++++++++----
+ cache-tree.c           | 25 +++++++++++--------------
  cache-tree.h           |  2 +-
- cache.h                |  1 +
- read-cache.c           |  6 +++---
- unpack-trees.c         |  2 +-
- 7 files changed, 20 insertions(+), 12 deletions(-)
+ merge-recursive.c      |  4 +---
+ sequencer.c            |  4 +---
+ test-dump-cache-tree.c |  7 ++++---
+ 5 files changed, 18 insertions(+), 24 deletions(-)
 
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 88cb799..914d919 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -2126,7 +2126,7 @@ static struct commit *fake_working_tree_commit(st=
-ruct diff_options *opt,
- 	 * right now, but someday we might optimize diff-index --cached
- 	 * with cache-tree information.
- 	 */
--	cache_tree_invalidate_path(active_cache_tree, path);
-+	cache_tree_invalidate_path(&the_index, path);
-=20
- 	return commit;
- }
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index e0e881b..fa3c441 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -55,7 +55,7 @@ static int mark_ce_flags(const char *path, int flag, =
-int mark)
- 			active_cache[pos]->ce_flags |=3D flag;
- 		else
- 			active_cache[pos]->ce_flags &=3D ~flag;
--		cache_tree_invalidate_path(active_cache_tree, path);
-+		cache_tree_invalidate_path(&the_index, path);
- 		active_cache_changed |=3D CE_ENTRY_CHANGED;
- 		return 0;
- 	}
-@@ -267,7 +267,7 @@ static void chmod_path(int flip, const char *path)
- 	default:
- 		goto fail;
- 	}
--	cache_tree_invalidate_path(active_cache_tree, path);
-+	cache_tree_invalidate_path(&the_index, path);
- 	active_cache_changed |=3D CE_ENTRY_CHANGED;
- 	report("chmod %cx '%s'", flip, path);
- 	return;
 diff --git a/cache-tree.c b/cache-tree.c
-index 52f8692..23ddc73 100644
+index 23ddc73..18055f1 100644
 --- a/cache-tree.c
 +++ b/cache-tree.c
-@@ -98,7 +98,7 @@ struct cache_tree_sub *cache_tree_sub(struct cache_tr=
-ee *it, const char *path)
- 	return find_subtree(it, path, pathlen, 1);
+@@ -151,7 +151,7 @@ void cache_tree_invalidate_path(struct index_state =
+*istate, const char *path)
+ 		istate->cache_changed |=3D CACHE_TREE_CHANGED;
  }
 =20
--void cache_tree_invalidate_path(struct cache_tree *it, const char *pat=
-h)
-+static int do_invalidate_path(struct cache_tree *it, const char *path)
+-static int verify_cache(const struct cache_entry * const *cache,
++static int verify_cache(struct cache_entry **cache,
+ 			int entries, int flags)
  {
- 	/* a/b/c
- 	 * =3D=3D> invalidate self
-@@ -116,7 +116,7 @@ void cache_tree_invalidate_path(struct cache_tree *=
-it, const char *path)
- #endif
-=20
- 	if (!it)
--		return;
-+		return 0;
- 	slash =3D strchrnul(path, '/');
- 	namelen =3D slash - path;
- 	it->entry_count =3D -1;
-@@ -137,11 +137,18 @@ void cache_tree_invalidate_path(struct cache_tree=
- *it, const char *path)
- 				(it->subtree_nr - pos - 1));
- 			it->subtree_nr--;
- 		}
--		return;
-+		return 1;
- 	}
- 	down =3D find_subtree(it, path, namelen, 0);
- 	if (down)
--		cache_tree_invalidate_path(down->cache_tree, slash + 1);
-+		do_invalidate_path(down->cache_tree, slash + 1);
-+	return 1;
-+}
-+
-+void cache_tree_invalidate_path(struct index_state *istate, const char=
- *path)
-+{
-+	if (do_invalidate_path(istate->cache_tree, path))
-+		istate->cache_changed |=3D CACHE_TREE_CHANGED;
+ 	int i, funny;
+@@ -236,7 +236,7 @@ int cache_tree_fully_valid(struct cache_tree *it)
  }
 =20
- static int verify_cache(const struct cache_entry * const *cache,
+ static int update_one(struct cache_tree *it,
+-		      const struct cache_entry * const *cache,
++		      struct cache_entry **cache,
+ 		      int entries,
+ 		      const char *base,
+ 		      int baselen,
+@@ -398,18 +398,19 @@ static int update_one(struct cache_tree *it,
+ 	return i;
+ }
+=20
+-int cache_tree_update(struct cache_tree *it,
+-		      const struct cache_entry * const *cache,
+-		      int entries,
+-		      int flags)
++int cache_tree_update(struct index_state *istate, int flags)
+ {
+-	int i, skip;
+-	i =3D verify_cache(cache, entries, flags);
++	struct cache_tree *it =3D istate->cache_tree;
++	struct cache_entry **cache =3D istate->cache;
++	int entries =3D istate->cache_nr;
++	int skip, i =3D verify_cache(cache, entries, flags);
++
+ 	if (i)
+ 		return i;
+ 	i =3D update_one(it, cache, entries, "", 0, &skip, flags);
+ 	if (i < 0)
+ 		return i;
++	istate->cache_changed |=3D CACHE_TREE_CHANGED;
+ 	return 0;
+ }
+=20
+@@ -597,9 +598,7 @@ int write_cache_as_tree(unsigned char *sha1, int fl=
+ags, const char *prefix)
+=20
+ 	was_valid =3D cache_tree_fully_valid(active_cache_tree);
+ 	if (!was_valid) {
+-		if (cache_tree_update(active_cache_tree,
+-				      (const struct cache_entry * const *)active_cache,
+-				      active_nr, flags) < 0)
++		if (cache_tree_update(&the_index, flags) < 0)
+ 			return WRITE_TREE_UNMERGED_INDEX;
+ 		if (0 <=3D newfd) {
+ 			if (!write_locked_index(&the_index, lock_file, COMMIT_LOCK))
+@@ -698,7 +697,5 @@ int update_main_cache_tree(int flags)
+ {
+ 	if (!the_index.cache_tree)
+ 		the_index.cache_tree =3D cache_tree();
+-	return cache_tree_update(the_index.cache_tree,
+-				 (const struct cache_entry * const *)the_index.cache,
+-				 the_index.cache_nr, flags);
++	return cache_tree_update(&the_index, flags);
+ }
 diff --git a/cache-tree.h b/cache-tree.h
-index f1923ad..dfbcfab 100644
+index dfbcfab..154b357 100644
 --- a/cache-tree.h
 +++ b/cache-tree.h
-@@ -23,7 +23,7 @@ struct cache_tree {
+@@ -30,7 +30,7 @@ void cache_tree_write(struct strbuf *, struct cache_t=
+ree *root);
+ struct cache_tree *cache_tree_read(const char *buffer, unsigned long s=
+ize);
 =20
- struct cache_tree *cache_tree(void);
- void cache_tree_free(struct cache_tree **);
--void cache_tree_invalidate_path(struct cache_tree *, const char *);
-+void cache_tree_invalidate_path(struct index_state *, const char *);
- struct cache_tree_sub *cache_tree_sub(struct cache_tree *, const char =
-*);
+ int cache_tree_fully_valid(struct cache_tree *);
+-int cache_tree_update(struct cache_tree *, const struct cache_entry * =
+const *, int, int);
++int cache_tree_update(struct index_state *, int);
 =20
- void cache_tree_write(struct strbuf *, struct cache_tree *root);
-diff --git a/cache.h b/cache.h
-index 7155052..4c288e8 100644
---- a/cache.h
-+++ b/cache.h
-@@ -273,6 +273,7 @@ static inline unsigned int canon_mode(unsigned int =
-mode)
- #define CE_ENTRY_ADDED		(1 << 2)
- #define SOMETHING_CHANGED	(1 << 3) /* unclassified changes go here */
- #define RESOLVE_UNDO_CHANGED	(1 << 4)
-+#define CACHE_TREE_CHANGED	(1 << 5)
+ int update_main_cache_tree(int);
 =20
- struct index_state {
- 	struct cache_entry **cache;
-diff --git a/read-cache.c b/read-cache.c
-index 6971fc4..f1265d4 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -65,7 +65,7 @@ void rename_index_entry_at(struct index_state *istate=
-, int nr, const char *new_n
- 	new->ce_namelen =3D namelen;
- 	memcpy(new->name, new_name, namelen + 1);
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 442c1ec..0b5d34d 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -265,9 +265,7 @@ struct tree *write_tree_from_memory(struct merge_op=
+tions *o)
+ 		active_cache_tree =3D cache_tree();
 =20
--	cache_tree_invalidate_path(istate->cache_tree, old->name);
-+	cache_tree_invalidate_path(istate, old->name);
- 	remove_index_entry_at(istate, nr);
- 	add_index_entry(istate, new, ADD_CACHE_OK_TO_ADD|ADD_CACHE_OK_TO_REPL=
-ACE);
- }
-@@ -521,7 +521,7 @@ int remove_file_from_index(struct index_state *ista=
-te, const char *path)
- 	int pos =3D index_name_pos(istate, path, strlen(path));
- 	if (pos < 0)
- 		pos =3D -pos-1;
--	cache_tree_invalidate_path(istate->cache_tree, path);
-+	cache_tree_invalidate_path(istate, path);
- 	while (pos < istate->cache_nr && !strcmp(istate->cache[pos]->name, pa=
-th))
- 		remove_index_entry_at(istate, pos);
- 	return 0;
-@@ -939,7 +939,7 @@ static int add_index_entry_with_check(struct index_=
-state *istate, struct cache_e
- 	int skip_df_check =3D option & ADD_CACHE_SKIP_DFCHECK;
- 	int new_only =3D option & ADD_CACHE_NEW_ONLY;
+ 	if (!cache_tree_fully_valid(active_cache_tree) &&
+-	    cache_tree_update(active_cache_tree,
+-			      (const struct cache_entry * const *)active_cache,
+-			      active_nr, 0) < 0)
++	    cache_tree_update(&the_index, 0) < 0)
+ 		die(_("error building trees"));
 =20
--	cache_tree_invalidate_path(istate->cache_tree, ce->name);
-+	cache_tree_invalidate_path(istate, ce->name);
- 	pos =3D index_name_stage_pos(istate, ce->name, ce_namelen(ce), ce_sta=
-ge(ce));
+ 	result =3D lookup_tree(active_cache_tree->sha1);
+diff --git a/sequencer.c b/sequencer.c
+index 4fb0774..377c877 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -371,9 +371,7 @@ static int is_index_unchanged(void)
+ 		active_cache_tree =3D cache_tree();
 =20
- 	/* existing match? Just replace it. */
-diff --git a/unpack-trees.c b/unpack-trees.c
-index a722685..3beff8a 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -1263,7 +1263,7 @@ static void invalidate_ce_path(const struct cache=
-_entry *ce,
- 			       struct unpack_trees_options *o)
+ 	if (!cache_tree_fully_valid(active_cache_tree))
+-		if (cache_tree_update(active_cache_tree,
+-				      (const struct cache_entry * const *)active_cache,
+-				      active_nr, 0))
++		if (cache_tree_update(&the_index, 0))
+ 			return error(_("Unable to update cache tree\n"));
+=20
+ 	return !hashcmp(active_cache_tree->sha1, head_commit->tree->object.sh=
+a1);
+diff --git a/test-dump-cache-tree.c b/test-dump-cache-tree.c
+index 47eab97..330ba4f 100644
+--- a/test-dump-cache-tree.c
++++ b/test-dump-cache-tree.c
+@@ -56,11 +56,12 @@ static int dump_cache_tree(struct cache_tree *it,
+=20
+ int main(int ac, char **av)
  {
- 	if (ce)
--		cache_tree_invalidate_path(o->src_index->cache_tree, ce->name);
-+		cache_tree_invalidate_path(o->src_index, ce->name);
++	struct index_state istate;
+ 	struct cache_tree *another =3D cache_tree();
+ 	if (read_cache() < 0)
+ 		die("unable to read index file");
+-	cache_tree_update(another,
+-			  (const struct cache_entry * const *)active_cache,
+-			  active_nr, WRITE_TREE_DRY_RUN);
++	istate =3D the_index;
++	istate.cache_tree =3D another;
++	cache_tree_update(&istate, WRITE_TREE_DRY_RUN);
+ 	return dump_cache_tree(active_cache_tree, another, "");
  }
-=20
- /*
 --=20
 1.9.1.346.ga2b5940
