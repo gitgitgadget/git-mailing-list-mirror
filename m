@@ -1,171 +1,110 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v4 00/27] Use ref transactions for all ref updates
-Date: Mon, 28 Apr 2014 15:54:15 -0700
-Message-ID: <1398725682-30782-1-git-send-email-sahlberg@google.com>
+Subject: [PATCH v4 05/27] update-ref.c: log transaction error from the update_ref
+Date: Mon, 28 Apr 2014 15:54:20 -0700
+Message-ID: <1398725682-30782-6-git-send-email-sahlberg@google.com>
+References: <1398725682-30782-1-git-send-email-sahlberg@google.com>
 Cc: mhagger@alum.mit.edu, Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 29 00:56:35 2014
+X-From: git-owner@vger.kernel.org Tue Apr 29 00:56:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WeuTT-0007Zc-4P
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Apr 2014 00:56:35 +0200
+	id 1WeuTb-0007iM-Kh
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Apr 2014 00:56:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754243AbaD1Wyr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1756351AbaD1W4a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 18:56:30 -0400
+Received: from mail-ob0-f201.google.com ([209.85.214.201]:41670 "EHLO
+	mail-ob0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754268AbaD1Wyr (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 28 Apr 2014 18:54:47 -0400
-Received: from mail-ve0-f201.google.com ([209.85.128.201]:49242 "EHLO
-	mail-ve0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751286AbaD1Wyq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 18:54:46 -0400
-Received: by mail-ve0-f201.google.com with SMTP id jy13so1133182veb.0
-        for <git@vger.kernel.org>; Mon, 28 Apr 2014 15:54:45 -0700 (PDT)
+Received: by mail-ob0-f201.google.com with SMTP id vb8so1612080obc.4
+        for <git@vger.kernel.org>; Mon, 28 Apr 2014 15:54:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=kLM4fbemzTP0hEpHnBgD85NB4UU67KovcFRN8CPijj0=;
-        b=D3ptY9U5CXyrXxIVzP6Ubwr2MhvWPjO6m1WjuDzvPdRs+p2bLN7nFnQOOajtNxN11+
-         LrmgRA0AMxQynDeWzHIYgNBUdT9OymhTvw875gVrktahniFkfMwPz+o3JCtS91Riu5Ev
-         8pWwxhmG2AeYvYKkKXjlw1QUghtgDHyMaSwKJg0WpGjwVLEgxoYh3/EDgy9mVYXwfajC
-         mSS3SmRgttVsm8EtIbfyApFpbHhJO5LibXhZkNqo3kESA1K632rNiGHwl4X4BnqnpSoT
-         qa2yq1EGa6x6rMRSCRpp0hpNMgjXqrm0Ts287v1f4lxdpK2p0WAzrHduY4r+j2Iy++jA
-         Xb4Q==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=bJZDLvgoB7LzjoiVkX1h2ReJEIdzOT3ohXyvwHVl2N0=;
+        b=YbfPGXfu5lha/VjsUUcA2ZUxKO14ZVvS3iqKZDS/w5YZXDp3NBogqQypmQe+KnSGzU
+         jlUsbWy4/yzQuS2iPPK3eOmbGFWIz/FgTka8K4AZyX5dp/32v4oFF78HZDxgzGDrrpF/
+         4TQDabGMeHPpVygUp+LheWmdc/NNhCWYWM2btjvICCSwreRArI06D1oAolKVtIBspqkx
+         A/GTX7wueAfo5/6+wR02TzCEpNmqFhOVFLUT1H82GytU1f3scwgThapxobnRwt9ZMs+P
+         UsXuZT6+uKuwGb1x5t4h9x8cttxmgERR1bvaDhmwQTyJtprgKEyfxUJCay13ONhdYeuE
+         nQpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=kLM4fbemzTP0hEpHnBgD85NB4UU67KovcFRN8CPijj0=;
-        b=LIsNUAp7x5pSfjOG1iRu6kImis6ksD2jJxDVN41B4GWKvXlTU8nOQnL72QanByn53R
-         FQNI3WE2p5Y6MjEc6yaYwm5Ck2SFtvIC7ylK7PNN2gsWxhVpg8SodjXMe80VXYMoNR9h
-         z3OcRunJ3FSZow/Cey/b/4MYA7rrja5aatJ1mpDm2O6EoEvndfbNaYhTdcs0lG9q0hA1
-         EKoVI85rlmNu7XJIq2p25qVFr4aJdNRhUDtb9Q1dFJfTr25t73Z2kzGozhYB3zjx5W2O
-         tfPC+M8oh8Jgpvu9MJitWvH05jZn7Aeik7K5GSxVTe8TaOp773v1eiCEXRgdjC5EwDjt
-         n8UQ==
-X-Gm-Message-State: ALoCoQmK+Klq377IpgRnv4/OvfBKLcNU8r8BOnAcV4xGwIuGWUoxd3c5q59vUq3q31X/KFEEvjez9mw6rG/tfh4xmiVh2mfdyLlYRCFCRA5pOE4ITYGqLeqi4kKSDU54LvXyYWlCQ/Fb86LUWaZgRYzq+xlKlSzN+VMfpY/aU7ur11/RuuJCc6Oqr2gnONtUcuPLbv//CBBM
-X-Received: by 10.58.30.78 with SMTP id q14mr13996316veh.10.1398725685185;
-        Mon, 28 Apr 2014 15:54:45 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=bJZDLvgoB7LzjoiVkX1h2ReJEIdzOT3ohXyvwHVl2N0=;
+        b=gWEO7FfvwY5z61/+eyjJ3pyIoIAhLEiK8R/DhGqVStAcmBhOSiPwykjpR3f+/BdHW5
+         oUTOdmrE3ABsiw+Utkvr0uuxZarqaG7bPfD56hvlrYcVWaWkjs6vaEg1QN8jleXHZajm
+         5IO9fDEdqmyJGBLK0AwKolQ5YQo93CQba5WMWJ0IMFWtQAhLWW+SDwxhd9G1Nt3f6y7K
+         +WXMZC7F7Yt/P7UjznGUa95SxvtoXPq6zpSXg/SloHMwFlUO2rGaJrD19+1ansDoprYb
+         RA/CTxo4WsJ4nhuzxmPG/kp+b+kKpZCxSNSs8hGFkDny3B9YNc2LSkVnnvy5l8stqgHD
+         /zgg==
+X-Gm-Message-State: ALoCoQm9FqqSBJN1nxZD+ia5SCS6/p2X7/tZsQpErU8xQx5FWPMitTxoDs5J2QgxhGWfHHS8JY/Zk07mNvF3ILJqWmt56+DwRMOEE8zYa9k4GGUPA9hGRJVd0GXhJ+9SKL4wE1WMnB78U7oDSUcdGsFjLUJUjB95aVGkT4Wr+iAi4i70HqaxW0fFHqwHSgTlBeFhfxC7Rq9x
+X-Received: by 10.182.196.8 with SMTP id ii8mr14512137obc.5.1398725687390;
+        Mon, 28 Apr 2014 15:54:47 -0700 (PDT)
 Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id c50si1424513yhl.7.2014.04.28.15.54.45
+        by gmr-mx.google.com with ESMTPS id r64si1011481yhh.0.2014.04.28.15.54.47
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 28 Apr 2014 15:54:45 -0700 (PDT)
+        Mon, 28 Apr 2014 15:54:47 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id DAFC331C224;
-	Mon, 28 Apr 2014 15:54:44 -0700 (PDT)
+	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 241B031C20B;
+	Mon, 28 Apr 2014 15:54:47 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 5A9E5E080D; Mon, 28 Apr 2014 15:54:44 -0700 (PDT)
+	id DA221E080D; Mon, 28 Apr 2014 15:54:46 -0700 (PDT)
 X-Mailer: git-send-email 1.9.1.528.g98b8868.dirty
+In-Reply-To: <1398725682-30782-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247486>
 
-This patch series is based on mhagger/ref-transactions and expands on the
-transaction API. It converts all external (outside of refs.c) callers to
-use the transaction API for any writes.
-This makes most of the ref updates to become atomic when there are failures
-locking or writing to a ref.
+Call ref_transaction_commit with QUIET_ON_ERR and use the strbuf that is
+returned to print a log message if/after the transaction fails.
 
+Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+---
+ builtin/update-ref.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-Version 4:
- - Rename patch series from "Use ref transactions from most callers" to
-   "Use ref transactions for all ref updates".
- - Convert all external ref writes to use transactions and make write_ref_sha1
-   and lock_ref_sha1 static functions.
- - Change the ref commit and free handling so we no longer pass pointer to
-   pointer to _commit. _commit no longer frees the transaction. The caller
-   MUST call _free itself.
- - Change _commit to take a strbuf pointer instead of a char* for error
-   reporting back to the caller.
- - Re-add the walker patch after fixing it.
-
-Version 3:
- - Remove the walker patch for now. Walker needs more complex solution
-   so defer it until the basics are done.
- - Remove the onerr argument to ref_transaction_commit(). All callers
-   that need to die() on error now have to do this explicitely.
- - Pass an error string from ref_transaction_commit() back to the callers
-   so that they can craft a nice error message upon failures.
- - Make ref_transaction_rollback() accept NULL as argument.
- - Change ref_transaction_commit() to take a pointer to pointer argument for
-   the transaction and have it clear the callers pointer to NULL when
-   invoked. This allows for much nicer handling of transaction rollback on
-   failure.
-
-Version 2:
- - Add a patch to ref_transaction_commit to make it honor onerr even if the
-   error triggered in ref_Transaction_commit itself rather than in a call
-   to other functions (that already honor onerr).
- - Add a patch to make the update_ref() helper function use transactions
-   internally.
- - Change ref_transaction_update to die() instead of error() if we pass
-   if a NULL old_sha1 but have have_old == true.
- - Change ref_transaction_create to die() instead of error() if new_sha1
-   is false but we pass it a null_sha1.
- - Change ref_transaction_delete die() instead of error() if we pass
-   if a NULL old_sha1 but have have_old == true.
- - Change several places to do  if(!transaction || ref_transaction_update()
-   || ref_Transaction_commit()) die(generic-message) instead of checking each
-   step separately and having a different message for each failure.
-   Most users are likely not interested in what step of the transaction
-   failed and only whether it failed or not.
- - Change commit.c to only pass a pointer to ref_transaction_update
-   iff current_head is non-NULL.
-   The previous patch used to compute a garbage pointer for
-   current_head->object.sha1 and relied on the fact that ref_transaction_update
-   would not try to dereference this pointer if !!current_head was 0.
- - Updated commit message for the walker_fetch change to try to justify why
-   the change in locking semantics should not be harmful.
-
-Ronnie Sahlberg (27):
-  refs.c: constify the sha arguments for
-    ref_transaction_create|delete|update
-  refs.c: allow passing NULL to ref_transaction_free
-  refs.c: add a strbuf argument to ref_transaction_commit for error
-    logging
-  refs.c: make ref_update_reject_duplicates take a strbuf argument for
-    errors
-  update-ref.c: log transaction error from the update_ref
-  refs.c: make update_ref_write update a strbuf on failure
-  refs.c: remove the onerr argument to ref_transaction_commit
-  refs.c: change ref_transaction_update() to do error checking and
-    return status
-  refs.c: change ref_transaction_create to do error checking and return
-    status
-  refs.c: ref_transaction_delete to check for error and return status
-  tag.c: use ref transactions when doing updates
-  replace.c: use the ref transaction functions for updates
-  commit.c: use ref transactions for updates
-  sequencer.c: use ref transactions for all ref updates
-  fast-import.c: change update_branch to use ref transactions
-  branch.c: use ref transaction for all ref updates
-  refs.c: change update_ref to use a transaction
-  refs.c: free the transaction before returning when number of updates
-    is 0
-  refs.c: ref_transaction_commit should not free the transaction
-  fetch.c: clear errno before calling functions that might set it
-  fetch.c: change s_update_ref to use a ref transaction
-  fetch.c: use a single ref transaction for all ref updates
-  receive-pack.c: use a reference transaction for updating the refs
-  fast-import.c: use a ref transaction when dumping tags
-  walker.c: use ref transaction for ref updates
-  refs.c: make write_ref_sha1 static
-  refs.c: make lock_ref_sha1 static
-
- branch.c               |  31 +++++++-------
- builtin/commit.c       |  24 +++++------
- builtin/fetch.c        |  36 ++++++++--------
- builtin/receive-pack.c |  20 ++++-----
- builtin/replace.c      |  15 ++++---
- builtin/tag.c          |  15 ++++---
- builtin/update-ref.c   |  29 +++++++------
- fast-import.c          |  37 ++++++++++------
- refs.c                 | 112 +++++++++++++++++++++++++++++++++----------------
- refs.h                 |  45 ++++++++++----------
- sequencer.c            |  23 +++++++---
- walker.c               |  51 +++++++++++-----------
- 12 files changed, 258 insertions(+), 180 deletions(-)
-
+diff --git a/builtin/update-ref.c b/builtin/update-ref.c
+index aaa06aa..207e24d 100644
+--- a/builtin/update-ref.c
++++ b/builtin/update-ref.c
+@@ -342,6 +342,7 @@ int cmd_update_ref(int argc, const char **argv, const char *prefix)
+ 	const char *refname, *oldval, *msg = NULL;
+ 	unsigned char sha1[20], oldsha1[20];
+ 	int delete = 0, no_deref = 0, read_stdin = 0, end_null = 0, flags = 0;
++	struct strbuf err = STRBUF_INIT;
+ 	struct option options[] = {
+ 		OPT_STRING( 'm', NULL, &msg, N_("reason"), N_("reason of the update")),
+ 		OPT_BOOL('d', NULL, &delete, N_("delete the reference")),
+@@ -359,17 +360,16 @@ int cmd_update_ref(int argc, const char **argv, const char *prefix)
+ 		die("Refusing to perform update with empty message.");
+ 
+ 	if (read_stdin) {
+-		int ret;
+ 		transaction = ref_transaction_begin();
+-
+ 		if (delete || no_deref || argc > 0)
+ 			usage_with_options(git_update_ref_usage, options);
+ 		if (end_null)
+ 			line_termination = '\0';
+ 		update_refs_stdin();
+-		ret = ref_transaction_commit(transaction, msg, NULL,
+-					     UPDATE_REFS_DIE_ON_ERR);
+-		return ret;
++		if (ref_transaction_commit(transaction, msg, &err,
++					   UPDATE_REFS_QUIET_ON_ERR))
++			die("%s", err.buf);
++		return 0;
+ 	}
+ 
+ 	if (end_null)
 -- 
 1.9.1.528.g98b8868.dirty
