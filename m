@@ -1,51 +1,51 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 09/14] t1001-read-tree-m-2way.sh: use the $( ... ) construct for command substitution
-Date: Mon, 28 Apr 2014 05:57:32 -0700
-Message-ID: <1398689857-17014-9-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 12/14] t1004-read-tree-m-u-wf.sh: use the $( ... ) construct for command substitution
+Date: Mon, 28 Apr 2014 05:57:35 -0700
+Message-ID: <1398689857-17014-12-git-send-email-gitter.spiros@gmail.com>
 References: <1398689857-17014-1-git-send-email-gitter.spiros@gmail.com>
 Cc: matthieu.moy@grenoble-inp.fr, Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 28 14:58:30 2014
+X-From: git-owner@vger.kernel.org Mon Apr 28 14:58:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wel8g-0004If-1G
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 14:58:30 +0200
+	id 1Wel8k-0004PP-89
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 14:58:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932076AbaD1M6V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2014 08:58:21 -0400
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:33928 "EHLO
-	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755395AbaD1M5v (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 08:57:51 -0400
-Received: by mail-pa0-f51.google.com with SMTP id fb1so5145575pad.10
-        for <git@vger.kernel.org>; Mon, 28 Apr 2014 05:57:51 -0700 (PDT)
+	id S1755863AbaD1M6U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 08:58:20 -0400
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:35543 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755817AbaD1M5y (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2014 08:57:54 -0400
+Received: by mail-pa0-f53.google.com with SMTP id ld10so5769237pab.12
+        for <git@vger.kernel.org>; Mon, 28 Apr 2014 05:57:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=7ue4jg1+DckyIXWu+YbFck9mBsc4nen0DlpFIf/u+hI=;
-        b=tdfiU6S9gZA+deBYKLciYvDjxu2T65jxnOVkYB06Q+Z5Ap+djo5NV3BKW2W41vLqE4
-         Kj30TuyJVqlg/APvG7a+wVW944CIu5HErEQyry57/4tgGF9f/zkTg1+QPra4qxZr3O1p
-         KEW4huim2RVPBdyO29swM4OrJSeuEqaAEICv9kHH9KXnwJMiT+0oDZeWzpSxsNoN2CGs
-         W4fpRT0a6sYmFdmkeyRJXVKV7lnDKlKWiQnycIm92A/ig755F0ZFoi58kiCblnNfZvb3
-         YYJoJgoId4mA1sVoHqtWO3sjR8g9nqkGrPchKJ18ep09eogujtJ6z7J/F5u4u3fDaJiX
-         3++Q==
-X-Received: by 10.66.136.103 with SMTP id pz7mr3690026pab.140.1398689871158;
-        Mon, 28 Apr 2014 05:57:51 -0700 (PDT)
+        bh=5r9Xc1LpU47eOvY6NRcREETyTZchkqqDHDg5wDffTC0=;
+        b=K93HQ+87Txrjq/6TYPjdiJ1eNP5TzhBH7Th+jDAyPOXleAfECZVJQvDnmkVs3aKr2l
+         AHL2cK8WW7ldmKJvReLyEX8sJuZ26u6+7/1NyY8OgCEA/xqcSDT9del4SJnpG7VdlTpW
+         3tipQRf6nrzjf16Loe/91d5iTu246JTWrMTONH001hMdb8yeikMEX+QuP6OI6cY/pB0n
+         WxbxXLWQc2BERbkIv88CsP0c6d/mAPGjEiVNTrw+9c6eeqwWAeiquf0R5CdkCY1G6HC8
+         lK3AblkcUSvMeMzxrwo/bxz0AHuku6T0GvVwGXkIukV736A4urVwCz/vof2jN1Am20V5
+         3hfA==
+X-Received: by 10.68.202.8 with SMTP id ke8mr28902940pbc.86.1398689874305;
+        Mon, 28 Apr 2014 05:57:54 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id ky8sm34896290pbc.64.2014.04.28.05.57.50
+        by mx.google.com with ESMTPSA id ky8sm34896290pbc.64.2014.04.28.05.57.53
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 28 Apr 2014 05:57:50 -0700 (PDT)
+        Mon, 28 Apr 2014 05:57:53 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1398689857-17014-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247318>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -67,92 +67,48 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t1001-read-tree-m-2way.sh |   18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ t/t1004-read-tree-m-u-wf.sh |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/t/t1001-read-tree-m-2way.sh b/t/t1001-read-tree-m-2way.sh
-index 3a24abf..db1b6f5 100755
---- a/t/t1001-read-tree-m-2way.sh
-+++ b/t/t1001-read-tree-m-2way.sh
-@@ -36,7 +36,7 @@ compare_change () {
- }
+diff --git a/t/t1004-read-tree-m-u-wf.sh b/t/t1004-read-tree-m-u-wf.sh
+index 3e72aff..c70cf42 100755
+--- a/t/t1004-read-tree-m-u-wf.sh
++++ b/t/t1004-read-tree-m-u-wf.sh
+@@ -30,7 +30,7 @@ test_expect_success 'two-way not clobbering' '
  
- check_cache_at () {
--	clean_if_empty=`git diff-files -- "$1"`
-+	clean_if_empty=$(git diff-files -- "$1")
- 	case "$clean_if_empty" in
- 	'')  echo "$1: clean" ;;
- 	?*)  echo "$1: dirty" ;;
-@@ -68,14 +68,14 @@ test_expect_success \
-      echo rezrov >rezrov &&
-      echo yomin >yomin &&
-      git update-index --add nitfol bozbar rezrov &&
--     treeH=`git write-tree` &&
-+     treeH=$(git write-tree) &&
-      echo treeH $treeH &&
-      git ls-tree $treeH &&
+ 	echo >file2 master creates untracked file2 &&
+ 	echo >subdir/file2 master creates untracked subdir/file2 &&
+-	if err=`read_tree_u_must_succeed -m -u master side 2>&1`
++	if err=$(read_tree_u_must_succeed -m -u master side 2>&1)
+ 	then
+ 		echo should have complained
+ 		false
+@@ -43,7 +43,7 @@ echo file2 >.gitignore
  
-      cat bozbar-new >bozbar &&
-      git update-index --add frotz bozbar --force-remove rezrov &&
-      git ls-files --stage >M.out &&
--     treeM=`git write-tree` &&
-+     treeM=$(git write-tree) &&
-      echo treeM $treeM &&
-      git ls-tree $treeM &&
-      git diff-tree $treeH $treeM'
-@@ -315,7 +315,7 @@ test_expect_success \
-     'rm -f .git/index &&
-      echo DF >DF &&
-      git update-index --add DF &&
--     treeDF=`git write-tree` &&
-+     treeDF=$(git write-tree) &&
-      echo treeDF $treeDF &&
-      git ls-tree $treeDF &&
+ test_expect_success 'two-way with incorrect --exclude-per-directory (1)' '
  
-@@ -323,7 +323,7 @@ test_expect_success \
-      mkdir DF &&
-      echo DF/DF >DF/DF &&
-      git update-index --add --remove DF DF/DF &&
--     treeDFDF=`git write-tree` &&
-+     treeDFDF=$(git write-tree) &&
-      echo treeDFDF $treeDFDF &&
-      git ls-tree $treeDFDF &&
-      git ls-files --stage >DFDF.out'
-@@ -345,7 +345,7 @@ test_expect_success \
-     'rm -f .git/index &&
-      : >a &&
-      git update-index --add a &&
--     treeM=`git write-tree` &&
-+     treeM=$(git write-tree) &&
-      echo treeM $treeM &&
-      git ls-tree $treeM &&
-      git ls-files --stage >treeM.out &&
-@@ -354,7 +354,7 @@ test_expect_success \
-      git update-index --remove a &&
-      mkdir a &&
-      : >a/b &&
--     treeH=`git write-tree` &&
-+     treeH=$(git write-tree) &&
-      echo treeH $treeH &&
-      git ls-tree $treeH'
+-	if err=`read_tree_u_must_succeed -m --exclude-per-directory=.gitignore master side 2>&1`
++	if err=$(read_tree_u_must_succeed -m --exclude-per-directory=.gitignore master side 2>&1)
+ 	then
+ 		echo should have complained
+ 		false
+@@ -54,7 +54,7 @@ test_expect_success 'two-way with incorrect --exclude-per-directory (1)' '
  
-@@ -372,7 +372,7 @@ test_expect_success \
-      mkdir c &&
-      : >c/d &&
-      git update-index --add a c/d &&
--     treeM=`git write-tree` &&
-+     treeM=$(git write-tree) &&
-      echo treeM $treeM &&
-      git ls-tree $treeM &&
-      git ls-files --stage >treeM.out &&
-@@ -381,7 +381,7 @@ test_expect_success \
-      mkdir a &&
-      : >a/b &&
-      git update-index --add --remove a a/b &&
--     treeH=`git write-tree` &&
-+     treeH=$(git write-tree) &&
-      echo treeH $treeH &&
-      git ls-tree $treeH'
+ test_expect_success 'two-way with incorrect --exclude-per-directory (2)' '
  
+-	if err=`read_tree_u_must_succeed -m -u --exclude-per-directory=foo --exclude-per-directory=.gitignore master side 2>&1`
++	if err=$(read_tree_u_must_succeed -m -u --exclude-per-directory=foo --exclude-per-directory=.gitignore master side 2>&1)
+ 	then
+ 		echo should have complained
+ 		false
+@@ -95,7 +95,7 @@ test_expect_success 'three-way not clobbering a working tree file' '
+ 	git checkout master &&
+ 	echo >file3 file three created in master, untracked &&
+ 	echo >subdir/file3 file three created in master, untracked &&
+-	if err=`read_tree_u_must_succeed -m -u branch-point master side 2>&1`
++	if err=$(read_tree_u_must_succeed -m -u branch-point master side 2>&1)
+ 	then
+ 		echo should have complained
+ 		false
 -- 
 1.7.10.4
