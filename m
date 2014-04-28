@@ -1,71 +1,77 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 04/12] Makefile: introduce CROSS_COMPILE variable
-Date: Mon, 28 Apr 2014 13:09:58 -0500
-Message-ID: <535e9976f1835_499f1069310db@nysa.notmuch>
-References: <1398693097-24651-1-git-send-email-marat@slonopotamus.org>
- <1398693097-24651-5-git-send-email-marat@slonopotamus.org>
- <535e91e6c69eb_4565148331047@nysa.notmuch>
- <20140428181506.GA20059@seldon>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 04/14] appp.sh: use the $( ... ) construct for command substitution
+Date: Mon, 28 Apr 2014 20:07:30 +0200
+Message-ID: <vpqmwf572fx.fsf@anie.imag.fr>
+References: <1398260646-2660-1-git-send-email-gitter.spiros@gmail.com>
+	<1398260646-2660-4-git-send-email-gitter.spiros@gmail.com>
+	<20140425225843.GA238861@vauxhall.crustytoothpaste.net>
+	<xmqq61lts5m9.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: GIT Mailing-list <git@vger.kernel.org>
-To: Marat Radchenko <marat@slonopotamus.org>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 28 21:15:18 2014
+Content-Type: text/plain
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 28 21:15:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wer1D-0003SK-Kq
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 21:15:12 +0200
+	id 1Wer1C-0003SK-Iv
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 21:15:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754428AbaD1TM6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2014 15:12:58 -0400
-Received: from mail-oa0-f44.google.com ([209.85.219.44]:47514 "EHLO
-	mail-oa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932169AbaD1TM4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 15:12:56 -0400
-Received: by mail-oa0-f44.google.com with SMTP id n16so7775682oag.31
-        for <git@vger.kernel.org>; Mon, 28 Apr 2014 12:12:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=mr9uL1uaxPhrn251zTJGTcexgSe+fcZmmTxSPaHfltQ=;
-        b=xn5gpS+VFQEjZaenLqfYzGoZCyERHhbdhmmjIGgb6JY04Q7qd1UgS6NYtP9RQP8450
-         K4qSJGyBI/D/6M9yUlh66cGuKLS6C4omkx+dCMoBnUXZyX0ZVSbdEC7nmlb6qIyjc5On
-         JcI2cgrAFWNVTOIgCfwDBsP94+70bs/wKaUJGCHF89GO5eFITM64R+YG3vX17zXEcNEJ
-         TWR5dYez2p7IQeSKBiDQ7uc7ixSZHeb5nurbMrA6P6pQGPSpIAZ28kQuAvM742wsaU2f
-         8tWx8C8/ZBABdgXRYRgwReh5+uMVLWjF/rSgwoL3m5gwqxTnwknwZHDGxOz5SyapQWdz
-         ZDpQ==
-X-Received: by 10.182.109.201 with SMTP id hu9mr1938141obb.77.1398709232837;
-        Mon, 28 Apr 2014 11:20:32 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id su13sm76498877oeb.9.2014.04.28.11.20.30
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 28 Apr 2014 11:20:31 -0700 (PDT)
-In-Reply-To: <20140428181506.GA20059@seldon>
+	id S932101AbaD1TMr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 15:12:47 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:34681 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932085AbaD1TMp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2014 15:12:45 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s3SI7Snd007380
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 28 Apr 2014 20:07:29 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s3SI7U21011457;
+	Mon, 28 Apr 2014 20:07:30 +0200
+In-Reply-To: <xmqq61lts5m9.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Mon, 28 Apr 2014 10:53:18 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 28 Apr 2014 20:07:29 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s3SI7Snd007380
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1399313253.67@piZWyZfgH1WQvJgL6z5Q0w
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247393>
 
-Marat Radchenko wrote:
-> On Mon, Apr 28, 2014 at 12:37:42PM -0500, Felipe Contreras wrote:
-> > > +CC = $(CROSS_COMPILE)cc
-> > 
-> > Nice.
-> 
-> Actually, not. You still have to override CC because it is
-> $(CROSS_COMPILE)*g*cc. Any thoughts how to handle this?
+Junio C Hamano <gitster@pobox.com> writes:
 
-Tell mingw to fix this? My distribution (Arch Linux) provides a link
-x86_64-w64-mingw32-cc -> x86_64-w64-mingw32-gcc.
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>
+>>>  CCS=`echo -e "$CMT_MSG\n$HEADERS" | sed -n -e 's/^Cc: \(.*\)$/\1,/gp' \
+>>>  	-e 's/^Signed-off-by: \(.*\)/\1,/gp'`
+>>
+>> It looks like you may have missed a usage here due to the line break.
+>
+> Good eyes ;-)
+>
+> The following may be an obvious replacement patch, but alternatively
+> we could just drop the whole thing (contrib/ material is not
+> something we would need to police strictly for the style---nobody
+> should be mimicking their styles as they are not part of _our_
+> codebase in the first place).
+
+My vote goes for keeping the patch as it is, so that future people
+grepping for `...` construct do not find any after the series is
+finished.
+
+(and because it's simple to do)
 
 -- 
-Felipe Contreras
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
