@@ -1,75 +1,113 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] t3910: show failure of core.precomposeunicode with
- decomposed filenames
-Date: Mon, 28 Apr 2014 16:03:26 -0400
-Message-ID: <20140428200326.GA2961@sigill.intra.peff.net>
-References: <20140428161630.GA9435@sigill.intra.peff.net>
- <xmqqbnvlqn5j.fsf@gitster.dls.corp.google.com>
- <20140428193502.GD25993@sigill.intra.peff.net>
- <535EB167.4030804@web.de>
+From: Bhushan Lodha <bhushanlodha@gmail.com>
+Subject: Re: [PATCH 06/10] log: --function-name pickaxe
+Date: Mon, 28 Apr 2014 16:04:40 -0400
+Message-ID: <CAHqUa-3myd+ephcRBQ97gV02BJqzKLqowU4GFi-PsS6qzCMQUw@mail.gmail.com>
+References: <1395946256-67124-1-git-send-email-dad-bgl@mit.edu>
+	<62ab0f9c34eabe020ae99c7c1f69d580d9bb36d8.1395942768.git.davidad@alum.mit.edu>
+	<533DD1B1.3000107@web.de>
+	<xmqqwqf6ozp3.fsf@gitster.dls.corp.google.com>
+	<533E9465.8070609@gmail.com>
+	<xmqqlhvlorug.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Mon Apr 28 22:03:35 2014
+Cc: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+	git@vger.kernel.org, Jeff King <peff@peff.net>,
+	"David Dalrymple (on zayin)" <davidad@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 28 22:04:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Werm2-0003eY-NA
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 22:03:35 +0200
+	id 1WernD-00056B-5C
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 22:04:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753997AbaD1UDa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Apr 2014 16:03:30 -0400
-Received: from cloud.peff.net ([50.56.180.127]:40654 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752632AbaD1UD3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 16:03:29 -0400
-Received: (qmail 15612 invoked by uid 102); 28 Apr 2014 20:03:28 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 28 Apr 2014 15:03:28 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 28 Apr 2014 16:03:26 -0400
-Content-Disposition: inline
-In-Reply-To: <535EB167.4030804@web.de>
+	id S1755149AbaD1UEn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Apr 2014 16:04:43 -0400
+Received: from mail-la0-f43.google.com ([209.85.215.43]:40348 "EHLO
+	mail-la0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752119AbaD1UEm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Apr 2014 16:04:42 -0400
+Received: by mail-la0-f43.google.com with SMTP id c6so5346510lan.2
+        for <git@vger.kernel.org>; Mon, 28 Apr 2014 13:04:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=UBNljycmvtZVMZKniBe/Xzh5L+2SX9TL6lf+exmRK3g=;
+        b=tpZMrUxdI3ED/rmrQNVKA8DFgYbiEudXqpDkXSAhWExbDtZUNzbgcBYrn44wYnytsj
+         w24ffa0tQ0dKLVfd7cgNbov2hlnz3bYE9FLkJ6Fbisd3aJcZLf68/UPV1o7CKzPnNbSM
+         DrhH0OISqloHrt8sIEplOKtsqvv+619CXF0BNQtNzGkDvrtoewK1PWdBechq7jEGYIGi
+         dQYuZiVZGR8YxokNoO/mD0y/iSCqkwqRnCPRD2h5N28GG7A3DVl7kB8Skba7RozLFJlV
+         VGnGNLb4JXLb82NiNf4tqIfR3MDaEH8kam0c35eUY1yJOR8l8lfbSpbAOWeUutL/j6tV
+         UFKg==
+X-Received: by 10.112.118.20 with SMTP id ki20mr2523124lbb.45.1398715480693;
+ Mon, 28 Apr 2014 13:04:40 -0700 (PDT)
+Received: by 10.112.236.129 with HTTP; Mon, 28 Apr 2014 13:04:40 -0700 (PDT)
+In-Reply-To: <xmqqlhvlorug.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247433>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247434>
 
-On Mon, Apr 28, 2014 at 09:52:07PM +0200, Torsten B=C3=B6gershausen wro=
-te:
+I plan to work on this in few weeks. If anybody has more suggestion or
+want to discuss the implementation let me know
 
-> To my knowledge repos with decomposed unicode should be rare in
-> practice.  I only can speak for european (or latin based) or cyrillic
-> languages myself:
-
-I've run across several cases in the past few months, but only just
-figured out what was going on. Most were tickets to GitHub support, but
-we actually have such a case in our github/github repository. In most
-cases, I think they were created on older versions of git on OS X,
-either before core.precomposeunicode existed, or before it was turned o=
+On Fri, Apr 4, 2014 at 2:46 PM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> Jakub Nar=C4=99bski <jnareb@gmail.com> writes:
+>
+>> W dniu 2014-04-03 23:44, Junio C Hamano pisze:
+>>> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+>>>
+>>>> With that approach you depend on the hunk header and apparently ne=
+ed
+>>>> to add XDL_EMIT_MOREFUNCNAMES and XDL_EMIT_MOREHUNKHEADS to improv=
+e
+>>>> the results.  This approach feels fragile.
+>>>>
+>>>> Would it perhaps be more robust to not base the implementation on =
+diff
+>>>> and instead to scan the raw file contents?
+>>>
+>>> That is an interesting idea.
+>>>
+>>> Perhaps this can be implemented as a new stage in the transformatio=
 n
-by default. The decomposed form got baked into the tree (whatever the
-user originally typed, git probably found out about it via "git add .")=
-=2E
-
-I think reports are just coming in now because we didn't start turning
-on core.precomposeunicode by default until v1.8.5, shipped in November.
-And then, a person working on the repository would not notice anything,
-since we only set the flag during clone. So it took time for people to
-upgrade _and_ to make fresh clones.
-
-> So for me the test case could sense, even if I think that nobody (TM)
-> uses an old Git version under Mac OS X which is not able to handle
-> precomposed unicode.
-
-Even when they do not, the decomposed values are baked into history fro=
-m
-those old versions. So it is a matter of history created with older
-versions not interacting well with newer versions.
-
--Peff
+>>> pipeline, I wonder?  There is currently no transformation that
+>>> modifies the blob contents being compared, but I do not think there
+>>> is anything fundamental that prevents one from being written.  The
+>>> new "limit to this function body" transformation would perhaps sit
+>>> before the diffcore-rename and would transform all the blobs to
+>>> empty, except for the part that is the body of the function the use=
+r
+>>> is interested in.
+>>
+>> Well, there is 'texconv', e.g.
+>>
+>>   .gitattributes
+>>   *.jpg diff=3Djpg
+>>
+>>   .git/config
+>>   [diff "jpg"]
+>>          textconv =3D exif
+>
+> ;-)  So you could define this textconv
+>
+>     sed -n -e '/^int main(/,/^}/p'
+>
+> to limit the output only to the definition of the function main().
+>
+>> Doesn't it fit in said place in the transformation pipeline?
+>
+> Not at all, unfortunately.  The textconv conversion happens in the
+> final output stage and comes way too late to influence the earlier
+> stages like renames and pickaxe, which will still see the whole
+> contents outside the definition of the function main().
+>
+>
+>
