@@ -1,51 +1,51 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 11/14] t1003-read-tree-prefix.sh: use the $( ... ) construct for command substitution
-Date: Mon, 28 Apr 2014 05:57:34 -0700
-Message-ID: <1398689857-17014-11-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 04/14] t0025-crlf-auto.sh: use the $( ... ) construct for command substitution
+Date: Mon, 28 Apr 2014 05:57:27 -0700
+Message-ID: <1398689857-17014-4-git-send-email-gitter.spiros@gmail.com>
 References: <1398689857-17014-1-git-send-email-gitter.spiros@gmail.com>
 Cc: matthieu.moy@grenoble-inp.fr, Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 28 14:58:20 2014
+X-From: git-owner@vger.kernel.org Mon Apr 28 14:58:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wel8R-00042y-Tn
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 14:58:16 +0200
+	id 1Wel8a-0004DO-Ks
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 14:58:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755839AbaD1M5z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2014 08:57:55 -0400
-Received: from mail-pa0-f44.google.com ([209.85.220.44]:51399 "EHLO
-	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755564AbaD1M5x (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 08:57:53 -0400
-Received: by mail-pa0-f44.google.com with SMTP id ey11so3924893pad.31
-        for <git@vger.kernel.org>; Mon, 28 Apr 2014 05:57:53 -0700 (PDT)
+	id S1755761AbaD1M5v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 08:57:51 -0400
+Received: from mail-pd0-f171.google.com ([209.85.192.171]:52645 "EHLO
+	mail-pd0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755395AbaD1M5q (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2014 08:57:46 -0400
+Received: by mail-pd0-f171.google.com with SMTP id g10so732050pdj.30
+        for <git@vger.kernel.org>; Mon, 28 Apr 2014 05:57:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=n2FZ2xEbJ2hN3KCus7Uw8rKFkPbxwpiaf+6ms+uC2A0=;
-        b=s4aIZo/tFaWOEEcN94Tpemi/m/1sJ6pJj/xYb6m8nprrq6bfxnWQuJksZShzjY8Hnk
-         BohrRP5tDwDVfx/MlWSgE3e5T+gY7YtLa+ROLoMgXbM1QhDfwcbJYFFG5T8rbwXqEnhk
-         BF/NH6pnjn86H6iFPF9iDQi6I5sxn3Rin1mIF8Cu/UfRDQWh2wC7HKWeJVl6vFpCnSoz
-         959R41mDG8qldyx+OYVBQt1W/stoG1LpMoxiRNHJltACyWUHgnfb70YkcIpyj3HBR8l+
-         wYTxKOIZCgHTxAVYe+6A+DbLa8DwbuErSNyZjjE8+fKl/qf9pRoHuVzPRXJymaEINKDF
-         xWVQ==
-X-Received: by 10.67.5.7 with SMTP id ci7mr25060030pad.99.1398689873182;
-        Mon, 28 Apr 2014 05:57:53 -0700 (PDT)
+        bh=Fb2Aoi6079uRXhp+QTEOnCZfJ0xa4ILUcANeY7PkKSs=;
+        b=D5+apsO9v9ZSFp5QM4dfUbeBu/ll9q8NEUtSK5Z4RaMRHRYOmCclrzhEG/fgFObE97
+         8O6NVSuBCl9PmM1AW3A+g2N4pggcIaR+xzfrbSAkzMepvtG5GCms3nW0Ske2J93Wyyr0
+         T7+IBLL4ygObNrGuLdTIqJ/P/aaFTwZRmjgndjH+oET/dfo/3gFNMda9v04C2YhhWmBF
+         5p+ayhRqbS6PB0oHxY7iYudrm/LtvJeGaGnPJE8N7ao5WYAjryp6q84ChyalAqwUTZCu
+         wPQQRDHhW8k/ltLrzkxNSusTEcs91KJQ369HLeJTTUuDAmCd7DqLrbYSK0GVkRaOhs52
+         eMeQ==
+X-Received: by 10.68.221.161 with SMTP id qf1mr29114662pbc.10.1398689865565;
+        Mon, 28 Apr 2014 05:57:45 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id ky8sm34896290pbc.64.2014.04.28.05.57.52
+        by mx.google.com with ESMTPSA id ky8sm34896290pbc.64.2014.04.28.05.57.44
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 28 Apr 2014 05:57:52 -0700 (PDT)
+        Mon, 28 Apr 2014 05:57:44 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1398689857-17014-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247315>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247316>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -67,20 +67,126 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t1003-read-tree-prefix.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t0025-crlf-auto.sh |   38 +++++++++++++++++++-------------------
+ 1 file changed, 19 insertions(+), 19 deletions(-)
 
-diff --git a/t/t1003-read-tree-prefix.sh b/t/t1003-read-tree-prefix.sh
-index 8c6d67e..b6111cd 100755
---- a/t/t1003-read-tree-prefix.sh
-+++ b/t/t1003-read-tree-prefix.sh
-@@ -11,7 +11,7 @@ test_description='git read-tree --prefix test.
- test_expect_success setup '
- 	echo hello >one &&
- 	git update-index --add one &&
--	tree=`git write-tree` &&
-+	tree=$(git write-tree) &&
- 	echo tree is $tree
+diff --git a/t/t0025-crlf-auto.sh b/t/t0025-crlf-auto.sh
+index f5f67a6..b0e5694 100755
+--- a/t/t0025-crlf-auto.sh
++++ b/t/t0025-crlf-auto.sh
+@@ -19,9 +19,9 @@ test_expect_success setup '
+ 
+ 	git commit -m initial &&
+ 
+-	one=`git rev-parse HEAD:one` &&
+-	two=`git rev-parse HEAD:two` &&
+-	three=`git rev-parse HEAD:three` &&
++	one=$(git rev-parse HEAD:one) &&
++	two=$(git rev-parse HEAD:two) &&
++	three=$(git rev-parse HEAD:three) &&
+ 
+ 	echo happy.
+ '
+@@ -33,9 +33,9 @@ test_expect_success 'default settings cause no changes' '
+ 
+ 	! has_cr one &&
+ 	has_cr two &&
+-	onediff=`git diff one` &&
+-	twodiff=`git diff two` &&
+-	threediff=`git diff three` &&
++	onediff=$(git diff one) &&
++	twodiff=$(git diff two) &&
++	threediff=$(git diff three) &&
+ 	test -z "$onediff" -a -z "$twodiff" -a -z "$threediff"
+ '
+ 
+@@ -48,7 +48,7 @@ test_expect_success 'crlf=true causes a CRLF file to be normalized' '
+ 
+ 	# Note, "normalized" means that git will normalize it if added
+ 	has_cr two &&
+-	twodiff=`git diff two` &&
++	twodiff=$(git diff two) &&
+ 	test -n "$twodiff"
+ '
+ 
+@@ -60,7 +60,7 @@ test_expect_success 'text=true causes a CRLF file to be normalized' '
+ 
+ 	# Note, "normalized" means that git will normalize it if added
+ 	has_cr two &&
+-	twodiff=`git diff two` &&
++	twodiff=$(git diff two) &&
+ 	test -n "$twodiff"
+ '
+ 
+@@ -72,7 +72,7 @@ test_expect_success 'eol=crlf gives a normalized file CRLFs with autocrlf=false'
+ 	git read-tree --reset -u HEAD &&
+ 
+ 	has_cr one &&
+-	onediff=`git diff one` &&
++	onediff=$(git diff one) &&
+ 	test -z "$onediff"
+ '
+ 
+@@ -84,7 +84,7 @@ test_expect_success 'eol=crlf gives a normalized file CRLFs with autocrlf=input'
+ 	git read-tree --reset -u HEAD &&
+ 
+ 	has_cr one &&
+-	onediff=`git diff one` &&
++	onediff=$(git diff one) &&
+ 	test -z "$onediff"
+ '
+ 
+@@ -96,7 +96,7 @@ test_expect_success 'eol=lf gives a normalized file LFs with autocrlf=true' '
+ 	git read-tree --reset -u HEAD &&
+ 
+ 	! has_cr one &&
+-	onediff=`git diff one` &&
++	onediff=$(git diff one) &&
+ 	test -z "$onediff"
+ '
+ 
+@@ -108,9 +108,9 @@ test_expect_success 'autocrlf=true does not normalize CRLF files' '
+ 
+ 	has_cr one &&
+ 	has_cr two &&
+-	onediff=`git diff one` &&
+-	twodiff=`git diff two` &&
+-	threediff=`git diff three` &&
++	onediff=$(git diff one) &&
++	twodiff=$(git diff two) &&
++	threediff=$(git diff three) &&
+ 	test -z "$onediff" -a -z "$twodiff" -a -z "$threediff"
+ '
+ 
+@@ -123,9 +123,9 @@ test_expect_success 'text=auto, autocrlf=true _does_ normalize CRLF files' '
+ 
+ 	has_cr one &&
+ 	has_cr two &&
+-	onediff=`git diff one` &&
+-	twodiff=`git diff two` &&
+-	threediff=`git diff three` &&
++	onediff=$(git diff one) &&
++	twodiff=$(git diff two) &&
++	threediff=$(git diff three) &&
+ 	test -z "$onediff" -a -n "$twodiff" -a -z "$threediff"
+ '
+ 
+@@ -137,7 +137,7 @@ test_expect_success 'text=auto, autocrlf=true does not normalize binary files' '
+ 	git read-tree --reset -u HEAD &&
+ 
+ 	! has_cr three &&
+-	threediff=`git diff three` &&
++	threediff=$(git diff three) &&
+ 	test -z "$threediff"
+ '
+ 
+@@ -148,7 +148,7 @@ test_expect_success 'eol=crlf _does_ normalize binary files' '
+ 	git read-tree --reset -u HEAD &&
+ 
+ 	has_cr three &&
+-	threediff=`git diff three` &&
++	threediff=$(git diff three) &&
+ 	test -z "$threediff"
  '
  
 -- 
