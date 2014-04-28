@@ -1,80 +1,85 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 04/12] Makefile: introduce CROSS_COMPILE variable
-Date: Mon, 28 Apr 2014 13:45:04 -0700
-Message-ID: <20140428204504.GP9218@google.com>
-References: <1398693097-24651-1-git-send-email-marat@slonopotamus.org>
- <1398693097-24651-5-git-send-email-marat@slonopotamus.org>
- <20140428162536.GB13002@google.com>
- <20140428204048.GA21365@seldon>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Makefile: default to -lcurl when no CURL_CONFIG or CURLDIR
+Date: Mon, 28 Apr 2014 13:45:45 -0700
+Message-ID: <xmqqlhupp4hx.fsf@gitster.dls.corp.google.com>
+References: <1398714653-1050-1-git-send-email-dborowitz@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: GIT Mailing-list <git@vger.kernel.org>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: Marat Radchenko <marat@slonopotamus.org>
-X-From: git-owner@vger.kernel.org Mon Apr 28 22:45:18 2014
+Cc: git@vger.kernel.org, kusmabite@gmail.com
+To: Dave Borowitz <dborowitz@google.com>
+X-From: git-owner@vger.kernel.org Mon Apr 28 22:46:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WesQO-0004Es-Vp
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 22:45:17 +0200
+	id 1WesR1-00051f-6I
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 22:45:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755910AbaD1UpJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2014 16:45:09 -0400
-Received: from mail-pa0-f50.google.com ([209.85.220.50]:54367 "EHLO
-	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755871AbaD1UpH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 16:45:07 -0400
-Received: by mail-pa0-f50.google.com with SMTP id rd3so6261965pab.9
-        for <git@vger.kernel.org>; Mon, 28 Apr 2014 13:45:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=FTpcovwxl/NpYOep/M1NcaLRc0OiNpTfYH6KBJXoPWI=;
-        b=If++i+x6+0txuTQ8R25CR/b382R7L9SXBZYS1Vut6oPvFpRdWd/xdyZARKaImjAf7F
-         duE2CbJFfJ5z1L2H5+LPnyavjWgZgohhTENl2OcjpLizBBAq9fScw7u5ztqtsaxlOGIy
-         TfhcQmcwFpDkBRQzafo7e3n+qMsCL9hRsVvIa+Z51dt3GZq9HkUiD7pP9ZBNkONnip+y
-         47GoCuUlrz4bTWgXqPbbG+AaNolJooTZ8H7v25eQoTO24iYHvOTx9xsb35klv668J8DU
-         ECE0Yqqst9EdA7Ynr3l1lRfCi7RKSh2KroyGGrschKYoLjlqrsH7upuh9Im77vCzbb9B
-         YcWw==
-X-Received: by 10.68.190.163 with SMTP id gr3mr27581268pbc.103.1398717906992;
-        Mon, 28 Apr 2014 13:45:06 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id au16sm97034874pac.27.2014.04.28.13.45.05
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 28 Apr 2014 13:45:06 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20140428204048.GA21365@seldon>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754630AbaD1Upv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 16:45:51 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62986 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752119AbaD1Upv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2014 16:45:51 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3A365819BD;
+	Mon, 28 Apr 2014 16:45:50 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=untrsr98dhvqde0HydVHl1qCoxw=; b=X7up3C
+	dSPTl8NVSZTJQqgqwYxQ8zYd9Q18QgJUaMkm8jN5QgGOsAHNYGj5FOlLMzlqHFnk
+	/Iwuma6tEpnReqDSaT+4bb9ZE2Izyp688uIHdY8YxOX9IC7qUxPdT54Mc+VS5k6U
+	2QUh0mu4A/i+6LFXtbRpajvLWKpls1d8ChfL4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=b/tuu922fsjWuc28h1OiEI/LTGaMxmuF
+	OVk70q3of56phQFsiPC0JjNQWTb9ROaLTKS3C7urbbZnPcCoANDqa1R6ut6IHSpt
+	vuPTGcOMynsQWmcpkgzuXsA6Gx6lG+Y4iB0k8a+l2a8Y4Hi+P5slsgt41A8t4Qr2
+	0DFJIyvUF7Q=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 210D6819BA;
+	Mon, 28 Apr 2014 16:45:50 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 98084819B7;
+	Mon, 28 Apr 2014 16:45:47 -0400 (EDT)
+In-Reply-To: <1398714653-1050-1-git-send-email-dborowitz@google.com> (Dave
+	Borowitz's message of "Mon, 28 Apr 2014 12:50:53 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 139C5C9C-CF16-11E3-9087-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247443>
 
-Hi,
+Dave Borowitz <dborowitz@google.com> writes:
 
-Marat Radchenko wrote:
-> On Mon, Apr 28, 2014 at 09:25:36AM -0700, Jonathan Nieder wrote:
-
->>> -STRIP ?= strip
->>> +STRIP = $(CROSS_COMPILE)strip
->>
->> Before, STRIP from the environment took precedence over STRIP from the
->> makefile.  Switching to the more usual 'environment can't be trusted'
->> convention is a good change, but please mention it in the commit
->> message.
+> The original implementation of CURL_CONFIG support did not match the
+> original behavior of using -lcurl when CURLDIR was not set. This broke
+> implementations that were lacking curl-config but did have libcurl
+> installed along system libraries, such as MSysGit. In other words, the
+> assumption that curl-config is always installed was incorrect.
 >
-> Taken from [1]:
->
->> Simply expanded variables are defined by
+> Instead, if CURL_CONFIG is empty or returns an empty result (e.g. due
+> to curl-config being missing), use the old behavior of falling back to
+> -lcurl.
+> ---
 
-I'm not really sure what in particular you're pointing to in that
-page.  If you have a more specific question about what '?=' means,
-could you say it?
+Sign-off?
 
-Hope that helps,
-Jonathan
+I still think the implementation of "If CURL_CONFIG is unset" bit is
+a bit redundant, though.
+
+> +		CURL_CONFIG ?= curl-config
+> +		ifeq "$(CURL_CONFIG)" ""
+> +			CURL_LIBCURL =
+> +		else
+> +			CURL_LIBCURL := $(shell $(CURL_CONFIG) --libs)
+> +		endif
+
+Other than that, the remainder of the change looks correct to me.
+
+Thanks.  
