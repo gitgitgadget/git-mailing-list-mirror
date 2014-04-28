@@ -1,51 +1,51 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 03/14] t0020-crlf.sh: use the $( ... ) construct for command substitution
-Date: Mon, 28 Apr 2014 05:57:26 -0700
-Message-ID: <1398689857-17014-3-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 10/14] t1002-read-tree-m-u-2way.sh: use the $( ... ) construct for command substitution
+Date: Mon, 28 Apr 2014 05:57:33 -0700
+Message-ID: <1398689857-17014-10-git-send-email-gitter.spiros@gmail.com>
 References: <1398689857-17014-1-git-send-email-gitter.spiros@gmail.com>
 Cc: matthieu.moy@grenoble-inp.fr, Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 28 14:58:03 2014
+X-From: git-owner@vger.kernel.org Mon Apr 28 14:58:07 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wel8B-0003i6-5e
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 14:57:59 +0200
+	id 1Wel8G-0003pg-E4
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Apr 2014 14:58:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755795AbaD1M5w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1755796AbaD1M55 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 08:57:57 -0400
+Received: from mail-pb0-f42.google.com ([209.85.160.42]:60065 "EHLO
+	mail-pb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755764AbaD1M5w (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 28 Apr 2014 08:57:52 -0400
-Received: from mail-pb0-f50.google.com ([209.85.160.50]:50001 "EHLO
-	mail-pb0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755564AbaD1M5o (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 08:57:44 -0400
-Received: by mail-pb0-f50.google.com with SMTP id md12so5820409pbc.23
-        for <git@vger.kernel.org>; Mon, 28 Apr 2014 05:57:44 -0700 (PDT)
+Received: by mail-pb0-f42.google.com with SMTP id un15so5827044pbc.15
+        for <git@vger.kernel.org>; Mon, 28 Apr 2014 05:57:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=fY3KDkVw1QUmlKtsTeGYMLV6ztaBDLK6QJYDt26eUrQ=;
-        b=QLrx/Fj+n3QJntUUJ4QPu877Vkv/mF62LG3W1Kt0KP+GVnmaQxbAgcKU9tkgEJKSFQ
-         l4Nz6r2FnAEYxzkqRFAc55ugrZTu6N8CNYB6UxnDR7sOTEIypYgJU7bce/KXoiJ1XbaG
-         J652Y4wZ4V14NRpn9ClLiZVHVe0e49TTbPFbaqQeI5BqZ6n1adAec1p3nc9WxCsgbzpN
-         mGfK4wOgBQ/vTpi8E9ugyZgW60tFjOOkdajXqgJCdv2aOUFTxefXRb9Y/KLtCRZPfivg
-         zwHSSQ8ALVnYlz5LL4JxzbE5vqg7ItCuPs6kiQ73WdpCNlab/LIumjX1G3nuU0uqeWSY
-         Sd3Q==
-X-Received: by 10.68.254.5 with SMTP id ae5mr25086982pbd.83.1398689864371;
-        Mon, 28 Apr 2014 05:57:44 -0700 (PDT)
+        bh=phdvZ5ai0+xviRHYebb0rz85RfW59JXHNPP3Ool5cZ4=;
+        b=WbIoFViqXSKkrh6LaODfdKUHAKoP0zbf2QaEU0VaeD9K+Ta8TI7la4Lb9HE7m6Q08u
+         mpnbteIWRrbXmTcFyWgutfw90TvP02NhfR1wV+aX5WDtoLwXRXU+rYI9toFIXG05KZJg
+         OnoeHL26CZnbNNEja9zfwc6zwgXKGgJ6QMkkxS1s5jSX+6tqpv7kaZJAMMjtLh0+Vq1S
+         /tX3bq+uIpd035wpqbLXP+1KCQ4mlmL236eSFW3CkGMZQbExe73djtgavcsWga/CcAvd
+         o/SYqh0kNAAL6MBeictiZE6+uD86WB2AvGkN8VjKUxT94peyDei0DR6R/lwm5+cHHliz
+         vlAA==
+X-Received: by 10.68.129.34 with SMTP id nt2mr29049863pbb.18.1398689872139;
+        Mon, 28 Apr 2014 05:57:52 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id ky8sm34896290pbc.64.2014.04.28.05.57.43
+        by mx.google.com with ESMTPSA id ky8sm34896290pbc.64.2014.04.28.05.57.51
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 28 Apr 2014 05:57:43 -0700 (PDT)
+        Mon, 28 Apr 2014 05:57:51 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1398689857-17014-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247311>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247312>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -67,134 +67,56 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t0020-crlf.sh |   42 +++++++++++++++++++++---------------------
- 1 file changed, 21 insertions(+), 21 deletions(-)
+ t/t1002-read-tree-m-u-2way.sh |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/t/t0020-crlf.sh b/t/t0020-crlf.sh
-index e526184..d2e51a8 100755
---- a/t/t0020-crlf.sh
-+++ b/t/t0020-crlf.sh
-@@ -20,14 +20,14 @@ test_expect_success setup '
+diff --git a/t/t1002-read-tree-m-u-2way.sh b/t/t1002-read-tree-m-u-2way.sh
+index a847709..fed877b 100755
+--- a/t/t1002-read-tree-m-u-2way.sh
++++ b/t/t1002-read-tree-m-u-2way.sh
+@@ -21,7 +21,7 @@ compare_change () {
+ }
  
- 	git commit -m initial &&
+ check_cache_at () {
+-	clean_if_empty=`git diff-files -- "$1"`
++	clean_if_empty=$(git diff-files -- "$1")
+ 	case "$clean_if_empty" in
+ 	'')  echo "$1: clean" ;;
+ 	?*)  echo "$1: dirty" ;;
+@@ -41,14 +41,14 @@ test_expect_success \
+      echo bozbar >bozbar &&
+      echo rezrov >rezrov &&
+      git update-index --add nitfol bozbar rezrov &&
+-     treeH=`git write-tree` &&
++     treeH=$(git write-tree) &&
+      echo treeH $treeH &&
+      git ls-tree $treeH &&
  
--	one=`git rev-parse HEAD:one` &&
--	dir=`git rev-parse HEAD:dir` &&
--	two=`git rev-parse HEAD:dir/two` &&
--	three=`git rev-parse HEAD:three` &&
-+	one=$(git rev-parse HEAD:one) &&
-+	dir=$(git rev-parse HEAD:dir) &&
-+	two=$(git rev-parse HEAD:dir/two) &&
-+	three=$(git rev-parse HEAD:three) &&
+      echo gnusto >bozbar &&
+      git update-index --add frotz bozbar --force-remove rezrov &&
+      git ls-files --stage >M.out &&
+-     treeM=`git write-tree` &&
++     treeM=$(git write-tree) &&
+      echo treeM $treeM &&
+      git ls-tree $treeM &&
+      sum bozbar frotz nitfol >M.sum &&
+@@ -318,7 +318,7 @@ test_expect_success \
+     'rm -f .git/index &&
+      echo DF >DF &&
+      git update-index --add DF &&
+-     treeDF=`git write-tree` &&
++     treeDF=$(git write-tree) &&
+      echo treeDF $treeDF &&
+      git ls-tree $treeDF &&
  
- 	for w in Some extra lines here; do echo $w; done >>one &&
- 	git diff >patch.file &&
--	patched=`git hash-object --stdin <one` &&
-+	patched=$(git hash-object --stdin <one) &&
- 	git read-tree --reset -u HEAD &&
- 
- 	echo happy.
-@@ -111,7 +111,7 @@ test_expect_success 'update with autocrlf=input' '
- 		}
- 	done &&
- 
--	differs=`git diff-index --cached HEAD` &&
-+	differs=$(git diff-index --cached HEAD) &&
- 	test -z "$differs" || {
- 		echo Oops "$differs"
- 		false
-@@ -135,7 +135,7 @@ test_expect_success 'update with autocrlf=true' '
- 		}
- 	done &&
- 
--	differs=`git diff-index --cached HEAD` &&
-+	differs=$(git diff-index --cached HEAD) &&
- 	test -z "$differs" || {
- 		echo Oops "$differs"
- 		false
-@@ -158,9 +158,9 @@ test_expect_success 'checkout with autocrlf=true' '
- 			break
- 		}
- 	done &&
--	test "$one" = `git hash-object --stdin <one` &&
--	test "$two" = `git hash-object --stdin <dir/two` &&
--	differs=`git diff-index --cached HEAD` &&
-+	test "$one" = $(git hash-object --stdin <one) &&
-+	test "$two" = $(git hash-object --stdin <dir/two) &&
-+	differs=$(git diff-index --cached HEAD) &&
- 	test -z "$differs" || {
- 		echo Oops "$differs"
- 		false
-@@ -184,9 +184,9 @@ test_expect_success 'checkout with autocrlf=input' '
- 			git update-index -- $f
- 		fi
- 	done &&
--	test "$one" = `git hash-object --stdin <one` &&
--	test "$two" = `git hash-object --stdin <dir/two` &&
--	differs=`git diff-index --cached HEAD` &&
-+	test "$one" = $(git hash-object --stdin <one) &&
-+	test "$two" = $(git hash-object --stdin <dir/two) &&
-+	differs=$(git diff-index --cached HEAD) &&
- 	test -z "$differs" || {
- 		echo Oops "$differs"
- 		false
-@@ -200,7 +200,7 @@ test_expect_success 'apply patch (autocrlf=input)' '
- 	git read-tree --reset -u HEAD &&
- 
- 	git apply patch.file &&
--	test "$patched" = "`git hash-object --stdin <one`" || {
-+	test "$patched" = "$(git hash-object --stdin <one)" || {
- 		echo "Eh?  apply without index"
- 		false
- 	}
-@@ -213,7 +213,7 @@ test_expect_success 'apply patch --cached (autocrlf=input)' '
- 	git read-tree --reset -u HEAD &&
- 
- 	git apply --cached patch.file &&
--	test "$patched" = `git rev-parse :one` || {
-+	test "$patched" = $(git rev-parse :one) || {
- 		echo "Eh?  apply with --cached"
- 		false
- 	}
-@@ -226,8 +226,8 @@ test_expect_success 'apply patch --index (autocrlf=input)' '
- 	git read-tree --reset -u HEAD &&
- 
- 	git apply --index patch.file &&
--	test "$patched" = `git rev-parse :one` &&
--	test "$patched" = `git hash-object --stdin <one` || {
-+	test "$patched" = $(git rev-parse :one) &&
-+	test "$patched" = $(git hash-object --stdin <one) || {
- 		echo "Eh?  apply with --index"
- 		false
- 	}
-@@ -240,7 +240,7 @@ test_expect_success 'apply patch (autocrlf=true)' '
- 	git read-tree --reset -u HEAD &&
- 
- 	git apply patch.file &&
--	test "$patched" = "`remove_cr <one | git hash-object --stdin`" || {
-+	test "$patched" = "$(remove_cr <one | git hash-object --stdin)" || {
- 		echo "Eh?  apply without index"
- 		false
- 	}
-@@ -253,7 +253,7 @@ test_expect_success 'apply patch --cached (autocrlf=true)' '
- 	git read-tree --reset -u HEAD &&
- 
- 	git apply --cached patch.file &&
--	test "$patched" = `git rev-parse :one` || {
-+	test "$patched" = $(git rev-parse :one) || {
- 		echo "Eh?  apply without index"
- 		false
- 	}
-@@ -266,8 +266,8 @@ test_expect_success 'apply patch --index (autocrlf=true)' '
- 	git read-tree --reset -u HEAD &&
- 
- 	git apply --index patch.file &&
--	test "$patched" = `git rev-parse :one` &&
--	test "$patched" = "`remove_cr <one | git hash-object --stdin`" || {
-+	test "$patched" = $(git rev-parse :one) &&
-+	test "$patched" = "$(remove_cr <one | git hash-object --stdin)" || {
- 		echo "Eh?  apply with --index"
- 		false
- 	}
+@@ -326,7 +326,7 @@ test_expect_success \
+      mkdir DF &&
+      echo DF/DF >DF/DF &&
+      git update-index --add --remove DF DF/DF &&
+-     treeDFDF=`git write-tree` &&
++     treeDFDF=$(git write-tree) &&
+      echo treeDFDF $treeDFDF &&
+      git ls-tree $treeDFDF &&
+      git ls-files --stage >DFDF.out'
 -- 
 1.7.10.4
