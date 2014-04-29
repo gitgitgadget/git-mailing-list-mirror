@@ -1,90 +1,61 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Recording the current branch on each commit?
-Date: Tue, 29 Apr 2014 11:00:15 +0200
-Message-ID: <87r44g33z4.fsf@fencepost.gnu.org>
-References: <535C47BF.2070805@game-point.net>
-	<CALKQrgfmBByMwMhxu3HkJqJGWy2Rwvij6Hi1_4npjfsxcSgpaQ@mail.gmail.com>
-	<535D4085.4040707@game-point.net>
-	<CALKQrgemFx=2JaC1BaRqCwEV+knC8QftxcZ7K0AsT9azzuyVdA@mail.gmail.com>
-	<535D6EB1.9080208@game-point.net>
-	<535e18cdc7bce_338911e930c72@nysa.notmuch>
-	<87bnvl6bdg.fsf@fencepost.gnu.org>
-	<535e8e4253196_45651483310b3@nysa.notmuch>
-	<152626b3-0642-4e26-9333-7d911d45c669@email.android.com>
-	<535edfb9baa4a_4c5c11c92f0bc@nysa.notmuch>
-	<CAHYYfeGBLXGgK-cTQLEreFXJakp1jBE829=LrhmKR3MttBiw+A@mail.gmail.com>
-	<535f1d4d8cbbb_762310ef30c9c@nysa.notmuch>
-	<220967ee-98a9-4731-88c0-43a9cba7220a@email.android.com>
-	<535f62c1e740a_45e485b30887@nysa.notmuch>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: James Denholm <nod.helm@gmail.com>,
-	Jeremy Morton <admin@game-point.net>,
-	Johan Herland <johan@herland.net>,
-	Git mailing list <git@vger.kernel.org>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 29 11:00:58 2014
+From: Marat Radchenko <marat@slonopotamus.org>
+Subject: [PATCH 01/12] MINGW: compat/mingw.h: do not attempt to redefine lseek on mingw-w64
+Date: Tue, 29 Apr 2014 13:11:55 +0400
+Message-ID: <1398762726-22825-2-git-send-email-marat@slonopotamus.org>
+References: <1398762726-22825-1-git-send-email-marat@slonopotamus.org>
+Cc: marat@slonopotamus.org,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Erik Faye-Lund <kusmabite@gmail.com>
+To: GIT Mailing-list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 29 11:12:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wf3uM-0001JK-9E
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Apr 2014 11:00:58 +0200
+	id 1Wf45R-00057r-A5
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Apr 2014 11:12:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756224AbaD2JAx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2014 05:00:53 -0400
-Received: from fencepost.gnu.org ([208.118.235.10]:55104 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751680AbaD2JAv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2014 05:00:51 -0400
-Received: from localhost ([127.0.0.1]:54138 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1Wf3uE-0001nE-CA; Tue, 29 Apr 2014 05:00:50 -0400
-Received: by lola (Postfix, from userid 1000)
-	id 19057DF406; Tue, 29 Apr 2014 11:00:15 +0200 (CEST)
-In-Reply-To: <535f62c1e740a_45e485b30887@nysa.notmuch> (Felipe Contreras's
-	message of "Tue, 29 Apr 2014 03:28:49 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
+	id S1756344AbaD2JMS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2014 05:12:18 -0400
+Received: from seldon.slonopotamus.org ([94.242.204.247]:44862 "EHLO
+	slonopotamus.org" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
+	with ESMTP id S1751680AbaD2JMQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2014 05:12:16 -0400
+Received: from [185.6.245.138] (helo=radchenko-d-lnx.mail.msk)
+	by slonopotamus.org with esmtpsa (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256)
+	(Exim 4.80.1)
+	(envelope-from <marat@slonopotamus.org>)
+	id 1Wf45C-0006BN-Jm; Tue, 29 Apr 2014 13:12:10 +0400
+X-Mailer: git-send-email 1.9.1
+In-Reply-To: <1398762726-22825-1-git-send-email-marat@slonopotamus.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247532>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247533>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Unlike MinGW, MinGW-W64 has lseek already properly defined in io.h.
 
-> Contributors don't have any responsibility to champion their patches.
-> It is pro bono work.
+Signed-off-by: Marat Radchenko <marat@slonopotamus.org>
+Acked-by: Eric Faye-Lund <kusmabite@gmail.com>
+---
+ compat/mingw.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-No, that's just the appearance that should be upheld in the higher
-society.  It's ok to get paid for work on Git as long as you don't
-mention it in public.  It's also ok to get paid for _promises_ of work
-if you can make people believe you.  Open Source is not much different
-from how politics and society in general work in the U.S.A.  To get the
-real wads of money, you first need to get the means not to have to talk
-about money (it's ok if you do it by means totally opposed to "the
-political cause" as long as you don't talk about it), then you have to
-prefinance people's trust in you not being there for the money, and then
-you are in a position to get paid for your work.
-
-Anyway, I digress.  Even without all that not so "pro bono" background
-to "pro bono work", there is still a difference between "pro bono" work
-ending up in the wastebin and "pro bono" work ending up in a product.
-
-Even while the ones getting the benefits from your work will not feel an
-obligation to make it worth your while, there is a difference in
-satisfaction between getting your work trashed and getting it used.
-
-The satisfaction by exploding in self-righteousness tends to be a poor
-substitute and is comparatively short-lived.
-
-Yes, it may mean that you have to carry your child the last yards rather
-than shout it across the finishing line.  Even though it should have
-legs perfectly suited to get it across the track on its own.
-
-Only that way you get to pat it on its head.
-
+diff --git a/compat/mingw.h b/compat/mingw.h
+index e033e72..262b300 100644
+--- a/compat/mingw.h
++++ b/compat/mingw.h
+@@ -265,7 +265,9 @@ static inline int getrlimit(int resource, struct rlimit *rlp)
+  * Use mingw specific stat()/lstat()/fstat() implementations on Windows.
+  */
+ #define off_t off64_t
++#ifndef lseek
+ #define lseek _lseeki64
++#endif
+ 
+ /* use struct stat with 64 bit st_size */
+ #ifdef stat
 -- 
-David Kastrup
+1.9.1
