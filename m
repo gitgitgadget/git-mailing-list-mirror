@@ -1,86 +1,143 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Document RUN_SETUP_GENTLY
-Date: Tue, 29 Apr 2014 11:25:36 -0700
-Message-ID: <xmqq1twgkn6n.fsf@gitster.dls.corp.google.com>
-References: <CAE+yK_nZ0tVbqvH00vqaAL2mUz4s6CQS5kCfGsayv-40b0yejQ@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v4 12/27] replace.c: use the ref transaction functions for updates
+Date: Tue, 29 Apr 2014 14:29:10 -0400
+Message-ID: <CAPig+cQ5br8icrUPwP7=zuQnXD4-tNU5rjZ8AWhCWGwT5KegfA@mail.gmail.com>
+References: <1398725682-30782-1-git-send-email-sahlberg@google.com>
+	<1398725682-30782-13-git-send-email-sahlberg@google.com>
+	<CAPig+cSWMK_kyVvaD8QCfZmPu4JVT+nOJZJLteHhDao0umHLbA@mail.gmail.com>
+	<CAL=YDWn9TJsygZdgY2gXVBScFjO3zbrbJ5XORc2ZLaY-M8PmSw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git mailing list <git@vger.kernel.org>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Tue Apr 29 20:25:46 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Ronnie Sahlberg <sahlberg@google.com>
+X-From: git-owner@vger.kernel.org Tue Apr 29 20:29:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WfCiw-0007vD-76
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Apr 2014 20:25:46 +0200
+	id 1WfCmK-0003Gd-CS
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Apr 2014 20:29:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933757AbaD2SZm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2014 14:25:42 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45083 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932491AbaD2SZl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2014 14:25:41 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CE1BD7FC78;
-	Tue, 29 Apr 2014 14:25:39 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+0Cz0o2XVPRos8zjPm8i+TrDT4Q=; b=wrxX/c
-	Nf6prSuq4HEfu01RgpkI4DmpD0QX19+9KCA2JxbO/gk0Z7NFghQAKAHR6sbpkX85
-	ls6Q7mFNQDTUgT24i5a8s+5fcOKce+fKAjEQQeU7xTDSYFPbl1rE8Ivs+AozTDHJ
-	IRcc20VLNg8XlYFjRteJpS+/9aYZmVLFB60Uc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ca/S4XCS9GMiPTeo4blbToFycREVtC0e
-	DyyVtcijEmIS18UVmjUa/KgZdjmZ8no9/AA4dozrGIOnTK+Hcf/+do/DimGy3Bpf
-	fbsViHuUZE1eEHZvT1O672a7lS1nXjDz4w1cWNSd+DCbdJ7lxAnS9hSNHLQj6Umw
-	Wdpfuzv2vSs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B32C87FC77;
-	Tue, 29 Apr 2014 14:25:39 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A64197FC76;
-	Tue, 29 Apr 2014 14:25:37 -0400 (EDT)
-In-Reply-To: <CAE+yK_nZ0tVbqvH00vqaAL2mUz4s6CQS5kCfGsayv-40b0yejQ@mail.gmail.com>
-	(David Turner's message of "Tue, 29 Apr 2014 01:04:11 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: A94E1F18-CFCB-11E3-96AA-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S964964AbaD2S3M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2014 14:29:12 -0400
+Received: from mail-yk0-f172.google.com ([209.85.160.172]:50481 "EHLO
+	mail-yk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932284AbaD2S3L (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2014 14:29:11 -0400
+Received: by mail-yk0-f172.google.com with SMTP id 131so536617ykp.3
+        for <git@vger.kernel.org>; Tue, 29 Apr 2014 11:29:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=ColfbJcKAvD8SCEPCfqwOtA9CYT/Oqbe/iD+wIbvzv4=;
+        b=E9ybz+3meItrMp7a0hSN8DCGVZGTto0VJmE9JgW1c+bwG+HZPevHki5qn62lrB1bWi
+         E3uYhLhLt++8h/ShmYy7yPmx8QeBj+U3AO8qwzFhU+P4UWbDxQRxagZ/Y4Z//tc9wQDT
+         wfGl7Y9p2UHvdRtdC19dBW1+1FAVHBz93mpmC6gV99a9Ss+QGsVm3Xbgyn56YLN2V05D
+         8yJ9XsN+3NufAKWAecIrWopb7bNL1fO25mLY1sOWgm0gtEuat0SkZR8iZ+PNFFX02jwg
+         /FTNFDdaMrfQ5nmzK7R7Z04ur51YV4KwfssE7T/U91Nccv7d3K/cldPq+NO0bfTlY/Ax
+         kmcg==
+X-Received: by 10.236.194.169 with SMTP id m29mr5186454yhn.121.1398796150855;
+ Tue, 29 Apr 2014 11:29:10 -0700 (PDT)
+Received: by 10.170.163.66 with HTTP; Tue, 29 Apr 2014 11:29:10 -0700 (PDT)
+In-Reply-To: <CAL=YDWn9TJsygZdgY2gXVBScFjO3zbrbJ5XORc2ZLaY-M8PmSw@mail.gmail.com>
+X-Google-Sender-Auth: APvvXGRb7KjEp_aYMmKXokW9VGo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247600>
 
-David Turner <dturner@twopensource.com> writes:
-
-> Document RUN_SETUP_GENTLY
+On Tue, Apr 29, 2014 at 12:18 PM, Ronnie Sahlberg <sahlberg@google.com> wrote:
+> On Mon, Apr 28, 2014 at 5:44 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>> On Mon, Apr 28, 2014 at 6:54 PM, Ronnie Sahlberg <sahlberg@google.com> wrote:
+>>> Update replace.c to use ref transactions for updates.
+>>>
+>>> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+>>> ---
+>>>  builtin/replace.c | 14 ++++++++------
+>>>  1 file changed, 8 insertions(+), 6 deletions(-)
+>>>
+>>> diff --git a/builtin/replace.c b/builtin/replace.c
+>>> index b62420a..b037b29 100644
+>>> --- a/builtin/replace.c
+>>> +++ b/builtin/replace.c
+>>> @@ -129,7 +129,8 @@ static int replace_object(const char *object_ref, const char *replace_ref,
+>>>         unsigned char object[20], prev[20], repl[20];
+>>>         enum object_type obj_type, repl_type;
+>>>         char ref[PATH_MAX];
+>>> -       struct ref_lock *lock;
+>>> +       struct ref_transaction *transaction;
+>>> +       struct strbuf err = STRBUF_INIT;
+>>>
+>>>         if (get_sha1(object_ref, object))
+>>>                 die("Failed to resolve '%s' as a valid ref.", object_ref);
+>>> @@ -157,11 +158,12 @@ static int replace_object(const char *object_ref, const char *replace_ref,
+>>>         else if (!force)
+>>>                 die("replace ref '%s' already exists", ref);
+>>>
+>>> -       lock = lock_any_ref_for_update(ref, prev, 0, NULL);
+>>> -       if (!lock)
+>>> -               die("%s: cannot lock the ref", ref);
+>>> -       if (write_ref_sha1(lock, repl, NULL) < 0)
+>>> -               die("%s: cannot update the ref", ref);
+>>> +       transaction = ref_transaction_begin();
+>>> +       if (!transaction ||
+>>> +           ref_transaction_update(transaction, ref, repl, prev,
+>>> +                                  0, !is_null_sha1(prev)) ||
+>>> +           ref_transaction_commit(transaction, NULL, &err))
+>>> +               die(_("%s: failed to replace ref: %s"), ref, err.buf);
+>>
+>> Even though 'err' will be empty after this conditional, would
+>> strbuf_release(&err) here be warranted to future-proof it? Today's
+>> implementation of strbuf will not have allocated any memory, but
+>> perhaps a future change might pre-allocate (unlikely though that is),
+>> which would leak here.
 >
-> Signed-off-by: David Turner <dturner@twitter.com>
-> ---
->  Documentation/technical/api-builtin.txt | 5 +++++
->  1 file changed, 5 insertions(+)
->
-> diff --git a/Documentation/technical/api-builtin.txt
-> b/Documentation/technical/api-builtin.txt
-> index e3d6e7a..1bbeda2 100644
-> --- a/Documentation/technical/api-builtin.txt
-> +++ b/Documentation/technical/api-builtin.txt
-> @@ -28,6 +28,11 @@ where options is the bitwise-or of:
->   in a subdirectory.  If there is no work tree, no chdir() is
->   done.
->
-> +`RUN_SETUP_GENTLY`::
-> +
-> + If there is a Git directory, chdir as per RUN_SETUP, otherwise,
-> + don't create one and don't chdir.
+> I have no strong feelings either way.
+> A previous patch got a comment to remove a strbuf_release() because we
+> knew in that
+> code path that the string would be empty and thus the call was superfluous.
 
-I can understand "don't chdir" part, but where does "don't create"
-come from?  Makes it sound as if non GENTLY version would create one
-if there isn't there, but I am guessing that that is not what you
-meant to say.
+Indeed, I realized later that the reason I gave for possibly adding
+the strbuf_release() was effectively bogus. Code throughout the
+project ignores strbuff_release() when it is obvious that the strbuf
+hasn't been used. Such code looks like this:
 
-Puzzled.
+func() {
+    struct strbuf foo = STRBUF_INIT;
+    ...code not touching 'foo'...
+    if (...)
+        return;
+    ...code touching 'foo'...
+    strbuf_release(&foo);
+}
+
+At the point of early return, it's obvious at a glance that no content
+has been added to 'foo'.
+
+It was only a little while ago that I came to understand why the code
+in this patch bothered me:
+
+func() {
+    struct strbuf foo = STRBUF_INIT;
+    if (bar(&foo))
+        die(...);
+    ...return or fall off end without releasing 'foo'...
+}
+
+The problem is that it's not so easy to see that it's safe to "leak"
+the strbuf without detouring through the documentation of bar() and
+possibly its implementation as well, before finally resuming the
+reading of func(). That extra cost of having to study bar() will
+likely be paid by most readers of func() who are concerned about the
+missing strbuf_release(). The cognitive burden is greater.
+
+> So one for and one against so far.
+> I will leave as is until there is more consensus.
+
+Fair enough. The fact that the variable is named 'err' in this case
+might be enough to allow one to infer, without detouring through
+bar(), that the missing strbuf_release() is intentional.
