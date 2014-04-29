@@ -1,197 +1,177 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH v3 16/19] branch.c: use ref transaction for all ref updates
-Date: Tue, 29 Apr 2014 08:11:02 -0700
-Message-ID: <CAL=YDWnav-26kBmmJ+XJq-hQEkdv3UUdz6wQ5Jn-cq+H8Ozb+g@mail.gmail.com>
-References: <1398442494-23438-1-git-send-email-sahlberg@google.com>
-	<1398442494-23438-17-git-send-email-sahlberg@google.com>
-	<535AECC5.3090100@alum.mit.edu>
-	<CAL=YDWkJKOM7eo7cknMH4MAAYJ=Ds9PVjUvufHzrBu=neucf4g@mail.gmail.com>
-	<535F725B.5000102@alum.mit.edu>
+Subject: Re: [PATCH v4 08/27] refs.c: change ref_transaction_update() to do
+ error checking and return status
+Date: Tue, 29 Apr 2014 09:05:08 -0700
+Message-ID: <CAL=YDW=R5LpG-w9zAo9eeop7QqnspcVb8OQmdTOg35sJi9fMyA@mail.gmail.com>
+References: <1398725682-30782-1-git-send-email-sahlberg@google.com>
+	<1398725682-30782-9-git-send-email-sahlberg@google.com>
+	<CAPig+cQM-5_N5caoJVRY0+VcPXO0qhnv7hetdanOoqRQJkm3jQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Apr 29 17:11:11 2014
+Cc: Git List <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Tue Apr 29 18:05:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wf9gc-0000Ws-F3
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Apr 2014 17:11:11 +0200
+	id 1WfAXb-000150-At
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Apr 2014 18:05:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751521AbaD2PLF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2014 11:11:05 -0400
-Received: from mail-vc0-f174.google.com ([209.85.220.174]:35431 "EHLO
-	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750827AbaD2PLD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2014 11:11:03 -0400
-Received: by mail-vc0-f174.google.com with SMTP id ib6so451159vcb.19
-        for <git@vger.kernel.org>; Tue, 29 Apr 2014 08:11:02 -0700 (PDT)
+	id S1758205AbaD2QFO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2014 12:05:14 -0400
+Received: from mail-vc0-f170.google.com ([209.85.220.170]:61667 "EHLO
+	mail-vc0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757618AbaD2QFJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2014 12:05:09 -0400
+Received: by mail-vc0-f170.google.com with SMTP id hr9so558889vcb.1
+        for <git@vger.kernel.org>; Tue, 29 Apr 2014 09:05:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=8dDzbLRDaLWcLpwKPX6DGqS07ePe6q31j65vgqmA//M=;
-        b=nvyNtrWIR5fAuAcXfndrqgJ7hd9Rb7bqjj83vGgVga1ezAv1y4wfMS2MMJkmajOmdb
-         T+Cby4hXFfae8wwpeVX/7AWo0ge1hLea+GEp3IEAQ6gLJNQ0c4zUs846AhWylgRfKmRz
-         2mOa+Dwo2G5bUb6I50+viXN53fVwGKpZ4UzZav/puO8YRNmNOVt+t/k5oyYnviQOlis/
-         uA75Jds0Wk3nkyC/3lB4wxerUJh4p7pJhOmwfygYh4H6W8SzanLpPxraHkJhoWS3tHDB
-         c5gNJvyW1LxXInqZQjf+wVINJCWABSjfEpsMl530ZnVipCB4ro5HzBYtjVIOZDF0loku
-         QHLg==
+        bh=zqtNwAlZ/BsPohmYt10A3BDF42RKpK4ad3Hrw5Hy8dg=;
+        b=X45Xme2yaf+M5OPuQI1/wdkYtdJqtstA686PqtLiL0+i+AVLnxBB5FjSU7iZqJSnBz
+         t4z/Lk/Lo/EW8h0wnLnheGW8Y/XOUztTvH5J2ib51vtSKMeFT86Lx+DtTa3tU+0qqbzK
+         6rYdJUSdw4p/2HixzZ23iZUjP3UUpkjLt/s+R9xek5LyrSIQpoCoNyYFn0O2xRPB2iFB
+         dR8zuSCraJ445v8YNRV0HlTpDiRTvkogOMD/kfxqeTV1RCjEx81RBm1aGykJZ/gUw4jQ
+         BoLdJG5GAhG9Jczs54N9hDCAKg8YIHYN1gpvc+4IWsnj8YJItbXui7kJWjWfTU1wOsK5
+         FvPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:date
          :message-id:subject:from:to:cc:content-type;
-        bh=8dDzbLRDaLWcLpwKPX6DGqS07ePe6q31j65vgqmA//M=;
-        b=T9v7DsksA+q21YBcEsAnT9yxudrMpvLfVLp6z0TcsIhA4GBQSSslC7GCzqIhVoiceD
-         zkuVnIyX/xtnLxgJ0CXuc3NNiQIq9xB9rhnBOseEQa5m3J7NY6/Klz+0rMKly6flqkpm
-         5pdKkCQoVfWkKAJtBpPULbPizGw/n28C3XVP569vG25CYaM8exsxSQm06KmXaYa2wqd0
-         tgskWsHP4KK/YxeA8k2Pe62H0xIaG9HHezNE0bTiy71eU5rFxI68TYqY2YIGeFWCHMEi
-         6cLY3WDAYFCBovXaM1Zxeobrjv95JJxK+6fhIdBGmTfkWltxdjdith0E+xQy2l1Ws9kA
-         AQyA==
-X-Gm-Message-State: ALoCoQnEAZRYOGxOJekzdXP3m3FS8fA6PIdxGXKhpV/M4fPq1ZTuL2qN0Q43oVbdBIX1BYcTeiENEWpADMt+IZzcyJYfgrZpG2chhwDuiDnPGOi5l9ElywNqjbWKVn/vjgZhEWdUzbvA6Zp5r8R7NyVsHOEH0VLE9PTwdrt1Z6ZvFa8vh2fxO7fKO3cZSrgXHmnPNqUXfll+
-X-Received: by 10.52.119.178 with SMTP id kv18mr1155422vdb.39.1398784262096;
- Tue, 29 Apr 2014 08:11:02 -0700 (PDT)
-Received: by 10.52.141.13 with HTTP; Tue, 29 Apr 2014 08:11:02 -0700 (PDT)
-In-Reply-To: <535F725B.5000102@alum.mit.edu>
+        bh=zqtNwAlZ/BsPohmYt10A3BDF42RKpK4ad3Hrw5Hy8dg=;
+        b=hHwripIXW88ARjDufx+vFntw9bRylvdfpfbv3Y/jfmRIv5Xt8trMY50tO7t/l/g9Fg
+         w9FrZQwTAPiB12P9uJZampeuddUvABELfNNPuLXXBEfDrVF8CTnMuBsaQXEHMDSV0EIQ
+         fknqnjgZXyfLm9NtD0HRZiywYnSCAis0VhOuxY2rOXeF7UmB1h6fQaSa/uOG5zVATQTg
+         Ur59w3SF5+vX09F4TNfbIYcDw17URZt4M+XFyrlh/aG0PUnJoz1y339ALjAYHL/fjd4y
+         LZMGg6NHVUG1isajxwUr+Rnhw94Vf0s9UVdqRt3nVb88yGnUVQPyteqOtnvvtCPYJX5l
+         DSmQ==
+X-Gm-Message-State: ALoCoQkRBl4moyeFjfS/9z+5Fcvxs4+iubmfvMDz3mE9SmKGakRB10Lzy8XVGbmkDjLd3sjyTTQNKYVOWXCWsTM20q0c/s1tv/nPAcUdMiHjmBsytXJE0LnmrDBsWYslpj0knSgbiMgeo8zTZCKik9CQ2JljzGBrBcHgdo6H3wtm+cE6Q9Q47GtTC8LVHFJBTMLwIPk5R2cN
+X-Received: by 10.58.171.229 with SMTP id ax5mr159421vec.24.1398787508508;
+ Tue, 29 Apr 2014 09:05:08 -0700 (PDT)
+Received: by 10.52.141.13 with HTTP; Tue, 29 Apr 2014 09:05:08 -0700 (PDT)
+In-Reply-To: <CAPig+cQM-5_N5caoJVRY0+VcPXO0qhnv7hetdanOoqRQJkm3jQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247587>
 
-On Tue, Apr 29, 2014 at 2:35 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> On 04/28/2014 09:16 PM, Ronnie Sahlberg wrote:
->> On Fri, Apr 25, 2014 at 4:16 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->>> On 04/25/2014 06:14 PM, Ronnie Sahlberg wrote:
->>>> Change create_branch to use a ref transaction when creating the new branch.
->>>> ref_transaction_create will check that the ref does not already exist and fail
->>>> otherwise meaning that we no longer need to keep a lock on the ref during the
->>>> setup_tracking. This simplifies the code since we can now do the transaction
->>>> in one single step.
->>>>
->>>> If the forcing flag is false then use ref_transaction_create since this will
->>>> fail if the ref already exist. Otherwise use ref_transaction_update.
->>>>
->>>> This also fixes a race condition in the old code where two concurrent
->>>> create_branch could race since the lock_any_ref_for_update/write_ref_sha1
->>>> did not protect against the ref already existsing. I.e. one thread could end up
->>>> overwriting a branch even if the forcing flag is false.
->>>>
->>>> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
->>>> ---
->>>>  branch.c | 39 +++++++++++++++++++++++++--------------
->>>>  1 file changed, 25 insertions(+), 14 deletions(-)
->>>>
->>>> diff --git a/branch.c b/branch.c
->>>> index 660097b..23cde1e 100644
->>>> --- a/branch.c
->>>> +++ b/branch.c
->>>> @@ -226,7 +226,6 @@ void create_branch(const char *head,
->>>>                  int force, int reflog, int clobber_head,
->>>>                  int quiet, enum branch_track track)
->>>>  {
->>>> -     struct ref_lock *lock = NULL;
->>>>       struct commit *commit;
->>>>       unsigned char sha1[20];
->>>>       char *real_ref, msg[PATH_MAX + 20];
->>>> @@ -285,15 +284,6 @@ void create_branch(const char *head,
->>>>               die(_("Not a valid branch point: '%s'."), start_name);
->>>>       hashcpy(sha1, commit->object.sha1);
->>>>
->>>> -     if (!dont_change_ref) {
->>>> -             lock = lock_any_ref_for_update(ref.buf, NULL, 0, NULL);
->>>> -             if (!lock)
->>>> -                     die_errno(_("Failed to lock ref for update"));
->>>> -     }
->>>> -
->>>> -     if (reflog)
->>>> -             log_all_ref_updates = 1;
->>>> -
->>>>       if (forcing)
->>>>               snprintf(msg, sizeof msg, "branch: Reset to %s",
->>>>                        start_name);
->>>> @@ -301,13 +291,34 @@ void create_branch(const char *head,
->>>>               snprintf(msg, sizeof msg, "branch: Created from %s",
->>>>                        start_name);
->>>>
->>>> +     if (reflog)
->>>> +             log_all_ref_updates = 1;
->>>> +
->>>> +     if (!dont_change_ref) {
->>>> +             struct ref_transaction *transaction;
->>>> +             char *err = NULL;
->>>> +
->>>> +             transaction = ref_transaction_begin();
->>>> +             if (forcing) {
->>>> +                     if (!transaction ||
->>>> +                         ref_transaction_update(transaction, ref.buf, sha1,
->>>> +                                                NULL, 0, 0) ||
->>>> +                         ref_transaction_commit(transaction, msg, &err))
->>>> +                       die_errno(_("%s: failed to write ref: %s"),
->>>> +                                 ref.buf, err);
->>>> +             } else {
->>>> +                     if (!transaction ||
->>>> +                         ref_transaction_create(transaction, ref.buf, sha1,
->>>> +                                                0) ||
->>>> +                         ref_transaction_commit(transaction, msg, &err))
->>>> +                       die_errno(_("%s: failed to write ref: %s"),
->>>> +                                 ref.buf, err);
->>>> +             }
->>>
->>> You've got some indentation problems above.
->>>
->>> But actually, there seems like a lot of duplicated code here.  Couldn't
->>> you instead do a single block with have_old set based on forcing:
->>>
->>>     ref_transaction_update(transaction, ref.buf, sha1,
->>>                            null_sha1, 0, !forcing)
->>>
->>> ?
+On Mon, Apr 28, 2014 at 5:51 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Mon, Apr 28, 2014 at 6:54 PM, Ronnie Sahlberg <sahlberg@google.com> wrote:
+>> Update ref_transaction_update() do some basic error checking and return
+>> true on error. Update all callers to check ref_transaction_update() for error.
 >>
->> Done, thanks.
+>> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+>> ---
+>>  builtin/update-ref.c | 10 ++++++----
+>>  refs.c               |  9 +++++++--
+>>  refs.h               | 10 +++++-----
+>>  3 files changed, 18 insertions(+), 11 deletions(-)
 >>
+>> diff --git a/builtin/update-ref.c b/builtin/update-ref.c
+>> index 2bef2a0..59c4d6b 100644
+>> --- a/builtin/update-ref.c
+>> +++ b/builtin/update-ref.c
+>> @@ -197,8 +197,9 @@ static const char *parse_cmd_update(struct strbuf *input, const char *next)
+>>         if (*next != line_termination)
+>>                 die("update %s: extra input: %s", refname, next);
 >>
->> I am not sure how I feel about using _update to create new refs
->> since we already have ref_transaction_create for that purpose.
+>> -       ref_transaction_update(transaction, refname, new_sha1, old_sha1,
+>> -                              update_flags, have_old);
+>> +       if (ref_transaction_update(transaction, refname, new_sha1, old_sha1,
+>> +                                  update_flags, have_old))
+>> +               die("update %s: failed", refname);
 >>
->> ref_transaction_update can either be used to update an existing ref
->> or it can be used to create new refs, either by passing have_old==0
->> or by passing old_sha1==null_sha1 and have_old==1
+>>         update_flags = 0;
+>>         free(refname);
+>> @@ -286,8 +287,9 @@ static const char *parse_cmd_verify(struct strbuf *input, const char *next)
+>>         if (*next != line_termination)
+>>                 die("verify %s: extra input: %s", refname, next);
+>>
+>> -       ref_transaction_update(transaction, refname, new_sha1, old_sha1,
+>> -                              update_flags, have_old);
+>> +       if (ref_transaction_update(transaction, refname, new_sha1, old_sha1,
+>> +                                  update_flags, have_old))
+>> +               die("failed transaction update for %s", refname);
+>>
+>>         update_flags = 0;
+>>         free(refname);
+>> diff --git a/refs.c b/refs.c
+>> index 308e13e..1a903fb 100644
+>> --- a/refs.c
+>> +++ b/refs.c
+>> @@ -3333,19 +3333,24 @@ static struct ref_update *add_update(struct ref_transaction *transaction,
+>>         return update;
+>>  }
+>>
+>> -void ref_transaction_update(struct ref_transaction *transaction,
+>> +int ref_transaction_update(struct ref_transaction *transaction,
+>>                             const char *refname,
+>>                             const unsigned char *new_sha1,
+>>                             const unsigned char *old_sha1,
+>>                             int flags, int have_old)
+>>  {
+>> -       struct ref_update *update = add_update(transaction, refname);
+>> +       struct ref_update *update;
+>> +
+>> +       if (have_old && !old_sha1)
+>> +               die("have_old is true but old_sha1 is NULL");
+>>
+>> +       update = add_update(transaction, refname);
+>>         hashcpy(update->new_sha1, new_sha1);
+>>         update->flags = flags;
+>>         update->have_old = have_old;
+>>         if (have_old)
+>>                 hashcpy(update->old_sha1, old_sha1);
+>> +       return 0;
 >
-> Hold onto your socks then, because I think in the future update() should
-> get a have_new parameter too.  That way it can also be used to verify
-> the current value of a reference by passing have_old=1, have_new=0
-> without also re-setting the reference unnecessarily like now.  Though I
-> admit, have_old=have_new=0 might *not* be so useful :-)
->
->> Maybe the api would be cleaner if we would change it so that update
->> and create does
->> not overlap and thus change _update so that it can only modify refs
->> that must already exist ?
->
-> I have no compunctions about using update() to create or delete a
-> reference.  My point of view is that update() is the general case, and
-> create() and delete() are special-cases that exist only for the
-> convenience of callers.  For example, our future pluggable backends
-> might only have to implement update(), and the other two functions could
-> delegate to it at the abstract layer.
->
-> Plus, making this stricter would make it impossible to eliminate
-> duplicate code like in the example above, which is itself evidence that
-> update() is a useful abstraction.
+> Am I misreading? The commit message talks about returning true on
+> error, but this code seems to only ever die() or return 0 (false).
 >
 
-Ok, Fair enough.
-In that case, in the future we should change
-ref_transaction_create/ref_transaction_delete to just
-become wrappers that invoke ref_transaction_update.
+I have updated the commit message to be more precise.
+The function returns true on error but there are currently no checks
+that actually
+do return failure in this function. Such checks will be added in the future.
+Also having it return an int instead of void allows us to use the pattern
+
+if(!transaction ||
+  ref_transaction_update(transaction, ...) |||
+  ref_transaction_commit(transaction, ...)) {
+
+eventhough we do not yet have any conditions where _update will fail.
 
 
-> Michael
->
-> --
-> Michael Haggerty
-> mhagger@alum.mit.edu
-> http://softwareswirl.blogspot.com/
+
+
+>>  }
+>>
+>>  void ref_transaction_create(struct ref_transaction *transaction,
+>> diff --git a/refs.h b/refs.h
+>> index bc7715e..0364a3e 100644
+>> --- a/refs.h
+>> +++ b/refs.h
+>> @@ -237,11 +237,11 @@ void ref_transaction_rollback(struct ref_transaction *transaction);
+>>   * that the reference should have had before the update, or zeros if
+>>   * it must not have existed beforehand.
+>>   */
+>> -void ref_transaction_update(struct ref_transaction *transaction,
+>> -                           const char *refname,
+>> -                           const unsigned char *new_sha1,
+>> -                           const unsigned char *old_sha1,
+>> -                           int flags, int have_old);
+>> +int ref_transaction_update(struct ref_transaction *transaction,
+>> +                          const char *refname,
+>> +                          const unsigned char *new_sha1,
+>> +                          const unsigned char *old_sha1,
+>> +                          int flags, int have_old);
+>>
+>>  /*
+>>   * Add a reference creation to transaction.  new_sha1 is the value
+>> --
+>> 1.9.1.528.g98b8868.dirty
