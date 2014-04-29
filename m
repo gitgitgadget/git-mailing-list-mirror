@@ -1,70 +1,68 @@
-From: Marat Radchenko <marat@slonopotamus.org>
-Subject: Re: [PATCH 10/12] MINGW: config.mak.uname: drop USE_NED_ALLOCATOR
-Date: Tue, 29 Apr 2014 11:48:14 +0400
-Message-ID: <20140429074814.GA23421@seldon>
-References: <1398693097-24651-1-git-send-email-marat@slonopotamus.org>
- <1398693097-24651-11-git-send-email-marat@slonopotamus.org>
- <CABPQNSZD5jz1A8=zQvU4dYvNb-5M+TV50Uj+oVbWJs3YWBytHw@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: Reference to a commit inside a commit message
+Date: Tue, 29 Apr 2014 02:57:30 -0500
+Message-ID: <535f5b6a41ff6_45e485b3087b@nysa.notmuch>
+References: <20140428183552.GA9709@workstation.Belkin>
+ <20140429034128.GD11979@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: GIT Mailing-list <git@vger.kernel.org>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: Erik Faye-Lund <kusmabite@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 29 09:48:30 2014
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+To: Jeff King <peff@peff.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 29 10:08:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wf2mC-0006Rh-Hj
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Apr 2014 09:48:28 +0200
+	id 1Wf35M-0002sf-59
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Apr 2014 10:08:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755831AbaD2HsU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2014 03:48:20 -0400
-Received: from seldon.slonopotamus.org ([94.242.204.247]:56058 "EHLO
-	slonopotamus.org" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
-	with ESMTP id S1755760AbaD2HsS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2014 03:48:18 -0400
-Received: from marat by slonopotamus.org with local (Exim 4.80.1)
-	(envelope-from <marat@slonopotamus.org>)
-	id 1Wf2ly-00067N-QO; Tue, 29 Apr 2014 11:48:14 +0400
-Content-Disposition: inline
-In-Reply-To: <CABPQNSZD5jz1A8=zQvU4dYvNb-5M+TV50Uj+oVbWJs3YWBytHw@mail.gmail.com>
-User-Agent: Mutt/1.5.22 (2013-10-16)
+	id S1756160AbaD2III (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2014 04:08:08 -0400
+Received: from mail-ob0-f176.google.com ([209.85.214.176]:62727 "EHLO
+	mail-ob0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756115AbaD2IIF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2014 04:08:05 -0400
+Received: by mail-ob0-f176.google.com with SMTP id wp4so8406489obc.7
+        for <git@vger.kernel.org>; Tue, 29 Apr 2014 01:08:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:message-id:in-reply-to:references:subject:mime-version
+         :content-type:content-transfer-encoding;
+        bh=yRReNhSjLZxo2ahUharNAFi+7iJAUSOz59JZBbu4z+c=;
+        b=u7yBmwIJfYyiT20NQL0e1VEJsvQlZi9qT4gsTCMN3j348Nvv4k60Augx6B3HeK/Rmr
+         GvBF+ERnLVOZM0bY57dFmvIBrnB7c2OgXSgd/PTeAZ6W4499CQQOscwa8YVFrgVYq0wn
+         4ZOgGmIzbhWKeiRssRWxXKaMGKkMPfuA5z/vLgBFAAh3C7587xB0RmIOZuSSKSNm81p6
+         uCmtDm+bUQEHUj0K7GNlPcMQqAe/gyPMEpWUdbpW31gxORs8rdOYOzCZCWlvoBD/6ZUO
+         GvJ4bDwfZJOv+6ucAnqoLKSz+b6IadABHNkqfWqZn0OF3oJPyeKSsf5JEHQETudSHRxL
+         Gz0w==
+X-Received: by 10.60.37.166 with SMTP id z6mr26468089oej.22.1398758884082;
+        Tue, 29 Apr 2014 01:08:04 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id bj8sm42491426obb.7.2014.04.29.01.08.02
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 29 Apr 2014 01:08:03 -0700 (PDT)
+In-Reply-To: <20140429034128.GD11979@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247528>
 
-On Mon, Apr 28, 2014 at 05:23:25PM +0200, Erik Faye-Lund wrote:
-> On Mon, Apr 28, 2014 at 3:51 PM, Marat Radchenko <marat@slonopotamus.org> wrote:
-> > nedalloc was initially added in f0ed82 to fix slowness of standard WinXP
-> > memory allocator. Since WinXP is EOLed, this point is no longer valid.
-> >
-> > The actual reason behind this commit is incompatibility of malloc.c.h
-> > with MinGW-W64 headers. Alternative solution implies updating nedalloc
-> > to something newer.
+Jeff King wrote:
+
+> [1] I do not know about others, but I typically cut and paste from
+>     another terminal, and use the following alias in my config:
 > 
-> Did you measure that malloc on newer Windows-versions are actually
-> faster? AFAIK, malloc does a lot more inside the CRT than in the
-> kernel...
+>       [alias]
+>       ll = "!git --no-pager log -1 --pretty='tformat:%h (%s, %ad)' --date=short"
 
-Windows 8, msysGit.
+I have:
 
-git repack -adf on msysgit/git (best of 3 runs)
+  [alias]
+  short = show --quiet --format='%C(auto)%h (%s)%C(reset)'
 
-+ nedalloc: 10.5s
-- nedalloc: 11s
-
-git repack -adf on torvalds/linux (best of 3 runs)
-
-+ nedalloc: 3m 24s
-- nedalloc: 3m 47s
-
-We need to make a decision: drop nedalloc, update nedalloc to later release,
-patch nedalloc to make it work under MinGW-W64 or disable nedalloc under
-MinGW-W64 (still leaving it enabled under MinGW).
-
-P.S. Waiting for "Resolving deltas" when cloning torvalds/linux is a pain,
-perhaps someone should run gprof on it.
+-- 
+Felipe Contreras
