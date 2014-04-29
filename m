@@ -1,149 +1,77 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH v4 15/27] fast-import.c: change update_branch to use ref transactions
-Date: Tue, 29 Apr 2014 09:57:16 -0700
-Message-ID: <CAL=YDWkD+0=Cy5wjAUtVn8QNtVr3NSaUkRoEnC+QcdRhYG59vA@mail.gmail.com>
-References: <1398725682-30782-1-git-send-email-sahlberg@google.com>
-	<1398725682-30782-16-git-send-email-sahlberg@google.com>
-	<CAPig+cTE9+XHYfnynMykbYf=0kMivj5wFu0Lovnr8XbxyEpsyA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] PAGER_ENV: remove 'S' from $LESS by default
+Date: Tue, 29 Apr 2014 10:01:05 -0700
+Message-ID: <xmqq38gwm5ny.fsf@gitster.dls.corp.google.com>
+References: <20140425154722.GC11479@google.com>
+	<1398674062-24288-1-git-send-email-Matthieu.Moy@imag.fr>
+	<87vbtt6dyq.fsf@fencepost.gnu.org> <vpqsioxn82l.fsf@anie.imag.fr>
+	<87k3a96cj9.fsf@fencepost.gnu.org> <vpq38gxlk3m.fsf@anie.imag.fr>
+	<20140428162439.GA9844@sigill.intra.peff.net>
+	<xmqqk3a9qoib.fsf@gitster.dls.corp.google.com>
+	<vpq4n1cxqrp.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue Apr 29 18:57:26 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, David Kastrup <dak@gnu.org>,
+	git@vger.kernel.org, jrnieder@gmail.com
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Apr 29 19:01:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WfBLN-0005wY-W6
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Apr 2014 18:57:22 +0200
+	id 1WfBPA-0001it-EP
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Apr 2014 19:01:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756824AbaD2Q5R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2014 12:57:17 -0400
-Received: from mail-vc0-f171.google.com ([209.85.220.171]:57270 "EHLO
-	mail-vc0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756224AbaD2Q5R (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2014 12:57:17 -0400
-Received: by mail-vc0-f171.google.com with SMTP id ld13so648188vcb.2
-        for <git@vger.kernel.org>; Tue, 29 Apr 2014 09:57:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=B9pf44klq6dizLUeAN0nxcG5ebwgc7HJCKnYzJewqJE=;
-        b=GGclmx6XT6n7DU6MwMPS40FL/vF57VJaYF4cxW8C+pbP5y2QMeV5dyJVjk9d2IFUXp
-         0F+oIaFdwhJ8WFp3Tg29l2oKSAHiSn2JHeIqWKHKuc9fQGFVlSjPGHPvW3SgHtAsKqj1
-         2Wi/T42aI/AqA++7ymSZNNbwRJQqpXgY8bt1dpS74O8VXaV/tT0v5sUmMGBLyyoPc5II
-         FuHMCvHiqk984AW3t3cE0EwlqcySTclDlPe8eLa/sbVa08zyqMutIMnBiW/mnbs7kuNr
-         80lNU59gQAbdHCoeM32FWnDPyYYdB2f1S3cAiYgF63A5IRt8H7DBZP5pL35K3wkhPgid
-         fB/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=B9pf44klq6dizLUeAN0nxcG5ebwgc7HJCKnYzJewqJE=;
-        b=VAdGHYNft82j+CPd8TkH0ZJ3jqJpmwbLF2qwKHDL9QVRFxbcDyoOI+A9VFjzNZcrKM
-         Fc2Ygd6jMYmGHnMCml85zFMbaunMa0xALe5aIegpQvZDL9HxIXVb3oEWM1QZ5HV/3Jwa
-         2OimxLWcH/RK8AtFDZirUcZXrq+I2ccoc92u7XEPmrjwxtgie2pyPf1aA0GyChD54IdU
-         L3C4xep7jEsjf6uGP2Y6YZxSHvxyg6irAM5MomUzccHJaxV738X9ktL5g0f1wnC9OYJD
-         4RZqbr1JqWn4DqaogwqC9kxDDrYF0W5W2KBzuOR9wZ1L9z2WZa6ER8cvyLugDxKaa8CO
-         boOw==
-X-Gm-Message-State: ALoCoQka0gXXQuYR2t//V5MlZlSofqrR6dw9ReB0z8YjKE112MCMdNYxE/36Cl+X6XMGmjE/FL5w6ZcZVLXQQ2Gb7F52meM8Hc3tfjEj2IMZ83O/utU4zSH7noiSQvo1AaILYt2Ccg+5BaqCDh1vJYq3NmLG7iF+8BkH48UHwtNAhY/oiXDI2K7IowdBoppJ5izQbr/pr/ax
-X-Received: by 10.58.112.98 with SMTP id ip2mr199618veb.35.1398790636439; Tue,
- 29 Apr 2014 09:57:16 -0700 (PDT)
-Received: by 10.52.141.13 with HTTP; Tue, 29 Apr 2014 09:57:16 -0700 (PDT)
-In-Reply-To: <CAPig+cTE9+XHYfnynMykbYf=0kMivj5wFu0Lovnr8XbxyEpsyA@mail.gmail.com>
+	id S933727AbaD2RBM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2014 13:01:12 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39685 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933227AbaD2RBL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2014 13:01:11 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2B52C81178;
+	Tue, 29 Apr 2014 13:01:11 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=LfLa10kCNVtBXnU4MJjm9L3F6N4=; b=OmRf8P
+	zdYUHCNldTHAbsObGfPTsOKBccg1KFdABSTFcvukS2GaOcIx+ZnTHv4LEru/DOCB
+	2R2tLRdousXnJdFD1cYwvNRyla+bWa+vSpA+L4+ZMuubf/XaKUzBGXyKf9NHwE4i
+	TF4+9xABvqnwp1K5A4ZFX17jx2Q5gftSmwOI0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=pWeDC85Gym/tOtN0kmkC3y8ESNbm/Uuj
+	Gr3zZzG2eyiGFXO4wE0aDsO5C9KQ3hhp+umZ4Llys5WID09YZvzM/NzEeloDEoQr
+	kMRNI3aqDZtV4R9YPp6kkEn1KPqVtodpCrmKl7XDvLGUn469IH78wXuwE1m1N2K6
+	3B3c6uSbw1w=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 12C3681176;
+	Tue, 29 Apr 2014 13:01:11 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9B9A38116D;
+	Tue, 29 Apr 2014 13:01:07 -0400 (EDT)
+In-Reply-To: <vpq4n1cxqrp.fsf@anie.imag.fr> (Matthieu Moy's message of "Tue,
+	29 Apr 2014 14:29:46 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: DB561C2E-CFBF-11E3-B099-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247590>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247591>
 
-On Mon, Apr 28, 2014 at 7:18 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Mon, Apr 28, 2014 at 6:54 PM, Ronnie Sahlberg <sahlberg@google.com> wrote:
->> Change update_branch() to use ref transactions for updates.
->>
->> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
->> ---
->>  fast-import.c | 20 ++++++++++++--------
->>  1 file changed, 12 insertions(+), 8 deletions(-)
->>
->> diff --git a/fast-import.c b/fast-import.c
->> index fb4738d..300c8dc 100644
->> --- a/fast-import.c
->> +++ b/fast-import.c
->> @@ -1678,36 +1678,40 @@ found_entry:
->>  static int update_branch(struct branch *b)
->>  {
->>         static const char *msg = "fast-import";
->> -       struct ref_lock *lock;
->> +       struct ref_transaction *transaction;
->>         unsigned char old_sha1[20];
->> +       struct strbuf err = STRBUF_INIT;
->>
->>         if (is_null_sha1(b->sha1))
->>                 return 0;
->>         if (read_ref(b->name, old_sha1))
->>                 hashclr(old_sha1);
->> -       lock = lock_any_ref_for_update(b->name, old_sha1, 0, NULL);
->> -       if (!lock)
->> -               return error("Unable to lock %s", b->name);
->>         if (!force_update && !is_null_sha1(old_sha1)) {
->>                 struct commit *old_cmit, *new_cmit;
->>
->>                 old_cmit = lookup_commit_reference_gently(old_sha1, 0);
->>                 new_cmit = lookup_commit_reference_gently(b->sha1, 0);
->>                 if (!old_cmit || !new_cmit) {
->> -                       unlock_ref(lock);
->>                         return error("Branch %s is missing commits.", b->name);
->>                 }
->>
->>                 if (!in_merge_bases(old_cmit, new_cmit)) {
->> -                       unlock_ref(lock);
->>                         warning("Not updating %s"
->>                                 " (new tip %s does not contain %s)",
->>                                 b->name, sha1_to_hex(b->sha1), sha1_to_hex(old_sha1));
->>                         return -1;
->>                 }
->>         }
->> -       if (write_ref_sha1(lock, b->sha1, msg) < 0)
->> -               return error("Unable to update %s", b->name);
->> +       transaction = ref_transaction_begin();
->> +       if ((!transaction ||
->> +           ref_transaction_update(transaction, b->name, b->sha1, old_sha1,
->> +                                  0, 1)) ||
->> +           (ref_transaction_commit(transaction, msg, &err) &&
->> +            !(transaction = NULL))) {
->> +               ref_transaction_rollback(transaction);
->> +               return error("Unable to update branch %s: %s", b->name,
->> +                            strbuf_detach(&err, NULL));
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+
+>> I also agree that droppage of S does not have to wait for that
+>> topic.
 >
-> Iffy strbuf handling. The strbuf content is being leaked here whether
-> detached or not.
->
+> So, shall I rewrite my patch on top of master? (not hard, but there will
+> be a minor conflict to resolve when merging with Peff's cooking series).
 
-Thanks!
+Sure, the one near the tip of 'pu' can even be dropped, especially
+when nobody is actively looking at it, if it turns out to be too
+much of a nuisance.
 
-I have updated this and all other patches to make sure we do a
-strbuf_release() any time we have
-added to the string.
-
-I also did a quick audit of the strbuf_detach() use in builtin/*
-(which I based my use on)
-and there seems to be quite common that strbuf_detach() is used in a
-way that will leak memory.
-
-
-I will make a note and perhaps audit all the other strbuf_detach()
-calls for a future patch series.
-
-
-
-
->> +       }
->>         return 0;
->>  }
->>
->> --
->> 1.9.1.528.g98b8868.dirty
+Thanks.
