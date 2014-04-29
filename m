@@ -1,175 +1,93 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH v3 19/19] refs.c: pass **transaction to commit and have it
- clear the pointer
-Date: Tue, 29 Apr 2014 11:58:41 -0700
-Message-ID: <CAL=YDWmrWT_N8k19t86tfHoTNSbpKh6qRSh-XMUvO9u4fdGk=Q@mail.gmail.com>
-References: <1398442494-23438-1-git-send-email-sahlberg@google.com>
-	<1398442494-23438-20-git-send-email-sahlberg@google.com>
-	<535B0C6F.509@alum.mit.edu>
-	<CAL=YDWkSdiUd-6A60ncGaDrFV2pc5WtRMv8iCSHHqFLkKH=pfw@mail.gmail.com>
-	<535F6FFD.90004@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 2/2] test/send-email: to-cover, cc-cover tests
+Date: Tue, 29 Apr 2014 12:01:10 -0700
+Message-ID: <xmqqppk0j6yx.fsf@gitster.dls.corp.google.com>
+References: <1398750059-11955-1-git-send-email-mst@redhat.com>
+	<1398750059-11955-2-git-send-email-mst@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Apr 29 20:58:48 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Michael S. Tsirkin" <mst@redhat.com>
+X-From: git-owner@vger.kernel.org Tue Apr 29 21:01:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WfDEt-0001yp-DE
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Apr 2014 20:58:47 +0200
+	id 1WfDHT-0004mC-4C
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Apr 2014 21:01:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932715AbaD2S6m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2014 14:58:42 -0400
-Received: from mail-ve0-f182.google.com ([209.85.128.182]:32911 "EHLO
-	mail-ve0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754482AbaD2S6m (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2014 14:58:42 -0400
-Received: by mail-ve0-f182.google.com with SMTP id jw12so838350veb.13
-        for <git@vger.kernel.org>; Tue, 29 Apr 2014 11:58:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=glsaMJekmJakSOzVeZSbXds/DiSThBVwMyBLixgxC2g=;
-        b=kuphMSAgszuJC54WlGs7wxOtlPl5XFxmhCRF8RIdrqHbwq5SlpaX/MPpR1FyVZDMpT
-         NUAfJtcLu+iheeLD8lQi5DR89dgP+2Y6PK6Fx+gpjBYZ9hydxCLDuA9Qzb3nUgl/K5Ie
-         T9Il7LE1Bo3WZ4tuTYvLx/Iw8ZqVpE16R73WzjdAM12zA9lHVQF/Up/sdDsH0XkliWpt
-         RhSket2Ng/t3wRE0ydl+OEY6A82fi7SGNNY23WZQ8IDZOABRBzrg8inigq2gj92W4ago
-         0wdiP/vOR7Nc5p5pJb6gakv0mf2mQRBd4uEbUwir7uyZqoPGm2C5S0AGOcLSYebtHwDq
-         rviQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=glsaMJekmJakSOzVeZSbXds/DiSThBVwMyBLixgxC2g=;
-        b=CTo/hN9ou3cZJVLetzSqcc4INh0cuaxv4aFaRP92wcJL6KNQ+wc8cDo790RlxxjvCA
-         w3UPlnO4iiPPhLOibbrbavhYkNagCcLAz0GNekCZ9yoQLiIqczchY1rZ9oQWSGFGx3+w
-         rL+2+aZ4GoYwv09zVdn+H9ZJjy48s6zJ8XALD/eRsTVVqaUx7OI+YDcImBzn9/QgOHbs
-         4zHuqw/Wntd2nt3wBWFV6iXvQDUyucTUKcGwA7MinEn9YvB25Ki7IVhjgdbMidvzxc8d
-         uo7bDCCYrlxFLo1EPYermmdp1A7ymB7ETYxmIkuHWC8Lm+WzmCGQ8FRIj27tM0SOjjqB
-         Dabg==
-X-Gm-Message-State: ALoCoQluYue6I9JdlMih5TNxGpv523MT5Va/TDhq08u226f+l2TItue1S+LamAVb1uMgm+6XgvVMfEblm7KSND4CNacKxJ4s71knMt6y+7JD+jeLkLE1dd4PJI3P0pPA++wnQhRHHTVpWJIlLrRo+d+MkIOYdV/I83GGJyZS9p7XFpYoAIWwp9Uuaq/6d84XDfTmybpsAyTf
-X-Received: by 10.52.164.237 with SMTP id yt13mr26330755vdb.18.1398797921205;
- Tue, 29 Apr 2014 11:58:41 -0700 (PDT)
-Received: by 10.52.141.13 with HTTP; Tue, 29 Apr 2014 11:58:41 -0700 (PDT)
-In-Reply-To: <535F6FFD.90004@alum.mit.edu>
+	id S965003AbaD2TBS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2014 15:01:18 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62659 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965000AbaD2TBQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2014 15:01:16 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8284981A42;
+	Tue, 29 Apr 2014 15:01:15 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=YDIar202bQ28SSMQQdqfPYucqgM=; b=x3aeI8
+	ZnABhLjRxs5mQ9mYyxqIlUusN1beqnqxeTH7Wro2OK57v9D+YrR9g5UAVhzbm/6I
+	D2A+dP8rKKdCwCFy1am7uP2h9Wlvx3utDBbPKcpCS/tmZLqpvW/nYKMABgMhoWny
+	Si/T221gVmgYW8TX7kDBWuJZO507ImbDfjz44=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=A51i9+nRniM8+5gv4bbrH15DJEMDdQdJ
+	OVEYWFYsrx4d5VnZnIxl1LUpXWs4L2svnfGv2lxIsnZU9iNAXRJWIRV38pnBuYIP
+	0UrjMvC+jLd589qqgoDwL0QB4naX6BebuUxwBc3nLOeNMUMq4JEmG3mLAdFJlwdy
+	T6NokccjubY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6A7E481A41;
+	Tue, 29 Apr 2014 15:01:15 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7B06881A3D;
+	Tue, 29 Apr 2014 15:01:12 -0400 (EDT)
+In-Reply-To: <1398750059-11955-2-git-send-email-mst@redhat.com> (Michael
+	S. Tsirkin's message of "Tue, 29 Apr 2014 08:41:18 +0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: A1C26196-CFD0-11E3-955E-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247602>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247603>
 
-On Tue, Apr 29, 2014 at 2:25 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> On 04/28/2014 07:59 PM, Ronnie Sahlberg wrote:
->> On Fri, Apr 25, 2014 at 6:31 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->>> On 04/25/2014 06:14 PM, Ronnie Sahlberg wrote:
->>>> Change ref_transaction_commit to take a pointer to a pointer for the
->>>> transaction. This allows us to clear the transaction pointer from within
->>>> ref_transaction_commit so that it becomes NULL in the caller.
->>>>
->>>> This makes transaction handling in the callers much nicer since instead of
->>>> having to write horrible code like :
->>>>       t = ref_transaction_begin();
->>>>       if ((!t ||
->>>>           ref_transaction_update(t, refname, sha1, oldval, flags,
->>>>                                  !!oldval)) ||
->>>>           (ref_transaction_commit(t, action, &err) && !(t = NULL))) {
->>>>               ref_transaction_rollback(t);
->>>>
->>>> we can now just do the much nicer
->>>>       t = ref_transaction_begin();
->>>>       if (!t ||
->>>>           ref_transaction_update(t, refname, sha1, oldval, flags,
->>>>                                  !!oldval) ||
->>>>           ref_transaction_commit(&t, action, &err)) {
->>>>               ref_transaction_rollback(t);
->>>
->>> I understand the motivation for this change, but passing
->>> pointer-to-pointer is unconventional in a case like this.  Unfortunately
->>> I ran out of steam for the night before I could think about alternatives.
->>
->> I see.
->> Yes passing a pointer to pointer is not ideal.
->> But I still want to be able to use the pattern
->>        t = ref_transaction_begin();
->>        if (!t ||
->>            ref_transaction_update(t, ...) ||
->>            ref_transaction_commit(t, ...)) {
->>                ref_transaction_rollback(t);
->>
->> Maybe the problem is that ref_transaction_commit() implicitely also
->> frees the transaction.
->>
->>
->> What about changing ref_transaction_commit() would NOT free the
->> transaction and thus a caller would
->> always have to explicitely free the transaction afterwards?
->>
->> Something like this :
->>        t = ref_transaction_begin();
->>        if (!t ||
->>            ref_transaction_update(t, ...) ||
->>            ref_transaction_commit(&t, ...)) {
->
-> You wouldn't need the "&" here then, right?
->
->>                ref_transaction_rollback(t);
->>        }
->>        ref_transaction_free(t);
->
-> That sounds like a better solution.  We would want to make sure that
-> ref_transaction_commit() / ref_transaction_rollback() leaves the
-> ref_transaction in a state that if it is accidentally passed to
-> ref_transaction_update() or its friends, the function calls die("BUG: ...").
+"Michael S. Tsirkin" <mst@redhat.com> writes:
 
-Thanks!
+> Add tests for the new feature.
+>
+> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> ---
+>  t/t9001-send-email.sh | 45 +++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 45 insertions(+)
+>
+> diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+> index 1ecdacb..97cc094 100755
+> --- a/t/t9001-send-email.sh
+> +++ b/t/t9001-send-email.sh
+> @@ -1334,6 +1334,51 @@ test_expect_success $PREREQ '--force sends cover letter template anyway' '
+>  	test -n "$(ls msgtxt*)"
+>  '
+>  
+> +test_cover_addresses () {
+> +	header="$1"
+> +	shift
+> +	clean_fake_sendmail &&
+> +	rm -fr outdir &&
+> +	git format-patch --cover-letter -2 -o outdir &&
+> +	cover=`echo outdir/0000-*.patch` &&
+> +	mv $cover cover-to-edit.patch &&
+> +	sed "s/^From:/$header: extra@address.com\nFrom:/" cover-to-edit.patch > $cover &&
 
-Good idea.
-I will add a transaction->status field that can track OPEN/CLOSED/ERROR
-and die(BUG:...) appropriately in _commit/_create/_delete/_update if
-it has the wrong value.
+Please do the redirection like this:
 
+	sed "s/^From:/$header: extra@address.com\nFrom:/" cover-to-edit.patch >"$cover" &&
 
->
-> Unless we want to make ref_transaction objects reusable.  But then we
-> would need an explicit "allocation" step in the boilerplate code:
->
->     t = ref_transaction_alloc();
->     while (something) {
->             if (ref_transaction_begin(t) ||
->                  ref_transaction_update(t, ...) ||
->                  ref_transaction_commit(t, ...)) {
->                     ref_transaction_rollback(t);
->             }
->     }
->     ref_transaction_free(t);
->
-> Note that ref_transaction_begin() should in this case be converted to
-> return 0-on-OK, negative-on-error for consistency.
->
-> This would bring us back to the familiar pattern alloc...use...free.
->
-> I was going to say that the extra boilerplate is not worth it, and
-> anyway reusing ref_transaction objects won't save any significant work.
->  But then it occurred to me that ref_transaction_alloc() might be a
-> place to do more expensive work, like creating a connection to a
-> database, so reuse could potentially be a bigger win.
-
-ACK, but I don't think we need reusable transaction yet. Once the API
-is cleaned up
-it should be reasonably easy to add in the future if we see a need for it.
-Sounds reasonable to you ?
-
-
->
-> All in all, either way is OK with me.
->
-> Michael
->
-> --
-> Michael Haggerty
-> mhagger@alum.mit.edu
-> http://softwareswirl.blogspot.com/
+in your later patches (I'll tweak this patch myself, so no need to
+resend).  We know >$cover should be the same as >"$cover", but it
+was reported that some version of bash does not know it and
+complains instead (see Documentation/CodingGuidelines).
