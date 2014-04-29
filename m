@@ -1,93 +1,85 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 17/32] read-cache: split-index mode
-Date: Tue, 29 Apr 2014 08:43:36 +0700
-Message-ID: <CACsJy8BEJdA+d5DL94n4o3FRphs9bNPhX9oKK3MmOfTTBY=f9Q@mail.gmail.com>
-References: <1398682553-11634-1-git-send-email-pclouds@gmail.com>
- <1398682553-11634-18-git-send-email-pclouds@gmail.com> <xmqq1twhnkbz.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH 00/32] Split index mode for very large indexes
+Date: Tue, 29 Apr 2014 08:52:59 +0700
+Message-ID: <CACsJy8B7P0Un0__9mS2j81PimPZbz9oTKZHKx8yo_smOMck1qA@mail.gmail.com>
+References: <1398682553-11634-1-git-send-email-pclouds@gmail.com> <CAJo=hJtgijOOMPbFjvTUaENw=hr0YixYmy1UkdqEd=CpLZ5L2A@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 29 03:44:20 2014
+Cc: git <git@vger.kernel.org>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Apr 29 03:53:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wex5n-0007TA-L5
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Apr 2014 03:44:20 +0200
+	id 1WexEk-0001Eo-QJ
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Apr 2014 03:53:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751727AbaD2BoJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Apr 2014 21:44:09 -0400
-Received: from mail-qa0-f49.google.com ([209.85.216.49]:53221 "EHLO
-	mail-qa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750801AbaD2BoI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Apr 2014 21:44:08 -0400
-Received: by mail-qa0-f49.google.com with SMTP id dc16so3808942qab.22
-        for <git@vger.kernel.org>; Mon, 28 Apr 2014 18:44:07 -0700 (PDT)
+	id S1751283AbaD2Bxa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Apr 2014 21:53:30 -0400
+Received: from mail-qa0-f47.google.com ([209.85.216.47]:61149 "EHLO
+	mail-qa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751096AbaD2Bxa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Apr 2014 21:53:30 -0400
+Received: by mail-qa0-f47.google.com with SMTP id j7so2918804qaq.20
+        for <git@vger.kernel.org>; Mon, 28 Apr 2014 18:53:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        bh=mPSXh3Mb1kYjegrtiRQ8FnyBcP+hNSLkYPq5jFcuO+o=;
-        b=m2QMhVakakfmvoL1FB5dcM7+YaLWKbrrhxAk3StS2aD06/EZfKAKSC13dkdc0reDyG
-         G3BbhC08v2mGyHtwBzmUTTENI2acWeHQfov+6v7qij2d3xCLA/3ai2Au3xuyrhyB3waU
-         8zdq0CCzHQRCvfkCrhVzvNdWNSuzzk/0sd7Zc51C7XYkCxvqg8prn634UmYBNE7sOCb1
-         moQjZdd9Thk259Btvm+VAXrRFnsnmT2KXMijMi1U9v2PmYwy1C3POwnBLSUE4/rloFwa
-         tHQsk7zytTOoc1p61JW7lI3Ck8I7BmTRgJbK52ePJS7wZ1qljtwSDKYCj0MgXelatka6
-         EkjA==
-X-Received: by 10.140.80.40 with SMTP id b37mr4026448qgd.98.1398735847557;
- Mon, 28 Apr 2014 18:44:07 -0700 (PDT)
-Received: by 10.96.138.9 with HTTP; Mon, 28 Apr 2014 18:43:36 -0700 (PDT)
-In-Reply-To: <xmqq1twhnkbz.fsf@gitster.dls.corp.google.com>
+        bh=mwYDTMzZkqRoed2BBNqp+rbMmI+JBMhb3UyhWox877g=;
+        b=mhDygdO3D120x5nAbzVY15UITIsxSN39+Pr7XBT6ewsetnDMfDW9v6ZV5hhOdPpV09
+         /gRjHZ6ptr/09cq6T7Us8UnzuEB4JlAvqRGMwYCAfX80Uixpn4XCHZ2GdT2elGwLZ82r
+         WJ2QSK/H9CeCLf2bHUuqErCAkRZtyPloohKdm68CtzwFYdPzM1wWbKWePCG44+2uHKR5
+         gAnOOMpxbzpDYV+EUFIehZVrEeL505uWtfVddrNCCVLmKw1r4HyZsdcNzzkYlWSHkbC5
+         11yE6m7TVPjcu2Ijs5GNGZf0aYcMy8DDriGwCfdiRX34JPaCrwt4vNeoreYCYXtrCIzD
+         LekA==
+X-Received: by 10.224.97.69 with SMTP id k5mr38720920qan.8.1398736409372; Mon,
+ 28 Apr 2014 18:53:29 -0700 (PDT)
+Received: by 10.96.138.9 with HTTP; Mon, 28 Apr 2014 18:52:59 -0700 (PDT)
+In-Reply-To: <CAJo=hJtgijOOMPbFjvTUaENw=hr0YixYmy1UkdqEd=CpLZ5L2A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247508>
 
-On Tue, Apr 29, 2014 at 5:46 AM, Junio C Hamano <gitster@pobox.com> wro=
+On Tue, Apr 29, 2014 at 4:18 AM, Shawn Pearce <spearce@spearce.org> wro=
 te:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
-:
+> On Mon, Apr 28, 2014 at 3:55 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8D=
+c Duy <pclouds@gmail.com> wrote:
+>> I hinted about it earlier [1]. It now passes the test suite and with=
+ a
+>> design that I'm happy with (thanks to Junio for a suggestion about t=
+he
+>> rename problem).
+>>
+>> From the user point of view, this reduces the writable size of index
+>> down to the number of updated files. For example my webkit index v4 =
+is
+>> 14MB. With a fresh split, I only have to update an index of 200KB.
+>> Every file I touch will add about 80 bytes to that. As long as I don=
+'t
+>> touch every single tracked file in my worktree, I should not pay
+>> penalty for writing 14MB index file on every operation.
 >
->> diff --git a/cache.h b/cache.h
->> index 0f6247c..90a5998 100644
->> --- a/cache.h
->> +++ b/cache.h
->> @@ -135,6 +135,7 @@ struct cache_entry {
->>       unsigned int ce_mode;
->>       unsigned int ce_flags;
->>       unsigned int ce_namelen;
->> +     unsigned int index;     /* for link extension */
->>       unsigned char sha1[20];
->>       char name[FLEX_ARRAY]; /* more */
->>  };
+> This is a very welcome type of improvement.
 >
-> I am not sure if we want to keep an otherwise unused 8-byte around
-> per cache entry (especially for a large project where the split
-> index mode should matter) after we read the index.
->
-> I expected to see some code where entries in this incremental index
-> are used to override the entries from the base/shared index, but
-> merge_base_index() seems to do just memcpy() to discard the former
-> and replace them with the latter.  Is this step meant to work at
-> all, or is it a smaller step meant to be completed in later patches?
+> I am however concerned about the complexity of the format employed.
+> Why do we need two EWAH bitmaps in the new index? Why isn't this just
+> a pair of sorted files that are merge-joined at read, with records in
+> $GIT_DIR/index taking priority over same-named records in
+> $GIT_DIR/sharedindex.$SHA1?  Deletes could be marked with a bit or an
+> "all zero" metadata record.
 
-This field only matters at write time, not read time. It's to quickly
-detect if an entry is shared, see prepare_to_write_split_index().
-
-> I do think it is sensible to keep two arrays of "struct cache_entry"
-> around (one for base and one for incremental changes) inside
-> index_state, and the patch seems to do so via "struct split_index"
-> that does have a copy of saved_cache.  If the write-out codepath
-> walks these two sorted arrays in parallel, shouldn't it be able to
-> figure out which entry is added, deleted and modified without
-> fattening this structure?
-
-So far without that "index" field I would have to resort to hasing
-entries in both arrays to find the shared paths. But ideas are
-welcome.
+With the bitmaps, I know the exact position to replace or delete an
+entry. Merge sort works, but I would need to walk through all entries
+in both indexes to compare entry name and stage, a bit costly in my
+opinion. And if you look at the format description in patch 0017, I
+store the replaced entries without their names to save a bit more
+space. "EWAH" is just an implementation detail. A straightforward
+bitmap should work fine (25kb for 200k entries seem reasonable).
 --=20
 Duy
