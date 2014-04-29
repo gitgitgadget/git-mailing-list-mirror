@@ -1,98 +1,73 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4 12/27] replace.c: use the ref transaction functions for updates
-Date: Mon, 28 Apr 2014 20:44:56 -0400
-Message-ID: <CAPig+cSWMK_kyVvaD8QCfZmPu4JVT+nOJZJLteHhDao0umHLbA@mail.gmail.com>
-References: <1398725682-30782-1-git-send-email-sahlberg@google.com>
-	<1398725682-30782-13-git-send-email-sahlberg@google.com>
+From: "Kevin Cagle (kcagle) [CONT - Type 2]" <kcagle@micron.com>
+Subject: git subtree issue in more recent versions
+Date: Tue, 29 Apr 2014 00:50:01 +0000
+Message-ID: <55893188F2F68B4B9819D7F9452F981D09FCDF67@NTXBOIMBX01.micron.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Ronnie Sahlberg <sahlberg@google.com>
-X-From: git-owner@vger.kernel.org Tue Apr 29 02:45:03 2014
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 29 02:50:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WewAQ-00060N-UC
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Apr 2014 02:45:03 +0200
+	id 1WewFQ-0003Vt-4b
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Apr 2014 02:50:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754280AbaD2Ao5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Apr 2014 20:44:57 -0400
-Received: from mail-yh0-f48.google.com ([209.85.213.48]:62633 "EHLO
-	mail-yh0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751400AbaD2Ao4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Apr 2014 20:44:56 -0400
-Received: by mail-yh0-f48.google.com with SMTP id v1so3308089yhn.7
-        for <git@vger.kernel.org>; Mon, 28 Apr 2014 17:44:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=z3AYX2LJdJ6Hch1QVrQH0JxkdOrbUciWOEYQxsgeqok=;
-        b=sE7oVRI0lQ+d/f+EV1qcArj/FJ5WFQ9TR3U2pZb4MXZEUxJW7uAn3osU3u8r/3KBXm
-         gM7nnDaf+K2J4/K9xu5rMqmJBGGtDE+K/5p/a4gklNoZOXM5/It+q5ofqvD+d7O8tdLL
-         KstgoVvDR2Anplv4UrMKA9napid39RApu016+saqODfosOhAmECpWSUQLkVRPhUIfc0d
-         Qfv2o42PC4gEjAdWc/GSB9Id89eow/0uwT03n5xR+mMo+igHj0FwPlBrXUa8OqoviZby
-         0TAmBkbDKEmRruGD6qSygzbFyItLuX8YKaK5uTCg+nWbwVeY4BkIJGaxVNCOWYT6cnQ5
-         +HWQ==
-X-Received: by 10.236.39.242 with SMTP id d78mr41196628yhb.36.1398732296115;
- Mon, 28 Apr 2014 17:44:56 -0700 (PDT)
-Received: by 10.170.163.66 with HTTP; Mon, 28 Apr 2014 17:44:56 -0700 (PDT)
-In-Reply-To: <1398725682-30782-13-git-send-email-sahlberg@google.com>
-X-Google-Sender-Auth: oQZ5O1BqTUktcXEsAXiXZDEFWCg
+	id S1753314AbaD2AuE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 20:50:04 -0400
+Received: from mailout.micron.com ([137.201.242.129]:28364 "EHLO
+	mailout.micron.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752473AbaD2AuD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Apr 2014 20:50:03 -0400
+Received: from mail.micron.com (ntxboicas03.micron.com [137.201.84.59])
+	by mailout.micron.com (8.14.4/8.14.6) with ESMTP id s3T0o2Sx015939
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL)
+	for <git@vger.kernel.org>; Mon, 28 Apr 2014 18:50:02 -0600
+Received: from NTXBOIMBX01.micron.com ([fe80::7520:6f5e:51e1:8d75]) by
+ NTXBOICAS03.micron.com ([::1]) with mapi id 14.03.0174.001; Mon, 28 Apr 2014
+ 18:50:01 -0600
+Thread-Topic: git subtree issue in more recent versions
+Thread-Index: Ac9jRPOFDsc452iCTjCFP83Ii9m4yQ==
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [137.201.88.182]
+x-tm-as-product-ver: SMEX-10.0.0.4152-7.000.1014-20662.003
+x-tm-as-result: No--28.123500-0.000000-31
+x-tm-as-user-approved-sender: Yes
+x-tm-as-user-blocked-sender: No
+x-mt-checkinternalsenderrule: True
+X-Scanned-By: MIMEDefang 2.73 on 137.201.82.105
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247503>
 
-On Mon, Apr 28, 2014 at 6:54 PM, Ronnie Sahlberg <sahlberg@google.com> wrote:
-> Update replace.c to use ref transactions for updates.
->
-> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
-> ---
->  builtin/replace.c | 14 ++++++++------
->  1 file changed, 8 insertions(+), 6 deletions(-)
->
-> diff --git a/builtin/replace.c b/builtin/replace.c
-> index b62420a..b037b29 100644
-> --- a/builtin/replace.c
-> +++ b/builtin/replace.c
-> @@ -129,7 +129,8 @@ static int replace_object(const char *object_ref, const char *replace_ref,
->         unsigned char object[20], prev[20], repl[20];
->         enum object_type obj_type, repl_type;
->         char ref[PATH_MAX];
-> -       struct ref_lock *lock;
-> +       struct ref_transaction *transaction;
-> +       struct strbuf err = STRBUF_INIT;
->
->         if (get_sha1(object_ref, object))
->                 die("Failed to resolve '%s' as a valid ref.", object_ref);
-> @@ -157,11 +158,12 @@ static int replace_object(const char *object_ref, const char *replace_ref,
->         else if (!force)
->                 die("replace ref '%s' already exists", ref);
->
-> -       lock = lock_any_ref_for_update(ref, prev, 0, NULL);
-> -       if (!lock)
-> -               die("%s: cannot lock the ref", ref);
-> -       if (write_ref_sha1(lock, repl, NULL) < 0)
-> -               die("%s: cannot update the ref", ref);
-> +       transaction = ref_transaction_begin();
-> +       if (!transaction ||
-> +           ref_transaction_update(transaction, ref, repl, prev,
-> +                                  0, !is_null_sha1(prev)) ||
-> +           ref_transaction_commit(transaction, NULL, &err))
-> +               die(_("%s: failed to replace ref: %s"), ref, err.buf);
+Hi,
 
-Even though 'err' will be empty after this conditional, would
-strbuf_release(&err) here be warranted to future-proof it? Today's
-implementation of strbuf will not have allocated any memory, but
-perhaps a future change might pre-allocate (unlikely though that is),
-which would leak here.
+I've discovered a bug in git subtree related to annotated tags. The command 'git subtree' will fail if you use an annotated tag as the <refspec>. e.g.:
 
->         return 0;
->  }
-> --
-> 1.9.1.528.g98b8868.dirty
+$ git subtree add -P oldGit https://github.com/git/git.git tags/v1.9.2
+
+Will produce this error:
+
+10ff115f5c572299de4e04ade0d7adb3c75fbf1f is not a valid 'commit' object
+
+The bug isn't found in 1.7.1 (installed subtree manually) but is found in 1.9.0 and 2.0.0.rc1. 
+
+It's related to the git fetch putting the "wrong" SHA1 in .git/FETCH_HEAD. Thus, if you do:
+
+$ git ls-remote https://github.com/git/git.git | grep v1.9.2
+
+You'll see this:
+10ff115f5c572299de4e04ade0d7adb3c75fbf1f        refs/tags/v1.9.2
+0bc85abb7aa9b24b093253018801a0fb43d01122        refs/tags/v1.9.2^{}
+
+An older version will put the 0bc85a in FETCH_HEAD but newer versions will put 10ff11 which will not work. I'm new to Git so I don't know when/why that was changed but somewhere along the way, that change broke git subtree add. :( A workaround is to use lightweight tags but that's not suitable for some. 
+
+Thanks,
+Kevin
