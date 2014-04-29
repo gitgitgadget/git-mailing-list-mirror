@@ -1,110 +1,129 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v5 05/30] update-ref.c: log transaction error from the update_ref
-Date: Tue, 29 Apr 2014 15:18:50 -0700
-Message-ID: <1398809955-32008-6-git-send-email-sahlberg@google.com>
+Subject: [PATCH v5 15/30] fast-import.c: change update_branch to use ref transactions
+Date: Tue, 29 Apr 2014 15:19:00 -0700
+Message-ID: <1398809955-32008-16-git-send-email-sahlberg@google.com>
 References: <1398809955-32008-1-git-send-email-sahlberg@google.com>
 Cc: mhagger@alum.mit.edu, Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 30 00:21:37 2014
+X-From: git-owner@vger.kernel.org Wed Apr 30 00:21:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WfGP9-0003nO-9x
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 00:21:35 +0200
+	id 1WfGP7-0003nO-JM
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 00:21:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932984AbaD2WV3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2014 18:21:29 -0400
-Received: from mail-oa0-f73.google.com ([209.85.219.73]:47274 "EHLO
-	mail-oa0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965263AbaD2WTU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2014 18:19:20 -0400
-Received: by mail-oa0-f73.google.com with SMTP id i4so72057oah.0
-        for <git@vger.kernel.org>; Tue, 29 Apr 2014 15:19:19 -0700 (PDT)
+	id S965335AbaD2WUa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2014 18:20:30 -0400
+Received: from mail-pa0-f74.google.com ([209.85.220.74]:59914 "EHLO
+	mail-pa0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965277AbaD2WTY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2014 18:19:24 -0400
+Received: by mail-pa0-f74.google.com with SMTP id rd3so167846pab.1
+        for <git@vger.kernel.org>; Tue, 29 Apr 2014 15:19:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=KvuTF8+LI2NMgnwea2BS2NTOriW+4dNnThYUZocK24w=;
-        b=S24dlO0UKaWapPQlbFVdFP8bPi1RO5nRd6d0UfeXvi8qwn7IO2Gl4oS2X2xbZjfuGr
-         gIIcCfEu9v5HL2qWoQHbRizNRxrMgeA9MY4xTihtfCIAuDPldC7AoW1lmVj8Ah3afiwT
-         4x/eulUt9VAOZzYfL42lf0Aa+CL47mY4xk7Nh+OsIEQ1L80gmngJ0mLcG1BjqWY6/gTj
-         +sSUWvCaaOPo/52ElbR4UHfVO34qenJ/nIuS5+wH9CD0B0O023QXBH4NRmUOCtCukUIr
-         +sMD+6VHuEVUI3puWuF3WGyD/k6O/lA/O8mDvFByVQ4OCq9eEH6Pe3mVYiNDQe/srgnY
-         mPmw==
+        bh=H2GZudY4mWdmMh+qLU+PyZu0Zuq9/tt8mZmGpL5NJzg=;
+        b=XipEB5TwGm4W2DaBKROVq6sESLUv5XLISyvuOyrWqhKAq/9tchBSEILXgEXrUQ0mTX
+         lvwSFBpJJ2SjI+AjSHr5GpWxA+UobAg7F3/qPtcDboxyyIvLnXbhwUq0R0nx0iA1UsCp
+         iTJmXVoP7h/Y/RVyBcjLSfXnrcDK3uagnvtmWJ/xDvDj7D7Dv5pwtwQ9q4LTuzUqeIKc
+         +xLJYNpwrtyIXDyFYEy2ZHygvFV2gXgCrnrYWfCKPQj4kr+R036aauCXzn7/5wWQ28Ac
+         thR1kw9nX5KXIAFQHbFVFeQBiZfSFBKQv5HaLFpJKTAdqZFFm/40lfZT2/ar8yljfMDu
+         tzow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=KvuTF8+LI2NMgnwea2BS2NTOriW+4dNnThYUZocK24w=;
-        b=QS+bsfLiaF/bwYI79JACs0bxOKgG6+/+KNQ3mvKPLm4sf8dIlQ6EA2/oggU60sySae
-         sSaCx3m414M/2iVn0Ay3r6V7DkkRr0TA5hhSc/1WOmZnG5MuD+81klZLsgti1DStZAsh
-         84zX341I9xYL5Fw4e+i7lzn309W/7A0IVBdy07LeFHCKQptLwQTamPF904r1hHywIuZ0
-         FlMfnfvbOzzb4dX0/L4fFVucgjFVs3MRzNKn/nzh63J3XxwRCjFuRcRJPlGJGp8+5jPo
-         xxddErzVxIPfrG9xUew3N1tXJmGZhds5WexlQg+hhYUwTWcbmsFFWlW3iKpbLQwthTsK
-         zNWQ==
-X-Gm-Message-State: ALoCoQm3GeuqshwqlxMMeXXZj9W0dooBYyKAZR0Hy5knT86Lv1y1k1PAv4IQEAt7iXAjMOoBfgnTWOKnJAVJV8uOUxIaWFTcx3NPJqN/5wa8/TcP0mQxWwPePzQmclvSwrCkzj+kGZr4GUDgmqA1EzdNPYN4rNVPFqrxmAFZQHyH8K8ECpFXIYQ7rOBVU1qGNaBehvbrZ+um
-X-Received: by 10.42.107.146 with SMTP id d18mr289577icp.8.1398809959624;
-        Tue, 29 Apr 2014 15:19:19 -0700 (PDT)
+        bh=H2GZudY4mWdmMh+qLU+PyZu0Zuq9/tt8mZmGpL5NJzg=;
+        b=LY2/Ayu1ZHqzxUjWp18FNZwBTNuNwqal4lKxTBa7QcEBnHebUEPu8cB+JavXjqoiaD
+         SQ6Zbk5M7K5hrLN0pjHZfIZ4h/Sc7umgxjkprFTq+K0heSXuYPKa4uRT1ekjLH1W58uZ
+         F+bwDwxD8xuVCbSvMV9CMdslLP5mLnq+M6iXTLPENPyyy8WQihFg3ri3BeC68idaoLNz
+         KBoSzrd5BFWwuNlENlYXuqN0CiFy7HIE6bjuBhOB4HEd7ABwJ5RcyqkisUTmzKCvFr05
+         DyxaEJ2hANB9JvmPUZ9oFPrHM6sgY6jA4uaSTNEd+wJlrq8bwg1S+gz+gyiMyjhGN5SF
+         M+Ug==
+X-Gm-Message-State: ALoCoQnlkuVHwhT/5IHIFspRPbP1jrzjAgOd+KJBrgDQm8BLxke9zP0brbAZvXR5QtsAH3jFyhCvPZOV+IgapwpO0BToQcJawB94MHD6SPX1DMil4Z0bumuRmH13EgBNCwTlnYHT1BSdWhhuYeA1oIHJ8ZSdIpH9/pNWvzwabWBbV+dm2osJQv/Qv/fdNH02UoMtgAPrJLLl
+X-Received: by 10.66.232.38 with SMTP id tl6mr281051pac.33.1398809963902;
+        Tue, 29 Apr 2014 15:19:23 -0700 (PDT)
 Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id g21si2739666yhe.3.2014.04.29.15.19.19
+        by gmr-mx.google.com with ESMTPS id r64si1400116yhh.0.2014.04.29.15.19.23
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 29 Apr 2014 15:19:19 -0700 (PDT)
+        Tue, 29 Apr 2014 15:19:23 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 6DF1C31C1D2;
-	Tue, 29 Apr 2014 15:19:19 -0700 (PDT)
+	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id AE64B31C20C;
+	Tue, 29 Apr 2014 15:19:23 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 50439E0A5B; Tue, 29 Apr 2014 15:19:19 -0700 (PDT)
+	id 734B8E0B2F; Tue, 29 Apr 2014 15:19:23 -0700 (PDT)
 X-Mailer: git-send-email 1.9.1.532.gf8485a6
 In-Reply-To: <1398809955-32008-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247651>
 
-Call ref_transaction_commit with QUIET_ON_ERR and use the strbuf that is
-returned to print a log message if/after the transaction fails.
+Change update_branch() to use ref transactions for updates.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- builtin/update-ref.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ fast-import.c | 21 +++++++++++++--------
+ 1 file changed, 13 insertions(+), 8 deletions(-)
 
-diff --git a/builtin/update-ref.c b/builtin/update-ref.c
-index aaa06aa..207e24d 100644
---- a/builtin/update-ref.c
-+++ b/builtin/update-ref.c
-@@ -342,6 +342,7 @@ int cmd_update_ref(int argc, const char **argv, const char *prefix)
- 	const char *refname, *oldval, *msg = NULL;
- 	unsigned char sha1[20], oldsha1[20];
- 	int delete = 0, no_deref = 0, read_stdin = 0, end_null = 0, flags = 0;
+diff --git a/fast-import.c b/fast-import.c
+index fb4738d..35de36a 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -1678,36 +1678,41 @@ found_entry:
+ static int update_branch(struct branch *b)
+ {
+ 	static const char *msg = "fast-import";
+-	struct ref_lock *lock;
++	struct ref_transaction *transaction;
+ 	unsigned char old_sha1[20];
 +	struct strbuf err = STRBUF_INIT;
- 	struct option options[] = {
- 		OPT_STRING( 'm', NULL, &msg, N_("reason"), N_("reason of the update")),
- 		OPT_BOOL('d', NULL, &delete, N_("delete the reference")),
-@@ -359,17 +360,16 @@ int cmd_update_ref(int argc, const char **argv, const char *prefix)
- 		die("Refusing to perform update with empty message.");
  
- 	if (read_stdin) {
--		int ret;
- 		transaction = ref_transaction_begin();
--
- 		if (delete || no_deref || argc > 0)
- 			usage_with_options(git_update_ref_usage, options);
- 		if (end_null)
- 			line_termination = '\0';
- 		update_refs_stdin();
--		ret = ref_transaction_commit(transaction, msg, NULL,
--					     UPDATE_REFS_DIE_ON_ERR);
--		return ret;
-+		if (ref_transaction_commit(transaction, msg, &err,
-+					   UPDATE_REFS_QUIET_ON_ERR))
-+			die("%s", err.buf);
-+		return 0;
+ 	if (is_null_sha1(b->sha1))
+ 		return 0;
+ 	if (read_ref(b->name, old_sha1))
+ 		hashclr(old_sha1);
+-	lock = lock_any_ref_for_update(b->name, old_sha1, 0, NULL);
+-	if (!lock)
+-		return error("Unable to lock %s", b->name);
+ 	if (!force_update && !is_null_sha1(old_sha1)) {
+ 		struct commit *old_cmit, *new_cmit;
+ 
+ 		old_cmit = lookup_commit_reference_gently(old_sha1, 0);
+ 		new_cmit = lookup_commit_reference_gently(b->sha1, 0);
+ 		if (!old_cmit || !new_cmit) {
+-			unlock_ref(lock);
+ 			return error("Branch %s is missing commits.", b->name);
+ 		}
+ 
+ 		if (!in_merge_bases(old_cmit, new_cmit)) {
+-			unlock_ref(lock);
+ 			warning("Not updating %s"
+ 				" (new tip %s does not contain %s)",
+ 				b->name, sha1_to_hex(b->sha1), sha1_to_hex(old_sha1));
+ 			return -1;
+ 		}
  	}
+-	if (write_ref_sha1(lock, b->sha1, msg) < 0)
+-		return error("Unable to update %s", b->name);
++	transaction = ref_transaction_begin();
++	if ((!transaction ||
++	    ref_transaction_update(transaction, b->name, b->sha1, old_sha1,
++				   0, 1)) ||
++	    (ref_transaction_commit(transaction, msg, &err) &&
++	     !(transaction = NULL))) {
++		ref_transaction_rollback(transaction);
++		error("Unable to update branch %s: %s", b->name, err.buf);
++		strbuf_release(&err);
++		return -1;
++	}
+ 	return 0;
+ }
  
- 	if (end_null)
 -- 
 1.9.1.532.gf8485a6
