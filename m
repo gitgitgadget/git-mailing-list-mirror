@@ -1,146 +1,177 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v3 19/19] refs.c: pass **transaction to commit and have
- it clear the pointer
-Date: Tue, 29 Apr 2014 11:25:17 +0200
-Message-ID: <535F6FFD.90004@alum.mit.edu>
-References: <1398442494-23438-1-git-send-email-sahlberg@google.com>	<1398442494-23438-20-git-send-email-sahlberg@google.com>	<535B0C6F.509@alum.mit.edu> <CAL=YDWkSdiUd-6A60ncGaDrFV2pc5WtRMv8iCSHHqFLkKH=pfw@mail.gmail.com>
+Subject: Re: [PATCH v3 16/19] branch.c: use ref transaction for all ref updates
+Date: Tue, 29 Apr 2014 11:35:23 +0200
+Message-ID: <535F725B.5000102@alum.mit.edu>
+References: <1398442494-23438-1-git-send-email-sahlberg@google.com>	<1398442494-23438-17-git-send-email-sahlberg@google.com>	<535AECC5.3090100@alum.mit.edu> <CAL=YDWkJKOM7eo7cknMH4MAAYJ=Ds9PVjUvufHzrBu=neucf4g@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Cc: "git@vger.kernel.org" <git@vger.kernel.org>
 To: Ronnie Sahlberg <sahlberg@google.com>
-X-From: git-owner@vger.kernel.org Tue Apr 29 11:25:35 2014
+X-From: git-owner@vger.kernel.org Tue Apr 29 11:35:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wf4IB-00028T-2v
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Apr 2014 11:25:35 +0200
+	id 1Wf4Ro-0003xL-6D
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Apr 2014 11:35:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933326AbaD2JZX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2014 05:25:23 -0400
-Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:50017 "EHLO
-	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S933232AbaD2JZU (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 Apr 2014 05:25:20 -0400
-X-AuditID: 12074411-f79ab6d000002f0e-69-535f6fff0dd6
+	id S1757314AbaD2Jf2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2014 05:35:28 -0400
+Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:59060 "EHLO
+	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756304AbaD2Jf0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Apr 2014 05:35:26 -0400
+X-AuditID: 12074412-f79d46d000002e58-9d-535f725d0da7
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 9F.E1.12046.FFF6F535; Tue, 29 Apr 2014 05:25:19 -0400 (EDT)
+	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id C7.D0.11864.D527F535; Tue, 29 Apr 2014 05:35:25 -0400 (EDT)
 Received: from [192.168.69.130] (p4FC96C32.dip0.t-ipconnect.de [79.201.108.50])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s3T9PHTt013168
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s3T9ZNiK013530
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Tue, 29 Apr 2014 05:25:18 -0400
+	Tue, 29 Apr 2014 05:35:24 -0400
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.4.0
-In-Reply-To: <CAL=YDWkSdiUd-6A60ncGaDrFV2pc5WtRMv8iCSHHqFLkKH=pfw@mail.gmail.com>
+In-Reply-To: <CAL=YDWkJKOM7eo7cknMH4MAAYJ=Ds9PVjUvufHzrBu=neucf4g@mail.gmail.com>
 X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprJKsWRmVeSWpSXmKPExsUixO6iqPs/Pz7Y4P0ufYuuK91MFv8m1Dgw
-	eSzYVOrxeZNcAFMUt01SYklZcGZ6nr5dAnfGpoXTWQv+yVS8/WnfwLhftIuRk0NCwERi6ud2
-	NghbTOLCvfVANheHkMBlRokVGz6xQzjnmSS2XbjCDFLFK6ApMf/RSbAOFgFVib+fv4HZbAK6
-	Eot6mpm6GDk4RAWCJP6cVYQoF5Q4OfMJC4gtAtR6s/80E4jNLKAv8enPAbByYYEkiePHkyBW
-	3WWUePbiJdgqToFAiTWLjrOA1EgIiEv0NAaBmMwC6hLr5wlBTJGX2P52DvMERsFZSJbNQqia
-	haRqASPzKka5xJzSXN3cxMyc4tRk3eLkxLy81CJdU73czBK91JTSTYyQoBXcwTjjpNwhRgEO
-	RiUe3o6YuGAh1sSy4srcQ4ySHExKorwG2fHBQnxJ+SmVGYnFGfFFpTmpxYcYJTiYlUR4862A
-	crwpiZVVqUX5MClpDhYlcV6+Jep+QgLpiSWp2ampBalFMFkZDg4lCd5NwOgUEixKTU+tSMvM
-	KUFIM3FwggznkhIpTs1LSS1KLC3JiAdFbnwxMHZBUjxAe6fmgewtLkjMBYpCtJ5i1OW40LCi
-	hUmIJS8/L1VKnNcNpEgApCijNA9uBSxFvWIUB/pYmLcP5BIeYHqDm/QKaAkT0JJgX7AlJYkI
-	KakGRpe8D6tXXYvacOlFbKb6reeH/+sFvbQLvj7vr6FEseSW9o6DTw/Udxmc9D+59OuydGXn
-	+xF92p7qNSwmF4qzX+vdK7c8fPtnnqud8sxVvp8/e/5l+ehXWSL+koVhr5nf/E0S 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprNKsWRmVeSWpSXmKPExsUixO6iqBtbFB9scOItn0XXlW4mi38TahyY
+	PBZsKvX4vEkugCmK2yYpsaQsODM9T98ugTtjyZtnrAUN2hU/V81ia2C8KtfFyMkhIWAi8e7H
+	RlYIW0ziwr31bF2MXBxCApcZJR6fvMAI4ZxnkrjVcYgdpIpXQFti54JGJhCbRUBVYt2W/8wg
+	NpuArsSinmagOAeHqECQxJ+zihDlghInZz5hAbFFBDQlbvafBmtlFtCX+PTnAJgtLOAvsfbB
+	U6jFDxklnt+eDnYRp0CgxJQpy9lAZkoIiEv0NAaBmMwC6hLr5wlBjJGX2P52DvMERsFZSLbN
+	QqiahaRqASPzKka5xJzSXN3cxMyc4tRk3eLkxLy81CJdM73czBK91JTSTYyQwBXawbj+pNwh
+	RgEORiUeXoOouGAh1sSy4srcQ4ySHExKorwG2fHBQnxJ+SmVGYnFGfFFpTmpxYcYJTiYlUR4
+	862AcrwpiZVVqUX5MClpDhYlcd6fi9X9hATSE0tSs1NTC1KLYLIyHBxKErznCoEaBYtS01Mr
+	0jJzShDSTBycIMO5pESKU/NSUosSS0sy4kHRG18MjF+QFA/Q3myQdt7igsRcoChE6ylGXY4L
+	DStamIRY8vLzUqXEec1AigRAijJK8+BWwNLUK0ZxoI+FedeAVPEAUxzcpFdAS5iAlgT7gi0p
+	SURISTUwhkavPBuVwZ32RtT0XPnOJZtW1lVE6zXIHns8U3hqyUJtOetFObz/mR7oJpw7dSBw
+	2v/CD/Y1SyJd38VVc256t/eVnFWiY9jc5BUh+TfeHVi2w/zxs/nJljtsm1VnVsnL 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247555>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247556>
 
-On 04/28/2014 07:59 PM, Ronnie Sahlberg wrote:
-> On Fri, Apr 25, 2014 at 6:31 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+On 04/28/2014 09:16 PM, Ronnie Sahlberg wrote:
+> On Fri, Apr 25, 2014 at 4:16 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
 >> On 04/25/2014 06:14 PM, Ronnie Sahlberg wrote:
->>> Change ref_transaction_commit to take a pointer to a pointer for the
->>> transaction. This allows us to clear the transaction pointer from within
->>> ref_transaction_commit so that it becomes NULL in the caller.
+>>> Change create_branch to use a ref transaction when creating the new branch.
+>>> ref_transaction_create will check that the ref does not already exist and fail
+>>> otherwise meaning that we no longer need to keep a lock on the ref during the
+>>> setup_tracking. This simplifies the code since we can now do the transaction
+>>> in one single step.
 >>>
->>> This makes transaction handling in the callers much nicer since instead of
->>> having to write horrible code like :
->>>       t = ref_transaction_begin();
->>>       if ((!t ||
->>>           ref_transaction_update(t, refname, sha1, oldval, flags,
->>>                                  !!oldval)) ||
->>>           (ref_transaction_commit(t, action, &err) && !(t = NULL))) {
->>>               ref_transaction_rollback(t);
+>>> If the forcing flag is false then use ref_transaction_create since this will
+>>> fail if the ref already exist. Otherwise use ref_transaction_update.
 >>>
->>> we can now just do the much nicer
->>>       t = ref_transaction_begin();
->>>       if (!t ||
->>>           ref_transaction_update(t, refname, sha1, oldval, flags,
->>>                                  !!oldval) ||
->>>           ref_transaction_commit(&t, action, &err)) {
->>>               ref_transaction_rollback(t);
+>>> This also fixes a race condition in the old code where two concurrent
+>>> create_branch could race since the lock_any_ref_for_update/write_ref_sha1
+>>> did not protect against the ref already existsing. I.e. one thread could end up
+>>> overwriting a branch even if the forcing flag is false.
+>>>
+>>> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+>>> ---
+>>>  branch.c | 39 +++++++++++++++++++++++++--------------
+>>>  1 file changed, 25 insertions(+), 14 deletions(-)
+>>>
+>>> diff --git a/branch.c b/branch.c
+>>> index 660097b..23cde1e 100644
+>>> --- a/branch.c
+>>> +++ b/branch.c
+>>> @@ -226,7 +226,6 @@ void create_branch(const char *head,
+>>>                  int force, int reflog, int clobber_head,
+>>>                  int quiet, enum branch_track track)
+>>>  {
+>>> -     struct ref_lock *lock = NULL;
+>>>       struct commit *commit;
+>>>       unsigned char sha1[20];
+>>>       char *real_ref, msg[PATH_MAX + 20];
+>>> @@ -285,15 +284,6 @@ void create_branch(const char *head,
+>>>               die(_("Not a valid branch point: '%s'."), start_name);
+>>>       hashcpy(sha1, commit->object.sha1);
+>>>
+>>> -     if (!dont_change_ref) {
+>>> -             lock = lock_any_ref_for_update(ref.buf, NULL, 0, NULL);
+>>> -             if (!lock)
+>>> -                     die_errno(_("Failed to lock ref for update"));
+>>> -     }
+>>> -
+>>> -     if (reflog)
+>>> -             log_all_ref_updates = 1;
+>>> -
+>>>       if (forcing)
+>>>               snprintf(msg, sizeof msg, "branch: Reset to %s",
+>>>                        start_name);
+>>> @@ -301,13 +291,34 @@ void create_branch(const char *head,
+>>>               snprintf(msg, sizeof msg, "branch: Created from %s",
+>>>                        start_name);
+>>>
+>>> +     if (reflog)
+>>> +             log_all_ref_updates = 1;
+>>> +
+>>> +     if (!dont_change_ref) {
+>>> +             struct ref_transaction *transaction;
+>>> +             char *err = NULL;
+>>> +
+>>> +             transaction = ref_transaction_begin();
+>>> +             if (forcing) {
+>>> +                     if (!transaction ||
+>>> +                         ref_transaction_update(transaction, ref.buf, sha1,
+>>> +                                                NULL, 0, 0) ||
+>>> +                         ref_transaction_commit(transaction, msg, &err))
+>>> +                       die_errno(_("%s: failed to write ref: %s"),
+>>> +                                 ref.buf, err);
+>>> +             } else {
+>>> +                     if (!transaction ||
+>>> +                         ref_transaction_create(transaction, ref.buf, sha1,
+>>> +                                                0) ||
+>>> +                         ref_transaction_commit(transaction, msg, &err))
+>>> +                       die_errno(_("%s: failed to write ref: %s"),
+>>> +                                 ref.buf, err);
+>>> +             }
 >>
->> I understand the motivation for this change, but passing
->> pointer-to-pointer is unconventional in a case like this.  Unfortunately
->> I ran out of steam for the night before I could think about alternatives.
+>> You've got some indentation problems above.
+>>
+>> But actually, there seems like a lot of duplicated code here.  Couldn't
+>> you instead do a single block with have_old set based on forcing:
+>>
+>>     ref_transaction_update(transaction, ref.buf, sha1,
+>>                            null_sha1, 0, !forcing)
+>>
+>> ?
 > 
-> I see.
-> Yes passing a pointer to pointer is not ideal.
-> But I still want to be able to use the pattern
->        t = ref_transaction_begin();
->        if (!t ||
->            ref_transaction_update(t, ...) ||
->            ref_transaction_commit(t, ...)) {
->                ref_transaction_rollback(t);
-> 
-> Maybe the problem is that ref_transaction_commit() implicitely also
-> frees the transaction.
+> Done, thanks.
 > 
 > 
-> What about changing ref_transaction_commit() would NOT free the
-> transaction and thus a caller would
-> always have to explicitely free the transaction afterwards?
+> I am not sure how I feel about using _update to create new refs
+> since we already have ref_transaction_create for that purpose.
 > 
-> Something like this :
->        t = ref_transaction_begin();
->        if (!t ||
->            ref_transaction_update(t, ...) ||
->            ref_transaction_commit(&t, ...)) {
+> ref_transaction_update can either be used to update an existing ref
+> or it can be used to create new refs, either by passing have_old==0
+> or by passing old_sha1==null_sha1 and have_old==1
 
-You wouldn't need the "&" here then, right?
+Hold onto your socks then, because I think in the future update() should
+get a have_new parameter too.  That way it can also be used to verify
+the current value of a reference by passing have_old=1, have_new=0
+without also re-setting the reference unnecessarily like now.  Though I
+admit, have_old=have_new=0 might *not* be so useful :-)
 
->                ref_transaction_rollback(t);
->        }
->        ref_transaction_free(t);
+> Maybe the api would be cleaner if we would change it so that update
+> and create does
+> not overlap and thus change _update so that it can only modify refs
+> that must already exist ?
 
-That sounds like a better solution.  We would want to make sure that
-ref_transaction_commit() / ref_transaction_rollback() leaves the
-ref_transaction in a state that if it is accidentally passed to
-ref_transaction_update() or its friends, the function calls die("BUG: ...").
+I have no compunctions about using update() to create or delete a
+reference.  My point of view is that update() is the general case, and
+create() and delete() are special-cases that exist only for the
+convenience of callers.  For example, our future pluggable backends
+might only have to implement update(), and the other two functions could
+delegate to it at the abstract layer.
 
-Unless we want to make ref_transaction objects reusable.  But then we
-would need an explicit "allocation" step in the boilerplate code:
-
-    t = ref_transaction_alloc();
-    while (something) {
-            if (ref_transaction_begin(t) ||
-                 ref_transaction_update(t, ...) ||
-                 ref_transaction_commit(t, ...)) {
-                    ref_transaction_rollback(t);
-            }
-    }
-    ref_transaction_free(t);
-
-Note that ref_transaction_begin() should in this case be converted to
-return 0-on-OK, negative-on-error for consistency.
-
-This would bring us back to the familiar pattern alloc...use...free.
-
-I was going to say that the extra boilerplate is not worth it, and
-anyway reusing ref_transaction objects won't save any significant work.
- But then it occurred to me that ref_transaction_alloc() might be a
-place to do more expensive work, like creating a connection to a
-database, so reuse could potentially be a bigger win.
-
-All in all, either way is OK with me.
+Plus, making this stricter would make it impossible to eliminate
+duplicate code like in the example above, which is itself evidence that
+update() is a useful abstraction.
 
 Michael
 
