@@ -1,116 +1,80 @@
-From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v2] Document RUN_SETUP_GENTLY
-Date: Tue, 29 Apr 2014 15:21:34 -0400
-Message-ID: <CAE+yK_kwMWRBDEVO=WVh5H-uFQJa2LEezRwbKnduLqoFjWC4zA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] t3910: show failure of core.precomposeunicode with
+ decomposed filenames
+Date: Tue, 29 Apr 2014 15:46:54 -0400
+Message-ID: <20140429194654.GC11832@sigill.intra.peff.net>
+References: <20140428161630.GA9435@sigill.intra.peff.net>
+ <xmqqvbtskqjv.fsf@gitster.dls.corp.google.com>
+ <20140429180210.GB11832@sigill.intra.peff.net>
+ <xmqqwqe8j7id.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 29 21:21:42 2014
+X-From: git-owner@vger.kernel.org Tue Apr 29 21:47:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WfDb1-0000s2-V6
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Apr 2014 21:21:40 +0200
+	id 1WfDzY-0002l8-M7
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Apr 2014 21:47:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933478AbaD2TVg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2014 15:21:36 -0400
-Received: from mail-we0-f180.google.com ([74.125.82.180]:33144 "EHLO
-	mail-we0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932759AbaD2TVf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2014 15:21:35 -0400
-Received: by mail-we0-f180.google.com with SMTP id t61so682551wes.11
-        for <git@vger.kernel.org>; Tue, 29 Apr 2014 12:21:34 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc
-         :content-type;
-        bh=+uF876xUvSLaVO3aI/+YUW7r7jroFKP0ixdXNSi6uMc=;
-        b=i9MmI9VbPBJ/JoPszeZv8d/49HoMUhSJvMFBbGuAVaDl9cQPJV3lVbkewv6BYdJA3I
-         84VonKZdpuBNyQMrW6AApLoSIPgBfS0lxGQeND8zuKK1XzQp55dsnbirtZLcRlo2nQKJ
-         J9bsGXhsAykPuuIxs5rGHo7HgChq+DiHqzfeYmwiHgXKgGqhZ/7KchYre3hVFW+O0iGV
-         jWc1k3o9FKfP1PIhdf8furhp3WLLLJhMJmSyimbLbEpYZcSOVpsu2CwjqFKzMP0BK675
-         dZqe0XO31Q7/nFnAEGcMNJBNFHZSjq9FVwk1+EWC5euvgNOUG7ZWlpWc6euLBPKDa9VS
-         4NoQ==
-X-Gm-Message-State: ALoCoQk5/c62winZcVM8kQA6oljoQCmWznoRe3OrsJCN8egEt5SNYccUxS02eTXRUdk+w1sQ5bwf
-X-Received: by 10.194.89.168 with SMTP id bp8mr960140wjb.73.1398799294097;
- Tue, 29 Apr 2014 12:21:34 -0700 (PDT)
-Received: by 10.180.18.104 with HTTP; Tue, 29 Apr 2014 12:21:34 -0700 (PDT)
+	id S965128AbaD2Tq5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2014 15:46:57 -0400
+Received: from cloud.peff.net ([50.56.180.127]:41508 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S965044AbaD2Tq4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2014 15:46:56 -0400
+Received: (qmail 25982 invoked by uid 102); 29 Apr 2014 19:46:56 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 29 Apr 2014 14:46:56 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Apr 2014 15:46:54 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqwqe8j7id.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247607>
 
-Sorry about that -- the documentation of RUN_SETUP confused me.  So I
-have a new patch that edits that as well.
+On Tue, Apr 29, 2014 at 11:49:30AM -0700, Junio C Hamano wrote:
 
---
-RUN_SETUP_GENTLY and improve RUN_SETUP docs
+> Jeff King <peff@peff.net> writes:
+> 
+> > I don't think we have a "str_utf8_cmp" that ignores normalizations (or
+> > maybe strcoll will do this?). But in theory we could use it everywhere
+> > we use strcasecmp for ignore_case. And then we would not need to have
+> > our readdir wrapper, maybe? I admit I haven't thought that much about
+> > _either_ approach. But aside from some bugs in the hash system, I do not
+> > recall seeing any design problems in the ignorecase code.
+> 
+> Our diffs and merges depend on walking two (or more) sorted lists,
+> and that sort order is baked in the tree objects when they are
+> created.  Using "normalized comparison" only when comparing the
+> earliest elements picked from these sorted lists would not give you
+> the correct comparison or merge results, would it?
 
-Signed-off-by: David Turner <dturner@twitter.com>
----
- Documentation/technical/api-builtin.txt | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+Right, but we do not do normalized comparisons on that side. Not for
+precompose, and not for ignorecase. The entry in the index _is_
+case-sensitive[1], and we compare it as such to the tree side.
 
-diff --git a/Documentation/technical/api-builtin.txt
-b/Documentation/technical/api-builtin.txt
-index e3d6e7a..b250c1a 100644
---- a/Documentation/technical/api-builtin.txt
-+++ b/Documentation/technical/api-builtin.txt
-@@ -23,10 +23,15 @@ where options is the bitwise-or of:
+It is only when comparing the filesystem side to the index that we need
+to care about such normalizations. And there we have the name-hash code
+to handle ignorecase, but nothing to handle precompose.
 
- `RUN_SETUP`::
+-Peff
 
-- Make sure there is a Git directory to work on, and if there is a
-- work tree, chdir to the top of it if the command was invoked
-- in a subdirectory.  If there is no work tree, no chdir() is
-- done.
-+ If there is not a Git directory to work on, abort.  If there
-+ is a work tree, chdir to the top of it if the command was
-+ invoked in a subdirectory.  If there is no work tree, no
-+ chdir() is done.
-+
-+`RUN_SETUP_GENTLY`::
-+
-+ If there is a Git directory, chdir as per RUN_SETUP, otherwise,
-+ don't chdir anywhere.
+[1] This works because you typically get the case-sensitive entry via
+    `git read-tree`, and then further update it from the filesystem. If
+    you were to add a new entry "makefile", and somebody else added
+    "Makefile", they would conflict.
 
- `USE_PAGER`::
-
--- 
-
-
-On Tue, Apr 29, 2014 at 2:25 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> David Turner <dturner@twopensource.com> writes:
->
->> Document RUN_SETUP_GENTLY
->>
->> Signed-off-by: David Turner <dturner@twitter.com>
->> ---
->>  Documentation/technical/api-builtin.txt | 5 +++++
->>  1 file changed, 5 insertions(+)
->>
->> diff --git a/Documentation/technical/api-builtin.txt
->> b/Documentation/technical/api-builtin.txt
->> index e3d6e7a..1bbeda2 100644
->> --- a/Documentation/technical/api-builtin.txt
->> +++ b/Documentation/technical/api-builtin.txt
->> @@ -28,6 +28,11 @@ where options is the bitwise-or of:
->>   in a subdirectory.  If there is no work tree, no chdir() is
->>   done.
->>
->> +`RUN_SETUP_GENTLY`::
->> +
->> + If there is a Git directory, chdir as per RUN_SETUP, otherwise,
->> + don't create one and don't chdir.
->
-> I can understand "don't chdir" part, but where does "don't create"
-> come from?  Makes it sound as if non GENTLY version would create one
-> if there isn't there, but I am guessing that that is not what you
-> meant to say.
->
-> Puzzled.
->
+    When you do "git add makefile" and "Makefile" _does_ exist, I am not
+    sure, though, if it is git who handles making sure we find the
+    correct entry, or if it is simply the fact that case insensitive
+    filesystems are typically case-preserving (so you generally ask for
+    "Makefile" anyway). If it is the latter, then that is a problem for
+    precompose. HFS's NFD normalization is non-preserving.
