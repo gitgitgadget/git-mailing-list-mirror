@@ -1,126 +1,135 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH v4 12/27] replace.c: use the ref transaction functions for updates
-Date: Tue, 29 Apr 2014 09:18:25 -0700
-Message-ID: <CAL=YDWn9TJsygZdgY2gXVBScFjO3zbrbJ5XORc2ZLaY-M8PmSw@mail.gmail.com>
-References: <1398725682-30782-1-git-send-email-sahlberg@google.com>
-	<1398725682-30782-13-git-send-email-sahlberg@google.com>
-	<CAPig+cSWMK_kyVvaD8QCfZmPu4JVT+nOJZJLteHhDao0umHLbA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Sleep 1 millisecond in poll() to avoid busy wait
+Date: Tue, 29 Apr 2014 09:51:26 -0700
+Message-ID: <xmqq7g68m641.fsf@gitster.dls.corp.google.com>
+References: <20140428083931.GA10257@camelia.ucw.cz>
+	<CABPQNSaC30p7TEOvc85u=+skjrFj17182vWWSL=QNVuvzVFE=w@mail.gmail.com>
+	<20140428113815.GA10559@camelia.ucw.cz>
+	<20140428114224.GA11186@camelia.ucw.cz>
+	<CABPQNSbDkE+Vff=4MmPO9oMfjRay6Oin51zZRoZ8mOEhGoaD3Q@mail.gmail.com>
+	<535E6E4B.6070308@viscovery.net>
+	<20140428153527.GB12357@camelia.ucw.cz>
+	<CABPQNSbpyFzg8A8gLp2nJZeTRSLSb0Qs8ytZDsJLmi6VyER71Q@mail.gmail.com>
+	<xmqqfvkxqo0l.fsf@gitster.dls.corp.google.com>
+	<20140429034727.GB15181@camelia.ucw.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue Apr 29 18:18:39 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: kusmabite@gmail.com, Johannes Sixt <j.sixt@viscovery.net>,
+	GIT Mailing-list <git@vger.kernel.org>,
+	Theodore Leblond <theodore.leblond@gmail.com>
+To: Stepan Kasal <kasal@ucw.cz>
+X-From: git-owner@vger.kernel.org Tue Apr 29 18:51:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WfAjt-0006Mu-7d
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Apr 2014 18:18:37 +0200
+	id 1WfBFu-0008BI-O7
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Apr 2014 18:51:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758044AbaD2QS1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2014 12:18:27 -0400
-Received: from mail-ve0-f179.google.com ([209.85.128.179]:38628 "EHLO
-	mail-ve0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757458AbaD2QS0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2014 12:18:26 -0400
-Received: by mail-ve0-f179.google.com with SMTP id db12so553133veb.38
-        for <git@vger.kernel.org>; Tue, 29 Apr 2014 09:18:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=WkkW28cxtf6qKV48bmwYPq0NmX+TKXb9b+z9PTINAAI=;
-        b=C1rXiziiT726ad9l+/XCwdMmpR6GmsEqxG7cnO1OuBFfzs9tZQDPsvgVTdbeEHBFqE
-         zUnMmBQ6xV1VmCAMufvhL0EuB9h2CykH7qVqOUgdF1cdbuCTu3lFNJSVsVykuM9g3KbK
-         wHmlzrzfrrMiCby+js6s4Gcpvfnr02YMOMBB/ja4aoO1QPXZ49kX5wFw9pYO0OBNlZTE
-         /8/X/AbrCIWaLX/FIZhoJgH7xLFT+AtAR9F36LeUxVXIBrfPPXEJ8GQV3nwa9Gg9LCg+
-         eHKdVmSOwfZ9GQOlOdu3f1caVbdXos9UDcvbmz37D0F46d1rp2W0NjIC+1yJ9zqQE43q
-         iHsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=WkkW28cxtf6qKV48bmwYPq0NmX+TKXb9b+z9PTINAAI=;
-        b=j5gIJ4BOG6Kd9LpwD9yNQb0VR0yEzoTp9NCZGhJbxbsLW+6N5ddVM5iJYcw/6x8vB7
-         jHq1Yr/HjMw9CcHqgArn5S317pe6JV/eCdy4BXgofrwWnnYSMu2cR+4RghPA41bnyg7G
-         Pmr8/tY4uEzcT/cPyzg6vBz6smHv9dGfVUTCmSoBGj1ABHBW9fXhorJTmhkmHl5QGsG/
-         fDupnwM4RV25ylbkSdwT2JT4KkZfZQgyLDrA8D+RzkKeQ/Xrpn3UgRwmXA2Gf/EbKmp6
-         ByBdYOLNctQ/sClct5iV9XCt18yr0A/ySNJrrOjwlGuweXlxogrLwiym+VBcqyfKcwGH
-         V5DQ==
-X-Gm-Message-State: ALoCoQm+h27+t8NONhPy3QEHdvf9GiheJf3Dl8WevZo2Qur1QwDdINy7uQrDxrBJBW/Jx8qXKHBS4jgLkMoodfFQYXy+8qtrE6LbCvEjV9o22elrktSo8fRElYzjKl8X7vHRauj4MEg4kgdUCUPn5LD8NjW+V7eXPvnjhjEdp+A77Cw+j87dLh3qNTo8eyAO3ONg/suzpGzz
-X-Received: by 10.52.237.228 with SMTP id vf4mr663680vdc.47.1398788305747;
- Tue, 29 Apr 2014 09:18:25 -0700 (PDT)
-Received: by 10.52.141.13 with HTTP; Tue, 29 Apr 2014 09:18:25 -0700 (PDT)
-In-Reply-To: <CAPig+cSWMK_kyVvaD8QCfZmPu4JVT+nOJZJLteHhDao0umHLbA@mail.gmail.com>
+	id S1758168AbaD2Qve (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2014 12:51:34 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44526 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751778AbaD2Qvb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2014 12:51:31 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 201BC7FF16;
+	Tue, 29 Apr 2014 12:51:31 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Cp5h5d8IUVOKkPngk621q9jTYr8=; b=NCRums
+	qd+l/zdo2kF+YOR1RObSDdumJLsRLwZCapY+4nwiyHEMwTRWRuXjA0KlKnv+RvPZ
+	WTRRd+mZBUyfEqjB6eYM8hEUOM6HiEhQHU56nXWGRtz+UdTINQPIIy4TINqjzmhg
+	X3cAc2pwNO8GGSYFpMROXWxPxeQw4nqaGXc4k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=QU5UouJFvS5V/5UOg89q3L4jRpAkR9hV
+	tAL1pdOxyjBUgOa79caL5RTiNq7/wH7fs62xZDeBKLRxAwOn35Owp75jw3K/Q6sF
+	5J/pQmR1yJAr7+rr4wnPDmoSKvsmWL2P74Gmv6+udQldUtFTdGtPdSqusArRw2qs
+	mX2rH6vHQmY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E83D57FF15;
+	Tue, 29 Apr 2014 12:51:30 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BCD897FF12;
+	Tue, 29 Apr 2014 12:51:28 -0400 (EDT)
+In-Reply-To: <20140429034727.GB15181@camelia.ucw.cz> (Stepan Kasal's message
+	of "Tue, 29 Apr 2014 05:47:27 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 8251D5C4-CFBE-11E3-8539-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247589>
 
-On Mon, Apr 28, 2014 at 5:44 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Mon, Apr 28, 2014 at 6:54 PM, Ronnie Sahlberg <sahlberg@google.com> wrote:
->> Update replace.c to use ref transactions for updates.
->>
->> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
->> ---
->>  builtin/replace.c | 14 ++++++++------
->>  1 file changed, 8 insertions(+), 6 deletions(-)
->>
->> diff --git a/builtin/replace.c b/builtin/replace.c
->> index b62420a..b037b29 100644
->> --- a/builtin/replace.c
->> +++ b/builtin/replace.c
->> @@ -129,7 +129,8 @@ static int replace_object(const char *object_ref, const char *replace_ref,
->>         unsigned char object[20], prev[20], repl[20];
->>         enum object_type obj_type, repl_type;
->>         char ref[PATH_MAX];
->> -       struct ref_lock *lock;
->> +       struct ref_transaction *transaction;
->> +       struct strbuf err = STRBUF_INIT;
->>
->>         if (get_sha1(object_ref, object))
->>                 die("Failed to resolve '%s' as a valid ref.", object_ref);
->> @@ -157,11 +158,12 @@ static int replace_object(const char *object_ref, const char *replace_ref,
->>         else if (!force)
->>                 die("replace ref '%s' already exists", ref);
->>
->> -       lock = lock_any_ref_for_update(ref, prev, 0, NULL);
->> -       if (!lock)
->> -               die("%s: cannot lock the ref", ref);
->> -       if (write_ref_sha1(lock, repl, NULL) < 0)
->> -               die("%s: cannot update the ref", ref);
->> +       transaction = ref_transaction_begin();
->> +       if (!transaction ||
->> +           ref_transaction_update(transaction, ref, repl, prev,
->> +                                  0, !is_null_sha1(prev)) ||
->> +           ref_transaction_commit(transaction, NULL, &err))
->> +               die(_("%s: failed to replace ref: %s"), ref, err.buf);
+Stepan Kasal <kasal@ucw.cz> writes:
+
+> Hello Junio,
 >
-> Even though 'err' will be empty after this conditional, would
-> strbuf_release(&err) here be warranted to future-proof it? Today's
-> implementation of strbuf will not have allocated any memory, but
-> perhaps a future change might pre-allocate (unlikely though that is),
-> which would leak here.
+> thank you for pointing out the problems.
+>
+> Let me explain the background:
+>
+> After some discussion a one line fix to win32/poll.c was accepted to msysgit/git
+> at 2012-05-16 https://github.com/msysgit/git/pull/7
+>
+> The description of the commit looked like this:
+>> I played around with this [...]
+>> [...]
+>> I also tested the very fast local case, and didn't see any measurable
+>> difference. On a big repo with 4500 files, the upload-pack took about 2
+>> seconds with and without the fix.
+> ... but there was no sign-off by Theodore.
+>
+> Because poll.c comes from Gnulib, it was reported there as well.
+> Paolo Bonzini accepted the fix for poll.c and added a fix for select.
+> The combined commit got this changelog entry:
+>
+>> 2012-05-21  Paolo Bonzini  <bonzini@gnu.org>
+>> 
+>>         poll/select: prevent busy-waiting.  SwitchToThread() only gives away
+>>         the rest of the current time slice to another thread in the current
+>>         process. So if the thread that feeds the file decscriptor we're
+>>         polling is not in the current process, we get busy-waiting.
+>>         * lib/poll.c: Use SleepEx(1, TRUE) instead of SwitchToThread().
+>>         Patch from Theodore Leblond.
+>>         * lib/select.c: Split polling out of the loop that sets the output
+>>         fd_sets.  Check for zero result and loop if the wait timeout is
+>>         infinite.
+>
+> The patch that I (Stepan) submitted as "v2" combines things like this:
+> - subject by Theodore
+> - first paragraph by Paolo, concise problem description
+> - rest from Theodore's original commit ("I" = Theodore, I suppose)
+> - diff exctly as in gnulib commit
+>
+> On Mon, Apr 28, 2014 at 11:58:50AM -0700, Junio C Hamano wrote:
+>>     Subject: compat/poll: sleep 1 millisecond to avoid busy wait
+>
+> Thanks for improving it.
+>
+>>     Signed-off-by: Theodore Leblond <theodore.leblond@gmail.com>
+>>     Signed-off-by: Stepan Kasal <kasal@ucw.cz>
+>>     Acked-by: Johannes Sixt <j6t@kdbg.org>
+>>     Acked-by: Erik Faye-Lund <kusmabite@gmail.com>
+>
+> Sorry that I forgot to add my sign-off (Stepan).
+> But I'm afraid I cannot add Theodore's, it was not in the original
+> commit.  But it is one line change; the real work was the analysis.
 
+Well, the original git/pull/7 in msysgit repository says that is a
+patch by Theodore, so the kosher thing to do is to ask him (and I
+see he is on the Cc list), and also ask msysgit folks (and I see
+they are on the Cc list as well) to be a bit more careful when
+responding to pull requests, especially given that it is our mutual
+benefit to make sure we keep the changes between our two trees to
+the minimum by upstreaming.
+
+I'll queue without the forged sign-off by Theodore, as I think DCO
+(1.1) (c) read loosely would let me do so ;-)
 
 Thanks.
-
-
-I have no strong feelings either way.
-A previous patch got a comment to remove a strbuf_release() because we
-knew in that
-code path that the string would be empty and thus the call was superfluous.
-
-So one for and one against so far.
-I will leave as is until there is more consensus.
-
-
-
->
->>         return 0;
->>  }
->> --
->> 1.9.1.528.g98b8868.dirty
