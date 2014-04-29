@@ -1,110 +1,76 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: [GIT GUI PATCH] git-gui: unconditionally use rev-parse --show-toplevel
-Date: Tue, 29 Apr 2014 22:58:22 +1200
-Message-ID: <1398769102-6401-1-git-send-email-judge.packham@gmail.com>
-References: <CAFOYHZD=wxwm0nLhtZwvXDAhQ23j0C5maArQunc0CVe_-SF_mQ@mail.gmail.com>
-Cc: Chris Packham <judge.packham@gmail.com>
-To: patthoyts@users.sourceforge.net, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 29 12:58:51 2014
+From: James Denholm <nod.helm@gmail.com>
+Subject: Re: Recording the current branch on each commit?
+Date: Tue, 29 Apr 2014 20:59:07 +1000
+Message-ID: <752e9542-7450-4928-a9cb-79b9c3b69bcd@email.android.com>
+References: <535C47BF.2070805@game-point.net> <CALKQrgfmBByMwMhxu3HkJqJGWy2Rwvij6Hi1_4npjfsxcSgpaQ@mail.gmail.com> <535D4085.4040707@game-point.net> <CALKQrgemFx=2JaC1BaRqCwEV+knC8QftxcZ7K0AsT9azzuyVdA@mail.gmail.com> <535D6EB1.9080208@game-point.net> <535e18cdc7bce_338911e930c72@nysa.notmuch> <87bnvl6bdg.fsf@fencepost.gnu.org> <535e8e4253196_45651483310b3@nysa.notmuch> <152626b3-0642-4e26-9333-7d911d45c669@email.android.com> <535edfb9baa4a_4c5c11c92f0bc@nysa.notmuch> <CAHYYfeGBLXGgK-cTQLEreFXJakp1jBE829=LrhmKR3MttBiw+A@mail.gmail.com> <535f1d4d8cbbb_762310ef30c9c@nysa.notmuch> <220967ee-98a9-4731-88c0-43a9cba7220a@email.android.com> <535f62c1e740a_45e485b30887@nysa.notmuch> <87r44g33z4.fsf@fencepost.gnu.org> <535f702352d21_3aee3b2f0b9@nysa.notmuch> <87mwf431t3.fsf@fencepost.gnu.org> <535f
+ 76db38a34_6f23159b31099@nysa.notmuch> <87eh0g30it.fsf@fencepost.gnu.org> <535f7c35cb5b1_7c7c10e32f019@nysa.notmuch>
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Jeremy Morton <admin@game-point.net>,
+	Johan Herland <johan@herland.net>,
+	Git mailing list <git@vger.kernel.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>,
+	David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Tue Apr 29 12:59:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wf5kP-0007Kc-OW
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Apr 2014 12:58:50 +0200
+	id 1Wf5l0-0007yV-DR
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Apr 2014 12:59:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933685AbaD2K6p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2014 06:58:45 -0400
-Received: from mail-pd0-f178.google.com ([209.85.192.178]:61027 "EHLO
-	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933674AbaD2K6o (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2014 06:58:44 -0400
-Received: by mail-pd0-f178.google.com with SMTP id fp1so29043pdb.9
-        for <git@vger.kernel.org>; Tue, 29 Apr 2014 03:58:43 -0700 (PDT)
+	id S933692AbaD2K7W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2014 06:59:22 -0400
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:54016 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933674AbaD2K7W (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2014 06:59:22 -0400
+Received: by mail-pa0-f45.google.com with SMTP id kq14so30109pab.18
+        for <git@vger.kernel.org>; Tue, 29 Apr 2014 03:59:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=dMWD6FA/pwQwRIrzFvxBa577UpQgP14JqX0aiPjX5b0=;
-        b=JyJTRQiyp3C9aBcaeCQZqAtRIdTsbQaDMf82/XEsKJQJhER6iPxESO3zLUrxP6Wqtq
-         ejvgvYm7Xxvdu3+fH3lfSUJJpr6QOLdX5z741E/15tcaS23aMbhqvm2ByWG7wnq8Xfls
-         Jx1jp2qC03pVG7HpavefsMTFLoAApoDVR3ESulVkc5iCxq3chZEwUTmXkcfn6MtkMEYv
-         Ui/KKrO0jkrW9sFqYabMoyZdw5oiVqLS/MRAjebreS5Kn4J8xCA3UzSNqnBr1tCZ0em/
-         +jrIOG3RWOJcIMaZ0AsTwRLBhJyKGxoETcYq6SgFdN8yxb07SgZijAGPoHhhZno5/C4t
-         fszQ==
-X-Received: by 10.66.102.39 with SMTP id fl7mr32027041pab.43.1398769121899;
-        Tue, 29 Apr 2014 03:58:41 -0700 (PDT)
-Received: from linux.lan (115-188-15-163.jetstream.xtra.co.nz. [115.188.15.163])
-        by mx.google.com with ESMTPSA id qx11sm108265024pab.35.2014.04.29.03.58.38
+        h=user-agent:in-reply-to:references:mime-version
+         :content-transfer-encoding:content-type:subject:from:date:to:cc
+         :message-id;
+        bh=dFF+LTsz0jTGSCemLYpSIglAnWF/5eX5axUWRSpnfvg=;
+        b=DkS3XZUAhUPC6kRdDb2yrQ7S2CQCKa8d0pGcRe/aqG5yQS6Zt2uquexjQ6dm5uzU8T
+         r7Po3lTpTRVDeR+7mfcp+/4T2dc7+YIaYyjRy5Jm1PHztWnaJc1uo2IuWgfKOnMBodPf
+         f5m5ZZDu+4lcm4L4RPQCzIup8lgnFeiivAKGODGGjVpyWikRwy/gjxFLAOPfW6lAIsb5
+         tcEbLeywZgz1cS3HYmWTm1jNHOH3XmF4TDNHymAYfPhxa0xzD0OTI7XZAbOjYwfPJz06
+         iljQ6lfyjNTTSyIYgSFA6VtDMNS36Wr4TEzpU6sFL/UrNvSxlcFQQ/H5xLnQL+a5/nVj
+         uhgw==
+X-Received: by 10.66.136.71 with SMTP id py7mr32508395pab.2.1398769160561;
+        Tue, 29 Apr 2014 03:59:20 -0700 (PDT)
+Received: from [10.86.17.135] ([101.119.29.242])
+        by mx.google.com with ESMTPSA id qh2sm108300888pab.13.2014.04.29.03.59.15
         for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 29 Apr 2014 03:58:40 -0700 (PDT)
-X-Mailer: git-send-email 1.8.2.rc1.4.g27db5a0
-In-Reply-To: <CAFOYHZD=wxwm0nLhtZwvXDAhQ23j0C5maArQunc0CVe_-SF_mQ@mail.gmail.com>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 29 Apr 2014 03:59:19 -0700 (PDT)
+User-Agent: Kaiten Mail
+In-Reply-To: <535f7c35cb5b1_7c7c10e32f019@nysa.notmuch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247565>
 
-Previously 'git rev-parse --show-toplevel' was used to determine the
-canonical work-tree only when the installed git version was detected to
-be 1.7.0 or better. The fall-back logic used the core.worktree config
-variable which in the case of a submodule is a relative path from the
-submodule's $GIT_DIR. Unfortunately vsatisfies doesn't handle versions
-like v2.0.0.rc0 so the fall-back logic is triggered.
+I've no right to say this, given that I've no contributions
+thus far to the project, little history in open source at all,
+and have only been following the list for less than a week,
+but I'll say it anyway, mayhaps.
 
-Given the fact that git 1.7.0 was released over 4 years ago rather than
-fixing the fall-back logic it seems reasonable to drop the version
-check.
+And I don't mean this to cause offence, or inspire outrage,
+or any similar sort of thing. I mean this only with good
+intentions.
 
-Signed-off-by: Chris Packham <judge.packham@gmail.com>
----
-So I'm not sure if vsatisfies is failing because the version has .rc0 or
-because it thinks v2.0.0 < 1.7.0. Regardless I think it's reasonably safe to
-assume that people who are using the newer versions of git-gui are running new
-enough versions of git.
+But Felipe, if you honestly feel that git has stagnated, and
+that your contributions aren't wanted because we'd
+rather starve, then perhaps git isn't the right project for you.
 
-There is also a similar section in rescan_stage2 that is checking for the
-version being 1.6.3 or newer. Again I think it's probably safe to assume that
-no-one is running a version of git that old (or at least no-one that wants to
-run this version of git-gui). I'm not quite sure how to excercise that bit of
-code so I haven't attempted to fix that.
-
- git-gui.sh | 20 ++++----------------
- 1 file changed, 4 insertions(+), 16 deletions(-)
-
-diff --git a/git-gui.sh b/git-gui.sh
-index cf2209b..9ded5b9 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -1282,23 +1282,11 @@ if {![file isdirectory $_gitdir]} {
- load_config 0
- apply_config
- 
--# v1.7.0 introduced --show-toplevel to return the canonical work-tree
--if {[package vsatisfies $_git_version 1.7.0]} {
--	if { [is_Cygwin] } {
--		catch {set _gitworktree [exec cygpath --windows [git rev-parse --show-toplevel]]}
--	} else {
--		set _gitworktree [git rev-parse --show-toplevel]
--	}
-+# Determine the canonical work-tree
-+if { [is_Cygwin] } {
-+	catch {set _gitworktree [exec cygpath --windows [git rev-parse --show-toplevel]]}
- } else {
--	# try to set work tree from environment, core.worktree or use
--	# cdup to obtain a relative path to the top of the worktree. If
--	# run from the top, the ./ prefix ensures normalize expands pwd.
--	if {[catch { set _gitworktree $env(GIT_WORK_TREE) }]} {
--		set _gitworktree [get_config core.worktree]
--		if {$_gitworktree eq ""} {
--			set _gitworktree [file normalize ./[git rev-parse --show-cdup]]
--		}
--	}
-+	set _gitworktree [git rev-parse --show-toplevel]
- }
- 
- if {$_prefix ne {}} {
--- 
-1.8.2.rc1.4.g27db5a0
+I'm not saying that you shouldn't work on the git codebase,
+you could very easily fork it and make the innovative SCMS
+none of us can see, and kill git. Can be done, if hunting really
+is the best choice as you say.
