@@ -1,104 +1,117 @@
-From: David Lang <david@lang.hm>
-Subject: Re: Recording the current branch on each commit?
-Date: Tue, 29 Apr 2014 15:14:17 -0700 (PDT)
-Message-ID: <alpine.DEB.2.02.1404291512420.14881@nftneq.ynat.uz>
-References: <CALKQrgemFx=2JaC1BaRqCwEV+knC8QftxcZ7K0AsT9azzuyVdA@mail.gmail.com> <535D6EB1.9080208@game-point.net> <CALKQrgdFLc=k9i1+N2458amLMGQa99q55A=N785VfMRwfOH6Rg@mail.gmail.com> <20140428.084543.1615507400056684596.chriscool@tuxfamily.org>
- <535E18E0.3010507@game-point.net> <CALKQrgfN-bE7KpZFadtD806Xk29N_R2sYurPQSKHLSh0UwcZiw@mail.gmail.com> <535E1C7A.3040504@game-point.net>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v5 1/6] pull: rename pull.rename to pull.mode
+Date: Tue, 29 Apr 2014 17:05:04 -0500
+Message-ID: <53602210aff0c_10a211e3308d@nysa.notmuch>
+References: <1398770226-9686-1-git-send-email-felipe.contreras@gmail.com>
+ <1398770226-9686-2-git-send-email-felipe.contreras@gmail.com>
+ <5324ACC54F034438BBAFDB15A9D716D5@PhilipOakley>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Johan Herland <johan@herland.net>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Git mailing list <git@vger.kernel.org>
-To: Jeremy Morton <admin@game-point.net>
-X-From: git-owner@vger.kernel.org Wed Apr 30 00:14:43 2014
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Andreas Krey <a.krey@gmx.de>, John Keeping <john@keeping.me.uk>,
+	Jeff King <peff@peff.net>, Richard Hansen <rhansen@bbn.com>,
+	"Brian M. Carlson" <sandals@crustytoothpaste.net>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: Philip Oakley <philipoakley@iee.org>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Apr 30 00:15:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WfGIU-0004zf-29
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 00:14:42 +0200
+	id 1WfGJV-000658-KB
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 00:15:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933262AbaD2WOi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2014 18:14:38 -0400
-Received: from mail.lang.hm ([64.81.33.126]:42261 "EHLO bifrost.lang.hm"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752537AbaD2WOh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2014 18:14:37 -0400
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id s3TMEHTP020397;
-	Tue, 29 Apr 2014 15:14:22 -0700
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <535E1C7A.3040504@game-point.net>
-User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
+	id S965253AbaD2WPm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2014 18:15:42 -0400
+Received: from mail-yh0-f42.google.com ([209.85.213.42]:45146 "EHLO
+	mail-yh0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965250AbaD2WPl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2014 18:15:41 -0400
+Received: by mail-yh0-f42.google.com with SMTP id f73so895179yha.29
+        for <git@vger.kernel.org>; Tue, 29 Apr 2014 15:15:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=3Js5dqhyy1eHYqYw2ivhQMDqUoexzUgYES+DPv94qN8=;
+        b=zvwIFLpuzX9q8JwRSIlvzM7jJJ3KPJ3stLLklArfyC145+5TaniAlRRchJhLsXD4WZ
+         /w5flBgjf0TO0uScOJmbr06w97tz9niD89q/bLLecCmgMb1WwKqiuZvFnwpe7ZPitBGk
+         np74KksW8UwM95wwuYcFXVs45bKtd83snhwSUGwHH6tEQuPTSRctpxRIhtP/Z4joldgZ
+         2NMPEIPEu/1ww4jX+zZleJRzoYik5wTDWtKFbnRU5360Jo+ti1QXA82Xis7vFk0Gvd18
+         P+cIWBWnyKuHUrOTfj78zia/n3B2CuZiQvxDmTvwERFJgnU1tg4KbGX58mIjw0WELrya
+         PjjQ==
+X-Received: by 10.236.104.234 with SMTP id i70mr521198yhg.125.1398809740844;
+        Tue, 29 Apr 2014 15:15:40 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id x37sm2381610yhn.39.2014.04.29.15.15.38
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 29 Apr 2014 15:15:39 -0700 (PDT)
+In-Reply-To: <5324ACC54F034438BBAFDB15A9D716D5@PhilipOakley>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247625>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247626>
 
-On Mon, 28 Apr 2014, Jeremy Morton wrote:
+Philip Oakley wrote:
+> From: "Felipe Contreras" <felipe.contreras@gmail.com>
+> > Also 'branch.<name>.rebase' to 'branch.<name>.pullmode'.
+> 
+> Sorry I haven't commented earlier. Because the 0/6 explanation isn't a
+> commit, a few extra words would be useful to capture what the 0/6 cover
+> letter said to start the patch series cleanly/clearly e.g. start with
+> 
+>     Begin the "Reject non-ff pulls by default" process by creating new
+>     config variables which will allow extra options, to replace the old 
+> pull
+>     configuration options.
+> 
+> I didn't immediately grasp why the 'replacement' was happening, rather
+> than it being a creation and a deprecation.
 
-> On 28/04/2014 10:09, Johan Herland wrote:
->> On Mon, Apr 28, 2014 at 11:01 AM, Jeremy Morton<admin@game-point.net> 
->> wrote:
->>> On 28/04/2014 07:45, Christian Couder wrote:
->>>> Yes, it's possible. Yesterday, I sent the following patch:
->>>> 
->>>> [RFC/PATCH 2/2] trailer: add examples to the documentation
->>>> 
->>>> and it shows a commit-msg hook to do something like that:
->>>> 
->>>> $ cat>.git/hooks/commit-msg<<EOF
->>>> #!/bin/sh
->>>> git interpret-trailers --trim-empty --trailer "git-version: \$(git
->>>> describe)" "\$1">   "\$1.new"
->>>> mv "\$1.new" "\$1"
->>>> EOF
->>>> $ chmod +x .git/hooks/commit-msg
->>>> 
->>>> I think you just need to use the following if you want the branch
->>>> instead of the git version:
->>>> 
->>>> git interpret-trailers --trim-empty --trailer "git-branch: \$(git 
->>>> name-rev
->>>> --name-only HEAD)" "\$1">   "\$1.new"
->>>> 
->>>> It could even be simpler if there was an option (which has already
->>>> been discussed) that made it possible to modify the file in
->>>> place. This way one would not need the 'mv "\$1.new" "\$1"' command.
->>> 
->>> This is certainly going in the right direction, but it's still implemented
->>> as a hook on a per-repo basis.  Do you foresee a point in the future where
->>> these trailers could be added through simple one-liners in someone's 
->>> global
->>> .gitconfig file?  That's where I'd really like to get to.
->> 
->> It's a hack, but it works surprisingly well in practice (assuming that
->> you and your co-workers all agree that this is an acceptable
->> approach):
->>
->>   1. Write the hook script and add it to your project (in a git-hooks
->> subdir or something)
->>
->>   2. Add a post-checkout hook to install the first hook and the
->> post-checkout hook itself into the user's .git/hooks/ dir.
->>
->>   3. Tell your co-workers to run the post-checkout hook script manually
->> the first time. After that, the script should take care of updating
->> itself and any hooks that you add to the project.
->> 
->> 
->> ...Johan
->
-> I don't understand why the co-workers need to run the post-checkout hook 
-> script manually the first time?
+How about this:
 
-because git does not trust the contents of the repository, so it won't 
-auto-execute a hook that's part of the respository.
+> > This way 'pull.mode' can be set to 'merge', and the default can be
+> > something else.
 
-You can include a hook, and then have someone run it, and after that it will be 
-installed locally and run after every pull (and can therefor replace itself), 
-but it requires that they run it manually the first time.
+This will allow us to eventually add a 'merge-ff-only' option, and
+eventually set it as default to solve the problem of not rejecting
+non-ff pulls by default.
 
-David Lang
+> > The old configurations still work, but get deprecated.
+> >
+> > Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+
+> > --- a/Documentation/config.txt
+> > +++ b/Documentation/config.txt
+
+> > @@ -764,15 +764,15 @@ branch.<name>.mergeoptions::
+> >  option values containing whitespace characters are currently not
+> >  supported.
+> >
+> > -branch.<name>.rebase::
+> > - When true, rebase the branch <name> on top of the fetched branch,
+> > - instead of merging the default branch from the default remote when
+> > - "git pull" is run. See "pull.rebase" for doing this in a non
+> > - branch-specific manner.
+> > +branch.<name>.pullmode::
+> > + When "git pull" is run, this determines if it would either merge or
+> > + rebase the fetched branch. The possible values are 'merge',
+> > + 'rebase', and 'rebase-preserve'. See "pull.mode" for doing this in a
+> > + non branch-specific manner.
+> 
+> I'd think it useful to add that:
+>     branch.<name>.rebase is deprecated.
+> given the large amount of internet cruft about this older config
+> variable name
+
+I don't recall deprecated configurations in the documentation, but I
+don't see a problem adding that either.
+
+-- 
+Felipe Contreras
