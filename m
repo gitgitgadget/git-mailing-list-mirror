@@ -1,78 +1,110 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Recording the current branch on each commit?
-Date: Tue, 29 Apr 2014 12:37:23 +0200
-Message-ID: <87a9b42zh8.fsf@fencepost.gnu.org>
-References: <535C47BF.2070805@game-point.net>
-	<CALKQrgfmBByMwMhxu3HkJqJGWy2Rwvij6Hi1_4npjfsxcSgpaQ@mail.gmail.com>
-	<535D4085.4040707@game-point.net>
-	<CALKQrgemFx=2JaC1BaRqCwEV+knC8QftxcZ7K0AsT9azzuyVdA@mail.gmail.com>
-	<535D6EB1.9080208@game-point.net>
-	<535e18cdc7bce_338911e930c72@nysa.notmuch>
-	<87bnvl6bdg.fsf@fencepost.gnu.org>
-	<535e8e4253196_45651483310b3@nysa.notmuch>
-	<152626b3-0642-4e26-9333-7d911d45c669@email.android.com>
-	<535edfb9baa4a_4c5c11c92f0bc@nysa.notmuch>
-	<CAHYYfeGBLXGgK-cTQLEreFXJakp1jBE829=LrhmKR3MttBiw+A@mail.gmail.com>
-	<535f1d4d8cbbb_762310ef30c9c@nysa.notmuch>
-	<220967ee-98a9-4731-88c0-43a9cba7220a@email.android.com>
-	<535f62c1e740a_45e485b30887@nysa.notmuch>
-	<87r44g33z4.fsf@fencepost.gnu.org>
-	<535f702352d21_3aee3b2f0b9@nysa.notmuch>
-	<87mwf431t3.fsf@fencepost.gnu.org>
-	<535f76db38a34_6f23159b31099@nysa.notmuch>
-	<87eh0g30it.fsf@fencepost.gnu.org>
-	<535f7c35cb5b1_7c7c10e32f019@nysa.notmuch>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: James Denholm <nod.helm@gmail.com>,
-	Jeremy Morton <admin@game-point.net>,
-	Johan Herland <johan@herland.net>,
-	Git mailing list <git@vger.kernel.org>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 29 12:37:36 2014
+From: Chris Packham <judge.packham@gmail.com>
+Subject: [GIT GUI PATCH] git-gui: unconditionally use rev-parse --show-toplevel
+Date: Tue, 29 Apr 2014 22:58:22 +1200
+Message-ID: <1398769102-6401-1-git-send-email-judge.packham@gmail.com>
+References: <CAFOYHZD=wxwm0nLhtZwvXDAhQ23j0C5maArQunc0CVe_-SF_mQ@mail.gmail.com>
+Cc: Chris Packham <judge.packham@gmail.com>
+To: patthoyts@users.sourceforge.net, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 29 12:58:51 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wf5Pr-0001nI-Jl
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Apr 2014 12:37:35 +0200
+	id 1Wf5kP-0007Kc-OW
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Apr 2014 12:58:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933598AbaD2Kh1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2014 06:37:27 -0400
-Received: from fencepost.gnu.org ([208.118.235.10]:57344 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932384AbaD2KhZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2014 06:37:25 -0400
-Received: from localhost ([127.0.0.1]:56383 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1Wf5Pf-00019J-Ts; Tue, 29 Apr 2014 06:37:24 -0400
-Received: by lola (Postfix, from userid 1000)
-	id 7B36FDF342; Tue, 29 Apr 2014 12:37:23 +0200 (CEST)
-In-Reply-To: <535f7c35cb5b1_7c7c10e32f019@nysa.notmuch> (Felipe Contreras's
-	message of "Tue, 29 Apr 2014 05:17:25 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
+	id S933685AbaD2K6p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2014 06:58:45 -0400
+Received: from mail-pd0-f178.google.com ([209.85.192.178]:61027 "EHLO
+	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933674AbaD2K6o (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2014 06:58:44 -0400
+Received: by mail-pd0-f178.google.com with SMTP id fp1so29043pdb.9
+        for <git@vger.kernel.org>; Tue, 29 Apr 2014 03:58:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=dMWD6FA/pwQwRIrzFvxBa577UpQgP14JqX0aiPjX5b0=;
+        b=JyJTRQiyp3C9aBcaeCQZqAtRIdTsbQaDMf82/XEsKJQJhER6iPxESO3zLUrxP6Wqtq
+         ejvgvYm7Xxvdu3+fH3lfSUJJpr6QOLdX5z741E/15tcaS23aMbhqvm2ByWG7wnq8Xfls
+         Jx1jp2qC03pVG7HpavefsMTFLoAApoDVR3ESulVkc5iCxq3chZEwUTmXkcfn6MtkMEYv
+         Ui/KKrO0jkrW9sFqYabMoyZdw5oiVqLS/MRAjebreS5Kn4J8xCA3UzSNqnBr1tCZ0em/
+         +jrIOG3RWOJcIMaZ0AsTwRLBhJyKGxoETcYq6SgFdN8yxb07SgZijAGPoHhhZno5/C4t
+         fszQ==
+X-Received: by 10.66.102.39 with SMTP id fl7mr32027041pab.43.1398769121899;
+        Tue, 29 Apr 2014 03:58:41 -0700 (PDT)
+Received: from linux.lan (115-188-15-163.jetstream.xtra.co.nz. [115.188.15.163])
+        by mx.google.com with ESMTPSA id qx11sm108265024pab.35.2014.04.29.03.58.38
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 29 Apr 2014 03:58:40 -0700 (PDT)
+X-Mailer: git-send-email 1.8.2.rc1.4.g27db5a0
+In-Reply-To: <CAFOYHZD=wxwm0nLhtZwvXDAhQ23j0C5maArQunc0CVe_-SF_mQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247563>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247564>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Previously 'git rev-parse --show-toplevel' was used to determine the
+canonical work-tree only when the installed git version was detected to
+be 1.7.0 or better. The fall-back logic used the core.worktree config
+variable which in the case of a submodule is a relative path from the
+submodule's $GIT_DIR. Unfortunately vsatisfies doesn't handle versions
+like v2.0.0.rc0 so the fall-back logic is triggered.
 
-> David Kastrup wrote:
->
->> The default behavior of "git push".
->
-> This is a minor change that not many people would notice, and it has not
-> actually happend. But fine, let's count it as one.
+Given the fact that git 1.7.0 was released over 4 years ago rather than
+fixing the fall-back logic it seems reasonable to drop the version
+check.
 
-Shrug.  Your diatribe is to a good part about the default behavior of
-"git pull".  The "minor" change affects multiple branches in upstream,
-while your "important change" affects a single local branch.
+Signed-off-by: Chris Packham <judge.packham@gmail.com>
+---
+So I'm not sure if vsatisfies is failing because the version has .rc0 or
+because it thinks v2.0.0 < 1.7.0. Regardless I think it's reasonably safe to
+assume that people who are using the newer versions of git-gui are running new
+enough versions of git.
 
-With that sort of bias, it's easy to convince yourself of anything.
+There is also a similar section in rescan_stage2 that is checking for the
+version being 1.6.3 or newer. Again I think it's probably safe to assume that
+no-one is running a version of git that old (or at least no-one that wants to
+run this version of git-gui). I'm not quite sure how to excercise that bit of
+code so I haven't attempted to fix that.
 
+ git-gui.sh | 20 ++++----------------
+ 1 file changed, 4 insertions(+), 16 deletions(-)
+
+diff --git a/git-gui.sh b/git-gui.sh
+index cf2209b..9ded5b9 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -1282,23 +1282,11 @@ if {![file isdirectory $_gitdir]} {
+ load_config 0
+ apply_config
+ 
+-# v1.7.0 introduced --show-toplevel to return the canonical work-tree
+-if {[package vsatisfies $_git_version 1.7.0]} {
+-	if { [is_Cygwin] } {
+-		catch {set _gitworktree [exec cygpath --windows [git rev-parse --show-toplevel]]}
+-	} else {
+-		set _gitworktree [git rev-parse --show-toplevel]
+-	}
++# Determine the canonical work-tree
++if { [is_Cygwin] } {
++	catch {set _gitworktree [exec cygpath --windows [git rev-parse --show-toplevel]]}
+ } else {
+-	# try to set work tree from environment, core.worktree or use
+-	# cdup to obtain a relative path to the top of the worktree. If
+-	# run from the top, the ./ prefix ensures normalize expands pwd.
+-	if {[catch { set _gitworktree $env(GIT_WORK_TREE) }]} {
+-		set _gitworktree [get_config core.worktree]
+-		if {$_gitworktree eq ""} {
+-			set _gitworktree [file normalize ./[git rev-parse --show-cdup]]
+-		}
+-	}
++	set _gitworktree [git rev-parse --show-toplevel]
+ }
+ 
+ if {$_prefix ne {}} {
 -- 
-David Kastrup
+1.8.2.rc1.4.g27db5a0
