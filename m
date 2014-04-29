@@ -1,93 +1,137 @@
-From: Stepan Kasal <kasal@ucw.cz>
-Subject: [PATCH] MSVC: link dynamically to the CRT
-Date: Tue, 29 Apr 2014 12:25:09 +0200
-Organization: <)><
-Message-ID: <20140429102509.GA16706@camelia.ucw.cz>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: Recording the current branch on each commit?
+Date: Tue, 29 Apr 2014 05:17:25 -0500
+Message-ID: <535f7c35cb5b1_7c7c10e32f019@nysa.notmuch>
+References: <535C47BF.2070805@game-point.net>
+ <CALKQrgfmBByMwMhxu3HkJqJGWy2Rwvij6Hi1_4npjfsxcSgpaQ@mail.gmail.com>
+ <535D4085.4040707@game-point.net>
+ <CALKQrgemFx=2JaC1BaRqCwEV+knC8QftxcZ7K0AsT9azzuyVdA@mail.gmail.com>
+ <535D6EB1.9080208@game-point.net>
+ <535e18cdc7bce_338911e930c72@nysa.notmuch>
+ <87bnvl6bdg.fsf@fencepost.gnu.org>
+ <535e8e4253196_45651483310b3@nysa.notmuch>
+ <152626b3-0642-4e26-9333-7d911d45c669@email.android.com>
+ <535edfb9baa4a_4c5c11c92f0bc@nysa.notmuch>
+ <CAHYYfeGBLXGgK-cTQLEreFXJakp1jBE829=LrhmKR3MttBiw+A@mail.gmail.com>
+ <535f1d4d8cbbb_762310ef30c9c@nysa.notmuch>
+ <220967ee-98a9-4731-88c0-43a9cba7220a@email.android.com>
+ <535f62c1e740a_45e485b30887@nysa.notmuch>
+ <87r44g33z4.fsf@fencepost.gnu.org>
+ <535f702352d21_3aee3b2f0b9@nysa.notmuch>
+ <87mwf431t3.fsf@fencepost.gnu.org>
+ <535f76db38a34_6f23159b31099@nysa.notmuch>
+ <87eh0g30it.fsf@fencepost.gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: GIT Mailing-list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Apr 29 12:25:23 2014
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: James Denholm <nod.helm@gmail.com>,
+	Jeremy Morton <admin@game-point.net>,
+	Johan Herland <johan@herland.net>,
+	Git mailing list <git@vger.kernel.org>
+To: David Kastrup <dak@gnu.org>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 29 12:28:09 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wf5E0-0005jS-Br
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Apr 2014 12:25:20 +0200
+	id 1Wf5Gh-0000ER-Jp
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Apr 2014 12:28:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756726AbaD2KZN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2014 06:25:13 -0400
-Received: from jabberwock.ucw.cz ([46.255.230.98]:43315 "EHLO
-	jabberwock.ucw.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755161AbaD2KZM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2014 06:25:12 -0400
-Received: from 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (84.64.broadband3.iol.cz [85.70.64.84])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	(Authenticated sender: kasal)
-	by jabberwock.ucw.cz (Postfix) with ESMTPSA id C580A1C009E
-	for <git@vger.kernel.org>; Tue, 29 Apr 2014 12:25:10 +0200 (CEST)
-Received: from camelia.ucw.cz (camelia.ucw.cz [127.0.0.1])
-	by 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (8.14.3/8.14.3) with ESMTP id s3TAPA1e016713
-	for <git@vger.kernel.org>; Tue, 29 Apr 2014 12:25:10 +0200
-Received: (from kasal@localhost)
-	by camelia.ucw.cz (8.14.3/8.14.3/Submit) id s3TAP9R8016712
-	for git@vger.kernel.org; Tue, 29 Apr 2014 12:25:09 +0200
-Content-Disposition: inline
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1757346AbaD2K2D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2014 06:28:03 -0400
+Received: from mail-oa0-f52.google.com ([209.85.219.52]:57614 "EHLO
+	mail-oa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756655AbaD2K2B (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2014 06:28:01 -0400
+Received: by mail-oa0-f52.google.com with SMTP id l6so8575136oag.39
+        for <git@vger.kernel.org>; Tue, 29 Apr 2014 03:28:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=uBjynhZe92ts8xv7M0G1h9LIlgf84u6qdCrzU6A+ZDk=;
+        b=XncdHGH2Ro2Vl9hkgPWLvpt9ptbhw8bLmhhgijlHwbBSmb7Tdk/JNcR8i3VEnzCLwa
+         vzAW9WpV0Ms6+zhY4hKd6ppJntJGoLWXkXLIhHr73WeSF2Km/9b0Lc9pOj7OVIlh7hbf
+         hlNpRXNRu+v25eqSeaUR9f1pzuRoKSJxx2t8nz+ZuHc4VfJUNpa8UBmL7ntXKeoe0MxC
+         zg5NOYvKy1XMnWhk2IZ/2a8BGrggDXmut7bsy3ZjUL/aW4uBLv1pP24OPfdTN75zTVOD
+         h1Wt1VVtWrajxooebsIKOQb5sP5vPyhLNQEBmdlgrTl99XHC5cMdTWVlXkXvK7tyrzmm
+         l8TA==
+X-Received: by 10.182.252.204 with SMTP id zu12mr933305obc.69.1398767280942;
+        Tue, 29 Apr 2014 03:28:00 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id pt8sm39353463obb.5.2014.04.29.03.27.58
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 29 Apr 2014 03:27:59 -0700 (PDT)
+In-Reply-To: <87eh0g30it.fsf@fencepost.gnu.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247561>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247562>
 
-From: Karsten Blees <blees@dcon.de>
-Date: Fri, 7 Jan 2011 17:20:21 +0100
+David Kastrup wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> 
+> > David Kastrup wrote:
+> >
+> >> Well, there you have it.  The ones that do any kind of relevant change
+> >> are the ones that need thinking about and consideration.  And when you
+> >> are so verbose about them that
+> >> 
+> >> a) you are getting on people's nerves
+> >> b) nobody else finds something worth saying that you did not already say
+> >> 
+> >> then the net effect is that it feels to the person in question he's
+> >> mainly doing you (and not all that many others) a favor by investing
+> >> the work for properly considering it and its consequences.
+> >
+> > This is the last time I say it: this is demonstrably false.
+> 
+> Feelings are not categorizable as "demonstrably false".
 
-Dynamic linking is generally preferred over static linking, and MSVCRT.dll
-has been integral part of Windows for a long time.
+It's demonsrable by the challenge below.
 
-This also fixes linker warnings for _malloc and _free in zlib.lib, which
-seems to be compiled for MSVCRT.dll already.
+> > You claim that relevant changes can be made if the submitter is not so
+> > verbose (and less aggressive and what not).
+> >
+> > This is obviously not the case. Show me any change of importance done
+> > in the last two years, hell, make it four. And by change I mean
+> > something that was one way before, and was another way after.
+> 
+> The default behavior of "git push".
 
-The DLL version also exports some of the CRT initialization functions,
-which are hidden in the static libcmt.lib (e.g. __wgetmainargs, required by
-subsequent Unicode patches).
+This is a minor change that not many people would notice, and it has not
+actually happend. But fine, let's count it as one.
 
-Signed-off-by: Karsten Blees <blees@dcon.de>
-Signed-off-by: Stepan Kasal <kasal@ucw.cz>
----
+> Colorized diffs.
 
-Another patch from msysgit.
-Cheers,
-  Stepan
+That's not a change.
 
- config.mak.uname | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+> "git add dir/"
 
-diff --git a/config.mak.uname b/config.mak.uname
-index efaed94..eebc847 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -365,16 +365,16 @@ ifeq ($(uname_S),Windows)
- 		compat/win32/pthread.o compat/win32/syslog.o \
- 		compat/win32/dirent.o
- 	COMPAT_CFLAGS = -D__USE_MINGW_ACCESS -DNOGDI -DHAVE_STRING_H -DHAVE_ALLOCA_H -Icompat -Icompat/regex -Icompat/win32 -DSTRIP_EXTENSION=\".exe\"
--	BASIC_LDFLAGS = -IGNORE:4217 -IGNORE:4049 -NOLOGO -SUBSYSTEM:CONSOLE -NODEFAULTLIB:MSVCRT.lib
-+	BASIC_LDFLAGS = -IGNORE:4217 -IGNORE:4049 -NOLOGO -SUBSYSTEM:CONSOLE
- 	EXTLIBS = user32.lib advapi32.lib shell32.lib wininet.lib ws2_32.lib
- 	PTHREAD_LIBS =
- 	lib =
- ifndef DEBUG
--	BASIC_CFLAGS += -GL -Os -MT
-+	BASIC_CFLAGS += -GL -Os -MD
- 	BASIC_LDFLAGS += -LTCG
- 	AR += -LTCG
- else
--	BASIC_CFLAGS += -Zi -MTd
-+	BASIC_CFLAGS += -Zi -MDd
- endif
- 	X = .exe
- endif
+That doesn't count as an important change.
+
+> can now remove files.
+
+Irrelevant.
+
+> "git gc --aggressive" has been sanitized.
+
+Irrelevant. Nobody did notice.
+
+
+That's all you could list for *four* years? None of that would even be noticed
+by most of our users, maybe push.default (when it actually happens), but that's
+*one*.
+
+*One* important change in *four* years.
+
+That's demonstration that change just does not happen. And if you disagree,
+then we'll agree to disagree.
+
 -- 
-1.9.2.msysgit.0.158.g6070cee
+Felipe Contreras
