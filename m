@@ -1,139 +1,141 @@
-From: =?UTF-8?B?SmVhbi1Ob8OrbCBBdmlsYQ==?= <avila.jn@gmail.com>
-Subject: Re: Tagging  a branch as "not fitted for branching" ?
-Date: Tue, 29 Apr 2014 09:37:06 +0200
-Message-ID: <535F56A2.9020900@gmail.com>
-References: <535E4507.2070805@gmail.com> <xmqqoazlm3ji.fsf@gitster.dls.corp.google.com>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH] t3910: show failure of core.precomposeunicode with decomposed
+ filenames
+Date: Tue, 29 Apr 2014 09:39:53 +0200
+Message-ID: <535F5749.1060500@web.de>
+References: <20140428161630.GA9435@sigill.intra.peff.net> <xmqqbnvlqn5j.fsf@gitster.dls.corp.google.com> <20140428193502.GD25993@sigill.intra.peff.net> <535EB167.4030804@web.de> <20140428200326.GA2961@sigill.intra.peff.net> <535EBEDA.5070207@web.de> <20140429032347.GB11979@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8;
 	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 29 09:37:20 2014
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Apr 29 09:41:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wf2bP-0002kl-0v
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Apr 2014 09:37:19 +0200
+	id 1Wf2eu-0006iC-SQ
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Apr 2014 09:40:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932793AbaD2HhM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Apr 2014 03:37:12 -0400
-Received: from mail-wi0-f182.google.com ([209.85.212.182]:54074 "EHLO
-	mail-wi0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932621AbaD2HhK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2014 03:37:10 -0400
-Received: by mail-wi0-f182.google.com with SMTP id d1so6863669wiv.15
-        for <git@vger.kernel.org>; Tue, 29 Apr 2014 00:37:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=ostayBynKjdZ5c4y7wk+9iRk2n6jI6LsUtVobgSvNC4=;
-        b=TknisgoWi2IvhmR79j3l4Hy6WPEUBXA9rEsEjcWxLelWv7cS3Q8+u6zVsssyUpTnZC
-         X/cShY/XRABC6pmrIVyYQsDlxXkE9oQtmEZVyHVtg/JjWDJFwyxyIevbfxY6FJKyGWTD
-         rOJFSrGmS331voTGHJF8CGv0cwr8I1hIp5EevfDztfwxVIZNHLTHFoXi/6lZbZr7MBTC
-         SWbyGFgv2xJOweA+quAGJDjlOymMl5hLHnNb0ASDWPCi29R4JOVCmDhXNKmuDlHwergK
-         PGTvRXtgNQjSSeqaWYm+D0s6O5yV5o/Da4wb+hjVjs5FkDke3W6J9Ios/eThkN9z+LfT
-         m75w==
-X-Received: by 10.180.228.42 with SMTP id sf10mr19159791wic.48.1398757028512;
-        Tue, 29 Apr 2014 00:37:08 -0700 (PDT)
-Received: from [192.168.1.95] (static-csq-cds-097114.business.bouyguestelecom.com. [164.177.97.114])
-        by mx.google.com with ESMTPSA id bq12sm8312553wib.0.2014.04.29.00.37.07
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 29 Apr 2014 00:37:07 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
-In-Reply-To: <xmqqoazlm3ji.fsf@gitster.dls.corp.google.com>
+	id S1755711AbaD2Hkx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Apr 2014 03:40:53 -0400
+Received: from mout.web.de ([212.227.15.14]:62203 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751727AbaD2Hkw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2014 03:40:52 -0400
+Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb102)
+ with ESMTPSA (Nemesis) id 0MNcIg-1WXsj43zoY-007DVx; Tue, 29 Apr 2014 09:40:49
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20131104 Icedove/17.0.10
+In-Reply-To: <20140429032347.GB11979@sigill.intra.peff.net>
+X-Provags-ID: V03:K0:+I1FY3YwHzsdZ1NSuPgvsoR9lt6Q1dxMF/JbowsjeqySyvteOBx
+ WPSsJooR6o0XXvFObtrRzkdWu0+/tCNWoqPPpDfS76Ew+hBTQqgLEff33gAF59Uy5yiqqJA
+ hF8ehahb0fplGEcr6WQZODD+7Lp0biPsltjtZrtsdHTEFNqWtXf8kMhrwe72ayt63QbhLxQ
+ DuMUqJMm1Qz+A7u+/k6Qw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247526>
 
-Le 29/04/2014 01:34, Junio C Hamano a =C3=A9crit :
-> Jean-No=C3=ABl Avila <avila.jn@gmail.com> writes:
+On 04/29/2014 05:23 AM, Jeff King wrote:
+> On Mon, Apr 28, 2014 at 10:49:30PM +0200, Torsten B=C3=B6gershausen w=
+rote:
 >
->> Most manuals on git state that it is bad practice to push -f a branc=
-h
->> after have meddled with its history, because this would risk to upse=
-t
->> the repositories of the coworkers. On the other hand, some workflows
->> use branches to propose modifications, and need some rewritting of t=
-he
->> history after some review steps. In this case, the branch should onl=
-y
->> be seen as a mere pile of patches. Having this two-sided discourse i=
-s
->> often misunderstood by casual git users.
+>> OK, thanks for the description.
+>> In theory we can make Git "composition ignoring" by changing
+>> index_file_exists() in name-hash.c.
+>> (Both names must be precomposed first and compared then)
+> Yeah, we could perhaps get away without storing the extra precomposed
+> form if we just stored the entries under their precomposed hash, and
+> then taught same_name to use a slower precompose-aware comparison. Bu=
+t I
+> also see that we do binary searches in index_name_pos (called by
+> index_name_is_other). I don't know if we'd have to deal with this
+> problem there, too.
+Just loud thinking:
+We precompose whenever we read file names from disc, that's done in=20
+readdir()
+We precompose whenever we get an argv into Git, that's done in=20
+precompose_argv()
+We precompose every time we read file names from the index file on=20
+disc(?) into memory.
+That we don't do today, and my suggestion to hack name-hash.c isn't a=20
+good one.
+
+Probably we need to go into read-cache.c, or more places. I'm not an=20
+expert here knowing
+all Git internal details.
+Basically all places where strings containing file names are put into=20
+memory are effected,
+and I wouldn't be too concerned about CPU cycles.
+
+>> I don't know how much people are using Git before 1.7.12 (the
+>> first version supporting precomposed unicode).
 >>
->> The proposed solution would be to be able to flag the branches with =
-a
->> special tag "not fitted for branching" that a collaborator could use
->> when pushing it. This tag would be passed on to any pulled
->> remote. When another collaborator would then issue a "git checkout
->> -b", the command would fail with a warning message, unless forced wi=
-th
->> -f'.
->>
->> Is this feature already present? If not, would it be of any interest=
-?
-> Since nobody seems to be responding...
->
-> I do not think there is anything like that.  I am not personally
-> interested in it very much without seeing much details on how we go
-> about implementing such a feature.  Note that I am not speaking on
-> behalf of the project, or as its maintainer, but just as one of the
-> active contributors to the project, so my "not interested" is in no
-> way final.
->
-> There are ways other than "checkout -b" to end up having your
-> commits on top of a forbidden commit.  Are you going to cover all of
-> them and at what point?  You may rebase your work based on 'master'
-> (which is not one of these forbidden branches) onto it.  You may
-> start your WIP on top of 'master', realize that you need something
-> that is cooking only in 'pu' (which is a forbidden-to-be-built-on
-> branch), and then do a "git checkout -m pu^0" in order to further
-> experiment with it in an ideal world in which that prerequiste of
-> yours already has graduated, and then decide to keep the WIP on a
-> branch that you are not going to publish with "git branch wip" after
-> commiting it on a detached HEAD.  Requiring "-f" during such an
-> exploratory, idea-forming programming exercise might be a bit too
-> much, and I cannot offhand see where the good place is to require
-> "-f" in the first place.  At the final "git branch wip" step is too
-> late, as you have already expended a lot of effort to build that
-> WIP, and your saying "git branch wip" should be an enough clue for
-> Git that you do mean to save it.
->
-> At the first glance, I do agree (and to only this part I can say "I
-> am interested in") that it might be a good idea if we had a bit more
-> formal way to convey that branch 'pu' is not something you may want
-> to base your final work on, but I am not sure if such a tag would
-> help very much in practice or would be seen as a mere unnecessary
-> roadblock that prevents them from freer experiments once the
-> developers get used to the convention of their projects.
+>> Could we simply ask them to upgrade ?
+> I'm not sure what you mean here. Upgrading won't help, because the
+> values are baked into existing history created with the old versions
+> forever. Any time I "git checkout v1.0" on the broken project, a mode=
+rn
+> git will complain about the ghost untracked file.
+It depends if all file names in a certain repo are stored decomposed,
+(in this case everybody can set core.precomposeunicode false)
+or if there is a mixture having precomposed and decomposed
+in different comits/directories...
+In this case we can normalize the master branch.
+=46or older commit the users need to wait for an updated Git version,
+until that they need to live with the ghosts as good as they can.
 
-Thank you for your reply.
+>
+>> The next problem is that people need to agree if the repo should sto=
+re
+>> names in pre- or decomposed form.
+>> (My voice is for precomposed)
+>> Unfortunatly the core.precomposeunicode is repo-local, so everybody
+>> needs to "agree globally" and "configure locally".
+> Yeah, that was sort of my "point 1" from the patch. I'm a bit worried
+> that it creates problems for people on other systems, though. Linux
+> people do not need to care about precomposed/decomposed at all, and a=
+ny
+> attempt we make to automatically handle it is going to run afoul of
+> non-utf8 encodings. Not to mention that it does not solve the "git
+> checkout v1.0" problem above.
+Not sure what is meant by non-utf8 encodings.
+Mac OS X can only handle Unicode filenames,
+and a single ISO-8859-1 will be returned as "%XY" from readdir().
+So if you want to share a repo with Mac OS X (and/or Windows)
+Unicode should be used.
+Are you saying that there is a Linux station feeding in file names in =20
+e.g. 8859-1, EUC ?
+My experience/knowledge is that you can not do that (in a useful way).
 
-I had not looked at other scenarios and the use cases that you bring up=
-=20
-show that this feature would be far more complex than first estimated. =
-I=20
-was more focused on the simplest case that is the broadest in the githu=
-b=20
-fashion. Basing a work on a remote 'pu' branch when using advanced=20
-branch management commands may not raise any warning, or these warnings=
-=20
-could be muffled with a config property.
 
-After thinking a bit more on this, the initial idea encompassed another=
-=20
-feature: enable people to push without "-f" when they have created thes=
-e=20
-kind of branches. In your daily management of the pu branch for git, do=
-=20
-you have to use the -f flag a lot? Would it be helpful to just tell git=
-=20
-"I know what I am doing on this branch"? In this feature, the tagging=20
-would only be local.
+>> Side note:
+>> I which we had this config variable travelling with the repo, like .=
+gitattributes does
+>> for text dealing with CRLF-LF.
+> Yeah, I guess if we wanted to enforce it everywhere, you would have t=
+o
+> use .gitattributes since we cannot safely turn on such a feature by
+> default.
+>
+>> I don't know how many reports you have, reading all this it feels as=
+ if the effected users
+>> could "normalize" their repos and run "git config core.precomposeuni=
+code true", followed
+>> by "git config --global core.precomposeunicode true".
+>> Does that sound like a possible way forward ?
+> I have just a handful of reports. Maybe 3-4? I didn't dig them all up
+> today, as it would be a non-trivial effort. But I have no idea how go=
+od
+> a sampling that is.
+The following could help, may be:
+git -c core.quotepath=3Dfalse ls-files | iconv -f UTF-8-MAC -t UTF-8 >e=
+xpected
+git -c core.quotepath=3Dfalse ls-files >actual
+diff expected actual
+>
+> -Peff
