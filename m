@@ -1,80 +1,138 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 17/32] read-cache: split-index mode
-Date: Wed, 30 Apr 2014 05:45:26 +0700
-Message-ID: <CACsJy8Da=n+kh8_bUkJ11-dK09A6zOMnhBQJCsPCWcCJ2mY0pw@mail.gmail.com>
-References: <1398682553-11634-1-git-send-email-pclouds@gmail.com>
- <1398682553-11634-18-git-send-email-pclouds@gmail.com> <xmqq1twhnkbz.fsf@gitster.dls.corp.google.com>
- <CACsJy8BEJdA+d5DL94n4o3FRphs9bNPhX9oKK3MmOfTTBY=f9Q@mail.gmail.com> <xmqqiopskq1o.fsf@gitster.dls.corp.google.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH v5 1/6] pull: rename pull.rename to pull.mode
+Date: Wed, 30 Apr 2014 00:00:03 +0100
+Organization: OPDS
+Message-ID: <7B859CB604CE45AEA1DE2C9A9EF6C2B9@PhilipOakley>
+References: <1398770226-9686-1-git-send-email-felipe.contreras@gmail.com> <1398770226-9686-2-git-send-email-felipe.contreras@gmail.com> <5324ACC54F034438BBAFDB15A9D716D5@PhilipOakley> <53602210aff0c_10a211e3308d@nysa.notmuch>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 30 00:46:13 2014
+Content-Type: text/plain;
+	format=flowed;
+	charset="UTF-8";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Andreas Krey" <a.krey@gmx.de>,
+	"John Keeping" <john@keeping.me.uk>, "Jeff King" <peff@peff.net>,
+	"Richard Hansen" <rhansen@bbn.com>,
+	"Brian M. Carlson" <sandals@crustytoothpaste.net>,
+	"Felipe Contreras" <felipe.contreras@gmail.com>
+To: "Felipe Contreras" <felipe.contreras@gmail.com>,
+	"Git List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Apr 30 01:00:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WfGmy-0003rU-62
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 00:46:12 +0200
+	id 1WfH0U-0001IJ-3t
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 01:00:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758039AbaD2Wp6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2014 18:45:58 -0400
-Received: from mail-qc0-f176.google.com ([209.85.216.176]:37532 "EHLO
-	mail-qc0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754260AbaD2Wp5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2014 18:45:57 -0400
-Received: by mail-qc0-f176.google.com with SMTP id x13so1020839qcv.21
-        for <git@vger.kernel.org>; Tue, 29 Apr 2014 15:45:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=1x9aZJLHUaoto1esYsw/RyXrUOHxr1ECmAu2TvTMZRY=;
-        b=yaGR233sE0f3mioHC/Hk5d93sJHsbSa931YCnOX/fMcY/QVEL07ws1kgkUzmI1oERx
-         k05xs9W4KlC+i4QhrRkSDHlGYB7VfAOEJwtJqk49XGoPM7c6oRVjz1/d4XbGSFairw++
-         DU1yCKo2ITYc5bNde91v57nq2uHabx9fZ2if41sfVCDVgn8zH5iaVAU+gscdCdamG2xA
-         vkMGMTKI+F15oJp77ggA7H4X7baxiJNeWoDrbP3pQMl9XeUmwd51/ssYTkatjBGg+IXX
-         yBbftu1USvsD9SENRUC4+tl1R7iWRFtlh6WxcgMB+mVjYMH3Jf3ebjundA1ZiKQmgoXk
-         iFOw==
-X-Received: by 10.140.107.198 with SMTP id h64mr834386qgf.30.1398811556809;
- Tue, 29 Apr 2014 15:45:56 -0700 (PDT)
-Received: by 10.96.138.9 with HTTP; Tue, 29 Apr 2014 15:45:26 -0700 (PDT)
-In-Reply-To: <xmqqiopskq1o.fsf@gitster.dls.corp.google.com>
+	id S1753450AbaD2XAE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2014 19:00:04 -0400
+Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:15978 "EHLO
+	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751767AbaD2XAC (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Apr 2014 19:00:02 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AqYXAJQtYFNZ8YTM/2dsb2JhbABNDIMGhAuFPbx2BQECAQGBIxd0giAFAQEEAQgBARMGFR4BASELAgMFAgEDFQMCAgUhAgIUAQQIEgYHFwYBEggCAQIDAYgcAwkMpiyFWZcSDYZbF4Epiw+BMAFmgnY1gRUEj2uFM4ICjn2FVYMyPA
+X-IPAS-Result: AqYXAJQtYFNZ8YTM/2dsb2JhbABNDIMGhAuFPbx2BQECAQGBIxd0giAFAQEEAQgBARMGFR4BASELAgMFAgEDFQMCAgUhAgIUAQQIEgYHFwYBEggCAQIDAYgcAwkMpiyFWZcSDYZbF4Epiw+BMAFmgnY1gRUEj2uFM4ICjn2FVYMyPA
+X-IronPort-AV: E=Sophos;i="4.97,953,1389744000"; 
+   d="scan'208";a="465008983"
+Received: from host-89-241-132-204.as13285.net (HELO PhilipOakley) ([89.241.132.204])
+  by out1.ip01ir2.opaltelecom.net with SMTP; 29 Apr 2014 23:59:59 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247662>
 
-On Wed, Apr 30, 2014 at 12:23 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Duy Nguyen <pclouds@gmail.com> writes:
->
->>> I do think it is sensible to keep two arrays of "struct cache_entry"
->>> around (one for base and one for incremental changes) inside
->>> index_state, and the patch seems to do so via "struct split_index"
->>> that does have a copy of saved_cache.  If the write-out codepath
->>> walks these two sorted arrays in parallel, shouldn't it be able to
->>> figure out which entry is added, deleted and modified without
->>> fattening this structure?
+From: "Felipe Contreras" <felipe.contreras@gmail.com>
+> Philip Oakley wrote:
+>> From: "Felipe Contreras" <felipe.contreras@gmail.com>
+>> > Also 'branch.<name>.rebase' to 'branch.<name>.pullmode'.
 >>
->> So far without that "index" field I would have to resort to hasing
->> entries in both arrays to find the shared paths. But ideas are
->> welcome.
+>> Sorry I haven't commented earlier. Because the 0/6 explanation isn't 
+>> a
+>> commit, a few extra words would be useful to capture what the 0/6 
+>> cover
+>> letter said to start the patch series cleanly/clearly e.g. start with
+>>
+>>     Begin the "Reject non-ff pulls by default" process by creating 
+>> new
+>>     config variables which will allow extra options, to replace the 
+>> old
+>> pull
+>>     configuration options.
+>>
+>> I didn't immediately grasp why the 'replacement' was happening, 
+>> rather
+>> than it being a creation and a deprecation.
 >
-> Hmm, why do you need to hash, when both arrays are sorted?  Wouldn't
-> it be just the matter of walking these two arrays in parallel,
-> with one scanning index for each array initialized to the beginning,
-> comparing the elements pointed by these indices, noting the side
-> that comes earlier in the sort order and advancing the index on that
-> side (or if they compare equal then advance both), ...?
+> How about this:
+>
+>> > This way 'pull.mode' can be set to 'merge', and the default can be
+>> > something else.
 
-And compare all names and stages (especially in the unpack-trees case,
-when no entry is reused). I kinda hope to avoid that. Speaking about
-reusing cache_entry, we won't be able to share cache_entry because
-when it's freed in replace_index_entry, or remove_index_entry_at in
-the main index, we need to locate the same entry in the shared index
-as well and remove that stale pointer. Without sharing, we nearly
-double memory usage from the beginning.
--- 
-Duy
+My initial problem was the word sequence order which, in the original, 
+started with the 'replace' statement, which tripped me up. So I was 
+looking for some preparatory wording to set the scene and avoid the 
+trip.
+(I'm assuming you were noting that you already had the subsequent "This 
+way 'pull.mode'.." statement, unfortunately I'd already tripped up by 
+then in the original, hence the suggestions for the scene setting)
+
+>
+> This will allow us to eventually add a 'merge-ff-only' option, and
+> eventually set it as default to solve the problem of not rejecting
+> non-ff pulls by default.
+>
+>> > The old configurations still work, but get deprecated.
+>> >
+>> > Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+>
+>> > --- a/Documentation/config.txt
+>> > +++ b/Documentation/config.txt
+>
+>> > @@ -764,15 +764,15 @@ branch.<name>.mergeoptions::
+>> >  option values containing whitespace characters are currently not
+>> >  supported.
+>> >
+>> > -branch.<name>.rebase::
+>> > - When true, rebase the branch <name> on top of the fetched branch,
+>> > - instead of merging the default branch from the default remote 
+>> > when
+>> > - "git pull" is run. See "pull.rebase" for doing this in a non
+>> > - branch-specific manner.
+>> > +branch.<name>.pullmode::
+>> > + When "git pull" is run, this determines if it would either merge 
+>> > or
+>> > + rebase the fetched branch. The possible values are 'merge',
+>> > + 'rebase', and 'rebase-preserve'. See "pull.mode" for doing this 
+>> > in a
+>> > + non branch-specific manner.
+>>
+>> I'd think it useful to add that:
+>>     branch.<name>.rebase is deprecated.
+>> given the large amount of internet cruft about this older config
+>> variable name
+>
+> I don't recall deprecated configurations in the documentation, but I
+> don't see a problem adding that either.
+
+I'm sure that Junio will be able to form an opinion, which could go 
+either way. On the one hand we try to avoid endless deprecation notices 
+that then never get removed. On the other, we have the internet advice 
+to set those old variables, so its worth associating them with their 
+newer replacement with the warning. It'll be some else's judgment call 
+at the end of the day.
+
+>
+> -- 
+> Felipe Contreras
+>
+--
+Philip 
