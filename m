@@ -1,85 +1,117 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 00/32] Split index mode for very large indexes
-Date: Tue, 29 Apr 2014 08:52:59 +0700
-Message-ID: <CACsJy8B7P0Un0__9mS2j81PimPZbz9oTKZHKx8yo_smOMck1qA@mail.gmail.com>
-References: <1398682553-11634-1-git-send-email-pclouds@gmail.com> <CAJo=hJtgijOOMPbFjvTUaENw=hr0YixYmy1UkdqEd=CpLZ5L2A@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v4 15/27] fast-import.c: change update_branch to use ref transactions
+Date: Mon, 28 Apr 2014 22:18:18 -0400
+Message-ID: <CAPig+cTE9+XHYfnynMykbYf=0kMivj5wFu0Lovnr8XbxyEpsyA@mail.gmail.com>
+References: <1398725682-30782-1-git-send-email-sahlberg@google.com>
+	<1398725682-30782-16-git-send-email-sahlberg@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Apr 29 03:53:37 2014
+Cc: Git List <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Ronnie Sahlberg <sahlberg@google.com>
+X-From: git-owner@vger.kernel.org Tue Apr 29 04:18:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WexEk-0001Eo-QJ
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Apr 2014 03:53:35 +0200
+	id 1Wexcm-0005Dw-Ee
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Apr 2014 04:18:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751283AbaD2Bxa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Apr 2014 21:53:30 -0400
-Received: from mail-qa0-f47.google.com ([209.85.216.47]:61149 "EHLO
-	mail-qa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751096AbaD2Bxa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Apr 2014 21:53:30 -0400
-Received: by mail-qa0-f47.google.com with SMTP id j7so2918804qaq.20
-        for <git@vger.kernel.org>; Mon, 28 Apr 2014 18:53:29 -0700 (PDT)
+	id S1754497AbaD2CSU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Apr 2014 22:18:20 -0400
+Received: from mail-yk0-f170.google.com ([209.85.160.170]:57698 "EHLO
+	mail-yk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752255AbaD2CST (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Apr 2014 22:18:19 -0400
+Received: by mail-yk0-f170.google.com with SMTP id 79so3749136ykr.1
+        for <git@vger.kernel.org>; Mon, 28 Apr 2014 19:18:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=mwYDTMzZkqRoed2BBNqp+rbMmI+JBMhb3UyhWox877g=;
-        b=mhDygdO3D120x5nAbzVY15UITIsxSN39+Pr7XBT6ewsetnDMfDW9v6ZV5hhOdPpV09
-         /gRjHZ6ptr/09cq6T7Us8UnzuEB4JlAvqRGMwYCAfX80Uixpn4XCHZ2GdT2elGwLZ82r
-         WJ2QSK/H9CeCLf2bHUuqErCAkRZtyPloohKdm68CtzwFYdPzM1wWbKWePCG44+2uHKR5
-         gAnOOMpxbzpDYV+EUFIehZVrEeL505uWtfVddrNCCVLmKw1r4HyZsdcNzzkYlWSHkbC5
-         11yE6m7TVPjcu2Ijs5GNGZf0aYcMy8DDriGwCfdiRX34JPaCrwt4vNeoreYCYXtrCIzD
-         LekA==
-X-Received: by 10.224.97.69 with SMTP id k5mr38720920qan.8.1398736409372; Mon,
- 28 Apr 2014 18:53:29 -0700 (PDT)
-Received: by 10.96.138.9 with HTTP; Mon, 28 Apr 2014 18:52:59 -0700 (PDT)
-In-Reply-To: <CAJo=hJtgijOOMPbFjvTUaENw=hr0YixYmy1UkdqEd=CpLZ5L2A@mail.gmail.com>
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=Vezs+In0o2bwOqjC/T3wbH2kbDKUp4HoOfGU1uj2A18=;
+        b=Cx89AkMZxrwkng3BmeJo9rBVzpWOUPZ0wMEPYyAdF9lkShnYe/2xQXHpaBbe6rzd02
+         R1AQ6SLZnH8wL+xtjrQdicEEejDmWiBUvkf9ocmLFW0qMd9bY98x4EueSMw1CMhOrmqu
+         XRk8Wdyuw4ULaaGubcIQRxhHcFgXjJdYoFhcPdvjoCxPd0yWDkGGqyxYcdBsFpzIfKUr
+         NidjrHjaaJ+Z5RqPYxrJI1NXXBVcwbQBIjBqN20AQnJ2daOfL1gZKhZn2GHueJcpPym4
+         dXA2aGRS7i5K8Bjxvh4/ZU6/MWzX5TAjsrHHfsszkph1VUzXMhYk8tHTuqC+J2zWwJX0
+         tfqw==
+X-Received: by 10.236.81.6 with SMTP id l6mr43705550yhe.29.1398737898668; Mon,
+ 28 Apr 2014 19:18:18 -0700 (PDT)
+Received: by 10.170.163.66 with HTTP; Mon, 28 Apr 2014 19:18:18 -0700 (PDT)
+In-Reply-To: <1398725682-30782-16-git-send-email-sahlberg@google.com>
+X-Google-Sender-Auth: FYuYcHqcygsRCl2wSIfhXE7Imtk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247509>
 
-On Tue, Apr 29, 2014 at 4:18 AM, Shawn Pearce <spearce@spearce.org> wro=
-te:
-> On Mon, Apr 28, 2014 at 3:55 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8D=
-c Duy <pclouds@gmail.com> wrote:
->> I hinted about it earlier [1]. It now passes the test suite and with=
- a
->> design that I'm happy with (thanks to Junio for a suggestion about t=
-he
->> rename problem).
->>
->> From the user point of view, this reduces the writable size of index
->> down to the number of updated files. For example my webkit index v4 =
-is
->> 14MB. With a fresh split, I only have to update an index of 200KB.
->> Every file I touch will add about 80 bytes to that. As long as I don=
-'t
->> touch every single tracked file in my worktree, I should not pay
->> penalty for writing 14MB index file on every operation.
+On Mon, Apr 28, 2014 at 6:54 PM, Ronnie Sahlberg <sahlberg@google.com> wrote:
+> Change update_branch() to use ref transactions for updates.
 >
-> This is a very welcome type of improvement.
+> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+> ---
+>  fast-import.c | 20 ++++++++++++--------
+>  1 file changed, 12 insertions(+), 8 deletions(-)
 >
-> I am however concerned about the complexity of the format employed.
-> Why do we need two EWAH bitmaps in the new index? Why isn't this just
-> a pair of sorted files that are merge-joined at read, with records in
-> $GIT_DIR/index taking priority over same-named records in
-> $GIT_DIR/sharedindex.$SHA1?  Deletes could be marked with a bit or an
-> "all zero" metadata record.
+> diff --git a/fast-import.c b/fast-import.c
+> index fb4738d..300c8dc 100644
+> --- a/fast-import.c
+> +++ b/fast-import.c
+> @@ -1678,36 +1678,40 @@ found_entry:
+>  static int update_branch(struct branch *b)
+>  {
+>         static const char *msg = "fast-import";
+> -       struct ref_lock *lock;
+> +       struct ref_transaction *transaction;
+>         unsigned char old_sha1[20];
+> +       struct strbuf err = STRBUF_INIT;
+>
+>         if (is_null_sha1(b->sha1))
+>                 return 0;
+>         if (read_ref(b->name, old_sha1))
+>                 hashclr(old_sha1);
+> -       lock = lock_any_ref_for_update(b->name, old_sha1, 0, NULL);
+> -       if (!lock)
+> -               return error("Unable to lock %s", b->name);
+>         if (!force_update && !is_null_sha1(old_sha1)) {
+>                 struct commit *old_cmit, *new_cmit;
+>
+>                 old_cmit = lookup_commit_reference_gently(old_sha1, 0);
+>                 new_cmit = lookup_commit_reference_gently(b->sha1, 0);
+>                 if (!old_cmit || !new_cmit) {
+> -                       unlock_ref(lock);
+>                         return error("Branch %s is missing commits.", b->name);
+>                 }
+>
+>                 if (!in_merge_bases(old_cmit, new_cmit)) {
+> -                       unlock_ref(lock);
+>                         warning("Not updating %s"
+>                                 " (new tip %s does not contain %s)",
+>                                 b->name, sha1_to_hex(b->sha1), sha1_to_hex(old_sha1));
+>                         return -1;
+>                 }
+>         }
+> -       if (write_ref_sha1(lock, b->sha1, msg) < 0)
+> -               return error("Unable to update %s", b->name);
+> +       transaction = ref_transaction_begin();
+> +       if ((!transaction ||
+> +           ref_transaction_update(transaction, b->name, b->sha1, old_sha1,
+> +                                  0, 1)) ||
+> +           (ref_transaction_commit(transaction, msg, &err) &&
+> +            !(transaction = NULL))) {
+> +               ref_transaction_rollback(transaction);
+> +               return error("Unable to update branch %s: %s", b->name,
+> +                            strbuf_detach(&err, NULL));
 
-With the bitmaps, I know the exact position to replace or delete an
-entry. Merge sort works, but I would need to walk through all entries
-in both indexes to compare entry name and stage, a bit costly in my
-opinion. And if you look at the format description in patch 0017, I
-store the replaced entries without their names to save a bit more
-space. "EWAH" is just an implementation detail. A straightforward
-bitmap should work fine (25kb for 200k entries seem reasonable).
---=20
-Duy
+Iffy strbuf handling. The strbuf content is being leaked here whether
+detached or not.
+
+> +       }
+>         return 0;
+>  }
+>
+> --
+> 1.9.1.528.g98b8868.dirty
