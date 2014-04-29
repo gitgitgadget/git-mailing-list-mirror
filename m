@@ -1,80 +1,62 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] t3910: show failure of core.precomposeunicode with
- decomposed filenames
-Date: Tue, 29 Apr 2014 15:46:54 -0400
-Message-ID: <20140429194654.GC11832@sigill.intra.peff.net>
-References: <20140428161630.GA9435@sigill.intra.peff.net>
- <xmqqvbtskqjv.fsf@gitster.dls.corp.google.com>
- <20140429180210.GB11832@sigill.intra.peff.net>
- <xmqqwqe8j7id.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 24/32] split-index: strip pathname of on-disk replaced entries
+Date: Tue, 29 Apr 2014 13:25:50 -0700
+Message-ID: <xmqqlhunkhm9.fsf@gitster.dls.corp.google.com>
+References: <1398682553-11634-1-git-send-email-pclouds@gmail.com>
+	<1398682553-11634-25-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 29 21:47:01 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 29 22:26:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WfDzY-0002l8-M7
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Apr 2014 21:47:01 +0200
+	id 1WfEbW-0002AY-Mm
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Apr 2014 22:26:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965128AbaD2Tq5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2014 15:46:57 -0400
-Received: from cloud.peff.net ([50.56.180.127]:41508 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S965044AbaD2Tq4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2014 15:46:56 -0400
-Received: (qmail 25982 invoked by uid 102); 29 Apr 2014 19:46:56 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 29 Apr 2014 14:46:56 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Apr 2014 15:46:54 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqqwqe8j7id.fsf@gitster.dls.corp.google.com>
+	id S1758210AbaD2U0J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2014 16:26:09 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42458 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756244AbaD2U0I (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2014 16:26:08 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E74E7818E7;
+	Tue, 29 Apr 2014 16:26:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=lBAUU4C3aDZCEOifhhggNJT0VyE=; b=brd5VZ
+	wmWq93KpzFXgi8Bu8Wt2QkMvwC7Vh2ZPnzEIu0AoKqJIMpFha1RKp0oJC/aaYSMc
+	I/TIIdrKVQefLSTN52hMNsyKeRt+mQz6mf1t9vMFPQmLfk0S/hAoKT09iFoDoiRO
+	rEEhwvJ0lAN/BjbRmUXqtISFCxbM+cjButMpo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ZGxVlf0LEZK1/7XkTkeK6/VyVgNNoDmc
+	+uplbIpZ0H3hFRWL2HS8IqRtwzxxI9T9Afhf3Ljv5FRV6U2zhVCHeurTczeof30i
+	TT0HaC1JDPO1N3Ip/mbUYiGXXqz56o97BQyKZ1quflDX4TrO7b4ewdJ6ZEDHf4qM
+	AvorYCh1AFc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D37C7818E3;
+	Tue, 29 Apr 2014 16:26:06 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 64532818D6;
+	Tue, 29 Apr 2014 16:26:04 -0400 (EDT)
+In-Reply-To: <1398682553-11634-25-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Mon, 28
+ Apr 2014 17:55:45 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 7CCC5AE8-CFDC-11E3-9991-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247608>
 
-On Tue, Apr 29, 2014 at 11:49:30AM -0700, Junio C Hamano wrote:
-
-> Jeff King <peff@peff.net> writes:
-> 
-> > I don't think we have a "str_utf8_cmp" that ignores normalizations (or
-> > maybe strcoll will do this?). But in theory we could use it everywhere
-> > we use strcasecmp for ignore_case. And then we would not need to have
-> > our readdir wrapper, maybe? I admit I haven't thought that much about
-> > _either_ approach. But aside from some bugs in the hash system, I do not
-> > recall seeing any design problems in the ignorecase code.
-> 
-> Our diffs and merges depend on walking two (or more) sorted lists,
-> and that sort order is baked in the tree objects when they are
-> created.  Using "normalized comparison" only when comparing the
-> earliest elements picked from these sorted lists would not give you
-> the correct comparison or merge results, would it?
-
-Right, but we do not do normalized comparisons on that side. Not for
-precompose, and not for ignorecase. The entry in the index _is_
-case-sensitive[1], and we compare it as such to the tree side.
-
-It is only when comparing the filesystem side to the index that we need
-to care about such normalizations. And there we have the name-hash code
-to handle ignorecase, but nothing to handle precompose.
-
--Peff
-
-[1] This works because you typically get the case-sensitive entry via
-    `git read-tree`, and then further update it from the filesystem. If
-    you were to add a new entry "makefile", and somebody else added
-    "Makefile", they would conflict.
-
-    When you do "git add makefile" and "Makefile" _does_ exist, I am not
-    sure, though, if it is git who handles making sure we find the
-    correct entry, or if it is simply the fact that case insensitive
-    filesystems are typically case-preserving (so you generally ask for
-    "Makefile" anyway). If it is the latter, then that is a problem for
-    precompose. HFS's NFD normalization is non-preserving.
+This triggers "saved_namelen may be used uninitialized" for me, even
+though it looks clear that it is used under CE_STRIP_NAME and it is
+assigned under that condition.  Sigh to a stupid compiler...
