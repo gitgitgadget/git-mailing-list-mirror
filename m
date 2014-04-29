@@ -1,98 +1,62 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v1 0/4] replace: add option to edit a Git object
-Date: Tue, 29 Apr 2014 14:43:54 -0700
-Message-ID: <xmqqvbtrizfp.fsf@gitster.dls.corp.google.com>
-References: <20140426194404.21546.82305.chriscool@tuxfamily.org>
-	<20140429023629.GB11730@sigill.intra.peff.net>
+Subject: Re: [PATCH v6 1/5] patch-id: make it stable against hunk reordering
+Date: Tue, 29 Apr 2014 14:45:18 -0700
+Message-ID: <xmqqr44fizdd.fsf@gitster.dls.corp.google.com>
+References: <1398622524-26207-1-git-send-email-mst@redhat.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Apr 29 23:44:03 2014
+Cc: git@vger.kernel.org, sunshine@sunshineco.com, jrnieder@gmail.com,
+	peff@peff.net
+To: "Michael S. Tsirkin" <mst@redhat.com>
+X-From: git-owner@vger.kernel.org Tue Apr 29 23:45:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WfFoo-0006e9-KQ
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Apr 2014 23:44:02 +0200
+	id 1WfFqA-00086l-3Y
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Apr 2014 23:45:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932922AbaD2Vn7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Apr 2014 17:43:59 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64504 "EHLO
+	id S933009AbaD2VpW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Apr 2014 17:45:22 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34024 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932885AbaD2Vn6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Apr 2014 17:43:58 -0400
+	id S932885AbaD2VpW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Apr 2014 17:45:22 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0CADA7FE8B;
-	Tue, 29 Apr 2014 17:43:58 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B28E07FF00;
+	Tue, 29 Apr 2014 17:45:21 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=LF6hsoRuYE/pCTth1JpJ6XOTLvs=; b=wA5qGJ
-	4OLQhAPC81iNuX0TwlFmnEWoacZgJUUxwwF8HCoZYyvgNfP7+tfyDonVka0OliMh
-	tBT292gCuWawIWTPHpo9DtQbdylKQ5xZjJvrf5GDPTunVjvGxaWTOEfzQyrAcmv3
-	cARL+ZhXvP/Fq8Y4lKIWuTJs/vWx0BkpQEhXU=
+	:content-type; s=sasl; bh=G4GR+ZDwjUP6mt7ZKTpf3JlSpL8=; b=AL8jaC
+	osNEfnmrq8YWBzBPzW04hFG58MfbiULQ/HTY61TBW4ZJ4e37TiQFtcJMKRvAwzrX
+	s/cFTH+QK+ZG9IxYLdzotPOUtBZ3P+kP2Wy/6xgA5ANRHk/zhXCtN69yfdJxpxd+
+	+A6R9OKpBRel5GErp7ixi8Bf78aQ0xhf4IOZw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=js9xE61HrjRJVSGq6tPN/lnJF3H0XMM3
-	1mwwOWSLi0QNW5XbBiz8RP2itH/TYELXya8r6eJXNq3nXSp4RSmPc8oJCbn3VgTp
-	0eWcW65BiFxCVGtxr8yTzOb/KFS6RUSaHVZzjfkiNWLrpG5zE61FRZ7vPJhAtQ06
-	jBneUNdfWbE=
+	:content-type; q=dns; s=sasl; b=xOyjDVXEgAY4wGGedJM4QIRReF9bOtgX
+	7hYTKlQmSx6tYjHeGEzf0V67GI/evWn96FoRwU8Iz/qOmr49qr2hxNn7nKdsNErI
+	F10i4e0sJ6Xq4G6u1XUfYK5wi5gQqJFb2GQuEP9nJpbM+VvBNqNlz5ITB0rjUqQe
+	//ZMzzLzyss=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E0D4F7FE89;
-	Tue, 29 Apr 2014 17:43:57 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9951F7FEFF;
+	Tue, 29 Apr 2014 17:45:21 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BEFCA7FE87;
-	Tue, 29 Apr 2014 17:43:55 -0400 (EDT)
-In-Reply-To: <20140429023629.GB11730@sigill.intra.peff.net> (Jeff King's
-	message of "Mon, 28 Apr 2014 22:36:29 -0400")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B1A167FEFD;
+	Tue, 29 Apr 2014 17:45:19 -0400 (EDT)
+In-Reply-To: <1398622524-26207-1-git-send-email-mst@redhat.com> (Michael
+	S. Tsirkin's message of "Sun, 27 Apr 2014 21:15:44 +0300")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 5D24FA5A-CFE7-11E3-835A-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 8F2AB4A4-CFE7-11E3-98FF-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247612>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247613>
 
-Jeff King <peff@peff.net> writes:
+Thanks.
 
-> On Sat, Apr 26, 2014 at 10:00:53PM +0200, Christian Couder wrote:
->
->> This patch series comes from what Peff sent in the following thread:
->> 
->> http://thread.gmane.org/gmane.comp.version-control.git/243361/focus=243528
->
-> Thanks. As I recall, these were in pretty good shape, and I just read
-> over them again and didn't see anything wrong.
->
->> I added the following fixes:
->> 
->> - add "strbuf_release(&result);" in import_object(); this was suggested
->>   by Eric Sunshine
->> - use MODE_LIST instead of MODE_DELETE if no arguments are passed; this
->>   makes the test suite pass
->> - add "--no-replace-objects" when calling "git cat-file" in export_object();
->>   so that we edit the original object if an object is already replaced
->
-> All sensible, I think.
->
->> I am not happy with the fact that if the user doesn't modify the object when
->> editing it, then a replace ref can still be created that points to the
->> original object. I think something should be done to avoid that.
->
-> Yeah, it should be easy to just hashcmp the sha1s after calling
-> import_object. In fact, I think we can just erase any existing replace
-> ref in that case (the user might have started with a replace ref and
-> converted it _back_ to the original object, for example).
->
->> Once that is fixed, I plan to add some tests and documentation, but I wanted
->> first to let you know that I am looking at this.
->
-> Great. Thanks for working on this.
->
-> -Peff
-
-Thanks.  In the meantime, I'll queue these as-is and push the result
-out.
+I'll revert the merge of the previous round to 'next' and then queue
+this series instead.
