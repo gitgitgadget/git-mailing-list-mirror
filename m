@@ -1,67 +1,123 @@
-From: Vincenzo di Cicco <enzodicicco@gmail.com>
-Subject: Re: Reference to a commit inside a commit message
-Date: Wed, 30 Apr 2014 20:29:38 +0200
-Message-ID: <CAKOJyXduybjMEvkw6e2LijTa553mEPqe2_ELfVy_QZ5kc=RrRg@mail.gmail.com>
-References: <20140428183552.GA9709@workstation.Belkin>
-	<20140429034128.GD11979@sigill.intra.peff.net>
-	<535f5b6a41ff6_45e485b3087b@nysa.notmuch>
-	<CAKOJyXfHKwRXA==M2TaPNT-ZwLPF8YQeEoBoxbe-s6Q+UQgL0Q@mail.gmail.com>
-	<CAP8UFD1q2zdJZVkJVsNtGfN35LFmuK5txd91nTak5kGmvvKdWA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Document RUN_SETUP_GENTLY
+Date: Wed, 30 Apr 2014 11:29:59 -0700
+Message-ID: <xmqqeh0efz6g.fsf@gitster.dls.corp.google.com>
+References: <CAE+yK_kwMWRBDEVO=WVh5H-uFQJa2LEezRwbKnduLqoFjWC4zA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 30 20:29:46 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Git mailing list <git@vger.kernel.org>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Wed Apr 30 20:30:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WfZGL-0002cI-6k
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 20:29:45 +0200
+	id 1WfZGr-0003N7-W4
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 20:30:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759034AbaD3S3k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Apr 2014 14:29:40 -0400
-Received: from mail-vc0-f182.google.com ([209.85.220.182]:61824 "EHLO
-	mail-vc0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751498AbaD3S3j (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2014 14:29:39 -0400
-Received: by mail-vc0-f182.google.com with SMTP id lf12so2798289vcb.27
-        for <git@vger.kernel.org>; Wed, 30 Apr 2014 11:29:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=8FkSW3jnj2RiSfbFvjrz70ddepsw+vM+0p/aVrilLr8=;
-        b=GmtF3ME/hvf4/uVzW93K90yWh8dPnnXZpR2WhtCvdrFetem79rpArGOq69FYHDvzJh
-         KtD6V8nsbTeyclJOyRMSCFpAwrtn6ZXzZjwDV/cDY0nM/JHnJr1FezoEGt5WSnx/5AxU
-         CLUBfyrBuKKDbmBBs38DLfSDD5ZWplE/0cPf9ll2sYnVVTKlInJPlEji4PoNgEMavXBc
-         5VdwuUhYZDjam764GioVtdaLrV2XofiIochBADyWnehmAzp32l+GRD1MdDRPqtkqwA2w
-         TteOeJADbcEI4eqRb4QkYJpaHp5R8z5X77yJU0HE4p0ltNvqASmpieKb6cNwSCUY0G/G
-         thqw==
-X-Received: by 10.58.211.69 with SMTP id na5mr2586177vec.30.1398882578799;
- Wed, 30 Apr 2014 11:29:38 -0700 (PDT)
-Received: by 10.220.177.198 with HTTP; Wed, 30 Apr 2014 11:29:38 -0700 (PDT)
-In-Reply-To: <CAP8UFD1q2zdJZVkJVsNtGfN35LFmuK5txd91nTak5kGmvvKdWA@mail.gmail.com>
+	id S1422649AbaD3SaI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2014 14:30:08 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61411 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759236AbaD3SaH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2014 14:30:07 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 95D727DE6D;
+	Wed, 30 Apr 2014 14:30:06 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=v1QEOsbkseRpOKag4ZWr6JOj1Xk=; b=J13H45
+	sCWc7XlGEpTvY4g3rZqNszWFFZDloTD4vFibjsHtZOc4NJdgEMJkI9p1AlC9+cEe
+	XH7eD6cyHjKXed1MJmBYima/djnIpZ4YQy2AWjrfFZU3S/ZbSil6wDANbGifCSE1
+	ULwUO1AEYdnKLesQLmFgKbmuZEFmOox/EhlaA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=BF2+ZYtMNf+i0muXFTGX7K5wG5bKLQOv
+	WXtP5Ix+S+oD3uZdn4ub49Wqoi62HpufGxegoSMhJh7IgIjxuFH0A6DsWUc/zLnF
+	Twr7UimV4Jrp6rqTYJ3hQa16OG+eTpT8HLc7y2/INSZS2YNjkwlCwbK1km+NBJuG
+	mTxGlNKXLA4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 646D87DE6C;
+	Wed, 30 Apr 2014 14:30:06 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C2A1E7DE67;
+	Wed, 30 Apr 2014 14:30:00 -0400 (EDT)
+In-Reply-To: <CAE+yK_kwMWRBDEVO=WVh5H-uFQJa2LEezRwbKnduLqoFjWC4zA@mail.gmail.com>
+	(David Turner's message of "Tue, 29 Apr 2014 15:21:34 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 708E00CE-D095-11E3-BBE8-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247754>
 
-> You should use the latest version of the patch series (v11), because the
-> blank line is now automatically added.
+David Turner <dturner@twopensource.com> writes:
 
-Yes interpret-trailers add the blank line, but when call `git commit
--m "$MSG" -e` it isn't displayed.
-I think this happens due to the default value of 'cleanup' option of
-git-commit that is 'strip' (in my case) when the message is edited.
-I can't use neither 'verbatim' nor 'whitespace' otherwise all the
-comments will be displayed.
+> Sorry about that -- the documentation of RUN_SETUP confused me.  So I
+> have a new patch that edits that as well.
+>
+> --
+> RUN_SETUP_GENTLY and improve RUN_SETUP docs
+>
+> Signed-off-by: David Turner <dturner@twitter.com>
+> ---
 
-> And using ':' instead of '=' after "see-also" would be more standard.
+You do not want to have "Sorry about that..." in your final commit
+log message.  Please do the above this way if you wanted to:
 
-Thanks I've updated my script and now I'm using the latest interpret-trailers.
 
-NaN
+	Sorry about that ...
+
+	-- >8 --
+	Subject: docs: document RUN_SETUP_GENTLY and clarify RUN_SETUP
+
+	We only said what happens when we find the Git directory under
+	RUN_SETUP, without saying what happens otherwise.
+
+	Signed-off-by: ...
+	---
+        $DIFFSTAT
+        $PATCH
+
+
+
+>  Documentation/technical/api-builtin.txt | 13 +++++++++----
+>  1 file changed, 9 insertions(+), 4 deletions(-)
+>
+> diff --git a/Documentation/technical/api-builtin.txt
+> b/Documentation/technical/api-builtin.txt
+> index e3d6e7a..b250c1a 100644
+> --- a/Documentation/technical/api-builtin.txt
+> +++ b/Documentation/technical/api-builtin.txt
+> @@ -23,10 +23,15 @@ where options is the bitwise-or of:
+>
+>  `RUN_SETUP`::
+>
+> - Make sure there is a Git directory to work on, and if there is a
+> - work tree, chdir to the top of it if the command was invoked
+
+Your mailer ate all the whitespaces and folded the lines, it seems.
+
+I'll fix it up and queue the result on 'pu', so please eyeball it
+and holler if I made a silly mistake while doing the fixup.
+
+Thanks.
+
+
+> - in a subdirectory.  If there is no work tree, no chdir() is
+> - done.
+> + If there is not a Git directory to work on, abort.  If there
+> + is a work tree, chdir to the top of it if the command was
+> + invoked in a subdirectory.  If there is no work tree, no
+> + chdir() is done.
+> +
+> +`RUN_SETUP_GENTLY`::
+> +
+> + If there is a Git directory, chdir as per RUN_SETUP, otherwise,
+> + don't chdir anywhere.
+>
+>  `USE_PAGER`::
