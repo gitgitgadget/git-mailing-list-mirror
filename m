@@ -1,51 +1,51 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 13/14] t4204-patch-id.sh: use the $( ... ) construct for command substitution
-Date: Wed, 30 Apr 2014 09:23:06 -0700
-Message-ID: <1398874987-14873-13-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 04/14] t4010-diff-pathspec.sh: use the $( ... ) construct for command substitution
+Date: Wed, 30 Apr 2014 09:22:57 -0700
+Message-ID: <1398874987-14873-4-git-send-email-gitter.spiros@gmail.com>
 References: <1398874987-14873-1-git-send-email-gitter.spiros@gmail.com>
 Cc: matthieu.moy@grenoble-inp.fr, Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 30 18:24:17 2014
+X-From: git-owner@vger.kernel.org Wed Apr 30 18:24:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WfXIq-0002fn-7E
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 18:24:12 +0200
+	id 1WfXIp-0002fn-4t
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 18:24:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965106AbaD3QXt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Apr 2014 12:23:49 -0400
-Received: from mail-pd0-f178.google.com ([209.85.192.178]:63126 "EHLO
-	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965084AbaD3QXr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2014 12:23:47 -0400
-Received: by mail-pd0-f178.google.com with SMTP id fp1so1936431pdb.9
-        for <git@vger.kernel.org>; Wed, 30 Apr 2014 09:23:43 -0700 (PDT)
+	id S965091AbaD3QXq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2014 12:23:46 -0400
+Received: from mail-pd0-f179.google.com ([209.85.192.179]:38748 "EHLO
+	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965084AbaD3QXp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2014 12:23:45 -0400
+Received: by mail-pd0-f179.google.com with SMTP id y10so1960855pdj.38
+        for <git@vger.kernel.org>; Wed, 30 Apr 2014 09:23:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=4hGaeUcSjNbluiUIFceTkACCfkTpSYGS3xU8tPeiOqM=;
-        b=LhepLKQOBPbilEZHsFzuKgS3NdSYjCnL09C0jXmmPTH/+Ze7zWScpUB+9bHQK7ayJf
-         G785JLdo19bQ6+KmJa334xjhdI3gVCRNdWrPgaDkBEYtxwLbit63hB/m+jvY24qZumpd
-         VwpMx35hYE0cxL77fmRWHdz23FRogcAW3MRDCSUFaxApoJM8xjXIAVtDQViJa2QBlhe/
-         xHhr5gC3D8ewa3zMEDipgMavNlU9yP3mtxoInpGvFdXbV5KypGaRPsSVz9zjytv1cUCU
-         ac4qMjLkG7cZ79OC0kx2jbMNMxVHE85+ol3L89RGnKszSwnOn6N5eYUECwCnT+TdUszA
-         w8tw==
-X-Received: by 10.66.102.39 with SMTP id fl7mr10146872pab.43.1398875022708;
-        Wed, 30 Apr 2014 09:23:42 -0700 (PDT)
+        bh=5BeMHuJ3RfMrRYq1YsjiywUmaHcedJE7mMNYuFjbzUk=;
+        b=DdqAUHNmFz7YHe3roPi49DLp1IIyuy4upB9ecU7H3iLBwcaXJPS6PEifmojU4TZj5z
+         iHGqZ2Vs2lDNaay/J50HH8Docv7jGbEoXM416zWOfPahLQPItv7C0CzWidKimT1mJZe7
+         3qltZVKaVW++UojyqoeZePT8F5T5tcWlaB7OFF0L5zgvy1003XlZVEA12V6/MTSYXu0j
+         QCv55DisafDV8PZ5J0XpmecEenjKnscj1/nnQKG2st7uPimImf55SYnD4+FzKOwoA6GL
+         R+T1eWHV1kKbh1WEjLo4G8cxSZfKQdcg//frFPgmxRrb8LFts7L7c+LK/T3VDy7DnTOG
+         plpw==
+X-Received: by 10.66.226.145 with SMTP id rs17mr10302841pac.144.1398875013965;
+        Wed, 30 Apr 2014 09:23:33 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id te2sm138674233pac.25.2014.04.30.09.23.41
+        by mx.google.com with ESMTPSA id te2sm138674233pac.25.2014.04.30.09.23.33
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 30 Apr 2014 09:23:42 -0700 (PDT)
+        Wed, 30 Apr 2014 09:23:33 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1398874987-14873-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247733>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247734>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -67,23 +67,30 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t4204-patch-id.sh |    4 ++--
+ t/t4010-diff-pathspec.sh |    4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/t4204-patch-id.sh b/t/t4204-patch-id.sh
-index d2c930d..7940f6f 100755
---- a/t/t4204-patch-id.sh
-+++ b/t/t4204-patch-id.sh
-@@ -45,8 +45,8 @@ test_expect_success 'patch-id supports git-format-patch output' '
- 	git checkout same &&
- 	git format-patch -1 --stdout | calc_patch_id same &&
- 	test_cmp patch-id_master patch-id_same &&
--	set `git format-patch -1 --stdout | git patch-id` &&
--	test "$2" = `git rev-parse HEAD`
-+	set $(git format-patch -1 --stdout | git patch-id) &&
-+	test "$2" = $(git rev-parse HEAD)
- '
- 
- test_expect_success 'whitespace is irrelevant in footer' '
+diff --git a/t/t4010-diff-pathspec.sh b/t/t4010-diff-pathspec.sh
+index 2bb9736..bf07841 100755
+--- a/t/t4010-diff-pathspec.sh
++++ b/t/t4010-diff-pathspec.sh
+@@ -18,7 +18,7 @@ test_expect_success \
+      mkdir path1 &&
+      echo rezrov >path1/file1 &&
+      git update-index --add file0 path1/file1 &&
+-     tree=`git write-tree` &&
++     tree=$(git write-tree) &&
+      echo "$tree" &&
+      echo nitfol >file0 &&
+      echo yomin >path1/file1 &&
+@@ -131,7 +131,7 @@ test_expect_success 'diff multiple wildcard pathspecs' '
+ 	mkdir path2 &&
+ 	echo rezrov >path2/file1 &&
+ 	git update-index --add path2/file1 &&
+-	tree3=`git write-tree` &&
++	tree3=$(git write-tree) &&
+ 	git diff --name-only $tree $tree3 -- "path2*1" "path1*1" >actual &&
+ 	cat <<-\EOF >expect &&
+ 	path1/file1
 -- 
 1.7.10.4
