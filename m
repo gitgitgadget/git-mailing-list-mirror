@@ -1,69 +1,53 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Pull is Evil
-Date: Wed, 30 Apr 2014 19:09:10 +0200
-Message-ID: <vpqha5akamh.fsf@anie.imag.fr>
-References: <4ay6w9i74cygt6ii1b0db7wg.1398433713382@email.android.com>
-	<xmqqoazlqot4.fsf@gitster.dls.corp.google.com>
-	<536106EA.5090204@xiplink.com>
-	<536129068cc28_1404fdd310fd@nysa.notmuch>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/2] strbuf: Use _rtrim and _ltrim in strbuf_trim
+Date: Wed, 30 Apr 2014 13:11:06 -0400
+Message-ID: <20140430171105.GA8518@sigill.intra.peff.net>
+References: <1398848287-77109-1-git-send-email-modocache@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Marc Branchaud <marcnarc@xiplink.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Marat Radchenko <marat@slonopotamus.org>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 30 19:09:45 2014
+Content-Type: text/plain; charset=utf-8
+Cc: GIT Mailing-list <git@vger.kernel.org>
+To: Brian Gesiak <modocache@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 30 19:11:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WfY0u-00074v-CV
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 19:09:44 +0200
+	id 1WfY2L-0000iN-F7
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 19:11:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759157AbaD3RJk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Apr 2014 13:09:40 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:43827 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758836AbaD3RJk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2014 13:09:40 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s3UH97K6006477
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 30 Apr 2014 19:09:08 +0200
-Received: from anie.imag.fr (ensi-vpn-228.imag.fr [129.88.57.228])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s3UH9ATd012024;
-	Wed, 30 Apr 2014 19:09:10 +0200
-In-Reply-To: <536129068cc28_1404fdd310fd@nysa.notmuch> (Felipe Contreras's
-	message of "Wed, 30 Apr 2014 11:47:02 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 30 Apr 2014 19:09:08 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s3UH97K6006477
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1399482550.04781@3asZoXucGE4R4J9SUzA2Xg
+	id S1758931AbaD3RLJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2014 13:11:09 -0400
+Received: from cloud.peff.net ([50.56.180.127]:42251 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752135AbaD3RLI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2014 13:11:08 -0400
+Received: (qmail 28540 invoked by uid 102); 30 Apr 2014 17:11:07 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 30 Apr 2014 12:11:07 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 30 Apr 2014 13:11:06 -0400
+Content-Disposition: inline
+In-Reply-To: <1398848287-77109-1-git-send-email-modocache@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247746>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+On Wed, Apr 30, 2014 at 05:58:06PM +0900, Brian Gesiak wrote:
 
-> Marc Branchaud wrote:
->> But I'm definitely biased because I think pull is pretty much broken:
->> 
->> * New users are encouraged to use pull, but all too often the default
->> fetch-then-merge behaviour doesn't match their expectations and they end up
->> starting threads like this one on the mailing list.
->
-> Yes, this has been discussed many times in the past, and everyone agrees
-> the default behavior is not correct.
+> strbuf_trim strips whitespace from the end, then the beginning of a
+> strbuf. Those operations are duplicated in strbuf_rtrim and
+> strbuf_ltrim.
+> 
+> Replace strbuf_trim implementation with calls to strbuf_rtrim,
+> then strbuf_ltrim.
 
-You definitely have a strange notion of "everyone".
+Thanks, this looks good. I wondered if perhaps doing them together
+inline might have been more efficient, but there really is no overlap in
+what they compute.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+The documentation patch looks good to me, too.
+
+-Peff
