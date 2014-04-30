@@ -1,167 +1,159 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v5 0/6] Reject non-ff pulls by default
-Date: Wed, 30 Apr 2014 13:44:00 -0500
-Message-ID: <53614470489f9_f9b15012ecbc@nysa.notmuch>
-References: <1398770226-9686-1-git-send-email-felipe.contreras@gmail.com>
- <xmqqr44eg0s0.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Pull is Evil
+Date: Wed, 30 Apr 2014 12:10:05 -0700
+Message-ID: <xmqq38gufxbm.fsf@gitster.dls.corp.google.com>
+References: <4ay6w9i74cygt6ii1b0db7wg.1398433713382@email.android.com>
+	<xmqqoazlqot4.fsf@gitster.dls.corp.google.com>
+	<536106EA.5090204@xiplink.com>
+	<536129068cc28_1404fdd310fd@nysa.notmuch>
+	<vpqha5akamh.fsf@anie.imag.fr>
+	<5361416a172fe_f9b15012ec7e@nysa.notmuch>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Andreas Krey <a.krey@gmx.de>,
-	John Keeping <john@keeping.me.uk>, Jeff King <peff@peff.net>,
-	Richard Hansen <rhansen@bbn.com>,
-	Philip Oakley <philipoakley@iee.org>,
-	"Brian M. Carlson" <sandals@crustytoothpaste.net>
-To: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 30 20:54:43 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Marc Branchaud <marcnarc@xiplink.com>,
+	Marat Radchenko <marat@slonopotamus.org>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 30 21:10:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WfZeU-00040x-Gz
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 20:54:43 +0200
+	id 1WfZta-0008Lr-ML
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 21:10:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758958AbaD3Syi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Apr 2014 14:54:38 -0400
-Received: from mail-yh0-f49.google.com ([209.85.213.49]:60450 "EHLO
-	mail-yh0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751498AbaD3Syi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2014 14:54:38 -0400
-Received: by mail-yh0-f49.google.com with SMTP id t59so2067026yho.8
-        for <git@vger.kernel.org>; Wed, 30 Apr 2014 11:54:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=Naq4TSi1aSXfRJZrPN1n5MekkBT35hlW500t2QEXIzE=;
-        b=U+8XSbRsBdHBO8mLwEjW19jNHV6fORQKGvEILxGi+c80+dxUsUjjW6h5USN/qPDwNN
-         CX0yi1yqfr5lfIDuEQIu2YHuLRG/h9dI2LdK5gvqBMl+rCUFfL6iwHrSBPLH2Ic7SBsC
-         TpXQrPGsHN47bA8K2SFaJMXUwLoqBVe/WUBPk4qShAyMXCOy+1tskqO09b9kuuf/fBR3
-         zsaEb3LwHs7p11bRKGk+Ns96zllMK2NP21UpFelbAxAN0JN1DYJLCPBJOw+ceXZvCf+c
-         7mWkmCU66sfhfbpk0H0oKMcCJHl9GQ7sRfVK0d9pmaN4fJf2oPbbMlCbHc1VuJUSx5/J
-         dT5w==
-X-Received: by 10.236.230.41 with SMTP id i39mr8603127yhq.14.1398884077376;
-        Wed, 30 Apr 2014 11:54:37 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id c25sm44346263yhn.3.2014.04.30.11.54.34
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 30 Apr 2014 11:54:36 -0700 (PDT)
-In-Reply-To: <xmqqr44eg0s0.fsf@gitster.dls.corp.google.com>
+	id S1759235AbaD3TKL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2014 15:10:11 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33012 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759107AbaD3TKJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2014 15:10:09 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 168E87EBC1;
+	Wed, 30 Apr 2014 15:10:09 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=9asZ9SCqJzKeLjS6pjbX919UdY4=; b=LIv0gv
+	rujKHeHhheRtZa0vOVs6jgVf25HRdraXL1HtW9VZA7LTnYJN1McYOwV2SzGTs8up
+	OQP7JDnDSngd+YxEW4cO7/kjuEQRTkO680edBJqMH4SLIYgQ4kTo391ywpSWymJo
+	iZDSRNwmhPQz35qb66YtFvKZoqTwjf09hGBLU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=XByr6cvGIOZBpbs/XlkzO3pRVB9hUTTs
+	0w7SDc0rdQHFWvO+290DHhlQNB5Mbqen5qPScljtG69jxVgFUimW8SK4DmmntNLo
+	Ae7Fb4Yx23B0iZ7Xq+2te8GU3W6tCNUECkl9f6B/bWcob79c3Y2SGOFS4/+4iCeC
+	uCydn2ipHmk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E18337EBC0;
+	Wed, 30 Apr 2014 15:10:08 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C98087EBBE;
+	Wed, 30 Apr 2014 15:10:06 -0400 (EDT)
+In-Reply-To: <5361416a172fe_f9b15012ec7e@nysa.notmuch> (Felipe Contreras's
+	message of "Wed, 30 Apr 2014 13:31:06 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 0AB49460-D09B-11E3-8EC0-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247758>
 
-Junio C Hamano wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
-> 
-> > These are the steps needed to achieve this:
-> 
-> The overall progression (this comment is only about the design, not
-> the implementation) looks almost sensible, but I may have missed
-> some issues because the presentation was done in reverse.
-> 
-> In the following comment, I'll flip the presentation order to better
-> show natural progression of what the users will see.
-> 
-> > 1) Rename pull.rename to pull.mode and
-> >    branch.<name>.rebase to branch.<name>.pullmode
-> >
-> > This way the configurations and options remain consistent:
-> >
-> >   git pull --merge
-> >   pull.mode = merge
-> >   branch.<name>.pullmode = merge
-> >
-> >   git pull --rebase
-> >   pull.mode = rebase
-> >   branch.<name>.pullmode = rebase
-> >
-> >   git pull --rebase=preserve
-> >   pull.mode = rebase-preserve
-> >   branch.<name>.pullmode = rebase-preserve
-> >
-> >   git pull
-> >   pull.mode = merge-ff-only
-> >   branch.<name>.pullmode = merge-ff-only
-> 
-> Until the "--merge" option is added, "pull.mode = merge" cannot be
-> the same as "git pull --merge".  I think you either need to squash
-> these two steps into one, or flip the order of them.
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-Yeah, but the documentation of --merge should mention `pull.mode` and
-`branch.<name>.pullmode`. If I do --merge first I would have to mention
-pull.rebase and branch.<name>.rebase, which is weird.
+> Matthieu Moy wrote:
+>> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>> ...
+>> > Yes, this has been discussed many times in the past, and everyone agrees
+>> > the default behavior is not correct.
+>> 
+>> You definitely have a strange notion of "everyone".
+>
+> Do I? Let's look at some of the discussions:
+>
+> http://thread.gmane.org/gmane.comp.version-control.git/225146
+>
+> * W. Trevor King agrees the default should change
+> * Junio C Hamano agrees the default should change
+> * John Keeping agrees the default should change
+> * Matthieu Moy doesn't agree anything should change
+> * Linus Torvalds agrees changing the default is fine
+>
+> http://thread.gmane.org/gmane.comp.version-control.git/233554
+>
+> * Richard Hansen agrees with my proposal
+> * Ramkumar Ramachandra agrees with my proposal
+> * Brian M. Carlson is not happy but can live with my proposal
+> * Jeff King accepts my proposal is a good way to move forward
+> * Matthieu Moy is OK with change, but only if the default remains the same
+>
+> So, by "everyone" I mean everyone but one person (you).
 
-I think it's more sensible to do the less visible changes first.
+I looked at the latter thread and re-read what Peff wrote (added to
+Cc).  I think the most relevant (other than solving it in quite a
+different way $gmane/233554) one to your version of the solution is
+this:
 
-> > 2) Add --merge option
-> >
-> > Since we have a message that says "If unsure, run 'git pull --merge'", which is
-> > more friendly than 'git pull --no-rebase', we should add this option, and
-> > deprecate --no-rebase.
-> 
-> Obviously s/have a/will have a/, but the intention is good.
-> 
-> > However, the documentation would become confusing if --merge is configured in
-> > pull.rebase, instead, we want something like this:
-> >
-> >   See `pull.mode`, `branch.<name>.pullmode` in linkgit:git-config[1] if you want
-> >   to make `git pull` always use `--merge`.
-> 
-> It gets unclear to me how the transition is planned around here.  Is
-> this a correct paraphrasing of these four steps?
-> 
->     - Add pull.mode (and its branch-specific friend) and "pull
->       --merge" so that people can set the former to "merge" or train
->       their fingers to type the latter to keep doing the
->       fetch-and-merge (your steps 1 and 2)
-> 
->     - Add ff-only to pull.mode (your step 3)
+  http://thread.gmane.org/gmane.comp.version-control.git/233554/focus=234365
 
-Correct.
+where he responds to my "how about this way forward" with this:
 
->     - With the endgame of "out of box Git without any configuration
->       refuses 'git pull' (without --merge/--rebase) that does not
->       fast forward" in mind, start warning "In the future you will
->       have to either set pull.mode (and/or its friends) or type
->       "pull --merge" (or "pull --rebase") when the endgame version
->       of 'git pull' would fail with the error message, but still do
->       as was asked to do as before.  At this step, existing users
->       can set pull.mode to "merge" or "rebase" or whatever to
->       squelch the warning.
-> 
->     - Flip the default.  By the time this happens, thanks to the
->       previous step to warn beforehand, nobody needs to see the
->       warning. (your step 4)
+    > ... I think other people are also in
+    > agreement. So perhaps:
+    > 
+    >  - drop jc/pull-training-wheel and revert its merge from 'next';
+    > 
+    >  - update Felipe's series with a bit of tweak to make it less
+    >    impactful by demoting error into warning and advice.
+    > 
+    > would be a good way forward?
 
-This is what my last version of the series did[1]. However, my plan was
-to land this in 1.x so users could see the warning, and then flip the
-switch on 2.0.
+    I think that would address the concern I raised, because it does not
+    create a roadblock to new users accomplishing their task. They can
+    ignore the warning, or choose "merge" as the default to shut up the
+    warning (and it is easy to choose that if you are confused, because
+    it is what git is doing by default alongside the warning).
 
-This plan, however, fell off the cliff.
+While I do not quite see the previous discussion as deciding the
+particular implementation is good without further tweaks, I would
+say that everybody agrees that the default behaviour is not good for
+everybody and therefore should (or for Linus, "it is OK to") change.
 
-> If that is the rough outline, I think it is sensible.
-> 
-> > 3) Add merge-ff-only config
-> >
-> > This option would trigger a check inside `git pull` itself, and error out with
-> > the aforementioned message if it's not possible to do a fast-forward merge.
-> >
-> > However, this option conflicts with --rebase, and --no-rebase. Solution below.
-> 
-> Am I reading you correctly that setting "pull.mode = ff-only" will
-> require you to explicitly say "git pull --merge/--rebase"?  If that
-> is the case, I think the step makes sense.
+> Rational people don't think in absolute terms, "everyone" means
+> virtually everyone, which is the case.
 
-pull.mode = merge-ff-only
+True for "should change", not virtually everyone for "should change
+with that particular solution".
 
-[1] http://article.gmane.org/gmane.comp.version-control.git/235951
+But after re-reading the series description 0/n this round in the
+other thread, I think the overall direction is good (just like Peff
+said in the previous thread), especially if there is a warning not
+error period.
 
--- 
-Felipe Contreras
+The step (I am not sure you have it in your series or not, but I
+would strongly recommend adding one if it doesn't yet) that gives a
+"will change the default, and here is how to configure" warning when
+we see an actual merge made (or rebased) after "git pull" without
+"--merge/--rebase" is not just a way to prepare existing users, but
+is a good way to bring new goodness to newbies.  The session might
+go like this:
+
+	$ git pull
+        ... fetching ...
+        ... merging ...
+        ... diffstat ...
+        warning: you merged the $branch from $remote into your
+        warning: work, which may not be what you wanted to do unless
+        warning: you are acting as a project integrator.  If that is
+        warning: the case, "git config --set pull.mode ff-only" to
+        warning: cause "git pull" to refuse working when it does not
+        warning: fast-forward.  Use pull.mode=merge if you did mean
+        warning: it, to squelch this message.
+
+I am not advocating the exact wording above, but am illustrating
+that there is a place for us to tell the new people to live in a
+better future before the switchover happens.
