@@ -1,98 +1,68 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] rerere: fix for merge.conflictstyle
-Date: Wed, 30 Apr 2014 02:08:35 -0400
-Message-ID: <20140430060835.GA21698@sigill.intra.peff.net>
-References: <1398830909-24680-1-git-send-email-felipe.contreras@gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: RE: [PATCH] git-completion.zsh: do not clobber complete()
+Date: Wed, 30 Apr 2014 00:58:53 -0500
+Message-ID: <5360911d8fb6e_597a125b30828@nysa.notmuch>
+References: <1392413040-28436-1-git-send-email-lodato@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 30 08:08:42 2014
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Mark Lodato <lodato@google.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: Mark Lodato <lodato@google.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 30 08:09:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WfNhB-00012L-OS
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 08:08:42 +0200
+	id 1WfNi2-0001vL-4u
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 08:09:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751899AbaD3GIi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Apr 2014 02:08:38 -0400
-Received: from cloud.peff.net ([50.56.180.127]:41841 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751787AbaD3GIh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2014 02:08:37 -0400
-Received: (qmail 26246 invoked by uid 102); 30 Apr 2014 06:08:37 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 30 Apr 2014 01:08:37 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 30 Apr 2014 02:08:35 -0400
-Content-Disposition: inline
-In-Reply-To: <1398830909-24680-1-git-send-email-felipe.contreras@gmail.com>
+	id S1752171AbaD3GJb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2014 02:09:31 -0400
+Received: from mail-yk0-f175.google.com ([209.85.160.175]:58926 "EHLO
+	mail-yk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751983AbaD3GJa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2014 02:09:30 -0400
+Received: by mail-yk0-f175.google.com with SMTP id q200so1109491ykb.34
+        for <git@vger.kernel.org>; Tue, 29 Apr 2014 23:09:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=w7F4iqCskfs6ZnPovbqRd2bS0ocOnkmIwdn26fBhTWo=;
+        b=MzGhOZhPSfAXayGYF0GGEUINJq73sg1S/CZBofR4ovmaSgm0P1iR54o9WuVOVQCAQS
+         NwzbQpEO2OoVtn3X/ALyBZm9tFTbq4PCTL9dWMWW4HxJeagp6O8WWg7k1bZvK0yFT9YV
+         /lT7e/sj39cFgUjQ7LJE0kiGBB3b1XbB2FYdpz5gt7jPmgN/32q26ObrxZ7eNHeOKZIH
+         aLy5lPhzPvMQH8RhW6Wl279rQRU964wOiqU6C/XrS89ZHK2SBpGudKztlnDVkDbdpfw+
+         VKxg9y4pcCyHWNX8t1lfOQCCEP7PF3XPCbBn5FWKUrHfCikEGbA/XDLw8C2MYVjItnkP
+         YDsA==
+X-Received: by 10.236.131.42 with SMTP id l30mr3043352yhi.130.1398838169701;
+        Tue, 29 Apr 2014 23:09:29 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id b45sm41148100yhl.31.2014.04.29.23.09.27
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 29 Apr 2014 23:09:28 -0700 (PDT)
+In-Reply-To: <1392413040-28436-1-git-send-email-lodato@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247677>
 
-On Tue, Apr 29, 2014 at 11:08:29PM -0500, Felipe Contreras wrote:
+Mark Lodato wrote:
+> Previously, git-completion.zsh redefined complete() to make
+> __git_complete() a no-op. This broke zsh's built-in bash completion
+> compatibility layer (bashcompinit), which defines its own complete().
 
-> If we use a different conflict style `git rerere forget` is not able to
-> find the matching conflict SHA-1 because the diff generated is actually
-> different from what `git merge` generated.
+How exactly? I'm testing this and I don't see any problems. I run
+'type -f _complete' and I get bashcompinit's complete, and the internal
+_complete() function is used only by the _git completion.
 
-Can you show an example or test case?
+How have you configured this completion? Are you using the recommended
+instructions?
 
-I could not reproduce the problem with a trivial case, and rerere
-specifically tries to handle the differences between "merge" and "diff3"
-styles by throwing away the base content between "|" and "=" lines.
-However, I wonder if it could still miss a match in some cases because
-the "merge" style uses XDL_MERGE_ZEALOUS, whereas diff3 bumps it
-down to XDL_MERGE_EAGER, which could lead to a slightly different
-preimage.
-
-If so, I think this points to a slightly more pervasive problem in
-"rerere", then: data recorded under one merge level might not be usable
-later (whether for "rerere forget" or for actually applying a
-resolution).
-
-The level can change if:
-
-  1. you have run something like "checkout --conflict=diff3" (and rerere
-     reads in the working tree file, which it does for regular
-     resolution, but not for "forget").
-
-  2. you use "git merge-file", which uses XDL_MERGE_ZEALOUS_ALNUM
-
-  3. you record resolutions and then change merge.conflictstyle
-
-For (1), this is hopefully rarely going to be an issue, since "merge"
-applies rerere itself before you get a chance to run checkout. So you
-would have to manually run "git rerere" yourself (you might do that with
-"rerere forget", but "forget" always re-runs the merge from the index).
-
-For (2), we can hopefully ignore it, as merge-file does not run rerere
-(and probably not many people use merge-file at all these days).
-
-For (3), we can hopefully ignore this as rare; changing the variable
-invalidates your cache, but only the hunks for which the ZEALOUS/EAGER
-level makes a difference.
-
-There isn't currently a way to tweak the merge-level manually, which
-would be the other obvious way to trigger the situation.
-
-We already get around the merge/diff3 format by trying to normalize the
-merge/diff3 hunks we see. It would be nice if we could normalize away
-the merge-levels, too, but I don't think that is possible just from the
-conflict data. We'd have to actually re-run the low-level merge with
-known settings. For git-merge, that would mean doubling the work when
-"rerere" is in use.  And it would mean that we could not run "rerere" on
-a partially-resolved file.
-
-So given all of the "hopefully rare" statements above and the complexity
-of the complete solution, it's probably not worth pursuing. In which
-case your patch seems like the best we can do. At least it covers the
-more common case when you have set merge.conflictstyle but _didn't_
-change it since the postimage was recorded.
-
--Peff
+-- 
+Felipe Contreras
