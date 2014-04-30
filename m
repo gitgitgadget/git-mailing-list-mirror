@@ -1,114 +1,87 @@
-From: Stepan Kasal <kasal@ucw.cz>
-Subject: Re: A failing attempt to use Git in a centralized environment
-Date: Wed, 30 Apr 2014 18:12:15 +0200
-Organization: <)><
-Message-ID: <20140430161215.GA24017@camelia.ucw.cz>
-References: <4ay6w9i74cygt6ii1b0db7wg.1398433713382@email.android.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Marat Radchenko <marat@slonopotamus.org>
-X-From: git-owner@vger.kernel.org Wed Apr 30 18:12:29 2014
+From: Elia Pinto <gitter.spiros@gmail.com>
+Subject: [PATCH 03/14] t4006-diff-mode.sh: use the $( ... ) construct for command substitution
+Date: Wed, 30 Apr 2014 09:22:56 -0700
+Message-ID: <1398874987-14873-3-git-send-email-gitter.spiros@gmail.com>
+References: <1398874987-14873-1-git-send-email-gitter.spiros@gmail.com>
+Cc: matthieu.moy@grenoble-inp.fr, Elia Pinto <gitter.spiros@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 30 18:23:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WfX7U-0003DI-67
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 18:12:28 +0200
+	id 1WfXIP-000217-8x
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 18:23:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422732AbaD3QMU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Apr 2014 12:12:20 -0400
-Received: from jabberwock.ucw.cz ([46.255.230.98]:43160 "EHLO
-	jabberwock.ucw.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422657AbaD3QMQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2014 12:12:16 -0400
-Received: from 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (84.64.broadband3.iol.cz [85.70.64.84])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	(Authenticated sender: kasal)
-	by jabberwock.ucw.cz (Postfix) with ESMTPSA id ACA761C00C6;
-	Wed, 30 Apr 2014 18:12:15 +0200 (CEST)
-Received: from camelia.ucw.cz (camelia.ucw.cz [127.0.0.1])
-	by 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (8.14.3/8.14.3) with ESMTP id s3UGCFuk024115;
-	Wed, 30 Apr 2014 18:12:15 +0200
-Received: (from kasal@localhost)
-	by camelia.ucw.cz (8.14.3/8.14.3/Submit) id s3UGCFZV024114;
-	Wed, 30 Apr 2014 18:12:15 +0200
-Content-Disposition: inline
-In-Reply-To: <4ay6w9i74cygt6ii1b0db7wg.1398433713382@email.android.com>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S965065AbaD3QXk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2014 12:23:40 -0400
+Received: from mail-pd0-f176.google.com ([209.85.192.176]:53901 "EHLO
+	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965044AbaD3QXg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2014 12:23:36 -0400
+Received: by mail-pd0-f176.google.com with SMTP id y10so1894998pdj.35
+        for <git@vger.kernel.org>; Wed, 30 Apr 2014 09:23:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=BzyZCYOOMmSKJQwmq4TjkR55ClnX60nbFajILGfwJyA=;
+        b=Dro9saWxjm2XZPH+jz1+aqXMaKxEajfqjtkGHWuvVglQmO+iUpdXLm2vaGr2n+yiVc
+         VR4fv2rhsE73a/4hn5QydKInIAAq9/DbVt7iDXSBAiI3VYPsIYpRnJSS689yvNIGhPV4
+         bSdTTApBblyvmSlj38rpdtgdnJb1wQUtfvVXNXqDu6hgSiNcbY1tzapPdBkRiLA5zyqZ
+         5JPAHfweQMlpIR9TinQ0U6sIJkWgUEZtbb1bdG858RfDbUANqdgviqQ1IAO/E82dXxo0
+         cI7x9AgurfV0vE37suUqx6NMqetW7lvy+Qnwjh6wB3nIxUVGyTXzfNUhtRH6zEvBVISA
+         FwAQ==
+X-Received: by 10.66.243.131 with SMTP id wy3mr10512464pac.32.1398875013072;
+        Wed, 30 Apr 2014 09:23:33 -0700 (PDT)
+Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
+        by mx.google.com with ESMTPSA id te2sm138674233pac.25.2014.04.30.09.23.32
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 30 Apr 2014 09:23:32 -0700 (PDT)
+X-Mailer: git-send-email 1.7.10.4
+In-Reply-To: <1398874987-14873-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247727>
 
-Hello Marat,
+The Git CodingGuidelines prefer the $(...) construct for command
+substitution instead of using the backquotes `...`.
 
-On Mon, Apr 28, 2014 at 10:29:07AM +0400, Marat Radchenko wrote:
-> Setup:
-> 20 people (programmers, artists, designers) with prior SVN
+The backquoted form is the traditional method for command
+substitution, and is supported by POSIX.  However, all but the
+simplest uses become complicated quickly.  In particular, embedded
+command substitutions and/or the use of double quotes require
+careful escaping with the backslash character.
 
-I was in a similar situation: 10 people, mostly mathematicians,
-previous experience with Tortoise SVN.
+The patch was generated by:
 
-I wanted to move to Git with centralized model.  I call it a success:
-people can do basic changes on master and also can work with
-branches, if they don't want to break master.  (Much better than
-keeping uncommitted changes at a svn checkout.)
+for _f in $(find . -name "*.sh")
+do
+   sed -i 's@`\(.*\)`@$(\1)@g' ${_f}
+done
 
-I avoided TortoiseGit because I thought it would make the switch more
-complicated: Git does differ from SVN, and it cannot be hidden.
+and then carefully proof-read.
 
-We use Git Extensions (Windows only frontend).
-I like it, as it is very close to command-line, so it is easy for me
-to provide support.  It also improves the dialogs by hiding all the
-advanced options; you have to click on "advanced" to get the full
-list.
+Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+---
+ t/t4006-diff-mode.sh |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-When working on master, pull --rebase is a necessity:
-The install procedure does set config
-  branch.autosetuprebase = always
-(Must be done before any clone, so that all branches created after
-that are set up to rebase, rtfm...)
-
-I also told people to check "Rebase" in the pull dialog (it is
-persistent then).
-
-And I provided snapshots, so they immediatly call for help if they
-see non-linear history.
-
-> Problem #4: when conflict happens during rebase, mergetool shows
-> user own changes as "theirs" and remote changes as "mine". And
-> believe me, explaining this to users doesn't increase their
-> willingness to adopt Git.
-
-Our mergetool is Kdiff3.  (Git Extensions are willing to install it;
-we did that separately to get a newer 64bit version.)
-Kdiff3 shows three columns; their names (BASE, LOCAL, etc.) are
-confusiong, but in our case it was easy to ignore them; we had no
-previous experience with merge conflicts resolving.
-
-> Problem #6: push - reject - pull - push sequence sometimes
-> transforms into a loop with several iterations and doesn't add
-> happiness.
-
-I told people to do "pull-push" always when they want to push.
-If the pull has conflicts, then they naturally do "pull-push" again
-after the conflicts are resolved.
-
-Git Extensions has its problems, you may look at the issue tracker;
-I created several reports when exploring it (login kasal).
-
-I would mention:
-https://github.com/gitextensions/gitextensions/issues/2241
-
-If you pull on a non-tracking branch, it creates a false
-origin/branchname from origin/HEAD.  The bug was fixed, but there was
-no release since then: so you have to live with it or you have to
-build Git Extensions yourself in Visual Studio.
-
-I had to write this in haste; hope this helps you anyway.
-
-Stepan
+diff --git a/t/t4006-diff-mode.sh b/t/t4006-diff-mode.sh
+index 0591149..76f643b 100755
+--- a/t/t4006-diff-mode.sh
++++ b/t/t4006-diff-mode.sh
+@@ -13,7 +13,7 @@ sed_script='s/\(:100644 100755\) \('"$_x40"'\) \2 /\1 X X /'
+ test_expect_success 'setup' '
+ 	echo frotz >rezrov &&
+ 	git update-index --add rezrov &&
+-	tree=`git write-tree` &&
++	tree=$(git write-tree) &&
+ 	echo $tree
+ '
+ 
+-- 
+1.7.10.4
