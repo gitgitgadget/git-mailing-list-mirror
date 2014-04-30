@@ -1,472 +1,86 @@
-From: Richard Hansen <rhansen@bbn.com>
-Subject: Re: [PATCH v5 1/6] pull: rename pull.rename to pull.mode
-Date: Wed, 30 Apr 2014 16:26:27 -0400
-Message-ID: <53615C73.20409@bbn.com>
-References: <1398770226-9686-1-git-send-email-felipe.contreras@gmail.com> <1398770226-9686-2-git-send-email-felipe.contreras@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 18/32] read-cache: mark new entries for split index
+Date: Wed, 30 Apr 2014 16:35:54 -0400
+Message-ID: <CAPig+cStwY3Evy8036Qetmz4Oz0t948=d9C3neBMsi6PbJjOGQ@mail.gmail.com>
+References: <1398682553-11634-1-git-send-email-pclouds@gmail.com>
+	<1398682553-11634-19-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Andreas Krey <a.krey@gmx.de>, John Keeping <john@keeping.me.uk>,
-	Jeff King <peff@peff.net>,
-	Philip Oakley <philipoakley@iee.org>,
-	"Brian M. Carlson" <sandals@crustytoothpaste.net>
-To: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 30 22:26:51 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 30 22:36:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wfb5d-0005TD-Ig
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 22:26:50 +0200
+	id 1WfbEV-00015g-T7
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 22:36:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422732AbaD3U0k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Apr 2014 16:26:40 -0400
-Received: from smtp.bbn.com ([128.33.0.80]:19792 "EHLO smtp.bbn.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1946071AbaD3U0h (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2014 16:26:37 -0400
-Received: from socket.bbn.com ([192.1.120.102]:41281)
-	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
-	(Exim 4.77 (FreeBSD))
-	(envelope-from <rhansen@bbn.com>)
-	id 1Wfb5H-0009OD-Ll; Wed, 30 Apr 2014 16:26:27 -0400
-X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id 5C21740822
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
-In-Reply-To: <1398770226-9686-2-git-send-email-felipe.contreras@gmail.com>
-X-Enigmail-Version: 1.6
+	id S1759512AbaD3Ufz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Apr 2014 16:35:55 -0400
+Received: from mail-yk0-f177.google.com ([209.85.160.177]:55090 "EHLO
+	mail-yk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759493AbaD3Ufz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 30 Apr 2014 16:35:55 -0400
+Received: by mail-yk0-f177.google.com with SMTP id 19so999131ykq.22
+        for <git@vger.kernel.org>; Wed, 30 Apr 2014 13:35:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=ZXrzZ6l0mp6x0e/c4r+/+4sweJNQeM1nNxHom+WY2fM=;
+        b=LrXYQUVzLavt2VPN8Pz7zAIguUxbz29IQfH5vt8jhaF/F3mSiy/Rz8/xu0wh+cs19z
+         nCZsqy0eAxYNUWlYGeQNu9SimwxLEgCnlAsdWHOdYpZefSFI7PMfrQwu5WVGBAYcDmUS
+         DYRSZ0GJ9ncBuf5HmOGl8p7jlVIqfKILzPtiawgNFS2uYJ42NSh+8tlQGDrJSxBRTEVr
+         p5v9/i+W/ohaxvgePDNnnX+awVxxNPeb1LnTvRPOvhVIxT4cbIi5uJR4MnG7bOJlLutn
+         g2rZlLYBaYNxcvVkPrnEroCg51NwbXmnvgx9knXE2eIo1g/BXsuPurCU6QR0yrsgyHXN
+         9MQw==
+X-Received: by 10.236.170.37 with SMTP id o25mr8948002yhl.145.1398890154497;
+ Wed, 30 Apr 2014 13:35:54 -0700 (PDT)
+Received: by 10.170.163.66 with HTTP; Wed, 30 Apr 2014 13:35:54 -0700 (PDT)
+In-Reply-To: <1398682553-11634-19-git-send-email-pclouds@gmail.com>
+X-Google-Sender-Auth: DCzMGL49UISFcAD8g86wt4qaGFE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247778>
 
-On 2014-04-29 07:17, Felipe Contreras wrote:
-> Also 'branch.<name>.rebase' to 'branch.<name>.pullmode'.
-> 
-> This way 'pull.mode' can be set to 'merge', and the default can be
-> something else.
-> 
-> The old configurations still work, but get deprecated.
+On Mon, Apr 28, 2014 at 6:55 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
+Duy <pclouds@gmail.com> wrote:
+> Make sure entry addition does not lead to unifying the index. We don'=
+t
+> need to explicitly keep track of new entries. If ce->index is zero,
+> they're new. Otherwise it's unlikely that they are new, but we'll do =
+a
+> through check later at writing time.
 
-Should users be warned if both pull.rebase and pull.mode are set?  (Also
-if both branch.<name>.rebase and branch.<name>.pullmode are set.)
+s/through/thorough/
 
-Hmm, thinking about it more, I think I prefer it to *not* warn if both
-are set (as is currently coded).  If the user set *mode then presumably
-they've read the documentation and know that *mode is the right way to
-configure the behavior, so a warning would only serve to badger them
-into cleaning up their config file.  And it would annoy users that keep
-their ~/.gitconfig in a dotfiles repo shared between machines with
-different versions of Git.
-
-I prefer a deprecation note in the documentation as Philip suggests, but
-I'm OK without one too.
-
--Richard
-
-
-> 
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
 > ---
->  Documentation/config.txt   | 34 +++++++++++++++++-----------------
->  Documentation/git-pull.txt |  2 +-
->  branch.c                   |  4 ++--
->  builtin/remote.c           | 14 ++++++++++++--
->  git-pull.sh                | 39 +++++++++++++++++++++++++++++++++++++--
->  t/t3200-branch.sh          | 40 ++++++++++++++++++++--------------------
->  t/t5601-clone.sh           |  4 ++--
->  7 files changed, 91 insertions(+), 46 deletions(-)
-> 
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index c26a7c8..5978d35 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -708,7 +708,7 @@ branch.autosetupmerge::
->  branch.autosetuprebase::
->  	When a new branch is created with 'git branch' or 'git checkout'
->  	that tracks another branch, this variable tells Git to set
-> -	up pull to rebase instead of merge (see "branch.<name>.rebase").
-> +	up pull to rebase instead of merge (see "branch.<name>.pullmode").
->  	When `never`, rebase is never automatically set to true.
->  	When `local`, rebase is set to true for tracked branches of
->  	other local branches.
-> @@ -764,15 +764,15 @@ branch.<name>.mergeoptions::
->  	option values containing whitespace characters are currently not
->  	supported.
->  
-> -branch.<name>.rebase::
-> -	When true, rebase the branch <name> on top of the fetched branch,
-> -	instead of merging the default branch from the default remote when
-> -	"git pull" is run. See "pull.rebase" for doing this in a non
-> -	branch-specific manner.
-> +branch.<name>.pullmode::
-> +	When "git pull" is run, this determines if it would either merge or
-> +	rebase the fetched branch. The possible values are 'merge',
-> +	'rebase', and 'rebase-preserve'. See "pull.mode" for doing this in a
-> +	non branch-specific manner.
->  +
-> -	When preserve, also pass `--preserve-merges` along to 'git rebase'
-> -	so that locally committed merge commits will not be flattened
-> -	by running 'git pull'.
-> +	When 'rebase-preserve', also pass `--preserve-merges` along to
-> +	'git rebase' so that locally committed merge commits will not be
-> +	flattened by running 'git pull'.
->  +
->  *NOTE*: this is a possibly dangerous operation; do *not* use
->  it unless you understand the implications (see linkgit:git-rebase[1]
-> @@ -1881,15 +1881,15 @@ pretty.<name>::
->  	Note that an alias with the same name as a built-in format
->  	will be silently ignored.
->  
-> -pull.rebase::
-> -	When true, rebase branches on top of the fetched branch, instead
-> -	of merging the default branch from the default remote when "git
-> -	pull" is run. See "branch.<name>.rebase" for setting this on a
-> -	per-branch basis.
-> +pull.mode::
-> +	When "git pull" is run, this determines if it would either merge or
-> +	rebase the fetched branch. The possible values are 'merge',
-> +	'rebase', and 'rebase-preserve'. See "branch.<name>.pullmode" for doing
-> +	this in a non branch-specific manner.
->  +
-> -	When preserve, also pass `--preserve-merges` along to 'git rebase'
-> -	so that locally committed merge commits will not be flattened
-> -	by running 'git pull'.
-> +	When 'rebase-preserve', also pass `--preserve-merges` along to
-> +	'git rebase' so that locally committed merge commits will not be
-> +	flattened by running 'git pull'.
->  +
->  *NOTE*: this is a possibly dangerous operation; do *not* use
->  it unless you understand the implications (see linkgit:git-rebase[1]
-> diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
-> index 200eb22..9a91b9f 100644
-> --- a/Documentation/git-pull.txt
-> +++ b/Documentation/git-pull.txt
-> @@ -117,7 +117,7 @@ locally created merge commits will not be flattened.
->  +
->  When false, merge the current branch into the upstream branch.
->  +
-> -See `pull.rebase`, `branch.<name>.rebase` and `branch.autosetuprebase` in
-> +See `pull.mode`, `branch.<name>.pullmode` and `branch.autosetuprebase` in
->  linkgit:git-config[1] if you want to make `git pull` always use
->  `--rebase` instead of merging.
->  +
-> diff --git a/branch.c b/branch.c
-> index 723a36b..63ce671 100644
-> --- a/branch.c
-> +++ b/branch.c
-> @@ -71,8 +71,8 @@ void install_branch_config(int flag, const char *local, const char *origin, cons
->  
->  	if (rebasing) {
->  		strbuf_reset(&key);
-> -		strbuf_addf(&key, "branch.%s.rebase", local);
-> -		git_config_set(key.buf, "true");
-> +		strbuf_addf(&key, "branch.%s.pullmode", local);
-> +		git_config_set(key.buf, "rebase");
->  	}
->  	strbuf_release(&key);
->  
-> diff --git a/builtin/remote.c b/builtin/remote.c
-> index b3ab4cf..46d3c4d 100644
-> --- a/builtin/remote.c
-> +++ b/builtin/remote.c
-> @@ -264,7 +264,7 @@ static int config_read_branches(const char *key, const char *value, void *cb)
->  		char *name;
->  		struct string_list_item *item;
->  		struct branch_info *info;
-> -		enum { REMOTE, MERGE, REBASE } type;
-> +		enum { REMOTE, MERGE, REBASE, PULLMODE } type;
->  
->  		key += 7;
->  		if (ends_with(key, ".remote")) {
-> @@ -276,6 +276,9 @@ static int config_read_branches(const char *key, const char *value, void *cb)
->  		} else if (ends_with(key, ".rebase")) {
->  			name = xstrndup(key, strlen(key) - 7);
->  			type = REBASE;
-> +		} else if (ends_with(key, ".pullmode")) {
-> +			name = xstrndup(key, strlen(key) - 9);
-> +			type = PULLMODE;
->  		} else
->  			return 0;
->  
-> @@ -299,12 +302,19 @@ static int config_read_branches(const char *key, const char *value, void *cb)
->  				space = strchr(value, ' ');
->  			}
->  			string_list_append(&info->merge, xstrdup(value));
-> -		} else {
-> +		} else if (type == REBASE) {
->  			int v = git_config_maybe_bool(orig_key, value);
->  			if (v >= 0)
->  				info->rebase = v;
->  			else if (!strcmp(value, "preserve"))
->  				info->rebase = 1;
-> +		} else {
-> +			if (!strcmp(value, "rebase"))
-> +				info->rebase = 1;
-> +			else if (!strcmp(value, "merge"))
-> +				info->rebase = 0;
-> +			else if (!strcmp(value, "rebase-preserve"))
-> +				info->rebase = 1;
->  		}
->  	}
->  	return 0;
-> diff --git a/git-pull.sh b/git-pull.sh
-> index 0a5aa2c..d4e25f1 100755
-> --- a/git-pull.sh
-> +++ b/git-pull.sh
-> @@ -15,6 +15,10 @@ require_work_tree_exists
->  cd_to_toplevel
->  
->  
-> +warn () {
-> +	printf >&2 '%s\n' "$*"
-> +}
-> +
->  die_conflict () {
->      git diff-index --cached --name-status -r --ignore-submodules HEAD --
->      if [ $(git config --bool --get advice.resolveConflict || echo true) = "true" ]; then
-> @@ -47,10 +51,41 @@ log_arg= verbosity= progress= recurse_submodules= verify_signatures=
->  merge_args= edit= rebase_args=
->  curr_branch=$(git symbolic-ref -q HEAD)
->  curr_branch_short="${curr_branch#refs/heads/}"
-> -rebase=$(bool_or_string_config branch.$curr_branch_short.rebase)
-> +mode=$(git config branch.${curr_branch_short}.pullmode)
-> +if test -z "$mode"
-> +then
-> +	mode=$(git config pull.mode)
-> +fi
-> +case "$mode" in
-> +merge)
-> +	rebase="false"
-> +	;;
-> +rebase)
-> +	rebase="true"
-> +	;;
-> +rebase-preserve)
-> +	rebase="preserve"
-> +	;;
-> +'')
-> +	;;
-> +*)
-> +	echo "Invalid value for 'mode'"
-> +	usage
-> +	exit 1
-> +	;;
-> +esac
->  if test -z "$rebase"
->  then
-> -	rebase=$(bool_or_string_config pull.rebase)
-> +	rebase=$(bool_or_string_config branch.$curr_branch_short.rebase)
-> +	if test -z "$rebase"
-> +	then
-> +		rebase=$(bool_or_string_config pull.rebase)
-> +	fi
-> +	if test -n "$rebase"
-> +	then
-> +		warn "$(gettext "The configurations pull.rebase and branch.<name>.rebase are deprecated.")"
-> +		warn "$(gettext "Please use pull.mode and branch.<name>.pullmode instead.")"
-> +	fi
->  fi
->  dry_run=
->  while :
-> diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-> index fcdb867..b79aa75 100755
-> --- a/t/t3200-branch.sh
-> +++ b/t/t3200-branch.sh
-> @@ -559,7 +559,7 @@ test_expect_success 'autosetuprebase local on a tracked local branch' '
->  	git branch --track myr1 mybase &&
->  	test "$(git config branch.myr1.remote)" = . &&
->  	test "$(git config branch.myr1.merge)" = refs/heads/mybase &&
-> -	test "$(git config branch.myr1.rebase)" = true
-> +	test "$(git config branch.myr1.pullmode)" = rebase
->  '
->  
->  test_expect_success 'autosetuprebase always on a tracked local branch' '
-> @@ -571,7 +571,7 @@ test_expect_success 'autosetuprebase always on a tracked local branch' '
->  	git branch --track myr2 mybase &&
->  	test "$(git config branch.myr2.remote)" = . &&
->  	test "$(git config branch.myr2.merge)" = refs/heads/mybase &&
-> -	test "$(git config branch.myr2.rebase)" = true
-> +	test "$(git config branch.myr2.pullmode)" = rebase
->  '
->  
->  test_expect_success 'autosetuprebase remote on a tracked local branch' '
-> @@ -583,7 +583,7 @@ test_expect_success 'autosetuprebase remote on a tracked local branch' '
->  	git branch --track myr3 mybase2 &&
->  	test "$(git config branch.myr3.remote)" = . &&
->  	test "$(git config branch.myr3.merge)" = refs/heads/mybase2 &&
-> -	! test "$(git config branch.myr3.rebase)" = true
-> +	! test "$(git config branch.myr3.pullmode)" = rebase
->  '
->  
->  test_expect_success 'autosetuprebase never on a tracked local branch' '
-> @@ -595,7 +595,7 @@ test_expect_success 'autosetuprebase never on a tracked local branch' '
->  	git branch --track myr4 mybase2 &&
->  	test "$(git config branch.myr4.remote)" = . &&
->  	test "$(git config branch.myr4.merge)" = refs/heads/mybase2 &&
-> -	! test "$(git config branch.myr4.rebase)" = true
-> +	! test "$(git config branch.myr4.pullmode)" = rebase
->  '
->  
->  test_expect_success 'autosetuprebase local on a tracked remote branch' '
-> @@ -606,7 +606,7 @@ test_expect_success 'autosetuprebase local on a tracked remote branch' '
->  	git branch --track myr5 local/master &&
->  	test "$(git config branch.myr5.remote)" = local &&
->  	test "$(git config branch.myr5.merge)" = refs/heads/master &&
-> -	! test "$(git config branch.myr5.rebase)" = true
-> +	! test "$(git config branch.myr5.pullmode)" = rebase
->  '
->  
->  test_expect_success 'autosetuprebase never on a tracked remote branch' '
-> @@ -617,7 +617,7 @@ test_expect_success 'autosetuprebase never on a tracked remote branch' '
->  	git branch --track myr6 local/master &&
->  	test "$(git config branch.myr6.remote)" = local &&
->  	test "$(git config branch.myr6.merge)" = refs/heads/master &&
-> -	! test "$(git config branch.myr6.rebase)" = true
-> +	! test "$(git config branch.myr6.pullmode)" = rebase
->  '
->  
->  test_expect_success 'autosetuprebase remote on a tracked remote branch' '
-> @@ -628,7 +628,7 @@ test_expect_success 'autosetuprebase remote on a tracked remote branch' '
->  	git branch --track myr7 local/master &&
->  	test "$(git config branch.myr7.remote)" = local &&
->  	test "$(git config branch.myr7.merge)" = refs/heads/master &&
-> -	test "$(git config branch.myr7.rebase)" = true
-> +	test "$(git config branch.myr7.pullmode)" = rebase
->  '
->  
->  test_expect_success 'autosetuprebase always on a tracked remote branch' '
-> @@ -639,7 +639,7 @@ test_expect_success 'autosetuprebase always on a tracked remote branch' '
->  	git branch --track myr8 local/master &&
->  	test "$(git config branch.myr8.remote)" = local &&
->  	test "$(git config branch.myr8.merge)" = refs/heads/master &&
-> -	test "$(git config branch.myr8.rebase)" = true
-> +	test "$(git config branch.myr8.pullmode)" = rebase
->  '
->  
->  test_expect_success 'autosetuprebase unconfigured on a tracked remote branch' '
-> @@ -650,7 +650,7 @@ test_expect_success 'autosetuprebase unconfigured on a tracked remote branch' '
->  	git branch --track myr9 local/master &&
->  	test "$(git config branch.myr9.remote)" = local &&
->  	test "$(git config branch.myr9.merge)" = refs/heads/master &&
-> -	test "z$(git config branch.myr9.rebase)" = z
-> +	test "z$(git config branch.myr9.pullmode)" = z
->  '
->  
->  test_expect_success 'autosetuprebase unconfigured on a tracked local branch' '
-> @@ -661,7 +661,7 @@ test_expect_success 'autosetuprebase unconfigured on a tracked local branch' '
->  	git branch --track myr10 mybase2 &&
->  	test "$(git config branch.myr10.remote)" = . &&
->  	test "$(git config branch.myr10.merge)" = refs/heads/mybase2 &&
-> -	test "z$(git config branch.myr10.rebase)" = z
-> +	test "z$(git config branch.myr10.pullmode)" = z
->  '
->  
->  test_expect_success 'autosetuprebase unconfigured on untracked local branch' '
-> @@ -671,7 +671,7 @@ test_expect_success 'autosetuprebase unconfigured on untracked local branch' '
->  	git branch --no-track myr11 mybase2 &&
->  	test "z$(git config branch.myr11.remote)" = z &&
->  	test "z$(git config branch.myr11.merge)" = z &&
-> -	test "z$(git config branch.myr11.rebase)" = z
-> +	test "z$(git config branch.myr11.pullmode)" = z
->  '
->  
->  test_expect_success 'autosetuprebase unconfigured on untracked remote branch' '
-> @@ -681,7 +681,7 @@ test_expect_success 'autosetuprebase unconfigured on untracked remote branch' '
->  	git branch --no-track myr12 local/master &&
->  	test "z$(git config branch.myr12.remote)" = z &&
->  	test "z$(git config branch.myr12.merge)" = z &&
-> -	test "z$(git config branch.myr12.rebase)" = z
-> +	test "z$(git config branch.myr12.pullmode)" = z
->  '
->  
->  test_expect_success 'autosetuprebase never on an untracked local branch' '
-> @@ -692,7 +692,7 @@ test_expect_success 'autosetuprebase never on an untracked local branch' '
->  	git branch --no-track myr13 mybase2 &&
->  	test "z$(git config branch.myr13.remote)" = z &&
->  	test "z$(git config branch.myr13.merge)" = z &&
-> -	test "z$(git config branch.myr13.rebase)" = z
-> +	test "z$(git config branch.myr13.pullmode)" = z
->  '
->  
->  test_expect_success 'autosetuprebase local on an untracked local branch' '
-> @@ -703,7 +703,7 @@ test_expect_success 'autosetuprebase local on an untracked local branch' '
->  	git branch --no-track myr14 mybase2 &&
->  	test "z$(git config branch.myr14.remote)" = z &&
->  	test "z$(git config branch.myr14.merge)" = z &&
-> -	test "z$(git config branch.myr14.rebase)" = z
-> +	test "z$(git config branch.myr14.pullmode)" = z
->  '
->  
->  test_expect_success 'autosetuprebase remote on an untracked local branch' '
-> @@ -714,7 +714,7 @@ test_expect_success 'autosetuprebase remote on an untracked local branch' '
->  	git branch --no-track myr15 mybase2 &&
->  	test "z$(git config branch.myr15.remote)" = z &&
->  	test "z$(git config branch.myr15.merge)" = z &&
-> -	test "z$(git config branch.myr15.rebase)" = z
-> +	test "z$(git config branch.myr15.pullmode)" = z
->  '
->  
->  test_expect_success 'autosetuprebase always on an untracked local branch' '
-> @@ -725,7 +725,7 @@ test_expect_success 'autosetuprebase always on an untracked local branch' '
->  	git branch --no-track myr16 mybase2 &&
->  	test "z$(git config branch.myr16.remote)" = z &&
->  	test "z$(git config branch.myr16.merge)" = z &&
-> -	test "z$(git config branch.myr16.rebase)" = z
-> +	test "z$(git config branch.myr16.pullmode)" = z
->  '
->  
->  test_expect_success 'autosetuprebase never on an untracked remote branch' '
-> @@ -736,7 +736,7 @@ test_expect_success 'autosetuprebase never on an untracked remote branch' '
->  	git branch --no-track myr17 local/master &&
->  	test "z$(git config branch.myr17.remote)" = z &&
->  	test "z$(git config branch.myr17.merge)" = z &&
-> -	test "z$(git config branch.myr17.rebase)" = z
-> +	test "z$(git config branch.myr17.pullmode)" = z
->  '
->  
->  test_expect_success 'autosetuprebase local on an untracked remote branch' '
-> @@ -747,7 +747,7 @@ test_expect_success 'autosetuprebase local on an untracked remote branch' '
->  	git branch --no-track myr18 local/master &&
->  	test "z$(git config branch.myr18.remote)" = z &&
->  	test "z$(git config branch.myr18.merge)" = z &&
-> -	test "z$(git config branch.myr18.rebase)" = z
-> +	test "z$(git config branch.myr18.pullmode)" = z
->  '
->  
->  test_expect_success 'autosetuprebase remote on an untracked remote branch' '
-> @@ -758,7 +758,7 @@ test_expect_success 'autosetuprebase remote on an untracked remote branch' '
->  	git branch --no-track myr19 local/master &&
->  	test "z$(git config branch.myr19.remote)" = z &&
->  	test "z$(git config branch.myr19.merge)" = z &&
-> -	test "z$(git config branch.myr19.rebase)" = z
-> +	test "z$(git config branch.myr19.pullmode)" = z
->  '
->  
->  test_expect_success 'autosetuprebase always on an untracked remote branch' '
-> @@ -769,7 +769,7 @@ test_expect_success 'autosetuprebase always on an untracked remote branch' '
->  	git branch --no-track myr20 local/master &&
->  	test "z$(git config branch.myr20.remote)" = z &&
->  	test "z$(git config branch.myr20.merge)" = z &&
-> -	test "z$(git config branch.myr20.rebase)" = z
-> +	test "z$(git config branch.myr20.pullmode)" = z
->  '
->  
->  test_expect_success 'autosetuprebase always on detached HEAD' '
-> diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-> index 5e67035..0e91b67 100755
-> --- a/t/t5601-clone.sh
-> +++ b/t/t5601-clone.sh
-> @@ -191,8 +191,8 @@ test_expect_success 'clone respects global branch.autosetuprebase' '
->  		rm -fr dst &&
->  		git clone src dst &&
->  		cd dst &&
-> -		actual="z$(git config branch.master.rebase)" &&
-> -		test ztrue = $actual
-> +		actual="$(git config branch.master.pullmode)" &&
-> +		test "$actual" = rebase
->  	)
->  '
->  
-> 
+>  read-cache.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/read-cache.c b/read-cache.c
+> index ff889ad..2f2e0c1 100644
+> --- a/read-cache.c
+> +++ b/read-cache.c
+> @@ -38,7 +38,8 @@ static struct cache_entry *refresh_cache_entry(stru=
+ct cache_entry *ce,
+>  #define CACHE_EXT_LINK 0x6c696e6b        /* "link" */
+>
+>  /* changes that can be kept in $GIT_DIR/index (basically all extensi=
+ons) */
+> -#define EXTMASK (RESOLVE_UNDO_CHANGED | CACHE_TREE_CHANGED)
+> +#define EXTMASK (RESOLVE_UNDO_CHANGED | CACHE_TREE_CHANGED | \
+> +                CE_ENTRY_ADDED)
+>
+>  struct index_state the_index;
+>  static const char *alternate_index_output;
+> --
+> 1.9.1.346.ga2b5940
