@@ -1,7 +1,8 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 01/14] t3905-stash-include-untracked.sh: use the $( ... ) construct for command substitution
-Date: Wed, 30 Apr 2014 09:22:54 -0700
-Message-ID: <1398874987-14873-1-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 09/14] t4038-diff-combined.sh: use the $( ... ) construct for command substitution
+Date: Wed, 30 Apr 2014 09:23:02 -0700
+Message-ID: <1398874987-14873-9-git-send-email-gitter.spiros@gmail.com>
+References: <1398874987-14873-1-git-send-email-gitter.spiros@gmail.com>
 Cc: matthieu.moy@grenoble-inp.fr, Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Wed Apr 30 18:24:48 2014
@@ -10,40 +11,41 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WfXJM-0003QJ-Lu
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 18:24:45 +0200
+	id 1WfXJP-0003QJ-HP
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 18:24:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965055AbaD3QXj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S933685AbaD3QY3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2014 12:24:29 -0400
+Received: from mail-pd0-f182.google.com ([209.85.192.182]:33707 "EHLO
+	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965045AbaD3QXj (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 30 Apr 2014 12:23:39 -0400
-Received: from mail-pd0-f171.google.com ([209.85.192.171]:47274 "EHLO
-	mail-pd0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965045AbaD3QXh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2014 12:23:37 -0400
-Received: by mail-pd0-f171.google.com with SMTP id r10so1935625pdi.16
-        for <git@vger.kernel.org>; Wed, 30 Apr 2014 09:23:31 -0700 (PDT)
+Received: by mail-pd0-f182.google.com with SMTP id v10so1972154pde.27
+        for <git@vger.kernel.org>; Wed, 30 Apr 2014 09:23:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=+kro/8a60yGJzbdG5Rkq6J2QGGkjyVUXw4IQ6FzJYjk=;
-        b=VnOsKyKnp5ecHEqawbC7nD68FOU5ZFYPRFETEs3vtS0IBd4F/9ZwIcNdn7pAK9gewc
-         Zl1u97i49eNzc96dGJyiaJfBALVHMx2zIF2ZGbO7P1VcVIfhUMEBw8hP5Kz3iKC1chbc
-         oPHq2ejeyNqbef6+AOFALw9GeRn6q9P0NigiXjVP1wKEKP5u70OmfhlJpEsnxWw7CrS+
-         g5KTmsz+XNQix2vQiTNUw8K2eycaI6s+Rp9OGyNHndd66HXeVwoVJ/xAjUXR8Rg3eSPZ
-         vB2oM8cJiUnqSKvdNsovcJCfDZguMGbJaxqfiYCghK97mLV2m1pkodGADuJsYCp2ckch
-         ud8w==
-X-Received: by 10.66.149.37 with SMTP id tx5mr10082112pab.81.1398875010942;
-        Wed, 30 Apr 2014 09:23:30 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=GZB1APDriPou/xgIvmWsMx8Qf9mnXIMq0aN6c3JmcG0=;
+        b=rPrTSwMh0homeW5MEHNbP/+jGhHYdeXVjSopBNAEORhMbPm6krZ3iMFbcT3qXZyph4
+         5ddsWKnyfPZxlqA3EjZslxF1vvHewMMcXB+251GeaR96CCCOpjqlwLC1ujCwYhW/RfGd
+         mve/6xTEWYSF4JKNcyMrI7AbwpG00sxPElGDY/0oZci/k/I8OpzS+zuwb4F1WpAeIYrn
+         KDBmJQPGjxO3Uf5ZtMiJz/Akh7GV9TmraDXe9DBmI/z5GE+9RcaaYLWaqQ8P5zGntBgW
+         x38LvfBDBfgtqDtw2FFfmrBZjv+Chm/gdRhe0LHfm077hxVh4atz3h+v609ypfekLXE0
+         P9zw==
+X-Received: by 10.66.227.104 with SMTP id rz8mr10358715pac.74.1398875018808;
+        Wed, 30 Apr 2014 09:23:38 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id te2sm138674233pac.25.2014.04.30.09.23.29
+        by mx.google.com with ESMTPSA id te2sm138674233pac.25.2014.04.30.09.23.37
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 30 Apr 2014 09:23:29 -0700 (PDT)
+        Wed, 30 Apr 2014 09:23:38 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
+In-Reply-To: <1398874987-14873-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247738>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -65,23 +67,21 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t3905-stash-include-untracked.sh |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t4038-diff-combined.sh |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t3905-stash-include-untracked.sh b/t/t3905-stash-include-untracked.sh
-index a5e7e6b..f372fc8 100755
---- a/t/t3905-stash-include-untracked.sh
-+++ b/t/t3905-stash-include-untracked.sh
-@@ -96,8 +96,8 @@ test_expect_success 'stash pop after save --include-untracked leaves files untra
- 	git stash pop &&
- 	git status --porcelain >actual &&
- 	test_cmp expect actual &&
--	test "1" = "`cat file2`" &&
--	test untracked = "`cat untracked/untracked`"
-+	test "1" = "$(cat file2)" &&
-+	test untracked = "$(cat untracked/untracked)"
- '
- 
- git clean --force --quiet -d
+diff --git a/t/t4038-diff-combined.sh b/t/t4038-diff-combined.sh
+index 1019d7b..41913c3 100755
+--- a/t/t4038-diff-combined.sh
++++ b/t/t4038-diff-combined.sh
+@@ -94,7 +94,7 @@ test_expect_success 'setup for --cc --raw' '
+ 	blob=$(echo file | git hash-object --stdin -w) &&
+ 	base_tree=$(echo "100644 blob $blob	file" | git mktree) &&
+ 	trees= &&
+-	for i in `test_seq 1 40`
++	for i in $(test_seq 1 40)
+ 	do
+ 		blob=$(echo file$i | git hash-object --stdin -w) &&
+ 		trees="$trees$(echo "100644 blob $blob	file" | git mktree)$LF"
 -- 
 1.7.10.4
