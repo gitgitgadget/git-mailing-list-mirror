@@ -1,68 +1,76 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [RFD] use approxidate for "git commit --date=xyz"?
-Date: Wed, 30 Apr 2014 14:09:10 -0700
-Message-ID: <CA+55aFx=LizEyS6hq=av_qwRZuu_q3xPSXO-Jr4CAfXqaAuUtA@mail.gmail.com>
+From: Pasha Bolokhov <pasha.bolokhov@gmail.com>
+Subject: Problem: staging of an alternative repository
+Date: Wed, 30 Apr 2014 14:22:44 -0700
+Message-ID: <CAKpPgveXqraM4bXb499mJm5Ls+EinihfEJ6VgOFikC0_Qp8iTA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 30 23:09:18 2014
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 30 23:23:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wfbki-00054e-Lk
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 23:09:17 +0200
+	id 1WfbyD-0007Dv-9D
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 23:23:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946052AbaD3VJM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Apr 2014 17:09:12 -0400
-Received: from mail-vc0-f174.google.com ([209.85.220.174]:48937 "EHLO
-	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751382AbaD3VJL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2014 17:09:11 -0400
-Received: by mail-vc0-f174.google.com with SMTP id ib6so2951232vcb.5
-        for <git@vger.kernel.org>; Wed, 30 Apr 2014 14:09:10 -0700 (PDT)
+	id S1945941AbaD3VXI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2014 17:23:08 -0400
+Received: from mail-oa0-f48.google.com ([209.85.219.48]:48617 "EHLO
+	mail-oa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965185AbaD3VXF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2014 17:23:05 -0400
+Received: by mail-oa0-f48.google.com with SMTP id i4so1959141oah.21
+        for <git@vger.kernel.org>; Wed, 30 Apr 2014 14:23:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:date:message-id:subject:from:to:cc:content-type;
-        bh=e6uDQqLqE7ri72edOEmf2pLIGkwArIvthyfY+2BF0SM=;
-        b=aE+dk7EFqC8nvylatUYnF7a+VuDLA8yE2x2JSqLR90RfopET4WgeCGSXEv+H5ejvC8
-         eHXNQe7lodQ+xUh39rzy+zB4JwCCfjG18q47YKnbhL+p/4qYM+Iy4dwxPpitKEWBKql9
-         5W7GVkiGNU8fOkjl2KBF75tJXw4xjl6ISdmqigZF9nP4Trv/HxJT7tCv7o8/7FhPVgPX
-         W7kEKE0J75jeJEizc/Crjxibg+2YIASHSa11ALN5DJl8oQxFluEz8X1zxmszChbEUX15
-         6XrXrdMhKOp4JKPbo0aYGM4Qia4AB7URb3pcn6KvQffgiVpoJMIo84PxGJSq9JFlvVH1
-         jc9g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:sender:date:message-id:subject:from:to:cc:content-type;
-        bh=e6uDQqLqE7ri72edOEmf2pLIGkwArIvthyfY+2BF0SM=;
-        b=A8j62jD7oAYZDISuqcxTRxaFgCIuAvpxe9ZXQy3bZ1iXw9EqhDrlpGA8mJurphogcG
-         LS0zzbDu2RWSuwy7ToGDWN8xDFu5Sl+RF9fJ9slbjRUyxoCd85TjAtb7d3/uGnoOOVyL
-         RnRzaVyIjHWoyIDTOeDGumIXWvCUKLDpNMskg=
-X-Received: by 10.58.178.130 with SMTP id cy2mr5251vec.55.1398892150396; Wed,
- 30 Apr 2014 14:09:10 -0700 (PDT)
-Received: by 10.220.13.2 with HTTP; Wed, 30 Apr 2014 14:09:10 -0700 (PDT)
-X-Google-Sender-Auth: jw9ZuewRr2JNeXVq5o2XzHcBKAI
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=Fg8aB6e1TaJa5/OBT7K9nIHngDYHrRCEmMmVJ87ot4I=;
+        b=uChAZfe7TWCuHOEqwWLnJ7TaUEZKj/k+L9D6e/nmZems3QKU6dOXE/L1VqMf9tGDhv
+         sHnPWue0Lsz0NeGcbM+6P6FG44UBD7VJX/AQAI939ccwDgoC2Y3TXmP6+LhmKikf1ZlM
+         mUpaVL7qXvTfEppMdyIF5bbcDZaNiV9fUvSEa2CN4KxPMsDqciqlJ6lT7lhMFF+6+OQ8
+         FX+l2ySROBiWqcFc8EUM0ZTjHTFzAO5S+Aoi8NJnQVmfMv9u3a+PHz3brv2oy/daezCz
+         7ZFaRtIHPvaQnOBHOWgvkZ3UouCkdxWD3yhZMRpvREQwBzUbp74iscH/0aTSljb0OTVv
+         sZSg==
+X-Received: by 10.182.24.69 with SMTP id s5mr6122708obf.35.1398892984441; Wed,
+ 30 Apr 2014 14:23:04 -0700 (PDT)
+Received: by 10.60.246.130 with HTTP; Wed, 30 Apr 2014 14:22:44 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247781>
 
-I just got a comment saying that
+        Hi
 
-    git commit --amend --date=now
+    It turns out Git treats the directory '.git' differently enough
+from everything else. That may be ok, but here's one place where I
+encountered an unpleasant (and imho unexpected) behaviour:
 
-doesn't work. I replied that you can use
+    if you supply a different repository base name, say, '.git_new',
+by either setting GIT_DIR or using the '--git-dir' option, Git 'add'
+will not make any exception for it and think of it as a new (weird)
+directory. In particular, 'git add -A' with a consequent commit will
+add this repository into itself with all its guts.
 
-   --date="$(date)"
+    Now I know, the '--git-dir' option may usually be meant to use
+when the repository is somewhere outside of the work tree, and such a
+problem would not arise. And even if it is inside, sure enough, you
+can add this '.git_new' to the ignores or excludes. But is this really
+what you expect?
 
-but I do wonder if we should accept the approxidate format - we do in
-other equivalent places. Hmm?
+    I come forward to offer my own will to fix this behaviour (which
+is rooted in 'dir.c'). However there are uncertainties, and I'm asking
+for an opinion.
 
-The code uses fmt_ident(), which uses parse_date(), which in turn uses
-parse_date_basic(). Maybe parse_date() could use
-"approxidate_careful()" instead of "parse_date_basic()"?
+    Apparently, the assumption that the repository is in '.git' has
+propagated far enough. In particular, every '.git' within the working
+tree seems to be ignored for the purpose of staging. Is this a
+consistent behaviour? And, perhaps there are a million more places
+where the name '.git' is hard-coded, and it might be reasonable to
+question the legitimacy for that. Or, in contrast, to what degree or
+depth (in the source code) does one *expect* Git to rename all its
+hard-coded '.git's into '.gut's when a "GIT_DIR=.gut" is supplied?
 
-            Linus
+   cheers
+Pavel
