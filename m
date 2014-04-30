@@ -1,84 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFD] use approxidate for "git commit --date=xyz"?
-Date: Wed, 30 Apr 2014 14:34:59 -0700
-Message-ID: <xmqq1tweec1o.fsf@gitster.dls.corp.google.com>
-References: <CA+55aFx=LizEyS6hq=av_qwRZuu_q3xPSXO-Jr4CAfXqaAuUtA@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Problem: staging of an alternative repository
+Date: Wed, 30 Apr 2014 14:35:45 -0700
+Message-ID: <20140430213545.GV9218@google.com>
+References: <CAKpPgveXqraM4bXb499mJm5Ls+EinihfEJ6VgOFikC0_Qp8iTA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Apr 30 23:35:21 2014
+Cc: git@vger.kernel.org
+To: Pasha Bolokhov <pasha.bolokhov@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 30 23:42:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wfc9v-0007L2-Qy
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 23:35:20 +0200
+	id 1WfcGq-0000TI-OU
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 23:42:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1945910AbaD3VfL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Apr 2014 17:35:11 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42538 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759237AbaD3VfK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2014 17:35:10 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B5710821F3;
-	Wed, 30 Apr 2014 17:35:04 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=NeiqeCXmKODLwS3EcMqhQ0zBTG0=; b=c2UD9Q
-	DIPG5Cb3YsNkdsu5psYvnB6XUPXa4LC8dZBrIo2/9pLL/RO/Bh517Gjm+ewyUrrP
-	3O039KaxBECn3IlrroIzUBOvy7l8qTCIa5zAPxjHJsEqepAnaC3CQiWxU4Rzj0lo
-	R/qXO5xUpYd4/19/Evy+TofqXFFbTK+0CWFeU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=MI4kOm/cMuNQFw9wtMLgX1tb5Oaa0ck5
-	BO+cq+58JlUxuVsyDAMbkIUcVCmd56DyZRtknjnJj6gpi5S51ChvlutevD1WMdb5
-	YN7j/HBfNq2YTz+9lXX+QDV7IHhO+U8vMdmHwmWRpBWFKO3ZBdQeVg/aNDaH4uZa
-	LooyuPIjOyo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9A2FD821F2;
-	Wed, 30 Apr 2014 17:35:04 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6CD1B821ED;
-	Wed, 30 Apr 2014 17:35:01 -0400 (EDT)
-In-Reply-To: <CA+55aFx=LizEyS6hq=av_qwRZuu_q3xPSXO-Jr4CAfXqaAuUtA@mail.gmail.com>
-	(Linus Torvalds's message of "Wed, 30 Apr 2014 14:09:10 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 490CA414-D0AF-11E3-A0AF-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759118AbaD3VmZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2014 17:42:25 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:46598 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752566AbaD3VmY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2014 17:42:24 -0400
+Received: by mail-pa0-f42.google.com with SMTP id bj1so2719352pad.29
+        for <git@vger.kernel.org>; Wed, 30 Apr 2014 14:42:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=/kTUsH7hOIp1EfQgItnIc2adPpZKF+JSbndKCTaSUDk=;
+        b=j5cV0G5GLIfptNpfrJXqi+ipIZKXiMe15AG/g5A/C208fTJ8mkFcqsTh/PL780zR8Y
+         rn0If4ehwubGcojgEl6ppp5o1XKAuG0Ifxc75WFhLSKocj1z+Nxsg3RZReOR0b4XNxNL
+         r2IXXuR4RvFEJ0m95OvDSuOrv4k8TneEnX2OK/eaRiK9JbYnbZ38Py5IcIKsuQVYVVfb
+         /vgZx5+B1hbX/1TsaSiuZSVYZnzz+XK/3boFYLIzN8ePLcCctCaWAEnnb0+sFe1AmUaa
+         KOe4FsDrkWBGEsmVb+9Dik7lV7ma3cXC58ANC9y2ubxu7HJrj0YGNhUdQdW/n2eWVD39
+         yfaQ==
+X-Received: by 10.66.149.37 with SMTP id tx5mr12928924pab.81.1398893747727;
+        Wed, 30 Apr 2014 14:35:47 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id vd8sm143558679pac.12.2014.04.30.14.35.46
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 30 Apr 2014 14:35:47 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CAKpPgveXqraM4bXb499mJm5Ls+EinihfEJ6VgOFikC0_Qp8iTA@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247782>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247783>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Hi Pavel,
 
-> I just got a comment saying that
->
->     git commit --amend --date=now
->
-> doesn't work. I replied that you can use
->
->    --date="$(date)"
+Pasha Bolokhov wrote:
 
-Offhand without double-checking the actual codepath I do not have
-objection against approxidate-careful.
+>     It turns out Git treats the directory '.git' differently enough
+> from everything else. That may be ok,
 
-But why does the workflow need --date=now in the first place?
-Wouldn't --reset-author do what you want better?  What is the
-situation where you want to say that this patch has been changed
-significantly enough from the original to label it with the current
-timestamp without taking the authorship?
+Yeah, it's intended.
 
-> but I do wonder if we should accept the approxidate format - we do in
-> other equivalent places. Hmm?
->
-> The code uses fmt_ident(), which uses parse_date(), which in turn uses
-> parse_date_basic(). Maybe parse_date() could use
-> "approxidate_careful()" instead of "parse_date_basic()"?
->
->             Linus
+[...]
+>     if you supply a different repository base name, say, '.git_new',
+> by either setting GIT_DIR or using the '--git-dir' option, Git 'add'
+> will not make any exception for it and think of it as a new (weird)
+> directory.
+
+Yep, a git repository metadata directory named .git_new is not special
+in any way and you can use "git add" to track it if you want (for
+example to add a testcase).
+
+[...]
+>     Now I know, the '--git-dir' option may usually be meant to use
+> when the repository is somewhere outside of the work tree, and such a
+> problem would not arise. And even if it is inside, sure enough, you
+> can add this '.git_new' to the ignores or excludes. But is this really
+> what you expect?
+
+I think it's more that it never came up.  Excluding the current
+$GIT_DIR from what "git add" can add (on top of the current rule of
+excluding all instances of ".git") seems like a sensible change,
+assuming it can be done without hurting the code too much. ;-)
+
+But as you note, you are not using $GIT_DIR the way it was intended to
+be used.
+
+Thanks and hope that helps,
+Jonathan
