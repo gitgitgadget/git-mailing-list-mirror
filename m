@@ -1,95 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
 Subject: Re: [PATCH v5 0/6] Reject non-ff pulls by default
-Date: Wed, 30 Apr 2014 12:28:19 -0700
-Message-ID: <xmqqtx9aehws.fsf@gitster.dls.corp.google.com>
+Date: Wed, 30 Apr 2014 14:22:52 -0500
+Message-ID: <53614d8c23d6_2aa5fa32f06@nysa.notmuch>
 References: <1398770226-9686-1-git-send-email-felipe.contreras@gmail.com>
-	<xmqqr44eg0s0.fsf@gitster.dls.corp.google.com>
-	<53614470489f9_f9b15012ecbc@nysa.notmuch>
+ <xmqqr44eg0s0.fsf@gitster.dls.corp.google.com>
+ <53614470489f9_f9b15012ecbc@nysa.notmuch>
+ <xmqqy4ymeihb.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org, Andreas Krey <a.krey@gmx.de>,
 	John Keeping <john@keeping.me.uk>, Jeff King <peff@peff.net>,
 	Richard Hansen <rhansen@bbn.com>,
 	Philip Oakley <philipoakley@iee.org>,
 	"Brian M. Carlson" <sandals@crustytoothpaste.net>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 30 21:28:28 2014
+To: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 30 21:33:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WfaB9-00082N-TM
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 21:28:28 +0200
+	id 1WfaG6-0006sF-TG
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 21:33:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759389AbaD3T2Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Apr 2014 15:28:24 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37416 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759107AbaD3T2X (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2014 15:28:23 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D82077F25E;
-	Wed, 30 Apr 2014 15:28:22 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ObZjcrVdgiE23aZNXCzDsoraXdA=; b=a8laj5
-	9QAvdoHddmkmACVYeTjUK5N240uTKAsEzROCO+dqd7fGyoShFBmVlpkE9qHdflCT
-	aGd19A3YSApSGwvVvEAlS8TVJdU9T8RaBcLSWXSEw4y1/8RIF+H2/thXSby4CiCI
-	spZYfnFAKkvaKpyLTlyi2hclp/BD/ti/nqfY4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=FWBGBsu7W8vCknwdOBOPwHrIy/9j9gHx
-	em5wLjy2VZ3lTbBRJW44K92P8MjkW2ANe6PteyaFXijmWPr+izSsJEgN8a4aGFnN
-	j4W4Ttu0KQmJX1sKmHqc13E5gDX+XOMhV9UeULWA2XhgdI9ICpUJHH2Dc6TOwOzr
-	szpnX8FE9uA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B93387F25D;
-	Wed, 30 Apr 2014 15:28:22 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 990967F25C;
-	Wed, 30 Apr 2014 15:28:20 -0400 (EDT)
-In-Reply-To: <53614470489f9_f9b15012ecbc@nysa.notmuch> (Felipe Contreras's
-	message of "Wed, 30 Apr 2014 13:44:00 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 96A39B54-D09D-11E3-8BAB-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1946000AbaD3Tda (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2014 15:33:30 -0400
+Received: from mail-yh0-f45.google.com ([209.85.213.45]:48932 "EHLO
+	mail-yh0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1945997AbaD3Tda (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2014 15:33:30 -0400
+Received: by mail-yh0-f45.google.com with SMTP id z6so2107236yhz.4
+        for <git@vger.kernel.org>; Wed, 30 Apr 2014 12:33:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=aH8unoEWOFgPf5pcqEB5ccVSU/RsmsCfY36ntLnNpNI=;
+        b=EMVrsoB1hGeSc1KjGcJPDE2beD0jVY4TvLLi2tKvzQe6uKZXxp339UA1HsRIlT9SZ2
+         wHtjh11kvixCY98iL08tOMhNgZ3YBfK2g5NnLzYdAqDQNIAsQjjCGWcgQvuaIoaJv93Y
+         Lw4k34BXusZh/O7j3x0NeOvbLNDkcuWgQcfKxc/1tryzlrtXVWZk+/N0gcwxtiyHiL63
+         s1xosAgIZ8JB05X62w2voKYBNm58znxmhmy3I/mpk0jG1S+BtjOCaPmH0za6SjyvCijq
+         RN+UGzjWN5d/Zn+FpJCyST99CTojQJwFiYyna6KWI6KQy13pBgZi1LO2M4Msci/9NqIF
+         Fs0A==
+X-Received: by 10.236.1.3 with SMTP id 3mr8628828yhc.62.1398886409175;
+        Wed, 30 Apr 2014 12:33:29 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id z69sm44523549yha.26.2014.04.30.12.33.26
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 30 Apr 2014 12:33:28 -0700 (PDT)
+In-Reply-To: <xmqqy4ymeihb.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247761>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Junio C Hamano wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> 
+> >>     - With the endgame of "out of box Git without any configuration
+> >>       refuses 'git pull' (without --merge/--rebase) that does not
+> >>       fast forward" in mind, start warning "In the future you will
+> >>       have to either set pull.mode (and/or its friends) or type
+> >>       "pull --merge" (or "pull --rebase") when the endgame version
+> >>       of 'git pull' would fail with the error message, but still do
+> >>       as was asked to do as before.  At this step, existing users
+> >>       can set pull.mode to "merge" or "rebase" or whatever to
+> >>       squelch the warning.
+> >> 
+> >>     - Flip the default.  By the time this happens, thanks to the
+> >>       previous step to warn beforehand, nobody needs to see the
+> >>       warning. (your step 4)
+> >
+> > This is what my last version of the series did[1]. However, my plan was
+> > to land this in 1.x so users could see the warning, and then flip the
+> > switch on 2.0.
+> >
+> > This plan, however, fell off the cliff.
+> 
+> Yeah, I see that $gmane/234488 explains why the second step in the
+> previous one stopped.  I guess it was in expecting a reroll state,
+> waiting for that other topic (I do not remember offhand) to
+> graduate.
+> 
+> I see nothing touching the affected codepaths now, so this time
+> around we may have a better chance, perhaps?
 
-> Junio C Hamano wrote:
-> ...
->> Until the "--merge" option is added, "pull.mode = merge" cannot be
->> the same as "git pull --merge".  I think you either need to squash
->> these two steps into one, or flip the order of them.
->
-> Yeah, but the documentation of --merge should mention `pull.mode` and
-> `branch.<name>.pullmode`. If I do --merge first I would have to mention
-> pull.rebase and branch.<name>.rebase, which is weird.
+A chance of what? Do you want me to reroll to include the future
+backwards-incompatible change warning? Should I include the patch that
+turns the switch?
 
-And the point of your step (1) to introduce pull.mode is to fix the
-weirdness, so in that sense, it makes even more sense to do the
-"--merge" first and then pull.mode the second.
-
-If you first add --merge with an awkward documentation in the first
-step and then correct that awkwardness in the second step that adds
-pull.mode (oh, by the way, we need to pay attention to pull.rename
-as a fallback at least for a while), that would show a clear
-justification why pull.mode is a good idea.
-
-> I think it's more sensible to do the less visible changes first.
-
-The people who discover pull.mode and set it to "merge" will be
-greeted with an error with that step.
-
-So it appears that squashing these two (and possibly also the
-addition of merge-ff-only) into a single step would be the only
-alternative, if you want to avoid the "introduce something that
-shows the awkwardness of the situation and immediately fix it"
-approach.
+-- 
+Felipe Contreras
