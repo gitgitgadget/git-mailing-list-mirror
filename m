@@ -1,78 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 8/8] CodingGuidelines: once it is in, it is not worth the code churn
-Date: Wed, 30 Apr 2014 14:45:12 -0700
-Message-ID: <1398894312-30763-9-git-send-email-gitster@pobox.com>
-References: <1398894312-30763-1-git-send-email-gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 30 23:46:08 2014
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: Pull is Evil
+Date: Wed, 30 Apr 2014 17:48:18 -0400
+Message-ID: <53616FA2.2010405@xiplink.com>
+References: <4ay6w9i74cygt6ii1b0db7wg.1398433713382@email.android.com>	<xmqqoazlqot4.fsf@gitster.dls.corp.google.com>	<536106EA.5090204@xiplink.com>	<xmqqppjyhnom.fsf@gitster.dls.corp.google.com>	<536152D3.5050107@xiplink.com> <xmqqa9b2egcy.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Marat Radchenko <marat@slonopotamus.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 30 23:48:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WfcKO-0005ZE-BW
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 23:46:08 +0200
+	id 1WfcME-0008Ed-Lf
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 23:48:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759556AbaD3Vp7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Apr 2014 17:45:59 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35318 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759485AbaD3Vp5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2014 17:45:57 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CA38382630;
-	Wed, 30 Apr 2014 17:45:56 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=wNf4
-	tfO/XQZM0YCXWvHSQIolBUk=; b=VoDqnOAf0ao0bCX7fqF8nBwA/8fi0LFqfCC4
-	Gs262BgU8g4xaK/0BM2H8YKFpIgS9n8i1+Ukz1XBbO3eJiNHTz70iZ/UbHfzxpQx
-	9+Det1BTrm3Tt772Df4v9ZPK6VBCVGnSS0kLbecI8wPnqhuKlKIr6j6A5Vr4LP4D
-	vDttK4Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=c+7QFd
-	kdrrRmGy5R7iFg9CSIo0TDrG9hJx42mgIXlE7FBavUBctMXWZXNJIuX+ZGz57fuM
-	XJGDV6oQpl+nkuVJUniucGMRG1rwGi+OGHqzTum0se2C0tkFmTDooy7IbVbUG/24
-	tkyDhbvZOo0lINNHvIgjX/py0REfQo6CzzGqw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A7EDC8262F;
-	Wed, 30 Apr 2014 17:45:56 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5F46A8261E;
-	Wed, 30 Apr 2014 17:45:49 -0400 (EDT)
-X-Mailer: git-send-email 2.0.0-rc1-355-gd6d6511
-In-Reply-To: <1398894312-30763-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: CB40EB06-D0B0-11E3-9E54-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759601AbaD3Vrx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2014 17:47:53 -0400
+Received: from smtp130.ord.emailsrvr.com ([173.203.6.130]:48563 "EHLO
+	smtp130.ord.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759440AbaD3Vrx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2014 17:47:53 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp25.relay.ord1a.emailsrvr.com (SMTP Server) with ESMTP id 9FF803F08D9;
+	Wed, 30 Apr 2014 17:47:52 -0400 (EDT)
+X-Virus-Scanned: OK
+Received: by smtp25.relay.ord1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 571813F0902;
+	Wed, 30 Apr 2014 17:47:52 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
+In-Reply-To: <xmqqa9b2egcy.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247793>
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/CodingGuidelines | 8 ++++++++
- 1 file changed, 8 insertions(+)
+On 14-04-30 04:01 PM, Junio C Hamano wrote:
+> 
+> Maybe I was unclear.
+> 
+> I didn't mean "replace 'pull' with 'update' everywhere".  I meant
+> "Introduce 'update' that lets integrate your history into that from
+> the remote, which is to integrate in a direction opposite from how
+> 'pull' does".  
 
-diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-index 86fb9f6..759003e 100644
---- a/Documentation/CodingGuidelines
-+++ b/Documentation/CodingGuidelines
-@@ -18,6 +18,14 @@ code.  For Git in general, three rough rules are:
-    judgement call, the decision is based more on real world
-    constraints people face than what the paper standard says.
- 
-+ - Fixing style violations while working on a real change as a
-+   preparatory clean-up step is good, but otherwise avoid useless code
-+   churn for the sake of conforming to the style.
-+
-+   "Once it _is_ in the tree, it's not really worth the patch noise to
-+   go and fix it up."
-+   Cf. http://article.gmane.org/gmane.linux.kernel/943020
-+
- Make your code readable and sensible, and don't try to be clever.
- 
- As for more concrete guidelines, just imitate the existing code
--- 
-2.0.0-rc1-355-gd6d6511
+That's what I understood.
+
+> Then the downstream people (i.e. by definition, most of us) would
+> use "git update" while integrators would use "git pull".  There is
+> no workflow assumption if we do so.
+
+Isn't merge-or-rebase a workflow assumption?  I don't think there's a good
+rule of thumb for that choice.  Downstream-vs-Integrator doesn't seem like
+enough, nor does it seem as simple as "'git pull' should merge" and "'git
+update' should rebase" (or vice-versa).
+
+But maybe I'm wrong and there really is only one salient axis (be it that one
+or another).
+
+>> I don't think we'll ever be able to create a One "Git Pull" To Rule Them All.
+> 
+> Yes, that is exactly why I mentioned "git update".
+
+I doubt that a new, additional command with different workflow assumptions
+will be any more successful.
+
+> Another way not to make any workflow assumption is to ask the user
+> to tell us.
+
+Yes.  But I wouldn't expect a new user to be able to answer.
+
+		M.
