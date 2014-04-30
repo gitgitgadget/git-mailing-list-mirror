@@ -1,91 +1,54 @@
-From: Stepan Kasal <kasal@ucw.cz>
-Subject: [PATCH] wincred: add install target and avoid overwriting
-	configured variables
-Date: Wed, 30 Apr 2014 08:46:10 +0200
-Organization: <)><
-Message-ID: <20140430064610.GA22094@camelia.ucw.cz>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git-svn Rewrites Some Commits, but not All
+Date: Wed, 30 Apr 2014 06:59:51 +0000
+Message-ID: <20140430065951.GA30265@dcvr.yhbt.net>
+References: <CADu-kvcXWXAd2iBt+oQOVt5znxLmU0fmJ-tgOaogyfGjS5R0vA@mail.gmail.com>
+ <CAA01CsoWw2OxuO7e09u18b9-g8c2aavDNWPDE_TvG33-79nwMQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: GIT Mailing-list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 30 08:46:20 2014
+Cc: Aaron Laws <dartme18@gmail.com>, git <git@vger.kernel.org>
+To: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 30 08:59:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WfOHZ-0006fF-6d
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 08:46:17 +0200
+	id 1WfOUl-0004b6-Ms
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 08:59:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752066AbaD3GqN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Apr 2014 02:46:13 -0400
-Received: from jabberwock.ucw.cz ([46.255.230.98]:58842 "EHLO
-	jabberwock.ucw.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751713AbaD3GqM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2014 02:46:12 -0400
-Received: from 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (84.64.broadband3.iol.cz [85.70.64.84])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	(Authenticated sender: kasal)
-	by jabberwock.ucw.cz (Postfix) with ESMTPSA id 81F911C00D4
-	for <git@vger.kernel.org>; Wed, 30 Apr 2014 08:46:11 +0200 (CEST)
-Received: from camelia.ucw.cz (camelia.ucw.cz [127.0.0.1])
-	by 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (8.14.3/8.14.3) with ESMTP id s3U6kBXK022132
-	for <git@vger.kernel.org>; Wed, 30 Apr 2014 08:46:11 +0200
-Received: (from kasal@localhost)
-	by camelia.ucw.cz (8.14.3/8.14.3/Submit) id s3U6kAZp022131
-	for git@vger.kernel.org; Wed, 30 Apr 2014 08:46:10 +0200
+	id S1754021AbaD3G7w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2014 02:59:52 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:57354 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751713AbaD3G7v (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2014 02:59:51 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F63144C009;
+	Wed, 30 Apr 2014 06:59:51 +0000 (UTC)
 Content-Disposition: inline
-User-Agent: Mutt/1.5.19 (2009-01-05)
+In-Reply-To: <CAA01CsoWw2OxuO7e09u18b9-g8c2aavDNWPDE_TvG33-79nwMQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247680>
 
-From: Pat Thoyts <patthoyts@users.sourceforge.net>
-Date: Wed, 24 Oct 2012 00:15:29 +0100
+Piotr Krukowiecki <piotr.krukowiecki@gmail.com> wrote:
+> On Mon, Apr 28, 2014 at 9:26 PM, Aaron Laws <dartme18@gmail.com> wrote:
+> > The way I understand it, when `git svn dcommit` is run, new commits
+> > are created (A' is created from A adding SVN information), then the
+> > current branch is moved to point to A'. Why don't we move any other
+> > refs that were pointing to A over to A' ? What would be the point of
+> > continuing to point to A? I'm interested in looking into coding this
+> > change to git-svn, but I would like to hear some feedback first.
+> 
+> I think A' might not always be simply (A + SVN info). I think you can
+> dcommit when you're not up to date.  So A' will have a different
+> parent than A (will be automatically rebased on top of current branch
+> tip). Other refs pointing to A might be used as bookmarks, and moving
+> them from A to A' would be a significant change.
 
-Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
-Signed-off-by: Stepan Kasal <kasal@ucw.cz>
----
-Another one from msysGit project.
-Original subject by Pat; I would suggest:
-    wincred: improve Makefile
- contrib/credential/wincred/Makefile | 22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
-
-diff --git a/contrib/credential/wincred/Makefile b/contrib/credential/wincred/Makefile
-index bad45ca..3ce6aba 100644
---- a/contrib/credential/wincred/Makefile
-+++ b/contrib/credential/wincred/Makefile
-@@ -1,14 +1,20 @@
--all: git-credential-wincred.exe
--
--CC = gcc
--RM = rm -f
--CFLAGS = -O2 -Wall
--
- -include ../../../config.mak.autogen
- -include ../../../config.mak
- 
--git-credential-wincred.exe : git-credential-wincred.c
-+prefix ?= /usr/local
-+libexecdir ?= $(prefix)/libexec/git-core
-+
-+INSTALL ?= install
-+
-+GIT_CREDENTIAL_WINCRED := git-credential-wincred.exe
-+
-+all: $(GIT_CREDENTIAL_WINCRED)
-+
-+$(GIT_CREDENTIAL_WINCRED): git-credential-wincred.c
- 	$(LINK.c) $^ $(LOADLIBES) $(LDLIBS) -o $@
- 
-+install: $(GIT_CREDENTIAL_WINCRED)
-+	$(INSTALL) -m 755 $(GIT_CREDENTIAL_WINCRED) $(libexecdir)
-+
- clean:
--	$(RM) git-credential-wincred.exe
-+	$(RM) $(GIT_CREDENTIAL_WINCRED)
--- 
-1.9.2.msysgit.0.158.g6070cee
+Right, I would not want "git rebase" (what dcommit uses internally)
+to scan all the branches in my repository and try to update them
+behind my back.  It's far too surprising and potentially dangerous.
