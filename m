@@ -1,51 +1,51 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 11/14] t4116-apply-reverse.sh: use the $( ... ) construct for command substitution
-Date: Wed, 30 Apr 2014 09:23:04 -0700
-Message-ID: <1398874987-14873-11-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 13/14] t4204-patch-id.sh: use the $( ... ) construct for command substitution
+Date: Wed, 30 Apr 2014 09:23:06 -0700
+Message-ID: <1398874987-14873-13-git-send-email-gitter.spiros@gmail.com>
 References: <1398874987-14873-1-git-send-email-gitter.spiros@gmail.com>
 Cc: matthieu.moy@grenoble-inp.fr, Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 30 18:24:15 2014
+X-From: git-owner@vger.kernel.org Wed Apr 30 18:24:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WfXIq-0002fn-Pd
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 18:24:13 +0200
+	id 1WfXIq-0002fn-7E
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 18:24:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1945928AbaD3QX4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Apr 2014 12:23:56 -0400
-Received: from mail-pd0-f182.google.com ([209.85.192.182]:57071 "EHLO
-	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965044AbaD3QXn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2014 12:23:43 -0400
-Received: by mail-pd0-f182.google.com with SMTP id v10so1972192pde.27
-        for <git@vger.kernel.org>; Wed, 30 Apr 2014 09:23:41 -0700 (PDT)
+	id S965106AbaD3QXt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2014 12:23:49 -0400
+Received: from mail-pd0-f178.google.com ([209.85.192.178]:63126 "EHLO
+	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965084AbaD3QXr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2014 12:23:47 -0400
+Received: by mail-pd0-f178.google.com with SMTP id fp1so1936431pdb.9
+        for <git@vger.kernel.org>; Wed, 30 Apr 2014 09:23:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=UjKGkDidrnVexfl2a3PkYZAuR/9inRkVeXG+q+c9zUU=;
-        b=Hio3rYwTRLtZsIu2GPcwrKYDKrMaOD2Ef5K5JsdD+cee0eA/xbjQeiKmJ2+jG0BO9N
-         tk/a1hZY2zPjAikTScF6l+MOFrxVNeGIG4pur8h/Tir9lm4P2ueiYLRqGChowAlxkrr/
-         q06i9+c+0VMFmsoebNNp3+nk7dwemYD8tXJFq7wPPITMk7A/0lvQ4n6qcpZti66N+JxB
-         +F4RBN7xIZridgn35hKIkyK4rQkBfcHgwYsuPo7/mv8KF95m5RtxJd6CrlNYIDPEIfgA
-         ixQirjybJt8F3KdRhtn19xDJcVsKQPtnGwNygwon6z+Dg1RXdW1C6nlllOEVv+NZkNUx
-         OJvg==
-X-Received: by 10.66.226.145 with SMTP id rs17mr10303945pac.144.1398875020897;
-        Wed, 30 Apr 2014 09:23:40 -0700 (PDT)
+        bh=4hGaeUcSjNbluiUIFceTkACCfkTpSYGS3xU8tPeiOqM=;
+        b=LhepLKQOBPbilEZHsFzuKgS3NdSYjCnL09C0jXmmPTH/+Ze7zWScpUB+9bHQK7ayJf
+         G785JLdo19bQ6+KmJa334xjhdI3gVCRNdWrPgaDkBEYtxwLbit63hB/m+jvY24qZumpd
+         VwpMx35hYE0cxL77fmRWHdz23FRogcAW3MRDCSUFaxApoJM8xjXIAVtDQViJa2QBlhe/
+         xHhr5gC3D8ewa3zMEDipgMavNlU9yP3mtxoInpGvFdXbV5KypGaRPsSVz9zjytv1cUCU
+         ac4qMjLkG7cZ79OC0kx2jbMNMxVHE85+ol3L89RGnKszSwnOn6N5eYUECwCnT+TdUszA
+         w8tw==
+X-Received: by 10.66.102.39 with SMTP id fl7mr10146872pab.43.1398875022708;
+        Wed, 30 Apr 2014 09:23:42 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id te2sm138674233pac.25.2014.04.30.09.23.39
+        by mx.google.com with ESMTPSA id te2sm138674233pac.25.2014.04.30.09.23.41
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 30 Apr 2014 09:23:40 -0700 (PDT)
+        Wed, 30 Apr 2014 09:23:42 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1398874987-14873-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247732>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247733>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -67,52 +67,23 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t4116-apply-reverse.sh |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ t/t4204-patch-id.sh |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/t4116-apply-reverse.sh b/t/t4116-apply-reverse.sh
-index 1e4d438..ce8567f 100755
---- a/t/t4116-apply-reverse.sh
-+++ b/t/t4116-apply-reverse.sh
-@@ -30,10 +30,10 @@ test_expect_success setup '
- 
- test_expect_success 'apply in forward' '
- 
--	T0=`git rev-parse "second^{tree}"` &&
-+	T0=$(git rev-parse "second^{tree}") &&
- 	git reset --hard initial &&
- 	git apply --index --binary patch &&
--	T1=`git write-tree` &&
-+	T1=$(git write-tree) &&
- 	test "$T0" = "$T1"
+diff --git a/t/t4204-patch-id.sh b/t/t4204-patch-id.sh
+index d2c930d..7940f6f 100755
+--- a/t/t4204-patch-id.sh
++++ b/t/t4204-patch-id.sh
+@@ -45,8 +45,8 @@ test_expect_success 'patch-id supports git-format-patch output' '
+ 	git checkout same &&
+ 	git format-patch -1 --stdout | calc_patch_id same &&
+ 	test_cmp patch-id_master patch-id_same &&
+-	set `git format-patch -1 --stdout | git patch-id` &&
+-	test "$2" = `git rev-parse HEAD`
++	set $(git format-patch -1 --stdout | git patch-id) &&
++	test "$2" = $(git rev-parse HEAD)
  '
  
-@@ -62,22 +62,22 @@ test_expect_success 'setup separate repository lacking postimage' '
- 
- test_expect_success 'apply in forward without postimage' '
- 
--	T0=`git rev-parse "second^{tree}"` &&
-+	T0=$(git rev-parse "second^{tree}") &&
- 	(
- 		cd initial &&
- 		git apply --index --binary ../patch &&
--		T1=`git write-tree` &&
-+		T1=$(git write-tree) &&
- 		test "$T0" = "$T1"
- 	)
- '
- 
- test_expect_success 'apply in reverse without postimage' '
- 
--	T0=`git rev-parse "initial^{tree}"` &&
-+	T0=$(git rev-parse "initial^{tree}") &&
- 	(
- 		cd second &&
- 		git apply --index --binary --reverse ../patch &&
--		T1=`git write-tree` &&
-+		T1=$(git write-tree) &&
- 		test "$T0" = "$T1"
- 	)
- '
+ test_expect_success 'whitespace is irrelevant in footer' '
 -- 
 1.7.10.4
