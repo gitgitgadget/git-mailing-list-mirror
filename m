@@ -1,55 +1,51 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: =?UTF-8?q?=5BPATCH=2008/14=5D=20t4036-format-patch-signer-mime=2Esh=3A=20use=20the=20=24=28=20=2E=2E=2E=20=29=20construct=20for=20command=20substitution?=
-Date: Wed, 30 Apr 2014 09:23:01 -0700
-Message-ID: <1398874987-14873-8-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 02/14] t3910-mac-os-precompose.sh: use the $( ... ) construct for command substitution
+Date: Wed, 30 Apr 2014 09:22:55 -0700
+Message-ID: <1398874987-14873-2-git-send-email-gitter.spiros@gmail.com>
 References: <1398874987-14873-1-git-send-email-gitter.spiros@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: matthieu.moy@grenoble-inp.fr, Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 30 18:24:48 2014
+X-From: git-owner@vger.kernel.org Wed Apr 30 18:24:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WfXJP-0003QJ-0x
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 18:24:47 +0200
+	id 1WfXJQ-0003QJ-2p
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 18:24:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1945931AbaD3QYW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Apr 2014 12:24:22 -0400
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:52389 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965069AbaD3QXm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2014 12:23:42 -0400
-Received: by mail-pa0-f52.google.com with SMTP id kx10so2278055pab.39
-        for <git@vger.kernel.org>; Wed, 30 Apr 2014 09:23:37 -0700 (PDT)
+	id S933732AbaD3QYf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2014 12:24:35 -0400
+Received: from mail-pd0-f173.google.com ([209.85.192.173]:37800 "EHLO
+	mail-pd0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965047AbaD3QXh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2014 12:23:37 -0400
+Received: by mail-pd0-f173.google.com with SMTP id p10so1907658pdj.4
+        for <git@vger.kernel.org>; Wed, 30 Apr 2014 09:23:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=AipuY6Tin6uARGlHuINJUwBpt2EDyZQDny3GxS85p+k=;
-        b=QLGy8zb5o9lFZWoVmxt5K+Pk23TgJlqqIXSLi5gZyUYMvf1h37POhlE5gRc6IBvuDO
-         gkn2eOjnVnvNg72NTDaPQ+nM9EqIb+G0XH8p9ST2VcpGl4S8neglyzLcK9xuCFIGkJ/6
-         obqQM9f41seQ2UICoHLGTHt4NYQAiYUuo/dsYFhqG8dWYWZYI6kKzoOrlwWYWv9D1hyA
-         03uUuFif6QO2LmdJNXFu79UMT2WmsJNhTHqsunH3QVbWPolGqkTdfTjhUnqOZqulYqwl
-         CGuYV9VEA2UZRqXm/AokxoosVvblc67BHPmyqn/F8opnHVp0ingRQnYciM5MN4AMawCS
-         LcXg==
-X-Received: by 10.66.150.69 with SMTP id ug5mr10238186pab.55.1398875017816;
-        Wed, 30 Apr 2014 09:23:37 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=ddAoqFGRNwDz1S5V3I0G6fnWYVqR5lxEYVjOHp6YKYA=;
+        b=liiHz/ulpVyawn0tNBmmGuRWqUdDZw7LDimVWIgwRvtSO9kaZC/mBwnLkgaar2qQJ5
+         HRIwx0gn0u6Nw/TMhoPJlng2Ff2/2VSxog/PrlXLJd+JC6wyzg678AlXCpYyvo1nIIU1
+         TD2Xb7SmswsJqUucCLU14K9NfOtVIxfrD05twBVD1V0PRhB4MeJRRuIs2D3TVtrSna0p
+         emB/0mQkhZ3SNkWZDl073KMPjcaWK6qTeQ1jBF2ZYwa1AWo9vOayjmskythAWJeXlI5z
+         uy4wih5lTR/6GfeJw80m2EgPwvoVPhO2jRq+U0dnsrQDD17acw31HSyvZjxFQ2OPwv9g
+         KcBw==
+X-Received: by 10.66.192.41 with SMTP id hd9mr10063079pac.87.1398875012128;
+        Wed, 30 Apr 2014 09:23:32 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id te2sm138674233pac.25.2014.04.30.09.23.36
+        by mx.google.com with ESMTPSA id te2sm138674233pac.25.2014.04.30.09.23.31
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 30 Apr 2014 09:23:37 -0700 (PDT)
+        Wed, 30 Apr 2014 09:23:31 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1398874987-14873-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247740>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -71,24 +67,50 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t4036-format-patch-signer-mime.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t3910-mac-os-precompose.sh |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/t/t4036-format-patch-signer-mime.sh b/t/t4036-format-patch=
--signer-mime.sh
-index ba43f18..98d9713 100755
---- a/t/t4036-format-patch-signer-mime.sh
-+++ b/t/t4036-format-patch-signer-mime.sh
-@@ -42,7 +42,7 @@ test_expect_success 'attach and signoff do not duplic=
-ate mime headers' '
-=20
- 	GIT_COMMITTER_NAME=3D"=E3=81=AF=E3=81=BE=E3=81=AE =E3=81=B5=E3=81=AB=E3=
-=81=8A=E3=81=86" \
- 	git format-patch -s --stdout -1 --attach >output &&
--	test `grep -ci ^MIME-Version: output` =3D 1
-+	test $(grep -ci ^MIME-Version: output) =3D 1
-=20
+diff --git a/t/t3910-mac-os-precompose.sh b/t/t3910-mac-os-precompose.sh
+index e4ba601..96941e9 100755
+--- a/t/t3910-mac-os-precompose.sh
++++ b/t/t3910-mac-os-precompose.sh
+@@ -14,13 +14,13 @@ then
+ fi
+ 
+ # create utf-8 variables
+-Adiarnfc=`printf '\303\204'`
+-Adiarnfd=`printf 'A\314\210'`
++Adiarnfc=$(printf '\303\204')
++Adiarnfd=$(printf 'A\314\210')
+ 
+-Odiarnfc=`printf '\303\226'`
+-Odiarnfd=`printf 'O\314\210'`
+-AEligatu=`printf '\303\206'`
+-Invalidu=`printf '\303\377'`
++Odiarnfc=$(printf '\303\226')
++Odiarnfd=$(printf 'O\314\210')
++AEligatu=$(printf '\303\206')
++Invalidu=$(printf '\303\377')
+ 
+ 
+ #Create a string with 255 bytes (decomposed)
+@@ -35,7 +35,7 @@ Alongc=$Alongc$Alongc$Alongc$Alongc$Alongc           #250 Byte
+ Alongc=$Alongc$AEligatu$AEligatu                     #254 Byte
+ 
+ test_expect_success "detect if nfd needed" '
+-	precomposeunicode=`git config core.precomposeunicode` &&
++	precomposeunicode=$(git config core.precomposeunicode) &&
+ 	test "$precomposeunicode" = true &&
+ 	git config core.precomposeunicode true
  '
-=20
---=20
+@@ -146,7 +146,7 @@ test_expect_success "respect git config --global core.precomposeunicode" '
+ 	git config --global core.precomposeunicode true &&
+ 	rm -rf .git &&
+ 	git init &&
+-	precomposeunicode=`git config core.precomposeunicode` &&
++	precomposeunicode=$(git config core.precomposeunicode) &&
+ 	test "$precomposeunicode" = "true"
+ '
+ 
+-- 
 1.7.10.4
