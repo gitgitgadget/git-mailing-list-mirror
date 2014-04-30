@@ -1,116 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/8] CodingGuidelines: give an example for control statements
-Date: Wed, 30 Apr 2014 15:03:25 -0700
-Message-ID: <xmqqwqe6cw5u.fsf@gitster.dls.corp.google.com>
-References: <1398894312-30763-1-git-send-email-gitster@pobox.com>
-	<1398894312-30763-5-git-send-email-gitster@pobox.com>
-	<5361711F.1030208@gmail.com>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: Pull is Evil
+Date: Wed, 30 Apr 2014 18:06:45 -0400
+Message-ID: <536173F5.7010905@xiplink.com>
+References: <4ay6w9i74cygt6ii1b0db7wg.1398433713382@email.android.com> <xmqqoazlqot4.fsf@gitster.dls.corp.google.com> <536106EA.5090204@xiplink.com> <xmqqppjyhnom.fsf@gitster.dls.corp.google.com> <536152D3.5050107@xiplink.com> <5361598f8eaf7_4781124b2f02b@nysa.notmuch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Stefan Beller <stefanbeller@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 01 00:04:06 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Marat Radchenko <marat@slonopotamus.org>, git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 01 00:06:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wfcbl-0004Qq-IV
-	for gcvg-git-2@plane.gmane.org; Thu, 01 May 2014 00:04:05 +0200
+	id 1WfceF-0007sG-On
+	for gcvg-git-2@plane.gmane.org; Thu, 01 May 2014 00:06:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759340AbaD3WD5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Apr 2014 18:03:57 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49814 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752243AbaD3WD5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2014 18:03:57 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A1AAB82D16;
-	Wed, 30 Apr 2014 18:03:56 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=UJ5hzd89BtPR+pYlizkguYTKAhQ=; b=RxIAbE
-	FcXZ86nnfrKcpyIegkx/MIakkTcu0R4nnEjJT3XCZQ99deOA+vJEUrUG2S1Hx8ra
-	zLx5+1eYvvxQznsAsALScEwpljKObi33bygL3NUYCkqHdt800bgEIH7GIUHlb6FS
-	+sUl5hOpCbZxhrnbdTMoVsKqmjjc5mlaMQCx4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Em4ams6Jwmn/hjVFblOjJnwtK2Nx5JEQ
-	Ar8P0mBAO1dJDKmoB1t8b55Y8OGLVWTTDrkUx2150NGR+8PHSxsoF6g9ZS/ij/cF
-	CihLx24jtL4uY8mmlspRXCvBjyJ0DlRE9JEuKxCWbrHCjFwZi8w0B+qn4z6X/h4C
-	Ury1ZqiXARs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 84ADE82D15;
-	Wed, 30 Apr 2014 18:03:56 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8B2DE82CB6;
-	Wed, 30 Apr 2014 18:03:27 -0400 (EDT)
-In-Reply-To: <5361711F.1030208@gmail.com> (Stefan Beller's message of "Wed, 30
-	Apr 2014 23:54:39 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 41FCAAC6-D0B3-11E3-AAAD-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S964977AbaD3WGV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2014 18:06:21 -0400
+Received: from smtp130.ord.emailsrvr.com ([173.203.6.130]:53132 "EHLO
+	smtp130.ord.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933602AbaD3WGU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2014 18:06:20 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp25.relay.ord1a.emailsrvr.com (SMTP Server) with ESMTP id 561353F0AA2;
+	Wed, 30 Apr 2014 18:06:19 -0400 (EDT)
+X-Virus-Scanned: OK
+Received: by smtp25.relay.ord1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 0D04A3F0156;
+	Wed, 30 Apr 2014 18:06:19 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
+In-Reply-To: <5361598f8eaf7_4781124b2f02b@nysa.notmuch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247796>
 
-Stefan Beller <stefanbeller@gmail.com> writes:
+On 14-04-30 04:14 PM, Felipe Contreras wrote:
+> Marc Branchaud wrote:
+>> All that said, I don't object to any attempts at improving the command
+>> either.  But I also don't see any kind of improvement that would lead
+>> me to start using "git pull" let alone recommending it to new users.
+> 
+> What is wrong when `git pull` merges a fast-forward?
 
-> On 30.04.2014 23:45, Junio C Hamano wrote:
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->> ---
->>  Documentation/CodingGuidelines | 11 +++++++++++
->>  1 file changed, 11 insertions(+)
->> 
->> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
->> index 1e0c4cf..d72e912 100644
->> --- a/Documentation/CodingGuidelines
->> +++ b/Documentation/CodingGuidelines
->> @@ -97,6 +97,17 @@ For shell scripts specifically (not exhaustive):
->>     "then" should be on the next line for if statements, and "do"
->>     should be on the next line for "while" and "for".
->>  
->> +	(incorrect)
->
-> At the other patches you used #comments behind oneliners,
-> not sure if that's also suitable here for consistency of the documentation.
+Nothing.  Everything.  It depends.
 
-I think you meant this one (are there others?):
+> The problems with `git pull` come when you can't do a fast-forward merge, right?
 
-+	cat hello > world < universe	# incorrect
-+	cat hello >world <universe	# correct
-+
-+	echo hello >$world		# incorrect
-+	echo hello >"$world"		# correct
-+
+Some of them, maybe most of them.
 
-I can certainly go with this instead over there:
+But the reason "git pull" is broken is that any solution to the problems that
+arise depend on the project's workflow.  That would be fine if there was a
+workflow that suited some large majority of users, but there doesn't seem to
+be one.
 
-	(incorrect)
-	cat hello > world < universe
-	echo hello >$world
+<aside>
 
-	(correct)
-	cat hello >world <universe
-	echo hello >"$world"
+I dug up the workflows question from the 2012 user survey[1], but it's less
+revealing than one might like:
 
-I do not think it is wise to use the trailing comment style on all
-the incorrect/correct lines for these examples.
+ 19. What git workflow(s) is used by projects in which development you
+participate?
 
->> +	if test -f hello; then
->> +		do this
->> +	fi
->> +
->> +	(correct)
->> +	if test -f hello
->> +	then
->> +		do this
->> +	fi
->> +
->>   - We prefer "test" over "[ ... ]".
->>  
->>   - We do not write the noiseword "function" in front of shell
->> 
+single developer, only private repository (no interaction)		67%
+
+centralized workflow (push to common repository)			69%
+
+branched centralized (push to different branches in common repository)	50%
+
+peer-to-peer workflow (all repositories roughly equal)			 9%
+
+integration-manager workflow (maintainer pulls/applies patches to "blessed"
+repository))	19%
+
+dictator and lieutenants workflow (hierarchical workflow)		 5%
+
+using collaborative code review tool, e.g. Gerrit			13%
+
+other workflow, please explain						 2%
+
+Total respondents	4352
+
+Respondents who skipped this question	135
+
+(IIRC, this was a "check all that apply" question.)
+
+I don't think this lets us conclude anything about the popularity of merging
+or rebasing, even though many respondents use a centralized workflow.  I use
+a centralized workflow, and I will sometimes merge and sometimes rebase.  It
+depends on the work I'm doing.
+
+</aside>
+
+		M.
+
+[1] https://www.survs.com/results/QPESOB10/ME8UTHXM4M
