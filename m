@@ -1,201 +1,282 @@
 From: Ilya Bobyr <ilya.bobyr@gmail.com>
 Subject: Re: [PATCH 3/3] test-lib: '--run' to run only specific tests
-Date: Wed, 30 Apr 2014 02:40:31 -0700
-Message-ID: <5360C50F.7070505@gmail.com>
-References: <1398154767-1276-1-git-send-email-ilya.bobyr@gmail.com>	<1398154767-1276-4-git-send-email-ilya.bobyr@gmail.com> <xmqqlhuvzy6r.fsf@gitster.dls.corp.google.com>
+Date: Wed, 30 Apr 2014 02:41:19 -0700
+Message-ID: <5360C53F.5080909@gmail.com>
+References: <1398154767-1276-1-git-send-email-ilya.bobyr@gmail.com>	<1398154767-1276-4-git-send-email-ilya.bobyr@gmail.com> <CAPig+cTK8i6rGYmum0m-wCmTUE4oqMVEdryiAt29vJXYdgSuYQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
 	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 30 11:40:51 2014
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Wed Apr 30 11:41:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WfR0P-0006yd-HN
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 11:40:46 +0200
+	id 1WfR1F-0007yU-N5
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 11:41:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758454AbaD3Jkl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Apr 2014 05:40:41 -0400
-Received: from mail-ig0-f182.google.com ([209.85.213.182]:59701 "EHLO
-	mail-ig0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757271AbaD3Jkk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2014 05:40:40 -0400
-Received: by mail-ig0-f182.google.com with SMTP id l13so1422391iga.15
-        for <git@vger.kernel.org>; Wed, 30 Apr 2014 02:40:40 -0700 (PDT)
+	id S1758481AbaD3Jld (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2014 05:41:33 -0400
+Received: from mail-ie0-f182.google.com ([209.85.223.182]:46674 "EHLO
+	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751691AbaD3Jlc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2014 05:41:32 -0400
+Received: by mail-ie0-f182.google.com with SMTP id tp5so1646559ieb.41
+        for <git@vger.kernel.org>; Wed, 30 Apr 2014 02:41:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=message-id:date:from:user-agent:mime-version:to:cc:subject
          :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=XhUvHBT7URkaK18A3coGuJrK0Q7xCz4PcabzxS7cTt0=;
-        b=Tl8/ohGsFp+/o+zwJ6HDiCVebIiYhfgeu7CI5oqvZ+gp/WPuFlr2k4lRUL6P26ihmg
-         0DDRMQSKN881AwGhznpN/5VHM3WnnptFtJY4v9BN8YL0Zxyb1lGsTesNsXJ+2h+L+gcA
-         Un/MY1ey2E12mQk6+iqd8vBhCDWpjjo6apI+vyvZWNtKPPWJMJN72MciW6gMFjSCWYPa
-         jl1a5d128W4tBxEoSrtl1B+U0gqk8CD6PFlKCpyhhhwVxQxPBijnmkjxGVerLfzoMWU3
-         U2j6b4ndeFFAVAh0J3cRBA991DmuKlJE+K7JB87Hw96Pawq5QbGVa/DidCXDDJMD5eNA
-         aGKg==
-X-Received: by 10.50.153.72 with SMTP id ve8mr36802220igb.16.1398850840026;
-        Wed, 30 Apr 2014 02:40:40 -0700 (PDT)
+        bh=Tugp0c8zRvkwxalWSe5aiAERSprux0MsJqMakDLcMWM=;
+        b=JXin98ENHcGDsfRj8wdKJfxfS1H72Jd0WAnxfzjherJBzi148J1HfFUa8HiJA7Xhvx
+         xeBnHrFv4XumvXRPItpKndbeJJX+GWCWaOxY8NAm7DUyEtuQEb1Esw31w0iADQh1AmRT
+         /IMoghK1Uw1NuXYXIiW+ZkpRSnx8EKMVwovGDnQ3x8CiPXHzBeVhEyZkVEW9Czdrech/
+         A8GdB4BxAAnZgoS/B7kbKsbzXyZBzcSMVzGicOlykN0tN+m2RRsAOEYfioqJXenGzkTK
+         Jo8ffU7EpNyfg9YHbMSbNqjP3TZGSRAKPkQIUL5YbpiU89kKxx/0qqYVhi5fAwzzNVVr
+         4PcA==
+X-Received: by 10.50.33.74 with SMTP id p10mr36632540igi.5.1398850886948;
+        Wed, 30 Apr 2014 02:41:26 -0700 (PDT)
 Received: from [192.168.1.2] (c-50-136-172-14.hsd1.ca.comcast.net. [50.136.172.14])
-        by mx.google.com with ESMTPSA id d10sm4319585igc.8.2014.04.30.02.40.38
+        by mx.google.com with ESMTPSA id ie20sm4321823igb.10.2014.04.30.02.41.25
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 30 Apr 2014 02:40:39 -0700 (PDT)
+        Wed, 30 Apr 2014 02:41:26 -0700 (PDT)
 User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:29.0) Gecko/20100101 Thunderbird/29.0
-In-Reply-To: <xmqqlhuvzy6r.fsf@gitster.dls.corp.google.com>
+In-Reply-To: <CAPig+cTK8i6rGYmum0m-wCmTUE4oqMVEdryiAt29vJXYdgSuYQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247689>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247690>
 
-On 4/23/2014 11:40 AM, Junio C Hamano wrote:
-> Ilya Bobyr <ilya.bobyr@gmail.com> writes:
->
->> @@ -187,10 +192,70 @@ and either can match the "t[0-9]{4}" part to skip the whole
->>  test, or t[0-9]{4} followed by ".$number" to say which
->>  particular test to skip.
->>  
->> -Note that some tests in the existing test suite rely on previous
->> -test item, so you cannot arbitrarily disable one and expect the
->> -remainder of test to check what the test originally was intended
->> -to check.
->> +For an individual test suite --run could be used to specify that
->> +only some tests should be run or that some tests should be
->> +excluded from a run.
->> +
->> +The argument for --run is a list of individual test numbers or
->> +ranges with an optional negation prefix that define what tests in
->> +a test suite to include in the run.  A range is two numbers
->> +separated with a dash and matches a range of tests with both ends
->> +been included.  You may omit the first or the second number to
->> +mean "from the first test" or "up to the very last test"
->> +respectively.
->> +
->> +Optional prefix of '!' means that the test or a range of tests
->> +should be excluded from the run.
->> +
->> +If --run starts with an unprefixed number or range the initial
->> +set of tests to run is empty. If the first item starts with '!'
->> +all the tests are added to the initial set.  After initial set is
->> +determined every test number or range is added or excluded from
->> +the set one by one, from left to right.
->> +
->> +Individual numbers or ranges could be separated either by a space
->> +or a comma.
->> +
->> +For example, common case is to run several setup tests (1, 2, 3)
->> +and then a specific test (21) that relies on that setup:
->> +
->> +    $ sh ./t9200-git-cvsexport-commit.sh --run='1 2 3 21'
->> +
->> +or:
->> +
->> +    $ sh ./t9200-git-cvsexport-commit.sh --run=1,2,3,21
->> +
->> +or:
->> +
->> +    $ sh ./t9200-git-cvsexport-commit.sh --run='-3 21'
-> Good and easily understandable examples. 
->
->> +To run only tests up to a specific test (21), one could do this:
->> +
->> +    $ sh ./t9200-git-cvsexport-commit.sh --run='1-21'
->> +
->> +or this:
->> +
->> +    $ sh ./t9200-git-cvsexport-commit.sh --run='-21'
-> These may be redundant, given that the reader would have to have
-> grokked the earlier "-3 21" already at this point.
-
-The original idea was to show two most common use cases in the examples,
-so that one could just copy/paste it.
-I guess you are right that the second is a bit redundant now from the
-standpoint of a person who is reading all of it.
-
-I have reordered the examples.  Single range is simpler, it comes first
-and then a more complicated example.
-
+On 4/23/2014 12:51 PM, Eric Sunshine wrote:
+> On Tue, Apr 22, 2014 at 4:19 AM, Ilya Bobyr <ilya.bobyr@gmail.com> wrote:
+>> Allow better control of the set of tests that will be executed for a
+>> single test suite.  Mostly useful while debugging or developing as it
+>> allows to focus on a specific test.
+>>
+>> Signed-off-by: Ilya Bobyr <ilya.bobyr@gmail.com>
+>> ---
+>> diff --git a/t/README b/t/README
+>> index 6b93aca..2dac619 100644
+>> --- a/t/README
+>> +++ b/t/README
 >> +As noted above, the test set is built going though items left to
 >> +right, so this:
 >> +
 >> +    $ sh ./t9200-git-cvsexport-commit.sh --run='1-4 !3'
 >> +
 >> +will run tests 1, 2, and 4.
-> I do not quite understand what you mean by "left to right"; is that
-> implementation detail necessary for the user of the feature, or is
-> it talking about some limitation coming from the implementation?
-> e.g. perhaps "!3 1-4" would not work as people would expect "do not
-> run 3, but run tests from 1 thru 4 otherwise", and warning against
-> having such an expectation that cannot be fulfilled?
-
-I thought that it is something that you may want to understand if you
-are going to build something complicated.  As I do not have a specific
-use case, this is kind of a made up example.
-The idea is that what is on the right overwrites what is on the left. 
-I've added that sentence as an additional clarification, and your example.
-
+>> +
 >> +You may use negation with ranges.  The following will run all
 >> +test as a test suite except from 7 upto 11:
->> +
+> s/upto/up to/
+> ...or...
+> s/upto/through/
+
+Fixed.  Thanks.
+
 >> +    $ sh ./t9200-git-cvsexport-commit.sh --run='!7-11'
-> Hmm, that is somewhat counter-intuitive or at least ambiguous.  I
-> first thought you would be running everything but skipping 7 thru
-> 11, but your explanation is that it is equivalent to "-6,8-11" (that
-> is, to intersect set "-11" and set "!7").
-
-Your expectation is correct.
-A space or a comma is needed in order for "!7" and "-11" to be treated
-separately.
-I am not sure why did you read the description as "-6,8-11".  There is a
-typo in the sentence: s/as a/in the/.
-I've changed that, but I would not object a better explanation of cause :)
-
-> The above two illustrate the reason rather well why I said it would
-> be better to avoid negation because it would complicate the mental
-> model the user needs to form when using the feature.
-
-I think that you do not have to use it if you do not need it.
-It adds some expressiveness, is rather easy to implement and is already
-there :)
-I can remove it, of cause, but is it really necessary?
-
+>> +
 >> +Some tests in a test suite rely on the previous tests performing
 >> +certain actions, specifically some tests are designated as
 >> +"setup" test, so you cannot _arbitrarily_ disable one test and
 >> +expect the rest to function correctly.
-> What this text (moved from the top of this hunk) tells the reader
-> applies to both the traditional t0123.4 and the new "--run=1-3,5-"
-> syntaxes, but the new placement of it make it sound as if it is only
-> for skipping with "--run", especially because the text before this
-> paragraph and also after this paragraph both apply only to "--run".
-
-True, but there is another paragraph at the beginning of the section
-that talks why would you want to use GIT_SKIP_TESTS:
-
-> In some environments, certain tests have no way of succeeding
-> due to platform limitation, such as lack of 'unzip' program, or
-> filesystem that do not allow arbitrary sequence of non-NUL bytes
-> as pathnames.
-
-I was thinking that if you would be working with individual test suits
-you would use '--run'.
-And this is where you more likely to think about setup tests.
-I could move that paragraph just after the GIT_SKIP_TESTS description. 
-Then it would apply more to both.
-I am not sure it is needed.  Let me know if you think otherwise.
-
 >> +--run is mostly useful when you want to focus on a specific test
 >> +and know what you are doing.  Or when you want to run up to a
 >> +certain test.
-> Likewise for "and know what you are doing" part.  I'd suggest
-> dropping that phrase from here, and/or make it part of the "you
-> cannot randomly omit and expect later ones to work" that covers both
-> ways to skip tests.
+>>
+>>
+>>  Naming Tests
+>> diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+>> index ae8874e..e2589cc 100755
+>> --- a/t/t0000-basic.sh
+>> +++ b/t/t0000-basic.sh
+>> @@ -84,6 +97,18 @@ check_sub_test_lib_test () {
+>>         )
+>>  }
+>>
+>> +check_sub_test_lib_test_err () {
+>> +       name="$1" # stdin is the expected output output from the test
+>> +       # expecte error output is in descriptor 3
+> s/expecte/expected/
 
-I've made this part a bit less wage.
+Fixed.
 
-Thank you for reviewing it :)
+>> +       (
+>> +               cd "$name" &&
+>> +               sed -e 's/^> //' -e 's/Z$//' >expect.out &&
+>> +               test_cmp expect.out out &&
+>> +               sed -e 's/^> //' -e 's/Z$//' <&3 >expect.err &&
+>> +               test_cmp expect.err err
+>> +       )
+>> +}
+>> +
+>>  test_expect_success 'pretend we have a fully passing test suite' "
+>>         run_sub_test_lib_test full-pass '3 passing tests' <<-\\EOF &&
+>>         for i in 1 2 3
+>> @@ -333,6 +358,329 @@ test_expect_success 'GIT_SKIP_TESTS sh pattern' "
+>> +test_expect_success '--run invalid range start' "
+>> +       run_sub_test_lib_test_err run-inv-range-start \
+>> +               '--run invalid range start' \
+>> +               --run='a-5' <<-\\EOF &&
+>> +       test_expect_success \"passing test #1\" 'true'
+>> +       test_done
+>> +       EOF
+>> +       check_sub_test_lib_test_err run-inv-range-start \
+>> +               <<-\\EOF_OUT 3<<-\\EOF_ERR
+>> +       > FATAL: Unexpected exit with code 1
+>> +       EOF_OUT
+>> +       > error: --run: range start should contain only digits: 'a-5'
+> This reads rather strangely, as if it's attempting to give an example
+> (after the colon) of a valid digit range, but then shows something
+> that is not valid. Rewording it slightly can eliminate the ambiguity:
+>
+>     error: --run: invalid non-numeric range start: 'a-5'
+
+Changed.
+
+>> +       EOF_ERR
+>> +"
+>> +
+>> +test_expect_success '--run invalid range end' "
+>> +       run_sub_test_lib_test_err run-inv-range-end \
+>> +               '--run invalid range end' \
+>> +               --run='1-z' <<-\\EOF &&
+>> +       test_expect_success \"passing test #1\" 'true'
+>> +       test_done
+>> +       EOF
+>> +       check_sub_test_lib_test_err run-inv-range-end \
+>> +               <<-\\EOF_OUT 3<<-\\EOF_ERR
+>> +       > FATAL: Unexpected exit with code 1
+>> +       EOF_OUT
+>> +       > error: --run: range end should contain only digits: '1-z'
+> Ditto.
+
+Fixed.
+
+>> +       EOF_ERR
+>> +"
+>> +
+>> +test_expect_success '--run invalid selector' "
+>> +       run_sub_test_lib_test_err run-inv-selector \
+>> +               '--run invalid selector' \
+>> +               --run='1?' <<-\\EOF &&
+>> +       test_expect_success \"passing test #1\" 'true'
+>> +       test_done
+>> +       EOF
+>> +       check_sub_test_lib_test_err run-inv-selector \
+>> +               <<-\\EOF_OUT 3<<-\\EOF_ERR
+>> +       > FATAL: Unexpected exit with code 1
+>> +       EOF_OUT
+>> +       > error: --run: test selector should contain only digits: '1?'
+> And here:
+>
+>     error: --run: invalid non-digit in range selector: '1?'
+>
+> or something.
+
+Changed to "invalid non-digit in test selector".  This one is only shown
+if it does not have a "-", so it is probably not a range.
+
+>> +       EOF_ERR
+>> +"
+>> +
+>> +
+>>  test_set_prereq HAVEIT
+>>  haveit=no
+>>  test_expect_success HAVEIT 'test runs if prerequisite is satisfied' '
+>> diff --git a/t/test-lib.sh b/t/test-lib.sh
+>> index e7d9c51..46ba513 100644
+>> --- a/t/test-lib.sh
+>> +++ b/t/test-lib.sh
+>> @@ -366,6 +374,100 @@ match_pattern_list () {
+>>         return 1
+>>  }
+>>
+>> +match_test_selector_list () {
+>> +       title="$1"
+>> +       shift
+>> +       arg="$1"
+>> +       shift
+>> +       test -z "$1" && return 0
+>> +
+>> +       # Both commas and spaces are accepted as separators
+>> +       OLDIFS=$IFS
+>> +       IFS='   ,'
+> The comment mentions only space and comma, but the actual assigned IFS
+> value also treats tabs as separators. Perhaps update the comment to
+> say "commas and whitespace".
+
+I thought that tab is a space character =)  Changed it.
+
+>> +       set -- $1
+>> +       IFS=$OLDIFS
+>> +
+>> +       # If the first selector is negative we include by default.
+>> +       include=
+>> +       case "$1" in
+>> +               !*) include=t ;;
+>> +       esac
+>> +
+>> +       for selector
+>> +       do
+>> +               orig_selector=$selector
+>> +
+>> +
+> Unnecessary extra blank line.
+
+Thanks.
+
+> [...]
+>> +                               ;;
+>> +                       *)
+>> +                               if expr "z$selector" : "z[0-9]*[^0-9]" >/dev/null
+>> +                               then
+>> +                                       echo "error: $title: test selector should contain" \
+>> +                                               "only digits: '$orig_selector'" >&2
+>> +                                       exit 1
+>> +                               fi
+>> +               esac
+>> +
+>> +               # Short cut for "obvious" cases
+>> +               test -z "$include" && test -z "$positive" && continue
+>> +               test -n "$include" && test -n "$positive" && continue
+>> +
+>> +               case "$selector" in
+>> +                       -*)
+>> +                               if test $arg -le ${selector#-}
+>> +                               then
+>> +                                       include=$positive
+>> +                               fi
+>> +                               ;;
+>> +                       *-)
+>> +                               if test $arg -ge ${selector%-}
+>> +                               then
+>> +                                       include=$positive
+>> +                               fi
+>> +                               ;;
+>> +                       *-*)
+>> +                               if test ${selector%%-*} -le $arg \
+>> +                                       -a $arg -le ${selector#*-}
+> The -a option to 'test' is not portable [1] and is considered obsolete
+> by POSIX [2]. Use "test foo && test bar" instead.
+>
+> [1]: http://www.gnu.org/software/autoconf/manual/autoconf.html#index-g_t_0040command_007btest_007d-1793
+> [2]: http://pubs.opengroup.org/onlinepubs/9699919799/utilities/test.html
+
+Did not know that.  Thanks.  Changed it.
+
+It is used a number of times thought:
+
+$ git grep '\<test\>.*-a\>' | wc -l
+72
+
+About 10 matches are accidental, but the rest are '-a' uses in 'test'.
+
+>> [...]
+
+Thanks a lot for looking into it :)
