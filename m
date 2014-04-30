@@ -1,100 +1,98 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: Pull is Evil
-Date: Wed, 30 Apr 2014 18:06:45 -0400
-Message-ID: <536173F5.7010905@xiplink.com>
-References: <4ay6w9i74cygt6ii1b0db7wg.1398433713382@email.android.com> <xmqqoazlqot4.fsf@gitster.dls.corp.google.com> <536106EA.5090204@xiplink.com> <xmqqppjyhnom.fsf@gitster.dls.corp.google.com> <536152D3.5050107@xiplink.com> <5361598f8eaf7_4781124b2f02b@nysa.notmuch>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 3/8] CodingGuidelines: give an example for redirection
+Date: Wed, 30 Apr 2014 15:14:07 -0700
+Message-ID: <xmqqsioucvo0.fsf_-_@gitster.dls.corp.google.com>
+References: <1398894312-30763-1-git-send-email-gitster@pobox.com>
+	<1398894312-30763-4-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Marat Radchenko <marat@slonopotamus.org>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 01 00:06:41 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Stefan Beller <stefanbeller@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 01 00:14:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WfceF-0007sG-On
-	for gcvg-git-2@plane.gmane.org; Thu, 01 May 2014 00:06:40 +0200
+	id 1Wfcld-0001DA-2b
+	for gcvg-git-2@plane.gmane.org; Thu, 01 May 2014 00:14:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964977AbaD3WGV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Apr 2014 18:06:21 -0400
-Received: from smtp130.ord.emailsrvr.com ([173.203.6.130]:53132 "EHLO
-	smtp130.ord.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933602AbaD3WGU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2014 18:06:20 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp25.relay.ord1a.emailsrvr.com (SMTP Server) with ESMTP id 561353F0AA2;
-	Wed, 30 Apr 2014 18:06:19 -0400 (EDT)
-X-Virus-Scanned: OK
-Received: by smtp25.relay.ord1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 0D04A3F0156;
-	Wed, 30 Apr 2014 18:06:19 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
-In-Reply-To: <5361598f8eaf7_4781124b2f02b@nysa.notmuch>
+	id S1759498AbaD3WOM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2014 18:14:12 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47662 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752243AbaD3WOL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2014 18:14:11 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 54F267F0BC;
+	Wed, 30 Apr 2014 18:14:11 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=2eaDezVrljdOTBfUaHR51wBgIts=; b=TWImDO
+	UHjC75E+OYcEbZcYJTIk6rZqDBzPio6uCU+VLw6o7Dyc6s4TEb5X35gB/iTueNC4
+	iQZtBafL2FkjOVRnIa63JnhSNU74t5ux9Ed8R7759irAre147xXBvwhT7kwsVLmd
+	R+SK8DtjLE4BXbj8T+w/YH2yxrkOUIlQT1nPQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CPRjoCamx5jn1WnHqfz4qL+brXDHiqrt
+	fasOVZwweJ/IGa1rH35ppxISDIJQeRH0YdAGmUpaBUR8w5Sv9Tb/83lvnyW0lbgy
+	JoA3kz28q4S4cbjEMi7tuOIh0RoKDo4zOlPLOQQ0+2IWfVY4PaQuwlok0GhPZMXW
+	s0OhxJZBuZk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3B7B47F0B9;
+	Wed, 30 Apr 2014 18:14:11 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2E2347F0B2;
+	Wed, 30 Apr 2014 18:14:09 -0400 (EDT)
+In-Reply-To: <1398894312-30763-4-git-send-email-gitster@pobox.com> (Junio
+	C. Hamano's message of "Wed, 30 Apr 2014 14:45:07 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: C06D4C34-D0B4-11E3-B621-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247797>
 
-On 14-04-30 04:14 PM, Felipe Contreras wrote:
-> Marc Branchaud wrote:
->> All that said, I don't object to any attempts at improving the command
->> either.  But I also don't see any kind of improvement that would lead
->> me to start using "git pull" let alone recommending it to new users.
-> 
-> What is wrong when `git pull` merges a fast-forward?
 
-Nothing.  Everything.  It depends.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-> The problems with `git pull` come when you can't do a fast-forward merge, right?
+ * Instead of using trailing "# correct" comment on each of the
+   one-liners, group the good ones and the bad ones into two groups
+   and give (incorrect)/(correct) header like the other patches as
+   suggested.  How does this look?
 
-Some of them, maybe most of them.
+   The only reason I originally did these differently is because
+   these are two independent examples, and I thought it would make
+   the difference stand out better to the readers if we showed
+   good/bad pairs of "cat" and "echo" that way.  But as long as we
+   are not going to add more examples here, I think the result is
+   not too bad.
 
-But the reason "git pull" is broken is that any solution to the problems that
-arise depend on the project's workflow.  That would be fine if there was a
-workflow that suited some large majority of users, but there doesn't seem to
-be one.
+ Documentation/CodingGuidelines | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-<aside>
-
-I dug up the workflows question from the 2012 user survey[1], but it's less
-revealing than one might like:
-
- 19. What git workflow(s) is used by projects in which development you
-participate?
-
-single developer, only private repository (no interaction)		67%
-
-centralized workflow (push to common repository)			69%
-
-branched centralized (push to different branches in common repository)	50%
-
-peer-to-peer workflow (all repositories roughly equal)			 9%
-
-integration-manager workflow (maintainer pulls/applies patches to "blessed"
-repository))	19%
-
-dictator and lieutenants workflow (hierarchical workflow)		 5%
-
-using collaborative code review tool, e.g. Gerrit			13%
-
-other workflow, please explain						 2%
-
-Total respondents	4352
-
-Respondents who skipped this question	135
-
-(IIRC, this was a "check all that apply" question.)
-
-I don't think this lets us conclude anything about the popularity of merging
-or rebasing, even though many respondents use a centralized workflow.  I use
-a centralized workflow, and I will sometimes merge and sometimes rebase.  It
-depends on the work I'm doing.
-
-</aside>
-
-		M.
-
-[1] https://www.survs.com/results/QPESOB10/ME8UTHXM4M
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+index 6a8e94b..6bfe96e 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -61,6 +61,14 @@ For shell scripts specifically (not exhaustive):
+    redirection target in a variable (as shown above), our code does so
+    because some versions of bash issue a warning without the quotes.
+ 
++	(incorrect)
++	cat hello > world < universe
++	echo hello >$world
++
++	(correct)
++	cat hello >world <universe
++	echo hello >"$world"
++
+  - We prefer $( ... ) for command substitution; unlike ``, it
+    properly nests.  It should have been the way Bourne spelled
+    it from day one, but unfortunately isn't.
+-- 
+2.0.0-rc1-355-gd6d6511
