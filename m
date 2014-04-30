@@ -1,101 +1,93 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Pull is Evil (was: Re: A failing attempt to use Git in a centralized
- environment)
-Date: Wed, 30 Apr 2014 10:21:30 -0400
-Message-ID: <536106EA.5090204@xiplink.com>
-References: <4ay6w9i74cygt6ii1b0db7wg.1398433713382@email.android.com> <xmqqoazlqot4.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Pull is Evil (was: Re: A failing attempt to use Git in a centralized environment)
+Date: Wed, 30 Apr 2014 07:55:21 -0700
+Message-ID: <xmqqppjyhnom.fsf@gitster.dls.corp.google.com>
+References: <4ay6w9i74cygt6ii1b0db7wg.1398433713382@email.android.com>
+	<xmqqoazlqot4.fsf@gitster.dls.corp.google.com>
+	<536106EA.5090204@xiplink.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	Marat Radchenko <marat@slonopotamus.org>
-X-From: git-owner@vger.kernel.org Wed Apr 30 16:26:51 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Marat Radchenko <marat@slonopotamus.org>, git@vger.kernel.org
+To: Marc Branchaud <marcnarc@xiplink.com>
+X-From: git-owner@vger.kernel.org Wed Apr 30 16:56:09 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WfVTB-0006lC-H7
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 16:26:45 +0200
+	id 1WfVvV-0005e7-86
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 16:56:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759087AbaD3O0l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Apr 2014 10:26:41 -0400
-Received: from smtp146.ord.emailsrvr.com ([173.203.6.146]:52450 "EHLO
-	smtp146.ord.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759070AbaD3O0l (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2014 10:26:41 -0400
-X-Greylist: delayed 335 seconds by postgrey-1.27 at vger.kernel.org; Wed, 30 Apr 2014 10:26:40 EDT
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp11.relay.ord1a.emailsrvr.com (SMTP Server) with ESMTP id EC77AF06E8;
-	Wed, 30 Apr 2014 10:21:04 -0400 (EDT)
-X-Virus-Scanned: OK
-Received: by smtp11.relay.ord1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id A12B4F0119;
-	Wed, 30 Apr 2014 10:21:04 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
-In-Reply-To: <xmqqoazlqot4.fsf@gitster.dls.corp.google.com>
+	id S1759183AbaD3Oz5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2014 10:55:57 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52077 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759179AbaD3Oz4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2014 10:55:56 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ECDB882BF8;
+	Wed, 30 Apr 2014 10:55:55 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=rsvAmyJgFPg6MOotIgZKysijrGI=; b=XY282N
+	t1X+xR7NAq2LjatGxgGLyysAu2c0mCZIa+XwoyKSBhSeVsIefvZSa5W7t2AIlxJg
+	obcvaItwZq4KcHEhoA6Wuo96fbjcSQCi1xhzMNY0+gVqg96zVoK6tqg8UJqPuNP3
+	UyWXrUBFyxmcGX5nX+ztbXI8PYda9tRHKLZfc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PEbGahOR5IctGeJY+r5lpUakFIxSUCHo
+	YKDuzEtvMLyPt0xCeTYYlLLAw0CMi9Xz3rQKSyP64Fts25ztlZpUFQX7O6j/uJ7c
+	xHHYHBu3564RaV1vTEzcClvKsuK/AH+bdOHfNCaChklHsiokp6W5Cz1b5B19fOSZ
+	CxreYOcj7AQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D176382BF7;
+	Wed, 30 Apr 2014 10:55:55 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 54C5482BBF;
+	Wed, 30 Apr 2014 10:55:23 -0400 (EDT)
+In-Reply-To: <536106EA.5090204@xiplink.com> (Marc Branchaud's message of "Wed,
+	30 Apr 2014 10:21:30 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 74FEFA46-D077-11E3-902C-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247717>
 
-On 14-04-28 02:41 PM, Junio C Hamano wrote:
-> Marat Radchenko <marat@slonopotamus.org> writes:
-> 
->> Problem #1: TortoiseGit GUI windows for common tasks have a heck
->> lots of controls that a common Git user will never need.
-> 
-> Do people around TortoiseGit lurk on this list?  Otherwise this may
-> not be something we can help you with here.
-> 
->> Problem #2 occured the first day we started using Git on real
->> project. It is explained in detail in older post to Git ML [3]. I
->> call it "swapped/reverse merge problem".
->>
->> In short:
->> 1. Hack, hack, hack
->> 2. Commit
->> 3. Push, woops, reject (non-ff)
->> 4. Pull
->> 5. Push
->>
->> The root of evil is step #4 that creates a merge commit with
->> "swapped" parents.
-> 
-> Yes, this is a real issue, and I do not mind seeing a patch to
-> improve the situation (there may be different approaches, and one
-> random approach somebody takes may not necessarily be a good way to
-> improve the situation though).
-> 
->  - Perhaps by allowing an option to tell the "pull" at the fourth
->    step to record swapped parents in the merge?
-> 
->  - Perhaps in step #3, stop suggesting to "pull first" and instead
->    tell them to "fetch upstream, rebase your work on it and then
->    push"?
+Marc Branchaud <marcnarc@xiplink.com> writes:
 
-This approach would be my preference.
+> But I'm definitely biased because I think pull is pretty much broken:
+>
+> * New users are encouraged to use pull, but all too often the default
+> fetch-then-merge behaviour doesn't match their expectations and they end up
+> starting threads like this one on the mailing list.
+>
+> * If we change pull's default behaviour, we'll just be shifting the
+> mismatched expectations onto the other half of the new users who would be
+> happy with fetch-then-merge.
+>
+> * I'm not sure why new users are taught to use pull.  I suspect it's because
+> it tries to hide the idea of local-vs-remote branches, and people writing git
+> tutorials don't want to overwhelm new users with what seems to be an internal
+> detail.  But these notions are really fundamental to using git effectively,
+> and I think pull does everyone a disservice by trying to gloss them over.
+>
+> Anyway, rather than ranting on I'll just suggest that there's not enough
+> commonality between the ways people use git to make it worthwhile trying to
+> teach pull how to deal with a significant number of them.  I think the pull
+> command should be deprecated and quietly retired as a failed experiment.
 
-But I'm definitely biased because I think pull is pretty much broken:
+I almost agree with the first sentence in the last paragraph, and
+your bulletted list above supports it.
 
-* New users are encouraged to use pull, but all too often the default
-fetch-then-merge behaviour doesn't match their expectations and they end up
-starting threads like this one on the mailing list.
+I am not sure how the second sentence can follow as its consequence.
 
-* If we change pull's default behaviour, we'll just be shifting the
-mismatched expectations onto the other half of the new users who would be
-happy with fetch-then-merge.
-
-* I'm not sure why new users are taught to use pull.  I suspect it's because
-it tries to hide the idea of local-vs-remote branches, and people writing git
-tutorials don't want to overwhelm new users with what seems to be an internal
-detail.  But these notions are really fundamental to using git effectively,
-and I think pull does everyone a disservice by trying to gloss them over.
-
-Anyway, rather than ranting on I'll just suggest that there's not enough
-commonality between the ways people use git to make it worthwhile trying to
-teach pull how to deal with a significant number of them.  I think the pull
-command should be deprecated and quietly retired as a failed experiment.
-
-		M.
+If the conclusion were "maybe adding a 'git update' to match the
+expectation of those who build on top of the work of others (aka
+CVS/SVN style) more  closely and teaching new users to use that
+instead of 'git pull' may be a good way forward", I can sort of
+understand (if I may not be able to immediately agree with, until I
+can regurgitate the ramifications of such a change) it.
