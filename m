@@ -1,268 +1,93 @@
-From: Viktor Ransmayr <viktor.ransmayr@gmail.com>
-Subject: Re: Git for Windows 1.9.2
-Date: Wed, 30 Apr 2014 13:21:42 -0700 (PDT)
-Message-ID: <5d1ebb1d-2358-427a-ba5c-03c02a9d7ed0@googlegroups.com>
-References: <alpine.DEB.1.00.1404120007020.14982@s15462909.onlinehome-server.info>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: Pull is Evil
+Date: Wed, 30 Apr 2014 15:11:31 -0500
+Message-ID: <536158f39fccd_4781124b2f090@nysa.notmuch>
+References: <4ay6w9i74cygt6ii1b0db7wg.1398433713382@email.android.com>
+ <xmqqoazlqot4.fsf@gitster.dls.corp.google.com>
+ <536106EA.5090204@xiplink.com>
+ <536129068cc28_1404fdd310fd@nysa.notmuch>
+ <vpqha5akamh.fsf@anie.imag.fr>
+ <5361416a172fe_f9b15012ec7e@nysa.notmuch>
+ <xmqq38gufxbm.fsf@gitster.dls.corp.google.com>
+ <53614fb5e204_2aa5fa32f0df@nysa.notmuch>
+ <xmqqlhumegqg.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: multipart/alternative; 
-	boundary="----=_Part_3312_4300234.1398889302165"
-Cc: git@vger.kernel.org
-To: msysgit@googlegroups.com
-X-From: msysgit+bncBDI6ZFVHSMKRBV5WQWNQKGQE3RHG57A@googlegroups.com Wed Apr 30 22:21:46 2014
-Return-path: <msysgit+bncBDI6ZFVHSMKRBV5WQWNQKGQE3RHG57A@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-ve0-f189.google.com ([209.85.128.189])
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Marc Branchaud <marcnarc@xiplink.com>,
+	Marat Radchenko <marat@slonopotamus.org>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 30 22:22:16 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDI6ZFVHSMKRBV5WQWNQKGQE3RHG57A@googlegroups.com>)
-	id 1Wfb0i-000763-RU
-	for gcvm-msysgit@m.gmane.org; Wed, 30 Apr 2014 22:21:45 +0200
-Received: by mail-ve0-f189.google.com with SMTP id jx11sf476021veb.26
-        for <gcvm-msysgit@m.gmane.org>; Wed, 30 Apr 2014 13:21:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:x-original-sender:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=JsCWB5hVbRW/no6Ss+xf8yOmFjUoO3m1nFBM2MG+8uM=;
-        b=PmrixeRzr2rYlMA8BqaqIOq8JjR+N2Vt76orWUJedVlrcqr+H8RkCKmT5BJ/zC3HFj
-         AwQ7p631uBbYjKg5goHi88KbjFFqh+1N/WbgAl8+YK60NieFWnoOrW/NBY+A/khzqnNj
-         i1jZTNOYh4udkMu9Ta2PUF3Zu5Uv8Xmco9anfqGNudT27Ls+xh38vnF1ToXi3Cj78DaA
-         YzfLgZVw4+D346EPwvDepJTMsJxUKJ28tgvk2FZlGjF9bR+/h/8ZnNQbP2y1WG6EHXrt
-         iseOWKHSoXb0iBo3cZSWInziPsqSCi/zHn3+GPPeTpPcqRQ3q6s8tiehu0AgpFGikFLx
-         Lxew==
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Wfb1D-0007sI-N5
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 22:22:16 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1759305AbaD3UWM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2014 16:22:12 -0400
+Received: from mail-yk0-f172.google.com ([209.85.160.172]:44694 "EHLO
+	mail-yk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759107AbaD3UWL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2014 16:22:11 -0400
+Received: by mail-yk0-f172.google.com with SMTP id 131so1975939ykp.17
+        for <git@vger.kernel.org>; Wed, 30 Apr 2014 13:22:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:x-original-sender:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=JsCWB5hVbRW/no6Ss+xf8yOmFjUoO3m1nFBM2MG+8uM=;
-        b=soubMKiPgHgR5XPw3dp33pYXsn3SCP3pdhY2ptONJXOf9SfvaeXFQ4gLoK0PLCZLpy
-         +y/MVPDcqcDPCn8wWZRL88JmXgSbyQ1jHJr94wpERti1cqZ3ZmQxrMrGQWQDWCYKS+FB
-         9UzaxhLHF2sns90DFirPpyTkbsqCB2+msVvVnm3cUCxTYIgvDiVnddFZAc/gH/uEPORK
-         kMNS8gCllCWUs21E0sev3+mdorLxArnVp+Ul0Vuz2/kkDjHvuKnMBvJ0G/3UT+o9vZnW
-         1YWfM/OLXgHo2DciAooKDfrdWK33Vk1QiwcKUpTk1DJQh1fE4MD14cI1lXgRzjNukpX0
-         xPaw==
-X-Received: by 10.140.44.75 with SMTP id f69mr117062qga.11.1398889304085;
-        Wed, 30 Apr 2014 13:21:44 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.140.107.247 with SMTP id h110ls779303qgf.44.gmail; Wed, 30 Apr
- 2014 13:21:43 -0700 (PDT)
-X-Received: by 10.140.95.214 with SMTP id i80mr128213qge.3.1398889303524;
-        Wed, 30 Apr 2014 13:21:43 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.1404120007020.14982@s15462909.onlinehome-server.info>
-X-Original-Sender: viktor.ransmayr@gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247774>
+         :mime-version:content-type:content-transfer-encoding;
+        bh=jxLQgigthAReDXw+9Ja+AiOCIIJ1AckM4L2E6Rfv1lE=;
+        b=vIX141tIQcbCQeRhp2jaGzxkoMDbFphPDdPxOj/7YPQKycNczdpfcVaj/CnG3857HE
+         UY3HLFy3YswqV4z7SpMFAjcNWmrvLn4XAjpg5RyB8WUlovRMmWqBM16fzuZniuqMsVat
+         d7KUGREhTzIdH/DzIXyXG4D9QCESzT3DusHTvZifYrdPWexVx+V2qlLJUMBCpPnJPbcK
+         hz9Q7gJ8KVgIJ6uYNvWypB2xMuiInJsgyzDKje0Fnms/miyfayljHwvOk3XADH5CPJer
+         0wtVX0KBli7aga0QTmCARZ1n/FeVn0LrWzYoNdbA20TKIZAqMdCtfOcQY+Ecm6uGgQqX
+         CpXw==
+X-Received: by 10.236.124.236 with SMTP id x72mr8843399yhh.49.1398889330164;
+        Wed, 30 Apr 2014 13:22:10 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id k70sm44749809yhm.38.2014.04.30.13.22.06
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 30 Apr 2014 13:22:09 -0700 (PDT)
+In-Reply-To: <xmqqlhumegqg.fsf@gitster.dls.corp.google.com>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247775>
 
-------=_Part_3312_4300234.1398889302165
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Junio C Hamano wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> > Junio C Hamano wrote:
+> >> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> >> > Matthieu Moy wrote:
+> >> >> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> >> >> ...
+> >> >> > Yes, this has been discussed many times in the past, and everyone agrees
+> >> >> > the default behavior is not correct.
+> >> >> 
+> >> >> You definitely have a strange notion of "everyone".
+> >
+> >> While I do not quite see the previous discussion as deciding the
+> >> particular implementation is good without further tweaks, I would
+> >> say that everybody agrees that the default behaviour is not good for
+> >> everybody and therefore should (or for Linus, "it is OK to") change.
+> > ...
+> > I said 'everyone agrees the default behavior is not correct', which is
+> > true.
+> 
+> Isn't that what I said a few lines above?  Why are you still
+> arguing?
 
-Hello Johannes,
+I'm not arguing, I'm clarifying what I said for Matthieu. What I said
+was a response to him.
 
-Am Samstag, 12. April 2014 00:13:09 UTC+2 schrieb Johannes Schindelin:
->
-> Hi,=20
->
-> the Git for Windows team just released version 1.9.2 of the=20
-> Windows-specific installers.=20
->
-> New Features=20
-> * Comes with Git 1.9.2 plus Windows-specific patches.=20
-> * Custom installer settings can be saved and loaded, for unsupervised=20
->   installation on batches of machines (msysGit PR #168).=20
-> * Comes with VIM 7.4 (msysGit PR #170).=20
-> * Comes with ZLib 1.2.8.=20
-> * Comes with xargs 4.4.2.=20
->
-> Bugfixes=20
-> * Work around stack limitations when listing an insane number of tags (PR=
-=20
->   #154).=20
-> * Assorted test fixes (PRs #156, #158).=20
-> * Compile warning fix in config.c (PR #159).=20
-> * Ships with actual dos2unix and unix2dos.=20
-> * The installer no longer recommends mixing with Cygwin.=20
-> * Fixes a regression in Git-Cheetah which froze the Explorer upon calling=
-=20
->   Git Bash from the context menu (Git-Cheetah PRs #14 and #15).=20
->
-> It can be downloaded here:=20
->
->        =20
-> https://github.com/msysgit/msysgit/releases/download/Git-1.9.2-preview201=
-40411/Git-1.9.2-preview20140411.exe=20
->
-
-When I try to download this version I get redirected to
-
-https://s3.amazonaws.com/github-cloud/releases/325827/6df478ca-c1c2-11e3-82=
-2d-07b9bbc3039e.exe?response-content-disposition=3Dattachment%3B%20filename=
-%3DGit-1.9.2-preview20140411.exe&AWSAccessKeyId=3DAKIAISTNZFOVBIJMK3TQ&Expi=
-res=3D1398889077&Signature=3D7Fpp4JQ7TxQCgLLIOoNsrUbVCIo%3D=20
-
-
-and receive the following error:
-
-"Connction to the server was reset, while the page was accessed". - To be=
-=20
-precise the german error text I received is as follows:
-
-     Fehler: Verbindung unterbrochen
-
-     Die Verbindung zum Server wurde zur=C3=BCckgesetzt, w=C3=A4hrend die S=
-eite=20
-geladen wurde.
-
-Any idea what is wrong - or - what else I could try?=20
-=20
-
-> This release also marks a change relevant only for developers wanting to=
-=20
-> help with the development of Git for Windows: only the net installer (i.e=
-.=20
-> a rudimentary Git environment that simply clones everything necessary to=
-=20
-> build Git for Windows) is available for download; the "full" installers=
-=20
-> were not useful for Git for Windows contributors.=20
->
-
-With kind regards,
-
-Viktor
-=20
-
---=20
---=20
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github =
-accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den
-
----=20
-You received this message because you are subscribed to the Google Groups "=
-msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an e=
-mail to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
-
-------=_Part_3312_4300234.1398889302165
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hello Johannes,<br><br>Am Samstag, 12. April 2014 00:13:09=
- UTC+2 schrieb Johannes Schindelin:<blockquote class=3D"gmail_quote" style=
-=3D"margin: 0;margin-left: 0.8ex;border-left: 1px #ccc solid;padding-left: =
-1ex;">Hi,
-<br>
-<br>the Git for Windows team just released version 1.9.2 of the
-<br>Windows-specific installers.
-<br>
-<br>New Features
-<br>* Comes with Git 1.9.2 plus Windows-specific patches.
-<br>* Custom installer settings can be saved and loaded, for unsupervised
-<br>&nbsp; installation on batches of machines (msysGit PR #168).
-<br>* Comes with VIM 7.4 (msysGit PR #170).
-<br>* Comes with ZLib 1.2.8.
-<br>* Comes with xargs 4.4.2.
-<br>
-<br>Bugfixes
-<br>* Work around stack limitations when listing an insane number of tags (=
-PR
-<br>&nbsp; #154).
-<br>* Assorted test fixes (PRs #156, #158).
-<br>* Compile warning fix in config.c (PR #159).
-<br>* Ships with actual dos2unix and unix2dos.
-<br>* The installer no longer recommends mixing with Cygwin.
-<br>* Fixes a regression in Git-Cheetah which froze the Explorer upon calli=
-ng
-<br>&nbsp; Git Bash from the context menu (Git-Cheetah PRs #14 and #15).
-<br>
-<br>It can be downloaded here:
-<br>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=3D"https://gith=
-ub.com/msysgit/msysgit/releases/download/Git-1.9.2-preview20140411/Git-1.9.=
-2-preview20140411.exe" target=3D"_blank" onmousedown=3D"this.href=3D'https:=
-//www.google.com/url?q\75https%3A%2F%2Fgithub.com%2Fmsysgit%2Fmsysgit%2Frel=
-eases%2Fdownload%2FGit-1.9.2-preview20140411%2FGit-1.9.2-preview20140411.ex=
-e\46sa\75D\46sntz\0751\46usg\75AFQjCNEq_43eAACdEZ6_nlfOXdSmD18EBw';return t=
-rue;" onclick=3D"this.href=3D'https://www.google.com/url?q\75https%3A%2F%2F=
-github.com%2Fmsysgit%2Fmsysgit%2Freleases%2Fdownload%2FGit-1.9.2-preview201=
-40411%2FGit-1.9.2-preview20140411.exe\46sa\75D\46sntz\0751\46usg\75AFQjCNEq=
-_43eAACdEZ6_nlfOXdSmD18EBw';return true;">https://github.com/<wbr>msysgit/m=
-sysgit/releases/<wbr>download/Git-1.9.2-<wbr>preview20140411/Git-1.9.2-<wbr=
->preview20140411.exe</a>
-<br></blockquote><div><br>When I try to download this version I get redirec=
-ted to<br><br>https://s3.amazonaws.com/github-cloud/releases/325827/6df478c=
-a-c1c2-11e3-822d-07b9bbc3039e.exe?response-content-disposition=3Dattachment=
-%3B%20filename%3DGit-1.9.2-preview20140411.exe&amp;AWSAccessKeyId=3DAKIAIST=
-NZFOVBIJMK3TQ&amp;Expires=3D1398889077&amp;Signature=3D7Fpp4JQ7TxQCgLLIOoNs=
-rUbVCIo%3D <br><br>and receive the following error:<br><br>"Connction to th=
-e server was reset, while the page was accessed". - To be precise the germa=
-n error text I received is as follows:<br><br>&nbsp;&nbsp;&nbsp;&nbsp; Fehl=
-er: Verbindung unterbrochen<br><br>&nbsp;&nbsp;&nbsp;&nbsp; Die Verbindung =
-zum Server wurde zur=C3=BCckgesetzt, w=C3=A4hrend die Seite geladen wurde.<=
-br><br>Any idea what is wrong - or - what else I could try? <br></div><div>=
-&nbsp;</div><blockquote class=3D"gmail_quote" style=3D"margin: 0;margin-lef=
-t: 0.8ex;border-left: 1px #ccc solid;padding-left: 1ex;">This release also =
-marks a change relevant only for developers wanting to
-<br>help with the development of Git for Windows: only the net installer (i=
-.e.
-<br>a rudimentary Git environment that simply clones everything necessary t=
-o
-<br>build Git for Windows) is available for download; the "full" installers
-<br>were not useful for Git for Windows contributors.
-<br></blockquote><div><br>With kind regards,<br><br>Viktor<br>&nbsp;<br></d=
-iv></div>
-
-<p></p>
-
--- <br />
--- <br />
-*** Please reply-to-all at all times ***<br />
-*** (do not pretend to know who is subscribed and who is not) ***<br />
-*** Please avoid top-posting. ***<br />
-The msysGit Wiki is here: <a href=3D"https://github.com/msysgit/msysgit/wik=
-i">https://github.com/msysgit/msysgit/wiki</a> - Github accounts are free.<=
-br />
-&nbsp;<br />
-You received this message because you are subscribed to the Google<br />
-Groups &quot;msysGit&quot; group.<br />
-To post to this group, send email to msysgit@googlegroups.com<br />
-To unsubscribe from this group, send email to<br />
-msysgit+unsubscribe@googlegroups.com<br />
-For more options, and view previous threads, visit this group at<br />
-<a href=3D"http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den">http:=
-//groups.google.com/group/msysgit?hl=3Den_US?hl=3Den</a><br />
-<br />
---- <br />
-You received this message because you are subscribed to the Google Groups &=
-quot;msysGit&quot; group.<br />
-To unsubscribe from this group and stop receiving emails from it, send an e=
-mail to <a href=3D"mailto:msysgit+unsubscribe@googlegroups.com">msysgit+uns=
-ubscribe@googlegroups.com</a>.<br />
-For more options, visit <a href=3D"https://groups.google.com/d/optout">http=
-s://groups.google.com/d/optout</a>.<br />
-
-------=_Part_3312_4300234.1398889302165--
+-- 
+Felipe Contreras
