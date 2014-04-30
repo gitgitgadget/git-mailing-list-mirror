@@ -1,51 +1,51 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 03/14] t4006-diff-mode.sh: use the $( ... ) construct for command substitution
-Date: Wed, 30 Apr 2014 09:22:56 -0700
-Message-ID: <1398874987-14873-3-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 05/14] t4012-diff-binary.sh: use the $( ... ) construct for command substitution
+Date: Wed, 30 Apr 2014 09:22:58 -0700
+Message-ID: <1398874987-14873-5-git-send-email-gitter.spiros@gmail.com>
 References: <1398874987-14873-1-git-send-email-gitter.spiros@gmail.com>
 Cc: matthieu.moy@grenoble-inp.fr, Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 30 18:23:46 2014
+X-From: git-owner@vger.kernel.org Wed Apr 30 18:23:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WfXIP-000217-8x
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 18:23:45 +0200
+	id 1WfXIP-000217-QX
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 18:23:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965065AbaD3QXk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S965074AbaD3QXm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2014 12:23:42 -0400
+Received: from mail-pd0-f178.google.com ([209.85.192.178]:49653 "EHLO
+	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965044AbaD3QXk (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 30 Apr 2014 12:23:40 -0400
-Received: from mail-pd0-f176.google.com ([209.85.192.176]:53901 "EHLO
-	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965044AbaD3QXg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2014 12:23:36 -0400
-Received: by mail-pd0-f176.google.com with SMTP id y10so1894998pdj.35
-        for <git@vger.kernel.org>; Wed, 30 Apr 2014 09:23:33 -0700 (PDT)
+Received: by mail-pd0-f178.google.com with SMTP id fp1so1953393pdb.37
+        for <git@vger.kernel.org>; Wed, 30 Apr 2014 09:23:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=BzyZCYOOMmSKJQwmq4TjkR55ClnX60nbFajILGfwJyA=;
-        b=Dro9saWxjm2XZPH+jz1+aqXMaKxEajfqjtkGHWuvVglQmO+iUpdXLm2vaGr2n+yiVc
-         VR4fv2rhsE73a/4hn5QydKInIAAq9/DbVt7iDXSBAiI3VYPsIYpRnJSS689yvNIGhPV4
-         bSdTTApBblyvmSlj38rpdtgdnJb1wQUtfvVXNXqDu6hgSiNcbY1tzapPdBkRiLA5zyqZ
-         5JPAHfweQMlpIR9TinQ0U6sIJkWgUEZtbb1bdG858RfDbUANqdgviqQ1IAO/E82dXxo0
-         cI7x9AgurfV0vE37suUqx6NMqetW7lvy+Qnwjh6wB3nIxUVGyTXzfNUhtRH6zEvBVISA
-         FwAQ==
-X-Received: by 10.66.243.131 with SMTP id wy3mr10512464pac.32.1398875013072;
-        Wed, 30 Apr 2014 09:23:33 -0700 (PDT)
+        bh=XOPwwZqonLQeATU8TJOJ3jJFZ3mEPM40nI3L9+/Y4fw=;
+        b=QhuzZxJrCnyrUZh/81eFrJjXbBqb+I4AFj3FkO9uiSjbDm+MlSenwazSuFWDgXwYIr
+         ya7PWMgXNKNNinjgWNSziSNABduikyu9jGpkeAU4qxgshhCcamcj4uRDkXuXWQ0SL8mi
+         hPtb8dauwzW1B38f9aUt4spCk/u6/jg7q7+rWnIQDJSoREU6xZfTsljNgi7DZ31qAPr1
+         5ZtOObPXS3aOpwyNw/rp5NWYYbSfJAgHi+PaFalrRBe+VLaJX18ziev73IaHUc6tTIDa
+         7BV/yd2F584s9ijxajAhGTUklpVbngfo6Zw5imYmZ8LB0EWxEd3RA3Fwq9k+qBD+OybF
+         diqg==
+X-Received: by 10.66.251.233 with SMTP id zn9mr10199882pac.67.1398875014869;
+        Wed, 30 Apr 2014 09:23:34 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id te2sm138674233pac.25.2014.04.30.09.23.32
+        by mx.google.com with ESMTPSA id te2sm138674233pac.25.2014.04.30.09.23.34
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 30 Apr 2014 09:23:32 -0700 (PDT)
+        Wed, 30 Apr 2014 09:23:34 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1398874987-14873-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247728>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -67,20 +67,54 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t4006-diff-mode.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t4012-diff-binary.sh |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/t/t4006-diff-mode.sh b/t/t4006-diff-mode.sh
-index 0591149..76f643b 100755
---- a/t/t4006-diff-mode.sh
-+++ b/t/t4006-diff-mode.sh
-@@ -13,7 +13,7 @@ sed_script='s/\(:100644 100755\) \('"$_x40"'\) \2 /\1 X X /'
- test_expect_success 'setup' '
- 	echo frotz >rezrov &&
- 	git update-index --add rezrov &&
--	tree=`git write-tree` &&
-+	tree=$(git write-tree) &&
- 	echo $tree
+diff --git a/t/t4012-diff-binary.sh b/t/t4012-diff-binary.sh
+index 1215ae5..643d729 100755
+--- a/t/t4012-diff-binary.sh
++++ b/t/t4012-diff-binary.sh
+@@ -67,18 +67,18 @@ test_expect_success C_LOCALE_OUTPUT 'apply detecting corrupt patch correctly' '
+ 	git diff >output &&
+ 	sed -e "s/-CIT/xCIT/" <output >broken &&
+ 	test_must_fail git apply --stat --summary broken 2>detected &&
+-	detected=`cat detected` &&
+-	detected=`expr "$detected" : "fatal.*at line \\([0-9]*\\)\$"` &&
+-	detected=`sed -ne "${detected}p" broken` &&
++	detected=$(cat detected) &&
++	detected=$(expr "$detected" : "fatal.*at line \\([0-9]*\\)\$") &&
++	detected=$(sed -ne "${detected}p" broken) &&
+ 	test "$detected" = xCIT
+ '
+ 
+ test_expect_success C_LOCALE_OUTPUT 'apply detecting corrupt patch correctly' '
+ 	git diff --binary | sed -e "s/-CIT/xCIT/" >broken &&
+ 	test_must_fail git apply --stat --summary broken 2>detected &&
+-	detected=`cat detected` &&
+-	detected=`expr "$detected" : "fatal.*at line \\([0-9]*\\)\$"` &&
+-	detected=`sed -ne "${detected}p" broken` &&
++	detected=$(cat detected) &&
++	detected=$(expr "$detected" : "fatal.*at line \\([0-9]*\\)\$") &&
++	detected=$(sed -ne "${detected}p" broken) &&
+ 	test "$detected" = xCIT
+ '
+ 
+@@ -88,7 +88,7 @@ test_expect_success 'initial commit' 'git commit -a -m initial'
+ test_expect_success 'diff-index with --binary' '
+ 	echo AIT >a && mv b e && echo CIT >c && cat e >d &&
+ 	git update-index --add --remove a b c d e &&
+-	tree0=`git write-tree` &&
++	tree0=$(git write-tree) &&
+ 	git diff --cached --binary >current &&
+ 	git apply --stat --summary current
+ '
+@@ -96,7 +96,7 @@ test_expect_success 'diff-index with --binary' '
+ test_expect_success 'apply binary patch' '
+ 	git reset --hard &&
+ 	git apply --binary --index <current &&
+-	tree1=`git write-tree` &&
++	tree1=$(git write-tree) &&
+ 	test "$tree1" = "$tree0"
  '
  
 -- 
