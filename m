@@ -1,74 +1,63 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Pull is Evil
-Date: Wed, 30 Apr 2014 13:01:46 -0700
-Message-ID: <20140430200146.GU9218@google.com>
-References: <4ay6w9i74cygt6ii1b0db7wg.1398433713382@email.android.com>
- <xmqqoazlqot4.fsf@gitster.dls.corp.google.com>
- <536106EA.5090204@xiplink.com>
- <xmqqppjyhnom.fsf@gitster.dls.corp.google.com>
- <536152D3.5050107@xiplink.com>
+From: Stepan Kasal <kasal@ucw.cz>
+Subject: Re: [PATCH] MSVC: link dynamically to the CRT
+Date: Wed, 30 Apr 2014 22:17:33 +0200
+Organization: <)><
+Message-ID: <20140430201733.GB21870@camelia.ucw.cz>
+References: <20140429102509.GA16706@camelia.ucw.cz> <xmqqa9b2fyve.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Marat Radchenko <marat@slonopotamus.org>, git@vger.kernel.org
-To: Marc Branchaud <marcnarc@xiplink.com>
-X-From: git-owner@vger.kernel.org Wed Apr 30 22:09:19 2014
+Cc: GIT Mailing-list <git@vger.kernel.org>,
+	Erik Faye-Lund <kusmabite@gmail.com>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 30 22:17:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wfaof-0006EM-3Z
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 22:09:17 +0200
+	id 1Wfawm-0001Ir-Gt
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 22:17:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759413AbaD3UJL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Apr 2014 16:09:11 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:61240 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752199AbaD3UJK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2014 16:09:10 -0400
-Received: by mail-pa0-f42.google.com with SMTP id bj1so2538784pad.15
-        for <git@vger.kernel.org>; Wed, 30 Apr 2014 13:09:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=JbGNq3SAal0wsl9s2p5s1uBpZ4g2bXpTYQUF0Ea2fP8=;
-        b=xihpV4+xrylIBtPfvWRnSkxK1yyVBMFdxiF9QJHPEBz8KOoc4Crmf9FfjfgGvo/4ju
-         7bcLai4aw0Hk4If16mORYKDEbAvR6cRPjIku07MIRqNLN2zb9GdlSqpdjycfBM/3wwiS
-         1ccs0eDBv+yJlCj6o6tDXYrkEevLHaMOThsluVbrahPqzx/J6Nc1gkHcysW9xWuTOOdx
-         /Ebsgjs0C98sOz8NPP1mCcefi0iQTL3vR6HXW4uMC6vKySDQ8Y3lXkdCucUYf2JJtUTF
-         NUrApfcIGxL2YHEu8XJIZKEx75vfRuFFSMPiRn2DAJgwJAtUKhv7NFsKUfiYt4NEr9OQ
-         v/lw==
-X-Received: by 10.66.147.99 with SMTP id tj3mr12089990pab.47.1398888108839;
-        Wed, 30 Apr 2014 13:01:48 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id qh2sm142076535pab.13.2014.04.30.13.01.47
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 30 Apr 2014 13:01:48 -0700 (PDT)
+	id S1758963AbaD3URg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2014 16:17:36 -0400
+Received: from jabberwock.ucw.cz ([46.255.230.98]:46784 "EHLO
+	jabberwock.ucw.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758836AbaD3URf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2014 16:17:35 -0400
+Received: from 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (84.64.broadband3.iol.cz [85.70.64.84])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	(Authenticated sender: kasal)
+	by jabberwock.ucw.cz (Postfix) with ESMTPSA id 6C06C1C00F9;
+	Wed, 30 Apr 2014 22:17:34 +0200 (CEST)
+Received: from camelia.ucw.cz (camelia.ucw.cz [127.0.0.1])
+	by 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (8.14.3/8.14.3) with ESMTP id s3UKHY5T025103;
+	Wed, 30 Apr 2014 22:17:34 +0200
+Received: (from kasal@localhost)
+	by camelia.ucw.cz (8.14.3/8.14.3/Submit) id s3UKHXLm025102;
+	Wed, 30 Apr 2014 22:17:33 +0200
 Content-Disposition: inline
-In-Reply-To: <536152D3.5050107@xiplink.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <xmqqa9b2fyve.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247773>
 
-Marc Branchaud wrote:
+Hello Junio,
 
-> All that said, I don't object to any attempts at improving the command
-> either.  But I also don't see any kind of improvement that would lead me to
-> start using "git pull" let alone recommending it to new users.
+On Wed, Apr 30, 2014 at 11:36:37AM -0700, Junio C Hamano wrote:
+> like I do not have to ask "does this look ok?" question when seeing
+> a patch from Erik or J6t, is it unnecessary for me to do so for a
+> patch from you?
 
-If "git pull" starts using --ff-only by default then I might start
-recommending it.
+it _is_ necessary to ask, as I'm just a newcomer who has (fortunately)
+almost no experience with Windows.
 
-I'm a little scared to look at the details of this thread.  Hopefully
-once the topic matures and settles down a little it will be worthwhile
-to review, or if there's any way I can help before then, feel free to
-ask me privately.
+But I will try to point out iif it "has been in msysgit for x years".
+That fact can be taken as an implicite ack from msysgit community.
 
-Thanks for your work,
-Jonathan
+Stepan
