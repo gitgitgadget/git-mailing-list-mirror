@@ -1,98 +1,187 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 3/8] CodingGuidelines: give an example for redirection
-Date: Wed, 30 Apr 2014 15:14:07 -0700
-Message-ID: <xmqqsioucvo0.fsf_-_@gitster.dls.corp.google.com>
-References: <1398894312-30763-1-git-send-email-gitster@pobox.com>
-	<1398894312-30763-4-git-send-email-gitster@pobox.com>
+From: Stepan Kasal <kasal@ucw.cz>
+Subject: Re: [PATCH 08/12] MINGW: fix main() signature in
+ http-fetch.c and remote-curl.c
+Date: Thu, 1 May 2014 00:17:28 +0200
+Organization: <)><
+Message-ID: <20140430221728.GA27914@camelia.ucw.cz>
+References: <1398762726-22825-1-git-send-email-marat@slonopotamus.org> <1398762726-22825-9-git-send-email-marat@slonopotamus.org> <5360B5EC.1070907@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Stefan Beller <stefanbeller@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 01 00:14:18 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Marat Radchenko <marat@slonopotamus.org>,
+        GIT Mailing-list <git@vger.kernel.org>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Erik Faye-Lund <kusmabite@gmail.com>, msysgit@googlegroups.com,
+        Pat Thoyts <patthoyts@users.sourceforge.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Sixt <j.sixt@viscovery.net>
+To: Karsten Blees <karsten.blees@gmail.com>
+X-From: msysgit+bncBCU63DXMWULRB7HMQWNQKGQEU23ZLTI@googlegroups.com Thu May 01 00:17:37 2014
+Return-path: <msysgit+bncBCU63DXMWULRB7HMQWNQKGQEU23ZLTI@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-we0-f191.google.com ([74.125.82.191])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wfcld-0001DA-2b
-	for gcvg-git-2@plane.gmane.org; Thu, 01 May 2014 00:14:17 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759498AbaD3WOM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Apr 2014 18:14:12 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47662 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752243AbaD3WOL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2014 18:14:11 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 54F267F0BC;
-	Wed, 30 Apr 2014 18:14:11 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=2eaDezVrljdOTBfUaHR51wBgIts=; b=TWImDO
-	UHjC75E+OYcEbZcYJTIk6rZqDBzPio6uCU+VLw6o7Dyc6s4TEb5X35gB/iTueNC4
-	iQZtBafL2FkjOVRnIa63JnhSNU74t5ux9Ed8R7759irAre147xXBvwhT7kwsVLmd
-	R+SK8DtjLE4BXbj8T+w/YH2yxrkOUIlQT1nPQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CPRjoCamx5jn1WnHqfz4qL+brXDHiqrt
-	fasOVZwweJ/IGa1rH35ppxISDIJQeRH0YdAGmUpaBUR8w5Sv9Tb/83lvnyW0lbgy
-	JoA3kz28q4S4cbjEMi7tuOIh0RoKDo4zOlPLOQQ0+2IWfVY4PaQuwlok0GhPZMXW
-	s0OhxJZBuZk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3B7B47F0B9;
-	Wed, 30 Apr 2014 18:14:11 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2E2347F0B2;
-	Wed, 30 Apr 2014 18:14:09 -0400 (EDT)
-In-Reply-To: <1398894312-30763-4-git-send-email-gitster@pobox.com> (Junio
-	C. Hamano's message of "Wed, 30 Apr 2014 14:45:07 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: C06D4C34-D0B4-11E3-B621-0731802839F8-77302942!b-pb-sasl-quonix.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247797>
+	(envelope-from <msysgit+bncBCU63DXMWULRB7HMQWNQKGQEU23ZLTI@googlegroups.com>)
+	id 1Wfcon-0005M2-Sf
+	for gcvm-msysgit@m.gmane.org; Thu, 01 May 2014 00:17:33 +0200
+Received: by mail-we0-f191.google.com with SMTP id u57sf211832wes.8
+        for <gcvm-msysgit@m.gmane.org>; Wed, 30 Apr 2014 15:17:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :in-reply-to:organization:user-agent:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type:content-disposition;
+        bh=lDo13SsCZewfeYn7LgH8K0cByPDDS31KqLC6dzsWCpc=;
+        b=SvkQHCxNklRJ+in2swS98Eq0LA/oqEs1DNj7rKGobMNayEV8KpUsngKJCrVbXSjP6I
+         934JIGDVB6KIenVNXpCJqw+kQmOiru6Vr2W80dOa3m0RFdkbRQGAjzVSbpqVYzPNrs0D
+         sHZWfljSDEWpWScyjuv58mMjjRRsSocrpiz1BSyhmpa/e9yu6RNG8732q/iga/qT8A8J
+         pKgMiDAvspuXeE9e/vgti0pVn1pUE4akOHQjcow++cnKDBZJ5of6FRLROnqZZ8iR8+j5
+         u3Vznhgt+rH5eKAdBnxLuilaqlNu6LAwUvAjrU4htKX1Gv/9Jy+e5XtidFJzjrC9jejT
+         BYNw==
+X-Received: by 10.152.198.138 with SMTP id jc10mr41526lac.31.1398896253465;
+        Wed, 30 Apr 2014 15:17:33 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.120.2 with SMTP id ky2ls137647lab.69.gmail; Wed, 30 Apr
+ 2014 15:17:32 -0700 (PDT)
+X-Received: by 10.112.168.198 with SMTP id zy6mr604503lbb.15.1398896252065;
+        Wed, 30 Apr 2014 15:17:32 -0700 (PDT)
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz. [46.255.230.98])
+        by gmr-mx.google.com with ESMTP id u49si908223eeo.1.2014.04.30.15.17.30
+        for <msysgit@googlegroups.com>;
+        Wed, 30 Apr 2014 15:17:30 -0700 (PDT)
+Received-SPF: none (google.com: kasal@ucw.cz does not designate permitted sender hosts) client-ip=46.255.230.98;
+Received: from 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (84.64.broadband3.iol.cz [85.70.64.84])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	(Authenticated sender: kasal)
+	by jabberwock.ucw.cz (Postfix) with ESMTPSA id A8E551C00EC;
+	Thu,  1 May 2014 00:17:29 +0200 (CEST)
+Received: from camelia.ucw.cz (camelia.ucw.cz [127.0.0.1])
+	by 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (8.14.3/8.14.3) with ESMTP id s3UMHTd8028125;
+	Thu, 1 May 2014 00:17:29 +0200
+Received: (from kasal@localhost)
+	by camelia.ucw.cz (8.14.3/8.14.3/Submit) id s3UMHSJr028124;
+	Thu, 1 May 2014 00:17:28 +0200
+In-Reply-To: <5360B5EC.1070907@gmail.com>
+User-Agent: Mutt/1.5.19 (2009-01-05)
+X-Original-Sender: kasal@ucw.cz
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
+ (google.com: kasal@ucw.cz does not designate permitted sender hosts) smtp.mail=kasal@ucw.cz
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Content-Disposition: inline
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247798>
 
+Hello,
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+On Wed, Apr 30, 2014 at 10:35:56AM +0200, Karsten Blees wrote:
+> Would you mind cross checking your changes with the msysgit fork?
+> [...]
+> See https://github.com/msysgit/git/commit/9206e7fd (squashed from
+> https://github.com/msysgit/git/commit/0115ef83 and
+> https://github.com/msysgit/git/commit/6949537a).
+
+OK, I _did_ checked these, let's look at the two original commits:
+
+- 0115ef83 is interesting, but not relevant to the warnings,
+- 6949537a contains a fix for the const warning, plus it fixed a
+  minor nit in the other commit.
+
+> [...] you to come up with an
+> alternate solution for something that's long been fixed).
+
+Long been fixed by a quick and dirty hack.
+Marat's fix is nicer, can I ask some of the msysGit guys to ack it?
+(Appended below for the new cc's here.)
+
+Have a nice day,
+	Stepan
+
+PS: I bet Dscho will be able to handle the conflict.
+
+From: Marat Radchenko <marat@slonopotamus.org>
+Subject: [PATCH 08/12] MINGW: fix main() signature in http-fetch.c and remote-curl.c
+Date: Tue, 29 Apr 2014 13:12:02 +0400
+
+On MinGW, compat/mingw.h defines a 'mingw_main' wrapper function.
+Fix `warning: passing argument 2 of 'mingw_main' from incompatible
+pointer type` in http-fetch.c and remote-curl.c by dropping 'const'.
+
+Signed-off-by: Marat Radchenko <marat@slonopotamus.org>
 ---
+ http-fetch.c  | 5 +++--
+ remote-curl.c | 2 +-
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
- * Instead of using trailing "# correct" comment on each of the
-   one-liners, group the good ones and the bad ones into two groups
-   and give (incorrect)/(correct) header like the other patches as
-   suggested.  How does this look?
-
-   The only reason I originally did these differently is because
-   these are two independent examples, and I thought it would make
-   the difference stand out better to the readers if we showed
-   good/bad pairs of "cat" and "echo" that way.  But as long as we
-   are not going to add more examples here, I think the result is
-   not too bad.
-
- Documentation/CodingGuidelines | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
-diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-index 6a8e94b..6bfe96e 100644
---- a/Documentation/CodingGuidelines
-+++ b/Documentation/CodingGuidelines
-@@ -61,6 +61,14 @@ For shell scripts specifically (not exhaustive):
-    redirection target in a variable (as shown above), our code does so
-    because some versions of bash issue a warning without the quotes.
+diff --git a/http-fetch.c b/http-fetch.c
+index ba3ea10..a6a9a2f 100644
+--- a/http-fetch.c
++++ b/http-fetch.c
+@@ -6,7 +6,7 @@
+ static const char http_fetch_usage[] = "git http-fetch "
+ "[-c] [-t] [-a] [-v] [--recover] [-w ref] [--stdin] commit-id url";
  
-+	(incorrect)
-+	cat hello > world < universe
-+	echo hello >$world
-+
-+	(correct)
-+	cat hello >world <universe
-+	echo hello >"$world"
-+
-  - We prefer $( ... ) for command substitution; unlike ``, it
-    properly nests.  It should have been the way Bourne spelled
-    it from day one, but unfortunately isn't.
+-int main(int argc, const char **argv)
++int main(int argc, char **argv)
+ {
+ 	struct walker *walker;
+ 	int commits_on_stdin = 0;
+@@ -38,7 +38,8 @@ int main(int argc, const char **argv)
+ 		} else if (argv[arg][1] == 'v') {
+ 			get_verbosely = 1;
+ 		} else if (argv[arg][1] == 'w') {
+-			write_ref = &argv[arg + 1];
++			const char *ref = argv[arg + 1];
++			write_ref = &ref;
+ 			arg++;
+ 		} else if (argv[arg][1] == 'h') {
+ 			usage(http_fetch_usage);
+diff --git a/remote-curl.c b/remote-curl.c
+index 52c2d96..565b6c9 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -938,7 +938,7 @@ static void parse_push(struct strbuf *buf)
+ 	free(specs);
+ }
+ 
+-int main(int argc, const char **argv)
++int main(int argc, char **argv)
+ {
+ 	struct strbuf buf = STRBUF_INIT;
+ 	int nongit;
 -- 
-2.0.0-rc1-355-gd6d6511
+1.9.1
+
+--
+To unsubscribe from this list: send the line "unsubscribe git" in
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
