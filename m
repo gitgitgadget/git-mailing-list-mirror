@@ -1,51 +1,51 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 07/14] t4014-format-patch.sh: use the $( ... ) construct for command substitution
-Date: Wed, 30 Apr 2014 09:23:00 -0700
-Message-ID: <1398874987-14873-7-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 14/14] t5000-tar-tree.sh: use the $( ... ) construct for command substitution
+Date: Wed, 30 Apr 2014 09:23:07 -0700
+Message-ID: <1398874987-14873-14-git-send-email-gitter.spiros@gmail.com>
 References: <1398874987-14873-1-git-send-email-gitter.spiros@gmail.com>
 Cc: matthieu.moy@grenoble-inp.fr, Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 30 18:23:48 2014
+X-From: git-owner@vger.kernel.org Wed Apr 30 18:24:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WfXIQ-000217-Ar
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 18:23:46 +0200
+	id 1WfXIp-0002fn-MC
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 18:24:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965085AbaD3QXo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S965100AbaD3QXr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2014 12:23:47 -0400
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:62985 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965077AbaD3QXo (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 30 Apr 2014 12:23:44 -0400
-Received: from mail-pd0-f175.google.com ([209.85.192.175]:51610 "EHLO
-	mail-pd0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965046AbaD3QXk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2014 12:23:40 -0400
-Received: by mail-pd0-f175.google.com with SMTP id fp1so1910051pdb.34
-        for <git@vger.kernel.org>; Wed, 30 Apr 2014 09:23:36 -0700 (PDT)
+Received: by mail-pa0-f46.google.com with SMTP id kp14so2187234pab.19
+        for <git@vger.kernel.org>; Wed, 30 Apr 2014 09:23:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=/ku/WMiBlWBmIBamdAPW9dWQuk3fddZL9Kj+5+hIWNM=;
-        b=KPgBDkN7NaC65YBUrsRFrrLJPYtyuP5xMMw24ntm2ST0q09NDnNCOJNvpTM3tKgQLm
-         LTyKJoD65IHtWzcA8G6tdNcfOPuSF4zlhb8hRnC3Y8pLB178w4ZtKkKfBW8RZrFSIblG
-         IdMU7zswyW4EP1GLyI7K15Cof07JwcJo/4q/Z4Al1btMefPg8mHycoOUk3QBnBk2pqK/
-         wxmsL3MhrICBwR2WoGgV7TxRW092qQx15kB02loCom2iPHpl9+agxDAtRhbzIP6m0KJD
-         TFhV7PwI4p+lcgV0JDLjdjv66ajbSJkzXjP4ZIoBt6dsN+rjM7Igiz6MY+ZIBuYbFZqP
-         k+WA==
-X-Received: by 10.66.249.233 with SMTP id yx9mr10290702pac.3.1398875016886;
-        Wed, 30 Apr 2014 09:23:36 -0700 (PDT)
+        bh=phO6rCYX5hPG3u92VuDnmcAsbjkzDV67Tu6LM0WZpCg=;
+        b=XjS7XVKCBmVfGlDHiPTfaxV3d4rVI91d0lZ53U9+CRXYBOvp9zQCbF8htEFNl8WIeK
+         n0GcRgXhpaOfhxLvjHDwunwi2DhPgQHxnHfhwN53s6IQ2SFo0g4u1Z1gPJtvHjfTDShw
+         Ye2wUEQ+uc+h3gSq3CSwyRVr9I8lyuWV6zmJUGkVWKt8k8bJUQR9/o8y3MSu8gdbaXDi
+         S4g62dnSqx5eax8ZWM9mfxd5f5u4vhDyRViYS0Nw/PCQhRPav20JrqEW0NWLgMbbJMP6
+         lTseq1VNZDDAbMET8MgJVlVYkSxYTRWTyjol0iALW92ct1J7hO1Gfx/utUnKiF9hUZOF
+         KuoA==
+X-Received: by 10.66.249.233 with SMTP id yx9mr10291814pac.3.1398875023825;
+        Wed, 30 Apr 2014 09:23:43 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id te2sm138674233pac.25.2014.04.30.09.23.35
+        by mx.google.com with ESMTPSA id te2sm138674233pac.25.2014.04.30.09.23.42
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 30 Apr 2014 09:23:36 -0700 (PDT)
+        Wed, 30 Apr 2014 09:23:43 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1398874987-14873-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247730>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -67,57 +67,39 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t4014-format-patch.sh |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ t/t5000-tar-tree.sh |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index 9c80633..282bee4 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -43,7 +43,7 @@ test_expect_success setup '
- test_expect_success "format-patch --ignore-if-in-upstream" '
+diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
+index 1cf0a4e..74fc5a8 100755
+--- a/t/t5000-tar-tree.sh
++++ b/t/t5000-tar-tree.sh
+@@ -123,7 +123,7 @@ test_expect_success \
+     'add files to repository' \
+     'find a -type f | xargs git update-index --add &&
+      find a -type l | xargs git update-index --add &&
+-     treeid=`git write-tree` &&
++     treeid=$(git write-tree) &&
+      echo $treeid >treeid &&
+      git update-ref HEAD $(TZ=GMT GIT_COMMITTER_DATE="2005-05-27 22:00:00" \
+      git commit-tree $treeid </dev/null)'
+@@ -207,7 +207,7 @@ test_expect_success \
  
- 	git format-patch --stdout master..side >patch0 &&
--	cnt=`grep "^From " patch0 | wc -l` &&
-+	cnt=$(grep "^From " patch0 | wc -l) &&
- 	test $cnt = 3
+ test_expect_success 'clients cannot access unreachable commits' '
+ 	test_commit unreachable &&
+-	sha1=`git rev-parse HEAD` &&
++	sha1=$(git rev-parse HEAD) &&
+ 	git reset --hard HEAD^ &&
+ 	git archive $sha1 >remote.tar &&
+ 	test_must_fail git archive --remote=. $sha1 >remote.tar
+@@ -215,7 +215,7 @@ test_expect_success 'clients cannot access unreachable commits' '
  
- '
-@@ -52,7 +52,7 @@ test_expect_success "format-patch --ignore-if-in-upstream" '
- 
- 	git format-patch --stdout \
- 		--ignore-if-in-upstream master..side >patch1 &&
--	cnt=`grep "^From " patch1 | wc -l` &&
-+	cnt=$(grep "^From " patch1 | wc -l) &&
- 	test $cnt = 2
- 
- '
-@@ -69,7 +69,7 @@ test_expect_success "format-patch doesn't consider merge commits" '
- 	git checkout -b merger master &&
- 	test_tick &&
- 	git merge --no-ff slave &&
--	cnt=`git format-patch -3 --stdout | grep "^From " | wc -l` &&
-+	cnt=$(git format-patch -3 --stdout | grep "^From " | wc -l) &&
- 	test $cnt = 3
- '
- 
-@@ -77,7 +77,7 @@ test_expect_success "format-patch result applies" '
- 
- 	git checkout -b rebuild-0 master &&
- 	git am -3 patch0 &&
--	cnt=`git rev-list master.. | wc -l` &&
-+	cnt=$(git rev-list master.. | wc -l) &&
- 	test $cnt = 2
- '
- 
-@@ -85,7 +85,7 @@ test_expect_success "format-patch --ignore-if-in-upstream result applies" '
- 
- 	git checkout -b rebuild-1 master &&
- 	git am -3 patch1 &&
--	cnt=`git rev-list master.. | wc -l` &&
-+	cnt=$(git rev-list master.. | wc -l) &&
- 	test $cnt = 2
- '
- 
+ test_expect_success 'upload-archive can allow unreachable commits' '
+ 	test_commit unreachable1 &&
+-	sha1=`git rev-parse HEAD` &&
++	sha1=$(git rev-parse HEAD) &&
+ 	git reset --hard HEAD^ &&
+ 	git archive $sha1 >remote.tar &&
+ 	test_config uploadarchive.allowUnreachable true &&
 -- 
 1.7.10.4
