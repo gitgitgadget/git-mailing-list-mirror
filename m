@@ -1,70 +1,125 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 6/6] completion: bash: cleanup cygwin check
-Date: Wed, 30 Apr 2014 06:07:45 -0500
-Message-ID: <1398856065-2982-7-git-send-email-felipe.contreras@gmail.com>
-References: <1398856065-2982-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 30 13:18:49 2014
+From: Stepan Kasal <kasal@ucw.cz>
+Subject: Re: [PATCH] wincred: add install target and avoid overwriting
+	configured variables
+Date: Wed, 30 Apr 2014 13:27:24 +0200
+Organization: <)><
+Message-ID: <20140430112724.GA22929@camelia.ucw.cz>
+References: <20140430064610.GA22094@camelia.ucw.cz> <CABPQNSZsviaGqFeKZE4ofF6HoUQrPvNPuowar4YDjk_Mbu5iCQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: GIT Mailing-list <git@vger.kernel.org>,
+	Pat Thoyts <patthoyts@users.sourceforge.net>
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 30 13:27:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WfSXH-0003bx-Mg
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 13:18:48 +0200
+	id 1WfSfi-0006RD-Rx
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 13:27:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932640AbaD3LSm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Apr 2014 07:18:42 -0400
-Received: from mail-yk0-f176.google.com ([209.85.160.176]:63005 "EHLO
-	mail-yk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932290AbaD3LSl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2014 07:18:41 -0400
-Received: by mail-yk0-f176.google.com with SMTP id q9so1319668ykb.7
-        for <git@vger.kernel.org>; Wed, 30 Apr 2014 04:18:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=pFfT/aI5asD5rVZG9oNDxDUG6Y2uT+l2sEgX0VEQHDU=;
-        b=Goafa4ur1cK7nD0fdUpf/x9cK+3o8ba3KRYN80K2O5vBBF5HtUqBv3Mklm9Y83pNmJ
-         6PccmQoL1EjfOGfbw/LAla7gaGb71vrw/naeHLueiHxo3p0IOc/OcS8V8VUYnjQ6hAA5
-         UzpvPjtj/AME30yyWT8w0Cr7XgpTSBCSprAmFChtn53ubOZIigX6apQxDGb17e7iWx8e
-         tgPwrRGdi0j91QZQbU/7UspdeEKLs5HgtjvogtgmIldwvdixyuyC1sXQeKEdtgYpdi9q
-         tWvaSGzxoCt+6e1cZgrRX6087x6s4Uss1tej/m6PYtyJZdMs91e/zHU1QPxLy4v/VuEU
-         1yug==
-X-Received: by 10.236.21.241 with SMTP id r77mr4809215yhr.7.1398856719854;
-        Wed, 30 Apr 2014 04:18:39 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id l67sm42283762yha.8.2014.04.30.04.18.38
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 30 Apr 2014 04:18:38 -0700 (PDT)
-X-Mailer: git-send-email 1.9.2+fc1.11.g71fb719
-In-Reply-To: <1398856065-2982-1-git-send-email-felipe.contreras@gmail.com>
+	id S1758693AbaD3L11 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2014 07:27:27 -0400
+Received: from jabberwock.ucw.cz ([46.255.230.98]:37940 "EHLO
+	jabberwock.ucw.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756568AbaD3L10 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2014 07:27:26 -0400
+Received: from 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (84.64.broadband3.iol.cz [85.70.64.84])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	(Authenticated sender: kasal)
+	by jabberwock.ucw.cz (Postfix) with ESMTPSA id 567801C00F3;
+	Wed, 30 Apr 2014 13:27:25 +0200 (CEST)
+Received: from camelia.ucw.cz (camelia.ucw.cz [127.0.0.1])
+	by 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (8.14.3/8.14.3) with ESMTP id s3UBRPhl023035;
+	Wed, 30 Apr 2014 13:27:25 +0200
+Received: (from kasal@localhost)
+	by camelia.ucw.cz (8.14.3/8.14.3/Submit) id s3UBROdb023034;
+	Wed, 30 Apr 2014 13:27:24 +0200
+Content-Disposition: inline
+In-Reply-To: <CABPQNSZsviaGqFeKZE4ofF6HoUQrPvNPuowar4YDjk_Mbu5iCQ@mail.gmail.com>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247704>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247705>
 
-Avoid Yoda conditions, use test, and cleaner statement.
+Hello,
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- contrib/completion/git-completion.bash | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+> On Wed, Apr 30, 2014 at 8:46 AM, Stepan Kasal <kasal@ucw.cz> wrote:
+> > Date: Wed, 24 Oct 2012 00:15:29 +0100
+> >
+> > Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
+> > Signed-off-by: Stepan Kasal <kasal@ucw.cz>
+> > ---
+> > Another one from msysGit project.
+> > Original subject by Pat; I would suggest:
+> >     wincred: improve Makefile
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index f1ce962..34edef9 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2600,6 +2600,5 @@ __git_complete gitk __gitk_main
- # when the user has tab-completed the executable name and consequently
- # included the '.exe' suffix.
- #
--if [ Cygwin = "$(uname -o 2>/dev/null)" ]; then
-+test "$(uname -o 2>/dev/null)" = "Cygwin" &&
- __git_complete git.exe __git_main
--fi
--- 
-1.9.2+fc1.11.g71fb719
+On Wed, Apr 30, 2014 at 11:21:17AM +0200, Erik Faye-Lund wrote:
+> I'm a little bit unsure about this, because the makefile was basically
+> just copied from contrib/credential/osxkeychain/Makefile (which was
+> the first credential helper) and tweaked slightly.
+> 
+> So, what makes wincred special compared to gnome-keyring, netrc and
+> osxkeychain wrt installation? Shouldn't all helpers get the same
+> treatment?
+
+I can only guess that the hardwired CC and CFLAGS values can cause
+problems.
+It is probably much sane on Windows to use the compiler that the user
+set up for the build.
+
+I'm not sure if users of, say, OS X, have the same problems, so I
+would hesitate to apply these changes to all helpers.
+
+> > From: Pat Thoyts <patthoyts@users.sourceforge.net>
+> >  contrib/credential/wincred/Makefile | 22 ++++++++++++++--------
+> >  1 file changed, 14 insertions(+), 8 deletions(-)
+> >
+> > diff --git a/contrib/credential/wincred/Makefile b/contrib/credential/wincred/Makefile
+> > index bad45ca..3ce6aba 100644
+> > --- a/contrib/credential/wincred/Makefile
+> > +++ b/contrib/credential/wincred/Makefile
+> > @@ -1,14 +1,20 @@
+> > -all: git-credential-wincred.exe
+> > -
+> > -CC = gcc
+> > -RM = rm -f
+> > -CFLAGS = -O2 -Wall
+> > -
+> >  -include ../../../config.mak.autogen
+> >  -include ../../../config.mak
+> >
+> > -git-credential-wincred.exe : git-credential-wincred.c
+> > +prefix ?= /usr/local
+> > +libexecdir ?= $(prefix)/libexec/git-core
+> > +
+> > +INSTALL ?= install
+> > +
+> > +GIT_CREDENTIAL_WINCRED := git-credential-wincred.exe
+> 
+> Why this variable? IMO, it's just as "GIT_CREDENTIAL_WINCRED" easy to
+> miss-spell as "git-credential-wincred.exe", and it doesn't seem to be
+> possible to overload.
+
+If you mis-spell a variable name, nothing is build.  If you misspell
+a binary name, that binary may get compiled using a default rule;
+that is why I would generally prefer variables.
+Moreover, if the cardinality of the set ever increases, the
+indirection may get helpful.
+No big deal.
+
+> > +
+> > +all: $(GIT_CREDENTIAL_WINCRED)
+> > +
+> 
+> Also, why move the all-target down from the top? Is it simply because
+> of the definition above?
+
+Again, I agree with Pat that it is nicer this way, but no big
+deal.
+
+Stepan Kasal
