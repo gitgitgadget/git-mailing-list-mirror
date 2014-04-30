@@ -1,84 +1,68 @@
-From: Richard Hansen <rhansen@bbn.com>
-Subject: Re: [PATCH 00/32] Split index mode for very large indexes
-Date: Wed, 30 Apr 2014 16:48:05 -0400
-Message-ID: <53616185.9000208@bbn.com>
-References: <1398682553-11634-1-git-send-email-pclouds@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [RFD] use approxidate for "git commit --date=xyz"?
+Date: Wed, 30 Apr 2014 14:09:10 -0700
+Message-ID: <CA+55aFx=LizEyS6hq=av_qwRZuu_q3xPSXO-Jr4CAfXqaAuUtA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 30 22:48:14 2014
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 30 23:09:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WfbQM-0001Ol-3c
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 22:48:14 +0200
+	id 1Wfbki-00054e-Lk
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 23:09:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759394AbaD3UsI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Apr 2014 16:48:08 -0400
-Received: from smtp.bbn.com ([128.33.1.81]:26016 "EHLO smtp.bbn.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758905AbaD3UsH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 30 Apr 2014 16:48:07 -0400
-Received: from socket.bbn.com ([192.1.120.102]:42889)
-	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
-	(Exim 4.77 (FreeBSD))
-	(envelope-from <rhansen@bbn.com>)
-	id 1WfbQO-000LTU-0j; Wed, 30 Apr 2014 16:48:16 -0400
-X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id C419440822
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
-In-Reply-To: <1398682553-11634-1-git-send-email-pclouds@gmail.com>
-X-Enigmail-Version: 1.6
+	id S1946052AbaD3VJM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2014 17:09:12 -0400
+Received: from mail-vc0-f174.google.com ([209.85.220.174]:48937 "EHLO
+	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751382AbaD3VJL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2014 17:09:11 -0400
+Received: by mail-vc0-f174.google.com with SMTP id ib6so2951232vcb.5
+        for <git@vger.kernel.org>; Wed, 30 Apr 2014 14:09:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:date:message-id:subject:from:to:cc:content-type;
+        bh=e6uDQqLqE7ri72edOEmf2pLIGkwArIvthyfY+2BF0SM=;
+        b=aE+dk7EFqC8nvylatUYnF7a+VuDLA8yE2x2JSqLR90RfopET4WgeCGSXEv+H5ejvC8
+         eHXNQe7lodQ+xUh39rzy+zB4JwCCfjG18q47YKnbhL+p/4qYM+Iy4dwxPpitKEWBKql9
+         5W7GVkiGNU8fOkjl2KBF75tJXw4xjl6ISdmqigZF9nP4Trv/HxJT7tCv7o8/7FhPVgPX
+         W7kEKE0J75jeJEizc/Crjxibg+2YIASHSa11ALN5DJl8oQxFluEz8X1zxmszChbEUX15
+         6XrXrdMhKOp4JKPbo0aYGM4Qia4AB7URb3pcn6KvQffgiVpoJMIo84PxGJSq9JFlvVH1
+         jc9g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google;
+        h=mime-version:sender:date:message-id:subject:from:to:cc:content-type;
+        bh=e6uDQqLqE7ri72edOEmf2pLIGkwArIvthyfY+2BF0SM=;
+        b=A8j62jD7oAYZDISuqcxTRxaFgCIuAvpxe9ZXQy3bZ1iXw9EqhDrlpGA8mJurphogcG
+         LS0zzbDu2RWSuwy7ToGDWN8xDFu5Sl+RF9fJ9slbjRUyxoCd85TjAtb7d3/uGnoOOVyL
+         RnRzaVyIjHWoyIDTOeDGumIXWvCUKLDpNMskg=
+X-Received: by 10.58.178.130 with SMTP id cy2mr5251vec.55.1398892150396; Wed,
+ 30 Apr 2014 14:09:10 -0700 (PDT)
+Received: by 10.220.13.2 with HTTP; Wed, 30 Apr 2014 14:09:10 -0700 (PDT)
+X-Google-Sender-Auth: jw9ZuewRr2JNeXVq5o2XzHcBKAI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247780>
 
-On 2014-04-28 06:55, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
-> From the user point of view, this reduces the writable size of index
-> down to the number of updated files. For example my webkit index v4 i=
-s
-> 14MB. With a fresh split, I only have to update an index of 200KB.
-> Every file I touch will add about 80 bytes to that. As long as I don'=
-t
-> touch every single tracked file in my worktree, I should not pay
-> penalty for writing 14MB index file on every operation.
+I just got a comment saying that
 
-I played around with these changes a bit and have some questions:
+    git commit --amend --date=now
 
-  * These changes should only affect performance when the index is
-    updated, right?  In other words, if I do "git status; git status"
-    the second "git status" shouldn't update the index and therefore
-    shouldn't have a noticeable performance improvement relative to Git
-    without these patches.  Right?
+doesn't work. I replied that you can use
 
-  * Do you have any before/after benchmark results you can share?
+   --date="$(date)"
 
-  * Are there any benchmark scripts I can use to test it out in my own
-    repositories?
+but I do wonder if we should accept the approxidate format - we do in
+other equivalent places. Hmm?
 
-  * Is there a debug utility I can use to examine the contents of the
-    index and sharedindex.* files in a more human-readable way?
+The code uses fmt_ident(), which uses parse_date(), which in turn uses
+parse_date_basic(). Maybe parse_date() could use
+"approxidate_careful()" instead of "parse_date_basic()"?
 
-I'm asking because in my (very basic) tests I noticed that with the
-following command:
-
-    git status; time git status
-
-the second "git status" had an unexpected ~20% performance improvement
-in my repo relative to a build without your patches.  The second "git
-status" in the following command also had about a ~20% performance
-improvement:
-
-    git status; touch file-in-index; time git status
-
-So it seems like the patches did improve performance somewhat, but in
-ways I wasn't expecting.  (I'm not entirely certain my benchmark method
-is sound.)
-
-Thanks,
-Richard
+            Linus
