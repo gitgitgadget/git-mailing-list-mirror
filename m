@@ -1,51 +1,51 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 06/14] t4013-diff-various.sh: use the $( ... ) construct for command substitution
-Date: Wed, 30 Apr 2014 09:22:59 -0700
-Message-ID: <1398874987-14873-6-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 10/14] t4057-diff-combined-paths.sh: use the $( ... ) construct for command substitution
+Date: Wed, 30 Apr 2014 09:23:03 -0700
+Message-ID: <1398874987-14873-10-git-send-email-gitter.spiros@gmail.com>
 References: <1398874987-14873-1-git-send-email-gitter.spiros@gmail.com>
 Cc: matthieu.moy@grenoble-inp.fr, Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 30 18:24:45 2014
+X-From: git-owner@vger.kernel.org Wed Apr 30 18:24:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WfXJM-0003QJ-5P
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 18:24:44 +0200
+	id 1WfXJN-0003QJ-7L
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 18:24:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965059AbaD3QXj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Apr 2014 12:23:39 -0400
-Received: from mail-pa0-f45.google.com ([209.85.220.45]:61946 "EHLO
-	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965046AbaD3QXh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2014 12:23:37 -0400
-Received: by mail-pa0-f45.google.com with SMTP id kq14so2319725pab.4
-        for <git@vger.kernel.org>; Wed, 30 Apr 2014 09:23:36 -0700 (PDT)
+	id S965072AbaD3QXm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2014 12:23:42 -0400
+Received: from mail-pd0-f173.google.com ([209.85.192.173]:36257 "EHLO
+	mail-pd0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965068AbaD3QXk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2014 12:23:40 -0400
+Received: by mail-pd0-f173.google.com with SMTP id p10so1988191pdj.18
+        for <git@vger.kernel.org>; Wed, 30 Apr 2014 09:23:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=F+uR3gfDKqD5cKDNmy1uCmp0Uj7TGjUphSF70gxom30=;
-        b=tbVWbjNRRyXB7O+pCXTtYj0rc7rNNurEzsurVfNHlK2Uo6+HSzxBQT6nNZCVU0wPjQ
-         gwNMLptQ7cCL9y5Pv7StnfwMvZd7e0BTQIw7m+syckwVlnPYpGraFPEFIi6W/CIMfv/S
-         v0cbNY3auY9pEFaqmtyp9AYyKspQQb0/MVZVw8wUijL8tFmWHP1hqzLzf9eEom75ojUO
-         mhUg22iaA48Sa2AvHAiJJ4rdWUpDhdZaNR0NuvtOqv6mn7idxCPWKexV1PZEMQz/DkPd
-         chQoyw54RYIURchb4hEYbpg5zU4xgAXapFDkbxK6fpKFyC7QZhgMix8uADDuxwTuVZJ4
-         yhgA==
-X-Received: by 10.66.218.193 with SMTP id pi1mr10380771pac.20.1398875015904;
-        Wed, 30 Apr 2014 09:23:35 -0700 (PDT)
+        bh=aO6FQWDOw5g2MjVpG+J6SdD/SpOEdH48dUo4f39myTk=;
+        b=cWz0GC4JeDWPmwRGeurC915+JenLXdAjtOo3K5zREOEmay5dTc4OrIbQoUsvzh/DqZ
+         wiMLFdYIxfwiAmWJROQP1coXrbk9baBR8lxiNlc5nwjFUDUo+mxJgD4KntEjFg4CH+F3
+         UqaAXhnVErN2hLJQ8UBGN8RNMyaQhQp+cJcaNHrGHQDmrOmpreMKbrPaWT5bVQ2iIG2D
+         qMLA2DhrJjIEkdqqiykV7jojaM89P8EvTWPfJjjm/xjvJSmDwrFbHTlA5tCGXzH1VDms
+         BH06AbCyAddq8RoLL9XeuGCr51GsxN/MS20ws2FGYuFg6U17nL1+jsr2NYElMXJMc918
+         szqA==
+X-Received: by 10.67.23.135 with SMTP id ia7mr10307636pad.5.1398875019875;
+        Wed, 30 Apr 2014 09:23:39 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id te2sm138674233pac.25.2014.04.30.09.23.34
+        by mx.google.com with ESMTPSA id te2sm138674233pac.25.2014.04.30.09.23.38
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 30 Apr 2014 09:23:35 -0700 (PDT)
+        Wed, 30 Apr 2014 09:23:39 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1398874987-14873-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247736>
 
 The Git CodingGuidelines prefer the $(...) construct for command
 substitution instead of using the backquotes `...`.
@@ -67,30 +67,21 @@ and then carefully proof-read.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t4013-diff-various.sh |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ t/t4057-diff-combined-paths.sh |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-index e77c09c..805b055 100755
---- a/t/t4013-diff-various.sh
-+++ b/t/t4013-diff-various.sh
-@@ -107,14 +107,14 @@ test_expect_success setup '
- +*++ [initial] Initial
- EOF
+diff --git a/t/t4057-diff-combined-paths.sh b/t/t4057-diff-combined-paths.sh
+index 097e632..dff36b7 100755
+--- a/t/t4057-diff-combined-paths.sh
++++ b/t/t4057-diff-combined-paths.sh
+@@ -5,7 +5,7 @@ test_description='combined diff show only paths that are different to all parent
+ . ./test-lib.sh
  
--V=`git version | sed -e 's/^git version //' -e 's/\./\\./g'`
-+V=$(git version | sed -e 's/^git version //' -e 's/\./\\./g')
- while read cmd
- do
- 	case "$cmd" in
- 	'' | '#'*) continue ;;
- 	esac
--	test=`echo "$cmd" | sed -e 's|[/ ][/ ]*|_|g'`
--	pfx=`printf "%04d" $test_count`
-+	test=$(echo "$cmd" | sed -e 's|[/ ][/ ]*|_|g')
-+	pfx=$(printf "%04d" $test_count)
- 	expect="$TEST_DIRECTORY/t4013/diff.$test"
- 	actual="$pfx-diff.$test"
- 
+ # verify that diffc.expect matches output of
+-# `git diff -c --name-only HEAD HEAD^ HEAD^2`
++# $(git diff -c --name-only HEAD HEAD^ HEAD^2)
+ diffc_verify () {
+ 	git diff -c --name-only HEAD HEAD^ HEAD^2 >diffc.actual &&
+ 	test_cmp diffc.expect diffc.actual
 -- 
 1.7.10.4
