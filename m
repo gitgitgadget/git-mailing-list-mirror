@@ -1,49 +1,75 @@
-From: Max Kirillov <max@max630.net>
-Subject: Re: Recording the current branch on each commit?
-Date: Wed, 30 Apr 2014 07:04:37 +0300
-Message-ID: <20140430040437.GA5817@wheezy.local>
-References: <20140427233635.96eec638b311907e2368f42b42021fd8.fa0e4193ea.wbe@email02.secureserver.net>
- <xmqq1twhs4lt.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 30 06:04:57 2014
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH] rerere: fix for merge.conflictstyle
+Date: Tue, 29 Apr 2014 23:08:29 -0500
+Message-ID: <1398830909-24680-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 30 06:19:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WfLlQ-0001ql-8n
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 06:04:56 +0200
+	id 1WfLzD-0007rY-Gw
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 06:19:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753388AbaD3EEt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Apr 2014 00:04:49 -0400
-Received: from p3plsmtpa06-08.prod.phx3.secureserver.net ([173.201.192.109]:37220
-	"EHLO p3plsmtpa06-08.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753101AbaD3EEp (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 30 Apr 2014 00:04:45 -0400
-Received: from wheezy.local ([82.181.158.170])
-	by p3plsmtpa06-08.prod.phx3.secureserver.net with 
-	id w44b1n00S3gsSd60144jRF; Tue, 29 Apr 2014 21:04:44 -0700
-Content-Disposition: inline
-In-Reply-To: <xmqq1twhs4lt.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751273AbaD3ETI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2014 00:19:08 -0400
+Received: from mail-yh0-f48.google.com ([209.85.213.48]:40742 "EHLO
+	mail-yh0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750978AbaD3ETG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2014 00:19:06 -0400
+Received: by mail-yh0-f48.google.com with SMTP id v1so1151657yhn.21
+        for <git@vger.kernel.org>; Tue, 29 Apr 2014 21:19:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=C7j/M3TQMoktTSyY8GCR+XRjkd2J77cvaA9lYO8828A=;
+        b=dYmPjUu73ULcv17CjvxLXdlxftrRF+Cm+qwTnjpPcCOr35WQAUY8YrvozsiKW8G0F+
+         NqH8b8saCHkQMcV+U2KWoPXedv26d1yhg+gfEZXh4DuNhpSWF34L5wrpVKIrdn4xmN3E
+         pfywXjxuoyvthnQrnzBF+2fYvnoc/tZR79I0xbrK5H35DCN95ICLBuYHzqhaT+Hkw4ec
+         YEKl3jTwIVWP87MOltZpAjZAmGkaizPn/rzCODPM2LbgTq+wijMChZahOnxBucPBb6Ii
+         ukGWX/VykODaYfE6FbmGGHZdTTOjfTVcxILqnuFDXvovEmvLcn1JljpFGTTzMj7vJPCY
+         qvNQ==
+X-Received: by 10.236.79.134 with SMTP id i6mr2690448yhe.16.1398831545337;
+        Tue, 29 Apr 2014 21:19:05 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id f2sm40737405yhg.7.2014.04.29.21.19.02
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 29 Apr 2014 21:19:04 -0700 (PDT)
+X-Mailer: git-send-email 1.9.2+fc1.10.gc7d6c45.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247674>
 
-On Mon, Apr 28, 2014 at 11:15:10AM -0700, Junio C Hamano wrote:
-> "Any additional information about the commit can be added" you
-> suggest is exactly the kind of thing we want to avoid, which made
-> Linus say in an even older discussion [*2*]:
-> 
->     No "this random field could be used this random way" crud,
->     please.
+If we use a different conflict style `git rerere forget` is not able to
+find the matching conflict SHA-1 because the diff generated is actually
+different from what `git merge` generated.
 
-I see, thanks for explanation.
+The fix is to call git_xmerge_config() so that git_xmerge_style is set
+properly and the diffs match.
 
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ builtin/rerere.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/builtin/rerere.c b/builtin/rerere.c
+index 4e51add..98eb8c5 100644
+--- a/builtin/rerere.c
++++ b/builtin/rerere.c
+@@ -60,6 +60,8 @@ int cmd_rerere(int argc, const char **argv, const char *prefix)
+ 
+ 	argc = parse_options(argc, argv, prefix, options, rerere_usage, 0);
+ 
++	git_config(git_xmerge_config, NULL);
++
+ 	if (autoupdate == 1)
+ 		flags = RERERE_AUTOUPDATE;
+ 	if (autoupdate == 0)
 -- 
-Max
+1.9.2+fc1.10.gc7d6c45.dirty
