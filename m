@@ -1,107 +1,92 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH/RFC] Makefile: do not depend on curl-config
-Date: Wed, 30 Apr 2014 18:52:38 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.1404301851210.14982@s15462909.onlinehome-server.info>
-References: <1398702545-9860-1-git-send-email-kusmabite@gmail.com> <xmqqfvkuhm77.fsf@gitster.dls.corp.google.com> <CABPQNSZUCPd=1Eu8VUCP01tkdYkBC=xspFZuDuywuYZUH8ewvw@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: RE: Pull is Evil (was: Re: A failing attempt to use Git in a
+ centralized environment)
+Date: Wed, 30 Apr 2014 11:47:02 -0500
+Message-ID: <536129068cc28_1404fdd310fd@nysa.notmuch>
+References: <4ay6w9i74cygt6ii1b0db7wg.1398433713382@email.android.com>
+ <xmqqoazlqot4.fsf@gitster.dls.corp.google.com>
+ <536106EA.5090204@xiplink.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, Dave Borowitz <dborowitz@google.com>, 
-    GIT Mailing-list <git@vger.kernel.org>, Pat Thoyts <patthoyts@gmail.com>, 
-    Marat Radchenko <marat@slonopotamus.org>, tuomas.silvola@knowit.fi, 
-    msysGit <msysgit@googlegroups.com>, sschuberth@gmail.com
-To: Erik Faye-Lund <kusmabite@gmail.com>
-X-From: msysgit+bncBCZPH74Q5YNRBWOUQSNQKGQEXL5BDSA@googlegroups.com Wed Apr 30 18:52:44 2014
-Return-path: <msysgit+bncBCZPH74Q5YNRBWOUQSNQKGQEXL5BDSA@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-ee0-f63.google.com ([74.125.83.63])
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Marc Branchaud <marcnarc@xiplink.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Marat Radchenko <marat@slonopotamus.org>
+X-From: git-owner@vger.kernel.org Wed Apr 30 18:57:48 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCZPH74Q5YNRBWOUQSNQKGQEXL5BDSA@googlegroups.com>)
-	id 1WfXkQ-0000fL-V0
-	for gcvm-msysgit@m.gmane.org; Wed, 30 Apr 2014 18:52:42 +0200
-Received: by mail-ee0-f63.google.com with SMTP id d17sf199646eek.8
-        for <gcvm-msysgit@m.gmane.org>; Wed, 30 Apr 2014 09:52:42 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1WfXpJ-0007pu-2K
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Apr 2014 18:57:45 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1945914AbaD3Q5l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2014 12:57:41 -0400
+Received: from mail-yh0-f43.google.com ([209.85.213.43]:35876 "EHLO
+	mail-yh0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758884AbaD3Q5k (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2014 12:57:40 -0400
+Received: by mail-yh0-f43.google.com with SMTP id f10so1897660yha.2
+        for <git@vger.kernel.org>; Wed, 30 Apr 2014 09:57:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=date:from:to:cc:subject:in-reply-to:message-id:references
-         :user-agent:mime-version:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=yOPf1niB1xiWoj5J8jUTbPcfC+kLNRX8nib76Cs4Ric=;
-        b=bUgZ/k7UdugvUCcU+mnRrezAcj7695lP4xdqQmBFjwi1qX5mjqsX0DypV5h3hbiCKL
-         FKdRVH4jGtqZNVVqCz8uNvAI1V4aPULbUt0NmV8zNaFppDcoGYOFyI4/DgY3BYjurmGz
-         NSBzdIyk/bMtdvE+slHSyX4vXNd/o1jgVLgIGh//xpfT7z+kXtFZayzheCl/0TOMH0d1
-         uq0+Q45k9QujDVeZ0uab//pN+ZPxB/VMX3/3Ab6EQmkSQgnhtppietu5QL2kC1mYvjv0
-         Hq8+uZWroM7la7aNeRiQx1GG+KwFi7tFdf3ifQ3zRCoDCP2YS81YYYqbFBIzUJrrJY/1
-         ubkQ==
-X-Received: by 10.180.81.69 with SMTP id y5mr26850wix.19.1398876762647;
-        Wed, 30 Apr 2014 09:52:42 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.83.65 with SMTP id o1ls266888wiy.5.gmail; Wed, 30 Apr 2014
- 09:52:41 -0700 (PDT)
-X-Received: by 10.180.76.143 with SMTP id k15mr603999wiw.6.1398876761351;
-        Wed, 30 Apr 2014 09:52:41 -0700 (PDT)
-Received: from mout.gmx.net (mout.gmx.net. [212.227.17.21])
-        by gmr-mx.google.com with ESMTPS id u49si631105eeo.1.2014.04.30.09.52.41
-        for <msysgit@googlegroups.com>
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=2qOnCej9d8Pd6In2RgbbadDqNlUZNsH7NTS2pqZJNlI=;
+        b=O70oEsD1ImM7preR1+EuANQ9P7O1guRjAzUvRNHvzDgZcvydA6+daINBMNwVTBGTOJ
+         6yycI70t8To/Bvng/5+CCnDMPSpobv1aICKDgBMEnHXfu5bbwwb4jE3rMus8CqbVY05p
+         jDDYc4SWoxzRE6qUi7wZHFigBqzApheJzZ1qJIBVki4+jLNilS9edIK6hlkUGfI6S+l3
+         boN9KCVNkoZgbfxBgSlMnYYbphtiWxr+FF5nDm0+zGOChdFFp7ZJ50jUm5THitDuNanO
+         C6wEPlq8gbOubx0/A+VZeZtZ4sj9oDCGQdNloquYYr970FSphvlAK+KmPRb8R5aTsTRX
+         4kQQ==
+X-Received: by 10.236.92.210 with SMTP id j58mr7305126yhf.5.1398877059928;
+        Wed, 30 Apr 2014 09:57:39 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id s26sm43805466yhg.4.2014.04.30.09.57.37
+        for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 30 Apr 2014 09:52:41 -0700 (PDT)
-Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.17.21 as permitted sender) client-ip=212.227.17.21;
-Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx103) with ESMTPSA (Nemesis) id 0MEo4s-1WdrjB0MBu-00G2gA;
- Wed, 30 Apr 2014 18:52:39 +0200
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <CABPQNSZUCPd=1Eu8VUCP01tkdYkBC=xspFZuDuywuYZUH8ewvw@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:jWN99Fux9elzA9Uw0a7rQ5/YCzDp4EwYfnBPKKQeNysimn+py8x
- lgqls2VTh7O8Dtauxj1zoB5VutH7oDCtO1McCrrsGQBEh3y3tzbU18aZuQCpbE3czcrtJvk
- CIF1Yfr1a2n1/h7O+WS5/RB92dT0ToQmZgJAV+vhKcwBnPHh2wJ/ol0R1lj+XpM1FWPKJ35
- OG8v4nHK7syBplFYBYewA==
-X-Original-Sender: johannes.schindelin@gmx.de
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.17.21 as
- permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247743>
+        Wed, 30 Apr 2014 09:57:38 -0700 (PDT)
+In-Reply-To: <536106EA.5090204@xiplink.com>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247744>
 
-Hi kusma,
+Marc Branchaud wrote:
+> But I'm definitely biased because I think pull is pretty much broken:
+> 
+> * New users are encouraged to use pull, but all too often the default
+> fetch-then-merge behaviour doesn't match their expectations and they end up
+> starting threads like this one on the mailing list.
 
-On Wed, 30 Apr 2014, Erik Faye-Lund wrote:
+Yes, this has been discussed many times in the past, and everyone agrees
+the default behavior is not correct.
 
-> We can keep this patch in the msysGit repo for the 2.0 release.
+Most people agree it has to be changed.
 
-FWIW the plan is to switch to mingwGitDevEnv for the 2.0 release. It is
-not quite clear as of yet how patches will be managed with said
-environment.
+And we have patches for it[1].
 
-Ciao,
-Johannes
+But it's not going to change. Why? No reason given, it's just not going
+to.
+
+> * If we change pull's default behaviour, we'll just be shifting the
+> mismatched expectations onto the other half of the new users who would be
+> happy with fetch-then-merge.
+
+Not true. As it has been agreed in the discussions, very few people
+would be affected negatively by this change, and even then an
+appropriate error message like:
+
+  The pull was not fast-forward, please either merge or rebase.
+  If unsure, run 'git pull --merge'.
+
+Should do the trick.
+
+[1] http://article.gmane.org/gmane.comp.version-control.git/247567
 
 -- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+Felipe Contreras
