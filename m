@@ -1,83 +1,87 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: Pull is Evil
-Date: Wed, 30 Apr 2014 17:25:59 -0500
-Message-ID: <53617877b41a9_41a872f308ef@nysa.notmuch>
-References: <4ay6w9i74cygt6ii1b0db7wg.1398433713382@email.android.com>
- <xmqqoazlqot4.fsf@gitster.dls.corp.google.com>
- <536106EA.5090204@xiplink.com>
- <xmqqppjyhnom.fsf@gitster.dls.corp.google.com>
- <536152D3.5050107@xiplink.com>
- <5361598f8eaf7_4781124b2f02b@nysa.notmuch>
- <536173F5.7010905@xiplink.com>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: split index: sparse warning
+Date: Thu, 01 May 2014 00:44:58 +0100
+Message-ID: <53618AFA.6070602@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Marat Radchenko <marat@slonopotamus.org>, git@vger.kernel.org
-To: Marc Branchaud <marcnarc@xiplink.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 01 00:36:43 2014
+Cc: GIT Mailing-list <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 01 01:45:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wfd7K-0005PL-W5
-	for gcvg-git-2@plane.gmane.org; Thu, 01 May 2014 00:36:43 +0200
+	id 1WfeBd-0003Zd-1D
+	for gcvg-git-2@plane.gmane.org; Thu, 01 May 2014 01:45:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759641AbaD3Wgj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Apr 2014 18:36:39 -0400
-Received: from mail-yh0-f52.google.com ([209.85.213.52]:60745 "EHLO
-	mail-yh0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758905AbaD3Wgi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2014 18:36:38 -0400
-Received: by mail-yh0-f52.google.com with SMTP id a41so2137580yho.11
-        for <git@vger.kernel.org>; Wed, 30 Apr 2014 15:36:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=UnuZY9OyEJb2/0lKYCg9dE+ro1i6OiKM7md6LeDD2J4=;
-        b=Te8njoTmVGmBg6P+hInUj8/0Q4DcGiH+qMsCXTl7E7ERvDqsUVAEGx6bMX+/zQbFnX
-         6KaYE2nDvz0SH6kYtgh0x3OHhXrkwwbQQ3riqJWDB4D1Rc+SSd2Tlw16oNQtXXq/YIzk
-         K8EttEs1Z1WuUuhU0YxML1z+idLdCBn2W7QLkk51Mmue9+TN8QNh5QdwM9x0qAsOw1tA
-         BndRtQaoUUvbFAzuptMCd4znpqB9pSthxMd8WyWHeerIsOl6Rn++3I9SuQODSMxusJn9
-         67DD+Z2Tt0CBq7QttTlKMkqEiWwh6VPV+cbB7hcjPmLEuvLmhv2qPyjKoRqsVjUH7HIq
-         Z5ww==
-X-Received: by 10.236.81.6 with SMTP id l6mr10011890yhe.29.1398897397672;
-        Wed, 30 Apr 2014 15:36:37 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id s6sm45352401yhk.22.2014.04.30.15.36.34
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 30 Apr 2014 15:36:36 -0700 (PDT)
-In-Reply-To: <536173F5.7010905@xiplink.com>
+	id S1759651AbaD3XpG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2014 19:45:06 -0400
+Received: from mdfmta010.mxout.tch.inty.net ([91.221.169.51]:53599 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751565AbaD3XpF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2014 19:45:05 -0400
+Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta010.tch.inty.net (Postfix) with ESMTP id D47AC4005AA;
+	Thu,  1 May 2014 00:45:03 +0100 (BST)
+Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta010.tch.inty.net (Postfix) with ESMTP id 60DC44005A9;
+	Thu,  1 May 2014 00:45:03 +0100 (BST)
+Received: from [192.168.254.9] (unknown [80.176.147.220])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mdfmta010.tch.inty.net (Postfix) with ESMTP;
+	Thu,  1 May 2014 00:45:01 +0100 (BST)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
+X-MDF-HostID: 19
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247801>
 
-Marc Branchaud wrote:
-> On 14-04-30 04:14 PM, Felipe Contreras wrote:
-> > Marc Branchaud wrote:
-> >> All that said, I don't object to any attempts at improving the command
-> >> either.  But I also don't see any kind of improvement that would lead
-> >> me to start using "git pull" let alone recommending it to new users.
-> > 
-> > What is wrong when `git pull` merges a fast-forward?
-> 
-> Nothing.  Everything.  It depends.
+Hi Duy,
 
-It depends on what? I don't see how a fast-forward `git pull` could
-possibly have any trouble.
+I haven't looked at your split-index series at all. However, sparse has
+nagged me to take a quick squint at the result of the series as it
+appears in the 'pu' branch.
 
-> > The problems with `git pull` come when you can't do a fast-forward merge, right?
-> 
-> Some of them, maybe most of them.
+In particular, sparse complains thus:
 
-Name one problem with a fast-forward merge.
+      SP sequencer.c
+  sequencer.c:690:49: error: incompatible types for operation (>=)
+  sequencer.c:690:49:    left side has type int ( extern [toplevel] *<noident> )( ... )
+  sequencer.c:690:49:    right side has type int
 
--- 
-Felipe Contreras
+... which is fair enough; index_fd is, indeed, a function (pointer) and
+not an int file descriptor! The offending code looks like:
+
+683 static void read_and_refresh_cache(struct replay_opts *opts)
+684 {
+685         static struct lock_file index_lock;
+686         hold_locked_index(&index_lock, 0);
+687         if (read_index_preload(&the_index, NULL) < 0)
+688                 die(_("git %s: failed to read the index"), action_name(opts));
+689         refresh_index(&the_index, REFRESH_QUIET|REFRESH_UNMERGED, NULL, NULL, NULL);
+690         if (the_index.cache_changed && index_fd >= 0) {
+691                 if (write_locked_index(&the_index, &index_lock, COMMIT_LOCK))
+692                         die(_("git %s: failed to refresh the index"), action_name(opts));
+693         }
+694         rollback_lock_file(&index_lock);
+695 }
+
+
+It seems that, in an earlier commit (33c297aa), index_fd was declared
+as a local int variable (hiding the global function) which was then
+initialised by a call to hold_locked_index().
+
+I assume that the conditional should be changed to something like:
+
+690         if (the_index.cache_changed && index_lock.fd >= 0) {
+
+... but I haven't spent any time investigating this, so take this
+suggestion which a large pinch of salt! :-P
+
+ATB,
+Ramsay Jones
