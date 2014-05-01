@@ -1,102 +1,117 @@
-From: Steffen Ullrich <Steffen_Ullrich@genua.de>
-Subject: Re: git send-email doesn't work with IPv6 and STARTTLS
-Date: Thu, 1 May 2014 22:48:14 +0200
-Message-ID: <20140501204814.GA31294@genua.de>
-References: <53615259.90200@mirix.org>
- <20140501180546.GA9218@google.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: Pull is Evil
+Date: Thu, 1 May 2014 22:06:17 +0100
+Organization: OPDS
+Message-ID: <E699B6CE8ADD46618D52F05DB8EF6F07@PhilipOakley>
+References: <4ay6w9i74cygt6ii1b0db7wg.1398433713382@email.android.com>	<xmqqoazlqot4.fsf@gitster.dls.corp.google.com>	<536106EA.5090204@xiplink.com> <xmqqppjyhnom.fsf@gitster.dls.corp.google.com> <536152D3.5050107@xiplink.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthias-Christian Ott <ott@mirix.org>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 01 23:00:28 2014
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Marat Radchenko" <marat@slonopotamus.org>,
+	"Felipe Contreras" <felipe.contreras@gmail.com>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"Marc Branchaud" <marcnarc@xiplink.com>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu May 01 23:06:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wfy5g-0002RG-11
-	for gcvg-git-2@plane.gmane.org; Thu, 01 May 2014 23:00:24 +0200
+	id 1WfyBT-0001Ox-Fd
+	for gcvg-git-2@plane.gmane.org; Thu, 01 May 2014 23:06:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751454AbaEAVAU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 May 2014 17:00:20 -0400
-Received: from gg-0.genua.de ([80.154.94.10]:22978 "EHLO gg.genua.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750851AbaEAVAT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 May 2014 17:00:19 -0400
-X-Greylist: delayed 719 seconds by postgrey-1.27 at vger.kernel.org; Thu, 01 May 2014 17:00:19 EDT
-Received: from gg.genua.de (localhost.genua.de [127.0.0.1])
-	by gg.genua.de (8.14.6/8.14.6) with ESMTP id s41KmHN3004274
-	for <git@vger.kernel.org>; Thu, 1 May 2014 22:48:17 +0200 (CEST)
-Received: (from localhost) by gg.genua.de (MSCAN) id 5/gg.genua.de/smtp-gw/mscan; Thu May  1 22:48:17 2014
-Content-Disposition: inline
-In-Reply-To: <20140501180546.GA9218@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752034AbaEAVGS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 May 2014 17:06:18 -0400
+Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:16801 "EHLO
+	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751259AbaEAVGQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 1 May 2014 17:06:16 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AkdWAJG2YlMCYJZX/2dsb2JhbABagwZfA4hovCwFAQIBAQuBCRd0giAFAQEFCAEBLh4BARYLCwIDBQIBAxUBCyUUAQQaBgcXBhMIAgECAwEKA4gnq2GeLo5SHRiCdoEVBIlMhjecGoM0PA
+X-IPAS-Result: AkdWAJG2YlMCYJZX/2dsb2JhbABagwZfA4hovCwFAQIBAQuBCRd0giAFAQEFCAEBLh4BARYLCwIDBQIBAxUBCyUUAQQaBgcXBhMIAgECAwEKA4gnq2GeLo5SHRiCdoEVBIlMhjecGoM0PA
+X-IronPort-AV: E=Sophos;i="4.97,966,1389744000"; 
+   d="scan'208";a="445263416"
+Received: from host-2-96-150-87.as13285.net (HELO PhilipOakley) ([2.96.150.87])
+  by out1.ip04ir2.opaltelecom.net with SMTP; 01 May 2014 22:06:14 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247883>
 
+From: "Marc Branchaud" <marcnarc@xiplink.com>
+Sent: Wednesday, April 30, 2014 8:45 PM
+[...]
+> I don't think we'll ever be able to create a One "Git Pull" To Rule 
+> Them All.
+> At best we'll end up with something with enough knobs that it could be
+> configured to work in most workflows (I think we're actually pretty 
+> close to
+> that).  But for new users that defeats the purpose.  It means that 
+> "git pull"
+> is really an advanced command, and beginners should avoid it until 
+> they
+> understand enough of git to configure it properly.
+>
+> So rather than perpetuate the myth that one command can always (or 
+> even just
+> usually) do the right thing, let's just retire the command.
+>
+> All that said, I don't object to any attempts at improving the command
+> either.  But I also don't see any kind of improvement that would lead 
+> me to
+> start using "git pull" let alone recommending it to new users.
+>
+> M.
+>
+> [1] By "significant" I mean "enough to perpetually create new mailing 
+> list
+> threads about changing 'git pull'".
+>
+[general reply to all, rather than to anyone in particular, using Marc's 
+summary]
 
-Hi,
+The point that there is no easy solution to an updated default pull 
+action that is right for everybody, straight out of the box, I think is 
+now fairly obvious, a summarised by Marc. I certainly avoid pull.
 
-Net::SMTP does neither supports SSL nor IPv6.
+My 'solution', if it could be called that, would be that at the point of 
+switch over, after a period of release note warning and then code 
+warning, that the plain 'git pull' would not even do the no-ff, but 
+would simply refuse to do anything unless the user had explicitly set 
+the [new] config variable(s) to a value of _their_ choice. The message 
+could give guidance based on their old setting(s) and the new options as 
+appropriate, i.e. if they have an old definitive setting then the new 
+setting may be an obvious one.
 
-git-send-mail does not use Net::SMTP directly for SSL support, but:
-- for direct connections (port 465) it uses Net::SMTP::SSL which just
-  replaces the superclass if Net::SMTP with IO::Socket::SSL and thus
-  implicitly supports IPv6 (because IO::Socket::SSL does)
-- for plain connections with SSL upgrade git-send-mail uses Net::SMTP for
-  the initial connect and then does Net::SMTP::SSL->start_SSL (e.g.
-  inherited from IO::Socket::SSL) to upgrade the socket to SSL.
+During the warning period between the release cycles, we may have a two 
+step ramp up of the warning, where the first cycle allows users who have 
+read the release notes to choose their new setting and it's auto 
+detected from there on, then in the second cycle Git detects the lack of 
+a setting and gives a warning prompt (just like the Git 2.0 warning), 
+and finally the change over release makes a 'git pull' without a config 
+setting an error.
 
-The problem here is that Net::SMTP does not support IPv6, but this
-should be solvable by using Net::INETGlue::INET_is_INET6 before loading
-Net::SMTP.
+I know that for some it's a phaff that appears to waste time (been 
+there, been that person), but it does allow the stragglers time to pick 
+up the hints and not be too surprised, which will include many otherwise 
+professional folks who just happen to have other priorities [e.g. this 
+message typed from a Win XP machine!].
 
-But all these tricks are just workarounds for missing IPv6 and SSL support
-directly in the Net::SMTP, Net::FTP and Net::POP3.
-I therefore repeat my proposal from RT#93823 (no response yet) to add
-transparent support for IPv6 and SSL into these modules. By transparent I
-mean that the features are available if the necessary modules are installed
-(e.g. IO::Socket::SSL for SSL and IO::Socket::INET6 or IO::Socket::IP for
-IPv6), but that it works like before if they are not installed.
+The approach does have a solid heritage, and avoids anyone (on the 
+coding side) having to decide on an initial default, when it should be a 
+user choice. Though I do agree with Filipe that the '--no-ff merge' 
+would probably be the least worst for the new user and likely be a 
+suitable 'if you don't know use this one' suggestion.
 
-I don't have these patches yet, but most of the necessary code is already
-there in Net::SSLGlue and Net::INET6Glue.
-Would you accept and incorporate such patches?
-
-Regards,
-Steffen
-
-On Thu, May 01, 2014 at 11:05:46AM -0700, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Hi,
-> 
-> Matthias-Christian Ott wrote[1]:
-> 
-> > git send-email uses Net::SMTP connections that use STARTTLS. Net::SMTP
-> > does not support IPv6. I patched Net:SMTP to use IO::Socket::INET6 and
-> > it worked.
-> 
-> Thanks for reporting.
-> 
->  1. What version of Net::SMTP do you use?
-> 
->  2. Would you be willing to contribute your patch to Net::SMTP upstream,
->     for example by mailing it to bug-libnet@rt.cpan.org with
->     the string "[rt.cpan.org #93823]" somewhere in the subject line[2]?
-> 
-> Hope that helps,
-> Jonathan
-> 
-> [1] http://thread.gmane.org/gmane.comp.version-control.git/247769
-> [2] https://rt.cpan.org/Public/Bug/Display.html?id=93823
-> https://rt.cpan.org/NoAuth/RT/CPAN/Usage.html
-
+Philip
 -- 
-genua
-Gesellschaft fuer Netzwerk- und Unix-Administration mbH
-Domagkstrasse 7, 85551 Kirchheim bei Muenchen
-tel +49 89 991950-0, fax -999, www.genua.de
-Geschaeftsfuehrer: Dr. Magnus Harlander, Dr. Michaela Harlander,
-Bernhard Schneck. Amtsgericht Muenchen HRB 98238
