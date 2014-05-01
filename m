@@ -1,7 +1,7 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
+From: Felipe Contreras <felipe.contreras@gmail.com>
 Subject: Re: Pull is Evil
-Date: Thu, 1 May 2014 09:46:10 +0000
-Message-ID: <20140501094610.GB75770@vauxhall.crustytoothpaste.net>
+Date: Thu, 01 May 2014 05:48:10 -0500
+Message-ID: <5362266a3ca00_284da2f2eca3@nysa.notmuch>
 References: <4ay6w9i74cygt6ii1b0db7wg.1398433713382@email.android.com>
  <xmqqoazlqot4.fsf@gitster.dls.corp.google.com>
  <536106EA.5090204@xiplink.com>
@@ -10,112 +10,102 @@ References: <4ay6w9i74cygt6ii1b0db7wg.1398433713382@email.android.com>
  <5361598f8eaf7_4781124b2f02b@nysa.notmuch>
  <536173F5.7010905@xiplink.com>
  <53617877b41a9_41a872f308ef@nysa.notmuch>
+ <20140501094610.GB75770@vauxhall.crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="i0/AhcQY5QxfSsSZ"
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Cc: Marc Branchaud <marcnarc@xiplink.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Marat Radchenko <marat@slonopotamus.org>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 01 11:46:21 2014
+To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 01 12:58:54 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WfnZM-0002yF-RC
-	for gcvg-git-2@plane.gmane.org; Thu, 01 May 2014 11:46:21 +0200
+	id 1WfohZ-0000na-DM
+	for gcvg-git-2@plane.gmane.org; Thu, 01 May 2014 12:58:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753776AbaEAJqR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 May 2014 05:46:17 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:47429 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754014AbaEAJqP (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 1 May 2014 05:46:15 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:b5e1:3ff0:63e4:293d])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 3A3A928087;
-	Thu,  1 May 2014 09:46:14 +0000 (UTC)
-Mail-Followup-To: Felipe Contreras <felipe.contreras@gmail.com>,
-	Marc Branchaud <marcnarc@xiplink.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Marat Radchenko <marat@slonopotamus.org>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <53617877b41a9_41a872f308ef@nysa.notmuch>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.14-trunk-rt-amd64)
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Spam-Score: -0.272 () BAYES_00,RDNS_NONE
+	id S1754755AbaEAK6t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 May 2014 06:58:49 -0400
+Received: from mail-yh0-f48.google.com ([209.85.213.48]:45232 "EHLO
+	mail-yh0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752408AbaEAK6s (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 May 2014 06:58:48 -0400
+Received: by mail-yh0-f48.google.com with SMTP id v1so2805619yhn.21
+        for <git@vger.kernel.org>; Thu, 01 May 2014 03:58:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=krU406uP5Hty1Yuk8EbC5zCGqzr26dg9n+DIuQAdx4s=;
+        b=GjLCP3Nbc2BEKdshy+CRY4o4mfx6Xc4oJFZhpyACApbSNI9wlfIN6T4ORcvVWE2mCI
+         Ri7P8oGBrSJVIvHJ8j4M84B89fISKTTOQU9rfRbPkaVzA99Wd0jN122ggpr+N5ero8qX
+         OvYR8ahJgSI8hz1UBkeG6nk91MaOvusObqjYm4JCZbfieM/EnZNs4Oj/R0p2TYwjQPAq
+         eVV6BQazL/52dt8y4onaLEHPjrBqjrdoQwKyF/vJh+fVygPCwLPXUY9gJ4mylwvNHt6P
+         RXtb028yrUS+UKCH9bf1b7qW2+EghWmcIRwZN8DDg9J1Cgdh8T7AlQU4vua04//N83TE
+         nDYg==
+X-Received: by 10.236.140.16 with SMTP id d16mr13505948yhj.55.1398941927890;
+        Thu, 01 May 2014 03:58:47 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id c66sm48224952yhk.23.2014.05.01.03.58.45
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 01 May 2014 03:58:46 -0700 (PDT)
+In-Reply-To: <20140501094610.GB75770@vauxhall.crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247808>
 
+brian m. carlson wrote:
+> On Wed, Apr 30, 2014 at 05:25:59PM -0500, Felipe Contreras wrote:
+> > Marc Branchaud wrote:
+> > > On 14-04-30 04:14 PM, Felipe Contreras wrote:
+> > > > What is wrong when `git pull` merges a fast-forward?
+> > > 
+> > > Nothing.  Everything.  It depends.
+> > 
+> > It depends on what? I don't see how a fast-forward `git pull` could
+> > possibly have any trouble.
+> > 
+> > > > The problems with `git pull` come when you can't do a fast-forward merge, right?
+> > > 
+> > > Some of them, maybe most of them.
+> > 
+> > Name one problem with a fast-forward merge.
+> 
+> At work, we have a workflow where we merge topic branches as
+> non-fast-forward, so that we have a record of the history (including who
+> reviewed the code), but when we want to just update our local branches,
+> we always want fast-forward:
+> 
+>   git checkout maintenance-branch
+>   # Update our maintenance branch to the latest from the main repo.
+>   git pull --ff-only
+>   git pull --no-ff developer-remote topic-branch
+>   git push main-repo HEAD
+> 
+> So there are times when fast-forward merges are the right thing, and
+> times when they're not, and as you can see, this depends on context and
+> isn't per-repository.
 
---i0/AhcQY5QxfSsSZ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+That's not what I asked.
 
-On Wed, Apr 30, 2014 at 05:25:59PM -0500, Felipe Contreras wrote:
-> Marc Branchaud wrote:
-> > On 14-04-30 04:14 PM, Felipe Contreras wrote:
-> > > What is wrong when `git pull` merges a fast-forward?
-> >=20
-> > Nothing.  Everything.  It depends.
->=20
-> It depends on what? I don't see how a fast-forward `git pull` could
-> possibly have any trouble.
->=20
-> > > The problems with `git pull` come when you can't do a fast-forward me=
-rge, right?
-> >=20
-> > Some of them, maybe most of them.
->=20
-> Name one problem with a fast-forward merge.
+I didn't ask you if fast-forward merges were the right thing to do in
+every situation.
 
-At work, we have a workflow where we merge topic branches as
-non-fast-forward, so that we have a record of the history (including who
-reviewed the code), but when we want to just update our local branches,
-we always want fast-forward:
+I asked you, *when* people do a fast-forward merge (that is; when it's
+possible and desirable), what are the problems that a fast-forward merge
+causes?
 
-  git checkout maintenance-branch
-  # Update our maintenance branch to the latest from the main repo.
-  git pull --ff-only
-  git pull --no-ff developer-remote topic-branch
-  git push main-repo HEAD
+I tired of waiting, so I'll answer for you: there are absolutely no
+problems. The problems are only on non-fast-forward merges, and we have
+a solution.
 
-So there are times when fast-forward merges are the right thing, and
-times when they're not, and as you can see, this depends on context and
-isn't per-repository.
-
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
-
---i0/AhcQY5QxfSsSZ
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCgAGBQJTYhfhAAoJEL9TXYEfUvaL4hYQALnN1cP1gyAwqJrpwROlUu1P
-v6ROWRd+6JWWtRMPJsuJwFf7XFGhLJOUyOwt6s//rbhGktW4XGfNN+gGqp4U3xD3
-GOfq/yvUV5ENbYb8Q8vZCkt3VPpGc/SOXv9DGbn6D13kh/M1bS6arBJgueyRAg29
-4e6m+GSXIT7EcqLLzCDRhUKCld2upsgfa5ZYqNb0bqIJyXiak0ycxjVi8PU2Qfbp
-8z22YXc6pN3bM+ABYHJr47Yndg+m+0hd63v9lcCY5ocfCuOw7Wfb4yJGsIIsX510
-XFrKeeYAG586Di7g6MXs78NlbBtZX9OziffKvq7rQNCaguRX43t6c0R/H1CfsKr6
-0twWZD86pvIP5XYO2U/xh299y1w+MY7FTOxb2L69JaprixyBI0jTOmd3dcJwrAa9
-1RN3FA/8bt9L3pOfZeI1OZ3rMfOeTjpfUOjIeNZYE/c8nNuhzBZigB0J/uOUeD/N
-XrUf06ARkAvrmp3zespfy687B4oyhujTJs3xnBVdZwD9H3L5ya5ziHsJ+QLjEzy2
-w3t5yUTsxvvkM+UF3WrI4kLwHhY6xH/ESCw1IiWAMq9HY63sLgq9y3W0xP/LirPg
-vD8ZnZ4jHSLx4+bnSAr1Ty6pN0vISkGi4K8inlOoAmLrKAh71eHPbijF2wrDOLeo
-i6EzM2/0PEt+cjVYHMlv
-=Dozj
------END PGP SIGNATURE-----
-
---i0/AhcQY5QxfSsSZ--
+-- 
+Felipe Contreras
