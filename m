@@ -1,88 +1,98 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: split index: sparse warning
-Date: Thu, 1 May 2014 07:12:02 +0700
-Message-ID: <CACsJy8Ad+hfmJSgKX6O9FTXggUjyMkpJLzf=awnV5oFACsX+vQ@mail.gmail.com>
-References: <53618AFA.6070602@ramsay1.demon.co.uk>
+From: Nathan Collins <nathan.collins@gmail.com>
+Subject: [BUG?] Patches created with 'diff.noprefix=true' don't 'git apply'.
+Date: Wed, 30 Apr 2014 18:36:22 -0700
+Message-ID: <CAO8RVvdgN3U5hUEsJjYY9urfeVUDWwHiEur4NQp=H93W37RRnw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: GIT Mailing-list <git@vger.kernel.org>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Thu May 01 02:12:39 2014
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu May 01 03:37:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WfecA-0006MZ-PL
-	for gcvg-git-2@plane.gmane.org; Thu, 01 May 2014 02:12:39 +0200
+	id 1Wffvz-0004ph-BI
+	for gcvg-git-2@plane.gmane.org; Thu, 01 May 2014 03:37:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752211AbaEAAMe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Apr 2014 20:12:34 -0400
-Received: from mail-qa0-f48.google.com ([209.85.216.48]:64014 "EHLO
+	id S1751500AbaEABhF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Apr 2014 21:37:05 -0400
+Received: from mail-qa0-f48.google.com ([209.85.216.48]:45135 "EHLO
 	mail-qa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752191AbaEAAMd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Apr 2014 20:12:33 -0400
-Received: by mail-qa0-f48.google.com with SMTP id j15so2388869qaq.7
-        for <git@vger.kernel.org>; Wed, 30 Apr 2014 17:12:33 -0700 (PDT)
+	with ESMTP id S1750834AbaEABhE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Apr 2014 21:37:04 -0400
+Received: by mail-qa0-f48.google.com with SMTP id j15so2487438qaq.35
+        for <git@vger.kernel.org>; Wed, 30 Apr 2014 18:37:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=BQOGFzwDn7y4YrQKsAEjCynIIhMC7UTqCPVfIv7mz5Q=;
-        b=tC4xsRRG9igNHb09merw3oj6HyxGzq/ABz+xr09AleJ4YzIu4kIUDtqJ87AH2zxl3+
-         1mBRVslofh9lCx0hV+PcSuHk8ZQDnSrN/u9dqD9PT5U4qoByhQp8z+WDOw5/cH+Jun1x
-         R0SuBYgnHHN/MGFTc+Nlvfy5gPMf2UeePLBMpKWgIH7yP1yvm1RTNmhJlB9anEakTlTF
-         mOA7G+4XZoelQLvEAIVjndmeXwUkU091P83C+Ryd3B4nOFCa5x68jLMB6Tz/TW+5pG7t
-         rXvf2WHoTcS3o1s8t+wV6Iatlxe/ryy9Q34FwzlTq7IU0GBdcf1CrudoNdGIeWa/wSJo
-         m20g==
-X-Received: by 10.140.47.206 with SMTP id m72mr9113366qga.21.1398903153009;
- Wed, 30 Apr 2014 17:12:33 -0700 (PDT)
-Received: by 10.96.138.9 with HTTP; Wed, 30 Apr 2014 17:12:02 -0700 (PDT)
-In-Reply-To: <53618AFA.6070602@ramsay1.demon.co.uk>
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=JPXOo1KbMuJmYR17S7JljIhmnA4hvXkI7RquqZ9sioc=;
+        b=GMVJJ6wT4m2ltYKqPVY2MKCadMMNNWYXuoalFA+nwnaIxK3Rll7GGcDpVRu/QOnxrx
+         yHdHAq/vVoQo5xTM32Po6Rg3lEhIMsE4gKRSHz5fsQv9mbh2m8oKqbICBS4pDQBCHpXm
+         T5dxiBSa9cA9nXwc5fpejuezhfn+nYABJVNCpQCBXUmyS20GfJi30wnINFZ4lqN2dJId
+         QFT3NgZZ9VIk6129ddC677WaQTmefZy20+uW9qe6UwzB2c9kxSb7i7XTTZ8ojMhj4j72
+         Yb5AMJKTV3K5RhqXiEpc+gCXT4CTW6QVyBZoOQFJu2J0cefDhKd+F7Z4hwPEwEBxTpRm
+         VI2Q==
+X-Received: by 10.140.106.66 with SMTP id d60mr9734776qgf.44.1398908222647;
+ Wed, 30 Apr 2014 18:37:02 -0700 (PDT)
+Received: by 10.229.150.208 with HTTP; Wed, 30 Apr 2014 18:36:22 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247804>
 
-On Thu, May 1, 2014 at 6:44 AM, Ramsay Jones <ramsay@ramsay1.demon.co.uk> wrote:
-> Hi Duy,
->
-> I haven't looked at your split-index series at all. However, sparse has
-> nagged me to take a quick squint at the result of the series as it
-> appears in the 'pu' branch.
->
-> In particular, sparse complains thus:
->
->       SP sequencer.c
->   sequencer.c:690:49: error: incompatible types for operation (>=)
->   sequencer.c:690:49:    left side has type int ( extern [toplevel] *<noident> )( ... )
->   sequencer.c:690:49:    right side has type int
->
-> ... which is fair enough; index_fd is, indeed, a function (pointer) and
-> not an int file descriptor! The offending code looks like:
->
-> 683 static void read_and_refresh_cache(struct replay_opts *opts)
-> 684 {
-> 685         static struct lock_file index_lock;
-> 686         hold_locked_index(&index_lock, 0);
-> 687         if (read_index_preload(&the_index, NULL) < 0)
-> 688                 die(_("git %s: failed to read the index"), action_name(opts));
-> 689         refresh_index(&the_index, REFRESH_QUIET|REFRESH_UNMERGED, NULL, NULL, NULL);
-> 690         if (the_index.cache_changed && index_fd >= 0) {
-> 691                 if (write_locked_index(&the_index, &index_lock, COMMIT_LOCK))
-> 692                         die(_("git %s: failed to refresh the index"), action_name(opts));
-> 693         }
-> 694         rollback_lock_file(&index_lock);
-> 695 }
->
->
-> It seems that, in an earlier commit (33c297aa), index_fd was declared
-> as a local int variable (hiding the global function) which was then
-> initialised by a call to hold_locked_index().
+Bug?
+====
 
-Ugh.. after removing index_fd the local variable, index_fd now becomes
-the function from sha1_file.c. Noted and will fix it in the next
-reroll.
---
-Duy
+Patches created with 'diff.noprefix=true' don't 'git apply' without
+specifying '-p0'.
+
+I'm not sure this is a bug -- the 'man git-apply' just says "Reads the
+supplied diff output (i.e. "a patch") and applies it to files" -- but
+I would expect patches I create locally to apply cleanly locally. In
+real life the 'diff.noprefix=true' is in my ~/.gitconfig, so this was
+pretty confusing.
+
+Here's an old bug that's kind of related:
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=607044
+
+I'm using Git 1.9.2.
+
+Example
+=======
+
+Create a repo with a test commit:
+
+  git init bug.git
+  cd bug.git
+  git add test
+  git commit test -m Test
+
+Revert the test commit in a contrived way (like
+'git revert HEAD --no-commit; git reset'). This works:
+
+  git -c diff.noprefix=false show | git -c diff.noprefix=false apply --reverse
+
+And this works:
+
+  git reset --hard
+  git -c diff.noprefix=true show | git -c diff.noprefix=true apply -p0 --reverse
+
+But this fails:
+
+  git reset --hard
+  git -c diff.noprefix=true show | git -c diff.noprefix=true apply --reverse
+
+    fatal: git diff header lacks filename information when removing 1
+leading pathname component (line 12)
+
+Use Case
+========
+
+Partially reverting a commit:
+
+http://git.661346.n2.nabble.com/Revert-a-single-commit-in-a-single-file-td6064050.html#a6064406
+
+Cheers,
+
+-nathan
