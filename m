@@ -1,180 +1,152 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v6 41/42] refs.c: make rename_ref use a transaction
-Date: Thu,  1 May 2014 13:37:41 -0700
-Message-ID: <1398976662-6962-42-git-send-email-sahlberg@google.com>
+Subject: [PATCH v6 39/42] refs.c: add a new flag for transaction delete for refs we know are packed only
+Date: Thu,  1 May 2014 13:37:39 -0700
+Message-ID: <1398976662-6962-40-git-send-email-sahlberg@google.com>
 References: <1398976662-6962-1-git-send-email-sahlberg@google.com>
 Cc: mhagger@alum.mit.edu, Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 01 22:38:41 2014
+X-From: git-owner@vger.kernel.org Thu May 01 22:38:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wfxke-0001Qi-QD
+	id 1Wfxkf-0001Qi-AT
 	for gcvg-git-2@plane.gmane.org; Thu, 01 May 2014 22:38:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751795AbaEAUiS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 May 2014 16:38:18 -0400
-Received: from mail-ie0-f201.google.com ([209.85.223.201]:61883 "EHLO
-	mail-ie0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752468AbaEAUiB (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1752468AbaEAUiT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 May 2014 16:38:19 -0400
+Received: from mail-ob0-f202.google.com ([209.85.214.202]:53024 "EHLO
+	mail-ob0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752441AbaEAUiB (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 1 May 2014 16:38:01 -0400
-Received: by mail-ie0-f201.google.com with SMTP id rd18so797769iec.4
-        for <git@vger.kernel.org>; Thu, 01 May 2014 13:38:01 -0700 (PDT)
+Received: by mail-ob0-f202.google.com with SMTP id gq1so798623obb.1
+        for <git@vger.kernel.org>; Thu, 01 May 2014 13:38:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=QkYxUJgc+vs9vH8XU4lE0HkNXH+QXqJSbP5ePDY2gdA=;
-        b=OavvLXjeMFNi6PJiDQXEJVZtD08ffVMkIh/pUVC1Fhqu9v3a+x6Zyb9r8sIg9pHMmK
-         pELvL9r2ukr7enIf7D+RSuwJFlsw6U58xzPFDGt60lF6SUBJlylxURt2pQWEApeGL9gk
-         RwEdDNnd/Cpx11ZN/VUGYWWW3QaXP6Bm2z/CZT7TNQzulrl0MrE+TBpoIFSQBjLiUq7k
-         8CAiDnvtH+jgw5kit4kYRPvPa053UfJJZHooP66tSfjjG7uoMAqvQCXVYYotqJtirb3y
-         UpXgJD/4IwhZJcCGp+vh1A/uiu04no7O8nrQInc99OWim63Ou9V0tK1soV9VnnnC12oJ
-         uSDA==
+        bh=+nLkEf01+7Lq2B/oeWURbZn3M0qwZsB+CGwgqOl94po=;
+        b=fmM4mpsPZqqrFJaTmJpKre0XM5mVUjMhqn+kasBmN4+ijaJpdnvI5w3/7n8M5ewEb0
+         a+85i17FqKVP7LDiQzJcKu9qoXke40g3DcWfZ8ElcL1rS4bfbjmjPs4Ij1kJU+MXUZSV
+         b+InqoYMlar+9gRMtozIbdGwyrTcTghE2Ajwl3Czakt2OTGP0IHmrkbASkO1cAxsUJli
+         F7qaIZJsFMFloNo99TkfUNmt4sKgsBd9kN02u1X3Sq8QA9h6onGE9gWnOh9mjg8fCuhY
+         OxZiQ56cDVhZ7/HQ30O/lDodIBEnAVm47539PsQxhwJ8/75QUgMY7qKSgB/29qfC+mkO
+         W6Bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=QkYxUJgc+vs9vH8XU4lE0HkNXH+QXqJSbP5ePDY2gdA=;
-        b=jx9A05Q+0fliNkdP5wIjTPpSbzchFYpACIZ/xzi0EkoBM8o9L+jjuE2IRTO6ceGJzW
-         GEDZpeVEJaTj9GWtul9SEa1qD8WAssWMMBLoJAcE3AJpg29uR9ZhBw9aq6xVDcCjusu/
-         s0evkd0fQCINNufIlesenELCL4M4wljaEUFX1T/NDoYgSw5XnlnXilpRjluDE/eKIL1s
-         zr9pQxcbdHe3vO1WSYuAYxSWRjqgKQulDF2MhElM1W5hHxBfCwZp37SII7DnBxOmsl6+
-         sOhqP9o7QLYaenvWt59GG4cqPCweghlAzlkKimBNvOWY2yN+p62OsbgQkw8UigfFDnGv
-         9cgw==
-X-Gm-Message-State: ALoCoQm4pnSAEy8RD0x2hPkY1n/krmO6JyexKaFZA7Z5B4T8h9CWe8+W49g/VvQ93hEFSDgZiWd7
-X-Received: by 10.50.35.229 with SMTP id l5mr2458751igj.0.1398976681475;
-        Thu, 01 May 2014 13:38:01 -0700 (PDT)
+        bh=+nLkEf01+7Lq2B/oeWURbZn3M0qwZsB+CGwgqOl94po=;
+        b=VFtl0aBZX9AG2WVUlUT6XWGQfUlvi363lGFpw937ngLJz80d09PbuqUVTCYzFLwpQJ
+         gqcvG65uGvO4oLHXJqFMt+M0E/6j+uTppg60vJ1Uck803JF9dNdWaZki2eceI3RyIevn
+         VrOXIJrj6Op/bozjV+d9HyRG5F2iS9POKnXJLM+/GbECZW1+o5c8HIYBZCosGrucIJ8B
+         GGmqTv+YrpxN2haqPrKheODucNtIMWlbU9++W2/pENJI4Y+0/n2ypD+RMJVICbLKU/iy
+         CGS2f8oO37Lu/P9F6DoBUHpm5c2yolWvygAI9NqQVnbSo9Ula+UEeYH850eAYrjQFKMo
+         IVLg==
+X-Gm-Message-State: ALoCoQl0E8XL2keNfCOcnZ/J9/SBr64ZTUz0/MHKVA9rLbZOy9avAdA55121SNy2sjOg2rFtmkDY
+X-Received: by 10.42.209.18 with SMTP id ge18mr5924306icb.7.1398976680626;
+        Thu, 01 May 2014 13:38:00 -0700 (PDT)
 Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id g21si3538118yhe.3.2014.05.01.13.38.01
+        by gmr-mx.google.com with ESMTPS id g21si3538109yhe.3.2014.05.01.13.38.00
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 01 May 2014 13:38:01 -0700 (PDT)
+        Thu, 01 May 2014 13:38:00 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 31CCF31C1CC;
-	Thu,  1 May 2014 13:38:01 -0700 (PDT)
+	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 75F1B31C1CC;
+	Thu,  1 May 2014 13:38:00 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id E9AF2E0A5B; Thu,  1 May 2014 13:38:00 -0700 (PDT)
+	id 3A4DAE097F; Thu,  1 May 2014 13:38:00 -0700 (PDT)
 X-Mailer: git-send-email 2.0.0.rc1.351.g4d2c8e4
 In-Reply-To: <1398976662-6962-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247847>
 
-Change rename_ref to use a single transaction to perform the ref rename.
+Add a new flag REF_ISPACKONLY that we can use in ref_transaction_delete.
+This flag indicates that the ref does not exist as a loose ref andf only as
+a packed ref. If this is the case we then change the commit code so that
+we skip taking out a lock file and we skip calling delete_ref_loose.
+Check for this flag and die(BUG:...) if used with _update or _create.
+
+At the start of the transaction, before we even start locking any refs,
+we add all such REF_ISPACKONLY refs to delnames so that we have a list of
+all pack only refs that we will be deleting during this transaction.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- refs.c | 73 ++++++++++++++++++------------------------------------------------
- 1 file changed, 20 insertions(+), 53 deletions(-)
+ refs.c | 19 +++++++++++++++++++
+ refs.h |  2 ++
+ 2 files changed, 21 insertions(+)
 
 diff --git a/refs.c b/refs.c
-index eb75927..810a4db 100644
+index 51cd41e..b525076 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -2586,9 +2586,10 @@ static int rename_tmp_log(const char *newrefname)
+@@ -3321,6 +3321,9 @@ int ref_transaction_update(struct ref_transaction *transaction,
+ 	if (transaction->status != REF_TRANSACTION_OPEN)
+ 		die("BUG: update on transaction that is not open");
  
- int rename_ref(const char *oldrefname, const char *newrefname, const char *logmsg)
- {
--	unsigned char sha1[20], orig_sha1[20];
--	int flag = 0, logmoved = 0;
--	struct ref_lock *lock;
-+	unsigned char sha1[20];
-+	int flag = 0;
-+	struct ref_transaction *transaction;
-+	struct strbuf err = STRBUF_INIT;
- 	struct stat loginfo;
- 	int log = !lstat(git_path("logs/%s", oldrefname), &loginfo);
- 	const char *symref = NULL;
-@@ -2599,7 +2600,7 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
- 	if (log && S_ISLNK(loginfo.st_mode))
- 		return error("reflog for %s is a symlink", oldrefname);
++	if (flags & REF_ISPACKONLY)
++		die("BUG: REF_ISPACKONLY can not be used with updates");
++
+ 	update = add_update(transaction, refname);
+ 	hashcpy(update->new_sha1, new_sha1);
+ 	update->flags = flags;
+@@ -3345,6 +3348,9 @@ int ref_transaction_create(struct ref_transaction *transaction,
+ 	if (transaction->status != REF_TRANSACTION_OPEN)
+ 		die("BUG: create on transaction that is not open");
  
--	symref = resolve_ref_unsafe(oldrefname, orig_sha1, 1, &flag);
-+	symref = resolve_ref_unsafe(oldrefname, sha1, 1, &flag);
- 	if (flag & REF_ISSYMREF)
- 		return error("refname %s is a symbolic ref, renaming it is not supported",
- 			oldrefname);
-@@ -2621,62 +2622,28 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
- 	if (pack_refs(PACK_REFS_ALL | PACK_REFS_PRUNE))
- 		return error("unable to pack refs");
++	if (flags & REF_ISPACKONLY)
++		die("BUG: REF_ISPACKONLY can not be used with creates");
++
+ 	update = add_update(transaction, refname);
  
--	if (delete_ref(oldrefname, orig_sha1, REF_NODEREF)) {
--		error("unable to delete old %s", oldrefname);
--		goto rollback;
--	}
--
--	if (!read_ref_full(newrefname, sha1, 1, NULL) &&
--	    delete_ref(newrefname, sha1, REF_NODEREF)) {
--		if (errno==EISDIR) {
--			if (remove_empty_directories(git_path("%s", newrefname))) {
--				error("Directory not empty: %s", newrefname);
--				goto rollback;
--			}
--		} else {
--			error("unable to delete existing %s", newrefname);
--			goto rollback;
--		}
-+	transaction = ref_transaction_begin();
-+	if (!transaction ||
-+	    ref_transaction_delete(transaction, oldrefname, sha1,
-+				   REF_NODEREF | REF_ISPACKONLY,
-+				   1, NULL) ||
-+	    ref_transaction_update(transaction, newrefname, sha1,
-+				   NULL, 0, 0, logmsg) ||
-+	    ref_transaction_commit(transaction, &err)) {
-+		ref_transaction_rollback(transaction);
-+		error("rename_ref failed: %s", err.buf);
-+		strbuf_release(&err);
-+		goto rollbacklog;
- 	}
-+	ref_transaction_free(transaction);
+ 	hashcpy(update->new_sha1, new_sha1);
+@@ -3458,10 +3464,20 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 	if (ret)
+ 		goto cleanup;
  
- 	if (log && rename_tmp_log(newrefname))
--		goto rollback;
--
--	logmoved = log;
--
--	lock = lock_ref_sha1_basic(newrefname, NULL, 0, NULL, NULL, 0);
--	if (!lock) {
--		error("unable to lock %s for update", newrefname);
--		goto rollback;
--	}
--	lock->force_write = 1;
--	hashcpy(lock->old_sha1, orig_sha1);
--	if (write_ref_sha1(lock, orig_sha1, logmsg)) {
--		error("unable to write current sha1 into %s", newrefname);
--		goto rollback;
--	}
--
--	return 0;
--
-- rollback:
--	lock = lock_ref_sha1_basic(oldrefname, NULL, 0, NULL, NULL, 0);
--	if (!lock) {
--		error("unable to lock %s for rollback", oldrefname);
- 		goto rollbacklog;
--	}
++	for (i = 0; i < n; i++) {
++		struct ref_update *update = updates[i];
++
++		if (update->flags & REF_ISPACKONLY)
++			delnames[delnum++] = update->refname;
++	}
++
+ 	/* Acquire all locks while verifying old values */
+ 	for (i = 0; i < n; i++) {
+ 		struct ref_update *update = updates[i];
  
--	lock->force_write = 1;
--	flag = log_all_ref_updates;
--	log_all_ref_updates = 0;
--	if (write_ref_sha1(lock, orig_sha1, NULL))
--		error("unable to write current sha1 into %s", oldrefname);
--	log_all_ref_updates = flag;
-+	return 0;
++		if (update->flags & REF_ISPACKONLY)
++			continue;
++
+ 		update->lock = lock_ref_sha1_basic(update->refname,
+ 						   (update->have_old ?
+ 						    update->old_sha1 :
+@@ -3499,6 +3515,9 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 	for (i = 0; i < n; i++) {
+ 		struct ref_update *update = updates[i];
  
-  rollbacklog:
--	if (logmoved && rename(git_path("logs/%s", newrefname), git_path("logs/%s", oldrefname)))
--		error("unable to restore logfile %s from %s: %s",
--			oldrefname, newrefname, strerror(errno));
--	if (!logmoved && log &&
-+	if (log &&
- 	    rename(git_path(TMP_RENAMED_LOG), git_path("logs/%s", oldrefname)))
- 		error("unable to restore logfile %s from "TMP_RENAMED_LOG": %s",
- 			oldrefname, strerror(errno));
++		if (update->flags & REF_ISPACKONLY)
++			continue;
++
+ 		if (update->lock) {
+ 			ret |= delete_ref_loose(update->lock, update->type);
+ 			if (!(update->flags & REF_ISPRUNING))
+diff --git a/refs.h b/refs.h
+index 7a89415..71e39b9 100644
+--- a/refs.h
++++ b/refs.h
+@@ -136,6 +136,8 @@ extern int peel_ref(const char *refname, unsigned char *sha1);
+ #define REF_NODEREF	0x01
+ /** Deleting a loose ref during prune */
+ #define REF_ISPRUNING	0x02
++/** Deletion of a ref that only exists as a packed ref */
++#define REF_ISPACKONLY	0x04
+ extern struct ref_lock *lock_any_ref_for_update(const char *refname,
+ 						const unsigned char *old_sha1,
+ 						int flags, int *type_p);
 -- 
 2.0.0.rc1.351.g4d2c8e4
