@@ -1,69 +1,76 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Zsh submodule name completion borked
-Date: Thu, 1 May 2014 15:31:21 -0700
-Message-ID: <20140501223121.GD9218@google.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: RE: Zsh submodule name completion borked
+Date: Thu, 01 May 2014 17:35:46 -0500
+Message-ID: <5362cc42ed06d_569a13852ecb@nysa.notmuch>
 References: <CABURp0oS0qnyVhfV1rsaNXT-88QJvgpNn+meApNKRTGdULDXpA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+To: Phil Hord <phil.hord@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
 	Jens Lehmann <Jens.Lehmann@web.de>,
 	Heiko Voigt <hvoigt@hvoigt.net>
-To: Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 02 00:31:29 2014
+X-From: git-owner@vger.kernel.org Fri May 02 00:46:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WfzVp-00023J-4R
-	for gcvg-git-2@plane.gmane.org; Fri, 02 May 2014 00:31:29 +0200
+	id 1WfzkP-00034k-LX
+	for gcvg-git-2@plane.gmane.org; Fri, 02 May 2014 00:46:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752212AbaEAWbZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 May 2014 18:31:25 -0400
-Received: from mail-pd0-f169.google.com ([209.85.192.169]:64072 "EHLO
-	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751968AbaEAWbY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 May 2014 18:31:24 -0400
-Received: by mail-pd0-f169.google.com with SMTP id z10so2445988pdj.0
-        for <git@vger.kernel.org>; Thu, 01 May 2014 15:31:23 -0700 (PDT)
+	id S1752743AbaEAWq3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 May 2014 18:46:29 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:44544 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752512AbaEAWq0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 May 2014 18:46:26 -0400
+Received: by mail-ob0-f174.google.com with SMTP id gq1so4327148obb.19
+        for <git@vger.kernel.org>; Thu, 01 May 2014 15:46:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=OhAW+6K1BlI3ZcjI7a+8O1HET6vNgKuAa0A/Z0OwBro=;
-        b=SjY5H97AjorkzIkvTQqWL849a7arYE0jm05RrKHd5Z0ppvkkvreBXvA0ENjGLzRmuX
-         wbx7Rp7jAXx93qU5KXbB4pckvDU1mqkeyh1zYafGQYndnWCPcy03XmKrLNUDM4o6V8dp
-         sx/3b3ejx/W4ZvZONPYfV5eZIpPkb5BMWDQLVqVmPMkMJDA30ezN6AEkCFVmyU0z8TUy
-         xiMneK3uBS7tc49Uw4MkVLSPCwCHIGm3qZm/lLOOHyVHPiv26yhz7mp44aUTYCEIvru8
-         gQuBrLsOXOji23wol4+1bZhCmoLiBr2t3X3RCe3vKxZUbLvhtqLwunOhqROh4Q8fBPtV
-         WyhA==
-X-Received: by 10.67.13.134 with SMTP id ey6mr26629410pad.44.1398983483772;
-        Thu, 01 May 2014 15:31:23 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id nw13sm144027722pab.37.2014.05.01.15.31.22
+        h=date:from:to:message-id:in-reply-to:references:subject:mime-version
+         :content-type:content-transfer-encoding;
+        bh=zPmpAcN5Jm3gUxZR43Wj0VsZTMcFXMzVW+PEzC+EOWM=;
+        b=ZeZSrgKJhlYTWw1N1HTGLriKfftDNfl8tQgkfjY8NZlwM6JdxKyg7x/13sjZu5YPnX
+         aeHvaz4O1q38rqT94yLaosgNojBeKgEQwcI2CpqFj0B73enLQvo38ljDb0UE6FHtmXKN
+         2sJIVal42dv8Ny+urPg0Zxc3wJLwHRdDCtRJuv5aNwrv41MQOcZMch1/c0LAZgsjMziy
+         j2Dlk/1zbE74XXjtK31RMx9cAUx2RFUJmeFnhbsvw1MHMKJecWj1z73TuhuNqlNY/stA
+         zzmo7jwwJwFCDoq4otP1U+gPBxVvq5zCfrdWflWmH5P1wlH8Je+/7SGagNE1ttCkkQ1M
+         adCg==
+X-Received: by 10.182.112.231 with SMTP id it7mr12004652obb.8.1398984386049;
+        Thu, 01 May 2014 15:46:26 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id sm4sm62165317obc.3.2014.05.01.15.46.23
         for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 01 May 2014 15:31:23 -0700 (PDT)
-Content-Disposition: inline
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 01 May 2014 15:46:25 -0700 (PDT)
 In-Reply-To: <CABURp0oS0qnyVhfV1rsaNXT-88QJvgpNn+meApNKRTGdULDXpA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247889>
-
-Hi,
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247890>
 
 Phil Hord wrote:
-
 > When I use zsh tab-completion to complete the submodule name in 'git
 > submodule init', I get more than I expected.
+> 
+> From the gerrit repository (which has plugins):
+>   $ git submodule init plugins/<TAB>
+>   plugins/commit-message-length-validator\ \(v1.0-rc1-9-g545000b\)
+>   plugins/reviewnotes\ \(v1.0-rc1-8-ge984300\)
+>   plugins/replication\ \(v1.1-rc0-13-g4c3f4c9\)
+> 
+> It works ok in bash.  I tried to bisect the trouble, but it still
+> fails in 1.8.3, so I'm beginning to think it's me.  Does this happen
+> to anyone else?  Is it something in my local configuration causing
+> this?
 
-Is this using zsh's native tab-completion (i.e., not the tab
-completion bundled with git)?  There might have been a change there.
+Define 'works' in bash. From what I can see from the bash completion,
+it's not doing anything special, so the completion you see are simply
+files.
 
-Another place to look for hints would be ~/.gitconfig.
-
-Hope that helps,
-Jonathan
+-- 
+Felipe Contreras
