@@ -1,83 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/8] CodingGuidelines: give an example for control statements
-Date: Thu, 01 May 2014 11:00:32 -0700
-Message-ID: <xmqqk3a5crb3.fsf@gitster.dls.corp.google.com>
-References: <1398894312-30763-1-git-send-email-gitster@pobox.com>
-	<1398894312-30763-5-git-send-email-gitster@pobox.com>
-	<87ppjxziyo.fsf@fencepost.gnu.org>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: Re: Pull is Evil
+Date: Thu, 01 May 2014 14:04:33 -0400
+Message-ID: <53628CB1.8010302@xiplink.com>
+References: <4ay6w9i74cygt6ii1b0db7wg.1398433713382@email.android.com> <xmqqoazlqot4.fsf@gitster.dls.corp.google.com> <536106EA.5090204@xiplink.com> <xmqqppjyhnom.fsf@gitster.dls.corp.google.com> <536152D3.5050107@xiplink.com> <5361598f8eaf7_4781124b2f02b@nysa.notmuch> <536173F5.7010905@xiplink.com> <53617877b41a9_41a872f308ef@nysa.notmuch> <20140501094610.GB75770@vauxhall.crustytoothpaste.net> <5362664C.8040907@xiplink.com> <20140501175623.GY6227@odin.tremily.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Thu May 01 20:00:53 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Marat Radchenko <marat@slonopotamus.org>, git@vger.kernel.org
+To: "W. Trevor King" <wking@tremily.us>
+X-From: git-owner@vger.kernel.org Thu May 01 20:04:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WfvHw-0004IZ-C1
-	for gcvg-git-2@plane.gmane.org; Thu, 01 May 2014 20:00:52 +0200
+	id 1WfvLB-0008JO-3n
+	for gcvg-git-2@plane.gmane.org; Thu, 01 May 2014 20:04:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751654AbaEASAs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 May 2014 14:00:48 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:65430 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751626AbaEASAr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 May 2014 14:00:47 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 10189111CA;
-	Thu,  1 May 2014 14:00:47 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=yLZoa+H4n/sMb4otvd/JAGnRYFs=; b=v6wRAX
-	sipsodVpS27cWhj+WvcDYp9bRoh22LOmFqKel/EIR0JcJCcOLLVIBlMN4YjTKBKC
-	ptxxiIxVtIL1WAS4HBwgLBaTNH+eLbvz2PxPATXFT1iaDJySIyA5a63TZsXIqw80
-	EBEZsGNI4NR2nQFff1xwLmc2RljmibBPQeMp4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xmAatSQfRqkpKfITKZ56ql3CHrnJCmPy
-	uV8iUEgn6TZHaMsmOjxpvkmPfMImArCvTgKBNhuSEQZx5eIlKNN+MRC2kvoxE1J0
-	NIQ+flcSK+6gRUHliPg3KnsBzA4iliryrafKL6gmD6wxnGHCha4FgvDj+s+vMVZK
-	gTaxpCUMNLQ=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 01B9B111C9;
-	Thu,  1 May 2014 14:00:47 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id E9C85111B6;
-	Thu,  1 May 2014 14:00:33 -0400 (EDT)
-In-Reply-To: <87ppjxziyo.fsf@fencepost.gnu.org> (David Kastrup's message of
-	"Thu, 01 May 2014 16:12:15 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 7DD5A8A2-D15A-11E3-BE13-9CEB01674E00-77302942!pb-smtp0.pobox.com
+	id S1751298AbaEASEI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 1 May 2014 14:04:08 -0400
+Received: from smtp138.ord.emailsrvr.com ([173.203.6.138]:54776 "EHLO
+	smtp138.ord.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751216AbaEASEH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 May 2014 14:04:07 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp26.relay.ord1a.emailsrvr.com (SMTP Server) with ESMTP id 840AE1C016C;
+	Thu,  1 May 2014 14:04:05 -0400 (EDT)
+X-Virus-Scanned: OK
+Received: by smtp26.relay.ord1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id BF0F51C05C6;
+	Thu,  1 May 2014 14:04:04 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
+In-Reply-To: <20140501175623.GY6227@odin.tremily.us>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247820>
 
-David Kastrup <dak@gnu.org> writes:
+On 14-05-01 01:56 PM, W. Trevor King wrote:
+> On Thu, May 01, 2014 at 11:20:44AM -0400, Marc Branchaud wrote:
+>> On 14-05-01 05:46 AM, brian m. carlson wrote:
+>>>   git checkout maintenance-branch
+>>>   # Update our maintenance branch to the latest from the main repo.
+>>>   git pull --ff-only
+>>>   git pull --no-ff developer-remote topic-branch
+>>>   git push main-repo HEAD
+>>
+>> =E2=80=A6
+>> What's more, it seems to me that the only real advantage "git pull" =
+provides
+>> here is a less typing compared to the non-pull equivalent:
+>>
+>>   git fetch main-repo
+>>   git checkout main-repo/maintenance-branch
+>>   git fetch developer-remote
+>>   git merge --no-ff developer-remote/topic-branch
+>>   git push main-repo HEAD
+>=20
+> You're missing Brian's fast-forward merge here.  It should be:
+>=20
+>   git checkout maintenance-branch
+>   git fetch main-repo
+>   git merge --ff-only main-repo/maintenance-branch
+>   git fetch developer-remote
+>   =E2=80=A6
 
->>   - We do not write the noiseword "function" in front of shell
->
-> s/noiseword/bashism/
+I think you're mistaken -- I checked out "main-repo/maintenance-branch"
+directly, so there's no need to fast-forward a local branch.
 
-That is outside the scope of this patch, but since you brought it
-up...
+>> Sure, the non-pull approach makes use of Scary Branch Stuff (remotes
+>> and namespaces and detached HEADs -- oh my!).
+>=20
+> No need for detached heads with Brian's local maintenance-branch.
 
-I did consider between noiseword and bashism when I wrote this part,
-and decided against "bashism".  XCU 2.4 "Reserved Words" lists it
-(among others) and says
+Yes.  OTOH, no need to bother keeping a local maintenance-branch up to =
+date
+if you use a detached HEAD.
 
-    ... may be recognized as reserved words on some implementations
-    ... causing unspecified results
+> If
+> you're teaching and just need folks merging the remote's HEAD, you
+> can avoid namespaces and remotes entirely:
+>=20
+>   git fetch git://example.net/main-repo.git
+>   git merge --ff-only FETCH_HEAD
+>=20
+> although I doubt =E2=80=9Cthe remote's HEAD=E2=80=9D will be easier t=
+o explain than
+> the namespaced, remote-tracking branches it replaces.  It's certainly
+> not worth the hassle of un-training FETCH_HEAD-merges later on ;).
 
-Even if "bash" were not the only shell that uses "function" keyword
-to introduce a shell function definition, we wouldn't use it.  As we
-say in the introductory part, we may say "It is not in POSIX, but it
-is supported so widely and using it give us so great a benefit, so
-we do use it" for some things, but "function" is not one of them.
+Agreed.  I wouldn't advocate teaching people about FETCH_HEAD as if it =
+were
+something they should use regularly.
 
-The reason is because it is a noiseword and its use is not necessary
-in order to define a shell function.
+		M.
