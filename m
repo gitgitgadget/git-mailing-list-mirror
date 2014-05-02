@@ -1,134 +1,114 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: Pull is Mostly Evil
-Date: Fri, 02 May 2014 16:55:01 -0500
-Message-ID: <536414352fa24_1976139f2f0f9@nysa.notmuch>
-References: <5363BB9F.40102@xiplink.com>
- <xmqqoazgaw0y.fsf@gitster.dls.corp.google.com>
- <5363edc954f8e_70ef0f30c24@nysa.notmuch>
- <20140502214817.GA10801@sigill.intra.peff.net>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH] Define constants for lengths of object names
+Date: Fri, 2 May 2014 22:09:08 +0000
+Message-ID: <20140502220908.GI75770@vauxhall.crustytoothpaste.net>
+References: <1398942410-112069-1-git-send-email-sandals@crustytoothpaste.net>
+ <20140501172007.GZ9218@google.com>
+ <20140501230041.GC75770@vauxhall.crustytoothpaste.net>
+ <20140501230553.GE9218@google.com>
+ <CACsJy8AhxJDcBHNWbssWs2F1oQB4xGG7rpBePX60m4=_+MVEZw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Marc Branchaud <marcnarc@xiplink.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 03 00:05:47 2014
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ZY5CS28jBCfb727c"
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 03 00:09:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WgLaT-0008LW-OB
-	for gcvg-git-2@plane.gmane.org; Sat, 03 May 2014 00:05:46 +0200
+	id 1WgLdt-0004Dk-A8
+	for gcvg-git-2@plane.gmane.org; Sat, 03 May 2014 00:09:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752524AbaEBWFl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 May 2014 18:05:41 -0400
-Received: from mail-ob0-f181.google.com ([209.85.214.181]:60563 "EHLO
-	mail-ob0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752078AbaEBWFk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 May 2014 18:05:40 -0400
-Received: by mail-ob0-f181.google.com with SMTP id gq1so5912160obb.40
-        for <git@vger.kernel.org>; Fri, 02 May 2014 15:05:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=vPY8oxfv3bAoy5AmrrC3PNBITQ9DeMYugMFhHytftlU=;
-        b=CH0FmHgEFlK9dhg2f0c+GI2TnBfiqRsGzTgP9TfGyeBoLHP8dUlSQxOPqnihCGdtEl
-         oBsZpYDLj1377RbSxJcOcfKMzvLp2Ar40jOZuXU6Xjmg1Vg/wX5zMKvr1aqKKg2ONHuW
-         M9Tt44B5O6d1PQlbdFRRwA2RkcnWxLB6CraE4b2ez7CnX9xKfY9kRPo2gg3M8vik3VPH
-         uZ4vx9JSN+FTHlAnl+0z667+ZbW+mPY1S8IN77beaazDGxzLgj2Ek2wp36A9IW+xKdTM
-         awnPJInChsgaH7VhksjWkqyC3ViJcs3Ju859mtB2uwpKX1bm2YrdNAvVkccmHkFAZ5PJ
-         DOUw==
-X-Received: by 10.182.60.65 with SMTP id f1mr3091440obr.78.1399068340355;
-        Fri, 02 May 2014 15:05:40 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id jr2sm592690obb.8.2014.05.02.15.05.37
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 02 May 2014 15:05:39 -0700 (PDT)
-In-Reply-To: <20140502214817.GA10801@sigill.intra.peff.net>
+	id S1752719AbaEBWJN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 May 2014 18:09:13 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:47507 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752332AbaEBWJN (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 2 May 2014 18:09:13 -0400
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:406f:e13c:7c96:bfde])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 24CE328087;
+	Fri,  2 May 2014 22:09:12 +0000 (UTC)
+Mail-Followup-To: Duy Nguyen <pclouds@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>
+Content-Disposition: inline
+In-Reply-To: <CACsJy8AhxJDcBHNWbssWs2F1oQB4xGG7rpBePX60m4=_+MVEZw@mail.gmail.com>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.14-trunk-rt-amd64)
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Spam-Score: -0.272 () BAYES_00,RDNS_NONE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247992>
 
-Jeff King wrote:
-> On Fri, May 02, 2014 at 02:11:05PM -0500, Felipe Contreras wrote:
-> 
-> > Junio C Hamano wrote:
-> > > If we step back a bit, because we are forcing him to differentiate
-> > > these two pulls in his mental model anyway, perhaps it may help
-> > > people (both new and old) if we had a new command to make the
-> > > distinction stand out more.  What if the command sequence were like
-> > > this instead?
-> > > 
-> > >     $ git checkout maint
-> > >     $ git update [ origin maint ]
-> > > 
-> > >     $ git pull [--no-ff] developer-remote topic-branch
-> > >     $ git push [ origin maint ]
-> > > 
-> > > where the new command 'update' enforces the '--ff-only' update.  And
-> > > then we would stop telling "'git pull' first" when a push does not
-> > > fast-forward.
-> > 
-> > In addition to barf when it's not a fast-forward, such command can
-> > switch the parents, so it appears 'maint' was merged to 'origin/maint'.
-> > Many people have complained about this order.
-> 
-> I realize this has veered off into talking about an "update" command,
-> and not necessarily "pull", but since there a lot of proposals floating
-> around, I wanted to make one point: if we are going to do such a switch,
-> let's please make it something the user explicitly turns on.
 
-This is sensible, but with warning "X will be the default in the
-future", just like we did with push.default = simple.
+--ZY5CS28jBCfb727c
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> One common workflow for GitHub users is to back-merge master into a
-> topic, because they want the final "integrated" version on the topic
-> branch. That lets it get review, run tests, and even get test-deployed
-> from there before merging to master (and then when it does merge to
-> master, we know the result will be a trivial merge).  This workflow
-> helps spread out the load (there is no central "integration" person or
-> script, and the merge itself becomes a possible part of the review/test
-> cycle).  Some projects will do this by rebasing the topic, but that has
-> its own complications (like making collaboration harder because the
-> commits are being frequently rewritten).
+On Fri, May 02, 2014 at 07:15:44AM +0700, Duy Nguyen wrote:
+> On Fri, May 2, 2014 at 6:05 AM, Jonathan Nieder <jrnieder@gmail.com> wrot=
+e:
+> >
+> > I can make up for it in enthuasiasm.  Please?  It's something I've
+> > wanted for a long time but never found the time to do.
+>=20
+> It's definitely better in the sense that the compiler will catch new
+> "char[20]" declarations for us. It's also a lot more work.
 
-They can do:
+It is.  I'm going to start with a patch that introduces struct object_id
+and the fixed constants.  Then I'm going to get a patch that compiles
+with lots of warnings, and then I'm going to fix all those warnings.
+Otherwise, the patch will simply be too enormous to review.
 
-% git pull origin master
+I'm willing to hear other suggestions for going about this, though.
 
-That shouldn't revese the bases.
+> No architecture was named last time if I remember correctly. But we
+> could check "sizeof(struct object_id) =3D=3D 20" in a test or something.
+> When people scream, we can pack the struct on that particular
+> platform?
 
-> Such users are going to run "git pull origin master" or just "git pull"
-> to get that merge.
+Sounds like a plan.  I am not aware of any architecture that has this
+limitation; I've worked with x86(-64)?, 32-bit PowerPC, UltraSPARC, and
+ARM.
 
-I'd say the vast majority of users running "git pull" want the parents
-reversed, the minority that doesn't can switch to "git pull origin
-master" (or add a configuration).
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
 
-> A switch to disallowing non-ff is going to disrupt
-> that workflow.
+--ZY5CS28jBCfb727c
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
-Only if the refuse to do "git pull origin master".
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-> But I think that is the same moment they should probably be deciding on
-> whether their workflow wants "regular" or "reverse" merges. And I do not
-> think the decision between the two has an obvious split over which is
-> better.
+iQIcBAEBCgAGBQJTZBeEAAoJEL9TXYEfUvaLHO4P/052hG0IzzZl13BKUS7Muqya
+GL5VyIZKJT7VvWPQAZKtrExTidw1jXLaZOQ+J67saciTHLGZUahiRGS4Jc7Qpmhe
+Ey65dLtqzT8VE32ZAiaFBB86u04kFoaNgktmTqyaz2x3bnuu5uMoX91I3VcvhZWM
+uLt/iCJDetF6y35mYNw5LIbi6VkVZtw8fTUe8JG75Xmf9bZrH91Q+R9CaYLcmmOS
+PmdbXjtjeIehRF0Pc6tlwHQ/tl3NRnK2F79++r5i8o8vFgHDny+JOKeyqY03rY1E
+ZMqQ1riTk9x8YN0SDXbvpwf7059LmcKNpCsnz1ouR/omzgj9M4LTsz5fqJIImjdd
+MB4MlJoeaOwd6LHZWHkW84ZtVXkoDX5hWTy9pwu1ZybHcfC/XeqvztddNrF/u/GG
+OfWaROzUtLu8uV9DA61u1pSJUhKZ6V1vwpkXDn7GwuZ4riFdDe/9kQiMJvf7xFvj
+YjjejSVYmmkaBz6GwlWr/GxV34A5MG6UnAi6SSUjas2KTU9iD/ouhGRtSqXDslZ7
+qAJTcyqfzIc3jKKI1i0idRTeDhUvVgtdQ8rurYzir6yVuJm2Jimzp/g7Sum54FOq
+depV+jD2iYnSjM7xAx2nY7WBPuQ/GHSD98uLRnXU0FppDmK/nSgM853t7qQPBAGl
+pKu+nKuKkjGlrlLWvo2H
+=Le+q
+-----END PGP SIGNATURE-----
 
-Because there hasn't been enough discussion on this topic. I'm fairly
-certain there will be consensus once concrete proposals are properly
-discussed.
-
-Most likely the consensus and the proposals will be ignored and nothing
-will change as usual, but that's a different thing.
-
--- 
-Felipe Contreras
+--ZY5CS28jBCfb727c--
