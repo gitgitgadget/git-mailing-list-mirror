@@ -1,126 +1,75 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: Pull is Evil
-Date: Fri, 02 May 2014 15:34:34 -0500
-Message-ID: <5364015a94900_135215292ec28@nysa.notmuch>
-References: <20140501200703.GB6227@odin.tremily.us>
- <5362d7dc7b12_12fe14dd31095@nysa.notmuch>
- <20140502000208.GB28634@odin.tremily.us>
- <5362e8b09aba1_429131b31038@nysa.notmuch>
- <20140502011004.GD28634@odin.tremily.us>
- <5362f1755f2a9_d1310572f0fa@nysa.notmuch>
- <20140502145433.GF28634@odin.tremily.us>
- <5363ea28d3c14_70ef0f30c94@nysa.notmuch>
- <20140502190746.GJ28634@odin.tremily.us>
- <5363ee55ac2af_70ef0f30cf3@nysa.notmuch>
- <20140502194637.GL28634@odin.tremily.us>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 7/8] CodingGuidelines: on comparison
+Date: Fri, 02 May 2014 13:45:25 -0700
+Message-ID: <xmqqppjvap0a.fsf@gitster.dls.corp.google.com>
+References: <1398894312-30763-1-git-send-email-gitster@pobox.com>
+	<1398894312-30763-8-git-send-email-gitster@pobox.com>
+	<20140501213657.GC14441@sigill.intra.peff.net>
+	<xmqqk3a4avt1.fsf@gitster.dls.corp.google.com>
+	<20140502203116.GA32500@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Marc Branchaud <marcnarc@xiplink.com>,
-	Marat Radchenko <marat@slonopotamus.org>, git@vger.kernel.org
-To: "W. Trevor King" <wking@tremily.us>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 02 22:45:29 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri May 02 22:45:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WgKKk-0001SB-NG
-	for gcvg-git-2@plane.gmane.org; Fri, 02 May 2014 22:45:27 +0200
+	id 1WgKKv-00022g-4I
+	for gcvg-git-2@plane.gmane.org; Fri, 02 May 2014 22:45:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753143AbaEBUpU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 May 2014 16:45:20 -0400
-Received: from mail-ob0-f179.google.com ([209.85.214.179]:65071 "EHLO
-	mail-ob0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753115AbaEBUpP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 2 May 2014 16:45:15 -0400
-Received: by mail-ob0-f179.google.com with SMTP id wo20so18853obc.38
-        for <git@vger.kernel.org>; Fri, 02 May 2014 13:45:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=hmbZYlwCz+qIp/nfF9A/m9nLW3vX8j+4RGnoI5zV33w=;
-        b=x9U/dJJCuxyQRfGCaP/Sa1/Os400fYmVSGOZWM4yxFiQwr9s3igb7EcUOrRFPsDPi6
-         e05sCbd9/sxudoOaDTVZSXFu85NKlBU8FbTLdOfYduKlvQvAYk+c5SzxK1we7rVmT141
-         FRALV9OotUocBGFIWY19yjYaM6hbagrKuBM+NXpIjzjGjkq/SDh6xwgT7Ha5muw8oRAo
-         FpnKJn40Uql1/tLdpKKrzXPdfiWIAtGAvc5c/KanKahxdaZUA/h+XuSPjta+b1GrstFA
-         XRrXef6++eA4DIIqfGv7aQ3FCaNa77xtstz/L6m0kJuSoHokbILdmH8HXL7V4hOKCUnR
-         YrSQ==
-X-Received: by 10.60.16.103 with SMTP id f7mr18937191oed.8.1399063514760;
-        Fri, 02 May 2014 13:45:14 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id f1sm333929oej.5.2014.05.02.13.45.11
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 02 May 2014 13:45:12 -0700 (PDT)
-In-Reply-To: <20140502194637.GL28634@odin.tremily.us>
+	id S1753166AbaEBUpc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 May 2014 16:45:32 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:50198 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752795AbaEBUpa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 May 2014 16:45:30 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E1792123C9;
+	Fri,  2 May 2014 16:45:29 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=76k30SVq5h/oF3UzaMgvHLnOPTg=; b=cgo0Pd
+	I4gW/aaYGd3Ol0k7YU/08OZHryJKy8b5I1jrLKB2VIfJ5HgERmIiYOufjnvpdCvM
+	iDNpnyaN988toTsRRqTaOamju/HyRF4z7M4LthkVdeZycXQdVuxhfHHBfy2ggXaY
+	prEOu16bk0lw8Qpu0Y8s151BFtn4ju8QkI1V4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=C93p9NuwgxIL98DzUW4j+AUH2A2Gh+IZ
+	VCN8eh3kwfCrJyK69xZ1GlLDEeteX/O+ttOj0e+igiXroUNrZ1gn9/06agMcKyQs
+	QejUAAT6n6jHGgETcohs65WjcQZg2LE+L5UXFnkU8pyEZrB8HKerRSKuABBKONyT
+	sq0S2grl5qo=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D5532123C8;
+	Fri,  2 May 2014 16:45:29 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 6E633123C4;
+	Fri,  2 May 2014 16:45:27 -0400 (EDT)
+In-Reply-To: <20140502203116.GA32500@sigill.intra.peff.net> (Jeff King's
+	message of "Fri, 2 May 2014 16:31:16 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: B13B7272-D23A-11E3-82C3-9CEB01674E00-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247971>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247972>
 
-W. Trevor King wrote:
-> On Fri, May 02, 2014 at 02:13:25PM -0500, Felipe Contreras wrote:
-> > It would matter almost exactly zero.
->=20
-> Some folks have explicit merge policies, and deciding how much that
-> matters is probably best left up to the projects themselves and not
-> decided in Git code.
+Jeff King <peff@peff.net> writes:
 
-Let's make some fake numbers to see around how much this would matter.
-The amount of people that are not used to Git could be around 60%.
+> I meant something even less in-depth. Your message says only "on
+> comparison", and I did not even know what "this" in your sentence above
+> would mean until I followed the link.
+>
+>   There are arguments for writing a conditional as "a < b" rather than
+>   "b > a", or vice versa. Let's give guidance on which we prefer.
+>
+> Not a big deal, but I think it is easy when you have just written the
+> patch to forget that a reviewer or a reader of "git log" six months have
+> no has no context at all.
 
-Of these, the amount that would be doing integration is probably 30%, a=
-s
-those tasks would be relegated to more advanced users. A project that
-lets non-advanced users to integration probably wouldn't care if the
-merges are fast-forward or not, but let's say 10% of them do. That make=
-s
-3%.
-
-On the other hand, user might do merges when trying to bring their loca=
-l
-repositories up-to-date, let's say 100% of them do. Of those, the ones
-in a project that doesn't want fast-forward merges is probably 10%. Tha=
-t
-makes 10%. However, such projects wouldn't want them merging
-'origin/master' to 'master', but 'topic' to 'master', so they shouldn't
-be using `git pull` anyway, but for the sake of argument let's say that
-they do.
-
-That would make around 8%, and 6% of those wouldn't be using `git pull`
-anyway.
-
-So no, for all intents and purposes it doesn't matter. I would rather
-concentrate on the issue more than 90% of the users face.
-
-> > And just as they can do pull.promot =3D true, they can do pull.mode=
- =3D
-> > fetch-only.
->=20
-> Why would you run a fetch-only pull instead of running 'git fetch'?  =
-I
-> think it would make more sense to have 'pull.mode =3D none' with whic=
-h
-> 'git pull =E2=80=A6' turns into a no-op suggesting an explicit
-> fetch/{merge|rebase}.  Having something like that available would
-> help with the training issue that pull.prompt was addressing.
-
-I fail to see how training them to do this:
-
-  % git config --global pull.mode none
-  % git pull
-  % git fetch
-  % git merge --no-ff
-
-Is preferable than training them to do:
-
-  % git pull --no-ff
-
---=20
-=46elipe Contreras
+Thanks; I'll steal that one.
