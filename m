@@ -1,64 +1,130 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: smudge/clean filters and SHA1 hashes
-Date: Fri, 2 May 2014 14:07:02 -0700
-Message-ID: <CAJo=hJurLa9rdHNHS01uW3FEd_yNPzdFE8X4xaOWCFCnzF7MUg@mail.gmail.com>
-References: <CADsUFkQLtUDpoiSqj-UYeyz1a-WZPh9vN+RW4ti8ut=22QwL4g@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: Pull is Mostly Evil
+Date: Fri, 02 May 2014 15:58:41 -0500
+Message-ID: <53640701f135a_135215292ec1@nysa.notmuch>
+References: <5363BB9F.40102@xiplink.com>
+ <xmqqoazgaw0y.fsf@gitster.dls.corp.google.com>
+ <5363edc954f8e_70ef0f30c24@nysa.notmuch>
+ <xmqqtx989c9d.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: SLONIK.AZ@gmail.com
-X-From: git-owner@vger.kernel.org Fri May 02 23:07:36 2014
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Marc Branchaud <marcnarc@xiplink.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 02 23:09:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WgKgA-0003By-5l
-	for gcvg-git-2@plane.gmane.org; Fri, 02 May 2014 23:07:34 +0200
+	id 1WgKi2-0001nU-QY
+	for gcvg-git-2@plane.gmane.org; Fri, 02 May 2014 23:09:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753153AbaEBVH0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 May 2014 17:07:26 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:63007 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753117AbaEBVHX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 May 2014 17:07:23 -0400
-Received: by mail-wg0-f44.google.com with SMTP id a1so2645572wgh.27
-        for <git@vger.kernel.org>; Fri, 02 May 2014 14:07:22 -0700 (PDT)
+	id S1753273AbaEBVJX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 May 2014 17:09:23 -0400
+Received: from mail-oa0-f44.google.com ([209.85.219.44]:52257 "EHLO
+	mail-oa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752399AbaEBVJV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 May 2014 17:09:21 -0400
+Received: by mail-oa0-f44.google.com with SMTP id n16so5874510oag.31
+        for <git@vger.kernel.org>; Fri, 02 May 2014 14:09:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=NbfYRiM4nm2ha+IS3iGqyJo0W8QMSEKl0bLZBHf3NVw=;
-        b=YqIRFH+whGeJOt9Qi/Sg/VhN+kJtp5z0vOG28V5aWJ9pJVJpXe67YDNwsp55VRwDzS
-         WRE+qa9T/F4J3/1IIikQ48L4u6n70uX6B7yxiEwbzjIDNY6n8R15LyiDiUU8bUGshXn3
-         romWN/pghemkxlC2OrZ0dKwhhKXNIv56HlxV4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=NbfYRiM4nm2ha+IS3iGqyJo0W8QMSEKl0bLZBHf3NVw=;
-        b=gqjcsGrHrBX4Gq7g5WxR5969wPxn5dy226x1aI3fMgb/XTno2xbmEFN9tnp3kbiXGx
-         d5q+83cwQ0U597ndL9YrDIEXoq35viad2cJfbulpAp0brjCqz7ZE4L3MQc/v0lkAP02N
-         kdVK8Kx7cZgGu6WNcO3MkW/9uFh7I+M/idma9uhNdJWZvN/Dj406zCPDPO6UTq8dxcEA
-         zyNTzsZCmGgtGtprMsE8SQQByW37x4PgLIHUncaKunjWLjA6wxJXeyFDNzHhJ67H7mWO
-         I/HHkFSRU7ceK4VtPG4zLl1nBSxV9je8FlS7nYTrfyrrpmjlPakfrddCyoPrGXn7ru9n
-         lGGg==
-X-Gm-Message-State: ALoCoQmnu382ipLRm0i/wHQs63l91LeDwojuj5TZiptnQSFSF/AMTNyOCVei4+RfP4Vu7SnKpTB2
-X-Received: by 10.180.100.129 with SMTP id ey1mr4676574wib.60.1399064842505;
- Fri, 02 May 2014 14:07:22 -0700 (PDT)
-Received: by 10.227.91.202 with HTTP; Fri, 2 May 2014 14:07:02 -0700 (PDT)
-In-Reply-To: <CADsUFkQLtUDpoiSqj-UYeyz1a-WZPh9vN+RW4ti8ut=22QwL4g@mail.gmail.com>
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=oKcal3RnVEmxftgE1J3rsepsmCL9P0yIMwZ9v7OGGIo=;
+        b=I+JX7X2LcjLvoRKWEFN0qN03TELk8h4AVBqbHZZaUNfgSOSSofhsCbv16efoWJzrgg
+         h4xG21d2D3Q9DryQkzD84jAYd8wfQJ4j3EuO8nPujf8k9X4QnoGjWoqCEaDRY4O9vdFi
+         VQBcPwJg526CwbkIAY+OTrVO1UUH915bdleVI3ZFzMR68MdNWk73MiAlRzHeDFpVBpwK
+         5gPdR7te19c9/3JYPU6ZOAFeAuBqS7YJ52lK9oeqaVZZMQQDqgUJ9BpGMk4+EP+vpuXp
+         lrT7c3QDGa1BSedFZ1kdIwJo2qqOeqoEptpC4xNZfb8gi5vOwJ/LZhB96mHxlUUd3dEX
+         hdag==
+X-Received: by 10.60.102.37 with SMTP id fl5mr3522246oeb.65.1399064960834;
+        Fri, 02 May 2014 14:09:20 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id a7sm280496obf.19.2014.05.02.14.09.18
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 02 May 2014 14:09:19 -0700 (PDT)
+In-Reply-To: <xmqqtx989c9d.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247982>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247983>
 
-On Fri, May 2, 2014 at 2:05 PM, Leo Razoumov <slonik.az@gmail.com> wrote:
-> surprisingly, searching this list and by way of Google
-> I cannot find an answer to a simple question:
->
-> In presence of smudge/clean filters which SHA1 hash
-> (clean content or smudged content) gets stored in the repository?
+Junio C Hamano wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> 
+> >> Stepping back even further, and thinking what is different between
+> >> these two pulls, we notice that the first one is pulling from the
+> >> place we push back to.  Perhaps a way to solve this issue, without
+> >> having to introduce a new 'git update' and updating the tutorials,
+> >> may be disallow fetch+merge by default only when pulling from the
+> >> place the result is going to be pushed back to?
+> >
+> > Which is basically essentially the same as not specifying anything, or
+> > rather, running `git pull` without arguments.
+> 
+> I cannot tell if you are agreeing or disagreeing, and with what.
 
-The clean version is used to obtain the SHA-1.
+I'm agreeing that 'git pull repo branch' is different than 'git pull',
+and 'git pull' is the problem. I'm not certain about 'git pull repo',
+but I think that probably shouldn't change either.
+
+> Using the "special case 'git pull' without arguments" heuristics
+> would take us back to the old jc/pull-training-wheel patch
+> 
+>     http://thread.gmane.org/gmane.comp.version-control.git/225146/focus=230856
+
+If you mean adding back the 'test $# = 0', then yes, if you mean going
+back to 'pull.rebase=false' to force merges (and a bunch of other
+stuff), then no.
+
+> which we agreed to drop in
+> 
+>     http://thread.gmane.org/gmane.comp.version-control.git/233554/focus=234365
+> 
+> to favor the old series you did with pull.mode, and we rejected that
+> patch in $gmane/230856 for a sound reason, I would think.
+
+Because the 'pull.mode=merge' mode option was simply sensible.
+
+> "You are pulling from the place the result is going to be pushed
+> back to" is different from "'git pull' was run without arguments".
+> In the "pumpking" example in the message you are responding to:
+> 
+>     When he becomes in charge of producing a new 'maint' (in his
+>     original, he says 'maintenance-branch'), he first does this:
+> 
+>         $ git checkout maint
+>         $ git pull --ff-only [ origin maint ]
+> 
+> the heuristics would trigger the safety only when the optional
+> "origin maint" are not given, but we do have enough information
+> to see "git pull origin maint" (with where from and what to pull
+> explicitly specified on the command line) falls into the case where
+> the user needs protection, don't we?
+
+I think 'git pull' and 'git pull origin maint' are different, regardless
+of the fact that origin/maint is the upstream.
+
+In the former I would expect 'maint' to be merged to 'origin/maint', in
+the latter I would expect 'origin/maint' to be merged into 'maint'. And
+if the user has specified that he wants to merge 'origin/maint' into
+'maint', I don't see why a non-fast-forward should fail.
+ 
+> Also, with the triangular push configuration, "git pull" without
+> argument will fetch from one place that is different from where the
+> current branch is going to pushed to, so that heuristics would not
+> work at all.
+
+I think that's irrelevant. Both the upstream and publish tracking
+branches don't matter when the user has specifically asked for a branch
+to be pulled.
+
+-- 
+Felipe Contreras
