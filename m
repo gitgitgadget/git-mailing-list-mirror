@@ -1,78 +1,85 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
+From: David Kastrup <dak@gnu.org>
 Subject: Re: Pull is Evil
-Date: Fri, 02 May 2014 03:14:23 -0500
-Message-ID: <536353dfa270b_609874930cae@nysa.notmuch>
-References: <536152D3.5050107@xiplink.com>
- <5361598f8eaf7_4781124b2f02b@nysa.notmuch>
- <536173F5.7010905@xiplink.com>
- <53617877b41a9_41a872f308ef@nysa.notmuch>
- <20140501094610.GB75770@vauxhall.crustytoothpaste.net>
- <5362664C.8040907@xiplink.com>
- <20140501175623.GY6227@odin.tremily.us>
- <53628CB1.8010302@xiplink.com>
- <20140501183008.GZ6227@odin.tremily.us>
- <5362ACD6.50505@xiplink.com>
- <20140502071655.GA6288@inner.h.apk.li>
+Date: Fri, 02 May 2014 10:46:09 +0200
+Organization: Organization?!?
+Message-ID: <87wqe4y3e6.fsf@fencepost.gnu.org>
+References: <4ay6w9i74cygt6ii1b0db7wg.1398433713382@email.android.com>
+	<xmqqoazlqot4.fsf@gitster.dls.corp.google.com>
+	<536106EA.5090204@xiplink.com>
+	<xmqqppjyhnom.fsf@gitster.dls.corp.google.com>
+	<536152D3.5050107@xiplink.com>
+	<xmqqa9b2egcy.fsf@gitster.dls.corp.google.com>
+	<20140502074027.GB6288@inner.h.apk.li>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: "W. Trevor King" <wking@tremily.us>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Marat Radchenko <marat@slonopotamus.org>, git@vger.kernel.org
-To: Andreas Krey <a.krey@gmx.de>, Marc Branchaud <marcnarc@xiplink.com>
-X-From: git-owner@vger.kernel.org Fri May 02 10:25:12 2014
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 02 10:46:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wg8mN-0003Ny-NK
-	for gcvg-git-2@plane.gmane.org; Fri, 02 May 2014 10:25:12 +0200
+	id 1Wg971-0003yv-1C
+	for gcvg-git-2@plane.gmane.org; Fri, 02 May 2014 10:46:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751387AbaEBIZI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 May 2014 04:25:08 -0400
-Received: from mail-oa0-f53.google.com ([209.85.219.53]:58166 "EHLO
-	mail-oa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750813AbaEBIZF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 May 2014 04:25:05 -0400
-Received: by mail-oa0-f53.google.com with SMTP id m1so2301990oag.12
-        for <git@vger.kernel.org>; Fri, 02 May 2014 01:25:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=oGY9WiRB6QOuSv7cKiz5cpfZOEs4SgkeIfksxYs0EYI=;
-        b=wdewrfqNBx4qZqKEgnl+Jv2xhAr3rvsUVZQKohIJGqPvEK0k8T+aaZIcMct6j0g+kR
-         KvlawspHaGfnP9WJn8uFPvPpgYMvBJLM3J7WcYtD8tc3367U7sy2N/FIUbVatLMZF3Xz
-         MgmpDhTmRl0CFWP+8i5+vt2EdMnAjCZJxZ44rfqPeq9OAdfP00bqE6Ixa5kyaMbkG0dr
-         lZwhWA1lKAi+3A3ftV34ReBkRTax1ctf0o0ubO9z52DbK0i67ZHBuy1mboS3nm8L/TF9
-         y/JcANMIkj02OV5rn6wiCaRRdfW5CaKWFUZROKAQlQku1V8XimJuo0jUTwUKP91hLs1l
-         TQrw==
-X-Received: by 10.60.131.172 with SMTP id on12mr15783376oeb.18.1399019104783;
-        Fri, 02 May 2014 01:25:04 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id ut8sm65331814obc.22.2014.05.02.01.25.00
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 02 May 2014 01:25:02 -0700 (PDT)
-In-Reply-To: <20140502071655.GA6288@inner.h.apk.li>
+	id S1751505AbaEBIq2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 May 2014 04:46:28 -0400
+Received: from plane.gmane.org ([80.91.229.3]:40818 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751159AbaEBIqY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 May 2014 04:46:24 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Wg96t-0003oP-FY
+	for git@vger.kernel.org; Fri, 02 May 2014 10:46:23 +0200
+Received: from x2f52453.dyn.telefonica.de ([2.245.36.83])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 02 May 2014 10:46:23 +0200
+Received: from dak by x2f52453.dyn.telefonica.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 02 May 2014 10:46:23 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: x2f52453.dyn.telefonica.de
+X-Face: 2FEFf>]>q>2iw=B6,xrUubRI>pR&Ml9=ao@P@i)L:\urd*t9M~y1^:+Y]'C0~{mAl`oQuAl
+ \!3KEIp?*w`|bL5qr,H)LFO6Q=qx~iH4DN;i";/yuIsqbLLCh/!U#X[S~(5eZ41to5f%E@'ELIi$t^
+ Vc\LWP@J5p^rst0+('>Er0=^1{]M9!p?&:\z]|;&=NP3AhB!B_bi^]Pfkw
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
+Cancel-Lock: sha1:DGFjFrF3ESlPfuf61jFuaNpI1F0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247931>
 
-Andreas Krey wrote:
-> My personal beef with 'git pull' is still that sometimes (namely in
-> the 'git pull && git push' sequence) it should reverse the order of
-> the parents in the merge commit, so that *my* commits look like an
-> integrated topic branch, instead of the former mainline.
+Andreas Krey <a.krey@gmx.de> writes:
 
-I haven't really thought much about this but it does make sense. How
-about changing the behavior so `git pull` by default changes the order
-of the parents, but `git pull repo branch` doesn't.
+> On Wed, 30 Apr 2014 13:01:49 +0000, Junio C Hamano wrote:
+> ...
+>> I didn't mean "replace 'pull' with 'update' everywhere".  I meant
+>> "Introduce 'update' that lets integrate your history into that from
+>> the remote, which is to integrate in a direction opposite from how
+>> 'pull' does".  
+>
+> That still doesn't quite solve my problem. If I'm tracking origin/master
+> in a local master branch, I can just use 'git pull' to get my 'feature'
+> branch (which is named master) updated to the current state of the origin.
+> This amounts to 'integrating' origin/master into my master.
+
+This discussion makes as much sense to me as debating whether "git
+fiddle" should, in case a simple "git hammer" does not apply, should
+translate to an implied "git screwdriver", and when it does, whether
+more people's workflows involve turning a screw left rather than right
+by default.
+
+What the gibbins?  I don't even use git pull.  I use git fetch, and
+then, depending on my needs, I rebase or merge.  git pull is not part of
+my workflow exactly because it does non-connected things not translating
+unambiguously to a particular identifiable workflow.  It might
+sometimes, more by accident than design, do what I would have done
+anyway.  But I prefer making that choice on my own, depending on the
+particular circumstances.
 
 -- 
-Felipe Contreras
+David Kastrup
