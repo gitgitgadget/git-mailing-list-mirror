@@ -1,114 +1,105 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH] Define constants for lengths of object names
-Date: Fri, 2 May 2014 22:09:08 +0000
-Message-ID: <20140502220908.GI75770@vauxhall.crustytoothpaste.net>
-References: <1398942410-112069-1-git-send-email-sandals@crustytoothpaste.net>
- <20140501172007.GZ9218@google.com>
- <20140501230041.GC75770@vauxhall.crustytoothpaste.net>
- <20140501230553.GE9218@google.com>
- <CACsJy8AhxJDcBHNWbssWs2F1oQB4xGG7rpBePX60m4=_+MVEZw@mail.gmail.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: Pull is Mostly Evil
+Date: Fri, 2 May 2014 23:12:52 +0100
+Organization: OPDS
+Message-ID: <B2C7522180DD4894BB18B91CAFD35FF9@PhilipOakley>
+References: <5363BB9F.40102@xiplink.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ZY5CS28jBCfb727c"
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 03 00:09:22 2014
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+To: "Marc Branchaud" <marcnarc@xiplink.com>,
+	"Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat May 03 00:12:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WgLdt-0004Dk-A8
-	for gcvg-git-2@plane.gmane.org; Sat, 03 May 2014 00:09:17 +0200
+	id 1WgLhR-0000mz-3s
+	for gcvg-git-2@plane.gmane.org; Sat, 03 May 2014 00:12:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752719AbaEBWJN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 May 2014 18:09:13 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:47507 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752332AbaEBWJN (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 2 May 2014 18:09:13 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:406f:e13c:7c96:bfde])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 24CE328087;
-	Fri,  2 May 2014 22:09:12 +0000 (UTC)
-Mail-Followup-To: Duy Nguyen <pclouds@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>
-Content-Disposition: inline
-In-Reply-To: <CACsJy8AhxJDcBHNWbssWs2F1oQB4xGG7rpBePX60m4=_+MVEZw@mail.gmail.com>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.14-trunk-rt-amd64)
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Spam-Score: -0.272 () BAYES_00,RDNS_NONE
+	id S1752410AbaEBWMx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 May 2014 18:12:53 -0400
+Received: from out1.ip03ir2.opaltelecom.net ([62.24.128.239]:26564 "EHLO
+	out1.ip03ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750813AbaEBWMw (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 2 May 2014 18:12:52 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AlJVAIYXZFMCYJ6l/2dsb2JhbABZgwZfA4hpvB8FAQIBDIECF3SCIAUBAQQBCAEBLh4BARURBgIDBQIBAxUBCyUUAQQaBgcXBgESCAIBAgMBiCgMq3iebI8HgnaBFQSJTIY4hTaWZYM1PA
+X-IPAS-Result: AlJVAIYXZFMCYJ6l/2dsb2JhbABZgwZfA4hpvB8FAQIBDIECF3SCIAUBAQQBCAEBLh4BARURBgIDBQIBAxUBCyUUAQQaBgcXBgESCAIBAgMBiCgMq3iebI8HgnaBFQSJTIY4hTaWZYM1PA
+X-IronPort-AV: E=Sophos;i="4.97,974,1389744000"; 
+   d="scan'208";a="459481362"
+Received: from host-2-96-158-165.as13285.net (HELO PhilipOakley) ([2.96.158.165])
+  by out1.ip03ir2.opaltelecom.net with SMTP; 02 May 2014 23:12:50 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247992>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247993>
 
+From: "Marc Branchaud" <marcnarc@xiplink.com>
+Sent: Friday, May 02, 2014 4:37 PM
+> (Apologies for not CCing all the folks who've participated in the 
+> "Pull is
+> Evil" thread -- I couldn't find a good branch of that thread for this 
+> message.)
+>
+> OK, so maybe "git pull" is just Mostly Evil.  People seem to have 
+> found many
+> different ways to make it work for them.
+>
+> But in reality "git pull" has become a chimera that confuses a large 
+> number
+> of new users, and that experienced users either avoid entirely or 
+> customize
+> to give them a convenient shorthand for working in their particular
+> environment.  As a tool for new git users, it just doesn't seem to be
+> achieving its goals.
+>
+> I think the git project as a whole would benefit if it started to 
+> treat "git
+> pull" as an advanced command, in the sense that it needs to be 
+> configured by
+> an experienced user in order to make it correctly follow a project's
+> workflow.  Once it's configured properly, "git pull" is a powerful 
+> tool that
+> gives users an easy way to do complex things.  In that sense, it may 
+> be
+> appropriate for a project to tailor "git pull" as it likes, then teach 
+> its
+> own users to use the command.
+>
+> However, when it comes to teaching people how to use git qua git, "git 
+> pull"
+> should be the last thing they learn about, because it's only after you
+> understand various basic git concepts that you can configure "git 
+> pull" to do
+> the right thing.
+>
+> To that end, I suggest that pull's default behaviour should be to do
+> *nothing*.  It should just print out a message to the effect that it 
+> hasn't
+> been configured, and that the user should run "git help pull" for 
+> guidance.
+>
+I tend to agree.
+The hard part is making sure folk have enough prior learning to make a 
+choice that their will fit their real needs.
 
---ZY5CS28jBCfb727c
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Fri, May 02, 2014 at 07:15:44AM +0700, Duy Nguyen wrote:
-> On Fri, May 2, 2014 at 6:05 AM, Jonathan Nieder <jrnieder@gmail.com> wrot=
-e:
-> >
-> > I can make up for it in enthuasiasm.  Please?  It's something I've
-> > wanted for a long time but never found the time to do.
->=20
-> It's definitely better in the sense that the compiler will catch new
-> "char[20]" declarations for us. It's also a lot more work.
-
-It is.  I'm going to start with a patch that introduces struct object_id
-and the fixed constants.  Then I'm going to get a patch that compiles
-with lots of warnings, and then I'm going to fix all those warnings.
-Otherwise, the patch will simply be too enormous to review.
-
-I'm willing to hear other suggestions for going about this, though.
-
-> No architecture was named last time if I remember correctly. But we
-> could check "sizeof(struct object_id) =3D=3D 20" in a test or something.
-> When people scream, we can pack the struct on that particular
-> platform?
-
-Sounds like a plan.  I am not aware of any architecture that has this
-limitation; I've worked with x86(-64)?, 32-bit PowerPC, UltraSPARC, and
-ARM.
-
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
-
---ZY5CS28jBCfb727c
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCgAGBQJTZBeEAAoJEL9TXYEfUvaLHO4P/052hG0IzzZl13BKUS7Muqya
-GL5VyIZKJT7VvWPQAZKtrExTidw1jXLaZOQ+J67saciTHLGZUahiRGS4Jc7Qpmhe
-Ey65dLtqzT8VE32ZAiaFBB86u04kFoaNgktmTqyaz2x3bnuu5uMoX91I3VcvhZWM
-uLt/iCJDetF6y35mYNw5LIbi6VkVZtw8fTUe8JG75Xmf9bZrH91Q+R9CaYLcmmOS
-PmdbXjtjeIehRF0Pc6tlwHQ/tl3NRnK2F79++r5i8o8vFgHDny+JOKeyqY03rY1E
-ZMqQ1riTk9x8YN0SDXbvpwf7059LmcKNpCsnz1ouR/omzgj9M4LTsz5fqJIImjdd
-MB4MlJoeaOwd6LHZWHkW84ZtVXkoDX5hWTy9pwu1ZybHcfC/XeqvztddNrF/u/GG
-OfWaROzUtLu8uV9DA61u1pSJUhKZ6V1vwpkXDn7GwuZ4riFdDe/9kQiMJvf7xFvj
-YjjejSVYmmkaBz6GwlWr/GxV34A5MG6UnAi6SSUjas2KTU9iD/ouhGRtSqXDslZ7
-qAJTcyqfzIc3jKKI1i0idRTeDhUvVgtdQ8rurYzir6yVuJm2Jimzp/g7Sum54FOq
-depV+jD2iYnSjM7xAx2nY7WBPuQ/GHSD98uLRnXU0FppDmK/nSgM853t7qQPBAGl
-pKu+nKuKkjGlrlLWvo2H
-=Le+q
------END PGP SIGNATURE-----
-
---ZY5CS28jBCfb727c--
+> It'll take quite a bit of time, but I think that if we change our 
+> attitude
+> towards "git pull" and take this unconfigured-by-default approach, 
+> then in a
+> few years the entire git ecosystem will be in a better place.
+>
+> M.
+> --
+Philip
