@@ -1,105 +1,90 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Pull is Evil
-Date: Fri, 02 May 2014 14:13:25 -0500
-Message-ID: <5363ee55ac2af_70ef0f30cf3@nysa.notmuch>
-References: <53629da233345_76612eb2f075@nysa.notmuch>
- <20140501194846.GA6227@odin.tremily.us>
- <20140501200703.GB6227@odin.tremily.us>
- <5362d7dc7b12_12fe14dd31095@nysa.notmuch>
- <20140502000208.GB28634@odin.tremily.us>
- <5362e8b09aba1_429131b31038@nysa.notmuch>
- <20140502011004.GD28634@odin.tremily.us>
- <5362f1755f2a9_d1310572f0fa@nysa.notmuch>
- <20140502145433.GF28634@odin.tremily.us>
- <5363ea28d3c14_70ef0f30c94@nysa.notmuch>
- <20140502190746.GJ28634@odin.tremily.us>
+Date: Fri, 02 May 2014 12:29:48 -0700
+Message-ID: <xmqqbnvgasib.fsf@gitster.dls.corp.google.com>
+References: <536106EA.5090204@xiplink.com>
+	<xmqqppjyhnom.fsf@gitster.dls.corp.google.com>
+	<536152D3.5050107@xiplink.com>
+	<5361598f8eaf7_4781124b2f02b@nysa.notmuch>
+	<536173F5.7010905@xiplink.com>
+	<53617877b41a9_41a872f308ef@nysa.notmuch>
+	<20140501094610.GB75770@vauxhall.crustytoothpaste.net>
+	<5362664C.8040907@xiplink.com> <20140501175623.GY6227@odin.tremily.us>
+	<53628CB1.8010302@xiplink.com> <20140501183008.GZ6227@odin.tremily.us>
+	<5362ACD6.50505@xiplink.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Marc Branchaud <marcnarc@xiplink.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: "W. Trevor King" <wking@tremily.us>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
 	Marat Radchenko <marat@slonopotamus.org>, git@vger.kernel.org
-To: "W. Trevor King" <wking@tremily.us>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 02 21:24:13 2014
+To: Marc Branchaud <marcnarc@xiplink.com>
+X-From: git-owner@vger.kernel.org Fri May 02 21:29:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WgJ47-0006D8-Jt
-	for gcvg-git-2@plane.gmane.org; Fri, 02 May 2014 21:24:11 +0200
+	id 1WgJ9h-0008HG-EV
+	for gcvg-git-2@plane.gmane.org; Fri, 02 May 2014 21:29:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752298AbaEBTYH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 May 2014 15:24:07 -0400
-Received: from mail-oa0-f52.google.com ([209.85.219.52]:47251 "EHLO
-	mail-oa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751805AbaEBTYG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 2 May 2014 15:24:06 -0400
-Received: by mail-oa0-f52.google.com with SMTP id l6so5666618oag.39
-        for <git@vger.kernel.org>; Fri, 02 May 2014 12:24:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=pziEGMiQP3740PLvgTJM/G+MX1UNvtltveWnLEylJ6Q=;
-        b=Q+BjDKfA5sGkwBRs5nlbXxi1Uq6ppNDnpnhKpQuWBlHLM91Ph1vROS+nZ/vOow3A/V
-         VYzifSZH8zmm9POhzGcnY5wiBd2jxRS5meRGbYJj2A2lNKfc3L0lDJDf0fkDH4udokY7
-         rWIMUqq33NSbigMx11xEe0uXhMBF1WnqpV9wcYhP85BxOrzyheMretrYOz7w9ytC3IS+
-         ywyTKakQTvOlg20MdSASyH7TbHiUrCc2hlM9GEPvKzCUYTb8EiNiK5EcJg4TfhSijBrr
-         7HdZmesC70q7KRz4ahN/lDpU4+sVuF6Ei/EzomouPB9ey6ieoB/5o90dBu4eUc3EX+D0
-         a01w==
-X-Received: by 10.60.51.69 with SMTP id i5mr18285763oeo.17.1399058644720;
-        Fri, 02 May 2014 12:24:04 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id vh3sm68725942obb.9.2014.05.02.12.24.01
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 02 May 2014 12:24:03 -0700 (PDT)
-In-Reply-To: <20140502190746.GJ28634@odin.tremily.us>
+	id S1752121AbaEBT3x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 May 2014 15:29:53 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:55623 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750877AbaEBT3x (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 May 2014 15:29:53 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8E7941237D;
+	Fri,  2 May 2014 15:29:52 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=PeCPul38hdG0HoLmui5hMVxU0bs=; b=kkHgf8
+	gLpbBrjUvCM7GPKKWFg8MU1X9z91wv47a2FPBmfC5M+VqjK6xrLknB/o23SVsdDb
+	bArSAA8e2XTAS5rbLTObMiKRBtkPxTyH+39ZKYOV5ZpR6j3TWRKhqaMDjyvqdVp5
+	fwvhw0ReFmjxPSIr2aSsgOVX7+1+A/8F9q0Lw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=MR8HPVk3RsW3y/g3xkft7czszuz618rd
+	WC1a0Gl0HH5Y5m5Ce0Po3c9Q/cmq5XcV14xQJVnNB160FMcLRkjp3kxw3ENVg/mU
+	Vo1rWZpzaPHS9ixfjemAmsVtz1xheK8osBb2dS/v3J/hCjsiUnCnLBcSUDofhD5y
+	aRUwZb/Mupk=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 84CF91237C;
+	Fri,  2 May 2014 15:29:52 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0DAA51237B;
+	Fri,  2 May 2014 15:29:49 -0400 (EDT)
+In-Reply-To: <5362ACD6.50505@xiplink.com> (Marc Branchaud's message of "Thu,
+	01 May 2014 16:21:42 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 20BBD002-D230-11E3-ADC0-9CEB01674E00-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247958>
 
-W. Trevor King wrote:
-> On Fri, May 02, 2014 at 01:55:36PM -0500, Felipe Contreras wrote:
-> > W. Trevor King wrote:
-> > > On Thu, May 01, 2014 at 08:14:29PM -0500, Felipe Contreras wrote:
-> > > > W. Trevor King wrote:
-> > > > > My proposed --prompt behavior is for folks who think =E2=80=9C=
-I often run
-> > > > > this command without thinking it through all the way.  I'm al=
-so
-> > > > > not used to reading Git's output and using 'reset --hard' wit=
-h the
-> > > > > reflog to reverse changes.  Instead of trusting me to only sa=
-y
-> > > > > what I mean or leaving me to recover from mistakes, please te=
-ll me
-> > > > > what's about to change and let me opt out if I've changed my
-> > > > > mind.=E2=80=9D
-> > > >=20
-> > > > Unfortunately those folks by definition wouldn't know about the
-> > > > --prompt option.
-> > >=20
-> > > But once such folks are identified, you just have to convince the=
-m
-> > > (once) to set the pull.prompt config.  That's a lot easier than
-> > > convincing them (for every pull) to set the appropriate ff flag.
-> >=20
-> > It wouldn't matter if by the default non-fast-forward merges are
-> > rejected.
->=20
-> It would matter if you didn't want them making non-fast-forward merge=
-s
-> (e.g. for explicitly-merged topic branches).
+Marc Branchaud <marcnarc@xiplink.com> writes:
 
-It would matter almost exactly zero. And just as they can do pull.promo=
-t
-=3D true, they can do pull.mode =3D fetch-only.
+> I may be mistaken, but I think "git pull" evolved to try to address the
+> detached-HEAD risk (at least in part).
 
---=20
-=46elipe Contreras
+You are totally mistaken.
+
+"git pull" was part of the things to make git usable by Linus before
+1.0 release, and matches the integrator workflow perfectly well.
+The detached HEAD came much much later.
+
+The issue we are discussing with "git pull" is that if a non
+integrator does a "git pull" from the upstream, in order to push the
+result of integrating the local work with it back to the upstream,
+by default "git pull" creates a merge in a direction that is wrong
+when seen in the "first-parent chain is the trunk" point of view.
+
+One way to solve that _might_ be to use the detached HEAD as you
+illustrated in your long-hand in the thread that had Brian's
+example, but that is not even a failed 'git push' recommends to do
+to the users, and there was no link between how 'git pull' behaves
+and use of detached HEAD at all.
