@@ -1,136 +1,111 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 4/4] commit: accept more date formats for "--date"
-Date: Thu, 1 May 2014 21:12:42 -0400
-Message-ID: <20140502011242.GD25413@sigill.intra.peff.net>
-References: <20140502010328.GA30556@sigill.intra.peff.net>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: Pull is Evil
+Date: Thu, 01 May 2014 20:14:29 -0500
+Message-ID: <5362f1755f2a9_d1310572f0fa@nysa.notmuch>
+References: <53617877b41a9_41a872f308ef@nysa.notmuch>
+ <20140501094610.GB75770@vauxhall.crustytoothpaste.net>
+ <5362266a3ca00_284da2f2eca3@nysa.notmuch>
+ <7vbnvhil5x.fsf@alter.siamese.dyndns.org>
+ <53629da233345_76612eb2f075@nysa.notmuch>
+ <20140501194846.GA6227@odin.tremily.us>
+ <20140501200703.GB6227@odin.tremily.us>
+ <5362d7dc7b12_12fe14dd31095@nysa.notmuch>
+ <20140502000208.GB28634@odin.tremily.us>
+ <5362e8b09aba1_429131b31038@nysa.notmuch>
+ <20140502011004.GD28634@odin.tremily.us>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 02 03:12:48 2014
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Marc Branchaud <marcnarc@xiplink.com>,
+	Marat Radchenko <marat@slonopotamus.org>, git@vger.kernel.org
+To: "W. Trevor King" <wking@tremily.us>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 02 03:25:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wg21w-00052L-3c
-	for gcvg-git-2@plane.gmane.org; Fri, 02 May 2014 03:12:48 +0200
+	id 1Wg2E5-0002iS-Tf
+	for gcvg-git-2@plane.gmane.org; Fri, 02 May 2014 03:25:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751386AbaEBBMo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 May 2014 21:12:44 -0400
-Received: from cloud.peff.net ([50.56.180.127]:43276 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751317AbaEBBMo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 May 2014 21:12:44 -0400
-Received: (qmail 28254 invoked by uid 102); 2 May 2014 01:12:44 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 01 May 2014 20:12:44 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 01 May 2014 21:12:42 -0400
-Content-Disposition: inline
-In-Reply-To: <20140502010328.GA30556@sigill.intra.peff.net>
+	id S1751435AbaEBBZL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 1 May 2014 21:25:11 -0400
+Received: from mail-oa0-f50.google.com ([209.85.219.50]:38776 "EHLO
+	mail-oa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751338AbaEBBZK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 1 May 2014 21:25:10 -0400
+Received: by mail-oa0-f50.google.com with SMTP id i11so4420027oag.37
+        for <git@vger.kernel.org>; Thu, 01 May 2014 18:25:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=g6wK8VJMFIQBSI9qAaRZrmAWlx96uY31HgVD/ilN6l4=;
+        b=oEhvxrdG0s/BpTFbme5VFb0n6OvaSyaCDDhw2b4MQJnf/13a70VpdbMnvBZlHMRJq/
+         /lVemKCIekYZP/DQTt6urc7mKUuXRojotkWYIFjG2A4/m/6jq4BKawpPG6lHwnjLLKW5
+         VKYpUA9ZWg1KpbhxcygVYS+YQ/rkz18rOGh5VfYiONOyP3r7qI79KLzeNsQxbXI9kgDe
+         q+1ncc7hL+rfTq9qjLm6WkLVS6iIa5VxbnDzOIz5cvaTI3OCaCyVtb99LsaYLOyHLbdE
+         +9gBJKTkoKordkiHSfmBC0dSys1z5Z4mgzvwWcdZmf5iKrDvyHPVqPc+ZIB9Kw2AUlsU
+         IpHA==
+X-Received: by 10.182.42.136 with SMTP id o8mr188186obl.80.1398993909653;
+        Thu, 01 May 2014 18:25:09 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id ko3sm123622045oeb.1.2014.05.01.18.25.06
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 01 May 2014 18:25:08 -0700 (PDT)
+In-Reply-To: <20140502011004.GD28634@odin.tremily.us>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247918>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247919>
 
-Right now we pass off the string found by "--date" straight
-to the fmt_ident function, which will use our strict
-parse_date to normalize it. However, this means obvious
-things like "--date=now" or "--date=2.days.ago" will not
-work.
+W. Trevor King wrote:
+> On Thu, May 01, 2014 at 07:37:04PM -0500, Felipe Contreras wrote:
+> > If that was the case the user wouls have run `git merge
+> > --no-ff`. Only expereinced users would answer 'no'.
+>=20
+> Folks who are setting any ff options don't need any of these training
+> wheels.
 
-Instead, let's fallback to the approxidate function to
-handle this for us. Note that we must try parse_date
-ourselves first, even though approxidate will try strict
-parsing itself. The reason is that approxidate throws away
-any timezone information it sees from the strict parsing,
-and we want to preserve it. So asking for:
+Indeed.
 
-  git commit --date="@1234567890 -0700"
+> My proposed --prompt behavior is for folks who think =E2=80=9CI often=
+ run this
+> command without thinking it through all the way.  I'm also not used t=
+o
+> reading Git's output and using 'reset --hard' with the reflog to
+> reverse changes.  Instead of trusting me to only say what I mean or
+> leaving me to recover from mistakes, please tell me what's about to
+> change and let me opt out if I've changed my mind.=E2=80=9D
 
-continues to set the date in -0700, regardless of what the
-local timezone is.
+Unfortunately those folks by definition wouldn't know about the --promp=
+t
+option.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/commit.c  | 27 +++++++++++++++++++++++++--
- t/t7501-commit.sh | 12 ++++++++++--
- 2 files changed, 35 insertions(+), 4 deletions(-)
+> > For example, I'm thinking that by default when the a fast-forward i=
+s
+> > possible, just do it, =E2=80=A6
+>=20
+> But just because a ff is possible doesn't mean it's what the
+> user/project wants.
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index a25661f..d1c90db 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -526,10 +526,29 @@ static int sane_ident_split(struct ident_split *person)
- 	return 1;
- }
- 
-+static int parse_force_date(const char *in, char *out, int len)
-+{
-+	if (len < 1)
-+		return -1;
-+	*out++ = '@';
-+	len--;
-+
-+	if (parse_date(in, out, len) < 0) {
-+		int errors = 0;
-+		unsigned long t = approxidate_careful(in, &errors);
-+		if (errors)
-+			return -1;
-+		snprintf(out, len, "%lu", t);
-+	}
-+
-+	return 0;
-+}
-+
- static void determine_author_info(struct strbuf *author_ident)
- {
- 	char *name, *email, *date;
- 	struct ident_split author;
-+	char date_buf[64];
- 
- 	name = getenv("GIT_AUTHOR_NAME");
- 	email = getenv("GIT_AUTHOR_EMAIL");
-@@ -574,8 +593,12 @@ static void determine_author_info(struct strbuf *author_ident)
- 		email = xstrndup(lb + 2, rb - (lb + 2));
- 	}
- 
--	if (force_date)
--		date = force_date;
-+	if (force_date) {
-+		if (parse_force_date(force_date, date_buf, sizeof(date_buf)))
-+			die(_("invalid date format: %s"), force_date);
-+		date = date_buf;
-+	}
-+
- 	strbuf_addstr(author_ident, fmt_ident(name, email, date, IDENT_STRICT));
- 	if (!split_ident_line(&author, author_ident->buf, author_ident->len) &&
- 	    sane_ident_split(&author)) {
-diff --git a/t/t7501-commit.sh b/t/t7501-commit.sh
-index 5a76823..63e0427 100755
---- a/t/t7501-commit.sh
-+++ b/t/t7501-commit.sh
-@@ -351,8 +351,16 @@ test_expect_success 'commit mentions forced date in output' '
- 	grep "Date: *Sat Jan 2 03:04:05 2010" output
- '
- 
--test_expect_success 'commit complains about bogus date' '
--	test_must_fail git commit --amend --date=10.11.2010
-+test_expect_success 'commit complains about completely bogus dates' '
-+	test_must_fail git commit --amend --date=seventeen
-+'
-+
-+test_expect_success 'commit --date allows approxidate' '
-+	git commit --amend \
-+		--date="midnight the 12th of october, anno domini 1979" &&
-+	echo "Fri Oct 12 00:00:00 1979 +0000" >expect &&
-+	git log -1 --format=%ad >actual &&
-+	test_cmp expect actual
- '
- 
- test_expect_success 'sign off (1)' '
--- 
-1.9.1.656.ge8a0637
+Yeah, so? We cannot read minds, especially not the minds of the people
+that are not sitted in from of the computer.
+
+> It may be the most likely guess, but why guess when they've explicitl=
+y
+> asked for a prompt?
+
+*If* the user has specifically asked for a prompt, sure, ask. But I'm
+not particularly interested in that, because I'm certain very very few
+people would use --prompt.
+
+I'm interested in the defaults.
+
+--=20
+=46elipe Contreras
