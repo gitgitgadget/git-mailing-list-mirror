@@ -1,74 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: BUG or FEATURE? Use of '/' in branch names
-Date: Fri, 02 May 2014 15:16:07 -0700
-Message-ID: <xmqq61lnakt4.fsf@gitster.dls.corp.google.com>
+Date: Fri, 2 May 2014 15:16:17 -0700
+Message-ID: <20140502221617.GO9218@google.com>
 References: <5363D1B4.1000503@lge.com>
-	<AAC0CF0A2CCEC34CBE983015FD81C4F7392A504B61@AICEXMBXCL02.LGE.NET>
+ <AAC0CF0A2CCEC34CBE983015FD81C4F7392A504B61@AICEXMBXCL02.LGE.NET>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
-	"simon.busch\@lge.com" <simon.busch@lge.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	"simon.busch@lge.com" <simon.busch@lge.com>
 To: Keith Derrick <keith.derrick@lge.com>
-X-From: git-owner@vger.kernel.org Sat May 03 00:16:17 2014
+X-From: git-owner@vger.kernel.org Sat May 03 00:16:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WgLke-0004G4-K2
-	for gcvg-git-2@plane.gmane.org; Sat, 03 May 2014 00:16:16 +0200
+	id 1WgLkn-0004oB-Da
+	for gcvg-git-2@plane.gmane.org; Sat, 03 May 2014 00:16:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753016AbaEBWQN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 May 2014 18:16:13 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:62331 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752593AbaEBWQM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 May 2014 18:16:12 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id DFDB5122B3;
-	Fri,  2 May 2014 18:16:11 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=gmWtqZxujKJ5i2QB7D6FzSxdqgw=; b=f4Sz4E
-	3Z0OVgYTfUIQVpcRKPbtTEdrWI+TuXGPdd9fNULLoG3LNg9la6rkCNkJidtQEAaL
-	0MCsGukdoPvUUowFECnV8upLnQwR42WEVVnQ9w5AK/F+i5XKthFswo+zSCm078E9
-	5bHSujmZrscTJgO9E4DlMUa2hdg0h7ZRc+ZgQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UK1vdlVVZOddcosSxPPzKFaY4MziU4Gk
-	REUSrR5yLVzQo9j2QBHu9oYxcRNLLrkqTly8yERK/E5ovM3nQcFiLuqEjDAMP+c0
-	AjCs6zLft3SRASU7ucrWSpCERjmfrs9yAgyWXe0wV3hk4+UoWPpWp8DJM+2TrzX6
-	dCACsM+gxY8=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D2F8A122B2;
-	Fri,  2 May 2014 18:16:11 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id BF2B2122B1;
-	Fri,  2 May 2014 18:16:08 -0400 (EDT)
+	id S1753079AbaEBWQV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 May 2014 18:16:21 -0400
+Received: from mail-pd0-f172.google.com ([209.85.192.172]:43481 "EHLO
+	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752926AbaEBWQU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 May 2014 18:16:20 -0400
+Received: by mail-pd0-f172.google.com with SMTP id g10so5343857pdj.3
+        for <git@vger.kernel.org>; Fri, 02 May 2014 15:16:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=BA8h6l0hSu7G3uuQ2gdtDHk4PB9HhAnKwjUh9s1kYBM=;
+        b=d+tSwdZBLnciRP277yS/MUgXLnSX8oS3/XHF9Ivrgh6D2LOCM8j6FapRrhHffAgBVg
+         P+QB9C0RBnKlRrIs6qVUd3Y5NhXdNNh0WBsxwqv0tQ6OOb/YUNYY5bdcxTp2pHoCAraQ
+         5tebWjAGn1a34ij4gdByBJb6R+4NJESeR2/O5vy1KvmVldPoobH7OPFyf/YmBGDDwfRc
+         mAbCcVy9XtDEQSRVEtvjQBXQd8eHDSD9nmGQbeLblScM+BdprvGryrThceZwTcETj5N/
+         Dnb6CC81qI8/mFoPiFJyuTnW/ToBYylNxzms7eYxIp4aKu2Dt5UvC4zw0NbVRdzAngyD
+         aYRQ==
+X-Received: by 10.67.1.39 with SMTP id bd7mr39839995pad.15.1399068980088;
+        Fri, 02 May 2014 15:16:20 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id xr9sm1982894pab.5.2014.05.02.15.16.19
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 02 May 2014 15:16:19 -0700 (PDT)
+Content-Disposition: inline
 In-Reply-To: <AAC0CF0A2CCEC34CBE983015FD81C4F7392A504B61@AICEXMBXCL02.LGE.NET>
-	(Keith Derrick's message of "Fri, 2 May 2014 18:04:29 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 5C84D6DA-D247-11E3-A250-9CEB01674E00-77302942!pb-smtp0.pobox.com
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247995>
 
-Keith Derrick <keith.derrick@lge.com> writes:
+Hi Keith,
 
-> The problem arises when a branch already exists with a name
-> matching the stem of the new branch name.
-> ...
-> But, for the reverse reason, I can't now create the branch named 'hotfix'
+Keith Derrick wrote:
 
-All correct.  Allowing '/' in branch names came about not with a
-careful design but was done by a happy accident, and we accepted it
-under the condition "as long as users know that they cannot have
-branches D and D/F at the same time, that is fine".
+>     $ git checkout -b hotfix
+>     Switched to a new branch 'hotfix'
+>     $ git checkout -b hotfix/b2
+>     error: unable to resolve reference refs/heads/hotfix/b2: Not a directory
+>     fatal: Failed to lock ref for update: Not a directory
+>     $
 
-An obvious alternative convention you can adopt would be to use not
-'/' but some other separating characters (e.g. "_") as your
-hierarchy delimiter, if you must have D and D_F at the same time.
+That's an ugly message.  I think we can do better. (hint hint)
+
+Longer term, I think people would like to make it possible for a
+'hotfix' and 'hotfix/b2' branch to coexist, but that will take some
+work, and until then, git tries to be careful about enforcing the
+constraint that they cannot coexist.
+
+Fixing it would be complicated by the need to avoid breaking people
+with older versions of git when they fetch from you (what happens to
+the origin/hotfix and origin/hotfix/b2 remote-tracking refs on the
+client side?).
+
+Thanks and hope that helps,
+Jonathan
