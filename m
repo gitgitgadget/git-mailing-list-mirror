@@ -1,103 +1,94 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v6 4/7] pull: add --merge option
-Date: Thu, 01 May 2014 21:41:34 -0500
-Message-ID: <536305def1e35_23b2147b2f0bb@nysa.notmuch>
-References: <1398988808-29678-1-git-send-email-felipe.contreras@gmail.com>
- <1398988808-29678-5-git-send-email-felipe.contreras@gmail.com>
- <20140502013753.GE75770@vauxhall.crustytoothpaste.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v6 20/42] fetch.c: clear errno before calling functions
+ that might set it
+Date: Fri, 2 May 2014 00:11:55 -0400
+Message-ID: <CAPig+cRa55472sncNsBnweR9Dj2HwTttu4t3GLP8buoTK59DyA@mail.gmail.com>
+References: <1398976662-6962-1-git-send-email-sahlberg@google.com>
+	<1398976662-6962-21-git-send-email-sahlberg@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Andreas Krey <a.krey@gmx.de>,
-	John Keeping <john@keeping.me.uk>, Jeff King <peff@peff.net>,
-	Richard Hansen <rhansen@bbn.com>,
-	Philip Oakley <philipoakley@iee.org>,
-	"W. Trevor King" <wking@tremily.us>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 02 04:52:30 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Ronnie Sahlberg <sahlberg@google.com>
+X-From: git-owner@vger.kernel.org Fri May 02 06:13:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wg3aP-0002q5-J1
-	for gcvg-git-2@plane.gmane.org; Fri, 02 May 2014 04:52:29 +0200
+	id 1Wg4qX-0003DO-DN
+	for gcvg-git-2@plane.gmane.org; Fri, 02 May 2014 06:13:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751366AbaEBCwQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 May 2014 22:52:16 -0400
-Received: from mail-oa0-f54.google.com ([209.85.219.54]:64085 "EHLO
-	mail-oa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750798AbaEBCwP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 May 2014 22:52:15 -0400
-Received: by mail-oa0-f54.google.com with SMTP id j17so118126oag.41
-        for <git@vger.kernel.org>; Thu, 01 May 2014 19:52:15 -0700 (PDT)
+	id S1750751AbaEBEL4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 May 2014 00:11:56 -0400
+Received: from mail-yh0-f46.google.com ([209.85.213.46]:39244 "EHLO
+	mail-yh0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750699AbaEBEL4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 May 2014 00:11:56 -0400
+Received: by mail-yh0-f46.google.com with SMTP id 29so1335848yhl.33
+        for <git@vger.kernel.org>; Thu, 01 May 2014 21:11:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=ArpnIxMy/6zGObN8Evl2Cm3efbRKS8nnZxYAe/xMtwY=;
-        b=GJfgmszp9WPDT8AZZ4SI3M5kRtYzfH4W7Choo3hjeGKz3efoT+N67VL99Vo5LZCtJr
-         uPPXsD/h5Yv3bSweoyG9Zm0suMRvy/2UpeU9bzDYG1etsGSaxX+YLgc4RxRLW1vRIuao
-         /KNFKupKbHHM2OSA+o+ZDZ3yhomuyOOBQRHXFWaIuSQx8x3tMv0NGM5N05lih33SwYDO
-         MrnP9EXcFa1CnLqzwuigyF44GHdDxd26PSeOHLyPp85EXgxZCStFlLbCDJHH7ez2tKfN
-         00hN19YoSvhAUyhk9XrF8QVlu3p+IWNZGaxNnJCDzmEEfrN29PJnMvCZUB3hyNIE6BV7
-         2ptw==
-X-Received: by 10.60.17.132 with SMTP id o4mr14392121oed.34.1398999134992;
-        Thu, 01 May 2014 19:52:14 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id f1sm124470052oej.5.2014.05.01.19.52.11
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 01 May 2014 19:52:13 -0700 (PDT)
-In-Reply-To: <20140502013753.GE75770@vauxhall.crustytoothpaste.net>
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=Pii5D9XH+hya7d3xc12mH0VXDFSSqw4O1d8U4Nuj0qI=;
+        b=rjMrYxj4bS3lyWO/F261Jf3jKAO0lVyIWNTH5EFGhQpUUHMi8rxUGYlg80+Lp5p1Dv
+         zzN9QwI8WHIzeM7l+zsbImho3Aw6wmGytlRnVd8JIPyAazriYoVu27CXmIp/RrLl4Hi7
+         ldapJL0BSzuACcCdQcb1Db8ymPu2RRlI6W8o9qePBcwODh3sLLDGc98ETdpx+KwbK3+Y
+         HQRZCfWSU9sjsRTv5eUXFERX8K4lNyxu44KYjuKyMh4DE3kIVD1hJjwE+uw7IaeYfWM0
+         nUmKmYAkPkmRFat+Z802zGjz+A4mT5mKG5FsZeG0CJN2sEOdPMKOIjeMxDPcSKQp+unk
+         UK7Q==
+X-Received: by 10.236.194.169 with SMTP id m29mr19562409yhn.121.1399003915398;
+ Thu, 01 May 2014 21:11:55 -0700 (PDT)
+Received: by 10.170.163.66 with HTTP; Thu, 1 May 2014 21:11:55 -0700 (PDT)
+In-Reply-To: <1398976662-6962-21-git-send-email-sahlberg@google.com>
+X-Google-Sender-Auth: 2NZcoK0jse8q9-Laxc3-7O0MYiE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247922>
 
-brian m. carlson wrote:
-> On Thu, May 01, 2014 at 07:00:05PM -0500, Felipe Contreras wrote:
-> > Also, deprecate --no-rebase since there's no need for it any more.
-> > 
-> > Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> > ---
-> >  Documentation/git-pull.txt |  8 ++++++--
-> >  git-pull.sh                | 10 +++++++++-
-> >  2 files changed, 15 insertions(+), 3 deletions(-)
-> > 
-> > diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
-> > index 9a91b9f..767bca3 100644
-> > --- a/Documentation/git-pull.txt
-> > +++ b/Documentation/git-pull.txt
-> > @@ -127,8 +127,12 @@ It rewrites history, which does not bode well when you
-> >  published that history already.  Do *not* use this option
-> >  unless you have read linkgit:git-rebase[1] carefully.
-> >  
-> > ---no-rebase::
-> > -	Override earlier --rebase.
-> > +-m::
-> > +--merge::
-> > +	Force a merge.
-> > ++
-> > +See `pull.mode`, `branch.<name>.pullmode` in linkgit:git-config[1] if you want
-> > +to make `git pull` always use `--merge`.
-> 
-> So I'm confused here, and maybe you can enlighten me.  As I read this
-> documentation, --merge would always force a merge, like --no-ff.  If so,
-> I don't see an option to preserve the existing behavior, which is the
-> I-don't-care-just-do-it case.  If the behavior is different, then this
-> documentation needs to be improved, I think, along with the
-> documentation earlier in the series.
+On Thu, May 1, 2014 at 4:37 PM, Ronnie Sahlberg <sahlberg@google.com> wrote:
+> In s_update_ref there are two calls that when they fail we return an error
+> based on the errno value. In particular we want to return a specific error
+> if ENOTDIR happened. Both these functions do have failure modes where they
+> may return an error without updating errno, in which case a previous and
+> unrelated ENOTDIT may cause us to return the wrong error. Clear errno before
 
-I don't understand what is your point.
+s/ENOTDIT/ENOTDIR/
 
-So basically you think these should be the same?
-
-  % git pull --merge --no-merge --rebase --no-rebase
-  % git pull
-
--- 
-Felipe Contreras
+> calling any functions if we check errno afterwards.
+>
+> Also skip initializing a static variable to 0. Statics live in .bss and
+> are all automatically initialized to 0.
+>
+> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+> ---
+>  builtin/fetch.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+>
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index 55f457c..a93c893 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -44,7 +44,7 @@ static struct transport *gtransport;
+>  static struct transport *gsecondary;
+>  static const char *submodule_prefix = "";
+>  static const char *recurse_submodules_default;
+> -static int shown_url = 0;
+> +static int shown_url;
+>
+>  static int option_parse_recurse_submodules(const struct option *opt,
+>                                    const char *arg, int unset)
+> @@ -382,6 +382,8 @@ static int s_update_ref(const char *action,
+>         if (!rla)
+>                 rla = default_rla.buf;
+>         snprintf(msg, sizeof(msg), "%s: %s", rla, action);
+> +
+> +       errno = 0;
+>         lock = lock_any_ref_for_update(ref->name,
+>                                        check_old ? ref->old_sha1 : NULL,
+>                                        0, NULL);
+> --
+> 2.0.0.rc1.351.g4d2c8e4
