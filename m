@@ -1,82 +1,101 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: Pull is Mostly Evil
-Date: Fri, 2 May 2014 17:05:29 +0100
-Organization: OPDS
-Message-ID: <C439C0C76DA44AB5AAC91E7C0D2991BA@PhilipOakley>
-References: <5363BB9F.40102@xiplink.com> <87k3a4xjzg.fsf@fencepost.gnu.org>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Phil Hord <phil.hord@gmail.com>
+Subject: Re: Zsh submodule name completion borked
+Date: Fri, 2 May 2014 12:23:02 -0400
+Message-ID: <CABURp0qdd6LYVfF0g8BWo_xjK36LbS=EnXkF_Kb4XQPM8U9r_g@mail.gmail.com>
+References: <CABURp0oS0qnyVhfV1rsaNXT-88QJvgpNn+meApNKRTGdULDXpA@mail.gmail.com>
+ <5362cc42ed06d_569a13852ecb@nysa.notmuch>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-To: <git@vger.kernel.org>, "David Kastrup" <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Fri May 02 18:05:42 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: Felipe Contreras <felipe.contreras@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 02 18:23:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WgFy1-0005SG-4F
-	for gcvg-git-2@plane.gmane.org; Fri, 02 May 2014 18:05:41 +0200
+	id 1WgGFK-0002Aq-8b
+	for gcvg-git-2@plane.gmane.org; Fri, 02 May 2014 18:23:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753923AbaEBQFf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 May 2014 12:05:35 -0400
-Received: from out1.ip06ir2.opaltelecom.net ([62.24.128.242]:9190 "EHLO
-	out1.ip06ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753100AbaEBQFb (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 2 May 2014 12:05:31 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AiNTAPXBY1MCYJ6l/2dsb2JhbABagwZfA4hpvB0FAQIBDIEFF3SCIAUBAQQBCAEBLh4BASwCAwUCAQMVDCUUAQQaBgcXBgESCAIBAgMBiCgMq1+eZo8HgnaBFQSJTIY4nBuDNTw
-X-IPAS-Result: AiNTAPXBY1MCYJ6l/2dsb2JhbABagwZfA4hpvB0FAQIBDIEFF3SCIAUBAQQBCAEBLh4BASwCAwUCAQMVDCUUAQQaBgcXBgESCAIBAgMBiCgMq1+eZo8HgnaBFQSJTIY4nBuDNTw
-X-IronPort-AV: E=Sophos;i="4.97,973,1389744000"; 
-   d="scan'208";a="610892892"
-Received: from host-2-96-158-165.as13285.net (HELO PhilipOakley) ([2.96.158.165])
-  by out1.ip06ir2.opaltelecom.net with SMTP; 02 May 2014 17:05:29 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1753417AbaEBQXZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 May 2014 12:23:25 -0400
+Received: from mail-wg0-f41.google.com ([74.125.82.41]:47995 "EHLO
+	mail-wg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752774AbaEBQXY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 May 2014 12:23:24 -0400
+Received: by mail-wg0-f41.google.com with SMTP id b13so202264wgh.12
+        for <git@vger.kernel.org>; Fri, 02 May 2014 09:23:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=n9GOJogKmklfejnlH9dztmLxmrrDdSBvw40iylCzmCs=;
+        b=Y6EGgqbYas4+7qTNK0HtyhEy0FZjDYVchxOtPxjdtsxw/EtG6iHOzii7CGodqxvFDl
+         T2OaiBU0j4TeGXTC9fN4Ul0/A60Tfjo/+MOq0Xbn822OPcc+ZyI5eWmml9LtRA3bWHPt
+         Eht+rnUg2JN+TiUlvrNxReWPYD8/W5wV/GPhN+ju6vWqepXqBDbcTpEH7T0huTbKf5Su
+         001wemZ/SMeGrhZFbOnLduXYCo1bxm7UodTNYm2upBLac8m5tvWGF84qiri9VackeU6k
+         d2tvqp+KBuqZpEGOBD4ZZ3cXRNBcYwKkrA78Vtyfr3WGckECe4GxsrtQcgOCIqr5RZ6j
+         W0QQ==
+X-Received: by 10.194.60.114 with SMTP id g18mr2514169wjr.61.1399047802611;
+ Fri, 02 May 2014 09:23:22 -0700 (PDT)
+Received: by 10.227.231.193 with HTTP; Fri, 2 May 2014 09:23:02 -0700 (PDT)
+In-Reply-To: <5362cc42ed06d_569a13852ecb@nysa.notmuch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247942>
 
-From: "David Kastrup" <dak@gnu.org>
-> Marc Branchaud <marcnarc@xiplink.com> writes:
+On Thu, May 1, 2014 at 6:35 PM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> Phil Hord wrote:
+>> When I use zsh tab-completion to complete the submodule name in 'git
+>> submodule init', I get more than I expected.
+>>
+>> From the gerrit repository (which has plugins):
+>>   $ git submodule init plugins/<TAB>
+>>   plugins/commit-message-length-validator\ \(v1.0-rc1-9-g545000b\)
+>>   plugins/reviewnotes\ \(v1.0-rc1-8-ge984300\)
+>>   plugins/replication\ \(v1.1-rc0-13-g4c3f4c9\)
+>>
+>> It works ok in bash.  I tried to bisect the trouble, but it still
+>> fails in 1.8.3, so I'm beginning to think it's me.  Does this happen
+>> to anyone else?  Is it something in my local configuration causing
+>> this?
 >
->> To that end, I suggest that pull's default behaviour should be to do
->> *nothing*.  It should just print out a message to the effect that it
->> hasn't been configured, and that the user should run "git help pull"
->> for guidance.
->
-> Fetching is uncontentious, and I _think_ that fast-forwards are pretty
-> uncontentious as well.
 
-While the fast forward is /pretty/ uncontentious, it still maybe 
-contentious for some. But more importantly (in my mind) is the fact that 
-it (git pull) hasn't been configured, and pressing for _that_ to happen 
-is the big benefit.
+It seems to be something local.  I thought the issue persisted with no
+local .zshrc config, but it looks like I only turned off my local
+config and not the global settings.  The recent Ubuntu update is a
+likely culprit.  I'll investigate locally and turn my reports up to
+Ubuntu/Debian/Zshell.
 
-I'm more than happy that the fast-forward should be the recommended 'if 
-you don't know, choose this' option, as you say, its pretty 
-uncontentious and has easy mechanisms for backing out which are well 
-illustrated across the internet.
+> Define 'works' in bash. From what I can see from the bash completion,
+> it's not doing anything special, so the completion you see are simply
+> files.
 
-It would still need a few cycles of ramping up the warnings to ease folk 
-in gently. One has to beware of the issues at both ends of the Kruger 
-Dunning curve. This thread discussion in some ways has suffered from the 
-inverse K-D effect.
+To clarify my description in case anyone else sees it or is
+interested, before I load /etc/zsh/zshrc, tab gives me simple filename
+expansion.
 
->
-> It's just when the merge-left/merge-right/rebase-left/rebase-right
-> decision kicks in that prescribing one git-pull behavior looks like a
-> recipe for trouble.
->
-> -- 
-> David Kastrup
->
---
-Philip
+After I load /etc/zsh/zshrc, tab expands only submodules in HEAD.  But
+for some reason it gets the wrong kind of results in the expansion,
+returning not just submodule paths, but submodule paths with tag info
+appended.
+
+Sample session:
+  $ zsh --norcs
+  % git submodule init plugins/<TAB>
+   commit-message-length-validator/
+   README
+   reviewnotes/
+   replication/
+  ^C
+  % source /etc/zsh/zshrc
+  % git submodule init plugins/<TAB>
+  plugins/commit-message-length-validator\ \(v1.0-rc1-9-g545000b\)
+  plugins/reviewnotes\ \(v1.0-rc1-8-ge984300\)
+  plugins/replication\ \(v1.1-rc0-13-g4c3f4c9\)
