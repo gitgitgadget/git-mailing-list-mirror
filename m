@@ -1,112 +1,109 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: [PATCH v6 1/7] pull: rename pull.rebase to pull.mode
-Date: Fri, 2 May 2014 07:13:59 -0700
-Message-ID: <20140502141359.GE28634@odin.tremily.us>
-References: <1398988808-29678-1-git-send-email-felipe.contreras@gmail.com>
- <1398988808-29678-2-git-send-email-felipe.contreras@gmail.com>
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: Re: [PATCH v6 20/42] fetch.c: clear errno before calling functions
+ that might set it
+Date: Fri, 2 May 2014 07:48:16 -0700
+Message-ID: <CAL=YDW=CEQedqJ2S=MrPG3YnavJVyVYg_X7FbE3QwpNDQ3Ofhw@mail.gmail.com>
+References: <1398976662-6962-1-git-send-email-sahlberg@google.com>
+	<1398976662-6962-21-git-send-email-sahlberg@google.com>
+	<CAPig+cRa55472sncNsBnweR9Dj2HwTttu4t3GLP8buoTK59DyA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="YkJPYEFdoxh/AXLE"
-Cc: git@vger.kernel.org, Andreas Krey <a.krey@gmx.de>,
-	John Keeping <john@keeping.me.uk>, Jeff King <peff@peff.net>,
-	Richard Hansen <rhansen@bbn.com>,
-	Philip Oakley <philipoakley@iee.org>,
-	"Brian M. Carlson" <sandals@crustytoothpaste.net>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 02 16:14:10 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Fri May 02 16:48:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WgEE6-0004LI-6Z
-	for gcvg-git-2@plane.gmane.org; Fri, 02 May 2014 16:14:10 +0200
+	id 1WgElB-0004DX-S9
+	for gcvg-git-2@plane.gmane.org; Fri, 02 May 2014 16:48:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751501AbaEBOOF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 May 2014 10:14:05 -0400
-Received: from qmta05.westchester.pa.mail.comcast.net ([76.96.62.48]:48636
-	"EHLO qmta05.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751318AbaEBOOE (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 2 May 2014 10:14:04 -0400
-Received: from omta21.westchester.pa.mail.comcast.net ([76.96.62.72])
-	by qmta05.westchester.pa.mail.comcast.net with comcast
-	id wzKr1n0021ZXKqc552E2iX; Fri, 02 May 2014 14:14:02 +0000
-Received: from odin.tremily.us ([24.18.63.50])
-	by omta21.westchester.pa.mail.comcast.net with comcast
-	id x2E01n00J152l3L3h2E1ea; Fri, 02 May 2014 14:14:02 +0000
-Received: by odin.tremily.us (Postfix, from userid 1000)
-	id 67CFA1174034; Fri,  2 May 2014 07:13:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1399040039; bh=PhvjsG6Ztj2xB23zyZZZvJ5gauvDr5QEPqWXe9CO9tU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=oWEGzaCOMGsNMCxqirBBkK+ZyTgHMeKNFt6B/8CxkFCXgGtm3uewth0CSfci46wuf
-	 S2NgPYB9PIr+nTUwuGjLwDXmGjAgh+/qGWGjJ8PzPEeD+Mcy/AaoLgW54EKRisXs1O
-	 fVB1u5A/e495iLCyIR3MXcs1YnwuilNMNw5PvsMA=
-Content-Disposition: inline
-In-Reply-To: <1398988808-29678-2-git-send-email-felipe.contreras@gmail.com>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.23 (2014-03-12)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20140121; t=1399040042;
-	bh=0D+4qkw7vgEJolg3lvY73femIkmFDJASCnnNU312Qgg=;
-	h=Received:Received:Received:Date:From:To:Subject:Message-ID:
-	 MIME-Version:Content-Type;
-	b=YHjI7EVP2lXGlA4aOrAodEuBh71stHOvPPcvQ2IsICJxgvME9hJjmOwh3zjWK7dyG
-	 kMufTky+4Z69TwbiKaK4Hchgg+pGlPNvEwl8BoP4f3B7veptL//S+AoB5koOOe9GZK
-	 WLi+3rddOsJ6nA8jIWM7oEPEpLVfZd3dIrnCd6oxCmdtEaCt8RQdVRo5pcrhanwhz/
-	 FRYkkx901sVy/ArB4Hrp9OHBeCx7wd4eoIc2YgX904FqJ1MAfxg+NDnzZ55mlUU7bJ
-	 dPo8dQoWC96ipnU5paXHXJo30gbE2CJFqj12rfn/oG5BAATm/lzpkOZUh54PdbiTgR
-	 tySEB9ucyajvQ==
+	id S1752146AbaEBOsS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 May 2014 10:48:18 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:50280 "EHLO
+	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750991AbaEBOsR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 May 2014 10:48:17 -0400
+Received: by mail-ob0-f174.google.com with SMTP id gq1so5263275obb.5
+        for <git@vger.kernel.org>; Fri, 02 May 2014 07:48:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=azlqu1G1CAqbC6ARPuueYPgYZKGmSL5fhUCpI5TbSyo=;
+        b=KULotcqRpiTi7yxYl4gA0njahwWkggXIguBKGVKzL7KqbwT6iG3N35REIFw4RaXOD3
+         2FkrsntlZWl3r1Pq5TgRnP6pwEwueJmPZhZ/Ivkxkfn1hZ2ATcEUdWuGuMJ82JyTIDc/
+         8ouwZE2bfnidnKHR94fg7NMhOLfmghxEp6hX60OQxGHa3SU3WRErFIB7+m33jdIznphZ
+         D/ddSSbhkuBzpKs8h7XQwYaHN/4lqQxluTVQRWdeEuEVrvPHjnBPyc8YxiinN9u2mWaT
+         9FZc64MFzOYPKsPzs3+178rHduj/AbS0KI21AI0xJkoIRRXW2dmRW0MeBgqIgbu41TaX
+         qZ7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=azlqu1G1CAqbC6ARPuueYPgYZKGmSL5fhUCpI5TbSyo=;
+        b=If40bABRIvAL7ii6StsXFZxSnO0keTtHLnFG3PBswG7WcEVbwXy+PQ1WuTr2DPdDMA
+         /jGXK+BLdE71rzjRBFSnXlUJ5CpvzIm61lBZPky5VEqYJTkoJZ1Bo6bDkEib3XX9u299
+         kJGTiP1CZkU1pAEWm6jO2x7PveBT9LDvSRjHXz3Q/tVLrq7WCkUCmgPbv00C7aQSLgEk
+         Q5F0U2BibAP2o7EUykqWdMZSvetL6rJ4PLSQ1Ej9m6ZuPhB4pgTgVxQk68CMDU97RAuW
+         f6/ekigaiGUwoxncr8Ey1Ru7p+SDzB2fkxvpzv2D6Gb9JWJnlpxrGKGd0qCxb3abjj9m
+         P1ZQ==
+X-Gm-Message-State: ALoCoQnIcpLPemwFlSKnTjqGYt11xJDV3/uB4T7i0VwAmyQL/Ueg4ZIOz7wGuh1obF46hwExyked
+X-Received: by 10.60.57.164 with SMTP id j4mr17356095oeq.24.1399042096470;
+ Fri, 02 May 2014 07:48:16 -0700 (PDT)
+Received: by 10.182.108.35 with HTTP; Fri, 2 May 2014 07:48:16 -0700 (PDT)
+In-Reply-To: <CAPig+cRa55472sncNsBnweR9Dj2HwTttu4t3GLP8buoTK59DyA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247934>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247935>
 
+Fixed. Thanks.
 
---YkJPYEFdoxh/AXLE
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Thu, May 01, 2014 at 07:00:02PM -0500, Felipe Contreras wrote:
-> Also 'branch.<name>.rebase' to 'branch.<name>.pullmode'.
-
-Perhaps this has already been hashed out in a previous version of this
-series, but we may want to use pull.update and branch.<name>.update to
-match the existing submodule.<name>.update.  Both settings are
-selecting the default integration style between HEAD and some other
-reference (pull's remote branch, the gitlinked commit, or the
-submodule's --remote branch).
-
-Cheers,
-Trevor
-
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
-
---YkJPYEFdoxh/AXLE
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
-
-iQIcBAEBAgAGBQJTY6gkAAoJEKKfehoaNkbt41MP/3dHLprKV83mSrXh0KWQ8PyS
-PqSj/4oXZ2j70slGktpMn2HuHqNlxt24oBorVemynK9bUttaez86QQrWJohqQ9Jc
-bGeM87nOHHyw8il6oUoCyWbO6E3NPWV1HG+bgXVanqpigBFYAkk4BSPjCNLIfxFZ
-LuYb/AtDB6IHykbzdP6HU6i9Nujw3mWu0lfv4z0Lb8MX8p2brjBzjOiTJEZ9QRgD
-crAf3KAmqexg2evv0h43oyHnsvYvK5WlPlQ7hZ/wsjmL5aEYW1mG7bnVJ+cH+cig
-suW3PktqQWXr1NHRk4EttJKsOGqKXw0N327+l3a+4lJahOpGXRielz1qLIjC4+Ou
-5rZh0hUZPbCW6GklBaQHmM3BjCUtcTqvrprvE6oXWTGBK8asfKsn8/1G9KaEUyY8
-ZjwZxuFBGv+3vmmCm3wBU9QMJD0bwcRVkO6oD3NOkSDnLMpqItMXLcS+g5XxqfJe
-o332sgCdLm3LVGWwFePaUtO9kD3ple7snAsgPqrEoGzV5LZeO7uPngSRRMjDmQx+
-qMXQadx4VXHxSzkl9/p8MrDZUvQONU9+rtjYSzaCv+8Jk7+vJzjOGw9pML5pzx5e
-2gO0HVayFdBJYDEy2CnDHSK0rVW6j6sznmbh81PqwqSja2WyPf4tNXBS90212x9e
-uPikl00iyvhj8qN0AI+p
-=c89O
------END PGP SIGNATURE-----
-
---YkJPYEFdoxh/AXLE--
+On Thu, May 1, 2014 at 9:11 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Thu, May 1, 2014 at 4:37 PM, Ronnie Sahlberg <sahlberg@google.com> wrote:
+>> In s_update_ref there are two calls that when they fail we return an error
+>> based on the errno value. In particular we want to return a specific error
+>> if ENOTDIR happened. Both these functions do have failure modes where they
+>> may return an error without updating errno, in which case a previous and
+>> unrelated ENOTDIT may cause us to return the wrong error. Clear errno before
+>
+> s/ENOTDIT/ENOTDIR/
+>
+>> calling any functions if we check errno afterwards.
+>>
+>> Also skip initializing a static variable to 0. Statics live in .bss and
+>> are all automatically initialized to 0.
+>>
+>> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+>> ---
+>>  builtin/fetch.c | 4 +++-
+>>  1 file changed, 3 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/builtin/fetch.c b/builtin/fetch.c
+>> index 55f457c..a93c893 100644
+>> --- a/builtin/fetch.c
+>> +++ b/builtin/fetch.c
+>> @@ -44,7 +44,7 @@ static struct transport *gtransport;
+>>  static struct transport *gsecondary;
+>>  static const char *submodule_prefix = "";
+>>  static const char *recurse_submodules_default;
+>> -static int shown_url = 0;
+>> +static int shown_url;
+>>
+>>  static int option_parse_recurse_submodules(const struct option *opt,
+>>                                    const char *arg, int unset)
+>> @@ -382,6 +382,8 @@ static int s_update_ref(const char *action,
+>>         if (!rla)
+>>                 rla = default_rla.buf;
+>>         snprintf(msg, sizeof(msg), "%s: %s", rla, action);
+>> +
+>> +       errno = 0;
+>>         lock = lock_any_ref_for_update(ref->name,
+>>                                        check_old ? ref->old_sha1 : NULL,
+>>                                        0, NULL);
+>> --
+>> 2.0.0.rc1.351.g4d2c8e4
