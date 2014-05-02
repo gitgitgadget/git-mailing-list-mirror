@@ -1,69 +1,71 @@
-From: Andreas Krey <a.krey@gmx.de>
-Subject: Re: Pull is Evil
-Date: Fri, 2 May 2014 09:40:27 +0200
-Message-ID: <20140502074027.GB6288@inner.h.apk.li>
-References: <4ay6w9i74cygt6ii1b0db7wg.1398433713382@email.android.com> <xmqqoazlqot4.fsf@gitster.dls.corp.google.com> <536106EA.5090204@xiplink.com> <xmqqppjyhnom.fsf@gitster.dls.corp.google.com> <536152D3.5050107@xiplink.com> <xmqqa9b2egcy.fsf@gitster.dls.corp.google.com>
+From: Charles Bailey <cbailey32@bloomberg.net>
+Subject: Re: [PATCH] Add extra logic required to detect endianness on Solaris
+Date: Fri, 2 May 2014 08:49:17 +0100
+Message-ID: <20140502074917.GA25198@hashpling.org>
+References: <1398930197-12851-1-git-send-email-cbailey32@bloomberg.net>
+ <xmqqa9b1coml.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Marc Branchaud <marcnarc@xiplink.com>,
-	Marat Radchenko <marat@slonopotamus.org>, git@vger.kernel.org
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 02 09:41:02 2014
+X-From: git-owner@vger.kernel.org Fri May 02 09:49:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wg85d-00013h-OF
-	for gcvg-git-2@plane.gmane.org; Fri, 02 May 2014 09:41:02 +0200
+	id 1Wg8Dk-0002J5-PP
+	for gcvg-git-2@plane.gmane.org; Fri, 02 May 2014 09:49:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751636AbaEBHk6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 May 2014 03:40:58 -0400
-Received: from continuum.iocl.org ([217.140.74.2]:46425 "EHLO
-	continuum.iocl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750858AbaEBHk5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 May 2014 03:40:57 -0400
-Received: (from krey@localhost)
-	by continuum.iocl.org (8.11.3/8.9.3) id s427eRe08079;
-	Fri, 2 May 2014 09:40:27 +0200
+	id S1751643AbaEBHtU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 May 2014 03:49:20 -0400
+Received: from avasout05.plus.net ([84.93.230.250]:49189 "EHLO
+	avasout05.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751402AbaEBHtU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 May 2014 03:49:20 -0400
+Received: from turing.int.hashpling.org ([212.159.69.125])
+	by avasout05 with smtp
+	id wvpF1n0062iA9hg01vpG6h; Fri, 02 May 2014 08:49:18 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.1 cv=WIHxXxcR c=1 sm=1 tr=0
+ a=wpJ/2au8Z6V/NgdivHIBow==:117 a=wpJ/2au8Z6V/NgdivHIBow==:17 a=Ew9TdX-QAAAA:8
+ a=0Bzu9jTXAAAA:8 a=J0QyKEt1u0cA:10 a=VVbyae50lWsA:10 a=N2sEI2mohSIA:10
+ a=BHUvooL90DcA:10 a=kj9zAlcOel0A:10 a=BNFp--SqAAAA:8 a=t6vHy8rRs7sRERAV4agA:9
+ a=CjuIK1q_8ugA:10
+Received: from charles by turing.int.hashpling.org with local (Exim 4.82)
+	(envelope-from <charles@hashpling.org>)
+	id 1Wg8Dd-0006bO-Aa; Fri, 02 May 2014 08:49:17 +0100
 Content-Disposition: inline
-In-Reply-To: <xmqqa9b2egcy.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.4.2.1i
-X-message-flag: What did you expect to see here?
+In-Reply-To: <xmqqa9b1coml.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247927>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247928>
 
-On Wed, 30 Apr 2014 13:01:49 +0000, Junio C Hamano wrote:
-...
-> I didn't mean "replace 'pull' with 'update' everywhere".  I meant
-> "Introduce 'update' that lets integrate your history into that from
-> the remote, which is to integrate in a direction opposite from how
-> 'pull' does".  
+On Thu, May 01, 2014 at 11:58:26AM -0700, Junio C Hamano wrote:
+> 
+> This patch seems to address two unrelated issues in that.
+> 
+>  (1) The existing support does not help a platform where the
+>      convention is to define either _BIG_ENDIAN (with one leading
+>      underscore) or _LITTLE_ENDIAN and not both, which is Solaris
+>      but there may be others.
+> 
+>  (2) There may be __LITTLE_ENDIAN and __BIG_ENDIAN macros already
+>      defined on the platform.  Or these may not have been defined at
+>      all.  You avoid unconditionally redefing these.
+> 
+> I find the latter iffy.
 
-That still doesn't quite solve my problem. If I'm tracking origin/master
-in a local master branch, I can just use 'git pull' to get my 'feature'
-branch (which is named master) updated to the current state of the origin.
-This amounts to 'integrating' origin/master into my master.
+Yes, you are right. I think I was uncomfortable defining macros with
+names reserved for the implementation even if the implementation didn't
+seem to be using them. I think I made my patch less correct as a result.
+Looking at the rest of the git source code we don't seem to use any of
+these macros anywhere else so perhaps we could use macros specific to
+GIT?
 
-When I finally want to deliver and push to origin/master, I put on the
-integrator's hat, and I cat do a 'git update' that will do the merge
-in reverse, and push the result to origin/master. The result will look
-like origin pulled my master branch into his.
+Let me follow up with an alternative patch.
 
-Problem is that whether to use pull or update depends on whether I
-intend to push afterwards; and additionally, if I can push fast-forward
-without needing to 'git update' the integration into origin/master will
-look weird.
-
-(Oh, and please don't name it 'update' - we have an important alias
-of that name.)
-
-Andreas
-
--- 
-"Totally trivial. Famous last words."
-From: Linus Torvalds <torvalds@*.org>
-Date: Fri, 22 Jan 2010 07:29:21 -0800
+Charles.
