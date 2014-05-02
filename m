@@ -1,68 +1,61 @@
 From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH 1/8] CodingGuidelines: typofix
-Date: Fri, 02 May 2014 22:53:26 +0200
-Message-ID: <871twbykah.fsf@fencepost.gnu.org>
-References: <1398894312-30763-1-git-send-email-gitster@pobox.com>
-	<1398894312-30763-2-git-send-email-gitster@pobox.com>
-	<87tx99zj31.fsf@fencepost.gnu.org>
-	<xmqqoazhcrqg.fsf@gitster.dls.corp.google.com>
-	<20140501212714.GB14441@sigill.intra.peff.net>
-	<xmqqfvksav81.fsf@gitster.dls.corp.google.com>
-	<20140502203327.GB32500@sigill.intra.peff.net>
-	<53640220eeca1_135215292ec1b@nysa.notmuch>
+Subject: Re: Pull is Mostly Evil
+Date: Fri, 02 May 2014 21:37:25 +0200
+Message-ID: <8761lox98q.fsf@fencepost.gnu.org>
+References: <5363BB9F.40102@xiplink.com> <87k3a4xjzg.fsf@fencepost.gnu.org>
+	<alpine.DEB.2.02.1405021227161.14881@nftneq.ynat.uz>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 02 22:53:45 2014
+Cc: git@vger.kernel.org
+To: David Lang <david@lang.hm>
+X-From: git-owner@vger.kernel.org Fri May 02 22:53:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WgKSm-0005pa-Pq
-	for gcvg-git-2@plane.gmane.org; Fri, 02 May 2014 22:53:45 +0200
+	id 1WgKSn-0005pa-UA
+	for gcvg-git-2@plane.gmane.org; Fri, 02 May 2014 22:53:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752401AbaEBUxk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 May 2014 16:53:40 -0400
-Received: from fencepost.gnu.org ([208.118.235.10]:35785 "EHLO
+	id S1752801AbaEBUxm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 May 2014 16:53:42 -0400
+Received: from fencepost.gnu.org ([208.118.235.10]:35787 "EHLO
 	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752136AbaEBUxk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 May 2014 16:53:40 -0400
-Received: from localhost ([127.0.0.1]:34821 helo=lola)
+	with ESMTP id S1752136AbaEBUxl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 May 2014 16:53:41 -0400
+Received: from localhost ([127.0.0.1]:34822 helo=lola)
 	by fencepost.gnu.org with esmtp (Exim 4.71)
 	(envelope-from <dak@gnu.org>)
-	id 1WgKSg-0003yh-Sa; Fri, 02 May 2014 16:53:39 -0400
+	id 1WgKSg-0003yi-TP; Fri, 02 May 2014 16:53:39 -0400
 Received: by lola (Postfix, from userid 1000)
-	id 59625E0D2A; Fri,  2 May 2014 22:53:26 +0200 (CEST)
-In-Reply-To: <53640220eeca1_135215292ec1b@nysa.notmuch> (Felipe Contreras's
-	message of "Fri, 02 May 2014 15:37:52 -0500")
+	id 4BD56E0D26; Fri,  2 May 2014 21:37:25 +0200 (CEST)
+In-Reply-To: <alpine.DEB.2.02.1405021227161.14881@nftneq.ynat.uz> (David
+	Lang's message of "Fri, 2 May 2014 12:31:27 -0700 (PDT)")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247976>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247977>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+David Lang <david@lang.hm> writes:
 
-> Jeff King wrote:
->> On Fri, May 02, 2014 at 11:31:10AM -0700, Junio C Hamano wrote:
->> 
->> > But let's follow this one:
->> > 
->> > http://www.google.com/trends/explore#q=judgement%20call%2C%20judgment%20call&cmpt=q
->> > 
->> > which seems to say that with 'e' is more common.
->> 
->> Grammar by democracy. ;)
+> On Fri, 2 May 2014, David Kastrup wrote:
 >
-> Languages are a democracy. There's no authority that decides if
-> "unibrow" should become part of the English language. We all do.
+>> It's just when the merge-left/merge-right/rebase-left/rebase-right
+>> decision kicks in that prescribing one git-pull behavior looks like a
+>> recipe for trouble.
+>
+> confusion at least. It's not fatal confusion, people have been using
+> it for years after all.
 
-Well, and the U.S. justice system rather supports the hyphenation judge-
-mental.
+It's one of the most frequent causes for educating newcomers what they
+have been doing wrong in the LilyPond project.  Including the occasional
+blunder from experienced people who did not notice that they got a
+non-ff merge as a mergeday present.
+
+It's one of the main things putting new contributors on edge and causing
+anxiety about messing up again.
 
 -- 
 David Kastrup
