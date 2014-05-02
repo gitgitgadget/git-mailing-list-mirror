@@ -1,73 +1,126 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: smudge/clean filters and SHA1 hashes
-Date: Fri, 02 May 2014 15:02:10 -0700
-Message-ID: <xmqqeh0balgd.fsf@gitster.dls.corp.google.com>
-References: <CADsUFkQLtUDpoiSqj-UYeyz1a-WZPh9vN+RW4ti8ut=22QwL4g@mail.gmail.com>
+From: Keith Derrick <keith.derrick@lge.com>
+Subject: BUG or FEATURE? Use of '/' in branch names
+Date: Fri, 2 May 2014 18:04:29 -0400
+Message-ID: <AAC0CF0A2CCEC34CBE983015FD81C4F7392A504B61@AICEXMBXCL02.LGE.NET>
+References: <5363D1B4.1000503@lge.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: SLONIK.AZ@gmail.com
-X-From: git-owner@vger.kernel.org Sat May 03 00:02:20 2014
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "simon.busch@lge.com" <simon.busch@lge.com>
+To: Keith Derrick <keith.derrick@lge.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat May 03 00:04:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WgLX9-0004St-5u
-	for gcvg-git-2@plane.gmane.org; Sat, 03 May 2014 00:02:19 +0200
+	id 1WgLZQ-0004gj-Qs
+	for gcvg-git-2@plane.gmane.org; Sat, 03 May 2014 00:04:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752774AbaEBWCP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 May 2014 18:02:15 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:53860 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752148AbaEBWCP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 May 2014 18:02:15 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 684AF12EB5;
-	Fri,  2 May 2014 18:02:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=i2VWFoVFVPQHWki8Xm7Azge1M38=; b=G2VAj8
-	e3Ar4VsjZI4hGk+bjUnjjSZaA1/IFBsIC5bmyldrmWN+nn4qIgYurB7hpqygxdPg
-	rw6aSdiRAqz/na1QZYUq+Y3+SDmBRYPXi+B3m7WiCXyIgGf2wNPq6QoZDpHLAVLk
-	3H1xeQxjZJJFctBcyTdLHd1FmBMQLhIPGDhbA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=O3Kf8A2GCp+7gGEGq8rCysJ79Vnm2y6u
-	QVohBMYDpsR99X9xncc1HkeUoQihX8XT3tsW+dwMbDsxrzYXxwwtcxQ2pxCI7bBm
-	fFUdlaDBW2NkbvadvoBUr3DK/KHD+w/Xr8FNSEqc9MxZPMgvEB6jImFpmzu/KfCN
-	kpUf9t0A+Cw=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5E65B12EB4;
-	Fri,  2 May 2014 18:02:14 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 2283912EAB;
-	Fri,  2 May 2014 18:02:12 -0400 (EDT)
-In-Reply-To: <CADsUFkQLtUDpoiSqj-UYeyz1a-WZPh9vN+RW4ti8ut=22QwL4g@mail.gmail.com>
-	(Leo Razoumov's message of "Fri, 2 May 2014 17:05:57 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 69D72F2E-D245-11E3-911B-9CEB01674E00-77302942!pb-smtp0.pobox.com
+	id S1752757AbaEBWEh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 May 2014 18:04:37 -0400
+Received: from lgeamrelo01.lge.com ([156.147.1.125]:55164 "EHLO
+	lgeamrelo01.lge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752148AbaEBWEg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 2 May 2014 18:04:36 -0400
+Received: from unknown (HELO aicexhub01.lge.net) (204.79.148.70)
+	by 156.147.1.125 with ESMTP; 3 May 2014 07:04:33 +0900
+X-Original-SENDERIP: 204.79.148.70
+X-Original-MAILFROM: keith.derrick@lge.com
+Received: from AICEXMBXCL02.LGE.NET ([136.166.10.230]) by AICEXHUB02
+ ([204.79.148.68]) with mapi; Fri, 2 May 2014 18:04:32 -0400
+Thread-Topic: BUG or FEATURE? Use of '/' in branch names
+Thread-Index: Ac9mKavAalHt+3FESZ6hu7NjEABBowAKHb+g
+In-Reply-To: <5363D1B4.1000503@lge.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-cr-hashedpuzzle: Ad/J CERk CLjm C3ZC C8BE D4NW Ee/p Ftge F5a8 F7iV GWow
+ GYas HXTl JN1B Jw7d
+ KMpL;1;ZwBpAHQAQAB2AGcAZQByAC4AawBlAHIAbgBlAGwALgBvAHIAZwA=;Sosha1_v1;7;{58395E1C-2E0B-4040-B156-0FDBCDF3ADD1};awBlAGkAdABoAC4AZABlAHIAcgBpAGMAawBAAGwAZwBlAC4AYwBvAG0A;Fri,
+ 02 May 2014 22:04:29
+ GMT;QgBVAEcAIABvAHIAIABGAEUAQQBUAFUAUgBFAD8AIABVAHMAZQAgAG8AZgAgACcALwAnACAAaQBuACAAYgByAGEAbgBjAGgAIABuAGEAbQBlAHMA
+x-cr-puzzleid: {58395E1C-2E0B-4040-B156-0FDBCDF3ADD1}
+acceptlanguage: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247990>
 
-Leo Razoumov <slonik.az@gmail.com> writes:
+According to https://www.kernel.org/pub/software/scm/git/docs/git-check=
+-ref-format.html a '/' is character to use in a branch name.
 
-> In presence of smudge/clean filters which SHA1 hash
-> (clean content or smudged content) gets stored in the repository?
 
-You are cleaning cruft in the contents before the contents are
-hashed to compute the object name.  The point is to keep clean
-objects in the object database, protected from dirty reality in the
-working tree (which you instanciate by applying the smudge filter to
-dirty the clean object in the ideal world).
+git imposes the following rules on how references are named:
+1. They can include slash=A0/=A0for hierarchical (directory) grouping, =
+but no slash-separated component can begin with a dot=A0.=A0or end with=
+ the sequence=A0.lock.
 
-The crlf conversion works exactly the same way. For portability, you
-keep a version terminated with LF in the object database and that is
-what is hashed to compute the blob object name, but we export with
-CRLF line endings for a working tree that wants files whose lines
-are terminated that way.
+
+git-flow, for example,=A0 uses it extensively to prefix branches with '=
+release/', 'bugfix/', 'hotfix/' etc.
+
+However, I just ran into the following problem
+
+
+    $git init
+    Initialized empty Git repository in /home/keith/play/bug2/.git/
+    $touch a
+    $git add a
+    $git commit -m "C1"
+    [master (root-commit) d569d5b] C1
+    =A01 file changed, 0 insertions(+), 0 deletions(-)
+    =A0create mode 100644 a
+    $git checkout -b hotfix
+    Switched to a new branch 'hotfix'
+    $git checkout -b hotfix/b2
+    error: unable to resolve reference refs/heads/hotfix/b2: Not a dire=
+ctory
+    fatal: Failed to lock ref for update: Not a directory
+    $
+
+The problem arises when a branch already exists with a name matching th=
+e stem of the new branch name.
+
+As far as I can see, this comes from the use of the branch name to crea=
+te a directory under .git/refs/heads with the name 'hotfix/b2' because =
+=2Egit/refs/heads/hotfix already exists as a plain file.
+
+Note, however that this works
+
+    $git init
+    Initialized empty Git repository in /home/keith/play/bug3/.git/
+    $touch a
+    $git add a && git commit -m 'C1'
+    [master (root-commit) 304052c] C1
+    =A01 file changed, 0 insertions(+), 0 deletions(-)
+    =A0create mode 100644 a
+    $git checkout -b hotfix/b1
+    Switched to a new branch 'hotfix/b1'
+    $git checkout -b hotfix/b2
+    Switched to a new branch 'hotfix/b2'
+    $ls .git/refs/heads/ -R
+    .git/refs/heads/:
+    hotfix=A0 master
+
+    .git/refs/heads/hotfix:
+    b1=A0 b2
+    $
+
+But, for the reverse reason, I can't now create the branch named 'hotfi=
+x'
+
+I can see the value in grouping branches in a directory tree under refs=
+/heads, but wouldn't it make more sense to simply escape the '/' in the=
+ branch name so that 'hotfix/b1' is stored on disk as 'hotfix\/b1'?
+
+I found this when trying to document a branching workflow for support b=
+ranches. The repositories already had branches such as 'release1', 'rel=
+ease2' and I wanted to add branches such as 'release1/develop', 'releas=
+e2/develop', 'release1/staging', 'release2/staging' etc.
+
+Renaming the existing published branches is not an option for us, I'm a=
+fraid.
