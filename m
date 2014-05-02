@@ -1,85 +1,161 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Pull is Evil
-Date: Fri, 02 May 2014 10:46:09 +0200
-Organization: Organization?!?
-Message-ID: <87wqe4y3e6.fsf@fencepost.gnu.org>
-References: <4ay6w9i74cygt6ii1b0db7wg.1398433713382@email.android.com>
-	<xmqqoazlqot4.fsf@gitster.dls.corp.google.com>
-	<536106EA.5090204@xiplink.com>
-	<xmqqppjyhnom.fsf@gitster.dls.corp.google.com>
-	<536152D3.5050107@xiplink.com>
-	<xmqqa9b2egcy.fsf@gitster.dls.corp.google.com>
-	<20140502074027.GB6288@inner.h.apk.li>
+From: Dave Bradley <dbradley2@bell.net>
+Subject: #178  parsing of pretty=format:"%an %ad" causes fatal: bad revision '%ad'
+Date: Fri, 2 May 2014 07:50:25 -0400
+Message-ID: <BLU0-SMTP1116609FAC7E0C76123F929F430@phx.gbl>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 02 10:46:33 2014
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed	reply-type=original
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri May 02 13:55:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wg971-0003yv-1C
-	for gcvg-git-2@plane.gmane.org; Fri, 02 May 2014 10:46:31 +0200
+	id 1WgC44-00048h-Ai
+	for gcvg-git-2@plane.gmane.org; Fri, 02 May 2014 13:55:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751505AbaEBIq2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 May 2014 04:46:28 -0400
-Received: from plane.gmane.org ([80.91.229.3]:40818 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751159AbaEBIqY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 May 2014 04:46:24 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Wg96t-0003oP-FY
-	for git@vger.kernel.org; Fri, 02 May 2014 10:46:23 +0200
-Received: from x2f52453.dyn.telefonica.de ([2.245.36.83])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 02 May 2014 10:46:23 +0200
-Received: from dak by x2f52453.dyn.telefonica.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 02 May 2014 10:46:23 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: x2f52453.dyn.telefonica.de
-X-Face: 2FEFf>]>q>2iw=B6,xrUubRI>pR&Ml9=ao@P@i)L:\urd*t9M~y1^:+Y]'C0~{mAl`oQuAl
- \!3KEIp?*w`|bL5qr,H)LFO6Q=qx~iH4DN;i";/yuIsqbLLCh/!U#X[S~(5eZ41to5f%E@'ELIi$t^
- Vc\LWP@J5p^rst0+('>Er0=^1{]M9!p?&:\z]|;&=NP3AhB!B_bi^]Pfkw
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
-Cancel-Lock: sha1:DGFjFrF3ESlPfuf61jFuaNpI1F0=
+	id S1751936AbaEBLzg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 May 2014 07:55:36 -0400
+Received: from blu0-omc3-s10.blu0.hotmail.com ([65.55.116.85]:37052 "EHLO
+	blu0-omc3-s10.blu0.hotmail.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751733AbaEBLzf convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 2 May 2014 07:55:35 -0400
+X-Greylist: delayed 306 seconds by postgrey-1.27 at vger.kernel.org; Fri, 02 May 2014 07:55:35 EDT
+Received: from BLU0-SMTP11 ([65.55.116.73]) by blu0-omc3-s10.blu0.hotmail.com with Microsoft SMTPSVC(6.0.3790.4675);
+	 Fri, 2 May 2014 04:50:28 -0700
+X-TMN: [lYoyi0sKMZoG5XsiVyPX2lKgksYJM4w3]
+X-Originating-Email: [dbradley2@bell.net]
+Received: from prbrad2 ([70.54.91.155]) by BLU0-SMTP11.phx.gbl over TLS secured channel with Microsoft SMTPSVC(6.0.3790.4675);
+	 Fri, 2 May 2014 04:50:28 -0700
+X-Priority: 3
+X-MSMail-Priority: Normal
+Importance: Normal
+X-Mailer: Microsoft Windows Live Mail 16.4.3522.110
+X-MimeOLE: Produced By Microsoft MimeOLE V16.4.3522.110
+X-OriginalArrivalTime: 02 May 2014 11:50:28.0884 (UTC) FILETIME=[B6B9FD40:01CF65FC]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247932>
 
-Andreas Krey <a.krey@gmx.de> writes:
+Hi,
 
-> On Wed, 30 Apr 2014 13:01:49 +0000, Junio C Hamano wrote:
-> ...
->> I didn't mean "replace 'pull' with 'update' everywhere".  I meant
->> "Introduce 'update' that lets integrate your history into that from
->> the remote, which is to integrate in a direction opposite from how
->> 'pull' does".  
->
-> That still doesn't quite solve my problem. If I'm tracking origin/master
-> in a local master branch, I can just use 'git pull' to get my 'feature'
-> branch (which is named master) updated to the current state of the origin.
-> This amounts to 'integrating' origin/master into my master.
+I=E2=80=99m very new to =E2=80=98git=E2=80=99 github. I reported the #1=
+78 issue in github and the=20
+issue has been closed, I believe this means no further discussion.
 
-This discussion makes as much sense to me as debating whether "git
-fiddle" should, in case a simple "git hammer" does not apply, should
-translate to an implied "git screwdriver", and when it does, whether
-more people's workflows involve turning a screw left rather than right
-by default.
+There are a three additional comments, thank you to the contributors. T=
+he=20
+advise was to discuss upstream which meant nothing to me (again thanks =
+to=20
+another contributor for clarification).
 
-What the gibbins?  I don't even use git pull.  I use git fetch, and
-then, depending on my needs, I rebase or merge.  git pull is not part of
-my workflow exactly because it does non-connected things not translating
-unambiguously to a particular identifiable workflow.  It might
-sometimes, more by accident than design, do what I would have done
-anyway.  But I prefer making that choice on my own, depending on the
-particular circumstances.
+Summary
+------------
+The issue reported is (in my opinion) a defect in argument processing=20
+(happens on Windows and Linux (as per another contributor)).
 
--- 
-David Kastrup
+The issue (in my opinion) is a defect for argument processing by Git. T=
+he=20
+decision (agreement or otherwise) I guess is for this upstream discussi=
+on.
+
+I appreciate the open-source git and its usage to the community. But th=
+is is=20
+owned by the discussion group and I doubt my involvement is wanted. So =
+this=20
+will be my last communication on this issue.
+
+Context
+----------
+Over many years, I=E2=80=99ve used command-line on Unix/Linux/Windows i=
+n both hobby=20
+and professional modes. In the latter case the processing of arguments =
+with=20
+spaces has often been the cause of defects (none expected behaviour) fo=
+r=20
+newly introduced products.
+
+I=E2=80=99ve found no documentation about the pretty=3Dformat behaviour=
+ as described=20
+by the #178 issue. Also, there are many (but incomplete) google-it=20
+second-hand documents(?) about. So a document fix in the internet age i=
+s not=20
+necessarily the approach to solve an issue, as all those google-it item=
+s=20
+create fog.
+
+=46or this issue I was processing a git command to run in a GUI and hap=
+pened=20
+upon it. The GUI (original design by me) allows interfacing with CVS, S=
+VN,=20
+HG and maybe now GIT in a similar manner. The GUI holds the interfacing=
+ and=20
+access information and concatenates it onto the VCS command/sub-command=
+s as=20
+appropriate for a request. Thus, the concatenated VCS request may be=20
+processed for copy-paste onto a command line window/terminal or (for my=
+ GUI)=20
+executed via a programming language=E2=80=99s command-line-execution cl=
+ass/function=20
+(Perl, Java, C,.....).
+
+With the argument being further processed within git, it behaves in a m=
+anner=20
+that wasn=E2=80=99t expected.
+
+
+Thx
+Dave
+
+the Issue as reported
+
+
+Getting a fatal failure when using the following --pretty=3Dformat:"%an=
+ %ad"=20
+via a programmed execution from within a programming language. (Java us=
+ing=20
+the execution capabilities puts the ' --pretty=3Dformat:"%an %ad" ' as =
+an=20
+argument). This is reproduced on a Windows command-line entry by puttin=
+g=20
+double-quotes around the argument. (see below for various examples of p=
+ass,=20
+fail and testing around).
+
+The git argument parser appears to perform a split on spaces within the=
+=20
+arguments passed to it also. This is not a normal behaviour for any par=
+sing.=20
+Also, the split is happening within a string quote, it would appear ("%=
+an=20
+%ad").
+Even tried %20 to represent the space.
+
+Thx
+
+G:\ws_test_env\GIT_TESTBED_TMP\fest-swing-1.x>git=20
+log --all --pretty=3Dformat:"%an %ad" -- pom.xml
+xxxx xxxx Mon Nov 23 03:09:17 2009 +0000
+xxxx xxxx Mon Nov 23 02:42:24 2009 +0000
+
+G:\ws_test_env\GIT_TESTBED_TMP\fest-swing-1.x>git log --all=20
+"--pretty=3Dformat:"%an %ad"" -- pom.xml
+fatal: bad revision '%ad'
+
+G:\ws_test_env\GIT_TESTBED_TMP\fest-swing-1.x>git log --all=20
+"--pretty=3Dformat:"%an" "%ad"" -- pom.xml
+xxxx xxxx Mon Nov 23 03:09:17 2009 +0000
+xxxx xxxx Mon Nov 23 02:42:24 2009 +0000
+
+G:\ws_test_env\GIT_TESTBED_TMP\fest-swing-1.x>git log --all=20
+"--pretty=3Dformat:"%an" " %ad"" -- pom.xml
+fatal: bad revision '%ad'
+
+G:\ws_test_env\GIT_TESTBED_TMP\fest-swing-1.x>git log --all=20
+"--pretty=3Dformat:"%an" "%ad"" -- pom.xml
+xxxx xxxx Mon Nov 23 03:09:17 2009 +0000
+xxxx xxxx Mon Nov 23 02:42:24 2009 +0000
