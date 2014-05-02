@@ -1,88 +1,80 @@
-From: Keith Derrick <keith.derrick@lge.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: BUG or FEATURE? Use of '/' in branch names
-Date: Fri, 2 May 2014 18:36:59 -0400
-Message-ID: <53641E0B.5000706@lge.com>
+Date: Fri, 2 May 2014 15:43:12 -0700
+Message-ID: <20140502224312.GP9218@google.com>
 References: <5363D1B4.1000503@lge.com>
  <AAC0CF0A2CCEC34CBE983015FD81C4F7392A504B61@AICEXMBXCL02.LGE.NET>
  <20140502221617.GO9218@google.com>
+ <53641E0B.5000706@lge.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=us-ascii
 Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
 	"simon.busch@lge.com" <simon.busch@lge.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 03 00:39:40 2014
+To: Keith Derrick <keith.derrick@lge.com>
+X-From: git-owner@vger.kernel.org Sat May 03 00:43:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WgM7H-0003hc-Fc
-	for gcvg-git-2@plane.gmane.org; Sat, 03 May 2014 00:39:39 +0200
+	id 1WgMAq-00038U-3K
+	for gcvg-git-2@plane.gmane.org; Sat, 03 May 2014 00:43:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751655AbaEBWjg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 May 2014 18:39:36 -0400
-Received: from LGEMRELSE6Q.lge.com ([156.147.1.121]:49739 "EHLO
-	lgemrelse6q.lge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750807AbaEBWjf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 2 May 2014 18:39:35 -0400
-Received: from unknown (HELO aicexhub01.lge.net) (204.79.148.69)
-	by 156.147.1.121 with ESMTP; 3 May 2014 07:39:32 +0900
-X-Original-SENDERIP: 204.79.148.69
-X-Original-MAILFROM: keith.derrick@lge.com
-Received: from AICEXMBXCL02.LGE.NET ([136.166.10.230]) by AICEXHUB01
- ([204.79.148.67]) with mapi; Fri, 2 May 2014 18:38:02 -0400
-Thread-Topic: BUG or FEATURE? Use of '/' in branch names
-Thread-Index: Ac9mVyzLZ1O7UBh+QDaKvZcQ4jr8Ig==
-In-Reply-To: <20140502221617.GO9218@google.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101
- Thunderbird/24.4.0
-acceptlanguage: en-US
+	id S1752593AbaEBWnQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 May 2014 18:43:16 -0400
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:49089 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751366AbaEBWnP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 May 2014 18:43:15 -0400
+Received: by mail-pa0-f53.google.com with SMTP id kp14so1629896pab.26
+        for <git@vger.kernel.org>; Fri, 02 May 2014 15:43:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=jP+OBnGKbUTEYEQKIl/mQLnN+ULHA/Enn0DvvTeFjpg=;
+        b=tlQqdJKXv8oFOXprL/xJOvbhDxYu16iW5C29YzDdVzfUP5Q6JxTrl/l0CSFliTYAXi
+         KfoPOdNmi52udhpnB6lJg6dY8CwzP8XYPuhvtNGTwO1cRsb4uVR0Qifq6WltL+o1SzK+
+         xvZwJKk+WorqIswyl94IosJFqkGrlXEZWpNTRpXIch6jIMemX01UsbrtQTGeth3oaPmn
+         QOjZ9BWLbKsyCr1u88Wp50N8BF2uO9HY9Fdqcyw0iE5UKCFuAk6uwCu9mCp0bQs7WU+o
+         uOG0bqHxMZr64PXijVycOFuyc2ebTiP3hwNIh9XiueSln662dZYQrRuvG8bVUz51Hech
+         keiw==
+X-Received: by 10.67.4.169 with SMTP id cf9mr39893683pad.45.1399070595178;
+        Fri, 02 May 2014 15:43:15 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id nx12sm2392428pab.6.2014.05.02.15.43.14
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 02 May 2014 15:43:14 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <53641E0B.5000706@lge.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248002>
 
-Yes, I've since found some discussion on this, and had already changed 
-to use '-' to append the classifier.
+Hi,
 
-But the other problem is that I can't easily find this restriction 
-documented anywhere - which means it comes as a suprise to people.
+Keith Derrick wrote:
 
-As it stands, the documentation implies that what I tried should work. 
-In which case, how it's been *implemented* seems to be breaking the 
-promise of the functional specification (if you view the documentation 
-as such).
+> Yes, I've since found some discussion on this, and had already changed 
+> to use '-' to append the classifier.
+>
+> But the other problem is that I can't easily find this restriction 
+> documented anywhere - which means it comes as a suprise to people.
 
-Keith
+That sounds like another serious bug (the first one was the lousy
+error message).  The current behavior is intended, and it sounds like
+the documentation is lagging.
 
-On 05/02/2014 03:16 PM, Jonathan Nieder wrote:
-> Hi Keith,
->
-> Keith Derrick wrote:
->
->>      $ git checkout -b hotfix
->>      Switched to a new branch 'hotfix'
->>      $ git checkout -b hotfix/b2
->>      error: unable to resolve reference refs/heads/hotfix/b2: Not a directory
->>      fatal: Failed to lock ref for update: Not a directory
->>      $
-> That's an ugly message.  I think we can do better. (hint hint)
->
-> Longer term, I think people would like to make it possible for a
-> 'hotfix' and 'hotfix/b2' branch to coexist, but that will take some
-> work, and until then, git tries to be careful about enforcing the
-> constraint that they cannot coexist.
->
-> Fixing it would be complicated by the need to avoid breaking people
-> with older versions of git when they fetch from you (what happens to
-> the origin/hotfix and origin/hotfix/b2 remote-tracking refs on the
-> client side?).
->
-> Thanks and hope that helps,
-> Jonathan
+Where did you expect to find information about this?  Knowing that
+would help a lot in fixing it.
+
+(The nicest way to indicate where you expected to read about this
+is with a patch against the relevant file in Documentation/*.txt,
+of course.)
+
+Thanks again,
+Jonathan
