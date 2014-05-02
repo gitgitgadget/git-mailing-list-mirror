@@ -1,125 +1,157 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Detect endianness on more platforms that don't use BYTE_ORDER
-Date: Fri, 02 May 2014 12:43:32 -0700
-Message-ID: <xmqq38gsarvf.fsf@gitster.dls.corp.google.com>
-References: <20140502074917.GA25198@hashpling.org>
-	<1399017329-25645-1-git-send-email-cbailey32@bloomberg.net>
-	<xmqqwqe4azyd.fsf@gitster.dls.corp.google.com>
-	<20140502165830.GA29339@hashpling.org>
-	<xmqq7g64asae.fsf@gitster.dls.corp.google.com>
+From: "W. Trevor King" <wking@tremily.us>
+Subject: Re: Pull is Evil
+Date: Fri, 2 May 2014 12:46:37 -0700
+Message-ID: <20140502194637.GL28634@odin.tremily.us>
+References: <20140501200703.GB6227@odin.tremily.us>
+ <5362d7dc7b12_12fe14dd31095@nysa.notmuch>
+ <20140502000208.GB28634@odin.tremily.us>
+ <5362e8b09aba1_429131b31038@nysa.notmuch>
+ <20140502011004.GD28634@odin.tremily.us>
+ <5362f1755f2a9_d1310572f0fa@nysa.notmuch>
+ <20140502145433.GF28634@odin.tremily.us>
+ <5363ea28d3c14_70ef0f30c94@nysa.notmuch>
+ <20140502190746.GJ28634@odin.tremily.us>
+ <5363ee55ac2af_70ef0f30cf3@nysa.notmuch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Charles Bailey <cbailey32@bloomberg.net>
-X-From: git-owner@vger.kernel.org Fri May 02 21:43:43 2014
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="eMP3JyRexyk9c0Bv"
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Marc Branchaud <marcnarc@xiplink.com>,
+	Marat Radchenko <marat@slonopotamus.org>, git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 02 21:46:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WgJN0-0002dE-8g
-	for gcvg-git-2@plane.gmane.org; Fri, 02 May 2014 21:43:42 +0200
+	id 1WgJPw-0004Aq-Ri
+	for gcvg-git-2@plane.gmane.org; Fri, 02 May 2014 21:46:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752545AbaEBTni (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 May 2014 15:43:38 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:53497 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752485AbaEBTnh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 May 2014 15:43:37 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id AD33A126B7;
-	Fri,  2 May 2014 15:43:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fFsL9jtJgmNTDKco5obxLX/R+MQ=; b=YQlkvt
-	UyEzeNniXTOp+k5kUIEFwWEYY4bOU4pgdNu3oSUnzDMWUkm5Pcm5L4zOvurrcntz
-	mjtR+iSNV2cXR2YHv5QnNzOPG4/akinYq5kb6BqpFV92ijE8YvZB3cZ2eomRJ9Xd
-	8DgAAN1s8oZu/9NouyKA8suyYId5Tpc7eTzQc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QUueQbPrW3n3ycHSoPzaWdHljUBIZKRF
-	2NJX84uTCtzeFqDVkM7a4rb9NzADcdv04ZIKJoD6/28h6UWxs/ynCzR3oQXiBFNu
-	9UZkys8krQjOh0ldwo5DKaI9siTpzMOrN+3wZeu/z/g61zEvFd/fmG3ccbw0Kum1
-	UjzkKiOymuw=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9FD1F126B6;
-	Fri,  2 May 2014 15:43:36 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 36884126B5;
-	Fri,  2 May 2014 15:43:34 -0400 (EDT)
-In-Reply-To: <xmqq7g64asae.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Fri, 02 May 2014 12:34:33 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 0BF9D02C-D232-11E3-9F8E-9CEB01674E00-77302942!pb-smtp0.pobox.com
+	id S1752675AbaEBTql (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 May 2014 15:46:41 -0400
+Received: from qmta04.westchester.pa.mail.comcast.net ([76.96.62.40]:60760
+	"EHLO qmta04.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752172AbaEBTqk (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 2 May 2014 15:46:40 -0400
+Received: from omta22.westchester.pa.mail.comcast.net ([76.96.62.73])
+	by qmta04.westchester.pa.mail.comcast.net with comcast
+	id x4eg1n0041ap0As547mfmR; Fri, 02 May 2014 19:46:39 +0000
+Received: from odin.tremily.us ([24.18.63.50])
+	by omta22.westchester.pa.mail.comcast.net with comcast
+	id x7md1n00h152l3L3i7met6; Fri, 02 May 2014 19:46:39 +0000
+Received: by odin.tremily.us (Postfix, from userid 1000)
+	id 83F28117465F; Fri,  2 May 2014 12:46:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
+	t=1399059997; bh=vFP+R0BYI/0wT0UFqWyaKSCgWMnGh+H4IpPTyHvgV/E=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=kGutsPcOvOlJpcfCt8QuuMvoydBfN9WUftD2jSF11+TARRo+iy8Mlb18FIKqS6f9j
+	 m/QkWefdenYfLYx9vqXbkCFtZ28zxxY83N+Fem2EDvimBbUhk6VyPk076ZnFs6o2ok
+	 cGed1yqDUEvG5dQA5KLPy3ZeGHDk3U3aVA1JQ4bA=
+Content-Disposition: inline
+In-Reply-To: <5363ee55ac2af_70ef0f30cf3@nysa.notmuch>
+OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
+ url=http://tremily.us/pubkey.txt
+User-Agent: Mutt/1.5.23 (2014-03-12)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+	s=q20140121; t=1399059999;
+	bh=QyXFM1jW7rLYwDKqQfQWeFvn+g1/JNjuyGpv3kqeDpc=;
+	h=Received:Received:Received:Date:From:To:Subject:Message-ID:
+	 MIME-Version:Content-Type;
+	b=p8+ogpQosja0acofXy4s3u71HzqN+DiOJguVHU7Gn4KJFCGCTgMUcLZswmtR55000
+	 1FlNHmO329FYY+vv2SvuwCnM0tmYq0s/QlyBbvlb07LVeDBYFOWqQh6Bmch/jkE56p
+	 XW/Veclya2xxqtyHirckeqaLwCpjwh80rri7KqcHggeA8/bEiUwZpfovGeFFmvvrPo
+	 Gb0M/tlltPWryAekaPFxK/0Cv21pyOBhmOUKnYrRIq77MmswtfNXQG1zNtA8Hh1UKT
+	 UPWhjEGuIkgDo94l9Dys/xDCdvEq+QLiRjC/X9wIj768CDDN6tFnnwcz3KAAELYncF
+	 rbQx3L+tLjVhA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247962>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247963>
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> Charles Bailey <cbailey32@bloomberg.net> writes:
->
->> I claim that any
->> platform which provides both but with differing senses is somewhat
->> broken so I cannot see the precedence mattering much.
->
-> I agree with that, and that is the reason why we shouldn't change
-> the order all of a sudden.  If it shouldn't matter, then there is
-> only downside of a possiblity to break such an insane set-up that
-> has been happily working by accident, without helping anybody if we
-> change it, no?
+--eMP3JyRexyk9c0Bv
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-So,... I am inclined to queue this on top of your patch at least for
-now, before I go into incommunicado-mode to finish preparing -rc2.
+On Fri, May 02, 2014 at 02:13:25PM -0500, Felipe Contreras wrote:
+> W. Trevor King wrote [1]:
+> > On Fri, May 02, 2014 at 01:55:36PM -0500, Felipe Contreras wrote:
+> > > W. Trevor King wrote:
+> > > > On Thu, May 01, 2014 at 08:14:29PM -0500, Felipe Contreras wrote:
+> > > > > W. Trevor King wrote:
+> > > > > > My proposed --prompt behavior is for folks who think =E2=80=9CI=
+ often run
+> > > > > > this command without thinking it through all the way.  I'm also
+> > > > > > not used to reading Git's output and using 'reset --hard' with =
+the
+> > > > > > reflog to reverse changes.  Instead of trusting me to only say
+> > > > > > what I mean or leaving me to recover from mistakes, please tell=
+ me
+> > > > > > what's about to change and let me opt out if I've changed my
+> > > > > > mind.=E2=80=9D
+> > > > >=20
+> > > > > Unfortunately those folks by definition wouldn't know about the
+> > > > > --prompt option.
+> > > >=20
+> > > > But once such folks are identified, you just have to convince them
+> > > > (once) to set the pull.prompt config.  That's a lot easier than
+> > > > convincing them (for every pull) to set the appropriate ff flag.
+> > >=20
+> > > It wouldn't matter if by the default non-fast-forward merges are
+> > > rejected.
+> >=20
+> > It would matter if you [only wanted] them making non-fast-forward
+> > merges (e.g. for explicitly-merged topic branches).
+>=20
+> It would matter almost exactly zero.
 
--- >8 --
-Subject: [PATCH] compat/bswap.h: restore preference __BIG_ENDIAN over BIG_ENDIAN
+Some folks have explicit merge policies, and deciding how much that
+matters is probably best left up to the projects themselves and not
+decided in Git code.  I like having a place to explain why a feature
+is useful and has been included in projects I maintain.
 
-The previous commit swaps the order we check the macros defined by
-the compiler and the system headers from the original.  Since the
-order of check should not matter (i.e. it is insane to define both
-__BIG_ENDIAN and friends and BIG_ENDIAN and friends and in a
-conflicting way), it is the most conservative thing to do not to
-change it.
+> And just as they can do pull.promot =3D true, they can do pull.mode =3D
+> fetch-only.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- compat/bswap.h | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+Why would you run a fetch-only pull instead of running 'git fetch'?  I
+think it would make more sense to have 'pull.mode =3D none' with which
+'git pull =E2=80=A6' turns into a no-op suggesting an explicit
+fetch/{merge|rebase}.  Having something like that available would
+help with the training issue that pull.prompt was addressing.
 
-diff --git a/compat/bswap.h b/compat/bswap.h
-index f08a9fe..c4293db 100644
---- a/compat/bswap.h
-+++ b/compat/bswap.h
-@@ -101,18 +101,18 @@ static inline uint64_t git_bswap64(uint64_t x)
- #undef ntohll
- #undef htonll
- 
--#if defined(BYTE_ORDER) && defined(LITTLE_ENDIAN) && defined(BIG_ENDIAN)
--
--# define GIT_BYTE_ORDER BYTE_ORDER
--# define GIT_LITTLE_ENDIAN LITTLE_ENDIAN
--# define GIT_BIG_ENDIAN BIG_ENDIAN
--
--#elif defined(__BYTE_ORDER) && defined(__LITTLE_ENDIAN) && defined(__BIG_ENDIAN)
-+#if defined(__BYTE_ORDER) && defined(__LITTLE_ENDIAN) && defined(__BIG_ENDIAN)
- 
- # define GIT_BYTE_ORDER __BYTE_ORDER
- # define GIT_LITTLE_ENDIAN __LITTLE_ENDIAN
- # define GIT_BIG_ENDIAN __BIG_ENDIAN
- 
-+#elif defined(BYTE_ORDER) && defined(LITTLE_ENDIAN) && defined(BIG_ENDIAN)
-+
-+# define GIT_BYTE_ORDER BYTE_ORDER
-+# define GIT_LITTLE_ENDIAN LITTLE_ENDIAN
-+# define GIT_BIG_ENDIAN BIG_ENDIAN
-+
- #else
- 
- # define GIT_BIG_ENDIAN 4321
--- 
-2.0.0-rc1-355-gd6d6511
+Cheers,
+Trevor
+
+[1]: With David Kastrup's "only wanted" typo fix.
+
+--=20
+This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
+For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
+
+--eMP3JyRexyk9c0Bv
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
+
+iQIcBAEBAgAGBQJTY/YbAAoJEKKfehoaNkbt7oMQAIkihm9ajmFyZaZsLBVPJExf
+QNbmMEczV6Dk1OOJ25eJimu/lM4FBIUzZT1qd15xVNTHtAXr9teP2A3PfucNSo1P
+9AyObtZQDmajP5Fn+4Al1zlnC6sNCX/ycpVmeV1Ys62njs1QRbGpemKysD7WVzvX
+IOJ8YdZXqLSpX5ojDZauV/VkO0QWRP6Vfoy37vJuYJlXTS/3xlAqU/HpLjriLuMp
+7XKzE/Map2uix0TTpUayAbtBukMYy1/z6fnZ+r+4jCiZ7fbwWt+R+nyjvOrBBjSs
+UZGC4s9LJ8Ci31nTiqW30tOcAoqSAnOUKnAcNW1NL3+q84eyqC1wesLBIwYCR2H9
+XYUHmB/ZXsvXK9lmysvMBcJcWgijn6Z5PrY1HqaF5zbGGJYwVM9X7530vbFYfpUb
+/FPPh0ZgRX1DdSHphRDjFoTKexXkk9zf0lw+jwPDxjqusxlByIrxO3+AU3tFO6ak
+cJXQLVp0scodMYnsIgD1Z0h8WxRrOwSzlr9u0HLn47CJX50hZO373KaRlykuDV3i
+8MT4kjQniHp0IKYPypgDr1k5A/JKgDeyTKW13lG+4mzC4cykGWTitHFy9pkUXlAy
+ygRndj0CnBRB6Uyj6aGO7qMqAc1I+vqEO4XgdUxPSS/j6j34A4MDsOPhleEL5Z1n
+H8veC/NacAPSDLzLQ7RR
+=nDXz
+-----END PGP SIGNATURE-----
+
+--eMP3JyRexyk9c0Bv--
