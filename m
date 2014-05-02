@@ -1,171 +1,225 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: Pull is Evil
-Date: Fri, 2 May 2014 14:13:05 -0700
-Message-ID: <20140502211305.GN28634@odin.tremily.us>
-References: <20140502000208.GB28634@odin.tremily.us>
- <5362e8b09aba1_429131b31038@nysa.notmuch>
- <20140502011004.GD28634@odin.tremily.us>
- <5362f1755f2a9_d1310572f0fa@nysa.notmuch>
- <20140502145433.GF28634@odin.tremily.us>
- <5363ea28d3c14_70ef0f30c94@nysa.notmuch>
- <20140502190746.GJ28634@odin.tremily.us>
- <5363ee55ac2af_70ef0f30cf3@nysa.notmuch>
- <20140502194637.GL28634@odin.tremily.us>
- <5364015a94900_135215292ec28@nysa.notmuch>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v6 1/7] pull: rename pull.rebase to pull.mode
+Date: Fri, 02 May 2014 16:12:06 -0500
+Message-ID: <53640a26569a5_135215292ec43@nysa.notmuch>
+References: <1398988808-29678-1-git-send-email-felipe.contreras@gmail.com>
+ <1398988808-29678-2-git-send-email-felipe.contreras@gmail.com>
+ <53640403.30600@bbn.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="FX+Db2fp7WJhXKrW"
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Marc Branchaud <marcnarc@xiplink.com>,
-	Marat Radchenko <marat@slonopotamus.org>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 02 23:13:15 2014
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Andreas Krey <a.krey@gmx.de>, John Keeping <john@keeping.me.uk>,
+	Jeff King <peff@peff.net>,
+	Philip Oakley <philipoakley@iee.org>,
+	"Brian M. Carlson" <sandals@crustytoothpaste.net>,
+	"W. Trevor King" <wking@tremily.us>
+To: Richard Hansen <rhansen@bbn.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 02 23:23:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WgKle-0006Fn-5N
-	for gcvg-git-2@plane.gmane.org; Fri, 02 May 2014 23:13:14 +0200
+	id 1WgKuw-0005hq-GS
+	for gcvg-git-2@plane.gmane.org; Fri, 02 May 2014 23:22:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752969AbaEBVNL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 May 2014 17:13:11 -0400
-Received: from qmta12.westchester.pa.mail.comcast.net ([76.96.59.227]:41384
-	"EHLO qmta12.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752726AbaEBVNJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 2 May 2014 17:13:09 -0400
-Received: from omta20.westchester.pa.mail.comcast.net ([76.96.62.71])
-	by qmta12.westchester.pa.mail.comcast.net with comcast
-	id x8mH1n00C1YDfWL5C9D8mE; Fri, 02 May 2014 21:13:08 +0000
-Received: from odin.tremily.us ([24.18.63.50])
-	by omta20.westchester.pa.mail.comcast.net with comcast
-	id x9D61n00g152l3L3g9D7Kp; Fri, 02 May 2014 21:13:08 +0000
-Received: by odin.tremily.us (Postfix, from userid 1000)
-	id E9C13117480C; Fri,  2 May 2014 14:13:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1399065185; bh=3u9T7QB8dDvfKB3WHSyLWYU2UC77upHAW+slLSzx73A=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=mkHjO8Q/SNSZSO10r1HG2xc7yy+b4JNx8NjscgMmytc2Fo1N/CMgPtchT2d4Jbvf0
-	 R74Bu4Wwd2/QzAsWMkn19C3tuQfjwrCRLnYbFSCyrDC09Mt5JJzg4fLiUisBrcyJlA
-	 ABCWVnDADAJ8VpyAsCEh6I3hYDeTuQv2n37Ylkhc=
-Content-Disposition: inline
-In-Reply-To: <5364015a94900_135215292ec28@nysa.notmuch>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.23 (2014-03-12)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20140121; t=1399065188;
-	bh=BpUhFompATAlm9Ub5FiqcQL7DwuiD2yt0pNNE6/7KTc=;
-	h=Received:Received:Received:Date:From:To:Subject:Message-ID:
-	 MIME-Version:Content-Type;
-	b=hz1qgEEybGHM1XFJ9cnBoCZnOqVM1N9Cy0ZhEEK2hpLD5EVpyj8CS/V2bDUAKMrvM
-	 bwLX0LmNUsOI9ygRt7iZfF4vylI1Lvd8yI0LF9doZNkXEbUzaY1vIGV4Dd/mqGhlOA
-	 lPX8LCvEkpxS9f4u5c33DRlgUzTY6rmK0WFFSz4YhWFGGMlXS34FJIIBiO0N4+JLk3
-	 qEtf82Fk9nhWavmt1Ob0BhaUNOtK9yH9aQ+Yd/9fc+FO8AL2yQoW7Sz9hPlOEMHEHv
-	 5xnXkU/HtZLAnqRrLzZPhjfa/tEoJOO1Uae1sYb2vFM1enfpFkEwMprry3kGhQeEaf
-	 ACAHHETjREP8w==
+	id S1752826AbaEBVWq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 May 2014 17:22:46 -0400
+Received: from mail-ob0-f172.google.com ([209.85.214.172]:60168 "EHLO
+	mail-ob0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752410AbaEBVWp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 May 2014 17:22:45 -0400
+Received: by mail-ob0-f172.google.com with SMTP id wo20so5862483obc.17
+        for <git@vger.kernel.org>; Fri, 02 May 2014 14:22:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=/Y0B3CFUdB0aRWks5GXxarfC7ABGNHZUg+m76vr3sXI=;
+        b=f3WJQ+hPCwkSa3lAtt2VnhRekTjD9kV85GxPV0R4Uk8D/E53zVksRAe3KebOAbDbUk
+         2GF9GIJQHNmIV8br2/k45/tFnbowi6ftV6kJ1xJ97pwJbjaDTeqvm9nEVOQX8sLkFlBE
+         6o6+h+iu0iJSaWdo0oUrqdgICiBeUwUbfJAHy/kF5JfC2H3fBpcFXVmDm/eTMU+djsoO
+         NcgOTS8F96ykuuj7ZBzfLQDxsPCOoW0lN+Jv2IM12QtXzpcRDkTXRONknD6KRKckOGGi
+         e78v1eHu4s49CuSgSVTg02UJR7DWU90Xt49AxPYl6wyAQU8sSGUMEryyfhvMpjYCZWVM
+         rC9Q==
+X-Received: by 10.182.181.105 with SMTP id dv9mr4222510obc.59.1399065765019;
+        Fri, 02 May 2014 14:22:45 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id e8sm689609oed.7.2014.05.02.14.22.42
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 02 May 2014 14:22:43 -0700 (PDT)
+In-Reply-To: <53640403.30600@bbn.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/247985>
 
+Richard Hansen wrote:
+> On 2014-05-01 20:00, Felipe Contreras wrote:
+> > Also 'branch.<name>.rebase' to 'branch.<name>.pullmode'.
+> > 
+> > This way we can add more modes and the default can be something else,
+> > namely it can be set to merge-ff-only, so eventually we can reject
+> > non-fast-forward merges by default.
+> > 
+> > The old configurations still work, but get deprecated.
+> 
+> s/get/are/
+> 
+> > 
+> > Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> > ---
+> >  Documentation/config.txt   | 39 ++++++++++++++++++++++-----------------
+> >  Documentation/git-pull.txt |  2 +-
+> >  branch.c                   |  4 ++--
+> >  builtin/remote.c           | 14 ++++++++++++--
+> >  git-pull.sh                | 31 +++++++++++++++++++++++++++++--
+> >  t/t3200-branch.sh          | 40 ++++++++++++++++++++--------------------
+> >  t/t5601-clone.sh           |  4 ++--
+> >  7 files changed, 88 insertions(+), 46 deletions(-)
+> > 
+> > diff --git a/Documentation/config.txt b/Documentation/config.txt
+> > index c26a7c8..c028aeb 100644
+> > --- a/Documentation/config.txt
+> > +++ b/Documentation/config.txt
+> > @@ -708,7 +708,7 @@ branch.autosetupmerge::
+> >  branch.autosetuprebase::
+> >  	When a new branch is created with 'git branch' or 'git checkout'
+> >  	that tracks another branch, this variable tells Git to set
+> > -	up pull to rebase instead of merge (see "branch.<name>.rebase").
+> > +	up pull to rebase instead of merge (see "branch.<name>.pullmode").
+> >  	When `never`, rebase is never automatically set to true.
+> >  	When `local`, rebase is set to true for tracked branches of
+> >  	other local branches.
+> 
+> Should branch.autosetuprebase be replaced with a new
+> branch.autosetupmode setting?
 
---FX+Db2fp7WJhXKrW
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Maybe. But if so, I think that should be done in another series.
+Otherwise we'll never have a chance to change anything.
 
-On Fri, May 02, 2014 at 03:34:34PM -0500, Felipe Contreras wrote:
-> W. Trevor King wrote:
-> > On Fri, May 02, 2014 at 02:13:25PM -0500, Felipe Contreras wrote:
-> > > It would matter almost exactly zero.
-> >=20
-> > Some folks have explicit merge policies, and deciding how much
-> > that matters is probably best left up to the projects themselves
-> > and not decided in Git code.
->=20
-> Let's make some fake numbers to see around how much this would matter.
+> > @@ -764,15 +764,17 @@ branch.<name>.mergeoptions::
+> >  	option values containing whitespace characters are currently not
+> >  	supported.
+> >  
+> > -branch.<name>.rebase::
+> > -	When true, rebase the branch <name> on top of the fetched branch,
+> > -	instead of merging the default branch from the default remote when
+> > -	"git pull" is run. See "pull.rebase" for doing this in a non
+> > -	branch-specific manner.
+> > +branch.<name>.pullmode::
+> > +	When "git pull" is run, this determines if it would either merge or
+> > +	rebase the fetched branch.
+> 
+> To me this sentence implies that 'rebase' would rebase the fetched
+> branch onto HEAD, when it's actually the other way around.
 
-The point isn't that this is a huge flaw, the point is that we should
-be able to configure Git to match sane workflows.  Saying =E2=80=9Cthat's
-unlikely to happen=E2=80=9D doesn't solve the problem that some newcomers h=
-ave
-trouble matching their project's desired workflow.
+Right.
 
-> So no, for all intents and purposes it doesn't matter. I would rather
-> concentrate on the issue more than 90% of the users face.
+This actually interesting mode of thinking:
 
-You don't have to concentrate on it, because I'm willing to write up
-the patch, I'm just trying to find a consensus spec before writing the
-patch.  If you don't have strong feelings about a pull.prompt
-proposal, I won't mind ;).  I just don't want to write it up and
-*then* hear =E2=80=9Cthat's a terrible idea, you should have just done $x.=
-=E2=80=9D.
+a) git pull --rebase
 
-> > > And just as they can do pull.promot =3D true, they can do pull.mode =
-=3D
-> > > fetch-only.
-> >=20
-> > Why would you run a fetch-only pull instead of running 'git fetch'?  I
-> > think it would make more sense to have 'pull.mode =3D none' with which
-> > 'git pull =E2=80=A6' turns into a no-op suggesting an explicit
-> > fetch/{merge|rebase}.  Having something like that available would
-> > help with the training issue that pull.prompt was addressing.
->=20
-> I fail to see how training them to do this:
->=20
->   % git config --global pull.mode none
->   % git pull
->   % git fetch
->   % git merge --no-ff
->=20
-> Is preferable than training them to do:
->=20
->   % git pull --no-ff
+We want to rebase HEAD onto @{upstream}.
 
-The goal is to train them to do:
+b) git pull --merge
 
->   % git config --global pull.mode none
->   % git fetch
->   % git merge --no-ff
+We want to merge HEAD into @{upstream}. (Why are we doing the opposite?)
 
-The 'git pull' (with 'none' mode) explainer just helps retrain folks
-that are already using the current 'git pull' incorrectly.
+c) git pull --rebase github john
 
-The benefit is that the repeated pair of commands (fetch/merge) takes
-longer to type, which gives them longer to realize that they should
-think about what they're doing and abort.  That's all a pull.prompt
-would be doing anyway.
+We weant to rebase github/john onto HEAD. (We are doing the opposite?)
 
-Cheers,
-Trevor
+d) git pull --merge github john
 
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
+We want to merge github/john into HEAD.
 
---FX+Db2fp7WJhXKrW
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
+> >                                  The possible values are 'merge',
+> > +	'rebase', and 'rebase-preserve'.
+> 
+> While the name 'merge' is mostly self-explanatory, I think it needs
+> further clarification:  Does 'merge' imply --no-ff?  Or --ff?  Or the
+> value of merge.ff?
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
+'pull.mode=merge' will do the same as `git merge`, I don't see where or
+how it can be explained more clearly.
 
-iQIcBAEBAgAGBQJTZApfAAoJEKKfehoaNkbtJHMQAJoo79JWrYYecKduCwnmbfZZ
-I7J5faC1ne5nAV4VY3MOynO7TwCXEedsJdwmYXZa7xpn+8KuU0TQE3OTU7pnxBWa
-mzkcfgBTMatu3tC5u7Vxe9GS6WYDDog3Uqtj/pMDH+2IK5hk3NvO9tOQx26rUjNh
-cXd3anlpPrcfbJ8mUVycHmOw0C9kg3slcFuu+3Ta6JsQ2XC8HBGztKFaHbQI5CMr
-Mv30g4F+Nf3ICiVIAP5tRRz/jhoKTYfC3Ria5MaH73jzltNNDG3hMKtuldflpCGy
-TCdOy6mCBItqKauKQL1aKH1BFtMxGS3G4cezwqBwSF/U9BLGMoCUS8LhIk4jfWWY
-GvmEmTu+3TYyhUy7CACNdYLzkG7/EbZOwnnsBhFcxTZ2MAK8NrqWuLAEoDUodd5p
-QsqQ768pftIn7pecrMfOBpwTiVxIaUefMM/CkIOL7BJmC6DWbg3vqQpBfFtjxvk1
-a8DS8d6aNdLSQWHGCp+z5A3cKzhMPtfEAzeD/wd96fB+sOSqfTGp1ao3hDHBXs0V
-G+85WhI9gyxOYqp+oDS+MM/viHOVeyx1RcDVHpPL5u1+U/IueSuWRjqy4eUqlu8e
-Y+rpbMr3cvFfiP1bQkPtyhS2YYcFcc3b41oSpfa8BPVK6SL1sNEHCsWDusKhYwO3
-u0VxOYkH1cKLyWTa751x
-=ORuO
------END PGP SIGNATURE-----
+> Which side will be the first parent?
 
---FX+Db2fp7WJhXKrW--
+The same as things currently are: the pulled branch into the current
+branch (current branch is first parent).
+
+We should probably change this, but that's out of scope of this series,
+and hasn't been decided yet.
+
+> >                                        See "pull.mode" for doing this in a
+> > +	non branch-specific manner.
+> 
+> I find this sentence to be a bit unclear and would prefer something
+> like:  "Defaults to the value of pull.mode."
+
+Hmm, might make sense.
+
+> >  +
+> > -	When preserve, also pass `--preserve-merges` along to 'git rebase'
+> > -	so that locally committed merge commits will not be flattened
+> > -	by running 'git pull'.
+> > +	When 'rebase-preserve', also pass `--preserve-merges` along to
+> > +	'git rebase' so that locally committed merge commits will not be
+> > +	flattened by running 'git pull'.
+> > ++
+> > +	It was named 'branch.<name>.rebase' but that is deprecated now.
+> 
+> To me this sentence implies that .rebase was simply renamed to .pullmode
+> with no other changes.  I'd prefer something like this:
+> 
+> branch.<name>.rebase::
+>     Deprecated in favor of branch.<name>.pullmode.
+> 
+> (Same goes for pull.rebase.)
+
+Right.
+
+> >  +
+> >  *NOTE*: this is a possibly dangerous operation; do *not* use
+> >  it unless you understand the implications (see linkgit:git-rebase[1]
+> > @@ -1881,15 +1883,18 @@ pretty.<name>::
+> >  	Note that an alias with the same name as a built-in format
+> >  	will be silently ignored.
+> >  
+> > -pull.rebase::
+> > -	When true, rebase branches on top of the fetched branch, instead
+> > -	of merging the default branch from the default remote when "git
+> > -	pull" is run. See "branch.<name>.rebase" for setting this on a
+> > -	per-branch basis.
+> > +pull.mode::
+> > +	When "git pull" is run, this determines if it would either merge or
+> > +	rebase the fetched branch. The possible values are 'merge',
+> > +	'rebase', and 'rebase-preserve'. See "branch.<name>.pullmode" for doing
+> > +	this in a non branch-specific manner.
+> > ++
+> > +	When 'rebase-preserve', also pass `--preserve-merges` along to
+> > +	'git rebase' so that locally committed merge commits will not be
+> > +	flattened by running 'git pull'.
+> > ++
+> >  +
+> > -	When preserve, also pass `--preserve-merges` along to 'git rebase'
+> > -	so that locally committed merge commits will not be flattened
+> > -	by running 'git pull'.
+> 
+> The default value should be documented.  Also, rather than copy+paste
+> the description from branch.<name>.pullmode, I'd prefer a brief
+> reference.  For example:
+> 
+> pull.mode::
+>     See branch.<name>.pullmode.  Defaults to 'merge'.
+
+I'd say pull.mode is the important one.
+
+-- 
+Felipe Contreras
