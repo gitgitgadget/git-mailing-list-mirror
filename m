@@ -1,7 +1,9 @@
 From: dturner@twopensource.com
-Subject: Watchman support for git
-Date: Fri,  2 May 2014 19:14:08 -0400
-Message-ID: <1399072451-15561-1-git-send-email-dturner@twopensource.com>
+Subject: [PATCH 1/3] After chdir to run grep, return to old directory
+Date: Fri,  2 May 2014 19:14:09 -0400
+Message-ID: <1399072451-15561-2-git-send-email-dturner@twopensource.com>
+References: <1399072451-15561-1-git-send-email-dturner@twopensource.com>
+Cc: David Turner <dturner@twitter.com>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Sat May 03 01:14:50 2014
 Return-path: <git-owner@vger.kernel.org>
@@ -9,92 +11,82 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WgMfH-0005b5-3i
-	for gcvg-git-2@plane.gmane.org; Sat, 03 May 2014 01:14:47 +0200
+	id 1WgMfH-0005b5-N1
+	for gcvg-git-2@plane.gmane.org; Sat, 03 May 2014 01:14:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752485AbaEBXOk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1752608AbaEBXOm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 May 2014 19:14:42 -0400
+Received: from mail-qa0-f41.google.com ([209.85.216.41]:60959 "EHLO
+	mail-qa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752544AbaEBXOk (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 2 May 2014 19:14:40 -0400
-Received: from mail-qg0-f48.google.com ([209.85.192.48]:48207 "EHLO
-	mail-qg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752109AbaEBXOj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 May 2014 19:14:39 -0400
-Received: by mail-qg0-f48.google.com with SMTP id i50so4011555qgf.7
-        for <git@vger.kernel.org>; Fri, 02 May 2014 16:14:38 -0700 (PDT)
+Received: by mail-qa0-f41.google.com with SMTP id dc16so3216617qab.14
+        for <git@vger.kernel.org>; Fri, 02 May 2014 16:14:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:subject:date:message-id;
-        bh=51XsPeEnqrRhDqiN88s7GcAPRkNQ/DQMERqWsTsVsgo=;
-        b=W+A/V8HPPmq+7bbN2vXUR4VOw8D/m+PmMI+9Vq2s7hhJjJRN4BLmTMWo997yx+Li1j
-         l3Es254k06mfziOeCDg0N5CrPBXyDbq+Yd4vqYXjHDsCQn5uTSnYlxS12DdiVd6jkpgD
-         jIgI9wo3LPpHIaz4AazMKs0L0nNZGYRbskEb0fq/qP0RYVeE/jVmJ/cdfNPtbfRyqBKP
-         3QNRZA00PDImEgAKsQ9iY0gaeFntTwphKuFPkn11qCqXcS/ypZOxIZFJHaxwnTPAcZw4
-         OT5Vm71FUcIMIouFuQGHleifFUS8lF53yEGaAuyFPzWLN2R2MaMFVPRuBAQwJeMVr4vI
-         QrrA==
-X-Gm-Message-State: ALoCoQlPYeAJTvTX23AwfPjsFvLCe0lrzU+5mXFzfEv/Rwm0qckpX/EWD7OnMlSG3dr+UowKH917
-X-Received: by 10.224.30.131 with SMTP id u3mr26856853qac.50.1399072478624;
-        Fri, 02 May 2014 16:14:38 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=s+CNSYbCq3GPRRF0OP7BVU93lNWWJCrSzzyqADvmGKg=;
+        b=IzN6/oUBJlcFlJmxlfDOYFdKtRwWRJ4QZPmDNN9+Tk3nF9pM+6/oE/51i2/sRb0DNh
+         vGqQE1Hu+K3bHX7enJT/Wi6vuN62Qzr7o496bRqHL6FslfNU+m70GUrv+wIOdpw91SL5
+         QK6uBQF6pjP8SBAb6LBvWa5aT6dR/BH55FeMvdiM/guuEfUAFqhQu85ZDUL6U1Eb5KO1
+         08wI7WmbeoB6U3vS6zrnCKGTFTWOarEHoSxDGNoUc+3Y/1P/nmunHpkfPNTHT1vOU/9i
+         nXrQdWrzJGx9TvbOtu0J5vaViFLdl8y0AE6QU7gfXOqvpd2uoMUrO2WrfPiASakxxYfK
+         7zsQ==
+X-Gm-Message-State: ALoCoQmNNo37Afa3PRPIe0GEvxYIqILOw++XHgm1JpFmuQEPROyJSjd2C0Iz2LYH0ynO3hFRiU++
+X-Received: by 10.224.51.2 with SMTP id b2mr26134764qag.49.1399072480008;
+        Fri, 02 May 2014 16:14:40 -0700 (PDT)
 Received: from stross.twitter.corp ([8.25.196.25])
-        by mx.google.com with ESMTPSA id q62sm598071qgd.0.2014.05.02.16.14.36
-        for <git@vger.kernel.org>
+        by mx.google.com with ESMTPSA id q62sm598071qgd.0.2014.05.02.16.14.38
+        for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 02 May 2014 16:14:37 -0700 (PDT)
+        Fri, 02 May 2014 16:14:39 -0700 (PDT)
 X-Mailer: git-send-email 2.0.0.rc0.31.g69c1a2d
+In-Reply-To: <1399072451-15561-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248005>
 
-The most sigificant patch uses Facebook's watchman daemon[1] to monitor
-the repository work tree for changes.  This makes allows git status
-to avoid traversing the entire work tree to find changes.
+From: David Turner <dturner@twitter.com>
 
-This change requires libwatchman[2], a client library that I wrote for
-watchman.
+Signed-off-by: David Turner <dturner@twitter.com>
+---
+ builtin/grep.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-While making the watchman change, I also made a change to the index
-format (contributed here in a separate patch).  Index integrity
-checking uses the same SHA1 algorithm as the rest of git; this is
-actually relatively slow.  It's not a huge part of run-time, but since
-I wanted to do the same checking for the Watchman filesystem cache
-(which is about twice as large as the index), I decided to optimize it
-anyway.  I switched to VMAC.  VMAC is supposed to be a MAC, but
-there's no reason it can't be used with a fixed key as a simple
-integrity check.  VMAC is roughly five times faster than SHA1 on my
-machine; This adds up to a 5% overal speed improvement on git status
-(depending on the structure of your repo, and about 15% on git diff
---cached with no cached changes).
-
-The index format change might be less important with the split index;
-I haven't investigated that since at the time I wrote these patches,
-it didn't exist.
-
-Some numbers follow.  They are on my laptop, which has 4x i5-2520M
-processors, 8GB of RAM, and a solid state disk.  They're all tested
-with a hot cache.
-
-Test repository 1: Linux
-
-Linux is about 45k files in 3k directories.  The average length of a
-filename is about 32 bytes.
-
-Git status timing:
-no watchman: 125ms
-watchman: 90ms
-
-Test repository 2: Superscience
-
-My second test repository (which is a semi-synthetic repo generated
-from various Twitter internal repos) is somewhat larger than this, and
-gets a correspondingly larger improvement.  It is about 65k files in
-20k directories; the average length of a filename is 67 bytes.
-
-Git status timing:
-no watchman, index version 4: 370 ms
-no watchman, index version 5: 365 ms
-watchman, index version 4: 170 ms
-watchman, index version 5: 165 ms
-
-
-[1] https://github.com/facebook/watchman
-[2] https://github.com/twitter/libwatchman
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 69ac2d8..e9fe040 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -355,15 +355,25 @@ static void run_pager(struct grep_opt *opt, const char *prefix)
+ {
+ 	struct string_list *path_list = opt->output_priv;
+ 	const char **argv = xmalloc(sizeof(const char *) * (path_list->nr + 1));
++	static char old_directory[PATH_MAX+1];
+ 	int i, status;
+ 
+ 	for (i = 0; i < path_list->nr; i++)
+ 		argv[i] = path_list->items[i].string;
+ 	argv[path_list->nr] = NULL;
+ 
+-	if (prefix && chdir(prefix))
+-		die(_("Failed to chdir: %s"), prefix);
++
++	if (prefix) {
++		if (!getcwd(old_directory, PATH_MAX+1))
++			die(_("Failed to get cwd: %s"), prefix);
++		if (chdir(prefix))
++			die(_("Failed to chdir: %s"), prefix);
++	}
+ 	status = run_command_v_opt(argv, RUN_USING_SHELL);
++	if (prefix)
++		if (chdir(old_directory))
++			die(_("Failed to chdir: %s"), old_directory);
++
+ 	if (status)
+ 		exit(status);
+ 	free(argv);
+-- 
+2.0.0.rc0.31.g69c1a2d
