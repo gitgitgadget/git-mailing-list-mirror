@@ -1,67 +1,77 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: RE: Watchman support for git
-Date: Fri, 02 May 2014 18:20:02 -0500
-Message-ID: <536428224adfb_200c12912f010@nysa.notmuch>
-References: <1399072451-15561-1-git-send-email-dturner@twopensource.com>
+Subject: Re: Pull is Mostly Evil
+Date: Fri, 02 May 2014 18:23:35 -0500
+Message-ID: <536428f7796e0_200c12912f03@nysa.notmuch>
+References: <5363BB9F.40102@xiplink.com>
+ <87k3a4xjzg.fsf@fencepost.gnu.org>
+ <C439C0C76DA44AB5AAC91E7C0D2991BA@PhilipOakley>
+ <5363ec734572a_70ef0f30cdc@nysa.notmuch>
+ <2F8B2EEED0594446A6FCF771BBEDFB56@PhilipOakley>
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
 Content-Transfer-Encoding: 7bit
-To: dturner@twopensource.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 03 01:30:46 2014
+To: Philip Oakley <philipoakley@iee.org>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	git@vger.kernel.org, David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Sat May 03 01:34:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WgMuj-0000oJ-Ho
-	for gcvg-git-2@plane.gmane.org; Sat, 03 May 2014 01:30:45 +0200
+	id 1WgMyD-0001US-Lc
+	for gcvg-git-2@plane.gmane.org; Sat, 03 May 2014 01:34:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753096AbaEBXam (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 May 2014 19:30:42 -0400
-Received: from mail-ob0-f181.google.com ([209.85.214.181]:43520 "EHLO
-	mail-ob0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752541AbaEBXal (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 May 2014 19:30:41 -0400
-Received: by mail-ob0-f181.google.com with SMTP id gq1so5991322obb.40
-        for <git@vger.kernel.org>; Fri, 02 May 2014 16:30:41 -0700 (PDT)
+	id S1753186AbaEBXeQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 May 2014 19:34:16 -0400
+Received: from mail-oa0-f41.google.com ([209.85.219.41]:63464 "EHLO
+	mail-oa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751640AbaEBXeO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 May 2014 19:34:14 -0400
+Received: by mail-oa0-f41.google.com with SMTP id m1so3448815oag.0
+        for <git@vger.kernel.org>; Fri, 02 May 2014 16:34:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:message-id:in-reply-to:references:subject:mime-version
          :content-type:content-transfer-encoding;
-        bh=PFVVJwFZgSmIjLKbXsbuCKGgmr0d5iywSwXWtTmXo0Y=;
-        b=FzsDTwZ2djpzf12nehLGFbo3pbJcVVZOLVg28TlgXPpK+1zLKgdPWN9XM/baxDpwO/
-         MTcGA6EOU+CTzKSZWVG5FWeGDaGyA/we4E+ez7/6O6h4QUYZxehvxj7d1c7wUbbxgHa4
-         KIOYdJdiIBsKa+r3woEOc9fxPa1xiM+NdnWxhHZIMHxhY+Cc5oHnTycjmXowmf+DTguG
-         DF6qRm7XK04QkItkerHQF9jflmbdY7fNM6zzK3sd+uTI3kjWpAQJ8Y33aI8napErcqs4
-         64o9bHJhqH1y8t93n9M6SnzgPxe2HLkYSW+PbS2JclD5A71CgoFA9A17sC3sYSjn84t8
-         mNCA==
-X-Received: by 10.182.33.73 with SMTP id p9mr17813645obi.37.1399073441032;
-        Fri, 02 May 2014 16:30:41 -0700 (PDT)
+        bh=kyPCNa+y3mEdjVRwIR+5r3D1jQJv7ZA7CZ2MNnuV9z0=;
+        b=l1lG1MK4+m21+wMfUO2hiFfQ5sdkwe9X00aMFXgoDWhi5gsOgFGJsZwpaQftwh23Vj
+         /es0vNk23W6cgboNbC0xn3eOrHMTsZUzP8U9KGXUkNV/jlEQbxSUIrUh7qFzvpjjSAK7
+         JWWZJUTFNaI37BXoGrcTKPLhwkz2PwOqf1nTdKWnHiYgTRxdDAIzkQJga97qqBGjgdnM
+         vWGGFp8QOuO2csdOdPAO+RtVwJy8bCoEZT+mzAzJ5RfDZk+BHkq5xXcXY0wEjSyQCxn8
+         d/PODxcfUZ1Yeb30NQSMeFTrR1PDLrw+QpOCQwTSHTMCHmeqVgoQTuo6BDsC7Czlql0u
+         tHTg==
+X-Received: by 10.182.28.134 with SMTP id b6mr18197402obh.27.1399073653829;
+        Fri, 02 May 2014 16:34:13 -0700 (PDT)
 Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id cn1sm1912253oeb.11.2014.05.02.16.30.38
+        by mx.google.com with ESMTPSA id rt4sm1034378obb.12.2014.05.02.16.34.11
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 02 May 2014 16:30:40 -0700 (PDT)
-In-Reply-To: <1399072451-15561-1-git-send-email-dturner@twopensource.com>
+        Fri, 02 May 2014 16:34:12 -0700 (PDT)
+In-Reply-To: <2F8B2EEED0594446A6FCF771BBEDFB56@PhilipOakley>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248008>
 
-dturner@ wrote:
-> Test repository 1: Linux
+Philip Oakley wrote:
+> From: "Felipe Contreras" <felipe.contreras@gmail.com>
+> > So? No defaults can please absolutely everyone, the best anybody can
+> > do is try to please the majority of people, and merging
+> > fast-forwards only does that.
 > 
-> Linux is about 45k files in 3k directories.  The average length of a
-> filename is about 32 bytes.
-> 
-> Git status timing:
-> no watchman: 125ms
-> watchman: 90ms
+> That assumes that doing something is better than doing nothing,
 
-That's very interesting. Do you get similar improvements when doing
-something similar in Merurial (watchman vs . no watchman).
+When doing something is better for the vast majority of people, that's
+what should be done by default, unless the results are catastrophic for
+the minority.
+
+Since doing something is not catastrophic to the minority, it follows
+that the default should be to do something.
+
+It's a simple as that.
 
 -- 
 Felipe Contreras
