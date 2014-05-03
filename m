@@ -1,67 +1,60 @@
-From: tolga ceylan <tolga.ceylan@gmail.com>
-Subject: Re: [PATCH] git-p4: format-patch to diff-tree change breaks binary
- patches
-Date: Fri, 02 May 2014 22:40:57 -0700
-Message-ID: <53648169.7010307@gmail.com>
-References: <20140425044618.GA7058@olive> <20140426124307.GB4767@padd.com> <535C2138.3050400@gmail.com> <535C25B5.4050506@gmail.com>
+From: Andreas Krey <a.krey@gmx.de>
+Subject: Re: Pull is Evil
+Date: Sat, 3 May 2014 08:17:17 +0200
+Message-ID: <20140503061717.GA19561@inner.h.apk.li>
+References: <4ay6w9i74cygt6ii1b0db7wg.1398433713382@email.android.com> <xmqqoazlqot4.fsf@gitster.dls.corp.google.com> <536106EA.5090204@xiplink.com> <xmqqppjyhnom.fsf@gitster.dls.corp.google.com> <536152D3.5050107@xiplink.com> <xmqqa9b2egcy.fsf@gitster.dls.corp.google.com> <20140502074027.GB6288@inner.h.apk.li> <87wqe4y3e6.fsf@fencepost.gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, cdleonard@gmail.com
-To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Sat May 03 07:41:07 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Sat May 03 08:17:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WgSh7-0003D7-I6
-	for gcvg-git-2@plane.gmane.org; Sat, 03 May 2014 07:41:05 +0200
+	id 1WgTGP-0004Wk-3G
+	for gcvg-git-2@plane.gmane.org; Sat, 03 May 2014 08:17:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750823AbaECFlA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 May 2014 01:41:00 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:43013 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750768AbaECFk7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 May 2014 01:40:59 -0400
-Received: by mail-pa0-f42.google.com with SMTP id bj1so6549571pad.1
-        for <git@vger.kernel.org>; Fri, 02 May 2014 22:40:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=1FXyWgtD73wyrWxyPp+DXtVfxy0qLJ1aXgBHb7TeZdc=;
-        b=HFQNT+bLAmtNDtU2MKMgGeYLT39KXkOzkgjcHIHV3yfy457TxL06cctSsBuOarFcyy
-         0U1gN+25RFmRFey9OzoEwRtAfYRPg3Hldq/IAE7FheOMu4a+g1wIwRt/Mf+Ty6I6JqTc
-         D1dF2uW3RE5bVSNwY4K+naHoSu9vzqYhjPep7ikQgWWDjWpjwbh9qY99ODVuZHCc6jii
-         AlxAUWB4LKoN3dtcoXxj1wZo5h/zfv9JZ1D//DwWD60wlqNpTVUhpuQBxBymcaD3gfxS
-         pEArosGdVtCx2fOP9WMiYJ/Q6v00vsn2PzaX46BmgSiiBRFeCa3KAnpW+TPt9X1XMVao
-         IHFw==
-X-Received: by 10.66.177.168 with SMTP id cr8mr43572991pac.128.1399095658793;
-        Fri, 02 May 2014 22:40:58 -0700 (PDT)
-Received: from [192.168.1.100] (c-98-210-144-148.hsd1.ca.comcast.net. [98.210.144.148])
-        by mx.google.com with ESMTPSA id te2sm9526903pac.25.2014.05.02.22.40.57
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 02 May 2014 22:40:58 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-In-Reply-To: <535C25B5.4050506@gmail.com>
+	id S1751140AbaECGR3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 May 2014 02:17:29 -0400
+Received: from continuum.iocl.org ([217.140.74.2]:47255 "EHLO
+	continuum.iocl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750936AbaECGR3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 May 2014 02:17:29 -0400
+Received: (from krey@localhost)
+	by continuum.iocl.org (8.11.3/8.9.3) id s436HHS20103;
+	Sat, 3 May 2014 08:17:17 +0200
+Content-Disposition: inline
+In-Reply-To: <87wqe4y3e6.fsf@fencepost.gnu.org>
+User-Agent: Mutt/1.4.2.1i
+X-message-flag: What did you expect to see here?
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248019>
 
+On Fri, 02 May 2014 10:46:09 +0000, David Kastrup wrote:
+...
+> What the gibbins?  I don't even use git pull.
 
->
-> This is the error message git-apply emits in this case:
->
-> error: cannot apply binary patch to '<filename>' without full index line
-> error: <filename>: patch does not apply
->
-> Cheers,
-> Tolga
+I do, but I watch for the fast-forward message
+and undo as appropriate.
 
-Any feedback is appreciated.
-Cheers,
-Tolga
+> I use git fetch, and then, depending on my needs, I rebase or merge.
+
+I wouldn't mind that, but I have a century of newbies who are used
+to having other people's changes appear in their workspace without
+any interaction. Teaching them the mainline thing (aka first-parent)
+and the commands to properly merge&push is...tricky.
+
+And that goes for every user base, so some improvement would be
+greatly appreciated.
+
+Andreas
+
+-- 
+"Totally trivial. Famous last words."
+From: Linus Torvalds <torvalds@*.org>
+Date: Fri, 22 Jan 2010 07:29:21 -0800
