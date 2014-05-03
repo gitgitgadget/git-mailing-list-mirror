@@ -1,306 +1,68 @@
-From: Richard Hansen <rhansen@bbn.com>
-Subject: Re: Pull is Mostly Evil
-Date: Sat, 03 May 2014 18:09:32 -0400
-Message-ID: <5365691C.1010208@bbn.com>
-References: <5363BB9F.40102@xiplink.com> <xmqqoazgaw0y.fsf@gitster.dls.corp.google.com> <5364A143.1060404@bbn.com> <5364b62d5fb7b_ac68dd30816@nysa.notmuch>
+From: James Denholm <nod.helm@gmail.com>
+Subject: Re: [PATCH] subtree/Makefile: Standardize (esp. for packagers)
+Date: Sun, 04 May 2014 08:12:54 +1000
+Message-ID: <6e64be78-58d0-42c5-97de-aaf9310f014d@email.android.com>
+References: <1398304336-1879-1-git-send-email-nod.helm@gmail.com> <CAHYYfeGNDLVxzP6zMyJnSi8GxpQaUKGAkqaLfXbZ=8B1k7vvyQ@mail.gmail.com> <3cb4338e-de68-404d-86dc-70cac7e13606@email.android.com> <20140426072520.GB7558@sigill.intra.peff.net> <6a7bcc79-d9c3-4cf8-8f3b-a6a16298c221@email.android.com> <20140430032045.GA4613@comcast.net> <CAHYYfeGNO5QknoKkZfYy3XLNRZsVmf0WjeNGkDxH3QwPF-RsUQ@mail.gmail.com> <5365420874947_27397d32f016@nysa.notmuch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Cc: Git Mailing List <git@vger.kernel.org>
 To: Felipe Contreras <felipe.contreras@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Marc Branchaud <marcnarc@xiplink.com>
-X-From: git-owner@vger.kernel.org Sun May 04 00:09:45 2014
+	Matthew Ogilvie <mmogilvi_git@miniinfo.net>
+X-From: git-owner@vger.kernel.org Sun May 04 00:13:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wgi7t-0006T5-0M
-	for gcvg-git-2@plane.gmane.org; Sun, 04 May 2014 00:09:45 +0200
+	id 1WgiBB-0006oi-Mm
+	for gcvg-git-2@plane.gmane.org; Sun, 04 May 2014 00:13:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753066AbaECWJh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 May 2014 18:09:37 -0400
-Received: from smtp.bbn.com ([128.33.1.81]:56828 "EHLO smtp.bbn.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750972AbaECWJg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 May 2014 18:09:36 -0400
-Received: from socket.bbn.com ([192.1.120.102]:42976)
-	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
-	(Exim 4.77 (FreeBSD))
-	(envelope-from <rhansen@bbn.com>)
-	id 1Wgi7s-000FEw-2k; Sat, 03 May 2014 18:09:44 -0400
-X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id 72D853FF32
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-In-Reply-To: <5364b62d5fb7b_ac68dd30816@nysa.notmuch>
-X-Enigmail-Version: 1.6
+	id S1753216AbaECWNF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 May 2014 18:13:05 -0400
+Received: from mail-pd0-f179.google.com ([209.85.192.179]:34405 "EHLO
+	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753178AbaECWNE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 May 2014 18:13:04 -0400
+Received: by mail-pd0-f179.google.com with SMTP id g10so4218435pdj.10
+        for <git@vger.kernel.org>; Sat, 03 May 2014 15:13:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=user-agent:in-reply-to:references:mime-version
+         :content-transfer-encoding:content-type:subject:from:date:to:cc
+         :message-id;
+        bh=ao+XtPkeYlBacalByVrxQ+pJMg04rX9OU9i8xR3c+Rg=;
+        b=JPeSDlDanmYazwz/K7HT9JNtIq6hcfJixmuuojNEIYen5TAWAbmL7kZUV8smBpIXVO
+         b2f1zfx/envb4IXAXpmdmWFTZGmTOkgCHCK9KRGBWbBz9VngSeq8F/p5sl9HQqCid91Y
+         FHhC70XqsNB30KZZZNQbT7KENmon4HRNgInvbouLlJjLegq2zhhm/90no1hEqqOPqtG8
+         69l/cz5hVfWQlyUafOEZ4r258VTpCjRXfkKDabPb6m3l+wGuGbKkGbC/ZfxmGOVUNw/8
+         Wj2baeIAGUNxMkZR3nE5xGqVPsBlnR+T5xbXYl657GYGhvnpO8TACfIX6EgusjmYTHiT
+         CuGg==
+X-Received: by 10.66.147.130 with SMTP id tk2mr9711249pab.125.1399155182793;
+        Sat, 03 May 2014 15:13:02 -0700 (PDT)
+Received: from [10.94.180.28] ([101.119.29.196])
+        by mx.google.com with ESMTPSA id qx11sm28769711pab.35.2014.05.03.15.13.00
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 03 May 2014 15:13:02 -0700 (PDT)
+User-Agent: Kaiten Mail
+In-Reply-To: <5365420874947_27397d32f016@nysa.notmuch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248059>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248060>
 
-On 2014-05-03 05:26, Felipe Contreras wrote:
-> Richard Hansen wrote:
-> 
->> I think the fundamental difference is in the relationship between the
->> local and the remote branch (which branch derives from the other).
->> The relationship between the branches determines what the user wants
->> from 'git pull'.
->>
->> In my experience 'git pull' is mostly (only?) used for the following
->> three tasks:
-> 
-> I agree.
-> 
->>  1. update a local branch to incorporate the latest upstream changes
->>
->>     In this case, the local branch (master) is a derivative of the
->>     upstream branch (origin/master).  The user wants all of the
->>     commits in the remote branch to be in the local branch.  And the
->>     user would like the local changes, if any, to descend from the tip
->>     of the remote branch.
-> 
-> My current propsal of making `git pull` by default do --ff-only would
-> solve this.
+On 4 May 2014 05:22:48 GMT+10:00, Felipe Contreras <felipe.contreras@gmail.com> wrote:
+>I think you should take a look at the Makefile of
+>contrib/remote-helpers. I bet something simple like that would work
+>just
+>fine for subtree.
 
-It would go a long way toward improving the situation, yes.
+The current makefile is simple enough, just quirky and likes
+to be a special snowflake. 'sall good, the v2 addresses most
+of my immediate concerns with it.
 
-> In addition I think by default 'master' should be merged to
-> 'origin/master', if say --merge is given.
-
-This would break cases #2 and #3.  (With cases #2 and #3 you want the
-fetched branch to be the second parent, not the first.)
-
-Or are you proposing that pull --merge should reverse the parents if and
-only if the remote ref is @{u}?
-
-> 
->>     For this case, 'git pull --ff-only' followed by 'git rebase -p'
->>     works well, as does 'git pull --rebase=preserve' if the user is
->>     comfortable rebasing without reviewing the incoming commits first.
-> 
-> I suppose you mean a `git rebase -p` if the `git pull --ff-only` failed.
-
-Yes.
-
-> This might be OK on most projects, but not all.
-
-The rebase only affects the local repository (the commits haven't been
-pushed yet or else they'd be in @{u} already), so I'd say it's more of
-an individual developer decision than a project decision.
-
-In my opinion rebase would be the best option here, but if the project
-is OK with developers pushing merge or merge-there commits and the
-developer isn't yet comfortable with rebasing, then merge is also an
-acceptable option.
-
-> 
-> What happens after a `git pull --ff-only` fails should be totally
-> up to the user.
-
-I tend to agree, mostly because I want users to have an opportunity to
-review incoming commits before action is taken.  Also, though rebasing
-would yield the nicest history, some users aren't yet comfortable with
-rebase.  If a project is OK with silly little merge commits from users
-that aren't comfortable with rebase, then I don't want to force everyone
-to rebase by default.
-
-As an added bonus:  Defaulting to --ff-only makes it possible for 'git
-pull --all' to fast-forward every local branch to their configured
-upstream, not just the currently checked-out branch.  I think this would
-be a huge usability win.
-
-> 
->>  2. update a published feature branch with the latest changes from its
->>     parent branch
->>
->>     In this case, the local branch (foo) is a derivative of the
->>     upstream branch (origin/foo) which is itself a derivative of
->>     another branch (origin/master).  All commits in origin/master
->>     should be in origin/foo, and ideally all commits unique to
->>     origin/foo would descend from the tip of origin/master.
-> 
-> I don't understand why are you tainting the example with 'origin/foo',
-
-Originally I didn't have this case in my list, but I added it after
-thinking about Peff's comment:
-
-  On 2014-05-02 17:48, Jeff King wrote:
-  > One common workflow for GitHub users is to back-merge master into a
-  > topic, because they want the final "integrated" version on the topic
-  > branch.
-
-This almost but doesn't quite fit neatly into the other two cases.  It's
-not case #1 because the shared nature of origin/foo means that rebasing
-origin/foo onto origin/master is usually bad instead of usually good.
-It's not case #3 because rebasing origin/master commits onto origin/foo
-(assuming that the user would usually want to rebase the topic branch
-when integrating) would definitely be bad.
-
-> 'foo' and 'origin/master' are enough for this example. In fact, the
-> mention of 'origin/master' made it wrong: after the pull not all the
-> commits of origin/master would be in origin/foo, you need a push for
-> that.
-
-The push of foo to origin/foo was meant to be implied.
-
-> We have enough in our plate to taint this with yet another branch
-> and push.
-> 
-> For this case `git pull origin master` already work correctly for most
-> projects.
-
-Yes, it does.
-
-> We probably shouldn't change that.
-
-If we change 'git pull' to default to --ff-only but let 'git pull
-$remote [$refspec]' continue to default to --ff then we have two
-different behaviors depending on how 'git pull' is invoked.  I'm worried
-that this would trip up users.  I'm not convinced that having two
-different behaviors would be bad, but I'm not convinced that it would be
-good either.
-
-> 
->>  3. integrate a more-or-less complete feature/fix back into the line
->>     of development it forked off of
->>
->>     In this case the local branch is a primary line of development and
->>     the remote branch contains the derivative work.  Think Linus
->>     pulling in contributions.  Different situations will call for
->>     different ways to handle this case, but most will probably want
->>     some or all of:
->>
->>      * rebase the remote commits onto local HEAD
-> 
-> No. Most people will merge the remote branch as it is. There's no reason
-> to rebase, specially if you are creating a merge commit.
-
-I disagree.  I prefer to rebase a topic branch before merging (no-ff) to
-the main line of development for a couple of reasons:
-
-  * It makes commits easier to review.  For example, assume the
-    following commit history:
-
-       * merge topic-foo
-       |\
-       | * merge master into topic-foo
-       |/|
-       * | tweak the behavior of Thing
-       | |
-       | * refactor Thing
-       | |
-       | * wrap long lines; no behavior changes
-       |/
-       * blah
-       |
-       ...
-
-    In this case, the impact the "refactor Thing" and "wrap long lines"
-    commits have on master can't be fully understood without also
-    examining the presumed merge conflict resolution in the "merge
-    master into topic-foo" commit.  Merge commits are very hard to
-    review, even if (especially if?) there are no conflicts.
-    Developers can diff 'merge topic-foo' to its first parent, but then
-    they'll see lots of noise caused by the "wrap long lines" commit.
-
-    If the integrator rebases first, then the history looks like this:
-
-       * merge topic-foo
-       |\
-       | * refactor Thing
-       | |
-       | * wrap long lines; no behavior changes
-       |/
-       * tweak the behavior of Thing
-       |
-       * blah
-       |
-       ...
-
-    Now the merge conflict resolution is integrated into the "refactor
-    Thing" and "wrap long lines" commits, making them easier to review.
-
-  * Rebasing makes the commit history pretty and easier to understand.
-    Instead of this:
-
-       * merge feature.xyz
-       |\
-       | * xyz part 3/3
-       | |
-       | * merge master into feature.xyz
-       |/|
-       * | merge feature.foo
-       |\ \
-       | | * xyz part 2/3
-       | * | foo part 2/2
-       | * | foo part 1/2
-       | | * xyz part 1/3
-       |/ /
-       | /
-       |/
-       * merge feature.bar
-       |\
-
-    you get this:
-
-       * merge feature.xyz
-       |\
-       | * xyz part 3/3
-       | * xyz part 2/3
-       | * xyz part 1/3
-       |/
-       * merge feature.foo
-       |\
-       | * foo part 2/2
-       | * foo part 1/2
-       |/
-       * merge feature.bar
-       |\
-
-    When there are regularly dozens of active branches at a time, this
-    improved readability can be quite valuable.
-
-> 
->>      * merge into local HEAD so that the first parent (if a real merge
->>        and not a ff) is the previous version of the main line of
->>        development and the second parent is the derivative work
->>      * merge --no-ff so that:
->>         - the merge can serve as a cover letter (who reviewed it,
->>           which bug reports were fixed, where the changes came from,
->>           etc.)
->>         - the commits that compose the new topic are grouped together
->>         - the first-parent path represents a series of completed tasks
-> 
-> It is very rare that an integrator is even able to do a fast-forward
-> merge anyway.
-
-It depends on the level of project activity.  A project as active as the
-Linux kernel or Git will almost never have fast-forwards.  But
-occasional contributions by random users to a small, simple project will
-likely be fast-forwards.
-
-> So being explicit about --no-ff might better, but it would
-> hardly make a difference. Either way, a good integrator would configure
-> pull.ff = false.
-
-Configuring pull.ff = false is OK if the integrator only integrates and
-only uses one machine.  But if the integrator also wants to develop in
-the same repository, or if the integrator uses multiple machines to do
-the integration work (e.g., office desktop and laptop), then setting
-pull.ff may be less convenient, not more.
-
-Maybe it's OK to require integrators to get in the habit of typing 'git
-pull --no-ff'.  Presumably integrators are experienced Git users, so
-they can create their own 'git integrate' alias if they don't want to
-have to remember to type '--no-ff' all the time.
-
-> 
-> I'd say `git pull origin master` already works fine for this case.
-
-It does, but again preserving the current behavior would cause the
-behavior of 'git pull origin master' to be inconsistent with the
-proposed ff-only default for a plain 'git pull'.
-
--Richard
+Regards,
+James Denholm.
