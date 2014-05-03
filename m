@@ -1,149 +1,138 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: Pull is Mostly Evil
-Date: Sat, 3 May 2014 21:24:44 +0100
-Organization: OPDS
-Message-ID: <CFC38D3E32F9460685EFFD76228E4E21@PhilipOakley>
-References: <5363BB9F.40102@xiplink.com> <87k3a4xjzg.fsf@fencepost.gnu.org> <C439C0C76DA44AB5AAC91E7C0D2991BA@PhilipOakley> <5363ec734572a_70ef0f30cdc@nysa.notmuch> <2F8B2EEED0594446A6FCF771BBEDFB56@PhilipOakley> <20140502225342.GQ9218@google.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: Watchman support for git
+Date: Sat, 03 May 2014 16:49:09 -0400
+Organization: Twitter
+Message-ID: <1399150149.5310.47.camel@stross>
+References: <1399072451-15561-1-git-send-email-dturner@twopensource.com>
+	 <CACsJy8C72QQZd4v+p4bkFFKHnN2Uj1zD-BELwGtYB7sx1P6q6g@mail.gmail.com>
+	 <1399091986.5310.20.camel@stross>
+	 <CACsJy8B1Q3WEPT+nzDDwS5f7Wx+u5CHfN9JppRHv5VEx5NTxSw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Cc: "Felipe Contreras" <felipe.contreras@gmail.com>,
-	"Git List" <git@vger.kernel.org>, "David Kastrup" <dak@gnu.org>
-To: "Jonathan Nieder" <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 03 22:24:51 2014
+To: Duy Nguyen <pclouds@gmail.com>,
+	git mailing list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat May 03 22:49:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WggUL-0006hB-RZ
-	for gcvg-git-2@plane.gmane.org; Sat, 03 May 2014 22:24:50 +0200
+	id 1Wggs9-0007Gm-Uo
+	for gcvg-git-2@plane.gmane.org; Sat, 03 May 2014 22:49:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753240AbaECUYq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 May 2014 16:24:46 -0400
-Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:48744 "EHLO
-	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753178AbaECUYp (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 3 May 2014 16:24:45 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: As4ZAEdPZVNOl322/2dsb2JhbABZgwZPiHy8LQQBAQIBAYERF3SCIAUBAQQBCAEBLh4BASEFBgIDBQIBAw4HAQIJJRQBBAgSBgcXBhMIAgECAwEKAYgRAwkMCasvl2INhluMO4IXgzGBFQSJTYY7hHKCSIMui1uFXYM1PDAB
-X-IPAS-Result: As4ZAEdPZVNOl322/2dsb2JhbABZgwZPiHy8LQQBAQIBAYERF3SCIAUBAQQBCAEBLh4BASEFBgIDBQIBAw4HAQIJJRQBBAgSBgcXBhMIAgECAwEKAYgRAwkMCasvl2INhluMO4IXgzGBFQSJTYY7hHKCSIMui1uFXYM1PDAB
-X-IronPort-AV: E=Sophos;i="4.97,978,1389744000"; 
-   d="scan'208";a="445477606"
-Received: from host-78-151-125-182.as13285.net (HELO PhilipOakley) ([78.151.125.182])
-  by out1.ip04ir2.opaltelecom.net with SMTP; 03 May 2014 21:24:43 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1753224AbaECUtP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 May 2014 16:49:15 -0400
+Received: from mail-pd0-f182.google.com ([209.85.192.182]:41060 "EHLO
+	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752794AbaECUtO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 May 2014 16:49:14 -0400
+Received: by mail-pd0-f182.google.com with SMTP id fp1so907654pdb.13
+        for <git@vger.kernel.org>; Sat, 03 May 2014 13:49:14 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
+         :references:organization:content-type:content-transfer-encoding
+         :mime-version;
+        bh=vIHYG36RbHYbC4VR463dI82exit58Q6PYdLc3fD690Y=;
+        b=BXkFac+4lGt5F+QYYxqYiw8Oqt97hFNq9vPSpxMuAGwqBvK+jcgK+pMnreUVq+O/ph
+         oEqhi14klB2V4b3O3fn874kPv+qNV7sQaFwzozMWB1ltHN7ukpUm827fCJcPtHQ/TJta
+         5hR0kSVP8eEBtIRiLhgt/EUNn47RHdQnGm2ynnnkZIcaxeSNIt2DUPVrVzo9unWQ+I0w
+         hPKZDgfpYFZR87AZkGl8rxTkGDnh5Eqh7KHd47CkMZjMsOqRv3UOYmT7MDIu/3kZwOUX
+         Vvz0xoI19D3ovR0LZwpKGP1fbk5zenspbSF4Cn/tmA4qIl560HOsiiwu96403irxXKoC
+         fYPQ==
+X-Gm-Message-State: ALoCoQld3q8ETn3reh0MDTHWnjNIphMMgQwltESjpL8Iqs5QaoT+3lwsY2xaXj+oIkiYj2Ky5dYE
+X-Received: by 10.66.149.7 with SMTP id tw7mr51843052pab.72.1399150153987;
+        Sat, 03 May 2014 13:49:13 -0700 (PDT)
+Received: from [10.0.1.149] (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com. [207.38.164.98])
+        by mx.google.com with ESMTPSA id qh2sm27179874pab.13.2014.05.03.13.49.11
+        for <multiple recipients>
+        (version=SSLv3 cipher=RC4-SHA bits=128/128);
+        Sat, 03 May 2014 13:49:13 -0700 (PDT)
+In-Reply-To: <CACsJy8B1Q3WEPT+nzDDwS5f7Wx+u5CHfN9JppRHv5VEx5NTxSw@mail.gmail.com>
+X-Mailer: Evolution 3.2.3-0ubuntu6 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248058>
 
-From: "Jonathan Nieder" <jrnieder@gmail.com>
-Sent: Friday, May 02, 2014 11:53 PM
-> Hi,
->
-> Philip Oakley wrote:
->
->> That assumes that [git pull] doing something is better than doing
->> nothing,
->> which is appropriate when the costs on either side are roughly
->> similar.
->
-> I think the conversation's going around in circles.
+On Sat, 2014-05-03 at 15:49 +0700, Duy Nguyen wrote:
+> On Sat, May 3, 2014 at 11:39 AM, David Turner <dturner@twopensource.com> wrote:
+> >> Index v4 and split index (and the following read-cache daemon,
+> >> hopefully)
+> >
+> > Looking at some of the archives for read-cache daemon, it seems to be
+> > somewhat similar to watchman, right?  But I only saw inotify code; what
+> > about Mac OS?  Or am I misunderstanding what it is?
+> 
+> It's mentioned in [1], the second paragraph, mostly to hide index I/O
+> read cost and the SHA-1 hashing cost in the background. In theory it
+> should work on all platforms that support multiple processes and
+> efficient IPC. It can help load watchman file cache faster too.
 
-I agree it's going around, but it's a non-exact recurrence. Issues are
-being surfaced.
->
-> Potential next steps:
->
-> a. Documentation or test patch illustrating desired behavior
->
-> b. More traditional formal design doc explaining desired behavior and
->    the thinking behind it ("problem", "overview of solution",
->    "alternatives rejected", "complications", "example", "open
->    questions").
->
-> c. Implementation patch
->
-> d. Someone takes an existing patch and figures out the next step
->    toward getting it ready for application.
->
-> My preference is for (a), I guess.
+Yes, that seems like a good idea.
 
-I disagree about the leap to the presentation & discussion of a
-'solution' in these awkward scenarios (the old joke about "if I were you
-I wouldn't start from here", when asking for directions tends to apply).
-This is the same point made by Brooks in the 'Mythical Man Month'. A
-leap to code is no guarantee of success.
+I actually wrote some of a more-complicated, weirder version of this
+idea.  In my version, there was a long-running git daemon process that
+held the index, the watchman file cache, and also objects loaded from
+the object database.  Other git commands would then send their
+command-line and arguments over to the daemon, which would run the
+commands and send stdin/out/err back.  Of course, this is complicated
+because git commands are designed to run then exit, so they often rely
+on variables being initialized to zero, or fail to free memory.  I used
+the Boehm GC to handle the memory freeing problem.  To handle variables
+that needed to be reinitialized, I used __attribute__(section...) to put
+them all into one section, which I could save on daemon startup and
+restore after each command.  I also replaced calls to exit() with a
+function that called longjmp() so the daemon could survive commands
+failing.  Had I continued, I would also have had to track open file
+descriptors to avoid leaking those.
 
->
-> The point being that something more concrete (code or a design doc)
-> makes it easier to avoid talking past each other.  And having
-> something concrete to edit makes the stakes clearer so people can make
-> it incrementally better without being distracted by unimportant parts.
+This was a giant mess that only sort-of worked: it was difficult to
+track down all of the variables that needed to be reinitialized. 
 
-We've had Junio's training wheel, and now Filipe's n'th attempt at code
-examples, so my bad code wouldn't help ;-). As a systems engineer I've
-seen these confusions quite a few times in different guises.
+The advantage of my method is that there was somewhat less data to
+marshall over IPC, and that objects could be easily cached; the
+disadvantage is complexity, massive code changes, and the fact that it
+didn't actually totally work at the time I ran out of time. 
 
-I tend to fall back to P Checkland's "Systems Thinking, Systems
-Practice" model of the various processes that have to go on [1] to
-improve the situation (note he doesn't expect a solved solution in most
-cases, just an improvement in the situation). At the moment most of the
-discussion is in the "unstructured" parts of the processes. He also
-identifies 6 elements 'CATWOE' [2] that need to be considered when
-studying these problems.
+So I'm really looking forward to trying your version!
 
-Most of the discussion/arguments here are about the different
-'Weltanshaung's" (world views) of the contributors.
+> >> The last line could be a competition between watchman and my coming
+> >> "untracked cache" series. I expect to cut the number in that line at
+> >> least in half without external dependency.
+> >
+> > I hadn't seen the "untracked cached" work (I actually finished these
+> > patches a month or so ago but have been waiting for some internal
+> > reviews before sending them out).  Looks interesting.  It seems we use a
+> > similar strategy for handling ignores.
+> 
+> Yep, mostly the same at the core, except that I exploit directory
+> mtime while you use inotify. Each approach has its own pros and cons,
+> I think. Both should face the same traps in caching (e.g. if you "git
+> rm --cached" a file, that file could be come either untracked, or
+> ignored).
+> 
+> >> Patch 2/3 did not seem to make it to the list by the way..
+> >
+> > Thanks for your comments.  I just tried again to send patch 2/3.  I do
+> > actually see the CC of it in my @twitter.com mailbox, but I don't see it
+> > in the archives on the web.  Do you know if there is a reason the
+> > mailing list would reject it?
+> 
+> Probably its size, 131K, which is also an indicator to split it (and
+> the third patch) into smaller patches if you want to merge this
+> feature in master eventually.
 
-In terms of the new user pull problem, what needs to be modeled is the
-new user's and their weltanshaung, not how we ('experienced' users?)
-might 'solve' the problem.
+I would like to merge the feature into master.  It works well for me,
+and some of my colleagues who have tried it out.
 
-The pull problem is, I believe part of the bigger problem of the
-mind-set shift required for the transition to a DVCS for most new users.
-Git has grown organically, so still has some soft (unclear) edges, which
-probably needs more than just a transition plan for Filipe's pull
-changes, and its choice of the final default (or lack of).
+I can split the vmac patch into two, but one of them will remain quite
+large because it contains the code for VMAC and AES, which total a bit
+over 100k.  Since the list will probably reject that, I'll post a link
+to a repository containing the patches.
 
-For example, if users aren't understanding the differences between
-remote branches, remote tracking branches, and branches, which is part
-of the pull problem; have we made it easy for them to understand? [They
-already have to comprehend the 'staging' concept, so are already
-cognitively fully loaded].
-
-For the branch type example, some cleaner naming may help, such as:
-'remote branch', 'Tracking branch', and '(local) branch', which excludes
-the noiseword 'remote' from 'Tracking branches' (my deliberate 'T'
-emphasis). Though that does still leave the confusion between remote
-servers and remote repos, where the latter may actually be local, and if
-a file path, be the local '.' repo itself!
-
->
-> Thanks and hope that helps,
-
-Sorry if this went off at a tangent, but I believe it's important to get
-to the bottom of the new user problems, which are deeper than just a few 
-command defaults.
-
-> Jonathan
-> --
-
-Philip
---
-[1]
-http://40qx6d15vq6j25i83v3ks8nxfux.wpengine.netdna-cdn.com/files/2012/08/seven-steps2.gif
-or http://portals.wi.wur.nl/spicad/?Soft_Systems_Methodology Checkland's
-7 Steps.
-
-[2] CATWOE: customers, actors, transformation, weltanshaung, owners,
-environment.
+I'm not 100% sure how to split the watchman patch up.  I could add the
+fs_cache code and then separately add the watchman code that populates
+the cache.  Do you think there is a need to divide it up beyond this?
