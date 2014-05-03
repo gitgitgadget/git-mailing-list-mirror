@@ -1,87 +1,74 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Pull is Mostly Evil
-Date: Sat, 03 May 2014 04:18:03 +0200
-Organization: Organization?!?
-Message-ID: <87wqe3wqp0.fsf@fencepost.gnu.org>
-References: <5363BB9F.40102@xiplink.com>
-	<xmqqoazgaw0y.fsf@gitster.dls.corp.google.com>
-	<5363edc954f8e_70ef0f30c24@nysa.notmuch>
-	<20140502214817.GA10801@sigill.intra.peff.net>
+From: David Turner <dturner@twopensource.com>
+Subject: RE: Watchman support for git
+Date: Fri, 02 May 2014 22:24:57 -0400
+Organization: Twitter
+Message-ID: <1399083897.5310.0.camel@stross>
+References: <1399072451-15561-1-git-send-email-dturner@twopensource.com>
+	 <536428224adfb_200c12912f010@nysa.notmuch>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 03 04:18:20 2014
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 03 04:25:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WgPWs-0001UA-H8
-	for gcvg-git-2@plane.gmane.org; Sat, 03 May 2014 04:18:18 +0200
+	id 1WgPda-000879-3f
+	for gcvg-git-2@plane.gmane.org; Sat, 03 May 2014 04:25:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752885AbaECCSO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 May 2014 22:18:14 -0400
-Received: from plane.gmane.org ([80.91.229.3]:49373 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751640AbaECCSN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 May 2014 22:18:13 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1WgPWk-0000ml-4r
-	for git@vger.kernel.org; Sat, 03 May 2014 04:18:10 +0200
-Received: from x2f3bf8b.dyn.telefonica.de ([2.243.191.139])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 03 May 2014 04:18:10 +0200
-Received: from dak by x2f3bf8b.dyn.telefonica.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 03 May 2014 04:18:10 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: x2f3bf8b.dyn.telefonica.de
-X-Face: 2FEFf>]>q>2iw=B6,xrUubRI>pR&Ml9=ao@P@i)L:\urd*t9M~y1^:+Y]'C0~{mAl`oQuAl
- \!3KEIp?*w`|bL5qr,H)LFO6Q=qx~iH4DN;i";/yuIsqbLLCh/!U#X[S~(5eZ41to5f%E@'ELIi$t^
- Vc\LWP@J5p^rst0+('>Er0=^1{]M9!p?&:\z]|;&=NP3AhB!B_bi^]Pfkw
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
-Cancel-Lock: sha1:hFIwcZ8nLwrvpM6nO5k6snqkQAE=
+	id S1752597AbaECCZD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 May 2014 22:25:03 -0400
+Received: from mail-qg0-f47.google.com ([209.85.192.47]:41551 "EHLO
+	mail-qg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751640AbaECCZC (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 May 2014 22:25:02 -0400
+Received: by mail-qg0-f47.google.com with SMTP id e89so5459842qgf.6
+        for <git@vger.kernel.org>; Fri, 02 May 2014 19:25:01 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:content-transfer-encoding
+         :mime-version;
+        bh=65X87xeCLNrV4wpsF11lg04H6FeaqDbTfQH15MwDJNA=;
+        b=ijx6Y0M0dck/UFuj7OiiF+cjTXqlusWFsIalThFx4ngsLGbEmiBjs5LR2btpkNqkcA
+         i38AhU+GBmKyJi6lIZCvC7296wt8lL3tDfy+Akac4dH/osAD5rvz30sf2DlzG/ek7zNu
+         a/7vb8/UvC3aEO7WnHQXT01YiUEY0Nld657wtLjDr2DA2hITuyqs2oDcfhJRsRK5CsEQ
+         b/NvzeAiXNjpwdvsmCUZHSYqSlmjwWMvEuNg3y0pcE4Dsi64YEraegXwk0tw/wbrju5+
+         YFk2q0RvPpfWwz0jBAEqDI/x+8LLX55f0N/pd0Jknr4cA2VwMnorx7RG9AplNTPO0dWw
+         31/Q==
+X-Gm-Message-State: ALoCoQli5sD2jtu0DbqnLH4roGIpSpYCs9Hcf4YpX+I6ndqeHIN1t0D2cuUkANs09epuyFrH1OTV
+X-Received: by 10.140.102.161 with SMTP id w30mr25558875qge.108.1399083901325;
+        Fri, 02 May 2014 19:25:01 -0700 (PDT)
+Received: from [172.18.25.156] ([8.25.196.25])
+        by mx.google.com with ESMTPSA id z4sm1708576qas.8.2014.05.02.19.24.59
+        for <multiple recipients>
+        (version=SSLv3 cipher=RC4-SHA bits=128/128);
+        Fri, 02 May 2014 19:25:00 -0700 (PDT)
+In-Reply-To: <536428224adfb_200c12912f010@nysa.notmuch>
+X-Mailer: Evolution 3.2.3-0ubuntu6 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248015>
 
-Jeff King <peff@peff.net> writes:
+On Fri, 2014-05-02 at 18:20 -0500, Felipe Contreras wrote:
+> dturner@ wrote:
+> > Test repository 1: Linux
+> > 
+> > Linux is about 45k files in 3k directories.  The average length of a
+> > filename is about 32 bytes.
+> > 
+> > Git status timing:
+> > no watchman: 125ms
+> > watchman: 90ms
+> 
+> That's very interesting. Do you get similar improvements when doing
+> something similar in Merurial (watchman vs . no watchman).
 
-> On Fri, May 02, 2014 at 02:11:05PM -0500, Felipe Contreras wrote:
->
->> Junio C Hamano wrote:
->> > If we step back a bit, because we are forcing him to differentiate
->> > these two pulls in his mental model anyway, perhaps it may help
->> > people (both new and old) if we had a new command to make the
->> > distinction stand out more.  What if the command sequence were like
->> > this instead?
->> > 
->> >     $ git checkout maint
->> >     $ git update [ origin maint ]
->> > 
->> >     $ git pull [--no-ff] developer-remote topic-branch
->> >     $ git push [ origin maint ]
->> > 
->> > where the new command 'update' enforces the '--ff-only' update.  And
->> > then we would stop telling "'git pull' first" when a push does not
->> > fast-forward.
->> 
->> In addition to barf when it's not a fast-forward, such command can
->> switch the parents, so it appears 'maint' was merged to 'origin/maint'.
->> Many people have complained about this order.
->
-> I realize this has veered off into talking about an "update" command,
-> and not necessarily "pull", but since there a lot of proposals floating
-> around, I wanted to make one point: if we are going to do such a switch,
-> let's please make it something the user explicitly turns on.
-
-A safety catch defaulting to a factory position of "off" is not going to
-stop inexperienced people from shooting themselves in the foot.
-
--- 
-David Kastrup
+I have not tried it.  My understanding is that this is why Facebook
+wrote Watchman and added support for it to Mercurial, so I would assume
+that the improvements are at least this good.
