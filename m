@@ -1,77 +1,82 @@
-From: David Kastrup <dak@gnu.org>
+From: John Szakmeister <john@szakmeister.net>
 Subject: Re: Pull is Mostly Evil
-Date: Sat, 03 May 2014 11:56:46 +0200
-Message-ID: <87eh0bw5gh.fsf@fencepost.gnu.org>
+Date: Sat, 3 May 2014 06:00:44 -0400
+Message-ID: <CAEBDL5USVuFDXQk7Cb9cJ8Lm4RJNeJB0DwZBCB1cXmkroD8w3g@mail.gmail.com>
 References: <5363BB9F.40102@xiplink.com>
 	<xmqqoazgaw0y.fsf@gitster.dls.corp.google.com>
-	<5364A143.1060404@bbn.com> <87iopnwa2i.fsf@fencepost.gnu.org>
-	<5364b11b4db8d_1996f531068@nysa.notmuch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Richard Hansen <rhansen@bbn.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Marc Branchaud <marcnarc@xiplink.com>,
+Content-Type: text/plain; charset=UTF-8
+Cc: Marc Branchaud <marcnarc@xiplink.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 03 11:58:29 2014
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat May 03 12:00:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WgWiC-00031r-PR
-	for gcvg-git-2@plane.gmane.org; Sat, 03 May 2014 11:58:29 +0200
+	id 1WgWkT-0002GN-Ji
+	for gcvg-git-2@plane.gmane.org; Sat, 03 May 2014 12:00:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751012AbaECJ6V convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 3 May 2014 05:58:21 -0400
-Received: from fencepost.gnu.org ([208.118.235.10]:47322 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750960AbaECJ6U convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 3 May 2014 05:58:20 -0400
-Received: from localhost ([127.0.0.1]:46363 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1WgWi2-00013u-Ka; Sat, 03 May 2014 05:58:18 -0400
-Received: by lola (Postfix, from userid 1000)
-	id C45D9E08B6; Sat,  3 May 2014 11:56:46 +0200 (CEST)
-In-Reply-To: <5364b11b4db8d_1996f531068@nysa.notmuch> (Felipe Contreras's
-	message of "Sat, 03 May 2014 04:04:27 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
+	id S1751148AbaECKAq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 May 2014 06:00:46 -0400
+Received: from mail-yk0-f175.google.com ([209.85.160.175]:56919 "EHLO
+	mail-yk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751121AbaECKAp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 May 2014 06:00:45 -0400
+Received: by mail-yk0-f175.google.com with SMTP id q200so4690432ykb.34
+        for <git@vger.kernel.org>; Sat, 03 May 2014 03:00:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=M7+dB0wtKiJvuizIeqIhPCAlj5llcFblUsdFlzpiqWE=;
+        b=lc3jHj1YE0g04h0uKgU96enRAmSMvIA4+U4wIyDYRqaBusOfLWkaL0CKsa/GwgqW5o
+         wkxgAu98jQ55Qu2tcLiR0yiLhYpfQSpUHsbc4QVFZkUvG8sFGzB0bjqfMOLjtCXbnlBc
+         KV2Lxs+7LKzK8btJJ2bcCiBeC6sZkyOyXf4REqG6JLKj8PHyWJPk2GC7ViPdnJvHyawc
+         a5Sg8XEbsNUwv4JlKA3+UxD4q1W9CNLUZTCcWhtqeLmvE5ZqPNVqCKo06ehEIJMm39tO
+         ATYA7Fb7lcRaPUyTzX+cGtYpp7RcvIlBHIdw8azWOgqX5WIYxystaPglg+S028+XnVVz
+         xvUA==
+X-Received: by 10.236.81.6 with SMTP id l6mr30742437yhe.29.1399111244555; Sat,
+ 03 May 2014 03:00:44 -0700 (PDT)
+Received: by 10.170.172.69 with HTTP; Sat, 3 May 2014 03:00:44 -0700 (PDT)
+In-Reply-To: <xmqqoazgaw0y.fsf@gitster.dls.corp.google.com>
+X-Google-Sender-Auth: RtjiH6SyAf5Dh0bM5Hn61S9cAqo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248032>
 
-=46elipe Contreras <felipe.contreras@gmail.com> writes:
-
-> David Kastrup wrote:
->> Richard Hansen <rhansen@bbn.com> writes:
->>=20
->> > These three usage patterns are at odds; it's hard to change the
->> > default behavior of 'git pull' to favor one usage case without
->> > harming another.  Perhaps this is why there's so much disagreement
->> > about what 'git pull' should do.
->>=20
->> Should a screwdriver be turning clockwise or counterclockwise by
->> default?  There are valid arguments for either.
+On Fri, May 2, 2014 at 2:13 PM, Junio C Hamano <gitster@pobox.com> wrote:
+[snip]
+> Your earlier long-hand, together with the two examples that pulls
+> into the same "maint" branch Brian gave us, may give us a better
+> starting points to think about a saner way.
 >
-> If you don't have anything to contribute don't disturb the people tha=
-t
-> actually care and are trying to improve Git. Thanks.
+> To me, the problem sounds like:
+>
+>     Tutorials of Git often says "use 'git pull' to catch up your
+>     branch with your upstream work and then 'git push' back" (and
+>     worse yet, 'git push' that does not fast-forward suggests doing
+>     so), but 'git pull' that creates a merge in a wrong direction is
+>     not the right thing for many people.
 
-No need to expand on the welcoming atmosphere here.  My heinous plot to
-subvert the quality of Git has already been thwarted by making sure tha=
-t
-its "meritocracy" continues relying only on input from those with an
-independent income.  I'm just sticking around until my current
-contributions move into master so that I=A0can summarize the resulting
-low-hanging fruit that the meritorious can then pick at great fanfare.
+Yes, that's a good portion of the problem.
 
-The sooner my work moves from pu into master, the sooner y'all be rid o=
-f
-me.
+> And proposed solutions range from "let's write 'pull' off as a
+> failed experiment" to "let's forbid any merge made by use of 'pull'
+> by default, because it is likely that merge may be in reverse".
 
---=20
-David Kastrup
+FWIW, at my company, we took another approach.  We introduced a `git
+ffwd` command that fetches from all remotes, and fast-forwards all
+your local branches that are tracking a remote, and everyone on the
+team uses it all the time.  It should be said this team also likes to
+use Git bare-metal, because they like knowing how things work
+out-of-the-box.  But they all use the command because it's so
+convenient.
+
+I had started making a C version a while back, but never completed it.
+ I could take a stab at doing so again, if there's interest.
+
+-John
