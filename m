@@ -1,230 +1,103 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 1/4] remote-hg: add more tests
-Date: Sun, 4 May 2014 05:40:05 -0400
-Message-ID: <CAPig+cSP+M_HDaif+Xy-x2tuNcjtemmugSQK2V-jKxup-Nizxw@mail.gmail.com>
-References: <1399169814-20201-1-git-send-email-felipe.contreras@gmail.com>
-	<1399169814-20201-2-git-send-email-felipe.contreras@gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: Pull is Mostly Evil
+Date: Sun, 04 May 2014 04:51:09 -0500
+Message-ID: <53660d8d74c68_1c89b0930c53@nysa.notmuch>
+References: <5363BB9F.40102@xiplink.com>
+ <xmqqoazgaw0y.fsf@gitster.dls.corp.google.com>
+ <5364A143.1060404@bbn.com>
+ <87iopnwa2i.fsf@fencepost.gnu.org>
+ <5364b11b4db8d_1996f531068@nysa.notmuch>
+ <87eh0bw5gh.fsf@fencepost.gnu.org>
+ <alpine.DEB.2.02.1405032129420.25156@nftneq.ynat.uz>
+ <5365c45fd101d_6c25cd72ec2e@nysa.notmuch>
+ <eae08db4-f59f-4237-8f04-ebf33dbf6f67@email.android.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 04 11:40:20 2014
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Richard Hansen <rhansen@bbn.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Marc Branchaud <marcnarc@xiplink.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: James Denholm <nod.helm@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	David Lang <david@lang.hm>, David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Sun May 04 12:02:04 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wgsu9-0004G0-Ps
-	for gcvg-git-2@plane.gmane.org; Sun, 04 May 2014 11:40:18 +0200
+	id 1WgtFC-00038W-Ak
+	for gcvg-git-2@plane.gmane.org; Sun, 04 May 2014 12:02:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753386AbaEDJkH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 May 2014 05:40:07 -0400
-Received: from mail-yk0-f172.google.com ([209.85.160.172]:64860 "EHLO
-	mail-yk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753175AbaEDJkG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 May 2014 05:40:06 -0400
-Received: by mail-yk0-f172.google.com with SMTP id 131so5303363ykp.17
-        for <git@vger.kernel.org>; Sun, 04 May 2014 02:40:05 -0700 (PDT)
+	id S1752675AbaEDKBw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 May 2014 06:01:52 -0400
+Received: from mail-oa0-f44.google.com ([209.85.219.44]:39081 "EHLO
+	mail-oa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752142AbaEDKBv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 May 2014 06:01:51 -0400
+Received: by mail-oa0-f44.google.com with SMTP id i11so683735oag.17
+        for <git@vger.kernel.org>; Sun, 04 May 2014 03:01:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=CL3pkv4tZCDnRY7LOL7IG0uDbNtQGarD1lOFhlnRjl0=;
-        b=WNpoyjI15VIa9Bm8mHuAjZc0PGMdK6XBIML7gX59kS96n0LM0YsQ1CNMmrIk5oB4MD
-         5lMcrSHXm/Ao3WIU24EfjP0ZRJF5qvwvacDrlcgYRhqgbH1Ajnihf3eYrfKtngzrqhw1
-         2bjMoXNanuyqv+6sS5PRdrG3iiYsSflJUIhIZvsj3xv4KjiPw6hHlNKwIfYvrMi1epAR
-         3IefBheu0T4rDr3Z197BzgHB1YrWZkJMVESugvPFlR0obSe/znJTjMlhED5bVo1+vNlx
-         48JHbCnTYXS9bIPND2zdrHTRuFwSHeOVkLaTJQRQOWyPVJCiYWk38/JI2grGvpTTqS+l
-         jgLA==
-X-Received: by 10.236.170.37 with SMTP id o25mr38151152yhl.145.1399196405613;
- Sun, 04 May 2014 02:40:05 -0700 (PDT)
-Received: by 10.170.169.65 with HTTP; Sun, 4 May 2014 02:40:05 -0700 (PDT)
-In-Reply-To: <1399169814-20201-2-git-send-email-felipe.contreras@gmail.com>
-X-Google-Sender-Auth: 13fVS9A5QMGvsFCeWUA-TLFwKVM
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=YcnMcW9kwjNnfRjs+wE0ggXqasbCSPbu8JEnLT4oKOA=;
+        b=iAcuNd6QAAUPsjSbojgqtb4k4vO7gMIvb+gM9gY3Rr6vVnUE8a3sgBzOG9ncKbY0Wv
+         6BjP62oJx7L37pf6qyUWg2nFnTJRQ/Ugscv/u4i2r0A3ztqWbccP4kt4GDB9X9TcCevJ
+         8wfDHZqWVoY9dy0OQdG8unqTRrS8uP23iVSnnBbNtzC/DtR87NHJB2FCUXAGskQUQvLV
+         0pqQXIK7DE+Khn74uJToMMMx6ERPgTayuy1rTBI619Ho+9d4AHFnW3KQFuIIHRP1Pomm
+         5ix/8JJIXWaaTnEzG1E1TXMUH4L9f8tMlpYlloAilQR8RHGjDaHrhZm0jPOaLDVZWpvv
+         l/BA==
+X-Received: by 10.182.205.135 with SMTP id lg7mr25676866obc.32.1399197711194;
+        Sun, 04 May 2014 03:01:51 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id fj9sm21812403oeb.6.2014.05.04.03.01.48
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 04 May 2014 03:01:49 -0700 (PDT)
+In-Reply-To: <eae08db4-f59f-4237-8f04-ebf33dbf6f67@email.android.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248086>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248087>
 
-On Sat, May 3, 2014 at 10:16 PM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> Inspired by the tests in gitifyhg.
->
-> One test is failing, but that's because of a limitation of
-> remote-helpers.
->
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> ---
->  contrib/remote-helpers/test-hg.sh | 150 ++++++++++++++++++++++++++++++++++++++
->  1 file changed, 150 insertions(+)
->
-> diff --git a/contrib/remote-helpers/test-hg.sh b/contrib/remote-helpers/test-hg.sh
-> index 7d90056..33a434d 100755
-> --- a/contrib/remote-helpers/test-hg.sh
-> +++ b/contrib/remote-helpers/test-hg.sh
-> @@ -845,4 +845,154 @@ test_expect_success 'clone remote with generic null bookmark, then push to the b
->         )
->  '
->
-> +test_expect_success 'notes' '
-> +       test_when_finished "rm -rf hgrepo gitrepo" &&
-> +
-> +       (
-> +       hg init hgrepo &&
-> +       cd hgrepo &&
-> +       echo one > content &&
-> +       hg add content &&
-> +       hg commit -m one &&
-> +       echo two > content &&
-> +       hg commit -m two
-> +       ) &&
-> +
-> +       git clone "hg::hgrepo" gitrepo &&
-> +       hg -R hgrepo log --template "{node}\n\n" > expected &&
-> +       git --git-dir=gitrepo/.git log --pretty="tformat:%N" --notes=hg > actual &&
-> +       test_cmp expected actual
-> +'
-> +
-> +test_expect_failure 'push updates notes' '
-> +       test_when_finished "rm -rf hgrepo gitrepo" &&
-> +
-> +       (
-> +       hg init hgrepo &&
-> +       cd hgrepo &&
-> +       echo one > content &&
-> +       hg add content &&
-> +       hg commit -m one
-> +       ) &&
-> +
-> +       git clone "hg::hgrepo" gitrepo &&
-> +
-> +       (
-> +       cd gitrepo &&
-> +       echo two > content &&
-> +       git commit -a -m two
-> +       git push
-> +       ) &&
-> +
-> +       hg -R hgrepo log --template "{node}\n\n" > expected &&
-> +       git --git-dir=gitrepo/.git log --pretty="tformat:%N" --notes=hg > actual &&
-> +       test_cmp expected actual
-> +'
-> +
-> +test_expect_success 'pull tags' '
-> +       test_when_finished "rm -rf hgrepo gitrepo" &&
-> +
-> +       (
-> +       hg init hgrepo &&
-> +       cd hgrepo &&
-> +       echo one > content &&
-> +       hg add content &&
-> +       hg commit -m one
-> +       ) &&
-> +
-> +       git clone "hg::hgrepo" gitrepo &&
-> +
-> +       (cd hgrepo && hg tag v1.0) &&
-> +       (cd gitrepo && git pull) &&
-> +
-> +       echo "v1.0" > expected &&
-> +       git --git-dir=gitrepo/.git tag > actual &&
-> +       test_cmp expected actual
-> +'
-> +
-> +test_expect_success 'push merged named branch' '
-> +       test_when_finished "rm -rf hgrepo gitrepo" &&
-> +
-> +       (
-> +       hg init hgrepo &&
-> +       cd hgrepo &&
-> +       echo one > content &&
-> +       hg add content &&
-> +       hg commit -m one &&
-> +       hg branch feature &&
-> +       echo two > content &&
-> +       hg commit -m two &&
-> +       hg update default &&
-> +       echo three > content &&
-> +       hg commit -m three
-> +       ) &&
-> +
-> +       (
-> +       git clone "hg::hgrepo" gitrepo &&
-> +       cd gitrepo &&
-> +       git merge -m Merge -Xtheirs origin/branches/feature &&
-> +       git push
-> +       ) &&
-> +
-> +       cat > expected <<-EOF
+James Denholm wrote:
+> Felipe Contreras wrote:
+> >David Lang wrote:
+> >> the vast majority of people here do not take that attitude.
+> >
+> >It's actually the exact opposite. I don't care what is the track record
+> >of the people in the discussion.
+> 
+> Ah, yes, like that discussion we once had where you totally didn't run
+> `git log | grep James Denholm` at one point to demonstrate that I had
+> not yet made any contributions,instead of actually engaging in
+> discussion. Oh, wait.
 
-Broken &&-chain.
+You mean this thread[1] in which I sent 14 mails directly to you? Yeah,
+I din't engage in that discussion at all!
 
-> +       Merge
-> +       three
-> +       two
-> +       one
-> +       EOF
-> +       hg -R hgrepo log --template "{desc}\n" > actual &&
-> +       test_cmp expected actual
-> +'
-> +
-> +test_expect_success 'light tag sets author' '
-> +       test_when_finished "rm -rf hgrepo gitrepo" &&
-> +
-> +       (
-> +       hg init hgrepo &&
-> +       cd hgrepo &&
-> +       echo one > content &&
-> +       hg add content &&
-> +       hg commit -m one
-> +       ) &&
-> +
-> +       (
-> +       git clone "hg::hgrepo" gitrepo &&
-> +       cd gitrepo &&
-> +       git tag v1.0 &&
-> +       git push --tags
-> +       ) &&
-> +
-> +       echo "C O Mitter <committer@example.com>" > expected &&
-> +       hg -R hgrepo log --template "{author}\n" -r tip > actual &&
-> +       test_cmp expected actual
-> +'
-> +
-> +test_expect_success 'push tag different branch' '
-> +       test_when_finished "rm -rf hgrepo gitrepo" &&
-> +
-> +       (
-> +       hg init hgrepo &&
-> +       cd hgrepo &&
-> +       echo one > content &&
-> +       hg add content &&
-> +       hg commit -m one
-> +       hg branch feature &&
-> +       echo two > content &&
-> +       hg commit -m two
-> +       ) &&
-> +
-> +       (
-> +       git clone "hg::hgrepo" gitrepo &&
-> +       cd gitrepo &&
-> +       git branch &&
-> +       git checkout branches/feature &&
-> +       git tag v1.0 &&
-> +       git push --tags
-> +       ) &&
-> +
-> +       echo feature > expected &&
-> +       hg -R hgrepo log --template="{branch}\n" -r tip > actual &&
-> +       test_cmp expected actual
-> +'
-> +
->  test_done
-> --
-> 1.9.2+fc1.20.g204a630
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+And the point I was making is that if I manage to show the community was
+wrong in some thing (as you claimed), that community wouldn't include
+you.
+
+> >If their argument is good, their argument is good.
+> 
+> The problem, though, is that time and time again you've shown that you
+> value your own arguments to the exclusion of all others. You can't
+> tell if someone else's argument is good, because it runs against
+> yours, and yours must be right because you hold it.
+
+I can show you evidence of how that's a blatant lie. Just two days ago I
+changed my mind because somebody provided a good argument.
+
+But I'm not going to bother any more with you, you are just spreading
+lies and tainting the discussion.
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/247188/focus=247584
+
+-- 
+Felipe Contreras
