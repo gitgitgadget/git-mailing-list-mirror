@@ -1,78 +1,196 @@
-From: "Klishevich, Yauheni" <yklishevich@scnsoft.com>
-Subject: read-tree bug
-Date: Tue, 6 May 2014 13:32:00 +0000
-Message-ID: <CF8EBE3A.9AF%yklishevich@scnsoft.com>
-References: <CF8EB1C1.996%yklishevich@scnsoft.com>
+From: "'502304919' via msysGit" <msysgit@googlegroups.com>
+Subject: Re: [PATCH 10/12] MINGW: compat/poll/poll.c: undef NOGDI
+Date: Sun, 4 May 2014 16:46:29 -0500
+Message-ID: <1E023E9C-FDD6-47A5-9E7C-6D43F9167EEB@aol.com>
+References: <20140504205552.GA15590@seldon>
+Reply-To: 502304919 <boxerapp@aol.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 06 19:49:17 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: multipart/alternative; boundary="5366b535_327b23c6_7f3"
+Cc: Erik Faye-Lund <kusmabite@gmail.com>, msysGit
+ <msysgit@googlegroups.com>, Felipe Contreras
+ <felipe.contreras@gmail.com>, GIT Mailing-list <git@vger.kernel.org>, 
+ Stepan Kasal <kasal@ucw.cz>
+To: Marat Radchenko <marat@slonopotamus.org>
+X-From: msysgit+bncBDHJTVHEWICRB6URUONQKGQE6BW36XQ@googlegroups.com Tue May 06 19:51:18 2014
+Return-path: <msysgit+bncBDHJTVHEWICRB6URUONQKGQE6BW36XQ@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-yh0-f64.google.com ([209.85.213.64])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WhiS0-0008Bg-4S
-	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:42:40 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754207AbaEFNcV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 May 2014 09:32:21 -0400
-Received: from mail4.scnsoft.com ([93.171.207.9]:22483 "EHLO mail2.scnsoft.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753312AbaEFNcU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 May 2014 09:32:20 -0400
-Received: from SRV-SCN-MBX2.scnsoft.com (10.20.1.84) by
- srv-scn-mbx1.scnsoft.com (10.20.1.83) with Microsoft SMTP Server (TLS) id
- 15.0.775.38; Tue, 6 May 2014 16:32:01 +0300
-Received: from SRV-SCN-MBX2.scnsoft.com ([fe80::e1f5:7334:ca34:3ec1]) by
- srv-scn-mbx2.scnsoft.com ([fe80::e1f5:7334:ca34:3ec1%14]) with mapi id
- 15.00.0775.031; Tue, 6 May 2014 16:32:00 +0300
-Thread-Topic: read-tree bug
-Thread-Index: AQHPaSeoIWkS6oy84UubKFhYuyGk05szjNEA
-In-Reply-To: <CF8EB1C1.996%yklishevich@scnsoft.com>
-Accept-Language: ru-RU, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.10.2.58]
-Content-ID: <D2AE60D9B0866D40B16BD9A750D4FCDF@scnsoft.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248193>
+	(envelope-from <msysgit+bncBDHJTVHEWICRB6URUONQKGQE6BW36XQ@googlegroups.com>)
+	id 1WhjMi-0003E9-CE
+	for gcvm-msysgit@m.gmane.org; Tue, 06 May 2014 19:41:16 +0200
+Received: by mail-yh0-f64.google.com with SMTP id b6sf254826yha.19
+        for <gcvm-msysgit@m.gmane.org>; Tue, 06 May 2014 10:41:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:x-original-sender:x-original-authentication-results
+         :precedence:mailing-list:list-id:list-post:list-help:list-archive
+         :sender:list-subscribe:list-unsubscribe:reply-to:content-type;
+        bh=xFCNMCm+NO4X7+3Lujz7ZXHv/ieDEjMqFHqAZWicnFc=;
+        b=ZcKus4xSV2tOVlSrUQkSHBvNkTYIgj3caBmU8oIuBcQZv2jdizGHSwYsY+2ntf9b9V
+         42tqElSbOk8eQta6AICpqC19XglJtpGwOrQ7g2BcoNJp99oIm/HbXLVKu017OquLsBmk
+         MiagbCYkK4ZIWnrArLtBirxDDPB0TFDOdA42BFzJyLPClY9ErBEyaXDUvD/1GGS65Vje
+         pWNHOyeL5rWWsA0YS35/0UJzy+lkw/HeKr5KzaHongTntmqN9YNFqOkGBwO+cCqGPPTx
+         DIfo0NoX4iyutf3vymnLSzGdzK7mhStskkBvIhRxrXo09cAQakXqWfDA5zSBvY0wwT5J
+         /v6A==
+X-Received: by 10.182.111.170 with SMTP id ij10mr108284obb.18.1399376124831;
+        Tue, 06 May 2014 04:35:24 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.182.236.102 with SMTP id ut6ls1592605obc.24.gmail; Tue, 06 May
+ 2014 04:35:22 -0700 (PDT)
+X-Received: by 10.66.66.35 with SMTP id c3mr850169pat.7.1399376122847;
+        Tue, 06 May 2014 04:35:22 -0700 (PDT)
+Received: by 10.50.253.99 with SMTP id zz3msigc;
+        Sun, 4 May 2014 14:46:30 -0700 (PDT)
+X-Received: by 10.50.33.101 with SMTP id q5mr8590397igi.3.1399239990482;
+        Sun, 04 May 2014 14:46:30 -0700 (PDT)
+Received: from omr-d04.mx.aol.com (omr-d04.mx.aol.com. [205.188.109.201])
+        by gmr-mx.google.com with ESMTPS id n7si624712qcz.2.2014.05.04.14.46.30
+        for <msysgit@googlegroups.com>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Sun, 04 May 2014 14:46:30 -0700 (PDT)
+Received-SPF: pass (google.com: domain of boxerapp@aol.com designates 205.188.109.201 as permitted sender) client-ip=205.188.109.201;
+Received: from mtaout-aai02.mx.aol.com (mtaout-aai02.mx.aol.com [172.27.2.98])
+	by omr-d04.mx.aol.com (Outbound Mail Relay) with ESMTP id 416AF7000008D;
+	Sun,  4 May 2014 17:46:30 -0400 (EDT)
+Received: from Kodiaks-iPhone (rrcs-67-78-97-126.sw.biz.rr.com [67.78.97.126])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by mtaout-aai02.mx.aol.com (MUA/Third Party Client Interface) with ESMTPSA id E265738000095;
+	Sun,  4 May 2014 17:46:28 -0400 (EDT)
+In-Reply-To: <20140504205552.GA15590@seldon>
+x-aol-global-disposition: G
+x-aol-sid: 3039ac1b02625366b5342b55
+X-AOL-IP: 67.78.97.126
+X-Original-Sender: boxerapp@aol.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of boxerapp@aol.com designates 205.188.109.201 as
+ permitted sender) smtp.mail=boxerapp@aol.com;       dkim=pass
+ header.i=@mx.aol.com;       dmarc=pass (p=REJECT dis=NONE) header.from=aol.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+X-Original-From: 502304919 <boxerapp@aol.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248194>
 
-U29tZSBtb3JlIGluZm86DQoNCglJZiBJIHVzZSBpbiA1LXRoIGNvbW1hbmQg4oCc4oCUcHJlZml4
-PS0tcHJlZml4PW1iL3RydW5rL3NyYy9saWJz4oCcIC0gaXNzdWUgaXMNCnJlcHJvZHVjZWQNCg0K
-CUlmIOKAnOKAlHByZWZpeD0tLXByZWZpeD1tYi9saWJz4oCcIC0gYWxsIHdvcmsgZmluZQ0KDQoJ
-V2l0aCDigJzigJRwcmVmaXg9LS1wcmVmaXg9bWIvdHJ1bmsvbGlic+KAnCBJIGhhdmVu4oCZdCB0
-cmllZCwgaWYgaXQgaXMgZGVzaXJlZA0KdG8gY2hlY2sgdGhpcyBjYXNlLCBqdXN0IGxldCBtZSBr
-bm93Lg0KDQoNCg0KDQoNCg0KT24gNS82LzE0LCAxNTozNSwgIktsaXNoZXZpY2gsIFlhdWhlbmki
-IDx5a2xpc2hldmljaEBzY25zb2Z0LmNvbT4gd3JvdGU6DQoNCj5IZWxsbyENCj4NCj5JIGhhdmUg
-c29tZSB0cm91YmxlcyB3aXRoIGdpdCBjb21tYW5kIMKzcmVhZC10cmVlwrIuDQo+DQo+SSBoYXZl
-IGJpZyBwcm9qZWN0IGFuZCBJIHRyeSB0byBhZGQgc2hhcmVkIGxpYnJhcnkgdG8gc3ViZGlyZWN0
-b3J5LiBTbyBJDQo+bWFkZSB0aGUgZm9sbG93aW5nIGluIG15IHByb2plY3QgKG9uIG1hc3RlcikN
-Cj4NCj5naXQgcmVtb3RlIGFkZCBnaXRAYml0YnVja2V0Lm9yZzppamluMTk4NC9ncm91bmR3b3Jr
-LmdpdA0KPmdpdCBmZXRjaCBncm91bmR3b3JrDQo+Z2l0IGNoZWNrb3V0IMKtYiBnd2JyYW5jaCBn
-cm91bmR3b3JrL21hc3Rlcg0KPmdpdCBjaGVja291dCBtYXN0ZXINCj5naXQgcmVhZC10cmVlIC0t
-cHJlZml4PW1iL3RydW5rL3NyYy9ydS51cmFsc2liLmRiby5jbGllbnQuaXBob25lL2xpYnMvIC11
-DQo+Z3dicmFuY2gNCj5naXQgY29tbWl0IMKtbSDCs2FkZCBncm91bmR3b3JrIHRvIGxpYnPCsg0K
-PkFmdGVyIHRoYXQgSSBtYWtlIHNtYWxsIGNoYW5nZSBpbiBvbmUgZmlsZSBpbnNpZGUgbGlicyAo
-Zm9yIGV4YW1wbGUgaW4NCj4ibWIvdHJ1bmsvc3JjL3J1LnVyYWxzaWIuZGJvLmNsaWVudC5pcGhv
-bmUvbGlicy9ncm91bmR3b3JrL25vdGVzLnR4dMKyIGFuZA0KPmNvbW1pdCB3aXRoIA0KPmdpdCBj
-b21taXQgwq1hIMKtbSDCs3Rlc3QgY29tbWl0wrINCj4NCj5UaGVuIEkgbWFkZTogDQo+Z2l0IGNo
-ZWNrb3V0IGd3YnJhbmNoDQo+Z2l0IG1lcmdlIC0tc3F1YXNoIC1zIHN1YnRyZWUgLS1uby1jb21t
-aXQgbWFzdGVyDQo+DQo+QW5kIGFmdGVyIHRoaXMgaW5zdGVhZCBvZiBtZXJnaW5nIEkgZmluZCB0
-aGUgd2hvbGUgbWFpbiBwcm9qZWN0IGluIHN1YmRpcg0KPsKzZ3JvdW5kd29yay9Hcm91bmR3b3Jr
-L0Jhc2UubHByb2rCsi4NCj4NCj5JZiBJIGRvIHRoZSA1LXRoIGNvbW1hbmQgd2l0aCDigLlwcmVm
-aXggb3B0aW9uIHZhbHVlIGVxdWFsIHRvIGZvciBleGFtcGxlDQo+wrNsaWJzwrIgdGV0aGVyIHRo
-YW4gc29tZXRoaW5nIGxpa2UgwrNzdWJkaXIvc3Vic3ViZGlyL8WgL2xpYnPCsiAtIGFsbCB3b3Jr
-cw0KPmZpbmUuDQo+DQo+SSB0aGluayB0aGF0IGl0IGlzIGJhZywgYmVjYXVzZSBJIGV4cGVyaW1l
-bnRlZCBxdWl0ZSBhIGxvdCB3aXRoIGRlZmVycmVudA0KPnZhbHVlcy4gSSB0aGluayB0aGF0IHBy
-b2JsZW0gaW4gZGlyZWN0b3J5IG5hbWUgd2l0aCBkb3RzLCBpLmUuDQo+InJ1LnVyYWxzaWIuZGJv
-LmNsaWVudC5pcGhvbmXCsi4NCj4NCj5Db3VsZCB5b3UgcGxlYXNlIGhlbHAgbWUgd2l0aCB0aGlz
-IGlzc3VlLiBJZiB5b3UgbmVlZCB0byBhZGQgc29tZSBtb3JlDQo+aW5mbyBhYm91dCB0aGlzIGNh
-c2UgSSB3aWxsIHByb3ZpZGUuDQo+DQo+VGhhbmtzIGluIGFkdmFuY2UuDQo+DQo+DQo+QmVzdCBy
-ZWdhcmRzLCANCj5FdWdlbmUgS2xpc2hldmljaA0KPmlPUy1kZXZlbG9wZXINCj5za3lwZTogZXVn
-ZW5lLmtsaXNoZXZpY2gNCj4NCj4NCj4NCj4NCg0K
+--5366b535_327b23c6_7f3
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+I've added this to my to-do list. On May 4, 2014 at 3:55:52 PM CDT, Marat R=
+adchenko <marat@slonopotamus.org> wrote:On Sun, May 04, 2014 at 08:52:44PM =
++0200, Stepan Kasal wrote:> Thank you very much for this analysis.> It enab=
+les us to redirect you the third time: to report this as a> bug in MinGW-W6=
+4 ! ;-)I'll report this to MinGW-W64 soon, though even if/when they fixthe =
+issue on their side, I'd still like to have a workaround inGit to be able t=
+o use older MinGW-W64 versions that didn'treceive a fix.> Seriously, it loo=
+ks you found the best description of the problem,> and it would be nice if =
+you could modify your patch so that it> is really a work around: it would b=
+e in effect only for MinGW-W64,> and the comment would explain that this is=
+ a hack to work around the> bug. Workarounds do not have to be ugly and ful=
+l of #ifdef's.> If you manage to change the defs for poll.c without changin=
+g its> content, no one could tell you to report to gnulib first.v1 does exa=
+ctly this.> OTOH, if MsgWaitForMultipleObjects is present ustream (in gnuli=
+b's> poll.c, sorry that I cannot check right now), it still might be> bette=
+r to submit the work-around there first.Workaround is "just don't pass -DNO=
+GDI on MinGW-W64 if you wantMsgWaitForMultipleObjects", there's nothing to =
+send to gnulib.After all, was there a strong reason why Git started passing=
+ it?What is there was no option to disable part of windows.h?--To unsubscri=
+be from this list: send the line "unsubscribe git" inthe body of a message =
+to majordomo@vger.kernel.orgMore majordomo info at http://vger.kernel.org/m=
+ajordomo-info.html    =20
+
+--=20
+--=20
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github =
+accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den
+
+---=20
+You received this message because you are subscribed to the Google Groups "=
+msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an e=
+mail to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
+
+--5366b535_327b23c6_7f3
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<html><body><div>I've added this to my to-do list.</div><br/><br/><div><div=
+ class=3D"quote">On May 4, 2014 at 3:55:52 PM CDT, Marat Radchenko &lt;mara=
+t@slonopotamus.org&gt; wrote:<br/><blockquote type=3D"cite" style=3D"border=
+-left-style:solid;border-width:1px;margin-left:0px;padding-left:10px;">On S=
+un, May 04, 2014 at 08:52:44PM +0200, Stepan Kasal wrote:<br />> Thank you =
+very much for this analysis.<br />> It enables us to redirect you the third=
+ time: to report this as a<br />> bug in MinGW-W64 !  ;-)<br /><br />I'll r=
+eport this to MinGW-W64 soon, though even if/when they fix<br />the issue o=
+n their side, I'd still like to have a workaround in<br />Git to be able to=
+ use older MinGW-W64 versions that didn't<br />receive a fix.<br /><br />> =
+Seriously, it looks you found the best description of the problem,<br />> a=
+nd it would be nice if you could modify your patch so that it<br />> is rea=
+lly a work around: it would be in effect only for MinGW-W64,<br />> and the=
+ comment would explain that this is a hack to work around the<br />> bug.  =
+<br /><br />Workarounds do not have to be ugly and full of #ifdef's.<br /><=
+br />> If you manage to change the defs for poll.c without changing its<br =
+/>> content, no one could tell you to report to gnulib first.<br /><br />v1=
+ does exactly this.<br /><br />> OTOH, if MsgWaitForMultipleObjects is pres=
+ent ustream (in gnulib's<br />> poll.c, sorry that I cannot check right now=
+), it still might be<br />> better to submit the work-around there first.<b=
+r /><br />Workaround is "just don't pass -DNOGDI on MinGW-W64 if you want<b=
+r />MsgWaitForMultipleObjects", there's nothing to send to gnulib.<br />Aft=
+er all, was there a strong reason why Git started passing it?<br />What is =
+there was no option to disable part of windows.h?<br />--<br />To unsubscri=
+be from this list: send the line "unsubscribe git" in<br />the body of a me=
+ssage to majordomo@vger.kernel.org<br />More majordomo info at  http://vger=
+.kernel.org/majordomo-info.html<br /></blockquote></div></div></body></html=
+>
+
+<p></p>
+
+-- <br />
+-- <br />
+*** Please reply-to-all at all times ***<br />
+*** (do not pretend to know who is subscribed and who is not) ***<br />
+*** Please avoid top-posting. ***<br />
+The msysGit Wiki is here: <a href=3D"https://github.com/msysgit/msysgit/wik=
+i">https://github.com/msysgit/msysgit/wiki</a> - Github accounts are free.<=
+br />
+&nbsp;<br />
+You received this message because you are subscribed to the Google<br />
+Groups &quot;msysGit&quot; group.<br />
+To post to this group, send email to msysgit@googlegroups.com<br />
+To unsubscribe from this group, send email to<br />
+msysgit+unsubscribe@googlegroups.com<br />
+For more options, and view previous threads, visit this group at<br />
+<a href=3D"http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den">http:=
+//groups.google.com/group/msysgit?hl=3Den_US?hl=3Den</a><br />
+<br />
+--- <br />
+You received this message because you are subscribed to the Google Groups &=
+quot;msysGit&quot; group.<br />
+To unsubscribe from this group and stop receiving emails from it, send an e=
+mail to <a href=3D"mailto:msysgit+unsubscribe@googlegroups.com">msysgit+uns=
+ubscribe@googlegroups.com</a>.<br />
+For more options, visit <a href=3D"https://groups.google.com/d/optout">http=
+s://groups.google.com/d/optout</a>.<br />
+
+--5366b535_327b23c6_7f3--
