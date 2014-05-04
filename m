@@ -1,147 +1,95 @@
-From: Stepan Kasal <kasal@ucw.cz>
-Subject: Re: [PATCH 10/12] MINGW: compat/poll/poll.c: undef NOGDI
-Date: Sun, 4 May 2014 20:52:44 +0200
-Organization: <)><
-Message-ID: <20140504185244.GA17183@camelia.ucw.cz>
-References: <1398762726-22825-1-git-send-email-marat@slonopotamus.org> <1398762726-22825-11-git-send-email-marat@slonopotamus.org> <20140430114125.GA23046@camelia.ucw.cz> <20140503070050.GA8580@seldon>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH 3/3] Silence a bunch of format-zero-length warnings
+Date: Sun, 4 May 2014 19:01:22 +0000
+Message-ID: <20140504190121.GP75770@vauxhall.crustytoothpaste.net>
+References: <1399183975-2346-1-git-send-email-felipe.contreras@gmail.com>
+ <1399183975-2346-4-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: GIT Mailing-list <git@vger.kernel.org>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Erik Faye-Lund <kusmabite@gmail.com>,
-        msysGit <msysgit@googlegroups.com>
-To: Marat Radchenko <marat@slonopotamus.org>
-X-From: msysgit+bncBCU63DXMWULRB7MYTKNQKGQEI35CH7A@googlegroups.com Sun May 04 20:52:49 2014
-Return-path: <msysgit+bncBCU63DXMWULRB7MYTKNQKGQEI35CH7A@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-we0-f183.google.com ([74.125.82.183])
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="dT+85zccSFkyJC53"
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 04 21:01:35 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCU63DXMWULRB7MYTKNQKGQEI35CH7A@googlegroups.com>)
-	id 1Wh1Wp-0003FV-4l
-	for gcvm-msysgit@m.gmane.org; Sun, 04 May 2014 20:52:47 +0200
-Received: by mail-we0-f183.google.com with SMTP id u57sf20218wes.10
-        for <gcvm-msysgit@m.gmane.org>; Sun, 04 May 2014 11:52:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :in-reply-to:organization:user-agent:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type:content-disposition;
-        bh=ahcV7d7q5wunYej4aXRAuqSIgFCRLAiZRVefNhRQyyI=;
-        b=O/+K3/oaD0FRBW7kzb55D9kDeN3+RGW/tGq4RmiSlv6h7vi8/9P/ij2JEf5YOSKUvx
-         jVWYAC2feoAZOA/Vm/xfS5lekrDrlc7RA9iqmdqz3Tqi2MVPwNORdlYD8JAv77kBQvjq
-         Xn603s4LBOnl0BnDF4SWr74Iz+KkyCFpD2g9I+J3fy6goyhydf8t1lk3De+KSgwIx892
-         z5OhsxApbAwuHdvdIl62gccK/yldr+noB2rbWULkUmGJCvC38vwyaTqE9C73DH6TGlpU
-         zWd9GWfOntThRwWS09yLnMq96B2YAew32xmXDXLC2MDWogNF87yiACZ4HP8Icc1jivFe
-         Ai1Q==
-X-Received: by 10.180.109.17 with SMTP id ho17mr66730wib.18.1399229566652;
-        Sun, 04 May 2014 11:52:46 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.11.193 with SMTP id s1ls329586wib.16.canary; Sun, 04 May
- 2014 11:52:45 -0700 (PDT)
-X-Received: by 10.180.93.37 with SMTP id cr5mr1151465wib.1.1399229565327;
-        Sun, 04 May 2014 11:52:45 -0700 (PDT)
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz. [46.255.230.98])
-        by gmr-mx.google.com with ESMTP id u49si989639eeo.1.2014.05.04.11.52.45
-        for <msysgit@googlegroups.com>;
-        Sun, 04 May 2014 11:52:45 -0700 (PDT)
-Received-SPF: none (google.com: kasal@ucw.cz does not designate permitted sender hosts) client-ip=46.255.230.98;
-Received: from 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (84.64.broadband3.iol.cz [85.70.64.84])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	(Authenticated sender: kasal)
-	by jabberwock.ucw.cz (Postfix) with ESMTPSA id 075A91C01FB;
-	Sun,  4 May 2014 20:52:45 +0200 (CEST)
-Received: from camelia.ucw.cz (camelia.ucw.cz [127.0.0.1])
-	by 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (8.14.3/8.14.3) with ESMTP id s44Iqi7X017325;
-	Sun, 4 May 2014 20:52:44 +0200
-Received: (from kasal@localhost)
-	by camelia.ucw.cz (8.14.3/8.14.3/Submit) id s44IqipU017324;
-	Sun, 4 May 2014 20:52:44 +0200
-In-Reply-To: <20140503070050.GA8580@seldon>
-User-Agent: Mutt/1.5.19 (2009-01-05)
-X-Original-Sender: kasal@ucw.cz
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
- (google.com: kasal@ucw.cz does not designate permitted sender hosts) smtp.mail=kasal@ucw.cz
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Wh1fI-0004qT-UU
+	for gcvg-git-2@plane.gmane.org; Sun, 04 May 2014 21:01:33 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752280AbaEDTB2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 May 2014 15:01:28 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:47549 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752028AbaEDTB2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 4 May 2014 15:01:28 -0400
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:285a:6bfa:4cc0:fb21])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 97DD828087;
+	Sun,  4 May 2014 19:01:27 +0000 (UTC)
+Mail-Followup-To: Felipe Contreras <felipe.contreras@gmail.com>,
+	git@vger.kernel.org
 Content-Disposition: inline
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248106>
+In-Reply-To: <1399183975-2346-4-git-send-email-felipe.contreras@gmail.com>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.14-trunk-rt-amd64)
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Spam-Score: -0.272 () BAYES_00,RDNS_NONE
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248107>
 
-Hello Marat,
 
-On Sat, May 03, 2014 at 11:00:51AM +0400, Marat Radchenko wrote:
-> On Wed, Apr 30, 2014 at 01:41:25PM +0200, Stepan Kasal wrote:
-> > On Tue, Apr 29, 2014 at 01:12:04PM +0400, Marat Radchenko wrote:
-> > > On MinGW-W64, MsgWaitForMultipleObjects is guarded with #ifndef NOGDI.
-> > > 
-> > > Removal -DNOGDI=1 from config.mak.uname has an undesirable effect of
-[..]
-> > 
-> > compat/poll/poll.c comes from Gnulib, so it would be better to submit
-[..]
-> 
-> That's why v1 of this patch [1] didn't touch poll.c at all.
+--dT+85zccSFkyJC53
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-ouch!  It looks like you everyone sending you elsewhere.  I apologize
-for being part of that.  (I was not aware about the previous version.)
+On Sun, May 04, 2014 at 01:12:55AM -0500, Felipe Contreras wrote:
+> This is in gcc 4.9.0:
+>=20
+>   wt-status.c: In function =E2=80=98wt_status_print_unmerged_header=E2=80=
+=99:
+>   wt-status.c:191:2: warning: zero-length gnu_printf format string [-Wfor=
+mat-zero-length]
+>     status_printf_ln(s, c, "");
+>     ^
+>=20
+> We could pass -Wno-format-zero-length, but it seems compiler-specific
+> flags are frowned upon, so let's just avoid the warning altogether.
 
-> I don't think it's gnulib problem that combination of two third-parties
-> (git and mingw-w64) set up such conditions where poll.c fails to compile.
+I believe these warnings existed before GCC 4.9 as well, but I'm not
+opposed to the change.
 
-Well, yes and no: gnulib is mostly a collection of compatibility
-reimplementaions of functions that should be available on an ideal
-system.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
 
-> If one wants to dig deeper, I'd say the problem is in MinGW-W64 headers
-> because their behavior of hiding MsgWaitForMultipleObjects doesn't
-> match behavior of MSVC headers.
+--dT+85zccSFkyJC53
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
-Thank you very much for this analysis.
-It enables us to redirect you the third time: to report this as a
-bug in MinGW-W64 !  ;-)
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Seriously, it looks you found the best description of the problem,
-and it would be nice if you could modify your patch so that it
-is really a work around: it would be in effect only for MinGW-W64,
-and the comment would explain that this is a hack to work around the
-bug.  
+iQIcBAEBCgAGBQJTZo6BAAoJEL9TXYEfUvaLMgQQAKCYPIDR0IKswAnY0V4lkbU1
+FXp9RgKM05X+dHA6e3YwulP2u51f1BwlSx2yjT8/PMaYN+I20EtmQflOuHglwWad
+72NmYva6YbhOQ93fjPh8FfatXSvP63RzZ320DySredON9OfFlLtdA7xoXoazAxQe
+VWA9ekLWFNy6vZxst0V0pMGF6uGtcaihwysTuJmRaM5lzgO2oFJuq258gHtD812q
+hwGCpGfJ1lUnokWDUl3lKTtUjgqU1QM48R5eZ6MF3USL406Z9sjdW+ywFsxdhD01
+W98T+acm83S9q8CaRnBX5vDShZGrIvBog/vwyst7ZtNCGxBfP5cgP6YgDbDlKmWh
+Z1bweA3Uavzo1irCVklIe70PHWXBVvjuVgDu5NYnrI192xx1Awv4CtdIlq3doA20
+5uNkomLKDEE/sgrs57XW3zmuLgEyPhHuCQr+l0si5IlGsRwwGFtsOKPDkVNRSYth
+21sS5l2VfNP8wUWTGl68OjqEP0Rte/0SUFRlitiCITtEEb1BCNBthkfgAbHu+ccm
+M+xDgVjCSzwC/sRMe8ukcmGVNRgRJIwIhqOGhpp/5ZE/lfTX9fScN6Zy/2rYteEy
+yE3rZ79kOlH+vFI7WCHXVLo3xSblIidB7ZhXXl9hum/RqWOiam4sk0nVmqafxGef
+1RvqPMmuJy+39r0g1Mtd
+=yepV
+-----END PGP SIGNATURE-----
 
-If you manage to change the defs for poll.c without changing its
-content, no one could tell you to report to gnulib first.
-
-OTOH, if MsgWaitForMultipleObjects is present ustream (in gnulib's
-poll.c, sorry that I cannot check right now), it still might be
-better to submit the work-around there first.
-
-Thanks for your work,
-	Stepan Kasal
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+--dT+85zccSFkyJC53--
