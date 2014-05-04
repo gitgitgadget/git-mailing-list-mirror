@@ -1,257 +1,85 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [PATCH] t3910: show failure of core.precomposeunicode with decomposed
- filenames
-Date: Sun, 04 May 2014 08:13:15 +0200
-Message-ID: <5365DA7B.6050000@web.de>
-References: <20140428161630.GA9435@sigill.intra.peff.net>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: Pull is Mostly Evil
+Date: Sun, 04 May 2014 08:13:32 +0200
+Message-ID: <87wqe2ul4j.fsf@fencepost.gnu.org>
+References: <5363BB9F.40102@xiplink.com>
+	<xmqqoazgaw0y.fsf@gitster.dls.corp.google.com>
+	<5364A143.1060404@bbn.com> <87iopnwa2i.fsf@fencepost.gnu.org>
+	<5364b11b4db8d_1996f531068@nysa.notmuch>
+	<87eh0bw5gh.fsf@fencepost.gnu.org>
+	<alpine.DEB.2.02.1405032129420.25156@nftneq.ynat.uz>
+	<5365c45fd101d_6c25cd72ec2e@nysa.notmuch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun May 04 08:13:37 2014
+Content-Type: text/plain
+Cc: David Lang <david@lang.hm>, Richard Hansen <rhansen@bbn.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Marc Branchaud <marcnarc@xiplink.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 04 08:19:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wgpg8-0001Ob-Og
-	for gcvg-git-2@plane.gmane.org; Sun, 04 May 2014 08:13:37 +0200
+	id 1Wgpls-0002fN-LQ
+	for gcvg-git-2@plane.gmane.org; Sun, 04 May 2014 08:19:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753222AbaEDGNc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 May 2014 02:13:32 -0400
-Received: from mout.web.de ([212.227.15.4]:64508 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751258AbaEDGNb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 May 2014 02:13:31 -0400
-Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb003)
- with ESMTPSA (Nemesis) id 0MZlNu-1WQo9l3fyw-00LaHb; Sun, 04 May 2014 08:13:16
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
-In-Reply-To: <20140428161630.GA9435@sigill.intra.peff.net>
-X-Provags-ID: V03:K0:hp2EHD2ntozQq8kOaq3T6DKqGIl2Opd22BpNwuTuPM7vaKgTdl7
- xZDZeCXk52R8ZHW4QIH/8D4qB6kNY9i3Yt0YGHGA8XL9+bBYvNt44OzCR+LshctelJGKCtL
- jzV6ezGmTSCNMEoeV/h3zEmGArWTxqB8nLRyicaiJrzzNUu4AzJlZrfKqOyRGyx8+Cr2OPb
- rlXO/HG+Efwfy8pbeBHQQ==
+	id S1753389AbaEDGTW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 May 2014 02:19:22 -0400
+Received: from fencepost.gnu.org ([208.118.235.10]:34391 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751258AbaEDGTV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 May 2014 02:19:21 -0400
+Received: from localhost ([127.0.0.1]:33429 helo=lola)
+	by fencepost.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <dak@gnu.org>)
+	id 1Wgpld-00085D-Lj; Sun, 04 May 2014 02:19:17 -0400
+Received: by lola (Postfix, from userid 1000)
+	id 919C0E08BB; Sun,  4 May 2014 08:13:32 +0200 (CEST)
+In-Reply-To: <5365c45fd101d_6c25cd72ec2e@nysa.notmuch> (Felipe Contreras's
+	message of "Sat, 03 May 2014 23:38:55 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248074>
 
-(Sorry for the late reply, I'm handicapped by some local IT problems)
-Peff, do you know if the fix below helps ?
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-On 2014-04-28 18.16, Jeff King wrote:
-> If you have existing decomposed filenames in your git
-> repository (e.g., that were created with older versions of
-> git that did not precompose unicode), a modern git with
-> core.precomposeunicode set does not handle them well.
-Yes.
-> The problem is that we normalize the paths coming from the
-> disk into their precomposed form, and then compare them
-> against the literal bytes in the index. This makes things
-> better if you have the precomposed form in the index. It
-> makes things worse if you actually have the decomposed form
-> in the index.
+> David Lang wrote:
+>> note that this is one person taking the "I don't see any commits from
+>> you so your opinion doesn't count" attitude.
 >
-> As a result, paths with decomposed filenames may have their
-> precomposed variants listed as untracked files (even though
-> the precomposed variants do not exist on-disk at all).
-Yes
-> This patch just adds a test to demonstrate the breakage.
-> Some possible fixes are:
->
->   1. Tell everyone that NFD in the git repo is wrong, and
->      they should make a new commit to normalize all their
->      in-repo files to be precomposed.
->      This is probably not the right thing to do, because it
->      still doesn't fix checkouts of old history. And it
->      spreads the problem to people on byte-preserving
->      filesystems (like ext4), because now they have to start
->      precomposing their filenames as they are adde to git.
-     (typo:                                                                  ^added)
-I'm not sure if I follow. People running ext4 (or Linux in general,
-or Windows, or Unix) do not suffer from file system
-"feature" of Mac OS, which accepts precomposed/decomposed Unicode
-but returns decompomsed.
->
->   2. Do all index filename comparisons using a UTF-8 aware
->      comparison function when core.precomposeunicode is set.
->      This would probably have bad performance, and somewhat
->      defeats the point of converting the filenames at the
->      readdir level in the first place.
->
->   3. Convert index filenames to their precomposed form when
->      we read the index from disk. This would be efficient,
->      but we would have to be careful not to write the
->      precomposed forms back out to disk.
-Question:
-How could we be careful?
-Mac OS writes always decomposed Unicode to disk.
-(And all other OS tend to use precomposed forms, mainly because the "keyboard
-driver" generates it.)
->
->   4. Introduce some infrastructure to efficiently match up
->      the precomposed/decomposed forms. We already do
->      something similar for case-insensitive files using
->      name-hash.c. We might be able to adapt that strategy
->      here.
---------------------------
+> Wrong. I said it doesn't count "for the project".
 
-This is my understanding:
-Some possible fixes are:
+There are a number of commits from me that actually count.  A few old
+core performance ones might have actually have affected my carbon
+footprint noticeably.  The one currently in pu will probably not be
+called often enough for that but will at least have practical
+consequences.
 
-  1. Accept that NFD in a Git repo which is shared between Mac OS
-     and Linux or Windows is problematic.
-     Whenever core.precomposeunicode = true, do the following:
-     Let Git under Mac OS change all file names in the index
-     into the precomposed form when a new commit is done.
-     This is probably not a wrong thing to do.
+> Do you honestly believe Junio cares about what some random guy on the
+> list thinks about default aliases? No.
 
-     When the index file is read into memory, precompose the file names and compare
-     them with the precomposed form coming from precompose_utf8_readdir().
-     This avoids decomposed file names to be reported as untracked by "git status.
+Putting aside my code contributions: Git is a comparatively small
+project, so if the main project you are working on with Git is Git, your
+experience is limited.  So yes, input from people who are _not_ heavy
+Git developers is important, since the heavy Git developers do not get
+to see the heavy Git use cases a lot.
 
-  2. Do all index filename comparisons under Mac OS X using a UTF-8 aware
-     comparison function regardless if core.precomposeunicode is set.
-     This would probably have bad performance, and somewhat
-     defeats the point of converting the filenames at the
-     readdir level in the first place.
+> It's actually the exact opposite. I don't care what is the track
+> record of the people in the discussion. If their argument is good,
+> their argument is good.
 
-(The TC is good)
+More like if they are around, they are worth getting plastered with your
+frustration.
 
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  t/t3910-mac-os-precompose.sh | 10 ++++++++++
->  1 file changed, 10 insertions(+)
->
-> diff --git a/t/t3910-mac-os-precompose.sh b/t/t3910-mac-os-precompose.sh
-> index e4ba601..23aa61e 100755
-> --- a/t/t3910-mac-os-precompose.sh
-> +++ b/t/t3910-mac-os-precompose.sh
-> @@ -140,6 +140,16 @@ test_expect_success "Add long precomposed filename" '
->  	git add * &&
->  	git commit -m "Long filename"
->  '
-> +
-> +test_expect_failure 'handle existing decomposed filenames' '
-> +	echo content >"verbatim.$Adiarnfd" &&
-> +	git -c core.precomposeunicode=false add "verbatim.$Adiarnfd" &&
-> +	git commit -m "existing decomposed file" &&
-> +	>expect &&
-> +	git ls-files --exclude-standard -o "verbatim*" >untracked &&
-> +	test_cmp expect untracked
-> +'
-> +
->  # Test if the global core.precomposeunicode stops autosensing
->  # Must be the last test case
->  test_expect_success "respect git config --global core.precomposeunicode" '
-On top of the we need to following:
+> It's the others that focus on the carisma and credentials of the
+> people in the discussion, rather than the arguments.
 
-diff --git a/compat/precompose_utf8.c b/compat/precompose_utf8.c
-index 95fe849..5ed3d17 100644
---- a/compat/precompose_utf8.c
-+++ b/compat/precompose_utf8.c
-@@ -57,6 +57,19 @@ void probe_utf8_pathname_composition(char *path, int len)
- }
- 
- 
-+char *precompose_str_len(const char *in, size_t insz, int *outsz)
-+{
-+    char *prec_str = NULL;
-+    if (precomposed_unicode != 1)
-+        return NULL;
-+
-+    if (has_non_ascii(in, insz, NULL))
-+        prec_str = reencode_string_len(in, insz, repo_encoding, path_encoding, outsz);
-+
-+    return prec_str;
-+}
-+
-+
- void precompose_argv(int argc, const char **argv)
- {
-     int i = 0;
-diff --git a/compat/precompose_utf8.h b/compat/precompose_utf8.h
-index 3b73585..28f6595 100644
---- a/compat/precompose_utf8.h
-+++ b/compat/precompose_utf8.h
-@@ -26,6 +26,7 @@ typedef struct {
-     struct dirent_prec_psx *dirent_nfc;
- } PREC_DIR;
- 
-+char *precompose_str_len(const char *in, size_t insz, int *outsz);
- void precompose_argv(int argc, const char **argv);
- void probe_utf8_pathname_composition(char *, int);
- 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index d493a8c..de117d1 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -180,7 +180,7 @@ typedef unsigned long uintptr_t;
- #ifdef PRECOMPOSE_UNICODE
- #include "compat/precompose_utf8.h"
- #else
--#define precompose_str(in,i_nfd2nfc)
-+#define precompose_str_len(s,i,o) NULL
- #define precompose_argv(c,v)
- #define probe_utf8_pathname_composition(a,b)
- #endif
-diff --git a/read-cache.c b/read-cache.c
-index 4b4effd..0887835 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1330,7 +1330,7 @@ static inline uint32_t ntoh_l_force_align(void *p)
- #define ntoh_l(var) ntoh_l_force_align(&(var))
- #endif
- 
--static struct cache_entry *cache_entry_from_ondisk(struct ondisk_cache_entry *ondisk,
-+static struct cache_entry *cache_entry_from_ondisk_int(struct ondisk_cache_entry *ondisk,
-                            unsigned int flags,
-                            const char *name,
-                            size_t len)
-@@ -1355,6 +1355,22 @@ static struct cache_entry *cache_entry_from_ondisk(struct ondisk_cache_entry *on
-     return ce;
- }
- 
-+static struct cache_entry *cache_entry_from_ondisk(struct ondisk_cache_entry *ondisk,
-+                             unsigned int flags,
-+                             const char *name,
-+                             size_t len)
-+{
-+    int prec_len;
-+    char *prec_name = precompose_str_len(name, len, &prec_len);
-+    if (prec_name) {
-+        struct cache_entry *ce;
-+        ce = cache_entry_from_ondisk_int(ondisk, flags, prec_name, prec_len);
-+        free(prec_name);
-+        return ce;
-+    }
-+    return cache_entry_from_ondisk_int(ondisk, flags, name, len);
-+}
-+
- /*
-  * Adjacent cache entries tend to share the leading paths, so it makes
-  * sense to only store the differences in later entries.  In the v4
-diff --git a/t/t3910-mac-os-precompose.sh b/t/t3910-mac-os-precompose.sh
-index 23aa61e..2c3965b 100755
---- a/t/t3910-mac-os-precompose.sh
-+++ b/t/t3910-mac-os-precompose.sh
-@@ -141,13 +141,14 @@ test_expect_success "Add long precomposed filename" '
-     git commit -m "Long filename"
- '
- 
--test_expect_failure 'handle existing decomposed filenames' '
-+test_expect_success 'handle existing decomposed filenames' '
-     echo content >"verbatim.$Adiarnfd" &&
-     git -c core.precomposeunicode=false add "verbatim.$Adiarnfd" &&
-     git commit -m "existing decomposed file" &&
-     >expect &&
-     git ls-files --exclude-standard -o "verbatim*" >untracked &&
-     test_cmp expect untracked
-+    exit 0
- '
- 
- # Test if the global core.precomposeunicode stops autosensing
+I think you are confusing inertia with resistance.
+
+-- 
+David Kastrup
