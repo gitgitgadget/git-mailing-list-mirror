@@ -1,45 +1,72 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [PATCH] t3910: show failure of core.precomposeunicode with decomposed
- filenames
-Date: Sun, 04 May 2014 14:04:21 +0200
-Message-ID: <53662CC5.3040105@web.de>
-References: <20140428161630.GA9435@sigill.intra.peff.net> <xmqqvbtskqjv.fsf@gitster.dls.corp.google.com> <20140429180210.GB11832@sigill.intra.peff.net> <53610F76.3050209@web.de>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 1/9] Define a structure for object IDs.
+Date: Sun, 4 May 2014 19:29:21 +0700
+Message-ID: <CACsJy8Bb31FNN+aZpX7LgMQkPwC5_p_BMKthUKKPbRJomGwJSA@mail.gmail.com>
+References: <1399147942-165308-1-git-send-email-sandals@crustytoothpaste.net>
+ <1399147942-165308-2-git-send-email-sandals@crustytoothpaste.net> <5365D91E.70207@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun May 04 14:05:20 2014
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Sun May 04 14:30:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WgvAV-0004hz-27
-	for gcvg-git-2@plane.gmane.org; Sun, 04 May 2014 14:05:19 +0200
+	id 1WgvYK-0000Tr-1p
+	for gcvg-git-2@plane.gmane.org; Sun, 04 May 2014 14:29:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753773AbaEDMFM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 May 2014 08:05:12 -0400
-Received: from mout.web.de ([212.227.17.11]:49871 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753390AbaEDMFL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 May 2014 08:05:11 -0400
-Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb004)
- with ESMTPSA (Nemesis) id 0MKek3-1WfXqD1wPP-0021lV; Sun, 04 May 2014 14:04:22
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
-In-Reply-To: <53610F76.3050209@web.de>
-X-Provags-ID: V03:K0:ekif8rHuZiXcY8qTW8r3EgFkQE250x+GLMp30PKwCWONQAxyyCN
- q/+oAq+tow6tzDXHDGUrki43+gC1lHWQZs5QVE7gqmslZgxAEoAe9eoEBLlkPGRr6Cm7EL4
- njWLcTN0FYsopGVRxJp8Z/IR/n7fwAxqdv81Ii+u3cyo9ddvwxFEn4KxEEASxY53Y0y9KER
- /a8roARTpC7eUNB+W40Gg==
+	id S1753608AbaEDM3w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 May 2014 08:29:52 -0400
+Received: from mail-qa0-f47.google.com ([209.85.216.47]:43809 "EHLO
+	mail-qa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753326AbaEDM3v (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 May 2014 08:29:51 -0400
+Received: by mail-qa0-f47.google.com with SMTP id s7so427720qap.34
+        for <git@vger.kernel.org>; Sun, 04 May 2014 05:29:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=YheYHqz7QxzXTP8y/U2se+9KfkVZtQM9wB6n1idi/ps=;
+        b=ch2NHW+3eSLGJBFaaYb6NnQMnSn329rTnSs31TqEFk0FpkyrQDqQQyPGK8rjUULx0h
+         8nlJdVOgYE5EftPFwElQDT02jGm8zSSDHmde5UnVavrOB3erIy6zptFWM3lfKpPPEZO/
+         g2OOD2srap1S3UBMezvJDT/kvVa1XiPUwHFgZJyJ/epJ1+DHaGLdwrIbSBamhnbA1Evn
+         NQoAgkcAg1yo2xhtVdGmj2KiCiSwB0H6AQURhdDm2qJItbCNVnsCVRynp3neixpa4/qG
+         7d+n/YnSD/FY3hSadjadMrTzdXNpf7sGMXwL4BySZhr5nvXBdEMb9nYP34N3KMcT8Qki
+         Zpkg==
+X-Received: by 10.140.107.198 with SMTP id h64mr33556358qgf.30.1399206591120;
+ Sun, 04 May 2014 05:29:51 -0700 (PDT)
+Received: by 10.96.138.9 with HTTP; Sun, 4 May 2014 05:29:21 -0700 (PDT)
+In-Reply-To: <5365D91E.70207@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248095>
 
-On 2014-04-30 16.57, Torsten B=C3=B6gershausen wrote:
-There is something wrong with the patch, (test suite hangs or TC fail),
-so I need to com back later. Sorry for the noise.
+On Sun, May 4, 2014 at 1:07 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> On 05/03/2014 10:12 PM, brian m. carlson wrote:
+>> Many places throughout the code use "unsigned char [20]" to store object IDs
+>> (SHA-1 values).  This leads to lots of hardcoded numbers throughout the
+>> codebase.  It also leads to confusion about the purposes of a buffer.
+>>
+>> Introduce a structure for object IDs.  This allows us to obtain the benefits
+>> of compile-time checking for misuse.  The structure is expected to remain
+>> the same size and have the same alignment requirements on all known
+>> platforms, compared to the array of unsigned char.
+>
+> Please clarify whether you plan to rely on all platforms having "the
+> same size and alignment constraints" for correctness, or whether that
+> observation of the status quo is only meant to reassure us that this
+> change won't cause memory to be wasted on padding.
+
+It's not just about wasted padding. Some structs, like
+ondisk_cache_entry, reflect on-disk format. Padding means breakage.
+But I don't think this will be a big issue because we can detect if
+padding happens, abort to force the user to complain, and deal with it
+on case-by-case basis.
+-- 
+Duy
