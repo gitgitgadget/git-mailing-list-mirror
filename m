@@ -1,85 +1,74 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Pull is Mostly Evil
-Date: Sun, 04 May 2014 08:13:32 +0200
-Message-ID: <87wqe2ul4j.fsf@fencepost.gnu.org>
-References: <5363BB9F.40102@xiplink.com>
-	<xmqqoazgaw0y.fsf@gitster.dls.corp.google.com>
-	<5364A143.1060404@bbn.com> <87iopnwa2i.fsf@fencepost.gnu.org>
-	<5364b11b4db8d_1996f531068@nysa.notmuch>
-	<87eh0bw5gh.fsf@fencepost.gnu.org>
-	<alpine.DEB.2.02.1405032129420.25156@nftneq.ynat.uz>
-	<5365c45fd101d_6c25cd72ec2e@nysa.notmuch>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH 0/3] Fix a ton of compiler warnings
+Date: Sun,  4 May 2014 01:12:52 -0500
+Message-ID: <1399183975-2346-1-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: David Lang <david@lang.hm>, Richard Hansen <rhansen@bbn.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Marc Branchaud <marcnarc@xiplink.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 04 08:19:34 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 04 08:23:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wgpls-0002fN-LQ
-	for gcvg-git-2@plane.gmane.org; Sun, 04 May 2014 08:19:32 +0200
+	id 1Wgppu-0008FB-8G
+	for gcvg-git-2@plane.gmane.org; Sun, 04 May 2014 08:23:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753389AbaEDGTW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 May 2014 02:19:22 -0400
-Received: from fencepost.gnu.org ([208.118.235.10]:34391 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751258AbaEDGTV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 May 2014 02:19:21 -0400
-Received: from localhost ([127.0.0.1]:33429 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1Wgpld-00085D-Lj; Sun, 04 May 2014 02:19:17 -0400
-Received: by lola (Postfix, from userid 1000)
-	id 919C0E08BB; Sun,  4 May 2014 08:13:32 +0200 (CEST)
-In-Reply-To: <5365c45fd101d_6c25cd72ec2e@nysa.notmuch> (Felipe Contreras's
-	message of "Sat, 03 May 2014 23:38:55 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
+	id S1753405AbaEDGXh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 May 2014 02:23:37 -0400
+Received: from mail-oa0-f50.google.com ([209.85.219.50]:58649 "EHLO
+	mail-oa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751258AbaEDGXg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 May 2014 02:23:36 -0400
+Received: by mail-oa0-f50.google.com with SMTP id i7so1065815oag.9
+        for <git@vger.kernel.org>; Sat, 03 May 2014 23:23:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=k3wMiEbmFautARdLDtUaFeM0szvDFET3xxnnNeK/GjA=;
+        b=OPEdDgFScEM6Rug5LuI2v4IdH+hhP8+WBHChJ5p3nornYJYtGRWckYLoHQzrS+Fqxs
+         sRkiMQSiogL8yQ+1gJ4EpOXf4EljbrFWUx8WUE5vBdiC0Ws1txYQdIKmdRrwePVY8gsB
+         /bSK5qBZdKVrUrBJcebHKy9CmtGMCTO+EX+URt0tDfmQPheVugys2tt/yLqgo79xjjx6
+         XLEALeit77tljSUTK0AyZmKhEz+qwrWR8dJPaU7NB6lTtd+IZVjbzHT24UzFPB+mUD/i
+         +eI7Bz9fY/YFqi51AXoVLjNh6uxO0vH2D+693muDzhceSWbVU6iE4t3P2C4fDedROTqz
+         46Tw==
+X-Received: by 10.182.214.41 with SMTP id nx9mr24836197obc.15.1399184616177;
+        Sat, 03 May 2014 23:23:36 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id ml9sm19791688oeb.2.2014.05.03.23.23.33
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 03 May 2014 23:23:34 -0700 (PDT)
+X-Mailer: git-send-email 1.9.2+fc1.20.g204a630
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248075>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Hi,
 
-> David Lang wrote:
->> note that this is one person taking the "I don't see any commits from
->> you so your opinion doesn't count" attitude.
->
-> Wrong. I said it doesn't count "for the project".
+I'm getting tons and tons of warnings with gcc 4.9.0. Here are the patches to
+fix them all.
 
-There are a number of commits from me that actually count.  A few old
-core performance ones might have actually have affected my carbon
-footprint noticeably.  The one currently in pu will probably not be
-called often enough for that but will at least have practical
-consequences.
 
-> Do you honestly believe Junio cares about what some random guy on the
-> list thinks about default aliases? No.
+Felipe Contreras (3):
+  Revert "make error()'s constant return value more visible"
+  Revert "silence some -Wuninitialized false positives"
+  Silence a bunch of format-zero-length warnings
 
-Putting aside my code contributions: Git is a comparatively small
-project, so if the main project you are working on with Git is Git, your
-experience is limited.  So yes, input from people who are _not_ heavy
-Git developers is important, since the heavy Git developers do not get
-to see the heavy Git use cases a lot.
-
-> It's actually the exact opposite. I don't care what is the track
-> record of the people in the discussion. If their argument is good,
-> their argument is good.
-
-More like if they are around, they are worth getting plastered with your
-frustration.
-
-> It's the others that focus on the carisma and credentials of the
-> people in the discussion, rather than the arguments.
-
-I think you are confusing inertia with resistance.
+ builtin/commit.c  |  2 +-
+ cache.h           |  3 ---
+ config.c          |  1 -
+ git-compat-util.h | 11 -----------
+ parse-options.c   | 18 +++++++++---------
+ parse-options.h   |  4 ----
+ usage.c           |  1 -
+ wt-status.c       | 22 +++++++++++-----------
+ 8 files changed, 21 insertions(+), 41 deletions(-)
 
 -- 
-David Kastrup
+1.9.2+fc1.20.g204a630
