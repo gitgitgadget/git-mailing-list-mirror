@@ -1,120 +1,53 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] t3910: show failure of core.precomposeunicode with
- decomposed filenames
-Date: Mon, 5 May 2014 17:46:58 -0400
-Message-ID: <20140505214658.GA16971@sigill.intra.peff.net>
-References: <20140428161630.GA9435@sigill.intra.peff.net>
- <5365DA7B.6050000@web.de>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] Bump core.deltaBaseCacheLimit to 96m
+Date: Mon, 5 May 2014 17:27:49 +0700
+Message-ID: <CACsJy8D3xXM3ht3JeoowiFQfoL28WDxyijRhyRKGDn4rfn4aSw@mail.gmail.com>
+References: <1399223637-29964-1-git-send-email-dak@gnu.org> <CACsJy8BG8fRPk74R_-YABCGMn-YwbDcLHtjUNX7KE66jX1mR4A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Tue May 06 18:44:02 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Tue May 06 18:49:07 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WhiAX-0007Xo-ES
-	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:24:37 +0200
+	id 1WhhxL-0005Yp-A7
+	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:10:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756853AbaEEVrC convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 May 2014 17:47:02 -0400
-Received: from cloud.peff.net ([50.56.180.127]:45553 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756764AbaEEVrA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 May 2014 17:47:00 -0400
-Received: (qmail 8004 invoked by uid 102); 5 May 2014 21:47:00 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 05 May 2014 16:47:00 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 05 May 2014 17:46:58 -0400
-Content-Disposition: inline
-In-Reply-To: <5365DA7B.6050000@web.de>
+	id S1756256AbaEEK2V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 May 2014 06:28:21 -0400
+Received: from mail-qc0-f170.google.com ([209.85.216.170]:36234 "EHLO
+	mail-qc0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756252AbaEEK2U (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 May 2014 06:28:20 -0400
+Received: by mail-qc0-f170.google.com with SMTP id i8so736959qcq.1
+        for <git@vger.kernel.org>; Mon, 05 May 2014 03:28:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=XMlT3J9sDv75arzV5Y1LVQ7rbAtfH8AjHE/AaQVSXCo=;
+        b=wPz2VSG8LRzJLaAAdG6Y8g8T3PMM6mJThH80GJiVBHWPvwBvi+CMy2PiKxWRmq+PwD
+         zMRiqi68QUdItao7HIycsKKzOW99jyeelPkKGhLYXsY3SUs7P4yALBudQwbSKMiPQOWA
+         p87c6dC8LpBjiBaD8F05/zWQe1KakjjejJb18jdPlfauldFmhKciNZ5757r4rUPCywTV
+         NF5YO9v+2OkRv8UKgBVJYKTVdMlQEjKnWt+2LOqigbqViDC1z0Ai965j3JO8TXFCTG1I
+         fThmLXW9rTNwIejCBpS3tofYwKuyPdf11XAw5kaeI1q9P6jvwSEn7XGIAqL/tU7uGbhf
+         MoQA==
+X-Received: by 10.224.36.129 with SMTP id t1mr39571063qad.88.1399285699515;
+ Mon, 05 May 2014 03:28:19 -0700 (PDT)
+Received: by 10.96.138.9 with HTTP; Mon, 5 May 2014 03:27:49 -0700 (PDT)
+In-Reply-To: <CACsJy8BG8fRPk74R_-YABCGMn-YwbDcLHtjUNX7KE66jX1mR4A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248151>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248152>
 
-On Sun, May 04, 2014 at 08:13:15AM +0200, Torsten B=C3=B6gershausen wro=
-te:
+On Mon, May 5, 2014 at 5:26 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+> part. Would it make more sense to advise git devs to set this per repo
 
-> >   1. Tell everyone that NFD in the git repo is wrong, and
-> >      they should make a new commit to normalize all their
-> >      in-repo files to be precomposed.
-> >      This is probably not the right thing to do, because it
-> >      still doesn't fix checkouts of old history. And it
-> >      spreads the problem to people on byte-preserving
-> >      filesystems (like ext4), because now they have to start
-> >      precomposing their filenames as they are adde to git.
->      (typo:                                                          =
-        ^added)
-> I'm not sure if I follow. People running ext4 (or Linux in general,
-> or Windows, or Unix) do not suffer from file system
-> "feature" of Mac OS, which accepts precomposed/decomposed Unicode
-> but returns decompomsed.
-
-What I mean by "spreads the problem" is that git on Linux does not need
-to care about utf8 at all. It treats filenames as a byte sequence. But
-if we were to start enforcing "filenames should be precomposed utf8",
-then people adding files on Linux would want to enforce that, too.
-
-People on Linux could ignore the issue as they do now, but they would
-then create problems for OS X users if they add decomposed filenames.
-IOW, if the OS X code assumes "all repo filenames are precomposed", the=
-n
-other systems become a possible vector for violating that assumption.
-
-> >   3. Convert index filenames to their precomposed form when
-> >      we read the index from disk. This would be efficient,
-> >      but we would have to be careful not to write the
-> >      precomposed forms back out to disk.
-> Question:
-> How could we be careful?
-> Mac OS writes always decomposed Unicode to disk.
-> (And all other OS tend to use precomposed forms, mainly because the "=
-keyboard
-> driver" generates it.)
-
-Sorry, I should have been more clear here. I meant "do not write index
-entries using the precomposed forms out to the on-disk index". Because
-that would mean that git silently converts your filenames, and it would
-look like you have changes to commit whenever you read in a tree with a
-decomposed name.
-
-Looking over the patch you sent earlier, I suspect that is part of its
-problem (it stores the converted name in the index entry's name field).
-
-> This is my understanding:
-> Some possible fixes are:
->=20
->   1. Accept that NFD in a Git repo which is shared between Mac OS
->      and Linux or Windows is problematic.
->      Whenever core.precomposeunicode =3D true, do the following:
->      Let Git under Mac OS change all file names in the index
->      into the precomposed form when a new commit is done.
->      This is probably not a wrong thing to do.
->=20
->      When the index file is read into memory, precompose the file nam=
-es and compare
->      them with the precomposed form coming from precompose_utf8_readd=
-ir().
->      This avoids decomposed file names to be reported as untracked by=
- "git status.
-
-This is the case I was specifically thinking of above (and I think what
-your patch is doing).
-
->   2. Do all index filename comparisons under Mac OS X using a UTF-8 a=
-ware
->      comparison function regardless if core.precomposeunicode is set.
->      This would probably have bad performance, and somewhat
->      defeats the point of converting the filenames at the
->      readdir level in the first place.
-
-Right, I'm concerned about performance here, but I wonder if we can
-reuse the name-hash solutions from ignorecase.
-
--Peff
+s/advise git devs/advise emacs devs/
+-- 
+Duy
