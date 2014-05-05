@@ -1,163 +1,114 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: What's cooking in git.git (Apr 2014, #09; Tue, 29)
-Date: Mon, 5 May 2014 20:55:25 +0100
-Message-ID: <20140505195525.GC23935@serenity.lan>
-References: <xmqq7g67iwxc.fsf@gitster.dls.corp.google.com>
- <20140505184546.GB23935@serenity.lan>
- <5367e1ac39571_5977e7531081@nysa.notmuch>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH] Bump core.deltaBaseCacheLimit to 96m
+Date: Mon, 05 May 2014 13:20:09 +0200
+Message-ID: <874n14tqty.fsf@fencepost.gnu.org>
+References: <1399223637-29964-1-git-send-email-dak@gnu.org>
+	<CACsJy8BG8fRPk74R_-YABCGMn-YwbDcLHtjUNX7KE66jX1mR4A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 06 19:27:28 2014
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 06 19:31:04 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Whi8H-0006KZ-8D
-	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:22:17 +0200
+	id 1WhhyG-0005Yp-El
+	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:11:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752107AbaEEUDY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 May 2014 16:03:24 -0400
-Received: from hyena.aluminati.org ([64.22.123.221]:57758 "EHLO
-	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752055AbaEEUDY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 May 2014 16:03:24 -0400
-X-Greylist: delayed 469 seconds by postgrey-1.27 at vger.kernel.org; Mon, 05 May 2014 16:03:23 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by hyena.aluminati.org (Postfix) with ESMTP id D59AC2171D;
-	Mon,  5 May 2014 20:55:33 +0100 (BST)
-X-Quarantine-ID: <lmxR6jgBwEzR>
-X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -1
-X-Spam-Level: 
-X-Spam-Status: No, score=-1 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1] autolearn=disabled
-Received: from hyena.aluminati.org ([127.0.0.1])
-	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id lmxR6jgBwEzR; Mon,  5 May 2014 20:55:32 +0100 (BST)
-Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by hyena.aluminati.org (Postfix) with ESMTP id AFE2E21823;
-	Mon,  5 May 2014 20:55:32 +0100 (BST)
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id A2F11161E5A9;
-	Mon,  5 May 2014 20:55:32 +0100 (BST)
-X-Quarantine-ID: <Wv9lJoaGYcpj>
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id Wv9lJoaGYcpj; Mon,  5 May 2014 20:55:32 +0100 (BST)
-Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id AD4AE161E1A1;
-	Mon,  5 May 2014 20:55:27 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <5367e1ac39571_5977e7531081@nysa.notmuch>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1756330AbaEELUe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 May 2014 07:20:34 -0400
+Received: from fencepost.gnu.org ([208.118.235.10]:59168 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756215AbaEELUd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 5 May 2014 07:20:33 -0400
+Received: from localhost ([127.0.0.1]:58210 helo=lola)
+	by fencepost.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <dak@gnu.org>)
+	id 1WhGwh-0003sD-S8; Mon, 05 May 2014 07:20:32 -0400
+Received: by lola (Postfix, from userid 1000)
+	id 67AE8E04E9; Mon,  5 May 2014 13:20:09 +0200 (CEST)
+In-Reply-To: <CACsJy8BG8fRPk74R_-YABCGMn-YwbDcLHtjUNX7KE66jX1mR4A@mail.gmail.com>
+	(Duy Nguyen's message of "Mon, 5 May 2014 17:26:56 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248184>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248185>
 
-On Mon, May 05, 2014 at 02:08:28PM -0500, Felipe Contreras wrote:
-> John Keeping wrote:
-> > I am not convinced that tools for interoperating with other VCSs need to
-> > be part of core Git; as Junio has pointed out previously, while contrib/
-> > was necessary for promoting associated tools when Git was young and had
-> > not established mindshare, Git is now by far the most popular DVCS and
-> > is rapidly catching up with centralized systems.  Associated tools can
-> > therefore live on their own and do not need to be promoted as part of
-> > Git itself (as git-imerge is doing successfully).
-> 
-> Then let's remove git-p4.
+Duy Nguyen <pclouds@gmail.com> writes:
 
-If git-p4 were not already in the core, I would be making precisely the
-same argument regarding it (and the others you identify below).
+> On Mon, May 5, 2014 at 12:13 AM, David Kastrup <dak@gnu.org> wrote:
+>> The default of 16m causes serious thrashing for large delta chains
+>> combined with large files.
+>>
+>> Here are some benchmarks (pu variant of git blame):
+>>
+>> time git blame -C src/xdisp.c >/dev/null
+>
+> ...
+>
+>> diff --git a/Documentation/config.txt b/Documentation/config.txt
+>> index 1932e9b..21a3c86 100644
+>> --- a/Documentation/config.txt
+>> +++ b/Documentation/config.txt
+>> @@ -489,7 +489,7 @@ core.deltaBaseCacheLimit::
+>>         to avoid unpacking and decompressing frequently used base
+>>         objects multiple times.
+>>  +
+>> -Default is 16 MiB on all platforms.  This should be reasonable
+>> +Default is 96 MiB on all platforms.  This should be reasonable
+>>  for all users/operating systems, except on the largest projects.
+>>  You probably do not need to adjust this value.
+>
+> So emacs.git falls exactly into the "except on the largest projects"
+> part.
 
-> > In the case of git-remote-hg specifically, the remote helper has to use
-> > an interface that the Mercurial developers consider unstable [1];
-> 
-> There is no other sensible way of doing them.
-> 
-> > the version currently on 'pu' fails the test suite for me because I
-> > have Mercurial 3.0:
-> > 
-> > 	AttributeError: 'mqrepo' object has no attribute 'getbundle'
-> 
-> And because this patch has not been picked up[1].
+git gc --aggressive has been used/recommended for _all_ projects
+regularly, leading to delta chains with a length of 250.  So this delta
+chain size is not exceptional but will eventually occur in any archive
+that has been created and maintained according to the recommendations o=
+f
+Git's documentation (which recommends gc --aggressive every few hundred=
+s
+of revisions).  I was illustrating the effect on a file of size 1MB.
+That's not an egregiously large file either.
 
-And it is now probably too late for that to make Git 2.0, which means it
-may be another 12 weeks before it makes it into a Git release.  Since
-this is quite a minor change it may make it into a stable release, but
-what would happen if the required changes were much more involved?
+96MB is the point of diminuishing returns for this case which is _6_
+times larger than the current default and _small_ in comparison with th=
+e
+memory installed on developer machines nowadays.  Similar slowdowns
+occur with other examples.  Git will with the current defaults accept
+files of 512Mb size into its compression scheme (and thus its core
+memory) before punting.
 
-> > I do not want to end up in a situation where an update to Git is blocked
-> > by a distribution because git-remote-hg is not updated to support newer
-> > versions of Mercurial sufficiently quickly; this previously happened in
-> > Gentoo due to git-svn and meant that was stuck on 1.7.8 until 1.7.13 was
-> > released [2].
-> 
-> Travis-CI ensures that won't happen[2].
+The current delteBaseCacheLimit of 16Mb is rather ridiculous in
+particular with the pre-2.0 settings for gc --aggressive and causes
+serious performance degration.  It was actually ridiculous even 10 year=
+s
+ago.
 
-I don't see that building against Mercurial's default branch, so it will
-not help with future releases.
+> Would it make more sense to advise git devs to set this per repo
+> instead? The majority of (open source) repositories out there are
+> small if I'm not mistaken. Of those few big repos, we could have a
+> section listing all the tips and tricks to tune git. This is one of
+> them. Index v4 and sparse checkout are some other. In future, maybe
+> watchman support, split index and untracked cache as well.
 
-> > Since the remote helper interface is stable and the remote helpers do
-> > not use any of the Git internals, I consider the risks of including them
-> > in core Git to outweigh the benefits of wider distribution.  In fact,
-> > the remote helpers may benefit from having their own release cadences
-> > so that they can respond to changes in related projects more quickly
-> > than the normal Git release cycle.
-> 
-> Maybe, but git-remote-hg has already benefitted a lot from the wider
-> exposure of being in 'contrib/', I'm sure it would benefit even more if
-> it's distributed by default.
+Shrug.  The last version of the patch was refused because of wanting
+more evidence.  I added the evidence.
 
-Is that because it was included in contrib/ or just as a result of being
-publicised on this list and elsewhere?  I don't think git-imerge is
-suffering from being its own project and git-subtree appears to have
-received very little attention despite being in contrib/.
+And I have it on record in the mailing list and can point to it when
+people ask me why Git is so slow for "git blame" in comparison to other
+version control systems in spite of my purporting to having improved it=
+=2E
 
-> Moreover, there's a ton of subpar tools out there[3], and I believe
-> giving the burden of choosing one to the user is detrimental to the Git
-> project. If we as a project say: this is the one we recommend, and has
-> the Git stamp, that helps the users tremendously.
+I'm definitely not going to jump through any more hoops here.  I=A0don'=
+t
+see a point in this kind of spectacle.
 
-But by choosing one now, we are stuck promoting that one even if a
-better alternative comes along in the future.  We have seen that with
-git-cvsimport and it's not dissimilar to the situation with git-pull.
-
-> Your point is valid though, but it's valid not just for
-> git-remote-hg/bzr.
-> 
-> So I think these are the two options:
-> 
->   1) Include git-remote-hg/bzr to the core and distribute them by
->      default (as is the current intention)
-> 
->   2) Remove git-remote-hg/bzr entirely from the Git tree. And do the
->      same for other tools: git-p4, git-svn, git-cvs*. Given the huge
->      amount of people using Subversion, we might want to defer that one
->      for later, but eventually do it.
-
-Don't forget git-archimport...
-
-My personal vote would be for 2), splitting the bridges to other VCSs
-into their own repositories but there would need to be some guarantee
-that they would continue to be maintained.  I'm not sure it needs to
-wait for a major Git release since most of the impact is on package
-maintainers and not end users.
-
-> I'd say for v2.0 we should go for 1), and 2) should be considered for
-> v3.0, perhaps.
-
-I don't think there is any advantage to adding new tools now if we only
-intend to remove them in the future.
-
-> [1] http://article.gmane.org/gmane.comp.version-control.git/248065
-> [2] https://travis-ci.org/felipec/git
-> [3] https://github.com/felipec/git/wiki/Comparison-of-git-remote-hg-alternatives
+--=20
+David Kastrup
