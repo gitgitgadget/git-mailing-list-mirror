@@ -1,139 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Apr 2014, #09; Tue, 29)
-Date: Mon, 05 May 2014 16:50:58 -0700
-Message-ID: <xmqqoazb944d.fsf@gitster.dls.corp.google.com>
-References: <xmqq7g67iwxc.fsf@gitster.dls.corp.google.com>
-	<20140505184546.GB23935@serenity.lan>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] Bump core.deltaBaseCacheLimit to 96m
+Date: Mon, 5 May 2014 17:26:56 +0700
+Message-ID: <CACsJy8BG8fRPk74R_-YABCGMn-YwbDcLHtjUNX7KE66jX1mR4A@mail.gmail.com>
+References: <1399223637-29964-1-git-send-email-dak@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Tue May 06 18:52:07 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Tue May 06 18:52:09 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WhiDP-0007Xo-Du
-	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:27:35 +0200
+	id 1WhhxJ-0005Yp-5N
+	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:10:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932931AbaEEXvF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 May 2014 19:51:05 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:63375 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756886AbaEEXvD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 May 2014 19:51:03 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7F14215E36;
-	Mon,  5 May 2014 19:51:02 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=JZj1c3Nf3dqyWHg6pxmhLl5C6mI=; b=eUy/DC
-	9h/5liKfHhof6vMyEr4/2+zz7pDzSXaYVat0Z62oRtRCefSKt17rB3WqEQ8dxLm8
-	AqNZkZ70b+f34aG8lFkpD4nI0WheO/ERPyqQDGDquWrKufRmT+iiZwWtoau8Oc/r
-	t4W1EGxdREcxYBkJI8gh3zn5ekKhKfY5tmKn0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UuOW8lD/zcybRCrFsJvS4d088EelJgoh
-	gXbB8PG6r7mUByhEZUHzV/ExiwLlUlZyRu62OtTjcMQdPHNsfg7G2Q8hufvAOB1t
-	G8r+huNbTdUxSBOah8ZDQwg8WFtagA9k275v2G9WJcLfjEksE3xoAuZxZmkXHdtV
-	l+0KdYRHszQ=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7694215E35;
-	Mon,  5 May 2014 19:51:02 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3030A15E32;
-	Mon,  5 May 2014 19:51:00 -0400 (EDT)
-In-Reply-To: <20140505184546.GB23935@serenity.lan> (John Keeping's message of
-	"Mon, 5 May 2014 19:45:46 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 1C1AE092-D4B0-11E3-843A-9CEB01674E00-77302942!pb-smtp0.pobox.com
+	id S1756230AbaEEK12 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 May 2014 06:27:28 -0400
+Received: from mail-qa0-f52.google.com ([209.85.216.52]:61064 "EHLO
+	mail-qa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756086AbaEEK11 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 May 2014 06:27:27 -0400
+Received: by mail-qa0-f52.google.com with SMTP id cm18so5966994qab.11
+        for <git@vger.kernel.org>; Mon, 05 May 2014 03:27:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=tOOn/M6gE2/6tXHdOfbF5kiUWMsVsL6h2TAhOSgxbzw=;
+        b=X/lAwXFyfnHRYPG6meUrYgBQFbYgaLYLTOR8q3FqIExjYV8EbxLI/7VpmcnqhLD6g6
+         DNgot8+As8hJr+UECXZpJtmYcBJ87ZcDxOCwpoWANdpOBBoJN2rcfrLeNnyhQS8gLfjz
+         CJ/soUaAn4o7Myu1iypiP+zWOid+HJQ/JLIUPnf+Hmc+5P4VIJVOxxKQh9pRSAUvnMEg
+         OvJ/60TwHttibe8bMiL+eg9m9YdYo5MP+HgFPOT84bgpSI3UyQ4VpObKQeiy1oGjaHDc
+         L45luXQjj/cwwK7eMrQvYXAlZ4qp1Kt+jHvWC8ibs+mwW5kypIeaRdzBs9/IfdYU9xaA
+         pUpA==
+X-Received: by 10.140.91.161 with SMTP id z30mr40094627qgd.65.1399285647057;
+ Mon, 05 May 2014 03:27:27 -0700 (PDT)
+Received: by 10.96.138.9 with HTTP; Mon, 5 May 2014 03:26:56 -0700 (PDT)
+In-Reply-To: <1399223637-29964-1-git-send-email-dak@gnu.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248156>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248157>
 
-John Keeping <john@keeping.me.uk> writes:
-
-> On Tue, Apr 29, 2014 at 03:38:07PM -0700, Junio C Hamano wrote:
->> * fc/remote-helpers-hg-bzr-graduation (2014-04-29) 11 commits
->>  ...
->>  Move remote-hg and remote-bzr out of contrib/.  There were some
->>  suggestions on the follow-up fix patches still not in 'next', which
->>  may result in a reroll.
->> 
->>  Will merge to 'next' and keep it there for the remainder of the
->>  cycle.
+On Mon, May 5, 2014 at 12:13 AM, David Kastrup <dak@gnu.org> wrote:
+> The default of 16m causes serious thrashing for large delta chains
+> combined with large files.
 >
-> I'd like to register my opposition to moving git-remote-{bzr,hg} out of
-> contrib/.
-> ...
-> In the case of git-remote-hg specifically, the remote helper has to use
-> an interface that the Mercurial developers consider unstable [1];...
-> I do not want to end up in a situation where an update to Git is blocked
-> by a distribution because git-remote-hg is not updated to support newer
-> versions of Mercurial sufficiently quickly; this previously happened in
-> Gentoo due to git-svn and meant that was stuck on 1.7.8 until 1.7.13 was
-> released [2].
+> Here are some benchmarks (pu variant of git blame):
+>
+> time git blame -C src/xdisp.c >/dev/null
 
-The same argument would apply to git-svn, git-p4, and git-cvsimport,
-I would think.
+...
 
-Among these, I am not sure if we can find willing maintainers who
-can give enough love to them.  But unlike these other importers,
-remote-hg and remote-bzr do have an active maintainer (and IIRC I
-think I heard that Hg one even has an active competitor or two?) so
-I am reasonably confident that these can live on their own merit
-outside of my tree.  In the ideal world, I would think it may be
-even beneficial to the end users of these helpers to unbundle them.
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 1932e9b..21a3c86 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -489,7 +489,7 @@ core.deltaBaseCacheLimit::
+>         to avoid unpacking and decompressing frequently used base
+>         objects multiple times.
+>  +
+> -Default is 16 MiB on all platforms.  This should be reasonable
+> +Default is 96 MiB on all platforms.  This should be reasonable
+>  for all users/operating systems, except on the largest projects.
+>  You probably do not need to adjust this value.
 
-You raised a good point on the issue of external dependencies may
-impact Git as a whole, even for those who are not interested in the
-particular remote helpers at all.  I'll have to think about it.
-
-The silly thing is that I totally forgot that we almost got
-ourselves into a very similar situation on cvsimport when a series
-wanted to make it cvsps3-only.  It is very possible nobody would
-have picked up the entire new release, if we merged that change.
-
-Having said all that, there is one caveat.
-
-> Since the remote helper interface is stable and the remote helpers do
-> not use any of the Git internals, I consider the risks of including them
-> in core Git to outweigh the benefits of wider distribution.
-
-You are correct to say that a remote helper has to talk with a
-foreign system and it would not help to dictate the update schedule
-of helpers to match the release cycle of Git itself.  At the same
-time, however, the interface the remote helpers use to talk to Git
-has not been as stable as you seem to think, I am afraid.  For
-example, a recent remote-hg/bzr series needed some enhancements to
-fast-import to achieve the feature parity with native transports by
-adding a missing feature or two on the Git side.
-
-So in reality, a helper has to talk with two sides, needs to adjust
-to changes in the both sides, and both sides are changing.
-
-Unbundling a helper from Git would place more burden on the helper's
-maintainer, because the helper has to know enough about versions and
-features of both sides (the foreign system and Git) to adjust its
-behaviour, to stay compatible with wider versions of both foreign
-systems and Git.  Unbundling, when done properly, may give more
-ideal user experience to the end users, because such a helper would
-allow them to pick up the latest (or stay on an older but known to
-be stable) version of the helper and expect it to work with the
-foreign system and Git they happen to have.
-
-It however would be easier to maintain if the helper maintainer
-knows a change to Git itself will be released at the same time as
-the new version of the helper that takes advantage of the modified
-Git.  The helper maintainer only has to worry about compatibility
-with the foreign side if it is bundled with Git.
-
-So it boils down to "how much resource are there to make sure a
-helper will stay compatible with wider versions of both sides?" and
-"how far backwards are helper maintainers willing to bend to support
-users better?".
+So emacs.git falls exactly into the "except on the largest projects"
+part. Would it make more sense to advise git devs to set this per repo
+instead? The majority of (open source) repositories out there are
+small if I'm not mistaken. Of those few big repos, we could have a
+section listing all the tips and tricks to tune git. This is one of
+them. Index v4 and sparse checkout are some other. In future, maybe
+watchman support, split index and untracked cache as well.
+-- 
+Duy
