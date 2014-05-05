@@ -1,70 +1,73 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: [PATCH 1/9] Define a structure for object IDs.
-Date: Sun, 04 May 2014 23:31:16 +0200
-Message-ID: <87ppjt6xjv.fsf@igel.home>
-References: <1399147942-165308-1-git-send-email-sandals@crustytoothpaste.net>
-	<1399147942-165308-2-git-send-email-sandals@crustytoothpaste.net>
-	<5365D91E.70207@alum.mit.edu> <536606AB.1020803@kdbg.org>
-	<m2mwexke34.fsf@linux-m68k.org> <5366A09E.6030802@kdbg.org>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 1/3] Revert "make error()'s constant return value more
+ visible"
+Date: Mon, 05 May 2014 00:45:30 -0500
+Message-ID: <5367257a857ce_2db613a731043@nysa.notmuch>
+References: <1399183975-2346-1-git-send-email-felipe.contreras@gmail.com>
+ <1399183975-2346-2-git-send-email-felipe.contreras@gmail.com>
+ <20140505054901.GA19331@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Sun May 04 23:31:38 2014
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 06 18:07:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wh40J-0004Ef-T7
-	for gcvg-git-2@plane.gmane.org; Sun, 04 May 2014 23:31:24 +0200
+	id 1WhhtC-0005Yp-Qa
+	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:06:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752852AbaEDVbU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 May 2014 17:31:20 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:32877 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752606AbaEDVbT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 May 2014 17:31:19 -0400
-Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3gML3n5nJjz4KK7M;
-	Sun,  4 May 2014 23:31:17 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3gML3n5Ys7zbbck;
-	Sun,  4 May 2014 23:31:17 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.180])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id yx96Qh2-x1lz; Sun,  4 May 2014 23:31:17 +0200 (CEST)
-X-Auth-Info: INFdEe+Q8q3X6bg0RBYG8DMKbIqHjxyqwowexso53mQ=
-Received: from igel.home (ppp-93-104-158-29.dynamic.mnet-online.de [93.104.158.29])
-	by mail.mnet-online.de (Postfix) with ESMTPA;
-	Sun,  4 May 2014 23:31:17 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 1000)
-	id 06AFA2C423C; Sun,  4 May 2014 23:31:17 +0200 (CEST)
-X-Yow: Everybody gets free BORSCHT!
-In-Reply-To: <5366A09E.6030802@kdbg.org> (Johannes Sixt's message of "Sun, 04
-	May 2014 22:18:38 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1754620AbaEEF4N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 May 2014 01:56:13 -0400
+Received: from mail-ob0-f176.google.com ([209.85.214.176]:62737 "EHLO
+	mail-ob0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754412AbaEEF4M (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 May 2014 01:56:12 -0400
+Received: by mail-ob0-f176.google.com with SMTP id wp4so7823555obc.7
+        for <git@vger.kernel.org>; Sun, 04 May 2014 22:56:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=vV21qLq13nZYtzGDaSGN0V+bmxjFVmk7UVcy9vUFIRk=;
+        b=EcUpdqXOt/9URo51ZtMN4iv/GBIGTVsWPLE/7MpVrg2rD3Q9bLTsNT3vD9i3OlYbSA
+         Q2mxXs/E43nvq/AfdCbFEk8t2afAPQAaMh5ZD/ZSBDtJAjdrqoDQciE2M5edtR/01IVg
+         JJmcy84H1w3vTtdPVlCDqvLgiOntMuQ3tdf4pGFLNnU4ox9E0QOdMUzT0tT9Xq/ZbusZ
+         5NUaQzUQyfNw29gWDR2F4iGaiArSsbRM1R+MM9reqGamLkpj1nPgcm9fXkIC1jF63fAo
+         EtPn43WESrbj8tHB9dK4H+X3zAxbMtvLMQ0XArWpX6iDUHMcRoYaSTz7LKqiKmodDMh9
+         dNbQ==
+X-Received: by 10.182.33.6 with SMTP id n6mr1418179obi.48.1399269372022;
+        Sun, 04 May 2014 22:56:12 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id bj8sm16974812obb.7.2014.05.04.22.56.09
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 04 May 2014 22:56:10 -0700 (PDT)
+In-Reply-To: <20140505054901.GA19331@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248116>
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Jeff King wrote:
+> On Sun, May 04, 2014 at 01:12:53AM -0500, Felipe Contreras wrote:
+> 
+> > So it looks like gcc is smarter now, and in trying to fix a few warnings
+> > we generated hundreds more.
+> > 
+> > This reverts commit e208f9cc7574f5980faba498d0aa30b4defeb34f.
+> 
+> And now we've gone the other way, and re-enabled the initial warnings.
+> Can we come up with a solution that helps both cases?
 
-> Isn't internal padding only allowed between members to achieve correct
-> alignment of later members, and at the end only sufficient padding so
-> that members are aligned correctly when the struct is part of an array?
-
-The standard allows arbitrary internal padding, it doesn't have to be
-minimal.
-
-Andreas.
+What initial warnings? As I explained already I don't get any warnings
+with this patch series in gcc 4.9.0.
 
 -- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+Felipe Contreras
