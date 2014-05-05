@@ -1,104 +1,93 @@
-From: Ivo Bellin Salarin <ivo.bellinsalarin@gmail.com>
-Subject: Re: GIT, libcurl and GSS-Negotiate
-Date: Mon, 5 May 2014 12:21:33 +0200
-Message-ID: <CAPc4eF-aT47aEPmmPPkPRfntTNdNp=c4+OK_CPdq_7YB6rxDug@mail.gmail.com>
-References: <CAPc4eF__gWMy=E-8tdpMn_irA4m7mYF3=cwN6JeAqJsdPshNLw@mail.gmail.com>
-	<20140426174718.GC238861@vauxhall.crustytoothpaste.net>
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: Re: [PATCH 0/3] Use ref transactions for fetch
+Date: Mon, 5 May 2014 08:08:43 -0700
+Message-ID: <CAL=YDWmG8Q0kk+4fc6C15Ai2cTr-K8bNn--J7MrjNnHVuW44jg@mail.gmail.com>
+References: <1398192327-21302-1-git-send-email-sahlberg@google.com>
+	<53677483.4050409@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: Ivo Bellin Salarin <ivo.bellinsalarin@gmail.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 06 18:42:09 2014
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue May 06 18:42:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WhhxG-0005Yp-Ge
-	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:10:54 +0200
+	id 1Whi3K-0006KZ-AK
+	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:17:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756158AbaEEKVf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 May 2014 06:21:35 -0400
-Received: from mail-oa0-f52.google.com ([209.85.219.52]:54492 "EHLO
-	mail-oa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755764AbaEEKVe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 May 2014 06:21:34 -0400
-Received: by mail-oa0-f52.google.com with SMTP id o6so1165596oag.25
-        for <git@vger.kernel.org>; Mon, 05 May 2014 03:21:33 -0700 (PDT)
+	id S933099AbaEEPIo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 May 2014 11:08:44 -0400
+Received: from mail-vc0-f176.google.com ([209.85.220.176]:63252 "EHLO
+	mail-vc0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932842AbaEEPIn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 May 2014 11:08:43 -0400
+Received: by mail-vc0-f176.google.com with SMTP id lg15so6022851vcb.35
+        for <git@vger.kernel.org>; Mon, 05 May 2014 08:08:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
+        d=google.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        bh=JSMfnOE6kiM5vFD5hNz7IJF+lKgD4bMKs+qXRSsE/kg=;
-        b=Csk9RzrS6NnD2NOhEjaOoPDSK312/+Ybzf77A2bc8EDEF1B/0nHlq1W52bLkU7Md2g
-         uARvuQC1Uy1+/gpLRhVbBjIzBEYaAOhdgnoI4hq4VP/5urSjUH8qCSXXhDZoFlMnFwOX
-         cmTdVL9/Xbil09mi+3oWQkYkiBQFVaNzLRyWM7amGRwWDXhgmWzjIm21snwJTPDPIpo0
-         wy8afrBNzwwj4y28rt3GdiGbIzvEUuGO2Y9/ushgVxsEZFBQrvY5qYNDpMd46OehRsb8
-         3YzkeDd7HG3SUjeILvHU1mt6Lj8t3/D/6Kk0k1sy4OflDB3Moeq6JBaiD8whPCfXfwT8
-         79jg==
-X-Received: by 10.182.2.72 with SMTP id 8mr30910767obs.21.1399285293733; Mon,
- 05 May 2014 03:21:33 -0700 (PDT)
-Received: by 10.76.150.137 with HTTP; Mon, 5 May 2014 03:21:33 -0700 (PDT)
-In-Reply-To: <20140426174718.GC238861@vauxhall.crustytoothpaste.net>
+         :cc:content-type;
+        bh=qi/w6mlLVNziKvD3pjciEsAsCjzVPyPj+KbnJvPXM5g=;
+        b=A5Y08ZNfnHHcPtFtddN0vnyIJeykDI+Gn4ajwM9g0B2Ksn0uVapEEgFaSYn5B6EOmV
+         qumggGJBrBGM3w6YwHB+IdBRHuQHLLuf3Wcihjwwmzk+tqqjSLjUMx4bnBSZWZhNYe3w
+         nALiWeWE/qlH4vZqicdFhQaasV05GtFKOtMdrXA3Io0PtXIsfgeu7Jxt1iWsCreFmbPV
+         Ve/vcQrajazsoZShFMdEZJM2odMu2f4W3r5/kDd7si/n1E1dxp77O++Z3uFXIb+NQMeB
+         82YqTCZARLftXEtKaLEsQSUkEI7cW3rcsQG2BZmqrhj7cWiFPy12qJgsdTQcSP+7hKf0
+         dOtw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=qi/w6mlLVNziKvD3pjciEsAsCjzVPyPj+KbnJvPXM5g=;
+        b=li6oS8zV/frrXlbWMA2hbpGDo9trTGtdwB9CZnot7hiPdgdxl7tAjTilKyoNPQamgs
+         qjHUDSOGQ41YC2kK75EjDSUOj4Aj4BuzDZ0WgDR16bDfhLwScoOuYZshNcWMOHy7VU8f
+         aZWZYPNRrRrWRSxsPRrh4JnHO0n0Q9DN3ty7jlK/YbBG+7QFep6jLG9mvLc6aZsroq/S
+         QW0KvAWCxMcaPg4iHYSM5NTuoORat8wGwdzoXgU7nCkWuQFdjBvxc+Z8fW4XV4XACaPF
+         i18lBv7HCZULzd/2U8try5ao8Smixvivqx5egL2BvSaIBZSNOXadbD7qS8fpheWISkow
+         3ing==
+X-Gm-Message-State: ALoCoQk03/0ctWZFSNUsyUp7UoIEoh/DQBqu5bnvQULU1xjCRif1bOdhK4lrTTWTlSqIGmS3JSe9
+X-Received: by 10.52.0.176 with SMTP id 16mr541305vdf.60.1399302523112; Mon,
+ 05 May 2014 08:08:43 -0700 (PDT)
+Received: by 10.52.0.139 with HTTP; Mon, 5 May 2014 08:08:43 -0700 (PDT)
+In-Reply-To: <53677483.4050409@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248149>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248150>
 
-Well, I'm on Windows.
-using `git version 1.9.2.msysgit.0`.
-
-You can find all the exchanges, recorded with wireshark, of the
-following usecases:
-* git vanilla (not working),
-* VisualStudio2013 with libgit (working)
-* curl (--ntlm, working)
-* curl (--negotiate, not working)
-
-They're available on
-[github](https://github.com/nilleb/my-documents/tree/master/msysgit%23git%2C%20issue-171).
-
-
-
-On Sat, Apr 26, 2014 at 7:47 PM, brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
-> On Thu, Apr 24, 2014 at 07:17:36PM +0200, Ivo Bellin Salarin wrote:
->> To shortly resume it, the problem is that:
->> * when the authentication method (WWW-Authenticate) is Negotiate AND
->> * when the server proposes a NTLMSSP_CHALLENGE in response of the
->> client's NTLMSSP_NEGOTIATE,
->> => libcurl yields an "Authentication problem. Ignoring this.\n"
->> And the communication is closed.
+On Mon, May 5, 2014 at 4:22 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> On 04/22/2014 08:45 PM, Ronnie Sahlberg wrote:
+>> This change is based on the previous ref transaction patches.
+>> This is sent as a separate patch series since it implements a lot more
+>> non-trivial changes to the behaviour than the previous patches and thus can
+>> use more detailed review.
 >>
->> At this point, in a normal communication, the client should send a
->> NTLMSSP_AUTH containing a Kerberos ticket.
->>
->> Having seen the libcurl source code, I think we're passing through the
->> lines  from 776 to 780 of
->> [http.c](https://github.com/bagder/curl/blob/2e57c7e0fcfb9214b2a9dfa8b3da258ded013b8a/lib/http.c).
->> Some guy, on the github issue page, has suggested that this could be
->> related to an update of libcurl, when git was at its 1.8.2 version.
->>
->> I'm not debugging libcurl, and I can't reproduce this problem @home.
->> So, has somebody already experienced the same problem? Is there a
->> solution?
+>> Update fetch.c to use ref transactions when performing updates. Use a single
+>> ref transaction for all updates and only commit the transaction if all other
+>> checks and oeprations have been successful. This makes the ref updates during
+>> a fetch (mostly) atomic.
 >
-> I'm personally using Git with GSS-Negotiate (and MIT Kerberos 5) and it
-> does seem to work correctly for me.  For large pushes, your server (and
-> any intermediate proxies) will need to support 100 Continue properly, as
-> there's simply no other way to make it work.
+> Is this always an improvement?  What kind of checks are there that might
+> fail?
 >
-> What version of curl are you using (and what distro if you didn't
-> compile it yourself)?  Also, can you post output of an attempt to push
-> with GIT_CURL_VERBOSE=1?
+> It would be pretty annoying to spend a lot of time fetching a big pack,
+> only to have the fetch fail because one reference out of many couldn't
+> be updated.  This would force the user to download the entire pack
+> again, whereas if the successful reference updates had been allowed,
+> then probably most or all of the second download would have been avoidable.
 >
-> --
-> brian m. carlson / brian with sandals: Houston, Texas, US
-> +1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-> OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+> On the other hand, if a reference was renamed on the remote side,
+> allowing a partial reference update could cause history to be discarded
+> locally if the old name's delete was accepted but the new name's
+> addition was rejected.  This wouldn't be the end of the world, because
+> the history is presumably still available remotely to fetch again, but
+> it's not ideal either.
+>
+> I'm not sure myself what I would prefer, but I wanted to point out that
+> it is IMO not obvious that atomicity here is an improvement.
+>
 
-
-
--- 
-http://www.nilleb.com
+We could make it a .git/config option ?
