@@ -1,93 +1,120 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH 0/3] Use ref transactions for fetch
-Date: Mon, 5 May 2014 08:08:43 -0700
-Message-ID: <CAL=YDWmG8Q0kk+4fc6C15Ai2cTr-K8bNn--J7MrjNnHVuW44jg@mail.gmail.com>
-References: <1398192327-21302-1-git-send-email-sahlberg@google.com>
-	<53677483.4050409@alum.mit.edu>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] t3910: show failure of core.precomposeunicode with
+ decomposed filenames
+Date: Mon, 5 May 2014 17:46:58 -0400
+Message-ID: <20140505214658.GA16971@sigill.intra.peff.net>
+References: <20140428161630.GA9435@sigill.intra.peff.net>
+ <5365DA7B.6050000@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue May 06 18:42:34 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Tue May 06 18:44:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Whi3K-0006KZ-AK
-	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:17:10 +0200
+	id 1WhiAX-0007Xo-ES
+	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:24:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933099AbaEEPIo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 May 2014 11:08:44 -0400
-Received: from mail-vc0-f176.google.com ([209.85.220.176]:63252 "EHLO
-	mail-vc0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932842AbaEEPIn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 May 2014 11:08:43 -0400
-Received: by mail-vc0-f176.google.com with SMTP id lg15so6022851vcb.35
-        for <git@vger.kernel.org>; Mon, 05 May 2014 08:08:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=qi/w6mlLVNziKvD3pjciEsAsCjzVPyPj+KbnJvPXM5g=;
-        b=A5Y08ZNfnHHcPtFtddN0vnyIJeykDI+Gn4ajwM9g0B2Ksn0uVapEEgFaSYn5B6EOmV
-         qumggGJBrBGM3w6YwHB+IdBRHuQHLLuf3Wcihjwwmzk+tqqjSLjUMx4bnBSZWZhNYe3w
-         nALiWeWE/qlH4vZqicdFhQaasV05GtFKOtMdrXA3Io0PtXIsfgeu7Jxt1iWsCreFmbPV
-         Ve/vcQrajazsoZShFMdEZJM2odMu2f4W3r5/kDd7si/n1E1dxp77O++Z3uFXIb+NQMeB
-         82YqTCZARLftXEtKaLEsQSUkEI7cW3rcsQG2BZmqrhj7cWiFPy12qJgsdTQcSP+7hKf0
-         dOtw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=qi/w6mlLVNziKvD3pjciEsAsCjzVPyPj+KbnJvPXM5g=;
-        b=li6oS8zV/frrXlbWMA2hbpGDo9trTGtdwB9CZnot7hiPdgdxl7tAjTilKyoNPQamgs
-         qjHUDSOGQ41YC2kK75EjDSUOj4Aj4BuzDZ0WgDR16bDfhLwScoOuYZshNcWMOHy7VU8f
-         aZWZYPNRrRrWRSxsPRrh4JnHO0n0Q9DN3ty7jlK/YbBG+7QFep6jLG9mvLc6aZsroq/S
-         QW0KvAWCxMcaPg4iHYSM5NTuoORat8wGwdzoXgU7nCkWuQFdjBvxc+Z8fW4XV4XACaPF
-         i18lBv7HCZULzd/2U8try5ao8Smixvivqx5egL2BvSaIBZSNOXadbD7qS8fpheWISkow
-         3ing==
-X-Gm-Message-State: ALoCoQk03/0ctWZFSNUsyUp7UoIEoh/DQBqu5bnvQULU1xjCRif1bOdhK4lrTTWTlSqIGmS3JSe9
-X-Received: by 10.52.0.176 with SMTP id 16mr541305vdf.60.1399302523112; Mon,
- 05 May 2014 08:08:43 -0700 (PDT)
-Received: by 10.52.0.139 with HTTP; Mon, 5 May 2014 08:08:43 -0700 (PDT)
-In-Reply-To: <53677483.4050409@alum.mit.edu>
+	id S1756853AbaEEVrC convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 May 2014 17:47:02 -0400
+Received: from cloud.peff.net ([50.56.180.127]:45553 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756764AbaEEVrA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 May 2014 17:47:00 -0400
+Received: (qmail 8004 invoked by uid 102); 5 May 2014 21:47:00 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 05 May 2014 16:47:00 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 05 May 2014 17:46:58 -0400
+Content-Disposition: inline
+In-Reply-To: <5365DA7B.6050000@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248150>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248151>
 
-On Mon, May 5, 2014 at 4:22 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> On 04/22/2014 08:45 PM, Ronnie Sahlberg wrote:
->> This change is based on the previous ref transaction patches.
->> This is sent as a separate patch series since it implements a lot more
->> non-trivial changes to the behaviour than the previous patches and thus can
->> use more detailed review.
->>
->> Update fetch.c to use ref transactions when performing updates. Use a single
->> ref transaction for all updates and only commit the transaction if all other
->> checks and oeprations have been successful. This makes the ref updates during
->> a fetch (mostly) atomic.
->
-> Is this always an improvement?  What kind of checks are there that might
-> fail?
->
-> It would be pretty annoying to spend a lot of time fetching a big pack,
-> only to have the fetch fail because one reference out of many couldn't
-> be updated.  This would force the user to download the entire pack
-> again, whereas if the successful reference updates had been allowed,
-> then probably most or all of the second download would have been avoidable.
->
-> On the other hand, if a reference was renamed on the remote side,
-> allowing a partial reference update could cause history to be discarded
-> locally if the old name's delete was accepted but the new name's
-> addition was rejected.  This wouldn't be the end of the world, because
-> the history is presumably still available remotely to fetch again, but
-> it's not ideal either.
->
-> I'm not sure myself what I would prefer, but I wanted to point out that
-> it is IMO not obvious that atomicity here is an improvement.
->
+On Sun, May 04, 2014 at 08:13:15AM +0200, Torsten B=C3=B6gershausen wro=
+te:
 
-We could make it a .git/config option ?
+> >   1. Tell everyone that NFD in the git repo is wrong, and
+> >      they should make a new commit to normalize all their
+> >      in-repo files to be precomposed.
+> >      This is probably not the right thing to do, because it
+> >      still doesn't fix checkouts of old history. And it
+> >      spreads the problem to people on byte-preserving
+> >      filesystems (like ext4), because now they have to start
+> >      precomposing their filenames as they are adde to git.
+>      (typo:                                                          =
+        ^added)
+> I'm not sure if I follow. People running ext4 (or Linux in general,
+> or Windows, or Unix) do not suffer from file system
+> "feature" of Mac OS, which accepts precomposed/decomposed Unicode
+> but returns decompomsed.
+
+What I mean by "spreads the problem" is that git on Linux does not need
+to care about utf8 at all. It treats filenames as a byte sequence. But
+if we were to start enforcing "filenames should be precomposed utf8",
+then people adding files on Linux would want to enforce that, too.
+
+People on Linux could ignore the issue as they do now, but they would
+then create problems for OS X users if they add decomposed filenames.
+IOW, if the OS X code assumes "all repo filenames are precomposed", the=
+n
+other systems become a possible vector for violating that assumption.
+
+> >   3. Convert index filenames to their precomposed form when
+> >      we read the index from disk. This would be efficient,
+> >      but we would have to be careful not to write the
+> >      precomposed forms back out to disk.
+> Question:
+> How could we be careful?
+> Mac OS writes always decomposed Unicode to disk.
+> (And all other OS tend to use precomposed forms, mainly because the "=
+keyboard
+> driver" generates it.)
+
+Sorry, I should have been more clear here. I meant "do not write index
+entries using the precomposed forms out to the on-disk index". Because
+that would mean that git silently converts your filenames, and it would
+look like you have changes to commit whenever you read in a tree with a
+decomposed name.
+
+Looking over the patch you sent earlier, I suspect that is part of its
+problem (it stores the converted name in the index entry's name field).
+
+> This is my understanding:
+> Some possible fixes are:
+>=20
+>   1. Accept that NFD in a Git repo which is shared between Mac OS
+>      and Linux or Windows is problematic.
+>      Whenever core.precomposeunicode =3D true, do the following:
+>      Let Git under Mac OS change all file names in the index
+>      into the precomposed form when a new commit is done.
+>      This is probably not a wrong thing to do.
+>=20
+>      When the index file is read into memory, precompose the file nam=
+es and compare
+>      them with the precomposed form coming from precompose_utf8_readd=
+ir().
+>      This avoids decomposed file names to be reported as untracked by=
+ "git status.
+
+This is the case I was specifically thinking of above (and I think what
+your patch is doing).
+
+>   2. Do all index filename comparisons under Mac OS X using a UTF-8 a=
+ware
+>      comparison function regardless if core.precomposeunicode is set.
+>      This would probably have bad performance, and somewhat
+>      defeats the point of converting the filenames at the
+>      readdir level in the first place.
+
+Right, I'm concerned about performance here, but I wonder if we can
+reuse the name-hash solutions from ignorecase.
+
+-Peff
