@@ -1,63 +1,79 @@
-From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
-Subject: Re: [msysGit] Re: [PATCH/RFC] Makefile: do not depend on curl-config
-Date: Mon, 05 May 2014 17:03:27 +0200
-Message-ID: <5367A83F.5010606@virtuell-zuhause.de>
-References: <1398702545-9860-1-git-send-email-kusmabite@gmail.com> <xmqqfvkuhm77.fsf@gitster.dls.corp.google.com> <CABPQNSZUCPd=1Eu8VUCP01tkdYkBC=xspFZuDuywuYZUH8ewvw@mail.gmail.com> <alpine.DEB.1.00.1404301851210.14982@s15462909.onlinehome-server.info> <CAHGBnuPrQzSAVRZCneHdodAAQjA4dkGk0AguNm3xhW+cQ4XESQ@mail.gmail.com> <CABPQNSb83H7EEeAfaxC7KVpZmv-KEqE1wavTf53kA=aoDQz4Tw@mail.gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH] config: preserve config file permissions on edits
+Date: Mon, 5 May 2014 21:58:53 +0000
+Message-ID: <20140505215853.GA23299@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Dave Borowitz <dborowitz@google.com>,
-	GIT Mailing-list <git@vger.kernel.org>,
-	Pat Thoyts <patthoyts@gmail.com>,
-	Marat Radchenko <marat@slonopotamus.org>,
-	tuomas.silvola@knowit.fi, msysGit <msysgit@googlegroups.com>
-To: kusmabite@gmail.com, Sebastian Schuberth <sschuberth@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 06 18:49:41 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 06 18:51:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Whi3B-0006KZ-Vw
-	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:17:02 +0200
+	id 1WhiAv-0007Xo-77
+	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:25:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933107AbaEEPDf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 May 2014 11:03:35 -0400
-Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:48901 "EHLO
-	wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S933028AbaEEPDe (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 May 2014 11:03:34 -0400
-Received: from p5ddc0621.dip0.t-ipconnect.de ([93.220.6.33] helo=[192.168.100.43]); authenticated
-	by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	id 1WhKQU-0005hR-2L; Mon, 05 May 2014 17:03:30 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-In-Reply-To: <CABPQNSb83H7EEeAfaxC7KVpZmv-KEqE1wavTf53kA=aoDQz4Tw@mail.gmail.com>
-X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1399302213;a9d8539b;
+	id S1756843AbaEEV6y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 May 2014 17:58:54 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:41575 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756316AbaEEV6x (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 May 2014 17:58:53 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 55FF520687;
+	Mon,  5 May 2014 21:58:53 +0000 (UTC)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248154>
 
-Am 05.05.2014 12:53, schrieb Erik Faye-Lund:
-> On Wed, Apr 30, 2014 at 9:46 PM, Sebastian Schuberth
-> <sschuberth@gmail.com> wrote:
->> On Wed, Apr 30, 2014 at 6:52 PM, Johannes Schindelin
->> <Johannes.Schindelin@gmx.de> wrote:
->>
->>>> We can keep this patch in the msysGit repo for the 2.0 release.
->>>
->>> FWIW the plan is to switch to mingwGitDevEnv for the 2.0 release. It is
->>> not quite clear as of yet how patches will be managed with said
->>> environment.
->>
->> The environment is just that: The environment to build Git for
->> Windows. This means that patches on top of Git for Windows could still
->> be maintained in msysgit/git (or a fork thereof) on GitHub.
-> 
-> Thanks for the heads up. Even so, are you guys OK with me pushing this
-> patch to our downstream repo?
+Users may already store sensitive data such as imap.pass in
+.git/config; making the file world-readable when "git config"
+is called to edit means their password would be compromised
+on a shared system.
 
-Yes!
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+ config.c               | 7 +++++++
+ t/t1300-repo-config.sh | 6 ++++++
+ 2 files changed, 13 insertions(+)
+
+diff --git a/config.c b/config.c
+index a30cb5c..a0b6756 100644
+--- a/config.c
++++ b/config.c
+@@ -1636,6 +1636,13 @@ int git_config_set_multivar_in_file(const char *config_filename,
+ 			MAP_PRIVATE, in_fd, 0);
+ 		close(in_fd);
+ 
++		if (fchmod(fd, st.st_mode & 07777) < 0) {
++			error("fchmod on %s failed: %s",
++				lock->filename, strerror(errno));
++			ret = CONFIG_NO_WRITE;
++			goto out_free;
++		}
++
+ 		if (store.seen == 0)
+ 			store.seen = 1;
+ 
+diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
+index 58cd543..d87693e 100755
+--- a/t/t1300-repo-config.sh
++++ b/t/t1300-repo-config.sh
+@@ -1158,4 +1158,10 @@ test_expect_failure 'adding a key into an empty section reuses header' '
+ 	test_cmp expect .git/config
+ '
+ 
++test_expect_success POSIXPERM,PERL 'preserves existing permissions' '
++	chmod 0600 .git/config &&
++	git config imap.pass Hunter2 &&
++	perl -e "die q(badperm) if ((stat(q(.git/config)))[2] & 07777) != 0600"
++'
++
+ test_done
+-- 
+Eric Wong
