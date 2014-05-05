@@ -1,73 +1,90 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: material for git training sessions/presentations
-Date: Sun, 04 May 2014 23:53:57 -0500
-Message-ID: <53671965621e_25b273930894@nysa.notmuch>
-References: <CAFOYHZDNkTpQVge8Z_qOPS3eH-afKs-KeaFsQ6sOCtLbGgjdbQ@mail.gmail.com>
- <CAP2yMa+Q56R_Rsbsy4siJNKy0wU0JN7QM1NPMBO8sO_E9CSMwA@mail.gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 0/3] Use ref transactions for fetch
+Date: Mon, 05 May 2014 13:22:43 +0200
+Message-ID: <53677483.4050409@alum.mit.edu>
+References: <1398192327-21302-1-git-send-email-sahlberg@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, training@github.com
-To: Scott Chacon <schacon@gmail.com>,
-	Chris Packham <judge.packham@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 06 18:24:40 2014
+To: Ronnie Sahlberg <sahlberg@google.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 06 18:25:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Whhsn-0005Yp-L1
-	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:06:18 +0200
+	id 1WhhyJ-0005Yp-6x
+	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:11:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754555AbaEEFEj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 May 2014 01:04:39 -0400
-Received: from mail-oa0-f52.google.com ([209.85.219.52]:49449 "EHLO
-	mail-oa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754550AbaEEFEj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 May 2014 01:04:39 -0400
-Received: by mail-oa0-f52.google.com with SMTP id o6so897640oag.25
-        for <git@vger.kernel.org>; Sun, 04 May 2014 22:04:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=MfgfiYxkXa4i9xIxurCzA6UYXqDv0DNUYL/40q5co7U=;
-        b=w0Qdrl4DJsp3h8arhtZ2Nh1MOt8ifTSrBgTpf/dWfDTWZghZFJQRwVopiw7bjH92tp
-         D6QfQrVOegtSDRN+75cqvHlaxEzfG4BEtHxf5Vhn3pipCNyU2ckYMUJW5isE+7uWcRGx
-         TYpp1/esgL40mi2RMFRbo4qqg/FqUjwYj7lKya/ouIaMPcdQ8vn+YnSfUzZw0FvIOOSQ
-         OlscUHs6KX3qSUJ45R5dUTGBkceyKyvWh7OO/zKV3iysH6EZwAIFZUQUcOX6XSavonQP
-         Lyc8Xv/ooP2TjkrslsHG9OFp96JAvP0GALCaxUhe3J+/o7ZGMHpsEuKnNdfSFE2nW7VM
-         8UkQ==
-X-Received: by 10.182.45.161 with SMTP id o1mr8849926obm.29.1399266278703;
-        Sun, 04 May 2014 22:04:38 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id pt8sm16689339obb.5.2014.05.04.22.04.36
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 04 May 2014 22:04:37 -0700 (PDT)
-In-Reply-To: <CAP2yMa+Q56R_Rsbsy4siJNKy0wU0JN7QM1NPMBO8sO_E9CSMwA@mail.gmail.com>
+	id S1756384AbaEELWr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 May 2014 07:22:47 -0400
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:60683 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755451AbaEELWq (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 5 May 2014 07:22:46 -0400
+X-AuditID: 1207440f-f79326d000003c9f-0a-536774855bd0
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 87.02.15519.58477635; Mon,  5 May 2014 07:22:45 -0400 (EDT)
+Received: from [192.168.69.130] (p5DDB24B0.dip0.t-ipconnect.de [93.219.36.176])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s45BMhnn022079
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Mon, 5 May 2014 07:22:44 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.4.0
+In-Reply-To: <1398192327-21302-1-git-send-email-sahlberg@google.com>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupnleLIzCtJLcpLzFFi42IRYndR1G0tSQ82mD5D3KLrSjeTxb8JNQ5M
+	Hgs2lXp83iQXwBTFbZOUWFIWnJmep2+XwJ3xb3s7c8EVnor3G56wNTDO4Opi5OSQEDCR2Pv8
+	GjOELSZx4d56NhBbSOAyo8SXheZdjFxA9jkmiZm/jrGAJHgFtCVenlkHVsQioCqx7/NvVhCb
+	TUBXYlFPM1MXIweHqECQxJ+zihDlghInZz4BaxURsJNYf2sh2C5hAXOJ2VMWQ+1ylpj/fw1Y
+	nFPAReLhucWsIGMkBMQlehqDQMLMAjoS7/oeMEPY8hLb385hnsAoMAvJhllIymYhKVvAyLyK
+	US4xpzRXNzcxM6c4NVm3ODkxLy+1SNdELzezRC81pXQTIyRA+Xcwdq2XOcQowMGoxMObwJwe
+	LMSaWFZcmXuIUZKDSUmUd0s0UIgvKT+lMiOxOCO+qDQntfgQowQHs5IIb3YiUI43JbGyKrUo
+	HyYlzcGiJM6rvkTdT0ggPbEkNTs1tSC1CCYrw8GhJME7oRioUbAoNT21Ii0zpwQhzcTBCTKc
+	S0qkODUvJbUosbQkIx4UpfHFwDgFSfEA7d0H0s5bXJCYCxSFaD3FqMtxoWFFC5MQS15+XqqU
+	OO9ekCIBkKKM0jy4FbB09IpRHOhjYd7JIFU8wFQGN+kV0BImoCVcxmBLShIRUlINjFM/KcTK
+	ZdXdDuEXUI/4Wp4b9bD+g6nmg12HNISPneRa6rMtZJlV2r79n64fmVCSc4Dly+TqCd2svEcn
+	hWtMvvF6W0m51/FWk4X7RZ4eNwyetyKvfF1IqfxfoU81TM67dsXMD306c/lyp0DZ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248135>
 
-Scott Chacon wrote:
-> The GitHub training team has all of their materials open sourced under
-> a CC BY 3.0 license.  They're all written in Markdown and hosted on
-> GitHub.  You can check them out here, including going through an
-> online rendering of the materials:
+On 04/22/2014 08:45 PM, Ronnie Sahlberg wrote:
+> This change is based on the previous ref transaction patches.
+> This is sent as a separate patch series since it implements a lot more
+> non-trivial changes to the behaviour than the previous patches and thus can
+> use more detailed review.
 > 
-> http://training.github.com/kit/
+> Update fetch.c to use ref transactions when performing updates. Use a single
+> ref transaction for all updates and only commit the transaction if all other
+> checks and oeprations have been successful. This makes the ref updates during
+> a fetch (mostly) atomic.
 
-Very nice!
+Is this always an improvement?  What kind of checks are there that might
+fail?
 
-I'm skimming through the contents and I noticed you mention
-'color.ui = auto' a lot. There's no need for that, it has been the
-default since v1.8.4.
+It would be pretty annoying to spend a lot of time fetching a big pack,
+only to have the fetch fail because one reference out of many couldn't
+be updated.  This would force the user to download the entire pack
+again, whereas if the successful reference updates had been allowed,
+then probably most or all of the second download would have been avoidable.
 
-Cheers.
+On the other hand, if a reference was renamed on the remote side,
+allowing a partial reference update could cause history to be discarded
+locally if the old name's delete was accepted but the new name's
+addition was rejected.  This wouldn't be the end of the world, because
+the history is presumably still available remotely to fetch again, but
+it's not ideal either.
+
+I'm not sure myself what I would prefer, but I wanted to point out that
+it is IMO not obvious that atomicity here is an improvement.
+
+Michael
 
 -- 
-Felipe Contreras
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
