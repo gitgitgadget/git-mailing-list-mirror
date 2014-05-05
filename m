@@ -1,74 +1,66 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: [PATCH 1/9] Define a structure for object IDs.
-Date: Mon, 05 May 2014 11:23:06 +0200
-Message-ID: <87vbtk60lh.fsf@igel.home>
-References: <1399147942-165308-1-git-send-email-sandals@crustytoothpaste.net>
-	<1399147942-165308-2-git-send-email-sandals@crustytoothpaste.net>
-	<5365D91E.70207@alum.mit.edu> <536606AB.1020803@kdbg.org>
-	<m2mwexke34.fsf@linux-m68k.org> <5366A09E.6030802@kdbg.org>
-	<87ppjt6xjv.fsf@igel.home> <87lhugu7iw.fsf@fencepost.gnu.org>
+From: Chris Packham <judge.packham@gmail.com>
+Subject: material for git training sessions/presentations
+Date: Mon, 5 May 2014 16:18:51 +1200
+Message-ID: <CAFOYHZDNkTpQVge8Z_qOPS3eH-afKs-KeaFsQ6sOCtLbGgjdbQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Johannes Sixt <j6t@kdbg.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Tue May 06 18:16:09 2014
+Content-Type: text/plain; charset=UTF-8
+To: GIT <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 06 18:18:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Whhvn-0005Yp-KC
-	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:09:23 +0200
+	id 1WhhsN-0005Yp-6D
+	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:05:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755475AbaEEJXM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 May 2014 05:23:12 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:43397 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755286AbaEEJXL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 May 2014 05:23:11 -0400
-Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3gMds86mB8z3hjMh;
-	Mon,  5 May 2014 11:23:07 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3gMds75lNkzbbhK;
-	Mon,  5 May 2014 11:23:07 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.180])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id MLnDA2MaWmzT; Mon,  5 May 2014 11:23:06 +0200 (CEST)
-X-Auth-Info: 5pej5wxP1eWhjwW0EXXJ7lqPdW5WLnkTCAbk0G3usp0=
-Received: from igel.home (ppp-188-174-147-7.dynamic.mnet-online.de [188.174.147.7])
-	by mail.mnet-online.de (Postfix) with ESMTPA;
-	Mon,  5 May 2014 11:23:06 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 1000)
-	id AEE932C1D51; Mon,  5 May 2014 11:23:06 +0200 (CEST)
-X-Yow: Now, I think it would be GOOD to buy FIVE or SIX STUDEBAKERS
- and CRUISE for ARTIFICIAL FLAVORING!!
-In-Reply-To: <87lhugu7iw.fsf@fencepost.gnu.org> (David Kastrup's message of
-	"Mon, 05 May 2014 07:19:35 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1751029AbaEEESx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 May 2014 00:18:53 -0400
+Received: from mail-pd0-f170.google.com ([209.85.192.170]:40770 "EHLO
+	mail-pd0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750882AbaEEESw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 May 2014 00:18:52 -0400
+Received: by mail-pd0-f170.google.com with SMTP id v10so1118581pde.15
+        for <git@vger.kernel.org>; Sun, 04 May 2014 21:18:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=2ZXRtK4aaLXzZWdDmNN47n/plPO/2lpvf/XKmrbcQMQ=;
+        b=q0SE1G24KMsYGX9Avb9UyMO5KljYmvTiK0daCOeM7rJxY3ax6CaZ/RJiGMfeX3vt5I
+         RSQVhyg2M0TiybDXY44FxFgT54Bn9prMibAZqk5B8Uw29zv7ulnHJsAjWlXCSMKY+Aor
+         Oglv3/MOAZuDX2dre/vufWBMKeQYnGDt3L4MlfjhYFXlEi8r0uH6TqfsvvnTvGMD9jxk
+         NkrCDm7Jq1+y8E4FwvIo2vvxL7RqUMGk9bsgoWsjFICtcdSpPjO4sxRsk4BYwPu+x3Td
+         SLXJt0uK4rrrVc6LHBTB3Xy9/BGrUwZsAao4ZCqMyTRQ3SLQxIWRSnWRg4TnWmG1OV+3
+         3rkA==
+X-Received: by 10.66.191.134 with SMTP id gy6mr67285490pac.27.1399263532111;
+ Sun, 04 May 2014 21:18:52 -0700 (PDT)
+Received: by 10.70.46.38 with HTTP; Sun, 4 May 2014 21:18:51 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248124>
 
-David Kastrup <dak@gnu.org> writes:
+Hi,
 
-> It does not as far as I can see guarantee that a pointer to something
-> of the same type of its first member can be converted to a pointer to
-> a struct even if the struct only contains a member of such type.
+I know there are a few people on this list that do git training in
+various forms. At $dayjob I've been asked to run a few training
+sessions in house. The initial audience is SW developers so they are
+fairly clued up on VCS concepts and most have some experience
+(although some not positive) with git. Eventually this may also
+include some QA folks who are writing/maintaining test suites who
+might be less clued up on VCSes in general.
 
-This sentence doesn't make any sense.  If you have an object of struct
-type then any pointer to the first member of the object can only be a
-pointer to the one and same object.
+I know if I googled for git tutorials I'll find a bunch and I can
+probably write a few myself but does anyone have any advice from
+training sessions they've run about how best to present the subject
+matter. Particularly to a fairly savy audience who may have developed
+some bad habits. My plan was to try and have a few PCs/laptops handy
+and try to make it a little interactive.
 
-Andreas.
+Also if anyone has any presentations I could use under a CC-BY-SA (or
+other liberal license) as a basis for any material I produce that
+would save me starting from scratch.
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+Thanks,
+Chris
