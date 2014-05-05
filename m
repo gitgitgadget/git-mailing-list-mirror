@@ -1,84 +1,59 @@
-From: Scott Chacon <schacon@gmail.com>
-Subject: Re: material for git training sessions/presentations
-Date: Sun, 4 May 2014 21:29:59 -0700
-Message-ID: <CAP2yMa+Q56R_Rsbsy4siJNKy0wU0JN7QM1NPMBO8sO_E9CSMwA@mail.gmail.com>
-References: <CAFOYHZDNkTpQVge8Z_qOPS3eH-afKs-KeaFsQ6sOCtLbGgjdbQ@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 0/5] contrib/subtree/Makefile: Standardisation pass
+Date: Mon, 5 May 2014 01:08:04 -0400
+Message-ID: <20140505050803.GA6569@sigill.intra.peff.net>
+References: <1399121375-14727-1-git-send-email-nod.helm@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: GIT <git@vger.kernel.org>
-To: Chris Packham <judge.packham@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 06 18:18:32 2014
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, greend@obbligato.org, apenwarr@gmail.com,
+	gpmcgee@gmail.com, mmogilvi_git@miniinfo.net
+To: James Denholm <nod.helm@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 06 18:18:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WhhsU-0005Yp-Ah
-	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:05:58 +0200
+	id 1Whhsr-0005Yp-11
+	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:06:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754390AbaEEEaW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 May 2014 00:30:22 -0400
-Received: from mail-pd0-f172.google.com ([209.85.192.172]:64771 "EHLO
-	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754103AbaEEEaV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 May 2014 00:30:21 -0400
-Received: by mail-pd0-f172.google.com with SMTP id g10so7820655pdj.3
-        for <git@vger.kernel.org>; Sun, 04 May 2014 21:30:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=BYCNTYsy3YBZPb4vUgv6HiNJNdf/a6FEoQHsNoh65kw=;
-        b=k0yDch+4ezZgWicCI55DeJbeHAG7b2YibTnKE99jWHgitTeG546ZPDTTkYhbvBYBWM
-         oRg0ZEkWQes+vCIk/r3C2Kx/j3xapndtRXytQ1LLEzWlqO+UB/V/5ZxdwOBjzTQcMVIk
-         QhZnTe6fsCVhgsyEyBkVYHV0q8YbUhw+NGaO5zRcCR/xYdc0bLDU6zzIFPL1PkaWQlqS
-         guHPyEdngHxKg3TL3ET/7RDoKxbfefV3+pJ2GixGoZXaRlNqP4Cb+dpQ5kNrPAbpsi6P
-         XsEbVCp1ILcV8wXIwD5/CcIofUDwE7Dpwlnw0Jg9buvjfNaTGIBaw5ZDgHH55hG32bbr
-         JdHw==
-X-Received: by 10.66.65.204 with SMTP id z12mr37266464pas.60.1399264220275;
- Sun, 04 May 2014 21:30:20 -0700 (PDT)
-Received: by 10.70.54.133 with HTTP; Sun, 4 May 2014 21:29:59 -0700 (PDT)
-In-Reply-To: <CAFOYHZDNkTpQVge8Z_qOPS3eH-afKs-KeaFsQ6sOCtLbGgjdbQ@mail.gmail.com>
+	id S1754406AbaEEFII (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 May 2014 01:08:08 -0400
+Received: from cloud.peff.net ([50.56.180.127]:45063 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754255AbaEEFIH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 May 2014 01:08:07 -0400
+Received: (qmail 19575 invoked by uid 102); 5 May 2014 05:08:07 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 05 May 2014 00:08:07 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 05 May 2014 01:08:04 -0400
+Content-Disposition: inline
+In-Reply-To: <1399121375-14727-1-git-send-email-nod.helm@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248126>
 
-The GitHub training team has all of their materials open sourced under
-a CC BY 3.0 license.  They're all written in Markdown and hosted on
-GitHub.  You can check them out here, including going through an
-online rendering of the materials:
+On Sat, May 03, 2014 at 10:49:30PM +1000, James Denholm wrote:
 
-http://training.github.com/kit/
+> The main issues are that calls are made to git itself in the build
+> process, and that a subtree-exclusive variable is used for specifying
+> the exec path. Patches 1/5 through 3/5 resolve these.
+> 
+> The "cleanup" fixes (4/5 and 5/5) are based on precedents set by other
+> makefiles across the project.
 
-Scott
+Thanks, these all look sane to me (I do not use subtree, but since it's
+just about Makefiles, it was pretty easy to review).
 
-On Sun, May 4, 2014 at 9:18 PM, Chris Packham <judge.packham@gmail.com> wrote:
-> Hi,
->
-> I know there are a few people on this list that do git training in
-> various forms. At $dayjob I've been asked to run a few training
-> sessions in house. The initial audience is SW developers so they are
-> fairly clued up on VCS concepts and most have some experience
-> (although some not positive) with git. Eventually this may also
-> include some QA folks who are writing/maintaining test suites who
-> might be less clued up on VCSes in general.
->
-> I know if I googled for git tutorials I'll find a bunch and I can
-> probably write a few myself but does anyone have any advice from
-> training sessions they've run about how best to present the subject
-> matter. Particularly to a fairly savy audience who may have developed
-> some bad habits. My plan was to try and have a few PCs/laptops handy
-> and try to make it a little interactive.
->
-> Also if anyone has any presentations I could use under a CC-BY-SA (or
-> other liberal license) as a basis for any material I produce that
-> would save me starting from scratch.
->
-> Thanks,
-> Chris
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> One problem is foreseen: 3/5 will necessitate that package maintainers
+> who already have git-subtree included in their packages update their
+> build-scripts.
+
+I think that's probably OK. We strive for backwards compatibility in the
+tool itself, but refactoring Makefiles in contrib/ affects a pretty
+limited audience.
+
+-Peff
