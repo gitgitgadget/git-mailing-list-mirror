@@ -1,176 +1,94 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Summary of the problems with git pull
-Date: Sun, 04 May 2014 19:29:40 -0500
-Message-ID: <5366db742d494_18f9e4b308aa@nysa.notmuch>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 1/9] Define a structure for object IDs.
+Date: Mon, 05 May 2014 12:52:28 +0200
+Message-ID: <53676D6C.4010009@alum.mit.edu>
+References: <1399147942-165308-1-git-send-email-sandals@crustytoothpaste.net>	<1399147942-165308-2-git-send-email-sandals@crustytoothpaste.net>	<5365D91E.70207@alum.mit.edu> <536606AB.1020803@kdbg.org>	<m2mwexke34.fsf@linux-m68k.org> <5366A09E.6030802@kdbg.org>	<87ppjt6xjv.fsf@igel.home> <87lhugu7iw.fsf@fencepost.gnu.org>	<87vbtk60lh.fsf@igel.home> <87d2fstuzw.fsf@fencepost.gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "W. Trevor King" <wking@tremily.us>,
-	Philip Oakley <philipoakley@iee.org>,
-	Marc Branchaud <marcnarc@xiplink.com>,
-	Richard Hansen <rhansen@bbn.com>, Andreas Krey <a.krey@gmx.de>,
-	Marat Radchenko <marat@slonopotamus.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 06 18:21:35 2014
+Cc: Johannes Sixt <j6t@kdbg.org>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>, Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Tue May 06 18:22:04 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Whhr8-0005Yp-2R
-	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:04:34 +0200
+	id 1WhhxX-0005Yp-Qc
+	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:11:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753944AbaEEAkZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 May 2014 20:40:25 -0400
-Received: from mail-ob0-f182.google.com ([209.85.214.182]:65369 "EHLO
-	mail-ob0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753891AbaEEAkY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 May 2014 20:40:24 -0400
-Received: by mail-ob0-f182.google.com with SMTP id wn1so2943996obc.27
-        for <git@vger.kernel.org>; Sun, 04 May 2014 17:40:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:subject:mime-version:content-type
-         :content-transfer-encoding;
-        bh=rskOgHmg6DXHOLG+H43bwTKJZPcOyN23KMOSJTSGk/8=;
-        b=X/BFibaNWIh05p5NNL/YYQxur9H0XSTlwy7L6GZTcSH7Rwi7stFGW0zJOvP786Cpye
-         GQS8146oGNs+K/9RKSZ9ES/nS0kv23fC9sai/hogXfhTgYwA1ijh01xqeHlDY+yZqSFj
-         8/phin0QL1lEseAZpe6dqhdffExwNH0WdOIW+H0OXoY+ej+hPzAGYRXfEef9d9W0rln9
-         mgQdLXqvtE9Ek0G/D60hNFhtmwW9z9AMHvetkTn4l/37HKNfo65+iW+HWjv26kgoQRBM
-         E5t0hPL7MyRv4a3fDtlDJ6fmutNEwIEYF47cc1WiM/Y/1mNu6LcgiEpPkiHfgG/Nqo7T
-         akYg==
-X-Received: by 10.60.63.12 with SMTP id c12mr29581703oes.23.1399250423727;
-        Sun, 04 May 2014 17:40:23 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id cn1sm30189537oeb.11.2014.05.04.17.40.19
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 04 May 2014 17:40:21 -0700 (PDT)
+	id S1753374AbaEEKwf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 May 2014 06:52:35 -0400
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:55792 "EHLO
+	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753343AbaEEKwe (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 5 May 2014 06:52:34 -0400
+X-AuditID: 1207440e-f79c76d000003e2c-e7-53676d71a96f
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 7F.AC.15916.17D67635; Mon,  5 May 2014 06:52:33 -0400 (EDT)
+Received: from [192.168.69.130] (p5DDB24B0.dip0.t-ipconnect.de [93.219.36.176])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s45AqSvd020928
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Mon, 5 May 2014 06:52:30 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.4.0
+In-Reply-To: <87d2fstuzw.fsf@fencepost.gnu.org>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrFKsWRmVeSWpSXmKPExsUixO6iqFuYmx5ssGeXgcXsG9vYLLqudDNZ
+	PJl7l9mibeYPJov+pR1sDqwey2/+ZfJom2bm8fBVF7vHocMdjB6fN8kFsEZx2yQllpQFZ6bn
+	6dslcGfsmCxdsJK34vnbK8wNjLe5uhg5OSQETCSeT+1jhrDFJC7cW8/WxcjFISRwmVFi8p51
+	jBDOOSaJ1Ycvs4JU8QpoS6xdegqoioODRUBV4tO5YpAwm4CuxKKeZiaQsKhAkMSfs4oQ1YIS
+	J2c+YQGxRQTcJSbMaGQDsZkFCiU697WC7RUWsJbY2fwCalUjs8SJb5vBVnEK6Evs3HoQbKaE
+	gLhET2MQRK+OxLu+B8wQtrzE9rdzmCcwCs5Csm4WkrJZSMoWMDKvYpRLzCnN1c1NzMwpTk3W
+	LU5OzMtLLdI11svNLNFLTSndxAgJe74djO3rZQ4xCnAwKvHwJjKnBwuxJpYVV+YeYpTkYFIS
+	5d0SDRTiS8pPqcxILM6ILyrNSS0+xCjBwawkwpudCJTjTUmsrEotyodJSXOwKInzqi1R9xMS
+	SE8sSc1OTS1ILYLJynBwKEnwnsgGahQsSk1PrUjLzClBSDNxcIIM55ISKU7NS0ktSiwtyYgH
+	RW98MTB+QVI8QHvbQdp5iwsSc4GiEK2nGHU5LjSsaGESYsnLz0uVEuftBykSACnKKM2DWwFL
+	cq8YxYE+Fua9ClLFA0yQcJNeAS1hAlrCZQy2pCQRISXVwGhdkaxuFSBwyNyNuYaT/0r9y/a6
+	/80V7BI+neFpeos04viX9cdzC6bV5r6fZLHM+Vr1KY2uJfs3ZUt4Xj3Jx3HEK/W9 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248130>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248132>
 
-Hi,
+On 05/05/2014 11:50 AM, David Kastrup wrote:
+> The case we are talking about is basically passing a pointer to some
+> actual bonafide toplevel unsigned char [20] object to a routine that
+> expects a pointer to a struct _only_ containing one such
+> unsigned char [20] element.
+> 
+> This is the situation we have to deal with if a caller has not been
+> converted to using such a struct, but the called function does.
 
-There has been a lot of discussion about why `git pull` is broken for so
-many many workflows: [1][2][3][4][5], even as far back as [6].
+If the rewrite is done by first changing data structures and then
+changing functions in caller -> callee order then (1) the deltas can be
+pretty small, and (2) such illegal casting should be unnecessary.
 
-Many issues has been brought up, and many proposed solutions, probably
-too many for most people properly digest them, so here I'll try to
-synthesize them.
+> More seriously, this is the situation we have to deal with when our SHA1
+> is actually embedded in some header or whatever else that is actually
+> available only inside of a larger byte buffer.
+> 
+> In that case, the standard does not permit us converting the address
+> where that SHA1 is into a pointer to struct.  It may well be that this
+> will fall under the "let's ignore the standard and write for "sensible"
+> compilers/architectures" dictum, but if it doesn't, it might be
+> necessary to first copy the data to a struct before passing it to
+> routines expecting a pointer to struct.
 
-Mainly there are two core problems with `git pull`:
+This sounds dangerous even for a "sensible" compiler.  For example, I
+can imagine that a sensible compiler might make the assumption that a
+sha1 field that it knows was obtained from oid->sha1 is word-aligned,
+and generate optimized code based on that assumption, even though it
+otherwise wouldn't have had trouble working with unaligned (unsigned
+char *) pointers.
 
- 1) Many times it does a merge when it's not when people want
- 2) Many times it does a merge opposite of the desired direction
-
-The issue comes in trying to solve these problems in a way that would
-not affect anybody negatively.
-
-The simplest way to fix these issues unobtrusively would be to add
-configurations for the new behavior. However, this wouldn't solve the
-problem because as it has been discussed the vast majority of people
-doing these "bad merges" are not advanced users, so they wouldn't
-activate these options.
-
-What is needed is to change the default behavior, but in a way that is
-not obtrusive, and with backwards compatibility configuration.
-
-The most concrete proposal is my patch series that puts everything in
-place to enable fast-forward merged by default only. However, that still
-doesn't solve the problem of the ordering of parents. Normally these two
-issues would be independent of each other, but after further analysis I
-think they are not.
-
-== Two different kinds of pulls ==
-
-It has become clear that the `git pull` command is in fact used to do
-two very different things:
-
- 1) Update the current branch
-
-Most people do `git pull` like they would do `svn update`; to update
-their current branch.
-
- 2) Merge a remote branch
-
-There are many use-cases of this.
-
-The agreement so far is that 1) is the one that is broken, that is; a)
-by default only fast-forwards should be allowed, and b) when a merge
-happens the parents should be reverted (merge 'master' to
-'origin/master').
-
-It would be possible to differentiate these kinds by saying a `git pull`
-that doesn't specify the location can be assumed as 1), and a
-`git pull remote branch` that does as 2). Another possibility is to
-assume only the upstream branch corresponds to 1).
-
-Unfortunately it's the feeling of many people that this solution is not
-"clean", because it's two very different behaviors for the same command.
-Furthermore even deeper analysis of the use-cases demonstrates there
-would be a need to have different configurations for the different modes
-(e.g. pull.updateMode and pull.integrateMode).
-
-== git update ==
-
-Another proposed solution is to have a new command: `git update`. This
-command would be similar to `git pull --ff-only` by default, but it
-could be configured to do merges instead, and when doing so in reverse.
-
-An interesting side-effect of this new command is that it opens the
-possibility of thinking about `git update --rebase` vs.
-`git pull --rebase`.
-
-For example:
-
-  a) git update --merge
-
-     Merge HEAD into @{upstream}
-
-  b) git update --rebase
-
-     Rebase HEAD onto @{upstream}
-
-  c) git pull --merge github john
-
-     Merge github/john into HEAD
-
-  d) git pull --rebase github john
-
-     Rebase github/john onto HEAD
-
-Notice how the relationships between them are nice and consistent. Also,
-d) was not possible before.
-
-This solves essentially all the issues people presented in their
-use-cases, except the differentiation between merging topic and upstream
-branches, for which we might want to add different options in
-`git pull`, but that's independent from the issues I mentioned at the
-beginning.
-
-Nothing changes for the users of `git pull`, except that perhaps we
-would want --rebase to work in reverse, since the current
-`git pull --rebase` would already rebase HEAD onto @{upstream}.
-
-Personally my next step would be to port the changes I did for
-pull.mode = merge-ff-only into a new command `git update`, which would
-probably be a copy-paste from `git pull` and see how that turns out. In
-addition, when running `git pull` without arguments we might want to add
-a temporary notice explaining that perhaps the user wanted to type
-`git update` instead.
-
-Cheers.
-
-[1] http://article.gmane.org/gmane.comp.version-control.git/233554
-[2] http://article.gmane.org/gmane.comp.version-control.git/234295
-[3] http://article.gmane.org/gmane.comp.version-control.git/225146
-[4] http://article.gmane.org/gmane.comp.version-control.git/247237
-[5] http://article.gmane.org/gmane.comp.version-control.git/247939
-[6] http://article.gmane.org/gmane.comp.version-control.git/130819
+Michael
 
 -- 
-Felipe Contreras
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
