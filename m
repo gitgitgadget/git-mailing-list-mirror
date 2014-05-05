@@ -1,70 +1,107 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/3] Silence a bunch of format-zero-length warnings
-Date: Mon, 5 May 2014 01:21:17 -0400
-Message-ID: <20140505052117.GC6569@sigill.intra.peff.net>
-References: <1399183975-2346-1-git-send-email-felipe.contreras@gmail.com>
- <1399183975-2346-4-git-send-email-felipe.contreras@gmail.com>
- <20140504190121.GP75770@vauxhall.crustytoothpaste.net>
+From: Stepan Kasal <kasal@ucw.cz>
+Subject: Re: [PATCH 10/12] MINGW: compat/poll/poll.c: undef NOGDI
+Date: Mon, 5 May 2014 09:35:47 +0200
+Organization: <)><
+Message-ID: <20140505073547.GB20599@camelia.ucw.cz>
+References: <1398762726-22825-1-git-send-email-marat@slonopotamus.org> <1398762726-22825-11-git-send-email-marat@slonopotamus.org> <20140430114125.GA23046@camelia.ucw.cz> <20140503070050.GA8580@seldon> <20140504185244.GA17183@camelia.ucw.cz> <20140504205552.GA15590@seldon>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 06 18:10:22 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: GIT Mailing-list <git@vger.kernel.org>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Erik Faye-Lund <kusmabite@gmail.com>,
+	msysGit <msysgit@googlegroups.com>
+To: Marat Radchenko <marat@slonopotamus.org>
+X-From: git-owner@vger.kernel.org Tue May 06 18:12:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Whhsv-0005Yp-Tv
-	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:06:26 +0200
+	id 1Whhtm-0005Yp-CM
+	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:07:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754461AbaEEFVT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 May 2014 01:21:19 -0400
-Received: from cloud.peff.net ([50.56.180.127]:45081 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754411AbaEEFVT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 May 2014 01:21:19 -0400
-Received: (qmail 20800 invoked by uid 102); 5 May 2014 05:21:19 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 05 May 2014 00:21:19 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 05 May 2014 01:21:17 -0400
+	id S1754838AbaEEHfu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 May 2014 03:35:50 -0400
+Received: from jabberwock.ucw.cz ([46.255.230.98]:60007 "EHLO
+	jabberwock.ucw.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754635AbaEEHfu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 May 2014 03:35:50 -0400
+Received: from 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (84.64.broadband3.iol.cz [85.70.64.84])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	(Authenticated sender: kasal)
+	by jabberwock.ucw.cz (Postfix) with ESMTPSA id 12B051C01D2;
+	Mon,  5 May 2014 09:35:49 +0200 (CEST)
+Received: from camelia.ucw.cz (camelia.ucw.cz [127.0.0.1])
+	by 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (8.14.3/8.14.3) with ESMTP id s457ZmMs020752;
+	Mon, 5 May 2014 09:35:48 +0200
+Received: (from kasal@localhost)
+	by camelia.ucw.cz (8.14.3/8.14.3/Submit) id s457ZlOs020751;
+	Mon, 5 May 2014 09:35:47 +0200
 Content-Disposition: inline
-In-Reply-To: <20140504190121.GP75770@vauxhall.crustytoothpaste.net>
+In-Reply-To: <20140504205552.GA15590@seldon>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248119>
 
-On Sun, May 04, 2014 at 07:01:22PM +0000, brian m. carlson wrote:
+Hello,
 
-> On Sun, May 04, 2014 at 01:12:55AM -0500, Felipe Contreras wrote:
-> > This is in gcc 4.9.0:
-> >=20
-> >   wt-status.c: In function =E2=80=98wt_status_print_unmerged_header=
-=E2=80=99:
-> >   wt-status.c:191:2: warning: zero-length gnu_printf format string =
-[-Wformat-zero-length]
-> >     status_printf_ln(s, c, "");
-> >     ^
-> >=20
-> > We could pass -Wno-format-zero-length, but it seems compiler-specif=
-ic
-> > flags are frowned upon, so let's just avoid the warning altogether.
->=20
-> I believe these warnings existed before GCC 4.9 as well, but I'm not
-> opposed to the change.
+On Mon, May 05, 2014 at 12:55:52AM +0400, Marat Radchenko wrote:
+> On Sun, May 04, 2014 at 08:52:44PM +0200, Stepan Kasal wrote:
+> > is really a work around: it would be in effect only for MinGW-W64,
+> > and the comment would explain that this is a hack to work around the
+> > bug.  
+> 
+> Workarounds do not have to be ugly and full of #ifdef's.
 
-Yeah, this started last summer when we added __attribute__((format)) to
-the status_printf_ln calls, and I posted essentially the same patch.  W=
-e
-kind of waffled between "eh, just set -Wno-format-zero-length" and doin=
-g
-something, and ended up at the former. I'd be fine with doing it this
-way; we're not likely to add a lot of new callsites that would make it =
-a
-hassle to keep up with.
+I'm afraid they have to.  If you just select one of the reasonable
+variants, without noting that the other ones would trigger a bug, you
+are lying a trap for future contributors.
 
--Peff
+> > If you manage to change the defs for poll.c without changing its
+> > content, no one could tell you to report to gnulib first.
+> 
+> v1 does exactly this.
+
+Yes, but it changes the define for other configurations as well
+(MSVC, mingw 32bit).  I would suggest something along the change
+below.
+
+What do you think?
+
+Stepan
+
+diff --git a/config.mak.uname b/config.mak.uname
+index 82b8dff..446dd41 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -508,7 +508,11 @@ ifneq (,$(findstring MINGW,$(uname_S)))
+ 	NO_POSIX_GOODIES = UnfortunatelyYes
+ 	DEFAULT_HELP_FORMAT = html
+ 	NO_D_INO_IN_DIRENT = YesPlease
+-	COMPAT_CFLAGS += -D__USE_MINGW_ACCESS -D_USE_32BIT_TIME_T -DNOGDI -Icompat -Icompat/win32
++	COMPAT_CFLAGS += -D__USE_MINGW_ACCESS -D_USE_32BIT_TIME_T -Icompat -Icompat/win32
++ifneq ($(uname_M),x86_64)
++	# MinGW-W64 < x.y headers do not provide MsgWaitForMultipleObjects with NOGDI
++	COMPAT_CFLAGS += -DNOGDI
++endif
+ 	COMPAT_CFLAGS += -DSTRIP_EXTENSION=\".exe\"
+ 	COMPAT_OBJS += compat/mingw.o compat/winansi.o \
+ 		compat/win32/pthread.o compat/win32/syslog.o \
+diff --git a/git-compat-util.h b/git-compat-util.h
+index e6de32c..29a8afd 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -92,6 +92,9 @@
+ #define WIN32_LEAN_AND_MEAN  /* stops windows.h including winsock.h */
+ #include <winsock2.h>
+ #include <windows.h>
++/* We cannot define NOGDI on MinGW-W64, so we unfortunately include
++   wingdi.h.  It then defines ERROR=0, undef it to avoid conflicts */
++#undef ERROR
+ #define GIT_WINDOWS_NATIVE
+ #endif
+ 
