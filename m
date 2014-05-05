@@ -1,91 +1,73 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH v6 00/42] Use ref transactions for all ref updates
-Date: Mon, 5 May 2014 08:09:31 -0700
-Message-ID: <CAL=YDWkQEMwOaxQHHGC9g+kJjVTnTGNt4KxKFY9cRwcudK4i_A@mail.gmail.com>
-References: <1398976662-6962-1-git-send-email-sahlberg@google.com>
-	<53678ABA.4010104@alum.mit.edu>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH/RFC] Makefile: do not depend on curl-config
+Date: Mon, 5 May 2014 12:53:48 +0200
+Message-ID: <CABPQNSb83H7EEeAfaxC7KVpZmv-KEqE1wavTf53kA=aoDQz4Tw@mail.gmail.com>
+References: <1398702545-9860-1-git-send-email-kusmabite@gmail.com>
+ <xmqqfvkuhm77.fsf@gitster.dls.corp.google.com> <CABPQNSZUCPd=1Eu8VUCP01tkdYkBC=xspFZuDuywuYZUH8ewvw@mail.gmail.com>
+ <alpine.DEB.1.00.1404301851210.14982@s15462909.onlinehome-server.info> <CAHGBnuPrQzSAVRZCneHdodAAQjA4dkGk0AguNm3xhW+cQ4XESQ@mail.gmail.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue May 06 18:58:54 2014
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Dave Borowitz <dborowitz@google.com>,
+	GIT Mailing-list <git@vger.kernel.org>,
+	Pat Thoyts <patthoyts@gmail.com>,
+	Marat Radchenko <marat@slonopotamus.org>,
+	tuomas.silvola@knowit.fi, msysGit <msysgit@googlegroups.com>
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 06 19:01:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Whi3K-0006KZ-SH
-	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:17:11 +0200
+	id 1WhhxY-0005Yp-BB
+	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:11:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933131AbaEEPJc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 May 2014 11:09:32 -0400
-Received: from mail-ve0-f179.google.com ([209.85.128.179]:56429 "EHLO
-	mail-ve0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932842AbaEEPJb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 May 2014 11:09:31 -0400
-Received: by mail-ve0-f179.google.com with SMTP id oy12so5787076veb.24
-        for <git@vger.kernel.org>; Mon, 05 May 2014 08:09:31 -0700 (PDT)
+	id S1753343AbaEEKya (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 May 2014 06:54:30 -0400
+Received: from mail-ig0-f170.google.com ([209.85.213.170]:58857 "EHLO
+	mail-ig0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752631AbaEEKy3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 May 2014 06:54:29 -0400
+Received: by mail-ig0-f170.google.com with SMTP id r10so4245553igi.1
+        for <git@vger.kernel.org>; Mon, 05 May 2014 03:54:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=ImzDiBoVNbCCtzHrG0XPGjM8pKnvHuLdtOkkticaMsk=;
-        b=GaLIyWyvr/yl5uM86jbqLvFZ/2F0PMK3WYOPxizVFsNuL5r/ApH826xPLMCJcNT/xN
-         z5L4GW94YGRanNGfy4wt+S/QNAX/AZxEJ5f9F7rddRlolEeHkTi0OoaiGFe4bD8vYwTB
-         WDnsLjb8+xMpRncxqZ5zEef1M3KKZ3uWR8BJui3uwsLJSWmoKs0n9icf1nFk3tcf/SED
-         L1gFKKAVFuGEpsBGtkfgW5BbNtNS/MTr+/s+bjXsL4d9BQNk1A4Z3b5xgOpciUplbVSK
-         +f8E/j2PIB9w6UvQUTuRmCE708Q+FWsYPSKJPcvGjET2DDmRJejagcgFBKipCh2qHPAx
-         6JOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=ImzDiBoVNbCCtzHrG0XPGjM8pKnvHuLdtOkkticaMsk=;
-        b=bqyqh6wpCEhAWAmo2pNGuL7sDOQfRd5ud0r4HpxuBtJzaIqRWTcVTtJGV5vWynYbn5
-         LaYB1iBPxmiAJYttuCyWaNkmxM7HIB/ncKIGZPNCHpfC8NR2M8khNf6TRE+WNhY2PjuB
-         dLKiiBIU1MQ6iuQXIQ0e1qa0f/u/n+syzzGNEOZcC7oRXtjGAwhskFtxxW3EWLD+roY0
-         JT9TuVL2CN+I6IBkg6sV/iUWS+k5bVevG5qMh+DSv5Er/W2MUMhieSF4KDEUHmu36uRo
-         bT9gZ6xCR7yaOUSZRnsRHrP6TXhiIql/0fz/UWj/RJnAa45uIitRj0A8nnw90KbIsM10
-         YElA==
-X-Gm-Message-State: ALoCoQmygmfEO5UatepqQwq6Jt9wkrrIy0YcF/d3x7oj04DACZhVjnDK9lRNsaDHCWkl/6+O9VhC
-X-Received: by 10.220.191.134 with SMTP id dm6mr29018199vcb.16.1399302571231;
- Mon, 05 May 2014 08:09:31 -0700 (PDT)
-Received: by 10.52.0.139 with HTTP; Mon, 5 May 2014 08:09:31 -0700 (PDT)
-In-Reply-To: <53678ABA.4010104@alum.mit.edu>
+        d=gmail.com; s=20120113;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=hB/8uF1BGZ5Y7Qfn+0SSCr7yqANnXZS/zxekOEoPONE=;
+        b=VtweXXLK6gSYyPIIhUO29Mj1FiNqCm7gTWHTrU6z8p3cfcx1tspXauRdIWuTR96zqr
+         MqXOCtVDnFRrljLTOxdC6FwjOGwKF/ltm5D7Ng0ScOtGgtXV5XUCVnHSNLOAjALlnoJk
+         zi1dAUH2eSFXQ4g+pYZxmmIYVXUdwFEr9udQxjH9wkdMvpEruYg24nnSEcT+Z5fpGkTT
+         iZKj1RRTzlxEdnh50HLBmxG0LCt+9QXgahNWhAnyzmosdLyECOpHhWqV6FSg9HESbkK7
+         n1n1Xw53AdqSX0J54XGrrF68acyIyx0bwa+JNL+/AoXU4Pphd1MGC/68ziCYk7jNM6pl
+         VS3Q==
+X-Received: by 10.50.85.37 with SMTP id e5mr22199977igz.43.1399287269116; Mon,
+ 05 May 2014 03:54:29 -0700 (PDT)
+Received: by 10.64.166.135 with HTTP; Mon, 5 May 2014 03:53:48 -0700 (PDT)
+In-Reply-To: <CAHGBnuPrQzSAVRZCneHdodAAQjA4dkGk0AguNm3xhW+cQ4XESQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248165>
 
-On Mon, May 5, 2014 at 5:57 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> On 05/01/2014 10:37 PM, Ronnie Sahlberg wrote:
->> This patch series is based on next and expands on the transaction API. [...]
+On Wed, Apr 30, 2014 at 9:46 PM, Sebastian Schuberth
+<sschuberth@gmail.com> wrote:
+> On Wed, Apr 30, 2014 at 6:52 PM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
 >
-> Meta-comment:
+>>> We can keep this patch in the msysGit repo for the 2.0 release.
+>>
+>> FWIW the plan is to switch to mingwGitDevEnv for the 2.0 release. It is
+>> not quite clear as of yet how patches will be managed with said
+>> environment.
 >
-> Ronnie,
->
-> It seems like successive versions of this patch series are growing not
-> only in maturity but also in breadth.  That makes it harder to review them.
->
-> I, for one, would prefer that a patch series cover a roughly fixed set
-> of changes [1], so that all of the patches in a version of the series
-> are at roughly the same level of maturity.  That way, the whole series
-> can progress from "is this a good idea?" to "is the implementation
-> correct?" to "are all the details right?" at roughly the same time, and
-> then Junio can merge the branch, locking in that bit of progress.  While
-> this is happening, other series can be making their way through other
-> stages of the pipeline.
->
-> When new patches are added to an old series, then they delay the merge
-> of the older patches, even if those are ripe.  Plus, it makes it harder
-> for reviewers to keep track of the maturity level of each patch and to
-> read off how the older patches have changed.  It makes the patch series
-> a moving target.
->
-> There's no need to re-split this patch series, but please take this wish
-> into account in the future.
->
+> The environment is just that: The environment to build Git for
+> Windows. This means that patches on top of Git for Windows could still
+> be maintained in msysgit/git (or a fork thereof) on GitHub.
 
-Understood.
+Thanks for the heads up. Even so, are you guys OK with me pushing this
+patch to our downstream repo?
