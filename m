@@ -1,79 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/3] Revert "make error()'s constant return value more
- visible"
-Date: Mon, 5 May 2014 02:29:31 -0400
-Message-ID: <20140505062931.GA9311@sigill.intra.peff.net>
-References: <1399183975-2346-1-git-send-email-felipe.contreras@gmail.com>
- <1399183975-2346-2-git-send-email-felipe.contreras@gmail.com>
- <20140505054901.GA19331@sigill.intra.peff.net>
- <5367257a857ce_2db613a731043@nysa.notmuch>
- <20140505060202.GA27360@sigill.intra.peff.net>
- <53672c53f2ed9_2e86acd30c6e@nysa.notmuch>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [PATCH 1/9] Define a structure for object IDs.
+Date: Mon, 05 May 2014 11:23:06 +0200
+Message-ID: <87vbtk60lh.fsf@igel.home>
+References: <1399147942-165308-1-git-send-email-sandals@crustytoothpaste.net>
+	<1399147942-165308-2-git-send-email-sandals@crustytoothpaste.net>
+	<5365D91E.70207@alum.mit.edu> <536606AB.1020803@kdbg.org>
+	<m2mwexke34.fsf@linux-m68k.org> <5366A09E.6030802@kdbg.org>
+	<87ppjt6xjv.fsf@igel.home> <87lhugu7iw.fsf@fencepost.gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 06 18:15:43 2014
+Content-Type: text/plain
+Cc: Johannes Sixt <j6t@kdbg.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Tue May 06 18:16:09 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WhhtK-0005Yp-3I
-	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:06:50 +0200
+	id 1Whhvn-0005Yp-KC
+	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:09:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754670AbaEEG3d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 May 2014 02:29:33 -0400
-Received: from cloud.peff.net ([50.56.180.127]:45111 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754473AbaEEG3d (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 May 2014 02:29:33 -0400
-Received: (qmail 24569 invoked by uid 102); 5 May 2014 06:29:33 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 05 May 2014 01:29:33 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 05 May 2014 02:29:31 -0400
-Content-Disposition: inline
-In-Reply-To: <53672c53f2ed9_2e86acd30c6e@nysa.notmuch>
+	id S1755475AbaEEJXM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 May 2014 05:23:12 -0400
+Received: from mail-out.m-online.net ([212.18.0.10]:43397 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755286AbaEEJXL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 May 2014 05:23:11 -0400
+Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3gMds86mB8z3hjMh;
+	Mon,  5 May 2014 11:23:07 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+	by mail.m-online.net (Postfix) with ESMTP id 3gMds75lNkzbbhK;
+	Mon,  5 May 2014 11:23:07 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.180])
+	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
+	with ESMTP id MLnDA2MaWmzT; Mon,  5 May 2014 11:23:06 +0200 (CEST)
+X-Auth-Info: 5pej5wxP1eWhjwW0EXXJ7lqPdW5WLnkTCAbk0G3usp0=
+Received: from igel.home (ppp-188-174-147-7.dynamic.mnet-online.de [188.174.147.7])
+	by mail.mnet-online.de (Postfix) with ESMTPA;
+	Mon,  5 May 2014 11:23:06 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 1000)
+	id AEE932C1D51; Mon,  5 May 2014 11:23:06 +0200 (CEST)
+X-Yow: Now, I think it would be GOOD to buy FIVE or SIX STUDEBAKERS
+ and CRUISE for ARTIFICIAL FLAVORING!!
+In-Reply-To: <87lhugu7iw.fsf@fencepost.gnu.org> (David Kastrup's message of
+	"Mon, 05 May 2014 07:19:35 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248123>
 
-On Mon, May 05, 2014 at 01:14:43AM -0500, Felipe Contreras wrote:
+David Kastrup <dak@gnu.org> writes:
 
-> Jeff King wrote:
-> > On Mon, May 05, 2014 at 12:45:30AM -0500, Felipe Contreras wrote:
-> > 
-> > > Jeff King wrote:
-> > > > On Sun, May 04, 2014 at 01:12:53AM -0500, Felipe Contreras wrote:
-> > > > 
-> > > > > So it looks like gcc is smarter now, and in trying to fix a few warnings
-> > > > > we generated hundreds more.
-> > > > > 
-> > > > > This reverts commit e208f9cc7574f5980faba498d0aa30b4defeb34f.
-> > > > 
-> > > > And now we've gone the other way, and re-enabled the initial warnings.
-> > > > Can we come up with a solution that helps both cases?
-> > > 
-> > > What initial warnings? As I explained already I don't get any warnings
-> > > with this patch series in gcc 4.9.0.
-> > 
-> > The "few warnings" in your statement quoted above.
-> > 
-> > You could try reading the commit message of the commit you are
-> > reverting, which explains it, but the short answer is: try compiling
-> > with -O3.
-> 
-> Sigh. And I'm the one with the abrasive style of communication.
+> It does not as far as I can see guarantee that a pointer to something
+> of the same type of its first member can be converted to a pointer to
+> a struct even if the struct only contains a member of such type.
 
-I apologize if that seemed abrasive. I am slightly annoyed that you
-seemed to be reverting my commit without understanding (or dealing with)
-the problem that the original fixed.
+This sentence doesn't make any sense.  If you have an object of struct
+type then any pointer to the first member of the object can only be a
+pointer to the one and same object.
 
-But I was _also_ trying to point you in the right direction by directing
-you to -O3. Do you see the problem now?  And did you look at the
-follow-up patch I sent?
+Andreas.
 
--Peff
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
