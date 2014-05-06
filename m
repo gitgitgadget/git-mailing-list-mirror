@@ -1,82 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
 Subject: Re: What's cooking in git.git (May 2014, #01; Tue, 6)
-Date: Tue, 06 May 2014 16:48:24 -0700
-Message-ID: <xmqqha52cvuf.fsf@gitster.dls.corp.google.com>
+Date: Tue, 06 May 2014 18:50:29 -0500
+Message-ID: <536975458b570_110415b330c55@nysa.notmuch>
 References: <xmqqlhuecz1b.fsf@gitster.dls.corp.google.com>
-	<53696d8aa12d2_747f15213089@nysa.notmuch>
+ <53696d8aa12d2_747f15213089@nysa.notmuch>
+ <xmqqha52cvuf.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 07 01:48:39 2014
+To: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 07 02:01:21 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Whp6E-000846-Bs
-	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 01:48:38 +0200
+	id 1WhpIX-0002z1-00
+	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 02:01:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753456AbaEFXse (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 May 2014 19:48:34 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:54683 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752068AbaEFXsd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 May 2014 19:48:33 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 43B0F15F8C;
-	Tue,  6 May 2014 19:48:28 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=lgJqhFY5DiOd/KIJLcaIzETFauY=; b=qZFdcU
-	YMKmOcY/YowpHquK9cIaZ5H+5kvb3mvDzIkossRlp/3m2vuv/bFfGo3l8jvXQB6q
-	2z+H6PGlq5cZqWtVM3CDWMsdQ3MBW73eepy7/4Ek3CQueDGuDw4+z2LYJLR2z/VF
-	bjU/+9OpeCtnXECMS1eSCyY211N8Yv7+Dzqjg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BkgowNEdeZimLUoe0TQuRn/CcpyaxmHo
-	MN0c2C2/D+re5CUSUics3RLcRUuiAjQFVxgclk4sUv+Qmo3VsltTdUpxQxOGAeOZ
-	aGd+RdTHUYJOodVBTkYJrakb0ZLkFFvr285GB4RVCnjqyQMKUCB9VYB0Tpd9FM8N
-	ojpnSjF2HNk=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3851315F8B;
-	Tue,  6 May 2014 19:48:28 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id E88F415F88;
-	Tue,  6 May 2014 19:48:25 -0400 (EDT)
-In-Reply-To: <53696d8aa12d2_747f15213089@nysa.notmuch> (Felipe Contreras's
-	message of "Tue, 06 May 2014 18:17:30 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: EA94370C-D578-11E3-B482-9CEB01674E00-77302942!pb-smtp0.pobox.com
+	id S1751832AbaEGABR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 May 2014 20:01:17 -0400
+Received: from mail-ob0-f182.google.com ([209.85.214.182]:53709 "EHLO
+	mail-ob0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750867AbaEGABQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 May 2014 20:01:16 -0400
+Received: by mail-ob0-f182.google.com with SMTP id wn1so277621obc.13
+        for <git@vger.kernel.org>; Tue, 06 May 2014 17:01:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=f4yxZG5HvIidRYI8y7l2uBlQN6k7Uuj4foPzIh0VfvY=;
+        b=SkL2X0EWhffhqoIernZ4Oi2WiYKh0sDPdfUVws354TYJOVu1WVUWaC7Y2HmOEMEGvQ
+         oXjyKVbKBVxKu5cLZfJ2rfQm8Zjon0BVp25sgcjK5YqzVQr0k4piMCHep5V+YRTCPL1e
+         oU14mGIcsubEgepu01J/8r67vkNz84w+LpydNMq1cc6GlZc12bJnbA8Tciy5s7ut4rrN
+         mqRwzfpM1AwQ5WvzhJS4VV3WeO6wQ3mJFc7QHsFePk1/pG1p7cy6iTauZtuXgiAoPVVs
+         4D9BxRPUTrSaW7Af8ODAs67butycGuT1WtjYDyIJQv6JsLMADKNDqE1yKTQWxUTgrE+n
+         sxOA==
+X-Received: by 10.182.112.231 with SMTP id it7mr40634439obb.8.1399420875346;
+        Tue, 06 May 2014 17:01:15 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id oz15sm58537646oeb.13.2014.05.06.17.01.12
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 06 May 2014 17:01:14 -0700 (PDT)
+In-Reply-To: <xmqqha52cvuf.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248271>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Junio C Hamano wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> > Plus this one which has been completely ignored:
+> >
+> >    completion: move out of contrib
+> 
+> It is not about "ignored".  It is about running out of time before
+> concluding the day's integration.
 
-> Therefore the release notes are still lying to the users:
->
->  * "git push" via transport-helper interface (e.g. remote-hg) has
->    been updated to allow ref deletion in a way similar to the natively
->    supported transports.
->
-> That is not true.
+A comment doesn't require integration.
 
-Hmph, you are right.  I somehow mislabeled the series that ends at
-a7cb1276cc263446b19b43d3a7784cbc72f84e28 dealing with delete, when
-the series actually is about forcing.  Will update.
+Either way the rest of the patches have already "advanced".
 
-> Plus this one which has been completely ignored:
->
->    completion: move out of contrib
-
-It is not about "ignored".  It is about running out of time before
-concluding the day's integration.
-
-I can hopefully queue it on 'pu' tomorrow, and depending on the
-reviews or lack of reviews, it may advance on its own pace from
-there.
+-- 
+Felipe Contreras
