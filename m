@@ -1,218 +1,91 @@
-From: Jeff Sipek <jeffpc@josefsipek.net>
-Subject: Re: [GUILT 07/28] Added test cases for "guilt fold".
-Date: Tue, 6 May 2014 15:40:26 -0400
-Message-ID: <20140506194026.GK1655@meili.valhalla.31bits.net>
-References: <1395387126-13681-1-git-send-email-cederp@opera.com>
- <1395387126-13681-8-git-send-email-cederp@opera.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] merge-recursive.c: Fix case-changing merge bug
+Date: Tue, 06 May 2014 12:46:13 -0700
+Message-ID: <xmqqoazaelmi.fsf@gitster.dls.corp.google.com>
+References: <CAE+yK_m_bPt2pS6MQOrpvVDuLAJf8NFxYOgM8i98tU6-gLcTDw@mail.gmail.com>
+	<1398990069.19099.5.camel@stross>
+	<xmqqwqdyg7jt.fsf@gitster.dls.corp.google.com>
+	<1399397774.11843.46.camel@stross>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Per Cederqvist <cederp@opera.com>
-X-From: git-owner@vger.kernel.org Tue May 06 22:02:11 2014
+Cc: git mailing list <git@vger.kernel.org>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Tue May 06 22:06:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WhlE5-0001TJ-OB
-	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 21:40:30 +0200
+	id 1WhlJm-0000cs-OM
+	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 21:46:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752406AbaEFTk0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 May 2014 15:40:26 -0400
-Received: from josefsipek.net ([64.9.206.49]:1639 "EHLO josefsipek.net"
+	id S1753991AbaEFTqS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 May 2014 15:46:18 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:52466 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752047AbaEFTkZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 May 2014 15:40:25 -0400
-Received: from meili.valhalla.31bits.net (c-98-209-117-250.hsd1.mi.comcast.net [98.209.117.250])
-	by josefsipek.net (Postfix) with ESMTPSA id 160E955654;
-	Tue,  6 May 2014 15:40:23 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <1395387126-13681-8-git-send-email-cederp@opera.com>
-User-Agent: Mutt/1.5.22 (2013-10-16)
+	id S1753608AbaEFTqR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 May 2014 15:46:17 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5690D14DC4;
+	Tue,  6 May 2014 15:46:17 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=qb3j/FXLcL1jnfYRsQ2olufQe8k=; b=e4K5YC
+	Od0SuEZk3d7E+nObFAQ8dR4N/87UaOIucdMmasLXtEG2+z2ETyaLYVW18/cXNaiM
+	CCVefuNDLKkck2SsY3wXwoBDuuUExyMbNtw27TfcVuHDOfB8DL6UUC62/x+AGjzG
+	+vkyiJKwaPL3i7M402JmHx251jPeXCCh5ArOY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=oOhBUAK5wWnBpghpOlwF961Bna1EslDT
+	O8wXD3aYqTGz0wEiT31oo2aCooZwbzMkf4tQlmOANfUjlyUQMMbOKon9Egag5Sgv
+	og4UNMKrajndNHyZtS4cOGQhYW0nqcEm4wXZn6XMNRKlW0ds6A3wN7f88GykpY/r
+	W120deXpNjE=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4CA0414DC3;
+	Tue,  6 May 2014 15:46:17 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id F094214DC2;
+	Tue,  6 May 2014 15:46:14 -0400 (EDT)
+In-Reply-To: <1399397774.11843.46.camel@stross> (David Turner's message of
+	"Tue, 06 May 2014 10:36:14 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 1572D5EA-D557-11E3-9F7C-9CEB01674E00-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248230>
 
-On Fri, Mar 21, 2014 at 08:31:45AM +0100, Per Cederqvist wrote:
-> Test that we can combine any combination of patches with empty and
-> non-empty messages, both with and without guilt.diffstat.  (All
-> patches are empty.)
+David Turner <dturner@twopensource.com> writes:
 
-I feel like we should have *some* content there - most of the time, I care
-more about the diffs getting folded than the commit message :)
+> Would you prefer that I add it to t6022-merge-rename.sh?  Or I could
+> add it to t7062-wtstatus-ignorecase.sh and rename that file to
+> t7062-ignorecase.sh.  
 
-> Signed-off-by: Per Cederqvist <cederp@opera.com>
-> ---
->  regression/t-035.out | 659 +++++++++++++++++++++++++++++++++++++++++++++++++++
->  regression/t-035.sh  |  88 +++++++
->  2 files changed, 747 insertions(+)
->  create mode 100644 regression/t-035.out
->  create mode 100755 regression/t-035.sh
-> 
-> diff --git a/regression/t-035.out b/regression/t-035.out
-> new file mode 100644
-> index 0000000..04af146
-> --- /dev/null
-> +++ b/regression/t-035.out
-> @@ -0,0 +1,659 @@
-> +% setup_repo
-> +% git config guilt.diffstat true
-> +%% empty + empty (diffstat=true)
-> +% guilt new empty-1
-> +% guilt pop
-> +All patches popped.
-> +% guilt push
-> +Applying patch..empty-1
-> +Patch applied.
-> +% guilt new empty-2
-> +% guilt pop
-> +Now at empty-1.
-> +% guilt push
-> +Applying patch..empty-2
-> +Patch applied.
-> +% guilt pop
-> +Now at empty-1.
-> +% guilt fold empty-2
-> +% guilt pop
-> +All patches popped.
-> +% guilt push
-> +Applying patch..empty-1
-> +Patch applied.
-> +% list_files
-> +d .git/patches
-> +d .git/patches/master
-> +d .git/refs/patches
-> +d .git/refs/patches/master
-> +f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
-> +f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
-> +f 4ea806e306f0228a8ef41f186035e7b04097f1f2  .git/patches/master/status
-> +f 7d261b8caad0f161c21daf5de65eeb521ff8c067  .git/patches/master/empty-1
-> +f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
-> +f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
-> +f d28d87b88c1e24d637e390dc3603cfa7c1715711  .git/patches/master/series
-> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty-1~
-> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty-2~
-> +r bde3d337af70f36836ad606c800d194006f883b3  .git/refs/patches/master/empty-1
-> +% git log -p
+If I had only these two choices, t6022 would be it, as 6xxx series
+is where we have other tests for merge-recursive.
 
-Strictly speaking, git log isn't necessary since list_files prints the
-hashes of each of the files as well as the refs for all the applied patches.
-If anything mismatches, the hashes will catch it.  I'm ok with keeping the
-git log here as long as people can't mess up the formatting with git
-config/etc.
+I actually do not have a problem with adding a new file in t6xxx
+series as you did in this patch, if a longer term direction is to
+add more cases to it to make sure various paths that are only
+different in their cases (not just <TC, TC, tc> combination where
+one side renames, but things like <tc, TC TC> combination where both
+sides rename, etc.) are handled correctly during a merge.
 
-...
-> diff --git a/regression/t-035.sh b/regression/t-035.sh
-> new file mode 100755
-> index 0000000..aed3ef2
-> --- /dev/null
-> +++ b/regression/t-035.sh
-> @@ -0,0 +1,88 @@
-> +#!/bin/bash
-> +#
-> +# Test the fold code
-> +#
-> +
-> +source "$REG_DIR/scaffold"
-> +
-> +cmd setup_repo
-> +
-> +function fixup_time_info
-> +{
-> +	cmd guilt pop
-> +	touch -a -m -t "$TOUCH_DATE" ".git/patches/master/$1"
-> +	cmd guilt push
-> +}
-> +
-> +function test_fold
-> +{
-> +    using_diffstat=$1
-> +
-> +    cmd git config guilt.diffstat $using_diffstat
-> +
-> +    # Empty message + empty message = empty message.
-> +    echo "%% empty + empty (diffstat=$using_diffstat)"
-> +    cmd guilt new empty-1
-> +    fixup_time_info empty-1
-> +    cmd guilt new empty-2
-> +    fixup_time_info empty-2
-> +    cmd guilt pop
-> +    cmd guilt fold empty-2
-> +    fixup_time_info empty-1
-> +    cmd list_files
-> +    cmd git log -p
-> +    cmd guilt pop
-> +    cmd guilt delete -f empty-1
-> +    cmd list_files
-> +
-> +    # Empty message + non-empty message
-> +    echo "%% empty + non-empty (diffstat=$using_diffstat)"
-> +    cmd guilt new empty
-> +    fixup_time_info empty
-> +    cmd echo test > a
+Thanks.
 
-I see these redirected echos... what are they for?
+By the way, I see "touch" used to create a new file in the test,
+like this:
 
-> +    cmd guilt new -f -s -m "A commit message." non-empty
-> +    fixup_time_info non-empty
-> +    cmd guilt pop
-> +    cmd guilt fold non-empty
-> +    fixup_time_info empty
-> +    cmd list_files
-> +    cmd git log -p
-> +    cmd guilt pop
-> +    cmd guilt delete -f empty
-> +    cmd list_files
++	touch foo &&
++	git add foo &&
 
-Maybe make two helper functions.. one to make a patch with an empty message
-and one to make a patch with a non-empty message.  Then each of these blocks
-would look a bit cleaner.
+Please don't.  Instead, do it perhaps like this:
 
-	echo "%% empty + non-empty (diffstat=$using_diffstat)"
-	empty_patch empty
-	nonempty_patch non-empty
-	cmd guilt pop non-empty
-	cmd guilt fold non-empty
-	fixup_time_info empty
-	cmd list_files
-	cleanup empty
-	cmd list_files
+	>foo &&
+        git add foo &&
 
-cleanup()
-{
-	guilt pop $1
-	guilt delete -f $1
-}
-
-Eh, it's not as clean as I thought it would be, but I think it's still a
-bit better.  Ok, how about:
-
-for using_diffstat in true false ; do
-	for patcha in empty nonempty ; do
-		for patchb in empty nonempty ; do
-			echo "%% $patcha + $patchb (diffstat=$using_diffstat)"
-			${patcha}_patch $patcha
-			${patchb}_patch $patchb
-			cmd guilt pop $patchb
-			cmd guilt fold $patchb
-			fixup_time_info $patcha
-			cmd list_files
-			cleanup $patcha
-			cmd list_files
-		done
-	done
-done
-
-Aha!  That's better, IMO.
-
-Adding the non-empty diff is a matter of another loop, but I'm ok with just
-testing the headers (for now) :)
-
-Jeff.
-
--- 
-I abhor a system designed for the "user", if that word is a coded pejorative
-meaning "stupid and unsophisticated."
-		- Ken Thompson
+The primary purpose to use "touch" is to update a file's timestamp,
+and using it to create a file is misleading to readers.
