@@ -1,185 +1,148 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v2 1/2] refs.c: add new functions reflog_exists and delete_reflog
-Date: Tue,  6 May 2014 15:45:52 -0700
-Message-ID: <1399416353-31817-2-git-send-email-sahlberg@google.com>
-References: <1399416353-31817-1-git-send-email-sahlberg@google.com>
-Cc: mhagger@alum.mit.edu, Ronnie Sahlberg <sahlberg@google.com>
+From: dturner@twopensource.com
+Subject: [PATCH 1/2] merge-recursive.c: Fix case-changing merge.
+Date: Tue,  6 May 2014 15:59:03 -0700
+Message-ID: <1399417144-24864-1-git-send-email-dturner@twopensource.com>
+References: <xmqqoazaelmi.fsf@gitster.dls.corp.google.com>
+Cc: gitster@pobox.com, David Turner <dturner@twitter.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 07 00:46:15 2014
+X-From: git-owner@vger.kernel.org Wed May 07 01:00:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Who7q-0001DO-FN
-	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 00:46:14 +0200
+	id 1WhoLV-0005uU-UE
+	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 01:00:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754598AbaEFWqB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 May 2014 18:46:01 -0400
-Received: from mail-vc0-f202.google.com ([209.85.220.202]:47333 "EHLO
-	mail-vc0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754535AbaEFWqA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 May 2014 18:46:00 -0400
-Received: by mail-vc0-f202.google.com with SMTP id if11so32103vcb.1
-        for <git@vger.kernel.org>; Tue, 06 May 2014 15:45:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=of5FIZovNwFi9FgiGZFRwlW6xHbT4Wfbim2nOQB7Zds=;
-        b=NE0tqaZuk3BAodbLh1+Z+zyoet5cRYF7mvPX1gPj6a1/e+NNh+yqV8xl96I3J2x+jJ
-         dpvIwYKlAYmV0+Nqk9y72QHrJT4H5kKoOdnW4ANVtUo59bOfkqBDNSW6yHo2o20oYcQT
-         8mXteR8B20WlT+FZ+G1fReWNmOtk6ZSUZdV4Em2KNNZMi2bd9GJsXL2ILsZyhD8OjLUA
-         tNhwQXLYX595DA7bZpyffZtARvHzBctVXuNKvqqpoOUmAPHwGs43zQHKkackJG1JmQ+w
-         pdcAP2rgCo8sarTF5KRtYLLkTXg4uNuQN19OvYQdlpvQXw3OrpNjm9c5cHtlaDEKhE99
-         qRtA==
+	id S1752502AbaEFXAP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 May 2014 19:00:15 -0400
+Received: from mail-qa0-f46.google.com ([209.85.216.46]:32826 "EHLO
+	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750976AbaEFXAO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 May 2014 19:00:14 -0400
+Received: by mail-qa0-f46.google.com with SMTP id w8so183455qac.19
+        for <git@vger.kernel.org>; Tue, 06 May 2014 16:00:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=of5FIZovNwFi9FgiGZFRwlW6xHbT4Wfbim2nOQB7Zds=;
-        b=kMPaSRkTnBAjEibDDF2frMTpTXVMf/3Y59zJtrkjcs1+yS4fpEKBVlmmNW19EXETmN
-         qKoHH/TN8EHuRzKo148JxZr3GfkZuzWQNrCubKyaTdNq/fyjiqO3AEh/INJ8lbyEEXeT
-         8fwN3AQanfeYaHhJJvswPk0+OHFRLV/QEOvABzailBAAoYPXyQP6H0qH04fA5JG+WsMt
-         Bxe+pKu6mH/vCmmlASraTwLm2LlSR2rH7Mtl7k4at76Y/2OgEHBEx5bDN5qEVROqD89F
-         mWZ02dVQwujzO68YaLg4EzxiHqRQZ6crlGhKS73iyo8LlOsTbHaKHIUD6YI5DYsVmlbe
-         cYEQ==
-X-Gm-Message-State: ALoCoQlIpcqmtzuY7Tv72SNuAlwvTOVV6KBd53aHestQueElQxxJQ34GQqpAzQRxA0UxM9lB3LXD
-X-Received: by 10.58.150.194 with SMTP id uk2mr2701222veb.0.1399416359677;
-        Tue, 06 May 2014 15:45:59 -0700 (PDT)
-Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id r64si602290yhh.0.2014.05.06.15.45.59
+        bh=dSnJ6eOGfye9Y9MO87s8hHa4M71voO3pb2wYWEBy2as=;
+        b=VN2nwwwXll4o8LY4R3JxEsS76tGuSM2vj6yaHb8UsFcJHriD1tsiOKbQqISXTmYer6
+         9piYcOp1Eo8kQy1JiZEOONlSEmwYL8oM2m54lC7AZxfzfy8MFTyQ2laZH76UoUdh+CP9
+         /YHicz9W4GaZdvn4YFe2MVL9F0Unh/CF3TsGBBbWeCvxBXlzok6c0QROjr0PqR9hU46K
+         uEMLi8qV+5ITM2Zf3u++RfYe+5XewjWw8LAi17qFlcs3RdUJwx6cDsSrN9ukJ0CGeJOz
+         NdjRi+SMx8y4bYb31GR9ZMr3CzjsHGp4V22FmUwZ0iLFrevWb5qjZe3F/IzlgjhTbMLK
+         iU/A==
+X-Gm-Message-State: ALoCoQl5F25jUM6r0Uy92uWTUrmy9tyd6+1LUL9Bhe4OAHNtfBdGU3gWyCsUHEgJtydyL714Wjg3
+X-Received: by 10.140.36.149 with SMTP id p21mr55087583qgp.54.1399417213663;
+        Tue, 06 May 2014 16:00:13 -0700 (PDT)
+Received: from stross.twitter.corp ([8.25.197.27])
+        by mx.google.com with ESMTPSA id b17sm26150040qaq.25.2014.05.06.16.00.10
         for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 06 May 2014 15:45:59 -0700 (PDT)
-Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 64C8231C1BD;
-	Tue,  6 May 2014 15:45:59 -0700 (PDT)
-Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 148AAE0ACF; Tue,  6 May 2014 15:45:59 -0700 (PDT)
-X-Mailer: git-send-email 2.0.0.rc1.354.g7561c2b.dirty
-In-Reply-To: <1399416353-31817-1-git-send-email-sahlberg@google.com>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 06 May 2014 16:00:11 -0700 (PDT)
+X-Mailer: git-send-email 2.0.0.rc0.33.g27630aa
+In-Reply-To: <xmqqoazaelmi.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248266>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248267>
 
-Add two new functions, reflog_exists and delete_reflog, to hide the internal
-reflog implementation (that they are files under .git/logs/...) from callers.
-Update checkout.c to use these functions in update_refs_for_switch instead of
-building pathnames and calling out to file access functions. Update reflog.c
-to use these to check if the reflog exists. Now there are still many places
-in reflog.c where we are still leaking the reflog storage implementation but
-this at least reduces the number of such dependencies by one. Finally
-change two places in refs.c itself to use the new function to check if a ref
-exists or not isntead of build-path-and-stat(). Now, this is strictly not all
-that important since these are in parts of refs that are implementing the
-actual file storage backend but on the other hand it will not hurt either.
+From: David Turner <dturner@twitter.com>
 
-Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+On a case-insensitive filesystem, when merging, a file would be
+wrongly deleted from the working tree if an incoming commit had
+renamed it changing only its case.  When merging a rename, the file
+with the old name would be deleted -- but since the filesystem
+considers the old name to be the same as the new name, the new
+file would in fact be deleted.
+
+We avoid this by not deleting files that have a case-clone in the
+index at stage 0.
+
+Signed-off-by: David Turner <dturner@twitter.com>
 ---
- builtin/checkout.c |  7 +++----
- builtin/reflog.c   |  2 +-
- refs.c             | 21 +++++++++++++++------
- refs.h             |  6 ++++++
- 4 files changed, 25 insertions(+), 11 deletions(-)
+ merge-recursive.c           |  6 +++++
+ t/t6039-merge-ignorecase.sh | 53 +++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 59 insertions(+)
+ create mode 100755 t/t6039-merge-ignorecase.sh
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index ff44921..929f5bd 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -651,12 +651,11 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
- 			}
- 		}
- 		if (old->path && old->name) {
--			char log_file[PATH_MAX], ref_file[PATH_MAX];
-+			char ref_file[PATH_MAX];
- 
--			git_snpath(log_file, sizeof(log_file), "logs/%s", old->path);
- 			git_snpath(ref_file, sizeof(ref_file), "%s", old->path);
--			if (!file_exists(ref_file) && file_exists(log_file))
--				remove_path(log_file);
-+			if (!file_exists(ref_file) && reflog_exists(old->path))
-+				delete_reflog(old->path);
- 		}
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 4177092..cab16fa 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -589,6 +589,12 @@ static int remove_file(struct merge_options *o, int clean,
+ 			return -1;
  	}
- 	remove_branch_state();
-diff --git a/builtin/reflog.c b/builtin/reflog.c
-index c12a9784..e8a8fb1 100644
---- a/builtin/reflog.c
-+++ b/builtin/reflog.c
-@@ -369,7 +369,7 @@ static int expire_reflog(const char *ref, const unsigned char *sha1, int unused,
- 	if (!lock)
- 		return error("cannot lock ref '%s'", ref);
- 	log_file = git_pathdup("logs/%s", ref);
--	if (!file_exists(log_file))
-+	if (!reflog_exists(ref))
- 		goto finish;
- 	if (!cmd->dry_run) {
- 		newlog_path = git_pathdup("logs/%s.lock", ref);
-diff --git a/refs.c b/refs.c
-index e59bc18..302a2b3 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2013,7 +2013,6 @@ int dwim_log(const char *str, int len, unsigned char *sha1, char **log)
- 
- 	*log = NULL;
- 	for (p = ref_rev_parse_rules; *p; p++) {
--		struct stat st;
- 		unsigned char hash[20];
- 		char path[PATH_MAX];
- 		const char *ref, *it;
-@@ -2022,12 +2021,9 @@ int dwim_log(const char *str, int len, unsigned char *sha1, char **log)
- 		ref = resolve_ref_unsafe(path, hash, 1, NULL);
- 		if (!ref)
- 			continue;
--		if (!stat(git_path("logs/%s", path), &st) &&
--		    S_ISREG(st.st_mode))
-+		if (reflog_exists(path))
- 			it = path;
--		else if (strcmp(ref, path) &&
--			 !stat(git_path("logs/%s", ref), &st) &&
--			 S_ISREG(st.st_mode))
-+		else if (strcmp(ref, path) && reflog_exists(ref))
- 			it = ref;
- 		else
- 			continue;
-@@ -3030,6 +3026,19 @@ int read_ref_at(const char *refname, unsigned long at_time, int cnt,
- 	return 1;
- }
- 
-+int reflog_exists(const char *refname)
-+{
-+	struct stat st;
+ 	if (update_working_directory) {
++		if (ignore_case) {
++			struct cache_entry *ce;
++			ce = cache_file_exists(path, strlen(path), ignore_case);
++			if (ce && ce_stage(ce) == 0)
++				return 0;
++		}
+ 		if (remove_path(path))
+ 			return -1;
+ 	}
+diff --git a/t/t6039-merge-ignorecase.sh b/t/t6039-merge-ignorecase.sh
+new file mode 100755
+index 0000000..ad06752
+--- /dev/null
++++ b/t/t6039-merge-ignorecase.sh
+@@ -0,0 +1,53 @@
++#!/bin/sh
 +
-+	return !lstat(git_path("logs/%s", refname), &st) &&
-+		S_ISREG(st.st_mode);
-+}
++test_description='git-merge with case-changing rename on case-insensitive file system'
 +
-+int delete_reflog(const char *refname)
-+{
-+	return remove_path(git_path("logs/%s", refname));
-+}
++. ./test-lib.sh
 +
- static int show_one_reflog_ent(struct strbuf *sb, each_reflog_ent_fn fn, void *cb_data)
- {
- 	unsigned char osha1[20], nsha1[20];
-diff --git a/refs.h b/refs.h
-index c1cb4b4..8bd815d 100644
---- a/refs.h
-+++ b/refs.h
-@@ -159,6 +159,12 @@ extern int read_ref_at(const char *refname, unsigned long at_time, int cnt,
- 		       unsigned char *sha1, char **msg,
- 		       unsigned long *cutoff_time, int *cutoff_tz, int *cutoff_cnt);
- 
-+/** Check if a particular reflog exists */
-+extern int reflog_exists(const char *refname);
++if ! test_have_prereq CASE_INSENSITIVE_FS
++then
++	skip_all='skipping case insensitive tests - case sensitive file system'
++	test_done
++fi
 +
-+/** Delete a reflog */
-+extern int delete_reflog(const char *refname);
++test_expect_success 'merge with case-changing rename' '
++	test $(git config core.ignorecase) = true &&
++	> TestCase &&
++	git add TestCase &&
++	git commit -m "add TestCase" &&
++	git tag baseline
++	git checkout -b with-camel &&
++	> foo &&
++	git add foo &&
++	git commit -m "intervening commit" &&
++	git checkout master &&
++	git rm TestCase &&
++	> testcase &&
++	git add testcase &&
++	git commit -m "rename to testcase" &&
++	git checkout with-camel &&
++	git merge master -m "merge" &&
++	test -e testcase
++'
 +
- /* iterate over reflog entries */
- typedef int each_reflog_ent_fn(unsigned char *osha1, unsigned char *nsha1, const char *, unsigned long, int, const char *, void *);
- int for_each_reflog_ent(const char *refname, each_reflog_ent_fn fn, void *cb_data);
++test_expect_success 'merge with case-changing rename on both sides' '
++	git checkout master &&
++	git reset --hard baseline &&
++	git branch -D with-camel &&
++	git checkout -b with-camel &&
++	git mv --force TestCase testcase &&
++	git commit -m "recase on branch" &&
++	> foo &&
++	git add foo &&
++	git commit -m "intervening commit" &&
++	git checkout master &&
++	git rm TestCase &&
++	> testcase &&
++	git add testcase &&
++	git commit -m "rename to testcase" &&
++	git checkout with-camel &&
++	git merge master -m "merge" &&
++	test -e testcase
++'
++
++test_done
 -- 
-2.0.0.rc1.354.g7561c2b.dirty
+2.0.0.rc0.33.g27630aa
