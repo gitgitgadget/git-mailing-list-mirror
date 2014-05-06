@@ -1,123 +1,73 @@
-From: Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: Re: git gui error with relocated repository
-Date: Tue, 06 May 2014 13:10:35 +0100
-Message-ID: <871tw7xg3o.fsf@fox.patthoyts.tk>
-References: <CAFOYHZBPLZhVuf=bO0hPcUH2_0WXFSqk=_CqoUWBRixQc0L==Q@mail.gmail.com>
-	<CAFOYHZD=wxwm0nLhtZwvXDAhQ23j0C5maArQunc0CVe_-SF_mQ@mail.gmail.com>
-Reply-To: patthoyts@users.sourceforge.net
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: GIT <git@vger.kernel.org>
-To: Chris Packham <judge.packham@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 06 21:23:40 2014
+From: James Denholm <nod.helm@gmail.com>
+Subject: [PATCH v2 1/5] contrib/subtree/Makefile: scrap unused $(gitdir)
+Date: Tue,  6 May 2014 22:41:45 +1000
+Message-ID: <1399380109-3805-2-git-send-email-nod.helm@gmail.com>
+References: <1399380109-3805-1-git-send-email-nod.helm@gmail.com>
+Cc: git@vger.kernel.org, James Denholm <nod.helm@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 06 21:26:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WhiQ5-0008Bg-Qr
-	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:40:42 +0200
+	id 1WhiQj-0008Bg-Gv
+	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:41:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755368AbaEFMQ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 May 2014 08:16:27 -0400
-Received: from know-smtprelay-omc-5.server.virginmedia.net ([80.0.253.69]:54080
-	"EHLO know-smtprelay-omc-5.server.virginmedia.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754887AbaEFMQ0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 May 2014 08:16:26 -0400
-X-Greylist: delayed 348 seconds by postgrey-1.27 at vger.kernel.org; Tue, 06 May 2014 08:16:25 EDT
-Received: from fox.patthoyts.tk ([82.34.175.55])
-	by know-smtprelay-5-imp with bizsmtp
-	id ycAb1n05U1C56nm01cAcNU; Tue, 06 May 2014 13:10:36 +0100
-X-Originating-IP: [82.34.175.55]
-X-Spam: 0
-X-Authority: v=2.1 cv=TdEYtHgh c=1 sm=1 tr=0 a=g1XlTrwDEGH9N8TSFs8Bjw==:117
- a=g1XlTrwDEGH9N8TSFs8Bjw==:17 a=qRKFtABOsx0A:10 a=8gcHGidUu6gA:10
- a=CtgcEeagiGAA:10 a=kj9zAlcOel0A:10 a=FP58Ms26AAAA:8 a=pGLkceISAAAA:8
- a=Rf460ibiAAAA:8 a=of6QgrYFlsJObaNzSZIA:9 a=CjuIK1q_8ugA:10 a=MSl-tDqOz04A:10
- a=AkUkIWUyXwcA:10 a=NWVoK91CQyQA:10
-Received: by fox.patthoyts.tk (Postfix, from userid 1000)
-	id C055020A30; Tue,  6 May 2014 13:10:35 +0100 (BST)
-X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
- qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
- '?a?.s#@hl7CiTo'F"O!fvbL0
-X-Url: http://www.patthoyts.tk/
-In-Reply-To: <CAFOYHZD=wxwm0nLhtZwvXDAhQ23j0C5maArQunc0CVe_-SF_mQ@mail.gmail.com>
-	(Chris Packham's message of "Tue, 29 Apr 2014 16:23:18 +1200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+	id S1757491AbaEFMmU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 May 2014 08:42:20 -0400
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:48080 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756361AbaEFMmS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 May 2014 08:42:18 -0400
+Received: by mail-pa0-f47.google.com with SMTP id fa1so11029062pad.34
+        for <git@vger.kernel.org>; Tue, 06 May 2014 05:42:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=t557CVoRJAv0RyH4io2DD+sQpz1QgUyMPtcaw75K2kg=;
+        b=w6ryurKXotZBhm5enFX6SadG62UaTL64VTqcSTtx99m71leL41MZXigfSz7CIsqE2a
+         Q8WF7yNfF2rekJe7PSA++Vve8wf4QIY1P9jvGlTJl70Bu1B+zbo+66mFt30Q03xs+Zrp
+         KTg6fd4kGJYIt1m6fbJPKdUP+Mugz7B1wtcMNYw9cu60VaLiVTbqV5tGGQLfvbtW/aU/
+         nqj33cmCbgsY/rRYFQyFzhcDVJ8xUSUT8if0HZwXzqJlvWm/MQ46IoUnI2OI0/r3R1QA
+         xCktXhMNya7r07eKGDw+xkxR4maPRAe9bNhChDBurNtb0VuF+G12I0bt5j2KoQBGLM1/
+         bazg==
+X-Received: by 10.66.120.201 with SMTP id le9mr5768211pab.98.1399380137640;
+        Tue, 06 May 2014 05:42:17 -0700 (PDT)
+Received: from localhost.localdomain ([101.119.28.162])
+        by mx.google.com with ESMTPSA id iv2sm133398pbc.19.2014.05.06.05.42.14
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 06 May 2014 05:42:16 -0700 (PDT)
+X-Mailer: git-send-email 1.9.2
+In-Reply-To: <1399380109-3805-1-git-send-email-nod.helm@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248221>
 
-Chris Packham <judge.packham@gmail.com> writes:
+In 7ff8463dba0d74fc07a766bed457ae7afcc902b5, the references to gitdir
+were removed but the assignment itself wasn't. Hence, drop the gitdir
+assignment.
 
->On Tue, Apr 29, 2014 at 2:56 PM, Chris Packham <judge.packham@gmail.com> wrote:
->> Hi Pat,
->>
->> I'm running git 2.0.0-rc0 (haven't got round to pulling down rc1 yet)
->> which includes gitgui-0.19.0 and I'm getting a new error when I run
->> 'git gui' in a repository with a .git file (created by git submodule).
->>
->> I can send you a screencap of the error message off list if you want
->> but the text is
->>
->> "No working directory ../../../<repo>
->>
->> couldn't change working directory to ../../../<repo>: no such file or directory"
->
->My tcl is a little rusty but I think the problem might be this snippet.
->
-># v1.7.0 introduced --show-toplevel to return the canonical work-tree
->if {[package vsatisfies $_git_version 1.7.0]} {
->    if { [is_Cygwin] } {
->        catch {set _gitworktree [exec cygpath --windows [git rev-parse
->--show-toplevel]]}
->    } else {
->        set _gitworktree [git rev-parse --show-toplevel]
->    }
->} else {
->    # try to set work tree from environment, core.worktree or use
->    # cdup to obtain a relative path to the top of the worktree. If
->    # run from the top, the ./ prefix ensures normalize expands pwd.
->    if {[catch { set _gitworktree $env(GIT_WORK_TREE) }]} {
->        set _gitworktree [get_config core.worktree]
->        if {$_gitworktree eq ""} {
->            set _gitworktree [file normalize ./[git rev-parse --show-cdup]]
->        }
->    }
->}
->
->The  vsatisfies call probably doesn't handle '2.0.0.rc0' and the
->fallback behaviour probably needs to normalise core.worktree
->
+Reviewed-by: Jeff King <peff@peff.net>
+Signed-off-by: James Denholm <nod.helm@gmail.com>
+---
+ contrib/subtree/Makefile | 1 -
+ 1 file changed, 1 deletion(-)
 
-The _git_version variable has already been trimmed to remove such
-suffixes so the version comparison here will be ok. It looks more likely
-to be something to do with the .git being a file with a link being
-mishandled. How did you setup this test repository with its link to a
-parent?
-
->>
->> Here's some other info that might help
->>
->>   $ git --version
->>   git version 2.0.0.rc0
->>
->>   $ cat .git
->>   gitdir: ../.git/modules/<repo>
->>
->>   $ git rev-parse --git-dir
->>   /home/chris/src/<super>/.git/modules/<repo>
->>
->>   $ git config core.worktree
->>   ../../../<repo>
->>
->> Thanks,
->> Chris
->
-
+diff --git a/contrib/subtree/Makefile b/contrib/subtree/Makefile
+index 4030a16..87797ed 100644
+--- a/contrib/subtree/Makefile
++++ b/contrib/subtree/Makefile
+@@ -4,7 +4,6 @@
+ prefix ?= /usr/local
+ mandir ?= $(prefix)/share/man
+ libexecdir ?= $(prefix)/libexec/git-core
+-gitdir ?= $(shell git --exec-path)
+ man1dir ?= $(mandir)/man1
+ 
+ gitver ?= $(word 3,$(shell git --version))
 -- 
-Pat Thoyts                            http://www.patthoyts.tk/
-PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
+1.9.2
