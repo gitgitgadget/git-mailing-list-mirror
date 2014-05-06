@@ -1,73 +1,142 @@
-From: James Denholm <nod.helm@gmail.com>
-Subject: [PATCH v2 1/5] contrib/subtree/Makefile: scrap unused $(gitdir)
-Date: Tue,  6 May 2014 22:41:45 +1000
-Message-ID: <1399380109-3805-2-git-send-email-nod.helm@gmail.com>
-References: <1399380109-3805-1-git-send-email-nod.helm@gmail.com>
-Cc: git@vger.kernel.org, James Denholm <nod.helm@gmail.com>
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: Re: [PATCH] add a reflog_exists and delete_reflog abstraction
+Date: Tue, 6 May 2014 12:29:12 -0700
+Message-ID: <CAL=YDWnyKHSj8ZtD0t84Pg=uoHumGv2zgtOC0NAzP+Y+CanJ_w@mail.gmail.com>
+References: <1399330677-17930-1-git-send-email-sahlberg@google.com>
+	<xmqq1tw6g1mp.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 06 21:26:44 2014
+X-From: git-owner@vger.kernel.org Tue May 06 21:34:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WhiQj-0008Bg-Gv
-	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:41:21 +0200
+	id 1Whl3F-0004D1-MR
+	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 21:29:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757491AbaEFMmU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 May 2014 08:42:20 -0400
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:48080 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756361AbaEFMmS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 May 2014 08:42:18 -0400
-Received: by mail-pa0-f47.google.com with SMTP id fa1so11029062pad.34
-        for <git@vger.kernel.org>; Tue, 06 May 2014 05:42:17 -0700 (PDT)
+	id S1754187AbaEFT3O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 May 2014 15:29:14 -0400
+Received: from mail-vc0-f180.google.com ([209.85.220.180]:39970 "EHLO
+	mail-vc0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754024AbaEFT3N (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 May 2014 15:29:13 -0400
+Received: by mail-vc0-f180.google.com with SMTP id hq16so1623565vcb.11
+        for <git@vger.kernel.org>; Tue, 06 May 2014 12:29:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=t557CVoRJAv0RyH4io2DD+sQpz1QgUyMPtcaw75K2kg=;
-        b=w6ryurKXotZBhm5enFX6SadG62UaTL64VTqcSTtx99m71leL41MZXigfSz7CIsqE2a
-         Q8WF7yNfF2rekJe7PSA++Vve8wf4QIY1P9jvGlTJl70Bu1B+zbo+66mFt30Q03xs+Zrp
-         KTg6fd4kGJYIt1m6fbJPKdUP+Mugz7B1wtcMNYw9cu60VaLiVTbqV5tGGQLfvbtW/aU/
-         nqj33cmCbgsY/rRYFQyFzhcDVJ8xUSUT8if0HZwXzqJlvWm/MQ46IoUnI2OI0/r3R1QA
-         xCktXhMNya7r07eKGDw+xkxR4maPRAe9bNhChDBurNtb0VuF+G12I0bt5j2KoQBGLM1/
-         bazg==
-X-Received: by 10.66.120.201 with SMTP id le9mr5768211pab.98.1399380137640;
-        Tue, 06 May 2014 05:42:17 -0700 (PDT)
-Received: from localhost.localdomain ([101.119.28.162])
-        by mx.google.com with ESMTPSA id iv2sm133398pbc.19.2014.05.06.05.42.14
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 06 May 2014 05:42:16 -0700 (PDT)
-X-Mailer: git-send-email 1.9.2
-In-Reply-To: <1399380109-3805-1-git-send-email-nod.helm@gmail.com>
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=0YaCTVq+5qWcy8WV9yo01CmWyzz4H7iqBOPbj22MA1M=;
+        b=W9ac9WH0hoQHzAMO0fLOrf0/TyciS4Srdx7PZhRFuiMkGcqGTBoZk59xxD9Jn7ojHh
+         XMmsIO/eUgs+0eY/GAD7mVjowANpT1KKiwuT08wMF78j6vRXQgOw0csfwzCLIdK99RMt
+         RHc2sejTVRgupG1U9YiVK3NOaAhx02VDePZMt9Da+XlQIX/ajIe/z/JKo+7qPQqRAJZi
+         wJnUqJso690v3n7R/yE6/GwexiXSh8HPZ1+zwP1L/VCYv6n5Ua37KSF1dsL6WGpg4l4E
+         mhADcQO7b0v2BYXseBJpMhx+TfP8JmNIShLrI+Zq36h9tBDljfgKbOTqOLJ1s6sXRECJ
+         8i5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=0YaCTVq+5qWcy8WV9yo01CmWyzz4H7iqBOPbj22MA1M=;
+        b=Wm3pcFr6NF/1tw00C/nigEzs1NqQkqp+vkSriElO7qtbhDzjdKd2zsBlzMywVH4kVl
+         nTPc1b6zjGUE0XGDmqMjOHatYOFsBY15DLHjghFI762hikt6Bi8Y+IsYWy6N+1g5EDFY
+         c8esLIHGOqK7ZSRhsmtzYsuOM+kB02T/hxao+0kemkh9wy9x7ieTRFsKKCEZlm52YAWb
+         t71NfO1+QPCS3ikabb/q/FD07ESKKRn1Ocy6Vha8GpuS6H/4DwLzwePLP7WiSxsj6/iQ
+         RPLn9SxBhW1ogpXcX52rF4nB0UxqPvtw2i9GgW1wvrEnIK5cnaboLCIfiCAmwYxNGRiA
+         iu4w==
+X-Gm-Message-State: ALoCoQmCBEPvysWb/smpw/81JV+dKcX71CKtpqO1nU7D4s046oWvk6o/aZLzB3c8Pb962kAvMdLb
+X-Received: by 10.58.94.135 with SMTP id dc7mr76583veb.66.1399404552653; Tue,
+ 06 May 2014 12:29:12 -0700 (PDT)
+Received: by 10.52.0.139 with HTTP; Tue, 6 May 2014 12:29:12 -0700 (PDT)
+In-Reply-To: <xmqq1tw6g1mp.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248222>
 
-In 7ff8463dba0d74fc07a766bed457ae7afcc902b5, the references to gitdir
-were removed but the assignment itself wasn't. Hence, drop the gitdir
-assignment.
+On Tue, May 6, 2014 at 12:15 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Ronnie Sahlberg <sahlberg@google.com> writes:
+>
+>> It currently has a hard assumption that the loose ref file must exist at this
+>> stage or else it would end up deleting the reflog which is true today, as far
+>> as I can tell, but would break if git would change such that we could have
+>> a branch checked out without having a loose ref file for that branch.
+>
+> Hmmmm.  Do you mean this sequence will break?
 
-Reviewed-by: Jeff King <peff@peff.net>
-Signed-off-by: James Denholm <nod.helm@gmail.com>
----
- contrib/subtree/Makefile | 1 -
- 1 file changed, 1 deletion(-)
+As Michael suggested, this is already broken :-(
+This sequence will delete the reflog from master :
 
-diff --git a/contrib/subtree/Makefile b/contrib/subtree/Makefile
-index 4030a16..87797ed 100644
---- a/contrib/subtree/Makefile
-+++ b/contrib/subtree/Makefile
-@@ -4,7 +4,6 @@
- prefix ?= /usr/local
- mandir ?= $(prefix)/share/man
- libexecdir ?= $(prefix)/libexec/git-core
--gitdir ?= $(shell git --exec-path)
- man1dir ?= $(mandir)/man1
- 
- gitver ?= $(word 3,$(shell git --version))
--- 
-1.9.2
+    $ git init-db
+    $ git config core.logallrefupdates true
+    $ git commit -m Initial --allow-empty
+        [master (root-commit) bb11abe] Initial
+    $ git reflog master
+        [8561dcb master@{0}: commit (initial): Initial]
+    $ find .git/{refs,logs} -type f | grep master
+        [.git/refs/heads/master]
+        [.git/logs/refs/heads/master]
+    $ git branch foo
+    $ git pack-refs --all
+    $ find .git/{refs,logs} -type f | grep master
+        [.git/logs/refs/heads/master]
+    $ git checkout foo
+    $ find .git/{refs,logs} -type f | grep master
+        ... reflog file is missing ...
+    $ git reflog master
+        ... nothing ...
+
+I am adding a test for this in the next set of patches :
+
+diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
+index 236b13a..8cab06f 100755
+--- a/t/t1410-reflog.sh
++++ b/t/t1410-reflog.sh
+@@ -245,4 +245,12 @@ test_expect_success 'gc.reflogexpire=false' '
+
+ '
+
++test_expect_success 'checkout should not delete log for packed ref' '
++       test $(git reflog master | wc -l) = 4 &&
++       git branch foo &&
++       git pack-refs --all &&
++       git checkout foo &&
++       test $(git reflog master | wc -l) = 4
++'
++
+ test_done
+
+
+
+
+
+>
+>         : gitster x; git init lo
+>         Initialized empty Git repository in /var/tmp/x/lo/.git/
+>         : gitster x; cd lo
+>         : gitster lo/master; git commit --allow-empty -m initial
+>         [master (root-commit) db2b430] initial
+>         : gitster lo/master; git branch next
+>
+> Now we have two branches, master and next, and we are on master.
+>
+>         : gitster lo/master; git pack-refs --all
+>         : gitster lo/master; ls .git/refs/heads
+>         ./  ../
+>         : gitster lo/master; cat .git/packed-refs
+>         # pack-refs with: peeled fully-peeled
+>         db2b43072749258d1e3c119c9570349d77c26b3a refs/heads/master
+>         db2b43072749258d1e3c119c9570349d77c26b3a refs/heads/next
+>
+> And loose refs are fully packed.
+>
+>         : gitster lo/master; git checkout next
+>         Switched to branch 'next'
+>         : gitster lo/next; ls .git/refs/heads
+>         ./  ../
+>
