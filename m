@@ -1,110 +1,91 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH v2] config: preserve config file permissions on edits
-Date: Tue, 6 May 2014 00:17:14 +0000
-Message-ID: <20140506001714.GA29049@dcvr.yhbt.net>
-References: <20140505215853.GA23299@dcvr.yhbt.net>
+From: James Denholm <nod.helm@gmail.com>
+Subject: Re: [PATCH v2 0/5] contrib/subtree/Makefile: Standardisation pass
+Date: Tue, 6 May 2014 22:41:32 +1000
+Message-ID: <CAHYYfeGmQX3tBYA=1r9YCe0sTzHZaEWtBRcLXsrLsMv9AXTMEA@mail.gmail.com>
+References: <1399121375-14727-1-git-send-email-nod.helm@gmail.com>
+	<20140505050803.GA6569@sigill.intra.peff.net>
+	<69f827ea-0ba2-4ca0-b711-002e1a0010b7@email.android.com>
+	<20140505220112.GA17610@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 06 20:05:38 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	David Greene <greened@obbligato.org>,
+	Avery Pennarun <apenwarr@gmail.com>, gpmcgee@gmail.com,
+	Matthew Ogilvie <mmogilvi_git@miniinfo.net>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue May 06 20:09:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WhiFN-0007Xo-QM
-	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:29:38 +0200
+	id 1WhiQh-0008Bg-RD
+	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:41:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933526AbaEFARR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 May 2014 20:17:17 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:42969 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933523AbaEFARP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 May 2014 20:17:15 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C928120687;
-	Tue,  6 May 2014 00:17:14 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20140505215853.GA23299@dcvr.yhbt.net>
+	id S1757479AbaEFMlf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 May 2014 08:41:35 -0400
+Received: from mail-vc0-f169.google.com ([209.85.220.169]:47625 "EHLO
+	mail-vc0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755059AbaEFMld (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 May 2014 08:41:33 -0400
+Received: by mail-vc0-f169.google.com with SMTP id ij19so866081vcb.0
+        for <git@vger.kernel.org>; Tue, 06 May 2014 05:41:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=KM3NGyjH6diIYgtBsV2jm+XQxUwWvO65eDDqu+4QJ4o=;
+        b=F8ss1xVyXjaBoBmfaErpYdCPQywmk86J6Sjb8REtGXYD3QQtIj1ItATZ7Re1xO45wc
+         osRZ5qX9Lp8FUAN1FuzZ3hN6iWm0DE4bZNGoS9maglJUncDtBp85NWq2TFMRGgvp2fMV
+         WxbEUdahYzL167VKzbmWYGXdhpvmtlvnycxRbtx4SX7BMiBCIx327taBs6K5oFbEzOhq
+         X2zx64Tuq+rq2uvevlOyltawzwqT7MypzM+3gNsN1fEc54NKYZMa72pDoUwm/Kv6R0qL
+         CkfMKbbaM1VLaDHU5/P6ra8fMbL/mzCzdOqZnWagz6jJ+CC0KvPxZU+qgKjZ8NSxtse+
+         1ttw==
+X-Received: by 10.220.69.4 with SMTP id x4mr268404vci.74.1399380092132; Tue,
+ 06 May 2014 05:41:32 -0700 (PDT)
+Received: by 10.58.12.2 with HTTP; Tue, 6 May 2014 05:41:32 -0700 (PDT)
+In-Reply-To: <20140505220112.GA17610@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248201>
 
-Users may already store sensitive data such as imap.pass in
-.git/config; making the file world-readable when "git config"
-is called to edit means their password would be compromised
-on a shared system.
+On 6 May 2014 08:01, Jeff King <peff@peff.net> wrote:
+> [fixed David's address in cc list]
 
-[v2: updated for section renames, as noted by Junio]
+Ah, right. Wasn't sure what was going on there.
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
+> On Tue, May 06, 2014 at 07:54:30AM +1000, James Denholm wrote:
+>
+>> Given that subtree subtree doesn't really generate a lot of discussion,
+>> would it be advisable to wrap this up (barring further discussion) and send
+>> it off to Junio rather than waiting for further community consensus?
+>
+> I do not know if "lack of discussion" is a good reason to consider
+> something in good shape; oftentimes it is a sign that nobody is
+> interested in the area. We usually rely on "area maintainers" to give an
+> OK to the patches if they are not something that the maintainer himself
+> has an interest in.
+
+Yeah, I certainly only meant that in the context of this particular
+patch, post-review.
+
+> However, in this case, you did get review, and I think it is pretty easy
+> to see the patches are good even if one does not care about the
+> particular area. So I think they are fine to pass on and apply.
+
+Sounds good, I'll send it on up now. Thanks again for the help.
+
+> Note also that patches like this are a great place to get started, as
+> they help build trust in a contributor, who can later help out with
+> area maintenance.
+
+Yeah, to be honest, beyond the immediate goal of getting subtree in more
+distros, that is kinda the plan. A bit of a practical experience in
+contributing to the project, learning the specific ropes and such
+before proposing more substantial discussion and fixes/changes.
+
 ---
- config.c               | 16 ++++++++++++++++
- t/t1300-repo-config.sh | 10 ++++++++++
- 2 files changed, 26 insertions(+)
-
-diff --git a/config.c b/config.c
-index a30cb5c..c227aa8 100644
---- a/config.c
-+++ b/config.c
-@@ -1636,6 +1636,13 @@ int git_config_set_multivar_in_file(const char *config_filename,
- 			MAP_PRIVATE, in_fd, 0);
- 		close(in_fd);
- 
-+		if (fchmod(fd, st.st_mode & 07777) < 0) {
-+			error("fchmod on %s failed: %s",
-+				lock->filename, strerror(errno));
-+			ret = CONFIG_NO_WRITE;
-+			goto out_free;
-+		}
-+
- 		if (store.seen == 0)
- 			store.seen = 1;
- 
-@@ -1784,6 +1791,7 @@ int git_config_rename_section_in_file(const char *config_filename,
- 	int out_fd;
- 	char buf[1024];
- 	FILE *config_file;
-+	struct stat st;
- 
- 	if (new_name && !section_name_is_ok(new_name)) {
- 		ret = error("invalid section name: %s", new_name);
-@@ -1805,6 +1813,14 @@ int git_config_rename_section_in_file(const char *config_filename,
- 		goto unlock_and_out;
- 	}
- 
-+	fstat(fileno(config_file), &st);
-+
-+	if (fchmod(out_fd, st.st_mode & 07777) < 0) {
-+		ret = error("fchmod on %s failed: %s",
-+				lock->filename, strerror(errno));
-+		goto out;
-+	}
-+
- 	while (fgets(buf, sizeof(buf), config_file)) {
- 		int i;
- 		int length;
-diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
-index 58cd543..3f80ff0 100755
---- a/t/t1300-repo-config.sh
-+++ b/t/t1300-repo-config.sh
-@@ -1158,4 +1158,14 @@ test_expect_failure 'adding a key into an empty section reuses header' '
- 	test_cmp expect .git/config
- '
- 
-+test_expect_success POSIXPERM,PERL 'preserves existing permissions' '
-+	chmod 0600 .git/config &&
-+	git config imap.pass Hunter2 &&
-+	perl -e \
-+	  "die q(badset) if ((stat(q(.git/config)))[2] & 07777) != 0600" &&
-+	git config --rename-section imap pop &&
-+	perl -e \
-+	  "die q(badrename) if ((stat(q(.git/config)))[2] & 07777) != 0600"
-+'
-+
- test_done
--- 
-Eric Wong
+Regards,
+James Denholm.
