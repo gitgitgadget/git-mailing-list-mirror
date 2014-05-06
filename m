@@ -1,196 +1,134 @@
-From: "'502304919' via msysGit" <msysgit@googlegroups.com>
-Subject: Re: [PATCH 10/12] MINGW: compat/poll/poll.c: undef NOGDI
-Date: Sun, 4 May 2014 16:46:29 -0500
-Message-ID: <1E023E9C-FDD6-47A5-9E7C-6D43F9167EEB@aol.com>
-References: <20140504205552.GA15590@seldon>
-Reply-To: 502304919 <boxerapp@aol.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: What's cooking in git.git (Apr 2014, #09; Tue, 29)
+Date: Mon, 05 May 2014 19:20:48 -0500
+Message-ID: <53682ae027b7d_24f8d2930881@nysa.notmuch>
+References: <xmqq7g67iwxc.fsf@gitster.dls.corp.google.com>
+ <20140505184546.GB23935@serenity.lan>
+ <xmqqoazb944d.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: multipart/alternative; boundary="5366b535_327b23c6_7f3"
-Cc: Erik Faye-Lund <kusmabite@gmail.com>, msysGit
- <msysgit@googlegroups.com>, Felipe Contreras
- <felipe.contreras@gmail.com>, GIT Mailing-list <git@vger.kernel.org>, 
- Stepan Kasal <kasal@ucw.cz>
-To: Marat Radchenko <marat@slonopotamus.org>
-X-From: msysgit+bncBDHJTVHEWICRB6URUONQKGQE6BW36XQ@googlegroups.com Tue May 06 19:51:18 2014
-Return-path: <msysgit+bncBDHJTVHEWICRB6URUONQKGQE6BW36XQ@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-yh0-f64.google.com ([209.85.213.64])
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>,
+	John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Tue May 06 19:54:08 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDHJTVHEWICRB6URUONQKGQE6BW36XQ@googlegroups.com>)
-	id 1WhjMi-0003E9-CE
-	for gcvm-msysgit@m.gmane.org; Tue, 06 May 2014 19:41:16 +0200
-Received: by mail-yh0-f64.google.com with SMTP id b6sf254826yha.19
-        for <gcvm-msysgit@m.gmane.org>; Tue, 06 May 2014 10:41:15 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1WhiFk-0007Xo-3G
+	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:30:00 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S933383AbaEFAbd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 May 2014 20:31:33 -0400
+Received: from mail-oa0-f53.google.com ([209.85.219.53]:60598 "EHLO
+	mail-oa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933005AbaEFAbc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 May 2014 20:31:32 -0400
+Received: by mail-oa0-f53.google.com with SMTP id m1so6837777oag.40
+        for <git@vger.kernel.org>; Mon, 05 May 2014 17:31:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
+        d=gmail.com; s=20120113;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:list-post:list-help:list-archive
-         :sender:list-subscribe:list-unsubscribe:reply-to:content-type;
-        bh=xFCNMCm+NO4X7+3Lujz7ZXHv/ieDEjMqFHqAZWicnFc=;
-        b=ZcKus4xSV2tOVlSrUQkSHBvNkTYIgj3caBmU8oIuBcQZv2jdizGHSwYsY+2ntf9b9V
-         42tqElSbOk8eQta6AICpqC19XglJtpGwOrQ7g2BcoNJp99oIm/HbXLVKu017OquLsBmk
-         MiagbCYkK4ZIWnrArLtBirxDDPB0TFDOdA42BFzJyLPClY9ErBEyaXDUvD/1GGS65Vje
-         pWNHOyeL5rWWsA0YS35/0UJzy+lkw/HeKr5KzaHongTntmqN9YNFqOkGBwO+cCqGPPTx
-         DIfo0NoX4iyutf3vymnLSzGdzK7mhStskkBvIhRxrXo09cAQakXqWfDA5zSBvY0wwT5J
-         /v6A==
-X-Received: by 10.182.111.170 with SMTP id ij10mr108284obb.18.1399376124831;
-        Tue, 06 May 2014 04:35:24 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.182.236.102 with SMTP id ut6ls1592605obc.24.gmail; Tue, 06 May
- 2014 04:35:22 -0700 (PDT)
-X-Received: by 10.66.66.35 with SMTP id c3mr850169pat.7.1399376122847;
-        Tue, 06 May 2014 04:35:22 -0700 (PDT)
-Received: by 10.50.253.99 with SMTP id zz3msigc;
-        Sun, 4 May 2014 14:46:30 -0700 (PDT)
-X-Received: by 10.50.33.101 with SMTP id q5mr8590397igi.3.1399239990482;
-        Sun, 04 May 2014 14:46:30 -0700 (PDT)
-Received: from omr-d04.mx.aol.com (omr-d04.mx.aol.com. [205.188.109.201])
-        by gmr-mx.google.com with ESMTPS id n7si624712qcz.2.2014.05.04.14.46.30
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sun, 04 May 2014 14:46:30 -0700 (PDT)
-Received-SPF: pass (google.com: domain of boxerapp@aol.com designates 205.188.109.201 as permitted sender) client-ip=205.188.109.201;
-Received: from mtaout-aai02.mx.aol.com (mtaout-aai02.mx.aol.com [172.27.2.98])
-	by omr-d04.mx.aol.com (Outbound Mail Relay) with ESMTP id 416AF7000008D;
-	Sun,  4 May 2014 17:46:30 -0400 (EDT)
-Received: from Kodiaks-iPhone (rrcs-67-78-97-126.sw.biz.rr.com [67.78.97.126])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by mtaout-aai02.mx.aol.com (MUA/Third Party Client Interface) with ESMTPSA id E265738000095;
-	Sun,  4 May 2014 17:46:28 -0400 (EDT)
-In-Reply-To: <20140504205552.GA15590@seldon>
-x-aol-global-disposition: G
-x-aol-sid: 3039ac1b02625366b5342b55
-X-AOL-IP: 67.78.97.126
-X-Original-Sender: boxerapp@aol.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of boxerapp@aol.com designates 205.188.109.201 as
- permitted sender) smtp.mail=boxerapp@aol.com;       dkim=pass
- header.i=@mx.aol.com;       dmarc=pass (p=REJECT dis=NONE) header.from=aol.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-X-Original-From: 502304919 <boxerapp@aol.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248194>
+         :mime-version:content-type:content-transfer-encoding;
+        bh=QkewHPiRCYvh1wPzD8kyf9ZJxN7nAxy68GUKt58iJU4=;
+        b=1IQGzC16tMI7/V9GehOm6YpiM6ZGMiPARqQx0rsmLgUciV/7ObcvWxszNbim1J7XuI
+         ETZTwvp1XlItNt6llFZUNCcGWUtK/OzShl760CwpT6c3cqo4u8h+9dYTVPCTp1HNf4Bf
+         v5kUItipSvY/okn+Fn65//+oT5A/j3M5j8sOQxFOX4k0tokWvpjG/cVVukFqvulL4HGn
+         Go3M2cMX2hJ44NfOCj/5N/I9WIIPtYgjeQrZAmKZZrqoW0ZVan8zS8TSSBNVc9lOz5kO
+         o5vf+zbBxxfBmI2p7/VSZbKKvYmc/kB8gNedgCLBpS5ZllvgwyeQ4cjrQz185t8uL1DQ
+         ettg==
+X-Received: by 10.182.250.200 with SMTP id ze8mr77376obc.72.1399336292347;
+        Mon, 05 May 2014 17:31:32 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id w4sm44573075oem.8.2014.05.05.17.31.29
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 05 May 2014 17:31:30 -0700 (PDT)
+In-Reply-To: <xmqqoazb944d.fsf@gitster.dls.corp.google.com>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248195>
 
---5366b535_327b23c6_7f3
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Junio C Hamano wrote:
+> John Keeping <john@keeping.me.uk> writes:
 
-I've added this to my to-do list. On May 4, 2014 at 3:55:52 PM CDT, Marat R=
-adchenko <marat@slonopotamus.org> wrote:On Sun, May 04, 2014 at 08:52:44PM =
-+0200, Stepan Kasal wrote:> Thank you very much for this analysis.> It enab=
-les us to redirect you the third time: to report this as a> bug in MinGW-W6=
-4 ! ;-)I'll report this to MinGW-W64 soon, though even if/when they fixthe =
-issue on their side, I'd still like to have a workaround inGit to be able t=
-o use older MinGW-W64 versions that didn'treceive a fix.> Seriously, it loo=
-ks you found the best description of the problem,> and it would be nice if =
-you could modify your patch so that it> is really a work around: it would b=
-e in effect only for MinGW-W64,> and the comment would explain that this is=
- a hack to work around the> bug. Workarounds do not have to be ugly and ful=
-l of #ifdef's.> If you manage to change the defs for poll.c without changin=
-g its> content, no one could tell you to report to gnulib first.v1 does exa=
-ctly this.> OTOH, if MsgWaitForMultipleObjects is present ustream (in gnuli=
-b's> poll.c, sorry that I cannot check right now), it still might be> bette=
-r to submit the work-around there first.Workaround is "just don't pass -DNO=
-GDI on MinGW-W64 if you wantMsgWaitForMultipleObjects", there's nothing to =
-send to gnulib.After all, was there a strong reason why Git started passing=
- it?What is there was no option to disable part of windows.h?--To unsubscri=
-be from this list: send the line "unsubscribe git" inthe body of a message =
-to majordomo@vger.kernel.orgMore majordomo info at http://vger.kernel.org/m=
-ajordomo-info.html    =20
+> > In the case of git-remote-hg specifically, the remote helper has to use
+> > an interface that the Mercurial developers consider unstable [1];...
+> > I do not want to end up in a situation where an update to Git is blocked
+> > by a distribution because git-remote-hg is not updated to support newer
+> > versions of Mercurial sufficiently quickly; this previously happened in
+> > Gentoo due to git-svn and meant that was stuck on 1.7.8 until 1.7.13 was
+> > released [2].
+> 
+> The same argument would apply to git-svn, git-p4, and git-cvsimport,
+> I would think.
+> 
+> Among these, I am not sure if we can find willing maintainers who
+> can give enough love to them.  But unlike these other importers,
+> remote-hg and remote-bzr do have an active maintainer (and IIRC I
+> think I heard that Hg one even has an active competitor or two?)
 
---=20
---=20
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github =
-accounts are free.
+Unfortunately there are no more real competitors to remote-hg. A far as
+I can tell msysgit has dropped their remote helper, and gitifyhg is not
+being actively maintatined and it's even pointing to our git-remote-hg
+as probably the best alternative to use at the moment.
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den
+> so I am reasonably confident that these can live on their own merit
+> outside of my tree.  In the ideal world, I would think it may be even
+> beneficial to the end users of these helpers to unbundle them.
 
----=20
-You received this message because you are subscribed to the Google Groups "=
-msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an e=
-mail to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+It might be benefitial in the future, but right now I'm willing to bet
+there's many people that don't know git-remote-hg/bzr even exist. If Git
+v2.0 distributes them by default, and they are mentioned in the release
+notes:
 
---5366b535_327b23c6_7f3
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+ * Transparent support to pull and push to and from Mercurial and Bazaar
+   repositories is now enabled by default.
 
-<html><body><div>I've added this to my to-do list.</div><br/><br/><div><div=
- class=3D"quote">On May 4, 2014 at 3:55:52 PM CDT, Marat Radchenko &lt;mara=
-t@slonopotamus.org&gt; wrote:<br/><blockquote type=3D"cite" style=3D"border=
--left-style:solid;border-width:1px;margin-left:0px;padding-left:10px;">On S=
-un, May 04, 2014 at 08:52:44PM +0200, Stepan Kasal wrote:<br />> Thank you =
-very much for this analysis.<br />> It enables us to redirect you the third=
- time: to report this as a<br />> bug in MinGW-W64 !  ;-)<br /><br />I'll r=
-eport this to MinGW-W64 soon, though even if/when they fix<br />the issue o=
-n their side, I'd still like to have a workaround in<br />Git to be able to=
- use older MinGW-W64 versions that didn't<br />receive a fix.<br /><br />> =
-Seriously, it looks you found the best description of the problem,<br />> a=
-nd it would be nice if you could modify your patch so that it<br />> is rea=
-lly a work around: it would be in effect only for MinGW-W64,<br />> and the=
- comment would explain that this is a hack to work around the<br />> bug.  =
-<br /><br />Workarounds do not have to be ugly and full of #ifdef's.<br /><=
-br />> If you manage to change the defs for poll.c without changing its<br =
-/>> content, no one could tell you to report to gnulib first.<br /><br />v1=
- does exactly this.<br /><br />> OTOH, if MsgWaitForMultipleObjects is pres=
-ent ustream (in gnulib's<br />> poll.c, sorry that I cannot check right now=
-), it still might be<br />> better to submit the work-around there first.<b=
-r /><br />Workaround is "just don't pass -DNOGDI on MinGW-W64 if you want<b=
-r />MsgWaitForMultipleObjects", there's nothing to send to gnulib.<br />Aft=
-er all, was there a strong reason why Git started passing it?<br />What is =
-there was no option to disable part of windows.h?<br />--<br />To unsubscri=
-be from this list: send the line "unsubscribe git" in<br />the body of a me=
-ssage to majordomo@vger.kernel.org<br />More majordomo info at  http://vger=
-.kernel.org/majordomo-info.html<br /></blockquote></div></div></body></html=
->
+Many more people will know about that, and in the future when we try to
+unbundle them they can shout if for some reason it would be inconvenient
+for them. At the moment I don't think we can say for sure.
 
-<p></p>
+Even if people don't use these bridges, I think just mentioning that
+feature helps the project in general.
 
--- <br />
--- <br />
-*** Please reply-to-all at all times ***<br />
-*** (do not pretend to know who is subscribed and who is not) ***<br />
-*** Please avoid top-posting. ***<br />
-The msysGit Wiki is here: <a href=3D"https://github.com/msysgit/msysgit/wik=
-i">https://github.com/msysgit/msysgit/wiki</a> - Github accounts are free.<=
-br />
-&nbsp;<br />
-You received this message because you are subscribed to the Google<br />
-Groups &quot;msysGit&quot; group.<br />
-To post to this group, send email to msysgit@googlegroups.com<br />
-To unsubscribe from this group, send email to<br />
-msysgit+unsubscribe@googlegroups.com<br />
-For more options, and view previous threads, visit this group at<br />
-<a href=3D"http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den">http:=
-//groups.google.com/group/msysgit?hl=3Den_US?hl=3Den</a><br />
-<br />
---- <br />
-You received this message because you are subscribed to the Google Groups &=
-quot;msysGit&quot; group.<br />
-To unsubscribe from this group and stop receiving emails from it, send an e=
-mail to <a href=3D"mailto:msysgit+unsubscribe@googlegroups.com">msysgit+uns=
-ubscribe@googlegroups.com</a>.<br />
-For more options, visit <a href=3D"https://groups.google.com/d/optout">http=
-s://groups.google.com/d/optout</a>.<br />
+> You raised a good point on the issue of external dependencies may
+> impact Git as a whole, even for those who are not interested in the
+> particular remote helpers at all.  I'll have to think about it.
 
---5366b535_327b23c6_7f3--
+Yes, it's worth thinking about it because it's a real possibility.
+However, real possibilities are many times not likely to happen, and I
+think this is one of those cases.
+
+As I've said, if history is any indication these issues won't happen. As
+far as I can remember the only issues that have happened are backwards
+compatibility issues, not present or future. And as I said I've setup
+TravisCI builds to detect those, which is why we haven't had those
+issues since then.
+
+> So it boils down to "how much resource are there to make sure a helper
+> will stay compatible with wider versions of both sides?" and "how far
+> backwards are helper maintainers willing to bend to support users
+> better?".
+
+This is not that big of an issue. For example, notice how the changes in
+the transport-helper to enable say --force and --dry-run did not
+require to align changes in remote-hg/bzr. That's because remote-hg/bzr
+had already the code for these features, it was just not exercised until
+the transport-helper was modified.
+
+I think the current transport-helper infraestructure is already good
+enough to detect the features and options of the remote helpers so
+unbundling wouldn't be a major problem.
+
+Having said that alignment issues do happen, and we have one of those in
+Git v2.0, but I don't think they are a major concern (at least for
+remote-hg/bzr).
+
+-- 
+Felipe Contreras
