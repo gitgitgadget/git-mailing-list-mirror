@@ -1,117 +1,70 @@
-From: Jeff Sipek <jeffpc@josefsipek.net>
-Subject: Re: [GUILT 04/28] Allow "guilt import-commit" to run from a dir
- which contains spaces.
-Date: Tue, 6 May 2014 14:27:38 -0400
-Message-ID: <20140506182738.GI1655@meili.valhalla.31bits.net>
-References: <1395387126-13681-1-git-send-email-cederp@opera.com>
- <1395387126-13681-5-git-send-email-cederp@opera.com>
- <20140323170409.GG1661@meili.valhalla.31bits.net>
- <CAP=KgsSBcsG1kMfyc=MbUDCuC+4W9Boa2Fwf-FSg6XNxaCAt8g@mail.gmail.com>
- <20140323200739.GJ1661@meili.valhalla.31bits.net>
- <CAP=KgsTVfJ-P9OvpHOHf8kOtf+nZAwY94Dr4FcPDnwr23XP7+Q@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: What's cooking in git.git (Apr 2014, #09; Tue, 29)
+Date: Tue, 06 May 2014 14:39:21 -0500
+Message-ID: <53693a69ed668_2c65106f2ecdb@nysa.notmuch>
+References: <xmqq7g67iwxc.fsf@gitster.dls.corp.google.com>
+ <20140505184546.GB23935@serenity.lan>
+ <xmqqoazb944d.fsf@gitster.dls.corp.google.com>
+ <20140506080749.GD23935@serenity.lan>
+ <xmqqsiomem5t.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Per Cederqvist <cederp@opera.com>
-X-From: git-owner@vger.kernel.org Tue May 06 22:11:32 2014
+To: Junio C Hamano <gitster@pobox.com>,
+	John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Tue May 06 22:14:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WhkCI-0002bK-Sk
-	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 20:34:35 +0200
+	id 1WhlNX-0005Gd-2M
+	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 21:50:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751718AbaEFSeb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 May 2014 14:34:31 -0400
-Received: from josefsipek.net ([64.9.206.49]:1628 "EHLO josefsipek.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750859AbaEFSea (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 May 2014 14:34:30 -0400
-X-Greylist: delayed 415 seconds by postgrey-1.27 at vger.kernel.org; Tue, 06 May 2014 14:34:30 EDT
-Received: from meili.valhalla.31bits.net (c-98-209-117-250.hsd1.mi.comcast.net [98.209.117.250])
-	by josefsipek.net (Postfix) with ESMTPSA id 8CC1055659;
-	Tue,  6 May 2014 14:27:34 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <CAP=KgsTVfJ-P9OvpHOHf8kOtf+nZAwY94Dr4FcPDnwr23XP7+Q@mail.gmail.com>
-User-Agent: Mutt/1.5.22 (2013-10-16)
+	id S1754488AbaEFTuI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 May 2014 15:50:08 -0400
+Received: from mail-oa0-f52.google.com ([209.85.219.52]:48661 "EHLO
+	mail-oa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754480AbaEFTuH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 May 2014 15:50:07 -0400
+Received: by mail-oa0-f52.google.com with SMTP id eb12so2058873oac.25
+        for <git@vger.kernel.org>; Tue, 06 May 2014 12:50:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=DRqlmUZF3IZyB7hNA3aX5bnmiHleoyIMDEsh0aOWjMo=;
+        b=CVYx8qehr5eKHl9a1y1OxIOX6aWSlsHztDn9QCXA0p3cQno6WiBsZDEJQrIZ/RXDMB
+         IeHs1M+kEpSyemM8TIYKEo+OCnmXTBlFGeLcApmSxFt7Paz2S4+QoWXcKestHTpMSY9K
+         z6tchrFds1tb31ldqPvgYfj9Ea/E61V75gTV4sLMOz45NyE/NUd4G5n0qiIeKluzySG8
+         M7uXrGaNqGxWFPfKUhdbM2b5iOfeHnfEjx/keJjp2mPw7nP0V9xzg5qwMJ3iy0TQctBQ
+         Y399ck44WIeY4RrG5UD7DeejY9inU/DelZpAJ78B5Bkf6vQzQrb1sOnfjhK2GbkhF3H5
+         NwtA==
+X-Received: by 10.182.248.131 with SMTP id ym3mr4348120obc.58.1399405807094;
+        Tue, 06 May 2014 12:50:07 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id to6sm1294906obb.6.2014.05.06.12.50.04
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 06 May 2014 12:50:06 -0700 (PDT)
+In-Reply-To: <xmqqsiomem5t.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248234>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248235>
 
-On Sun, Mar 23, 2014 at 10:13:53PM +0100, Per Cederqvist wrote:
-> On Sun, Mar 23, 2014 at 9:07 PM, Jeff Sipek <jeffpc@josefsipek.net> wrote:
-> > On Sun, Mar 23, 2014 at 08:57:08PM +0100, Per Cederqvist wrote:
-> >> On Sun, Mar 23, 2014 at 6:04 PM, Jeff Sipek <jeffpc@josefsipek.net> wrote:
-> >>
-> >> > On Fri, Mar 21, 2014 at 08:31:42AM +0100, Per Cederqvist wrote:
-> >> >
-> >> >> Signed-off-by: Per Cederqvist <cederp@opera.com>
-> >> >> ---
-> >> >>  guilt-import-commit | 6 +++---
-> >> >>  1 file changed, 3 insertions(+), 3 deletions(-)
-> >> >>
-> >> >> diff --git a/guilt-import-commit b/guilt-import-commit
-> >> >> index 20dcee2..9488ded 100755
-> >> >> --- a/guilt-import-commit
-> >> >> +++ b/guilt-import-commit
-> >> >> @@ -23,7 +23,7 @@ if ! must_commit_first; then
-> >> >>  fi
-> >> >>
-> >> >>  disp "About to begin conversion..." >&2
-> >> >> -disp "Current head: `cat $GIT_DIR/refs/heads/\`git_branch\``" >&2
-> >> >> +disp "Current head: `cat \"$GIT_DIR\"/refs/heads/\`git_branch\``" >&2
-> >> >
-> >> > I wonder if it'd be better to use 'git rev-parse' here instead of looking at
-> >> > the refs directly.
-> >> >
-> >> > IOW,
-> >> >
-> >> > disp "Current head: `git rev-parse \`git_branch\``" >&2
-> >>
-> >> That is probably a good idea. I only made the minimum change
-> >> required to get the test suite to pass.
-> >
-> > I totally understand.
-> >
-> >> > Maybe even $() instead of the inner `` to clean it up some more.
-> >>
-> >> Yes, given that that construct is already used in several places
-> >> it is apparently portable enough for guilt. (I guess nobody uses
-> >> /bin/sh on Solaris to run guilt. It doesn't support the $(...)
-> >> construct.)
-> >
-> > Hrm?  I'm using OpenIndiana (OpenSolaris derivative) and my /bin/sh seems to
-> > be a symlink to ksh93.  What version of Solaris are you seeing this behavior
-> > on?
+Junio C Hamano wrote:
+> Having said that, I agree with the conclusion of your message:
 > 
-> Solaris 10:
-> 
-> Last login: Sun Mar 23 20:53:28 2014 from c80-217-121-12.
-> Sun Microsystems Inc.   SunOS 5.10      Generic January 2005
-> You have mail.
-> 500 ceder@bacon> uname -a
-> SunOS bacon 5.10 Generic_147147-26 sun4u sparc SUNW,Sun-Fire-15000
-> 501 ceder@bacon> /bin/sh
-> $ echo `id`
-> uid=105(ceder) gid=20105(ceder)
-> $ echo $(id)
-> syntax error: `(' unexpected
-> 
-> /bin/sh is a symlink to /sbin/sh.
-> 
-> On Solaris 10, you are supposed to use /usr/xpg4/bin/sh if you want
-> a competent standards-compliant shell. /bin/sh is provided as a very
-> backward-compatible shell.
+> > There is a different level of urgency between "you cannot use this
+> > new feature until you update Git" and "if you update Mercurial then
+> > the remote helper will stop working", and that's why I think the
+> > remote helpers may benefit from a separate release schedule.
 
-Ok, I finally got back to this series...
-
-I'd say let's use the nested ``.
-
-Jeff.
+The conclusion is correct, the premises are not.
 
 -- 
-Hegh QaQ law'
-quvHa'ghach QaQ puS
+Felipe Contreras
