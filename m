@@ -1,87 +1,94 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: What's cooking in git.git (Apr 2014, #09; Tue, 29)
-Date: Tue, 6 May 2014 09:07:49 +0100
-Message-ID: <20140506080749.GD23935@serenity.lan>
-References: <xmqq7g67iwxc.fsf@gitster.dls.corp.google.com>
- <20140505184546.GB23935@serenity.lan>
- <xmqqoazb944d.fsf@gitster.dls.corp.google.com>
+From: "Klishevich, Yauheni" <yklishevich@scnsoft.com>
+Subject: read-tree bug
+Date: Tue, 6 May 2014 12:35:27 +0000
+Message-ID: <CF8EB1C1.996%yklishevich@scnsoft.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 06 19:46:19 2014
+Content-Type: text/plain; charset=Windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 06 19:47:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WhiLS-0008Bg-M0
-	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:35:55 +0200
+	id 1WhiQY-0008Bg-Jp
+	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:41:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934295AbaEFIN1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 May 2014 04:13:27 -0400
-Received: from hyena.aluminati.org ([64.22.123.221]:49179 "EHLO
-	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934230AbaEFINY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 May 2014 04:13:24 -0400
-X-Greylist: delayed 328 seconds by postgrey-1.27 at vger.kernel.org; Tue, 06 May 2014 04:13:24 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by hyena.aluminati.org (Postfix) with ESMTP id 9327822B61;
-	Tue,  6 May 2014 09:07:55 +0100 (BST)
-X-Quarantine-ID: <aAQBg+krJALr>
-X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -1
-X-Spam-Level: 
-X-Spam-Status: No, score=-1 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1] autolearn=disabled
-Received: from hyena.aluminati.org ([127.0.0.1])
-	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id aAQBg+krJALr; Tue,  6 May 2014 09:07:54 +0100 (BST)
-Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by hyena.aluminati.org (Postfix) with ESMTPSA id 6C9A722B91;
-	Tue,  6 May 2014 09:07:50 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <xmqqoazb944d.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1757461AbaEFMfu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 May 2014 08:35:50 -0400
+Received: from mail4.scnsoft.com ([93.171.207.9]:17644 "EHLO mail2.scnsoft.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1756459AbaEFMfr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 May 2014 08:35:47 -0400
+Received: from SRV-SCN-MBX2.scnsoft.com (10.20.1.84) by
+ srv-scn-mbx1.scnsoft.com (10.20.1.83) with Microsoft SMTP Server (TLS) id
+ 15.0.775.38; Tue, 6 May 2014 15:35:28 +0300
+Received: from SRV-SCN-MBX2.scnsoft.com ([fe80::e1f5:7334:ca34:3ec1]) by
+ srv-scn-mbx2.scnsoft.com ([fe80::e1f5:7334:ca34:3ec1%14]) with mapi id
+ 15.00.0775.031; Tue, 6 May 2014 15:35:28 +0300
+Thread-Topic: read-tree bug
+Thread-Index: AQHPaSeoIWkS6oy84UubKFhYuyGk0w==
+Accept-Language: ru-RU, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.10.2.58]
+Content-ID: <EA5C38C7C79B1E4E9C7C6BD9C85948B9@scnsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248190>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248191>
 
-On Mon, May 05, 2014 at 04:50:58PM -0700, Junio C Hamano wrote:
-> John Keeping <john@keeping.me.uk> writes:
-> 
-> Having said all that, there is one caveat.
-> 
-> > Since the remote helper interface is stable and the remote helpers do
-> > not use any of the Git internals, I consider the risks of including them
-> > in core Git to outweigh the benefits of wider distribution.
-> 
-> You are correct to say that a remote helper has to talk with a
-> foreign system and it would not help to dictate the update schedule
-> of helpers to match the release cycle of Git itself.  At the same
-> time, however, the interface the remote helpers use to talk to Git
-> has not been as stable as you seem to think, I am afraid.  For
-> example, a recent remote-hg/bzr series needed some enhancements to
-> fast-import to achieve the feature parity with native transports by
-> adding a missing feature or two on the Git side.
+Hello!
 
-This doesn't qualify as an unstable interface for me.  In this case, the
-remote helpers could not support a feature without Git supporting it
-first, which is quite natural and the remote helper can then guard that
-feature with a capability check.  I do not think it likely that the
-remote helper interface will ever change in such a way that all remote
-helpers must be updated, at least not without a long deprecation period.
+I have some troubles with git command =B3read-tree=B2.
 
-The Mercurial API makes no such guarantee; it is considered a private
-implementation detail and most releases seem to contain some changes
-that require all consumers to be updated.
+I have big project and I try to add shared library to subdirectory. So =
+I
+made the following in my project (on master)
 
-There is a different level of urgency between "you cannot use this new
-feature until you update Git" and "if you update Mercurial then the
-remote helper will stop working", and that's why I think the remote
-helpers may benefit from a separate release schedule.
+git remote add git@bitbucket.org:ijin1984/groundwork.git
+git fetch groundwork
+git checkout =ADb gwbranch groundwork/master
+git checkout master
+git read-tree --prefix=3Dmb/trunk/src/ru.uralsib.dbo.client.iphone/libs=
+/ -u
+gwbranch
+git commit =ADm =B3add groundwork to libs=B2
+After that I make small change in one file inside libs (for example in
+"mb/trunk/src/ru.uralsib.dbo.client.iphone/libs/groundwork/notes.txt=B2=
+ and
+commit with=20
+git commit =ADa =ADm =B3test commit=B2
+
+Then I made:=20
+git checkout gwbranch
+git merge --squash -s subtree --no-commit master
+
+And after this instead of merging I find the whole main project in subd=
+ir
+=B3groundwork/Groundwork/Base.lproj=B2.
+
+If I do the 5-th command with =8Bprefix option value equal to for examp=
+le
+=B3libs=B2 tether than something like =B3subdir/subsubdir/=8A/libs=B2 -=
+ all works
+fine.
+
+I think that it is bag, because I experimented quite a lot with deferre=
+nt
+values. I think that problem in directory name with dots, i.e.
+"ru.uralsib.dbo.client.iphone=B2.
+
+Could you please help me with this issue. If you need to add some more
+info about this case I will provide.
+
+Thanks in advance.
+
+
+Best regards,=20
+Eugene Klishevich
+iOS-developer
+skype: eugene.klishevich
