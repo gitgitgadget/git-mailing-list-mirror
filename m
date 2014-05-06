@@ -1,93 +1,86 @@
-From: James Denholm <nod.helm@gmail.com>
-Subject: [PATCH v2 5/5] contrib/subtree/Makefile: clean rule cleanup
-Date: Tue,  6 May 2014 22:41:49 +1000
-Message-ID: <1399380109-3805-6-git-send-email-nod.helm@gmail.com>
-References: <1399380109-3805-1-git-send-email-nod.helm@gmail.com>
-Cc: git@vger.kernel.org, James Denholm <nod.helm@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 06 19:57:07 2014
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [BUG?] Patches created with 'diff.noprefix=true' don't 'git
+ apply'.
+Date: Mon, 5 May 2014 18:59:27 -0700
+Message-ID: <20140506015927.GV9218@google.com>
+References: <CAO8RVvdgN3U5hUEsJjYY9urfeVUDWwHiEur4NQp=H93W37RRnw@mail.gmail.com>
+ <20140501024042.GX9218@google.com>
+ <CAO8RVveV4SgXmJzWpYnyB3rnQALQkrrLNtLL5Ej5Y9Mjjekmmw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git <git@vger.kernel.org>
+To: Nathan Collins <nathan.collins@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 06 20:00:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WhiQm-0008Bg-C5
-	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:41:24 +0200
+	id 1WhiGq-0007Xo-0X
+	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:31:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757498AbaEFMmc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 May 2014 08:42:32 -0400
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:35413 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757503AbaEFMmb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 May 2014 08:42:31 -0400
-Received: by mail-pa0-f43.google.com with SMTP id hz1so463327pad.2
-        for <git@vger.kernel.org>; Tue, 06 May 2014 05:42:30 -0700 (PDT)
+	id S933667AbaEFB7d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 May 2014 21:59:33 -0400
+Received: from mail-ie0-f175.google.com ([209.85.223.175]:43331 "EHLO
+	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933507AbaEFB7d (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 May 2014 21:59:33 -0400
+Received: by mail-ie0-f175.google.com with SMTP id rl12so9057080iec.34
+        for <git@vger.kernel.org>; Mon, 05 May 2014 18:59:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=T3Ud3JwF8XwBP/3+QmPsT4lw3IW6sQWUD8l3iUck6AA=;
-        b=IShgNm7bf8jK6tyC/rO2Fn5DWODYVi3MJI+B3llrDV6eKK0gJlDKAMoIZGrPymwg8h
-         /HSvkzj2eK2ls9vfzVeRdqdLumshEV2QrvMaPDgAQK5Yv8vPBPWx60bWVdXqeO4sL6rZ
-         MdLiiQBghECi0voNkj83Gvdi80c4+QSpYtFOWsPpSpBI6D55EkK65Rj03vHjwND35C1U
-         EMInuLUwriOsSCw1G31h8OpJ+1uGSSld2VkDrJOr+QV0ned4qcbvxOdTfPHyd41+rBjU
-         HOqdJkJ1YMPNMqKvkInMAmxwydfFRySMXemiwq0dKfrZXpeV51kx5P1GxcRjdMCycS7C
-         x2dw==
-X-Received: by 10.66.155.102 with SMTP id vv6mr5960981pab.89.1399380150710;
-        Tue, 06 May 2014 05:42:30 -0700 (PDT)
-Received: from localhost.localdomain ([101.119.28.162])
-        by mx.google.com with ESMTPSA id iv2sm133398pbc.19.2014.05.06.05.42.27
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=IKCAPU5tCXrQiB34kQGgvTJfgeXTHS+P36Rf6E/5JTs=;
+        b=BPQPh07/qAP27DAzEFiv8x3YoIWGvw3xK6WK9SjddEA+rB2Cax+Y0hIqcygZ349ctN
+         M9o2p9XmCUGkAXOFC9UI5RhJcnpFXkWyt9Z5wumveBe25CQTZcI40Uiy60xS/WreBQg4
+         PI3KivR1UTMEAz1bmPOfUEzDLnv6XtXjI8UWG5ZLyhkpe9/OQPver7Ni48NIljRff3Hu
+         pHjF0IzClacV7XPeNM5zId055X/UOOARM3tbdJuFUHgdg/RZzAG1ibJgASbzfJW4LtV7
+         CUl+IylgCkJEtTNNaSf61egSd66KZKrCgvgQmZ9wcdbn4zqt8c3Mc2H/kx/Y+Ev7Kvr5
+         nT9g==
+X-Received: by 10.43.65.145 with SMTP id xm17mr7854036icb.44.1399341572691;
+        Mon, 05 May 2014 18:59:32 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id kr5sm33145333igb.9.2014.05.05.18.59.30
         for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 06 May 2014 05:42:29 -0700 (PDT)
-X-Mailer: git-send-email 1.9.2
-In-Reply-To: <1399380109-3805-1-git-send-email-nod.helm@gmail.com>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 05 May 2014 18:59:32 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CAO8RVveV4SgXmJzWpYnyB3rnQALQkrrLNtLL5Ej5Y9Mjjekmmw@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248198>
 
-git:Documentation/Makefile and others establish "RM ?= rm -f" as a
-convention for rm calls in clean rules, hence follow this convention
-instead of simply forcing clean to use rm.
+Nathan Collins wrote:
+> On Wed, Apr 30, 2014 at 7:40 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+>> Nathan Collins wrote:
 
-subproj and mainline no longer need to be removed in clean, as they are
-no longer created in git:contrib/subtree by "make test". Hence, remove
-the rm call for those folders.
+>>> git show | git apply --reverse
+>>
+>> The following which only uses plumbing commands should work:
+>>
+>>         git diff-tree -p HEAD^! |
+>>         git apply --reverse
+>
+> Nice! However, I don't now how to generalize this solution to other
+> (probably insane) use cases, e.g.
+>
+>   git log -S<string> --patch | git apply --reverse
 
-Other makefiles don't remove "*~" files, remove the rm call to prevent
-unexpected behaviour in the future. Similarly, clean doesn't remove the
-installable file, so rectify this.
+This should do it:
 
-Reviewed-by: Jeff King <peff@peff.net>
-Signed-off-by: James Denholm <nod.helm@gmail.com>
----
- contrib/subtree/Makefile | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+	git rev-list HEAD |
+	git diff-tree --no-commit-id -p -S<string> --stdin |
+	git apply --reverse
 
-diff --git a/contrib/subtree/Makefile b/contrib/subtree/Makefile
-index f3834b5..d888d45 100644
---- a/contrib/subtree/Makefile
-+++ b/contrib/subtree/Makefile
-@@ -12,7 +12,8 @@ man1dir ?= $(mandir)/man1
- -include ../../GIT-VERSION-FILE
- 
- # this should be set to a 'standard' bsd-type install program
--INSTALL ?= install
-+INSTALL  ?= install
-+RM       ?= rm -f
- 
- ASCIIDOC = asciidoc
- XMLTO    = xmlto
-@@ -60,7 +61,7 @@ test:
- 	$(MAKE) -C t/ test
- 
- clean:
--	rm -f *~ *.xml *.html *.1
--	rm -rf subproj mainline
-+	$(RM) $(GIT_SUBTREE)
-+	$(RM) *.xml *.html *.1
- 
- .PHONY: FORCE
--- 
-1.9.2
+More generally, when scripting plumbing commands tend to do the right
+thing.
+
+Will think more about the documentation and other parts (or if someone
+else sends a patch before I can, I won't mind).
+
+Thanks,
+Jonathan
