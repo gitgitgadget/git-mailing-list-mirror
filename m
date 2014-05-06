@@ -1,141 +1,132 @@
-From: dturner@twopensource.com
-Subject: [PATCH 2/2] ignorecase: Fix git mv on insensitive filesystems
-Date: Tue,  6 May 2014 15:59:04 -0700
-Message-ID: <1399417144-24864-2-git-send-email-dturner@twopensource.com>
-References: <xmqqoazaelmi.fsf@gitster.dls.corp.google.com>
- <1399417144-24864-1-git-send-email-dturner@twopensource.com>
-Cc: gitster@pobox.com, David Turner <dturner@twitter.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 07 01:00:28 2014
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: RE: What's cooking in git.git (May 2014, #01; Tue, 6)
+Date: Tue, 06 May 2014 18:17:30 -0500
+Message-ID: <53696d8aa12d2_747f15213089@nysa.notmuch>
+References: <xmqqlhuecz1b.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 07 01:28:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WhoLc-0005ws-Cb
-	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 01:00:28 +0200
+	id 1Whomb-0006H3-Vq
+	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 01:28:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754194AbaEFXAW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 May 2014 19:00:22 -0400
-Received: from mail-qc0-f172.google.com ([209.85.216.172]:39908 "EHLO
-	mail-qc0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750976AbaEFXAU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 May 2014 19:00:20 -0400
-Received: by mail-qc0-f172.google.com with SMTP id l6so215446qcy.3
-        for <git@vger.kernel.org>; Tue, 06 May 2014 16:00:19 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=MuYdsarM1XfIIwarH28OaPXQXWwtB10f/XcSMC0EXfk=;
-        b=KECw5oedAziQYqQzxlx6J6NkvSp3JK3ypDW46Chhinu2dc1NrpcGctOdz3Yl14eLQp
-         R4TbhPaszNOszO9F9PhUOmgr+BWeQhmgmi8Pmt6c++Q3zY/7Px5+kwF3lRPfemttUYeS
-         MS3nGPkA5/iAfoaXOrFXosF6Qs6JCrp/dFC0lXcdikhywTZjH7gcddGjzJu/U8Er24cx
-         pkZ2QaTiK2IK5S3Yp1nhMnYAXqb5+tZ7G3eD1725qtnFJbMXX01eveeUu4BKQWX/o9VP
-         pXNHHgHFkpO7ZoUGbTyYrBDXhDeVsTYIGz9LGun/UdW+cc1cW5mzeGYLM7J1Tq42WTIO
-         dxtQ==
-X-Gm-Message-State: ALoCoQmAuNRWlT5vgidmaGyYxfUNpiz6gEjbYY74wQEih7iUSG/88fI3g4eu7uIoDr9PdmpcZiC9
-X-Received: by 10.140.95.80 with SMTP id h74mr55240754qge.2.1399417219180;
-        Tue, 06 May 2014 16:00:19 -0700 (PDT)
-Received: from stross.twitter.corp ([8.25.197.27])
-        by mx.google.com with ESMTPSA id b17sm26150040qaq.25.2014.05.06.16.00.16
+	id S1752029AbaEFX2S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 May 2014 19:28:18 -0400
+Received: from mail-ob0-f179.google.com ([209.85.214.179]:41359 "EHLO
+	mail-ob0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751829AbaEFX2R (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 May 2014 19:28:17 -0400
+Received: by mail-ob0-f179.google.com with SMTP id gq1so237535obb.38
+        for <git@vger.kernel.org>; Tue, 06 May 2014 16:28:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:message-id:in-reply-to:references:subject:mime-version
+         :content-type:content-transfer-encoding;
+        bh=GV7NuAvuFRh9FiiZ+YIg0LPSm75X29FyiP2ZvroirRA=;
+        b=Zw81eAqmJeVlMCekkhBJDOnAx7DpBe3YLw3qRHYYrOrnUTmyUCoqdDK0at7PqEa2ik
+         JuPYxUSEAAUgyYYJPUMoJwCw4w2iUJ7obQ9LkUNaoe2HDi3pAd+6SzgR98jIalKCNpWU
+         ns7eRUa4nzqN/IYZrkAI4ry0uzChH1dXuhPmqokUrasQsFiL2Dxb/ujk2qinDSxKtTB6
+         6Gd2kNk/e1050UDLWN8ggsJ5WAsxs5HAQJR3gvWJooc7iKVtEf/tgOV2bFf8XFV4FCfq
+         S4MEPs6iB5vgJYvcaFAJCOcvcQoqauP9rFQDijrWnzR5PLxr9Z7mpnz4mqvhcDbZ1nCj
+         supQ==
+X-Received: by 10.182.213.168 with SMTP id nt8mr40365586obc.7.1399418897059;
+        Tue, 06 May 2014 16:28:17 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id f1sm58199479oej.5.2014.05.06.16.28.13
         for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 06 May 2014 16:00:17 -0700 (PDT)
-X-Mailer: git-send-email 2.0.0.rc0.33.g27630aa
-In-Reply-To: <1399417144-24864-1-git-send-email-dturner@twopensource.com>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 06 May 2014 16:28:15 -0700 (PDT)
+In-Reply-To: <xmqqlhuecz1b.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248268>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248269>
 
-From: David Turner <dturner@twitter.com>
+Junio C Hamano wrote:
+> * fc/remote-helpers-hg-bzr-graduation (2014-04-29) 11 commits
+>  - remote-hg: trivial cleanups
+>  - remote-hg: make sure we omit multiple heads
+>  - git-remote-hg: use internal clone's hgrc
+>  - t: remote-hg: split into setup test
+>  - remote-hg: properly detect missing contexts
+>  - remote-{hg,bzr}: store marks only on success
+>  - remote-hg: update to 'public' phase when pushing
+>  - remote-hg: fix parsing of custom committer
+>   (merged to 'next' on 2014-04-22 at fed170a)
+>  + remote-helpers: move tests out of contrib
+>  + remote-helpers: move out of contrib
+>  + remote-helpers: squelch python import exceptions
+> 
+>  Move remote-hg and remote-bzr out of contrib/.  There were some
+>  suggestions on the follow-up fix patches still not in 'next', which
+>  may result in a reroll.
 
-Make it possible to change the case of a filename on a
-case-insensitive filesystem using git mv.  Change git mv to allow
-moves where the destination file exists if either the destination file
-has the same inode as the source file (for Mac) or the same name
-ignoring case (for Win).
+I've no idea what suggestions you are talking about.
 
-Signed-off-by: David Turner <dturner@twitter.com>
----
- builtin/mv.c                | 18 ++++++++++--------
- t/t6039-merge-ignorecase.sh |  2 +-
- 2 files changed, 11 insertions(+), 9 deletions(-)
+>  I tend to agree with John Keeping that remote helpers that are
+>  actively maintained can and should aim to graduate from my tree and
+>  given to the user directly.
 
-diff --git a/builtin/mv.c b/builtin/mv.c
-index 45e57f3..8cead13 100644
---- a/builtin/mv.c
-+++ b/builtin/mv.c
-@@ -74,7 +74,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 	};
- 	const char **source, **destination, **dest_path, **submodule_gitfile;
- 	enum update_mode { BOTH = 0, WORKING_DIRECTORY, INDEX } *modes;
--	struct stat st;
-+	struct stat src_st,dst_st;
- 	struct string_list src_for_dst = STRING_LIST_INIT_NODUP;
- 
- 	gitmodules_config();
-@@ -102,8 +102,8 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 	if (dest_path[0][0] == '\0')
- 		/* special case: "." was normalized to "" */
- 		destination = internal_copy_pathspec(dest_path[0], argv, argc, DUP_BASENAME);
--	else if (!lstat(dest_path[0], &st) &&
--			S_ISDIR(st.st_mode)) {
-+	else if (!lstat(dest_path[0], &dst_st) &&
-+			S_ISDIR(dst_st.st_mode)) {
- 		dest_path[0] = add_slash(dest_path[0]);
- 		destination = internal_copy_pathspec(dest_path[0], argv, argc, DUP_BASENAME);
- 	} else {
-@@ -122,13 +122,13 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 			printf(_("Checking rename of '%s' to '%s'\n"), src, dst);
- 
- 		length = strlen(src);
--		if (lstat(src, &st) < 0)
-+		if (lstat(src, &src_st) < 0)
- 			bad = _("bad source");
- 		else if (!strncmp(src, dst, length) &&
- 				(dst[length] == 0 || dst[length] == '/')) {
- 			bad = _("can not move directory into itself");
--		} else if ((src_is_dir = S_ISDIR(st.st_mode))
--				&& lstat(dst, &st) == 0)
-+		} else if ((src_is_dir = S_ISDIR(src_st.st_mode))
-+				&& lstat(dst, &dst_st) == 0)
- 			bad = _("cannot move directory over file");
- 		else if (src_is_dir) {
- 			int first = cache_name_pos(src, length);
-@@ -202,14 +202,16 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 			}
- 		} else if (cache_name_pos(src, length) < 0)
- 			bad = _("not under version control");
--		else if (lstat(dst, &st) == 0) {
-+		else if (lstat(dst, &dst_st) == 0 &&
-+			 (src_st.st_ino != dst_st.st_ino ||
-+			  (src_st.st_ino == 0 && strcasecmp(src, dst)))) {
- 			bad = _("destination exists");
- 			if (force) {
- 				/*
- 				 * only files can overwrite each other:
- 				 * check both source and destination
- 				 */
--				if (S_ISREG(st.st_mode) || S_ISLNK(st.st_mode)) {
-+				if (S_ISREG(dst_st.st_mode) || S_ISLNK(dst_st.st_mode)) {
- 					if (verbose)
- 						warning(_("overwriting '%s'"), dst);
- 					bad = NULL;
-diff --git a/t/t6039-merge-ignorecase.sh b/t/t6039-merge-ignorecase.sh
-index ad06752..28cfb49 100755
---- a/t/t6039-merge-ignorecase.sh
-+++ b/t/t6039-merge-ignorecase.sh
-@@ -35,7 +35,7 @@ test_expect_success 'merge with case-changing rename on both sides' '
- 	git reset --hard baseline &&
- 	git branch -D with-camel &&
- 	git checkout -b with-camel &&
--	git mv --force TestCase testcase &&
-+	git mv TestCase testcase &&
- 	git commit -m "recase on branch" &&
- 	> foo &&
- 	git add foo &&
+Wait, I was under the impression the graduation was going to happen for
+v2.0.
+
+I don't understand what is the point of preparing the v2.0 for so long,
+and then all of a sudden tag v2.0.0-rc0 and say "oops! if you wanted to
+get something into v2.0 it's too late now", wait another 2-10 years for
+important changes to get merged.
+
+Such a wasted opportunity and such a disappointing release.
+
+Therefore the release notes are still lying to the users:
+
+ * "git push" via transport-helper interface (e.g. remote-hg) has
+   been updated to allow ref deletion in a way similar to the natively
+   supported transports.
+
+That is not true.
+
+These should obviously be part of the v2.0:
+
+* fc/remote-helpers-hg-bzr-graduation (2014-04-29) 11 commits
+ + remote-helpers: move tests out of contrib
+ + remote-helpers: move out of contrib
+ + remote-helpers: squelch python import exceptions
+ - remote-{hg,bzr}: store marks only on success
+
+* fc/remote-helper-refmap (2014-04-21) 8 commits
+  (merged to 'next' on 2014-04-22 at fb5a4c2)
+ + transport-helper: remove unnecessary strbuf resets
+ + transport-helper: add support to delete branches
+ + fast-export: add support to delete refs
+ + fast-import: add support to delete refs
+ + transport-helper: add support to push symbolic refs
+ + transport-helper: add support for old:new refspec
+ + fast-export: add new --refspec option
+ + fast-export: improve argument parsing
+
+* fc/merge-default-to-upstream (2014-04-22) 1 commit
+ + merge: enable defaulttoupstream by default
+
+* fc/mergetool-prompt (2014-04-24) 2 commits
+ + mergetool: document the default for --[no-]prompt
+ + mergetool: run prompt only if guessed tool
+
+Plus this one which has been completely ignored:
+
+   completion: move out of contrib
+
+
+Since you are not going to do so, I do not feel compelled to fix the
+synchronization crash regression that is present in v2.0.0-rc2 and I
+already warned you about.
+
 -- 
-2.0.0.rc0.33.g27630aa
+Felipe Contreras
