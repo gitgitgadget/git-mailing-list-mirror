@@ -1,161 +1,126 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 8/9] cache-tree: convert struct cache_tree to use object_id
-Date: Tue, 06 May 2014 16:53:47 +0200
-Message-ID: <5368F77B.8090409@alum.mit.edu>
-References: <1399147942-165308-1-git-send-email-sandals@crustytoothpaste.net> <1399147942-165308-9-git-send-email-sandals@crustytoothpaste.net>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: Watchman support for git
+Date: Mon, 05 May 2014 20:13:44 -0700
+Organization: Twitter
+Message-ID: <1399346024.11843.43.camel@stross>
+References: <1399072451-15561-1-git-send-email-dturner@twopensource.com>
+	 <CACsJy8C72QQZd4v+p4bkFFKHnN2Uj1zD-BELwGtYB7sx1P6q6g@mail.gmail.com>
+	 <1399091986.5310.20.camel@stross>
+	 <CACsJy8B1Q3WEPT+nzDDwS5f7Wx+u5CHfN9JppRHv5VEx5NTxSw@mail.gmail.com>
+	 <1399150149.5310.47.camel@stross>
+	 <CACsJy8Dr=m5FwmD2gXTM3bN-iYv+fyZ9RBUyvcj3UJJCC1yYtg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 06 20:43:26 2014
+To: git mailing list <git@vger.kernel.org>,
+	Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 06 20:49:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WhiUl-0008Jm-JG
-	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:45:31 +0200
+	id 1WhiHi-0007Xo-Is
+	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:32:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757652AbaEFOxw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 May 2014 10:53:52 -0400
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:50311 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754609AbaEFOxv (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 6 May 2014 10:53:51 -0400
-X-AuditID: 1207440d-f79d86d0000043db-a5-5368f77e9c53
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 50.61.17371.E77F8635; Tue,  6 May 2014 10:53:50 -0400 (EDT)
-Received: from [192.168.69.130] (p4FC97C6E.dip0.t-ipconnect.de [79.201.124.110])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s46ErlhS030132
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Tue, 6 May 2014 10:53:49 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.4.0
-In-Reply-To: <1399147942-165308-9-git-send-email-sandals@crustytoothpaste.net>
-X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprIKsWRmVeSWpSXmKPExsUixO6iqFv3PSPY4NhUBYuuK91MFm0zfzA5
-	MHksv/mXyePzJrkApihum6TEkrLgzPQ8fbsE7owbq46yFNyUqVj7o7yBcbJYFyMHh4SAicST
-	NS5djJxAppjEhXvr2boYuTiEBC4zSizc+5AFwjnPJHF90TFWkCpeAW2J57MmsoDYLAKqEvcW
-	TmcCsdkEdCUW9TQzgQwVFQiS+HNWEaJcUOLkzCdg5SICXhLzH80AGyMs4C9x51UD1Px+Roll
-	d2cygiQ4Bfwkth1ZwQxxnLhET2MQSJhZQEfiXd8DZghbXmL72znMExgFZiFZMQtJ2SwkZQsY
-	mVcxyiXmlObq5iZm5hSnJusWJyfm5aUW6Rrp5WaW6KWmlG5ihAQp7w7G/+tkDjEKcDAq8fB2
-	vMgIFmJNLCuuzD3EKMnBpCTKO+EzUIgvKT+lMiOxOCO+qDQntfgQowQHs5IIb8MXoBxvSmJl
-	VWpRPkxKmoNFSZxXbYm6n5BAemJJanZqakFqEUxWhoNDSYJX/xtQo2BRanpqRVpmTglCmomD
-	E2Q4l5RIcWpeSmpRYmlJRjwoSuOLgXEKkuIB2msA0s5bXJCYCxSFaD3FqMtxoWFFC5MQS15+
-	XqqUOO/+r0BFAiBFGaV5cCtgKekVozjQx8K8P0CqeIDpDG7SK6AlTEBLuIzTQZaUJCKkpBoY
-	1S8ITq9zUT7f/raX+fv3eyVsv5l6Bab78fdPCmzlDnR4skD1rEetzJrYjJaIo9PkdF9nsHwT
-	854e8lG9blbzmt9r1ukv4O6ssJG2TW9YI57RP3mblFfAo4IOtzMT5Ffw1Ux7OkXr 
+	id S933886AbaEFDNt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 May 2014 23:13:49 -0400
+Received: from mail-qa0-f50.google.com ([209.85.216.50]:63369 "EHLO
+	mail-qa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933809AbaEFDNt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 May 2014 23:13:49 -0400
+Received: by mail-qa0-f50.google.com with SMTP id j15so2758854qaq.23
+        for <git@vger.kernel.org>; Mon, 05 May 2014 20:13:48 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
+         :references:organization:content-type:content-transfer-encoding
+         :mime-version;
+        bh=mqz1p/R6QpXhlaYyBs0hnGCCqCO9Z7jfzu7g5RLVVHM=;
+        b=Nc+uzK+bJpJePwKyl4I4/9uNos+PFMABYWC68glqM47ib4QUUivzmwipvkCGclKltc
+         tpTiqbMLdjjfaakqe6N9eVBWbxZi0ZqVn8iQswkrSI5bbwsbcwkdswF68RU3vpzQ5/qb
+         Y5D50WRbRwtV+a6HBB/XMwGyCL+7ANTMpF4WgFCan3Gki8RAKv7C0dmId5DYXmfTbsre
+         hlXsfsY6uVVN/+kShzA4XREzeC9r2N6lVoMYtk0rSfkC5lEQM4gD7I1+0Vxnks1sSQde
+         giblxiHA6CiKvmioLpPNCoEJQ3GknIVJC3PlvJ2qrcG2HiC+KzmmWZW9WqjT07zTJBA9
+         1jaA==
+X-Gm-Message-State: ALoCoQmc3g1YlM+AGM94bmaYWqqQD/GeStGiyb6uMQbwB8C3ZfzwrLlVNd3LXuakphUIRRXnFhCw
+X-Received: by 10.140.101.99 with SMTP id t90mr9529669qge.115.1399346028395;
+        Mon, 05 May 2014 20:13:48 -0700 (PDT)
+Received: from [172.25.143.182] ([8.25.197.27])
+        by mx.google.com with ESMTPSA id 104sm14035223qgq.1.2014.05.05.20.13.45
+        for <multiple recipients>
+        (version=SSLv3 cipher=RC4-SHA bits=128/128);
+        Mon, 05 May 2014 20:13:47 -0700 (PDT)
+In-Reply-To: <CACsJy8Dr=m5FwmD2gXTM3bN-iYv+fyZ9RBUyvcj3UJJCC1yYtg@mail.gmail.com>
+X-Mailer: Evolution 3.2.3-0ubuntu6 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248210>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248211>
 
-On 05/03/2014 10:12 PM, brian m. carlson wrote:
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> ---
->  builtin/commit.c       |  2 +-
->  builtin/fsck.c         |  4 ++--
->  cache-tree.c           | 30 +++++++++++++++---------------
->  cache-tree.h           |  3 ++-
->  merge-recursive.c      |  2 +-
->  reachable.c            |  2 +-
->  sequencer.c            |  2 +-
->  test-dump-cache-tree.c |  4 ++--
->  8 files changed, 25 insertions(+), 24 deletions(-)
+On Sun, 2014-05-04 at 07:15 +0700, Duy Nguyen wrote:
+> > I would like to merge the feature into master.  It works well for me,
+> > and some of my colleagues who have tried it out.
 > 
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index 9cfef6c..639f843 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -1659,7 +1659,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
->  		append_merge_tag_headers(parents, &tail);
->  	}
->  
-> -	if (commit_tree_extended(&sb, active_cache_tree->sha1, parents, sha1,
-> +	if (commit_tree_extended(&sb, active_cache_tree->sha1.oid, parents, sha1,
->  				 author_ident.buf, sign_commit, extra)) {
->  		rollback_index_files();
->  		die(_("failed to write commit object"));
-> diff --git a/builtin/fsck.c b/builtin/fsck.c
-> index fc150c8..6854c81 100644
-> --- a/builtin/fsck.c
-> +++ b/builtin/fsck.c
-> @@ -587,10 +587,10 @@ static int fsck_cache_tree(struct cache_tree *it)
->  		fprintf(stderr, "Checking cache tree\n");
->  
->  	if (0 <= it->entry_count) {
-> -		struct object *obj = parse_object(it->sha1);
-> +		struct object *obj = parse_object(it->sha1.oid);
->  		if (!obj) {
->  			error("%s: invalid sha1 pointer in cache-tree",
-> -			      sha1_to_hex(it->sha1));
-> +			      sha1_to_hex(it->sha1.oid));
->  			return 1;
->  		}
->  		obj->used = 1;
-> diff --git a/cache-tree.c b/cache-tree.c
-> index 7fa524a..b7b2d06 100644
-> --- a/cache-tree.c
-> +++ b/cache-tree.c
-> @@ -219,7 +219,7 @@ int cache_tree_fully_valid(struct cache_tree *it)
->  	int i;
->  	if (!it)
->  		return 0;
-> -	if (it->entry_count < 0 || !has_sha1_file(it->sha1))
-> +	if (it->entry_count < 0 || !has_sha1_file(it->sha1.oid))
->  		return 0;
->  	for (i = 0; i < it->subtree_nr; i++) {
->  		if (!cache_tree_fully_valid(it->down[i]->cache_tree))
-> @@ -244,7 +244,7 @@ static int update_one(struct cache_tree *it,
->  
->  	*skip_count = 0;
->  
-> -	if (0 <= it->entry_count && has_sha1_file(it->sha1))
-> +	if (0 <= it->entry_count && has_sha1_file(it->sha1.oid))
->  		return it->entry_count;
->  
->  	/*
-> @@ -311,7 +311,7 @@ static int update_one(struct cache_tree *it,
->  		struct cache_tree_sub *sub;
->  		const char *path, *slash;
->  		int pathlen, entlen;
-> -		const unsigned char *sha1;
-> +		const struct object_id *sha1;
->  		unsigned mode;
->  
->  		path = ce->name;
-> @@ -327,21 +327,21 @@ static int update_one(struct cache_tree *it,
->  				die("cache-tree.c: '%.*s' in '%s' not found",
->  				    entlen, path + baselen, path);
->  			i += sub->count;
-> -			sha1 = sub->cache_tree->sha1;
-> +			sha1 = &sub->cache_tree->sha1;
->  			mode = S_IFDIR;
->  			if (sub->cache_tree->entry_count < 0)
->  				to_invalidate = 1;
->  		}
->  		else {
-> -			sha1 = ce->sha1;
-> +			sha1 = (struct object_id *)ce->sha1;
+> Have you tried to turn watchman on by default, then run it with git
+> test suite? That usually helps.
 
-This topic was discussed on the mailing list in the abstract.  Here is a
-concrete example.
+I have.  The tests work run fine under make, but prove sometimes freezes
+due to an issue in libwatchman which I just fixed (and which I plan to
+merge as soon as I can get a colleague to look the changes over).
 
-This cast is undefined, because you can't make the assumption that
-cache_entry::sha1 has the same alignment and padding as (struct object_id).
+> > I can split the vmac patch into two, but one of them will remain quite
+> > large because it contains the code for VMAC and AES, which total a bit
+> > over 100k.  Since the list will probably reject that, I'll post a link
+> > to a repository containing the patches.
+> 
+> With the read-cache deamon, I think hashing cost is less of an issue,
+> so new hashing algorithm becomes less important. If you store the file
+> cache in the deamon's memory only, there's no need to hash anything.
+> But I guess you already tried this.
 
-I think the transition will be more tractable if you rewrite the data
-structures *first*; in this case changing cache_entry::sha1 to be
-(struct object_id) *before* rewriting code that works with it.
+I agree that with the daemon, the cost is less of an issue, but I am not
+100% sure it is a non-issue; consecutive commands that need to
+read/write the index can still be slowed down.
 
-> [...]
+> > I'm not 100% sure how to split the watchman patch up.  I could add the
+> > fs_cache code and then separately add the watchman code that populates
+> > the cache.  Do you think there is a need to divide it up beyond this?
+> 
+> I'll need to have closer look at your patches to give any suggestions.
 
-Michael
+I have uploaded a new version (which is about 5-10% faster and which
+corrects some minor changes) to https://github.com/dturner-tw/git.git on
+the watchman branch.  
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+> Although if you don't mind waiting a bit, I can try to put my
+> untracked cache patches in good shape (hopefully in 2 weeks), then you
+> can mostly avoid touching dir.c and reuse my work.
+
+If the untracked cache patches are going to make it into master, then I
+would of course be willing to rewrite on top of them.  But I would also
+like to have a sense of whether there is any interest in watchman
+support (outside of Twitter).
+
+For what it's worth, the numbers today for index version 4 are for my
+superscience repo are:
+~380 (no watchman), ~260 (untracked-cache), ~175 (watchman).
+
+That's because untracked-cache still has to stat every directory.
+
+> I backed away from watchman support because I was worried about its
+> overhead (of watchman itself, and git/watchman IPC because it's not
+> designed specifically for git), which led me to try optimizing git as
+> much as possible without watchman first, then see how/if watchman can
+> help on top of that. I still think it's a good approach (maybe because
+> it started to make me doubt if watchman could pull a big performance
+> win on top to justify the changes to support it)
+
+I think on large repositories (especially deeply-nested ones), with the
+common case of a small number of changes, watchman will end up being a
+big win.  Java tends towards deep nesting
+(src/main/java/com/twitter/common/...), which is probably why my test
+repo had the largest speedup (>50%).  The IPC overhead might become bad
+if there were a large number of changes, but so far this has not been an
+issue for me in testing.  
