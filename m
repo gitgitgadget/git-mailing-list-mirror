@@ -1,109 +1,117 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Apr 2014, #09; Tue, 29)
-Date: Tue, 06 May 2014 10:59:16 -0700
-Message-ID: <xmqqeh06g557.fsf@gitster.dls.corp.google.com>
-References: <xmqq7g67iwxc.fsf@gitster.dls.corp.google.com>
-	<20140505184546.GB23935@serenity.lan>
-	<5367e1ac39571_5977e7531081@nysa.notmuch>
-	<20140505195525.GC23935@serenity.lan>
+From: Jeff Sipek <jeffpc@josefsipek.net>
+Subject: Re: [GUILT 04/28] Allow "guilt import-commit" to run from a dir
+ which contains spaces.
+Date: Tue, 6 May 2014 14:27:38 -0400
+Message-ID: <20140506182738.GI1655@meili.valhalla.31bits.net>
+References: <1395387126-13681-1-git-send-email-cederp@opera.com>
+ <1395387126-13681-5-git-send-email-cederp@opera.com>
+ <20140323170409.GG1661@meili.valhalla.31bits.net>
+ <CAP=KgsSBcsG1kMfyc=MbUDCuC+4W9Boa2Fwf-FSg6XNxaCAt8g@mail.gmail.com>
+ <20140323200739.GJ1661@meili.valhalla.31bits.net>
+ <CAP=KgsTVfJ-P9OvpHOHf8kOtf+nZAwY94Dr4FcPDnwr23XP7+Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Tue May 06 22:10:24 2014
+Cc: git@vger.kernel.org
+To: Per Cederqvist <cederp@opera.com>
+X-From: git-owner@vger.kernel.org Tue May 06 22:11:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WhjeK-00061A-JB
-	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 19:59:28 +0200
+	id 1WhkCI-0002bK-Sk
+	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 20:34:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753428AbaEFR7X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 May 2014 13:59:23 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:55751 "EHLO smtp.pobox.com"
+	id S1751718AbaEFSeb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 May 2014 14:34:31 -0400
+Received: from josefsipek.net ([64.9.206.49]:1628 "EHLO josefsipek.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751981AbaEFR7V (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 May 2014 13:59:21 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 897821309E;
-	Tue,  6 May 2014 13:59:20 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=S0o8Y1SN6vy9b7F58Lt6Y6/HxK4=; b=F/9QE8
-	Cvg5e3PoF2LbOqqs/Lq0QXyu4iFRuhV1X616MWidcc3ScDkcHKxGVndPbiIbIrEM
-	zNtwxLQzCtjOV6RbcWqhSH0CEEV0PE8UXUP0BdI22tfTS0u7S3pSwaQ2RpNjSvf3
-	C9xXT1DHXouoS2iJ437kVOMpobbHuyASr6mRo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wwbpgAJfvZyJqxKwEwjLSBKyMBwVArRP
-	0TpHRLaF2oFcHxFoGSi/VRf2v3XbuQ42NTOCdq65JrpmlrocbTU1SUqls3e8fkLB
-	ibxuovc/NPs4iXIz3yA3wF1QtpuXewHvbaLENrdAsmKqxUdscczzoDeBR7SMK85w
-	jP+lI2mpsSM=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7F0481309D;
-	Tue,  6 May 2014 13:59:20 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 1204F1309A;
-	Tue,  6 May 2014 13:59:18 -0400 (EDT)
-In-Reply-To: <20140505195525.GC23935@serenity.lan> (John Keeping's message of
-	"Mon, 5 May 2014 20:55:25 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 24ABD674-D548-11E3-B0F4-9CEB01674E00-77302942!pb-smtp0.pobox.com
+	id S1750859AbaEFSea (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 May 2014 14:34:30 -0400
+X-Greylist: delayed 415 seconds by postgrey-1.27 at vger.kernel.org; Tue, 06 May 2014 14:34:30 EDT
+Received: from meili.valhalla.31bits.net (c-98-209-117-250.hsd1.mi.comcast.net [98.209.117.250])
+	by josefsipek.net (Postfix) with ESMTPSA id 8CC1055659;
+	Tue,  6 May 2014 14:27:34 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <CAP=KgsTVfJ-P9OvpHOHf8kOtf+nZAwY94Dr4FcPDnwr23XP7+Q@mail.gmail.com>
+User-Agent: Mutt/1.5.22 (2013-10-16)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248234>
 
-John Keeping <john@keeping.me.uk> writes:
+On Sun, Mar 23, 2014 at 10:13:53PM +0100, Per Cederqvist wrote:
+> On Sun, Mar 23, 2014 at 9:07 PM, Jeff Sipek <jeffpc@josefsipek.net> wrote:
+> > On Sun, Mar 23, 2014 at 08:57:08PM +0100, Per Cederqvist wrote:
+> >> On Sun, Mar 23, 2014 at 6:04 PM, Jeff Sipek <jeffpc@josefsipek.net> wrote:
+> >>
+> >> > On Fri, Mar 21, 2014 at 08:31:42AM +0100, Per Cederqvist wrote:
+> >> >
+> >> >> Signed-off-by: Per Cederqvist <cederp@opera.com>
+> >> >> ---
+> >> >>  guilt-import-commit | 6 +++---
+> >> >>  1 file changed, 3 insertions(+), 3 deletions(-)
+> >> >>
+> >> >> diff --git a/guilt-import-commit b/guilt-import-commit
+> >> >> index 20dcee2..9488ded 100755
+> >> >> --- a/guilt-import-commit
+> >> >> +++ b/guilt-import-commit
+> >> >> @@ -23,7 +23,7 @@ if ! must_commit_first; then
+> >> >>  fi
+> >> >>
+> >> >>  disp "About to begin conversion..." >&2
+> >> >> -disp "Current head: `cat $GIT_DIR/refs/heads/\`git_branch\``" >&2
+> >> >> +disp "Current head: `cat \"$GIT_DIR\"/refs/heads/\`git_branch\``" >&2
+> >> >
+> >> > I wonder if it'd be better to use 'git rev-parse' here instead of looking at
+> >> > the refs directly.
+> >> >
+> >> > IOW,
+> >> >
+> >> > disp "Current head: `git rev-parse \`git_branch\``" >&2
+> >>
+> >> That is probably a good idea. I only made the minimum change
+> >> required to get the test suite to pass.
+> >
+> > I totally understand.
+> >
+> >> > Maybe even $() instead of the inner `` to clean it up some more.
+> >>
+> >> Yes, given that that construct is already used in several places
+> >> it is apparently portable enough for guilt. (I guess nobody uses
+> >> /bin/sh on Solaris to run guilt. It doesn't support the $(...)
+> >> construct.)
+> >
+> > Hrm?  I'm using OpenIndiana (OpenSolaris derivative) and my /bin/sh seems to
+> > be a symlink to ksh93.  What version of Solaris are you seeing this behavior
+> > on?
+> 
+> Solaris 10:
+> 
+> Last login: Sun Mar 23 20:53:28 2014 from c80-217-121-12.
+> Sun Microsystems Inc.   SunOS 5.10      Generic January 2005
+> You have mail.
+> 500 ceder@bacon> uname -a
+> SunOS bacon 5.10 Generic_147147-26 sun4u sparc SUNW,Sun-Fire-15000
+> 501 ceder@bacon> /bin/sh
+> $ echo `id`
+> uid=105(ceder) gid=20105(ceder)
+> $ echo $(id)
+> syntax error: `(' unexpected
+> 
+> /bin/sh is a symlink to /sbin/sh.
+> 
+> On Solaris 10, you are supposed to use /usr/xpg4/bin/sh if you want
+> a competent standards-compliant shell. /bin/sh is provided as a very
+> backward-compatible shell.
 
-> And it is now probably too late for that to make Git 2.0,...
+Ok, I finally got back to this series...
 
-Anything with end-user visible changes in the core part that is not
-a fix to a regression introduced between v1.9.0..master is too late
-for the upcoming release.  We are way past -rc1.
+I'd say let's use the nested ``.
 
->> So I think these are the two options:
->> 
->>   1) Include git-remote-hg/bzr to the core and distribute them by
->>      default (as is the current intention)
->> 
->>   2) Remove git-remote-hg/bzr entirely from the Git tree. And do the
->>      same for other tools: git-p4, git-svn, git-cvs*. Given the huge
->>      amount of people using Subversion, we might want to defer that one
->>      for later, but eventually do it.
+Jeff.
 
-Isn't there a middle ground?  The option 1.5 may be like this:
-
- - Eject tools in contrib/ that would benefit the users better if
-   they were outside my tree.  There are a few points to consider
-   when judging "benefit better if outside":
-
-   * Their release cycle requirements are better met outside my tree
-     (the "remote-hg depends not just on Git but Hg internal" issue
-     we have discussed).
-
-   * They are actively maintained.  The overall Git maintainer would
-     merely be being a bottleneck than being a helpful editor with
-     respect to these tools if we keep them in my tree, and we
-     expect that the tool maintainer would do a much better job
-     without me.
-
- - Keep tools that are not actively maintained but still used by the
-   users widely in my tree, but when their external dependencies
-   become baggage to Git as a whole, demote them to contrib/ and
-   stop installing them by default.
-
- - I would not mind having install.contrib-frotz target in the
-   top-level Makefile for each of the remaining contrib/frotz
-   hierarchies for those users and distro packagers who know their
-   platform meets the dependency requirements.
-
-> I'm not sure it needs to
-> wait for a major Git release since most of the impact is on package
-> maintainers and not end users.
-
-Removal of features is a big deal, I would think, though.
+-- 
+Hegh QaQ law'
+quvHa'ghach QaQ puS
