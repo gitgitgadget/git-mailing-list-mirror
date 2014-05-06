@@ -1,88 +1,111 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH] t3910: show failure of core.precomposeunicode with
- decomposed filenames
-Date: Tue, 6 May 2014 12:11:37 +0200
-Message-ID: <CABPQNSavqqB_yWXn1_8JTUWY8t13PZsepx7pez-9vcPAS6iv0w@mail.gmail.com>
-References: <20140428161630.GA9435@sigill.intra.peff.net> <5365DA7B.6050000@web.de>
- <20140505214658.GA16971@sigill.intra.peff.net>
-Reply-To: kusmabite@gmail.com
+From: "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH] test doc: test_write_lines does not split its arguments
+Date: Tue, 6 May 2014 21:20:51 +0300
+Message-ID: <20140506182051.GA10333@redhat.com>
+References: <1398622524-26207-1-git-send-email-mst@redhat.com>
+ <1398622524-26207-2-git-send-email-mst@redhat.com>
+ <20140505235143.GU9218@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue May 06 20:32:20 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, sunshine@sunshineco.com, peff@peff.net,
+	gitster@pobox.com
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 06 20:36:09 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WhiNX-0008Bg-E9
-	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:38:03 +0200
+	id 1Whk0P-000625-8P
+	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 20:22:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934791AbaEFKMT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 May 2014 06:12:19 -0400
-Received: from mail-ig0-f171.google.com ([209.85.213.171]:34201 "EHLO
-	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934609AbaEFKMS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 6 May 2014 06:12:18 -0400
-Received: by mail-ig0-f171.google.com with SMTP id c1so6010121igq.10
-        for <git@vger.kernel.org>; Tue, 06 May 2014 03:12:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=gwXF0NrNygJsXCYeCwEPYLUTXwxS24P4X5r56v0v260=;
-        b=z65no5RK2Z6WjE81MkQJFl/lHMqTmvmi8HCOqqWsKyyFCWlCpwvMHkPbloMFhAFHVq
-         QiwtnTP+FzgLXymhgIKuCkvHo/4FxAe6B9rdmPNffCnAMlFLJcjQqlbsJvqTmjD+kd5X
-         0FSZrtVCbeXKJyGzBjTC6KPV5ItJsC6L8EWzwYyxvlwlhaFElw33yb7Fii3vC+glFhLD
-         7QwXhFYP7ojydXU0iH+rFlSCsXrRftSGpJpVGPY2865opZMBIZ6kRL0YfnekFG7Y5Y61
-         mbeR/QoxmxP2QdjiIAd/KjPyRTEeCpx9zgwhfvMsfOMlj1l21q6BG+O80+egrmrmPb29
-         HAKA==
-X-Received: by 10.42.162.68 with SMTP id w4mr13209501icx.50.1399371138084;
- Tue, 06 May 2014 03:12:18 -0700 (PDT)
-Received: by 10.64.166.135 with HTTP; Tue, 6 May 2014 03:11:37 -0700 (PDT)
-In-Reply-To: <20140505214658.GA16971@sigill.intra.peff.net>
+	id S1752325AbaEFSWJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 May 2014 14:22:09 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:26347 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751018AbaEFSWI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 May 2014 14:22:08 -0400
+Received: from int-mx12.intmail.prod.int.phx2.redhat.com (int-mx12.intmail.prod.int.phx2.redhat.com [10.5.11.25])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id s46ILx3K015758
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 6 May 2014 14:22:00 -0400
+Received: from redhat.com (ovpn-116-50.ams2.redhat.com [10.36.116.50])
+	by int-mx12.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id s46ILvJw008016;
+	Tue, 6 May 2014 14:21:57 -0400
+Content-Disposition: inline
+In-Reply-To: <20140505235143.GU9218@google.com>
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.25
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248207>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248208>
 
-On Mon, May 5, 2014 at 11:46 PM, Jeff King <peff@peff.net> wrote:
-> On Sun, May 04, 2014 at 08:13:15AM +0200, Torsten B=C3=B6gershausen w=
-rote:
->
->> >   1. Tell everyone that NFD in the git repo is wrong, and
->> >      they should make a new commit to normalize all their
->> >      in-repo files to be precomposed.
->> >      This is probably not the right thing to do, because it
->> >      still doesn't fix checkouts of old history. And it
->> >      spreads the problem to people on byte-preserving
->> >      filesystems (like ext4), because now they have to start
->> >      precomposing their filenames as they are adde to git.
->>      (typo:                                                         =
-         ^added)
->> I'm not sure if I follow. People running ext4 (or Linux in general,
->> or Windows, or Unix) do not suffer from file system
->> "feature" of Mac OS, which accepts precomposed/decomposed Unicode
->> but returns decompomsed.
->
-> What I mean by "spreads the problem" is that git on Linux does not ne=
-ed
-> to care about utf8 at all. It treats filenames as a byte sequence. Bu=
-t
-> if we were to start enforcing "filenames should be precomposed utf8",
-> then people adding files on Linux would want to enforce that, too.
->
-> People on Linux could ignore the issue as they do now, but they would
-> then create problems for OS X users if they add decomposed filenames.
-> IOW, if the OS X code assumes "all repo filenames are precomposed", t=
-hen
-> other systems become a possible vector for violating that assumption.
+On Mon, May 05, 2014 at 04:51:43PM -0700, Jonathan Nieder wrote:
+> test_write_lines carefully quotes its arguments as "$@", so
+> 
+> 	test_write_lines "a b" c
+> 
+> writes two lines as requested, not three.
+> 
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 
-=46WIW, Git for Windows also doesn't deal with that "filenames are just
-a byte-sequence"-notion. We have patches in place that require
-filenames to *either* be valid UTF-8 or Windows-1252. Windows itself
-treats filenames as Unicode characters, not arbitrary byte sequences.
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+
+> ---
+> Hi,
+> 
+> Michael S. Tsirkin wrote:
+> 
+> > +++ b/t/README
+> > @@ -596,6 +596,28 @@ library for your script to use.
+> > +	test_write_lines "a b c d e f g" >foo
+> > +
+> > +   Is a more compact equivalent of:
+> > +	cat >foo <<-EOF
+> > +	a
+> > +	b
+> [...]
+> > +++ b/t/test-lib-functions.sh
+> > @@ -717,6 +717,11 @@ test_ln_s_add () {
+> >  	fi
+> >  }
+> >  
+> > +# This function writes out its parameters, one per line
+> > +test_write_lines () {
+> > +	printf "%s\n" "$@"
+> > +}
+> 
+> How about this patch?
+> 
+> Thanks,
+> Jonathan
+> 
+>  t/README | 7 +++----
+>  1 file changed, 3 insertions(+), 4 deletions(-)
+> 
+> diff --git a/t/README b/t/README
+> index 2d6232f..8a9d499 100644
+> --- a/t/README
+> +++ b/t/README
+> @@ -596,15 +596,14 @@ library for your script to use.
+>  		...
+>  	'
+>  
+> - - test_write_lines <text>
+> + - test_write_lines <lines>
+>  
+> -   Split <text> to white-space separated words and write it out on standard
+> -   output, one word per line.
+> +   Write <lines> on standard output, one line per argument.
+>     Useful to prepare multi-line files in a compact form.
+>  
+>     Example:
+>  
+> -	test_write_lines "a b c d e f g" >foo
+> +	test_write_lines a b c d e f g >foo
+>  
+>     Is a more compact equivalent of:
+>  	cat >foo <<-EOF
+> -- 
+> 1.9.1.423.g4596e3a
