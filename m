@@ -1,88 +1,108 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v2] pager: remove 'S' from $LESS by default
-Date: Tue, 06 May 2014 20:49:22 +0200
-Message-ID: <vpqzjiuu4i5.fsf@anie.imag.fr>
-References: <xmqq38gwm5ny.fsf@gitster.dls.corp.google.com>
-	<1398843325-31267-1-git-send-email-Matthieu.Moy@imag.fr>
-	<20140505184441.GS9218@google.com>
-	<110110563.544859.1399320654149.JavaMail.zimbra@imag.fr>
-	<xmqqppjqg6an.fsf@gitster.dls.corp.google.com>
-	<87mweuss7d.fsf@fencepost.gnu.org>
+From: Jeff Sipek <jeffpc@josefsipek.net>
+Subject: Re: [GUILT 17/28] "guilt graph" no longer loops when no patches are
+ applied.
+Date: Tue, 6 May 2014 16:10:23 -0400
+Message-ID: <20140506201023.GN1655@meili.valhalla.31bits.net>
+References: <1395387126-13681-1-git-send-email-cederp@opera.com>
+ <1395387126-13681-18-git-send-email-cederp@opera.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	d9ba@mailtor.net, peff@peff.net
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Tue May 06 22:17:15 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Per Cederqvist <cederp@opera.com>
+X-From: git-owner@vger.kernel.org Tue May 06 22:25:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WhkRM-000361-IF
-	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 20:50:08 +0200
+	id 1Whlh4-0005GE-87
+	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 22:10:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752803AbaEFSuB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 May 2014 14:50:01 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:53814 "EHLO rominette.imag.fr"
+	id S1754126AbaEFUKV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 May 2014 16:10:21 -0400
+Received: from josefsipek.net ([64.9.206.49]:1565 "EHLO josefsipek.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751486AbaEFSuA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 May 2014 14:50:00 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s46InKmZ028593
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 6 May 2014 20:49:20 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s46InPuE014564;
-	Tue, 6 May 2014 20:49:25 +0200
-In-Reply-To: <87mweuss7d.fsf@fencepost.gnu.org> (David Kastrup's message of
-	"Tue, 06 May 2014 20:00:22 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 06 May 2014 20:49:21 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s46InKmZ028593
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1400006962.64256@KsrSp+t4X+0Z2BKt0ni5ww
+	id S1751027AbaEFUKU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 May 2014 16:10:20 -0400
+Received: from meili.valhalla.31bits.net (c-98-209-117-250.hsd1.mi.comcast.net [98.209.117.250])
+	by josefsipek.net (Postfix) with ESMTPSA id 4385F55654;
+	Tue,  6 May 2014 16:10:19 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <1395387126-13681-18-git-send-email-cederp@opera.com>
+User-Agent: Mutt/1.5.22 (2013-10-16)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248238>
 
-David Kastrup <dak@gnu.org> writes:
+Signed-off-by: Josef 'Jeff' Sipek <jeffpc@josefsipek.net>
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> I still find the output from "git blame" disturbing, though.  The
->> first thing I do in "git blame" output is to scroll to the right in
->> order to identify the the area I am interested in, and this first
->> step is not negatively affected, because the right scrolled output 
->> automatically wraps long lines.
->>
->> But my second step is to scroll back to the left edge to find the
->> commit object name and at that point, the new default output without
->> "S" gets somewhat annoying, because most of the output lines from
->> "git blame" are longer than my window width.
->
-> git blame sucks in anything but fullscreen either way.  It would help to
-> display _only_ the source code and have the other info as mouse-over,
-> but that's not something a pager can do.
-
-Exactly. I personally never use "git blame" outside "git gui blame" for
-this reason.
-
-It's possible for a user to set pager.blame to "less -S" to get back to
-the previous behavior only for blame.
-
-The idea of having a separate default value for pager.blame (or set
-$LESS differently for blame) crossed my mind, but I actually don't like
-it, as it would make it harder for a user to fine-tune his configuration
-manually (one would have to cancel all the corner-cases that Git would
-set by default).
+On Fri, Mar 21, 2014 at 08:31:55AM +0100, Per Cederqvist wrote:
+> Give an error message if no patches are applied.  Added a test case
+> that never terminates unless this fix is applied.
+> 
+> Signed-off-by: Per Cederqvist <cederp@opera.com>
+> ---
+>  guilt-graph          | 10 ++++++++--
+>  regression/t-033.out |  3 +++
+>  regression/t-033.sh  | 11 +++++++++++
+>  3 files changed, 22 insertions(+), 2 deletions(-)
+>  create mode 100644 regression/t-033.out
+>  create mode 100755 regression/t-033.sh
+> 
+> diff --git a/guilt-graph b/guilt-graph
+> index b3469dc..00301d5 100755
+> --- a/guilt-graph
+> +++ b/guilt-graph
+> @@ -17,8 +17,14 @@ fi
+>  
+>  patchname="$1"
+>  
+> -bottom=`git rev-parse refs/patches/$branch/$(head_n 1 < "$applied")`
+> -base=`git rev-parse $bottom^`
+> +bottompatch=$(head_n 1 < "$applied")
+> +if [ -z "$bottompatch" ]
+> +then
+> +	echo "No patch applied." >&2
+> +	exit 1
+> +fi
+> +
+> +base=`git rev-parse "refs/patches/${branch}/${bottompatch}^"`
+>  
+>  if [ -z "$patchname" ]; then
+>  	top=`git rev-parse HEAD`
+> diff --git a/regression/t-033.out b/regression/t-033.out
+> new file mode 100644
+> index 0000000..76613f9
+> --- /dev/null
+> +++ b/regression/t-033.out
+> @@ -0,0 +1,3 @@
+> +% setup_repo
+> +% guilt graph
+> +No patch applied.
+> diff --git a/regression/t-033.sh b/regression/t-033.sh
+> new file mode 100755
+> index 0000000..ae40577
+> --- /dev/null
+> +++ b/regression/t-033.sh
+> @@ -0,0 +1,11 @@
+> +#!/bin/bash
+> +#
+> +# Test the graph code
+> +#
+> +
+> +source "$REG_DIR/scaffold"
+> +
+> +cmd setup_repo
+> +
+> +shouldfail guilt graph
+> +
+> -- 
+> 1.8.3.1
+> 
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+You measure democracy by the freedom it gives its dissidents, not the
+freedom it gives its assimilated conformists.
+		- Abbie Hoffman
