@@ -1,103 +1,57 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] After chdir to run grep, return to old directory
-Date: Tue, 06 May 2014 15:24:08 -0700
-Message-ID: <xmqqtx92czqv.fsf@gitster.dls.corp.google.com>
-References: <1399072451-15561-1-git-send-email-dturner@twopensource.com>
-	<1399072451-15561-2-git-send-email-dturner@twopensource.com>
+From: "Jordan McCullough (GitHub Staff)" <training@github.com>
+Subject: Re: Re: material for git training sessions/presentations
+Date: Tue, 06 May 2014 15:20:18 -0700
+Message-ID: <discussions/cb0b63ead41211e398260b8f9a8fb553/comments/1044478@github.com>
+References: <53671965621e_25b273930894@nysa.notmuch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, David Turner <dturner@twitter.com>
-To: dturner@twopensource.com
-X-From: git-owner@vger.kernel.org Wed May 07 00:24:29 2014
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>,
+	Chris Packham <judge.packham@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 07 00:27:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Whnmm-0006Ah-F2
-	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 00:24:28 +0200
+	id 1Whnpo-0000hM-1W
+	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 00:27:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754324AbaEFWYX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 May 2014 18:24:23 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:53226 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752519AbaEFWYN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 May 2014 18:24:13 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D427115FB0;
-	Tue,  6 May 2014 18:24:12 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9UvtwsOgj2Ut+Ake4sUA7xAb0lY=; b=fVYR01
-	eKWiX+t5mP4ItJoz0rbihpQFpF3XrkTkLxaHvBKbbZYAnEAh2utpyaVywl0eu3nh
-	gwLJtgIjFQ15NjWQBwI53umVmB/YmQJFNuD50XIvE0uJxeHG8gA9CK1lst19J9Eq
-	5QdqIOuFbP1h0DWuRn09MZDj0OgvRLhz3pn1A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hVEkAxlmmzvHY8iasNqFKWXLmnB2LIUO
-	SmDXX7zJP5AowbbLnCGn5CUtHuZp04pPdzMkZiPBPvnTNXLLFNUlHgVWPLZX2sG9
-	w4hRw91xD+qkXfHveg1bGuPwG6sgw3cipNEW1MfS9O5wvoZdpru8BoMtGivNh1Em
-	Oqht1EYCXB4=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C9A5515FAF;
-	Tue,  6 May 2014 18:24:12 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 781ED15FA9;
-	Tue,  6 May 2014 18:24:10 -0400 (EDT)
-In-Reply-To: <1399072451-15561-2-git-send-email-dturner@twopensource.com>
-	(dturner@twopensource.com's message of "Fri, 2 May 2014 19:14:09
-	-0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 254A3AEC-D56D-11E3-BF3A-9CEB01674E00-77302942!pb-smtp0.pobox.com
+	id S1751355AbaEFW1c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 May 2014 18:27:32 -0400
+Received: from o2.sgmail.github.com ([192.254.112.60]:35227 "HELO
+	o2.sgmail.github.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1750859AbaEFW1c (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 May 2014 18:27:32 -0400
+X-Greylist: delayed 431 seconds by postgrey-1.27 at vger.kernel.org; Tue, 06 May 2014 18:27:31 EDT
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=github.com; 
+	h=from:to:cc:in-reply-to:references:subject:mime-version:content-type:content-transfer-encoding; 
+	s=smtpapi; bh=YPiEjr7e/LND75pyKFWZlyRAv5A=; b=Q0xDaGktQIEnd6LaIw
+	1j4zLf9lioX3EGMnjUDr+2TsG8P1YCGNxR8XHbB9voF8Ftz1Y8uI6yrvZ3c8Wj82
+	OLGCOvhBuhsvsEd41n9pQQ6lil6TKOicuoOJSx0EIwamGRbWRpmD4FLPspSefphK
+	Kwq2F/EiAAEB/ZfMwV7ukgsgk=
+Received: by mf178.sendgrid.net with SMTP id mf178.18999.536960227
+        Tue, 06 May 2014 22:20:18 +0000 (UTC)
+Received: from github.com (ec2-54-211-215-45.compute-1.amazonaws.com [54.211.215.45])
+	by ismtpd-014 (SG) with ESMTP id 145d39f86d0.460a.2e5d9d
+	Tue, 06 May 2014 22:20:18 +0000 (GMT)
+In-Reply-To: <53671965621e_25b273930894@nysa.notmuch>
+X-SG-EID: YUhPsKA0VKt4kiGI+qrcaW2qjx7tU7rsf8gtpxAAA92kRIgb43C09SS5sIx6pRFemUSgeOb3w/xToI/qdZYL1ocaHUbcSgiZj40x67e8lCe5ywIMPaoKkHvbrlAyiNFRctkmNrPSjT7o3aScxqN/bZM8KQ0StizgAC8BEZ8VzHQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248260>
 
-dturner@twopensource.com writes:
+Hi Felipe,
 
-> From: David Turner <dturner@twitter.com>
->
-> Signed-off-by: David Turner <dturner@twitter.com>
+Jordan McCullough here from the GitHub Training team. I noticed you were kind enough to open a Pull Request (linked below for reference) addressing this. We really do appreciate the contribution.
 
-Ehh, why?
+I'll review the PR just as soon as I can, so anticipate a merge with your changes to the `color.ui` soon.
 
-> ---
->  builtin/grep.c | 14 ++++++++++++--
->  1 file changed, 12 insertions(+), 2 deletions(-)
->
-> diff --git a/builtin/grep.c b/builtin/grep.c
-> index 69ac2d8..e9fe040 100644
-> --- a/builtin/grep.c
-> +++ b/builtin/grep.c
-> @@ -355,15 +355,25 @@ static void run_pager(struct grep_opt *opt, const char *prefix)
->  {
->  	struct string_list *path_list = opt->output_priv;
->  	const char **argv = xmalloc(sizeof(const char *) * (path_list->nr + 1));
-> +	static char old_directory[PATH_MAX+1];
->  	int i, status;
->  
->  	for (i = 0; i < path_list->nr; i++)
->  		argv[i] = path_list->items[i].string;
->  	argv[path_list->nr] = NULL;
->  
-> -	if (prefix && chdir(prefix))
-> -		die(_("Failed to chdir: %s"), prefix);
-> +
-> +	if (prefix) {
-> +		if (!getcwd(old_directory, PATH_MAX+1))
-> +			die(_("Failed to get cwd: %s"), prefix);
-> +		if (chdir(prefix))
-> +			die(_("Failed to chdir: %s"), prefix);
-> +	}
->  	status = run_command_v_opt(argv, RUN_USING_SHELL);
-> +	if (prefix)
-> +		if (chdir(old_directory))
-> +			die(_("Failed to chdir: %s"), old_directory);
-> +
->  	if (status)
->  		exit(status);
->  	free(argv);
+https://github.com/github/training-kit/pull/118
+
+Commit and Octocats,
+Jordan
