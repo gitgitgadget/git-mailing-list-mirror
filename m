@@ -1,132 +1,82 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: RE: What's cooking in git.git (May 2014, #01; Tue, 6)
-Date: Tue, 06 May 2014 18:17:30 -0500
-Message-ID: <53696d8aa12d2_747f15213089@nysa.notmuch>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (May 2014, #01; Tue, 6)
+Date: Tue, 06 May 2014 16:48:24 -0700
+Message-ID: <xmqqha52cvuf.fsf@gitster.dls.corp.google.com>
 References: <xmqqlhuecz1b.fsf@gitster.dls.corp.google.com>
+	<53696d8aa12d2_747f15213089@nysa.notmuch>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 07 01:28:23 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 07 01:48:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Whomb-0006H3-Vq
-	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 01:28:22 +0200
+	id 1Whp6E-000846-Bs
+	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 01:48:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752029AbaEFX2S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 May 2014 19:28:18 -0400
-Received: from mail-ob0-f179.google.com ([209.85.214.179]:41359 "EHLO
-	mail-ob0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751829AbaEFX2R (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 May 2014 19:28:17 -0400
-Received: by mail-ob0-f179.google.com with SMTP id gq1so237535obb.38
-        for <git@vger.kernel.org>; Tue, 06 May 2014 16:28:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:message-id:in-reply-to:references:subject:mime-version
-         :content-type:content-transfer-encoding;
-        bh=GV7NuAvuFRh9FiiZ+YIg0LPSm75X29FyiP2ZvroirRA=;
-        b=Zw81eAqmJeVlMCekkhBJDOnAx7DpBe3YLw3qRHYYrOrnUTmyUCoqdDK0at7PqEa2ik
-         JuPYxUSEAAUgyYYJPUMoJwCw4w2iUJ7obQ9LkUNaoe2HDi3pAd+6SzgR98jIalKCNpWU
-         ns7eRUa4nzqN/IYZrkAI4ry0uzChH1dXuhPmqokUrasQsFiL2Dxb/ujk2qinDSxKtTB6
-         6Gd2kNk/e1050UDLWN8ggsJ5WAsxs5HAQJR3gvWJooc7iKVtEf/tgOV2bFf8XFV4FCfq
-         S4MEPs6iB5vgJYvcaFAJCOcvcQoqauP9rFQDijrWnzR5PLxr9Z7mpnz4mqvhcDbZ1nCj
-         supQ==
-X-Received: by 10.182.213.168 with SMTP id nt8mr40365586obc.7.1399418897059;
-        Tue, 06 May 2014 16:28:17 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id f1sm58199479oej.5.2014.05.06.16.28.13
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 06 May 2014 16:28:15 -0700 (PDT)
-In-Reply-To: <xmqqlhuecz1b.fsf@gitster.dls.corp.google.com>
+	id S1753456AbaEFXse (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 May 2014 19:48:34 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:54683 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752068AbaEFXsd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 May 2014 19:48:33 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 43B0F15F8C;
+	Tue,  6 May 2014 19:48:28 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=lgJqhFY5DiOd/KIJLcaIzETFauY=; b=qZFdcU
+	YMKmOcY/YowpHquK9cIaZ5H+5kvb3mvDzIkossRlp/3m2vuv/bFfGo3l8jvXQB6q
+	2z+H6PGlq5cZqWtVM3CDWMsdQ3MBW73eepy7/4Ek3CQueDGuDw4+z2LYJLR2z/VF
+	bjU/+9OpeCtnXECMS1eSCyY211N8Yv7+Dzqjg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=BkgowNEdeZimLUoe0TQuRn/CcpyaxmHo
+	MN0c2C2/D+re5CUSUics3RLcRUuiAjQFVxgclk4sUv+Qmo3VsltTdUpxQxOGAeOZ
+	aGd+RdTHUYJOodVBTkYJrakb0ZLkFFvr285GB4RVCnjqyQMKUCB9VYB0Tpd9FM8N
+	ojpnSjF2HNk=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3851315F8B;
+	Tue,  6 May 2014 19:48:28 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id E88F415F88;
+	Tue,  6 May 2014 19:48:25 -0400 (EDT)
+In-Reply-To: <53696d8aa12d2_747f15213089@nysa.notmuch> (Felipe Contreras's
+	message of "Tue, 06 May 2014 18:17:30 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: EA94370C-D578-11E3-B482-9CEB01674E00-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248269>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248270>
 
-Junio C Hamano wrote:
-> * fc/remote-helpers-hg-bzr-graduation (2014-04-29) 11 commits
->  - remote-hg: trivial cleanups
->  - remote-hg: make sure we omit multiple heads
->  - git-remote-hg: use internal clone's hgrc
->  - t: remote-hg: split into setup test
->  - remote-hg: properly detect missing contexts
->  - remote-{hg,bzr}: store marks only on success
->  - remote-hg: update to 'public' phase when pushing
->  - remote-hg: fix parsing of custom committer
->   (merged to 'next' on 2014-04-22 at fed170a)
->  + remote-helpers: move tests out of contrib
->  + remote-helpers: move out of contrib
->  + remote-helpers: squelch python import exceptions
-> 
->  Move remote-hg and remote-bzr out of contrib/.  There were some
->  suggestions on the follow-up fix patches still not in 'next', which
->  may result in a reroll.
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-I've no idea what suggestions you are talking about.
+> Therefore the release notes are still lying to the users:
+>
+>  * "git push" via transport-helper interface (e.g. remote-hg) has
+>    been updated to allow ref deletion in a way similar to the natively
+>    supported transports.
+>
+> That is not true.
 
->  I tend to agree with John Keeping that remote helpers that are
->  actively maintained can and should aim to graduate from my tree and
->  given to the user directly.
+Hmph, you are right.  I somehow mislabeled the series that ends at
+a7cb1276cc263446b19b43d3a7784cbc72f84e28 dealing with delete, when
+the series actually is about forcing.  Will update.
 
-Wait, I was under the impression the graduation was going to happen for
-v2.0.
+> Plus this one which has been completely ignored:
+>
+>    completion: move out of contrib
 
-I don't understand what is the point of preparing the v2.0 for so long,
-and then all of a sudden tag v2.0.0-rc0 and say "oops! if you wanted to
-get something into v2.0 it's too late now", wait another 2-10 years for
-important changes to get merged.
+It is not about "ignored".  It is about running out of time before
+concluding the day's integration.
 
-Such a wasted opportunity and such a disappointing release.
-
-Therefore the release notes are still lying to the users:
-
- * "git push" via transport-helper interface (e.g. remote-hg) has
-   been updated to allow ref deletion in a way similar to the natively
-   supported transports.
-
-That is not true.
-
-These should obviously be part of the v2.0:
-
-* fc/remote-helpers-hg-bzr-graduation (2014-04-29) 11 commits
- + remote-helpers: move tests out of contrib
- + remote-helpers: move out of contrib
- + remote-helpers: squelch python import exceptions
- - remote-{hg,bzr}: store marks only on success
-
-* fc/remote-helper-refmap (2014-04-21) 8 commits
-  (merged to 'next' on 2014-04-22 at fb5a4c2)
- + transport-helper: remove unnecessary strbuf resets
- + transport-helper: add support to delete branches
- + fast-export: add support to delete refs
- + fast-import: add support to delete refs
- + transport-helper: add support to push symbolic refs
- + transport-helper: add support for old:new refspec
- + fast-export: add new --refspec option
- + fast-export: improve argument parsing
-
-* fc/merge-default-to-upstream (2014-04-22) 1 commit
- + merge: enable defaulttoupstream by default
-
-* fc/mergetool-prompt (2014-04-24) 2 commits
- + mergetool: document the default for --[no-]prompt
- + mergetool: run prompt only if guessed tool
-
-Plus this one which has been completely ignored:
-
-   completion: move out of contrib
-
-
-Since you are not going to do so, I do not feel compelled to fix the
-synchronization crash regression that is present in v2.0.0-rc2 and I
-already warned you about.
-
--- 
-Felipe Contreras
+I can hopefully queue it on 'pu' tomorrow, and depending on the
+reviews or lack of reviews, it may advance on its own pace from
+there.
