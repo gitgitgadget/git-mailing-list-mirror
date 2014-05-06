@@ -1,106 +1,110 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/2] let clang use the constant-return error() macro
-Date: Tue, 6 May 2014 11:17:50 -0400
-Message-ID: <20140506151750.GB25768@sigill.intra.peff.net>
-References: <20140505212938.GA16715@sigill.intra.peff.net>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH v2] config: preserve config file permissions on edits
+Date: Tue, 6 May 2014 00:17:14 +0000
+Message-ID: <20140506001714.GA29049@dcvr.yhbt.net>
+References: <20140505215853.GA23299@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Max Horn <max@quendi.de>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 06 20:02:25 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 06 20:05:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WhiVK-0008Jm-4F
-	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:46:06 +0200
+	id 1WhiFN-0007Xo-QM
+	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:29:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757574AbaEFPRw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 May 2014 11:17:52 -0400
-Received: from cloud.peff.net ([50.56.180.127]:46007 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754234AbaEFPRw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 May 2014 11:17:52 -0400
-Received: (qmail 25675 invoked by uid 102); 6 May 2014 15:17:51 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 06 May 2014 10:17:51 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 06 May 2014 11:17:50 -0400
+	id S933526AbaEFARR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 May 2014 20:17:17 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:42969 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933523AbaEFARP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 May 2014 20:17:15 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id C928120687;
+	Tue,  6 May 2014 00:17:14 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <20140505212938.GA16715@sigill.intra.peff.net>
+In-Reply-To: <20140505215853.GA23299@dcvr.yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248199>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248200>
 
-Commit e208f9c converted error() into a macro to make its
-constant return value more apparent to calling code.  Commit
-5ded807 prevents us using this macro with clang, since
-clang's -Wunused-value is smart enough to realize that the
-constant "-1" is useless in some contexts.
+Users may already store sensitive data such as imap.pass in
+.git/config; making the file world-readable when "git config"
+is called to edit means their password would be compromised
+on a shared system.
 
-However, since the last commit puts the constant behind an
-inline function call, this is enough to prevent the
--Wunused-value warning on both modern gcc and clang. So we
-can now re-enable the macro when compiling with clang.
+[v2: updated for section renames, as noted by Junio]
 
-Tested with clang 3.3, 3.4, and 3.5.
-
-Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
 ---
-I still get warnings when compiling with clang -O3, due to
--Warray-bounds. It looks like a bug, though. Clang complains that:
+ config.c               | 16 ++++++++++++++++
+ t/t1300-repo-config.sh | 10 ++++++++++
+ 2 files changed, 26 insertions(+)
 
-  strcmp(argv[1], "git")
-
-oversteps array bounds when the strcmp is expanded into a mess of
-builtin magic. So I don't think we are doing anything wrong here.
-
- cache.h           | 2 +-
- git-compat-util.h | 2 +-
- parse-options.h   | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/cache.h b/cache.h
-index e2f12b0..35a3e6b 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1271,7 +1271,7 @@ extern int check_repository_format_version(const char *var, const char *value, v
- extern int git_env_bool(const char *, int);
- extern int git_config_system(void);
- extern int config_error_nonbool(const char *);
--#if defined(__GNUC__) && ! defined(__clang__)
-+#if defined(__GNUC__)
- #define config_error_nonbool(s) (config_error_nonbool(s), const_error())
- #endif
- extern const char *get_log_output_encoding(void);
-diff --git a/git-compat-util.h b/git-compat-util.h
-index b4c437e..70dc028 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -330,7 +330,7 @@ extern void warning(const char *err, ...) __attribute__((format (printf, 1, 2)))
-  * trying to help gcc, anyway, it's OK; other compilers will fall back to
-  * using the function as usual.
-  */
--#if defined(__GNUC__) && ! defined(__clang__)
-+#if defined(__GNUC__)
- static inline int const_error(void)
- {
- 	return -1;
-diff --git a/parse-options.h b/parse-options.h
-index 2f9be96..7940bc7 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -176,7 +176,7 @@ extern NORETURN void usage_msg_opt(const char *msg,
+diff --git a/config.c b/config.c
+index a30cb5c..c227aa8 100644
+--- a/config.c
++++ b/config.c
+@@ -1636,6 +1636,13 @@ int git_config_set_multivar_in_file(const char *config_filename,
+ 			MAP_PRIVATE, in_fd, 0);
+ 		close(in_fd);
  
- extern int optbug(const struct option *opt, const char *reason);
- extern int opterror(const struct option *opt, const char *reason, int flags);
--#if defined(__GNUC__) && ! defined(__clang__)
-+#if defined(__GNUC__)
- #define opterror(o,r,f) (opterror((o),(r),(f)), const_error())
- #endif
++		if (fchmod(fd, st.st_mode & 07777) < 0) {
++			error("fchmod on %s failed: %s",
++				lock->filename, strerror(errno));
++			ret = CONFIG_NO_WRITE;
++			goto out_free;
++		}
++
+ 		if (store.seen == 0)
+ 			store.seen = 1;
  
+@@ -1784,6 +1791,7 @@ int git_config_rename_section_in_file(const char *config_filename,
+ 	int out_fd;
+ 	char buf[1024];
+ 	FILE *config_file;
++	struct stat st;
+ 
+ 	if (new_name && !section_name_is_ok(new_name)) {
+ 		ret = error("invalid section name: %s", new_name);
+@@ -1805,6 +1813,14 @@ int git_config_rename_section_in_file(const char *config_filename,
+ 		goto unlock_and_out;
+ 	}
+ 
++	fstat(fileno(config_file), &st);
++
++	if (fchmod(out_fd, st.st_mode & 07777) < 0) {
++		ret = error("fchmod on %s failed: %s",
++				lock->filename, strerror(errno));
++		goto out;
++	}
++
+ 	while (fgets(buf, sizeof(buf), config_file)) {
+ 		int i;
+ 		int length;
+diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
+index 58cd543..3f80ff0 100755
+--- a/t/t1300-repo-config.sh
++++ b/t/t1300-repo-config.sh
+@@ -1158,4 +1158,14 @@ test_expect_failure 'adding a key into an empty section reuses header' '
+ 	test_cmp expect .git/config
+ '
+ 
++test_expect_success POSIXPERM,PERL 'preserves existing permissions' '
++	chmod 0600 .git/config &&
++	git config imap.pass Hunter2 &&
++	perl -e \
++	  "die q(badset) if ((stat(q(.git/config)))[2] & 07777) != 0600" &&
++	git config --rename-section imap pop &&
++	perl -e \
++	  "die q(badrename) if ((stat(q(.git/config)))[2] & 07777) != 0600"
++'
++
+ test_done
 -- 
-2.0.0.rc1.436.g03cb729
+Eric Wong
