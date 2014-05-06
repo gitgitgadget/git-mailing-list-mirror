@@ -1,86 +1,106 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [BUG?] Patches created with 'diff.noprefix=true' don't 'git
- apply'.
-Date: Mon, 5 May 2014 18:59:27 -0700
-Message-ID: <20140506015927.GV9218@google.com>
-References: <CAO8RVvdgN3U5hUEsJjYY9urfeVUDWwHiEur4NQp=H93W37RRnw@mail.gmail.com>
- <20140501024042.GX9218@google.com>
- <CAO8RVveV4SgXmJzWpYnyB3rnQALQkrrLNtLL5Ej5Y9Mjjekmmw@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 2/2] let clang use the constant-return error() macro
+Date: Tue, 6 May 2014 11:17:50 -0400
+Message-ID: <20140506151750.GB25768@sigill.intra.peff.net>
+References: <20140505212938.GA16715@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-To: Nathan Collins <nathan.collins@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 06 20:00:39 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Max Horn <max@quendi.de>, git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 06 20:02:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WhiGq-0007Xo-0X
-	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:31:08 +0200
+	id 1WhiVK-0008Jm-4F
+	for gcvg-git-2@plane.gmane.org; Tue, 06 May 2014 18:46:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933667AbaEFB7d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 May 2014 21:59:33 -0400
-Received: from mail-ie0-f175.google.com ([209.85.223.175]:43331 "EHLO
-	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933507AbaEFB7d (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 May 2014 21:59:33 -0400
-Received: by mail-ie0-f175.google.com with SMTP id rl12so9057080iec.34
-        for <git@vger.kernel.org>; Mon, 05 May 2014 18:59:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=IKCAPU5tCXrQiB34kQGgvTJfgeXTHS+P36Rf6E/5JTs=;
-        b=BPQPh07/qAP27DAzEFiv8x3YoIWGvw3xK6WK9SjddEA+rB2Cax+Y0hIqcygZ349ctN
-         M9o2p9XmCUGkAXOFC9UI5RhJcnpFXkWyt9Z5wumveBe25CQTZcI40Uiy60xS/WreBQg4
-         PI3KivR1UTMEAz1bmPOfUEzDLnv6XtXjI8UWG5ZLyhkpe9/OQPver7Ni48NIljRff3Hu
-         pHjF0IzClacV7XPeNM5zId055X/UOOARM3tbdJuFUHgdg/RZzAG1ibJgASbzfJW4LtV7
-         CUl+IylgCkJEtTNNaSf61egSd66KZKrCgvgQmZ9wcdbn4zqt8c3Mc2H/kx/Y+Ev7Kvr5
-         nT9g==
-X-Received: by 10.43.65.145 with SMTP id xm17mr7854036icb.44.1399341572691;
-        Mon, 05 May 2014 18:59:32 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id kr5sm33145333igb.9.2014.05.05.18.59.30
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 05 May 2014 18:59:32 -0700 (PDT)
+	id S1757574AbaEFPRw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 May 2014 11:17:52 -0400
+Received: from cloud.peff.net ([50.56.180.127]:46007 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754234AbaEFPRw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 May 2014 11:17:52 -0400
+Received: (qmail 25675 invoked by uid 102); 6 May 2014 15:17:51 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 06 May 2014 10:17:51 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 06 May 2014 11:17:50 -0400
 Content-Disposition: inline
-In-Reply-To: <CAO8RVveV4SgXmJzWpYnyB3rnQALQkrrLNtLL5Ej5Y9Mjjekmmw@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20140505212938.GA16715@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248199>
 
-Nathan Collins wrote:
-> On Wed, Apr 30, 2014 at 7:40 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
->> Nathan Collins wrote:
+Commit e208f9c converted error() into a macro to make its
+constant return value more apparent to calling code.  Commit
+5ded807 prevents us using this macro with clang, since
+clang's -Wunused-value is smart enough to realize that the
+constant "-1" is useless in some contexts.
 
->>> git show | git apply --reverse
->>
->> The following which only uses plumbing commands should work:
->>
->>         git diff-tree -p HEAD^! |
->>         git apply --reverse
->
-> Nice! However, I don't now how to generalize this solution to other
-> (probably insane) use cases, e.g.
->
->   git log -S<string> --patch | git apply --reverse
+However, since the last commit puts the constant behind an
+inline function call, this is enough to prevent the
+-Wunused-value warning on both modern gcc and clang. So we
+can now re-enable the macro when compiling with clang.
 
-This should do it:
+Tested with clang 3.3, 3.4, and 3.5.
 
-	git rev-list HEAD |
-	git diff-tree --no-commit-id -p -S<string> --stdin |
-	git apply --reverse
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I still get warnings when compiling with clang -O3, due to
+-Warray-bounds. It looks like a bug, though. Clang complains that:
 
-More generally, when scripting plumbing commands tend to do the right
-thing.
+  strcmp(argv[1], "git")
 
-Will think more about the documentation and other parts (or if someone
-else sends a patch before I can, I won't mind).
+oversteps array bounds when the strcmp is expanded into a mess of
+builtin magic. So I don't think we are doing anything wrong here.
 
-Thanks,
-Jonathan
+ cache.h           | 2 +-
+ git-compat-util.h | 2 +-
+ parse-options.h   | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/cache.h b/cache.h
+index e2f12b0..35a3e6b 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1271,7 +1271,7 @@ extern int check_repository_format_version(const char *var, const char *value, v
+ extern int git_env_bool(const char *, int);
+ extern int git_config_system(void);
+ extern int config_error_nonbool(const char *);
+-#if defined(__GNUC__) && ! defined(__clang__)
++#if defined(__GNUC__)
+ #define config_error_nonbool(s) (config_error_nonbool(s), const_error())
+ #endif
+ extern const char *get_log_output_encoding(void);
+diff --git a/git-compat-util.h b/git-compat-util.h
+index b4c437e..70dc028 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -330,7 +330,7 @@ extern void warning(const char *err, ...) __attribute__((format (printf, 1, 2)))
+  * trying to help gcc, anyway, it's OK; other compilers will fall back to
+  * using the function as usual.
+  */
+-#if defined(__GNUC__) && ! defined(__clang__)
++#if defined(__GNUC__)
+ static inline int const_error(void)
+ {
+ 	return -1;
+diff --git a/parse-options.h b/parse-options.h
+index 2f9be96..7940bc7 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -176,7 +176,7 @@ extern NORETURN void usage_msg_opt(const char *msg,
+ 
+ extern int optbug(const struct option *opt, const char *reason);
+ extern int opterror(const struct option *opt, const char *reason, int flags);
+-#if defined(__GNUC__) && ! defined(__clang__)
++#if defined(__GNUC__)
+ #define opterror(o,r,f) (opterror((o),(r),(f)), const_error())
+ #endif
+ 
+-- 
+2.0.0.rc1.436.g03cb729
