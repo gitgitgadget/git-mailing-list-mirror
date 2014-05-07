@@ -1,92 +1,77 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2 0/2] add a reflog_exists and delete_reflog abstraction
-Date: Wed, 07 May 2014 13:56:52 +0200
-Message-ID: <536A1F84.8020902@alum.mit.edu>
-References: <1399416353-31817-1-git-send-email-sahlberg@google.com>
+From: James Denholm <nod.helm@gmail.com>
+Subject: Re: [PATCH] Standardize python shebangs
+Date: Wed, 07 May 2014 22:03:48 +1000
+Message-ID: <e5ca17b7-941d-40eb-abf1-2c0b8d79e79d@email.android.com>
+References: <1399456987-24156-1-git-send-email-felipe.contreras@gmail.com> <CALKQrgc=Xa767S8ZTTYnXjHTfLOg_fDG+aT4cVqpvx4HMhO03Q@mail.gmail.com> <536a14f9de982_675a167130cb4@nysa.notmuch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: Ronnie Sahlberg <sahlberg@google.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 07 13:57:00 2014
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Git mailing list <git@vger.kernel.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>,
+	Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Wed May 07 14:04:04 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wi0T5-0004eU-VY
-	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 13:57:00 +0200
+	id 1Wi0Zv-0001Z6-G1
+	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 14:04:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755835AbaEGL44 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2014 07:56:56 -0400
-Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:49248 "EHLO
-	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755316AbaEGL4z (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 7 May 2014 07:56:55 -0400
-X-AuditID: 1207440f-f79326d000003c9f-99-536a1f866be2
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 95.02.15519.68F1A635; Wed,  7 May 2014 07:56:54 -0400 (EDT)
-Received: from [192.168.69.130] (p4FC96C3A.dip0.t-ipconnect.de [79.201.108.58])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s47Buq9A020599
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Wed, 7 May 2014 07:56:53 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.4.0
-In-Reply-To: <1399416353-31817-1-git-send-email-sahlberg@google.com>
-X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFuplleLIzCtJLcpLzFFi42IRYndR1G2Tzwo2WHpewaLrSjeTxb8JNQ5M
-	Hgs2lXp83iQXwBTFbZOUWFIWnJmep2+XwJ1xaul6toI3XBWLHjYxNTBu5+hi5OSQEDCR2Hr8
-	MTOELSZx4d56NhBbSOAyo8TdS4kQ9jkmiX2bZEBsXgFtiT0rXwDVcHCwCKhK3J/jCRJmE9CV
-	WNTTzAQSFhUIkvhzVhGiWlDi5MwnLCC2iICdxPpbC8E2CQv4SqydNocZYrqzRNPrmWA1nAIu
-	Eq+OnmIBGSMhIC7R0xgEEmYW0JF41/eAGcKWl9j+dg7zBEaBWUg2zEJSNgtJ2QJG5lWMcok5
-	pbm6uYmZOcWpybrFyYl5ealFuiZ6uZkleqkppZsYIcHJv4Oxa73MIUYBDkYlHt4HrzKChVgT
-	y4orcw8xSnIwKYnysnJnBQvxJeWnVGYkFmfEF5XmpBYfYpTgYFYS4e3mB8rxpiRWVqUW5cOk
-	pDlYlMR51Zeo+wkJpCeWpGanphakFsFkZTg4lCR4+YBRKCRYlJqeWpGWmVOCkGbi4AQZziUl
-	Upyal5JalFhakhEPitD4YmCMgqR4gPZygrTzFhck5gJFIVpPMepyXGhY0cIkxJKXn5cqJc4b
-	IAdUJABSlFGaB7cClopeMYoDfSzMexekigeYxuAmvQJawgS0hMs4HWRJSSJCSqqBccru3aoH
-	J3bzPnjI9Gnme0PJf827tJ7fM25c7cV09Zuc8KGn8g7eZ5fKPjzhGm2bXjDR7t+NybP4Tmpd
-	/h7Z/eU021HRqiflnby6xVc7bZyK7vz5slXj/Qd/RrMXT1fJmP94u3EWvzXfN6Uw 
+	id S932567AbaEGMD7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2014 08:03:59 -0400
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:33129 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932222AbaEGMD6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 May 2014 08:03:58 -0400
+Received: by mail-pa0-f43.google.com with SMTP id hz1so1092005pad.16
+        for <git@vger.kernel.org>; Wed, 07 May 2014 05:03:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=user-agent:in-reply-to:references:mime-version
+         :content-transfer-encoding:content-type:subject:from:date:to:cc
+         :message-id;
+        bh=T5ZXdKXdAT3BeYeSTQGNvg6WjNicMPHc0YVnfKbtmjs=;
+        b=qeEvMnIaxJAh2KXjfrn6zjaZltdGhLA0/8ohNE1tXjXS9hkhl+da26oeaM1QKC0L88
+         j3+9hOVx4WGKk+WQH0rswI6FeetB1vYATD+Re9L4LZ+vHJKFm/4d729Jn4DZaKOz7dCi
+         GwvkTJ6A+49ED5BixRPpMuqrEv1T+xtWxeMRv78gWUIyPPiehEgwTLNqRErFda9TrEex
+         mSXz9jpPX65sXX1T2DfqvOXjC/DmpivVH7JCt/kROQlySOf+0TaaLIuXp0AsIB7EnXYO
+         LLepHfOgn9sc+asElv2dUjm0WNd4zwA0go7uR079W1XMYEHVZ/Y9J3gHCz4w26nJJZ/y
+         1d8w==
+X-Received: by 10.66.177.168 with SMTP id cr8mr18497860pac.128.1399464238261;
+        Wed, 07 May 2014 05:03:58 -0700 (PDT)
+Received: from [10.65.230.182] ([101.119.26.217])
+        by mx.google.com with ESMTPSA id xk1sm112835711pac.21.2014.05.07.05.03.54
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 07 May 2014 05:03:57 -0700 (PDT)
+User-Agent: Kaiten Mail
+In-Reply-To: <536a14f9de982_675a167130cb4@nysa.notmuch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248299>
 
-On 05/07/2014 12:45 AM, Ronnie Sahlberg wrote:
-> This is a series adds two new functions to try to hide the reflog
-> implementation details from the callers in checkout.c and reflog.c.
-> It adds new functions to test if a reflog exists and to delete it, thus
-> allowing checkout.c to perform this if-test-then-delete operation without
-> having to know the internal implementation of reflogs (i.e. that they are files
-> that live under .git/logs)
-> 
-> Additionally we change checkout.c to use ref_exists instead of file_exists
-> when checking for ref existence. This fixes a bug when checkout could delete
-> a valid reflog file if the branch was a packed ref. The tests have been updated
-> to test for this bug.
-> 
-> 
-> Version 2:
->  - Typos and fixes suggested by mhagger.
->  - Break the checkout-deletes reflog bugfix out into a separate patch.
-> 
-> 
-> Ronnie Sahlberg (2):
->   refs.c: add new functions reflog_exists and delete_reflog
->   checkout.c: use ref_exists instead of file_exist
-> 
->  builtin/checkout.c |  8 ++------
->  builtin/reflog.c   |  2 +-
->  refs.c             | 21 +++++++++++++++------
->  refs.h             |  6 ++++++
->  t/t1410-reflog.sh  |  8 ++++++++
->  5 files changed, 32 insertions(+), 13 deletions(-)
+On 7 May 2014 21:11:53 GMT+10:00, Felipe Contreras <felipe.contreras@gmail.com> wrote:
+>Johan Herland wrote:
+>> On Wed, May 7, 2014 at 12:03 PM, Felipe Contreras
+>> <felipe.contreras@gmail.com> wrote:
+>> > It's better if all our scripts use the same '/usr/bin/env python'.
+>> 
+>> Only if they are source compatible with both Python2 and Python3. See
+>> PEP394 <URL: http://legacy.python.org/dev/peps/pep-0394/ >. Otherwise
+>> (for python2-only scripts) '/usr/bin/env python2' is the way to go.
+>
+>It doesn't matter. People and aistributions have to change them anyway.
 
-+1 Looks good to me.  Thanks!
+Yeah, but they shouldn't have to. The build process is
+already non-"sane", let's please not make it more so?
 
-Michael
+Moving all instances of "env python" to be "env python2",
+though, that I think is a reasonable solution (if this is even
+felt to be a problem).
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+Regards,
+James Denholm.
