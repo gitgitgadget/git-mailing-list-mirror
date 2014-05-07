@@ -1,93 +1,67 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [ANNOUNCE] ssoma - some sort of mail archiver (using git)
-Date: Wed, 7 May 2014 06:59:03 +0000
-Message-ID: <20140507065903.GA32120@dcvr.yhbt.net>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: [RFD] use approxidate for "git commit --date=xyz"?
+Date: Wed, 7 May 2014 08:22:15 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.1405070817580.15517@ds9.cixit.se>
+References: <CA+55aFx=LizEyS6hq=av_qwRZuu_q3xPSXO-Jr4CAfXqaAuUtA@mail.gmail.com> <xmqq1tweec1o.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 07 08:59:12 2014
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 07 09:22:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Whvos-0006z5-Qf
-	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 08:59:11 +0200
+	id 1WhwBU-0001Z1-Hx
+	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 09:22:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752184AbaEGG7G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2014 02:59:06 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:58175 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750739AbaEGG7F (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 May 2014 02:59:05 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B9C3020694;
-	Wed,  7 May 2014 06:59:03 +0000 (UTC)
-Content-Disposition: inline
+	id S1752261AbaEGHW2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2014 03:22:28 -0400
+Received: from upper-gw.cixit.se ([92.43.32.133]:36556 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1750905AbaEGHW1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 May 2014 03:22:27 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-9.4) with ESMTP id s477MIsI024029
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 7 May 2014 09:22:18 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id s477MFd6024025;
+	Wed, 7 May 2014 09:22:16 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <xmqq1tweec1o.fsf@gitster.dls.corp.google.com>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.3.7 (mail.cixit.se [127.0.0.1]); Wed, 07 May 2014 09:22:18 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248286>
 
-ssoma is a git-based mail archiver and transport.  Email is injected via
-ssoma-mda(1) (MDA: mail delivery agent) on a server and may be shared
-(via git) and extracted to mbox, Maildir, or IMAP via ssoma(1).  ssoma
-exists primarily as the mechanism (not policy) for public-inbox but may
-easily be used for other projects.
+Junio C Hamano:
 
-Readers of public-inbox instances may install ssoma to extract messages
-into their favorite mail client for reading.
+> But why does the workflow need --date=now in the first place?
 
-See http://public-inbox.org/ for more information on how ssoma is used.
+I tend to do this quite a lot, after fixing up a commit using rebase, 
+I notice that the commit date is when I first started fixing the 
+issue, even if that was a week or so ago. I then like to reset the 
+commit date to reflect when I actually was done with it, and try 
+"commit --amend --date=now".
 
-Source code: git clone git://80x24.org/ssoma
-WWW: http://ssoma.public-inbox.org/
-Installation info: http://ssoma.public-inbox.org/INSTALL.html
-Discussion: meta@public-inbox.org (no subscription required[1])
+I just haven't been annoyed enough to patch the code to fix it (so the 
+git repository at my $dayjob does have a number of commits with the "wrong" 
+commit time in it [1]), but I would welcome such an addition.
 
-You may subscribe to meta@public-inbox.org via ssoma:
-LISTNAME is a name of your choosing:
-
-    URL=git://public-inbox.org/meta
-    LISTNAME=public-inbox
-
-    # to initialize a maildir (this may be a new or existing maildir,
-    # ssoma will not touch existing messages)
-    # If you prefer mbox, use mbox:/path/to/mbox as the last argument
-    ssoma add $LISTNAME $URL maildir:/path/to/maildir
-
-    # read with your favorite MUA (only using mutt as an example)
-    mutt -f /path/to/maildir # (or /path/to/mbox)
-
-    # to keep your mbox or maildir up-to-date, periodically run the following:
-    ssoma sync $LISTNAME
-
-    # your MUA may modify and delete messages from the maildir or mbox,
-    # this does not affect ssoma functionality at all
-
-    # to sync all your ssoma subscriptions
-    ssoma sync
-
-    # You may wish to sync in your cronjob
-    ssoma sync --cron
-
-If you prefer web browsers, you may also read the list at:
-http://public-inbox.org/meta/ without installing ssoma
-Or use an Atom feed reader: http://public-inbox.org/meta/atom.xml
-
-[1] - or possible at this point:  public-inbox is an archives first,
-      pull-based approach to mailing lists.  Anybody may also run a
-      push service on top of it, though.
-
-Mail repository format
-----------------------
-If you are uncomfortable running code in ssoma for any reason and
-would rather read directly from the git repository, the following
-document describes it:
-
-    http://ssoma.public-inbox.org/ssoma_repository.txt
-
-Thanks for reading this far!
 -- 
-Eric Wong
+\\// Peter - http://www.softwolves.pp.se/
+
+  [1] The last such is one that took me about a week to implement:
+       AuthorDate: 2014-04-15 15:48:38 +0200
+       CommitDate: 2014-04-22 09:23:25 +0100
+      it'd look better to have the AuthorDate at the 22nd as well, imho.
