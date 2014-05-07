@@ -1,95 +1,92 @@
-From: Greg Troxel <gdt@ir.bbn.com>
-Subject: Re: What's cooking in git.git (Apr 2014, #09; Tue, 29)
-Date: Wed, 07 May 2014 07:44:34 -0400
-Message-ID: <rmiha51dd99.fsf@fnord.ir.bbn.com>
-References: <xmqq7g67iwxc.fsf@gitster.dls.corp.google.com>
-	<20140505184546.GB23935@serenity.lan>
-	<xmqqoazb944d.fsf@gitster.dls.corp.google.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v2 0/2] add a reflog_exists and delete_reflog abstraction
+Date: Wed, 07 May 2014 13:56:52 +0200
+Message-ID: <536A1F84.8020902@alum.mit.edu>
+References: <1399416353-31817-1-git-send-email-sahlberg@google.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha1; protocol="application/pgp-signature"
-Cc: John Keeping <john@keeping.me.uk>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 07 13:50:51 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: Ronnie Sahlberg <sahlberg@google.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 07 13:57:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wi0N9-0008Lh-4M
-	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 13:50:51 +0200
+	id 1Wi0T5-0004eU-VY
+	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 13:57:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932699AbaEGLur (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2014 07:50:47 -0400
-Received: from fnord.ir.bbn.com ([192.1.100.210]:57183 "EHLO fnord.ir.bbn.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755518AbaEGLuq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 May 2014 07:50:46 -0400
-X-Greylist: delayed 370 seconds by postgrey-1.27 at vger.kernel.org; Wed, 07 May 2014 07:50:46 EDT
-Received: by fnord.ir.bbn.com (Postfix, from userid 10853)
-	id 356E0A848; Wed,  7 May 2014 07:44:34 -0400 (EDT)
-OpenPGP: id=32611E25
-X-Hashcash: 1:20:140507:git@vger.kernel.org::RtUVxvXuMdTrcJIx:0000000000000000000000000000000000000000002if8
-X-Hashcash: 1:20:140507:gitster@pobox.com::u6yfP8cxbHkB9fTV:000000000000000000000000000000000000000000003ily
-X-Hashcash: 1:20:140507:john@keeping.me.uk::o9OOhsIoLKTrGKUF:00000000000000000000000000000000000000000005Fl7
-In-Reply-To: <xmqqoazb944d.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 05 May 2014 16:50:58 -0700")
-User-Agent: Gnus/5.130006 (Ma Gnus v0.6) Emacs/23.4 (berkeley-unix)
+	id S1755835AbaEGL44 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2014 07:56:56 -0400
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:49248 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755316AbaEGL4z (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 May 2014 07:56:55 -0400
+X-AuditID: 1207440f-f79326d000003c9f-99-536a1f866be2
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 95.02.15519.68F1A635; Wed,  7 May 2014 07:56:54 -0400 (EDT)
+Received: from [192.168.69.130] (p4FC96C3A.dip0.t-ipconnect.de [79.201.108.58])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s47Buq9A020599
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Wed, 7 May 2014 07:56:53 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.4.0
+In-Reply-To: <1399416353-31817-1-git-send-email-sahlberg@google.com>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFuplleLIzCtJLcpLzFFi42IRYndR1G2Tzwo2WHpewaLrSjeTxb8JNQ5M
+	Hgs2lXp83iQXwBTFbZOUWFIWnJmep2+XwJ1xaul6toI3XBWLHjYxNTBu5+hi5OSQEDCR2Hr8
+	MTOELSZx4d56NhBbSOAyo8TdS4kQ9jkmiX2bZEBsXgFtiT0rXwDVcHCwCKhK3J/jCRJmE9CV
+	WNTTzAQSFhUIkvhzVhGiWlDi5MwnLCC2iICdxPpbC8E2CQv4SqydNocZYrqzRNPrmWA1nAIu
+	Eq+OnmIBGSMhIC7R0xgEEmYW0JF41/eAGcKWl9j+dg7zBEaBWUg2zEJSNgtJ2QJG5lWMcok5
+	pbm6uYmZOcWpybrFyYl5ealFuiZ6uZkleqkppZsYIcHJv4Oxa73MIUYBDkYlHt4HrzKChVgT
+	y4orcw8xSnIwKYnysnJnBQvxJeWnVGYkFmfEF5XmpBYfYpTgYFYS4e3mB8rxpiRWVqUW5cOk
+	pDlYlMR51Zeo+wkJpCeWpGanphakFsFkZTg4lCR4+YBRKCRYlJqeWpGWmVOCkGbi4AQZziUl
+	Upyal5JalFhakhEPitD4YmCMgqR4gPZygrTzFhck5gJFIVpPMepyXGhY0cIkxJKXn5cqJc4b
+	IAdUJABSlFGaB7cClopeMYoDfSzMexekigeYxuAmvQJawgS0hMs4HWRJSSJCSqqBccru3aoH
+	J3bzPnjI9Gnme0PJf827tJ7fM25c7cV09Zuc8KGn8g7eZ5fKPjzhGm2bXjDR7t+NybP4Tmpd
+	/h7Z/eU021HRqiflnby6xVc7bZyK7vz5slXj/Qd/RrMXT1fJmP94u3EWvzXfN6Uw 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248297>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248298>
 
---=-=-=
-Content-Type: text/plain
+On 05/07/2014 12:45 AM, Ronnie Sahlberg wrote:
+> This is a series adds two new functions to try to hide the reflog
+> implementation details from the callers in checkout.c and reflog.c.
+> It adds new functions to test if a reflog exists and to delete it, thus
+> allowing checkout.c to perform this if-test-then-delete operation without
+> having to know the internal implementation of reflogs (i.e. that they are files
+> that live under .git/logs)
+> 
+> Additionally we change checkout.c to use ref_exists instead of file_exists
+> when checking for ref existence. This fixes a bug when checkout could delete
+> a valid reflog file if the branch was a packed ref. The tests have been updated
+> to test for this bug.
+> 
+> 
+> Version 2:
+>  - Typos and fixes suggested by mhagger.
+>  - Break the checkout-deletes reflog bugfix out into a separate patch.
+> 
+> 
+> Ronnie Sahlberg (2):
+>   refs.c: add new functions reflog_exists and delete_reflog
+>   checkout.c: use ref_exists instead of file_exist
+> 
+>  builtin/checkout.c |  8 ++------
+>  builtin/reflog.c   |  2 +-
+>  refs.c             | 21 +++++++++++++++------
+>  refs.h             |  6 ++++++
+>  t/t1410-reflog.sh  |  8 ++++++++
+>  5 files changed, 32 insertions(+), 13 deletions(-)
 
++1 Looks good to me.  Thanks!
 
-Junio C Hamano <gitster@pobox.com> writes:
+Michael
 
-> You raised a good point on the issue of external dependencies may
-> impact Git as a whole, even for those who are not interested in the
-> particular remote helpers at all.  I'll have to think about it.
-
-(As I'm sure you know, but starting from the beginning.)  There are
-basically two ways that a program can be built.  One is by a user on a
-particular system.  There, checking to see if various libraries are
-installed and if so enabling some additional feature (that isn't that
-hard/time-consuming to build) is entirely reasonable.
-
-In a packaging system, dependencies are much more troublesome.
-Dependencies have to be declared, and the build limited to use only
-those declared dependencies, in order to get repeatable builds and
-binary packages that can be used on other systems.  Dependencies that
-really are required are fine.  But optional dependencies are a problem,
-because e.g. one doesn't want to require the presence of qt to build
-something (that isn't already enormous).   So if git needs mercurial and
-subversion installed, plus perhaps 5 other things for less popular
-remote helpers, that starts to be a real burden.
-
-(I realize some packaging systems have a style where the union of the
-possible dependencies must be present to build, and then the resulting
-binaries are allocated to split packages.  But that's not universal, and
-it still requires large amounts of unnecessary dependencies to build a
-package from source.)
-
-Ideally, the core of git would have a small set of dependencies, and
-optional language bindings or remote helpers could be built
-independently (by running a different build, after git proper was built
-and installed).  It seems more likely that the property of independent
-builds of optional components will be preserved if the various git-foo
-pieces are in seaprate trees.  But if they are in subdirs of the main
-git tree, and build by "./configure && make && make install" in the
-subdir, that's arguably equivalent.
-
---=-=-=
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iEYEARECAAYFAlNqHKIACgkQ+vesoDJhHiW28ACeLnyEDJqaCyT3/O1wAzcdM6Iv
-vicAn1I2MdHs06n+70JV3L3QEBzS59es
-=R7i1
------END PGP SIGNATURE-----
---=-=-=--
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
