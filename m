@@ -1,128 +1,108 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: t5539 fails on ubuntu for v2.0.0-rc2
-Date: Wed, 07 May 2014 14:45:01 -0700
-Message-ID: <xmqqeh056z6q.fsf@gitster.dls.corp.google.com>
-References: <536A8FF8.7080909@fabiodalfonso.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: What's cooking in git.git (Apr 2014, #09; Tue, 29)
+Date: Wed, 07 May 2014 16:38:44 -0500
+Message-ID: <536aa7e4d07c7_76ff7a52ec36@nysa.notmuch>
+References: <xmqq7g67iwxc.fsf@gitster.dls.corp.google.com>
+ <20140505184546.GB23935@serenity.lan>
+ <xmqqd2fqcv7s.fsf@gitster.dls.corp.google.com>
+ <20140507080558.GH23935@serenity.lan>
+ <xmqqvbtha04t.fsf@gitster.dls.corp.google.com>
+ <536a96e762dc4_76ff7a52ec44@nysa.notmuch>
+ <20140507204420.GB9035@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: fabio.dalfonso@fabiodalfonso.com
-X-From: git-owner@vger.kernel.org Wed May 07 23:45:15 2014
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: John Keeping <john@keeping.me.uk>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 07 23:49:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wi9eL-00033B-8g
-	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 23:45:13 +0200
+	id 1Wi9ib-0006Jp-PN
+	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 23:49:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751820AbaEGVpJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2014 17:45:09 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:55013 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751163AbaEGVpI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 May 2014 17:45:08 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id AE1CE165C8;
-	Wed,  7 May 2014 17:45:07 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fqTZS8z7PKy0aVbUJeA+hYpUCA8=; b=aMnrPI
-	gL6skYTb6DHJWLMNfSnavkAM52lqX/+k5451LB6Rhe7VgWbQVDcbwL0tIIv0dV9T
-	vRm+KOZgig59VxN7oMgeftXKWIu9tOq9vsIz95tQ92JgaMc16smqaHz20blxdvnv
-	HnAloYuxB7Y/iIPd+5sCeCCWkW+PkK4ZRPXEg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=pj1RfQ93C/sOpB6bkNwHKdUQS8wur5rr
-	mgzLOG+/YIVtiSxjPRIndz/w0fz3ot7FNWQ7zMnUpeVlDhc3PslOFc7f1iXSeAVR
-	CPxzU4qcE4OQ2tf+NB+GVcBFa1LIhLudbs+/JSh7uKuXaGV6wbD7AR98BvJwo/WK
-	hesBqc9hy+8=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A12BB165C7;
-	Wed,  7 May 2014 17:45:07 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 2BBD2165C3;
-	Wed,  7 May 2014 17:45:03 -0400 (EDT)
-In-Reply-To: <536A8FF8.7080909@fabiodalfonso.com> (Fabio D'Alfonso's message
-	of "Wed, 07 May 2014 21:56:40 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: D8995574-D630-11E3-93BB-9CEB01674E00-77302942!pb-smtp0.pobox.com
+	id S1752425AbaEGVte (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2014 17:49:34 -0400
+Received: from mail-oa0-f41.google.com ([209.85.219.41]:60226 "EHLO
+	mail-oa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751992AbaEGVtc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 May 2014 17:49:32 -0400
+Received: by mail-oa0-f41.google.com with SMTP id m1so2041337oag.14
+        for <git@vger.kernel.org>; Wed, 07 May 2014 14:49:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=35NCE+tAL83wQUmdeBcHTV9DXb1YxjbriZrBn+e2v9c=;
+        b=c8ZNxE4PA3F2bcLwTkNtPqu5wmt0+JHzapZ365dr6dK1SrKnSTNHam9aW94QnDtsTt
+         0MUyocRZf10rKK3Xr9N24VOLybHQJ8IoxeJ2M1W72uBcU2PgIGTdzsEWO9+LbYUhP7i1
+         32Ozi1eNOfYfF0rLb8Si0Iod5x7D2Op0211eXRb3BdqN0W2JEYD2jh9f/YTNkk13Px/+
+         Fr5N+ko4DQQSBsZvojmru2cPNwZi5GT7F3wk/v06rVhuVodLnbNo4L/FtzgphzBeO+uM
+         CSDF4nX5puU4L/fdRcmDnapIIXhKvtfOCtish2qJcw6NSo0wF5R0dxGH3z9oPX2cNFJm
+         B6bg==
+X-Received: by 10.182.205.135 with SMTP id lg7mr48578650obc.32.1399499372486;
+        Wed, 07 May 2014 14:49:32 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id 10sm37082088obq.18.2014.05.07.14.49.29
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 07 May 2014 14:49:31 -0700 (PDT)
+In-Reply-To: <20140507204420.GB9035@serenity.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248381>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248382>
 
-Fabio D'Alfonso <fabio.dalfonso@fabiodalfonso.com> writes:
+John Keeping wrote:
+> On Wed, May 07, 2014 at 03:26:15PM -0500, Felipe Contreras wrote:
+> > Junio C Hamano wrote:
+> > > Your git-integrate might turn into something I could augment my
+> > > workflow with with some additions.
+> > > 
+> > >  - specifying a merge strategy per branch being merged;
+> > 
+> > git-reintegrate[1] supports this.
+> > 
+> > >  - support evil merges or picking a fix-up commit;
+> > 
+> > git-reintegrate supports this.
+> > 
+> > >  - leaving an empty commit only to leave comment in the history.
+> > 
+> > Done[2].
+> > 
+> > 
+> > > and until that happens, I'll keep using the Reintegrate script found
+> > > in my 'todo' branch.
+> > 
+> > My git-reintegrate supports everything John's git-integrate and in
+> > addition it supports generating the commands from an existing branch,
+> > like your Reintegrate. IOW; it's superior.
+> 
+> And yet the documentation is unchanged from the version you copied in
+> from git-integration.
 
-> Hi,
-> I am getting this in Ubuntu, something wrong with my env?
-> Thanks
->
-> root@HDUBVM01:~/builds/git/t# ./t5539-fetch-http-shallow.sh
-> ok 1 - setup shallow clone
-> not ok 2 - clone http repository
-> #
-> #        git clone --bare --no-local shallow
-> "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
-> #        git clone $HTTPD_URL/smart/repo.git clone &&
-> #        (
-> #        cd clone &&
-> #        git fsck &&
-> #        git log --format=%s origin/master >actual &&
-> #        cat <<EOF >expect &&
-> #    7
-> #    6
-> #    5
-> #    4
-> #    3
-> #    EOF
-> #        test_cmp expect actual
-> #        )
+Not much has changed since v0.1 since that version already worked
+perfectly. But I'll update it.
 
-Does not reproduce for me but I am on Ubuntu 12.04.2 LTS, so...
+> Personally I would much rather use a project which takes time to
+> document all of the features rather than relying on reading the code
+> to figure out the options.
 
-Running it with the -v option might give you more hints, and
-running it as
+And I would rather use a project that concentrates on having the
+features users need.
 
-    $ sh -x ./t5539-fe* -v
+> More features does not make a project superior.
 
-might give you more to chew.
+No, better features do.
 
-I do not think it is wise to run tests as root, though ;-)
+Either way. Documentation updated.
 
-
-> #
-> not ok 3 - no shallow lines after receiving ACK ready
-> #
-> #        (
-> #            cd shallow &&
-> #            for i in $(test_seq 15)
-> #            do
-> #                git checkout --orphan unrelated$i &&
-> #                test_commit unrelated$i &&
-> #                git push -q "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" \
-> #                    refs/heads/unrelated$i:refs/heads/unrelated$i &&
-> #                git push -q ../clone/.git \
-> #                    refs/heads/unrelated$i:refs/heads/unrelated$i ||
-> #                exit 1
-> #            done &&
-> #            git checkout master &&
-> #            test_commit new &&
-> #            git push  "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" master
-> #        ) &&
-> #        (
-> #            cd clone &&
-> #            git checkout --orphan newnew &&
-> #            test_commit new-too &&
-> #            GIT_TRACE_PACKET="$TRASH_DIRECTORY/trace" git fetch
-> --depth=2 &&
-> #            grep "fetch-pack< ACK .* ready" ../trace &&
-> #            ! grep "fetch-pack> done" ../trace
-> #        )
-> #
-> httpd (pid 10653?) not running
-> # failed 2 among 3 test(s)
-> 1..3
+-- 
+Felipe Contreras
