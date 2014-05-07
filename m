@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 15/20] read-cache.c: split racy stat test to a separate function
-Date: Wed,  7 May 2014 21:51:55 +0700
-Message-ID: <1399474320-6840-16-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 16/20] untracked cache: avoid racy timestamps
+Date: Wed,  7 May 2014 21:51:56 +0700
+Message-ID: <1399474320-6840-17-git-send-email-pclouds@gmail.com>
 References: <1399474320-6840-1-git-send-email-pclouds@gmail.com>
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
@@ -13,86 +13,108 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wi3Dy-0006HP-Lb
+	id 1Wi3Dz-0006HP-70
 	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 16:53:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932858AbaEGOx0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2014 10:53:26 -0400
-Received: from mail-pd0-f179.google.com ([209.85.192.179]:47148 "EHLO
-	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753281AbaEGOxY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 May 2014 10:53:24 -0400
-Received: by mail-pd0-f179.google.com with SMTP id g10so1150478pdj.38
-        for <git@vger.kernel.org>; Wed, 07 May 2014 07:53:23 -0700 (PDT)
+	id S932868AbaEGOxd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2014 10:53:33 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:65533 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932863AbaEGOx3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 May 2014 10:53:29 -0400
+Received: by mail-pa0-f42.google.com with SMTP id rd3so1301811pab.29
+        for <git@vger.kernel.org>; Wed, 07 May 2014 07:53:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=vXsh3zU8PFF1TiysEHKvwohWMVawQN1E6rKw366tMdY=;
-        b=nC7w4HcreqhPm5T5NSZUL/raIYU/8D7ZhrTeMpRH5fvsBYAzui4yAWLExAUFAN/hrJ
-         FKKWw/SyIiJrVaIlzOEKc9kLe7nj/DdIfRsEXAcZGpWNQxytf+Q6VWFSdvgrK9SQ04JB
-         dWkvu/VB4uU3ANdyMS/lnsrMLA8Hi5v2ywmV3OMEqmTuZfbi7usKqIUGlAFod7ip9IwQ
-         NJQahBixY8ojPBunwNTjqirYiuS49ZDof7ndJZbPlGzImowfpMFBB23m49HuioDYip+6
-         b73GjE3I4dNyUlRt6M/5j6PMXGzTZcEbA1vE1hg2jzy2bQBUjjRyEk9xu223bm4bbU6Y
-         4p9A==
-X-Received: by 10.66.148.98 with SMTP id tr2mr19749279pab.33.1399474403821;
-        Wed, 07 May 2014 07:53:23 -0700 (PDT)
+        bh=ovvlJgSHUzPRCWihlF0RkEVeZSc1FgLgWWo7mcifoMA=;
+        b=Lw/ZvN+efRmlrb9wdljZ58DO6RJaEoBFu2Fx2wItyCdWjlKrt1U6IDDVUyFBDTCaAY
+         oDIfCLMlc+AkYDtVZnaS5dKUO0Jd2kSOwU8KxAswMkpjNwG2rR9Xi3Gp9p7lYdgDtvO7
+         5HudkHw3jZkaZ4QkFWyIyr6JNx2+56hYTlhZlLs21+D7yyFeo7bLno80MU59kOCBiz47
+         32HJ8M5yW3jmO85O23i7y2Yu6tLyGK/0nA0+GftFWvN4RNKSmnGCMpiFJ7Fj+AInRcZl
+         yrMNBj0WENOnaxAfLijIn6iQxZYuAdCyaf6mweB65B1Lunmf44EEwYC478HIKmIHKt6U
+         bH5w==
+X-Received: by 10.66.141.109 with SMTP id rn13mr20011708pab.117.1399474409137;
+        Wed, 07 May 2014 07:53:29 -0700 (PDT)
 Received: from lanh ([115.73.204.3])
-        by mx.google.com with ESMTPSA id qv3sm3631319pbb.87.2014.05.07.07.53.20
+        by mx.google.com with ESMTPSA id mt1sm3658350pbb.31.2014.05.07.07.53.26
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 07 May 2014 07:53:22 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Wed, 07 May 2014 21:53:23 +0700
+        Wed, 07 May 2014 07:53:28 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Wed, 07 May 2014 21:53:29 +0700
 X-Mailer: git-send-email 1.9.1.346.ga2b5940
 In-Reply-To: <1399474320-6840-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248321>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248322>
 
+When a directory is updated within the same second that its timestamp
+is last saved, we cannot realize the directory has been updated by
+checking timestamps. Assume the worst (something is update). See
+29e4d36 (Racy GIT - 2005-12-20) for more information.
 ---
- read-cache.c | 24 +++++++++++++++---------
- 1 file changed, 15 insertions(+), 9 deletions(-)
+ cache.h      | 2 ++
+ dir.c        | 6 ++++--
+ read-cache.c | 8 ++++++++
+ 3 files changed, 14 insertions(+), 2 deletions(-)
 
+diff --git a/cache.h b/cache.h
+index 06fcb6b..98c22c4 100644
+--- a/cache.h
++++ b/cache.h
+@@ -525,6 +525,8 @@ extern void fill_stat_data(struct stat_data *sd, struct stat *st);
+  * INODE_CHANGED, and DATA_CHANGED.
+  */
+ extern int match_stat_data(const struct stat_data *sd, struct stat *st);
++extern int match_stat_data_racy(const struct index_state *istate,
++				const struct stat_data *sd, struct stat *st);
+ 
+ extern void fill_stat_cache_info(struct cache_entry *ce, struct stat *st);
+ 
+diff --git a/dir.c b/dir.c
+index 58303ca..24ccd22 100644
+--- a/dir.c
++++ b/dir.c
+@@ -677,7 +677,9 @@ static int add_excludes(const char *fname,
+ 			    !ce_stage(active_cache[pos]) &&
+ 			    ce_uptodate(active_cache[pos]))
+ 				hashcpy(sha1, active_cache[pos]->sha1);
+-			else if (ref_stat && !match_stat_data(ref_stat, &st)) {
++			else if (ref_stat &&
++				 !match_stat_data_racy(&the_index,
++						       ref_stat, &st)) {
+ 				if (ref_sha1 != sha1) /* support ref_sha1 == sha1 */
+ 					hashcpy(sha1, ref_sha1);
+ 			} else
+@@ -1543,7 +1545,7 @@ static int valid_cached_dir(struct dir_struct *dir,
+ 		return 0;
+ 	}
+ 	if (!untracked->valid ||
+-	    match_stat_data(&untracked->stat_data, &st)) {
++	    match_stat_data_racy(&the_index, &untracked->stat_data, &st)) {
+ 		if (untracked->valid)
+ 			invalidate_directory(dir->untracked, untracked);
+ 		fill_stat_data(&untracked->stat_data, &st);
 diff --git a/read-cache.c b/read-cache.c
-index 66c2279..72adcd6 100644
+index 72adcd6..823db9b 100644
 --- a/read-cache.c
 +++ b/read-cache.c
-@@ -258,20 +258,26 @@ static int ce_match_stat_basic(const struct cache_entry *ce, struct stat *st)
- 	return changed;
+@@ -280,6 +280,14 @@ static int is_racy_timestamp(const struct index_state *istate,
+ 		is_racy_stat(istate, &ce->ce_stat_data));
  }
  
--static int is_racy_timestamp(const struct index_state *istate,
--			     const struct cache_entry *ce)
-+static int is_racy_stat(const struct index_state *istate,
-+			const struct stat_data *sd)
- {
--	return (!S_ISGITLINK(ce->ce_mode) &&
--		istate->timestamp.sec &&
-+	return (istate->timestamp.sec &&
- #ifdef USE_NSEC
- 		 /* nanosecond timestamped files can also be racy! */
--		(istate->timestamp.sec < ce->ce_stat_data.sd_mtime.sec ||
--		 (istate->timestamp.sec == ce->ce_stat_data.sd_mtime.sec &&
--		  istate->timestamp.nsec <= ce->ce_stat_data.sd_mtime.nsec))
-+		(istate->timestamp.sec < sd->sd_mtime.sec ||
-+		 (istate->timestamp.sec == sd->sd_mtime.sec &&
-+		  istate->timestamp.nsec <= sd->sd_mtime.nsec))
- #else
--		istate->timestamp.sec <= ce->ce_stat_data.sd_mtime.sec
-+		istate->timestamp.sec <= sd->sd_mtime.sec
- #endif
--		 );
-+		);
++int match_stat_data_racy(const struct index_state *istate,
++			 const struct stat_data *sd, struct stat *st)
++{
++	if (is_racy_stat(istate, sd))
++		return MTIME_CHANGED;
++	return match_stat_data(sd, st);
 +}
 +
-+static int is_racy_timestamp(const struct index_state *istate,
-+			     const struct cache_entry *ce)
-+{
-+	return (!S_ISGITLINK(ce->ce_mode) &&
-+		is_racy_stat(istate, &ce->ce_stat_data));
- }
- 
  int ie_match_stat(const struct index_state *istate,
+ 		  const struct cache_entry *ce, struct stat *st,
+ 		  unsigned int options)
 -- 
 1.9.1.346.ga2b5940
