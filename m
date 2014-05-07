@@ -1,186 +1,83 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [PATCH] t3910: show failure of core.precomposeunicode with decomposed
- filenames
-Date: Wed, 07 May 2014 21:16:40 +0200
-Message-ID: <536A8698.3000208@web.de>
-References: <20140428161630.GA9435@sigill.intra.peff.net> <5365DA7B.6050000@web.de> <20140505214658.GA16971@sigill.intra.peff.net>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH] Standardize python shebangs
+Date: Wed, 07 May 2014 14:06:16 -0500
+Message-ID: <536a842838fbb_76ff7a52ec5d@nysa.notmuch>
+References: <1399456987-24156-1-git-send-email-felipe.contreras@gmail.com>
+ <vpqy4ydpiog.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+ charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>,
-	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Wed May 07 21:16:54 2014
+Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 07 21:17:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wi7Kn-00083R-RI
-	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 21:16:54 +0200
+	id 1Wi7L6-0008Ex-32
+	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 21:17:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751515AbaEGTQu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2014 15:16:50 -0400
-Received: from mout.web.de ([212.227.17.12]:56082 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750895AbaEGTQt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 May 2014 15:16:49 -0400
-Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb102)
- with ESMTPSA (Nemesis) id 0Lpw6t-1XMPgv1ln5-00fj8q; Wed, 07 May 2014 21:16:46
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
-In-Reply-To: <20140505214658.GA16971@sigill.intra.peff.net>
-X-Provags-ID: V03:K0:4wjdsyVRp7R64t4W96+ql5eMbhcD/xWpTQTlsYE2xOByP730HnL
- nreVoNTMHqhv8XoU60V4ty/hBj+BvcjMWSKw3gnSU4xRmWUepCEVFgtCKvtHSmIwa76wdCU
- 47As3KKqlk4PKpKDlOCDpjcT3X1FpEuFB4XUdN1fptPVIF60HMvXjqVOY38WTHeht3WIOfW
- GmrI6kvIcpy0kcfzrF59Q==
+	id S1751611AbaEGTRJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2014 15:17:09 -0400
+Received: from mail-ob0-f182.google.com ([209.85.214.182]:60231 "EHLO
+	mail-ob0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751256AbaEGTRG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 May 2014 15:17:06 -0400
+Received: by mail-ob0-f182.google.com with SMTP id wn1so1799437obc.27
+        for <git@vger.kernel.org>; Wed, 07 May 2014 12:17:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=FBljwLwX4eaMq7uQpaHxfXwYUXXq1raGkglU1geiAew=;
+        b=0QI7oV+07oeQlS/fsw4qdKwlFBi5yrG5v0yASZwHcCllegifOdYJIQ83m1WPoeXyOO
+         ELD21iQxYtnonQa3Dnk5lOOfxR6bEnfo2sGzJitmUSX5zCQpdLUfWBmtixecO7IqNh+1
+         b+aryrKJtM/f+V6+1BCQ9ImUZjbqD1r3iwc+o6V9EW9nlyNF+4N2H8o+7+pucJyQtlPL
+         MFFU0HnWmrX+lzvL5Lx6AkKyjDTqj8i1hY8Zl7PTijxP6omw8obdXgknpmaxg0l0h2hX
+         adeDfq+Bx6nwwhI7exATh6FiMRSPl1afD2BPD/MDhDI2Q398hmDn6XBLqG2d6Lh+tTsE
+         nlmA==
+X-Received: by 10.182.72.167 with SMTP id e7mr20546006obv.3.1399490223843;
+        Wed, 07 May 2014 12:17:03 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id w4sm69625940oem.8.2014.05.07.12.17.00
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 07 May 2014 12:17:01 -0700 (PDT)
+In-Reply-To: <vpqy4ydpiog.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248350>
 
-On 2014-05-05 23.46, Jeff King wrote:
-[]
->>   2. Do all index filename comparisons under Mac OS X using a UTF-8 aware
->>      comparison function regardless if core.precomposeunicode is set.
->>      This would probably have bad performance, and somewhat
->>      defeats the point of converting the filenames at the
->>      readdir level in the first place.
+Matthieu Moy wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
 > 
-> Right, I'm concerned about performance here, but I wonder if we can
-> reuse the name-hash solutions from ignorecase.
-Some short question, (sorry being short)
-What do you think about this:
+> > It's better if all our scripts use the same '/usr/bin/env python'.
+> 
+> Why?
+> 
+> Using python2 for git_multimail.py is a deliberate decision:
 
-diff --git a/compat/precompose_utf8.c b/compat/precompose_utf8.c
-index 95fe849..c807f38 100644
---- a/compat/precompose_utf8.c
-+++ b/compat/precompose_utf8.c
-@@ -57,6 +57,22 @@ void probe_utf8_pathname_composition(char *path, int len)
- }
- 
- 
-+char *inverscompose_str_len(const char *in, size_t insz, int *outsz)
-+{
-+	char *prec_str = NULL;
-+
-+	if (has_non_ascii(in, insz, NULL)) {
-+		int old_errno = errno;
-+		prec_str = reencode_string_len(in, (int)insz,
-+					       precomposed_unicode ? path_encoding : repo_encoding,
-+					       precomposed_unicode ? repo_encoding : path_encoding,
-+					       outsz);
-+		errno = old_errno;
-+	}
-+	return prec_str;
-+}
-+
-+
- void precompose_argv(int argc, const char **argv)
- {
- 	int i = 0;
-diff --git a/compat/precompose_utf8.h b/compat/precompose_utf8.h
-index 3b73585..b9ac099 100644
---- a/compat/precompose_utf8.h
-+++ b/compat/precompose_utf8.h
-@@ -26,6 +26,7 @@ typedef struct {
- 	struct dirent_prec_psx *dirent_nfc;
- } PREC_DIR;
- 
-+char *inverscompose_str_len(const char *in, size_t insz, int *outsz);
- void precompose_argv(int argc, const char **argv);
- void probe_utf8_pathname_composition(char *, int);
- 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index f6d3a46..5ae5f57 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -177,7 +177,7 @@ typedef unsigned long uintptr_t;
- #ifdef PRECOMPOSE_UNICODE
- #include "compat/precompose_utf8.h"
- #else
--#define precompose_str(in,i_nfd2nfc)
-+#define inverscompose_str_len(s,i,o) NULL
- #define precompose_argv(c,v)
- #define probe_utf8_pathname_composition(a,b)
- #endif
-diff --git a/name-hash.c b/name-hash.c
-index 97444d0..3c4a4ee 100644
---- a/name-hash.c
-+++ b/name-hash.c
-@@ -210,7 +210,7 @@ struct cache_entry *index_dir_exists(struct index_state *istate, const char *nam
- 	return NULL;
- }
- 
--struct cache_entry *index_file_exists(struct index_state *istate, const char *name, int namelen, int icase)
-+static struct cache_entry *index_file_exists_int(struct index_state *istate, const char *name, int namelen, int icase)
- {
- 	struct cache_entry *ce;
- 	struct hashmap_entry key;
-@@ -227,6 +227,25 @@ struct cache_entry *index_file_exists(struct index_state *istate, const char *na
- 	return NULL;
- }
- 
-+
-+struct cache_entry *index_file_exists(struct index_state *istate, const char *name, int namelen, int icase)
-+{
-+	struct cache_entry *ce;
-+	ce = index_file_exists_int(istate, name, namelen, icase);
-+	if (ce)
-+		return ce;
-+	else {
-+		int prec_len;
-+		char *prec_name = inverscompose_str_len(name, namelen, &prec_len);
-+		if (prec_name) {
-+			ce = index_file_exists_int(istate, prec_name, prec_len, icase);
-+			free(prec_name);
-+		}
-+	}
-+	return ce;
-+}
-+
-+
- void free_name_hash(struct index_state *istate)
- {
- 	if (!istate->name_hash_initialized)
-diff --git a/t/t3910-mac-os-precompose.sh b/t/t3910-mac-os-precompose.sh
-index e4ba601..4414658 100755
---- a/t/t3910-mac-os-precompose.sh
-+++ b/t/t3910-mac-os-precompose.sh
-@@ -140,6 +140,22 @@ test_expect_success "Add long precomposed filename" '
- 	git add * &&
- 	git commit -m "Long filename"
- '
-+
-+test_expect_success 'handle existing decomposed filenames' '
-+	git checkout master &&
-+	git reset --hard &&
-+	git checkout -b exist_decomposed &&
-+	echo content >"verbatim.$Adiarnfd" &&
-+	git -c core.precomposeunicode=false add "verbatim.$Adiarnfd" &&
-+	git commit -m "existing decomposed file" &&
-+	echo \"verbatim.A\\314\\210\" >expect &&
-+	git ls-files >actual &&
-+	test_cmp expect actual &&
-+	>expect &&
-+	git status | grep verbatim || : >actual &&
-+	test_cmp expect actual
-+'
-+
- # Test if the global core.precomposeunicode stops autosensing
- # Must be the last test case
- test_expect_success "respect git config --global core.precomposeunicode" '
-diff --git a/utf8.c b/utf8.c
-index 77c28d4..fb8a99a 100644
---- a/utf8.c
-+++ b/utf8.c
-@@ -519,7 +519,7 @@ char *reencode_string_iconv(const char *in, size_t insz, iconv_t conv, int *outs
- 	char *out, *outpos;
- 	iconv_ibp cp;
- 
--	outsz = insz;
-+	outsz = 3*insz; /* for decompose */
- 	outalloc = outsz + 1; /* for terminating NUL */
- 	out = xmalloc(outalloc);
- 	outpos = out;
+If you want to use python2, then use '/usr/bin/env python2'.
+
+> "The git-multimail project itself is currently hosted on GitHub:
+> 
+>     https://github.com/mhagger/git-multimail
+> 
+> We use the GitHub issue tracker to keep track of bugs and feature
+> requests, and GitHub pull requests to exchange patches (though, if you
+> prefer, you can send patches via the Git mailing list with cc to me).
+> Please sign off your patches as per the Git project practice."
+> )
+
+If you are going to follow practices different than git.git, then
+multimail shouldn't live in 'contrib/'. Junio is already thretening to
+remove stuff out of contrib even when development behaves as the Git
+core does, so it makes more sense for stuff that doesn't.
+
+-- 
+Felipe Contreras
