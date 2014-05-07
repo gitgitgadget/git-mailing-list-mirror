@@ -1,98 +1,94 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: What's cooking in git.git (Apr 2014, #09; Tue, 29)
-Date: Wed, 07 May 2014 15:26:15 -0500
-Message-ID: <536a96e762dc4_76ff7a52ec44@nysa.notmuch>
-References: <xmqq7g67iwxc.fsf@gitster.dls.corp.google.com>
- <20140505184546.GB23935@serenity.lan>
- <xmqqd2fqcv7s.fsf@gitster.dls.corp.google.com>
- <20140507080558.GH23935@serenity.lan>
- <xmqqvbtha04t.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Windows: Always normalize paths to Windows-style
+Date: Wed, 07 May 2014 13:40:05 -0700
+Message-ID: <xmqqmwet8gre.fsf@gitster.dls.corp.google.com>
+References: <20140428083931.GA10257@camelia.ucw.cz>
+	<CABPQNSaC30p7TEOvc85u=+skjrFj17182vWWSL=QNVuvzVFE=w@mail.gmail.com>
+	<20140428113815.GA10559@camelia.ucw.cz>
+	<20140428114224.GA11186@camelia.ucw.cz>
+	<CABPQNSbDkE+Vff=4MmPO9oMfjRay6Oin51zZRoZ8mOEhGoaD3Q@mail.gmail.com>
+	<20140428142931.GA12056@camelia.ucw.cz>
+	<20140507184444.GB4013@sandbox-ub>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>,
-	John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Wed May 07 22:37:10 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Stepan Kasal <kasal@ucw.cz>,
+	GIT Mailing-list <git@vger.kernel.org>,
+	Johannes Sixt <j6t@kdbg.org>
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Wed May 07 22:40:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wi8aT-0002dk-Ll
-	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 22:37:10 +0200
+	id 1Wi8dT-0004xy-Gz
+	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 22:40:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751100AbaEGUhF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2014 16:37:05 -0400
-Received: from mail-oa0-f47.google.com ([209.85.219.47]:64537 "EHLO
-	mail-oa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750904AbaEGUhE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 May 2014 16:37:04 -0400
-Received: by mail-oa0-f47.google.com with SMTP id i7so1925127oag.20
-        for <git@vger.kernel.org>; Wed, 07 May 2014 13:37:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=ZValr/izWg17D0ovTU2Okaih4EKcPKGK/+OYN6NDL9Y=;
-        b=gjU4IxFWcddIZ7vvv4Tg0bRX7SbIVHikgjaaoLDTOtRTm5HoRDIBghdxswgQssGPVw
-         LkixiazSGyQmG09bqoVhPDi6ges/dRBuRI0hNzbsUwwkwUOhbwqr402LeT8iqeD70Kkd
-         5+Lm5wE+ZqLlsOYFY85ivRMU3c2UYlK7Aq6JJe/EWCL21MhNFVBDnjxmeQN1nfeng+AX
-         nMgXPyOchBCOLeXjwj0bI3EzBiFAODOcehXkMCfJOy4gQXzdoFsnbJCIpX7jok+jPGLQ
-         lBvvbGrW7acUoonLlvXbG/eGcGoudKav7XiAZdOmr6ELkoyJBaKP0Jm/g0oU359JXRU7
-         EgLQ==
-X-Received: by 10.182.18.102 with SMTP id v6mr5733096obd.71.1399495023220;
-        Wed, 07 May 2014 13:37:03 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id zm8sm36662048obc.16.2014.05.07.13.36.59
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 07 May 2014 13:37:01 -0700 (PDT)
-In-Reply-To: <xmqqvbtha04t.fsf@gitster.dls.corp.google.com>
+	id S1751535AbaEGUkL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2014 16:40:11 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:51748 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751486AbaEGUkK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 May 2014 16:40:10 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9432516095;
+	Wed,  7 May 2014 16:40:09 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=MzIC1U88clHbhApKWbxSNgnu1gI=; b=H/PnXu
+	M00TU019vvGqsCASvx2/dJG069ZSdU2cW0EIXHz9XL4sxZJtY/ang8p/W4iW1Zx2
+	Y0ZmWp6xmzZqa8Rr7grNAOCyH0A/cHD21hY3pAAgj14hX4vr6VsLl6gzU+vHUNn0
+	ysUuY+NGoFYJig6iQHpBlURvzbTdA/Qk98PZE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ThFil2Vo08WaoI/hplcxs3ZzkYpFlQvA
+	yPwpFdqpNuP/S/iVfW+lUm+QitgGIqQSbBocLZw9D9ZcTyCUbsSRvp3lo7ekt/xf
+	+Al81BbJ6+q7DlzwHF1HCepLjnmlgCHbiAOx2GOSUlVMkThHdmOa7IWtKx8TTyKc
+	VFqimxa6Wz4=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 88FCD16094;
+	Wed,  7 May 2014 16:40:09 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id ED09616093;
+	Wed,  7 May 2014 16:40:06 -0400 (EDT)
+In-Reply-To: <20140507184444.GB4013@sandbox-ub> (Heiko Voigt's message of
+	"Wed, 7 May 2014 20:44:44 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: C646AECA-D627-11E3-8DCF-9CEB01674E00-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248363>
 
-Junio C Hamano wrote:
-> That "when I manually" part is what I meant by "we give a good way for
-> these third-party tools" above, and "make it really easy to install
-> these third-party tools" in the remaining part of the message you are
-> responding to.
+Heiko Voigt <hvoigt@hvoigt.net> writes:
 
-We need two things:
+> On Mon, Apr 28, 2014 at 04:29:31PM +0200, Stepan Kasal wrote:
+>> this is another patch that lives in msysGit for a long time.
+>> Originally, it had two parts:
+>> (Cf https://github.com/msysgit/git/commit/64a8a03 )
+>> 
+>> 1) adding alias pwd='pwd -W' to git-sh-setup.sh
+>>    This one went upstream, though as a shell function.
+>> 
+>> 2) revert of commit 4dce7d9b by Johannes Sixt <j6t@kdbg.org>
+>> This mingw-specific commit was created less than 3 weeks before
+>> it was reverted.  And it stayed reverted for two years.
+>> 
+>> Could you please either accept this patch, or revert 4dce7d9b ?
+>> (Both alternatives are exactly the same.)
+>
+> Sorry for the late reply.  To me reverting (or omitting at the next
+> rebasing merge) this patch sound fine, as it seems to be superseeded by
+> the upstream change.
+>
+> As I can see thats already done on master, so it seems to be all good.
 
-  1) Provied a pkg-config, as all sane shared components do
-  2) Split the testing framework so third-parties don't have to rely on
-     yet another third-parth (shareness)
+Are you guys talking about be39048a (git-sh-setup.sh: Add an pwd()
+function for MinGW, 2012-04-17) which has been in since v1.7.11?
 
-> Your git-integrate might turn into something I could augment my
-> workflow with with some additions.
-> 
->  - specifying a merge strategy per branch being merged;
-
-git-reintegrate[1] supports this.
-
->  - support evil merges or picking a fix-up commit;
-
-git-reintegrate supports this.
-
->  - leaving an empty commit only to leave comment in the history.
-
-Done[2].
-
-
-> and until that happens, I'll keep using the Reintegrate script found
-> in my 'todo' branch.
-
-My git-reintegrate supports everything John's git-integrate and in
-addition it supports generating the commands from an existing branch,
-like your Reintegrate. IOW; it's superior.
-
-[1] https://github.com/felipec/git-reintegrate
-[2] https://github.com/felipec/git-reintegrate/commit/332412470c6e084f10ac2f8dc11e86ab4680974a
-
--- 
-Felipe Contreras
+The change introduced by 4dce7d9b (submodules: fix ambiguous
+absolute paths under Windows, 2012-03-04) still exists, but your
+"reverting this patch sound fine" confuses me.
