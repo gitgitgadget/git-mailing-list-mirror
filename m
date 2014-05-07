@@ -1,155 +1,120 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: What's cooking in git.git (Apr 2014, #09; Tue, 29)
-Date: Wed, 7 May 2014 20:28:05 +0100
-Message-ID: <20140507192805.GA9035@serenity.lan>
-References: <xmqq7g67iwxc.fsf@gitster.dls.corp.google.com>
- <20140505184546.GB23935@serenity.lan>
- <xmqqd2fqcv7s.fsf@gitster.dls.corp.google.com>
- <20140507080558.GH23935@serenity.lan>
- <xmqqvbtha04t.fsf@gitster.dls.corp.google.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH] completion: move out of contrib
+Date: Wed, 07 May 2014 14:45:17 -0500
+Message-ID: <536a8d4dd798e_76ff7a52ec26@nysa.notmuch>
+References: <1399077403-19678-1-git-send-email-felipe.contreras@gmail.com>
+ <xmqq38gmctzn.fsf@gitster.dls.corp.google.com>
+ <536989d764672_250b14ed2ec66@nysa.notmuch>
+ <536a067b3b1ca_5e8fbfd30879@nysa.notmuch>
+ <xmqqppjpbicu.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 07 21:38:29 2014
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 07 21:56:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wi7fh-0007TX-0H
-	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 21:38:29 +0200
+	id 1Wi7wt-00052d-Mg
+	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 21:56:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751009AbaEGTiZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2014 15:38:25 -0400
-Received: from hyena.aluminati.org ([64.22.123.221]:43947 "EHLO
-	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750880AbaEGTiY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 May 2014 15:38:24 -0400
-X-Greylist: delayed 607 seconds by postgrey-1.27 at vger.kernel.org; Wed, 07 May 2014 15:38:24 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by hyena.aluminati.org (Postfix) with ESMTP id B274A21B15;
-	Wed,  7 May 2014 20:28:16 +0100 (BST)
-X-Quarantine-ID: <HYjyB2BGuxzt>
-X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -1
-X-Spam-Level: 
-X-Spam-Status: No, score=-1 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1] autolearn=disabled
-Received: from hyena.aluminati.org ([127.0.0.1])
-	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id HYjyB2BGuxzt; Wed,  7 May 2014 20:28:15 +0100 (BST)
-Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by hyena.aluminati.org (Postfix) with ESMTP id 9626121AD0;
-	Wed,  7 May 2014 20:28:15 +0100 (BST)
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id 85F7E161E581;
-	Wed,  7 May 2014 20:28:15 +0100 (BST)
-X-Quarantine-ID: <dwNCHX4zvwlZ>
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id dwNCHX4zvwlZ; Wed,  7 May 2014 20:28:14 +0100 (BST)
-Received: from serenity.lan (banza.aluminati.org [10.0.7.182])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id 4634F161E358;
-	Wed,  7 May 2014 20:28:09 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <xmqqvbtha04t.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1752678AbaEGT4K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2014 15:56:10 -0400
+Received: from mail-oa0-f48.google.com ([209.85.219.48]:49001 "EHLO
+	mail-oa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751000AbaEGT4H (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 May 2014 15:56:07 -0400
+Received: by mail-oa0-f48.google.com with SMTP id i4so1865830oah.21
+        for <git@vger.kernel.org>; Wed, 07 May 2014 12:56:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=5QftVkeCRWLbId4p/TyoF8V4OIBNj4J+sBVlBgYvOEE=;
+        b=Tiu8yf02I9BM8PRnP8gPBAtoRt1O9sH5gYc3U9XPs/lxYtgQjH4CusPGJTsfpC20MU
+         uv5K/Solhp4VmM1sOAwk2LxYi7U6p65aUJlgZYdhZMhOl6uHzwR59nKLeDI+4Nsffwxu
+         IkgnchW9an9JGF/Xe2BYKSjRGirDt9jBzzJBH3b0g60zd9HogptFsfftaWTGoElK8BDJ
+         36ghL2/XuIfkomTUsqhghuIRnyCsE2aSGVSZSeCbg5PiDdL6Bo5pOLvCvv4Tijc6sbAf
+         gq2JaJzaqbQO8L+lS6/ahYXG3hbo35BVb6zvMssLKYBCW563h9ECwYQzx0FR4se5zAx+
+         PBUw==
+X-Received: by 10.60.51.136 with SMTP id k8mr49231446oeo.33.1399492566901;
+        Wed, 07 May 2014 12:56:06 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id nt6sm1889066obc.19.2014.05.07.12.56.02
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 07 May 2014 12:56:03 -0700 (PDT)
+In-Reply-To: <xmqqppjpbicu.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248352>
 
-On Wed, May 07, 2014 at 11:56:18AM -0700, Junio C Hamano wrote:
-> John Keeping <john@keeping.me.uk> writes:
+Junio C Hamano wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
 > 
-> > On Tue, May 06, 2014 at 05:01:59PM -0700, Junio C Hamano wrote:
-> > ...
-> >> Another thing to keep in mind is that we need to ensure that we give
-> >> a good way for these third-party tools to integrate well with the
-> >> core Git tools to form a single toolchest for the users.  I would
-> >> love to be able to do
-> >> 
-> >>     $ (cd git.git && make install)
-> >>     $ (cd git-imerge.git && make install)
-> >> 
-> >> and then say "git imerge", "git --help imerge", etc.  The same for
-> >> the remote helpers that we may be splitting out of my tree into
-> >> their own stand-alone projects.
+> > As an example of all the hacks needed by a real distribution package,
+> > here's the stuff ArchLinux packagers have to do:
 > >
-> > This can already work given suitable installation.  With
-> > git-integration[1] I can type `git help integration` and it shows me the
-> > man page in the same way that `git help commit` does.  When I manually
-> > linked the HTML file to the right place `git help -w integration` worked
-> > as well.
+> >   # bash completion
+> >   mkdir -p "$pkgdir"/usr/share/bash-completion/completions/
+> >   install -m644 ./contrib/completion/git-completion.bash "$pkgdir"/usr/share/bash-completion/completions/git
+> >...
+> >
+> > And here's what debian packagers have to do:
+> >
+> >   # bash completion
+> >   install -d -m0755 '$(GIT)'/etc/bash_completion.d
+> >   install -m0644 contrib/completion/git-completion.bash \
+> >     '$(GIT)'/etc/bash_completion.d/git
+> >...
+> >
+
+This is what the latest debian package does:
+
+	# bash completion
+	install -d -m0755 '$(GIT)'/usr/share/bash-completion/completions
+	install -m0644 contrib/completion/git-completion.bash \
+	  '$(GIT)'/usr/share/bash-completion/completions/git
+	ln -s git '$(GIT)'/usr/share/bash-completion/completions/gitk
+
+> > If our build system was sane, they wouldn't need so many hacks.
 > 
-> That "when I manually" part is what I meant by "we give a good way
-> for these third-party tools" above, and "make it really easy to
-> install these third-party tools" in the remaining part of the
-> message you are responding to.
-> 
-> > I think this is enough...
+> I do not see how the above two examples lead to that conclusion.
+> How would it help to blindly install to $(sharedir),
 
-Having thought about it a bit more after reading Felipe's reply, it
-would be nice if there were some way for third-party tools to install
-HTML documentation without relying on `git --html-path` but I cannot see
-an obvious way to do that as there isn't a standard $HTML_PATH to match
-$MAN_PATH and $PATH.
+It is not blind, it is the location bash-completion uses *by default*,
+and it's what most (all?) distributions use.
 
-I've never tried `git help --info` until this thread, but I think we
-could make some trivial improvements to that in order to support .info
-documentation for third-party tools.
+> or suggestion to use pkg-info when major distros do not even use one?
 
-> The reason why I CC'ed Michael was primarily because I thought you
-> were not one of those third-party tools maintainers (and secondarily
-> I am a fairly big fan of imerge), but it is good to hear your
-> opinion as another third-party provider.  Your git-integrate might
-> turn into something I could augment my workflow with with some
-> additions.  What is missing (I only read the full manual page at
-> http://johnkeeping.github.io/git-integration/git-integration.html)
-> to support my workflow seems to be:
-> 
->  - specifying a merge strategy per branch being merged;
+Which major distros do not ship with the pkg-config? It is part of
+bash-completion (as it should be part of every decent shared softare
+component), they all ship it.
 
-This is already supported by the "merge" instruction:
+Do you want me to go on a hunt and list all the distrubionts that ship
+both?
 
-	If any options are given after the ref (and on the same line)
-	then these are passed to git merge. This may be useful for
-	specifying an alternative merge strategy for a branch.
+  /usr/share/bash-completion/completions/git
+  /usr/share/pkgconfig/bash-completion.pc
 
->  - support evil merges or picking a fix-up commit;
+How many distributions would it take for you to accept the facts?
 
-I have an implementation of this on a branch, but have never merged it
-because it's not something I need to do often and it is very hard to
-support for git-integration's "status" output.
+> I would understand if the saneness you seek were for distros to
+> agree on where things should go, or at least agree on how to find
+> out where things should go.
 
-One of my primary use cases for git-integration involves pulling
-together branches owned by others (either in the same repository or by
-having fetched from their repositories); in this case it is interesting
-to see if/how a branch has changed since the last time the integration
-branch was built.  This also handles changes to the instruction sheet
-without an immediate rebuild.
+They all gree.
 
-I have not found a good way of figuring out whether a fixup commit has
-been applied and squashed into a merge) so I have let the branch sit
-there awaiting a perfect solution (which I doubt exists).  It may be
-that the status of a fixup is unimportant, so it could just be marked as
-unknown; I am mostly convinced that marking it as unknown is going to be
-better than an heuristic that is right most of the time.
+> I do not think we are there yet.
 
->  - leaving an empty commit only to leave comment in the history.
+You are wrong.
 
-This would be easy to add.
-
-> and until that happens, I'll keep using the Reintegrate script found
-> in my 'todo' branch.
-
-When I originally wrote git-integration I purposefully did not target
-your workflow because I (perhaps wrongly) assumed that the interaction
-between the different integration branches would mean that Git was
-better served sticking to the custom Reintegrate script.
+-- 
+Felipe Contreras
