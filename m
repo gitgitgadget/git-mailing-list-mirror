@@ -1,113 +1,92 @@
-From: Nathan Collins <nathan.collins@gmail.com>
-Subject: Re: [BUG?] Patches created with 'diff.noprefix=true' don't 'git apply'.
-Date: Wed, 7 May 2014 16:39:45 -0700
-Message-ID: <CAO8RVvfzP_nc9=nwr6JSK9s6u7DEctMpdn_5yca9h7G4TOd2Bw@mail.gmail.com>
-References: <CAO8RVvdgN3U5hUEsJjYY9urfeVUDWwHiEur4NQp=H93W37RRnw@mail.gmail.com>
- <20140501024042.GX9218@google.com> <CAO8RVveV4SgXmJzWpYnyB3rnQALQkrrLNtLL5Ej5Y9Mjjekmmw@mail.gmail.com>
- <xmqqa9aug4my.fsf@gitster.dls.corp.google.com> <CAO8RVvfHVBG6QZ5M1DJK4kOX8GMDrvEw4_L=LsEc4G6E0pP7ug@mail.gmail.com>
- <xmqqbnvaehm3.fsf@gitster.dls.corp.google.com> <CAO8RVveF6Oh0mqqyiVRHmnqQ+vXX7riDW_=zn0g=t88cQjCVrg@mail.gmail.com>
- <xmqqzjita0sn.fsf@gitster.dls.corp.google.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH] shell doc: remove stray "+" in example
+Date: Wed, 7 May 2014 16:44:01 -0700
+Message-ID: <20140507234401.GY9218@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 08 01:40:34 2014
+X-From: git-owner@vger.kernel.org Thu May 08 01:44:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WiBRx-0001TL-V7
-	for gcvg-git-2@plane.gmane.org; Thu, 08 May 2014 01:40:34 +0200
+	id 1WiBVS-000433-VL
+	for gcvg-git-2@plane.gmane.org; Thu, 08 May 2014 01:44:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752829AbaEGXka (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2014 19:40:30 -0400
-Received: from mail-qc0-f177.google.com ([209.85.216.177]:50820 "EHLO
-	mail-qc0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752633AbaEGXk0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 May 2014 19:40:26 -0400
-Received: by mail-qc0-f177.google.com with SMTP id i17so1982474qcy.22
-        for <git@vger.kernel.org>; Wed, 07 May 2014 16:40:25 -0700 (PDT)
+	id S1751638AbaEGXoG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2014 19:44:06 -0400
+Received: from mail-pd0-f173.google.com ([209.85.192.173]:61578 "EHLO
+	mail-pd0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751364AbaEGXoE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 May 2014 19:44:04 -0400
+Received: by mail-pd0-f173.google.com with SMTP id y10so1669917pdj.32
+        for <git@vger.kernel.org>; Wed, 07 May 2014 16:44:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=w3/8/42m4NL1C2+MoHfy7svFJSOOqowntCpluwCUQ5o=;
-        b=FwdFcZnfPvR9/dvqGiAlHcchQo+TVNQnVAnMl75sJ8yvA4LmPWz/11zkJu2q3K5wHu
-         QYKYAg0Pyq3C4zg0ln4xBmCX/slafCuH5ysScL+4x9Tr2v9jFvtU+6vs2+TOXHtSEJmu
-         fEIGbAj4YlOLZzQyzTYILVgs/8EJl3F6Cub8bv4vo4zkMI5jk8NqO5LE7ojVKQ9R0+qM
-         dKyPc4TTPYqRWF5uf9ElDA8V2si02MhUWbS83B/k3ZpSPzWAUZUXL+Jq6vNnPab+iZAc
-         48NtQPkuS1Ht+XA7IYn3fP/lgunHgJ5F8/jjul47BunDuL+TAsUHA9vszuVFfYyY0vhi
-         DIrg==
-X-Received: by 10.140.88.241 with SMTP id t104mr107745qgd.29.1399506025913;
- Wed, 07 May 2014 16:40:25 -0700 (PDT)
-Received: by 10.229.150.208 with HTTP; Wed, 7 May 2014 16:39:45 -0700 (PDT)
-In-Reply-To: <xmqqzjita0sn.fsf@gitster.dls.corp.google.com>
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        bh=JQ6OuWMN3T6UcMU+vFIqBz/YmV43LEzHPf5PiRl69eQ=;
+        b=PC0ueTeaVMy53ypCgrDx7KxkXGyVVnLYfdkKTktfZKGsI8Zingw1vVv2h7sBnCay77
+         tWlSwa4XtBNwrnvJpYR5aMXTG1M/6OMxpJ6EnhfSNSggjU7RMwiolJ6gLkWcHEOBx2Wp
+         vxENRLs1SRJQWJweu1+NQPPznzhM0xkyc1NN4hbqsZDptqMYJrbW+X2rwZs3+zRb1gwJ
+         ZDXaPX3goobSVE4+KuA5VfHhI3gKjBZUoe5nXgyavg1LiJ0wuRVDDHeuim9K7lqDrspI
+         8NRwq5gDCDXZdoF4Stkl+aTJK+8iQX2s/j57obUFDa5baoMTyPIOl9lGMKSIlL06j2Vv
+         MUgA==
+X-Received: by 10.66.66.135 with SMTP id f7mr530541pat.22.1399506243783;
+        Wed, 07 May 2014 16:44:03 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id qv3sm5194349pbb.87.2014.05.07.16.44.02
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 07 May 2014 16:44:03 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248390>
 
-On Wed, May 7, 2014 at 11:42 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Nathan Collins <nathan.collins@gmail.com> writes:
+The git-shell(1) manpage says
 
->> For (2), the solution may be to add a separate
->> 'diff.add-clickable-paths' option (probably there is a better name?
->> 'diff.add-copyable-paths'? ...),...
->> ...
->> Concretely, if 'diff.add-clickable-paths' is set, then instead of e.g.
->>
->>   diff --git a/src/Data/Function/Decorator/Memoizer/Unsafe.hs
->> b/src/Data/Function/Decorator/Memoizer
->>   index 3ef17da..a0586d3 100644
->>   --- a/src/Data/Function/Decorator/Memoizer/Unsafe.hs
->>   +++ b/src/Data/Function/Decorator/Memoizer/Unsafe.hs
->
-> If you do something along that line, perhaps
->
->         Index: src/Data/Function/Decorator/Memoizer/Unsafe.hs
->         diff --git a/src/Data/Function/Decorator/Memoizer/Unsafe.hs ...
->         index 3ef17da..a0586d3 100644
->         --- a/src/Data/Function/Decorator/Memoizer/Unsafe.hs
->         +++ b/src/Data/Function/Decorator/Memoizer/Unsafe.hs
->
-> to imitate what "cvs diff" does may be more familar to people.
->
-> What would you propose to make clickable in a renaming diff, though?
+	EXAMPLE
+	       To disable interactive logins, displaying a greeting
+		instead:
 
-Your 'Index' header looks good, and I would expect a renaming diff to
-have something like
+		+
 
-  Index: foo -> bar
+		   $ chsh -s /usr/bin/git-shell
+		   $ mkdir $HOME/git-shell-commands
+[...]
 
-as in 'git status', but I just realized that a "clickable paths"
-option already exists in some sense! There is a '--patch-with-raw'
-option (which is "short" for '--patch' and '--raw', hahaha) which
-inserts clickable file names in the patch, above each diff.  Moreover,
-it respects the '--relative' option, so you can get relative or
-absolute (relative repo root) clickable paths. It handles renaming by
-inserting the old and new paths separated by space.
+The stray "+" has been there ever since the example was added in
+v1.8.3-rc0~210^2 (shell: new no-interactive-login command to print a
+custom message, 2013-03-09).  The "+" sign between paragraphs is
+needed in asciidoc to attach extra paragraphs to a list item but here
+it is not needed and ends up rendered as a literal "+".  Remove it.
 
-So then, having a way to make '--patch-with-raw' the default for all
-non-plumbing patch-producing commands would solve the clickable paths
-problem.
+A quick search with "grep -e '<p>+' /usr/share/doc/git/html/*.html"
+doesn't find any other instances of this problem.
 
-In a summary, a possible complete solution:
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ Documentation/git-shell.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-1. improve Git apply error message: mention '-p$n' and '-p1' default,
-   and report if path in patch makes sense for some non-default '-p'
-   value.
-
-2. improve 'diff.noprefix' documentation: tell user that this option
-   is for producing '-p0' patches, and that using it to produce
-   clickable paths is insane and may cause problems with generated
-   patches.  Suggest the user use '--patch-with-raw', and possibly
-   '--relative', instead, or refer to (3).
-
-3. add a Git config for making '--patch-with-raw' and optionally
-   '--relative' the default for non-plumbing patch-producing commands.
-
-Cheers,
-
--nathan
+diff --git a/Documentation/git-shell.txt b/Documentation/git-shell.txt
+index c35051b..e4bdd22 100644
+--- a/Documentation/git-shell.txt
++++ b/Documentation/git-shell.txt
+@@ -66,7 +66,7 @@ EXAMPLE
+ -------
+ 
+ To disable interactive logins, displaying a greeting instead:
+-+
++
+ ----------------
+ $ chsh -s /usr/bin/git-shell
+ $ mkdir $HOME/git-shell-commands
+-- 
+1.9.1.423.g4596e3a
