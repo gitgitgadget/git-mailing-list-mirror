@@ -1,94 +1,102 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] pager: remove 'S' from $LESS by default
-Date: Wed, 07 May 2014 10:07:29 -0700
-Message-ID: <xmqqy4ydbjqm.fsf@gitster.dls.corp.google.com>
-References: <xmqq38gwm5ny.fsf@gitster.dls.corp.google.com>
-	<1398843325-31267-1-git-send-email-Matthieu.Moy@imag.fr>
-	<20140505184441.GS9218@google.com>
-	<110110563.544859.1399320654149.JavaMail.zimbra@imag.fr>
-	<xmqqppjqg6an.fsf@gitster.dls.corp.google.com>
-	<87mweuss7d.fsf@fencepost.gnu.org> <vpqzjiuu4i5.fsf@anie.imag.fr>
-	<20140506215516.GA30185@sigill.intra.peff.net>
+Subject: Re: [PATCH] git-p4: format-patch to diff-tree change breaks binary patches
+Date: Wed, 07 May 2014 10:27:14 -0700
+Message-ID: <xmqqtx91bitp.fsf@gitster.dls.corp.google.com>
+References: <20140507054854.GA3571@olive>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	David Kastrup <dak@gnu.org>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	d9ba@mailtor.net
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed May 07 19:07:43 2014
+Cc: git@vger.kernel.org, cdleonard@gmail.com, pw@padd.com
+To: Tolga Ceylan <tolga.ceylan@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 07 19:27:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wi5Ji-0000Ve-Ut
-	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 19:07:39 +0200
+	id 1Wi5cq-0008EI-RV
+	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 19:27:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751463AbaEGRHf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2014 13:07:35 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:53631 "EHLO smtp.pobox.com"
+	id S1751506AbaEGR1U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2014 13:27:20 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:60207 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751049AbaEGRHe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 May 2014 13:07:34 -0400
+	id S1750950AbaEGR1T (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 May 2014 13:27:19 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D44BB16EC2;
-	Wed,  7 May 2014 13:07:33 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 01A4A1447E;
+	Wed,  7 May 2014 13:27:19 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4dRbNdpC2R15sJOFULs79bAWrzE=; b=UxSMpn
-	CNLpM21uS73r8qm2JCDGl25duA97PFgArTQFzrZ7hitEwgju/701lSbHZOa2XIAq
-	eWbL/I0AsjbttBtbgFOCweqa59prjHMWxF6QrO25n+9Esl6/TLnlg3XM/QsX8kyH
-	a9+oIqGa8rPkdfZpDhIIDhf/GFPYeEHVJlkao=
+	:content-type; s=sasl; bh=C8n9rA5ZT6fWxDO2/jljwXi4CwE=; b=vl4+xX
+	tqI1f2pMLS4tgEepWXkF2z4NKVBFI+uifkk/cxpk1s4F+uGV5jNXOZyXItMyFkPE
+	Q++kxCLgadaMsMRtxcv28UOVAXFMy4LH/Ibyf86HKMUEC7ZRqYiQGWsJHfbVQaA5
+	90/Llxt1Z+zUp7ZEwZZGvOF1+zNFe3V/UtJEc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=T5FFB1wjhCGmf4nSM40mU7GlkS/QVwwQ
-	DAEZuEcx26WjJhxniduaaAOYYNQZRddbq6N19FXCDrI2FM3HI+e3pGeM1R7p99Sw
-	q19BGGhQdsu4RCz+twohvWhAvEmPF64dbKtLNEq8zJ+YP0VByhnwDUec3V6Nx5fH
-	Nyt/GbYsorY=
+	:content-type; q=dns; s=sasl; b=BY+5QLKnefc82tqndheEvdcNETbw1Xus
+	zxJKLc7sZyOnbFtPdH9pvFriqtVeOcG/BVjdDuaprf9zJ6u70DtxHMsRiowFpt8V
+	XGuhxYOORUZ3imbDKP85f9jZIe4uCLEJBohGQiCfNgmwnON5JngDpUS+Mqu3Olv+
+	viiUjdvWk/U=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C7A4E16EC1;
-	Wed,  7 May 2014 13:07:33 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E68DB1447D;
+	Wed,  7 May 2014 13:27:18 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 6B06016EBF;
-	Wed,  7 May 2014 13:07:31 -0400 (EDT)
-In-Reply-To: <20140506215516.GA30185@sigill.intra.peff.net> (Jeff King's
-	message of "Tue, 6 May 2014 17:55:16 -0400")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 14E0014476;
+	Wed,  7 May 2014 13:27:16 -0400 (EDT)
+In-Reply-To: <20140507054854.GA3571@olive> (Tolga Ceylan's message of "Tue, 6
+	May 2014 22:48:54 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 13635C44-D60A-11E3-B78E-9CEB01674E00-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: D57E26A4-D60C-11E3-9591-9CEB01674E00-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248333>
 
-Jeff King <peff@peff.net> writes:
+Tolga Ceylan <tolga.ceylan@gmail.com> writes:
 
-> On Tue, May 06, 2014 at 08:49:22PM +0200, Matthieu Moy wrote:
-> ...
->> The idea of having a separate default value for pager.blame (or set
->> $LESS differently for blame) crossed my mind, but I actually don't like
->> it, as it would make it harder for a user to fine-tune his configuration
->> manually (one would have to cancel all the corner-cases that Git would
->> set by default).
+> When applying binary patches a full index is required. format-patch
+> already handles this, but diff-tree needs '--full-index' argument
+> to always output full index. When git-p4 runs git-apply to test
+> the patch, git-apply rejects the patch due to abbreviated blob
+> object names. This is the error message git-apply emits in this
+> case:
 >
-> Agreed. We already get some confusion from users with "git has set $LESS
-> for me".  Changing it to "git set up $LESS depending on which command is
-> running" seems like it would cause more of the same.
+> error: cannot apply binary patch to '<filename>' without full index line
+> error: <filename>: patch does not apply
+>
+> Signed-off-by: Tolga Ceylan <tolga.ceylan@gmail.com>
+> Acked-by: Pete Wyckoff <pw@padd.com>
+> ---
 
-While I fully agree with the above conclusion, I just noticed that I
-will be irritated enough to eventually set pager.blame myself, after
-running a short "git blame -L1311,+7 git-p4.py", which is one of the
-standard first steps for me to start reading patches submit on the
-list.
+Because the original breakage was already in 1.9, not a regression
+between 1.9 and master, as the matter of principle our default is to
+defer until 2.0 final to avoid risking unintended additional
+breakages elsewhere.  But this fix is an obviously correct and
+trivial single liner that were eyeballed by more than one person,
+and that affects only three calls to os.system(), and its
+correctness can be seen even without knowing p4 at all by somebody
+like me ;-)
 
-Even with line wrapping, the output fits on a single page, so "F"
-(aka "--quit-if-one-screen") kicks in, before giving me a chance to
-scroll horizontally around.
+So let's queue it for 2.0.
 
-Not objecting to the conclusion of the discussion with a concrete
-counterproposal.  Just hoping somebody clever enough might come up
-with a good trick to make things easier to use and explain, which I
-however suspect may be an incompatible pair of goals.
+Thanks.
+
+>  git-p4.py |    2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/git-p4.py b/git-p4.py
+> index cdfa2df..4ee6739 100755
+> --- a/git-p4.py
+> +++ b/git-p4.py
+> @@ -1311,7 +1311,7 @@ class P4Submit(Command, P4UserMap):
+>              else:
+>                  die("unknown modifier %s for %s" % (modifier, path))
+>  
+> -        diffcmd = "git diff-tree -p \"%s\"" % (id)
+> +        diffcmd = "git diff-tree --full-index -p \"%s\"" % (id)
+>          patchcmd = diffcmd + " | git apply "
+>          tryPatchCmd = patchcmd + "--check -"
+>          applyPatchCmd = patchcmd + "--check --apply -"
