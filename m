@@ -1,106 +1,80 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Apr 2014, #09; Tue, 29)
-Date: Wed, 07 May 2014 11:56:18 -0700
-Message-ID: <xmqqvbtha04t.fsf@gitster.dls.corp.google.com>
-References: <xmqq7g67iwxc.fsf@gitster.dls.corp.google.com>
-	<20140505184546.GB23935@serenity.lan>
-	<xmqqd2fqcv7s.fsf@gitster.dls.corp.google.com>
-	<20140507080558.GH23935@serenity.lan>
+Subject: Re: What's cooking in git.git (May 2014, #01; Tue, 6)
+Date: Wed, 07 May 2014 11:59:53 -0700
+Message-ID: <xmqqr4459zyu.fsf@gitster.dls.corp.google.com>
+References: <xmqqlhuecz1b.fsf@gitster.dls.corp.google.com>
+	<53696d8aa12d2_747f15213089@nysa.notmuch>
+	<xmqqha52cvuf.fsf@gitster.dls.corp.google.com>
+	<536975458b570_110415b330c55@nysa.notmuch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Wed May 07 20:56:35 2014
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 07 21:00:07 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wi718-0000y2-KG
-	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 20:56:35 +0200
+	id 1Wi74Y-0003aV-0f
+	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 21:00:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751351AbaEGS4Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2014 14:56:24 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:55124 "EHLO smtp.pobox.com"
+	id S1752136AbaEGTAB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2014 15:00:01 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:63432 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751115AbaEGS4X (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 May 2014 14:56:23 -0400
+	id S1752107AbaEGS76 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 May 2014 14:59:58 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 192FA16C06;
-	Wed,  7 May 2014 14:56:23 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C7FC616D19;
+	Wed,  7 May 2014 14:59:57 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=jwS0X+hp7LpsblSDH3atpBSN5uY=; b=uJt/c7
-	7Zzk67kTPMfma2z8g9Fx417Z6aEDRLWfL7dtaq9dHl3BWuNyRNfFTxRWECTQxzWM
-	PN/6zOH8YemBcKM1ahJSz8b6S+aTydMlVUin1jbBmL1sM2sgGPbMq1Dx6uC9CBSl
-	EEORZ5XLeo3PwRygWDnHyUpFSetU1y7Jx+hQY=
+	:content-type; s=sasl; bh=5k3WOGDxaMTXkpkQUu2TivvdHls=; b=WW9Gbr
+	7gx9DsB7h4thbI3wWAF51YaaQaHoO0h4EEJVdmg/aoXu681pMymzfq2iMGwjm96K
+	//4UUQ4IPxSargn711ZVaUm6VHpf7Eu/1phRT4fsRIHgmn/HAQaBl51VfvHgbdug
+	AfPxeWgt/vv59r/6fEfNgi+rS9PWfj9vaIEX0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wwXn4uz9fBxK8iqmXz+KIJ/vlXCqY/cJ
-	dg4pLRmYp4iASiV6IW36OUvU+e0y5ImcdornRxemnqCBaXUCX8F2QcKxx2Ukq95u
-	62nchOdoMzXg6ILYyp41M45xb2c8hk99eVvqD6QP6rsQlZ+GiCLuBkVc4sPILAys
-	2PulFSDp4P8=
+	:content-type; q=dns; s=sasl; b=Af/5/plEAMufUuUhh2X/rh/wnB1N6Gcr
+	yZExzb9Dx0DyJwB1xTQHfzOi3unH/X3URGlv9ST+PQfT/7/XFrLhN62CP0fQRZ49
+	6xLeFBq53YZAL+4JGKnm0uUW/zlnj2G4Pa/mIigG7MKRyOr2OFDJjonu6pTpkbTE
+	rZ0KN23gKzE=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0F55816C05;
-	Wed,  7 May 2014 14:56:23 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id BD2F816D18;
+	Wed,  7 May 2014 14:59:57 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 090BF16C01;
-	Wed,  7 May 2014 14:56:19 -0400 (EDT)
-In-Reply-To: <20140507080558.GH23935@serenity.lan> (John Keeping's message of
-	"Wed, 7 May 2014 09:05:58 +0100")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id F41B616D17;
+	Wed,  7 May 2014 14:59:54 -0400 (EDT)
+In-Reply-To: <536975458b570_110415b330c55@nysa.notmuch> (Felipe Contreras's
+	message of "Tue, 06 May 2014 18:50:29 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 46BC2652-D619-11E3-A98F-9CEB01674E00-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: C6DC8BF6-D619-11E3-814C-9CEB01674E00-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248347>
 
-John Keeping <john@keeping.me.uk> writes:
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-> On Tue, May 06, 2014 at 05:01:59PM -0700, Junio C Hamano wrote:
-> ...
->> Another thing to keep in mind is that we need to ensure that we give
->> a good way for these third-party tools to integrate well with the
->> core Git tools to form a single toolchest for the users.  I would
->> love to be able to do
+> Junio C Hamano wrote:
+>> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>> > Plus this one which has been completely ignored:
+>> >
+>> >    completion: move out of contrib
 >> 
->>     $ (cd git.git && make install)
->>     $ (cd git-imerge.git && make install)
->> 
->> and then say "git imerge", "git --help imerge", etc.  The same for
->> the remote helpers that we may be splitting out of my tree into
->> their own stand-alone projects.
+>> It is not about "ignored".  It is about running out of time before
+>> concluding the day's integration.
 >
-> This can already work given suitable installation.  With
-> git-integration[1] I can type `git help integration` and it shows me the
-> man page in the same way that `git help commit` does.  When I manually
-> linked the HTML file to the right place `git help -w integration` worked
-> as well.
+> A comment doesn't require integration.
 
-That "when I manually" part is what I meant by "we give a good way
-for these third-party tools" above, and "make it really easy to
-install these third-party tools" in the remaining part of the
-message you are responding to.
+It requires time and attention that are limited commodities.
+Moreover, I won't read or respond to pieces of e-mail in the order
+they come in.
 
-> I think this is enough...
-
-Thanks.
-
-The reason why I CC'ed Michael was primarily because I thought you
-were not one of those third-party tools maintainers (and secondarily
-I am a fairly big fan of imerge), but it is good to hear your
-opinion as another third-party provider.  Your git-integrate might
-turn into something I could augment my workflow with with some
-additions.  What is missing (I only read the full manual page at
-http://johnkeeping.github.io/git-integration/git-integration.html)
-to support my workflow seems to be:
-
- - specifying a merge strategy per branch being merged;
- - support evil merges or picking a fix-up commit;
- - leaving an empty commit only to leave comment in the history.
-
-and until that happens, I'll keep using the Reintegrate script found
-in my 'todo' branch.
+The topics listed in the What's cooking report is fixed at the end
+of the day's integration cycle, as they are essentially output of
+"log --first-parent master..pu | grep Merge".
