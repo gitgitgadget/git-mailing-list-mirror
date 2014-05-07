@@ -1,116 +1,126 @@
-From: James Denholm <nod.helm@gmail.com>
-Subject: Re: [PATCH] contrib/subtree bugfix: Crash if FETCH_HEAD is tag
-Date: Thu, 08 May 2014 07:53:39 +1000
-Message-ID: <df8addda-8c59-480a-ac52-a958de9d43c9@email.android.com>
-References: <1399185212-17833-1-git-send-email-nod.helm@gmail.com>
+From: Jeff Sipek <jeffpc@josefsipek.net>
+Subject: Re: [GUILT 25/28] "guilt push" now fails when there are no more
+ patches to push.
+Date: Wed, 7 May 2014 18:04:27 -0400
+Message-ID: <20140507220427.GD1459@meili.valhalla.31bits.net>
+References: <1395387126-13681-1-git-send-email-cederp@opera.com>
+ <1395387126-13681-26-git-send-email-cederp@opera.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Kevin Cagle <kcagle@micron.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	James Denholm <nod.helm@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 07 23:54:20 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Per Cederqvist <cederp@opera.com>
+X-From: git-owner@vger.kernel.org Thu May 08 00:04:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wi9nA-0001Lt-31
-	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 23:54:20 +0200
+	id 1Wi9wy-0000NR-1A
+	for gcvg-git-2@plane.gmane.org; Thu, 08 May 2014 00:04:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752784AbaEGVyQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2014 17:54:16 -0400
-Received: from mail-pd0-f171.google.com ([209.85.192.171]:51250 "EHLO
-	mail-pd0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751971AbaEGVyN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 May 2014 17:54:13 -0400
-Received: by mail-pd0-f171.google.com with SMTP id r10so1579355pdi.2
-        for <git@vger.kernel.org>; Wed, 07 May 2014 14:54:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=user-agent:in-reply-to:references:mime-version
-         :content-transfer-encoding:content-type:subject:from:date:to:cc
-         :message-id;
-        bh=+B1convd81bqM7TYFfdpP5vcRruEDA8hMYjncxDL5IU=;
-        b=qWFqEL6HhTFRa4H4prR1/3CFT+/j6lcfd4mefnLD7UIt+8S7cuK9gcnrzbAzS20vmh
-         pv1cSHIK3gyAaftW/ZQztAk0cqSHUKj9jJ7rE3F5yeaib+lKUsYqhGrq8tBfZKkcfBfz
-         LhmtZ6ROESlB9J1zFaUx/jxGhP7+7Uz7Duvm6mfG6zUerNvLaPrCemFvw2AOr3evhsmb
-         0NsXUkH5MXS1HoXfQuMGN/0n0pYGl5q45UewKVgle/gLXAccHVOEm8VvemGMdmxRKRgx
-         D7+7FYORua+oFLcZ6rYOVUmTN6UaBYYT9ZiyghROfomONosIfTdAGY21zoc7IbukBTzV
-         myBA==
-X-Received: by 10.66.233.72 with SMTP id tu8mr23711007pac.112.1399499652789;
-        Wed, 07 May 2014 14:54:12 -0700 (PDT)
-Received: from [10.68.252.199] ([101.119.26.148])
-        by mx.google.com with ESMTPSA id yv7sm119144888pac.33.2014.05.07.14.54.09
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 07 May 2014 14:54:11 -0700 (PDT)
-User-Agent: Kaiten Mail
-In-Reply-To: <1399185212-17833-1-git-send-email-nod.helm@gmail.com>
+	id S1751756AbaEGWEY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2014 18:04:24 -0400
+Received: from josefsipek.net ([64.9.206.49]:1618 "EHLO josefsipek.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751486AbaEGWEX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 May 2014 18:04:23 -0400
+Received: from meili.valhalla.31bits.net (c-98-209-117-250.hsd1.mi.comcast.net [98.209.117.250])
+	by josefsipek.net (Postfix) with ESMTPSA id 5AF3F55654;
+	Wed,  7 May 2014 18:04:22 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <1395387126-13681-26-git-send-email-cederp@opera.com>
+User-Agent: Mutt/1.5.22 (2013-10-16)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248383>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248384>
 
-On 4 May 2014 16:33:32 GMT+10:00, James Denholm <nod.helm@gmail.com> wrote:
->cmd_add_commit() is passed FETCH_HEAD by cmd_add_repository, which is
->then rev-parsed into an object ID. However, if the user is fetching a
->tag rather than a branch HEAD, such as by executing:
->
->$ git subtree add -P oldGit https://github.com/git/git.git tags/v1.8.0
->
->The object ID is a tag and is never peeled, and the git commit-tree
->call
->(line 561) slaps us in the face because it doesn't handle tag IDs.
->
->Because peeling a committish ID doesn't do anything if it's already a
->commit, fix by peeling[1] the object ID before assigning it to $rev, as
->per the patch.
->
->[*1*]: Via peel_committish(), from git:git-sh-setup.sh
->
->Reported-by: Kevin Cagle <kcagle@micron.com>
->Diagnosed-by: Junio C Hamano <gitster@pobox.com>
->Signed-off-by: James Denholm <nod.helm@gmail.com>
->---
->NB: This bug doesn't surface when using --squash, as $rev is reassigned
->to the squash commit via new_squash_commit before git commit-tree sees
->it (though for simplicity, new_squash_commit now also sees the peeled
->ID).
->
->Also doesn't surface when using "git subtree merge", as git merge can
->handle tag objects.
->
->On a side note, if merging a tag without --squash, git merge recognises
->that it's a tag and adds a note to the merge commit body. It may be
->worth mimicking this when using "subtree merge --squash" or
->"subtree add".
->
-> contrib/subtree/git-subtree.sh | 2 +-
-> 1 file changed, 1 insertion(+), 1 deletion(-)
->
->diff --git a/contrib/subtree/git-subtree.sh
->b/contrib/subtree/git-subtree.sh
->index dc59a91..9453dae 100755
->--- a/contrib/subtree/git-subtree.sh
->+++ b/contrib/subtree/git-subtree.sh
->@@ -538,7 +538,7 @@ cmd_add_commit()
-> {
-> 	revs=$(git rev-parse $default --revs-only "$@") || exit $?
-> 	set -- $revs
->-	rev="$1"
->+	rev=$(peel_committish "$1")
-> 	
-> 	debug "Adding $dir as '$rev'..."
-> 	git read-tree --prefix="$dir" $rev || exit $?
+On Fri, Mar 21, 2014 at 08:32:03AM +0100, Per Cederqvist wrote:
+> This makes it easier to script operations on the entire queue, for
+> example run the test suite on each patch in the queue:
+> 
+>     guilt pop -a;while guilt push; do make test||break; done
+> 
+> This brings "guilt push" in line with the push operation in Mercurial
+> Queues (hg qpush), which fails when there are no patches to apply.
+> 
+> Updated the test suite.
+> 
+> "guilt push -a" still does not fail.  (It successfully manages to
+> ensure that all patches are pushed, even if it did not have to do
+> anything to make it so.)
+> 
+> Signed-off-by: Per Cederqvist <cederp@opera.com>
+> ---
+>  guilt-push           | 14 ++++-----
+>  regression/t-020.out | 89 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+>  regression/t-020.sh  | 13 +++++++-
+>  3 files changed, 108 insertions(+), 8 deletions(-)
+> 
+> diff --git a/guilt-push b/guilt-push
+> index 67687e7..2222350 100755
+> --- a/guilt-push
+> +++ b/guilt-push
+> @@ -55,6 +55,7 @@ fi
+>  
+>  patch="$1"
+>  [ ! -z "$all" ] && patch="-a"
+> +[ -z "$patch" ] && { patch=1; num=t; }
 
-I know that subtree isn't exactly the most popular or exciting part of
-the project at the moment, but given that this is adding a subtree based
-on an annotated tag is a reasonably sensible operation and (to me) the
-fix seems reasonably trivial, could I get some eyes on this?
+I don't think there's any other place in the repo that does this.  Instead
+you see a lot of if-then-fi.  To keep it consistent, I'd suggest:
 
-Regards,
-James Denholm.
+if [ -z "$patch" ] ; then
+	patch=1
+	num=t
+fi
+
+Ah, this took me a while to figure out.  The above turns:
+
+$ guilt push
+
+into 
+
+$ guilt push -n 1
+
+I'd throw in a comment.
+
+(Note to self, this file is a huge mess and could use a bit of cleanup.)
+
+> @@ -78,11 +79,6 @@ elif [ ! -z "$num" ]; then
+>  	# clamp to minimum
+>  	[ $tidx -lt $eidx ] && eidx=$tidx
+>  
+> -elif [ -z "$patch" ]; then
+> -	# we are supposed to push only the next patch onto the stack
+> -
+> -	eidx=`wc -l < "$applied"`
+> -	eidx=`expr $eidx + 1`
+>  else
+>  	# we're supposed to push only up to a patch, make sure the patch is
+>  	# in the series
+> @@ -109,7 +105,11 @@ if [ "$sidx" -gt "$eidx" ]; then
+>  	else
+>  		disp "File series fully applied, ends at patch `get_series | tail -n 1`"
+>  	fi
+> -	exit 0
+> +	if [ -n "$all" ]; then
+> +		exit 0
+> +	else
+> +		exit 1
+> +	fi
+
+This changes the output on stdout.  E.g.,
+
+$ guilt pu
+$ guilt pu -n 1
+File series fully applied, ends at patch crashdump
+
+With this patch, both will print the message. Right?
+
+>  fi
+>  
+>  get_series | sed -n -e "${sidx},${eidx}p" | while read p
+
+Jeff.
