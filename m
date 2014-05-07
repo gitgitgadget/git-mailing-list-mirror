@@ -1,96 +1,119 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 01/20] dir.c: coding style fix
-Date: Wed,  7 May 2014 21:51:41 +0700
-Message-ID: <1399474320-6840-2-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 02/20] dir.h: move struct exclude declaration to top level
+Date: Wed,  7 May 2014 21:51:42 +0700
+Message-ID: <1399474320-6840-3-git-send-email-pclouds@gmail.com>
 References: <1399474320-6840-1-git-send-email-pclouds@gmail.com>
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 07 16:52:19 2014
+X-From: git-owner@vger.kernel.org Wed May 07 16:52:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wi3Cl-0005VP-GR
-	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 16:52:19 +0200
+	id 1Wi3Cm-0005VP-0l
+	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 16:52:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756246AbaEGOwJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2014 10:52:09 -0400
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:49048 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751915AbaEGOwH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 May 2014 10:52:07 -0400
-Received: by mail-pa0-f52.google.com with SMTP id kx10so1290750pab.39
-        for <git@vger.kernel.org>; Wed, 07 May 2014 07:52:06 -0700 (PDT)
+	id S1751821AbaEGOwO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2014 10:52:14 -0400
+Received: from mail-pd0-f179.google.com ([209.85.192.179]:36963 "EHLO
+	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756247AbaEGOwM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 May 2014 10:52:12 -0400
+Received: by mail-pd0-f179.google.com with SMTP id g10so1164533pdj.10
+        for <git@vger.kernel.org>; Wed, 07 May 2014 07:52:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=n+BzkJ2SdRpKstvwwvrcHSCrObyabEsCmZW8ksRxhks=;
-        b=DVQG9ld8DlV4Wq7juVolHSiPB5scZ0KJaZpWTMZQp+DJvEvVGR6wxort6/raoU+1hE
-         YskDO1m+u2j+dNn7lNn9i7ILxwfrHbD8zw8ba6kOtIn4hKNAouHkumD+cNmdstGkucpw
-         Fyo20nGVlA7PgMoc5UP6py24p/BCAkyMryl9MxuhmS8nlDqdKNPlwSMEbHE5mbtbCw3j
-         fNvKNlTbJlS6HrQt21QkCa3hfnAfIWbaDS+oAkt4lrBkHuJbJnLqeKMRS71kPLiJFuNH
-         XCqE3RKjLi0gAjD5P0nGZ9i8f3+5vWBLQ3hhSsPyzVCansQiXVI9ssHMa2qIOsCVudMm
-         D7+A==
-X-Received: by 10.66.180.34 with SMTP id dl2mr19946829pac.124.1399474326810;
-        Wed, 07 May 2014 07:52:06 -0700 (PDT)
+        bh=IL1Pw7ptl39Gzol3486LJdrXoWnh0cOwREwpE3R8r3c=;
+        b=WdCuLXyiKj9iAEHBdxsOQ1AqGTVkZ0RQkdqRVn+QjDcN+aN2mEB6LlLC6WZ+g14MOw
+         rQZ/aadVUDoMTMcYlrrcyD8oolSBOIrrFTMyy8jcaNq/XOhMxYKNGp3ipLQybve89P86
+         Hti4VnLwnU2vdK9TgARpc9OChJq/yZB4jKbPhkSYUZfRp1W1t3HHv1RAACddbakSf8kw
+         SCbp3I82GRl+/tTtjqoj3zUiu6Un+ApCaShwpSFP30wAM+igZkxW6X1IZKaVypTLqH9S
+         cnbzTtrfxd96Tkr3vF6+Dmac6N+1mwhZ8rp/mtlObttgKQTXwfAZteOaG6s+x6eGeh+S
+         M91A==
+X-Received: by 10.66.148.98 with SMTP id tr2mr19739134pab.33.1399474332009;
+        Wed, 07 May 2014 07:52:12 -0700 (PDT)
 Received: from lanh ([115.73.204.3])
-        by mx.google.com with ESMTPSA id di3sm3663663pbc.11.2014.05.07.07.52.04
+        by mx.google.com with ESMTPSA id be7sm4092738pad.9.2014.05.07.07.52.09
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 07 May 2014 07:52:06 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Wed, 07 May 2014 21:52:07 +0700
+        Wed, 07 May 2014 07:52:11 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Wed, 07 May 2014 21:52:12 +0700
 X-Mailer: git-send-email 1.9.1.346.ga2b5940
 In-Reply-To: <1399474320-6840-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248307>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248308>
 
+There is no actual nested struct here. Move it out for clarity.
 ---
- dir.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ dir.h | 42 ++++++++++++++++++++++--------------------
+ 1 file changed, 22 insertions(+), 20 deletions(-)
 
-diff --git a/dir.c b/dir.c
-index eb6f581..7a83f70 100644
---- a/dir.c
-+++ b/dir.c
-@@ -553,8 +553,7 @@ int add_excludes_from_file_to_list(const char *fname,
- 			buf = xrealloc(buf, size+1);
- 			buf[size++] = '\n';
- 		}
--	}
--	else {
-+	} else {
- 		size = xsize_t(st.st_size);
- 		if (size == 0) {
- 			close(fd);
-@@ -789,9 +788,11 @@ static void prep_exclude(struct dir_struct *dir, const char *base, int baselen)
+diff --git a/dir.h b/dir.h
+index 55e5345..02e3710 100644
+--- a/dir.h
++++ b/dir.h
+@@ -15,6 +15,27 @@ struct dir_entry {
+ #define EXC_FLAG_MUSTBEDIR 8
+ #define EXC_FLAG_NEGATIVE 16
  
- 	group = &dir->exclude_list_group[EXC_DIRS];
- 
--	/* Pop the exclude lists from the EXCL_DIRS exclude_list_group
++struct exclude {
 +	/*
-+	 * Pop the exclude lists from the EXCL_DIRS exclude_list_group
- 	 * which originate from directories not in the prefix of the
--	 * path being checked. */
-+	 * path being checked.
++	 * This allows callers of last_exclude_matching() etc.
++	 * to determine the origin of the matching pattern.
 +	 */
- 	while ((stk = dir->exclude_stack) != NULL) {
- 		if (stk->baselen <= baselen &&
- 		    !strncmp(dir->basebuf, base, stk->baselen))
-@@ -818,8 +819,7 @@ static void prep_exclude(struct dir_struct *dir, const char *base, int baselen)
- 		if (current < 0) {
- 			cp = base;
- 			current = 0;
--		}
--		else {
-+		} else {
- 			cp = strchr(base + current + 1, '/');
- 			if (!cp)
- 				die("oops in prep_exclude");
++	struct exclude_list *el;
++
++	const char *pattern;
++	int patternlen;
++	int nowildcardlen;
++	const char *base;
++	int baselen;
++	int flags;
++
++	/*
++	 * Counting starts from 1 for line numbers in ignore files,
++	 * and from -1 decrementing for patterns from CLI args.
++	 */
++	int srcpos;
++};
++
+ /*
+  * Each excludes file will be parsed into a fresh exclude_list which
+  * is appended to the relevant exclude_list_group (either EXC_DIRS or
+@@ -32,26 +53,7 @@ struct exclude_list {
+ 	/* origin of list, e.g. path to filename, or descriptive string */
+ 	const char *src;
+ 
+-	struct exclude {
+-		/*
+-		 * This allows callers of last_exclude_matching() etc.
+-		 * to determine the origin of the matching pattern.
+-		 */
+-		struct exclude_list *el;
+-
+-		const char *pattern;
+-		int patternlen;
+-		int nowildcardlen;
+-		const char *base;
+-		int baselen;
+-		int flags;
+-
+-		/*
+-		 * Counting starts from 1 for line numbers in ignore files,
+-		 * and from -1 decrementing for patterns from CLI args.
+-		 */
+-		int srcpos;
+-	} **excludes;
++	struct exclude **excludes;
+ };
+ 
+ /*
 -- 
 1.9.1.346.ga2b5940
