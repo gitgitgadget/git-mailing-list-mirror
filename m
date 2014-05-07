@@ -1,90 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] merge-recursive.c: Fix case-changing merge.
-Date: Wed, 07 May 2014 11:01:04 -0700
-Message-ID: <xmqqd2fpbh9b.fsf@gitster.dls.corp.google.com>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH 2/2] ignorecase: Fix git mv on insensitive filesystems
+Date: Wed, 07 May 2014 11:01:06 -0700
+Organization: Twitter
+Message-ID: <1399485666.11843.68.camel@stross>
 References: <xmqqoazaelmi.fsf@gitster.dls.corp.google.com>
-	<1399417144-24864-1-git-send-email-dturner@twopensource.com>
+	 <1399417144-24864-1-git-send-email-dturner@twopensource.com>
+	 <1399417144-24864-2-git-send-email-dturner@twopensource.com>
+	 <5369CFDE.2070207@viscovery.net> <1399480977.11843.62.camel@stross>
+	 <xmqqha51bhxg.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, David Turner <dturner@twitter.com>
-To: dturner@twopensource.com
-X-From: git-owner@vger.kernel.org Wed May 07 20:01:34 2014
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
+	David Turner <dturner@twitter.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 07 20:01:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wi69c-0000d1-4t
-	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 20:01:16 +0200
+	id 1Wi69i-0000he-4D
+	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 20:01:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752254AbaEGSBM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1752264AbaEGSBR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2014 14:01:17 -0400
+Received: from mail-qc0-f170.google.com ([209.85.216.170]:53627 "EHLO
+	mail-qc0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752255AbaEGSBM (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 7 May 2014 14:01:12 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:55424 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752245AbaEGSBK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 May 2014 14:01:10 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id DF11A14E91;
-	Wed,  7 May 2014 14:01:09 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=gdad7zedwR3ANueC0e3hZg9FCDw=; b=Gzn1oc
-	W//lXDve2nA7YkRG7DZIncsjIJIH6THT8r2u9O0CXSwrdPg/CyVkz+d1ZCAFMSJT
-	PhAWqjDnJ7MnhEgNnMQxcaizu/CjzhOdDiM8F3T/OfG57wPY0JmKOXTSoU4ufSUy
-	M+gBi8by139g2Ps8W7jqBeO0k7v71il7t2Rjo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gYksRn+wkO4C+fIclJsi4QCcltb1119b
-	iSxGDXbDq9G5b6nEHhm/BvEWJcXgytj+vGxEdSwURVL26RwXZpdF+2MMr1ba+LXz
-	VpofIlxsWGitSeAccgegQO2ktQ2RjCXhScE3PnB5KPYhADuBCXjgnFzU3QGxgJZd
-	WJBIfU2I4nE=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id CD96514E90;
-	Wed,  7 May 2014 14:01:09 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3F92C14E87;
-	Wed,  7 May 2014 14:01:06 -0400 (EDT)
-In-Reply-To: <1399417144-24864-1-git-send-email-dturner@twopensource.com>
-	(dturner@twopensource.com's message of "Tue, 6 May 2014 15:59:03
-	-0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 8F9272A8-D611-11E3-9A47-9CEB01674E00-77302942!pb-smtp0.pobox.com
+Received: by mail-qc0-f170.google.com with SMTP id i8so1553463qcq.29
+        for <git@vger.kernel.org>; Wed, 07 May 2014 11:01:12 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:content-transfer-encoding
+         :mime-version;
+        bh=hvY7ptTZ+jf0/OoQzxYm6s7GDJEu6u7Gm1ReZaBvLtY=;
+        b=Ygz87zsprgVClQrThgXFtRfrwskfJ67DjJz0Znzeg1rrYjLC0RdU682zfk5DYjON8g
+         E8yK2H7teAt4T9mZRyH7oo7AO090s2Xg/Flu5rHUdOaMlNpS4BnaffqckGuTEGasyT3d
+         RGjjWGPdOIJDSRDv9OoQ/6Vl76dZOMoWZ22+QKBCIw0E+O5MjwFWlRGajrjKiD6S0CP0
+         8jKUPi6oILLYvgMhn6T8uZjEv90l2Vcc/PKIwWk//A6Ge/v9vAjwwgRR+aKaqPoBcUS8
+         0VekbEbb4rXULMMeozhDmR5Tztgs8v6FdZTtpnDSHKGcewXxjUGmcTEGWH2PwB3ZLDTo
+         OagA==
+X-Gm-Message-State: ALoCoQkHwOqiT/PE9QmPunr28FVQ5HwWZu5ZgosLkXGsYw9wi7TLxGmXa5bn9EcdmJQWs42UthI5
+X-Received: by 10.224.119.131 with SMTP id z3mr20914953qaq.91.1399485671509;
+        Wed, 07 May 2014 11:01:11 -0700 (PDT)
+Received: from [172.25.144.67] ([8.25.197.27])
+        by mx.google.com with ESMTPSA id l46sm7883113qga.21.2014.05.07.11.01.09
+        for <multiple recipients>
+        (version=SSLv3 cipher=RC4-SHA bits=128/128);
+        Wed, 07 May 2014 11:01:10 -0700 (PDT)
+In-Reply-To: <xmqqha51bhxg.fsf@gitster.dls.corp.google.com>
+X-Mailer: Evolution 3.2.3-0ubuntu6 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248339>
 
-dturner@twopensource.com writes:
+On Wed, 2014-05-07 at 10:46 -0700, Junio C Hamano wrote:
+> David Turner <dturner@twopensource.com> writes:
+> 
+> > On Wed, 2014-05-07 at 08:17 +0200, Johannes Sixt wrote:
+> >> >  		} else if (cache_name_pos(src, length) < 0)
+> >> >  			bad = _("not under version control");
+> >> > -		else if (lstat(dst, &st) == 0) {
+> >> > +		else if (lstat(dst, &dst_st) == 0 &&
+> >> > +			 (src_st.st_ino != dst_st.st_ino ||
+> >> > +			  (src_st.st_ino == 0 && strcasecmp(src, dst)))) {
+> >> 
+> >> Don't do that. st_ino is zero on Windows only because we do not spend time
+> >> to fill in the field. Don't use it as an indicator for a case-insensitive
+> >> file system; zero may be a valid inode number on other systems.
+> >
+> > I don't think it is a problem if zero is a valid inode.  The only thing
+> > that happens when there is a zero inode, is that we have to compare
+> > filenames.  The inode check is just an optimization to avoid doing a
+> > bunch of strcasecmp on systems that don't have to.
+> 
+> Am I correct to rephrase you that the code assumes that any
+> filesystem that cannot give unique inum to different files will use
+> 0 as the placeholder inum, so if src/dst share the same non-zero
+> inum, it is guaranteed that is not a placeholder and we know they
+> are different files without comparing the two paths?
 
-> +if ! test_have_prereq CASE_INSENSITIVE_FS
-> +then
-> +	skip_all='skipping case insensitive tests - case sensitive file system'
-> +	test_done
-> +fi
-> +
-> +test_expect_success 'merge with case-changing rename' '
-> +	test $(git config core.ignorecase) = true &&
+Yes, this is indeed a fair rephrasing.  In fact, the entire zero-check
+should not be necessary, as POSIX requires that the st_ino field has a
+"meaningful" value.  So in the case that this ever runs into a problem,
+we ought to wrap the lstat call with a compatibility layer anyway. 
 
-This check seems a bit strange.  You already know you are on a case
-insensitive filesystem, so I would understand that if you assume it
-is set, or if you make sure it is set (if you are really paranoid).
-
-But I'll let it pass, as it is not wrong per-se.  Just looked strange.
-
-> +	> TestCase &&
-
-Please have no SP between redirection operator and its target.
-
-> +	test -e testcase
-
-Please make it a habit to use "test -f" when you expect "the path
-exists as a file", not merely "something exists there I do not care
-if it is a file or a directory", for which "test -e" is perfectly
-appropriate.
-
-I'll fix up locally before queuing; no need to resend.
-
-Thanks.
+But maybe there is an OS I'm not thinking of which fills in st_ino with
+something else?
