@@ -1,78 +1,105 @@
-From: James Denholm <nod.helm@gmail.com>
-Subject: Re: [PATCH] Standardize python shebangs
-Date: Thu, 08 May 2014 08:19:15 +1000
-Message-ID: <d15f06ad-0418-48ed-a9dc-6ca1e955e75c@email.android.com>
-References: <1399456987-24156-1-git-send-email-felipe.contreras@gmail.com> <vpqy4ydpiog.fsf@anie.imag.fr> <536a842838fbb_76ff7a52ec5d@nysa.notmuch> <vpqr445nxrw.fsf@anie.imag.fr> <536a9a34e8194_76ff7a52ec7f@nysa.notmuch> <vpq1tw5nw7q.fsf@anie.imag.fr>
+From: Max Kirillov <max@max630.net>
+Subject: Re: Pull is Mostly Evil
+Date: Thu, 8 May 2014 01:37:52 +0300
+Message-ID: <20140507223752.GA13933@wheezy.local>
+References: <5363BB9F.40102@xiplink.com>
+ <xmqqoazgaw0y.fsf@gitster.dls.corp.google.com>
+ <5364A143.1060404@bbn.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 08 00:19:32 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Marc Branchaud <marcnarc@xiplink.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Richard Hansen <rhansen@bbn.com>
+X-From: git-owner@vger.kernel.org Thu May 08 00:38:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WiABW-0002oT-RJ
-	for gcvg-git-2@plane.gmane.org; Thu, 08 May 2014 00:19:31 +0200
+	id 1WiATV-0007s5-Db
+	for gcvg-git-2@plane.gmane.org; Thu, 08 May 2014 00:38:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752638AbaEGWT0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2014 18:19:26 -0400
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:39727 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752633AbaEGWTY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 May 2014 18:19:24 -0400
-Received: by mail-pa0-f49.google.com with SMTP id lj1so1743382pab.8
-        for <git@vger.kernel.org>; Wed, 07 May 2014 15:19:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=user-agent:in-reply-to:references:mime-version
-         :content-transfer-encoding:content-type:subject:from:date:to:cc
-         :message-id;
-        bh=LK+lxBBzXhDa+9zbxNdkN4J6TaF/hnpzxmvMaJtNtgc=;
-        b=H/6v/ogwJR4SqovUJuz6GPvHNWxP2lg3UEl6Qal1uDaMacJR+qKnKlGI+/orz+86Kx
-         KeX1qH+oDMlnOk7ITymb8I0Kcn3pTMkrSAvRecoB61Pt71sGjd/5eMB+jXmu2dzQ+E/x
-         EiOgOVDZwczTz6lbb+nWfygKwWSGODG4+brLVELd68R7d0/DB1tjpxPdTjzUti04/lUW
-         63zZxsiiCwjQJwENhpKFHJUHY9vQb8A11FYtr6il62F4zDkSkWsgvcPzaM0HGU537I+x
-         4Z7z3MjzIb1HuO78m+BCmhhKSy7CjM4zw7EX40MxeuxOJl5JAlFZCegOS0KninsBF4Uz
-         YXMQ==
-X-Received: by 10.66.240.197 with SMTP id wc5mr22605777pac.78.1399501164219;
-        Wed, 07 May 2014 15:19:24 -0700 (PDT)
-Received: from [10.68.252.199] ([101.119.26.148])
-        by mx.google.com with ESMTPSA id vd8sm118090308pac.12.2014.05.07.15.19.21
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 07 May 2014 15:19:23 -0700 (PDT)
-User-Agent: Kaiten Mail
-In-Reply-To: <vpq1tw5nw7q.fsf@anie.imag.fr>
+	id S1751990AbaEGWiB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2014 18:38:01 -0400
+Received: from p3plsmtpa06-05.prod.phx3.secureserver.net ([173.201.192.106]:45329
+	"EHLO p3plsmtpa06-05.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751975AbaEGWiA (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 May 2014 18:38:00 -0400
+Received: from wheezy.local ([82.181.158.170])
+	by p3plsmtpa06-05.prod.phx3.secureserver.net with 
+	id zAdr1n00E3gsSd601Adxpf; Wed, 07 May 2014 15:37:59 -0700
+Content-Disposition: inline
+In-Reply-To: <5364A143.1060404@bbn.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248386>
 
-On 8 May 2014 06:57:13 GMT+10:00, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> wrote:
->Felipe Contreras <felipe.contreras@gmail.com> writes:
->
->> Matthieu Moy wrote:
->>> Felipe Contreras <felipe.contreras@gmail.com> writes:
->>> > If you want to use python2, then use '/usr/bin/env python2'.
->>> 
->>> Err, yes, this is what the code does before your patch.
->>
->> Not for all the instances.
->
->Well, I guess not all scripts require python2, hence not all scripts
->declare that they depend on python2.
+Hi.
 
-Does it make sense for git to have a strict subset of python scripts as
-version agnostic, though? Given that some scripts depend on python2
-already, and hence we know that the user has python2, and these scripts
-run perfectly well on python2, why not mandate that the agnostic subset
-be run on python2?
+I might be late to this discussion, but here either
+something I don't understand or something is missed.
 
-Regards,
-James Denholm.
+On Sat, May 03, 2014 at 03:56:51AM -0400, Richard Hansen wrote:
+> In my experience 'git pull' is mostly (only?) used for the following
+> three tasks:
+> 
+>  1. update a local branch to incorporate the latest upstream changes
+> 
+>     In this case, the local branch (master) is a
+>     derivative of the upstream branch (origin/master).
+>     The user wants all of the commits in the remote branch
+>     to be in the local branch.  And the user would like
+>     the local changes, if any, to descend from the tip of
+>     the remote branch.
+> 
+>     For this case, 'git pull --ff-only' followed by 'git
+>     rebase -p' works well, as does 'git pull
+>     --rebase=preserve' if the user is comfortable rebasing
+>     without reviewing the incoming commits first.  A plain
+>     'git pull' or 'git pull --ff' is suboptimal due to the
+>     awkward backwards-parents merge commit.
+
+This is actually not a finally defined use case. What kind
+of "local changes" user can have ahead of the remote? As
+far I understand, there are 3 cases:
+
+ 1a. Changes that are going to be merged back to the master,
+     but not yet ready to be there.
+
+This is essentially the same as case 2, but it does not name
+the development branch explicitely. Switching parents for
+this case is not desirable.
+
+ 1b. Some truly local changes which never goes anywhere.
+
+For this case the parent order does not matter.
+
+ 1c. The local changes prepared for integration, but instead
+     of filing a pull request of otherwise publishing the
+     branch for integrator, the leaf developer does the
+     integrator's job and merges it back to master and then
+     publishing the master.
+
+As far as I understand, this is the only case when somebody
+would want the parents to be switched. And this does not
+seem to be a good practice, because it's prone to push races
+and requires letting everyone to push to master. So maybe
+git should not encourage people to do so.
+
+And the name "update", proposed here, does not seem to be
+correct. Because what happens is not updating, but merging
+feature to master and closing it.
+
+>  2. update a published feature branch with the latest
+>     changes from its parent branch
+
+>  3. integrate a more-or-less complete feature/fix back
+>     into the line of development it forked off of
+
+-- 
+Max
