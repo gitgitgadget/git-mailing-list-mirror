@@ -1,105 +1,69 @@
-From: Max Kirillov <max@max630.net>
-Subject: Re: Pull is Mostly Evil
-Date: Thu, 8 May 2014 01:37:52 +0300
-Message-ID: <20140507223752.GA13933@wheezy.local>
-References: <5363BB9F.40102@xiplink.com>
- <xmqqoazgaw0y.fsf@gitster.dls.corp.google.com>
- <5364A143.1060404@bbn.com>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: [GIT PULL] l10n update on Swedish
+Date: Thu, 8 May 2014 07:02:04 +0800
+Message-ID: <CANYiYbH8qsmhUbwN9LewtiqkdtQkC+yfzxRZs+ciGqdghWDO+A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Marc Branchaud <marcnarc@xiplink.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Richard Hansen <rhansen@bbn.com>
-X-From: git-owner@vger.kernel.org Thu May 08 00:38:05 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Peter Krefting <peter@softwolves.pp.se>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 08 01:02:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WiATV-0007s5-Db
-	for gcvg-git-2@plane.gmane.org; Thu, 08 May 2014 00:38:05 +0200
+	id 1WiAqq-00087o-6N
+	for gcvg-git-2@plane.gmane.org; Thu, 08 May 2014 01:02:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751990AbaEGWiB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2014 18:38:01 -0400
-Received: from p3plsmtpa06-05.prod.phx3.secureserver.net ([173.201.192.106]:45329
-	"EHLO p3plsmtpa06-05.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751975AbaEGWiA (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 7 May 2014 18:38:00 -0400
-Received: from wheezy.local ([82.181.158.170])
-	by p3plsmtpa06-05.prod.phx3.secureserver.net with 
-	id zAdr1n00E3gsSd601Adxpf; Wed, 07 May 2014 15:37:59 -0700
-Content-Disposition: inline
-In-Reply-To: <5364A143.1060404@bbn.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751626AbaEGXCJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2014 19:02:09 -0400
+Received: from mail-wi0-f182.google.com ([209.85.212.182]:42242 "EHLO
+	mail-wi0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751440AbaEGXCG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 May 2014 19:02:06 -0400
+Received: by mail-wi0-f182.google.com with SMTP id r20so2183619wiv.9
+        for <git@vger.kernel.org>; Wed, 07 May 2014 16:02:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        bh=zG90bwM4nJdnWn84/ERCsTLAUJOb23Jyc2mlFJ+mhv4=;
+        b=IBRAyu9OBWRfrtr+2X+fg7m3IBsxwx0zXBwgYYYkTQsRwjKpKQAZmDeFwRoTGvuQ4+
+         SetJWY8hIzHlrJfV/xaHkskzxWTz7vGadYHsSd0CoyhNj6wU5Qxzq7icLm2mNOsj4nFy
+         3pt62iNY0+As+LDI+tBWMliChZLK8xZON5NVyPsad+zXIUiNlmzURw6LWdLT7VX8/iX/
+         EW0qYb0L94IS69/uPn2trgYc75vdFNpOz3VyOJ2SCtj7HBaie6NH1mjm2kouO3vsDUj4
+         zKjPTA8iLrJYBfteqxnhtmzwHJQrcmJbhv7IlDxvzHAyCgtyyO0Ga5Kq8jWw1w4KVIXe
+         R00w==
+X-Received: by 10.180.10.164 with SMTP id j4mr9817547wib.51.1399503724713;
+ Wed, 07 May 2014 16:02:04 -0700 (PDT)
+Received: by 10.217.57.202 with HTTP; Wed, 7 May 2014 16:02:04 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248387>
 
-Hi.
+Hi Junio,
 
-I might be late to this discussion, but here either
-something I don't understand or something is missed.
+The following changes since commit b4f86a4ce85e4e370a67455de6586a02f158a789:
 
-On Sat, May 03, 2014 at 03:56:51AM -0400, Richard Hansen wrote:
-> In my experience 'git pull' is mostly (only?) used for the following
-> three tasks:
-> 
->  1. update a local branch to incorporate the latest upstream changes
-> 
->     In this case, the local branch (master) is a
->     derivative of the upstream branch (origin/master).
->     The user wants all of the commits in the remote branch
->     to be in the local branch.  And the user would like
->     the local changes, if any, to descend from the tip of
->     the remote branch.
-> 
->     For this case, 'git pull --ff-only' followed by 'git
->     rebase -p' works well, as does 'git pull
->     --rebase=preserve' if the user is comfortable rebasing
->     without reviewing the incoming commits first.  A plain
->     'git pull' or 'git pull --ff' is suboptimal due to the
->     awkward backwards-parents merge commit.
+  Git 2.0-rc2 (2014-05-02 13:15:52 -0700)
 
-This is actually not a finally defined use case. What kind
-of "local changes" user can have ahead of the remote? As
-far I understand, there are 3 cases:
+are available in the git repository at:
 
- 1a. Changes that are going to be merged back to the master,
-     but not yet ready to be there.
+  git://github.com/git-l10n/git-po master
 
-This is essentially the same as case 2, but it does not name
-the development branch explicitely. Switching parents for
-this case is not desirable.
+for you to fetch changes up to 80dad719fb4bd8090b70da0e6f61ac22a6ff8754:
 
- 1b. Some truly local changes which never goes anywhere.
+  l10n: Fix a couple of typos in the Swedish translation (2014-05-07
+07:06:37 +0100)
 
-For this case the parent order does not matter.
+----------------------------------------------------------------
+Peter Krefting (1):
+      l10n: Fix a couple of typos in the Swedish translation
 
- 1c. The local changes prepared for integration, but instead
-     of filing a pull request of otherwise publishing the
-     branch for integrator, the leaf developer does the
-     integrator's job and merges it back to master and then
-     publishing the master.
+ po/sv.po | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-As far as I understand, this is the only case when somebody
-would want the parents to be switched. And this does not
-seem to be a good practice, because it's prone to push races
-and requires letting everyone to push to master. So maybe
-git should not encourage people to do so.
-
-And the name "update", proposed here, does not seem to be
-correct. Because what happens is not updating, but merging
-feature to master and closing it.
-
->  2. update a published feature branch with the latest
->     changes from its parent branch
-
->  3. integrate a more-or-less complete feature/fix back
->     into the line of development it forked off of
-
--- 
-Max
+--
+Jiang Xin
