@@ -1,94 +1,142 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH 2/2] ignorecase: Fix git mv on insensitive filesystems
-Date: Wed, 07 May 2014 11:01:06 -0700
-Organization: Twitter
-Message-ID: <1399485666.11843.68.camel@stross>
-References: <xmqqoazaelmi.fsf@gitster.dls.corp.google.com>
-	 <1399417144-24864-1-git-send-email-dturner@twopensource.com>
-	 <1399417144-24864-2-git-send-email-dturner@twopensource.com>
-	 <5369CFDE.2070207@viscovery.net> <1399480977.11843.62.camel@stross>
-	 <xmqqha51bhxg.fsf@gitster.dls.corp.google.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] Standardize python shebangs
+Date: Wed, 07 May 2014 20:06:39 +0200
+Message-ID: <vpqy4ydpiog.fsf@anie.imag.fr>
+References: <1399456987-24156-1-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
-	David Turner <dturner@twitter.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 07 20:01:46 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 07 20:06:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wi69i-0000he-4D
-	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 20:01:22 +0200
+	id 1Wi6F2-00059b-9T
+	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 20:06:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752264AbaEGSBR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2014 14:01:17 -0400
-Received: from mail-qc0-f170.google.com ([209.85.216.170]:53627 "EHLO
-	mail-qc0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752255AbaEGSBM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 May 2014 14:01:12 -0400
-Received: by mail-qc0-f170.google.com with SMTP id i8so1553463qcq.29
-        for <git@vger.kernel.org>; Wed, 07 May 2014 11:01:12 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:content-transfer-encoding
-         :mime-version;
-        bh=hvY7ptTZ+jf0/OoQzxYm6s7GDJEu6u7Gm1ReZaBvLtY=;
-        b=Ygz87zsprgVClQrThgXFtRfrwskfJ67DjJz0Znzeg1rrYjLC0RdU682zfk5DYjON8g
-         E8yK2H7teAt4T9mZRyH7oo7AO090s2Xg/Flu5rHUdOaMlNpS4BnaffqckGuTEGasyT3d
-         RGjjWGPdOIJDSRDv9OoQ/6Vl76dZOMoWZ22+QKBCIw0E+O5MjwFWlRGajrjKiD6S0CP0
-         8jKUPi6oILLYvgMhn6T8uZjEv90l2Vcc/PKIwWk//A6Ge/v9vAjwwgRR+aKaqPoBcUS8
-         0VekbEbb4rXULMMeozhDmR5Tztgs8v6FdZTtpnDSHKGcewXxjUGmcTEGWH2PwB3ZLDTo
-         OagA==
-X-Gm-Message-State: ALoCoQkHwOqiT/PE9QmPunr28FVQ5HwWZu5ZgosLkXGsYw9wi7TLxGmXa5bn9EcdmJQWs42UthI5
-X-Received: by 10.224.119.131 with SMTP id z3mr20914953qaq.91.1399485671509;
-        Wed, 07 May 2014 11:01:11 -0700 (PDT)
-Received: from [172.25.144.67] ([8.25.197.27])
-        by mx.google.com with ESMTPSA id l46sm7883113qga.21.2014.05.07.11.01.09
-        for <multiple recipients>
-        (version=SSLv3 cipher=RC4-SHA bits=128/128);
-        Wed, 07 May 2014 11:01:10 -0700 (PDT)
-In-Reply-To: <xmqqha51bhxg.fsf@gitster.dls.corp.google.com>
-X-Mailer: Evolution 3.2.3-0ubuntu6 
+	id S1752139AbaEGSGs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2014 14:06:48 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:55988 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752108AbaEGSGs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 May 2014 14:06:48 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s47I6bDr001910
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 7 May 2014 20:06:37 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s47I6dYY031593;
+	Wed, 7 May 2014 20:06:39 +0200
+In-Reply-To: <1399456987-24156-1-git-send-email-felipe.contreras@gmail.com>
+	(Felipe Contreras's message of "Wed, 7 May 2014 05:03:07 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 07 May 2014 20:06:37 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s47I6bDr001910
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1400090801.72624@WfKP08vz+MVPGU9QAVEvWA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248340>
 
-On Wed, 2014-05-07 at 10:46 -0700, Junio C Hamano wrote:
-> David Turner <dturner@twopensource.com> writes:
-> 
-> > On Wed, 2014-05-07 at 08:17 +0200, Johannes Sixt wrote:
-> >> >  		} else if (cache_name_pos(src, length) < 0)
-> >> >  			bad = _("not under version control");
-> >> > -		else if (lstat(dst, &st) == 0) {
-> >> > +		else if (lstat(dst, &dst_st) == 0 &&
-> >> > +			 (src_st.st_ino != dst_st.st_ino ||
-> >> > +			  (src_st.st_ino == 0 && strcasecmp(src, dst)))) {
-> >> 
-> >> Don't do that. st_ino is zero on Windows only because we do not spend time
-> >> to fill in the field. Don't use it as an indicator for a case-insensitive
-> >> file system; zero may be a valid inode number on other systems.
-> >
-> > I don't think it is a problem if zero is a valid inode.  The only thing
-> > that happens when there is a zero inode, is that we have to compare
-> > filenames.  The inode check is just an optimization to avoid doing a
-> > bunch of strcasecmp on systems that don't have to.
-> 
-> Am I correct to rephrase you that the code assumes that any
-> filesystem that cannot give unique inum to different files will use
-> 0 as the placeholder inum, so if src/dst share the same non-zero
-> inum, it is guaranteed that is not a placeholder and we know they
-> are different files without comparing the two paths?
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-Yes, this is indeed a fair rephrasing.  In fact, the entire zero-check
-should not be necessary, as POSIX requires that the st_ino field has a
-"meaningful" value.  So in the case that this ever runs into a problem,
-we ought to wrap the lstat call with a compatibility layer anyway. 
+> It's better if all our scripts use the same '/usr/bin/env python'.
 
-But maybe there is an OS I'm not thinking of which fills in st_ino with
-something else?
+Why?
+
+Using python2 for git_multimail.py is a deliberate decision:
+
+https://github.com/mhagger/git-multimail/pull/2
+
+(also, contrib/hooks/multimail/README says:
+
+"The git-multimail project itself is currently hosted on GitHub:
+
+    https://github.com/mhagger/git-multimail
+
+We use the GitHub issue tracker to keep track of bugs and feature
+requests, and GitHub pull requests to exchange patches (though, if you
+prefer, you can send patches via the Git mailing list with cc to me).
+Please sign off your patches as per the Git project practice."
+)
+
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> ---
+>  contrib/hooks/multimail/README                  | 6 +++---
+>  contrib/hooks/multimail/git_multimail.py        | 2 +-
+>  contrib/hooks/multimail/migrate-mailhook-config | 2 +-
+>  contrib/hooks/multimail/post-receive            | 2 +-
+>  contrib/svn-fe/svnrdump_sim.py                  | 2 +-
+>  5 files changed, 7 insertions(+), 7 deletions(-)
+>
+> diff --git a/contrib/hooks/multimail/README b/contrib/hooks/multimail/README
+> index 477d65f..cf0bcb8 100644
+> --- a/contrib/hooks/multimail/README
+> +++ b/contrib/hooks/multimail/README
+> @@ -76,10 +76,10 @@ Requirements
+>    The example scripts invoke Python using the following shebang line
+>    (following PEP 394 [1]):
+>  
+> -      #! /usr/bin/env python2
+> +      #! /usr/bin/env python
+>  
+> -  If your system's Python2 interpreter is not in your PATH or is not
+> -  called "python2", you can change the lines accordingly.  Or you can
+> +  If your system's Python interpreter is not in your PATH or is not
+> +  called "python", you can change the lines accordingly.  Or you can
+>    invoke the Python interpreter explicitly, for example via a tiny
+>    shell script like
+>  
+> diff --git a/contrib/hooks/multimail/git_multimail.py b/contrib/hooks/multimail/git_multimail.py
+> index 8b58ed6..f6dcdc6 100755
+> --- a/contrib/hooks/multimail/git_multimail.py
+> +++ b/contrib/hooks/multimail/git_multimail.py
+> @@ -1,4 +1,4 @@
+> -#! /usr/bin/env python2
+> +#! /usr/bin/env python
+>  
+>  # Copyright (c) 2012-2014 Michael Haggerty and others
+>  # Derived from contrib/hooks/post-receive-email, which is
+> diff --git a/contrib/hooks/multimail/migrate-mailhook-config b/contrib/hooks/multimail/migrate-mailhook-config
+> index 04eeaac..fba0b90 100755
+> --- a/contrib/hooks/multimail/migrate-mailhook-config
+> +++ b/contrib/hooks/multimail/migrate-mailhook-config
+> @@ -1,4 +1,4 @@
+> -#! /usr/bin/env python2
+> +#! /usr/bin/env python
+>  
+>  """Migrate a post-receive-email configuration to be usable with git_multimail.py.
+>  
+> diff --git a/contrib/hooks/multimail/post-receive b/contrib/hooks/multimail/post-receive
+> index 4d46828..4f2cf9d 100755
+> --- a/contrib/hooks/multimail/post-receive
+> +++ b/contrib/hooks/multimail/post-receive
+> @@ -1,4 +1,4 @@
+> -#! /usr/bin/env python2
+> +#! /usr/bin/env python
+>  
+>  """Example post-receive hook based on git-multimail.
+>  
+> diff --git a/contrib/svn-fe/svnrdump_sim.py b/contrib/svn-fe/svnrdump_sim.py
+> index 4e78a1c..bf20819 100755
+> --- a/contrib/svn-fe/svnrdump_sim.py
+> +++ b/contrib/svn-fe/svnrdump_sim.py
+> @@ -1,4 +1,4 @@
+> -#!/usr/bin/python
+> +#!/usr/bin/env python
+>  """
+>  Simulates svnrdump by replaying an existing dump from a file, taking care
+>  of the specified revision range.
+
+
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
