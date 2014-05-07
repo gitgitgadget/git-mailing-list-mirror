@@ -1,80 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (May 2014, #01; Tue, 6)
-Date: Wed, 07 May 2014 11:59:53 -0700
-Message-ID: <xmqqr4459zyu.fsf@gitster.dls.corp.google.com>
-References: <xmqqlhuecz1b.fsf@gitster.dls.corp.google.com>
-	<53696d8aa12d2_747f15213089@nysa.notmuch>
-	<xmqqha52cvuf.fsf@gitster.dls.corp.google.com>
-	<536975458b570_110415b330c55@nysa.notmuch>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 0/4] remote-hg: more improvements
+Date: Wed, 07 May 2014 14:01:29 -0500
+Message-ID: <536a83097302f_76ff7a52ec6c@nysa.notmuch>
+References: <1399169814-20201-1-git-send-email-felipe.contreras@gmail.com>
+ <xmqq8uqdbgqg.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 07 21:00:07 2014
+To: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 07 21:12:21 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wi74Y-0003aV-0f
-	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 21:00:06 +0200
+	id 1Wi7GP-0004XZ-Gl
+	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 21:12:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752136AbaEGTAB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2014 15:00:01 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:63432 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752107AbaEGS76 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 May 2014 14:59:58 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C7FC616D19;
-	Wed,  7 May 2014 14:59:57 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5k3WOGDxaMTXkpkQUu2TivvdHls=; b=WW9Gbr
-	7gx9DsB7h4thbI3wWAF51YaaQaHoO0h4EEJVdmg/aoXu681pMymzfq2iMGwjm96K
-	//4UUQ4IPxSargn711ZVaUm6VHpf7Eu/1phRT4fsRIHgmn/HAQaBl51VfvHgbdug
-	AfPxeWgt/vv59r/6fEfNgi+rS9PWfj9vaIEX0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Af/5/plEAMufUuUhh2X/rh/wnB1N6Gcr
-	yZExzb9Dx0DyJwB1xTQHfzOi3unH/X3URGlv9ST+PQfT/7/XFrLhN62CP0fQRZ49
-	6xLeFBq53YZAL+4JGKnm0uUW/zlnj2G4Pa/mIigG7MKRyOr2OFDJjonu6pTpkbTE
-	rZ0KN23gKzE=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id BD2F816D18;
-	Wed,  7 May 2014 14:59:57 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id F41B616D17;
-	Wed,  7 May 2014 14:59:54 -0400 (EDT)
-In-Reply-To: <536975458b570_110415b330c55@nysa.notmuch> (Felipe Contreras's
-	message of "Tue, 06 May 2014 18:50:29 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: C6DC8BF6-D619-11E3-814C-9CEB01674E00-77302942!pb-smtp0.pobox.com
+	id S1751521AbaEGTMR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2014 15:12:17 -0400
+Received: from mail-oa0-f43.google.com ([209.85.219.43]:35238 "EHLO
+	mail-oa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752491AbaEGTMQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 May 2014 15:12:16 -0400
+Received: by mail-oa0-f43.google.com with SMTP id l6so1814315oag.2
+        for <git@vger.kernel.org>; Wed, 07 May 2014 12:12:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=H4OyRyg45iIl9uTQ/E7dcuarK7QvDJN+ZNG3Nc1ob18=;
+        b=esgE9OTV/bulWcSrGqKdAjTO/XvVdUQPdA/pPBqtMb4IXe/KqHqEQ8bAqW+lP59YIC
+         Mwmu/i1J3fe61AOzOwUenh2uZbPL9rNIDXcCYPpnPkxEhIW+lOS4ObsHPROVzStkRKF8
+         aSOwEQ9yu0mL7dcutxNj38UU2bxZrSj3Th1N8rkIm5TfZ6/KaI9ZAs/Nr4D+J4RIKxdO
+         3qTprxMrS8Ogijc2ZKfg0q55pwbF8EtIP9Bf1sDCVh/2+dMyCWgqRUpU9s2Sc+TunY3s
+         5zjIBzLImI8yCv7K8yYm8qPkewihhtk/cOREKmII3MOcJNRndaCNM7Vm1rDXRWr1C3re
+         0vtA==
+X-Received: by 10.60.146.201 with SMTP id te9mr48312419oeb.38.1399489936390;
+        Wed, 07 May 2014 12:12:16 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id zm8sm36212345obc.16.2014.05.07.12.12.13
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 07 May 2014 12:12:14 -0700 (PDT)
+In-Reply-To: <xmqq8uqdbgqg.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248348>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Junio C Hamano wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> 
+> > Here's a bunch of tests more, and a fixes for Mercurial v3.0.
+> 
+> I think the discussion with John Keeping hints that we shouldn't be
+> rushing fc/remote-helpers-hg-bzr-graduation
 
-> Junio C Hamano wrote:
->> Felipe Contreras <felipe.contreras@gmail.com> writes:
->> > Plus this one which has been completely ignored:
->> >
->> >    completion: move out of contrib
->> 
->> It is not about "ignored".  It is about running out of time before
->> concluding the day's integration.
->
-> A comment doesn't require integration.
+Really? Based on what reasoning? I have proven his reasoning to be
+basically wrong.
 
-It requires time and attention that are limited commodities.
-Moreover, I won't read or respond to pieces of e-mail in the order
-they come in.
+> I'll queue this separately on a topic based on the tip of
+> yesterday's master for now.
+> 
+> One thing I couldn't read from the proposed log messages was if this
+> is meant to work with and tested with both v3.0 and pre-v3.0 Hg, or
+> this is to request others who run pre-v3.0 Hg to test these changes.
+> 
+> For example, I see
+> 
+> 	from mercurial import changegroup
+>         if check_version(3, 0):
+>         	cg = changegroup.getbundle(...)
+> 	else:
+>         	cg = repo.getbundle(...)
+> 
+> and offhand it was unclear if the unconditional import was a
+> mistake.
 
-The topics listed in the What's cooking report is fixed at the end
-of the day's integration cycle, as they are essentially output of
-"log --first-parent master..pu | grep Merge".
+Of course it wasn't a mistake.
+
+-- 
+Felipe Contreras
