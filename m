@@ -1,119 +1,94 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH] add a reflog_exists and delete_reflog abstraction
-Date: Wed, 7 May 2014 13:47:24 -0700
-Message-ID: <CAL=YDW=dhNR3qy9mym9naS9QrHhghSZmoQ=2L1nA47CtmY90=g@mail.gmail.com>
-References: <1399330677-17930-1-git-send-email-sahlberg@google.com>
-	<5368FE5E.7020009@alum.mit.edu>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 0/4] remote-hg: more improvements
+Date: Wed, 07 May 2014 15:37:50 -0500
+Message-ID: <536a999e2c0c_76ff7a52ec1e@nysa.notmuch>
+References: <1399169814-20201-1-git-send-email-felipe.contreras@gmail.com>
+ <xmqq8uqdbgqg.fsf@gitster.dls.corp.google.com>
+ <536a83097302f_76ff7a52ec6c@nysa.notmuch>
+ <xmqqvbth8ha9.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed May 07 22:47:31 2014
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, John Keeping <john@keeping.me.uk>
+To: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 07 22:48:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wi8kT-0001ym-PW
-	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 22:47:30 +0200
+	id 1Wi8le-0002uv-Ik
+	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 22:48:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751546AbaEGUrZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2014 16:47:25 -0400
-Received: from mail-ve0-f181.google.com ([209.85.128.181]:35417 "EHLO
-	mail-ve0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750968AbaEGUrZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 May 2014 16:47:25 -0400
-Received: by mail-ve0-f181.google.com with SMTP id pa12so2020821veb.26
-        for <git@vger.kernel.org>; Wed, 07 May 2014 13:47:24 -0700 (PDT)
+	id S1751555AbaEGUsh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2014 16:48:37 -0400
+Received: from mail-oa0-f53.google.com ([209.85.219.53]:38336 "EHLO
+	mail-oa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751160AbaEGUsg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 May 2014 16:48:36 -0400
+Received: by mail-oa0-f53.google.com with SMTP id m1so1979377oag.12
+        for <git@vger.kernel.org>; Wed, 07 May 2014 13:48:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=BO8zAdfT7H44bg7QxJYraN0tCr5P5xmeJvBqlDql0xI=;
-        b=MO53jfBijV2729jI0YRtDyr0HUgO6jVx53issKKawrW3chiJxHBW8ysi9dwu/4g9ZT
-         3PSy2oKo6BcoqgfWKiw6YfIUw8ZecMzIw7ShTiUElZcj78MPxIwSKrQbIMp/todsrt9J
-         4UxZonCkUwgHJ+IGzDC08gI4Tx7hH/7KZI04BYmXU/naUK3lJ2gcCpTu9PqeQIeLz6Kf
-         hbdYSSM7PXY8OkLg1qvu6GUea98SEanzX+YWTU5MnvbKP13xCALxM/fZrcXoOhV+73Hr
-         fEOurv3XviJ0YGd/3uYU+BGFcae7SMfUmrj1xsBsJT6JhDQzC96sxxC5k3ceQ2Q+gVmR
-         2GxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=BO8zAdfT7H44bg7QxJYraN0tCr5P5xmeJvBqlDql0xI=;
-        b=AgGRpwnCw1yxkUboZ3joUWZZtt4pSfSsuPU+iQURRJuoKehz4FLL124kK2p3r651tc
-         Cj30Fu6wTBtF/MgeWkxkj8CNK0npSQFs25g2thbstP2ayhZ9tjKAzt5M9Hb8f1LIiCZV
-         YEvXmw9Uo5SZjiHk7KRJeCpU5uyF98XgCzTiJy7G6pq5Zgsu3lQwJAvb/EhLzwAZd5AP
-         fcN/2fDZsk/8EmbhSgq4QnB4toSY4nsscOS89I0wVZqtreQcsGO3fknuLWW4EQX/Kq+g
-         Q9HWCwjEHjgpZr71Mrp2y4oQqL/p9uDGr28n8vur2Ny6HE576/KO+GY06rhryZgyrf1P
-         KKeg==
-X-Gm-Message-State: ALoCoQlYY1ERsDNzdbQXNxEIZ4RVuInYVRxVW+oCnAEzY2fpU3GqhQe4fQLUJq4QLIbODG2nvUkn
-X-Received: by 10.220.106.7 with SMTP id v7mr2699411vco.46.1399495644265; Wed,
- 07 May 2014 13:47:24 -0700 (PDT)
-Received: by 10.52.0.139 with HTTP; Wed, 7 May 2014 13:47:24 -0700 (PDT)
-In-Reply-To: <5368FE5E.7020009@alum.mit.edu>
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=f6uOccHS8YfQ42qSB/B6ltiSLn5nGbXyF5jWl9eywqQ=;
+        b=GF7tPtGA4L3gV5OB+HQhGcBUS2eXXrv66yXGAt/ji9cDyi13RM2boNvX+s4pnJsrS2
+         g+pFQ1tOmTIhU5oqwvpCezaUDWdomz1aImFvlzWcoUsuJ3AK742S5W0NvAIxapfe/y4b
+         KNVL/Tdlij2EL9br1bStkqIqt8dLDKKSP0oreV5hwojVgzFMlxNJnrxw2me+JAovt8fo
+         vzlWKRQp9lec3V7GHVKnNY5jiRWDnSXFxYGG0JpqaAtrT98Eunr6xniwBwbFH8vbCuIP
+         4ybDwwGzf8M4Q8bm+Kz4WPVxphQKApw7pLZIpauwYgFtLG8G4oOd0uX5IhO14Ub1m1aI
+         ZHng==
+X-Received: by 10.60.45.35 with SMTP id j3mr6132609oem.68.1399495716076;
+        Wed, 07 May 2014 13:48:36 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id ci10sm70500132oec.0.2014.05.07.13.48.33
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 07 May 2014 13:48:34 -0700 (PDT)
+In-Reply-To: <xmqqvbth8ha9.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248368>
 
-On Tue, May 6, 2014 at 8:23 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> On 05/06/2014 12:57 AM, Ronnie Sahlberg wrote:
->> This is a single patch that adds two new functions to try to hide the reflog
->> implementation details from the callers in checkout.c and reflog.c.
->> It adds new functions to test if a reflog exists and to delete it, thus
->> allowing checkout.c to perform this if-test-then-delete operation without
->> having to know the internal implementation of reflogs (i.e. that they are files
->> that live unde r.git/logs)
->>
->> It also changes checkout.c to use ref_exists when checking for whether a ref
->> exists or not instead of checking if the loose ref file exists or not.
->> Using ref_exists instead both hides the reflog implementation details from
->> checkout.c as well as making the code more robust against future changes.
->> It currently has a hard assumption that the loose ref file must exist at this
->> stage or else it would end up deleting the reflog which is true today, as far
->> as I can tell, but would break if git would change such that we could have
->> a branch checked out without having a loose ref file for that branch.
->
-> For single patches, people usually don't send a separate cover letter.
-> Any comments that you want to make that are not suitable for the commit
-> message can go between the "---" line and the diffstat of the patch email.
->
-> Regarding this change, I think before too long we will also need an API
-> to turn reflogs on for a reference.  We might want to add a flag to ref
-> transaction entries that cause the reflog to be created if it doesn't
-> already exist.  Reflogs can currently be created for a reference via the
-> config setting "core.logAllRefUpdates" or (for branches) by "git branch
-> --create-reflog" (maybe there are others).
+Junio C Hamano wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> > Really? Based on what reasoning? I have proven his reasoning to be
+> > basically wrong.
+> 
+> Perhaps s/proven/convinced myself only/; you didn't prove it to me
+> and I doubt you proved it to John.
 
-Yes. I agree.
+And you are still conveniently avoiding the question:
 
-I think we need a flag to ref_transaction_create and ref_transaction_update to
-create a new reflog.
+Based on what reasoning?
 
-Then I also think we need to add a new transaction command,
-ref_transaction_reflog() that can be used to either append or overwrite the
-reflog.  Builtin/reflog.c will need an API to create/overwrite the reflog
-with new text.
+> > Of course it wasn't a mistake.
+> 
+> I doubt about the "Of course" part.  The first reaction after seeing
+> that the new "changegroup" is used only inside check_version(3,0)
+> and nowhere else was to wonder if that import is necessary (or even
+> safe) for the pre-v3.0 versions.
 
-And finally we also need an api to create symrefs.
-ref_transaction_symref() or something.
+I don't care about your first reaction. If that was only present in
+newer versions, how do you think it would pass the testing on older
+versions?
 
+https://travis-ci.org/felipec/git
 
-But this will wait until my current patch series is merged.
+Normally I would explain the details of why this is the case, and send
+the crash regresion fix for v2.0 with a clear explanation, but since you
+are adamant in threating git-remote-hg/bzr as just another crappy
+contrib script that doesn't even have tests like diff-highlight or
+hg-to-git. Why would I care?
 
->
-> Several tests in the test suite currently create reflog files by hand.
-> Thus we might also need a way to create reflogs at the command line by
-> the time we implement pluggable reference backends.
+The fact that I'm the maintainer and I say it'ss good should be good
+enough, and if the current version in "master" renders unusable the
+existing Mercurial clones, hey, it's only in contrib, right?
 
-I can add this once we have an api.
-
->
-> Michael
->
-> --
-> Michael Haggerty
-> mhagger@alum.mit.edu
-> http://softwareswirl.blogspot.com/
+-- 
+Felipe Contreras
