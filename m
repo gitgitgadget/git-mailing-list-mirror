@@ -1,83 +1,155 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] Standardize python shebangs
-Date: Wed, 07 May 2014 14:06:16 -0500
-Message-ID: <536a842838fbb_76ff7a52ec5d@nysa.notmuch>
-References: <1399456987-24156-1-git-send-email-felipe.contreras@gmail.com>
- <vpqy4ydpiog.fsf@anie.imag.fr>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: What's cooking in git.git (Apr 2014, #09; Tue, 29)
+Date: Wed, 7 May 2014 20:28:05 +0100
+Message-ID: <20140507192805.GA9035@serenity.lan>
+References: <xmqq7g67iwxc.fsf@gitster.dls.corp.google.com>
+ <20140505184546.GB23935@serenity.lan>
+ <xmqqd2fqcv7s.fsf@gitster.dls.corp.google.com>
+ <20140507080558.GH23935@serenity.lan>
+ <xmqqvbtha04t.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 07 21:17:12 2014
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 07 21:38:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wi7L6-0008Ex-32
-	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 21:17:12 +0200
+	id 1Wi7fh-0007TX-0H
+	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 21:38:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751611AbaEGTRJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2014 15:17:09 -0400
-Received: from mail-ob0-f182.google.com ([209.85.214.182]:60231 "EHLO
-	mail-ob0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751256AbaEGTRG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 May 2014 15:17:06 -0400
-Received: by mail-ob0-f182.google.com with SMTP id wn1so1799437obc.27
-        for <git@vger.kernel.org>; Wed, 07 May 2014 12:17:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=FBljwLwX4eaMq7uQpaHxfXwYUXXq1raGkglU1geiAew=;
-        b=0QI7oV+07oeQlS/fsw4qdKwlFBi5yrG5v0yASZwHcCllegifOdYJIQ83m1WPoeXyOO
-         ELD21iQxYtnonQa3Dnk5lOOfxR6bEnfo2sGzJitmUSX5zCQpdLUfWBmtixecO7IqNh+1
-         b+aryrKJtM/f+V6+1BCQ9ImUZjbqD1r3iwc+o6V9EW9nlyNF+4N2H8o+7+pucJyQtlPL
-         MFFU0HnWmrX+lzvL5Lx6AkKyjDTqj8i1hY8Zl7PTijxP6omw8obdXgknpmaxg0l0h2hX
-         adeDfq+Bx6nwwhI7exATh6FiMRSPl1afD2BPD/MDhDI2Q398hmDn6XBLqG2d6Lh+tTsE
-         nlmA==
-X-Received: by 10.182.72.167 with SMTP id e7mr20546006obv.3.1399490223843;
-        Wed, 07 May 2014 12:17:03 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id w4sm69625940oem.8.2014.05.07.12.17.00
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 07 May 2014 12:17:01 -0700 (PDT)
-In-Reply-To: <vpqy4ydpiog.fsf@anie.imag.fr>
+	id S1751009AbaEGTiZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2014 15:38:25 -0400
+Received: from hyena.aluminati.org ([64.22.123.221]:43947 "EHLO
+	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750880AbaEGTiY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 May 2014 15:38:24 -0400
+X-Greylist: delayed 607 seconds by postgrey-1.27 at vger.kernel.org; Wed, 07 May 2014 15:38:24 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by hyena.aluminati.org (Postfix) with ESMTP id B274A21B15;
+	Wed,  7 May 2014 20:28:16 +0100 (BST)
+X-Quarantine-ID: <HYjyB2BGuxzt>
+X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -1
+X-Spam-Level: 
+X-Spam-Status: No, score=-1 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1] autolearn=disabled
+Received: from hyena.aluminati.org ([127.0.0.1])
+	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id HYjyB2BGuxzt; Wed,  7 May 2014 20:28:15 +0100 (BST)
+Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
+	by hyena.aluminati.org (Postfix) with ESMTP id 9626121AD0;
+	Wed,  7 May 2014 20:28:15 +0100 (BST)
+Received: from localhost (localhost [127.0.0.1])
+	by pichi.aluminati.org (Postfix) with ESMTP id 85F7E161E581;
+	Wed,  7 May 2014 20:28:15 +0100 (BST)
+X-Quarantine-ID: <dwNCHX4zvwlZ>
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+Received: from pichi.aluminati.org ([127.0.0.1])
+	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id dwNCHX4zvwlZ; Wed,  7 May 2014 20:28:14 +0100 (BST)
+Received: from serenity.lan (banza.aluminati.org [10.0.7.182])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by pichi.aluminati.org (Postfix) with ESMTPSA id 4634F161E358;
+	Wed,  7 May 2014 20:28:09 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <xmqqvbtha04t.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248351>
 
-Matthieu Moy wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+On Wed, May 07, 2014 at 11:56:18AM -0700, Junio C Hamano wrote:
+> John Keeping <john@keeping.me.uk> writes:
 > 
-> > It's better if all our scripts use the same '/usr/bin/env python'.
+> > On Tue, May 06, 2014 at 05:01:59PM -0700, Junio C Hamano wrote:
+> > ...
+> >> Another thing to keep in mind is that we need to ensure that we give
+> >> a good way for these third-party tools to integrate well with the
+> >> core Git tools to form a single toolchest for the users.  I would
+> >> love to be able to do
+> >> 
+> >>     $ (cd git.git && make install)
+> >>     $ (cd git-imerge.git && make install)
+> >> 
+> >> and then say "git imerge", "git --help imerge", etc.  The same for
+> >> the remote helpers that we may be splitting out of my tree into
+> >> their own stand-alone projects.
+> >
+> > This can already work given suitable installation.  With
+> > git-integration[1] I can type `git help integration` and it shows me the
+> > man page in the same way that `git help commit` does.  When I manually
+> > linked the HTML file to the right place `git help -w integration` worked
+> > as well.
 > 
-> Why?
+> That "when I manually" part is what I meant by "we give a good way
+> for these third-party tools" above, and "make it really easy to
+> install these third-party tools" in the remaining part of the
+> message you are responding to.
 > 
-> Using python2 for git_multimail.py is a deliberate decision:
+> > I think this is enough...
 
-If you want to use python2, then use '/usr/bin/env python2'.
+Having thought about it a bit more after reading Felipe's reply, it
+would be nice if there were some way for third-party tools to install
+HTML documentation without relying on `git --html-path` but I cannot see
+an obvious way to do that as there isn't a standard $HTML_PATH to match
+$MAN_PATH and $PATH.
 
-> "The git-multimail project itself is currently hosted on GitHub:
+I've never tried `git help --info` until this thread, but I think we
+could make some trivial improvements to that in order to support .info
+documentation for third-party tools.
+
+> The reason why I CC'ed Michael was primarily because I thought you
+> were not one of those third-party tools maintainers (and secondarily
+> I am a fairly big fan of imerge), but it is good to hear your
+> opinion as another third-party provider.  Your git-integrate might
+> turn into something I could augment my workflow with with some
+> additions.  What is missing (I only read the full manual page at
+> http://johnkeeping.github.io/git-integration/git-integration.html)
+> to support my workflow seems to be:
 > 
->     https://github.com/mhagger/git-multimail
-> 
-> We use the GitHub issue tracker to keep track of bugs and feature
-> requests, and GitHub pull requests to exchange patches (though, if you
-> prefer, you can send patches via the Git mailing list with cc to me).
-> Please sign off your patches as per the Git project practice."
-> )
+>  - specifying a merge strategy per branch being merged;
 
-If you are going to follow practices different than git.git, then
-multimail shouldn't live in 'contrib/'. Junio is already thretening to
-remove stuff out of contrib even when development behaves as the Git
-core does, so it makes more sense for stuff that doesn't.
+This is already supported by the "merge" instruction:
 
--- 
-Felipe Contreras
+	If any options are given after the ref (and on the same line)
+	then these are passed to git merge. This may be useful for
+	specifying an alternative merge strategy for a branch.
+
+>  - support evil merges or picking a fix-up commit;
+
+I have an implementation of this on a branch, but have never merged it
+because it's not something I need to do often and it is very hard to
+support for git-integration's "status" output.
+
+One of my primary use cases for git-integration involves pulling
+together branches owned by others (either in the same repository or by
+having fetched from their repositories); in this case it is interesting
+to see if/how a branch has changed since the last time the integration
+branch was built.  This also handles changes to the instruction sheet
+without an immediate rebuild.
+
+I have not found a good way of figuring out whether a fixup commit has
+been applied and squashed into a merge) so I have let the branch sit
+there awaiting a perfect solution (which I doubt exists).  It may be
+that the status of a fixup is unimportant, so it could just be marked as
+unknown; I am mostly convinced that marking it as unknown is going to be
+better than an heuristic that is right most of the time.
+
+>  - leaving an empty commit only to leave comment in the history.
+
+This would be easy to add.
+
+> and until that happens, I'll keep using the Reintegrate script found
+> in my 'todo' branch.
+
+When I originally wrote git-integration I purposefully did not target
+your workflow because I (perhaps wrongly) assumed that the interaction
+between the different integration branches would mean that Git was
+better served sticking to the custom Reintegrate script.
