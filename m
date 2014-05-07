@@ -1,229 +1,201 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 11/20] untracked cache: save to an index extension
-Date: Wed,  7 May 2014 21:51:51 +0700
-Message-ID: <1399474320-6840-12-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 12/20] untracked cache: load from UNTR index extension
+Date: Wed,  7 May 2014 21:51:52 +0700
+Message-ID: <1399474320-6840-13-git-send-email-pclouds@gmail.com>
 References: <1399474320-6840-1-git-send-email-pclouds@gmail.com>
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 07 16:53:19 2014
+X-From: git-owner@vger.kernel.org Wed May 07 16:53:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wi3Di-00067n-3R
+	id 1Wi3Di-00067n-Jw
 	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 16:53:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756285AbaEGOxF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2014 10:53:05 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:43285 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754473AbaEGOxC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 May 2014 10:53:02 -0400
-Received: by mail-pa0-f46.google.com with SMTP id kx10so1267395pab.19
-        for <git@vger.kernel.org>; Wed, 07 May 2014 07:53:02 -0700 (PDT)
+	id S932823AbaEGOxL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2014 10:53:11 -0400
+Received: from mail-pd0-f171.google.com ([209.85.192.171]:56513 "EHLO
+	mail-pd0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753281AbaEGOxJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 May 2014 10:53:09 -0400
+Received: by mail-pd0-f171.google.com with SMTP id r10so1165203pdi.30
+        for <git@vger.kernel.org>; Wed, 07 May 2014 07:53:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=aEDJS5jLDgMyaEuGIkLPBIixlE9tlOnSgEas4sA7st4=;
-        b=CCROSJVGTQpe6XnTBsHrof33ns/oTZym62p5N/6+XxXgXfANqrIq/K+bqU1W7Tb0gk
-         2ltF7xRbL3bIU6/xoOBLDeZxXNGuDb57QYqJcNypMxW1T0kw169fVlOJakYu9PgGbD2P
-         D1oeM5JektIROjoHiZ3sYIR9j0Nt7ryocTVx9g5HF5WUolpeEp6rcBDXB/bYtfUPkGC2
-         LO65x4A+VZPjLZF28AMY+ZouunfMsJ9yBczSOE9meznXF7/wlBIQ17fzeyd3fOxb8ZKV
-         fMjiBRDjlnq3/QoaZrRKPiOBwrBkpBTo62VYot4xDCU8ZPPxGyLaPy5YKcIZdZJM/7Es
-         YXsA==
-X-Received: by 10.66.233.9 with SMTP id ts9mr19881924pac.37.1399474382353;
-        Wed, 07 May 2014 07:53:02 -0700 (PDT)
+        bh=lJIhRsPU2foxaDYi2eUt6yFesxB1r03gRLo8288QPCo=;
+        b=CTX6B+vltX2FXmp5Gs0GylL6D9Yr1xnvu8yWRCHf0qiFV0lQWN6aGINNrupimeJDxQ
+         TjAzNVkt7lXL64i98NIOsjfEuuu1ExQCh+d22HMjLIgTPRUtsBixzISBJuP9HMbLQAZa
+         uisUgtK/q+o6Z9NrIliKQiP3BoNqcM/WyBs4Aoou+R5iMEpjLCtV7rUl9wP6hFqLSbfk
+         Nr5mfwLVSpHf1rTflfUOnk67kEoF7MkYcfLRmNw+A4xEJxmTlWvwGVYd5S9eY/9g6zw6
+         v1+5f9oh0JAWqohUATDUDCP8kYBl9PBn/CZ0SqgKJKX/emG6Wt8Tfqzi9BMJ7VDbCxfk
+         6GLg==
+X-Received: by 10.67.13.226 with SMTP id fb2mr20063983pad.146.1399474387354;
+        Wed, 07 May 2014 07:53:07 -0700 (PDT)
 Received: from lanh ([115.73.204.3])
-        by mx.google.com with ESMTPSA id op3sm3651538pbc.40.2014.05.07.07.52.59
+        by mx.google.com with ESMTPSA id bc4sm3671543pbb.2.2014.05.07.07.53.04
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 07 May 2014 07:53:01 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Wed, 07 May 2014 21:53:02 +0700
+        Wed, 07 May 2014 07:53:06 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Wed, 07 May 2014 21:53:08 +0700
 X-Mailer: git-send-email 1.9.1.346.ga2b5940
 In-Reply-To: <1399474320-6840-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248318>
 
-FIXME: save check_only
+FIXME: load check_only
 ---
- cache.h      |  3 ++
- dir.c        | 91 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- dir.h        |  1 +
- read-cache.c | 12 ++++++++
- 4 files changed, 107 insertions(+)
+ dir.c        | 107 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ dir.h        |   1 +
+ read-cache.c |   3 ++
+ 3 files changed, 111 insertions(+)
 
-diff --git a/cache.h b/cache.h
-index 107ac61..06fcb6b 100644
---- a/cache.h
-+++ b/cache.h
-@@ -268,6 +268,8 @@ static inline unsigned int canon_mode(unsigned int mode)
- 
- #define cache_entry_size(len) (offsetof(struct cache_entry,name) + (len) + 1)
- 
-+
-+struct untracked_cache;
- struct index_state {
- 	struct cache_entry **cache;
- 	unsigned int version;
-@@ -279,6 +281,7 @@ struct index_state {
- 		 initialized : 1;
- 	struct hashmap name_hash;
- 	struct hashmap dir_hash;
-+	struct untracked_cache *untracked;
- };
- 
- extern struct index_state the_index;
 diff --git a/dir.c b/dir.c
-index b5bfda8..b7d394a 100644
+index b7d394a..3c61b42 100644
 --- a/dir.c
 +++ b/dir.c
-@@ -12,6 +12,7 @@
- #include "refs.h"
- #include "wildmatch.h"
- #include "pathspec.h"
-+#include "varint.h"
- 
- struct path_simplify {
- 	int len;
-@@ -2165,3 +2166,93 @@ void clear_directory(struct dir_struct *dir)
- 	}
- 	strbuf_release(&dir->basebuf);
+@@ -2256,3 +2256,110 @@ void write_untracked_extension(struct strbuf *out, struct untracked_cache *untra
+ 	if (untracked->root)
+ 		write_one_dir(out, untracked->root);
  }
 +
-+struct ondisk_untracked_cache {
-+	struct stat_data info_exclude_stat;
-+	struct stat_data excludes_file_stat;
-+	uint32_t dir_flags;
-+	unsigned char info_exclude_sha1[20];
-+	unsigned char excludes_file_sha1[20];
-+	char exclude_per_dir[1];
-+};
-+
-+static void stat_data_to_disk(struct stat_data *to, const struct stat_data *from)
++static void stat_data_from_disk(struct stat_data *to, const struct stat_data *from)
 +{
-+	to->sd_ctime.sec  = htonl(from->sd_ctime.sec);
-+	to->sd_ctime.nsec = htonl(from->sd_ctime.nsec);
-+	to->sd_mtime.sec  = htonl(from->sd_mtime.sec);
-+	to->sd_mtime.nsec = htonl(from->sd_mtime.nsec);
-+	to->sd_dev	  = htonl(from->sd_dev);
-+	to->sd_ino	  = htonl(from->sd_ino);
-+	to->sd_uid	  = htonl(from->sd_uid);
-+	to->sd_gid	  = htonl(from->sd_gid);
-+	to->sd_size	  = htonl(from->sd_size);
++	to->sd_ctime.sec  = get_be32(&from->sd_ctime.sec);
++	to->sd_ctime.nsec = get_be32(&from->sd_ctime.nsec);
++	to->sd_mtime.sec  = get_be32(&from->sd_mtime.sec);
++	to->sd_mtime.nsec = get_be32(&from->sd_mtime.nsec);
++	to->sd_dev	  = get_be32(&from->sd_dev);
++	to->sd_ino	  = get_be32(&from->sd_ino);
++	to->sd_uid	  = get_be32(&from->sd_uid);
++	to->sd_gid	  = get_be32(&from->sd_gid);
++	to->sd_size	  = get_be32(&from->sd_size);
 +}
 +
-+static void write_one_dir(struct strbuf *out, struct untracked_cache_dir *untracked)
++static int read_one_dir(struct untracked_cache_dir **untracked_,
++			const unsigned char *data_, unsigned long sz)
 +{
-+	struct stat_data stat_data;
-+	unsigned char intbuf[16];
-+	unsigned int intlen, value;
-+	int i;
++#define NEXT(x) \
++	next = data + (x); \
++	if (next > data_ + sz) \
++		return -1;
 +
-+	stat_data_to_disk(&stat_data, &untracked->stat_data);
-+	strbuf_add(out, &stat_data, sizeof(stat_data));
-+	strbuf_add(out, untracked->exclude_sha1, 20);
++	struct untracked_cache_dir ud, *untracked;
++	const unsigned char *next, *data = data_;
++	unsigned int value;
++	int i, len;
 +
-+	/*
-+	 * untracked_nr should be reset whenever valid is clear, but
-+	 * for safety..
-+	 */
-+	if (!untracked->valid) {
-+		untracked->untracked_nr = 0;
-+		untracked->check_only = 0;
++	memset(&ud, 0, sizeof(ud));
++	ud.recurse = 1;
++
++	NEXT(sizeof(struct stat_data));
++	stat_data_from_disk(&ud.stat_data, (struct stat_data *)data);
++	data = next;
++
++	NEXT(20);
++	hashcpy(ud.exclude_sha1, data);
++	data = next;
++
++	next = data;
++	value = decode_varint(&next);
++	if (next > data_ + sz)
++		return -1;
++	ud.untracked_alloc = ud.untracked_nr = value >> 2;
++	if (ud.untracked_nr)
++		ud.untracked = xmalloc(sizeof(*ud.untracked) * ud.untracked_nr);
++	if (value & 1)
++		ud.valid = 1;
++	if (value & 2)
++		ud.check_only = 1;
++	data = next;
++
++	next = data;
++	ud.dirs_alloc = ud.dirs_nr = decode_varint(&next);
++	if (next > data_ + sz)
++		return -1;
++	ud.dirs = xmalloc(sizeof(*ud.dirs) * ud.dirs_nr);
++	data = next;
++
++	len = strlen((const char *)data);
++	NEXT(len + 1);
++	*untracked_ = untracked = xmalloc(sizeof(*untracked) + len);
++	memcpy(untracked, &ud, sizeof(ud));
++	memcpy(untracked->name, data, len + 1);
++	data = next;
++
++	for (i = 0; i < untracked->untracked_nr; i++) {
++		len = strlen((const char *)data);
++		NEXT(len + 1);
++		untracked->untracked[i] = xstrdup((const char*)data);
++		data = next;
 +	}
 +
-+	/*
-+	 * encode_varint does not deal with signed integers. Use the
-+	 * lowest bit to store the sign.
-+	 */
-+	value = untracked->untracked_nr << 2;
-+	if (untracked->valid)
-+		value |= 1;
-+	if (untracked->check_only)
-+		value |= 2;
-+	intlen = encode_varint(value, intbuf);
-+	strbuf_add(out, intbuf, intlen);
-+
-+	/* skip non-recurse directories */
-+	for (i = 0, value = 0; i < untracked->dirs_nr; i++)
-+		if (untracked->dirs[i]->recurse)
-+			value++;
-+	intlen = encode_varint(value, intbuf);
-+	strbuf_add(out, intbuf, intlen);
-+
-+	strbuf_add(out, untracked->name, strlen(untracked->name) + 1);
-+
-+	for (i = 0; i < untracked->untracked_nr; i++)
-+		strbuf_add(out, untracked->untracked[i],
-+			   strlen(untracked->untracked[i]) + 1);
-+
-+	for (i = 0; i < untracked->dirs_nr; i++)
-+		if (untracked->dirs[i]->recurse)
-+			write_one_dir(out, untracked->dirs[i]);
++	for (i = 0; i < untracked->dirs_nr; i++) {
++		len = read_one_dir(untracked->dirs + i, data, sz - (data - data_));
++		if (len < 0)
++			return -1;
++		data += len;
++	}
++	return data - data_;
 +}
 +
-+void write_untracked_extension(struct strbuf *out, struct untracked_cache *untracked)
++struct untracked_cache *read_untracked_extension(const void *data, unsigned long sz)
 +{
-+	struct ondisk_untracked_cache *ouc;
-+	int len = 0;
-+	if (untracked->exclude_per_dir)
-+		len = strlen(untracked->exclude_per_dir);
-+	ouc = xmalloc(sizeof(*ouc) + len);
-+	stat_data_to_disk(&ouc->info_exclude_stat, &untracked->info_exclude_stat);
-+	stat_data_to_disk(&ouc->excludes_file_stat, &untracked->excludes_file_stat);
-+	hashcpy(ouc->info_exclude_sha1, untracked->info_exclude_sha1);
-+	hashcpy(ouc->excludes_file_sha1, untracked->excludes_file_sha1);
-+	ouc->dir_flags = htonl(untracked->dir_flags);
-+	memcpy(ouc->exclude_per_dir, untracked->exclude_per_dir, len + 1);
-+	strbuf_add(out, ouc, sizeof(*ouc) + len);
-+	if (untracked->root)
-+		write_one_dir(out, untracked->root);
++	const struct ondisk_untracked_cache *ouc = data;
++	struct untracked_cache *uc;
++	int len;
++
++	if (sz < sizeof(*ouc))
++		return NULL;
++
++	uc = xcalloc(1, sizeof(*uc));
++	stat_data_from_disk(&uc->info_exclude_stat, &ouc->info_exclude_stat);
++	stat_data_from_disk(&uc->excludes_file_stat, &ouc->excludes_file_stat);
++	hashcpy(uc->info_exclude_sha1, ouc->info_exclude_sha1);
++	hashcpy(uc->excludes_file_sha1, ouc->excludes_file_sha1);
++	uc->dir_flags = get_be32(&ouc->dir_flags);
++	uc->exclude_per_dir = xstrdup(ouc->exclude_per_dir);
++	len = sizeof(*ouc) + strlen(ouc->exclude_per_dir);
++	if (sz == len)
++		return uc;
++	if (sz > len &&
++	    read_one_dir(&uc->root, (const unsigned char *)data + len,
++			 sz - len) == sz - len)
++		return uc;
++	free(uc);
++	return NULL;
 +}
 diff --git a/dir.h b/dir.h
-index 5dde37b..e520d58 100644
+index e520d58..42a09ff 100644
 --- a/dir.h
 +++ b/dir.h
-@@ -295,4 +295,5 @@ static inline int dir_path_match(const struct dir_entry *ent,
+@@ -295,5 +295,6 @@ static inline int dir_path_match(const struct dir_entry *ent,
  			      has_trailing_dir);
  }
  
-+void write_untracked_extension(struct strbuf *out, struct untracked_cache *untracked);
++struct untracked_cache *read_untracked_extension(const void *data, unsigned long sz);
+ void write_untracked_extension(struct strbuf *out, struct untracked_cache *untracked);
  #endif
 diff --git a/read-cache.c b/read-cache.c
-index ba13353..a619666 100644
+index a619666..c350b7b 100644
 --- a/read-cache.c
 +++ b/read-cache.c
-@@ -34,6 +34,7 @@ static struct cache_entry *refresh_cache_entry(struct cache_entry *ce,
- #define CACHE_EXT(s) ( (s[0]<<24)|(s[1]<<16)|(s[2]<<8)|(s[3]) )
- #define CACHE_EXT_TREE 0x54524545	/* "TREE" */
- #define CACHE_EXT_RESOLVE_UNDO 0x52455543 /* "REUC" */
-+#define CACHE_EXT_UNTRACKED 0x554E5452	  /* "UNTR" */
- 
- struct index_state the_index;
- 
-@@ -1869,6 +1870,17 @@ int write_index(struct index_state *istate, int newfd)
- 		if (err)
- 			return -1;
- 	}
-+	if (istate->untracked) {
-+		struct strbuf sb = STRBUF_INIT;
-+
-+		write_untracked_extension(&sb, istate->untracked);
-+		err = write_index_ext_header(&c, newfd, CACHE_EXT_UNTRACKED,
-+					     sb.len) < 0 ||
-+			ce_write(&c, newfd, sb.buf, sb.len) < 0;
-+		strbuf_release(&sb);
-+		if (err)
-+			return -1;
-+	}
- 
- 	if (ce_flush(&c, newfd) || fstat(newfd, &st))
- 		return -1;
+@@ -1332,6 +1332,9 @@ static int read_index_extension(struct index_state *istate,
+ 	case CACHE_EXT_RESOLVE_UNDO:
+ 		istate->resolve_undo = resolve_undo_read(data, sz);
+ 		break;
++	case CACHE_EXT_UNTRACKED:
++		istate->untracked = read_untracked_extension(data, sz);
++		break;
+ 	default:
+ 		if (*ext < 'A' || 'Z' < *ext)
+ 			return error("index uses %.4s extension, which we do not understand",
 -- 
 1.9.1.346.ga2b5940
