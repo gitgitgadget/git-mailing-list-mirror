@@ -1,100 +1,113 @@
-From: Greg Troxel <gdt@ir.bbn.com>
-Subject: Re: What's cooking in git.git (Apr 2014, #09; Tue, 29)
-Date: Wed, 07 May 2014 19:38:41 -0400
-Message-ID: <rmizjit6txa.fsf@fnord.ir.bbn.com>
-References: <xmqq7g67iwxc.fsf@gitster.dls.corp.google.com>
-	<20140505184546.GB23935@serenity.lan>
-	<xmqqoazb944d.fsf@gitster.dls.corp.google.com>
-	<rmiha51dd99.fsf@fnord.ir.bbn.com>
-	<536a8f6cd81e9_76ff7a52ec60@nysa.notmuch>
+From: Nathan Collins <nathan.collins@gmail.com>
+Subject: Re: [BUG?] Patches created with 'diff.noprefix=true' don't 'git apply'.
+Date: Wed, 7 May 2014 16:39:45 -0700
+Message-ID: <CAO8RVvfzP_nc9=nwr6JSK9s6u7DEctMpdn_5yca9h7G4TOd2Bw@mail.gmail.com>
+References: <CAO8RVvdgN3U5hUEsJjYY9urfeVUDWwHiEur4NQp=H93W37RRnw@mail.gmail.com>
+ <20140501024042.GX9218@google.com> <CAO8RVveV4SgXmJzWpYnyB3rnQALQkrrLNtLL5Ej5Y9Mjjekmmw@mail.gmail.com>
+ <xmqqa9aug4my.fsf@gitster.dls.corp.google.com> <CAO8RVvfHVBG6QZ5M1DJK4kOX8GMDrvEw4_L=LsEc4G6E0pP7ug@mail.gmail.com>
+ <xmqqbnvaehm3.fsf@gitster.dls.corp.google.com> <CAO8RVveF6Oh0mqqyiVRHmnqQ+vXX7riDW_=zn0g=t88cQjCVrg@mail.gmail.com>
+ <xmqqzjita0sn.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha1; protocol="application/pgp-signature"
-Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 08 01:38:48 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 08 01:40:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WiBQE-0000C1-UD
-	for gcvg-git-2@plane.gmane.org; Thu, 08 May 2014 01:38:47 +0200
+	id 1WiBRx-0001TL-V7
+	for gcvg-git-2@plane.gmane.org; Thu, 08 May 2014 01:40:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752201AbaEGXin (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2014 19:38:43 -0400
-Received: from fnord.ir.bbn.com ([192.1.100.210]:55326 "EHLO fnord.ir.bbn.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751377AbaEGXim (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 May 2014 19:38:42 -0400
-Received: by fnord.ir.bbn.com (Postfix, from userid 10853)
-	id 3F540A8D0; Wed,  7 May 2014 19:38:41 -0400 (EDT)
-OpenPGP: id=32611E25
-X-Hashcash: 1:20:140507:felipe.contreras@gmail.com::sGxaXvFCRoZzhDKB:000000000000000000000000000000000000bSv
-X-Hashcash: 1:20:140507:john@keeping.me.uk::Ks+Xf8rOOU5zm8OS:00000000000000000000000000000000000000000001Eyk
-X-Hashcash: 1:20:140507:gitster@pobox.com::3KbxLrvNafUDD9oe:000000000000000000000000000000000000000000006s0+
-X-Hashcash: 1:20:140507:git@vger.kernel.org::cUDOC+T3ao1CEYNJ:0000000000000000000000000000000000000000008ucB
-In-Reply-To: <536a8f6cd81e9_76ff7a52ec60@nysa.notmuch> (Felipe Contreras's
-	message of "Wed, 07 May 2014 14:54:20 -0500")
-User-Agent: Gnus/5.130006 (Ma Gnus v0.6) Emacs/23.4 (berkeley-unix)
+	id S1752829AbaEGXka (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2014 19:40:30 -0400
+Received: from mail-qc0-f177.google.com ([209.85.216.177]:50820 "EHLO
+	mail-qc0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752633AbaEGXk0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 May 2014 19:40:26 -0400
+Received: by mail-qc0-f177.google.com with SMTP id i17so1982474qcy.22
+        for <git@vger.kernel.org>; Wed, 07 May 2014 16:40:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=w3/8/42m4NL1C2+MoHfy7svFJSOOqowntCpluwCUQ5o=;
+        b=FwdFcZnfPvR9/dvqGiAlHcchQo+TVNQnVAnMl75sJ8yvA4LmPWz/11zkJu2q3K5wHu
+         QYKYAg0Pyq3C4zg0ln4xBmCX/slafCuH5ysScL+4x9Tr2v9jFvtU+6vs2+TOXHtSEJmu
+         fEIGbAj4YlOLZzQyzTYILVgs/8EJl3F6Cub8bv4vo4zkMI5jk8NqO5LE7ojVKQ9R0+qM
+         dKyPc4TTPYqRWF5uf9ElDA8V2si02MhUWbS83B/k3ZpSPzWAUZUXL+Jq6vNnPab+iZAc
+         48NtQPkuS1Ht+XA7IYn3fP/lgunHgJ5F8/jjul47BunDuL+TAsUHA9vszuVFfYyY0vhi
+         DIrg==
+X-Received: by 10.140.88.241 with SMTP id t104mr107745qgd.29.1399506025913;
+ Wed, 07 May 2014 16:40:25 -0700 (PDT)
+Received: by 10.229.150.208 with HTTP; Wed, 7 May 2014 16:39:45 -0700 (PDT)
+In-Reply-To: <xmqqzjita0sn.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248388>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248389>
 
---=-=-=
-Content-Type: text/plain
+On Wed, May 7, 2014 at 11:42 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Nathan Collins <nathan.collins@gmail.com> writes:
 
-
-Felipe Contreras <felipe.contreras@gmail.com> writes:
-
-> Greg Troxel wrote:
->> In a packaging system, dependencies are much more troublesome.
->> Dependencies have to be declared, and the build limited to use only
->> those declared dependencies, in order to get repeatable builds and
->> binary packages that can be used on other systems.  Dependencies that
->> really are required are fine.  But optional dependencies are a
->> problem, because e.g. one doesn't want to require the presence of qt
->> to build something (that isn't already enormous).   So if git needs
->> mercurial and subversion installed, plus perhaps 5 other things for
->> less popular remote helpers, that starts to be a real burden.
+>> For (2), the solution may be to add a separate
+>> 'diff.add-clickable-paths' option (probably there is a better name?
+>> 'diff.add-copyable-paths'? ...),...
+>> ...
+>> Concretely, if 'diff.add-clickable-paths' is set, then instead of e.g.
+>>
+>>   diff --git a/src/Data/Function/Decorator/Memoizer/Unsafe.hs
+>> b/src/Data/Function/Decorator/Memoizer
+>>   index 3ef17da..a0586d3 100644
+>>   --- a/src/Data/Function/Decorator/Memoizer/Unsafe.hs
+>>   +++ b/src/Data/Function/Decorator/Memoizer/Unsafe.hs
 >
-> It doesn't *need* them to build. The Mercurial/Bazaar dependencies are
-> optional, both at build-time and at run-time. Most distributions would
-> want to test the functionality they are distributing, and for testing
-> they do need these dependencies.
+> If you do something along that line, perhaps
+>
+>         Index: src/Data/Function/Decorator/Memoizer/Unsafe.hs
+>         diff --git a/src/Data/Function/Decorator/Memoizer/Unsafe.hs ...
+>         index 3ef17da..a0586d3 100644
+>         --- a/src/Data/Function/Decorator/Memoizer/Unsafe.hs
+>         +++ b/src/Data/Function/Decorator/Memoizer/Unsafe.hs
+>
+> to imitate what "cvs diff" does may be more familar to people.
+>
+> What would you propose to make clickable in a renaming diff, though?
 
-My point is that a packaging of git needs to either decide to forego
-these optional parts, or to include them, in the default case.  One
-choice means that anyone who builds the package from source has to have
-the dependencies, and the other means that users of the built package(s)
-can't use the features.  I realize that in Linux it's perhaps typical to
-not worry about burdening builders because actually building is very
-rare, but that's only reasonable because of having only one OS and
-perhaps three CPUs; with dozens each, building from source becomes more
-frequent.  So I'm merely trying to suggest that it's better to have a
-core package with a restrained set of dependencies, and then a way to
-build the other things independently (perhaps assuming the core is
-built/installed), each with their own dependencies.
+Your 'Index' header looks good, and I would expect a renaming diff to
+have something like
 
-It turns out in pkgsrc that git-svn is a meta-package (with no files)
-that depends on git-base (no man pages, no gitk) and p5-subversion.
-hg-git appears to be a separate source distribution, depending on a
-python implementation of the git formats.  So perhaps the situation is
-currently ok.  I was just trying to point out the issue to avoid
-regressions in the packaging situation.
+  Index: foo -> bar
 
+as in 'git status', but I just realized that a "clickable paths"
+option already exists in some sense! There is a '--patch-with-raw'
+option (which is "short" for '--patch' and '--raw', hahaha) which
+inserts clickable file names in the patch, above each diff.  Moreover,
+it respects the '--relative' option, so you can get relative or
+absolute (relative repo root) clickable paths. It handles renaming by
+inserting the old and new paths separated by space.
 
+So then, having a way to make '--patch-with-raw' the default for all
+non-plumbing patch-producing commands would solve the clickable paths
+problem.
 
---=-=-=
-Content-Type: application/pgp-signature
+In a summary, a possible complete solution:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+1. improve Git apply error message: mention '-p$n' and '-p1' default,
+   and report if path in patch makes sense for some non-default '-p'
+   value.
 
-iEYEARECAAYFAlNqxAEACgkQ+vesoDJhHiWpFgCeNSRouxxiR8VKuqu9OE39iAvt
-8G0AnigExHw2geoanWl/kQtrrpi+50VZ
-=fkRj
------END PGP SIGNATURE-----
---=-=-=--
+2. improve 'diff.noprefix' documentation: tell user that this option
+   is for producing '-p0' patches, and that using it to produce
+   clickable paths is insane and may cause problems with generated
+   patches.  Suggest the user use '--patch-with-raw', and possibly
+   '--relative', instead, or refer to (3).
+
+3. add a Git config for making '--patch-with-raw' and optionally
+   '--relative' the default for non-plumbing patch-producing commands.
+
+Cheers,
+
+-nathan
