@@ -1,76 +1,73 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH 2/2] ignorecase: Fix git mv on insensitive filesystems
-Date: Wed, 07 May 2014 09:42:57 -0700
-Organization: Twitter
-Message-ID: <1399480977.11843.62.camel@stross>
-References: <xmqqoazaelmi.fsf@gitster.dls.corp.google.com>
-	 <1399417144-24864-1-git-send-email-dturner@twopensource.com>
-	 <1399417144-24864-2-git-send-email-dturner@twopensource.com>
-	 <5369CFDE.2070207@viscovery.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: Beginner question on "Pull is mostly evil"
+Date: Wed, 7 May 2014 13:04:05 -0400
+Message-ID: <20140507170405.GA6224@sigill.intra.peff.net>
+References: <0C723FEB5B4E5642B25B451BA57E2730751C2642@S1P5DAG3C.EXCHPROD.USA.NET>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	David Turner <dturner@twitter.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed May 07 18:43:09 2014
+Content-Type: text/plain; charset=utf-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Jim Garrison <jim.garrison@nwea.org>
+X-From: git-owner@vger.kernel.org Wed May 07 19:04:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wi4w0-0006sV-Jz
-	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 18:43:08 +0200
+	id 1Wi5GS-0006Oo-7x
+	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 19:04:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932354AbaEGQnE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2014 12:43:04 -0400
-Received: from mail-qc0-f175.google.com ([209.85.216.175]:45364 "EHLO
-	mail-qc0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932223AbaEGQnC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 May 2014 12:43:02 -0400
-Received: by mail-qc0-f175.google.com with SMTP id w7so1384019qcr.6
-        for <git@vger.kernel.org>; Wed, 07 May 2014 09:43:01 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:content-transfer-encoding
-         :mime-version;
-        bh=g8rD0smgTEhVdXKXXMNs+w19QJNrFr2edo86ZgRzM+E=;
-        b=cvV/8OV59GOkfRKnTp5uOgRd+fUorZGEbTUitd66u2rp4hn1WQDMo4NSvYatvqnd1h
-         D0wO712QIbAZdC5IlaVp9yoendS4vv9FdXiFPZsxn57mBZgDYKNqU3wWVKPUkK8NyH5T
-         y3L15mQ7QSqXPY18bbDAzV7drEs+tW5FM5ffRaiX+/AunAyG/KSlu6WojISdW5JXDnU2
-         HUbKlD3qh/TPbD7kEX+GBmdXcmFyr30eoUkUdGDOeMjz+3dRcwOaJH6cqY/vBvXpjaBC
-         TEFs8sK5UybyCSh2QbwvAo4fF2FTQfYJs8MDiJeKbDvfOzUZ7J+KTDkiqL6pj84MH2h0
-         5Rgg==
-X-Gm-Message-State: ALoCoQnnoPbvoTQsdu1fCgVNLdXqJaA8z/F5KUx10FMhULqvcHYEsB7u9ZKrKXa60HhhrmXc/ldA
-X-Received: by 10.224.6.10 with SMTP id 10mr67880967qax.45.1399480981265;
-        Wed, 07 May 2014 09:43:01 -0700 (PDT)
-Received: from [172.25.144.67] ([8.25.197.27])
-        by mx.google.com with ESMTPSA id n105sm20591261qgd.7.2014.05.07.09.42.59
-        for <multiple recipients>
-        (version=SSLv3 cipher=RC4-SHA bits=128/128);
-        Wed, 07 May 2014 09:43:00 -0700 (PDT)
-In-Reply-To: <5369CFDE.2070207@viscovery.net>
-X-Mailer: Evolution 3.2.3-0ubuntu6 
+	id S1751514AbaEGREL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2014 13:04:11 -0400
+Received: from cloud.peff.net ([50.56.180.127]:46812 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751068AbaEGREH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 May 2014 13:04:07 -0400
+Received: (qmail 7243 invoked by uid 102); 7 May 2014 17:04:07 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 07 May 2014 12:04:07 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 07 May 2014 13:04:05 -0400
+Content-Disposition: inline
+In-Reply-To: <0C723FEB5B4E5642B25B451BA57E2730751C2642@S1P5DAG3C.EXCHPROD.USA.NET>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248331>
 
-On Wed, 2014-05-07 at 08:17 +0200, Johannes Sixt wrote:
-> >  		} else if (cache_name_pos(src, length) < 0)
-> >  			bad = _("not under version control");
-> > -		else if (lstat(dst, &st) == 0) {
-> > +		else if (lstat(dst, &dst_st) == 0 &&
-> > +			 (src_st.st_ino != dst_st.st_ino ||
-> > +			  (src_st.st_ino == 0 && strcasecmp(src, dst)))) {
+On Wed, May 07, 2014 at 03:40:28PM +0000, Jim Garrison wrote:
+
+> During my initial self-education I came across the maxim "don't pull,
+> fetch+merge instead" and have been doing that.  I think I followed
+> most of the "pull is (mostly) evil" discussion but one facet still
+> puzzles me: the idea that pull will do a merge "in the wrong
+> direction" sometimes.
 > 
-> Don't do that. st_ino is zero on Windows only because we do not spend time
-> to fill in the field. Don't use it as an indicator for a case-insensitive
-> file system; zero may be a valid inode number on other systems.
+> Do I understand correctly that this occurs only in the presence of
+> multiple remotes?
 
-I don't think it is a problem if zero is a valid inode.  The only thing
-that happens when there is a zero inode, is that we have to compare
-filenames.  The inode check is just an optimization to avoid doing a
-bunch of strcasecmp on systems that don't have to.
+No, it does not have to do with multiple remotes. It is about "X merged
+into Y" versus "Y merged into X". The ordering of parents in a merge
+doesn't matter for the merge result, but git must choose some order, and
+it always uses your current HEAD first, and then the commit you are
+merging second (and so on, in an octopus merge).
+
+As a result, you can use "git log --first-parent" to follow the line of
+development that always got merged into. In a strict topic-branch
+workflow like git.git, this will show you just what happened on master:
+a linear sequence of merges of topic branches, with occasional
+direct-to-master commits like version bumps.
+
+For an integrator who is pulling from other people, "git pull bob topic"
+from "master" does the right thing: master is the first parent, and
+topic is the second parent.
+
+For somebody with a centralized repo who follows the "push was a
+non-fastforward, so pull then push" advice, the merge between their work
+and master will be "backwards". The merge commit will have upstream's
+work (i.e., "master") merged into their topic. Following --first-parent
+will walk down their work instead of the merge commits on master.
+
+Does that explain it?
+
+-Peff
