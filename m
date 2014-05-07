@@ -1,142 +1,97 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] Standardize python shebangs
-Date: Wed, 07 May 2014 20:06:39 +0200
-Message-ID: <vpqy4ydpiog.fsf@anie.imag.fr>
-References: <1399456987-24156-1-git-send-email-felipe.contreras@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/4] remote-hg: more improvements
+Date: Wed, 07 May 2014 11:12:23 -0700
+Message-ID: <xmqq8uqdbgqg.fsf@gitster.dls.corp.google.com>
+References: <1399169814-20201-1-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
 To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 07 20:06:52 2014
+X-From: git-owner@vger.kernel.org Wed May 07 20:12:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wi6F2-00059b-9T
-	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 20:06:52 +0200
+	id 1Wi6KW-0001Av-Ay
+	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 20:12:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752139AbaEGSGs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2014 14:06:48 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:55988 "EHLO rominette.imag.fr"
+	id S1751115AbaEGSM2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2014 14:12:28 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:53723 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752108AbaEGSGs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 May 2014 14:06:48 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s47I6bDr001910
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 7 May 2014 20:06:37 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s47I6dYY031593;
-	Wed, 7 May 2014 20:06:39 +0200
-In-Reply-To: <1399456987-24156-1-git-send-email-felipe.contreras@gmail.com>
-	(Felipe Contreras's message of "Wed, 7 May 2014 05:03:07 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 07 May 2014 20:06:37 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s47I6bDr001910
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1400090801.72624@WfKP08vz+MVPGU9QAVEvWA
+	id S1750884AbaEGSM1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 May 2014 14:12:27 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 02C9D1615F;
+	Wed,  7 May 2014 14:12:27 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6O9W0Fgz6cVpEo/1msoTphyCk7o=; b=sF86rM
+	vnWUkACgGveYyLae6P0mHAhXitV66l8w82H9RjOgcB5c+cKWRs90CtKgkd0t+qER
+	pDUUMOtCJ3XNjh86uOHfGsCZXiud7LANugpdho9FYghqKICCVaisCavo+NsyRuhJ
+	1tE8Ca+4NfUGcUm96BG1D+l7cFeZsW8p18bYA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Wx6bVM9rV8GxcOPA4S0BeIJkuJ8LKbPT
+	IPdtXBW58zi3sLjQV5Oej11dUv5gV3pSof+aN5GvFUi1INmyHxp0DLQ5YRlzsQ5A
+	KJzBPBxLLMXuTo8ExnKCuLhqOIG61itaZaYsinzJ19BGmBtPFAa03alXe6w5S3G3
+	vD2pZX/crNg=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E9ABB1615E;
+	Wed,  7 May 2014 14:12:26 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 852D81615C;
+	Wed,  7 May 2014 14:12:24 -0400 (EDT)
+In-Reply-To: <1399169814-20201-1-git-send-email-felipe.contreras@gmail.com>
+	(Felipe Contreras's message of "Sat, 3 May 2014 21:16:50 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 23DBFFC8-D613-11E3-B1C0-9CEB01674E00-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248341>
 
 Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-> It's better if all our scripts use the same '/usr/bin/env python'.
+> Here's a bunch of tests more, and a fixes for Mercurial v3.0.
 
-Why?
+I think the discussion with John Keeping hints that we shouldn't be
+rushing fc/remote-helpers-hg-bzr-graduation and this does not appear
+to assume the presense of that series, which is good in order to
+make these fixes jump over them.
 
-Using python2 for git_multimail.py is a deliberate decision:
+I'll queue this separately on a topic based on the tip of
+yesterday's master for now.
 
-https://github.com/mhagger/git-multimail/pull/2
+One thing I couldn't read from the proposed log messages was if this
+is meant to work with and tested with both v3.0 and pre-v3.0 Hg, or
+this is to request others who run pre-v3.0 Hg to test these changes.
 
-(also, contrib/hooks/multimail/README says:
+For example, I see
 
-"The git-multimail project itself is currently hosted on GitHub:
+	from mercurial import changegroup
+        if check_version(3, 0):
+        	cg = changegroup.getbundle(...)
+	else:
+        	cg = repo.getbundle(...)
 
-    https://github.com/mhagger/git-multimail
+and offhand it was unclear if the unconditional import was a
+mistake.
 
-We use the GitHub issue tracker to keep track of bugs and feature
-requests, and GitHub pull requests to exchange patches (though, if you
-prefer, you can send patches via the Git mailing list with cc to me).
-Please sign off your patches as per the Git project practice."
-)
+Thanks.
 
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> ---
->  contrib/hooks/multimail/README                  | 6 +++---
->  contrib/hooks/multimail/git_multimail.py        | 2 +-
->  contrib/hooks/multimail/migrate-mailhook-config | 2 +-
->  contrib/hooks/multimail/post-receive            | 2 +-
->  contrib/svn-fe/svnrdump_sim.py                  | 2 +-
->  5 files changed, 7 insertions(+), 7 deletions(-)
 >
-> diff --git a/contrib/hooks/multimail/README b/contrib/hooks/multimail/README
-> index 477d65f..cf0bcb8 100644
-> --- a/contrib/hooks/multimail/README
-> +++ b/contrib/hooks/multimail/README
-> @@ -76,10 +76,10 @@ Requirements
->    The example scripts invoke Python using the following shebang line
->    (following PEP 394 [1]):
->  
-> -      #! /usr/bin/env python2
-> +      #! /usr/bin/env python
->  
-> -  If your system's Python2 interpreter is not in your PATH or is not
-> -  called "python2", you can change the lines accordingly.  Or you can
-> +  If your system's Python interpreter is not in your PATH or is not
-> +  called "python", you can change the lines accordingly.  Or you can
->    invoke the Python interpreter explicitly, for example via a tiny
->    shell script like
->  
-> diff --git a/contrib/hooks/multimail/git_multimail.py b/contrib/hooks/multimail/git_multimail.py
-> index 8b58ed6..f6dcdc6 100755
-> --- a/contrib/hooks/multimail/git_multimail.py
-> +++ b/contrib/hooks/multimail/git_multimail.py
-> @@ -1,4 +1,4 @@
-> -#! /usr/bin/env python2
-> +#! /usr/bin/env python
->  
->  # Copyright (c) 2012-2014 Michael Haggerty and others
->  # Derived from contrib/hooks/post-receive-email, which is
-> diff --git a/contrib/hooks/multimail/migrate-mailhook-config b/contrib/hooks/multimail/migrate-mailhook-config
-> index 04eeaac..fba0b90 100755
-> --- a/contrib/hooks/multimail/migrate-mailhook-config
-> +++ b/contrib/hooks/multimail/migrate-mailhook-config
-> @@ -1,4 +1,4 @@
-> -#! /usr/bin/env python2
-> +#! /usr/bin/env python
->  
->  """Migrate a post-receive-email configuration to be usable with git_multimail.py.
->  
-> diff --git a/contrib/hooks/multimail/post-receive b/contrib/hooks/multimail/post-receive
-> index 4d46828..4f2cf9d 100755
-> --- a/contrib/hooks/multimail/post-receive
-> +++ b/contrib/hooks/multimail/post-receive
-> @@ -1,4 +1,4 @@
-> -#! /usr/bin/env python2
-> +#! /usr/bin/env python
->  
->  """Example post-receive hook based on git-multimail.
->  
-> diff --git a/contrib/svn-fe/svnrdump_sim.py b/contrib/svn-fe/svnrdump_sim.py
-> index 4e78a1c..bf20819 100755
-> --- a/contrib/svn-fe/svnrdump_sim.py
-> +++ b/contrib/svn-fe/svnrdump_sim.py
-> @@ -1,4 +1,4 @@
-> -#!/usr/bin/python
-> +#!/usr/bin/env python
->  """
->  Simulates svnrdump by replaying an existing dump from a file, taking care
->  of the specified revision range.
-
-
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+>
+> Felipe Contreras (4):
+>   remote-hg: add more tests
+>   t: remote-hg: add file operation tests
+>   t: remote-hg: trivial cleanups and fixes
+>   remote-hg: add support for hg v3.0
+>
+>  contrib/remote-helpers/git-remote-hg |   6 +-
+>  contrib/remote-helpers/test-hg.sh    | 240 ++++++++++++++++++++++++++++++++++-
+>  2 files changed, 238 insertions(+), 8 deletions(-)
