@@ -1,214 +1,177 @@
-From: Nathan Collins <nathan.collins@gmail.com>
-Subject: Re: [BUG?] Patches created with 'diff.noprefix=true' don't 'git apply'.
-Date: Tue, 6 May 2014 18:16:30 -0700
-Message-ID: <CAO8RVveF6Oh0mqqyiVRHmnqQ+vXX7riDW_=zn0g=t88cQjCVrg@mail.gmail.com>
-References: <CAO8RVvdgN3U5hUEsJjYY9urfeVUDWwHiEur4NQp=H93W37RRnw@mail.gmail.com>
- <20140501024042.GX9218@google.com> <CAO8RVveV4SgXmJzWpYnyB3rnQALQkrrLNtLL5Ej5Y9Mjjekmmw@mail.gmail.com>
- <xmqqa9aug4my.fsf@gitster.dls.corp.google.com> <CAO8RVvfHVBG6QZ5M1DJK4kOX8GMDrvEw4_L=LsEc4G6E0pP7ug@mail.gmail.com>
- <xmqqbnvaehm3.fsf@gitster.dls.corp.google.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH] completion: move out of contrib
+Date: Tue, 06 May 2014 20:18:15 -0500
+Message-ID: <536989d764672_250b14ed2ec66@nysa.notmuch>
+References: <1399077403-19678-1-git-send-email-felipe.contreras@gmail.com>
+ <xmqq38gmctzn.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 07 03:17:16 2014
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 07 03:29:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WhqU0-0004Mk-7g
-	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 03:17:16 +0200
+	id 1WhqfU-0006yF-9w
+	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 03:29:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751586AbaEGBRM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 May 2014 21:17:12 -0400
-Received: from mail-qg0-f53.google.com ([209.85.192.53]:58134 "EHLO
-	mail-qg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750889AbaEGBRL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 May 2014 21:17:11 -0400
-Received: by mail-qg0-f53.google.com with SMTP id f51so317835qge.26
-        for <git@vger.kernel.org>; Tue, 06 May 2014 18:17:10 -0700 (PDT)
+	id S1755555AbaEGB3E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 May 2014 21:29:04 -0400
+Received: from mail-ob0-f175.google.com ([209.85.214.175]:64158 "EHLO
+	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750904AbaEGB3C (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 May 2014 21:29:02 -0400
+Received: by mail-ob0-f175.google.com with SMTP id wo20so360687obc.34
+        for <git@vger.kernel.org>; Tue, 06 May 2014 18:29:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=dRoLu3oD/FK35t5lJaEnfY/ZteMQBitioWFMVsw8Z6k=;
-        b=JsfRZgVmVU7mItdCxzhCZ7YaWSayg2z0EuK9tgHAayIBzVIzoOuE55DweGGhxlTmTl
-         rRREWDY+A2gmx5rNLjfa1xwHMsofWyUYNNVV1vtIQSEEQRK/VkF7BJ8huIuR+B0TypWK
-         tBbtjaZRlP7sKp2fcXG4fTGAM4HvSr/WHgrNR/fEDX3QRniLU7QL9XG99mxs1se01yRN
-         yO0Ed6JNtUqBvr8fUgcmJhOb8UR6+66r+075egio1P9qk7cdccOxuGr/PQCQejftvkNj
-         FvR6smueqxH9U6g7o+nbcLJI0nHlvOUlSfivyd5R0VFwqQz8pspwLdRGoYzPGUjWVsV/
-         qYXQ==
-X-Received: by 10.224.67.195 with SMTP id s3mr60985574qai.96.1399425430236;
- Tue, 06 May 2014 18:17:10 -0700 (PDT)
-Received: by 10.229.150.208 with HTTP; Tue, 6 May 2014 18:16:30 -0700 (PDT)
-In-Reply-To: <xmqqbnvaehm3.fsf@gitster.dls.corp.google.com>
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=EVz4Q0OBazDDMmsdRJQhIuIigUOFQkQ0pczjfy2EClo=;
+        b=Bi+Xzhlq0ezVwWlfOW9k75THN6FsDaWWtBAWCg6N7lRqlldAvdl9u8ne+/XSkY8mqb
+         LZPb5kL7CoPg50H64cIbu2dZ7B81kOGgd2nzqX5fJPDoKgOAV/5wyTuHzXCvXfpqoYhP
+         Ox3E7stHrI3CJ/eEtJbOP+ozCwo09HFinXVJUSaaFpWdsSNaKoT7sDkmDHCJsAr5Ik31
+         s15wwobgWjbOxGGpTx/YFTMGmRe6hI22mX/PMV92IZ9zHEGLH85hCyScsJeE8TlCwYaD
+         KD0o6+kqsqP651Vanr4Kn/71wf1YrIj0OFzFlpT2I33RSbpwHD51BapR+wZEEcNf6nck
+         Sz9g==
+X-Received: by 10.182.33.6 with SMTP id n6mr12932238obi.48.1399426141826;
+        Tue, 06 May 2014 18:29:01 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id f1sm59307847oej.5.2014.05.06.18.28.59
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 06 May 2014 18:29:00 -0700 (PDT)
+In-Reply-To: <xmqq38gmctzn.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248276>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248277>
 
-On Tue, May 6, 2014 at 2:12 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Nathan Collins <nathan.collins@gmail.com> writes:
->
->> But 'git apply' could be much more helpful than 'patch' even, since
->> the presence or absence of the 'a/' and 'b/' prefixes in the patch,
->> and the 'diff.noprefix' setting, give Git enough info to be very
->> helpful to the user.
->
-> The prefix would be unreliable as the generator may be using the
-> mnemonicprefix option to use i/ and w/ prefixes.  Worse yet, the
-> configuration variables are for people who generated the diff you
-> are feeding "git apply", and there is nothing that tells "apply"
-> that the patch is generated with _your_ setting.
+Junio C Hamano wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> 
+> > These have been stable and widely used for quite a long time, they even
+> > have tests outside of the contrib area, and most distributions ship
+> > them, so they can be considered part of the core already.
+> >
+> > Let's move them out of contrib and install them by default.
+> >
+> > Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> > ---
+> >  Makefile                                           | 5 ++++-
+> >  {contrib/completion => shared}/git-completion.bash | 0
+> >  {contrib/completion => shared}/git-completion.zsh  | 0
+> >  {contrib/completion => shared}/git-prompt.sh       | 0
+> >  t/t9902-completion.sh                              | 2 +-
+> >  t/t9903-bash-prompt.sh                             | 2 +-
+> >  6 files changed, 6 insertions(+), 3 deletions(-)
+> >  rename {contrib/completion => shared}/git-completion.bash (100%)
+> >  rename {contrib/completion => shared}/git-completion.zsh (100%)
+> >  rename {contrib/completion => shared}/git-prompt.sh (100%)
+> 
+> I am not sure whom this change is meant to help.
+> 
+>  - Those who build from source *and* care about having the latest
+>    completion must already have a way they have been using to
+>    install them.  They will have to change their procedure to adjust
+>    for the change of the path, *and* disable the part of "install"
+>    that installs it to $(sharedir) which is unlikely to match where
+>    they have been installing completion scripts.
 
-More concretely, what I had in mind was that if 'diff.noprefix=true'
-is set in the user's config, and the patch is in '-p0' format, then
-Git could suggest to the user that the 'diff.noprefix' setting *might*
-be causing them to generate '-p0' patches. If the user had in fact not
-generated the patch themselves, then they could safely ignore the
-suggestion.
+No.
 
-But this may just be an overcomplicated solution to my and others'
-misuse of the 'diff.noprefix' option; see below.
+>  - Those who package completion for distros already have a way they
+>    have been using to install them.  They suffer the same as those
+>    who build from the source.
 
-> So that is not workable.
->
-> However, Before issuing this error message
->
->>   git -c diff.noprefix=true diff HEAD~ | git apply --reverse
->>   error: Data/Function/Decorator/Memoizer/Unsafe.hs: No such file or directory
->
-> we _could_ check that there is Data/ directory in the target tree
-> the patch is being applied and suggest to:
+Yes, *if* they have been packaging them, they have a way. But what if
+they haven't been doing so?
 
-To clarify, the actual path was
+And for the ones that have a way, now they need one hack less.
 
-  src/Data/Function/Decorator/Memoizer/Unsafe.hs
+>  - Those who use pre-packaged Git and completion scripts would not
+>    care.
 
-The path in the error message,
+No.
 
-  Data/Function/Decorator/Memoizer/Unsafe.hs
+>  - Those who have *not* installed from the source may benefit for
+>    being able to say "make install" and let it be installed, but
+>    they have to dot-include /usr/share/git-completion.bash location,
+>    which is new, not from /etc/bash_completion.d/git as they are
+>    used to.
 
-was the '-p1' version of that path. This is extra confusing if the
-user is unfamiliar with the '-p' option for patch and unaware that
-'git apply' is assuming '-p1'.
+Wrong. They don't have to dot-include anything, bash-completion does
+that automagically. If they don't have bash-completion, sure, they'll
+need to dot-include the new location.
 
->  * "use -p0", if noprefix, which I agree with Jonathan is an insane
->    thing to use by default, is common enough; or
->
->  * "use different setting for -p$n", if noprefix is not common.
->
-> in the error message.  Extra computation necessary to do so would
-> happen only in the error codepath, and we wouldn't mind spending
-> some cycles if they help the end user.
+And the location is not /usr/share/git-completion.bash, it's
+$(sharedir)/bash-completion/completions.
 
-I'm starting to think there are really two separate issues here:
+Although after reading bash-completion's README, it should actually be:
 
-1. 'git apply' doesn't give a very helpful error message when the
-patch does not apply due to not being in '-p1' format.
+ % pkg-config --variable=completionsdir bash-completion
 
-2. the 'diff.noprefix=true' option is used for two unrelated things in
-practice. One of them is related to diffing -- namely, making Git
-generate '-p0' patches -- and the other is unrelated to diffing --
-namely, users want file names that can be easily copied with
-double-click.
+> A better change might be to give a new Makefile target, perhaps
+> 
+>     $ make install.contrib-completion
+> 
+> without moving the scripts from their current place.
 
-For (1), I think the solution is check if the patch makes sense as
-'-p0', in the error case, and tell the user about this in the error
-message as you suggested above.  In fact, in case the '-p1' path
-doesn't exist, Git could just try all possible '-p$n' values, and
-report the first that yields valid paths, if any. Mentioning to the
-user that they have 'diff.noprefix=true' set in case '-p0' is
-discovered might be helpful, but a better solution to (2) might
-eliminate this problem in practice.
+But they are not contrib, they are part of the core, and should be
+distributed by default.
 
-For (2), the solution may be to add a separate
-'diff.add-clickable-paths' option (probably there is a better name?
-'diff.add-copyable-paths'? ...), which makes Git insert clickable
-paths in the comments in the diff output. This handles the
-clickable-paths use case which lead me and others to abuse
-'diff.noprefix=true'. Examples where people suggest using
-'diff.noprefix=true' to make it easier to double-click copy paths
-include [1 - 5]. Examples where people suggest using 'noprefix' to
-generate '-p0' patches include [6 - 10].
+> That way, nobody gets hurt, and those who are new to Git who want to
+> build and install from the source would not have to invent their own
+> way to install stuff from contrib/ (the same goes for other contrib/
+> tools such as contrib/workdir/ we may want to add a new target to let
+> you say "make install.contrib-workdir").
 
-Concretely, if 'diff.add-clickable-paths' is set, then instead of e.g.
+There is already a way to install from contrib.
 
-  diff --git a/src/Data/Function/Decorator/Memoizer/Unsafe.hs
-b/src/Data/Function/Decorator/Memoizer
-  index 3ef17da..a0586d3 100644
-  --- a/src/Data/Function/Decorator/Memoizer/Unsafe.hs
-  +++ b/src/Data/Function/Decorator/Memoizer/Unsafe.hs
+ % make -C contrib/remote-helpers install
 
-we get e.g.
+The fact that you never picked my fixes to make it so is another matter.
 
-  # src/Data/Function/Decorator/Memoizer/Unsafe.hs
-  diff --git a/src/Data/Function/Decorator/Memoizer/Unsafe.hs
-b/src/Data/Function/Decorator/Memoizer
-  index 3ef17da..a0586d3 100644
-  --- a/src/Data/Function/Decorator/Memoizer/Unsafe.hs
-  +++ b/src/Data/Function/Decorator/Memoizer/Unsafe.hs
+> I _may_ be persuaded to fold the installation of all possible
+> contrib/ stuff into the regular "make install", but I haven't
+> thought things through.
 
-as the diff header.
+But the completions are not contrib, they are essentially part of the
+core.
 
-In any case, warning the user in the 'diff.noprefix' docs that the
-point of the option is to create '-p0' patches, and that setting this
-permanently will cause bad interactions with other Git commands (like
-'git apply') seems like a great idea -- you suggested this in your
-first email, but I hadn't really understood why my use of
-'diff.noprefix' was "insane" yet. This probably won't help people that
-blindly use 'noprefix' in the "insane" way based on a suggestion they
-found with Google, but it can't hurt. If there were a
-'diff.add-clickable-paths' option, then the 'diff.noprefix' docs could
-also mention this, and suggest the user use that instead if their use
-case is the "easy copy" use case.
+If you want to demote them to contrib, then they shouldn't be tested by
+default, and t9902-completion.sh and t9903-bash-prompt.sh should be
+moved out to contrib.
 
-Thank you both for pointing out that my usage of 'diff.noprefix=true'
-is insane. Sorry if my suggestion for the 'diff.add-clickable-paths'
-option is also insane; making the 'git apply' error message better --
-keeping in mind that users who use 'noprefix' to create clickable
-paths may not even know what "'-p$n' patch" is -- is probably
-sufficient in practice.
+You cannot have your cake and eat it at the same time.
 
-Cheers,
+> The patch does two unrelated things:
+> 
+>  - Move things in the source tree.
+> 
+>  - Install the completion by default.
+> 
+> I very much agree that the latter may be a good thing to have in the
+> polished end result.  I am not sure if the installation location
+> chosen is sensible.  At least, another redirection
+> 
+>     git_completion_dir = $(sharedir)
+> 
+> may be necessary to allow people install these in the location they
+> want.
 
--nathan
+ifneq ($(prefix),$(HOME))
+	bashcompletiondir := $(shell pkg-config --variable=completionsdir bash-completion 2> /dev/null)
+endif
+ifndef bashcompletiondir
+	bashcompletiondir = $(sharedir)/bash-completion/completions
+endif
 
-References for copy and paste:
-
-[1] http://stackoverflow.com/a/20370519/470844: answer to SO question
-about why there are 'a/' and 'b/' prefixes. Last comment says that
-'--no-prefix' makes copy and paste easier.
-
-[2] https://coderwall.com/p/oaekvg: points out that 'noprefix' makes
-copy and paste easier.
-
-[3] http://git.661346.n2.nabble.com/PATCH-git-jump-ignore-custom-prefix-in-diff-mode-tp7567162p7567308.html:
-post to Git mailing list with user mentioning they use 'noprefix' to
-make copy and paste easier.
-
-[4] http://hugogiraudel.com/2014/03/17/git-tips-and-tricks-part-2/:
-blog post suggesting you can set 'noprefix' to make it easier to copy
-and paste file names.
-
-[5] http://www.databasesandlife.com/why-subversion-is-better-than-git/:
-page arguing that SVN is better than Git (hahaha) because in SVN you
-can copy file names from diff output with double click, but in Git
-there is an annoying leading 'a/' or 'b/'. A Git defender replies
-suggesting that 'noprefix' can be used to make copy/paste work.
-
-References for creating '-p0' patches:
-
-[6] http://tamsler.blogspot.com/2009/02/patching-with-git-diff.html
-
-[7] http://stackoverflow.com/questions/4610744/can-i-get-a-patch-compatible-output-from-git-diff
-
-[8] http://lists.drupal.org/pipermail/development/2011-April/038006.html
-
-[9] http://www.lullabot.com/blog/article/git-best-practices-upgrading-patch-process
-
-[10]
-http://scribu.net/wordpress/contributing-to-wordpress-using-github.html:
-SVN uses '-p0' patches, so they suggest using 'noprefix' to generate
-SVN compatible patches from Git.
+-- 
+Felipe Contreras
