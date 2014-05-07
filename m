@@ -1,111 +1,76 @@
-From: Pasha Bolokhov <pasha.bolokhov@gmail.com>
-Subject: Re: Problem: staging of an alternative repository
-Date: Wed, 7 May 2014 13:51:57 -0700
-Message-ID: <CAKpPgvcvOeneqpidNAbp-8gkS3dpLfMEdTjb-L7o-VSadKHP9A@mail.gmail.com>
-References: <CAKpPgveXqraM4bXb499mJm5Ls+EinihfEJ6VgOFikC0_Qp8iTA@mail.gmail.com>
- <20140430213545.GV9218@google.com> <CACsJy8C4bO_ZB-DMOkbJc9cJd_LmR6z0RZ1UZB3wKPEX005xmA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] merge-recursive.c: Fix case-changing merge.
+Date: Wed, 07 May 2014 13:53:25 -0700
+Message-ID: <xmqqa9at8g56.fsf@gitster.dls.corp.google.com>
+References: <xmqqoazaelmi.fsf@gitster.dls.corp.google.com>
+	<1399417144-24864-1-git-send-email-dturner@twopensource.com>
+	<xmqqd2fpbh9b.fsf@gitster.dls.corp.google.com>
+	<20140507181355.GW9218@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 07 22:52:25 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: dturner@twopensource.com, git@vger.kernel.org,
+	David Turner <dturner@twitter.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 07 22:53:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wi8pF-0005gx-8A
-	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 22:52:25 +0200
+	id 1Wi8qM-0006aH-SK
+	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 22:53:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751986AbaEGUwU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2014 16:52:20 -0400
-Received: from mail-oa0-f45.google.com ([209.85.219.45]:60058 "EHLO
-	mail-oa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751969AbaEGUwS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 May 2014 16:52:18 -0400
-Received: by mail-oa0-f45.google.com with SMTP id l6so1978808oag.32
-        for <git@vger.kernel.org>; Wed, 07 May 2014 13:52:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=RZgCVEiKrRp1pqpLS+CUewW1BGetYMhcI9nfYo0kGk0=;
-        b=lYVjMx/sW5xgL3r7JwnLLfIqxXYAHuqT0QcG73AcEVi6QkSBRS5TCt8BaeA+1u486m
-         mn+cymT8BKi7hMWKcYPjj7vrZ4J/KVlYSAET+sQBSnRmbzAZF3rBfP4PM+zX9jpQBjKm
-         bnTvXzcTHmOhwKacqdqzX5fONvOIr3A0e0Rwa7WVN1U1oDg067sjJzgVeVqVMdM5RoJt
-         ef8oTYwWqCRSYzr7D5ZDdQzoOfAjHo8vIhQO6EUeM9Ye0OaS0pd9Xw0lpb2nMctQLW2w
-         RAMVZtuT280tcYDeM4LaG8PDViJs/ZxeGopNdWE7yp9Q4iviQ1QfAWgn1HI//+OM2FA+
-         EPEw==
-X-Received: by 10.182.78.100 with SMTP id a4mr18980765obx.56.1399495937764;
- Wed, 07 May 2014 13:52:17 -0700 (PDT)
-Received: by 10.60.16.8 with HTTP; Wed, 7 May 2014 13:51:57 -0700 (PDT)
-In-Reply-To: <CACsJy8C4bO_ZB-DMOkbJc9cJd_LmR6z0RZ1UZB3wKPEX005xmA@mail.gmail.com>
+	id S1752005AbaEGUxb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2014 16:53:31 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:59287 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750966AbaEGUxa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 May 2014 16:53:30 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1461416534;
+	Wed,  7 May 2014 16:53:30 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=13se8JryLRs4KBMsdf/kcjxbqg4=; b=eBrViH
+	0RWOJGDwDBc/OeQnLqIWQAtTzfIWOic46X5VtYJae+gykqVCvq1Njjw3CJxUoo+r
+	IyW/xB+ceTi9m7HrTrq29B3hyxWiHvUQdeNqw+TaeNCnUqErDf4hehhEwH7XbgoZ
+	z16onPi9pD3nz0XjQ2fp650HWibUdD0fCa+0g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Fk6vvReUxgSPaPKwydRsrXO9tFBAVEPK
+	hgageRRCrMsBCTADOLty8sb/r8LF9Ib1tDEaIje9+lHPXmNxdc4T/bkw5h3qYqC8
+	imKRIjWEoBNmu8TljSrMh1uDzRF8y9dwVFWQs1KPpxjraLEcDBwFXhKSn5dCBp7P
+	NUeAtfdCJ00=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0829816532;
+	Wed,  7 May 2014 16:53:30 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 401EF16529;
+	Wed,  7 May 2014 16:53:27 -0400 (EDT)
+In-Reply-To: <20140507181355.GW9218@google.com> (Jonathan Nieder's message of
+	"Wed, 7 May 2014 11:13:55 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: A3496762-D629-11E3-BF99-9CEB01674E00-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248372>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248373>
 
-    Hi,
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-I've looked more attentively, here are my observations and the
-resulting suggestions:
-
-- Suggest only to check *string-wise* the given "path" against
-$GIT_DIR. Both or one of them may be relative paths (but comparison
-best be performed when converted to absolute paths). That's the only
-solution which will give predictable results, but does not handle
-symlinks: if you have symlinks (so that both differing paths actually
-point to the same location) the comparison will return failure. Only
-if you have an exact string-wise match do we ignore the "path"
-
-- With this way of comparison, only the root ".git_new" will be
-ignored. Submodules will likely contain the usual ".git". Since the
-code normally ignores ".git" anyway, and I do not intend to change
-that, I don't see how submodule detection can be affected
-
-- The problem of resolving symlinks is in a very general case
-insolvable (e.g. imagine one of the symlinks points to another
-filesystem which may be up or down depending on the day of week - it's
-easy to plot a scenario where symlinks will resolve (or even fail to
-resolve) differently at different runs)
-
-- Even if it was solvable, the current implementation of handling
-".git" certainly does not check any symlinks:
-        $  mv -i   .git   .metadata
-        $  ln -s .metadata .git
-  Then certainly "git add -A" will grab all ".metadata" and store into itself
-
-  Please let me know what you think. Again, I can try to carefully do
-this suggestion
-
-Pavel
-
-
-On Thu, May 1, 2014 at 11:20 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Thu, May 1, 2014 at 4:35 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
->>>     Now I know, the '--git-dir' option may usually be meant to use
->>> when the repository is somewhere outside of the work tree, and such a
->>> problem would not arise. And even if it is inside, sure enough, you
->>> can add this '.git_new' to the ignores or excludes. But is this really
->>> what you expect?
->>
->> I think it's more that it never came up.  Excluding the current
->> $GIT_DIR from what "git add" can add (on top of the current rule of
->> excluding all instances of ".git") seems like a sensible change,
->> assuming it can be done without hurting the code too much. ;-)
+>> Please make it a habit to use "test -f" when you expect "the path
+>> exists as a file", not merely "something exists there I do not care
+>> if it is a file or a directory", for which "test -e" is perfectly
+>> appropriate.
 >
-> I think it came up before. Changes could be very messy (but I did not
-> check carefully) because right now we just compare $(basename $path)
-> with ".git", one path component, simple and easy. Checking against
-> $GIT_DIR means all path components. You also have to deal with
-> relative and absolute paths and symlinks in some path components. You
-> may also need to think if submodule detection code (checking ".git"
-> again) is impacted. On top of that, read_directory() code is already
-> messy (or at least scary to me) with all kinds of shortcuts we have
-> added over the years. A simpler solution may be ignoring all
-> directories whose last component is  "$GIT_DIR_NAME" (e.g.
-> GIT_DIR_NAME=.git_new).
-> --
-> Duy
+> Or, better in tests,
+>
+> 	test_path_is_file testcase
+>
+> which prints an error instead of just silently failing when
+> the path is not a file.
+
+Thanks, will tweak.
