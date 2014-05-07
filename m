@@ -1,83 +1,135 @@
-From: Tolga Ceylan <tolga.ceylan@gmail.com>
-Subject: [PATCH] git-p4: format-patch to diff-tree change breaks binary
- patches
-Date: Tue, 6 May 2014 22:48:54 -0700
-Message-ID: <20140507054854.GA3571@olive>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 2/2] ignorecase: Fix git mv on insensitive filesystems
+Date: Wed, 07 May 2014 08:17:02 +0200
+Message-ID: <5369CFDE.2070207@viscovery.net>
+References: <xmqqoazaelmi.fsf@gitster.dls.corp.google.com> <1399417144-24864-1-git-send-email-dturner@twopensource.com> <1399417144-24864-2-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: cdleonard@gmail.com, pw@padd.com, gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 07 07:49:19 2014
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	David Turner <dturner@twitter.com>
+To: dturner@twopensource.com
+X-From: git-owner@vger.kernel.org Wed May 07 08:17:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WhujC-0006xb-LW
-	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 07:49:15 +0200
+	id 1WhvAK-0004zT-UC
+	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 08:17:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751491AbaEGFtL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2014 01:49:11 -0400
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:49490 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750889AbaEGFtK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 May 2014 01:49:10 -0400
-Received: by mail-pa0-f52.google.com with SMTP id kx10so667925pab.11
-        for <git@vger.kernel.org>; Tue, 06 May 2014 22:49:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        bh=bwStlgNmDSCGpjBwuA6uKqySJemxsLE0cGYYr8VQN1U=;
-        b=rOiXSuUBD2qDAOCFU49P6pYCEkv1YdqAbv1v+gGJ2t/0BGycaaWQpP0OyoRhkXzhmt
-         CmxwRHrg7r1Y7NSEgNmeghlzlnGEubrHoJnqSBseMsjIHEZ9JsGD02REVpSGrKRLW+Eb
-         QwFGc1a/8ETWiVjvPqpM0oq6tv44mHmo1E57qpf0aXy68Lp6n6Iv0QOI/INvjxqFHpry
-         fZLJNS25Rln4+9mjKcIc5hs0YwMlTJzE2vw2UvAXa+UProerHyiGjKoxwwXDbFUjLPbh
-         kYcjN56ySohC8w6rUJqzvjOtZoRm6/sHqXNL250GH5y+YrthgXcq/2kApfWcogAuPV7G
-         j0vQ==
-X-Received: by 10.66.150.228 with SMTP id ul4mr14916162pab.16.1399441749050;
-        Tue, 06 May 2014 22:49:09 -0700 (PDT)
-Received: from olive (c-98-210-144-148.hsd1.ca.comcast.net. [98.210.144.148])
-        by mx.google.com with ESMTPSA id cj1sm2695128pac.40.2014.05.06.22.49.07
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 06 May 2014 22:49:08 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751435AbaEGGRL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2014 02:17:11 -0400
+Received: from so.liwest.at ([212.33.55.15]:44323 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751104AbaEGGRK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 May 2014 02:17:10 -0400
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.80.1)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1WhvA7-0007m8-Gn; Wed, 07 May 2014 08:17:04 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 1CC1416613;
+	Wed,  7 May 2014 08:17:03 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
+In-Reply-To: <1399417144-24864-2-git-send-email-dturner@twopensource.com>
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248283>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248284>
 
-When applying binary patches a full index is required. format-patch
-already handles this, but diff-tree needs '--full-index' argument
-to always output full index. When git-p4 runs git-apply to test
-the patch, git-apply rejects the patch due to abbreviated blob
-object names. This is the error message git-apply emits in this
-case:
+Am 5/7/2014 0:59, schrieb dturner@twopensource.com:
+> From: David Turner <dturner@twitter.com>
+> 
+> Make it possible to change the case of a filename on a
+> case-insensitive filesystem using git mv.  Change git mv to allow
+> moves where the destination file exists if either the destination file
+> has the same inode as the source file (for Mac) or the same name
+> ignoring case (for Win).
+> 
+> Signed-off-by: David Turner <dturner@twitter.com>
+> ---
+>  builtin/mv.c                | 18 ++++++++++--------
+>  t/t6039-merge-ignorecase.sh |  2 +-
+>  2 files changed, 11 insertions(+), 9 deletions(-)
+> 
+> diff --git a/builtin/mv.c b/builtin/mv.c
+> index 45e57f3..8cead13 100644
+> --- a/builtin/mv.c
+> +++ b/builtin/mv.c
+> @@ -74,7 +74,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+>  	};
+>  	const char **source, **destination, **dest_path, **submodule_gitfile;
+>  	enum update_mode { BOTH = 0, WORKING_DIRECTORY, INDEX } *modes;
+> -	struct stat st;
+> +	struct stat src_st,dst_st;
+>  	struct string_list src_for_dst = STRING_LIST_INIT_NODUP;
+>  
+>  	gitmodules_config();
+> @@ -102,8 +102,8 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+>  	if (dest_path[0][0] == '\0')
+>  		/* special case: "." was normalized to "" */
+>  		destination = internal_copy_pathspec(dest_path[0], argv, argc, DUP_BASENAME);
+> -	else if (!lstat(dest_path[0], &st) &&
+> -			S_ISDIR(st.st_mode)) {
+> +	else if (!lstat(dest_path[0], &dst_st) &&
+> +			S_ISDIR(dst_st.st_mode)) {
+>  		dest_path[0] = add_slash(dest_path[0]);
+>  		destination = internal_copy_pathspec(dest_path[0], argv, argc, DUP_BASENAME);
+>  	} else {
+> @@ -122,13 +122,13 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+>  			printf(_("Checking rename of '%s' to '%s'\n"), src, dst);
+>  
+>  		length = strlen(src);
+> -		if (lstat(src, &st) < 0)
+> +		if (lstat(src, &src_st) < 0)
+>  			bad = _("bad source");
+>  		else if (!strncmp(src, dst, length) &&
+>  				(dst[length] == 0 || dst[length] == '/')) {
+>  			bad = _("can not move directory into itself");
+> -		} else if ((src_is_dir = S_ISDIR(st.st_mode))
+> -				&& lstat(dst, &st) == 0)
+> +		} else if ((src_is_dir = S_ISDIR(src_st.st_mode))
+> +				&& lstat(dst, &dst_st) == 0)
+>  			bad = _("cannot move directory over file");
+>  		else if (src_is_dir) {
+>  			int first = cache_name_pos(src, length);
+> @@ -202,14 +202,16 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+>  			}
+>  		} else if (cache_name_pos(src, length) < 0)
+>  			bad = _("not under version control");
+> -		else if (lstat(dst, &st) == 0) {
+> +		else if (lstat(dst, &dst_st) == 0 &&
+> +			 (src_st.st_ino != dst_st.st_ino ||
+> +			  (src_st.st_ino == 0 && strcasecmp(src, dst)))) {
 
-error: cannot apply binary patch to '<filename>' without full index line
-error: <filename>: patch does not apply
+Don't do that. st_ino is zero on Windows only because we do not spend time
+to fill in the field. Don't use it as an indicator for a case-insensitive
+file system; zero may be a valid inode number on other systems.
 
-Signed-off-by: Tolga Ceylan <tolga.ceylan@gmail.com>
-Acked-by: Pete Wyckoff <pw@padd.com>
----
- git-p4.py |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/git-p4.py b/git-p4.py
-index cdfa2df..4ee6739 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -1311,7 +1311,7 @@ class P4Submit(Command, P4UserMap):
-             else:
-                 die("unknown modifier %s for %s" % (modifier, path))
- 
--        diffcmd = "git diff-tree -p \"%s\"" % (id)
-+        diffcmd = "git diff-tree --full-index -p \"%s\"" % (id)
-         patchcmd = diffcmd + " | git apply "
-         tryPatchCmd = patchcmd + "--check -"
-         applyPatchCmd = patchcmd + "--check --apply -"
--- 
-1.7.9.5
+>  			bad = _("destination exists");
+>  			if (force) {
+>  				/*
+>  				 * only files can overwrite each other:
+>  				 * check both source and destination
+>  				 */
+> -				if (S_ISREG(st.st_mode) || S_ISLNK(st.st_mode)) {
+> +				if (S_ISREG(dst_st.st_mode) || S_ISLNK(dst_st.st_mode)) {
+>  					if (verbose)
+>  						warning(_("overwriting '%s'"), dst);
+>  					bad = NULL;
+> diff --git a/t/t6039-merge-ignorecase.sh b/t/t6039-merge-ignorecase.sh
+> index ad06752..28cfb49 100755
+> --- a/t/t6039-merge-ignorecase.sh
+> +++ b/t/t6039-merge-ignorecase.sh
+> @@ -35,7 +35,7 @@ test_expect_success 'merge with case-changing rename on both sides' '
+>  	git reset --hard baseline &&
+>  	git branch -D with-camel &&
+>  	git checkout -b with-camel &&
+> -	git mv --force TestCase testcase &&
+> +	git mv TestCase testcase &&
+>  	git commit -m "recase on branch" &&
+>  	> foo &&
+>  	git add foo &&
