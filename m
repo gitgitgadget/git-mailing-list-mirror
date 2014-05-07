@@ -1,80 +1,117 @@
-From: Thorsten Glaser <tg@debian.org>
-Subject: [PATCH] builtin/tag.c: Add tag name to user message
-Date: Fri, 30 Aug 2013 00:03:10 +0200
-Message-ID: <201405070749.s477nvCL000897@herc.mirbsd.org>
-Cc: Richard Hartmann <richih@debian.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 07 10:05:54 2014
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: What's cooking in git.git (Apr 2014, #09; Tue, 29)
+Date: Wed, 7 May 2014 09:05:58 +0100
+Message-ID: <20140507080558.GH23935@serenity.lan>
+References: <xmqq7g67iwxc.fsf@gitster.dls.corp.google.com>
+ <20140505184546.GB23935@serenity.lan>
+ <xmqqd2fqcv7s.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 07 10:06:21 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WhwrQ-0003XV-Bw
-	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 10:05:52 +0200
+	id 1Whwrt-0003we-Eg
+	for gcvg-git-2@plane.gmane.org; Wed, 07 May 2014 10:06:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751252AbaEGIFr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2014 04:05:47 -0400
-Received: from eurynome.mirbsd.org ([81.169.181.30]:43165 "EHLO
-	eurynome.mirbsd.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751129AbaEGIFp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 May 2014 04:05:45 -0400
-X-Greylist: delayed 884 seconds by postgrey-1.27 at vger.kernel.org; Wed, 07 May 2014 04:05:42 EDT
-Received: from herc.mirbsd.org (root@herc.mirbsd.org [IPv6:2a01:198:25d:0:202:b3ff:feb7:54e8])
-	by eurynome.mirbsd.org (8.14.5.Beta0/8.14.3) with ESMTP id s477on5P026590
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK)
-	for <git@vger.kernel.org>; Wed, 7 May 2014 07:50:54 GMT
-Received: from herc.mirbsd.org (tg@localhost [IPv6:::1])
-	by herc.mirbsd.org (8.14.5/8.14.5) with ESMTP id s477nwb5008378
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 7 May 2014 07:50:01 GMT
-Received: (from tg@localhost)
-	by herc.mirbsd.org (8.14.5/8.14.5/Submit) id s477nvCL000897;
-	Wed, 7 May 2014 07:49:57 GMT
+	id S1751847AbaEGIGP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2014 04:06:15 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:45017 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751481AbaEGIGK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 May 2014 04:06:10 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id BB6A9CDA5F2;
+	Wed,  7 May 2014 09:06:09 +0100 (BST)
+X-Quarantine-ID: <vVoLHiGHYewn>
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -1
+X-Spam-Level: 
+X-Spam-Status: No, score=-1 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1] autolearn=disabled
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id vVoLHiGHYewn; Wed,  7 May 2014 09:06:08 +0100 (BST)
+Received: from serenity.lan (chimera.aluminati.org [10.0.16.60])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 13818CDA580;
+	Wed,  7 May 2014 09:06:00 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <xmqqd2fqcv7s.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248290>
 
-Display the tag name about to be added to the user during interactive
-editing.
+On Tue, May 06, 2014 at 05:01:59PM -0700, Junio C Hamano wrote:
+> John Keeping <john@keeping.me.uk> writes:
+> 
+> > I'd like to register my opposition to moving git-remote-{bzr,hg} out of
+> > contrib/.
+> >
+> > I am not convinced that tools for interoperating with other VCSs need to
+> > be part of core Git; as Junio has pointed out previously, while contrib/
+> > was necessary ... Associated tools can
+> > therefore live on their own and do not need to be promoted as part of
+> > Git itself (as git-imerge is doing successfully).
+> 
+> Another thing to keep in mind is that we need to ensure that we give
+> a good way for these third-party tools to integrate well with the
+> core Git tools to form a single toolchest for the users.  I would
+> love to be able to do
+> 
+>     $ (cd git.git && make install)
+>     $ (cd git-imerge.git && make install)
+> 
+> and then say "git imerge", "git --help imerge", etc.  The same for
+> the remote helpers that we may be splitting out of my tree into
+> their own stand-alone projects.
 
-Signed-off-by: Thorsten Glaser <tg@debian.org>
-Signed-off-by: Richard Hartmann <richih@debian.org>
----
- builtin/tag.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+This can already work given suitable installation.  With
+git-integration[1] I can type `git help integration` and it shows me the
+man page in the same way that `git help commit` does.  When I manually
+linked the HTML file to the right place `git help -w integration` worked
+as well.
 
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 6c7c6bd..8a7265b 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -278,11 +278,11 @@ static int do_sign(struct strbuf *buffer)
- }
- 
- static const char tag_template[] =
--	N_("\nWrite a tag message\n"
-+	N_("\nWrite a message for tag:\n  %s\n"
- 	"Lines starting with '%c' will be ignored.\n");
- 
- static const char tag_template_nocleanup[] =
--	N_("\nWrite a tag message\n"
-+	N_("\nWrite a message for tag:\n  %s\n"
- 	"Lines starting with '%c' will be kept; you may remove them"
- 	" yourself if you want to.\n");
- 
-@@ -378,9 +378,9 @@ static void create_tag(const unsigned char *object, const char *tag,
- 			struct strbuf buf = STRBUF_INIT;
- 			strbuf_addch(&buf, '\n');
- 			if (opt->cleanup_mode == CLEANUP_ALL)
--				strbuf_commented_addf(&buf, _(tag_template), comment_line_char);
-+				strbuf_commented_addf(&buf, _(tag_template), tag, comment_line_char);
- 			else
--				strbuf_commented_addf(&buf, _(tag_template_nocleanup), comment_line_char);
-+				strbuf_commented_addf(&buf, _(tag_template_nocleanup), tag, comment_line_char);
- 			write_or_die(fd, buf.buf, buf.len);
- 			strbuf_release(&buf);
- 		}
--- 
-2.0.0.rc0
+> I _think_ it probably is OK for git-imerge.git/Makefile to peek into
+> our Makefile, e.g.
+> 
+>     $ cd git-imerge.git
+>     $ make GIT_SOURCE_DIR=../git.git install
+> 
+> to learn where imerge should install its subcommand implementation
+> and documentation.  It might even want to borrow the test framework
+> by using $GIT_SOURCE_DIR/t/test-lib.sh or somesuch.  There may be
+> some changes the third-party tool authors would want to have in our
+> Makefile to help them better when building their tools this way; I
+> dunno.
+> 
+> I also think that there should be a way to make it really easy to
+> install these third-party tools to augment the installed version of
+> Git without having the source tree of Git.  We have ways for them to
+> ask us where things are expected to be, e.g.
+> 
+>     $ git --html-path
+>     $ git --man-path
+>     $ git --exec-path
+> 
+> but I am not sure if these are enough, or if it would help them to
+> add a bit more, then what these "a bit more" are.
+
+I think this is enough - now I need to go and make git-integration's
+Makefile use them by default rather than just using the same defaults as
+git.git.
+
+Perhaps it would be useful to have a skeleton "external Git utility"
+project under contrib/ which could demonstrate best practice for
+installing utilties that augment Git.
+
+[1] http://johnkeeping.github.io/git-integration/
