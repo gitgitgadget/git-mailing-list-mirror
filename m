@@ -1,116 +1,62 @@
-From: Per Cederqvist <cederp@opera.com>
-Subject: Re: [GUILT 07/28] Added test cases for "guilt fold".
-Date: Thu, 8 May 2014 21:41:22 +0200
-Message-ID: <CAP=KgsR2CD39XeC+UsPU_Oh2GDBg-WrF=+Q33jhfYvToZz7UwA@mail.gmail.com>
-References: <1395387126-13681-1-git-send-email-cederp@opera.com>
-	<1395387126-13681-8-git-send-email-cederp@opera.com>
-	<20140506194026.GK1655@meili.valhalla.31bits.net>
-	<CAP=KgsQ2fvVWZG7OwwWac+tMeWaPTEdSrgFqE5gVfSAqNn-VCQ@mail.gmail.com>
-	<20140507210601.GA1459@meili.valhalla.31bits.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] merge-recursive.c: Fix case-changing merge.
+Date: Thu, 08 May 2014 12:45:03 -0700
+Message-ID: <xmqqlhuc2gxs.fsf@gitster.dls.corp.google.com>
+References: <536B4680.1010806@web.de>
+	<1399569814-20644-1-git-send-email-dturner@twopensource.com>
+	<1399569814-20644-2-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Jeff Sipek <jeffpc@josefsipek.net>
-X-From: git-owner@vger.kernel.org Thu May 08 21:41:28 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, David Turner <dturner@twitter.com>
+To: dturner@twopensource.com
+X-From: git-owner@vger.kernel.org Thu May 08 21:45:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WiUC7-0006WJ-G7
-	for gcvg-git-2@plane.gmane.org; Thu, 08 May 2014 21:41:27 +0200
+	id 1WiUFo-0002OV-Sx
+	for gcvg-git-2@plane.gmane.org; Thu, 08 May 2014 21:45:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754959AbaEHTlY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 May 2014 15:41:24 -0400
-Received: from mail-ig0-f176.google.com ([209.85.213.176]:47509 "EHLO
-	mail-ig0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754871AbaEHTlX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 May 2014 15:41:23 -0400
-Received: by mail-ig0-f176.google.com with SMTP id hl10so227129igb.3
-        for <git@vger.kernel.org>; Thu, 08 May 2014 12:41:23 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=4TnZuQRYdcIb01JZ6W2qh7xbm5zMvABW3kjDuuNjHfo=;
-        b=Yozfye1XvzwmdRTz7WfMeXMELgmdiUR1JQaJHpbGnl1aDWOUyViMxhUB3FhKXs/q8E
-         9BTHQ77mWEfZKRdQtNCTA2fxkYrvEOTperLXAVqHXRRM6drjswGi2JnYhP9BuCPzrZIP
-         FnUEwwmPGbns3VMy2PRXvxMXEFRWam/XVd1tDw+HQj/5o1WWIWIuvBtWscg9aK5psf5P
-         kNB/vBgoL/dN3vtOkXJDbuTq/KPXEmTZKCPDWQt9oNZj5NtgY3SkaoOPWOESuJCum9ty
-         MoNhm8F/y597pPF0qXe7TGIbLPJ/LXzvM9JSXLyNCklj0QMExVjLTg3utBjBzCHldPtz
-         SwgA==
-X-Gm-Message-State: ALoCoQm7q6xpShzc00HhpNJqKU6Q0LQNhWuvhBYBEjMIzXLGUcUbSlFXxMjUyDtV5l/twRdGjd1G
-X-Received: by 10.50.147.9 with SMTP id tg9mr59690132igb.31.1399578082954;
- Thu, 08 May 2014 12:41:22 -0700 (PDT)
-Received: by 10.43.89.66 with HTTP; Thu, 8 May 2014 12:41:22 -0700 (PDT)
-In-Reply-To: <20140507210601.GA1459@meili.valhalla.31bits.net>
+	id S1755563AbaEHTpK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 May 2014 15:45:10 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:53579 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755560AbaEHTpI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 May 2014 15:45:08 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 35C0D16DED;
+	Thu,  8 May 2014 15:45:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=tfPzaYUbvFuUdYXoofUB29//yfY=; b=x7WJFb
+	QfYZuUoY8m0rcQUGPcP6Gf8DBFtvITlvPBbDlcLIXxqpdP3A5uxPyxPvIweVJgG9
+	/9bgYOOysoXpw+1ao3MA5majH58VRYeKCv+br5gea57WERqlTvc1to9foML7VksJ
+	Kqa5FovtK0V8mB12tzpHTFNxOIWAkvFiPhLlY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=GQkmH99TsFenNE6jsoSXzWkWpIiCpFLa
+	kT4MPr4qcbFaeFkXfYwTtT8JLDNGCsHF3zXSnKZ0LFRHYZj4FhBi1sMRaGbWhGK9
+	uLPKKfenmV8riok4R0aDUSzHmnlp40liMAe1XSlB+hLUtWzW8ITBcwmQV5xU8Imp
+	q197zvUZgBw=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2B54F16DEC;
+	Thu,  8 May 2014 15:45:08 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id E858B16DE0;
+	Thu,  8 May 2014 15:45:04 -0400 (EDT)
+In-Reply-To: <1399569814-20644-2-git-send-email-dturner@twopensource.com>
+	(dturner@twopensource.com's message of "Thu, 8 May 2014 10:23:33
+	-0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 40885DB6-D6E9-11E3-BCB3-9CEB01674E00-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248435>
 
-On Wed, May 7, 2014 at 11:06 PM, Jeff Sipek <jeffpc@josefsipek.net> wrote:
-> On Wed, May 07, 2014 at 10:59:56PM +0200, Per Cederqvist wrote:
->> On Tue, May 6, 2014 at 9:40 PM, Jeff Sipek <jeffpc@josefsipek.net> wrote:
->> > On Fri, Mar 21, 2014 at 08:31:45AM +0100, Per Cederqvist wrote:
->> >> Test that we can combine any combination of patches with empty and
->> >> non-empty messages, both with and without guilt.diffstat.  (All
->> >> patches are empty.)
->> >
->> > I feel like we should have *some* content there - most of the time, I care
->> > more about the diffs getting folded than the commit message :)
->>
->> I added these tests for a reason: the reproduce a bug in guilt that I found.
->>
->> I'm afraid that having some content might hide the bug I found. (I'm also
->> equally afraid that it might uncover other bugs in guilt, which would delay
->> integration of this patch series. So adding more test cases with content
->> is a good thing to do, but maybe not in this patch series.)
->
-> Fair enough.  I use guilt-fold all the time and it hasn't lost any of my
-> diffs, so I'm happy to defer this until some point in the future.
->
-> ...
->> > for using_diffstat in true false ; do
->> >         for patcha in empty nonempty ; do
->> >                 for patchb in empty nonempty ; do
->> >                         echo "%% $patcha + $patchb (diffstat=$using_diffstat)"
->> >                         ${patcha}_patch $patcha
->> >                         ${patchb}_patch $patchb
->> >                         cmd guilt pop $patchb
->> >                         cmd guilt fold $patchb
->> >                         fixup_time_info $patcha
->> >                         cmd list_files
->> >                         cleanup $patcha
->> >                         cmd list_files
->> >                 done
->> >         done
->> > done
->> >
->> > Aha!  That's better, IMO.
->>
->> I'll try that and post a version 2 of the series. It might take a few
->> days, though.
->
-> No problem.  I'm still the slower one of the two of us. :/
->
-> Jeff.
-
-There were a few details that made it a bit more complex than that,
-but I think the end result was still an improvement.
-
-The most obvious detail is that if you add two empty patches, you
-cannot name them both "empty", so when $patcha and $patchb is the same
-you have to add suffixes.
-
-The other detail is that my tests used different commit messages when
-both commits contained a message.  I want to retain that behaviour, so
-that added a few lines of complexity.
-
-I'll post an updated patch series once I've gone through all your
-comments.  In the meantime, you can see my new implementation here:
-
-http://repo.or.cz/w/guilt/ceder.git/commitdiff/3107dc73eaff020da18024c3b5f5f92b94d17852?hp=6df110c95133d6e557ce3dbcb6fd39bc797f877b#patch2
-
-    /ceder
+Thanks; I think this is identical to what we already have on the
+dt/merge-recursive-case-insensitive topic.
