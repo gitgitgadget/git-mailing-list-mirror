@@ -1,176 +1,118 @@
-From: Per Cederqvist <cederp@opera.com>
-Subject: Re: [GUILT 20/28] "guilt graph": Handle patch names containing quotes.
-Date: Thu, 8 May 2014 22:18:44 +0200
-Message-ID: <CAP=KgsSOz7Yg=J42QU9rUKmX+rxppXVVHs5S4G-_KOcUr+Lwaw@mail.gmail.com>
-References: <1395387126-13681-1-git-send-email-cederp@opera.com>
-	<1395387126-13681-21-git-send-email-cederp@opera.com>
-	<CAPig+cQ8aPSjCzf0AjNQRvtJJ52eaOi=fJNZ8vXdnFoE5vxyAQ@mail.gmail.com>
-	<20140506202446.GQ1655@meili.valhalla.31bits.net>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 0/4] remote-hg: more improvements
+Date: Thu, 08 May 2014 15:15:58 -0500
+Message-ID: <536be5feea670_3ce710a12ecc0@nysa.notmuch>
+References: <1399169814-20201-1-git-send-email-felipe.contreras@gmail.com>
+ <xmqq8uqdbgqg.fsf@gitster.dls.corp.google.com>
+ <536a83097302f_76ff7a52ec6c@nysa.notmuch>
+ <xmqqvbth8ha9.fsf@gitster.dls.corp.google.com>
+ <536a999e2c0c_76ff7a52ec1e@nysa.notmuch>
+ <xmqqoaz95ees.fsf@gitster.dls.corp.google.com>
+ <536ad9601b73b_3caaa612ecdc@nysa.notmuch>
+ <CAHYYfeGvOnonm0fd=Fa9p_if+8dRo2zg_N9c=gjjqyko=ipJag@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>
-To: Jeff Sipek <jeffpc@josefsipek.net>
-X-From: git-owner@vger.kernel.org Thu May 08 22:18:51 2014
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	John Keeping <john@keeping.me.uk>,
+	=?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>,
+	Scott Chacon <schacon@gmail.com>, Jeff King <peff@peff.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: James Denholm <nod.helm@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 08 22:26:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WiUmI-0006Kn-R4
-	for gcvg-git-2@plane.gmane.org; Thu, 08 May 2014 22:18:51 +0200
+	id 1WiUu6-00071M-Bj
+	for gcvg-git-2@plane.gmane.org; Thu, 08 May 2014 22:26:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755786AbaEHUSr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 May 2014 16:18:47 -0400
-Received: from mail-ig0-f174.google.com ([209.85.213.174]:39575 "EHLO
-	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755688AbaEHUSp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 8 May 2014 16:18:45 -0400
-Received: by mail-ig0-f174.google.com with SMTP id h3so270364igd.13
-        for <git@vger.kernel.org>; Thu, 08 May 2014 13:18:44 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Kkmls1X/EUabBMDmN9f8ky+v+HYOh/vWKACIejBUOnk=;
-        b=LIOEBzvdFKzlBwbzIgKU1XRFCW+3xBRoX4cokpk5qXO4fmVDpl0SQiJKj4lMci5yEc
-         vMnLHyKRwyz5cus812StWLB0i6fKVMYo+RQ3GUBE0uQs/k2cYeHIyGAlnmS7pckO3fbG
-         A0cElfoQ65iAxNERfUKV8PHucAfZfVCpT7FwkqWimyPsBMXoJdxumZeC/qltNhtTvprn
-         ZHA6UXlTCql8No4FTtOE5JobWY3XPxLiXRDjtWK+N8PpNKYAhMplutRtHOT6oyHX5lGE
-         DVCX1Oe0cXTDev5kF2a5PAoJ8gtElA9BJpuGO60Czaa1PkJmwM80msR93vZgC11X9u67
-         KqvQ==
-X-Gm-Message-State: ALoCoQnVhX7WjXborNYz7SBcOmNITHGZzTn5sDyct3S/oF4Mnnons9A2S3xlyDzgNLbcoRozGquG
-X-Received: by 10.50.66.227 with SMTP id i3mr12156473igt.19.1399580324865;
- Thu, 08 May 2014 13:18:44 -0700 (PDT)
-Received: by 10.43.89.66 with HTTP; Thu, 8 May 2014 13:18:44 -0700 (PDT)
-In-Reply-To: <20140506202446.GQ1655@meili.valhalla.31bits.net>
+	id S1753994AbaEHU0u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 May 2014 16:26:50 -0400
+Received: from mail-ob0-f178.google.com ([209.85.214.178]:44168 "EHLO
+	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751856AbaEHU0t (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 May 2014 16:26:49 -0400
+Received: by mail-ob0-f178.google.com with SMTP id va2so3753998obc.9
+        for <git@vger.kernel.org>; Thu, 08 May 2014 13:26:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=CJpYM1RcijFekE1KfX6Td5UMTrCyC18Fdp2uvuNQixY=;
+        b=wNXfIz2o4+UPr4+HNcNuhz45Fu78MwCMnqdf9OYoEH4otHcRSd32WPMbAAKovG39/o
+         8DVW+xU9KRVdLWl+KI50Q+6nvJ5a//a/bjQcBN29IdmkRNnXPG3SyXxFYcpzozQknFwo
+         eU71qgUYnyW390EvdaVC7wth1vtG3Amfj+BlU9ZWzmMkh4zAMkJP/A8XfCy88QtNdj3P
+         qQiHPBett0QO+DX4+1mm9DsTrdynIFB5ynMxjlMc7m2z+fGsjmlaTADhTQpMzBo2B/9z
+         gdPa5lM+9sGmX9mWTgVHlOOG7vugYCJ8Y9+bDEiIu7tGEFruR7KISmYi8pfQL/qHuURV
+         szLw==
+X-Received: by 10.182.72.167 with SMTP id e7mr8085089obv.3.1399580809199;
+        Thu, 08 May 2014 13:26:49 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id js4sm8319150oeb.3.2014.05.08.13.26.45
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 08 May 2014 13:26:47 -0700 (PDT)
+In-Reply-To: <CAHYYfeGvOnonm0fd=Fa9p_if+8dRo2zg_N9c=gjjqyko=ipJag@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248441>
 
-On Tue, May 6, 2014 at 10:24 PM, Jeff Sipek <jeffpc@josefsipek.net> wro=
-te:
-> On Fri, Mar 21, 2014 at 03:57:37AM -0400, Eric Sunshine wrote:
->> On Fri, Mar 21, 2014 at 3:31 AM, Per Cederqvist <cederp@opera.com> w=
-rote:
->> > Quote quotes with a backslash in the "guitl graph" output.  Otherw=
-ise,
->>
->> s/guitl/guilt/
->
-> Yep.
+James Denholm wrote:
+> Felipe, I would ask, suggest, beg, implore you to calm down.
 
-Oups. Will fix.
+I am calmed down. I waited a day before replying to make sure of that.
 
->> > the "dot" file could contain syntax errors.
->> >
->> > Added a test case.
->> > ---
->> >  guilt-graph          |  2 ++
->> >  regression/t-033.out | 22 ++++++++++++++++++++++
->> >  regression/t-033.sh  |  9 +++++++++
->> >  3 files changed, 33 insertions(+)
->> >
->> > diff --git a/guilt-graph b/guilt-graph
->> > index 575f03b..24ab83b 100755
->> > --- a/guilt-graph
->> > +++ b/guilt-graph
->> > @@ -58,6 +58,8 @@ while [ "$current" !=3D "$base" ]; do
->> >  }"`
->> >         [ -z "$pname" ] && pname=3D"?"
->> >
->> > +       pname=3D"`printf \"%s\" $pname|sed 's/\"/\\\\\"/g'`"
->
-> Some of this filtering is getting a bit unwieldy.  I'd add spaces aro=
-und the
-> |.  Do we want to be paranoid and add quotes around $pname?  If not, =
-then it
-> looks good.
+> It's generally not a good plan to alienate the maintainer of a
+> project, regardless of the correctness or incorrectness of one's
+> arguments, but I fear that's only what you will achieve at the moment.
 
-Indeed. I wish I could think of a better way to do this. :-)
+He has already alienated me. In fact he asked me before to leave the
+mailing list. And I did for a while.
 
-I'll add spaces, and quote $pname just to play safe.
+However, at some level he knows my patches are beneficial to the
+project, so he is applying them again.
 
-    /ceder
+Either way it doesn't matter if I'm calmed down or not, abrassive or
+civil, this ad hominmen double standards bullshit is going to continue.
 
->> > +
->> >         disp "# checking rev $current"
->> >         disp "  \"$current\" [label=3D\"$pname\"]"
->> >
->> > diff --git a/regression/t-033.out b/regression/t-033.out
->> > index e638d7b..1c28ea9 100644
->> > --- a/regression/t-033.out
->> > +++ b/regression/t-033.out
->> > @@ -63,3 +63,25 @@ digraph G {
->> >         "ff2775f8d1dc753f635830adcc3a067e0b681e2d" [label=3D"a.pat=
-ch"]
->> >         "891bc14b5603474c9743fd04f3da888644413dc5" -> "ff2775f8d1d=
-c753f635830adcc3a067e0b681e2d"; // ?
->> >  }
->> > +% guilt new a-"better&quicker'-patch.patch
->> > +% git add file.txt
->> > +% guilt refresh
->> > +Patch a-"better&quicker'-patch.patch refreshed
->> > +% guilt pop
->> > +Now at c.patch.
->> > +% guilt push
->> > +Applying patch..a-"better&quicker'-patch.patch
->> > +Patch applied.
->> > +% guilt graph
->> > +digraph G {
->> > +# checking rev bc7df666a646739eaf559af23cab72f2bfd01f0e
->> > +       "bc7df666a646739eaf559af23cab72f2bfd01f0e" [label=3D"a-\"b=
-etter&quicker'-patch.patch"]
->> > +# checking rev 891bc14b5603474c9743fd04f3da888644413dc5
->> > +       "891bc14b5603474c9743fd04f3da888644413dc5" [label=3D"c.pat=
-ch"]
->> > +       "bc7df666a646739eaf559af23cab72f2bfd01f0e" -> "891bc14b560=
-3474c9743fd04f3da888644413dc5"; // ?
->> > +# checking rev c7014443c33d2b0237293687ceb9cbd38313df65
->> > +       "c7014443c33d2b0237293687ceb9cbd38313df65" [label=3D"b.pat=
-ch"]
->> > +# checking rev ff2775f8d1dc753f635830adcc3a067e0b681e2d
->> > +       "ff2775f8d1dc753f635830adcc3a067e0b681e2d" [label=3D"a.pat=
-ch"]
->> > +       "891bc14b5603474c9743fd04f3da888644413dc5" -> "ff2775f8d1d=
-c753f635830adcc3a067e0b681e2d"; // ?
->> > +}
->> > diff --git a/regression/t-033.sh b/regression/t-033.sh
->> > index 57dce78..968292c 100755
->> > --- a/regression/t-033.sh
->> > +++ b/regression/t-033.sh
->> > @@ -46,3 +46,12 @@ cmd git add file.txt
->> >  cmd guilt refresh
->> >  fixup_time_info c.patch
->> >  cmd guilt graph
->> > +
->> > +# A patch name that contains funky characters, including unbalanc=
-ed
->> > +# quotes.
->> > +cmd guilt new "a-\"better&quicker'-patch.patch"
->> > +cmd echo d >> file.txt
->> > +cmd git add file.txt
->> > +cmd guilt refresh
->> > +fixup_time_info "a-\"better&quicker'-patch.patch"
->> > +cmd guilt graph
->> > --
->> > 1.8.3.1
->> >
->> > --
->> > To unsubscribe from this list: send the line "unsubscribe git" in
->> > the body of a message to majordomo@vger.kernel.org
->> > More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
-> --
-> All parts should go together without forcing.  You must remember that=
- the
-> parts you are reassembling were disassembled by you.  Therefore, if y=
-ou
-> can=E2=80=99t get them together again, there must be a reason.  By al=
-l means, do not
-> use a hammer.
->                 =E2=80=94 IBM Manual, 1925
+See what was his reply to my mail? *Nothing*.
+
+What was his reply when I argued if he even admitted he could
+potentially be wrong, and if so would essentially trash a project I've
+worked very hard for? *Nothing*.
+
+What was his reply when I argued that git-remote-hg has more quality
+than all the tools in contrib, even some in the core and therefore
+doesn't belong there? *Nothing*.
+
+What was his reply when I said double standards were applied for
+git-remote-hg. *Nothing*.
+
+How about when I argued there was no mechanism for out-of-tree tools to
+be properly maintained and promoted, and moving tools outside of the
+tree shouldn't be done before that happens? *Nothing*.
+
+What did he say when I suggested to move out git-p4 and git-svn, if he
+is so sure important tools can "flourish" out-of-tree? *Nothing*.
+
+The truth is that it doesn't matter how I present my arguments, calmly
+or otherwise. He is *never* going to accept he was wrong, especially not
+when that would mean I was right.
+
+Don't expect any more git-remote-hg patches from me. If Junio thinks
+it's just another crappy contrib tool, then I'll threat it as one.
+
+And unfortunately Junio would rather let an important part of Git die a
+slow death rather than admit he was wrong. Just watch him ignore the
+problem.
+
+-- 
+Felipe Contreras
