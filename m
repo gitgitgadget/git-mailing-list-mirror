@@ -1,192 +1,94 @@
-From: ovhrb6ho1pnnv7lo@mailinator.com
-Subject: unexpected behaviour for "git diff --word-diff"
-Date: Thu, 8 May 2014 18:39:49 +0200
-Message-ID: <20140508163949.GA1801@else-banjo.ktb.de>
-Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="Qxx1br4bt0+wmkIi"
+From: dturner@twopensource.com
+Subject: [PATCH 2/2] ignorecase: Fix git mv on insensitive filesystems
+Date: Thu,  8 May 2014 10:23:34 -0700
+Message-ID: <1399569814-20644-3-git-send-email-dturner@twopensource.com>
+References: <536B4680.1010806@web.de>
+ <1399569814-20644-1-git-send-email-dturner@twopensource.com>
+Cc: gitster@pobox.com, David Turner <dturner@twitter.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 08 19:00:03 2014
+X-From: git-owner@vger.kernel.org Thu May 08 19:24:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WiRfr-0000JR-Ka
-	for gcvg-git-2@plane.gmane.org; Thu, 08 May 2014 18:59:59 +0200
+	id 1WiS3J-0002Zs-R5
+	for gcvg-git-2@plane.gmane.org; Thu, 08 May 2014 19:24:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754599AbaEHQ74 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 May 2014 12:59:56 -0400
-Received: from mout1.freenet.de ([195.4.92.91]:49843 "EHLO mout1.freenet.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754555AbaEHQ7z (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 May 2014 12:59:55 -0400
-X-Greylist: delayed 850 seconds by postgrey-1.27 at vger.kernel.org; Thu, 08 May 2014 12:59:55 EDT
-Received: from [195.4.92.141] (helo=mjail1.freenet.de)
-	by mout1.freenet.de with esmtpa (ID b-thomas@freenet.de) (port 25) (Exim 4.82 #1)
-	id 1WiRS3-0000D6-L6
-	for git@vger.kernel.org; Thu, 08 May 2014 18:45:43 +0200
-Received: from localhost ([::1]:59979 helo=mjail1.freenet.de)
-	by mjail1.freenet.de with esmtpa (ID b-thomas@freenet.de) (Exim 4.80.1 #4)
-	id 1WiRS3-0000DJ-Fn
-	for git@vger.kernel.org; Thu, 08 May 2014 18:45:43 +0200
-Received: from mx8.freenet.de ([195.4.92.18]:50598)
-	by mjail1.freenet.de with esmtpa (ID b-thomas@freenet.de) (Exim 4.80.1 #4)
-	id 1WiRPp-0005zg-P7
-	for git@vger.kernel.org; Thu, 08 May 2014 18:43:25 +0200
-Received: from p4fc4e784.dip0.t-ipconnect.de ([79.196.231.132]:48125 helo=else-banjo.ktb.de)
-	by mx8.freenet.de with esmtpsa (ID b-thomas@freenet.de) (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256) (port 587) (Exim 4.80.1 #4)
-	id 1WiRPp-00056C-GR
-	for git@vger.kernel.org; Thu, 08 May 2014 18:43:25 +0200
-Received: by else-banjo.ktb.de (Postfix, from userid 501)
-	id 038E0807; Thu,  8 May 2014 16:39:49 +0000 (GMT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Originated-At: 79.196.231.132!48125
+	id S1755136AbaEHRYK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 May 2014 13:24:10 -0400
+Received: from mail-qa0-f44.google.com ([209.85.216.44]:35982 "EHLO
+	mail-qa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755128AbaEHRYI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 May 2014 13:24:08 -0400
+Received: by mail-qa0-f44.google.com with SMTP id j7so2920149qaq.3
+        for <git@vger.kernel.org>; Thu, 08 May 2014 10:24:07 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=gtW+NwmOj64jielSOSHLOGdBDQkrYldOc1D849LA1xE=;
+        b=Q32flhVCQHfde4pHtQZj8ATsehYZNUQVcbCZYHzPUWBKbc3WyryTkQivs474lowsxN
+         /B/YkeC5sc+RPRiw4VCnehKYZ7F4+1tbG8ICFyo9q1IltbP9kziG0NEx0QUnmBGv6zHp
+         htB0s3CTPMugazavzxB5R9RHd4ShMPQzTL8NAcA/4AYsc5Yq9TJZC1cNTtGKnSk2+bc7
+         WjLL3a7Yk3WRXmkY2PMpmQlChQi/o6KuLhMTqke9hYIYhWSqo3+me2D735vgKEzczj/i
+         kwHNbmLDhRWs9g1WPUXyt/p2U8j+JfAgPs5vpzbwFU7H/mhCJvv5j6pvkk1EtqQp7QHD
+         E8ew==
+X-Gm-Message-State: ALoCoQnBYJ1OZXCk/zqj6TsxjgGKvnGDgUkY0157P0z4WenQ/0gqYWW9ftoHOvTlVU7sIWCa7vMa
+X-Received: by 10.224.53.194 with SMTP id n2mr6744776qag.48.1399569847586;
+        Thu, 08 May 2014 10:24:07 -0700 (PDT)
+Received: from stross.twitter.corp ([8.25.197.27])
+        by mx.google.com with ESMTPSA id w8sm2339093qag.30.2014.05.08.10.24.05
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 08 May 2014 10:24:06 -0700 (PDT)
+X-Mailer: git-send-email 2.0.0.rc0.33.g27630aa
+In-Reply-To: <1399569814-20644-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248423>
 
+From: David Turner <dturner@twitter.com>
 
---Qxx1br4bt0+wmkIi
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Make it possible to change the case of a filename on a
+case-insensitive filesystem using git mv.  Change git mv to allow
+moves where the destination file exists if the destination file has
+the same name as the source file ignoring case.
 
-Hi,
+Signed-off-by: David Turner <dturner@twitter.com>
+---
+ builtin/mv.c                | 3 ++-
+ t/t6039-merge-ignorecase.sh | 2 +-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-I get an unexpected behaviour for "git diff --word-diff" if 2 adjacent lines
-start and end with the same letter. I tried versions 1.7.9 and 1.9.0.
-
-Attached is a script with 7 examples. For each example, a file with 2 lines is
-compared to a file with the same lines, only 1 or 2 letters appended in each
-line. Each example is executed 4 times: with and without --word-diff-regex=.,
-and with and without -R. The script prints the result of the diff of the 2
-files. Just below it also prints the result of a counterexample: the same 2
-lines with 2 lines (1 was sometimes not enough) of "xxx" between them.
-
-Only for tests 5c,d and 6c,d the result matches the result for the
-counterexample.
-
-Kind regards,
-Thomas
-
---Qxx1br4bt0+wmkIi
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename="test.git-diff"
-
-#!/bin/bash
-
-##########################################
-# execute 6 tests with counterexamples for "git diff --word-diff"
-#
-# (optional) argument: (sub-)test to execute, e.g. "1" or "3b"
-#   if none/empty: all tests are executed
-#
-# common header lines of the diff output are removed
-##########################################
-
-# init global variables:
-#   command to execute
-GITDIFF="git diff --word-diff=plain --no-index --no-color"
-#   names of test files
-file1=$0.1
-file2=$0.2
-file1x=$0.1x
-file2x=$0.2x
-#   wanted test case, info to print
-want=
-info=
-
-##########################################
-# do_sub_test()
-#   call "git diff" for a sub-test and its counterexample
-#   common header lines of the diff output are removed
-do_sub_test() {
-    curr_sub_test=$1
-
-    # set additional arguments for git diff
-    case $curr_sub_test in
-        *a) add_args=;;
-        *b) add_args=-R;;
-        *c) add_args=--word-diff-regex=.;;
-        *d) add_args="-R --word-diff-regex=.";;
-    esac
-
-    # execute original test
-    echo "  -- test" $curr_sub_test: DIFF $add_args: $info
-    $GITDIFF $add_args $file1 $file2 | sed '/^[di+-]\|^@@ -1,2 +1,2 /d'
-
-    # execute counterexample
-    echo "    -- expected:"
-    $GITDIFF $add_args $file1x $file2x | sed '/^[di+-]\|^xxx$\|^@@ -1,4 +1,4 /d'
-}
-
-##########################################
-# do_test()
-#   create files for a test, call do_sub_test for wanted sub-test (or all)
-do_test() {
-    curr_test=$1
-    line1=$2
-    line2=$3
-    append=$4
-
-    # create files for test
-    echo -e "$line1\n$line2" > $file1
-    echo -e "$line1$append\n$line2$append" > $file2
-
-    # create files for counterexample
-    echo -e "$line1\nxxx\nxxx\n$line2" > $file1x
-    echo -e "$line1$append\nxxx\nxxx\n$line2$append" > $file2x
-
-    info="append '$append' to '$line1' <nl> '$line2'"
-
-    # call do_sub_test for wanted sub-test (or all)
-    case $want in ?a|?|'') do_sub_test ${curr_test}a;; esac
-    case $want in ?b|?|'') do_sub_test ${curr_test}b;; esac
-    case $want in ?c|?|'') do_sub_test ${curr_test}c;; esac
-    case $want in ?d|?|'') do_sub_test ${curr_test}d;; esac
-}
-
-##########################################
-# do_all_tests()
-#   call do_test for wanted test (or all)
-do_all_tests() {
-    want=$1
-
-    case $want in 1*|'') do_test 1 '' .a .   ;; esac
-    case $want in 2*|'') do_test 2 .  .a .   ;; esac
-    case $want in 3*|'') do_test 3 '' a  a   ;; esac
-    case $want in 4*|'') do_test 4 a  aa a   ;; esac
-    case $want in 5*|'') do_test 5 '' a  b   ;; esac
-    case $want in 6*|'') do_test 6 '' a  'b ';; esac
-}
-
-##########################################
-# main()
-#   prepare cleanup, do tests
-
-# clean up test files on exit and some signals
-trap "rm -f $file1 $file2 $file1x $file2x; exit" 0 1 2 15
-
-usage="Usage: $0 [<testcase>]\n  <testcase> can be [1-6][a-d] or empty\n  e.g. '$0 1' or '$0 3b'"
-
-case $1 in
-    [1-6]|[1-6][a-d]|'')
-    ;;
-
-    -h|--help)
-        echo -e $usage
-        exit
-    ;;
-
-    *)
-        echo -e "Error: invalid argument '$1'\n$usage"
-        exit
-    ;;
-esac
-
-# do tests
-do_all_tests $1
-
---Qxx1br4bt0+wmkIi--
+diff --git a/builtin/mv.c b/builtin/mv.c
+index 45e57f3..f4d89d0 100644
+--- a/builtin/mv.c
++++ b/builtin/mv.c
+@@ -202,7 +202,8 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+ 			}
+ 		} else if (cache_name_pos(src, length) < 0)
+ 			bad = _("not under version control");
+-		else if (lstat(dst, &st) == 0) {
++		else if (lstat(dst, &st) == 0 &&
++			 (!ignore_case || strcasecmp(src, dst))) {
+ 			bad = _("destination exists");
+ 			if (force) {
+ 				/*
+diff --git a/t/t6039-merge-ignorecase.sh b/t/t6039-merge-ignorecase.sh
+index dfc9f17..a977653 100755
+--- a/t/t6039-merge-ignorecase.sh
++++ b/t/t6039-merge-ignorecase.sh
+@@ -35,7 +35,7 @@ test_expect_success 'merge with case-changing rename on both sides' '
+ 	git reset --hard baseline &&
+ 	git branch -D with-camel &&
+ 	git checkout -b with-camel &&
+-	git mv --force TestCase testcase &&
++	git mv TestCase testcase &&
+ 	git commit -m "recase on branch" &&
+ 	>foo &&
+ 	git add foo &&
+-- 
+2.0.0.rc0.33.g27630aa
