@@ -1,83 +1,141 @@
-From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH 2/2] ignorecase: Fix git mv on insensitive filesystems
-Date: Thu, 08 May 2014 10:55:28 +0200
-Message-ID: <536B4680.1010806@web.de>
-References: <xmqqoazaelmi.fsf@gitster.dls.corp.google.com>	<1399417144-24864-1-git-send-email-dturner@twopensource.com>	<1399417144-24864-2-git-send-email-dturner@twopensource.com>	<5369CFDE.2070207@viscovery.net> <1399480977.11843.62.camel@stross> <xmqqha51bhxg.fsf@gitster.dls.corp.google.com> <536B2637.2060808@viscovery.net>
+From: Stepan Kasal <kasal@ucw.cz>
+Subject: Re: [PATCH] Windows: Always normalize paths to Windows-style
+Date: Thu, 8 May 2014 12:11:15 +0200
+Organization: <)><
+Message-ID: <20140508101115.GC4511@camelia.ucw.cz>
+References: <20140428083931.GA10257@camelia.ucw.cz> <CABPQNSaC30p7TEOvc85u=+skjrFj17182vWWSL=QNVuvzVFE=w@mail.gmail.com> <20140428113815.GA10559@camelia.ucw.cz> <20140428114224.GA11186@camelia.ucw.cz> <CABPQNSbDkE+Vff=4MmPO9oMfjRay6Oin51zZRoZ8mOEhGoaD3Q@mail.gmail.com> <20140428142931.GA12056@camelia.ucw.cz> <20140507184444.GB4013@sandbox-ub> <xmqqmwet8gre.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	David Turner <dturner@twopensource.com>, git@vger.kernel.org,
-	David Turner <dturner@twitter.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu May 08 10:55:42 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Heiko Voigt <hvoigt@hvoigt.net>, GIT Mailing-list <git@vger.kernel.org>,
+        Johannes Sixt <j6t@kdbg.org>, msysgit@googlegroups.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: msysgit+bncBCU63DXMWULRBRVQVWNQKGQEHKSCLSI@googlegroups.com Thu May 08 12:11:21 2014
+Return-path: <msysgit+bncBCU63DXMWULRBRVQVWNQKGQEHKSCLSI@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-wg0-f62.google.com ([74.125.82.62])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WiK7B-0004so-5a
-	for gcvg-git-2@plane.gmane.org; Thu, 08 May 2014 10:55:41 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753315AbaEHIzg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 May 2014 04:55:36 -0400
-Received: from mout.web.de ([212.227.15.3]:60857 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753257AbaEHIze (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 May 2014 04:55:34 -0400
-Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb101)
- with ESMTPSA (Nemesis) id 0MC1fA-1WZYgd06Ou-008nne; Thu, 08 May 2014 10:55:31
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20131104 Icedove/17.0.10
-In-Reply-To: <536B2637.2060808@viscovery.net>
-X-Provags-ID: V03:K0:B3zB4Iy6oqgy7HnHzqTSu2TtrKB86qV2bO+i54ViaOiPYRp1/xl
- RDelRajbkdv7I7AcAbyg6dSnxzGf2C1ht5/wFmA0PcN2KtgYkqNBz1dGqDIGWdx5AaE0XoZ
- FYnu0NP+61SOLv62Hf2hqrJ02xLfqOYJRRZWiiOm/tSr5ymDJrYKg1zexMDuWLwyh/E9jYy
- zC/4Vq2AJChElojEOVNAw==
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248415>
+	(envelope-from <msysgit+bncBCU63DXMWULRBRVQVWNQKGQEHKSCLSI@googlegroups.com>)
+	id 1WiLIN-0007vh-60
+	for gcvm-msysgit@m.gmane.org; Thu, 08 May 2014 12:11:19 +0200
+Received: by mail-wg0-f62.google.com with SMTP id n12sf231082wgh.17
+        for <gcvm-msysgit@m.gmane.org>; Thu, 08 May 2014 03:11:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :in-reply-to:organization:user-agent:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type:content-disposition;
+        bh=KWp2nhVl6pMxnvqfZ6Jz9b1fUDyF1reeKkOLIdVxjrE=;
+        b=d5r6yhkgXF26yjCRXDusUBN13HA1Occ5OiGsyo4IoAfZ2BXRWYN7L9qWfzrxXhEc8E
+         /fdk5RIEUOAu5mG/lrXkZZLhSmqH/MXEO3Zw1CNNySr8HOjIfgVl/oX18T+yXGLZwpBl
+         15N0xq19uwyuPIAv3pZwliRvIvEAlMrzqhNYW4pLvIVq98mu+YvjvieOXq8w/CDIB9Ke
+         iRWGtgXs+eUzRPLBkyysOywxSZFXf7xlk037lYszS3nfz58jVwF6aN+Aoy5RNJzwqabV
+         IQCBcmdIF84CZljYc3hLTnoO3w3MOfKGNqldvSRhr+oCZldJU91Nw6uHJ4t91ECQk5GW
+         2C9Q==
+X-Received: by 10.180.198.239 with SMTP id jf15mr28964wic.12.1399543878923;
+        Thu, 08 May 2014 03:11:18 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.180.95.161 with SMTP id dl1ls132426wib.0.gmail; Thu, 08 May
+ 2014 03:11:17 -0700 (PDT)
+X-Received: by 10.180.211.102 with SMTP id nb6mr359005wic.1.1399543877538;
+        Thu, 08 May 2014 03:11:17 -0700 (PDT)
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz. [46.255.230.98])
+        by gmr-mx.google.com with ESMTP id m49si385142eeu.0.2014.05.08.03.11.17
+        for <msysgit@googlegroups.com>;
+        Thu, 08 May 2014 03:11:17 -0700 (PDT)
+Received-SPF: none (google.com: kasal@ucw.cz does not designate permitted sender hosts) client-ip=46.255.230.98;
+Received: from 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (84.64.broadband3.iol.cz [85.70.64.84])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	(Authenticated sender: kasal)
+	by jabberwock.ucw.cz (Postfix) with ESMTPSA id 450CB1C00F1;
+	Thu,  8 May 2014 12:11:17 +0200 (CEST)
+Received: from camelia.ucw.cz (camelia.ucw.cz [127.0.0.1])
+	by 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (8.14.3/8.14.3) with ESMTP id s48ABGb0004622;
+	Thu, 8 May 2014 12:11:16 +0200
+Received: (from kasal@localhost)
+	by camelia.ucw.cz (8.14.3/8.14.3/Submit) id s48ABFdB004621;
+	Thu, 8 May 2014 12:11:15 +0200
+In-Reply-To: <xmqqmwet8gre.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.19 (2009-01-05)
+X-Original-Sender: kasal@ucw.cz
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
+ (google.com: kasal@ucw.cz does not designate permitted sender hosts) smtp.mail=kasal@ucw.cz
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Content-Disposition: inline
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248416>
 
-On 05/08/2014 08:37 AM, Johannes Sixt wrote:
-> Am 5/7/2014 19:46, schrieb Junio C Hamano:
->> David Turner <dturner@twopensource.com> writes:
->>
->>> On Wed, 2014-05-07 at 08:17 +0200, Johannes Sixt wrote:
->>>>>   		} else if (cache_name_pos(src, length) < 0)
->>>>>   			bad = _("not under version control");
->>>>> -		else if (lstat(dst, &st) == 0) {
->>>>> +		else if (lstat(dst, &dst_st) == 0 &&
->>>>> +			 (src_st.st_ino != dst_st.st_ino ||
->>>>> +			  (src_st.st_ino == 0 && strcasecmp(src, dst)))) {
->>>> Don't do that. st_ino is zero on Windows only because we do not spend time
->>>> to fill in the field. Don't use it as an indicator for a case-insensitive
->>>> file system; zero may be a valid inode number on other systems.
->>> I don't think it is a problem if zero is a valid inode.  The only thing
->>> that happens when there is a zero inode, is that we have to compare
->>> filenames.  The inode check is just an optimization to avoid doing a
->>> bunch of strcasecmp on systems that don't have to.
->> Am I correct to rephrase you that the code assumes that any
->> filesystem that cannot give unique inum to different files will use
->> 0 as the placeholder inum, so if src/dst share the same non-zero
->> inum, it is guaranteed that is not a placeholder and we know they
->> are different files without comparing the two paths?
-> "If src and dst share the same non-zero inum, it is guaranteed that it is
-> not a placeholder and we know they are the same file" is more correct.
->
-> What if both inums are zero? Can this happen on any sane POSIX system? I
-> don't know, but my gut feeling is that inode zero is too special to be
-> allocated for files or directories.
->
-> In that case, it is safe to assume that the st_ino field is just a
-> placeholder when it is zero, and we have to compare the file name. Then we
-> can either assume that this happens only for our emulation layer on MinGW
-> (and the comparison can be case-insensitive) or choose the comparison mode
-> based on core.ignorecase. This patch does the former, but I think we
-> should do the latter.
-Whatever we do, we should "protect" the strcasecmp() with ignore_case:
+Hello,
 
-!ignore_case || strcasecmp(src, dst)
+On Wed, May 07, 2014 at 01:40:05PM -0700, Junio C Hamano wrote:
+> Heiko Voigt <hvoigt@hvoigt.net> writes:
+> > On Mon, Apr 28, 2014 at 04:29:31PM +0200, Stepan Kasal wrote:
+> >> this is another patch that lives in msysGit for a long time.
+> >> Originally, it had two parts:
+> >> (Cf https://github.com/msysgit/git/commit/64a8a03 )
+> >> 
+> >> 1) adding alias pwd='pwd -W' to git-sh-setup.sh
+> >>    This one went upstream, though as a shell function.
+> >> 
+> >> 2) revert of commit 4dce7d9b by Johannes Sixt <j6t@kdbg.org>
+> >> This mingw-specific commit was created less than 3 weeks before
+> >> it was reverted.  And it stayed reverted for two years.
+> >> 
+> >> Could you please either accept this patch, or revert 4dce7d9b ?
+> >> (Both alternatives are exactly the same.)
+> >
+> > Sorry for the late reply.  To me reverting (or omitting at the next
+> > rebasing merge) this patch sound fine, as it seems to be superseeded by
+> > the upstream change.
+> >
+> > As I can see thats already done on master, so it seems to be all good.
 
-(And once that is done, you don't need to look at st_ino at all)
+Thank you, Junio, for asking.
+(I'm afraid my previous mail was unclear.)
+
+> Are you guys talking about be39048a (git-sh-setup.sh: Add an pwd()
+> function for MinGW, 2012-04-17) which has been in since v1.7.11?
+
+This one is ok, keep it.  (msysGit has been using an alias instead of
+function for several years, but msysGit/master was synced recently.)
+
+> The change introduced by 4dce7d9b (submodules: fix ambiguous
+> absolute paths under Windows, 2012-03-04) still exists, but your
+> "reverting this patch sound fine" confuses me.
+
+This one was accepted to git, but was reverted in msysGit almost
+immediately by 64a8a03.  Things stayed that way for 2 years.
+So it seems no one has ever actually used this code.
+Consequently, I propose to revert 4dce7d9b from git.
+
+Stepan
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
