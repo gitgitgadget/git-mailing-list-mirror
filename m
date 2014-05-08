@@ -1,175 +1,100 @@
-From: Fabio D'Alfonso <fabio.dalfonso@fabiodalfonso.com>
-Subject: Re: t5539 fails on ubuntu for v2.0.0-rc2
-Date: Thu, 08 May 2014 16:13:58 +0200
-Organization: Fabio D'Alfonso
-Message-ID: <536B9126.1020702@fabiodalfonso.com>
-References: <536A8FF8.7080909@fabiodalfonso.com> <xmqqeh056z6q.fsf@gitster.dls.corp.google.com> <20140508041423.GC26630@sigill.intra.peff.net> <536B1DF4.5080109@fabiodalfonso.com>
-Reply-To: fabio.dalfonso@fabiodalfonso.com
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUG?] Patches created with 'diff.noprefix=true' don't 'git apply'.
+Date: Thu, 08 May 2014 09:56:19 -0700
+Message-ID: <xmqqa9as5hvw.fsf@gitster.dls.corp.google.com>
+References: <CAO8RVvdgN3U5hUEsJjYY9urfeVUDWwHiEur4NQp=H93W37RRnw@mail.gmail.com>
+	<20140501024042.GX9218@google.com>
+	<CAO8RVveV4SgXmJzWpYnyB3rnQALQkrrLNtLL5Ej5Y9Mjjekmmw@mail.gmail.com>
+	<xmqqa9aug4my.fsf@gitster.dls.corp.google.com>
+	<CAO8RVvfHVBG6QZ5M1DJK4kOX8GMDrvEw4_L=LsEc4G6E0pP7ug@mail.gmail.com>
+	<xmqqbnvaehm3.fsf@gitster.dls.corp.google.com>
+	<CAO8RVveF6Oh0mqqyiVRHmnqQ+vXX7riDW_=zn0g=t88cQjCVrg@mail.gmail.com>
+	<xmqqzjita0sn.fsf@gitster.dls.corp.google.com>
+	<CAO8RVvfzP_nc9=nwr6JSK9s6u7DEctMpdn_5yca9h7G4TOd2Bw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu May 08 16:37:17 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git <git@vger.kernel.org>
+To: Nathan Collins <nathan.collins@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 08 18:56:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WiPRk-00078z-Dw
-	for gcvg-git-2@plane.gmane.org; Thu, 08 May 2014 16:37:16 +0200
+	id 1WiRcT-0004wL-Vg
+	for gcvg-git-2@plane.gmane.org; Thu, 08 May 2014 18:56:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754360AbaEHOhJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 May 2014 10:37:09 -0400
-Received: from gateway02.websitewelcome.com ([69.41.248.84]:39004 "EHLO
-	gateway02.websitewelcome.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754348AbaEHOhI (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 8 May 2014 10:37:08 -0400
-X-Greylist: delayed 1333 seconds by postgrey-1.27 at vger.kernel.org; Thu, 08 May 2014 10:37:07 EDT
-Received: by gateway02.websitewelcome.com (Postfix, from userid 5007)
-	id 4FE9E6EA63B33; Thu,  8 May 2014 09:14:09 -0500 (CDT)
-Received: from gator4050.hostgator.com (gator4050.hostgator.com [192.185.4.61])
-	by gateway02.websitewelcome.com (Postfix) with ESMTP id 399136EA60E69
-	for <git@vger.kernel.org>; Thu,  8 May 2014 09:14:07 -0500 (CDT)
-Received: from [95.237.40.27] (port=7788 helo=[192.168.1.16])
-	by gator4050.hostgator.com with esmtpa (Exim 4.82)
-	(envelope-from <fabio.dalfonso@fabiodalfonso.com>)
-	id 1WiP5G-000106-Uk; Thu, 08 May 2014 09:14:03 -0500
-User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-In-Reply-To: <536B1DF4.5080109@fabiodalfonso.com>
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - gator4050.hostgator.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - fabiodalfonso.com
-X-BWhitelist: no
-X-Source-IP: 95.237.40.27
-X-Exim-ID: 1WiP5G-000106-Uk
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: ([192.168.1.16]) [95.237.40.27]:7788
-X-Source-Auth: fabio.dalfonso@fabiodalfonso.com
-X-Email-Count: 1
-X-Source-Cap: ZGFsZm9uc287ZGFsZm9uc287Z2F0b3I0MDUwLmhvc3RnYXRvci5jb20=
+	id S1753553AbaEHQ40 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 May 2014 12:56:26 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:59446 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752485AbaEHQ4Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 May 2014 12:56:25 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C4EAA1406D;
+	Thu,  8 May 2014 12:56:24 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=rqqa6NmRtLob/VRgtipxLrR23Uc=; b=WxiKfJ
+	PviVxOapWlcUIlYN6O7Gx5xkgz3TAJDpgXT/AEqh2JXbH/Y5vIB3qloWgS/5DbaO
+	MB+Cn2q1m1XhXhs+lNHmh9iOjyN0kDdCItUHhkClRIRpRsJmZy3SY2+nLrxJAmm4
+	vUAh1d5rnFOJdt9+RZPdd3SG3MPzvgDfNPFRk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OQ7FSksCOpon8npZdKk37PwuS+sURxIm
+	ea/0fQ4TPbC+vuyHdQPaj4zkxcXFVPw5AFO60KudluHQlQJhEkRMN1TEb5x9j4MM
+	VUgTcrR448ZPhtPjrEFCi7DIi2lDHUBPymATIhnwfOBt2d19PWvHaqNBAYffvAkN
+	rdaP2lDapWM=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id B94FA1406A;
+	Thu,  8 May 2014 12:56:24 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0328414069;
+	Thu,  8 May 2014 12:56:21 -0400 (EDT)
+In-Reply-To: <CAO8RVvfzP_nc9=nwr6JSK9s6u7DEctMpdn_5yca9h7G4TOd2Bw@mail.gmail.com>
+	(Nathan Collins's message of "Wed, 7 May 2014 16:39:45 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: AECA259C-D6D1-11E3-817F-9CEB01674E00-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248421>
 
-The message seems common around  the apache issues but the previous tes=
-t=20
-t5538 that uses start and stop routines works.
+Nathan Collins <nathan.collins@gmail.com> writes:
 
-=46abio D'Alfonso
-'Enabling Business Through IT'
-cell.  +39.348.059.40.22 ***
-web: www.fabiodalfonso.com <http://www.fabiodalfonso.com/>
-email: fabio.dalfonso@fabiodalfonso.com
-<mailto:fabio.dalfonso@fabiodalfonso.com>linkedin:=20
-www.linkedin.com/in/fabiodalfonso <http://it.linkedin.com/in/fabiodalfo=
-nso>
-twitter: www.twitter.com/#!/fabio_dalfonso=20
-<http://www.twitter.com/#%21/fabio_dalfonso>
+>> What would you propose to make clickable in a renaming diff, though?
+>
+> Your 'Index' header looks good, and I would expect a renaming diff to
+> have something like
+>
+>   Index: foo -> bar
+>
+> as in 'git status',
 
-fax: +39.06.874.599.581
-BlackBerry=C2=AE Wireless Enabled Address.
+Heh, please don't call "Index:" *mine* --- It is a CVS abomination
+;-).
 
+For renames and copies, we do have separate "rename from" and
+"rename to" in the extended header part, so there is no reason to
+worry about them at all.  I would suggest showing the name _after_
+the change (unless it is a deletion---instead of showing /dev/null
+to signal that it was deleted, show the original filename) for
+consistency so that users can do "show -p | grep '^Index: ' to see
+what resulting paths there are without missing the renamed ones.
 
-          ** Hidden  numbers are automatically rejected by the phone*
+> but I just realized that a "clickable paths"
+> option already exists in some sense! There is a '--patch-with-raw'
+> option...
 
-On 5/8/2014 8:02 AM, Fabio D'Alfonso wrote:
-> Hi,
-> this is the error in httpd error.log
->
->  [Wed May 07 20:44:10 2014] [alert] getpwuid: couldn't determine user=
-=20
-> name from  uid 4294967295, you probably need to modify the User direc=
-tive
->  [Wed May 07 20:44:10 2014] [notice] Apache/2.2.17 (Ubuntu) configure=
-d=20
-> --        resuming normal operations
->  [Wed May 07 20:44:10 2014] [alert] getpwuid: couldn't determine user=
-=20
-> name from  uid 4294967295, you probably need to modify the User direc=
-tive
->  [Wed May 07 20:44:10 2014] [alert] getpwuid: couldn't determine user=
-=20
-> name from  uid 4294967295, you probably need to modify the User direc=
-tive
->  [Wed May 07 20:44:10 2014] [alert] getpwuid: couldn't determine user=
-=20
-> name from  uid 4294967295, you probably need to modify the User direc=
-tive
->  [Wed May 07 20:44:10 2014] [alert] getpwuid: couldn't determine user=
-=20
-> name from  uid 4294967295, you probably need to modify the User direc=
-tive
->  [Wed May 07 20:44:11 2014] [alert] Child 12037 returned a Fatal=20
-> error...        Apache is exiting!
->
-> The 1.9.x versions compiled and tested here, before. It is a natty=20
-> dektop 11.04.
->
-> Thanks
->
-> Fabio D'Alfonso
-> 'Enabling Business Through IT'
-> cell.  +39.348.059.40.22 ***
-> web: www.fabiodalfonso.com <http://www.fabiodalfonso.com/>
-> email: fabio.dalfonso@fabiodalfonso.com
-> <mailto:fabio.dalfonso@fabiodalfonso.com>linkedin:=20
-> www.linkedin.com/in/fabiodalfonso=20
-> <http://it.linkedin.com/in/fabiodalfonso>
-> twitter: www.twitter.com/#!/fabio_dalfonso=20
-> <http://www.twitter.com/#%21/fabio_dalfonso>
->
-> fax: +39.06.874.599.581
-> BlackBerry=C2=AE Wireless Enabled Address.
->
->
->          ** Hidden  numbers are automatically rejected by the phone*
->
-> On 5/8/2014 6:14 AM, Jeff King wrote:
->> On Wed, May 07, 2014 at 02:45:01PM -0700, Junio C Hamano wrote:
->>
->>> Fabio D'Alfonso <fabio.dalfonso@fabiodalfonso.com> writes:
->>>
->>>> root@HDUBVM01:~/builds/git/t# ./t5539-fetch-http-shallow.sh
->>>> ok 1 - setup shallow clone
->>>> not ok 2 - clone http repository
->>> [...]
->>> Does not reproduce for me but I am on Ubuntu 12.04.2 LTS, so...
->> Nor me on Debian unstable.
->>
->>> Running it with the -v option might give you more hints, and
->>> running it as
->>>
->>>      $ sh -x ./t5539-fe* -v
->>>
->>> might give you more to chew.
->> Yes, definitely that, but also, from:
->>
->>>> httpd (pid 10653?) not running
->>>> # failed 2 among 3 test(s)
->> ...it looks like the httpd server did not start. Look in httpd/error=
-=2Elog
->> of "trash directory.t5539-fetch-http-shallow" to see the apache log.=
- It
->> may give some reason for failing to start.
->>
->> -Peff
->> --=20
->> To unsubscribe from this list: send the line "unsubscribe git" in
->> the body of a message to majordomo@vger.kernel.org
->> More majordomo info at http://vger.kernel.org/majordomo-info.html
->>
->
-> --=20
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
->
+I do not think that would be useful (neither --stat which would be
+more commonly used for other reasosn), because these come at the top
+and by the time you see individual patch, they may be long scrolled
+off the top of the screen.
+
+Of course, the CVS "Index:" or "rename to" would be the same thing
+if a file is heavily modified, so it may not be too big a deal, but
+as I said, I never felt any need to double-click, so I wouldn't be
+the best judge.
