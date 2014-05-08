@@ -1,373 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: How to keep a project's canonical history correct.
-Date: Thu, 08 May 2014 11:37:48 -0700
-Message-ID: <xmqqsiok2k1v.fsf@gitster.dls.corp.google.com>
-References: <1399526252-28522-1-git-send-email-ischis2@cox.net>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: Watchman support for git
+Date: Thu, 08 May 2014 21:17:56 +0200
+Message-ID: <536BD864.5090804@gmail.com>
+References: <1399072451-15561-1-git-send-email-dturner@twopensource.com> <536428224adfb_200c12912f010@nysa.notmuch> <1399083897.5310.0.camel@stross> <5364654088dc4_4d2010fb2ec7d@nysa.notmuch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "Stephen P. Smith" <ischis2@cox.net>
-X-From: git-owner@vger.kernel.org Thu May 08 20:38:04 2014
+To: Felipe Contreras <felipe.contreras@gmail.com>,
+	David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Thu May 08 21:18:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WiTCj-0001S4-L1
-	for gcvg-git-2@plane.gmane.org; Thu, 08 May 2014 20:38:02 +0200
+	id 1WiTpZ-0005P2-58
+	for gcvg-git-2@plane.gmane.org; Thu, 08 May 2014 21:18:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755325AbaEHSh5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 May 2014 14:37:57 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:55277 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754658AbaEHSh4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 May 2014 14:37:56 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8B84C15754;
-	Thu,  8 May 2014 14:37:55 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=57QjxFN0I598B8z9MUkpvF+mA0c=; b=icF3lF
-	NUm9/Jo+GJq+q7j4LgDLsAbrat/i/OKAp2znvx+7NuykjwaqdsBvEXt8mSZ8FpZR
-	dJYpR+d3N1RMBRNtgdkkck0/OsJIaFDZDwA21rpmpzzE62VUPgmNqJpyBiHXvvXJ
-	McHJ8yoVSEzMl6bI9a9fQW7GEMqsuy7aSf3aE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NFPE93XHtRe5astZcfUZRJ5U1eL+aZoZ
-	G1S3qrFC649n1RhavCziuIKVCOcOcqfxGrBJV/WKcO4SIb1bE7DemFD4XQcEb2Pl
-	ZMt/NErvyueTGqImi7Qi5M/pz73AXhWVa1+ghxZRd3/F6xfGOW6DhrO2pojYaDNL
-	vAsqg+495oY=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7C4D715753;
-	Thu,  8 May 2014 14:37:54 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id E812B15751;
-	Thu,  8 May 2014 14:37:50 -0400 (EDT)
-In-Reply-To: <1399526252-28522-1-git-send-email-ischis2@cox.net> (Stephen
-	P. Smith's message of "Wed, 7 May 2014 22:17:32 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: DC146F54-D6DF-11E3-90D3-9CEB01674E00-77302942!pb-smtp0.pobox.com
+	id S1754599AbaEHTSE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 May 2014 15:18:04 -0400
+Received: from mail-ee0-f44.google.com ([74.125.83.44]:63468 "EHLO
+	mail-ee0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752840AbaEHTSD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 May 2014 15:18:03 -0400
+Received: by mail-ee0-f44.google.com with SMTP id c41so1985998eek.17
+        for <git@vger.kernel.org>; Thu, 08 May 2014 12:18:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=W5Q2n9mjs1ItS+YfVr7kH+BHQKsEHcH4v42iH/ToekY=;
+        b=xBks8y4qJC+4FaRlKvK89ee+LwkKMkMc+uceBCV0IxgSOV9hzhuek9b2WzyY2SmGCH
+         VdIVovWWTQGozX05c+MD+mTz5aOUg70hPIAfuyLOjtFOQEaT7bHWb5N2paz+0fepoEhI
+         tw5yahEDQqYyOudhWtKwmev01WTytJM2a5pfoCyQ8GEEbSaQ9bzyNvQ8acjrGlAkcumJ
+         leiEDTJGkFtpCMtoevI8/vganDWn8iWMrgCzxMsSble0Icsw4nDhko7MaezspH3ezoOW
+         YrpQQcZJjYjZnqiuDDQVvxxxFqyw9O2elCmNy67qVMx3RkhKMmEndfsDD9jvoIvyme/2
+         piFg==
+X-Received: by 10.15.75.197 with SMTP id l45mr7775200eey.89.1399576681711;
+        Thu, 08 May 2014 12:18:01 -0700 (PDT)
+Received: from [192.168.188.20] (p5B156FF0.dip0.t-ipconnect.de. [91.21.111.240])
+        by mx.google.com with ESMTPSA id t4sm6156461eeb.29.2014.05.08.12.17.58
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 08 May 2014 12:17:58 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <5364654088dc4_4d2010fb2ec7d@nysa.notmuch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248433>
 
-"Stephen P. Smith" <ischis2@cox.net> writes:
+On 03.05.2014 05:40, Felipe Contreras wrote:
 
-> During the mail thread about "Pull is mostly evil" a user asked how
-> the first parent could become reversed.
->
-> This howto explains how the first parent can get reversed when viewed
-> by the project and then explains a method to keep the history correct.
->
-> Signed-off-by: Stephen P. Smith <ischis2@cox.net>
-> ---
+>>> That's very interesting. Do you get similar improvements when doing
+>>> something similar in Merurial (watchman vs . no watchman).
+>>
+>> I have not tried it.  My understanding is that this is why Facebook
+>> wrote Watchman and added support for it to Mercurial, so I would assume
+>> that the improvements are at least this good.
+> 
+> Yeah, my bet is that they are actually much better (because Mercurial
+> can't be so optimized as Git).
+> 
+> I'm interested in this number because if watchman in Git is improving it
+> by 30%, but in Mercurial it's improving it by 100% (made up number),
+> therefore it makes sens that you might want it more if you are using hg,
+> but not so much if you are using git.
+> 
+> Also, if similar repositories with Mercurial+watchman are actually
+> faster than Git+watchman, that means that there's room for improvement
+> in your implementation. This is not a big issue at this point of the
+> process, just something nice to know.
 
-Thanks.  There are a few nitpicks though, most of them what I should
-have done when I wrote the original before sending it out ;-)
+The article at [1] has some details, they claim "For our repository, enabling Watchman integration has made Mercurial's status command more than 5x faster than Git's status command".
 
->  Documentation/Makefile                             |   1 +
->  .../howto/keep-canonical-history-correct.txt       | 207 +++++++++++++++++++++
->  2 files changed, 208 insertions(+)
->  create mode 100644 Documentation/howto/keep-canonical-history-correct.txt
->
-> diff --git a/Documentation/Makefile b/Documentation/Makefile
-> index fc6b2cf..cea0e7a 100644
-> --- a/Documentation/Makefile
-> +++ b/Documentation/Makefile
-> @@ -59,6 +59,7 @@ SP_ARTICLES += howto/recover-corrupted-blob-object
->  SP_ARTICLES += howto/recover-corrupted-object-harder
->  SP_ARTICLES += howto/rebuild-from-update-hook
->  SP_ARTICLES += howto/rebase-from-internal-branch
-> +SP_ARTICLES += howto/keep-canonical-history-correct
->  SP_ARTICLES += howto/maintain-git
->  API_DOCS = $(patsubst %.txt,%,$(filter-out technical/api-index-skel.txt technical/api-index.txt, $(wildcard technical/api-*.txt)))
->  SP_ARTICLES += $(API_DOCS)
-> diff --git a/Documentation/howto/keep-canonical-history-correct.txt b/Documentation/howto/keep-canonical-history-correct.txt
-> new file mode 100644
-> index 0000000..dd310ea
-> --- /dev/null
-> +++ b/Documentation/howto/keep-canonical-history-correct.txt
-> @@ -0,0 +1,207 @@
-> +From: Junio C Hamano <gitster@pobox.com>
-> +Date: Wed, 07 May 2014 13:15:39 -0700
-> +Subject: Beginner question on "Pull is mostly evil"
-> +Abstract: This how-to explains a method for keeping a project's history correct when using git pull.
-> +Content-type: text/asciidoc
+[1] https://code.facebook.com/posts/218678814984400/scaling-mercurial-at-facebook/
 
-Please keep the Message-ID: from the original; people can find the
-original discussion more easily that way.
-
-Also, wrap long lines of Abstract (see revert-branch-rebase.txt for
-an example).
-
-> +Keep authoritative canonical history correct with git pull
-> +==========================================================
-> +
-
-We may want to have an introductory sentence before this "Suppose"
-to set the scene, so that readers would be prepared to read about
-the workflow that uses a central repository for everybody to meet.
-
-> +Suppose that that central repository has this history:
-> +
-> +------------
-> +    ---o---o---A
-> +------------
-> +
-> +which ends at commit A (time flows from left to right and each node in
-> +the graph is a commit, lines between them indicating parent-child
-> +relationship).
-> +
-> +Then you clone it and work on your own commits, which leads you to
-> +have this in *your* repository:
-
-s/this/this history/ perhaps.
-
-> +
-> +------------
-> +    ---o---o---A---B---C
-> +------------
-> +
-> +Imagine your coworker did the same and built on top of A in *his*
-> +repository this history in the meantime, and then pushed it to the
-> +central repository:
-> +
-> +------------
-> +    ---o---o---A---X---Y---Z
-> +------------
-> +
-> +Now, if you "git push" at this point, beause your history that leads
-> +to C lack X, Y and Z, it will fail.  You need to somehow make the
-
-s/lack/lacks/
-
-As this is no longer a plain text, you probably want `C`, `X`, etc.,
-to typeset these commit markers in fixed width.
-
-> +tip of your history a descendant of Z.
-> +
-> +One suggested way to solve the problem is "fetch and then merge".
-
-s/\.$/, aka "git pull"./
-
-> +If you fetch, your repository will have a history like this:
-
-s/If/When/
-
-> +------------
-> +    ---o---o---A---B---C
-> +                \
-> +                 X---Y---Z
-> +------------
-> +
-> +And then if you did merge after that, while still on *your* branch,
-> +i.e. C, you will create a merge M and make the history look like
-> +this:
-
-s/did/run/ perhaps.  The past tense there feels wrong.
-
-> +
-> +------------
-> +    ---o---o---A---B---C---M
-> +                \         /
-> +                 X---Y---Z
-> +------------
-> +
-> +M is a descendant of Z, so you can push to update the central
-> +repository.  Such a merge M does not lose any commit in both
-> +histories, so in that sense it may not be wrong, but when people
-> +would want to talk about "the authoritative canonical history that
-
-s/would want/want/; I have a bad habit of overusing "would".
-
-> +is shared among the project participants", i.e. "the trunk", the way
-> +they often use is to do:
-> +
-> +------------
-> +    $ git log --first-parent
-> +------------
-> +
-> +For all other people who observed the central repository after your
-> +coworker pushed Z but before you pushed M, the commit on the trunk
-> +used to be "o-o-A-X-Y-Z".  But because you made M while you were on
-
-As this is no longer a plain text, you probably want `o-o-A-X-Y-Z`
-(not dq, but bq) to typeset them in fixed width in AsciiDoc.  Same
-for X-Y-Z below.
-
-> +C, M's first parent is C, so by pushing M to advance the central
-> +repository, you made X-Y-Z a side branch, not on the trunk.
-> +
-> +You would rather want to have a history of this shape:
-> +
-> +------------
-> +    ---o---o---A---X---Y---Z---M'
-> +                \             /
-> +                 B-----------C
-> +------------
-> +
-> +so that in the first-parent chain, it is clear that the project
-> +first did X and then Y and then Z and merged a change that consists
-> +of two commits B and C that achieves a single goal.  You may have
-> +worked on fixing the bug #12345 with these two patches, and the
-> +merge M' with swapped parents can say in its log message "Merge
-> +'fix-bug-12345'".
-
-Add something like this at the end of that paragraph:
-
-    Having a way to tell "git pull" to create a merge but record the
-    parents in reverse order may be a way to do so.
-
-It was obvious to the original questioner who did read the recent
-"pull is mostly evil" thread, which is why I did not say it in the
-original, but it is necessary for the readers of this document where
-they lack the context.  Otherwise it would not be apparent to them
-what "swapping the merge order" below refers to.
-
-> +Note that I said "achieves a single goal" above, because this is
-> +important.  "swapping the merge order" only covers a special case
-> +where the project does not care too much about having unrelated
-> +things done on a single merge but cares a lot about first-parent
-> +chain.
-> +
-> +There are multiple schools of thought about the "trunk" management.
-
-I have not tried to format it myself, but does the following 1. 2. 3.
-(all pre-indented already) format correctly when passed to AsciiDoc?
-I suspect the text may all shown in fixed width, which would not be
-what we want.
-
-> + 1. Some projects want to keep a completely linear history without
-> +    any merges.  Obviously, swapping the merge order would not help
-> +    their taste.  You would need to flatten your history on top of
-
-s/help/match/ or something.
-
-> +    the updated upstream to result in a history of this shape
-> +    instead:
-> ++
-> +------------
-> +    ---o---o---A---X---Y---Z---B---C
-> +------------
-> ++
-> +    with "git pull --rebase" or something.
-
-Use `git pull --rebase` (i.e. not dq but bq) here, too.
-
-> + 2. Some projects tolerate merges in their history, but do not worry
-> +    too much about the first-parent order, and allows fast-forward
-> +    merges.  To them, swapping the merge order does not hurt, but
-> +    it is unnecessary.
-> +
-> + 3. Some projects want each commit on the "trunk" to do one single
-> +    thing.  The output of "git log --first-parent" in such a project
-> +    would show either a merge of a side branch that completes a
-> +    single theme, or a single commit that completes a single theme
-> +    by itself.  If your two commits B and C (or they may even be two
-> +    groups of commits) were solving two independent issues, then the
-> +    merge M' we made in the earlier example by swapping the merge
-> +    order is still not up to the project standard.  It merges two
-> +    unrelated efforts B and C at the same time.
-
-Likewise for `git log --first-parent`, `B`, `C, and `M'`; they all
-want to be typeset in fixed width.
-
-> +For projects in the last category (git itself is one of them),
-
-s/git/Git/ as we seem to prefer that spelling these days when
-talking about the project.
-
-> +individual developers would want to prepare a history more like
-> +this:
-> +
-> +------------
-> +                 C0--C1--C2     topic-c
-> +                /
-> +    ---o---o---A                master
-> +                \
-> +                 B0--B1--B2     topic-b
-> +------------
-> +
-> +That is, keeping separate topics on separate branches, perhaps like
-> +so:
-> +
-> +------------
-> +    $ git clone $URL work && cd work
-> +    $ git checkout -b topic-b master
-> +    $ ... work to create B0, B1 and B2 to complete one theme
-> +    $ git checkout -b topic-c master
-> +    $ ... same for the theme of topic-c
-> +------------
-> +
-> +And then
-> +
-> +------------
-> +    $ git checkout master
-> +    $ git pull --ff-only
-> +------------
-> +
-> +would grab X, Y and Z from the upstream and advance your master
-> +branch:
-> +
-> +------------
-> +                 C0--C1--C2
-> +                /
-> +    ---o---o---A---X---Y---Z
-> +                \
-> +                 B0--B1--B2
-> +------------
-
-We may want to have the topic-c/master/topic-b branch labels like
-the previous picture here.
-
-> +And then you would merge these two branches separately:
-> +
-> +------------
-> +    $ git merge topic-b
-> +    $ git merge topic-c
-> +------------
-> +
-> +to result in
-> +
-> +------------
-> +                 C0--C1---------C2
-> +                /                 \
-> +    ---o---o---A---X---Y---Z---M---N
-> +                \             /
-> +                 B0--B1-----B2
-> +------------
-> +
-> +and push it back to the central repository.
-> +
-> +It is very much possible that while you are merging topic-b and
-> +topic-c, somebody again advanced the history in the central
-> +repository to put W on top of Z, and make your "git push" fail.
-> +
-> +In such a case, you would rewind to discard M and N, update the tip
-> +of your 'master' again and redo the two merges:
-> +
-> +------------
-> +    $ git reset --hard origin/master
-> +    $ git pull --ff-only
-> +    $ git merge topic-b
-> +    $ git merge topic-c
-> +------------
-> +
-> +------------
-> +                 C0--C1--------------C2
-> +                /                     \
-> +    ---o---o---A---X---Y---Z---W---M'--N
-> +                \                 /
-> +                 B0--B1---------B2
-> +------------
-
-I failed to do so in the original, but the final merge should be
-labeled as N' (with prime), just like M turned into M', to denote
-that they are different commits from their counterparts in the
-orignal history.
-
-Thanks.
+-- 
+Sebastian Schuberth
