@@ -1,140 +1,122 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] ignorecase: Fix git mv on insensitive filesystems
-Date: Thu, 08 May 2014 13:55:57 -0700
-Message-ID: <xmqq4n102dnm.fsf@gitster.dls.corp.google.com>
-References: <536B4680.1010806@web.de>
-	<1399569814-20644-1-git-send-email-dturner@twopensource.com>
-	<1399569814-20644-3-git-send-email-dturner@twopensource.com>
-	<xmqqha502ghc.fsf@gitster.dls.corp.google.com>
-	<1399581623.11843.105.camel@stross>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: Output from "git blame A..B -- path" for the bottom commit is misleading
+Date: Thu, 08 May 2014 23:13:31 +0200
+Message-ID: <878uqcotxg.fsf@fencepost.gnu.org>
+References: <xmqq8uqc2dt5.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, David Turner <dturner@twitter.com>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Thu May 08 22:56:11 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 08 23:14:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WiVMO-00064R-GJ
-	for gcvg-git-2@plane.gmane.org; Thu, 08 May 2014 22:56:08 +0200
+	id 1WiVds-0000dx-UJ
+	for gcvg-git-2@plane.gmane.org; Thu, 08 May 2014 23:14:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755581AbaEHU4E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 May 2014 16:56:04 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:59592 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754831AbaEHU4C (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 May 2014 16:56:02 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id CA0C316350;
-	Thu,  8 May 2014 16:56:01 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bzEiRmVT5pBZvM6m2mSicSDz1hY=; b=gvU7Xd
-	gW/VSBbTH29UipQQ6X9hbFDyffXQvTuVDPnhuReSJDTxFg9W9bH5T88Jm296Xpez
-	9lbllXEPolOjurF3AtvRhiynWahjJBbkJZlQ4xEGQOti423eqoAxD5I0SuM3nM9x
-	RpQYIaVUu3wpCw/+uxJJOOOEZFMFmmoNcnLo4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=RnX6KWKgd5zTgqm303s6IEA2t8WO9GY0
-	ngJsttQsyzcE/ptHUiTD+HP44nmIPnxix+VynbbSrfO2cje+AqQ4FkAmqlnQhjz8
-	oXRAg17vFuNFEU+FTWHSE1TGAvfgFNZSS7tsxUAE4xELwXzNTJHjqMNd+aFNqAex
-	1pXuvzX/XMg=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id BE87F1634F;
-	Thu,  8 May 2014 16:56:01 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0C57C1634C;
-	Thu,  8 May 2014 16:55:58 -0400 (EDT)
-In-Reply-To: <1399581623.11843.105.camel@stross> (David Turner's message of
-	"Thu, 08 May 2014 13:40:23 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 282C20FE-D6F3-11E3-8438-9CEB01674E00-77302942!pb-smtp0.pobox.com
+	id S1755125AbaEHVOI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 May 2014 17:14:08 -0400
+Received: from fencepost.gnu.org ([208.118.235.10]:41157 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753348AbaEHVOG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 May 2014 17:14:06 -0400
+Received: from localhost ([127.0.0.1]:40199 helo=lola)
+	by fencepost.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <dak@gnu.org>)
+	id 1WiVdl-0000uO-LK; Thu, 08 May 2014 17:14:05 -0400
+Received: by lola (Postfix, from userid 1000)
+	id DC800E0A47; Thu,  8 May 2014 23:13:31 +0200 (CEST)
+In-Reply-To: <xmqq8uqc2dt5.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Thu, 08 May 2014 13:52:38 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248448>
 
-David Turner <dturner@twopensource.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
->> Hmm, I would find it easier to read if it were:
->> 
->> 		... if (lstat(dst, &st) == 0 &&
->>                 	!(ignore_case && !strcasecmp(src, dst))) {
->> 
->> That is, "it is an error for dst to exist, unless we are on a case
->> insensitive filesystem and src and dst refer to the same file.", but
->> maybe it is just me.
+> If you run
 >
-> I personally dislike the double negative. I also considered breaking it
-> out into a little function with a self-documenting name -- does that
-> sound better?
+>     $ git blame -L103,107 v2.0.0-rc0..v2.0.0-rc2 t/t9117-git-svn-init-clone.sh
+>
+> you will see something like this:
+>
+>     ^cc29195 (Junio C Hamano 2014-04-18 11:21:43 -0700 103) 
+>     7bbc458b (Kyle J. McKay  2014-04-22 04:16:22 -0700 104) test_expect_...
+>     ^cc29195 (Junio C Hamano 2014-04-18 11:21:43 -0700 105)         test...
+>     7bbc458b (Kyle J. McKay  2014-04-22 04:16:22 -0700 106)         git ...
+>     ^cc29195 (Junio C Hamano 2014-04-18 11:21:43 -0700 107)         test...
+>
+> It is correct to attribute these lines that have not changed since
+> the bottom of the range (i.e. v2.0.0-rc0) to that commit,
 
-No, it shows that it is just me.  I did not say that the original is
-unreadable.
+They are not attributed to that commit in particular.  They are traced
+all the way up to that commit, so they are either from this commit or
+from an earlier one.
 
->> More importantly, what is the end-user visible effect of this
->> change?  Is it fair to summarize it like this?
->> 
->>     On a case-insensitive filesystem, "mv hello.txt Hello.txt"
->>     always trigger the "dst already exists" error, because both
->>     names refer to the same file to MS-DOS, requiring the user to
->                                      ^^^^^^
-> (I have not actually tested on Windows; I tested on the Mac since that's
-> what I have handy)
+> But I find it really misleading, as this is the true picture if we
+> dug to the bottom of the history:
 >
->>     pass the "--force" option.  Allow it without "--force".
->
-> Yes.
->
->> Overwriting an existing file with "mv hello.txt Hello.txt" on a case
->> sensitive filesystem *is* an unusual operation, and that is the
->> reason why we require "--force" to make sure that the user means it.
->> I have a slight suspicion that the same "mv hello.txt Hello.txt" on
->> a case insensitive filesystem, where two names are known (to the end
->> user of such a filesystem) to refer to the same path would equally
->> be a very unusual thing to do, and such an operation may deserve a
->> similar safety precaution to make sure that the user really meant to
->> do so by requiring "--force".
->> 
->> So, I dunno.
->
-> The argument against --force is that git's behavior should not
-> significantly differ between sensitive and insensitive filesystems
-> (where possible).  I do not see a case-changing rename as unusual on a
-> case-insensitive filesystem; these filesystems typically preserve case,
-> and a user might reasonably care about the case of a filename either for
-> aesthetic reasons or for functionality on sensible filesystems (e.g.
-> developers who work on Macs but deploy on GNU/Linux, as is quite
-> common).
->
-> The Mac's interface itself provides conflicting evidence: on one hand,
-> we might expect git mv to work like plain mv: nothing special is needed
-> to do a case-changing mv). On the other hand, in the Finder, attempting
-> a case-changing rename causes an error message (which there is no way to
-> get around other than the two-rename dance).  I read this as "ordinary
-> users never intentionally change the case of files, but developers
-> sometimes do", but that's not the only possible reading.
->
-> I myself am not actually a Mac user; I simply support a bunch of Mac
-> users (which is where the merge bug came from).  So I don't know what
-> Mac users would prefer.  Maybe there are some on the git mailing list?
->
-> I also have not tried on Windows.  I put in an email to the one
-> Windows-using friend I can think of to ask her to give Windows Explorer
-> (or whatever it's called these days) a try.  My guess (based on a quick
-> Google search) would be is that it works without error, but I will send
-> an update if I hear otherwise.
+>     $ git blame -L103,107 v2.0.0-rc2 t/t9117-git-svn-init-clone.sh
+>     f849bb6b (Johan Herland 2013-10-11 14:57:06 +0200 103) 
+>     7bbc458b (Kyle J. McKay 2014-04-22 04:16:22 -0700 104) test_expect_...
+>     f849bb6b (Johan Herland 2013-10-11 14:57:06 +0200 105)  test ! -d p...
+>     7bbc458b (Kyle J. McKay 2014-04-22 04:16:22 -0700 106)  git svn ini...
+>     f849bb6b (Johan Herland 2013-10-11 14:57:06 +0200 107)  test_must_f...
 
-Alright.  Thanks for sanity checking.
+So indeed, an earlier one.
 
-I've already queued your patch as-is when I was composing the
-message you responded to and today's integration cycle is already
-going, so unless other people have ideas to convince us both that
-this is a bad idea, all is well without any further action.
+> I do not expect Johan's name to appear in the output for the first
+> one, because that would require us to dig deeper than the commit we
+> were told to stop at, but I am wondering if we can do better than the
+> existing "-b" option to reduce the confusion from the output.
 
-Thanks.
+Do you mean "better than" or rather "better in the case where -b is
+given"?
+
+> The "-b" option blanks the commit object name, but still shows the
+> name and timestamp for the bottom commit:
+>
+>              (Junio C Hamano 2014-04-18 11:21:43 -0700 103) 
+>     7bbc458b (Kyle J. McKay  2014-04-22 04:16:22 -0700 104) test_expect_...
+>              (Junio C Hamano 2014-04-18 11:21:43 -0700 105)         test...
+>     7bbc458b (Kyle J. McKay  2014-04-22 04:16:22 -0700 106)         git ...
+>              (Junio C Hamano 2014-04-18 11:21:43 -0700 107)         test...
+>
+> I am tempted to say "blame that is run without the --porcelain
+> option is a end-user facing Porcelain, and people should not be
+> reading its output in their scripts" and change the behaviour of the
+> "-b" option to instead show something like this instead:
+>     
+>     ^cc29195 (Unknown        2014-04-18 11:21:43 -0700 103) 
+>     7bbc458b (Kyle J. McKay  2014-04-22 04:16:22 -0700 104) test_expect_...
+>     ^cc29195 (Unknown        2014-04-18 11:21:43 -0700 105)         test...
+>     7bbc458b (Kyle J. McKay  2014-04-22 04:16:22 -0700 106)         git ...
+>     ^cc29195 (Unknown        2014-04-18 11:21:43 -0700 107)         test...
+>
+> which shows the commit object name, its bottom-ness and the
+> timestamp, or even
+>
+>              (                                         103) 
+>     7bbc458b (Kyle J. McKay  2014-04-22 04:16:22 -0700 104) test_expect_...
+>              (                                         105)         test...
+>     7bbc458b (Kyle J. McKay  2014-04-22 04:16:22 -0700 106)         git ...
+>              (                                         107)         test...
+>
+> which does away with the misleading information altogether.
+
+That would make more sense for -b but hardly for the default.
+
+> I myself is leaning towards the latter between the two, and not
+> overriding "-b" but introducing another "cleanse the output of
+> useless bottom information even more" option.
+
+One could use -b -b but frankly, where is the point?  Name and date
+deliver no useful information when the commit is absent.
+
+-- 
+David Kastrup
