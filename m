@@ -1,42 +1,47 @@
-From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
-Subject: Re: [PATCH 2/2] ignorecase: Fix git mv on insensitive filesystems
-Date: Thu, 08 May 2014 22:48:26 +0200
-Message-ID: <536BED9A.6020100@virtuell-zuhause.de>
+From: Robert Dailey <rcdailey.lists@gmail.com>
+Subject: Bash v4 on msysgit?
+Date: Thu, 8 May 2014 15:50:24 -0500
+Message-ID: <CAHd499Dx2iiKc9sy6wJwO3_Jofbp1kwptTAXNvtrZ4DLgkGe8g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-To: dturner@twopensource.com, GIT Mailing-list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu May 08 22:48:37 2014
+Content-Type: text/plain; charset=UTF-8
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu May 08 22:50:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WiVF3-0005wU-Hl
-	for gcvg-git-2@plane.gmane.org; Thu, 08 May 2014 22:48:33 +0200
+	id 1WiVGv-00084n-Tl
+	for gcvg-git-2@plane.gmane.org; Thu, 08 May 2014 22:50:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755389AbaEHUs3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 May 2014 16:48:29 -0400
-Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:37668 "EHLO
-	wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754658AbaEHUs3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 8 May 2014 16:48:29 -0400
-Received: from p5ddc3d47.dip0.t-ipconnect.de ([93.220.61.71] helo=[192.168.100.43]); authenticated
-	by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	id 1WiVEx-0004Ql-B9; Thu, 08 May 2014 22:48:27 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1399582109;972371ed;
+	id S1755581AbaEHUu0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 May 2014 16:50:26 -0400
+Received: from mail-vc0-f170.google.com ([209.85.220.170]:43131 "EHLO
+	mail-vc0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755073AbaEHUuZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 May 2014 16:50:25 -0400
+Received: by mail-vc0-f170.google.com with SMTP id lf12so4075098vcb.29
+        for <git@vger.kernel.org>; Thu, 08 May 2014 13:50:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:date:message-id:subject:from:to:content-type;
+        bh=T87wh9Xu0TCecDivbi6eGPmEsn6gIsXfNDN/abKyFHs=;
+        b=mS3DPzlW6fWQFxPWVEo4lLB159RzvyMQSPZUY/etwJ15fLJcUzv9Je1OwEqjLFk7FS
+         hfd1PWK5BDYw5zeHtwSJmCFwukJCvBxboyga6+wSk1mgmkDugqWpx+TJyGyZZAuBpqY9
+         yk8ne9tYDrZMW3jJUnmSp+lF+2eBPM1c/OsB2RPfhG++rCxHmuSEOQX4cCoqHn1hWmMs
+         B3Jo/ndrXWBR7wowDLJTaUJi5BU5HFssbzgqiNo/jPcRqML6Fs7wI05KqM29Nx3OC6b1
+         XEaoxtxs7ryfTy56N89bRQu667iVNfyFP0R541CcEQeADKlWEq2h1Kmt6eTIX+EDnsk/
+         lkoA==
+X-Received: by 10.220.89.4 with SMTP id c4mr2379589vcm.53.1399582224986; Thu,
+ 08 May 2014 13:50:24 -0700 (PDT)
+X-Google-Sender-Delegation: rcdailey@gmail.com
+Received: by 10.220.13.198 with HTTP; Thu, 8 May 2014 13:50:24 -0700 (PDT)
+X-Google-Sender-Auth: LNj3swEKqSHRmLJIMjtbEjLCMpY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248445>
 
-> I also have not tried on Windows.  I put in an email to the one
-> Windows-using friend I can think of to ask her to give Windows Explorer
-> (or whatever it's called these days) a try.  My guess (based on a quick
-> Google search) would be is that it works without error, but I will send
-> an update if I hear otherwise.
-
-A case-only changing rename in the windows explorer in Win7 works
-perfectly without any problems.
+How can I get Bash v4 for msysgit 1.9.2? I need it for 'globstar'
+shopt support. Thanks in advance.
