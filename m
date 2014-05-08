@@ -1,115 +1,92 @@
-From: Jeff Sipek <jeffpc@josefsipek.net>
-Subject: Re: [GUILT 07/28] Added test cases for "guilt fold".
-Date: Thu, 8 May 2014 15:59:43 -0400
-Message-ID: <20140508195942.GC1619@meili.valhalla.31bits.net>
-References: <1395387126-13681-1-git-send-email-cederp@opera.com>
- <1395387126-13681-8-git-send-email-cederp@opera.com>
- <20140506194026.GK1655@meili.valhalla.31bits.net>
- <CAP=KgsQ2fvVWZG7OwwWac+tMeWaPTEdSrgFqE5gVfSAqNn-VCQ@mail.gmail.com>
- <20140507210601.GA1459@meili.valhalla.31bits.net>
- <CAP=KgsR2CD39XeC+UsPU_Oh2GDBg-WrF=+Q33jhfYvToZz7UwA@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 0/4] remote-hg: more improvements
+Date: Thu, 08 May 2014 14:56:27 -0500
+Message-ID: <536be16ba5ef1_3ce710a12ecdb@nysa.notmuch>
+References: <1399169814-20201-1-git-send-email-felipe.contreras@gmail.com>
+ <xmqq8uqdbgqg.fsf@gitster.dls.corp.google.com>
+ <xmqqha515ebt.fsf@gitster.dls.corp.google.com>
+ <536adf96f37ec_3caaa612ec69@nysa.notmuch>
+ <xmqqtx902k45.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Per Cederqvist <cederp@opera.com>
-X-From: git-owner@vger.kernel.org Thu May 08 21:59:44 2014
+To: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 08 22:07:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WiUTn-0001bV-AL
-	for gcvg-git-2@plane.gmane.org; Thu, 08 May 2014 21:59:43 +0200
+	id 1WiUbF-00020S-AK
+	for gcvg-git-2@plane.gmane.org; Thu, 08 May 2014 22:07:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755594AbaEHT7j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 May 2014 15:59:39 -0400
-Received: from josefsipek.net ([64.9.206.49]:1754 "EHLO josefsipek.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755214AbaEHT7j (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 May 2014 15:59:39 -0400
-Received: from meili.valhalla.31bits.net (c-98-209-117-250.hsd1.mi.comcast.net [98.209.117.250])
-	by josefsipek.net (Postfix) with ESMTPSA id CAB9155654;
-	Thu,  8 May 2014 15:59:37 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <CAP=KgsR2CD39XeC+UsPU_Oh2GDBg-WrF=+Q33jhfYvToZz7UwA@mail.gmail.com>
-User-Agent: Mutt/1.5.22 (2013-10-16)
+	id S1755756AbaEHUHT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 May 2014 16:07:19 -0400
+Received: from mail-ob0-f170.google.com ([209.85.214.170]:65450 "EHLO
+	mail-ob0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755604AbaEHUHS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 May 2014 16:07:18 -0400
+Received: by mail-ob0-f170.google.com with SMTP id uy5so3705819obc.1
+        for <git@vger.kernel.org>; Thu, 08 May 2014 13:07:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=Sh/mpUx8KxJR0tJYpxVdu4UKDz1oqGuiGp5EvsZ+f5Y=;
+        b=ja89WXHdecfPPygWQQSr5zwEuwj4oMsnwBAvfjsx56bB66k5qgA9JCYFbk+LMpIHI8
+         PR89nwSngRCahs9M245pQc3jyMig73GRFCdmMYHCJxfxPZ2JgYkpujN12sBGdjTFt/2X
+         Q9QGBXtYrMdWTkQxog3UZa/S93MhkQilzyLxhjJ5q0cdc3EErpKmyT1C1zK/zivcP4fQ
+         V+ATvJcrLmpNuqIRbV2zR7ZoZPV3CflzlOnl+Vo4tT8+KbDKkvQr0+XK+tA+OepiKTKz
+         Jl3uM5LCvqRV88AQWBHftApqZfckbAeUqfssCSPvaFzqTlXhYT4wmB3NTzsp+va0++El
+         BswQ==
+X-Received: by 10.60.131.40 with SMTP id oj8mr8075650oeb.14.1399579637861;
+        Thu, 08 May 2014 13:07:17 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id jr2sm4133013obb.8.2014.05.08.13.07.13
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 08 May 2014 13:07:14 -0700 (PDT)
+In-Reply-To: <xmqqtx902k45.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248438>
 
-On Thu, May 08, 2014 at 09:41:22PM +0200, Per Cederqvist wrote:
-> On Wed, May 7, 2014 at 11:06 PM, Jeff Sipek <jeffpc@josefsipek.net> wrote:
-> > On Wed, May 07, 2014 at 10:59:56PM +0200, Per Cederqvist wrote:
-> >> On Tue, May 6, 2014 at 9:40 PM, Jeff Sipek <jeffpc@josefsipek.net> wrote:
-> >> > On Fri, Mar 21, 2014 at 08:31:45AM +0100, Per Cederqvist wrote:
-> >> >> Test that we can combine any combination of patches with empty and
-> >> >> non-empty messages, both with and without guilt.diffstat.  (All
-> >> >> patches are empty.)
-> >> >
-> >> > I feel like we should have *some* content there - most of the time, I care
-> >> > more about the diffs getting folded than the commit message :)
-> >>
-> >> I added these tests for a reason: the reproduce a bug in guilt that I found.
-> >>
-> >> I'm afraid that having some content might hide the bug I found. (I'm also
-> >> equally afraid that it might uncover other bugs in guilt, which would delay
-> >> integration of this patch series. So adding more test cases with content
-> >> is a good thing to do, but maybe not in this patch series.)
-> >
-> > Fair enough.  I use guilt-fold all the time and it hasn't lost any of my
-> > diffs, so I'm happy to defer this until some point in the future.
-> >
-> > ...
-> >> > for using_diffstat in true false ; do
-> >> >         for patcha in empty nonempty ; do
-> >> >                 for patchb in empty nonempty ; do
-> >> >                         echo "%% $patcha + $patchb (diffstat=$using_diffstat)"
-> >> >                         ${patcha}_patch $patcha
-> >> >                         ${patchb}_patch $patchb
-> >> >                         cmd guilt pop $patchb
-> >> >                         cmd guilt fold $patchb
-> >> >                         fixup_time_info $patcha
-> >> >                         cmd list_files
-> >> >                         cleanup $patcha
-> >> >                         cmd list_files
-> >> >                 done
-> >> >         done
-> >> > done
-> >> >
-> >> > Aha!  That's better, IMO.
-> >>
-> >> I'll try that and post a version 2 of the series. It might take a few
-> >> days, though.
-> >
-> > No problem.  I'm still the slower one of the two of us. :/
-> >
-> > Jeff.
+Junio C Hamano wrote:
+> In other words, I knew that you are capable enough to track down a
+> bug in the code you wrote recently that made it violate the
+> expectation you defined in your own tests.
+
+Wrong. The code in question was not recent, it was introdued in 1.8.3,
+more than one year ago.
+
+And wrong, it didn't violate the expectation of my own tests.
+
+The code was simply not exercised in the tests.
+
+> There was no room for differences of opinions to come into play, as it
+> was just between you and your own code.
 > 
-> There were a few details that made it a bit more complex than that,
-> but I think the end result was still an improvement.
+> Why would I expect otherwise?
 
-The devil's in the details :)
+Because most people take attacks on their code as personal attacks, and
+they don't fix bugs in their code if they don't like the person
+reporting it.
 
-> The most obvious detail is that if you add two empty patches, you
-> cannot name them both "empty", so when $patcha and $patchb is the same
-> you have to add suffixes.
-> 
-> The other detail is that my tests used different commit messages when
-> both commits contained a message.  I want to retain that behaviour, so
-> that added a few lines of complexity.
-> 
-> I'll post an updated patch series once I've gone through all your
-> comments.  In the meantime, you can see my new implementation here:
-> 
-> http://repo.or.cz/w/guilt/ceder.git/commitdiff/3107dc73eaff020da18024c3b5f5f92b94d17852?hp=6df110c95133d6e557ce3dbcb6fd39bc797f877b#patch2
+But you know I don't take attacks on my code and ideas personally, which
+is more that can be said of most people on the list.
 
-Much better than the original, IMO.
+> Do you want to make it a separate follow-up patch with a log message
+> that explains why it now uses LookupError (not ManifestLookupError),
+> or do you want to reroll the original by squashing it?
 
-Thanks,
+I don't want to do anything for a "contrib" tool.
 
-Jeff.
+It's already broken in v2.0 anyway.
 
 -- 
-We have joy, we have fun, we have Linux on a Sun...
+Felipe Contreras
