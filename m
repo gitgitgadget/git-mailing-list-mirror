@@ -1,130 +1,152 @@
-From: Stepan Kasal <kasal@ucw.cz>
-Subject: [PATCH] Revert "submodules: fix ambiguous absolute paths
- under Windows"
-Date: Thu, 8 May 2014 22:36:57 +0200
-Organization: <)><
-Message-ID: <20140508203657.GA6203@camelia.ucw.cz>
-References: <20140428083931.GA10257@camelia.ucw.cz> <CABPQNSaC30p7TEOvc85u=+skjrFj17182vWWSL=QNVuvzVFE=w@mail.gmail.com> <20140428113815.GA10559@camelia.ucw.cz> <20140428114224.GA11186@camelia.ucw.cz> <CABPQNSbDkE+Vff=4MmPO9oMfjRay6Oin51zZRoZ8mOEhGoaD3Q@mail.gmail.com> <20140428142931.GA12056@camelia.ucw.cz> <20140507184444.GB4013@sandbox-ub> <xmqqmwet8gre.fsf@gitster.dls.corp.google.com> <20140508101115.GC4511@camelia.ucw.cz> <xmqqd2fo2fmi.fsf@gitster.dls.corp.google.com>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH 2/2] ignorecase: Fix git mv on insensitive filesystems
+Date: Thu, 08 May 2014 13:40:23 -0700
+Organization: Twitter
+Message-ID: <1399581623.11843.105.camel@stross>
+References: <536B4680.1010806@web.de>
+	 <1399569814-20644-1-git-send-email-dturner@twopensource.com>
+	 <1399569814-20644-3-git-send-email-dturner@twopensource.com>
+	 <xmqqha502ghc.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Heiko Voigt <hvoigt@hvoigt.net>, GIT Mailing-list <git@vger.kernel.org>,
-        Johannes Sixt <j6t@kdbg.org>, msysgit@googlegroups.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, David Turner <dturner@twitter.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: msysgit+bncBCU63DXMWULRB2WVV6NQKGQE5IJMUTI@googlegroups.com Thu May 08 22:37:04 2014
-Return-path: <msysgit+bncBCU63DXMWULRB2WVV6NQKGQE5IJMUTI@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wg0-f59.google.com ([74.125.82.59])
+X-From: git-owner@vger.kernel.org Thu May 08 22:40:35 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCU63DXMWULRB2WVV6NQKGQE5IJMUTI@googlegroups.com>)
-	id 1WiV3r-0001Oy-VE
-	for gcvm-msysgit@m.gmane.org; Thu, 08 May 2014 22:37:00 +0200
-Received: by mail-wg0-f59.google.com with SMTP id x12sf323709wgg.4
-        for <gcvm-msysgit@m.gmane.org>; Thu, 08 May 2014 13:36:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :in-reply-to:organization:user-agent:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type:content-disposition;
-        bh=Y7ZPiCj0cE2QVdf8i+juVUtm3ANDRYTeCj1nAiGFu20=;
-        b=OP5DQKM/Z3EbFMcZRyrUis8tNGjcEcWjr2iMGsqVxJEHYUpWmm1fKzn/kptTkCtahh
-         vBKZkBGBdFR2xIzWfJ8i+c5y+Ur7Quxh91pH9tiqZABVj6EgsSfXZv6ZSVjOoyUd3PPc
-         6ZlRP6jrPxgpOXaDaQiAUm1hV8RDjSZN7D+IyTWONXzXN5AWhDF9qEtAqD1juJiiW9/m
-         fvLp2+MdUrreOGs/a17DDQ1ewp6x0yg+Ovx7q7MDssc+WgCy/Tn63Uk3s3om1c0x6a+y
-         y44SMiZoTmK8nBi50FxDiMiOrzoo1uxteECP6kEpbz3ojl0kaLdtJCYy9K7igKyqsrJI
-         NYmw==
-X-Received: by 10.180.211.168 with SMTP id nd8mr79412wic.11.1399581419630;
-        Thu, 08 May 2014 13:36:59 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.103.10 with SMTP id fs10ls254974wib.33.canary; Thu, 08 May
- 2014 13:36:58 -0700 (PDT)
-X-Received: by 10.112.136.229 with SMTP id qd5mr88156lbb.21.1399581418316;
-        Thu, 08 May 2014 13:36:58 -0700 (PDT)
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz. [46.255.230.98])
-        by gmr-mx.google.com with ESMTP id u49si82924eeo.1.2014.05.08.13.36.58
-        for <msysgit@googlegroups.com>;
-        Thu, 08 May 2014 13:36:58 -0700 (PDT)
-Received-SPF: none (google.com: kasal@ucw.cz does not designate permitted sender hosts) client-ip=46.255.230.98;
-Received: from 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (84.64.broadband3.iol.cz [85.70.64.84])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	(Authenticated sender: kasal)
-	by jabberwock.ucw.cz (Postfix) with ESMTPSA id 018B81C00F0;
-	Thu,  8 May 2014 22:36:57 +0200 (CEST)
-Received: from camelia.ucw.cz (camelia.ucw.cz [127.0.0.1])
-	by 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (8.14.3/8.14.3) with ESMTP id s48Kav1F006214;
-	Thu, 8 May 2014 22:36:57 +0200
-Received: (from kasal@localhost)
-	by camelia.ucw.cz (8.14.3/8.14.3/Submit) id s48Kava0006213;
-	Thu, 8 May 2014 22:36:57 +0200
-In-Reply-To: <xmqqd2fo2fmi.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.19 (2009-01-05)
-X-Original-Sender: kasal@ucw.cz
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
- (google.com: kasal@ucw.cz does not designate permitted sender hosts) smtp.mail=kasal@ucw.cz
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Content-Disposition: inline
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248442>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1WiV7K-0005Tf-D4
+	for gcvg-git-2@plane.gmane.org; Thu, 08 May 2014 22:40:34 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1755672AbaEHUka (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 May 2014 16:40:30 -0400
+Received: from mail-qc0-f181.google.com ([209.85.216.181]:64351 "EHLO
+	mail-qc0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755668AbaEHUk3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 May 2014 16:40:29 -0400
+Received: by mail-qc0-f181.google.com with SMTP id m20so3460171qcx.26
+        for <git@vger.kernel.org>; Thu, 08 May 2014 13:40:29 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:content-transfer-encoding
+         :mime-version;
+        bh=AP3dWFl6nt0c3G9mKfFsarrT+KhLEwQ6Auknveoxc1o=;
+        b=VRfF5miIEiXn8KYwdC3lVmAE6IbpGTfSLnVMTfqxeiwse9kwwKBV1l8Le2O+U0qxhj
+         Hvix/D67XbY6UbSVLKBjAndRjUmpb2bm7UvSKxMc9j2CE9psvcZTA9PfETRuRMxCovh8
+         Po/8BwH6y24pbIpEGeOOksIrq9YNX72hhfa4BE7Now7D+lUKrMXzea4ALBd3790gOrN1
+         +c6f9p+O7L1f0jixvAbbNoLF2zX27jooyJFdvxaK5Y4j3z8czm9wc7eTPB3iQSRRJtqG
+         TYECW0v4bFpvORJvXj4smeysQfy0Z1z7JT6lA7awmTHF/WT3TfpBo/yl7aHFyykdy1iL
+         8WzA==
+X-Gm-Message-State: ALoCoQkxtVfJES8JyqqP3DvLA76kBtXg8c3IKAhh16IXt93rsPAtPimji5mi1Ny+LazsD/Xe0Mrz
+X-Received: by 10.140.104.78 with SMTP id z72mr8343591qge.60.1399581629189;
+        Thu, 08 May 2014 13:40:29 -0700 (PDT)
+Received: from [172.25.144.67] ([8.25.197.27])
+        by mx.google.com with ESMTPSA id o3sm3096031qas.0.2014.05.08.13.40.27
+        for <multiple recipients>
+        (version=SSLv3 cipher=RC4-SHA bits=128/128);
+        Thu, 08 May 2014 13:40:28 -0700 (PDT)
+In-Reply-To: <xmqqha502ghc.fsf@gitster.dls.corp.google.com>
+X-Mailer: Evolution 3.2.3-0ubuntu6 
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248443>
 
-This reverts commit 4dce7d9b408b2935b85721b54a2010eda7ec1be9,
-which was originally done to help Windows but was almost
-immediately reverted in msysGit, and the codebase kept this
-unnecessary divergence for almost two years.
+On Thu, 2014-05-08 at 12:54 -0700, Junio C Hamano wrote:
+> dturner@twopensource.com writes:
+> 
+> > From: David Turner <dturner@twitter.com>
+> >
+> > Make it possible to change the case of a filename on a
+> > case-insensitive filesystem using git mv.  Change git mv to allow
+> > moves where the destination file exists if the destination file has
+> > the same name as the source file ignoring case.
+> >
+> > Signed-off-by: David Turner <dturner@twitter.com>
+> > ---
+> >  builtin/mv.c                | 3 ++-
+> >  t/t6039-merge-ignorecase.sh | 2 +-
+> >  2 files changed, 3 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/builtin/mv.c b/builtin/mv.c
+> > index 45e57f3..f4d89d0 100644
+> > --- a/builtin/mv.c
+> > +++ b/builtin/mv.c
+> > @@ -202,7 +202,8 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+> >  			}
+> >  		} else if (cache_name_pos(src, length) < 0)
+> >  			bad = _("not under version control");
+> > -		else if (lstat(dst, &st) == 0) {
+> > +		else if (lstat(dst, &st) == 0 &&
+> > +			 (!ignore_case || strcasecmp(src, dst))) {
+> 
+> Hmm, I would find it easier to read if it were:
+> 
+> 		... if (lstat(dst, &st) == 0 &&
+>                 	!(ignore_case && !strcasecmp(src, dst))) {
+> 
+> That is, "it is an error for dst to exist, unless we are on a case
+> insensitive filesystem and src and dst refer to the same file.", but
+> maybe it is just me.
 
-Signed-off-by: Stepan Kasal <kasal@ucw.cz>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
-On Thu, May 08, 2014 at 01:13:25PM -0700, Junio C Hamano wrote:
-> OK, let's do this.  I'd like you to take the authorship of it (and
+I personally dislike the double negative. I also considered breaking it
+out into a little function with a self-documenting name -- does that
+sound better?
 
-ok; thank you for the nice description, no need for any correction.
+> More importantly, what is the end-user visible effect of this
+> change?  Is it fair to summarize it like this?
+> 
+>     On a case-insensitive filesystem, "mv hello.txt Hello.txt"
+>     always trigger the "dst already exists" error, because both
+>     names refer to the same file to MS-DOS, requiring the user to
+                                     ^^^^^^
+(I have not actually tested on Windows; I tested on the Mac since that's
+what I have handy)
 
- git-submodule.sh | 3 ---
- 1 file changed, 3 deletions(-)
+>     pass the "--force" option.  Allow it without "--force".
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 66f5f75..821e6d4 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -285,9 +285,6 @@ module_clone()
- 	# resolve any symlinks that might be present in $PWD
- 	a=$(cd_to_toplevel && cd "$gitdir" && pwd)/
- 	b=$(cd_to_toplevel && cd "$sm_path" && pwd)/
--	# normalize Windows-style absolute paths to POSIX-style absolute paths
--	case $a in [a-zA-Z]:/*) a=/${a%%:*}${a#*:} ;; esac
--	case $b in [a-zA-Z]:/*) b=/${b%%:*}${b#*:} ;; esac
- 	# Remove all common leading directories after a sanity check
- 	if test "${a#$b}" != "$a" || test "${b#$a}" != "$b"; then
- 		die "$(eval_gettext "Gitdir '\$a' is part of the submodule path '\$b' or vice versa")"
--- 
-2.0.0-rc2-397-ga0fd1fc
+Yes.
 
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+> Overwriting an existing file with "mv hello.txt Hello.txt" on a case
+> sensitive filesystem *is* an unusual operation, and that is the
+> reason why we require "--force" to make sure that the user means it.
+> I have a slight suspicion that the same "mv hello.txt Hello.txt" on
+> a case insensitive filesystem, where two names are known (to the end
+> user of such a filesystem) to refer to the same path would equally
+> be a very unusual thing to do, and such an operation may deserve a
+> similar safety precaution to make sure that the user really meant to
+> do so by requiring "--force".
+> 
+> So, I dunno.
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+The argument against --force is that git's behavior should not
+significantly differ between sensitive and insensitive filesystems
+(where possible).  I do not see a case-changing rename as unusual on a
+case-insensitive filesystem; these filesystems typically preserve case,
+and a user might reasonably care about the case of a filename either for
+aesthetic reasons or for functionality on sensible filesystems (e.g.
+developers who work on Macs but deploy on GNU/Linux, as is quite
+common).
 
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+The Mac's interface itself provides conflicting evidence: on one hand,
+we might expect git mv to work like plain mv: nothing special is needed
+to do a case-changing mv). On the other hand, in the Finder, attempting
+a case-changing rename causes an error message (which there is no way to
+get around other than the two-rename dance).  I read this as "ordinary
+users never intentionally change the case of files, but developers
+sometimes do", but that's not the only possible reading.
+
+I myself am not actually a Mac user; I simply support a bunch of Mac
+users (which is where the merge bug came from).  So I don't know what
+Mac users would prefer.  Maybe there are some on the git mailing list?
+
+I also have not tried on Windows.  I put in an email to the one
+Windows-using friend I can think of to ask her to give Windows Explorer
+(or whatever it's called these days) a try.  My guess (based on a quick
+Google search) would be is that it works without error, but I will send
+an update if I hear otherwise.
