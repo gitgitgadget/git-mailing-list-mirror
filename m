@@ -1,75 +1,175 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH] Standardize python shebangs
-Date: Thu, 8 May 2014 14:20:23 +0200
-Message-ID: <CALKQrgevDwtjF9Thi9xV6M=Os4mZMwf9JhYecJB4c0-SOJq33A@mail.gmail.com>
-References: <1399456987-24156-1-git-send-email-felipe.contreras@gmail.com>
-	<vpqy4ydpiog.fsf@anie.imag.fr>
-	<536a842838fbb_76ff7a52ec5d@nysa.notmuch>
-	<vpqr445nxrw.fsf@anie.imag.fr>
-	<536a9a34e8194_76ff7a52ec7f@nysa.notmuch>
-	<vpq1tw5nw7q.fsf@anie.imag.fr>
-	<d15f06ad-0418-48ed-a9dc-6ca1e955e75c@email.android.com>
-	<vpqlhucmqxt.fsf@anie.imag.fr>
+From: Fabio D'Alfonso <fabio.dalfonso@fabiodalfonso.com>
+Subject: Re: t5539 fails on ubuntu for v2.0.0-rc2
+Date: Thu, 08 May 2014 16:13:58 +0200
+Organization: Fabio D'Alfonso
+Message-ID: <536B9126.1020702@fabiodalfonso.com>
+References: <536A8FF8.7080909@fabiodalfonso.com> <xmqqeh056z6q.fsf@gitster.dls.corp.google.com> <20140508041423.GC26630@sigill.intra.peff.net> <536B1DF4.5080109@fabiodalfonso.com>
+Reply-To: fabio.dalfonso@fabiodalfonso.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: James Denholm <nod.helm@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Git mailing list <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu May 08 14:20:38 2014
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu May 08 16:37:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WiNJT-00079O-1Y
-	for gcvg-git-2@plane.gmane.org; Thu, 08 May 2014 14:20:35 +0200
+	id 1WiPRk-00078z-Dw
+	for gcvg-git-2@plane.gmane.org; Thu, 08 May 2014 16:37:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753208AbaEHMUa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 May 2014 08:20:30 -0400
-Received: from mail12.copyleft.no ([188.94.218.224]:56400 "EHLO
-	mail12.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751179AbaEHMUa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 May 2014 08:20:30 -0400
-Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
-	by mail12.copyleft.no with esmtp (Exim 4.76)
-	(envelope-from <johan@herland.net>)
-	id 1WiNJL-0001bz-Re
-	for git@vger.kernel.org; Thu, 08 May 2014 14:20:27 +0200
-Received: from mail-ob0-f175.google.com ([209.85.214.175])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1WiNJL-0008kM-C1
-	for git@vger.kernel.org; Thu, 08 May 2014 14:20:27 +0200
-Received: by mail-ob0-f175.google.com with SMTP id wo20so2885361obc.20
-        for <git@vger.kernel.org>; Thu, 08 May 2014 05:20:23 -0700 (PDT)
-X-Received: by 10.182.96.99 with SMTP id dr3mr3940950obb.42.1399551623363;
- Thu, 08 May 2014 05:20:23 -0700 (PDT)
-Received: by 10.182.245.10 with HTTP; Thu, 8 May 2014 05:20:23 -0700 (PDT)
-In-Reply-To: <vpqlhucmqxt.fsf@anie.imag.fr>
+	id S1754360AbaEHOhJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 May 2014 10:37:09 -0400
+Received: from gateway02.websitewelcome.com ([69.41.248.84]:39004 "EHLO
+	gateway02.websitewelcome.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754348AbaEHOhI (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 May 2014 10:37:08 -0400
+X-Greylist: delayed 1333 seconds by postgrey-1.27 at vger.kernel.org; Thu, 08 May 2014 10:37:07 EDT
+Received: by gateway02.websitewelcome.com (Postfix, from userid 5007)
+	id 4FE9E6EA63B33; Thu,  8 May 2014 09:14:09 -0500 (CDT)
+Received: from gator4050.hostgator.com (gator4050.hostgator.com [192.185.4.61])
+	by gateway02.websitewelcome.com (Postfix) with ESMTP id 399136EA60E69
+	for <git@vger.kernel.org>; Thu,  8 May 2014 09:14:07 -0500 (CDT)
+Received: from [95.237.40.27] (port=7788 helo=[192.168.1.16])
+	by gator4050.hostgator.com with esmtpa (Exim 4.82)
+	(envelope-from <fabio.dalfonso@fabiodalfonso.com>)
+	id 1WiP5G-000106-Uk; Thu, 08 May 2014 09:14:03 -0500
+User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
+In-Reply-To: <536B1DF4.5080109@fabiodalfonso.com>
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - gator4050.hostgator.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - fabiodalfonso.com
+X-BWhitelist: no
+X-Source-IP: 95.237.40.27
+X-Exim-ID: 1WiP5G-000106-Uk
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: ([192.168.1.16]) [95.237.40.27]:7788
+X-Source-Auth: fabio.dalfonso@fabiodalfonso.com
+X-Email-Count: 1
+X-Source-Cap: ZGFsZm9uc287ZGFsZm9uc287Z2F0b3I0MDUwLmhvc3RnYXRvci5jb20=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248419>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248420>
 
-On Thu, May 8, 2014 at 1:48 PM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> It is very important that git-multimail keeps running with Python2
-> (ideally, it could be portable Python 2 or 3, but it's not so easy to
-> do), but that would be strange to force even non-git-multimail-users to
-> use Python2 for that.
+The message seems common around  the apache issues but the previous tes=
+t=20
+t5538 that uses start and stop routines works.
 
-FWIW, the rules laid out in PEP394 should be very easy to follow:
+=46abio D'Alfonso
+'Enabling Business Through IT'
+cell.  +39.348.059.40.22 ***
+web: www.fabiodalfonso.com <http://www.fabiodalfonso.com/>
+email: fabio.dalfonso@fabiodalfonso.com
+<mailto:fabio.dalfonso@fabiodalfonso.com>linkedin:=20
+www.linkedin.com/in/fabiodalfonso <http://it.linkedin.com/in/fabiodalfo=
+nso>
+twitter: www.twitter.com/#!/fabio_dalfonso=20
+<http://www.twitter.com/#%21/fabio_dalfonso>
 
- - If your script is Python2-only, use "#!/usr/bin/env python2"
- - If your script is Python3-only, use "#!/usr/bin/env python3"
- - If your script is Python2/3-agnostic, use "#!/usr/bin/env python"
+fax: +39.06.874.599.581
+BlackBerry=C2=AE Wireless Enabled Address.
 
-...Johan
 
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+          ** Hidden  numbers are automatically rejected by the phone*
+
+On 5/8/2014 8:02 AM, Fabio D'Alfonso wrote:
+> Hi,
+> this is the error in httpd error.log
+>
+>  [Wed May 07 20:44:10 2014] [alert] getpwuid: couldn't determine user=
+=20
+> name from  uid 4294967295, you probably need to modify the User direc=
+tive
+>  [Wed May 07 20:44:10 2014] [notice] Apache/2.2.17 (Ubuntu) configure=
+d=20
+> --        resuming normal operations
+>  [Wed May 07 20:44:10 2014] [alert] getpwuid: couldn't determine user=
+=20
+> name from  uid 4294967295, you probably need to modify the User direc=
+tive
+>  [Wed May 07 20:44:10 2014] [alert] getpwuid: couldn't determine user=
+=20
+> name from  uid 4294967295, you probably need to modify the User direc=
+tive
+>  [Wed May 07 20:44:10 2014] [alert] getpwuid: couldn't determine user=
+=20
+> name from  uid 4294967295, you probably need to modify the User direc=
+tive
+>  [Wed May 07 20:44:10 2014] [alert] getpwuid: couldn't determine user=
+=20
+> name from  uid 4294967295, you probably need to modify the User direc=
+tive
+>  [Wed May 07 20:44:11 2014] [alert] Child 12037 returned a Fatal=20
+> error...        Apache is exiting!
+>
+> The 1.9.x versions compiled and tested here, before. It is a natty=20
+> dektop 11.04.
+>
+> Thanks
+>
+> Fabio D'Alfonso
+> 'Enabling Business Through IT'
+> cell.  +39.348.059.40.22 ***
+> web: www.fabiodalfonso.com <http://www.fabiodalfonso.com/>
+> email: fabio.dalfonso@fabiodalfonso.com
+> <mailto:fabio.dalfonso@fabiodalfonso.com>linkedin:=20
+> www.linkedin.com/in/fabiodalfonso=20
+> <http://it.linkedin.com/in/fabiodalfonso>
+> twitter: www.twitter.com/#!/fabio_dalfonso=20
+> <http://www.twitter.com/#%21/fabio_dalfonso>
+>
+> fax: +39.06.874.599.581
+> BlackBerry=C2=AE Wireless Enabled Address.
+>
+>
+>          ** Hidden  numbers are automatically rejected by the phone*
+>
+> On 5/8/2014 6:14 AM, Jeff King wrote:
+>> On Wed, May 07, 2014 at 02:45:01PM -0700, Junio C Hamano wrote:
+>>
+>>> Fabio D'Alfonso <fabio.dalfonso@fabiodalfonso.com> writes:
+>>>
+>>>> root@HDUBVM01:~/builds/git/t# ./t5539-fetch-http-shallow.sh
+>>>> ok 1 - setup shallow clone
+>>>> not ok 2 - clone http repository
+>>> [...]
+>>> Does not reproduce for me but I am on Ubuntu 12.04.2 LTS, so...
+>> Nor me on Debian unstable.
+>>
+>>> Running it with the -v option might give you more hints, and
+>>> running it as
+>>>
+>>>      $ sh -x ./t5539-fe* -v
+>>>
+>>> might give you more to chew.
+>> Yes, definitely that, but also, from:
+>>
+>>>> httpd (pid 10653?) not running
+>>>> # failed 2 among 3 test(s)
+>> ...it looks like the httpd server did not start. Look in httpd/error=
+=2Elog
+>> of "trash directory.t5539-fetch-http-shallow" to see the apache log.=
+ It
+>> may give some reason for failing to start.
+>>
+>> -Peff
+>> --=20
+>> To unsubscribe from this list: send the line "unsubscribe git" in
+>> the body of a message to majordomo@vger.kernel.org
+>> More majordomo info at http://vger.kernel.org/majordomo-info.html
+>>
+>
+> --=20
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
+>
