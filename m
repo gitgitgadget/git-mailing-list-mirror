@@ -1,77 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/4] remote-hg: more improvements
-Date: Wed, 07 May 2014 17:00:54 -0700
-Message-ID: <xmqqha515ebt.fsf@gitster.dls.corp.google.com>
-References: <1399169814-20201-1-git-send-email-felipe.contreras@gmail.com>
-	<xmqq8uqdbgqg.fsf@gitster.dls.corp.google.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: What's cooking in git.git (Apr 2014, #09; Tue, 29)
+Date: Wed, 07 May 2014 19:18:13 -0500
+Message-ID: <536acd4578ac_3caaa612ec76@nysa.notmuch>
+References: <xmqq7g67iwxc.fsf@gitster.dls.corp.google.com>
+ <20140505184546.GB23935@serenity.lan>
+ <xmqqoazb944d.fsf@gitster.dls.corp.google.com>
+ <rmiha51dd99.fsf@fnord.ir.bbn.com>
+ <536a8f6cd81e9_76ff7a52ec60@nysa.notmuch>
+ <rmizjit6txa.fsf@fnord.ir.bbn.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 08 02:01:04 2014
+To: Greg Troxel <gdt@ir.bbn.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 08 02:30:54 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WiBln-0007Ov-Bd
-	for gcvg-git-2@plane.gmane.org; Thu, 08 May 2014 02:01:03 +0200
+	id 1WiCEg-0002QS-6G
+	for gcvg-git-2@plane.gmane.org; Thu, 08 May 2014 02:30:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752591AbaEHAA7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2014 20:00:59 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:59796 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751587AbaEHAA7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 May 2014 20:00:59 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A127C1693E;
-	Wed,  7 May 2014 20:00:58 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=WG6M9DXRLFM/1HFCY8DrrgDbiA8=; b=iYuMTODhtZXfLhvu00am
-	3hzn/2Qh/UUcLgYOhOmcg6q5p60YmL4HK2DbVAD2u5cIyJfyStaqau/2TO07mmlt
-	XNGZl5u4pp4NyWSJkdqyz34GJq2MyjUfv/q7xJx9zPUHtCUusajwjffaiJFMl8+W
-	8RVsYO5NC3Lt0KypF9jNPjI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=n0oWUqmSmZUV7HduwHzwbrKozRO/KU2DIq7rKDeEUI73Hl
-	q8bsw/NdmBRu6GTlAJdFF8pKRb3Ut+1r3Xc4KRUmA8rNkCVQPMzy9FxcrDAAeNbK
-	frkXJ7Nmuv5V/5+iFO8TS1lY2PZeBgKwfJD/q65bWunF296Y7BHkmUmDE86cw=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 96FD61693D;
-	Wed,  7 May 2014 20:00:58 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 484F216938;
-	Wed,  7 May 2014 20:00:56 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: D43B5FBE-D643-11E3-9653-9CEB01674E00-77302942!pb-smtp0.pobox.com
+	id S1751298AbaEHA3B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2014 20:29:01 -0400
+Received: from mail-yk0-f179.google.com ([209.85.160.179]:39817 "EHLO
+	mail-yk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751111AbaEHA3A (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 May 2014 20:29:00 -0400
+Received: by mail-yk0-f179.google.com with SMTP id 19so1532400ykq.38
+        for <git@vger.kernel.org>; Wed, 07 May 2014 17:28:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=X39JhKA174u6QdWrhiUttNXzIBNKZAGnkzfSYX22pb0=;
+        b=D4VcqBRVdwMyG8H/4nH3nno+wFBqpCS4or73+/KRmy3mFVb7rIn2KWNd/OxrTS9S8y
+         zZm3VFDyY/wC1BN7aJG33xr5qp/XanSd4GhCwiL26z3ZaRxQCibg2R9l4ovlQ3pSfLyA
+         wbhi5J4Vw6du+AIJjEaQZCz/4fXSVyTB2DvcM0Q0Qt5pdJot9UFr2sTIPnY/pRbugCMP
+         uPK2kzt1oRQ47lbvHEe4rpZ8Q0+uCbKVV5M+IT5zsz5xe0WashCIdDX2Md3Ivs7AbVSY
+         zW9dc2zCjnO382vCF2etveV9jeQFsizMExcQ/cP8nhC/vHdPhiTyxuVjMjXn3SlTT2DX
+         b/sw==
+X-Received: by 10.236.102.70 with SMTP id c46mr507221yhg.40.1399508939875;
+        Wed, 07 May 2014 17:28:59 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id d44sm29513553yhf.21.2014.05.07.17.28.57
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 07 May 2014 17:28:58 -0700 (PDT)
+In-Reply-To: <rmizjit6txa.fsf@fnord.ir.bbn.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248393>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
+Greg Troxel wrote:
+> 
 > Felipe Contreras <felipe.contreras@gmail.com> writes:
->
->> Here's a bunch of tests more, and a fixes for Mercurial v3.0.
->
-> I think the discussion with John Keeping hints that we shouldn't be
-> rushing fc/remote-helpers-hg-bzr-graduation and this does not appear
-> to assume the presense of that series, which is good in order to
-> make these fixes jump over them.
+> 
+> > Greg Troxel wrote:
+> >> In a packaging system, dependencies are much more troublesome.
+> >> Dependencies have to be declared, and the build limited to use only
+> >> those declared dependencies, in order to get repeatable builds and
+> >> binary packages that can be used on other systems.  Dependencies that
+> >> really are required are fine.  But optional dependencies are a
+> >> problem, because e.g. one doesn't want to require the presence of qt
+> >> to build something (that isn't already enormous).   So if git needs
+> >> mercurial and subversion installed, plus perhaps 5 other things for
+> >> less popular remote helpers, that starts to be a real burden.
+> >
+> > It doesn't *need* them to build. The Mercurial/Bazaar dependencies are
+> > optional, both at build-time and at run-time. Most distributions would
+> > want to test the functionality they are distributing, and for testing
+> > they do need these dependencies.
+> 
+> My point is that a packaging of git needs to either decide to forego
+> these optional parts, or to include them, in the default case.
 
-When merged to a place somewhere early between the next and the pu
-branches (aka "the jch branch", which is the version I usually use
-myself), this seemed to break t5810, so I did today's integration
-cycle one more time by excluding this topic and then instead queuing
-it near the tip of the pu branch (read: today's 'pu' does not pass
-the test suite for me).
+That is currently the case. They would be included by default, but not
+usable unless the *optional* dependencies are installed.
 
-There may be some other changes that this series depends on that I
-may have missed that caused this breakage.  Can you take a look?
+> So I'm merely trying to suggest that it's better to have a core
+> package with a restrained set of dependencies, and then a way to build
+> the other things independently (perhaps assuming the core is
+> built/installed), each with their own dependencies.
 
-Thanks.
+I'm all in favor of 'make install' installing only the core of Git, and
+different targets for all the other parts.
+
+However, if you take a look at any distribution's packaing of Git you
+would see why that wouldn't be desirable (they are full of hacks and
+fixes). If the build system is eventually fixed so one package can do
+'make install', another 'make install-p4', another 'make install-hg' and
+so on, that would be great. But we are pretty far from that.
+
+-- 
+Felipe Contreras
