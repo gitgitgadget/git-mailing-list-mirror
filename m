@@ -1,74 +1,74 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: Is there any efficient way to track history of a piece of code?
-Date: Thu, 08 May 2014 19:35:49 +1200
-Message-ID: <536B33D5.7090301@gmail.com>
-References: <CAHz2CGW4rRWzGMPxM1XsoYvrwrrddrxAr+AKAi5SdMx+3rBjNg@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: What's cooking in git.git (Apr 2014, #09; Tue, 29)
+Date: Thu, 08 May 2014 02:56:37 -0500
+Message-ID: <536b38b55b7fc_4fa68b32eca@nysa.notmuch>
+References: <xmqq7g67iwxc.fsf@gitster.dls.corp.google.com>
+ <20140505184546.GB23935@serenity.lan>
+ <xmqqoazb944d.fsf@gitster.dls.corp.google.com>
+ <536B3259.1050602@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+ charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com
-To: Jianyu Zhan <nasa4836@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 08 09:36:03 2014
+Cc: git@vger.kernel.org
+To: Chris Packham <judge.packham@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Thu May 08 10:07:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WiIs3-0005mF-I4
-	for gcvg-git-2@plane.gmane.org; Thu, 08 May 2014 09:35:59 +0200
+	id 1WiJMi-0001RZ-53
+	for gcvg-git-2@plane.gmane.org; Thu, 08 May 2014 10:07:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751549AbaEHHfz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 May 2014 03:35:55 -0400
-Received: from mail-pd0-f182.google.com ([209.85.192.182]:50333 "EHLO
-	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751103AbaEHHfy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 May 2014 03:35:54 -0400
-Received: by mail-pd0-f182.google.com with SMTP id v10so2117957pde.13
-        for <git@vger.kernel.org>; Thu, 08 May 2014 00:35:54 -0700 (PDT)
+	id S1752757AbaEHIHb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 May 2014 04:07:31 -0400
+Received: from mail-yk0-f176.google.com ([209.85.160.176]:34504 "EHLO
+	mail-yk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751756AbaEHIH1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 May 2014 04:07:27 -0400
+Received: by mail-yk0-f176.google.com with SMTP id q9so1831116ykb.21
+        for <git@vger.kernel.org>; Thu, 08 May 2014 01:07:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=rQuvZzVLfUv/ZJpt3bfcOj6VtIPV0mr+KxXfztXbVjE=;
-        b=BqKsmyaTtGb6NajQoFCuJrCvvlTYbPEi1wYQPlhjlkSFWJDewyKmATjSeH/Kf2Wi/j
-         FvZV/BI/kwXkzQ1ueNEd2iondbwcSUGiP+EHzKn0TMKc0fHEDobEIkojG6B7ZSgaKpe4
-         BWwiuswlFe2BdM6GBWi4386/+rciBn0+yyAFB89DBNQCC5eiQ88ek8vjzGGPHYRvmmcy
-         NwRGDsDk+cXNI94OFyo2xM/YMhy201LsgVhiNZHJYtShH/CrPBSCYROrxTn2vLP95hcz
-         EY9/WAibNab0edGFQOMcbztqRi4xSeU1Y5ZQwgyWZCLqaB5jksyhJrvQcPmfT4KwuYwp
-         l8+A==
-X-Received: by 10.66.65.169 with SMTP id y9mr4261774pas.145.1399534554499;
-        Thu, 08 May 2014 00:35:54 -0700 (PDT)
-Received: from linux.site (115-188-15-163.jetstream.xtra.co.nz. [115.188.15.163])
-        by mx.google.com with ESMTPSA id kt8sm1012368pab.7.2014.05.08.00.35.51
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=K5w/ID96nfH4s3hDD6GCy7j8V19K0OE0yUJbJCWmbr8=;
+        b=U6gkXEqsPF9G54VEwlbtyfwEC7+mllLjLjigq1Fe+XRC1lwjGLZJu4SmqoCyHCoa+f
+         z6jBSgVNmyWkVeeaUgxkmsGHbBrHiWVr1Pau+u5QccX7iQYBsfc1gPmgoVKyLZbkQooF
+         q2pK+ejnDDgaMWpPl+pz3WEq1MiUt2uBqK2j5Mp4wkuwiSrpNgBEnqzeLYWEPk8W2lbb
+         6qL9Ij9WN/RtkvYM4TaJkY+W6nH7iRyBTzO1C1yi8Sc/VGrj18dyFA0JmZYZVJO6pZ2B
+         zYHIbEw4nVAS4ZEL285iyOQEk5A7AcXTmTHhQdX0AtU0xbjbJsw7nhdU+hORsgnSIYDP
+         YSxA==
+X-Received: by 10.236.231.6 with SMTP id k6mr2709455yhq.156.1399536446727;
+        Thu, 08 May 2014 01:07:26 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id x37sm323467yhn.39.2014.05.08.01.07.22
         for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 08 May 2014 00:35:53 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
-In-Reply-To: <CAHz2CGW4rRWzGMPxM1XsoYvrwrrddrxAr+AKAi5SdMx+3rBjNg@mail.gmail.com>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 08 May 2014 01:07:23 -0700 (PDT)
+In-Reply-To: <536B3259.1050602@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248414>
 
-On 08/05/14 18:54, Jianyu Zhan wrote:
-> Usually, a trivial change(like coding style fix) may bury a
-> original change of the code, and thus git blame is of less
-> help. And to address this situation, I have to do like this:
+Chris Packham wrote:
+> On 06/05/14 11:50, Junio C Hamano wrote:
+> > The same argument would apply to git-svn, git-p4, and git-cvsimport,
+> > I would think.
 > 
->    git blame -s REF^ <file-in-question> > temp
-> 
-> to dig into the history recursively by hand, to find out
-> the original change.
-> 
-> Here, REF is commit-id that git blame reports.
-> 
-> git log -L is a good alternative option, but sometimes it seems
-> too cubersome, as I care only one line of code.
-> 
-> Is there any current solution or suggestion?
-> 
+> A bit of a crazy suggestion and a little off-topic. Assuming maintainers
+> can be found what about having these foreign vcs interfaces as
+> submodules. That way they can be in Junio's tree as well as having their
+> own release cycles. The same could apply to git-gui, gitk and gitweb. It
+> would also be a chance to eat-our-own-dogfood with submodules.
 
-I use "git gui blame" for this all the time at $dayjob. If there aren't
-too many of these code clean ups then the eclipse git integration is
-also handy for this but it will suffer from the same issues as git blame.
+If submodules were an integral part of Git that would be a possibility,
+but they are more like a hack.
+
+-- 
+Felipe Contreras
