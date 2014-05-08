@@ -1,67 +1,100 @@
-From: James Denholm <nod.helm@gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
 Subject: Re: [PATCH 0/4] remote-hg: more improvements
-Date: Thu, 8 May 2014 11:34:48 +1000
-Message-ID: <CAHYYfeGvOnonm0fd=Fa9p_if+8dRo2zg_N9c=gjjqyko=ipJag@mail.gmail.com>
+Date: Wed, 07 May 2014 20:36:22 -0500
+Message-ID: <536adf96f37ec_3caaa612ec69@nysa.notmuch>
 References: <1399169814-20201-1-git-send-email-felipe.contreras@gmail.com>
-	<xmqq8uqdbgqg.fsf@gitster.dls.corp.google.com>
-	<536a83097302f_76ff7a52ec6c@nysa.notmuch>
-	<xmqqvbth8ha9.fsf@gitster.dls.corp.google.com>
-	<536a999e2c0c_76ff7a52ec1e@nysa.notmuch>
-	<xmqqoaz95ees.fsf@gitster.dls.corp.google.com>
-	<536ad9601b73b_3caaa612ecdc@nysa.notmuch>
+ <xmqq8uqdbgqg.fsf@gitster.dls.corp.google.com>
+ <xmqqha515ebt.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	John Keeping <john@keeping.me.uk>,
-	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-	Scott Chacon <schacon@gmail.com>, Jeff King <peff@peff.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 08 03:34:55 2014
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 08 03:47:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WiDEb-00042u-Cd
-	for gcvg-git-2@plane.gmane.org; Thu, 08 May 2014 03:34:53 +0200
+	id 1WiDR5-0004SM-L7
+	for gcvg-git-2@plane.gmane.org; Thu, 08 May 2014 03:47:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752815AbaEHBet (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 May 2014 21:34:49 -0400
-Received: from mail-vc0-f173.google.com ([209.85.220.173]:63644 "EHLO
-	mail-vc0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751841AbaEHBet (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 May 2014 21:34:49 -0400
-Received: by mail-vc0-f173.google.com with SMTP id il7so2404243vcb.32
-        for <git@vger.kernel.org>; Wed, 07 May 2014 18:34:48 -0700 (PDT)
+	id S1752762AbaEHBrM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 May 2014 21:47:12 -0400
+Received: from mail-yh0-f41.google.com ([209.85.213.41]:41312 "EHLO
+	mail-yh0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752720AbaEHBrL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 May 2014 21:47:11 -0400
+Received: by mail-yh0-f41.google.com with SMTP id f73so1760803yha.0
+        for <git@vger.kernel.org>; Wed, 07 May 2014 18:47:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=w5GFDPKn6NMKn539b+XmiJp9Cal1waDiGtcFK1U9jn0=;
-        b=T8+8bfGxkdCPnTxb0wrfpTzScBX8d7v2gFzvcu/V6r5Gr25viq9kQpvAJl3s8xvKXd
-         XLZS9vD1cwV5E7/QIsSm/440nAjnSkuZJMkv0xWameBNO6jW2oiKwUl/FIcGAN+HhMil
-         nVsOwHBTIlDAUz02rElPwJh4/KJjb3HFlRPDymJoHsktwm/etSa/GP54WdcfxppZRJ48
-         Wa4VGkb0Sw6V9ft9AE+cw/ab+dU8UOFk6srJ482wmTe77NPMXUq03jdCGixwqo7TLWCw
-         B6IdxAwZNDjJNpN1A5hV3lGSkFJNLugZ3L8Ab4WmtkUchJ1Xol9+zq2gKdaUpgjKRfMz
-         YkYQ==
-X-Received: by 10.52.99.168 with SMTP id er8mr354769vdb.26.1399512888104; Wed,
- 07 May 2014 18:34:48 -0700 (PDT)
-Received: by 10.58.12.2 with HTTP; Wed, 7 May 2014 18:34:48 -0700 (PDT)
-In-Reply-To: <536ad9601b73b_3caaa612ecdc@nysa.notmuch>
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=UcBKHSrs8lMxfbNp2pSNi0MZTWEqYnQ7SI8UG+tvIpk=;
+        b=Y3kSmAVPcBXup06v0KRuG/U45wrwfZGFxafaaz9bmUyfmf1odHH/11+4HJ9h6LQMKc
+         iW3q76bEpxCrHnMkMcPvvdhBoKA9Z7jJSoXEGtBhEOa5jp5IiBDYD14nzpbTpaHFJ+NX
+         kucQwD0LNlO+BC6g6LeL4EzIt/cJkG9XOhHyCf71Uz3g4H7KV7F3ECIQRZ/+UtBZ7+5d
+         w4jo8bSPLD+6tGZbqukbLpuT6XCMyl9dbiu6ScbN1Sa7znofSMBzjyaKf/UeHyS90ou1
+         YhLHjCB8tor6QvZDGwLCLRSTSnDQejAS9yc01hMr5O0FnDu2JviWjAdSp+/ipr7R0RUs
+         t5IA==
+X-Received: by 10.236.206.7 with SMTP id k7mr809227yho.84.1399513630742;
+        Wed, 07 May 2014 18:47:10 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id e4sm13803677yhb.32.2014.05.07.18.47.08
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 07 May 2014 18:47:09 -0700 (PDT)
+In-Reply-To: <xmqqha515ebt.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248399>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248400>
 
-Felipe, I would ask, suggest, beg, implore you to calm down. It's
-generally not a good plan to alienate the maintainer of a project,
-regardless of the correctness or incorrectness of one's arguments, but I
-fear that's only what you will achieve at the moment.
+Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > Felipe Contreras <felipe.contreras@gmail.com> writes:
+> >
+> >> Here's a bunch of tests more, and a fixes for Mercurial v3.0.
+> >
+> > I think the discussion with John Keeping hints that we shouldn't be
+> > rushing fc/remote-helpers-hg-bzr-graduation and this does not appear
+> > to assume the presense of that series, which is good in order to
+> > make these fixes jump over them.
+> 
+> When merged to a place somewhere early between the next and the pu
+> branches (aka "the jch branch", which is the version I usually use
+> myself), this seemed to break t5810, so I did today's integration
+> cycle one more time by excluding this topic and then instead queuing
+> it near the tip of the pu branch (read: today's 'pu' does not pass
+> the test suite for me).
+> 
+> There may be some other changes that this series depends on that I
+> may have missed that caused this breakage.  Can you take a look?
 
---
-Regards,
-James Denholm.
+I'm such a bad maintainer and I don't take constructive criticism well
+why would you expect me to take a look?
+
+As usual, I did more than take a look and I went ahead to manually test
+with multiple versions of Mercurial. The problem appears with hg < 2.6.
+
+Here's the fix:
+
+--- a/git-remote-hg.py
++++ b/git-remote-hg.py
+@@ -905,7 +905,7 @@ def write_tag(repo, tag, node, msg, author):
+         try:
+             fctx = tip.filectx(f)
+             data = fctx.data()
+-        except error.ManifestLookupError:
++        except error.LookupError:
+             data = ""
+         content = data + "%s %s\n" % (node, tag)
+         return context.memfilectx(f, content, False, False, None)
+
+-- 
+Felipe Contreras
