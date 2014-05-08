@@ -1,148 +1,176 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Windows: Always normalize paths to Windows-style
-Date: Thu, 08 May 2014 13:13:25 -0700
-Message-ID: <xmqqd2fo2fmi.fsf@gitster.dls.corp.google.com>
-References: <20140428083931.GA10257@camelia.ucw.cz>
-	<CABPQNSaC30p7TEOvc85u=+skjrFj17182vWWSL=QNVuvzVFE=w@mail.gmail.com>
-	<20140428113815.GA10559@camelia.ucw.cz>
-	<20140428114224.GA11186@camelia.ucw.cz>
-	<CABPQNSbDkE+Vff=4MmPO9oMfjRay6Oin51zZRoZ8mOEhGoaD3Q@mail.gmail.com>
-	<20140428142931.GA12056@camelia.ucw.cz>
-	<20140507184444.GB4013@sandbox-ub>
-	<xmqqmwet8gre.fsf@gitster.dls.corp.google.com>
-	<20140508101115.GC4511@camelia.ucw.cz>
+From: Per Cederqvist <cederp@opera.com>
+Subject: Re: [GUILT 20/28] "guilt graph": Handle patch names containing quotes.
+Date: Thu, 8 May 2014 22:18:44 +0200
+Message-ID: <CAP=KgsSOz7Yg=J42QU9rUKmX+rxppXVVHs5S4G-_KOcUr+Lwaw@mail.gmail.com>
+References: <1395387126-13681-1-git-send-email-cederp@opera.com>
+	<1395387126-13681-21-git-send-email-cederp@opera.com>
+	<CAPig+cQ8aPSjCzf0AjNQRvtJJ52eaOi=fJNZ8vXdnFoE5vxyAQ@mail.gmail.com>
+	<20140506202446.GQ1655@meili.valhalla.31bits.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Heiko Voigt <hvoigt@hvoigt.net>,  GIT Mailing-list <git@vger.kernel.org>,  Johannes Sixt <j6t@kdbg.org>,  msysgit@googlegroups.com
-To: Stepan Kasal <kasal@ucw.cz>
-X-From: msysgit+bncBCG77UMM3EJRB2WKV6NQKGQESN2BEOI@googlegroups.com Thu May 08 22:13:33 2014
-Return-path: <msysgit+bncBCG77UMM3EJRB2WKV6NQKGQESN2BEOI@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-yh0-f63.google.com ([209.85.213.63])
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>
+To: Jeff Sipek <jeffpc@josefsipek.net>
+X-From: git-owner@vger.kernel.org Thu May 08 22:18:51 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCG77UMM3EJRB2WKV6NQKGQESN2BEOI@googlegroups.com>)
-	id 1WiUhA-0000Mg-RH
-	for gcvm-msysgit@m.gmane.org; Thu, 08 May 2014 22:13:33 +0200
-Received: by mail-yh0-f63.google.com with SMTP id z6sf639720yhz.28
-        for <gcvm-msysgit@m.gmane.org>; Thu, 08 May 2014 13:13:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=I2oLPb52e71GUhPfbQfvaZpv4Ik+fuJldQJKqGOgDNQ=;
-        b=lVxmag4lQ850ciEStE1v9y2zNrgLo8PyWJpOkbVxTQtkzPEQY/Mox9FlIki+c0JqZ6
-         bW4Vi+8Sc6QCMvgDQ1Aandb+Txw8J1RdjI7UjumfYGV+MMdWr9IN054cOLK0JJv/JCbG
-         wx3JTl0GMm6VraIw/FNdzaQ0vfPiKLAa1yE+D0DRFEdLCedZVRPXT22fXl5pX6S3yMNe
-         85qrVYPRHpmh47qxujGwH7CO+Y1jKtjLMypdhajYhRlW9cNTys12zVpuERj8rhNVTrVu
-         YLAiltddnJIrdkdiVawSwKi6kZZSalHsW4DND6UkuY4+Y7QcexBe1wqt11ToGV18WJd3
-         tDaQ==
-X-Received: by 10.50.79.137 with SMTP id j9mr858292igx.15.1399580011845;
-        Thu, 08 May 2014 13:13:31 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.50.79.225 with SMTP id m1ls618121igx.9.canary; Thu, 08 May
- 2014 13:13:30 -0700 (PDT)
-X-Received: by 10.42.29.138 with SMTP id r10mr2564254icc.11.1399580010716;
-        Thu, 08 May 2014 13:13:30 -0700 (PDT)
-Received: from smtp.pobox.com (smtp.pobox.com. [208.72.237.35])
-        by gmr-mx.google.com with ESMTP id ga1si319800qcb.0.2014.05.08.13.13.30
-        for <msysgit@googlegroups.com>;
-        Thu, 08 May 2014 13:13:30 -0700 (PDT)
-Received-SPF: pass (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2CA8A157C7;
-	Thu,  8 May 2014 16:13:30 -0400 (EDT)
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1F183157C5;
-	Thu,  8 May 2014 16:13:30 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 94731157C3;
-	Thu,  8 May 2014 16:13:27 -0400 (EDT)
-In-Reply-To: <20140508101115.GC4511@camelia.ucw.cz> (Stepan Kasal's message of
-	"Thu, 8 May 2014 12:11:15 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 3764FF06-D6ED-11E3-9395-9CEB01674E00-77302942!pb-smtp0.pobox.com
-X-Original-Sender: gitster@pobox.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted
- sender) smtp.mail=junio@pobox.com;       dkim=pass header.i=@pobox.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248439>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1WiUmI-0006Kn-R4
+	for gcvg-git-2@plane.gmane.org; Thu, 08 May 2014 22:18:51 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1755786AbaEHUSr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 May 2014 16:18:47 -0400
+Received: from mail-ig0-f174.google.com ([209.85.213.174]:39575 "EHLO
+	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755688AbaEHUSp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 May 2014 16:18:45 -0400
+Received: by mail-ig0-f174.google.com with SMTP id h3so270364igd.13
+        for <git@vger.kernel.org>; Thu, 08 May 2014 13:18:44 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Kkmls1X/EUabBMDmN9f8ky+v+HYOh/vWKACIejBUOnk=;
+        b=LIOEBzvdFKzlBwbzIgKU1XRFCW+3xBRoX4cokpk5qXO4fmVDpl0SQiJKj4lMci5yEc
+         vMnLHyKRwyz5cus812StWLB0i6fKVMYo+RQ3GUBE0uQs/k2cYeHIyGAlnmS7pckO3fbG
+         A0cElfoQ65iAxNERfUKV8PHucAfZfVCpT7FwkqWimyPsBMXoJdxumZeC/qltNhtTvprn
+         ZHA6UXlTCql8No4FTtOE5JobWY3XPxLiXRDjtWK+N8PpNKYAhMplutRtHOT6oyHX5lGE
+         DVCX1Oe0cXTDev5kF2a5PAoJ8gtElA9BJpuGO60Czaa1PkJmwM80msR93vZgC11X9u67
+         KqvQ==
+X-Gm-Message-State: ALoCoQnVhX7WjXborNYz7SBcOmNITHGZzTn5sDyct3S/oF4Mnnons9A2S3xlyDzgNLbcoRozGquG
+X-Received: by 10.50.66.227 with SMTP id i3mr12156473igt.19.1399580324865;
+ Thu, 08 May 2014 13:18:44 -0700 (PDT)
+Received: by 10.43.89.66 with HTTP; Thu, 8 May 2014 13:18:44 -0700 (PDT)
+In-Reply-To: <20140506202446.GQ1655@meili.valhalla.31bits.net>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248440>
 
-Stepan Kasal <kasal@ucw.cz> writes:
+On Tue, May 6, 2014 at 10:24 PM, Jeff Sipek <jeffpc@josefsipek.net> wro=
+te:
+> On Fri, Mar 21, 2014 at 03:57:37AM -0400, Eric Sunshine wrote:
+>> On Fri, Mar 21, 2014 at 3:31 AM, Per Cederqvist <cederp@opera.com> w=
+rote:
+>> > Quote quotes with a backslash in the "guitl graph" output.  Otherw=
+ise,
+>>
+>> s/guitl/guilt/
+>
+> Yep.
 
-> This one was accepted to git, but was reverted in msysGit almost
-> immediately by 64a8a03.  Things stayed that way for 2 years.
-> So it seems no one has ever actually used this code.
-> Consequently, I propose to revert 4dce7d9b from git.
+Oups. Will fix.
 
-OK, let's do this.  I'd like you to take the authorship of it (and
-correct any mistake I may have made in the description) with your
-sign-off.
+>> > the "dot" file could contain syntax errors.
+>> >
+>> > Added a test case.
+>> > ---
+>> >  guilt-graph          |  2 ++
+>> >  regression/t-033.out | 22 ++++++++++++++++++++++
+>> >  regression/t-033.sh  |  9 +++++++++
+>> >  3 files changed, 33 insertions(+)
+>> >
+>> > diff --git a/guilt-graph b/guilt-graph
+>> > index 575f03b..24ab83b 100755
+>> > --- a/guilt-graph
+>> > +++ b/guilt-graph
+>> > @@ -58,6 +58,8 @@ while [ "$current" !=3D "$base" ]; do
+>> >  }"`
+>> >         [ -z "$pname" ] && pname=3D"?"
+>> >
+>> > +       pname=3D"`printf \"%s\" $pname|sed 's/\"/\\\\\"/g'`"
+>
+> Some of this filtering is getting a bit unwieldy.  I'd add spaces aro=
+und the
+> |.  Do we want to be paranoid and add quotes around $pname?  If not, =
+then it
+> looks good.
 
-Thanks.
+Indeed. I wish I could think of a better way to do this. :-)
 
--- >8 --
-From: Stepan Kasal <kasal@ucw.cz>
-Subject: [PATCH] Revert "submodules: fix ambiguous absolute paths under Windows"
+I'll add spaces, and quote $pname just to play safe.
 
-This reverts commit 4dce7d9b408b2935b85721b54a2010eda7ec1be9,
-which was originally done to help Windows but was almost
-immediately reverted in msysGit, and the codebase kept this
-unnecessary divergence for almost two years.
+    /ceder
 
-Not-Signed-off-yet-by: Stepan Kasal <kasal@ucw.cz>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- git-submodule.sh | 3 ---
- 1 file changed, 3 deletions(-)
-
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 66f5f75..821e6d4 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -285,9 +285,6 @@ module_clone()
- 	# resolve any symlinks that might be present in $PWD
- 	a=$(cd_to_toplevel && cd "$gitdir" && pwd)/
- 	b=$(cd_to_toplevel && cd "$sm_path" && pwd)/
--	# normalize Windows-style absolute paths to POSIX-style absolute paths
--	case $a in [a-zA-Z]:/*) a=/${a%%:*}${a#*:} ;; esac
--	case $b in [a-zA-Z]:/*) b=/${b%%:*}${b#*:} ;; esac
- 	# Remove all common leading directories after a sanity check
- 	if test "${a#$b}" != "$a" || test "${b#$a}" != "$b"; then
- 		die "$(eval_gettext "Gitdir '\$a' is part of the submodule path '\$b' or vice versa")"
--- 
-2.0.0-rc2-397-ga0fd1fc
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+>> > +
+>> >         disp "# checking rev $current"
+>> >         disp "  \"$current\" [label=3D\"$pname\"]"
+>> >
+>> > diff --git a/regression/t-033.out b/regression/t-033.out
+>> > index e638d7b..1c28ea9 100644
+>> > --- a/regression/t-033.out
+>> > +++ b/regression/t-033.out
+>> > @@ -63,3 +63,25 @@ digraph G {
+>> >         "ff2775f8d1dc753f635830adcc3a067e0b681e2d" [label=3D"a.pat=
+ch"]
+>> >         "891bc14b5603474c9743fd04f3da888644413dc5" -> "ff2775f8d1d=
+c753f635830adcc3a067e0b681e2d"; // ?
+>> >  }
+>> > +% guilt new a-"better&quicker'-patch.patch
+>> > +% git add file.txt
+>> > +% guilt refresh
+>> > +Patch a-"better&quicker'-patch.patch refreshed
+>> > +% guilt pop
+>> > +Now at c.patch.
+>> > +% guilt push
+>> > +Applying patch..a-"better&quicker'-patch.patch
+>> > +Patch applied.
+>> > +% guilt graph
+>> > +digraph G {
+>> > +# checking rev bc7df666a646739eaf559af23cab72f2bfd01f0e
+>> > +       "bc7df666a646739eaf559af23cab72f2bfd01f0e" [label=3D"a-\"b=
+etter&quicker'-patch.patch"]
+>> > +# checking rev 891bc14b5603474c9743fd04f3da888644413dc5
+>> > +       "891bc14b5603474c9743fd04f3da888644413dc5" [label=3D"c.pat=
+ch"]
+>> > +       "bc7df666a646739eaf559af23cab72f2bfd01f0e" -> "891bc14b560=
+3474c9743fd04f3da888644413dc5"; // ?
+>> > +# checking rev c7014443c33d2b0237293687ceb9cbd38313df65
+>> > +       "c7014443c33d2b0237293687ceb9cbd38313df65" [label=3D"b.pat=
+ch"]
+>> > +# checking rev ff2775f8d1dc753f635830adcc3a067e0b681e2d
+>> > +       "ff2775f8d1dc753f635830adcc3a067e0b681e2d" [label=3D"a.pat=
+ch"]
+>> > +       "891bc14b5603474c9743fd04f3da888644413dc5" -> "ff2775f8d1d=
+c753f635830adcc3a067e0b681e2d"; // ?
+>> > +}
+>> > diff --git a/regression/t-033.sh b/regression/t-033.sh
+>> > index 57dce78..968292c 100755
+>> > --- a/regression/t-033.sh
+>> > +++ b/regression/t-033.sh
+>> > @@ -46,3 +46,12 @@ cmd git add file.txt
+>> >  cmd guilt refresh
+>> >  fixup_time_info c.patch
+>> >  cmd guilt graph
+>> > +
+>> > +# A patch name that contains funky characters, including unbalanc=
+ed
+>> > +# quotes.
+>> > +cmd guilt new "a-\"better&quicker'-patch.patch"
+>> > +cmd echo d >> file.txt
+>> > +cmd git add file.txt
+>> > +cmd guilt refresh
+>> > +fixup_time_info "a-\"better&quicker'-patch.patch"
+>> > +cmd guilt graph
+>> > --
+>> > 1.8.3.1
+>> >
+>> > --
+>> > To unsubscribe from this list: send the line "unsubscribe git" in
+>> > the body of a message to majordomo@vger.kernel.org
+>> > More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
+> --
+> All parts should go together without forcing.  You must remember that=
+ the
+> parts you are reassembling were disassembled by you.  Therefore, if y=
+ou
+> can=E2=80=99t get them together again, there must be a reason.  By al=
+l means, do not
+> use a hammer.
+>                 =E2=80=94 IBM Manual, 1925
