@@ -1,94 +1,85 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v1 1/2] Remove 'git archimport'
-Date: Fri, 09 May 2014 12:52:53 -0500
-Message-ID: <536d15f512afd_a7adc530c31@nysa.notmuch>
-References: <1399599203-13991-1-git-send-email-felipe.contreras@gmail.com>
- <1399599203-13991-2-git-send-email-felipe.contreras@gmail.com>
- <20140509055024.GB30674@dcvr.yhbt.net>
- <xmqqlhuazw2c.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 00/32] Split index mode for very large indexes
+Date: Fri, 09 May 2014 10:55:22 -0700
+Message-ID: <xmqqha4yzvjp.fsf@gitster.dls.corp.google.com>
+References: <1398682553-11634-1-git-send-email-pclouds@gmail.com>
+	<CAJo=hJtgijOOMPbFjvTUaENw=hr0YixYmy1UkdqEd=CpLZ5L2A@mail.gmail.com>
+	<20140509102744.GA4939@lanh>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-	Martin Langhoff <martin@laptop.org>
-To: Junio C Hamano <gitster@pobox.com>,
-	Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Fri May 09 19:53:08 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Shawn Pearce <spearce@spearce.org>, git <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 09 19:55:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wioyn-0000FM-UR
-	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 19:53:06 +0200
+	id 1Wip1F-0003pA-Ad
+	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 19:55:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756796AbaEIRxA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 May 2014 13:53:00 -0400
-Received: from mail-yh0-f51.google.com ([209.85.213.51]:51285 "EHLO
-	mail-yh0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756360AbaEIRw7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 May 2014 13:52:59 -0400
-Received: by mail-yh0-f51.google.com with SMTP id f10so4030698yha.24
-        for <git@vger.kernel.org>; Fri, 09 May 2014 10:52:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=D4bkDrGgOs84q4yb0kNu28PIa0wtUWbmTtJYkCLEeN4=;
-        b=SxSoT6AnKgLp+5eRycxrPzvSeHnzjFyn2MzIZctJlHz8MINZTaWr3syElNjJSnRCUz
-         0vePVYPfp5mdBeAtGOtl6Reu7Bgs1pslnSKbpqyKobImkDPppGftKwiNLpnqHy4xoAD5
-         1lmS+OBUWMUWkubuplqYxkK/uVjE8lkj4UscPnlOWYS42yuPXoD6bCReb+Nqqq0QuDPO
-         qPd8trKacQL24b7TI1jC+k61MeLPJF43xhwYxuH7xegnCLV5LRB5UxJHzDusY+bMaXhN
-         de2aABpY3asSYHM/lCFWDoHv5JJu8T0OdeAk6nE2r7yOtVzMALiUbTKGOn3KAn5okrBB
-         nHFQ==
-X-Received: by 10.236.55.40 with SMTP id j28mr16758906yhc.85.1399657978856;
-        Fri, 09 May 2014 10:52:58 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id a104sm7131914yhq.5.2014.05.09.10.52.55
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 09 May 2014 10:52:56 -0700 (PDT)
-In-Reply-To: <xmqqlhuazw2c.fsf@gitster.dls.corp.google.com>
+	id S1756986AbaEIRz2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 May 2014 13:55:28 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:55773 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751667AbaEIRz1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 May 2014 13:55:27 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3366815C60;
+	Fri,  9 May 2014 13:55:27 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ac6vvMa5gKdlZ02zzZs9ygLSdz8=; b=Fa+OKQ
+	h/beGcfjgisqhLqdBHfqt098nv+Hay4rqqXNOUaEX1cNjl7zzb808HaydNYAzSpn
+	gkyf1r3ptDxdziTzt0d01F8+5L7th0/G6q6WIF4SAch9oosAllC+Al6SpsrDPLc6
+	G1DsDDpG/lrLGCfZv2GCE+f7+Fxr2ERsB92uI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=o0ESz8Fl7V+xc8xAW8mlt+5FnoEywavr
+	PuY4i4UsiTt4xw9vtrPvhBaX98YAo9ImxrTxNjrMOIQezus/vrGDfL1nOBm5pHuI
+	mfpzMKM2IUEtOt9LTkOT6mU8rmsaWuHEZDbDnt05OqbsI/ON57iWcHKa/A71U49T
+	i12J6Lc5gZ4=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 27DE015C5E;
+	Fri,  9 May 2014 13:55:27 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 8E98315C53;
+	Fri,  9 May 2014 13:55:24 -0400 (EDT)
+In-Reply-To: <20140509102744.GA4939@lanh> (Duy Nguyen's message of "Fri, 9 May
+	2014 17:27:44 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 18BDF880-D7A3-11E3-8BA1-9CEB01674E00-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248600>
 
-Junio C Hamano wrote:
-> Eric Wong <normalperson@yhbt.net> writes:
-> 
-> > Felipe Contreras <felipe.contreras@gmail.com> wrote:
-> >> No updates since 2010, and no tests.
-> >
-> > Who benefits from this removal?  Is this causing a maintenance
-> > burden for Junio?
-> 
-> No.  See http://thread.gmane.org/gmane.comp.version-control.git/248587
+Duy Nguyen <pclouds@gmail.com> writes:
 
-This has nothing to do with that thread.
+> On Mon, Apr 28, 2014 at 02:18:44PM -0700, Shawn Pearce wrote:
+>> > The read penalty is not addressed here, so I still pay 14MB hashing
+>> > cost. But that's an easy problem. We could cache the validated index
+>> > in a daemon. Whenever git needs to load an index, it pokes the daemon.
+>> > The daemon verifies that the on-disk index still has the same
+>> > signature, then sends the in-mem index to git. When git updates the
+>> > index, it pokes the daemon again to update in-mem index. Next time git
+>> > reads the index, it does not have to pay I/O cost any more (actually
+>> > it does but the cost is hidden away when you do not have to read it
+>> > yet).
+>> 
+>> If we are going this far, maybe it is worthwhile building a mmap()
+>> region the daemon exports to the git client that holds the "in memory"
+>> format of the index. Clients would mmap this PROT_READ, MAP_PRIVATE
+>> and can then quickly access the base file information without doing
+>> further validation, or copying the large(ish) data over a pipe.
+>
+> The below patch implements such a daemon to cache the index. It takes
+> 91ms and 377ms to load a 25MB index with and without the daemon. I use
+> share memory instead of pipe, but the format is still "on disk" not
+> "in memory" for simplicity. I think we're good even without in memory
+> format.
 
-This is a *CORE* tool, not part of contrib.
-
-Core tools should have tests, shouldn't they?
-
-In a previous thread you were worried that git-remote-hg might break
-things because the Mercurial interface could change and break tests
-(which WON'T HAPPEN). And here we have a tool which doesn't even have
-tests.
-
-So let's merge git-remote-hg without tests, that way the build cannot
-break.
-
-If an actively maintained, production-ready, well tested, and actively
-used tool cannot get into the core, why is an unmaintained, no tested at
-all, not actively used tool in the core?
-
-And BTW, the argument John Keeping used for git-remote-hg doesn't apply
-to git-remote-bzr where the API doesn't change at all.
-
-Such incredible double standards.
-
--- 
-Felipe Contreras
+Interesting ;-).
