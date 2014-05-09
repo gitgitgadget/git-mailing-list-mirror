@@ -1,77 +1,72 @@
-From: Alexandre Julliard <julliard@winehq.org>
-Subject: Re: [PATCH v1 18/25] contrib: remove 'emacs'
-Date: Fri, 09 May 2014 16:50:00 +0200
-Message-ID: <87d2fnropz.fsf@wine.dyndns.org>
+From: Tim Henigan <tim.henigan@gmail.com>
+Subject: Re: [PATCH v1 06/25] contrib: remove 'diffall'
+Date: Fri, 9 May 2014 08:12:07 -0700
+Message-ID: <CAFouetj4A+z2xzciGAbsQ8th8CNwYMd5QTapar4TXRLzGdAqeQ@mail.gmail.com>
 References: <1399597116-1851-1-git-send-email-felipe.contreras@gmail.com>
-	<1399597116-1851-19-git-send-email-felipe.contreras@gmail.com>
-	<CAFcZeCqbF54-KjHU1R3pC6XgWi21KcpRGB7HcbfSGyvTScQU2A@mail.gmail.com>
-	<536c91f079e71_2bf0e952f0a@nysa.notmuch>
-	<CAFcZeCo5mCfnUN1uBiaZnD6DL6y8hPhK5MPts5raLCTGwJX9Gg@mail.gmail.com>
+	<1399597116-1851-7-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
-To: David =?utf-8?Q?K=C3=A5gedal?= <davidk@lysator.liu.se>
-X-From: git-owner@vger.kernel.org Fri May 09 17:08:27 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 09 17:12:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WimPQ-0003Xv-CU
-	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 17:08:24 +0200
+	id 1WimT7-0000lq-1l
+	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 17:12:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752606AbaEIPIU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 May 2014 11:08:20 -0400
-Received: from mail.codeweavers.com ([216.251.189.131]:47705 "EHLO
-	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750775AbaEIPIU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 May 2014 11:08:20 -0400
-X-Greylist: delayed 1088 seconds by postgrey-1.27 at vger.kernel.org; Fri, 09 May 2014 11:08:19 EDT
-Received: from xdsl-188-155-88-142.adslplus.ch ([188.155.88.142] helo=wine.dyndns.org)
-	by mail.codeweavers.com with esmtpsa (TLS1.2:DHE_RSA_AES_256_CBC_SHA256:256)
-	(Exim 4.80)
-	(envelope-from <julliard@winehq.org>)
-	id 1Wim7j-00082T-ML; Fri, 09 May 2014 09:50:09 -0500
-Received: by wine.dyndns.org (Postfix, from userid 1000)
-	id 20B15204431; Fri,  9 May 2014 16:50:00 +0200 (CEST)
-In-Reply-To: <CAFcZeCo5mCfnUN1uBiaZnD6DL6y8hPhK5MPts5raLCTGwJX9Gg@mail.gmail.com>
-	("David =?utf-8?Q?K=C3=A5gedal=22's?= message of "Fri, 9 May 2014 10:42:51
- +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
-X-Spam-Score: -2.9
+	id S1756748AbaEIPMI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 May 2014 11:12:08 -0400
+Received: from mail-ve0-f177.google.com ([209.85.128.177]:33591 "EHLO
+	mail-ve0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756738AbaEIPMH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 May 2014 11:12:07 -0400
+Received: by mail-ve0-f177.google.com with SMTP id db11so5333254veb.36
+        for <git@vger.kernel.org>; Fri, 09 May 2014 08:12:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=UhsNJ3X4hgnIlQGxpZAdzUdV47sL4ACWNrglDIC4AFM=;
+        b=e1+tNGv4xDxkVnXkE2kl+Aep4MNqSNyszAtp4ybxHpL71+T78aqqe+2F6d9VrorTFh
+         4ak5/IY0jY57fVZ4Zkvqwaoh/SIilpz4T0qggpO6HVzer0SdnsT3nGR31Z3LOQG4hPfu
+         2hAtsDqKFHQORhIhRyj9yLXpXmlTmgywccDNeo2/s5qdZvNK4ZZ2nX5NB2lV/taFRGUq
+         WEQmOi4dW5iIsaTakt3CLDQ2FJJylfzTgqPCqjUb5p0hZNo2gGxY+vqUoj17ZlCis7Mt
+         SyHwQG1TTA3YTjgaj9Ea/rVIeFf+/iPFFe5OQJRy3QnppJ4jjc77XyE5YYzIMBfxXDsD
+         aijQ==
+X-Received: by 10.52.37.48 with SMTP id v16mr7440939vdj.4.1399648327250; Fri,
+ 09 May 2014 08:12:07 -0700 (PDT)
+Received: by 10.220.95.207 with HTTP; Fri, 9 May 2014 08:12:07 -0700 (PDT)
+In-Reply-To: <1399597116-1851-7-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248566>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248567>
 
-David K=C3=A5gedal <davidk@lysator.liu.se> writes:
-
-> 2014-05-09 10:29 GMT+02:00 Felipe Contreras
-> <felipe.contreras@gmail.com>:
+On Thu, May 8, 2014 at 5:58 PM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> No activity since 2010, no tests.
 >
->     David K=C3=A5gedal wrote:
->     > What problem does this removal solve?
->    =20
->    =20
->     Please do not top post.
->    =20
->     a) What problem does it solve by staying?
->     b) Where are the tests?
->     c) Why it cannot be moved to an outside repository like may other
->     git-related tools?
->
-> Fair enough. I guess the target should rather be to get it into the
-> emacs distribution.
+> Cc: Tim Henigan <tim.henigan@gmail.com>
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> ---
+>  contrib/diffall/README      |  31 ------
+>  contrib/diffall/git-diffall | 257 --------------------------------------------
+>  2 files changed, 288 deletions(-)
+>  delete mode 100644 contrib/diffall/README
+>  delete mode 100755 contrib/diffall/git-diffall
 
-It's already in Emacs in a different form, as part of the generic VC
-support. And nowadays, users are probably better served by using
-something like Magit anyway. As far as my code is concerned I have no
-objections to removing it.
+I see no problem with removing this script from contrib.  However, the
+commit message
+should mention that git-difftool learned all the features of
+git-diffall when the '--dir-diff'
+option was added in v1.7.11 (ca. June 2012).
 
---=20
-Alexandre Julliard
-julliard@winehq.org
+Also, the script was first added to contrib in Feb. 2012, so "no
+activity since 2010" is
+incorrect.  I'm not sure this information is useful in the commit
+message at all.
