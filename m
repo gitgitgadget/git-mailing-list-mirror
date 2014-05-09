@@ -1,76 +1,519 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: RE: What's cooking in git.git (May 2014, #02; Fri, 9)
-Date: Fri, 09 May 2014 16:42:44 -0500
-Message-ID: <536d4bd48e3f9_585ea5308b2@nysa.notmuch>
-References: <xmqq61lewtkf.fsf@gitster.dls.corp.google.com>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: [PATCH 2/2] Make it possible to update git_wcwidth()
+Date: Fri, 09 May 2014 23:51:44 +0200
+Message-ID: <536D4DF0.3060301@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 09 23:42:58 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: kevin@bracey.fi, peter@softwolves.pp.se, tboegi@web.de
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 09 23:52:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WisZC-00025o-T2
-	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 23:42:55 +0200
+	id 1Wisi0-0007MK-QS
+	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 23:52:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757600AbaEIVmv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 May 2014 17:42:51 -0400
-Received: from mail-yk0-f172.google.com ([209.85.160.172]:58021 "EHLO
-	mail-yk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757368AbaEIVmu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 May 2014 17:42:50 -0400
-Received: by mail-yk0-f172.google.com with SMTP id 79so3997480ykr.31
-        for <git@vger.kernel.org>; Fri, 09 May 2014 14:42:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:message-id:in-reply-to:references:subject:mime-version
-         :content-type:content-transfer-encoding;
-        bh=cLYwLCWwwjmw0FBrlPQS7OvycvUpNl/q4WG8oH20llM=;
-        b=WpgANRy9D/Lrr+WmEpF4jmCYWZwdXX0JWPTR2pA3cGPXfwhp3xZWhnD7Ed3L9o+ZOZ
-         Cz3v4BdmGaL1hglEDyOACv579M44FAapJXmVAmzgJb1spDi7fSyEFjf4AA57w446m2Ws
-         lJzHGpfW3VeztzjYYkOWOL7IzMfOPog4tdoRdqLSTCtJWkDSQT7sHDIg7GlrXwqvj7kZ
-         YRViyof8VZ+ZEu1HRFCHTKxX9PoOJypmVDedrqsfNrp9rVzJeKBdYKr4N1jnNbSruCJD
-         mFutbx4uvsqh/iQ4wD/ufcXgWnXc65xURzfnSTxynbRuluTvdk6taX6jwB6dvIuQJ0gj
-         ciWQ==
-X-Received: by 10.236.114.2 with SMTP id b2mr18602923yhh.92.1399671769671;
-        Fri, 09 May 2014 14:42:49 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id j76sm7957703yhi.33.2014.05.09.14.42.46
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 09 May 2014 14:42:48 -0700 (PDT)
-In-Reply-To: <xmqq61lewtkf.fsf@gitster.dls.corp.google.com>
+	id S1757883AbaEIVv4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 May 2014 17:51:56 -0400
+Received: from mout.web.de ([212.227.17.12]:56963 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757441AbaEIVvy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 May 2014 17:51:54 -0400
+Received: from [192.168.209.27] ([78.72.74.102]) by smtp.web.de (mrweb004)
+ with ESMTPSA (Nemesis) id 0Mbdf3-1WPpie2Y3J-00J0Wx; Fri, 09 May 2014 23:51:45
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
+X-Provags-ID: V03:K0:M6siCFyqX4o2ErROOPiKcKVc4BLENi0i22eLty3T5ikb3LNoVXX
+ /2MS3K6JgWSf6igZRvIeGNCu6zlZJiq6Y6/194KV8M5KeJfsykeFe5wlkcgkyZv++X4kl9D
+ gTZAeacuOyUc4xZFJEM9El31eCciXHy7Bj6l8+iFlz9mjqu5EAetxzOpTu1G0j33+WWFI8R
+ fCtbgbLM3lpB1uA2a9Y/Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248644>
 
-Junio C Hamano wrote:
-> * fc/remote-helpers-hg-bzr-graduation (2014-04-29) 11 commits
->  - remote-hg: trivial cleanups
->  - remote-hg: make sure we omit multiple heads
->  - git-remote-hg: use internal clone's hgrc
->  - t: remote-hg: split into setup test
->  - remote-hg: properly detect missing contexts
->  - remote-{hg,bzr}: store marks only on success
->  - remote-hg: update to 'public' phase when pushing
->  - remote-hg: fix parsing of custom committer
->   (merged to 'next' on 2014-04-22 at fed170a)
->  + remote-helpers: move tests out of contrib
->  + remote-helpers: move out of contrib
->  + remote-helpers: squelch python import exceptions
-> 
->  As there were announcements for these two to be maintained as
->  independent third-party projects ($gmane/248561, $gmane/248583),
+The function git_wcwidth() returns for a given unicode code point the
+width on the display:
+-1 for control characters,
+ 0 for combining or other non-visible code points
+ 1 for e.g. ASCII
+ 2 for double-width code points.
 
-Clarification: after Junio unlilaterally blocked any further progress
-towards grauduation to the core, which was the intention since the very
-beginning.
+This table had been originally been extracted for one Unicode version,
+probably 3.2.
 
--- 
-Felipe Contreras
+Make it possible to update the to a later version of Unicode:
+
+=46actor out the table from utf8.c into unicode_width.h and
+add the script update_unicode.sh to update the table based on the lates=
+t
+Unicode specification files.
+
+Thanks to
+Peter Krefting <peter@softwolves.pp.se> and
+Kevin Bracey <kevin@bracey.fi>
+for helping with their Unicode knowledge
+
+Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+---
+ .gitignore        |   1 +
+ Makefile          |   1 +
+ unicode_width.h   | 288 ++++++++++++++++++++++++++++++++++++++++++++++=
+++++++++
+ update_unicode.sh |  37 +++++++
+ utf8.c            |  61 +-----------
+ 5 files changed, 329 insertions(+), 59 deletions(-)
+ create mode 100644 unicode_width.h
+ create mode 100755 update_unicode.sh
+
+diff --git a/.gitignore b/.gitignore
+index dc600f9..42294e5 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -226,6 +226,7 @@
+ /config.mak.autogen
+ /config.mak.append
+ /configure
++/unicode
+ /tags
+ /TAGS
+ /cscope*
+diff --git a/Makefile b/Makefile
+index a53f3a8..2e2077a 100644
+--- a/Makefile
++++ b/Makefile
+@@ -730,6 +730,7 @@ LIB_H +=3D transport.h
+ LIB_H +=3D tree-walk.h
+ LIB_H +=3D tree.h
+ LIB_H +=3D unpack-trees.h
++LIB_H +=3D unicode_width.h
+ LIB_H +=3D url.h
+ LIB_H +=3D urlmatch.h
+ LIB_H +=3D userdiff.h
+diff --git a/unicode_width.h b/unicode_width.h
+new file mode 100644
+index 0000000..4db7803
+--- /dev/null
++++ b/unicode_width.h
+@@ -0,0 +1,288 @@
++static const struct interval zero_width[] =3D {
++{ 0x0300, 0x036F },
++{ 0x0483, 0x0489 },
++{ 0x0591, 0x05BD },
++{ 0x05BF, 0x05BF },
++{ 0x05C1, 0x05C2 },
++{ 0x05C4, 0x05C5 },
++{ 0x05C7, 0x05C7 },
++{ 0x0600, 0x0604 },
++{ 0x0610, 0x061A },
++{ 0x061C, 0x061C },
++{ 0x064B, 0x065F },
++{ 0x0670, 0x0670 },
++{ 0x06D6, 0x06DD },
++{ 0x06DF, 0x06E4 },
++{ 0x06E7, 0x06E8 },
++{ 0x06EA, 0x06ED },
++{ 0x070F, 0x070F },
++{ 0x0711, 0x0711 },
++{ 0x0730, 0x074A },
++{ 0x07A6, 0x07B0 },
++{ 0x07EB, 0x07F3 },
++{ 0x0816, 0x0819 },
++{ 0x081B, 0x0823 },
++{ 0x0825, 0x0827 },
++{ 0x0829, 0x082D },
++{ 0x0859, 0x085B },
++{ 0x08E4, 0x08FE },
++{ 0x0900, 0x0902 },
++{ 0x093A, 0x093A },
++{ 0x093C, 0x093C },
++{ 0x0941, 0x0948 },
++{ 0x094D, 0x094D },
++{ 0x0951, 0x0957 },
++{ 0x0962, 0x0963 },
++{ 0x0981, 0x0981 },
++{ 0x09BC, 0x09BC },
++{ 0x09C1, 0x09C4 },
++{ 0x09CD, 0x09CD },
++{ 0x09E2, 0x09E3 },
++{ 0x0A01, 0x0A02 },
++{ 0x0A3C, 0x0A3C },
++{ 0x0A41, 0x0A42 },
++{ 0x0A47, 0x0A48 },
++{ 0x0A4B, 0x0A4D },
++{ 0x0A51, 0x0A51 },
++{ 0x0A70, 0x0A71 },
++{ 0x0A75, 0x0A75 },
++{ 0x0A81, 0x0A82 },
++{ 0x0ABC, 0x0ABC },
++{ 0x0AC1, 0x0AC5 },
++{ 0x0AC7, 0x0AC8 },
++{ 0x0ACD, 0x0ACD },
++{ 0x0AE2, 0x0AE3 },
++{ 0x0B01, 0x0B01 },
++{ 0x0B3C, 0x0B3C },
++{ 0x0B3F, 0x0B3F },
++{ 0x0B41, 0x0B44 },
++{ 0x0B4D, 0x0B4D },
++{ 0x0B56, 0x0B56 },
++{ 0x0B62, 0x0B63 },
++{ 0x0B82, 0x0B82 },
++{ 0x0BC0, 0x0BC0 },
++{ 0x0BCD, 0x0BCD },
++{ 0x0C3E, 0x0C40 },
++{ 0x0C46, 0x0C48 },
++{ 0x0C4A, 0x0C4D },
++{ 0x0C55, 0x0C56 },
++{ 0x0C62, 0x0C63 },
++{ 0x0CBC, 0x0CBC },
++{ 0x0CBF, 0x0CBF },
++{ 0x0CC6, 0x0CC6 },
++{ 0x0CCC, 0x0CCD },
++{ 0x0CE2, 0x0CE3 },
++{ 0x0D41, 0x0D44 },
++{ 0x0D4D, 0x0D4D },
++{ 0x0D62, 0x0D63 },
++{ 0x0DCA, 0x0DCA },
++{ 0x0DD2, 0x0DD4 },
++{ 0x0DD6, 0x0DD6 },
++{ 0x0E31, 0x0E31 },
++{ 0x0E34, 0x0E3A },
++{ 0x0E47, 0x0E4E },
++{ 0x0EB1, 0x0EB1 },
++{ 0x0EB4, 0x0EB9 },
++{ 0x0EBB, 0x0EBC },
++{ 0x0EC8, 0x0ECD },
++{ 0x0F18, 0x0F19 },
++{ 0x0F35, 0x0F35 },
++{ 0x0F37, 0x0F37 },
++{ 0x0F39, 0x0F39 },
++{ 0x0F71, 0x0F7E },
++{ 0x0F80, 0x0F84 },
++{ 0x0F86, 0x0F87 },
++{ 0x0F8D, 0x0F97 },
++{ 0x0F99, 0x0FBC },
++{ 0x0FC6, 0x0FC6 },
++{ 0x102D, 0x1030 },
++{ 0x1032, 0x1037 },
++{ 0x1039, 0x103A },
++{ 0x103D, 0x103E },
++{ 0x1058, 0x1059 },
++{ 0x105E, 0x1060 },
++{ 0x1071, 0x1074 },
++{ 0x1082, 0x1082 },
++{ 0x1085, 0x1086 },
++{ 0x108D, 0x108D },
++{ 0x109D, 0x109D },
++{ 0x1160, 0x11FF },
++{ 0x135D, 0x135F },
++{ 0x1712, 0x1714 },
++{ 0x1732, 0x1734 },
++{ 0x1752, 0x1753 },
++{ 0x1772, 0x1773 },
++{ 0x17B4, 0x17B5 },
++{ 0x17B7, 0x17BD },
++{ 0x17C6, 0x17C6 },
++{ 0x17C9, 0x17D3 },
++{ 0x17DD, 0x17DD },
++{ 0x180B, 0x180E },
++{ 0x18A9, 0x18A9 },
++{ 0x1920, 0x1922 },
++{ 0x1927, 0x1928 },
++{ 0x1932, 0x1932 },
++{ 0x1939, 0x193B },
++{ 0x1A17, 0x1A18 },
++{ 0x1A1B, 0x1A1B },
++{ 0x1A56, 0x1A56 },
++{ 0x1A58, 0x1A5E },
++{ 0x1A60, 0x1A60 },
++{ 0x1A62, 0x1A62 },
++{ 0x1A65, 0x1A6C },
++{ 0x1A73, 0x1A7C },
++{ 0x1A7F, 0x1A7F },
++{ 0x1B00, 0x1B03 },
++{ 0x1B34, 0x1B34 },
++{ 0x1B36, 0x1B3A },
++{ 0x1B3C, 0x1B3C },
++{ 0x1B42, 0x1B42 },
++{ 0x1B6B, 0x1B73 },
++{ 0x1B80, 0x1B81 },
++{ 0x1BA2, 0x1BA5 },
++{ 0x1BA8, 0x1BA9 },
++{ 0x1BAB, 0x1BAB },
++{ 0x1BE6, 0x1BE6 },
++{ 0x1BE8, 0x1BE9 },
++{ 0x1BED, 0x1BED },
++{ 0x1BEF, 0x1BF1 },
++{ 0x1C2C, 0x1C33 },
++{ 0x1C36, 0x1C37 },
++{ 0x1CD0, 0x1CD2 },
++{ 0x1CD4, 0x1CE0 },
++{ 0x1CE2, 0x1CE8 },
++{ 0x1CED, 0x1CED },
++{ 0x1CF4, 0x1CF4 },
++{ 0x1DC0, 0x1DE6 },
++{ 0x1DFC, 0x1DFF },
++{ 0x200B, 0x200F },
++{ 0x202A, 0x202E },
++{ 0x2060, 0x2064 },
++{ 0x2066, 0x206F },
++{ 0x20D0, 0x20F0 },
++{ 0x2CEF, 0x2CF1 },
++{ 0x2D7F, 0x2D7F },
++{ 0x2DE0, 0x2DFF },
++{ 0x302A, 0x302D },
++{ 0x3099, 0x309A },
++{ 0xA66F, 0xA672 },
++{ 0xA674, 0xA67D },
++{ 0xA69F, 0xA69F },
++{ 0xA6F0, 0xA6F1 },
++{ 0xA802, 0xA802 },
++{ 0xA806, 0xA806 },
++{ 0xA80B, 0xA80B },
++{ 0xA825, 0xA826 },
++{ 0xA8C4, 0xA8C4 },
++{ 0xA8E0, 0xA8F1 },
++{ 0xA926, 0xA92D },
++{ 0xA947, 0xA951 },
++{ 0xA980, 0xA982 },
++{ 0xA9B3, 0xA9B3 },
++{ 0xA9B6, 0xA9B9 },
++{ 0xA9BC, 0xA9BC },
++{ 0xAA29, 0xAA2E },
++{ 0xAA31, 0xAA32 },
++{ 0xAA35, 0xAA36 },
++{ 0xAA43, 0xAA43 },
++{ 0xAA4C, 0xAA4C },
++{ 0xAAB0, 0xAAB0 },
++{ 0xAAB2, 0xAAB4 },
++{ 0xAAB7, 0xAAB8 },
++{ 0xAABE, 0xAABF },
++{ 0xAAC1, 0xAAC1 },
++{ 0xAAEC, 0xAAED },
++{ 0xAAF6, 0xAAF6 },
++{ 0xABE5, 0xABE5 },
++{ 0xABE8, 0xABE8 },
++{ 0xABED, 0xABED },
++{ 0xFB1E, 0xFB1E },
++{ 0xFE00, 0xFE0F },
++{ 0xFE20, 0xFE26 },
++{ 0xFEFF, 0xFEFF },
++{ 0xFFF9, 0xFFFB },
++{ 0x101FD, 0x101FD },
++{ 0x10A01, 0x10A03 },
++{ 0x10A05, 0x10A06 },
++{ 0x10A0C, 0x10A0F },
++{ 0x10A38, 0x10A3A },
++{ 0x10A3F, 0x10A3F },
++{ 0x11001, 0x11001 },
++{ 0x11038, 0x11046 },
++{ 0x11080, 0x11081 },
++{ 0x110B3, 0x110B6 },
++{ 0x110B9, 0x110BA },
++{ 0x110BD, 0x110BD },
++{ 0x11100, 0x11102 },
++{ 0x11127, 0x1112B },
++{ 0x1112D, 0x11134 },
++{ 0x11180, 0x11181 },
++{ 0x111B6, 0x111BE },
++{ 0x116AB, 0x116AB },
++{ 0x116AD, 0x116AD },
++{ 0x116B0, 0x116B5 },
++{ 0x116B7, 0x116B7 },
++{ 0x16F8F, 0x16F92 },
++{ 0x1D167, 0x1D169 },
++{ 0x1D173, 0x1D182 },
++{ 0x1D185, 0x1D18B },
++{ 0x1D1AA, 0x1D1AD },
++{ 0x1D242, 0x1D244 },
++{ 0xE0001, 0xE0001 },
++{ 0xE0020, 0xE007F },
++{ 0xE0100, 0xE01EF }
++};
++static const struct interval double_width[] =3D {
++{ /* plane */ 0x0, 0x1C },
++{ /* plane */ 0x1C, 0x21 },
++{ /* plane */ 0x21, 0x22 },
++{ /* plane */ 0x22, 0x23 },
++{ /* plane */ 0x0, 0x0 },
++{ /* plane */ 0x0, 0x0 },
++{ /* plane */ 0x0, 0x0 },
++{ /* plane */ 0x0, 0x0 },
++{ /* plane */ 0x0, 0x0 },
++{ /* plane */ 0x0, 0x0 },
++{ /* plane */ 0x0, 0x0 },
++{ /* plane */ 0x0, 0x0 },
++{ /* plane */ 0x0, 0x0 },
++{ /* plane */ 0x0, 0x0 },
++{ /* plane */ 0x0, 0x0 },
++{ /* plane */ 0x0, 0x0 },
++{ /* plane */ 0x0, 0x0 },
++{ 0x1100, 0x115F },
++{ 0x2329, 0x232A },
++{ 0x2E80, 0x2E99 },
++{ 0x2E9B, 0x2EF3 },
++{ 0x2F00, 0x2FD5 },
++{ 0x2FF0, 0x2FFB },
++{ 0x3000, 0x303E },
++{ 0x3041, 0x3096 },
++{ 0x3099, 0x30FF },
++{ 0x3105, 0x312D },
++{ 0x3131, 0x318E },
++{ 0x3190, 0x31BA },
++{ 0x31C0, 0x31E3 },
++{ 0x31F0, 0x321E },
++{ 0x3220, 0x3247 },
++{ 0x3250, 0x32FE },
++{ 0x3300, 0x4DBF },
++{ 0x4E00, 0xA48C },
++{ 0xA490, 0xA4C6 },
++{ 0xA960, 0xA97C },
++{ 0xAC00, 0xD7A3 },
++{ 0xF900, 0xFAFF },
++{ 0xFE10, 0xFE19 },
++{ 0xFE30, 0xFE52 },
++{ 0xFE54, 0xFE66 },
++{ 0xFE68, 0xFE6B },
++{ 0xFF01, 0xFF60 },
++{ 0xFFE0, 0xFFE6 },
++{ 0x1B000, 0x1B001 },
++{ 0x1F200, 0x1F202 },
++{ 0x1F210, 0x1F23A },
++{ 0x1F240, 0x1F248 },
++{ 0x1F250, 0x1F251 },
++{ 0x20000, 0x2FFFD },
++{ 0x30000, 0x3FFFD }
++};
+diff --git a/update_unicode.sh b/update_unicode.sh
+new file mode 100755
+index 0000000..000b937
+--- /dev/null
++++ b/update_unicode.sh
+@@ -0,0 +1,37 @@
++#!/bin/sh
++#See http://www.unicode.org/reports/tr44/
++#
++#Me Enclosing_Mark  an enclosing combining mark
++#Mn Nonspacing_Mark a nonspacing combining mark (zero advance width)
++#Cf Format          a format control character
++#
++UNICODEWIDTH_H=3D../unicode_width.h
++if ! test -d unicode; then
++	mkdir unicode
++fi &&
++( cd unicode &&
++	if ! test -f UnicodeData.txt; then
++		wget http://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt
++	fi &&
++	if ! test -f EastAsianWidth.txt; then
++		wget http://www.unicode.org/Public/UCD/latest/ucd/EastAsianWidth.txt
++	fi &&
++	if ! test -d uniset; then
++		git clone https://github.com/depp/uniset.git
++	fi &&
++	(
++		cd uniset &&
++		if ! test -x uniset; then
++			autoreconf -i &&
++			./configure --enable-warnings=3D-Werror CFLAGS=3D'-O0 -ggdb'
++		fi &&
++		make
++	) &&
++	echo "static const struct interval zero_width[] =3D {" >$UNICODEWIDTH=
+_H &&
++	UNICODE_DIR=3D. ./uniset/uniset --32 cat:Me,Mn,Cf + U+1160..U+11FF - =
+U+00AD |
++	grep -v plane >>$UNICODEWIDTH_H &&
++	echo "};" >>$UNICODEWIDTH_H &&
++	echo "static const struct interval double_width[] =3D {" >>$UNICODEWI=
+DTH_H &&
++	UNICODE_DIR=3D. ./uniset/uniset --32 eaw:F,W >>$UNICODEWIDTH_H &&
++	echo "};" >>$UNICODEWIDTH_H
++)
+diff --git a/utf8.c b/utf8.c
+index b5d8136..b30790d 100644
+--- a/utf8.c
++++ b/utf8.c
+@@ -80,65 +80,8 @@ static int git_wcwidth(ucs_char_t ch)
+ {
+ 	/*
+ 	 * Sorted list of non-overlapping intervals of non-spacing characters=
+,
+-	 * generated by
+-	 *   "uniset +cat=3DMe +cat=3DMn +cat=3DCf -00AD +1160-11FF +200B c".
+ 	 */
+-	static const struct interval combining[] =3D {
+-		{ 0x0300, 0x036F }, { 0x0483, 0x0489 }, { 0x0591, 0x05BD },
+-		{ 0x05BF, 0x05BF }, { 0x05C1, 0x05C2 }, { 0x05C4, 0x05C5 },
+-		{ 0x05C7, 0x05C7 }, { 0x0600, 0x0604 }, { 0x0610, 0x061A },
+-		{ 0x064B, 0x065F }, { 0x0670, 0x0670 }, { 0x06D6, 0x06E4 },
+-		{ 0x06E7, 0x06E8 }, { 0x06EA, 0x06ED }, { 0x070F, 0x070F },
+-		{ 0x0711, 0x0711 }, { 0x0730, 0x074A }, { 0x07A6, 0x07B0 },
+-		{ 0x0901, 0x0902 }, { 0x093C, 0x093C }, { 0x0941, 0x0948 },
+-		{ 0x094D, 0x094D }, { 0x0951, 0x0954 }, { 0x0962, 0x0963 },
+-		{ 0x0981, 0x0981 }, { 0x09BC, 0x09BC }, { 0x09C1, 0x09C4 },
+-		{ 0x09CD, 0x09CD }, { 0x09E2, 0x09E3 }, { 0x0A01, 0x0A02 },
+-		{ 0x0A3C, 0x0A3C }, { 0x0A41, 0x0A42 }, { 0x0A47, 0x0A48 },
+-		{ 0x0A4B, 0x0A4D }, { 0x0A70, 0x0A71 }, { 0x0A81, 0x0A82 },
+-		{ 0x0ABC, 0x0ABC }, { 0x0AC1, 0x0AC5 }, { 0x0AC7, 0x0AC8 },
+-		{ 0x0ACD, 0x0ACD }, { 0x0AE2, 0x0AE3 }, { 0x0B01, 0x0B01 },
+-		{ 0x0B3C, 0x0B3C }, { 0x0B3F, 0x0B3F }, { 0x0B41, 0x0B43 },
+-		{ 0x0B4D, 0x0B4D }, { 0x0B56, 0x0B56 }, { 0x0B82, 0x0B82 },
+-		{ 0x0BC0, 0x0BC0 }, { 0x0BCD, 0x0BCD }, { 0x0C3E, 0x0C40 },
+-		{ 0x0C46, 0x0C48 }, { 0x0C4A, 0x0C4D }, { 0x0C55, 0x0C56 },
+-		{ 0x0CBC, 0x0CBC }, { 0x0CBF, 0x0CBF }, { 0x0CC6, 0x0CC6 },
+-		{ 0x0CCC, 0x0CCD }, { 0x0D41, 0x0D43 }, { 0x0D4D, 0x0D4D },
+-		{ 0x0DCA, 0x0DCA }, { 0x0DD2, 0x0DD4 }, { 0x0DD6, 0x0DD6 },
+-		{ 0x0E31, 0x0E31 }, { 0x0E34, 0x0E3A }, { 0x0E47, 0x0E4E },
+-		{ 0x0EB1, 0x0EB1 }, { 0x0EB4, 0x0EB9 }, { 0x0EBB, 0x0EBC },
+-		{ 0x0EC8, 0x0ECD }, { 0x0F18, 0x0F19 }, { 0x0F35, 0x0F35 },
+-		{ 0x0F37, 0x0F37 }, { 0x0F39, 0x0F39 }, { 0x0F71, 0x0F7E },
+-		{ 0x0F80, 0x0F84 }, { 0x0F86, 0x0F87 }, { 0x0F90, 0x0F97 },
+-		{ 0x0F99, 0x0FBC }, { 0x0FC6, 0x0FC6 }, { 0x102D, 0x1030 },
+-		{ 0x1032, 0x1032 }, { 0x1036, 0x1037 }, { 0x1039, 0x1039 },
+-		{ 0x1058, 0x1059 }, { 0x1160, 0x11FF }, { 0x1712, 0x1714 },
+-		{ 0x1732, 0x1734 }, { 0x1752, 0x1753 }, { 0x1772, 0x1773 },
+-		{ 0x17B4, 0x17B5 }, { 0x17B7, 0x17BD }, { 0x17C6, 0x17C6 },
+-		{ 0x17C9, 0x17D3 }, { 0x17DD, 0x17DD }, { 0x180B, 0x180D },
+-		{ 0x18A9, 0x18A9 }, { 0x1920, 0x1922 }, { 0x1927, 0x1928 },
+-		{ 0x1932, 0x1932 }, { 0x1939, 0x193B }, { 0x200B, 0x200F },
+-		{ 0x202A, 0x202E }, { 0x2060, 0x2063 }, { 0x206A, 0x206F },
+-		{ 0x20D0, 0x20EA }, { 0x302A, 0x302F }, { 0x3099, 0x309A },
+-		{ 0xFB1E, 0xFB1E }, { 0xFE00, 0xFE0F }, { 0xFE20, 0xFE23 },
+-		{ 0xFEFF, 0xFEFF }, { 0xFFF9, 0xFFFB }, { 0x1D167, 0x1D169 },
+-		{ 0x1D173, 0x1D182 }, { 0x1D185, 0x1D18B },
+-		{ 0x1D1AA, 0x1D1AD }, { 0xE0001, 0xE0001 },
+-		{ 0xE0020, 0xE007F }, { 0xE0100, 0xE01EF }
+-	};
+-	static const struct interval double_width[] =3D {
+-		{ 0x1100, 0x115F },
+-		{ 0x2329, 0x232A },
+-		{ 0x2E80, 0x303E },
+-		{ 0x3040, 0xA4CF },
+-		{ 0xAC00, 0xD7A3 },
+-		{ 0xF900, 0xFAFF },
+-		{ 0xFE30, 0xFE6F },
+-		{ 0xFF00, 0xFF60 },
+-		{ 0xFFE0, 0xFFE6 },
+-		{ 0x20000, 0x2FFFD },
+-		{ 0x30000, 0x3FFFD }
+-	};
++#include "unicode_width.h"
+=20
+ 	/* test for 8-bit control characters */
+ 	if (ch =3D=3D 0)
+@@ -147,7 +90,7 @@ static int git_wcwidth(ucs_char_t ch)
+ 		return -1;
+=20
+ 	/* binary search in table of non-spacing characters */
+-	if (bisearch(ch, combining, sizeof(combining)
++	if (bisearch(ch, zero_width, sizeof(zero_width)
+ 				/ sizeof(struct interval) - 1))
+ 		return 0;
+=20
+--=20
+1.9.2.691.g8d8dc6d
