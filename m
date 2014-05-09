@@ -1,79 +1,119 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v1 1/2] Remove 'git archimport'
-Date: Fri, 09 May 2014 02:11:12 -0500
-Message-ID: <536c7f9089b77_182dd0d31084@nysa.notmuch>
-References: <1399599203-13991-1-git-send-email-felipe.contreras@gmail.com>
- <1399599203-13991-2-git-send-email-felipe.contreras@gmail.com>
- <20140509055024.GB30674@dcvr.yhbt.net>
+Subject: Re: Conforming to pep8
+Date: Fri, 09 May 2014 02:18:54 -0500
+Message-ID: <536c815ee0b9c_182dd0d3104b@nysa.notmuch>
+References: <20140509015429.GA550@wst420>
+ <536c3911ea173_741a161d310f2@nysa.notmuch>
+ <20140509035759.GA9051@wst420>
+ <536c5b4d9e2c9_377dfcb2f02b@nysa.notmuch>
+ <20140509051623.GB9051@wst420>
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Martin Langhoff <martin@laptop.org>
-To: Eric Wong <normalperson@yhbt.net>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 09 09:11:23 2014
+To: William Giokas <1007380@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 09 09:19:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wiexm-0005DF-Dj
-	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 09:11:22 +0200
+	id 1Wif5I-0007jd-WF
+	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 09:19:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755282AbaEIHLS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 May 2014 03:11:18 -0400
-Received: from mail-ob0-f175.google.com ([209.85.214.175]:42125 "EHLO
-	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751721AbaEIHLR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 May 2014 03:11:17 -0400
-Received: by mail-ob0-f175.google.com with SMTP id wo20so4337624obc.34
-        for <git@vger.kernel.org>; Fri, 09 May 2014 00:11:17 -0700 (PDT)
+	id S1753785AbaEIHTB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 May 2014 03:19:01 -0400
+Received: from mail-yk0-f171.google.com ([209.85.160.171]:47526 "EHLO
+	mail-yk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752792AbaEIHS7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 May 2014 03:18:59 -0400
+Received: by mail-yk0-f171.google.com with SMTP id 142so3118053ykq.2
+        for <git@vger.kernel.org>; Fri, 09 May 2014 00:18:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=2Bav9H98nrIAKSDHWJPxGb79xCuAxtglQWS5vrnUW4Q=;
-        b=NtxZ+uVTPdklMNRuU8qxQ/xlLpZG4EBRjtbMtE56vAq8NheyxRFtTS9FtaqpWPS8BB
-         fL+ZQaC9eV+iEHzbxEpoaa75Rl6hOS3WAHyY6M//j5a+/vAnzSlcIGs0UcrL5Ijsqo0K
-         +SdzUsEcGJWZ0lvBrGZZUP5W2BFTSIoiC7aXaHHf8rwPQrTjKv/UekSEsOlDGxpC+UYF
-         1t5YM0GPakyGOE9tbXNtg6IDFOk7M0td008Z++Ry40L4OHWBB856Klom3vz/SodvFg2p
-         4g/Smr564n+JunAQlr69FOSLR2KfhQltc4IB8yO3WFEGSwDCv3suicmfVwCrgWDvyaPw
-         48Dg==
-X-Received: by 10.60.39.131 with SMTP id p3mr10981317oek.44.1399619477158;
-        Fri, 09 May 2014 00:11:17 -0700 (PDT)
+        h=date:from:to:message-id:in-reply-to:references:subject:mime-version
+         :content-type:content-transfer-encoding;
+        bh=VdN+MdVtQdcnmGJOHOYMRJX0FZQ+0nV3Po/4/eSbJZE=;
+        b=ADejZhDv+UxIPc+pjm8q3GSPQOytI57pFBIpftPwuOdXzEsdjegkqw+HBZSKe9WaiV
+         y01sD5mjXakmKYjbWu6ZkosyoaWLnchbAKaOxAT9cD3nIE56V7Jcl8UHSj+8qU/8d6Sl
+         V/kRTMa/D8ZHAqCUivYvRGhB1gB6B/f2E/+M/DZHkCE2w2c+yU035Y0GmDNct4gVgB6N
+         HicviWPUF88l7f4N3Q9GyOZSqxiq/8qfZPbD5niGyHxLyx/tOg4iDkuCGo+VjawpwTuz
+         /CJM/qqY+f/WU6Ur+WPBMHA+VFxiSNTXbBsM1+Yfry6Bt5MdmrDiw1bttA03YANPEDXu
+         F9LQ==
+X-Received: by 10.236.78.168 with SMTP id g28mr12129413yhe.157.1399619938947;
+        Fri, 09 May 2014 00:18:58 -0700 (PDT)
 Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id dh8sm13344011oeb.10.2014.05.09.00.11.14
+        by mx.google.com with ESMTPSA id n5sm5024246yhn.43.2014.05.09.00.18.56
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 09 May 2014 00:11:15 -0700 (PDT)
-In-Reply-To: <20140509055024.GB30674@dcvr.yhbt.net>
+        Fri, 09 May 2014 00:18:57 -0700 (PDT)
+In-Reply-To: <20140509051623.GB9051@wst420>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248521>
 
-Eric Wong wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> wrote:
-> > No updates since 2010, and no tests.
+William Giokas wrote:
+> On Thu, May 08, 2014 at 11:36:29PM -0500, Felipe Contreras wrote:
+> > William Giokas wrote:
+> > > E401: Multi-line imports seems like something that would just be
+> > > changing one line
+> > 
+> > Yes, and make the code very annoying.
 > 
-> Who benefits from this removal?  Is this causing a maintenance
-> burden for Junio?
+> It's 1 extra line in git-remote-hg, and 4 lines in git-remote-bzr.
 
-It is cruft that nobody uses and we are not even testing.
+Ah, it refers to the '^import *' not '^from x import'. That's fine then.
 
-> > Plus, foreign SCM tools should live out-of-tree anyway.
+> > > E302: Blank lines don't seem to be that hard to do either. That can even
+> > > be automated quite reliably. It shouldn't detract from the readability,
+> > > juts makes the file a bit longer.
+> > 
+> > The problem is not that it's hard to do, the problem is that it makes
+> > the code uglier.
 > 
-> Even if so, there ought to be a transitionary period in case there are
-> any users.  We would need to warn potential users of its impending
-> removal in the documentation and at runtime.
+> I would disagree, but this is one of the less important things.
+> 
+> > > E20{1,2,3}: Extra whitespace is something that just makes things more
+> > > consistent and readable.
+> > 
+> > I don't see how this:
+> > 
+> >   {'100755': 'x', '120000': 'l'}
+> > 
+> > Is more readable than this:
+> > 
+> >   { '100755': 'x', '120000': 'l' }
+> > 
+> > No strong opinion on this one though.
+> 
+> It's not so much that it's wrong or less readable, but there is
+> inconsistency on this one and I'd err pep8. Again, will send a patch to
+> your tree for you to review, though it looks like you mostly fixed this
+> in [1].
 
-All right, so you are OK with adding deprecation warnings whenever the
-tool is run, and a note in the documentation?
+I don't see inconsistency within the script. All the hashes are in the
+form of { content }.
 
-For how many releases?
+> > > >   max-line-length = 160
+> > > 
+> > > The standard states that this should, at most, be increased to a value
+> > > between 80 and 100.
+> > 
+> > And why's that?
+> > 
+> > This has been discussed many times in the LKML, and the end result is
+> > that we don't live in the 60's, our terminals are not constrained to 60
+> > characters. Going beyond 100 is fine.
+> 
+> Fair enough. At the same time, it'd only change 14 lines in the current
+> git.git tree and would probably increase the readability of some of the
+> sections. I noticed that some of the changes in the referenced patch
+> actually fixed this on a few lines as well.
+
+If the result is not so horrible I would consider this, otherwise I'll
+just ignore the warning.
 
 -- 
 Felipe Contreras
