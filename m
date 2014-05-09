@@ -1,181 +1,122 @@
-From: Fabio D'Alfonso <fabio.dalfonso@fabiodalfonso.com>
-Subject: Re: t5539 fails on ubuntu for v2.0.0-rc2 - the SAME on 12.04 server
- - this test was disabled up to 1.9.2
-Date: Fri, 09 May 2014 10:39:32 +0200
-Organization: Fabio D'Alfonso
-Message-ID: <536C9444.8060408@fabiodalfonso.com>
-References: <536A8FF8.7080909@fabiodalfonso.com> <536BF8C7.6010208@fabiodalfonso.com>
-Reply-To: fabio.dalfonso@fabiodalfonso.com
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH v1 04/25] contrib: remove 'buildsystems'
+Date: Fri, 9 May 2014 11:10:07 +0200
+Message-ID: <CABPQNSay4gDJ2Ea-w0=wnU1oqVZ_ATm1Q_M71zt+rAd1XUr0zg@mail.gmail.com>
+References: <1399597116-1851-1-git-send-email-felipe.contreras@gmail.com>
+ <1399597116-1851-5-git-send-email-felipe.contreras@gmail.com>
+ <CABPQNSYZ4eWS_9_omZGK5wCD7ap_siEkC10e4ayT8Jp9w1bOSw@mail.gmail.com>
+ <536c8e63448c2_25d198d30c55@nysa.notmuch> <CABPQNSYgfUdtfT0sYCwGsWQgW3QFOZvSZSyG76dmF6+ZSMaByw@mail.gmail.com>
+ <536c966cf0e9c_2bf0e952f079@nysa.notmuch>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 09 11:01:29 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: GIT Mailing-list <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Marius Storm-Olsen <mstormo@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 09 11:10:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WiggJ-00009x-1T
-	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 11:01:27 +0200
+	id 1WigpS-0004ma-KK
+	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 11:10:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756267AbaEIJBW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 May 2014 05:01:22 -0400
-Received: from gateway05.websitewelcome.com ([67.18.16.77]:45704 "EHLO
-	gateway05.websitewelcome.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753922AbaEIJBU (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 May 2014 05:01:20 -0400
-X-Greylist: delayed 1301 seconds by postgrey-1.27 at vger.kernel.org; Fri, 09 May 2014 05:01:20 EDT
-Received: by gateway05.websitewelcome.com (Postfix, from userid 5007)
-	id 6141254F6EB92; Fri,  9 May 2014 03:39:37 -0500 (CDT)
-Received: from gator4050.hostgator.com (gator4050.hostgator.com [192.185.4.61])
-	by gateway05.websitewelcome.com (Postfix) with ESMTP id 543F954F6EB60
-	for <git@vger.kernel.org>; Fri,  9 May 2014 03:39:37 -0500 (CDT)
-Received: from [95.235.186.180] (port=14898 helo=[192.168.1.16])
-	by gator4050.hostgator.com with esmtpa (Exim 4.82)
-	(envelope-from <fabio.dalfonso@fabiodalfonso.com>)
-	id 1WigLA-0002Yn-Nr
-	for git@vger.kernel.org; Fri, 09 May 2014 03:39:37 -0500
-User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-In-Reply-To: <536BF8C7.6010208@fabiodalfonso.com>
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - gator4050.hostgator.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - fabiodalfonso.com
-X-BWhitelist: no
-X-Source-IP: 95.235.186.180
-X-Exim-ID: 1WigLA-0002Yn-Nr
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: ([192.168.1.16]) [95.235.186.180]:14898
-X-Source-Auth: fabio.dalfonso@fabiodalfonso.com
-X-Email-Count: 1
-X-Source-Cap: ZGFsZm9uc287ZGFsZm9uc287Z2F0b3I0MDUwLmhvc3RnYXRvci5jb20=
+	id S1755919AbaEIJKt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 May 2014 05:10:49 -0400
+Received: from mail-ig0-f180.google.com ([209.85.213.180]:42871 "EHLO
+	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752505AbaEIJKs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 May 2014 05:10:48 -0400
+Received: by mail-ig0-f180.google.com with SMTP id c1so881333igq.13
+        for <git@vger.kernel.org>; Fri, 09 May 2014 02:10:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=IFOTcxPSdby7A1VdJMUGV/mHY2u3kGlJ/vJBrd263D0=;
+        b=dqD9aeQzjmN14ZLz+qTrwHW47rlNgo0xmPMRT6P40f85ytGvAXOSON0HUUAd2P+FgQ
+         dtpoCP7q9YZPI27bh9FxQWQKkOTTukdauDBo5SFCgaRsPqv5QL3Uj/I1sE1lBnyxISkW
+         jbGkM9edzGVFQ7ovQYYGsURMJyrgSOIt/QxAqn6TXXDyG0G9x6YLUq7onG6O9b8Ufcwz
+         fBdndjTI0re8CzQGgStGsH58FViH63TT6rNpesuA7pIe7dQOksYtEArF1Ans8MQZ+Aty
+         LMclSl+Q1IJAI5gs36U791i01FiVpP5a/7kiPZEj1sDS0PXahhfUpUs5f2nIxndjmoW/
+         8P0g==
+X-Received: by 10.50.50.146 with SMTP id c18mr6160571igo.42.1399626647616;
+ Fri, 09 May 2014 02:10:47 -0700 (PDT)
+Received: by 10.64.166.135 with HTTP; Fri, 9 May 2014 02:10:07 -0700 (PDT)
+In-Reply-To: <536c966cf0e9c_2bf0e952f079@nysa.notmuch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248539>
 
-Hi,
-this test was disabled up to 1.9.2 so it did not fail as it did not run=
-=20
-by default.
-I have set the variable to run and got an error also in previous=20
-version, while never had problem in use.
-
-So I simply go on as there will no worst than before.
-
-It seems that no one is interested to this issue. Probably I=20
-misunderstood the purpose of the list.
-
-Regards
-
-=46abio D'Alfonso
-'Enabling Business Through IT'
-cell.  +39.348.059.40.22 ***
-web: www.fabiodalfonso.com <http://www.fabiodalfonso.com/>
-email: fabio.dalfonso@fabiodalfonso.com
-<mailto:fabio.dalfonso@fabiodalfonso.com>linkedin:=20
-www.linkedin.com/in/fabiodalfonso <http://it.linkedin.com/in/fabiodalfo=
-nso>
-twitter: www.twitter.com/#!/fabio_dalfonso=20
-<http://www.twitter.com/#%21/fabio_dalfonso>
-
-fax: +39.06.874.599.581
-BlackBerry=C2=AE Wireless Enabled Address.
-
-
-          ** Hidden  numbers are automatically rejected by the phone*
-
-On 5/8/2014 11:36 PM, Fabio D'Alfonso wrote:
-> Hi,
-> strange that no one gets the error. I get also on another server=20
-> 12.04.4 LTS so the problem is not on a single VM or version.
->
-> No idea?
->
-> Fabio D'Alfonso
-> 'Enabling Business Through IT'
-> cell.  +39.348.059.40.22 ***
-> web: www.fabiodalfonso.com <http://www.fabiodalfonso.com/>
-> email: fabio.dalfonso@fabiodalfonso.com
-> <mailto:fabio.dalfonso@fabiodalfonso.com>linkedin:=20
-> www.linkedin.com/in/fabiodalfonso=20
-> <http://it.linkedin.com/in/fabiodalfonso>
-> twitter: www.twitter.com/#!/fabio_dalfonso=20
-> <http://www.twitter.com/#%21/fabio_dalfonso>
->
-> fax: +39.06.874.599.581
-> BlackBerry=C2=AE Wireless Enabled Address.
->
->
->          ** Hidden  numbers are automatically rejected by the phone*
->
-> On 5/7/2014 9:56 PM, Fabio D'Alfonso wrote:
->> Hi,
->> I am getting this in Ubuntu, something wrong with my env?
->> Thanks
+On Fri, May 9, 2014 at 10:48 AM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> Erik Faye-Lund wrote:
+>> On Fri, May 9, 2014 at 10:14 AM, Felipe Contreras
+>> <felipe.contreras@gmail.com> wrote:
+>> > If you want this script to remain in contrib, please:
+>> >
+>> >  a) Write at least a few tests
+>> >  b) Write some documentation
+>> >  c) Explain why it cannot live outside the git.git repository like other
+>> >     tools. [1][2][3]
 >>
->> root@HDUBVM01:~/builds/git/t# ./t5539-fetch-http-shallow.sh
->> ok 1 - setup shallow clone
->> not ok 2 - clone http repository
->> #
->> #        git clone --bare --no-local shallow=20
->> "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
->> #        git clone $HTTPD_URL/smart/repo.git clone &&
->> #        (
->> #        cd clone &&
->> #        git fsck &&
->> #        git log --format=3D%s origin/master >actual &&
->> #        cat <<EOF >expect &&
->> #    7
->> #    6
->> #    5
->> #    4
->> #    3
->> #    EOF
->> #        test_cmp expect actual
->> #        )
->> #
->> not ok 3 - no shallow lines after receiving ACK ready
->> #
->> #        (
->> #            cd shallow &&
->> #            for i in $(test_seq 15)
->> #            do
->> #                git checkout --orphan unrelated$i &&
->> #                test_commit unrelated$i &&
->> #                git push -q "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" \
->> # refs/heads/unrelated$i:refs/heads/unrelated$i &&
->> #                git push -q ../clone/.git \
->> # refs/heads/unrelated$i:refs/heads/unrelated$i ||
->> #                exit 1
->> #            done &&
->> #            git checkout master &&
->> #            test_commit new &&
->> #            git push  "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" master
->> #        ) &&
->> #        (
->> #            cd clone &&
->> #            git checkout --orphan newnew &&
->> #            test_commit new-too &&
->> #            GIT_TRACE_PACKET=3D"$TRASH_DIRECTORY/trace" git fetch=20
->> --depth=3D2 &&
->> #            grep "fetch-pack< ACK .* ready" ../trace &&
->> #            ! grep "fetch-pack> done" ../trace
->> #        )
->> #
->> httpd (pid 10653?) not running
->> # failed 2 among 3 test(s)
->> 1..3
+>> (Adding Marius, the original author to the CC-list)
 >>
+>> Uh, why is such a burden required all of a sudden? contrib/README
+>> mentions no such requirements, and the scripts have been accepted (and
+>> maintained) since.
 >
-> --=20
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> contrib/README mentions clearly the expectation that these scripts
+> eventually move to the core once they mature. This is never going to
+> happen for these.
+
+Yes, *expectation*. Not requirement.
+
+> It also mentions that inactive ones would be proposed for removal, and
+> this one is clearly inactive. It has 9 commits (if you count the one
+> that changes the execution bit).
+
+It mentions that Junio *might* suggest things to be removed, not that
+things *should* be removed if left unmaintained.
+
+And this script is not unmaintained, it's simply just still working.
+
+>> Besides, you say "No activity since 2010" - this is not the case,
+>> bc380fc is from November 2013.
 >
+> You think changing the execution bit of a file is considered "activity"?
+>
+
+Well, now we're getting into semantics, which I don't care so much
+about. It shows some sort of interest in the scripts, at least.
+
+>> And there's already *some* documentation in the scripts themselves.
+>
+> That's nice. So you can just copy that into a README.
+
+Feel free to scratch that itch yourself, you're the one inventing new
+requirements here.
+
+>> Please stop your pointless crusade that'll only break other people's work-flows.
+>
+> If you care about these scripts, it should be trivial for you to add at
+> least a few tests, souldn't it?
+
+Again, testing this is not my itch. Feel free to scratch that one
+yourself, but please don't remove the script.
+
+> Please tell me how exactly will your work-flow be broken. More
+> specifically, tell me why your scripts cannot be moved outside of git,
+> like git-extras[1], git-deploy[2], git-ftp[3], and countless other
+> tools.
+
+Moving the script out of the repo makes it less convenient to bisect
+issues with MSVC, as it depends heavily on the top-level Makefile.
+Moving it out would require figuring out what version of the script
+matches a given git revision, which is a hassle.
+
+Again, please stop this pointless crusade.
