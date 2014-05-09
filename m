@@ -1,248 +1,376 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 16/17] contrib: remove 'git-resurrect'
-Date: Fri,  9 May 2014 14:11:42 -0500
-Message-ID: <1399662703-355-17-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v2 17/17] contrib: remove 'contacts'
+Date: Fri,  9 May 2014 14:11:43 -0500
+Message-ID: <1399662703-355-18-git-send-email-felipe.contreras@gmail.com>
 References: <1399662703-355-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 09 21:13:19 2014
+X-From: git-owner@vger.kernel.org Fri May 09 21:13:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WiqEJ-0002Qc-UV
+	id 1WiqEK-0002Qc-Eu
 	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 21:13:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757358AbaEITMy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 May 2014 15:12:54 -0400
-Received: from mail-yk0-f181.google.com ([209.85.160.181]:47386 "EHLO
-	mail-yk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757303AbaEITMx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 May 2014 15:12:53 -0400
-Received: by mail-yk0-f181.google.com with SMTP id 131so3826725ykp.12
-        for <git@vger.kernel.org>; Fri, 09 May 2014 12:12:52 -0700 (PDT)
+	id S1757368AbaEITNB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 May 2014 15:13:01 -0400
+Received: from mail-yk0-f172.google.com ([209.85.160.172]:42478 "EHLO
+	mail-yk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757359AbaEITM5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 May 2014 15:12:57 -0400
+Received: by mail-yk0-f172.google.com with SMTP id 79so3816845ykr.17
+        for <git@vger.kernel.org>; Fri, 09 May 2014 12:12:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=lLjMYv0bVDrOl3PdW81wPuWdWliOq54Y5QWzFULa4Qg=;
-        b=dEQVTIJMGtmMKZXdFGjvEycAKkkcgOJUPC9T97sjQnVW03icOaIeCnNxYLlHg9dJva
-         OBjt5m90IxRp2apKKWEAv1TzeVllSiDCZp/zG119TP+aIugUQD/Q5dVLq97Wlag64YSx
-         jwS2EohpARVxZz/vHOGKSi5xgb0637QmRtT4yr1TQPOhPB2T33jUnwz8eXI68IcjF4l6
-         zOkukVzPBnTZsg9pisjeO2rQLWdKerL74/N9VbuLeeHa0e7glWv62XonqQoc6GJxrlcp
-         wawprzobnP/E6pXhlWyZ5TasFZyJek49Mok1he4h6J9w01mAJgheWHnYUwQmLBybrZ6t
-         aKZw==
-X-Received: by 10.236.175.37 with SMTP id y25mr8568170yhl.100.1399662772696;
-        Fri, 09 May 2014 12:12:52 -0700 (PDT)
+        bh=HWSJ52dL3hI1OHyGr/7fdH84EojrSZFCFZ1wPkm3+o0=;
+        b=bVur+TsN0PWzU+zSPKnuohMAbbPVd/vCGejD/roO926YiauPUx7abrCsd58NJXwxhw
+         EQCVrUlK6SzaqyeC/TV3W5mDcCfXnUUSCGbUKRVgGkYMU+S1t/88EAaT43mlx9KZurRf
+         sAInYgzVUj6UQxXP7RZXMV+wIiLmOWexZmJ8GjSFC/apKHIeiiCgkajYeNT2xXXmAs91
+         Q8Yps1RonfDkmFr9y9XSfWZXQzvi2oMfUxmb4FIytwKy5hVOG9cE3yCTRfBp8uBE2v0T
+         dshtC+RqMeGw0tcNz4xkU7V19OqyP8YUVk+DH+3qQMtfwrG1ZgIlah4pJfHOQ5DgTl3l
+         nqeA==
+X-Received: by 10.236.86.226 with SMTP id w62mr18128606yhe.94.1399662776475;
+        Fri, 09 May 2014 12:12:56 -0700 (PDT)
 Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id g1sm7409478yho.37.2014.05.09.12.12.50
+        by mx.google.com with ESMTPSA id l66sm7401550yhc.54.2014.05.09.12.12.54
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 09 May 2014 12:12:51 -0700 (PDT)
+        Fri, 09 May 2014 12:12:55 -0700 (PDT)
 X-Mailer: git-send-email 1.9.2+fc1.28.g12374c0
 In-Reply-To: <1399662703-355-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248628>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248629>
 
-No activity, no documentation, no tests, no chance of ever graduating.
+There are better out-of-tree tools, and this tool is not planned to move
+into the core anyway.
 
+No tests either.
+
+Cc: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/git-resurrect.sh | 182 -----------------------------------------------
- 1 file changed, 182 deletions(-)
- delete mode 100755 contrib/git-resurrect.sh
+ contrib/contacts/git-contacts     | 203 --------------------------------------
+ contrib/contacts/git-contacts.txt |  94 ------------------
+ 2 files changed, 297 deletions(-)
+ delete mode 100755 contrib/contacts/git-contacts
+ delete mode 100644 contrib/contacts/git-contacts.txt
 
-diff --git a/contrib/git-resurrect.sh b/contrib/git-resurrect.sh
+diff --git a/contrib/contacts/git-contacts b/contrib/contacts/git-contacts
 deleted file mode 100755
-index d7e97bb..0000000
---- a/contrib/git-resurrect.sh
+index dbe2abf..0000000
+--- a/contrib/contacts/git-contacts
 +++ /dev/null
-@@ -1,182 +0,0 @@
--#!/bin/sh
+@@ -1,203 +0,0 @@
+-#!/usr/bin/perl
 -
--USAGE="[-a] [-r] [-m] [-t] [-n] [-b <newname>] <name>"
--LONG_USAGE="git-resurrect attempts to find traces of a branch tip
--called <name>, and tries to resurrect it.  Currently, the reflog is
--searched for checkout messages, and with -r also merge messages.  With
---m and -t, the history of all refs is scanned for Merge <name> into
--other/Merge <other> into <name> (respectively) commit subjects, which
--is rather slow but allows you to resurrect other people's topic
--branches."
+-# List people who might be interested in a patch.  Useful as the argument to
+-# git-send-email --cc-cmd option, and in other situations.
+-#
+-# Usage: git contacts <file | rev-list option> ...
 -
--OPTIONS_KEEPDASHDASH=
--OPTIONS_STUCKLONG=
--OPTIONS_SPEC="\
--git resurrect $USAGE
----
--b,branch=            save branch as <newname> instead of <name>
--a,all                same as -l -r -m -t
--k,keep-going         full rev-list scan (instead of first match)
--l,reflog             scan reflog for checkouts (enabled by default)
--r,reflog-merges      scan for merges recorded in reflog
--m,merges             scan for merges into other branches (slow)
--t,merge-targets      scan for merges of other branches into <name>
--n,dry-run            don't recreate the branch"
+-use strict;
+-use warnings;
+-use IPC::Open2;
 -
--. git-sh-setup
+-my $since = '5-years-ago';
+-my $min_percent = 10;
+-my $labels_rx = qr/Signed-off-by|Reviewed-by|Acked-by|Cc/i;
+-my %seen;
 -
--search_reflog () {
--        sed -ne 's~^\([^ ]*\) .*\tcheckout: moving from '"$1"' .*~\1~p' \
--                < "$GIT_DIR"/logs/HEAD
+-sub format_contact {
+-	my ($name, $email) = @_;
+-	return "$name <$email>";
 -}
 -
--search_reflog_merges () {
--	git rev-parse $(
--		sed -ne 's~^[^ ]* \([^ ]*\) .*\tmerge '"$1"':.*~\1^2~p' \
--			< "$GIT_DIR"/logs/HEAD
--	)
+-sub parse_commit {
+-	my ($commit, $data) = @_;
+-	my $contacts = $commit->{contacts};
+-	my $inbody = 0;
+-	for (split(/^/m, $data)) {
+-		if (not $inbody) {
+-			if (/^author ([^<>]+) <(\S+)> .+$/) {
+-				$contacts->{format_contact($1, $2)} = 1;
+-			} elsif (/^$/) {
+-				$inbody = 1;
+-			}
+-		} elsif (/^$labels_rx:\s+([^<>]+)\s+<(\S+?)>$/o) {
+-			$contacts->{format_contact($1, $2)} = 1;
+-		}
+-	}
 -}
 -
--_x40="[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]"
--_x40="$_x40$_x40$_x40$_x40$_x40$_x40$_x40$_x40"
--
--search_merges () {
--        git rev-list --all --grep="Merge branch '$1'" \
--                --pretty=tformat:"%P %s" |
--        sed -ne "/^$_x40 \($_x40\) Merge .*/ {s//\1/p;$early_exit}"
+-sub import_commits {
+-	my ($commits) = @_;
+-	return unless %$commits;
+-	my $pid = open2 my $reader, my $writer, qw(git cat-file --batch);
+-	for my $id (keys(%$commits)) {
+-		print $writer "$id\n";
+-		my $line = <$reader>;
+-		if ($line =~ /^([0-9a-f]{40}) commit (\d+)/) {
+-			my ($cid, $len) = ($1, $2);
+-			die "expected $id but got $cid\n" unless $id eq $cid;
+-			my $data;
+-			# cat-file emits newline after data, so read len+1
+-			read $reader, $data, $len + 1;
+-			parse_commit($commits->{$id}, $data);
+-		}
+-	}
+-	close $reader;
+-	close $writer;
+-	waitpid($pid, 0);
+-	die "git-cat-file error: $?\n" if $?;
 -}
 -
--search_merge_targets () {
--	git rev-list --all --grep="Merge branch '[^']*' into $branch\$" \
--		--pretty=tformat:"%H %s" --all |
--	sed -ne "/^\($_x40\) Merge .*/ {s//\1/p;$early_exit} "
+-sub get_blame {
+-	my ($commits, $source, $from, $ranges) = @_;
+-	return unless @$ranges;
+-	open my $f, '-|',
+-		qw(git blame --porcelain -C),
+-		map({"-L$_->[0],+$_->[1]"} @$ranges),
+-		'--since', $since, "$from^", '--', $source or die;
+-	while (<$f>) {
+-		if (/^([0-9a-f]{40}) \d+ \d+ \d+$/) {
+-			my $id = $1;
+-			$commits->{$id} = { id => $id, contacts => {} }
+-				unless $seen{$id};
+-			$seen{$id} = 1;
+-		}
+-	}
+-	close $f;
 -}
 -
--dry_run=
--early_exit=q
--scan_reflog=t
--scan_reflog_merges=
--scan_merges=
--scan_merge_targets=
--new_name=
+-sub blame_sources {
+-	my ($sources, $commits) = @_;
+-	for my $s (keys %$sources) {
+-		for my $id (keys %{$sources->{$s}}) {
+-			get_blame($commits, $s, $id, $sources->{$s}{$id});
+-		}
+-	}
+-}
 -
--while test "$#" != 0; do
--	case "$1" in
--	    -b|--branch)
--		shift
--		new_name="$1"
--		;;
--	    -n|--dry-run)
--		dry_run=t
--		;;
--	    --no-dry-run)
--		dry_run=
--		;;
--	    -k|--keep-going)
--		early_exit=
--		;;
--	    --no-keep-going)
--		early_exit=q
--		;;
--	    -m|--merges)
--		scan_merges=t
--		;;
--	    --no-merges)
--		scan_merges=
--		;;
--	    -l|--reflog)
--		scan_reflog=t
--		;;
--	    --no-reflog)
--		scan_reflog=
--		;;
--	    -r|--reflog_merges)
--		scan_reflog_merges=t
--		;;
--	    --no-reflog_merges)
--		scan_reflog_merges=
--		;;
--	    -t|--merge-targets)
--		scan_merge_targets=t
--		;;
--	    --no-merge-targets)
--		scan_merge_targets=
--		;;
--	    -a|--all)
--		scan_reflog=t
--		scan_reflog_merges=t
--		scan_merges=t
--		scan_merge_targets=t
--		;;
--	    --)
--		shift
--		break
--		;;
--	    *)
--		usage
--		;;
--	esac
--	shift
--done
+-sub scan_patches {
+-	my ($sources, $id, $f) = @_;
+-	my $source;
+-	while (<$f>) {
+-		if (/^From ([0-9a-f]{40}) Mon Sep 17 00:00:00 2001$/) {
+-			$id = $1;
+-			$seen{$id} = 1;
+-		}
+-		next unless $id;
+-		if (m{^--- (?:a/(.+)|/dev/null)$}) {
+-			$source = $1;
+-		} elsif (/^@@ -(\d+)(?:,(\d+))?/ && $source) {
+-			my $len = defined($2) ? $2 : 1;
+-			push @{$sources->{$source}{$id}}, [$1, $len] if $len;
+-		}
+-	}
+-}
 -
--test "$#" = 1 || usage
+-sub scan_patch_file {
+-	my ($commits, $file) = @_;
+-	open my $f, '<', $file or die "read failure: $file: $!\n";
+-	scan_patches($commits, undef, $f);
+-	close $f;
+-}
 -
--all_strategies="$scan_reflog$scan_reflog_merges$scan_merges$scan_merge_targets"
--if test -z "$all_strategies"; then
--	die "must enable at least one of -lrmt"
--fi
+-sub parse_rev_args {
+-	my @args = @_;
+-	open my $f, '-|',
+-		qw(git rev-parse --revs-only --default HEAD --symbolic), @args
+-		or die;
+-	my @revs;
+-	while (<$f>) {
+-		chomp;
+-		push @revs, $_;
+-	}
+-	close $f;
+-	return @revs if scalar(@revs) != 1;
+-	return "^$revs[0]", 'HEAD' unless $revs[0] =~ /^-/;
+-	return $revs[0], 'HEAD';
+-}
 -
--branch="$1"
--test -z "$new_name" && new_name="$branch"
+-sub scan_rev_args {
+-	my ($commits, $args) = @_;
+-	my @revs = parse_rev_args(@$args);
+-	open my $f, '-|', qw(git rev-list --reverse), @revs or die;
+-	while (<$f>) {
+-		chomp;
+-		my $id = $_;
+-		$seen{$id} = 1;
+-		open my $g, '-|', qw(git show -C --oneline), $id or die;
+-		scan_patches($commits, $id, $g);
+-		close $g;
+-	}
+-	close $f;
+-}
 -
--if test ! -z "$scan_reflog"; then
--	if test -r "$GIT_DIR"/logs/HEAD; then
--		candidates="$(search_reflog $branch)"
--	else
--		die 'reflog scanning requested, but' \
--			'$GIT_DIR/logs/HEAD not readable'
--	fi
--fi
--if test ! -z "$scan_reflog_merges"; then
--	if test -r "$GIT_DIR"/logs/HEAD; then
--		candidates="$candidates $(search_reflog_merges $branch)"
--	else
--		die 'reflog scanning requested, but' \
--			'$GIT_DIR/logs/HEAD not readable'
--	fi
--fi
--if test ! -z "$scan_merges"; then
--	candidates="$candidates $(search_merges $branch)"
--fi
--if test ! -z "$scan_merge_targets"; then
--	candidates="$candidates $(search_merge_targets $branch)"
--fi
+-sub mailmap_contacts {
+-	my ($contacts) = @_;
+-	my %mapped;
+-	my $pid = open2 my $reader, my $writer, qw(git check-mailmap --stdin);
+-	for my $contact (keys(%$contacts)) {
+-		print $writer "$contact\n";
+-		my $canonical = <$reader>;
+-		chomp $canonical;
+-		$mapped{$canonical} += $contacts->{$contact};
+-	}
+-	close $reader;
+-	close $writer;
+-	waitpid($pid, 0);
+-	die "git-check-mailmap error: $?\n" if $?;
+-	return \%mapped;
+-}
 -
--candidates="$(git rev-parse $candidates | sort -u)"
+-if (!@ARGV) {
+-	die "No input revisions or patch files\n";
+-}
 -
--if test -z "$candidates"; then
--	hint=
--	test "z$all_strategies" != "ztttt" \
--		&& hint=" (maybe try again with -a)"
--	die "no candidates for $branch found$hint"
--fi
+-my (@files, @rev_args);
+-for (@ARGV) {
+-	if (-e) {
+-		push @files, $_;
+-	} else {
+-		push @rev_args, $_;
+-	}
+-}
 -
--echo "** Candidates for $branch **"
--for cmt in $candidates; do
--	git --no-pager log --pretty=tformat:"%ct:%h [%cr] %s" --abbrev-commit -1 $cmt
--done \
--| sort -n | cut -d: -f2-
+-my %sources;
+-for (@files) {
+-	scan_patch_file(\%sources, $_);
+-}
+-if (@rev_args) {
+-	scan_rev_args(\%sources, \@rev_args)
+-}
 -
--newest="$(git rev-list -1 $candidates)"
--if test ! -z "$dry_run"; then
--	printf "** Most recent: "
--	git --no-pager log -1 --pretty=tformat:"%h %s" $newest
--elif ! git rev-parse --verify --quiet $new_name >/dev/null; then
--	printf "** Restoring $new_name to "
--	git --no-pager log -1 --pretty=tformat:"%h %s" $newest
--	git branch $new_name $newest
--else
--	printf "Most recent: "
--	git --no-pager log -1 --pretty=tformat:"%h %s" $newest
--	echo "** $new_name already exists, doing nothing"
--fi
+-my $toplevel = `git rev-parse --show-toplevel`;
+-chomp $toplevel;
+-chdir($toplevel) or die "chdir failure: $toplevel: $!\n";
+-
+-my %commits;
+-blame_sources(\%sources, \%commits);
+-import_commits(\%commits);
+-
+-my $contacts = {};
+-for my $commit (values %commits) {
+-	for my $contact (keys %{$commit->{contacts}}) {
+-		$contacts->{$contact}++;
+-	}
+-}
+-$contacts = mailmap_contacts($contacts);
+-
+-my $ncommits = scalar(keys %commits);
+-for my $contact (keys %$contacts) {
+-	my $percent = $contacts->{$contact} * 100 / $ncommits;
+-	next if $percent < $min_percent;
+-	print "$contact\n";
+-}
+diff --git a/contrib/contacts/git-contacts.txt b/contrib/contacts/git-contacts.txt
+deleted file mode 100644
+index dd914d1..0000000
+--- a/contrib/contacts/git-contacts.txt
++++ /dev/null
+@@ -1,94 +0,0 @@
+-git-contacts(1)
+-===============
+-
+-NAME
+-----
+-git-contacts - List people who might be interested in a set of changes
+-
+-
+-SYNOPSIS
+---------
+-[verse]
+-'git contacts' (<patch>|<range>|<rev>)...
+-
+-
+-DESCRIPTION
+------------
+-
+-Given a set of changes, specified as patch files or revisions, determine people
+-who might be interested in those changes.  This is done by consulting the
+-history of each patch or revision hunk to find people mentioned by commits
+-which touched the lines of files under consideration.
+-
+-Input consists of one or more patch files or revision arguments.  A revision
+-argument can be a range or a single `<rev>` which is interpreted as
+-`<rev>..HEAD`, thus the same revision arguments are accepted as for
+-linkgit:git-format-patch[1]. Patch files and revision arguments can be combined
+-in the same invocation.
+-
+-This command can be useful for determining the list of people with whom to
+-discuss proposed changes, or for finding the list of recipients to Cc: when
+-submitting a patch series via `git send-email`. For the latter case, `git
+-contacts` can be used as the argument to `git send-email`'s `--cc-cmd` option.
+-
+-
+-DISCUSSION
+-----------
+-
+-`git blame` is invoked for each hunk in a patch file or revision.  For each
+-commit mentioned by `git blame`, the commit message is consulted for people who
+-authored, reviewed, signed, acknowledged, or were Cc:'d.  Once the list of
+-participants is known, each person's relevance is computed by considering how
+-many commits mentioned that person compared with the total number of commits
+-under consideration.  The final output consists only of participants who exceed
+-a minimum threshold of participation.
+-
+-
+-OUTPUT
+-------
+-
+-For each person of interest, a single line is output, terminated by a newline.
+-If the person's name is known, ``Name $$<user@host>$$'' is printed; otherwise
+-only ``$$<user@host>$$'' is printed.
+-
+-
+-EXAMPLES
+---------
+-
+-* Consult patch files:
+-+
+-------------
+-$ git contacts feature/*.patch
+-------------
+-
+-* Revision range:
+-+
+-------------
+-$ git contacts R1..R2
+-------------
+-
+-* From a single revision to `HEAD`:
+-+
+-------------
+-$ git contacts origin
+-------------
+-
+-* Helper for `git send-email`:
+-+
+-------------
+-$ git send-email --cc-cmd='git contacts' feature/*.patch
+-------------
+-
+-
+-LIMITATIONS
+------------
+-
+-Several conditions controlling a person's significance are currently
+-hard-coded, such as minimum participation level (10%), blame date-limiting (5
+-years), and `-C` level for detecting moved and copied lines (a single `-C`). In
+-the future, these conditions may become configurable.
+-
+-
+-GIT
+----
+-Part of the linkgit:git[1] suite
 -- 
 1.9.2+fc1.28.g12374c0
