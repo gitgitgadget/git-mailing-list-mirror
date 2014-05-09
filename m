@@ -1,148 +1,313 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 11/17] contrib: remove 'workdir'
-Date: Fri,  9 May 2014 14:11:37 -0500
-Message-ID: <1399662703-355-12-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v2 12/17] contrib: remove 'svn-fe'
+Date: Fri,  9 May 2014 14:11:38 -0500
+Message-ID: <1399662703-355-13-git-send-email-felipe.contreras@gmail.com>
 References: <1399662703-355-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 09 21:12:47 2014
+X-From: git-owner@vger.kernel.org Fri May 09 21:12:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WiqDu-0001jz-85
-	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 21:12:46 +0200
+	id 1WiqDu-0001jz-OZ
+	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 21:12:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757239AbaEITMe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 May 2014 15:12:34 -0400
-Received: from mail-yh0-f43.google.com ([209.85.213.43]:34897 "EHLO
-	mail-yh0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757207AbaEITMd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 May 2014 15:12:33 -0400
-Received: by mail-yh0-f43.google.com with SMTP id f10so4136321yha.30
-        for <git@vger.kernel.org>; Fri, 09 May 2014 12:12:32 -0700 (PDT)
+	id S1757267AbaEITMi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 May 2014 15:12:38 -0400
+Received: from mail-yh0-f50.google.com ([209.85.213.50]:38446 "EHLO
+	mail-yh0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757241AbaEITMg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 May 2014 15:12:36 -0400
+Received: by mail-yh0-f50.google.com with SMTP id 29so4228697yhl.9
+        for <git@vger.kernel.org>; Fri, 09 May 2014 12:12:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=JHbOgifmd0JHy2lHfkhUKPL3LrI4wS9dm8C79D5m308=;
-        b=SNIo9tc0l9jZatugA5+/ZV0GaeoSR5HiNWjbt+udTAiS3orlW0sz/TWBeyB4643b8F
-         RZCIWMgSmKGoKLjIINFJovyXNPhmsBxuJG24PeidNjP/+jZG3y89G59n247SB67NWTK5
-         nrkvwy+19BebnyAdYgkR+GUf6KyIDZfyCqOuH0n7awws8Zbnynsq1lnDEqmd0UsZQyrp
-         UCfvq0uPJkhkUyaDNlYPjj7ochxEBvjvhX91mYJcOqe5riqDGRRlgJ4hwmb2TAV0LAsg
-         nE67tMPuQZFoR3/Q8AYgY3gWD2qPNTBgkp7nATSiS9pvrxYaECRn1QfH+yn0U5PhD07i
-         NM+g==
-X-Received: by 10.236.32.178 with SMTP id o38mr17677750yha.119.1399662752471;
-        Fri, 09 May 2014 12:12:32 -0700 (PDT)
+        bh=nKB8zzFOYtjuvJzNTV/QApcJ4G1zRKNCY/H3GoVSpC4=;
+        b=xDP2ZflqiXnqi/Kz8J6esa/zfTCh2rkecL2r0D9acZt9QPdGvIKY5iE1Y0j19dprS1
+         4QGUvrMQqUFIY2R2Hw0GbBectTC3HOOtffNmRKAip3jxPPe1Su7fPdXRE5bFmlRV2WXi
+         +Vn9e74LN4C20Ijo37cY+lAh6g0SAWJPmVClbHDShk2rfm+wvY48/yLGsZRtZy0KtPHK
+         mnd/y/Zpcr8B88gAcMVux/sFrw+kjZEV4hX3PXQ5JN4obSyV4yjWpHDtvpkpGpDZlSBt
+         2aYP1wAOpJT9leOurHFfBUWNQ0MTnr3Wfz0Fp9idrKiBwl9urg7EwsOwCMXDzOkVsQwv
+         BZsQ==
+X-Received: by 10.236.133.145 with SMTP id q17mr18005319yhi.3.1399662756123;
+        Fri, 09 May 2014 12:12:36 -0700 (PDT)
 Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id u21sm7399372yhb.51.2014.05.09.12.12.29
+        by mx.google.com with ESMTPSA id k7sm7411418yhj.31.2014.05.09.12.12.33
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 09 May 2014 12:12:30 -0700 (PDT)
+        Fri, 09 May 2014 12:12:35 -0700 (PDT)
 X-Mailer: git-send-email 1.9.2+fc1.28.g12374c0
 In-Reply-To: <1399662703-355-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248623>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248624>
 
-No activity since 2010, no documentation, no tests.
+No activity since 2012, no tests.
 
+Cc: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/workdir/git-new-workdir | 82 -----------------------------------------
- 1 file changed, 82 deletions(-)
- delete mode 100755 contrib/workdir/git-new-workdir
+ contrib/svn-fe/.gitignore      |  4 ---
+ contrib/svn-fe/Makefile        | 63 -------------------------------------
+ contrib/svn-fe/svn-fe.c        | 18 -----------
+ contrib/svn-fe/svn-fe.txt      | 71 ------------------------------------------
+ contrib/svn-fe/svnrdump_sim.py | 57 ---------------------------------
+ 5 files changed, 213 deletions(-)
+ delete mode 100644 contrib/svn-fe/.gitignore
+ delete mode 100644 contrib/svn-fe/Makefile
+ delete mode 100644 contrib/svn-fe/svn-fe.c
+ delete mode 100644 contrib/svn-fe/svn-fe.txt
+ delete mode 100755 contrib/svn-fe/svnrdump_sim.py
 
-diff --git a/contrib/workdir/git-new-workdir b/contrib/workdir/git-new-workdir
-deleted file mode 100755
-index 75e8b25..0000000
---- a/contrib/workdir/git-new-workdir
+diff --git a/contrib/svn-fe/.gitignore b/contrib/svn-fe/.gitignore
+deleted file mode 100644
+index 02a7791..0000000
+--- a/contrib/svn-fe/.gitignore
 +++ /dev/null
-@@ -1,82 +0,0 @@
--#!/bin/sh
+@@ -1,4 +0,0 @@
+-/*.xml
+-/*.1
+-/*.html
+-/svn-fe
+diff --git a/contrib/svn-fe/Makefile b/contrib/svn-fe/Makefile
+deleted file mode 100644
+index 360d8da..0000000
+--- a/contrib/svn-fe/Makefile
++++ /dev/null
+@@ -1,63 +0,0 @@
+-all:: svn-fe$X
 -
--usage () {
--	echo "usage:" $@
--	exit 127
+-CC = gcc
+-RM = rm -f
+-MV = mv
+-
+-CFLAGS = -g -O2 -Wall
+-LDFLAGS =
+-ALL_CFLAGS = $(CFLAGS)
+-ALL_LDFLAGS = $(LDFLAGS)
+-EXTLIBS =
+-
+-GIT_LIB = ../../libgit.a
+-VCSSVN_LIB = ../../vcs-svn/lib.a
+-LIBS = $(VCSSVN_LIB) $(GIT_LIB) $(EXTLIBS)
+-
+-QUIET_SUBDIR0 = +$(MAKE) -C # space to separate -C and subdir
+-QUIET_SUBDIR1 =
+-
+-ifneq ($(findstring $(MAKEFLAGS),w),w)
+-PRINT_DIR = --no-print-directory
+-else # "make -w"
+-NO_SUBDIR = :
+-endif
+-
+-ifneq ($(findstring $(MAKEFLAGS),s),s)
+-ifndef V
+-	QUIET_CC      = @echo '   ' CC $@;
+-	QUIET_LINK    = @echo '   ' LINK $@;
+-	QUIET_SUBDIR0 = +@subdir=
+-	QUIET_SUBDIR1 = ;$(NO_SUBDIR) echo '   ' SUBDIR $$subdir; \
+-	                $(MAKE) $(PRINT_DIR) -C $$subdir
+-endif
+-endif
+-
+-svn-fe$X: svn-fe.o $(VCSSVN_LIB) $(GIT_LIB)
+-	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ svn-fe.o \
+-		$(ALL_LDFLAGS) $(LIBS)
+-
+-svn-fe.o: svn-fe.c ../../vcs-svn/svndump.h
+-	$(QUIET_CC)$(CC) -I../../vcs-svn -o $*.o -c $(ALL_CFLAGS) $<
+-
+-svn-fe.html: svn-fe.txt
+-	$(QUIET_SUBDIR0)../../Documentation $(QUIET_SUBDIR1) \
+-		MAN_TXT=../contrib/svn-fe/svn-fe.txt \
+-		../contrib/svn-fe/$@
+-
+-svn-fe.1: svn-fe.txt
+-	$(QUIET_SUBDIR0)../../Documentation $(QUIET_SUBDIR1) \
+-		MAN_TXT=../contrib/svn-fe/svn-fe.txt \
+-		../contrib/svn-fe/$@
+-	$(MV) ../../Documentation/svn-fe.1 .
+-
+-../../vcs-svn/lib.a: FORCE
+-	$(QUIET_SUBDIR0)../.. $(QUIET_SUBDIR1) vcs-svn/lib.a
+-
+-../../libgit.a: FORCE
+-	$(QUIET_SUBDIR0)../.. $(QUIET_SUBDIR1) libgit.a
+-
+-clean:
+-	$(RM) svn-fe$X svn-fe.o svn-fe.html svn-fe.xml svn-fe.1
+-
+-.PHONY: all clean FORCE
+diff --git a/contrib/svn-fe/svn-fe.c b/contrib/svn-fe/svn-fe.c
+deleted file mode 100644
+index f363505..0000000
+--- a/contrib/svn-fe/svn-fe.c
++++ /dev/null
+@@ -1,18 +0,0 @@
+-/*
+- * This file is in the public domain.
+- * You may freely use, modify, distribute, and relicense it.
+- */
+-
+-#include <stdlib.h>
+-#include "svndump.h"
+-
+-int main(int argc, char **argv)
+-{
+-	if (svndump_init(NULL))
+-		return 1;
+-	svndump_read((argc > 1) ? argv[1] : NULL, "refs/heads/master",
+-			"refs/notes/svn/revs");
+-	svndump_deinit();
+-	svndump_reset();
+-	return 0;
 -}
+diff --git a/contrib/svn-fe/svn-fe.txt b/contrib/svn-fe/svn-fe.txt
+deleted file mode 100644
+index a3425f4..0000000
+--- a/contrib/svn-fe/svn-fe.txt
++++ /dev/null
+@@ -1,71 +0,0 @@
+-svn-fe(1)
+-=========
 -
--die () {
--	echo $@
--	exit 128
--}
+-NAME
+-----
+-svn-fe - convert an SVN "dumpfile" to a fast-import stream
 -
--if test $# -lt 2 || test $# -gt 3
--then
--	usage "$0 <repository> <new_workdir> [<branch>]"
--fi
+-SYNOPSIS
+---------
+-[verse]
+-mkfifo backchannel &&
+-svnadmin dump --deltas REPO |
+-	svn-fe [url] 3<backchannel |
+-	git fast-import --cat-blob-fd=3 3>backchannel
 -
--orig_git=$1
--new_workdir=$2
--branch=$3
+-DESCRIPTION
+------------
 -
--# want to make sure that what is pointed to has a .git directory ...
--git_dir=$(cd "$orig_git" 2>/dev/null &&
--  git rev-parse --git-dir 2>/dev/null) ||
--  die "Not a git repository: \"$orig_git\""
+-Converts a Subversion dumpfile into input suitable for
+-git-fast-import(1) and similar importers. REPO is a path to a
+-Subversion repository mirrored on the local disk. Remote Subversion
+-repositories can be mirrored on local disk using the `svnsync`
+-command.
 -
--case "$git_dir" in
--.git)
--	git_dir="$orig_git/.git"
--	;;
--.)
--	git_dir=$orig_git
--	;;
--esac
+-Note: this tool is very young.  The details of its commandline
+-interface may change in backward incompatible ways.
 -
--# don't link to a configured bare repository
--isbare=$(git --git-dir="$git_dir" config --bool --get core.bare)
--if test ztrue = z$isbare
--then
--	die "\"$git_dir\" has core.bare set to true," \
--		" remove from \"$git_dir/config\" to use $0"
--fi
+-INPUT FORMAT
+-------------
+-Subversion's repository dump format is documented in full in
+-`notes/dump-load-format.txt` from the Subversion source tree.
+-Files in this format can be generated using the 'svnadmin dump' or
+-'svk admin dump' command.
 -
--# don't link to a workdir
--if test -h "$git_dir/config"
--then
--	die "\"$orig_git\" is a working directory only, please specify" \
--		"a complete repository."
--fi
+-OUTPUT FORMAT
+--------------
+-The fast-import format is documented by the git-fast-import(1)
+-manual page.
 -
--# don't recreate a workdir over an existing repository
--if test -e "$new_workdir"
--then
--	die "destination directory '$new_workdir' already exists."
--fi
+-NOTES
+------
+-Subversion dumps do not record a separate author and committer for
+-each revision, nor do they record a separate display name and email
+-address for each author.  Like git-svn(1), 'svn-fe' will use the name
 -
--# make sure the links use full paths
--git_dir=$(cd "$git_dir"; pwd)
+----------
+-user <user@UUID>
+----------
 -
--# create the workdir
--mkdir -p "$new_workdir/.git" || die "unable to create \"$new_workdir\"!"
+-as committer, where 'user' is the value of the `svn:author` property
+-and 'UUID' the repository's identifier.
 -
--# create the links to the original repo.  explicitly exclude index, HEAD and
--# logs/HEAD from the list since they are purely related to the current working
--# directory, and should not be shared.
--for x in config refs logs/refs objects info hooks packed-refs remotes rr-cache svn
--do
--	case $x in
--	*/*)
--		mkdir -p "$(dirname "$new_workdir/.git/$x")"
--		;;
--	esac
--	ln -s "$git_dir/$x" "$new_workdir/.git/$x"
--done
+-To support incremental imports, 'svn-fe' puts a `git-svn-id` line at
+-the end of each commit log message if passed a URL on the command
+-line.  This line has the form `git-svn-id: URL@REVNO UUID`.
 -
--# now setup the workdir
--cd "$new_workdir"
--# copy the HEAD from the original repository as a default branch
--cp "$git_dir/HEAD" .git/HEAD
--# checkout the branch (either the same as HEAD from the original repository, or
--# the one that was asked for)
--git checkout -f $branch
+-The resulting repository will generally require further processing
+-to put each project in its own repository and to separate the history
+-of each branch.  The 'git filter-branch --subdirectory-filter' command
+-may be useful for this purpose.
+-
+-BUGS
+-----
+-Empty directories and unknown properties are silently discarded.
+-
+-The exit status does not reflect whether an error was detected.
+-
+-SEE ALSO
+---------
+-git-svn(1), svn2git(1), svk(1), git-filter-branch(1), git-fast-import(1),
+-https://svn.apache.org/repos/asf/subversion/trunk/notes/dump-load-format.txt
+diff --git a/contrib/svn-fe/svnrdump_sim.py b/contrib/svn-fe/svnrdump_sim.py
+deleted file mode 100755
+index 4e78a1c..0000000
+--- a/contrib/svn-fe/svnrdump_sim.py
++++ /dev/null
+@@ -1,57 +0,0 @@
+-#!/usr/bin/python
+-"""
+-Simulates svnrdump by replaying an existing dump from a file, taking care
+-of the specified revision range.
+-To simulate incremental imports the environment variable SVNRMAX can be set
+-to the highest revision that should be available.
+-"""
+-import sys, os
+-
+-if sys.hexversion < 0x02040000:
+-        # The limiter is the ValueError() calls. This may be too conservative
+-        sys.stderr.write("svnrdump-sim.py: requires Python 2.4 or later.\n")
+-        sys.exit(1)
+-
+-def getrevlimit():
+-        var = 'SVNRMAX'
+-        if var in os.environ:
+-                return os.environ[var]
+-        return None
+-
+-def writedump(url, lower, upper):
+-        if url.startswith('sim://'):
+-                filename = url[6:]
+-                if filename[-1] == '/': filename = filename[:-1] #remove terminating slash
+-        else:
+-                raise ValueError('sim:// url required')
+-        f = open(filename, 'r');
+-        state = 'header'
+-        wroterev = False
+-        while(True):
+-                l = f.readline()
+-                if l == '': break
+-                if state == 'header' and l.startswith('Revision-number: '):
+-                        state = 'prefix'
+-                if state == 'prefix' and l == 'Revision-number: %s\n' % lower:
+-                        state = 'selection'
+-                if not upper == 'HEAD' and state == 'selection' and l == 'Revision-number: %s\n' % upper:
+-                        break;
+-
+-                if state == 'header' or state == 'selection':
+-                        if state == 'selection': wroterev = True
+-                        sys.stdout.write(l)
+-        return wroterev
+-
+-if __name__ == "__main__":
+-        if not (len(sys.argv) in (3, 4, 5)):
+-                print("usage: %s dump URL -rLOWER:UPPER")
+-                sys.exit(1)
+-        if not sys.argv[1] == 'dump': raise NotImplementedError('only "dump" is suppported.')
+-        url = sys.argv[2]
+-        r = ('0', 'HEAD')
+-        if len(sys.argv) == 4 and sys.argv[3][0:2] == '-r':
+-                r = sys.argv[3][2:].lstrip().split(':')
+-        if not getrevlimit() is None: r[1] = getrevlimit()
+-        if writedump(url, r[0], r[1]): ret = 0
+-        else: ret = 1
+-        sys.exit(ret)
 -- 
 1.9.2+fc1.28.g12374c0
