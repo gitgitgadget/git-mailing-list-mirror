@@ -1,390 +1,432 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 07/17] contrib: remove 'stats'
-Date: Fri,  9 May 2014 14:11:33 -0500
-Message-ID: <1399662703-355-8-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v2 08/17] contrib: remove 'convert-objects'
+Date: Fri,  9 May 2014 14:11:34 -0500
+Message-ID: <1399662703-355-9-git-send-email-felipe.contreras@gmail.com>
 References: <1399662703-355-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 09 21:12:28 2014
+X-From: git-owner@vger.kernel.org Fri May 09 21:12:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WiqDa-0001Gh-Uo
-	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 21:12:27 +0200
+	id 1WiqDg-0001Rg-Vg
+	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 21:12:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757157AbaEITMT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 May 2014 15:12:19 -0400
-Received: from mail-yk0-f169.google.com ([209.85.160.169]:64144 "EHLO
-	mail-yk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756837AbaEITMQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 May 2014 15:12:16 -0400
-Received: by mail-yk0-f169.google.com with SMTP id 200so3885944ykr.28
-        for <git@vger.kernel.org>; Fri, 09 May 2014 12:12:16 -0700 (PDT)
+	id S1757202AbaEITMZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 May 2014 15:12:25 -0400
+Received: from mail-yh0-f44.google.com ([209.85.213.44]:49223 "EHLO
+	mail-yh0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757165AbaEITMU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 May 2014 15:12:20 -0400
+Received: by mail-yh0-f44.google.com with SMTP id b6so4141570yha.17
+        for <git@vger.kernel.org>; Fri, 09 May 2014 12:12:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Ew+GFBopcnwKlwpFRZ/VJ15DNzycwQkJq0wQoV28J/s=;
-        b=mVEr/NjtWBdCouXHjEiDwFfb3/+aZBoCow4KpIF8RuIHgoSQJ5rmw7g14Z4tD/gTAT
-         RJ/kDS5FoJ32OgGi5oDaQldsoS28NHT5+7pHvAAGb6NByjWl7D6yI2v6UczTFwgRIHSh
-         wt1dkbJgsQeECqPoRl9uXI3retcSC2hxkw8r/OhPna24OWVfHJ5kV6gf4Jdi/zRa70g4
-         xHcnRXAEGqL21uNYa5NC1DezjEkGc/Sp3stxoB6JMaFqjMEe+7A/fNgesb/CuDAUXlvh
-         NVz+EpyWFU5UksoqzT8RQ/Uq6qm5gDNSO3jA/DRilxJZ84bibn0S1lLMFeiPZIGoE0A6
-         oc3g==
-X-Received: by 10.236.112.37 with SMTP id x25mr17998588yhg.26.1399662736235;
-        Fri, 09 May 2014 12:12:16 -0700 (PDT)
+        bh=/KSeScZzbhv3744tlD6208u8GfhuXRG3Fgm8pCBgzhE=;
+        b=A4RWBpxZf4gW0xnBKXAEudRTbiJAvHfqyuE0sGtZIWxLL7WiogOJCHM8Bc0vESHmmw
+         7zO2/y2JlamSEHirwomSx+59gIlB9er4RrgerUGqvCCE6hly2EkNBkqzs+8Tua2tb7fz
+         mcMWrsyO0OK8QS5KVVv5Ts/CPERzlsCDH8ambdf84DCXxS25SHSo86s7tK5cq2scYW9m
+         Q9iIETbBOl7A3CP6t6CRO/rG9A+++Ze06zbixz0sJD2m4p32S4CHsv+UHAdWS4NzWNP9
+         fMGfJvGNon7VeHHY596JzkgbP0VQiXHCGj0p1Fhw0+QLDaGkt1I6mXY9w8xNI1lCLjLD
+         D0ZQ==
+X-Received: by 10.236.141.113 with SMTP id f77mr17996583yhj.128.1399662740289;
+        Fri, 09 May 2014 12:12:20 -0700 (PDT)
 Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id a104sm7423638yhq.5.2014.05.09.12.12.13
+        by mx.google.com with ESMTPSA id r46sm7411558yhd.29.2014.05.09.12.12.17
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 09 May 2014 12:12:15 -0700 (PDT)
+        Fri, 09 May 2014 12:12:19 -0700 (PDT)
 X-Mailer: git-send-email 1.9.2+fc1.28.g12374c0
 In-Reply-To: <1399662703-355-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248619>
 
-No real activity since 2012 (or ever), no tests, no documentation.
+No activity since 2010, no tests, no documentation.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/stats/git-common-hash |  26 ------
- contrib/stats/mailmap.pl      |  70 --------------
- contrib/stats/packinfo.pl     | 212 ------------------------------------------
- 3 files changed, 308 deletions(-)
- delete mode 100755 contrib/stats/git-common-hash
- delete mode 100755 contrib/stats/mailmap.pl
- delete mode 100755 contrib/stats/packinfo.pl
+ contrib/convert-objects/convert-objects.c       | 329 ------------------------
+ contrib/convert-objects/git-convert-objects.txt |  29 ---
+ 2 files changed, 358 deletions(-)
+ delete mode 100644 contrib/convert-objects/convert-objects.c
+ delete mode 100644 contrib/convert-objects/git-convert-objects.txt
 
-diff --git a/contrib/stats/git-common-hash b/contrib/stats/git-common-hash
-deleted file mode 100755
-index e27fd08..0000000
---- a/contrib/stats/git-common-hash
+diff --git a/contrib/convert-objects/convert-objects.c b/contrib/convert-objects/convert-objects.c
+deleted file mode 100644
+index f3b57bf..0000000
+--- a/contrib/convert-objects/convert-objects.c
 +++ /dev/null
-@@ -1,26 +0,0 @@
--#!/bin/sh
+@@ -1,329 +0,0 @@
+-#include "cache.h"
+-#include "blob.h"
+-#include "commit.h"
+-#include "tree.h"
 -
--# This script displays the distribution of longest common hash prefixes.
--# This can be used to determine the minimum prefix length to use
--# for object names to be unique.
+-struct entry {
+-	unsigned char old_sha1[20];
+-	unsigned char new_sha1[20];
+-	int converted;
+-};
 -
--git rev-list --objects --all | sort | perl -lne '
--  substr($_, 40) = "";
--  # uncomment next line for a distribution of bits instead of hex chars
--  # $_ = unpack("B*",pack("H*",$_));
--  if (defined $p) {
--    ($p ^ $_) =~ /^(\0*)/;
--    $common = length $1;
--    if (defined $pcommon) {
--      $count[$pcommon > $common ? $pcommon : $common]++;
--    } else {
--      $count[$common]++; # first item
--    }
--  }
--  $p = $_;
--  $pcommon = $common;
--  END {
--    $count[$common]++; # last item
--    print "$_: $count[$_]" for 0..$#count;
--  }
--'
-diff --git a/contrib/stats/mailmap.pl b/contrib/stats/mailmap.pl
-deleted file mode 100755
-index 9513f5e..0000000
---- a/contrib/stats/mailmap.pl
-+++ /dev/null
-@@ -1,70 +0,0 @@
--#!/usr/bin/perl
+-#define MAXOBJECTS (1000000)
 -
--use warnings 'all';
--use strict;
--use Getopt::Long;
+-static struct entry *convert[MAXOBJECTS];
+-static int nr_convert;
 -
--my $match_emails;
--my $match_names;
--my $order_by = 'count';
--Getopt::Long::Configure(qw(bundling));
--GetOptions(
--	'emails|e!' => \$match_emails,
--	'names|n!'  => \$match_names,
--	'count|c'   => sub { $order_by = 'count' },
--	'time|t'    => sub { $order_by = 'stamp' },
--) or exit 1;
--$match_emails = 1 unless $match_names;
+-static struct entry * convert_entry(unsigned char *sha1);
 -
--my $email = {};
--my $name = {};
--
--open(my $fh, '-|', "git log --format='%at <%aE> %aN'");
--while(<$fh>) {
--	my ($t, $e, $n) = /(\S+) <(\S+)> (.*)/;
--	mark($email, $e, $n, $t);
--	mark($name, $n, $e, $t);
+-static struct entry *insert_new(unsigned char *sha1, int pos)
+-{
+-	struct entry *new = xcalloc(1, sizeof(struct entry));
+-	hashcpy(new->old_sha1, sha1);
+-	memmove(convert + pos + 1, convert + pos, (nr_convert - pos) * sizeof(struct entry *));
+-	convert[pos] = new;
+-	nr_convert++;
+-	if (nr_convert == MAXOBJECTS)
+-		die("you're kidding me - hit maximum object limit");
+-	return new;
 -}
--close($fh);
 -
--if ($match_emails) {
--	foreach my $e (dups($email)) {
--		foreach my $n (vals($email->{$e})) {
--			show($n, $e, $email->{$e}->{$n});
+-static struct entry *lookup_entry(unsigned char *sha1)
+-{
+-	int low = 0, high = nr_convert;
+-
+-	while (low < high) {
+-		int next = (low + high) / 2;
+-		struct entry *n = convert[next];
+-		int cmp = hashcmp(sha1, n->old_sha1);
+-		if (!cmp)
+-			return n;
+-		if (cmp < 0) {
+-			high = next;
+-			continue;
 -		}
--		print "\n";
+-		low = next+1;
 -	}
+-	return insert_new(sha1, low);
 -}
--if ($match_names) {
--	foreach my $n (dups($name)) {
--		foreach my $e (vals($name->{$n})) {
--			show($n, $e, $name->{$n}->{$e});
+-
+-static void convert_binary_sha1(void *buffer)
+-{
+-	struct entry *entry = convert_entry(buffer);
+-	hashcpy(buffer, entry->new_sha1);
+-}
+-
+-static void convert_ascii_sha1(void *buffer)
+-{
+-	unsigned char sha1[20];
+-	struct entry *entry;
+-
+-	if (get_sha1_hex(buffer, sha1))
+-		die("expected sha1, got '%s'", (char *) buffer);
+-	entry = convert_entry(sha1);
+-	memcpy(buffer, sha1_to_hex(entry->new_sha1), 40);
+-}
+-
+-static unsigned int convert_mode(unsigned int mode)
+-{
+-	unsigned int newmode;
+-
+-	newmode = mode & S_IFMT;
+-	if (S_ISREG(mode))
+-		newmode |= (mode & 0100) ? 0755 : 0644;
+-	return newmode;
+-}
+-
+-static int write_subdirectory(void *buffer, unsigned long size, const char *base, int baselen, unsigned char *result_sha1)
+-{
+-	char *new = xmalloc(size);
+-	unsigned long newlen = 0;
+-	unsigned long used;
+-
+-	used = 0;
+-	while (size) {
+-		int len = 21 + strlen(buffer);
+-		char *path = strchr(buffer, ' ');
+-		unsigned char *sha1;
+-		unsigned int mode;
+-		char *slash, *origpath;
+-
+-		if (!path || strtoul_ui(buffer, 8, &mode))
+-			die("bad tree conversion");
+-		mode = convert_mode(mode);
+-		path++;
+-		if (memcmp(path, base, baselen))
+-			break;
+-		origpath = path;
+-		path += baselen;
+-		slash = strchr(path, '/');
+-		if (!slash) {
+-			newlen += sprintf(new + newlen, "%o %s", mode, path);
+-			new[newlen++] = '\0';
+-			hashcpy((unsigned char *)new + newlen, (unsigned char *) buffer + len - 20);
+-			newlen += 20;
+-
+-			used += len;
+-			size -= len;
+-			buffer = (char *) buffer + len;
+-			continue;
 -		}
--		print "\n";
+-
+-		newlen += sprintf(new + newlen, "%o %.*s", S_IFDIR, (int)(slash - path), path);
+-		new[newlen++] = 0;
+-		sha1 = (unsigned char *)(new + newlen);
+-		newlen += 20;
+-
+-		len = write_subdirectory(buffer, size, origpath, slash-origpath+1, sha1);
+-
+-		used += len;
+-		size -= len;
+-		buffer = (char *) buffer + len;
 -	}
--}
--exit 0;
 -
--sub mark {
--	my ($h, $k, $v, $t) = @_;
--	my $e = $h->{$k}->{$v} ||= { count => 0, stamp => 0 };
--	$e->{count}++;
--	$e->{stamp} = $t unless $t < $e->{stamp};
+-	write_sha1_file(new, newlen, tree_type, result_sha1);
+-	free(new);
+-	return used;
 -}
 -
--sub dups {
--	my $h = shift;
--	return grep { keys($h->{$_}) > 1 } keys($h);
+-static void convert_tree(void *buffer, unsigned long size, unsigned char *result_sha1)
+-{
+-	void *orig_buffer = buffer;
+-	unsigned long orig_size = size;
+-
+-	while (size) {
+-		size_t len = 1+strlen(buffer);
+-
+-		convert_binary_sha1((char *) buffer + len);
+-
+-		len += 20;
+-		if (len > size)
+-			die("corrupt tree object");
+-		size -= len;
+-		buffer = (char *) buffer + len;
+-	}
+-
+-	write_subdirectory(orig_buffer, orig_size, "", 0, result_sha1);
 -}
 -
--sub vals {
--	my $h = shift;
--	return sort {
--		$h->{$b}->{$order_by} <=> $h->{$a}->{$order_by}
--	} keys($h);
+-static unsigned long parse_oldstyle_date(const char *buf)
+-{
+-	char c, *p;
+-	char buffer[100];
+-	struct tm tm;
+-	const char *formats[] = {
+-		"%c",
+-		"%a %b %d %T",
+-		"%Z",
+-		"%Y",
+-		" %Y",
+-		NULL
+-	};
+-	/* We only ever did two timezones in the bad old format .. */
+-	const char *timezones[] = {
+-		"PDT", "PST", "CEST", NULL
+-	};
+-	const char **fmt = formats;
+-
+-	p = buffer;
+-	while (isspace(c = *buf))
+-		buf++;
+-	while ((c = *buf++) != '\n')
+-		*p++ = c;
+-	*p++ = 0;
+-	buf = buffer;
+-	memset(&tm, 0, sizeof(tm));
+-	do {
+-		const char *next = strptime(buf, *fmt, &tm);
+-		if (next) {
+-			if (!*next)
+-				return mktime(&tm);
+-			buf = next;
+-		} else {
+-			const char **p = timezones;
+-			while (isspace(*buf))
+-				buf++;
+-			while (*p) {
+-				if (!memcmp(buf, *p, strlen(*p))) {
+-					buf += strlen(*p);
+-					break;
+-				}
+-				p++;
+-			}
+-		}
+-		fmt++;
+-	} while (*buf && *fmt);
+-	printf("left: %s\n", buf);
+-	return mktime(&tm);
 -}
 -
--sub show {
--	my ($n, $e, $h) = @_;
--	print "$n <$e> ($h->{$order_by})\n";
+-static int convert_date_line(char *dst, void **buf, unsigned long *sp)
+-{
+-	unsigned long size = *sp;
+-	char *line = *buf;
+-	char *next = strchr(line, '\n');
+-	char *date = strchr(line, '>');
+-	int len;
+-
+-	if (!next || !date)
+-		die("missing or bad author/committer line %s", line);
+-	next++; date += 2;
+-
+-	*buf = next;
+-	*sp = size - (next - line);
+-
+-	len = date - line;
+-	memcpy(dst, line, len);
+-	dst += len;
+-
+-	/* Is it already in new format? */
+-	if (isdigit(*date)) {
+-		int datelen = next - date;
+-		memcpy(dst, date, datelen);
+-		return len + datelen;
+-	}
+-
+-	/*
+-	 * Hacky hacky: one of the sparse old-style commits does not have
+-	 * any date at all, but we can fake it by using the committer date.
+-	 */
+-	if (*date == '\n' && strchr(next, '>'))
+-		date = strchr(next, '>')+2;
+-
+-	return len + sprintf(dst, "%lu -0700\n", parse_oldstyle_date(date));
 -}
-diff --git a/contrib/stats/packinfo.pl b/contrib/stats/packinfo.pl
-deleted file mode 100755
-index be188c0..0000000
---- a/contrib/stats/packinfo.pl
+-
+-static void convert_date(void *buffer, unsigned long size, unsigned char *result_sha1)
+-{
+-	char *new = xmalloc(size + 100);
+-	unsigned long newlen = 0;
+-
+-	/* "tree <sha1>\n" */
+-	memcpy(new + newlen, buffer, 46);
+-	newlen += 46;
+-	buffer = (char *) buffer + 46;
+-	size -= 46;
+-
+-	/* "parent <sha1>\n" */
+-	while (!memcmp(buffer, "parent ", 7)) {
+-		memcpy(new + newlen, buffer, 48);
+-		newlen += 48;
+-		buffer = (char *) buffer + 48;
+-		size -= 48;
+-	}
+-
+-	/* "author xyz <xyz> date" */
+-	newlen += convert_date_line(new + newlen, &buffer, &size);
+-	/* "committer xyz <xyz> date" */
+-	newlen += convert_date_line(new + newlen, &buffer, &size);
+-
+-	/* Rest */
+-	memcpy(new + newlen, buffer, size);
+-	newlen += size;
+-
+-	write_sha1_file(new, newlen, commit_type, result_sha1);
+-	free(new);
+-}
+-
+-static void convert_commit(void *buffer, unsigned long size, unsigned char *result_sha1)
+-{
+-	void *orig_buffer = buffer;
+-	unsigned long orig_size = size;
+-
+-	if (memcmp(buffer, "tree ", 5))
+-		die("Bad commit '%s'", (char *) buffer);
+-	convert_ascii_sha1((char *) buffer + 5);
+-	buffer = (char *) buffer + 46;    /* "tree " + "hex sha1" + "\n" */
+-	while (!memcmp(buffer, "parent ", 7)) {
+-		convert_ascii_sha1((char *) buffer + 7);
+-		buffer = (char *) buffer + 48;
+-	}
+-	convert_date(orig_buffer, orig_size, result_sha1);
+-}
+-
+-static struct entry * convert_entry(unsigned char *sha1)
+-{
+-	struct entry *entry = lookup_entry(sha1);
+-	enum object_type type;
+-	void *buffer, *data;
+-	unsigned long size;
+-
+-	if (entry->converted)
+-		return entry;
+-	data = read_sha1_file(sha1, &type, &size);
+-	if (!data)
+-		die("unable to read object %s", sha1_to_hex(sha1));
+-
+-	buffer = xmalloc(size);
+-	memcpy(buffer, data, size);
+-
+-	if (type == OBJ_BLOB) {
+-		write_sha1_file(buffer, size, blob_type, entry->new_sha1);
+-	} else if (type == OBJ_TREE)
+-		convert_tree(buffer, size, entry->new_sha1);
+-	else if (type == OBJ_COMMIT)
+-		convert_commit(buffer, size, entry->new_sha1);
+-	else
+-		die("unknown object type %d in %s", type, sha1_to_hex(sha1));
+-	entry->converted = 1;
+-	free(buffer);
+-	free(data);
+-	return entry;
+-}
+-
+-int main(int argc, char **argv)
+-{
+-	unsigned char sha1[20];
+-	struct entry *entry;
+-
+-	setup_git_directory();
+-
+-	if (argc != 2)
+-		usage("git-convert-objects <sha1>");
+-	if (get_sha1(argv[1], sha1))
+-		die("Not a valid object name %s", argv[1]);
+-
+-	entry = convert_entry(sha1);
+-	printf("new sha1: %s\n", sha1_to_hex(entry->new_sha1));
+-	return 0;
+-}
+diff --git a/contrib/convert-objects/git-convert-objects.txt b/contrib/convert-objects/git-convert-objects.txt
+deleted file mode 100644
+index 0565d83..0000000
+--- a/contrib/convert-objects/git-convert-objects.txt
 +++ /dev/null
-@@ -1,212 +0,0 @@
--#!/usr/bin/perl
--#
--# This tool will print vaguely pretty information about a pack.  It
--# expects the output of "git verify-pack -v" as input on stdin.
--#
--# $ git verify-pack -v | packinfo.pl
--#
--# This prints some full-pack statistics; currently "all sizes", "all
--# path sizes", "tree sizes", "tree path sizes", and "depths".
--#
--# * "all sizes" stats are across every object size in the file;
--#   full sizes for base objects, and delta size for deltas.
--# * "all path sizes" stats are across all object's "path sizes".
--#   A path size is the sum of the size of the delta chain, including the
--#   base object.  In other words, it's how many bytes need be read to
--#   reassemble the file from deltas.
--# * "tree sizes" are object sizes grouped into delta trees.
--# * "tree path sizes" are path sizes grouped into delta trees.
--# * "depths" should be obvious.
--#
--# When run as:
--#
--# $ git verify-pack -v | packinfo.pl -tree
--#
--# the trees of objects are output along with the stats.  This looks
--# like:
--#
--#   0 commit 031321c6...      803      803
--#
--#   0   blob 03156f21...     1767     1767
--#   1    blob f52a9d7f...       10     1777
--#   2     blob a8cc5739...       51     1828
--#   3      blob 660e90b1...       15     1843
--#   4       blob 0cb8e3bb...       33     1876
--#   2     blob e48607f0...      311     2088
--#      size: count 6 total 2187 min 10 max 1767 mean 364.50 median 51 std_dev 635.85
--# path size: count 6 total 11179 min 1767 max 2088 mean 1863.17 median 1843 std_dev 107.26
--#
--# The first number after the sha1 is the object size, the second
--# number is the path size.  The statistics are across all objects in
--# the previous delta tree.  Obviously they are omitted for trees of
--# one object.
--#
--# When run as:
--#
--# $ git verify-pack -v | packinfo.pl -tree -filenames
--#
--# it adds filenames to the tree.  Getting this information is slow:
--#
--#   0   blob 03156f21...     1767     1767 Documentation/git-lost-found.txt @ tags/v1.2.0~142
--#   1    blob f52a9d7f...       10     1777 Documentation/git-lost-found.txt @ tags/v1.5.0-rc1~74
--#   2     blob a8cc5739...       51     1828 Documentation/git-lost+found.txt @ tags/v0.99.9h^0
--#   3      blob 660e90b1...       15     1843 Documentation/git-lost+found.txt @ master~3222^2~2
--#   4       blob 0cb8e3bb...       33     1876 Documentation/git-lost+found.txt @ master~3222^2~3
--#   2     blob e48607f0...      311     2088 Documentation/git-lost-found.txt @ tags/v1.5.2-rc3~4
--#      size: count 6 total 2187 min 10 max 1767 mean 364.50 median 51 std_dev 635.85
--# path size: count 6 total 11179 min 1767 max 2088 mean 1863.17 median 1843 std_dev 107.26
--#
--# When run as:
--#
--# $ git verify-pack -v | packinfo.pl -dump
--#
--# it prints out "sha1 size pathsize depth" for each sha1 in lexical
--# order.
--#
--# 000079a2eaef17b7eae70e1f0f635557ea67b644 30 472 7
--# 00013cafe6980411aa6fdd940784917b5ff50f0a 44 1542 4
--# 000182eacf99cde27d5916aa415921924b82972c 499 499 0
--# ...
--#
--# This is handy for comparing two packs.  Adding "-filenames" will add
--# filenames, as per "-tree -filenames" above.
+@@ -1,29 +0,0 @@
+-git-convert-objects(1)
+-======================
 -
--use strict;
--use Getopt::Long;
+-NAME
+-----
+-git-convert-objects - Converts old-style git repository
 -
--my $filenames = 0;
--my $tree = 0;
--my $dump = 0;
--GetOptions("tree" => \$tree,
--           "filenames" => \$filenames,
--           "dump" => \$dump);
 -
--my %parents;
--my %children;
--my %sizes;
--my @roots;
--my %paths;
--my %types;
--my @commits;
--my %names;
--my %depths;
--my @depths;
+-SYNOPSIS
+---------
+-[verse]
+-'git-convert-objects'
 -
--while (<STDIN>) {
--    my ($sha1, $type, $size, $space, $offset, $depth, $parent) = split(/\s+/, $_);
--    next unless ($sha1 =~ /^[0-9a-f]{40}$/);
--    $depths{$sha1} = $depth || 0;
--    push(@depths, $depth || 0);
--    push(@commits, $sha1) if ($type eq 'commit');
--    push(@roots, $sha1) unless $parent;
--    $parents{$sha1} = $parent;
--    $types{$sha1} = $type;
--    push(@{$children{$parent}}, $sha1);
--    $sizes{$sha1} = $size;
--}
+-DESCRIPTION
+------------
+-Converts old-style git repository to the latest format
 -
--if ($filenames && ($tree || $dump)) {
--    open(NAMES, "git name-rev --all|");
--    while (<NAMES>) {
--        if (/^(\S+)\s+(.*)$/) {
--            my ($sha1, $name) = ($1, $2);
--            $names{$sha1} = $name;
--        }
--    }
--    close NAMES;
 -
--    for my $commit (@commits) {
--        my $name = $names{$commit};
--        open(TREE, "git ls-tree -t -r $commit|");
--        print STDERR "Plumbing tree $name\n";
--        while (<TREE>) {
--            if (/^(\S+)\s+(\S+)\s+(\S+)\s+(.*)$/) {
--                my ($mode, $type, $sha1, $path) = ($1, $2, $3, $4);
--                $paths{$sha1} = "$path @ $name";
--            }
--        }
--        close TREE;
--    }
--}
+-Author
+-------
+-Written by Linus Torvalds <torvalds@osdl.org>
 -
--sub stats {
--    my @data = sort {$a <=> $b} @_;
--    my $min = $data[0];
--    my $max = $data[$#data];
--    my $total = 0;
--    my $count = scalar @data;
--    for my $datum (@data) {
--        $total += $datum;
--    }
--    my $mean = $total / $count;
--    my $median = $data[int(@data / 2)];
--    my $diff_sum = 0;
--    for my $datum (@data) {
--        $diff_sum += ($datum - $mean)**2;
--    }
--    my $std_dev = sqrt($diff_sum / $count);
--    return ($count, $total, $min, $max, $mean, $median, $std_dev);
--}
+-Documentation
+---------------
+-Documentation by David Greaves, Junio C Hamano and the git-list <git@vger.kernel.org>.
 -
--sub print_stats {
--    my $name = shift;
--    my ($count, $total, $min, $max, $mean, $median, $std_dev) = stats(@_);
--    printf("%s: count %s total %s min %s max %s mean %.2f median %s std_dev %.2f\n",
--           $name, $count, $total, $min, $max, $mean, $median, $std_dev);
--}
--
--my @sizes;
--my @path_sizes;
--my @all_sizes;
--my @all_path_sizes;
--my %path_sizes;
--
--sub dig {
--    my ($sha1, $depth, $path_size) = @_;
--    $path_size += $sizes{$sha1};
--    push(@sizes, $sizes{$sha1});
--    push(@all_sizes, $sizes{$sha1});
--    push(@path_sizes, $path_size);
--    push(@all_path_sizes, $path_size);
--    $path_sizes{$sha1} = $path_size;
--    if ($tree) {
--        printf("%3d%s %6s %s %8d %8d %s\n",
--               $depth, (" " x $depth), $types{$sha1},
--               $sha1, $sizes{$sha1}, $path_size, $paths{$sha1});
--    }
--    for my $child (@{$children{$sha1}}) {
--        dig($child, $depth + 1, $path_size);
--    }
--}
--
--my @tree_sizes;
--my @tree_path_sizes;
--
--for my $root (@roots) {
--    undef @sizes;
--    undef @path_sizes;
--    dig($root, 0, 0);
--    my ($aa, $sz_total) = stats(@sizes);
--    my ($bb, $psz_total) = stats(@path_sizes);
--    push(@tree_sizes, $sz_total);
--    push(@tree_path_sizes, $psz_total);
--    if ($tree) {
--        if (@sizes > 1) {
--            print_stats("     size", @sizes);
--            print_stats("path size", @path_sizes);
--        }
--        print "\n";
--    }
--}
--
--if ($dump) {
--    for my $sha1 (sort keys %sizes) {
--        print "$sha1 $sizes{$sha1} $path_sizes{$sha1} $depths{$sha1} $paths{$sha1}\n";
--    }
--} else {
--    print_stats("      all sizes", @all_sizes);
--    print_stats(" all path sizes", @all_path_sizes);
--    print_stats("     tree sizes", @tree_sizes);
--    print_stats("tree path sizes", @tree_path_sizes);
--    print_stats("         depths", @depths);
--}
+-GIT
+----
+-Part of the gitlink:git[7] suite
 -- 
 1.9.2+fc1.28.g12374c0
