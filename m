@@ -1,88 +1,64 @@
-From: Stefan Beller <stefanbeller@gmail.com>
-Subject: Re: [PATCH v1 25/25] contrib: remove 'mw-to-git'
-Date: Fri, 09 May 2014 14:30:41 +0200
-Message-ID: <536CCA71.8010300@gmail.com>
-References: <1399597116-1851-1-git-send-email-felipe.contreras@gmail.com> <1399597116-1851-26-git-send-email-felipe.contreras@gmail.com> <vpqr443i600.fsf@anie.imag.fr> <536cb51c3f348_6b2dde7308b1@nysa.notmuch>
+From: Robert Dailey <rcdailey.lists@gmail.com>
+Subject: Re: Bash v4 on msysgit?
+Date: Fri, 9 May 2014 08:09:32 -0500
+Message-ID: <CAHd499DhnCKhd5m7XF3XjZAt4_JiF_Taog56RO1J6F+TksRQcQ@mail.gmail.com>
+References: <536CA1C9.1090201@virtuell-zuhause.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?Q8OpbGVzdGluIE1hdHRl?= <celestin.matte@ensimag.fr>,
-	Benoit Person <benoit.person@ensimag.fr>
-To: Felipe Contreras <felipe.contreras@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri May 09 14:30:47 2014
+Cc: GIT Mailing-list <git@vger.kernel.org>
+To: Thomas Braun <thomas.braun@virtuell-zuhause.de>
+X-From: git-owner@vger.kernel.org Fri May 09 15:09:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wijws-0004Jx-Tb
-	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 14:30:47 +0200
+	id 1WikYT-0002tv-Ql
+	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 15:09:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754063AbaEIMam (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 May 2014 08:30:42 -0400
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:35259 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752606AbaEIMam (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 May 2014 08:30:42 -0400
-Received: by mail-ee0-f46.google.com with SMTP id t10so2582854eei.5
-        for <git@vger.kernel.org>; Fri, 09 May 2014 05:30:40 -0700 (PDT)
+	id S1751992AbaEINJe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 May 2014 09:09:34 -0400
+Received: from mail-vc0-f180.google.com ([209.85.220.180]:64322 "EHLO
+	mail-vc0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751084AbaEINJd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 May 2014 09:09:33 -0400
+Received: by mail-vc0-f180.google.com with SMTP id hy4so4277195vcb.25
+        for <git@vger.kernel.org>; Fri, 09 May 2014 06:09:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=fdJWeRCYmJLeDdOnZ3GCGJaO7ZlLHZQZl3vR8B0mhcw=;
-        b=iydhiFjgC0uxLnr8aH1HCtVZTwmEAgddmhXqdjl9XG2Y0RDpf8mhCgBIHlFVxLXIzQ
-         7aQCSpOzBvdlvKNBvdZMJ9qnuzBEUrrzb64C9hx9R5ztTTNGZrsWb9TYDjCRvRXs16b5
-         Ag7f1VOmZbLnyQNmeZYRgVwSyK2tUWvsFs4NJWW4jhhPYZ85teLZl5qwBrcB661AkN5N
-         Y4ePPdwL2WVDglAO3dkv2R4Dem50eYkcMwembv/jswQNKAytrgoX3DMpvdOG0c3vnNg5
-         9HUFTULx1q4HsMFMXWx/WSE5q8wPt5raOZunUmmeRlG4pvX3UjzuxMKQ7vyKwPB7fZyQ
-         EZlw==
-X-Received: by 10.15.24.201 with SMTP id j49mr12932154eeu.99.1399638640878;
-        Fri, 09 May 2014 05:30:40 -0700 (PDT)
-Received: from [192.168.1.7] (ip-178-200-168-156.unitymediagroup.de. [178.200.168.156])
-        by mx.google.com with ESMTPSA id cj41sm11118115eeb.34.2014.05.09.05.30.39
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 09 May 2014 05:30:40 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
-In-Reply-To: <536cb51c3f348_6b2dde7308b1@nysa.notmuch>
-X-Enigmail-Version: 1.5.2
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=k7+5l1X49GGp/QtctteULSNz9Y/umm7CdXUGCTvPnNA=;
+        b=jAaTr4W0SVpJDG2rRonnWt07zBfpXKdhm4z4ME54wyVW4UvuxxP2sxiPBfFgjyeOqI
+         BrDZul3tK4CqyzGVg5qtEmST1EL9YffbJtGzFg3alHYZ2jVsGZvEXcQUzNmyjlcWmyv/
+         +xOOfHmvaAULKHSb6Iw7sKEu6l2rtI8xEMOFAHhe0rQ1WeYuTBBymRHktosddUuDncvg
+         gbP3bh2zRhYsWRC3VmVsDHiqjXA3JDUp68JgLR4gfBt5uW6qxeQTTgH36UHNDCcNZv5E
+         5sSfIpnpgjllF08ySN3S1+37WXRjtcjMQQKbfiU0aQxe92qbAyPw0AH1zJqDnZn9axmS
+         //rw==
+X-Received: by 10.52.53.69 with SMTP id z5mr217839vdo.42.1399640972670; Fri,
+ 09 May 2014 06:09:32 -0700 (PDT)
+X-Google-Sender-Delegation: rcdailey@gmail.com
+Received: by 10.220.13.198 with HTTP; Fri, 9 May 2014 06:09:32 -0700 (PDT)
+In-Reply-To: <536CA1C9.1090201@virtuell-zuhause.de>
+X-Google-Sender-Auth: FhouDztRSR-gYRoUlFZqYZKzJUQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248554>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248555>
 
-On 09.05.2014 12:59, Felipe Contreras wrote:
-> Matthieu Moy wrote:
->> Felipe Contreras <felipe.contreras@gmail.com> writes:
->>
->>> No chance of ever graduating.
->>
->> I see no relationship between the chance of graduating and the removal
->> from contrib/.
-> 
-> Read contrib/README.
-> 
->> If you want to remove mw-to-git from contrib, then a good starting point
->> would be to explain why you want to do so in the commit message.
-> 
-> The purpose of the contrib area is to either a) give visibility to
-> otherwise potentially ignored scripts b) serve a staging area for
-> features before moving into the core.
-> 
-> This script doesn't match either of those. It doesn't belong in the
-> contrib/ area.
-> 
+Thanks for the info. Really quite disappointing that the discussion
+linked was from 3 years ago but still no progress. I wish I could use
+cygwin to use GIT but LESS doesn't work for log, reflog, and other
+commands.
 
-Maybe we could split it a little bit. Similar to the kernel there is a
-staging area. Ok there are some features, which are not yet promoted
-to mainline, some never will.
-
-But some things like examples/ could be moved out to another directory.
-(How about Documentation/historicEncounters/ ?)
-
-Also we could think about renaming contrib to staging then.
-However I don't think it's urgent.
+On Fri, May 9, 2014 at 4:37 AM, Thomas Braun
+<thomas.braun@virtuell-zuhause.de> wrote:
+>> How can I get Bash v4 for msysgit 1.9.2? I need it for 'globstar'
+>> shopt support. Thanks in advance.
+>
+> Unfortunately you can't.
+> Newer bash versions don't work with the current msys layer.
+>
+> See http://mingw.5.n7.nabble.com/bash-4-x-for-MSYS-td5605.html for a
+> more in depth discussion.
