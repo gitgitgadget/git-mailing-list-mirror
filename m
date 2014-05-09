@@ -1,108 +1,126 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 01/17] contrib: remove outdated README
-Date: Fri, 09 May 2014 12:58:46 -0700
-Message-ID: <xmqqbnv6yb9l.fsf@gitster.dls.corp.google.com>
-References: <1399662703-355-1-git-send-email-felipe.contreras@gmail.com>
-	<1399662703-355-2-git-send-email-felipe.contreras@gmail.com>
+Subject: [ANNOUNCE] Git v1.9.3
+Date: Fri, 09 May 2014 13:00:08 -0700
+Message-ID: <xmqq38giyb7b.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 09 21:59:00 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>
+To: git@vger.kernel.org
+X-From: linux-kernel-owner@vger.kernel.org Fri May 09 22:00:31 2014
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wiqwc-0004nu-QQ
-	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 21:58:59 +0200
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1Wiqy2-0006w9-85
+	for glk-linux-kernel-3@plane.gmane.org; Fri, 09 May 2014 22:00:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757507AbaEIT6x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 May 2014 15:58:53 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:60336 "EHLO smtp.pobox.com"
+	id S1757519AbaEIUAO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Fri, 9 May 2014 16:00:14 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:52304 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757229AbaEIT6v (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 May 2014 15:58:51 -0400
+	id S1754063AbaEIUAM convert rfc822-to-8bit (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Fri, 9 May 2014 16:00:12 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6CE7815CDD;
-	Fri,  9 May 2014 15:58:50 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 55D2C15D62;
+	Fri,  9 May 2014 16:00:12 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5WSeQyd2hq2OecgYmTg65K2k9kQ=; b=FFQtvq
-	Nr1HQs/Qzt4Vufg+ZdDq+OCNO74w900W77BFW5lDiegy7xx+wI8lj1NvBLz0pO02
-	+6TlroQJdQP1E6xdm5c8y/hEMWrvMT0cHkWrryt5etCAjEmJPgxuHJdyY33IjUnr
-	4KFuQwlAQ+vVxgtnEuQGHMPO3MO/2Yh/52ZtY=
+	:subject:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=i7MACobG4zcDbBu+j6XMHWCyI
+	qM=; b=lRgxL6jzQH1l9r/Wj+cDOCdhfZykhibchF6/5LTbyCA/L0RRDeMtBHMYV
+	x/WoagKO1+Gn2Wk0ZnzdZfM3u68BycqWHf0fJxfskbckR1wlWop8+xhCqNmfRVg1
+	3MK7icxidI1/0Sx/HupLoLGb0e644qu+OnhOo7wxCLNa8IZXfY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=kTE36lhjIOCHxDFAR3eH2DyIh1mF1aiQ
-	JVAhnTte1q0d2HXm1svbMqTUihN4Elk+WR+0n+VL243JJ/GcoE8lPZ1XHQGyyQ+J
-	zgYhRLtbxcGPft3QRNqZ23Q0nfw01TO23mRRxy2z+CwO6CIJV0qMhc+SwNKQ5ZIB
-	zEWparWoDxo=
+	:subject:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=Rhl3LbQb8UVIcKW5iap
+	xHy5fz+Rkp3wCZXWFGteE9uaAiFinK3XQ6ev3R6fyzltBYcdsIiXHSKPFcX4HBYa
+	0gzAdtlDFvXvkeI6Ljfr5y8qH6ES7pUlyq1hNvj6ywoZGdrEwetG5VhwEJQBo0F4
+	7GkBzi6uS8hPZUnz28i6vwpE=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 62D2C15CD6;
-	Fri,  9 May 2014 15:58:50 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4D29815D61;
+	Fri,  9 May 2014 16:00:12 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id CCD5F15CC8;
-	Fri,  9 May 2014 15:58:47 -0400 (EDT)
-In-Reply-To: <1399662703-355-2-git-send-email-felipe.contreras@gmail.com>
-	(Felipe Contreras's message of "Fri, 9 May 2014 14:11:27 -0500")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D7E3915D60;
+	Fri,  9 May 2014 16:00:09 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 556C9D52-D7B4-11E3-A956-9CEB01674E00-77302942!pb-smtp0.pobox.com
-Sender: git-owner@vger.kernel.org
+X-Pobox-Relay-ID: 86536F54-D7B4-11E3-A6FB-9CEB01674E00-77302942!pb-smtp0.pobox.com
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248635>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248636>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+The latest maintenance release Git v1.9.3 is now available at
+the usual places.
 
-> There is no guideline as for what should be part of contrib.
->
-> Some tools are actively maintained, others consist of a single commit.
-> Some tools have active user-base, some aren't used by anyone. Some tools
-> are on the path towards the core, others will never get there. Some
-> tools are already out-of-tree and simply mirrored, others probably
-> wouldn't survive out-of-tree. Some tools are production-ready, others
-> don't even run. Some tools have tests, most don't.
->
-> Junio has explained that he wrote this a long time ago, when Git was a
-> different beast, now this no longer applies.
->
-> The only way to find out if a tool belongs in contrib or not is to as
-> Junio.
->
-> Cc: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> ---
+The tarballs are found at:
 
-This is wrong.
+    https://www.kernel.org/pub/software/scm/git/testing/
 
-The reason I suggested splitting remote-hg out of my tree does not
-have anything to do with "removal of disused and inactive" described
-in the document.  As written elsewhere, it was a response to
+The following public repositories will all have a copy of the
+'v1.9.3' tag and the 'maint' branch that the tag points at:
 
-    http://thread.gmane.org/gmane.comp.version-control.git/248063/focus=248457
+  url =3D https://kernel.googlesource.com/pub/scm/git/git
+  url =3D git://repo.or.cz/alt-git.git
+  url =3D https://code.google.com/p/git-core/
+  url =3D git://git.sourceforge.jp/gitroot/git-core/git.git
+  url =3D git://git-core.git.sourceforge.net/gitroot/git-core/git-core
+  url =3D https://github.com/gitster/git
 
-where you said
+but I am cutting 2.0.0-rc3 today, so you may have to wait for a bit
+until these repositories are updated.
 
-    I don't want to do anything for a "contrib" tool.
 
-and in response I suggested that you have an option to make it a
-standalone third-party project (and the other option being to stay
-in contrib/ but then you have to work well with others just like
-other contributors).  With the promotion to the core has already
-been ruled out as not an ideal direction in the thread that begins
-at this one:
+Git v1.9.3 Release Notes
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-    http://thread.gmane.org/gmane.comp.version-control.git/247660/focus=248167
+=46ixes since v1.9.2
+------------------
 
-that is one of the only two alternatives I can offer.  Given that
-the Git ecosystem has matured enough to let third-party tools
-flourish on their own merit, if you do not want to work on a thing
-in contrib/, that is now a more viable option than it used to be.
+ * "git p4" dealing with changes in binary files were broken by a
+   change in 1.9 release.
 
-For tools that are happy to be in contrib/ and are still in use by
-users, none of the above would apply.  And what the text says is
-still perfectly valid.  There is nothing outdated in it.
+ * The shell prompt script (in contrib/), when using the PROMPT_COMMAND
+   interface, used an unsafe construct when showing the branch name in
+   $PS1.
+
+ * "git rebase" used a POSIX shell construct FreeBSD /bin/sh does not
+   work well with.
+
+ * Some more Unicode codepoints defined in Unicode 6.3 as having
+   zero width have been taught to our display column counting logic.
+
+ * Some tests used shell constructs that did not work well on
+   FreeBSD.
+
+----------------------------------------------------------------
+
+Changes since v1.9.2 are as follows:
+
+Jonathan Nieder (1):
+      shell doc: remove stray "+" in example
+
+Junio C Hamano (2):
+      Start preparing for 1.9.3
+      Git 1.9.3
+
+Kyle J. McKay (4):
+      test: fix t7001 cp to use POSIX options
+      test: fix t5560 on FreeBSD
+      rebase: avoid non-function use of "return" on FreeBSD
+      Revert "rebase: fix run_specific_rebase's use of "return" on Free=
+BSD"
+
+Richard Hansen (1):
+      git-prompt.sh: don't put unsanitized branch names in $PS1
+
+Tolga Ceylan (1):
+      git-p4: format-patch to diff-tree change breaks binary patches
+
+Torsten B=C3=B6gershausen (1):
+      utf8.c: partially update to version 6.3
