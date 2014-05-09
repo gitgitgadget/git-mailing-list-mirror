@@ -1,91 +1,103 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH v1 04/25] contrib: remove 'buildsystems'
-Date: Fri, 09 May 2014 11:17:38 +0200
-Message-ID: <8761lfnwel.fsf@fencepost.gnu.org>
-References: <1399597116-1851-1-git-send-email-felipe.contreras@gmail.com>
-	<1399597116-1851-5-git-send-email-felipe.contreras@gmail.com>
-	<CABPQNSYZ4eWS_9_omZGK5wCD7ap_siEkC10e4ayT8Jp9w1bOSw@mail.gmail.com>
-	<536c8e63448c2_25d198d30c55@nysa.notmuch>
-	<CABPQNSYgfUdtfT0sYCwGsWQgW3QFOZvSZSyG76dmF6+ZSMaByw@mail.gmail.com>
-	<536c966cf0e9c_2bf0e952f079@nysa.notmuch>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v1 1/2] Remove 'git archimport'
+Date: Fri, 09 May 2014 04:20:40 -0500
+Message-ID: <536c9de8f07ae_39ea14ab310f9@nysa.notmuch>
+References: <1399599203-13991-1-git-send-email-felipe.contreras@gmail.com>
+ <1399599203-13991-2-git-send-email-felipe.contreras@gmail.com>
+ <20140509055024.GB30674@dcvr.yhbt.net>
+ <536c7f9089b77_182dd0d31084@nysa.notmuch>
+ <20140509081507.GA26494@dcvr.yhbt.net>
+ <536c939781d8b_2bf0e952f08@nysa.notmuch>
+ <20140509085937.GA29347@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Erik Faye-Lund <kusmabite@gmail.com>,
-	GIT Mailing-list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Marius Storm-Olsen <mstormo@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 09 11:17:48 2014
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Martin Langhoff <martin@laptop.org>
+To: Eric Wong <normalperson@yhbt.net>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 09 11:20:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wigw7-0005Y0-Mq
-	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 11:17:48 +0200
+	id 1Wigz5-0001FY-0c
+	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 11:20:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756616AbaEIJRm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 May 2014 05:17:42 -0400
-Received: from fencepost.gnu.org ([208.118.235.10]:52839 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756338AbaEIJRj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 May 2014 05:17:39 -0400
-Received: from localhost ([127.0.0.1]:51881 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1Wigvy-0001WI-DM; Fri, 09 May 2014 05:17:38 -0400
-Received: by lola (Postfix, from userid 1000)
-	id 135BDE07B8; Fri,  9 May 2014 11:17:38 +0200 (CEST)
-In-Reply-To: <536c966cf0e9c_2bf0e952f079@nysa.notmuch> (Felipe Contreras's
-	message of "Fri, 09 May 2014 03:48:44 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
+	id S1756659AbaEIJUq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 May 2014 05:20:46 -0400
+Received: from mail-yk0-f176.google.com ([209.85.160.176]:60101 "EHLO
+	mail-yk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754610AbaEIJUp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 May 2014 05:20:45 -0400
+Received: by mail-yk0-f176.google.com with SMTP id q9so3205236ykb.7
+        for <git@vger.kernel.org>; Fri, 09 May 2014 02:20:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=paUoyKGnE9tul/tq10MIOBWAmFuJK+LCvTOc3e5O0dg=;
+        b=g3jiOHyVav7JAY5YE4rIzgpOOvQvlTllURBmbU8QSEuhwbJtgcn5WfDNEBsnOWtXUy
+         SjnfgjUOpttE4W2U3BwQLittxhCP/yVFMPtu2dXleEJYGfURaWE9n2b0dqDCo3+xSGNq
+         FoaVsP7E6lQf4kMBMM9Obdc8u6I60mm1NtLdUZ62HWr6WyEdA3C1up1ryqwANCuPix2P
+         oxFLdBcda9wFp0Ze40+U5ANeHZUpQcc72FTkJ5FQmIertgkkYTyYgDxcyqbrvEy4gwUO
+         1mpu148GJ6+/m6TgOlZxgdOAa7RVl54ppBlo/rtETtng+XPytGohb0Ilke4G93NmjSlP
+         bMvQ==
+X-Received: by 10.236.229.133 with SMTP id h5mr13531070yhq.64.1399627245022;
+        Fri, 09 May 2014 02:20:45 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id r46sm5366461yhd.29.2014.05.09.02.20.42
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 09 May 2014 02:20:44 -0700 (PDT)
+In-Reply-To: <20140509085937.GA29347@dcvr.yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248541>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Eric Wong wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> wrote:
+> > As a minimal token that anybody might possibly be using it, I would like
+> > to see it work at least once. Since you said you have arch repos, can
+> > you confirm that it does something?
+> 
+> Those repos are in offline/offsite storage and I do not have time to
+> retrieve them.
 
-> Erik Faye-Lund wrote:
->> On Fri, May 9, 2014 at 10:14 AM, Felipe Contreras
->> <felipe.contreras@gmail.com> wrote:
->> > If you want this script to remain in contrib, please:
->> >
->> >  a) Write at least a few tests
->> >  b) Write some documentation
->> >  c) Explain why it cannot live outside the git.git repository like other
->> >     tools. [1][2][3]
->> 
->> (Adding Marius, the original author to the CC-list)
->> 
->> Uh, why is such a burden required all of a sudden? contrib/README
->> mentions no such requirements, and the scripts have been accepted (and
->> maintained) since.
->
-> contrib/README mentions clearly the expectation that these scripts
-> eventually move to the core once they mature. This is never going to
-> happen for these.
->
-> It also mentions that inactive ones would be proposed for removal, and
-> this one is clearly inactive. It has 9 commits (if you count the one
-> that changes the execution bit).
->
->> Besides, you say "No activity since 2010" - this is not the case,
->> bc380fc is from November 2013.
->
-> You think changing the execution bit of a file is considered "activity"?
+Then we have no reason to believe they still work, and therefore, no
+reason to believe anybody is using this.
 
-For an indication of "this software has actual users", it definitely
-would count as such, yes.  Why would someone change the executable bit
-if it did not impact his usage of the software?
+> I've forgotten how to use tla to get a public repo, even.
 
-The idea of removing software from distribution is to get rid of stuff
-without a user base rather than punishing lazy developers.
+No surprises there given how unfriendly tla is.
 
-If it were the latter, then you could argue that anybody not willing to
-host his own repository should get thrown off Git's.  That would solve
-the whole contrib "problem" in one fell swoop.
+> > Eric Wong wrote:
+> > > No, I am not convinced existing foreign SCM tools should move
+> > > out-of-tree.  Perhaps something like the following would be helpful:
+> > 
+> > Tell that to Junio.
+> > 
+> > If tools like git-remote-hg with tests and active maintanance and many
+> > users cannot be in the core, why should 'git archimport' be?
+> 
+> Perhaps it's easier to deal with a benign, unmaintained tool than
+> to deal with you as a maintainer?
+
+That is irrelevant to the bad quality of 'git archimport'.
+
+> > Would you at least be OK with a demotion to contrib/?
+> 
+> I don't see the point of moving it around, even.
+
+So basically you think we should keep 'git archimport' forever in the
+core, even if nobody uses it ever. So much for compromises.
+
+I think it should be removed altogether. If somebody complains the were
+using the tool, it can be added to contrib/ as a temporary measure.
 
 -- 
-David Kastrup
+Felipe Contreras
