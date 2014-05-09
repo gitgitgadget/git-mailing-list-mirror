@@ -1,172 +1,468 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] How to keep a project's canonical history correct.
-Date: Fri, 09 May 2014 14:05:44 -0700
-Message-ID: <xmqqk39uwtlj.fsf@gitster.dls.corp.google.com>
-References: <xmqq4n119wgk.fsf@gitster.dls.corp.google.com>
-	<1399615721-566-1-git-send-email-ischis2@cox.net>
+Subject: [ANNOUNCE] Git v2.0.0-rc3
+Date: Fri, 09 May 2014 14:06:08 -0700
+Message-ID: <xmqqd2fmwtkv.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Stephen P. Smith" <ischis2@cox.net>
-X-From: git-owner@vger.kernel.org Fri May 09 23:05:59 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>
+To: git@vger.kernel.org
+X-From: linux-kernel-owner@vger.kernel.org Fri May 09 23:06:27 2014
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WirzR-0006HI-NY
-	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 23:05:58 +0200
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1Wirzu-0006yz-M2
+	for glk-linux-kernel-3@plane.gmane.org; Fri, 09 May 2014 23:06:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757714AbaEIVFw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 May 2014 17:05:52 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:59640 "EHLO smtp.pobox.com"
+	id S1757783AbaEIVGQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Fri, 9 May 2014 17:06:16 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:51451 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757463AbaEIVFt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 May 2014 17:05:49 -0400
+	id S1757606AbaEIVGM convert rfc822-to-8bit (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Fri, 9 May 2014 17:06:12 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8B3611715C;
-	Fri,  9 May 2014 17:05:48 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7524817172;
+	Fri,  9 May 2014 17:06:12 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=anfpBkiR1jr+981EndxjXrs79B0=; b=tTy7wx7fd9rbELnXqF/k
-	+ayigJ/x2odwXNjAb0FT4DzVZ3mONYxSBzhp60veh4A5dlj8+JcrZNk68D0RgzCZ
-	DOuyWzUHfW6bvOnAjHp0/HEr8sEfLVFb7TdGkrMjUufbD6c0NDG5Ucc7E+rIHV0T
-	qMI3kw73ctgO2C0cakAqLoY=
+	:subject:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=Yzy0w2XMhlDGycPoJzOMJrCKt
+	K0=; b=fGr7JJush/Naf8nUVkOn9UYsaFkFxLQ8x6JQTNxy8dEpLkZ3Cm1Z2UUA2
+	mmscL/MyEnDFMpbocJhIeGEMgCqpLS7axSBYUT3gk/UV0s0hGmC9hfKn+ygh83P/
+	5nC/kx3OVl6Hc1EQ7qOKG0OcH6J+A+oq5HOurWRwlGQb9FBFR0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=KOgTqpzpEBY7eZwA6lN096FikOpZus4GCDvx1SBQTzCNKb
-	IfoszE6lVZ86CZeg3bl2LjIuiFGiJpIxyGSSeM4ef3tjduBzxvC9JZ0WQ7lZOmZa
-	jkAXZfhM4upaxiksIm0AdZk8NZLAnYtpem+VAespWdyAc6PAUtm45tuE07IGM=
+	:subject:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=J6jRIAAlZhsgtNm9tEM
+	+zeCKYIczOdwop8cy8KwjpbkQWp7+NMTYkIP+JVimIBsmU+aKpfM484+k8yijvKM
+	Kdz0qOzc48gwLlAhVhIEQeGHY3YhRSuVsWitF05hU2/3NeQdjR1PHGXvmGQnvQMz
+	lRCQabpmZmFI/oMmWMcHD1CY=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 805751715B;
-	Fri,  9 May 2014 17:05:48 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 67ED217171;
+	Fri,  9 May 2014 17:06:12 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id BE3D417158;
-	Fri,  9 May 2014 17:05:45 -0400 (EDT)
-Importance: high
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 72CEC1716B;
+	Fri,  9 May 2014 17:06:09 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: B04D571C-D7BD-11E3-97B4-9CEB01674E00-77302942!pb-smtp0.pobox.com
-Sender: git-owner@vger.kernel.org
+X-Pobox-Relay-ID: BE6CAC3A-D7BD-11E3-A5C5-9CEB01674E00-77302942!pb-smtp0.pobox.com
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248639>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248640>
 
-"Stephen P. Smith" <ischis2@cox.net> writes:
+A release candidate Git v2.0.0-rc3 is now available for testing
+at the usual places.
 
-> During the mail thread about "Pull is mostly evil" a user asked how
-> the first parent could become reversed.
->
-> This howto explains how the first parent can get reversed when viewed
-> by the project and then explains a method to keep the history correct.
->
-> Signed-off-by: Stephen P. Smith <ischis2@cox.net>
-> ---
+This hopefully will be the last -rc before the real 2.0.
 
-I needed a few tweaks on top while queuing.  You will find the
-result on 'pu' after I push it out.
+The tarballs are found at:
 
-In addition to one typofix ("because" lacking "c"), here are what I
-did:
+    https://www.kernel.org/pub/software/scm/git/testing/
 
- - Typeset concrete command e.g. `git pull` in monospace.
+The following public repositories all have a copy of the 'v2.0.0-rc3'
+tag and the 'master' branch that the tag points at:
 
- - The second and subsequent paragraphs continued with "+" need to
-   be flushed to the left; leaving them indented will format them in
-   monospace (see "with `git pull --rebase` or something").
+  url =3D https://kernel.googlesource.com/pub/scm/git/git
+  url =3D git://repo.or.cz/alt-git.git
+  url =3D https://code.google.com/p/git-core/
+  url =3D git://git.sourceforge.jp/gitroot/git-core/git.git
+  url =3D git://git-core.git.sourceforge.net/gitroot/git-core/git-core
+  url =3D https://github.com/gitster/git
 
- - Be more explicit in describing 'trunk' being 'the first-parent
-   chain' in the text.
+Git v2.0 Release Notes (draft)
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D
 
- - Refer to a newer article that discusses this exact topic.
+Backward compatibility notes
+----------------------------
 
- - De-emphasize 'fix-bug-12345' in "Merge fix-bug-12345" log message.
+When "git push [$there]" does not say what to push, we have used the
+traditional "matching" semantics so far (all your branches were sent
+to the remote as long as there already are branches of the same name
+over there).  In Git 2.0, the default is now the "simple" semantics,
+which pushes:
 
- - Describe what the final history illustration shows.
+ - only the current branch to the branch with the same name, and only
+   when the current branch is set to integrate with that remote
+   branch, if you are pushing to the same remote as you fetch from; or
+
+ - only the current branch to the branch with the same name, if you
+   are pushing to a remote that is not where you usually fetch from.
+
+You can use the configuration variable "push.default" to change
+this.  If you are an old-timer who wants to keep using the
+"matching" semantics, you can set the variable to "matching", for
+example.  Read the documentation for other possibilities.
+
+When "git add -u" and "git add -A" are run inside a subdirectory
+without specifying which paths to add on the command line, they
+operate on the entire tree for consistency with "git commit -a" and
+other commands (these commands used to operate only on the current
+subdirectory).  Say "git add -u ." or "git add -A ." if you want to
+limit the operation to the current directory.
+
+"git add <path>" is the same as "git add -A <path>" now, so that
+"git add dir/" will notice paths you removed from the directory and
+record the removal.  In older versions of Git, "git add <path>" used
+to ignore removals.  You can say "git add --ignore-removal <path>" to
+add only added or modified paths in <path>, if you really want to.
+
+The "-q" option to "git diff-files", which does *NOT* mean "quiet",
+has been removed (it told Git to ignore deletion, which you can do
+with "git diff-files --diff-filter=3Dd").
+
+"git request-pull" lost a few "heuristics" that often led to mistakes.
+
+The default prefix for "git svn" has changed in Git 2.0.  For a long
+time, "git svn" created its remote-tracking branches directly under
+refs/remotes, but it now places them under refs/remotes/origin/ unless
+it is told otherwise with its --prefix option.
 
 
-Unless you have objections to the below (or suggestions for better
-alternatives), there is no need to resend the patch.
+Updates since v1.9 series
+-------------------------
 
-Thanks.
+UI, Workflows & Features
 
-diff --git a/Documentation/howto/keep-canonical-history-correct.txt b/Documentation/howto/keep-canonical-history-correct.txt
-index 5979a79..35d48ef 100644
---- a/Documentation/howto/keep-canonical-history-correct.txt
-+++ b/Documentation/howto/keep-canonical-history-correct.txt
-@@ -38,12 +38,12 @@ central repository:
-     ---o---o---A---X---Y---Z
- ------------
- 
--Now, if you "git push" at this point, beause your history that leads
-+Now, if you `git push` at this point, because your history that leads
- to `C` lacks `X`, `Y` and `Z`, it will fail.  You need to somehow make
- the tip of your history a descendant of `Z`.
- 
- One suggested way to solve the problem is "fetch and then merge", aka
--"git pull". When you fetch, your repository will have a history like
-+`git pull`. When you fetch, your repository will have a history like
- this:
- 
- ------------
-@@ -65,8 +65,9 @@ you will create a merge `M` and make the history look like this:
- repository.  Such a merge `M` does not lose any commit in both
- histories, so in that sense it may not be wrong, but when people want
- to talk about "the authoritative canonical history that is shared
--among the project participants", i.e. "the trunk", the way they often
--use is to do:
-+among the project participants", i.e. "the trunk", they often view
-+it as "commits you see by following the first-parent chain", and use
-+this command to view it:
- 
- ------------
-     $ git log --first-parent
-@@ -91,11 +92,11 @@ did `X` and then `Y` and then `Z` and merged a change that consists of
- two commits `B` and `C` that achieves a single goal.  You may have
- worked on fixing the bug #12345 with these two patches, and the merge
- `M'` with swapped parents can say in its log message "Merge
--'fix-bug-12345'". Having a way to tell "git pull" to create a merge
-+fix-bug-12345". Having a way to tell `git pull` to create a merge
- but record the parents in reverse order may be a way to do so.
- 
- Note that I said "achieves a single goal" above, because this is
--important.  "swapping the merge order" only covers a special case
-+important.  "Swapping the merge order" only covers a special case
- where the project does not care too much about having unrelated
- things done on a single merge but cares a lot about first-parent
- chain.
-@@ -111,7 +112,7 @@ There are multiple schools of thought about the "trunk" management.
-     ---o---o---A---X---Y---Z---B---C
- ------------
- +
--    with `git pull --rebase` or something.
-+with `git pull --rebase` or something.
- 
-  2. Some projects tolerate merges in their history, but do not worry
-     too much about the first-parent order, and allow fast-forward
-@@ -190,7 +191,7 @@ and push it back to the central repository.
- 
- It is very much possible that while you are merging topic-b and
- topic-c, somebody again advanced the history in the central repository
--to put `W` on top of `Z`, and make your "git push" fail.
-+to put `W` on top of `Z`, and make your `git push` fail.
- 
- In such a case, you would rewind to discard `M` and `N`, update the
- tip of your 'master' again and redo the two merges:
-@@ -202,6 +203,8 @@ tip of your 'master' again and redo the two merges:
-     $ git merge topic-c
- ------------
- 
-+The procedure will result in a history that looks like this:
-+
- ------------
- 		 C0--C1--------------C2
- 		/                     \
-@@ -210,4 +213,4 @@ tip of your 'master' again and redo the two merges:
- 		 B0--B1---------B2
- ------------
- 
--See http://git-blame.blogspot.com/2012/03/fun-with-first-parent.html
-+See also http://git-blame.blogspot.com/2013/09/fun-with-first-parent-history.html
+ * The "multi-mail" post-receive hook (in contrib/) has been updated
+   to a more recent version from the upstream.
+
+ * "git gc --aggressive" learned "--depth" option and
+   "gc.aggressiveDepth" configuration variable to allow use of a less
+   insane depth than the built-in default value of 250.
+
+ * "git log" learned the "--show-linear-break" option to show where a
+   single strand-of-pearls is broken in its output.
+
+ * The "rev-parse --parseopt" mechanism used by scripted Porcelains to
+   parse command line options and to give help text learned to take
+   the argv-help (the placeholder string for an option parameter,
+   e.g. "key-id" in "--gpg-sign=3D<key-id>").
+
+ * The pattern to find where the function begins in C/C++ used in
+   "diff" and "grep -p" has been updated to help C++ source better.
+
+ * "git rebase" learned to interpret a lone "-" as "@{-1}", the
+   branch that we were previously on.
+
+ * "git commit --cleanup=3D<mode>" learned a new mode, scissors.
+
+ * "git tag --list" output can be sorted using "version sort" with
+   "--sort=3Dversion:refname".
+
+ * Discard the accumulated "heuristics" to guess from which branch the
+   result wants to be pulled from and make sure what the end user
+   specified is not second-guessed by "git request-pull", to avoid
+   mistakes.  When you pushed out your 'master' branch to your public
+   repository as 'for-linus', use the new "master:for-linus" syntax to
+   denote the branch to be pulled.
+
+ * "git grep" learned to behave in a way similar to native grep when
+   "-h" (no header) and "-c" (count) options are given.
+
+ * "git push" via transport-helper interface (e.g. remote-hg) has
+   been updated to allow forced ref updates in a way similar to the
+   natively supported transports.
+
+ * The "simple" mode is the default for "git push".
+
+ * "git add -u" and "git add -A", when run without any pathspec, is a
+   tree-wide operation even when run inside a subdirectory of a
+   working tree.
+
+ * "git add <path>" is the same as "git add -A <path>" now.
+
+ * "core.statinfo" configuration variable, which is a
+   never-advertised synonym to "core.checkstat", has been removed.
+
+ * The "-q" option to "git diff-files", which does *NOT* mean
+   "quiet", has been removed (it told Git to ignore deletion, which
+   you can do with "git diff-files --diff-filter=3Dd").
+
+ * Server operators can loosen the "tips of refs only" restriction for
+   the remote archive service with the uploadarchive.allowUnreachable
+   configuration option.
+
+ * The progress indicators from various time-consuming commands have
+   been marked for i18n/l10n.
+
+ * "git notes -C <blob>" diagnoses an attempt to use an object that
+   is not a blob as an error.
+
+ * "git config" learned to read from the standard input when "-" is
+   given as the value to its "--file" parameter (attempting an
+   operation to update the configuration in the standard input of
+   course is rejected).
+
+ * Trailing whitespaces in .gitignore files, unless they are quoted
+   for fnmatch(3), e.g. "path\ ", are warned and ignored.  Strictly
+   speaking, this is a backward incompatible change, but very unlikely
+   to bite any sane user and adjusting should be obvious and easy.
+
+ * Many commands that create commits, e.g. "pull", "rebase",
+   learned to take the --gpg-sign option on the command line.
+
+ * "git commit" can be told to always GPG sign the resulting commit
+   by setting "commit.gpgsign" configuration variable to true (the
+   command line option --no-gpg-sign should override it).
+
+ * "git pull" can be told to only accept fast-forward by setting the
+   new "pull.ff" configuration.
+
+ * "git reset" learned the "-N" option, which does not reset the index
+   fully for paths the index knows about but the tree-ish the command
+   resets to does not (these paths are kept as intend-to-add entries).
+
+
+Performance, Internal Implementation, etc.
+
+ * The compilation options to port to AIX and to MSVC have been
+   updated.
+
+ * We started using wildmatch() in place of fnmatch(3) a few releases
+   ago; complete the process and stop using fnmatch(3).
+
+ * Uses of curl's "multi" interface and "easy" interface do not mix
+   well when we attempt to reuse outgoing connections.  Teach the RPC
+   over http code, used in the smart HTTP transport, not to use the
+   "easy" interface.
+
+ * The bitmap-index feature from JGit has been ported, which should
+   significantly improve performance when serving objects from a
+   repository that uses it.
+
+ * The way "git log --cc" shows a combined diff against multiple
+   parents has been optimized.
+
+ * The prefixcmp() and suffixcmp() functions are gone.  Use
+   starts_with() and ends_with(), and also consider if skip_prefix()
+   suits your needs better when using the former.
+
+
+Also contains various documentation updates and code clean-ups.  Many
+of them came from flurry of activities as GSoC candidate microproject
+exercises.
+
+
+=46ixes since v1.9 series
+-----------------------
+
+Unless otherwise noted, all the fixes since v1.9 in the maintenance
+track are contained in this release (see the maintenance releases'
+notes for details).
+
+ * "git p4" was broken in 1.9 release to deal with changes in binary
+   files.
+   (merge 749b668 cl/p4-use-diff-tree later to maint).
+
+ * The shell prompt script (in contrib/), when using the PROMPT_COMMAND
+   interface, used an unsafe construct when showing the branch name in
+   $PS1.
+   (merge 8976500 rh/prompt-pcmode-avoid-eval-on-refname later to maint=
+).
+
+ * The remote-helper interface to fast-import/fast-export via the
+   transport-helper has been tightened to avoid leaving the import
+   marks file from a failed/crashed run, as such a file that is out of
+   sync with the reality confuses a later invocation of itself.
+
+ * "git rebase" used a POSIX shell construct FreeBSD /bin/sh does not
+   work well with.
+   (merge 8cd6596 km/avoid-non-function-return-in-rebase later to maint=
+).
+
+ * zsh prompt (in contrib/) leaked unnecessary error messages.
+
+ * bash completion (in contrib/) did not complete the refs and remotes
+   correctly given "git pu<TAB>" when "pu" is aliased to "push".
+
+ * Some more Unicode codepoints defined in Unicode 6.3 as having zero
+   width have been taught to our display column counting logic.
+   (merge d813ab9 tb/unicode-6.3-zero-width later to maint).
+
+ * Some tests used shell constructs that did not work well on FreeBSD
+   (merge ff7a1c6 km/avoid-bs-in-shell-glob later to maint).
+   (merge 00764ca km/avoid-cp-a later to maint).
+
+ * "git update-ref --stdin" did not fail a request to create a ref
+   when the ref already existed.
+   (merge b9d56b5 mh/update-ref-batch-create-fix later to maint).
+
+ * "git diff --no-index -Mq a b" fell into an infinite loop.
+   (merge ad1c3fb jc/fix-diff-no-index-diff-opt-parse later to maint).
+
+ * "git fetch --prune", when the right-hand-side of multiple fetch
+   refspecs overlap (e.g. storing "refs/heads/*" to
+   "refs/remotes/origin/*", while storing "refs/frotz/*" to
+   "refs/remotes/origin/fr/*"), aggressively thought that lack of
+   "refs/heads/fr/otz" on the origin site meant we should remove
+   "refs/remotes/origin/fr/otz" from us, without checking their
+   "refs/frotz/otz" first.
+
+   Note that such a configuration is inherently unsafe (think what
+   should happen when "refs/heads/fr/otz" does appear on the origin
+   site), but that is not a reason not to be extra careful.
+   (merge e6f6371 cn/fetch-prune-overlapping-destination later to maint=
+).
+
+ * "git status --porcelain --branch" showed its output with labels
+   "ahead/behind/gone" translated to the user's locale.
+   (merge 7a76c28 mm/status-porcelain-format-i18n-fix later to maint).
+
+ * A stray environment variable $prefix could have leaked into and
+   affected the behaviour of the "subtree" script (in contrib/).
+
+ * When it is not necessary to edit a commit log message (e.g. "git
+   commit -m" is given a message without specifying "-e"), we used to
+   disable the spawning of the editor by overriding GIT_EDITOR, but
+   this means all the uses of the editor, other than to edit the
+   commit log message, are also affected.
+   (merge b549be0 bp/commit-p-editor later to maint).
+
+ * "git mv" that moves a submodule forgot to adjust the array that
+   uses to keep track of which submodules were to be moved to update
+   its configuration.
+   (merge fb8a4e8 jk/mv-submodules-fix later to maint).
+
+ * Length limit for the pathname used when removing a path in a deep
+   subdirectory has been removed to avoid buffer overflows.
+   (merge 2f29e0c mh/remove-subtree-long-pathname-fix later to maint).
+
+ * The test helper lib-terminal always run an actual test_expect_*
+   when included, which screwed up with the use of skil-all that may
+   have to be done later.
+   (merge 7e27173 jk/lib-terminal-lazy later to maint).
+
+ * "git index-pack" used a wrong variable to name the keep-file in an
+   error message when the file cannot be written or closed.
+   (merge de983a0 nd/index-pack-error-message later to maint).
+
+ * "rebase -i" produced a broken insn sheet when the title of a commit
+   happened to contain '\n' (or ended with '\c') due to a careless use
+   of 'echo'.
+   (merge cb1aefd us/printf-not-echo later to maint).
+
+ * There were a few instances of 'git-foo' remaining in the
+   documentation that should have been spelled 'git foo'.
+   (merge 3c3e6f5 rr/doc-merge-strategies later to maint).
+
+ * Serving objects from a shallow repository needs to write a
+   new file to hold the temporary shallow boundaries but it was not
+   cleaned when we exit due to die() or a signal.
+   (merge 7839632 jk/shallow-update-fix later to maint).
+
+ * When "git stash pop" stops after failing to apply the stash
+   (e.g. due to conflicting changes), the stash is not dropped. State
+   that explicitly in the output to let the users know.
+   (merge 2d4c993 jc/stash-pop-not-popped later to maint).
+
+ * The labels in "git status" output that describe the nature of
+   conflicts (e.g. "both deleted") were limited to 20 bytes, which was
+   too short for some l10n (e.g. fr).
+   (merge c7cb333 jn/wt-status later to maint).
+
+ * "git clean -d pathspec" did not use the given pathspec correctly
+   and ended up cleaning too much.
+   (merge 1f2e108 jk/clean-d-pathspec later to maint).
+
+ * "git difftool" misbehaved when the repository is bound to the
+   working tree with the ".git file" mechanism, where a textual file
+   ".git" tells us where it is.
+   (merge fcfec8b da/difftool-git-files later to maint).
+
+ * "git push" did not pay attention to branch.*.pushremote if it is
+   defined earlier than remote.pushdefault; the order of these two
+   variables in the configuration file should not matter, but it did
+   by mistake.
+   (merge 98b406f jk/remote-pushremote-config-reading later to maint).
+
+ * Codepaths that parse timestamps in commit objects have been
+   tightened.
+   (merge f80d1f9 jk/commit-dates-parsing-fix later to maint).
+
+ * "git diff --external-diff" incorrectly fed the submodule directory
+   in the working tree to the external diff driver when it knew it is
+   the same as one of the versions being compared.
+   (merge aba4727 tr/diff-submodule-no-reuse-worktree later to maint).
+
+ * "git reset" needs to refresh the index when working in a working
+   tree (it can also be used to match the index to the HEAD in an
+   otherwise bare repository), but it failed to set up the working
+   tree properly, causing GIT_WORK_TREE to be ignored.
+   (merge b7756d4 nd/reset-setup-worktree later to maint).
+
+ * "git check-attr" when working on a repository with a working tree
+   did not work well when the working tree was specified via the
+   --work-tree (and obviously with --git-dir) option.
+   (merge cdbf623 jc/check-attr-honor-working-tree later to maint).
+
+ * "merge-recursive" was broken in 1.7.7 era and stopped working in
+   an empty (temporary) working tree, when there are renames
+   involved.  This has been corrected.
+   (merge 6e2068a bk/refresh-missing-ok-in-merge-recursive later to mai=
+nt.)
+
+ * "git rev-parse" was loose in rejecting command line arguments
+   that do not make sense, e.g. "--default" without the required
+   value for that option.
+   (merge a43219f ds/rev-parse-required-args later to maint.)
+
+ * include.path variable (or any variable that expects a path that
+   can use ~username expansion) in the configuration file is not a
+   boolean, but the code failed to check it.
+   (merge 67beb60 jk/config-path-include-fix later to maint.)
+
+ * Commands that take pathspecs on the command line misbehaved when
+   the pathspec is given as an absolute pathname (which is a
+   practice not particularly encouraged) that points at a symbolic
+   link in the working tree.
+   (merge later 655ee9e mw/symlinks to maint.)
+
+ * "git diff --quiet -- pathspec1 pathspec2" sometimes did not return
+   correct status value.
+   (merge f34b205 nd/diff-quiet-stat-dirty later to maint.)
+
+ * Attempting to deepen a shallow repository by fetching over smart
+   HTTP transport failed in the protocol exchange, when no-done
+   extension was used.  The fetching side waited for the list of
+   shallow boundary commits after the sending end stopped talking to
+   it.
+   (merge 0232852 nd/http-fetch-shallow-fix later to maint.)
+
+ * Allow "git cmd path/", when the 'path' is where a submodule is
+   bound to the top-level working tree, to match 'path', despite the
+   extra and unnecessary trailing slash (such a slash is often
+   given by command line completion).
+   (merge 2e70c01 nd/submodule-pathspec-ending-with-slash later to main=
+t.)
+
+ * Documentation and in-code comments had many instances of mistaken
+   use of "nor", which have been corrected.
+   (merge 235e8d5 jl/nor-or-nand-and later to maint).
+
+----------------------------------------------------------------
+
+Changes since v2.0.0-rc2 are as follows:
+
+Jonathan Nieder (1):
+      shell doc: remove stray "+" in example
+
+Junio C Hamano (4):
+      Update draft release notes for 2.0
+      Start preparing for 1.9.3
+      Git 1.9.3
+      Git 2.0-rc3
+
+Peter Krefting (1):
+      l10n: Fix a couple of typos in the Swedish translation
+
+Tolga Ceylan (1):
+      git-p4: format-patch to diff-tree change breaks binary patches
+
+=C3=98yvind A. Holm (1):
+      RelNotes/2.0.0: Grammar and typo fixes
