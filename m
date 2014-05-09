@@ -1,401 +1,376 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v1 19/25] contrib: remove 'diff-highlight'
-Date: Thu,  8 May 2014 19:58:30 -0500
-Message-ID: <1399597116-1851-20-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v1 20/25] contrib: remove 'contacts'
+Date: Thu,  8 May 2014 19:58:31 -0500
+Message-ID: <1399597116-1851-21-git-send-email-felipe.contreras@gmail.com>
 References: <1399597116-1851-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>,
-	Jeff King <peff@peff.net>
+	Eric Sunshine <sunshine@sunshineco.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 09 03:11:17 2014
+X-From: git-owner@vger.kernel.org Fri May 09 03:11:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WiZLH-0001Jc-W7
-	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 03:11:16 +0200
+	id 1WiZLJ-0001Jc-Cj
+	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 03:11:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755604AbaEIBLJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 May 2014 21:11:09 -0400
-Received: from mail-yh0-f50.google.com ([209.85.213.50]:47005 "EHLO
-	mail-yh0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755344AbaEIBLB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 May 2014 21:11:01 -0400
-Received: by mail-yh0-f50.google.com with SMTP id 29so3140277yhl.23
-        for <git@vger.kernel.org>; Thu, 08 May 2014 18:11:01 -0700 (PDT)
+	id S932206AbaEIBLP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 May 2014 21:11:15 -0400
+Received: from mail-yk0-f181.google.com ([209.85.160.181]:65404 "EHLO
+	mail-yk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755501AbaEIBLG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 May 2014 21:11:06 -0400
+Received: by mail-yk0-f181.google.com with SMTP id 131so2883221ykp.40
+        for <git@vger.kernel.org>; Thu, 08 May 2014 18:11:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=HCRJN9jSuzCiSD6tB455nMuQKJTXTxRFuYSwh8Vp4bk=;
-        b=K0Nfg3Sa+ODqg/PYG42k3IvKv2CKE2ACKPFSOXNRdUBSabySJ9eUohXLORvVIO5HQD
-         Wpq3Ron0RUZcAjFvmhdYlfU6B7kedjFC0qQVZAtz0u6RQYivORAQpD6R/ukuimP7hAAI
-         BgKq6ZfPyK5StKijTmd+v6/BUqsOiFoEhYeq+1IFVQhooMGHOU687XTHLwYszQJxkVRR
-         Pap3+Zrcw9TxjldT+I+bXQv8y2n9TgOrSlL69vKttOKTbIVmx2pD0daGUoZA4PbKOCIk
-         PKfFbIBYlNC6rCioVehySmjK33FHLIVT3+1w40f2TVa6FUqv3YlhS47ioqY6c+pS5A7t
-         D5hw==
-X-Received: by 10.236.41.165 with SMTP id h25mr10254957yhb.126.1399597861004;
-        Thu, 08 May 2014 18:11:01 -0700 (PDT)
+        bh=OWxAdKv+VQZETwbrxEemasMKK/rQeugDKvlNLTKqMpc=;
+        b=sVeajMiBQVoOXOm+qJNlNel0g3b90N/+6YrIGEVadxfm4ZsizhKr3Pn3FhDm85vpUk
+         qi4Sw1ooelJOKXqM6jsnuOVwVYnjI1m7+Ku4jkeNYi4skQoSa5CSWCwxKUiicfk1FcgD
+         sCN7O5cGqSkJM/85/8w6fRHL4polekgaANg6o62wdDiprmBhFqfjcuaecngJi55SAIgD
+         EZSSdBP9SCuinkd+XOmDFwaNf1O6cPkhEyCHMe2hIdVnDb+1IfBb31sCHthiV4CuUVtB
+         QcEBiKivQTy02g1HIi9iyn55rp00fMVJmmIsSjb+UOSQ8NruPo0XSwW0W8hZcvb9U2Si
+         mU0Q==
+X-Received: by 10.236.138.136 with SMTP id a8mr10031135yhj.113.1399597865288;
+        Thu, 08 May 2014 18:11:05 -0700 (PDT)
 Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id t6sm3912586yhc.45.2014.05.08.18.10.56
+        by mx.google.com with ESMTPSA id h23sm3917937yhf.34.2014.05.08.18.11.02
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 08 May 2014 18:10:57 -0700 (PDT)
+        Thu, 08 May 2014 18:11:04 -0700 (PDT)
 X-Mailer: git-send-email 1.9.2+fc1.27.gbce2056
 In-Reply-To: <1399597116-1851-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248487>
 
-No activity since 2012, no tests, no chance of ever graduating.
+There are better out-of-tree tools, and this tool is not planned to move
+into the core anyway.
 
-Cc: Jeff King <peff@peff.net>
+No tests either.
+
+Cc: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/diff-highlight/README         | 152 -----------------------------
- contrib/diff-highlight/diff-highlight | 173 ----------------------------------
- 2 files changed, 325 deletions(-)
- delete mode 100644 contrib/diff-highlight/README
- delete mode 100755 contrib/diff-highlight/diff-highlight
+ contrib/contacts/git-contacts     | 203 --------------------------------------
+ contrib/contacts/git-contacts.txt |  94 ------------------
+ 2 files changed, 297 deletions(-)
+ delete mode 100755 contrib/contacts/git-contacts
+ delete mode 100644 contrib/contacts/git-contacts.txt
 
-diff --git a/contrib/diff-highlight/README b/contrib/diff-highlight/README
-deleted file mode 100644
-index 502e03b..0000000
---- a/contrib/diff-highlight/README
-+++ /dev/null
-@@ -1,152 +0,0 @@
--diff-highlight
--==============
--
--Line oriented diffs are great for reviewing code, because for most
--hunks, you want to see the old and the new segments of code next to each
--other. Sometimes, though, when an old line and a new line are very
--similar, it's hard to immediately see the difference.
--
--You can use "--color-words" to highlight only the changed portions of
--lines. However, this can often be hard to read for code, as it loses
--the line structure, and you end up with oddly formatted bits.
--
--Instead, this script post-processes the line-oriented diff, finds pairs
--of lines, and highlights the differing segments.  It's currently very
--simple and stupid about doing these tasks. In particular:
--
--  1. It will only highlight hunks in which the number of removed and
--     added lines is the same, and it will pair lines within the hunk by
--     position (so the first removed line is compared to the first added
--     line, and so forth). This is simple and tends to work well in
--     practice. More complex changes don't highlight well, so we tend to
--     exclude them due to the "same number of removed and added lines"
--     restriction. Or even if we do try to highlight them, they end up
--     not highlighting because of our "don't highlight if the whole line
--     would be highlighted" rule.
--
--  2. It will find the common prefix and suffix of two lines, and
--     consider everything in the middle to be "different". It could
--     instead do a real diff of the characters between the two lines and
--     find common subsequences. However, the point of the highlight is to
--     call attention to a certain area. Even if some small subset of the
--     highlighted area actually didn't change, that's OK. In practice it
--     ends up being more readable to just have a single blob on the line
--     showing the interesting bit.
--
--The goal of the script is therefore not to be exact about highlighting
--changes, but to call attention to areas of interest without being
--visually distracting.  Non-diff lines and existing diff coloration is
--preserved; the intent is that the output should look exactly the same as
--the input, except for the occasional highlight.
--
--Use
-----
--
--You can try out the diff-highlight program with:
--
-----------------------------------------------
--git log -p --color | /path/to/diff-highlight
-----------------------------------------------
--
--If you want to use it all the time, drop it in your $PATH and put the
--following in your git configuration:
--
-----------------------------------------------
--[pager]
--	log = diff-highlight | less
--	show = diff-highlight | less
--	diff = diff-highlight | less
-----------------------------------------------
--
--Bugs
------
--
--Because diff-highlight relies on heuristics to guess which parts of
--changes are important, there are some cases where the highlighting is
--more distracting than useful. Fortunately, these cases are rare in
--practice, and when they do occur, the worst case is simply a little
--extra highlighting. This section documents some cases known to be
--sub-optimal, in case somebody feels like working on improving the
--heuristics.
--
--1. Two changes on the same line get highlighted in a blob. For example,
--   highlighting:
--
------------------------------------------------
---foo(buf, size);
--+foo(obj->buf, obj->size);
------------------------------------------------
--
--   yields (where the inside of "+{}" would be highlighted):
--
------------------------------------------------
---foo(buf, size);
--+foo(+{obj->buf, obj->}size);
------------------------------------------------
--
--   whereas a more semantically meaningful output would be:
--
------------------------------------------------
---foo(buf, size);
--+foo(+{obj->}buf, +{obj->}size);
------------------------------------------------
--
--   Note that doing this right would probably involve a set of
--   content-specific boundary patterns, similar to word-diff. Otherwise
--   you get junk like:
--
-------------------------------------------------------
---this line has some -{i}nt-{ere}sti-{ng} text on it
--+this line has some +{fa}nt+{a}sti+{c} text on it
-------------------------------------------------------
--
--   which is less readable than the current output.
--
--2. The multi-line matching assumes that lines in the pre- and post-image
--   match by position. This is often the case, but can be fooled when a
--   line is removed from the top and a new one added at the bottom (or
--   vice versa). Unless the lines in the middle are also changed, diffs
--   will show this as two hunks, and it will not get highlighted at all
--   (which is good). But if the lines in the middle are changed, the
--   highlighting can be misleading. Here's a pathological case:
--
-------------------------------------------------------
---one
---two
---three
---four
--+two 2
--+three 3
--+four 4
--+five 5
-------------------------------------------------------
--
--   which gets highlighted as:
--
-------------------------------------------------------
---one
---t-{wo}
---three
---f-{our}
--+two 2
--+t+{hree 3}
--+four 4
--+f+{ive 5}
-------------------------------------------------------
--
--   because it matches "two" to "three 3", and so forth. It would be
--   nicer as:
--
-------------------------------------------------------
---one
---two
---three
---four
--+two +{2}
--+three +{3}
--+four +{4}
--+five 5
-------------------------------------------------------
--
--   which would probably involve pre-matching the lines into pairs
--   according to some heuristic.
-diff --git a/contrib/diff-highlight/diff-highlight b/contrib/diff-highlight/diff-highlight
+diff --git a/contrib/contacts/git-contacts b/contrib/contacts/git-contacts
 deleted file mode 100755
-index c4404d4..0000000
---- a/contrib/diff-highlight/diff-highlight
+index dbe2abf..0000000
+--- a/contrib/contacts/git-contacts
 +++ /dev/null
-@@ -1,173 +0,0 @@
+@@ -1,203 +0,0 @@
 -#!/usr/bin/perl
 -
--use warnings FATAL => 'all';
+-# List people who might be interested in a patch.  Useful as the argument to
+-# git-send-email --cc-cmd option, and in other situations.
+-#
+-# Usage: git contacts <file | rev-list option> ...
+-
 -use strict;
+-use warnings;
+-use IPC::Open2;
 -
--# Highlight by reversing foreground and background. You could do
--# other things like bold or underline if you prefer.
--my $HIGHLIGHT   = "\x1b[7m";
--my $UNHIGHLIGHT = "\x1b[27m";
--my $COLOR = qr/\x1b\[[0-9;]*m/;
--my $BORING = qr/$COLOR|\s/;
+-my $since = '5-years-ago';
+-my $min_percent = 10;
+-my $labels_rx = qr/Signed-off-by|Reviewed-by|Acked-by|Cc/i;
+-my %seen;
 -
--my @removed;
--my @added;
--my $in_hunk;
+-sub format_contact {
+-	my ($name, $email) = @_;
+-	return "$name <$email>";
+-}
 -
--while (<>) {
--	if (!$in_hunk) {
--		print;
--		$in_hunk = /^$COLOR*\@/;
--	}
--	elsif (/^$COLOR*-/) {
--		push @removed, $_;
--	}
--	elsif (/^$COLOR*\+/) {
--		push @added, $_;
--	}
--	else {
--		show_hunk(\@removed, \@added);
--		@removed = ();
--		@added = ();
--
--		print;
--		$in_hunk = /^$COLOR*[\@ ]/;
--	}
--
--	# Most of the time there is enough output to keep things streaming,
--	# but for something like "git log -Sfoo", you can get one early
--	# commit and then many seconds of nothing. We want to show
--	# that one commit as soon as possible.
--	#
--	# Since we can receive arbitrary input, there's no optimal
--	# place to flush. Flushing on a blank line is a heuristic that
--	# happens to match git-log output.
--	if (!length) {
--		local $| = 1;
+-sub parse_commit {
+-	my ($commit, $data) = @_;
+-	my $contacts = $commit->{contacts};
+-	my $inbody = 0;
+-	for (split(/^/m, $data)) {
+-		if (not $inbody) {
+-			if (/^author ([^<>]+) <(\S+)> .+$/) {
+-				$contacts->{format_contact($1, $2)} = 1;
+-			} elsif (/^$/) {
+-				$inbody = 1;
+-			}
+-		} elsif (/^$labels_rx:\s+([^<>]+)\s+<(\S+?)>$/o) {
+-			$contacts->{format_contact($1, $2)} = 1;
+-		}
 -	}
 -}
 -
--# Flush any queued hunk (this can happen when there is no trailing context in
--# the final diff of the input).
--show_hunk(\@removed, \@added);
--
--exit 0;
--
--sub show_hunk {
--	my ($a, $b) = @_;
--
--	# If one side is empty, then there is nothing to compare or highlight.
--	if (!@$a || !@$b) {
--		print @$a, @$b;
--		return;
+-sub import_commits {
+-	my ($commits) = @_;
+-	return unless %$commits;
+-	my $pid = open2 my $reader, my $writer, qw(git cat-file --batch);
+-	for my $id (keys(%$commits)) {
+-		print $writer "$id\n";
+-		my $line = <$reader>;
+-		if ($line =~ /^([0-9a-f]{40}) commit (\d+)/) {
+-			my ($cid, $len) = ($1, $2);
+-			die "expected $id but got $cid\n" unless $id eq $cid;
+-			my $data;
+-			# cat-file emits newline after data, so read len+1
+-			read $reader, $data, $len + 1;
+-			parse_commit($commits->{$id}, $data);
+-		}
 -	}
--
--	# If we have mismatched numbers of lines on each side, we could try to
--	# be clever and match up similar lines. But for now we are simple and
--	# stupid, and only handle multi-line hunks that remove and add the same
--	# number of lines.
--	if (@$a != @$b) {
--		print @$a, @$b;
--		return;
--	}
--
--	my @queue;
--	for (my $i = 0; $i < @$a; $i++) {
--		my ($rm, $add) = highlight_pair($a->[$i], $b->[$i]);
--		print $rm;
--		push @queue, $add;
--	}
--	print @queue;
+-	close $reader;
+-	close $writer;
+-	waitpid($pid, 0);
+-	die "git-cat-file error: $?\n" if $?;
 -}
 -
--sub highlight_pair {
--	my @a = split_line(shift);
--	my @b = split_line(shift);
--
--	# Find common prefix, taking care to skip any ansi
--	# color codes.
--	my $seen_plusminus;
--	my ($pa, $pb) = (0, 0);
--	while ($pa < @a && $pb < @b) {
--		if ($a[$pa] =~ /$COLOR/) {
--			$pa++;
--		}
--		elsif ($b[$pb] =~ /$COLOR/) {
--			$pb++;
--		}
--		elsif ($a[$pa] eq $b[$pb]) {
--			$pa++;
--			$pb++;
--		}
--		elsif (!$seen_plusminus && $a[$pa] eq '-' && $b[$pb] eq '+') {
--			$seen_plusminus = 1;
--			$pa++;
--			$pb++;
--		}
--		else {
--			last;
+-sub get_blame {
+-	my ($commits, $source, $from, $ranges) = @_;
+-	return unless @$ranges;
+-	open my $f, '-|',
+-		qw(git blame --porcelain -C),
+-		map({"-L$_->[0],+$_->[1]"} @$ranges),
+-		'--since', $since, "$from^", '--', $source or die;
+-	while (<$f>) {
+-		if (/^([0-9a-f]{40}) \d+ \d+ \d+$/) {
+-			my $id = $1;
+-			$commits->{$id} = { id => $id, contacts => {} }
+-				unless $seen{$id};
+-			$seen{$id} = 1;
 -		}
 -	}
+-	close $f;
+-}
 -
--	# Find common suffix, ignoring colors.
--	my ($sa, $sb) = ($#a, $#b);
--	while ($sa >= $pa && $sb >= $pb) {
--		if ($a[$sa] =~ /$COLOR/) {
--			$sa--;
+-sub blame_sources {
+-	my ($sources, $commits) = @_;
+-	for my $s (keys %$sources) {
+-		for my $id (keys %{$sources->{$s}}) {
+-			get_blame($commits, $s, $id, $sources->{$s}{$id});
 -		}
--		elsif ($b[$sb] =~ /$COLOR/) {
--			$sb--;
--		}
--		elsif ($a[$sa] eq $b[$sb]) {
--			$sa--;
--			$sb--;
--		}
--		else {
--			last;
--		}
--	}
--
--	if (is_pair_interesting(\@a, $pa, $sa, \@b, $pb, $sb)) {
--		return highlight_line(\@a, $pa, $sa),
--		       highlight_line(\@b, $pb, $sb);
--	}
--	else {
--		return join('', @a),
--		       join('', @b);
 -	}
 -}
 -
--sub split_line {
--	local $_ = shift;
--	return map { /$COLOR/ ? $_ : (split //) }
--	       split /($COLOR*)/;
+-sub scan_patches {
+-	my ($sources, $id, $f) = @_;
+-	my $source;
+-	while (<$f>) {
+-		if (/^From ([0-9a-f]{40}) Mon Sep 17 00:00:00 2001$/) {
+-			$id = $1;
+-			$seen{$id} = 1;
+-		}
+-		next unless $id;
+-		if (m{^--- (?:a/(.+)|/dev/null)$}) {
+-			$source = $1;
+-		} elsif (/^@@ -(\d+)(?:,(\d+))?/ && $source) {
+-			my $len = defined($2) ? $2 : 1;
+-			push @{$sources->{$source}{$id}}, [$1, $len] if $len;
+-		}
+-	}
 -}
 -
--sub highlight_line {
--	my ($line, $prefix, $suffix) = @_;
--
--	return join('',
--		@{$line}[0..($prefix-1)],
--		$HIGHLIGHT,
--		@{$line}[$prefix..$suffix],
--		$UNHIGHLIGHT,
--		@{$line}[($suffix+1)..$#$line]
--	);
+-sub scan_patch_file {
+-	my ($commits, $file) = @_;
+-	open my $f, '<', $file or die "read failure: $file: $!\n";
+-	scan_patches($commits, undef, $f);
+-	close $f;
 -}
 -
--# Pairs are interesting to highlight only if we are going to end up
--# highlighting a subset (i.e., not the whole line). Otherwise, the highlighting
--# is just useless noise. We can detect this by finding either a matching prefix
--# or suffix (disregarding boring bits like whitespace and colorization).
--sub is_pair_interesting {
--	my ($a, $pa, $sa, $b, $pb, $sb) = @_;
--	my $prefix_a = join('', @$a[0..($pa-1)]);
--	my $prefix_b = join('', @$b[0..($pb-1)]);
--	my $suffix_a = join('', @$a[($sa+1)..$#$a]);
--	my $suffix_b = join('', @$b[($sb+1)..$#$b]);
--
--	return $prefix_a !~ /^$COLOR*-$BORING*$/ ||
--	       $prefix_b !~ /^$COLOR*\+$BORING*$/ ||
--	       $suffix_a !~ /^$BORING*$/ ||
--	       $suffix_b !~ /^$BORING*$/;
+-sub parse_rev_args {
+-	my @args = @_;
+-	open my $f, '-|',
+-		qw(git rev-parse --revs-only --default HEAD --symbolic), @args
+-		or die;
+-	my @revs;
+-	while (<$f>) {
+-		chomp;
+-		push @revs, $_;
+-	}
+-	close $f;
+-	return @revs if scalar(@revs) != 1;
+-	return "^$revs[0]", 'HEAD' unless $revs[0] =~ /^-/;
+-	return $revs[0], 'HEAD';
 -}
+-
+-sub scan_rev_args {
+-	my ($commits, $args) = @_;
+-	my @revs = parse_rev_args(@$args);
+-	open my $f, '-|', qw(git rev-list --reverse), @revs or die;
+-	while (<$f>) {
+-		chomp;
+-		my $id = $_;
+-		$seen{$id} = 1;
+-		open my $g, '-|', qw(git show -C --oneline), $id or die;
+-		scan_patches($commits, $id, $g);
+-		close $g;
+-	}
+-	close $f;
+-}
+-
+-sub mailmap_contacts {
+-	my ($contacts) = @_;
+-	my %mapped;
+-	my $pid = open2 my $reader, my $writer, qw(git check-mailmap --stdin);
+-	for my $contact (keys(%$contacts)) {
+-		print $writer "$contact\n";
+-		my $canonical = <$reader>;
+-		chomp $canonical;
+-		$mapped{$canonical} += $contacts->{$contact};
+-	}
+-	close $reader;
+-	close $writer;
+-	waitpid($pid, 0);
+-	die "git-check-mailmap error: $?\n" if $?;
+-	return \%mapped;
+-}
+-
+-if (!@ARGV) {
+-	die "No input revisions or patch files\n";
+-}
+-
+-my (@files, @rev_args);
+-for (@ARGV) {
+-	if (-e) {
+-		push @files, $_;
+-	} else {
+-		push @rev_args, $_;
+-	}
+-}
+-
+-my %sources;
+-for (@files) {
+-	scan_patch_file(\%sources, $_);
+-}
+-if (@rev_args) {
+-	scan_rev_args(\%sources, \@rev_args)
+-}
+-
+-my $toplevel = `git rev-parse --show-toplevel`;
+-chomp $toplevel;
+-chdir($toplevel) or die "chdir failure: $toplevel: $!\n";
+-
+-my %commits;
+-blame_sources(\%sources, \%commits);
+-import_commits(\%commits);
+-
+-my $contacts = {};
+-for my $commit (values %commits) {
+-	for my $contact (keys %{$commit->{contacts}}) {
+-		$contacts->{$contact}++;
+-	}
+-}
+-$contacts = mailmap_contacts($contacts);
+-
+-my $ncommits = scalar(keys %commits);
+-for my $contact (keys %$contacts) {
+-	my $percent = $contacts->{$contact} * 100 / $ncommits;
+-	next if $percent < $min_percent;
+-	print "$contact\n";
+-}
+diff --git a/contrib/contacts/git-contacts.txt b/contrib/contacts/git-contacts.txt
+deleted file mode 100644
+index dd914d1..0000000
+--- a/contrib/contacts/git-contacts.txt
++++ /dev/null
+@@ -1,94 +0,0 @@
+-git-contacts(1)
+-===============
+-
+-NAME
+-----
+-git-contacts - List people who might be interested in a set of changes
+-
+-
+-SYNOPSIS
+---------
+-[verse]
+-'git contacts' (<patch>|<range>|<rev>)...
+-
+-
+-DESCRIPTION
+------------
+-
+-Given a set of changes, specified as patch files or revisions, determine people
+-who might be interested in those changes.  This is done by consulting the
+-history of each patch or revision hunk to find people mentioned by commits
+-which touched the lines of files under consideration.
+-
+-Input consists of one or more patch files or revision arguments.  A revision
+-argument can be a range or a single `<rev>` which is interpreted as
+-`<rev>..HEAD`, thus the same revision arguments are accepted as for
+-linkgit:git-format-patch[1]. Patch files and revision arguments can be combined
+-in the same invocation.
+-
+-This command can be useful for determining the list of people with whom to
+-discuss proposed changes, or for finding the list of recipients to Cc: when
+-submitting a patch series via `git send-email`. For the latter case, `git
+-contacts` can be used as the argument to `git send-email`'s `--cc-cmd` option.
+-
+-
+-DISCUSSION
+-----------
+-
+-`git blame` is invoked for each hunk in a patch file or revision.  For each
+-commit mentioned by `git blame`, the commit message is consulted for people who
+-authored, reviewed, signed, acknowledged, or were Cc:'d.  Once the list of
+-participants is known, each person's relevance is computed by considering how
+-many commits mentioned that person compared with the total number of commits
+-under consideration.  The final output consists only of participants who exceed
+-a minimum threshold of participation.
+-
+-
+-OUTPUT
+-------
+-
+-For each person of interest, a single line is output, terminated by a newline.
+-If the person's name is known, ``Name $$<user@host>$$'' is printed; otherwise
+-only ``$$<user@host>$$'' is printed.
+-
+-
+-EXAMPLES
+---------
+-
+-* Consult patch files:
+-+
+-------------
+-$ git contacts feature/*.patch
+-------------
+-
+-* Revision range:
+-+
+-------------
+-$ git contacts R1..R2
+-------------
+-
+-* From a single revision to `HEAD`:
+-+
+-------------
+-$ git contacts origin
+-------------
+-
+-* Helper for `git send-email`:
+-+
+-------------
+-$ git send-email --cc-cmd='git contacts' feature/*.patch
+-------------
+-
+-
+-LIMITATIONS
+------------
+-
+-Several conditions controlling a person's significance are currently
+-hard-coded, such as minimum participation level (10%), blame date-limiting (5
+-years), and `-C` level for detecting moved and copied lines (a single `-C`). In
+-the future, these conditions may become configurable.
+-
+-
+-GIT
+----
+-Part of the linkgit:git[1] suite
 -- 
 1.9.2+fc1.27.gbce2056
