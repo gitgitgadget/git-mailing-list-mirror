@@ -1,71 +1,83 @@
-From: Stephen Smith <ishchis2@gmail.com>
-Subject: Re: [PATCH] How to keep a project's canonical history correct.
-Date: Fri, 9 May 2014 06:41:57 -0700
-Message-ID: <BB377FC6-CE4A-4A7F-BAC7-7141BD9776C5@gmail.com>
-References: <xmqq4n119wgk.fsf@gitster.dls.corp.google.com> <1399615721-566-1-git-send-email-ischis2@cox.net>
-Mime-Version: 1.0 (1.0)
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v1 19/25] contrib: remove 'diff-highlight'
+Date: Fri, 09 May 2014 09:16:26 -0500
+Message-ID: <536ce33a860a2_3cfd9d12f08b@nysa.notmuch>
+References: <1399597116-1851-1-git-send-email-felipe.contreras@gmail.com>
+ <1399597116-1851-20-git-send-email-felipe.contreras@gmail.com>
+ <20140509015107.GA9787@sigill.intra.peff.net>
+ <536c35a3507a8_741a161d310cf@nysa.notmuch>
+ <CALbm-EbcoZmWtuxMLSZWjPcgKVTXZPcQ_ppj2UGKzF9oh+hQvA@mail.gmail.com>
+Mime-Version: 1.0
 Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
 	Junio C Hamano <gitster@pobox.com>
-To: "Stephen P. Smith" <ischis2@cox.net>
-X-From: git-owner@vger.kernel.org Fri May 09 15:42:12 2014
+To: Stefan Beller <stefanbeller@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 09 16:16:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wil3v-0000cf-Qv
-	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 15:42:08 +0200
+	id 1WilbI-0001cY-7A
+	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 16:16:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751583AbaEINmD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 May 2014 09:42:03 -0400
-Received: from mail-pd0-f178.google.com ([209.85.192.178]:60614 "EHLO
-	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750744AbaEINmB convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 May 2014 09:42:01 -0400
-Received: by mail-pd0-f178.google.com with SMTP id r10so3758657pdi.9
-        for <git@vger.kernel.org>; Fri, 09 May 2014 06:42:01 -0700 (PDT)
+	id S1756358AbaEIOQc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 May 2014 10:16:32 -0400
+Received: from mail-yh0-f54.google.com ([209.85.213.54]:53475 "EHLO
+	mail-yh0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751895AbaEIOQb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 May 2014 10:16:31 -0400
+Received: by mail-yh0-f54.google.com with SMTP id i57so3746756yha.13
+        for <git@vger.kernel.org>; Fri, 09 May 2014 07:16:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=references:mime-version:in-reply-to:content-type
-         :content-transfer-encoding:message-id:cc:from:subject:date:to;
-        bh=ULTUeDD8JHm2W4/Matu3bnHuYLSS+BhA7/6OBd1MvBE=;
-        b=aU3nQ2ZwF25Uj1XbtpH7NiR4eHCzCY1iQKQ/rlauxIwUhniC69jnbHl2H0wJbFHa4z
-         u5BFeYUqiCjFkQKXDC/van4jzYTa6hXyT6yqJaBWqHuKAgfMCIU3xqO8EKe35bilVfSd
-         7/anjqTTrQPGQHW5VCzPSBsY95Op+gSrKuwjedyxOuUx+U+HMQU504IfqY5Vd8xyFrbB
-         0WtzJimnPvGlmaa47aEeIpiiJIxeMIrt0BBHMazCqfsNSzIDDRkHOVWr39J7nth1/s+y
-         9EvH2/9vuan/SLhPhU95kTYs0q1ycf4Vb2PAra25b9dXfDmGxQfwxCAUQt2mc2rJQuC4
-         +pgQ==
-X-Received: by 10.66.163.2 with SMTP id ye2mr20704263pab.110.1399642921090;
-        Fri, 09 May 2014 06:42:01 -0700 (PDT)
-Received: from [10.42.75.160] (mobile-166-137-182-051.mycingular.net. [166.137.182.51])
-        by mx.google.com with ESMTPSA id ix7sm7720496pbd.36.2014.05.09.06.41.59
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=Uuw/WqdqSq2KXlrieGv5gMJm+5/H1JeGY0xRa0+JgwA=;
+        b=YKPsqWqGeHGGSx+TiZdlr4YJ9xsO0f1UOhOQ0vLV/dDuw/DRMjVVUnS69F2A34taPZ
+         7jF/0DeB1Rdhn3ycTi0JcXk+XKDT5vosA6wLHvl9+oTA/5UK8wtFdkXM68CzB8zJTCxt
+         fPU0RorNLTNXevb5Gk75opINzZsyckFKFQHPaRn3k3C4C158aEYIwRGbljrgVo606hAQ
+         7i6A0CdRvyAwLOCWeMg9Hb2pxhYUdcHAMPjHJyKQWoH3Mw9cAofSIegyRjfgOylfMWhH
+         /OSlyvKv/f9H7F2yqvGwfn0plGou7/mHTDQRpDBwziYo7TIJAfc1Fdx6VzCRiuSQMWhG
+         AlLQ==
+X-Received: by 10.236.86.5 with SMTP id v5mr15140682yhe.153.1399644990951;
+        Fri, 09 May 2014 07:16:30 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id k7sm6319508yhj.31.2014.05.09.07.16.28
         for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 09 May 2014 06:42:00 -0700 (PDT)
-In-Reply-To: <1399615721-566-1-git-send-email-ischis2@cox.net>
-X-Mailer: iPhone Mail (11D201)
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 09 May 2014 07:16:29 -0700 (PDT)
+In-Reply-To: <CALbm-EbcoZmWtuxMLSZWjPcgKVTXZPcQ_ppj2UGKzF9oh+hQvA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248559>
 
-
-
-> On May 8, 2014, at 11:08 PM, "Stephen P. Smith" <ischis2@cox.net> wrote:
+Stefan Beller wrote:
+> >
+> > It is serious.
+> >
+> > The purpose of the 'contrib/' area is not clear. The statemens coming
+> > from Junio don't match what is on 'contrib/README'. So we have a huge
+> > variance of quality all over 'contrib/'. Some tools in contrib have
+> > higher quality than what is part of the core (e.g. they have tests,
+> > while git-archimport doesn't).
 > 
-> During the mail thread about "Pull is mostly evil" a user asked how
-> the first parent could become reversed.
-> 
-> This howto explains how the first parent can get reversed when viewed
-> by the project and then explains a method to keep the history correct.
-> 
-> Signed-off-by: Stephen P. Smith <ischis2@cox.net>
-> ---
+> How about rewriting the README then?
 
-The reason I resubmitted as a brand new patch was because I was using the message ID from the original topic as requested. 
+To say what?
 
-In my repository I did a "git merge --squash" then the format patch.  
+> Also as I said in another mail, we could split up the contrib/ area
+> into multiple areas with narrow defined use-cases, i.e. staging/,
+> Documentation/historicTools (the current contrib/examples section),
+> 3rdPartyTools/, Bridges/ (for cooperating with other VCS).
+
+That won't fix the issue that these tools are not maintained. A separate
+repository 'git-cruft' might do.
+
+-- 
+Felipe Contreras
