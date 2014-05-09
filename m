@@ -1,94 +1,113 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH v1 04/25] contrib: remove 'buildsystems'
-Date: Fri, 9 May 2014 10:33:28 +0200
-Message-ID: <CABPQNSYgfUdtfT0sYCwGsWQgW3QFOZvSZSyG76dmF6+ZSMaByw@mail.gmail.com>
-References: <1399597116-1851-1-git-send-email-felipe.contreras@gmail.com>
- <1399597116-1851-5-git-send-email-felipe.contreras@gmail.com>
- <CABPQNSYZ4eWS_9_omZGK5wCD7ap_siEkC10e4ayT8Jp9w1bOSw@mail.gmail.com> <536c8e63448c2_25d198d30c55@nysa.notmuch>
-Reply-To: kusmabite@gmail.com
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v1 1/2] Remove 'git archimport'
+Date: Fri, 09 May 2014 03:36:39 -0500
+Message-ID: <536c939781d8b_2bf0e952f08@nysa.notmuch>
+References: <1399599203-13991-1-git-send-email-felipe.contreras@gmail.com>
+ <1399599203-13991-2-git-send-email-felipe.contreras@gmail.com>
+ <20140509055024.GB30674@dcvr.yhbt.net>
+ <536c7f9089b77_182dd0d31084@nysa.notmuch>
+ <20140509081507.GA26494@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: GIT Mailing-list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Marius Storm-Olsen <mstormo@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 09 10:34:20 2014
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Martin Langhoff <martin@laptop.org>
+To: Eric Wong <normalperson@yhbt.net>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 09 10:36:51 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WigG0-0004Q2-Ke
-	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 10:34:16 +0200
+	id 1WigIV-0007tq-0i
+	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 10:36:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755843AbaEIIeK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 May 2014 04:34:10 -0400
-Received: from mail-ig0-f173.google.com ([209.85.213.173]:46577 "EHLO
-	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752717AbaEIIeI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 May 2014 04:34:08 -0400
-Received: by mail-ig0-f173.google.com with SMTP id hn18so858394igb.0
-        for <git@vger.kernel.org>; Fri, 09 May 2014 01:34:08 -0700 (PDT)
+	id S1756266AbaEIIgq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 May 2014 04:36:46 -0400
+Received: from mail-yk0-f182.google.com ([209.85.160.182]:34885 "EHLO
+	mail-yk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752431AbaEIIgp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 May 2014 04:36:45 -0400
+Received: by mail-yk0-f182.google.com with SMTP id 9so3147142ykp.13
+        for <git@vger.kernel.org>; Fri, 09 May 2014 01:36:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=KKe5+AOcdJvyzQpDhqt79vbar/Jf6QO0iHADadZhtYE=;
-        b=jEz3I9xqg+mTFfkDFrfIRJ5g+EunFXmwsAL+WSUtUiuOQVUQmp5IOl7wVW/f6pGWv6
-         O3DukSpG1vmj7TOx7/QgtjxH0zAwzGlVcrz8xTKFOpjl8ssxav7pPaDadovRgBky3De0
-         /Y0N0pKRhgngO+qjBMpA4Nq95e7cGbLw8ek1d68yIlvWEmrEN/sczkKMz4jLx6gW2seo
-         h3+YEZGEVXh7Fn4fxqO7yTFFKScV3hQ3jpO09QUQ++U7aDW7MnpsMRUgkcZfBuSUe/y5
-         75eiWOhTfrqtGssvEyOJiwS42csu5XWHg/hvd12dDwW1YWwQIpqAemeh/vqC8qzfBTDB
-         lkgw==
-X-Received: by 10.50.22.69 with SMTP id b5mr6313174igf.45.1399624448140; Fri,
- 09 May 2014 01:34:08 -0700 (PDT)
-Received: by 10.64.166.135 with HTTP; Fri, 9 May 2014 01:33:28 -0700 (PDT)
-In-Reply-To: <536c8e63448c2_25d198d30c55@nysa.notmuch>
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=6/ZosmeqowuiZNtGjvA3uYAvWNA5Kf2jNY4pcuREIZ8=;
+        b=y6sbkxElN7LrrJOJoU5888DvQJyZCQjhQMywwfkyKfTWL61i5RxWU1CdLFmOB5XrZX
+         nH6Yd0qbMGrQGtNsNao1h+FFNlE5RhoVnjWsHaL1qqXKh4B8etjERlvjZo5XbCHMkaO5
+         EDhT2KPs8TEMOkpKIs2eXR5JDCcQ7OecrSbKnqsXeJj1nbEXtSBYidZG6NsTRpPBzCGh
+         tOONNz7jmd05un3u/iow/PgyEz3QSuHGJlBcYhfXkWJMNQa4/NzUYTRkbx1oTiIWy1Rk
+         ZY0Vux2Q3KTHl3LBZ/anRAZ9T28/8RuDQM5CUbgOnKEI/UUyyRQk29vsmn9AvzZOsrUG
+         aniw==
+X-Received: by 10.236.61.45 with SMTP id v33mr12900072yhc.20.1399624604495;
+        Fri, 09 May 2014 01:36:44 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id t27sm5232777yho.55.2014.05.09.01.36.41
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 09 May 2014 01:36:42 -0700 (PDT)
+In-Reply-To: <20140509081507.GA26494@dcvr.yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248534>
 
-On Fri, May 9, 2014 at 10:14 AM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> Erik Faye-Lund wrote:
->> On Fri, May 9, 2014 at 2:58 AM, Felipe Contreras
->> <felipe.contreras@gmail.com> wrote:
->> > No activity since 2010, no documentation, no tests.
->> >
->> > Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
->> > ---
->> >  contrib/buildsystems/Generators.pm        |  42 --
->> >  contrib/buildsystems/Generators/QMake.pm  | 189 ---------
->> >  contrib/buildsystems/Generators/Vcproj.pm | 626 ------------------------------
->> >  contrib/buildsystems/engine.pl            | 359 -----------------
->> >  contrib/buildsystems/generate             |  29 --
->> >  contrib/buildsystems/parse.pl             | 228 -----------
->> >  6 files changed, 1473 deletions(-)
->> >  delete mode 100644 contrib/buildsystems/Generators.pm
->> >  delete mode 100644 contrib/buildsystems/Generators/QMake.pm
->> >  delete mode 100644 contrib/buildsystems/Generators/Vcproj.pm
->> >  delete mode 100755 contrib/buildsystems/engine.pl
->> >  delete mode 100755 contrib/buildsystems/generate
->> >  delete mode 100755 contrib/buildsystems/parse.pl
->>
->> Please don't. This script is useful to build with the MSVC IDE, which
->> enables us to use their excellent debugger.
->
-> If you want this script to remain in contrib, please:
->
->  a) Write at least a few tests
->  b) Write some documentation
->  c) Explain why it cannot live outside the git.git repository like other
->     tools. [1][2][3]
+Eric Wong wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> wrote:
+> > Eric Wong wrote:
+> > > Felipe Contreras <felipe.contreras@gmail.com> wrote:
+> > > > No updates since 2010, and no tests.
+> > > 
+> > > Who benefits from this removal?  Is this causing a maintenance
+> > > burden for Junio?
+> > 
+> > It is cruft that nobody uses and we are not even testing.
+> 
+> We do not know nobody uses it.
 
-(Adding Marius, the original author to the CC-list)
+And we do not know if aybody does either.
 
-Uh, why is such a burden required all of a sudden? contrib/README
-mentions no such requirements, and the scripts have been accepted (and
-maintained) since. Besides, you say "No activity since 2010" - this is
-not the case, bc380fc is from November 2013. And there's already
-*some* documentation in the scripts themselves.
+As a minimal token that anybody might possibly be using it, I would like
+to see it work at least once. Since you said you have arch repos, can
+you confirm that it does something?
 
-Please stop your pointless crusade that'll only break other people's work-flows.
+> I have old GNU Arch projects I have not looked at in a decade.  There
+> is a small chance I may use archimport again (whether for nostalgia or
+> contractual/legal reasons).
+
+ % git show v1.9.0:git-archimport.perl > ~/bin/git-archimport
+
+Problem solved.
+
+> Of course I know to extract archimport from history, but someone in
+> the future may not know the existence of it.
+
+If somebody cared, that person would add tests, or even better, create
+an out-of-tree project.
+
+> > > > Plus, foreign SCM tools should live out-of-tree anyway.
+> > > 
+> > > Even if so, there ought to be a transitionary period in case there are
+> > > any users.  We would need to warn potential users of its impending
+> > > removal in the documentation and at runtime.
+> > 
+> > All right, so you are OK with adding deprecation warnings whenever the
+> > tool is run, and a note in the documentation?
+> 
+> No, I am not convinced existing foreign SCM tools should move
+> out-of-tree.  Perhaps something like the following would be helpful:
+
+Tell that to Junio.
+
+If tools like git-remote-hg with tests and active maintanance and many
+users cannot be in the core, why should 'git archimport' be?
+
+Would you at least be OK with a demotion to contrib/?
+
+-- 
+Felipe Contreras
