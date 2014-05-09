@@ -1,100 +1,89 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v1 07/25] contrib: remove 'git-jump'
-Date: Fri, 9 May 2014 11:20:05 -0400
-Message-ID: <20140509152005.GB18197@sigill.intra.peff.net>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v1 06/25] contrib: remove 'diffall'
+Date: Fri, 09 May 2014 10:20:34 -0500
+Message-ID: <536cf242394eb_ce316372ec42@nysa.notmuch>
 References: <1399597116-1851-1-git-send-email-felipe.contreras@gmail.com>
- <1399597116-1851-8-git-send-email-felipe.contreras@gmail.com>
- <20140509020350.GD9787@sigill.intra.peff.net>
- <536c399454062_741a161d31099@nysa.notmuch>
+ <1399597116-1851-7-git-send-email-felipe.contreras@gmail.com>
+ <CAFouetj=30Wd_CDiXA0UqqKNdfJSv+C5mWbMJPOkEdqxr7k54w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 09 17:20:18 2014
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Tim Henigan <tim.henigan@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 09 17:20:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wimav-0003Tk-Lk
-	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 17:20:18 +0200
+	id 1WimbQ-0004CZ-H6
+	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 17:20:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756816AbaEIPUL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 May 2014 11:20:11 -0400
-Received: from cloud.peff.net ([50.56.180.127]:48294 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756785AbaEIPUH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 May 2014 11:20:07 -0400
-Received: (qmail 26282 invoked by uid 102); 9 May 2014 15:20:07 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 09 May 2014 10:20:07 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 09 May 2014 11:20:05 -0400
-Content-Disposition: inline
-In-Reply-To: <536c399454062_741a161d31099@nysa.notmuch>
+	id S1756836AbaEIPUn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 May 2014 11:20:43 -0400
+Received: from mail-yh0-f54.google.com ([209.85.213.54]:37156 "EHLO
+	mail-yh0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756818AbaEIPUm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 May 2014 11:20:42 -0400
+Received: by mail-yh0-f54.google.com with SMTP id i57so3900006yha.27
+        for <git@vger.kernel.org>; Fri, 09 May 2014 08:20:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=iyAMOscAmq3eHFVXZ47NwbPjjyY3dPpA4dTG3etyDe0=;
+        b=IVw7quoa+K261oJ8sREJcamGI5QOapnyLpC3M++B0TR0A1H5OWU3J8VRIEAlMih0Jv
+         pbHvL9vqQEoTwPZWzlpPfHxg7/NTXm9JoEfSw5xS6jL2xGxzjftd1ec8CByPWgAbDU+z
+         xzDS3ZjI2pnI7DAzaIzyiFClQzb6bRB+f4pnY5TCI2lwwTpOfHCW52dOMsmtFGg6bJkP
+         K6vIcKLRyRMJDldt4HQYKiYfNP2Xj1CZVHwQ5ZzH6b2cdQycr+6buaIYzGs0Nh5GB+9p
+         NjmVIlAiBHkp8wWxjar4IuexqPtNsx/C052ScpE6LHT2xuUJea4hOFvr6F5wJQabM1ok
+         rsGA==
+X-Received: by 10.236.230.41 with SMTP id i39mr15877089yhq.14.1399648841483;
+        Fri, 09 May 2014 08:20:41 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id g1sm6554898yho.37.2014.05.09.08.20.36
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 09 May 2014 08:20:37 -0700 (PDT)
+In-Reply-To: <CAFouetj=30Wd_CDiXA0UqqKNdfJSv+C5mWbMJPOkEdqxr7k54w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248571>
 
-On Thu, May 08, 2014 at 09:12:36PM -0500, Felipe Contreras wrote:
-
-> Jeff King wrote:
-> > On Thu, May 08, 2014 at 07:58:18PM -0500, Felipe Contreras wrote:
-> > 
-> > > No activity, no tests.
-> > 
-> > Like diff-highlight, I don't think "no activity" is a useful indicator.
-> > I use this daily, and several people have commented off-list to me that
-> > they use it, too.
+Tim Henigan wrote:
+> On Thu, May 8, 2014 at 5:58 PM, Felipe Contreras <felipe.contreras@gmail.com
+> > wrote:
 > 
-> Add tests then.
+> > No activity since 2010, no tests.
+> >
+> > Cc: Tim Henigan <tim.henigan@gmail.com>
+> > Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> > ---
+> >  contrib/diffall/README      |  31 ------
+> >  contrib/diffall/git-diffall | 257
+> > --------------------------------------------
+> >  2 files changed, 288 deletions(-)
+> >  delete mode 100644 contrib/diffall/README
+> >  delete mode 100755 contrib/diffall/git-diffall
+> >
+> 
+> 
+> I see no problem with removing this script from contrib.  However, the
+> commit message should mention that git-difftool learned all the
+> features of git-diffall when the '--dir-diff' option was added in
+> v1.7.11 (ca. June 2012).
 
-I don't really feel like spending time on it right now. There are better
-uses of my time.
+Will do.
 
-I thought on this for a while before responding. Am I simply being lazy
-and a bad programmer not to write tests? Am I propagating a double
-standard where I do not have to write tests?
+> Also, the script was first added to contrib in Feb. 2012, so "no
+> activity since 2010" is incorrect.
 
-Here's the conclusion I came to. Sure, some tests are better than no
-tests. But the code works, empirically; I use it every day. It is not
-changing, so the chances of regression are low. I can spend an hour
-writing tests that demonstrate what I already know. I can even spend
-several hours trying to come up with torture cases that might
-demonstrate a potential failure that nobody in the real world
-experiences. But why?
+Ah, sorry about that.
 
-Because YOU, who have no interest whatsoever in either this script or
-diff-highlight, have decided to demand that I write them, or spend time
-spinning the code into its own repository. Sorry, but I have more useful
-things to do than appease you.
-
-I have no problem with cleaning up cruft in contrib that is broken and
-nobody uses; it is a potential hazard and time-waster for people who
-look in that directory. But when people say "no, this is maintained, I
-use it, and it works", I really don't see the point in you arguing with
-them. Nobody benefits.
-
-> It this is never meant to move to the core, then it should go
-> out-of-tree anyway.
-
-"should" in your opinion. I know, I know, you will quote contrib/README
-at me.  If Junio wants to enforce "contrib is only for things which are
-meant to graduate" in his tree, then I will abide by that and maintain
-these scripts out-of-tree. But I would rather see an actual decision
-from the maintainer on that, and not an 8-year-old README which clearly
-has not been followed in the intervening years.
-
-And speaking of wasted time, I do not plan on responding further to you
-in this thread. I am telling you ahead of time that this is the case,
-because elsewhere[1] I saw you complaining that Junio did not respond to
-your emails, which you seemed to think was because he cannot admit that
-he was wrong. So I want to say up front that I am going to avoid
-interacting with you further because it generally seems fruitless,
-consumes a large amount of time, and causes me a great deal of stress.
-
--Peff
-
-[1] http://article.gmane.org/gmane.comp.version-control.git/248441
+-- 
+Felipe Contreras
