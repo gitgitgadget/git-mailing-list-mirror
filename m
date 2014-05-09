@@ -1,364 +1,235 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v1 06/25] contrib: remove 'diffall'
-Date: Thu,  8 May 2014 19:58:17 -0500
-Message-ID: <1399597116-1851-7-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v1 07/25] contrib: remove 'git-jump'
+Date: Thu,  8 May 2014 19:58:18 -0500
+Message-ID: <1399597116-1851-8-git-send-email-felipe.contreras@gmail.com>
 References: <1399597116-1851-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Tim Henigan <tim.henigan@gmail.com>
+	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 09 03:10:10 2014
+X-From: git-owner@vger.kernel.org Fri May 09 03:10:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WiZKB-0008HV-Jd
-	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 03:10:07 +0200
+	id 1WiZKR-0000Bn-Ku
+	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 03:10:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756055AbaEIBJ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 May 2014 21:09:57 -0400
-Received: from mail-yh0-f53.google.com ([209.85.213.53]:45495 "EHLO
-	mail-yh0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756013AbaEIBJz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 May 2014 21:09:55 -0400
-Received: by mail-yh0-f53.google.com with SMTP id i57so885059yha.40
-        for <git@vger.kernel.org>; Thu, 08 May 2014 18:09:54 -0700 (PDT)
+	id S1756061AbaEIBKF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 May 2014 21:10:05 -0400
+Received: from mail-yh0-f51.google.com ([209.85.213.51]:47219 "EHLO
+	mail-yh0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756013AbaEIBJ7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 May 2014 21:09:59 -0400
+Received: by mail-yh0-f51.google.com with SMTP id f10so3141775yha.10
+        for <git@vger.kernel.org>; Thu, 08 May 2014 18:09:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=3UlwAOzrdEG8YHN1xw/evI7FjfcZgA5dtIK9GDOzS1g=;
-        b=PO5LcHmPpKOLJiDBDDCHH6Zt33umywYSH4fq8TrlgT3EWzNQxVo5+zPLGFFbmtFWQq
-         xq7tlxFSBps/lmeuy4T/k+KnTrFcLHAMbYbJEdUZSNjpORd4/F1r3SJi9V4n/soH/MtB
-         ETPllt0ExOEmzSqLE5ZzHODlzuix0+j62bBxCDQXQXpQxNUyJDkHoTGo1OlGvPbTGKee
-         AElhqnMVEQL1sUQhn+TSuUQIAITok2v1M30RkRLPSqUowp8pdmQLJKUaxdcOR4SQ4Atg
-         bZpi7mCvP1a9IxY85JqwdslhkHLRq43l87RhFLeMUPsUam3XndKa1KZtDLL9Bm/XM7NI
-         fm1w==
-X-Received: by 10.236.32.178 with SMTP id o38mr10166216yha.119.1399597794780;
-        Thu, 08 May 2014 18:09:54 -0700 (PDT)
+        bh=nP4RwoFe92hyaVM7+iiAWbE7EBleXG1dHxzR85BSWa0=;
+        b=l+AAJH/IjIOB5QLdeXfNlzmtAA8iecwxMUKFNad9cbgoaOOUimHnS6snaBaKf2uzZx
+         MH0kT/v+WY/HzL3l5mxQQunTBalSPct2s2867Nwyn8QJaBHqlYU0J53gKQRQtXRHVn/y
+         D7DcCorF3oFtvqYfzeUMqEkEoJ3QVwaCSdcuZcd/avFGbbAA6ZjUBmq8sLqw1v9RybLs
+         6WieYsUpoSlHbM3IsKUtR4AD9l2tuYqdhY5wL/JQupDx8mpfa8nIlkCLfEUCq0Qh7es8
+         gkCcULA5pItJvMVrF5G65dm2IzDHHTkEEMRvzquhBcRsKBezbR6R7MGrD6zk/Q26BjpB
+         vFNA==
+X-Received: by 10.236.93.194 with SMTP id l42mr10380582yhf.17.1399597799348;
+        Thu, 08 May 2014 18:09:59 -0700 (PDT)
 Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id f70sm3917071yhh.30.2014.05.08.18.09.52
+        by mx.google.com with ESMTPSA id l67sm3904911yha.52.2014.05.08.18.09.56
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 08 May 2014 18:09:53 -0700 (PDT)
+        Thu, 08 May 2014 18:09:57 -0700 (PDT)
 X-Mailer: git-send-email 1.9.2+fc1.27.gbce2056
 In-Reply-To: <1399597116-1851-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248473>
 
-No activity since 2010, no tests.
+No activity, no tests.
 
-Cc: Tim Henigan <tim.henigan@gmail.com>
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/diffall/README      |  31 ------
- contrib/diffall/git-diffall | 257 --------------------------------------------
- 2 files changed, 288 deletions(-)
- delete mode 100644 contrib/diffall/README
- delete mode 100755 contrib/diffall/git-diffall
+ contrib/git-jump/README   | 92 -----------------------------------------------
+ contrib/git-jump/git-jump | 69 -----------------------------------
+ 2 files changed, 161 deletions(-)
+ delete mode 100644 contrib/git-jump/README
+ delete mode 100755 contrib/git-jump/git-jump
 
-diff --git a/contrib/diffall/README b/contrib/diffall/README
+diff --git a/contrib/git-jump/README b/contrib/git-jump/README
 deleted file mode 100644
-index 507f17d..0000000
---- a/contrib/diffall/README
+index 1cebc32..0000000
+--- a/contrib/git-jump/README
 +++ /dev/null
-@@ -1,31 +0,0 @@
--The git-diffall script provides a directory based diff mechanism
--for git.
+@@ -1,92 +0,0 @@
+-git-jump
+-========
 -
--To determine what diff viewer is used, the script requires either
--the 'diff.tool' or 'merge.tool' configuration option to be set.
+-Git-jump is a script for helping you jump to "interesting" parts of your
+-project in your editor. It works by outputting a set of interesting
+-spots in the "quickfix" format, which editors like vim can use as a
+-queue of places to visit (this feature is usually used to jump to errors
+-produced by a compiler). For example, given a diff like this:
 -
--This script is compatible with most common forms used to specify a
--range of revisions to diff:
+-------------------------------------
+-diff --git a/foo.c b/foo.c
+-index a655540..5a59044 100644
+---- a/foo.c
+-+++ b/foo.c
+-@@ -1,3 +1,3 @@
+- int main(void) {
+--  printf("hello word!\n");
+-+  printf("hello world!\n");
+- }
+------------------------------------
 -
--  1. git diffall: shows diff between working tree and staged changes
--  2. git diffall --cached [<commit>]: shows diff between staged
--     changes and HEAD (or other named commit)
--  3. git diffall <commit>: shows diff between working tree and named
--     commit
--  4. git diffall <commit> <commit>: show diff between two named commits
--  5. git diffall <commit>..<commit>: same as above
--  6. git diffall <commit>...<commit>: show the changes on the branch
--     containing and up to the second, starting at a common ancestor
--     of both <commit>
+-git-jump will feed this to the editor:
 -
--Note: all forms take an optional path limiter [-- <path>*]
+------------------------------------
+-foo.c:2: printf("hello word!\n");
+------------------------------------
 -
--The '--extcmd=<command>' option allows the user to specify a custom
--command for viewing diffs.  When given, configured defaults are
--ignored and the script runs $command $LOCAL $REMOTE.  Additionally,
--$BASE is set in the environment.
+-Obviously this trivial case isn't that interesting; you could just open
+-`foo.c` yourself. But when you have many changes scattered across a
+-project, you can use the editor's support to "jump" from point to point.
 -
--This script is based on an example provided by Thomas Rast on the
--Git list [1]:
+-Git-jump can generate three types of interesting lists:
 -
--[1] http://thread.gmane.org/gmane.comp.version-control.git/124807
-diff --git a/contrib/diffall/git-diffall b/contrib/diffall/git-diffall
+-  1. The beginning of any diff hunks.
+-
+-  2. The beginning of any merge conflict markers.
+-
+-  3. Any grep matches.
+-
+-
+-Using git-jump
+---------------
+-
+-To use it, just drop git-jump in your PATH, and then invoke it like
+-this:
+-
+---------------------------------------------------
+-# jump to changes not yet staged for commit
+-git jump diff
+-
+-# jump to changes that are staged for commit; you can give
+-# arbitrary diff options
+-git jump diff --cached
+-
+-# jump to merge conflicts
+-git jump merge
+-
+-# jump to all instances of foo_bar
+-git jump grep foo_bar
+-
+-# same as above, but case-insensitive; you can give
+-# arbitrary grep options
+-git jump grep -i foo_bar
+---------------------------------------------------
+-
+-
+-Related Programs
+-----------------
+-
+-You can accomplish some of the same things with individual tools. For
+-example, you can use `git mergetool` to start vimdiff on each unmerged
+-file. `git jump merge` is for the vim-wielding luddite who just wants to
+-jump straight to the conflict text with no fanfare.
+-
+-As of git v1.7.2, `git grep` knows the `--open-files-in-pager` option,
+-which does something similar to `git jump grep`. However, it is limited
+-to positioning the cursor to the correct line in only the first file,
+-leaving you to locate subsequent hits in that file or other files using
+-the editor or pager. By contrast, git-jump provides the editor with a
+-complete list of files and line numbers for each match.
+-
+-
+-Limitations
+------------
+-
+-This scripts was written and tested with vim. Given that the quickfix
+-format is the same as what gcc produces, I expect emacs users have a
+-similar feature for iterating through the list, but I know nothing about
+-how to activate it.
+-
+-The shell snippets to generate the quickfix lines will almost certainly
+-choke on filenames with exotic characters (like newlines).
+diff --git a/contrib/git-jump/git-jump b/contrib/git-jump/git-jump
 deleted file mode 100755
-index 84f2b65..0000000
---- a/contrib/diffall/git-diffall
+index dc90cd6..0000000
+--- a/contrib/git-jump/git-jump
 +++ /dev/null
-@@ -1,257 +0,0 @@
+@@ -1,69 +0,0 @@
 -#!/bin/sh
--# Copyright 2010 - 2012, Tim Henigan <tim.henigan@gmail.com>
--#
--# Perform a directory diff between commits in the repository using
--# the external diff or merge tool specified in the user's config.
 -
--USAGE='[--cached] [--copy-back] [-x|--extcmd=<command>] <commit>{0,2} [-- <path>*]
+-usage() {
+-	cat <<\EOF
+-usage: git jump <mode> [<args>]
 -
--    --cached     Compare to the index rather than the working tree.
+-Jump to interesting elements in an editor.
+-The <mode> parameter is one of:
 -
--    --copy-back  Copy files back to the working tree when the diff
--                 tool exits (in case they were modified by the
--                 user).  This option is only valid if the diff
--                 compared with the working tree.
+-diff: elements are diff hunks. Arguments are given to diff.
 -
--    -x=<command>
--    --extcmd=<command>  Specify a custom command for viewing diffs.
--                 git-diffall ignores the configured defaults and
--                 runs $command $LOCAL $REMOTE when this option is
--                 specified. Additionally, $BASE is set in the
--                 environment.
--'
+-merge: elements are merge conflicts. Arguments are ignored.
 -
--SUBDIRECTORY_OK=1
--. "$(git --exec-path)/git-sh-setup"
--
--TOOL_MODE=diff
--. "$(git --exec-path)/git-mergetool--lib"
--
--merge_tool="$(get_merge_tool)"
--if test -z "$merge_tool"
--then
--	echo "Error: Either the 'diff.tool' or 'merge.tool' option must be set."
--	usage
--fi
--
--start_dir=$(pwd)
--
--# All the file paths returned by the diff command are relative to the root
--# of the working copy. So if the script is called from a subdirectory, it
--# must switch to the root of working copy before trying to use those paths.
--cdup=$(git rev-parse --show-cdup) &&
--cd "$cdup" || {
--	echo >&2 "Cannot chdir to $cdup, the toplevel of the working tree"
--	exit 1
+-grep: elements are grep hits. Arguments are given to grep.
+-EOF
 -}
 -
--# set up temp dir
--tmp=$(perl -e 'use File::Temp qw(tempdir);
--	$t=tempdir("/tmp/git-diffall.XXXXX") or exit(1);
--	print $t') || exit 1
--trap 'rm -rf "$tmp"' EXIT
+-open_editor() {
+-	editor=`git var GIT_EDITOR`
+-	eval "$editor -q \$1"
+-}
 -
--left=
--right=
--paths=
--dashdash_seen=
--compare_staged=
--merge_base=
--left_dir=
--right_dir=
--diff_tool=
--copy_back=
+-mode_diff() {
+-	git diff --no-prefix --relative "$@" |
+-	perl -ne '
+-	if (m{^\+\+\+ (.*)}) { $file = $1; next }
+-	defined($file) or next;
+-	if (m/^@@ .*\+(\d+)/) { $line = $1; next }
+-	defined($line) or next;
+-	if (/^ /) { $line++; next }
+-	if (/^[-+]\s*(.*)/) {
+-		print "$file:$line: $1\n";
+-		$line = undef;
+-	}
+-	'
+-}
 -
--while test $# != 0
--do
--	case "$1" in
--	-h|--h|--he|--hel|--help)
--		usage
--		;;
--	--cached)
--		compare_staged=1
--		;;
--	--copy-back)
--		copy_back=1
--		;;
--	-x|--e|--ex|--ext|--extc|--extcm|--extcmd)
--		if test $# = 1
--		then
--			echo You must specify the tool for use with --extcmd
--			usage
--		else
--			diff_tool=$2
--			shift
--		fi
--		;;
--	--)
--		dashdash_seen=1
--		;;
--	-*)
--		echo Invalid option: "$1"
--		usage
--		;;
--	*)
--		# could be commit, commit range or path limiter
--		case "$1" in
--		*...*)
--			left=${1%...*}
--			right=${1#*...}
--			merge_base=1
--			;;
--		*..*)
--			left=${1%..*}
--			right=${1#*..}
--			;;
--		*)
--			if test -n "$dashdash_seen"
--			then
--				paths="$paths$1 "
--			elif test -z "$left"
--			then
--				left=$1
--			elif test -z "$right"
--			then
--				right=$1
--			else
--				paths="$paths$1 "
--			fi
--			;;
--		esac
--		;;
--	esac
--	shift
--done
+-mode_merge() {
+-	git ls-files -u |
+-	perl -pe 's/^.*?\t//' |
+-	sort -u |
+-	while IFS= read fn; do
+-		grep -Hn '^<<<<<<<' "$fn"
+-	done
+-}
 -
--# Determine the set of files which changed
--if test -n "$left" && test -n "$right"
--then
--	left_dir="cmt-$(git rev-parse --short $left)"
--	right_dir="cmt-$(git rev-parse --short $right)"
+-# Grep -n generates nice quickfix-looking lines by itself,
+-# but let's clean up extra whitespace, so they look better if the
+-# editor shows them to us in the status bar.
+-mode_grep() {
+-	git grep -n "$@" |
+-	perl -pe '
+-	s/[ \t]+/ /g;
+-	s/^ *//;
+-	'
+-}
 -
--	if test -n "$compare_staged"
--	then
--		usage
--	elif test -n "$merge_base"
--	then
--		git diff --name-only "$left"..."$right" -- $paths >"$tmp/filelist"
--	else
--		git diff --name-only "$left" "$right" -- $paths >"$tmp/filelist"
--	fi
--elif test -n "$left"
--then
--	left_dir="cmt-$(git rev-parse --short $left)"
--
--	if test -n "$compare_staged"
--	then
--		right_dir="staged"
--		git diff --name-only --cached "$left" -- $paths >"$tmp/filelist"
--	else
--		right_dir="working_tree"
--		git diff --name-only "$left" -- $paths >"$tmp/filelist"
--	fi
--else
--	left_dir="HEAD"
--
--	if test -n "$compare_staged"
--	then
--		right_dir="staged"
--		git diff --name-only --cached -- $paths >"$tmp/filelist"
--	else
--		right_dir="working_tree"
--		git diff --name-only -- $paths >"$tmp/filelist"
--	fi
--fi
--
--# Exit immediately if there are no diffs
--if test ! -s "$tmp/filelist"
--then
--	exit 0
--fi
--
--if test -n "$copy_back" && test "$right_dir" != "working_tree"
--then
--	echo "--copy-back is only valid when diff includes the working tree."
+-if test $# -lt 1; then
+-	usage >&2
 -	exit 1
 -fi
+-mode=$1; shift
 -
--# Create the named tmp directories that will hold the files to be compared
--mkdir -p "$tmp/$left_dir" "$tmp/$right_dir"
--
--# Populate the tmp/right_dir directory with the files to be compared
--while read name
--do
--	if test -n "$right"
--	then
--		ls_list=$(git ls-tree $right "$name")
--		if test -n "$ls_list"
--		then
--			mkdir -p "$tmp/$right_dir/$(dirname "$name")"
--			git show "$right":"$name" >"$tmp/$right_dir/$name" || true
--		fi
--	elif test -n "$compare_staged"
--	then
--		ls_list=$(git ls-files -- "$name")
--		if test -n "$ls_list"
--		then
--			mkdir -p "$tmp/$right_dir/$(dirname "$name")"
--			git show :"$name" >"$tmp/$right_dir/$name"
--		fi
--	else
--		if test -e "$name"
--		then
--			mkdir -p "$tmp/$right_dir/$(dirname "$name")"
--			cp "$name" "$tmp/$right_dir/$name"
--		fi
--	fi
--done < "$tmp/filelist"
--
--# Populate the tmp/left_dir directory with the files to be compared
--while read name
--do
--	if test -n "$left"
--	then
--		ls_list=$(git ls-tree $left "$name")
--		if test -n "$ls_list"
--		then
--			mkdir -p "$tmp/$left_dir/$(dirname "$name")"
--			git show "$left":"$name" >"$tmp/$left_dir/$name" || true
--		fi
--	else
--		if test -n "$compare_staged"
--		then
--			ls_list=$(git ls-tree HEAD "$name")
--			if test -n "$ls_list"
--			then
--				mkdir -p "$tmp/$left_dir/$(dirname "$name")"
--				git show HEAD:"$name" >"$tmp/$left_dir/$name"
--			fi
--		else
--			mkdir -p "$tmp/$left_dir/$(dirname "$name")"
--			git show :"$name" >"$tmp/$left_dir/$name"
--		fi
--	fi
--done < "$tmp/filelist"
--
--LOCAL="$tmp/$left_dir"
--REMOTE="$tmp/$right_dir"
--
--if test -n "$diff_tool"
--then
--	export BASE
--	eval $diff_tool '"$LOCAL"' '"$REMOTE"'
--else
--	run_merge_tool "$merge_tool" false
--fi
--
--# Copy files back to the working dir, if requested
--if test -n "$copy_back" && test "$right_dir" = "working_tree"
--then
--	cd "$start_dir"
--	git_top_dir=$(git rev-parse --show-toplevel)
--	find "$tmp/$right_dir" -type f |
--	while read file
--	do
--		cp "$file" "$git_top_dir/${file#$tmp/$right_dir/}"
--	done
--fi
+-trap 'rm -f "$tmp"' 0 1 2 3 15
+-tmp=`mktemp -t git-jump.XXXXXX` || exit 1
+-type "mode_$mode" >/dev/null 2>&1 || { usage >&2; exit 1; }
+-"mode_$mode" "$@" >"$tmp"
+-test -s "$tmp" || exit 0
+-open_editor "$tmp"
 -- 
 1.9.2+fc1.27.gbce2056
