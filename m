@@ -1,71 +1,77 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH v1 23/25] contrib: remove 'hooks/multimail'
-Date: Fri, 09 May 2014 17:04:28 +0200
-Message-ID: <87y4ybxabn.fsf@fencepost.gnu.org>
+From: Alexandre Julliard <julliard@winehq.org>
+Subject: Re: [PATCH v1 18/25] contrib: remove 'emacs'
+Date: Fri, 09 May 2014 16:50:00 +0200
+Message-ID: <87d2fnropz.fsf@wine.dyndns.org>
 References: <1399597116-1851-1-git-send-email-felipe.contreras@gmail.com>
-	<1399597116-1851-24-git-send-email-felipe.contreras@gmail.com>
-	<536CED9B.3080706@alum.mit.edu>
+	<1399597116-1851-19-git-send-email-felipe.contreras@gmail.com>
+	<CAFcZeCqbF54-KjHU1R3pC6XgWi21KcpRGB7HcbfSGyvTScQU2A@mail.gmail.com>
+	<536c91f079e71_2bf0e952f0a@nysa.notmuch>
+	<CAFcZeCo5mCfnUN1uBiaZnD6DL6y8hPhK5MPts5raLCTGwJX9Gg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri May 09 17:04:34 2014
+	Junio C Hamano <gitster@pobox.com>,
+	Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
+To: David =?utf-8?Q?K=C3=A5gedal?= <davidk@lysator.liu.se>
+X-From: git-owner@vger.kernel.org Fri May 09 17:08:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WimLh-00062U-Py
-	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 17:04:34 +0200
+	id 1WimPQ-0003Xv-CU
+	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 17:08:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753527AbaEIPEa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 May 2014 11:04:30 -0400
-Received: from fencepost.gnu.org ([208.118.235.10]:40111 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752029AbaEIPE3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 May 2014 11:04:29 -0400
-Received: from localhost ([127.0.0.1]:39151 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1WimLc-0004xE-Jk; Fri, 09 May 2014 11:04:28 -0400
-Received: by lola (Postfix, from userid 1000)
-	id 300D5E07B8; Fri,  9 May 2014 17:04:28 +0200 (CEST)
-In-Reply-To: <536CED9B.3080706@alum.mit.edu> (Michael Haggerty's message of
-	"Fri, 09 May 2014 17:00:43 +0200")
+	id S1752606AbaEIPIU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 May 2014 11:08:20 -0400
+Received: from mail.codeweavers.com ([216.251.189.131]:47705 "EHLO
+	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750775AbaEIPIU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 May 2014 11:08:20 -0400
+X-Greylist: delayed 1088 seconds by postgrey-1.27 at vger.kernel.org; Fri, 09 May 2014 11:08:19 EDT
+Received: from xdsl-188-155-88-142.adslplus.ch ([188.155.88.142] helo=wine.dyndns.org)
+	by mail.codeweavers.com with esmtpsa (TLS1.2:DHE_RSA_AES_256_CBC_SHA256:256)
+	(Exim 4.80)
+	(envelope-from <julliard@winehq.org>)
+	id 1Wim7j-00082T-ML; Fri, 09 May 2014 09:50:09 -0500
+Received: by wine.dyndns.org (Postfix, from userid 1000)
+	id 20B15204431; Fri,  9 May 2014 16:50:00 +0200 (CEST)
+In-Reply-To: <CAFcZeCo5mCfnUN1uBiaZnD6DL6y8hPhK5MPts5raLCTGwJX9Gg@mail.gmail.com>
+	("David =?utf-8?Q?K=C3=A5gedal=22's?= message of "Fri, 9 May 2014 10:42:51
+ +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
+X-Spam-Score: -2.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248566>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+David K=C3=A5gedal <davidk@lysator.liu.se> writes:
 
-> On 05/09/2014 02:58 AM, Felipe Contreras wrote:
->> No tests. No chance of ever graduating.
->> 
->> Already out-of-tree.
->> 
->> Cc: Michael Haggerty <mhagger@alum.mit.edu>
->> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> 2014-05-09 10:29 GMT+02:00 Felipe Contreras
+> <felipe.contreras@gmail.com>:
 >
-> Thank you for your input.
+>     David K=C3=A5gedal wrote:
+>     > What problem does this removal solve?
+>    =20
+>    =20
+>     Please do not top post.
+>    =20
+>     a) What problem does it solve by staying?
+>     b) Where are the tests?
+>     c) Why it cannot be moved to an outside repository like may other
+>     git-related tools?
 >
-> git-multimail is maintained outside of the Git project and is only
-> distributed along with Git as a convenience to Git users.  It does in
-> fact have a test suite, along with some other bits and bobs that are not
-> needed to use it, in the upstream repository at
->
->     https://github.com/mhagger/git-multimail
->
-> What's more, it has a maintainer who doesn't routinely insult other
-> people on the mailing list, conduct endless and pointless flame wars,
-> think that he is superior to everybody in sight, and throw temper
-> tantrums when his rudeness, argumentativeness, and arrogance for some
-> reason don't win the hearts and minds of other contributors.
+> Fair enough. I guess the target should rather be to get it into the
+> emacs distribution.
 
-Oh come on.  Junio is not _that_ bad.
+It's already in Emacs in a different form, as part of the generic VC
+support. And nowadays, users are probably better served by using
+something like Magit anyway. As far as my code is concerned I have no
+objections to removing it.
 
--- 
-David Kastrup
+--=20
+Alexandre Julliard
+julliard@winehq.org
