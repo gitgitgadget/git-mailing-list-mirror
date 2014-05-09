@@ -1,432 +1,401 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v1 05/25] contrib: remove 'convert-objects'
-Date: Thu,  8 May 2014 19:58:16 -0500
-Message-ID: <1399597116-1851-6-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v1 19/25] contrib: remove 'diff-highlight'
+Date: Thu,  8 May 2014 19:58:30 -0500
+Message-ID: <1399597116-1851-20-git-send-email-felipe.contreras@gmail.com>
 References: <1399597116-1851-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Jeff King <peff@peff.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 09 03:11:05 2014
+X-From: git-owner@vger.kernel.org Fri May 09 03:11:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WiZL0-0000zM-6w
-	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 03:10:58 +0200
+	id 1WiZLH-0001Jc-W7
+	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 03:11:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756034AbaEIBJx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 May 2014 21:09:53 -0400
-Received: from mail-yk0-f178.google.com ([209.85.160.178]:56178 "EHLO
-	mail-yk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756019AbaEIBJu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 May 2014 21:09:50 -0400
-Received: by mail-yk0-f178.google.com with SMTP id 20so2874937yks.23
-        for <git@vger.kernel.org>; Thu, 08 May 2014 18:09:50 -0700 (PDT)
+	id S1755604AbaEIBLJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 May 2014 21:11:09 -0400
+Received: from mail-yh0-f50.google.com ([209.85.213.50]:47005 "EHLO
+	mail-yh0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755344AbaEIBLB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 May 2014 21:11:01 -0400
+Received: by mail-yh0-f50.google.com with SMTP id 29so3140277yhl.23
+        for <git@vger.kernel.org>; Thu, 08 May 2014 18:11:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=i6K2CTSaBfJTlAiFCHG3ITlRTHJjUuCXhN5Zt9nIx18=;
-        b=S8+Mx5A16xyttlz7fvCc3kwbnrQ1/vQHb6kS5WGToZelptu9vY4V1dM4eZdeJnBd/B
-         76jj3K1ElOcB+FSEmi0GYfunwRbJVxrwR8RwJMWXysTZtASs9UflCpBdoKKijlu3P4qC
-         FfD8J4s8pQVb9DL31ZLhgu/fpZ0AveaoNCPn3Yw26seSeJrCcqY90r2z9DYu3vhr9qJx
-         pt/QCybPeHZB/m1QnxOmoSQWgxeAtjxY9rbReakImLN6ULFWfB81gWtCzkejnF7Fj3Qu
-         ZMuMfl3S3Jkz7sjh8cjAu1Zk6GBTp3vMWZogvmhCitWMlsMac7T81THxMWTVz6mTh13q
-         UaQg==
-X-Received: by 10.236.165.199 with SMTP id e47mr10396414yhl.12.1399597789946;
-        Thu, 08 May 2014 18:09:49 -0700 (PDT)
+        bh=HCRJN9jSuzCiSD6tB455nMuQKJTXTxRFuYSwh8Vp4bk=;
+        b=K0Nfg3Sa+ODqg/PYG42k3IvKv2CKE2ACKPFSOXNRdUBSabySJ9eUohXLORvVIO5HQD
+         Wpq3Ron0RUZcAjFvmhdYlfU6B7kedjFC0qQVZAtz0u6RQYivORAQpD6R/ukuimP7hAAI
+         BgKq6ZfPyK5StKijTmd+v6/BUqsOiFoEhYeq+1IFVQhooMGHOU687XTHLwYszQJxkVRR
+         Pap3+Zrcw9TxjldT+I+bXQv8y2n9TgOrSlL69vKttOKTbIVmx2pD0daGUoZA4PbKOCIk
+         PKfFbIBYlNC6rCioVehySmjK33FHLIVT3+1w40f2TVa6FUqv3YlhS47ioqY6c+pS5A7t
+         D5hw==
+X-Received: by 10.236.41.165 with SMTP id h25mr10254957yhb.126.1399597861004;
+        Thu, 08 May 2014 18:11:01 -0700 (PDT)
 Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id l67sm3904422yha.52.2014.05.08.18.09.47
+        by mx.google.com with ESMTPSA id t6sm3912586yhc.45.2014.05.08.18.10.56
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 08 May 2014 18:09:48 -0700 (PDT)
+        Thu, 08 May 2014 18:10:57 -0700 (PDT)
 X-Mailer: git-send-email 1.9.2+fc1.27.gbce2056
 In-Reply-To: <1399597116-1851-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248486>
 
-No activity since 2010, no tests, no documentation.
+No activity since 2012, no tests, no chance of ever graduating.
 
+Cc: Jeff King <peff@peff.net>
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/convert-objects/convert-objects.c       | 329 ------------------------
- contrib/convert-objects/git-convert-objects.txt |  29 ---
- 2 files changed, 358 deletions(-)
- delete mode 100644 contrib/convert-objects/convert-objects.c
- delete mode 100644 contrib/convert-objects/git-convert-objects.txt
+ contrib/diff-highlight/README         | 152 -----------------------------
+ contrib/diff-highlight/diff-highlight | 173 ----------------------------------
+ 2 files changed, 325 deletions(-)
+ delete mode 100644 contrib/diff-highlight/README
+ delete mode 100755 contrib/diff-highlight/diff-highlight
 
-diff --git a/contrib/convert-objects/convert-objects.c b/contrib/convert-objects/convert-objects.c
+diff --git a/contrib/diff-highlight/README b/contrib/diff-highlight/README
 deleted file mode 100644
-index f3b57bf..0000000
---- a/contrib/convert-objects/convert-objects.c
+index 502e03b..0000000
+--- a/contrib/diff-highlight/README
 +++ /dev/null
-@@ -1,329 +0,0 @@
--#include "cache.h"
--#include "blob.h"
--#include "commit.h"
--#include "tree.h"
+@@ -1,152 +0,0 @@
+-diff-highlight
+-==============
 -
--struct entry {
--	unsigned char old_sha1[20];
--	unsigned char new_sha1[20];
--	int converted;
--};
+-Line oriented diffs are great for reviewing code, because for most
+-hunks, you want to see the old and the new segments of code next to each
+-other. Sometimes, though, when an old line and a new line are very
+-similar, it's hard to immediately see the difference.
 -
--#define MAXOBJECTS (1000000)
+-You can use "--color-words" to highlight only the changed portions of
+-lines. However, this can often be hard to read for code, as it loses
+-the line structure, and you end up with oddly formatted bits.
 -
--static struct entry *convert[MAXOBJECTS];
--static int nr_convert;
+-Instead, this script post-processes the line-oriented diff, finds pairs
+-of lines, and highlights the differing segments.  It's currently very
+-simple and stupid about doing these tasks. In particular:
 -
--static struct entry * convert_entry(unsigned char *sha1);
+-  1. It will only highlight hunks in which the number of removed and
+-     added lines is the same, and it will pair lines within the hunk by
+-     position (so the first removed line is compared to the first added
+-     line, and so forth). This is simple and tends to work well in
+-     practice. More complex changes don't highlight well, so we tend to
+-     exclude them due to the "same number of removed and added lines"
+-     restriction. Or even if we do try to highlight them, they end up
+-     not highlighting because of our "don't highlight if the whole line
+-     would be highlighted" rule.
 -
--static struct entry *insert_new(unsigned char *sha1, int pos)
--{
--	struct entry *new = xcalloc(1, sizeof(struct entry));
--	hashcpy(new->old_sha1, sha1);
--	memmove(convert + pos + 1, convert + pos, (nr_convert - pos) * sizeof(struct entry *));
--	convert[pos] = new;
--	nr_convert++;
--	if (nr_convert == MAXOBJECTS)
--		die("you're kidding me - hit maximum object limit");
--	return new;
--}
+-  2. It will find the common prefix and suffix of two lines, and
+-     consider everything in the middle to be "different". It could
+-     instead do a real diff of the characters between the two lines and
+-     find common subsequences. However, the point of the highlight is to
+-     call attention to a certain area. Even if some small subset of the
+-     highlighted area actually didn't change, that's OK. In practice it
+-     ends up being more readable to just have a single blob on the line
+-     showing the interesting bit.
 -
--static struct entry *lookup_entry(unsigned char *sha1)
--{
--	int low = 0, high = nr_convert;
+-The goal of the script is therefore not to be exact about highlighting
+-changes, but to call attention to areas of interest without being
+-visually distracting.  Non-diff lines and existing diff coloration is
+-preserved; the intent is that the output should look exactly the same as
+-the input, except for the occasional highlight.
 -
--	while (low < high) {
--		int next = (low + high) / 2;
--		struct entry *n = convert[next];
--		int cmp = hashcmp(sha1, n->old_sha1);
--		if (!cmp)
--			return n;
--		if (cmp < 0) {
--			high = next;
--			continue;
--		}
--		low = next+1;
--	}
--	return insert_new(sha1, low);
--}
--
--static void convert_binary_sha1(void *buffer)
--{
--	struct entry *entry = convert_entry(buffer);
--	hashcpy(buffer, entry->new_sha1);
--}
--
--static void convert_ascii_sha1(void *buffer)
--{
--	unsigned char sha1[20];
--	struct entry *entry;
--
--	if (get_sha1_hex(buffer, sha1))
--		die("expected sha1, got '%s'", (char *) buffer);
--	entry = convert_entry(sha1);
--	memcpy(buffer, sha1_to_hex(entry->new_sha1), 40);
--}
--
--static unsigned int convert_mode(unsigned int mode)
--{
--	unsigned int newmode;
--
--	newmode = mode & S_IFMT;
--	if (S_ISREG(mode))
--		newmode |= (mode & 0100) ? 0755 : 0644;
--	return newmode;
--}
--
--static int write_subdirectory(void *buffer, unsigned long size, const char *base, int baselen, unsigned char *result_sha1)
--{
--	char *new = xmalloc(size);
--	unsigned long newlen = 0;
--	unsigned long used;
--
--	used = 0;
--	while (size) {
--		int len = 21 + strlen(buffer);
--		char *path = strchr(buffer, ' ');
--		unsigned char *sha1;
--		unsigned int mode;
--		char *slash, *origpath;
--
--		if (!path || strtoul_ui(buffer, 8, &mode))
--			die("bad tree conversion");
--		mode = convert_mode(mode);
--		path++;
--		if (memcmp(path, base, baselen))
--			break;
--		origpath = path;
--		path += baselen;
--		slash = strchr(path, '/');
--		if (!slash) {
--			newlen += sprintf(new + newlen, "%o %s", mode, path);
--			new[newlen++] = '\0';
--			hashcpy((unsigned char *)new + newlen, (unsigned char *) buffer + len - 20);
--			newlen += 20;
--
--			used += len;
--			size -= len;
--			buffer = (char *) buffer + len;
--			continue;
--		}
--
--		newlen += sprintf(new + newlen, "%o %.*s", S_IFDIR, (int)(slash - path), path);
--		new[newlen++] = 0;
--		sha1 = (unsigned char *)(new + newlen);
--		newlen += 20;
--
--		len = write_subdirectory(buffer, size, origpath, slash-origpath+1, sha1);
--
--		used += len;
--		size -= len;
--		buffer = (char *) buffer + len;
--	}
--
--	write_sha1_file(new, newlen, tree_type, result_sha1);
--	free(new);
--	return used;
--}
--
--static void convert_tree(void *buffer, unsigned long size, unsigned char *result_sha1)
--{
--	void *orig_buffer = buffer;
--	unsigned long orig_size = size;
--
--	while (size) {
--		size_t len = 1+strlen(buffer);
--
--		convert_binary_sha1((char *) buffer + len);
--
--		len += 20;
--		if (len > size)
--			die("corrupt tree object");
--		size -= len;
--		buffer = (char *) buffer + len;
--	}
--
--	write_subdirectory(orig_buffer, orig_size, "", 0, result_sha1);
--}
--
--static unsigned long parse_oldstyle_date(const char *buf)
--{
--	char c, *p;
--	char buffer[100];
--	struct tm tm;
--	const char *formats[] = {
--		"%c",
--		"%a %b %d %T",
--		"%Z",
--		"%Y",
--		" %Y",
--		NULL
--	};
--	/* We only ever did two timezones in the bad old format .. */
--	const char *timezones[] = {
--		"PDT", "PST", "CEST", NULL
--	};
--	const char **fmt = formats;
--
--	p = buffer;
--	while (isspace(c = *buf))
--		buf++;
--	while ((c = *buf++) != '\n')
--		*p++ = c;
--	*p++ = 0;
--	buf = buffer;
--	memset(&tm, 0, sizeof(tm));
--	do {
--		const char *next = strptime(buf, *fmt, &tm);
--		if (next) {
--			if (!*next)
--				return mktime(&tm);
--			buf = next;
--		} else {
--			const char **p = timezones;
--			while (isspace(*buf))
--				buf++;
--			while (*p) {
--				if (!memcmp(buf, *p, strlen(*p))) {
--					buf += strlen(*p);
--					break;
--				}
--				p++;
--			}
--		}
--		fmt++;
--	} while (*buf && *fmt);
--	printf("left: %s\n", buf);
--	return mktime(&tm);
--}
--
--static int convert_date_line(char *dst, void **buf, unsigned long *sp)
--{
--	unsigned long size = *sp;
--	char *line = *buf;
--	char *next = strchr(line, '\n');
--	char *date = strchr(line, '>');
--	int len;
--
--	if (!next || !date)
--		die("missing or bad author/committer line %s", line);
--	next++; date += 2;
--
--	*buf = next;
--	*sp = size - (next - line);
--
--	len = date - line;
--	memcpy(dst, line, len);
--	dst += len;
--
--	/* Is it already in new format? */
--	if (isdigit(*date)) {
--		int datelen = next - date;
--		memcpy(dst, date, datelen);
--		return len + datelen;
--	}
--
--	/*
--	 * Hacky hacky: one of the sparse old-style commits does not have
--	 * any date at all, but we can fake it by using the committer date.
--	 */
--	if (*date == '\n' && strchr(next, '>'))
--		date = strchr(next, '>')+2;
--
--	return len + sprintf(dst, "%lu -0700\n", parse_oldstyle_date(date));
--}
--
--static void convert_date(void *buffer, unsigned long size, unsigned char *result_sha1)
--{
--	char *new = xmalloc(size + 100);
--	unsigned long newlen = 0;
--
--	/* "tree <sha1>\n" */
--	memcpy(new + newlen, buffer, 46);
--	newlen += 46;
--	buffer = (char *) buffer + 46;
--	size -= 46;
--
--	/* "parent <sha1>\n" */
--	while (!memcmp(buffer, "parent ", 7)) {
--		memcpy(new + newlen, buffer, 48);
--		newlen += 48;
--		buffer = (char *) buffer + 48;
--		size -= 48;
--	}
--
--	/* "author xyz <xyz> date" */
--	newlen += convert_date_line(new + newlen, &buffer, &size);
--	/* "committer xyz <xyz> date" */
--	newlen += convert_date_line(new + newlen, &buffer, &size);
--
--	/* Rest */
--	memcpy(new + newlen, buffer, size);
--	newlen += size;
--
--	write_sha1_file(new, newlen, commit_type, result_sha1);
--	free(new);
--}
--
--static void convert_commit(void *buffer, unsigned long size, unsigned char *result_sha1)
--{
--	void *orig_buffer = buffer;
--	unsigned long orig_size = size;
--
--	if (memcmp(buffer, "tree ", 5))
--		die("Bad commit '%s'", (char *) buffer);
--	convert_ascii_sha1((char *) buffer + 5);
--	buffer = (char *) buffer + 46;    /* "tree " + "hex sha1" + "\n" */
--	while (!memcmp(buffer, "parent ", 7)) {
--		convert_ascii_sha1((char *) buffer + 7);
--		buffer = (char *) buffer + 48;
--	}
--	convert_date(orig_buffer, orig_size, result_sha1);
--}
--
--static struct entry * convert_entry(unsigned char *sha1)
--{
--	struct entry *entry = lookup_entry(sha1);
--	enum object_type type;
--	void *buffer, *data;
--	unsigned long size;
--
--	if (entry->converted)
--		return entry;
--	data = read_sha1_file(sha1, &type, &size);
--	if (!data)
--		die("unable to read object %s", sha1_to_hex(sha1));
--
--	buffer = xmalloc(size);
--	memcpy(buffer, data, size);
--
--	if (type == OBJ_BLOB) {
--		write_sha1_file(buffer, size, blob_type, entry->new_sha1);
--	} else if (type == OBJ_TREE)
--		convert_tree(buffer, size, entry->new_sha1);
--	else if (type == OBJ_COMMIT)
--		convert_commit(buffer, size, entry->new_sha1);
--	else
--		die("unknown object type %d in %s", type, sha1_to_hex(sha1));
--	entry->converted = 1;
--	free(buffer);
--	free(data);
--	return entry;
--}
--
--int main(int argc, char **argv)
--{
--	unsigned char sha1[20];
--	struct entry *entry;
--
--	setup_git_directory();
--
--	if (argc != 2)
--		usage("git-convert-objects <sha1>");
--	if (get_sha1(argv[1], sha1))
--		die("Not a valid object name %s", argv[1]);
--
--	entry = convert_entry(sha1);
--	printf("new sha1: %s\n", sha1_to_hex(entry->new_sha1));
--	return 0;
--}
-diff --git a/contrib/convert-objects/git-convert-objects.txt b/contrib/convert-objects/git-convert-objects.txt
-deleted file mode 100644
-index 0565d83..0000000
---- a/contrib/convert-objects/git-convert-objects.txt
-+++ /dev/null
-@@ -1,29 +0,0 @@
--git-convert-objects(1)
--======================
--
--NAME
------
--git-convert-objects - Converts old-style git repository
--
--
--SYNOPSIS
----------
--[verse]
--'git-convert-objects'
--
--DESCRIPTION
-------------
--Converts old-style git repository to the latest format
--
--
--Author
--------
--Written by Linus Torvalds <torvalds@osdl.org>
--
--Documentation
----------------
--Documentation by David Greaves, Junio C Hamano and the git-list <git@vger.kernel.org>.
--
--GIT
+-Use
 ----
--Part of the gitlink:git[7] suite
+-
+-You can try out the diff-highlight program with:
+-
+----------------------------------------------
+-git log -p --color | /path/to/diff-highlight
+----------------------------------------------
+-
+-If you want to use it all the time, drop it in your $PATH and put the
+-following in your git configuration:
+-
+----------------------------------------------
+-[pager]
+-	log = diff-highlight | less
+-	show = diff-highlight | less
+-	diff = diff-highlight | less
+----------------------------------------------
+-
+-Bugs
+-----
+-
+-Because diff-highlight relies on heuristics to guess which parts of
+-changes are important, there are some cases where the highlighting is
+-more distracting than useful. Fortunately, these cases are rare in
+-practice, and when they do occur, the worst case is simply a little
+-extra highlighting. This section documents some cases known to be
+-sub-optimal, in case somebody feels like working on improving the
+-heuristics.
+-
+-1. Two changes on the same line get highlighted in a blob. For example,
+-   highlighting:
+-
+-----------------------------------------------
+--foo(buf, size);
+-+foo(obj->buf, obj->size);
+-----------------------------------------------
+-
+-   yields (where the inside of "+{}" would be highlighted):
+-
+-----------------------------------------------
+--foo(buf, size);
+-+foo(+{obj->buf, obj->}size);
+-----------------------------------------------
+-
+-   whereas a more semantically meaningful output would be:
+-
+-----------------------------------------------
+--foo(buf, size);
+-+foo(+{obj->}buf, +{obj->}size);
+-----------------------------------------------
+-
+-   Note that doing this right would probably involve a set of
+-   content-specific boundary patterns, similar to word-diff. Otherwise
+-   you get junk like:
+-
+------------------------------------------------------
+--this line has some -{i}nt-{ere}sti-{ng} text on it
+-+this line has some +{fa}nt+{a}sti+{c} text on it
+------------------------------------------------------
+-
+-   which is less readable than the current output.
+-
+-2. The multi-line matching assumes that lines in the pre- and post-image
+-   match by position. This is often the case, but can be fooled when a
+-   line is removed from the top and a new one added at the bottom (or
+-   vice versa). Unless the lines in the middle are also changed, diffs
+-   will show this as two hunks, and it will not get highlighted at all
+-   (which is good). But if the lines in the middle are changed, the
+-   highlighting can be misleading. Here's a pathological case:
+-
+------------------------------------------------------
+--one
+--two
+--three
+--four
+-+two 2
+-+three 3
+-+four 4
+-+five 5
+------------------------------------------------------
+-
+-   which gets highlighted as:
+-
+------------------------------------------------------
+--one
+--t-{wo}
+--three
+--f-{our}
+-+two 2
+-+t+{hree 3}
+-+four 4
+-+f+{ive 5}
+------------------------------------------------------
+-
+-   because it matches "two" to "three 3", and so forth. It would be
+-   nicer as:
+-
+------------------------------------------------------
+--one
+--two
+--three
+--four
+-+two +{2}
+-+three +{3}
+-+four +{4}
+-+five 5
+------------------------------------------------------
+-
+-   which would probably involve pre-matching the lines into pairs
+-   according to some heuristic.
+diff --git a/contrib/diff-highlight/diff-highlight b/contrib/diff-highlight/diff-highlight
+deleted file mode 100755
+index c4404d4..0000000
+--- a/contrib/diff-highlight/diff-highlight
++++ /dev/null
+@@ -1,173 +0,0 @@
+-#!/usr/bin/perl
+-
+-use warnings FATAL => 'all';
+-use strict;
+-
+-# Highlight by reversing foreground and background. You could do
+-# other things like bold or underline if you prefer.
+-my $HIGHLIGHT   = "\x1b[7m";
+-my $UNHIGHLIGHT = "\x1b[27m";
+-my $COLOR = qr/\x1b\[[0-9;]*m/;
+-my $BORING = qr/$COLOR|\s/;
+-
+-my @removed;
+-my @added;
+-my $in_hunk;
+-
+-while (<>) {
+-	if (!$in_hunk) {
+-		print;
+-		$in_hunk = /^$COLOR*\@/;
+-	}
+-	elsif (/^$COLOR*-/) {
+-		push @removed, $_;
+-	}
+-	elsif (/^$COLOR*\+/) {
+-		push @added, $_;
+-	}
+-	else {
+-		show_hunk(\@removed, \@added);
+-		@removed = ();
+-		@added = ();
+-
+-		print;
+-		$in_hunk = /^$COLOR*[\@ ]/;
+-	}
+-
+-	# Most of the time there is enough output to keep things streaming,
+-	# but for something like "git log -Sfoo", you can get one early
+-	# commit and then many seconds of nothing. We want to show
+-	# that one commit as soon as possible.
+-	#
+-	# Since we can receive arbitrary input, there's no optimal
+-	# place to flush. Flushing on a blank line is a heuristic that
+-	# happens to match git-log output.
+-	if (!length) {
+-		local $| = 1;
+-	}
+-}
+-
+-# Flush any queued hunk (this can happen when there is no trailing context in
+-# the final diff of the input).
+-show_hunk(\@removed, \@added);
+-
+-exit 0;
+-
+-sub show_hunk {
+-	my ($a, $b) = @_;
+-
+-	# If one side is empty, then there is nothing to compare or highlight.
+-	if (!@$a || !@$b) {
+-		print @$a, @$b;
+-		return;
+-	}
+-
+-	# If we have mismatched numbers of lines on each side, we could try to
+-	# be clever and match up similar lines. But for now we are simple and
+-	# stupid, and only handle multi-line hunks that remove and add the same
+-	# number of lines.
+-	if (@$a != @$b) {
+-		print @$a, @$b;
+-		return;
+-	}
+-
+-	my @queue;
+-	for (my $i = 0; $i < @$a; $i++) {
+-		my ($rm, $add) = highlight_pair($a->[$i], $b->[$i]);
+-		print $rm;
+-		push @queue, $add;
+-	}
+-	print @queue;
+-}
+-
+-sub highlight_pair {
+-	my @a = split_line(shift);
+-	my @b = split_line(shift);
+-
+-	# Find common prefix, taking care to skip any ansi
+-	# color codes.
+-	my $seen_plusminus;
+-	my ($pa, $pb) = (0, 0);
+-	while ($pa < @a && $pb < @b) {
+-		if ($a[$pa] =~ /$COLOR/) {
+-			$pa++;
+-		}
+-		elsif ($b[$pb] =~ /$COLOR/) {
+-			$pb++;
+-		}
+-		elsif ($a[$pa] eq $b[$pb]) {
+-			$pa++;
+-			$pb++;
+-		}
+-		elsif (!$seen_plusminus && $a[$pa] eq '-' && $b[$pb] eq '+') {
+-			$seen_plusminus = 1;
+-			$pa++;
+-			$pb++;
+-		}
+-		else {
+-			last;
+-		}
+-	}
+-
+-	# Find common suffix, ignoring colors.
+-	my ($sa, $sb) = ($#a, $#b);
+-	while ($sa >= $pa && $sb >= $pb) {
+-		if ($a[$sa] =~ /$COLOR/) {
+-			$sa--;
+-		}
+-		elsif ($b[$sb] =~ /$COLOR/) {
+-			$sb--;
+-		}
+-		elsif ($a[$sa] eq $b[$sb]) {
+-			$sa--;
+-			$sb--;
+-		}
+-		else {
+-			last;
+-		}
+-	}
+-
+-	if (is_pair_interesting(\@a, $pa, $sa, \@b, $pb, $sb)) {
+-		return highlight_line(\@a, $pa, $sa),
+-		       highlight_line(\@b, $pb, $sb);
+-	}
+-	else {
+-		return join('', @a),
+-		       join('', @b);
+-	}
+-}
+-
+-sub split_line {
+-	local $_ = shift;
+-	return map { /$COLOR/ ? $_ : (split //) }
+-	       split /($COLOR*)/;
+-}
+-
+-sub highlight_line {
+-	my ($line, $prefix, $suffix) = @_;
+-
+-	return join('',
+-		@{$line}[0..($prefix-1)],
+-		$HIGHLIGHT,
+-		@{$line}[$prefix..$suffix],
+-		$UNHIGHLIGHT,
+-		@{$line}[($suffix+1)..$#$line]
+-	);
+-}
+-
+-# Pairs are interesting to highlight only if we are going to end up
+-# highlighting a subset (i.e., not the whole line). Otherwise, the highlighting
+-# is just useless noise. We can detect this by finding either a matching prefix
+-# or suffix (disregarding boring bits like whitespace and colorization).
+-sub is_pair_interesting {
+-	my ($a, $pa, $sa, $b, $pb, $sb) = @_;
+-	my $prefix_a = join('', @$a[0..($pa-1)]);
+-	my $prefix_b = join('', @$b[0..($pb-1)]);
+-	my $suffix_a = join('', @$a[($sa+1)..$#$a]);
+-	my $suffix_b = join('', @$b[($sb+1)..$#$b]);
+-
+-	return $prefix_a !~ /^$COLOR*-$BORING*$/ ||
+-	       $prefix_b !~ /^$COLOR*\+$BORING*$/ ||
+-	       $suffix_a !~ /^$BORING*$/ ||
+-	       $suffix_b !~ /^$BORING*$/;
+-}
 -- 
 1.9.2+fc1.27.gbce2056
