@@ -1,104 +1,181 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Output from "git blame A..B -- path" for the bottom commit is misleading
-Date: Fri, 09 May 2014 10:28:19 -0700
-Message-ID: <xmqqy4yazwss.fsf@gitster.dls.corp.google.com>
-References: <xmqq8uqc2dt5.fsf@gitster.dls.corp.google.com>
-	<20140508212647.GA6992@sigill.intra.peff.net>
-	<874n10ot2m.fsf@fencepost.gnu.org>
-	<20140509001145.GA8734@sigill.intra.peff.net>
-	<87zjiro856.fsf@fencepost.gnu.org>
-	<20140509152935.GD18197@sigill.intra.peff.net>
+From: Fabio D'Alfonso <fabio.dalfonso@fabiodalfonso.com>
+Subject: Re: t5539 fails on ubuntu for v2.0.0-rc2
+Date: Fri, 09 May 2014 18:43:58 +0200
+Organization: Fabio D'Alfonso
+Message-ID: <536D05CE.6040004@fabiodalfonso.com>
+References: <536A8FF8.7080909@fabiodalfonso.com> <xmqqeh056z6q.fsf@gitster.dls.corp.google.com> <20140508041423.GC26630@sigill.intra.peff.net> <536B1DF4.5080109@fabiodalfonso.com> <20140509155945.GG18197@sigill.intra.peff.net>
+Reply-To: fabio.dalfonso@fabiodalfonso.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Kastrup <dak@gnu.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri May 09 19:28:33 2014
+X-From: git-owner@vger.kernel.org Fri May 09 19:32:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wioaz-0006EF-H3
-	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 19:28:29 +0200
+	id 1Wioei-0003em-BM
+	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 19:32:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932168AbaEIR2Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 May 2014 13:28:25 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:60369 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757094AbaEIR2Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 May 2014 13:28:24 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 26B191557D;
-	Fri,  9 May 2014 13:28:24 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ax4P4znLMi8N+j2ff/lXGRUpCL4=; b=MGanA9
-	jFTh4eEy9AKhV8CwnLI2AWm154DnoEBK3WIt2jpOlyplIIPsqoJH0SStf1X9Q1O7
-	mFhYEHikkeiHaV3kCqHRYJcLddadEJYK5Xalr9wJ4uy7T0GxjCVTpSll7iKe53vo
-	pHUXAgqtu/2Xm9SxuYt3d5UXqWUbh7YOcHBQM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Wq9tF36CHS9e3Xp67leQzC1pFZ86+FYI
-	GH+1nb/j8cb7T273D6okdd6FVB99mAnuZjSB7hy6b6UcM325oa18/Wk0tPzeqt2l
-	ptcYxhhVSTZquKecUsL7JTpwP1aCXD8mZJtcr6OvNj9I9Rrn44gIWBAP15J3IKE+
-	04ZF2iS4gMQ=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1D87F1557B;
-	Fri,  9 May 2014 13:28:24 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D40791556F;
-	Fri,  9 May 2014 13:28:20 -0400 (EDT)
-In-Reply-To: <20140509152935.GD18197@sigill.intra.peff.net> (Jeff King's
-	message of "Fri, 9 May 2014 11:29:35 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 50EE3746-D79F-11E3-88BF-9CEB01674E00-77302942!pb-smtp0.pobox.com
+	id S1757165AbaEIRcQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 May 2014 13:32:16 -0400
+Received: from gateway13.websitewelcome.com ([69.56.195.10]:42796 "EHLO
+	gateway13.websitewelcome.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752977AbaEIRcP (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 May 2014 13:32:15 -0400
+X-Greylist: delayed 1500 seconds by postgrey-1.27 at vger.kernel.org; Fri, 09 May 2014 13:32:14 EDT
+Received: by gateway13.websitewelcome.com (Postfix, from userid 5007)
+	id A991F2B9B0EB7; Fri,  9 May 2014 11:44:20 -0500 (CDT)
+Received: from gator4050.hostgator.com (gator4050.hostgator.com [192.185.4.61])
+	by gateway13.websitewelcome.com (Postfix) with ESMTP id 828FA2B9ACB22
+	for <git@vger.kernel.org>; Fri,  9 May 2014 11:44:04 -0500 (CDT)
+Received: from [79.9.183.8] (port=20049 helo=[192.168.1.16])
+	by gator4050.hostgator.com with esmtpa (Exim 4.82)
+	(envelope-from <fabio.dalfonso@fabiodalfonso.com>)
+	id 1Wintw-0007S1-NQ; Fri, 09 May 2014 11:44:01 -0500
+User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
+In-Reply-To: <20140509155945.GG18197@sigill.intra.peff.net>
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - gator4050.hostgator.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - fabiodalfonso.com
+X-BWhitelist: no
+X-Source-IP: 79.9.183.8
+X-Exim-ID: 1Wintw-0007S1-NQ
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: ([192.168.1.16]) [79.9.183.8]:20049
+X-Source-Auth: fabio.dalfonso@fabiodalfonso.com
+X-Email-Count: 1
+X-Source-Cap: ZGFsZm9uc287ZGFsZm9uc287Z2F0b3I0MDUwLmhvc3RnYXRvci5jb20=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248594>
 
-Jeff King <peff@peff.net> writes:
+Hi,
+yes, the problem comes from root. I made a make test using "git" user i=
+n=20
+my 12.04 server where there is a gitlab and the test went on for 5539.
+I think the 3 could be the better solution.
 
-> On Fri, May 09, 2014 at 07:04:05AM +0200, David Kastrup wrote:
+This is not the place to discuss about the sudo mania, a disease I did=20
+not get and hope not to get, but let me share just a short think.=20
+Oracle, by product was never made possible to install as a root on=20
+linux/unix , while OEL allow the login to made any system / maintenance=
+=20
+activity.
+Such a kind of protection , 'product configuration based' protection,=20
+targeted to the needs of the specific usage , always made sense:=20
+smoothly configure the system , then stay in the bound of the product.
+
+Why I should manage a possibly try and trash personal desktop (or a 3=20
+backups VM) as the NSA server is a mistery I do not want to solve. So=20
+this seems a way to give a box to a dumb, to prevent the breakage. Last=
+=20
+but not least, desktop involve shortcuts and other things, that fly to=20
+the root when something is set up by sudo, and I used to put software i=
+n=20
+/opt for out of the tree stuff (e.g. netbeans or smartgit) , and should=
+=20
+have to fight with myself to access my setups.
+The server setup I made for gitlab has quite sense with its user for th=
+e=20
+same reason the oracle pretends and in both cases it is a server , you=20
+get access to your service not being aware of the mechanics of the back=
+end.
+In a personal desktop, where confort is the premiere  need, all this=20
+seems quite stupid to be forced, also any one could use if he wants.
+
+Sorry for the digression, but it is starting to hurt, generally speakin=
+g.
+
+
+=46abio D'Alfonso
+'Enabling Business Through IT'
+cell.  +39.348.059.40.22 ***
+web: www.fabiodalfonso.com <http://www.fabiodalfonso.com/>
+email: fabio.dalfonso@fabiodalfonso.com
+<mailto:fabio.dalfonso@fabiodalfonso.com>linkedin:=20
+www.linkedin.com/in/fabiodalfonso <http://it.linkedin.com/in/fabiodalfo=
+nso>
+twitter: www.twitter.com/#!/fabio_dalfonso=20
+<http://www.twitter.com/#%21/fabio_dalfonso>
+
+fax: +39.06.874.599.581
+BlackBerry=C2=AE Wireless Enabled Address.
+
+
+          ** Hidden  numbers are automatically rejected by the phone*
+
+On 5/9/2014 5:59 PM, Jeff King wrote:
+> On Thu, May 08, 2014 at 08:02:28AM +0200, Fabio D'Alfonso wrote:
 >
->> Arguably if the user explicitly limited the range, he knows what he's
->> looking at. Admittedly, I don't know offhand which options _will_
->> produce boundary commit indications: there may be some without explicit
->> range limitation, and we might also be talking about limiting through
->> shallow repos (git blame on a shallow repo is probably a bad idea in the
->> first place, but anyway).
+>> this is the error in httpd error.log
+>>
+>>   [Wed May 07 20:44:10 2014] [alert] getpwuid: couldn't determine us=
+er name
+>> from  uid 4294967295, you probably need to modify the User directive
+>>   [Wed May 07 20:44:10 2014] [notice] Apache/2.2.17 (Ubuntu) configu=
+red --
+>> resuming normal operations
+>>   [Wed May 07 20:44:10 2014] [alert] getpwuid: couldn't determine us=
+er name
+>> from  uid 4294967295, you probably need to modify the User directive
+>>   [Wed May 07 20:44:10 2014] [alert] getpwuid: couldn't determine us=
+er name
+>> from  uid 4294967295, you probably need to modify the User directive
+>>   [Wed May 07 20:44:10 2014] [alert] getpwuid: couldn't determine us=
+er name
+>> from  uid 4294967295, you probably need to modify the User directive
+>>   [Wed May 07 20:44:10 2014] [alert] getpwuid: couldn't determine us=
+er name
+>> from  uid 4294967295, you probably need to modify the User directive
+>>   [Wed May 07 20:44:11 2014] [alert] Child 12037 returned a Fatal er=
+ror...
+>> Apache is exiting!
+> Hmm.  Some googling turned up a similar case:
 >
-> Yes, I was thinking mostly of "X..Y" types of ranges, which are probably
-> the most common. I hadn't considered shallow repositories, and you can
-> also hit the root commit as a boundary if you do not specify --root.
+>    http://www.linuxquestions.org/questions/linux-server-73/apache-won=
+%27t-start-because-490312/
 >
-> I guess the question still in my mind is: what use does the identity of
-> the boundary commit have? That is, whether you know ahead of time where
-> the boundary is or not, is there ever a case where knowing its author
-> and/or commit sha1 is a useful piece of information, as opposed to
-> knowing that we hit a boundary at all?
+> It looks like apache is trying to getpwuid (probably as part of doing=
+ a
+> setuid on its children), failing, and then crashing. I suspect that t=
+his
+> is related to you running as root, as a non-root apache would not wan=
+t
+> to (nor be able to) call setuid.
 >
-> I could not think of one, but I may simply lack imagination.
-
-Well, the original message was triggered by the same "I could not
-think of one" from me ;-).
-
-We may want to flip the default to do a more sanitised version of "-b"
-that has been suggested earlier:
-
->              (                                         103) 
->     7bbc458b (Kyle J. McKay  2014-04-22 04:16:22 -0700 104) test_expect_...
->              (                                         105)         test...
->     7bbc458b (Kyle J. McKay  2014-04-22 04:16:22 -0700 106)         git ...
->              (                                         107)         test...
-> 
-> which does away with the misleading information altogether.
-
-and have another option to show the current default output for those
-who would want that information.
-
-But that will be a topic for post 2.0; I should start preparing for
-the -rc3 soonish, so I'll stop here.
+> Does running the tests as a non-root user fix it? If so, I think we h=
+ave
+> a few options in git:
+>
+>    1. Add a User directive to our httpd.conf. I doubt this is a good
+>       idea to do unconditionally, as a non-root apache would probably=
+ be
+>       unhappy with it.
+>
+>    2. Add a User directive when we detect that the tests are running =
+as
+>       root.  This might work, but I'm a bit iffy, as we do not know t=
+he
+>       appropriate username for the system (e.g., "nobody" versus
+>       "www-data" versus something else).
+>
+>    3. Just disable the http tests when run as root.
+>
+> I think I'd favor 3. But I'd like to be sure that being root is the
+> problem.
+>
+> -Peff
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
