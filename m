@@ -1,89 +1,100 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v1 23/25] contrib: remove 'hooks/multimail'
-Date: Fri, 09 May 2014 10:18:51 -0500
-Message-ID: <536cf1db3a623_ce316372ecdf@nysa.notmuch>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v1 07/25] contrib: remove 'git-jump'
+Date: Fri, 9 May 2014 11:20:05 -0400
+Message-ID: <20140509152005.GB18197@sigill.intra.peff.net>
 References: <1399597116-1851-1-git-send-email-felipe.contreras@gmail.com>
- <1399597116-1851-24-git-send-email-felipe.contreras@gmail.com>
- <536CED9B.3080706@alum.mit.edu>
+ <1399597116-1851-8-git-send-email-felipe.contreras@gmail.com>
+ <20140509020350.GD9787@sigill.intra.peff.net>
+ <536c399454062_741a161d31099@nysa.notmuch>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 09 17:19:05 2014
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 09 17:20:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WimZg-0001n9-3d
-	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 17:19:00 +0200
+	id 1Wimav-0003Tk-Lk
+	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 17:20:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756533AbaEIPS4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 May 2014 11:18:56 -0400
-Received: from mail-yh0-f49.google.com ([209.85.213.49]:65179 "EHLO
-	mail-yh0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755420AbaEIPSz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 May 2014 11:18:55 -0400
-Received: by mail-yh0-f49.google.com with SMTP id c41so3839882yho.36
-        for <git@vger.kernel.org>; Fri, 09 May 2014 08:18:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=s0T23ibFl4sValojWiWyy5N36wLlgSRFTC/uB3OhbwY=;
-        b=ZWi5TUXfNZ85cect8LQTG33nv9hbVjWDll3vdgpuxW3f1sXIkyfKALd4fH5bkZOTaC
-         hkUPZa5OoR2yn5qVM8ZqzINjKC12ZEfPX+MmvsIrDgm+3W8AMq02CtLEYD5/WI3/nlyM
-         /bWkjzMPG2ZTXhJLkj2uFA9raqzaU/lFOpyMX5p8X1MGeGLtYqIiDkdBMe5Pt8ZW9THU
-         RR7w1QnQyXhP6a66aq+HyyUugD/8OfWbUrjwUalocl6vXplrTWsnUpaJjg61f6oi0bPw
-         Wd2Jc1tpwZS7jnc9fhihxBrG2KzFi4U5RyXUmzJu3NbzjDIrgHaqbMub8vwWiMNfhmYd
-         G6WQ==
-X-Received: by 10.236.209.68 with SMTP id r44mr6551732yho.152.1399648735003;
-        Fri, 09 May 2014 08:18:55 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id d43sm6563355yhb.10.2014.05.09.08.18.52
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 09 May 2014 08:18:53 -0700 (PDT)
-In-Reply-To: <536CED9B.3080706@alum.mit.edu>
+	id S1756816AbaEIPUL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 May 2014 11:20:11 -0400
+Received: from cloud.peff.net ([50.56.180.127]:48294 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756785AbaEIPUH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 May 2014 11:20:07 -0400
+Received: (qmail 26282 invoked by uid 102); 9 May 2014 15:20:07 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 09 May 2014 10:20:07 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 09 May 2014 11:20:05 -0400
+Content-Disposition: inline
+In-Reply-To: <536c399454062_741a161d31099@nysa.notmuch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248570>
 
-Michael Haggerty wrote:
-> On 05/09/2014 02:58 AM, Felipe Contreras wrote:
-> > No tests. No chance of ever graduating.
+On Thu, May 08, 2014 at 09:12:36PM -0500, Felipe Contreras wrote:
+
+> Jeff King wrote:
+> > On Thu, May 08, 2014 at 07:58:18PM -0500, Felipe Contreras wrote:
 > > 
-> > Already out-of-tree.
+> > > No activity, no tests.
 > > 
-> > Cc: Michael Haggerty <mhagger@alum.mit.edu>
-> > Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> > Like diff-highlight, I don't think "no activity" is a useful indicator.
+> > I use this daily, and several people have commented off-list to me that
+> > they use it, too.
 > 
-> Thank you for your input.
-> 
-> git-multimail is maintained outside of the Git project and is only
-> distributed along with Git as a convenience to Git users.
+> Add tests then.
 
-I do not see anywhere in contrib/README any hint that contrib is meant
-for that.
+I don't really feel like spending time on it right now. There are better
+uses of my time.
 
-> It does in fact have a test suite, along with some other bits and bobs
-> that are not needed to use it, in the upstream repository at
-> 
->     https://github.com/mhagger/git-multimail
+I thought on this for a while before responding. Am I simply being lazy
+and a bad programmer not to write tests? Am I propagating a double
+standard where I do not have to write tests?
 
-Good to know. But IMO the tests should be in git.git as well, or nothing
-at all.
+Here's the conclusion I came to. Sure, some tests are better than no
+tests. But the code works, empirically; I use it every day. It is not
+changing, so the chances of regression are low. I can spend an hour
+writing tests that demonstrate what I already know. I can even spend
+several hours trying to come up with torture cases that might
+demonstrate a potential failure that nobody in the real world
+experiences. But why?
 
-> What's more, it has a maintainer who doesn't routinely insult other
-> people on the mailing list,
+Because YOU, who have no interest whatsoever in either this script or
+diff-highlight, have decided to demand that I write them, or spend time
+spinning the code into its own repository. Sorry, but I have more useful
+things to do than appease you.
 
-Aaand skiping the rest. Good bye.
+I have no problem with cleaning up cruft in contrib that is broken and
+nobody uses; it is a potential hazard and time-waster for people who
+look in that directory. But when people say "no, this is maintained, I
+use it, and it works", I really don't see the point in you arguing with
+them. Nobody benefits.
 
--- 
-Felipe Contreras
+> It this is never meant to move to the core, then it should go
+> out-of-tree anyway.
+
+"should" in your opinion. I know, I know, you will quote contrib/README
+at me.  If Junio wants to enforce "contrib is only for things which are
+meant to graduate" in his tree, then I will abide by that and maintain
+these scripts out-of-tree. But I would rather see an actual decision
+from the maintainer on that, and not an 8-year-old README which clearly
+has not been followed in the intervening years.
+
+And speaking of wasted time, I do not plan on responding further to you
+in this thread. I am telling you ahead of time that this is the case,
+because elsewhere[1] I saw you complaining that Junio did not respond to
+your emails, which you seemed to think was because he cannot admit that
+he was wrong. So I want to say up front that I am going to avoid
+interacting with you further because it generally seems fruitless,
+consumes a large amount of time, and causes me a great deal of stress.
+
+-Peff
+
+[1] http://article.gmane.org/gmane.comp.version-control.git/248441
