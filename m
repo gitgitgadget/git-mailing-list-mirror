@@ -1,103 +1,125 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: Conforming to pep8
-Date: Fri, 09 May 2014 16:33:47 +0200
-Message-ID: <536CE74B.8050302@alum.mit.edu>
-References: <20140509015429.GA550@wst420> <20140509020908.GG9218@google.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [ANNOUNCE] git-remote-hg 0.2
+Date: Fri, 09 May 2014 09:50:12 -0500
+Message-ID: <536ceb245228e_6bf0154f30c9e@nysa.notmuch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+ charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Pete Wyckoff <pw@padd.com>
-To: Jonathan Nieder <jrnieder@gmail.com>,
-	William Giokas <1007380@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 09 16:33:58 2014
+Cc: Richard Hansen <rhansen@bbn.com>,
+	Torsten =?UTF-8?B?QsO2Z2Vyc2hhdXNlbg==?= <tboegi@web.de>,
+	Antoine Pelisse <apelisse@gmail.com>,
+	Christophe Simonis <christophe@kn.gl>,
+	Dusty Phillips <dusty@linux.ca>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 09 16:50:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wils4-0002IX-Dy
-	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 16:33:56 +0200
+	id 1Wim8K-000275-AP
+	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 16:50:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756787AbaEIOdw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 May 2014 10:33:52 -0400
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:49001 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755542AbaEIOdv (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 May 2014 10:33:51 -0400
-X-AuditID: 12074413-f79076d000002d17-72-536ce74e54f5
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 74.69.11543.E47EC635; Fri,  9 May 2014 10:33:50 -0400 (EDT)
-Received: from [192.168.69.130] (p5DDB2E4D.dip0.t-ipconnect.de [93.219.46.77])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s49EXm6n025496
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Fri, 9 May 2014 10:33:49 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.4.0
-In-Reply-To: <20140509020908.GG9218@google.com>
-X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrLKsWRmVeSWpSXmKPExsUixO6iqOv3PCfY4MkcM4t3j28wWXRd6Way
-	eHtzCaPFpIudrA4sHjtn3WX3+HVkPbvH501yAcxR3DZJiSVlwZnpefp2CdwZH+Z9ZilYwFvR
-	vKaVtYHxHFcXIyeHhICJxN22rWwQtpjEhXvrgWwuDiGBy4wSCy53s0A4Z5kk+uesYgWp4hXQ
-	lnhw4AiYzSKgKtF5dDUziM0moCuxqKeZqYuRg0NUIEjiz1lFiHJBiZMzn7CA2CICPhLtS68x
-	gtjMAsYSX76sBIsLC8hLTPp6jQnEFgKqeTKzDSzOKaAvceH5aWaQkRIC4hI9jUEQrToS7/oe
-	MEPY8hLb385hnsAoOAvJtllIymYhKVvAyLyKUS4xpzRXNzcxM6c4NVm3ODkxLy+1SNdcLzez
-	RC81pXQTIyS4hXcw7jopd4hRgINRiYfXYXp2sBBrYllxZe4hRkkOJiVRXtEtOcFCfEn5KZUZ
-	icUZ8UWlOanFhxglOJiVRHg1DwPleFMSK6tSi/JhUtIcLErivGpL1P2EBNITS1KzU1MLUotg
-	sjIcHEoSvJbPgBoFi1LTUyvSMnNKENJMHJwgw7mkRIpT81JSixJLSzLiQfEbXwyMYJAUD9De
-	qqcge4sLEnOBohCtpxh1OS40rGhhEmLJy89LlRLnZQYpEgApyijNg1sBS2WvGMWBPhbmtQG5
-	hAeYBuEmvQJawgS0xFc/G2RJSSJCSqqBcVeDccj+Nd9l2Wy+ce9bOpMjRez2vqve+ln2h8uW
-	MDlNm86wT+rekWMeTMpnjs09vbb3v6hQT2fCzz+SbIs1pm+xuRV5SfCQ0JOSvwVT 
+	id S1756679AbaEIOuk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 May 2014 10:50:40 -0400
+Received: from mail-yh0-f52.google.com ([209.85.213.52]:47623 "EHLO
+	mail-yh0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756080AbaEIOuS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 May 2014 10:50:18 -0400
+Received: by mail-yh0-f52.google.com with SMTP id z6so3430595yhz.39
+        for <git@vger.kernel.org>; Fri, 09 May 2014 07:50:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:subject:mime-version:content-type
+         :content-transfer-encoding;
+        bh=+h0z68xJu/B0aguKev08ed7N//QBpYKKnaUNUs6FKcY=;
+        b=jN+dI+FHao1qAG862rDDyKKn+IMywkN1q4DtDrTXPxdKffoDMauEf3Qxed3vFBssFJ
+         j1zROOL/I+bb6dBMLcTZ+fTJbARctA0lmnj8YH4Jse9KFxy0O1FsN1mzA1EJq92Ji4g0
+         9sr56T81TbI88LiJj9aRbs8oKkPrG+SH24jJ+5zZg4iUcIFcrqI6wsX0QgcCHCBcYCxG
+         nCXl+OGvJpdNQbyoX1Hgsn1kv/o80N2hsVypQ/c/MT1xn5DCHNyrx9LziYkmnSqSv3JF
+         aoHHFMW2Cu7F1Q8Ov9C243gu1xlOVPS+JbqwbQj92u0ybAR4rWoOUTXRLX7S6WAgr2WF
+         pP3g==
+X-Received: by 10.236.140.16 with SMTP id d16mr15860271yhj.55.1399647018200;
+        Fri, 09 May 2014 07:50:18 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id c66sm6448579yhk.23.2014.05.09.07.50.14
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 09 May 2014 07:50:15 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248561>
 
-On 05/09/2014 04:09 AM, Jonathan Nieder wrote:
-> (cc-ing Pete Wyckoff who maintains git-p4 and Michael Haggerty
-> who maintains git-multimail)
-> William Giokas wrote:
-> 
->>      - We follow PEP-8 (http://www.python.org/dev/peps/pep-0008/).
->>
->> It's even the first thing that you see when you go looking for 'python'
->> in the coding style document. I just ran every file in the tree that
->> either ended in '.py' or had a python #!, and was greeted with a whole
->> bunch of output::
->>
->>     ./git-p4.py
->>     ./contrib/svn-fe/svnrdump_sim.py
->>     ./contrib/remote-helpers/git-remote-bzr
->>     ./contrib/hooks/multimail/post-receive
->>     ./contrib/hooks/multimail/migrate-mailhook-config
->>     ./contrib/hooks/multimail/git_multimail.py
->>     ./contrib/hooks/multimail/README
->>     ./contrib/hg-to-git/hg-to-git.py
->>     ./contrib/gitview/gitview
->>     ./contrib/fast-import/import-zips.py
-> 
-> Thanks for running this check.  Passing on the result to the
-> maintainers of some of those scripts in case they have thoughts.
-> 
-> [...]
+Hi,
 
-Thanks for the heads-up, William and Jonathan.  I wasn't aware of the
-pep8 tool.  Though I think it enforces a couple of rules that go a bit
-beyond PEP8, I don't mind conforming to it, at least with options
+git-remote-hg is a bidirectional bridge between Git and Mercurial. It is
+production-ready, has been widely tested, and was previously part of
+git.git.
 
-    --max-line-length=99 --hang-closing
+Junio C Hamano has retracted from his previous statements where he
+wanted these tools to become part of the Git core and distributed by
+default.
 
-I just committed a change to my upstream repository that gets pep8 to
-run cleanly on all Python files.
+It is obviously production ready so it doesn't belong in contrib/
+either.
 
-I don't think it is worth making an extra code drop to Git just to push
-these mild stylistic changes, but if somebody disagrees you know where
-to find my repo.
+Since there's no path forward, it has been split into a separate
+out-of-tree project.
 
-Michael
+This will hurt our users, but it's better than having dubious prospects
+of when and how these tools will be part of the core, if such a thing
+was even possible to begin with.
+
+Changes from v1.9 upstream:
+
+ * Add manpage
+ * Fix regression that will become active in Git v2.0
+ * Do not fail on invalid bookmarks
+ * Skip multiple heads (hg has such a thing)
+ * Ported tests from gitifyhg
+ * Add support for Mercurial v3.0
+ * Fixes for failed imports
+
+If you use ArchLinux, you can use the package I wrote[1].
+
+Enjoy :)
+
+https://github.com/felipec/git-remote-hg
+
+Daniel Liew (1):
+      Use internal clone's hgrc
+
+Felipe Contreras (22):
+      Reorganize tests
+      Add README
+      build: add install target
+      doc: add manpage
+      Always normalize paths
+      Fix parsing of custom committer
+      Update to 'public' phase when pushing
+      Store marks only on success
+      Properly detect missing contexts
+      test: split into setup test
+      remote-hg: make sure we omit multiple heads
+      Simplify hg-git regex
+      Add more tests
+      test: dd file operation tests
+      test: trivial cleanups and fixes
+      Add support for hg v3.0
+      test: trivial style cleanups
+      test: fix redirection style
+      travis: add initial configuration
+      readme: fix link location
+      test: add missing redirection
+      Use python2 instead of python
+
+Max Horn (1):
+      Do not fail on invalid bookmarks
+
+[1] https://aur.archlinux.org/packages/git-remote-hg/
 
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+Felipe Contreras
