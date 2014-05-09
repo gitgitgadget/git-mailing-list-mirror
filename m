@@ -1,181 +1,76 @@
-From: Fabio D'Alfonso <fabio.dalfonso@fabiodalfonso.com>
-Subject: Re: t5539 fails on ubuntu for v2.0.0-rc2
-Date: Fri, 09 May 2014 18:43:58 +0200
-Organization: Fabio D'Alfonso
-Message-ID: <536D05CE.6040004@fabiodalfonso.com>
-References: <536A8FF8.7080909@fabiodalfonso.com> <xmqqeh056z6q.fsf@gitster.dls.corp.google.com> <20140508041423.GC26630@sigill.intra.peff.net> <536B1DF4.5080109@fabiodalfonso.com> <20140509155945.GG18197@sigill.intra.peff.net>
-Reply-To: fabio.dalfonso@fabiodalfonso.com
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v1 07/25] contrib: remove 'git-jump'
+Date: Fri, 09 May 2014 10:37:32 -0700
+Message-ID: <xmqqppjmzwdf.fsf@gitster.dls.corp.google.com>
+References: <1399597116-1851-1-git-send-email-felipe.contreras@gmail.com>
+	<1399597116-1851-8-git-send-email-felipe.contreras@gmail.com>
+	<20140509020350.GD9787@sigill.intra.peff.net>
+	<536c399454062_741a161d31099@nysa.notmuch>
+	<20140509152005.GB18197@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri May 09 19:32:22 2014
+X-From: git-owner@vger.kernel.org Fri May 09 19:37:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wioei-0003em-BM
-	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 19:32:20 +0200
+	id 1Wiojx-0002mO-2x
+	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 19:37:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757165AbaEIRcQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 May 2014 13:32:16 -0400
-Received: from gateway13.websitewelcome.com ([69.56.195.10]:42796 "EHLO
-	gateway13.websitewelcome.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752977AbaEIRcP (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 May 2014 13:32:15 -0400
-X-Greylist: delayed 1500 seconds by postgrey-1.27 at vger.kernel.org; Fri, 09 May 2014 13:32:14 EDT
-Received: by gateway13.websitewelcome.com (Postfix, from userid 5007)
-	id A991F2B9B0EB7; Fri,  9 May 2014 11:44:20 -0500 (CDT)
-Received: from gator4050.hostgator.com (gator4050.hostgator.com [192.185.4.61])
-	by gateway13.websitewelcome.com (Postfix) with ESMTP id 828FA2B9ACB22
-	for <git@vger.kernel.org>; Fri,  9 May 2014 11:44:04 -0500 (CDT)
-Received: from [79.9.183.8] (port=20049 helo=[192.168.1.16])
-	by gator4050.hostgator.com with esmtpa (Exim 4.82)
-	(envelope-from <fabio.dalfonso@fabiodalfonso.com>)
-	id 1Wintw-0007S1-NQ; Fri, 09 May 2014 11:44:01 -0500
-User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-In-Reply-To: <20140509155945.GG18197@sigill.intra.peff.net>
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - gator4050.hostgator.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - fabiodalfonso.com
-X-BWhitelist: no
-X-Source-IP: 79.9.183.8
-X-Exim-ID: 1Wintw-0007S1-NQ
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: ([192.168.1.16]) [79.9.183.8]:20049
-X-Source-Auth: fabio.dalfonso@fabiodalfonso.com
-X-Email-Count: 1
-X-Source-Cap: ZGFsZm9uc287ZGFsZm9uc287Z2F0b3I0MDUwLmhvc3RnYXRvci5jb20=
+	id S1756360AbaEIRhk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 May 2014 13:37:40 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:59067 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751667AbaEIRhi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 May 2014 13:37:38 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id B901415808;
+	Fri,  9 May 2014 13:37:37 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=HbtQj6C5P7Vo77AF/WpV82bxMTI=; b=p8fiHp
+	X2+hewcVIVfGUBr7Vqon6BMsUWxklgMBzUS3hdNyCo7THs9WqiWCNszBwpXiShoe
+	QZh7K2a0Jo2YtNKj+Bs0UN+fQ/xbtP9cAMyF6XrvnOwPNG0RlZHCgJMOraN9OHhP
+	jw6iRczN9afKLwh1naAxgCkVDNbQ6ple21tM0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=LxcZwzu0v80QSqDrWmC8Qc8CeEwh85FZ
+	iEJQbfauBUFx2BDS9Ved/xiYXFw473g2QUsToQacxp6mLHw6xyLIdBKCFSUkE0N3
+	Wga4GUe6xzzzG9MAphqeO1pXwaezvX7/DBfAmSQAAJHYe/OM6dVfLTIXiJ0KCG1O
+	Hvk5ZpgAg2A=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id AB64315807;
+	Fri,  9 May 2014 13:37:37 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 8117515802;
+	Fri,  9 May 2014 13:37:34 -0400 (EDT)
+In-Reply-To: <20140509152005.GB18197@sigill.intra.peff.net> (Jeff King's
+	message of "Fri, 9 May 2014 11:20:05 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 9AEFDE0C-D7A0-11E3-BD77-9CEB01674E00-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248594>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248595>
 
-Hi,
-yes, the problem comes from root. I made a make test using "git" user i=
-n=20
-my 12.04 server where there is a gitlab and the test went on for 5539.
-I think the 3 could be the better solution.
+Jeff King <peff@peff.net> writes:
 
-This is not the place to discuss about the sudo mania, a disease I did=20
-not get and hope not to get, but let me share just a short think.=20
-Oracle, by product was never made possible to install as a root on=20
-linux/unix , while OEL allow the login to made any system / maintenance=
-=20
-activity.
-Such a kind of protection , 'product configuration based' protection,=20
-targeted to the needs of the specific usage , always made sense:=20
-smoothly configure the system , then stay in the bound of the product.
-
-Why I should manage a possibly try and trash personal desktop (or a 3=20
-backups VM) as the NSA server is a mistery I do not want to solve. So=20
-this seems a way to give a box to a dumb, to prevent the breakage. Last=
-=20
-but not least, desktop involve shortcuts and other things, that fly to=20
-the root when something is set up by sudo, and I used to put software i=
-n=20
-/opt for out of the tree stuff (e.g. netbeans or smartgit) , and should=
-=20
-have to fight with myself to access my setups.
-The server setup I made for gitlab has quite sense with its user for th=
-e=20
-same reason the oracle pretends and in both cases it is a server , you=20
-get access to your service not being aware of the mechanics of the back=
-end.
-In a personal desktop, where confort is the premiere  need, all this=20
-seems quite stupid to be forced, also any one could use if he wants.
-
-Sorry for the digression, but it is starting to hurt, generally speakin=
-g.
-
-
-=46abio D'Alfonso
-'Enabling Business Through IT'
-cell.  +39.348.059.40.22 ***
-web: www.fabiodalfonso.com <http://www.fabiodalfonso.com/>
-email: fabio.dalfonso@fabiodalfonso.com
-<mailto:fabio.dalfonso@fabiodalfonso.com>linkedin:=20
-www.linkedin.com/in/fabiodalfonso <http://it.linkedin.com/in/fabiodalfo=
-nso>
-twitter: www.twitter.com/#!/fabio_dalfonso=20
-<http://www.twitter.com/#%21/fabio_dalfonso>
-
-fax: +39.06.874.599.581
-BlackBerry=C2=AE Wireless Enabled Address.
-
-
-          ** Hidden  numbers are automatically rejected by the phone*
-
-On 5/9/2014 5:59 PM, Jeff King wrote:
-> On Thu, May 08, 2014 at 08:02:28AM +0200, Fabio D'Alfonso wrote:
->
->> this is the error in httpd error.log
->>
->>   [Wed May 07 20:44:10 2014] [alert] getpwuid: couldn't determine us=
-er name
->> from  uid 4294967295, you probably need to modify the User directive
->>   [Wed May 07 20:44:10 2014] [notice] Apache/2.2.17 (Ubuntu) configu=
-red --
->> resuming normal operations
->>   [Wed May 07 20:44:10 2014] [alert] getpwuid: couldn't determine us=
-er name
->> from  uid 4294967295, you probably need to modify the User directive
->>   [Wed May 07 20:44:10 2014] [alert] getpwuid: couldn't determine us=
-er name
->> from  uid 4294967295, you probably need to modify the User directive
->>   [Wed May 07 20:44:10 2014] [alert] getpwuid: couldn't determine us=
-er name
->> from  uid 4294967295, you probably need to modify the User directive
->>   [Wed May 07 20:44:10 2014] [alert] getpwuid: couldn't determine us=
-er name
->> from  uid 4294967295, you probably need to modify the User directive
->>   [Wed May 07 20:44:11 2014] [alert] Child 12037 returned a Fatal er=
-ror...
->> Apache is exiting!
-> Hmm.  Some googling turned up a similar case:
->
->    http://www.linuxquestions.org/questions/linux-server-73/apache-won=
-%27t-start-because-490312/
->
-> It looks like apache is trying to getpwuid (probably as part of doing=
- a
-> setuid on its children), failing, and then crashing. I suspect that t=
-his
-> is related to you running as root, as a non-root apache would not wan=
-t
-> to (nor be able to) call setuid.
->
-> Does running the tests as a non-root user fix it? If so, I think we h=
-ave
-> a few options in git:
->
->    1. Add a User directive to our httpd.conf. I doubt this is a good
->       idea to do unconditionally, as a non-root apache would probably=
- be
->       unhappy with it.
->
->    2. Add a User directive when we detect that the tests are running =
-as
->       root.  This might work, but I'm a bit iffy, as we do not know t=
-he
->       appropriate username for the system (e.g., "nobody" versus
->       "www-data" versus something else).
->
->    3. Just disable the http tests when run as root.
->
-> I think I'd favor 3. But I'd like to be sure that being root is the
-> problem.
+> And speaking of wasted time, I do not plan on responding further to you
+> in this thread. I am telling you ahead of time that this is the case,
+> because elsewhere[1] I saw you complaining that Junio did not respond to
+> your emails, which you seemed to think was because he cannot admit that
+> he was wrong. So I want to say up front that I am going to avoid
+> interacting with you further because it generally seems fruitless,
+> consumes a large amount of time, and causes me a great deal of stress.
 >
 > -Peff
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
+> [1] http://article.gmane.org/gmane.comp.version-control.git/248441
+
+Heh, well said.  I'll follow suit, then.
