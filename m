@@ -1,376 +1,390 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v1 20/25] contrib: remove 'contacts'
-Date: Thu,  8 May 2014 19:58:31 -0500
-Message-ID: <1399597116-1851-21-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v1 03/25] contrib: remove 'stats'
+Date: Thu,  8 May 2014 19:58:14 -0500
+Message-ID: <1399597116-1851-4-git-send-email-felipe.contreras@gmail.com>
 References: <1399597116-1851-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
+	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 09 03:11:18 2014
+X-From: git-owner@vger.kernel.org Fri May 09 03:11:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WiZLJ-0001Jc-Cj
-	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 03:11:17 +0200
+	id 1WiZLU-0001an-2O
+	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 03:11:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932206AbaEIBLP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 May 2014 21:11:15 -0400
-Received: from mail-yk0-f181.google.com ([209.85.160.181]:65404 "EHLO
-	mail-yk0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755501AbaEIBLG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 May 2014 21:11:06 -0400
-Received: by mail-yk0-f181.google.com with SMTP id 131so2883221ykp.40
-        for <git@vger.kernel.org>; Thu, 08 May 2014 18:11:05 -0700 (PDT)
+	id S1755963AbaEIBJn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 May 2014 21:09:43 -0400
+Received: from mail-yk0-f179.google.com ([209.85.160.179]:43434 "EHLO
+	mail-yk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754263AbaEIBJl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 May 2014 21:09:41 -0400
+Received: by mail-yk0-f179.google.com with SMTP id 19so2882466ykq.10
+        for <git@vger.kernel.org>; Thu, 08 May 2014 18:09:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=OWxAdKv+VQZETwbrxEemasMKK/rQeugDKvlNLTKqMpc=;
-        b=sVeajMiBQVoOXOm+qJNlNel0g3b90N/+6YrIGEVadxfm4ZsizhKr3Pn3FhDm85vpUk
-         qi4Sw1ooelJOKXqM6jsnuOVwVYnjI1m7+Ku4jkeNYi4skQoSa5CSWCwxKUiicfk1FcgD
-         sCN7O5cGqSkJM/85/8w6fRHL4polekgaANg6o62wdDiprmBhFqfjcuaecngJi55SAIgD
-         EZSSdBP9SCuinkd+XOmDFwaNf1O6cPkhEyCHMe2hIdVnDb+1IfBb31sCHthiV4CuUVtB
-         QcEBiKivQTy02g1HIi9iyn55rp00fMVJmmIsSjb+UOSQ8NruPo0XSwW0W8hZcvb9U2Si
-         mU0Q==
-X-Received: by 10.236.138.136 with SMTP id a8mr10031135yhj.113.1399597865288;
-        Thu, 08 May 2014 18:11:05 -0700 (PDT)
+        bh=mG1TEYI971i7JSPR492ZWfwuFVDv8+r84SJpDEzTguk=;
+        b=SyzfxPTfJIH1zRgR0/CiEKHz94zBDRmyvFWXILhN4Bsy93QHYvUKY8Wd+yCxdntKUT
+         MY9QIwADDxs5fHxveuAuGP1fifhaz1tQQikIRCteAgbS/aNj34lIvix8NX/Oxr0nn0P1
+         niWomFufmh6OPHNwazwnb0DLTJJR2IW4SfKFtXKBKHaEzFP48zatxCP4A8pvR3BaA96f
+         +MQ/1y/lhnrs7HBtplyzOTP/0O08Zv++y+3tTEutTL/muyfi9nunf0QTr92X0rn5Ycst
+         4YalrdhoKDUVpqZMY52kQxn189SLzybtjH7JTC61mgS8/feoJLlRzKidIDDxo+e00TPN
+         nK5g==
+X-Received: by 10.236.130.241 with SMTP id k77mr9751921yhi.159.1399597780560;
+        Thu, 08 May 2014 18:09:40 -0700 (PDT)
 Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id h23sm3917937yhf.34.2014.05.08.18.11.02
+        by mx.google.com with ESMTPSA id l66sm3904551yhc.54.2014.05.08.18.09.38
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 08 May 2014 18:11:04 -0700 (PDT)
+        Thu, 08 May 2014 18:09:39 -0700 (PDT)
 X-Mailer: git-send-email 1.9.2+fc1.27.gbce2056
 In-Reply-To: <1399597116-1851-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248488>
 
-There are better out-of-tree tools, and this tool is not planned to move
-into the core anyway.
+No real activity since 2012 (or ever), no tests, no documentation.
 
-No tests either.
-
-Cc: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/contacts/git-contacts     | 203 --------------------------------------
- contrib/contacts/git-contacts.txt |  94 ------------------
- 2 files changed, 297 deletions(-)
- delete mode 100755 contrib/contacts/git-contacts
- delete mode 100644 contrib/contacts/git-contacts.txt
+ contrib/stats/git-common-hash |  26 ------
+ contrib/stats/mailmap.pl      |  70 --------------
+ contrib/stats/packinfo.pl     | 212 ------------------------------------------
+ 3 files changed, 308 deletions(-)
+ delete mode 100755 contrib/stats/git-common-hash
+ delete mode 100755 contrib/stats/mailmap.pl
+ delete mode 100755 contrib/stats/packinfo.pl
 
-diff --git a/contrib/contacts/git-contacts b/contrib/contacts/git-contacts
+diff --git a/contrib/stats/git-common-hash b/contrib/stats/git-common-hash
 deleted file mode 100755
-index dbe2abf..0000000
---- a/contrib/contacts/git-contacts
+index e27fd08..0000000
+--- a/contrib/stats/git-common-hash
 +++ /dev/null
-@@ -1,203 +0,0 @@
+@@ -1,26 +0,0 @@
+-#!/bin/sh
+-
+-# This script displays the distribution of longest common hash prefixes.
+-# This can be used to determine the minimum prefix length to use
+-# for object names to be unique.
+-
+-git rev-list --objects --all | sort | perl -lne '
+-  substr($_, 40) = "";
+-  # uncomment next line for a distribution of bits instead of hex chars
+-  # $_ = unpack("B*",pack("H*",$_));
+-  if (defined $p) {
+-    ($p ^ $_) =~ /^(\0*)/;
+-    $common = length $1;
+-    if (defined $pcommon) {
+-      $count[$pcommon > $common ? $pcommon : $common]++;
+-    } else {
+-      $count[$common]++; # first item
+-    }
+-  }
+-  $p = $_;
+-  $pcommon = $common;
+-  END {
+-    $count[$common]++; # last item
+-    print "$_: $count[$_]" for 0..$#count;
+-  }
+-'
+diff --git a/contrib/stats/mailmap.pl b/contrib/stats/mailmap.pl
+deleted file mode 100755
+index 9513f5e..0000000
+--- a/contrib/stats/mailmap.pl
++++ /dev/null
+@@ -1,70 +0,0 @@
 -#!/usr/bin/perl
 -
--# List people who might be interested in a patch.  Useful as the argument to
--# git-send-email --cc-cmd option, and in other situations.
+-use warnings 'all';
+-use strict;
+-use Getopt::Long;
+-
+-my $match_emails;
+-my $match_names;
+-my $order_by = 'count';
+-Getopt::Long::Configure(qw(bundling));
+-GetOptions(
+-	'emails|e!' => \$match_emails,
+-	'names|n!'  => \$match_names,
+-	'count|c'   => sub { $order_by = 'count' },
+-	'time|t'    => sub { $order_by = 'stamp' },
+-) or exit 1;
+-$match_emails = 1 unless $match_names;
+-
+-my $email = {};
+-my $name = {};
+-
+-open(my $fh, '-|', "git log --format='%at <%aE> %aN'");
+-while(<$fh>) {
+-	my ($t, $e, $n) = /(\S+) <(\S+)> (.*)/;
+-	mark($email, $e, $n, $t);
+-	mark($name, $n, $e, $t);
+-}
+-close($fh);
+-
+-if ($match_emails) {
+-	foreach my $e (dups($email)) {
+-		foreach my $n (vals($email->{$e})) {
+-			show($n, $e, $email->{$e}->{$n});
+-		}
+-		print "\n";
+-	}
+-}
+-if ($match_names) {
+-	foreach my $n (dups($name)) {
+-		foreach my $e (vals($name->{$n})) {
+-			show($n, $e, $name->{$n}->{$e});
+-		}
+-		print "\n";
+-	}
+-}
+-exit 0;
+-
+-sub mark {
+-	my ($h, $k, $v, $t) = @_;
+-	my $e = $h->{$k}->{$v} ||= { count => 0, stamp => 0 };
+-	$e->{count}++;
+-	$e->{stamp} = $t unless $t < $e->{stamp};
+-}
+-
+-sub dups {
+-	my $h = shift;
+-	return grep { keys($h->{$_}) > 1 } keys($h);
+-}
+-
+-sub vals {
+-	my $h = shift;
+-	return sort {
+-		$h->{$b}->{$order_by} <=> $h->{$a}->{$order_by}
+-	} keys($h);
+-}
+-
+-sub show {
+-	my ($n, $e, $h) = @_;
+-	print "$n <$e> ($h->{$order_by})\n";
+-}
+diff --git a/contrib/stats/packinfo.pl b/contrib/stats/packinfo.pl
+deleted file mode 100755
+index be188c0..0000000
+--- a/contrib/stats/packinfo.pl
++++ /dev/null
+@@ -1,212 +0,0 @@
+-#!/usr/bin/perl
 -#
--# Usage: git contacts <file | rev-list option> ...
+-# This tool will print vaguely pretty information about a pack.  It
+-# expects the output of "git verify-pack -v" as input on stdin.
+-#
+-# $ git verify-pack -v | packinfo.pl
+-#
+-# This prints some full-pack statistics; currently "all sizes", "all
+-# path sizes", "tree sizes", "tree path sizes", and "depths".
+-#
+-# * "all sizes" stats are across every object size in the file;
+-#   full sizes for base objects, and delta size for deltas.
+-# * "all path sizes" stats are across all object's "path sizes".
+-#   A path size is the sum of the size of the delta chain, including the
+-#   base object.  In other words, it's how many bytes need be read to
+-#   reassemble the file from deltas.
+-# * "tree sizes" are object sizes grouped into delta trees.
+-# * "tree path sizes" are path sizes grouped into delta trees.
+-# * "depths" should be obvious.
+-#
+-# When run as:
+-#
+-# $ git verify-pack -v | packinfo.pl -tree
+-#
+-# the trees of objects are output along with the stats.  This looks
+-# like:
+-#
+-#   0 commit 031321c6...      803      803
+-#
+-#   0   blob 03156f21...     1767     1767
+-#   1    blob f52a9d7f...       10     1777
+-#   2     blob a8cc5739...       51     1828
+-#   3      blob 660e90b1...       15     1843
+-#   4       blob 0cb8e3bb...       33     1876
+-#   2     blob e48607f0...      311     2088
+-#      size: count 6 total 2187 min 10 max 1767 mean 364.50 median 51 std_dev 635.85
+-# path size: count 6 total 11179 min 1767 max 2088 mean 1863.17 median 1843 std_dev 107.26
+-#
+-# The first number after the sha1 is the object size, the second
+-# number is the path size.  The statistics are across all objects in
+-# the previous delta tree.  Obviously they are omitted for trees of
+-# one object.
+-#
+-# When run as:
+-#
+-# $ git verify-pack -v | packinfo.pl -tree -filenames
+-#
+-# it adds filenames to the tree.  Getting this information is slow:
+-#
+-#   0   blob 03156f21...     1767     1767 Documentation/git-lost-found.txt @ tags/v1.2.0~142
+-#   1    blob f52a9d7f...       10     1777 Documentation/git-lost-found.txt @ tags/v1.5.0-rc1~74
+-#   2     blob a8cc5739...       51     1828 Documentation/git-lost+found.txt @ tags/v0.99.9h^0
+-#   3      blob 660e90b1...       15     1843 Documentation/git-lost+found.txt @ master~3222^2~2
+-#   4       blob 0cb8e3bb...       33     1876 Documentation/git-lost+found.txt @ master~3222^2~3
+-#   2     blob e48607f0...      311     2088 Documentation/git-lost-found.txt @ tags/v1.5.2-rc3~4
+-#      size: count 6 total 2187 min 10 max 1767 mean 364.50 median 51 std_dev 635.85
+-# path size: count 6 total 11179 min 1767 max 2088 mean 1863.17 median 1843 std_dev 107.26
+-#
+-# When run as:
+-#
+-# $ git verify-pack -v | packinfo.pl -dump
+-#
+-# it prints out "sha1 size pathsize depth" for each sha1 in lexical
+-# order.
+-#
+-# 000079a2eaef17b7eae70e1f0f635557ea67b644 30 472 7
+-# 00013cafe6980411aa6fdd940784917b5ff50f0a 44 1542 4
+-# 000182eacf99cde27d5916aa415921924b82972c 499 499 0
+-# ...
+-#
+-# This is handy for comparing two packs.  Adding "-filenames" will add
+-# filenames, as per "-tree -filenames" above.
 -
 -use strict;
--use warnings;
--use IPC::Open2;
+-use Getopt::Long;
 -
--my $since = '5-years-ago';
--my $min_percent = 10;
--my $labels_rx = qr/Signed-off-by|Reviewed-by|Acked-by|Cc/i;
--my %seen;
+-my $filenames = 0;
+-my $tree = 0;
+-my $dump = 0;
+-GetOptions("tree" => \$tree,
+-           "filenames" => \$filenames,
+-           "dump" => \$dump);
 -
--sub format_contact {
--	my ($name, $email) = @_;
--	return "$name <$email>";
+-my %parents;
+-my %children;
+-my %sizes;
+-my @roots;
+-my %paths;
+-my %types;
+-my @commits;
+-my %names;
+-my %depths;
+-my @depths;
+-
+-while (<STDIN>) {
+-    my ($sha1, $type, $size, $space, $offset, $depth, $parent) = split(/\s+/, $_);
+-    next unless ($sha1 =~ /^[0-9a-f]{40}$/);
+-    $depths{$sha1} = $depth || 0;
+-    push(@depths, $depth || 0);
+-    push(@commits, $sha1) if ($type eq 'commit');
+-    push(@roots, $sha1) unless $parent;
+-    $parents{$sha1} = $parent;
+-    $types{$sha1} = $type;
+-    push(@{$children{$parent}}, $sha1);
+-    $sizes{$sha1} = $size;
 -}
 -
--sub parse_commit {
--	my ($commit, $data) = @_;
--	my $contacts = $commit->{contacts};
--	my $inbody = 0;
--	for (split(/^/m, $data)) {
--		if (not $inbody) {
--			if (/^author ([^<>]+) <(\S+)> .+$/) {
--				$contacts->{format_contact($1, $2)} = 1;
--			} elsif (/^$/) {
--				$inbody = 1;
--			}
--		} elsif (/^$labels_rx:\s+([^<>]+)\s+<(\S+?)>$/o) {
--			$contacts->{format_contact($1, $2)} = 1;
--		}
--	}
+-if ($filenames && ($tree || $dump)) {
+-    open(NAMES, "git name-rev --all|");
+-    while (<NAMES>) {
+-        if (/^(\S+)\s+(.*)$/) {
+-            my ($sha1, $name) = ($1, $2);
+-            $names{$sha1} = $name;
+-        }
+-    }
+-    close NAMES;
+-
+-    for my $commit (@commits) {
+-        my $name = $names{$commit};
+-        open(TREE, "git ls-tree -t -r $commit|");
+-        print STDERR "Plumbing tree $name\n";
+-        while (<TREE>) {
+-            if (/^(\S+)\s+(\S+)\s+(\S+)\s+(.*)$/) {
+-                my ($mode, $type, $sha1, $path) = ($1, $2, $3, $4);
+-                $paths{$sha1} = "$path @ $name";
+-            }
+-        }
+-        close TREE;
+-    }
 -}
 -
--sub import_commits {
--	my ($commits) = @_;
--	return unless %$commits;
--	my $pid = open2 my $reader, my $writer, qw(git cat-file --batch);
--	for my $id (keys(%$commits)) {
--		print $writer "$id\n";
--		my $line = <$reader>;
--		if ($line =~ /^([0-9a-f]{40}) commit (\d+)/) {
--			my ($cid, $len) = ($1, $2);
--			die "expected $id but got $cid\n" unless $id eq $cid;
--			my $data;
--			# cat-file emits newline after data, so read len+1
--			read $reader, $data, $len + 1;
--			parse_commit($commits->{$id}, $data);
--		}
--	}
--	close $reader;
--	close $writer;
--	waitpid($pid, 0);
--	die "git-cat-file error: $?\n" if $?;
+-sub stats {
+-    my @data = sort {$a <=> $b} @_;
+-    my $min = $data[0];
+-    my $max = $data[$#data];
+-    my $total = 0;
+-    my $count = scalar @data;
+-    for my $datum (@data) {
+-        $total += $datum;
+-    }
+-    my $mean = $total / $count;
+-    my $median = $data[int(@data / 2)];
+-    my $diff_sum = 0;
+-    for my $datum (@data) {
+-        $diff_sum += ($datum - $mean)**2;
+-    }
+-    my $std_dev = sqrt($diff_sum / $count);
+-    return ($count, $total, $min, $max, $mean, $median, $std_dev);
 -}
 -
--sub get_blame {
--	my ($commits, $source, $from, $ranges) = @_;
--	return unless @$ranges;
--	open my $f, '-|',
--		qw(git blame --porcelain -C),
--		map({"-L$_->[0],+$_->[1]"} @$ranges),
--		'--since', $since, "$from^", '--', $source or die;
--	while (<$f>) {
--		if (/^([0-9a-f]{40}) \d+ \d+ \d+$/) {
--			my $id = $1;
--			$commits->{$id} = { id => $id, contacts => {} }
--				unless $seen{$id};
--			$seen{$id} = 1;
--		}
--	}
--	close $f;
+-sub print_stats {
+-    my $name = shift;
+-    my ($count, $total, $min, $max, $mean, $median, $std_dev) = stats(@_);
+-    printf("%s: count %s total %s min %s max %s mean %.2f median %s std_dev %.2f\n",
+-           $name, $count, $total, $min, $max, $mean, $median, $std_dev);
 -}
 -
--sub blame_sources {
--	my ($sources, $commits) = @_;
--	for my $s (keys %$sources) {
--		for my $id (keys %{$sources->{$s}}) {
--			get_blame($commits, $s, $id, $sources->{$s}{$id});
--		}
--	}
+-my @sizes;
+-my @path_sizes;
+-my @all_sizes;
+-my @all_path_sizes;
+-my %path_sizes;
+-
+-sub dig {
+-    my ($sha1, $depth, $path_size) = @_;
+-    $path_size += $sizes{$sha1};
+-    push(@sizes, $sizes{$sha1});
+-    push(@all_sizes, $sizes{$sha1});
+-    push(@path_sizes, $path_size);
+-    push(@all_path_sizes, $path_size);
+-    $path_sizes{$sha1} = $path_size;
+-    if ($tree) {
+-        printf("%3d%s %6s %s %8d %8d %s\n",
+-               $depth, (" " x $depth), $types{$sha1},
+-               $sha1, $sizes{$sha1}, $path_size, $paths{$sha1});
+-    }
+-    for my $child (@{$children{$sha1}}) {
+-        dig($child, $depth + 1, $path_size);
+-    }
 -}
 -
--sub scan_patches {
--	my ($sources, $id, $f) = @_;
--	my $source;
--	while (<$f>) {
--		if (/^From ([0-9a-f]{40}) Mon Sep 17 00:00:00 2001$/) {
--			$id = $1;
--			$seen{$id} = 1;
--		}
--		next unless $id;
--		if (m{^--- (?:a/(.+)|/dev/null)$}) {
--			$source = $1;
--		} elsif (/^@@ -(\d+)(?:,(\d+))?/ && $source) {
--			my $len = defined($2) ? $2 : 1;
--			push @{$sources->{$source}{$id}}, [$1, $len] if $len;
--		}
--	}
+-my @tree_sizes;
+-my @tree_path_sizes;
+-
+-for my $root (@roots) {
+-    undef @sizes;
+-    undef @path_sizes;
+-    dig($root, 0, 0);
+-    my ($aa, $sz_total) = stats(@sizes);
+-    my ($bb, $psz_total) = stats(@path_sizes);
+-    push(@tree_sizes, $sz_total);
+-    push(@tree_path_sizes, $psz_total);
+-    if ($tree) {
+-        if (@sizes > 1) {
+-            print_stats("     size", @sizes);
+-            print_stats("path size", @path_sizes);
+-        }
+-        print "\n";
+-    }
 -}
 -
--sub scan_patch_file {
--	my ($commits, $file) = @_;
--	open my $f, '<', $file or die "read failure: $file: $!\n";
--	scan_patches($commits, undef, $f);
--	close $f;
+-if ($dump) {
+-    for my $sha1 (sort keys %sizes) {
+-        print "$sha1 $sizes{$sha1} $path_sizes{$sha1} $depths{$sha1} $paths{$sha1}\n";
+-    }
+-} else {
+-    print_stats("      all sizes", @all_sizes);
+-    print_stats(" all path sizes", @all_path_sizes);
+-    print_stats("     tree sizes", @tree_sizes);
+-    print_stats("tree path sizes", @tree_path_sizes);
+-    print_stats("         depths", @depths);
 -}
--
--sub parse_rev_args {
--	my @args = @_;
--	open my $f, '-|',
--		qw(git rev-parse --revs-only --default HEAD --symbolic), @args
--		or die;
--	my @revs;
--	while (<$f>) {
--		chomp;
--		push @revs, $_;
--	}
--	close $f;
--	return @revs if scalar(@revs) != 1;
--	return "^$revs[0]", 'HEAD' unless $revs[0] =~ /^-/;
--	return $revs[0], 'HEAD';
--}
--
--sub scan_rev_args {
--	my ($commits, $args) = @_;
--	my @revs = parse_rev_args(@$args);
--	open my $f, '-|', qw(git rev-list --reverse), @revs or die;
--	while (<$f>) {
--		chomp;
--		my $id = $_;
--		$seen{$id} = 1;
--		open my $g, '-|', qw(git show -C --oneline), $id or die;
--		scan_patches($commits, $id, $g);
--		close $g;
--	}
--	close $f;
--}
--
--sub mailmap_contacts {
--	my ($contacts) = @_;
--	my %mapped;
--	my $pid = open2 my $reader, my $writer, qw(git check-mailmap --stdin);
--	for my $contact (keys(%$contacts)) {
--		print $writer "$contact\n";
--		my $canonical = <$reader>;
--		chomp $canonical;
--		$mapped{$canonical} += $contacts->{$contact};
--	}
--	close $reader;
--	close $writer;
--	waitpid($pid, 0);
--	die "git-check-mailmap error: $?\n" if $?;
--	return \%mapped;
--}
--
--if (!@ARGV) {
--	die "No input revisions or patch files\n";
--}
--
--my (@files, @rev_args);
--for (@ARGV) {
--	if (-e) {
--		push @files, $_;
--	} else {
--		push @rev_args, $_;
--	}
--}
--
--my %sources;
--for (@files) {
--	scan_patch_file(\%sources, $_);
--}
--if (@rev_args) {
--	scan_rev_args(\%sources, \@rev_args)
--}
--
--my $toplevel = `git rev-parse --show-toplevel`;
--chomp $toplevel;
--chdir($toplevel) or die "chdir failure: $toplevel: $!\n";
--
--my %commits;
--blame_sources(\%sources, \%commits);
--import_commits(\%commits);
--
--my $contacts = {};
--for my $commit (values %commits) {
--	for my $contact (keys %{$commit->{contacts}}) {
--		$contacts->{$contact}++;
--	}
--}
--$contacts = mailmap_contacts($contacts);
--
--my $ncommits = scalar(keys %commits);
--for my $contact (keys %$contacts) {
--	my $percent = $contacts->{$contact} * 100 / $ncommits;
--	next if $percent < $min_percent;
--	print "$contact\n";
--}
-diff --git a/contrib/contacts/git-contacts.txt b/contrib/contacts/git-contacts.txt
-deleted file mode 100644
-index dd914d1..0000000
---- a/contrib/contacts/git-contacts.txt
-+++ /dev/null
-@@ -1,94 +0,0 @@
--git-contacts(1)
--===============
--
--NAME
------
--git-contacts - List people who might be interested in a set of changes
--
--
--SYNOPSIS
----------
--[verse]
--'git contacts' (<patch>|<range>|<rev>)...
--
--
--DESCRIPTION
-------------
--
--Given a set of changes, specified as patch files or revisions, determine people
--who might be interested in those changes.  This is done by consulting the
--history of each patch or revision hunk to find people mentioned by commits
--which touched the lines of files under consideration.
--
--Input consists of one or more patch files or revision arguments.  A revision
--argument can be a range or a single `<rev>` which is interpreted as
--`<rev>..HEAD`, thus the same revision arguments are accepted as for
--linkgit:git-format-patch[1]. Patch files and revision arguments can be combined
--in the same invocation.
--
--This command can be useful for determining the list of people with whom to
--discuss proposed changes, or for finding the list of recipients to Cc: when
--submitting a patch series via `git send-email`. For the latter case, `git
--contacts` can be used as the argument to `git send-email`'s `--cc-cmd` option.
--
--
--DISCUSSION
------------
--
--`git blame` is invoked for each hunk in a patch file or revision.  For each
--commit mentioned by `git blame`, the commit message is consulted for people who
--authored, reviewed, signed, acknowledged, or were Cc:'d.  Once the list of
--participants is known, each person's relevance is computed by considering how
--many commits mentioned that person compared with the total number of commits
--under consideration.  The final output consists only of participants who exceed
--a minimum threshold of participation.
--
--
--OUTPUT
--------
--
--For each person of interest, a single line is output, terminated by a newline.
--If the person's name is known, ``Name $$<user@host>$$'' is printed; otherwise
--only ``$$<user@host>$$'' is printed.
--
--
--EXAMPLES
----------
--
--* Consult patch files:
--+
--------------
--$ git contacts feature/*.patch
--------------
--
--* Revision range:
--+
--------------
--$ git contacts R1..R2
--------------
--
--* From a single revision to `HEAD`:
--+
--------------
--$ git contacts origin
--------------
--
--* Helper for `git send-email`:
--+
--------------
--$ git send-email --cc-cmd='git contacts' feature/*.patch
--------------
--
--
--LIMITATIONS
-------------
--
--Several conditions controlling a person's significance are currently
--hard-coded, such as minimum participation level (10%), blame date-limiting (5
--years), and `-C` level for detecting moved and copied lines (a single `-C`). In
--the future, these conditions may become configurable.
--
--
--GIT
-----
--Part of the linkgit:git[1] suite
 -- 
 1.9.2+fc1.27.gbce2056
