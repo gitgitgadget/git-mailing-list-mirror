@@ -1,109 +1,89 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v2 01/17] contrib: remove outdated README
-Date: Fri, 09 May 2014 16:54:03 -0500
-Message-ID: <536d4e7ba8ea_585ea5308a9@nysa.notmuch>
-References: <1399662703-355-1-git-send-email-felipe.contreras@gmail.com>
- <1399662703-355-2-git-send-email-felipe.contreras@gmail.com>
- <xmqqbnv6yb9l.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH v1 1/2] Remove 'git archimport'
+Date: Fri, 09 May 2014 17:01:03 -0500
+Message-ID: <536d501fd74a1_65615d32ecf5@nysa.notmuch>
+References: <1399599203-13991-1-git-send-email-felipe.contreras@gmail.com>
+ <1399599203-13991-2-git-send-email-felipe.contreras@gmail.com>
+ <20140509055024.GB30674@dcvr.yhbt.net>
+ <xmqqlhuazw2c.fsf@gitster.dls.corp.google.com>
+ <536d15f512afd_a7adc530c31@nysa.notmuch>
+ <CA+39Oz63YEFPmwntLs+W9X9dMc+TcvV3n05+rr74P8zHoEaAmg@mail.gmail.com>
+ <20140509192121.GA14448@dcvr.yhbt.net>
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
+Cc: Junio C Hamano <gitster@pobox.com>, git list <git@vger.kernel.org>,
+	Martin Langhoff <martin@laptop.org>,
+	Thomas Adam <thomas@xteddy.org>
+To: Eric Wong <normalperson@yhbt.net>,
 	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 09 23:54:19 2014
+X-From: git-owner@vger.kernel.org Sat May 10 00:01:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WiskA-0002TB-Eq
-	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 23:54:14 +0200
+	id 1Wisqx-0004rL-80
+	for gcvg-git-2@plane.gmane.org; Sat, 10 May 2014 00:01:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757692AbaEIVyJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 May 2014 17:54:09 -0400
-Received: from mail-yh0-f44.google.com ([209.85.213.44]:54339 "EHLO
-	mail-yh0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757452AbaEIVyI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 May 2014 17:54:08 -0400
-Received: by mail-yh0-f44.google.com with SMTP id b6so4324817yha.17
-        for <git@vger.kernel.org>; Fri, 09 May 2014 14:54:07 -0700 (PDT)
+	id S1757704AbaEIWBK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 May 2014 18:01:10 -0400
+Received: from mail-yh0-f47.google.com ([209.85.213.47]:61785 "EHLO
+	mail-yh0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757672AbaEIWBJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 May 2014 18:01:09 -0400
+Received: by mail-yh0-f47.google.com with SMTP id z6so3925672yhz.6
+        for <git@vger.kernel.org>; Fri, 09 May 2014 15:01:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-type:content-transfer-encoding;
-        bh=qhIquYuNtyqlSGwTUSQJtct0THHdxw9jUmUoPWlbxMY=;
-        b=q4hQYD7QPNjF14EbphQ+niY/+Hn68GKytvAS3g3t0n+uLR+v+bGSguIIeYTjlKIEn3
-         DtF7C52BqpdroG/Wo9sSY2sGyjXJbrDxcaKAwurILYM3QHBbuPJ0d5vwETOWyHUpcL/L
-         b2LqU8XzRDy3FEFrPdGkEQ/rmsioU0BNi6XEl4wMuvxNJhhe1Fdki6v10yUbXx4R/2M0
-         ktuffYVh/7a4A/tInWftPQIHav2/FzxvjIMX2iHecpmZyuS97SU9Xydm3cBjuhCo9TC/
-         tdHfDZw3a0hfVEzveKyJ/wZotl6RBJOqXuKnXn4awtwEBzynpGEtEDJaCsCTgmIEFfcn
-         FtOQ==
-X-Received: by 10.236.86.226 with SMTP id w62mr19274874yhe.94.1399672447814;
-        Fri, 09 May 2014 14:54:07 -0700 (PDT)
+        bh=6XapOpDUNJPgk8nVBpdSmNi1I3XG4sSDzbQHFiflHBI=;
+        b=LasYi4cOiiIq9Lyb0AmtwuAQhzSBbratfTzKR+2bVCQkapeIxuw1t4C5fORSqT/dlS
+         MuKbTS83ciWLqe+eJCd3HO6GziBlE3jcGPm5cLwX0ZtOPKIzt7AIMiRoKwUAEO3RoEAc
+         +EQOQYqlQSlg26P2ZMwmJIscf1kkMtf4umhPc13i7Mu4zx3OP224TRbD72pV25F/fP7f
+         Hxs7QmADviamEdGObc6jlMfv9+TAEi00UEIfZa81XH0G0AowySsQBF14/+oNKJy1uq9U
+         kDtwoWnYqMprQJFAC1J2LVmpFmAjuypkkUckBD2yngs/NDAZ4Aki2SdxS+Dl9ATNr6h8
+         zbTw==
+X-Received: by 10.236.100.177 with SMTP id z37mr18994303yhf.123.1399672868509;
+        Fri, 09 May 2014 15:01:08 -0700 (PDT)
 Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id s26sm8011933yhg.4.2014.05.09.14.54.05
+        by mx.google.com with ESMTPSA id r18sm8038386yhr.1.2014.05.09.15.01.06
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 09 May 2014 14:54:06 -0700 (PDT)
-In-Reply-To: <xmqqbnv6yb9l.fsf@gitster.dls.corp.google.com>
+        Fri, 09 May 2014 15:01:07 -0700 (PDT)
+In-Reply-To: <20140509192121.GA14448@dcvr.yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248646>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248647>
 
-Junio C Hamano wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+Eric Wong wrote:
+> Thomas Adam <thomas@xteddy.org> wrote:
+> > I think I speak for everyone when I say: fuck off.
 > 
-> > There is no guideline as for what should be part of contrib.
-> >
-> > Some tools are actively maintained, others consist of a single commit.
-> > Some tools have active user-base, some aren't used by anyone. Some tools
-> > are on the path towards the core, others will never get there. Some
-> > tools are already out-of-tree and simply mirrored, others probably
-> > wouldn't survive out-of-tree. Some tools are production-ready, others
-> > don't even run. Some tools have tests, most don't.
-> >
-> > Junio has explained that he wrote this a long time ago, when Git was a
-> > different beast, now this no longer applies.
-> >
-> > The only way to find out if a tool belongs in contrib or not is to as
-> > Junio.
-> >
-> > Cc: Junio C Hamano <gitster@pobox.com>
-> > Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> > ---
+> I wouldn't put it so harshly...
 > 
-> This is wrong.
-> 
-> The reason I suggested splitting remote-hg out of my tree does not
+> Felipe: I suggest you take a long vacation away from development.
 
-This particular patch has nothing to do with remote-hg.
+Nah, I'm done.
 
-> have anything to do with "removal of disused and inactive" described
-> in the document.  As written elsewhere, it was a response to
-> 
->     http://thread.gmane.org/gmane.comp.version-control.git/248063/focus=248457
-> 
-> where you said
-> 
->     I don't want to do anything for a "contrib" tool.
+> Whatever good you may be able to contribute today is drowned out by your
+> behavior.
 
-You are once more twisting the sequence of events.
+That's OK because I'm never contributing again.
 
-*First* you blocked any progres towards graduation 2014-05-06, even
-though I told you what John Keeping argued wasn't going to happen.
+I'd contribute patches that would be a burden to maintain on my tree
+otherwise, but all the goodies will go to my git-fc fork.
 
-  http://thread.gmane.org/gmane.comp.version-control.git/247660/focus=248242
+There is just no point in contributin to Git, because nothing ever
+changes ever. Nothing gets removed, nothing changed.
 
-*After* that I decided not touch git-remote-hg/bzr on your tree any more
-2014-05-08.
+> The projects you are involved with will get by fine without you.
 
-  http://thread.gmane.org/gmane.comp.version-control.git/248063/focus=248457
-
-Do not attempt to construe the consequence as the cause. You caused it.
+git-remote-hg didn't get by so fine without me.
 
 -- 
 Felipe Contreras
