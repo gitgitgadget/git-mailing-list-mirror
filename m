@@ -1,90 +1,79 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v1 18/25] contrib: remove 'emacs'
-Date: Fri, 09 May 2014 09:53:43 -0500
-Message-ID: <536cebf798633_6bf0154f30c67@nysa.notmuch>
-References: <1399597116-1851-1-git-send-email-felipe.contreras@gmail.com>
- <1399597116-1851-19-git-send-email-felipe.contreras@gmail.com>
- <CAFcZeCqbF54-KjHU1R3pC6XgWi21KcpRGB7HcbfSGyvTScQU2A@mail.gmail.com>
- <536c91f079e71_2bf0e952f0a@nysa.notmuch>
- <CAFcZeCo5mCfnUN1uBiaZnD6DL6y8hPhK5MPts5raLCTGwJX9Gg@mail.gmail.com>
- <87d2fnropz.fsf@wine.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v1 1/2] Remove 'git archimport'
+Date: Fri, 9 May 2014 10:54:53 -0400
+Message-ID: <20140509145453.GA18197@sigill.intra.peff.net>
+References: <1399599203-13991-1-git-send-email-felipe.contreras@gmail.com>
+ <1399599203-13991-2-git-send-email-felipe.contreras@gmail.com>
+ <20140509055024.GB30674@dcvr.yhbt.net>
+ <536c7f9089b77_182dd0d31084@nysa.notmuch>
+ <20140509081507.GA26494@dcvr.yhbt.net>
+ <536c939781d8b_2bf0e952f08@nysa.notmuch>
+ <20140509085937.GA29347@dcvr.yhbt.net>
+ <536c9de8f07ae_39ea14ab310f9@nysa.notmuch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org,
 	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
-To: Alexandre Julliard <julliard@winehq.org>,
-	=?UTF-8?B?RGF2aWQgS8OlZ2VkYWw=?= <davidk@lysator.liu.se>
-X-From: git-owner@vger.kernel.org Fri May 09 16:54:02 2014
+	Martin Langhoff <martin@laptop.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 09 16:55:09 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WimBU-0006oK-Kr
-	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 16:54:01 +0200
+	id 1WimCV-0008Aa-OG
+	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 16:55:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756851AbaEIOxu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 May 2014 10:53:50 -0400
-Received: from mail-yk0-f179.google.com ([209.85.160.179]:56148 "EHLO
-	mail-yk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750824AbaEIOxt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 May 2014 10:53:49 -0400
-Received: by mail-yk0-f179.google.com with SMTP id 19so3507834ykq.24
-        for <git@vger.kernel.org>; Fri, 09 May 2014 07:53:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=YQWzPOkwG2bvr+A0CSrrvp+6JPaPVOPfUabaQNEfnHY=;
-        b=uC8sZnldwnvp4kjhmlOIt1uLsUBS2E4w8NylmW3Jme6vyhZ5HocZDNrX6+HoyHl2vB
-         g9xSbh4WAb+w27YPIkC4tk1bg0Yz0sH8S4BR4lyitIB/6h+MqDbope8OGf6rJIwe3mBY
-         C4tfRplSUmXvURBMgK9LMDWNUN8vKIvauoE+yeaM9qEM9m9gjAX4Yk8TDTs199Q+q+dP
-         fMix2nR4s7m5UqhTBv18KyvT/iHSCMTYDaks4sWEEWCEEaVLu7VhXbqb8WKtK2//Ycxz
-         ce5UEcMCg8YwnV0TTsJH3yLJajkaW2PMU4wE9nWDNlbHgXM9qcbxunDxTk2f9wMnDKIl
-         +nIw==
-X-Received: by 10.236.230.41 with SMTP id i39mr15665533yhq.14.1399647228865;
-        Fri, 09 May 2014 07:53:48 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id m69sm6465256yhn.16.2014.05.09.07.53.45
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 09 May 2014 07:53:46 -0700 (PDT)
-In-Reply-To: <87d2fnropz.fsf@wine.dyndns.org>
+	id S1756983AbaEIOy7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 May 2014 10:54:59 -0400
+Received: from cloud.peff.net ([50.56.180.127]:48267 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756952AbaEIOy5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 May 2014 10:54:57 -0400
+Received: (qmail 24838 invoked by uid 102); 9 May 2014 14:54:56 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 09 May 2014 09:54:56 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 09 May 2014 10:54:53 -0400
+Content-Disposition: inline
+In-Reply-To: <536c9de8f07ae_39ea14ab310f9@nysa.notmuch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248563>
 
-Alexandre Julliard wrote:
-> David K=C3=A5gedal <davidk@lysator.liu.se> writes:
->=20
-> > 2014-05-09 10:29 GMT+02:00 Felipe Contreras
-> > <felipe.contreras@gmail.com>:
-> >
-> >     David K=C3=A5gedal wrote:
-> >     > What problem does this removal solve?
-> >    =20
-> >    =20
-> >     Please do not top post.
-> >    =20
-> >     a) What problem does it solve by staying?
-> >     b) Where are the tests?
-> >     c) Why it cannot be moved to an outside repository like may oth=
-er
-> >     git-related tools?
-> >
-> > Fair enough. I guess the target should rather be to get it into the
-> > emacs distribution.
->=20
-> It's already in Emacs in a different form, as part of the generic VC
-> support. And nowadays, users are probably better served by using
-> something like Magit anyway. As far as my code is concerned I have no
-> objections to removing it.
+On Fri, May 09, 2014 at 04:20:40AM -0500, Felipe Contreras wrote:
 
-All right. Thanks for the clarification.
+> Eric Wong wrote:
+> > Felipe Contreras <felipe.contreras@gmail.com> wrote:
+> > > As a minimal token that anybody might possibly be using it, I would like
+> > > to see it work at least once. Since you said you have arch repos, can
+> > > you confirm that it does something?
+> > 
+> > Those repos are in offline/offsite storage and I do not have time to
+> > retrieve them.
+> 
+> Then we have no reason to believe they still work, and therefore, no
+> reason to believe anybody is using this.
 
---=20
-=46elipe Contreras
+Do you have any reason to believe they do NOT work? If not, and they are
+not causing any problems, then what is the benefit to getting rid of
+them?
+
+> > I've forgotten how to use tla to get a public repo, even.
+
+I haven't used tla in quite a long time, but:
+
+  tla register-archive http://www.atai.org/archarchives/atai@atai.org--public/
+  tla my-default-archive atai@atai.org--public
+  mkdir repo
+  cd repo
+  git archimport atai@atai.org--public
+
+seemed to work (that archive is straight off the tla homepage's
+instructions). Looks like the commit messages could use some cleanup,
+but certainly it's better than nothing.
+
+-Peff
