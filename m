@@ -1,146 +1,149 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: Conforming to pep8
-Date: Fri, 9 May 2014 09:01:30 -0700
-Message-ID: <20140509160130.GA28634@odin.tremily.us>
-References: <20140509015429.GA550@wst420>
- <536c3911ea173_741a161d310f2@nysa.notmuch>
- <20140509035759.GA9051@wst420>
- <536c5b4d9e2c9_377dfcb2f02b@nysa.notmuch>
- <20140509051623.GB9051@wst420>
- <536c815ee0b9c_182dd0d3104b@nysa.notmuch>
- <20140509072820.GD9051@wst420>
- <536c8546ed6fd_182dd0d3100@nysa.notmuch>
- <20140509074402.GE9051@wst420>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v1 07/25] contrib: remove 'git-jump'
+Date: Fri, 09 May 2014 11:13:14 -0500
+Message-ID: <536cfe9ab8c66_ce316372ecf6@nysa.notmuch>
+References: <1399597116-1851-1-git-send-email-felipe.contreras@gmail.com>
+ <1399597116-1851-8-git-send-email-felipe.contreras@gmail.com>
+ <20140509020350.GD9787@sigill.intra.peff.net>
+ <536c399454062_741a161d31099@nysa.notmuch>
+ <20140509152005.GB18197@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="vJwpkiw3F9XLBeML"
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
-To: William Giokas <1007380@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 09 18:01:42 2014
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 09 18:13:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WinEz-0004EX-Fs
-	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 18:01:41 +0200
+	id 1WinQL-0004ud-6S
+	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 18:13:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756903AbaEIQBf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 May 2014 12:01:35 -0400
-Received: from qmta10.westchester.pa.mail.comcast.net ([76.96.62.17]:51479
-	"EHLO qmta10.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753547AbaEIQBd (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 May 2014 12:01:33 -0400
-Received: from omta18.westchester.pa.mail.comcast.net ([76.96.62.90])
-	by qmta10.westchester.pa.mail.comcast.net with comcast
-	id zniK1n0011wpRvQ5As1Yhi; Fri, 09 May 2014 16:01:32 +0000
-Received: from odin.tremily.us ([24.18.63.50])
-	by omta18.westchester.pa.mail.comcast.net with comcast
-	id zs1W1n00e152l3L3es1Xd2; Fri, 09 May 2014 16:01:32 +0000
-Received: by odin.tremily.us (Postfix, from userid 1000)
-	id 7571711953DE; Fri,  9 May 2014 09:01:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1399651290; bh=72i+4sy22K4UVJz4ldF+nJxqiCAla3KyRxhdDXtqblQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=g25+eW/gm/zNgHzn3zR9dxFdc9qbKc0CMa1gJ4hYoyYD3OI8MtKYC0nNCYFknl0Gp
-	 TB+mKIHNeWmmdT0Q7iGP5k+l3VDwXXVVoeYGIr2Q8Y7Rs8SgHdB/0Ok3r4u0n69Qe8
-	 Gb2f9bTeV88R0GKSQdhTVpGKa0gwsTjBWKp5/nlA=
-Content-Disposition: inline
-In-Reply-To: <20140509074402.GE9051@wst420>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.23 (2014-03-12)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20140121; t=1399651292;
-	bh=7CWQ5xAESCeIJn2ZFZJJWKD9CSAMNkyJIADPLewcA9E=;
-	h=Received:Received:Received:Date:From:To:Subject:Message-ID:
-	 MIME-Version:Content-Type;
-	b=XirQX1kKHO1oLAZncixPBxYi8tbiCqRyNiunvtpXEctuM1mA22xoU3L9mgHdAHYlt
-	 Xp/UMdTdG1IaoxEIojkkpQWYUXsAisVo3eP98v2QDq3WZh04RKCEGyU7fonmzBPFOO
-	 ZmhYeLmaPu4oHLwnwcm47TzxtEXfSmgLBKThkvTl0PZf8davLMIjjulw95COlYshc7
-	 X+OvgsEiUjbMssyJTQ45NfuLM15TspdxL9GtFRzvf2rJr3o8HJFJCGaUcZK5/vPNIR
-	 KbU3JoAmpFX8iC8sJ319E5zx4iZ5QinNQEHOx2Yn/NE78G2qxNCFVjOUS382Lm/qjB
-	 xWm7Qqqm4GZjA==
+	id S1756938AbaEIQNV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 May 2014 12:13:21 -0400
+Received: from mail-oa0-f52.google.com ([209.85.219.52]:42052 "EHLO
+	mail-oa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756929AbaEIQNU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 May 2014 12:13:20 -0400
+Received: by mail-oa0-f52.google.com with SMTP id eb12so5037342oac.25
+        for <git@vger.kernel.org>; Fri, 09 May 2014 09:13:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=GOzxuJplsFMPITbMB/5zQ8I4sBK2pGihuMMhP7b4E+U=;
+        b=iftwSNXBCS1CVCIj0uliCnlU4lBhh6jCVJiiSY6FonH77Zo+8hOHS2TeQjGyqtezEw
+         gNlOGyDHfT6PSKGk0uOZGDnsIlVZzNfz/D9ElVvCtbD698nNPobf1IhLPO7E18hvjWmg
+         ep3r33UdxuE46aHyMBv/bO8hWb7pUm9o6S0tDDMcw4Sxmham+LH/wCj1es3ya0z1m+K/
+         y8FBdwxk0FvGJ24VGeFW4hHryXrBNheyaG8YOpxLjK8zgTsR2f1tqKomoPZFZyW1yePf
+         tXteddAQRH+jJMKpDoeF8zAkH8F0MsjdMJaNvVmuMLws5jqwvJih9OVH8j5r7d/7peva
+         5p5w==
+X-Received: by 10.60.159.5 with SMTP id wy5mr15286411oeb.58.1399651999570;
+        Fri, 09 May 2014 09:13:19 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id cu7sm17478547oec.12.2014.05.09.09.13.16
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 09 May 2014 09:13:18 -0700 (PDT)
+In-Reply-To: <20140509152005.GB18197@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248579>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248580>
 
+Jeff King wrote:
+> On Thu, May 08, 2014 at 09:12:36PM -0500, Felipe Contreras wrote:
+> 
+> > Jeff King wrote:
+> > > On Thu, May 08, 2014 at 07:58:18PM -0500, Felipe Contreras wrote:
+> > > 
+> > > > No activity, no tests.
+> > > 
+> > > Like diff-highlight, I don't think "no activity" is a useful indicator.
+> > > I use this daily, and several people have commented off-list to me that
+> > > they use it, too.
+> > 
+> > Add tests then.
+> 
+> I don't really feel like spending time on it right now. There are better
+> uses of my time.
+> 
+> I thought on this for a while before responding. Am I simply being lazy
+> and a bad programmer not to write tests?
 
---vJwpkiw3F9XLBeML
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+It depends how you define "lazy". Some people think laziness is a good
+quality in a programmer.
 
-On Fri, May 09, 2014 at 02:44:02AM -0500, William Giokas wrote:
-> Maybe a time to use something like::
->=20
->   from mercurial import foo \
->                         bar \
->                         baz \
->                         ...
->=20
-> Would make that import into quite a few lines, but would help organize
-> things and let you easily organize things in the future.
+> Am I propagating a double standard where I do not have to write tests?
 
-=46rom PEP 8 [1]:
-  The preferred way of wrapping long lines is by using Python's
-  implied line continuation inside parentheses, brackets and
-  braces. Long lines can be broken over multiple lines by wrapping
-  expressions in parentheses. These should be used in preference to
-  using a backslash for line continuation.
+Only if you are imposing those standards onto others. It doesn't seem
+like you are doing it, but Junio is.
 
-So I prefer something like:
+> Here's the conclusion I came to. Sure, some tests are better than no
+> tests. But the code works, empirically; I use it every day. It is not
+> changing, so the chances of regression are low. I can spend an hour
+> writing tests that demonstrate what I already know. I can even spend
+> several hours trying to come up with torture cases that might
+> demonstrate a potential failure that nobody in the real world
+> experiences. But why?
+> 
+> Because YOU, who have no interest whatsoever in either this script or
+> diff-highlight, have decided to demand that I write them, or spend time
+> spinning the code into its own repository. Sorry, but I have more useful
+> things to do than appease you.
 
-  from mercurial import (
-      bar,
-      baz,
-      foo,
-      )
+Nobody is forcing you to do anything. If you don't want to write tests,
+move the code out of git.git, there's hundreads of tools out there
+out-of-tree, and they don't have tests either.
 
-The indentation for the closing parenthesis is optional [2].  You can
-of course do things like:
+The purpose of contrib is very clearly defined in contrib/README, and
+nowhere does it say that tools belong there if Peff uses them. You need
+more than that to belong in contrib.
 
-  from mercurial import (
-      bar, baz,
-      foo,
-      )
+> I have no problem with cleaning up cruft in contrib that is broken and
+> nobody uses; it is a potential hazard and time-waster for people who
+> look in that directory. But when people say "no, this is maintained, I
+> use it, and it works", I really don't see the point in you arguing with
+> them. Nobody benefits.
 
-but I prefer the complete specification of =E2=80=9Csingle, alphebetized en=
-try
-per line=E2=80=9D.  I'm happy to send patches if that style is ok.
+Then you need to talk to Junio, because it really doesn't make sense to
+have such abismally different double standards.
 
-Cheers,
-Trevor
+> > It this is never meant to move to the core, then it should go
+> > out-of-tree anyway.
+> 
+> "should" in your opinion. I know, I know, you will quote contrib/README
+> at me.  If Junio wants to enforce "contrib is only for things which are
+> meant to graduate" in his tree, then I will abide by that and maintain
+> these scripts out-of-tree. But I would rather see an actual decision
+> from the maintainer on that, and not an 8-year-old README which clearly
+> has not been followed in the intervening years.
 
-[1]: http://legacy.python.org/dev/peps/pep-0008/#maximum-line-length
-[2]: http://legacy.python.org/dev/peps/pep-0008/#indentation
+Exactly. Junio has to decide what is the standard for contrib, and what
+is the standard for the core. And right now we have incredibly crappy
+and unmaintained tools in contrib that nobody uses, as well as
+production ready which are in better shape than some tools in the core.
 
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
+This huge discrepancy should not be.
 
---vJwpkiw3F9XLBeML
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
+> And speaking of wasted time, I do not plan on responding further to you
+> in this thread. I am telling you ahead of time that this is the case,
+> because elsewhere[1] I saw you complaining that Junio did not respond to
+> your emails,
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
+Respond or not, the issue about the discrepancy of standards remains.
 
-iQIcBAEBAgAGBQJTbPvYAAoJEKKfehoaNkbtj54QAIsbdwktiSujSGJGd1nxWaC1
-maakmmSqpylTrObUMwZ4l738jXDUgXF45nmjsmvsrhNRp/+EWfDG8K3MYyux2aUz
-Fm0ftR+Sk7Uyk7v9elWNo+rmvrCqC7J2pJkmgozSiW7VaaqCReTcgXLfiHHZv/j1
-HFs7u0XtqZlVI9w742iyhvaSRu2TafRRaBD0B4UebEK/PBdQ5tPJip1O0uJWZgH9
-jD398/2lvB1xtaEkz75XezxiRyNODZD7p4i2t+DJoFFAZiubtK1dspNnW0prhUJ+
-pWljJD8vLYOrp8cziwwoh9Tzd2JKlnvq4JtdiY/P3UpZ3dIM91ZA6PsfSvgKXRjJ
-nwLluH8JTaGZEHSfGQ4CeTW9gra2lx8iobViRY33sgHgd2lk5I5wPwOVAw2NRQyz
-PqM1KRdT25XI4PW4dQvzot7h9qOEnETP6wL7/1m29xA+1D17c/CC079e+U5dw6fp
-T+0tRqAadHNt6kDbWLjHoukNArxZlTtM/efprrVZQoqy4ZevEsc3ELbr5iNA3xYf
-vYPXebswGAkuXKsR2gnm09n42aZ4gBkDuBPXebsTOV+uIGqIBWP2gJjG+S+yRFjc
-T3LssGDLeENAUmaxb5AT75IuMI1YnzzT6+7JwT8TJiqtjjOu2tuKFcbxoVQP6KrG
-hWILKto0D/r2McvGAxUQ
-=OaH+
------END PGP SIGNATURE-----
+> which you seemed to think was because he cannot admit that he was
+> wrong.
 
---vJwpkiw3F9XLBeML--
+Why he didn't do it is irrelevant, the fact is that he didn't do it.
+Other people wonder what is the reponse to these questions. If he
+doesn't do it, that's on him.
+
+-- 
+Felipe Contreras
