@@ -1,81 +1,99 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v1 00/25] contrib: cleanup
-Date: Fri, 09 May 2014 12:15:01 -0500
-Message-ID: <536d0d158d827_693d7fd30c54@nysa.notmuch>
-References: <1399597116-1851-1-git-send-email-felipe.contreras@gmail.com>
- <CACPiFCJnsu3qw59oK94sP1u0+KBDvne0ZpKS0LMGc_9ge+rJjA@mail.gmail.com>
- <536c36fc8e04c_741a161d31095@nysa.notmuch>
- <20140509152236.GC18197@sigill.intra.peff.net>
- <536cfb02d0f1a_ce316372ecce@nysa.notmuch>
- <CACPiFCLcXOsSG34oBefEN7CPy4AKMAZjf7EA5WmxJG5oUfmepA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/4] remote-hg: more improvements
+Date: Fri, 09 May 2014 10:16:54 -0700
+Message-ID: <xmqq61le27p5.fsf@gitster.dls.corp.google.com>
+References: <1399169814-20201-1-git-send-email-felipe.contreras@gmail.com>
+	<xmqq8uqdbgqg.fsf@gitster.dls.corp.google.com>
+	<xmqqha515ebt.fsf@gitster.dls.corp.google.com>
+	<536adf96f37ec_3caaa612ec69@nysa.notmuch>
+	<xmqqtx902k45.fsf@gitster.dls.corp.google.com>
+	<536be16ba5ef1_3ce710a12ecdb@nysa.notmuch>
+	<xmqqppjn29o3.fsf@gitster.dls.corp.google.com>
+	<536c084ecb546_4f6fd2f30cdd@nysa.notmuch>
+	<xmqqha4z27ly.fsf@gitster.dls.corp.google.com>
+	<536c15cf8594b_6f3bb152ecb@nysa.notmuch>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Martin Langhoff <martin.langhoff@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 09 19:15:16 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 09 19:17:07 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WioOB-0003Q5-6J
-	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 19:15:15 +0200
+	id 1WioPy-00068k-Ga
+	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 19:17:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757191AbaEIRPJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 May 2014 13:15:09 -0400
-Received: from mail-yh0-f44.google.com ([209.85.213.44]:49889 "EHLO
-	mail-yh0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757151AbaEIRPI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 May 2014 13:15:08 -0400
-Received: by mail-yh0-f44.google.com with SMTP id b6so4022790yha.31
-        for <git@vger.kernel.org>; Fri, 09 May 2014 10:15:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=9uULKEp35RJkacfFwWrxm5WI6xL9lCzdgGroifGd8EA=;
-        b=pnynKoPxty18RTO/TdXVlbxrOpz0ZbBZdwb4D0p0m/4dkM8Y2rRA6JblQZAA25d1WC
-         mL+7ADNLYyjEP78M2Vodvyd9P5cdrpRx1aR49hKrVnHWapBmj7kR7EGq+TByS+6FIpKo
-         PK55CxdSKPcNB+gyatG3FJLO0495za+aPDeBB5IHmL21CgUTwi8anmgeYk1oe82AUCO+
-         TcOD88p53+t55UD80RMCuKeZTgS50XtgNx8KVe1D7B1N9cGPzRfNMA2LDiLcUSTDutX5
-         cupAA8RRpEXxITR/tDmlS1x7DbtZCC7kc3YwPa8l6oIB0knm8Wy39iEN6PRCBXQujjdK
-         dc0g==
-X-Received: by 10.236.163.8 with SMTP id z8mr16689431yhk.43.1399655707447;
-        Fri, 09 May 2014 10:15:07 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id l66sm6969422yhc.54.2014.05.09.10.15.03
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 09 May 2014 10:15:06 -0700 (PDT)
-In-Reply-To: <CACPiFCLcXOsSG34oBefEN7CPy4AKMAZjf7EA5WmxJG5oUfmepA@mail.gmail.com>
+	id S1757224AbaEIRRA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 May 2014 13:17:00 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:60310 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757200AbaEIRQ7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 May 2014 13:16:59 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9169315276;
+	Fri,  9 May 2014 13:16:58 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=7TIQqMlyvCXwn50vma1fdEwaFpQ=; b=PxjkEG
+	heif5NVakH3R4fYIlnVFXfnw5NR0TiIWua/KLxkix7OM8TQ0R02Vu2jg42DaBkLM
+	CzApXapRcu2H7RlHL+bvCAh8h9S4y/wdSiPcv7koPF2ZFcTXoJYjrPcdsXHl92V3
+	2ttzABCPV/MgW3GzTjEYkcD3dCZTAymNJGULc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=lEnRvcFnaIGE7C5HGXM8y5PGEva+rPmz
+	bYpptvdrs4oX5sCXfMVwbmHXMwhEyGekzqckltbULNa8CAYM/AYrB+sx4FYrbhf5
+	7UU0dwQ5Onh7dK4QYdFzCmoHEYLkdMQPILC+OBGqFvbe0D03kkacRBKDf7dVISXi
+	qQQ4c1pIPrU=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 861D215275;
+	Fri,  9 May 2014 13:16:58 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 16E9B1526F;
+	Fri,  9 May 2014 13:16:56 -0400 (EDT)
+In-Reply-To: <536c15cf8594b_6f3bb152ecb@nysa.notmuch> (Felipe Contreras's
+	message of "Thu, 08 May 2014 18:39:59 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: B8C598B6-D79D-11E3-9F12-9CEB01674E00-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248590>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248591>
 
-Martin Langhoff wrote:
-> On Fri, May 9, 2014 at 11:57 AM, Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
-> > I already explained:
-> >> That's right, and they are Cc'ed so they can respond.  Some tools have
-> >> only one commit or two, and in those I didn't even bother Cc'ing
-> >> anyone.
-> >
-> > contrib/persistent-https consist of a *single* commit, I didn't bother
-> > with those.
-> 
-> That single commit is the "merge" into contrib. It may have had a dev
-> history before.
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-It may, but from git.git's perspective it has no activity.
+> Junio C Hamano wrote:
+>> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>> 
+>> > I already said this multiple times, but let me be clear once more:
+>> >
+>> > MASTER HAS A REGRESSION (for all versions of Mercurial).
+>> 
+>> As you said, that is not a regression, isn't it?  It is an old
+>> breakage that existed even before 1.9 (was it 1.8.3 or something?)
+>
+> No. It does't happen in 1.9, it will happen in 2.0.
+>
+> That's a REGRESSION.
 
-Either way it's written in Go. I fail to see why Go can be tolerated
-while Ruby and any other language can't. Only C, perl, sh, or python.
+You earlier said in our exchange:
 
--- 
-Felipe Contreras
+    > Wrong. The code in question was not recent, it was introdued in 1.8.3,
+    > more than one year ago.
+
+and "git blame -L870,880 contrib/remote-helpers/git-remote-hg" does
+show that 68d4f4f3 (remote-hg: custom method to write tags,
+2013-04-22) is the culplit that has introduced ManifestLookupError.
+
+And it is in since 1.8.3.  How does it break 2.0 and without
+breaking 1.9?  The dormant and otherwise unused code got its first
+caller, or something?
+
+If this were a core part of the system the only sensible thing we
+can do at this point is to revert at this late stage of the cycle,
+but I do not think I have time to bisect and find that culprit, as
+today is when -rc3 has been scheduled to happen.
