@@ -1,910 +1,1532 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v1 22/25] contrib: remove 'fast-import'
-Date: Thu,  8 May 2014 19:58:33 -0500
-Message-ID: <1399597116-1851-23-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v1 24/25] contrib: remove 'hooks'
+Date: Thu,  8 May 2014 19:58:35 -0500
+Message-ID: <1399597116-1851-25-git-send-email-felipe.contreras@gmail.com>
 References: <1399597116-1851-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	David Aguilar <davvid@gmail.com>
+	Gerrit Pape <pape@smarden.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Andy Parkins <andyparkins@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 09 03:11:31 2014
+X-From: git-owner@vger.kernel.org Fri May 09 03:11:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WiZLU-0001an-Ql
-	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 03:11:29 +0200
+	id 1WiZLf-0001q4-Lx
+	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 03:11:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756073AbaEIBLW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 May 2014 21:11:22 -0400
-Received: from mail-yh0-f43.google.com ([209.85.213.43]:49924 "EHLO
-	mail-yh0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756013AbaEIBLT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 May 2014 21:11:19 -0400
-Received: by mail-yh0-f43.google.com with SMTP id f10so3150891yha.2
-        for <git@vger.kernel.org>; Thu, 08 May 2014 18:11:17 -0700 (PDT)
+	id S1756076AbaEIBLe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 May 2014 21:11:34 -0400
+Received: from mail-yk0-f180.google.com ([209.85.160.180]:37987 "EHLO
+	mail-yk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755344AbaEIBL3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 May 2014 21:11:29 -0400
+Received: by mail-yk0-f180.google.com with SMTP id q9so2887218ykb.39
+        for <git@vger.kernel.org>; Thu, 08 May 2014 18:11:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=B1lUIZPAl1jvKnyllFaxEiWCq41YfPtHgoZKLv2SPDg=;
-        b=UGj8yajMF3H1veMSWlbwPUYplyMtJCMFRHVcdCMA0nJTi21UfSj3d7WgfkT1zwh8QW
-         BiSXdvnYd5+nKf4hfywMn51VfIZWx8xgL8gfUQxtarZPl3SWbri/bQzz+Qvcvc5lXsiY
-         rGcedMjHEu+C+CDVqIHflz01bxouhXK3WmHbvxnmwJvJVR0pDBh/S95OOr7raMizVdah
-         swdKU8H/FQLYEnUZPCw0mvNQGsmwafYWzvOlbeaPeY42nu272F3XJ/jceIJBouU1uELv
-         fCj71zMmE3VI5r6g8W7PnDu/7cPVr1RZCw8AE+iPALZiKVOMAUzB9hU6uFjLYoKdeLS5
-         fKZQ==
-X-Received: by 10.236.169.233 with SMTP id n69mr10092046yhl.110.1399597877472;
-        Thu, 08 May 2014 18:11:17 -0700 (PDT)
+        bh=Rg3MoJ54bZtU5iP0U6kT/JMUIgioIDZrrzB3MNH2NA8=;
+        b=fWUySvA0sjyXsyqiN1l+Lv9WlWOMuJC5FkxxUKiNan+Czt2+OK7eGt0hGK/mm0WkE0
+         4R7IMGC16hrLCHZ6xTUJalO2j915HC6DL2R6kRJW9vZNwlOpi4b2Uim+8Z+D1VzKTmkR
+         NxxsFwFkToo/Wg9RBWxJQPgGcrQfARlVdgbn25Xdd1Yu5bbZ4YkJG8DrmseOfBS2l0nM
+         PJccfvMJaN4N3zyFl9BcSo8UW9627ntMWuH9xGvXZJf5hvReZ7RveoBoaFkCf+UtEj4V
+         0FP+QIEyBx8RTuQ8XhfX/TUuKCEGNw2y3onrLFe/0z0DnzkIULjVyVENf7JE7VdSFnhv
+         a3IA==
+X-Received: by 10.236.113.69 with SMTP id z45mr10369113yhg.0.1399597889078;
+        Thu, 08 May 2014 18:11:29 -0700 (PDT)
 Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id g1sm3918120yho.37.2014.05.08.18.11.13
+        by mx.google.com with ESMTPSA id k7sm3921763yhj.31.2014.05.08.18.11.26
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 08 May 2014 18:11:15 -0700 (PDT)
+        Thu, 08 May 2014 18:11:27 -0700 (PDT)
 X-Mailer: git-send-email 1.9.2+fc1.27.gbce2056
 In-Reply-To: <1399597116-1851-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248489>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248490>
 
-No tests, no documentation.
+No activity since 2008, no tests, no documentation.
 
-No chance of ever graduating.
-
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: David Aguilar <davvid@gmail.com>
+Cc: Gerrit Pape <pape@smarden.org>
+Cc: Shawn O. Pearce <spearce@spearce.org>
+Cc: Andy Parkins <andyparkins@gmail.com>
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/fast-import/git-import.perl         |  64 -----
- contrib/fast-import/git-import.sh           |  38 ---
- contrib/fast-import/git-p4.README           |  12 -
- contrib/fast-import/import-directories.perl | 417 ----------------------------
- contrib/fast-import/import-tars.perl        | 189 -------------
- contrib/fast-import/import-zips.py          |  78 ------
- 6 files changed, 798 deletions(-)
- delete mode 100755 contrib/fast-import/git-import.perl
- delete mode 100755 contrib/fast-import/git-import.sh
- delete mode 100644 contrib/fast-import/git-p4.README
- delete mode 100755 contrib/fast-import/import-directories.perl
- delete mode 100755 contrib/fast-import/import-tars.perl
- delete mode 100755 contrib/fast-import/import-zips.py
+ contrib/hooks/post-receive-email  | 759 --------------------------------------
+ contrib/hooks/pre-auto-gc-battery |  42 ---
+ contrib/hooks/setgitperms.perl    | 214 -----------
+ contrib/hooks/update-paranoid     | 421 ---------------------
+ 4 files changed, 1436 deletions(-)
+ delete mode 100755 contrib/hooks/post-receive-email
+ delete mode 100755 contrib/hooks/pre-auto-gc-battery
+ delete mode 100755 contrib/hooks/setgitperms.perl
+ delete mode 100755 contrib/hooks/update-paranoid
 
-diff --git a/contrib/fast-import/git-import.perl b/contrib/fast-import/git-import.perl
+diff --git a/contrib/hooks/post-receive-email b/contrib/hooks/post-receive-email
 deleted file mode 100755
-index 0891b9e..0000000
---- a/contrib/fast-import/git-import.perl
+index 8747b84..0000000
+--- a/contrib/hooks/post-receive-email
 +++ /dev/null
-@@ -1,64 +0,0 @@
--#!/usr/bin/perl
--#
--# Performs an initial import of a directory. This is the equivalent
--# of doing 'git init; git add .; git commit'. It's a little slower,
--# but is meant to be a simple fast-import example.
--
--use strict;
--use File::Find;
--
--my $USAGE = 'usage: git-import branch import-message';
--my $branch = shift or die "$USAGE\n";
--my $message = shift or die "$USAGE\n";
--
--chomp(my $username = `git config user.name`);
--chomp(my $email = `git config user.email`);
--die 'You need to set user name and email'
--  unless $username && $email;
--
--system('git init');
--open(my $fi, '|-', qw(git fast-import --date-format=now))
--  or die "unable to spawn fast-import: $!";
--
--print $fi <<EOF;
--commit refs/heads/$branch
--committer $username <$email> now
--data <<MSGEOF
--$message
--MSGEOF
--
--EOF
--
--find(
--  sub {
--    if($File::Find::name eq './.git') {
--      $File::Find::prune = 1;
--      return;
--    }
--    return unless -f $_;
--
--    my $fn = $File::Find::name;
--    $fn =~ s#^.\/##;
--
--    open(my $in, '<', $_)
--      or die "unable to open $fn: $!";
--    my @st = stat($in)
--      or die "unable to stat $fn: $!";
--    my $len = $st[7];
--
--    print $fi "M 644 inline $fn\n";
--    print $fi "data $len\n";
--    while($len > 0) {
--      my $r = read($in, my $buf, $len < 4096 ? $len : 4096);
--      defined($r) or die "read error from $fn: $!";
--      $r > 0 or die "premature EOF from $fn: $!";
--      print $fi $buf;
--      $len -= $r;
--    }
--    print $fi "\n";
--
--  }, '.'
--);
--
--close($fi);
--exit $?;
-diff --git a/contrib/fast-import/git-import.sh b/contrib/fast-import/git-import.sh
-deleted file mode 100755
-index f8d803c..0000000
---- a/contrib/fast-import/git-import.sh
-+++ /dev/null
-@@ -1,38 +0,0 @@
+@@ -1,759 +0,0 @@
 -#!/bin/sh
 -#
--# Performs an initial import of a directory. This is the equivalent
--# of doing 'git init; git add .; git commit'. It's a lot slower,
--# but is meant to be a simple fast-import example.
+-# Copyright (c) 2007 Andy Parkins
+-#
+-# An example hook script to mail out commit update information.
+-#
+-# NOTE: This script is no longer under active development.  There
+-# is another script, git-multimail, which is more capable and
+-# configurable and is largely backwards-compatible with this script;
+-# please see "contrib/hooks/multimail/".  For instructions on how to
+-# migrate from post-receive-email to git-multimail, please see
+-# "README.migrate-from-post-receive-email" in that directory.
+-#
+-# This hook sends emails listing new revisions to the repository
+-# introduced by the change being reported.  The rule is that (for
+-# branch updates) each commit will appear on one email and one email
+-# only.
+-#
+-# This hook is stored in the contrib/hooks directory.  Your distribution
+-# will have put this somewhere standard.  You should make this script
+-# executable then link to it in the repository you would like to use it in.
+-# For example, on debian the hook is stored in
+-# /usr/share/git-core/contrib/hooks/post-receive-email:
+-#
+-#  cd /path/to/your/repository.git
+-#  ln -sf /usr/share/git-core/contrib/hooks/post-receive-email hooks/post-receive
+-#
+-# This hook script assumes it is enabled on the central repository of a
+-# project, with all users pushing only to it and not between each other.  It
+-# will still work if you don't operate in that style, but it would become
+-# possible for the email to be from someone other than the person doing the
+-# push.
+-#
+-# To help with debugging and use on pre-v1.5.1 git servers, this script will
+-# also obey the interface of hooks/update, taking its arguments on the
+-# command line.  Unfortunately, hooks/update is called once for each ref.
+-# To avoid firing one email per ref, this script just prints its output to
+-# the screen when used in this mode.  The output can then be redirected if
+-# wanted.
+-#
+-# Config
+-# ------
+-# hooks.mailinglist
+-#   This is the list that all pushes will go to; leave it blank to not send
+-#   emails for every ref update.
+-# hooks.announcelist
+-#   This is the list that all pushes of annotated tags will go to.  Leave it
+-#   blank to default to the mailinglist field.  The announce emails lists
+-#   the short log summary of the changes since the last annotated tag.
+-# hooks.envelopesender
+-#   If set then the -f option is passed to sendmail to allow the envelope
+-#   sender address to be set
+-# hooks.emailprefix
+-#   All emails have their subjects prefixed with this prefix, or "[SCM]"
+-#   if emailprefix is unset, to aid filtering
+-# hooks.showrev
+-#   The shell command used to format each revision in the email, with
+-#   "%s" replaced with the commit id.  Defaults to "git rev-list -1
+-#   --pretty %s", displaying the commit id, author, date and log
+-#   message.  To list full patches separated by a blank line, you
+-#   could set this to "git show -C %s; echo".
+-#   To list a gitweb/cgit URL *and* a full patch for each change set, use this:
+-#     "t=%s; printf 'http://.../?id=%%s' \$t; echo;echo; git show -C \$t; echo"
+-#   Be careful if "..." contains things that will be expanded by shell "eval"
+-#   or printf.
+-# hooks.emailmaxlines
+-#   The maximum number of lines that should be included in the generated
+-#   email body. If not specified, there is no limit.
+-#   Lines beyond the limit are suppressed and counted, and a final
+-#   line is added indicating the number of suppressed lines.
+-# hooks.diffopts
+-#   Alternate options for the git diff-tree invocation that shows changes.
+-#   Default is "--stat --summary --find-copies-harder". Add -p to those
+-#   options to include a unified diff of changes in addition to the usual
+-#   summary output.
+-#
+-# Notes
+-# -----
+-# All emails include the headers "X-Git-Refname", "X-Git-Oldrev",
+-# "X-Git-Newrev", and "X-Git-Reftype" to enable fine tuned filtering and
+-# give information for debugging.
+-#
 -
--if [ -z "$1" -o -z "$2" ]; then
--	echo "usage: git-import branch import-message"
--	exit 1
--fi
+-# ---------------------------- Functions
 -
--USERNAME="$(git config user.name)"
--EMAIL="$(git config user.email)"
+-#
+-# Function to prepare for email generation. This decides what type
+-# of update this is and whether an email should even be generated.
+-#
+-prep_for_email()
+-{
+-	# --- Arguments
+-	oldrev=$(git rev-parse $1)
+-	newrev=$(git rev-parse $2)
+-	refname="$3"
 -
--if [ -z "$USERNAME" -o -z "$EMAIL" ]; then
--	echo "You need to set user name and email"
--	exit 1
--fi
+-	# --- Interpret
+-	# 0000->1234 (create)
+-	# 1234->2345 (update)
+-	# 2345->0000 (delete)
+-	if expr "$oldrev" : '0*$' >/dev/null
+-	then
+-		change_type="create"
+-	else
+-		if expr "$newrev" : '0*$' >/dev/null
+-		then
+-			change_type="delete"
+-		else
+-			change_type="update"
+-		fi
+-	fi
 -
--git init
+-	# --- Get the revision types
+-	newrev_type=$(git cat-file -t $newrev 2> /dev/null)
+-	oldrev_type=$(git cat-file -t "$oldrev" 2> /dev/null)
+-	case "$change_type" in
+-	create|update)
+-		rev="$newrev"
+-		rev_type="$newrev_type"
+-		;;
+-	delete)
+-		rev="$oldrev"
+-		rev_type="$oldrev_type"
+-		;;
+-	esac
 -
--(
--	cat <<EOF
--commit refs/heads/$1
--committer $USERNAME <$EMAIL> now
--data <<MSGEOF
--$2
--MSGEOF
+-	# The revision type tells us what type the commit is, combined with
+-	# the location of the ref we can decide between
+-	#  - working branch
+-	#  - tracking branch
+-	#  - unannoted tag
+-	#  - annotated tag
+-	case "$refname","$rev_type" in
+-		refs/tags/*,commit)
+-			# un-annotated tag
+-			refname_type="tag"
+-			short_refname=${refname##refs/tags/}
+-			;;
+-		refs/tags/*,tag)
+-			# annotated tag
+-			refname_type="annotated tag"
+-			short_refname=${refname##refs/tags/}
+-			# change recipients
+-			if [ -n "$announcerecipients" ]; then
+-				recipients="$announcerecipients"
+-			fi
+-			;;
+-		refs/heads/*,commit)
+-			# branch
+-			refname_type="branch"
+-			short_refname=${refname##refs/heads/}
+-			;;
+-		refs/remotes/*,commit)
+-			# tracking branch
+-			refname_type="tracking branch"
+-			short_refname=${refname##refs/remotes/}
+-			echo >&2 "*** Push-update of tracking branch, $refname"
+-			echo >&2 "***  - no email generated."
+-			return 1
+-			;;
+-		*)
+-			# Anything else (is there anything else?)
+-			echo >&2 "*** Unknown type of update to $refname ($rev_type)"
+-			echo >&2 "***  - no email generated"
+-			return 1
+-			;;
+-	esac
 -
--EOF
--	find * -type f|while read i;do
--		echo "M 100644 inline $i"
--		echo data $(stat -c '%s' "$i")
--		cat "$i"
--		echo
+-	# Check if we've got anyone to send to
+-	if [ -z "$recipients" ]; then
+-		case "$refname_type" in
+-			"annotated tag")
+-				config_name="hooks.announcelist"
+-				;;
+-			*)
+-				config_name="hooks.mailinglist"
+-				;;
+-		esac
+-		echo >&2 "*** $config_name is not set so no email will be sent"
+-		echo >&2 "*** for $refname update $oldrev->$newrev"
+-		return 1
+-	fi
+-
+-	return 0
+-}
+-
+-#
+-# Top level email generation function.  This calls the appropriate
+-# body-generation routine after outputting the common header.
+-#
+-# Note this function doesn't actually generate any email output, that is
+-# taken care of by the functions it calls:
+-#  - generate_email_header
+-#  - generate_create_XXXX_email
+-#  - generate_update_XXXX_email
+-#  - generate_delete_XXXX_email
+-#  - generate_email_footer
+-#
+-# Note also that this function cannot 'exit' from the script; when this
+-# function is running (in hook script mode), the send_mail() function
+-# is already executing in another process, connected via a pipe, and
+-# if this function exits without, whatever has been generated to that
+-# point will be sent as an email... even if nothing has been generated.
+-#
+-generate_email()
+-{
+-	# Email parameters
+-	# The email subject will contain the best description of the ref
+-	# that we can build from the parameters
+-	describe=$(git describe $rev 2>/dev/null)
+-	if [ -z "$describe" ]; then
+-		describe=$rev
+-	fi
+-
+-	generate_email_header
+-
+-	# Call the correct body generation function
+-	fn_name=general
+-	case "$refname_type" in
+-	"tracking branch"|branch)
+-		fn_name=branch
+-		;;
+-	"annotated tag")
+-		fn_name=atag
+-		;;
+-	esac
+-
+-	if [ -z "$maxlines" ]; then
+-		generate_${change_type}_${fn_name}_email
+-	else
+-		generate_${change_type}_${fn_name}_email | limit_lines $maxlines
+-	fi
+-
+-	generate_email_footer
+-}
+-
+-generate_email_header()
+-{
+-	# --- Email (all stdout will be the email)
+-	# Generate header
+-	cat <<-EOF
+-	To: $recipients
+-	Subject: ${emailprefix}$projectdesc $refname_type $short_refname ${change_type}d. $describe
+-	MIME-Version: 1.0
+-	Content-Type: text/plain; charset=utf-8
+-	Content-Transfer-Encoding: 8bit
+-	X-Git-Refname: $refname
+-	X-Git-Reftype: $refname_type
+-	X-Git-Oldrev: $oldrev
+-	X-Git-Newrev: $newrev
+-	Auto-Submitted: auto-generated
+-
+-	This is an automated email from the git hooks/post-receive script. It was
+-	generated because a ref change was pushed to the repository containing
+-	the project "$projectdesc".
+-
+-	The $refname_type, $short_refname has been ${change_type}d
+-	EOF
+-}
+-
+-generate_email_footer()
+-{
+-	SPACE=" "
+-	cat <<-EOF
+-
+-
+-	hooks/post-receive
+-	--${SPACE}
+-	$projectdesc
+-	EOF
+-}
+-
+-# --------------- Branches
+-
+-#
+-# Called for the creation of a branch
+-#
+-generate_create_branch_email()
+-{
+-	# This is a new branch and so oldrev is not valid
+-	echo "        at  $newrev ($newrev_type)"
+-	echo ""
+-
+-	echo $LOGBEGIN
+-	show_new_revisions
+-	echo $LOGEND
+-}
+-
+-#
+-# Called for the change of a pre-existing branch
+-#
+-generate_update_branch_email()
+-{
+-	# Consider this:
+-	#   1 --- 2 --- O --- X --- 3 --- 4 --- N
+-	#
+-	# O is $oldrev for $refname
+-	# N is $newrev for $refname
+-	# X is a revision pointed to by some other ref, for which we may
+-	#   assume that an email has already been generated.
+-	# In this case we want to issue an email containing only revisions
+-	# 3, 4, and N.  Given (almost) by
+-	#
+-	#  git rev-list N ^O --not --all
+-	#
+-	# The reason for the "almost", is that the "--not --all" will take
+-	# precedence over the "N", and effectively will translate to
+-	#
+-	#  git rev-list N ^O ^X ^N
+-	#
+-	# So, we need to build up the list more carefully.  git rev-parse
+-	# will generate a list of revs that may be fed into git rev-list.
+-	# We can get it to make the "--not --all" part and then filter out
+-	# the "^N" with:
+-	#
+-	#  git rev-parse --not --all | grep -v N
+-	#
+-	# Then, using the --stdin switch to git rev-list we have effectively
+-	# manufactured
+-	#
+-	#  git rev-list N ^O ^X
+-	#
+-	# This leaves a problem when someone else updates the repository
+-	# while this script is running.  Their new value of the ref we're
+-	# working on would be included in the "--not --all" output; and as
+-	# our $newrev would be an ancestor of that commit, it would exclude
+-	# all of our commits.  What we really want is to exclude the current
+-	# value of $refname from the --not list, rather than N itself.  So:
+-	#
+-	#  git rev-parse --not --all | grep -v $(git rev-parse $refname)
+-	#
+-	# Get's us to something pretty safe (apart from the small time
+-	# between refname being read, and git rev-parse running - for that,
+-	# I give up)
+-	#
+-	#
+-	# Next problem, consider this:
+-	#   * --- B --- * --- O ($oldrev)
+-	#          \
+-	#           * --- X --- * --- N ($newrev)
+-	#
+-	# That is to say, there is no guarantee that oldrev is a strict
+-	# subset of newrev (it would have required a --force, but that's
+-	# allowed).  So, we can't simply say rev-list $oldrev..$newrev.
+-	# Instead we find the common base of the two revs and list from
+-	# there.
+-	#
+-	# As above, we need to take into account the presence of X; if
+-	# another branch is already in the repository and points at some of
+-	# the revisions that we are about to output - we don't want them.
+-	# The solution is as before: git rev-parse output filtered.
+-	#
+-	# Finally, tags: 1 --- 2 --- O --- T --- 3 --- 4 --- N
+-	#
+-	# Tags pushed into the repository generate nice shortlog emails that
+-	# summarise the commits between them and the previous tag.  However,
+-	# those emails don't include the full commit messages that we output
+-	# for a branch update.  Therefore we still want to output revisions
+-	# that have been output on a tag email.
+-	#
+-	# Luckily, git rev-parse includes just the tool.  Instead of using
+-	# "--all" we use "--branches"; this has the added benefit that
+-	# "remotes/" will be ignored as well.
+-
+-	# List all of the revisions that were removed by this update, in a
+-	# fast-forward update, this list will be empty, because rev-list O
+-	# ^N is empty.  For a non-fast-forward, O ^N is the list of removed
+-	# revisions
+-	fast_forward=""
+-	rev=""
+-	for rev in $(git rev-list $newrev..$oldrev)
+-	do
+-		revtype=$(git cat-file -t "$rev")
+-		echo "  discards  $rev ($revtype)"
 -	done
--	echo
--) | git fast-import --date-format=now
-diff --git a/contrib/fast-import/git-p4.README b/contrib/fast-import/git-p4.README
-deleted file mode 100644
-index cec5ecf..0000000
---- a/contrib/fast-import/git-p4.README
-+++ /dev/null
-@@ -1,12 +0,0 @@
--The git-p4 script moved to the top-level of the git source directory.
+-	if [ -z "$rev" ]; then
+-		fast_forward=1
+-	fi
 -
--Invoke it as any other git command, like "git p4 clone", for instance.
+-	# List all the revisions from baserev to newrev in a kind of
+-	# "table-of-contents"; note this list can include revisions that
+-	# have already had notification emails and is present to show the
+-	# full detail of the change from rolling back the old revision to
+-	# the base revision and then forward to the new revision
+-	for rev in $(git rev-list $oldrev..$newrev)
+-	do
+-		revtype=$(git cat-file -t "$rev")
+-		echo "       via  $rev ($revtype)"
+-	done
 -
--Note that the top-level git-p4.py script is now the source.  It is
--built using make to git-p4, which will be installed.
+-	if [ "$fast_forward" ]; then
+-		echo "      from  $oldrev ($oldrev_type)"
+-	else
+-		#  1. Existing revisions were removed.  In this case newrev
+-		#     is a subset of oldrev - this is the reverse of a
+-		#     fast-forward, a rewind
+-		#  2. New revisions were added on top of an old revision,
+-		#     this is a rewind and addition.
 -
--Windows users can copy the git-p4.py source script directly, possibly
--invoking it through a batch file called "git-p4.bat" in the same folder.
--It should contain just one line:
+-		# (1) certainly happened, (2) possibly.  When (2) hasn't
+-		# happened, we set a flag to indicate that no log printout
+-		# is required.
 -
--    @python "%~d0%~p0git-p4.py" %*
-diff --git a/contrib/fast-import/import-directories.perl b/contrib/fast-import/import-directories.perl
+-		echo ""
+-
+-		# Find the common ancestor of the old and new revisions and
+-		# compare it with newrev
+-		baserev=$(git merge-base $oldrev $newrev)
+-		rewind_only=""
+-		if [ "$baserev" = "$newrev" ]; then
+-			echo "This update discarded existing revisions and left the branch pointing at"
+-			echo "a previous point in the repository history."
+-			echo ""
+-			echo " * -- * -- N ($newrev)"
+-			echo "            \\"
+-			echo "             O -- O -- O ($oldrev)"
+-			echo ""
+-			echo "The removed revisions are not necessarily gone - if another reference"
+-			echo "still refers to them they will stay in the repository."
+-			rewind_only=1
+-		else
+-			echo "This update added new revisions after undoing existing revisions.  That is"
+-			echo "to say, the old revision is not a strict subset of the new revision.  This"
+-			echo "situation occurs when you --force push a change and generate a repository"
+-			echo "containing something like this:"
+-			echo ""
+-			echo " * -- * -- B -- O -- O -- O ($oldrev)"
+-			echo "            \\"
+-			echo "             N -- N -- N ($newrev)"
+-			echo ""
+-			echo "When this happens we assume that you've already had alert emails for all"
+-			echo "of the O revisions, and so we here report only the revisions in the N"
+-			echo "branch from the common base, B."
+-		fi
+-	fi
+-
+-	echo ""
+-	if [ -z "$rewind_only" ]; then
+-		echo "Those revisions listed above that are new to this repository have"
+-		echo "not appeared on any other notification email; so we list those"
+-		echo "revisions in full, below."
+-
+-		echo ""
+-		echo $LOGBEGIN
+-		show_new_revisions
+-
+-		# XXX: Need a way of detecting whether git rev-list actually
+-		# outputted anything, so that we can issue a "no new
+-		# revisions added by this update" message
+-
+-		echo $LOGEND
+-	else
+-		echo "No new revisions were added by this update."
+-	fi
+-
+-	# The diffstat is shown from the old revision to the new revision.
+-	# This is to show the truth of what happened in this change.
+-	# There's no point showing the stat from the base to the new
+-	# revision because the base is effectively a random revision at this
+-	# point - the user will be interested in what this revision changed
+-	# - including the undoing of previous revisions in the case of
+-	# non-fast-forward updates.
+-	echo ""
+-	echo "Summary of changes:"
+-	git diff-tree $diffopts $oldrev..$newrev
+-}
+-
+-#
+-# Called for the deletion of a branch
+-#
+-generate_delete_branch_email()
+-{
+-	echo "       was  $oldrev"
+-	echo ""
+-	echo $LOGBEGIN
+-	git diff-tree -s --always --encoding=UTF-8 --pretty=oneline $oldrev
+-	echo $LOGEND
+-}
+-
+-# --------------- Annotated tags
+-
+-#
+-# Called for the creation of an annotated tag
+-#
+-generate_create_atag_email()
+-{
+-	echo "        at  $newrev ($newrev_type)"
+-
+-	generate_atag_email
+-}
+-
+-#
+-# Called for the update of an annotated tag (this is probably a rare event
+-# and may not even be allowed)
+-#
+-generate_update_atag_email()
+-{
+-	echo "        to  $newrev ($newrev_type)"
+-	echo "      from  $oldrev (which is now obsolete)"
+-
+-	generate_atag_email
+-}
+-
+-#
+-# Called when an annotated tag is created or changed
+-#
+-generate_atag_email()
+-{
+-	# Use git for-each-ref to pull out the individual fields from the
+-	# tag
+-	eval $(git for-each-ref --shell --format='
+-	tagobject=%(*objectname)
+-	tagtype=%(*objecttype)
+-	tagger=%(taggername)
+-	tagged=%(taggerdate)' $refname
+-	)
+-
+-	echo "   tagging  $tagobject ($tagtype)"
+-	case "$tagtype" in
+-	commit)
+-
+-		# If the tagged object is a commit, then we assume this is a
+-		# release, and so we calculate which tag this tag is
+-		# replacing
+-		prevtag=$(git describe --abbrev=0 $newrev^ 2>/dev/null)
+-
+-		if [ -n "$prevtag" ]; then
+-			echo "  replaces  $prevtag"
+-		fi
+-		;;
+-	*)
+-		echo "    length  $(git cat-file -s $tagobject) bytes"
+-		;;
+-	esac
+-	echo " tagged by  $tagger"
+-	echo "        on  $tagged"
+-
+-	echo ""
+-	echo $LOGBEGIN
+-
+-	# Show the content of the tag message; this might contain a change
+-	# log or release notes so is worth displaying.
+-	git cat-file tag $newrev | sed -e '1,/^$/d'
+-
+-	echo ""
+-	case "$tagtype" in
+-	commit)
+-		# Only commit tags make sense to have rev-list operations
+-		# performed on them
+-		if [ -n "$prevtag" ]; then
+-			# Show changes since the previous release
+-			git shortlog "$prevtag..$newrev"
+-		else
+-			# No previous tag, show all the changes since time
+-			# began
+-			git shortlog $newrev
+-		fi
+-		;;
+-	*)
+-		# XXX: Is there anything useful we can do for non-commit
+-		# objects?
+-		;;
+-	esac
+-
+-	echo $LOGEND
+-}
+-
+-#
+-# Called for the deletion of an annotated tag
+-#
+-generate_delete_atag_email()
+-{
+-	echo "       was  $oldrev"
+-	echo ""
+-	echo $LOGBEGIN
+-	git diff-tree -s --always --encoding=UTF-8 --pretty=oneline $oldrev
+-	echo $LOGEND
+-}
+-
+-# --------------- General references
+-
+-#
+-# Called when any other type of reference is created (most likely a
+-# non-annotated tag)
+-#
+-generate_create_general_email()
+-{
+-	echo "        at  $newrev ($newrev_type)"
+-
+-	generate_general_email
+-}
+-
+-#
+-# Called when any other type of reference is updated (most likely a
+-# non-annotated tag)
+-#
+-generate_update_general_email()
+-{
+-	echo "        to  $newrev ($newrev_type)"
+-	echo "      from  $oldrev"
+-
+-	generate_general_email
+-}
+-
+-#
+-# Called for creation or update of any other type of reference
+-#
+-generate_general_email()
+-{
+-	# Unannotated tags are more about marking a point than releasing a
+-	# version; therefore we don't do the shortlog summary that we do for
+-	# annotated tags above - we simply show that the point has been
+-	# marked, and print the log message for the marked point for
+-	# reference purposes
+-	#
+-	# Note this section also catches any other reference type (although
+-	# there aren't any) and deals with them in the same way.
+-
+-	echo ""
+-	if [ "$newrev_type" = "commit" ]; then
+-		echo $LOGBEGIN
+-		git diff-tree -s --always --encoding=UTF-8 --pretty=medium $newrev
+-		echo $LOGEND
+-	else
+-		# What can we do here?  The tag marks an object that is not
+-		# a commit, so there is no log for us to display.  It's
+-		# probably not wise to output git cat-file as it could be a
+-		# binary blob.  We'll just say how big it is
+-		echo "$newrev is a $newrev_type, and is $(git cat-file -s $newrev) bytes long."
+-	fi
+-}
+-
+-#
+-# Called for the deletion of any other type of reference
+-#
+-generate_delete_general_email()
+-{
+-	echo "       was  $oldrev"
+-	echo ""
+-	echo $LOGBEGIN
+-	git diff-tree -s --always --encoding=UTF-8 --pretty=oneline $oldrev
+-	echo $LOGEND
+-}
+-
+-
+-# --------------- Miscellaneous utilities
+-
+-#
+-# Show new revisions as the user would like to see them in the email.
+-#
+-show_new_revisions()
+-{
+-	# This shows all log entries that are not already covered by
+-	# another ref - i.e. commits that are now accessible from this
+-	# ref that were previously not accessible
+-	# (see generate_update_branch_email for the explanation of this
+-	# command)
+-
+-	# Revision range passed to rev-list differs for new vs. updated
+-	# branches.
+-	if [ "$change_type" = create ]
+-	then
+-		# Show all revisions exclusive to this (new) branch.
+-		revspec=$newrev
+-	else
+-		# Branch update; show revisions not part of $oldrev.
+-		revspec=$oldrev..$newrev
+-	fi
+-
+-	other_branches=$(git for-each-ref --format='%(refname)' refs/heads/ |
+-	    grep -F -v $refname)
+-	git rev-parse --not $other_branches |
+-	if [ -z "$custom_showrev" ]
+-	then
+-		git rev-list --pretty --stdin $revspec
+-	else
+-		git rev-list --stdin $revspec |
+-		while read onerev
+-		do
+-			eval $(printf "$custom_showrev" $onerev)
+-		done
+-	fi
+-}
+-
+-
+-limit_lines()
+-{
+-	lines=0
+-	skipped=0
+-	while IFS="" read -r line; do
+-		lines=$((lines + 1))
+-		if [ $lines -gt $1 ]; then
+-			skipped=$((skipped + 1))
+-		else
+-			printf "%s\n" "$line"
+-		fi
+-	done
+-	if [ $skipped -ne 0 ]; then
+-		echo "... $skipped lines suppressed ..."
+-	fi
+-}
+-
+-
+-send_mail()
+-{
+-	if [ -n "$envelopesender" ]; then
+-		/usr/sbin/sendmail -t -f "$envelopesender"
+-	else
+-		/usr/sbin/sendmail -t
+-	fi
+-}
+-
+-# ---------------------------- main()
+-
+-# --- Constants
+-LOGBEGIN="- Log -----------------------------------------------------------------"
+-LOGEND="-----------------------------------------------------------------------"
+-
+-# --- Config
+-# Set GIT_DIR either from the working directory, or from the environment
+-# variable.
+-GIT_DIR=$(git rev-parse --git-dir 2>/dev/null)
+-if [ -z "$GIT_DIR" ]; then
+-	echo >&2 "fatal: post-receive: GIT_DIR not set"
+-	exit 1
+-fi
+-
+-projectdesc=$(sed -ne '1p' "$GIT_DIR/description" 2>/dev/null)
+-# Check if the description is unchanged from it's default, and shorten it to
+-# a more manageable length if it is
+-if expr "$projectdesc" : "Unnamed repository.*$" >/dev/null
+-then
+-	projectdesc="UNNAMED PROJECT"
+-fi
+-
+-recipients=$(git config hooks.mailinglist)
+-announcerecipients=$(git config hooks.announcelist)
+-envelopesender=$(git config hooks.envelopesender)
+-emailprefix=$(git config hooks.emailprefix || echo '[SCM] ')
+-custom_showrev=$(git config hooks.showrev)
+-maxlines=$(git config hooks.emailmaxlines)
+-diffopts=$(git config hooks.diffopts)
+-: ${diffopts:="--stat --summary --find-copies-harder"}
+-
+-# --- Main loop
+-# Allow dual mode: run from the command line just like the update hook, or
+-# if no arguments are given then run as a hook script
+-if [ -n "$1" -a -n "$2" -a -n "$3" ]; then
+-	# Output to the terminal in command line mode - if someone wanted to
+-	# resend an email; they could redirect the output to sendmail
+-	# themselves
+-	prep_for_email $2 $3 $1 && PAGER= generate_email
+-else
+-	while read oldrev newrev refname
+-	do
+-		prep_for_email $oldrev $newrev $refname || continue
+-		generate_email $maxlines | send_mail
+-	done
+-fi
+diff --git a/contrib/hooks/pre-auto-gc-battery b/contrib/hooks/pre-auto-gc-battery
 deleted file mode 100755
-index 4dec1f1..0000000
---- a/contrib/fast-import/import-directories.perl
+index 9d0c2d1..0000000
+--- a/contrib/hooks/pre-auto-gc-battery
 +++ /dev/null
-@@ -1,417 +0,0 @@
+@@ -1,42 +0,0 @@
+-#!/bin/sh
+-#
+-# An example hook script to verify if you are on battery, in case you
+-# are running Linux or OS X. Called by git-gc --auto with no arguments.
+-# The hook should exit with non-zero status after issuing an appropriate
+-# message if it wants to stop the auto repacking.
+-#
+-# This hook is stored in the contrib/hooks directory. Your distribution
+-# may have put this somewhere else. If you want to use this hook, you
+-# should make this script executable then link to it in the repository
+-# you would like to use it in.
+-#
+-# For example, if the hook is stored in
+-# /usr/share/git-core/contrib/hooks/pre-auto-gc-battery:
+-#
+-# cd /path/to/your/repository.git
+-# ln -sf /usr/share/git-core/contrib/hooks/pre-auto-gc-battery \
+-#	hooks/pre-auto-gc
+-
+-if test -x /sbin/on_ac_power && /sbin/on_ac_power
+-then
+-	exit 0
+-elif test "$(cat /sys/class/power_supply/AC/online 2>/dev/null)" = 1
+-then
+-	exit 0
+-elif grep -q 'on-line' /proc/acpi/ac_adapter/AC/state 2>/dev/null
+-then
+-	exit 0
+-elif grep -q '0x01$' /proc/apm 2>/dev/null
+-then
+-	exit 0
+-elif grep -q "AC Power \+: 1" /proc/pmu/info 2>/dev/null
+-then
+-	exit 0
+-elif test -x /usr/bin/pmset && /usr/bin/pmset -g batt |
+-	grep -q "Currently drawing from 'AC Power'"
+-then
+-	exit 0
+-fi
+-
+-echo "Auto packing deferred; not on AC"
+-exit 1
+diff --git a/contrib/hooks/setgitperms.perl b/contrib/hooks/setgitperms.perl
+deleted file mode 100755
+index 2770a1b..0000000
+--- a/contrib/hooks/setgitperms.perl
++++ /dev/null
+@@ -1,214 +0,0 @@
 -#!/usr/bin/perl
 -#
--# Copyright 2008-2009 Peter Krefting <peter@softwolves.pp.se>
+-# Copyright (c) 2006 Josh England
 -#
--# ------------------------------------------------------------------------
+-# This script can be used to save/restore full permissions and ownership data
+-# within a git working tree.
 -#
--# This program is free software; you can redistribute it and/or modify
--# it under the terms of the GNU General Public License as published by
--# the Free Software Foundation.
+-# To save permissions/ownership data, place this script in your .git/hooks
+-# directory and enable a `pre-commit` hook with the following lines:
+-#      #!/bin/sh
+-#     SUBDIRECTORY_OK=1 . git-sh-setup
+-#     $GIT_DIR/hooks/setgitperms.perl -r
 -#
--# This program is distributed in the hope that it will be useful,
--# but WITHOUT ANY WARRANTY; without even the implied warranty of
--# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
--# GNU General Public License for more details.
+-# To restore permissions/ownership data, place this script in your .git/hooks
+-# directory and enable a `post-merge` and `post-checkout` hook with the
+-# following lines:
+-#      #!/bin/sh
+-#     SUBDIRECTORY_OK=1 . git-sh-setup
+-#     $GIT_DIR/hooks/setgitperms.perl -w
 -#
--# You should have received a copy of the GNU General Public License
--# along with this program; if not, write to the Free Software
--# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
--#
--# ------------------------------------------------------------------------
--
--=pod
--
--=head1 NAME
--
--import-directories - Import bits and pieces to Git.
--
--=head1 SYNOPSIS
--
--B<import-directories.perl> F<configfile> F<outputfile>
--
--=head1 DESCRIPTION
--
--Script to import arbitrary projects version controlled by the "copy the
--source directory to a new location and edit it there"-version controlled
--projects into version control. Handles projects with arbitrary branching
--and version trees, taking a file describing the inputs and generating a
--file compatible with the L<git-fast-import(1)> format.
--
--=head1 CONFIGURATION FILE
--
--=head2 Format
--
--The configuration file is based on the standard I<.ini> format.
--
-- ; Comments start with semi-colons
-- [section]
-- key=value
--
--Please see below for information on how to escape special characters.
--
--=head2 Global configuration
--
--Global configuration is done in the B<[config]> section, which should be
--the first section in the file. Configuration can be changed by
--repeating configuration sections later on.
--
-- [config]
-- ; configure conversion of CRLFs. "convert" means that all CRLFs
-- ; should be converted into LFs (suitable for the core.autocrlf
-- ; setting set to true in Git). "none" means that all data is
-- ; treated as binary.
-- crlf=convert
--
--=head2 Revision configuration
--
--Each revision that is to be imported is described in three
--sections. Revisions should be defined in topological order, so
--that a revision's parent has always been defined when a new revision
--is introduced. All the sections for one revision must be defined
--before defining the next revision.
--
--Each revision is assigned a unique numerical identifier. The
--numbers do not need to be consecutive, nor monotonically
--increasing.
--
--For instance, if your configuration file contains only the two
--revisions 4711 and 42, where 4711 is the initial commit, the
--only requirement is that 4711 is completely defined before 42.
--
--=pod
--
--=head3 Revision description section
--
--A section whose section name is just an integer gives meta-data
--about the revision.
--
-- [3]
-- ; author sets the author of the revisions
-- author=Peter Krefting <peter@softwolves.pp.se>
-- ; branch sets the branch that the revision should be committed to
-- branch=master
-- ; parent describes the revision that is the parent of this commit
-- ; (optional)
-- parent=1
-- ; merges describes a revision that is merged into this commit
-- ; (optional; can be repeated)
-- merges=2
-- ; selects one file to take the timestamp from
-- ; (optional; if unspecified, the most recent file from the .files
-- ;  section is used)
-- timestamp=3/source.c
--
--=head3 Revision contents section
--
--A section whose section name is an integer followed by B<.files>
--describe all the files included in this revision. If a file that
--was available previously is not included in this revision, it will
--be removed.
--
--If an on-disk revision is incomplete, you can point to files from
--a previous revision. There are no restrictions on where the source
--files are located, nor on their names.
--
-- [3.files]
-- ; the key is the path inside the repository, the value is the path
-- ; as seen from the importer script.
-- source.c=ver-3.00/source.c
-- source.h=ver-2.99/source.h
-- readme.txt=ver-3.00/introduction to the project.txt
--
--File names are treated as byte strings (but please see below on
--quoting rules), and should be stored in the configuration file in
--the encoding that should be used in the generated repository.
--
--=head3 Revision commit message section
--
--A section whose section name is an integer followed by B<.message>
--gives the commit message. This section is read verbatim, up until
--the beginning of the next section. As such, a commit message may not
--contain a line that begins with an opening square bracket ("[") and
--ends with a closing square bracket ("]"), unless they are surrounded
--by whitespace or other characters.
--
-- [3.message]
-- Implement foobar.
-- ; trailing blank lines are ignored.
--
--=cut
--
--# Globals
--use strict;
--use warnings;
--use integer;
--my $crlfmode = 0;
--my @revs;
--my (%revmap, %message, %files, %author, %branch, %parent, %merges, %time, %timesource);
--my $sectiontype = 0;
--my $rev = 0;
--my $mark = 1;
--
--# Check command line
--if ($#ARGV < 1 || $ARGV[0] =~ /^--?h/)
--{
--    exec('perldoc', $0);
--    exit 1;
--}
--
--# Open configuration
--my $config = $ARGV[0];
--open CFG, '<', $config or die "Cannot open configuration file \"$config\": ";
--
--# Open output
--my $output = $ARGV[1];
--open OUT, '>', $output or die "Cannot create output file \"$output\": ";
--binmode OUT;
--
--LINE: while (my $line = <CFG>)
--{
--	$line =~ s/\r?\n$//;
--	next LINE if $sectiontype != 4 && $line eq '';
--	next LINE if $line =~ /^;/;
--	my $oldsectiontype = $sectiontype;
--	my $oldrev = $rev;
--
--	# Sections
--	if ($line =~ m"^\[(config|(\d+)(|\.files|\.message))\]$")
--	{
--		if ($1 eq 'config')
--		{
--			$sectiontype = 1;
--		}
--		elsif ($3 eq '')
--		{
--			$sectiontype = 2;
--			$rev = $2;
--			# Create a new revision
--			die "Duplicate rev: $line\n " if defined $revmap{$rev};
--			print "Reading revision $rev\n";
--			push @revs, $rev;
--			$revmap{$rev} = $mark ++;
--			$time{$revmap{$rev}} = 0;
--		}
--		elsif ($3 eq '.files')
--		{
--			$sectiontype = 3;
--			$rev = $2;
--			die "Revision mismatch: $line\n " unless $rev == $oldrev;
--		}
--		elsif ($3 eq '.message')
--		{
--			$sectiontype = 4;
--			$rev = $2;
--			die "Revision mismatch: $line\n " unless $rev == $oldrev;
--		}
--		else
--		{
--			die "Internal parse error: $line\n ";
--		}
--		next LINE;
--	}
--
--	# Parse data
--	if ($sectiontype != 4)
--	{
--		# Key and value
--		if ($line =~ m"^\s*([^\s].*=.*[^\s])\s*$")
--		{
--			my ($key, $value) = &parsekeyvaluepair($1);
--			# Global configuration
--			if (1 == $sectiontype)
--			{
--				if ($key eq 'crlf')
--				{
--					$crlfmode = 1, next LINE if $value eq 'convert';
--					$crlfmode = 0, next LINE if $value eq 'none';
--				}
--				die "Unknown configuration option: $line\n ";
--			}
--			# Revision specification
--			if (2 == $sectiontype)
--			{
--				my $current = $revmap{$rev};
--				$author{$current} = $value, next LINE if $key eq 'author';
--				$branch{$current} = $value, next LINE if $key eq 'branch';
--				$parent{$current} = $value, next LINE if $key eq 'parent';
--				$timesource{$current} = $value, next LINE if $key eq 'timestamp';
--				push(@{$merges{$current}}, $value), next LINE if $key eq 'merges';
--				die "Unknown revision option: $line\n ";
--			}
--			# Filespecs
--			if (3 == $sectiontype)
--			{
--				# Add the file and create a marker
--				die "File not found: $line\n " unless -f $value;
--				my $current = $revmap{$rev};
--				${$files{$current}}{$key} = $mark;
--				my $time = &fileblob($value, $crlfmode, $mark ++);
--
--				# Update revision timestamp if more recent than other
--				# files seen, or if this is the file we have selected
--				# to take the time stamp from using the "timestamp"
--				# directive.
--				if ((defined $timesource{$current} && $timesource{$current} eq $value)
--				    || $time > $time{$current})
--				{
--					$time{$current} = $time;
--				}
--			}
--		}
--		else
--		{
--			die "Parse error: $line\n ";
--		}
--	}
--	else
--	{
--		# Commit message
--		my $current = $revmap{$rev};
--		if (defined $message{$current})
--		{
--			$message{$current} .= "\n";
--		}
--		$message{$current} .= $line;
--	}
--}
--close CFG;
--
--# Start spewing out data for git-fast-import
--foreach my $commit (@revs)
--{
--	# Progress
--	print OUT "progress Creating revision $commit\n";
--
--	# Create commit header
--	my $mark = $revmap{$commit};
--
--	# Branch and commit id
--	print OUT "commit refs/heads/", $branch{$mark}, "\nmark :", $mark, "\n";
--
--	# Author and timestamp
--	die "No timestamp defined for $commit (no files?)\n" unless defined $time{$mark};
--	print OUT "committer ", $author{$mark}, " ", $time{$mark}, " +0100\n";
--
--	# Commit message
--	die "No message defined for $commit\n" unless defined $message{$mark};
--	my $message = $message{$mark};
--	$message =~ s/\n$//; # Kill trailing empty line
--	print OUT "data ", length($message), "\n", $message, "\n";
--
--	# Parent and any merges
--	print OUT "from :", $revmap{$parent{$mark}}, "\n" if defined $parent{$mark};
--	if (defined $merges{$mark})
--	{
--		foreach my $merge (@{$merges{$mark}})
--		{
--			print OUT "merge :", $revmap{$merge}, "\n";
--		}
--	}
--
--	# Output file marks
--	print OUT "deleteall\n"; # start from scratch
--	foreach my $file (sort keys %{$files{$mark}})
--	{
--		print OUT "M 644 :", ${$files{$mark}}{$file}, " $file\n";
--	}
--	print OUT "\n";
--}
--
--# Create one file blob
--sub fileblob
--{
--	my ($filename, $crlfmode, $mark) = @_;
--
--	# Import the file
--	print OUT "progress Importing $filename\nblob\nmark :$mark\n";
--	open FILE, '<', $filename or die "Cannot read $filename\n ";
--	binmode FILE;
--	my ($size, $mtime) = (stat(FILE))[7,9];
--	my $file;
--	read FILE, $file, $size;
--	close FILE;
--	$file =~ s/\r\n/\n/g if $crlfmode;
--	print OUT "data ", length($file), "\n", $file, "\n";
--
--	return $mtime;
--}
--
--# Parse a key=value pair
--sub parsekeyvaluepair
--{
--=pod
--
--=head2 Escaping special characters
--
--Key and value strings may be enclosed in quotes, in which case
--whitespace inside the quotes is preserved. Additionally, an equal
--sign may be included in the key by preceding it with a backslash.
--For example:
--
-- "key1 "=value1
-- key2=" value2"
-- key\=3=value3
-- key4=value=4
-- "key5""=value5
--
--Here the first key is "key1 " (note the trailing white-space) and the
--second value is " value2" (note the leading white-space). The third
--key contains an equal sign "key=3" and so does the fourth value, which
--does not need to be escaped. The fifth key contains a trailing quote,
--which does not need to be escaped since it is inside a surrounding
--quote.
--
--=cut
--	my $pair = shift;
--
--	# Separate key and value by the first non-quoted equal sign
--	my ($key, $value);
--	if ($pair =~ /^(.*[^\\])=(.*)$/)
--	{
--		($key, $value) = ($1, $2)
--	}
--	else
--	{
--		die "Parse error: $pair\n ";
--	}
--
--	# Unquote and unescape the key and value separately
--	return (&unescape($key), &unescape($value));
--}
--
--# Unquote and unescape
--sub unescape
--{
--	my $string = shift;
--
--	# First remove enclosing quotes. Backslash before the trailing
--	# quote leaves both.
--	if ($string =~ /^"(.*[^\\])"$/)
--	{
--		$string = $1;
--	}
--
--	# Second remove any backslashes inside the unquoted string.
--	# For later: Handle special sequences like \t ?
--	$string =~ s/\\(.)/$1/g;
--
--	return $string;
--}
--
--__END__
--
--=pod
--
--=head1 EXAMPLES
--
--B<import-directories.perl> F<project.import>
--
--=head1 AUTHOR
--
--Copyright 2008-2009 Peter Krefting E<lt>peter@softwolves.pp.se>
--
--This program is free software; you can redistribute it and/or modify
--it under the terms of the GNU General Public License as published by
--the Free Software Foundation.
--
--=cut
-diff --git a/contrib/fast-import/import-tars.perl b/contrib/fast-import/import-tars.perl
-deleted file mode 100755
-index 95438e1..0000000
---- a/contrib/fast-import/import-tars.perl
-+++ /dev/null
-@@ -1,189 +0,0 @@
--#!/usr/bin/perl
--
--## tar archive frontend for git-fast-import
--##
--## For example:
--##
--##  mkdir project; cd project; git init
--##  perl import-tars.perl *.tar.bz2
--##  git whatchanged import-tars
--##
--## Use --metainfo to specify the extension for a meta data file, where
--## import-tars can read the commit message and optionally author and
--## committer information.
--##
--##  echo 'This is the commit message' > myfile.tar.bz2.msg
--##  perl import-tars.perl --metainfo=msg myfile.tar.bz2
--
 -use strict;
 -use Getopt::Long;
+-use File::Find;
+-use File::Basename;
 -
--my $metaext = '';
+-my $usage =
+-"usage: setgitperms.perl [OPTION]... <--read|--write>
+-This program uses a file `.gitmeta` to store/restore permissions and uid/gid
+-info for all files/dirs tracked by git in the repository.
 -
--die "usage: import-tars [--metainfo=extension] *.tar.{gz,bz2,lzma,xz,Z}\n"
--	unless GetOptions('metainfo=s' => \$metaext) && @ARGV;
+----------------------------------Read Mode-------------------------------------
+--r,  --read         Reads perms/etc from working dir into a .gitmeta file
+--s,  --stdout       Output to stdout instead of .gitmeta
+--d,  --diff         Show unified diff of perms file (XOR with --stdout)
 -
--my $branch_name = 'import-tars';
--my $branch_ref = "refs/heads/$branch_name";
--my $author_name = $ENV{'GIT_AUTHOR_NAME'} || 'T Ar Creator';
--my $author_email = $ENV{'GIT_AUTHOR_EMAIL'} || 'tar@example.com';
--my $committer_name = $ENV{'GIT_COMMITTER_NAME'} || `git config --get user.name`;
--my $committer_email = $ENV{'GIT_COMMITTER_EMAIL'} || `git config --get user.email`;
+----------------------------------Write Mode------------------------------------
+--w,  --write        Modify perms/etc in working dir to match the .gitmeta file
+--v,  --verbose      Be verbose
 -
--chomp($committer_name, $committer_email);
+-\n";
 -
--open(FI, '|-', 'git', 'fast-import', '--quiet')
--	or die "Unable to start git fast-import: $!\n";
--foreach my $tar_file (@ARGV)
--{
--	my $commit_time = time;
--	$tar_file =~ m,([^/]+)$,;
--	my $tar_name = $1;
+-my ($stdout, $showdiff, $verbose, $read_mode, $write_mode);
 -
--	if ($tar_name =~ s/\.(tar\.gz|tgz)$//) {
--		open(I, '-|', 'gunzip', '-c', $tar_file)
--			or die "Unable to gunzip -c $tar_file: $!\n";
--	} elsif ($tar_name =~ s/\.(tar\.bz2|tbz2)$//) {
--		open(I, '-|', 'bunzip2', '-c', $tar_file)
--			or die "Unable to bunzip2 -c $tar_file: $!\n";
--	} elsif ($tar_name =~ s/\.tar\.Z$//) {
--		open(I, '-|', 'uncompress', '-c', $tar_file)
--			or die "Unable to uncompress -c $tar_file: $!\n";
--	} elsif ($tar_name =~ s/\.(tar\.(lzma|xz)|(tlz|txz))$//) {
--		open(I, '-|', 'xz', '-dc', $tar_file)
--			or die "Unable to xz -dc $tar_file: $!\n";
--	} elsif ($tar_name =~ s/\.tar$//) {
--		open(I, $tar_file) or die "Unable to open $tar_file: $!\n";
--	} else {
--		die "Unrecognized compression format: $tar_file\n";
--	}
+-if ((@ARGV < 0) || !GetOptions(
+-			       "stdout",         \$stdout,
+-			       "diff",           \$showdiff,
+-			       "read",           \$read_mode,
+-			       "write",          \$write_mode,
+-			       "verbose",        \$verbose,
+-			      )) { die $usage; }
+-die $usage unless ($read_mode xor $write_mode);
 -
--	my $author_time = 0;
--	my $next_mark = 1;
--	my $have_top_dir = 1;
--	my ($top_dir, %files);
+-my $topdir = `git rev-parse --show-cdup` or die "\n"; chomp $topdir;
+-my $gitdir = $topdir . '.git';
+-my $gitmeta = $topdir . '.gitmeta';
 -
--	while (read(I, $_, 512) == 512) {
--		my ($name, $mode, $uid, $gid, $size, $mtime,
--			$chksum, $typeflag, $linkname, $magic,
--			$version, $uname, $gname, $devmajor, $devminor,
--			$prefix) = unpack 'Z100 Z8 Z8 Z8 Z12 Z12
--			Z8 Z1 Z100 Z6
--			Z2 Z32 Z32 Z8 Z8 Z*', $_;
--		last unless length($name);
--		if ($name eq '././@LongLink') {
--			# GNU tar extension
--			if (read(I, $_, 512) != 512) {
--				die ('Short archive');
--			}
--			$name = unpack 'Z257', $_;
--			next unless $name;
+-if ($write_mode) {
+-    # Update the working dir permissions/ownership based on data from .gitmeta
+-    open (IN, "<$gitmeta") or die "Could not open $gitmeta for reading: $!\n";
+-    while (defined ($_ = <IN>)) {
+-	chomp;
+-	if (/^(.*)  mode=(\S+)\s+uid=(\d+)\s+gid=(\d+)/) {
+-	    # Compare recorded perms to actual perms in the working dir
+-	    my ($path, $mode, $uid, $gid) = ($1, $2, $3, $4);
+-	    my $fullpath = $topdir . $path;
+-	    my (undef,undef,$wmode,undef,$wuid,$wgid) = lstat($fullpath);
+-	    $wmode = sprintf "%04o", $wmode & 07777;
+-	    if ($mode ne $wmode) {
+-		$verbose && print "Updating permissions on $path: old=$wmode, new=$mode\n";
+-		chmod oct($mode), $fullpath;
+-	    }
+-	    if ($uid != $wuid || $gid != $wgid) {
+-		if ($verbose) {
+-		    # Print out user/group names instead of uid/gid
+-		    my $pwname  = getpwuid($uid);
+-		    my $grpname  = getgrgid($gid);
+-		    my $wpwname  = getpwuid($wuid);
+-		    my $wgrpname  = getgrgid($wgid);
+-		    $pwname = $uid if !defined $pwname;
+-		    $grpname = $gid if !defined $grpname;
+-		    $wpwname = $wuid if !defined $wpwname;
+-		    $wgrpname = $wgid if !defined $wgrpname;
 -
--			my $dummy;
--			if (read(I, $_, 512) != 512) {
--				die ('Short archive');
--			}
--			($dummy, $mode, $uid, $gid, $size, $mtime,
--			$chksum, $typeflag, $linkname, $magic,
--			$version, $uname, $gname, $devmajor, $devminor,
--			$prefix) = unpack 'Z100 Z8 Z8 Z8 Z12 Z12
--			Z8 Z1 Z100 Z6
--			Z2 Z32 Z32 Z8 Z8 Z*', $_;
+-		    print "Updating uid/gid on $path: old=$wpwname/$wgrpname, new=$pwname/$grpname\n";
 -		}
--		next if $name =~ m{/\z};
--		$mode = oct $mode;
--		$size = oct $size;
--		$mtime = oct $mtime;
--		next if $typeflag == 5; # directory
+-		chown $uid, $gid, $fullpath;
+-	    }
+-	}
+-	else {
+-	    warn "Invalid input format in $gitmeta:\n\t$_\n";
+-	}
+-    }
+-    close IN;
+-}
+-elsif ($read_mode) {
+-    # Handle merge conflicts in the .gitperms file
+-    if (-e "$gitdir/MERGE_MSG") {
+-	if (`grep ====== $gitmeta`) {
+-	    # Conflict not resolved -- abort the commit
+-	    print "PERMISSIONS/OWNERSHIP CONFLICT\n";
+-	    print "    Resolve the conflict in the $gitmeta file and then run\n";
+-	    print "    `.git/hooks/setgitperms.perl --write` to reconcile.\n";
+-	    exit 1;
+-	}
+-	elsif (`grep $gitmeta $gitdir/MERGE_MSG`) {
+-	    # A conflict in .gitmeta has been manually resolved. Verify that
+-	    # the working dir perms matches the current .gitmeta perms for
+-	    # each file/dir that conflicted.
+-	    # This is here because a `setgitperms.perl --write` was not
+-	    # performed due to a merge conflict, so permissions/ownership
+-	    # may not be consistent with the manually merged .gitmeta file.
+-	    my @conflict_diff = `git show \$(cat $gitdir/MERGE_HEAD)`;
+-	    my @conflict_files;
+-	    my $metadiff = 0;
 -
--		print FI "blob\n", "mark :$next_mark\n";
--		if ($typeflag == 2) { # symbolic link
--			print FI "data ", length($linkname), "\n", $linkname;
--			$mode = 0120000;
+-	    # Build a list of files that conflicted from the .gitmeta diff
+-	    foreach my $line (@conflict_diff) {
+-		if ($line =~ m|^diff --git a/$gitmeta b/$gitmeta|) {
+-		    $metadiff = 1;
+-		}
+-		elsif ($line =~ /^diff --git/) {
+-		    $metadiff = 0;
+-		}
+-		elsif ($metadiff && $line =~ /^\+(.*)  mode=/) {
+-		    push @conflict_files, $1;
+-		}
+-	    }
+-
+-	    # Verify that each conflict file now has permissions consistent
+-	    # with the .gitmeta file
+-	    foreach my $file (@conflict_files) {
+-		my $absfile = $topdir . $file;
+-		my $gm_entry = `grep "^$file  mode=" $gitmeta`;
+-		if ($gm_entry =~ /mode=(\d+)  uid=(\d+)  gid=(\d+)/) {
+-		    my ($gm_mode, $gm_uid, $gm_gid) = ($1, $2, $3);
+-		    my (undef,undef,$mode,undef,$uid,$gid) = lstat("$absfile");
+-		    $mode = sprintf("%04o", $mode & 07777);
+-		    if (($gm_mode ne $mode) || ($gm_uid != $uid)
+-			|| ($gm_gid != $gid)) {
+-			print "PERMISSIONS/OWNERSHIP CONFLICT\n";
+-			print "    Mismatch found for file: $file\n";
+-			print "    Run `.git/hooks/setgitperms.perl --write` to reconcile.\n";
+-			exit 1;
+-		    }
+-		}
+-		else {
+-		    print "Warning! Permissions/ownership no longer being tracked for file: $file\n";
+-		}
+-	    }
+-	}
+-    }
+-
+-    # No merge conflicts -- write out perms/ownership data to .gitmeta file
+-    unless ($stdout) {
+-	open (OUT, ">$gitmeta.tmp") or die "Could not open $gitmeta.tmp for writing: $!\n";
+-    }
+-
+-    my @files = `git ls-files`;
+-    my %dirs;
+-
+-    foreach my $path (@files) {
+-	chomp $path;
+-	# We have to manually add stats for parent directories
+-	my $parent = dirname($path);
+-	while (!exists $dirs{$parent}) {
+-	    $dirs{$parent} = 1;
+-	    next if $parent eq '.';
+-	    printstats($parent);
+-	    $parent = dirname($parent);
+-	}
+-	# Now the git-tracked file
+-	printstats($path);
+-    }
+-
+-    # diff the temporary metadata file to see if anything has changed
+-    # If no metadata has changed, don't overwrite the real file
+-    # This is just so `git commit -a` doesn't try to commit a bogus update
+-    unless ($stdout) {
+-	if (! -e $gitmeta) {
+-	    rename "$gitmeta.tmp", $gitmeta;
+-	}
+-	else {
+-	    my $diff = `diff -U 0 $gitmeta $gitmeta.tmp`;
+-	    if ($diff ne '') {
+-		rename "$gitmeta.tmp", $gitmeta;
+-	    }
+-	    else {
+-		unlink "$gitmeta.tmp";
+-	    }
+-	    if ($showdiff) {
+-		print $diff;
+-	    }
+-	}
+-	close OUT;
+-    }
+-    # Make sure the .gitmeta file is tracked
+-    system("git add $gitmeta");
+-}
+-
+-
+-sub printstats {
+-    my $path = $_[0];
+-    $path =~ s/@/\@/g;
+-    my (undef,undef,$mode,undef,$uid,$gid) = lstat($path);
+-    $path =~ s/%/\%/g;
+-    if ($stdout) {
+-	print $path;
+-	printf "  mode=%04o  uid=$uid  gid=$gid\n", $mode & 07777;
+-    }
+-    else {
+-	print OUT $path;
+-	printf OUT "  mode=%04o  uid=$uid  gid=$gid\n", $mode & 07777;
+-    }
+-}
+diff --git a/contrib/hooks/update-paranoid b/contrib/hooks/update-paranoid
+deleted file mode 100755
+index d18b317..0000000
+--- a/contrib/hooks/update-paranoid
++++ /dev/null
+@@ -1,421 +0,0 @@
+-#!/usr/bin/perl
+-
+-use strict;
+-use File::Spec;
+-
+-$ENV{PATH}     = '/opt/git/bin';
+-my $acl_git    = '/vcs/acls.git';
+-my $acl_branch = 'refs/heads/master';
+-my $debug      = 0;
+-
+-=doc
+-Invoked as: update refname old-sha1 new-sha1
+-
+-This script is run by git-receive-pack once for each ref that the
+-client is trying to modify.  If we exit with a non-zero exit value
+-then the update for that particular ref is denied, but updates for
+-other refs in the same run of receive-pack may still be allowed.
+-
+-We are run after the objects have been uploaded, but before the
+-ref is actually modified.  We take advantage of that fact when we
+-look for "new" commits and tags (the new objects won't show up in
+-`rev-list --all`).
+-
+-This script loads and parses the content of the config file
+-"users/$this_user.acl" from the $acl_branch commit of $acl_git ODB.
+-The acl file is a git-config style file, but uses a slightly more
+-restricted syntax as the Perl parser contained within this script
+-is not nearly as permissive as git-config.
+-
+-Example:
+-
+-  [user]
+-    committer = John Doe <john.doe@example.com>
+-    committer = John R. Doe <john.doe@example.com>
+-
+-  [repository "acls"]
+-    allow = heads/master
+-    allow = CDUR for heads/jd/
+-    allow = C    for ^tags/v\\d+$
+-
+-For all new commit or tag objects the committer (or tagger) line
+-within the object must exactly match one of the user.committer
+-values listed in the acl file ("HEAD:users/$this_user.acl").
+-
+-For a branch to be modified an allow line within the matching
+-repository section must be matched for both the refname and the
+-opcode.
+-
+-Repository sections are matched on the basename of the repository
+-(after removing the .git suffix).
+-
+-The opcode abbrevations are:
+-
+-  C: create new ref
+-  D: delete existing ref
+-  U: fast-forward existing ref (no commit loss)
+-  R: rewind/rebase existing ref (commit loss)
+-
+-if no opcodes are listed before the "for" keyword then "U" (for
+-fast-forward update only) is assumed as this is the most common
+-usage.
+-
+-Refnames are matched by always assuming a prefix of "refs/".
+-This hook forbids pushing or deleting anything not under "refs/".
+-
+-Refnames that start with ^ are Perl regular expressions, and the ^
+-is kept as part of the regexp.  \\ is needed to get just one \, so
+-\\d expands to \d in Perl.  The 3rd allow line above is an example.
+-
+-Refnames that don't start with ^ but that end with / are prefix
+-matches (2nd allow line above); all other refnames are strict
+-equality matches (1st allow line).
+-
+-Anything pushed to "heads/" (ok, really "refs/heads/") must be
+-a commit.  Tags are not permitted here.
+-
+-Anything pushed to "tags/" (err, really "refs/tags/") must be an
+-annotated tag.  Commits, blobs, trees, etc. are not permitted here.
+-Annotated tag signatures aren't checked, nor are they required.
+-
+-The special subrepository of 'info/new-commit-check' can
+-be created and used to allow users to push new commits and
+-tags from another local repository to this one, even if they
+-aren't the committer/tagger of those objects.  In a nut shell
+-the info/new-commit-check directory is a Git repository whose
+-objects/info/alternates file lists this repository and all other
+-possible sources, and whose refs subdirectory contains symlinks
+-to this repository's refs subdirectory, and to all other possible
+-sources refs subdirectories.  Yes, this means that you cannot
+-use packed-refs in those repositories as they won't be resolved
+-correctly.
+-
+-=cut
+-
+-my $git_dir = $ENV{GIT_DIR};
+-my $new_commit_check = "$git_dir/info/new-commit-check";
+-my $ref = $ARGV[0];
+-my $old = $ARGV[1];
+-my $new = $ARGV[2];
+-my $new_type;
+-my ($this_user) = getpwuid $<; # REAL_USER_ID
+-my $repository_name;
+-my %user_committer;
+-my @allow_rules;
+-my @path_rules;
+-my %diff_cache;
+-
+-sub deny ($) {
+-	print STDERR "-Deny-    $_[0]\n" if $debug;
+-	print STDERR "\ndenied: $_[0]\n\n";
+-	exit 1;
+-}
+-
+-sub grant ($) {
+-	print STDERR "-Grant-   $_[0]\n" if $debug;
+-	exit 0;
+-}
+-
+-sub info ($) {
+-	print STDERR "-Info-    $_[0]\n" if $debug;
+-}
+-
+-sub git_value (@) {
+-	open(T,'-|','git',@_); local $_ = <T>; chop; close T; $_;
+-}
+-
+-sub match_string ($$) {
+-	my ($acl_n, $ref) = @_;
+-	   ($acl_n eq $ref)
+-	|| ($acl_n =~ m,/$, && substr($ref,0,length $acl_n) eq $acl_n)
+-	|| ($acl_n =~ m,^\^, && $ref =~ m:$acl_n:);
+-}
+-
+-sub parse_config ($$$$) {
+-	my $data = shift;
+-	local $ENV{GIT_DIR} = shift;
+-	my $br = shift;
+-	my $fn = shift;
+-	return unless git_value('rev-list','--max-count=1',$br,'--',$fn);
+-	info "Loading $br:$fn";
+-	open(I,'-|','git','cat-file','blob',"$br:$fn");
+-	my $section = '';
+-	while (<I>) {
+-		chomp;
+-		if (/^\s*$/ || /^\s*#/) {
+-		} elsif (/^\[([a-z]+)\]$/i) {
+-			$section = lc $1;
+-		} elsif (/^\[([a-z]+)\s+"(.*)"\]$/i) {
+-			$section = join('.',lc $1,$2);
+-		} elsif (/^\s*([a-z][a-z0-9]+)\s*=\s*(.*?)\s*$/i) {
+-			push @{$data->{join('.',$section,lc $1)}}, $2;
 -		} else {
--			print FI "data $size\n";
--			while ($size > 0 && read(I, $_, 512) == 512) {
--				print FI substr($_, 0, $size);
--				$size -= 512;
--			}
--		}
--		print FI "\n";
--
--		my $path;
--		if ($prefix) {
--			$path = "$prefix/$name";
--		} else {
--			$path = "$name";
--		}
--		$files{$path} = [$next_mark++, $mode];
--
--		$author_time = $mtime if $mtime > $author_time;
--		$path =~ m,^([^/]+)/,;
--		$top_dir = $1 unless $top_dir;
--		$have_top_dir = 0 if $top_dir ne $1;
--	}
--
--	my $commit_msg = "Imported from $tar_file.";
--	my $this_committer_name = $committer_name;
--	my $this_committer_email = $committer_email;
--	my $this_author_name = $author_name;
--	my $this_author_email = $author_email;
--	if ($metaext ne '') {
--		# Optionally read a commit message from <filename.tar>.msg
--		# Add a line on the form "Committer: name <e-mail>" to override
--		# the committer and "Author: name <e-mail>" to override the
--		# author for this tar ball.
--		if (open MSG, '<', "${tar_file}.${metaext}") {
--			my $header_done = 0;
--			$commit_msg = '';
--			while (<MSG>) {
--				if (!$header_done && /^Committer:\s+([^<>]*)\s+<(.*)>\s*$/i) {
--					$this_committer_name = $1;
--					$this_committer_email = $2;
--				} elsif (!$header_done && /^Author:\s+([^<>]*)\s+<(.*)>\s*$/i) {
--					$this_author_name = $1;
--					$this_author_email = $2;
--				} elsif (!$header_done && /^$/) { # empty line ends header.
--					$header_done = 1;
--				} else {
--					$commit_msg .= $_;
--					$header_done = 1;
--				}
--			}
--			close MSG;
+-			deny "bad config file line $. in $br:$fn";
 -		}
 -	}
--
--	print FI <<EOF;
--commit $branch_ref
--author $this_author_name <$this_author_email> $author_time +0000
--committer $this_committer_name <$this_committer_email> $commit_time +0000
--data <<END_OF_COMMIT_MESSAGE
--$commit_msg
--END_OF_COMMIT_MESSAGE
--
--deleteall
--EOF
--
--	foreach my $path (keys %files)
--	{
--		my ($mark, $mode) = @{$files{$path}};
--		$path =~ s,^([^/]+)/,, if $have_top_dir;
--		$mode = $mode & 0111 ? 0755 : 0644 unless $mode == 0120000;
--		printf FI "M %o :%i %s\n", $mode, $mark, $path;
--	}
--	print FI "\n";
--
--	print FI <<EOF;
--tag $tar_name
--from $branch_ref
--tagger $author_name <$author_email> $author_time +0000
--data <<END_OF_TAG_MESSAGE
--Package $tar_name
--END_OF_TAG_MESSAGE
--
--EOF
--
 -	close I;
 -}
--close FI;
-diff --git a/contrib/fast-import/import-zips.py b/contrib/fast-import/import-zips.py
-deleted file mode 100755
-index d12c296..0000000
---- a/contrib/fast-import/import-zips.py
-+++ /dev/null
-@@ -1,78 +0,0 @@
--#!/usr/bin/env python
 -
--## zip archive frontend for git-fast-import
--##
--## For example:
--##
--##  mkdir project; cd project; git init
--##  python import-zips.py *.zip
--##  git log --stat import-zips
+-sub all_new_committers () {
+-	local $ENV{GIT_DIR} = $git_dir;
+-	$ENV{GIT_DIR} = $new_commit_check if -d $new_commit_check;
 -
--from os import popen, path
--from sys import argv, exit, hexversion, stderr
--from time import mktime
--from zipfile import ZipFile
+-	info "Getting committers of new commits.";
+-	my %used;
+-	open(T,'-|','git','rev-list','--pretty=raw',$new,'--not','--all');
+-	while (<T>) {
+-		next unless s/^committer //;
+-		chop;
+-		s/>.*$/>/;
+-		info "Found $_." unless $used{$_}++;
+-	}
+-	close T;
+-	info "No new commits." unless %used;
+-	keys %used;
+-}
 -
--if hexversion < 0x01060000:
--    # The limiter is the zipfile module
--    stderr.write("import-zips.py: requires Python 1.6.0 or later.\n")
--    exit(1)
+-sub all_new_taggers () {
+-	my %exists;
+-	open(T,'-|','git','for-each-ref','--format=%(objectname)','refs/tags');
+-	while (<T>) {
+-		chop;
+-		$exists{$_} = 1;
+-	}
+-	close T;
 -
--if len(argv) < 2:
--    print 'usage:', argv[0], '<zipfile>...'
--    exit(1)
+-	info "Getting taggers of new tags.";
+-	my %used;
+-	my $obj = $new;
+-	my $obj_type = $new_type;
+-	while ($obj_type eq 'tag') {
+-		last if $exists{$obj};
+-		$obj_type = '';
+-		open(T,'-|','git','cat-file','tag',$obj);
+-		while (<T>) {
+-			chop;
+-			if (/^object ([a-z0-9]{40})$/) {
+-				$obj = $1;
+-			} elsif (/^type (.+)$/) {
+-				$obj_type = $1;
+-			} elsif (s/^tagger //) {
+-				s/>.*$/>/;
+-				info "Found $_." unless $used{$_}++;
+-				last;
+-			}
+-		}
+-		close T;
+-	}
+-	info "No new tags." unless %used;
+-	keys %used;
+-}
 -
--branch_ref = 'refs/heads/import-zips'
--committer_name = 'Z Ip Creator'
--committer_email = 'zip@example.com'
+-sub check_committers (@) {
+-	my @bad;
+-	foreach (@_) { push @bad, $_ unless $user_committer{$_}; }
+-	if (@bad) {
+-		print STDERR "\n";
+-		print STDERR "You are not $_.\n" foreach (sort @bad);
+-		deny "You cannot push changes not committed by you.";
+-	}
+-}
 -
--fast_import = popen('git fast-import --quiet', 'w')
--def printlines(list):
--    for str in list:
--        fast_import.write(str + "\n")
+-sub load_diff ($) {
+-	my $base = shift;
+-	my $d = $diff_cache{$base};
+-	unless ($d) {
+-		local $/ = "\0";
+-		my %this_diff;
+-		if ($base =~ /^0{40}$/) {
+-			# Don't load the diff at all; we are making the
+-			# branch and have no base to compare to in this
+-			# case.  A file level ACL makes no sense in this
+-			# context.  Having an empty diff will allow the
+-			# branch creation.
+-			#
+-		} else {
+-			open(T,'-|','git','diff-tree',
+-				'-r','--name-status','-z',
+-				$base,$new) or return undef;
+-			while (<T>) {
+-				my $op = $_;
+-				chop $op;
 -
--for zipfile in argv[1:]:
--    commit_time = 0
--    next_mark = 1
--    common_prefix = None
--    mark = dict()
+-				my $path = <T>;
+-				chop $path;
 -
--    zip = ZipFile(zipfile, 'r')
--    for name in zip.namelist():
--        if name.endswith('/'):
--            continue
--        info = zip.getinfo(name)
+-				$this_diff{$path} = $op;
+-			}
+-			close T or return undef;
+-		}
+-		$d = \%this_diff;
+-		$diff_cache{$base} = $d;
+-	}
+-	return $d;
+-}
 -
--        if commit_time < info.date_time:
--            commit_time = info.date_time
--        if common_prefix == None:
--            common_prefix = name[:name.rfind('/') + 1]
--        else:
--            while not name.startswith(common_prefix):
--                last_slash = common_prefix[:-1].rfind('/') + 1
--                common_prefix = common_prefix[:last_slash]
+-deny "No GIT_DIR inherited from caller" unless $git_dir;
+-deny "Need a ref name" unless $ref;
+-deny "Refusing funny ref $ref" unless $ref =~ s,^refs/,,;
+-deny "Bad old value $old" unless $old =~ /^[a-z0-9]{40}$/;
+-deny "Bad new value $new" unless $new =~ /^[a-z0-9]{40}$/;
+-deny "Cannot determine who you are." unless $this_user;
+-grant "No change requested." if $old eq $new;
 -
--        mark[name] = ':' + str(next_mark)
--        next_mark += 1
+-$repository_name = File::Spec->rel2abs($git_dir);
+-$repository_name =~ m,/([^/]+)(?:\.git|/\.git)$,;
+-$repository_name = $1;
+-info "Updating in '$repository_name'.";
 -
--        printlines(('blob', 'mark ' + mark[name], \
--                    'data ' + str(info.file_size)))
--        fast_import.write(zip.read(name) + "\n")
+-my $op;
+-if    ($old =~ /^0{40}$/) { $op = 'C'; }
+-elsif ($new =~ /^0{40}$/) { $op = 'D'; }
+-else                      { $op = 'R'; }
 -
--    committer = committer_name + ' <' + committer_email + '> %d +0000' % \
--        mktime(commit_time + (0, 0, 0))
+-# This is really an update (fast-forward) if the
+-# merge base of $old and $new is $old.
+-#
+-$op = 'U' if ($op eq 'R'
+-	&& $ref =~ m,^heads/,
+-	&& $old eq git_value('merge-base',$old,$new));
 -
--    printlines(('commit ' + branch_ref, 'committer ' + committer, \
--        'data <<EOM', 'Imported from ' + zipfile + '.', 'EOM', \
--        '', 'deleteall'))
+-# Load the user's ACL file. Expand groups (user.memberof) one level.
+-{
+-	my %data = ('user.committer' => []);
+-	parse_config(\%data,$acl_git,$acl_branch,"external/$repository_name.acl");
 -
--    for name in mark.keys():
--        fast_import.write('M 100644 ' + mark[name] + ' ' +
--            name[len(common_prefix):] + "\n")
+-	%data = (
+-		'user.committer' => $data{'user.committer'},
+-		'user.memberof' => [],
+-	);
+-	parse_config(\%data,$acl_git,$acl_branch,"users/$this_user.acl");
 -
--    printlines(('',  'tag ' + path.basename(zipfile), \
--        'from ' + branch_ref, 'tagger ' + committer, \
--        'data <<EOM', 'Package ' + zipfile, 'EOM', ''))
+-	%user_committer = map {$_ => $_} @{$data{'user.committer'}};
+-	my $rule_key = "repository.$repository_name.allow";
+-	my $rules = $data{$rule_key} || [];
 -
--if fast_import.close():
--    exit(1)
+-	foreach my $group (@{$data{'user.memberof'}}) {
+-		my %g;
+-		parse_config(\%g,$acl_git,$acl_branch,"groups/$group.acl");
+-		my $group_rules = $g{$rule_key};
+-		push @$rules, @$group_rules if $group_rules;
+-	}
+-
+-RULE:
+-	foreach (@$rules) {
+-		while (/\${user\.([a-z][a-zA-Z0-9]+)}/) {
+-			my $k = lc $1;
+-			my $v = $data{"user.$k"};
+-			next RULE unless defined $v;
+-			next RULE if @$v != 1;
+-			next RULE unless defined $v->[0];
+-			s/\${user\.$k}/$v->[0]/g;
+-		}
+-
+-		if (/^([AMD ]+)\s+of\s+([^\s]+)\s+for\s+([^\s]+)\s+diff\s+([^\s]+)$/) {
+-			my ($ops, $pth, $ref, $bst) = ($1, $2, $3, $4);
+-			$ops =~ s/ //g;
+-			$pth =~ s/\\\\/\\/g;
+-			$ref =~ s/\\\\/\\/g;
+-			push @path_rules, [$ops, $pth, $ref, $bst];
+-		} elsif (/^([AMD ]+)\s+of\s+([^\s]+)\s+for\s+([^\s]+)$/) {
+-			my ($ops, $pth, $ref) = ($1, $2, $3);
+-			$ops =~ s/ //g;
+-			$pth =~ s/\\\\/\\/g;
+-			$ref =~ s/\\\\/\\/g;
+-			push @path_rules, [$ops, $pth, $ref, $old];
+-		} elsif (/^([CDRU ]+)\s+for\s+([^\s]+)$/) {
+-			my $ops = $1;
+-			my $ref = $2;
+-			$ops =~ s/ //g;
+-			$ref =~ s/\\\\/\\/g;
+-			push @allow_rules, [$ops, $ref];
+-		} elsif (/^for\s+([^\s]+)$/) {
+-			# Mentioned, but nothing granted?
+-		} elsif (/^[^\s]+$/) {
+-			s/\\\\/\\/g;
+-			push @allow_rules, ['U', $_];
+-		}
+-	}
+-}
+-
+-if ($op ne 'D') {
+-	$new_type = git_value('cat-file','-t',$new);
+-
+-	if ($ref =~ m,^heads/,) {
+-		deny "$ref must be a commit." unless $new_type eq 'commit';
+-	} elsif ($ref =~ m,^tags/,) {
+-		deny "$ref must be an annotated tag." unless $new_type eq 'tag';
+-	}
+-
+-	check_committers (all_new_committers);
+-	check_committers (all_new_taggers) if $new_type eq 'tag';
+-}
+-
+-info "$this_user wants $op for $ref";
+-foreach my $acl_entry (@allow_rules) {
+-	my ($acl_ops, $acl_n) = @$acl_entry;
+-	next unless $acl_ops =~ /^[CDRU]+$/; # Uhh.... shouldn't happen.
+-	next unless $acl_n;
+-	next unless $op =~ /^[$acl_ops]$/;
+-	next unless match_string $acl_n, $ref;
+-
+-	# Don't test path rules on branch deletes.
+-	#
+-	grant "Allowed by: $acl_ops for $acl_n" if $op eq 'D';
+-
+-	# Aggregate matching path rules; allow if there aren't
+-	# any matching this ref.
+-	#
+-	my %pr;
+-	foreach my $p_entry (@path_rules) {
+-		my ($p_ops, $p_n, $p_ref, $p_bst) = @$p_entry;
+-		next unless $p_ref;
+-		push @{$pr{$p_bst}}, $p_entry if match_string $p_ref, $ref;
+-	}
+-	grant "Allowed by: $acl_ops for $acl_n" unless %pr;
+-
+-	# Allow only if all changes against a single base are
+-	# allowed by file path rules.
+-	#
+-	my @bad;
+-	foreach my $p_bst (keys %pr) {
+-		my $diff_ref = load_diff $p_bst;
+-		deny "Cannot difference trees." unless ref $diff_ref;
+-
+-		my %fd = %$diff_ref;
+-		foreach my $p_entry (@{$pr{$p_bst}}) {
+-			my ($p_ops, $p_n, $p_ref, $p_bst) = @$p_entry;
+-			next unless $p_ops =~ /^[AMD]+$/;
+-			next unless $p_n;
+-
+-			foreach my $f_n (keys %fd) {
+-				my $f_op = $fd{$f_n};
+-				next unless $f_op;
+-				next unless $f_op =~ /^[$p_ops]$/;
+-				delete $fd{$f_n} if match_string $p_n, $f_n;
+-			}
+-			last unless %fd;
+-		}
+-
+-		if (%fd) {
+-			push @bad, [$p_bst, \%fd];
+-		} else {
+-			# All changes relative to $p_bst were allowed.
+-			#
+-			grant "Allowed by: $acl_ops for $acl_n diff $p_bst";
+-		}
+-	}
+-
+-	foreach my $bad_ref (@bad) {
+-		my ($p_bst, $fd) = @$bad_ref;
+-		print STDERR "\n";
+-		print STDERR "Not allowed to make the following changes:\n";
+-		print STDERR "(base: $p_bst)\n";
+-		foreach my $f_n (sort keys %$fd) {
+-			print STDERR "  $fd->{$f_n} $f_n\n";
+-		}
+-	}
+-	deny "You are not permitted to $op $ref";
+-}
+-close A;
+-deny "You are not permitted to $op $ref";
 -- 
 1.9.2+fc1.27.gbce2056
