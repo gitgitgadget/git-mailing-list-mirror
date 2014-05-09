@@ -1,83 +1,103 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v1 19/25] contrib: remove 'diff-highlight'
-Date: Fri, 09 May 2014 09:16:26 -0500
-Message-ID: <536ce33a860a2_3cfd9d12f08b@nysa.notmuch>
-References: <1399597116-1851-1-git-send-email-felipe.contreras@gmail.com>
- <1399597116-1851-20-git-send-email-felipe.contreras@gmail.com>
- <20140509015107.GA9787@sigill.intra.peff.net>
- <536c35a3507a8_741a161d310cf@nysa.notmuch>
- <CALbm-EbcoZmWtuxMLSZWjPcgKVTXZPcQ_ppj2UGKzF9oh+hQvA@mail.gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Conforming to pep8
+Date: Fri, 09 May 2014 16:33:47 +0200
+Message-ID: <536CE74B.8050302@alum.mit.edu>
+References: <20140509015429.GA550@wst420> <20140509020908.GG9218@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Stefan Beller <stefanbeller@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 09 16:16:37 2014
+Cc: git@vger.kernel.org, Pete Wyckoff <pw@padd.com>
+To: Jonathan Nieder <jrnieder@gmail.com>,
+	William Giokas <1007380@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 09 16:33:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WilbI-0001cY-7A
-	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 16:16:37 +0200
+	id 1Wils4-0002IX-Dy
+	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 16:33:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756358AbaEIOQc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 May 2014 10:16:32 -0400
-Received: from mail-yh0-f54.google.com ([209.85.213.54]:53475 "EHLO
-	mail-yh0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751895AbaEIOQb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 May 2014 10:16:31 -0400
-Received: by mail-yh0-f54.google.com with SMTP id i57so3746756yha.13
-        for <git@vger.kernel.org>; Fri, 09 May 2014 07:16:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=Uuw/WqdqSq2KXlrieGv5gMJm+5/H1JeGY0xRa0+JgwA=;
-        b=YKPsqWqGeHGGSx+TiZdlr4YJ9xsO0f1UOhOQ0vLV/dDuw/DRMjVVUnS69F2A34taPZ
-         7jF/0DeB1Rdhn3ycTi0JcXk+XKDT5vosA6wLHvl9+oTA/5UK8wtFdkXM68CzB8zJTCxt
-         fPU0RorNLTNXevb5Gk75opINzZsyckFKFQHPaRn3k3C4C158aEYIwRGbljrgVo606hAQ
-         7i6A0CdRvyAwLOCWeMg9Hb2pxhYUdcHAMPjHJyKQWoH3Mw9cAofSIegyRjfgOylfMWhH
-         /OSlyvKv/f9H7F2yqvGwfn0plGou7/mHTDQRpDBwziYo7TIJAfc1Fdx6VzCRiuSQMWhG
-         AlLQ==
-X-Received: by 10.236.86.5 with SMTP id v5mr15140682yhe.153.1399644990951;
-        Fri, 09 May 2014 07:16:30 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id k7sm6319508yhj.31.2014.05.09.07.16.28
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 09 May 2014 07:16:29 -0700 (PDT)
-In-Reply-To: <CALbm-EbcoZmWtuxMLSZWjPcgKVTXZPcQ_ppj2UGKzF9oh+hQvA@mail.gmail.com>
+	id S1756787AbaEIOdw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 May 2014 10:33:52 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:49001 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755542AbaEIOdv (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 May 2014 10:33:51 -0400
+X-AuditID: 12074413-f79076d000002d17-72-536ce74e54f5
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 74.69.11543.E47EC635; Fri,  9 May 2014 10:33:50 -0400 (EDT)
+Received: from [192.168.69.130] (p5DDB2E4D.dip0.t-ipconnect.de [93.219.46.77])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s49EXm6n025496
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Fri, 9 May 2014 10:33:49 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.4.0
+In-Reply-To: <20140509020908.GG9218@google.com>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrLKsWRmVeSWpSXmKPExsUixO6iqOv3PCfY4MkcM4t3j28wWXRd6Way
+	eHtzCaPFpIudrA4sHjtn3WX3+HVkPbvH501yAcxR3DZJiSVlwZnpefp2CdwZH+Z9ZilYwFvR
+	vKaVtYHxHFcXIyeHhICJxN22rWwQtpjEhXvrgWwuDiGBy4wSCy53s0A4Z5kk+uesYgWp4hXQ
+	lnhw4AiYzSKgKtF5dDUziM0moCuxqKeZqYuRg0NUIEjiz1lFiHJBiZMzn7CA2CICPhLtS68x
+	gtjMAsYSX76sBIsLC8hLTPp6jQnEFgKqeTKzDSzOKaAvceH5aWaQkRIC4hI9jUEQrToS7/oe
+	MEPY8hLb385hnsAoOAvJtllIymYhKVvAyLyKUS4xpzRXNzcxM6c4NVm3ODkxLy+1SNdcLzez
+	RC81pXQTIyS4hXcw7jopd4hRgINRiYfXYXp2sBBrYllxZe4hRkkOJiVRXtEtOcFCfEn5KZUZ
+	icUZ8UWlOanFhxglOJiVRHg1DwPleFMSK6tSi/JhUtIcLErivGpL1P2EBNITS1KzU1MLUotg
+	sjIcHEoSvJbPgBoFi1LTUyvSMnNKENJMHJwgw7mkRIpT81JSixJLSzLiQfEbXwyMYJAUD9De
+	qqcge4sLEnOBohCtpxh1OS40rGhhEmLJy89LlRLnZQYpEgApyijNg1sBS2WvGMWBPhbmtQG5
+	hAeYBuEmvQJawgS0xFc/G2RJSSJCSqqBcVeDccj+Nd9l2Wy+ce9bOpMjRez2vqve+ln2h8uW
+	MDlNm86wT+rekWMeTMpnjs09vbb3v6hQT2fCzz+SbIs1pm+xuRV5SfCQ0JOSvwVT 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248560>
 
-Stefan Beller wrote:
-> >
-> > It is serious.
-> >
-> > The purpose of the 'contrib/' area is not clear. The statemens coming
-> > from Junio don't match what is on 'contrib/README'. So we have a huge
-> > variance of quality all over 'contrib/'. Some tools in contrib have
-> > higher quality than what is part of the core (e.g. they have tests,
-> > while git-archimport doesn't).
+On 05/09/2014 04:09 AM, Jonathan Nieder wrote:
+> (cc-ing Pete Wyckoff who maintains git-p4 and Michael Haggerty
+> who maintains git-multimail)
+> William Giokas wrote:
 > 
-> How about rewriting the README then?
+>>      - We follow PEP-8 (http://www.python.org/dev/peps/pep-0008/).
+>>
+>> It's even the first thing that you see when you go looking for 'python'
+>> in the coding style document. I just ran every file in the tree that
+>> either ended in '.py' or had a python #!, and was greeted with a whole
+>> bunch of output::
+>>
+>>     ./git-p4.py
+>>     ./contrib/svn-fe/svnrdump_sim.py
+>>     ./contrib/remote-helpers/git-remote-bzr
+>>     ./contrib/hooks/multimail/post-receive
+>>     ./contrib/hooks/multimail/migrate-mailhook-config
+>>     ./contrib/hooks/multimail/git_multimail.py
+>>     ./contrib/hooks/multimail/README
+>>     ./contrib/hg-to-git/hg-to-git.py
+>>     ./contrib/gitview/gitview
+>>     ./contrib/fast-import/import-zips.py
+> 
+> Thanks for running this check.  Passing on the result to the
+> maintainers of some of those scripts in case they have thoughts.
+> 
+> [...]
 
-To say what?
+Thanks for the heads-up, William and Jonathan.  I wasn't aware of the
+pep8 tool.  Though I think it enforces a couple of rules that go a bit
+beyond PEP8, I don't mind conforming to it, at least with options
 
-> Also as I said in another mail, we could split up the contrib/ area
-> into multiple areas with narrow defined use-cases, i.e. staging/,
-> Documentation/historicTools (the current contrib/examples section),
-> 3rdPartyTools/, Bridges/ (for cooperating with other VCS).
+    --max-line-length=99 --hang-closing
 
-That won't fix the issue that these tools are not maintained. A separate
-repository 'git-cruft' might do.
+I just committed a change to my upstream repository that gets pep8 to
+run cleanly on all Python files.
+
+I don't think it is worth making an extra code drop to Git just to push
+these mild stylistic changes, but if somebody disagrees you know where
+to find my repo.
+
+Michael
 
 -- 
-Felipe Contreras
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
