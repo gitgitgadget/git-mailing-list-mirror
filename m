@@ -1,83 +1,67 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v1 19/25] contrib: remove 'diff-highlight'
-Date: Fri, 09 May 2014 13:40:24 -0500
-Message-ID: <536d2118ee65c_2bd710c13082b@nysa.notmuch>
-References: <1399597116-1851-1-git-send-email-felipe.contreras@gmail.com>
- <1399597116-1851-20-git-send-email-felipe.contreras@gmail.com>
- <20140509015107.GA9787@sigill.intra.peff.net>
- <xmqqa9aq28a4.fsf@gitster.dls.corp.google.com>
- <536d142c3524_693d7fd30c9d@nysa.notmuch>
- <xmqq61lezv0f.fsf@gitster.dls.corp.google.com>
- <536d1c9cecc58_a3dedb2f03f@nysa.notmuch>
- <xmqq1tw2zty1.fsf@gitster.dls.corp.google.com>
+From: Thomas Adam <thomas@xteddy.org>
+Subject: Re: [PATCH v1 1/2] Remove 'git archimport'
+Date: Fri, 9 May 2014 19:33:34 +0100
+Message-ID: <CA+39Oz63YEFPmwntLs+W9X9dMc+TcvV3n05+rr74P8zHoEaAmg@mail.gmail.com>
+References: <1399599203-13991-1-git-send-email-felipe.contreras@gmail.com>
+ <1399599203-13991-2-git-send-email-felipe.contreras@gmail.com>
+ <20140509055024.GB30674@dcvr.yhbt.net> <xmqqlhuazw2c.fsf@gitster.dls.corp.google.com>
+ <536d15f512afd_a7adc530c31@nysa.notmuch>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 09 20:40:36 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Eric Wong <normalperson@yhbt.net>,
+	git list <git@vger.kernel.org>,
+	Martin Langhoff <martin@laptop.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 09 20:41:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wipik-0003KK-I8
-	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 20:40:34 +0200
+	id 1WipjM-0004Kz-3u
+	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 20:41:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754063AbaEISka (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 May 2014 14:40:30 -0400
-Received: from mail-yh0-f41.google.com ([209.85.213.41]:50530 "EHLO
-	mail-yh0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750744AbaEISka (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 May 2014 14:40:30 -0400
-Received: by mail-yh0-f41.google.com with SMTP id f73so4182870yha.28
-        for <git@vger.kernel.org>; Fri, 09 May 2014 11:40:29 -0700 (PDT)
+	id S1755727AbaEISlH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 May 2014 14:41:07 -0400
+Received: from mail-yh0-f44.google.com ([209.85.213.44]:52462 "EHLO
+	mail-yh0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754499AbaEISlG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 May 2014 14:41:06 -0400
+Received: by mail-yh0-f44.google.com with SMTP id b6so4102357yha.17
+        for <git@vger.kernel.org>; Fri, 09 May 2014 11:41:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=Aa7CShcpz2zkb4XH3YpkdVwF3s+Gm/VRH7QsHU4315w=;
-        b=BDM4bu7JCNT0UBNUiN90eT02Lxb6UcKk23WvlohfJCFL7Ppm/d9ToQZ6R9T1kIOiEz
-         6Asd+hcdhCE9LiRBF0nBELT1nG0YsXJpmJ7YLkGAWFcBke7zFhHSRkyogHxD7YuYSkxX
-         H52IvmGfE3pspNMkUV07+83jubx9ok/7fS6TFq023u6XPSQSXyI3Yu/hz/6G6TIuFxxI
-         Ut0t4kxyRdMHQesGpS/f0W5QI/AmmOcOtKeAOmOVwtxPA3CJtyy9DtVM2JAxz9RWygKX
-         1KXWUSACVrJQVgwOhpEWm7DZFD+PQz3mHxE3WqQfzC/EdGpWTUaswoG8vTGr1T+w8V3y
-         vhCQ==
-X-Received: by 10.236.170.37 with SMTP id o25mr17185045yhl.145.1399660829672;
-        Fri, 09 May 2014 11:40:29 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id e4sm7287558yhe.42.2014.05.09.11.40.27
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 09 May 2014 11:40:28 -0700 (PDT)
-In-Reply-To: <xmqq1tw2zty1.fsf@gitster.dls.corp.google.com>
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=R9oT8yOmzVJdLt4LRopTRQkHtVmfZXyQlYUWJCpGu+I=;
+        b=Zifjr7ZGSmLuhYmpscxUnIRFKZa8LZrRpf6QvJsSA3bTHds/aQOkIyx3ZHHnGKiQf1
+         V8IT3tI5BHLKTQ7m5UrTXsBg9Z3S1DlWn9yLBgZbgLekMfvHF0zEOfJYROztC1/VMQH4
+         VwWaZAD73BxQHtkaRvVUEfmAc8+gaYB+EAYZqCwVfQC8III3y2ZbezgazQABTHqG/rqn
+         uonVbEG30H56sdd47+N0zrVYBDucb8owctLYORhXwlA73LT/fvAvbaZ3K4yNLRk2S9Wy
+         v2BYhDfLiMztHazlqFuHhpkirc1gy4HdarZw9LuiwFkCjRH+4eVOfBOH9eqIsdYpxP+C
+         p0tw==
+X-Received: by 10.236.230.41 with SMTP id i39mr17401240yhq.14.1399660429429;
+ Fri, 09 May 2014 11:33:49 -0700 (PDT)
+Received: by 10.170.142.87 with HTTP; Fri, 9 May 2014 11:33:34 -0700 (PDT)
+In-Reply-To: <536d15f512afd_a7adc530c31@nysa.notmuch>
+X-Google-Sender-Auth: 6GUUAYCo_w8uVcSQokJyHkVX3cM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248609>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248610>
 
-Junio C Hamano wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
-> 
-> > Junio C Hamano wrote:
-> >> Felipe Contreras <felipe.contreras@gmail.com> writes:
-> >> 
-> >> > *You* said this[1]:
-> >> 
-> >> If you read the context you omitted from the quote, and realize that
-> >> it was a counter-suggestion to give a middle ground to a more
-> >> draconian "let's divide them into two", neither which I said I want
-> >> to see go forward immediately, you see that this message does not
-> >> deserve any response.
-> >
-> > So when you came with a guideline, that was only for git-remote-hg/bzr.
-> 
-> There is no guideline involved.
+On 9 May 2014 18:52, Felipe Contreras <felipe.contreras@gmail.com> wrote:
+>
+> Such incredible double standards.
 
-Exactly. It's all arbitrary.
+I think I speak for everyone when I say: fuck off.
 
--- 
-Felipe Contreras
+I'm sick and tired of seeing you pop up here with polemic and
+rhetoric, publicly outing those who are making Git great, just because
+you're not getting your own way.
+
+You have a fork of git which you created, go away and use it.
+
+-- Thomas Adam
