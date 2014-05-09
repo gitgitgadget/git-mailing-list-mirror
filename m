@@ -1,89 +1,88 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH v1 04/25] contrib: remove 'buildsystems'
-Date: Fri, 9 May 2014 13:35:06 +0200
-Message-ID: <CABPQNSbU8E39vcP1T50DWgwTvxcd7UX3BHmJfS4gJigTWX=7jw@mail.gmail.com>
-References: <1399597116-1851-1-git-send-email-felipe.contreras@gmail.com>
- <1399597116-1851-5-git-send-email-felipe.contreras@gmail.com>
- <CABPQNSYZ4eWS_9_omZGK5wCD7ap_siEkC10e4ayT8Jp9w1bOSw@mail.gmail.com>
- <536c8e63448c2_25d198d30c55@nysa.notmuch> <CABPQNSYgfUdtfT0sYCwGsWQgW3QFOZvSZSyG76dmF6+ZSMaByw@mail.gmail.com>
- <536c966cf0e9c_2bf0e952f079@nysa.notmuch> <CABPQNSay4gDJ2Ea-w0=wnU1oqVZ_ATm1Q_M71zt+rAd1XUr0zg@mail.gmail.com>
- <536ca0a0f38af_39ea14ab31017@nysa.notmuch> <CABPQNSYJabLU5+9ODMWswu_7R_LRno9oEM=NyC6vhZ--tatb+A@mail.gmail.com>
- <536cb4b4cda1e_6b2dde730827@nysa.notmuch>
-Reply-To: kusmabite@gmail.com
+From: Stefan Beller <stefanbeller@gmail.com>
+Subject: Re: [PATCH v1 25/25] contrib: remove 'mw-to-git'
+Date: Fri, 09 May 2014 14:30:41 +0200
+Message-ID: <536CCA71.8010300@gmail.com>
+References: <1399597116-1851-1-git-send-email-felipe.contreras@gmail.com> <1399597116-1851-26-git-send-email-felipe.contreras@gmail.com> <vpqr443i600.fsf@anie.imag.fr> <536cb51c3f348_6b2dde7308b1@nysa.notmuch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: GIT Mailing-list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Marius Storm-Olsen <mstormo@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 09 13:35:52 2014
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?B?Q8OpbGVzdGluIE1hdHRl?= <celestin.matte@ensimag.fr>,
+	Benoit Person <benoit.person@ensimag.fr>
+To: Felipe Contreras <felipe.contreras@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Fri May 09 14:30:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wij5i-0004vF-49
-	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 13:35:51 +0200
+	id 1Wijws-0004Jx-Tb
+	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 14:30:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754946AbaEILfr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 May 2014 07:35:47 -0400
-Received: from mail-ie0-f177.google.com ([209.85.223.177]:35625 "EHLO
-	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753767AbaEILfq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 May 2014 07:35:46 -0400
-Received: by mail-ie0-f177.google.com with SMTP id rp18so3905666iec.36
-        for <git@vger.kernel.org>; Fri, 09 May 2014 04:35:46 -0700 (PDT)
+	id S1754063AbaEIMam (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 May 2014 08:30:42 -0400
+Received: from mail-ee0-f46.google.com ([74.125.83.46]:35259 "EHLO
+	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752606AbaEIMam (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 May 2014 08:30:42 -0400
+Received: by mail-ee0-f46.google.com with SMTP id t10so2582854eei.5
+        for <git@vger.kernel.org>; Fri, 09 May 2014 05:30:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=Y3TqbBjVk18xOY0zU5jlEiqJsAkaWsyNqcEnxzWFa4s=;
-        b=bpXBW5Wm32ndT0UQtOTqryaDdzZ/L7mj3dorBOPAmkl56eKgZMhzIuCVqDFujvZUMp
-         GqpajwDR+9zjQZ0vOjTJKEb9aXO4H62Vr+OrHGl4AGi4QRGy+R52wpvCg5G3S1J4yJHv
-         9l/1RkU+49bLaLVcDfH/XhLrtkiVJKuUNG7msZrVxz6DWGJpwGa0P6G87wLWi/0ddpph
-         jiNRrnzn8iRtV+5mFfcxJhsPus+EiWbmUlNWrOqHAg6u3xDZDqFxs22pDysqW9Ka+WcF
-         DB1bH1QsCZ827dQZFytooy0YEUKAwMVuN95gMy0lFX3cQ4o+G2zviWLtIG0Z1HzKmnoL
-         q7tA==
-X-Received: by 10.50.154.73 with SMTP id vm9mr8317129igb.14.1399635346208;
- Fri, 09 May 2014 04:35:46 -0700 (PDT)
-Received: by 10.64.166.135 with HTTP; Fri, 9 May 2014 04:35:06 -0700 (PDT)
-In-Reply-To: <536cb4b4cda1e_6b2dde730827@nysa.notmuch>
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=fdJWeRCYmJLeDdOnZ3GCGJaO7ZlLHZQZl3vR8B0mhcw=;
+        b=iydhiFjgC0uxLnr8aH1HCtVZTwmEAgddmhXqdjl9XG2Y0RDpf8mhCgBIHlFVxLXIzQ
+         7aQCSpOzBvdlvKNBvdZMJ9qnuzBEUrrzb64C9hx9R5ztTTNGZrsWb9TYDjCRvRXs16b5
+         Ag7f1VOmZbLnyQNmeZYRgVwSyK2tUWvsFs4NJWW4jhhPYZ85teLZl5qwBrcB661AkN5N
+         Y4ePPdwL2WVDglAO3dkv2R4Dem50eYkcMwembv/jswQNKAytrgoX3DMpvdOG0c3vnNg5
+         9HUFTULx1q4HsMFMXWx/WSE5q8wPt5raOZunUmmeRlG4pvX3UjzuxMKQ7vyKwPB7fZyQ
+         EZlw==
+X-Received: by 10.15.24.201 with SMTP id j49mr12932154eeu.99.1399638640878;
+        Fri, 09 May 2014 05:30:40 -0700 (PDT)
+Received: from [192.168.1.7] (ip-178-200-168-156.unitymediagroup.de. [178.200.168.156])
+        by mx.google.com with ESMTPSA id cj41sm11118115eeb.34.2014.05.09.05.30.39
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 09 May 2014 05:30:40 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
+In-Reply-To: <536cb51c3f348_6b2dde7308b1@nysa.notmuch>
+X-Enigmail-Version: 1.5.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248553>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248554>
 
-On Fri, May 9, 2014 at 12:57 PM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> Erik Faye-Lund wrote:
->> On Fri, May 9, 2014 at 11:32 AM, Felipe Contreras
->> <felipe.contreras@gmail.com> wrote:
->> > Erik Faye-Lund wrote:
->> >> On Fri, May 9, 2014 at 10:48 AM, Felipe Contreras
->> >> > You think changing the execution bit of a file is considered "activity"?
->> >>
->> >> Well, now we're getting into semantics, which I don't care so much
->> >> about.
->> >
->> > Convenient.
+On 09.05.2014 12:59, Felipe Contreras wrote:
+> Matthieu Moy wrote:
+>> Felipe Contreras <felipe.contreras@gmail.com> writes:
 >>
->> Yeah, the part above here goes in my "don't argue with idiots, they'll
->> drag you down to their level and beat you with experience"-filter.
->> Good luck trying to convince *anyone* with this line of argumentation.
->
-> It has been demonstrated that there is inactivity. The fact that your
-> semantics about "inactivity" differ from the rest of the world is
-> irrelevant.
->
->> > The script doesn't depend on the version of the Makefile, and proof of
->> > that is that is has *never* been changed even though the Makefile has.
+>>> No chance of ever graduating.
 >>
->> Except it has, in 74cf9bd.
->
-> Once change in *four* years. My god! How are people ever going to keep
-> up with such amount of changes if it moves out-of-tree!
->
+>> I see no relationship between the chance of graduating and the removal
+>> from contrib/.
+> 
+> Read contrib/README.
+> 
+>> If you want to remove mw-to-git from contrib, then a good starting point
+>> would be to explain why you want to do so in the commit message.
+> 
+> The purpose of the contrib area is to either a) give visibility to
+> otherwise potentially ignored scripts b) serve a staging area for
+> features before moving into the core.
+> 
+> This script doesn't match either of those. It doesn't belong in the
+> contrib/ area.
+> 
 
-It's rather amusing to see you react to my definition of "activity",
-when you seem to have a rather unusual definition of "never"...
+Maybe we could split it a little bit. Similar to the kernel there is a
+staging area. Ok there are some features, which are not yet promoted
+to mainline, some never will.
+
+But some things like examples/ could be moved out to another directory.
+(How about Documentation/historicEncounters/ ?)
+
+Also we could think about renaming contrib to staging then.
+However I don't think it's urgent.
