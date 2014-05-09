@@ -1,81 +1,79 @@
-From: David Lang <david@lang.hm>
-Subject: Re: Watchman support for git
-Date: Fri, 9 May 2014 00:08:25 -0700 (PDT)
-Message-ID: <alpine.DEB.2.02.1405090002000.17457@nftneq.ynat.uz>
-References: <1399072451-15561-1-git-send-email-dturner@twopensource.com> <536428224adfb_200c12912f010@nysa.notmuch> <1399083897.5310.0.camel@stross> <5364654088dc4_4d2010fb2ec7d@nysa.notmuch> <536BD864.5090804@gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v1 1/2] Remove 'git archimport'
+Date: Fri, 09 May 2014 02:11:12 -0500
+Message-ID: <536c7f9089b77_182dd0d31084@nysa.notmuch>
+References: <1399599203-13991-1-git-send-email-felipe.contreras@gmail.com>
+ <1399599203-13991-2-git-send-email-felipe.contreras@gmail.com>
+ <20140509055024.GB30674@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	David Turner <dturner@twopensource.com>, git@vger.kernel.org
-To: Sebastian Schuberth <sschuberth@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 09 09:08:36 2014
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Martin Langhoff <martin@laptop.org>
+To: Eric Wong <normalperson@yhbt.net>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 09 09:11:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wiev6-0001Kv-1o
-	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 09:08:36 +0200
+	id 1Wiexm-0005DF-Dj
+	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 09:11:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751918AbaEIHIc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 May 2014 03:08:32 -0400
-Received: from mail.lang.hm ([64.81.33.126]:50216 "EHLO bifrost.lang.hm"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751410AbaEIHIb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 May 2014 03:08:31 -0400
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id s4978QUW008961;
-	Fri, 9 May 2014 00:08:26 -0700
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <536BD864.5090804@gmail.com>
-User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
+	id S1755282AbaEIHLS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 May 2014 03:11:18 -0400
+Received: from mail-ob0-f175.google.com ([209.85.214.175]:42125 "EHLO
+	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751721AbaEIHLR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 May 2014 03:11:17 -0400
+Received: by mail-ob0-f175.google.com with SMTP id wo20so4337624obc.34
+        for <git@vger.kernel.org>; Fri, 09 May 2014 00:11:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=2Bav9H98nrIAKSDHWJPxGb79xCuAxtglQWS5vrnUW4Q=;
+        b=NtxZ+uVTPdklMNRuU8qxQ/xlLpZG4EBRjtbMtE56vAq8NheyxRFtTS9FtaqpWPS8BB
+         fL+ZQaC9eV+iEHzbxEpoaa75Rl6hOS3WAHyY6M//j5a+/vAnzSlcIGs0UcrL5Ijsqo0K
+         +SdzUsEcGJWZ0lvBrGZZUP5W2BFTSIoiC7aXaHHf8rwPQrTjKv/UekSEsOlDGxpC+UYF
+         1t5YM0GPakyGOE9tbXNtg6IDFOk7M0td008Z++Ry40L4OHWBB856Klom3vz/SodvFg2p
+         4g/Smr564n+JunAQlr69FOSLR2KfhQltc4IB8yO3WFEGSwDCv3suicmfVwCrgWDvyaPw
+         48Dg==
+X-Received: by 10.60.39.131 with SMTP id p3mr10981317oek.44.1399619477158;
+        Fri, 09 May 2014 00:11:17 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id dh8sm13344011oeb.10.2014.05.09.00.11.14
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 09 May 2014 00:11:15 -0700 (PDT)
+In-Reply-To: <20140509055024.GB30674@dcvr.yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248520>
 
-On Thu, 8 May 2014, Sebastian Schuberth wrote:
+Eric Wong wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> wrote:
+> > No updates since 2010, and no tests.
+> 
+> Who benefits from this removal?  Is this causing a maintenance
+> burden for Junio?
 
-> On 03.05.2014 05:40, Felipe Contreras wrote:
->
->>>> That's very interesting. Do you get similar improvements when doing
->>>> something similar in Merurial (watchman vs . no watchman).
->>>
->>> I have not tried it.  My understanding is that this is why Facebook
->>> wrote Watchman and added support for it to Mercurial, so I would assume
->>> that the improvements are at least this good.
->>
->> Yeah, my bet is that they are actually much better (because Mercurial
->> can't be so optimized as Git).
->>
->> I'm interested in this number because if watchman in Git is improving it
->> by 30%, but in Mercurial it's improving it by 100% (made up number),
->> therefore it makes sens that you might want it more if you are using hg,
->> but not so much if you are using git.
->>
->> Also, if similar repositories with Mercurial+watchman are actually
->> faster than Git+watchman, that means that there's room for improvement
->> in your implementation. This is not a big issue at this point of the
->> process, just something nice to know.
->
-> The article at [1] has some details, they claim "For our repository, enabling Watchman integration has made Mercurial's status command more than 5x faster than Git's status command".
->
-> [1] https://code.facebook.com/posts/218678814984400/scaling-mercurial-at-facebook/
+It is cruft that nobody uses and we are not even testing.
 
-a lot of that speed comparison is going to depend on your storage system and the 
-size of your repository.
+> > Plus, foreign SCM tools should live out-of-tree anyway.
+> 
+> Even if so, there ought to be a transitionary period in case there are
+> any users.  We would need to warn potential users of its impending
+> removal in the documentation and at runtime.
 
-if you have a high-end enterprise storage system that tracks metadata very 
-differently from the file contents (I've seen some that have rackes worth of 
-SATA drives for contents and then 'small' arrays of a few dozen flash drives for 
-the metadata), and then you have very large repositories (Facebook has 
-everything in a single repo), then you have a perfect storm where something like 
-watchman that talks the proprietary protocol of the storage array can be FAR 
-faster than anything that needs to operate with the standard POSIX calls.
+All right, so you are OK with adding deprecation warnings whenever the
+tool is run, and a note in the documentation?
 
-That can easily account for the difference between the facebook announcement and 
-the results presented for normal disks that show an improvement, but with even 
-stock git being faster than improved mercurial.
+For how many releases?
 
-David Lang
+-- 
+Felipe Contreras
