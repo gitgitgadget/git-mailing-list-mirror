@@ -1,127 +1,104 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: Watchman support for git
-Date: Fri, 09 May 2014 10:17:38 -0700
-Organization: Twitter
-Message-ID: <1399655858.11843.119.camel@stross>
-References: <1399072451-15561-1-git-send-email-dturner@twopensource.com>
-	 <536428224adfb_200c12912f010@nysa.notmuch> <1399083897.5310.0.camel@stross>
-	 <5364654088dc4_4d2010fb2ec7d@nysa.notmuch> <536BD864.5090804@gmail.com>
-	 <alpine.DEB.2.02.1405090002000.17457@nftneq.ynat.uz>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Output from "git blame A..B -- path" for the bottom commit is misleading
+Date: Fri, 09 May 2014 10:28:19 -0700
+Message-ID: <xmqqy4yazwss.fsf@gitster.dls.corp.google.com>
+References: <xmqq8uqc2dt5.fsf@gitster.dls.corp.google.com>
+	<20140508212647.GA6992@sigill.intra.peff.net>
+	<874n10ot2m.fsf@fencepost.gnu.org>
+	<20140509001145.GA8734@sigill.intra.peff.net>
+	<87zjiro856.fsf@fencepost.gnu.org>
+	<20140509152935.GD18197@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Sebastian Schuberth <sschuberth@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	git@vger.kernel.org
-To: David Lang <david@lang.hm>
-X-From: git-owner@vger.kernel.org Fri May 09 19:17:49 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: David Kastrup <dak@gnu.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri May 09 19:28:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WioQe-0007CL-AL
-	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 19:17:48 +0200
+	id 1Wioaz-0006EF-H3
+	for gcvg-git-2@plane.gmane.org; Fri, 09 May 2014 19:28:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756922AbaEIRRo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 May 2014 13:17:44 -0400
-Received: from mail-qc0-f171.google.com ([209.85.216.171]:58573 "EHLO
-	mail-qc0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756779AbaEIRRn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 May 2014 13:17:43 -0400
-Received: by mail-qc0-f171.google.com with SMTP id x13so4881920qcv.16
-        for <git@vger.kernel.org>; Fri, 09 May 2014 10:17:42 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:content-transfer-encoding
-         :mime-version;
-        bh=OluC6LExqrszYdnSRUlWd1PbB7ljHI4n8/PHTT/oONU=;
-        b=OMjro1A3QOvhUta1E2qgnaIXVF5P/ECT32MM0SIqUzBOp0pewN0TaUZ6Z1deI4Qt+m
-         krWCVe7hpx0cER0b3yL8JtUix6Z5Vmxl0TkFBIpbdPMM0L1MIEOXb+J1+tMGyhXwvjMi
-         pDHbsWkiQbd4C6zkOridXNUcVR4gYknxk601h2GlDnsLhrauhksLYiby8/CZzf2JXv/7
-         qM6Nqyz/DLz0VBHb5+ZvBMN2jiBwi6/IhljL4xTJJONQPn011fV6eprSx90zx+joIXhS
-         kV8PhdZneB1aJMvBTk33A/lhHitd2cwqbnXYGwhCQys+F5IarhoVHM/cgMOnoG1fhYrj
-         ye1Q==
-X-Gm-Message-State: ALoCoQm/kUPYju54shILx68O2A3sxCAVzslWOEVCIRr4PZJ6mOkFt6Wz2WTh+Xq/o0Ch8wERroda
-X-Received: by 10.140.28.3 with SMTP id 3mr15853805qgy.71.1399655862615;
-        Fri, 09 May 2014 10:17:42 -0700 (PDT)
-Received: from [172.25.144.67] ([8.25.197.27])
-        by mx.google.com with ESMTPSA id r4sm7461130qad.49.2014.05.09.10.17.40
-        for <multiple recipients>
-        (version=SSLv3 cipher=RC4-SHA bits=128/128);
-        Fri, 09 May 2014 10:17:41 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.02.1405090002000.17457@nftneq.ynat.uz>
-X-Mailer: Evolution 3.2.3-0ubuntu6 
+	id S932168AbaEIR2Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 May 2014 13:28:25 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:60369 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757094AbaEIR2Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 May 2014 13:28:24 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 26B191557D;
+	Fri,  9 May 2014 13:28:24 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ax4P4znLMi8N+j2ff/lXGRUpCL4=; b=MGanA9
+	jFTh4eEy9AKhV8CwnLI2AWm154DnoEBK3WIt2jpOlyplIIPsqoJH0SStf1X9Q1O7
+	mFhYEHikkeiHaV3kCqHRYJcLddadEJYK5Xalr9wJ4uy7T0GxjCVTpSll7iKe53vo
+	pHUXAgqtu/2Xm9SxuYt3d5UXqWUbh7YOcHBQM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Wq9tF36CHS9e3Xp67leQzC1pFZ86+FYI
+	GH+1nb/j8cb7T273D6okdd6FVB99mAnuZjSB7hy6b6UcM325oa18/Wk0tPzeqt2l
+	ptcYxhhVSTZquKecUsL7JTpwP1aCXD8mZJtcr6OvNj9I9Rrn44gIWBAP15J3IKE+
+	04ZF2iS4gMQ=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1D87F1557B;
+	Fri,  9 May 2014 13:28:24 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D40791556F;
+	Fri,  9 May 2014 13:28:20 -0400 (EDT)
+In-Reply-To: <20140509152935.GD18197@sigill.intra.peff.net> (Jeff King's
+	message of "Fri, 9 May 2014 11:29:35 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 50EE3746-D79F-11E3-88BF-9CEB01674E00-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248592>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248593>
 
-On Fri, 2014-05-09 at 00:08 -0700, David Lang wrote:
-> On Thu, 8 May 2014, Sebastian Schuberth wrote:
+Jeff King <peff@peff.net> writes:
+
+> On Fri, May 09, 2014 at 07:04:05AM +0200, David Kastrup wrote:
+>
+>> Arguably if the user explicitly limited the range, he knows what he's
+>> looking at. Admittedly, I don't know offhand which options _will_
+>> produce boundary commit indications: there may be some without explicit
+>> range limitation, and we might also be talking about limiting through
+>> shallow repos (git blame on a shallow repo is probably a bad idea in the
+>> first place, but anyway).
+>
+> Yes, I was thinking mostly of "X..Y" types of ranges, which are probably
+> the most common. I hadn't considered shallow repositories, and you can
+> also hit the root commit as a boundary if you do not specify --root.
+>
+> I guess the question still in my mind is: what use does the identity of
+> the boundary commit have? That is, whether you know ahead of time where
+> the boundary is or not, is there ever a case where knowing its author
+> and/or commit sha1 is a useful piece of information, as opposed to
+> knowing that we hit a boundary at all?
+>
+> I could not think of one, but I may simply lack imagination.
+
+Well, the original message was triggered by the same "I could not
+think of one" from me ;-).
+
+We may want to flip the default to do a more sanitised version of "-b"
+that has been suggested earlier:
+
+>              (                                         103) 
+>     7bbc458b (Kyle J. McKay  2014-04-22 04:16:22 -0700 104) test_expect_...
+>              (                                         105)         test...
+>     7bbc458b (Kyle J. McKay  2014-04-22 04:16:22 -0700 106)         git ...
+>              (                                         107)         test...
 > 
-> > On 03.05.2014 05:40, Felipe Contreras wrote:
-> >
-> >>>> That's very interesting. Do you get similar improvements when doing
-> >>>> something similar in Merurial (watchman vs . no watchman).
-> >>>
-> >>> I have not tried it.  My understanding is that this is why Facebook
-> >>> wrote Watchman and added support for it to Mercurial, so I would assume
-> >>> that the improvements are at least this good.
-> >>
-> >> Yeah, my bet is that they are actually much better (because Mercurial
-> >> can't be so optimized as Git).
-> >>
-> >> I'm interested in this number because if watchman in Git is improving it
-> >> by 30%, but in Mercurial it's improving it by 100% (made up number),
-> >> therefore it makes sens that you might want it more if you are using hg,
-> >> but not so much if you are using git.
-> >>
-> >> Also, if similar repositories with Mercurial+watchman are actually
-> >> faster than Git+watchman, that means that there's room for improvement
-> >> in your implementation. This is not a big issue at this point of the
-> >> process, just something nice to know.
-> >
-> > The article at [1] has some details, they claim "For our repository, enabling Watchman integration has made Mercurial's status command more than 5x faster than Git's status command".
-> >
-> > [1] https://code.facebook.com/posts/218678814984400/scaling-mercurial-at-facebook/
-> 
-> a lot of that speed comparison is going to depend on your storage system and the 
-> size of your repository.
-> 
-> if you have a high-end enterprise storage system that tracks metadata very 
-> differently from the file contents (I've seen some that have rackes worth of 
-> SATA drives for contents and then 'small' arrays of a few dozen flash drives for 
-> the metadata), and then you have very large repositories (Facebook has 
-> everything in a single repo), then you have a perfect storm where something like 
-> watchman that talks the proprietary protocol of the storage array can be FAR 
-> faster than anything that needs to operate with the standard POSIX calls.
-> 
-> That can easily account for the difference between the facebook announcement and 
-> the results presented for normal disks that show an improvement, but with even 
-> stock git being faster than improved mercurial.
+> which does away with the misleading information altogether.
 
-As I recall from Facebook's presentation[1] on this (as well as from the
-discussion on the git mailing list[2]), Facebook's test respository is
-much larger than any known git repository.  In particular, it is larger
-than WebKit. These performance improvements are not for server-side
-tasks, but for client-side (e.g. git/hg status).  Facebook also made
-other improvements for the client-server communication, and for
-log/blame, but these are not relevant to watchman.
+and have another option to show the current default output for those
+who would want that information.
 
-It is entirely possible that, as repo size grows, Mercurial with
-watchman is faster than git without.
-
-With my patches, git status isn't constant-time; it's merely a roughly
-constant factor faster. My initial design was to make git status
-constant-time by caching the results of the wt_status_collect calls.
-But there were so many cases with the various options that I got a bit
-lost in the wilderness and made a big mess. Maybe I would do better if I
-tried it again today.  And maybe if I just build on top of the
-untracked-cache code, I would be able to get to constant-time; I'll have
-to try that at some point.  
-
-[1] http://www.youtube.com/watch?v=Dlguc63cRXg
-[2] http://comments.gmane.org/gmane.comp.version-control.git/189776
+But that will be a topic for post 2.0; I should start preparing for
+the -rc3 soonish, so I'll stop here.
