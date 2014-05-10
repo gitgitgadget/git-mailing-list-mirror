@@ -1,75 +1,58 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v1 20/25] contrib: remove 'contacts'
-Date: Fri, 09 May 2014 23:00:21 -0500
-Message-ID: <536da4558de17_1ed7ae930412@nysa.notmuch>
-References: <1399597116-1851-1-git-send-email-felipe.contreras@gmail.com>
- <1399597116-1851-21-git-send-email-felipe.contreras@gmail.com>
- <20140510015958.GA45511@vauxhall.crustytoothpaste.net>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: Watchman support for git
+Date: Sat, 10 May 2014 12:26:36 +0700
+Message-ID: <CACsJy8B6AVOHH7HhreqvusQN=UFZzj1mkjqekrOb62Lmq_8VQw@mail.gmail.com>
+References: <1399072451-15561-1-git-send-email-dturner@twopensource.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 10 06:00:34 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Sat May 10 07:27:21 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WiySg-0003vR-0v
-	for gcvg-git-2@plane.gmane.org; Sat, 10 May 2014 06:00:34 +0200
+	id 1Wizob-0005up-TX
+	for gcvg-git-2@plane.gmane.org; Sat, 10 May 2014 07:27:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751127AbaEJEAa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 May 2014 00:00:30 -0400
-Received: from mail-ie0-f181.google.com ([209.85.223.181]:49719 "EHLO
-	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750705AbaEJEA3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 May 2014 00:00:29 -0400
-Received: by mail-ie0-f181.google.com with SMTP id y20so4967541ier.40
-        for <git@vger.kernel.org>; Fri, 09 May 2014 21:00:29 -0700 (PDT)
+	id S1751024AbaEJF1J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 May 2014 01:27:09 -0400
+Received: from mail-qg0-f47.google.com ([209.85.192.47]:41963 "EHLO
+	mail-qg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750857AbaEJF1I (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 May 2014 01:27:08 -0400
+Received: by mail-qg0-f47.google.com with SMTP id j107so5516980qga.34
+        for <git@vger.kernel.org>; Fri, 09 May 2014 22:27:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=sFN3V2A8J7Tjz2H7gjutt+alIUAnih8MaD9EWPoSRj8=;
-        b=CAQw9NEO3gxojKCITFzyg8rDroFmIiiVQ1lPL5RxiCjAmi7N0HwWQtYNGXzAa+PGkJ
-         sG5Anunwss2VXvPDcAJK+TfDR5kkl/hvDaTTH+0zlDElJlsx/flBn/3XAYGgoS9CWqHG
-         7JdRWmNWwV0t9pPX699BryI4JUmofqBBt9i/c7pCcHbYmX/dlOzx6tMbSM08jgtKvczT
-         hu5k9se0Sn0ssXC3JldR49ravuHQDHppSsdRkNqB351/wj7dr2AtO36onnGQBhRFhDRL
-         LL38yZ90/FgJNOQgrlwDOozi3QdveSX1U2WQgRrdG/K4TNz4g0HHQSU219TJM22FxZJK
-         aZrw==
-X-Received: by 10.50.153.49 with SMTP id vd17mr17049567igb.40.1399694429300;
-        Fri, 09 May 2014 21:00:29 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id i16sm3759733igf.11.2014.05.09.21.00.24
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 09 May 2014 21:00:26 -0700 (PDT)
-In-Reply-To: <20140510015958.GA45511@vauxhall.crustytoothpaste.net>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=2qZFlF4B75tbli0XzAXkJEIEOlLsi3sNY8ME4O1+zk0=;
+        b=ygzcrC7SmmnL8wlz/jUqzn0QIHyAsAvDTW1xIumeyed8kmbG+nl4fF0wRmCEs9gjjr
+         vwlmiCwfI3a0GSUe3qZcYGHq8oJdIPz1nWlk8gyy24cEVdjAEehgvuOb7IJ/aS5oQufz
+         oLNUZT07mpb7ZyWNsT4AKh3xHeSYMOpJFHwHZciorpA7zMQm/TSID4Xq7yf9yyIvwcRe
+         EluBqTFBc1JzJbwI1AVg9rlc5d7kbBND1y4e/QZtWsKdtgQ1MklNwqiW8L5E8VvFOIc0
+         C2p9JhT6LzLL7Ce2rqNzrcrIUULwIvKruDoU8J4w2IO8gGAbt/Zn89QRdjK4aly22I/h
+         r46A==
+X-Received: by 10.140.80.40 with SMTP id b37mr19547411qgd.98.1399699627727;
+ Fri, 09 May 2014 22:27:07 -0700 (PDT)
+Received: by 10.96.138.9 with HTTP; Fri, 9 May 2014 22:26:36 -0700 (PDT)
+In-Reply-To: <1399072451-15561-1-git-send-email-dturner@twopensource.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248651>
 
-brian m. carlson wrote:
-> On Thu, May 08, 2014 at 07:58:31PM -0500, Felipe Contreras wrote:
-> > There are better out-of-tree tools, and this tool is not planned to move
-> > into the core anyway.
-> 
-> I have used this once or twice, and I have seen others indicate their
-> use of it as well.  I am not volunteering to maintain this, but if it is
-> working reasonably well for people (as it appears to be), I don't see a
-> reason to remove it.
+On Sat, May 3, 2014 at 6:14 AM,  <dturner@twopensource.com> wrote:
+> The most sigificant patch uses Facebook's watchman daemon[1] to monitor
+> the repository work tree for changes.  This makes allows git status
+> to avoid traversing the entire work tree to find changes.
 
-If all it took as qualification for contrib is that "somebody" uses it,
-contrib would be festered by tools that right now live out-of-tree.
-
-The reasons why some tools are not dropped from contrib, and others are
-rejected to contrib are completely arbitrary.
-
+I got "warning: Watchman watch error: Got bad JSON from watchman
+get-sockname: '[' or '{' expected near end of file". Any ideas what I
+did wrong? I'm using watchman.git and libwatchman.git. check-0.9.11
+and jansson-2.4 were installed by system (gentoo).
 -- 
-Felipe Contreras
+Duy
