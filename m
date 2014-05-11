@@ -1,94 +1,155 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Watchman support for git
-Date: Sun, 11 May 2014 07:21:11 +0700
-Message-ID: <CACsJy8Cazm+6ixw3r8WYfdFYeD01Lmf0PSF0sdsh7PGy_6WDTQ@mail.gmail.com>
-References: <1399072451-15561-1-git-send-email-dturner@twopensource.com>
- <CACsJy8B6AVOHH7HhreqvusQN=UFZzj1mkjqekrOb62Lmq_8VQw@mail.gmail.com> <1399747109.11843.137.camel@stross>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: optimising a push by fetching objects from nearby repos
+Date: Sun, 11 May 2014 06:34:19 +0530
+Message-ID: <536ECC93.1070102@gmail.com>
+References: <536E2C19.3000202@gmail.com> <xmqqtx8xuz3b.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Sun May 11 02:21:47 2014
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	milki <milki@rescomp.berkeley.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun May 11 03:04:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WjHWU-0003sA-Jz
-	for gcvg-git-2@plane.gmane.org; Sun, 11 May 2014 02:21:46 +0200
+	id 1WjIBw-0000qe-UQ
+	for gcvg-git-2@plane.gmane.org; Sun, 11 May 2014 03:04:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757668AbaEKAVm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 May 2014 20:21:42 -0400
-Received: from mail-qg0-f44.google.com ([209.85.192.44]:52233 "EHLO
-	mail-qg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756563AbaEKAVm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 May 2014 20:21:42 -0400
-Received: by mail-qg0-f44.google.com with SMTP id i50so6227872qgf.3
-        for <git@vger.kernel.org>; Sat, 10 May 2014 17:21:41 -0700 (PDT)
+	id S1756798AbaEKBE0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 May 2014 21:04:26 -0400
+Received: from mail-pd0-f179.google.com ([209.85.192.179]:38769 "EHLO
+	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751983AbaEKBEZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 May 2014 21:04:25 -0400
+Received: by mail-pd0-f179.google.com with SMTP id g10so5099086pdj.24
+        for <git@vger.kernel.org>; Sat, 10 May 2014 18:04:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=ypJiP8iwX8ObaaoOiaR874GE8tBZYZw9+nSikIZAbgQ=;
-        b=eYlsuayAu145tYOBaRPgPh6S18EnT/P3NYl8k3z14fqrh0AP8YNas7dzV/YiJlLKti
-         kCcD534g4fBguAZszPYfmIkhfE24LlOOEvH/lswMVeewmzDnqyPjLOb/HVIw0U+IQFCn
-         IqV1tdReca/NjbOKC7Z3EsjbUloCx4/W/c1/powWX+Qg7UmPAB3gNpcrKjqvU7sLYXlt
-         q8PuXAGq7NG92Pe3kM95iSh2kjD1zQI5hV9DSYxciM29auwGGBBhMNwY+87O0NTHBq5o
-         C50Bg0QHBEke3Lx/x0Q3+zq8POV7QYucpa88e3coLR1gfjX0zRghXqTTx+zEFCUK85Jt
-         AcXQ==
-X-Received: by 10.224.121.72 with SMTP id g8mr4570967qar.79.1399767701372;
- Sat, 10 May 2014 17:21:41 -0700 (PDT)
-Received: by 10.96.138.9 with HTTP; Sat, 10 May 2014 17:21:11 -0700 (PDT)
-In-Reply-To: <1399747109.11843.137.camel@stross>
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=bibzQguMW1gCx/kIb0BI0RFqy7mudf6HEicFTpVDrkk=;
+        b=JM1mThmggka2INeZ3aC4KKYs+6nfADL3bSOJb7b5MucCcbPKHzI0T1bu/2VmlhXH9x
+         QYBP37dakDXPnfE5pl9MNY3glC+jtN67WY2t3CrfpVCJDe21CSzQji7G18BllWdh/L5u
+         etpcA01vlG8kYDw9ZBjEktCZxLztxGV4zsdem96Oue19dapQEevLy+ljR/Fbl7hzh7e/
+         3B7MTKEInd5eK65MczTAgD8aXWarYZ4Ov6I1c0y6LKprTPm1930s4MYu1gdzezciBiOu
+         0R0l4dnuq29VnD4vDyzew85k+TcADK9jOiHxkeKkd1sDKUigjUOGrugnW4rZC822OSY7
+         LMzQ==
+X-Received: by 10.66.189.201 with SMTP id gk9mr37800460pac.25.1399770265036;
+        Sat, 10 May 2014 18:04:25 -0700 (PDT)
+Received: from sita-lt.atc.tcs.com ([117.216.208.79])
+        by mx.google.com with ESMTPSA id yj6sm28539244pab.19.2014.05.10.18.04.21
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 10 May 2014 18:04:23 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
+In-Reply-To: <xmqqtx8xuz3b.fsf@gitster.dls.corp.google.com>
+X-Enigmail-Version: 1.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248667>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248668>
 
-On Sun, May 11, 2014 at 1:38 AM, David Turner <dturner@twopensource.com> wrote:
->> I got "warning: Watchman watch error: Got bad JSON from watchman
->> get-sockname: '[' or '{' expected near end of file". Any ideas what I
->> did wrong? I'm using watchman.git and libwatchman.git. check-0.9.11
->> and jansson-2.4 were installed by system (gentoo).
+On 05/11/2014 02:32 AM, Junio C Hamano wrote:
+> Sitaram Chamarty <sitaramc@gmail.com> writes:
 >
-> What do you get from watchman get-sockname on the command-line?  Do the
-> watchman tests pass?
+>> Is there a trick to optimising a push by telling the receiver to pick up
+>> missing objects from some other repo on its own server, to cut down even
+>> more on network traffic?
+>>
+>> So, hypothetically,
+>>
+>>      git push user@host:repo1 --look-for-objects-in=repo2
+>>
+>> I'm aware of the alternates mechanism, but that makes the dependency on
+>> the other repo sort-of permanent.
+>
+> In the direction of fetching, this may be give a good starting point.
+>
+>      http://thread.gmane.org/gmane.comp.version-control.git/243918/focus=245397
 
-Found the problem. "watchman" binary is not in $PATH but popen() did
-not complain (or it did but your "2>/dev/null" in watchman_connect
-suppressed it). BTW you need to update the array size of "expressions"
-in test_watchman_misc().
+That's an interesting thread and it's recent too.  However, it's about
+clone (though the intro email mentions other commands also).
 
-So without watchman I got
+I'm specifically interested in push efficiency right now.  When you
+"fork" someone's repo to your own space, and you push your fork to the
+same server, it ought to be able to get most of the common objects from
+disk (specifically, from the repo you forked), and only what extra you
+did from the network.
 
-   299.871ms read_index_from:1538 if (verify_hdr(hdr, mmap_size) < 0) go
-   498.205ms cmd_status:1300 refresh_index(&the_index, REFRESH_QUIE
-   796.050ms wt_status_collect:622 wt_status_collect_untracked(s)
+Clones do have a workaround (clone with --reference, then repack, as you
+said in that thread), but no such workaround exists for push.
 
-and with watchman ("git status" ran several times to make sure it's cached)
+> In the direction of pushing, theoretically you could:
+>
+>   - define a new capability "look-for-objects-in" to pass the name of
+>     the repository from "git push" to the "receive-pack";
+>
+>   - have "receive-pack" temporarily borrow from the named repository
+>     (if the policy on the server side allows it), and accept the push;
+>
+>   - repack in order to dissociate the receiving repository from the
+>     other repository it temporarily borrowed from.
+>
+> which would be the natural inverse of the approach suggested in the
+> "Can I borrow just temporarily while cloning?" thread.
+>
+> But I haven't thought things through with respect to what else need
+> to be modified to make sure this does not have adverse interaction
+> with simultaneous pushes into the same repository, which would make
+> it harder to solve for "receive-pack" than for "clone/fetch".
 
-   301.950ms read_index_from:1538 if (verify_hdr(hdr, mmap_size) < 0) go
-    34.918ms  read_fs_cache:347 if (verify_hdr(hdr, mmap_size) < 0) go
-  1564.096ms  watchman_load_fs_cache:628 update_fs_cache(istate, result);
-   161.930ms cmd_status:1300 refresh_index(&the_index, REFRESH_QUIE
-   251.614ms wt_status_collect:622 wt_status_collect_untracked(s)
+I'll leave it in your capable hands :-)  My C coding days are long gone!
 
-Given the total time of "git status" without watchman is 1.9s,,
-update_fs_cache() nearly matches that number alone. All that is spent
-in the exclude update code in the function, but if you do
-last_excluding_matching() anyway, why cache it?
+I do have a way to do this in gitolite (haven't coded it yet; just
+thinking).  Gitolite lets you specify something to do before git-*-pack
+runs, and I was planning something like this:
 
-I think we're paying lookup cost in refresh_index(). I forced CE_VALID
-bit on as an experiment and refresh_index() went down to 33ms.
+terminology: borrow, borrower repo, reference repo
 
-A bit surprised about wt_status_collect_untracked number. I verified
-that last_excluding_matching() still runs (on the same number of
-entries like in no-watchman case). Replacing fs_cache_open() in
-add_excludes_from_file_to_list() to plain open() does not change the
-number, so we probably won't need that (unless your worktree is filled
-with .gitignore, which I doubt it's a norm). So about 500ms saved is
-in opendir/readdir.. A simple/separate opendir/readdir/closedir
-program confirms that (ugh!).
--- 
-Duy
+"borrow = relaxed" mode
+
+     1.  check if the user has read access to the reference repo; skip
+         the rest of this if he doesn't
+
+     2.  from reference repo's "objects", find all directories and
+         "mkdir" them into borrower's objects directory, then find all
+         files and "ln" (hardlink) them. This is presumably what "clone
+         -l" does.
+
+     This method is close to constant time since we're not copying
+     objects.
+
+     It has the potential issue that if an object existed in the
+     reference repo that was subsequently *deleted* (say, a commit that
+     contained a password, which was quickly overwritten when
+     discovered), and the attacker knows the SHA, he can get the commit
+     out by sending an commit that depends on it, then fetching it back.
+
+     (He could do that to the reference repo directly if he had write
+     access, but we'll assume he doesn't, so this *is* a possible
+     attack).
+
+"borrow = strict" mode
+
+     1.  (same as for "relaxed" mode)
+
+     2.  actually *fetch* all refs from the reference repo to the
+         borrower (into, say, 'refs/borrowed'), then delete all those
+         refs so you just have the objects now.
+
+     Unlike the previous method, this takes time proportional to the
+     delta between borrower and reference, and may load the system a bit,
+     but unless the reference repo is highly volatile, this will settle
+     down. The point is that it cannot be used to get anything that the
+     user doesn't already have access to anyway.
+
+I still have to try it, but it sounds like both these would work.
+
+I'd appreciate any comments though...
+
+regards
+sitaram
