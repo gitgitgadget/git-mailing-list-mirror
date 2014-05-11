@@ -1,159 +1,83 @@
-From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-Subject: [PATCH] git-add--interactive: Preserve diff heading when splitting hunks
-Date: Sun, 11 May 2014 16:09:56 +0000
-Message-ID: <1399824596-4670-1-git-send-email-avarab@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] inline constant return from error() function
+Date: Sun, 11 May 2014 10:22:03 -0700
+Message-ID: <xmqqppjkut6s.fsf@gitster.dls.corp.google.com>
+References: <20140505212938.GA16715@sigill.intra.peff.net>
+	<20140506151441.GA25768@sigill.intra.peff.net>
+	<xmqqppjqczhq.fsf@gitster.dls.corp.google.com>
+	<20140507030254.GC20726@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 11 18:10:17 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun May 11 19:24:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WjWKO-0006RF-Mb
-	for gcvg-git-2@plane.gmane.org; Sun, 11 May 2014 18:10:17 +0200
+	id 1WjXUI-00072W-O0
+	for gcvg-git-2@plane.gmane.org; Sun, 11 May 2014 19:24:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753136AbaEKQKE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 May 2014 12:10:04 -0400
-Received: from mail-ee0-f41.google.com ([74.125.83.41]:45088 "EHLO
-	mail-ee0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750948AbaEKQKC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 May 2014 12:10:02 -0400
-Received: by mail-ee0-f41.google.com with SMTP id t10so3976637eei.0
-        for <git@vger.kernel.org>; Sun, 11 May 2014 09:10:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version:content-type
-         :content-transfer-encoding;
-        bh=Qg7qhoeIvFj5D7E2kXGpnnF3WtTDeqKXCbdbbWGhTv8=;
-        b=QxqFwFnRzrpoaKV185kyyu3VjXvezyTAuHw3wzOCyZsGj0Kb1NSSntSYlpiLHsSqYz
-         thMbPddhal17T5fVQZvF5kaupTTdIcopOEW0fAzjs8ZdEdW604ZhB7ayK9m+IBHYdvXM
-         67yOObIoDR26GiO4FARi1Sb8993/YyIxq2IeFKKrU+n06gDRKvhyOoNL0JScu0P87wcE
-         dcDHI4me7tKwoSuEGLCZ4+BFmAuH5Lp/ys750/Q6Q2eY5oFl1FSdWrDZABCO5VUqaNmd
-         xA4WF0WB/fWMpQP600qRW/PkU6ZtQHMpr2K/sNldRiCfGgQQQMUFdnw2NERJ5jdZKR8y
-         S7Cw==
-X-Received: by 10.15.49.8 with SMTP id i8mr24051732eew.33.1399824600868;
-        Sun, 11 May 2014 09:10:00 -0700 (PDT)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by mx.google.com with ESMTPSA id w6sm26451271eej.7.2014.05.11.09.09.59
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 11 May 2014 09:09:59 -0700 (PDT)
-X-Mailer: git-send-email 2.0.0.rc0
+	id S1753793AbaEKRWJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 May 2014 13:22:09 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:61946 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753136AbaEKRWI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 May 2014 13:22:08 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5154015A3D;
+	Sun, 11 May 2014 13:22:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=8yh9C6ESnKzB/sdjsxJY1c/7Cbg=; b=SB+e6I
+	tVVREG/glSkBBem9r9/E7+lqq5VLFtkf3gxo2C3aT6g9S15RzrxcuAP/4aZM4gq5
+	0giB+wTkAwGbbXFmUzViT+/l3qcpalwMZkmLcC2I9S8JgUh+VAOdr6Y4T9XfO3Xp
+	9mqvaFBnJ8YGaW7b+q/05cHYXlAQNNiLnj8xw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=kanEFp6dL9dV+gWENFL/z/N2MlaUYsxO
+	l0eBo/5ETcjXO/rOD3aUMJG++EQINJlYkOMExjvwRFM5J58wDbzL+I3GiV0Rqa34
+	FI4LyXbOJ07Y+mJkoNuaKckwelPoMxIWpJEXxCgVeJZm2onTyVxchHUKJGVv2r6n
+	SK/OBvHTnY8=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4829815A3C;
+	Sun, 11 May 2014 13:22:07 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id CC70315A3A;
+	Sun, 11 May 2014 13:22:04 -0400 (EDT)
+In-Reply-To: <20140507030254.GC20726@sigill.intra.peff.net> (Jeff King's
+	message of "Tue, 6 May 2014 23:02:54 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: C59FF7C2-D930-11E3-B08E-9CEB01674E00-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248675>
 
-Change the display of hunks in hunk splitting mode to preserve the diff
-heading, which hasn't been done ever since the hunk splitting was
-initially added in v1.4.4.2-270-g835b2ae.
+Jeff King <peff@peff.net> writes:
 
-Splitting the first hunk of this patch will now result in:
-
-    Stage this hunk [y,n,q,a,d,/,j,J,g,s,e,?]? s
-    Split into 2 hunks.
-    @@ -792,7 +792,7 @@ sub hunk_splittable {
-    [...]
-
-Instead of:
-
-    Stage this hunk [y,n,q,a,d,/,j,J,g,s,e,?]? s
-    Split into 2 hunks.
-    @@ -792,7 +792,7 @@
-    [...]
-
-This makes it easier to use the tool when you're splitting some giant
-hunk and can't remember in which function you are anymore.
-
-The diff is somewhat larger than I initially expected because in order
-to display the headings in the same color scheme as the output from
-git-diff(1) itself I had to split up the code that would previously
-color diff output that previously consisted entirely of the fraginfo,
-but now consists of the fraginfo and the diff heading (the latter of
-which isn't colored).
-
-Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+> On Tue, May 06, 2014 at 03:29:37PM -0700, Junio C Hamano wrote:
 >
----
- git-add--interactive.perl | 40 ++++++++++++++++++++++++---------------=
--
- 1 file changed, 24 insertions(+), 16 deletions(-)
+>> That's kind of W*A*T magic, and I generally try to avoid magic, as
+>> long as it solves your "can we make both -O2 with new compilers and
+>> -O3 happy?" I wouldn't complain ;-)
+>
+> I agree it's rather magical, but I think it's something we can count on.
 
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index 1fadd69..ed1e564 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -792,11 +792,11 @@ sub hunk_splittable {
-=20
- sub parse_hunk_header {
- 	my ($line) =3D @_;
--	my ($o_ofs, $o_cnt, $n_ofs, $n_cnt) =3D
--	    $line =3D~ /^@@ -(\d+)(?:,(\d+))? \+(\d+)(?:,(\d+))? @@/;
-+	my ($o_ofs, $o_cnt, $n_ofs, $n_cnt, $heading) =3D
-+	    $line =3D~ /^@@ -(\d+)(?:,(\d+))? \+(\d+)(?:,(\d+))? @@(.*)/;
- 	$o_cnt =3D 1 unless defined $o_cnt;
- 	$n_cnt =3D 1 unless defined $n_cnt;
--	return ($o_ofs, $o_cnt, $n_ofs, $n_cnt);
-+	return ($o_ofs, $o_cnt, $n_ofs, $n_cnt, $heading);
- }
-=20
- sub split_hunk {
-@@ -808,8 +808,7 @@ sub split_hunk {
- 	# If there are context lines in the middle of a hunk,
- 	# it can be split, but we would need to take care of
- 	# overlaps later.
--
--	my ($o_ofs, undef, $n_ofs) =3D parse_hunk_header($text->[0]);
-+	my ($o_ofs, undef, $n_ofs, undef, $heading) =3D parse_hunk_header($te=
-xt->[0]);
- 	my $hunk_start =3D 1;
-=20
-       OUTER:
-@@ -886,17 +885,26 @@ sub split_hunk {
- 		my $o_cnt =3D $hunk->{OCNT};
- 		my $n_cnt =3D $hunk->{NCNT};
-=20
--		my $head =3D ("@@ -$o_ofs" .
--			    (($o_cnt !=3D 1) ? ",$o_cnt" : '') .
--			    " +$n_ofs" .
--			    (($n_cnt !=3D 1) ? ",$n_cnt" : '') .
--			    " @@\n");
--		my $display_head =3D $head;
--		unshift @{$hunk->{TEXT}}, $head;
--		if ($diff_use_color) {
--			$display_head =3D colored($fraginfo_color, $head);
--		}
--		unshift @{$hunk->{DISPLAY}}, $display_head;
-+		my $fraginfo =3D join(
-+			"",
-+			"@@ -$o_ofs",
-+			(($o_cnt !=3D 1) ? ",$o_cnt" : ''),
-+			" +$n_ofs",
-+			(($n_cnt !=3D 1) ? ",$n_cnt" : ''),
-+			" @@"
-+		);
-+		unshift @{$hunk->{TEXT}}, join(
-+			"",
-+			$fraginfo,
-+			$heading,
-+			"\n"
-+		);
-+		unshift @{$hunk->{DISPLAY}}, join(
-+			"",
-+			$diff_use_color ? colored($fraginfo_color, $fraginfo) : $fraginfo,
-+			$heading,
-+			"\n"
-+		);
- 	}
- 	return @split;
- }
---=20
-2.0.0.rc0
+Certainly. Sorry that I missed "but" before "as long as", which made
+me sound as if I were unhappy.  At least, I didn't call it an ugly
+"hack" ;-)
+
+The alternative you mentioned up-thread "... to write out "return
+error(...)"  as "error(...); return -1". In some ways that is more
+readable, though it is more verbose..." has one more downside you
+did not mention, and the approach to encapsulate it inside error()
+will not have it: new call-sites to error() do not have to worry
+about the issue with this approach.
+
+Until it breaks, that is.  But that goes without saying with the
+"it's something we can count on" pre-condition in place ;-).
