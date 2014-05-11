@@ -1,102 +1,122 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
+From: "Storm-Olsen, Marius" <Marius.Storm-Olsen@student.bi.no>
 Subject: Re: optimising a push by fetching objects from nearby repos
-Date: Sun, 11 May 2014 07:40:36 +0530
-Message-ID: <536EDC1C.5040101@gmail.com>
-References: <536E2C19.3000202@gmail.com> <xmqqtx8xuz3b.fsf@gitster.dls.corp.google.com> <536ECC93.1070102@gmail.com> <1399772049733.13154@student.bi.no>
+Date: Sun, 11 May 2014 03:11:57 +0000
+Message-ID: <1399777917522.41294@student.bi.no>
+References: <536E2C19.3000202@gmail.com>
+ <xmqqtx8xuz3b.fsf@gitster.dls.corp.google.com> <536ECC93.1070102@gmail.com>
+ <1399772049733.13154@student.bi.no> <536EDC1C.5040101@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
 	milki <milki@rescomp.berkeley.edu>
-To: "Storm-Olsen, Marius" <Marius.Storm-Olsen@student.bi.no>,
+To: Sitaram Chamarty <sitaramc@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun May 11 04:10:58 2014
+X-From: git-owner@vger.kernel.org Sun May 11 05:12:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WjJE8-0000rk-9c
-	for gcvg-git-2@plane.gmane.org; Sun, 11 May 2014 04:10:56 +0200
+	id 1WjKBN-0007ix-RM
+	for gcvg-git-2@plane.gmane.org; Sun, 11 May 2014 05:12:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757390AbaEKCKn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 May 2014 22:10:43 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:49758 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751550AbaEKCKm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 May 2014 22:10:42 -0400
-Received: by mail-pa0-f46.google.com with SMTP id kq14so1808883pab.19
-        for <git@vger.kernel.org>; Sat, 10 May 2014 19:10:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=6LPPi9Er0LHzLTD9OIqSvI2GrOMfoXwQw5ktmBXLUpw=;
-        b=vZkfiGOc0yesc4dzndjP+8eHYeWf6fgmGj8o/GY5YGfzGPHDHo4t2OTRR7XH3pribH
-         ry8EhMqIg+9tsXQ6ofaTpJFQLtwVp0udAH/SDls4objMaCqIYtnG43KCj+3JRWX7df/C
-         Ww9P/FT0+OWbf3ZkmOfT9vYwBTNLL9f9yggMWIz2s+6IvbzU2utd6vJo9Xdz/hznLyAc
-         HSOP2v/qR6tmRSUkvuAKJghnwUoG59uU4NhvFg40EzH3B2CNgh08WeJZBbNGH09Uzhsn
-         rzKus4W30TLYugSysfcYM1d5f+bQdpR7yKFlMr/Lli990JwH+fduX35kGWUad5vvh7FU
-         ND8A==
-X-Received: by 10.66.148.230 with SMTP id tv6mr770962pab.155.1399774241880;
-        Sat, 10 May 2014 19:10:41 -0700 (PDT)
-Received: from sita-lt.atc.tcs.com ([117.195.174.132])
-        by mx.google.com with ESMTPSA id qw8sm15202086pbb.27.2014.05.10.19.10.38
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 10 May 2014 19:10:40 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-In-Reply-To: <1399772049733.13154@student.bi.no>
-X-Enigmail-Version: 1.6
+	id S1757761AbaEKDMF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 May 2014 23:12:05 -0400
+Received: from mail-db3lp0082.outbound.protection.outlook.com ([213.199.154.82]:28276
+	"EHLO emea01-db3-obe.outbound.protection.outlook.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1757660AbaEKDMD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 10 May 2014 23:12:03 -0400
+Received: from DBXPR07MB110.eurprd07.prod.outlook.com (10.242.138.148) by
+ DBXPR07MB109.eurprd07.prod.outlook.com (10.242.138.147) with Microsoft SMTP
+ Server (TLS) id 15.0.939.12; Sun, 11 May 2014 03:11:58 +0000
+Received: from DBXPR07MB110.eurprd07.prod.outlook.com ([169.254.6.161]) by
+ DBXPR07MB110.eurprd07.prod.outlook.com ([169.254.6.161]) with mapi id
+ 15.00.0939.000; Sun, 11 May 2014 03:11:58 +0000
+Thread-Topic: optimising a push by fetching objects from nearby repos
+Thread-Index: AQHPbFVRF04hHlEsxka8y+FpDjZfZZs6TapygABDioD//7Q3AIAAXk4A//+9IgA=
+In-Reply-To: <536EDC1C.5040101@gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-imapappendstamp: DBXPR07MB110.eurprd07.prod.outlook.com
+ (15.00.0939.000)
+x-originating-ip: [2601:e:a80:455:b9a8:d0db:3cae:ae12]
+x-forefront-prvs: 020877E0CB
+x-forefront-antispam-report: SFV:NSPM;SFS:(10009001)(6009001)(428001)(479174003)(377454003)(24454002)(51704005)(199002)(189002)(36756003)(83322001)(20776003)(64706001)(46102001)(76482001)(15202345003)(92726001)(19580395003)(77982001)(80022001)(81542001)(86362001)(76176999)(83072002)(4396001)(74662001)(85852003)(87936001)(81342001)(99396002)(101416001)(31966008)(74502001)(74482001)(21056001)(79102001)(92566001)(2656002)(54356999)(50986999)(3826001);DIR:OUT;SFP:1101;SCL:1;SRVR:DBXPR07MB109;H:DBXPR07MB110.eurprd07.prod.outlook.com;FPR:;MLV:sfv;PTR:InfoNoRecords;A:1;MX:1;LANG:en;
+received-spf: None (: student.bi.no does not designate permitted sender
+ hosts)
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=Marius.Storm-Olsen@student.bi.no; 
+Content-ID: <F52B5E1A112E0A4D9F4DE3A2AFE52DE9@nbsstd.onmicrosoft.com>
+X-OriginatorOrg: student.bi.no
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248671>
 
-On 05/11/2014 07:04 AM, Storm-Olsen, Marius wrote:
-> On 5/10/2014 8:04 PM, Sitaram Chamarty wrote:
->> On 05/11/2014 02:32 AM, Junio C Hamano wrote: That's an interesting
->> thread and it's recent too.  However, it's about clone (though the
->> intro email mentions other commands also).
->>
->> I'm specifically interested in push efficiency right now.  When you
->> "fork" someone's repo to your own space, and you push your fork to
->> the same server, it ought to be able to get most of the common
->> objects from disk (specifically, from the repo you forked), and only
->> what extra you did from the network.
->>
-> ...
->>
->> I do have a way to do this in gitolite (haven't coded it yet; just
->> thinking).  Gitolite lets you specify something to do before
->> git-*-pack runs, and I was planning something like this:
+On 5/10/2014 9:10 PM, Sitaram Chamarty wrote:
+> On 05/11/2014 07:04 AM, Storm-Olsen, Marius wrote:
+>> On 5/10/2014 8:04 PM, Sitaram Chamarty wrote: Many of the Git repo
+>> managers will neatly set up a server-side repo clone for you, with
+>> alternates into the original repo saving both network and disk
+>> I/O.
 >
-> And here you're poking the stick at the real solution to your problem.
+> Gitolite already has a "fork" command that does that (though it uses
+> "-l", not alternates).  I specifically don't want to use alternates,
+> and I also specifically am looking for something that activates on a
+> push -- in the situations I am looking to optimise, the clone already
+> happened.
+
+You can probably get the managers to do a fork without alternates too.
+
+Also, it doesn't matter if you have already cloned from the original 
+repo remotely. If you use the git manager to clone the original repo on 
+the server, and you push to your new repo, only your changes will go 
+back over the wire. The git protocol will figure out only which objects 
+are missing to complete the new HEAD, and send those.
+
+So
+    1. Clone remote repo
+    2. Hack hack hack
+    3. Fork repo on server
+    4. Push changes to your own remote repo
+is equally efficient.
+
+
+>> So your work flow would instead be:
+>>     1. Fork repo on server
+>>     2. Remotely clone your own forked repo
+>>
+>> I think it's more appropriate to handle this higher level operation
+>> within the security context of a git repo manager, rather than directly
+>> in git.
 >
-> Many of the Git repo managers will neatly set up a server-side repo
-> clone for you, with alternates into the original repo saving both
-> network and disk I/O.
+> Yes, because of the "read access" check in my suggested procedure to
+> handle this.  (Otherwise this is as valid as the plan suggested for
+> clone in Junior's email in [1]).
 
-Gitolite already has a "fork" command that does that (though it uses
-"-l", not alternates).  I specifically don't want to use alternates, and
-I also specifically am looking for something that activates on a push --
-in the situations I am looking to optimise, the clone already happened.
+It's similar, but security issues come into play due to the swapped 
+direction, which is why I think it's wrong to place it in the push 
+command. Now, having the 'borrow' complement to 'reference' in Git seems 
+like a good idea, and should work for your case too, but IMO should be 
+configured with in the security context of the repo manager, and not on 
+an individual push. *shrug*
 
-> So your work flow would instead be:
->     1. Fork repo on server
->     2. Remotely clone your own forked repo
+
+> [1]:
+> http://thread.gmane.org/gmane.comp.version-control.git/243918/focus=245397
 >
-> I think it's more appropriate to handle this higher level operation
-> within the security context of a git repo manager, rather than directly
-> in git.
+> I will certainly be doing this in gitolite.  The point of my post was to
+> validate the flow with the *git* experts in case they catch something I
+> missed, not to say "this should be done *in* git".
 
-Yes, because of the "read access" check in my suggested procedure to
-handle this.  (Otherwise this is as valid as the plan suggested for
-clone in Junior's email in [1]).
+Absolutely, and I think that's how everyone perceived it :) It's a good 
+idea, with some tweaks, I think.
 
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/243918/focus=245397
 
-I will certainly be doing this in gitolite.  The point of my post was to
-validate the flow with the *git* experts in case they catch something I
-missed, not to say "this should be done *in* git".
+-- 
+.marius
