@@ -1,146 +1,262 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: Watchman support for git
-Date: Sun, 11 May 2014 15:56:22 -0700
-Organization: Twitter
-Message-ID: <1399848982.11843.161.camel@stross>
-References: <1399072451-15561-1-git-send-email-dturner@twopensource.com>
-	 <CACsJy8B6AVOHH7HhreqvusQN=UFZzj1mkjqekrOb62Lmq_8VQw@mail.gmail.com>
-	 <1399747109.11843.137.camel@stross>
-	 <CACsJy8Cazm+6ixw3r8WYfdFYeD01Lmf0PSF0sdsh7PGy_6WDTQ@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: What's cooking in git.git (May 2014, #02; Fri, 9)
+Date: Sun, 11 May 2014 18:03:23 -0500
+Message-ID: <537001bbb2ac6_5ae11e52fc34@nysa.notmuch>
+References: <xmqq61lewtkf.fsf@gitster.dls.corp.google.com>
+ <536d4bd48e3f9_585ea5308b2@nysa.notmuch>
+ <xmqqk39suru0.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+ charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 12 00:56:34 2014
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 12 01:03:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WjcfY-0007Dl-4V
-	for gcvg-git-2@plane.gmane.org; Mon, 12 May 2014 00:56:32 +0200
+	id 1WjcmQ-0003NQ-G0
+	for gcvg-git-2@plane.gmane.org; Mon, 12 May 2014 01:03:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752657AbaEKW42 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 May 2014 18:56:28 -0400
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:51914 "EHLO
-	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751614AbaEKW41 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 May 2014 18:56:27 -0400
-Received: by mail-pa0-f51.google.com with SMTP id kq14so7064667pab.10
-        for <git@vger.kernel.org>; Sun, 11 May 2014 15:56:26 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:content-transfer-encoding
-         :mime-version;
-        bh=LYvApLR3Nd+0mvosbsbE4R6eueAvg/Tdw3pnegEwTlQ=;
-        b=I3FdIka2li2E0LdnQpXqNZCd2T+/6izh4yyOt3z+vEtDwxtNFYvHv7cK7ZbrPQP6Vh
-         e8ow/5+Qwi6T53hYpaXbQs8eQFYHq1C0o1xeceXFY+8gIoIlJCq91WT6KtSIO/nSn7qN
-         I+yJt8lw6KXhW92NwNrB2qHuZdBVcuuwHsQs0zzOvp8G9JK9Rt0YncWwypOIcNQM5ffu
-         eW4HHP88TOjgF4WhMG/TrC/zULCbDVkCtBG5Psa4owcyy7ne/fdI3A78kDYV9XjOubL7
-         X1d4fe42TIT4CLttjlDYHk8AMjgVOCxV4762LnwhZZu3baQZ1tVICkaVUGwDWEC6g/Hz
-         ceug==
-X-Gm-Message-State: ALoCoQn21XciKaAfMTpgIg4h3tEQIcEJnuB74MwYcJDn+40ndSA806zlD/VP2/D+8LSf0FHpaxz2
-X-Received: by 10.67.13.134 with SMTP id ey6mr48562697pad.44.1399848986830;
-        Sun, 11 May 2014 15:56:26 -0700 (PDT)
-Received: from [192.168.0.2] (65-102-19-155.ptld.qwest.net. [65.102.19.155])
-        by mx.google.com with ESMTPSA id sv10sm19304024pbc.74.2014.05.11.15.56.24
+	id S1757726AbaEKXDe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 May 2014 19:03:34 -0400
+Received: from mail-ob0-f176.google.com ([209.85.214.176]:48171 "EHLO
+	mail-ob0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753644AbaEKXDd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 May 2014 19:03:33 -0400
+Received: by mail-ob0-f176.google.com with SMTP id wo20so7190741obc.7
+        for <git@vger.kernel.org>; Sun, 11 May 2014 16:03:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=qAzrSBR7XeRhgaFRq3UN9l7iC3OxOziEfCC0sjLWbSs=;
+        b=smzYvLYkMoSJrKt4d1BKemCwKO7jkF88R2JeprUqxX1RrgTAaYbJqlio6LbhFqgfvP
+         0jHvLjGPgOoNVcnP8/CLIb04yiYPqTRO3kUx0qwFp6GaTmzdQnNtnBAwM4+8oybg8xDQ
+         Nhmi+iLs9873JmQcz3TjBubSpeNdwv2HF/bTdOaR1Zrvs41Kw1cbMZHSAh1Fjcj7zBw7
+         0CFim+BlIx41H10enPaUN0A3y44JYnFU4xOoavOdXCDMCdBN9xH2ht87HUwylK2Mp2LA
+         Z25e8l4vn+KKDTywARAItI2KMM/CvwbPKL5A/otLtnUWVSPlqCJLAVtELxakUCjJc5Xr
+         wHQw==
+X-Received: by 10.182.144.194 with SMTP id so2mr28862265obb.31.1399849413293;
+        Sun, 11 May 2014 16:03:33 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id p1sm16861536obh.28.2014.05.11.16.03.29
         for <multiple recipients>
-        (version=SSLv3 cipher=RC4-SHA bits=128/128);
-        Sun, 11 May 2014 15:56:25 -0700 (PDT)
-In-Reply-To: <CACsJy8Cazm+6ixw3r8WYfdFYeD01Lmf0PSF0sdsh7PGy_6WDTQ@mail.gmail.com>
-X-Mailer: Evolution 3.2.3-0ubuntu6 
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 11 May 2014 16:03:31 -0700 (PDT)
+In-Reply-To: <xmqqk39suru0.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248683>
 
-On Sun, 2014-05-11 at 07:21 +0700, Duy Nguyen wrote:
-> On Sun, May 11, 2014 at 1:38 AM, David Turner <dturner@twopensource.com> wrote:
-> >> I got "warning: Watchman watch error: Got bad JSON from watchman
-> >> get-sockname: '[' or '{' expected near end of file". Any ideas what I
-> >> did wrong? I'm using watchman.git and libwatchman.git. check-0.9.11
-> >> and jansson-2.4 were installed by system (gentoo).
+Junio C Hamano wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> 
+> > Junio C Hamano wrote:
+> >> * fc/remote-helpers-hg-bzr-graduation (2014-04-29) 11 commits
+> >>  - remote-hg: trivial cleanups
+> >>  - remote-hg: make sure we omit multiple heads
+> >>  - git-remote-hg: use internal clone's hgrc
+> >>  - t: remote-hg: split into setup test
+> >>  - remote-hg: properly detect missing contexts
+> >>  - remote-{hg,bzr}: store marks only on success
+> >>  - remote-hg: update to 'public' phase when pushing
+> >>  - remote-hg: fix parsing of custom committer
+> >>   (merged to 'next' on 2014-04-22 at fed170a)
+> >>  + remote-helpers: move tests out of contrib
+> >>  + remote-helpers: move out of contrib
+> >>  + remote-helpers: squelch python import exceptions
+> >> 
+> >>  As there were announcements for these two to be maintained as
+> >>  independent third-party projects ($gmane/248561, $gmane/248583),
 > >
-> > What do you get from watchman get-sockname on the command-line?  Do the
-> > watchman tests pass?
+> > Clarification: after Junio unlilaterally blocked any further progress
+> > towards grauduation to the core, which was the intention since the very
+> > beginning.
 > 
-> Found the problem. "watchman" binary is not in $PATH but popen() did
-> not complain (or it did but your "2>/dev/null" in watchman_connect
-> suppressed it). 
-
-I should probably not be using popen, since it doesn't offer good error
-reporting.  I'll try to fix that in the next few days.
-
-> BTW you need to update the array size of "expressions"
-> in test_watchman_misc().
-
-Thanks, fixed.
-
-> So without watchman I got
+> After seeing your repeated attempts to spread misinformation, I was
+> planning to totally ignore you, but because "What's cooking" is one
+> of the important project-wide report, I'll respond one last time.
 > 
->    299.871ms read_index_from:1538 if (verify_hdr(hdr, mmap_size) < 0) go
->    498.205ms cmd_status:1300 refresh_index(&the_index, REFRESH_QUIE
->    796.050ms wt_status_collect:622 wt_status_collect_untracked(s)
+> Even though I was originally leaning towards moving them into core
+> (after all, why would I have merged the bottom three commits to
+> 'next' otherwise?), I was later convinced, during the discussion
+> that started with John Keeping's objection [*1*], that I was wrong,
+
+Funny how you simply put a reference to the objection, and don't even
+mention it, even though I asked you multiple times to state clearly what
+was this "argument" that moved you so deeply. Even now the link you
+posted is to this same thread, not John Keeping's objection.
+
+Since you have failed to clarify, I'll make a guess and assume it's this
+one[1]:
+
+  I do not want to end up in a situation where an update to Git is
+  blocked by a distribution because git-remote-hg is not updated to
+  support newer versions of Mercurial sufficiently quickly; this
+  previously happened in Gentoo due to git-svn and meant that was stuck
+  on 1.7.8 until 1.7.13 was released [2].
+
+First of all, John Keeping is not arguing that such situation *will*
+arise, he is arguing that it *might*. Well, an asteriod *might* wipe all
+humans on Earth tomorrow, should we all act like it *will* happen, throw
+away all our money and run naked on the streets? No, we assess what is
+the *likelihood* that such an event would happen.
+
+That's what sane human beings do all the time; we try to calculate the
+future using the past and logic as a reference. That's why you see most
+people not check their chairs before sitting, they assume the chair
+functions correctly, even it *might* be broken, and indeed sometimes
+they are and they fall, but it happens so rarely that it doesn't make
+sense to worry about.
+
+But you are not like that, are you? To you is enough that something
+*might* happen to act like it *will*. I told you the hypothetical event
+that John Keeping was talking about would not happen, we have checks in
+place to ensure that it doesn't[2].
+
+And you don't use history as an indicator of the future; there hasn't
+been *a single* change in git-remote-hg that was needed for newer
+versions of Mercurial. The only one was extremely recent, and I didn't
+catch it sooner because I wasn't testing for hg's development version,
+which I am now.
+
+Moreover, the reason of the failure was that I wrote my own custom
+push() method, which relies on things too deep in the API, and those
+things do change from time to time. To mitigate the possibility of that
+happening I'm planning to contact the Mercurial developers to see how it
+would be possible to change their API so I wouldn't need my custom
+push() method in the future, and therefore if they change something
+inside their push() method, that change wouldn't hit us.
+
+But you are not interested in that are you? You are not interesed in how
+likely is the event, nor on mitigation strategies, you only care that it
+*might* happen, even though in reality it proably never *will*. Perhaps
+you do check every chair before sitting.
+
+Let's assume that it *will* happen (it won't), what is the worst case
+scenario? The users of git-remote-hg might get some broken
+functionality, but that would happen regardless if they are in the core,
+contrib, or out-of-tree. 'make test' might break and prevent packages
+and other people to build correctly. This is a real issue, however, it's
+not impossible to solve (nothing is), and there's many ways to deal with
+this:
+
+ a) Distribute remote-hg tests separately. This is actually how my patch
+    series started: t/remote-helpers was separate from the other tests.
+    This way we can tell distributions that they shouldn't rely on these
+    tests passing always.
+ b) Add a new test_expect_success_maybe. This way distributions can keep
+    running the tests, but if something fails the build wouldn't stop.
+ c) Just remove all tests. Given that there are tools in the core
+    already without tests, actually, a few foreign scm tools don't have
+    any tests at all: `git archimport` and `git quiltimport`.
+
+There could be a combination of a) and b), so we have a special location
+of tests that might fail but we want to run anyway and warn if they do.
+
+Problem solved.
+
+What other problems would remain? It's hard to say because you never
+actually clarified what you meant by John Keeping's "argument".
+
+Even more; let's assume we don't go for any solution and include the
+tests as they are, and let's assume the issue *will* happen (we know it
+won't), wouldn't it make sense to wait until it does to make such a
+drastic decision?
+
+I know bees can sting pretty hard, but I've never been stung by one, I
+just avoid them calmly. Should I be afraid of something that has never
+happened? No, like any sane human being I use the past to predict the
+future, and I assume I won't get sting if I act the same way I have
+acted before. But apparently you act like something that has never
+happened, will.
+
+So let's recap:
+
+ 1) That issue that was mentioned won't happen
+ 2) No, really, it won't happen
+ 3) We are already doing things to mitigate the possibily
+ 4) More mitigation strategies are coming
+ 5) We can negate all the negative outcomes by making the tests optional
+ 6) If and when such an issue happens *THEN* we should act, not before
+
+In other words; that argument is bullshit from every angle you look at
+it.
+
+The fact that you were convinced by such a bad argument is rather
+worrying.
+
+Moreover, I've been operating under the assumption that these tools
+would get into the core, working very hard, fixing every bug,
+implementing every feature, answering every question, going above and
+beyond the quality of every other similar tool *by far*.
+
+And then from one day to the next you say; "sorry, somebody said
+something and I've changed my mind. Nyah nyah nyah!".
+
+Honestly, after all this work I would have expected a little bit more
+thought into this. At the very least some discussion. Not this "I'm not
+going to explain it to you, re-read John's mail" bullshit.
+
+This is fucked up.
+
+> and if they moves outside contrib/, the best direction for them to
+> go is not to the core but to become independent third-party plug-in
+> for allow users to pick up the latest without being restricted by
+> our release schedule to ensure no-regressions to the entire system.
+
+If by "no-regressions to the entire system" you mean "so our test suite
+doesn't fail". I already gave you multiple ways to work around it, the
+most extreme is to simply don't include the tests.
+
+> At some point I have to decide what would be the best next step, and
+> your counter-arguments did not make much sense to me.
+
+Really? WHY?! When did you said so? Where is the explanation.
+
+All you said is "I'm convinced".
+
+> Is making that decision as the maintainer unilateral?
+
+Yes, when you make the decision by yourself without considering any
+other point of view, that's unilateral.
+
+> I would not mind asking the others, as your discussion tactic seems
+> to be "repeated voices start sounding like a chorus, and a chorus is
+> project concensus".
 > 
-> and with watchman ("git status" ran several times to make sure it's cached)
+> Those who are observing from the sideline, please raise your hand if
+> you think the three-line "Clarification" Felipe gave us is a fair
+> and accurate clarification.  Anybody?
+
+Funny. This thread is titled "What's cooking in git.git", and nobody
+that has worked on this is Cc'ed.
+
+If your objective is for this mail to be ignored, this is definitely the
+way to go.
+
+> I'll stop wasting time even on fact-checking from now on whenever
+> you say anything.  It's not worth the project's time.
+
+Essentially you want to have the last word, stay on your high horse, and
+avoid any discussion, so even if you are wrong, it will look like you
+were right. How convenient.
+
+> [Reference]
 > 
->    301.950ms read_index_from:1538 if (verify_hdr(hdr, mmap_size) < 0) go
->     34.918ms  read_fs_cache:347 if (verify_hdr(hdr, mmap_size) < 0) go
->   1564.096ms  watchman_load_fs_cache:628 update_fs_cache(istate, result);
->    161.930ms cmd_status:1300 refresh_index(&the_index, REFRESH_QUIE
->    251.614ms wt_status_collect:622 wt_status_collect_untracked(s)
-> 
-> Given the total time of "git status" without watchman is 1.9s,,
-> update_fs_cache() nearly matches that number alone. All that is spent
-> in the exclude update code in the function, but if you do
-> last_excluding_matching() anyway, why cache it?
+> *1* http://thread.gmane.org/gmane.comp.version-control.git/248641/focus=248643
 
-My numbers are different (for my test repository):
+That's the wrong reference ^. Are you ever going to provide this
+"convincing argument"?
 
----
-    30.031ms read_index:1386 r = read_index_from(istate, get_index_
-    71.625ms cmd_status:1302 refresh_index(&the_index, REFRESH_QUIE
-   259.712ms wt_status_collect:622 wt_status_collect_untracked(s)
-----
-    41.110ms read_index:1386 r = read_index_from(istate, get_index_
-     9.294ms read_fs_cache:347 if (verify_hdr(hdr, mmap_size) < 0) go
-     0.173ms watchman_load_fs_cache:628 update_fs_cache(istate, result)
-    41.901ms read_index:1386 r = read_index_from(istate, get_index_
-    18.355ms cmd_status:1302 refresh_index(&the_index, REFRESH_QUIE
-    50.911ms wt_status_collect:622 wt_status_collect_untracked(s)
----
+[1] http://article.gmane.org/gmane.comp.version-control.git/248167
+[2] https://travis-ci.org/felipec/git
 
-I think something must be going wrong with update_fs_cache on your
-machine.  I have a few hypotheses:
-
-1. Maybe watchman isn't fully started up when you run your tests.
-2. Maybe there is a bug.
-
-update_fs_cache should only have to update based on what it has learned
-from watchman.  So if no .gitignore has been changed, it should not have
-to do very much work.
-
-I could take the fe_excluded check and move it above the
-last_exclude_matching check in fs_cache_is_excluded; it causes t7300 to
-fail when run under watchman but presumably that's fixable
-
-> I think we're paying lookup cost in refresh_index(). I forced CE_VALID
-> bit on as an experiment and refresh_index() went down to 33ms.
-
-Yes, it is possible to use Watchman to set CE_VALID as well, and I
-should probably do that.  It's a bit more complicated (at least, I
-recall running into problems), but probably doable.
-
-> A bit surprised about wt_status_collect_untracked number. I verified
-> that last_excluding_matching() still runs (on the same number of
-> entries like in no-watchman case). Replacing fs_cache_open() in
-> add_excludes_from_file_to_list() to plain open() does not change the
-> number, so we probably won't need that (unless your worktree is filled
-> with .gitignore, which I doubt it's a norm). 
-
-My test repo has a couple hundred of them.  Maybe that's unusual?  A
-repo with a lot of projects will tend to have lots of gitignore files,
-because each project will want to maintain them independently.
+-- 
+Felipe Contreras
