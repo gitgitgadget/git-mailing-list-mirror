@@ -1,134 +1,170 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (May 2014, #02; Fri, 9)
-Date: Sun, 11 May 2014 10:51:19 -0700
-Message-ID: <xmqqk39suru0.fsf@gitster.dls.corp.google.com>
-References: <xmqq61lewtkf.fsf@gitster.dls.corp.google.com>
-	<536d4bd48e3f9_585ea5308b2@nysa.notmuch>
+Subject: Re: [PATCH] git-add--interactive: Preserve diff heading when splitting hunks
+Date: Sun, 11 May 2014 10:52:45 -0700
+Message-ID: <xmqqfvkgurrm.fsf@gitster.dls.corp.google.com>
+References: <1399824596-4670-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 11 19:51:32 2014
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 11 19:52:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WjXuN-00062I-Hi
-	for gcvg-git-2@plane.gmane.org; Sun, 11 May 2014 19:51:31 +0200
+	id 1WjXvi-00008t-0r
+	for gcvg-git-2@plane.gmane.org; Sun, 11 May 2014 19:52:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757179AbaEKRv1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 May 2014 13:51:27 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:59503 "EHLO smtp.pobox.com"
+	id S1755470AbaEKRwu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 May 2014 13:52:50 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:54518 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753136AbaEKRv0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 May 2014 13:51:26 -0400
+	id S1751663AbaEKRwt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 11 May 2014 13:52:49 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B5A8816C31;
-	Sun, 11 May 2014 13:51:25 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 432B516C98;
+	Sun, 11 May 2014 13:52:49 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=7jqH78fcXVIQLxJsPVT9yGapZ5E=; b=aP2lVi
-	e27639jIcJPqRtMlLc4VRZOVYgavcBWGiw2shmn8ToLzk3PZ8kGyTZCzFt6O0sFd
-	l1T0Ig1Any+yHjq3h3rAW5d/s0juctEru+Wefs0byWtMykKmfL5JhsJJjUV5xb8S
-	jVwCeLIOaT1lrm+mENMRCPrSZPHeYf2XlaXlk=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=rBvKN8UV5X1X
+	jnOyFTh9D3ba6dg=; b=f98cr24LvAYVLBZ06N1CkwWXF2Bo4ZJnh1FfpQCHlJBC
+	5fdC9nwRAk/pO4oL6wJ1g+ctIrV+9JIUCSIuVrwOYYobUYElww5+H4OTy+F6CLsF
+	CMGD4mug/fmpU3B3fiEuv8FlrmqZMVNkGV0V20pQgSZGCM8UqRPS1dTl3CtwOqk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=HhNx1o6qoQvQN17cb3SzJTQjArWmlEdW
-	EoxtiYwsovGnpeSZgJN8KBekOuA4BLTDA1MzZpjNymSCe7Ith0N6yAMjM87uC+pp
-	A7gps0tRh5VU4PMhAs//GXF2vDzGKfT/Enc5sWXZHVVzGz6HsnM5KMr/fQq889vN
-	WlDfQfyM488=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=GYY6Cr
+	0HUPiZTF7VlrpeWtQujM5MNKGBfiXbRLPulSfkeYrhO0iqT3Ev+41QpnV2L/Z3Or
+	LhW5O7ykLqCEVKTPogMoFpQkQrFTt/u/BDTBXh38RT0I59fUd5B6cVobY9b9ULpZ
+	TWL7mHUdqiKZd6C+gXJIUZTMjHiJfTj/CoD48=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id AA91216C30;
-	Sun, 11 May 2014 13:51:25 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3AB5516C97;
+	Sun, 11 May 2014 13:52:49 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id A303716C20;
-	Sun, 11 May 2014 13:51:20 -0400 (EDT)
-In-Reply-To: <536d4bd48e3f9_585ea5308b2@nysa.notmuch> (Felipe Contreras's
-	message of "Fri, 09 May 2014 16:42:44 -0500")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id AC0BA16C93;
+	Sun, 11 May 2014 13:52:46 -0400 (EDT)
+In-Reply-To: <1399824596-4670-1-git-send-email-avarab@gmail.com>
+ (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Sun, 11 May
+ 2014 16:09:56 +0000")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: DC2E951C-D934-11E3-8AF1-9CEB01674E00-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 0F769334-D935-11E3-B198-9CEB01674E00-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248677>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> Junio C Hamano wrote:
->> * fc/remote-helpers-hg-bzr-graduation (2014-04-29) 11 commits
->>  - remote-hg: trivial cleanups
->>  - remote-hg: make sure we omit multiple heads
->>  - git-remote-hg: use internal clone's hgrc
->>  - t: remote-hg: split into setup test
->>  - remote-hg: properly detect missing contexts
->>  - remote-{hg,bzr}: store marks only on success
->>  - remote-hg: update to 'public' phase when pushing
->>  - remote-hg: fix parsing of custom committer
->>   (merged to 'next' on 2014-04-22 at fed170a)
->>  + remote-helpers: move tests out of contrib
->>  + remote-helpers: move out of contrib
->>  + remote-helpers: squelch python import exceptions
->> 
->>  As there were announcements for these two to be maintained as
->>  independent third-party projects ($gmane/248561, $gmane/248583),
+> Change the display of hunks in hunk splitting mode to preserve the di=
+ff
+> heading, which hasn't been done ever since the hunk splitting was
+> initially added in v1.4.4.2-270-g835b2ae.
 >
-> Clarification: after Junio unlilaterally blocked any further progress
-> towards grauduation to the core, which was the intention since the very
-> beginning.
+> Splitting the first hunk of this patch will now result in:
+>
+>     Stage this hunk [y,n,q,a,d,/,j,J,g,s,e,?]? s
+>     Split into 2 hunks.
+>     @@ -792,7 +792,7 @@ sub hunk_splittable {
+>     [...]
+>
+> Instead of:
+>
+>     Stage this hunk [y,n,q,a,d,/,j,J,g,s,e,?]? s
+>     Split into 2 hunks.
+>     @@ -792,7 +792,7 @@
+>     [...]
+>
+> This makes it easier to use the tool when you're splitting some giant
+> hunk and can't remember in which function you are anymore.
 
-After seeing your repeated attempts to spread misinformation, I was
-planning to totally ignore you, but because "What's cooking" is one
-of the important project-wide report, I'll respond one last time.
+Makes sense to me.
 
-Even though I was originally leaning towards moving them into core
-(after all, why would I have merged the bottom three commits to
-'next' otherwise?), I was later convinced, during the discussion
-that started with John Keeping's objection [*1*], that I was wrong,
-and if they moves outside contrib/, the best direction for them to
-go is not to the core but to become independent third-party plug-in
-for allow users to pick up the latest without being restricted by
-our release schedule to ensure no-regressions to the entire system.
-
-At some point I have to decide what would be the best next step, and
-your counter-arguments did not make much sense to me.  The decision
-is that the best course for these two is either staying in contrib/
-if they are not ready, or becoming independent third-party projects
-if they are.
-
-Is making that decision as the maintainer unilateral?
-
-I would not mind asking the others, as your discussion tactic seems
-to be "repeated voices start sounding like a chorus, and a chorus is
-project concensus".
-
-Those who are observing from the sideline, please raise your hand if
-you think the three-line "Clarification" Felipe gave us is a fair
-and accurate clarification.  Anybody?
-
-I also do not mind seeing hands raised of those who do not agree,
-even though I already know that they would be a silent majority.
-
-Remember, I intend to make this message the "one last time" one.  In
-the past, any time you made absurd claims by twisting facts and what
-other people said, I tried to contain the damage to innocent
-bystanders (who may not know Git and the history of the discussion
-well enough to make their own judgment) by double-checking facts and
-correcting you.  These days, I still do the same fact-checking,
-which steals time from the project that would be better spent in
-other ways, but because I know your counter-arguments will be
-nitpicking on subissues that do not matter in the larger picture and
-resulting back-and-force will end up wasting a lot more time without
-anything to improve the project, I started to apply the "do not feed
-a troll".
-
-I'll stop wasting time even on fact-checking from now on whenever
-you say anything.  It's not worth the project's time.
-
-
-[Reference]
-
-*1* http://thread.gmane.org/gmane.comp.version-control.git/248641/focus=248643
+>
+> The diff is somewhat larger than I initially expected because in orde=
+r
+> to display the headings in the same color scheme as the output from
+> git-diff(1) itself I had to split up the code that would previously
+> color diff output that previously consisted entirely of the fraginfo,
+> but now consists of the fraginfo and the diff heading (the latter of
+> which isn't colored).
+>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.c=
+om>
+> ---
+>  git-add--interactive.perl | 40 ++++++++++++++++++++++++-------------=
+---
+>  1 file changed, 24 insertions(+), 16 deletions(-)
+>
+> diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+> index 1fadd69..ed1e564 100755
+> --- a/git-add--interactive.perl
+> +++ b/git-add--interactive.perl
+> @@ -792,11 +792,11 @@ sub hunk_splittable {
+> =20
+>  sub parse_hunk_header {
+>  	my ($line) =3D @_;
+> -	my ($o_ofs, $o_cnt, $n_ofs, $n_cnt) =3D
+> -	    $line =3D~ /^@@ -(\d+)(?:,(\d+))? \+(\d+)(?:,(\d+))? @@/;
+> +	my ($o_ofs, $o_cnt, $n_ofs, $n_cnt, $heading) =3D
+> +	    $line =3D~ /^@@ -(\d+)(?:,(\d+))? \+(\d+)(?:,(\d+))? @@(.*)/;
+>  	$o_cnt =3D 1 unless defined $o_cnt;
+>  	$n_cnt =3D 1 unless defined $n_cnt;
+> -	return ($o_ofs, $o_cnt, $n_ofs, $n_cnt);
+> +	return ($o_ofs, $o_cnt, $n_ofs, $n_cnt, $heading);
+>  }
+> =20
+>  sub split_hunk {
+> @@ -808,8 +808,7 @@ sub split_hunk {
+>  	# If there are context lines in the middle of a hunk,
+>  	# it can be split, but we would need to take care of
+>  	# overlaps later.
+> -
+> -	my ($o_ofs, undef, $n_ofs) =3D parse_hunk_header($text->[0]);
+> +	my ($o_ofs, undef, $n_ofs, undef, $heading) =3D parse_hunk_header($=
+text->[0]);
+>  	my $hunk_start =3D 1;
+> =20
+>        OUTER:
+> @@ -886,17 +885,26 @@ sub split_hunk {
+>  		my $o_cnt =3D $hunk->{OCNT};
+>  		my $n_cnt =3D $hunk->{NCNT};
+> =20
+> -		my $head =3D ("@@ -$o_ofs" .
+> -			    (($o_cnt !=3D 1) ? ",$o_cnt" : '') .
+> -			    " +$n_ofs" .
+> -			    (($n_cnt !=3D 1) ? ",$n_cnt" : '') .
+> -			    " @@\n");
+> -		my $display_head =3D $head;
+> -		unshift @{$hunk->{TEXT}}, $head;
+> -		if ($diff_use_color) {
+> -			$display_head =3D colored($fraginfo_color, $head);
+> -		}
+> -		unshift @{$hunk->{DISPLAY}}, $display_head;
+> +		my $fraginfo =3D join(
+> +			"",
+> +			"@@ -$o_ofs",
+> +			(($o_cnt !=3D 1) ? ",$o_cnt" : ''),
+> +			" +$n_ofs",
+> +			(($n_cnt !=3D 1) ? ",$n_cnt" : ''),
+> +			" @@"
+> +		);
+> +		unshift @{$hunk->{TEXT}}, join(
+> +			"",
+> +			$fraginfo,
+> +			$heading,
+> +			"\n"
+> +		);
+> +		unshift @{$hunk->{DISPLAY}}, join(
+> +			"",
+> +			$diff_use_color ? colored($fraginfo_color, $fraginfo) : $fraginfo=
+,
+> +			$heading,
+> +			"\n"
+> +		);
+>  	}
+>  	return @split;
+>  }
