@@ -1,184 +1,158 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
+From: Felipe Contreras <felipe.contreras@gmail.com>
 Subject: Re: Should git-remote-hg/bzr be part of the core?
-Date: Mon, 12 May 2014 14:05:52 +0200
-Message-ID: <5370B920.2060506@alum.mit.edu>
-References: <537008f06ceb8_8e47492f89f@nysa.notmuch> <53709788.2050201@alum.mit.edu> <5370a47bee98c_139611a92fc29@nysa.notmuch>
+Date: Mon, 12 May 2014 07:05:49 -0500
+Message-ID: <5370b91dbd91c_168f13a72fc19@nysa.notmuch>
+References: <537008f06ceb8_8e47492f89f@nysa.notmuch>
+ <CA+55aFwf9iAKxbvdPV9Up_T709KwBXJWW4g-F829CRQP4YkivQ@mail.gmail.com>
+ <53707b5955034_2b5710592f8aa@nysa.notmuch>
+ <5370825f709ef_a8114c1304e2@nysa.notmuch>
+ <CALbm-EZhCOvO+RiFs9A+eb-Qri8_1tphCH1JkVo1iWTc3Qcp8Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+ charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: Richard Hansen <rhansen@bbn.com>,
-	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1cw==?= <tboegi@web.de>,
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	git-fc@googlegroups.com, Richard Hansen <rhansen@bbn.com>,
+	Jeff King <peff@peff.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Dusty Phillips <dusty@linux.ca>,
 	Antoine Pelisse <apelisse@gmail.com>,
+	John Keeping <john@keeping.me.uk>,
 	Christophe Simonis <christophe@kn.gl>,
-	Dusty Phillips <dusty@linux.ca>, Jeff King <peff@peff.net>,
-	John Keeping <john@keeping.me.uk>
-To: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-	git-fc@googlegroups.com
-X-From: git-owner@vger.kernel.org Mon May 12 14:06:09 2014
+	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+To: Stefan Beller <stefanbeller@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 12 14:16:51 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wjozg-0005b5-Cw
-	for gcvg-git-2@plane.gmane.org; Mon, 12 May 2014 14:06:08 +0200
+	id 1WjpA3-0006tb-76
+	for gcvg-git-2@plane.gmane.org; Mon, 12 May 2014 14:16:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755154AbaELMGD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 May 2014 08:06:03 -0400
-Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:55069 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755043AbaELMGC (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 May 2014 08:06:02 -0400
-X-AuditID: 1207440c-f79656d000003eba-13-5370b9283c32
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 22.7B.16058.829B0735; Mon, 12 May 2014 08:06:00 -0400 (EDT)
-Received: from [192.168.69.130] (p5DDB1CF6.dip0.t-ipconnect.de [93.219.28.246])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s4CC5qlG029644
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Mon, 12 May 2014 08:05:53 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.4.0
-In-Reply-To: <5370a47bee98c_139611a92fc29@nysa.notmuch>
-X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA01SbUgTYRznubvdbnMXt9Pc0wytiSjqrCjqqIg+RByEIlp9KMFOPd1ou627
-	rVSEJq2oaTU/RLleqFApM98Qc2JUkzKLqb0gQu8vWkrvWtgbdddQ+/Z7/r83Hv5/AqVfq4yE
-	VXDxosDZTLgWo9UbFptTgs7cpcffpDE/wt0Yc2LijZq5OP0RZ268EpjuxgGc8T2sQpiRwW4V
-	M+2tRpmQt4A5dPArWK9ljw1uYYOBJ2q2p6YfZ8Mvn6PscOM1nB29+UXNjh3uAexkezz7aKwT
-	y9Zsi1pbwLl251pLhCXrdkRZ/DXNmHMkvTTc9wnzgAeJPqAhILUChuuqQQTHwqGnLbgPaAma
-	egBg/af3IPIYRODA5++4oiKpNHjyXCuqYIxKgqNNv1UKxikzPF+9D/EBgphP5cBf4cURuR72
-	177GFBxDWeCfofF/VpRqReD3H0YFR1Or4bvmq//mNLUXVj0bVitYQ62C+ye9mBIJKQOsrsxR
-	IEolw5YzdCQlAV55fwr1A33gv7LAnCrwn+osQBtBPGdz2812zmqT+EKzVMgJAi+al2XYra4M
-	vsjdDiJb0nWBb80LQ4AigElHsqgzl1Zxu6UyewgsIBDTfPJwqzyaV+AoKrNwkiVfdNt4KQQg
-	gZpiyJ/tMkcWcWXlvOiYoeIIzGQgk+qSs2iqhHPxO3neyYsz7EKCMEEyoUs26kW+hC8tttpc
-	czRCaJRwrTFG4oUiXuTcLku+st18SV6vQunk3kWKnZScnF2eRqx3gJkY8lzwIjQmOATeaCD1
-	iohSRBa3MFsxc5wTwCD/OJpUKyqdfLqzSRNyCSKXrI5zKCUubo4yegDyMevIvKcN 
+	id S1755146AbaELMQq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 May 2014 08:16:46 -0400
+Received: from mail-oa0-f50.google.com ([209.85.219.50]:50628 "EHLO
+	mail-oa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754597AbaELMQq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 May 2014 08:16:46 -0400
+Received: by mail-oa0-f50.google.com with SMTP id i7so7997976oag.37
+        for <git@vger.kernel.org>; Mon, 12 May 2014 05:16:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=zZGmnSwz5KJo1qMVkuG+tVRRhn7zZO6Emt3jTtuaRl0=;
+        b=mf58EcLiGpH3uWoFQtcWMvLAwLMsqadqw2b9BqkTq2bDhxGrIIqBVkFq17h4TYMBdF
+         XrHaEIGGaOewKJGiYi0kO5crRGuxFOph0jtfA9p/AyLUwHYO6951GS+8uuWo74o9vrRW
+         SuR578kT9JvMxTzTCO5SqmVyliAKHwN55uaWwRNkFyLgExpqSavJUZiLsdUuFQHIUVPX
+         ZVadohhNYSSfjeffao4yqghLe/vcj2baGRUJIZiL3sau+ejcWQrNDuD/ENMgmefT/sM8
+         jmeIjqICKYuHNT5GW6AROUeoQyKAG8ek0Sbg7hHqLcQ8vDwGt/ZJ4wCuRz7CxzbBkN3R
+         KZgA==
+X-Received: by 10.182.112.231 with SMTP id it7mr32817464obb.8.1399897005562;
+        Mon, 12 May 2014 05:16:45 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id sm4sm19989768obc.3.2014.05.12.05.16.42
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 12 May 2014 05:16:44 -0700 (PDT)
+In-Reply-To: <CALbm-EZhCOvO+RiFs9A+eb-Qri8_1tphCH1JkVo1iWTc3Qcp8Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248701>
 
-On 05/12/2014 12:37 PM, Felipe Contreras wrote:
-> Michael Haggerty wrote:
->> On 05/12/2014 01:34 AM, Felipe Contreras wrote:
->>> Recently Junio said he was willing to hear the opinion of other people
->>> regarding the move from contrib to the core[1]. This move is already
->>> under way, but suddenly Junio changed his mind.
->>
->> I agree with Junio.  There are good technical arguments for and against
->> moving git-remote-hg out of contrib.
+Stefan Beller wrote:
+> 2014-05-12 10:12 GMT+02:00 Felipe Contreras <felipe.contreras@gmail.com>:
+> > Felipe Contreras wrote:
+> >> Linus Torvalds wrote:
+> >> > Felipe, stop this stupid blaming of everybody but yourself.
+> >>
+> >> Show me evidence that this decision was my fault. Junio certainly hasn't
+> >> said so. You just have no idea what we are talking about.
+> >
+> > Here, let me show you.
 > 
-> Saying you agree with Junio is content-free. You have to say *why* you
-> agree.
+> I suspect Linus had a reason not to include the mailing lists
+> in the first place
 
-Actually, I don't have to, not even if you tell me to.  And anyway, I
-think the small technical advantages/disadvantages of the possible
-different locations for git-remote-hg are dwarfed by the social
-considerations so I think dwelling on technical considerations would
-sidetrack this discussion.
+Huh?
 
-> [...]
+He did include the mailing lists in the first place[1]. Either something
+is wrong with the mailing list, or somebody is removing the mails.
+
+You can see the full thread in the git-fc mailing list, and there you
+can see the git ml is included in all the mails, including the one you
+just sent, where you included the git ml, and it doesn't show in the
+archives.
+
+> and make a huge public discussion, but instead wrote to you
+> personally.  I guess this is just Linus desire not to waste the time
+> of everybody as he learned that these discussions are fruitless
+> sometimes.
+
+Don't you agree that including transparent bridges for Mercurial and
+Bazaar distributed by default would be benefitial to the project?
+
+If a discussion could potentially lead to them being included, I'd say
+that wouldn't be fruitless, but it's *precisely* what our end users
+would like us to be discussing right now.
+
+> Junio C Hamano wrote [in another thread]:
+> > I would not mind asking the others, as your discussion tactic seems
+> > to be "repeated voices start sounding like a chorus, and a chorus is
+> > project concensus".
+> >
+> > Those who are observing from the sideline, please raise your hand if
+> > you think the three-line "Clarification" Felipe gave us is a fair
+> > and accurate clarification.  Anybody?
+> >
+> > I also do not mind seeing hands raised of those who do not agree,
+> > even though I already know that they would be a silent majority.
 > 
->> 1. That subproject has not been maintained to the standards of the Git
->> project;
-> 
-> The quality of the subjproject has not been called into question, stop
-> taiting the discussion with red herrings.
+> I think Junio is behaving very professional unlike you, Felipe.
+> This includes being polite and very patient.
 
-On the contrary.  I just called the quality of the subproject into
-question, and I stated exactly which aspects of its quality I find to be
-inadequate in the text that you omitted from your response:
+> Also this includes weighting different reasons to make
+> informed rational decisions.
 
-> [...] specifically, Git project standards include good commit
-> messages and a willingness to engage with the community on a friendly
-> and constructive way and to welcome feedback.  Because of your
-> confrontational and nit-picking style, Felipe, many people who have
-> tried to help you improve your work are rebuffed and end up giving up
-> out of frustration or exhaustion.  Because of this, your commits do not
-> benefit from the usual amount of help from the community and therefore
-> their quality is not as high as required for commits to core Git.
+Where is he weighting the different reasons? I've asked him multiple
+times to provide those reasons. He mensions there's one, but he doesn't
+say which one it is.
 
-Commit quality very definitely includes the quality of log messages and
-the quality of the discussion on the mailing list that can inform people
-working on those areas of the code in the future.
+If I haven't see this reason, how do you know he is weighing different
+ones?
 
->> 2. Moving git-remote-hg into the core would require even *more* of your
->> presence on the Git mailing list.
-> 
-> That's not true. I sent my patches at my own pace, it doesn't matter if
-> they are in contrib or in the core, I would have kept sending them at
-> the same pace. I have addressed all issues and responded to all
-> questions as if they were already part of the core, which is why they
-> have more quality than other tools already in the core. I only stopped
-> doing that when Junio changed the direction we had since day one.
-> 
-> Also a red herring.
+> Git being a project widely used and people trusting it for their
+> work needs to have high quality and cannot go left today and
+> go right tomorrow, but most of the decisions are done long-term.
 
-OK, maybe you are technically correct there.  There is indeed a
-difference between > and >=.  Let me amend my claim:
+Yes. What is right, and what is left in this example?
 
-2. Moving git-remote-hg into the core would require you to continue your
-   presence on the Git mailing list.
+Presumably going right would be to include these tools in the core, but
+that would imply that he plans to go left in the future. But he hasn't
+said that. So what makes you think the project would go "left" in the
+future?
 
->>> [...] Does it make sense to you that
->>> you get thrown in jail for a crime you haven't committed merely because
->>> someone thinks it's likely you will?
->>
->> Being the leader of your own valuable open-source project is nothing
->> like jail.  It is an opportunity for you to shine in an environment that
->> is more suited to your personality.
-> 
-> Don't be ridiculous. There is no out-of-tree tool that could possibly
-> compete in popularity against core tools.
+> Felipe, this may be the reason, why you think nothing changes.
+> It's just slower than you'd like, but with more thoughts weighted.
 
-I never made that claim.  I claimed that it was "nothing like jail", and
-I stand by that claim.  I also think that the Git community is a place
-unsuited to someone with your personality, and that you might truly
-shine more in an independent project.
+Really? I'll issue the same challenge I've issued to many people.
 
-> If you think being out-of-tree is not a negative, lets throw out
-> git-archimport, git-quiltimport, git-p4, git-cvs, git-svn. Let us give
-> them an "opportunity to shine".
+Name a single important change in Git (was one way before, it's another
+way now) that has happened in the last 5 years. And by important I mean
+for starters users noticed it.
 
-In my opinion, the technical issues for moving importers are not
-overwhelming.  Therefore, I don't have a strong opinion about the future
-of these other tools, because their presence in the Git tree is not
-coupled to the continued presence of a problematic subproject maintainer.
+You won't be able to, because nothing ever changes.
 
-> You know that those tools do better in the core, and you know
-> git-remote-hg/bzr would do better in the core. Don't act as if you
-> didn't.
+> Junio, I think you're doing an awesome job in maintaining Git
+> and leading the community.
 
-I maintain cvs2svn/cvs2git outside of the Git core.  In fact, one of
-cvs2git's competitors, "git cvsimport" *is* in Git core.  Nevertheless,
-users have no problem finding cvs2git, and I think it's safe to say that
-its reputation exceeds that of "git cvsimport", even though some people
-accidentally use "git cvsimport" out of laziness.
+Maintaining, yes, but leading? Leading it where?
 
-People who need to do a conversion from A to B only have to Google for
-"A B" and they will find the best conversion tools pretty easily.  If
-the tools are packaged for their OS then they are just an "apt-get
-install" away from happiness.  And given that tools like cvs2git or
-git-remote-hg, don't even need to be compiled, users can install them
-pretty easily themselves.
-
->> This email is written in sorrow, not in anger.  Felipe, you seem to have
->> so much potential.  If you would put as much effort in conducting social
->> interactions as you do in coding, the whole balance would change
->> entirely, and any software project would be happy to have you.  With all
->> my heart I truly wish you the best in your future endeavors.
-> 
-> Let's see how sincere you are in your sentiment. I'll reply to you
-> personally about the points that I consider to be red herrings and ad
-> hominem attacks so we don't taint the dicussion. If you don't reply I'll
-> know you were not being sincere.
-
-Jumping at your every demand is not a prerequisite for being sincere.
-
-Michael
+[1] https://groups.google.com/forum/#!original/git-fc/Clhss-fXS2k/9UtiilJ2WQ4J
 
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+Felipe Contreras
